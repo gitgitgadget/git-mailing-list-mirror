@@ -1,82 +1,115 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] t1507: change quoting in test_did_you_mean to a more
- general one
-Date: Fri, 06 May 2011 13:10:41 +0200
-Message-ID: <4DC3D731.3070503@drmicha.warpmail.net>
-References: <20110505191027.GA3242@camk.edu.pl> <7vsjss6hmf.fsf@alter.siamese.dyndns.org> <4DC3A685.4080300@drmicha.warpmail.net> <4DC3CBEF.6080303@viscovery.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [RFC/PATCH 3/2 (squash!)] git-send-email: Warn about rejected automatically added  recipients
+Date: Fri, 6 May 2011 13:22:23 +0200
+Message-ID: <201105061322.24736.jnareb@gmail.com>
+References: <20110415034251.GC19621@sigill.intra.peff.net> <20110504213535.GB27779@sigill.intra.peff.net> <201105051601.46012.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: Kacper Kornet <draenog@pld-linux.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri May 06 13:10:59 2011
+Cc: git@vger.kernel.org, Paul Gortmaker <paul.gortmaker@windriver.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 06 13:22:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QIIvy-0007hf-4l
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 13:10:58 +0200
+	id 1QIJ7X-00056A-Ne
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 13:22:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754773Ab1EFLKo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2011 07:10:44 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:49206 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753646Ab1EFLKn (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 May 2011 07:10:43 -0400
-Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id D66FE20AFB;
-	Fri,  6 May 2011 07:10:42 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute6.internal (MEProxy); Fri, 06 May 2011 07:10:42 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=NsmjoldHqmX/fx4f5XhDkiDgFrU=; b=bX2pp2+iptHflQsUSGVYaT2zMCrokfHjHB4/TAgMDlkq4WbK6rAZ/pUEMxPB4JBZ2F1GE1YVZp1dq3fGAIgsBBpdCgDdCb9PbvkiROqY4iVHRaX49ToPkcWbTOTmTLdHijqqbAfhBhKz2Ue8y2mgeHwGIRBkhyIYtcQfNxEmyoU=
-X-Sasl-enc: dGGGVPk1l/uLyGBl4WQXebALrmVlR6Y609sfHd71cmJO 1304680242
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 22C1F444206;
-	Fri,  6 May 2011 07:10:42 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Lightning/1.0b3pre Thunderbird/3.1.10
-In-Reply-To: <4DC3CBEF.6080303@viscovery.net>
+	id S1755005Ab1EFLWg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2011 07:22:36 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:35646 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754864Ab1EFLWg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2011 07:22:36 -0400
+Received: by fxm17 with SMTP id 17so2217966fxm.19
+        for <git@vger.kernel.org>; Fri, 06 May 2011 04:22:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=EwjE9RI1eu9VDc8RFeV+dltV1PMsSYTq9C5xGVOeT8I=;
+        b=VK8HUblAppewjK1Nck4Ycg/5d4FNjQ6Xp35pufVUGYV8d6dCUPRbEsEXn2U53JFM6L
+         UXwHez4Zv9ifaWElA8AX6Lyy8azcr502HY1Zj4hnmQHmpumyMCuQjCrtc/LrrEgpyLno
+         GgTRsXYlj0a7S0pgqkf5ZejdCF2WdI1rFQNbc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=g8bS3ZHkp8qj8XoYrr70ur+tFrYujRn+4Ko4XV7gcQm7AlLNlyBsW6j0ywVLwPRlyx
+         4ykQVoMsn9MWwUv7+toBR5r14/ZzGp+fHzClt+sTRKs9/NlifW5dlrEM7OT8ZQValvT6
+         xYBNGqN4WbCfISMlZMkYL0URWSzglrlc9pfZM=
+Received: by 10.223.53.85 with SMTP id l21mr2094434fag.26.1304680954845;
+        Fri, 06 May 2011 04:22:34 -0700 (PDT)
+Received: from [192.168.1.13] (aeho239.neoplus.adsl.tpnet.pl [79.186.196.239])
+        by mx.google.com with ESMTPS id l1sm1963173bkl.1.2011.05.06.04.22.32
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 06 May 2011 04:22:33 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <201105051601.46012.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172970>
 
-Johannes Sixt venit, vidit, dixit 06.05.2011 12:22:
-> Am 5/6/2011 9:43, schrieb Michael J Gruber:
->> Junio C Hamano venit, vidit, dixit 05.05.2011 22:02:
->>> Kacper Kornet <draenog@pld-linux.org> writes:
->>>> -	printf "fatal: Path '$2$3' $4, but not ${5:-'$3'}.\n" >expected &&
->>>> -	printf "Did you mean '$1:$2$3'${2:+ aka '$1:./$3'}?\n" >>expected &&
->>>> +	printf "fatal: Path '$2$3' $4, but not ${5:-\'$3\'}.\n" >expected &&
->>>> +	printf "Did you mean '$1:$2$3'${2:+ aka \'$1:./$3\'}?\n" >>expected &&
->> Other than that, I have no objections if this patch makes more shells
->> happy and no happy ones unhappy.
->>
->> Is your ksh OK with all other tests?
-> 
-> Note that:
-> 
-> - With the proposed change, bash now prints the backslashes.
-> 
-> - The printfs should be echos, really.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+On Thu, 5 May 2011, Jakub Narebski wrote:
+> On Wed, 4 May 2011, Jeff King wrote:
+>> On Wed, May 04, 2011 at 06:12:08PM +0200, Jakub Narebski wrote:
+>>> On Fri, 15 Apr 2011, Jeff King wrote:
 
-I thought printfs can be relied upon better than echos (in terms of line
-endings)?
-
-> - The behavior of quoting at the right of :- when the ${...:-...} exansion
-> appears in double-quotes was debated recently at length at the Austin
-> group (which revises the POSIX standard). You better move the expansions
-> to assignments of temporary variables, where you don't need the
-> surrounding double-quotes:
+>>>> [...] You could probably remember which recipients are "important"
+>>>> (i.e., given on the command line) and which were pulled automatically
+>>>> from the commit information, and then feed each recipient individually.
+>>>> If important ones fail, abort the message. If an unimportant one fails,
+>>>> send the message anyway, but remember the bad address and report the
+>>>> error at the end.
 > 
-> 	butnot=${5:-\'$3\'} aka=${2:+ aka \'$1:./$3\'}
-> 
-> Here, the backslash unambiguously quotes the next character.
-> 
-> -- Hannes
+> It does not warn about bad addresses from body, and there are no tests yet!
 
-Whatever makes most shells happy, as long as that includes current bash...
+Now it does warn, though I don't know if we should warn after each message,
+or all together at the end, and if we should warn only about _new_ addresses.
 
-Michael
+Still no tests, and no idea how to write one...
+
+Also if it is to be standalone commit, it needs better commit message.
+But if it is to squashed with previous, it doesn't ;-)
+
+ git-send-email.perl |   11 ++++++++++-
+ 1 files changed, 10 insertions(+), 1 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index e758fd9..b8d4fb9 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1136,11 +1136,20 @@ X-Mailer: git-send-email $gitversion
+ 
+ 		$smtp->mail( $raw_from ) or die $smtp->message;
+ 		$smtp->to( @recipients ) or die $smtp->message;
+-		$smtp->to( @recipients_extra, { Notify => ['NEVER'], SkipBad => 1 });
++		my @good_recips =
++			$smtp->to( @recipients_extra, { Notify => ['NEVER'], SkipBad => 1 });
+ 		$smtp->data or die $smtp->message;
+ 		$smtp->datasend("$header\n$message") or die $smtp->message;
+ 		$smtp->dataend() or die $smtp->message;
+ 		$smtp->code =~ /250|200/ or die "Failed to send $subject\n".$smtp->message;
++
++		%seen = ();
++		unique_email_list(\%seen, @good_recips);
++		# bad recipients are those not seen on list of good recipients
++		my @bad_recips = unique_email_list(\%seen, @recipients_extra);
++		@bad_recips and
++			warn "W: The following addresses added from body were rejected:\n\t".
++				join("\n\t", @bad_recips)."\n";
+ 	}
+ 	if ($quiet) {
+ 		printf (($dry_run ? "Dry-" : "")."Sent %s\n", $subject);
+-- 
+1.7.5
