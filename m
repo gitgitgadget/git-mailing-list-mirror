@@ -1,73 +1,86 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Question about PERL_PATH
-Date: Fri, 06 May 2011 09:05:08 -0700
-Message-ID: <7v7ha33jd7.fsf@alter.siamese.dyndns.org>
-References: <4DC3F804.3080205@mev.co.uk>
+Subject: Re: [PATCH] staging: brcm80211: SDIO/MMC cleanups
+Date: Fri, 06 May 2011 09:07:48 -0700
+Message-ID: <7v39kr3j8r.fsf@alter.siamese.dyndns.org>
+References: <20110504165947.40EED208186@grundler.mtv.corp.google.com>
+ <4DC3B086.90802@broadcom.com> <7viptn3neo.fsf@alter.siamese.dyndns.org>
+ <4DC41B06.5040500@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ian Abbott <abbotti@mev.co.uk>
-X-From: git-owner@vger.kernel.org Fri May 06 18:05:25 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Arend van Spriel <arend@broadcom.com>,
+	"Grant\@google.com" <Grant@google.com>,
+	"\"Grundler \<grundler\"\@chromium.org \<Grundler" 
+	<grundler@chromium.org>, Greg Kroah-Hartman <greg@kroah.com>,
+	"devel\@linuxdriverproject.org" <devel@linuxdriverproject.org>,
+	Dowan Kim <dowan@broadcom.com>,
+	Henry Ptasinski <henryp@broadcom.com>,
+	Venkat Rao <vrao@broadcom.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri May 06 18:08:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QINWu-0001EZ-No
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 18:05:25 +0200
+	id 1QINZo-00038R-Bg
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 18:08:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752712Ab1EFQFS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2011 12:05:18 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49782 "EHLO
+	id S1755120Ab1EFQIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2011 12:08:18 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53777 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752261Ab1EFQFR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2011 12:05:17 -0400
+	with ESMTP id S1752309Ab1EFQIR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2011 12:08:17 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 839C758B0;
-	Fri,  6 May 2011 12:07:19 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C24255905;
+	Fri,  6 May 2011 12:10:20 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+vxKV28pvWu965gUHap4BXFzXbo=; b=xLVBLg
-	0wVt9FEwkYR5VnMPokidyBbzfNguuE5jmcIpEbwUPJwvFXfGYMdgJkCbiPWXvW+T
-	s2uuI30nCd365WJhtDBOZcSUsdh3DV3UVLNe6DNQHqLlRkXCuW4FipzqTfJHGl5O
-	RBZd0SSUrSlV0LiqzdGn06WY6kYfImgiYp2Uc=
+	:content-type; s=sasl; bh=dw7Geb8IWoCFLwQn7h7Ns+/IObQ=; b=K01G30
+	TZWzb7WR+NU6LxLXqUA3WVr1xSkm/TQnzN7qkiFL/jBFq4yuzlwNBg0xMlVi0vJw
+	fuLXZzKoTyg1VsxvxNP8odI7anfa5u6oijQ0nbRhLOjCpJhb5G8S4LZFgwpbg9Tp
+	VLUb6vG7IjkaOOm4bwR/rNui2n7U25S3hjot0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lJPv28p733bSJSoLKMDMFFe7yea5XViz
-	Bi/C6BpYow6F8YMsZ9nc9cRniPNcz4jfAMqT0LnSQb1QEhIjVTKkIq9Xl7c1ZeVD
-	OTH9/9oJCCIjEVn/EbNbERtg9J3j2MDIJda4gwMp2cEdWuwr8FLUMOHwsV61r8D5
-	PFwMIE0g1wg=
+	:content-type; q=dns; s=sasl; b=DjsTTC/ovnt9d1UY+BCpA5JM4l6P10a7
+	wf/M/ODeeoAkFXFs2gmzoOlZPqDNHq6pWs1SQMdKIfrJnZnO1rqKhKiyIfnM1IdM
+	jvEW6/ajEZLLuVNFN3S8JhBwHI2cT90ubL0jdn9nMgfgNhzXBYEjXMCFAaYmH8hC
+	R+8VGdF2VEc=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6081D58AE;
-	Fri,  6 May 2011 12:07:17 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 217C958FE;
+	Fri,  6 May 2011 12:10:10 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 82C2058AC; Fri,  6 May 2011
- 12:07:14 -0400 (EDT)
-In-Reply-To: <4DC3F804.3080205@mev.co.uk> (Ian Abbott's message of "Fri, 6
- May 2011 14:30:44 +0100")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C1BDF58F2; Fri,  6 May 2011
+ 12:09:53 -0400 (EDT)
+In-Reply-To: <4DC41B06.5040500@drmicha.warpmail.net> (Michael J. Gruber's
+ message of "Fri, 06 May 2011 18:00:06 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EA092E84-77FA-11E0-A2D5-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 510022D2-77FB-11E0-8FA8-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172985>
 
-Ian Abbott <abbotti@mev.co.uk> writes:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> The Gentoo ebuilds for git have started invoking 'make' with the option
-> 'PERL_PATH=/usr/bin/env perl'.  This doesn't seem to cause any problems
-> except when running git instaweb, which outputs an error similar to the
-> following:
+> Junio C Hamano venit, vidit, dixit 06.05.2011 16:37:
+>> "Arend van Spriel" <arend@broadcom.com> writes:
+>> 
+>>> The git documentation on the git am command is not very elaborate. I
+>>> investigated the issue and checked following:
+>>> 1. line 135 in dhd_sdio.c in the patch does match line 135 in my
+>>> checked out branch.
+>> 
+>> Does it exactly match, or does it merely visually match if you ignore tabs
+>> and spaces munged by somebody between the state of the file submitter
+>> committed and grunder.eml file you stored?
 >
-> /usr/libexec/git-core/git-instaweb: line 135: /usr/bin/env perl: No such
-> file or directory
+> Junio, he reported the hashes to match! Puzzling. Or a MUA doing things
+> to the .eml.
 
-The variable is not PERL_COMMAND_LINE, but is PERL_PATH, so I think it
-should expects the path to the program.
-
-Our testsuite also rely on it being the path to the program by enclosing
-the reference to it inside double quotes, to make sure that PERL_PATH set
-to "/Program Files/Perl/perl.exe" works.  Didn't Gentoo folks see any test
-breakage before shipping the ebuild procedure?
+The latter is exactly what I meant.  The mailchain leading to the
+receiver's mailbox would not adjust the hash recorded in the patch when it
+munges whitespaces.
