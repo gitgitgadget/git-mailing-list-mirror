@@ -1,93 +1,81 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 1/2] tests: eliminate unnecessary setup test assertions
-Date: Fri, 6 May 2011 17:26:29 -0500
-Message-ID: <20110506222629.GA27945@elie>
-References: <20110503090351.GA27862@elie>
- <4DC1CE16.5030808@dailyvoid.com>
- <7vsjsuc704.fsf@alter.siamese.dyndns.org>
- <20110506205441.GA20182@elie>
- <20110506205851.GB20182@elie>
- <20110506214801.GA17848@sigill.intra.peff.net>
+Date: Fri, 06 May 2011 15:27:08 -0700
+Message-ID: <7voc3fxy6b.fsf@alter.siamese.dyndns.org>
+References: <20110503090351.GA27862@elie> <4DC1CE16.5030808@dailyvoid.com>
+ <7vsjsuc704.fsf@alter.siamese.dyndns.org> <20110506205441.GA20182@elie>
+ <20110506205851.GB20182@elie> <20110506214801.GA17848@sigill.intra.peff.net>
+ <20110506221300.GB17848@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Michael Grubb <devel@dailyvoid.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat May 07 00:26:43 2011
+X-From: git-owner@vger.kernel.org Sat May 07 00:27:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QITTu-0007it-HG
-	for gcvg-git-2@lo.gmane.org; Sat, 07 May 2011 00:26:42 +0200
+	id 1QITUc-000870-2F
+	for gcvg-git-2@lo.gmane.org; Sat, 07 May 2011 00:27:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753369Ab1EFW0h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2011 18:26:37 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:62468 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752648Ab1EFW0g (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2011 18:26:36 -0400
-Received: by yxs7 with SMTP id 7so1351526yxs.19
-        for <git@vger.kernel.org>; Fri, 06 May 2011 15:26:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=YAvr2np+C6sw3tZT++CSxOj7laLDEJgGt3U22fYoDgE=;
-        b=MJuFnkkkMswKCXLZ1gRoBbzlJCzQjR0f4UELNeRo9e0rlV3KbQlLwFUVpYNnAIHWaI
-         aNs46Yu8yhKmEtVHne843EfYomytxLXo1Tt3auPJiBzUls3Dh+su885EddDQdRx0mPFg
-         by7b1RdZUlNNqUiBRKyWLi9JU9ff7uQPb9UWU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=FL35jIaUJmRKCyGpQX+TSOG96eMBXQZy3srko1IvCRhitWppCjgn59FoT9EAjOvp7W
-         5S2ve62OlenQPFmPsQa/eqsO2SwHHiAwnGdblN5yOHM1ciuLahKiveUzvRk4Pm/bkR4q
-         RpUExoVE6OxMlAIZb1iNpN3iWlxT7k3Pzl0fU=
-Received: by 10.150.66.11 with SMTP id o11mr3691953yba.159.1304720796287;
-        Fri, 06 May 2011 15:26:36 -0700 (PDT)
-Received: from elie (adsl-76-206-232-100.dsl.chcgil.sbcglobal.net [76.206.232.100])
-        by mx.google.com with ESMTPS id b4sm9913ybo.23.2011.05.06.15.26.34
-        (version=SSLv3 cipher=OTHER);
-        Fri, 06 May 2011 15:26:35 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20110506214801.GA17848@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753987Ab1EFW1X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2011 18:27:23 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59311 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753459Ab1EFW1V (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2011 18:27:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DE80C41A9;
+	Fri,  6 May 2011 18:29:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jBJ2WWziMU1AKgAZGj8u1ijuZDw=; b=Rmzj84
+	zVZdtthMIyKcGNJ//k+aOR9AUABopDKb9WQvYd7BVyEHUki3DeYQ/Ch5QbUO/6Fu
+	zsaIkg4u2d+zyR3GI531jhwHXf5hkE8NiMABzoKeI3DZDGpNb5dAvQCvbNnodGJU
+	cK3A+nzhfUt0mBrAT5XkSQV5K7XH3XJOfyLsY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sdVR5poUuKCGo3JcRdTtSl/kF+FnnLS3
+	wtTubmzlM3kcOC3eMii68QV9U7Rez7OG/ScPDx+n6fYURVQh7F+UTs9VFuKO5/LI
+	qxJlthmUq+nrVAd3SHmvc3cGkNpnjrZOvSQCgzNiYzrimZrdhnHTAAmE83LPeHS5
+	u2v+ieVVyOk=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9C30C41A8;
+	Fri,  6 May 2011 18:29:18 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5928E41A7; Fri,  6 May 2011
+ 18:29:13 -0400 (EDT)
+In-Reply-To: <20110506221300.GB17848@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 6 May 2011 18:13:00 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 48270600-7830-11E0-8755-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173022>
 
-Jeff King wrote:
+Jeff King <peff@peff.net> writes:
 
-> So there are definitely particular people who prefer different styles
-> (and I recalled that Junio and I differed on this style point, which is
-> confirmed here). Interestingly, you are the only person to fall right in
-> the middle.  I guess that means you are good at emulating surrounding
-> code. :)
+> Two minor complaints on git-blame; maybe somebody can point out
+> something clever I've missed.
 
-Probably my older code leaves out the space more often, and newer code
-includes it.  There is an odd kind of logic that can be used to
-justify including or not including the space, namely:
+>   1. blame's "-L" understands patterns already.
 
-In C, a function definition starts with an expression that looks
-something like a function call, as in "double sin(double x);".  So
-when you want to know everything there is to know about the sine
-function, you can do a "git grep -F -e 'sin('", and it will return to
-you its definition and a list of callers.
+Teaching blame to take multiple -L options has been one of many
+longstanding todo item for me.  Someday.
 
-The shell function definition syntax looks oddly like an old-style C
-prototype "f()".  But do not be misled: to duplicate the above
-property familiar from C, one needs to include a space before the
-parentheses, so "git grep -F -e 'f '" will return its definition and a
-list of callers.
+>   2. Parsing the human-readable output blame output sucks. But parsing
+>      --porcelain is annoyingly complex for quick-and-dirty things like
+>      this. It doesn't repeat the commit information per-line.
 
-Of course the same argument works backwards: if you want the
-definition without the callers, then only the spaceless syntax will
-allow you to grep for 'f()'.
+Non-repetition was quite deliberate, as the reader was expected to have
+memory proportional to the number of lines in the range, but I agree it is
+not friendly for quick and dirty hack.
 
-Unlike brace placement, this seems to be a question of style with no
-right answer. :)
+You should be able to add a command line option that disables the early
+return at the beginning of emit_one_suspect_detail() with a 5-6 lines of
+patch.
