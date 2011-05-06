@@ -1,73 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] staging: brcm80211: SDIO/MMC cleanups
-Date: Fri, 06 May 2011 07:37:51 -0700
-Message-ID: <7viptn3neo.fsf@alter.siamese.dyndns.org>
-References: <20110504165947.40EED208186@grundler.mtv.corp.google.com>
- <4DC3B086.90802@broadcom.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: RFC: a plugin architecture for git extensions?
+Date: Fri, 6 May 2011 09:50:37 -0500
+Message-ID: <20110506145036.GB2991@elie>
+References: <4DB9329E.7000703@op5.se>
+ <88795B20-6994-46A5-9710-2ADC84E04695@gmail.com>
+ <7vhb986chl.fsf@alter.siamese.dyndns.org>
+ <BANLkTi=+emhzqfiGxGbnJ=bm3oL7SvjhBw@mail.gmail.com>
+ <7vbozg4eqw.fsf@alter.siamese.dyndns.org>
+ <BANLkTi=zrWR0GAm6n1Gs9XDCR6kXtjDW0A@mail.gmail.com>
+ <20110506065601.GB13351@elie>
+ <BANLkTimVjZgOJk1ik7fbhQvW21Fo9eZoXg@mail.gmail.com>
+ <20110506141719.GA2991@elie>
+ <BANLkTikW2u2W=Hpw2G4VJf_h88x4_7x_=Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Grant\@google.com" <Grant@google.com>,
-	"\"Grundler \<grundler\"\@chromium.org \<Grundler" 
-	<grundler@chromium.org>, "Greg Kroah-Hartman" <greg@kroah.com>,
-	"devel\@linuxdriverproject.org" <devel@linuxdriverproject.org>,
-	"Dowan Kim" <dowan@broadcom.com>,
-	"Henry Ptasinski" <henryp@broadcom.com>,
-	"Venkat Rao" <vrao@broadcom.com>, git@vger.kernel.org
-To: "Arend van Spriel" <arend@broadcom.com>
-X-From: git-owner@vger.kernel.org Fri May 06 16:38:21 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	David Aguilar <davvid@gmail.com>, Andreas Ericsson <ae@op5.se>,
+	Joey Hess <joey@kitenet.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	"david@lang.hm" <david@lang.hm>,
+	Pau Garcia i Quiles <pgquiles@elpauer.org>
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 06 16:50:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QIMAe-00054t-SR
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 16:38:21 +0200
+	id 1QIMMo-0004pP-Kx
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 16:50:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752005Ab1EFOiQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2011 10:38:16 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50471 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751821Ab1EFOiP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2011 10:38:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 415554EF3;
-	Fri,  6 May 2011 10:40:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jSz22P8vxg9bbDZfwHOzLkimxgM=; b=K0dYFk
-	2X8XQ70nSzDrmvxH+Lc96HRB25aVNz/Rawl+sEpI9gIVaYjrVoddmUemmP2aUeE8
-	Y97O/6B18JHsZIk7oP9+HdhZXfYqzc1hnqE3D3GPHAbuHNJ+f06/OVPyAq1tCQmy
-	0EcX0MFh6Rc+N7Vu2mUBbrFm7maBRNa4Vxc+o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vmo+OyfBEeK9Fb6xrwOPywyqLWF0XdmI
-	QBF4j319jcWqYpK3ruF5CSl0a4JrYHVglR3Fj+Do/qg/iXyEu0uttYF/ZRSj7bBn
-	NIX6y6pqXL64ByUSeEGkhKoUm39jencufnubHzjrbqMt4Jm2DhviYRQY/dXB++BP
-	+sFuXJS6JEQ=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A10654EF2;
-	Fri,  6 May 2011 10:40:08 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4E1D04EF1; Fri,  6 May 2011
- 10:39:57 -0400 (EDT)
-In-Reply-To: <4DC3B086.90802@broadcom.com> (Arend van Spriel's message of
- "Fri, 6 May 2011 10:25:42 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BD75DBD0-77EE-11E0-B267-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
+	id S1755024Ab1EFOup (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2011 10:50:45 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:38568 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754736Ab1EFOun (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2011 10:50:43 -0400
+Received: by iwn34 with SMTP id 34so2728941iwn.19
+        for <git@vger.kernel.org>; Fri, 06 May 2011 07:50:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=YGLXT2yt4pWl+yBfZFbfagiXXW0TdExIb0qC/3+lqBM=;
+        b=tyDmry2h/sOCoPlmF35YkV7A9Nw8I/JXoQwAXmO2NSxh86V1DHVIp6s1GQFb4Z4EQA
+         TMde4xsQz4jLo0RCZNpZXJkTcRGJMNPRB/dMZTEPe58Do/LSfJtEuSlI0gQGa+mtGNww
+         UIMyNCVjacNUzy+XD4yqR2gPQfOIOLI8BIpbM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=dDO3pAXvSjWW7esTnrGl36RC1xcZdKrEnKXP1XYPZJCpaHjpt7g7crNf/iNXzYGgj1
+         P6ZOg7l24aLfX+lZRGeNQriCjZldtlGQIQEH55JS45V+Js12st2m8qjeLIec55sF95z5
+         1cWQHDIK4wCmPDMSc0mjn4zYlVIrX9x/orYsY=
+Received: by 10.42.169.67 with SMTP id a3mr1189908icz.160.1304693442495;
+        Fri, 06 May 2011 07:50:42 -0700 (PDT)
+Received: from elie (adsl-76-206-232-100.dsl.chcgil.sbcglobal.net [76.206.232.100])
+        by mx.google.com with ESMTPS id a8sm1369703ibg.48.2011.05.06.07.50.39
+        (version=SSLv3 cipher=OTHER);
+        Fri, 06 May 2011 07:50:40 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <BANLkTikW2u2W=Hpw2G4VJf_h88x4_7x_=Q@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172979>
 
-"Arend van Spriel" <arend@broadcom.com> writes:
+Jon Seymour wrote:
 
-> The git documentation on the git am command is not very elaborate. I
-> investigated the issue and checked following:
-> 1. line 135 in dhd_sdio.c in the patch does match line 135 in my
-> checked out branch.
+> Partly because that is second guessing &/or reverse engineering the
+> distribution's decisions and
 
-Does it exactly match, or does it merely visually match if you ignore tabs
-and spaces munged by somebody between the state of the file submitter
-committed and grunder.eml file you stored?
+Well, no --- that's what /usr/local is _for_:
+http://www.pathname.com/fhs/pub/fhs-2.3.html#USRLOCALLOCALHIERARCHY
+
+> it won't work for a Windows install where there is no /usr/local
+
+That's true.  I believe command-line users on Windows who install by
+unzipping to a directory are used to having to set a PATH for
+themselves.  Perhaps it would be convenient for git to learn to add a
+specific standard directory to its private PATH as a Windows-specific
+extension, though.
+
+If your goal is to make installing new commands for git easier than
+installing native apps --- why?  It seems backwards.  Consider that
+the end result ought to be easy not only for the app developer but for
+the end user, and if every program with the ability to call other
+programs sets up its own better replacement for standard operating
+system facilities, that will make for a complicated system to
+administer indeed.  So with that in mind, it might be simpler to take
+advantage of existing project that simplifies installation of native
+apps, like <http://zero-install.sourceforge.net/>.
+
+The development environment for git on Windows (mysgit) does provide a
+directory hierarchy complete with /usr et al, so people using that
+very well might want to install to /usr/local.  Likewise with Cygwin.
+
+> Not that I currently, have a need, but Junio did mention the case
+> where someone wants to enhance an existing git command with a wrapper
+> of some kind.
+
+For reasons you've hinted at before, Git deliberately does not allow
+that (similarly, it does not allow git aliases to override existing
+commands).  $GIT_EXEC_PATH comes first on the PATH that git uses
+internally.  That's a feature, not a bug, imho.
