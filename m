@@ -1,115 +1,130 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [RFC/PATCH 3/2 (squash!)] git-send-email: Warn about rejected automatically added  recipients
-Date: Fri, 6 May 2011 13:22:23 +0200
-Message-ID: <201105061322.24736.jnareb@gmail.com>
-References: <20110415034251.GC19621@sigill.intra.peff.net> <20110504213535.GB27779@sigill.intra.peff.net> <201105051601.46012.jnareb@gmail.com>
+From: Patrick =?iso-8859-1?q?H=E4cker?= 
+	<patrick.haecker@lss.uni-stuttgart.de>
+Subject: Improvement of git commit interface
+Date: Fri, 6 May 2011 14:03:20 +0200
+Organization: LSS
+Message-ID: <201105061403.27242.patrick.haecker@lss.uni-stuttgart.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: multipart/signed;
+  boundary="nextPart2659567.KF26eyQT0c";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Paul Gortmaker <paul.gortmaker@windriver.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 06 13:22:56 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 06 14:10:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QIJ7X-00056A-Ne
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 13:22:56 +0200
+	id 1QIJrh-000448-PW
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 14:10:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755005Ab1EFLWg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2011 07:22:36 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:35646 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754864Ab1EFLWg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2011 07:22:36 -0400
-Received: by fxm17 with SMTP id 17so2217966fxm.19
-        for <git@vger.kernel.org>; Fri, 06 May 2011 04:22:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=EwjE9RI1eu9VDc8RFeV+dltV1PMsSYTq9C5xGVOeT8I=;
-        b=VK8HUblAppewjK1Nck4Ycg/5d4FNjQ6Xp35pufVUGYV8d6dCUPRbEsEXn2U53JFM6L
-         UXwHez4Zv9ifaWElA8AX6Lyy8azcr502HY1Zj4hnmQHmpumyMCuQjCrtc/LrrEgpyLno
-         GgTRsXYlj0a7S0pgqkf5ZejdCF2WdI1rFQNbc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=g8bS3ZHkp8qj8XoYrr70ur+tFrYujRn+4Ko4XV7gcQm7AlLNlyBsW6j0ywVLwPRlyx
-         4ykQVoMsn9MWwUv7+toBR5r14/ZzGp+fHzClt+sTRKs9/NlifW5dlrEM7OT8ZQValvT6
-         xYBNGqN4WbCfISMlZMkYL0URWSzglrlc9pfZM=
-Received: by 10.223.53.85 with SMTP id l21mr2094434fag.26.1304680954845;
-        Fri, 06 May 2011 04:22:34 -0700 (PDT)
-Received: from [192.168.1.13] (aeho239.neoplus.adsl.tpnet.pl [79.186.196.239])
-        by mx.google.com with ESMTPS id l1sm1963173bkl.1.2011.05.06.04.22.32
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 06 May 2011 04:22:33 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <201105051601.46012.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1751616Ab1EFMKc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2011 08:10:32 -0400
+Received: from charon.rus.uni-stuttgart.de ([129.69.1.54]:34622 "EHLO
+	charon.rus.uni-stuttgart.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751324Ab1EFMKb (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 May 2011 08:10:31 -0400
+X-Greylist: delayed 420 seconds by postgrey-1.27 at vger.kernel.org; Fri, 06 May 2011 08:10:31 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by charon.rus.uni-stuttgart.de (Postfix) with ESMTP id 16F785FDCA
+	for <git@vger.kernel.org>; Fri,  6 May 2011 14:03:29 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at charon.rus.uni-stuttgart.de
+Received: from charon.rus.uni-stuttgart.de ([127.0.0.1])
+	by localhost (charon.rus.uni-stuttgart.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id qh1QaS97ZfDn for <git@vger.kernel.org>;
+	Fri,  6 May 2011 14:03:28 +0200 (CEST)
+Received: from uni-stuttgart.de (mbox.uni-stuttgart.de [129.69.1.9])
+	by charon.rus.uni-stuttgart.de (Postfix) with ESMTP id 5D2FB5FDC4
+	for <git@vger.kernel.org>; Fri,  6 May 2011 14:03:28 +0200 (CEST)
+X-Virus-Scanned: by mbox.uni-stuttgart.de
+Received: from [129.69.32.117] (account insm113@isb.uni-stuttgart.de HELO pc117.localnet)
+  by uni-stuttgart.de (CommuniGate Pro SMTP 5.3.7)
+  with ESMTPSA id 145034199 for git@vger.kernel.org; Fri, 06 May 2011 14:03:27 +0200
+User-Agent: KMail/1.13.5 (Linux/2.6.32-5-686; KDE/4.4.5; i686; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172971>
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-On Thu, 5 May 2011, Jakub Narebski wrote:
-> On Wed, 4 May 2011, Jeff King wrote:
->> On Wed, May 04, 2011 at 06:12:08PM +0200, Jakub Narebski wrote:
->>> On Fri, 15 Apr 2011, Jeff King wrote:
+--nextPart2659567.KF26eyQT0c
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
->>>> [...] You could probably remember which recipients are "important"
->>>> (i.e., given on the command line) and which were pulled automatically
->>>> from the commit information, and then feed each recipient individually.
->>>> If important ones fail, abort the message. If an unimportant one fails,
->>>> send the message anyway, but remember the bad address and report the
->>>> error at the end.
-> 
-> It does not warn about bad addresses from body, and there are no tests yet!
+Hello,
 
-Now it does warn, though I don't know if we should warn after each message,
-or all together at the end, and if we should warn only about _new_ addresses.
+I introduce git to students and thus see, where they have a harder time tha=
+n=20
+necessary to understand git.
 
-Still no tests, and no idea how to write one...
+Thus, I was thinking about a CLI improvement regarding "git commit". It=20
+follows from the observation, that the staging area is a very valuable=20
+thing, but it should not be needed for very simple workflows and thus shoul=
+d=20
+not be the first concept, the students have to learn about.
 
-Also if it is to be standalone commit, it needs better commit message.
-But if it is to squashed with previous, it doesn't ;-)
+After a file has been added to the repository once, you can use git without=
+=20
+knowing anything about the staging area, with "git commit <filename>".=20
+Shouldn't we allow "git commit <filename>" for files never added to git, as=
+=20
+well?
+Then, IMHO this would be more consistent, as in a small project a typical=20
+commit (with a new file) consists of adding a new file to the repository an=
+d=20
+changing an existing file (e.g. to call a function located in the new file)=
+=2E=20
+ATM this is done with "git add <newfile> <oldfile> && git commit". But as w=
+e=20
+track content and not files, it were perfectly logical, if "git commit=20
+<newfile> <oldfile>" were possible, as then it were completely consistent t=
+o=20
+only change an existing file without adding a new file, which is "git commi=
+t=20
+<oldfile>".
 
- git-send-email.perl |   11 ++++++++++-
- 1 files changed, 10 insertions(+), 1 deletions(-)
+So I suggest to change "git commit <filename>" so that if <filename> cannot=
+=20
+be found in the repository, it is also looked for in the working directory=
+=20
+and basically a "git add <filename> && git commit" is done if the <filename=
+>=20
+is found.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index e758fd9..b8d4fb9 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1136,11 +1136,20 @@ X-Mailer: git-send-email $gitversion
- 
- 		$smtp->mail( $raw_from ) or die $smtp->message;
- 		$smtp->to( @recipients ) or die $smtp->message;
--		$smtp->to( @recipients_extra, { Notify => ['NEVER'], SkipBad => 1 });
-+		my @good_recips =
-+			$smtp->to( @recipients_extra, { Notify => ['NEVER'], SkipBad => 1 });
- 		$smtp->data or die $smtp->message;
- 		$smtp->datasend("$header\n$message") or die $smtp->message;
- 		$smtp->dataend() or die $smtp->message;
- 		$smtp->code =~ /250|200/ or die "Failed to send $subject\n".$smtp->message;
-+
-+		%seen = ();
-+		unique_email_list(\%seen, @good_recips);
-+		# bad recipients are those not seen on list of good recipients
-+		my @bad_recips = unique_email_list(\%seen, @recipients_extra);
-+		@bad_recips and
-+			warn "W: The following addresses added from body were rejected:\n\t".
-+				join("\n\t", @bad_recips)."\n";
- 	}
- 	if ($quiet) {
- 		printf (($dry_run ? "Dry-" : "")."Sent %s\n", $subject);
--- 
-1.7.5
+I do _not_ suggest to change "git commit -a" to include all files never=20
+added to git, because that would be rather error prone. So after the change=
+=20
+we would have an inconsistency between "git commit <newfile>" and "git=20
+commit -a", but I think this inconsistency is better than having the=20
+inconsistency between "git commit <oldfile>" and "git commit <newfile>".
+
+Kind regards
+Patrick
+
+P.S. Please CC, as I am not subscribed
+
+
+=2D-=20
+Patrick H=E4cker
+Universit=E4t Stuttgart=20
+Lehrstuhl f=FCr Systemtheorie und Signalverarbeitung=20
+Tel: +49 711 685 67362
+E-Mail: patrick.haecker@lss.uni-stuttgart.de
+URL: http://www.lss.uni-stuttgart.de
+
+--nextPart2659567.KF26eyQT0c
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iEYEABECAAYFAk3D44gACgkQRDNqD/jh8GL90ACcDPCFQOneNeXT52wb9XlxH23X
+o+8An1dWQjRdnz4Fdhv4dlSbfXSJ9FMg
+=sh6R
+-----END PGP SIGNATURE-----
+
+--nextPart2659567.KF26eyQT0c--
