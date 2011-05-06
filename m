@@ -1,72 +1,84 @@
-From: Ian Abbott <abbotti@mev.co.uk>
-Subject: Re: Question about PERL_PATH
-Date: Fri, 6 May 2011 17:42:19 +0100
-Message-ID: <4DC424EB.6000107@mev.co.uk>
-References: <4DC3F804.3080205@mev.co.uk> <7v7ha33jd7.fsf@alter.siamese.dyndns.org>
+From: "Arend van Spriel" <arend@broadcom.com>
+Subject: Re: [PATCH] staging: brcm80211: SDIO/MMC cleanups
+Date: Fri, 6 May 2011 18:44:18 +0200
+Message-ID: <4DC42562.5080308@broadcom.com>
+References: <20110504165947.40EED208186@grundler.mtv.corp.google.com>
+ <4DC3B086.90802@broadcom.com> <7viptn3neo.fsf@alter.siamese.dyndns.org>
+ <4DC41B06.5040500@drmicha.warpmail.net>
+ <7v39kr3j8r.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
+Content-Type: text/plain;
+ charset=iso-8859-1;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 06 18:42:31 2011
+Cc: "Michael J Gruber" <git@drmicha.warpmail.net>,
+	"\"Grundler <grundler\"@chromium.org <Grundler" 
+	<grundler@chromium.org>, "Greg Kroah-Hartman" <greg@kroah.com>,
+	"devel@linuxdriverproject.org" <devel@linuxdriverproject.org>,
+	"Dowan Kim" <dowan@broadcom.com>,
+	"Henry Ptasinski" <henryp@broadcom.com>,
+	"Venkat Rao" <vrao@broadcom.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 06 18:44:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QIO6o-0005f1-Pi
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 18:42:31 +0200
+	id 1QIO8u-0006uU-UL
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 18:44:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756534Ab1EFQmZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 May 2011 12:42:25 -0400
-Received: from mail.mev.co.uk ([62.49.15.74]:38791 "EHLO mail.mev.co.uk"
+	id S1756634Ab1EFQog (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2011 12:44:36 -0400
+Received: from mms1.broadcom.com ([216.31.210.17]:1560 "EHLO mms1.broadcom.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755352Ab1EFQmY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2011 12:42:24 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail.mev.co.uk (Postfix) with ESMTP id 06A0625032;
-	Fri,  6 May 2011 17:42:24 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at mail.mev.co.uk
-Received: from mail.mev.co.uk ([127.0.0.1])
-	by localhost (mantis.mev.local [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id wQfkofmo2Eqx; Fri,  6 May 2011 17:42:21 +0100 (BST)
-Received: from remote.mev.co.uk (mev2008.mev.local [10.0.0.1])
-	by mail.mev.co.uk (Postfix) with ESMTPS id 662BE25007;
-	Fri,  6 May 2011 17:42:21 +0100 (BST)
-Received: from [10.0.0.210] (10.0.0.254) by remote.mev.co.uk (10.0.0.1) with
- Microsoft SMTP Server (TLS) id 8.1.436.0; Fri, 6 May 2011 17:42:19 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110503 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <7v7ha33jd7.fsf@alter.siamese.dyndns.org>
+	id S1756619Ab1EFQof (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2011 12:44:35 -0400
+Received: from [10.9.200.131] by mms1.broadcom.com with ESMTP (Broadcom
+ SMTP Relay (Email Firewall v6.3.2)); Fri, 06 May 2011 09:48:05 -0700
+X-Server-Uuid: 02CED230-5797-4B57-9875-D5D2FEE4708A
+Received: from mail-irva-13.broadcom.com (10.11.16.103) by
+ IRVEXCHHUB01.corp.ad.broadcom.com (10.9.200.131) with Microsoft SMTP
+ Server id 8.2.247.2; Fri, 6 May 2011 09:44:21 -0700
+Received: from mail-sj1-12.sj.broadcom.com (mail-sj1-12.sj.broadcom.com
+ [10.17.16.106]) by mail-irva-13.broadcom.com (Postfix) with ESMTP id
+ 2738074D03; Fri, 6 May 2011 09:44:22 -0700 (PDT)
+Received: from [10.240.253.69] (svpn-10-240-253-69.broadcom.com
+ [10.240.253.69]) by mail-sj1-12.sj.broadcom.com (Postfix) with ESMTP id
+ F275220501; Fri, 6 May 2011 09:44:19 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.17)
+ Gecko/20110424 Thunderbird/3.1.10
+In-Reply-To: <7v39kr3j8r.fsf@alter.siamese.dyndns.org>
+X-WSS-ID: 61DAF9CF1IC1883585-01-01
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172988>
 
-On 06/05/11 17:05, Junio C Hamano wrote:
-> Ian Abbott <abbotti@mev.co.uk> writes:
-> 
->> The Gentoo ebuilds for git have started invoking 'make' with the option
->> 'PERL_PATH=/usr/bin/env perl'.  This doesn't seem to cause any problems
->> except when running git instaweb, which outputs an error similar to the
->> following:
->>
->> /usr/libexec/git-core/git-instaweb: line 135: /usr/bin/env perl: No such
->> file or directory
-> 
-> The variable is not PERL_COMMAND_LINE, but is PERL_PATH, so I think it
-> should expects the path to the program.
-> 
-> Our testsuite also rely on it being the path to the program by enclosing
-> the reference to it inside double quotes, to make sure that PERL_PATH set
-> to "/Program Files/Perl/perl.exe" works.  Didn't Gentoo folks see any test
-> breakage before shipping the ebuild procedure?
+On 05/06/2011 06:07 PM, Junio C Hamano wrote:
+> Michael J Gruber<git@drmicha.warpmail.net>  writes:
+>
+>> Junio C Hamano venit, vidit, dixit 06.05.2011 16:37:
+>>> "Arend van Spriel"<arend@broadcom.com>  writes:
+>>>
+>>>> The git documentation on the git am command is not very elaborate. I
+>>>> investigated the issue and checked following:
+>>>> 1. line 135 in dhd_sdio.c in the patch does match line 135 in my
+>>>> checked out branch.
+>>> Does it exactly match, or does it merely visually match if you ignore tabs
+>>> and spaces munged by somebody between the state of the file submitter
+>>> committed and grunder.eml file you stored?
+>> Junio, he reported the hashes to match! Puzzling. Or a MUA doing things
+>> to the .eml.
+> The latter is exactly what I meant.  The mailchain leading to the
+> receiver's mailbox would not adjust the hash recorded in the patch when it
+> munges whitespaces.
 
-Both you and Michael make excellent points and I've submitted a Gentoo
-bug report mentioning this thread, so we'll see what happens!
+Tried patch -p1 < grundler.eml. That gives info at which line it fails. 
+I believe we have to blame Thunderbird here as you suspected. It placed 
+a line break because to line was too long. Crap! Why do tools have to be 
+"smart"?
 
-http://bugs.gentoo.org/show_bug.cgi?id=366241
-
--- 
--=( Ian Abbott @ MEV Ltd.    E-mail: <abbotti@mev.co.uk>        )=-
--=( Tel: +44 (0)161 477 1898   FAX: +44 (0)161 718 3587         )=-
+Gr. AvS
