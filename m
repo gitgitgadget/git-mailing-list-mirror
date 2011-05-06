@@ -1,120 +1,92 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH v2] status: display "doing what" information in git status
-Date: Fri, 6 May 2011 19:40:53 +0200
-Message-ID: <20110506174053.GB2872@madism.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] status: display "doing what" information in git
+ status
+Date: Fri, 06 May 2011 11:24:03 -0700
+Message-ID: <7vaaez1yd8.fsf@alter.siamese.dyndns.org>
 References: <7vr58c4sip.fsf@alter.siamese.dyndns.org>
  <1304667535-4787-1-git-send-email-madcoder@debian.org>
- <m3oc3guogs.fsf@localhost.localdomain>
+ <7vei4b20we.fsf@alter.siamese.dyndns.org> <20110506173656.GA2872@madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Git ML <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 06 19:41:01 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git ML <git@vger.kernel.org>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Fri May 06 20:24:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QIP1Q-0004BM-Ih
-	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 19:41:00 +0200
+	id 1QIPhJ-0003BP-IY
+	for gcvg-git-2@lo.gmane.org; Fri, 06 May 2011 20:24:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756567Ab1EFRk4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 May 2011 13:40:56 -0400
-Received: from pan.madism.org ([88.191.52.104]:54692 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755417Ab1EFRkz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2011 13:40:55 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id A19AA51ACE;
-	Fri,  6 May 2011 19:40:54 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id B96C92B0E2; Fri,  6 May 2011 19:40:53 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <m3oc3guogs.fsf@localhost.localdomain>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756602Ab1EFSYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 May 2011 14:24:12 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47576 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755280Ab1EFSYL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2011 14:24:11 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B8DD54910;
+	Fri,  6 May 2011 14:26:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zNeHbWEMdf/UhBrPNLjXu/a2LVc=; b=J9rN13
+	cL/ODJyP668sV56SzmN1fxv9lSqBbaxsifU35phHgqC0BZG/yGuDtMoRVaYQBKSf
+	ijfgZHGvM08lUJek5ZN3n2SR6Wi3XnJTBpQav88MhlxelqGEXTgEY3kMw0MGJAdL
+	6aAaIG+hSa+WqyxKxlnW4OJTwpVHkpW8EzXH0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JRXTL3o7SRL4ERiMH0muy57uSwcAgtF3
+	HmPjGRXXkdRdp539ztWokCPkhXM5AeWnhAoC3rumu/9XJ3X2BfaWleIFBVLhworD
+	v+SsgJjIXfHBS0KNrrZ26OURzl/FKcJfUXfN/aDHjiQZigijo2yJGxb58xKDGW/N
+	4JCwsdJr4oM=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 84C92490C;
+	Fri,  6 May 2011 14:26:11 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8D1134908; Fri,  6 May 2011
+ 14:26:08 -0400 (EDT)
+In-Reply-To: <20110506173656.GA2872@madism.org> (Pierre Habouzit's message of
+ "Fri, 6 May 2011 19:36:56 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 51936B4C-780E-11E0-9818-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/172996>
 
-On Fri, May 06, 2011 at 03:13:55AM -0700, Jakub Narebski wrote:
-> Pierre Habouzit <madcoder@debian.org> writes:
-> > If we have an ongoing operation then:
-> > - if we are on a branch it displays:
-> >   # On branch $branch ($what_is_ongoing)
-> >   #   ($ongoing_hint)
-> > - if we are on a detached head it displays:
-> >   # $what_is_ongoing (detached head)
-> >   #   ($ongoing_hint)
-> >
-> > If we have no ongoing operation the git status does as before:
-> > - if we are on a branch it displays:
-> >   # On branch $branch
-> > - if we are on a detached head it displays:
-> >   # Not currently on any branch.
+Pierre Habouzit <madcoder@debian.org> writes:
+
+>> > +	const char * const rebase_advice =
+>> > +		_("use \"git rebase --abort\" to abort current rebase or proceed");
+>> > +	const char * const am_advice =
+>> > +		_("use \"git am --abort\" to abort current mailbox apply or proceed");
+>> 
+>> If the reader does not even know that the "--abort" option is used to
+>> abort, " or proceed" needs to be followed by "by doing $this", if it wants
+>> to have any practical value.  I would suggest dropping it.
+>> 
+>> > +	const char * const merge_advice =
+>> > +		_("use \"git reset --hard\" to abort, or resolve conflicts and commit");
+>> This codepath being in wt-status.c, I wonder if any of these advices could
+>> trigger to appear in the log message editor when the user tries to run
+>> "git commit".  If so, I suspect any of the above is too late to help the
+>> user, no?
 >
-> Very nice to have such example in commit message.
->
-> > Since the ongoing operation is usually something to be done with be=
-fore
-> > continuing with further git operations, the hint and ongoing operat=
-ions
-> > are displayed with the "WT_STATUS_NOBRANCH" color to be easy to spo=
-t.
-> >
-> > Signed-off-by: Pierre Habouzit <madcoder@debian.org>
-> > ---
-> >  wt-status.c |  138 +++++++++++++++++++++++++++++++++++++++++++++++=
-+++++------
-> >  1 files changed, 123 insertions(+), 15 deletions(-)
->=20
-> Could you please add some *tests* for this new feature? =20
->=20
-> Don't forget to mark it with C_LOCALE_OUTPUT or use test_i18ncmp /
-> / test_i18ngrep in tests.
+> Well I'm not very happy with the advices, feel free to reword them in a better
+> way.
 
-=46rankly I sadly don't have the time to write them, which is a very ba=
-d
-excuse, this is a feature I wrote for $work and that I use and I though=
-t
-it would be nice to share.
+I already suggested dropping it ;-)  Rewording to emptiness would be the
+simplest and cleanest.
 
-Generating all the possible cases is just very long, and the test
-framework changed too much since the last time I used it a few years ag=
-o
-and I abandoned after 10minutes not being able to make it work properly=
-=2E
+>> Also, should we make these conditional upon advice.status or something?
+> they are
+>                           vvvvvvvvvvvvvvvvvvv
+>     +       if (advice && advice_status_hints) {
+>     +               status_printf(s, color(WT_STATUS_HEADER, s), "");
+>     +               status_printf_more(s, status_nobranch, "  (%s)\n", advice);
+>     +       }
 
-> > +static void wt_status_print_doingwhat(struct wt_status *s)
-> > +{
-> > +	const char *status_nobranch =3D color(WT_STATUS_NOBRANCH, s);
-> > +	const char *branch_name =3D s->branch;
-> > +	const char *advice =3D NULL;
-> > +
-> > +	const char * const rebase_advice =3D
-> > +		_("use \"git rebase --abort\" to abort current rebase or proceed=
-");
-> > +	const char * const am_advice =3D
-> > +		_("use \"git am --abort\" to abort current mailbox apply or proc=
-eed");
-> > +	const char * const merge_advice =3D
-> > +		_("use \"git reset --hard\" to abort, or resolve conflicts and c=
-ommit");
->=20
-> Thanks for marking it up for i18n... though I am not sure if we shoul=
-d
-> use _() or N_() here...
-
-It's _() you want to translate those. They are used through a
-printf("  (%s)", ...) later that doesn't need i18n.
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@d=
-ebian.org
-OOO                                                http://www.madism.or=
-g
+By the way, this change also breaks t7060, at least.
