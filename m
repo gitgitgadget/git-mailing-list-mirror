@@ -1,111 +1,120 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 02/02] Remove gitweb/gitweb.cgi and other legacy targets from main Makefile
-Date: Sat,  7 May 2011 14:45:21 +0200
-Message-ID: <1304772321-22687-3-git-send-email-jnareb@gmail.com>
-References: <1304772321-22687-1-git-send-email-jnareb@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 07 14:49:29 2011
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH v3] rerere: Expose an API corresponding to 'clear' functionality
+Date: Sat, 7 May 2011 18:47:45 +0530
+Message-ID: <20110507131745.GA29061@ramkum.desktop.amazon.com>
+References: <20110413203843.GC30630@elie> <1304663813-27724-1-git-send-email-artagnon@gmail.com> <7vr58b22ny.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 07 15:17:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QIgwq-0001Tl-Gz
-	for gcvg-git-2@lo.gmane.org; Sat, 07 May 2011 14:49:28 +0200
+	id 1QIhOQ-0006k7-RZ
+	for gcvg-git-2@lo.gmane.org; Sat, 07 May 2011 15:17:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751803Ab1EGMtX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 May 2011 08:49:23 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:64060 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751588Ab1EGMtX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 May 2011 08:49:23 -0400
-Received: by mail-fx0-f46.google.com with SMTP id 17so2841785fxm.19
-        for <git@vger.kernel.org>; Sat, 07 May 2011 05:49:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references;
-        bh=izdiiqT9ox3+fre7reMNnUug8QDc7zcYc5Qx//Cr1m4=;
-        b=PPwyGfYCQ3cAKOVRVC59SpPJVsBLQ07hGWwEXUN3C+fko9nZKSeWEcCooUffJC/2Yc
-         as2e0SSmXWpIpp8WvztcMib/C5cIxl/VMrMN2vcd5fvAukP8M5WYpiiRSF6w0b7PlZOM
-         4CVgA1ShxzFes0NIhb6jt/dvewDXuksL/ltlM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=gU02XWgjFnnSerfq/PKPFQtOKca98oNbMDcrcfWiZl0Pta7T2WQ8GXXmrFOmIlKYdU
-         4bJDurkU3huk1dEmOkiAeen7bBc31wJ9rHDRv67caiNgIx6KWifqOiCilQ6o7HE8MMRT
-         +1/Ak3LUHczEnQ1LoG/aUdMY8X/px6QD4D9Xk=
-Received: by 10.223.159.134 with SMTP id j6mr462171fax.74.1304772562460;
-        Sat, 07 May 2011 05:49:22 -0700 (PDT)
-Received: from localhost.localdomain (abwd142.neoplus.adsl.tpnet.pl [83.8.227.142])
-        by mx.google.com with ESMTPS id j11sm1375094faa.20.2011.05.07.05.49.20
-        (version=SSLv3 cipher=OTHER);
-        Sat, 07 May 2011 05:49:21 -0700 (PDT)
-X-Mailer: git-send-email 1.7.5.189.gcec93
-In-Reply-To: <1304772321-22687-1-git-send-email-jnareb@gmail.com>
+	id S1753374Ab1EGNRx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 May 2011 09:17:53 -0400
+Received: from smtp-fw-2101.amazon.com ([72.21.196.25]:54371 "EHLO
+	smtp-fw-2101.amazon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752987Ab1EGNRx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 May 2011 09:17:53 -0400
+X-IronPort-AV: E=Sophos;i="4.64,331,1301875200"; 
+   d="scan'208";a="73887724"
+Received: from smtp-in-0102.sea3.amazon.com ([10.224.19.46])
+  by smtp-border-fw-out-2101.iad2.amazon.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 07 May 2011 13:17:51 +0000
+Received: from ramkum.desktop.amazon.com (ramkum.desktop.amazon.com [172.25.205.64])
+	by smtp-in-0102.sea3.amazon.com (8.13.8/8.13.8) with ESMTP id p47DHkDQ007891;
+	Sat, 7 May 2011 13:17:46 GMT
+Received: by ramkum.desktop.amazon.com (Postfix, from userid 272482)
+	id 93C7875481C; Sat,  7 May 2011 18:47:45 +0530 (IST)
+Content-Disposition: inline
+In-Reply-To: <7vr58b22ny.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.4.2.2i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173051>
 
-Now that there is gitweb/Makefile, let's leave only "gitweb" and
-"install-gitweb" targets in main Makefile.  Those targets just
-delegate to gitweb's Makefile.
+Hi Junio,
 
-Requested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-This patch is part of 'jn/gitweb-js' (a76424e) in 'pu', and was sent
-to git mailing list as part of the following series:
+Junio C Hamano writes:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+> 
+> > Libify the "rerere clear" into a simple function called rerere_clear
+> > that takes no arguments, and returns the exit status.  Also export
+> > unlink_rr_item as unlink_rerere_item so rerere_clear and the
+> > un-libified "git rerere gc" can both use it.
+> >
+> > Helped-by: Jonathan Nieder <jrnieder@gmail.com>
+> > Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> > ---
+> >  What changed since v2: Jonathan's review.
+> 
+> Are you sure this is the version you wanted to send?
+> 
+> You now return -1 from rerere_clear() when setup_rerere() says that the
+> feature is not enabled, and this is propagated back to cmd_rerere(),
+> causing the whole command to report a failure in its exit status, which
+> seems to me a grave regression.  Your previous round got this part right,
+> but it is broken in this round.
 
-  [PATCHv3 00/13] gitweb: Change timezone in dates using JavaScript
-  http://thread.gmane.org/gmane.comp.version-control.git/172384
+Ugh, I'm not sure how this change crept in- sorry :|
+Could you please squash this diff into the patch?
 
-I think this simplification (straighforward deletion of duplicated
-code) is worth on its own.
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 
- Makefile |   26 --------------------------
- 1 files changed, 0 insertions(+), 26 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 8960cee..d0c577b 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1747,32 +1747,6 @@ $(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl
- gitweb:
- 	$(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) all
+diff --git a/rerere.c b/rerere.c
+index aaca3b0..fda02f6 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -687,7 +687,7 @@ int rerere_clear(void)
  
--ifdef JSMIN
--GITWEB_PROGRAMS += gitweb/static/gitweb.min.js
--GITWEB_JS = gitweb/static/gitweb.min.js
--else
--GITWEB_JS = gitweb/static/gitweb.js
--endif
--ifdef CSSMIN
--GITWEB_PROGRAMS += gitweb/static/gitweb.min.css
--GITWEB_CSS = gitweb/static/gitweb.min.css
--else
--GITWEB_CSS = gitweb/static/gitweb.css
--endif
--OTHER_PROGRAMS +=  gitweb/gitweb.cgi  $(GITWEB_PROGRAMS)
--gitweb/gitweb.cgi: gitweb/gitweb.perl $(GITWEB_PROGRAMS)
--	$(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) $(patsubst gitweb/%,%,$@)
--
--ifdef JSMIN
--gitweb/static/gitweb.min.js: gitweb/static/gitweb.js
--	$(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) $(patsubst gitweb/%,%,$@)
--endif # JSMIN
--ifdef CSSMIN
--gitweb/static/gitweb.min.css: gitweb/static/gitweb.css
--	$(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) $(patsubst gitweb/%,%,$@)
--endif # CSSMIN
--
--
- git-instaweb: git-instaweb.sh gitweb
- 	$(QUIET_GEN)$(RM) $@ $@+ && \
- 	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
--- 
-1.7.3
+ 	fd = setup_rerere(&merge_rr, 0);
+ 	if (fd < 0)
+-		return -1;
++		return 0;
+ 	for (i = 0; i < merge_rr.nr; i++) {
+ 		const char *name = (const char *)merge_rr.items[i].util;
+ 		if (!has_rerere_resolution(name))
+
+> Also I seem to recall that Jonathan suggested that you do not have to
+> expose unlink_rr_item() as an external symbol if you moved the garbage
+> collection part from builtin/rerere.c to rerere.c but I do not see such a
+> change in this patch.  I think the gc interface is a lot more reasonable
+> API to expose to external callers ("git gc" may want to make an internal
+> call to rerere_gc() moved to rerere.c, instead of spawning "git rerere gc"
+> as an external command) than unlink_rerere_item() that is only useful for
+> callers that are deep inside rerere specific codepath.
+
+I'll quote Jonathan from the previous review:
+
+"
+I think the reason for this is that rerere_gc is not being exposed at
+the same time, right?  I suppose if I were doing it, I would have
+moved that to rerere.c, too and kept unlink_rr_item static, but there
+is also appeal in a minimal patch.  It would be clearer to say
+something to the effect that we
+
+	Also export unlink_rr_item as unlink_rerere_item so
+	rerere_clear and the un-libified "git rerere gc" can
+	both use it.
+"
+
+To the first part of the question: yes, that's the reason for exposing
+unlink_rr_item as unlink_rerere_item.  Yet, I followed the latter
+approach for the appeal of the minimal patch -- I should have said
+this explicitly.  Anyway, I plan to post another patch cleaning up and
+libifying rerere shortly.
+
+Junio: If you feel that garbage_collect should be exposed in this
+patch, I'll post an alternative version now, and you can pick the one
+you like :)
+
+-- Ram
