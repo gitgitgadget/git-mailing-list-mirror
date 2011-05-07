@@ -1,81 +1,72 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH 2/2] git-send-email: Do not require that addresses added from  body be valid
-Date: Sat, 7 May 2011 15:21:05 +0200
-Message-ID: <201105071521.06344.jnareb@gmail.com>
-References: <20110415034251.GC19621@sigill.intra.peff.net> <20110504213535.GB27779@sigill.intra.peff.net> <201105051601.46012.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Paul Gortmaker <paul.gortmaker@windriver.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat May 07 15:21:18 2011
+From: Boris Faure <billiob@gmail.com>
+Subject: [PATCH 1/2] commit: do not cleanup template
+Date: Sat,  7 May 2011 17:53:43 +0200
+Message-ID: <1304783624-9919-1-git-send-email-billiob@gmail.com>
+Cc: Boris Faure <billiob@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 07 17:54:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QIhRd-0008S2-If
-	for gcvg-git-2@lo.gmane.org; Sat, 07 May 2011 15:21:17 +0200
+	id 1QIjpi-0003Ha-RP
+	for gcvg-git-2@lo.gmane.org; Sat, 07 May 2011 17:54:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753510Ab1EGNVN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 May 2011 09:21:13 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:45262 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753119Ab1EGNVM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 May 2011 09:21:12 -0400
-Received: by bwz15 with SMTP id 15so3075974bwz.19
-        for <git@vger.kernel.org>; Sat, 07 May 2011 06:21:10 -0700 (PDT)
+	id S1755582Ab1EGPyJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 May 2011 11:54:09 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:64614 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755426Ab1EGPyH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 May 2011 11:54:07 -0400
+Received: by wya21 with SMTP id 21so3019865wya.19
+        for <git@vger.kernel.org>; Sat, 07 May 2011 08:54:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=STxv/7tcpu4RhU2WFx7T4lW/01/LAHjFSjm/gwI85/4=;
-        b=I9RNVVN4Zl/7C5v8d0SC9NFgzSQ0Mw0e1dk8RkCL2L6z966TbKUbKg7xzLOoE72oyt
-         HWURgmdBqTO+XkAAycmKX+tQ7CQc5MiGFB2ZaJCTMCrHBfhvQoArhkFJKKiPeCOt/+Hb
-         QoJWGHg7L4kscEH2OklGSa4nleKaMF0rD8vD0=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=Ae+hZyarDLT9eb1jiUP0+KCdx8nm0WBq4PDYAoBO/yE=;
+        b=jyARdduf0IaPpoDt8TIkJrklDAU0SUoiG6EPf/hdWg4AsHnjYA6HuezRGQUdXSYxOS
+         CaFaCbzwB9Gf+foXfgnZ95nyCrwtqTGOJYefYeghy0lvCqouDjDtG5HBiq/kcRxDWQPL
+         /RDeypWSIxqvrjeZ7FGjcXCCMDshgA9ep0MJM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=s+nnF5rQOh7LOWXakp68bG4sgREOx4gY1mMYOII0gkUXeQj3rLORcyzVPZ7A3AEnZh
-         KpUB/mLSYDr4bM/kON1RC4ryLd7s9HpadxqQJ/FmqBolpILbVsnZhWNC6lGQ5S9PuGu0
-         jt/Bha5X8dNf0K0PIrbbA5Qn73qzpwivjxadw=
-Received: by 10.205.81.76 with SMTP id zx12mr2788841bkb.82.1304774470827;
-        Sat, 07 May 2011 06:21:10 -0700 (PDT)
-Received: from [192.168.1.13] (abwd142.neoplus.adsl.tpnet.pl [83.8.227.142])
-        by mx.google.com with ESMTPS id q18sm2568154bka.3.2011.05.07.06.21.08
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=AZ6Oxb0Fl5ezb7BeaBXMnTvwu0moQJCl/vv3O08rK8QmDqO9q59NRca8v5trqSZTvZ
+         hFaXB6Ft6UJn+WffNN++Xv0CIehBSMcGFvpHqNUUdafF6yf/p4FpIuqxrqJ7qQrR7dBi
+         4BP6g2eBrWEKMJeXT9CJLrFw5A/U8rTIn3K1k=
+Received: by 10.216.68.18 with SMTP id k18mr783188wed.109.1304783645066;
+        Sat, 07 May 2011 08:54:05 -0700 (PDT)
+Received: from localhost.localdomain (ADijon-259-1-88-55.w90-33.abo.wanadoo.fr [90.33.231.55])
+        by mx.google.com with ESMTPS id t5sm2149539wes.9.2011.05.07.08.54.04
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 07 May 2011 06:21:09 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <201105051601.46012.jnareb@gmail.com>
-Content-Disposition: inline
+        Sat, 07 May 2011 08:54:04 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173054>
 
-On Thu, 5 May 2011, Jakub Narebski wrote:
+The template can begin with a new line (to insert commit title) that
+should not be cleaned up.
 
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0$smtp->to( @recipients ) or die $smtp->messa=
-ge;
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0$smtp->to( @recipients_extra, { Notify =3D> ['NEVE=
-R'], SkipBad =3D> 1 });
-                                                  ^^^^^^^^^^^^^^^^^^^^
+Signed-off-by: Boris Faure <billiob@gmail.com>
+---
+ builtin/commit.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Note: contrary to what I thought this doesn't mean to not send any
-notification request, but to send DSN (Delivery Status Notification)
-request of 'NEVER'.  For example when using smtp.gmail.com gives:
-
-  Net::SMTP::recipient: DSN option not supported by host at ./git-send-=
-email line 1140
-
-So the underlined part has to be removed.
-
---=20
-Jakub Narebski
-Poland
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 67757e9..f0e880b 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -708,7 +708,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 	if (s->fp == NULL)
+ 		die_errno(_("could not open '%s'"), git_path(commit_editmsg));
+ 
+-	if (cleanup_mode != CLEANUP_NONE)
++	if (!template_file && cleanup_mode != CLEANUP_NONE)
+ 		stripspace(&sb, 0);
+ 
+ 	if (signoff) {
+-- 
+1.7.5.1
