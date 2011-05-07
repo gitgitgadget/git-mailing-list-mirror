@@ -1,112 +1,71 @@
-From: "Boris 'billiob' Faure" <billiob@gmail.com>
-Subject: Re: [PATCH 1/2] commit: do not cleanup template
-Date: Sat, 7 May 2011 23:17:03 +0200
-Message-ID: <BANLkTinvwjoa4z2JEiuPD44BV2V_m50VYQ@mail.gmail.com>
-References: <1304783624-9919-1-git-send-email-billiob@gmail.com>
-	<7vwri2uv4m.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] tests: eliminate unnecessary setup test assertions
+Date: Sat, 07 May 2011 15:05:24 -0700
+Message-ID: <7voc3eupy3.fsf@alter.siamese.dyndns.org>
+References: <20110503090351.GA27862@elie> <4DC1CE16.5030808@dailyvoid.com>
+ <7vsjsuc704.fsf@alter.siamese.dyndns.org> <20110506205441.GA20182@elie>
+ <20110506205851.GB20182@elie> <20110506214801.GA17848@sigill.intra.peff.net>
+ <20110506221300.GB17848@sigill.intra.peff.net>
+ <7voc3fxy6b.fsf@alter.siamese.dyndns.org>
+ <20110506222951.GA24474@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 07 23:17:28 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Michael Grubb <devel@dailyvoid.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun May 08 00:05:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QIosR-0001ZE-Eu
-	for gcvg-git-2@lo.gmane.org; Sat, 07 May 2011 23:17:27 +0200
+	id 1QIpdA-0001OX-CS
+	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 00:05:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754833Ab1EGVRH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 May 2011 17:17:07 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:50526 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754689Ab1EGVRF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 May 2011 17:17:05 -0400
-Received: by bwz15 with SMTP id 15so3211417bwz.19
-        for <git@vger.kernel.org>; Sat, 07 May 2011 14:17:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Np2IBjvPn14xKy3BKbUuPyya00Xj9dRlW0gKLF5M7nM=;
-        b=lbwd1p5TfmBKNCLytQc6jc/oqK9NDnySYNVP4upBSyD1I9Os5KbtCAPaS8gY/pzbp2
-         8BzyASfpgMoILFg3qps4fS/C7sfuW5LQeM6b2np9NkD6nijWZnrXxVG9OHI5Ath9/2vx
-         YmQX7FZ84B36RDeSF2ZMxJa5J3xXYMHp3xl9o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=mQ9WRu1vp1ueIPRh/hCSzyWlaoZAhgOVHdoVFX8cEo+TvGPAt1yRVHky8pivBVCK/H
-         UO2Vz+jY7TeDAJC3M7ZMe6bYMaj6xHgBqXoO2uHHyrI9meXZ38uK6xwjbqrBUq50dHu6
-         yUZfg3mBmqYFcf6NsxcEMsosHWc408tcRNyds=
-Received: by 10.204.6.203 with SMTP id a11mr167385bka.15.1304803023951; Sat,
- 07 May 2011 14:17:03 -0700 (PDT)
-Received: by 10.204.103.141 with HTTP; Sat, 7 May 2011 14:17:03 -0700 (PDT)
-In-Reply-To: <7vwri2uv4m.fsf@alter.siamese.dyndns.org>
+	id S1755824Ab1EGWFk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 May 2011 18:05:40 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48038 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755110Ab1EGWFj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 May 2011 18:05:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8EED94E14;
+	Sat,  7 May 2011 18:07:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9UScwrdDyVeBMm06ihGXSATYsMc=; b=yBTF9v
+	A/+rg41sIXidY3UdyCiUrMkQK/yqYNPvuMs8C6RSrtxjVkXecukuCnztcezpP9RX
+	76RZ3j417CZq5YEbtX5rIH6OX8M+VmtPMeOscV2n0k65NygiEjyCTr1qRn5dSI/e
+	rrccVl7nJxWooTWe1mNdd6Cn02ko/segVWuQA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SBtXXpzD2qpRTLZoPd/spybPb+bDHaF5
+	N2sWdc4mWTO5EjudVd9q/86zBerTTwI4VrRD+QYMOhwlwq/ZJOcVc1S1qHvyLRDq
+	8NuomujekzyhPWLRqiMeqE2GgFa/1NptBegIvWj7XEF8MI6IVG25HF+6Y2BAIls3
+	aEsciWfMj/M=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4DC144E10;
+	Sat,  7 May 2011 18:07:37 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0BA0E4E0E; Sat,  7 May 2011
+ 18:07:31 -0400 (EDT)
+In-Reply-To: <20110506222951.GA24474@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 6 May 2011 18:29:51 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6AEDF556-78F6-11E0-8417-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173068>
 
-On Sat, May 7, 2011 at 22:13, Junio C Hamano <gitster@pobox.com> wrote:
-> [=E2=80=A6]
-> My gut feeling is that it is relatively easy to justify [1/2]. We pre=
-pare
-> the message file to be edited by the committer in sb by reading from
-> different message sources, and usually we would want to clean up what=
- is
-> in sb before writing it out, but you may want to enforce a particular
-> format by using the template (such as having a leading whitespace) an=
-d the
-> way to tweak and fix that appearance should be by editing the templat=
-e,
-> not by automatically running stripspace() here [*1*] when the message=
- came
-> from the template.
+Jeff King <peff@peff.net> writes:
 
-That's exactly my point of view.
+> I think multiple -L is not quite enough. I want a single "-L" that
+> matches every instance of a pattern, like:
+>
+>   -L "/ ()/,+0"
 
-I use the commit template feature mostly to show additional pieces of
-information I'd use in my editor when writing the log.
-It had scratched an itch because I have to insert manually a newline
-to write the commit title whenever I use a commit log template.
-It's a bit strange for me to have that different behavior when writing
-a commit log whether the commit log template feature is used or not.
-I consider the newline being part of the template since sometimes the
-template could even pre-fill the commit log title.
-That's the main reason I disabled the cleanup when using a template.
-
-> I cannot tell offhand how you justify [2/2], though. What motivated y=
-ou to
-> remove this blank line? At this point in the codepath, it does not lo=
-ok
-> like it should matter if the original message came from your template=
- or
-> from somewhere else.
-
-In the way I use the commit log template, I consider that new line
-inserted there as useless.
-
-> If the blank line is unneeded after "# You may be committing a merge.=
-=2E."
-> for readability, wouldn't that blank line be unneeded when you took t=
-he
-> message from other places, no?
-
-Maybe.
-
-> It might make sense to move that newline before "if (whence !=3D FROM=
-_COMMIT)"
-> block, though, to make the logic easier to follow, regardless of the =
-use
-> of the template file.
-
-Moving the newline there will not change my point of view on the
-usefulness of it when using a template.
-
---=20
-Boris Faure
+Of course I am aware that needs to be a part of the multiple -L topic;
+after all I was the one who invented -L "$regexp" support ;-)
