@@ -1,125 +1,154 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Teach checkout the -n|--dry-run option
-Date: Sun, 08 May 2011 14:30:22 -0700
-Message-ID: <7vwri0ric1.fsf@alter.siamese.dyndns.org>
-References: <4DC47242.6060205@web.de>
- <7vhb97xx5g.fsf@alter.siamese.dyndns.org>
- <7vfwoqwby5.fsf@alter.siamese.dyndns.org> <4DC67CF4.80901@web.de>
- <4DC70200.1080201@web.de>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 1/4] git-sh-i18n--envsubst: our own envsubst(1) for eval_gettext()
+Date: Sun, 8 May 2011 23:33:46 +0200
+Message-ID: <BANLkTikSvU4haNpRmPq8o2P0yB1Y3t0Ahg@mail.gmail.com>
+References: <1304856659-10672-1-git-send-email-avarab@gmail.com>
+	<1304856659-10672-2-git-send-email-avarab@gmail.com>
+	<7v1v09un8y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sun May 08 23:30:47 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 08 23:33:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJBYp-0004Ai-Rf
-	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 23:30:44 +0200
+	id 1QJBbt-0005H5-Uc
+	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 23:33:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753951Ab1EHVad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 May 2011 17:30:33 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40382 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753912Ab1EHVac (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2011 17:30:32 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B919D5D74;
-	Sun,  8 May 2011 17:32:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nYh9cPBh3VQEZI+EIGFKAyIVgy8=; b=q8B4F+
-	OhbZzESuziB00giw3iynC9uf7nehBOPKioPk7Y13l8kihSxGV7rdTFD2ZssgpCK2
-	UocZwLwU7bhD2MAHbq+jnhgx706kKAm0prJYD00+YB1jdEKsTagbOti/HWUDNQZe
-	emHQUFgvLN5L0svzWsaRvAYAzbIilDVYT72Io=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aDNDFCs0W1BRajztt3DypC7Xv7swaRfs
-	Y8waFkFVjsFXElIMgLMvzLMfbDxb6EdETF/WycZx6FDOSEBwRo+gQoGmt1kwg3aS
-	QBW3HFP3Ct/tKSka0yve5eg+23+qS9LuXd/fkPyqP+ZIsVH+fW0SkLXLDntzyP26
-	9aUNefAKSs8=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6BC9B5D73;
-	Sun,  8 May 2011 17:32:33 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 448D85D72; Sun,  8 May 2011
- 17:32:29 -0400 (EDT)
-In-Reply-To: <4DC70200.1080201@web.de> (Jens Lehmann's message of "Sun, 08
- May 2011 22:50:08 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AF54CEA8-79BA-11E0-B56C-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
+	id S1753343Ab1EHVdt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2011 17:33:49 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:49629 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752333Ab1EHVdt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 May 2011 17:33:49 -0400
+Received: by bwz15 with SMTP id 15so3558052bwz.19
+        for <git@vger.kernel.org>; Sun, 08 May 2011 14:33:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=FAWmgW9ddEd+tJEsM1515YnhifeCSfjR+YdXNJR7/dg=;
+        b=YG4uTBopWnSU4vAxK+bQcBbODZxXZmaGAKR+99dfWgo2fHqURJ1BCqHflWXps811zJ
+         aC8Tzej9yuo1T+NHA2JY8h3znSJhHPTv+xIfp35LOzKmiJBXAplr5l87JD8Rzl2rMOMd
+         jJe9RTxYsDV7ushKE5DS25kI7gQJdVkODYkyU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=YPRQXDRo/g5nfQ55d3qWk1e+zKW2DLhQXDoZC+R8gwmOx0dAQ02iCcxYGC8OdG7BK5
+         ivMhpD/9/OTqwD257WWM2Vgh8DgpU7xnaGEPRb3Kx+WdgrV/Cj6RlgL7GfTezM6Q/3Oj
+         iu7aY5mzQpH0VDkMUGsIuL0t+SEQjtKZKHMdg=
+Received: by 10.204.154.88 with SMTP id n24mr3722078bkw.38.1304890426167; Sun,
+ 08 May 2011 14:33:46 -0700 (PDT)
+Received: by 10.204.101.132 with HTTP; Sun, 8 May 2011 14:33:46 -0700 (PDT)
+In-Reply-To: <7v1v09un8y.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173183>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+On Sun, May 8, 2011 at 19:15, Junio C Hamano <gitster@pobox.com> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =C2=A0<avarab@gmail.com> write=
+s:
+>
+>> Add a git-sh-i18n--envsubst program which is a stripped-down version
+>> of the GNU envsubst(1) program that comes with GNU gettext for use i=
+n
+>> the eval_gettext() fallback
+>
+> Ok up to this point.
+>
+>> ... instead of using a clever (but broken)
+>> printf + eval + printf trick.
+>>
+>> In a previous incarnation of the gettext series I implemented the
+>> eval_gettext() fallback like this:
+>> ...
+>> This was clever, but ...
+>> ...
+>> To work around this, and to improve our variable expansion behavior
+>> (eval has security issues) I've imported a stripped-down version of
+>> gettext's envsubst(1) program.
+>
+> I do not think the lengthy history of failed experiments above is wor=
+th
+> explaining. If you really want to say something to justify a new help=
+er, I
+> think it is sufficient to just explain that it is unsolvable in shell=
+=2E I
+> tried that in the first 9-line paragraph in:
+>
+> =C2=A0http://thread.gmane.org/gmane.comp.version-control.git/170703/f=
+ocus=3D170770
+>
+> In other words, "we tried X that didn't work and we tried Y that didn=
+'t
+> either, we cannot think of any better solution, so we are doing somet=
+hing
+> else" is not a good justificiation for doing that "something else".
+>
+> "Anything based on shell is an unpractical solution for this and that
+> reasons, so we use this instead" explains that the earlier failures w=
+ere
+> not because we did not try hard enough. =C2=A0Unlike "tried X and Y b=
+ut didn't
+> work", dismissing "anything based on shell" as a whole class with cle=
+ar
+> explanation why it would not work would prevent people from pursuing =
+that
+> dead-end approach. =C2=A0It also avoids giving quibbling people an ex=
+cuse to
+> argue against importing envsubst implementation saying "you didn't tr=
+y
+> hard enough".
 
-> diff --git a/t/t1000-read-tree-m-3way.sh b/t/t1000-read-tree-m-3way.sh
-> index ca8a409..bcfb5e6 100755
-> --- a/t/t1000-read-tree-m-3way.sh
-> +++ b/t/t1000-read-tree-m-3way.sh
-> @@ -259,6 +259,8 @@ test_expect_success \
->      "rm -f .git/index AA &&
->       cp .orig-A/AA AA &&
->       git update-index --add AA &&
-> +     git read-tree -n -m $tree_O $tree_A $tree_B &&
-> +     test_must_fail check_result &&
+I included the failed experiments because I know for sure that those
+don't work, but I'm not sure that this is impossible in shell, and it
+might be possible in some non-POSIX shell (which we could optionally
+take advantage of on certain platforms in the future).
 
-That's a rather sloppy way to test that the command did not do anything to
-compare one possible outcome, instead of verifying that the result is
-identical to the original condition, no?
+So having the failed examples that we know don't work is valuable for
+anyone digging into this in the future.
 
-How about
+Or are we sure that this can't work in POSIX (or non-POSIX shells)?
 
-	...
-	git update_index --add AA &&
-        git ls-files -s >pre-dry-run &&
-        git read-tree -n -m $tree_O $tree_A $tree_B &&
-        git ls-files -s >post-dry-run &&
-        test_cmp pre-dry-run post-dry-run &&
-        ...
+>> With it eval_gettext() is implemented
+>> like this:
+>> ...
+>> Reported-by: Johannes Sixt <j.sixt@viscovery.net>
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.=
+com>
+>
+> Ok.
+>
+>> diff --git a/Documentation/git-sh-i18n--envsubst.txt b/Documentation=
+/git-sh-i18n--envsubst.txt
+>> new file mode 100644
+>> index 0000000..e146a2c
+>> --- /dev/null
+>> +++ b/Documentation/git-sh-i18n--envsubst.txt
+>> @@ -0,0 +1,36 @@
+>> ...
+>> +Author
+>> +------
+>> +Written by =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+>> +
+>> +Documentation
+>> +--------------
+>> +Documentation by =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason and the git=
+-list
+>> +<git@vger.kernel.org>.
+>
+> I do not think we do these individual credits these days in the doc.
 
-We also should be checking that the command reports it is going to fail
-when it should as well.  Always remember to check both sides of the coin.
+I wrote this when that was the convention, but evidently we've changed
+that since then.
 
->       git read-tree -m $tree_O $tree_A $tree_B &&
->       check_result"
-
-I suspect that it would make sense to replace
-
-	git read-tree $args && check_result
-
-with
-        
-	read_tree_must_succeed $args
-
-and
-
-	test_must_fail git read-tree $args
-
-with
-
-	read_tree_must_fail $args
-
-and implement two shell wrappers, perhaps like this.
-
-read_tree_must_succeed () {
-	git ls-files -s >pre-dry-run &&
-	git read-tree -n "$@" &&
-        git ls-files -s >post-dry-run &&
-        test_cmp pre-dry-run post-dry-run &&
-        git read-tree "$@"
-}
-
-read_tree_must_fail () {
-	git ls-files -s >pre-dry-run &&
-	test_must_fail git read-tree -n "$@" &&
-        git ls-files -s >post-dry-run &&
-	test_must_fail git read-tree "$@"
-}
+I'll remove it in the next iteration.
