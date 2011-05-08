@@ -1,227 +1,110 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] t3703, t4208: add test cases for magic pathspec
-Date: Sun,  8 May 2011 18:08:26 +0700
-Message-ID: <1304852906-29272-1-git-send-email-pclouds@gmail.com>
-References: <1304764507-27547-1-git-send-email-pclouds@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] Teach checkout the -n|--dry-run option
+Date: Sun, 08 May 2011 13:22:28 +0200
+Message-ID: <4DC67CF4.80901@web.de>
+References: <4DC47242.6060205@web.de> <7vhb97xx5g.fsf@alter.siamese.dyndns.org> <7vfwoqwby5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Sun May 08 13:11:55 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 08 13:22:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJ1ty-0002Yi-Cj
-	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 13:11:54 +0200
+	id 1QJ24M-0006yE-Ob
+	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 13:22:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753103Ab1EHLLg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2011 07:11:36 -0400
-Received: from mail-px0-f173.google.com ([209.85.212.173]:52489 "EHLO
-	mail-px0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752889Ab1EHLLf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2011 07:11:35 -0400
-Received: by pxi16 with SMTP id 16so3077592pxi.4
-        for <git@vger.kernel.org>; Sun, 08 May 2011 04:11:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=u21ArkIJCWtAuHndn6ES1s7kSD1iviLc2w05KcoYJSM=;
-        b=tf7itRWEFulaAoJxScLJv2fw9TS9IvgYJJMgQWoKinQYnBt+0jyqNliehfHSd/MXti
-         6nUhAd0/V2TRio0F5PF1/IM78BCkVNcE8V/l26Eos6LcpAqQoniQ9gF30ok1Sueqc6hU
-         t7RERi/EGHQEQlM0xISJ9RTlAhBhpmncsk8AM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=xQ804b/swSrEo+2+z7qKDLXNTD7q/jObkiG+fvf0NfWq+3NbpN0nv3rfsHf0du3ehP
-         wUrQ89p1VhfVAP8SHR/s+spsEDBE60fuLxQwbh6P0We/EfQK1tk8WLd6RonJfPXDWeoQ
-         2Ej8kuNZQMta9ROOF74nUmCnSY8cDxSrE7l1Y=
-Received: by 10.142.173.14 with SMTP id v14mr3044159wfe.119.1304853094639;
-        Sun, 08 May 2011 04:11:34 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.73.196.42])
-        by mx.google.com with ESMTPS id k7sm6680365wfa.2.2011.05.08.04.11.29
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 08 May 2011 04:11:33 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 08 May 2011 18:08:37 +0700
-X-Mailer: git-send-email 1.7.4.74.g639db
-In-Reply-To: <1304764507-27547-1-git-send-email-pclouds@gmail.com>
+	id S1753508Ab1EHLWd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 May 2011 07:22:33 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:42588 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753373Ab1EHLWc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 May 2011 07:22:32 -0400
+Received: from smtp03.web.de  ( [172.20.0.65])
+	by fmmailgate02.web.de (Postfix) with ESMTP id A22AD19EE5671;
+	Sun,  8 May 2011 13:22:30 +0200 (CEST)
+Received: from [93.246.38.165] (helo=[192.168.178.43])
+	by smtp03.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1QJ24E-0006q7-00; Sun, 08 May 2011 13:22:30 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
+In-Reply-To: <7vfwoqwby5.fsf@alter.siamese.dyndns.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX18p6ggjou0LdvRubcAKM4i6S/3OFWmHgFN6bUs9
+	w3rxgdZy4+QCRL1zHt2Wo4JLHreyLc0SSlJtZcd+e7o0vXoXpu
+	BdUBWluuJzU1eYfSC9TQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173093>
 
-While at it, also document ":" syntax.
+Am 07.05.2011 21:24, schrieb Junio C Hamano:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> In other words, can't the check you need in submodule be scripted around
+>> the specific plumbing responsible for the branch switching, which is:
+>>
+>>     $ git read-tree -m HEAD $other_branch
+>>
+>>> @@ -397,7 +400,7 @@ static int merge_working_tree(struct checkout_opts *opts,
+>>>
+>>>  		/* 2-way merge to the new branch */
+>>>  		topts.initial_checkout = is_cache_unborn();
+>>> -		topts.update = 1;
+>>> +		topts.update = !opts->dry_run;
+>>>  		topts.merge = 1;
+>>>  		topts.gently = opts->merge && old->commit;
+>>>  		topts.verbose_update = !opts->quiet;
+>>
+>> What you are doing in this part of your patch is exactly that two-tree
+>> form of the "read-tree -m", no?
+> 
+> That is, this would succeed:
+> 
+> 	$ git reset --hard master
+>         $ git read-tree --index-output=rubbish -m master next
+>         
+> and these would fail:
+> 
+> 	$ git reset --hard master
+> 	$ echo >>Makefile
+>         $ git read-tree --index-output=rubbish -m master next
+>         error: Entry 'Makefile' not uptodate. Cannot merge.
+> 
+> 	$ git reset --hard master
+> 	$ echo >>Makefile
+> 	$ git add Makefile
+>         $ git read-tree --index-output=rubbish -m master next
+>         error: Entry 'Makefile' would be overwritten by merge. Cannot merge.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- v2.
+Thanks for pointing me to "git read-tree -m". When I saw that a "git
+checkout -n" would do exactly what I needed, I stopped looking for
+alternatives (especially as I saw that adding -n there would help
+other non-submodule use cases as well).
 
- Documentation/glossary-content.txt |    3 +
- t/t3703-add-magic-pathspec.sh      |   78 ++++++++++++++++++++++++++++=
-++++++++
- t/t4208-log-magic-pathspec.sh      |   40 ++++++++++++++++++
- 3 files changed, 121 insertions(+), 0 deletions(-)
- create mode 100755 t/t3703-add-magic-pathspec.sh
- create mode 100755 t/t4208-log-magic-pathspec.sh
+> Having said that, please do not discard your patch.  After sleeping on
+> this, I started to think that "checkout -n" might be a better interface
+> than using the plumbing read-tree in the longer term, especially if you
+> can enhance it to handle "checkout -m -n" to check if the local change can
+> be merged without conflicts.
 
-diff --git a/Documentation/glossary-content.txt b/Documentation/glossar=
-y-content.txt
-index 0ca029b..02cea08 100644
---- a/Documentation/glossary-content.txt
-+++ b/Documentation/glossary-content.txt
-@@ -311,6 +311,9 @@ parenthesis `(`, a comma-separated list of zero or =
-more "magic words",
- and a close parentheses `)`, and the remainder is the pattern to match
- against the path.
- +
-+A pathspec with only a colon means "there is no pathspec". This form
-+cannot be combined with other pathspec.
-++
- The "magic signature" consists of an ASCII symbol that is not
- alphanumeric.
- +
-diff --git a/t/t3703-add-magic-pathspec.sh b/t/t3703-add-magic-pathspec=
-=2Esh
-new file mode 100755
-index 0000000..3d8c6b8
---- /dev/null
-+++ b/t/t3703-add-magic-pathspec.sh
-@@ -0,0 +1,78 @@
-+#!/bin/sh
-+
-+test_description=3D'magic pathspec tests using git-add'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	mkdir sub anothersub &&
-+	: >sub/foo &&
-+	: >anothersub/foo
-+'
-+
-+test_expect_failure 'colon alone magic can only used alone' '
-+	test_must_fail git add -n sub/foo : &&
-+	test_must_fail git add -n : sub/foo
-+'
-+
-+cat >expected <<EOF
-+add 'anothersub/foo'
-+add 'expected'
-+add 'sub/actual'
-+add 'sub/foo'
-+EOF
-+
-+test_expect_success 'add :' '
-+	(cd sub && git add -n : >actual) &&
-+	test_cmp expected sub/actual
-+'
-+
-+test_expect_success 'add :/' '
-+	(cd sub && git add -n :/ >actual) &&
-+	test_cmp expected sub/actual
-+'
-+
-+cat >expected <<EOF
-+add 'anothersub/foo'
-+EOF
-+
-+test_expect_success 'add :/anothersub' '
-+	(cd sub && git add -n :/anothersub >actual) &&
-+	test_cmp expected sub/actual
-+'
-+
-+test_expect_success 'add :/non-existent' '
-+	(cd sub && test_must_fail git add -n :/non-existent)
-+'
-+
-+cat >expected <<EOF
-+add 'sub/foo'
-+EOF
-+
-+test_expect_success 'add :(icase)foo' '
-+	(cd sub && git add -n ":(icase)FoO" >actual) &&
-+	test_cmp expected sub/actual
-+'
-+
-+test_expect_success 'a file with the same (long) magic name exists' '
-+	: >":(icase)ha" &&
-+	test_must_fail git add -n ":(icase)ha" 2>error &&
-+	git add -n "./:(icase)ha"
-+'
-+
-+cat >expected <<EOF
-+fatal: pathspec ':(icase)ha' did not match any files
-+EOF
-+
-+test_expect_failure 'show pathspecs exactly what are typed in' '
-+	test_cmp expected error
-+'
-+
-+test_expect_success 'a file with the same (short) magic name exists' '
-+	mkdir ":" &&
-+	: >":/bar" &&
-+	test_must_fail git add -n :/bar &&
-+	git add -n "./:/bar"
-+'
-+
-+test_done
-diff --git a/t/t4208-log-magic-pathspec.sh b/t/t4208-log-magic-pathspec=
-=2Esh
-new file mode 100755
-index 0000000..b296a74
---- /dev/null
-+++ b/t/t4208-log-magic-pathspec.sh
-@@ -0,0 +1,40 @@
-+#!/bin/sh
-+
-+test_description=3D'magic pathspec tests using git-log'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	test_commit initial &&
-+	test_tick &&
-+	git commit --allow-empty -m empty &&
-+	mkdir sub
-+'
-+
-+test_expect_failure 'git log :/ ambiguous with [ref]:/path' '
-+	test_must_fail git log :/ 2>error &&
-+	grep ambiguous error
-+'
-+
-+test_expect_failure 'git log :' '
-+	git log :
-+'
-+
-+test_expect_success 'git log HEAD -- :/' '
-+	cat >expected <<EOF &&
-+24b24cf initial
-+EOF
-+	(cd sub && git log --oneline HEAD -- :/ >../actual) &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'git log HEAD -- :' '
-+	cat >expected <<EOF &&
-+41d179c empty
-+24b24cf initial
-+EOF
-+	(cd sub && git log --oneline HEAD -- : >../actual) &&
-+	test_cmp expected actual
-+'
-+
-+test_done
---=20
-1.7.4.74.g639db
+I'll see if I can come up with a solution for the "-m -n" case (I stopped
+after implementing the checkout branch case I needed to get some feedback
+if this thing went into the right direction). And I assume the "git
+checkout <pathspec>" case should learn -n too?
+
+> But if the only question you are interested in is "can I switch to that
+> branch from the current state of the index and the working tree?", I would
+> prefer to see if the script can use "read-tree -m" approach first.
+
+Yup, I will try that.
+
+> We may also want to add "read-tree -n" so that you do not have to specify
+> a dummy index output only to prevent from writing the real index over,
+> though.
+
+Hmm, wouldn't using "read-tree --index-output=/dev/null" be equivalent to
+"read-tree -n"? But nonetheless it might make sense to add the -n option.
