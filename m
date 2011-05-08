@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH 40/48] i18n: git-bisect echo + gettext messages
-Date: Sun,  8 May 2011 12:21:12 +0000
-Message-ID: <1304857280-14773-41-git-send-email-avarab@gmail.com>
+Subject: [PATCH 24/48] i18n: git-submodule $errmsg messages
+Date: Sun,  8 May 2011 12:20:56 +0000
+Message-ID: <1304857280-14773-25-git-send-email-avarab@gmail.com>
 References: <1304857280-14773-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -17,84 +17,96 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJ31M-0004a3-Cj
-	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 14:23:36 +0200
+	id 1QJ31P-0004a3-6I
+	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 14:23:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754108Ab1EHMXM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2011 08:23:12 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:48739 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753939Ab1EHMWL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2011 08:22:11 -0400
-Received: by mail-ey0-f174.google.com with SMTP id 24so1325631eyx.19
-        for <git@vger.kernel.org>; Sun, 08 May 2011 05:22:10 -0700 (PDT)
+	id S1754139Ab1EHMX3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2011 08:23:29 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:56660 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753685Ab1EHMV4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 May 2011 08:21:56 -0400
+Received: by mail-ew0-f46.google.com with SMTP id 4so1327019ewy.19
+        for <git@vger.kernel.org>; Sun, 08 May 2011 05:21:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references:mime-version:content-type
          :content-transfer-encoding;
-        bh=NereHC5EdGjGx0OZleRsjYm1g/7AN0OheqnYakeEAII=;
-        b=wYzo50vB+277QbCO5s/6zVnQBnjJpx4GC9Wagai3DM69mji8LlxQqEqOjGTv8Nrs5m
-         lR2QX+4Cpu1Z1xzSPpUBwacwjmozTSOAa9V5IvHk+GkIJUN/+t/3N4R5EXSmmIK4ctVq
-         PJjJzlXjvfS14chD5qukJC0brWwt/hKqVIr6Q=
+        bh=xin77xTGrHrNDPo7S6q+8Z/MilFvDrrZOP+hIq3t9BY=;
+        b=AGlztUBzVJJNYtWBjYO1U2WMH1EPP0Kr1QoxQU3u6cXktKK/6B7fYiG43a4NCCWvoM
+         kz0G0CoIq5jMecvu1HgiylwAACv3yCfvO1OCPQLd8TXMKWuaVecVezXNb5tYUN+TRJqB
+         iKx3RKjjpOuh42OEVFTtKYZxNVDuqsE84adi0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=xDNxkj+uQycWeWJxwRr0UJMfY455iJI+piAWVIhy1fyvPRRNxluISQEzQi39auz4Hq
-         LOGwOzo4IPL5GiO4RuTP8XhciSfxap1tbZ3odHquHCngXbBy2NLNWzi1do/BnOp+NS0P
-         dqdKOK0FWGxj1pHEEhkQ2tgCj/i+emsfqEEk0=
-Received: by 10.213.36.10 with SMTP id r10mr612939ebd.131.1304857330578;
-        Sun, 08 May 2011 05:22:10 -0700 (PDT)
+        b=Tm0+e6PcoSgSBmYPB2O3baTTvcJgFqWBNkeHMB2gMgOgtY+Q+gfj7rdxj+7kKI2jwv
+         e6X5ZPUXZr9JDxby/CTTRENOiO/M65nLRbtDDvnSNhJ4ONOkDKvq3X+gL4Dz2YX0t/FS
+         RM/IkS1L52EsH5TD4thFC9rT6O2UBq+M80PD8=
+Received: by 10.14.22.8 with SMTP id s8mr2775358ees.49.1304857315522;
+        Sun, 08 May 2011 05:21:55 -0700 (PDT)
 Received: from w.nix.is (w.nix.is [188.40.98.140])
-        by mx.google.com with ESMTPS id n55sm2690046een.2.2011.05.08.05.22.09
+        by mx.google.com with ESMTPS id n55sm2690046een.2.2011.05.08.05.21.54
         (version=SSLv3 cipher=OTHER);
-        Sun, 08 May 2011 05:22:10 -0700 (PDT)
+        Sun, 08 May 2011 05:21:54 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4.4
 In-Reply-To: <1304857280-14773-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173148>
+
+Gettextize warning messages stored in the $errmsg variable using
+eval_gettext interpolation. This is explicitly tested for so we
+need to skip a portion of a test with test_i18ncmp.
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- git-bisect.sh |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+ git-submodule.sh             |    6 +++---
+ t/t7401-submodule-summary.sh |    2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 4420b46..80607dc 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -36,7 +36,7 @@ _x40=3D"$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 7d2c51d..7bebdf9 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -675,13 +675,13 @@ cmd_summary() {
+ 		total_commits=3D
+ 		case "$missing_src,$missing_dst" in
+ 		t,)
+-			errmsg=3D"  Warn: $name doesn't contain commit $sha1_src"
++			errmsg=3D"$(eval_gettext "  Warn: \$name doesn't contain commit \$s=
+ha1_src")"
+ 			;;
+ 		,t)
+-			errmsg=3D"  Warn: $name doesn't contain commit $sha1_dst"
++			errmsg=3D"$(eval_gettext "  Warn: \$name doesn't contain commit \$s=
+ha1_dst")"
+ 			;;
+ 		t,t)
+-			errmsg=3D"  Warn: $name doesn't contain commits $sha1_src and $sha1=
+_dst"
++			errmsg=3D"$(eval_gettext "  Warn: \$name doesn't contain commits \$=
+sha1_src and \$sha1_dst")"
+ 			;;
+ 		*)
+ 			errmsg=3D
+diff --git a/t/t7401-submodule-summary.sh b/t/t7401-submodule-summary.s=
+h
+index 44ebc45..cfa6632 100755
+--- a/t/t7401-submodule-summary.sh
++++ b/t/t7401-submodule-summary.sh
+@@ -162,7 +162,7 @@ test_expect_success 'nonexistent commit' "
+   Warn: sm1 doesn't contain commit $head4_full
 =20
- bisect_autostart() {
- 	test -s "$GIT_DIR/BISECT_START" || {
--		echo >&2 'You need to start by "git bisect start"'
-+		echo >&2 "$(gettext "You need to start by \"git bisect start\"")"
- 		if test -t 0
- 		then
- 			echo >&2 -n 'Do you want me to do it for you [Y/n]? '
-@@ -239,7 +239,7 @@ bisect_next_check() {
- 	t,,good)
- 		# have bad but not good.  we could bisect although
- 		# this is less optimum.
--		echo >&2 'Warning: bisecting only with a bad commit.'
-+		echo >&2 "$(gettext "Warning: bisecting only with a bad commit.")"
- 		if test -t 0
- 		then
- 			printf >&2 'Are you sure [Y/n]? '
-@@ -403,7 +403,7 @@ bisect_run () {
+ EOF
+-    test_cmp actual expected
++    test_i18ncmp actual expected
+ "
 =20
-       if sane_grep "first bad commit could be any of" "$GIT_DIR/BISECT=
-_RUN" \
- 		> /dev/null; then
--	  echo >&2 "bisect run cannot continue any more"
-+	  echo >&2 "$(gettext "bisect run cannot continue any more")"
- 	  exit $res
-       fi
-=20
+ commit_file
 --=20
 1.7.4.4
