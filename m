@@ -1,127 +1,68 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v0 2/3] index_fd(): split into two helper functions
-Date: Sun,  8 May 2011 01:47:34 -0700
-Message-ID: <1304844455-23570-3-git-send-email-gitster@pobox.com>
-References: <1304844455-23570-1-git-send-email-gitster@pobox.com>
+Subject: [PATCH v0 0/3] git add a-Big-file
+Date: Sun,  8 May 2011 01:47:32 -0700
+Message-ID: <1304844455-23570-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 08 10:47:52 2011
+X-From: git-owner@vger.kernel.org Sun May 08 10:47:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QIzeZ-0004V0-NS
-	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 10:47:52 +0200
+	id 1QIzeS-0004Sw-Kf
+	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 10:47:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752704Ab1EHIro (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 May 2011 04:47:44 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43876 "EHLO
+	id S1752137Ab1EHIrj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 May 2011 04:47:39 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43810 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751361Ab1EHIrm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2011 04:47:42 -0400
+	with ESMTP id S1751361Ab1EHIrj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 May 2011 04:47:39 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2ECB54E00
-	for <git@vger.kernel.org>; Sun,  8 May 2011 04:49:46 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7CAE14DF1
+	for <git@vger.kernel.org>; Sun,  8 May 2011 04:49:41 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=tAJT
-	X28akWcRrhlVlCENL2A5V1M=; b=Wa+PbnD8zeI0TDA7zHsPtMf24fd2HZPtAyMG
-	H+twA4flDJQmyFk626glh3oHtDMQRtMZjax0SKTlf9xX7700Nzicyi5xv0BK5VwO
-	PDXfLPQ88jO+Mvl2p0mEShTpb3JV7gXOEEqpiJWCO15wNhxQrcTJRXOAFxlrH2dA
-	1OSyslQ=
+	:subject:date:message-id; s=sasl; bh=js9/E4WeML0D8Cp7xpHadJ0GdX0
+	=; b=iUx18QafVoPzmRMhIeyrpPL0uGiXjYe5Rl72nYD87P4GT4hCk+HELxVRTlk
+	hhBjCU4Izo+9ZKxLr7YAKSX3Nu5W/crNcvt99ihSgVrInFFrAWqsXHKAgUMoFYzX
+	cYagDdpTDTqqjvUgFk2izkPkGbVThrp78HaphQ04ZrwizweQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=xj5Vfu
-	M7NF7Yn6vofyMPvAuxmmskf5NI2y0aES0F9xVsWb8LGXE1WAYqzkdhWEnlpzPv6b
-	2OQgx/6pr5+fmYpZDnEb3lr5IZhJGURMp92r1yRHom503LRJKpN7H4pUquxEVrwb
-	Q98/VQUtI4HqJXxJpFg7yp6Gd24I8pfIvnuBM=
+	:date:message-id; q=dns; s=sasl; b=DwkXyunGxaHQz3KBOGhRpgI/8mQc2
+	ljwpeKvLdl5NfDpkNczd9SpV6dv5w+4nCW6Z1f5qtHDyL+/aBsWR87jA6xRjh31B
+	GNdFya3a7bsMeoP3m2RhyArSpd3M8yOwpFqUlX0hxe0HffVjAnVZr9rIccDxXEPr
+	5kNnUjn81HWBJc=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 280414DFF
-	for <git@vger.kernel.org>; Sun,  8 May 2011 04:49:46 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 76AD44DF0
+	for <git@vger.kernel.org>; Sun,  8 May 2011 04:49:41 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8CF6E4DFE for
- <git@vger.kernel.org>; Sun,  8 May 2011 04:49:45 -0400 (EDT)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 087B84DEF for
+ <git@vger.kernel.org>; Sun,  8 May 2011 04:49:40 -0400 (EDT)
 X-Mailer: git-send-email 1.7.5.1.268.gce5bd
-In-Reply-To: <1304844455-23570-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 1FE56CF6-7950-11E0-8E40-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 1D1F019E-7950-11E0-A532-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173083>
 
-Split out the case where we do not know the size of the input (hence we
-read everything into a strbuf before doing anything) to index_pipe(), and
-the other case where we mmap or read the whole data to index_bulk().
+This is merely a POC, hoping that interested parties might fill in the
+blanks aka update the NEEDSWORK part of the patch.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- sha1_file.c |   42 +++++++++++++++++++++++++++++++-----------
- 1 files changed, 31 insertions(+), 11 deletions(-)
+Junio C Hamano (3):
+  index_fd(): turn write_object and format_check arguments into one flag
+  index_fd(): split into two helper functions
+  Bigfile: teach "git add" to send a large file straight to a pack
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 17c179c..49416b0 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2619,22 +2619,29 @@ static int index_mem(unsigned char *sha1, void *buf, size_t size,
- 	return ret;
- }
- 
-+static int index_pipe(unsigned char *sha1, int fd, enum object_type type,
-+		      const char *path, unsigned flags)
-+{
-+	struct strbuf sbuf = STRBUF_INIT;
-+	int ret;
-+
-+	if (strbuf_read(&sbuf, fd, 4096) >= 0)
-+		ret = index_mem(sha1, sbuf.buf, sbuf.len, type,	path, flags);
-+	else
-+		ret = -1;
-+	strbuf_release(&sbuf);
-+	return ret;
-+}
-+
- #define SMALL_FILE_SIZE (32*1024)
- 
--int index_fd(unsigned char *sha1, int fd, struct stat *st,
--	     enum object_type type, const char *path, unsigned flags)
-+static int index_core(unsigned char *sha1, int fd, size_t size,
-+		      enum object_type type, const char *path,
-+		      unsigned flags)
- {
- 	int ret;
--	size_t size = xsize_t(st->st_size);
- 
--	if (!S_ISREG(st->st_mode)) {
--		struct strbuf sbuf = STRBUF_INIT;
--		if (strbuf_read(&sbuf, fd, 4096) >= 0)
--			ret = index_mem(sha1, sbuf.buf, sbuf.len, type,	path, flags);
--		else
--			ret = -1;
--		strbuf_release(&sbuf);
--	} else if (!size) {
-+	if (!size) {
- 		ret = index_mem(sha1, NULL, size, type, path, flags);
- 	} else if (size <= SMALL_FILE_SIZE) {
- 		char *buf = xmalloc(size);
-@@ -2648,6 +2655,19 @@ int index_fd(unsigned char *sha1, int fd, struct stat *st,
- 		ret = index_mem(sha1, buf, size, type, path, flags);
- 		munmap(buf, size);
- 	}
-+	return ret;
-+}
-+
-+int index_fd(unsigned char *sha1, int fd, struct stat *st,
-+	     enum object_type type, const char *path, unsigned flags)
-+{
-+	int ret;
-+	size_t size = xsize_t(st->st_size);
-+
-+	if (!S_ISREG(st->st_mode))
-+		ret = index_pipe(sha1, fd, type, path, flags);
-+	else
-+		ret = index_core(sha1, fd, size, type, path, flags);
- 	close(fd);
- 	return ret;
- }
+ builtin/hash-object.c  |    5 +-
+ builtin/update-index.c |    3 +-
+ cache.h                |    7 ++-
+ notes-merge.c          |    2 +-
+ read-cache.c           |    4 +-
+ sha1_file.c            |  165 +++++++++++++++++++++++++++++++++++++++++-------
+ t/t1050-large.sh       |   22 +++++++
+ 7 files changed, 177 insertions(+), 31 deletions(-)
+ create mode 100755 t/t1050-large.sh
+
 -- 
 1.7.5.1.268.gce5bd
