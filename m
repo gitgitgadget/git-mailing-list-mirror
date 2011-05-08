@@ -1,110 +1,98 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] Teach checkout the -n|--dry-run option
-Date: Sun, 08 May 2011 13:22:28 +0200
-Message-ID: <4DC67CF4.80901@web.de>
-References: <4DC47242.6060205@web.de> <7vhb97xx5g.fsf@alter.siamese.dyndns.org> <7vfwoqwby5.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 05/11] revert: Catch incompatible command-line options early
+Date: Sun, 8 May 2011 17:17:51 +0530
+Message-ID: <20110508114749.GA3114@ramkum.desktop.amazon.com>
+References: <1302448317-32387-1-git-send-email-artagnon@gmail.com> <1302448317-32387-6-git-send-email-artagnon@gmail.com> <7vfwpotqdx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 08 13:22:39 2011
+X-From: git-owner@vger.kernel.org Sun May 08 13:48:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJ24M-0006yE-Ob
-	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 13:22:39 +0200
+	id 1QJ2TD-0007be-AB
+	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 13:48:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753508Ab1EHLWd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 May 2011 07:22:33 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:42588 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753373Ab1EHLWc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2011 07:22:32 -0400
-Received: from smtp03.web.de  ( [172.20.0.65])
-	by fmmailgate02.web.de (Postfix) with ESMTP id A22AD19EE5671;
-	Sun,  8 May 2011 13:22:30 +0200 (CEST)
-Received: from [93.246.38.165] (helo=[192.168.178.43])
-	by smtp03.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1QJ24E-0006q7-00; Sun, 08 May 2011 13:22:30 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
-In-Reply-To: <7vfwoqwby5.fsf@alter.siamese.dyndns.org>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX18p6ggjou0LdvRubcAKM4i6S/3OFWmHgFN6bUs9
-	w3rxgdZy4+QCRL1zHt2Wo4JLHreyLc0SSlJtZcd+e7o0vXoXpu
-	BdUBWluuJzU1eYfSC9TQ==
+	id S1751187Ab1EHLr6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 May 2011 07:47:58 -0400
+Received: from smtp-fw-9101.amazon.com ([207.171.184.25]:43615 "EHLO
+	smtp-fw-9101.amazon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750949Ab1EHLr6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 May 2011 07:47:58 -0400
+X-IronPort-AV: E=Sophos;i="4.64,334,1301875200"; 
+   d="scan'208";a="695338687"
+Received: from smtp-in-0191.sea3.amazon.com ([10.224.12.28])
+  by smtp-border-fw-out-9101.sea19.amazon.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 08 May 2011 11:47:57 +0000
+Received: from ramkum.desktop.amazon.com (ramkum.desktop.amazon.com [172.25.205.64])
+	by smtp-in-0191.sea3.amazon.com (8.13.8/8.13.8) with ESMTP id p48BltpA024496;
+	Sun, 8 May 2011 11:47:56 GMT
+Received: by ramkum.desktop.amazon.com (Postfix, from userid 272482)
+	id BA9C8754824; Sun,  8 May 2011 17:17:51 +0530 (IST)
+Content-Disposition: inline
+In-Reply-To: <7vfwpotqdx.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.4.2.2i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173094>
 
-Am 07.05.2011 21:24, schrieb Junio C Hamano:
-> Junio C Hamano <gitster@pobox.com> writes:
+Hi Junio,
+
+Junio C Hamano writes:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+> > @@ -112,6 +130,13 @@ static void parse_args(int argc, const char **argv)
+> >  	if (cmd_opts.commit_argc < 2)
+> >  		usage_with_options(usage_str, options);
+> >  
+> > +	if (cmd_opts.allow_ff) {
+> > +		int opt_bitarray[] = {cmd_opts.signoff, cmd_opts.no_commit,
+> > +				      cmd_opts.no_replay, cmd_opts.edit};
+> > +		die_opt_incompatible(me, "--ff", 4, opt_bitarray, "--signoff",
+> > +				"--no-commit", "-x", "--edit");
+> > +	}
 > 
->> In other words, can't the check you need in submodule be scripted around
->> the specific plumbing responsible for the branch switching, which is:
->>
->>     $ git read-tree -m HEAD $other_branch
->>
->>> @@ -397,7 +400,7 @@ static int merge_working_tree(struct checkout_opts *opts,
->>>
->>>  		/* 2-way merge to the new branch */
->>>  		topts.initial_checkout = is_cache_unborn();
->>> -		topts.update = 1;
->>> +		topts.update = !opts->dry_run;
->>>  		topts.merge = 1;
->>>  		topts.gently = opts->merge && old->commit;
->>>  		topts.verbose_update = !opts->quiet;
->>
->> What you are doing in this part of your patch is exactly that two-tree
->> form of the "read-tree -m", no?
+> Why not do it like this instead?
 > 
-> That is, this would succeed:
+> 	struct incompatible {
+>         	unsigned option_bit;
+>                 const char *option_name;
+> 	} incompatible[] = {
+> 		{ opts->signoff, "--signoff" },
+>                 { opts->no_commit, "--no-commit" },
+>                 ...
+> 	};
+> 	verify_compatible("me", "--ff", incompatible, ARRAY_SIZE(incompatible));
 > 
-> 	$ git reset --hard master
->         $ git read-tree --index-output=rubbish -m master next
->         
-> and these would fail:
+> Or if you are shooting for ease-of-use, it might make sense to do it like
+> this:
 > 
-> 	$ git reset --hard master
-> 	$ echo >>Makefile
->         $ git read-tree --index-output=rubbish -m master next
->         error: Entry 'Makefile' not uptodate. Cannot merge.
+> 	verify_compatible("me", "--ff",
+>         		"--signoff", opts->signoff,
+>                         "--no-commit", opts->no_commit,
+>                         ...
+>                         NULL);
 > 
-> 	$ git reset --hard master
-> 	$ echo >>Makefile
-> 	$ git add Makefile
->         $ git read-tree --index-output=rubbish -m master next
->         error: Entry 'Makefile' would be overwritten by merge. Cannot merge.
+> and make verify_compatible() a varargs function that takes two optional
+> arguments at a time, i.e. const char *, followed by an int.  Then there is
+> no need for extra "int opt_bitarray[]" or "struct incompatible".
+> 
+> That would justify use of varargs, I think.
 
-Thanks for pointing me to "git read-tree -m". When I saw that a "git
-checkout -n" would do exactly what I needed, I stopped looking for
-alternatives (especially as I saw that adding -n there would help
-other non-submodule use cases as well).
+Now that you point it out, my original approach was unnecessarily
+cryptic and convoluted.  I've followed this approach in my new series,
+and kept varargs -- the code looks much prettier now.  Thanks :)
 
-> Having said that, please do not discard your patch.  After sleeping on
-> this, I started to think that "checkout -n" might be a better interface
-> than using the plumbing read-tree in the longer term, especially if you
-> can enhance it to handle "checkout -m -n" to check if the local change can
-> be merged without conflicts.
+I can't justify changing the name from "die_opt_incompatible" to
+"verify_compatible" though; the name I've chosen seems to be more
+appropriate/ descriptive.  Further, I think command-line parsing
+should always be the toplevel caller, and "die" is therefore more
+appropriate than "return error" here.
 
-I'll see if I can come up with a solution for the "-m -n" case (I stopped
-after implementing the checkout branch case I needed to get some feedback
-if this thing went into the right direction). And I assume the "git
-checkout <pathspec>" case should learn -n too?
-
-> But if the only question you are interested in is "can I switch to that
-> branch from the current state of the index and the working tree?", I would
-> prefer to see if the script can use "read-tree -m" approach first.
-
-Yup, I will try that.
-
-> We may also want to add "read-tree -n" so that you do not have to specify
-> a dummy index output only to prevent from writing the real index over,
-> though.
-
-Hmm, wouldn't using "read-tree --index-output=/dev/null" be equivalent to
-"read-tree -n"? But nonetheless it might make sense to add the -n option.
+-- Ram
