@@ -1,74 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 16/48] i18n: git-pull eval_gettext + warning message
-Date: Sun, 08 May 2011 13:19:06 -0700
-Message-ID: <7v1v09rlmt.fsf@alter.siamese.dyndns.org>
-References: <1304857280-14773-1-git-send-email-avarab@gmail.com>
- <1304857280-14773-17-git-send-email-avarab@gmail.com>
- <20110508165254.GA20654@pcpool00.mathematik.uni-freiburg.de>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH] git-format-patch.txt: update hints for sending patches
+ with Thunderbird
+Date: Sun, 08 May 2011 22:29:21 +0200
+Message-ID: <4DC6FD21.6050503@gmail.com>
+References: <4DC6DA6A.7010306@elegosoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org
-To: "Bernhard R. Link" 
-	<brl+ccmadness@pcpool00.mathematik.uni-freiburg.de>
-X-From: git-owner@vger.kernel.org Sun May 08 22:19:34 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Michael Schubert <mschub@elegosoft.com>
+X-From: git-owner@vger.kernel.org Sun May 08 22:29:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJARx-00039Y-Oh
-	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 22:19:34 +0200
+	id 1QJAbj-0006wt-S3
+	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 22:29:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751800Ab1EHUTQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 May 2011 16:19:16 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56773 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750753Ab1EHUTQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2011 16:19:16 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 27AA6593B;
-	Sun,  8 May 2011 16:21:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0EyRuGBzB/Tj1vEAnNMCLzqNkRU=; b=RiNXPz
-	AELZzEO88j+xMi/Zq2w++eAv51bc8xf7hhpjiHT3/wJFJYF/lGGlSXCCSs5NrvMb
-	aLDarpTmlyP8eTM/f4cSDS7GNJyjOF0rrwHaVnvf2k7udJgpDWxNHsi5xiLtdb9I
-	bWsUgd5OxlcoJqdg2zhs85O2OZilRurm+H3KI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oxTkdcxGteWxmxKvBQ5C3+87Bkdj5Cc6
-	GdiD3lldwSa053q7wK9u82q4Nc+uwfrnSNKqRC9XrrvtIBDIldVJwgi37xasog8a
-	1gnjzBwhR+EAVEJfphof52s5b2sxfVcESwchJC7jG/d2SA1wfZxR31RBmSt0sDP7
-	/ANwt3k/Rhw=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E93DF593A;
-	Sun,  8 May 2011 16:21:16 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E25525936; Sun,  8 May 2011
- 16:21:12 -0400 (EDT)
-In-Reply-To: <20110508165254.GA20654@pcpool00.mathematik.uni-freiburg.de>
- (Bernhard R. Link's message of "Sun, 8 May 2011 18:52:54 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BA59B430-79B0-11E0-9B37-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
+	id S1752939Ab1EHU3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 May 2011 16:29:33 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:62107 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752959Ab1EHU31 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 May 2011 16:29:27 -0400
+Received: by fxm17 with SMTP id 17so3242674fxm.19
+        for <git@vger.kernel.org>; Sun, 08 May 2011 13:29:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version
+         :newsgroups:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=62bwjqtgfLmOhudzr7oeSiN4FiLuqqWhWtj+RBxMKQk=;
+        b=aluJO+3jPesN/VQXudkWXsIRnaBfMuzUN4GGgprNTD2kd/pHYPclVm8MmFbx0MHECi
+         sG68LABuBgUIBkOKbZfI44t9sF72y79QCep0uvSCJ0XQEFfP2GlnkCm+sHp2zwkSSQ0Q
+         vtfVbh0p0KKAevhsE0KbPOM85/MtITSnsAcRc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        b=BO869d1RiKRF7u1k73pAvpha8UqQkRLHF+Bk4QUl8Rnd4JbhseIQce9kZDCREU6Prv
+         vmw70QuSG/LIxGfXMLpEeaNwoaMj24r+67NNXMNH27FDNVeTAbjVz00774xEUMS0Wtza
+         pds+YB3iT/Xtalb2eSDJSfm9eFZUthw0rQ+sI=
+Received: by 10.223.32.142 with SMTP id c14mr2897219fad.59.1304886564870;
+        Sun, 08 May 2011 13:29:24 -0700 (PDT)
+Received: from [192.168.178.23] (p5DDB0006.dip0.t-ipconnect.de [93.219.0.6])
+        by mx.google.com with ESMTPS id g5sm1768371faa.2.2011.05.08.13.29.23
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 08 May 2011 13:29:24 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <4DC6DA6A.7010306@elegosoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173178>
 
-"Bernhard R. Link"  <brl+ccmadness@pcpool00.mathematik.uni-freiburg.de>
-writes:
+On 08.05.2011 20:01, Michael Schubert wrote:
 
->> +	echo >&2 "$(eval_gettext "Warning: fetch updated the current branch head.
->> +Warning: fast-forwarding your working tree from
->> +Warning: commit \$orig_head.")"
->
-> echo "$(...)"
->
-> sounds quite wasteful and harder to read than necessary.
-> The same also happens in later patches.
+> Using Thunderbird 3.1.10 setting mail.wrap_long_lines to false
+> somehow doesn't stop Thunderbird from wrapping.
 
-A very good point.  Just letting eval_gettext write out to >&2 should be
-both sufficient and inifinitely more readable.
+Just FYI, I'm using the "Toggle Word Wrap" [1] add-on which works great 
+for me when sending patches via Thunderbird. Moreover, it allows to 
+easily toggle wrapping on a mail-by-mail basis.
+
+[1] https://addons.mozilla.org/en-US/thunderbird/addon/toggle-word-wrap/
+
+-- 
+Sebastian Schuberth
