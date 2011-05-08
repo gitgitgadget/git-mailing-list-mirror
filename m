@@ -1,98 +1,89 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 05/11] revert: Catch incompatible command-line options early
-Date: Sun, 8 May 2011 17:17:51 +0530
-Message-ID: <20110508114749.GA3114@ramkum.desktop.amazon.com>
-References: <1302448317-32387-1-git-send-email-artagnon@gmail.com> <1302448317-32387-6-git-send-email-artagnon@gmail.com> <7vfwpotqdx.fsf@alter.siamese.dyndns.org>
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: [GSoC 11] submodule improvements
+Date: Sun, 8 May 2011 14:05:38 +0200
+Message-ID: <20110508120538.GA19074@paksenarrion.iveqy.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 08 13:48:20 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 08 13:52:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJ2TD-0007be-AB
-	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 13:48:19 +0200
+	id 1QJ2Xc-0000pa-QM
+	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 13:52:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751187Ab1EHLr6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 May 2011 07:47:58 -0400
-Received: from smtp-fw-9101.amazon.com ([207.171.184.25]:43615 "EHLO
-	smtp-fw-9101.amazon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750949Ab1EHLr6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2011 07:47:58 -0400
-X-IronPort-AV: E=Sophos;i="4.64,334,1301875200"; 
-   d="scan'208";a="695338687"
-Received: from smtp-in-0191.sea3.amazon.com ([10.224.12.28])
-  by smtp-border-fw-out-9101.sea19.amazon.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 08 May 2011 11:47:57 +0000
-Received: from ramkum.desktop.amazon.com (ramkum.desktop.amazon.com [172.25.205.64])
-	by smtp-in-0191.sea3.amazon.com (8.13.8/8.13.8) with ESMTP id p48BltpA024496;
-	Sun, 8 May 2011 11:47:56 GMT
-Received: by ramkum.desktop.amazon.com (Postfix, from userid 272482)
-	id BA9C8754824; Sun,  8 May 2011 17:17:51 +0530 (IST)
+	id S1751339Ab1EHLwr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2011 07:52:47 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:50137 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751187Ab1EHLwq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 May 2011 07:52:46 -0400
+Received: by bwz15 with SMTP id 15so3395200bwz.19
+        for <git@vger.kernel.org>; Sun, 08 May 2011 04:52:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:sender:date:from:to:subject:message-id
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:user-agent;
+        bh=jZGfvKcjJo4Gg0+AmLnWVczKgXm9l8XYAvalOfws+O4=;
+        b=pNQAMoX+FRRhc6mtVN9O9Ges47Ec8B8rW8RKRDhAHYh5jUhccK8+oMMiIeBNLcHcNh
+         7MHSt3kuzWUYe7w9fcbmPNrJKVUy/Hw4UnvFSrOndySprnIjLDLUhGs0oXmeuR5/3TNw
+         rsXNBl1BY0hrm8kwxuic3ZmSh82lQ9ODQdHbE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:content-transfer-encoding:user-agent;
+        b=rfDwpUK8N+jMrJW0Z182i9k4dO004Nonhu6cfwwGWBFMkuVfxE7mk9qIyFIxgG9fOw
+         788DHCaUeoeLxkXSF568fR2nhrdHqvIHMdmmTMT20ZJCMy6GWjPvi2l/5QX4dJbD/Nyv
+         jvLI4l2Nbzz/SatPRavkV5u/FXKjyEx6xvg5U=
+Received: by 10.204.14.204 with SMTP id h12mr4885885bka.78.1304855565109;
+        Sun, 08 May 2011 04:52:45 -0700 (PDT)
+Received: from paksenarrion.iveqy.com (h-185-240.A189.priv.bahnhof.se [85.24.185.240])
+        by mx.google.com with ESMTPS id 16sm3045905bkm.18.2011.05.08.04.52.43
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 08 May 2011 04:52:43 -0700 (PDT)
+Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1QJ2jy-000568-IR
+	for git@vger.kernel.org; Sun, 08 May 2011 14:05:38 +0200
 Content-Disposition: inline
-In-Reply-To: <7vfwpotqdx.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.4.2.2i
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173095>
 
-Hi Junio,
+Hi,
+I've been chosen to improve git submodules during the summer. My main
+focus will be to move the .git-directory away from the submodules so
+that submodules can be deleted and created in the working tree [1].
 
-Junio C Hamano writes:
-> Ramkumar Ramachandra <artagnon@gmail.com> writes:
-> > @@ -112,6 +130,13 @@ static void parse_args(int argc, const char **argv)
-> >  	if (cmd_opts.commit_argc < 2)
-> >  		usage_with_options(usage_str, options);
-> >  
-> > +	if (cmd_opts.allow_ff) {
-> > +		int opt_bitarray[] = {cmd_opts.signoff, cmd_opts.no_commit,
-> > +				      cmd_opts.no_replay, cmd_opts.edit};
-> > +		die_opt_incompatible(me, "--ff", 4, opt_bitarray, "--signoff",
-> > +				"--no-commit", "-x", "--edit");
-> > +	}
-> 
-> Why not do it like this instead?
-> 
-> 	struct incompatible {
->         	unsigned option_bit;
->                 const char *option_name;
-> 	} incompatible[] = {
-> 		{ opts->signoff, "--signoff" },
->                 { opts->no_commit, "--no-commit" },
->                 ...
-> 	};
-> 	verify_compatible("me", "--ff", incompatible, ARRAY_SIZE(incompatible));
-> 
-> Or if you are shooting for ease-of-use, it might make sense to do it like
-> this:
-> 
-> 	verify_compatible("me", "--ff",
->         		"--signoff", opts->signoff,
->                         "--no-commit", opts->no_commit,
->                         ...
->                         NULL);
-> 
-> and make verify_compatible() a varargs function that takes two optional
-> arguments at a time, i.e. const char *, followed by an int.  Then there is
-> no need for extra "int opt_bitarray[]" or "struct incompatible".
-> 
-> That would justify use of varargs, I think.
+I will post updates on this list labeled [GSoC 11 submodule] for those
+interested in following my work. I've also put up a fork of Junios repo
+on github, where you can find my [2] branches.
 
-Now that you point it out, my original approach was unnecessarily
-cryptic and convoluted.  I've followed this approach in my new series,
-and kept varargs -- the code looks much prettier now.  Thanks :)
+My name is Fredrik Gustafsson, I study electronics with a software path
+in Lund, Sweden.
 
-I can't justify changing the name from "die_opt_incompatible" to
-"verify_compatible" though; the name I've chosen seems to be more
-appropriate/ descriptive.  Further, I think command-line parsing
-should always be the toplevel caller, and "die" is therefore more
-appropriate than "return error" here.
+My schedule is a bit strange because of the Swedish semesters, so my
+work will begin tomorrow (Monday).
 
--- Ram
+I'm looking forward to work with my mentors (whose already been very
+supportive) and the rest of the git community.
+
+[1] My proposal:
+http://www.google-melange.com/gsoc/proposal/review/google/gsoc2011/iveq=
+y/1
+
+[2] Github-page
+https://github.com/iveqy/git
+--=20
+Med v=E4nliga h=E4lsningar
+=46redrik Gustafsson
+
+tel: 0733-608274
+e-post: iveqy@iveqy.com
