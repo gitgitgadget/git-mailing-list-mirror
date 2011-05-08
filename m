@@ -1,75 +1,115 @@
-From: "Bukovska Valentina" <o_babich@amm.by>
-Subject: Apliec rokas ap pleciem =?UTF-8?B?dHLFq2PEq2dpIGFwxKPEk3JidGFp?=
- sievietei
-Date: Sun, 8 May 2011 15:11:45 +0300
-Message-ID: <auto-000951210338@glade.tutby.com>
-Reply-To: "Bukovska Valentina" <o_babich@amm.by>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: RFC: a plugin architecture for git extensions?
+Date: Sun, 8 May 2011 23:13:35 +1000
+Message-ID: <BANLkTinhN0=2NETtOjG_yvubHiZagGB0Wg@mail.gmail.com>
+References: <alpine.DEB.2.00.1104271751300.940@asgard.lang.hm>
+	<BANLkTimnkBMRH7Spj1ByQRa9YdV9w+bwtQ@mail.gmail.com>
+	<BANLkTikbcpzF203rUVB05OYyYhLmu3+n6w@mail.gmail.com>
+	<BANLkTinQny-M0rL+Vs9L_cQhtVLyv6rqMw@mail.gmail.com>
+	<4DB9329E.7000703@op5.se>
+	<88795B20-6994-46A5-9710-2ADC84E04695@gmail.com>
+	<7vhb986chl.fsf@alter.siamese.dyndns.org>
+	<BANLkTi=+emhzqfiGxGbnJ=bm3oL7SvjhBw@mail.gmail.com>
+	<7vbozg4eqw.fsf@alter.siamese.dyndns.org>
+	<BANLkTi=zrWR0GAm6n1Gs9XDCR6kXtjDW0A@mail.gmail.com>
+	<20110506065601.GB13351@elie>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 08 15:11:38 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	David Aguilar <davvid@gmail.com>, Andreas Ericsson <ae@op5.se>,
+	Joey Hess <joey@kitenet.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	"david@lang.hm" <david@lang.hm>,
+	Pau Garcia i Quiles <pgquiles@elpauer.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 08 15:13:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJ3ln-00078w-GG
-	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 15:11:35 +0200
+	id 1QJ3nw-0008Ay-8a
+	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 15:13:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753374Ab1EHNL3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 May 2011 09:11:29 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: from glade.tutby.com ([195.137.160.20]:47007 "EHLO glade.tutby.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752746Ab1EHNL2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2011 09:11:28 -0400
-X-Greylist: delayed 3601 seconds by postgrey-1.27 at vger.kernel.org; Sun, 08 May 2011 09:11:27 EDT
-Received: from [200.103.110.45] (account o_babich@amm.by HELO mail.amm.by)
-  by glade.tutby.com (CommuniGate Pro SMTP 5.1.11)
-  with ESMTPA id 951210338 for git@vger.kernel.org; Sun, 08 May 2011 15:11:22 +0300
+	id S1753843Ab1EHNNi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2011 09:13:38 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:62571 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753526Ab1EHNNg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 May 2011 09:13:36 -0400
+Received: by vxi39 with SMTP id 39so4888237vxi.19
+        for <git@vger.kernel.org>; Sun, 08 May 2011 06:13:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=r5O2Tj//PtlN0oBveVou6+h7J59LAFRtOoSekM0zdT4=;
+        b=aX5S1VwlUbjv289LIci4Wu4Q/l234etPUwgTinti4jdxUUH8pYu+o4Gv+ZjG+MtN/C
+         o9RL0FHsEhhvmvJA9hfwRQQLyMhta0Y6/B2e0Zvc2jWpfwIlH53qfxLPa1DYOPKyzlUc
+         mwXrue555liSbG2X9tzmmGfkMxhzPukSWh9r0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=rdqng+Eq0CSM6+x1uZxf7gYFv00rTQPmvBufg4YEKSykZvPItXWIc4WoACaa5Q/MiM
+         f9mKH/Ic6u34GHKr8lW8UFa8KyYEf4T5aF+/orXFKPbMotq0eEpUT+DWS8AVydCv9Pm5
+         vNt3ofaf2yrSXTRSoIsvikHZgWR4D2zLIUzg0=
+Received: by 10.52.94.170 with SMTP id dd10mr1723783vdb.159.1304860415808;
+ Sun, 08 May 2011 06:13:35 -0700 (PDT)
+Received: by 10.52.160.66 with HTTP; Sun, 8 May 2011 06:13:35 -0700 (PDT)
+In-Reply-To: <20110506065601.GB13351@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 11.5 points;
- * -2.6 BAYES_00 BODY: Bayesian spam probability is 0 to 1%
- *      [score: 0.0000]
- *  1.5 RAZOR2_CF_RANGE_E8_51_100 Razor2 gives engine 8 confidence level
- *      above 50%
- *      [cf: 100]
- *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
- *  3.0 RAZOR2_CF_RANGE_51_100 Razor2 gives confidence level above 50%
- *      [cf: 100]
- *  1.6 RCVD_IN_NJABL_PROXY RBL: NJABL: sender is an open proxy
- *      [200.103.110.45 listed in combined.njabl.org]
- *  2.0 URIBL_BLACK Contains an URL listed in the URIBL blacklist
- *      [URIs: urlzip.fr]
- *  2.0 URIBL_SC_SWINOG URI's listed in uribl.swinog.ch.
- *      [URIs: urlzip.fr]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: urlzip.fr]
- *  1.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: urlzip.fr]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173156>
 
-Saliec rokas uz apa=C4=BCumiem puskailai meitenei,=20
+On Fri, May 6, 2011 at 4:56 PM, Jonathan Nieder <jrnieder@gmail.com> wr=
+ote:
+>
+> But now I am less sure. =C2=A0The motivating example has less than 10
+> commands; that doesn't seem worth all the fuss at all. =C2=A0Why not =
+just
+> install the command on the $PATH? =C2=A0"git help work" _would_ work =
+on all
+> the systems I have easy access to. =C2=A0For example, if I write:
+>
 
-pa=C5=86=C4=93m ugun=C4=ABgu drinku b=C4=81r=C4=81 un noskaties izcilu =
-=C5=A1ovu..=20
+An aspect of the motivational example that I would welcome your
+feedback on is this.
 
-Tikko atv=C4=93rts un satrieco=C5=A1s naktsklubs gaida tevi un tavus dr=
-augus - m=C4=93s nesort=C4=93jam viesus, mums katrs ir svar=C4=ABgs: va=
-i no Latvijas, vai =C5=85ujorkas.
+git-work is an example of an extension that depends on 3 other
+extensions (git-base, git-atomic and git-test).
 
-Draudz=C4=ABgas cenas, v=C4=81cie=C5=A1u mened=C5=BEeri - detaliz=C4=93=
-ti uzzini =C5=A1eit: http://urlzip.fr/QZG
+Similarly:
+
+   git-base depends on git-test.
+   git-atomic depends on git-test
+
+It seems that if I am to represent these dependencies, I need to
+create 4 * N packages, where N is the number of packaging systems I
+want to support.
+
+It is unclear how I make:
+
+    make install prefix=3D/usr/local
+
+work unless the 3 other dependencies have been installed first. If I
+need to explain that these 3 other dependencies need to be installed,
+then my installation instructions have just become longer.
+
+This seems a shame, since each extension has a dependency only on
+other git extensions and git itself. Yet, to provide a workable
+installation from source option for my users, I need to either get
+them to fetch and build all 4 packages from source, or I need to build
+packages for N different distribution managers.
+
+[ FWIW: I recognise that my current proposals for a simple git
+--system-extensions-dir don't make this problem any easier to solve,
+but I wanted to use the example to demonstrate why a simple make
+install script isn't the silver bullet to every installation scenario
+].
+
+jon.
