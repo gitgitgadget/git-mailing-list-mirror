@@ -1,113 +1,96 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] Teach checkout the -n|--dry-run option
-Date: Sun, 08 May 2011 23:41:46 +0200
-Message-ID: <4DC70E1A.6060702@web.de>
-References: <4DC47242.6060205@web.de> <7vhb97xx5g.fsf@alter.siamese.dyndns.org> <7vfwoqwby5.fsf@alter.siamese.dyndns.org> <4DC67CF4.80901@web.de> <4DC70200.1080201@web.de> <7vwri0ric1.fsf@alter.siamese.dyndns.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 0/4] i18n: Add shell script translation infrastructure
+Date: Sun, 8 May 2011 23:45:24 +0200
+Message-ID: <BANLkTinnv=hm80h=9P80t=3QvwS-BQ7D=A@mail.gmail.com>
+References: <1304856659-10672-1-git-send-email-avarab@gmail.com>
+ <BANLkTi=nTSf0CQWs-ODxw=P+eX=Dc7Yf-Q@mail.gmail.com> <BANLkTikmj_urw389ad0r86OR+26AvXTVzg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 08 23:41:58 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Sebastian Schuberth <sschuberth
+X-From: git-owner@vger.kernel.org Sun May 08 23:46:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJBjh-00084D-Nn
-	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 23:41:58 +0200
+	id 1QJBnn-0001Eb-LW
+	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 23:46:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754161Ab1EHVlw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 May 2011 17:41:52 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:34870 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753655Ab1EHVlv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2011 17:41:51 -0400
-Received: from smtp04.web.de  ( [172.20.0.225])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 9B31E19EE97E6;
-	Sun,  8 May 2011 23:41:49 +0200 (CEST)
-Received: from [93.240.113.59] (helo=[192.168.178.43])
-	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1QJBjZ-0002pn-00; Sun, 08 May 2011 23:41:49 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
-In-Reply-To: <7vwri0ric1.fsf@alter.siamese.dyndns.org>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1/aX9DcUM1csVGG8GtY6I16XuZfvK5iQVrg+CDS
-	qPeuQ28NCaoYoDUPa3BrGXJ1PwCkgK/kMbU7pJH5PD3O0EfbbS
-	jCv0v7Rq9Ok2v92owVGQ==
+	id S1754156Ab1EHVqH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2011 17:46:07 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:61844 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754108Ab1EHVqF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 May 2011 17:46:05 -0400
+Received: by qyg14 with SMTP id 14so3589760qyg.19
+        for <git@vger.kernel.org>; Sun, 08 May 2011 14:46:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=q7MTAANs00KQij5UEwsDgcJzg+gY8W4UirB9PRGF3LM=;
+        b=blDuYvTGI86/A1dsjS8l77FVl92pyUe9+YwMp/vdnXaMKykweLDej5EpyH3ucqLWNX
+         35SX3sP0JhybJlz8/WCzHW3+5QFuup4zaeiT1py0WjWbYcrN5jCASN5uAjfws2NYwtVd
+         ALUXw/hqzQs1i7y/sKThqcycXHsPXo1uPG6xw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=hu9XHQo/8WT4+AMFtYqWueSb2Q3WCIcQmUXEw3X6EWEznZwXbtWJpiLMHnatxgyLwG
+         w8+zxXWnrY4xCWr8Ed/zvmdK8Y5AZcMzXvQ5GRnniogJVkxMW3pH48KLkG8mWIXI90W4
+         ay1lQRVrW/QAI1fs6O9eHUdOMQzSJ4zxF6VQg=
+Received: by 10.229.67.13 with SMTP id p13mr3305912qci.98.1304891164124; Sun,
+ 08 May 2011 14:46:04 -0700 (PDT)
+Received: by 10.229.75.70 with HTTP; Sun, 8 May 2011 14:45:24 -0700 (PDT)
+In-Reply-To: <BANLkTikmj_urw389ad0r86OR+26AvXTVzg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173187>
 
-Am 08.05.2011 23:30, schrieb Junio C Hamano:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
-> 
->> diff --git a/t/t1000-read-tree-m-3way.sh b/t/t1000-read-tree-m-3way.sh
->> index ca8a409..bcfb5e6 100755
->> --- a/t/t1000-read-tree-m-3way.sh
->> +++ b/t/t1000-read-tree-m-3way.sh
->> @@ -259,6 +259,8 @@ test_expect_success \
->>      "rm -f .git/index AA &&
->>       cp .orig-A/AA AA &&
->>       git update-index --add AA &&
->> +     git read-tree -n -m $tree_O $tree_A $tree_B &&
->> +     test_must_fail check_result &&
-> 
-> That's a rather sloppy way to test that the command did not do anything to
-> compare one possible outcome, instead of verifying that the result is
-> identical to the original condition, no?
-> 
-> How about
-> 
-> 	...
-> 	git update_index --add AA &&
->         git ls-files -s >pre-dry-run &&
->         git read-tree -n -m $tree_O $tree_A $tree_B &&
->         git ls-files -s >post-dry-run &&
->         test_cmp pre-dry-run post-dry-run &&
->         ...
+Heya,
 
-Yeah, that is much better than my first sketch.
+[+msysgit people]
 
-> We also should be checking that the command reports it is going to fail
-> when it should as well.  Always remember to check both sides of the coin.
-> 
->>       git read-tree -m $tree_O $tree_A $tree_B &&
->>       check_result"
-> 
-> I suspect that it would make sense to replace
-> 
-> 	git read-tree $args && check_result
-> 
-> with
->         
-> 	read_tree_must_succeed $args
-> 
-> and
-> 
-> 	test_must_fail git read-tree $args
-> 
-> with
-> 
-> 	read_tree_must_fail $args
-> 
-> and implement two shell wrappers, perhaps like this.
-> 
-> read_tree_must_succeed () {
-> 	git ls-files -s >pre-dry-run &&
-> 	git read-tree -n "$@" &&
->         git ls-files -s >post-dry-run &&
->         test_cmp pre-dry-run post-dry-run &&
->         git read-tree "$@"
-> }
-> 
-> read_tree_must_fail () {
-> 	git ls-files -s >pre-dry-run &&
-> 	test_must_fail git read-tree -n "$@" &&
->         git ls-files -s >post-dry-run &&
-> 	test_must_fail git read-tree "$@"
-> }
+On Sun, May 8, 2011 at 23:38, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <a=
+varab@gmail.com> wrote:
+> On Sun, May 8, 2011 at 19:03, Sverre Rabbelier <srabbelier@gmail.com>=
+ wrote:
+>> On Sun, May 8, 2011 at 14:10, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason=
+ <avarab@gmail.com> wrote:
+>>> This adds skeleton no-op functions to git-sh-i18n.sh analogous to t=
+he
+>>> gettext.c skeleton functions for C, adds *.sh scripts to the "pot"
+>>> target for message extraction, and updates the git-sh-i18n--envsubs=
+t
+>>> tests to use the new test_i18ncmp function.
+>>
+>> I seem to remember there were some concerns about performance with a
+>> previous version of this series. Have you done any before/after
+>> timings on, say, the git test suite? Or am I remembering incorrectly=
+?
+>
+> When I benchmark this on my (Linux) system it runs at 0% difference
+> between the current test suite and the one with this series.
+>
+> The concern was about Windows, where forks are more expensive, so
+> e.g. every time we shell out to sed/awk/perl/grep or
+> git-sh-i18n--envsubst we incur a larger speed hit than on Unix
+> systems.
 
-Thanks, will send an updated patch with better test cases soon ...
+Perhaps one of the windows devs can benchmark this then? =C3=86var, whe=
+re
+do you have a pullable version of this series? Your github fork has
+quite a few branches.
+
+--=20
+Cheers,
+
+Sverre Rabbelier
