@@ -1,80 +1,137 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC v2] Do not strip empty lines / trailing spaces from a
- commit message template
-Date: Sun, 08 May 2011 11:14:08 -0700
-Message-ID: <7vy62hrrf3.fsf@alter.siamese.dyndns.org>
-References: <4DC65888.7090309@gmail.com>
- <1304850662-6424-1-git-send-email-billiob@gmail.com>
- <4DC68C88.7030604@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Sebastian Schuberth <sschuberth@gmail.com>
-To: Boris Faure <billiob@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 08 20:14:23 2011
+From: Boris Faure <billiob@gmail.com>
+Subject: [PATCH/RFC v3] Do not strip empty lines / trailing spaces from a commit message template
+Date: Sun,  8 May 2011 20:55:22 +0200
+Message-ID: <1304880922-19879-1-git-send-email-billiob@gmail.com>
+References: <7vy62hrrf3.fsf@alter.siamese.dyndns.org>
+Cc: Boris Faure <billiob@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 08 20:47:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJ8Uo-0005HV-Tl
-	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 20:14:23 +0200
+	id 1QJ90Z-0001n3-Ko
+	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 20:47:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755409Ab1EHSOS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 May 2011 14:14:18 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60874 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754474Ab1EHSOR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2011 14:14:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 49B7150FD;
-	Sun,  8 May 2011 14:16:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lysI6NEgTo5breAJ3fTquYz6UpI=; b=iR0dkJ
-	FKV/WPcl9IRYhCz0kKDQ792/4hRZbbkIhQtXX6oiRxZW2C/Xn7WGyO5Jmr+FeBvz
-	PZS4EDkBr7x4eQMsUXHVwrhQKW+vjOpB+g8HVtZv6WSknloRdf8qJObivtkbWjEt
-	KwIXHUFZI7+NjjLnm650U9Migfq/cE+TbXX04=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=C+1ZhguKwBvS/mCgVB6NhRZly4ytSvgO
-	J8lyGi3YnhWWolZTsfoqeY16CaoXF7gkZeCZeZ4jktlYbTPID0iv6Q0FqrL1JtqA
-	z8+G78QbY2T0FavCd7uzSwGDbd8ixtNxcTQFsZCpWkraQghN4B4rwbGYPO7HftZL
-	9p91cYRxKP4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0FC0650FC;
-	Sun,  8 May 2011 14:16:19 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0207850F6; Sun,  8 May 2011
- 14:16:14 -0400 (EDT)
-In-Reply-To: <4DC68C88.7030604@gmail.com> (Sebastian Schuberth's message of
- "Sun, 08 May 2011 14:28:56 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 454211A8-799F-11E0-90EE-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
+	id S932189Ab1EHSrH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 May 2011 14:47:07 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:40093 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932150Ab1EHSrE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 May 2011 14:47:04 -0400
+Received: by wwa36 with SMTP id 36so5074032wwa.1
+        for <git@vger.kernel.org>; Sun, 08 May 2011 11:47:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references;
+        bh=xXFvXJnq0C2LMbqQGXP9h98ucr0rjzLkkEnEmPL4Cak=;
+        b=nogLFe50ctWieYH3mDbx3YQIlKfF6Jcn1alcWSw9UpKehc1IhZA9ETYwDQ6a3d6iap
+         lWhT24MxKTi1ddQZRVNf1qYESGjWPao4ocXvoALK7C70QcEDUOnRYaUcYHhKylgieVxL
+         5+dg1+lINk7xtMGQyt0m/1O+jik7FROlb06+M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=MAT25ADcELyyBNfThLy3343ShZmPfdYC3yDun6JvGLva0hK+sc0Niox1tLK+2jqiK4
+         pxU2d8Vvd1iwOOYp+SR2mFlrBiUnY+R8KH3WhJA9OONOMpeFXixasMQJ96LXJMU07wHY
+         fGg+hEo624AcYV8/WQT9AmbbBgbvfW7hXuzTs=
+Received: by 10.227.93.36 with SMTP id t36mr2085551wbm.11.1304880423400;
+        Sun, 08 May 2011 11:47:03 -0700 (PDT)
+Received: from localhost.localdomain (ADijon-259-1-88-55.w90-33.abo.wanadoo.fr [90.33.231.55])
+        by mx.google.com with ESMTPS id z13sm3292135wbd.46.2011.05.08.11.47.01
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 08 May 2011 11:47:02 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.1.217.g4e3aa.dirty
+In-Reply-To: <7vy62hrrf3.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173171>
 
-Sebastian Schuberth <sschuberth@gmail.com> writes:
+Templates should be just that: A form that the user fills out, and forms
+have blanks. If people are attached to not having extra whitespace in the
+editor, they can simply clean up their templates.
 
-> On 08.05.2011 12:31, Boris Faure wrote:
->
->> Templates should be just that: A form that the user fills out, and forms
->> have blanks. If people are attached to not having extra whitespace in the
->> editor, they can simply clean up their templates.
->>
->> Added test with editor adding even more whitespace.
->>
->> Signed-off-by: Boris Faure<billiob@gmail.com>
->> Based-on-patch-by:Sebastian Schuberth<sschuberth@gmail.com>
->
-> Thanks for rebasing the patch and adding the test! I've run the whole
-> test suite on Linux, and all tests pass for me (including the added
-> one).
+Added test with editor adding even more whitespace.
 
-Thanks, both.  The updated log message explains _why_ this change is a
-good thing very well.
+Signed-off-by: Boris Faure <billiob@gmail.com>
+Based-on-patch-by:Sebastian Schuberth <sschuberth@gmail.com>
+---
+ builtin/commit.c                |    4 +++-
+ t/t7500-commit.sh               |   14 ++++++++++++++
+ t/t7500/add-whitespaced-content |    8 ++++++++
+ 3 files changed, 25 insertions(+), 1 deletions(-)
+ create mode 100755 t/t7500/add-whitespaced-content
 
-I'd avoid "echo -e" which is not portable, though.
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 67757e9..411d5e4 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -615,6 +615,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 	const char *hook_arg1 = NULL;
+ 	const char *hook_arg2 = NULL;
+ 	int ident_shown = 0;
++	int clean_message_contents = (cleanup_mode != CLEANUP_NONE);
+ 
+ 	if (!no_verify && run_hook(index_file, "pre-commit", NULL))
+ 		return 0;
+@@ -681,6 +682,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		if (strbuf_read_file(&sb, template_file, 0) < 0)
+ 			die_errno(_("could not read '%s'"), template_file);
+ 		hook_arg1 = "template";
++		clean_message_contents = 0;
+ 	}
+ 
+ 	/*
+@@ -708,7 +710,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 	if (s->fp == NULL)
+ 		die_errno(_("could not open '%s'"), git_path(commit_editmsg));
+ 
+-	if (cleanup_mode != CLEANUP_NONE)
++	if (clean_message_contents)
+ 		stripspace(&sb, 0);
+ 
+ 	if (signoff) {
+diff --git a/t/t7500-commit.sh b/t/t7500-commit.sh
+index 47096f9..dedbc0d 100755
+--- a/t/t7500-commit.sh
++++ b/t/t7500-commit.sh
+@@ -123,6 +123,20 @@ test_expect_success 'commit message from file should override template' '
+ 	commit_msg_is "standard input msg"
+ '
+ 
++cat > "$TEMPLATE" << EOF
++
++
++### template
++
++EOF
++test_expect_success 'commit message from template with whitespace issue' '
++	echo "content galore" >> foo &&
++	git add foo &&
++	GIT_EDITOR="$TEST_DIRECTORY"/t7500/add-whitespaced-content git commit \
++		--template "$TEMPLATE" &&
++	commit_msg_is "commit message"
++'
++
+ test_expect_success 'using alternate GIT_INDEX_FILE (1)' '
+ 
+ 	cp .git/index saved-index &&
+diff --git a/t/t7500/add-whitespaced-content b/t/t7500/add-whitespaced-content
+new file mode 100755
+index 0000000..9cb5860
+--- /dev/null
++++ b/t/t7500/add-whitespaced-content
+@@ -0,0 +1,8 @@
++#!/bin/sh
++cat >> "$1" << EOF
++ 
++
++commit message       	 
++
++EOF
++exit 0
+-- 
+1.7.5.1.217.g4e3aa.dirty
