@@ -1,73 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git alias fails if non-accessible directory is in PATH
-Date: Sun, 08 May 2011 09:50:13 -0700
-Message-ID: <7v7ha1uofu.fsf@alter.siamese.dyndns.org>
-References: <iq5p6k$73f$1@dough.gmane.org>
+From: "Bernhard R. Link" 
+	<brl+ccmadness@pcpool00.mathematik.uni-freiburg.de>
+Subject: Re: [PATCH 16/48] i18n: git-pull eval_gettext + warning message
+Date: Sun, 8 May 2011 18:52:54 +0200
+Message-ID: <20110508165254.GA20654@pcpool00.mathematik.uni-freiburg.de>
+References: <1304857280-14773-1-git-send-email-avarab@gmail.com> <1304857280-14773-17-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 08 18:50:28 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 08 18:53:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJ7Bc-0005yq-2V
-	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 18:50:28 +0200
+	id 1QJ7E5-00078Y-MV
+	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 18:53:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932158Ab1EHQuW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 May 2011 12:50:22 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45324 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932085Ab1EHQuV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2011 12:50:21 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5E3344B7A;
-	Sun,  8 May 2011 12:52:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WBKAVjblwle9BwNO0yjLejOJwpA=; b=pEBHvF
-	WOxGOT3+uJiV0h6QymfEof5KOm4QA97F6/qjDQguYOpF/ZwMzyAzASSlxtIBdrUr
-	xY2lNBtYQwoESZJkjeiSSqeVipTK/h9D660ptCevo/Dr5N3JLEm3B5288IxXMN5V
-	XNRg2Wi8D67hVa3slN2CN8cKl/jbweLhkpeVA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fPUgL7FgRwleMPJeRHGwL+0UJs4v2jap
-	Ekp6ocUYm+spLDDI0/quSkYbNUhiNAEV9t1siCEQ9ZiqcUkv2qg0n9XEVatrs/lS
-	SfJ8TdNZaKOTD5ovMHwHJVsxyieKur9rj3lDoH/Jx7boUue54sFEUyvaiT/ugfDw
-	pd3mCuuY5PM=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3A16B4B79;
-	Sun,  8 May 2011 12:52:23 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5CBDD4B78; Sun,  8 May 2011
- 12:52:20 -0400 (EDT)
-In-Reply-To: <iq5p6k$73f$1@dough.gmane.org> (Sebastian Schuberth's message of
- "Sun, 08 May 2011 11:53:24 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8BABF732-7993-11E0-90C3-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
+	id S1755248Ab1EHQw5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2011 12:52:57 -0400
+Received: from pcpool00.mathematik.uni-freiburg.de ([132.230.30.150]:39984
+	"EHLO pcpool00.mathematik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751856Ab1EHQw4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 May 2011 12:52:56 -0400
+Received: from pcpool09.mathematik.uni-freiburg.de ([132.230.30.159])
+	by pcpool00.mathematik.uni-freiburg.de with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.72)
+	(envelope-from <brl@pcpool00.mathematik.uni-freiburg.de>)
+	id 1QJ7Dy-0007a8-MS; Sun, 08 May 2011 18:52:54 +0200
+Received: from brl by pcpool09.mathematik.uni-freiburg.de with local (Exim 4.69)
+	(envelope-from <brl@pcpool00.mathematik.uni-freiburg.de>)
+	id 1QJ7Dy-0005No-KH; Sun, 08 May 2011 18:52:54 +0200
+Content-Disposition: inline
+In-Reply-To: <1304857280-14773-17-git-send-email-avarab@gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173161>
 
-Sebastian Schuberth <sschuberth@gmail.com> writes:
+* =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> [110508 14:23]:
+> Signed-off-by: =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com>
+> ---
+>  git-pull.sh |    6 +++---
+>  1 files changed, 3 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/git-pull.sh b/git-pull.sh
+> index 06dcd81..79ba9ab 100755
+> --- a/git-pull.sh
+> +++ b/git-pull.sh
+> @@ -217,9 +217,9 @@ then
+>  	# $orig_head commit, but we are merging into $curr_head.
+>  	# First update the working tree to match $curr_head.
+> =20
+> -	echo >&2 "Warning: fetch updated the current branch head."
+> -	echo >&2 "Warning: fast-forwarding your working tree from"
+> -	echo >&2 "Warning: commit $orig_head."
+> +	echo >&2 "$(eval_gettext "Warning: fetch updated the current branch=
+ head.
+> +Warning: fast-forwarding your working tree from
+> +Warning: commit \$orig_head.")"
 
-> # git config alias.br branch
-> $ git br
-> fatal: cannot exec 'git-br': Permission denied
->
-> Is this by design, or a bug?
+echo "$(...)"
 
-The "tangent" part of
-
-    http://thread.gmane.org/gmane.comp.version-control.git/171755
-
-and then the discussion that begins at
-
-    http://thread.gmane.org/gmane.comp.version-control.git/171755/focus=171767
-
-may explain the current list concensus.
+sounds quite wasteful and harder to read than necessary.
+The same also happens in later patches.
