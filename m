@@ -1,70 +1,135 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 0/4] i18n: Add shell script translation infrastructure
-Date: Sun, 8 May 2011 19:03:39 +0200
-Message-ID: <BANLkTi=nTSf0CQWs-ODxw=P+eX=Dc7Yf-Q@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] git-sh-i18n--envsubst: our own envsubst(1) for
+ eval_gettext()
+Date: Sun, 08 May 2011 10:15:57 -0700
+Message-ID: <7v1v09un8y.fsf@alter.siamese.dyndns.org>
 References: <1304856659-10672-1-git-send-email-avarab@gmail.com>
+ <1304856659-10672-2-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 08 19:04:38 2011
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 08 19:16:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJ7PJ-00034P-Nn
-	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 19:04:38 +0200
+	id 1QJ7aY-0007V9-3z
+	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 19:16:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754109Ab1EHREV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2011 13:04:21 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:50558 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751567Ab1EHREU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 May 2011 13:04:20 -0400
-Received: by qyg14 with SMTP id 14so3520026qyg.19
-        for <git@vger.kernel.org>; Sun, 08 May 2011 10:04:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=Lf+8G30mbkZ6t5hYvwzFoRr5/E8mh1/K+P9gBDMaY5A=;
-        b=dZEWDoo3k6GrSluP/tu95PhZGI9RDumN4OxDjQaCsKxCEayz+zkoNBQqYDPimjoXoQ
-         NC8Fd0f2GYu5NcV4kLAKv4Xzeasc/zeiZckWXKlrrxbV1K//0MlU3i5KAP1EmNNsuAal
-         123DGt12b9EnzadFGpBwsg2aSkRxs4V+7yrmM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=CcK9MB1/uuqekF8yBPbh7k8wY8k5m3CyQIdW5dvrV7QcEl2nn7izFjtL/3z+MRvrqo
-         xtX11Ii7no1FnP6x9fzA+bJJTf6UnUcFTgZwyD50Po6UJq1lbAXPzqr5H5f9yLjyu6EU
-         0qEAupXcUIir7Fic83PsrFu8hNC+xigD8cryM=
-Received: by 10.229.42.142 with SMTP id s14mr4428246qce.174.1304874259138;
- Sun, 08 May 2011 10:04:19 -0700 (PDT)
-Received: by 10.229.75.70 with HTTP; Sun, 8 May 2011 10:03:39 -0700 (PDT)
-In-Reply-To: <1304856659-10672-1-git-send-email-avarab@gmail.com>
+	id S1755276Ab1EHRQJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2011 13:16:09 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35304 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753921Ab1EHRQH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 May 2011 13:16:07 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 72EA44CD8;
+	Sun,  8 May 2011 13:18:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=vtA1ahatFWOp
+	qbXF57J1NutGN9I=; b=ZbBocGpK1zSsC0ar40h+MM4Nf/CdiXiW0v+H1MjfyB9q
+	uard5HYf0NRXUhaJZIh05qMc80mfqO0a/fIowkQoDhb+3sb5f1qbrJRqbpEpbXS8
+	0lAtDD52hZl0v8xcb2SLu4+W4uL5F/u8OLGMN5NVLgoBpocHo8Oe/POAh/FGZNE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=nQTHGi
+	Jrpj3/it2zfAOn07tuY/Jk1/drLZOT86Hs5OAW8B0SRDwTgtTBGeyFCDmYys9stO
+	DhxE5UahXfsVjY/dWIKnSu7vYeLOVU8BtCf+JtjgWLx3j4CdVVEMFGamJ0WZB7I1
+	xkZWTRsHNu/lOiJeHgeAz8oB6jWCtS6LgKR/8=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3B5B34CD4;
+	Sun,  8 May 2011 13:18:08 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0473D4CD3; Sun,  8 May 2011
+ 13:18:03 -0400 (EDT)
+In-Reply-To: <1304856659-10672-2-git-send-email-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun, 8 May
+ 2011 12:10:56 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 248BF3F0-7997-11E0-A489-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173164>
 
-Heya,
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-On Sun, May 8, 2011 at 14:10, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <a=
-varab@gmail.com> wrote:
-> This adds skeleton no-op functions to git-sh-i18n.sh analogous to the
-> gettext.c skeleton functions for C, adds *.sh scripts to the "pot"
-> target for message extraction, and updates the git-sh-i18n--envsubst
-> tests to use the new test_i18ncmp function.
+> Add a git-sh-i18n--envsubst program which is a stripped-down version
+> of the GNU envsubst(1) program that comes with GNU gettext for use in
+> the eval_gettext() fallback
 
-I seem to remember there were some concerns about performance with a
-previous version of this series. Have you done any before/after
-timings on, say, the git test suite? Or am I remembering incorrectly?
+Ok up to this point.
 
---=20
-Cheers,
+> ... instead of using a clever (but broken)
+> printf + eval + printf trick.
+>
+> In a previous incarnation of the gettext series I implemented the
+> eval_gettext() fallback like this:
+> ...
+> This was clever, but ...
+> ...=20
+> To work around this, and to improve our variable expansion behavior
+> (eval has security issues) I've imported a stripped-down version of
+> gettext's envsubst(1) program.
 
-Sverre Rabbelier
+I do not think the lengthy history of failed experiments above is worth
+explaining. If you really want to say something to justify a new helper=
+, I
+think it is sufficient to just explain that it is unsolvable in shell. =
+I
+tried that in the first 9-line paragraph in:
+
+  http://thread.gmane.org/gmane.comp.version-control.git/170703/focus=3D=
+170770
+
+In other words, "we tried X that didn't work and we tried Y that didn't
+either, we cannot think of any better solution, so we are doing somethi=
+ng
+else" is not a good justificiation for doing that "something else".
+
+"Anything based on shell is an unpractical solution for this and that
+reasons, so we use this instead" explains that the earlier failures wer=
+e
+not because we did not try hard enough.  Unlike "tried X and Y but didn=
+'t
+work", dismissing "anything based on shell" as a whole class with clear
+explanation why it would not work would prevent people from pursuing th=
+at
+dead-end approach.  It also avoids giving quibbling people an excuse to
+argue against importing envsubst implementation saying "you didn't try
+hard enough".
+
+> With it eval_gettext() is implemented
+> like this:
+> ...
+> Reported-by: Johannes Sixt <j.sixt@viscovery.net>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.c=
+om>
+
+Ok.
+
+> diff --git a/Documentation/git-sh-i18n--envsubst.txt b/Documentation/=
+git-sh-i18n--envsubst.txt
+> new file mode 100644
+> index 0000000..e146a2c
+> --- /dev/null
+> +++ b/Documentation/git-sh-i18n--envsubst.txt
+> @@ -0,0 +1,36 @@
+> ...
+> +Author
+> +------
+> +Written by =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> +
+> +Documentation
+> +--------------
+> +Documentation by =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason and the git-=
+list
+> +<git@vger.kernel.org>.
+
+I do not think we do these individual credits these days in the doc.
