@@ -1,111 +1,145 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: [GSoC 11] submodule improvements
-Date: Sun, 8 May 2011 23:01:17 +0200
-Message-ID: <20110508210117.GA24380@paksenarrion.iveqy.com>
-References: <20110508120538.GA19074@paksenarrion.iveqy.com>
- <20110508151007.GA5066@jpl.local>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] Teach checkout the -n|--dry-run option
+Date: Sun, 08 May 2011 22:50:08 +0200
+Message-ID: <4DC70200.1080201@web.de>
+References: <4DC47242.6060205@web.de> <7vhb97xx5g.fsf@alter.siamese.dyndns.org> <7vfwoqwby5.fsf@alter.siamese.dyndns.org> <4DC67CF4.80901@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org
-To: Magnus =?iso-8859-1?Q?B=E4ck?= <magnus.back@sonyericsson.com>
-X-From: git-owner@vger.kernel.org Sun May 08 22:48:45 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 08 22:50:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJAuB-0005QV-OL
-	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 22:48:44 +0200
+	id 1QJAvg-0005vD-M5
+	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 22:50:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752947Ab1EHUsZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2011 16:48:25 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:63311 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751810Ab1EHUsY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2011 16:48:24 -0400
-Received: by ewy4 with SMTP id 4so1385323ewy.19
-        for <git@vger.kernel.org>; Sun, 08 May 2011 13:48:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=PpKbBcSwtJ9PzI7cv+2PHUaUis90Ztw1cnuZtFr8RD0=;
-        b=MYyY+aACjU5av+DD5ZFUsqeHGs1M3eTaNwLTSgJnvE2A9gg5b2f88cGDRnOra8cn4M
-         XlxXkI8DB+dT7C44aJp+F455QeexmsgJiSInDYDT4VVmRkSGkm2pIsHeV6ZccrKYdzte
-         2PTqWd5hquwbtlKW7xfYdEkn239fE2eQN2IIw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=ZxdqVs6MpQACORBYLKjQuz4yLMLbFj/LfpiKsHBacqLQqRnGL82Lht1xrG/MVrURUk
-         XFZJBE6c4ZCdqbjyjb9D+IrCIjYWRH7tmxYY4l2m0Hml7HO+D0XkiB0DLa1Y4ZB/DiBu
-         I3QkoCTZbsNOKe0I0QpAcCpue2isswXdk6rXY=
-Received: by 10.14.9.18 with SMTP id 18mr3060808ees.236.1304887702565;
-        Sun, 08 May 2011 13:48:22 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (h-185-240.A189.priv.bahnhof.se [85.24.185.240])
-        by mx.google.com with ESMTPS id y9sm2967093eeh.22.2011.05.08.13.48.21
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 08 May 2011 13:48:21 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1QJB6L-0006ML-Ez; Sun, 08 May 2011 23:01:17 +0200
-Content-Disposition: inline
-In-Reply-To: <20110508151007.GA5066@jpl.local>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751810Ab1EHUuM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 May 2011 16:50:12 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:33981 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751340Ab1EHUuK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 May 2011 16:50:10 -0400
+Received: from smtp01.web.de  ( [172.20.0.243])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 66F7C19EE90D0;
+	Sun,  8 May 2011 22:50:09 +0200 (CEST)
+Received: from [93.240.113.59] (helo=[192.168.178.43])
+	by smtp01.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1QJAvZ-0007Iv-00; Sun, 08 May 2011 22:50:09 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
+In-Reply-To: <4DC67CF4.80901@web.de>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1/Zr5IS48zZxVGla/spfnCuT7kKTmg6+mvCpTDq
+	DKnIpOcSyZdSEPGNMq2Y7sxHlnFumQ8PCHSS3GmlKgFmStOdcH
+	LL222sCeF4WX7H50NMAg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173181>
 
-On Sun, May 08, 2011 at 05:10:07PM +0200, Magnus B=E4ck wrote:
-> On Sunday, May 08, 2011 at 14:05 CEST,
->      Fredrik Gustafsson <iveqy@iveqy.com> wrote:
-> > [1] My proposal:
-> > http://www.google-melange.com/gsoc/proposal/review/google/gsoc2011/=
-iveqy/1
->=20
-> The proposal says
->=20
->     The submodule system is widely used, specially within the android
->     platform.
->=20
-> which puzzles me somewhat. The Android platform uses the Repo tool
-> to help out with multiple gits in the same source tree, and Repo
-> currently isn't based on submodules. Work is however ongoing to
-> switch Repo into using submodules instead (which would make the
-> whole tool rather redundant). Are you thinking of that work, or
-> is there a misunderstanding somewhere?
+Am 08.05.2011 13:22, schrieb Jens Lehmann:
+> Am 07.05.2011 21:24, schrieb Junio C Hamano:
+>> We may also want to add "read-tree -n" so that you do not have to specify
+>> a dummy index output only to prevent from writing the real index over,
+>> though.
+> 
+> Hmm, wouldn't using "read-tree --index-output=/dev/null" be equivalent to
+> "read-tree -n"? But nonetheless it might make sense to add the -n option.
 
-That senctence can certainly be misinterpret, specially without the
-sentence after.
+No idea how I could manage to test "read-tree --index-output=/dev/null"
+successfully without getting an "unable to write new index file" error.
 
-With "the submodule system" I didn't meant the git implementation of
-submodules but rather the use of multiple git-repositories connected in
-some way.=20
+But using read-tree works for me, so what about something like this,
+maybe with some more tests?
 
-The git submodule-commands is one way to achieve this, there's many
-others, for example (part of) repo.
+-------------8<---------------
+Subject: [PATCH] Teach read-tree the -n|--dry-run option
 
-My goal is that the git submodule system should be good enough to be th=
-e
-only submodule system needed to be used with git.
+Using this option tells read-tree to not update the index. That makes it
+possible to check if updating the index would be successful without
+changing it.
 
-I'm sorry for being unclear in the proposal.
+As using --dry-run is expected to have no side effects, this option makes
+no sense together with "-u".
 
---=20
-Med v=E4nliga h=E4lsningar
-=46redrik Gustafsson
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
+ Documentation/git-read-tree.txt |    5 +++++
+ builtin/read-tree.c             |    7 +++++--
+ t/t1000-read-tree-m-3way.sh     |    2 ++
+ 3 files changed, 12 insertions(+), 2 deletions(-)
 
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
+index 26fdadc..a35849f 100644
+--- a/Documentation/git-read-tree.txt
++++ b/Documentation/git-read-tree.txt
+@@ -53,6 +53,11 @@ OPTIONS
+ 	trees that are not directly related to the current
+ 	working tree status into a temporary index file.
 
---=20
-Med v=E4nliga h=E4lsningar
-=46redrik Gustafsson
++-n::
++--dry-run::
++	Don't write the index file. This option isn't allowed together
++	with -u.
++
+ -v::
+ 	Show the progress of checking files out.
 
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+index 93c9281..693576f 100644
+--- a/builtin/read-tree.c
++++ b/builtin/read-tree.c
+@@ -98,7 +98,7 @@ static struct lock_file lock_file;
+
+ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
+ {
+-	int i, newfd, stage = 0;
++	int i, newfd, stage = 0, dry_run = 0;
+ 	unsigned char sha1[20];
+ 	struct tree_desc t[MAX_UNPACK_TREES];
+ 	struct unpack_trees_options opts;
+@@ -130,6 +130,7 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
+ 		  PARSE_OPT_NONEG, exclude_per_directory_cb },
+ 		OPT_SET_INT('i', NULL, &opts.index_only,
+ 			    "don't check the working tree after merging", 1),
++		OPT__DRY_RUN(&dry_run, "don't update the index"),
+ 		OPT_SET_INT(0, "no-sparse-checkout", &opts.skip_sparse_checkout,
+ 			    "skip applying sparse checkout filter", 1),
+ 		OPT_SET_INT(0, "debug-unpack", &opts.debug_unpack,
+@@ -183,6 +184,8 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
+ 		die("--exclude-per-directory is meaningless unless -u");
+ 	if (opts.merge && !opts.index_only)
+ 		setup_work_tree();
++	if (opts.update && dry_run)
++		die("--dry-run contradicts -u");
+
+ 	if (opts.merge) {
+ 		if (stage < 2)
+@@ -219,7 +222,7 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
+ 	if (unpack_trees(nr_trees, t, &opts))
+ 		return 128;
+
+-	if (opts.debug_unpack)
++	if (opts.debug_unpack || dry_run)
+ 		return 0; /* do not write the index out */
+
+ 	/*
+diff --git a/t/t1000-read-tree-m-3way.sh b/t/t1000-read-tree-m-3way.sh
+index ca8a409..bcfb5e6 100755
+--- a/t/t1000-read-tree-m-3way.sh
++++ b/t/t1000-read-tree-m-3way.sh
+@@ -259,6 +259,8 @@ test_expect_success \
+     "rm -f .git/index AA &&
+      cp .orig-A/AA AA &&
+      git update-index --add AA &&
++     git read-tree -n -m $tree_O $tree_A $tree_B &&
++     test_must_fail check_result &&
+      git read-tree -m $tree_O $tree_A $tree_B &&
+      check_result"
+
+-- 
+1.7.5.1.218.g8af57
