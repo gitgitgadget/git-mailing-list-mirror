@@ -1,89 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] commit: do not cleanup template
-Date: Sat, 07 May 2011 15:31:40 -0700
-Message-ID: <7vei4auoqb.fsf@alter.siamese.dyndns.org>
-References: <1304783624-9919-1-git-send-email-billiob@gmail.com>
- <7vwri2uv4m.fsf@alter.siamese.dyndns.org>
- <BANLkTinvwjoa4z2JEiuPD44BV2V_m50VYQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Question about PERL_PATH
+Date: Sat, 7 May 2011 20:13:26 -0400
+Message-ID: <20110508001326.GA13282@sigill.intra.peff.net>
+References: <4DC3F804.3080205@mev.co.uk>
+ <7v7ha33jd7.fsf@alter.siamese.dyndns.org>
+ <robbat2-20110507T174237-068953557Z@orbis-terrarum.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Cc: git@vger.kernel.org
-To: "Boris 'billiob' Faure" <billiob@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 08 00:32:06 2011
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org, abbotti@mev.co.uk
+X-From: git-owner@vger.kernel.org Sun May 08 02:13:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QIq2f-0002h4-JW
-	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 00:32:05 +0200
+	id 1QIrd9-0006IQ-6I
+	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 02:13:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756143Ab1EGWbs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 May 2011 18:31:48 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62136 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756029Ab1EGWbr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 May 2011 18:31:47 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BBABE4FC4;
-	Sat,  7 May 2011 18:33:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=X64KTKwbrecKrKuzYwF3KiAHdtw=; b=NslfCZ
-	3OLRAqBWXhZA8r3JUuQSmkEaO+a93QAFe25f/XO8c72KFzrSenrUNwzUqwgDIxX9
-	ygM5cMSZK0rsCG0leB4IZw+JhM1VxOkwNocJSBIYRFGpcYfC/ldhVQdhf8HvKYGP
-	CO5yC90XsmjhO5EGtJCAythvK2YvqTrD1sGXI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dE0pAXSTTKKyPxMdRcl2uquJP+4rxkQD
-	h/W5Wgilm3Cb28zVdluxLmCnliV2LHuWHpHCPL0i+BVoYHu5rmyxRMewjtMT9x0l
-	xvuhq/+L7Si9iBXIHYr0uURRJoTxlStzO2T9WsOtZCt68G1ExnBYkpewL8ZO94s4
-	D56PqZTcp1k=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 98A234FC3;
-	Sat,  7 May 2011 18:33:49 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A9F924FC2; Sat,  7 May 2011
- 18:33:46 -0400 (EDT)
-In-Reply-To: <BANLkTinvwjoa4z2JEiuPD44BV2V_m50VYQ@mail.gmail.com> (Boris
- Faure's message of "Sat, 7 May 2011 23:17:03 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 14192F3A-78FA-11E0-9F07-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
+	id S1751480Ab1EHANc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 May 2011 20:13:32 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41146
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751284Ab1EHANb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 May 2011 20:13:31 -0400
+Received: (qmail 24016 invoked by uid 107); 8 May 2011 00:15:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 07 May 2011 20:15:26 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 07 May 2011 20:13:26 -0400
+Content-Disposition: inline
+In-Reply-To: <robbat2-20110507T174237-068953557Z@orbis-terrarum.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173071>
 
-"Boris 'billiob' Faure" <billiob@gmail.com> writes:
+On Sat, May 07, 2011 at 06:02:48PM +0000, Robin H. Johnson wrote:
 
-> On Sat, May 7, 2011 at 22:13, Junio C Hamano <gitster@pobox.com> wrote:
->> […]
->> My gut feeling is that it is relatively easy to justify [1/2]. We prepare
->> the message file to be edited by the committer in sb by reading from
->> different message sources, and usually we would want to clean up what is
->> in sb before writing it out, but you may want to enforce a particular
->> format by using the template (such as having a leading whitespace) and the
->> way to tweak and fix that appearance should be by editing the template,
->> not by automatically running stripspace() here [*1*] when the message came
->> from the template.
->
-> That's exactly my point of view.
+> On Fri, May 06, 2011 at 09:05:08AM -0700,  Junio C Hamano wrote:
+> > The variable is not PERL_COMMAND_LINE, but is PERL_PATH, so I think it
+> > should expects the path to the program.
+> > 
+> > Our testsuite also rely on it being the path to the program by enclosing
+> > the reference to it inside double quotes, to make sure that PERL_PATH set
+> > to "/Program Files/Perl/perl.exe" works.  Didn't Gentoo folks see any test
+> > breakage before shipping the ebuild procedure?
+> The entire test suite completes fine with our
+> PERL_PATH="${EPREFIX}/usr/bin/env perl" setting.
 
-Please describe these things in the proposed commit log message.  A
-submitted patch should not force reviewers and future readers of "git log"
-to guess why this change was made.
+This is more luck than anything. For example, you are skipping all of
+the perl tests (t9700) and all of the git-svn tests (t91*), because they
+both try do something like:
 
-While reviewing, reviewers can ask what problem you are trying to solve,
-why you did things in one particular way, etc., and they may be able to
-extract the necessary information from you like I just did during this
-exchange.
+  if ! "$PERL_PATH" -e "use SomeModule"; then
+    skip_all="You don't have SomeModule installed"
+  fi
 
-But people who are reading "git log" in the future and bisecting the code
-to see why this change was made 6 months ago will not have that luxury,
-and even if they manage to find you and asked, you may not remember why.
+So you are skipping many tests accidentally, and it is only luck that
+all such uses are currently tests that handle a broken "$PERL_PATH" in
+this way. It is entirely likely that this usage may end up causing a
+test suite failure at some point in the future.
 
-Without having enough clue to understand what you wanted to achieve, they
-may make changes that breaks your unstated expectation, and they would not
-even know they broke things.
+If we want to support this use of env/, we need to provide separate
+Makefile variables for "what goes at the top of a perl script" and "what
+we use to run perl".
+
+> This was originally put into place because of our bug #326625 [1].
+> From that bug:
+> ====
+> Git does not compile if local::lib installed in user's home directory if
+> 'sudo' is used to raise privileges. Local::lib exports environment
+> variable PERL5_MM_OPTS, which contains string INSTALL_BASE='...'.
+> Variable PREFIX is set in package's Makefile.pl. Package will not
+> compile if both of these variables are set.
+> ====
+> (Full logs attached in the bug).
+> 
+> If you can suggest a better way to fix the user's bug, I'll revert the
+> PERL_PATH change.
+
+It looks like we auto-build the perl bits of the Makefile by calling:
+
+  $(PERL_PATH) Makefile.PL PREFIX=$(prefix) INSTALL_BASE=''
+
+which seems to me like it should override local::lib's INSTALL_BASE
+(which also doesn't seem ideal, but I wouldn't expect it to cause this
+error). But surely the solution involves changing this line in
+perl/Makefile to handle the local::lib case?
+
+I also don't see how this is git-specific. From my reading of the bug
+report, local::lib will fail to work any time the user does:
+
+  perl Makefile.PL PREFIX=anything
+
+which seems odd. Wouldn't other packages be running into this problem,
+then, too (i.e., anything which has a little bit of perl and
+automagically runs MakeMaker on behalf of the user)?
+
+-Peff
