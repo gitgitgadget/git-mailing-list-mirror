@@ -1,115 +1,80 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: RFC: a plugin architecture for git extensions?
-Date: Sun, 8 May 2011 23:13:35 +1000
-Message-ID: <BANLkTinhN0=2NETtOjG_yvubHiZagGB0Wg@mail.gmail.com>
-References: <alpine.DEB.2.00.1104271751300.940@asgard.lang.hm>
-	<BANLkTimnkBMRH7Spj1ByQRa9YdV9w+bwtQ@mail.gmail.com>
-	<BANLkTikbcpzF203rUVB05OYyYhLmu3+n6w@mail.gmail.com>
-	<BANLkTinQny-M0rL+Vs9L_cQhtVLyv6rqMw@mail.gmail.com>
-	<4DB9329E.7000703@op5.se>
-	<88795B20-6994-46A5-9710-2ADC84E04695@gmail.com>
-	<7vhb986chl.fsf@alter.siamese.dyndns.org>
-	<BANLkTi=+emhzqfiGxGbnJ=bm3oL7SvjhBw@mail.gmail.com>
-	<7vbozg4eqw.fsf@alter.siamese.dyndns.org>
-	<BANLkTi=zrWR0GAm6n1Gs9XDCR6kXtjDW0A@mail.gmail.com>
-	<20110506065601.GB13351@elie>
+From: Magnus =?iso-8859-1?Q?B=E4ck?= <magnus.back@sonyericsson.com>
+Subject: Re: [GSoC 11] submodule improvements
+Date: Sun, 8 May 2011 17:10:07 +0200
+Message-ID: <20110508151007.GA5066@jpl.local>
+References: <20110508120538.GA19074@paksenarrion.iveqy.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	David Aguilar <davvid@gmail.com>, Andreas Ericsson <ae@op5.se>,
-	Joey Hess <joey@kitenet.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	"david@lang.hm" <david@lang.hm>,
-	Pau Garcia i Quiles <pgquiles@elpauer.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 08 15:13:50 2011
+Cc: git@vger.kernel.org
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Sun May 08 17:10:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJ3nw-0008Ay-8a
-	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 15:13:48 +0200
+	id 1QJ5cf-0004M8-Ll
+	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 17:10:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753843Ab1EHNNi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2011 09:13:38 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:62571 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753526Ab1EHNNg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 May 2011 09:13:36 -0400
-Received: by vxi39 with SMTP id 39so4888237vxi.19
-        for <git@vger.kernel.org>; Sun, 08 May 2011 06:13:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=r5O2Tj//PtlN0oBveVou6+h7J59LAFRtOoSekM0zdT4=;
-        b=aX5S1VwlUbjv289LIci4Wu4Q/l234etPUwgTinti4jdxUUH8pYu+o4Gv+ZjG+MtN/C
-         o9RL0FHsEhhvmvJA9hfwRQQLyMhta0Y6/B2e0Zvc2jWpfwIlH53qfxLPa1DYOPKyzlUc
-         mwXrue555liSbG2X9tzmmGfkMxhzPukSWh9r0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=rdqng+Eq0CSM6+x1uZxf7gYFv00rTQPmvBufg4YEKSykZvPItXWIc4WoACaa5Q/MiM
-         f9mKH/Ic6u34GHKr8lW8UFa8KyYEf4T5aF+/orXFKPbMotq0eEpUT+DWS8AVydCv9Pm5
-         vNt3ofaf2yrSXTRSoIsvikHZgWR4D2zLIUzg0=
-Received: by 10.52.94.170 with SMTP id dd10mr1723783vdb.159.1304860415808;
- Sun, 08 May 2011 06:13:35 -0700 (PDT)
-Received: by 10.52.160.66 with HTTP; Sun, 8 May 2011 06:13:35 -0700 (PDT)
-In-Reply-To: <20110506065601.GB13351@elie>
+	id S1754554Ab1EHPKL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2011 11:10:11 -0400
+Received: from smtprelay-b21.telenor.se ([195.54.99.212]:57100 "EHLO
+	smtprelay-b21.telenor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754284Ab1EHPKK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 May 2011 11:10:10 -0400
+Received: from ipb3.telenor.se (ipb3.telenor.se [195.54.127.166])
+	by smtprelay-b21.telenor.se (Postfix) with ESMTP id DFFFEEB337
+	for <git@vger.kernel.org>; Sun,  8 May 2011 17:10:08 +0200 (CEST)
+X-SMTPAUTH-B2: [b627879]
+X-SENDER-IP: [83.227.167.132]
+X-LISTENER: [smtp.bredband.net]
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AlUTADixxk1T46eEPGdsb2JhbACXZo4xCwEBAQE3MohxvFCGDASeRA
+X-IronPort-AV: E=Sophos;i="4.64,335,1301868000"; 
+   d="scan'208";a="9498496"
+Received: from ua-83-227-167-132.cust.bredbandsbolaget.se (HELO elwood.jpl.local) ([83.227.167.132])
+  by ipb3.telenor.se with ESMTP; 08 May 2011 17:10:08 +0200
+Received: by elwood.jpl.local (Postfix, from userid 1000)
+	id 467EE422AF; Sun,  8 May 2011 17:10:07 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20110508120538.GA19074@paksenarrion.iveqy.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173157>
 
-On Fri, May 6, 2011 at 4:56 PM, Jonathan Nieder <jrnieder@gmail.com> wr=
-ote:
->
-> But now I am less sure. =C2=A0The motivating example has less than 10
-> commands; that doesn't seem worth all the fuss at all. =C2=A0Why not =
-just
-> install the command on the $PATH? =C2=A0"git help work" _would_ work =
-on all
-> the systems I have easy access to. =C2=A0For example, if I write:
->
+On Sunday, May 08, 2011 at 14:05 CEST,
+     Fredrik Gustafsson <iveqy@iveqy.com> wrote:
 
-An aspect of the motivational example that I would welcome your
-feedback on is this.
+> I've been chosen to improve git submodules during the summer. My main
+> focus will be to move the .git-directory away from the submodules so
+> that submodules can be deleted and created in the working tree [1].
 
-git-work is an example of an extension that depends on 3 other
-extensions (git-base, git-atomic and git-test).
+[...]
 
-Similarly:
+> [1] My proposal:
+> http://www.google-melange.com/gsoc/proposal/review/google/gsoc2011/iv=
+eqy/1
 
-   git-base depends on git-test.
-   git-atomic depends on git-test
+The proposal says
 
-It seems that if I am to represent these dependencies, I need to
-create 4 * N packages, where N is the number of packaging systems I
-want to support.
+    The submodule system is widely used, specially within the android
+    platform.
 
-It is unclear how I make:
+which puzzles me somewhat. The Android platform uses the Repo tool
+to help out with multiple gits in the same source tree, and Repo
+currently isn't based on submodules. Work is however ongoing to
+switch Repo into using submodules instead (which would make the
+whole tool rather redundant). Are you thinking of that work, or
+is there a misunderstanding somewhere?
 
-    make install prefix=3D/usr/local
+[...]
 
-work unless the 3 other dependencies have been installed first. If I
-need to explain that these 3 other dependencies need to be installed,
-then my installation instructions have just become longer.
-
-This seems a shame, since each extension has a dependency only on
-other git extensions and git itself. Yet, to provide a workable
-installation from source option for my users, I need to either get
-them to fetch and build all 4 packages from source, or I need to build
-packages for N different distribution managers.
-
-[ FWIW: I recognise that my current proposals for a simple git
---system-extensions-dir don't make this problem any easier to solve,
-but I wanted to use the example to demonstrate why a simple make
-install script isn't the silver bullet to every installation scenario
-].
-
-jon.
+--=20
+Magnus B=E4ck                   Opinions are my own and do not necessar=
+ily
+SW Configuration Manager      represent the ones of my employer, etc.
+Sony Ericsson
