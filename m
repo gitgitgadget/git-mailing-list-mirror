@@ -1,128 +1,174 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/3] blame: refactor porcelain output
-Date: Mon, 9 May 2011 09:34:02 -0400
-Message-ID: <20110509133402.GB11022@sigill.intra.peff.net>
+Subject: [PATCH 3/3] blame: add --line-porcelain output format
+Date: Mon, 9 May 2011 09:34:42 -0400
+Message-ID: <20110509133442.GC11022@sigill.intra.peff.net>
 References: <20110509133153.GA10998@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 09 15:34:17 2011
+X-From: git-owner@vger.kernel.org Mon May 09 15:34:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJQbG-0001j9-4d
-	for gcvg-git-2@lo.gmane.org; Mon, 09 May 2011 15:34:14 +0200
+	id 1QJQbp-00023j-SS
+	for gcvg-git-2@lo.gmane.org; Mon, 09 May 2011 15:34:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753126Ab1EINeG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 May 2011 09:34:06 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39682
+	id S1753297Ab1EINep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 May 2011 09:34:45 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39685
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752680Ab1EINeF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2011 09:34:05 -0400
-Received: (qmail 9095 invoked by uid 107); 9 May 2011 13:36:01 -0000
+	id S1752680Ab1EINeo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2011 09:34:44 -0400
+Received: (qmail 9125 invoked by uid 107); 9 May 2011 13:36:41 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 09 May 2011 09:36:01 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 May 2011 09:34:02 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 09 May 2011 09:36:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 May 2011 09:34:42 -0400
 Content-Disposition: inline
 In-Reply-To: <20110509133153.GA10998@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173232>
 
-This is in preparation for adding more porcelain output
-options. The three changes are:
-
-  1. emit_porcelain now receives the format option flags
-
-  2. emit_one_suspect_detail takes an optional "repeat"
-     parameter to suppress the "show only once" behavior
-
-  3. The code for emitting porcelain suspect is factored
-     into its own function for repeatability.
-
-There should be no functional changes.
+This is just like --porcelain, except that we always output
+the commit information for each line, not just the first
+time it is referenced. This can make quick and dirty scripts
+much easier to write; see the example added to the blame
+documentation.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I broke this out for readability. I can break each of the 3 out into a
-separate patch if that helps, but it seemed excessive.
+I'm not 100% happy with the name, but I couldn't think of anything
+better. Something like --verbose-porcelain works, but is a little too
+vague. Suggestions welcome.
 
- builtin/blame.c |   25 ++++++++++++++++---------
- 1 files changed, 16 insertions(+), 9 deletions(-)
+ Documentation/blame-options.txt |    5 +++++
+ Documentation/git-blame.txt     |   13 +++++++++++++
+ builtin/blame.c                 |   10 ++++++++--
+ t/t8008-blame-formats.sh        |   19 +++++++++++++++++++
+ 4 files changed, 45 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
+index 16e3c68..e76195a 100644
+--- a/Documentation/blame-options.txt
++++ b/Documentation/blame-options.txt
+@@ -52,6 +52,11 @@ of lines before or after the line given by <start>.
+ --porcelain::
+ 	Show in a format designed for machine consumption.
+ 
++--line-porcelain::
++	Show the porcelain format, but output commit information for
++	each line, not just the first time a commit is referenced.
++	Implies --porcelain.
++
+ --incremental::
+ 	Show the result incrementally in a format designed for
+ 	machine consumption.
+diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
+index bb8edb4..9516914 100644
+--- a/Documentation/git-blame.txt
++++ b/Documentation/git-blame.txt
+@@ -105,6 +105,19 @@ The contents of the actual line is output after the above
+ header, prefixed by a TAB. This is to allow adding more
+ header elements later.
+ 
++The porcelain format generally suppresses commit information that has
++already been seen. For example, two lines that are blamed to the same
++commit will both be shown, but the details for that commit will be shown
++only once. This is more efficient, but may require more state be kept by
++the reader. The `--line-porcelain` option can be used to output full
++commit information for each line, allowing simpler (but less efficient)
++usage like:
++
++	# count the number of lines attributed to each author
++	git blame --line-porcelain file |
++	sed -n 's/^author //p' |
++	sort | uniq -c | sort -rn
++
+ 
+ SPECIFYING RANGES
+ -----------------
 diff --git a/builtin/blame.c b/builtin/blame.c
-index 4242e4b..d74e18f 100644
+index d74e18f..6c26672 100644
 --- a/builtin/blame.c
 +++ b/builtin/blame.c
-@@ -1484,13 +1484,14 @@ static void write_filename_info(const char *path)
- /*
-  * Porcelain/Incremental format wants to show a lot of details per
-  * commit.  Instead of repeating this every line, emit it only once,
-- * the first time each commit appears in the output.
-+ * the first time each commit appears in the output (unless the
-+ * user has specifically asked for us to repeat).
-  */
--static int emit_one_suspect_detail(struct origin *suspect)
-+static int emit_one_suspect_detail(struct origin *suspect, int repeat)
- {
- 	struct commit_info ci;
- 
--	if (suspect->commit->object.flags & METAINFO_SHOWN)
-+	if (!repeat && suspect->commit->object.flags & METAINFO_SHOWN)
- 		return 0;
- 
- 	suspect->commit->object.flags |= METAINFO_SHOWN;
-@@ -1529,7 +1530,7 @@ static void found_guilty_entry(struct blame_entry *ent)
- 		printf("%s %d %d %d\n",
- 		       sha1_to_hex(suspect->commit->object.sha1),
- 		       ent->s_lno + 1, ent->lno + 1, ent->num_lines);
--		emit_one_suspect_detail(suspect);
-+		emit_one_suspect_detail(suspect, 0);
- 		write_filename_info(suspect->path);
- 		maybe_flush_or_die(stdout, "stdout");
- 	}
-@@ -1619,7 +1620,15 @@ static const char *format_time(unsigned long time, const char *tz_str,
+@@ -1619,6 +1619,7 @@ static const char *format_time(unsigned long time, const char *tz_str,
+ #define OUTPUT_SHOW_SCORE      0100
  #define OUTPUT_NO_AUTHOR       0200
  #define OUTPUT_SHOW_EMAIL	0400
++#define OUTPUT_LINE_PORCELAIN 01000
  
--static void emit_porcelain(struct scoreboard *sb, struct blame_entry *ent)
-+static void emit_porcelain_details(struct origin *suspect, int repeat)
-+{
-+	if (emit_one_suspect_detail(suspect, repeat) ||
-+	    (suspect->commit->object.flags & MORE_THAN_ONE_PATH))
-+		write_filename_info(suspect->path);
-+}
-+
-+static void emit_porcelain(struct scoreboard *sb, struct blame_entry *ent,
-+			   int opt)
+ static void emit_porcelain_details(struct origin *suspect, int repeat)
  {
+@@ -1630,6 +1631,7 @@ static void emit_porcelain_details(struct origin *suspect, int repeat)
+ static void emit_porcelain(struct scoreboard *sb, struct blame_entry *ent,
+ 			   int opt)
+ {
++	int repeat = opt & OUTPUT_LINE_PORCELAIN;
  	int cnt;
  	const char *cp;
-@@ -1633,9 +1642,7 @@ static void emit_porcelain(struct scoreboard *sb, struct blame_entry *ent)
+ 	struct origin *suspect = ent->suspect;
+@@ -1642,15 +1644,18 @@ static void emit_porcelain(struct scoreboard *sb, struct blame_entry *ent,
  	       ent->s_lno + 1,
  	       ent->lno + 1,
  	       ent->num_lines);
--	if (emit_one_suspect_detail(suspect) ||
--	    (suspect->commit->object.flags & MORE_THAN_ONE_PATH))
--		write_filename_info(suspect->path);
-+	emit_porcelain_details(suspect, 0);
+-	emit_porcelain_details(suspect, 0);
++	emit_porcelain_details(suspect, repeat);
  
  	cp = nth_line(sb, ent->lno);
  	for (cnt = 0; cnt < ent->num_lines; cnt++) {
-@@ -1756,7 +1763,7 @@ static void output(struct scoreboard *sb, int option)
+ 		char ch;
+-		if (cnt)
++		if (cnt) {
+ 			printf("%s %d %d\n", hex,
+ 			       ent->s_lno + 1 + cnt,
+ 			       ent->lno + 1 + cnt);
++			if (repeat)
++				emit_porcelain_details(suspect, 1);
++		}
+ 		putchar('\t');
+ 		do {
+ 			ch = *cp++;
+@@ -2307,6 +2312,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 		OPT_BIT('f', "show-name", &output_option, "Show original filename (Default: auto)", OUTPUT_SHOW_NAME),
+ 		OPT_BIT('n', "show-number", &output_option, "Show original linenumber (Default: off)", OUTPUT_SHOW_NUMBER),
+ 		OPT_BIT('p', "porcelain", &output_option, "Show in a format designed for machine consumption", OUTPUT_PORCELAIN),
++		OPT_BIT(0, "line-porcelain", &output_option, "Show porcelain format with per-line commit information", OUTPUT_PORCELAIN|OUTPUT_LINE_PORCELAIN),
+ 		OPT_BIT('c', NULL, &output_option, "Use the same output mode as git-annotate (Default: off)", OUTPUT_ANNOTATE_COMPAT),
+ 		OPT_BIT('t', NULL, &output_option, "Show raw timestamp (Default: off)", OUTPUT_RAW_TIMESTAMP),
+ 		OPT_BIT('l', NULL, &output_option, "Show long commit SHA1 (Default: off)", OUTPUT_LONG_OBJECT_NAME),
+diff --git a/t/t8008-blame-formats.sh b/t/t8008-blame-formats.sh
+index 387d1a6..d15f8b3 100755
+--- a/t/t8008-blame-formats.sh
++++ b/t/t8008-blame-formats.sh
+@@ -68,4 +68,23 @@ test_expect_success 'blame --porcelain output' '
+ 	test_cmp expect actual
+ '
  
- 	for (ent = sb->ent; ent; ent = ent->next) {
- 		if (option & OUTPUT_PORCELAIN)
--			emit_porcelain(sb, ent);
-+			emit_porcelain(sb, ent, option);
- 		else {
- 			emit_other(sb, ent, option);
- 		}
++cat >expect <<EOF
++$ID1 1 1 1
++$COMMIT1
++	a
++$ID2 2 2 3
++$COMMIT2
++	b
++$ID2 3 3
++$COMMIT2
++	c
++$ID2 4 4
++$COMMIT2
++	d
++EOF
++test_expect_success 'blame --line-porcelain output' '
++	git blame --line-porcelain file >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 1.7.5.rc2.8.gc085
