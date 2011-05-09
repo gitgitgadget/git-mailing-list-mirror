@@ -1,230 +1,95 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] only warn about ambiguous refs if stderr is a tty
-Date: Mon, 9 May 2011 14:37:48 +0200
-Message-ID: <BANLkTimn7542tji-Uu5iH72HS9fcnaywvg@mail.gmail.com>
+Date: Mon, 9 May 2011 08:49:31 -0400
+Message-ID: <20110509124931.GA18197@sigill.intra.peff.net>
 References: <BANLkTinLCirA4XP9AOb9piGo9ucMsmrmkQ@mail.gmail.com>
- <1304927478-3112-1-git-send-email-kusmabite@gmail.com> <20110509080315.GA6205@sigill.intra.peff.net>
- <BANLkTimR_S-px-MfRy0pKGrjxOgSC_=e=A@mail.gmail.com> <20110509103208.GA9060@sigill.intra.peff.net>
-Reply-To: kusmabite@gmail.com
+ <1304927478-3112-1-git-send-email-kusmabite@gmail.com>
+ <20110509080315.GA6205@sigill.intra.peff.net>
+ <BANLkTimR_S-px-MfRy0pKGrjxOgSC_=e=A@mail.gmail.com>
+ <20110509103208.GA9060@sigill.intra.peff.net>
+ <BANLkTimn7542tji-Uu5iH72HS9fcnaywvg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org, steveire@gmail.com,
 	felipe.contreras@gmail.com, gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon May 09 14:38:16 2011
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 09 14:49:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJPj5-0007Ut-Uc
-	for gcvg-git-2@lo.gmane.org; Mon, 09 May 2011 14:38:16 +0200
+	id 1QJPu9-0004ZM-Pa
+	for gcvg-git-2@lo.gmane.org; Mon, 09 May 2011 14:49:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752802Ab1EIMiK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 May 2011 08:38:10 -0400
-Received: from mail-px0-f173.google.com ([209.85.212.173]:37435 "EHLO
-	mail-px0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752550Ab1EIMiI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 May 2011 08:38:08 -0400
-Received: by pxi16 with SMTP id 16so3547629pxi.4
-        for <git@vger.kernel.org>; Mon, 09 May 2011 05:38:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=btK8vRo1PG26Ib2gTeoD8OyR1bbfvAL2qELDm7IaGDs=;
-        b=W2DRlzGVgy+QfcCCd3DtAIrYbjeahdYQJucttbyS69exhd+MKYy3moZp/raY3EStZJ
-         WtdXGbxa3+goonv/Kuysd64GiUgQuMBACU4nhTwUKTpqr02HxQ5Pfj1rFggP38B9QV37
-         z54hndrqtRi0NPHPgXi0etOsBQ39Et9zpJX+I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=uS5iq9OPzjCsodtx9AbVpdiJQk+Mb1l2EWDARLpM8Kh0dCI6n/TTVVx55vETtPPjHS
-         2BhCOiVXO6GU4hW6wDHkRuBlJAjqgo1PjQ4mh9UvfAtZ8FRh+0sygviFoPX1PEI4jWaz
-         CvYXOAsZTmuGWv9JdNiErLvU6asolC2FGE5cg=
-Received: by 10.68.65.110 with SMTP id w14mr681200pbs.382.1304944688076; Mon,
- 09 May 2011 05:38:08 -0700 (PDT)
-Received: by 10.68.66.98 with HTTP; Mon, 9 May 2011 05:37:48 -0700 (PDT)
-In-Reply-To: <20110509103208.GA9060@sigill.intra.peff.net>
+	id S1752870Ab1EIMte (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 May 2011 08:49:34 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37035
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752142Ab1EIMtd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2011 08:49:33 -0400
+Received: (qmail 8671 invoked by uid 107); 9 May 2011 12:51:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 09 May 2011 08:51:29 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 May 2011 08:49:31 -0400
+Content-Disposition: inline
+In-Reply-To: <BANLkTimn7542tji-Uu5iH72HS9fcnaywvg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173228>
 
-On Mon, May 9, 2011 at 12:32 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, May 09, 2011 at 10:41:02AM +0200, Erik Faye-Lund wrote:
->> I was talking about warnings, not errors. But I can also see that on=
-e
->> would sometimes want warnings even when not connected to a tty, but
->> perhaps only when -v is specified?
->
-> I know. I meant a script like this:
->
-> =A0cat >>foo.sh <<'EOF'
-> =A0# go to branch in question
-> =A0git checkout "$1"
->
-> =A0# note some point of interest
-> =A0sha1=3D`git rev-parse "$2"`
->
-> =A0# do some script-specific inspection of $sha1, and
-> =A0# merge if it looks OK
-> =A0if test -z "$(git log ..$sha1 -- some-path)"; then
-> =A0 =A0git merge $sha1 || exit 1
-> =A0fi
-> =A0EOF
->
-> It may produce some chatty output (like "switched to branch..."). So =
-I
-> redirect it to a file, and if everything is successful, that output i=
-s
-> uninteresting. But if it fails, then I want to see everything. So I d=
-o
-> something like:
->
-> =A0if ! foo.sh master topic >output.tmp 2>&1; then
-> =A0 =A0cat output.tmp
-> =A0 =A0exit 1
-> =A0fi
->
-> If the merge fails, it will produce an error message. But I _also_ wa=
-nt
-> to see any warnings that were generated by it and earlier commands, l=
-ike
-> rev-parse (e.g., an ambiguous ref warning might help us understand wh=
-y
-> the merge failed).
+On Mon, May 09, 2011 at 02:37:48PM +0200, Erik Faye-Lund wrote:
 
-Yeah, I understood that part. My point was that once the output is
-wanted for diagnostics, you probably also want verbose output. And
-warnings should probably always be output if we're verbose.
+> Yeah, I understood that part. My point was that once the output is
+> wanted for diagnostics, you probably also want verbose output. And
+> warnings should probably always be output if we're verbose.
 
-But I have no strong feelings about this, so it's probably better to
-leave it alone.
+Ah, I see. I think my main concern is that the behavior you proposed
+would simply be surprising to people used to normal unix conventions.
+But it sounds like we both agree that isn't the right direction anyway.
 
->> > Yeah, if we disambiguate, I would be tempted to say that "HEAD" al=
-ways
->> > unambiguously refers to "HEAD".
->>
->> While that would touch less code, my gut tells me it's a bit more
->> fragile. But perhaps you're right; I can't come up with any real
->> arguments (i.e use cases that I care about) on top of my head.
->
-> Honestly, I'm kind of surprised it's not that way already. It would m=
-ake
-> sense to me that "upper" levels would take precedence over lower leve=
-ls,
-> but that ambiguity would occur within a level. So if I say "foo", we
-> would look for:
->
-> =A01. $GIT_DIR/foo, with no ambiguity
->
-> =A02. $GIT_DIR/refs/foo, with no ambiguity
->
-> =A03. $GIT_DIR/refs/tags/foo
-> =A0 =A0 $GIT_DIR/refs/heads/foo
-> =A0 =A0 $GIT_DIR/refs/remotes/foo
->
-> =A0 =A0 And note any ambiguity between those three.
->
-> Which is not very different than what we do today, except that things
-> like HEAD and FETCH_HEAD would always be unambiguously about the
-> top-level.
->
+> > Of course, because there is no refs/HEAD at all. I meant "if you have
+> > ambiguity between $GIT_DIR/HEAD and $GIT_DIR/refs/HEAD", then saying
+> > "refs/HEAD" should disambiguate already. In your example, there is no
+> > ambiguity.
+> 
+> I meant that "refs/HEAD" could be an non-ambiguous alias for HEAD, but
+> it's probably easier to just say that 'HEAD' isn't ambiguous. Your
+> suggestion of only checking for ambiguousness on the same level is IMO
+> an elegant way of doing this.
 
-I think that would make sense.
+OK, I see what you meant. But "refs/HEAD" cannot be a shortcut for
+"HEAD", as it means something totally different. You can have "HEAD",
+"refs/HEAD", "refs/heads/HEAD" all co-existing.
 
->> > And "refs/HEAD" should already work, no?
->>
->> No:
->> $ git init foo
->> $ cd foo/
->> $ echo "foo" > bar
->> $ git add bar
->> $ git commit -m.
->> [master (root-commit) fc0cbef] .
->> warning: LF will be replaced by CRLF in bar.
->> The file will have its original line endings in your working directo=
-ry.
->> =A01 files changed, 1 insertions(+), 0 deletions(-)
->> =A0create mode 100644 bar
->> $ git show refs/HEAD
->> fatal: ambiguous argument 'refs/HEAD': unknown revision or path not =
-in
->> the working tree.
->> Use '--' to separate paths from revisions
->
-> Of course, because there is no refs/HEAD at all. I meant "if you have
-> ambiguity between $GIT_DIR/HEAD and $GIT_DIR/refs/HEAD", then saying
-> "refs/HEAD" should disambiguate already. In your example, there is no
-> ambiguity.
+> I agree. There could be a remote chance that you can get a branch
+> called 'HEAD' from some foreign vcs or something, though. But I don't
+> think it's very likely, and the problem will also go away if we go
+> with your approach mentioned above.
 
-I meant that "refs/HEAD" could be an non-ambiguous alias for HEAD, but
-it's probably easier to just say that 'HEAD' isn't ambiguous. Your
-suggestion of only checking for ambiguousness on the same level is IMO
-an elegant way of doing this.
+Thinking on it more, I think warning is probably the only sane thing to
+do there. Having a branch with that name is just going to be confusing
+in the long run, and the sooner we start making the user aware of the
+situation, the better.
 
-> What I failed to notice is that the likely disambiguator is actually
-> "refs/heads/HEAD" if you erroneously made a branch.
->
-> Try this:
->
-> =A0# A repo with two commits
-> =A0git init repo && cd repo &&
-> =A0echo content >file &&
-> =A0git add file &&
-> =A0git commit -m one &&
-> =A0echo content >>file &&
-> =A0git commit -a -m two &&
->
-> =A0# And an ambiguously named ref called HEAD, pointing to "one";
-> =A0# our real HEAD is still pointing to "two"
-> =A0git branch HEAD HEAD^ &&
->
-> =A0# This should warn of ambiguity, but show "two"
-> =A0git log -1 --oneline HEAD
->
-> =A0# And this should not be ambiguous at all, and show "one"
-> =A0git log -1 --oneline refs/heads/HEAD
->
-> =A0# You can even do the same thing with refs/HEAD if you want, but
-> =A0# you have to use plumbing to get such a ref.
-> =A0git branch -d HEAD
-> =A0git update-ref refs/HEAD HEAD^
->
-> =A0# same as before, ambiguous "two"
-> =A0git log -1 --oneline HEAD
->
-> =A0# or we can use refs/HEAD to get "one"
-> =A0git log -1 --oneline refs/HEAD
->
-> So most of that makes sense to me. We choose $GIT_DIR/HEAD over other
-> options, and you can specifically refer to something further down by
-> its fully-qualified name.
->
-> The only thing that I think we might want to change is that "HEAD" is
-> considered ambiguous with "refs/heads/HEAD". On the other hand, it se=
-ems
-> a little insane to name your branch that, given that it has a
-> well-established meaning in git.
+> > I admit I haven't been following this
+> > thread too closely. What is the reason not to tell the user "sorry, that
+> > is an insane branch name. Accept the ambiguity warning, or choose a
+> > different name"?
+> 
+> I think having the ambiguity warning in itself isn't the problem, it's
+> gitk not swallowing it that is.
 
-I agree. There could be a remote chance that you can get a branch
-called 'HEAD' from some foreign vcs or something, though. But I don't
-think it's very likely, and the problem will also go away if we go
-with your approach mentioned above.
+Agreed.
 
-> I admit I haven't been following this
-> thread too closely. What is the reason not to tell the user "sorry, t=
-hat
-> is an insane branch name. Accept the ambiguity warning, or choose a
-> different name"?
+> The reporter also had some problems pushing with a branch named 'HEAD'
+> in his repo, but I didn't look into that part at all.
 
-I think having the ambiguity warning in itself isn't the problem, it's
-gitk not swallowing it that is.
+I expect that would be a separate issue entirely (if it were fetching, I
+wouldn't be surprised if it was the "fake" refs/remotes/*/HEAD symref we
+create getting in the way).
 
-The reporter also had some problems pushing with a branch named 'HEAD'
-in his repo, but I didn't look into that part at all.
+-Peff
