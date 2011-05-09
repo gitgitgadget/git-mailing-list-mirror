@@ -1,154 +1,230 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] t3703, t4208: add test cases for magic pathspec
-Date: Mon, 9 May 2011 19:33:45 +0700
-Message-ID: <BANLkTikONPUVvAEw+fSDva8RUp-YSm-Nxw@mail.gmail.com>
-References: <1304764507-27547-1-git-send-email-pclouds@gmail.com>
- <1304852906-29272-1-git-send-email-pclouds@gmail.com> <7v7ha1t6o9.fsf@alter.siamese.dyndns.org>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH] only warn about ambiguous refs if stderr is a tty
+Date: Mon, 9 May 2011 14:37:48 +0200
+Message-ID: <BANLkTimn7542tji-Uu5iH72HS9fcnaywvg@mail.gmail.com>
+References: <BANLkTinLCirA4XP9AOb9piGo9ucMsmrmkQ@mail.gmail.com>
+ <1304927478-3112-1-git-send-email-kusmabite@gmail.com> <20110509080315.GA6205@sigill.intra.peff.net>
+ <BANLkTimR_S-px-MfRy0pKGrjxOgSC_=e=A@mail.gmail.com> <20110509103208.GA9060@sigill.intra.peff.net>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 09 14:34:23 2011
+Cc: git@vger.kernel.org, steveire@gmail.com,
+	felipe.contreras@gmail.com, gitster@pobox.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon May 09 14:38:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJPfJ-0005kl-Qg
-	for gcvg-git-2@lo.gmane.org; Mon, 09 May 2011 14:34:22 +0200
+	id 1QJPj5-0007Ut-Uc
+	for gcvg-git-2@lo.gmane.org; Mon, 09 May 2011 14:38:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752754Ab1EIMeR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 May 2011 08:34:17 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:44415 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750923Ab1EIMeQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 May 2011 08:34:16 -0400
-Received: by bwz15 with SMTP id 15so3927737bwz.19
-        for <git@vger.kernel.org>; Mon, 09 May 2011 05:34:15 -0700 (PDT)
+	id S1752802Ab1EIMiK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 May 2011 08:38:10 -0400
+Received: from mail-px0-f173.google.com ([209.85.212.173]:37435 "EHLO
+	mail-px0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752550Ab1EIMiI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 May 2011 08:38:08 -0400
+Received: by pxi16 with SMTP id 16so3547629pxi.4
+        for <git@vger.kernel.org>; Mon, 09 May 2011 05:38:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=zze09NkdSQ7CvWa86c8RfZoqMq7JQdYSHUUJdg57HQQ=;
-        b=OO1rdKyxS/kga86TdX4rnQkyC8BfjADwMoIaFPR+x1i5YqUzOLkA7FzSE3122KLpoq
-         ISZhgNLyHg4N7jh6Vk4yCFiRvC4Z6jOXpL19BKVA2/1X8dpnCnKvh5gusoUNIbau1/hn
-         q5DQ/EuekaLjQeA4fL2Wmwd/0i3b3uklu8Jyw=
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=btK8vRo1PG26Ib2gTeoD8OyR1bbfvAL2qELDm7IaGDs=;
+        b=W2DRlzGVgy+QfcCCd3DtAIrYbjeahdYQJucttbyS69exhd+MKYy3moZp/raY3EStZJ
+         WtdXGbxa3+goonv/Kuysd64GiUgQuMBACU4nhTwUKTpqr02HxQ5Pfj1rFggP38B9QV37
+         z54hndrqtRi0NPHPgXi0etOsBQ39Et9zpJX+I=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=pH6drqAkrCFZEOGD63Wj21HvSZQkImH+ONl0rmpe+tpaMK7n6AoK3I9iRL26MNWcFa
-         gDBMOFSh9MNq687sm0AUbHL9TDVGXn/BDveCUS8S+2QP4w1N8eEVKtNLJwm6y/41SktA
-         xse7Dyrr+nbj/QXyhNZTeOpzd+VjzPRJljUrA=
-Received: by 10.204.35.206 with SMTP id q14mr2607887bkd.128.1304944455207;
- Mon, 09 May 2011 05:34:15 -0700 (PDT)
-Received: by 10.204.53.13 with HTTP; Mon, 9 May 2011 05:33:45 -0700 (PDT)
-In-Reply-To: <7v7ha1t6o9.fsf@alter.siamese.dyndns.org>
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=uS5iq9OPzjCsodtx9AbVpdiJQk+Mb1l2EWDARLpM8Kh0dCI6n/TTVVx55vETtPPjHS
+         2BhCOiVXO6GU4hW6wDHkRuBlJAjqgo1PjQ4mh9UvfAtZ8FRh+0sygviFoPX1PEI4jWaz
+         CvYXOAsZTmuGWv9JdNiErLvU6asolC2FGE5cg=
+Received: by 10.68.65.110 with SMTP id w14mr681200pbs.382.1304944688076; Mon,
+ 09 May 2011 05:38:08 -0700 (PDT)
+Received: by 10.68.66.98 with HTTP; Mon, 9 May 2011 05:37:48 -0700 (PDT)
+In-Reply-To: <20110509103208.GA9060@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173227>
 
-2011/5/9 Junio C Hamano <gitster@pobox.com>:
->> +test_expect_failure 'colon alone magic can only used alone' '
->> + =C2=A0 =C2=A0 test_must_fail git add -n sub/foo : &&
->> + =C2=A0 =C2=A0 test_must_fail git add -n : sub/foo
->> +'
+On Mon, May 9, 2011 at 12:32 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, May 09, 2011 at 10:41:02AM +0200, Erik Faye-Lund wrote:
+>> I was talking about warnings, not errors. But I can also see that on=
+e
+>> would sometimes want warnings even when not connected to a tty, but
+>> perhaps only when -v is specified?
 >
-> I don't care too much about this case (it is a user error), but if yo=
-u
-> promise you will turn this expect-failure to expect-success in a foll=
-ow-up
-> patch, why not ;-)?
+> I know. I meant a script like this:
+>
+> =A0cat >>foo.sh <<'EOF'
+> =A0# go to branch in question
+> =A0git checkout "$1"
+>
+> =A0# note some point of interest
+> =A0sha1=3D`git rev-parse "$2"`
+>
+> =A0# do some script-specific inspection of $sha1, and
+> =A0# merge if it looks OK
+> =A0if test -z "$(git log ..$sha1 -- some-path)"; then
+> =A0 =A0git merge $sha1 || exit 1
+> =A0fi
+> =A0EOF
+>
+> It may produce some chatty output (like "switched to branch..."). So =
+I
+> redirect it to a file, and if everything is successful, that output i=
+s
+> uninteresting. But if it fails, then I want to see everything. So I d=
+o
+> something like:
+>
+> =A0if ! foo.sh master topic >output.tmp 2>&1; then
+> =A0 =A0cat output.tmp
+> =A0 =A0exit 1
+> =A0fi
+>
+> If the merge fails, it will produce an error message. But I _also_ wa=
+nt
+> to see any warnings that were generated by it and earlier commands, l=
+ike
+> rev-parse (e.g., an ambiguous ref warning might help us understand wh=
+y
+> the merge failed).
 
-failed tests are (annoying enough) to be fixed, right? :)
+Yeah, I understood that part. My point was that once the output is
+wanted for diagnostics, you probably also want verbose output. And
+warnings should probably always be output if we're verbose.
 
->> +cat >expected <<EOF
->> +add 'anothersub/foo'
->> +add 'expected'
->> +add 'sub/actual'
->> +add 'sub/foo'
->> +EOF
->> +
->> +test_expect_success 'add :' '
->> + =C2=A0 =C2=A0 (cd sub && git add -n : >actual) &&
->> + =C2=A0 =C2=A0 test_cmp expected sub/actual
->> +'
->
-> Shouldn't
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ git anycmd :
->
-> be equivalent to
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ (cd $(git rev-parse --show-cdup)/. && gi=
-t anycmd)
->
-> for any command? =C2=A0I doubt this test is expecting the right outco=
-me.
-> Shouldn't it result in "Nothing specified, nothing added."?
+But I have no strong feelings about this, so it's probably better to
+leave it alone.
 
-It's gray area. Yes I'd rather see that behavior, but then a lot of
-code needs to be audited. Perhaps we should delay introducing ":"
-until get_pathspec() learns to modify argc. IOW die() for now when
-users write ":".
-
->> +test_expect_success 'add :/non-existent' '
->> + =C2=A0 =C2=A0 (cd sub && test_must_fail git add -n :/non-existent)
->> +'
+>> > Yeah, if we disambiguate, I would be tempted to say that "HEAD" al=
+ways
+>> > unambiguously refers to "HEAD".
+>>
+>> While that would touch less code, my gut tells me it's a bit more
+>> fragile. But perhaps you're right; I can't come up with any real
+>> arguments (i.e use cases that I care about) on top of my head.
 >
-> Just being curious. What should the error message say? =C2=A0Can we m=
-ake it to
-> say "fatal: pathspec 'non-ex' from root did not match any files"?
-
-My opinion is in the next test. It should show exactly what users type
-in, ie. "pathspec ':/non-existent' did not match any files". "'non-ex'
-from root" is nice when there's only one magic. If users specify a few
-more in one pathspec, the text may become too verbose.
-
->> +test_expect_failure 'show pathspecs exactly what are typed in' '
->> + =C2=A0 =C2=A0 test_cmp expected error
->> +'
+> Honestly, I'm kind of surprised it's not that way already. It would m=
+ake
+> sense to me that "upper" levels would take precedence over lower leve=
+ls,
+> but that ambiguity would occur within a level. So if I say "foo", we
+> would look for:
 >
-> Will this break under gettext-poison?
-
-Never really known what that poison is. Will grep ":/non-existent" inst=
-ead.
-
->> +test_expect_failure 'git log :/ ambiguous with [ref]:/path' '
->> + =C2=A0 =C2=A0 test_must_fail git log :/ 2>error &&
->> + =C2=A0 =C2=A0 grep ambiguous error
->> +'
->> +test_expect_failure 'git log :' '
->> + =C2=A0 =C2=A0 git log :
->> +'
+> =A01. $GIT_DIR/foo, with no ambiguity
 >
-> These two should expect exactly the same error, I think. ':', ':/' or
-> anything magic will not satisify verify_filename(), and needs a
-> double-dash before it.
-
-Yes. Error from the latter "fatal: Path '' does not exist (neither on
-disk nor in the index)." makes me wonder, why does log accept a sha1
-syntax that may resolve to non-commit object?
-
-> We could improve the disambiguation heuristics so that when we do not=
- have
-> a '--' on the command line:
+> =A02. $GIT_DIR/refs/foo, with no ambiguity
 >
-> =C2=A0- make sure all the earlier ones are refs and they cannot be a =
-path on
-> =C2=A0 the filesystem (otherwise we need a disambiguator "--").
+> =A03. $GIT_DIR/refs/tags/foo
+> =A0 =A0 $GIT_DIR/refs/heads/foo
+> =A0 =A0 $GIT_DIR/refs/remotes/foo
 >
-> =C2=A0- the first non-ref argument and everything that follows must b=
-e either a
-> =C2=A0 ':' magic, a string with globbing character, or a path on the
-> =C2=A0 filesystem, and none of them can be a ref.
+> =A0 =A0 And note any ambiguity between those three.
 >
-> Do you want to take a stab at it?
+> Which is not very different than what we do today, except that things
+> like HEAD and FETCH_HEAD would always be unambiguously about the
+> top-level.
+>
 
-A bit busy these days. If you're interested, go ahead.
---=20
-Duy
+I think that would make sense.
+
+>> > And "refs/HEAD" should already work, no?
+>>
+>> No:
+>> $ git init foo
+>> $ cd foo/
+>> $ echo "foo" > bar
+>> $ git add bar
+>> $ git commit -m.
+>> [master (root-commit) fc0cbef] .
+>> warning: LF will be replaced by CRLF in bar.
+>> The file will have its original line endings in your working directo=
+ry.
+>> =A01 files changed, 1 insertions(+), 0 deletions(-)
+>> =A0create mode 100644 bar
+>> $ git show refs/HEAD
+>> fatal: ambiguous argument 'refs/HEAD': unknown revision or path not =
+in
+>> the working tree.
+>> Use '--' to separate paths from revisions
+>
+> Of course, because there is no refs/HEAD at all. I meant "if you have
+> ambiguity between $GIT_DIR/HEAD and $GIT_DIR/refs/HEAD", then saying
+> "refs/HEAD" should disambiguate already. In your example, there is no
+> ambiguity.
+
+I meant that "refs/HEAD" could be an non-ambiguous alias for HEAD, but
+it's probably easier to just say that 'HEAD' isn't ambiguous. Your
+suggestion of only checking for ambiguousness on the same level is IMO
+an elegant way of doing this.
+
+> What I failed to notice is that the likely disambiguator is actually
+> "refs/heads/HEAD" if you erroneously made a branch.
+>
+> Try this:
+>
+> =A0# A repo with two commits
+> =A0git init repo && cd repo &&
+> =A0echo content >file &&
+> =A0git add file &&
+> =A0git commit -m one &&
+> =A0echo content >>file &&
+> =A0git commit -a -m two &&
+>
+> =A0# And an ambiguously named ref called HEAD, pointing to "one";
+> =A0# our real HEAD is still pointing to "two"
+> =A0git branch HEAD HEAD^ &&
+>
+> =A0# This should warn of ambiguity, but show "two"
+> =A0git log -1 --oneline HEAD
+>
+> =A0# And this should not be ambiguous at all, and show "one"
+> =A0git log -1 --oneline refs/heads/HEAD
+>
+> =A0# You can even do the same thing with refs/HEAD if you want, but
+> =A0# you have to use plumbing to get such a ref.
+> =A0git branch -d HEAD
+> =A0git update-ref refs/HEAD HEAD^
+>
+> =A0# same as before, ambiguous "two"
+> =A0git log -1 --oneline HEAD
+>
+> =A0# or we can use refs/HEAD to get "one"
+> =A0git log -1 --oneline refs/HEAD
+>
+> So most of that makes sense to me. We choose $GIT_DIR/HEAD over other
+> options, and you can specifically refer to something further down by
+> its fully-qualified name.
+>
+> The only thing that I think we might want to change is that "HEAD" is
+> considered ambiguous with "refs/heads/HEAD". On the other hand, it se=
+ems
+> a little insane to name your branch that, given that it has a
+> well-established meaning in git.
+
+I agree. There could be a remote chance that you can get a branch
+called 'HEAD' from some foreign vcs or something, though. But I don't
+think it's very likely, and the problem will also go away if we go
+with your approach mentioned above.
+
+> I admit I haven't been following this
+> thread too closely. What is the reason not to tell the user "sorry, t=
+hat
+> is an insane branch name. Accept the ambiguity warning, or choose a
+> different name"?
+
+I think having the ambiguity warning in itself isn't the problem, it's
+gitk not swallowing it that is.
+
+The reporter also had some problems pushing with a branch named 'HEAD'
+in his repo, but I didn't look into that part at all.
