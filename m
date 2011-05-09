@@ -1,102 +1,101 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [RFC v1] git-p4: test case for RCS keyword problem
-Date: Mon, 9 May 2011 19:00:34 -0400
-Message-ID: <20110509230034.GC1716@arf.padd.com>
-References: <1304927397-24614-1-git-send-email-luke@diamand.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] tag: disallow '-' as tag name
+Date: Mon, 09 May 2011 16:08:09 -0700
+Message-ID: <7v62pjo4km.fsf@alter.siamese.dyndns.org>
+References: <1304954496.11377.11.camel@kohr-ah>
+ <7v39knpxbe.fsf@alter.siamese.dyndns.org> <4DC87113.4030204@elegosoft.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Michael Horowitz <michael.horowitz@ieee.org>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Tue May 10 01:00:44 2011
+Cc: Alex Vandiver <alex@chmrr.net>, git@vger.kernel.org
+To: Michael Schubert <mschub@elegosoft.com>
+X-From: git-owner@vger.kernel.org Tue May 10 01:08:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJZRT-0002pq-Fy
-	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 01:00:43 +0200
+	id 1QJZYu-0006BG-9S
+	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 01:08:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755252Ab1EIXAi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 May 2011 19:00:38 -0400
-Received: from honk.padd.com ([74.3.171.149]:60712 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752871Ab1EIXAh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2011 19:00:37 -0400
-Received: from arf.padd.com (unknown [50.52.168.230])
-	by honk.padd.com (Postfix) with ESMTPSA id 1337820B7;
-	Mon,  9 May 2011 16:00:37 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id D4ED35AA98; Mon,  9 May 2011 19:00:34 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <1304927397-24614-1-git-send-email-luke@diamand.org>
+	id S932437Ab1EIXIT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 May 2011 19:08:19 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48321 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752871Ab1EIXIS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2011 19:08:18 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 111994DED;
+	Mon,  9 May 2011 19:10:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lXp0iwDLHRyOcJykLmZMS50WlFo=; b=Z5IlK5
+	l+FNQdjILD6ZMvUeuEc22j4TLqndJVH6K5C31MkJ0yl8JVZCOcJNLXsOHLLKqbRD
+	41CBZ8OoGNKKJ2jvsG3gqJsnRBpy1GNWvDqCuS+g4LxOI2kaLL6/BZyx7C4xBu+5
+	NsWHB35eO7KPHk/rAV1nI26WzjC/dqhT3Sde4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BzOqxnO25H0ppzIEWdd+GARkWVti6Z1o
+	PwY2x86T1TX3h+cQi0ZxRLGdvKfxO8LZ4XyUM9Hjh76ZeGsoNRlJacuWHDPn2mSf
+	nmEYNiPGB1hzOOrBj6zvW0abINSM00CbB8FKnoKxqjfKxAYUy7vIfkunlrIHr1mK
+	/CS22VbNgPw=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CB25D4DEC;
+	Mon,  9 May 2011 19:10:20 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A23354DEB; Mon,  9 May 2011
+ 19:10:16 -0400 (EDT)
+In-Reply-To: <4DC87113.4030204@elegosoft.com> (Michael Schubert's message of
+ "Tue, 10 May 2011 00:56:19 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 82FBAFB6-7A91-11E0-95DD-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173284>
 
-luke@diamand.org wrote on Mon, 09 May 2011 08:49 +0100:
-> This is following on from some earlier threads about RCS keywords
-> and git-p4:
-> 
-> http://marc.info/?l=git&m=122145837226632&w=2
-> http://marc.info/?l=git&m=130470278328964&w=2
+Michael Schubert <mschub@elegosoft.com> writes:
 
-I hadn't read Mike's mail.  Not that deep into my backlog yet.
+> Add strbuf_check_tag_ref() as helper to check a refname for a tag.
+>
+> Signed-off-by: Michael Schubert <mschub@elegosoft.com>
+> ---
 
-> The problem is that git-p4 imports into git with RCS keywords
-> unexpanded (e.g. as $Id$), which is certainly the right thing
-> to do given how nasty RCS keywords are.
-> 
-> However, when it comes to try to apply your changes, it
-> applies them against a checked-out p4 tree, where the RCS keywords
-> *are* expanded. This then fails if in git you modify any lines
-> that contain RCS keywords (i.e. deleting them, or deleting the
-> entire file).
-> 
-> You would think you could just tell p4 to not expand RCS keywords
-> in your client view, but sadly that option doesn't exist :-(
+That was quick ;-).
 
-One idea.  I snuck in a2b665d "convert filter: supply path to
-external driver" that lets you do:
+>  builtin/tag.c |   30 ++++++++++++++++++++++--------
+>  1 files changed, 22 insertions(+), 8 deletions(-)
+>
+> diff --git a/builtin/tag.c b/builtin/tag.c
+> index b66b34a..f087a7f 100644
+> --- a/builtin/tag.c
+> +++ b/builtin/tag.c
+> @@ -352,11 +352,26 @@ static int parse_msg_arg(const struct option *opt, const char *arg, int unset)
+>  	return 0;
+>  }
+>  
+> +static int strbuf_check_tag_ref(struct strbuf *sb, const char *name)
+> +{
+> +	if (name[0] == '-')
+> +		return CHECK_REF_FORMAT_ERROR;
 
-    git config filter.p4.clean git-p4-filter --clean %f
-    git config filter.p4.smudge git-p4-filter --smudge %f
-    echo "*.c filter=p4" >> .gitattributes
+So contrary to what the title claims, it forbids a tag that begins with '-',
+e.g. '-foo', not just a single dash.  That is fine by me (we do the same
+in strbuf-check-branch-ref) but it needs to be explained better.
 
-Then your git tree can have expanded keywords too.  The script to
-clean is pretty easy; to smudge you have to ask p4 for the
-information using fstat and filelog.  My script is pretty nasty
-and full of dependencies, but I could clean it up if you think
-this is a good way to go.
+> +	strbuf_reset(sb);
+> +	strbuf_add(sb, "refs/tags/", 10);
+> +	strbuf_add(sb, name, strlen(name));
 
-We'd need to discover text+k files at clone and sync time
-and maintain the .gitattributes accordingly.  Filtering all
-files would be wrong, and slow.
+strbuf_addf(sb, "refs/tags/%s", name)?
 
-Dhruva's approach has the downside of always including RCS lines
-in every commit when the file changes in p4.
+> +	if (sb->len > PATH_MAX)
+> +		die(_("tag name too long: %.*s..."), 50, name);
 
-> This isn't a fix, it's just a test case that shows the problem,
-> and doesn't even try to test the whole-file deletion case.
-> 
-> I'm hoping someone will suggest a good way to handle this.
-> 
-> Otherwise, I've got a possible scheme that involves spotting the
-> failure to apply the patch, patching up RCS keywords in the
-> p4 client shadow and then trying again. It's not pretty but it seems
-> like it ought to work. My current version doesn't handle deletion,
-> and zaps *all* RCS keywords rather than just the ones zapped in git;
-> more work is needed before I can submit it.
+I think that should be
 
-I'm a little hazy on how you would identify a patch failure as
-due to an RCS keyword, but maybe it's possible.  The deleted line
-case is surely hard.
+	if (PATH_MAX <= sb->len)
 
-Curious what you think of switching to having expanded keywords
-in the repo, but using smudge/clean instead.
-
-Maybe hang onto this test case until we figure out how we want
-to deal with it.
-
-		-- Pete
+but I do not see the point of checking against PATH_MAX if you are already
+using a strbuf...
