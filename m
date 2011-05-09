@@ -1,82 +1,118 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v4 (for maint)] git-completion: fix zsh support
-Date: Mon, 9 May 2011 17:53:07 -0500
-Message-ID: <20110509225307.GG22908@elie>
-References: <BANLkTikkhryMa69DSx4EAYjw+aar4icKcQ@mail.gmail.com>
- <1304979299-6496-1-git-send-email-felipe.contreras@gmail.com>
+From: Michael Schubert <mschub@elegosoft.com>
+Subject: [RFC/PATCH] tag: disallow '-' as tag name
+Date: Tue, 10 May 2011 00:56:19 +0200
+Message-ID: <4DC87113.4030204@elegosoft.com>
+References: <1304954496.11377.11.camel@kohr-ah> <7v39knpxbe.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 10 00:53:19 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>, Alex Vandiver <alex@chmrr.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 10 00:56:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJZKI-000051-Gc
-	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 00:53:18 +0200
+	id 1QJZNK-0001I4-H4
+	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 00:56:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755793Ab1EIWxN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 May 2011 18:53:13 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:37412 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755699Ab1EIWxM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2011 18:53:12 -0400
-Received: by yia27 with SMTP id 27so1972861yia.19
-        for <git@vger.kernel.org>; Mon, 09 May 2011 15:53:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=WjTg/F8JvUF8jixFySa8/JWBsE5wlkDDQCJhNQTPri4=;
-        b=lzvzCQ4fDWJ21uYiHGUz9GY+T2zDi6zSVhHEmE3tCrPl+N2Zma6y83AgQJoetG8Req
-         OxGgFA+IZntburYaEyarn3I1PVmTkzXnm2H0bn/8U6d70+KNnXT/+uLexYYA00lV3WRg
-         4MU9D+gIqv5VUrEpSOdRlYHInOLOjz1nfkkNs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=oBjX8NLgvMBskCm+1CRWIq9nAV4070EK/GdLelm5PN8gc0KBozsqUldkOJLaNjLyQH
-         D+tFzWbkZxcTM1E87ePPdydbwL7yo1A+PIzuqfhogfAB/lt5rKqlJACLuImKZ2JE8nge
-         9wVObOBq5bSXr+mDi3vvtz6m/OKrQjztGOJK4=
-Received: by 10.236.156.132 with SMTP id m4mr8713820yhk.107.1304981592290;
-        Mon, 09 May 2011 15:53:12 -0700 (PDT)
-Received: from elie (adsl-68-255-107-251.dsl.chcgil.sbcglobal.net [68.255.107.251])
-        by mx.google.com with ESMTPS id l49sm2838950yhn.33.2011.05.09.15.53.10
-        (version=SSLv3 cipher=OTHER);
-        Mon, 09 May 2011 15:53:10 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1304979299-6496-1-git-send-email-felipe.contreras@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755129Ab1EIW4V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 May 2011 18:56:21 -0400
+Received: from mx0.elegosoft.com ([78.47.87.163]:33199 "EHLO mx0.elegosoft.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753308Ab1EIW4U (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2011 18:56:20 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id C4140DE77E;
+	Tue, 10 May 2011 00:56:19 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 2nEmz7HgvGFd; Tue, 10 May 2011 00:56:19 +0200 (CEST)
+Received: from [192.168.1.103] (g230120029.adsl.alicedsl.de [92.230.120.29])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id 7989CDE779;
+	Tue, 10 May 2011 00:56:19 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110503 Thunderbird/3.1.10
+In-Reply-To: <7v39knpxbe.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173282>
 
-Felipe Contreras wrote:
+Add strbuf_check_tag_ref() as helper to check a refname for a tag.
 
-> v4: more commit message improvements
+Signed-off-by: Michael Schubert <mschub@elegosoft.com>
+---
+ builtin/tag.c |   30 ++++++++++++++++++++++--------
+ 1 files changed, 22 insertions(+), 8 deletions(-)
 
-Thanks.  You seem to have ignored most of my review; I'll try to find
-time to clarify the commit message if the consensus is that this
-approach is a good idea.
-
-An alternative possibility if we need this fixed in the v1.7.5.x
-series (do we?) would be cherry-picking the fix from
-sg/completion-updates on top of maint.
-
-To clarify the trade-offs:
-
- - in terms of lines of code, the fix itself in sg/completion-updates
-   and this fix are about the same size.  But the sg/completion-updates
-   version relies on a code cleanup.
-
- - the fix in sg/completion-updates is less likely to be broken by
-   future changes in the bashcompinit library.
-
- - this fix is conceptually simpler.  In a way, the fix in
-   sg/completion-updates only works by accident.
+diff --git a/builtin/tag.c b/builtin/tag.c
+index b66b34a..f087a7f 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -352,11 +352,26 @@ static int parse_msg_arg(const struct option *opt, const char *arg, int unset)
+ 	return 0;
+ }
+ 
++static int strbuf_check_tag_ref(struct strbuf *sb, const char *name)
++{
++	if (name[0] == '-')
++		return CHECK_REF_FORMAT_ERROR;
++
++	strbuf_reset(sb);
++	strbuf_add(sb, "refs/tags/", 10);
++	strbuf_add(sb, name, strlen(name));
++
++	if (sb->len > PATH_MAX)
++		die(_("tag name too long: %.*s..."), 50, name);
++
++	return check_ref_format(sb->buf);
++}
++
+ int cmd_tag(int argc, const char **argv, const char *prefix)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
++	struct strbuf ref = STRBUF_INIT;
+ 	unsigned char object[20], prev[20];
+-	char ref[PATH_MAX];
+ 	const char *object_ref, *tag;
+ 	struct ref_lock *lock;
+ 
+@@ -452,12 +467,10 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	if (get_sha1(object_ref, object))
+ 		die(_("Failed to resolve '%s' as a valid ref."), object_ref);
+ 
+-	if (snprintf(ref, sizeof(ref), "refs/tags/%s", tag) > sizeof(ref) - 1)
+-		die(_("tag name too long: %.*s..."), 50, tag);
+-	if (check_ref_format(ref))
++	if (strbuf_check_tag_ref(&ref, tag))
+ 		die(_("'%s' is not a valid tag name."), tag);
+ 
+-	if (!resolve_ref(ref, prev, 1, NULL))
++	if (!resolve_ref(ref.buf, prev, 1, NULL))
+ 		hashclr(prev);
+ 	else if (!force)
+ 		die(_("tag '%s' already exists"), tag);
+@@ -466,14 +479,15 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 		create_tag(object, tag, &buf, msg.given || msgfile,
+ 			   sign, prev, object);
+ 
+-	lock = lock_any_ref_for_update(ref, prev, 0);
++	lock = lock_any_ref_for_update(ref.buf, prev, 0);
+ 	if (!lock)
+-		die(_("%s: cannot lock the ref"), ref);
++		die(_("%s: cannot lock the ref"), ref.buf);
+ 	if (write_ref_sha1(lock, object, NULL) < 0)
+-		die(_("%s: cannot update the ref"), ref);
++		die(_("%s: cannot update the ref"), ref.buf);
+ 	if (force && hashcmp(prev, object))
+ 		printf(_("Updated tag '%s' (was %s)\n"), tag, find_unique_abbrev(prev, DEFAULT_ABBREV));
+ 
+ 	strbuf_release(&buf);
++	strbuf_release(&ref);
+ 	return 0;
+ }
+-- 
+1.7.5.1 
