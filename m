@@ -1,103 +1,72 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 0/4] i18n: Add shell script translation infrastructure
-Date: Sun, 8 May 2011 23:52:01 +0200
-Message-ID: <BANLkTinOkM+MTwq46mvPs1G5fQmGvxknrg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] git-sh-i18n--envsubst: our own envsubst(1) for
+ eval_gettext()
+Date: Sun, 08 May 2011 20:17:18 -0700
+Message-ID: <7vsjsor29t.fsf@alter.siamese.dyndns.org>
 References: <1304856659-10672-1-git-send-email-avarab@gmail.com>
-	<BANLkTi=nTSf0CQWs-ODxw=P+eX=Dc7Yf-Q@mail.gmail.com>
-	<BANLkTikmj_urw389ad0r86OR+26AvXTVzg@mail.gmail.com>
-	<BANLkTinnv=hm80h=9P80t=3QvwS-BQ7D=A@mail.gmail.com>
+ <1304856659-10672-2-git-send-email-avarab@gmail.com>
+ <7v1v09un8y.fsf@alter.siamese.dyndns.org>
+ <BANLkTikSvU4haNpRmPq8o2P0yB1Y3t0Ahg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 08 23:52:10 2011
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 09 05:17:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJBta-0003CJ-Ch
-	for gcvg-git-2@lo.gmane.org; Sun, 08 May 2011 23:52:10 +0200
+	id 1QJGyU-0001XK-CZ
+	for gcvg-git-2@lo.gmane.org; Mon, 09 May 2011 05:17:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754300Ab1EHVwF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2011 17:52:05 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:33014 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754108Ab1EHVwD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 May 2011 17:52:03 -0400
-Received: by bwz15 with SMTP id 15so3562803bwz.19
-        for <git@vger.kernel.org>; Sun, 08 May 2011 14:52:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=wVR3f1DAsGZ0EYOdnhzOS7zvpZ7jQYG/phSzl6DvOy4=;
-        b=RwY2h0wdcIZ6CGCa3ktz8HxjkQ6iCRXeoYXOq2FlWspbm1ZCrY3sq++yob+x6Zb0R5
-         rw70PuqwdBtGm1NOzfAL8LH7FKGpWbE0ZRQcq/2ozFIe5R8txpHCknfD15ZUSmZEgBJJ
-         O3k7am4yBNoxr6mSFLBxj4g4gDnkEL73RDvto=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=W/0TtoJdMxOqtuZ8P0wlgZ1jpImQ57+KArl5PHeJvWjz4kz/w0Dx8O3KGGnPe7npCO
-         ERznq0mlI9sgWksDIVQBeRzMbSVHNVxl9N0DJMgvm7dcOC6NMwI2MCXPS+uK6gEiAg1o
-         pzPFv3J/MxnvZ93rhSYe7VCz/JcJBYhUNGRP4=
-Received: by 10.205.83.199 with SMTP id ah7mr5504110bkc.146.1304891521816;
- Sun, 08 May 2011 14:52:01 -0700 (PDT)
-Received: by 10.204.101.132 with HTTP; Sun, 8 May 2011 14:52:01 -0700 (PDT)
-In-Reply-To: <BANLkTinnv=hm80h=9P80t=3QvwS-BQ7D=A@mail.gmail.com>
+	id S1755390Ab1EIDR3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 May 2011 23:17:29 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47467 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750818Ab1EIDR2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 May 2011 23:17:28 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9C613563A;
+	Sun,  8 May 2011 23:19:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=b8v9i8OG8H94
+	dAkWmShP/GPxbx8=; b=XWH88IxqYt+4801eAojlcG9TTADkXjd472rdWdwD+A5F
+	GLWJlWaBh4Ri48jIZiQQToXhAr2ih7DY+fvxua8KxtS87NskD3/B/DtpdlwmiC8m
+	t7nqgatB02b2wRyUpDiCkU0+RrXax6BGvydEhNxPOCwPgzUfiYYOBTsasru7otQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=V0LAtC
+	3NgrkBKILv13BIV/ZPw1EUvngniF37S/SKm+rWwqYj8n3+ew1+DJr649v6pgXran
+	ArccpefWR+vHk4nyHWOPRSvb9gJNKSQ5uB3Dzj6JSgnB+ys2JgmNbUl8eCjcB09e
+	O5Y5YXBXG+1wvXbEMqDSEgGWOy/wK/ZwLtshA=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6C58D5639;
+	Sun,  8 May 2011 23:19:30 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5C1A35638; Sun,  8 May 2011
+ 23:19:26 -0400 (EDT)
+In-Reply-To: <BANLkTikSvU4haNpRmPq8o2P0yB1Y3t0Ahg@mail.gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun, 8 May
+ 2011 23:33:46 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 273AA354-79EB-11E0-85C9-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173191>
 
-On Sun, May 8, 2011 at 23:45, Sverre Rabbelier <srabbelier@gmail.com> w=
-rote:
-> Heya,
->
-> [+msysgit people]
->
-> On Sun, May 8, 2011 at 23:38, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =
-<avarab@gmail.com> wrote:
->> On Sun, May 8, 2011 at 19:03, Sverre Rabbelier <srabbelier@gmail.com=
-> wrote:
->>> On Sun, May 8, 2011 at 14:10, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmaso=
-n <avarab@gmail.com> wrote:
->>>> This adds skeleton no-op functions to git-sh-i18n.sh analogous to =
-the
->>>> gettext.c skeleton functions for C, adds *.sh scripts to the "pot"
->>>> target for message extraction, and updates the git-sh-i18n--envsub=
-st
->>>> tests to use the new test_i18ncmp function.
->>>
->>> I seem to remember there were some concerns about performance with =
-a
->>> previous version of this series. Have you done any before/after
->>> timings on, say, the git test suite? Or am I remembering incorrectl=
-y?
->>
->> When I benchmark this on my (Linux) system it runs at 0% difference
->> between the current test suite and the one with this series.
->>
->> The concern was about Windows, where forks are more expensive, so
->> e.g. every time we shell out to sed/awk/perl/grep or
->> git-sh-i18n--envsubst we incur a larger speed hit than on Unix
->> systems.
->
-> Perhaps one of the windows devs can benchmark this then? =C3=86var, w=
-here
-> do you have a pullable version of this series? Your github fork has
-> quite a few branches.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-It's ab/i18n-sh-only in git://github.com/avar/git.git
+> Or are we sure that this can't work in POSIX (or non-POSIX shells)?
 
-There was some discussion about this a while ago, not sure what came
-out of that, but there were some msysgit patches involved IIRC.
+You need to implement the same logic to tokenize enough to understand t=
+he
+expansion the shell does inside dq.  Yes, shell is general programming
+language and you can theoretically implement it, but would the result b=
+e a
+practical solution?  I doubt it.
