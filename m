@@ -1,132 +1,109 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v4 (for maint)] git-completion: fix zsh support
-Date: Tue, 10 May 2011 01:14:59 +0300
-Message-ID: <1304979299-6496-1-git-send-email-felipe.contreras@gmail.com>
-References: <BANLkTikkhryMa69DSx4EAYjw+aar4icKcQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] sparse checkout: do not eagerly decide the fate for
+ whole directory
+Date: Mon, 09 May 2011 15:22:36 -0700
+Message-ID: <7vei47o6oj.fsf@alter.siamese.dyndns.org>
+References: <BANLkTikgNR1G5_TO3rmMZy3fN2PNF2Pqjg@mail.gmail.com>
+ <1304955781-13566-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 10 00:15:23 2011
+Cc: git@vger.kernel.org, Thiago@cobalt.pobox.com,
+	Farina@cobalt.pobox.com, tfransosi@gmail.com, skillzero@gmail.com
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 10 00:23:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJYja-0001qJ-W3
-	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 00:15:23 +0200
+	id 1QJYqw-00054L-3W
+	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 00:22:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755659Ab1EIWPP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 May 2011 18:15:15 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:65336 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751573Ab1EIWPO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2011 18:15:14 -0400
-Received: by ewy4 with SMTP id 4so1674531ewy.19
-        for <git@vger.kernel.org>; Mon, 09 May 2011 15:15:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=B4hwtGtnQu+weXNxrK1dKF8W/kxBmzoXfULOjegbgxg=;
-        b=dFnzI6uGKdBOJK2rFfpUbToBVfOXFy1yMgNjJV9tytHxWJIbmDK4B3CUajtSI6gj55
-         nAqvbuySjWOgI0Gixed5iSjacejBgE/tnLcmt9r2JCSwKSmpaiXMEjGuUcVsaDgA6p7f
-         uayl1suEPH0OWsGSIEgqDl8P6EQLEdj0oDmKc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=Og/7Rxn2rk7rmGHJAR/4S+ZDyIKP7/+nfZbLwbmQWajg91lhkMPq5LK8PJRqrhUXfE
-         NzkgKNSPILaff+MRz6rUVHLDBp6RLvqiRr1jen4pL7VNmY4pVFB47FbdF4KCuC0th7rr
-         YSLypbJ+td15m8D4eyJcYD9MNOJKwkG2K126U=
-Received: by 10.14.43.19 with SMTP id k19mr3301507eeb.187.1304979312322;
-        Mon, 09 May 2011 15:15:12 -0700 (PDT)
-Received: from localhost (a91-153-253-80.elisa-laajakaista.fi [91.153.253.80])
-        by mx.google.com with ESMTPS id n55sm3796231een.2.2011.05.09.15.15.07
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 09 May 2011 15:15:11 -0700 (PDT)
-X-Mailer: git-send-email 1.7.5.1.1.g638e6
-In-Reply-To: <BANLkTikkhryMa69DSx4EAYjw+aar4icKcQ@mail.gmail.com>
+	id S1753532Ab1EIWWx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 May 2011 18:22:53 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35774 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752871Ab1EIWWw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 May 2011 18:22:52 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D7C184945;
+	Mon,  9 May 2011 18:24:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=SDUddGJgqtqa
+	uSlt2iIuto5zuKA=; b=a9QjQ2WeW7yosEPWvj1P2sAyKh6e70essGIt0ujOcm14
+	oNH8zYcyq8ijl95am2306AK4AoMEFdFv6LJauFCjjMedqYOAxzHinxcJtFtGNCkL
+	lWi7TfJlL9OzuKIVe41siTjtWwcUu6qNp1ZjuW7qxPoaeazFROsy0C1uyzR4DX8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=UZsq8M
+	1WPASSP2VUOi7+Or7iYFSZvqA+Bmfbr96pDEL2dv6UvsYFH2SIpHMCqxYdmFJ0rq
+	kIzgU3CY4Hfhieygm6ZNsY0uqbSgAE3M8L7ITT8MWvdzC0f9YdPLNDoxAWhw3stu
+	PZqelOyRIiNutmNwKfK7UMpPTb8aei+Tfu57k=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 748EE4944;
+	Mon,  9 May 2011 18:24:51 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B4A214937; Mon,  9 May 2011
+ 18:24:43 -0400 (EDT)
+In-Reply-To: <1304955781-13566-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Mon, 9 May
+ 2011 22:43:01 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2827A802-7A8B-11E0-83FB-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173276>
 
-It turns out 'words' is a special variable used by zsh completion. This
-was not isolated correctly in zsh's bash completion emulation, so by
-trying to set it as 'local' in git's completion, unexpected results
-occur; assignations are not propagated to outer levels in the call
-stack.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
 
-This is now fixed in the latest master branch of zsh[1] by simply
-defining 'words' as hidden (typeset -h), which removes the special
-meaning inside the emulated bash function. It probably won't be release=
+> Sparse-setting code follows closely how files are excluded in
+> read_directory(), every entry (including directories) are fed to
+> excluded_from_list() to decide if the entry is suitable. Directories
+> are treated no different than files. If a directory is matched (or
+> not), the whole directory is considered matched (or not) and the
+> process moves on.
+>
+> This generally works as long as there are no patterns to exclude part=
+s
+> of the directory. In case of sparse checkout code, the following patt=
+erns
+>
+>   t
+>   !t/t0000-basic.sh
+>
+> will produce a worktree with full directory "t" even if t0000-basic.s=
+h
+> is requested to stay out.
+
+That roughly corresponds to having
+
+	!t
+        t/t0000-basic.sh
+
+in gitignore mechanism, right?  Generally t/ is not to be excluded, but
+only t0000-basic.sh should be.  Sounds like a right thing to do.
+
+> Noticed-by: <skillzero@gmail.com>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  Fix some comments as Thiago suggested. 1/3 of this series should be
+>  dropped apparently.
+
+I am not quite sure what to do with this patch though.
+
+You marked this as 3/3 without saying anything about where 1 and 2 are =
+(or
+if they even exist).  You hint there is a 1 that should be dropped here=
+=2E
+
+Is this a re-rolled round, and if so where are the previous ones?  Coul=
 d
-until version 4.3.12.
-
-In the meantime, we can workaround the issue by doing the same; definin=
-g
-words as hidden (typeset -h) as soon as possible.
-
-Right now zsh is completely broken after commit da48616 (bash: get
---pretty=3Dm<tab> completion to work with bash v4), which introduced
-_get_comp_words_by_ref() that comes from bash-completion[2] scripts, an=
-d
-relies on the 'words' variable to behave like any normal variable.
-
-[1] http://zsh.git.sourceforge.net/git/gitweb.cgi?p=3Dzsh/zsh;a=3Dcommi=
-tdiff;h=3De880604f029088f32fb1ecc39213d720ae526aaa
-[2] http://bash-completion.alioth.debian.org/
-
-Comments-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
-Comments-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/completion/git-completion.bash |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
-
-This patch is meant for the maintenance branch, so Szeder's patches are=
- not
-required.
-
-v2: fix _gitk() too as Szeder suggested.
-
-v3: improve commit message as Jonathan Nieder suggested.
-    Also, improve comments.
-
-v4: more commit message improvements
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index 840ae38..763f145 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2710,6 +2710,10 @@ _git ()
- 	if [[ -n ${ZSH_VERSION-} ]]; then
- 		emulate -L bash
- 		setopt KSH_TYPESET
-+
-+		# workaround zsh's bashinit's bug that leaves 'words' as a
-+		# special variable in versions < 4.3.12
-+		typeset -h words
- 	fi
-=20
- 	local cur words cword
-@@ -2761,6 +2765,10 @@ _gitk ()
- 	if [[ -n ${ZSH_VERSION-} ]]; then
- 		emulate -L bash
- 		setopt KSH_TYPESET
-+
-+		# workaround zsh's bashinit's bug that leaves 'words' as a
-+		# special variable in versions < 4.3.12
-+		typeset -h words
- 	fi
-=20
- 	__git_has_doubledash && return
---=20
-1.7.5.1.1.g638e6
+you make things easier to find (just saying something like [PATCH v2 3/=
+3]
+in the Subject: is good enough) next time?
