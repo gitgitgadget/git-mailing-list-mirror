@@ -1,118 +1,102 @@
-From: Michael Schubert <mschub@elegosoft.com>
-Subject: [RFC/PATCH] tag: disallow '-' as tag name
-Date: Tue, 10 May 2011 00:56:19 +0200
-Message-ID: <4DC87113.4030204@elegosoft.com>
-References: <1304954496.11377.11.camel@kohr-ah> <7v39knpxbe.fsf@alter.siamese.dyndns.org>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [RFC v1] git-p4: test case for RCS keyword problem
+Date: Mon, 9 May 2011 19:00:34 -0400
+Message-ID: <20110509230034.GC1716@arf.padd.com>
+References: <1304927397-24614-1-git-send-email-luke@diamand.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>, Alex Vandiver <alex@chmrr.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 10 00:56:27 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Michael Horowitz <michael.horowitz@ieee.org>
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Tue May 10 01:00:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJZNK-0001I4-H4
-	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 00:56:26 +0200
+	id 1QJZRT-0002pq-Fy
+	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 01:00:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755129Ab1EIW4V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 May 2011 18:56:21 -0400
-Received: from mx0.elegosoft.com ([78.47.87.163]:33199 "EHLO mx0.elegosoft.com"
+	id S1755252Ab1EIXAi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 May 2011 19:00:38 -0400
+Received: from honk.padd.com ([74.3.171.149]:60712 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753308Ab1EIW4U (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2011 18:56:20 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mx0.elegosoft.com (Postfix) with ESMTP id C4140DE77E;
-	Tue, 10 May 2011 00:56:19 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
-Received: from mx0.elegosoft.com ([127.0.0.1])
-	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 2nEmz7HgvGFd; Tue, 10 May 2011 00:56:19 +0200 (CEST)
-Received: from [192.168.1.103] (g230120029.adsl.alicedsl.de [92.230.120.29])
-	by mx0.elegosoft.com (Postfix) with ESMTPSA id 7989CDE779;
-	Tue, 10 May 2011 00:56:19 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110503 Thunderbird/3.1.10
-In-Reply-To: <7v39knpxbe.fsf@alter.siamese.dyndns.org>
+	id S1752871Ab1EIXAh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2011 19:00:37 -0400
+Received: from arf.padd.com (unknown [50.52.168.230])
+	by honk.padd.com (Postfix) with ESMTPSA id 1337820B7;
+	Mon,  9 May 2011 16:00:37 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id D4ED35AA98; Mon,  9 May 2011 19:00:34 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <1304927397-24614-1-git-send-email-luke@diamand.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173283>
 
-Add strbuf_check_tag_ref() as helper to check a refname for a tag.
+luke@diamand.org wrote on Mon, 09 May 2011 08:49 +0100:
+> This is following on from some earlier threads about RCS keywords
+> and git-p4:
+> 
+> http://marc.info/?l=git&m=122145837226632&w=2
+> http://marc.info/?l=git&m=130470278328964&w=2
 
-Signed-off-by: Michael Schubert <mschub@elegosoft.com>
----
- builtin/tag.c |   30 ++++++++++++++++++++++--------
- 1 files changed, 22 insertions(+), 8 deletions(-)
+I hadn't read Mike's mail.  Not that deep into my backlog yet.
 
-diff --git a/builtin/tag.c b/builtin/tag.c
-index b66b34a..f087a7f 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -352,11 +352,26 @@ static int parse_msg_arg(const struct option *opt, const char *arg, int unset)
- 	return 0;
- }
- 
-+static int strbuf_check_tag_ref(struct strbuf *sb, const char *name)
-+{
-+	if (name[0] == '-')
-+		return CHECK_REF_FORMAT_ERROR;
-+
-+	strbuf_reset(sb);
-+	strbuf_add(sb, "refs/tags/", 10);
-+	strbuf_add(sb, name, strlen(name));
-+
-+	if (sb->len > PATH_MAX)
-+		die(_("tag name too long: %.*s..."), 50, name);
-+
-+	return check_ref_format(sb->buf);
-+}
-+
- int cmd_tag(int argc, const char **argv, const char *prefix)
- {
- 	struct strbuf buf = STRBUF_INIT;
-+	struct strbuf ref = STRBUF_INIT;
- 	unsigned char object[20], prev[20];
--	char ref[PATH_MAX];
- 	const char *object_ref, *tag;
- 	struct ref_lock *lock;
- 
-@@ -452,12 +467,10 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	if (get_sha1(object_ref, object))
- 		die(_("Failed to resolve '%s' as a valid ref."), object_ref);
- 
--	if (snprintf(ref, sizeof(ref), "refs/tags/%s", tag) > sizeof(ref) - 1)
--		die(_("tag name too long: %.*s..."), 50, tag);
--	if (check_ref_format(ref))
-+	if (strbuf_check_tag_ref(&ref, tag))
- 		die(_("'%s' is not a valid tag name."), tag);
- 
--	if (!resolve_ref(ref, prev, 1, NULL))
-+	if (!resolve_ref(ref.buf, prev, 1, NULL))
- 		hashclr(prev);
- 	else if (!force)
- 		die(_("tag '%s' already exists"), tag);
-@@ -466,14 +479,15 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		create_tag(object, tag, &buf, msg.given || msgfile,
- 			   sign, prev, object);
- 
--	lock = lock_any_ref_for_update(ref, prev, 0);
-+	lock = lock_any_ref_for_update(ref.buf, prev, 0);
- 	if (!lock)
--		die(_("%s: cannot lock the ref"), ref);
-+		die(_("%s: cannot lock the ref"), ref.buf);
- 	if (write_ref_sha1(lock, object, NULL) < 0)
--		die(_("%s: cannot update the ref"), ref);
-+		die(_("%s: cannot update the ref"), ref.buf);
- 	if (force && hashcmp(prev, object))
- 		printf(_("Updated tag '%s' (was %s)\n"), tag, find_unique_abbrev(prev, DEFAULT_ABBREV));
- 
- 	strbuf_release(&buf);
-+	strbuf_release(&ref);
- 	return 0;
- }
--- 
-1.7.5.1 
+> The problem is that git-p4 imports into git with RCS keywords
+> unexpanded (e.g. as $Id$), which is certainly the right thing
+> to do given how nasty RCS keywords are.
+> 
+> However, when it comes to try to apply your changes, it
+> applies them against a checked-out p4 tree, where the RCS keywords
+> *are* expanded. This then fails if in git you modify any lines
+> that contain RCS keywords (i.e. deleting them, or deleting the
+> entire file).
+> 
+> You would think you could just tell p4 to not expand RCS keywords
+> in your client view, but sadly that option doesn't exist :-(
+
+One idea.  I snuck in a2b665d "convert filter: supply path to
+external driver" that lets you do:
+
+    git config filter.p4.clean git-p4-filter --clean %f
+    git config filter.p4.smudge git-p4-filter --smudge %f
+    echo "*.c filter=p4" >> .gitattributes
+
+Then your git tree can have expanded keywords too.  The script to
+clean is pretty easy; to smudge you have to ask p4 for the
+information using fstat and filelog.  My script is pretty nasty
+and full of dependencies, but I could clean it up if you think
+this is a good way to go.
+
+We'd need to discover text+k files at clone and sync time
+and maintain the .gitattributes accordingly.  Filtering all
+files would be wrong, and slow.
+
+Dhruva's approach has the downside of always including RCS lines
+in every commit when the file changes in p4.
+
+> This isn't a fix, it's just a test case that shows the problem,
+> and doesn't even try to test the whole-file deletion case.
+> 
+> I'm hoping someone will suggest a good way to handle this.
+> 
+> Otherwise, I've got a possible scheme that involves spotting the
+> failure to apply the patch, patching up RCS keywords in the
+> p4 client shadow and then trying again. It's not pretty but it seems
+> like it ought to work. My current version doesn't handle deletion,
+> and zaps *all* RCS keywords rather than just the ones zapped in git;
+> more work is needed before I can submit it.
+
+I'm a little hazy on how you would identify a patch failure as
+due to an RCS keyword, but maybe it's possible.  The deleted line
+case is surely hard.
+
+Curious what you think of switching to having expanded keywords
+in the repo, but using smudge/clean instead.
+
+Maybe hang onto this test case until we figure out how we want
+to deal with it.
+
+		-- Pete
