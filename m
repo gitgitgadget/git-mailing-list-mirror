@@ -1,114 +1,146 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: 'git checkout -p' is a bit confusing...
-Date: Mon, 9 May 2011 06:57:00 -0400
-Message-ID: <20110509105700.GC9060@sigill.intra.peff.net>
-References: <BANLkTik+VbJZKc1Xwb-3p3HPW-zxanc7HQ@mail.gmail.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: RFC: a plugin architecture for git extensions?
+Date: Mon, 9 May 2011 21:07:31 +1000
+Message-ID: <BANLkTikUjGLBH6_ze7EvRfoKb9h-RREmuA@mail.gmail.com>
+References: <7vbozg4eqw.fsf@alter.siamese.dyndns.org>
+	<BANLkTi=zrWR0GAm6n1Gs9XDCR6kXtjDW0A@mail.gmail.com>
+	<20110506065601.GB13351@elie>
+	<BANLkTimVjZgOJk1ik7fbhQvW21Fo9eZoXg@mail.gmail.com>
+	<20110506172334.GB16576@sigill.intra.peff.net>
+	<BANLkTikDVBgOqd1U=qSL99U3K8EtLVTxtw@mail.gmail.com>
+	<20110509073535.GA5657@sigill.intra.peff.net>
+	<BANLkTi=tfxPN=WLmfn=d+jrHV3U-Rp8T=A@mail.gmail.com>
+	<20110509081219.GB6205@sigill.intra.peff.net>
+	<BANLkTimKRo_36Ce2aFWWXdM1a+EgQ-u77Q@mail.gmail.com>
+	<20110509104446.GB9060@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Git mailing list <git@vger.kernel.org>
-To: John Szakmeister <john@szakmeister.net>
-X-From: git-owner@vger.kernel.org Mon May 09 12:57:11 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Aguilar <davvid@gmail.com>, Andreas Ericsson <ae@op5.se>,
+	Joey Hess <joey@kitenet.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	"david@lang.hm" <david@lang.hm>,
+	Pau Garcia i Quiles <pgquiles@elpauer.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon May 09 13:07:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJO9G-0003i5-Cy
-	for gcvg-git-2@lo.gmane.org; Mon, 09 May 2011 12:57:10 +0200
+	id 1QJOJO-0007s5-AT
+	for gcvg-git-2@lo.gmane.org; Mon, 09 May 2011 13:07:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751803Ab1EIK5E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 May 2011 06:57:04 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36916
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751393Ab1EIK5D (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2011 06:57:03 -0400
-Received: (qmail 7541 invoked by uid 107); 9 May 2011 10:58:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 09 May 2011 06:58:58 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 May 2011 06:57:00 -0400
-Content-Disposition: inline
-In-Reply-To: <BANLkTik+VbJZKc1Xwb-3p3HPW-zxanc7HQ@mail.gmail.com>
+	id S1752302Ab1EILHd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 May 2011 07:07:33 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:63660 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752483Ab1EILHc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 May 2011 07:07:32 -0400
+Received: by vxi39 with SMTP id 39so5627677vxi.19
+        for <git@vger.kernel.org>; Mon, 09 May 2011 04:07:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3wgeA9cDHMsbbg1mGdbI8MSWoUL3DQmJF45y4XDCTJY=;
+        b=t16qppiYkUvbGnAAJuI1BLilyXQeANKyiyQ4H/vzHpngXuJifV60o2vyFoe4kRa87v
+         DsI3lCTMjYV9uejMr41gwMHFD6b27kOuIZMVsx4jSUEC4kH/wGTXlwpc8c9Ad4B+aGhK
+         o/Uq8EblL5+grSh0iCmdoXcDztm9/NERpisgI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=b/rjYbdC200Rn6cK0X2At3GJ1itgDj/0VXdwgKScZpl2erT4UFAQ0xTBxskautqj+y
+         wjEpdfGE9Hhde4G5Q7GBG9TAl+svxq4A34Q+ld8uE9gVJLGZWQNKy4lTMLAEGwvmMpNB
+         0IYpBBHKs2y/1YQcaWyAXP+OCiZfxEHLIOiVo=
+Received: by 10.52.76.106 with SMTP id j10mr718184vdw.39.1304939251814; Mon,
+ 09 May 2011 04:07:31 -0700 (PDT)
+Received: by 10.52.160.66 with HTTP; Mon, 9 May 2011 04:07:31 -0700 (PDT)
+In-Reply-To: <20110509104446.GB9060@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173219>
 
-On Mon, May 09, 2011 at 06:05:49AM -0400, John Szakmeister wrote:
+On Mon, May 9, 2011 at 8:44 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, May 09, 2011 at 06:45:56PM +1000, Jon Seymour wrote:
+>
+>> I am starting to think that deploy-via-zip/tar is unworkable for the
+>> case where the extension wants to supply html, since I think an
+>> attempt has to be made to deploy HTML in the path reported by git
+>> --html-path for reasons of HTML =C2=A0linkability from extension bac=
+k to
+>> the pages from git-core.
+>
+> Yeah, I don't see a way around that without post-processing the HTML
+> links at install time (or creating a symlink farm with all of the HTM=
+L
+> pages).
+>
+>> So, suppose we call it --preferred-extension-path*, then if the user
+>> (root or otherwise) defines
+>>
+>> =C2=A0 =C2=A0 git config core.preferrred-extension-path ${HOME}/.git=
+plugins
+>>
+>> then they get to choose where the installer next run will install ex=
+tensions.
+>
+> I thought about suggesting that, but a config option didn't seem a go=
+od
+> fit to me. The decision of where to put a package seems more likely t=
+o
+> be related to which _package_ it is, than which user you are. So a
+> command-line option would make more sense. And even if you have a con=
+fig
+> option, you would sitll need a command-line one to override, so it's =
+not
+> like you are reducing the amount of code or complexity.
+>
+> Which again makes it not a git issue at all, but an issue for
+> package-writers who want to provide a script. It's their job to inter=
+act
+> with the user and find out where the user wants to put things (i.e.,
+> personal or system directories).
+>
+> I don't really see any need for git's role in this to be more than:
+>
+> =C2=A01. Check a set list of directories for extra paths to add to PA=
+TH and
+> =C2=A0 =C2=A0 MANPATH.
+>
+> =C2=A02. Tell the packager's script what that set list is, so they ca=
+n be
+> =C2=A0 =C2=A0 sure to put their files in the right spot.
+>
 
-> I noticed this a little while back, but thought it may have been my
-> own misunderstanding.  I wanted to selectively revert part of a file,
-> so I used 'git checkout -p filename'.  Then I needed to edit the hunk,
-> and got something like this:
-> 
->     # Manual hunk edit mode -- see bottom for a quick guide
->     @@ -236,6 +236,12 @@ int run_add_interactive(const char *revision,
-> const char *patch_mode,
->             }
->             args[ac] = NULL;
-> 
->     +        for (i=0; i < ac; i++)
->     +          {
->     +            fprintf(stderr, "%s ", args[i]);
->     +          }
->     +        fprintf(stderr, "\n");
->     +
->     # ---
->     # To remove '+' lines, make them ' ' lines (context).
->     # To remove '-' lines, delete them.
->     # Lines starting with # will be removed.
->     #
->     # If the patch applies cleanly, the edited hunk will immediately be
->     # marked for discarding. If it does not apply cleanly, you will be given
->     # an opportunity to edit again. If all lines of the hunk are removed,
->     # then the edit is aborted and the hunk is left unchanged.
-> 
-> Since the diff was showing me the forward direction (from the base to
-> modified working tree), I expected that when I left the +'s in there,
-> that it was going to leave my hunk.  Unfortunately, it discarded my
-> hunk.  I can see the text at the bottom, and now it makes sense, but I
-> wonder if there's a way to make it so that you can edit the patch to
-> look the way you want, and keep those bits (in much the same way as
-> 'git add -p' works)?
-> 
-> I hope that makes sense. :-)
+The problem with presenting a list of possible directories is that
+given a list, the choice is ambiguous. Sure a decision procedure can
+be arrived at to choose, but it might be hard for the user to predict
+what decision the procedure will reach. In that case, the user must be
+prompted for a selection.
 
-Your mail does make sense. There are basically two ways of looking at a
-diff like this:
+Ideally most extension installs would not require any kind of
+configuration or decision by the user - simply a statement, I want
+this installed and I want it to be available immediately.
 
-  1. Is it a patch you want to apply to the working tree, and you want
-     to select the parts you like?
+The idea, I think, is to make this decision once, not every single
+extension install. Chances are
+git's default guess will be pretty good (say, /usr/local), but if a
+user decides that he wants to install
+this, and all future extensions in ~/.gitplugins, then this can be
+indicated once, with global configuration
+that overrides the compiled in default.
 
-or
+Again, part of the idea is to give the extension installer some degree
+of confidence that the selected prefix/bin is, in fact,
+in the path and to give the user an override in case the compiled in
+default isn't workable for some reason (for example, due to a
+permissions issue).
 
-  2. Is it a change that is in the working tree versus the index, and
-     you want to discard or keep the change?
-
-The interactive patch viewer is capable of doing both directions. In
-fact, if you do:
-
-  git checkout -p
-
-then it will show you the diff from the index to the working tree and
-say "did you want to discard this hunk?" It does a similar thing for
-"git checkout -p HEAD". But if you do:
-
-  git checkout -p some-other-commit
-
-then it will say "did you want to apply this hunk?".
-
-Which seems somewhat inconsistent, but mostly does what people mean. But
-as you noticed, when you stop saying "take this hunk" versus "discard
-this hunk" and move into "edit this hunk", the "discard" direction seems
-more counter-intuitive.
-
-In theory I guess we could flip between the two directions, which is,
-after all, more or less what "apply -R" does. So we could be in
-"discard" mode, but when somebody wants to "e"dit the patch, it would
-always be in "take the parts you _like_" mode. I have a nagging feeling
-that there may be some corner case that doesn't reverse properly, but I
-haven't thought too long about it.
-
--Peff
+jon.
