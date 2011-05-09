@@ -1,102 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/3] Git commit --patch (again)
-Date: Mon, 09 May 2011 16:56:20 -0700
-Message-ID: <7vsjsnmnrv.fsf@alter.siamese.dyndns.org>
-References: <1304748001-17982-1-git-send-email-conrad.irwin@gmail.com>
- <20110509144451.GA11362@sigill.intra.peff.net>
- <7vei47q0i6.fsf@alter.siamese.dyndns.org>
- <20110509220806.GC3719@sigill.intra.peff.net>
- <7vwrhzmnxf.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v4 (for maint)] git-completion: fix zsh support
+Date: Tue, 10 May 2011 02:58:32 +0300
+Message-ID: <BANLkTikUe_Kwdi+F3vK-7kC9WNU-x_8LDw@mail.gmail.com>
+References: <BANLkTikkhryMa69DSx4EAYjw+aar4icKcQ@mail.gmail.com>
+	<1304979299-6496-1-git-send-email-felipe.contreras@gmail.com>
+	<20110509225307.GG22908@elie>
+	<BANLkTim1Di2ABtrv8ncVPT6+vCvq5pD_kw@mail.gmail.com>
+	<20110509232804.GB23781@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: conrad.irwin@gmail.com, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 10 01:56:38 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 10 01:58:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJaJY-00074l-3g
-	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 01:56:36 +0200
+	id 1QJaLX-0007rG-QU
+	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 01:58:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755765Ab1EIX4b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 May 2011 19:56:31 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64257 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750869Ab1EIX4a (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2011 19:56:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BE1415297;
-	Mon,  9 May 2011 19:58:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PLBqs9aKnmqoU2D3GGN9k4melZE=; b=HqxBR5
-	3rDkXbwRUf/iDfiLycD/jZrcxMJ6ZhELhT5yhuIUOmxc5IiDw7dNWwJqIGq+14lc
-	IZz1HU/I03NK1u/0Hj7o5H8LC7qisutY+VQhW1JmaQ7q2d3jWKEwNyaQIyKdO+w3
-	2M0Sd/KbheP3ahtU2kRAjuofgtS7uC5gnhfEw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fK+TrXP8V8HKxG4d3Dp03aRDfWqxo6u1
-	Aprkw7MA2cvtd7rjgzTGnbSg+t2tu5I2Eu2LjJ35lXoSSeOdrQcwj1Aestg9L9n3
-	JgkwFfQCMVymlm83w6ZtIMFWtxTbUEDhlrGnNEZgHeSWWzbCoHi9Bq11DEZggYCp
-	LQTPhwThW7k=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E560E5292;
-	Mon,  9 May 2011 19:58:31 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BC2CD5290; Mon,  9 May 2011
- 19:58:27 -0400 (EDT)
-In-Reply-To: <7vwrhzmnxf.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 09 May 2011 16:53:00 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3E31DC46-7A98-11E0-8343-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
+	id S1755899Ab1EIX6f convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 May 2011 19:58:35 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:40819 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750869Ab1EIX6f convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 May 2011 19:58:35 -0400
+Received: by fxm17 with SMTP id 17so3956377fxm.19
+        for <git@vger.kernel.org>; Mon, 09 May 2011 16:58:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=9Rb0O5rVtAlp9wcC6NUWAPmDGJBr/6Jnqxt9tf7mnrU=;
+        b=BF3Zzy+wareaF04hv42KpecsN5ohlac1dLdVqdVxSXuu/NcZo/8EC2nwCVyo2BIiTN
+         KuS/kM51x4fcGshrzrZC4XC1xNkZJPDThcMA8vG7ceryHTyD9UyxAk+EmH5kvKb0XIrE
+         NgyLQynJ3e8CfivGEOFpAfldkwHZg18HMp6yQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=mmZlxhEM0dLD/3nCf5BkQjom5vJkGmqWeXsPm5nG79TIDl5FKek/8S5Q3oUprGQ/Vs
+         sd3ZKiW16rzJTzJ2HqKic2d/Kbxvzb26GtQMwufPMHkkhLweUnKtTvGz3gWFqfMdsNPQ
+         JsEL0yfM2+In+ERY5/hv95OQagEO7d3AL1okc=
+Received: by 10.223.77.4 with SMTP id e4mr3000593fak.51.1304985512838; Mon, 09
+ May 2011 16:58:32 -0700 (PDT)
+Received: by 10.223.74.130 with HTTP; Mon, 9 May 2011 16:58:32 -0700 (PDT)
+In-Reply-To: <20110509232804.GB23781@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173295>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Jeff King <peff@peff.net> writes:
+On Tue, May 10, 2011 at 2:28 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Felipe Contreras wrote:
+>> On Tue, May 10, 2011 at 1:53 AM, Jonathan Nieder <jrnieder@gmail.com=
+> wrote:
 >
->> It's unfortunately not quite as simple as having that test succeed, as
->> it changes state that breaks later tests. I didn't investigate deeply,
->> though.
+>>> =C2=A0- the fix in sg/completion-updates is less likely to be broke=
+n by
+>>> =C2=A0 future changes in the bashcompinit library.
+>>
+>> How exactly?
 >
-> Yeah, that test that hardcodes the exact commit sequence is disgusting.
-> In the meantime...
+> Because there remains the possibility that functions from bashcompini=
+t
+> will make use of the $words variable. =C2=A0I have said this about th=
+ree
+> times. =C2=A0It is not very likely, assuming the zsh developers want =
+to keep
+> supporting that fix (and I think they should), but the chance is ther=
+e.
+
+And I even wrote a test to show you that's not the case:
+http://article.gmane.org/gmane.comp.version-control.git/172963
+
+Now, can you modify my test to explain how *exactly* zsh folks can
+screw my patch up?
+
+>>> =C2=A0- this fix is conceptually simpler. =C2=A0In a way, the fix i=
+n
+>>> =C2=A0 sg/completion-updates only works by accident.
+>>
+>> You are missing other advantages:
 >
-> -- >8 --
-> From: Jeff King <peff@peff.net>
-> Subject: [PATCH] t7501.8: feed a meaningful command
+> Sorry, I should have prefaced the above with "in my opinion". =C2=A0A=
+nd to
+> be clear, I am not saying this fix should not be applied; I am just
+> explaining the trade-offs as I understand them.
+>
+> The reason I asked for another opinion is that I find it hard to be
+> objective in this case, because of another consideration I didn't
+> mention: each moment I have been spending on this is an exercise in
+> frustration.
 
-And then on top of that, Conrad's "allow commit --interactive <path>"
-would come, with this squashed in.  The last "reset HEAD^" is nasty but I
-don't have enough energy to fix 12ace0b (Add test case for basic commit
-functionality., 2007-07-31) today.
+Well, don't :) Just ask yourself this question: is the patch good
+enough? If not, send your own version.
 
- t/t7501-commit.sh |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
+Personally I think the latest version of the patch clearly explains
+what it is doing, and why. It even has comments on the code, which the
+other alternative doesn't.
 
-diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
-index 3d2b14d..c2fd116 100755
---- a/t/t7501-commit.sh
-+++ b/t/t7501-commit.sh
-@@ -41,11 +41,12 @@ test_expect_success \
- 	"echo King of the bongo >file &&
- 	test_must_fail git commit -m foo -a file"
- 
--test_expect_success PERL 'cannot use paths with --interactive' '
-+test_expect_success PERL 'can use paths with --interactive' '
- 	echo bong-o-bong >file &&
- 	# 2: update, 1:st path, that is all, 7: quit
- 	( echo 2; echo 1; echo; echo 7 ) |
--	test_must_fail git commit -m foo --interactive file
-+	git commit -m foo --interactive file &&
-+	git reset --hard HEAD^
- '
- 
- test_expect_success \
+--=20
+=46elipe Contreras
