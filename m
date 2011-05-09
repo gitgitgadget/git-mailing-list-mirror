@@ -1,75 +1,202 @@
-From: David <bouncingcats@gmail.com>
-Subject: Re: git rebase --interactive commits order
-Date: Mon, 9 May 2011 20:10:23 +1000
-Message-ID: <BANLkTi=PyBfMxCbWNfJEXEP6-MphdeE+_Q@mail.gmail.com>
-References: <BANLkTimX2tupqV464+Re8u06TT+qRmqPuw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] only warn about ambiguous refs if stderr is a tty
+Date: Mon, 9 May 2011 06:32:08 -0400
+Message-ID: <20110509103208.GA9060@sigill.intra.peff.net>
+References: <BANLkTinLCirA4XP9AOb9piGo9ucMsmrmkQ@mail.gmail.com>
+ <1304927478-3112-1-git-send-email-kusmabite@gmail.com>
+ <20110509080315.GA6205@sigill.intra.peff.net>
+ <BANLkTimR_S-px-MfRy0pKGrjxOgSC_=e=A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Philippe Vaucher <philippe.vaucher@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 09 12:10:35 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, steveire@gmail.com,
+	felipe.contreras@gmail.com, gitster@pobox.com
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 09 12:32:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJNQ9-0001Mf-D1
-	for gcvg-git-2@lo.gmane.org; Mon, 09 May 2011 12:10:33 +0200
+	id 1QJNlC-0001dr-Th
+	for gcvg-git-2@lo.gmane.org; Mon, 09 May 2011 12:32:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751668Ab1EIKKZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 May 2011 06:10:25 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:38055 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751308Ab1EIKKZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2011 06:10:25 -0400
-Received: by bwz15 with SMTP id 15so3842332bwz.19
-        for <git@vger.kernel.org>; Mon, 09 May 2011 03:10:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=WtPdMxBjb50cFzwR8EUSIcX7CoxEgdw3JWSz4y0E6mQ=;
-        b=jV90h2YP+Oku9OXc2PaIJEPFxc6YS2dIYvpiekEDZGdd31hPWmbo41kl6WYl9eWZFs
-         Cbp9itRq939HRpchdCyk2tIOBzu/UpKKpUrgjVsNI6Qb7pmH623hD8MJ89Xho8c+HOqx
-         K08hNf8tIWIZZr9O057hFjzK3CIUIaX0PFwTc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=ZmA5qAZ/v3gvMqmAwjThPqH7fkcoO3TCB59lJOi0h7OtPV2A2qdGohjrs1CSbHlwpC
-         5ndPtfY8771TE+0g3b1gvYj2rUVHUhMdyHvFRvb8Ex5xLdo9TFA8pWzt+KFldC7ri6rU
-         AuG/tvXxSnBqaz6hhuSN+r+WW5b3Ehwodhy+c=
-Received: by 10.204.19.65 with SMTP id z1mr478740bka.202.1304935823486; Mon,
- 09 May 2011 03:10:23 -0700 (PDT)
-Received: by 10.204.14.137 with HTTP; Mon, 9 May 2011 03:10:23 -0700 (PDT)
-In-Reply-To: <BANLkTimX2tupqV464+Re8u06TT+qRmqPuw@mail.gmail.com>
+	id S1751931Ab1EIKcN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 May 2011 06:32:13 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:40131
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751720Ab1EIKcM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2011 06:32:12 -0400
+Received: (qmail 7352 invoked by uid 107); 9 May 2011 10:34:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 09 May 2011 06:34:08 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 May 2011 06:32:08 -0400
+Content-Disposition: inline
+In-Reply-To: <BANLkTimR_S-px-MfRy0pKGrjxOgSC_=e=A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173216>
 
-On 9 May 2011 19:30, Philippe Vaucher <philippe.vaucher@gmail.com> wrote:
->
-> Is there an option or would it be possible to make it so that `git
-> rebase -i` lists commits in reverse chronological order, like it does
-> for `git log` ?
->
-> Almost every git commands I use lists events in reverse chronological
-> order (reflog, log, gitk) and then you do an interactive rebase and it
-> always takes me a second or two to switch mindsets and start reading
-> them in chronological order. I asked around and I'm far from being the
-> only one who think this is counter-intuitive. I understand there's an
-> implementation simplicity reason for it to be that way, and also that
-> it is somewhat logical to show the commits to be applied in order, but
-> as your mind is trained to read them in reverse chronological order
-> with the other commands I'd find it more consistant if rebase also
-> followed that.
+On Mon, May 09, 2011 at 10:41:02AM +0200, Erik Faye-Lund wrote:
 
-I agree. I use "rebase -i" a lot, often simultaneously viewing with
-gitk, and  I find my work rate is reduced because it is anti-intuitive
-to have different tools showing the same information in the opposite
-order, especially when squashing commits. I find I have to do a mental
-double check before every such operation. Like the OP, I would like to
-see "rebase -i" gain the capability to display commits in the same
-onscreen-ordering as the other command tools.
+> > I disagree. If I do:
+> >
+> > =C2=A0git foo 2>errors
+> >
+> > I would certainly expect any relevant errors to end up in that file=
+=2E As
+> > for why I would do that, two cases I can think of offhand are:
+> >
+> > =C2=A01. Test scripts, which use this extensively.
+> >
+> > =C2=A02. Sometimes cron jobs will capture chatty output in a file a=
+nd show
+> > =C2=A0 =C2=A0 it only in the case of some error condition.
+> >
+>=20
+> I was talking about warnings, not errors. But I can also see that one
+> would sometimes want warnings even when not connected to a tty, but
+> perhaps only when -v is specified?
+
+I know. I meant a script like this:
+
+  cat >>foo.sh <<'EOF'
+  # go to branch in question
+  git checkout "$1"
+
+  # note some point of interest
+  sha1=3D`git rev-parse "$2"`
+
+  # do some script-specific inspection of $sha1, and
+  # merge if it looks OK
+  if test -z "$(git log ..$sha1 -- some-path)"; then
+    git merge $sha1 || exit 1
+  fi
+  EOF
+
+It may produce some chatty output (like "switched to branch..."). So I
+redirect it to a file, and if everything is successful, that output is
+uninteresting. But if it fails, then I want to see everything. So I do
+something like:
+
+  if ! foo.sh master topic >output.tmp 2>&1; then
+    cat output.tmp
+    exit 1
+  fi
+
+If the merge fails, it will produce an error message. But I _also_ want
+to see any warnings that were generated by it and earlier commands, lik=
+e
+rev-parse (e.g., an ambiguous ref warning might help us understand why
+the merge failed).
+
+Obviously this is a pretty trivial example that I cooked up for this
+email. But the concept of stash-stderr-and-report-on-error is a pretty
+common pattern for cron jobs.
+
+> > Yeah, if we disambiguate, I would be tempted to say that "HEAD" alw=
+ays
+> > unambiguously refers to "HEAD".
+>=20
+> While that would touch less code, my gut tells me it's a bit more
+> fragile. But perhaps you're right; I can't come up with any real
+> arguments (i.e use cases that I care about) on top of my head.
+
+Honestly, I'm kind of surprised it's not that way already. It would mak=
+e
+sense to me that "upper" levels would take precedence over lower levels=
+,
+but that ambiguity would occur within a level. So if I say "foo", we
+would look for:
+
+  1. $GIT_DIR/foo, with no ambiguity
+
+  2. $GIT_DIR/refs/foo, with no ambiguity
+
+  3. $GIT_DIR/refs/tags/foo
+     $GIT_DIR/refs/heads/foo
+     $GIT_DIR/refs/remotes/foo
+
+     And note any ambiguity between those three.
+
+Which is not very different than what we do today, except that things
+like HEAD and FETCH_HEAD would always be unambiguously about the
+top-level.
+
+> > And "refs/HEAD" should already work, no?
+>=20
+> No:
+> $ git init foo
+> $ cd foo/
+> $ echo "foo" > bar
+> $ git add bar
+> $ git commit -m.
+> [master (root-commit) fc0cbef] .
+> warning: LF will be replaced by CRLF in bar.
+> The file will have its original line endings in your working director=
+y.
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+>  create mode 100644 bar
+> $ git show refs/HEAD
+> fatal: ambiguous argument 'refs/HEAD': unknown revision or path not i=
+n
+> the working tree.
+> Use '--' to separate paths from revisions
+
+Of course, because there is no refs/HEAD at all. I meant "if you have
+ambiguity between $GIT_DIR/HEAD and $GIT_DIR/refs/HEAD", then saying
+"refs/HEAD" should disambiguate already. In your example, there is no
+ambiguity.
+
+What I failed to notice is that the likely disambiguator is actually
+"refs/heads/HEAD" if you erroneously made a branch.
+
+Try this:
+
+  # A repo with two commits
+  git init repo && cd repo &&
+  echo content >file &&
+  git add file &&
+  git commit -m one &&
+  echo content >>file &&
+  git commit -a -m two &&
+
+  # And an ambiguously named ref called HEAD, pointing to "one";
+  # our real HEAD is still pointing to "two"
+  git branch HEAD HEAD^ &&
+
+  # This should warn of ambiguity, but show "two"
+  git log -1 --oneline HEAD
+
+  # And this should not be ambiguous at all, and show "one"
+  git log -1 --oneline refs/heads/HEAD
+
+  # You can even do the same thing with refs/HEAD if you want, but
+  # you have to use plumbing to get such a ref.
+  git branch -d HEAD
+  git update-ref refs/HEAD HEAD^
+
+  # same as before, ambiguous "two"
+  git log -1 --oneline HEAD
+
+  # or we can use refs/HEAD to get "one"
+  git log -1 --oneline refs/HEAD
+
+So most of that makes sense to me. We choose $GIT_DIR/HEAD over other
+options, and you can specifically refer to something further down by
+its fully-qualified name.
+
+The only thing that I think we might want to change is that "HEAD" is
+considered ambiguous with "refs/heads/HEAD". On the other hand, it seem=
+s
+a little insane to name your branch that, given that it has a
+well-established meaning in git. I admit I haven't been following this
+thread too closely. What is the reason not to tell the user "sorry, tha=
+t
+is an insane branch name. Accept the ambiguity warning, or choose a
+different name"?
+
+-Peff
