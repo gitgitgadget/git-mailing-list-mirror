@@ -1,174 +1,130 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/3] blame: add --line-porcelain output format
-Date: Mon, 9 May 2011 09:34:42 -0400
-Message-ID: <20110509133442.GC11022@sigill.intra.peff.net>
-References: <20110509133153.GA10998@sigill.intra.peff.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH for maint] git-completion: fix zsh support
+Date: Mon, 9 May 2011 16:51:55 +0300
+Message-ID: <BANLkTi=gNO6YyWKhTSX0=irEme-9vwyH2Q@mail.gmail.com>
+References: <20110505185907.GD1377@goldbirke>
+	<1304625144-5206-1-git-send-email-felipe.contreras@gmail.com>
+	<20110505232503.GA7507@elie>
+	<BANLkTikk1wfaC4Aic4iyJZXbZ5kkuEDxaA@mail.gmail.com>
+	<20110506095920.GA1635@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 09 15:34:51 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 09 15:52:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJQbp-00023j-SS
-	for gcvg-git-2@lo.gmane.org; Mon, 09 May 2011 15:34:50 +0200
+	id 1QJQsU-00035Z-MV
+	for gcvg-git-2@lo.gmane.org; Mon, 09 May 2011 15:52:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753297Ab1EINep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 May 2011 09:34:45 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39685
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752680Ab1EINeo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2011 09:34:44 -0400
-Received: (qmail 9125 invoked by uid 107); 9 May 2011 13:36:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 09 May 2011 09:36:41 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 May 2011 09:34:42 -0400
-Content-Disposition: inline
-In-Reply-To: <20110509133153.GA10998@sigill.intra.peff.net>
+	id S1753525Ab1EINv5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 May 2011 09:51:57 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:53509 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752802Ab1EINv4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 May 2011 09:51:56 -0400
+Received: by fxm17 with SMTP id 17so3600006fxm.19
+        for <git@vger.kernel.org>; Mon, 09 May 2011 06:51:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=6LFVgdffTjxqACUHTHpKLf3y7cP3LO/LGj667D1pJOA=;
+        b=Uy3+T1AHRNcqLn+v2Gk/9oXb5VCj9t+Bk8RLJ/XDDX/bK//vsfMSOLC9YRUUCGx130
+         3/fHk+uJIU6isUwYYDGeRPoiHn15Sg0EgyJliMS5uyrxieKqV/f0to+2m6cAuqVQAU+W
+         abHdjeL8qeCTiHL6rF/VKtR6CKwzxQogVIUx0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=XFGZQaW6ev1Ty72Uz4KqCpIkedrqCrI7xlHLBSPFOQXVAEeQ0f3B8aEs87Cm9ynXn9
+         bSGnorDeNYtbVGbySHSn7/vlzMLz3zBCQyFumzVj5X5IZ92PDP95qa1e854kWBHC2JwA
+         wY2W9Q0REeCxcGMbKLlLzXnrXhTLE3Ft88CAg=
+Received: by 10.223.95.198 with SMTP id e6mr3792071fan.13.1304949115261; Mon,
+ 09 May 2011 06:51:55 -0700 (PDT)
+Received: by 10.223.74.130 with HTTP; Mon, 9 May 2011 06:51:55 -0700 (PDT)
+In-Reply-To: <20110506095920.GA1635@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173233>
 
-This is just like --porcelain, except that we always output
-the commit information for each line, not just the first
-time it is referenced. This can make quick and dirty scripts
-much easier to write; see the example added to the blame
-documentation.
+On Fri, May 6, 2011 at 12:59 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Felipe Contreras wrote:
+>
+>> No, the scope remains local.
+>
+> Is this local in the sense of typeset used in ksh functions declared
+> as "function f" or local in the sense of typeset used in ksh function=
+s
+> declared as "f ()"? =C2=A0If the latter, I think you misunderstood me=
+ --- I
+> never meant to suggest otherwise.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I'm not 100% happy with the name, but I couldn't think of anything
-better. Something like --verbose-porcelain works, but is a little too
-vague. Suggestions welcome.
+I'm sorry, I don't know what you mean.
 
- Documentation/blame-options.txt |    5 +++++
- Documentation/git-blame.txt     |   13 +++++++++++++
- builtin/blame.c                 |   10 ++++++++--
- t/t8008-blame-formats.sh        |   19 +++++++++++++++++++
- 4 files changed, 45 insertions(+), 2 deletions(-)
+By "local" I mean that all the layers bellow in the call stack will
+use a separate "words" variable than the layers above.
 
-diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
-index 16e3c68..e76195a 100644
---- a/Documentation/blame-options.txt
-+++ b/Documentation/blame-options.txt
-@@ -52,6 +52,11 @@ of lines before or after the line given by <start>.
- --porcelain::
- 	Show in a format designed for machine consumption.
- 
-+--line-porcelain::
-+	Show the porcelain format, but output commit information for
-+	each line, not just the first time a commit is referenced.
-+	Implies --porcelain.
-+
- --incremental::
- 	Show the result incrementally in a format designed for
- 	machine consumption.
-diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
-index bb8edb4..9516914 100644
---- a/Documentation/git-blame.txt
-+++ b/Documentation/git-blame.txt
-@@ -105,6 +105,19 @@ The contents of the actual line is output after the above
- header, prefixed by a TAB. This is to allow adding more
- header elements later.
- 
-+The porcelain format generally suppresses commit information that has
-+already been seen. For example, two lines that are blamed to the same
-+commit will both be shown, but the details for that commit will be shown
-+only once. This is more efficient, but may require more state be kept by
-+the reader. The `--line-porcelain` option can be used to output full
-+commit information for each line, allowing simpler (but less efficient)
-+usage like:
-+
-+	# count the number of lines attributed to each author
-+	git blame --line-porcelain file |
-+	sed -n 's/^author //p' |
-+	sort | uniq -c | sort -rn
-+
- 
- SPECIFYING RANGES
- -----------------
-diff --git a/builtin/blame.c b/builtin/blame.c
-index d74e18f..6c26672 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -1619,6 +1619,7 @@ static const char *format_time(unsigned long time, const char *tz_str,
- #define OUTPUT_SHOW_SCORE      0100
- #define OUTPUT_NO_AUTHOR       0200
- #define OUTPUT_SHOW_EMAIL	0400
-+#define OUTPUT_LINE_PORCELAIN 01000
- 
- static void emit_porcelain_details(struct origin *suspect, int repeat)
- {
-@@ -1630,6 +1631,7 @@ static void emit_porcelain_details(struct origin *suspect, int repeat)
- static void emit_porcelain(struct scoreboard *sb, struct blame_entry *ent,
- 			   int opt)
- {
-+	int repeat = opt & OUTPUT_LINE_PORCELAIN;
- 	int cnt;
- 	const char *cp;
- 	struct origin *suspect = ent->suspect;
-@@ -1642,15 +1644,18 @@ static void emit_porcelain(struct scoreboard *sb, struct blame_entry *ent,
- 	       ent->s_lno + 1,
- 	       ent->lno + 1,
- 	       ent->num_lines);
--	emit_porcelain_details(suspect, 0);
-+	emit_porcelain_details(suspect, repeat);
- 
- 	cp = nth_line(sb, ent->lno);
- 	for (cnt = 0; cnt < ent->num_lines; cnt++) {
- 		char ch;
--		if (cnt)
-+		if (cnt) {
- 			printf("%s %d %d\n", hex,
- 			       ent->s_lno + 1 + cnt,
- 			       ent->lno + 1 + cnt);
-+			if (repeat)
-+				emit_porcelain_details(suspect, 1);
-+		}
- 		putchar('\t');
- 		do {
- 			ch = *cp++;
-@@ -2307,6 +2312,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 		OPT_BIT('f', "show-name", &output_option, "Show original filename (Default: auto)", OUTPUT_SHOW_NAME),
- 		OPT_BIT('n', "show-number", &output_option, "Show original linenumber (Default: off)", OUTPUT_SHOW_NUMBER),
- 		OPT_BIT('p', "porcelain", &output_option, "Show in a format designed for machine consumption", OUTPUT_PORCELAIN),
-+		OPT_BIT(0, "line-porcelain", &output_option, "Show porcelain format with per-line commit information", OUTPUT_PORCELAIN|OUTPUT_LINE_PORCELAIN),
- 		OPT_BIT('c', NULL, &output_option, "Use the same output mode as git-annotate (Default: off)", OUTPUT_ANNOTATE_COMPAT),
- 		OPT_BIT('t', NULL, &output_option, "Show raw timestamp (Default: off)", OUTPUT_RAW_TIMESTAMP),
- 		OPT_BIT('l', NULL, &output_option, "Show long commit SHA1 (Default: off)", OUTPUT_LONG_OBJECT_NAME),
-diff --git a/t/t8008-blame-formats.sh b/t/t8008-blame-formats.sh
-index 387d1a6..d15f8b3 100755
---- a/t/t8008-blame-formats.sh
-+++ b/t/t8008-blame-formats.sh
-@@ -68,4 +68,23 @@ test_expect_success 'blame --porcelain output' '
- 	test_cmp expect actual
- '
- 
-+cat >expect <<EOF
-+$ID1 1 1 1
-+$COMMIT1
-+	a
-+$ID2 2 2 3
-+$COMMIT2
-+	b
-+$ID2 3 3
-+$COMMIT2
-+	c
-+$ID2 4 4
-+$COMMIT2
-+	d
-+EOF
-+test_expect_success 'blame --line-porcelain output' '
-+	git blame --line-porcelain file >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-1.7.5.rc2.8.gc085
+>> In fact, if you follow the link I posted, that's precisely the fix t=
+he
+>> zsh guys were pushing for. And the it is already merged:
+>> http://zsh.git.sourceforge.net/git/gitweb.cgi?p=3Dzsh/zsh;a=3Dcommit=
+diff;h=3De880604f029088f32fb1ecc39213d720ae526aaa
+>
+> Now this changes things (since it amounts to a guarantee that the
+> bash completion emulation has already extracted all it needs from
+> $words before calling a completion function). =C2=A0What happens if s=
+omeone
+> calls "compgen -F" after words is hidden?
+
+I fail to see an example of that. Why don't you try?
+
+>> Well, it's hosted on debian.org, and I haven't seen it used anywhere
+>> else. I just don't know how else to identify that project.
+>
+> Here you go: http://pkgs.fedoraproject.org/gitweb/?p=3Dbash-completio=
+n.git;a=3Dtree
+
+That's just packaging:
+URL:            http://bash-completion.alioth.debian.org/
+
+http://pkgs.fedoraproject.org/gitweb/?p=3Dbash-completion.git;a=3Dblob;=
+f=3Dbash-completion.spec;h=3D855462dd092a50959d9576f6bc02c01332dd63a2;h=
+b=3DHEAD#l12
+
+>> I think the simplest fix is the one I'm proposing
+>
+> I'm happy with it as long as the zsh people are committed to making
+> sure it continues to work (which it sounds like they are, luckily).
+> I suppose it is intended to obsolete the third patch from G=C3=A1bor'=
+s
+> series? =C2=A0Could you provide an explanation for the commit log,
+> something to the effect that
+>
+> =C2=A0- the words array has special meaning
+> =C2=A0- that produces such-and-such puzzling symptoms
+> =C2=A0- zsh 4.3.12 (?) will fix it by using "typeset -h" to hide it w=
+hen
+> =C2=A0 running completion functions designed for bash
+> =C2=A0- we can make the same fix to work correctly with earlier versi=
+ons of
+> =C2=A0 zsh, and that's what this patch does
+>
+> ?
+
+I thought that's what I explained more or less. I will add the missing
+point and the new developments on the commit message and resend.
+
+Cheers.
+
+--=20
+=46elipe Contreras
