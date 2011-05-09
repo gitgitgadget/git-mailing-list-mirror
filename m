@@ -1,130 +1,96 @@
-From: Kacper Kornet <draenog@pld-linux.org>
-Subject: Re: [PATCH 1/1] Honor $(prefix) set in config.mak* when defining
- ETC_GIT* and sysconfdir
-Date: Mon, 9 May 2011 13:56:55 +0200
-Message-ID: <20110509115655.GA18423@camk.edu.pl>
-References: <4DC0E99E.6090402@viscovery.net>
- <20110504135827.GC18585@camk.edu.pl>
- <4DC1653A.7000000@viscovery.net>
- <7v4o5afht7.fsf@alter.siamese.dyndns.org>
- <7vwri5c27e.fsf@alter.siamese.dyndns.org>
- <20110505142910.GA31229@camk.edu.pl>
- <4DC2B814.5070507@viscovery.net>
- <20110505150036.GB31229@camk.edu.pl>
- <7vd3jxb16s.fsf@alter.siamese.dyndns.org>
- <4DC7A4D7.2050401@viscovery.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: RFC: a plugin architecture for git extensions?
+Date: Mon, 9 May 2011 08:21:37 -0400
+Message-ID: <20110509122137.GA10095@sigill.intra.peff.net>
+References: <20110506172334.GB16576@sigill.intra.peff.net>
+ <BANLkTikDVBgOqd1U=qSL99U3K8EtLVTxtw@mail.gmail.com>
+ <20110509073535.GA5657@sigill.intra.peff.net>
+ <BANLkTi=tfxPN=WLmfn=d+jrHV3U-Rp8T=A@mail.gmail.com>
+ <20110509081219.GB6205@sigill.intra.peff.net>
+ <BANLkTimKRo_36Ce2aFWWXdM1a+EgQ-u77Q@mail.gmail.com>
+ <20110509104446.GB9060@sigill.intra.peff.net>
+ <BANLkTikUjGLBH6_ze7EvRfoKb9h-RREmuA@mail.gmail.com>
+ <20110509112428.GE9060@sigill.intra.peff.net>
+ <BANLkTikQQNoYf=vZwMwAXPu0-S_2s9Y79w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon May 09 13:57:11 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Aguilar <davvid@gmail.com>, Andreas Ericsson <ae@op5.se>,
+	Joey Hess <joey@kitenet.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	"david@lang.hm" <david@lang.hm>,
+	Pau Garcia i Quiles <pgquiles@elpauer.org>
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 09 14:21:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJP5K-0004Ys-Oq
-	for gcvg-git-2@lo.gmane.org; Mon, 09 May 2011 13:57:11 +0200
+	id 1QJPT7-0008Aq-CP
+	for gcvg-git-2@lo.gmane.org; Mon, 09 May 2011 14:21:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752508Ab1EIL5E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 May 2011 07:57:04 -0400
-Received: from moat.camk.edu.pl ([148.81.175.50]:60463 "EHLO moat.camk.edu.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752352Ab1EIL5D (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2011 07:57:03 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by moat.camk.edu.pl (Postfix) with ESMTP id A0A135F0048;
-	Mon,  9 May 2011 13:57:01 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at camk.edu.pl
-Received: from moat.camk.edu.pl ([127.0.0.1])
-	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 7aHLZ79cCV0g; Mon,  9 May 2011 13:56:56 +0200 (CEST)
-Received: from gatekeeper.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
-	by moat.camk.edu.pl (Postfix) with ESMTP id 0B6C45F0046;
-	Mon,  9 May 2011 13:56:56 +0200 (CEST)
-Received: by gatekeeper.camk.edu.pl (Postfix, from userid 1293)
-	id ECBFB80B9E; Mon,  9 May 2011 13:56:55 +0200 (CEST)
+	id S1752744Ab1EIMVk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 May 2011 08:21:40 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42761
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752587Ab1EIMVj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2011 08:21:39 -0400
+Received: (qmail 8270 invoked by uid 107); 9 May 2011 12:23:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 09 May 2011 08:23:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 May 2011 08:21:37 -0400
 Content-Disposition: inline
-In-Reply-To: <4DC7A4D7.2050401@viscovery.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <BANLkTikQQNoYf=vZwMwAXPu0-S_2s9Y79w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173225>
 
-On Mon, May 09, 2011 at 10:24:55AM +0200, Johannes Sixt wrote:
-> --- 8< ---
-> From: Johannes Sixt <j6t@kdbg.org>
-> Subject: [PATCH] Honor $(prefix) set in config.mak* when defining ETC_GIT*
+On Mon, May 09, 2011 at 09:28:26PM +1000, Jon Seymour wrote:
 
-> Notice that the prefix specified for the build influenced the definitions
-> of ETC_GITCONFIG and ETC_GITATTRIBUTES only when it was exactly '/usr'.
-> Kacper Kornet noticed that this was furthermore only the case when the
-> build was triggered using 'make prefix=/usr', i.e., the prefix was given
-> on the command line; it did not work when the prefix was specified in
-> config.mak because this file is included much later in the Makefile.
+> > Anyway, with respect to "core.preferredPluginPath", if you do want to go
+> > in that direction, I don't think any extra git support is needed. You
+> > can already just do "git config --path core.preferredPluginPath" to get
+> > the value (with tilde-expansion, even).
+> 
+> I still think it would be useful for the git wrapper to add
+> core.preferredPluginPrefix/bin to the PATH, so that there is no
+> requirement for the user to do this separately via mechanisms that
+> will differ according to platform, shell etc.
 
-> To fix this, move the conditional after the inclusion of config.mak.
+Ah, yeah, that probably does make sense.
 
-> Additionally, it is desirable to specify the etc directory for a build
-> (for example, a build with prefix /usr/local may still want to have the
-> system configuration in /etc/gitconfig). For this purpose, promote the
-> variable 'sysconfdir' from a helper variable to a configuration
-> variable. The prefix check that was moved must now be wrapped so that it
-> does not override sysconfdir setting given in config.mak.
+My original conception was that it would be more like
+"preferredExtensionType" and would be either "user" or "system", from
+which the installer would select either "$HOME/.gitplugins" or "git
+--system-extension-dir" respectively. And I was still thinking in those
+terms, even though the example you showed was obviously an arbitrary
+path.
 
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
->  Makefile |   18 +++++++++---------
->  1 files changed, 9 insertions(+), 9 deletions(-)
+If you want to go the arbitrary path route, then yeah, it would need to
+be added to git's expansion list.
 
-> diff --git a/Makefile b/Makefile
-> index ca4b38e..10d6bd5 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -274,8 +274,7 @@ STRIP ?= strip
->  #   mandir
->  #   infodir
->  #   htmldir
-> -#   ETC_GITCONFIG (but not sysconfdir)
-> -#   ETC_GITATTRIBUTES
-> +#   sysconfdir
->  # can be specified as a relative path some/where/else;
->  # this is interpreted as relative to $(prefix) and "git" at
->  # runtime figures out where they are based on the path to the executable.
-> @@ -291,15 +290,8 @@ sharedir = $(prefix)/share
->  gitwebdir = $(sharedir)/gitweb
->  template_dir = share/git-core/templates
->  htmldir = share/doc/git-doc
-> -ifeq ($(prefix),/usr)
-> -sysconfdir = /etc
->  ETC_GITCONFIG = $(sysconfdir)/gitconfig
->  ETC_GITATTRIBUTES = $(sysconfdir)/gitattributes
-> -else
-> -sysconfdir = $(prefix)/etc
-> -ETC_GITCONFIG = etc/gitconfig
-> -ETC_GITATTRIBUTES = etc/gitattributes
-> -endif
->  lib = lib
->  # DESTDIR=
->  pathsep = :
-> @@ -1192,6 +1184,14 @@ endif
->  -include config.mak.autogen
->  -include config.mak
+There is one drawback with that, though. Consider something like this:
 
-> +ifndef sysconfdir
-> +ifeq ($(prefix),/usr)
-> +sysconfdir = /etc
-> +else
-> +sysconfdir = etc
-> +endif
-> +endif
-> +
->  ifdef CHECK_HEADER_DEPENDENCIES
->  COMPUTE_HEADER_DEPENDENCIES =
->  USE_COMPUTED_HEADER_DEPENDENCIES =
+  $ git config core.preferredPluginPrefix /opt/git-plugins
+  $ cd git-foo && ./install
+  [installs in /opt/git-plugins/git-foo]
+  $ git foo ;# works fine
 
-For me it looks all right. Thanks for writing the patch instead of me. 
--- 
-  Kacper Kornet
+  [time passes; now you decide you want to install new plugins in your
+   home directory]
+  $ git config core.preferredPluginPrefix $HOME/.gitplugins
+  $ cd git-bar && ./install
+  [installs in $HOME/.gitplugins]
+  $ git bar ;# works fine
+  $ git foo ;# now broken!
+
+So there is some value to separating the concept of "these are the paths
+git looks in" and "this is the path we install into" and enforcing that
+the latter points to one of the former.
+
+-Peff
