@@ -1,200 +1,135 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 6/6] git-grep: Bail out when -P is used with -F or -E
-Date: Mon, 09 May 2011 18:48:36 -0700
-Message-ID: <7vfwonmikr.fsf@alter.siamese.dyndns.org>
-References: <1304977928-7142-1-git-send-email-michal.kiedrowicz@gmail.com>
- <1304977928-7142-7-git-send-email-michal.kiedrowicz@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v3 (for maint)] git-completion: fix zsh support
+Date: Mon, 9 May 2011 21:04:21 -0500
+Message-ID: <20110510020421.GA25814@elie>
+References: <1304973913-5376-1-git-send-email-felipe.contreras@gmail.com>
+ <20110509211316.GB22908@elie>
+ <BANLkTikkhryMa69DSx4EAYjw+aar4icKcQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Bert Wesarg <bert.wesarg@googlemail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Alex Riesen <raa.lkml@gmail.com>
-To: =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 10 03:48:59 2011
+Cc: git@vger.kernel.org,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 10 04:04:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJc4J-0007Tx-4K
-	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 03:48:59 +0200
+	id 1QJcJM-0003YT-LI
+	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 04:04:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751775Ab1EJBsy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 May 2011 21:48:54 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44210 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751634Ab1EJBsx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 May 2011 21:48:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E4D805B49;
-	Mon,  9 May 2011 21:50:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=ocdgoS3KxHcx
-	C47jlg/dETdvqgg=; b=ncqlmveKAnvki55EaNDtrY9NeFznpMxJaoTJ9SDpnIA1
-	gno3llrt9AAzOP9VXiPeFG2M+MfGuCYw2y3VMdaD3bz9FKQRR3og/2ymOWigxr7Y
-	26VtEhZrOK87oJxHB5Y9WuMtfK3LiLS0/2m6jnk7Itg3+e1xqCj0xHxquqGnv5M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=BtXS5L
-	vbbmyNp0+bjrm/ytDwDXnBb3ts2FCnFEpWmTvRcaMEaw9Qt/T4AJv8OVZVOSFX+5
-	O0BkIdH7drXpXAE1Ubr1RhJrcaUn2e/F6wTpQZRWgQ6tAzPmhVN4r13xaYxgATKI
-	kzFS6CwGd+56+RIlHhZPw4WKaDHSzuETCFnF4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 872FF5B48;
-	Mon,  9 May 2011 21:50:51 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 907335B44; Mon,  9 May 2011
- 21:50:43 -0400 (EDT)
-In-Reply-To: <1304977928-7142-7-git-send-email-michal.kiedrowicz@gmail.com>
- (=?utf-8?Q?=22Micha=C5=82?= Kiedrowicz"'s message of "Mon, 9 May 2011
- 23:52:08 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EF54F170-7AA7-11E0-AE46-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
+	id S1752058Ab1EJCE2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 May 2011 22:04:28 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:64606 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751634Ab1EJCE1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 May 2011 22:04:27 -0400
+Received: by iyb14 with SMTP id 14so4805024iyb.19
+        for <git@vger.kernel.org>; Mon, 09 May 2011 19:04:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=5bprdzsepzh1FE8IM0sd4NFg/qiWDCwksM9Qep/Wzkc=;
+        b=iJNYinilYwjsXiHBAHqa7Gb86G4U2emZsC0C/W4EmeAUHp8OsyfU9i+h26dxErHMFH
+         hJGX2+jUF+s1lfwR78UXeZjtA63tC2lWpr8szKAzUxPUBkAEnRK6Ga7DfUgCAPYaT+EL
+         L1rvrsbtzvACbD/LpTfUjz93Ku3ReOjNiil+4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=R7Cmu15nZFGc2HAG0hbTr5zpWb31QhfgFwP3lQ8+Gm1ASr1k6hm9RPKz+oYD9STu6A
+         7X+7OJzF3AuaqMwgHDN72iju0Fff+dh77qHJG834fptyFvls9rW6Qsgs+iAJm9GiNNYO
+         gjWzz9ccIHMmbfXWv0w4QiincqPcJvb0n4la4=
+Received: by 10.42.1.82 with SMTP id 18mr3479223icf.274.1304993066984;
+        Mon, 09 May 2011 19:04:26 -0700 (PDT)
+Received: from elie (wireless-165-232.uchicago.edu [128.135.165.232])
+        by mx.google.com with ESMTPS id 14sm2881127ibc.8.2011.05.09.19.04.24
+        (version=SSLv3 cipher=OTHER);
+        Mon, 09 May 2011 19:04:25 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <BANLkTikkhryMa69DSx4EAYjw+aar4icKcQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173298>
 
-Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com> writes:
+Hi,
 
-> This also makes it bail out when grep.extendedRegexp is enabled.
+Sorry I missed this message before.
 
-That is a no-starter.  "git grep -P foo" from the command line should j=
-ust
-ignore the configured default.  It is not entirely your fault, as I thi=
-nk
-you inherited the bug from the existing code that lets grep.extendedReg=
-exp
-interact with the "--fixed" option from the command line.
+=46elipe Contreras wrote:
+> On Tue, May 10, 2011 at 12:13 AM, Jonathan Nieder <jrnieder@gmail.com=
+> wrote:
 
-> But `git grep -G -P pattern` and `git grep -E -G -P pattern` still wo=
-rk
-> because -G and -E set opts.regflags during parse_options() and there =
-is
-> no way to detect `-G` or `-E -G`.
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0zsh's bash completion emulation layer doe=
+s not sufficiently
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0insulate us from that reality. =C2=A0In p=
+articular, the variable
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0keeps the "special" attribute (even after=
+ a declaration "local
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0words"), so assignments within a function=
+ are undone whenever
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0the function returns.
+>
+> That explains less.
 
-How about following the usual pattern of letting the last one win?
+I believe you.  Could you give a hint of what it misses, so that it
+can be fixed?
 
-Perhaps like this?  This is not even compile tested, but should apply
-cleanly on top of, and can be squashed into, your 6/6.  You of course
-would need to rewrite the commit log message and documentation, if you
-said only one of these can be used.
+What I was trying to say is that (in the previous paragraph) it turns
+out 'words' is a special variable used by zsh completion and (in the
+quoted text)
 
-We would need some tests for "grep -P", no?  Please throw in the "last =
-one
-wins" and "command line defeats configuration" when you add one.
+ - we would prefer to use that variable for something else
 
-Also I deliberately said "--ignore-case and -P are not compatible (yet)=
-";
-shouldn't you be able to do ignore case fairly easily, I wonder?  Isn't=
- it
-just the matter of wrapping each one with "(?i:" and ")" pair, or anyth=
-ing
-more involved necessary?
+ - zsh's bashcompinit library can and should help us to do so
 
- builtin/grep.c |   58 +++++++++++++++++++++++++++++++++++++++++++-----=
--------
- 1 files changed, 45 insertions(+), 13 deletions(-)
+ - it would do so by using typeset -h to hide the variable, an
+   important effect of which is to clear the attribute called
+   "special"
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 8e422b3..37f2331 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -753,6 +753,15 @@ int cmd_grep(int argc, const char **argv, const ch=
-ar *prefix)
- 	int i;
- 	int dummy;
- 	int use_index =3D 1;
-+	enum {
-+		pattern_type_unspecified =3D 0,
-+		pattern_type_bre,
-+		pattern_type_ere,
-+		pattern_type_fixed,
-+		pattern_type_pcre,
-+	};
-+	int pattern_type =3D pattern_type_unspecified;
-+
- 	struct option options[] =3D {
- 		OPT_BOOLEAN(0, "cached", &cached,
- 			"search in index instead of in the work tree"),
-@@ -774,15 +783,18 @@ int cmd_grep(int argc, const char **argv, const c=
-har *prefix)
- 			"descend at most <depth> levels", PARSE_OPT_NONEG,
- 			NULL, 1 },
- 		OPT_GROUP(""),
--		OPT_BIT('E', "extended-regexp", &opt.regflags,
--			"use extended POSIX regular expressions", REG_EXTENDED),
--		OPT_NEGBIT('G', "basic-regexp", &opt.regflags,
--			"use basic POSIX regular expressions (default)",
--			REG_EXTENDED),
--		OPT_BOOLEAN('F', "fixed-strings", &opt.fixed,
--			"interpret patterns as fixed strings"),
--		OPT_BOOLEAN('P', "perl-regexp", &opt.pcre,
--				"use Perl-compatible regular expressions"),
-+		OPT_SET_INT('E', "extended-regexp", &pattern_type,
-+			    "use extended POSIX regular expressions",
-+			    pattern_type_ere),
-+		OPT_SET_INT('G', "basic-regexp", &pattern_type,
-+			    "use basic POSIX regular expressions (default)",
-+			    pattern_type_bre),
-+		OPT_SET_INT('F', "fixed-strings", &pattern_type,
-+			    "interpret patterns as fixed strings",
-+			    pattern_type_fixed),
-+		OPT_SET_INT('P', "perl-regexp", &pattern_type,
-+			    "use Perl-compatible regular expressions",
-+			    pattern_type_pcre),
- 		OPT_GROUP(""),
- 		OPT_BOOLEAN('n', "line-number", &opt.linenum, "show line numbers"),
- 		OPT_NEGBIT('h', NULL, &opt.pathname, "don't show filenames", 1),
-@@ -888,6 +900,28 @@ int cmd_grep(int argc, const char **argv, const ch=
-ar *prefix)
- 			     PARSE_OPT_KEEP_DASHDASH |
- 			     PARSE_OPT_STOP_AT_NON_OPTION |
- 			     PARSE_OPT_NO_INTERNAL_HELP);
-+	switch (pattern_type) {
-+	case pattern_type_fixed:
-+		opt.fixed =3D 1;
-+		opt.pcre =3D 0;
-+		break;
-+	case pattern_type_bre:
-+		opt.fixed =3D 0;
-+		opt.pcre =3D 0;
-+		opt.regflags &=3D ~REG_EXTENDED;
-+		break;
-+	case pattern_type_ere:
-+		opt.fixed =3D 0;
-+		opt.pcre =3D 0;
-+		opt.regflags |=3D REG_EXTENDED;
-+		break;
-+	case pattern_type_pcre:
-+		opt.fixed =3D 0;
-+		opt.pcre =3D 1;
-+		break;
-+	default:
-+		break; /* nothing */
-+	}
-=20
- 	if (use_index && !startup_info->have_repository)
- 		/* die the same way as if we did it at the beginning */
-@@ -925,12 +959,10 @@ int cmd_grep(int argc, const char **argv, const c=
-har *prefix)
-=20
- 	if (!opt.pattern_list)
- 		die(_("no pattern given."));
--	if (opt.regflags !=3D REG_NEWLINE && opt.pcre)
--		die(_("cannot mix --extended-regexp and --perl-regexp"));
- 	if (!opt.fixed && opt.ignore_case)
- 		opt.regflags |=3D REG_ICASE;
--	if ((opt.regflags !=3D REG_NEWLINE || opt.pcre) && opt.fixed)
--		die(_("cannot mix --fixed-strings and regexp"));
-+	if (opt.pcre && opt.ignore_case)
-+		die(_("--ignore-case and -P are not compatible (yet)"));
-=20
- #ifndef NO_PTHREADS
- 	if (online_cpus() =3D=3D 1 || !grep_threads_ok(&opt))
+ - even declaring "local words" does not clear that attribute
+
+ - the pertinent effect here is that (in the words of the zshcompwid
+   manpage) as long as parameters like words remain special, "except
+   for compstate, the parameters are reset on each function exit
+   (including nested function calls from within the completion widget)
+   to the values they had when the function was entered".
+
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0In particular, until 3bee6a473 (completio=
+n: don't declare
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0'local words' to make zsh happy, 2011-04-=
+28), the "words" array
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0would be cleared in _git by declaring "lo=
+cal words" and its new
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0value would never be propagated from _get=
+_comp_words_by_ref so
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0it remained empty and the completion scri=
+pt could not tell that
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0there were existing subcommand names on t=
+he command line (so
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0"git log m<TAB>" would complete subcomman=
+d names).
+>
+> I don't see the point in explaining in excruciating detail all the
+> series of steps in which an unset variable causes problems; the
+> variable doesn't get set, thus one can assume there are problems.
+
+Am I daft?  I guess so.  I really do have sympathy for the person who
+runs into this code, and wanting to check while making some change
+with unrelated purpose that it is still fixed, fires up zsh and runs
+
+	git a<TAB>
+
+=2E  Does it complete?  Yep, check, moving on.  Oops.
+
+There's some flamebait in the rest of your responses, so I'm snipping
+the rest of my explanations.  If you have sincere questions about my
+feedback in the future, I'd be glad to answer them.
