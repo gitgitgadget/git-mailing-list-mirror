@@ -1,98 +1,107 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [BUG] Autocompletion fails with "bash: words: bad array subscript"
-Date: Wed, 11 May 2011 00:39:35 +0200
-Message-ID: <20110510223935.GA31029@goldbirke>
-References: <BANLkTi=nOUEp_J+2dkZZp=HvER-eAdG9eg@mail.gmail.com>
-	<20110510203101.GG14456@sigill.intra.peff.net>
-	<20110510203943.GH14456@sigill.intra.peff.net>
-	<BANLkTi=0r_hCgt3wh4EkRqS6gnCyyKrY2g@mail.gmail.com>
-	<20110510210116.GA25224@sigill.intra.peff.net>
-	<BANLkTin9=7y+2eqUgo_ObcYeGs3TQ7YMGw@mail.gmail.com>
-	<20110510211016.GB26231@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-p4: warn if git authorship won't be retained
+Date: Tue, 10 May 2011 15:51:37 -0700
+Message-ID: <7vhb92i2yu.fsf@alter.siamese.dyndns.org>
+References: <1305055653-5133-1-git-send-email-luke@diamand.org>
+ <1305055653-5133-2-git-send-email-luke@diamand.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <gsoc@spearce.org>,
-	Stephen Boyd <bebarino@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 11 00:39:51 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Pete Wyckoff <pw@padd.com>
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Wed May 11 00:51:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJvap-0001FN-I5
-	for gcvg-git-2@lo.gmane.org; Wed, 11 May 2011 00:39:51 +0200
+	id 1QJvmT-0006AV-Kv
+	for gcvg-git-2@lo.gmane.org; Wed, 11 May 2011 00:51:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752749Ab1EJWjq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 May 2011 18:39:46 -0400
-Received: from moutng.kundenserver.de ([212.227.17.8]:64139 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752163Ab1EJWjp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2011 18:39:45 -0400
-Received: from localhost6.localdomain6 (p5B130BE1.dip0.t-ipconnect.de [91.19.11.225])
-	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
-	id 0MNATs-1QM6Ns1JWK-006brg; Wed, 11 May 2011 00:39:36 +0200
-Content-Disposition: inline
-In-Reply-To: <20110510211016.GB26231@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Provags-ID: V02:K0:9H3OHxulvTuFOL7O3b6G1j+2SudQeDsfWAFgzA/Gjv4
- jlSQV1mXw5tP5nIw/qDU2wg3XfC0O8yHB0w9/rsvbGvYoi6y0K
- MLgwnAoO52EZntRJ7Q0+ecaNL9tIUy/DyiWbxE2dN/4T1efTeJ
- Qj46RlaNEpEZl7NhMG9aaXVq1zbRuxrxpxi9Qqmolx4id05Sys
- VBbFRfHDASvdjzS6RhcRA==
+	id S1752809Ab1EJWvs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2011 18:51:48 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63352 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751762Ab1EJWvs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2011 18:51:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EC8F14A49;
+	Tue, 10 May 2011 18:53:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Ai33v28qHmz2tc2fzHROiyhIp/k=; b=iZT4ng
+	JZdAWr1Y3EQNlrsaG1ZBu5FquTxAN248Cb4AjZ0KeS3q4m5l4Nx/VvIqZYR4WYYN
+	hOg6ajfKORqjhQ1bJASQUYzAtNiwYpM8v5EasmcZR9kbkVslt54efCzbkiqKsEeh
+	0+/LxfJVoMCM5h3CiVUIfOwEU82GZ0KfdxY0I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZCZ2OZTA8DfuaXS0Ssx+8MZkeuuChgwG
+	+YzEzC6kIq8Xpd6qkDe8FgePQvIGTxrU3YegDlFAoBLG63c63YCLIpuzk62Yu7mp
+	RIjsh2FQ+A3raub463rrVf1Fmy0o30ZZLAlnDUYP4nimPddFuY6y75XA8cm81esw
+	U8m8mP8aP9E=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BC3B64A48;
+	Tue, 10 May 2011 18:53:49 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 96E454A46; Tue, 10 May 2011
+ 18:53:45 -0400 (EDT)
+In-Reply-To: <1305055653-5133-2-git-send-email-luke@diamand.org> (Luke
+ Diamand's message of "Tue, 10 May 2011 20:27:33 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5EAD22EE-7B58-11E0-9F82-B44DF9BAD297-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173378>
 
-Hi,
+Luke Diamand <luke@diamand.org> writes:
 
+> diff --git a/t/t9800-git-p4.sh b/t/t9800-git-p4.sh
+> index 4fb0e24..d6c7d13 100755
+> --- a/t/t9800-git-p4.sh
+> +++ b/t/t9800-git-p4.sh
+> @@ -160,6 +160,15 @@ p4_check_commit_author() {
+>      fi
+>  }
+>  
+> +make_change_by_user() {
+> +	file=$1
+> +	name=$2
+> +	email=$3
 
-On Tue, May 10, 2011 at 05:10:16PM -0400, Jeff King wrote:
-> On Tue, May 10, 2011 at 11:02:53PM +0200, Sverre Rabbelier wrote:
->=20
-> > On Tue, May 10, 2011 at 23:01, Jeff King <peff@peff.net> wrote:
-> > > Right. Bash calls into our __git() completion function, which cal=
-ls the
-> > > implementation of _get_comp_words_by_ref from /etc/bash_completio=
-n,
-> > > which has the bug. If you don't source git completion, then you a=
-re just
-> > > getting bash's default file completion.
-> >=20
-> > So should we file this bug with bash's completion people?
->=20
-> Probably, but it would be nice to reduce it to a smaller test case (o=
-r
-> one that happens just with completions shipped by Debian) just to rul=
-e
-> out anything git is doing.
+	file=$1 name=$2 email=$3 &&
 
-Thinking a bit more about it, you don't even need to search history to
-reproduce.  Try this:
+> +	echo "username: a change by $name" >> $file &&
+> ...
+> @@ -213,6 +222,43 @@ test_expect_success 'preserve user where author is unknown to p4' '
+>  	rm -rf "$git" && mkdir "$git"
+>  '
+>  
+> +# If we're *not* using --preserve-user, git-p4 should warn if we're submitting
+> +# changes that are not all ours.
+> +# Test: user in p4 and user unknown to p4.
+> +# Test: warning disabled and user is the same.
+> +test_expect_success 'not preserving user with mixed authorship' '
+> +	"$GITP4" clone --dest="$git" //depot &&
+> +	cd "$git" &&
+> +	git config git-p4.skipSubmitEditCheck true
+> +	p4_add_user derek Derek &&
+> + ...
+> +	p4_check_commit_author usernamefile3 alice &&
+> +	cd "$TRASH_DIRECTORY" &&
+> +	rm -rf "$git" && mkdir "$git"
+> +'
 
-  _foo ()
-  {
-          local prev
-          _get_comp_words_by_ref prev
-  }
-  complete -F _foo foo
+When the commands in the && chain fails after 'cd "$git"' near the top but
+not before 'cd "$TRASH_DIRECTORY"' near the end, you would end up starting
+the next test from somewhere different from "$TRASH_DIRECTORY".
 
-Then type "foo", go back to the very beginning of the command line,
-and then press TAB, and the same "bash: words: bad array subscript"
-error appears.
+Do it like this instead:
 
-So the bug is definitely not git-related.  The fix would be a check
-along the lines of the first two hunks of the patch I just sent out.
-Oddly enough, the bash-completion folks had a similar check in the now
-deprecated _get_pword() function, that didn't made it into
-_get_comp_words_by_ref()...
-
-
-Best,
-G=E1bor
+	"$GITP4" clone --dest="$git" //depot &&
+        (
+        	cd "$git" &&
+                ...
+	) &&
+        rm -fr "$git"
