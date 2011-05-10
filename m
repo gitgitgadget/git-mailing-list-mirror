@@ -1,132 +1,130 @@
-From: Michael Schubert <mschub@elegosoft.com>
-Subject: Re: [RFC/PATCH v2] tag: disallow '-' as tag name
-Date: Tue, 10 May 2011 11:47:03 +0200
-Message-ID: <4DC90997.4060208@elegosoft.com>
-References: <1304954496.11377.11.camel@kohr-ah> <7v39knpxbe.fsf@alter.siamese.dyndns.org> <4DC87113.4030204@elegosoft.com> <7v62pjo4km.fsf@alter.siamese.dyndns.org> <4DC87A84.4070604@elegosoft.com> <BANLkTik7PYjGMMfxaNPubYR7M1OgBrF_qw@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v3 (for maint)] git-completion: fix zsh support
+Date: Tue, 10 May 2011 13:44:50 +0300
+Message-ID: <BANLkTikRM==ttn2qmd-PY9tdfUhe5Xtqzg@mail.gmail.com>
+References: <1304973913-5376-1-git-send-email-felipe.contreras@gmail.com>
+	<20110509211316.GB22908@elie>
+	<BANLkTikkhryMa69DSx4EAYjw+aar4icKcQ@mail.gmail.com>
+	<20110510020421.GA25814@elie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Alex Vandiver <alex@chmrr.net>,
-	git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 10 11:47:36 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 10 12:44:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJjXT-0008Ot-GM
-	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 11:47:35 +0200
+	id 1QJkQz-0000JU-J7
+	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 12:44:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754184Ab1EJJrS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2011 05:47:18 -0400
-Received: from mx0.elegosoft.com ([78.47.87.163]:56387 "EHLO mx0.elegosoft.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754159Ab1EJJrL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2011 05:47:11 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mx0.elegosoft.com (Postfix) with ESMTP id 91729DE0BC;
-	Tue, 10 May 2011 11:47:10 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
-Received: from mx0.elegosoft.com ([127.0.0.1])
-	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 61+YxtNZCvfc; Tue, 10 May 2011 11:47:04 +0200 (CEST)
-Received: from [10.10.10.226] (i59F7870A.versanet.de [89.247.135.10])
-	by mx0.elegosoft.com (Postfix) with ESMTPSA id 1A8B2DE0AB;
-	Tue, 10 May 2011 11:47:04 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110503 Thunderbird/3.1.10
-In-Reply-To: <BANLkTik7PYjGMMfxaNPubYR7M1OgBrF_qw@mail.gmail.com>
+	id S1753812Ab1EJKox convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 May 2011 06:44:53 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:60087 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752916Ab1EJKow convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 May 2011 06:44:52 -0400
+Received: by fxm17 with SMTP id 17so4207181fxm.19
+        for <git@vger.kernel.org>; Tue, 10 May 2011 03:44:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=USNNdg8UKXE0Tfe2HoOLt1aM3PxZuZhjX1BoeGEAK/0=;
+        b=wCR9Z9tpuvIfk9RxhQOD72khF/L+qeiPFGDVDT2eXg69OFtgwtA/vqaTBZ+nH2UyBv
+         v/9mdOApk7U/7dv3qF/VOSMw03fWbAOhygrZrd0kpx80cvNF2ds6oBhsDYkqHcpyiTyt
+         riBaOYd7CFg2c7821Vdx7/l9JyggT6BEyIns8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=kNA2z1v2uAN2KCCWJU+qwzFakoRg/RAe+ZJWmAjTod0/TsKnTuBBLZ1/VcPpOO34Ju
+         P6fWHVjqCZWYGzLuliDlJi9+EiLHhsMIjb9MHBmov4TEUye5KIDlTIwyPmiCEhC6G8LL
+         0VFLUhqivvDkx7Bws/+9FWQXKq0H569rfzcU4=
+Received: by 10.223.87.215 with SMTP id x23mr1163484fal.32.1305024290865; Tue,
+ 10 May 2011 03:44:50 -0700 (PDT)
+Received: by 10.223.74.130 with HTTP; Tue, 10 May 2011 03:44:50 -0700 (PDT)
+In-Reply-To: <20110510020421.GA25814@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173324>
 
-On 05/10/2011 09:07 AM, Sverre Rabbelier wrote:
->> Disallow '-' as tag name just as any tag name starting with '-' to be
->> consistent with "git checkout".
-> 
-> This was hard for me to parse, how about::
-> 
-> Disallow '-' as tag name, as well as tag names starting with '-', to
-> be consistent with "git checkout".
+On Tue, May 10, 2011 at 5:04 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Felipe Contreras wrote:
+>> On Tue, May 10, 2011 at 12:13 AM, Jonathan Nieder <jrnieder@gmail.co=
+m> wrote:
+>
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0zsh's bash completion emulation layer do=
+es not sufficiently
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0insulate us from that reality. =C2=A0In =
+particular, the variable
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0keeps the "special" attribute (even afte=
+r a declaration "local
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0words"), so assignments within a functio=
+n are undone whenever
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0the function returns.
+>>
+>> That explains less.
+>
+> I believe you. =C2=A0Could you give a hint of what it misses, so that=
+ it
+> can be fixed?
 
-Thanks.
-
--- >8 --
-Subject: [PATCH] tag: disallow '-' as tag name
-
-Disallow '-' as tag name, as well as tag names starting with '-', to be
-consistent with "git checkout".
-
-Add strbuf_check_tag_ref() as helper to check a refname for a tag.
-
-Signed-off-by: Michael Schubert <mschub@elegosoft.com>
+This is what I explained:
 ---
- builtin/tag.c |   26 ++++++++++++++++++--------
- 1 files changed, 18 insertions(+), 8 deletions(-)
+so by trying to set it as 'local' in git's completion, unexpected
+results occur; assignations are not propagated to outer levels in the
+call stack.
+---
 
-diff --git a/builtin/tag.c b/builtin/tag.c
-index b66b34a..ec926fc 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -352,11 +352,22 @@ static int parse_msg_arg(const struct option *opt, const char *arg, int unset)
- 	return 0;
- }
- 
-+static int strbuf_check_tag_ref(struct strbuf *sb, const char *name)
-+{
-+	if (name[0] == '-')
-+		return CHECK_REF_FORMAT_ERROR;
-+
-+	strbuf_reset(sb);
-+	strbuf_addf(sb, "refs/tags/%s", name);
-+
-+	return check_ref_format(sb->buf);
-+}
-+
- int cmd_tag(int argc, const char **argv, const char *prefix)
- {
- 	struct strbuf buf = STRBUF_INIT;
-+	struct strbuf ref = STRBUF_INIT;
- 	unsigned char object[20], prev[20];
--	char ref[PATH_MAX];
- 	const char *object_ref, *tag;
- 	struct ref_lock *lock;
- 
-@@ -452,12 +463,10 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	if (get_sha1(object_ref, object))
- 		die(_("Failed to resolve '%s' as a valid ref."), object_ref);
- 
--	if (snprintf(ref, sizeof(ref), "refs/tags/%s", tag) > sizeof(ref) - 1)
--		die(_("tag name too long: %.*s..."), 50, tag);
--	if (check_ref_format(ref))
-+	if (strbuf_check_tag_ref(&ref, tag))
- 		die(_("'%s' is not a valid tag name."), tag);
- 
--	if (!resolve_ref(ref, prev, 1, NULL))
-+	if (!resolve_ref(ref.buf, prev, 1, NULL))
- 		hashclr(prev);
- 	else if (!force)
- 		die(_("tag '%s' already exists"), tag);
-@@ -466,14 +475,15 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		create_tag(object, tag, &buf, msg.given || msgfile,
- 			   sign, prev, object);
- 
--	lock = lock_any_ref_for_update(ref, prev, 0);
-+	lock = lock_any_ref_for_update(ref.buf, prev, 0);
- 	if (!lock)
--		die(_("%s: cannot lock the ref"), ref);
-+		die(_("%s: cannot lock the ref"), ref.buf);
- 	if (write_ref_sha1(lock, object, NULL) < 0)
--		die(_("%s: cannot update the ref"), ref);
-+		die(_("%s: cannot update the ref"), ref.buf);
- 	if (force && hashcmp(prev, object))
- 		printf(_("Updated tag '%s' (was %s)\n"), tag, find_unique_abbrev(prev, DEFAULT_ABBREV));
- 
- 	strbuf_release(&buf);
-+	strbuf_release(&ref);
- 	return 0;
- }
--- 
-1.7.5.1
+My text explains why Gabor's patch works: it doesn't set 'words' as
+local. Your text doesn't explain that; it generalizes that 'words'
+always behave that way, which is not the case. Your text also suggests
+that the assignments are always undone, which is not the case, as I
+explained; it only happens to the outer levels in the call stack.
+
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0In particular, until 3bee6a473 (completi=
+on: don't declare
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0'local words' to make zsh happy, 2011-04=
+-28), the "words" array
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0would be cleared in _git by declaring "l=
+ocal words" and its new
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0value would never be propagated from _ge=
+t_comp_words_by_ref so
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0it remained empty and the completion scr=
+ipt could not tell that
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0there were existing subcommand names on =
+the command line (so
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0"git log m<TAB>" would complete subcomma=
+nd names).
+>>
+>> I don't see the point in explaining in excruciating detail all the
+>> series of steps in which an unset variable causes problems; the
+>> variable doesn't get set, thus one can assume there are problems.
+>
+> Am I daft? =C2=A0I guess so. =C2=A0I really do have sympathy for the =
+person who
+> runs into this code, and wanting to check while making some change
+> with unrelated purpose that it is still fixed, fires up zsh and runs
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git a<TAB>
+>
+> . =C2=A0Does it complete? =C2=A0Yep, check, moving on. =C2=A0Oops.
+
+I didn't notice that. That can be easily explained with one line:
+
+---
+the completion script could not tell that there were existing
+subcommand names on the command line (so "git log m<TAB>" would
+complete subcommand names).
+---
+
+--=20
+=46elipe Contreras
