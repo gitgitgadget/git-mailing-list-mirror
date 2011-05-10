@@ -1,68 +1,55 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] completion: fix array indexing error after reverse
- history search
-Date: Wed, 11 May 2011 00:19:53 +0200
-Message-ID: <BANLkTimQmX+W1VQcmo9UkPP7cvkw+Se_xA@mail.gmail.com>
-References: <BANLkTi=nOUEp_J+2dkZZp=HvER-eAdG9eg@mail.gmail.com> <20110510221430.GM1377@goldbirke>
+From: Philippe Vaucher <philippe.vaucher@gmail.com>
+Subject: Re: git rebase --interactive commits order
+Date: Wed, 11 May 2011 00:20:22 +0200
+Message-ID: <BANLkTim1e=+yoyxd1AAThVYMZ_X3nfz=7Q@mail.gmail.com>
+References: <BANLkTimX2tupqV464+Re8u06TT+qRmqPuw@mail.gmail.com>
+ <BANLkTi=PyBfMxCbWNfJEXEP6-MphdeE+_Q@mail.gmail.com> <m2d3jr1mev.fsf@Spindle.sehlabs.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <gsoc@spearce.org>,
-	Stephen Boyd <bebarino@gmail.com>
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Wed May 11 00:20:41 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 11 00:20:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJvIF-0002Aa-0U
-	for gcvg-git-2@lo.gmane.org; Wed, 11 May 2011 00:20:39 +0200
+	id 1QJvIX-0002JN-Rk
+	for gcvg-git-2@lo.gmane.org; Wed, 11 May 2011 00:20:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752142Ab1EJWUe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 May 2011 18:20:34 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:61687 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751041Ab1EJWUd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 May 2011 18:20:33 -0400
-Received: by qwk3 with SMTP id 3so3935654qwk.19
-        for <git@vger.kernel.org>; Tue, 10 May 2011 15:20:33 -0700 (PDT)
+	id S1752181Ab1EJWUx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2011 18:20:53 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:40061 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751041Ab1EJWUw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2011 18:20:52 -0400
+Received: by qyk7 with SMTP id 7so1991107qyk.19
+        for <git@vger.kernel.org>; Tue, 10 May 2011 15:20:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=p2UbZH1VoTNoxj54FjqHxDtJgp7ZRb478OZKqNtqYis=;
-        b=Xkp6wBmRe7QHCwAJSvqZ3In3h26f+VVArjVvoz4vpwKWlBXP/GN7LZvQ1qJMb4RklT
-         DXuRSBXZ3t0z0I+VP01EfRFD0HK01Calkzx0kW2oer56NN7E9nUwUqRvASariAGuJ4SM
-         KvPkbSIireNM3kKMCoBzVRwwOhdWeArJKY1zA=
+         :message-id:subject:to:content-type;
+        bh=p9qshubnR5U6/K8mYe72sG5IHp5rA/aKjyrQVpAcMYY=;
+        b=XtfVRO/RcPb4szDJyuY0/uJiwEoMFHqGEVjGIjuNDva6AjeB4ysuJU1yv1RAW0GuKm
+         RT0hXLjrwywlyopPhU5DsA7qsqbuW7xyLglbCGtllafmBFGDPaafoKC8lv6MVO1YGVpw
+         caYw8/HtH8DtftdriuWNjfzr/hBNxUM74bquM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=Hxb2t+5QyGxhwE1WutjYa+MpjFRH3aXf8211h6qmBL9pp0K9a8qrJ5piVjefs3VCOr
-         0Kui9kbluT7w55MFWr0Dbjfj8OI33I0bg3RjkrbrCODIglsDyvnJ1hRpefMYNhvX/xrg
-         nhgotFE8skP1M7Z3nEFmbtZc8YEYtAQ8YQrjY=
-Received: by 10.229.45.203 with SMTP id g11mr6722764qcf.65.1305066033110; Tue,
- 10 May 2011 15:20:33 -0700 (PDT)
-Received: by 10.229.229.5 with HTTP; Tue, 10 May 2011 15:19:53 -0700 (PDT)
-In-Reply-To: <20110510221430.GM1377@goldbirke>
+         :content-type;
+        b=KAr1hAPBNBUMcxgGPPJu8j74Ttfhym5ZttdAuyOvFsCeEsy+JaK0DDghytR/NFlEkW
+         AyDzdvDqfIvwP4aWRleEEJhV7OP88edjOqMN7mjSXwxttltgCO8EpI/tHrmdCO3FQQf/
+         5B6gG+Dm2WABc1dnpmVzlMnaFXBCopJwA7NZ4=
+Received: by 10.229.63.96 with SMTP id a32mr3031763qci.285.1305066052151; Tue,
+ 10 May 2011 15:20:52 -0700 (PDT)
+Received: by 10.229.234.15 with HTTP; Tue, 10 May 2011 15:20:22 -0700 (PDT)
+In-Reply-To: <m2d3jr1mev.fsf@Spindle.sehlabs.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173374>
 
-Heya,
+So, sounds like most people agree with me. What should we do for this
+to happen? propose a patch?
 
-2011/5/11 SZEDER G=C3=A1bor <szeder@ira.uka.de>:
-> Nice catch, although I have no idea why anyone would attempt
-> completion at that point.
-
-Wow, amazing turnaround, will test tomorrow :). I hit tab instead of
-enter because I don't want to accidentally run the command.
-
---=20
-Cheers,
-
-Sverre Rabbelier
+Philippe
