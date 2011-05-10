@@ -1,114 +1,78 @@
-From: Conrad Irwin <conrad.irwin@gmail.com>
-Subject: Re: [PATCH v3 0/3] Git commit --patch (again)
-Date: Mon, 9 May 2011 23:42:17 -0700
-Message-ID: <BANLkTikwjZkzMxksBsVTFRYdhE3L6ZQM0A@mail.gmail.com>
-References: <1304748001-17982-1-git-send-email-conrad.irwin@gmail.com>
-	<20110509144451.GA11362@sigill.intra.peff.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Approxidate with YYYY.MM
+Date: Tue, 10 May 2011 08:54:33 +0200
+Message-ID: <4DC8E129.2020306@op5.se>
+References: <CAE5FB52-0F90-4F21-828F-7E40ED596B33@gernhardtsoftware.com> <4DC8DCC2.8050208@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 10 08:42:24 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Brian Gernhardt <brian@gernhardtsoftware.com>,
+	"git@vger.kernel.org List" <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue May 10 08:54:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJgeF-000275-Rv
-	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 08:42:24 +0200
+	id 1QJgqB-0007AT-FF
+	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 08:54:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753124Ab1EJGmT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 May 2011 02:42:19 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:41297 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751867Ab1EJGmS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 May 2011 02:42:18 -0400
-Received: by gwaa18 with SMTP id a18so2043071gwa.19
-        for <git@vger.kernel.org>; Mon, 09 May 2011 23:42:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=M1NLApe5M399vWQfUcJPisp2bSkI6nUAbFC4lHubBAs=;
-        b=MjtGotpdT78RjoHtTSxDbf6/f0wRmZ2HFcuzqlYRRlSWGnuMb4cZQFEr5hi0QL2BHU
-         zxbon+iPZjRI4lg7ggwID2yWXdKxbuXDWmhMvSWZCLVZG+WK0H3nMKkyti7zOFUPr0bz
-         GnDiS7dleNQEWARI6tDDs1LzJPDyvFC2648jo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=nQUrGpX9lBGCSRh7haJwHdWYpW+d5t2+hVbUp0g50ZJqGR2YT71jmb5d/wGvHV7N8W
-         2mgqG0VmaDOXRFZZItRDgSKj+tyKpcKeIZkQYXUNoSadOR5W+nPf9R7kFQn1c8IOW/6H
-         ztspxjIJQ/oArp/MH9pm3AYpLB9RICcXWCnPk=
-Received: by 10.236.9.68 with SMTP id 44mr8599032yhs.511.1305009737669; Mon,
- 09 May 2011 23:42:17 -0700 (PDT)
-Received: by 10.236.110.176 with HTTP; Mon, 9 May 2011 23:42:17 -0700 (PDT)
-In-Reply-To: <20110509144451.GA11362@sigill.intra.peff.net>
+	id S1753922Ab1EJGyi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2011 02:54:38 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:36511 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753649Ab1EJGyh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2011 02:54:37 -0400
+Received: by ewy4 with SMTP id 4so1743275ewy.19
+        for <git@vger.kernel.org>; Mon, 09 May 2011 23:54:36 -0700 (PDT)
+Received: by 10.14.53.11 with SMTP id f11mr3158326eec.204.1305010476191;
+        Mon, 09 May 2011 23:54:36 -0700 (PDT)
+Received: from vix.int.op5.se (c83-248-99-226.bredband.comhem.se [83.248.99.226])
+        by mx.google.com with ESMTPS id k32sm4067426eea.27.2011.05.09.23.54.34
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 09 May 2011 23:54:35 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Thunderbird/3.1.10 ThunderGit/0.1a
+In-Reply-To: <4DC8DCC2.8050208@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173317>
 
-On Mon, May 9, 2011 at 7:44 AM, Jeff King <peff@peff.net> wrote:
->
-> That still leaves an inconsistency in "git add -p" versus "git commit
-> -p" (e.g., if you abort "git add -p" with "^C"). But if we care, the
-> right solution is probably to make "git add -p" atomic. That can be a
-> separate topic, though, and I'm not sure anyone really cares enough t=
-o
-> work on it.
+On 05/10/2011 08:35 AM, Michael J Gruber wrote:
+> Brian Gernhardt venit, vidit, dixit 09.05.2011 21:02:
+>> (This is in response to a discussion on #parrot.)
+>>
+>> Rakudo (https://github.com/rakudo/rakudo/) uses tags of the form
+>> YYYY.MM for their monthly releases.  When we were attempting to find
+>> the cause of a slowdown, somewhat was trying to find what commits
+>> occurred after the 2011.01 release with "git log --after=2011.01".
+>> His mistake was pointed out but this led to the confusion of why this
+>> was parsed as "May 1 2011" instead of "Jan 1 2011".  Shouldn't
+>> date.c:match_multi_number() parse something with only two numbers as
+>> a beginning of month instead of allowing it to pass through to the
+>> generic parsing?
+> 
+> I just don't think there is a format like that. There is dd.mm.[yy]yy
+> and apparently also yyyy.mm.dd, but without leading zeros in mm for the
+> latter. Our date parser also takes "." for a space so that you don't
+> need to quote a space ("1.day.ago"). I can see the logic behind parsing
+> 2011.01 as January 2011, but it's a stretch from the existing formats:
+> 
 
-I have pondered this problem too. "git add -p" is a particularly unintu=
-itive,
-it inherits the update-the-index-after-every-complete-file semantics of
-"git add --interactive", but without ever making the file boundaries cl=
-ear
-to the user. Depending on how much this bugs me, I might try to fix it
-in the future, but I wonder whether any users of "git add --interactive=
-"
-are relying on the file based granularity.
+It would be far more logical to parse "2011-01" as "January 2011" as
+that's the preferred way to write month-precision dates in most
+countries that use both the metric system and the gregorian calender.
 
->
-> I have one final question. If I do abort a commit, is there any way t=
-o
-> recover the state that was in the temporary index? That is, if I abor=
-t
-> "git commit -i" by using an empty commit message, it is easy enough t=
-o
-> use shell history to repeat the command (possibly with a different se=
-t
-> of files). But if I spend some time selecting (and possibly editing)
-> hunks, and then decide to abort the commit, is there any way to recov=
-er
-> the intermediate index state?
+I've never seen that date-type with dot as a separator, but with the
+dash it's very, very common.
 
-Not really. You could use your knowledge of git-commit to assume that t=
-he
-tree object with the most recent ctime is probably useful, but that onl=
-y
-works some of the time. The occasions on which I have wanted to abort
-the process half-way, I've just created a temporary commit with what I
-have so far. A "git reset --soft" at that point makes the whole process
-long-hand for "git add -p".
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
->
->> =A0 Allow git commit --interactive with paths
->
-> Hmm. Test t7501.8 explicitly tests that this isn't allowed. But the t=
-est
-> is poorly written, and falsely returns success even with your patch.
->
-
-Well spotted. Thank you Junio for fixing that test.
-
-> which does properly fail with your change. Your commit should tweak t=
-hat
-> test (speaking of which, it would be nice for patch 1 to have a test,
-> too).
-
-I'll try to get my head around the tests :).
-
-Conrad
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
