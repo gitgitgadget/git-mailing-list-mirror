@@ -1,71 +1,72 @@
-From: Philippe Vaucher <philippe.vaucher@gmail.com>
-Subject: Re: git rebase --interactive commits order
-Date: Wed, 11 May 2011 01:05:09 +0200
-Message-ID: <BANLkTik6ZYVFP=2TnYiZ4iVZhOzSdizTEg@mail.gmail.com>
-References: <BANLkTimX2tupqV464+Re8u06TT+qRmqPuw@mail.gmail.com>
- <BANLkTi=PyBfMxCbWNfJEXEP6-MphdeE+_Q@mail.gmail.com> <m2d3jr1mev.fsf@Spindle.sehlabs.com>
- <BANLkTim1e=+yoyxd1AAThVYMZ_X3nfz=7Q@mail.gmail.com> <7vbozai2qe.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fix overslow :/no-such-string-ever-existed diagnostics
+Date: Tue, 10 May 2011 16:11:22 -0700
+Message-ID: <7v4o52i21x.fsf@alter.siamese.dyndns.org>
+References: <7vhb92jujt.fsf@alter.siamese.dyndns.org>
+ <7vzkmuidk1.fsf@alter.siamese.dyndns.org> <vpqfwomffuy.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 11 01:05:45 2011
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed May 11 01:11:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJvzt-0003AX-6O
-	for gcvg-git-2@lo.gmane.org; Wed, 11 May 2011 01:05:45 +0200
+	id 1QJw5W-0005OG-N0
+	for gcvg-git-2@lo.gmane.org; Wed, 11 May 2011 01:11:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752272Ab1EJXFk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2011 19:05:40 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:38497 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752142Ab1EJXFj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2011 19:05:39 -0400
-Received: by qyg14 with SMTP id 14so4991484qyg.19
-        for <git@vger.kernel.org>; Tue, 10 May 2011 16:05:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=q1WnhHtGZ3KHdFUZkQI8m92niC9NKjOmXfF2aQjwu+0=;
-        b=sQ86XlLAvc1GqZAOGjLmr38ztIkjou897ldEK6wmfEqJHHpuS8omNEh76MQpcx8yFU
-         WoZFqY7GO+RwGmQrbGGe6tLYR8j9Dq9QiXSv2yNoAd0Mg9y/woPiT84fyHs04hIJpQr8
-         /36Og1/MW+nT8yA0cRaqdOVOKUMgJB3wCdYno=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=jHXN4nMmnCJpuxmrTraAw1vnM18teTX5M2Y+o7uWBqrdMnMRqmseZOJnrUTlZdr59S
-         +B5owvvHaf/slG/6Gg6/tiFYkQjWzdaQkLt3zEPGwtH3CQ0wUf5iPo8fpa/8gYEFEthb
-         /T/3S8Yd7XuiUsQ0N/0Qig/5Sd41eZAARvMf4=
-Received: by 10.229.67.142 with SMTP id r14mr6614820qci.209.1305068739174;
- Tue, 10 May 2011 16:05:39 -0700 (PDT)
-Received: by 10.229.234.15 with HTTP; Tue, 10 May 2011 16:05:09 -0700 (PDT)
-In-Reply-To: <7vbozai2qe.fsf@alter.siamese.dyndns.org>
+	id S1753264Ab1EJXL3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2011 19:11:29 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47059 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753234Ab1EJXL3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2011 19:11:29 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3B9004BF5;
+	Tue, 10 May 2011 19:13:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DSkzOMuZ2kJFGGLJPEcD1yY9A8w=; b=t8aZcd
+	L+ue/3bRtoZ+88eeKPa+4DCQv5VR2x1reElMyhj9mHjLELnJLRL4YXUt/7/cFVLP
+	cGRNaxM6HxeSi50s5xr5xDU7/hHcJkvGq/+2obpQ3ZWQmygOhS3C3i7ns+DAX+RC
+	HAIoRRYFwVBY3De1rBqkjz+CWc2vHeEWfrZGY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=k1zgkjvxWAHsmIoervZAPxvzYTxhn7eV
+	rAovoKDDz7MNljsiDYzddd5THWuMaCprDLM3RRANxZBbg1dKiT8pWhzgJ6+fAaxt
+	L80kGs8te7Hz50goZY4cKgBduwYZwcjdX6oLeLtpFfFTOLw+8zq4ug9cqzkI3hbX
+	xBqwPdHd7oQ=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 17EB74BF4;
+	Tue, 10 May 2011 19:13:32 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 40A164BF1; Tue, 10 May 2011
+ 19:13:28 -0400 (EDT)
+In-Reply-To: <vpqfwomffuy.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Tue, 10 May 2011 22:41:25 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1F664C84-7B5B-11E0-9D7F-B44DF9BAD297-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173381>
 
->> So, sounds like most people agree with me.
->
-> No. You have to realize that happy majority are usually silent.
->
-> It is just most people including me know better than reading your thread
-> and filling the thread with the same "I have been completely content with
-> the current order to read from top to bottom when reading text at the
-> beginning of the screen (i.e. in the editor); do not change it".
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-Well if people really don't want it to change they'd speak up (like
-you did), otherwise things will change and as you seem to suggest the
-majority will be pissed off.
+> Is this a complement or an alternative? It seems to me that your other
+> patch makes this first one useless (in the sense that the second call is
+> always cheap), and avoids complexifying the code of get_sha1_with_mode_1
+> for the first call.
 
-IMHO it's more like the majority don't really care.
-Anyway, offering a "--reverse" patch off by default would please
-everyone, I'll see what I can do.
+I think that the get_sha1_with_mode_1() that is sprinkled with the
+"gently" conditional everywhere _is_ the primary source of complexity.
 
-Philippe
+I suspect that if 009fee4 did a proper refactoring, get_sha1_with_mode()
+wouldn't have that "gently" option at all, and the die_verify_filename()
+wouldn't call get_sha1_with_mode().  Instead, they would share same set of
+helper functions and the latter would make a few calls to them, only to
+deal with :<path> and <tree>:<path> cases.
