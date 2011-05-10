@@ -1,80 +1,96 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v5 (for maint)] git-completion: fix regression in zsh support
-Date: Tue, 10 May 2011 20:36:33 +0300
-Message-ID: <BANLkTinRB-hUwOdZsWRFZWxUAebkFeaGVQ@mail.gmail.com>
-References: <1305030039-16044-1-git-send-email-felipe.contreras@gmail.com>
-	<7vr586jwzm.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] fix overstrict :<path> diagnosis
+Date: Tue, 10 May 2011 11:10:30 -0700
+Message-ID: <7vhb92jujt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 10 19:36:42 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 10 20:10:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJqrS-0007Ij-AZ
-	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 19:36:42 +0200
+	id 1QJrOQ-00083l-Ny
+	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 20:10:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751357Ab1EJRgf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2011 13:36:35 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:55600 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751030Ab1EJRgf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2011 13:36:35 -0400
-Received: by fxm17 with SMTP id 17so4472133fxm.19
-        for <git@vger.kernel.org>; Tue, 10 May 2011 10:36:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=91TN3jaSPieITbKd+8bmmgIPhMsoaJAD+2mCRjraM3k=;
-        b=CehmyjOfk2PNWbVxCjX6psk8SA72dLtQ0tSM/6NMNj8zvIYo8dhSxK8RMsD8Ul2eZm
-         ePbts5kteF7RgpTBaRSkn7jhvTlqQVbEPYNVZFv/vJI01QCHSqRsBlRrS7GJH//rYupX
-         kKlAR/ZfArfUqd1tAhQQsfP44EnL09wJ58xWA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=Jbvgbt2BThfXSVB076ezrx9EMHVaabRTp6P2VpvHqoc4po3bFzsoVExe4UtxI+086R
-         M4iBiHPI8Etq3mX0rdvUUi48r9s2CZZHS1stfoJRlcwSTSURhl36UiqTW9a1q/G3Ibkj
-         cxii5KSnopIhdw3qvhxtPc3Wnfl/XGoA/03zo=
-Received: by 10.223.100.86 with SMTP id x22mr1748728fan.108.1305048993718;
- Tue, 10 May 2011 10:36:33 -0700 (PDT)
-Received: by 10.223.74.130 with HTTP; Tue, 10 May 2011 10:36:33 -0700 (PDT)
-In-Reply-To: <7vr586jwzm.fsf@alter.siamese.dyndns.org>
+	id S1751850Ab1EJSKi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2011 14:10:38 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34071 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751799Ab1EJSKi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2011 14:10:38 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C09AA4DB7;
+	Tue, 10 May 2011 14:12:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=R
+	RNDEhZ/XXeHO85+vxE6YR5uNvU=; b=mLBVh9+M/j71puxFbP6FtXy2AYmFVOuXL
+	MSSJ1BsGAAgb12eUq3qAwfP7swZ7s8W2l322mup0U1nlsdGORzfuzOjo7Tzue3XC
+	2467rOYqLbdSZf+UAumSooWSdHkwb0VvMSc5BZBfYYm8ZVRLnX2Pq3OrLrcny/Gm
+	IwnrgrsIDU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=EM+zOVo3/sKCzaa6/rsIyNt5mZYfU4Q4d8Wsam+oz3RTl6C4S/leAq2z
+	tl1aLpd67fjCntqDaJkJJ4BfxPmMkm7AdsNeEA17nRIFylb9n1RRb2cQak7DZIRB
+	RmhqYC5L2uwydEyXj59H+hUBfiTkl9QodzF4wEZlST3indBZ4Ao=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9EC7E4DB5;
+	Tue, 10 May 2011 14:12:40 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B8A234DB4; Tue, 10 May 2011
+ 14:12:37 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 17E4C1FE-7B31-11E0-AE1C-B44DF9BAD297-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173344>
 
-On Tue, May 10, 2011 at 8:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> Right now zsh is quite broken;...
->
-> Yuck--sounds like zsh as a whole is broken, but certainly you didn't mean
-> that ;-)
+Given "git log :", we get a disambiguation message that tries to be
+helpful and yet totally misses the point, i.e.
 
-Right: s/zsh/zsh support/
+    $ git log :
+    fatal: Path '' does not exist (neither on disk nor in the index).
+    $ git log :/
+    fatal: Path '/' exists on disk, but not in the index.
 
-> Could you also clarify "Right now" a bit?
->
-> Is "The git-completion script in contrib/ in 1.7.5 is broken for versions
-> of zsh before 4.3.12" a good rewrite of the above?
+An empty path nor anything that begins with '/' cannot possibly in the
+index, and it is wrong to guess that the user might have meant to access
+such an index entry.
 
-Well, "right now" all versions of zsh are before 4.3.12. I also don't
-see the point mentioning of 1.7.5. Maybe "The git-completion script in
-contrib/ is quite broken".
+It should yield the same error message as "git log '*.c'", i.e.
 
-> of zsh before 4.3.12"
-> No need for resend if that is the only change required.
+    $ git log '*.c'
+    fatal: ambiguous argument '*.c': unknown revision or path not in the working tree.
+    Use '--' to separate paths from revisions
 
-All right. Hopefully there won't be other changes.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
--- 
-Felipe Contreras
+ * I actually think the message should say
+
+ 	fatal: ambiguous argument '*.c': neither a rev nor a path.
+        Use '--' to separate pathspec from revisions.
+
+   for brevity, but that is a separate topic.
+
+ sha1_name.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/sha1_name.c b/sha1_name.c
+index faea58d..90d8bfa 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -1173,7 +1173,7 @@ int get_sha1_with_context_1(const char *name, unsigned char *sha1,
+ 			}
+ 			pos++;
+ 		}
+-		if (!gently)
++		if (!gently && name[1] && name[1] != '/')
+ 			diagnose_invalid_index_path(stage, prefix, cp);
+ 		free(new_path);
+ 		return -1;
