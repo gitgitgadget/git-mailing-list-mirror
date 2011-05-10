@@ -1,48 +1,42 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: Victor Engmark <victor.engmark@terreactive.ch>
 Subject: Re: Approxidate with YYYY.MM
-Date: Tue, 10 May 2011 09:08:01 +0200
-Message-ID: <4DC8E451.7090702@drmicha.warpmail.net>
-References: <CAE5FB52-0F90-4F21-828F-7E40ED596B33@gernhardtsoftware.com> <4DC8DCC2.8050208@drmicha.warpmail.net> <4DC8E129.2020306@op5.se>
+Date: Tue, 10 May 2011 09:40:08 +0200
+Organization: terreActive AG
+Message-ID: <4DC8EBD8.50707@terreactive.ch>
+References: <CAE5FB52-0F90-4F21-828F-7E40ED596B33@gernhardtsoftware.com> <4DC8DCC2.8050208@drmicha.warpmail.net> <964517.31047.1305010481774.JavaMail.trustmail@mail1.terreactive.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Brian Gernhardt <brian@gernhardtsoftware.com>,
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Brian Gernhardt <brian@gernhardtsoftware.com>,
 	"git@vger.kernel.org List" <git@vger.kernel.org>
 To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue May 10 09:08:17 2011
+X-From: git-owner@vger.kernel.org Tue May 10 09:40:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJh3G-0003yp-2O
-	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 09:08:14 +0200
+	id 1QJhYT-0001DQ-PT
+	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 09:40:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754216Ab1EJHIF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2011 03:08:05 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:46554 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751140Ab1EJHID (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 May 2011 03:08:03 -0400
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id F35A420A10;
-	Tue, 10 May 2011 03:08:02 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute4.internal (MEProxy); Tue, 10 May 2011 03:08:02 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=g4cLiWtsBc4hrXztCUrXiSq6ufM=; b=LJ9FtYSyCpzvi4IHCn+ygLp/ZysCi7m6AjoMyhkL+kvs/6U9XYIePSE8t+NX3LQmOP0zHWz0a+BCdtn6QFjvcOhxppWHtU/tGX7f1mIw21Lpv/5VXFAWKcNUTtvMtrNOKDvZds7rJaSf+MI52W9GMcGG8+bgs17rbz7zZBSLVXY=
-X-Sasl-enc: p/ZjjO18e8chXYT+iFMlRY6aR2gG48wP0s8K0LE4hyB0 1305011282
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 61D4144742F;
-	Tue, 10 May 2011 03:08:02 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Lightning/1.0b3pre Thunderbird/3.1.10
-In-Reply-To: <4DC8E129.2020306@op5.se>
+	id S1754739Ab1EJHkY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2011 03:40:24 -0400
+Received: from gate.terreactive.ch ([212.90.202.121]:55503 "EHLO
+	mail.terreactive.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754715Ab1EJHkX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2011 03:40:23 -0400
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110424 Thunderbird/3.1.10
+In-Reply-To: <964517.31047.1305010481774.JavaMail.trustmail@mail1.terreactive.ch>
+X-terreActive-From: victor.engmark@terreactive.ch
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173319>
 
-Andreas Ericsson venit, vidit, dixit 10.05.2011 08:54:
+On 05/10/2011 08:54 AM, Andreas Ericsson wrote:
 > On 05/10/2011 08:35 AM, Michael J Gruber wrote:
 >> Brian Gernhardt venit, vidit, dixit 09.05.2011 21:02:
 >>> (This is in response to a discussion on #parrot.)
@@ -70,26 +64,38 @@ Andreas Ericsson venit, vidit, dixit 10.05.2011 08:54:
 > 
 > I've never seen that date-type with dot as a separator, but with the
 > dash it's very, very common.
-> 
 
-Exactly that's what I wrote. People misuse the dot format probably as
-frequently as the dash format, in the sense that the use an ordering
-which is wrong for the respective separator. We currently parse n.m as
-day n of month m of the current year for certain n only: We parse
+Seconded. ISO dates are getting pretty common, and in the extended
+format hyphens are the default separator between year, month, and date
+<https://secure.wikimedia.org/wikipedia/en/wiki/ISO_8601#Calendar_dates>.
 
-31.3. as March 3rd of the current year
-32.3. as May 3rd of 2032
+A few notes on support:
 
-(because May is the current month) which does not make that much sense,
-admittedly. I would have hoped the latter to be April 1st (current
-year). I agree that defaulting the month to the current month in the dot
-format makes no sense, but I think (and I guess we disagree here) that
-it's a matter of garbage in - garbage out. As for turning that garbage
-into marbles: 32.3. == 1.4. seems more logical to me. Note that for example
+GNU `date` 8.5 parses some ISO date strings correctly:
+$ date --date='2001-02-03' +%Y-%m-%d\ %H:%M:%S
+2001-02-03 00:00:00
+$ date --date='2001-02-03 04:05:06' +%Y-%m-%d\ %H:%M:%S
+2001-02-03 04:05:06
 
-2020.9.11 -> 2020-11-09 07:06:16 +0000
+Unfortunately, it doesn't handle partial dates:
+$ date --date='2001-02' +%Y-%m-%d\ %H:%M:%S
+date: invalid date `2001-02'
 
-which means that we *never* parse the Chinese yyyy.mm.dd correctly, not
-even the complete form!
+But it does handle HH:MM:
+$ date --date='04:05' +%Y-%m-%d\ %H:%M:%S
+2011-05-10 04:05:00
 
-Michael
+Basic format dates are sometimes parsed correctly:
+$ date --date='20010203' +%Y-%m-%d\ %H:%M:%S
+2001-02-03 00:00:00
+
+But not with seconds:
+$ date --date='20010203040506' +%Y-%m-%d\ %H:%M:%S
+2001020304-05-06 00:00:00
+
+The W3C recommends the use of ISO dates:
+<http://www.w3.org/QA/Tips/iso-date>, and their standards, like XML,
+typically support only ISO dates (or a subset thereof).
+
+Cheers,
+Victor Engmark
