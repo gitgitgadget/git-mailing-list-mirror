@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/9] count_pathspec(): return number of elements in pathspec
-Date: Mon,  9 May 2011 22:51:12 -0700
-Message-ID: <1305006678-4051-4-git-send-email-gitster@pobox.com>
+Subject: [PATCH 1/9] grep: use get_pathspec() correctly
+Date: Mon,  9 May 2011 22:51:10 -0700
+Message-ID: <1305006678-4051-2-git-send-email-gitster@pobox.com>
 References: <1304852906-29272-1-git-send-email-pclouds@gmail.com>
  <1305006678-4051-1-git-send-email-gitster@pobox.com>
 Cc: pclouds@gmail.com
@@ -12,91 +12,73 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJfrB-0001Bh-AE
-	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 07:51:41 +0200
+	id 1QJfrA-0001Bh-7h
+	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 07:51:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753264Ab1EJFve (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2011 01:51:34 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53165 "EHLO
+	id S1752581Ab1EJFv2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2011 01:51:28 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53029 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752939Ab1EJFvd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2011 01:51:33 -0400
+	with ESMTP id S1751818Ab1EJFv0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2011 01:51:26 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4259E5C8E;
-	Tue, 10 May 2011 01:53:38 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8EB9B5C85;
+	Tue, 10 May 2011 01:53:31 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=8unc
-	UA+MmvEVKLQaXfGWpdQRAwk=; b=jyZuQAIKC0iVSjnd9PuLlMYo9shMP/uts4oy
-	/oFui72M3p4V5DjzoDllAkk2qmRwVbvEAxBttYtc7FUoBUO/+XnCegUJpXTPl72O
-	sn2dnRMbPoYgo5xiZzJs5QwC0wC4DizSBHfV0K3FxSS1wftUHr4cNLOWRCS65BTS
-	qMsBdtg=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=DTDN
+	C3ZoJuEoqJFthkLAukOpzpQ=; b=mnZEZ8wTZW4njC3d0OcjMavMH92LsZSC63iM
+	JCYKD8ULCjlgOffQP8C7EOhJ4prI/aUPfJTDzBvcrviiW788Q+jHNVqRvs7wVQ61
+	xTlSHjrPaTMEpv9KJGSinqE3gBTPe3ohXYuhyrv2WfJ0kp/EP3RQxKhWcaIuybvS
+	TauutiA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	sOGZhfusgO7ZAxFKkUSdER/wt/CBGPX+ProCse8aWgfXwqH4jSZri1RHu/HDV5cc
-	+LSyCHkc9MX/LChlCBGYNn1s13ollSVOea6lraOl9BgvKFTqQMqIfsKIwkRGqC4o
-	JLdcpCQZY+OqD46dnjbVe0SqrnM2bjqgNbG8mq1D7z8=
+	HOK8etUc7ZOXeSDisEC1WmDqplg0Dd3LdFrgUVHv7WThWGBpHlyM9ZXlTPQU436i
+	KauG21voNBIAqCfFv/et1O6/7l3bxTWapwEtYUPHRxk9hVmNiXiauTAZrejPvcHW
+	mQmGGDo5bfX65cenpElvJFc8ykzF/DCeI4yevXEt/cY=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2E8485C8D;
-	Tue, 10 May 2011 01:53:37 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 78D855C84;
+	Tue, 10 May 2011 01:53:30 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5B2735C8C; Tue, 10 May 2011
- 01:53:35 -0400 (EDT)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B978C5C83; Tue, 10 May 2011
+ 01:53:28 -0400 (EDT)
 X-Mailer: git-send-email 1.7.5.1.290.g1b565
 In-Reply-To: <1305006678-4051-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: D920E5FE-7AC9-11E0-824C-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: D5244608-7AC9-11E0-9E5F-90BEB0B5FC3A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173307>
 
-When fed a non-empty argv[], get_pathspec(prefix, argv) used to always
-return an array of string that has the same number of elements as argv[]
-had, but with ":" (work at toplevel without any path limit) magic pathspec
-it can return zero elements.  Passing the result from get_pathspec() to
-this function will always give the correct number of pathspec elements.
+When there is no remaining string in argv, get_pathspec(prefix, argv)
+will return a two-element array that has prefix as the first element,
+so there is no need to re-roll that logic in the code that uses
+get_pathspec().
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- cache.h |    3 ++-
- setup.c |   10 ++++++++++
- 2 files changed, 12 insertions(+), 1 deletions(-)
+ builtin/grep.c |    8 +-------
+ 1 files changed, 1 insertions(+), 7 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index be6ce72..6170dce 100644
---- a/cache.h
-+++ b/cache.h
-@@ -425,7 +425,8 @@ extern void set_git_work_tree(const char *tree);
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 0bf8c01..222dd6d 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -956,13 +956,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			verify_filename(prefix, argv[j]);
+ 	}
  
- #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
- 
--extern const char **get_pathspec(const char *prefix, const char **pathspec);
-+extern const char **get_pathspec(const char *prefix, const char **argv);
-+extern int count_pathspec(const char **pathspec);
- extern void setup_work_tree(void);
- extern const char *setup_git_directory_gently(int *);
- extern const char *setup_git_directory(void);
-diff --git a/setup.c b/setup.c
-index c1be388..cab9ddd 100644
---- a/setup.c
-+++ b/setup.c
-@@ -287,6 +287,16 @@ const char **get_pathspec(const char *prefix, const char **pathspec)
- 	return pathspec;
- }
- 
-+int count_pathspec(const char **pathspec)
-+{
-+	int i;
-+	if (!pathspec)
-+		return 0;
-+	for (i = 0; pathspec[i]; i++)
-+		; /* just counting */
-+	return i;
-+}
-+
- /*
-  * Test if it looks like we're at a git directory.
-  * We want to see:
+-	if (i < argc)
+-		paths = get_pathspec(prefix, argv + i);
+-	else if (prefix) {
+-		paths = xcalloc(2, sizeof(const char *));
+-		paths[0] = prefix;
+-		paths[1] = NULL;
+-	}
++	paths = get_pathspec(prefix, argv + i);
+ 	init_pathspec(&pathspec, paths);
+ 	pathspec.max_depth = opt.max_depth;
+ 	pathspec.recursive = 1;
 -- 
 1.7.5.1.290.g1b565
