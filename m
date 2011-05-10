@@ -1,185 +1,108 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: [PATCH] completion: fix array indexing error after reverse history
-	search
-Date: Wed, 11 May 2011 00:14:30 +0200
-Message-ID: <20110510221430.GM1377@goldbirke>
-References: <BANLkTi=nOUEp_J+2dkZZp=HvER-eAdG9eg@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v5 (for maint)] git-completion: fix regression in zsh
+ support
+Date: Tue, 10 May 2011 17:16:00 -0500
+Message-ID: <20110510221600.GD1994@elie>
+References: <1305030039-16044-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <gsoc@spearce.org>,
-	Stephen Boyd <bebarino@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 11 00:14:45 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 11 00:16:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJvCV-0007uk-Jg
-	for gcvg-git-2@lo.gmane.org; Wed, 11 May 2011 00:14:44 +0200
+	id 1QJvDx-00009R-4H
+	for gcvg-git-2@lo.gmane.org; Wed, 11 May 2011 00:16:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753055Ab1EJWOi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 May 2011 18:14:38 -0400
-Received: from moutng.kundenserver.de ([212.227.17.8]:58333 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752163Ab1EJWOh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2011 18:14:37 -0400
-Received: from localhost6.localdomain6 (p5B130BE1.dip0.t-ipconnect.de [91.19.11.225])
-	by mrelayeu.kundenserver.de (node=mreu0) with ESMTP (Nemesis)
-	id 0LwVKN-1PfNRg0dDz-017sTZ; Wed, 11 May 2011 00:14:31 +0200
+	id S1753133Ab1EJWQH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2011 18:16:07 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:62701 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752181Ab1EJWQG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2011 18:16:06 -0400
+Received: by gwaa18 with SMTP id a18so2307790gwa.19
+        for <git@vger.kernel.org>; Tue, 10 May 2011 15:16:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=zJG8klnv3YP3ggbKVhohE6KEd8+zUG0z160nN5ocgQQ=;
+        b=nZq36zpuWqQ4/WXECFsXg3y74UXrDHT1urgAPbn5ZYdrbqKVEfLXnRfLIhfkSnk0T8
+         ODi/ttDQNJhaUMLRx7rnACpush778Xg4jWlo5pPXyyJCZiunAd58YGtMtO9Igw3dN2sR
+         cvSKq6HW8YPkRLEANlOz5pEWx7yEZ9FVsLoU8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=GZNZr9vgKhEZ04Ncp7smEbOeRbMCBik6+nyeS4WSMkrhzincBFl4+FQxIoSXyas3or
+         xK5MPVoIp/Lo2aKoqOU5xe0Yr1goHIAgemhSNa0t54h/5G7FVrU/FQ/elmv55kohWnGK
+         yK+owemNez5lJW+KYD43L7g3eW7KiHgm0gbJ0=
+Received: by 10.151.130.7 with SMTP id h7mr6815578ybn.366.1305065764953;
+        Tue, 10 May 2011 15:16:04 -0700 (PDT)
+Received: from elie (adsl-69-209-56-134.dsl.chcgil.ameritech.net [69.209.56.134])
+        by mx.google.com with ESMTPS id f8sm1935954ybn.8.2011.05.10.15.16.02
+        (version=SSLv3 cipher=OTHER);
+        Tue, 10 May 2011 15:16:03 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <BANLkTi=nOUEp_J+2dkZZp=HvER-eAdG9eg@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Provags-ID: V02:K0:1fyNZf51QZvP/BpwzoQc50/H8MnNgHLddnOH7Fe29mB
- lsjJV9rOEjaoC8CrtSvGQabXINuOZfUnQnIPkxJgAykAXrWHf9
- wRFr1PPNX6Jq67+j+t9OsSpG9W+6eP0PHa2C8EWgcaT35qCwRc
- BYxzpEeuJXu+mo6M1YQjKcSsa16W6mjA6xUXmQw/pPAyOm45dp
- w9ryIlxj8J/j50gAGNkCA==
+In-Reply-To: <1305030039-16044-1-git-send-email-felipe.contreras@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173371>
 
-In v1.7.4-rc0~11^2~2 (bash: get --pretty=3Dm<tab> completion to work
-with bash v4, 2010-12-02) we started to use _get_comp_words_by_ref()
-to access completion-related variables.  This function is usually
-provided by the bash-completion package, but if it's not present when
-git-completion.bash is loaded, then we use our simplified
-re-implementation of that function.  We also provide a bare bones
-_get_comp_words_by_ref() implementation that works with zsh.
+Felipe Contreras wrote:
 
-Unfortunately (and interestingly!), since the recent commit da4902a
-(completion: remove unnecessary _get_comp_words_by_ref() invocations,
-2011-04-28) the same bug can be triggered in all of these three
-implementations when doing reverse history search:
+> Right now zsh is quite broken; the completion doesn't notice when
+> there's a subcommand. For example: "git log origi<TAB>" gives no
+> completions because it would try to find a "git origi..." command. The
+> issue would be gone in zsh 4.3.12, but for now we can workaround it by
+> porting the same fix.
+>
+> The problem started after commit v1.7.4-rc0~11^2~2 (bash: get
+> --pretty=m<tab> completion to work with bash v4), which introduced
+> _get_comp_words_by_ref() that comes from bash-completion[1] scripts, and
+> relies on the 'words' variable. However, it turns out 'words' is a
 
- - Hit ctrl-r to start reverse history search.
- - Search for a git command, e.g. by typing 'git '.
-   The prompt will look like this: (reverse-i-search)`git ': git diff
- - Press TAB to attempt completion.
+The _get_comp_words_by_ref function does not rely on but writes to the
+'words' variable.  Aside from that, this is a nicer summary.
 
-This will lead to an error like:
+> special variable used by zsh completion. From zshcompwid(1):
+[...]
+> [2] http://zsh.git.sourceforge.net/git/gitweb.cgi?p=zsh/zsh;a=commitdiff;h=e880604f029088f32fb1ecc39213d720ae526aaa
 
-  $ bash: words: bad array subscript
+I doubt this URL will last forever.  Why not just say commit
+e880604f029088f32fb1ecc, or '"29140: hide the "words" special variable
+so that it may be used as an ordinary variable by bash completions",
+2011-05-04' which conveniently includes a mailing list reference?
 
-The reason for this is that since commit da4902a we always tell
-_get_comp_words_by_ref() to set the $prev variable in _git(), which
-should contain the word preceeding the word containing the current
-cursor position.  The value of this variable is assigned in all three
-_get_comp_words_by_ref() implementations with something like
+Thanks for the fix and your patience with me.  To answer the sincere
+questions I could find among your replies to v4:
 
-  prev=3D${COMP_WORDS[COMP_CWORD-1]}
+ - I included the "completion: move private shopt shim for zsh to
+   __git_ namespace" patch in the series as a reminder to Junio,
+   since he had requested one.
 
-However, in the above bug-triggering input the cursor is considered to
-be at the very beginning of the command line, i.e. in the nullth word,
-so the array index in the above line ends up to be -1, hence the
-error.  In this case the only sensible value for $prev would be an
-empty string, because there is no previous word on the command line.
+ - "in no part of [compgen] does the zsh emulation make use of the
+   'words' special variable" is just plain false.  compgen -F uses the
+   'words' variable, and we are lucky to have not needed to use it
+   yet.
 
-The same applies to the _get_comp_words_by_ref() invocation in
-_gitk(), too.
+ - I changed the comment because when I read the original, putting
+   myself in the shoes of someone who didn't know the context, I found
+   it confusing.  "work around bug in old versions of zsh" just leaves
+   me wondering "What bug?  Is it a bug in the behavior of 'local',
+   and are we working around it by using an alternate spelling?"  
 
-This patch fixes both of our _get_comp_words_by_ref() implementations
-by assigning an empty string to $prev when there can't be any previous
-word.  It also works around the bug in _get_comp_words_by_ref() from
-the bash-completion package by not asking for the $prev variable at
-all when there can't be any previous word.  In the latter case we
-check the value of $COMP_CWORD; we usually refrain from using this
-variable directly in completion functions because of the word
-splitting changes introduced in bash v4 (see v1.7.4-rc0~11^2~2), but
-in this case, i.e. at the nullth word the different word splitting
-rules don't make a difference.
+   That said, I suppose the main point of a comment is to say
+   "something important happens here", and a person can use 
 
-Noticed-by: Sverre Rabbelier <srabbelier@gmail.com>
-Signed-off-by: SZEDER G=E1bor <szeder@ira.uka.de>
----
+	git log -S"workaround zsh's bug" -- contrib/completion/git-completion.bash
 
-On Tue, May 10, 2011 at 10:13:11PM +0200, Sverre Rabbelier wrote:
-> This happens if I try use ctrl-shift-r (reverse-i-search) for the
-> string `git commit -am "S`, resulting in the following:
->=20
-> (reverse-i-search)`git commit -am "S': git commit -am "Set new Melang=
-e
-> version number to 2-0-20110501 in app.yaml.template."
->=20
-> If I then hit tab, I get:
->=20
-> $ bash: words: bad array subscriptversion number to 2-0-20110501 in
-> app.yaml.template."
-
-Nice catch, although I have no idea why anyone would attempt
-completion at that point.
-
-
-Best,
-G=E1bor
-
- contrib/completion/git-completion.bash |   26 ++++++++++++++++++++++--=
---
- 1 files changed, 22 insertions(+), 4 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index 00691fc..0b12c66 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -445,7 +445,11 @@ _get_comp_words_by_ref ()
- 			cur=3D$cur_
- 			;;
- 		prev)
--			prev=3D${words_[$cword_-1]}
-+			if [ "$cword_" =3D 0 ]; then
-+				prev=3D""
-+			else
-+				prev=3D${words_[$cword_-1]}
-+			fi
- 			;;
- 		words)
- 			words=3D("${words_[@]}")
-@@ -466,7 +470,11 @@ _get_comp_words_by_ref ()
- 			cur=3D${COMP_WORDS[COMP_CWORD]}
- 			;;
- 		prev)
--			prev=3D${COMP_WORDS[COMP_CWORD-1]}
-+			if [ "$COMP_CWORD" =3D 0 ]; then
-+				prev=3D""
-+			else
-+				prev=3D${COMP_WORDS[COMP_CWORD-1]}
-+			fi
- 			;;
- 		words)
- 			words=3D("${COMP_WORDS[@]}")
-@@ -2611,7 +2619,12 @@ _git ()
- 	fi
-=20
- 	local cur words cword prev
--	_get_comp_words_by_ref -n =3D: cur words cword prev
-+	if [ "$COMP_CWORD" =3D 0 ]; then
-+		_get_comp_words_by_ref -n =3D: cur words cword
-+		prev=3D""
-+	else
-+		_get_comp_words_by_ref -n =3D: cur words cword prev
-+	fi
- 	while [ $c -lt $cword ]; do
- 		i=3D"${words[c]}"
- 		case "$i" in
-@@ -2662,7 +2675,12 @@ _gitk ()
- 	fi
-=20
- 	local cur words cword prev
--	_get_comp_words_by_ref -n =3D: cur words cword prev
-+	if [ "$COMP_CWORD" =3D "0" ]; then
-+		_get_comp_words_by_ref -n =3D: cur words cword
-+		prev=3D""
-+	else
-+		_get_comp_words_by_ref -n =3D: cur words cword prev
-+	fi
-=20
- 	__git_has_doubledash && return
-=20
---=20
-1.7.5.1.248.g2ba0c6
+   to find out what exactly it is, so no harm done.
