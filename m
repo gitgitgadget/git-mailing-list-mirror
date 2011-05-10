@@ -1,60 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG] Autocompletion fails with "bash: words: bad array
- subscript"
-Date: Tue, 10 May 2011 16:39:43 -0400
-Message-ID: <20110510203943.GH14456@sigill.intra.peff.net>
-References: <BANLkTi=nOUEp_J+2dkZZp=HvER-eAdG9eg@mail.gmail.com>
- <20110510203101.GG14456@sigill.intra.peff.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] fix overslow :/no-such-string-ever-existed diagnostics
+Date: Tue, 10 May 2011 22:41:25 +0200
+Message-ID: <vpqfwomffuy.fsf@bauges.imag.fr>
+References: <7vhb92jujt.fsf@alter.siamese.dyndns.org>
+	<7vzkmuidk1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <gsoc@spearce.org>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
-	Stephen Boyd <bebarino@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 10 22:39:56 2011
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 10 22:41:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJtii-0004uD-0D
-	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 22:39:52 +0200
+	id 1QJtkQ-0005tb-L7
+	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 22:41:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752185Ab1EJUjp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2011 16:39:45 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60548
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751716Ab1EJUjp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2011 16:39:45 -0400
-Received: (qmail 25901 invoked by uid 107); 10 May 2011 20:41:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 10 May 2011 16:41:42 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 May 2011 16:39:43 -0400
-Content-Disposition: inline
-In-Reply-To: <20110510203101.GG14456@sigill.intra.peff.net>
+	id S1751702Ab1EJUld (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2011 16:41:33 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:51655 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751225Ab1EJUlc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2011 16:41:32 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p4AKfN4q017537
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 10 May 2011 22:41:23 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1QJtkD-0004nX-Mu; Tue, 10 May 2011 22:41:25 +0200
+In-Reply-To: <7vzkmuidk1.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 10 May 2011 12:02:54 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 10 May 2011 22:41:23 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p4AKfN4q017537
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1305664885.83267@mlgy8nVtk/CmXIUxMV6EBw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173361>
 
-On Tue, May 10, 2011 at 04:31:01PM -0400, Jeff King wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> It looks like we set $cword too low at some point, as the problematic
-> code seems to be:
-> 
->   + upargs+=(-v $vprev "${words[cword - 1]}")
->   bash: words: bad array subscript
-> 
-> but I haven't figured out yet where that happens.
+> On my box, the command spends ~1.8 seconds without the patch to make the
+> report; with the patch it spends ~1.12 seconds.
 
-Hrm. That code doesn't appear in our completion at all. We provide our
-own _get_comp_words_by_ref, but if it is already defined, we use
-whatever is there. So on my box, the problematic code comes from
-/etc/bash_completion. And I think it is a bug there, as this is one of
-the first things called (so git's completion hasn't had a change to
-introduce any bugs yet :) ).
+Nice improvement.
 
--Peff
+>  * Yes, we often say "this is an error path and paying the price in
+>    performance for a better diagnosis is worth", and it is correct.
+>    But it is not an excuse to spend unnecessary cycles.
+
+Right. When I introduced the second call with gently=0, I was thinking
+of cases where the function is fast, but :/blah has to walk through
+history, and we don't want that twice (especially since the conclusion
+is to give generic and not-so-helpfull message!).
+
+>    We may want to add a guard at the beginning of die_verify_filename() to
+>    omit the extra call to get_sha1_with_mode_1(only_to_die=1) when arg
+>    looks like a magic pathspec, i.e. ":" followed by anything !isalnum().
+
+Is this a complement or an alternative? It seems to me that your other
+patch makes this first one useless (in the sense that the second call is
+always cheap), and avoids complexifying the code of get_sha1_with_mode_1
+for the first call.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
