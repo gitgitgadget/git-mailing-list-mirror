@@ -1,80 +1,105 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [BUG] Autocompletion fails with "bash: words: bad array subscript"
-Date: Tue, 10 May 2011 22:13:11 +0200
-Message-ID: <BANLkTi=nOUEp_J+2dkZZp=HvER-eAdG9eg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Separate default remotes for pulling and pushing
+Date: Tue, 10 May 2011 16:17:16 -0400
+Message-ID: <20110510201716.GE14456@sigill.intra.peff.net>
+References: <1FDDE878-C81A-4318-836B-7F8BED51A981@gmail.com>
+ <BANLkTinJDUa7sXjKHo81bG7KbnspxZ88oA@mail.gmail.com>
+ <20110509081708.GA5871@sigill.intra.peff.net>
+ <7viptjq0ua.fsf@alter.siamese.dyndns.org>
+ <20110509220459.GA3719@sigill.intra.peff.net>
+ <7vaaevo5l0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "Shawn O. Pearce" <gsoc@spearce.org>,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Stephen Boyd <bebarino@gmail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 10 22:14:09 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	David Lee <davidomundo@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 10 22:17:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QJtJj-0000B0-UK
-	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 22:14:04 +0200
+	id 1QJtMx-0001vu-Ba
+	for gcvg-git-2@lo.gmane.org; Tue, 10 May 2011 22:17:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752687Ab1EJUNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 May 2011 16:13:53 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:58790 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752680Ab1EJUNw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2011 16:13:52 -0400
-Received: by qyg14 with SMTP id 14so4919223qyg.19
-        for <git@vger.kernel.org>; Tue, 10 May 2011 13:13:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:from:date:message-id:subject:to:cc
-         :content-type;
-        bh=kVOpRCm39LW/po0ok4L3iEwoAIKz2162TbbyvfqlEJU=;
-        b=WL6Z9HtOdNl42G70Jjuv1y2Y8LHeXkAxUu7x9JlI9pYGcx/GOlcalntz88X1jay5ZV
-         t2rnHYtnW0l7XGhoM2Qku+Wtsz0rDALQarxmWSG5wYh7SXsevyS3M553f4WG6jNqLJWF
-         5zmGwTy+x1+3rltKa69rVQQqxavTrCmMlxg8E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        b=xMZPunfy6L5c6NcWsj7/3t2ZbekemFIl2fjJBVArsU66LGD49PV9DNYLnok1DWW/RE
-         pZKI+LoIInBcuMcZ4WoEAYvJCu3DD/itY1It/6V0FBKEdeMalR+veOTqKnHVkz0aF3yr
-         +joNx46uIpQ8benV5ZwHljCkg7V21+ZpqfHmA=
-Received: by 10.224.207.131 with SMTP id fy3mr7094481qab.89.1305058431184;
- Tue, 10 May 2011 13:13:51 -0700 (PDT)
-Received: by 10.229.229.5 with HTTP; Tue, 10 May 2011 13:13:11 -0700 (PDT)
+	id S1752321Ab1EJURS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 May 2011 16:17:18 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34449
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752234Ab1EJURS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2011 16:17:18 -0400
+Received: (qmail 25737 invoked by uid 107); 10 May 2011 20:19:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 10 May 2011 16:19:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 May 2011 16:17:16 -0400
+Content-Disposition: inline
+In-Reply-To: <7vaaevo5l0.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173357>
 
-Heya,
+On Mon, May 09, 2011 at 03:46:19PM -0700, Junio C Hamano wrote:
 
-[cced: git completion people]
+> > Interesting. Is your fetch from "ko" a no-op, or are you using it to
+> > syncrhonize development between different machines?
+> 
+> Preformatted html and man pages are made when I push the integrated source
+> branches out, triggered from the post-update hook at kernel.org.  I do not
+> format them on my box.
 
-This happens if I try use ctrl-shift-r (reverse-i-search) for the
-string `git commit -am "S`, resulting in the following:
+Ah, that makes sense.
 
-(reverse-i-search)`git commit -am "S': git commit -am "Set new Melange
-version number to 2-0-20110501 in app.yaml.template."
+> > I think it is important to note that calling them both "origin" is
+> > definitely the wrong thing. The proposal is instead that "git push"
+> > without a remote would default to something besides "origin". For people
+> > who publish multiple places, it might even make sense for it to be an
+> > iterative push to each place.
+> 
+> Either we add branch.<name>.pushremote or push.defaultremote then?
 
-If I then hit tab, I get:
+I don't think most people would want just branch.<name>.pushremote. They
+are more likely to want to always push to some place, so
+push.defaultremote is a better choice.
 
-$ bash: words: bad array subscriptversion number to 2-0-20110501 in
-app.yaml.template."
+But that has weird precedence problems. We auto-create branch.*.remote,
+so if branch-specific config takes precedence, their push.defaultremote
+will almost never be used. And if branch-specific config _doesn't_ take
+precedence, then that is weird and unlike almost every other part of
+git.
 
-Hitting tab again gives:
+Another option is to mark the remote with an explicit "don't push here,
+push to this other remote instead" config, like:
 
-bash: words: bad array subscript
+  $ git remote add my-fork host:project.git
+  $ git config remote.origin.pushremote my-fork
+  $ git push ;# acts as if you did "git push my-fork"
 
-Display all 3032 possibilities? (y or n)
+And then when we default to a remote, either because it is "origin" or
+because it is in branch.*.remote, then we will end up pushing to the
+right place.
 
-I have no clue how to debug this, other than that it doesn't happen if
-I don't source ~/code/git/contrib/completion/git-completion.bash.
+I'm unsure what should happen in the case of:
 
-Anyone have any idea's?
+  $ git config remote.origin.pushremote my-fork
+  $ git push origin
 
--- 
-Cheers,
+In the workflow we described, "origin" is simply not a push-able remote,
+so it is a slight convenience to intercept all pushes for it and
+transparently rewrite them to "my-fork". And it makes the concept of
+that config slightly simpler. It basically becomes the equivalent of
+remote.*.pushurl, except that we are clear that it is a totally separate
+remote with different tracking branches.
 
-Sverre Rabbelier
+But it does eliminate any workflow where "origin" is _sometimes_
+pushable, but you almost always want to push somewhere else instead.
+Because you have no way to push to "origin" now. I don't know of any
+such workflow, but I hate to be restrictive for no good reason.
+
+If it just handles "use this remote instead only in the case of a
+default selection", then the name should probably be like
+"defaultpushremote" or something.
+
+-Peff
