@@ -1,8 +1,9 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 0/8] Sequencer Foundations
-Date: Wed, 11 May 2011 08:14:26 -0500
-Message-ID: <20110511131356.GI2676@elie>
+Subject: Re: [PATCH 2/8] revert: Make "commit" and "me" local variables
+Date: Wed, 11 May 2011 05:37:04 -0500
+Message-ID: <20110511103704.GB2676@elie>
 References: <1305100822-20470-1-git-send-email-artagnon@gmail.com>
+ <1305100822-20470-3-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git List <git@vger.kernel.org>,
@@ -10,102 +11,192 @@ Cc: Git List <git@vger.kernel.org>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Junio C Hamano <gitster@pobox.com>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 11 18:04:53 2011
+X-From: git-owner@vger.kernel.org Wed May 11 18:07:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKBu8-0007zE-PR
-	for gcvg-git-2@lo.gmane.org; Wed, 11 May 2011 18:04:53 +0200
+	id 1QKBwU-0001Sg-OS
+	for gcvg-git-2@lo.gmane.org; Wed, 11 May 2011 18:07:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755742Ab1EKQEe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2011 12:04:34 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:42487 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755376Ab1EKQEc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2011 12:04:32 -0400
-Received: by yia27 with SMTP id 27so211861yia.19
-        for <git@vger.kernel.org>; Wed, 11 May 2011 09:04:32 -0700 (PDT)
+	id S1756908Ab1EKQHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 May 2011 12:07:06 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:46551 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756865Ab1EKQHC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2011 12:07:02 -0400
+Received: by gyd10 with SMTP id 10so215343gyd.19
+        for <git@vger.kernel.org>; Wed, 11 May 2011 09:07:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=2XL2FYtSiIX15Z9GxQolnd6H4VFez3ettjF1ta/0pV0=;
-        b=WZ+xZmPSLObSq+3WOegHHje/VtOA5/Kfa7g/hu9dA9VZILpCAFmNT9ffmdbz+3YPoZ
-         FgBFUgUWFktUL2smfEkmtl3+JQUXrkQZswk/PfzOY2w2y1ar8ZGyRdXnTVIMNCIG2UBj
-         6iauhceGQ+tctBSEn7olQEVY43s+kCHzxNbO8=
+        bh=ME/xfkVm7OWqJP/Qg0yI17LuibOuczrFQO9ZhSRK6Us=;
+        b=luddjd1Sor7viaOT2Z4Dez/Gv0mQt6eplGkrOHW2pJz8e6wzypnltdglpyi99Fx27P
+         q38IwF9pu5JMymIU330tdDS3fjwUGblUQR0pJCQFDq93s4FF44B16kI+I97kJKxGOR0F
+         gAsGVA+fvRzeusSlxmaNLEqhApgd79rMXqvco=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=ujPCbRRlKfShScHNFRE9EVj+YHsx1Ysr54SBoBgeB1qV0KcKhBmgfE8xI5Ynv3y14M
-         z3GCMjTlT8zhuKxr8+nuwSkaMv0upwLtZ5vnI2lgxnO/4jYDbPElMmSUDLowvgVqlY6Q
-         FlkoGhPul5Oi6RX6SpTHvUhrpo+5glBG99UUg=
-Received: by 10.150.2.21 with SMTP id 21mr6806343ybb.354.1305119670288;
-        Wed, 11 May 2011 06:14:30 -0700 (PDT)
+        b=hLhC0uIaMig3YCCW8wvDQPm8z7Va1kys8L7AJwuP63flHdj3iOeAgo7zR3YjOV44WI
+         gVp9kjq/lPtqnDzO571M8L/8paIatVjdygEGX+XuodUMsAxiS+jn9MEz2g9esP5PYzCL
+         LCF/OS1M9r0kDmcMAoHUNqgpItGsFKyh9mjgc=
+Received: by 10.42.165.67 with SMTP id j3mr6580582icy.368.1305110228795;
+        Wed, 11 May 2011 03:37:08 -0700 (PDT)
 Received: from elie (adsl-69-209-56-134.dsl.chcgil.sbcglobal.net [69.209.56.134])
-        by mx.google.com with ESMTPS id w15sm2022283ybk.16.2011.05.11.06.14.28
+        by mx.google.com with ESMTPS id 14sm6147ibc.25.2011.05.11.03.37.06
         (version=SSLv3 cipher=OTHER);
-        Wed, 11 May 2011 06:14:29 -0700 (PDT)
+        Wed, 11 May 2011 03:37:07 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1305100822-20470-1-git-send-email-artagnon@gmail.com>
+In-Reply-To: <1305100822-20470-3-git-send-email-artagnon@gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173401>
 
 Ramkumar Ramachandra wrote:
 
-> I've not attempted to add anything new in this series -- It merely
-> fixes all the mistakes in the previous iteration.  I've tried to
-> integrate the improvements suggested by all the previous reviews.
+> Currently, "commit" and "me" are global static variables. Since we
+> want to develop the functionality to either pick/ revert individual
+> commits atomically later in the series, make them local variables.
 
-Thanks!  This is much more readable, probably because of the commit
-messages. ;-)
+I suppose the idea is that the current commit and whether we are
+cherry-picking or reverting is not global state and should be allowed
+to differ between threads, or that for easier debugging we would like
+to narrow their scope.
 
-> All tests pass in all patches, and I hope no
-> stray lines have travelled b/w the patches during the rebase.
+How does this relate to the sequencer series?  Maybe the idea is that
+they are explicit parameters in the functions that will be exposed
+rather than that they are local variables?
 
-Speaking of which, some tests and documentation would be nice as icing
-on the cake.
+>
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+>  The variable "me" is nowhere as fundamental as "commit" -- it's
+>  simply a string derived from a more fundamental "action".
 
-> Ramkumar Ramachandra (8):
->   revert: Improve error handling by cascading errors upwards
->   revert: Make "commit" and "me" local variables
->   revert: Introduce a struct to parse command-line options into
->   revert: Separate cmdline argument handling from the functional code
->   revert: Catch incompatible command-line options early
->   revert: Introduce head, todo, done files to persist state
->   revert: Implement parsing --continue, --abort and --skip
->   revert: Implement --abort processing
+That suggests to me that "action" should probably be made local at the
+same time.  On second thought, it looks like this commit is doing two
+unrelated things ---
 
-The heart is patch 6/8.  I have not thought about this deeply yet, but
-I wonder if it would be simpler if the behavior of "git cherry-pick
-1..10" looked like this:
+ - simplifying the state that has to be kept by computing "me"
+   from "action" on the fly
 
-. if there is state in .git/sequencer already, error out
-. lock .git/sequencer/head with the lockfile API to prevent
-  concurrent access
-. write current state, including remaining commits to cherry-pick
-. unlock .git/sequencer/head
-. cherry-pick commit #1
-. lock sequencer, check state, update state, unlock
-. cherry-pick commit #2
- ...
+ - narrowing the scope of "commit" and passing it around explicitly
 
-This way, even if cherry-picking causes git to segfault, the sequencer
-state is in good order and we know where to pick up.  More
-importantly, massive refactoring of the merge_recursive API would not
-be needed to keep everything in working order.  An atexit and sigchain
-handler could be added to print advice for the reader about how to
-resume, but that's just an extra hint and it's okay if it sometimes
-doesn't happen sometimes.
+and would be clearer as two separate commits.
 
-What do you think?
+> --- a/builtin/revert.c
+> +++ b/builtin/revert.c
+[...]
+> @@ -51,7 +49,7 @@ static size_t xopts_nr, xopts_alloc;
+>  
+>  #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+>  
+> -static char *get_encoding(const char *message);
+> +static char *get_encoding(struct commit *commit, const char *message);
 
-Ciao,
+If the die is converted to an assert or die("BUG: ...") without
+specifying which commit then this first parameter is not needed.
+
+>  static const char * const *revert_or_cherry_pick_usage(void)
+>  {
+> @@ -116,7 +114,8 @@ struct commit_message {
+>  	const char *message;
+>  };
+>  
+> -static int get_message(const char *raw_message, struct commit_message *out)
+> +static int get_message(struct commit *commit, const char *raw_message,
+> +		struct commit_message *out)
+
+Likewise.
+
+[...]
+> @@ -187,7 +186,8 @@ static char *get_encoding(const char *message)
+>  	return NULL;
+>  }
+>  
+> -static void add_message_to_msg(struct strbuf *msgbuf, const char *message)
+> +static void add_message_to_msg(struct commit *commit, struct strbuf *msgbuf,
+> +			const char *message)
+
+Perhaps the new parameter could be "const char *fallback" and the
+caller call sha1_to_hex unconditionally?  (Yes, it sounds like wasted
+computation, but it might be worth the clarity.)
+
+> @@ -200,7 +200,7 @@ static void add_message_to_msg(struct strbuf *msgbuf, const char *message)
+>  	strbuf_addstr(msgbuf, p);
+>  }
+>  
+> -static int write_cherry_pick_head(void)
+> +static int write_cherry_pick_head(struct commit *commit)
+
+Ah, it might not be wasted computation.  This could take
+commit_sha1_hex as parameter so it only needs to be computed once.
+
+> @@ -319,6 +319,7 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+>  	int clean, index_fd;
+>  	const char **xopt;
+>  	static struct lock_file index_lock;
+> +	const char *me = (action == REVERT ? "revert" : "cherry-pick");
+
+Style: I find this clearer without the parentheses (but feel free to
+ignore).
+
+[...]
+> @@ -402,6 +403,7 @@ static int do_pick_commit(void)
+>  	struct commit_message msg = { NULL, NULL, NULL, NULL, NULL };
+>  	char *defmsg = NULL;
+>  	struct strbuf msgbuf = STRBUF_INIT;
+> +	const char *me = (action == REVERT ? "revert" : "cherry-pick");
+>  	int res;
+>  
+>  	if (no_commit) {
+> @@ -458,9 +460,10 @@ static int do_pick_commit(void)
+>  		/* TRANSLATORS: The first %s will be "revert" or
+>  		   "cherry-pick", the second %s a SHA1 */
+>  		return error(_("%s: cannot parse parent commit %s"),
+> -		    me, sha1_to_hex(parent->object.sha1));
+> +			action == REVERT ? "revert" : "cherry-pick",
+> +			sha1_to_hex(parent->object.sha1));
+
+I think one of the computations of "me" is left over.
+
+> @@ -562,10 +565,13 @@ static int prepare_revs(struct rev_info *revs)
+>  	return 0;
+>  }
+>  
+> -static int read_and_refresh_cache(const char *me)
+> +static int read_and_refresh_cache(void)
+
+Since you seem to be moving towards having fewer statics and more
+explicit parameters, I think this part is a step backwards.  Maybe it
+should take "action" as a parameter instead.
+
+> @@ -583,10 +589,12 @@ static int read_and_refresh_cache(const char *me)
+>  static int revert_or_cherry_pick(int argc, const char **argv)
+>  {
+>  	struct rev_info revs;
+> +	struct commit *commit;
+> +	const char *me;
+>  	int res;
+>  
+>  	git_config(git_default_config, NULL);
+> -	me = action == REVERT ? "revert" : "cherry-pick";
+> +	me = (action == REVERT ? "revert" : "cherry-pick");
+
+Why?
+
+>  	setenv(GIT_REFLOG_ACTION, me, 0);
+>  	parse_args(argc, argv);
+>  
+
+Sorry, mostly nitpicks.  Still, hope that helps.
+
+Regards,
 Jonathan
