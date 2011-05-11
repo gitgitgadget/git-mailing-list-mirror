@@ -1,64 +1,83 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [BUG?] git revert option parsing too lenient?
-Date: Wed, 11 May 2011 22:51:46 +0200
-Message-ID: <BANLkTi=ScEiUiE7Lm4LnhcWLGCzOWK5YQw@mail.gmail.com>
-References: <BANLkTi=dPzu0wrDr3aycEv68M2tw7k5m8A@mail.gmail.com>
- <20110511203645.GB28742@sigill.intra.peff.net> <BANLkTin5FMYJkeLTNeZ47jsXtVxvrLRL+Q@mail.gmail.com>
- <20110511204851.GA29146@sigill.intra.peff.net>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [BUG] Autocompletion fails with "bash: words: bad array subscript"
+Date: Wed, 11 May 2011 23:09:41 +0200
+Message-ID: <20110511210941.GC31029@goldbirke>
+References: <BANLkTi=nOUEp_J+2dkZZp=HvER-eAdG9eg@mail.gmail.com>
+	<20110510203101.GG14456@sigill.intra.peff.net>
+	<20110510203943.GH14456@sigill.intra.peff.net>
+	<BANLkTi=0r_hCgt3wh4EkRqS6gnCyyKrY2g@mail.gmail.com>
+	<20110510210116.GA25224@sigill.intra.peff.net>
+	<BANLkTin9=7y+2eqUgo_ObcYeGs3TQ7YMGw@mail.gmail.com>
+	<20110510211016.GB26231@sigill.intra.peff.net>
+	<20110510223935.GA31029@goldbirke> <20110510234552.GG1994@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 11 22:52:37 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>,
+	Jeff King <peff@peff.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <gsoc@spearce.org>,
+	Stephen Boyd <bebarino@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 11 23:10:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKGOW-0001jv-A5
-	for gcvg-git-2@lo.gmane.org; Wed, 11 May 2011 22:52:32 +0200
+	id 1QKGfY-0004Sw-Ha
+	for gcvg-git-2@lo.gmane.org; Wed, 11 May 2011 23:10:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755629Ab1EKUw1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2011 16:52:27 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:34464 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755598Ab1EKUw0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2011 16:52:26 -0400
-Received: by qyg14 with SMTP id 14so520190qyg.19
-        for <git@vger.kernel.org>; Wed, 11 May 2011 13:52:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=e13UQsea8G3/9EwweZ+M6VNHOuhFBQ5busvIpbQ7+MQ=;
-        b=UAPL4Y7ynYP/Lk3BOVoylBixqsL95aUdCIF1wYw3byJOl5pasdGIxOsT9jG54/6/Jz
-         1kT3Su9x4iJB2Ot6o6rpEK0sKg/d14Yfs5cc4vczk9l6jKF1HxrroXOZqmF2RDNyK+/x
-         H2kEmbEjhYPHFP690dRPUO9zdKURR5fZMKJVw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=W7xD7pCScV+f2mfRMM59cy6dRSAWXwHRe2Kn36oO4eLvay4i8hOqZkD3H9hdL1M24B
-         mAPBCGhFFBUMxawCQXjL8JqyZmP6nP4IPp234Zh4W53cXQ+yiPvKFm3/oYD+CQpQBRil
-         lySEiIcb12HnXLFiCNPdrn0PfrIM35d3oVUq4=
-Received: by 10.229.45.203 with SMTP id g11mr7698462qcf.65.1305147146124; Wed,
- 11 May 2011 13:52:26 -0700 (PDT)
-Received: by 10.229.229.5 with HTTP; Wed, 11 May 2011 13:51:46 -0700 (PDT)
-In-Reply-To: <20110511204851.GA29146@sigill.intra.peff.net>
+	id S1756245Ab1EKVJq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 May 2011 17:09:46 -0400
+Received: from moutng.kundenserver.de ([212.227.126.187]:64385 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756239Ab1EKVJo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2011 17:09:44 -0400
+Received: from localhost6.localdomain6 (p5B1306CF.dip0.t-ipconnect.de [91.19.6.207])
+	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
+	id 0MM2YK-1QNXuk0Kia-007luw; Wed, 11 May 2011 23:09:42 +0200
+Content-Disposition: inline
+In-Reply-To: <20110510234552.GG1994@elie>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:61PAikKb5YX9gCcoJ7b/UkHZrK1JLeg2PNhyyVEhsXh
+ kRbGvV87hc3c36kN8gWT/z6H2qiwI9Oo55pa18Hn1XF9J65mJV
+ kN3MFrqqhvVCU18PWuwUlNVePkRbMEsOPBFc3y7jTDXqdvwnyP
+ PGMk0DBFlcHsZFqgJ26jvSz+B44A6rcx2poUJDK8ArYVyA2Ewg
+ 1YGbGhZAcFYd8hT8uhX5w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173428>
 
-Heya,
+Hi,
 
-On Wed, May 11, 2011 at 22:48, Jeff King <peff@peff.net> wrote:
-> And I don't want to discourage you from trying to work on it. :)
 
-Who knows, maybe I'll have some time to work on git(-remote-hg) sometime :).
+On Tue, May 10, 2011 at 06:45:52PM -0500, Jonathan Nieder wrote:
+> SZEDER G=E1bor wrote:
+> > So the bug is definitely not git-related.  The fix would be a check
+> > along the lines of the first two hunks of the patch I just sent out=
+=2E
+>=20
+> FWIW it looks like the bash-completion lib adopted a different fix
+> recently: see [1] (_init_completion: Indicate that completion should
+> not continue if cword =3D=3D 0, 2011-05-02).
+>=20
+> [1] http://git.debian.org/?p=3Dbash-completion/bash-completion.git;a=3D=
+commitdiff;h=3D457dbf6061eea5f2d1e3bccacf1691265f7321cc
 
--- 
-Cheers,
+That doesn't fix the issue at hand.  _init_completion() invokes
+_get_comp_words_by_ref() before that check to set all variables [1],
+which will in turn try to access the -1th element of the array when
+setting $prev, producing the same error.
 
-Sverre Rabbelier
+
+Best,
+G=E1bor
+
+
+[1]: http://git.debian.org/?p=3Dbash-completion/bash-completion.git;a=3D=
+blob;f=3Dbash_completion;h=3De88e2fc8cd97f2a43173b45a1448451bb53e55ab;h=
+b=3D457dbf6061eea5f2d1e3bccacf1691265f7321cc#l708
