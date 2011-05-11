@@ -1,95 +1,66 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH 2/2] Ensure git ls-tree exits with a non-zero exit code if read_tree_recursive fails.
-Date: Sun, 24 Jul 2011 11:07:50 +1000
-Message-ID: <1311469670-15392-3-git-send-email-jon.seymour@gmail.com>
-References: <1311469670-15392-1-git-send-email-jon.seymour@gmail.com>
-Cc: Jens.Lehmann@web.de, Jon Seymour <jon.seymour@gmail.com>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: git-show / tig: no indention for commit message
+Date: Wed, 11 May 2011 13:36:55 +0200
+Message-ID: <20110511113655.GB24644@nibiru.local>
+Reply-To: weigelt@metux.de
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 24 03:08:21 2011
+X-From: git-owner@vger.kernel.org Sun Jul 24 03:33:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QknB7-0000ki-6j
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Jul 2011 03:08:21 +0200
+	id 1QknZE-000578-N4
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Jul 2011 03:33:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751380Ab1GXBIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Jul 2011 21:08:12 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:57057 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750763Ab1GXBII (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jul 2011 21:08:08 -0400
-Received: by mail-pz0-f42.google.com with SMTP id 37so5971353pzk.1
-        for <git@vger.kernel.org>; Sat, 23 Jul 2011 18:08:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=r3UHd9bUf7Fjhs2qs5QNqwC9eTqgGEhRhs2ZRDCXIjs=;
-        b=kLtj6FC0uPotJmXKOUZgzifyd+MrD36KpPNeU9dUsXhn0v7+XbC6Tric2pIk4wusRF
-         ZxHiaEjDGW1aNalgoNwiSidsj+iIuZsbUgnyiCRStRJcSOdWb9hDtygDpFA6Jqnf3HOc
-         KA/401q97CA1IdnUii+ER4Sc2u8i8ZRWCXK08=
-Received: by 10.142.60.16 with SMTP id i16mr1765045wfa.343.1311469688117;
-        Sat, 23 Jul 2011 18:08:08 -0700 (PDT)
-Received: from localhost.localdomain ([124.169.157.32])
-        by mx.google.com with ESMTPS id d1sm3160283pbj.72.2011.07.23.18.08.05
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 23 Jul 2011 18:08:07 -0700 (PDT)
-X-Mailer: git-send-email 1.7.6.347.g96e0b
-In-Reply-To: <1311469670-15392-1-git-send-email-jon.seymour@gmail.com>
+	id S1751795Ab1GXB3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Jul 2011 21:29:39 -0400
+Received: from caprica.metux.de ([82.165.128.25]:36862 "EHLO
+	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751387Ab1GXB3i (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Jul 2011 21:29:38 -0400
+X-Greylist: delayed 3680 seconds by postgrey-1.27 at vger.kernel.org; Sat, 23 Jul 2011 21:29:38 EDT
+Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
+	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id p6O0FFjg019030
+	for <git@vger.kernel.org>; Sun, 24 Jul 2011 02:19:05 +0200
+Received: (from uucp@localhost)
+	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id p6NNxeDf027510
+	for git@vger.kernel.org; Sun, 24 Jul 2011 01:59:41 +0200
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id p4BBatC6027548
+	for git@vger.kernel.org; Wed, 11 May 2011 13:36:55 +0200
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177710>
 
-In the case of a corrupt repository, git ls-tree may report an error but
-presently it exits with a code of 0.
 
-This change uses the return code of read_tree_recursive instead.
+Hi folks,
 
-Improved-by: Jens Lehmann <Jens.Lehmann@web.de>
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
----
- builtin/ls-tree.c               |    6 +++---
- t/t3103-ls-tree-missing-tree.sh |    2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index f08c5b0..6d6c992 100644
---- a/builtin/ls-tree.c
-+++ b/builtin/ls-tree.c
-@@ -120,7 +120,7 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
- {
- 	unsigned char sha1[20];
- 	struct tree *tree;
--	int i, full_tree = 0;
-+	int i, full_tree = 0, err;
- 	const struct option ls_tree_options[] = {
- 		OPT_BIT('d', NULL, &ls_options, "only show trees",
- 			LS_TREE_ONLY),
-@@ -173,7 +173,7 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
- 	tree = parse_tree_indirect(sha1);
- 	if (!tree)
- 		die("not a tree object");
--	read_tree_recursive(tree, "", 0, 0, &pathspec, show_tree, NULL);
-+	err = read_tree_recursive(tree, "", 0, 0, &pathspec, show_tree, NULL);
- 
--	return 0;
-+	return err;
- }
-diff --git a/t/t3103-ls-tree-missing-tree.sh b/t/t3103-ls-tree-missing-tree.sh
-index cd17fa7..365ac07 100755
---- a/t/t3103-ls-tree-missing-tree.sh
-+++ b/t/t3103-ls-tree-missing-tree.sh
-@@ -11,7 +11,7 @@ test_expect_success 'setup' '
- 	git commit -m test
- '
- 
--test_expect_failure 'ls-tree fails with non-zero exit code on broken tree' '
-+test_expect_success 'ls-tree fails with non-zero exit code on broken tree' '
- 	rm -f .git/objects/5f/cffbd6e4c5c5b8d81f5e9314b20e338e3ffff5 &&
- 	test_must_fail git ls-tree -r HEAD
- '
+I often have to copy+paste commit messages from tig (when putting
+changes into TFS manually ;-o), and the 4-spaces indention is quite
+unhandy here. Is there a way to switch it off ?
+
+
+cu
 -- 
-1.7.6.347.g96e0b
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
+
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
