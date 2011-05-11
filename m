@@ -1,9 +1,10 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 5/8] revert: Catch incompatible command-line options early
-Date: Wed, 11 May 2011 07:06:54 -0500
-Message-ID: <20110511120654.GF2676@elie>
+Subject: Re: [PATCH 7/8] revert: Implement parsing --continue, --abort and
+ --skip
+Date: Wed, 11 May 2011 07:59:51 -0500
+Message-ID: <20110511125900.GH2676@elie>
 References: <1305100822-20470-1-git-send-email-artagnon@gmail.com>
- <1305100822-20470-6-git-send-email-artagnon@gmail.com>
+ <1305100822-20470-8-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git List <git@vger.kernel.org>,
@@ -11,104 +12,116 @@ Cc: Git List <git@vger.kernel.org>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Junio C Hamano <gitster@pobox.com>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 11 17:56:18 2011
+X-From: git-owner@vger.kernel.org Wed May 11 17:58:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKBlj-0002RP-CL
-	for gcvg-git-2@lo.gmane.org; Wed, 11 May 2011 17:56:11 +0200
+	id 1QKBnc-0003vF-AF
+	for gcvg-git-2@lo.gmane.org; Wed, 11 May 2011 17:58:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756164Ab1EKP4F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2011 11:56:05 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:39299 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755436Ab1EKP4D (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2011 11:56:03 -0400
-Received: by iyb14 with SMTP id 14so445743iyb.19
-        for <git@vger.kernel.org>; Wed, 11 May 2011 08:56:02 -0700 (PDT)
+	id S1756082Ab1EKP4Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 May 2011 11:56:24 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:34336 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753229Ab1EKP4W (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2011 11:56:22 -0400
+Received: by iwn34 with SMTP id 34so626121iwn.19
+        for <git@vger.kernel.org>; Wed, 11 May 2011 08:56:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=+xOKUvFZVqK8g7BQHhWT/8ssggJFakcEsLqNsKqZbuU=;
-        b=L2rvI0jxO2AQnqdpmGoxeGZtznxlhAkgGi2Fca4PAtT4CGQtjxZ10OL7jUEeri27PC
-         CnZgxwVaOx2NcrlH+O1XpYbeezDLoOjZh8y78wfTfBnLKB8w2q5OU3lsoDFJV4ubR3TN
-         NLvvGK9qMg6x0r8L4fWJZXnoQOhIKnyBYE7Aw=
+        bh=COFzRLBAT5gpL0kFOgxR3nKG/YjhlvlGLAjSVSkj084=;
+        b=OVtvtP4i4SVtrETr7XhURnaOcM35LihrQVzcT8f+g9LU50oJGL9dCFVxVPcfmqR577
+         pr6o4EQY31SPZOT9UK2qwopkj301L+w9QVvb5SA8cQUezFUSZy1bi76npQgTXF6+EVS+
+         jGdR4FpXmXQE7EWRK9IyzEqCNlIckmDjUTWm8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=XZijLDSYAJ7EUO5B6gNvbfbcAe7vJbltHqGUzLb+JNBuCpRFkrdjrGRJ2GcpmNMoUn
-         pl/wT//Zuyt9cU2yr+IDcARNosTESNJon/fg/BOqop15HMkgCtjQOVgLNvF3IQkmHtFc
-         MrhVErqK+Vp3sp48JBMFEQHzLfacPSKG/Z5y8=
-Received: by 10.42.134.196 with SMTP id m4mr9809873ict.491.1305115618311;
-        Wed, 11 May 2011 05:06:58 -0700 (PDT)
+        b=OzgaWSF7fugkMKt+aZAl2hRMjqNztOFyk/z2H8PLhE7D6CCExm3ZKHuiDoRmZ7ON2d
+         eAlcHIgEAxDphnZnJrbNeMqLFAd0mGOTI9PB5Zvg/cz0ns5QBIeVV0knsXHQhUgnpRKc
+         oEUnOW2G99TFJo4j1bXgvdiVretvalg+lN43A=
+Received: by 10.231.178.1 with SMTP id bk1mr2207208ibb.81.1305118827051;
+        Wed, 11 May 2011 06:00:27 -0700 (PDT)
 Received: from elie (adsl-69-209-56-134.dsl.chcgil.ameritech.net [69.209.56.134])
-        by mx.google.com with ESMTPS id i3sm34979iby.6.2011.05.11.05.06.56
+        by mx.google.com with ESMTPS id 19sm49953ibx.1.2011.05.11.06.00.24
         (version=SSLv3 cipher=OTHER);
-        Wed, 11 May 2011 05:06:57 -0700 (PDT)
+        Wed, 11 May 2011 06:00:25 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1305100822-20470-6-git-send-email-artagnon@gmail.com>
+In-Reply-To: <1305100822-20470-8-git-send-email-artagnon@gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173397>
 
 Ramkumar Ramachandra wrote:
 
-> Earlier, incompatible command-line options used to be caught in
-> pick_commits after parse_args has parsed the options and populated the
-> options structure; a lot of unncessary work has already been done, and
-> significant amount of cleanup is required to die at this stage.
-> Instead, hand over this responsibility to parse_args so that the
-> program can die early.
+> Introduce three new command-line options: --continue, --abort, and
+> --skip resembling the correspoding options in "rebase -i".  For now,
+> just parse the options into the replay_opts structure, making sure
+> that two of them are not specified together. They will actually be
+> implemented later in the series.
 
-Looking at the patch, this seems like a bugfix (error messages
-currently say "cherry-pick: " when they should sometimes say
-"revert: ") and cleanup (dealing with options incompatible with "--ff"
-in a loop instead of one by one) in addition to the "check and die
-early" improvement you explain above.
+I'd suggest squashing this patch with the next one.  If a "git
+cherry-pick" accepting an --abort option that does not do anything
+leaked into the wild, that would not be a good outcome.
 
 > --- a/builtin/revert.c
 > +++ b/builtin/revert.c
-> @@ -80,10 +80,29 @@ static int option_parse_x(const struct option *opt,
->  	return 0;
->  }
+> @@ -145,7 +153,47 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+>  	opts->xopts_nr = xopts_nr;
+>  	opts->xopts_alloc = xopts_alloc;
 >  
-> +static void die_opt_incompatible(const char *me, const char *base_opt, ...)
-> +{
-> +	const char *this_opt;
-> +	int this_opt_set;
-> +	va_list ap;
-> +
-> +	va_start(ap, base_opt);
-> +	while (1) {
-> +		if (!(this_opt = va_arg(ap, const char *)))
-> +			break;
-> +		if ((this_opt_set = va_arg(ap, int)))
-> +			die(_("%s: %s cannot be used with %s"),
-> +				me, this_opt, base_opt);
-> +	}
-> +	va_end(ap);
-> +}
+> -	if (opts->commit_argc < 2)
+> +	/* Check for incompatible command line arguments */
+> +	if (opts->abort_oper || opts->skip_oper || opts->continue_oper) {
+> +		char *this_oper;
+> +		if (opts->abort_oper) {
+> +			this_oper = "--abort";
+> +			die_opt_incompatible(me, this_oper,
+> +					"--skip", opts->skip_oper,
+> +					NULL);
+> +			die_opt_incompatible(me, this_oper,
+> +					"--continue", opts->continue_oper,
+> +					NULL);
 
-Wait a second --- this doesn't always die!  Why is it called
-die_opt_incompatible rather than verify_opt_compatible_or_die or
-something?
+What happened to
 
-I think I would have written the loop something like
+			...(me, "--abort",
+				"--skip", opts->skip,
+				"--continue", opts->continue);
 
-	va_start(ap, opt1);
-	while ((opt2 = va_arg(ap, const char *))) {
+?  I also wonder if there should not be a function to deal with
+mutually incompatible options:
+
+	va_start(ap, commandname);
+	while ((arg1 = va_arg(ap, const char *))) {
 		int set = va_arg(ap, int);
 		if (set)
-			die(opt1 cannot be used with opt2);
+			break;
+	}
+	while ((arg2 = va_arg(ap, const char *))) {
+		int set = va_arg(ap, int);
+		if (set)
+			die(arg1 and arg2 are incompatible);
 	}
 	va_end(ap);
 
-Thanks.  The refactoring into a loop is nice.
+> +		die_opt_incompatible(me, this_oper,
+> +				"--no-commit", opts->no_commit,
+[...]
+
+Seems reasonable.  A part of me would want to accept such options and
+only error out if the saved state indicates that they are different
+from the options supplied before, so if a person has
+
+	alias applycommits = git cherry-pick --no-commit
+
+then "applycommits --continue" could work without trouble, but
+that's probably overegineering.
