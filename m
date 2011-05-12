@@ -1,212 +1,181 @@
 From: Luke Diamand <luke@diamand.org>
-Subject: [PATCH/RFC v5] git-p4: warn if git authorship won't be retained
-Date: Thu, 12 May 2011 06:05:56 +0100
-Message-ID: <1305176756-27046-2-git-send-email-luke@diamand.org>
-References: <1305176756-27046-1-git-send-email-luke@diamand.org>
-Cc: Pete Wyckoff <pw@padd.com>, Junio C Hamano <gitster@pobox.com>,
-	Luke Diamand <luke@diamand.org>
+Subject: [PATCHv1] git-p4: test harness directory handling tidyup
+Date: Thu, 12 May 2011 06:14:59 +0100
+Message-ID: <1305177299-27130-2-git-send-email-luke@diamand.org>
+References: <1305177299-27130-1-git-send-email-luke@diamand.org>
+Cc: Pete Wyckoff <pw@padd.com>, Luke Diamand <luke@diamand.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 12 07:06:21 2011
+X-From: git-owner@vger.kernel.org Thu May 12 07:15:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKO6O-0006oU-Bb
-	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 07:06:21 +0200
+	id 1QKOF3-0001sp-2s
+	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 07:15:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753120Ab1ELFGP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2011 01:06:15 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:50533 "EHLO
+	id S1753211Ab1ELFPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2011 01:15:09 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:42651 "EHLO
 	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752385Ab1ELFGO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2011 01:06:14 -0400
-Received: by mail-wy0-f174.google.com with SMTP id 21so878044wya.19
-        for <git@vger.kernel.org>; Wed, 11 May 2011 22:06:14 -0700 (PDT)
-Received: by 10.217.2.202 with SMTP id p52mr6646778wes.28.1305176773997;
-        Wed, 11 May 2011 22:06:13 -0700 (PDT)
+	with ESMTP id S1752198Ab1ELFPI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2011 01:15:08 -0400
+Received: by wya21 with SMTP id 21so881050wya.19
+        for <git@vger.kernel.org>; Wed, 11 May 2011 22:15:07 -0700 (PDT)
+Received: by 10.227.206.133 with SMTP id fu5mr10457040wbb.31.1305177307203;
+        Wed, 11 May 2011 22:15:07 -0700 (PDT)
 Received: from localhost.localdomain (cpc4-cmbg14-2-0-cust166.5-4.cable.virginmedia.com [86.30.143.167])
-        by mx.google.com with ESMTPS id d54sm408283wej.10.2011.05.11.22.06.11
+        by mx.google.com with ESMTPS id bd8sm505740wbb.14.2011.05.11.22.15.05
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 11 May 2011 22:06:13 -0700 (PDT)
+        Wed, 11 May 2011 22:15:06 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1
-In-Reply-To: <1305176756-27046-1-git-send-email-luke@diamand.org>
+In-Reply-To: <1305177299-27130-1-git-send-email-luke@diamand.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173441>
 
-If the git commits you are submitting contain changes made by
-other people, the authorship will not be retained. Change git-p4
-to warn of this and to note that --preserve-user can be used
-to solve the problem (if you have suitable permissions).
-The warning can be disabled.
+The git-p4 test harness relied a lot on cd'ing to the target directory
+and then cd'ing back explicitly. That caused problems if the test failed
+partway through. i.e.
+  cd $git && stuff && cd "$TRASH_DIRECTORY"
 
-Add a test case and update documentation.
+Instead, use:
+  (cd $git && stuff)
 
-Acked-by: Pete Wyckoff <pw@padd.com>
 Signed-off-by: Luke Diamand <luke@diamand.org>
+Suggested-by: Junio C Hamano <gitster@pobox.com>
 ---
- contrib/fast-import/git-p4     |   33 ++++++++++++++++++++++++++-
- contrib/fast-import/git-p4.txt |    7 ++++++
- t/t9800-git-p4.sh              |   47 ++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 85 insertions(+), 2 deletions(-)
+ t/t9800-git-p4.sh |   37 ++++++++++++++++++++++---------------
+ 1 files changed, 22 insertions(+), 15 deletions(-)
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index bd8c761..021b985 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -614,6 +614,7 @@ class P4Submit(Command, P4UserMap):
-         self.verbose = False
-         self.preserveUser = gitConfig("git-p4.preserveUser").lower() == "true"
-         self.isWindows = (platform.system() == "Windows")
-+        self.myP4UserId = None
- 
-     def check(self):
-         if len(p4CmdList("opened ...")) > 0:
-@@ -721,6 +722,25 @@ class P4Submit(Command, P4UserMap):
-                     return 1
-         return 0
- 
-+    def p4UserId(self):
-+        if self.myP4UserId:
-+            return self.myP4UserId
-+
-+        results = p4CmdList("user -o")
-+        for r in results:
-+            if r.has_key('User'):
-+                self.myP4UserId = r['User']
-+                return r['User']
-+        die("Could not find your p4 user id")
-+
-+    def p4UserIsMe(self, p4User):
-+        # return True if the given p4 user is actually me
-+        me = self.p4UserId()
-+        if not p4User or p4User != me:
-+            return False
-+        else:
-+            return True
-+
-     def prepareSubmitTemplate(self):
-         # remove lines in the Files section that show changes to files outside the depot path we're committing into
-         template = ""
-@@ -750,8 +770,7 @@ class P4Submit(Command, P4UserMap):
-     def applyCommit(self, id):
-         print "Applying %s" % (read_pipe("git log --max-count=1 --pretty=oneline %s" % id))
- 
--        if self.preserveUser:
--            (p4User, gitEmail) = self.p4UserForCommit(id)
-+        (p4User, gitEmail) = self.p4UserForCommit(id)
- 
-         if not self.detectRenames:
-             # If not explicitly set check the config variable
-@@ -887,6 +906,11 @@ class P4Submit(Command, P4UserMap):
-                     newdiff += "+" + line
-                 f.close()
- 
-+            if self.checkAuthorship and not self.p4UserIsMe(p4User):
-+                submitTemplate += "######## git author %s does not match your p4 account.\n" % gitEmail
-+                submitTemplate += "######## Use git-p4 option --preserve-user to modify authorship.\n"
-+                submitTemplate += "######## Use git-p4 config git-p4.skipUserNameCheck hides this message.\n"
-+
-             separatorLine = "######## everything below this line is just the diff #######\n"
- 
-             [handle, fileName] = tempfile.mkstemp()
-@@ -998,6 +1022,11 @@ class P4Submit(Command, P4UserMap):
-             commits.append(line.strip())
-         commits.reverse()
- 
-+        if self.preserveUser or (gitConfig("git-p4.skipUserNameCheck") == "true"):
-+            self.checkAuthorship = False
-+        else:
-+            self.checkAuthorship = True
-+
-         if self.preserveUser:
-             self.checkValidP4Users(commits)
- 
-diff --git a/contrib/fast-import/git-p4.txt b/contrib/fast-import/git-p4.txt
-index d46b7a5..3c7c138 100644
---- a/contrib/fast-import/git-p4.txt
-+++ b/contrib/fast-import/git-p4.txt
-@@ -226,6 +226,13 @@ stop. With allowMissingPerforceUsers set to true, git-p4 will use the
- current user (i.e. the behavior without --preserve-user) and carry on with
- the perforce commit.
- 
-+git-p4.skipUserNameCheck
-+
-+  git config [--global] git-p4.skipUserNameCheck false
-+
-+When submitting, git-p4 checks that the git commits are authored by the current
-+p4 user, and warns if they are not. This disables the check.
-+
- Implementation Details...
- =========================
- 
 diff --git a/t/t9800-git-p4.sh b/t/t9800-git-p4.sh
-index 4fb0e24..888ad54 100755
+index 888ad54..122e91d 100755
 --- a/t/t9800-git-p4.sh
 +++ b/t/t9800-git-p4.sh
-@@ -160,6 +160,15 @@ p4_check_commit_author() {
-     fi
- }
+@@ -28,6 +28,8 @@ test_expect_success setup '
+ '
  
-+make_change_by_user() {
-+	file=$1
-+	name=$2
-+	email=$3
-+	echo "username: a change by $name" >> $file &&
-+	git add $file &&
-+	git commit --author "$name <$email>" -m "a change by $name"
-+}
-+
- # Test username support, submitting as user 'alice'
- test_expect_success 'preserve users' '
- 	p4_add_user alice Alice &&
-@@ -213,6 +222,44 @@ test_expect_success 'preserve user where author is unknown to p4' '
+ test_expect_success 'add p4 files' '
++	export P4CLIENT=client &&
++	(
+ 	cd "$cli" &&
+ 	p4 client -i <<-EOF &&
+ 	Client: client
+@@ -35,14 +37,13 @@ test_expect_success 'add p4 files' '
+ 	Root: $cli
+ 	View: //depot/... //client/...
+ 	EOF
+-	export P4CLIENT=client &&
+ 	echo file1 >file1 &&
+ 	p4 add file1 &&
+ 	p4 submit -d "file1" &&
+ 	echo file2 >file2 &&
+ 	p4 add file2 &&
+-	p4 submit -d "file2" &&
+-	cd "$TRASH_DIRECTORY"
++	p4 submit -d "file2"
++	)
+ '
+ 
+ test_expect_success 'basic git-p4 clone' '
+@@ -100,34 +101,37 @@ test_expect_success 'exit when p4 fails to produce marshaled output' '
+ '
+ 
+ test_expect_success 'add p4 files with wildcards in the names' '
++	(
+ 	cd "$cli" &&
+ 	echo file-wild-hash >file-wild#hash &&
+ 	echo file-wild-star >file-wild\*star &&
+ 	echo file-wild-at >file-wild@at &&
+ 	echo file-wild-percent >file-wild%percent &&
+ 	p4 add -f file-wild* &&
+-	p4 submit -d "file wildcards" &&
+-	cd "$TRASH_DIRECTORY"
++	p4 submit -d "file wildcards"
++	)
+ '
+ 
+ test_expect_success 'wildcard files git-p4 clone' '
+ 	"$GITP4" clone --dest="$git" //depot &&
++	(
+ 	cd "$git" &&
+ 	test -f file-wild#hash &&
+ 	test -f file-wild\*star &&
+ 	test -f file-wild@at &&
+-	test -f file-wild%percent &&
+-	cd "$TRASH_DIRECTORY" &&
++	test -f file-wild%percent
++	)
  	rm -rf "$git" && mkdir "$git"
  '
  
-+# If we're *not* using --preserve-user, git-p4 should warn if we're submitting
-+# changes that are not all ours.
-+# Test: user in p4 and user unknown to p4.
-+# Test: warning disabled and user is the same.
-+test_expect_success 'not preserving user with mixed authorship' '
-+	"$GITP4" clone --dest="$git" //depot &&
+ test_expect_success 'clone bare' '
+ 	"$GITP4" clone --dest="$git" --bare //depot &&
 +	(
-+	cd "$git" &&
-+	git config git-p4.skipSubmitEditCheck true &&
-+	p4_add_user derek Derek &&
-+
-+	make_change_by_user usernamefile3 Derek derek@localhost &&
-+	(P4EDITOR=cat P4USER=alice P4PASSWD=secret "$GITP4" commit |
-+		grep "git author derek@localhost does not match" > /dev/null) &&
-+	git diff --exit-code HEAD..p4/master &&
-+
-+	make_change_by_user usernamefile3 Charlie charlie@localhost &&
-+	(P4EDITOR=cat P4USER=alice P4PASSWD=secret "$GITP4" commit |
-+		grep "git author charlie@localhost does not match" > /dev/null) &&
-+	git diff --exit-code HEAD..p4/master &&
-+
-+	make_change_by_user usernamefile3 alice alice@localhost &&
-+	!(P4EDITOR=cat P4USER=alice P4PASSWD=secret "$GITP4" commit |
-+		grep "does not match" > /dev/null) &&
-+	git diff --exit-code HEAD..p4/master &&
-+
-+	git config git-p4.skipUserNameCheck true &&
-+	make_change_by_user usernamefile3 Charlie charlie@localhost &&
-+	!(P4EDITOR=cat P4USER=alice P4PASSWD=secret "$GITP4" commit |
-+		grep "git author charlie@localhost does not match" > /dev/null) &&
-+	git diff --exit-code HEAD..p4/master &&
-+
-+	p4_check_commit_author usernamefile3 alice
-+	) &&
-+	rm -rf "$git" && mkdir "$git"
-+'
-+
-+
- test_expect_success 'shutdown' '
- 	pid=`pgrep -f p4d` &&
- 	test -n "$pid" &&
+ 	cd "$git" &&
+ 	test ! -d .git &&
+ 	bare=`git config --get core.bare` &&
+-	test "$bare" = true &&
+-	cd "$TRASH_DIRECTORY" &&
++	test "$bare" = true
++	)
+ 	rm -rf "$git" && mkdir "$git"
+ '
+ 
+@@ -175,6 +179,7 @@ test_expect_success 'preserve users' '
+ 	p4_add_user bob Bob &&
+ 	p4_grant_admin alice &&
+ 	"$GITP4" clone --dest="$git" //depot &&
++	(
+ 	cd "$git" &&
+ 	echo "username: a change by alice" >> file1 &&
+ 	echo "username: a change by bob" >> file2 &&
+@@ -183,8 +188,8 @@ test_expect_success 'preserve users' '
+ 	git config git-p4.skipSubmitEditCheck true &&
+ 	P4EDITOR=touch P4USER=alice P4PASSWD=secret "$GITP4" commit --preserve-user &&
+ 	p4_check_commit_author file1 alice &&
+-	p4_check_commit_author file2 bob &&
+-	cd "$TRASH_DIRECTORY" &&
++	p4_check_commit_author file2 bob
++	)
+ 	rm -rf "$git" && mkdir "$git"
+ '
+ 
+@@ -192,18 +197,20 @@ test_expect_success 'preserve users' '
+ # not submit change to p4 (git diff should show deltas).
+ test_expect_success 'refuse to preserve users without perms' '
+ 	"$GITP4" clone --dest="$git" //depot &&
++	(
+ 	cd "$git" &&
+ 	echo "username-noperms: a change by alice" >> file1 &&
+ 	git commit --author "Alice <alice@localhost>" -m "perms: a change by alice" file1 &&
+ 	! P4EDITOR=touch P4USER=bob P4PASSWD=secret "$GITP4" commit --preserve-user &&
+-	! git diff --exit-code HEAD..p4/master > /dev/null &&
+-	cd "$TRASH_DIRECTORY" &&
++	! git diff --exit-code HEAD..p4/master > /dev/null
++	)
+ 	rm -rf "$git" && mkdir "$git"
+ '
+ 
+ # What happens with unknown author? Without allowMissingP4Users it should fail.
+ test_expect_success 'preserve user where author is unknown to p4' '
+ 	"$GITP4" clone --dest="$git" //depot &&
++	(
+ 	cd "$git" &&
+ 	git config git-p4.skipSubmitEditCheck true
+ 	echo "username-bob: a change by bob" >> file1 &&
+@@ -217,8 +224,8 @@ test_expect_success 'preserve user where author is unknown to p4' '
+ 	git config git-p4.preserveUser true &&
+ 	P4EDITOR=touch P4USER=alice P4PASSWD=secret "$GITP4" commit &&
+ 	git diff --exit-code HEAD..p4/master > /dev/null &&
+-	p4_check_commit_author file1 alice &&
+-	cd "$TRASH_DIRECTORY" &&
++	p4_check_commit_author file1 alice
++	)
+ 	rm -rf "$git" && mkdir "$git"
+ '
+ 
 -- 
 1.7.1
