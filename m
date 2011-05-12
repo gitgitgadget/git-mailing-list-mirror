@@ -1,126 +1,89 @@
-From: "J.H." <warthog9@kernel.org>
-Subject: Re: [PATCH/WIP] Starting work on a man page for /etc/gitweb.conf
-Date: Thu, 12 May 2011 10:24:14 -0700
-Message-ID: <4DCC17BE.7000005@kernel.org>
-References: <1305141664.30104.11.camel@drew-northup.unet.maine.edu> <20110512105325.GA13490@elie> <201105121701.26547.jnareb@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: AAARGH bisection is hard (Re: [2.6.39 regression] X locks up hard
+ right after logging in)
+Date: Thu, 12 May 2011 10:37:53 -0700
+Message-ID: <BANLkTi=YDZa+BRaG90vJsjrT9VxgySrDRQ@mail.gmail.com>
+References: <BANLkTi=kb_m-CfrpnD8qQTVYLGaDdgy_tg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Drew Northup <drew.northup@maine.edu>, git@vger.kernel.org,
-	Petr Baudis <pasky@suse.cz>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 12 19:26:35 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+	git@vger.kernel.org
+To: Andrew Lutomirski <luto@mit.edu>
+X-From: git-owner@vger.kernel.org Thu May 12 19:39:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKZek-0002xW-G2
-	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 19:26:34 +0200
+	id 1QKZqx-0002aq-57
+	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 19:39:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758179Ab1ELR03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2011 13:26:29 -0400
-Received: from shards.monkeyblade.net ([198.137.202.13]:52156 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758127Ab1ELR03 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2011 13:26:29 -0400
-Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
+	id S1758294Ab1ELRit convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 May 2011 13:38:49 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:35403 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758281Ab1ELRiq convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2011 13:38:46 -0400
+Received: from mail-ew0-f46.google.com (mail-ew0-f46.google.com [209.85.215.46])
 	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.4/8.14.4) with ESMTP id p4CHOEkB002206
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
-	Thu, 12 May 2011 10:24:14 -0700
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110307 Fedora/3.1.9-0.39.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.9
-In-Reply-To: <201105121701.26547.jnareb@gmail.com>
-X-Enigmail-Version: 1.1.2
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.6 (shards.monkeyblade.net [198.137.202.13]); Thu, 12 May 2011 10:24:15 -0700 (PDT)
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p4CHcFpJ032410
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL);
+	Thu, 12 May 2011 10:38:16 -0700
+Received: by ewy4 with SMTP id 4so494563ewy.19
+        for <multiple recipients>; Thu, 12 May 2011 10:38:13 -0700 (PDT)
+Received: by 10.14.13.66 with SMTP id a42mr289003eea.193.1305221893098; Thu,
+ 12 May 2011 10:38:13 -0700 (PDT)
+Received: by 10.14.127.144 with HTTP; Thu, 12 May 2011 10:37:53 -0700 (PDT)
+In-Reply-To: <BANLkTi=kb_m-CfrpnD8qQTVYLGaDdgy_tg@mail.gmail.com>
+X-Spam-Status: No, hits=-102.977 required=5 tests=AWL,BAYES_00,USER_IN_WHITELIST
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173488>
 
-On 05/12/2011 08:01 AM, Jakub Narebski wrote:
-> On Thu, 12 May 2011, Jonathan Nieder wrote:
->> Drew Northup wrote:
->>
->>> This is a work in progress. Much of what is in it has been pulled
->>> directly from the README and INSTALL files of gitweb. No effort has yet
->>> been made to de-duplicate any of this.
-> 
-> While it might be a good idea to split main part of gitweb/README into
-> gitweb.conf.txt (documenting configuration), and perhaps also separate
-> gitweb.txt (main page for gitweb, like SVN::Web manpage), I don't think
-> that much of gitweb/INSTALL should be moved.
+On Thu, May 12, 2011 at 10:15 AM, Andrew Lutomirski <luto@mit.edu> wrot=
+e:
+>
+> OK, this sucks. =A0In the course of bisecting this, I've hit two othe=
+r
+> apparently unrelated bugs that prevent my from testing large numbers
+> of kernels. =A0Do I have two questions:
+>
+> 1. Anyone have any ideas from looking at the log?
 
-I would agree with this, if you are shooting for a config file
-man/txt/html page INSTALL has nothing to do with it, and serves a
-different purpose.
+Nope, that doesn't look very helpful.
 
->>> TODO:
->>>   * Clean up README and INSTALL files
->>>   * Add Makefile rules to build man / HTML pages.
->>>   * Remove or rephrase redundant portions of original documentation
->>>   * A lot more...
->>
->> I agree with this TODO list. :)  It should be possible to reuse rules from
->> Documentation/Makefile if you put this under Documentation/.  gitweb already
->> keeps its tests under t/ for convenience; I think it's okay if it
->> puts some documentation under Documentation/.
-> 
-> Note that git-gui and gitk both also keep their manpages in Documentation/
-> as Documentation/git-gui.txt and Documentation/gitk.txt
-> 
-> We can add "doc" target to gitweb/Makefile, which would delegate work to
-> ../Documentation/Makefile, similarly to existing "test" target in
-> gitweb/Makefile.
+> 2. =A0The !&$#@ bisection is skipping all over the place. =A0I've see=
+n
+> 2.6.37 versions and all manner of -rc's out of order.
 
-I disagree slightly, I'd personally rather try and keep gitweb more
-self-contained under gitweb/.  I can see the advantage of keeping the
-docs under Documentation/ but I can also appreciate keeping gitweb self
-contained, like it is currently.
+That's the _point_ of bisection. It jumps around. You can start off
+trying to pick points on my development tree, but I only have a
+hundred merges or so. You're going to start delving into the actual
+development versions very quickly. And if you don't do it early,
+bisection is going to be much much slower, because it's not going to
+pick half-way points.
 
->>> +
->>> +SYNOPSIS
->>> +--------
->>> +/etc/gitweb.conf
-> 
-> I'd say
-> 
->     +SYNOPSIS
->     +--------
->     +gitweb_conf.perl
->     +/etc/gitweb.conf
-> 
-> or
-> 
->     +SYNOPSIS
->     +--------
->     +$GITWEBDIR/gitweb_conf.perl
->     +/etc/gitweb.conf
+So bisection works so well exactly because it picks points that are
+far away from each other, and you should just totally ignore the
+version number. It's meaningless. Looking at it just confuses you.
+Don't do it.
 
-I'd prefer the later, I don't know of many people who actually use
-/etc/gitweb.conf, and I'd rather see this be a more generic man page
-than steering someone who's implementing this to only trying to use
-/etc/gitweb.conf
+Now, "pick stable points" would obviously be nice, but that is going
+to have to be manual. You can certainly make some helper scripts, and
+that's where that "--first-parent" thing comes in. So if you want to,
+just use "git bisect reset" to the commit you want to test.
 
->> gitweb will also look for gitweb_config.perl along @INC, and
->> the $GITWEB_CONFIG and $GITWEB_CONFIG_SYSTEM envvars can override
->> these paths.
-> 
-> I think that we don't need to describe envvars in synopsis, but we
-> should have per-gitweb configuration file (gitweb_conf.perl) in
-> "Synopsis" section.
+If you think it's networking, for example, and you've bisected into
+there but aren't sure, do "gitk --bisect", find the point where I
+merge, and pick that (and my parent), and "git bisect reset" those
+points. That way you can verify that it's the networking merge (or
+verify that it isn't).
 
-That sounds more like an INSTALL thing.
-
-[...]
-
-Beyond that I've no real issue that haven't already been brought up, but
-I do want to make sure that the ultimate plan here is to add the scripts
-that generate this vs. the final output, right?  I mean we already have
-2 places this documentation lives (in gitweb.perl and README), I'm not
-sure we need a 3rd place to update the documentation at by hand.  Just
-asking.
-
-- John 'Warthog9' Hawley
+                         Linus
