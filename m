@@ -1,60 +1,91 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: [BUG?] read_directory(), core.ignorecase and pathspec
-Date: Thu, 12 May 2011 20:24:25 +0700
-Message-ID: <BANLkTimqJvLoWGxMzeSs9n7LrrLaE-azwQ@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 20/48] i18n: git-submodule die + eval_gettext messages
+Date: Thu, 12 May 2011 15:48:22 +0200
+Message-ID: <BANLkTik98wsBvoHNtausLBw0F1FqdDhAuQ@mail.gmail.com>
+References: <1304857280-14773-1-git-send-email-avarab@gmail.com>
+	<1304857280-14773-21-git-send-email-avarab@gmail.com>
+	<4DCB9592.2090503@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 12 15:25:04 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu May 12 15:48:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKVt1-0000tg-F4
-	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 15:25:03 +0200
+	id 1QKWFh-0007C4-0o
+	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 15:48:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756069Ab1ELNY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2011 09:24:57 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:40314 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752192Ab1ELNY4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2011 09:24:56 -0400
-Received: by bwz15 with SMTP id 15so1286789bwz.19
-        for <git@vger.kernel.org>; Thu, 12 May 2011 06:24:55 -0700 (PDT)
+	id S1757333Ab1ELNsY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 May 2011 09:48:24 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:50653 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757075Ab1ELNsX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 May 2011 09:48:23 -0400
+Received: by fxm17 with SMTP id 17so1091813fxm.19
+        for <git@vger.kernel.org>; Thu, 12 May 2011 06:48:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=U50fW7gQjDTrGeuy7BMi9WqGiNQ6Xg3zudhzk5StTDs=;
-        b=PZeQTlrJFXv5GE1R9BtgYeI+yySLAwm23ObUf2r+DpJP+m70pFYxiWMhsgjPE6d5tY
-         iIyjLfs1xEjgHstG5FF7SR9u1ltYU/Q9/fUCTWJW5UjZXWr0/qQoSgWAWs3aBzsQxWdX
-         N17wfvXAhMqW1qrWkBKFth1KYp097+paTr2dE=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=OtYlm0h8Ncf1R11xrFHxmko+mze8d2YyYcpFyzkW3xA=;
+        b=WBM6FbcGsUlw/471o40DAGwB6ZRLpgB59wIRTbdmzRjkKgP3FlOVGftTZpB4Zmop92
+         bZ/Yex1cdLOO08Tt1AvcOCkDSvmCqt3EjX8rkyQxvGGYu8AkeY3oSUnJQodjaJ2KaMJw
+         Ubpyfxu5je6tlvMOmnIskUz6MjOX4zY+nhIEs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=fFYpdjIndEzmFJgO58dsX5THHPWMhyE9xIsUV4mEAfU2Tn+RqGczs4sxlTBVxr/Brx
-         nS0fGNUPuC+c5WrQpQAwyGmUDCcf/Ufu7W7JD1vKV8hgyF6iFKpTpby7fbbncEzi6SPB
-         N2z31l7C4kHwSHmR+FibojUJDmSbvUCNqH15o=
-Received: by 10.204.73.157 with SMTP id q29mr201746bkj.101.1305206695108; Thu,
- 12 May 2011 06:24:55 -0700 (PDT)
-Received: by 10.204.53.13 with HTTP; Thu, 12 May 2011 06:24:25 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=MBc+tQfQ7Ntd8IVMISRPDcfGKHHhNxah++U22uc3AdWj/fYk+NvzXMH1daiHtVoFi/
+         yfrVCT0iL9ZlRbADMaeztVTcRCnuyEesEd5lNZmBW/RrtaWmbN8A27kT3vjO8BGwXZY3
+         /CzGm8gTGDcVmFpwA1CO2HhNDQyvkDICJUwWg=
+Received: by 10.223.127.210 with SMTP id h18mr288363fas.67.1305208102619; Thu,
+ 12 May 2011 06:48:22 -0700 (PDT)
+Received: by 10.223.105.9 with HTTP; Thu, 12 May 2011 06:48:22 -0700 (PDT)
+In-Reply-To: <4DCB9592.2090503@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173469>
 
-I was looking at how read_directory() uses pathspec, and it seems that
-simplify_away(), the function that cuts out directories early if
-they're definitely outside given pathspec, does exact match (ie.
-memcmp) regardless core.ignorecase. This means "git add -- '*.c'" may
-not work as expected when core.ignorecase is on.
+On Thu, May 12, 2011 at 10:08, Johannes Sixt <j.sixt@viscovery.net> wro=
+te:
+> Am 5/8/2011 14:20, schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 say "Submodule '$name' (=
+$url) registered for path '$path'"
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 say "$(eval_gettext "Sub=
+module '\$name' (\$url) registered for path '\$path'")"
+>
+> On Windows, we have a problem with messages like this (and many other=
+s)
+> that reference $path. eval_gettext has to export 'path', but on Windo=
+ws
+> environment variables are case-insensitive. In the substitution, this
+> happens to pick the value of 'PATH' rather than of 'path'... Can you =
+do
+> something about this?
+>
+> Of course, the problem is not limited to 'path' at all, but it is a
+> prominent example discovered by the test suite.
 
-I haven't tested it though. Just heads up. If you care about
-core.ignorecase (I don't apparently), you can try it out.
+I didn't know Windows had that limitation. We can easily work around
+it by just renaming $path to something else (e.g. $filepath).
 
-The whole simplifying thing in read_directory() will eventually be
-replaced with real pathspec matching as we put more magic in pathspec.
--- 
-Duy
+Since we do:
+
+    export PATH $(git sh-i18n--envsubst --variables "$1");
+
+I assume this problem only occurs with variables that match
+/^path$/i. Or are there other problems on Windows?
+
+I don't have a Windows machine, and I'm not about to buy a license. So
+getting the output of the failing test suite would be very useful if
+this happens for variables other than $path.
+
+If it's only $path I'll just change it to something else and include
+that change in v2 of the series.
