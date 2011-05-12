@@ -1,70 +1,80 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] Tweak t3102-ls-tree-wildcards to run on Windows
-Date: Thu, 12 May 2011 19:19:59 +0700
-Message-ID: <BANLkTino-zmbRqNat-TO8YcQHCrMr4A06A@mail.gmail.com>
-References: <4DCB9C42.5070806@viscovery.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 3/3] t3503: test cherry picking and reverting root commits
+Date: Thu, 12 May 2011 14:20:23 +0200
+Message-ID: <4DCBD087.90302@viscovery.net>
+References: <20110512110855.GA5240@sigill.intra.peff.net> <20110512111007.GC5292@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu May 12 14:20:36 2011
+Content-Transfer-Encoding: 7bit
+Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 12 14:21:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKUsd-0003TB-LO
-	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 14:20:36 +0200
+	id 1QKUt5-0003kr-VT
+	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 14:21:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756940Ab1ELMUb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 May 2011 08:20:31 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:38923 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756897Ab1ELMUa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 May 2011 08:20:30 -0400
-Received: by bwz15 with SMTP id 15so1237815bwz.19
-        for <git@vger.kernel.org>; Thu, 12 May 2011 05:20:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=+LhW7utWTy7Q3pP0+rKaThuCfBLsxPcK59Lpciw4SXk=;
-        b=DvWjWbdQ12sds1cj48qdQpi+Eu8Vm5BwFAIi91UtzKaRf5SShIc4Lx+LiQsfQpBaa/
-         jTY2bKOh9H51yQdUzHuZdbl1j7R5JLQrYWGqb3J9DDw4cqx/WkOSWYpu1nUoizyyFli0
-         x/pxQW6re5jSzEaHWT/YMYpjgxiLatHshKW8E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=d8CvgrFWBHvSpGdEI4kzKOK3pZeTdq30sldBQU9eCnr4w7nnroHzBavO8rcyK9WJVi
-         yOp3JICo/K5xHzEtXQqBf36Yb7YzbX9NIHp873ioXMiWyMlm/jzDiQUwdGa8c/1z8J7l
-         8w1j4xBdD9h2RAiw7ZTS6co5ATsTqApdb7pPE=
-Received: by 10.204.45.152 with SMTP id e24mr139995bkf.47.1305202829166; Thu,
- 12 May 2011 05:20:29 -0700 (PDT)
-Received: by 10.204.53.13 with HTTP; Thu, 12 May 2011 05:19:59 -0700 (PDT)
-In-Reply-To: <4DCB9C42.5070806@viscovery.net>
+	id S1756995Ab1ELMU7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2011 08:20:59 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:35201 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756944Ab1ELMU6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2011 08:20:58 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1QKUsR-00050b-Ol; Thu, 12 May 2011 14:20:54 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 77B311660F;
+	Thu, 12 May 2011 14:20:23 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
+In-Reply-To: <20110512111007.GC5292@sigill.intra.peff.net>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173466>
 
-2011/5/12 Johannes Sixt <j.sixt@viscovery.net>:
-> From: Johannes Sixt <j6t@kdbg.org>
->
-> The test case fails on Windows, because "a*" is an invalid file name.
-> Therefore, use "a[a]" instead.
->
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
-> =C2=A0Regarding the change from * to [], I do not know whether the re=
-sult
-> =C2=A0still tests the same thing. Please advise!
+Am 5/12/2011 13:10, schrieb Jeff King:
+> +test_expect_success 'cherry-pick a root commit with an external strategy' '
+> +
+> +	git cherry-pick --strategy=resolve master &&
+> +	test first = $(cat file1)
 
-The result is correct. Whatever pattern you throw at ls-tree should be
-interpreted literally, no magic at all.
+What if file1 does not exist? Then cat fails loudly. But this does not
+fail the entire command immediately; rather, the test command fails, but
+not because of a non-equality, but because of an invalid usage ("syntax
+error"). IOW, the test does the right thing, but for the wrong reason.
 
-Acked-by: me.
---=20
-Duy
+Yes, an earlier test gave a bad precedent, and the following fixup (to
+be squashed in) fixes it, too.
+
+-- Hannes
+
+
+diff --git a/t/t3503-cherry-pick-root.sh b/t/t3503-cherry-pick-root.sh
+index 1f9ed67..3006452 100755
+--- a/t/t3503-cherry-pick-root.sh
++++ b/t/t3503-cherry-pick-root.sh
+@@ -23,7 +23,7 @@ test_expect_success setup '
+ test_expect_success 'cherry-pick a root commit' '
+ 
+ 	git cherry-pick master &&
+-	test first = $(cat file1)
++	test first = "$(cat file1)"
+ 
+ '
+ 
+@@ -37,7 +37,7 @@ test_expect_success 'revert a root commit' '
+ test_expect_success 'cherry-pick a root commit with an external strategy' '
+ 
+ 	git cherry-pick --strategy=resolve master &&
+-	test first = $(cat file1)
++	test first = "$(cat file1)"
+ 
+ '
+ 
