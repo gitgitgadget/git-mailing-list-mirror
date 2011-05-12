@@ -1,80 +1,133 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Drew Northup <drew.northup@maine.edu>
 Subject: Re: [PATCH/WIP] Starting work on a man page for /etc/gitweb.conf
-Date: Thu, 12 May 2011 20:17:51 +0200
-Message-ID: <201105122017.52373.jnareb@gmail.com>
-References: <1305141664.30104.11.camel@drew-northup.unet.maine.edu> <201105121701.26547.jnareb@gmail.com> <4DCC17BE.7000005@kernel.org>
+Date: Thu, 12 May 2011 14:33:11 -0400
+Message-ID: <1305225191.24667.101.camel@drew-northup.unet.maine.edu>
+References: <1305141664.30104.11.camel@drew-northup.unet.maine.edu>
+	 <201105122008.53322.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Drew Northup <drew.northup@maine.edu>, git@vger.kernel.org,
-	Petr Baudis <pasky@suse.cz>
-To: "J.H." <warthog9@kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 12 20:17:59 2011
+Cc: git@vger.kernel.org, Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	"John 'Warthog9' Hawley" <warthog9@kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Petr Baudis <pasky@suse.cz>,
+	Sylvain Rabot <sylvain@abstraction.fr>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 12 20:33:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKaSU-0000Nt-LZ
-	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 20:17:59 +0200
+	id 1QKahc-0001hl-Sy
+	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 20:33:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932575Ab1ELSRx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2011 14:17:53 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:37538 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932264Ab1ELSRw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2011 14:17:52 -0400
-Received: by fxm17 with SMTP id 17so1271350fxm.19
-        for <git@vger.kernel.org>; Thu, 12 May 2011 11:17:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=DfnLNC0dTZc6ILz9N737zOqruib6DJ1597Vz9k/gMCE=;
-        b=M2+Ve9/Ge3s4i2eoY4RAJeedwL7vr9aqoQX167vKpEVMIH8GuAQMsC0Er3DdSOkic/
-         WV30axaFdj6QIh4H48tnFajh6mIbaMBJsQ0qYrblJ0v3npoJJhgc4HaxyiXXiNgWoBjJ
-         cbpoNhVWKJnVn+NIUkohUV8cZUH0wnHKIvUfg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=x0ib/iCCBR3F8YKy5VCum3oB8b2ScGCuHw2nNvmetakFP1kk+z2nNJKoDb/+Qn3drF
-         Zyo6XHreM5TRCAFu7b09jH58NynLupI8NcTmzUg4NtwNzNNAgpMXNeYA+1qZavawKH4O
-         SavjkMqeQ1Ri1GQ9wMLtWRgwRKvJ2TwJGwFmo=
-Received: by 10.223.77.92 with SMTP id f28mr619259fak.37.1305224271786;
-        Thu, 12 May 2011 11:17:51 -0700 (PDT)
-Received: from [192.168.1.13] (abvl88.neoplus.adsl.tpnet.pl [83.8.209.88])
-        by mx.google.com with ESMTPS id t15sm567172fau.24.2011.05.12.11.17.49
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 12 May 2011 11:17:50 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4DCC17BE.7000005@kernel.org>
-Content-Disposition: inline
+	id S1758492Ab1ELSdc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2011 14:33:32 -0400
+Received: from beryl.its.maine.edu ([130.111.32.94]:57174 "EHLO
+	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758486Ab1ELSdb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2011 14:33:31 -0400
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p4CIXG6Z026332
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 12 May 2011 14:33:16 -0400
+In-Reply-To: <201105122008.53322.jnareb@gmail.com>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=7 Fuz1=7
+	Fuz2=7
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: p4CIXG6Z026332
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1305829997.66126@7U4eSVlE5poMdVt+KkWjjA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173492>
 
-On Thu, 12 May 2011, J.H. wrote:
 
-> Beyond that I've no real issue that haven't already been brought up, but
-> I do want to make sure that the ultimate plan here is to add the scripts
-> that generate this vs. the final output, right?  I mean we already have
-> 2 places this documentation lives (in gitweb.perl and README), I'm not
-> sure we need a 3rd place to update the documentation at by hand.  Just
-> asking.
+On Thu, 2011-05-12 at 20:08 +0200, Jakub Narebski wrote:
+> On Wed, 11 May 2011, Drew Northup wrote:
 
-I think the ultimate goal is to move _documentation_ out of gitweb/README
-(and some from gitweb/INSTALL) to gitweb.txt (or gitweb.pod) and
-gitweb.conf.txt manpages... so that gitweb/README would be of size of
-other README's (with sole exception of t/README, which is special case),
-i.e. up to around 2,300 lines, and not 23,000 lines (10 times more).
+> > +
+> > +The syntax of the configuration files is that of PERL, as these files are
+> > +indeed handled as fragments of PERL code (the language that gitweb itself is
+> > +written in). Variables may be set using "'our $variable = value'"; text from
+> > +"#" character until the end of a line is ignored.
+> 
+> I think it would be nice to have an example here, something like:
+> 
+> -----
+> our $site_name = 'My Gitweb'; # or 'localhost'
+> -----
+
+Looks reasonable to me...
+
+> >                                                    See the perlsyn(1) man page 
+> > +for more information.
+> 
+> Is this how other manpages should be referenced in AsciiDoc?
+> 
+> 
+> BTW. What is &#8211;, and could we write it using something more readable?
+
+That's an en dash. A lot of people write it "blah - blah," but that's
+not typographically correct (and asciidoc isn't nice enough to fix it
+for us, as that would likely mess something else up). It compiles
+properly into both HTML and manpages. I didn't think that dropping the
+UTF-8 character into the asciidoc sources would go over well.
+
+> > +One good reason to take advantage of the system-wide and local gitweb
+> > +configuration files is that not all settings may be set up directly in the CGI
+> > +itself. Optional features &#8211; defined using the '%features' variable
+> > +&#8211; must be set in one of the two configuration files.
+> > +
+> > +CONFIGURATION SETTINGS
+> > +----------------------
+> > +Standard Options
+> > +~~~~~~~~~~~~~~~~~
+> > +The following are not typically set or overridden at build time:
+> 
+> Hmmm... There are four kinds of configuration variables:
+
+Thank you for this extraction & table.
+
+> > +Configuration Options Often Set at Compile Time
+> > +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> > +These configuration variables are often specified at compile time and are
+> > +defined by default in the gitweb CGI itself:
+> > +
+> > +GIT_BINDIR::
+> > +	Points where to find the git executable.  You should set it up to
+> > +	the place where the git binary was installed (usually /usr/bin) if you
+> > +	don't install git from sources together with gitweb.  [Default: $(bindir)]
+> [...]
+> 
+> I think this should be left in gitweb/INSTALL, as those are important
+> _only_ during building gitweb.
+
+Understood, I'll have to audit the list for values like that. 
+
+> > +Configuration File Example
+> > +~~~~~~~~~~~~~~~~~~~~~~~~~~
+> > +
+> > +To enable blame, pickaxe search, and snapshot support, while allowing
+> > +individual projects to turn them off, put the following in your
+> > +GITWEB_CONFIG file:
+> > +
+> > +        $feature{'blame'}{'default'} = [1];
+> > +        $feature{'blame'}{'override'} = 1;
+> 
+> I think this example requires explaining upfront what does it mean to
+> allow feature override, i.e. about per-repository configuration.
+
+Agreed, I was just pulling thing together in this step. I think that
+there are likely other worthy additions to this portion.
 
 -- 
-Jakub Narebski
-Poland
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
