@@ -1,88 +1,54 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/3] t3503: test cherry picking and reverting root commits
-Date: Thu, 12 May 2011 07:10:07 -0400
-Message-ID: <20110512111007.GC5292@sigill.intra.peff.net>
-References: <20110512110855.GA5240@sigill.intra.peff.net>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCHv1] git-p4: test harness directory handling tidyup
+Date: Thu, 12 May 2011 07:29:37 -0400
+Message-ID: <20110512112937.GA3128@arf.padd.com>
+References: <1305177299-27130-1-git-send-email-luke@diamand.org>
+ <1305177299-27130-2-git-send-email-luke@diamand.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 12 13:10:17 2011
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Thu May 12 13:29:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKTmb-0006fS-8R
-	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 13:10:17 +0200
+	id 1QKU5V-0000HP-9n
+	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 13:29:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754518Ab1ELLKK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2011 07:10:10 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53680
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754116Ab1ELLKJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2011 07:10:09 -0400
-Received: (qmail 12799 invoked by uid 107); 12 May 2011 11:12:07 -0000
-Received: from sigill-wired.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.8)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 12 May 2011 07:12:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 May 2011 07:10:07 -0400
+	id S1754651Ab1ELL3o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2011 07:29:44 -0400
+Received: from honk.padd.com ([74.3.171.149]:41731 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752569Ab1ELL3n (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2011 07:29:43 -0400
+Received: from arf.padd.com (unknown [50.52.168.230])
+	by honk.padd.com (Postfix) with ESMTPSA id B121B21A4;
+	Thu, 12 May 2011 04:29:41 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 455065AA98; Thu, 12 May 2011 07:29:37 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20110512110855.GA5240@sigill.intra.peff.net>
+In-Reply-To: <1305177299-27130-2-git-send-email-luke@diamand.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173461>
 
-We already tested cherry-picking a root commit, but only
-with the internal merge-recursive strategy. Let's also test
-the recently-allowed reverting of a root commit, as well as
-testing with external strategies (which until recently
-triggered a segfault).
+luke@diamand.org wrote on Thu, 12 May 2011 06:14 +0100:
+> The git-p4 test harness relied a lot on cd'ing to the target directory
+> and then cd'ing back explicitly. That caused problems if the test failed
+> partway through. i.e.
+>   cd $git && stuff && cd "$TRASH_DIRECTORY"
+> 
+> Instead, use:
+>   (cd $git && stuff)
+> 
+> Signed-off-by: Luke Diamand <luke@diamand.org>
+> Suggested-by: Junio C Hamano <gitster@pobox.com>
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/t3503-cherry-pick-root.sh |   23 ++++++++++++++++++++++-
- 1 files changed, 22 insertions(+), 1 deletions(-)
+I'm glad that Junio noticed and that you took the time to fix
+this.  It was indeed a problem.
 
-diff --git a/t/t3503-cherry-pick-root.sh b/t/t3503-cherry-pick-root.sh
-index b0faa29..1f9ed67 100755
---- a/t/t3503-cherry-pick-root.sh
-+++ b/t/t3503-cherry-pick-root.sh
-@@ -1,6 +1,6 @@
- #!/bin/sh
- 
--test_description='test cherry-picking a root commit'
-+test_description='test cherry-picking (and reverting) a root commit'
- 
- . ./test-lib.sh
- 
-@@ -27,4 +27,25 @@ test_expect_success 'cherry-pick a root commit' '
- 
- '
- 
-+test_expect_success 'revert a root commit' '
-+
-+	git revert master &&
-+	! test -f file1
-+
-+'
-+
-+test_expect_success 'cherry-pick a root commit with an external strategy' '
-+
-+	git cherry-pick --strategy=resolve master &&
-+	test first = $(cat file1)
-+
-+'
-+
-+test_expect_success 'revert a root commit with an external strategy' '
-+
-+	git revert --strategy=resolve master &&
-+	! test -f file1
-+
-+'
-+
- test_done
--- 
-1.7.5.1.12.ga7abed
+Acked-by: Pete Wyckoff <pw@padd.com>
