@@ -1,100 +1,60 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] t3503: test cherry picking and reverting root commits
-Date: Thu, 12 May 2011 08:37:03 -0400
-Message-ID: <20110512123703.GA21078@sigill.intra.peff.net>
-References: <20110512110855.GA5240@sigill.intra.peff.net>
- <20110512111007.GC5292@sigill.intra.peff.net>
- <4DCBD087.90302@viscovery.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: [BUG?] read_directory(), core.ignorecase and pathspec
+Date: Thu, 12 May 2011 20:24:25 +0700
+Message-ID: <BANLkTimqJvLoWGxMzeSs9n7LrrLaE-azwQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu May 12 14:37:16 2011
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 12 15:25:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKV8j-000553-Qe
-	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 14:37:14 +0200
+	id 1QKVt1-0000tg-F4
+	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 15:25:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753950Ab1ELMhH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2011 08:37:07 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58138
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751738Ab1ELMhG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2011 08:37:06 -0400
-Received: (qmail 13815 invoked by uid 107); 12 May 2011 12:39:04 -0000
-Received: from sigill-wired.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.8)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 12 May 2011 08:39:04 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 May 2011 08:37:03 -0400
-Content-Disposition: inline
-In-Reply-To: <4DCBD087.90302@viscovery.net>
+	id S1756069Ab1ELNY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2011 09:24:57 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:40314 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752192Ab1ELNY4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2011 09:24:56 -0400
+Received: by bwz15 with SMTP id 15so1286789bwz.19
+        for <git@vger.kernel.org>; Thu, 12 May 2011 06:24:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=U50fW7gQjDTrGeuy7BMi9WqGiNQ6Xg3zudhzk5StTDs=;
+        b=PZeQTlrJFXv5GE1R9BtgYeI+yySLAwm23ObUf2r+DpJP+m70pFYxiWMhsgjPE6d5tY
+         iIyjLfs1xEjgHstG5FF7SR9u1ltYU/Q9/fUCTWJW5UjZXWr0/qQoSgWAWs3aBzsQxWdX
+         N17wfvXAhMqW1qrWkBKFth1KYp097+paTr2dE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=fFYpdjIndEzmFJgO58dsX5THHPWMhyE9xIsUV4mEAfU2Tn+RqGczs4sxlTBVxr/Brx
+         nS0fGNUPuC+c5WrQpQAwyGmUDCcf/Ufu7W7JD1vKV8hgyF6iFKpTpby7fbbncEzi6SPB
+         N2z31l7C4kHwSHmR+FibojUJDmSbvUCNqH15o=
+Received: by 10.204.73.157 with SMTP id q29mr201746bkj.101.1305206695108; Thu,
+ 12 May 2011 06:24:55 -0700 (PDT)
+Received: by 10.204.53.13 with HTTP; Thu, 12 May 2011 06:24:25 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173468>
 
-On Thu, May 12, 2011 at 02:20:23PM +0200, Johannes Sixt wrote:
+I was looking at how read_directory() uses pathspec, and it seems that
+simplify_away(), the function that cuts out directories early if
+they're definitely outside given pathspec, does exact match (ie.
+memcmp) regardless core.ignorecase. This means "git add -- '*.c'" may
+not work as expected when core.ignorecase is on.
 
-> Am 5/12/2011 13:10, schrieb Jeff King:
-> > +test_expect_success 'cherry-pick a root commit with an external strategy' '
-> > +
-> > +	git cherry-pick --strategy=resolve master &&
-> > +	test first = $(cat file1)
-> 
-> What if file1 does not exist? Then cat fails loudly. But this does not
-> fail the entire command immediately; rather, the test command fails, but
-> not because of a non-equality, but because of an invalid usage ("syntax
-> error"). IOW, the test does the right thing, but for the wrong reason.
-> 
-> Yes, an earlier test gave a bad precedent, and the following fixup (to
-> be squashed in) fixes it, too.
+I haven't tested it though. Just heads up. If you care about
+core.ignorecase (I don't apparently), you can try it out.
 
-Yeah, sorry, I blindly copied the earlier test without thinking. If we
-are going to tweak, my preference is actually to use test_cmp. And while
-we're at it, I should be using test_path_is_missing.
-
-So:
-
-diff --git a/t/t3503-cherry-pick-root.sh b/t/t3503-cherry-pick-root.sh
-index 1f9ed67..9aefe3a 100755
---- a/t/t3503-cherry-pick-root.sh
-+++ b/t/t3503-cherry-pick-root.sh
-@@ -23,28 +23,30 @@ test_expect_success setup '
- test_expect_success 'cherry-pick a root commit' '
- 
- 	git cherry-pick master &&
--	test first = $(cat file1)
-+	echo first >expect &&
-+	test_cmp expect file1
- 
- '
- 
- test_expect_success 'revert a root commit' '
- 
- 	git revert master &&
--	! test -f file1
-+	test_path_is_missing file1
- 
- '
- 
- test_expect_success 'cherry-pick a root commit with an external strategy' '
- 
- 	git cherry-pick --strategy=resolve master &&
--	test first = $(cat file1)
-+	echo first >expect &&
-+	test_cmp expect file1
- 
- '
- 
- test_expect_success 'revert a root commit with an external strategy' '
- 
- 	git revert --strategy=resolve master &&
--	! test -f file1
-+	test_path_is_missing file1
- 
- '
- 
+The whole simplifying thing in read_directory() will eventually be
+replaced with real pathspec matching as we put more magic in pathspec.
+-- 
+Duy
