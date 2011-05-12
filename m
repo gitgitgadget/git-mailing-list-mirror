@@ -1,73 +1,91 @@
 From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH jc/magic-pathspec] t3703: Skip tests using directory name
- ":" on Windows
-Date: Thu, 12 May 2011 10:21:33 +0200
-Message-ID: <4DCB988D.6060908@viscovery.net>
-References: <1304852906-29272-1-git-send-email-pclouds@gmail.com> <1305006678-4051-1-git-send-email-gitster@pobox.com> <1305006678-4051-10-git-send-email-gitster@pobox.com>
+Subject: [PATCH] Tweak t3102-ls-tree-wildcards to run on Windows
+Date: Thu, 12 May 2011 10:37:22 +0200
+Message-ID: <4DCB9C42.5070806@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, pclouds@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 12 10:27:07 2011
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 12 10:38:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKREf-0004SR-7G
-	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 10:27:05 +0200
+	id 1QKRPQ-0001E5-GW
+	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 10:38:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754452Ab1ELI07 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2011 04:26:59 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:20730 "EHLO
+	id S1753539Ab1ELIhj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2011 04:37:39 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:38490 "EHLO
 	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754401Ab1ELI06 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2011 04:26:58 -0400
+	with ESMTP id S1751476Ab1ELIhh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2011 04:37:37 -0400
 Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
 	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
 	(envelope-from <j.sixt@viscovery.net>)
-	id 1QKREP-0001e7-PE; Thu, 12 May 2011 10:26:56 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id CEFD61660F;
-	Thu, 12 May 2011 10:21:33 +0200 (CEST)
+	id 1QKROd-0003qF-IK; Thu, 12 May 2011 10:37:36 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 32C7A1660F;
+	Thu, 12 May 2011 10:37:23 +0200 (CEST)
 User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
-In-Reply-To: <1305006678-4051-10-git-send-email-gitster@pobox.com>
+X-Enigmail-Version: 1.1.1
 X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173451>
 
 From: Johannes Sixt <j6t@kdbg.org>
 
-":" is not allowed in file names on Windows. Detect this case and skip a
-test if necessary.
+The test case fails on Windows, because "a*" is an invalid file name.
+Therefore, use "a[a]" instead.
 
 Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
- t/t3703-add-magic-pathspec.sh |    8 ++++++--
- 1 files changed, 6 insertions(+), 2 deletions(-)
+ Regarding the change from * to [], I do not know whether the result
+ still tests the same thing. Please advise!
 
-diff --git a/t/t3703-add-magic-pathspec.sh b/t/t3703-add-magic-pathspec.sh
-index ce5585e..e508246 100755
---- a/t/t3703-add-magic-pathspec.sh
-+++ b/t/t3703-add-magic-pathspec.sh
-@@ -44,8 +44,12 @@ test_expect_success 'a file with the same (long) magic name exists' '
- 	git add -n "./:(icase)ha"
+ -- Hannes
+
+ t/t3102-ls-tree-wildcards.sh |   14 +++++++-------
+ 1 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/t/t3102-ls-tree-wildcards.sh b/t/t3102-ls-tree-wildcards.sh
+index f2b2a52..c286854 100755
+--- a/t/t3102-ls-tree-wildcards.sh
++++ b/t/t3102-ls-tree-wildcards.sh
+@@ -1,21 +1,21 @@
+ #!/bin/sh
+ 
+-test_description='ls-tree with(out) wildcards'
++test_description='ls-tree with(out) globs'
+ 
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' '
+-	mkdir a aa "a*" &&
+-	touch a/one aa/two "a*/three" &&
+-	git add a/one aa/two "a*/three" &&
++	mkdir a aa "a[a]" &&
++	touch a/one aa/two "a[a]/three" &&
++	git add a/one aa/two "a[a]/three" &&
+ 	git commit -m test
  '
  
--test_expect_success 'a file with the same (short) magic name exists' '
--	mkdir ":" &&
-+if mkdir ":" 2>/dev/null
-+then
-+	test_set_prereq COLON_DIR
-+fi
-+
-+test_expect_success COLON_DIR 'a file with the same (short) magic name exists' '
- 	: >":/bar" &&
- 	test_must_fail git add -n :/bar &&
- 	git add -n "./:/bar"
+-test_expect_success 'ls-tree a* matches literally' '
++test_expect_success 'ls-tree a[a] matches literally' '
+ 	cat >expected <<EOF &&
+-100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391	a*/three
++100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391	a[a]/three
+ EOF
+-	git ls-tree -r HEAD "a*" >actual &&
++	git ls-tree -r HEAD "a[a]" >actual &&
+ 	test_cmp expected actual
+ '
+ 
 -- 
-1.7.5.1.1644.g7f2ed
+1.7.5.1.1646.g44dd
