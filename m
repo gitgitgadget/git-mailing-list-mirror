@@ -1,71 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Adds 'stash.index' configuration option
-Date: Wed, 11 May 2011 17:54:20 -0700
-Message-ID: <7v7h9weo1v.fsf@alter.siamese.dyndns.org>
-References: <D80C1130-8DE6-457E-B203-FCF25B8ED72C@gmail.com>
- <7vfwoker7i.fsf@alter.siamese.dyndns.org>
- <7vboz8epbp.fsf@alter.siamese.dyndns.org>
- <30791C70-81D4-44D7-B2E7-814D001F3E12@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: David Pisoni <dpisoni@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 12 02:54:33 2011
+From: "Nathan W. Panike" <nathan.panike@gmail.com>
+Subject: [PATCH] Make the '%d' for log pretty format look the same as
+ --decorate
+Date: Wed, 11 May 2011 22:18:27 -0500
+Message-ID: <4dcb540a.c2d5e70a.1a77.14aa@mx.google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 12 05:29:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKKAi-0000fe-RH
-	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 02:54:33 +0200
+	id 1QKMaX-0006VK-KU
+	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 05:29:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751187Ab1ELAy2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 May 2011 20:54:28 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55675 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750703Ab1ELAy1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2011 20:54:27 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3E8FB5173;
-	Wed, 11 May 2011 20:56:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sCo/u9Iv2BjVkf0EcLPGpPtUJK4=; b=O5p2bS
-	gHKiRVqgdAVSsLvduUqKlnFe6Bn090mskuqJptr+QEEe3IBc3IhPeccuKwYGaAJz
-	yPnF8UQHXLHEggRahVfpwUdDZXUA6l6CrQfnbQ4cDSMDFKJWTekO6j2ux49OK0Ya
-	eGoILcNGnqiEjrKsl6Re8GVUJOk3UH933oI3c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Mqs+V1xiVTUQtiz9wZaG9RlOfgxXelW/
-	pYgW0K8eFQjHGlaSx2t8NedLEe+m2KswiIQtZvn8E0HxPxB+AlvwWj/Y+9Jru6Vp
-	BVpGgJxLCbXqLatiKcFi+Q+ferFDUu/wpVxmw7LJkFynstH4gXSOPQIz9+IDQr7x
-	8VAbgVfzhvU=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1B3DB5172;
-	Wed, 11 May 2011 20:56:30 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 432E25171; Wed, 11 May 2011
- 20:56:27 -0400 (EDT)
-In-Reply-To: <30791C70-81D4-44D7-B2E7-814D001F3E12@gmail.com> (David Pisoni's
- message of "Wed, 11 May 2011 17:48:58 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AC30EBA6-7C32-11E0-9312-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+	id S1751381Ab1ELD3Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 May 2011 23:29:16 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:51256 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751072Ab1ELD3Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2011 23:29:16 -0400
+Received: by iyb14 with SMTP id 14so877403iyb.19
+        for <git@vger.kernel.org>; Wed, 11 May 2011 20:29:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:message-id:from:date:subject:to;
+        bh=g3VfNter0jW6vbVSBDgq8WsYwOaRkUuEa3udVtP/FAQ=;
+        b=XDqPOYab6h//O/1TWxxoSPMQEG9bsX6zlciAWR/TcN6YEpeiUO0BPQWqOKUEfhFP7t
+         imtfSlp5WPhMKrKfP2ffs9e9Ezfl+zy2hWsbvfjyF6MOw5gOC24FiIsMASPT1qXLYPvv
+         cjkEnFDRFrBioTWwYZFQ79ELMM+MnXqXwMSAM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:from:date:subject:to;
+        b=YLW+TNb8IDQc9GWsC0aGaEKkZxg7FCJ1Gx3oTb95whlSt5RmTbfYaSrYwMQUOP/Dgg
+         C1nzSjDi8LuLh7i5W/ztACX3jR4f9BviXYwzB9MOVx44etJoij4Yot0HzRUYB7zm9WsH
+         x5eD7G5HAtuoVLMP8K6jclbsOom+6QyEzkLgI=
+Received: by 10.231.60.73 with SMTP id o9mr7265656ibh.33.1305170955376;
+        Wed, 11 May 2011 20:29:15 -0700 (PDT)
+Received: from localhost (ppp-70-226-173-12.dsl.mdsnwi.ameritech.net [70.226.173.12])
+        by mx.google.com with ESMTPS id gx2sm308836ibb.60.2011.05.11.20.29.12
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 11 May 2011 20:29:14 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173438>
 
-David Pisoni <dpisoni@gmail.com> writes:
+We teach git to add a "tag: " prefix to tag names when the '%d' pretty format
+option is given.  It is then the same format as the --decorate option given
+directly to log.
+---
+ log-tree.c |    9 ---------
+ log-tree.h |    9 +++++++++
+ pretty.c   |    2 ++
+ 3 files changed, 11 insertions(+), 9 deletions(-)
 
-> I agree.  I like your change, also.
-> Does this feature make sense to you overall?
-
-I am very much in favor of --no-index in the sense that I would prefer to
-have it in the system than not having it.
-
-I am neutral to the configuration variable in the sense that I wouldn't
-miss it if we don't have it and I wouldn't spend too much of my own
-brain-cycle to add such a variable, but I wouldn't be disturbed too much
-by it if we had it in the system.
+diff --git a/log-tree.c b/log-tree.c
+index 2a1e3a9..9c24cbf 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -11,15 +11,6 @@
+ 
+ struct decoration name_decoration = { "object names" };
+ 
+-enum decoration_type {
+-	DECORATION_NONE = 0,
+-	DECORATION_REF_LOCAL,
+-	DECORATION_REF_REMOTE,
+-	DECORATION_REF_TAG,
+-	DECORATION_REF_STASH,
+-	DECORATION_REF_HEAD,
+-};
+-
+ static char decoration_colors[][COLOR_MAXLEN] = {
+ 	GIT_COLOR_RESET,
+ 	GIT_COLOR_BOLD_GREEN,	/* REF_LOCAL */
+diff --git a/log-tree.h b/log-tree.h
+index 5c4cf7c..29861f0 100644
+--- a/log-tree.h
++++ b/log-tree.h
+@@ -3,6 +3,15 @@
+ 
+ #include "revision.h"
+ 
++enum decoration_type {
++	DECORATION_NONE = 0,
++	DECORATION_REF_LOCAL,
++	DECORATION_REF_REMOTE,
++	DECORATION_REF_TAG,
++	DECORATION_REF_STASH,
++	DECORATION_REF_HEAD,
++};
++
+ struct log_info {
+ 	struct commit *commit, *parent;
+ };
+diff --git a/pretty.c b/pretty.c
+index dff5c8d..8130556 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -786,6 +786,8 @@ static void format_decoration(struct strbuf *sb, const struct commit *commit)
+ 	while (d) {
+ 		strbuf_addstr(sb, prefix);
+ 		prefix = ", ";
++		if(d->type == DECORATION_REF_TAG)
++			strbuf_addstr(sb, "tag: ");
+ 		strbuf_addstr(sb, d->name);
+ 		d = d->next;
+ 	}
+-- 
+1.7.5.1
