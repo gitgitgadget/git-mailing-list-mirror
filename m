@@ -1,77 +1,73 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Question about git-cherry and the rev list it's using
-Date: Thu, 12 May 2011 08:47:11 +0200
-Message-ID: <4DCB826F.5020406@drmicha.warpmail.net>
-References: <BANLkTinMfVE=s+TouyxE-ucf7MHGf1m7HA@mail.gmail.com>
+Subject: Re: [PATCH] Adds 'stash.index' configuration option
+Date: Thu, 12 May 2011 09:14:09 +0200
+Message-ID: <4DCB88C1.20105@drmicha.warpmail.net>
+References: <D80C1130-8DE6-457E-B203-FCF25B8ED72C@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Francis Moreau <francis.moro@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 12 08:47:21 2011
+Cc: GIt Mailing List <git@vger.kernel.org>,
+	Git Maintainer <gitster@pobox.com>
+To: David Pisoni <dpisoni@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 12 09:14:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKPg9-0005Va-13
-	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 08:47:21 +0200
+	id 1QKQ6D-0001MO-Qq
+	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 09:14:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753118Ab1ELGrP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2011 02:47:15 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:48451 "EHLO
+	id S1752802Ab1ELHOM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2011 03:14:12 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:37046 "EHLO
 	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752700Ab1ELGrO (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 May 2011 02:47:14 -0400
+	by vger.kernel.org with ESMTP id S1752218Ab1ELHOL (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 May 2011 03:14:11 -0400
 Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 72294203CB;
-	Thu, 12 May 2011 02:47:13 -0400 (EDT)
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 6E19E20AF8;
+	Thu, 12 May 2011 03:14:11 -0400 (EDT)
 Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute4.internal (MEProxy); Thu, 12 May 2011 02:47:13 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=c3Zn9gWwZg5Hbsx5tFfdylkZS+0=; b=VHG4uh72AXlR845ki9FGOthmWU/YPKJNqjr9o9/VkvvA82jGrQm9bkrHY+JaFrq1zOIZK1G0HA2F2V4PoZkzEY5N6LEJas6qq6KAqYCZy5ROqxphxWEiYIzSmmrd1qv7lyRAxqIN2VjEqN0mhtcj5nFxGLCoIxdwms1iK02nxSU=
-X-Sasl-enc: k1UbAlaOxVyZXiCNnNSDKuPFarN1sPCci0iwTyybmcvy 1305182833
+  by compute4.internal (MEProxy); Thu, 12 May 2011 03:14:11 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=/cutUCv4+6D8ogx8i2AC6hDaaQY=; b=aeDdn4uVEgWdat+oqq6mFcA8z7Wizuvsbd2oBqEffsOWcig3CjvIX2YqlxrU4aKvawXvtzrc/nFkfHb4SCebGDGP+U0dKBwimVu4H1X7LHnOv7/ogyOW1BAMK5NYuN//x9w2c6tMHlw0l5BlTsgR/nfTSUAa59/E2BeFskkjgAM=
+X-Sasl-enc: lUsKLz4sofdf7zt9fqQwWDy/0PviEcR6oHXXfv2REiqT 1305184451
 Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id EFC794443D0;
-	Thu, 12 May 2011 02:47:12 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id C47424414F2;
+	Thu, 12 May 2011 03:14:10 -0400 (EDT)
 User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Lightning/1.0b3pre Thunderbird/3.1.10
-In-Reply-To: <BANLkTinMfVE=s+TouyxE-ucf7MHGf1m7HA@mail.gmail.com>
+In-Reply-To: <D80C1130-8DE6-457E-B203-FCF25B8ED72C@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173444>
 
-Francis Moreau venit, vidit, dixit 11.05.2011 18:11:
-> Hello,
+David Pisoni venit, vidit, dixit 12.05.2011 00:57:
 > 
-> I'm using "git cherry old master base" to see if all commits between
-> master and base have been applied in my 'old' branch.
-> 
-> So I expect that git cherry is using a list of commits given by : "git
-> rev-list --no-merges base..master".
+> Setting 'stash.index' config option changes 'git-stash pop|apply' to  
+> behave
+> as if '--index' switch is always supplied.
+> 'git-stash pop|apply' provides a --no-index switch to circumvent  
+> config default.
 
-Not really.
+This is yet another incarnation of
 
-For each commit in "--no-merges old..master ^base" (i.e. "--no-merges
-master ^old ^base"), "git cherry" checks whether there is a patch
-equivalent commit in "--no-merges master..old", and outputs it with + or -.
+foo.bar = true
 
-> But it looks like it's not the case:
-> 
->   $ git rev-list --no-merges --oneline base..master | wc -l
->   22
-> 
->   $ git cherry old master base | wc -l
->   12
-> 
-> Could anybody help me on this because I don't understand the results I have ?
+meaning that command "git foo" defaults to "git foo --bar". (Admittedly,
+this is about subcommands of foo.)
 
-"--no-merges ^old ^base" should rev-list --count to 12.
+It has the same problems (possibly breaking scripts). But more
+importantly, it inflates the code with every such incarnation we add.
+Have we really agreed that we introduce these one-by-one rather than
+doing something generic like
 
-But you may be better off with something like
+uiopts.<cmd> = <optionlist>
 
-git rev-list --count --cherry master...old ^base
+with which you would do
 
-(untested)
+uiopts.stash = "--index"
+
+and hopefully be script-safe (again, ignoring the subcommand issue)?
 
 Michael
