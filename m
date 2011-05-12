@@ -1,85 +1,73 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's cooking in git.git (May 2011, #05; Wed, 11)
-Date: Thu, 12 May 2011 13:16:46 -0700 (PDT)
-Message-ID: <m362pf7jzr.fsf@localhost.localdomain>
-References: <7vhb91f0jc.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [RFC PATCH 0/2] better handle .gitmodules merge conflicts
+Date: Thu, 12 May 2011 23:01:17 +0200
+Message-ID: <4DCC4A9D.3060007@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 12 22:16:58 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 12 23:01:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKcJc-0002qy-5P
-	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 22:16:56 +0200
+	id 1QKd0f-0004e5-TV
+	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 23:01:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758523Ab1ELUQv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2011 16:16:51 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:33660 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755039Ab1ELUQu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2011 16:16:50 -0400
-Received: by bwz15 with SMTP id 15so1601923bwz.19
-        for <git@vger.kernel.org>; Thu, 12 May 2011 13:16:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:x-authentication-warning:to:cc:subject
-         :references:from:date:in-reply-to:message-id:lines:user-agent
-         :mime-version:content-type;
-        bh=Tik6AR4R0/I4Uy9R5xJB7CZ42OifKtRGCVju1tI7Lpc=;
-        b=o/pk16werw8N8a7EG3Gakm+TzdtntP6amT2C062tKYSC2QuQvGqXmmRGnr/CdTxDIK
-         yc8grnCLpg2x0qf/Jjr2BzbtzXHruA+70TkiSB2Oqq9QgX5VfYpyD72nDt0WGRvhJ7Wr
-         Qjg6HhS3tbufaHjcJRvFXY9YK/mM94KngGToY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=CRzEU+j+6k4iAK5wJ2Pth3wSmSkjPtN4Fj+GSxE6yxtyIw611TgCMJKsxdpgIDUx7L
-         j/50WE+KbN4nCv6Xkk1oZQHSQ45LnpcJTMFEKeSmSshn78GT5wuZTVWoT69Ts9kNd2Kf
-         7Kom8c22hh2rZFH69RjhW5sVt4zD+MqAloK04=
-Received: by 10.204.181.7 with SMTP id bw7mr634401bkb.16.1305231407233;
-        Thu, 12 May 2011 13:16:47 -0700 (PDT)
-Received: from localhost.localdomain (abvl88.neoplus.adsl.tpnet.pl [83.8.209.88])
-        by mx.google.com with ESMTPS id q24sm931825bks.21.2011.05.12.13.16.45
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 12 May 2011 13:16:46 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p4CKGObc012680;
-	Thu, 12 May 2011 22:16:35 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p4CKG8VI012671;
-	Thu, 12 May 2011 22:16:08 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <7vhb91f0jc.fsf@alter.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S932698Ab1ELVBU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2011 17:01:20 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:50351 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758634Ab1ELVBT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2011 17:01:19 -0400
+Received: from smtp04.web.de  ( [172.20.0.225])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 4014618EC6E16;
+	Thu, 12 May 2011 23:01:18 +0200 (CEST)
+Received: from [93.240.105.8] (helo=[192.168.178.43])
+	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1QKd0Y-0004cY-00; Thu, 12 May 2011 23:01:18 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1/J1RZr/oQ6y8UzRgnklo8GtA8Bagqx2+/uglOQ
+	XfBB76PiKuG7sU0le19jJDFSsw2pIcLZSwSQxJf8NB6N2oFyXd
+	YqYenTp5HS8J489KD/LQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173497>
 
-Junio C Hamano <gitster@pobox.com> writes:
+This series contains a test to reproduce and a first attempt to fix the
+problem that "git diff", "git status" and "git fetch" die early when the
+.gitmodules file contains merge conflict markers. As I am not aware of any
+bug reports yet it looks like that either doesn't happen very often in the
+wild ("git diff" parses the .gitmodules file since 1.7.3, but even as
+heavy submodule users we only hit this once just recently) or the users
+encountering this problem just know what to do: resolve the conflict and
+carry on.
 
-> --------------------------------------------------
-> [Graduated to "master"]
+But that is no excuse to behave so unfriendly, especially as this can
+happen in a completely normal workflow, when e.g. two users are adding
+different submodules in separate branches and they get merged. So this
+RFC patch is my first attempt to avoid those commands dying.
 
-> * jn/ctags (2011-04-29) 3 commits
-> * jn/gitweb-dependency (2011-05-08) 2 commits
+In a second step a merge helper capable of merging inifiles would make
+sense. This should be enabled for the .gitmodules file by default and
+avoid most of the merge conflicts, e.g. when two users add different
+submodules in separate branches. But that is a different patch ...
 
-> --------------------------------------------------
-> [Stalled]
 
-> * jn/gitweb-js (2011-04-28) 13 commits
-> * jn/ctags-more (2011-04-29) 3 commits
+Heiko Voigt (1):
+  test that git status works with merge conflict in .gitmodules
 
-What about "[PATCHv2 0/2] gitweb: Beginnings of splitting gitweb into modules"
-http://thread.gmane.org/gmane.comp.version-control.git/172659
-git://repo.or.cz/git/jnareb-git.git gitweb/split
+Jens Lehmann (1):
+  Submodules: Don't parse .gitmodules when it contains merge conflicts
+
+ submodule.c                 |   23 +++++++++-
+ t/t7506-status-submodule.sh |  100 +++++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 117 insertions(+), 6 deletions(-)
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.7.5.1.251.ga75dd
