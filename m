@@ -1,73 +1,95 @@
-From: Phil Hord <hordp@cisco.com>
-Subject: Re: fast forward a branch from another
-Date: Thu, 12 May 2011 12:26:55 -0400
-Message-ID: <4DCC0A4F.7000800@cisco.com>
-References: <BANLkTi=PtkDp8PNdMNi3hTwHPjFg+Jtftw@mail.gmail.com> <7vsjsjdhud.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Exit code of git-ls-remote
+Date: Thu, 12 May 2011 09:41:42 -0700
+Message-ID: <7vk4dvdg6x.fsf@alter.siamese.dyndns.org>
+References: <20110512120536.GA22033@camk.edu.pl>
+ <7voc37dh4l.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Eric Frederich <eric.frederich@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Kacper Kornet <draenog@pld-linux.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 12 18:27:02 2011
+X-From: git-owner@vger.kernel.org Thu May 12 18:41:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKYj7-000086-Pc
-	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 18:27:02 +0200
+	id 1QKYxY-000103-9o
+	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 18:41:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757937Ab1ELQ04 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2011 12:26:56 -0400
-Received: from sj-iport-4.cisco.com ([171.68.10.86]:15817 "EHLO
-	sj-iport-4.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756164Ab1ELQ0z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2011 12:26:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=hordp@cisco.com; l=507; q=dns/txt;
-  s=iport; t=1305217615; x=1306427215;
-  h=message-id:date:from:mime-version:to:cc:subject:
-   references:in-reply-to:content-transfer-encoding;
-  bh=vnVo9Pea75WavVb74OJT/zta+WHlSVBBocI3QJFa26o=;
-  b=NKcbB9LcJB56AEaVZG9CUizVq75vB++RDHe6j+1C9GxZ6zgvmLMR+NtK
-   h4xmX7Jw2cF3C3RsK6uEya7P/wwpED0jRE6veabB3wg69+BQhYkPD1wp5
-   6cb8gCU0/IjtmJ5Urb52SulsV1joYsOY4cLa65h8EX6MK4EVbYn4PpOda
-   E=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvsEAPwJzE2tJV2c/2dsb2JhbACleHepKp4khhUEj3uEKIpd
-X-IronPort-AV: E=Sophos;i="4.64,359,1301875200"; 
-   d="scan'208";a="284945032"
-Received: from rcdn-core-5.cisco.com ([173.37.93.156])
-  by sj-iport-4.cisco.com with ESMTP; 12 May 2011 16:26:54 +0000
-Received: from [64.100.104.120] (dhcp-64-100-104-120.cisco.com [64.100.104.120])
-	by rcdn-core-5.cisco.com (8.14.3/8.14.3) with ESMTP id p4CGQsDd013311;
-	Thu, 12 May 2011 16:26:54 GMT
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110419 Lightning/1.0b2 Thunderbird/3.1.9
-In-Reply-To: <7vsjsjdhud.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.1.2
-X-TagToolbar-Keys: D20110512122655727
+	id S1758023Ab1ELQlv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2011 12:41:51 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64558 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758003Ab1ELQlu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2011 12:41:50 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 928F94CCB;
+	Thu, 12 May 2011 12:43:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RAeilhRvtOF7nhG5zyHoqX1eEww=; b=L2rYZ7
+	vPB68PNpPY2iqMYP4hl+uT1lLR3eUimEm4VfvBGllqCLqF5eqKXX/0H3q/h+jHIu
+	tQvh5nNLEzS0WtHfPReLIiQQhI1iX8XknDFEWU6cmbLUYD/vQP9BRAmhmd5GAR6N
+	cvVIJGLIJn61difz6RUc1rwtcQYNlAdX+UI/k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tK+FC7fprqiYHkvLwwpUX6kfMY6XGocD
+	VCsXnrSxpOM5RnNaLvKtUQmCNsPjjwTcfHNlBKBIWOZmik4HOygZ5yxQQPO0Yo6Z
+	55Pe6VcraUvyLTG4veJOyPf6nxb+f0pJsTOit6OXZ0tNHe1cMX9P2GINbx9mF2Om
+	+x0qrg7zUY0=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 713C84CC9;
+	Thu, 12 May 2011 12:43:53 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 522984CC8; Thu, 12 May 2011
+ 12:43:49 -0400 (EDT)
+In-Reply-To: <7voc37dh4l.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 12 May 2011 09:21:30 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 05799684-7CB7-11E0-88EA-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173482>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-On 05/12/2011 12:06 PM, Junio C Hamano wrote:
-> [...]
-> Instead of switching to "stable", while still on the development, you
-> could do
+> Kacper Kornet <draenog@pld-linux.org> writes:
 >
-> 	$ git push . HEAD:stable
+>> git-ls-remote behaves differently then git-show-ref when it cannot find
+>> any matching refs. While the latter returns non zero exit code in this
+>> case, the former always returns 0. Is there any specific reason for this
+>> behaviour?
 >
-> which would succeed only when you are purely ahead of stable (otherwise it
-> will fail as you are not forcing).
+> There is no specific reason other than "they happened to be implemented
+> like so".  These commands have always behaved that way and people are
+> relying on their exit status, so unless there is a compelling reason, they
+> will not change.
 >
+> It is just a matter of opinion to consider that it is an error condition
+> or just a normal case to see an empty set for a "List 'em and filter with
+> these criteria" request. Outside git, "find /there -name no-such-file"
+> exits with zero status, while "grep no-such-pattern file" exits with
+> non-zero status.
+>
+> You can rely on your knowledge of the commands and write your tests like
+> this:
+>
+> 	test $(git ls-remote $there $pattern | wc -l) != 0 || die "none"
+> 	git show-ref -q $pattern || die "none"
+>
+> Alternatively, you can defend yourself against the next person who asks
+> the same question by writing the last one as:
+>
+> 	test $(git show-ref $pattern | wc -l) != 0 || die "none"
+>
+> Either would work.
 
-Wow!  Another gem. I didn't realize you could use 'dot' to refer to the
-same repo you're in.
-
-I don't see this feature listed in the git push [REMOTES] section.  Is
-it documented somewhere else?
-
-Phil
+Having said all that, I would not oppose if you want to teach ls-remote an
+option, e.g. --exit-code, to tell it to indicate if it found any ref with
+its exit status. You need to be careful when picking what code to use so
+that the caller can tell if the error was because there was no network
+connection or there was nothing to be listed, though.
