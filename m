@@ -1,131 +1,70 @@
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Subject: git svn info --url lacks username
-Date: Thu, 12 May 2011 14:13:45 +0200
-Message-ID: <BANLkTinCx4pEycjGmWA=jZ8os7R3tZWXNQ@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] Tweak t3102-ls-tree-wildcards to run on Windows
+Date: Thu, 12 May 2011 19:19:59 +0700
+Message-ID: <BANLkTino-zmbRqNat-TO8YcQHCrMr4A06A@mail.gmail.com>
+References: <4DCB9C42.5070806@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 12 14:13:55 2011
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu May 12 14:20:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKUmA-0008EO-0V
-	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 14:13:54 +0200
+	id 1QKUsd-0003TB-LO
+	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 14:20:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756831Ab1ELMNs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 May 2011 08:13:48 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:41545 "EHLO
+	id S1756940Ab1ELMUb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 May 2011 08:20:31 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:38923 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756825Ab1ELMNr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 May 2011 08:13:47 -0400
-Received: by bwz15 with SMTP id 15so1233448bwz.19
-        for <git@vger.kernel.org>; Thu, 12 May 2011 05:13:46 -0700 (PDT)
+	with ESMTP id S1756897Ab1ELMUa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 May 2011 08:20:30 -0400
+Received: by bwz15 with SMTP id 15so1237815bwz.19
+        for <git@vger.kernel.org>; Thu, 12 May 2011 05:20:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:date:x-google-sender-auth
-         :message-id:subject:from:to:content-type:content-transfer-encoding;
-        bh=b55zjOR27w8KLVi5Ddvll9tdERKTsZtCN36Qd6VjH6E=;
-        b=BPX3H1ZnzpXjM+dAr1ssamSvy58hBjIltlLED0HD7BeyHttXBt5zkgAIPko8c51zVe
-         4k5zOHmHR6mqBLMdhbIlqkLUm4U0oq+PWbDb14Raul7mWWwmvesW/IIPNLOTXQIMZlr1
-         Ui/kmeppOhqH3zR93szwkEnutGV5pdd9i6Ekk=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=+LhW7utWTy7Q3pP0+rKaThuCfBLsxPcK59Lpciw4SXk=;
+        b=DvWjWbdQ12sds1cj48qdQpi+Eu8Vm5BwFAIi91UtzKaRf5SShIc4Lx+LiQsfQpBaa/
+         jTY2bKOh9H51yQdUzHuZdbl1j7R5JLQrYWGqb3J9DDw4cqx/WkOSWYpu1nUoizyyFli0
+         x/pxQW6re5jSzEaHWT/YMYpjgxiLatHshKW8E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        b=aiuGAATJztc7HoWu+AlB8SVC4X0dthx3wycj+stoLyEkqYSMesTEb+mvGuv5fQMJ+z
-         lhNcSf1arKGD3NHTViO84c57bciaQ8bk1GHuRYLDRTygwubZJcF3M6sN/j9pmkn7Wht+
-         y8r2eFYL7jJ+HzJ+8vVCa/vher7vMyFpgCokE=
-Received: by 10.204.80.28 with SMTP id r28mr137471bkk.46.1305202425885; Thu,
- 12 May 2011 05:13:45 -0700 (PDT)
-Received: by 10.204.126.154 with HTTP; Thu, 12 May 2011 05:13:45 -0700 (PDT)
-X-Google-Sender-Auth: H5H_D-dZ1QKAnlY5XIBMKPURvNs
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=d8CvgrFWBHvSpGdEI4kzKOK3pZeTdq30sldBQU9eCnr4w7nnroHzBavO8rcyK9WJVi
+         yOp3JICo/K5xHzEtXQqBf36Yb7YzbX9NIHp873ioXMiWyMlm/jzDiQUwdGa8c/1z8J7l
+         8w1j4xBdD9h2RAiw7ZTS6co5ATsTqApdb7pPE=
+Received: by 10.204.45.152 with SMTP id e24mr139995bkf.47.1305202829166; Thu,
+ 12 May 2011 05:20:29 -0700 (PDT)
+Received: by 10.204.53.13 with HTTP; Thu, 12 May 2011 05:19:59 -0700 (PDT)
+In-Reply-To: <4DCB9C42.5070806@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173465>
 
-        Hi all,
+2011/5/12 Johannes Sixt <j.sixt@viscovery.net>:
+> From: Johannes Sixt <j6t@kdbg.org>
+>
+> The test case fails on Windows, because "a*" is an invalid file name.
+> Therefore, use "a[a]" instead.
+>
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> ---
+> =C2=A0Regarding the change from * to [], I do not know whether the re=
+sult
+> =C2=A0still tests the same thing. Please advise!
 
-I'm using git-svn. Due to local policies and for compatibility with the=
- other
-developers using plain svn, I have to lock a file before committing any=
-thing to
-the svn repository.
+The result is correct. Whatever pattern you throw at ls-tree should be
+interpreted literally, no magic at all.
 
-Hence I wrote a small wrapper script around "git svn dcommit", which ba=
-sically
-does:
-
-| SVNROOT=3D$( ( cd ./$(git rev-parse --show-cdup) && git svn info --ur=
-l ) )
-| SVNLOCKFILE=3D$SVNROOT/lockfile
-|
-| svn lock $SVNLOCKFILE
-| git svn dcommit $*
-| svn unlock $SVNLOCKFILE
-
-A while ago, I started seeing "svn: Network connection closed unexpecte=
-dly"
-messages being printed. Unfortunately, I didn't really look into them a=
-t that
-time, as everything seemed to continue working fine.
-
-Recently, we noticed concurrent commits, and discovered I no longer loc=
-k the
-lockfile. It seems that both the lock and unlock fail with
-"svn: Network connection closed unexpectedly", because $SVNROOT doesn't
-contain the username I need to use for authentication.
-
-My .git/config has
-
-| [svn-remote "svn"]
-|         url =3D svn+ssh://user@server/project
-
-But "git svn info --url" only prints:
-
-| svn+ssh://server/project/sub/branches/branch
-
-i.e. the username part is missing.
-Obviously "git svn dcommit" does use the correct URL.
-
-I'm using git version 1.7.0.4, but I also tried version 1.7.5.1.217.g4e=
-3aa
-with the same results.
-
-The funny thing is that I tested that locking did work when I wrote my =
-script.
-But when I look at the history for git-svn.perl, I don't see any change=
- that
-caused it to break, or even work at all.
-Nor do I have access to the same machine and software I originally used=
-, as it
-got upgraded in the mean time.
-
-I tried, "git config --get svn-remote.svn.url", but that only gives me
-"svn+ssh://user@server/project", i.e. it lacks the "/sub/branches/branc=
-h" part.
-
-Do you have any idea what's going on, or how to fix it?
-Shouldn't "git svn info --url" include the username?
-
-Thanks in advance!
-
-Gr{oetje,eeting}s,
-
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 Geert
-
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-=
-m68k.org
-
-In personal conversations with technical people, I call myself a hacker=
-=2E But
-when I'm talking to journalists I just say "programmer" or something li=
-ke that.
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 =C2=A0=C2=A0 -- Linus Torvalds
+Acked-by: me.
+--=20
+Duy
