@@ -1,94 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Adds 'stash.index' configuration option
-Date: Thu, 12 May 2011 04:22:10 -0400
-Message-ID: <20110512082210.GA16813@sigill.intra.peff.net>
-References: <D80C1130-8DE6-457E-B203-FCF25B8ED72C@gmail.com>
- <4DCB88C1.20105@drmicha.warpmail.net>
- <20110512080425.GA11870@sigill.intra.peff.net>
- <4DCB96F9.2020700@drmicha.warpmail.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH jc/magic-pathspec] t3703: Skip tests using directory name
+ ":" on Windows
+Date: Thu, 12 May 2011 10:21:33 +0200
+Message-ID: <4DCB988D.6060908@viscovery.net>
+References: <1304852906-29272-1-git-send-email-pclouds@gmail.com> <1305006678-4051-1-git-send-email-gitster@pobox.com> <1305006678-4051-10-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: David Pisoni <dpisoni@gmail.com>,
-	GIt Mailing List <git@vger.kernel.org>,
-	Git Maintainer <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu May 12 10:22:36 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, pclouds@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 12 10:27:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKRAF-0001Z9-KD
-	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 10:22:31 +0200
+	id 1QKREf-0004SR-7G
+	for gcvg-git-2@lo.gmane.org; Thu, 12 May 2011 10:27:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754223Ab1ELIWP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2011 04:22:15 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:33216
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751475Ab1ELIWL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2011 04:22:11 -0400
-Received: (qmail 11186 invoked by uid 107); 12 May 2011 08:24:09 -0000
-Received: from sigill-wired.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.8)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 12 May 2011 04:24:09 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 May 2011 04:22:10 -0400
-Content-Disposition: inline
-In-Reply-To: <4DCB96F9.2020700@drmicha.warpmail.net>
+	id S1754452Ab1ELI07 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 May 2011 04:26:59 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:20730 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754401Ab1ELI06 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2011 04:26:58 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1QKREP-0001e7-PE; Thu, 12 May 2011 10:26:56 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id CEFD61660F;
+	Thu, 12 May 2011 10:21:33 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
+In-Reply-To: <1305006678-4051-10-git-send-email-gitster@pobox.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173450>
 
-On Thu, May 12, 2011 at 10:14:49AM +0200, Michael J Gruber wrote:
+From: Johannes Sixt <j6t@kdbg.org>
 
-> > I would love to see something like this, but have we yet figured out all
-> > of the issues, like:
-> > 
-> >   1. How do scripts wanting to call git programs suppress expansion of
-> >      uiopts when they want predictable behavior?
-> > 
-> >   2. Depending on the solution to (1), how do scripts specify that they
-> >      _do_ want to allow uiopts (e.g., because they know they are
-> >      presenting the output to the user) for certain commands?
-> > 
-> >   3. Depending on (1) and (2), how do scripts differentiate when some
-> >      options are OK in uiopts, but others are not? For example, it may
-> >      be desirable for an invocation of diff-tree to have renames turned
-> >      on by the user, but not for them to change the output format.
-> > 
-> 
-> We haven't figured that out, but was the consensus: "Whatever, let's
-> just keep adding single options." ?
+":" is not allowed in file names on Windows. Detect this case and skip a
+test if necessary.
 
-I don't know. But short of coming up with a more global solution, what
-do you want to do in the meantime? Forbid new config options of this
-sort? I didn't see any consensus on that, either.
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ t/t3703-add-magic-pathspec.sh |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
 
-I'm not trying to be hostile, btw. I don't know what the right solution
-is.
-
-> > As much as it sucks to have a config option for each individual option,
-> > there is at least some oversight of which options will not cause too
-> > much of a problem when triggered automatically.
-> 
-> I just think we have too many commands which are ui and are used in
-> scripts (e.g. log, commit, stash, just to name a few) for being able to
-> decide that ourselves. Are we saying that people using "git stash" in a
-> script have to deal themselves with a breakage caused by "--index" being
-> a default for some users now?
-
-I intentionally withheld any judgement on whether "stash --index" is a
-safe option to add or not. I think that is a separate issue from whether
-one should add such options, if they are considered safe.
-
-> With a generic approach, we could protect all git-sh-setup using scripts
-> right from the start, for example, while still allowing to override some
-> options or to protect only a few (based on the explicit wishes of a
-> uiopts-aware script).
-
-Absolutely a solution like that would be better. Do you have a
-particular proposal in mind? I know we've discussed it before, but I
-didn't remember ever reaching any consensus on the right solution.
-
--Peff
+diff --git a/t/t3703-add-magic-pathspec.sh b/t/t3703-add-magic-pathspec.sh
+index ce5585e..e508246 100755
+--- a/t/t3703-add-magic-pathspec.sh
++++ b/t/t3703-add-magic-pathspec.sh
+@@ -44,8 +44,12 @@ test_expect_success 'a file with the same (long) magic name exists' '
+ 	git add -n "./:(icase)ha"
+ '
+ 
+-test_expect_success 'a file with the same (short) magic name exists' '
+-	mkdir ":" &&
++if mkdir ":" 2>/dev/null
++then
++	test_set_prereq COLON_DIR
++fi
++
++test_expect_success COLON_DIR 'a file with the same (short) magic name exists' '
+ 	: >":/bar" &&
+ 	test_must_fail git add -n :/bar &&
+ 	git add -n "./:/bar"
+-- 
+1.7.5.1.1644.g7f2ed
