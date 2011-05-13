@@ -1,85 +1,110 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Question about git-cherry and the rev list it's using
-Date: Fri, 13 May 2011 13:13:24 +0200
-Message-ID: <4DCD1254.4050008@drmicha.warpmail.net>
-References: <BANLkTinMfVE=s+TouyxE-ucf7MHGf1m7HA@mail.gmail.com>	<4DCB826F.5020406@drmicha.warpmail.net>	<BANLkTi=qRbpBG_PDPjO_TVEe+nWqrFQ28w@mail.gmail.com> <BANLkTi=d+gDhgnmOzUDfHhGJP76JuLHJ2Q@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Francis Moreau <francis.moro@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 13 13:13:35 2011
+From: Osamu OKANO <okano.osamu@gmail.com>
+Subject: [PATCH 0/7] Document translation with po4a.
+Date: Fri, 13 May 2011 22:14:11 +0900
+Message-ID: <1305292458-3920-1-git-send-email-okano.osamu@gmail.com>
+Cc: Osamu OKANO <okano.osamu@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 13 15:14:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKqJJ-0007sV-3O
-	for gcvg-git-2@lo.gmane.org; Fri, 13 May 2011 13:13:33 +0200
+	id 1QKsCb-0006cz-MO
+	for gcvg-git-2@lo.gmane.org; Fri, 13 May 2011 15:14:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932387Ab1EMLN2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 May 2011 07:13:28 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:36737 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932213Ab1EMLN1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 May 2011 07:13:27 -0400
-Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 396BA206D7;
-	Fri, 13 May 2011 07:13:26 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute5.internal (MEProxy); Fri, 13 May 2011 07:13:26 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=4gwxtvp4srgRnjtyJyOZAmjtT/k=; b=gv1Bg5ukIwjOOKL7Dw3uz+z7NxgxiX51jkwcN5qlQsQ79xD9ez7ULg1Ble65x+IcDne6SWAwUKy2NA2nLnMGnzh8qM/p4oPTDxIu2ajlMiyCdFLVyE/kVFrevoqPKqYzF3rRr9ylv7qpxGeUkiKBXlxr4OUtUXgipG4g9nHZBOA=
-X-Sasl-enc: 7e1udh9QJWL4efc56EM41vPe2wmrBhcabIOWAdQ+7neW 1305285205
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id B6338443251;
-	Fri, 13 May 2011 07:13:25 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Lightning/1.0b3pre Thunderbird/3.1.10
-In-Reply-To: <BANLkTi=d+gDhgnmOzUDfHhGJP76JuLHJ2Q@mail.gmail.com>
+	id S1759308Ab1EMNOh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 May 2011 09:14:37 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:59800 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758584Ab1EMNOg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2011 09:14:36 -0400
+Received: by pvg12 with SMTP id 12so1148277pvg.19
+        for <git@vger.kernel.org>; Fri, 13 May 2011 06:14:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=XzJfuPt4zow5ilvl9WlYIj+abWjfjPOxK1j0XGF42g0=;
+        b=xPq2l8QoT6JqVyPKa7D5zIl5kgTUC0lZ5ShOA98O5gZAkTFvxVizAWn5XgHsYAGEIj
+         Z/2J1dO2owCudz+XTMkg2gATp9mBD0K+jOhExrTy8mzwT5OtLD+zR/x+tN3uTmjEjWYB
+         5t13SpHgHsTmN2//Fyq5h0kp3AghQTRz61Y+I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=hhi7Jq/TmEGX9zAh05Frrn0UAcL30QYgG9F/3vMKdJecMKdZWde88BdoV2xqB1Sc4k
+         Up+q7qG2xRnTlrHcbr/FbSFMwAF6CUqvsFk93kd0s+ydHR3oiFL0Wsq8soS+2Wp8nuBc
+         b0NgVnbacW+Do1DQqnbVw4yt2oJ/vExSdmtcU=
+Received: by 10.68.20.9 with SMTP id j9mr2239432pbe.440.1305292475746;
+        Fri, 13 May 2011 06:14:35 -0700 (PDT)
+Received: from localhost.localdomain (i118-20-60-90.s04.a013.ap.plala.or.jp [118.20.60.90])
+        by mx.google.com with ESMTPS id q20sm1358319pbt.72.2011.05.13.06.14.34
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 13 May 2011 06:14:35 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.1.169.g505a1.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173529>
 
-Francis Moreau venit, vidit, dixit 13.05.2011 09:02:
-> On Fri, May 13, 2011 at 8:54 AM, Francis Moreau <francis.moro@gmail.com> wrote:
->> [ resending to the mailing list too ]
->>
->> On Thu, May 12, 2011 at 8:47 AM, Michael J Gruber
->> <git@drmicha.warpmail.net> wrote:
->>> Francis Moreau venit, vidit, dixit 11.05.2011 18:11:
->>>> Hello,
->>>>
->>>> I'm using "git cherry old master base" to see if all commits between
->>>> master and base have been applied in my 'old' branch.
->>>>
->>>> So I expect that git cherry is using a list of commits given by : "git
->>>> rev-list --no-merges base..master".
->>>
->>> Not really.
->>>
->>> For each commit in "--no-merges old..master ^base" (i.e. "--no-merges
->>> master ^old ^base"), "git cherry" checks whether there is a patch
->>> equivalent commit in "--no-merges master..old", and outputs it with + or -.
->>>
->>
->> oh you're right, I missed the case when old has been merged in master.
->>
-> 
-> BTW, can't it be convenient for users if git-cherry also displays the
-> sha1 of the commits which have been merged upstream (the ones with the
-> '-' sign) ?
+1 Document translation with po4a. 
+---------------------------------
+I tried to translate Docmentation with po4a.
+Please relive my translation flow.
 
-(I assume you mean the sha1 of the commit as it is in upstream.)
+1.1 prepareration 
+==================
+$ install po4a
+$ git am 0001-Add-new-target-pot-in-Makefile.patch
+$ git am 0002-add-make-shell-scripts.patch
+$ cd Documentation
+$ make pot    # convert .txt to .pot  with po4a-gettexize
 
-Well, in general the map "sha1 to patchid" is not one-to-one and may not
-even be two-to-one. So we possibly would have to list more than one sha1
-along with the -1. Anyways, with the current implementation you can't do
-that, and it is not simple to change (because we may traverse *a lot* of
-commits if base and upstream are far apart or disconnected).
+1.2 new translation 
+====================
+$ mkdir ja
+$ cp git-stage.pot ja/git-stage.po
+  -> 0003-cp-git-stage.pot-ja-git-stage.po.patch
+$ cd ja
+$  translate .po by hand ...
+  -> 0004-translate-ja-git-stage.po.patch
+$ ../make_txt    # convert .po  to .txt  with po4a-translate
+$ ../make_html   # convert .txt to .html with asciidoc
 
-Note that "git cherry -v" gives you the subjects so that you can grep
-for those in case they match in your work flow. Same with "git log
---cherry --oneline" etc..
+1.3 update translation 
+=======================
+$ git-stage.txt was updated.
+  -> 0005-your-file.patch
+$ cd Documentation/ja
+$ ../make_update # update(merge) .po     with po4a-updatepo
+  -> 0006-update-git-stage.po.patch
+$ translate and remove fuzzy
+  -> 0007-translate-and-remove-fazzy.patch
+$ ../make_txt
+$ ../make_html
 
-Michael
+=======================
+Osamu OKANO (7):
+  Add new target pot in Makefile
+  add make(shell) scripts
+  cp git-stage.pot ja/git-stage.po
+  translate ja/git-stage.po
+  your file
+  update git-stage.po
+  translate and remove fazzy
+
+ Documentation/.gitignore      |    1 +
+ Documentation/Makefile        |   15 ++++++++-
+ Documentation/git-stage.txt   |    2 +-
+ Documentation/ja/git-stage.po |   74 +++++++++++++++++++++++++++++++++++++++++
+ Documentation/make_html       |   10 +++++
+ Documentation/make_txt        |   13 +++++++
+ Documentation/make_update     |   13 +++++++
+ 7 files changed, 126 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/ja/git-stage.po
+ create mode 100644 Documentation/make_html
+ create mode 100644 Documentation/make_txt
+ create mode 100644 Documentation/make_update
+
+-- 
+1.7.5.1.169.g505a1.dirty
