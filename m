@@ -1,76 +1,174 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [BUG?] read_directory(), core.ignorecase and pathspec
-Date: Fri, 13 May 2011 07:39:31 +0700
-Message-ID: <BANLkTimZuzj0o57TOnp8ftnqXse=nRv8HQ@mail.gmail.com>
-References: <BANLkTimqJvLoWGxMzeSs9n7LrrLaE-azwQ@mail.gmail.com> <7vwrhvdhwg.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC v5] git-p4: warn if git authorship won't be retained
+Date: Thu, 12 May 2011 22:29:55 -0700
+Message-ID: <7vaaerb224.fsf@alter.siamese.dyndns.org>
+References: <1305176756-27046-1-git-send-email-luke@diamand.org>
+ <1305176756-27046-2-git-send-email-luke@diamand.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 13 02:44:42 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Pete Wyckoff <pw@padd.com>
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Fri May 13 07:30:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKgUe-0007bt-C0
-	for gcvg-git-2@lo.gmane.org; Fri, 13 May 2011 02:44:36 +0200
+	id 1QKkx5-0005Be-3y
+	for gcvg-git-2@lo.gmane.org; Fri, 13 May 2011 07:30:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752775Ab1EMAkF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 May 2011 20:40:05 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:48664 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751360Ab1EMAkE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2011 20:40:04 -0400
-Received: by bwz15 with SMTP id 15so1736309bwz.19
-        for <git@vger.kernel.org>; Thu, 12 May 2011 17:40:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=CAqpvAjlp1rSmpkB6ld6ju4eEfe5X9XctY7xsPvCcmY=;
-        b=bgFty7Zp5tJLc3fHUBZxqVqRar34LihJHnFlvlhbVpnKlq6QidYJWBgFVoo+JWtOSz
-         KdBHGkPL5yLkPWlc1vDtpBzYaA6TWxeaWuVGQdwrzKA7InMvlsHH50CH6vbpVQil0n2o
-         FMONW3Z23Lfivxb8y3QCIXagfFEO8ThPkjDX0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=bt7ZQMFq8P1FrR7DTsNpNcaF3NTPNJhBrFUtkbn19fIzHPTkBSlqO3PuAXLvnvX2ld
-         MOy2dqh1c4nBSt1qFQ5qqjGKqLz1SSfH9BmTZxYdNzg7V+cdgw786Av5Hhho39DXYFZf
-         paFigAZqTpl8MLFt5B8rqAhmIbZQf4E5mk/i8=
-Received: by 10.204.35.206 with SMTP id q14mr748727bkd.128.1305247202127; Thu,
- 12 May 2011 17:40:02 -0700 (PDT)
-Received: by 10.204.53.13 with HTTP; Thu, 12 May 2011 17:39:31 -0700 (PDT)
-In-Reply-To: <7vwrhvdhwg.fsf@alter.siamese.dyndns.org>
+	id S1755989Ab1EMFaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 May 2011 01:30:08 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40133 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755794Ab1EMFaH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2011 01:30:07 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 462BE32A4;
+	Fri, 13 May 2011 01:32:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7GDLx5KYDUz7tnBZij2kHE1FVDI=; b=E8RkcV
+	uI8DvD2WfYyAWj33cvLvpCxf2bXa9V50l9VHIZQmi+5Go/YAlm/0MUpjLh8wKTsF
+	t6AwamgsjlYAWbJE17DLQl6zEPEbgEYSoh2X+kRmjUrheEYOBRaxj66B0frpXiWs
+	HpW4qgF5nbAjXiJPEWVSYxdMaM5TrGXRJEcwk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=T3ExwGAogALysPWdqJwF2Mr6G7LmSNpD
+	FY7aLdBi7mRF2OLkjGvyHSY3BOKnKtwryD/WYsMwCX0FJyfDE5l726oz0g3pjqlx
+	DvwHJ8hcTr4mUnqKV/UdcRBCTOJrAoCWLTRrYFGLuo4Ss2LIEp6LElyxORst6qkW
+	qZJWBB1EEps=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 132B03295;
+	Fri, 13 May 2011 01:32:08 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 802663291; Fri, 13 May 2011
+ 01:32:03 -0400 (EDT)
+In-Reply-To: <1305176756-27046-2-git-send-email-luke@diamand.org> (Luke
+ Diamand's message of "Thu, 12 May 2011 06:05:56 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 57FAD89E-7D22-11E0-8668-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173503>
 
-On Thu, May 12, 2011 at 11:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->
->> I was looking at how read_directory() uses pathspec, and it seems that
->> simplify_away(), the function that cuts out directories early if
->> they're definitely outside given pathspec, does exact match (ie.
->> memcmp) regardless core.ignorecase. This means "git add -- '*.c'" may
->> not work as expected when core.ignorecase is on.
->
-> I don't think for '*.c' it would make any difference, but it is very
-> plausible that 'frotz/*.c' will cull 'Frotz/anything' as "never going to
-> match".
+Luke Diamand <luke@diamand.org> writes:
 
-Right, it only checks prefix.
+> diff --git a/t/t9800-git-p4.sh b/t/t9800-git-p4.sh
+> index 4fb0e24..888ad54 100755
+> --- a/t/t9800-git-p4.sh
+> +++ b/t/t9800-git-p4.sh
+> @@ -160,6 +160,15 @@ p4_check_commit_author() {
+>      fi
+>  }
+>  
+> +make_change_by_user() {
+> +	file=$1
+> +	name=$2
+> +	email=$3
+> +	echo "username: a change by $name" >> $file &&
+> +	git add $file &&
+> +	git commit --author "$name <$email>" -m "a change by $name"
+> +}
 
->> The whole simplifying thing in read_directory() will eventually be
->> replaced with real pathspec matching as we put more magic in pathspec.
->
-> That should be done not "as" but "before". Get the foundation right before
-> going fancier.
->
+This should be:
 
-Right, again.
--- 
-Duy
+        make_change_by_user() {
+                file=$1 name=$2 email=$3 &&
+                echo "username: a change by $name" >>"$file" &&
+                git add "$file" &&
+                git commit --author "$name <$email>" -m "a change by $name"
+        }
+
+Points to keep in mind:
+
+ - An assignment is just an ordinary stmt. Make it a habit to keep it as
+   part of && chain without having to even think about it, so that you
+   won't forget to do so when you need to assign in the middle of a
+   sequence.
+
+ - Recent bash seems to give unnecessary warning to redirecting to a
+   file whose name is given as a variable. Use a(n unnecessary) double
+   quotes to avoid it.
+
+ - Our coding convention is not to have an extra SP after redirection.
+
+ - Double quote your variables where syntactically necessary to avoid them
+   from getting split by the shell when they contain IFS whitespaces.
+
+> +# If we're *not* using --preserve-user, git-p4 should warn if we're submitting
+> +# changes that are not all ours.
+> +# Test: user in p4 and user unknown to p4.
+> +# Test: warning disabled and user is the same.
+> +test_expect_success 'not preserving user with mixed authorship' '
+> +	"$GITP4" clone --dest="$git" //depot &&
+> +	(
+> +	cd "$git" &&
+
+I'd prefer to see this block inside the "(" ... ")" indented one level
+deeper, i.e.
+
+	"$GITP4" clone --dest="$git" //depot &&
+        (
+		cd "$git" &&
+                ...
+
+> +	git config git-p4.skipSubmitEditCheck true &&
+> +	p4_add_user derek Derek &&
+> +
+> +	make_change_by_user usernamefile3 Derek derek@localhost &&
+> +	(P4EDITOR=cat P4USER=alice P4PASSWD=secret "$GITP4" commit |
+> +		grep "git author derek@localhost does not match" > /dev/null) &&
+
+Are you expecting this '"$GITP4" commit' to succeed (i.e. exit with 0
+status), or to fail (i.e. exit with non-zero status)?  By having the
+command on the upstream side of a pipe, you cannot check its exit status.
+
+Either
+
+	P4EDITOR=cat P4USER=alice P4PASSWD=secret "$GITP4" commit >actual &&
+        grep "git author ..." actual &&
+
+or if you expect the '"$GITP4" commit' to fail:
+
+	! P4EDITOR=cat P4USER=alice P4PASSWD=secret "$GITP4" commit >actual &&
+        grep "git author ..." actual &&
+
+Do you really need to discard the output from grep?  When the test is run
+without "-v", the output would not be shown, and when it is run with "-v",
+showing the output would help you diagnose bugs in the test, no?
+
+If you indeed need to squelch grep, "grep -q" should be usable.  It is
+used in many other tests.
+
+I also do not see a need for using a subshell for this case, either.
+
+> +	git diff --exit-code HEAD..p4/master &&
+
+Is it possibile for the working tree files to have changed from p4/master,
+and if so is it an error you may want to catch?  Your answer could be "No,
+$GITP4 never touches the working tree, so that is unnecessary to check."
+
+> +	make_change_by_user usernamefile3 Charlie charlie@localhost &&
+> +	(P4EDITOR=cat P4USER=alice P4PASSWD=secret "$GITP4" commit |
+> +		grep "git author charlie@localhost does not match" > /dev/null) &&
+> +	git diff --exit-code HEAD..p4/master &&
+> +
+> +	make_change_by_user usernamefile3 alice alice@localhost &&
+> +	!(P4EDITOR=cat P4USER=alice P4PASSWD=secret "$GITP4" commit |
+> +		grep "does not match" > /dev/null) &&
+
+Again, either
+
+	P4EDITOR=cat P4USER=alice P4PASSWD=secret "$GITP4" commit >actual &&
+        ! grep "does not match" actual
+
+or
+
+	! P4EDITOR=cat P4USER=alice P4PASSWD=secret "$GITP4" commit >actual &&
+        ! grep "does not match" actual
+
+depending on what exit status you are expecting from '"$GITP4" commit'.
