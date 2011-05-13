@@ -1,94 +1,136 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: Re: git rebase --interactive commits order
-Date: Fri, 13 May 2011 19:51:12 +0200
-Message-ID: <20110513175112.GA14079@vidovic>
-References: <BANLkTimX2tupqV464+Re8u06TT+qRmqPuw@mail.gmail.com>
- <BANLkTi=PyBfMxCbWNfJEXEP6-MphdeE+_Q@mail.gmail.com>
- <m2d3jr1mev.fsf@Spindle.sehlabs.com>
- <BANLkTim1e=+yoyxd1AAThVYMZ_X3nfz=7Q@mail.gmail.com>
- <BANLkTinRcigdQv2GJN6L+nF3X2+F-5Lf5w@mail.gmail.com>
- <7vwrhygmrp.fsf@alter.siamese.dyndns.org>
- <BANLkTikV_TSEE1cgr=EOhuD0f8KP2vh-tA@mail.gmail.com>
- <7v39klgng7.fsf@alter.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: AAARGH bisection is hard (Re: [2.6.39 regression] X locks up hard
+ right after logging in)
+Date: Fri, 13 May 2011 10:54:41 -0700
+Message-ID: <BANLkTinVT=9+-HhwXcyLBwrnhX9F9Qz3ww@mail.gmail.com>
+References: <BANLkTi=kb_m-CfrpnD8qQTVYLGaDdgy_tg@mail.gmail.com>
+ <BANLkTikMeyRTOB9q4PEAYWnZRZfk3wg=kQ@mail.gmail.com> <BANLkTi=dL+KyQ3Bm58_Uj4LP9WSpbzAfJA@mail.gmail.com>
+ <BANLkTi=NdVUUZ=_bACzyeMGS3JWs0EMbWA@mail.gmail.com> <BANLkTimE2GkkhcFZtNrYZASWp0LDhUx=GQ@mail.gmail.com>
+ <BANLkTinyzBnksHk_rt8K2pmg90q5WyZX3w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Richard Peterson <richard@rcpeterson.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Philippe Vaucher <philippe.vaucher@gmail.com>,
-	git@vger.kernel.org, Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 13 19:51:27 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Christian Couder <christian.couder@gmail.com>,
+	linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+	git@vger.kernel.org, Shuang He <shuang.he@intel.com>
+To: Andrew Lutomirski <luto@mit.edu>
+X-From: linux-kernel-owner@vger.kernel.org Fri May 13 19:55:34 2011
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKwWM-0002pW-8L
-	for gcvg-git-2@lo.gmane.org; Fri, 13 May 2011 19:51:26 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1QKwaK-0005QC-2Y
+	for glk-linux-kernel-3@lo.gmane.org; Fri, 13 May 2011 19:55:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754993Ab1EMRvV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 May 2011 13:51:21 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:57113 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752581Ab1EMRvU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 May 2011 13:51:20 -0400
-Received: by wya21 with SMTP id 21so2086322wya.19
-        for <git@vger.kernel.org>; Fri, 13 May 2011 10:51:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=n24pV175rUJuUJgFso+Ijbql6wmVCPl0zkL72i7z+dM=;
-        b=tItQ/2bXRb7rNIw5Ta3204W56k+sBN4M7JsetKkSYfzv6WCSobLjm8CJNshDS1WeJe
-         ZkrgKDyxHEzrCrZWtIvVCFROoNOGG7NogRqMXyAZfR5a31TRR3yCKH5bQmvDUrsP+qeN
-         iB48fgZRSJ0xuKU7EUZzV23eujf5VF0+Ve7Co=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=B7mv8LD/N9ltZZXMz/5F7QLv//YaCDoRN7LnNcCt1CY9VOq2ZQS75uYq+oV2o4UdeE
-         ltBvQeTufQHPldI1AAqwIEzn372cMRfK0kebkc5FBv7bPxHfb7LJ/baVvNzqUSN3kC7U
-         UnhXXFBl6xW+36tr34WoErpGwwDR6xYhcdiDA=
-Received: by 10.227.60.131 with SMTP id p3mr1723676wbh.80.1305309078818;
-        Fri, 13 May 2011 10:51:18 -0700 (PDT)
-Received: from vidovic (aqu33-8-83-155-187-36.fbx.proxad.net [83.155.187.36])
-        by mx.google.com with ESMTPS id y29sm1532443wbd.38.2011.05.13.10.51.15
-        (version=SSLv3 cipher=OTHER);
-        Fri, 13 May 2011 10:51:17 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7v39klgng7.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-Sender: git-owner@vger.kernel.org
+	id S932694Ab1EMRzY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Fri, 13 May 2011 13:55:24 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:58279 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751095Ab1EMRzW convert rfc822-to-8bit
+	(ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Fri, 13 May 2011 13:55:22 -0400
+Received: from mail-vx0-f174.google.com (mail-vx0-f174.google.com [209.85.220.174])
+	(authenticated bits=0)
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p4DHt2mq011895
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL);
+	Fri, 13 May 2011 10:55:03 -0700
+Received: by vxi39 with SMTP id 39so2009560vxi.19
+        for <multiple recipients>; Fri, 13 May 2011 10:55:01 -0700 (PDT)
+Received: by 10.52.175.73 with SMTP id by9mr2415075vdc.154.1305309301123; Fri,
+ 13 May 2011 10:55:01 -0700 (PDT)
+Received: by 10.52.181.98 with HTTP; Fri, 13 May 2011 10:54:41 -0700 (PDT)
+In-Reply-To: <BANLkTinyzBnksHk_rt8K2pmg90q5WyZX3w@mail.gmail.com>
+X-Spam-Status: No, hits=-102.977 required=5 tests=AWL,BAYES_00,USER_IN_WHITELIST
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173555>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173556>
 
-The 11/05/11, Junio C Hamano wrote:
-> Richard Peterson <richard@rcpeterson.com> writes:
-> 
-> > On Tue, May 10, 2011 at 7:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> >>
-> >> Devils lie in the details.  For example, should squash/fixup come before
-> >> or after the squashed commit when --reverse is in effect, and why?
-> >>
-> >> Should "rebase --reverse --continue" work after it gets interrupted, if
-> >> not why not?
-> >
-> > Yes, it should work,...
-> 
-> Of course, if you start with --reverse, it is clear and obvious that
-> 'continue' should continue with the reversed instruction sheet, and it
-> probabaly should take --reverse as a no-op when given with --continue.
-> The original question should have been written more carefully to avoid
-> soliciting the response that addresses that uninteresting case.
+On Fri, May 13, 2011 at 10:24 AM, Andrew Lutomirski <luto@mit.edu> wrot=
+e:
+> On Fri, May 13, 2011 at 12:11 PM, Linus Torvalds
+> <torvalds@linux-foundation.org> wrote:
+>>
+>> Ehh. That's the "non-fancy" way of testing, I'm afraid: if you canno=
+t
+>> make assumption about the relationship between good and bad commits,
+>> then you have to test _every_ commit.
+>
+> Actually, I disagree. =A0I suspect, although I haven't convinced myse=
+lf
+> very well yet, that if you assume that the bug was caused one or more
+> times by some commit C that works but where all of C's parents don't
+> work (or vice versa), then there exists an algorithm that, at least
+> for most histories, will find such a commit in polylog tries given a
+> starting commit that works and another one that fails. =A0But I have =
+to
+> do real work before I think too much more about that.
 
-I don't understand. Why not just _display_ the commit in reverse order?
+So I do think we could probably add a few more concepts to git-bisect
+that could be quite useful.
 
-Then, from the user POV commands like squash, fixup, etc would apply in
-reverse order too (from up to down); keeping the mental model for "apply
-against ancestor".
+=46or example, in your case, since you had certain requirements of
+support that simply didn't exist earlier, something like
 
--- 
-Nicolas Sebrecht
+   git bisect requires v2.6.38
+
+would have been really useful - telling git bisect that any commit
+that cannot reach that required commit is not even worth testing.
+
+That would still have been rather dangerous thing to say (it's not
+actually a _true_ requirement: there may well be points in the i915
+development tree that still had all the required sandybridge support,
+but hadn't been merged into 38 yet), but it would have limited your
+bisection space to a degree that would have been useful.
+
+So if that "requirement" wasn't actually true (and the bug was
+introduced by a commit that was based on something before v2.6.38),
+the bisect would have pinpointed the particular merge that brought the
+commit in. So "pinpointed" might in this case mean "thousands of
+commits", but it would still likely be a very useful end result.
+
+And no, git-bisect doesn't have that kind of concept. And it could
+potentially be quite useful.
+
+Another thing that would be useful for git bisect would be the notion
+of "git bisect cherry-pick", which is useful for applying particular
+commits that fix unrelated problems _while_ you bisect the one you're
+interested in. You can currently do it manually, or by playing around
+with 'git bisect run' and making hacky stuff, but it's a pain. You
+didn't hit that case, but it's actually the most common problem there
+is with git bisect - having multiple _different_ bugs, rather than
+having the same bug show up twice.
+
+Yet another issue - related to the "multiple different bugs" thing -
+is exactly the fact that 'git bisect' only has a concept of a "single
+bug". You cannot say "this revision is good, that revision has bug A,
+that revision has bug B", where bug A might hide bug B and vice versa.
+If you have multiple bugs and they change symptoms, it can be _really_
+painful to bisect things, because you have to basically always pick
+one of them, and then re-do the whole thing after you've found the
+first one.
+
+So there's no question that there might not be things we would want to
+do with "git bisect".
+
+Of course, one of the real advantages of "git bisect" is that for many
+cases it's pretty simple. You can (and we absolutely rely on this)
+have normal users that have _no_ idea about kernel development do a
+bisect - the only thing they need to be able to do is to compile and
+install their own kernel, and reliably recognize the problematic
+symptoms.
+
+And that's really the biggest advantage of bisecting - it doesn't
+_always_ work, but it works often enough, and it's totally mindless.
+So clever features and extra complexity and smart things that can be
+done with it is often not all that useful - because a major user base
+is very much the "I don't know kernel development, but I want to help
+and my machine shows badness" kind of situation.
+
+                          Linus
