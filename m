@@ -1,103 +1,134 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 0/8] Sequencer Foundations
-Date: Fri, 13 May 2011 11:11:34 +0200
-Message-ID: <BANLkTi=8BrFXfoDwL_fXG2bXarP7d0xioA@mail.gmail.com>
-References: <1305100822-20470-1-git-send-email-artagnon@gmail.com>
-	<20110511131356.GI2676@elie>
-	<BANLkTi=zXWojMOfe9sECUu-X9euCjr4i3w@mail.gmail.com>
-	<20110512084136.GD28872@elie>
-	<20110512114415.GA14724@elie>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 7/8] revert: Implement parsing --continue, --abort and --skip
+Date: Fri, 13 May 2011 14:46:22 +0530
+Message-ID: <20110513091619.GC14272@ramkum.desktop.amazon.com>
+References: <1305100822-20470-1-git-send-email-artagnon@gmail.com> <1305100822-20470-8-git-send-email-artagnon@gmail.com> <20110511125900.GH2676@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Junio C Hamano <gitster@pobox.com>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 13 11:11:43 2011
+X-From: git-owner@vger.kernel.org Fri May 13 11:16:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKoPN-0005J0-FJ
-	for gcvg-git-2@lo.gmane.org; Fri, 13 May 2011 11:11:41 +0200
+	id 1QKoUC-0007vI-4C
+	for gcvg-git-2@lo.gmane.org; Fri, 13 May 2011 11:16:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932886Ab1EMJLg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 May 2011 05:11:36 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:52875 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932478Ab1EMJLf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 May 2011 05:11:35 -0400
-Received: by yxs7 with SMTP id 7so814804yxs.19
-        for <git@vger.kernel.org>; Fri, 13 May 2011 02:11:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=/aUdzu0swCxSh7jFTrqIwZRUi75e8N1uhqlgjrxI6YE=;
-        b=mVPr7C1vG96CAxgDHjBdMqcYRFRfw4f0/yG909SFcryNPhFyZcWsUL05Z2PSX+WhFw
-         u4t2bpQic/NY5mvUT96Vze3qhQyD6b/E80wZuwCOApUE36/OlvUPAdlzktW7SplO21ij
-         mphZLIUnx5aFPL3p53Tcsd3EeD8Ie84/v2uvQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ZFIYFcnobDnx8iIwvn4h54kBW5IsnykrN+xbmTrAhHEpNxorp9AqYv7r0SysH8EGpj
-         4Y1rZjrJ/l1YXfXT6/sTdS4pf8VoL5imfOB/f28UMcQ/qV/EIKXvWKOMbcaWyv+xwmVI
-         kKWyxP0/ol2xoyObK4BsO+OwdP6hbd8SO7V1Y=
-Received: by 10.236.105.140 with SMTP id k12mr1067280yhg.169.1305277894539;
- Fri, 13 May 2011 02:11:34 -0700 (PDT)
-Received: by 10.147.167.5 with HTTP; Fri, 13 May 2011 02:11:34 -0700 (PDT)
-In-Reply-To: <20110512114415.GA14724@elie>
+	id S932094Ab1EMJQd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 May 2011 05:16:33 -0400
+Received: from smtp-fw-4101.amazon.com ([72.21.198.25]:57045 "EHLO
+	smtp-fw-4101.amazon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758035Ab1EMJQd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2011 05:16:33 -0400
+X-IronPort-AV: E=Sophos;i="4.64,363,1301875200"; 
+   d="scan'208";a="435344928"
+Received: from smtp-in-5102.iad5.amazon.com ([10.218.9.29])
+  by smtp-border-fw-out-4101.iad4.amazon.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 13 May 2011 09:16:24 +0000
+Received: from ramkum.desktop.amazon.com (ramkum.desktop.amazon.com [172.25.205.64])
+	by smtp-in-5102.iad5.amazon.com (8.13.8/8.13.8) with ESMTP id p4D9GMir022086;
+	Fri, 13 May 2011 09:16:23 GMT
+Received: by ramkum.desktop.amazon.com (Postfix, from userid 272482)
+	id 173E175483F; Fri, 13 May 2011 14:46:22 +0530 (IST)
+Content-Disposition: inline
+In-Reply-To: <20110511125900.GH2676@elie>
+User-Agent: Mutt/1.4.2.2i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173514>
 
-Hi,
+Hi Jonathan,
 
-On Thu, May 12, 2011 at 1:44 PM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Jonathan Nieder wrote:
->> Christian Couder wrote:
->
->>> I think that the risk at this point might be to overengineer things
->>> and to lose time, and then we will perhaps find out that we need to=
- do
->>> some refactoring of the merge_recursive API anyway.
->>
->> I agree with the general principle... let's see if I understand the
->> details of what you are saying.
->
-> It occurs to me now that you were probably talking about the
-> suggestion of using the lockfile API (i.e., the write temporary/renam=
-e
-> trick). =A0In that case, I agree --- no need to overengineer it and
-> concurrency problems can be fixed later. =A0Sorry for an overcomplica=
-ted
-> explanation.
+Jonathan Nieder writes:
+> Ramkumar Ramachandra wrote:
+> 
+> > Introduce three new command-line options: --continue, --abort, and
+> > --skip resembling the correspoding options in "rebase -i".  For now,
+> > just parse the options into the replay_opts structure, making sure
+> > that two of them are not specified together. They will actually be
+> > implemented later in the series.
+> 
+> I'd suggest squashing this patch with the next one.  If a "git
+> cherry-pick" accepting an --abort option that does not do anything
+> leaked into the wild, that would not be a good outcome.
 
-Yeah, it was mostly the lockfile API.
+What about --continue and --skip? They're no-ops too here, and
+there'll soon be patches adding the functionality.  Do you think it's
+alright to parse and exit immediately?
 
-About writing files before each cherry-pick, I am not against it, if
-it is really needed to be safe. I even suggested it in my patch series
-back in November
-(http://article.gmane.org/gmane.comp.version-control.git/162183).
-But it will make cherry-pick less efficient, so it is a kind of
-performance regression that we can perhaps avoid by changing some
-die() into error().
+> > --- a/builtin/revert.c
+> > +++ b/builtin/revert.c
+> > @@ -145,7 +153,47 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+> >  	opts->xopts_nr = xopts_nr;
+> >  	opts->xopts_alloc = xopts_alloc;
+> >  
+> > -	if (opts->commit_argc < 2)
+> > +	/* Check for incompatible command line arguments */
+> > +	if (opts->abort_oper || opts->skip_oper || opts->continue_oper) {
+> > +		char *this_oper;
+> > +		if (opts->abort_oper) {
+> > +			this_oper = "--abort";
+> > +			die_opt_incompatible(me, this_oper,
+> > +					"--skip", opts->skip_oper,
+> > +					NULL);
+> > +			die_opt_incompatible(me, this_oper,
+> > +					"--continue", opts->continue_oper,
+> > +					NULL);
+> 
+> What happened to
+> 
+> 			...(me, "--abort",
+> 				"--skip", opts->skip,
+> 				"--continue", opts->continue);
 
-So what i suggest and in fact started is to just try that. We may find
-that we could indeed do it quite safely or we may find that it's too
-much work to be safe enough. When I tried it, it seemed to me that it
-was not a lot of work, and not very complex, though it added many
-commits to the patch series. But perhaps I overlooked some problems. I
-will have another look soon.
+Huh? Why? I've caught every possible combination of two of those
+options -- that already covers all three.
 
-Thanks,
-Christian.
+> ?  I also wonder if there should not be a function to deal with
+> mutually incompatible options:
+> 
+> 	va_start(ap, commandname);
+> 	while ((arg1 = va_arg(ap, const char *))) {
+> 		int set = va_arg(ap, int);
+> 		if (set)
+> 			break;
+> 	}
+> 	while ((arg2 = va_arg(ap, const char *))) {
+> 		int set = va_arg(ap, int);
+> 		if (set)
+> 			die(arg1 and arg2 are incompatible);
+> 	}
+> 	va_end(ap);
+
+I personally think having a function is cleaner: I even like the new
+API suggested by Junio.  We can probably even move it to a common
+place, and have others use it as well.
+
+> > +		die_opt_incompatible(me, this_oper,
+> > +				"--no-commit", opts->no_commit,
+> [...]
+> 
+> Seems reasonable.  A part of me would want to accept such options and
+> only error out if the saved state indicates that they are different
+> from the options supplied before, so if a person has
+> 
+> 	alias applycommits = git cherry-pick --no-commit
+> 
+> then "applycommits --continue" could work without trouble, but
+> that's probably overegineering.
+
+Over-engineering definitely! I'm looking to get something working
+first; add-on functionality like this can come as later patches.
+
+And yes, as you pointed out in another review, the name
+verify_opt_incompatible_or_die is more appropriate.
+
+Thanks for the detailed review.
+
+-- Ram
