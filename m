@@ -1,132 +1,93 @@
-From: Magnus =?iso-8859-1?Q?B=E4ck?= <magnus.back@sonyericsson.com>
-Subject: Re: merging bare repository
-Date: Fri, 13 May 2011 15:53:48 +0200
-Message-ID: <20110513135348.GB10857@jpl.local>
-References: <533718318.20110513145132@gmail.com>
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: Re: git-p4 issue
+Date: Fri, 13 May 2011 14:31:32 +0000 (UTC)
+Message-ID: <loom.20110513T162233-874@post.gmane.org>
+References: <BANLkTikeQSqAhm2CwCYBkE74OxPUnA0cOg@mail.gmail.com> <BANLkTimmVQAcx7hiQFUBcoAGdvPhktPuMg@mail.gmail.com> <BANLkTikDDDtyJB992DFNtvgMrGvbWf=rMw@mail.gmail.com> <BANLkTinJecAsXt+5JzscFYEx_ez2q9DioQ@mail.gmail.com> <20110420003100.GC28768@arf.padd.com> <BANLkTikYDR+bzJQGip9BFo-BSgsBqEcQjQ@mail.gmail.com> <BANLkTik49sCiBnf6ZofrtW+45uR6ZC+C9Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Ilya Basin <basinilya@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 13 16:17:46 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 13 16:31:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKtBZ-0006S4-NM
-	for gcvg-git-2@lo.gmane.org; Fri, 13 May 2011 16:17:46 +0200
+	id 1QKtPH-0008MG-BD
+	for gcvg-git-2@lo.gmane.org; Fri, 13 May 2011 16:31:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756076Ab1EMORk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 May 2011 10:17:40 -0400
-Received: from smtprelay-b12.telenor.se ([62.127.194.21]:47690 "EHLO
-	smtprelay-b12.telenor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755318Ab1EMORj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 May 2011 10:17:39 -0400
-X-Greylist: delayed 1428 seconds by postgrey-1.27 at vger.kernel.org; Fri, 13 May 2011 10:17:39 EDT
-Received: from ipb1.telenor.se (ipb1.telenor.se [195.54.127.164])
-	by smtprelay-b12.telenor.se (Postfix) with ESMTP id 04835EAD41
-	for <git@vger.kernel.org>; Fri, 13 May 2011 15:53:50 +0200 (CEST)
-X-SMTPAUTH-B2: [b627879]
-X-SENDER-IP: [83.227.167.132]
-X-LISTENER: [smtp.bredband.net]
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvwhAGg2zU1T46eEPGdsb2JhbACJHo4qjj8LAQEBATcyiHC8YIYVBJhRhik
-X-IronPort-AV: E=Sophos;i="4.64,364,1301868000"; 
-   d="scan'208";a="189388816"
-Received: from ua-83-227-167-132.cust.bredbandsbolaget.se (HELO elwood.jpl.local) ([83.227.167.132])
-  by ipb1.telenor.se with ESMTP; 13 May 2011 15:53:50 +0200
-Received: by elwood.jpl.local (Postfix, from userid 1000)
-	id D4EA5422CD; Fri, 13 May 2011 15:53:48 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <533718318.20110513145132@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1759313Ab1EMObu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 May 2011 10:31:50 -0400
+Received: from lo.gmane.org ([80.91.229.12]:37576 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758712Ab1EMObu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2011 10:31:50 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1QKtP7-0008F9-Ix
+	for git@vger.kernel.org; Fri, 13 May 2011 16:31:47 +0200
+Received: from 57.79.130.188 ([57.79.130.188])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 13 May 2011 16:31:45 +0200
+Received: from vitor.hda by 57.79.130.188 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 13 May 2011 16:31:45 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 57.79.130.188 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:2.0.1) Gecko/20100101 Firefox/4.0.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173541>
 
-On Friday, May 13, 2011 at 12:51 CEST,
-     Ilya Basin <basinilya@gmail.com> wrote:
+Hi Michael,
 
-> Hi list. Please suggest me a solution. There's a remote repository;
-> we're not allowed to push to. We have several committers.
-> So I want to create a local mirrror. We will push our changes to it.
-> Once in a while I want to sync this repo with upstream.
+Michael Horowitz <michael.horowitz <at> ieee.org> writes:
 
-Okay, so you're forking an upstream git and periodically merging from
-it. Pretty standard behavior.
+> 
+> Vitor,
+> 
+> > Could you please search for the following set of patches in this
+> > mailing list?
+> >
+> > [PATCH v2 0/3] git-p4: Improve branch support
+> >
+> > I think I sent v2 twice somehow, so please make sure you pick the
+> > latest ;)
+> > In these patches I add the possibility to use a "git-p4.branchList"
+> > configuration to define the branches. The patch is still to be
+> > approved because most people in the mailing list do not use branch
+> > detection, but I use it daily and it is working in my side. Could
+> > you please test it?
+> 
+> Can you send this patch again?  It looks like you had previously
+> responded to the list only, so I never got this message, as I wasn't
+> on the list at the time (I am now).  I only saw this because I was
+> searching the archive for something else.  I searched for the patch,
+> but the actual patch body doesn't seem to be in the archive.
 
-> Here's what I do:
->=20
-> on server:
->     [git@server]$ git clone --bare ssh://git@some.org/git/project.git=
- /git/project.git
->=20
-> on workstation:
->     [me@client]$ git clone ssh://git@server/git/project.git
->     [me@client]$ cd project
->     [me@client]$ touch aaa
->     [me@client]$ git add aaa
->     [me@client]$ git commit aaa -m abracadabra
->     [me@client]$ git push
->=20
-> back on server:
->     [git@server]$ git log
->     commit e5c871122cadfa4ed4d2ab488852ecdb803b4bd8
->     Author: Ilya Basin <>
->     Date:   Fri May 13 13:39:39 2011 +0400
->=20
->         abracadabra
->=20
-> I want to merge with upstream
->     [git@server]$ git fetch
->     [git@server]$ git merge origin
->     fatal: This operation must be run in a work tree
+I am also not in the mailing list, I just follow its RSS and try to
+follow up on the git-p4 related topics ;) That is the reason why you
+were not included in the reply.
 
-Don't do the merge in the server-side bare git, do it somewhere you've
-made a non-bare clone that has a worktree. A workstation would be the
-best choice, but you could make such a clone on the server too (but I'd
-avoid introducing a process in an organization that required people to
-be able to logon to the Git server). Once you've actually done the merg=
-e
-you can push the merge commit to the master branch of
-ssh://git@server/git/project.git.
+But I have been a bit busy and did not see this email passing by. Sorry.
+Luckily I had a tab opened in this thread, which I looked at today
+wondering what it was about! :P
 
-To deal with upstreams like this I recommend you place the upstream
-branch(es) in a separate namespace prefixed by <upstreamname>/, e.g.
-github/master if your upstream is the master branch from the official
-Github repo of the project. Example:
+Please follow the link to the thread [1] and you can open each of the
+entries. Take care not to apply patch 1/3 as it may require you to clone
+everything again.
 
-   git fetch ssh://git@some.org/git/project.git
-   git push ssh://git@server/git/project.git FETCH_HEAD:github/master
+> Thanks,
+> 
+> Mike
+> 
 
-If you mirror the upstream branches like this on your server merges
-from upstream becomes trivial[*],
+Regards,
+Vitor
 
-   git merge origin/github/master
-   git push ssh://git@server/git/project.git HEAD:master
-
-and can be done on any workstation plus it's easy for your users to
-e.g. see what they've been up to compared to the upstream:
-
-   git log origin/github/master..origin/master
-
-You could update github/master as often as you wish, perhaps more often
-than you do the actual merge to your own branch. That way your users ca=
-n
-easily keep track of what goodies await them in the next merge from
-upstream.
-
-[*] I'm being unnecessarily explicit in the push operation just to
-    show what's going on -- a plain "git push origin" will probably
-    do the same thing.
-
-[...]
-
---=20
-Magnus B=E4ck                   Opinions are my own and do not necessar=
-ily
-SW Configuration Manager      represent the ones of my employer, etc.
-Sony Ericsson
+[1] http://thread.gmane.org/gmane.comp.version-control.git/167998/focus=168000
