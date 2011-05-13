@@ -1,76 +1,62 @@
 From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 2/2] receive-pack: Add receive.denyObjectLimit to refuse
- push with too many objects
-Date: Fri, 13 May 2011 20:20:29 +0200
-Message-ID: <4DCD766D.2080801@kdbg.org>
-References: <201105131854.31540.johan@herland.net>
+Subject: Re: AAARGH bisection is hard (Re: [2.6.39 regression] X locks up
+ hard right after logging in)
+Date: Fri, 13 May 2011 20:34:08 +0200
+Message-ID: <4DCD79A0.7000500@kdbg.org>
+References: <BANLkTi=kb_m-CfrpnD8qQTVYLGaDdgy_tg@mail.gmail.com> <BANLkTikMeyRTOB9q4PEAYWnZRZfk3wg=kQ@mail.gmail.com> <BANLkTi=dL+KyQ3Bm58_Uj4LP9WSpbzAfJA@mail.gmail.com> <BANLkTi=NdVUUZ=_bACzyeMGS3JWs0EMbWA@mail.gmail.com> <BANLkTimE2GkkhcFZtNrYZASWp0LDhUx=GQ@mail.gmail.com> <BANLkTinyzBnksHk_rt8K2pmg90q5WyZX3w@mail.gmail.com> <BANLkTinVT=9+-HhwXcyLBwrnhX9F9Qz3ww@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri May 13 20:20:39 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Cc: Andrew Lutomirski <luto@mit.edu>,
+	Christian Couder <christian.couder@gmail.com>,
+	linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+	git@vger.kernel.org, Shuang He <shuang.he@intel.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: linux-kernel-owner@vger.kernel.org Fri May 13 20:34:25 2011
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKwyd-0002Yn-2j
-	for gcvg-git-2@lo.gmane.org; Fri, 13 May 2011 20:20:39 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1QKxBs-0002ZE-9m
+	for glk-linux-kernel-3@lo.gmane.org; Fri, 13 May 2011 20:34:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756612Ab1EMSUe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 May 2011 14:20:34 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:35179 "EHLO bsmtp.bon.at"
+	id S1751476Ab1EMSeN (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Fri, 13 May 2011 14:34:13 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:38244 "EHLO bsmtp.bon.at"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751665Ab1EMSUd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 May 2011 14:20:33 -0400
+	id S1750746Ab1EMSeL (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Fri, 13 May 2011 14:34:11 -0400
+X-Greylist: delayed 85155 seconds by postgrey-1.27 at vger.kernel.org; Fri, 13 May 2011 14:34:11 EDT
 Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id D07E92C4004;
-	Fri, 13 May 2011 20:20:30 +0200 (CEST)
+	by bsmtp.bon.at (Postfix) with ESMTP id 1FA8710014;
+	Fri, 13 May 2011 20:34:09 +0200 (CEST)
 Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id CA99419F3B3;
-	Fri, 13 May 2011 20:20:29 +0200 (CEST)
+	by dx.sixt.local (Postfix) with ESMTP id D2DDD19F3A5;
+	Fri, 13 May 2011 20:34:08 +0200 (CEST)
 User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.17) Gecko/20110414 SUSE/3.1.10 Thunderbird/3.1.10
-In-Reply-To: <201105131854.31540.johan@herland.net>
-Sender: git-owner@vger.kernel.org
+In-Reply-To: <BANLkTinVT=9+-HhwXcyLBwrnhX9F9Qz3ww@mail.gmail.com>
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173557>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173558>
 
-Am 13.05.2011 18:54, schrieb Johan Herland:
-> There's something weird going on here: The included test case works as
-> intended, but when I try to test this in "real-world" conditions,
-> I don't get the expected error message in the output:
+Am 13.05.2011 19:54, schrieb Linus Torvalds:
+> For example, in your case, since you had certain requirements of
+> support that simply didn't exist earlier, something like
 > 
->   # From inside my git.git repo:
->   $ git init --bare foo.git
->   $ (cd foo.git && git config receive.denyObjectLimit 100000)
->   $ git push foo.git/ master
->   Pushing to foo.git/
->   Counting objects: 112383, done.
->   Delta compression using up to 8 threads.
->   Compressing objects: 100% (27658/27658), done.
->   error: pack-objects died of signal 13
->   error: failed to push some refs to 'foo.git/'
->   $
+>    git bisect requires v2.6.38
 > 
-> So the pack-objects on the local side dies of a broken pipe (as
-> expected), but the error message from the remote side:
-> 
->   error: unpack failed: received pack exceeds configured receive.denyObjectLimit
-> 
-> is never printed, so the user gets no clue as to why the push failed.
+> would have been really useful - telling git bisect that any commit
+> that cannot reach that required commit is not even worth testing.
 
-The error message is printed by receive_status(), called around line 350
-in builtin/send-pack.c. But when pack-object fails, then the
-pack_objects() call around line 340 signals an error and an early-exit
-branch is taken, and receive_status() is never called.
+You can already have this with
 
-In the test case, only a small amount of data is produced by
-pack-objects, so that it can exit successfully and quickly enough
-because the data fits into the pipe buffer. If the pack-objects process
-were scheduled differently, there is a chance that it dies from SIGPIPE
-as well. So, you are just being lucky that the test case succeeds.
+   git bisect good v2.6.38
+
+It sounds a bit unintuitive, but with a slight mind-twist it can even be
+regarded as correct in a mathematical sense: when the precondition is
+false, the result is true. ;-)
 
 -- Hannes
