@@ -1,84 +1,96 @@
-From: Francis Moreau <francis.moro@gmail.com>
-Subject: Re: Question about git-cherry and the rev list it's using
-Date: Fri, 13 May 2011 09:02:27 +0200
-Message-ID: <BANLkTi=d+gDhgnmOzUDfHhGJP76JuLHJ2Q@mail.gmail.com>
-References: <BANLkTinMfVE=s+TouyxE-ucf7MHGf1m7HA@mail.gmail.com>
-	<4DCB826F.5020406@drmicha.warpmail.net>
-	<BANLkTi=qRbpBG_PDPjO_TVEe+nWqrFQ28w@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: AAARGH bisection is hard (Re: [2.6.39 regression] X locks up hard
+ right after logging in)
+Date: Fri, 13 May 2011 10:20:54 +0200
+Message-ID: <BANLkTikMeyRTOB9q4PEAYWnZRZfk3wg=kQ@mail.gmail.com>
+References: <BANLkTi=kb_m-CfrpnD8qQTVYLGaDdgy_tg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri May 13 09:02:33 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+	git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Shuang He <shuang.he@intel.com>
+To: Andrew Lutomirski <luto@mit.edu>
+X-From: linux-kernel-owner@vger.kernel.org Fri May 13 10:21:10 2011
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QKmOP-00043Y-0p
-	for gcvg-git-2@lo.gmane.org; Fri, 13 May 2011 09:02:33 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1QKncU-0004th-5D
+	for glk-linux-kernel-3@lo.gmane.org; Fri, 13 May 2011 10:21:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756659Ab1EMHC2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 May 2011 03:02:28 -0400
-Received: from mail-px0-f173.google.com ([209.85.212.173]:46036 "EHLO
-	mail-px0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756555Ab1EMHC1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 May 2011 03:02:27 -0400
-Received: by pxi16 with SMTP id 16so1508243pxi.4
-        for <git@vger.kernel.org>; Fri, 13 May 2011 00:02:27 -0700 (PDT)
+	id S1758044Ab1EMIVA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Fri, 13 May 2011 04:21:00 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:42923 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757894Ab1EMIU5 convert rfc822-to-8bit (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Fri, 13 May 2011 04:20:57 -0400
+Received: by gyd10 with SMTP id 10so805220gyd.19
+        for <multiple recipients>; Fri, 13 May 2011 01:20:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=gtezfr8eYmbRmXNAnu2qa7lkfwUEtYL19aHjMGX9F8I=;
-        b=Ec4lvHt+/bLYcR7TPw+Y6yOCTVpLFtSPMqDNuInjU83F/1nfcZQq6odYkuzDYY4/NM
-         Lfpa/uHBM67jhmxA7Q5MQJt17nChL5qQk/EfTpuS2kL5r6Tbf9UCj1r3ZxrBIxdIoy6D
-         OWCf4WcSEljhnhU4hCmbGPT0+4MY3mvC/n3+0=
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=2FP9Vtqn53rQjhWbJuE3EF86vB1xumZI6zBhZ3901OE=;
+        b=QipYSr2hrVKsh3dmAMDo2K37ZoArsVon2V1P6wlq8EORYV5VA9OI2PdU4vpMjyQg2o
+         6Ty4KQJylw2AUHSKFhO4lgawne6jPkOUjLYXs3cd3MujAy5hZ9wzfRF+6fgZ6mN11fa0
+         1keOPwCzTxToAgnyO/rhz9acgLHGRYw8UiUcY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=CgTyfmEote7nYonMb0APvxWSVJldii95oBnXjju+4++GPbSWI5EB8alvQKMybHJckQ
-         QdKEtwd5EQ6j4CGC/JNlsByFhIqTjTpiea3pjHK3sdjmERTxtOv1sFb6+wVQfVgvrDzP
-         wzBkJlybdc7NjyxsVhdPEJvmdi3ZGZ4QC/Nb0=
-Received: by 10.142.136.19 with SMTP id j19mr652691wfd.167.1305270147186; Fri,
- 13 May 2011 00:02:27 -0700 (PDT)
-Received: by 10.142.77.4 with HTTP; Fri, 13 May 2011 00:02:27 -0700 (PDT)
-In-Reply-To: <BANLkTi=qRbpBG_PDPjO_TVEe+nWqrFQ28w@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
+         :cc:content-type:content-transfer-encoding;
+        b=PCCDxU2Y5uua4fa+efNnNuvrwN9zqPSI2gLsb69lH3H28wcDW2iql//raZgB/Uoy0H
+         Uw8kftTmA2FBLdTp2VNUxKOeFd5YVy9FFJJF3FKC/TtTuAXW9dzc50JOzC2uJHUhwipQ
+         GoAs0GjO8UEyh00mBGnq5s9MupXbnJueiuXSo=
+Received: by 10.146.26.23 with SMTP id 23mr982264yaz.33.1305274854780; Fri, 13
+ May 2011 01:20:54 -0700 (PDT)
+Received: by 10.147.167.5 with HTTP; Fri, 13 May 2011 01:20:54 -0700 (PDT)
+In-Reply-To: <BANLkTi=kb_m-CfrpnD8qQTVYLGaDdgy_tg@mail.gmail.com>
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173507>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173508>
 
-On Fri, May 13, 2011 at 8:54 AM, Francis Moreau <francis.moro@gmail.com> wrote:
-> [ resending to the mailing list too ]
+On Thu, May 12, 2011 at 7:15 PM, Andrew Lutomirski <luto@mit.edu> wrote=
+:
 >
-> On Thu, May 12, 2011 at 8:47 AM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> Francis Moreau venit, vidit, dixit 11.05.2011 18:11:
->>> Hello,
->>>
->>> I'm using "git cherry old master base" to see if all commits between
->>> master and base have been applied in my 'old' branch.
->>>
->>> So I expect that git cherry is using a list of commits given by : "git
->>> rev-list --no-merges base..master".
->>
->> Not really.
->>
->> For each commit in "--no-merges old..master ^base" (i.e. "--no-merges
->> master ^old ^base"), "git cherry" checks whether there is a patch
->> equivalent commit in "--no-merges master..old", and outputs it with + or -.
->>
+> OK, this sucks. =A0In the course of bisecting this, I've hit two othe=
+r
+> apparently unrelated bugs that prevent my from testing large numbers
+> of kernels. =A0Do I have two questions:
 >
-> oh you're right, I missed the case when old has been merged in master.
+> 1. Anyone have any ideas from looking at the log?
 >
+> It looks like most of what's left is network code, so cc netdev.
+>
+> 2. =A0The !&$#@ bisection is skipping all over the place. =A0I've see=
+n
+> 2.6.37 versions and all manner of -rc's out of order. =A0Linus, and
+> other people who like pontificating about git bisection: is there any
+> way to get the bisection to follow Linus' tree? =A0I think that if
+> bisect could be persuaded to consider only changes that are reached b=
+y
+> following only the *first* merge parent all the way from the bad
+> revision to the good revision, then the bisection would build version=
+s
+> that were at least good enough for Linus to pull and might have fewer
+> bisection-killing bugs.
+>
+> (This isn't a new idea [1], and git rev-list --bisect --first-parent
+> isn't so bad except that it doesn't bisect.)
 
-BTW, can't it be convenient for users if git-cherry also displays the
-sha1 of the commits which have been merged upstream (the ones with the
-'-' sign) ?
+Did you forget to put the reference [1] in your email? Was it this one
+you were thinking about:
 
-Thanks
--- 
-Francis
+http://thread.gmane.org/gmane.comp.version-control.git/165433/
+
+?
+
+Thanks,
+Christian.
