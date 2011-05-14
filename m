@@ -1,65 +1,75 @@
-From: =?utf-8?b?RnLDqWTDqXJpYw==?= Heitzmann 
-	<frederic.heitzmann@gmail.com>
-Subject: git difftool does does not respect current working directory
-Date: Sat, 14 May 2011 14:25:40 +0000 (UTC)
-Message-ID: <loom.20110514T160931-46@post.gmane.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH v2 0/2] better handle .gitmodules merge conflicts
+Date: Sat, 14 May 2011 18:25:28 +0200
+Message-ID: <4DCEACF8.50503@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 14 16:30:17 2011
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 14 18:25:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QLFrD-0003D2-V7
-	for gcvg-git-2@lo.gmane.org; Sat, 14 May 2011 16:30:16 +0200
+	id 1QLHew-0000Cm-0f
+	for gcvg-git-2@lo.gmane.org; Sat, 14 May 2011 18:25:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757642Ab1ENOaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 May 2011 10:30:08 -0400
-Received: from lo.gmane.org ([80.91.229.12]:58514 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756991Ab1ENOaG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 May 2011 10:30:06 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1QLFr2-000372-NE
-	for git@vger.kernel.org; Sat, 14 May 2011 16:30:04 +0200
-Received: from dra38-7-88-179-84-80.fbx.proxad.net ([88.179.84.80])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 14 May 2011 16:30:04 +0200
-Received: from frederic.heitzmann by dra38-7-88-179-84-80.fbx.proxad.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 14 May 2011 16:30:04 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 88.179.84.80 (Mozilla/5.0 (X11; U; Linux i686; fr; rv:1.9.2.17) Gecko/20110422 Ubuntu/10.04 (lucid) Firefox/3.6.17)
+	id S1753390Ab1ENQZf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 May 2011 12:25:35 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:60004 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753235Ab1ENQZf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 May 2011 12:25:35 -0400
+Received: from smtp03.web.de  ( [172.20.0.65])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 9733418EEC733;
+	Sat, 14 May 2011 18:25:33 +0200 (CEST)
+Received: from [93.240.103.149] (helo=[192.168.178.43])
+	by smtp03.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1QLHen-0002mg-00; Sat, 14 May 2011 18:25:33 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX18LZSDzJmRmG0g5cHYULGIgyOSBymZDrIyH81gq
+	9QU/xs3ECe8tOz9547aFHANgW3INyTAjYtL7+uIBh8ItM+yBw7
+	b0QTypYcfLVRPd8VNngw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173590>
 
-Hello.
+Am 13.05.2011 08:19, schrieb Junio C Hamano:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+>> +static int gitmodules_is_unmerged;
+>
+> Is it too cumbersome to pass this down the callchain as an argument?
 
-It is useful to compare the modified version of a file to HEAD's version, in
-order to review changes before committing. gitk is fine for this but I often use
-git difftool -t gvimdiff, so that I can rewrite code right into my diff editor.
-Doing this, it is very likely that I open some more files (e.g. foo.h
-corresponding to foo.c) in gvimdiff.
-Unfortunately, 'git difftool' does not keep the current working directory while
-launching gvimdiff.
+I think so. Currently it influences the behavior of fetch, status,
+the diff family and commit. Having for example gitmodules_config()
+return that value and then pass it on would touch a lot of code (and
+that impact would grow even further with the recursive checkout
+series I'm working on).
 
-=> Is it done on purpose ?
-If not, it is probably a good idea to fix this.
+So I thought it best to have this information statically in the
+submodule.c file and let the call sites who need to know that call
+functions there to get just the information they need and hide the
+details in submodule.c.
 
-I will be more than happy to contribute but I have some hard time to get
-familiar with git source code.
-Any help to locate the proper pieces of code would be realy appreciated.
 
---
-Fred
+All other issues raised have been addressed in this series.
+
+
+Heiko Voigt (1):
+  test that git status works with merge conflict in .gitmodules
+
+Jens Lehmann (1):
+  Submodules: Don't parse .gitmodules when it contains merge conflicts
+
+ submodule.c                 |   31 +++++++++++++-
+ t/t7506-status-submodule.sh |   92 +++++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 117 insertions(+), 6 deletions(-)
+
+-- 
+1.7.5.1.291.g080bb
