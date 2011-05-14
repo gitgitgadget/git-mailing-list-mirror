@@ -1,157 +1,135 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Use GITWEB_CONFIG_SYSTEM even if GITWEB_CONFIG does exist
-Date: Sat, 14 May 2011 21:37:15 +0200
-Message-ID: <201105142137.16541.jnareb@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH] add, merge, diff: do not use strcasecmp to compare config
+ variable names
+Date: Sat, 14 May 2011 15:19:21 -0500
+Message-ID: <20110514201921.GA10758@elie>
+References: <1305393758-95432-1-git-send-email-jaysoffian@gmail.com>
+ <20110514190122.GA16851@elie>
+ <BANLkTi=MSfRhUhY1jkRC0agQNp7WHDG9FQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: Drew Northup <drew.northup@maine.edu>,
-	"John 'Warthog9' Hawley" <warthog9@kernel.org>,
-	Petr Baudis <pasky@suse.cz>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 14 21:37:34 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <junio@kernel.org>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 14 22:21:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QLKec-00070M-6K
-	for gcvg-git-2@lo.gmane.org; Sat, 14 May 2011 21:37:34 +0200
+	id 1QLLKf-0000PT-Vs
+	for gcvg-git-2@lo.gmane.org; Sat, 14 May 2011 22:21:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754152Ab1ENTha (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 May 2011 15:37:30 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:42819 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754055Ab1ENTh3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 May 2011 15:37:29 -0400
-Received: by fxm17 with SMTP id 17so2351416fxm.19
-        for <git@vger.kernel.org>; Sat, 14 May 2011 12:37:28 -0700 (PDT)
+	id S1754540Ab1ENUTa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 May 2011 16:19:30 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:45769 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754340Ab1ENUT3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 May 2011 16:19:29 -0400
+Received: by iwn34 with SMTP id 34so3037525iwn.19
+        for <git@vger.kernel.org>; Sat, 14 May 2011 13:19:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :message-id;
-        bh=wXsHSZVSEJFEYGl0jZ+aX/otxNJJqfmsQcRxRDo2CW4=;
-        b=VNvTa8v2fracQD+MNmYFgPZ7Hhghv9ik/k3BLO6CcE+5jEbdFNogOhTDzrJYUXVwel
-         n7FEv6+PIdAfda765Nqnf5/xCyN7VKJsg55CduvEjhyeOiKi+F7EOa7iEnSthJ0S4vA+
-         6zY8pjMblk+oqPMnaK9StzvOXMIi1VMEYd4Yk=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=Maivc4x4QY88luPvoH5ycFikLBulzSjGXXbDbTKkq5g=;
+        b=gMjMxAUxb/+fu4v7d2LfixDusyg1gAStsMcN82dS1uZMV1UwAPExzs9ZF3ET02o6Ye
+         VA3CxXsYT8EEKRvhwdnGxChPLH03WT2oL5ZOOS2Z9yDI39HO5bchLPnhQJCYl2GZawD4
+         vVjj80EmlbrbeLlUoYbh1Q3wT/CFXioCR3g5M=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        b=SSUvnM3WPGhfxNBksnCUsHo50jJE7YaJNTpvxCsBd0p2gBMy9xQ9gC65GF5EHmckx7
-         yhpdyJ1Y9c4nK4h5a0QfORQkefS9WGeivg+GB4j83sljtAJDHzsZtF6yYiG7vY/i6zFd
-         7l4ivZZOTSlMzOfhCXtmyK2fUy0XBEIyJLqyY=
-Received: by 10.223.159.134 with SMTP id j6mr1492950fax.74.1305401846167;
-        Sat, 14 May 2011 12:37:26 -0700 (PDT)
-Received: from [192.168.1.13] (abvm169.neoplus.adsl.tpnet.pl [83.8.210.169])
-        by mx.google.com with ESMTPS id c22sm1257091fat.14.2011.05.14.12.37.23
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 14 May 2011 12:37:24 -0700 (PDT)
-User-Agent: KMail/1.9.3
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=eOABKnZekJDQUcZlJdkp7FxyU8TtGTzxkITiQZ7CEI2unC8s27P73ocX3xjdMcdYlT
+         J/f4HpN5Otl5KHG7s94xuwBfHptutrZ70haXTBGZymh4b0h9C7Apkj32+A4XgvBmLjXz
+         G3dTb67IxYcuh1dAIZi1ZgCF2mEmOuX6Wjvhg=
+Received: by 10.43.54.193 with SMTP id vv1mr3445241icb.338.1305404368378;
+        Sat, 14 May 2011 13:19:28 -0700 (PDT)
+Received: from elie (adsl-69-209-56-134.dsl.chcgil.ameritech.net [69.209.56.134])
+        by mx.google.com with ESMTPS id jv9sm1356155icb.1.2011.05.14.13.19.26
+        (version=SSLv3 cipher=OTHER);
+        Sat, 14 May 2011 13:19:27 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <BANLkTi=MSfRhUhY1jkRC0agQNp7WHDG9FQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173604>
 
-gitweb obtains configuration from the following sources:
+The config machinery already makes section and variable names
+lowercase when parsing them, so using strcasecmp for comparison just
+feels wasteful.  No noticeable change intended.
 
-  1. per-instance configuration file (default: gitweb_conf.perl)
-  2. system-wide configuration file (default: /etc/gitweb.conf)
-
-If per-instance configuration file exists, then system-wide
-configuration was _not used at all_.  This is quite untypical and
-suprising behavior.
-
-This commit changes gitweb behavior so that configuration in
-per-instance configuration file can _override_ settings from
-system-wide configuration file.
-
-Suggested-by: Drew Northup <drew.northup@maine.edu>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+Noticed-by: Jay Soffian <jaysoffian@gmail.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-This is the response to discussion in the
+Jay Soffian wrote:
+> On Sat, May 14, 2011 at 3:01 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-  [PATCH/WIP] Starting work on a man page for /etc/gitweb.conf
-  http://thread.gmane.org/gmane.comp.version-control.git/173422
+>> No need to use strcasecmp --- the vars passed to config functions
+>> already have the section and variable names in lowercase.
+>
+> Okay, it was a cut-and-paste from ignore-errors I think.
 
-The patch to gitweb.perl itself (without the commit message) was send
-as part of 
+Good catch.
 
-  http://thread.gmane.org/gmane.comp.version-control.git/173422/focus=173489
+ builtin/add.c     |    4 ++--
+ merge-recursive.c |    6 +++---
+ xdiff-interface.c |    2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-(embedded in body of email).
-
-Note that changes to gitweb/README and gitweb/INSTALL were
-minimalized, so the final result might not be the best... but I think
-it is good enough.
-
- gitweb/INSTALL     |    8 +++++---
- gitweb/README      |    2 +-
- gitweb/gitweb.perl |    7 ++++---
- 3 files changed, 10 insertions(+), 7 deletions(-)
-
-diff --git a/gitweb/INSTALL b/gitweb/INSTALL
-index 4964a67..0584919 100644
---- a/gitweb/INSTALL
-+++ b/gitweb/INSTALL
-@@ -98,15 +98,17 @@ Gitweb config file
- See also "Runtime gitweb configuration" section in README file
- for gitweb (in gitweb/README).
+diff --git a/builtin/add.c b/builtin/add.c
+index 704141f..e57abdd 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -331,8 +331,8 @@ static struct option builtin_add_options[] = {
  
--- You can configure gitweb further using the gitweb configuration file;
-+- You can configure gitweb further using the per-instance gitweb configuration file;
-   by default this is a file named gitweb_config.perl in the same place as
-   gitweb.cgi script. You can control the default place for the config file
-   using the GITWEB_CONFIG build configuration variable, and you can set it
--  using the GITWEB_CONFIG environment variable. If this file does not
--  exist, gitweb looks for a system-wide configuration file, normally
-+  using the GITWEB_CONFIG environment variable.
-+  gitweb also looks for a system-wide configuration file, normally
-   /etc/gitweb.conf. You can change the default using the
-   GITWEB_CONFIG_SYSTEM build configuration variable, and override it
-   through the GITWEB_CONFIG_SYSTEM environment variable.
-+  Settings from per-instance configuration file override those from
-+  system-wide configuration file.
- 
- - The gitweb config file is a fragment of perl code. You can set variables
-   using "our $variable = value"; text from "#" character until the end
-diff --git a/gitweb/README b/gitweb/README
-index a92bde7..334f13e 100644
---- a/gitweb/README
-+++ b/gitweb/README
-@@ -126,7 +126,7 @@ Runtime gitweb configuration
- 
- You can adjust gitweb behaviour using the file specified in `GITWEB_CONFIG`
- (defaults to 'gitweb_config.perl' in the same directory as the CGI), and
--as a fallback `GITWEB_CONFIG_SYSTEM` (defaults to /etc/gitweb.conf).
-+`GITWEB_CONFIG_SYSTEM` (defaults to /etc/gitweb.conf), in that order.
- The most notable thing that is not configurable at compile time are the
- optional features, stored in the '%features' variable.
- 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index acdc5b8..9527cd2 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -637,12 +637,13 @@ sub evaluate_gitweb_config {
- 	our $GITWEB_CONFIG = $ENV{'GITWEB_CONFIG'} || "++GITWEB_CONFIG++";
- 	our $GITWEB_CONFIG_SYSTEM = $ENV{'GITWEB_CONFIG_SYSTEM'} || "++GITWEB_CONFIG_SYSTEM++";
- 	# die if there are errors parsing config file
-+	if (-e $GITWEB_CONFIG_SYSTEM) {
-+		do $GITWEB_CONFIG_SYSTEM;
-+		die $@ if $@;
-+	}
- 	if (-e $GITWEB_CONFIG) {
- 		do $GITWEB_CONFIG;
- 		die $@ if $@;
--	} elsif (-e $GITWEB_CONFIG_SYSTEM) {
--		do $GITWEB_CONFIG_SYSTEM;
--		die $@ if $@;
+ static int add_config(const char *var, const char *value, void *cb)
+ {
+-	if (!strcasecmp(var, "add.ignoreerrors") ||
+-	    !strcasecmp(var, "add.ignore-errors")) {
++	if (!strcmp(var, "add.ignoreerrors") ||
++	    !strcmp(var, "add.ignore-errors")) {
+ 		ignore_add_errors = git_config_bool(var, value);
+ 		return 0;
  	}
- }
+diff --git a/merge-recursive.c b/merge-recursive.c
+index ecb1806..07ad1a3 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1721,15 +1721,15 @@ int merge_recursive_generic(struct merge_options *o,
+ static int merge_recursive_config(const char *var, const char *value, void *cb)
+ {
+ 	struct merge_options *o = cb;
+-	if (!strcasecmp(var, "merge.verbosity")) {
++	if (!strcmp(var, "merge.verbosity")) {
+ 		o->verbosity = git_config_int(var, value);
+ 		return 0;
+ 	}
+-	if (!strcasecmp(var, "diff.renamelimit")) {
++	if (!strcmp(var, "diff.renamelimit")) {
+ 		o->diff_rename_limit = git_config_int(var, value);
+ 		return 0;
+ 	}
+-	if (!strcasecmp(var, "merge.renamelimit")) {
++	if (!strcmp(var, "merge.renamelimit")) {
+ 		o->merge_rename_limit = git_config_int(var, value);
+ 		return 0;
+ 	}
+diff --git a/xdiff-interface.c b/xdiff-interface.c
+index 164581f..0e2c169 100644
+--- a/xdiff-interface.c
++++ b/xdiff-interface.c
+@@ -347,7 +347,7 @@ int git_xmerge_style = -1;
  
+ int git_xmerge_config(const char *var, const char *value, void *cb)
+ {
+-	if (!strcasecmp(var, "merge.conflictstyle")) {
++	if (!strcmp(var, "merge.conflictstyle")) {
+ 		if (!value)
+ 			die("'%s' is not a boolean", var);
+ 		if (!strcmp(value, "diff3"))
 -- 
-1.7.5
+1.7.5.1
