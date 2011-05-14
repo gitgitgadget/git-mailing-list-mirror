@@ -1,99 +1,76 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCHv2 2/2] receive-pack: Add receive.objectCountLimit to
- refuse push with too many objects
-Date: Fri, 13 May 2011 19:30:30 -0700
-Message-ID: <BANLkTik_taBK+=nh+0WEUjp3AV_fC7e_dg@mail.gmail.com>
-References: <201105131854.31540.johan@herland.net> <7vpqnm7cim.fsf@alter.siamese.dyndns.org>
- <201105140343.48741.johan@herland.net> <201105140403.09981.johan@herland.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: What's cooking in git.git (May 2011, #06; Fri, 13)
+Date: Sat, 14 May 2011 10:03:30 +0700
+Message-ID: <BANLkTimHdZ_9PUg509Yb7g2Oyp3qk0cKdA@mail.gmail.com>
+References: <7vd3jm74gv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Sat May 14 04:40:10 2011
+Cc: git@vger.kernel.org, joey@kitenet.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 14 05:04:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QL4m1-0006QD-J0
-	for gcvg-git-2@lo.gmane.org; Sat, 14 May 2011 04:40:09 +0200
+	id 1QL59F-0005YR-6B
+	for gcvg-git-2@lo.gmane.org; Sat, 14 May 2011 05:04:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757253Ab1ENCav convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 May 2011 22:30:51 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:40117 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756066Ab1ENCav convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 May 2011 22:30:51 -0400
-Received: by vws1 with SMTP id 1so2211685vws.19
-        for <git@vger.kernel.org>; Fri, 13 May 2011 19:30:50 -0700 (PDT)
-Received: by 10.52.180.8 with SMTP id dk8mr2952405vdc.73.1305340250095; Fri,
- 13 May 2011 19:30:50 -0700 (PDT)
-Received: by 10.52.157.73 with HTTP; Fri, 13 May 2011 19:30:30 -0700 (PDT)
-In-Reply-To: <201105140403.09981.johan@herland.net>
+	id S1758392Ab1ENDED convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 May 2011 23:04:03 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:34088 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757573Ab1ENDEB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 May 2011 23:04:01 -0400
+Received: by bwz15 with SMTP id 15so2551727bwz.19
+        for <git@vger.kernel.org>; Fri, 13 May 2011 20:04:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=sPdCzxRLw20D9ZV04zrO1BjxThttrm9moXB6iVHokc8=;
+        b=dc7z7eKt+a3qPHxB6FJgLjh9CXruNMi0e90wIMnL7yUJ1JZXjHD1m/DuLyXZdk1+lY
+         rHUmPES3VVRe48/i9sExbAPjOLMidFbzkdQn/92UqeWZAU/bNNXAxf9RpEbelmNDjvg7
+         fh+lzaogpyAn6NOqgNdlC5yC++62pfhuXux8E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=gW0rj/gdws6roUD+82KBJIaXml/h6FBg7a5pPNbfIt8ymgbbSEC6HMx3KlQLn0TNYD
+         C28Q76v3KLxWa24fMgjhkKJdhKIIReDU1DhhOgXFoyjPbDxCCSzaND4F9rQqfw3p7O4N
+         MlyXSq5H2L1AF3Red34xfGvIUugyTefk1QORI=
+Received: by 10.204.32.146 with SMTP id c18mr904166bkd.182.1305342240168; Fri,
+ 13 May 2011 20:04:00 -0700 (PDT)
+Received: by 10.204.177.147 with HTTP; Fri, 13 May 2011 20:03:30 -0700 (PDT)
+In-Reply-To: <7vd3jm74gv.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173573>
 
-On Fri, May 13, 2011 at 19:03, Johan Herland <johan@herland.net> wrote:
-> The new receive.objectCountLimit config variable defines an upper lim=
-it
-> on the number of objects to accept in a single push. If the number of
-> objects in a push exceeds this limit, the entire push is discarded
-> without storing the pushed objects on the server at all.
-=2E..
-> + =A0 =A0 =A0 =A0 =A0 ntohl(hdr.hdr_entries) > receive_object_count_l=
-imit) {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 char buf[1024];
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 while (xread(0, buf, 1024) > 0)
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ; /* nothing */
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 return "received pack exceeds configure=
-d receive.objectCountLimit";
+On Sat, May 14, 2011 at 3:03 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> * jc/streaming (2011-05-12) 5 commits
+> =C2=A0- write_entry(): use streaming API for writing working tree fil=
+es
+> =C2=A0- stream: a streaming interface to read from the object store
+> =C2=A0- sha1_object_info_extended(): expose a bit more information fr=
+om object-info
+> =C2=A0- write_entry(): separate two helper functions out
+> =C2=A0- packed_object_info_detail(): do not return a string
+> =C2=A0(this branch uses jc/convert.)
+>
+> The counterpart to jc/bigfile to cover the write-out codepath. This d=
+oes
+> not yet have "read directly from pack or loose object without slurpin=
+g the
+> whole thing in memory" yet, which is still work in progress.
 
-Discarding in core is painful. We are still consuming bandwidth to
-toss away the data.
+You haven't sent this to git@vger, or it failed to deliver to me.
 
-I wonder... should we instead export the objectCountLimit as part of
-the advertisement to the client, and teach send-pack to look at this
-and pass it down to pack-objects? If pack-objects winds up with more
-than this limit, it aborts and the client doesn't even transmit data.
-Newer clients would abort cleanly with a nice error.
-
-I don't see it as a problem to advertise to a client "This server will
-only accept X objects from you, sending X + 1 is an error and will be
-rejected." If we are worried about an evil client using this
-advertisement to try and DoS a server... he can easily do that with a
-single giant blob. Or a very long delta chain of a single blob and
-many, many tiny deltas applied onto it. Knowing what the remote's
-objectCountLimit is doesn't increase the risk of a DoS attack.
-
-=46or older clients that don't know this new advertised capability, the=
-y
-should fail hard and not transfer all of this data. In my experience
-when a user gets these strange errors from his Git client, he contacts
-his server administrator with the screen output. At which point the
-administrator can see the Counting objects line, check the repository
-configuration, and tell the user what the problem is... and encourage
-them to upgrade their client to a newer version.
-
-If we are going to put limits in, does it make sense to try and push
-these limits back to pack-objects in a more detailed way? You talked
-about depth of history, or size of pack. pack-objects could
-approximate both. If its depth of history, it might even be able to
-cut off before it enumerates too many commits. :-)
-
-The remote side obviously cannot abort early with number of commits or
-pack size limits, but if those were soft limits suggested to a client,
-while the object count was a hard limit, you might get a better
-approximation for what you want. A server administrator might
-configure a soft limit of 10 commits, but a hard limit of 5,000
-objects. For most users, a bad push would abort very early on the soft
-limit of 10 commits if they did an incorrect rebase. Meanwhile a user
-who made 1 commit but changed every GPL header in the linux-2.6
-repository (26,000+ files) would also be stopped for exceeding the
-(hard) 5000 object limit.
-
+Anyway, do you plan to extend sha1_object_info_extended() further, to
+support external storage too (git-annex way for example)?
 --=20
-Shawn.
+Duy
