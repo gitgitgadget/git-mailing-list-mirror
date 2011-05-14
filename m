@@ -1,76 +1,84 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: What's cooking in git.git (May 2011, #06; Fri, 13)
-Date: Sat, 14 May 2011 10:03:30 +0700
-Message-ID: <BANLkTimHdZ_9PUg509Yb7g2Oyp3qk0cKdA@mail.gmail.com>
-References: <7vd3jm74gv.fsf@alter.siamese.dyndns.org>
+From: Marco Costalba <mcostalba@gmail.com>
+Subject: Re: Qgit should use "git config" instead of "git repo-config"
+Date: Sat, 14 May 2011 09:35:54 +0100
+Message-ID: <BANLkTin4kkzChJwh209SOD9-rJSiQxdGcQ@mail.gmail.com>
+References: <4DC85AA7.2090502@socialserve.com> <20110509231942.GA23781@elie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, joey@kitenet.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 14 05:04:09 2011
+Cc: Jonathan Rogers <jrogers@socialserve.com>, git@vger.kernel.org,
+	Thiago Farina <tfransosi@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 14 10:36:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QL59F-0005YR-6B
-	for gcvg-git-2@lo.gmane.org; Sat, 14 May 2011 05:04:09 +0200
+	id 1QLAKj-00006U-9q
+	for gcvg-git-2@lo.gmane.org; Sat, 14 May 2011 10:36:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758392Ab1ENDED convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 May 2011 23:04:03 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:34088 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757573Ab1ENDEB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 May 2011 23:04:01 -0400
-Received: by bwz15 with SMTP id 15so2551727bwz.19
-        for <git@vger.kernel.org>; Fri, 13 May 2011 20:04:00 -0700 (PDT)
+	id S1753729Ab1ENIgR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 May 2011 04:36:17 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:41471 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753200Ab1ENIgQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 May 2011 04:36:16 -0400
+Received: by yxs7 with SMTP id 7so1113066yxs.19
+        for <git@vger.kernel.org>; Sat, 14 May 2011 01:36:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=sPdCzxRLw20D9ZV04zrO1BjxThttrm9moXB6iVHokc8=;
-        b=dc7z7eKt+a3qPHxB6FJgLjh9CXruNMi0e90wIMnL7yUJ1JZXjHD1m/DuLyXZdk1+lY
-         rHUmPES3VVRe48/i9sExbAPjOLMidFbzkdQn/92UqeWZAU/bNNXAxf9RpEbelmNDjvg7
-         fh+lzaogpyAn6NOqgNdlC5yC++62pfhuXux8E=
+        bh=idf5C2r4l5frTvuSQU1s2Jm1IHAu2XY/yrByE+GG90k=;
+        b=w7XWkBR2itTo8lGPY6wnN+qlzPGZF4HFBExU38qTrdqDF47hjqD0yPweC1Ma3yxIZ7
+         8HCKhoWVM/Lt7TznYefnhKKBOPGUurrS46EJr0IMS/tt0WNRFgjFnmPiyrvA4+PwrxY3
+         pgStaTfB6VWtR60GPIJxteLAJvNMLUrVQSBJ4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=gW0rj/gdws6roUD+82KBJIaXml/h6FBg7a5pPNbfIt8ymgbbSEC6HMx3KlQLn0TNYD
-         C28Q76v3KLxWa24fMgjhkKJdhKIIReDU1DhhOgXFoyjPbDxCCSzaND4F9rQqfw3p7O4N
-         MlyXSq5H2L1AF3Red34xfGvIUugyTefk1QORI=
-Received: by 10.204.32.146 with SMTP id c18mr904166bkd.182.1305342240168; Fri,
- 13 May 2011 20:04:00 -0700 (PDT)
-Received: by 10.204.177.147 with HTTP; Fri, 13 May 2011 20:03:30 -0700 (PDT)
-In-Reply-To: <7vd3jm74gv.fsf@alter.siamese.dyndns.org>
+        b=KurgLhfYyLgaq0VrxBbnb5d29I9rCQGy+qwpNEEGIw2DMyFo/ip64TDQMOjJrrH/KL
+         cHcGNR1HOPyUFUtYRctsYMwlbOOqh96+jDCqg5QXo8091pmKl8DB0qjOTgs+WSrnXrxW
+         88aFsg+x3wfB5LGc47q0oc/Xq0I7jvJoxHYvc=
+Received: by 10.236.182.105 with SMTP id n69mr2469304yhm.199.1305362174149;
+ Sat, 14 May 2011 01:36:14 -0700 (PDT)
+Received: by 10.236.108.139 with HTTP; Sat, 14 May 2011 01:35:54 -0700 (PDT)
+In-Reply-To: <20110509231942.GA23781@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173576>
 
-On Sat, May 14, 2011 at 3:03 AM, Junio C Hamano <gitster@pobox.com> wro=
+On Tue, May 10, 2011 at 00:19, Jonathan Nieder <jrnieder@gmail.com> wro=
 te:
-> * jc/streaming (2011-05-12) 5 commits
-> =C2=A0- write_entry(): use streaming API for writing working tree fil=
-es
-> =C2=A0- stream: a streaming interface to read from the object store
-> =C2=A0- sha1_object_info_extended(): expose a bit more information fr=
-om object-info
-> =C2=A0- write_entry(): separate two helper functions out
-> =C2=A0- packed_object_info_detail(): do not return a string
-> =C2=A0(this branch uses jc/convert.)
+> Hi Jonathan,
 >
-> The counterpart to jc/bigfile to cover the write-out codepath. This d=
-oes
-> not yet have "read directly from pack or loose object without slurpin=
-g the
-> whole thing in memory" yet, which is still work in progress.
+> Jonathan Rogers wrote:
+>
+>> Here's a small patch to cause qgit to use "git config" instead of
+>> "git repo-config" in a couple of places.
+>
+> Thanks! =C2=A0I noticed you also submitted this at [1].
+>
+> Looking at the qgit source[2] I don't see an address to send patches =
+to;
+> cc-ing Marco for advice.
+>
+> Hope that helps,
+> Jonathan
+>
+> [1] http://sourceforge.net/tracker/index.php?func=3Ddetail&aid=3D3299=
+672&group_id=3D139897&atid=3D744829
+> [2] http://git.kernel.org/?p=3Dqgit/qgit4.git
+>
 
-You haven't sent this to git@vger, or it failed to deliver to me.
+Hi Jonathan,
 
-Anyway, do you plan to extend sha1_object_info_extended() further, to
-support external storage too (git-annex way for example)?
---=20
-Duy
+   thanks for the patch, please send to git list (if other people
+don't mind), I more or less routinely read the list. I really should
+do at least some maintenance work on qgit that has gone vastly
+bitrotten in the past months.....
+
+Marco
