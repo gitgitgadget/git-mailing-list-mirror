@@ -1,96 +1,115 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: RFC: a plugin architecture for git extensions?
-Date: Sat, 14 May 2011 05:51:36 -0700
-Message-ID: <20110514125133.GA765@gmail.com>
-References: <7viptz5j82.fsf@alter.siamese.dyndns.org>
- <BANLkTi=w0aKH6dxu84i4DjkL-vNCWQi8pw@mail.gmail.com>
- <alpine.DEB.2.00.1104271751300.940@asgard.lang.hm>
- <BANLkTimnkBMRH7Spj1ByQRa9YdV9w+bwtQ@mail.gmail.com>
- <BANLkTikbcpzF203rUVB05OYyYhLmu3+n6w@mail.gmail.com>
- <BANLkTinQny-M0rL+Vs9L_cQhtVLyv6rqMw@mail.gmail.com>
- <4DB9329E.7000703@op5.se>
- <88795B20-6994-46A5-9710-2ADC84E04695@gmail.com>
- <7vhb986chl.fsf@alter.siamese.dyndns.org>
- <buozkmw5w3j.fsf@dhlpc061.dev.necel.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCHv2 2/2] receive-pack: Add receive.objectCountLimit to refuse
+ push with too many objects
+Date: Sat, 14 May 2011 15:17:45 +0200
+Message-ID: <201105141517.45324.johan@herland.net>
+References: <201105131854.31540.johan@herland.net>
+ <201105140403.09981.johan@herland.net>
+ <BANLkTik_taBK+=nh+0WEUjp3AV_fC7e_dg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jon Seymour <jon.seymour@gmail.com>,
-	Andreas Ericsson <ae@op5.se>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Joey Hess <joey@kitenet.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	"david@lang.hm" <david@lang.hm>,
-	Pau Garcia i Quiles <pgquiles@elpauer.org>
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Sat May 14 14:51:52 2011
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat May 14 15:18:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QLEK0-0004RU-9y
-	for gcvg-git-2@lo.gmane.org; Sat, 14 May 2011 14:51:52 +0200
+	id 1QLEk5-0000SW-8D
+	for gcvg-git-2@lo.gmane.org; Sat, 14 May 2011 15:18:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757443Ab1ENMvr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 May 2011 08:51:47 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:44582 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757425Ab1ENMvq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 May 2011 08:51:46 -0400
-Received: by pwi15 with SMTP id 15so1524971pwi.19
-        for <git@vger.kernel.org>; Sat, 14 May 2011 05:51:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=Q1up6h23P4aaYRHuEtZJGFl5NctKBapOxHUWbWXziDw=;
-        b=bQxlJX6T/InsuNEzE1/qiItHOIzy4AIXd751MXORgdRQ3q5wEQHBsafBrv2cIcx8CE
-         jjOVrJwkReJof2JnKwfyVwwCPeE8/9AUUy1cW8aLN3xVsXyjeO5vjGvXCcyZTd8Lo4e7
-         SQEXw/5NB6zH2GnJzhw5hoZ6u/MlGWFR/tmDo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=VLepoOH67tfHhvzYY76mFxQoBRQhRiG18CXme+nkyjCn3GPvVot0pF1lotDoj5iMFd
-         yRh+ycpbYg43VHmxW+zpTgf3JZRWyor+NLDroGa3bGQ0tw/xaCXMP3NbXVI+McxHaFS+
-         ycy2L91uLX5aTJz2V9BX6hgNWiBZ+A7xNOUvg=
-Received: by 10.142.119.35 with SMTP id r35mr1516944wfc.411.1305377505937;
-        Sat, 14 May 2011 05:51:45 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id k7sm2973869wfa.14.2011.05.14.05.51.41
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 14 May 2011 05:51:43 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <buozkmw5w3j.fsf@dhlpc061.dev.necel.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752609Ab1ENNRu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 May 2011 09:17:50 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:58854 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752496Ab1ENNRt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 May 2011 09:17:49 -0400
+Received: from get-mta-scan04.get.basefarm.net ([10.5.16.4])
+ by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LL600JGGSXNHA10@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Sat, 14 May 2011 15:17:47 +0200 (MEST)
+Received: from get-mta-scan04.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 590621EF06D5_DCE80FAB	for <git@vger.kernel.org>; Sat,
+ 14 May 2011 13:17:46 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan04.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 380C21EF0CFF_DCE80FAF	for <git@vger.kernel.org>; Sat,
+ 14 May 2011 13:17:46 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LL6001O1SXMCY10@get-mta-in03.get.basefarm.net> for
+ git@vger.kernel.org; Sat, 14 May 2011 15:17:46 +0200 (MEST)
+User-Agent: KMail/1.13.7 (Linux/2.6.38-ARCH; KDE/4.6.3; x86_64; ; )
+In-reply-to: <BANLkTik_taBK+=nh+0WEUjp3AV_fC7e_dg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173582>
 
-On Mon, May 09, 2011 at 01:36:16PM +0900, Miles Bader wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> > Do you or do you not run "apt-get install git-superadd"?
-> >
-> > One possible answer may be to run "apt-get install git-superadd", and then
-> > the users who want "git add" to behave in a new way to opt-in to use the
-> > "plug-in".  I think that is what Jon is getting at.
-> 
-> If aliases could override built-in command names, it'd be easy enough
-> ("alias add=superadd") ... [with some feature to allow suppressing the
-> alias to prevent recursion, e.g. an environment variable or something.]
+On Saturday 14 May 2011, Shawn Pearce wrote:
+> I wonder... should we instead export the objectCountLimit as part of
+> the advertisement to the client, and teach send-pack to look at this
+> and pass it down to pack-objects? If pack-objects winds up with more
+> than this limit, it aborts and the client doesn't even transmit data.
+> Newer clients would abort cleanly with a nice error.
 
-I always thought this restriction was a good thing.
+Good idea (although it grows the scope from the quick-fix I initially 
+intended it to be...)
 
-The usability argument usually goes that it's generally
-bad for "git frotz" somewhere to behave different from
-"git frotz" somewhere else.
+I'm planning to add a new capability collection/namespace, called "limit-*", 
+where the server can communicate capabilities to the client, like so:
 
-Keeping this "limitation" is good for the sake of consistency.
+  limit-object-count_100000
+  limit-commit-count_1000
+  limit-pack-size_500000000
 
-This topic is orthogonal to the plugin rfc, though.
+(I'd prefer to s/_/=/ or s/_/:/, but according to pack-protocol.txt, a 
+capability may not contain "=" or ":")
+
+However, you say:
+
+> For older clients that don't know this new advertised capability, they
+> should fail hard and not transfer all of this data.
+
+AFAICS this is not the case. If a client does not understand a capability, 
+it simply ignores it, and carries on doing its usual thing.
+
+IINM there are only two ways to prevent an older client from transferring 
+all the data:
+
+1. Change the pack protocol in an incompatible way, that causes older client 
+to abort with a pack format error prior to transmitting the pack.
+
+2. (as in initial patch) Abort receive-pack when the server detects a limit 
+violation, leaving the client with a broken pipe. I haven't read the pack 
+protocol closely, but I wouldn't be surprised if this behavior is strictly 
+in violation of the protocol.
+
+> In my experience
+> when a user gets these strange errors from his Git client, he contacts
+> his server administrator with the screen output. At which point the
+> administrator can see the Counting objects line, check the repository
+> configuration, and tell the user what the problem is... and encourage
+> them to upgrade their client to a newer version.
+
+Hmm... Not ideal, but I guess we can live with that. At least we should warn 
+the server administrator of this in the documentation of the config 
+variable(s).
+
+
+Otherwise, I agree with everything you wrote.
+
+
+Have fun! :)
+
+...Johan
+
 -- 
-					David
+Johan Herland, <johan@herland.net>
+www.herland.net
