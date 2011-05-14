@@ -1,311 +1,157 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] Add log.abbrev-commit config option
-Date: Sat, 14 May 2011 15:35:02 -0400
-Message-ID: <BANLkTi=MSfRhUhY1jkRC0agQNp7WHDG9FQ@mail.gmail.com>
-References: <1305393758-95432-1-git-send-email-jaysoffian@gmail.com> <20110514190122.GA16851@elie>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Use GITWEB_CONFIG_SYSTEM even if GITWEB_CONFIG does exist
+Date: Sat, 14 May 2011 21:37:15 +0200
+Message-ID: <201105142137.16541.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <junio@kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 14 21:35:40 2011
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: Drew Northup <drew.northup@maine.edu>,
+	"John 'Warthog9' Hawley" <warthog9@kernel.org>,
+	Petr Baudis <pasky@suse.cz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 14 21:37:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QLKcm-000681-5D
-	for gcvg-git-2@lo.gmane.org; Sat, 14 May 2011 21:35:40 +0200
+	id 1QLKec-00070M-6K
+	for gcvg-git-2@lo.gmane.org; Sat, 14 May 2011 21:37:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754128Ab1ENTfd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 May 2011 15:35:33 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:65460 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754055Ab1ENTfc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 May 2011 15:35:32 -0400
-Received: by pvg12 with SMTP id 12so1580529pvg.19
-        for <git@vger.kernel.org>; Sat, 14 May 2011 12:35:32 -0700 (PDT)
+	id S1754152Ab1ENTha (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 May 2011 15:37:30 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:42819 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754055Ab1ENTh3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 May 2011 15:37:29 -0400
+Received: by fxm17 with SMTP id 17so2351416fxm.19
+        for <git@vger.kernel.org>; Sat, 14 May 2011 12:37:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=m4GSiCuE8j464Jm9Jmaz3iEDkD9vKbt8Zr2gjZcUyDQ=;
-        b=EpOdwZF3i+X6NWc0MQELIMoiAvlzd1j5QoZGZh1MFbBVE6cgS7y0i+IaXszZk/ncs1
-         v+L6YgXYW+aurEpqEMU4n1zA3KWYdKvq83T/Jzs0KyylRBt31un4SaJHNrmSruMb2KDQ
-         n6lq2nHxIUiTJbjKvn7b6oxUTjgU7OhoLdb6w=
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :message-id;
+        bh=wXsHSZVSEJFEYGl0jZ+aX/otxNJJqfmsQcRxRDo2CW4=;
+        b=VNvTa8v2fracQD+MNmYFgPZ7Hhghv9ik/k3BLO6CcE+5jEbdFNogOhTDzrJYUXVwel
+         n7FEv6+PIdAfda765Nqnf5/xCyN7VKJsg55CduvEjhyeOiKi+F7EOa7iEnSthJ0S4vA+
+         6zY8pjMblk+oqPMnaK9StzvOXMIi1VMEYd4Yk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=L79SvD73Gb8+d8gvpJyXu0d23QNht8uMa3L5dR3lDuOUWBA7hQeCnEh/V+65Tct0VX
-         2CFQDLbk56CSBDbPEjJzJSFGXAUGx87fS4/h8cSTpXKyvJifjGUCXHoHYCVooGjbgMNR
-         SQE8/laZCeK/Oa1e/uwci4RJffBM47HDwkVvs=
-Received: by 10.142.247.7 with SMTP id u7mr1753205wfh.255.1305401732111; Sat,
- 14 May 2011 12:35:32 -0700 (PDT)
-Received: by 10.142.174.16 with HTTP; Sat, 14 May 2011 12:35:02 -0700 (PDT)
-In-Reply-To: <20110514190122.GA16851@elie>
+        h=from:to:subject:date:user-agent:cc:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        b=SSUvnM3WPGhfxNBksnCUsHo50jJE7YaJNTpvxCsBd0p2gBMy9xQ9gC65GF5EHmckx7
+         yhpdyJ1Y9c4nK4h5a0QfORQkefS9WGeivg+GB4j83sljtAJDHzsZtF6yYiG7vY/i6zFd
+         7l4ivZZOTSlMzOfhCXtmyK2fUy0XBEIyJLqyY=
+Received: by 10.223.159.134 with SMTP id j6mr1492950fax.74.1305401846167;
+        Sat, 14 May 2011 12:37:26 -0700 (PDT)
+Received: from [192.168.1.13] (abvm169.neoplus.adsl.tpnet.pl [83.8.210.169])
+        by mx.google.com with ESMTPS id c22sm1257091fat.14.2011.05.14.12.37.23
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 14 May 2011 12:37:24 -0700 (PDT)
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173603>
 
-On Sat, May 14, 2011 at 3:01 PM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Why two options? =C2=A0It would be more conventional to provide just
-> log.abbrevCommit. =C2=A0The existing "[add] ignore-errors" is explain=
-ed in
-> the manual to be a mistake
+gitweb obtains configuration from the following sources:
 
-Ah, okay.
+  1. per-instance configuration file (default: gitweb_conf.perl)
+  2. system-wide configuration file (default: /etc/gitweb.conf)
 
->> config option as
->> a convenience for users who often use --abbrev-commit with git log a=
-nd
->> git show (but not git whatchanged, as its output is more likely to b=
-e
->> parsed even though it is not technically plumbing).
->
-> Hm, that wouldn't have been my hunch. =C2=A0Are you aware of any scri=
-pts
-> that parse "git whatchanged" output?
+If per-instance configuration file exists, then system-wide
+configuration was _not used at all_.  This is quite untypical and
+suprising behavior.
 
-Yes, I've seen it in post-receive hooks, however, that's typically in
-bare repos where I suppose it's unlikely for the user to set
-log.abbrevCommit, so maybe I was just being overly cautious.
+This commit changes gitweb behavior so that configuration in
+per-instance configuration file can _override_ settings from
+system-wide configuration file.
 
-> More worrying is "git log --format=3Draw". =C2=A0I think as long as w=
-e're
-> cautious about rolling this out slowly and noticing breakage early it
-> should be okay. =C2=A0It might even be nice to find out if there are
-> scripts or tests that care deeply about "git log"'s output format
-> (which would be more reliable if they had been written to use
-> "git rev-list | git diff-tree -s --stdin").
->
->> Allow the option to be overridden via --no-abbrev-commit.
->
-> Good idea anyway. =C2=A0Once parse_revision_opt learns to use parse_o=
-ptions
-> these negated options would be automatic (though that's a long way
-> away).
->
-> Unfortunately this wouldn't help scripts much until the option has
-> been around for a while. =C2=A0Maybe it would be safer to have two pa=
-tches
-> --- one to add --no-abbrev-commit which could be included in "maint"
-> and widely deployed, and one to add the new configuration only after
-> --no-abbrev-commit can be relied on? =C2=A0But on the other hand, scr=
-ipts
-> can be updated today to use rev-list | diff-tree, so maybe that's not
-> worth the trouble.
+Suggested-by: Drew Northup <drew.northup@maine.edu>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+This is the response to discussion in the
 
-I think that's overkill. Thinking through it more, this would only
-break any scripts:
+  [PATCH/WIP] Starting work on a man page for /etc/gitweb.conf
+  http://thread.gmane.org/gmane.comp.version-control.git/173422
 
-a) that are parsing whatchanged output; and
-b) the user sets log.abbrevCommit w/o updating his script
+The patch to gitweb.perl itself (without the commit message) was send
+as part of 
 
-> People using git by hand would certainly appreciate
-> --no-abbrev-commit, I suspect.
+  http://thread.gmane.org/gmane.comp.version-control.git/173422/focus=173489
 
-That's why I added it.
+(embedded in body of email).
 
->> --- a/Documentation/config.txt
->> +++ b/Documentation/config.txt
->> @@ -1314,6 +1314,12 @@ interactive.singlekey::
->> =C2=A0 =C2=A0 =C2=A0 linkgit:git-checkout[1]. Note that this setting=
- is silently
->> =C2=A0 =C2=A0 =C2=A0 ignored if portable keystroke input is not avai=
-lable.
->>
->> +log.abbrev-commit::
->> +log.abbrevCommit::
->> + =C2=A0 =C2=A0 If true, act as if --abbrev-commit were specified on=
- the command
->> + =C2=A0 =C2=A0 line. May be overridden with --no-abbrev-commit. Not=
-e that this setting
->> + =C2=A0 =C2=A0 is ignored by rev-list.
->
-> Style: most of that page is written from the point of view of the
-> user
->
-> [...]
->
-> So maybe something like:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0Whether to abbreviate hexadecimal commit o=
-bject names in
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0output from the 'log' family of commands. =
-=C2=A0The number of
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0digits shown is determined by the `--abbre=
-v` command-line
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0option and `core.abbrev` configuration var=
-iable. =C2=A0Can be
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0overridden on the command line by --abbrev=
--commit /
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0--no-abbrev-commit. =C2=A0The default is f=
-alse.
-> =C2=A0+
-> =C2=A0This does not affect the 'git diff-tree' and 'git rev-list'
-> =C2=A0commands.
+Note that changes to gitweb/README and gitweb/INSTALL were
+minimalized, so the final result might not be the best... but I think
+it is good enough.
 
-I thought I phrased it like the nearby options in config.txt. and that
-sounds overly verbose to me, but I'll take another look.
+ gitweb/INSTALL     |    8 +++++---
+ gitweb/README      |    2 +-
+ gitweb/gitweb.perl |    7 ++++---
+ 3 files changed, 10 insertions(+), 7 deletions(-)
 
->> --- a/Documentation/git-log.txt
->> +++ b/Documentation/git-log.txt
->> @@ -38,6 +38,9 @@ OPTIONS
->> =C2=A0 =C2=A0 =C2=A0 Continue listing the history of a file beyond r=
-enames
->> =C2=A0 =C2=A0 =C2=A0 (works only for a single file).
->>
->> +--no-abbrev-commit::
->> + =C2=A0 =C2=A0 Don't abbreviate commit name. Useful for overridding=
- log.abbrevCommit.
->
-> Also useful for overriding --abbrev-commit from aliases. :)
->
-> Shouldn't it be documented next to --abbrev-commit?
-
-As I implemented it, --no-abbrev-commit is only honored from within
-log.c, so I didn't want it to show up in the rev-list man page.
-
-But, see below where I address your question about why I didn't
-implement --no-abbrev-commit in revision.c
-
->> --- a/builtin/log.c
->> +++ b/builtin/log.c
->> @@ -23,6 +23,7 @@
->> =C2=A0/* Set a default date-time format for git log ("log.date" conf=
-ig variable) */
->> =C2=A0static const char *default_date_mode =3D NULL;
->>
->> +static int default_abbrev_commit =3D 0;
->> =C2=A0static int default_show_root =3D 1;
->> =C2=A0static int decoration_style;
->
-> Style: we try to avoid unnecessary zero initializers for variables in
-> the BSS section.
-
-Okay.
-
-> [...]
->> @@ -89,11 +91,13 @@ static void cmd_log_init_finish(int argc, const =
-char **argv, const char *prefix,
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0struct rev_info *rev, struct setup_revision_opt *opt)
->> =C2=A0{
->> =C2=A0 =C2=A0 =C2=A0 struct userformat_want w;
->> - =C2=A0 =C2=A0 int quiet =3D 0, source =3D 0;
->> + =C2=A0 =C2=A0 int quiet =3D 0, source =3D 0, no_abbrev_commit =3D =
-0;
->>
->> =C2=A0 =C2=A0 =C2=A0 const struct option builtin_log_options[] =3D {
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 OPT_BOOLEAN(0, "quiet", =
-&quiet, "supress diff output"),
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 OPT_BOOLEAN(0, "quiet", =
-&quiet, "suppress diff output"),
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 OPT_BOOLEAN(0, "sou=
-rce", &source, "show source"),
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 OPT_BOOLEAN(0, "no-abbre=
-v-commit", &no_abbrev_commit,
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 "don't abbreviate commit name"),
->
-> What happens if I do
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git log --no-abbrev-commit --abbrev-commit
->
-> ? =C2=A0How about
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git log --no-abbrev-commit --no-no-abbrev-=
-commit --abbrev-commit
->
-> ? :) =C2=A0The behavior should be nicer if this is implemented in rev=
-ision.c.
-
-
-It was a thinko to put it in log.c. I added --no-abbrev-commit
-thinking of its primary use case to override log.abbrevCommit. But
-obviously it's more generally useful in revision.c (even though that
-doesn't honor log.abbrevCommit), since it can still be used to
-override earlier CLI options that might enable abbreviation.
-
-I'll move it. Then I can document the option next to --abbrev-commit
-where it makes sense.
-
-> [...]
->> @@ -323,6 +330,11 @@ static int git_log_config(const char *var, cons=
-t char *value, void *cb)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return git_config_s=
-tring(&fmt_pretty, var, value);
->> =C2=A0 =C2=A0 =C2=A0 if (!strcmp(var, "format.subjectprefix"))
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return git_config_s=
-tring(&fmt_patch_subject_prefix, var, value);
->> + =C2=A0 =C2=A0 if (!strcasecmp(var, "log.abbrevcommit") ||
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 !strcasecmp(var, "log.abbrev-commit"))=
- {
->
-> No need to use strcasecmp --- the vars passed to config functions
-> already have the section and variable names in lowercase.
-
-Okay, it was a cut-and-paste from ignore-errors I think.
-
->> @@ -347,6 +359,7 @@ int cmd_whatchanged(int argc, const char **argv,=
- const char *prefix)
->> =C2=A0 =C2=A0 =C2=A0 struct setup_revision_opt opt;
->>
->> =C2=A0 =C2=A0 =C2=A0 git_config(git_log_config, NULL);
->> + =C2=A0 =C2=A0 default_abbrev_commit =3D 0;
->
-> Puzzling as mentioned above.
-
-Will drop.
-
->> --- a/t/t4202-log.sh
->> +++ b/t/t4202-log.sh
->> @@ -450,6 +450,14 @@ test_expect_success 'log.decorate configuration=
-' '
->>
->> =C2=A0'
->>
->> +test_expect_success 'log.abbrev-commit configuration' '
->> + =C2=A0 =C2=A0 test_might_fail git config --remove-section log &&
->> + =C2=A0 =C2=A0 git log --abbrev-commit >expect &&
->> + =C2=A0 =C2=A0 git config log.abbrev-commit true &&
->> + =C2=A0 =C2=A0 git log >actual &&
->> + =C2=A0 =C2=A0 test_cmp expect actual
->> +'
->
-> To avoid polluting the configuration, it would be nicest to do:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git config log.abbrev-commit true &&
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0test_when_finished "git config --unset log=
-=2Eabbrev-commit" &&
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git log >actual &&
->
-> though it looks like some tests already protect themselves.
-
-
-Other tests in t4202 protect themselves at the start, I emulated that b=
-ehavior.
-
-
-> Just because I'm curious: what happens if you do
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git config log.abbrev-commit true
->
-> in test_create_repo in test-lib.sh? =C2=A0(I.e., are there many tests=
- that
-> would be confused by this?) =C2=A0Tests tend to be more picky than us=
-er
-> scripts about the output of git but it might still be an ok way to
-> get a vague sense of the impact.
-
-I'll let you know. :-)
-
-> Hope that helps, and thanks for a pleasant read.
-
-Thanks for the quick review.
-
-j.
+diff --git a/gitweb/INSTALL b/gitweb/INSTALL
+index 4964a67..0584919 100644
+--- a/gitweb/INSTALL
++++ b/gitweb/INSTALL
+@@ -98,15 +98,17 @@ Gitweb config file
+ See also "Runtime gitweb configuration" section in README file
+ for gitweb (in gitweb/README).
+ 
+-- You can configure gitweb further using the gitweb configuration file;
++- You can configure gitweb further using the per-instance gitweb configuration file;
+   by default this is a file named gitweb_config.perl in the same place as
+   gitweb.cgi script. You can control the default place for the config file
+   using the GITWEB_CONFIG build configuration variable, and you can set it
+-  using the GITWEB_CONFIG environment variable. If this file does not
+-  exist, gitweb looks for a system-wide configuration file, normally
++  using the GITWEB_CONFIG environment variable.
++  gitweb also looks for a system-wide configuration file, normally
+   /etc/gitweb.conf. You can change the default using the
+   GITWEB_CONFIG_SYSTEM build configuration variable, and override it
+   through the GITWEB_CONFIG_SYSTEM environment variable.
++  Settings from per-instance configuration file override those from
++  system-wide configuration file.
+ 
+ - The gitweb config file is a fragment of perl code. You can set variables
+   using "our $variable = value"; text from "#" character until the end
+diff --git a/gitweb/README b/gitweb/README
+index a92bde7..334f13e 100644
+--- a/gitweb/README
++++ b/gitweb/README
+@@ -126,7 +126,7 @@ Runtime gitweb configuration
+ 
+ You can adjust gitweb behaviour using the file specified in `GITWEB_CONFIG`
+ (defaults to 'gitweb_config.perl' in the same directory as the CGI), and
+-as a fallback `GITWEB_CONFIG_SYSTEM` (defaults to /etc/gitweb.conf).
++`GITWEB_CONFIG_SYSTEM` (defaults to /etc/gitweb.conf), in that order.
+ The most notable thing that is not configurable at compile time are the
+ optional features, stored in the '%features' variable.
+ 
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index acdc5b8..9527cd2 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -637,12 +637,13 @@ sub evaluate_gitweb_config {
+ 	our $GITWEB_CONFIG = $ENV{'GITWEB_CONFIG'} || "++GITWEB_CONFIG++";
+ 	our $GITWEB_CONFIG_SYSTEM = $ENV{'GITWEB_CONFIG_SYSTEM'} || "++GITWEB_CONFIG_SYSTEM++";
+ 	# die if there are errors parsing config file
++	if (-e $GITWEB_CONFIG_SYSTEM) {
++		do $GITWEB_CONFIG_SYSTEM;
++		die $@ if $@;
++	}
+ 	if (-e $GITWEB_CONFIG) {
+ 		do $GITWEB_CONFIG;
+ 		die $@ if $@;
+-	} elsif (-e $GITWEB_CONFIG_SYSTEM) {
+-		do $GITWEB_CONFIG_SYSTEM;
+-		die $@ if $@;
+ 	}
+ }
+ 
+-- 
+1.7.5
