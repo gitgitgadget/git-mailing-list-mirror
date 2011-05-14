@@ -1,96 +1,62 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Qgit should use "git config" instead of "git repo-config"
-Date: Sat, 14 May 2011 03:56:46 -0500
-Message-ID: <20110514085617.GA4891@elie>
-References: <4DC85AA7.2090502@socialserve.com>
- <20110509231942.GA23781@elie>
- <BANLkTin4kkzChJwh209SOD9-rJSiQxdGcQ@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 0/7] Document translation with po4a.
+Date: Sat, 14 May 2011 11:14:57 +0200
+Message-ID: <BANLkTi=Tr-iciTK+ScLao=MWgOnKotZ+5w@mail.gmail.com>
+References: <1305292458-3920-1-git-send-email-okano.osamu@gmail.com>
+	<7v39ki8s2r.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Rogers <jrogers@socialserve.com>, git@vger.kernel.org,
-	Thiago Farina <tfransosi@gmail.com>
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 14 10:57:01 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Osamu OKANO <okano.osamu@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 14 11:20:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QLAei-0001Hw-59
-	for gcvg-git-2@lo.gmane.org; Sat, 14 May 2011 10:57:00 +0200
+	id 1QLB1C-00030b-J0
+	for gcvg-git-2@lo.gmane.org; Sat, 14 May 2011 11:20:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753871Ab1ENI4z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 May 2011 04:56:55 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:47986 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752912Ab1ENI4y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 May 2011 04:56:54 -0400
-Received: by iyb14 with SMTP id 14so2621199iyb.19
-        for <git@vger.kernel.org>; Sat, 14 May 2011 01:56:53 -0700 (PDT)
+	id S1751468Ab1ENJO7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 May 2011 05:14:59 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:43789 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751186Ab1ENJO6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 May 2011 05:14:58 -0400
+Received: by fxm17 with SMTP id 17so2188451fxm.19
+        for <git@vger.kernel.org>; Sat, 14 May 2011 02:14:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=QHfzPkhC4woFIhgKLVPHNLdibhZZI7BoVfvsi7qSxHw=;
-        b=JeCkl2PMCmkeSpnUuZ6lSL6prn/ri+jp+OrDxRHLQXP4WGhb0EG/7UOtf2FtKWyMPk
-         8yOpA5OAyX3mUErunLDvWYPiXOXK+LzE3qjZUCLsy8AeMnpZ/0qSh/GweGhaUH+Koh8l
-         0pVVhNwJOTrIP9tC7H8YLmygDmHiO/S3a8fTk=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=CLjU5kMZNaM1xvQ/iqRScjnKT3+XYIiWykXqPwXNxOY=;
+        b=qXhB5ozlxpsrOYSzK5CXUSkvhulH+g/ayQN6H15Llj2D67jhCcx9WertR0bUOPGVM5
+         jZcKVlwXDnKOWWISM+G3eQZ8SnlHmHf3tUEPT/m8v4ePiIj6CrLC8OAkj79LJqm9wp7M
+         t4NcRtZKohbDMyVeNY4MEDub6KF/h6DN2MK2E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=HKpTjG7NUNdHlj9lEvicFTKOCQG7VI0JsPH6qA+QlaTsJrtO5iGdKRJ9wd1Ip1Nsuo
-         NrXRjKEMDYjNPcP0en9g9rxFOxf0XX00ccVbPwP0kJ5V9REvZPqKaCojkQNST6ft9dsJ
-         qIBmZH53YVtM3U4MC58svFrJwgv0OyG9Gxbek=
-Received: by 10.43.46.2 with SMTP id um2mr2643502icb.419.1305363413404;
-        Sat, 14 May 2011 01:56:53 -0700 (PDT)
-Received: from elie (adsl-69-209-56-134.dsl.chcgil.ameritech.net [69.209.56.134])
-        by mx.google.com with ESMTPS id e12sm1173977ics.7.2011.05.14.01.56.50
-        (version=SSLv3 cipher=OTHER);
-        Sat, 14 May 2011 01:56:51 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <BANLkTin4kkzChJwh209SOD9-rJSiQxdGcQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=taqN5ek8AC/YPoJAEmEdRoGSgBq/0DxZOawe8fyVBg8QAYUq/Z8if734syhuWEhFln
+         rS5jY05Qx+zqvuWTl6ge8BQG3+rLXx1r5yqW4FeeBoGxltbQSkTqae9AtV1ID7oRAnfm
+         UmQJVmt9/gtTGpSCGHyTa6/JFG8K2Gq4CX4PE=
+Received: by 10.223.23.143 with SMTP id r15mr603825fab.29.1305364497450; Sat,
+ 14 May 2011 02:14:57 -0700 (PDT)
+Received: by 10.223.105.9 with HTTP; Sat, 14 May 2011 02:14:57 -0700 (PDT)
+In-Reply-To: <7v39ki8s2r.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173578>
 
-Marco Costalba wrote:
+On Fri, May 13, 2011 at 18:48, Junio C Hamano <gitster@pobox.com> wrote:
 
->    thanks for the patch, please send to git list (if other people
-> don't mind), I more or less routinely read the list. I really should
-> do at least some maintenance work on qgit that has gone vastly
-> bitrotten in the past months.....
+> I have a few comments on the overall structure.
 
-Thanks.  I don't know how I managed to miss that when skimming the
-README.
+FWIW I was going to add PO support to Documentation with po4a
+eventually, but I'm really glad someone beat me to it.
 
--- >8 --
-Subject: Emphasize that patches go to the git list
-
-So now even people with poor reading comprehension ability and
-search engines can tell where to send qgit improvements.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- README |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/README b/README
-index d1989ca..b07c463 100644
---- a/README
-+++ b/README
-@@ -4,7 +4,7 @@ qgit, a git GUI viewer
- With qgit you will be able to browse revisions history, view patch content
- and changed files, graphically following different development branches.
- 
--Bugs or feature requests should be sent to the git@vger.kernel.org
-+Bugs, patches, and feature requests should be sent to the git@vger.kernel.org
- mailing list.
- 
- Main features
--- 
-1.7.5.1
+I agree with Junio's suggested workflow for this, it would be really
+nice if you would follow up on this and submit something in that
+style, I'd be happy to help if needed.
