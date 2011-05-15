@@ -1,59 +1,73 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: how to keep git-fetch from running out of memory?
-Date: Sun, 15 May 2011 12:13:55 -0700
-Message-ID: <BANLkTinRkePRMQzQS7k=3bSTxTJRVpG39Q@mail.gmail.com>
-References: <BANLkTinnOTr+PUzBMpx1DLcxs8CVWjy33A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] sha1_file: typofix
+Date: Sun, 15 May 2011 12:16:03 -0700
+Message-ID: <7vsjsfpyfg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Kartik Agaram <ak@akkartik.com>
-X-From: git-owner@vger.kernel.org Sun May 15 21:14:23 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 15 21:16:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QLgli-0005Xb-64
-	for gcvg-git-2@lo.gmane.org; Sun, 15 May 2011 21:14:22 +0200
+	id 1QLgnW-0006FU-Cy
+	for gcvg-git-2@lo.gmane.org; Sun, 15 May 2011 21:16:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751567Ab1EOTOQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 May 2011 15:14:16 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:42983 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751378Ab1EOTOQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 May 2011 15:14:16 -0400
-Received: by vws1 with SMTP id 1so2733955vws.19
-        for <git@vger.kernel.org>; Sun, 15 May 2011 12:14:15 -0700 (PDT)
-Received: by 10.52.114.104 with SMTP id jf8mr5084021vdb.193.1305486855122;
- Sun, 15 May 2011 12:14:15 -0700 (PDT)
-Received: by 10.52.157.73 with HTTP; Sun, 15 May 2011 12:13:55 -0700 (PDT)
-In-Reply-To: <BANLkTinnOTr+PUzBMpx1DLcxs8CVWjy33A@mail.gmail.com>
+	id S1751584Ab1EOTQK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 May 2011 15:16:10 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53324 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751418Ab1EOTQJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 May 2011 15:16:09 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E5BA04A57;
+	Sun, 15 May 2011 15:18:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=2
+	IPdU0X39wO+bJ1KrothjhvjDyY=; b=dTRrq0qR66opIt2SBXVFoe/E4Ym4lXZeo
+	F2C901z2ntU7C/78x0KhGExc+2pLAPLjCwsJVp3hN+F1Dl6wmZCKLMZmSILkoEiI
+	KVdN9JaBH3Z1rX3ZlxgwAlgWqGElrbtchZLta7H+1fIG3ZK6vpTjT9K93TWVDH1M
+	1D2c64t48Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=Y4m
+	pMWxKWKr7MpjQEDpw4l+n0pNTuZV59Yx/HQ0VXD7EGJbi1TTKkfZGZ5WYQkAzK5+
+	JlCkj7qOti5y2o0c7Sk6hAUn2yeg+MHwxzum6HT5pwhSCrrRMJ5twLhZ8PxH5HhU
+	kliJOgQiQlrYHJqSLgj5EWYLEjj+oM0F2EDzYOHU=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D04DD4A56;
+	Sun, 15 May 2011 15:18:12 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0D4054A55; Sun, 15 May 2011
+ 15:18:10 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 13B39F88-7F28-11E0-9927-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173646>
 
-On Sat, May 14, 2011 at 22:24, Kartik Agaram <ak@akkartik.com> wrote:
-> I have a git repo with some large files that I'm no longer able to
-> update. git fetch keeps running out of memory:
->
-> =A0fatal: Out of memory, malloc failed
-> =A0fatal: unpack-objects died with error code 128
->
-> Anybody know how to keep it from compressing the refs into packfiles?
-> I've experimented with core.compression, pack.compression,
-> pack.windowMemory, pack.packSizeLimit, all without luck :(
+The number zero is spelled "zero", not "zer0".
 
-Instead of playing with these settings, try transfer.unpackLimit 1. It
-will force the code to use index-pack rather than unpack-objects,
-which has a different memory profile.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ sha1_file.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-However, that may still be insufficient. A big object must still be
-allocated in memory in order to compute its SHA-1. If you don't have
-sufficient memory, you need to increase your ulimits, or reconfigure
-your system to have more virtual memory available to the process.
-
---=20
-Shawn.
+diff --git a/sha1_file.c b/sha1_file.c
+index 889fe71..ee06d99 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1308,7 +1308,7 @@ static void *unpack_sha1_rest(z_stream *stream, void *buffer, unsigned long size
+ 		/*
+ 		 * The above condition must be (bytes <= size), not
+ 		 * (bytes < size).  In other words, even though we
+-		 * expect no more output and set avail_out to zer0,
++		 * expect no more output and set avail_out to zero,
+ 		 * the input zlib stream may have bytes that express
+ 		 * "this concludes the stream", and we *do* want to
+ 		 * eat that input.
+-- 
+1.7.5.1.334.gdfd07
