@@ -1,81 +1,131 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 6/7] update git-stage.po
-Date: Sun, 15 May 2011 07:56:03 -0500
-Message-ID: <20110515125603.GA3178@elie>
-References: <1305292458-3920-1-git-send-email-okano.osamu@gmail.com>
- <1305292458-3920-7-git-send-email-okano.osamu@gmail.com>
- <7vtycy7d9z.fsf@alter.siamese.dyndns.org>
- <BANLkTi=u4_vbTjDyL1JNAz06=R_1XUikvA@mail.gmail.com>
- <20110514192154.GA17271@elie>
- <BANLkTin+oceG32Xr9J+f3Kmf05P_MdDgeA@mail.gmail.com>
+From: Hermann Gausterer <git-mailinglist@mrq1.org>
+Subject: [PATCH] add-interactive: shortcut for add hunk and quit
+Date: Sun, 15 May 2011 14:55:25 +0200
+Message-ID: <20110515125525.GA3014@mrq1.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Osamu OKANO <okano.osamu@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 15 14:56:17 2011
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="C7zPtVaVf+AK4Oqc"
+Cc: Hermann Gausterer <git-mailinglist@mrq1.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 15 15:02:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QLaro-0002TD-0p
-	for gcvg-git-2@lo.gmane.org; Sun, 15 May 2011 14:56:16 +0200
+	id 1QLaxc-00055D-LF
+	for gcvg-git-2@lo.gmane.org; Sun, 15 May 2011 15:02:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759118Ab1EOM4M convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 May 2011 08:56:12 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:60993 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756390Ab1EOM4J convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 May 2011 08:56:09 -0400
-Received: by iyb14 with SMTP id 14so3097675iyb.19
-        for <git@vger.kernel.org>; Sun, 15 May 2011 05:56:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=ZF38so4Xcb31ISwJTiXvTzsJwryGw9XDDVlV8AChnwg=;
-        b=W4XZnTfIhb599llxQmiLHrOvUSoxK6yGslnXB/RFsz1nIzI2x2jIY3s7KK/TUaAQ05
-         UPqaAhuqhpZITKp05+lRI5F4n7UgV4PgDlljh19eXVH6gRBAVVMN0uMYC2K1Y16/0WnR
-         9oxXsmFmk+sZwGxRjtvZf3DDf+8mktZk2Jles=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=GIgXWSA9b/UegnTTGx2gjUNXNWIyhOH7DHpeUKKC0t4JCXBkZM6bg/CzJ5oX/BTjLd
-         HVsrhPlVKTEorHOWlNMtPdNBFPUAbo35DaIL3v3wjbM9gfOBb57NIKIcwaUdnK+aB1eE
-         YpnSVKbKd/gIzpTrFdUBi9JGaIOQG10/doT3w=
-Received: by 10.42.180.198 with SMTP id bv6mr3940622icb.398.1305464168901;
-        Sun, 15 May 2011 05:56:08 -0700 (PDT)
-Received: from elie (adsl-69-209-56-134.dsl.chcgil.sbcglobal.net [69.209.56.134])
-        by mx.google.com with ESMTPS id a1sm1609065ics.4.2011.05.15.05.56.07
-        (version=SSLv3 cipher=OTHER);
-        Sun, 15 May 2011 05:56:07 -0700 (PDT)
+	id S1759453Ab1EONCL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 May 2011 09:02:11 -0400
+Received: from nat-warsl417-02.aon.at ([195.3.96.120]:30698 "EHLO email.aon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756445Ab1EONCK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 May 2011 09:02:10 -0400
+X-Greylist: delayed 402 seconds by postgrey-1.27 at vger.kernel.org; Sun, 15 May 2011 09:02:10 EDT
+Received: (qmail 28222 invoked from network); 15 May 2011 12:55:27 -0000
+Received: from smarthub95.highway.telekom.at (HELO email.aon.at) ([172.18.5.234])
+          (envelope-sender <git-mailinglist@mrq1.org>)
+          by fallback44.highway.telekom.at (qmail-ldap-1.03) with SMTP
+          for <git@vger.kernel.org>; 15 May 2011 12:55:27 -0000
+Received: (qmail 11242 invoked from network); 15 May 2011 12:55:25 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.0 (2007-05-01) on
+	WARSBL503.highway.telekom.at
+X-Spam-Level: 
+Received: from 80-123-45-171.adsl.highway.telekom.at (HELO mrq1.org) ([80.123.45.171])
+          (envelope-sender <git-mailinglist@mrq1.org>)
+          by smarthub95.highway.telekom.at (qmail-ldap-1.03) with SMTP
+          for <git@vger.kernel.org>; 15 May 2011 12:55:25 -0000
 Content-Disposition: inline
-In-Reply-To: <BANLkTin+oceG32Xr9J+f3Kmf05P_MdDgeA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173632>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-> We went over this for the main gettext series.
+--C7zPtVaVf+AK4Oqc
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I mean no unkindness by this: Junio's answer was a little more
-helpful.
+combines the two commands "y"+"q" to one.
+i use this if i know that this is the last hunk to add.
 
-> Having a merge strategy to deal with them would be nice, but that can
-> be done by using the existing gitattributes config + msgmerge(1) to d=
-o
-> the work.
+Signed-off-by: Hermann Gausterer <git-git-2011@mrq1.org>
+---
+ Documentation/git-add.txt |    1 +
+ git-add--interactive.perl |   15 +++++++++++++--
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
-Could you spell that out?  I haven't seen a working example of such
-configuration before, and when I tried I wasn't able to get msgmerge
-to do it.  I'd be happy to summarize the result of such an explanation
-as an example for the gitattributes manpage.
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index 9c1d395..76ffd45 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -280,6 +280,7 @@ patch::
+        y - stage this hunk
+        n - do not stage this hunk
+        q - quit; do not stage this hunk nor any of the remaining ones
++       Q - quit; stage this hunk but none of the remaining ones
+        a - stage this hunk and all later hunks in the file
+        d - do not stage this hunk nor any of the later hunks in the file
+        g - select a hunk to go to
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 4f08fe7..db79556 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -1123,6 +1123,7 @@ sub help_patch_cmd {
+ y - $verb this hunk$target
+ n - do not $verb this hunk$target
+ q - quit; do not $verb this hunk nor any of the remaining ones
++Q - quit; $verb this hunk but none of the remaining ones
+ a - $verb this hunk and all later hunks in the file
+ d - do not $verb this hunk nor any of the later hunks in the file
+ g - select a hunk to go to
+@@ -1313,7 +1314,7 @@ sub patch_update_file {
+ 		   $hunk[$ix]{TYPE} eq 'deletion' ? ' deletion' :
+ 		   ' this hunk'),
+ 		  $patch_mode_flavour{TARGET},
+-		  " [y,n,q,a,d,/$other,?]? ";
++		  " [y,n,q,Q,a,d,/$other,?]? ";
+ 		my $line =3D prompt_single_character;
+ 		if ($line) {
+ 			if ($line =3D~ /^y/i) {
+@@ -1365,7 +1366,17 @@ sub patch_update_file {
+ 				}
+ 				next;
+ 			}
+-			elsif ($line =3D~ /^q/i) {
++			elsif ($line =3D~ /^q/) {
++				for ($i =3D 0; $i < $num; $i++) {
++					if (!defined $hunk[$i]{USE}) {
++						$hunk[$i]{USE} =3D 0;
++					}
++				}
++				$quit =3D 1;
++				last;
++			}
++			elsif ($line =3D~ /^Q/) {
++				$hunk[$ix]{USE} =3D 1;
+ 				for ($i =3D 0; $i < $num; $i++) {
+ 					if (!defined $hunk[$i]{USE}) {
+ 						$hunk[$i]{USE} =3D 0;
+--=20
+1.7.0.4
+
+
+--C7zPtVaVf+AK4Oqc
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iD8DBQFNz809AdCXZ1Xu7u4RAiyEAKCUq37MxRt5UfemxZ8VSsRICrFGqQCg5xqG
+1qzXhAFMNyDGLdncE8QAC04=
+=uMk6
+-----END PGP SIGNATURE-----
+
+--C7zPtVaVf+AK4Oqc--
