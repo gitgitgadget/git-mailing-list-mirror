@@ -1,52 +1,61 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: What's cooking in git.git (May 2011, #06; Fri, 13)
-Date: Sun, 15 May 2011 18:50:05 +0200
-Message-ID: <4DD0043D.1050101@web.de>
-References: <7vd3jm74gv.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: GLib
+Date: Sun, 15 May 2011 19:38:40 +0200
+Message-ID: <BANLkTik4ap_oBhWo4f-SQ6gKmgu98AELZw@mail.gmail.com>
+References: <1305477377.3612.5.camel@mamburu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 15 18:50:21 2011
+To: Zganyaiko Dmitry <zdo.str@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 15 19:38:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QLeWL-0004kY-3S
-	for gcvg-git-2@lo.gmane.org; Sun, 15 May 2011 18:50:21 +0200
+	id 1QLfHC-0000w5-Rz
+	for gcvg-git-2@lo.gmane.org; Sun, 15 May 2011 19:38:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760103Ab1EOQuO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 May 2011 12:50:14 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:53984 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754161Ab1EOQuN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 May 2011 12:50:13 -0400
-Received: from smtp04.web.de  ( [172.20.0.225])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 907C218EB539F;
-	Sun, 15 May 2011 18:50:08 +0200 (CEST)
-Received: from [93.240.120.226] (helo=[192.168.178.43])
-	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1QLeW8-0000JJ-00; Sun, 15 May 2011 18:50:08 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
-In-Reply-To: <7vd3jm74gv.fsf@alter.siamese.dyndns.org>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX19Efo8x6WjKfTMOyTm9cJ6OrcdRBSCMGi3opapY
-	L0Ix1IW/EpvAVP59T7FmHEElLZH+kvZdFClle5UB2Z6nEi7MHH
-	Rvwjek3tsUjfg85onz/A==
+	id S1751081Ab1EORim (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 May 2011 13:38:42 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:52294 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750874Ab1EORil (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 May 2011 13:38:41 -0400
+Received: by fxm17 with SMTP id 17so2616226fxm.19
+        for <git@vger.kernel.org>; Sun, 15 May 2011 10:38:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=GecqMBIwrUvVRSARnoPoB8JNRHxRwXLx00WcVfHyQCA=;
+        b=CUBcYBELCqlPu/6Xsi+tv8K5ACECKUPn9EdVP2QmseIg/6Cz1o1KAC0ubJTMsIjaT5
+         ZnHNJ9porbqxQYhhGTn/+Azcvd5sApzISXvvl8Om+59s4k63q6R18CMxQuMZlt70X4L3
+         2EzhigNtIQ9eNwcUr16NKPYXo4+/iPzghVxFI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=WzfoWLHRqJuIeihwWE7a7XCaH7IfBLXwg+BUSrMQQCd3NC9IA/8jVMfSniK2QV2EYO
+         H5+gmqV2sPt5Jobl64yMQYix/fDOE/uYu/SjQN1R51y1MF1fbeHY1pliRlCk/s+tlWdZ
+         2mzJYzP0yV8UxmeYmX/Sm09syUO/cf/AtLDGI=
+Received: by 10.223.59.81 with SMTP id k17mr4338208fah.94.1305481120366; Sun,
+ 15 May 2011 10:38:40 -0700 (PDT)
+Received: by 10.223.117.72 with HTTP; Sun, 15 May 2011 10:38:40 -0700 (PDT)
+In-Reply-To: <1305477377.3612.5.camel@mamburu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173641>
 
-Am 13.05.2011 22:03, schrieb Junio C Hamano:
-> * jl/read-tree-m-dry-run (2011-05-11) 1 commit
->  - Teach read-tree the -n|--dry-run option
-> 
-> Looked good. We _might_ want to make -n simply ignore -u, though.
+On Sun, May 15, 2011 at 18:36, Zganyaiko Dmitry <zdo.str@gmail.com> wrote:
 
-Fine by me. Do you want me to send an updated version? If so,
-should a warning be issued in that case or should that just
-happen silently?
+> So, why git was designed and is developing now without mature stable C
+> library like glib?
+
+Initially because it wasn't written by the sort of people who use big
+C libraries when they need some relatively small functionality.
+
+Nowadays because nobody has proposed a patch to use glib instead of
+our own toolkit, and even if someone did it might be rejected.
