@@ -1,93 +1,70 @@
-From: Philipp Metzler <phil@goli.at>
-Subject: git commit -a reports untracked files after a clone
-Date: Sun, 15 May 2011 02:46:37 +0200
-Message-ID: <7B399C74-8048-42BA-8672-9D7964F24888@goli.at>
-Mime-Version: 1.0 (Apple Message framework v1084)
+From: Junio C Hamano <junio@pobox.com>
+Subject: Re: [PATCH] add, merge, diff: do not use strcasecmp to compare
+ config variable names
+Date: Sat, 14 May 2011 18:53:29 -0700
+Message-ID: <7vhb8wrap2.fsf@alter.siamese.dyndns.org>
+References: <1305393758-95432-1-git-send-email-jaysoffian@gmail.com>
+ <20110514190122.GA16851@elie>
+ <BANLkTi=MSfRhUhY1jkRC0agQNp7WHDG9FQ@mail.gmail.com>
+ <20110514201921.GA10758@elie>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 15 03:01:48 2011
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 15 04:10:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QLPiO-0003D8-6X
-	for gcvg-git-2@lo.gmane.org; Sun, 15 May 2011 03:01:48 +0200
+	id 1QLQmx-00063v-3L
+	for gcvg-git-2@lo.gmane.org; Sun, 15 May 2011 04:10:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755970Ab1EOAwK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 May 2011 20:52:10 -0400
-Received: from smtprelay05.ispgateway.de ([80.67.31.97]:52520 "EHLO
-	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755938Ab1EOAwI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 May 2011 20:52:08 -0400
-X-Greylist: delayed 327 seconds by postgrey-1.27 at vger.kernel.org; Sat, 14 May 2011 20:52:08 EDT
-Received: from [80.120.110.118] (helo=[192.168.1.52])
-	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <phil@goli.at>)
-	id 1QLPTi-000602-4h; Sun, 15 May 2011 02:46:38 +0200
-X-Mailer: Apple Mail (2.1084)
-X-Df-Sender: phil@goli.at
+	id S1759516Ab1EOBxk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 May 2011 21:53:40 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58834 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759327Ab1EOBxj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 May 2011 21:53:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 547F255C1;
+	Sat, 14 May 2011 21:55:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=StR1KnWaxPnLK16d/IG4EO8YDiU=; b=ehCPq8
+	HkrhSAUqB4dVshFpe+PkmVnK6X2bGjbl62/ddrLuN/0LZR17VIkSKP5mBmHSDsqq
+	wNzVWZL7Hno8hpj/O4W8/j8edqoUwry34vmfknx68S0bMT9LGxYt18+Llcae4/Xi
+	HElGuSjcPJ63JiRDDan+OSdNuGQoZaytGOlUA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PsqtU/yQtGsoragB4xU/H0OPRPI8X9cd
+	tOdhPW4YBioQZajbJ/OrOAcX1RA0I5kysM6xGDHbYiDcwuYXe7dmg0iPxE60vqd5
+	utB0xetE3C2X2xr9LI02uAXk2MFynOm8IsINdbJb/+ij5PsEhEuQDshxXN8VJDb0
+	rQnTl7d9tTA=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2468655BF;
+	Sat, 14 May 2011 21:55:41 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1E56B55BE; Sat, 14 May 2011
+ 21:55:36 -0400 (EDT)
+In-Reply-To: <20110514201921.GA10758@elie> (Jonathan Nieder's message of
+ "Sat, 14 May 2011 15:19:21 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7004D87A-7E96-11E0-AE63-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173613>
 
-Hi,
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-I have a problem with git on OS X 10.6.7
+> The config machinery already makes section and variable names
+> lowercase when parsing them, so using strcasecmp for comparison just
+> feels wasteful.  No noticeable change intended.
 
-5102c6173c5a1c683dfdd8ccd07528adddd51745 is the first bad commit
+A quick "grep 'strcasecmp(va*r*, "[^"]*\.' yields exactly the ones covered
+by this patch.
 
-SHA:	5102c6173c5a1c683dfdd8ccd07528adddd51745
-Author:	Joshua Jensen <jjensen@workspacewhiz.com>
-Date:	Sun Oct 03 2010 11:56:43 GMT+0200 (CEST)
-
-This is how you can reproduce the problem:
-1. clone a repo
-2. run the command "git commit -a"
-
-I would expect: nothing to commit (working directory clean)
-Instead it reports: nothing added to commit but untracked files present (use "git add" to track)
-
-Starting with commit 
-
-SHA:	8c8674fc954d8c4bc46f303a141f510ecf264fcd
-Author:	Jeff King <peff@peff.net>
-Date:	Fri Mar 25 2011 19:13:31 GMT+0100 (CET)
-
-the following behaviour can be observed when these three commands are run in this order:
-
-1. git commit -a 
-   nothing added to commit but untracked files present (use "git add" to track)
-2. git status
-   nothing to commit (working directory clean)
-3. git commit -a
-   nothing to commit (working directory clean)
-
-So "git status" makes the untracked files "go away".
-
-Cheers,
-
-Philipp
-
-_______________________________________________________________
-
-DI Philipp Metzler
-Goli.at GesbR.
-Dorf Rieden 7/11
-A-6900 Bregenz
-EU - Austria
-
-E-Mail: phil@goli.at
-Skype: googol
-Tel: +43 / 676 / 72 94 176
-ICQ: 13950954
-
-o www.philippmetzler.com - Softwareentwicklung und Websites mit Django und Typo3.
-o www.goli.at - Ihr Speicherplatz im Netz. Messen Sie uns an unseren Daten.
-o www.clickshopping.at - Wir bringen Ihre Produkte auf den Punkt.
-o www.greencar.at - Elektroautos und mehr ...
-_______________________________________________________________
+Thanks, I've been meaning to change these while reading merge-recursive.
