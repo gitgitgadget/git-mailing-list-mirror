@@ -1,63 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: how to keep git-fetch from running out of memory?
-Date: Sun, 15 May 2011 13:25:22 -0700
-Message-ID: <7vboz3pv7x.fsf@alter.siamese.dyndns.org>
-References: <BANLkTinnOTr+PUzBMpx1DLcxs8CVWjy33A@mail.gmail.com>
- <BANLkTinRkePRMQzQS7k=3bSTxTJRVpG39Q@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Kartik Agaram <ak@akkartik.com>, git@vger.kernel.org
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun May 15 22:25:40 2011
+From: Marc Weber <marco-oweber@gmx.de>
+Subject: Re: ACLs for GIT
+Date: Sun, 15 May 2011 22:28:06 +0200
+Message-ID: <1305490853-sup-1446@nixos>
+References: <4DD02876.1040404@bbn.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 15 22:28:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QLhsg-0007fB-PV
-	for gcvg-git-2@lo.gmane.org; Sun, 15 May 2011 22:25:39 +0200
+	id 1QLhvG-000055-EW
+	for gcvg-git-2@lo.gmane.org; Sun, 15 May 2011 22:28:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752929Ab1EOUZd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 May 2011 16:25:33 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43179 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752605Ab1EOUZd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 May 2011 16:25:33 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 227985076;
-	Sun, 15 May 2011 16:27:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KJAiXl77fT8yy/D6fOgwJwAPa98=; b=rwFmDa
-	qgzF/7lG1CNtGODEtDSXahpg9FQRMPHwEU9V38v3xyo/cQ0/cNdeY2ghgRwt9qv3
-	U63JLFL6FnwwmrHqzaT4n6HmHdZh104dhL9cILWEmudsMIfYJrddFbr1KwhMAtzE
-	ja+jO7L77g+Bd6U73c5t24Niu7oQ5/uw6fSCQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=I1x3FxDhhWutmsUqvva3AciT46JIuPav
-	ZaB8OwqFCZw9LJRPeJnjgythK6peXiCWvWFKGrgItD2T4Gi9K77XLONY7V/NNj7D
-	gnF2edzLE5f6yuB9bNWmm76VImQrLBszueeg0ugDOL+ZAR1O5tQzjNS22+C8WjLj
-	eQCX2UdZSgk=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DBA9F5075;
-	Sun, 15 May 2011 16:27:34 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 85F685071; Sun, 15 May 2011
- 16:27:30 -0400 (EDT)
-In-Reply-To: <BANLkTinRkePRMQzQS7k=3bSTxTJRVpG39Q@mail.gmail.com> (Shawn
- Pearce's message of "Sun, 15 May 2011 12:13:55 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: C481942E-7F31-11E0-96F0-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+	id S1752978Ab1EOU2O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 May 2011 16:28:14 -0400
+Received: from mailout-de.gmx.net ([213.165.64.22]:54024 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1750929Ab1EOU2N (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 May 2011 16:28:13 -0400
+Received: (qmail invoked by alias); 15 May 2011 20:28:08 -0000
+Received: from p4FEFB13D.dip.t-dialin.net (EHLO mail.gmx.net) [79.239.177.61]
+  by mail.gmx.net (mp068) with SMTP; 15 May 2011 22:28:08 +0200
+X-Authenticated: #9006135
+X-Provags-ID: V01U2FsdGVkX1/X9UQJF+nXmcV9pSNDKPZrVL31s3uSpVPsQJTAS1
+	gVb7YWZ0++kZQf
+Received: by mail.gmx.net (sSMTP sendmail emulation); Sun, 15 May 2011 22:28:07 +0200
+In-reply-to: <4DD02876.1040404@bbn.com>
+User-Agent: Sup/git
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173662>
 
-Shawn Pearce <spearce@spearce.org> writes:
+Excerpts from Martin L Resnick's message of Sun May 15 21:24:38 +0200 2011:
+> Is anyone working on adding access control to GIT ?
 
-> However, that may still be insufficient. A big object must still be
-> allocated in memory in order to compute its SHA-1.
+I don't know git internals very well. But my very basic understanding is
+that each commit hash is based on *all* file contents and path names and its history.
 
-I wonder if we can stream this?
+If you drop some paths (eg by denying access) there is no way to verify
+or recalculate the hashes ?
+
+So even if you can deny access to some path I'd expect the result to be
+unusable because all kinds of tools such as gitk will start telling you
+about missing paths.
+
+
+Alternative ideas:
+
+- github supports SVN access to git repos. Maybe you can ask them to
+  provide what you're looking for?
+
+- clone the repo and strip off the files. Then allow access to those
+  cloned striped repos only.
+
+I don't think there is a simple solution to your request. But others may
+know better than I do.
+
+Marc Weber
