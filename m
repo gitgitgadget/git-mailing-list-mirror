@@ -1,65 +1,74 @@
-From: Marc Weber <marco-oweber@gmx.de>
-Subject: Re: ACLs for GIT
-Date: Sun, 15 May 2011 22:28:06 +0200
-Message-ID: <1305490853-sup-1446@nixos>
-References: <4DD02876.1040404@bbn.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 15 22:28:19 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] add-interactive: shortcut for add hunk and quit
+Date: Sun, 15 May 2011 13:30:32 -0700
+Message-ID: <7v7h9rpuzb.fsf@alter.siamese.dyndns.org>
+References: <20110515125525.GA3014@mrq1.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Hermann Gausterer <git-mailinglist@mrq1.org>
+X-From: git-owner@vger.kernel.org Sun May 15 22:30:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QLhvG-000055-EW
-	for gcvg-git-2@lo.gmane.org; Sun, 15 May 2011 22:28:18 +0200
+	id 1QLhxd-00013B-Pi
+	for gcvg-git-2@lo.gmane.org; Sun, 15 May 2011 22:30:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752978Ab1EOU2O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 May 2011 16:28:14 -0400
-Received: from mailout-de.gmx.net ([213.165.64.22]:54024 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1750929Ab1EOU2N (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 May 2011 16:28:13 -0400
-Received: (qmail invoked by alias); 15 May 2011 20:28:08 -0000
-Received: from p4FEFB13D.dip.t-dialin.net (EHLO mail.gmx.net) [79.239.177.61]
-  by mail.gmx.net (mp068) with SMTP; 15 May 2011 22:28:08 +0200
-X-Authenticated: #9006135
-X-Provags-ID: V01U2FsdGVkX1/X9UQJF+nXmcV9pSNDKPZrVL31s3uSpVPsQJTAS1
-	gVb7YWZ0++kZQf
-Received: by mail.gmx.net (sSMTP sendmail emulation); Sun, 15 May 2011 22:28:07 +0200
-In-reply-to: <4DD02876.1040404@bbn.com>
-User-Agent: Sup/git
-X-Y-GMX-Trusted: 0
+	id S1753057Ab1EOUal (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 May 2011 16:30:41 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:46769 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752776Ab1EOUak (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 May 2011 16:30:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 74E4B50B5;
+	Sun, 15 May 2011 16:32:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=19JM9tT4ZZ3xVggnFMTaAXiTnVg=; b=agjzz5
+	46OpAVMHobihwc6Km6T/ZlKDVHdvVdrJHKObc1M7BMWIqrPsHQnIBsrMseM3586B
+	CyXpxLRpSZIZe7ycbigmgwlgloY/NZJP8e3y4JGJ+M3+o6jvmyM4F8KqX3JPd5RK
+	XopMZQ9HAPylbFvGdAQ4BW2Uy0v+salqJaOoA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=f8KM+XKn0EH7ItS72MMr9gbe/t0MOw67
+	sgtdB6gXrh2PdqMn2h6/DvqyuGiNQwSNn+gyABjnqYUpBCQQ8VDpQuBGpkc5sdCj
+	ul+TN1nBK2SUgn0Oz7nKdLf81wSZ/uhzIRMWQlm/nGnG9Q77nnGQA71OFUMvc9jG
+	VtrJv8FcC2c=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5286150B4;
+	Sun, 15 May 2011 16:32:43 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 6C4AD50B2; Sun, 15 May 2011
+ 16:32:40 -0400 (EDT)
+In-Reply-To: <20110515125525.GA3014@mrq1.org> (Hermann Gausterer's message of
+ "Sun, 15 May 2011 14:55:25 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7C5B2858-7F32-11E0-9021-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173663>
 
-Excerpts from Martin L Resnick's message of Sun May 15 21:24:38 +0200 2011:
-> Is anyone working on adding access control to GIT ?
+Hermann Gausterer <git-mailinglist@mrq1.org> writes:
 
-I don't know git internals very well. But my very basic understanding is
-that each commit hash is based on *all* file contents and path names and its history.
+> combines the two commands "y"+"q" to one.
+> i use this if i know that this is the last hunk to add.
+>
+> Signed-off-by: Hermann Gausterer <git-git-2011@mrq1.org>
+> ---
+>  Documentation/git-add.txt |    1 +
+>  git-add--interactive.perl |   15 +++++++++++++--
+>  2 files changed, 14 insertions(+), 2 deletions(-)
 
-If you drop some paths (eg by denying access) there is no way to verify
-or recalculate the hashes ?
+It feels a bit _too_ narrow a usecase to me.
 
-So even if you can deny access to some path I'd expect the result to be
-unusable because all kinds of tools such as gitk will start telling you
-about missing paths.
+I am personally not very interested in the feature itself, but even if I
+were, I wouldn't be happy to see an implementation that duplicates a
+trivial existing loop without refactoring to add maintenance burden.
 
-
-Alternative ideas:
-
-- github supports SVN access to git repos. Maybe you can ask them to
-  provide what you're looking for?
-
-- clone the repo and strip off the files. Then allow access to those
-  cloned striped repos only.
-
-I don't think there is a simple solution to your request. But others may
-know better than I do.
-
-Marc Weber
+Thanks.
