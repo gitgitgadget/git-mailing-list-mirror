@@ -1,67 +1,68 @@
-From: Martin L Resnick <mresnick@bbn.com>
-Subject: Re: ACLs for GIT
-Date: Mon, 16 May 2011 09:22:31 -0400
-Message-ID: <4DD12517.1000308@bbn.com>
-References: <4DD02876.1040404@bbn.com> <20110515201608.GX6349@kiwi.flexilis.local>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 08/11] streaming_write_entry(): support files with holes
+Date: Mon, 16 May 2011 07:39:20 -0700
+Message-ID: <7v62pan207.fsf@alter.siamese.dyndns.org>
+References: <1305505831-31587-1-git-send-email-gitster@pobox.com>
+ <1305505831-31587-9-git-send-email-gitster@pobox.com>
+ <BANLkTi=VKb44yYuXdKLxrvFCVkfsDZSb4Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "R. Tyler Croy" <tyler@monkeypox.org>
-X-From: git-owner@vger.kernel.org Mon May 16 16:06:36 2011
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 16 16:39:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QLyRO-0004NY-A7
-	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 16:06:34 +0200
+	id 1QLyxJ-0005Ic-Jk
+	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 16:39:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755461Ab1EPOG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2011 10:06:29 -0400
-Received: from smtp.bbn.com ([128.33.0.80]:53230 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755303Ab1EPOG2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2011 10:06:28 -0400
-Received: from dhcp89-069-009.bbn.com ([128.89.69.9]:60628)
-	by smtp.bbn.com with esmtps (TLSv1:CAMELLIA256-SHA:256)
-	(Exim 4.74 (FreeBSD))
-	(envelope-from <mresnick@bbn.com>)
-	id 1QLxkl-00081R-Uy; Mon, 16 May 2011 09:22:31 -0400
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.17) Gecko/20110424 Lightning/1.0b2 Thunderbird/3.1.10
-In-Reply-To: <20110515201608.GX6349@kiwi.flexilis.local>
+	id S1755305Ab1EPOj3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2011 10:39:29 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49355 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751812Ab1EPOj2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2011 10:39:28 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 78A425C35;
+	Mon, 16 May 2011 10:41:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gAtJHNcXpThW310LqW0D171UZ7g=; b=tcC+gd
+	PwLjrVMvYAeVLC8WlYVyMlp28Ys7nfhTJnmeb7/ZGW4X2FL6gFF4qwbG5i8U2SP3
+	3OuRWEM/Vql4Z70OtZ4HiEsXPCz3jzDmFeVjBitbtOIp1geSs24HmaIanG5UZb9+
+	T5Hy6Y0ZhG7t6wJ425NgLBlGdhOeaj4yLOOJg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oIAAzDXf5BIVpZDyR/iZIxJW/p3W3KU5
+	qR8ocGaCLYPY+GHzBha9H44HBhJLh4rUWDbsGb9RrvQfTThpnxHIMTTPeNAFSHWW
+	n75HNVc2oV+0zHE4MQpuzRt+ZXofLC74EUG3FokqxucGZ4VYZGvn3l1xxelgbkhv
+	Rq3vCWWEJzQ=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 50DB15C31;
+	Mon, 16 May 2011 10:41:31 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 753E05C30; Mon, 16 May 2011
+ 10:41:28 -0400 (EDT)
+In-Reply-To: <BANLkTi=VKb44yYuXdKLxrvFCVkfsDZSb4Q@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Mon, 16 May 2011 17:53:39 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 96DF65B6-7FCA-11E0-9C1D-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173737>
 
-Thanks for the reply.
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-But gitolite would only work to deny reads on a repository or ref basis
-not a pathname level.
+> On Mon, May 16, 2011 at 7:30 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> One typical use of a large binary file is to hold a sparse on-disk hash
+>> table with a lot of holes. Help preserving the holes with lseek().
+>
+> Should that be done only with big enough holes? Random zeros may
+> increase the number of syscalls unnecessarily.
 
-
-On 05/15/2011 04:16 PM, R. Tyler Croy wrote:
->
-> On Sun, 15 May 2011, Martin L Resnick wrote:
->
->> Is anyone working on adding access control to GIT ?
->>
->> I'm looking for the Subversion equivalent of mod_authz_svn.
->> I need to restrict read access of ITAR documents that are
->> scattered throughout the source tree.
->> This restriction would need to deny fetch of the ITAR
->> documents yet allow fetch of any other files.
->>
->> Looking through the source code it would seem that
->> putting a hook call in the fetch-pack code would do it.
->
-> It sounds like 'gitolite' might be what you're looking for:
-> <https://github.com/sitaramc/gitolite>
->
-> - R. Tyler Croy
-> --------------------------------------
->      Code: http://github.com/rtyler
->   Chatter: http://identi.ca/agentdero
->            http://twitter.com/agentdero
+I think that is a valid concern, but doesn't the code do that already?
