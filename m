@@ -1,144 +1,91 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Bikeshedding advice on the ab/i18n-scripts series
-Date: Mon, 16 May 2011 22:53:44 +0200
-Message-ID: <BANLkTimtofA7xVBW-W+20zqUt98GLSPHdw@mail.gmail.com>
+Date: Mon, 16 May 2011 13:58:52 -0700
+Message-ID: <7v62pal5v7.fsf@alter.siamese.dyndns.org>
 References: <BANLkTi==pxyy7OeZT0mn33iJHrc5R7vHBw@mail.gmail.com>
-	<7vboz2l6h1.fsf@alter.siamese.dyndns.org>
+ <7vboz2l6h1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Erik Faye-Lund <kusmabite@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 16 22:53:51 2011
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 16 22:59:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QM4nW-0004Vv-KL
-	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 22:53:51 +0200
+	id 1QM4si-00074O-15
+	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 22:59:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755727Ab1EPUxq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 May 2011 16:53:46 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:46080 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752303Ab1EPUxp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 May 2011 16:53:45 -0400
-Received: by fxm17 with SMTP id 17so3361897fxm.19
-        for <git@vger.kernel.org>; Mon, 16 May 2011 13:53:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=NzYjYcTQ7kn+5XgzQvZWSH+19hk1rWrN/P3IDG9+8Nc=;
-        b=ECaUJIKVigjVZyyKyQb+3iLQqFjYVQtbBwU+ihi6LeUJM7wYh9RH+qfj8XbpoWnv1o
-         bNVtTpNTcenfsX3JFScrAkSVZNpCPQzR81ih6KK1BQOEEWHfBwqLml08gAfv3hD3fJsz
-         ILT6ZiAfhPAGK6gKRdDXz6baNnx0doL0Sk7Lg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=MGCpMWzAr15s41KHKc/dQiAxW7RHouQ87LNEG1hmw4LvqZ4z7CZxSXx2SRK2S5XkwW
-         x7ypDNBU2KxrKzKH8IrlOwYNFsS8ch+IDft2HL27GDdLyvf+hpmluNooMf/THPSN0EJj
-         0wbj39gXB+eKhgev+Q6+DgzUDTJ3u7lbjxiqw=
-Received: by 10.223.59.81 with SMTP id k17mr1103031fah.94.1305579224359; Mon,
- 16 May 2011 13:53:44 -0700 (PDT)
-Received: by 10.223.117.72 with HTTP; Mon, 16 May 2011 13:53:44 -0700 (PDT)
-In-Reply-To: <7vboz2l6h1.fsf@alter.siamese.dyndns.org>
+	id S1755725Ab1EPU7G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2011 16:59:06 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:52918 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752238Ab1EPU7F (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2011 16:59:05 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0124445BB;
+	Mon, 16 May 2011 17:01:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Sdp8oP1Fw1qj1aAFHp5vQ2njyIw=; b=E5Xjtj
+	UC5ss/x8hRRWljeb/AB71Ue5k4RQg4Z+UIh5+UMFvCm8tSQorjkrksGMCO5j4+Uk
+	kMW1TILKa3Kh8mdxVeas43993wdBtyvghqcAoy+xxPAEDgQHwZeFiu62LpGCAOJy
+	1q1A1o8k/1v0zeVyrQ6svTIqZ0mLTqndXEoAI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yjUX8Hswj2yUhvFARHvNK89BjdVlSoa6
+	L8irANyzyIhfT/5IKEk1lnQYNEYP8k4SlESiF+D3GbYhxnNxE2/m7sM5vJv8jz4g
+	peSnFiXwQvB3jNJNV1AyDYye13oJpGfVx4Zlynyda+ZgjF0+yIHKOse0REHZ7Y3T
+	NxwZ9JKz+Og=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A2A5345B9;
+	Mon, 16 May 2011 17:01:06 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3E96145B5; Mon, 16 May 2011
+ 17:01:00 -0400 (EDT)
+In-Reply-To: <7vboz2l6h1.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 16 May 2011 13:45:46 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 9E083270-7FFF-11E0-924A-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173759>
 
-On Mon, May 16, 2011 at 22:45, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> Oh, and for all the convertion of:
->>
->> =C2=A0 =C2=A0 echo >&2 "$(gettext "foobar")"
->>
->> I've already done:
->>
->> =C2=A0 =C2=A0 (
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 gettext "foobar" &&
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 echo
->> =C2=A0 =C2=A0 ) >&2
->
-> Sorry, but what problem are you trying to solve? =C2=A0The output fro=
-m
->
-> =C2=A0 =C2=A0$ gettext "foobar"
->
-> may have 0, 1 or more LF at the end, but wouldn't
->
-> =C2=A0 =C2=A0echo >&2 "$(gettext "foobar")"
->
-> terminate with a single LF in any case?
->
+Junio C Hamano <gitster@pobox.com> writes:
+
 > Ahh, perhaps I was the one who said something stupid like:
 >
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0echo >&2 "$(cmd)"
+> 	echo >&2 "$(cmd)"
 >
 > should be equivalent to
 >
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0cmd >&2
+> 	cmd >&2
 >
-> which is not the case when output from cmd does not end with a single=
- LF
+> which is not the case when output from cmd does not end with a single LF
 > (i.e. either an incomplete line, or with trailing blank lines).
 >
-> Sorry, if that is what you are trying to address, please let me take =
-that
+> Sorry, if that is what you are trying to address, please let me take that
 > back.
 
-Yeah, you said:
+Having said that, depending on how the strings are distributed, I have a
+feeling that we might be better off having two variants:
 
-    >> +  echo >&2 "$(eval_gettext "Warning: fetch updated the current
-branch head.
-    >> +Warning: fast-forwarding your working tree from
-    >> +Warning: commit \$orig_head.")"
-    >
-    > echo "$(...)"
-    >
-    > sounds quite wasteful and harder to read than necessary.
-    > The same also happens in later patches.
+	say >&2 "<message string>"
+	gettext >&2 "<message string>"
 
-    A very good point.  Just letting eval_gettext write out to >&2 shou=
-ld be
-    both sufficient and inifinitely more readable.
+The former would be
 
-    -- http://www.spinics.net/lists/git/msg157376.html
+	say () {
+		gettext >&2 "$1"; echo
+	}
 
-Which is why I rewrote all the relevant patches to look like:
-
-    diff --git a/git-pull.sh b/git-pull.sh
-    index 06dcd81..a10b129 100755
-    --- a/git-pull.sh
-    +++ b/git-pull.sh
-    @@ -217,9 +217,12 @@ then
-            # $orig_head commit, but we are merging into $curr_head.
-            # First update the working tree to match $curr_head.
-
-    -       echo >&2 "Warning: fetch updated the current branch head."
-    -       echo >&2 "Warning: fast-forwarding your working tree from"
-    -       echo >&2 "Warning: commit $orig_head."
-    +       (
-    +               eval_gettext "Warning: fetch updated the current
-branch head.
-    +Warning: fast-forwarding your working tree from
-    +Warning: commit \$orig_head." &&
-    +               echo
-    +       ) >&2
-            git update-index -q --refresh
-            git read-tree -u -m "$orig_head" "$curr_head" ||
-                    die "$(eval_gettext "Cannot fast-forward your worki=
-ng tree.
-
-I wrote them using echo "$(gettext "foo")" initially because I thought
-bending over backwards like this was silly.
-
-You want me to go and change it back now?
+and minority of callers (they may be an empty set) that care about
+trailing blank lines they output can include their own terminating LFs in
+the message to be translated and call gettext directly, letting it output
+the translation without stripping trailing LFs they (or their translation)
+produce.
