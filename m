@@ -1,68 +1,76 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 0/8] Sequencer Foundations
-Date: Mon, 16 May 2011 06:14:47 +0200
-Message-ID: <201105160614.48215.chriscool@tuxfamily.org>
-References: <1305100822-20470-1-git-send-email-artagnon@gmail.com> <BANLkTi=8BrFXfoDwL_fXG2bXarP7d0xioA@mail.gmail.com> <20110513103756.GC30618@elie>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 09/11] streaming: read non-delta incrementally from a
+ pack
+Date: Sun, 15 May 2011 22:00:50 -0700
+Message-ID: <7v62pbnssd.fsf@alter.siamese.dyndns.org>
+References: <1305505831-31587-1-git-send-email-gitster@pobox.com>
+ <1305505831-31587-10-git-send-email-gitster@pobox.com>
+ <BANLkTin7DALU8sfFxzJo62DGtNE2fsZxXw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 16 06:17:58 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon May 16 07:01:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QLpFm-0004Bs-Bo
-	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 06:17:58 +0200
+	id 1QLpvW-0005pU-4n
+	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 07:01:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750906Ab1EPEO6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2011 00:14:58 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:57536 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750856Ab1EPEO5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2011 00:14:57 -0400
-Received: from style.localnet (unknown [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id A044DA622B;
-	Mon, 16 May 2011 06:14:49 +0200 (CEST)
-User-Agent: KMail/1.13.6 (Linux/2.6.38-8-generic; KDE/4.6.2; x86_64; ; )
-In-Reply-To: <20110513103756.GC30618@elie>
+	id S1750984Ab1EPFA6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2011 01:00:58 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59387 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750938Ab1EPFA6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2011 01:00:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0432832C8;
+	Mon, 16 May 2011 01:03:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1CswdtOONJ3MoX2iE7BAeib02Qk=; b=H8ff5a
+	AdFbwpSetTwUMK8CSbmNL+praXXoTe6Df31fKUDUTY7tLmjEuJhDcDU10PXQfEIH
+	rhOAOXS9wu7VxBjlPN71MRK7m2t9hK5/3P4EaSLv/C9o+g6VwvCz0ArgTKNSRYEu
+	oTlnk9OOpT0hgOIU+IQBiOozXzQJY9El2Amdk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PQTwTLuQgXpbsFc7hLqmVGO7mKpofFOv
+	KQBn6l/zM2VE2W8F2fuau1s7zaTTGvn9/JvZm+ZGzeKLnVGg3KFcur8FCvWVuOMb
+	V76rK1Zjnp+fiCI1PnM1ZXCpZ70xeUqHDjES+8q9xdBo0TjxXpvXN7pRqWP2nVUX
+	3A3A2gV9GdA=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C626032C7;
+	Mon, 16 May 2011 01:03:01 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BC87332C5; Mon, 16 May 2011
+ 01:02:58 -0400 (EDT)
+In-Reply-To: <BANLkTin7DALU8sfFxzJo62DGtNE2fsZxXw@mail.gmail.com> (Shawn
+ Pearce's message of "Sun, 15 May 2011 17:58:46 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C65D7F86-7F79-11E0-B03F-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173702>
 
-On Friday 13 May 2011 12:37:56 Jonathan Nieder wrote:
-> Christian Couder wrote:
-> > About writing files before each cherry-pick, I am not against it, if
-> > it is really needed to be safe. I even suggested it in my patch series
-> > back in November
-> > (http://article.gmane.org/gmane.comp.version-control.git/162183).
-> > But it will make cherry-pick less efficient, so it is a kind of
-> > performance regression that we can perhaps avoid by changing some
-> > die() into error().
-> 
-> Yes, that's a good point.  Maybe in the long term the extra safety
-> could become optional.  And I am happy about the die() elimination;
-> the only part I was not as thrilled about is relying on it.
-> 
-> Some die() calls, like the one in xmalloc, would be very difficult to
-> eliminate.
+Shawn Pearce <spearce@spearce.org> writes:
 
-Yeah, but to address this problem, maybe we can use a special die routine like 
-you already suggested. I think if we use both error() and a special die 
-routine we should be pretty safe.
+> On Sun, May 15, 2011 at 17:30, Junio C Hamano <gitster@pobox.com> wrote:
+>> +static read_method_decl(pack_non_delta)
+>
+> I am not a huge fan of these decl macros... but I can see how writing
+> out the same function prototype 3 times is annoying.
 
-Anyway I looked at the patch series and I found nothing that your very good 
-review had not already spotted. My only nit is that maybe as the error 
-handling patch is growing bigger, it could be splitted in 2 or 3 patchs.
+More importantly, it helped greatly while re-rolling this series literally
+several times until I nailed the right set of parameters these methods
+should take.
 
-Thanks to you and Ram,
-Christian.
+> I think the better strategy is to avoid delta compression altogether
+> for objects that are so big we cannot materialize them as a contiguous
+> buffer.
+
+Yes, that is what I am aiming for in the recent topics around this area.
