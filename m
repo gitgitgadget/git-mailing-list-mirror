@@ -1,50 +1,70 @@
-From: Stephen Bash <bash@genarts.com>
-Subject: Maint-only commits
-Date: Mon, 16 May 2011 17:15:26 -0400 (EDT)
-Message-ID: <6416457.30612.1305580526325.JavaMail.root@mail.hq.genarts.com>
-References: <10397477.30610.1305580263246.JavaMail.root@mail.hq.genarts.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Bikeshedding advice on the ab/i18n-scripts series
+Date: Mon, 16 May 2011 16:26:41 -0500
+Message-ID: <20110516212641.GB15150@elie>
+References: <BANLkTi==pxyy7OeZT0mn33iJHrc5R7vHBw@mail.gmail.com>
+ <7vboz2l6h1.fsf@alter.siamese.dyndns.org>
+ <7v62pal5v7.fsf@alter.siamese.dyndns.org>
+ <BANLkTimuA6-jLAUAMuhVf6FfJ2eNp8ROZw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 16 23:15:42 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 16 23:26:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QM58f-0007Mh-EE
-	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 23:15:41 +0200
+	id 1QM5JV-000559-CL
+	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 23:26:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754664Ab1EPVPe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2011 17:15:34 -0400
-Received: from hq.genarts.com ([173.9.65.1]:27133 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753671Ab1EPVPd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2011 17:15:33 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id B323BEA2320
-	for <git@vger.kernel.org>; Mon, 16 May 2011 17:15:32 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jFRY4vFTyNez for <git@vger.kernel.org>;
-	Mon, 16 May 2011 17:15:26 -0400 (EDT)
-Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 88372EA2304
-	for <git@vger.kernel.org>; Mon, 16 May 2011 17:15:26 -0400 (EDT)
-In-Reply-To: <10397477.30610.1305580263246.JavaMail.root@mail.hq.genarts.com>
-X-Mailer: Zimbra 6.0.10_GA_2692 (ZimbraWebClient - SAF3 (Mac)/6.0.10_GA_2692)
+	id S1756076Ab1EPV0s convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 May 2011 17:26:48 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:40723 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754716Ab1EPV0r convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 May 2011 17:26:47 -0400
+Received: by iwn34 with SMTP id 34so4281678iwn.19
+        for <git@vger.kernel.org>; Mon, 16 May 2011 14:26:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=7S2pyc+6VyAuJKs8vnhJfPmZY5QpKRi/ZPdyIe49lJQ=;
+        b=iHo+DV0qGfIB7fXyPuXT1Suvlv29hHWC8dp6k2V8sCCG2CzvWloMXf8UL4JYcLhssu
+         eRl8upycxFiFG/uunO+kFztiqyETtDbOK7qk7YZ4xuNMwLI0tyCu5roCD8nlTr9rq2IL
+         Y8zNgaEDVM3RYq2ComvxXdJfgzJR6lls4y1Vs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=g1fViadB6UJJFKe6jctqGKlpyKQIgC/G34xyZDiadn5jygQssCP+AAXgcFSa4YbJ/v
+         Qi4oBsK5GnruujC3+bvsJb/gW8f+DC5FkXUfbmMx+8sk9pzSqey4g6IugKpBK3o85lKC
+         WsdnCwLsWK7wo45hK8XGrNTO9XGLvDKr0IQaY=
+Received: by 10.42.196.67 with SMTP id ef3mr1338005icb.506.1305581207162;
+        Mon, 16 May 2011 14:26:47 -0700 (PDT)
+Received: from elie (adsl-69-209-63-133.dsl.chcgil.ameritech.net [69.209.63.133])
+        by mx.google.com with ESMTPS id i3sm2351694iby.57.2011.05.16.14.26.45
+        (version=SSLv3 cipher=OTHER);
+        Mon, 16 May 2011 14:26:45 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <BANLkTimuA6-jLAUAMuhVf6FfJ2eNp8ROZw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173763>
 
-Hi all-
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-In my office we've recently run into three separate fixes required on our maintenance branch that should not be included in master (our normal workflow is to make changes on maint, tag, release, and then merge to master).  Normally these "maint only" fixes are interspersed with commits that should go back into master.  In the past the "maint only" commits were rare, so I'd carefully use "merge -s ours" to avoid including the "maint only" changes in master.  But now I'm wondering if there's a better process/workflow?  Certainly a well crafted alias or custom command makes the user's life easier, but still clutters master with "extra" merges.
+> That would require us to start extracting strings from all "say"
+> functions. The reason we have only "gettext" and "eval_gettext" is so
+> xgettext can extract them.
 
-Any thoughts?  Thanks!
-
-Stephen
+Isn't that what the xgettext -k parameter is for?
