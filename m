@@ -1,140 +1,59 @@
-From: Philipp Metzler <phil@goli.at>
-Subject: Re: git commit -a reports untracked files after a clone
-Date: Mon, 16 May 2011 12:49:07 +0200
-Message-ID: <7C2AE1EE-4CAE-4E86-A53C-C97BE1F2573B@goli.at>
-References: <7B399C74-8048-42BA-8672-9D7964F24888@goli.at> <7v39kgr5ln.fsf@alter.siamese.dyndns.org> <4501A58F-46F8-410C-BCEF-DD2FC10BC3A5@goli.at> <20110516103829.GA23889@sigill.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon May 16 12:49:20 2011
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 08/11] streaming_write_entry(): support files with holes
+Date: Mon, 16 May 2011 17:53:39 +0700
+Message-ID: <BANLkTi=VKb44yYuXdKLxrvFCVkfsDZSb4Q@mail.gmail.com>
+References: <1305505831-31587-1-git-send-email-gitster@pobox.com> <1305505831-31587-9-git-send-email-gitster@pobox.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 16 12:54:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QLvMU-0001L6-8Z
-	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 12:49:18 +0200
+	id 1QLvRJ-0003VI-4e
+	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 12:54:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753545Ab1EPKtM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2011 06:49:12 -0400
-Received: from smtprelay04.ispgateway.de ([80.67.31.31]:55766 "EHLO
-	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753195Ab1EPKtM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 May 2011 06:49:12 -0400
-Received: from [80.120.110.118] (helo=[192.168.1.52])
-	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <phil@goli.at>)
-	id 1QLvMK-0006ch-Ig; Mon, 16 May 2011 12:49:08 +0200
-In-Reply-To: <20110516103829.GA23889@sigill.intra.peff.net>
-X-Mailer: Apple Mail (2.1084)
-X-Df-Sender: phil@goli.at
+	id S1753742Ab1EPKyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2011 06:54:11 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:56142 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753592Ab1EPKyK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2011 06:54:10 -0400
+Received: by bwz15 with SMTP id 15so3607682bwz.19
+        for <git@vger.kernel.org>; Mon, 16 May 2011 03:54:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=jAf+pLNA01yGY9+DeJjBa16ny2Am7fhhUrMSRDVgGls=;
+        b=sqWsOfHt7d6czW75xxKxEBI7+XB/1BG0rgG9bLKjro0NUveGNCLCA5UmUTl/kgYf1V
+         ypNrIDye3dkKWiXy1iF9bumhyTGGsMTpabpp+zKWY7y5TByqMbu5smByIZ3Gs1dJcre3
+         6XXHH/zuUClInlRqjP3um6FgY97Wsec1IXXQ4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=TyQqG3azGn1tYTvycWYy/cHuZjrMvmvTC90kW6Xk4P/LijzUEA/lC39db0vqqLdf7t
+         jG1m36lV8er1hiQhBN56SVDORZYw5Y9KAgfFmVC6UJHcQgE8wiU9H/fo36WPNwREamw2
+         FgKQ/pg0kYTL7n7D+tBoA4CQzfKfkdcCwLrLA=
+Received: by 10.204.19.3 with SMTP id y3mr3905470bka.180.1305543249137; Mon,
+ 16 May 2011 03:54:09 -0700 (PDT)
+Received: by 10.204.46.71 with HTTP; Mon, 16 May 2011 03:53:39 -0700 (PDT)
+In-Reply-To: <1305505831-31587-9-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173725>
 
-Hi,
+On Mon, May 16, 2011 at 7:30 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> One typical use of a large binary file is to hold a sparse on-disk hash
+> table with a lot of holes. Help preserving the holes with lseek().
 
-Hope this helps. Just let me know if you need additional infos.
-
-[phil@Silberpfeil tmp]$ git clone git://git.kernel.org/pub/scm/git/git.git
-Cloning into git...
-remote: Counting objects: 140472, done.
-remote: Compressing objects: 100% (33586/33586), done.
-remote: Total 140472 (delta 105841), reused 139396 (delta 104981)
-Receiving objects: 100% (140472/140472), 27.67 MiB | 638 KiB/s, done.
-Resolving deltas: 100% (105841/105841), done.
-[phil@Silberpfeil tmp]$ cd git
-[phil@Silberpfeil git]$ git commit -uall
-# On branch master
-nothing to commit (working directory clean)
-[phil@Silberpfeil git]$ git commit -a
-# On branch master
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#	t/t9154/
-#	t/t9601/
-#	t/t9602/
-#	t/t9603/
-#	t/t9700/
-#	t/valgrind/
-#	templates/
-#	vcs-svn/
-#	xdiff/
-nothing added to commit but untracked files present (use "git add" to track)
-[phil@Silberpfeil git]$ git commit -uall
-# On branch master
-nothing to commit (working directory clean)
-[phil@Silberpfeil git]$ git commit -u
-# On branch master
-nothing to commit (working directory clean)
-[phil@Silberpfeil git]$ git commit --all
-# On branch master
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#	t/t9154/
-#	t/t9601/
-#	t/t9602/
-#	t/t9603/
-#	t/t9700/
-#	t/valgrind/
-#	templates/
-#	vcs-svn/
-#	xdiff/
-nothing added to commit but untracked files present (use "git add" to track)
-
-Cheers,
-
-Philipp
-
-_______________________________________________________________
-
-DI Philipp Metzler
-Goli.at GesbR.
-Dorf Rieden 7/11
-A-6900 Bregenz
-EU - Austria
-
-E-Mail: phil@goli.at
-Skype: googol
-Tel: +43 / 676 / 72 94 176
-ICQ: 13950954
-
-o www.philippmetzler.com - Softwareentwicklung und Websites mit Django und Typo3.
-o www.goli.at - Ihr Speicherplatz im Netz. Messen Sie uns an unseren Daten.
-o www.clickshopping.at - Wir bringen Ihre Produkte auf den Punkt.
-o www.greencar.at - Elektroautos und mehr ...
-_______________________________________________________________
-
-Am 16.05.2011 um 12:38 schrieb Jeff King:
-
-> On Sun, May 15, 2011 at 10:26:01AM +0200, Philipp Metzler wrote:
-> 
->> [phil@Silberpfeil tmp]$ git --version
->> git version 1.7.5.1
->> [phil@Silberpfeil tmp]$ git clone git://git.kernel.org/pub/scm/git/git.git
->> Cloning into git...
->> remote: Counting objects: 140383, done.
->> remote: Compressing objects: 100% (33498/33498), done.
->> remote: Total 140383 (delta 105777), reused 139383 (delta 104980)
->> Receiving objects: 100% (140383/140383), 27.61 MiB | 642 KiB/s, done.
->> Resolving deltas: 100% (105777/105777), done.
->> [phil@Silberpfeil tmp]$ cd git
->> [phil@Silberpfeil git]$ git commit -a
->> # On branch master
->> # Untracked files:
->> #   (use "git add <file>..." to include in what will be committed)
->> #
->> #	vcs-svn/
->> #	xdiff/
-> 
-> Can you try this again with "git commit -uall" so we can see which
-> specific files in those directories are causing the issue?
-> 
-> -Peff
+Should that be done only with big enough holes? Random zeros may
+increase the number of syscalls unnecessarily.
+-- 
+Duy
