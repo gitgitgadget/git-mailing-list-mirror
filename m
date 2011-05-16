@@ -1,80 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git cherry-pick --strategy=resolve segfaults if picking a root
- commit
-Date: Mon, 16 May 2011 08:01:33 -0700
-Message-ID: <7vwrhqlmeq.fsf@alter.siamese.dyndns.org>
-References: <iqgbvs$pm5$1@dough.gmane.org>
- <20110512104558.GA22108@sigill.intra.peff.net>
- <20110512110855.GA5240@sigill.intra.peff.net>
- <20110516102744.GA23286@sigill.intra.peff.net>
+From: Richard Peterson <richard@rcpeterson.com>
+Subject: Re: ACLs for GIT
+Date: Mon, 16 May 2011 11:26:38 -0400
+Message-ID: <BANLkTimMP3aJrQ-ivzR+yOhb12t-qQTz2Q@mail.gmail.com>
+References: <4DD02876.1040404@bbn.com>
+	<20110515201513.GA27758@jpl.local>
+	<4DD1250D.50005@bbn.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon May 16 17:01:55 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: =?ISO-8859-1?Q?Magnus_B=E4ck?= <magnus.back@sonyericsson.com>,
+	git@vger.kernel.org
+To: Martin L Resnick <mresnick@bbn.com>
+X-From: git-owner@vger.kernel.org Mon May 16 17:26:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QLzIs-0000pQ-JC
-	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 17:01:50 +0200
+	id 1QLzgz-0006a8-Eb
+	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 17:26:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755696Ab1EPPBp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2011 11:01:45 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43096 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755553Ab1EPPBo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2011 11:01:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EB51C5F15;
-	Mon, 16 May 2011 11:03:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YVJUz18Wv0B11HdYTO73Sjcbsnk=; b=MfI60w
-	9t+4VcE8tmSTzkjX+aqYkNl6V98DeUwUBG8WLlFMFdCpG9B2CPFZ+XVVXMebRYh2
-	gjdgln7sbbcT4vikpn7B1hvb2IshJXQgkiHGakEeUp9GBXSHI9Bmak1RpLxDBO+7
-	YJPdOH3/j7lx/srZ7aJn79p4ZddKyx8oJFPGc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cIpeAYQInuAY3XBUTvu0v/GjE0y1IvF7
-	DD01hd2LrwTZFCUKRxP1U1n2VV0iH+iw3bTQ14ewyFbiHsDY4SLp+o3/jS3urJu7
-	kVn3AOGjHZoUjsih82lNVt5LOTvmdVPe2m22KllVwALaABVW187/y8M8IsbUskHw
-	0mBPvlrEcgQ=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A511F5F11;
-	Mon, 16 May 2011 11:03:45 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 78FA05F0D; Mon, 16 May 2011
- 11:03:41 -0400 (EDT)
-In-Reply-To: <20110516102744.GA23286@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 16 May 2011 06:27:44 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B235AEB2-7FCD-11E0-9C7F-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+	id S1756106Ab1EPP0m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2011 11:26:42 -0400
+Received: from edgy.cirtexhosting.com ([75.126.140.58]:35784 "EHLO
+	edgy.cirtexhosting.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755769Ab1EPP0l (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2011 11:26:41 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:48344)
+	by edgy.cirtexhosting.com with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.69)
+	(envelope-from <richard@rcpeterson.com>)
+	id 1QLzh4-0006rT-TV
+	for git@vger.kernel.org; Mon, 16 May 2011 11:26:50 -0400
+Received: by yia27 with SMTP id 27so1449402yia.19
+        for <git@vger.kernel.org>; Mon, 16 May 2011 08:26:38 -0700 (PDT)
+Received: by 10.236.192.231 with SMTP id i67mr4502557yhn.40.1305559598199;
+ Mon, 16 May 2011 08:26:38 -0700 (PDT)
+Received: by 10.147.98.18 with HTTP; Mon, 16 May 2011 08:26:38 -0700 (PDT)
+In-Reply-To: <4DD1250D.50005@bbn.com>
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - edgy.cirtexhosting.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - rcpeterson.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173740>
 
-Jeff King <peff@peff.net> writes:
-
-> On Thu, May 12, 2011 at 07:08:55AM -0400, Jeff King wrote:
->> The series is:
->> 
->>   [1/3]: cherry-pick: handle root commits with external strategies
->>   [2/3]: revert: allow reverting a root commit
->>   [3/3]: t3503: test cherry picking and reverting root commits
+On Mon, May 16, 2011 at 9:22 AM, Martin L Resnick <mresnick@bbn.com> wrote:
+> Thanks Mangus.
 >
-> I seem to recall seeing an email from you saying that merge-helpers need
-> to handle tree-ish arguments, so this is an OK direction to go. But now
-> I can't seem to find it. Did I dream it?
+> You pointed out some hurdles I'll have to think about
+> (blocked files not matching the SHA and so can't be committed).
 >
-> If that is the case, then I think this series is worth picking up. So I
-> thought I'd prod you on it (I'm happy to repost, too, if that's easier).
+> As to why I want to do this consider NSA non-export rules.
+> Our application would be built with NSA encryption
+> but we have foreign nationals working on the code
+> and so they are not permitted to see that part.
+> The makefiles look to see if the NSA encryption code file
+> is there and link it in. If not a stub is used.
 
-No you did not dream it but I think it is worth picking up. It was in my
-"to look at" queue that was accidentally got lost.
+I bet you could use a submodule.
 
-Thanks for reminding.
+-Richard
