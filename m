@@ -1,121 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add Android support
-Date: Mon, 16 May 2011 14:11:22 -0700
-Message-ID: <7vzkmmjqpx.fsf@alter.siamese.dyndns.org>
-References: <D2F37FDB-20C2-401A-AA90-DB4A50C27123@gieschke.de>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Bikeshedding advice on the ab/i18n-scripts series
+Date: Mon, 16 May 2011 23:13:09 +0200
+Message-ID: <BANLkTimuA6-jLAUAMuhVf6FfJ2eNp8ROZw@mail.gmail.com>
+References: <BANLkTi==pxyy7OeZT0mn33iJHrc5R7vHBw@mail.gmail.com>
+	<7vboz2l6h1.fsf@alter.siamese.dyndns.org>
+	<7v62pal5v7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Rafael Gieschke <rafael@gieschke.de>
-X-From: git-owner@vger.kernel.org Mon May 16 23:11:36 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Erik Faye-Lund <kusmabite@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 16 23:13:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QM54i-0005Iu-14
-	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 23:11:36 +0200
+	id 1QM56K-0006B0-LS
+	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 23:13:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753980Ab1EPVLb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2011 17:11:31 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33346 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751438Ab1EPVLa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2011 17:11:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4D3FF474D;
-	Mon, 16 May 2011 17:13:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=j4BQ1bcdrNqmVRo3Z25bdUNMoyM=; b=l941HH
-	oOXeV6cq1YBTyUMlhsESFN3+0F/SK9EIJ4jYjEdTQ6HGgsMKpMfUORlZHpjhdVC3
-	KNCl9CS4VxqUIBQzAM01tMtXo341Ju9rXE/sHbpdD8b6cvVE9Fg3q8uZjWJ38hqf
-	AlUzYVGLaSztTf/U1Ecmar/Ng4iv++Mb4Buvg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dN9Sey1D7xRjAXm/R0jw3+iPL2zrgXXb
-	1LlXATLZWzv2mLCVU8wlXRYv+A0Tq9NKU3+PKx9SW5g+bk2PCBXJcQGm16MNqZjD
-	oHsFUaFo54p0HuAqxpCc/eMtYX0UizbOAMXfm8XHWrEvc0wXenHc70bvZwa0LPdm
-	vZX5yA9/Qss=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 05F5F474C;
-	Mon, 16 May 2011 17:13:34 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0A04C474B; Mon, 16 May 2011
- 17:13:30 -0400 (EDT)
-In-Reply-To: <D2F37FDB-20C2-401A-AA90-DB4A50C27123@gieschke.de> (Rafael
- Gieschke's message of "Mon, 16 May 2011 22:08:23 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5B7BEE9A-8001-11E0-9D98-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+	id S1752387Ab1EPVNM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 May 2011 17:13:12 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:53105 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753411Ab1EPVNL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 May 2011 17:13:11 -0400
+Received: by fxm17 with SMTP id 17so3373078fxm.19
+        for <git@vger.kernel.org>; Mon, 16 May 2011 14:13:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=h7XP1ROQYpQr91/grmZV7/0iHddEZFr6BA605gDP7D0=;
+        b=rcHq8erSPmBnyWS2PPH7HIvUrvQkMHjkCH0cAos9ENdAG05LsadlbjWxUx7BlFYqpL
+         Dle0IRC/PdZ7A2X36B737uUYRF4F1TqhNvCMGxHURTeAcsDo1hUsEhDdhFXNjxa0e8u7
+         XfJShaCoMH6GY/nRNjpyWUi+cK91NLbLNazDU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=jUL906LGXjjyhI48TA7A8+0att3t2aquKkqTKP6NPBBFwbUPZWGmR8KMzxYaf9LpbG
+         NiU4w7emzsGUhlxiZ3eJVu2DqLrlrhVadEIHWq9uJJXxAKUV2sC691crG4ugnyzOcxuE
+         /FlcXvsFQ3HO0ZWSn5kuicDq1EMcmUKbjwX4c=
+Received: by 10.223.73.139 with SMTP id q11mr4463595faj.56.1305580389818; Mon,
+ 16 May 2011 14:13:09 -0700 (PDT)
+Received: by 10.223.117.72 with HTTP; Mon, 16 May 2011 14:13:09 -0700 (PDT)
+In-Reply-To: <7v62pal5v7.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173761>
 
-Rafael Gieschke <rafael@gieschke.de> writes:
+On Mon, May 16, 2011 at 22:58, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Ahh, perhaps I was the one who said something stupid like:
+>>
+>> =C2=A0 =C2=A0 =C2=A0 echo >&2 "$(cmd)"
+>>
+>> should be equivalent to
+>>
+>> =C2=A0 =C2=A0 =C2=A0 cmd >&2
+>>
+>> which is not the case when output from cmd does not end with a singl=
+e LF
+>> (i.e. either an incomplete line, or with trailing blank lines).
+>>
+>> Sorry, if that is what you are trying to address, please let me take=
+ that
+>> back.
+>
+> Having said that, depending on how the strings are distributed, I hav=
+e a
+> feeling that we might be better off having two variants:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0say >&2 "<message string>"
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0gettext >&2 "<message string>"
+>
+> The former would be
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0say () {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0gettext >&2 "$=
+1"; echo
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+>
+> and minority of callers (they may be an empty set) that care about
+> trailing blank lines they output can include their own terminating LF=
+s in
+> the message to be translated and call gettext directly, letting it ou=
+tput
+> the translation without stripping trailing LFs they (or their transla=
+tion)
+> produce.
 
-> diff --git a/connect.c b/connect.c
-> index 57dc20c..15b285e 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -632,7 +632,11 @@ char *git_getpass(const char *prompt)
->  	if (!askpass)
->  		askpass = getenv("SSH_ASKPASS");
->  	if (!askpass || !(*askpass)) {
-> +		#ifndef NO_GETPASS
->  		char *result = getpass(prompt);
-> +		#else
-> +		char *result = NULL;
-> +		#endif
->  		if (!result)
->  			die_errno("Could not read password");
->  		return result;
-> diff --git a/ident.c b/ident.c
-> index 1c4adb0..76fa786 100644
-> --- a/ident.c
-> +++ b/ident.c
-> @@ -20,7 +20,12 @@ static void copy_gecos(const struct passwd *w, char *name, size_t sz)
->  	 * with commas.  Also & stands for capitalized form of the login name.
->  	 */
->  
-> -	for (len = 0, dst = name, src = w->pw_gecos; len < sz; src++) {
-> +	#ifndef NO_PW_GECOS
-> +	src = w->pw_gecos;
-> +	#else
-> +	src = "&";
-> +	#endif
-> +	for (len = 0, dst = name; len < sz; src++) {
->  		int ch = *src;
->  		if (ch != '&') {
->  			*dst++ = ch;
+That would require us to start extracting strings from all "say"
+functions. The reason we have only "gettext" and "eval_gettext" is so
+xgettext can extract them.
 
-Please do not throw in conditional compilation in a codepath that is
-otherwise generic.
-
-Do something like this near the beginning of the file (or if they are
-common, in an appropriate header):
-
-        #ifdef NO_GETPASS
-        #define getpass(ignored) NULL
-        #endif
-
-        #ifdef NO_PW_GECOS
-        #define get_gecos(ignored) "&"
-        #else
-        #define get_gecos(struct_passwd) (struct_passwd->pw_gecos)
-        #endif
-
-That way, you do not have to change connect.c at all, and the code that
-accesses gecos field would get a slight abstraction, i.e.
-
-	for (len = 0, dst = name, src = get_gecos(w); len < sz; src++) {
-		...
-
-I however suspect that NO_GETPASS would be a useless thing in the longer
-term. Wouldn't you rather wish to have a native Android UI that asks a
-password and plug that implementation as a replacement for git_getpass()?
-
-It might be worthwhile to study how mingw folks do this part before you
-dive in and butcher this codepath in a way you may regret later.
+I'd like to keep that simplicity. Let's not go and wrap these
+functions for trivial aesthetics at the cost of complexity.
