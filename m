@@ -1,157 +1,77 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCHv2] gitweb: Use GITWEB_CONFIG_SYSTEM even if GITWEB_CONFIG does exist
-Date: Mon, 16 May 2011 11:53:23 +0200
-Message-ID: <201105161153.24382.jnareb@gmail.com>
-References: <201105142137.16541.jnareb@gmail.com> <20110514210603.GA11502@elie> <201105151153.08826.jnareb@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git cherry-pick --strategy=resolve segfaults if picking a root
+ commit
+Date: Mon, 16 May 2011 06:27:44 -0400
+Message-ID: <20110516102744.GA23286@sigill.intra.peff.net>
+References: <iqgbvs$pm5$1@dough.gmane.org>
+ <20110512104558.GA22108@sigill.intra.peff.net>
+ <20110512110855.GA5240@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Drew Northup <drew.northup@maine.edu>,
-	John 'Warthog9' Hawley <warthog9@kernel.org>,
-	Petr Baudis <pasky@suse.cz>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 16 11:53:39 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 16 12:27:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QLuUc-0003rq-9l
-	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 11:53:38 +0200
+	id 1QLv1n-00019Q-Px
+	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 12:27:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753647Ab1EPJxd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2011 05:53:33 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:34105 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753809Ab1EPJxc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2011 05:53:32 -0400
-Received: by bwz15 with SMTP id 15so3567746bwz.19
-        for <git@vger.kernel.org>; Mon, 16 May 2011 02:53:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=XL7JTjqlXJILiXzgOBiGac4xlOg+S54cZP1yoqhVPAQ=;
-        b=NKgvqaKwG4MGWUcVrs1LqRzhgBq2dPbt2fQku+ssgDbh0/gIzk58J+Ar80CPrpQ6bA
-         e5P8EEWkqoO8XuyWhyJmWp9arXtpeVyukaaMwPngc/d/bYSb+nWDZmfHTaI2UFEIcc0g
-         1n3/WfGtJDCSEbhpLGyMyvxGH/590dZqDRbGg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=sNiyU1QhZE/sTy1Ld2AikgWkrjh+sf6/wWlQg8aSoeJNN9iPWRWpcg3CTVIeV2cZFc
-         gYXNiwq1HIlP/5dsCWQHjfqxKPpnPmAl05QcjONPcI4ZVl8JJgJxpVaQQsIX6ams4DUe
-         3p1QZC5871wLvi4fYFTUpsg7otzO+u0Qv06gM=
-Received: by 10.204.74.218 with SMTP id v26mr2510589bkj.76.1305539611162;
-        Mon, 16 May 2011 02:53:31 -0700 (PDT)
-Received: from [192.168.1.13] (abvo158.neoplus.adsl.tpnet.pl [83.8.212.158])
-        by mx.google.com with ESMTPS id u15sm2904256bkf.4.2011.05.16.02.53.28
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 16 May 2011 02:53:29 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <201105151153.08826.jnareb@gmail.com>
+	id S1754566Ab1EPK1t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2011 06:27:49 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46627
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754382Ab1EPK1t (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2011 06:27:49 -0400
+Received: (qmail 12884 invoked by uid 107); 16 May 2011 10:29:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 16 May 2011 06:29:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 May 2011 06:27:44 -0400
 Content-Disposition: inline
+In-Reply-To: <20110512110855.GA5240@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173721>
 
-gitweb obtains configuration from the following sources:
+On Thu, May 12, 2011 at 07:08:55AM -0400, Jeff King wrote:
 
-  1. per-instance configuration file (default: gitweb_conf.perl)
-  2. system-wide configuration file (default: /etc/gitweb.conf)
+> On Thu, May 12, 2011 at 06:45:58AM -0400, Jeff King wrote:
+> 
+> > So probably we should:
+> > 
+> >   1. Pass the empty tree along to merge-resolve. This will take a little
+> >      bit of refactoring, but more importantly, it means we will be
+> >      passing a tree-ish and not a commit-ish to a merge strategy. Is
+> >      that OK?
+> > 
+> >   2. Consider lifting the restriction on reverting root commits. If we
+> >      can cherry-pick it, we can revert it, so I suspect this would
+> >      already work with merge-recursive, but I didn't try. I don't care
+> >      too much either way, though; I doubt it's something people would do
+> >      a lot. It just seems like an unnecessary restriction.
+> 
+> This turned out to be quite easy. git-merge-resolve handles the tree-ish
+> argument just fine. But it's possible other merge helpers might not be
+> so happy. I dunno.
+> 
+> The series is:
+> 
+>   [1/3]: cherry-pick: handle root commits with external strategies
+>   [2/3]: revert: allow reverting a root commit
+>   [3/3]: t3503: test cherry picking and reverting root commits
 
-If per-instance configuration file exists, then system-wide
-configuration is _not used at all_.  This is quite untypical and
-suprising behavior.
+Junio,
 
-This commit changes gitweb behavior so that configuration in
-per-instance configuration file can _override_ settings from
-system-wide configuration file.
+I seem to recall seeing an email from you saying that merge-helpers need
+to handle tree-ish arguments, so this is an OK direction to go. But now
+I can't seem to find it. Did I dream it?
 
-Note that strictly speaking it is backwards incompatible change.
-Check your resulting gitweb configuration, please.
+If that is the case, then I think this series is worth picking up. So I
+thought I'd prod you on it (I'm happy to repost, too, if that's easier).
 
-Suggested-by: Drew Northup <drew.northup@maine.edu>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-Jakub Narebski wrote:
-
-> (Sidenote: I just noticed that if $GITWEB_CONFIG_SYSTEM eq $GITWEB_CONFIG,
-> then we don't need and should not re-read config file).
-
-This version addresses this issue.
-
- gitweb/INSTALL     |    8 +++++---
- gitweb/README      |    2 +-
- gitweb/gitweb.perl |   10 ++++++----
- 3 files changed, 12 insertions(+), 8 deletions(-)
-
-diff --git a/gitweb/INSTALL b/gitweb/INSTALL
-index 4964a67..0584919 100644
---- a/gitweb/INSTALL
-+++ b/gitweb/INSTALL
-@@ -98,15 +98,17 @@ Gitweb config file
- See also "Runtime gitweb configuration" section in README file
- for gitweb (in gitweb/README).
- 
--- You can configure gitweb further using the gitweb configuration file;
-+- You can configure gitweb further using the per-instance gitweb configuration file;
-   by default this is a file named gitweb_config.perl in the same place as
-   gitweb.cgi script. You can control the default place for the config file
-   using the GITWEB_CONFIG build configuration variable, and you can set it
--  using the GITWEB_CONFIG environment variable. If this file does not
--  exist, gitweb looks for a system-wide configuration file, normally
-+  using the GITWEB_CONFIG environment variable.
-+  gitweb also looks for a system-wide configuration file, normally
-   /etc/gitweb.conf. You can change the default using the
-   GITWEB_CONFIG_SYSTEM build configuration variable, and override it
-   through the GITWEB_CONFIG_SYSTEM environment variable.
-+  Settings from per-instance configuration file override those from
-+  system-wide configuration file.
- 
- - The gitweb config file is a fragment of perl code. You can set variables
-   using "our $variable = value"; text from "#" character until the end
-diff --git a/gitweb/README b/gitweb/README
-index a92bde7..334f13e 100644
---- a/gitweb/README
-+++ b/gitweb/README
-@@ -126,7 +126,7 @@ Runtime gitweb configuration
- 
- You can adjust gitweb behaviour using the file specified in `GITWEB_CONFIG`
- (defaults to 'gitweb_config.perl' in the same directory as the CGI), and
--as a fallback `GITWEB_CONFIG_SYSTEM` (defaults to /etc/gitweb.conf).
-+`GITWEB_CONFIG_SYSTEM` (defaults to /etc/gitweb.conf), in that order.
- The most notable thing that is not configurable at compile time are the
- optional features, stored in the '%features' variable.
- 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index e4ede13..0a23cb6 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -640,13 +640,15 @@ sub evaluate_gitweb_config {
- 	our $GITWEB_CONFIG = $ENV{'GITWEB_CONFIG'} || "++GITWEB_CONFIG++";
- 	our $GITWEB_CONFIG_SYSTEM = $ENV{'GITWEB_CONFIG_SYSTEM'} || "++GITWEB_CONFIG_SYSTEM++";
- 	# die if there are errors parsing config file
--	if (-e $GITWEB_CONFIG) {
--		do $GITWEB_CONFIG;
--		die $@ if $@;
--	} elsif (-e $GITWEB_CONFIG_SYSTEM) {
-+	if (-e $GITWEB_CONFIG_SYSTEM) {
- 		do $GITWEB_CONFIG_SYSTEM;
- 		die $@ if $@;
- 	}
-+	if ($GITWEB_CONFIG ne $GITWEB_CONFIG_SYSTEM &&
-+	    -e $GITWEB_CONFIG) {
-+		do $GITWEB_CONFIG;
-+		die $@ if $@;
-+	}
- }
- 
- # Get loadavg of system, to compare against $maxload.
--- 
-1.7.5
+-Peff
