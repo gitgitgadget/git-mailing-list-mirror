@@ -1,68 +1,91 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] add-interactive: shortcut to add hunk and quit
-Date: Mon, 16 May 2011 18:37:20 +0200
-Message-ID: <vpq4o4uwqin.fsf@bauges.imag.fr>
-References: <20110516162611.GA6960@mrq1.org>
+From: Raphael Zimmerer <killekulla@rdrz.de>
+Subject: [RFC/PATCH resend] gitk: Mark commits with notes with a yellow box.
+Date: Mon, 16 May 2011 18:40:29 +0200
+Message-ID: <20110516164029.GA28023@rdrz.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git list <git@vger.kernel.org>
-To: Hermann Gausterer <git-mailinglist@mrq1.org>
-X-From: git-owner@vger.kernel.org Mon May 16 18:37:57 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Paul Mackerras <paulus@samba.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 16 18:40:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QM0nq-0003hv-Mj
-	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 18:37:55 +0200
+	id 1QM0qS-0005EJ-Mj
+	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 18:40:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750963Ab1EPQhs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2011 12:37:48 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:52024 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750707Ab1EPQhs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2011 12:37:48 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p4GGbIu8020373
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 16 May 2011 18:37:18 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1QM0nI-0002X9-Lk; Mon, 16 May 2011 18:37:20 +0200
-In-Reply-To: <20110516162611.GA6960@mrq1.org> (Hermann Gausterer's message of
-	"Mon, 16 May 2011 18:26:11 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 16 May 2011 18:37:18 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p4GGbIu8020373
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1306168642.76172@8YVPtlBoS8uXQDkWYPJU0A
+	id S1752196Ab1EPQkb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2011 12:40:31 -0400
+Received: from rdrz.de ([217.160.107.209]:54130 "HELO rdrz.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751715Ab1EPQkb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2011 12:40:31 -0400
+Received: (qmail 20544 invoked by uid 1009); 16 May 2011 16:40:29 -0000
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173748>
 
-Hermann Gausterer <git-mailinglist@mrq1.org> writes:
+It is desirable to see at a glance which commits do contain notes.
+Therefore mark them with a yellow rectangle.
 
-> this combines the two commands "y"+"q" to one.
-> i use this if i know that this is the last hunk to add.
+That can be suppressed with `gitk --no-notes`.
 
-(please capitalize the "I", and actually, avoid saying "I" in a commit
-message)
+Signed-off-by: Raphael Zimmerer <killekulla@rdrz.de>
+---
 
-I'm not convinced this is useful enough to deserve a new command. The
-help message already starts being scary ...
+Maybe this patch is helpful. Sorry for any tcl/tk nonsense, it's not
+my first language...
 
-> +       Q - quit; stage this hunk but none of the remaining ones
+ gitk |   17 ++++++++++++++++-
+ 1 files changed, 16 insertions(+), 1 deletions(-)
 
-The explanation shouldn't start with "quit" I think. I'd say basically
-"stage this hunk and quit" or "stage this hunk but none of the remaining
-ones".
-
+diff --git a/gitk b/gitk
+index 4cde0c4..b182c75 100755
+--- a/gitk
++++ b/gitk
+@@ -1674,8 +1674,9 @@ proc parsecommit {id contents listed} {
+     if {$comdate != {}} {
+ 	set cdate($id) $comdate
+     }
++    set hasnote [string first "\nNotes:\n" $contents]
+     set commitinfo($id) [list $headline $auname $audate \
+-			     $comname $comdate $comment]
++			     $comname $comdate $comment $hasnote]
+ }
+ 
+ proc getcommit {id} {
+@@ -5899,6 +5900,9 @@ proc drawcmittext {id row col} {
+ 	|| [info exists idotherrefs($id)]} {
+ 	set xt [drawtags $id $x $xt $y]
+     }
++    if {[lindex $commitinfo($id) 6] > 0} {
++	set xt [drawnotesign $xt $y]
++    }
+     set headline [lindex $commitinfo($id) 0]
+     set name [lindex $commitinfo($id) 1]
+     set date [lindex $commitinfo($id) 2]
+@@ -6345,6 +6349,17 @@ proc drawtags {id x xt y1} {
+     return $xt
+ }
+ 
++proc drawnotesign {xt y} {
++    global linespc canv fgcolor
++
++    set orad [expr {$linespc / 3}]
++    set t [$canv create rectangle [expr {$xt - $orad}] [expr {$y - $orad}] \
++	       [expr {$xt + $orad - 1}] [expr {$y + $orad - 1}] \
++	       -fill yellow -outline $fgcolor -width 1 -tags circle]
++    set xt [expr {$xt + $orad * 3}]
++    return $xt
++}
++
+ proc xcoord {i level ln} {
+     global canvx0 xspc1 xspc2
+ 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.7.5.rc1.12.gff46a
