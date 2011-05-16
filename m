@@ -1,91 +1,64 @@
-From: Raphael Zimmerer <killekulla@rdrz.de>
-Subject: [RFC/PATCH resend] gitk: Mark commits with notes with a yellow box.
-Date: Mon, 16 May 2011 18:40:29 +0200
-Message-ID: <20110516164029.GA28023@rdrz.de>
+From: Jim Meyering <jim@meyering.net>
+Subject: [PATCH] Documentation/git-fsck.txt: fix typo: unreadable -> unreachable
+Date: Mon, 16 May 2011 20:23:35 +0200
+Message-ID: <874o4uwllk.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paul Mackerras <paulus@samba.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 16 18:40:37 2011
+Content-Type: text/plain
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 16 20:23:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QM0qS-0005EJ-Mj
-	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 18:40:37 +0200
+	id 1QM2SL-0005h5-QZ
+	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 20:23:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752196Ab1EPQkb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2011 12:40:31 -0400
-Received: from rdrz.de ([217.160.107.209]:54130 "HELO rdrz.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751715Ab1EPQkb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2011 12:40:31 -0400
-Received: (qmail 20544 invoked by uid 1009); 16 May 2011 16:40:29 -0000
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752424Ab1EPSXo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2011 14:23:44 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1]:39040 "EHLO smtp1-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752303Ab1EPSXo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2011 14:23:44 -0400
+Received: from mx.meyering.net (unknown [82.230.74.64])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id CE7B79401F1
+	for <git@vger.kernel.org>; Mon, 16 May 2011 20:23:36 +0200 (CEST)
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id 7335260151; Mon, 16 May 2011 20:23:35 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173749>
 
-It is desirable to see at a glance which commits do contain notes.
-Therefore mark them with a yellow rectangle.
 
-That can be suppressed with `gitk --no-notes`.
 
-Signed-off-by: Raphael Zimmerer <killekulla@rdrz.de>
+Signed-off-by: Jim Meyering <meyering@redhat.com>
 ---
+ Documentation/git-fsck.txt |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-Maybe this patch is helpful. Sorry for any tcl/tk nonsense, it's not
-my first language...
+diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
+index c9ede79..a2a508d 100644
+--- a/Documentation/git-fsck.txt
++++ b/Documentation/git-fsck.txt
+@@ -26,7 +26,7 @@ index file, all SHA1 references in .git/refs/*, and all reflogs (unless
+ --no-reflogs is given) as heads.
 
- gitk |   17 ++++++++++++++++-
- 1 files changed, 16 insertions(+), 1 deletions(-)
+ --unreachable::
+-	Print out objects that exist but that aren't readable from any
++	Print out objects that exist but that aren't reachable from any
+ 	of the reference nodes.
 
-diff --git a/gitk b/gitk
-index 4cde0c4..b182c75 100755
---- a/gitk
-+++ b/gitk
-@@ -1674,8 +1674,9 @@ proc parsecommit {id contents listed} {
-     if {$comdate != {}} {
- 	set cdate($id) $comdate
-     }
-+    set hasnote [string first "\nNotes:\n" $contents]
-     set commitinfo($id) [list $headline $auname $audate \
--			     $comname $comdate $comment]
-+			     $comname $comdate $comment $hasnote]
- }
- 
- proc getcommit {id} {
-@@ -5899,6 +5900,9 @@ proc drawcmittext {id row col} {
- 	|| [info exists idotherrefs($id)]} {
- 	set xt [drawtags $id $x $xt $y]
-     }
-+    if {[lindex $commitinfo($id) 6] > 0} {
-+	set xt [drawnotesign $xt $y]
-+    }
-     set headline [lindex $commitinfo($id) 0]
-     set name [lindex $commitinfo($id) 1]
-     set date [lindex $commitinfo($id) 2]
-@@ -6345,6 +6349,17 @@ proc drawtags {id x xt y1} {
-     return $xt
- }
- 
-+proc drawnotesign {xt y} {
-+    global linespc canv fgcolor
-+
-+    set orad [expr {$linespc / 3}]
-+    set t [$canv create rectangle [expr {$xt - $orad}] [expr {$y - $orad}] \
-+	       [expr {$xt + $orad - 1}] [expr {$y + $orad - 1}] \
-+	       -fill yellow -outline $fgcolor -width 1 -tags circle]
-+    set xt [expr {$xt + $orad * 3}]
-+    return $xt
-+}
-+
- proc xcoord {i level ln} {
-     global canvx0 xspc1 xspc2
- 
--- 
-1.7.5.rc1.12.gff46a
+ --root::
+@@ -76,7 +76,7 @@ It tests SHA1 and general object sanity, and it does full tracking of
+ the resulting reachability and everything else. It prints out any
+ corruption it finds (missing or bad objects), and if you use the
+ '--unreachable' flag it will also print out objects that exist but
+-that aren't readable from any of the specified head nodes.
++that aren't reachable from any of the specified head nodes.
+
+ So for example
+
+--
+1.7.5.1.467.g1a85
