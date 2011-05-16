@@ -1,411 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (May 2011, #07; Sun, 15)
-Date: Sun, 15 May 2011 18:07:49 -0700
-Message-ID: <7vaaeno3kq.fsf@alter.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCHv3 3/9] pack-objects: Allow --max-pack-size to be used
+ together with --stdout
+Date: Mon, 16 May 2011 03:39:25 +0200
+Message-ID: <201105160339.25737.johan@herland.net>
+References: <201105151942.29219.johan@herland.net>
+ <1305495440-30836-4-git-send-email-johan@herland.net>
+ <BANLkTingc375Kzm-TBS4aQ_912pg7G03cQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 16 03:08:03 2011
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon May 16 03:39:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QLmHx-000609-UD
-	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 03:08:02 +0200
+	id 1QLmmT-0005NA-Ff
+	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 03:39:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751862Ab1EPBH5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 May 2011 21:07:57 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57284 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751603Ab1EPBH4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 May 2011 21:07:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6FE77422A;
-	Sun, 15 May 2011 21:10:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=j
-	xI4cCIv/mOT7xdiCoKXFUZC5mk=; b=vb+DBbkNgnc6WtedU81280ErVOs9IXplz
-	EAZtEM0w1Pxryq53KRVA8qy/7naYZGB7Ix8hF2RVmdK7qqxqeUOD+3AXqQGkLi0T
-	V60JWDhcUo7mEHknusir5ESMvIsDMJdU4vS5NneUVepbHXv1nv0HQhfzh023cvSE
-	UebgoamVJE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=xFX
-	7i0r4oHU6awXJKw3LvrR80CVjSjAwrGMIZWQur+TTdFpWNEmHZh1QBm9nhCRxSO+
-	4OC1LRpOVIGJDcRA34f2f0x02lqk20khCEeiPo5Kq0Fl3VNlWjx0Yxxq7WqTVjrR
-	BFgZ9kw6JED9fdP7CYwTrl4144ZLsHVwKTQWAg9M=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3BA314226;
-	Sun, 15 May 2011 21:10:01 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id DC5FE421F; Sun, 15 May 2011
- 21:09:58 -0400 (EDT)
-X-master-at: c565cb452c1e20babe4d0632c58e0f11a9af30c4
-X-next-at: 1a857915d643622bb71b1f0683f43acb1ddb48df
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 394B9C1A-7F59-11E0-A529-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+	id S1752550Ab1EPBj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 May 2011 21:39:28 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:43376 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752016Ab1EPBj2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 May 2011 21:39:28 -0400
+Received: from get-mta-scan04.get.basefarm.net ([10.5.16.4])
+ by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LL900K7ZLXQXT70@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 16 May 2011 03:39:26 +0200 (MEST)
+Received: from get-mta-scan04.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id BD3D11EEF911_DD0804EB	for <git@vger.kernel.org>; Mon,
+ 16 May 2011 01:39:26 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan04.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 2A7641EEF737_DD0804EF	for <git@vger.kernel.org>; Mon,
+ 16 May 2011 01:39:26 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LL900DF0LXQ9Y10@get-mta-in03.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 16 May 2011 03:39:26 +0200 (MEST)
+User-Agent: KMail/1.13.7 (Linux/2.6.38-ARCH; KDE/4.6.3; x86_64; ; )
+In-reply-to: <BANLkTingc375Kzm-TBS4aQ_912pg7G03cQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173698>
-
-Here are the topics that have been cooking.  Commits prefixed with '-' are
-only in 'pu' while commits prefixed with '+' are in 'next'.
-
-I am somewhat frustrated that I so almost no reviews on gitweb
-patches. Does this mean nobody is interested in viewing the projects
-on gitweb? How can we improve this lack of review bandwidth situation?
-
-The main part of this cycle is expected to run thru May, aiming for a
-feature freeze in early June.
-
-We are about to finish the week #3 of this cycle.
-
---------------------------------------------------
-[New Topics]
-
-* jc/replacing (2011-05-15) 5 commits
- - read_sha1_file(): allow selective bypassing of replacement mechanism
- - inline lookup_replace_object() calls
- - read_sha1_file(): get rid of read_sha1_file_repl() madness
- - t6050: make sure we test not just commit replacement
- - Declare lookup_replace_object() in cache.h, not in commit.h
- (this branch is used by jc/streaming.)
-
-Will merge to "next" by the middle of week #4.
-
-* jh/receive-count-limit (2011-05-14) 1 commit
- - receive-pack: Add receive.objectCountLimit to refuse push with too many objects
-
-* jl/submodule-conflicted-gitmodules (2011-05-14) 2 commits
- - Submodules: Don't parse .gitmodules when it contains, merge conflicts
- - test that git status works with merge conflict in, .gitmodules
-
-Will merge to "next" by the middle of week #4.
-
---------------------------------------------------
-[Stalled]
-
-* mg/diff-stat-count (2011-05-03) 2 commits
- - diff-options.txt: describe --stat-{width,name-width,count}
- - diff: introduce --stat-count to limit the stat lines
-
-There was a miscounting spotted.  Need another round.
-
-* jn/gitweb-js (2011-04-28) 13 commits
- - gitweb: Make JavaScript ability to adjust timezones configurable
- - gitweb.js: Add UI for selecting common timezone to display dates
- - gitweb: JavaScript ability to adjust time based on timezone
- - gitweb: Unify the way long timestamp is displayed
- - gitweb: Refactor generating of long dates into format_timestamp_html
- - gitweb.js: Provide getElementsByClassName method (if it not exists)
- - gitweb.js: Introduce code to handle cookies from JavaScript
- - gitweb.js: Extract and improve datetime handling
- - gitweb.js: Provide default values for padding in padLeftStr and padLeft
- - gitweb.js: Update and improve comments in JavaScript files
- - gitweb: Split JavaScript for maintability, combining on build
- - Remove gitweb/gitweb.cgi and other legacy targets from main Makefile
- - git-instaweb: Simplify build dependency on gitweb
-
-Rerolled.  Waiting for comments.
-
-* jn/ctags-more (2011-04-29) 3 commits
- - gitweb: Optional grouping of projects by category
- - gitweb: Modularized git_get_project_description to be more generic
- - gitweb: Split git_project_list_body in two functions
-
-Waiting for comments.
-
-* jc/require-work-tree-exists (2011-05-08) 1 commit
- - require-work-tree wants more than what its name says
-
-Make "git pull" run from a random place work as long as GIT_DIR and
-GIT_WORK_TREE are set up correctly.  I am not absolutely sure if that
-is a sane use case, though. May drop.
-
-* jc/add-delete-default (2011-04-27) 1 commit
- - git add: notice removal of tracked paths by default
-
-* jk/maint-merge-rename-create (2011-03-25) 3 commits
- - merge: turn on rewrite detection
- - merge: handle renames with replacement content
- - t3030: fix accidental success in symlink rename
-
-Peff wanted to reroll this.
-
-* jc/index-pack (2011-02-27) 5 commits
- - index-pack --verify: read anomalous offsets from v2 idx file
- - write_idx_file: need_large_offset() helper function
- - index-pack: --verify
- - write_idx_file: introduce a struct to hold idx customization options
- - index-pack: group the delta-base array entries also by type
-
-Still a WIP. Need to put histogram output into index-pack --verify to
-really kill verify-pack.
-
-* jc/dotdot-is-parent-directory (2011-05-04) 1 commit
- - specifying ranges: we did not mean to make ".." an empty set
-
-Updated documentation, but I do not feel a strong enough annoyance to push
-this forward. May drop.
-
-* jk/tag-contains (2010-07-05) 4 commits
- - Why is "git tag --contains" so slow?
- - default core.clockskew variable to one day
- - limit "contains" traversals based on commit timestamp
- - tag: speed up --contains calculation
-
-The idea of the bottom one is probably Ok, except that the use of object
-flags needs to be rethought, or at least the helper needs to be moved to
-builtin/tag.c to make it clear that it should not be used outside the
-current usage context.
-
-* jc/advice-about-to-lose-commit (2011-05-06) 1 commit
- - checkout: honor advice.detachedHead when reattaching to a branch
-
-Needs to tighten the advice to only govern the generic How-to part.
-
---------------------------------------------------
-[Cooking]
-
-* jc/maint-1.6.6-pathspec-stdin-and-cmdline (2011-05-11) 1 commit
- + setup_revisions(): take pathspec from command line and --stdin correctly
- (this branch is used by jc/magic-pathspec, jc/maint-1.7.4-pathspec-stdin-and-cmdline and jc/maint-pathspec-stdin-and-cmdline.)
-
-* jc/maint-1.7.4-pathspec-stdin-and-cmdline (2011-05-11) 1 commit
- - Merge branch 'jc/maint-1.6.6-pathspec-stdin-and-cmdline'
- (this branch uses jc/maint-1.6.6-pathspec-stdin-and-cmdline; is tangled with jc/magic-pathspec and jc/maint-pathspec-stdin-and-cmdline.)
-
-* jc/maint-pathspec-stdin-and-cmdline (2011-05-11) 2 commits
-  (merged to 'next' on 2011-05-15 at b4e3a75)
- + Merge branch 'jc/maint-1.7.4-pathspec-stdin-and-cmdline'
- + Merge branch 'jc/maint-1.6.6-pathspec-stdin-and-cmdline'
- (this branch uses jc/maint-1.6.6-pathspec-stdin-and-cmdline; is tangled with jc/magic-pathspec and jc/maint-1.7.4-pathspec-stdin-and-cmdline.)
-
-These are to fix an ancient bug where feeding "git log --stdin path" with
-an input that also has additional pathspec corrupted memory.
-
-* jl/read-tree-m-dry-run (2011-05-11) 1 commit
- - Teach read-tree the -n|--dry-run option
-
-Looked good. We _might_ want to make -n simply ignore -u, though.
-
-* jc/streaming (2011-05-15) 12 commits
- - streaming: read loose objects incrementally
- - sha1_file.c: expose helpers to read loose objects
- - streaming: read non-delta incrementally from a pack
- - streaming_write_entry(): support files with holes
- - streaming_write_entry(): use streaming API in write_entry()
- - streaming: a new API to read from the object store
- - write_entry(): separate two helper functions out
- - unpack_object_header(): make it public
- - sha1_object_info_extended(): hint about objects in delta-base cache
- - sha1_object_info_extended(): expose a bit more info
- - packed_object_info_detail(): do not return a string
- - Merge branches 'jc/convert', 'jc/bigfile' and 'jc/replacing' into jc/streaming
- (this branch uses jc/bigfile, jc/convert and jc/replacing.)
-
-* jc/bigfile (2011-05-13) 3 commits
-  (merged to 'next' on 2011-05-15 at 0ee7144)
- + Bigfile: teach "git add" to send a large file straight to a pack
- + index_fd(): split into two helper functions
- + index_fd(): turn write_object and format_check arguments into one flag
- (this branch is used by jc/streaming.)
-
-This covers the entry point for a big file to the system. Other parts that
-need to know about them are the exit point (i.e. write_entry()), packing
-and repacking (as long as bigfilethreshold is sane this should work),
-diffs and status (avoid slurping large binary in core only to do nothing,
-which we already should), and transport (receive-pack/fetch-pack call
-either unpack-objects or index-pack, which still want to hold the full
-object in-core and need to be fixed).
-
-* jc/convert (2011-05-09) 4 commits
-  (merged to 'next' on 2011-05-15 at 9d35a6e)
- + convert: make it harder to screw up adding a conversion attribute
- + convert: make it safer to add conversion attributes
- + convert: give saner names to crlf/eol variables, types and functions
- + convert: rename the "eol" global variable to "core_eol"
- (this branch is used by jc/streaming.)
-
-Will merge to "master" by the middle of week #4.
-
-* jk/blame-line-porcelain (2011-05-09) 3 commits
-  (merged to 'next' on 2011-05-15 at 93232b3)
- + blame: add --line-porcelain output format
- + blame: refactor porcelain output
- + add tests for various blame formats
-
-Will merge to "master" by the end of week #4.
-
-* ms/tagname-does-not-begin-with-dash (2011-05-10) 1 commit
-  (merged to 'next' on 2011-05-15 at 7df0461)
- + tag: disallow '-' as tag name
-
-Will merge to "master" by the end of week #4.
-
-* nd/sparse-co-fix (2011-05-10) 2 commits
-  (merged to 'next' on 2011-05-15 at 1a85791)
- + sparse checkout: do not eagerly decide the fate for whole directory
- + t1011: fix sparse-checkout initialization and add new file
-
-Will merge to "master" by the end of week #4.
-
-* kk/maint-prefix-in-config-mak (2011-05-09) 3 commits
-  (merged to 'next' on 2011-05-09 at 267a3aa)
- + Honor $(prefix) set in config.mak* when defining ETC_GIT*
- + Revert "Honor $(prefix) set in config.mak* when defining ETC_GIT* and sysconfdir"
-  (merged to 'next' on 2011-05-02 at c747ba3)
- + Honor $(prefix) set in config.mak* when defining ETC_GIT* and sysconfdir
-
-One revert and replace the whole thing from J6t. The end result looked
-reasonable.
-
-Will merge to "master" by the end of week #4.
-
-* ci/commit--interactive-atomic (2011-05-10) 6 commits
-  (merged to 'next' on 2011-05-11 at 7f36fd8)
- + Test atomic git-commit --interactive
- + Add commit to list of config.singlekey commands
- + Add support for -p/--patch to git-commit
- + Allow git commit --interactive with paths
- + t7501.8: feed a meaningful command
- + Use a temporary index for git commit --interactive
-
-Will merge to "master" by the end of week #4.
-
-* ab/i18n-scripts (2011-05-14) 48 commits
- - i18n: git-bisect bisect_next_check "You need to" message
- - i18n: git-bisect [Y/n] messages
- - i18n: git-bisect bisect_replay + $1 messages
- - i18n: git-bisect bisect_reset + $1 messages
- - i18n: git-bisect bisect_run + $@ messages
- - i18n: git-bisect die + eval_gettext messages
- - i18n: git-bisect die + gettext messages
- - i18n: git-bisect echo + eval_gettext message
- - i18n: git-bisect echo + gettext messages
- - i18n: git-bisect gettext + echo message
- - i18n: git-bisect add git-sh-i18n
- - i18n: git-stash drop_stash say/die messages
- - i18n: git-stash "unknown option" message
- - i18n: git-stash die + eval_gettext $1 messages
- - i18n: git-stash die + eval_gettext $* messages
- - i18n: git-stash die + eval_gettext messages
- - i18n: git-stash die + gettext messages
- - i18n: git-stash say + gettext messages
- - i18n: git-stash echo + gettext message
- - i18n: git-stash add git-sh-i18n
- - i18n: git-submodule "blob" and "submodule" messages
- - i18n: git-submodule "path not initialized" message
- - i18n: git-submodule "[...] path is ignored" message
- - i18n: git-submodule "Entering [...]" message
- - i18n: git-submodule $errmsg messages
- - i18n: git-submodule "Submodule change[...]" messages
- - i18n: git-submodule "cached cannot be used" message
- - i18n: git-submodule $update_module say + die messages
- - i18n: git-submodule die + eval_gettext messages
- - i18n: git-submodule say + eval_gettext messages
- - i18n: git-submodule echo + eval_gettext messages
- - i18n: git-submodule add git-sh-i18n
- - i18n: git-pull eval_gettext + warning message
- - i18n: git-pull eval_gettext + die message
- - i18n: git-pull die messages
- - i18n: git-pull add git-sh-i18n
- - i18n: git-am printf(1) message to eval_gettext
- - i18n: git-am core say messages
- - i18n: git-am "Falling back" say message
- - i18n: git-am "Apply?" message
- - i18n: git-am clean_abort messages
- - i18n: git-am cannot_fallback messages
- - i18n: git-am die messages
- - i18n: git-am echo + gettext message
- - i18n: git-am eval_gettext messages
- - i18n: git-am multi-line getttext $msg; echo
- - i18n: git-am one-line gettext $msg; echo
- - i18n: git-am add git-sh-i18n
- (this branch uses ab/i18n-scripts-basic.)
-
-* ab/i18n-scripts-basic (2011-05-14) 4 commits
- - Makefile: add xgettext target for *.sh files
- - git-sh-i18n.sh: add GIT_GETTEXT_POISON support
- - git-sh-i18n.sh: add no-op gettext() and eval_gettext() wrappers
- - git-sh-i18n--envsubst: our own envsubst(1) for eval_gettext()
- (this branch is used by ab/i18n-scripts.)
-
-Re-rolled to drop credits from the individual documentation pages
-and update the documentation.
-
-* mg/merge-ff-config (2011-05-06) 3 commits
-  (merged to 'next' on 2011-05-08 at 977b432)
- + tests: check git does not barf on merge.ff values for future versions of git
- + merge: introduce merge.ff configuration variable
- + Merge branch 'jc/maint-branch-mergeoptions' into mg/merge-ff-config
-
-Will merge to "master" by the end of week #4.
-
-* mk/grep-pcre (2011-05-09) 10 commits
-  (merged to 'next' on 2011-05-15 at d110135)
- + git-grep: do not die upon -F/-P when grep.extendedRegexp is set.
- + git-grep: Bail out when -P is used with -F or -E
- + grep: Add basic tests
- + configure: Check for libpcre
- + git-grep: Learn PCRE
- + grep: Extract compile_regexp_failed() from compile_regexp()
- + grep: Fix a typo in a comment
-  (merged to 'next' on 2011-05-08 at 5d3bede)
- + grep: Put calls to fixmatch() and regmatch() into patmatch()
- + contrib/completion: --line-number to git grep
- + Documentation: Add --line-number to git-grep synopsis
-
-* fc/completion-zsh (2011-05-10) 1 commit
- + git-completion: fix regression in zsh support
- (this branch is used by sg/completion-updates.)
-
-* sg/completion-updates (2011-05-10) 4 commits
-  (merged to 'next' on 2011-05-10 at eaf5398)
- + Merge branch 'fc/completion-zsh' into sg/completion-updates
- + Revert "completion: don't declare 'local words' to make zsh happy"
-  (merged to 'next' on 2011-05-08 at 761178c)
- + completion: move private shopt shim for zsh to __git_ namespace
-  (merged to 'next' on 2011-05-02 at 0fd443a)
- + completion: don't declare 'local words' to make zsh happy
- (this branch uses fc/completion-zsh.)
-
-This reverts the "local words only on bash" thingy and uses the
-workaround blessed by zsh folks instead.
-
-Will merge to "master" by the end of week #4.
-
-* ld/p4-preserve-user-names (2011-05-13) 3 commits
-  (merged to 'next' on 2011-05-15 at bdedb60)
- + git-p4: warn if git authorship won't be retained
-  (merged to 'next' on 2011-05-11 at bc14314)
- + git-p4: small improvements to user-preservation
-  (merged to 'next' on 2011-04-29 at 25116c8)
- + git-p4: add option to preserve user names
-
-Will merge to "master" by the end of week #4.
-
-* jc/magic-pathspec (2011-05-12) 13 commits
-  (merged to 'next' on 2011-05-12 at 656c8b5)
- + t3703: Skip tests using directory name ":" on Windows
-  (merged to 'next' on 2011-05-11 at 86d1d6d)
- + revision.c: leave a note for "a lone :" enhancement
- + Merge branch 'jc/maint-1.6.6-pathspec-stdin-and-cmdline'
-  (merged to 'next' on 2011-05-11 at aaad95e)
- + t3703, t4208: add test cases for magic pathspec
- + rev/path disambiguation: further restrict "misspelled index entry" diag
- + fix overslow :/no-such-string-ever-existed diagnostics
- + fix overstrict :<path> diagnosis
- + grep: use get_pathspec() correctly
- + pathspec: drop "lone : means no pathspec" from get_pathspec()
- + Revert "magic pathspec: add ":(icase)path" to match case insensitively"
-  (merged to 'next' on 2011-04-25 at 788cd46)
- + magic pathspec: add ":(icase)path" to match case insensitively
- + magic pathspec: futureproof shorthand form
- + magic pathspec: add tentative ":/path/from/top/level" pathspec support
- (this branch uses jc/maint-1.6.6-pathspec-stdin-and-cmdline; is tangled with jc/maint-1.7.4-pathspec-stdin-and-cmdline and jc/maint-pathspec-stdin-and-cmdline.)
-
-Will merge to "master" by the end of week #4.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173699>
+
+On Monday 16 May 2011, Shawn Pearce wrote:
+> On Sun, May 15, 2011 at 14:37, Johan Herland <johan@herland.net> wrote:
+> > Currently we refuse combining --max-pack-size with --stdout since
+> > there's no way to make multiple packs when the pack is written to
+> > stdout. However, we want to be able to limit the maximum size of the
+> > pack created by --stdout (and abort pack-objects if we are unable to
+> > meet that limit).
+> > 
+> > Therefore, when used together with --stdout, we reinterpret
+> > --max-pack-size to indicate the maximum pack size which - if exceeded
+> > - will cause pack-objects to abort with an error message.
+> 
+> ...
+> 
+> >                if (pack_to_stdout) {
+> > +                       if (nr_written != nr_remaining)
+> > +                               die("unable to make pack within the pack size"
+> > +                                   " limit (%lu bytes)", pack_size_limit);
+> 
+> I think this is too late. We have already output a bunch of data, up
+> to the size limit at this point. If the size limit is non-trivial
+> (e.g. 5 MB) we have already sent most of that to the remote side, and
+> its already written some of that out to disk.
+> 
+> I'd like this to be a soft limit derived from the reused object sizes.
+> When planning the pack by looking at where we will reuse an object
+> from, sum those sizes. If the sum of these sizes would break this
+> limit, then we abort before even writing the pack header out.
+
+I agree, but it's currently late Sunday (early Monday), and after
+looking at this for a while, I'm no longer thinking straight.
+If someone that groks the pack-objects internal could help out, I'd be
+really grateful. AFAICS, we need to drill into prepare_pack() to find
+the details needed to estimate the total pack size, but I don't know
+exactly which data structure(s) holds the data needed. We probably need
+to accumulate a pack size estimate in find_deltas(), and then sum those
+across the threads, before we finally compare the total estimate to
+pack_size_limit prior to calling write_pack_file().
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
