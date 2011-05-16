@@ -1,68 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 08/11] streaming_write_entry(): support files with holes
-Date: Mon, 16 May 2011 07:39:20 -0700
-Message-ID: <7v62pan207.fsf@alter.siamese.dyndns.org>
-References: <1305505831-31587-1-git-send-email-gitster@pobox.com>
- <1305505831-31587-9-git-send-email-gitster@pobox.com>
- <BANLkTi=VKb44yYuXdKLxrvFCVkfsDZSb4Q@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git commit -a reports untracked files after a clone
+Date: Mon, 16 May 2011 10:55:35 -0400
+Message-ID: <20110516145535.GA25930@sigill.intra.peff.net>
+References: <7B399C74-8048-42BA-8672-9D7964F24888@goli.at>
+ <7v39kgr5ln.fsf@alter.siamese.dyndns.org>
+ <4501A58F-46F8-410C-BCEF-DD2FC10BC3A5@goli.at>
+ <20110516103829.GA23889@sigill.intra.peff.net>
+ <7C2AE1EE-4CAE-4E86-A53C-C97BE1F2573B@goli.at>
+ <20110516120825.GA24418@sigill.intra.peff.net>
+ <1D7CF554-A4AC-49EF-A095-9B05167BC458@goli.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 16 16:39:34 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Philipp Metzler <phil@goli.at>
+X-From: git-owner@vger.kernel.org Mon May 16 16:55:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QLyxJ-0005Ic-Jk
-	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 16:39:33 +0200
+	id 1QLzCz-000678-Nl
+	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 16:55:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755305Ab1EPOj3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2011 10:39:29 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49355 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751812Ab1EPOj2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2011 10:39:28 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 78A425C35;
-	Mon, 16 May 2011 10:41:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gAtJHNcXpThW310LqW0D171UZ7g=; b=tcC+gd
-	PwLjrVMvYAeVLC8WlYVyMlp28Ys7nfhTJnmeb7/ZGW4X2FL6gFF4qwbG5i8U2SP3
-	3OuRWEM/Vql4Z70OtZ4HiEsXPCz3jzDmFeVjBitbtOIp1geSs24HmaIanG5UZb9+
-	T5Hy6Y0ZhG7t6wJ425NgLBlGdhOeaj4yLOOJg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oIAAzDXf5BIVpZDyR/iZIxJW/p3W3KU5
-	qR8ocGaCLYPY+GHzBha9H44HBhJLh4rUWDbsGb9RrvQfTThpnxHIMTTPeNAFSHWW
-	n75HNVc2oV+0zHE4MQpuzRt+ZXofLC74EUG3FokqxucGZ4VYZGvn3l1xxelgbkhv
-	Rq3vCWWEJzQ=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 50DB15C31;
-	Mon, 16 May 2011 10:41:31 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 753E05C30; Mon, 16 May 2011
- 10:41:28 -0400 (EDT)
-In-Reply-To: <BANLkTi=VKb44yYuXdKLxrvFCVkfsDZSb4Q@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Mon, 16 May 2011 17:53:39 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 96DF65B6-7FCA-11E0-9C1D-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+	id S1755812Ab1EPOzk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2011 10:55:40 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60489
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755755Ab1EPOzk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2011 10:55:40 -0400
+Received: (qmail 14953 invoked by uid 107); 16 May 2011 14:57:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 16 May 2011 10:57:39 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 May 2011 10:55:35 -0400
+Content-Disposition: inline
+In-Reply-To: <1D7CF554-A4AC-49EF-A095-9B05167BC458@goli.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173738>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+On Mon, May 16, 2011 at 02:38:33PM +0200, Philipp Metzler wrote:
 
-> On Mon, May 16, 2011 at 7:30 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> One typical use of a large binary file is to hold a sparse on-disk hash
->> table with a lot of holes. Help preserving the holes with lseek().
->
-> Should that be done only with big enough holes? Random zeros may
-> increase the number of syscalls unnecessarily.
+> Could be a race condition / heisenbug yep. The result of "git commit
+> -a" differs - the directories vcs-svn and xdiff are there all the time
+> but not the others. The only constant thing is that the command "git
+> status" always "cleans up" everything. Another run:
 
-I think that is a valid concern, but doesn't the code do that already?
+OK, I'm making some progress. I can replicate on Linux with:
+
+  $ git config core.ignorecase true
+  $ git clone git foo
+  $ cd foo && git commit -a
+
+which gives a bunch of directories which contain tracked contents. Doing
+"git status" makes the problem go away, but then doing this makes it
+come back:
+
+  $ rm .git/index
+  $ git read-tree --reset HEAD
+
+And like you, it doesn't trigger with "-uall".
+
+So it is something about:
+
+  1. A fresh index that is perhaps missing stat information for some
+     entries.
+
+  2. Stopping the traversal at the directory boundary rather than
+     looking at details of each directory ("-uall").
+
+  3. core.ignorecase
+
+But it is definitely repeatable. Which is good, because that will make
+it easier to track down. :)
+
+I'll see what I can do, but it may not be today.
+
+-Peff
