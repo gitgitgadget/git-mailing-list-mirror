@@ -1,59 +1,141 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 08/11] streaming_write_entry(): support files with holes
-Date: Mon, 16 May 2011 17:53:39 +0700
-Message-ID: <BANLkTi=VKb44yYuXdKLxrvFCVkfsDZSb4Q@mail.gmail.com>
-References: <1305505831-31587-1-git-send-email-gitster@pobox.com> <1305505831-31587-9-git-send-email-gitster@pobox.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: RFC proposal: set git defaults options from config
+Date: Mon, 16 May 2011 07:02:56 -0400
+Message-ID: <20110516110256.GB23889@sigill.intra.peff.net>
+References: <D80C1130-8DE6-457E-B203-FCF25B8ED72C@gmail.com>
+ <4DCB88C1.20105@drmicha.warpmail.net>
+ <20110512080425.GA11870@sigill.intra.peff.net>
+ <4DCB96F9.2020700@drmicha.warpmail.net>
+ <20110512082210.GA16813@sigill.intra.peff.net>
+ <4DCBF01F.9040009@warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 16 12:54:17 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	David Pisoni <dpisoni@gmail.com>,
+	GIt Mailing List <git@vger.kernel.org>,
+	Git Maintainer <gitster@pobox.com>
+To: Michael J Gruber <drmicha@warpmail.net>
+X-From: git-owner@vger.kernel.org Mon May 16 13:03:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QLvRJ-0003VI-4e
-	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 12:54:17 +0200
+	id 1QLvZp-0006nw-DM
+	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 13:03:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753742Ab1EPKyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2011 06:54:11 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:56142 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753592Ab1EPKyK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2011 06:54:10 -0400
-Received: by bwz15 with SMTP id 15so3607682bwz.19
-        for <git@vger.kernel.org>; Mon, 16 May 2011 03:54:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=jAf+pLNA01yGY9+DeJjBa16ny2Am7fhhUrMSRDVgGls=;
-        b=sqWsOfHt7d6czW75xxKxEBI7+XB/1BG0rgG9bLKjro0NUveGNCLCA5UmUTl/kgYf1V
-         ypNrIDye3dkKWiXy1iF9bumhyTGGsMTpabpp+zKWY7y5TByqMbu5smByIZ3Gs1dJcre3
-         6XXHH/zuUClInlRqjP3um6FgY97Wsec1IXXQ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=TyQqG3azGn1tYTvycWYy/cHuZjrMvmvTC90kW6Xk4P/LijzUEA/lC39db0vqqLdf7t
-         jG1m36lV8er1hiQhBN56SVDORZYw5Y9KAgfFmVC6UJHcQgE8wiU9H/fo36WPNwREamw2
-         FgKQ/pg0kYTL7n7D+tBoA4CQzfKfkdcCwLrLA=
-Received: by 10.204.19.3 with SMTP id y3mr3905470bka.180.1305543249137; Mon,
- 16 May 2011 03:54:09 -0700 (PDT)
-Received: by 10.204.46.71 with HTTP; Mon, 16 May 2011 03:53:39 -0700 (PDT)
-In-Reply-To: <1305505831-31587-9-git-send-email-gitster@pobox.com>
+	id S1754857Ab1EPLDB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2011 07:03:01 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:33344
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754400Ab1EPLDA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2011 07:03:00 -0400
+Received: (qmail 13350 invoked by uid 107); 16 May 2011 11:05:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 16 May 2011 07:05:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 May 2011 07:02:56 -0400
+Content-Disposition: inline
+In-Reply-To: <4DCBF01F.9040009@warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173726>
 
-On Mon, May 16, 2011 at 7:30 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> One typical use of a large binary file is to hold a sparse on-disk hash
-> table with a lot of holes. Help preserving the holes with lseek().
+On Thu, May 12, 2011 at 04:35:11PM +0200, Michael J Gruber wrote:
 
-Should that be done only with big enough holes? Random zeros may
-increase the number of syscalls unnecessarily.
--- 
-Duy
+> Mechanism
+> =========
+> 
+> I propose the following mechanism for setting default command line
+> options from the config:
+> 
+> options.<cmd> = <value>
+> 
+> is a "multivar" in git-config speak, i.e. it can appear multiple times.
+> When running "git <cmd> <opts>", our wrapper executes
+> 
+> git <cmd> <values> <opt>
+> 
+> where <values> is determined by the following rule in pseudocode:
+> 
+> if $GIT_OPTIONS_<cmd> is unset:
+>   <values> := empty
+> else:
+>   for <value> in $(git config --get-all options.cmd):
+>     if <value> matches the regexp in $GIT_OPTIONS_<CMD>:
+>       append <value> to <values>
+
+As a user, how would I active this for all commands when not running a
+script? I see why you defensively say "if unset, don't enable this
+feature at all".  As a user, should I have to set GIT_OPTIONS_CMD for
+everything that I want to configure? I hope not.
+
+I think we need one extra variable to say generally "I am in strict
+plumbing mode" or "I am in user mode". So you would want something like:
+
+  if $GIT_STRICT is unset:
+    <values> := $(git config --get-all options.cmd)
+  else if $GIT_OPTIONS_<cmd> is unset:
+    <values> := empty
+  else:
+    [match values by regex as you do]
+
+But then you have a question of when GIT_STRICT gets set. An obvious
+place is to set it in the git wrapper, so that "git foo" will have its
+subcommands properly strict.
+
+But that doesn't help scripts which are not called from the git wrapper;
+they need to set GIT_STRICT themselves, so we need a phase-in period for
+them to do so.
+
+> NOTES
+> =====
+> 
+> * This can be done by commit_pager_choice() or by a call right after
+> that in those places.
+
+Ah, so reading this, I have a sense that you were intending to make the
+equivalent of GIT_STRICT be "am I running a pager" (or "am I outputting
+to a terminal)?
+
+Which is somewhat safer, as it is purely something for programs to opt
+into. And as a heuristic, it's mostly good. I can come up with examples
+where a script might not want to allow some options to be passed, even
+though output is to the user, but they are probably stretching (e.g.,
+something like "--allow-textconv" in a script that is meant to restrict
+the users rights).
+
+> * regexp notation/version to be decided
+
+I think I would just as soon have a list of allowed options. We're
+hopefully not doing the regex over the value of the option, like
+"--pretty=foo is OK, but --pretty=bar is not". It seems like this
+unnecessarily complicate the common case (you don't care what the value
+is, but you have to tack on (|=.*) to every option matcher), and the
+added flexibility is probably not going to be useful.
+
+So I expect options regex are just going to look like:
+
+  --(foo|bar|baz|bleep)
+
+at which point we might as well just make it a list. And for the sake of
+sanity, we may want to provide some default lists for scripts to OK,
+like some minimal set of rev limiting options or something, so that
+scripts don't end up specifying the same sets over and over.
+
+> * We should probably do this for long options only (and insert
+> "--<value>" rather than "<value>" to spare the "--" in config).
+
+Yeah. Anything that doesn't have a long option and is useful enough to
+be used in this way should probably get one.
+
+> Taking cover...
+
+I dunno. It's not so bad. But I think we probably want to start with an
+environment variable to say "I am a script, be strict", let scripts
+start picking that up, and then phase in the ability to turn on options
+selectively.
+
+-Peff
