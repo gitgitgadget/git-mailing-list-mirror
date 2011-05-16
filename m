@@ -1,64 +1,57 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: [PATCH] Documentation/git-fsck.txt: fix typo: unreadable -> unreachable
-Date: Mon, 16 May 2011 20:23:35 +0200
-Message-ID: <874o4uwllk.fsf@rho.meyering.net>
+From: Andrew Wong <andrew.w@sohovfx.com>
+Subject: Re: [BUG] rebase -p loses commits
+Date: Mon, 16 May 2011 15:42:40 -0400
+Message-ID: <4DD17E30.6030607@sohovfx.com>
+References: <20110516103354.GA23564@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 16 20:23:54 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon May 16 21:42:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QM2SL-0005h5-QZ
-	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 20:23:50 +0200
+	id 1QM3gp-0006l1-6g
+	for gcvg-git-2@lo.gmane.org; Mon, 16 May 2011 21:42:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752424Ab1EPSXo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2011 14:23:44 -0400
-Received: from smtp1-g21.free.fr ([212.27.42.1]:39040 "EHLO smtp1-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752303Ab1EPSXo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2011 14:23:44 -0400
-Received: from mx.meyering.net (unknown [82.230.74.64])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id CE7B79401F1
-	for <git@vger.kernel.org>; Mon, 16 May 2011 20:23:36 +0200 (CEST)
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id 7335260151; Mon, 16 May 2011 20:23:35 +0200 (CEST)
+	id S1754919Ab1EPTmo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2011 15:42:44 -0400
+Received: from smtp03.beanfield.com ([76.9.193.172]:60434 "EHLO
+	smtp03.beanfield.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754568Ab1EPTmn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2011 15:42:43 -0400
+X-Spam-Status: No
+X-beanfield-mta03-MailScanner-From: andrew.w@sohovfx.com
+X-beanfield-mta03-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,
+	score=-2.9, required 6, autolearn=not spam, ALL_TRUSTED -1.00,
+	BAYES_00 -1.90)
+X-beanfield-mta03-MailScanner: Found to be clean
+X-beanfield-mta03-MailScanner-ID: 1QM3gf-000Esl-2V
+Received: from [66.207.196.114] (helo=[192.168.1.112])
+	by mta01.beanfield.com with esmtpa (Exim 4.76)
+	(envelope-from <andrew.w@sohovfx.com>)
+	id 1QM3gf-000Esl-2V; Mon, 16 May 2011 15:42:41 -0400
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101026 SUSE/3.0.10 Thunderbird/3.0.10
+In-Reply-To: <20110516103354.GA23564@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173750>
 
+On 05/16/2011 06:33 AM, Jeff King wrote:
+> I was trying to reproduce somebody's issue with a minimal test case, and
+> I ran across this setup wherein "rebase -p" silently drops some commits:
+>   
 
+This particular patch seems to have something to do with the bug:
+    d80d6bc146232d81f1bb4bc58e5d89263fd228d4
+    http://thread.gmane.org/gmane.comp.version-control.git/98247/focus=98251
 
-Signed-off-by: Jim Meyering <meyering@redhat.com>
----
- Documentation/git-fsck.txt |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+However, I can't figure out what the "odd boundary case" that this patch
+was supposed to fix is. Anyone have any idea?
 
-diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
-index c9ede79..a2a508d 100644
---- a/Documentation/git-fsck.txt
-+++ b/Documentation/git-fsck.txt
-@@ -26,7 +26,7 @@ index file, all SHA1 references in .git/refs/*, and all reflogs (unless
- --no-reflogs is given) as heads.
-
- --unreachable::
--	Print out objects that exist but that aren't readable from any
-+	Print out objects that exist but that aren't reachable from any
- 	of the reference nodes.
-
- --root::
-@@ -76,7 +76,7 @@ It tests SHA1 and general object sanity, and it does full tracking of
- the resulting reachability and everything else. It prints out any
- corruption it finds (missing or bad objects), and if you use the
- '--unreachable' flag it will also print out objects that exist but
--that aren't readable from any of the specified head nodes.
-+that aren't reachable from any of the specified head nodes.
-
- So for example
-
---
-1.7.5.1.467.g1a85
+Andrew
