@@ -1,70 +1,76 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCHv3 6/9] receive-pack: Prepare for addition of the new
- 'limit-*' family of capabilities
-Date: Mon, 16 May 2011 15:16:37 -0700
-Message-ID: <BANLkTinxTWK3wgp-WcC9rBpCe2-uXeSE=w@mail.gmail.com>
-References: <201105151942.29219.johan@herland.net> <1305495440-30836-1-git-send-email-johan@herland.net>
- <1305495440-30836-7-git-send-email-johan@herland.net> <7vaaenm957.fsf@alter.siamese.dyndns.org>
- <BANLkTimUWHiUdxbBfvvcomqmzQxLPhUsZA@mail.gmail.com> <7vhb8ujo4e.fsf@alter.siamese.dyndns.org>
- <BANLkTimge=rPe6K3rYRqYDGQTN_wbi3a2A@mail.gmail.com> <7vd3jijnwe.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] connect: treat generic proxy processes like ssh
+ processes
+Date: Mon, 16 May 2011 16:12:50 -0700
+Message-ID: <7vy626i6j1.fsf@alter.siamese.dyndns.org>
+References: <20110516063944.GB25731@sigill.intra.peff.net>
+ <20110516064607.GA19078@sigill.intra.peff.net> <4DD181C6.4020104@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johan Herland <johan@herland.net>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Johan Herland <johan@herland.net>,
 	Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 17 00:17:25 2011
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Tue May 17 01:13:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QM66N-0004ei-A0
-	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 00:17:23 +0200
+	id 1QM6yP-0002tE-OF
+	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 01:13:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754276Ab1EPWRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2011 18:17:18 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:56856 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752860Ab1EPWRS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2011 18:17:18 -0400
-Received: by qwk3 with SMTP id 3so2514880qwk.19
-        for <git@vger.kernel.org>; Mon, 16 May 2011 15:17:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=HvQ29Y+n1rwpyJ6wPWF7ZJLryC6M6CRDw4o2WIyOwss=;
-        b=TjySYi7jtSuxugh7Gra6ZKeuoz4fDOPTqU79XrQWibvinAJdiKQqT3KUq4ggwvPTXy
-         s1qh8uyW0AN4bYRsQNGBwqYrb9Zl+PT1LSV21OgbZ06QWN80mnmT0tdOOJETPFbMfEMG
-         zCu/pIjSadl2T4WwYvQNbgn0UoUUQNaM0zj50=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=k8sD7DMDDJJF2WZA+RX3hqG5UlKSkNe0F5BG/fVdNqye72rbB4iUQ0GGq59H0eIgUA
-         4S9aZi3FyCIm/50/Xcsq7KnbeKXNTK0O5cjxHZX/VoAdS/Ze553AeTpr2qIsVKLgbjid
-         TEFrJcXM3Ah14DdY6We4qhLBj23hq/Q76SjsU=
-Received: by 10.229.90.90 with SMTP id h26mr3778676qcm.103.1305584237117; Mon,
- 16 May 2011 15:17:17 -0700 (PDT)
-Received: by 10.229.229.5 with HTTP; Mon, 16 May 2011 15:16:37 -0700 (PDT)
-In-Reply-To: <7vd3jijnwe.fsf@alter.siamese.dyndns.org>
+	id S1756173Ab1EPXNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2011 19:13:07 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56392 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755766Ab1EPXNG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2011 19:13:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 26F15555E;
+	Mon, 16 May 2011 19:15:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Qn/i7OyBYzODsN2MAvjcZpiY9hg=; b=LGY1gv
+	DFBpIOUV9V+YNUw4/UfH1ZdzKJX3l1dlLxwov4vdMdcXbZ4HkW6ZThh8Ffg6803X
+	Nu4PaGSNOAEjZN5Dy2j681nrp96cEOYnNKjv2E3r4pfcJuCTWuMsrndfjhl4uRNh
+	tbmDzxWIqZCFh/JO575JeYfRVDU3BWWSdTNTU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kb+/LPPthlJ3XVRrdjVvBbrXmRZ69jFG
+	8d9GnTrWloWtL958C108/NdXMQeialfKwu/2q4aXUuHIZvAA0FxvxEDbzkmDTkxw
+	eAiUvnZZf9bZvjThtTnOXiRtruL8hOFP1B8+Sc4w5GMsXPOFtlkpxlZsKlHAKJTU
+	bsuPlY0YgMU=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C94DD555D;
+	Mon, 16 May 2011 19:15:06 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 58B6F555A; Mon, 16 May 2011
+ 19:14:59 -0400 (EDT)
+In-Reply-To: <4DD181C6.4020104@kdbg.org> (Johannes Sixt's message of "Mon, 16
+ May 2011 21:57:58 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 56572CD4-8012-11E0-96AC-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173772>
 
-Heya,
+Johannes Sixt <j6t@kdbg.org> writes:
 
-On Mon, May 16, 2011 at 15:12, Junio C Hamano <gitster@pobox.com> wrote:
-> I do not see any point in deciding that right now without even knowing
-> what kind of strings (short? mostly ascii? etc.) we would typically want
-> as payload and tie our hands with a poor decision we would end up making
-> out of thin air.
+> At this point, proxy->argv would point to automatic storage; but we
+> need argv[0] in finish_command() for error reporting. In my
+> implementation, I xmalloced the pointer array and leaked it. (And
+> that's probably the reason that I never submitted the patch.) I
+> wouldn't dare to make argv just static because this limits us to have
+> just one open connection at a time established via git_proxy_connect().
 
-Ok, fair enough. :)
+Good point. If we really care, I would imagine that struct child_process
+can gain a boolean flag to tell finish_command() that the argv[] needs, so
+I do not think leakage here is such a big deal.
 
--- 
-Cheers,
+Will squash all three hunks in.  Assuming no_fork first and updating conn
+as we discover what kind of URL we have feels natural.
 
-Sverre Rabbelier
+Thanks, both.
