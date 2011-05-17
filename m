@@ -1,96 +1,80 @@
-From: Stephen Bash <bash@genarts.com>
+From: Jay Soffian <jaysoffian@gmail.com>
 Subject: Re: Maint-only commits
-Date: Tue, 17 May 2011 10:20:38 -0400 (EDT)
-Message-ID: <32603283.31527.1305642038158.JavaMail.root@mail.hq.genarts.com>
+Date: Tue, 17 May 2011 11:13:55 -0400
+Message-ID: <BANLkTinAGwJvJuZ_1Y1SK_EhrC0bj2cHHw@mail.gmail.com>
 References: <7vliy6jo8c.fsf@alter.siamese.dyndns.org>
+	<32603283.31527.1305642038158.JavaMail.root@mail.hq.genarts.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 17 16:20:53 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Stephen Bash <bash@genarts.com>
+X-From: git-owner@vger.kernel.org Tue May 17 17:14:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QML8m-0002Lv-Qo
-	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 16:20:53 +0200
+	id 1QMLyE-0006CS-JK
+	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 17:14:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755063Ab1EQOUr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2011 10:20:47 -0400
-Received: from hq.genarts.com ([173.9.65.1]:50085 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754788Ab1EQOUq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2011 10:20:46 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 0E36AEA2324;
-	Tue, 17 May 2011 10:20:45 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id wG0rSgox4Gga; Tue, 17 May 2011 10:20:38 -0400 (EDT)
-Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 5D2B4EA231F;
-	Tue, 17 May 2011 10:20:38 -0400 (EDT)
-In-Reply-To: <7vliy6jo8c.fsf@alter.siamese.dyndns.org>
-X-Mailer: Zimbra 6.0.10_GA_2692 (ZimbraWebClient - SAF3 (Mac)/6.0.10_GA_2692)
+	id S1755484Ab1EQPN4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 May 2011 11:13:56 -0400
+Received: from mail-px0-f173.google.com ([209.85.212.173]:48844 "EHLO
+	mail-px0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752687Ab1EQPNz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 May 2011 11:13:55 -0400
+Received: by pxi16 with SMTP id 16so403487pxi.4
+        for <git@vger.kernel.org>; Tue, 17 May 2011 08:13:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=z4+D4t1fGSwlcEOMgIQlknbZJXdjWZn0iw6lvW9h2lY=;
+        b=hyvfQcm2GLKMVsMCJRhLcOqHimj299+EHSKrqB1GPUFBixINJ6hm+sZWye2TQV+NVw
+         NUKZImh8TZBxnnTNaW58rH9z3psT6jv2yvSAaT9mMsVdPTY7NIeF2EbuUvNUGEM9Ny+p
+         Cz8ONjt171NXDrbD5GVpNpusQeRWY7ENXSsWk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=TmT05NNFpaANGWoL3RANQXndirVExyMn5btSJbAWBU3uxmUc9svE5U5p+jDDWqEwBC
+         2qCDSsZK1AS5JFY5VnuNTYP7Y8I4i7/OS10I0Zkv0Yvv03bYIF7zN4KByzcoxTJVhm/8
+         YC9FQCBJh5H2NXiEldxSV3K7QBy7wgerUCP4o=
+Received: by 10.143.28.6 with SMTP id f6mr500891wfj.169.1305645235206; Tue, 17
+ May 2011 08:13:55 -0700 (PDT)
+Received: by 10.142.200.15 with HTTP; Tue, 17 May 2011 08:13:55 -0700 (PDT)
+In-Reply-To: <32603283.31527.1305642038158.JavaMail.root@mail.hq.genarts.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173802>
 
------ Original Message -----
-> From: "Junio C Hamano" <gitster@pobox.com>
-> Sent: Monday, May 16, 2011 6:05:07 PM
-> Subject: Re: Maint-only commits
-> 
-> > In my office we've recently run into three separate fixes required
-> > on our maintenance branch that should not be included in master (our
-> > normal workflow is to make changes on maint, tag, release, and then merge
-> > to master). Normally these "maint only" fixes are interspersed with
-> > commits that should go back into master. In the past the "maint
-> > only" commits were rare, so I'd carefully use "merge -s ours" to avoid
-> > including the "maint only" changes in master. But now I'm wondering
-> > if there's a better process/workflow?
-> 
-> I wonder what these "maint only" changes are, and the most importantly, if
-> you know if a change you are about to commit is "maint only" material
-> at the time you make it, or if it is something you would notice
-> retroactively only when it is time to prepare merging maint back to master.
+On Tue, May 17, 2011 at 10:20 AM, Stephen Bash <bash@genarts.com> wrote=
+:
+> That's certainly a valid approach. =C2=A0I discussed it around the of=
+fice and got push back on adding additional complexity to our branching=
+ model. =C2=A0So I'll document the "our" merge approach and perhaps rev=
+isit the branching model at the beginning of the next development cycle=
+=2E
 
-The three recent cases have all been fixes that, due to refactoring on master, require different changes on the two branches (these specific changes have been non-conflicting in a merge sense, but incorrect in a code sense).  All three cases were known ahead of time as "maint only", but unfortunately the first one still snuck through the merge process and had to be reverted on master.
+At @work we use something like this. We have three branches:
 
-> Assuming the former, you can use exactly the same discipline you already
-> use to keep your 'maint' free of commits you make on 'master' to add
-> new features that shouldn't be in the maintenance track.
+- trunk (aka master, but it started as a git-svn branch long ago...)
+- release
+- maint
 
-... <snip> ...
+Our maint merges to both trunk and release, via an automated process
+except when a conflict requires human intervention.
 
-> - You would keep for-both-maint-and-master, maint, and master
-> branches.
-> 
-> - You treat the for-both-maint-and-master branch the way maint branch
-> in projects like git itself is treated, i.e. everything can go to
-> master. Commit changes that are meant for both maint and master on
-> this branch, either by committing directly on it, or forking a topic from a
-> commit on that branch and committing on top of it.
-> 
-> - You merge for-both-maint-and-master into maint and master at
-> appropriate times.
-> 
-> - You never merge maint to master, nor merge master to maint.
-> 
-> - You commit changes that should only go to master on master, either
-> by committing directly on it, or forking a topic from a commit on that
-> branch and committing on top of it.
-> 
-> - You commit changes that should only go to maint on maint, either by
-> committing directly on it, or forking a topic from a commit on that
-> branch and committing on top of it.
+Occasionally someone will put something on trunk by accident that
+should've gone to maint. We revert it from trunk, cherry-pick to
+maint, and let it merge back down.
 
-That's certainly a valid approach.  I discussed it around the office and got push back on adding additional complexity to our branching model.  So I'll document the "our" merge approach and perhaps revisit the branching model at the beginning of the next development cycle.
+(Aside, I've found hudson^wjenkins to be great for misc jobs like this
+and prefer it to cron these days for non-sytem-related periodic
+events.)
 
-Thanks,
-Stephen
+j.
