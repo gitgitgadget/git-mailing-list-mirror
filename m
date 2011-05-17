@@ -1,106 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jay Soffian <jaysoffian@gmail.com>
 Subject: Re: [PATCH v3] Add log.abbrevCommit config variable
-Date: Tue, 17 May 2011 11:50:47 -0700
-Message-ID: <7vy625f9fc.fsf@alter.siamese.dyndns.org>
+Date: Tue, 17 May 2011 15:08:03 -0400
+Message-ID: <BANLkTikW2Y0iAW6jiVMN9ifvTezY+iO+bg@mail.gmail.com>
 References: <BANLkTi=og+e6JW8t+sCvkFJUnR=SrFtWGg@mail.gmail.com>
- <1305413341-56450-1-git-send-email-jaysoffian@gmail.com>
+	<1305413341-56450-1-git-send-email-jaysoffian@gmail.com>
+	<7vy625f9fc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 17 20:51:08 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 17 21:08:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMPMH-0007fI-Qm
-	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 20:51:06 +0200
+	id 1QMPcw-0002mk-6L
+	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 21:08:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756482Ab1EQSu7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2011 14:50:59 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51269 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756469Ab1EQSu5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2011 14:50:57 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6F3DF58EE;
-	Tue, 17 May 2011 14:53:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TYt8RMw3YPWShEw9pKOXOxLFEF0=; b=XyoXmC
-	dtz5i6t3h7Bo4QuRdNzbHAzKtsc5q3lOJMw73tTSg5C+xrDsWvRu3+f9XYYN771r
-	9d502G6TE43FA3biTzdIEHV2tpDrmLJglq/yQ0rEHmnOnZQsqs9L+Yb4emkvw9KE
-	26M6wOHvWPSqM+ySxs+uU4FPTDfRk/i4SBvu4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IG1URmgNEX8t0ozvm6BJ4QZR2E4oY3Ba
-	OF28DoYMKOF+gsVHvitscU6rwP0SpXYMSXYZBsS5T4tqX0NuV7+ZR4T0WnXKQ0Io
-	c7SjZmqZqZURUXPCY8PDaJqeUG/QpIiLbSd11ffyUhk3t3PtSNKbX/TuWMy9Sxqd
-	j5s5HOt+87E=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3145058ED;
-	Tue, 17 May 2011 14:53:00 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0DEAD58E5; Tue, 17 May 2011
- 14:52:55 -0400 (EDT)
-In-Reply-To: <1305413341-56450-1-git-send-email-jaysoffian@gmail.com> (Jay
- Soffian's message of "Sat, 14 May 2011 18:49:01 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E2F40348-80B6-11E0-B2DD-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+	id S1756432Ab1EQTIH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 May 2011 15:08:07 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:37780 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756428Ab1EQTID convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 May 2011 15:08:03 -0400
+Received: by pzk9 with SMTP id 9so367894pzk.19
+        for <git@vger.kernel.org>; Tue, 17 May 2011 12:08:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=29QZD9SMNfUWpWynv+eLl8dW1ViLY+xi8Jx9aQRPvqY=;
+        b=oabmxEs2ieyod2HXz2KkQyK2cBaoYy5Ba4nz14xHN89kvQtfozY8P+qwyDp+kQBSaT
+         YfnbDu+4LqabqQRjVbvHWmCaE+89LscUC3AIEgX2i/H+pqA6UqiqGVRgLU9zVtrZHcje
+         1XneRO9LlcrZtwhmvlxUWSJeZmm2yO0eIAqzw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=lVAvqK0g9OZQlvR+adVTmADsCTjE0aH1tsWc2UNQ80adQw+qZvK2XZDRC6ibDTpFsJ
+         FjCwa+6hlq4QhCAIHYHQAF1VDdLgjyUKnxM/4n952fIvbcbAZWNu78EcO3/9nYKof8gN
+         YH1LTAoWHERwWfm9shZ4J+uaEdQO13I+4s1T4=
+Received: by 10.142.107.12 with SMTP id f12mr593923wfc.226.1305659283070; Tue,
+ 17 May 2011 12:08:03 -0700 (PDT)
+Received: by 10.142.200.15 with HTTP; Tue, 17 May 2011 12:08:03 -0700 (PDT)
+In-Reply-To: <7vy625f9fc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173819>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+On Tue, May 17, 2011 at 2:50 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Care to explain why your check has to be different?
 
-> @@ -137,6 +139,12 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
->  	    && rev->commit_format == CMIT_FMT_RAW)
->  		decoration_style = 0;
->  
-> +	/* ditto for log.abbrevCommit */
-> +	if (!rev->abbrev_commit_given && rev->abbrev_commit
-> +	    && rev->commit_format == CMIT_FMT_RAW)
-> +		rev->abbrev_commit = 0;
-> +
-> +
+It doesn't. I thought through it poorly.
 
-This is not exactly "ditto"; the lines before this hunk look like this:
+>=C2=A0If there is no reason
+> to use a different logic, then a natural thing to do is to rewrite th=
+e
+> existing decoration logic and add yours like this:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (rev->pretty_given && rev->commit_forma=
+t =3D=3D CMIT_FMT_RAW) {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* "log --pret=
+ty=3Draw" is special */
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!decoratio=
+n_given)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0decoration_style =3D 0;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!abbrev_co=
+mmit_given)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0rev->abbrev_commit =3D 0;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
 
-	/*
-	 * defeat log.decorate configuration interacting with --pretty=raw
-	 * from the command line.
-	 */
-	if (!decoration_given && rev->pretty_given
-	    && rev->commit_format == CMIT_FMT_RAW)
-		decoration_style = 0;
+It would be lovely if you could squash that in.
 
-The check for pretty-given and commit-format being raw is to catch only
-the case where the command line said --pretty=raw, excluding any case the
-commit-format is set to raw without any explicit --pretty=raw on the
-command line.  So at the logical level, this one should be read as if it
-was written like this:
+Thanks,
 
-	if (rev->pretty_given && rev->commit_format == CMIT_FMT_RAW) {
-        	/* "log --pretty=raw" is special */
-        	if (!decoration_given)
-			decoration_style = 0;
-	}
-
-even though the existing one makes it look as if checking decoration-given
-and pretty-given together when commit-format is set to raw.
-
-Care to explain why your check has to be different?  If there is no reason
-to use a different logic, then a natural thing to do is to rewrite the
-existing decoration logic and add yours like this:
-
-	if (rev->pretty_given && rev->commit_format == CMIT_FMT_RAW) {
-        	/* "log --pretty=raw" is special */
-        	if (!decoration_given)
-			decoration_style = 0;
-		if (!abbrev_commit_given)
-			rev->abbrev_commit = 0;
-	}
+j.
