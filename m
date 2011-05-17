@@ -1,88 +1,69 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: ACLs for GIT
-Date: Tue, 17 May 2011 21:11:44 +0530
-Message-ID: <BANLkTik6dP9su_K5WxUYkcGUL76J5ObvMg@mail.gmail.com>
-References: <4DD02876.1040404@bbn.com>
-	<20110515201608.GX6349@kiwi.flexilis.local>
-	<4DD12517.1000308@bbn.com>
-	<BANLkTikwEivOiQVV-B=g3pP_StXAa8CVwg@mail.gmail.com>
-	<BANLkTi=9vp+ibVa3tQzXbZSeYATKwmF60Q@mail.gmail.com>
-	<BANLkTimPbQe7DGmR0VvDkU3=ZNjcAu7axw@mail.gmail.com>
-	<BANLkTi=W2CtA2YaV_spru1E9pTWgoge3Kw@mail.gmail.com>
+From: Andrew Wong <andrew.w@sohovfx.com>
+Subject: Re: [BUG] rebase -p loses commits
+Date: Tue, 17 May 2011 12:07:38 -0400
+Message-ID: <4DD29D4A.8090703@sohovfx.com>
+References: <20110516103354.GA23564@sigill.intra.peff.net> <7vfwoel6vw.fsf@alter.siamese.dyndns.org> <4DD1C277.9070605@sohovfx.com> <20110517054432.GC10048@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Martin L Resnick <mresnick@bbn.com>,
-	"R. Tyler Croy" <tyler@monkeypox.org>, git@vger.kernel.org
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue May 17 17:59:39 2011
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 17 18:08:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMMgL-0003DT-Tt
-	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 17:59:38 +0200
+	id 1QMMoU-0000B3-0t
+	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 18:08:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755546Ab1EQP7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2011 11:59:33 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:57070 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755341Ab1EQP7c (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2011 11:59:32 -0400
-Received: by vxi39 with SMTP id 39so437266vxi.19
-        for <git@vger.kernel.org>; Tue, 17 May 2011 08:59:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=RsvXWIAmCeX14aKmFYTXmfD1Ovl1EJlSGr9TtboRIFg=;
-        b=PUd+8oXaBZMDfrjzNyJO2lF+l7wEY3/Ij/s1AwmS2MmM0fYY1ynQg0JyqI30FRTQHO
-         hXqe1N9zx1iTgODE++cmLQDgqgC11+A/CNlfZcrGvI1p9WwArYH3eHysO2ahz8uFtubr
-         FXlZ4l2XKTAkYdl2JQcyRvTDkkXALH1VHPaYs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=D/Zq10J+dsWxVn/xktFfZcxjskK/OO0wv7/HwjRtoA09njscmiWRd1U+0N3t37p5wF
-         +kWToNRWsD2bJe6iIJGj9NDdK2USrRJo5zXqWIc8aIIU18R5atiOQqxgo8WqfhgwMLbS
-         QAEtYaecjBa6OuFMcOorAqvKuPlDnd5iZYBmM=
-Received: by 10.52.68.147 with SMTP id w19mr782070vdt.152.1305646905005; Tue,
- 17 May 2011 08:41:45 -0700 (PDT)
-Received: by 10.52.164.101 with HTTP; Tue, 17 May 2011 08:41:44 -0700 (PDT)
-In-Reply-To: <BANLkTi=W2CtA2YaV_spru1E9pTWgoge3Kw@mail.gmail.com>
+	id S1755685Ab1EQQH5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 May 2011 12:07:57 -0400
+Received: from smtp01.beanfield.com ([76.9.193.170]:63143 "EHLO
+	smtp03.beanfield.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755341Ab1EQQH4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2011 12:07:56 -0400
+X-Spam-Status: No
+X-beanfield-mta01-MailScanner-From: andrew.w@sohovfx.com
+X-beanfield-mta01-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,
+	score=-2.9, required 6, autolearn=not spam, ALL_TRUSTED -1.00,
+	BAYES_00 -1.90)
+X-beanfield-mta01-MailScanner: Found to be clean
+X-beanfield-mta01-MailScanner-ID: 1QMMo7-000LXV-Fe
+Received: from [66.207.196.114] (helo=[192.168.1.112])
+	by mta01.beanfield.com with esmtpa (Exim 4.76)
+	(envelope-from <andrew.w@sohovfx.com>)
+	id 1QMMo7-000LXV-Fe; Tue, 17 May 2011 12:07:39 -0400
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101026 SUSE/3.0.10 Thunderbird/3.0.10
+In-Reply-To: <20110517054432.GC10048@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173811>
 
-On Tue, May 17, 2011 at 7:36 PM, Shawn Pearce <spearce@spearce.org> wrote:
-> On Tue, May 17, 2011 at 05:08, Sitaram Chamarty <sitaramc@gmail.com> wrote:
+On 05/17/2011 01:44 AM, Jeff King wrote:
+> Is it really the first-parentness here that is important to the
+> asymmetry? I thought it was more the fact that "feature" has the merge,
+> but "master" does not.
+To know the fact that "feature" has the merge, don't we need to know
+that "feature" is the first parent of the merge? For example, if "F" is
+the head of "feature" and we're on "*" as a detached head, then we can
+only say "feature" has the merge if we know "feature" is the first parent.
+> So the outcomes are the same, but the reasoning is different. And isn't
+> that what happens with Junio's patch (I tried a simple test and it
+> seemed to be)?
+I agree that the outcome of both should be the same. Junio's patch will
+fix the case when we do "git rebase -p", but the bug will still appear
+as soon as we do "git rebase -p -i", which I think is where the source
+of the problem is. So we should be looking to fix the issue with "git
+rebase -p -i", which will also fix "git rebase -p" too.
 
-> Yes. Or, he has a SHA-1 he suspects is a tree or blob and lists that
-> in a tree he pushes to a branch he can write to. Now he can fetch that
-> branch back, and obtain that object whose SHA-1 he has but whose
-> contents he does not have.
+I think it's pretty reasonable for "rebase -p -i" to pick the merge
+commit, which is already happening with "git rebase -p F". A possible
+use case for picking the merge commit is to do a fixup/squash/reword on
+"G" in the following graph:
 
-Good point.  Not too hard too I guess, unlike this one:
-
-> There is another attack that is incredibly improbable, but that JGit
-
-[snipped lots of complicated stuff]
-
-> assume this theoretical attack is too improbable to succeed. (And it
-> is given what we know about SHA-1 today.)
-
-IMO most of the theoretical attacks are just that.  They advance the
-state of the art but I've not heard of any of them actually being used
-in a real life scenario.  The sad fact is there are much weaker links
-to be found if you look around and you don't need all this.
-
->> Having two repos is still the best plan ;-)
->
-> Yes, but tell that to Gerrit Code Review users. They really use the
-> branch ACL features. :-)
-
-Interesting.  I do a fair amount of git consulting and training
-(inhouse) and this has only come up once so far.  I haven't seen it as
-being that common at all.
+      F---G---H
+     /   /
+    B---M
