@@ -1,80 +1,110 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: Maint-only commits
-Date: Tue, 17 May 2011 11:13:55 -0400
-Message-ID: <BANLkTinAGwJvJuZ_1Y1SK_EhrC0bj2cHHw@mail.gmail.com>
-References: <7vliy6jo8c.fsf@alter.siamese.dyndns.org>
-	<32603283.31527.1305642038158.JavaMail.root@mail.hq.genarts.com>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: [PATCHv2] gitweb: Use GITWEB_CONFIG_SYSTEM even if
+	GITWEB_CONFIG does exist
+Date: Tue, 17 May 2011 11:19:49 -0400
+Message-ID: <1305645589.11864.20.camel@drew-northup.unet.maine.edu>
+References: <201105142137.16541.jnareb@gmail.com>
+	 <20110514210603.GA11502@elie> <201105151153.08826.jnareb@gmail.com>
+	 <201105161153.24382.jnareb@gmail.com>
+	 <7v39kdj3hw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Stephen Bash <bash@genarts.com>
-X-From: git-owner@vger.kernel.org Tue May 17 17:14:03 2011
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	"John 'Warthog9' Hawley" <warthog9@kernel.org>,
+	Petr Baudis <pasky@suse.cz>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 17 17:25:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMLyE-0006CS-JK
-	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 17:14:02 +0200
+	id 1QMM92-0005dn-Ms
+	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 17:25:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755484Ab1EQPN4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 May 2011 11:13:56 -0400
-Received: from mail-px0-f173.google.com ([209.85.212.173]:48844 "EHLO
-	mail-px0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752687Ab1EQPNz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 May 2011 11:13:55 -0400
-Received: by pxi16 with SMTP id 16so403487pxi.4
-        for <git@vger.kernel.org>; Tue, 17 May 2011 08:13:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=z4+D4t1fGSwlcEOMgIQlknbZJXdjWZn0iw6lvW9h2lY=;
-        b=hyvfQcm2GLKMVsMCJRhLcOqHimj299+EHSKrqB1GPUFBixINJ6hm+sZWye2TQV+NVw
-         NUKZImh8TZBxnnTNaW58rH9z3psT6jv2yvSAaT9mMsVdPTY7NIeF2EbuUvNUGEM9Ny+p
-         Cz8ONjt171NXDrbD5GVpNpusQeRWY7ENXSsWk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=TmT05NNFpaANGWoL3RANQXndirVExyMn5btSJbAWBU3uxmUc9svE5U5p+jDDWqEwBC
-         2qCDSsZK1AS5JFY5VnuNTYP7Y8I4i7/OS10I0Zkv0Yvv03bYIF7zN4KByzcoxTJVhm/8
-         YC9FQCBJh5H2NXiEldxSV3K7QBy7wgerUCP4o=
-Received: by 10.143.28.6 with SMTP id f6mr500891wfj.169.1305645235206; Tue, 17
- May 2011 08:13:55 -0700 (PDT)
-Received: by 10.142.200.15 with HTTP; Tue, 17 May 2011 08:13:55 -0700 (PDT)
-In-Reply-To: <32603283.31527.1305642038158.JavaMail.root@mail.hq.genarts.com>
+	id S1755449Ab1EQPZG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 May 2011 11:25:06 -0400
+Received: from basalt.its.maine.edu ([130.111.32.66]:44864 "EHLO
+	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755120Ab1EQPZE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2011 11:25:04 -0400
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id p4HFJxUY022302
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 17 May 2011 11:20:04 -0400
+In-Reply-To: <7v39kdj3hw.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-URT-Metrics: basalt.its.maine.edu 1060; Body=6 Fuz1=6 Fuz2=6
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: p4HFJxUY022302
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1306250428.26256@u4gA2X/hw6u6PNf9zVF/cA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173803>
 
-On Tue, May 17, 2011 at 10:20 AM, Stephen Bash <bash@genarts.com> wrote=
-:
-> That's certainly a valid approach. =C2=A0I discussed it around the of=
-fice and got push back on adding additional complexity to our branching=
- model. =C2=A0So I'll document the "our" merge approach and perhaps rev=
-isit the branching model at the beginning of the next development cycle=
-=2E
 
-At @work we use something like this. We have three branches:
+On Mon, 2011-05-16 at 22:32 -0700, Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > This commit changes gitweb behavior so that configuration in
+> > per-instance configuration file can _override_ settings from
+> > system-wide configuration file.
+> >
+> > Note that strictly speaking it is backwards incompatible change.
+> 
+> I am not sure if we gain enough from this change.  As the system-wide one
+> can be arbitrarily overriden by per-instance one, the goal of this change
+> cannot be to make sure that the system administrator can enforce the
+> system wide policy over all the gitweb instances.
 
-- trunk (aka master, but it started as a git-svn branch long ago...)
-- release
-- maint
+Currently if there is a local configuration file
+_there_is_no_system-wide_policy_. That's the problem.
 
-Our maint merges to both trunk and release, via an automated process
-except when a conflict requires human intervention.
+> I think the goal is to let per-instance configuration have an easy way to
+> inherit from a common sane default, but if that is the case, wouldn't it
+> be a lot safer and more backward compatible way to just instruct people to
+> include that common default configuration at the beginning of per-instance
+> configuration file instead?  After all, you would need to give some advice
+> like this ...
 
-Occasionally someone will put something on trunk by accident that
-should've gone to maint. We revert it from trunk, cherry-pick to
-maint, and let it merge back down.
+If that's currently being done anywhere this change will not cause any
+pain. If the default /etc/gitweb.conf contains a set of commented-out
+sample entries, as it should in the case of something like this, then
+there will be no problems. As the local configurations will override the
+system configuration items one by one, instead of wholesale and
+outright, those items most likely to be a problem will be set correctly
+in my estimation.
 
-(Aside, I've found hudson^wjenkins to be great for misc jobs like this
-and prefer it to cron these days for non-sytem-related periodic
-events.)
+>From my day job I happen to know that asking the user to please respect
+the existing policy by including it in their local configuration policy
+doesn't work out very well. What usually happens is the user removes
+whatever is there and replaces it with whatever the tutorial they are
+currently looking at has in it. I highly doubt we'll change all of the
+tutorials out on the Internet, or all of the mere mortals using them. We
+can change Gitweb.
 
-j.
+The difference between the current situation and the resultant one can
+be summed up thusly:
+
+Currently
+/etc/gitweb.conf only: System policy
+gitweb_config.perl only: Local policy
+both: Local policy ONLY
+
+New
+/etc/gitweb.conf only: System policy
+gitweb_config.perl only: Local policy
+both: Local policy overrides System policy on a per-configurable item
+basis
+
+-- 
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
