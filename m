@@ -1,67 +1,124 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG] rebase -p loses commits
-Date: Tue, 17 May 2011 12:12:34 -0400
-Message-ID: <20110517161234.GA21388@sigill.intra.peff.net>
-References: <20110516103354.GA23564@sigill.intra.peff.net>
- <7vfwoel6vw.fsf@alter.siamese.dyndns.org>
- <4DD1C277.9070605@sohovfx.com>
- <20110517054432.GC10048@sigill.intra.peff.net>
- <4DD29D4A.8090703@sohovfx.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Subject: Re: git svn info --url lacks username
+Date: Tue, 17 May 2011 18:51:56 +0200
+Message-ID: <BANLkTik1n8SCVu1-EwVrhJ7rURtk16eA9A@mail.gmail.com>
+References: <BANLkTinCx4pEycjGmWA=jZ8os7R3tZWXNQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Andrew Wong <andrew.w@sohovfx.com>
-X-From: git-owner@vger.kernel.org Tue May 17 18:12:42 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 17 18:52:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMMt0-0003Mz-2m
-	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 18:12:42 +0200
+	id 1QMNVB-0004sK-Mm
+	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 18:52:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755621Ab1EQQMh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2011 12:12:37 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58124
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754367Ab1EQQMg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2011 12:12:36 -0400
-Received: (qmail 30071 invoked by uid 107); 17 May 2011 16:14:37 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 17 May 2011 12:14:37 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 May 2011 12:12:34 -0400
-Content-Disposition: inline
-In-Reply-To: <4DD29D4A.8090703@sohovfx.com>
+	id S1755605Ab1EQQv6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 May 2011 12:51:58 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:43314 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755327Ab1EQQv5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 May 2011 12:51:57 -0400
+Received: by bwz15 with SMTP id 15so664786bwz.19
+        for <git@vger.kernel.org>; Tue, 17 May 2011 09:51:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=8ME/4cUpIU21zUkqno2aS64u9fYrhHydqB3laVmfV2k=;
+        b=rCZWnrN3gZoAX9xrE3S+os7Cp/BkPZlPzqF5JKsn0chFrtMI+H26NdlP5hmi1t80bH
+         BhW8yaQypFY8V1pZmw4XGP628poxgoO1rM0eQKyOnP7F8ghKxyk0Tt6zaqwj2flWVEJF
+         H6CmQvSlxGpCiM3oVZEzW6cj/tdRUcrLpU1Qc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=ScyQqUP4deIN9V2MKxvb1UcrZABGyXU9VswYi2qRnUlh4L09d4HSd92CyaxO+w6mxr
+         YXw2V3K/vM07o0YlzQlKSOaOpeGr7LPTdQyd+agY/UTaGiiHXsUK0+8lAlgPu/tKGn4w
+         tmGrk/pmODj8eg8O4LsRiXwpk2UjkMh5CS+KQ=
+Received: by 10.204.74.7 with SMTP id s7mr807363bkj.57.1305651116344; Tue, 17
+ May 2011 09:51:56 -0700 (PDT)
+Received: by 10.204.116.17 with HTTP; Tue, 17 May 2011 09:51:56 -0700 (PDT)
+In-Reply-To: <BANLkTinCx4pEycjGmWA=jZ8os7R3tZWXNQ@mail.gmail.com>
+X-Google-Sender-Auth: 17AcHBfzBB4PRRQzFXN3HnpUNW4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173813>
 
-On Tue, May 17, 2011 at 12:07:38PM -0400, Andrew Wong wrote:
+On Thu, May 12, 2011 at 14:13, Geert Uytterhoeven <geert@linux-m68k.org=
+> wrote:
+> I'm using git-svn. Due to local policies and for compatibility with t=
+he other
+> developers using plain svn, I have to lock a file before committing a=
+nything to
+> the svn repository.
+>
+> Hence I wrote a small wrapper script around "git svn dcommit", which =
+basically
+> does:
+>
+> | SVNROOT=3D$( ( cd ./$(git rev-parse --show-cdup) && git svn info --=
+url ) )
+> | SVNLOCKFILE=3D$SVNROOT/lockfile
+> |
+> | svn lock $SVNLOCKFILE
+> | git svn dcommit $*
+> | svn unlock $SVNLOCKFILE
 
-> > Is it really the first-parentness here that is important to the
-> > asymmetry? I thought it was more the fact that "feature" has the merge,
-> > but "master" does not.
-> To know the fact that "feature" has the merge, don't we need to know
-> that "feature" is the first parent of the merge? For example, if "F" is
-> the head of "feature" and we're on "*" as a detached head, then we can
-> only say "feature" has the merge if we know "feature" is the first parent.
+[...]
 
-No, if "F" is the head of "feature", then it does _not_ have the merge.
-But it's not the merge that is important, it is really the fact that
-if we are rebasing "feature" on "master", that "master ^feature" is
-empty. IOW, we are already a superset. In this example, though, the
-merge is the thing that gives us that superset.
+> My .git/config has
+>
+> | [svn-remote "svn"]
+> | =C2=A0 =C2=A0 =C2=A0 =C2=A0 url =3D svn+ssh://user@server/project
+>
+> But "git svn info --url" only prints:
+>
+> | svn+ssh://server/project/sub/branches/branch
+>
+> i.e. the username part is missing.
+> Obviously "git svn dcommit" does use the correct URL.
 
-> I agree that the outcome of both should be the same. Junio's patch will
-> fix the case when we do "git rebase -p", but the bug will still appear
-> as soon as we do "git rebase -p -i", which I think is where the source
-> of the problem is. So we should be looking to fix the issue with "git
-> rebase -p -i", which will also fix "git rebase -p" too.
+[...]
 
-Ah, I see. Yes, in that case, we should definitely be fixing "git rebase
--p -i".
+> I tried, "git config --get svn-remote.svn.url", but that only gives m=
+e
+> "svn+ssh://user@server/project", i.e. it lacks the "/sub/branches/bra=
+nch" part.
+>
+> Do you have any idea what's going on, or how to fix it?
+> Shouldn't "git svn info --url" include the username?
 
--Peff
+I ended up adding:
+
+| SVNURL=3D$(git config --get svn-remote.svn.url)
+| case $SVNURL in svn+ssh://*@*)
+|         SVNROOT=3D${SVNURL%%@*}@${SVNROOT#svn+ssh://}
+|         ;;
+| esac
+
+so it hacks in the username from the config file.
+But I don't think that's the ideal solution?
+
+Gr{oetje,eeting}s,
+
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-=
+m68k.org
+
+In personal conversations with technical people, I call myself a hacker=
+=2E But
+when I'm talking to journalists I just say "programmer" or something li=
+ke that.
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 =C2=A0=C2=A0 -- Linus Torvalds
