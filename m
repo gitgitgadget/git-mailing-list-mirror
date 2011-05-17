@@ -1,117 +1,85 @@
-From: Hermann Gausterer <git-mailinglist@mrq1.org>
-Subject: [PATCH] add-interactive: shortcut to add hunk and quit
-Date: Tue, 17 May 2011 09:12:32 +0200
-Message-ID: <20110517071232.GA19396@mrq1.org>
-References: <7vboz1j4k9.fsf@alter.siamese.dyndns.org>
+From: Jesse Reynolds <jessedreynolds@gmail.com>
+Subject: error 'cannot create thread' doing clone or fetch
+Date: Tue, 17 May 2011 17:52:44 +0930
+Message-ID: <BANLkTi=p3CbQD_EzJATenGsxz5m3=KLtMA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="2oS5YaxWCcQjTEyO"
-Cc: Hermann Gausterer <git-mailinglist@mrq1.org>
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 17 09:12:42 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 17 10:22:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMESO-0005i8-R6
-	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 09:12:41 +0200
+	id 1QMFYL-0001xh-PM
+	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 10:22:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752690Ab1EQHMf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2011 03:12:35 -0400
-Received: from smtpout05.highway.telekom.at ([195.3.96.77]:3383 "EHLO
-	email.aon.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752687Ab1EQHMf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2011 03:12:35 -0400
-Received: (qmail 22915 invoked from network); 17 May 2011 07:12:32 -0000
-X-Spam-Checker-Version: SpamAssassin 3.2.0 (2007-05-01) on
-	WARSBL605.highway.telekom.at
-X-Spam-Level: 
-Received: from 93-82-42-90.adsl.highway.telekom.at (HELO mrq1.org) ([93.82.42.90])
-          (envelope-sender <git-mailinglist@mrq1.org>)
-          by smarthub90.highway.telekom.at (qmail-ldap-1.03) with SMTP
-          for <git@vger.kernel.org>; 17 May 2011 07:12:32 -0000
-Content-Disposition: inline
-In-Reply-To: <7vboz1j4k9.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752572Ab1EQIWt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 May 2011 04:22:49 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:37685 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751188Ab1EQIWq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2011 04:22:46 -0400
+Received: by wwa36 with SMTP id 36so283652wwa.1
+        for <git@vger.kernel.org>; Tue, 17 May 2011 01:22:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=AUQ3dw86GkAyZ0Y6Akvf+2gw+9O9L1Ag2ONKrIcob2I=;
+        b=kI+xL1sZ1l01NHpIHbFdGNZIY35EyoDRiPESBGrY6gqIp493UL/LxbgC9LgU2cLE7V
+         ywlaAJOFSvWIBBFLP95F0HyAgIQtZSCI6wlUtIR9goQ7YOCN530yejMj6UvCNOp9L5hY
+         cbZ6ZEgaMcYJKSpWoKnSQKzdPhXOUNkjyRVMA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=XmX3ewZblSv+q5Vj+zJUFikFVnCZ1c5vVWARRa5tdVtY8fMW3CikL2jb/Qy2LyAJ6v
+         eoQoZfz8AEfbbACZ+qAaTzNtJGkw4W+xq6flr/V8NPEBe+RvpKfCiFxugBqK0xonl3Ar
+         olnfKG9X4A9x4MZjayg9JEyrGNneEUe14bWEo=
+Received: by 10.216.235.158 with SMTP id u30mr301334weq.104.1305620564929;
+ Tue, 17 May 2011 01:22:44 -0700 (PDT)
+Received: by 10.216.39.205 with HTTP; Tue, 17 May 2011 01:22:44 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173793>
 
+Hello
 
---2oS5YaxWCcQjTEyO
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I have just installed git 1.7.5 on Solaris 9, SPARC, using a package
+from sunfreeware.com. I've created a new repository with 'git init'
+and done a commit. Now I'm trying to set up a shared repository but it
+seems there is some issue preventing git from creating a thread for
+the 'sideband demultiplexer'.
 
-this combines the two "add -i" commands "y"+"q" to one.
+First trying to do a git fetch --bare locally to create the shared
+repository fails:
 
-Signed-off-by: Hermann Gausterer <git-git-2011@mrq1.org>
----
- Documentation/git-add.txt |    1 +
- git-add--interactive.perl |    6 +++++-
- 2 files changed, 6 insertions(+), 1 deletions(-)
+$ git --bare init --shared
+Initialized empty shared Git repository in /pub/lots.git/
+$ git --bare fetch /home/jesse/src/lots master:master
+error: cannot create thread: Unknown error
+fatal: fetch-pack: unable to fork off sideband demultiplexer
+$ Broken Pipe
 
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index 9c1d395..329b720 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -280,6 +280,7 @@ patch::
-        y - stage this hunk
-        n - do not stage this hunk
-        q - quit; do not stage this hunk nor any of the remaining ones
-+       Q - stage this hunk but none of the remaining ones
-        a - stage this hunk and all later hunks in the file
-        d - do not stage this hunk nor any of the later hunks in the file
-        g - select a hunk to go to
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 4f08fe7..157a8a7 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -1123,6 +1123,7 @@ sub help_patch_cmd {
- y - $verb this hunk$target
- n - do not $verb this hunk$target
- q - quit; do not $verb this hunk nor any of the remaining ones
-+Q - $verb this hunk but none of the remaining ones
- a - $verb this hunk and all later hunks in the file
- d - do not $verb this hunk nor any of the later hunks in the file
- g - select a hunk to go to
-@@ -1313,7 +1314,7 @@ sub patch_update_file {
- 		   $hunk[$ix]{TYPE} eq 'deletion' ? ' deletion' :
- 		   ' this hunk'),
- 		  $patch_mode_flavour{TARGET},
--		  " [y,n,q,a,d,/$other,?]? ";
-+		  " [y,n,q,Q,a,d,/$other,?]? ";
- 		my $line =3D prompt_single_character;
- 		if ($line) {
- 			if ($line =3D~ /^y/i) {
-@@ -1366,6 +1367,9 @@ sub patch_update_file {
- 				next;
- 			}
- 			elsif ($line =3D~ /^q/i) {
-+				if ($line =3D~ /^Q/) {
-+					$hunk[$ix]{USE} =3D 1;
-+				}
- 				for ($i =3D 0; $i < $num; $i++) {
- 					if (!defined $hunk[$i]{USE}) {
- 						$hunk[$i]{USE} =3D 0;
---=20
-1.7.0.4
+I worked around the above error by using 'git clone --bare' instead.
+But now from a remote box I'm unable to do a clone over ssh for the
+same reason:
 
+$ git clone ssh://test03/pub/lots.git
+Cloning into lots...
+error: cannot create thread: Unknown error
+fatal: fetch-pack: unable to fork off sideband demultiplexer
+$ error: git upload-pack: git-pack-objects died with error.
+fatal: git upload-pack: aborting due to possible repository corruption
+on the remote side.
 
---2oS5YaxWCcQjTEyO
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+Any help greatly appreciated.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+I've searched the mailing list and online and can't seem to find
+anyone else having this issue. Then again my search skills don't seem
+to be what they once used to be!
 
-iD8DBQFN0h/gAdCXZ1Xu7u4RAn9LAJ9HCz2P0ivtE28ysmrIiP/icyw8JQCfbyQO
-w75Qy4cq0KiUT7Nbmr9lOmk=
-=8NbW
------END PGP SIGNATURE-----
-
---2oS5YaxWCcQjTEyO--
+Cheers
+Jesse
