@@ -1,110 +1,120 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: [PATCHv2] gitweb: Use GITWEB_CONFIG_SYSTEM even if
-	GITWEB_CONFIG does exist
-Date: Tue, 17 May 2011 11:19:49 -0400
-Message-ID: <1305645589.11864.20.camel@drew-northup.unet.maine.edu>
-References: <201105142137.16541.jnareb@gmail.com>
-	 <20110514210603.GA11502@elie> <201105151153.08826.jnareb@gmail.com>
-	 <201105161153.24382.jnareb@gmail.com>
-	 <7v39kdj3hw.fsf@alter.siamese.dyndns.org>
+From: <trast@student.ethz.ch>
+Subject: [PATCH] add -i: ignore terminal escape sequences
+Date: Tue, 17 May 2011 17:19:08 +0200
+Message-ID: <05ce7ccdb3f4e07724d430f6ea2a8c9730971c9d.1305645331.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	"John 'Warthog9' Hawley" <warthog9@kernel.org>,
-	Petr Baudis <pasky@suse.cz>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 17 17:25:13 2011
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Thomas Rast <trast@student.ethz.ch>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 17 17:25:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMM92-0005dn-Ms
-	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 17:25:13 +0200
+	id 1QMM9I-0005n2-4q
+	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 17:25:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755449Ab1EQPZG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2011 11:25:06 -0400
-Received: from basalt.its.maine.edu ([130.111.32.66]:44864 "EHLO
-	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755120Ab1EQPZE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2011 11:25:04 -0400
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id p4HFJxUY022302
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 17 May 2011 11:20:04 -0400
-In-Reply-To: <7v39kdj3hw.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-URT-Metrics: basalt.its.maine.edu 1060; Body=6 Fuz1=6 Fuz2=6
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p4HFJxUY022302
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1306250428.26256@u4gA2X/hw6u6PNf9zVF/cA
+	id S1755533Ab1EQPZW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 May 2011 11:25:22 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:2682 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755120Ab1EQPZV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2011 11:25:21 -0400
+X-Greylist: delayed 369 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 May 2011 11:25:20 EDT
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.289.1; Tue, 17 May
+ 2011 17:19:05 +0200
+Received: from localhost.localdomain (129.132.153.233) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.289.1; Tue, 17 May
+ 2011 17:19:09 +0200
+X-Mailer: git-send-email 1.7.5.1.520.g98107.dirty
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173804>
 
+From: Thomas Rast <trast@student.ethz.ch>
 
-On Mon, 2011-05-16 at 22:32 -0700, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
-> > This commit changes gitweb behavior so that configuration in
-> > per-instance configuration file can _override_ settings from
-> > system-wide configuration file.
-> >
-> > Note that strictly speaking it is backwards incompatible change.
-> 
-> I am not sure if we gain enough from this change.  As the system-wide one
-> can be arbitrarily overriden by per-instance one, the goal of this change
-> cannot be to make sure that the system administrator can enforce the
-> system wide policy over all the gitweb instances.
+On the author's terminal, the up-arrow input sequence is ^[[A, and
+thus fat-fingering an up-arrow into 'git checkout -p' is quite
+dangerous: git-add--interactive.perl will ignore the ^[ and [
+characters and happily treat A as "discard everything".
 
-Currently if there is a local configuration file
-_there_is_no_system-wide_policy_. That's the problem.
+As a band-aid fix, use Term::Cap to get all terminal capabilities.
+Then use the heuristic that any capability value that starts with ^[
+(i.e., \e in perl) must be a key input sequence.  Finally, given an
+input that starts with ^[, read more characters until we have read a
+full escape sequence, then return that to the caller.  We use a
+timeout of 0.5 seconds on the subsequent reads to avoid getting stuck
+if the user actually input a lone ^[.
 
-> I think the goal is to let per-instance configuration have an easy way to
-> inherit from a common sane default, but if that is the case, wouldn't it
-> be a lot safer and more backward compatible way to just instruct people to
-> include that common default configuration at the beginning of per-instance
-> configuration file instead?  After all, you would need to give some advice
-> like this ...
+Since none of the currently recognized keys start with ^[, the net
+result is that the sequence as a whole will be ignored and the help
+displayed.
 
-If that's currently being done anywhere this change will not cause any
-pain. If the default /etc/gitweb.conf contains a set of commented-out
-sample entries, as it should in the case of something like this, then
-there will be no problems. As the local configurations will override the
-system configuration items one by one, instead of wholesale and
-outright, those items most likely to be a problem will be set correctly
-in my estimation.
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
 
->From my day job I happen to know that asking the user to please respect
-the existing policy by including it in their local configuration policy
-doesn't work out very well. What usually happens is the user removes
-whatever is there and replaces it with whatever the tutorial they are
-currently looking at has in it. I highly doubt we'll change all of the
-tutorials out on the Internet, or all of the mere mortals using them. We
-can change Gitweb.
+I nearly managed to lose a bunch of uncommitted work today, but could
+salvage most of it from the pieces of diffs in the terminal
+scrollback.  Sigh.
 
-The difference between the current situation and the resultant one can
-be summed up thusly:
+Future work might include mapping such sequences to the keys they
+represent, so that (shift) up-arrow can be k (K) and (shift)
+down-arrow j (J), or some such.
 
-Currently
-/etc/gitweb.conf only: System policy
-gitweb_config.perl only: Local policy
-both: Local policy ONLY
+Oh yeah, PS: I'm alive ;-)
 
-New
-/etc/gitweb.conf only: System policy
-gitweb_config.perl only: Local policy
-both: Local policy overrides System policy on a per-configurable item
-basis
+ git-add--interactive.perl |   19 +++++++++++++++++++
+ 1 files changed, 19 insertions(+), 0 deletions(-)
 
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 4f08fe7..8f0839d 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -45,6 +45,9 @@
+ my $normal_color = $repo->get_color("", "reset");
+ 
+ my $use_readkey = 0;
++my $use_termcap = 0;
++my %term_escapes;
++
+ sub ReadMode;
+ sub ReadKey;
+ if ($repo->config_bool("interactive.singlekey")) {
+@@ -53,6 +56,14 @@
+ 		Term::ReadKey->import;
+ 		$use_readkey = 1;
+ 	};
++	eval {
++		require Term::Cap;
++		my $termcap = Term::Cap->Tgetent;
++		foreach (values %$termcap) {
++			$term_escapes{$_} = 1 if /^\e/;
++		}
++		$use_termcap = 1;
++	};
+ }
+ 
+ sub colored {
+@@ -1067,6 +1078,14 @@ sub prompt_single_character {
+ 		ReadMode 'cbreak';
+ 		my $key = ReadKey 0;
+ 		ReadMode 'restore';
++		if ($use_termcap and $key eq "\e") {
++			while (!defined $term_escapes{$key}) {
++				my $next = ReadKey 0.5;
++				last if (!defined $next);
++				$key .= $next;
++			}
++			$key =~ s/\e/^[/;
++		}
+ 		print "$key" if defined $key;
+ 		print "\n";
+ 		return $key;
 -- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+1.7.5.1.520.g98107.dirty
