@@ -1,82 +1,72 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH/RFC] config: Give error message when not changing a multivar
-Date: Tue, 17 May 2011 13:34:58 +0200
-Message-ID: <42ab57ae5a2cb7d6860e43e7c3061f9c38cf1b99.1305632091.git.git@drmicha.warpmail.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 17 13:35:11 2011
+From: Jeff King <peff@peff.net>
+Subject: Re: error 'cannot create thread' doing clone or fetch
+Date: Tue, 17 May 2011 07:47:54 -0400
+Message-ID: <20110517114754.GA13176@sigill.intra.peff.net>
+References: <BANLkTi=p3CbQD_EzJATenGsxz5m3=KLtMA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Jesse Reynolds <jessedreynolds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 17 13:48:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMIYQ-00021L-R1
-	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 13:35:11 +0200
+	id 1QMIku-00021Y-4o
+	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 13:48:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753901Ab1EQLfD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2011 07:35:03 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:41917 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753272Ab1EQLfD (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 May 2011 07:35:03 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 3974320940
-	for <git@vger.kernel.org>; Tue, 17 May 2011 07:35:01 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute3.internal (MEProxy); Tue, 17 May 2011 07:35:01 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:subject:date:message-id; s=smtpout; bh=s6TmUBDgN3xTsAUtIay+Z4OPxWk=; b=U8d4Zp7bxdl51l1L/V7CrCtSSnGvuBWFrBdBzEcFnO3fHEGM+8QeaDpWrEVn5vg/yqGS1RZSWVrZMqsMLTEEyMRW1YiQGtMcIExAYb8sNMSSwhRPHsLvCJ0zwObykZN5jk/SzK7DP5mwvJWe01XetOUXaOVbRCXJQyVhdO4BJYc=
-X-Sasl-enc: 6Wj8TQQsoXeqf4It+FX2My1Sr/qSMp0w+9s45pp5xglu 1305632100
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id AFD38443153;
-	Tue, 17 May 2011 07:35:00 -0400 (EDT)
-X-Mailer: git-send-email 1.7.5.1.514.gd181fb
+	id S1754089Ab1EQLr7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 May 2011 07:47:59 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39550
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753664Ab1EQLr7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2011 07:47:59 -0400
+Received: (qmail 25507 invoked by uid 107); 17 May 2011 11:49:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 17 May 2011 07:49:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 May 2011 07:47:54 -0400
+Content-Disposition: inline
+In-Reply-To: <BANLkTi=p3CbQD_EzJATenGsxz5m3=KLtMA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173795>
 
-When trying to set a multivar with "git config var value", "git config"
-issues
+On Tue, May 17, 2011 at 05:52:44PM +0930, Jesse Reynolds wrote:
 
-warning: remote.repoor.push has multiple values
+> I have just installed git 1.7.5 on Solaris 9, SPARC, using a package
+> from sunfreeware.com. I've created a new repository with 'git init'
+> and done a commit. Now I'm trying to set up a shared repository but it
+> seems there is some issue preventing git from creating a thread for
+> the 'sideband demultiplexer'.
+> 
+> First trying to do a git fetch --bare locally to create the shared
+> repository fails:
+> 
+> $ git --bare init --shared
+> Initialized empty shared Git repository in /pub/lots.git/
+> $ git --bare fetch /home/jesse/src/lots master:master
+> error: cannot create thread: Unknown error
+> fatal: fetch-pack: unable to fork off sideband demultiplexer
+> $ Broken Pipe
 
-leaving the user under the impression that the operation succeeded,
-unless one checks the return value.
+Weird. The only way that can happen is if pthread_create returned error,
+and the value it stuffed in errno is not useful ("unknown error"). 
+Offhand, I'd guess maybe something in the package build does not match
+your environment very well. Can you try building git from source? If the
+error persists, you could certainly get around it by defining
+NO_PTHREADS then.
 
-Instead, make it
+You could also try running it under "truss", though I doubt it is going
+to turn up anything more useful than "unknown error".
 
-warning: remote.repoor.push has multiple values
-error: Use a regexp, --add or --set-all to change remote.repoor.push.
+> I've searched the mailing list and online and can't seem to find
+> anyone else having this issue. Then again my search skills don't seem
+> to be what they once used to be!
 
-to be clear and helpful.
+I think this is the first we've ever seen this particular issue.
 
-Note: The "warning" is raised through other code paths also so that it
-needs to remain a warning for these (which do not raise the error). Only
-the caller can determine how to go on from that.
-
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- builtin/config.c |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
-
-diff --git a/builtin/config.c b/builtin/config.c
-index 3e3c528..c438ef4 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -436,9 +436,13 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 			      NULL, NULL);
- 	}
- 	else if (actions == ACTION_SET) {
-+		int ret;
- 		check_argc(argc, 2, 2);
- 		value = normalize_value(argv[0], argv[1]);
--		return git_config_set(argv[0], value);
-+		ret = git_config_set(argv[0], value);
-+		if (ret == 5)
-+			error("Use a regexp, --add or --set-all to change %s.", argv[0]);
-+		return ret;
- 	}
- 	else if (actions == ACTION_SET_ALL) {
- 		check_argc(argc, 2, 3);
--- 
-1.7.5.1.514.gd181fb
+-Peff
