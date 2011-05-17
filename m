@@ -1,81 +1,57 @@
-From: Ralf Thielow <ralf.thielow@googlemail.com>
-Subject: =?UTF-8?q?=5BPATCH=5D=20gitk=3A=20spelling=20fix=20in=20German=20translation?=
-Date: Tue, 17 May 2011 22:18:29 +0200
-Message-ID: <1305663509-5057-1-git-send-email-ralf.thielow@googlemail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [WIP PATCH] Teach read-tree the -n|--dry-run option
+Date: Tue, 17 May 2011 23:15:14 +0200
+Message-ID: <4DD2E562.90605@web.de>
+References: <7vd3jm74gv.fsf@alter.siamese.dyndns.org> <4DD0043D.1050101@web.de> <7vfwofpvai.fsf@alter.siamese.dyndns.org> <4DD2CFD4.7060508@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ralf Thielow <ralf.thielow@googlemail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 17 22:18:46 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 17 23:15:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMQj7-0008Fc-De
-	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 22:18:45 +0200
+	id 1QMRbw-0008U2-Lt
+	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 23:15:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932245Ab1EQUSk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 May 2011 16:18:40 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:41597 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932193Ab1EQUSk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2011 16:18:40 -0400
-Received: by fxm17 with SMTP id 17so723138fxm.19
-        for <git@vger.kernel.org>; Tue, 17 May 2011 13:18:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        bh=mxg7GsijuGWlANs53QJ6doJKM6sbpyUHoKMaRgPppwM=;
-        b=JfRqEUAT/+iNtxgBUDUSCX8OaxvbFGj8Sh6cfwmfpCQMdjsV4RfKooBmxuMht933+p
-         eW+zf4Rqpn0Lpk6Z1sNv9xO3Xle4U0k4dQAKc0UvZFaKVy/g2TMQhSN/4ApZEhbeDn+f
-         mIvwzXB+KYn55R12A5A7E7BBkJK2uK2/ZKTT0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=c8jmpyutwyEnuldOL80F2qeA4dkZZ9n/CwPlbEm+ryOktG3gLYSeRIKBkmWT9hWIYT
-         qS77GaAF3PeuceM3RfM8ZKrFpSKUUTXYJywSA6rPUnfz3LH+OEgRchDyOu83mcRp1MSm
-         to30yPm8eD/z3cCJqDpBE9c+NeOyeNA/8lPdw=
-Received: by 10.223.87.69 with SMTP id v5mr1381282fal.57.1305663519078;
-        Tue, 17 May 2011 13:18:39 -0700 (PDT)
-Received: from localhost.localdomain (dslb-094-222-152-123.pools.arcor-ip.net [94.222.152.123])
-        by mx.google.com with ESMTPS id b17sm350462fab.23.2011.05.17.13.18.36
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 17 May 2011 13:18:37 -0700 (PDT)
-X-Mailer: git-send-email 1.7.5.1
+	id S932317Ab1EQVPR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 May 2011 17:15:17 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:43900 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932296Ab1EQVPR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2011 17:15:17 -0400
+Received: from smtp07.web.de  ( [172.20.5.215])
+	by fmmailgate02.web.de (Postfix) with ESMTP id F369619FEF595;
+	Tue, 17 May 2011 23:15:14 +0200 (CEST)
+Received: from [93.240.98.235] (helo=[192.168.178.43])
+	by smtp07.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1QMRbm-0003Pp-00; Tue, 17 May 2011 23:15:14 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
+In-Reply-To: <4DD2CFD4.7060508@web.de>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX19tjwhNbD58LsNP0LVPibgKxKYQGV75NwbqmXD/
+	ho/+oOCyrM3AcLKEdDATJWh8p1bba6NtI2oP4bTxYyt4nuH71e
+	KWjmLxCkGr2fzmejcDKg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173824>
 
-=46ixed a spelling mistake in German translation. "positive integer" is
-not correctly translated to "ganzzahliger Wert" because "ganzzahliger W=
-ert"
-also includes negative values.
+Am 17.05.2011 21:43, schrieb Jens Lehmann:
+> The only exceptions where I could not make that replacement without
+> breaking a test were:
+> 
+> * t1001:381 (#25) new file conflicts with untracked directory
+>   This should have been detected by verify_absent_1(), but that function
+>   is left early when opts->update is 0. Will look into that.
+> 
+> * 1011:95  (#5)  read-tree with empty .git/info/sparse-checkout
+> * t1011:163 (#11) read-tree updates worktree, dirty case
+>   Not sure about those two as I haven't got much experience with sparse
+>   checkout. Will dig further, pointers welcome.
 
-Signed-off-by: Ralf Thielow <ralf.thielow@googlemail.com>
----
- gitk-git/po/de.po |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/gitk-git/po/de.po b/gitk-git/po/de.po
-index bd194a3..55e8467 100644
---- a/gitk-git/po/de.po
-+++ b/gitk-git/po/de.po
-@@ -652,7 +652,7 @@ msgstr "Bis:"
-=20
- #: gitk:3835
- msgid "Limit and/or skip a number of revisions (positive integer):"
--msgstr "Versionsanzahl begrenzen oder einige =C3=BCberspringen (ganzza=
-hliger Wert):"
-+msgstr "Versionsanzahl begrenzen oder einige =C3=BCberspringen (positi=
-ver ganzzahliger Wert):"
-=20
- #: gitk:3836
- msgid "Number to show:"
---=20
-1.7.5.1
+I found the reason for all three failures, patch coming.
