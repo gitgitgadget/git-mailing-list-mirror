@@ -1,80 +1,131 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add-interactive: shortcut to add hunk and quit
-Date: Mon, 16 May 2011 22:09:58 -0700
-Message-ID: <7vboz1j4k9.fsf@alter.siamese.dyndns.org>
-References: <20110516162611.GA6960@mrq1.org> <vpq4o4uwqin.fsf@bauges.imag.fr>
+Subject: Re: [PATCH 08/11] streaming_write_entry(): support files with holes
+Date: Mon, 16 May 2011 22:23:59 -0700
+Message-ID: <7v7h9pj3ww.fsf@alter.siamese.dyndns.org>
+References: <1305505831-31587-1-git-send-email-gitster@pobox.com>
+ <1305505831-31587-9-git-send-email-gitster@pobox.com>
+ <BANLkTi=VKb44yYuXdKLxrvFCVkfsDZSb4Q@mail.gmail.com>
+ <7v62pan207.fsf@alter.siamese.dyndns.org>
+ <BANLkTimF4zpNewcwsw=3pkt467p6Psq2Dw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Hermann Gausterer <git-mailinglist@mrq1.org>,
-	git list <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue May 17 07:10:16 2011
+Cc: git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 17 07:24:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMCXv-0008Mq-2W
-	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 07:10:15 +0200
+	id 1QMClS-0005vb-Fj
+	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 07:24:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751717Ab1EQFKK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2011 01:10:10 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62002 "EHLO
+	id S1751969Ab1EQFYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 May 2011 01:24:09 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40898 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751221Ab1EQFKI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2011 01:10:08 -0400
+	with ESMTP id S1751221Ab1EQFYH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2011 01:24:07 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A605133CC;
-	Tue, 17 May 2011 01:12:13 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3627C3539;
+	Tue, 17 May 2011 01:26:13 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=scmDDeb1lzwSm+UhRiyvBKvyf6U=; b=SXQnes
-	vFnV0CZ3EFX3y9n8T/1HBYeShX7TTOpq13aYu4AQJZN3jpdXN9ua+pKb0NTv4gLG
-	CLBFmNFd+WHqnLGj58F/UXfD62UXHNe2p/M6sNYYeEGYGW9yPGQQwWV5eOCxS0+b
-	cWH2s2NHi+F86i8xrzVeXfyZjNyTZ8jxxckqU=
+	:content-type; s=sasl; bh=CxllcK4fvhzHnJFlqQhKCN9d7Vk=; b=YWBWJ4
+	TfV1UuJ/Leote4hBKCZkrwgjNYSORPvHfZJdBBcMSl+2TDRVXb7JD3F5q/wc4FNz
+	Kxt3bgkg32YamGaiBzyUk6j8N5ORXm/G2eFEIbgmvoYf9oj7oF/JISvt47WXWMXS
+	WDXDvvTbMqr+CKoXoyVlkJoqau2xTeevJotY4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OkBrD4b+C8ztlSTqffO/O85Ac6WmDu4q
-	mjD0FPwY5gd4UzOhHfjP/uQfzrvrg7t1x0NStg+AnphE80h9+gFOy5IbSEHoERV5
-	xobQllwyuydL5GPF3YEPX+m72+pzPCvydPZprNZlSdtQHZg+UTIACKzIPkERNF+z
-	QL7+EJ6/iJA=
+	:content-type; q=dns; s=sasl; b=HRwj+x3XBUZmTGvFg0avv2KgnUqbuRxR
+	N72RiZGMBWv7OrF9TuYs+TOhEYNnro48ns6nRF9S+GrF7974bSujvZ1rp6Wi134O
+	R6lZ6MAHVezD9QVTrHjALhZzphDMOX1bYVot0cIhNBFPsqSPdX4bSli7eTbOZmX3
+	B/mJ957LpdU=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 73F3533CA;
-	Tue, 17 May 2011 01:12:10 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 12F653535;
+	Tue, 17 May 2011 01:26:11 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5AE1533C7; Tue, 17 May 2011
- 01:12:06 -0400 (EDT)
-In-Reply-To: <vpq4o4uwqin.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Mon, 16 May 2011 18:37:20 +0200")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id DD0863533; Tue, 17 May 2011
+ 01:26:07 -0400 (EDT)
+In-Reply-To: <BANLkTimF4zpNewcwsw=3pkt467p6Psq2Dw@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Tue, 17 May 2011 08:18:25 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 37D4F76E-8044-11E0-A5F8-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 2CDE2A90-8046-11E0-9BE4-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173784>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-> Hermann Gausterer <git-mailinglist@mrq1.org> writes:
+> On Mon, May 16, 2011 at 9:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+>>
+>>> On Mon, May 16, 2011 at 7:30 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>> One typical use of a large binary file is to hold a sparse on-disk hash
+>>>> table with a lot of holes. Help preserving the holes with lseek().
+>>>
+>>> Should that be done only with big enough holes? Random zeros may
+>>> increase the number of syscalls unnecessarily.
+>>
+>> I think that is a valid concern, but doesn't the code do that already?
 >
->> this combines the two commands "y"+"q" to one.
->> i use this if i know that this is the last hunk to add.
->
-> (please capitalize the "I", and actually, avoid saying "I" in a commit
-> message)
->
-> I'm not convinced this is useful enough to deserve a new command. The
-> help message already starts being scary ...
->
->> +       Q - quit; stage this hunk but none of the remaining ones
->
-> The explanation shouldn't start with "quit" I think. I'd say basically
-> "stage this hunk and quit" or "stage this hunk but none of the remaining
-> ones".
+> Ahh I see you only increase kept when the the whole buf is zero. I was
+> looking for an explicit threshold, but it's implicitly the buffer
+> size.
 
-I agree with both points. Other than that, the changes in this round looks
-good to me.
+Because the code works on 10k chunks and read_istream() does not give you
+a short-read, most of the time "kept" will only grab contiguous stream of
+NULs in 10k increment.  At the very end of the file, however, the code can
+seek by less than the chunksize, as the check is done by comparing the
+holdto with readlen, not with sizeof(buf).
 
-Hermann, care to re-roll for the last time?
+We might want to make sizeof(buf) a multiple of typical file block size
+(e.g. 16k) to get a better alignment.
+
+Seeking to 10k and writing 2k on a filesystem with 4k pagesize will only
+make two blocks of hole, not two and half, and we would be wasting a seek
+in that case.
+
+Also we may want to omit seeking for the last chunk that is smaller than
+the chunk size.
+
+Like this...
+
+ entry.c |   16 +++++++++-------
+ 1 files changed, 9 insertions(+), 7 deletions(-)
+
+diff --git a/entry.c b/entry.c
+index e063e72..f751c60 100644
+--- a/entry.c
++++ b/entry.c
+@@ -137,18 +137,20 @@ static int streaming_write_entry(struct cache_entry *ce, char *path,
+ 		goto close_and_exit;
+ 
+ 	for (;;) {
+-		char buf[10240];
++		char buf[1024 * 16];
+ 		ssize_t wrote, holeto;
+ 		ssize_t readlen = read_istream(st, buf, sizeof(buf));
+ 
+ 		if (!readlen)
+ 			break;
+-		for (holeto = 0; holeto < readlen; holeto++)
+-			if (buf[holeto])
+-				break;
+-		if (readlen == holeto) {
+-			kept += holeto;
+-			continue;
++		if (sizeof(buf) == readlen) {
++			for (holeto = 0; holeto < readlen; holeto++)
++				if (buf[holeto])
++					break;
++			if (readlen == holeto) {
++				kept += holeto;
++				continue;
++			}
+ 		}
+ 
+ 		if (kept && lseek(fd, kept, SEEK_CUR) == (off_t) -1)
