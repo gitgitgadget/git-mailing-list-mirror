@@ -1,74 +1,61 @@
-From: =?utf-8?b?TWljaGHFgg==?= Kiedrowicz <michal.kiedrowicz@gmail.com>
-Subject: Re: What's cooking in git.git (May 2011, #08; Mon, 16)
-Date: Tue, 17 May 2011 19:39:10 +0000 (UTC)
-Message-ID: <loom.20110517T213130-515@post.gmane.org>
-References: <7vwrhphllf.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 1/3] connect: treat generic proxy processes like ssh processes
+Date: Tue, 17 May 2011 22:14:43 +0200
+Message-ID: <4DD2D733.3070004@kdbg.org>
+References: <20110516063944.GB25731@sigill.intra.peff.net> <20110516064607.GA19078@sigill.intra.peff.net> <4DD181C6.4020104@kdbg.org> <20110517055422.GD10048@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 17 21:45:22 2011
+Cc: Johan Herland <johan@herland.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 17 22:14:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMQCk-0004bQ-T2
-	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 21:45:19 +0200
+	id 1QMQfS-0005yy-AX
+	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 22:14:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932204Ab1EQTpN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2011 15:45:13 -0400
-Received: from lo.gmane.org ([80.91.229.12]:34649 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932084Ab1EQTpL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2011 15:45:11 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1QMQCY-0004Qp-JY
-	for git@vger.kernel.org; Tue, 17 May 2011 21:45:06 +0200
-Received: from 85-177-78-94.net.stream.pl ([94.78.177.85])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 17 May 2011 21:45:06 +0200
-Received: from michal.kiedrowicz by 85-177-78-94.net.stream.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 17 May 2011 21:45:06 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 94.78.177.85 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110511 Gentoo Firefox/3.6.17)
+	id S932217Ab1EQUOw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 May 2011 16:14:52 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:40739 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S932112Ab1EQUOv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2011 16:14:51 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id AAB9FA7EB0;
+	Tue, 17 May 2011 22:10:44 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 81C8819F3B8;
+	Tue, 17 May 2011 22:14:44 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.17) Gecko/20110414 SUSE/3.1.10 Thunderbird/3.1.10
+In-Reply-To: <20110517055422.GD10048@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173822>
 
-(Sending from gmane "followup" interface, don't blame me if CC list is not OK.)
+Am 17.05.2011 07:54, schrieb Jeff King:
+> On Mon, May 16, 2011 at 09:57:58PM +0200, Johannes Sixt wrote:
+>> In my implementation, I xmalloced the pointer array and leaked it.
 
-Junio C Hamano <gitster <at> pobox.com> writes:
+I noticed that it actually isn't leaked because finish_connect() frees
+it. For this reason, I actually have to wonder why your version that
+stored a pointer to automatic storage in ->argv worked.
 
-> 
-> * mk/grep-pcre (2011-05-16) 12 commits
->   (merged to 'next' on 2011-05-16 at 0c6c25e)
->  + Makefile: Pass USE_LIBPCRE down in GIT-BUILD-OPTIONS
->  + git-grep: update tests now regexp type is "last one wins"
->   (merged to 'next' on 2011-05-15 at d110135)
->  + git-grep: do not die upon -F/-P when grep.extendedRegexp is set.
->  + git-grep: Bail out when -P is used with -F or -E
->  + grep: Add basic tests
->  + configure: Check for libpcre
->  + git-grep: Learn PCRE
->  + grep: Extract compile_regexp_failed() from compile_regexp()
->  + grep: Fix a typo in a comment
->   (merged to 'next' on 2011-05-08 at 5d3bede)
->  + grep: Put calls to fixmatch() and regmatch() into patmatch()
->  + contrib/completion: --line-number to git grep
->  + Documentation: Add --line-number to git-grep synopsis
-> 
-> Fixed up the build procedure that did not update GIT-BUILD-OPTIONS.
-> Will merge to "master" by the middle of week #5.
+> We also need to worry about the contents of each argv[] element, no? So
+> we should be xstrdup()ing the host and port, which point into some
+> string which gets passed to us. I didn't trace its provenance but I
+> think it is better to be defensive.
 
-Thanks for your help with last few patches, Junio. Unfortunately, I didn't have
-to time to work on testcases you wrote in comments to my last posting, but I'll
-try to prepare some during this week. 
+I would not worry too much today. Of course, functions other than
+start_command() might begin to access ->argv[i] with i > 0 later, but
+then we have to audit all users of struct child_process anyway.
+Currently, only start_command() uses these values, which is always
+called at a time when they are still valid.
+
+-- Hannes
