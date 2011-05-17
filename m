@@ -1,83 +1,69 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: ACLs for GIT
-Date: Mon, 16 May 2011 18:49:08 -0700
-Message-ID: <BANLkTi=9vp+ibVa3tQzXbZSeYATKwmF60Q@mail.gmail.com>
-References: <4DD02876.1040404@bbn.com> <20110515201608.GX6349@kiwi.flexilis.local>
- <4DD12517.1000308@bbn.com> <BANLkTikwEivOiQVV-B=g3pP_StXAa8CVwg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 01/11] packed_object_info_detail(): do not return a
+ string
+Date: Mon, 16 May 2011 19:36:36 -0700
+Message-ID: <7vfwoehx3f.fsf@alter.siamese.dyndns.org>
+References: <1305505831-31587-1-git-send-email-gitster@pobox.com>
+ <1305505831-31587-2-git-send-email-gitster@pobox.com>
+ <BANLkTinxfNH85v6AfWaVNRzhP-fJ0tjNNg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Martin L Resnick <mresnick@bbn.com>,
-	"R. Tyler Croy" <tyler@monkeypox.org>, git@vger.kernel.org
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 17 03:49:36 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 17 04:36:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QM9Pj-0001r9-BD
-	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 03:49:35 +0200
+	id 1QMA9T-00010y-KB
+	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 04:36:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752386Ab1EQBt3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 May 2011 21:49:29 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:50458 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751887Ab1EQBt3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 May 2011 21:49:29 -0400
-Received: by vws1 with SMTP id 1so31712vws.19
-        for <git@vger.kernel.org>; Mon, 16 May 2011 18:49:28 -0700 (PDT)
-Received: by 10.52.181.69 with SMTP id du5mr104707vdc.113.1305596968114; Mon,
- 16 May 2011 18:49:28 -0700 (PDT)
-Received: by 10.52.157.73 with HTTP; Mon, 16 May 2011 18:49:08 -0700 (PDT)
-In-Reply-To: <BANLkTikwEivOiQVV-B=g3pP_StXAa8CVwg@mail.gmail.com>
+	id S1752097Ab1EQCgq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2011 22:36:46 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49531 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751893Ab1EQCgq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2011 22:36:46 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9EDC4583E;
+	Mon, 16 May 2011 22:38:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qBbcTCWILTnvEIlorJXmmIpwuLw=; b=EGDVEL
+	No9glEXd4k/jeV9md6vRiH1Zxh9aqHLYXSfjh82n69btCQL2W6XDXDXfcgI4kahi
+	hovEIGONP6gWPp5weV7RB3ZiUchU4ZxMqqQswO0eIIrlu+btA6aTOjaj70nWlONs
+	Uv8j8iSOGwDBWQdOYKgQkZLj6IynKbbDYggg8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fQKq+OJ7w/X7FIdMZo1eYi8m6qrNcp0t
+	dcXc0IfKLvSVSnFXyYrQ12uEGCiN7asa+havTWj460kPHtrBV63i3VagDD/IqpYk
+	RbhFyu265bz4uyMyqf53owYI5eIaTfHwOvf6xNc2v+VejtvEJnwOCKY+BhPcsmT4
+	bfYFys7E4ko=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 72C6B5839;
+	Mon, 16 May 2011 22:38:48 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 209145833; Mon, 16 May 2011
+ 22:38:44 -0400 (EDT)
+In-Reply-To: <BANLkTinxfNH85v6AfWaVNRzhP-fJ0tjNNg@mail.gmail.com> (Thiago
+ Farina's message of "Mon, 16 May 2011 21:45:09 -0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CAFFE906-802E-11E0-AB19-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173782>
 
-On Mon, May 16, 2011 at 18:32, Sitaram Chamarty <sitaramc@gmail.com> wr=
-ote:
-> On Mon, May 16, 2011 at 6:52 PM, Martin L Resnick <mresnick@bbn.com> =
-wrote:
->> Thanks for the reply.
->>
->> But gitolite would only work to deny reads on a repository or ref ba=
-sis
->> not a pathname level.
->
-> I notice the original question has been answered, so this email is
-> just for the record.
->
-> Gitolite does not do any access control on *read* access (fetch,
-> clone). =A0It can only do that on *write*s (push).
->
-> Gerrit does that because they've reimplemented git itself and have
-> coded that into their git engine somehow. =A0I believe they had to
-> implement a callback from jgit to gerrit for the fetch,
+Thiago Farina <tfransosi@gmail.com> writes:
 
-Yes, we do.
+> In the commit message you say to return "enum object_name". Maybe
+> change from int to enum object_name here and below?
 
-> and deal with
-> evil clients that might try to read an object by pushing a supposed
-> change on top of a SHA that they know but don't actually have. (Or
-> something like that; I'm not real clear on this...).
+As other functions that return -1 on error return int as a convention, I
+do not think it is a good change.
 
-Yes, we also have protections for this. Users cannot push objects that
-reference objects they are not allowed to read. This check needs to be
-done for delta bases as well as commit tree/parent pointers, and tree
-entries. Its not difficult, but its not as simple as just limiting the
-branch names shown to upload-pack.
-
-> PS: Gitolite does have unreleased code to do this but it's a hack wit=
-h
-> several limitations. =A0Gitolite makes a temp "clone -l", deletes all
-> refs from it that the user has no access to, then redirects the
-> git-upload-pack to that repo instead ;-)
-
-Cute hack. Doesn't prevent the evil client from making an indirect
-reference to something you shouldn't have. :-)
-
---=20
-Shawn.
+As you may have noticed, "enum object_name" is not correct. It should be
+"enum object_type" I think.
