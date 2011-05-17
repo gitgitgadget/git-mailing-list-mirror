@@ -1,89 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] rebase -p loses commits
-Date: Mon, 16 May 2011 18:02:48 -0700
-Message-ID: <7vk4dqi1fr.fsf@alter.siamese.dyndns.org>
-References: <20110516103354.GA23564@sigill.intra.peff.net>
- <7vfwoel6vw.fsf@alter.siamese.dyndns.org> <4DD1C277.9070605@sohovfx.com>
- <7vpqnii1sx.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 08/11] streaming_write_entry(): support files with holes
+Date: Tue, 17 May 2011 08:18:25 +0700
+Message-ID: <BANLkTimF4zpNewcwsw=3pkt467p6Psq2Dw@mail.gmail.com>
+References: <1305505831-31587-1-git-send-email-gitster@pobox.com>
+ <1305505831-31587-9-git-send-email-gitster@pobox.com> <BANLkTi=VKb44yYuXdKLxrvFCVkfsDZSb4Q@mail.gmail.com>
+ <7v62pan207.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andrew Wong <andrew.w@sohovfx.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 17 03:06:01 2011
+X-From: git-owner@vger.kernel.org Tue May 17 03:19:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QM8jY-0003uE-MJ
-	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 03:06:01 +0200
+	id 1QM8w9-00006I-PM
+	for gcvg-git-2@lo.gmane.org; Tue, 17 May 2011 03:19:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752074Ab1EQBC7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 May 2011 21:02:59 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44172 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751633Ab1EQBC7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2011 21:02:59 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 57BF35FB9;
-	Mon, 16 May 2011 21:05:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AaVj3/Z1x4eBCqTGImnYjnJ2rHQ=; b=hkng/h
-	SfVkv2LcRceyCJpOtY2t1VCUoIuTZmk0bFX2oCIgEhYTksOv4zLrJsSpAylvKGWH
-	BhVkEPbOEURCcDCRoAXSjZqTxgflQCQe5WkL2t4pXI2EP9QeWlMnh4ByjJg21iHz
-	yci4smX+SYd01TgxShYl6V6FIDHv+DYA/o0P4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nKs73RYTav57o4GeZWFgRon3oH5lATmF
-	AB1lLroVJlkCg2Z7fluYZSCftmeGLE0UBPQH81NR1KuYHQuDKbeviEtOiCmbIrmk
-	g1NDlEQ/IBJpnGovJxxw1y8l7bWn2lBOrWeXrUG3Q6kz6SviWPFb1Np4tpAxG26E
-	8cy94US3JLU=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 234F05FB8;
-	Mon, 16 May 2011 21:05:02 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9CC4D5FB7; Mon, 16 May 2011
- 21:04:56 -0400 (EDT)
-In-Reply-To: <7vpqnii1sx.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 16 May 2011 17:54:54 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B173C258-8021-11E0-B49F-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+	id S1751887Ab1EQBS5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 May 2011 21:18:57 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:64380 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751381Ab1EQBS4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2011 21:18:56 -0400
+Received: by bwz15 with SMTP id 15so101801bwz.19
+        for <git@vger.kernel.org>; Mon, 16 May 2011 18:18:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=DYtHI4u+aQcsiKHQ2b1XMn8N+S1OaoJOCM6OLHcEKZ4=;
+        b=I66ota/lM0jDc3X6FX2Zd7flvhhW0S8nwKIgBLjZ0avCBdHCjgczC2V33HIsYpqddi
+         GoWX+0E3CvCCdYB7+b3I5y0bIXlPL4oOmW2Snm/8Ugc8okBndpmeS2utunPW70137kUs
+         vaqaM/TxfoY0qsszXZrgXSGAlLHZf6+iUyT00=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=XwpwfXjZSrhWiDofd28LwlKMjubaHGzrGPfQoftZ4OIx3cQTQL8tkCyxXK3UhilLHs
+         Xly6rq2nqVvd30Bvvd03WpDCMnneUl+7WypqL0K6OdszzZm9hm2zALor5eJJT284oma4
+         3SQX1+8JfDJ0WaCjiCDUfXS99Y78LhKCIQWAs=
+Received: by 10.204.171.65 with SMTP id g1mr61617bkz.45.1305595135191; Mon, 16
+ May 2011 18:18:55 -0700 (PDT)
+Received: by 10.204.46.71 with HTTP; Mon, 16 May 2011 18:18:25 -0700 (PDT)
+In-Reply-To: <7v62pan207.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173779>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> But the above "preserving" rewrite does not even preserve the topology of
-> the graph (the original * is a true merge between two forks, but *' is
-> not) to begin with.  Also, if you want to _usefully_ place F' on top of M,
-> such a rewrite should resolve possible conflicts that was resolved at * in
-> the original graph at F' anyway, which would mean that the resulting *'
-> should become a totally empty commit.
+On Mon, May 16, 2011 at 9:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 >
-> Why would anybody want to do such a thing to begin with?
+>> On Mon, May 16, 2011 at 7:30 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> One typical use of a large binary file is to hold a sparse on-disk hash
+>>> table with a lot of holes. Help preserving the holes with lseek().
+>>
+>> Should that be done only with big enough holes? Random zeros may
+>> increase the number of syscalls unnecessarily.
+>
+> I think that is a valid concern, but doesn't the code do that already?
 
-Note that I am not saying "rebase -p" is not useful in general.  If you
-had
-
-         x---x---x---W---X
-        /             \   \
-    ---M               Y---Z
-
-it is entirely sensible to want to have this history to exclude 'x'
-
-         x---x---x---W---X
-        /             \   \
-    ---M---W'--X'      Y---Z
-            \   \
-             Y'--Z'
-
-I think the patch I posted earlier should stop the problematic case Jeff
-mentioned from happening, but I am trying to see if it makes sense to stop
-without doing anything even when it is forced when onto and merge-base are
-the same commit (which is not true for this "sensible" case).
+Ahh I see you only increase kept when the the whole buf is zero. I was
+looking for an explicit threshold, but it's implicitly the buffer
+size. Sorry for the noise.
+-- 
+Duy
