@@ -1,77 +1,71 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 00/11] writing out a huge blob to working tree
-Date: Wed, 18 May 2011 02:41:58 -0400
-Message-ID: <20110518064158.GB27482@sigill.intra.peff.net>
-References: <1305505831-31587-1-git-send-email-gitster@pobox.com>
+Subject: Re: [PATCH] add-interactive: shortcut to add hunk and quit
+Date: Wed, 18 May 2011 02:45:15 -0400
+Message-ID: <20110518064515.GA29612@sigill.intra.peff.net>
+References: <20110517071232.GA19396@mrq1.org>
+ <4DD369C3.4070806@pcharlan.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 18 08:42:11 2011
+Cc: Hermann Gausterer <git-mailinglist@mrq1.org>,
+	git list <git@vger.kernel.org>
+To: Pete Harlan <pgit@pcharlan.com>
+X-From: git-owner@vger.kernel.org Wed May 18 08:45:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMaSQ-0003Bd-I5
-	for gcvg-git-2@lo.gmane.org; Wed, 18 May 2011 08:42:10 +0200
+	id 1QMaVY-0004mS-0Z
+	for gcvg-git-2@lo.gmane.org; Wed, 18 May 2011 08:45:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754535Ab1ERGmF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 May 2011 02:42:05 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:47802
+	id S1753952Ab1ERGpS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 May 2011 02:45:18 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49478
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754222Ab1ERGmE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 May 2011 02:42:04 -0400
-Received: (qmail 2321 invoked by uid 107); 18 May 2011 06:44:02 -0000
+	id S1752604Ab1ERGpR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 May 2011 02:45:17 -0400
+Received: (qmail 2399 invoked by uid 107); 18 May 2011 06:47:18 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 May 2011 02:44:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 May 2011 02:41:58 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 May 2011 02:47:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 May 2011 02:45:15 -0400
 Content-Disposition: inline
-In-Reply-To: <1305505831-31587-1-git-send-email-gitster@pobox.com>
+In-Reply-To: <4DD369C3.4070806@pcharlan.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173851>
 
-On Sun, May 15, 2011 at 05:30:20PM -0700, Junio C Hamano wrote:
+On Tue, May 17, 2011 at 11:40:03PM -0700, Pete Harlan wrote:
 
-> Interested parties may want to measure the performance impact of the last
-> three patches. The series deliberately ignores core.bigfileThreashold and
-> let small and large blobs alike go through the streaming_write_entry()
-> codepath, but it _might_ turn out that we would want to use the new code
-> only for large-ish blobs.
+> On 05/17/2011 12:12 AM, Hermann Gausterer wrote:
+> > this combines the two "add -i" commands "y"+"q" to one.
+> 
+> ...
+> 
+> >         y - stage this hunk
+> >         n - do not stage this hunk
+> >         q - quit; do not stage this hunk nor any of the remaining ones
+> > +       Q - stage this hunk but none of the remaining ones
+> >         a - stage this hunk and all later hunks in the file
+> >         d - do not stage this hunk nor any of the later hunks in the file
+> >         g - select a hunk to go to
+> 
+> If "q" means "quit", I would expect "Q" to mean something like "quit
+> immediately" (perhaps even undoing earlier adds), not "do something
+> that 'q' wouldn't do, and then quit".
 
-Hmm.
+I agree. There was some discussion in another thread recently of the
+atomicity of git-add (right now it applies the changes to each file
+after all of its hunks are done). I would expect "q" to be "quit and
+apply what I told you so far" and "Q" to be "quit and do not apply
+anything".
 
-  $ cd compile/linux-2.6
-  $ rm -rf *
-  $ time git.v1.7.5 checkout -f
-  real    0m4.405s
-  user    0m3.592s
-  sys     0m0.804s
+> Perhaps "o" (for "stage exactly [o]ne commit"), or "t" for "stage
+> [t]his commit" would be reasonable alternatives?
 
-  $ rm -rf *
-  $ time git.jch.streaming checkout -f
-  real    0m7.062s
-  user    0m5.188s
-  sys     0m1.776s
-
-(Actually those times are best-of-5 in each case). So there is
-definitely some slow-down for the non-huge case. Bisection points to
-your cd36b7b (streaming_write_entry(): use streaming API in
-write_entry()).
-
-According to perf, though, it's not the increased writes; the slowdown
-is actually from create_pack_revindex, in this call chain:
-
- create_pack_revindex
- find_pack_revindex
- packed_object_info_detail
- sha1_object_info_extended
- istream_source
- open_istream
- streaming_write_entry
+We could also allow multiple commands at once, like "yq" (even in
+single-key mode, this would do the same thing).
 
 -Peff
