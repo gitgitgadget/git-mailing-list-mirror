@@ -1,71 +1,85 @@
-From: Nir.Friedman@greenhouse.lotus.com
-Subject: git over https and http 1.1
-Date: Wed, 18 May 2011 08:46:18 -0400
-Message-ID: <OF134A8B76.F0B9B9C0-ON85257894.00462851-85257894.00462862@greenhouse.lotus.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git & patterns
+Date: Wed, 18 May 2011 15:07:16 +0200
+Message-ID: <4DD3C484.2070102@op5.se>
+References: <4DD3A402.3040802@hupie.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 18 14:46:34 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Ferry Huberts <mailings@hupie.com>
+X-From: git-owner@vger.kernel.org Wed May 18 15:07:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMg93-0007QE-HZ
-	for gcvg-git-2@lo.gmane.org; Wed, 18 May 2011 14:46:33 +0200
+	id 1QMgTG-0004PO-Kg
+	for gcvg-git-2@lo.gmane.org; Wed, 18 May 2011 15:07:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933103Ab1ERMq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 May 2011 08:46:29 -0400
-Received: from e36.co.us.ibm.com ([32.97.110.154]:43244 "EHLO
-	e36.co.us.ibm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933093Ab1ERMq2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 May 2011 08:46:28 -0400
-Received: from d03relay04.boulder.ibm.com (d03relay04.boulder.ibm.com [9.17.195.106])
-	by e36.co.us.ibm.com (8.14.4/8.13.1) with ESMTP id p4ICeir5008222
-	for <git@vger.kernel.org>; Wed, 18 May 2011 06:40:44 -0600
-Received: from d03av04.boulder.ibm.com (d03av04.boulder.ibm.com [9.17.195.170])
-	by d03relay04.boulder.ibm.com (8.13.8/8.13.8/NCO v10.0) with ESMTP id p4IClfwp042994
-	for <git@vger.kernel.org>; Wed, 18 May 2011 06:47:41 -0600
-Received: from d03av04.boulder.ibm.com (loopback [127.0.0.1])
-	by d03av04.boulder.ibm.com (8.14.4/8.13.1/NCO v10.0 AVout) with ESMTP id p4I6kMRD019375
-	for <git@vger.kernel.org>; Wed, 18 May 2011 00:46:22 -0600
-Received: from internet1.lotus.com (internet1.lotus.com [9.32.140.212])
-	by d03av04.boulder.ibm.com (8.14.4/8.13.1/NCO v10.0 AVin) with ESMTP id p4I6kMs3019296
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=FAIL)
-	for <git@vger.kernel.org>; Wed, 18 May 2011 00:46:22 -0600
-Received: from ghmail1.lotus.com (ghmail1.lotus.com [9.32.153.15])
-	by internet1.lotus.com (8.14.4/8.14.1) with ESMTP id p4ICkLxT1765442
-	for <git@vger.kernel.org>; Wed, 18 May 2011 08:46:21 -0400
-Received: from gh203.lotus.com ([9.32.7.20])
-          by ghmail3.lotus.com (Lotus Domino Release 8.5.2)
-          with ESMTP id 2011051808462021-24589 ;
-          Wed, 18 May 2011 08:46:20 -0400 
-Importance: Normal
-X-Priority: 3 (Normal)
-Sensitivity: 
-In-Reply-To: 
-References: 
-X-Mailer: Lotus Domino Web Server Release 8.5.1FP4 July 25, 2010
-X-MIMETrack: Serialize by Notes Server on DWA/lotus(Release 8.5.1FP4|July 25, 2010) at
- 05/18/2011 08:46:18 AM,
-	Serialize complete at 05/18/2011 08:46:18 AM,
-	Serialize by Router on DWA/lotus(Release 8.5.1FP4|July 25, 2010) at 05/18/2011
- 08:46:19 AM,
-	Itemize by SMTP Server on ghmail3/greenhouse(Release 8.5.2|August 10, 2010) at
- 05/18/2011 08:46:20 AM,
-	Serialize by Router on ghmail1/greenhouse(Release 8.5.2|August 10, 2010) at
- 05/18/2011 08:46:21 AM,
-	Serialize complete at 05/18/2011 08:46:21 AM
+	id S933106Ab1ERNHU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 May 2011 09:07:20 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:42839 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933111Ab1ERNHT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 May 2011 09:07:19 -0400
+Received: by bwz15 with SMTP id 15so1401145bwz.19
+        for <git@vger.kernel.org>; Wed, 18 May 2011 06:07:18 -0700 (PDT)
+Received: by 10.204.74.7 with SMTP id s7mr1806809bkj.57.1305724038009;
+        Wed, 18 May 2011 06:07:18 -0700 (PDT)
+Received: from vix.int.op5.se (sth-vpn1.op5.com [193.201.96.49])
+        by mx.google.com with ESMTPS id l1sm972577bkl.13.2011.05.18.06.07.16
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 18 May 2011 06:07:17 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Thunderbird/3.1.10 ThunderGit/0.1a
+In-Reply-To: <4DD3A402.3040802@hupie.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173877>
 
-I am using git with https as the transport protocol. 
-Response times were around 30 seconds before apache started processing the backend command. 
-I added the flags -  BrowserMatch "git"      downgrade-1.0 force-response-1.0
- to the apache conf file, and response times were fast. 
-This seems to mean that the libcurl library is not dealing correctly with HTTP 1/1 over SSL. Is this the best fix? 
-If so, maybe appropriate documentation should be added to the git setup docs.
+On 05/18/2011 12:48 PM, Ferry Huberts wrote:
+> Hi list
+> 
+> After reading the manual page for git describe it was not clear to me what
+> kind of pattern the --match option should take. Was it to be
+> a shell pattern (to be expected) or a regular expression pattern?
+> 
+> So I dug in the code to find fnmatch: shell pattern.
+> 
+> Now my question(s):
+> - could the manual page be update to make this explicit please? (plus
+> other manual pages talking about (shell) patterns)
+
+Patches welcome.
+
+> - could git start taking regular expression patterns please?
+> 
+
+I'm not the maintainer, but with my incredible powers of foresight I'll
+take a wild stab at answering in his stead:
+Not with the current argument, no, but introducing '--rematch' or '--rmatch'
+to take a regular expression instead would probably be a welcome patch if
+it's well done.
+
+
+> I'm using the --match option on git describe to generate version
+> information from and matching against a regular expression is soooo much
+> more powerful and allows me to fully define my naming convention while
+> shell patterns do not allow me to do so.
+> 
+> Or am I missing something?
+> 
+
+You're not, but we're missing the patch ;)
+For my own needs, the fnmatch patterns work quite well.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
