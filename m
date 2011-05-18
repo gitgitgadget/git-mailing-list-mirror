@@ -1,72 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add -i: ignore terminal escape sequences
-Date: Tue, 17 May 2011 20:52:08 -0700
-Message-ID: <7vipt8fyxj.fsf@alter.siamese.dyndns.org>
-References: <05ce7ccdb3f4e07724d430f6ea2a8c9730971c9d.1305645331.git.trast@student.ethz.ch>
+From: Elijah Newren <newren@gmail.com>
+Subject: Re: What's cooking in git.git (May 2011, #04; Sun, 8)
+Date: Tue, 17 May 2011 21:57:40 -0600
+Message-ID: <BANLkTimQQPad-Sg0=KnEsKowfUJjODKD7A@mail.gmail.com>
+References: <7v8vugqvy3.fsf@alter.siamese.dyndns.org>
+	<BANLkTimz5KpSC04gQkYL+oXJu5JfR8t8nw@mail.gmail.com>
+	<7vk4dql7oq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed May 18 05:52:27 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Ciaran <ciaranj@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 18 05:57:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMXo8-0004xf-Cn
-	for gcvg-git-2@lo.gmane.org; Wed, 18 May 2011 05:52:24 +0200
+	id 1QMXtL-000740-DY
+	for gcvg-git-2@lo.gmane.org; Wed, 18 May 2011 05:57:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932813Ab1ERDwT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2011 23:52:19 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:52199 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932778Ab1ERDwS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2011 23:52:18 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DEE5C5C1B;
-	Tue, 17 May 2011 23:54:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fpnYB1LajLLQQWIWjvjU91ZSGK4=; b=WLq21d
-	VMynMItZ/SmpcSinvmHduABr7yWYZxiW5kC5s8eugZ4VE8Jm6bPIUk0Tgf6XAXz2
-	itibiMHRX9p+nM9a3njhy0y4xQVIdCOa5bpv9b2tPpdB/341lhn74qN0eMHG9PuQ
-	p1aye5jg8upmIqFCx5B8c7bIA69SZNlHpqrfI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yj2aphAStJKNP4QHwfrpKqrJR4OkxXaL
-	JgVZ+4ToUlLhjxKdMsQXhYyMi6CMFl6UwpMK/yQ29UA0aKZAqDLvw7JLWLZrEyFI
-	cdXcT7JH/d+xt3YblFo/GSWDo6AsY3tUhVHfecaoNEKMpU4Ua/aliNzCuP7tt9vI
-	tEkpPZqWrrY=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AC9275C1A;
-	Tue, 17 May 2011 23:54:20 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 96A995C19; Tue, 17 May 2011
- 23:54:16 -0400 (EDT)
-In-Reply-To: <05ce7ccdb3f4e07724d430f6ea2a8c9730971c9d.1305645331.git.trast@student.ethz.ch> (trast@student.ethz.ch's message of "Tue, 17 May 2011 17:19:08 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 82D8418A-8102-11E0-A5DE-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+	id S1756496Ab1ERD5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 May 2011 23:57:43 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:64047 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751379Ab1ERD5m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2011 23:57:42 -0400
+Received: by fxm17 with SMTP id 17so907589fxm.19
+        for <git@vger.kernel.org>; Tue, 17 May 2011 20:57:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=pFFsWqckCImNL+JcW/Uf1/pRIe04aiRydqfl52j9Htg=;
+        b=ly3aI7Xw8M0iVmSGf7mt2TS4nPHkw/aH65x2PNDimJAICYbOW1UHHha/mOf5LDgZvX
+         adPVmrRbRJbZXf9NnsL4Sy97ANCZI35oRwnXOtfdH1/3lEVyOXorOnGc99u+JZPblctY
+         MyiKA0u5/ud+mryiU1jifNBtsqxfdf2kD5wfc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=GxNOW03fU8iLg6oKQvGsF7d/fbLjVqcvo6osqHtFjTLU4BOHyCZ2W9kruA75DFV3h6
+         AYttWAyUfkMrWoTWIsYaFZGf7l9s6RnytYP8enQIs1lq2DF5gtacEior2O8Hn1cewNkZ
+         JsQSZTSNNxThtiNMOuLP/CuyZ95jD0hd6uHHU=
+Received: by 10.223.110.21 with SMTP id l21mr1751568fap.70.1305691060554; Tue,
+ 17 May 2011 20:57:40 -0700 (PDT)
+Received: by 10.223.114.76 with HTTP; Tue, 17 May 2011 20:57:40 -0700 (PDT)
+In-Reply-To: <7vk4dql7oq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173839>
 
-<trast@student.ethz.ch> writes:
+On Mon, May 16, 2011 at 2:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> I am aware of an issue around the merge-recursive area reported by you on
+> May 3rd (Message-ID: <BANLkTimcRbuYzSp+MM-vsvxoWhAS8Jvo8Q@mail.gmail.com>,
+> $gmane/172617) [*1*]. I had an impression that the guilty party pointed at
+> by the bisection was already looking into it.
+>
+> Elijah, any progress on that one?
 
-> I nearly managed to lose a bunch of uncommitted work today, but could
-> salvage most of it from the pieces of diffs in the terminal
-> scrollback.  Sigh.
-
-I think the take-home lesson is that confirmation offered in the default
-mode is valuable.  The "single-key" mode is another long rope that I would
-not use myself, but the users can choose to hang themselves with.
-
-Jokes aside, it may make sense to offer an extra confirmation for "a" and
-possibly "s" in single-key mode. Unlike others, they are destructive when
-the changes you are splitting from the working tree is large-ish.
-
-> Oh yeah, PS: I'm alive ;-)
-
-Good to hear.
+Sorry, no, I was struggling to find time.  However, I was just
+successful today in making it so I can take care of some of these
+things on work time instead of always trying to find spare time to do
+it.  That should help tremendously; expect an update in a week.
