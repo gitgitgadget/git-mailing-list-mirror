@@ -1,73 +1,138 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: Windows permissions with repository on a network share
-Date: Wed, 18 May 2011 14:22:51 +0530
-Message-ID: <BANLkTikb4Q9ZmG-ToaV5LXLzfrcBu58PUw@mail.gmail.com>
-References: <iqu417$qnj$1@dough.gmane.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/3] connect: treat generic proxy processes like ssh
+ processes
+Date: Wed, 18 May 2011 04:57:44 -0400
+Message-ID: <20110518085743.GH27482@sigill.intra.peff.net>
+References: <20110516063944.GB25731@sigill.intra.peff.net>
+ <20110516064607.GA19078@sigill.intra.peff.net>
+ <4DD181C6.4020104@kdbg.org>
+ <20110517055422.GD10048@sigill.intra.peff.net>
+ <4DD2D733.3070004@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Jerome Lovy <t2a2e9z8ncbs9qg@brefemail.com>
-X-From: git-owner@vger.kernel.org Wed May 18 10:52:58 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Johan Herland <johan@herland.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed May 18 10:57:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMcV0-0000q4-1T
-	for gcvg-git-2@lo.gmane.org; Wed, 18 May 2011 10:52:58 +0200
+	id 1QMcZm-0003bb-UC
+	for gcvg-git-2@lo.gmane.org; Wed, 18 May 2011 10:57:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755240Ab1ERIwx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 May 2011 04:52:53 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:34548 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751573Ab1ERIww (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 May 2011 04:52:52 -0400
-Received: by vxi39 with SMTP id 39so938579vxi.19
-        for <git@vger.kernel.org>; Wed, 18 May 2011 01:52:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=nU8D9sdfMg12LCJDTYJqZ4LWav9o+aYtxHn61/wigCc=;
-        b=prU/pTfvYZrrX9drkdVEFz7U8DmA+49W3ocD08p45rWRdpyn4Mtw7DihpMOohj8eI9
-         8bBLEdafwZ9fcU725zmkWHJJyTs+SBl9gPMixd+YgAGODamyK8BK0b1cRg/HGngklk9b
-         xyYDM1cptMFqANsfBshddbDutlRS9Jan1+EXU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=aLNAm6L0UzZE7ZoXeRdk6A0uPw7QMpX2hwRR9GueV12ZUPpNN7y491FAmddhjh/u1H
-         k4XUX5nF/WfT9hH04jlh6PQN0MalCQokegfc5KgEmhyPnxCugRMZXFAaMkyJJ3TjDjl2
-         ziwugh7cf8E/W45OlPSQJu/xU6PLUPtiSsOpk=
-Received: by 10.52.111.136 with SMTP id ii8mr2308759vdb.72.1305708771856; Wed,
- 18 May 2011 01:52:51 -0700 (PDT)
-Received: by 10.52.164.101 with HTTP; Wed, 18 May 2011 01:52:51 -0700 (PDT)
-In-Reply-To: <iqu417$qnj$1@dough.gmane.org>
+	id S1755528Ab1ERI5t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 May 2011 04:57:49 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48005
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755174Ab1ERI5t (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 May 2011 04:57:49 -0400
+Received: (qmail 3296 invoked by uid 107); 18 May 2011 08:59:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 May 2011 04:59:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 May 2011 04:57:44 -0400
+Content-Disposition: inline
+In-Reply-To: <4DD2D733.3070004@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173864>
 
-On Tue, May 17, 2011 at 8:55 PM, Jerome Lovy
-<t2a2e9z8ncbs9qg@brefemail.com> wrote:
-> Hello,
->
-> Did anyone experiment with Windows permissions for a Git repository located
-> on a Windows network share?
->
-> Is it a sensible scheme in order to have a central repository with ACLs
-> (notably some group can read/write, some other group can only read) without
-> the need to set up a dedicated server (ala Gitolite) ?
-> (Assuming a Windows network share infrastructure is already in place...)
+On Tue, May 17, 2011 at 10:14:43PM +0200, Johannes Sixt wrote:
 
-I don't know about Windows but any OS/file-system level ACL system
-that has more granularity than the usual user/group/other, ought to
-work fine.
+> Am 17.05.2011 07:54, schrieb Jeff King:
+> > On Mon, May 16, 2011 at 09:57:58PM +0200, Johannes Sixt wrote:
+> >> In my implementation, I xmalloced the pointer array and leaked it.
+> 
+> I noticed that it actually isn't leaked because finish_connect() frees
+> it. For this reason, I actually have to wonder why your version that
+> stored a pointer to automatic storage in ->argv worked.
 
-The only thing gitolite can add is branch-level permissions, which it
-doesn't sound like you need.
+It probably didn't. As a simple refactoring, I didn't test the proxy
+codepath, and apparently nothing in our test suite does, either. :(
 
-[Of course, I like to think that the config file in gitolite is a much
-cleaner way of setting, reviewing, changing, and tracking changes of,
-permissions, but I'm biased ;-)]
+We can put the patch below on top (it fails with my original series, but
+passes with the bugfix you noticed).
+
+> I would not worry too much today. Of course, functions other than
+> start_command() might begin to access ->argv[i] with i > 0 later, but
+> then we have to audit all users of struct child_process anyway.
+> Currently, only start_command() uses these values, which is always
+> called at a time when they are still valid.
+
+That makes sense.
+
+-- >8 --
+Subject: [PATCH] test core.gitproxy configuration
+
+This is just a basic sanity test to see whether
+core.gitproxy works at all. Until now, we were not testing
+anywhere.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This is really basic. Apparently you can do horrible things like
+
+  git config core.gitproxy "./proxy for kernel.org"
+  git config core.gitproxy "./other-proxy for example.com"
+
+I can make it more elaborate if we really want to care.
+
+ t/t5532-fetch-proxy.sh |   42 ++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 42 insertions(+), 0 deletions(-)
+ create mode 100755 t/t5532-fetch-proxy.sh
+
+diff --git a/t/t5532-fetch-proxy.sh b/t/t5532-fetch-proxy.sh
+new file mode 100755
+index 0000000..07119d9
+--- /dev/null
++++ b/t/t5532-fetch-proxy.sh
+@@ -0,0 +1,42 @@
++#!/bin/sh
++
++test_description='fetching via git:// using core.gitproxy'
++. ./test-lib.sh
++
++test_expect_success 'setup remote repo' '
++	git init remote &&
++	(cd remote &&
++	 echo content >file &&
++	 git add file &&
++	 git commit -m one
++	)
++'
++
++cat >proxy <<'EOF'
++#!/bin/sh
++echo >&2 "proxying for $*"
++cmd=`perl -e '
++	read(STDIN, $buf, 4);
++	my $n = hex($buf) - 4;
++	read(STDIN, $buf, $n);
++	my ($cmd, $other) = split /\0/, $buf;
++	# drop absolute-path on repo name
++	$cmd =~ s{ /}{ };
++	print $cmd;
++'`
++exec $cmd
++EOF
++chmod +x proxy
++test_expect_success 'setup local repo' '
++	git remote add fake git://example.com/remote &&
++	git config core.gitproxy ./proxy
++'
++
++test_expect_success 'fetch through proxy works' '
++	git fetch fake &&
++	echo one >expect &&
++	git log -1 --format=%s FETCH_HEAD >actual &&
++	test_cmp expect actual
++'
++
++test_done
+-- 
+1.7.5.8.ga95ab
