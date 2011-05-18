@@ -1,72 +1,85 @@
 From: Eric Wong <normalperson@yhbt.net>
 Subject: Re: [PATCH/RFC] git-svn: New flag to add a file in empty
 	directories
-Date: Wed, 18 May 2011 08:22:15 +0000
-Message-ID: <20110518082215.GA21899@dcvr.yhbt.net>
-References: <1305669635-10861-1-git-send-email-rchen@cs.umd.edu>
+Date: Wed, 18 May 2011 08:33:14 +0000
+Message-ID: <20110518083314.GA22204@dcvr.yhbt.net>
+References: <1305669635-10861-1-git-send-email-rchen@cs.umd.edu> <4DD373CD.6010607@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ray Chen <rchen@cs.umd.edu>
-X-From: git-owner@vger.kernel.org Wed May 18 10:22:25 2011
+Cc: Ray Chen <rchen@cs.umd.edu>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed May 18 10:33:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMc1P-0007uT-8U
-	for gcvg-git-2@lo.gmane.org; Wed, 18 May 2011 10:22:23 +0200
+	id 1QMcC1-0005lP-P9
+	for gcvg-git-2@lo.gmane.org; Wed, 18 May 2011 10:33:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755420Ab1ERIWR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 May 2011 04:22:17 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:53957 "EHLO dcvr.yhbt.net"
+	id S1755972Ab1ERIdP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 May 2011 04:33:15 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:46980 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754316Ab1ERIWP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 May 2011 04:22:15 -0400
+	id S1755502Ab1ERIdP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 May 2011 04:33:15 -0400
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D4701F404;
-	Wed, 18 May 2011 08:22:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4AD01F404;
+	Wed, 18 May 2011 08:33:14 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <1305669635-10861-1-git-send-email-rchen@cs.umd.edu>
+In-Reply-To: <4DD373CD.6010607@alum.mit.edu>
 User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173860>
 
-Ray Chen <rchen@cs.umd.edu> wrote:
-> I needed this functionality when I was migrating a repository from SVN to
-> Git.
+Michael Haggerty <mhagger@alum.mit.edu> wrote:
+<snip> 1..3 are all very good points
 
-This feature sounds reasonable for folks making one-shot or read-only
-mirrors with git svn.
+> 4. If it is a goal to support long-term tracking of a Subversion
+> repository, then it would be good to add a config option to turn on this
+> feature permanently for a git-svn repository, so that the user doesn't
+> have to enter the extra options with each command invocation.
 
-> My knowledge of SVN is limited, so I'm not sure how correct this patch is.
-> I created a little test SVN repo, and `git svn clone --preserve-empty-dirs`
-> did the right thing, but that's hardly a complete test.
+Command-line options should be automatically converted into config file
+options inside git svn.  We should however discourage this from getting
+mixed...
 
-Please provide an automated test case so it's easier to review (I almost
-never see SVN repos anymore) and to ensure it stays working when other
-changes are made.
+> 5. It might be useful to allow the placeholder files to be committed to
+> Subversion, so that other git-svn users based off the same Subversion
+> repository don't have to worry about empty directories.  This would
+> typically be something that people would want to do semi-manually in
+> specific Subversion commits.  To support this user case, one could add a
+> similar option to "git svn mkdirs" that causes the placeholder files to
+> be created in the working copy but not committed.  Then the user could
+> review the suggested changes, perhaps add lines to the .gitignore files,
+> commit to git, then dcommit to Subversion.
 
-> Specifically, I experimentally noticed that my patch worked with lines 4532
-> and 4533 commented out.  I'm not sure what problems might occur when adding
-> a file Git without associated SVN properties.
+No, too hard and error-prone, I think.
 
-These two lines?
+This would require tracking which .gitignore files are git-only and
+which are not (some SVN repos have .gitignore files explicitly checked
+in, but that should /always/ be done explicitly by the user every time).
 
-> +	# The following two lines don't seem to be necessary, but I'm not
-> +	# familiar enough with SVN properties to know if correctness is
-> +	# compromised without them.
-> +#	$self->{file_prop}->{$path} = $self->{dir_prop}->{$dir};
-> +#	$self->add_file($path, { 'path' => $dir }, undef, '-1');
+I would go as far as to have a flag to disable dcommit (and set-tree) on
+any repo that uses this placeholder feature.  SVN-only folks could be
+very unhappy to see placeholder files, especially in some cases
+where placeholders may break builds or cause information leaks.
 
-It's been years since I dealt with the SVN library, so I'm not sure I
-still remember.  I think add_file is only for files that exist in the
-SVN side, not sure about the file_prop/dir_prop assignment, either.
 
-(more in my reply to Michael's email)
+I strongly believe git-svn should leave no trace.  Nobody but the user
+using git-svn should know they're using git-svn to interact with an SVN
+repo.  This allows users to stay under the radar of any idiotic rules
+(or knee-jerk reactions of FUD) their organization may have against
+using non-standard SVN clients.  So far, it's worked out pretty well,
+git-svn users slowly and quietly develop clout and influence to migrate
+their repos from SVN to git.
+
+> 6. Documentation patches would also be required.
+
+Agreed, along with automated test cases.
 
 -- 
 Eric Wong
