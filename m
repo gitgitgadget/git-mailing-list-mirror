@@ -1,257 +1,66 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH v5] Add log.abbrevCommit config variable
-Date: Tue, 17 May 2011 21:26:31 -0400
-Message-ID: <1305681991-11699-1-git-send-email-jaysoffian@gmail.com>
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Junio C Hamano <junio@kernel.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 18 03:26:43 2011
+From: Richard Peterson <bigtheta@gmail.com>
+Subject: Re: Is there a debug mode for git-clone https traffic?
+Date: Tue, 17 May 2011 21:38:39 -0400
+Message-ID: <-3808464152500901395@unknownmsgid>
+References: <BANLkTi=-i063MqrboT1MHrQy-vM0yBTUGg@mail.gmail.com>
+Mime-Version: 1.0 (iPhone Mail 8C148)
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 18 03:39:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMVX8-0006wE-ND
-	for gcvg-git-2@lo.gmane.org; Wed, 18 May 2011 03:26:43 +0200
+	id 1QMVjn-0003NV-Q3
+	for gcvg-git-2@lo.gmane.org; Wed, 18 May 2011 03:39:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932626Ab1ERB0i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 May 2011 21:26:38 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:33168 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932266Ab1ERB0h (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2011 21:26:37 -0400
-Received: by vxi39 with SMTP id 39so782329vxi.19
-        for <git@vger.kernel.org>; Tue, 17 May 2011 18:26:36 -0700 (PDT)
+	id S932724Ab1ERBjn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 May 2011 21:39:43 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:44094 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932720Ab1ERBjm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 May 2011 21:39:42 -0400
+Received: by yxs7 with SMTP id 7so386198yxs.19
+        for <git@vger.kernel.org>; Tue, 17 May 2011 18:39:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
-        bh=6X6VEtDFe7pIFm8zIHxHd9cnjObn8f4t855qLJekh9Q=;
-        b=b1bogTxWH3KGkzvrLZyy2E7ypVEs12olAyzYC/NAwu/dojMaTouR64M2cMgDkWBjIP
-         FfVAU57yXEQNw7/EQyDjARtAVzIxQXP2aiJ19KQLWncmLrEu5RZPIUUBAbToamB4w+nF
-         Ed25STgbqZsNd0mfEvuKZA9bhJB1lTOM2s7og=
+        h=domainkey-signature:references:from:in-reply-to:mime-version:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=Wr8zEtJKUm1wE493ZXDvTpL6KQA1UThiV6cOXZ4ZWvM=;
+        b=ZlEDPhe9zfGrfWSV/3GGTHpr03XjjN8XxCp0Lm3mojbmkyKyzbvKwrjm2SyIjeuccO
+         MZRSRPtn1vL7YlrgUBvqeBX1wINeDjPMZ1bwwit5W3hPFF/oZuLhTSrYBbSw+pba5vAD
+         SL9R0ip7GgUgSReaBaIejLV71MiBpYvZS+xf8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=TmrFsXriCTABqH761LWZK168XkxUN0vau4IBfnZHCnfjDlrt3seHW9DYm+Usn8xGZF
-         wxLpjs8BgYfHxu1IipvWTbd0NsVzWvmWKlMLky3PbVRFdjHAuZPDG/83Y8w818c5tCOI
-         6SRdW2GnFvAx6bPNFbvE6woWlHu+Kgc/CzW1I=
-Received: by 10.52.175.133 with SMTP id ca5mr1932309vdc.82.1305681996143;
-        Tue, 17 May 2011 18:26:36 -0700 (PDT)
-Received: from localhost (cpe-071-077-014-091.nc.res.rr.com [71.77.14.91])
-        by mx.google.com with ESMTPS id cy4sm241747vdc.39.2011.05.17.18.26.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 17 May 2011 18:26:35 -0700 (PDT)
-X-Mailer: git-send-email 1.7.5.1.340.g5d845
+        h=references:from:in-reply-to:mime-version:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=qYV7h+Ac2+J1zsC7AKDTs5QMPdXltqkQVAmKOCFK7AWI59XJr8Y3mE/WztRGamaItp
+         B7Sd/r3+9OZMlleYRYRA4H0njjQiU1pCcs+26M5Qz2XH9Sa9hv+sOBW8gj8R768jzFnG
+         IhTQedSBh5gtItqN7QTR+hEjYOFQGgPXYqd4c=
+Received: by 10.150.13.7 with SMTP id 7mr967582ybm.201.1305682782123; Tue, 17
+ May 2011 18:39:42 -0700 (PDT)
+In-Reply-To: <BANLkTi=-i063MqrboT1MHrQy-vM0yBTUGg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173837>
 
-Add log.abbrevCommit config variable as a convenience for users who
-often use --abbrev-commit with git log and friends. Allow the option
-to be overridden with --no-abbrev-commit. Per 635530a2fc and 4f62c2bc57,
-the config variable is ignored when log is given "--pretty=raw".
+On May 17, 2011, at 19:08, =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.=
+com> wrote:
 
-(Also, a drive-by spelling correction in git log's short help.)
+> I''m trying to debug a problem where over a https proxy I have
+> "warning: remote HEAD refers to nonexistent ref, unable to checkout."
+> when doing git-clone.
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
-- Fixed regression in "git reflog" output where commit was not abbreviated
-- Added tests for "git whatchanged" and "git reflog" output formats
-- Added additional stanzas to "log.abbrevCommit" test to check output
-  of "git whatchanged" and "git reflog"
+Last time I ran into that error, I was cloning from a bundle where the
+remote head was simply not in the bundle. The branches I needed were
+all there. Running "git branch -a" and then checking out one of the
+existent branches worked fine.
 
- Documentation/config.txt         |    5 ++++
- Documentation/pretty-options.txt |    5 ++++
- builtin/log.c                    |   24 ++++++++++++++--------
- revision.c                       |    3 ++
- revision.h                       |    1 +
- t/t4202-log.sh                   |   40 ++++++++++++++++++++++++++++++++++++++
- 6 files changed, 69 insertions(+), 9 deletions(-)
+Not sure if that's related to your situation at all.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 1a060ecbc8..6b93777199 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1315,6 +1315,11 @@ interactive.singlekey::
- 	setting is silently ignored if portable keystroke input
- 	is not available.
- 
-+log.abbrevCommit::
-+	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
-+	linkgit:git-whatchanged[1] assume `\--abbrev-commit`. You may
-+	override this option with `\--no-abbrev-commit`.
-+
- log.date::
- 	Set the default date-time mode for the 'log' command.
- 	Setting a value for log.date is similar to using 'git log''s
-diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
-index d5c977262a..2a3dc8664f 100644
---- a/Documentation/pretty-options.txt
-+++ b/Documentation/pretty-options.txt
-@@ -19,6 +19,11 @@ configuration (see linkgit:git-config[1]).
- This should make "--pretty=oneline" a whole lot more readable for
- people using 80-column terminals.
- 
-+--no-abbrev-commit::
-+	Show the full 40-byte hexadecimal commit object name. This negates
-+	`--abbrev-commit` and those options which imply it such as
-+	"--oneline". It also overrides the 'log.abbrevCommit' variable.
-+
- --oneline::
- 	This is a shorthand for "--pretty=oneline --abbrev-commit"
- 	used together.
-diff --git a/builtin/log.c b/builtin/log.c
-index f6219909a7..019a44ac86 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -23,6 +23,7 @@
- /* Set a default date-time format for git log ("log.date" config variable) */
- static const char *default_date_mode = NULL;
- 
-+static int default_abbrev_commit;
- static int default_show_root = 1;
- static int decoration_style;
- static int decoration_given;
-@@ -77,6 +78,7 @@ static void cmd_log_init_defaults(struct rev_info *rev)
- 		get_commit_format(fmt_pretty, rev);
- 	rev->verbose_header = 1;
- 	DIFF_OPT_SET(&rev->diffopt, RECURSIVE);
-+	rev->abbrev_commit = default_abbrev_commit;
- 	rev->show_root_diff = default_show_root;
- 	rev->subject_prefix = fmt_patch_subject_prefix;
- 	DIFF_OPT_SET(&rev->diffopt, ALLOW_TEXTCONV);
-@@ -92,7 +94,7 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
- 	int quiet = 0, source = 0;
- 
- 	const struct option builtin_log_options[] = {
--		OPT_BOOLEAN(0, "quiet", &quiet, "supress diff output"),
-+		OPT_BOOLEAN(0, "quiet", &quiet, "suppress diff output"),
- 		OPT_BOOLEAN(0, "source", &source, "show source"),
- 		{ OPTION_CALLBACK, 0, "decorate", NULL, NULL, "decorate options",
- 		  PARSE_OPT_OPTARG, decorate_callback},
-@@ -129,13 +131,13 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
- 	if (source)
- 		rev->show_source = 1;
- 
--	/*
--	 * defeat log.decorate configuration interacting with --pretty=raw
--	 * from the command line.
--	 */
--	if (!decoration_given && rev->pretty_given
--	    && rev->commit_format == CMIT_FMT_RAW)
--		decoration_style = 0;
-+	if (rev->pretty_given && rev->commit_format == CMIT_FMT_RAW) {
-+		/* "log --pretty=raw" is special */
-+		if (!decoration_given)
-+			decoration_style = 0;
-+		if (!rev->abbrev_commit_given)
-+			rev->abbrev_commit = 0;
-+	}
- 
- 	if (decoration_style) {
- 		rev->show_decorations = 1;
-@@ -323,6 +325,10 @@ static int git_log_config(const char *var, const char *value, void *cb)
- 		return git_config_string(&fmt_pretty, var, value);
- 	if (!strcmp(var, "format.subjectprefix"))
- 		return git_config_string(&fmt_patch_subject_prefix, var, value);
-+	if (!strcmp(var, "log.abbrevcommit")) {
-+		default_abbrev_commit = git_config_bool(var, value);
-+		return 0;
-+	}
- 	if (!strcmp(var, "log.date"))
- 		return git_config_string(&default_date_mode, var, value);
- 	if (!strcmp(var, "log.decorate")) {
-@@ -516,11 +522,11 @@ int cmd_log_reflog(int argc, const char **argv, const char *prefix)
- 
- 	init_revisions(&rev, prefix);
- 	init_reflog_walk(&rev.reflog_info);
--	rev.abbrev_commit = 1;
- 	rev.verbose_header = 1;
- 	memset(&opt, 0, sizeof(opt));
- 	opt.def = "HEAD";
- 	cmd_log_init_defaults(&rev);
-+	rev.abbrev_commit = 1;
- 	rev.commit_format = CMIT_FMT_ONELINE;
- 	rev.use_terminator = 1;
- 	rev.always_show_header = 1;
-diff --git a/revision.c b/revision.c
-index a7cf79bf2e..be74bf92f5 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1429,6 +1429,9 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 			revs->abbrev = 40;
- 	} else if (!strcmp(arg, "--abbrev-commit")) {
- 		revs->abbrev_commit = 1;
-+		revs->abbrev_commit_given = 1;
-+	} else if (!strcmp(arg, "--no-abbrev-commit")) {
-+		revs->abbrev_commit = 0;
- 	} else if (!strcmp(arg, "--full-diff")) {
- 		revs->diff = 1;
- 		revs->full_diff = 1;
-diff --git a/revision.h b/revision.h
-index bca9947977..5e1f5c7e8f 100644
---- a/revision.h
-+++ b/revision.h
-@@ -90,6 +90,7 @@ struct rev_info {
- 			show_notes_given:1,
- 			pretty_given:1,
- 			abbrev_commit:1,
-+			abbrev_commit_given:1,
- 			use_terminator:1,
- 			missing_newline:1,
- 			date_mode_explicit:1;
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 2fcc31a6f3..f709d5c099 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -450,6 +450,46 @@ test_expect_success 'log.decorate configuration' '
- 
- '
- 
-+test_expect_success 'reflog is expected format' '
-+	test_might_fail git config --remove-section log &&
-+	git log -g --abbrev-commit --pretty=oneline >expect &&
-+	git reflog >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'whatchanged is expected format' '
-+	git log --no-merges --raw >expect &&
-+	git whatchanged >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'log.abbrev-commit configuration' '
-+	test_when_finished "git config --unset log.abbrevCommit" &&
-+
-+	git log >expect.full &&
-+	git log --abbrev-commit >expect.abbrev &&
-+	git log --pretty=raw >expect.raw &&
-+	git log -g --abbrev-commit --pretty=oneline >expect.reflog &&
-+	git whatchanged --abbrev-commit >expect.whatchanged &&
-+
-+	git config log.abbrevCommit true &&
-+
-+	git log --no-abbrev-commit >actual.full &&
-+	test_cmp expect.full actual.full &&
-+
-+	git log >actual.abbrev &&
-+	test_cmp expect.abbrev actual.abbrev &&
-+
-+	git log --pretty=raw >actual.raw &&
-+	test_cmp expect.raw actual.raw &&
-+
-+	git reflog >actual.reflog &&
-+	test_cmp expect.reflog actual.reflog
-+
-+	git whatchanged >actual.whatchanged &&
-+	test_cmp expect.whatchanged actual.whatchanged
-+'
-+
- test_expect_success 'show added path under "--follow -M"' '
- 	# This tests for a regression introduced in v1.7.2-rc0~103^2~2
- 	test_create_repo regression &&
--- 
-1.7.5.1.340.g32d9b
+Richard
