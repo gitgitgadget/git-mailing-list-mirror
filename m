@@ -1,67 +1,73 @@
-From: Hermann Gausterer <git-mailinglist@mrq1.org>
-Subject: Re: [PATCH] add-interactive: shortcut to add hunk and quit
-Date: Wed, 18 May 2011 10:43:52 +0200
-Message-ID: <20110518084352.GA14922@mrq1.org>
-References: <20110517071232.GA19396@mrq1.org>
- <4DD369C3.4070806@pcharlan.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="6c2NcOVqGQ03X4Wi"
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 18 10:44:19 2011
+From: Gustav Munkby <grddev@gmail.com>
+Subject: [PATCH] git-svn: enable platform-specific authentication
+Date: Wed, 18 May 2011 10:45:20 +0200
+Message-ID: <1305708320-8614-1-git-send-email-grddev@gmail.com>
+Cc: Eric Wong <normalperson@yhbt.net>, Gustav Munkby <grddev@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 18 10:46:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMcMc-0004Eb-5t
-	for gcvg-git-2@lo.gmane.org; Wed, 18 May 2011 10:44:18 +0200
+	id 1QMcP2-0005fi-5C
+	for gcvg-git-2@lo.gmane.org; Wed, 18 May 2011 10:46:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756696Ab1ERIn5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 May 2011 04:43:57 -0400
-Received: from smtpout05.highway.telekom.at ([195.3.96.77]:19949 "EHLO
-	email.aon.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752031Ab1ERInz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 May 2011 04:43:55 -0400
-Received: (qmail 23869 invoked from network); 18 May 2011 08:43:52 -0000
-X-Spam-Checker-Version: SpamAssassin 3.2.0 (2007-05-01) on
-	WARSBL501.highway.telekom.at
-X-Spam-Level: 
-Received: from 80-123-45-235.adsl.highway.telekom.at (HELO mrq1.org) ([80.123.45.235])
-          (envelope-sender <git-mailinglist@mrq1.org>)
-          by smarthub91.highway.telekom.at (qmail-ldap-1.03) with SMTP
-          for <git@vger.kernel.org>; 18 May 2011 08:43:52 -0000
-Content-Disposition: inline
-In-Reply-To: <4DD369C3.4070806@pcharlan.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755529Ab1ERIqn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 May 2011 04:46:43 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:37334 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754565Ab1ERIqm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 May 2011 04:46:42 -0400
+Received: by ewy4 with SMTP id 4so370288ewy.19
+        for <git@vger.kernel.org>; Wed, 18 May 2011 01:46:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=1IXyVZ58fq1F3byy9bXDx9eUGvozLE+/4h5EDRiwIzo=;
+        b=tA8Pr83b3k7UObnRwsmZyJ0HwDqJKi7ZLaijBvdHUNJlrrQk9I2/z8CvTVlgxCoPI5
+         jSGg6r+3IPtxMJSSTGFnoput9q9Lj6yvXqn4gi+D2GfF9oPhGQM847K41iTfVWHRq481
+         ODsHhibBYhWp4p8G1I3aZvtqpW/VKyCeJptY8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=rTXd+jlCXtxMRs8s2QzkNTuaykAhteCxu/uSRhwDhEOZ89CKaB3msZiiMeShbbAdWO
+         8eakIXGWmwvwNUM8cfTZ9ssk04a0fhne9d5lTRbqxm4tRSSH3qoJERIkect/2zu4x4fv
+         RF/0BLturf4yY73/2qMUSuvCnWeTDI67FFPnE=
+Received: by 10.14.11.5 with SMTP id 5mr522664eew.92.1305708401252;
+        Wed, 18 May 2011 01:46:41 -0700 (PDT)
+Received: from localhost.localdomain (h85-30-59-231.static.se.alltele.net [85.30.59.231])
+        by mx.google.com with ESMTPS id y10sm981624eeh.17.2011.05.18.01.46.37
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 18 May 2011 01:46:38 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173862>
 
+Use the platform-specific authentication providers that are
+exposed to subversion bindings starting with subversion 1.6.
 
---6c2NcOVqGQ03X4Wi
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Signed-off-by: Gustav Munkby <grddev@gmail.com>
+---
+ git-svn.perl |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-On Tue, May 17, 2011 at 11:40:03PM -0700, Pete Harlan wrote:
-> Perhaps "o" (for "stage exactly [o]ne commit"), or "t" for "stage [t]his commit" would be reasonable alternatives?
-
-this option just adds and quits. so the "best" name would be "l"
-for "last" ...
-
---6c2NcOVqGQ03X4Wi
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iD8DBQFN04bIAdCXZ1Xu7u4RAhq9AKDGOqN2RkDuXHT7darukT6VAjOliQCfUlVX
-0mkWQ72LQ4nYKRkI8ApPnJo=
-=p3r9
------END PGP SIGNATURE-----
-
---6c2NcOVqGQ03X4Wi--
+diff --git a/git-svn.perl b/git-svn.perl
+index 0fd2fd2..3f7c3c8 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -4930,6 +4930,9 @@ BEGIN {
+ 
+ sub _auth_providers () {
+ 	[
++	  $SVN::Core::VERSION lt '1.6' ? () :
++	    @{SVN::Core::auth_get_platform_specific_client_providers(
++	      undef,undef)},
+ 	  SVN::Client::get_simple_provider(),
+ 	  SVN::Client::get_ssl_server_trust_file_provider(),
+ 	  SVN::Client::get_simple_prompt_provider(
+-- 
+1.7.5.1
