@@ -1,99 +1,90 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add-interactive: shortcut to add hunk and quit
-Date: Wed, 18 May 2011 08:28:57 -0700
-Message-ID: <7vr57wc9ja.fsf@alter.siamese.dyndns.org>
-References: <20110517071232.GA19396@mrq1.org> <4DD369C3.4070806@pcharlan.com>
- <20110518064515.GA29612@sigill.intra.peff.net>
- <4DD390AF.9020705@drmicha.warpmail.net>
+Subject: Re: Is there a debug mode for git-clone https traffic?
+Date: Wed, 18 May 2011 08:38:47 -0700
+Message-ID: <7vmxikc92w.fsf@alter.siamese.dyndns.org>
+References: <BANLkTi=-i063MqrboT1MHrQy-vM0yBTUGg@mail.gmail.com>
+ <20110518085932.GI27482@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Pete Harlan <pgit@pcharlan.com>,
-	Hermann Gausterer <git-mailinglist@mrq1.org>,
-	git list <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed May 18 17:29:20 2011
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 18 17:39:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMigX-0004eI-Oe
-	for gcvg-git-2@lo.gmane.org; Wed, 18 May 2011 17:29:18 +0200
+	id 1QMipy-0003Bh-Q3
+	for gcvg-git-2@lo.gmane.org; Wed, 18 May 2011 17:39:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756312Ab1ERP3M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 May 2011 11:29:12 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59646 "EHLO
+	id S1756802Ab1ERPi6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 May 2011 11:38:58 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35472 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754565Ab1ERP3L (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 May 2011 11:29:11 -0400
+	with ESMTP id S1755314Ab1ERPi5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 May 2011 11:38:57 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8C32645DC;
-	Wed, 18 May 2011 11:31:17 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9A4FA46D7;
+	Wed, 18 May 2011 11:41:03 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zgmLmQ1LEc48PUQHPh1LMaaz+FU=; b=B4fepr
-	oJ47oj8x9xKyFqv1Po09b6qK/9FR35xQ7pvzSnTB3sjEIIPjBAJTPQaK3cXbDTdp
-	6bJ0Lcta33A00tUtUmn72SarFmHAVN5kNZ32bowyTRK+ojB4WILhNQicCDupSoyb
-	Wo2KAquzpaEvNEzW6BKbtRHwt9he+f63i13Fo=
+	:content-type; s=sasl; bh=P8x9hENpVdG/wDSjJQSnc7JN9EM=; b=nOtHjU
+	pEBeIOAwzrqL0IMkYUIdtHexXpHsMVE4uPe/POiEo/UC+tJ3DEB01CRL0SPlNCd8
+	tzThyORKEZTuvPfR9pwoIXYEo3Aq08Mddigsad5GuDYvmsAeSTYlyspyMz2I50Hu
+	VME8Jl+waAa0NaI0xrE7pcx74eziXKTu2JkDo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yP8ozHZz0ybnaaTbLLWAYh5CrICm77+3
-	Q9nrWMXuNFpWSiluAqkGQy3Kw1y75DpLlb/DZzJhAQNVwD8fnF/waTH7QjeJACQI
-	tGTovpigX8RaqX6+a8peflzibJvKJRJuvxQsd3fXTQKOhM2K8Z0WVV/AEHLckFv0
-	r5NcwpFNPRQ=
+	:content-type; q=dns; s=sasl; b=dwpchraUKjs8M86qJN1zFZwKvzm0p377
+	V/3EbI6mOQ26VNFVk0I6yST9gnXZCdL2DVJvhw8c40E7Z0abQS5lcJg3J1mDttxb
+	cHwGHTcKYI/Z/R9V39oCN8eg8kCxwq3FmLjctySJm6ztxva0MPcjnPYrj3KeLXj7
+	znDfkFCzNP8=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3540545D8;
-	Wed, 18 May 2011 11:31:12 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5C21A46D6;
+	Wed, 18 May 2011 11:41:00 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9CFD145D4; Wed, 18 May 2011
- 11:31:05 -0400 (EDT)
-In-Reply-To: <4DD390AF.9020705@drmicha.warpmail.net> (Michael J. Gruber's
- message of "Wed, 18 May 2011 11:26:07 +0200")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 40B1546D5; Wed, 18 May 2011
+ 11:40:56 -0400 (EDT)
+In-Reply-To: <20110518085932.GI27482@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 18 May 2011 04:59:32 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DC700276-8163-11E0-A1B6-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 3B037EE8-8165-11E0-90EE-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173885>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Jeff King <peff@peff.net> writes:
 
->> We could also allow multiple commands at once, like "yq" (even in
->> single-key mode, this would do the same thing).
->
-> So instead of having to
->
-> press y press q
->
-> I can now
->
-> hold SHIFT press q
->
-> Seeing the gain in that fails me completely. Also, why doesn't "yd"
-> deserve a shortcut? I would expect that to be used more often, as in:
-> "Yes, that was the hunk I wanted to add from this file, but what other
-> files have changes"?
+> Others have mentioned ways to dump data from clone. But you can more or
+> less see what's going on with "git ls-remote <remote>". The sha1 for
+> "HEAD" will try to match with the sha1 for some other ref. If it
+> doesn't, then we give up.
 
-Thanks, I agree that "Q" as proposed is not very useful and looks too much
-like a hack that caters to one special user from that point of view.
+One thing noticed by somebody at $work is that we perform poorly when
+fetching from or pushing to a remote, which has an alternate, and when
+that alternate has a dangling HEAD that does not point at a valid commit.
 
-I've also been wondering why nobody has asked for "5y", which I often find
-lacking.
+I don't recall the exact details, but the story goes like...
 
-When you have a set of changes with many hunks to sift through, before
-going into an "add -p" session, you often have pretty good idea of hunks
-in which part of the files are to go to the commit you are currently
-building. I often find myself saying "ah, from here there are many hunks I
-want, and it is totally safe for me to apply 5 or so from here without
-looking."
+The remote in the middle would want to mark the objects that are available
+from the alternate by internally running ls-remote against its alternate,
+which returns with a failure status, and then the entire serving process
+is aborted, and the original client does not get what it wanted from the
+remote.
 
-I think "single-key" was a poorly designed attempt to improve productivity
-the ("y" <RET>)*5 into "y"*5, while sacrificing the safety net when you
-are trying to pick and decide one by one (like the accident Thomas had
-recently during "checkout -p"). If I can say "5y", think for half a second
-to make sure I typed what I meant, and <RET>, to apply 5 upcoming hunks in
-one go, I think I would be as efficient as the productivity optimization
-the single-key offers, while still protecting me from mistakes made by fat
-fingers.
+... or something like that.
+
+As the internal discovery of what additional objects are available to the
+remote from its alternate is primarily for improving network performance
+by avoiding to transfer unnecessary objects, it is tempting to argue that
+the remote could ignore the failure in ls-remote against the alternate.
+
+The remote however _is_ relying on the alternate for some (and possibly
+large part of) objects it _thinks_ it has via its own refs, and an
+alternate that fails ls-remote because it has its refs messed up is a bad
+sign that does not give us confidence that the remote itself is healthy,
+so from that point of view, we might be doing the right thing by refusing
+to serve the original requestor to prevent the damage from spreading.
