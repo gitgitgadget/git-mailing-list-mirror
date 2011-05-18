@@ -1,66 +1,72 @@
-From: Richard Peterson <bigtheta@gmail.com>
-Subject: Re: Is there a debug mode for git-clone https traffic?
-Date: Tue, 17 May 2011 21:38:39 -0400
-Message-ID: <-3808464152500901395@unknownmsgid>
-References: <BANLkTi=-i063MqrboT1MHrQy-vM0yBTUGg@mail.gmail.com>
-Mime-Version: 1.0 (iPhone Mail 8C148)
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 18 03:39:50 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] add -i: ignore terminal escape sequences
+Date: Tue, 17 May 2011 20:52:08 -0700
+Message-ID: <7vipt8fyxj.fsf@alter.siamese.dyndns.org>
+References: <05ce7ccdb3f4e07724d430f6ea2a8c9730971c9d.1305645331.git.trast@student.ethz.ch>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed May 18 05:52:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMVjn-0003NV-Q3
-	for gcvg-git-2@lo.gmane.org; Wed, 18 May 2011 03:39:48 +0200
+	id 1QMXo8-0004xf-Cn
+	for gcvg-git-2@lo.gmane.org; Wed, 18 May 2011 05:52:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932724Ab1ERBjn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 May 2011 21:39:43 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:44094 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932720Ab1ERBjm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 May 2011 21:39:42 -0400
-Received: by yxs7 with SMTP id 7so386198yxs.19
-        for <git@vger.kernel.org>; Tue, 17 May 2011 18:39:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:references:from:in-reply-to:mime-version:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=Wr8zEtJKUm1wE493ZXDvTpL6KQA1UThiV6cOXZ4ZWvM=;
-        b=ZlEDPhe9zfGrfWSV/3GGTHpr03XjjN8XxCp0Lm3mojbmkyKyzbvKwrjm2SyIjeuccO
-         MZRSRPtn1vL7YlrgUBvqeBX1wINeDjPMZ1bwwit5W3hPFF/oZuLhTSrYBbSw+pba5vAD
-         SL9R0ip7GgUgSReaBaIejLV71MiBpYvZS+xf8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=references:from:in-reply-to:mime-version:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=qYV7h+Ac2+J1zsC7AKDTs5QMPdXltqkQVAmKOCFK7AWI59XJr8Y3mE/WztRGamaItp
-         B7Sd/r3+9OZMlleYRYRA4H0njjQiU1pCcs+26M5Qz2XH9Sa9hv+sOBW8gj8R768jzFnG
-         IhTQedSBh5gtItqN7QTR+hEjYOFQGgPXYqd4c=
-Received: by 10.150.13.7 with SMTP id 7mr967582ybm.201.1305682782123; Tue, 17
- May 2011 18:39:42 -0700 (PDT)
-In-Reply-To: <BANLkTi=-i063MqrboT1MHrQy-vM0yBTUGg@mail.gmail.com>
+	id S932813Ab1ERDwT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 May 2011 23:52:19 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:52199 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932778Ab1ERDwS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2011 23:52:18 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DEE5C5C1B;
+	Tue, 17 May 2011 23:54:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fpnYB1LajLLQQWIWjvjU91ZSGK4=; b=WLq21d
+	VMynMItZ/SmpcSinvmHduABr7yWYZxiW5kC5s8eugZ4VE8Jm6bPIUk0Tgf6XAXz2
+	itibiMHRX9p+nM9a3njhy0y4xQVIdCOa5bpv9b2tPpdB/341lhn74qN0eMHG9PuQ
+	p1aye5jg8upmIqFCx5B8c7bIA69SZNlHpqrfI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yj2aphAStJKNP4QHwfrpKqrJR4OkxXaL
+	JgVZ+4ToUlLhjxKdMsQXhYyMi6CMFl6UwpMK/yQ29UA0aKZAqDLvw7JLWLZrEyFI
+	cdXcT7JH/d+xt3YblFo/GSWDo6AsY3tUhVHfecaoNEKMpU4Ua/aliNzCuP7tt9vI
+	tEkpPZqWrrY=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AC9275C1A;
+	Tue, 17 May 2011 23:54:20 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 96A995C19; Tue, 17 May 2011
+ 23:54:16 -0400 (EDT)
+In-Reply-To: <05ce7ccdb3f4e07724d430f6ea2a8c9730971c9d.1305645331.git.trast@student.ethz.ch> (trast@student.ethz.ch's message of "Tue, 17 May 2011 17:19:08 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 82D8418A-8102-11E0-A5DE-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173838>
 
-On May 17, 2011, at 19:08, =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.=
-com> wrote:
+<trast@student.ethz.ch> writes:
 
-> I''m trying to debug a problem where over a https proxy I have
-> "warning: remote HEAD refers to nonexistent ref, unable to checkout."
-> when doing git-clone.
+> I nearly managed to lose a bunch of uncommitted work today, but could
+> salvage most of it from the pieces of diffs in the terminal
+> scrollback.  Sigh.
 
-Last time I ran into that error, I was cloning from a bundle where the
-remote head was simply not in the bundle. The branches I needed were
-all there. Running "git branch -a" and then checking out one of the
-existent branches worked fine.
+I think the take-home lesson is that confirmation offered in the default
+mode is valuable.  The "single-key" mode is another long rope that I would
+not use myself, but the users can choose to hang themselves with.
 
-Not sure if that's related to your situation at all.
+Jokes aside, it may make sense to offer an extra confirmation for "a" and
+possibly "s" in single-key mode. Unlike others, they are destructive when
+the changes you are splitting from the working tree is large-ish.
 
-Richard
+> Oh yeah, PS: I'm alive ;-)
+
+Good to hear.
