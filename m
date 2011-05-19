@@ -1,111 +1,136 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 08/11] streaming_write_entry(): support files with holes
-Date: Thu, 19 May 2011 14:33:43 -0700
-Message-ID: <1305840826-7783-9-git-send-email-gitster@pobox.com>
+Subject: [PATCH v2 05/11] write_entry(): separate two helper functions out
+Date: Thu, 19 May 2011 14:33:40 -0700
+Message-ID: <1305840826-7783-6-git-send-email-gitster@pobox.com>
 References: <1305505831-31587-1-git-send-email-gitster@pobox.com>
  <1305840826-7783-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 19 23:35:18 2011
+X-From: git-owner@vger.kernel.org Thu May 19 23:35:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNAsH-00074u-5H
-	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 23:35:17 +0200
+	id 1QNAsr-0007T2-D8
+	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 23:35:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934871Ab1ESVfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2011 17:35:04 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33629 "EHLO
+	id S934846Ab1ESVeH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2011 17:34:07 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33463 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934849Ab1ESVeI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2011 17:34:08 -0400
+	with ESMTP id S934832Ab1ESVeB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2011 17:34:01 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BEE4252BA
-	for <git@vger.kernel.org>; Thu, 19 May 2011 17:36:15 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 58F1252AD
+	for <git@vger.kernel.org>; Thu, 19 May 2011 17:36:08 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=x1v9
-	sB6hi48DkJVxmuUGV6zuYIg=; b=uXaZxJa/1SKvGRMCC2sLZ3WgrZzbvwB+d1DZ
-	TRtaunaaHoidqjrVZt4F8Wb7aLWcNP1feJtMeV12ADpENmRk3A4N8RZv6QfWxh0g
-	pvZMqK1FnJthog+7Lacg7iKcKsRVJ5LGNuu0zBFSA5rspOCiVNgpKW7+nu97tuWx
-	XbmnYE0=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=F1Uf
+	+bRVjpFOiMBDjr/h/Y2LkSs=; b=CY3+AJypA9wEMTVJ/mguVUbq0fiQG4HD+/MM
+	OEvlYoRaGjtp+prDW8Fn6cYFeWaORibdN+i3oKuwmrd0R9/DE/Nn1WKB7vT4itV/
+	NYtNFinn3k9bz8F4Ea0WfCIFkFTbklgrgWQYWfGGqJ3s49LWG8+F/e9rFkFKMC9w
+	RPhEIoo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=FZvCnP
-	7jTzJOyZHgTP/biDwQgquVVCY5+qe8Z3joSEgHhPpGj+pp8URzLOA7bqfjaHKSxO
-	IbYpCQHhwwE5UwJu/usj/BqDymU2Ur/DKLtalUco2ptsRWkVi2yx3svChbRySF3F
-	9s/hOx6iqDO8MA44lZ7Kai3p8YUrqU9wZfgV0=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=t4OlcF
+	mae6/gyK6mAuTEejodIdj1r/ejxvt4BYLn12sbEEkmd6iuiW/eIzWUPR4ESqF66v
+	XW0L3N6xSzd95W5AN+0QBGIwIBTlIw+UoXeAQRyt2vAz8bXrFopUiyU6K3nmb232
+	0dIfJWKhkXPUqtBq420o4SmpIuCdSxYgPQqlU=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BC6DB52B9
-	for <git@vger.kernel.org>; Thu, 19 May 2011 17:36:15 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 55CC552AC
+	for <git@vger.kernel.org>; Thu, 19 May 2011 17:36:08 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 32CD152B7 for
- <git@vger.kernel.org>; Thu, 19 May 2011 17:36:14 -0400 (EDT)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A7B4E52AB for
+ <git@vger.kernel.org>; Thu, 19 May 2011 17:36:07 -0400 (EDT)
 X-Mailer: git-send-email 1.7.5.1.416.gac10c8
 In-Reply-To: <1305840826-7783-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 0665931E-8260-11E0-A4B9-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 01F8B0CC-8260-11E0-A4B9-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174023>
 
-One typical use of a large binary file is to hold a sparse on-disk hash
-table with a lot of holes. Help preserving the holes with lseek().
+In the write-out codepath, a block of code determines what file in the
+working tree to write to, and opens an output file descriptor to it.
+
+After writing the contents out to the file, another block of code runs
+fstat() on the file descriptor when appropriate.
+
+Separate these blocks out to open_output_fd() and fstat_output()
+helper functions.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- entry.c |   21 +++++++++++++++++++--
- 1 files changed, 19 insertions(+), 2 deletions(-)
+ entry.c |   43 ++++++++++++++++++++++++++-----------------
+ 1 files changed, 26 insertions(+), 17 deletions(-)
 
 diff --git a/entry.c b/entry.c
-index 7733a6b..f751c60 100644
+index b017167..cc6502a 100644
 --- a/entry.c
 +++ b/entry.c
-@@ -123,6 +123,7 @@ static int streaming_write_entry(struct cache_entry *ce, char *path,
- 	enum object_type type;
- 	unsigned long sz;
- 	int result = -1;
-+	ssize_t kept = 0;
- 	int fd = -1;
+@@ -91,6 +91,29 @@ static void *read_blob_entry(struct cache_entry *ce, unsigned long *size)
+ 	return NULL;
+ }
  
- 	st = open_istream(ce->sha1, &type, &sz);
-@@ -136,18 +137,34 @@ static int streaming_write_entry(struct cache_entry *ce, char *path,
- 		goto close_and_exit;
++static int open_output_fd(char *path, struct cache_entry *ce, int to_tempfile)
++{
++	int symlink = (ce->ce_mode & S_IFMT) != S_IFREG;
++	if (to_tempfile) {
++		strcpy(path, symlink
++		       ? ".merge_link_XXXXXX" : ".merge_file_XXXXXX");
++		return mkstemp(path);
++	} else {
++		return create_file(path, !symlink ? ce->ce_mode : 0666);
++	}
++}
++
++static int fstat_output(int fd, const struct checkout *state, struct stat *st)
++{
++	/* use fstat() only when path == ce->name */
++	if (fstat_is_reliable() &&
++	    state->refresh_cache && !state->base_dir_len) {
++		fstat(fd, st);
++		return 1;
++	}
++	return 0;
++}
++
+ static int write_entry(struct cache_entry *ce, char *path, const struct checkout *state, int to_tempfile)
+ {
+ 	unsigned int ce_mode_s_ifmt = ce->ce_mode & S_IFMT;
+@@ -128,17 +151,7 @@ static int write_entry(struct cache_entry *ce, char *path, const struct checkout
+ 			size = newsize;
+ 		}
  
- 	for (;;) {
--		char buf[10240];
--		ssize_t wrote;
-+		char buf[1024 * 16];
-+		ssize_t wrote, holeto;
- 		ssize_t readlen = read_istream(st, buf, sizeof(buf));
+-		if (to_tempfile) {
+-			if (ce_mode_s_ifmt == S_IFREG)
+-				strcpy(path, ".merge_file_XXXXXX");
+-			else
+-				strcpy(path, ".merge_link_XXXXXX");
+-			fd = mkstemp(path);
+-		} else if (ce_mode_s_ifmt == S_IFREG) {
+-			fd = create_file(path, ce->ce_mode);
+-		} else {
+-			fd = create_file(path, 0666);
+-		}
++		fd = open_output_fd(path, ce, to_tempfile);
+ 		if (fd < 0) {
+ 			free(new);
+ 			return error("unable to create file %s (%s)",
+@@ -146,12 +159,8 @@ static int write_entry(struct cache_entry *ce, char *path, const struct checkout
+ 		}
  
- 		if (!readlen)
- 			break;
-+		if (sizeof(buf) == readlen) {
-+			for (holeto = 0; holeto < readlen; holeto++)
-+				if (buf[holeto])
-+					break;
-+			if (readlen == holeto) {
-+				kept += holeto;
-+				continue;
-+			}
-+		}
- 
-+		if (kept && lseek(fd, kept, SEEK_CUR) == (off_t) -1)
-+			goto close_and_exit;
-+		else
-+			kept = 0;
- 		wrote = write_in_full(fd, buf, readlen);
- 
- 		if (wrote != readlen)
- 			goto close_and_exit;
- 	}
-+	if (kept && (lseek(fd, kept - 1, SEEK_CUR) == (off_t) -1 ||
-+		     write(fd, "", 1) != 1))
-+		goto close_and_exit;
- 	*fstat_done = fstat_output(fd, state, statbuf);
- 
- close_and_exit:
+ 		wrote = write_in_full(fd, new, size);
+-		/* use fstat() only when path == ce->name */
+-		if (fstat_is_reliable() &&
+-		    state->refresh_cache && !to_tempfile && !state->base_dir_len) {
+-			fstat(fd, &st);
+-			fstat_done = 1;
+-		}
++		if (!to_tempfile)
++			fstat_done = fstat_output(fd, state, &st);
+ 		close(fd);
+ 		free(new);
+ 		if (wrote != size)
 -- 
 1.7.5.1.416.gac10c8
