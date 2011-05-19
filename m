@@ -1,148 +1,154 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] unpack-trees: add check_worktree flag to enable
- dry-run functionality
-Date: Thu, 19 May 2011 11:14:42 -0700
-Message-ID: <7vei3u7e25.fsf@alter.siamese.dyndns.org>
-References: <7vd3jm74gv.fsf@alter.siamese.dyndns.org>
- <4DD0043D.1050101@web.de> <7vfwofpvai.fsf@alter.siamese.dyndns.org>
- <4DD2CFD4.7060508@web.de> <7vpqnheygi.fsf@alter.siamese.dyndns.org>
- <4DD557AF.4030700@web.de>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH] compat: add a getpass() compatibility function
+Date: Thu, 19 May 2011 20:07:44 +0200
+Message-ID: <BANLkTimDW8W13Wm8i+n0ww9jCeHsXc__iA@mail.gmail.com>
+References: <563395AE-A3E5-45FF-9063-F807C2CE3AD0@gieschke.de>
+ <BANLkTinPHeSfZXRb7pqt7-XWkR5fH=wAjg@mail.gmail.com> <EC81F772-7149-40A0-891A-973C886AB052@gieschke.de>
+ <7v62p68ut0.fsf@alter.siamese.dyndns.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu May 19 20:15:20 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Rafael Gieschke <rafael@gieschke.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 19 20:16:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QN7kj-00025p-F0
-	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 20:15:18 +0200
+	id 1QN7lc-0002iR-NL
+	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 20:16:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934118Ab1ESSPD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2011 14:15:03 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38496 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934030Ab1ESSOu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2011 14:14:50 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D3AB75B50;
-	Thu, 19 May 2011 14:16:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jJgaRfhOC4cYeKss2GmLwvn66as=; b=A5nvUK
-	B9x2B9WOmXgeMtO7hoEeBRWLmXdTfr0xRNvR+0K5i28awyKeAHWHlTKowA4DNq6y
-	N6ZNjAXlmgAoDaj/pBeK110Pi0nJh+jOP7KaV5Xd3u0vMU9RD8FdEwemWUHWJcbE
-	Bjhk1+DNg7dTLNAMm0cORvnGCbyEwXUJ/e9d0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eGQKR86ACBkaG94XT60VMNIZ7tZvf0VA
-	2JW8sWGZtFoG9ADKpLNJx6js37vsKMZyV7dHngS9Z4wamocrZTIz0y3AbaFQ8iVH
-	o+TMlEdI9SYvPFI/AzF2Eb/efEz0qRbzecij3Z0FSyYKkpVvOsNPYWb2eKhKTKXG
-	nqVvTwR0Clw=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B20615B4F;
-	Thu, 19 May 2011 14:16:53 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 82F685B4E; Thu, 19 May 2011
- 14:16:50 -0400 (EDT)
-In-Reply-To: <4DD557AF.4030700@web.de> (Jens Lehmann's message of "Thu, 19
- May 2011 19:47:27 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2C768D68-8244-11E0-8FC6-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+	id S934047Ab1ESSPt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 May 2011 14:15:49 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:51258 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934095Ab1ESSPp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 May 2011 14:15:45 -0400
+Received: by pwi15 with SMTP id 15so1345418pwi.19
+        for <git@vger.kernel.org>; Thu, 19 May 2011 11:15:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=GEEi/Y0EKSUAZp1gJIkuYcc1jqRorvW0FEB4xTwHe2Y=;
+        b=U6VJuYR73NWxjds9NsM/nC/IUZOXBpwXAAN9JYjTir7ZGnEUyWE+ksuIUTHol2p5DB
+         PxfNyJefgpwMs3kqKX72p/1GCekf5HTaBW5i1XNnXBSPerSsTw6O6uzcYRVwI2Gvd5oB
+         0V66eaaZfKSqtzBpnZxnkpUhWgxox8z0wCTs0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=tLpteRVl9UTny53Zh93105O1y7AjW+nc6/yUKDduQ5NZ9uOPNIJk42rBjrNiEe6nlN
+         pzgh451NBOsvXwj0zIHjoEpp7MYseE1YO36jd5mNnWAE1nUX91lAkdAhUnuF36Tcqcgt
+         bIhhb6hnWC6y6efs09fLk/FnLj17K72xEpQwQ=
+Received: by 10.68.20.163 with SMTP id o3mr5479419pbe.366.1305828484034; Thu,
+ 19 May 2011 11:08:04 -0700 (PDT)
+Received: by 10.68.64.229 with HTTP; Thu, 19 May 2011 11:07:44 -0700 (PDT)
+In-Reply-To: <7v62p68ut0.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173987>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
-
->>> +	if (opts.update && dry_run)
->>> +		opts.update = 0;
->> 
->> ... this hunk must go, right?
+On Thu, May 19, 2011 at 7:27 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Rafael Gieschke <rafael@gieschke.de> writes:
 >
-> But this is the "don't update the work tree when -n is used together
-> with -u" part, so it is needed, no? With this patch applied first and
-> opts.check_worktree set to 1 inside that if() added there all tests
-> succeed.
+>>> Windows doesn't have /dev/tty, but the logic in this version handle=
+s
+>>> that by using stdin/stderr instead. The signal-stuff has a comment
+>>> that indicates it might not even be correct. tcgetattr/tcsetattr is=
+n't
+>>> supported on Windows, but it's not needed if we use getch (as the
+>>> version in compat/mingw.c does). POSIX/curses getch respects the
+>>> echo-setting, while Windows getch never echo.
+>
+> Probably a properly abstracted common version would look like a funct=
+ion
+> that calls four platform-dependent helper funcions in this order:
+>
+> =A0 =A0 =A0 =A00. prompt
+> =A0 =A0 =A0 =A01. start "noecho" mode
+> =A0 =A0 =A0 =A02. get whole line
+> =A0 =A0 =A0 =A03. exit "noecho" mode
+>
+> where Windows may use stderr for 0, have noop() implementation for 1 =
+and
+> 3, use _getch() that does not echo for 2, while POSIX may write to
+> /dev/tty for 0, use tc[gs]etattr() with perhaps some signal settings
+> sprinkled in for 1 and 3.
+>
+> So I don't see a need for Windows to emulate tc[g]setattr nor curses =
+in
+> order to get a generic getpass() abstraction between two platforms.
+>
 
-I would say the natural way to do your "dry-run" would be to change the
-inner guts of unpack_trees() codepath that currently does
+When I think about it a bit more, it feels a bit pointless:
+0. is identical (fputs)
+1. is different (tc[gs]etattr vs nop)
+2. is different (getc vs _getch)
+3. is different (tcsetattr vs nop)
 
-	if (opts.update) {
-		if (do something to the work tree and get non-zero on failure)
-			die("... cannot update '%s'", path);
-	}
+So there's probably not much code to share here. There's a bit of
+logic, but I'm not entirely sure this should be the same either,
+because on Windows we have to take care of '\r' (since we open stdin
+in binary mode at start-up).
 
-with your "-n" work to
+But looking at the implementations, there's one thing that strike me:
+both the netbsd and uclibc implementations fill a static buffer, while
+our windows-version returns an allocated buffer. Reading POSIX, it's
+not entirely clear if the returned pointer should be free'd or not:
+http://pubs.opengroup.org/onlinepubs/007908799/xsh/getpass.html
 
-	if (opts.update) {
-        	if (opts.dry_run) {
-			if (would the work tree operation fail?)
-				say("... update would fail because ... '%s'", path);
-		} else {
-			if (do something to the work tree and get non-zero on failure)
-				die("... cannot update '%s'", path);
-		}
-	}
+But there is a hint: the limit of PASS_MAX bytes indicate that the
+buffer is expected to be statically allocated. So perhaps we should do
+this to prevent a leak?
 
-and that was why I thought you would want to keep the original value of
-opts.update. I wouldn't think of a good way to make the code that kicks
-in when both update and dry_run are set if you clear update that early in
-the codepath.
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 878b1de..dba3e64 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -1668,17 +1668,19 @@ int link(const char *oldpath, const char *newpa=
+th)
 
-Of course you could implement a roundabout logic that says something like
+ char *getpass(const char *prompt)
+ {
+-	struct strbuf buf =3D STRBUF_INIT;
++	static char buf[PASS_MAX];
++	int i;
 
-	if (!update && !pretending_to_update)
-        	return 0; /* we are not updating */
+ 	fputs(prompt, stderr);
+-	for (;;) {
++	for (i =3D 0; i < PASS_MAX - 1; ++i) {
+ 		char c =3D _getch();
+ 		if (c =3D=3D '\r' || c =3D=3D '\n')
+ 			break;
+-		strbuf_addch(&buf, c);
++		buf[i] =3D c;
+ 	}
++	buf[i] =3D '\0';
+ 	fputs("\n", stderr);
+-	return strbuf_detach(&buf, NULL);
++	return buf;
+ }
 
-	if (update)
-        	do work tree operations;
-	else if (pretending_to_update)
-        	check if work tree operations would fail;
-	else
-		do nothing;
+ pid_t waitpid(pid_t pid, int *status, unsigned options)
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 62eccd3..e37d557 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -48,6 +48,8 @@ typedef int socklen_t;
+ #define EAFNOSUPPORT WSAEAFNOSUPPORT
+ #define ECONNABORTED WSAECONNABORTED
 
-But I think that is going backwards. The point of "-n" == dry-run is to
-cover all cases, and your initial round was only covering "no -u" case and
-in this round we are trying to also cover "-u" case. With the approach to
-add "check-worktree", if we have the third mode of operation (the first
-two being the existing "without -u" and "with -u"), would you add yet
-another "check-distim"?
-
-Wouldn't the interaction with these true "operation modes" and "dry run"
-be a lot simpler to read and implement that way?  In other words, which
-one do you find easier between these two to follow?
-
-	if (opts.update) {
-		if (opts.dry-run)
-                	check if we can update but do not update in real;
-		else
-                	do update and die if we can't;
-	} else if (opts.distim) {
-		if (opts.dry-run)
-                	check if we can distim but do not actually distim it;
-		else
-                	do distim and die if we cannot;
-	} ...
-
-vs
-
-	if (!opts.update && !opts.distim && !opts.check_worktree && !opts.check_distim)
-		return;
-
-	if (opts.update || opts.check_worktree) {
-		if (opts.check_worktree)
-                	check if we can update but do not update in real;
-		else
-                	do update and die if we can't;
-	} else if (opts.distim || opts.check_distim) {
-		if (opts.check_distim)
-                	check if we can distim but do not distim in real;
-		else
-                	do distim and die if we can't;
-        }
++#define PASS_MAX 512
++
+ struct passwd {
+ 	char *pw_name;
+ 	char *pw_gecos;
