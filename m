@@ -1,65 +1,47 @@
-From: Drew Northup <drew.northup@maine.edu>
+From: Daniel Stenberg <daniel@haxx.se>
 Subject: Re: git over https and http 1.1
-Date: Thu, 19 May 2011 16:31:49 -0400
-Message-ID: <1305837109.25259.11.camel@drew-northup.unet.maine.edu>
-References: <OF134A8B76.F0B9B9C0-ON85257894.00462851-85257894.00462862@greenhouse.lotus.com>
+Date: Thu, 19 May 2011 22:36:06 +0200 (CEST)
+Message-ID: <alpine.DEB.2.00.1105192235380.25633@tvnag.unkk.fr>
+References: <OF134A8B76.F0B9B9C0-ON85257894.00462851-85257894.00462862@greenhouse.lotus.com> <1305837109.25259.11.camel@drew-northup.unet.maine.edu>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Nir.Friedman@greenhouse.lotus.com
-X-From: git-owner@vger.kernel.org Thu May 19 22:32:33 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Nir.Friedman@greenhouse.lotus.com, git@vger.kernel.org
+To: Drew Northup <drew.northup@maine.edu>
+X-From: git-owner@vger.kernel.org Thu May 19 22:36:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QN9tZ-0001ZM-3g
-	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 22:32:33 +0200
+	id 1QN9xM-0004LQ-AP
+	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 22:36:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934626Ab1ESUc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2011 16:32:27 -0400
-Received: from beryl.its.maine.edu ([130.111.32.94]:42916 "EHLO
-	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933813Ab1ESUc1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2011 16:32:27 -0400
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p4JKVtAx031573
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 19 May 2011 16:31:56 -0400
-In-Reply-To: <OF134A8B76.F0B9B9C0-ON85257894.00462851-85257894.00462862@greenhouse.lotus.com>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=2 Fuz1=2
-	Fuz2=2
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p4JKVtAx031573
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1306441918.69323@5k2zor/f8JDowT68CEoVRg
+	id S934252Ab1ESUgX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2011 16:36:23 -0400
+Received: from giant.haxx.se ([80.67.6.50]:41387 "EHLO giant.haxx.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933968Ab1ESUgW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2011 16:36:22 -0400
+Received: from giant.haxx.se (giant.haxx.se [80.67.6.50])
+	by giant.haxx.se (8.14.4/8.14.4/Debian-2) with ESMTP id p4JKa6E2013295;
+	Thu, 19 May 2011 22:36:06 +0200
+X-X-Sender: dast@giant.haxx.se
+In-Reply-To: <1305837109.25259.11.camel@drew-northup.unet.maine.edu>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-fromdanielhimself: yes
+X-Greylist: Default is to whitelist mail, not delayed by milter-greylist-4.3.8 (giant.haxx.se [80.67.6.50]); Thu, 19 May 2011 22:36:06 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174001>
 
+On Thu, 19 May 2011, Drew Northup wrote:
 
-On Wed, 2011-05-18 at 08:46 -0400, Nir.Friedman@greenhouse.lotus.com
-wrote:
-> I am using git with https as the transport protocol. 
-> Response times were around 30 seconds before apache started processing the backend command. 
-> I added the flags -  BrowserMatch "git"      downgrade-1.0 force-response-1.0
->  to the apache conf file, and response times were fast. 
-> This seems to mean that the libcurl library is not dealing correctly with HTTP 1/1 over SSL. Is this the best fix? 
-> If so, maybe appropriate documentation should be added to the git setup docs.--
+> Perhaps Git+libcurl isn't using keep-alive? I'd have to check the code.
 
-Sounds a little drastic to me... Perhaps to find out what's going on you
-might set up a test repo behind an STunnel instance and have a look at
-the TCP/HTTP stream between them? 
-
-Perhaps Git+libcurl isn't using keep-alive? I'd have to check the code.
+They do. HTTP 1.1 even does "keep-alive" by default...
 
 -- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+
+  / daniel.haxx.se
