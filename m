@@ -1,84 +1,80 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: End year project : minimal Git client based on libgit2
-Date: Thu, 19 May 2011 08:18:48 +0200
-Message-ID: <4DD4B648.8040509@op5.se>
-References: <BANLkTinGPvekMDT5nmsFQp3SpR_QOYq+UA@mail.gmail.com>
+From: Ferry Huberts <mailings@hupie.com>
+Subject: Re: git & patterns
+Date: Thu, 19 May 2011 08:23:46 +0200
+Message-ID: <4DD4B772.2050404@hupie.com>
+References: <4DD3A402.3040802@hupie.com> <7vsjsbbx7h.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Marc Pegon <pegon.marc@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 19 08:18:57 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 19 08:23:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMwZU-0004k9-U7
-	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 08:18:57 +0200
+	id 1QMweH-0007F8-NR
+	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 08:23:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932584Ab1ESGSw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2011 02:18:52 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:62396 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932267Ab1ESGSv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2011 02:18:51 -0400
-Received: by bwz15 with SMTP id 15so2072741bwz.19
-        for <git@vger.kernel.org>; Wed, 18 May 2011 23:18:50 -0700 (PDT)
-Received: by 10.204.14.129 with SMTP id g1mr2732417bka.122.1305785930286;
-        Wed, 18 May 2011 23:18:50 -0700 (PDT)
-Received: from vix.int.op5.se (sth-vpn1.op5.com [193.201.96.49])
-        by mx.google.com with ESMTPS id q25sm1398831bkk.10.2011.05.18.23.18.49
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 18 May 2011 23:18:49 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Thunderbird/3.1.10 ThunderGit/0.1a
-In-Reply-To: <BANLkTinGPvekMDT5nmsFQp3SpR_QOYq+UA@mail.gmail.com>
+	id S932610Ab1ESGXs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2011 02:23:48 -0400
+Received: from 82-197-206-98.dsl.cambrium.nl ([82.197.206.98]:58995 "EHLO
+	mail.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932363Ab1ESGXs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2011 02:23:48 -0400
+Received: from stinkpad.internal.hupie.com (82-197-206-98.dsl.cambrium.nl [82.197.206.98])
+	by mail.internal.Hupie.com (Postfix) with ESMTP id 09F9321E69C;
+	Thu, 19 May 2011 08:23:46 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Thunderbird/3.1.10
+In-Reply-To: <7vsjsbbx7h.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173932>
 
-On 05/18/2011 06:42 PM, Marc Pegon wrote:
-> Hello everyone. We are a team of four students from a French school of
-> engineering (Ensimag: http://ensimag.grenoble-inp.fr/). To end the
-> school year, we are supposed to work on a four-week full-time project,
-> under the supervision of Matthieu Moy, who has been following Git's
-> development for quite a few years now. We thought it would be
-> interesting to contribute to git/libgit2. We are especially interested
-> in one of the GSoC2011 ideas : Build a minimal Git client based on
-> libgit2 (http://git.wiki.kernel.org/index.php/SoC2011Ideas#Build_a_minimal_Git_client_based_on_libgit2)
+On 05/18/2011 09:55 PM, Junio C Hamano wrote:
+> Ferry Huberts <mailings@hupie.com> writes:
+> 
+>> After reading the manual page for git describe it was not clear to me what
+>> kind of pattern the --match option should take. Was it to be
+>> a shell pattern (to be expected) or a regular expression pattern?
+>>
+>> So I dug in the code to find fnmatch: shell pattern.
+>>
+>> Now my question(s):
+>>
+>> - could the manual page be update to make this explicit please? (plus
+>> other manual pages talking about (shell) patterns)
+> 
+> The general design guideline we have is to use glob for things that look
+> like pathnames. Refs, refspecs, ignore and attribute rules are the
+> examples of this rule.
 > 
 
-Cool project :)
+Well, to me tags do not look like pathnames at all, they're just
+'random' strings. As are branches.
+Technically they may be like pathnames because they're projected on to
+the filesystem that way, but principally they're not IMHO: it's an
+implementation detail.
 
-> We started by taking a look at libgit2 API and Git source code, and we
-> have already begun to write some (quick and dirty) code.
-> We would like to know more about your expectations around the
-> "minimal" git client. What are the key features to implement ?
-> According to the GSoC proposal, we should implement some high level
-> functionalities (push, commit, branch...). Perhaps we should
-> concentrate on more "plumbing" commands ?
-> 
+> We may be lacking this info in our documentation. A patch to add it
+> somewhere is very welcome.
 
-If you can make the plumbing commands work it should be trivial to
-script the other tools on top of the plumbing.
+Yesterday I already did a quick grep on pattern and glob in the
+documentation directory and found that:
+- usually patterns are just patterns, without specifying what kind
+- when a pattern type is specified it most of the time is a glob pattern
+- but sometimes it is called a shell pattern
+- and  a few cases speak of a wildcard pattern (I think)
 
-Otoh, coding up the commands currently implemented as scripts in C
-with libgit2 as backend would increase the chance of acceptance into
-git.git proper, since you'd then be doing something worthwhile for
-the git core.
+What should it be?
+From your comments I gather it should be a glob pattern.
+Isn't glob too 'tech speak' or is it acceptable?
+If not acceptable, then what? Shell wildcard pattern?
 
-Then again, creating bindings into other languages and writing up
-the minimal git in python or some such would also be extremely
-useful and worthwhile, and probably faster than writing the minimal
-git from scratch in C as well.
+thanks!
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Ferry Huberts
