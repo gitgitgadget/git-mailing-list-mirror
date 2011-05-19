@@ -1,64 +1,71 @@
-From: Daniel Stenberg <daniel@haxx.se>
-Subject: RE: FW: git over https and http 1.1
-Date: Thu, 19 May 2011 09:31:27 +0200 (CEST)
-Message-ID: <alpine.DEB.2.00.1105190928560.3084@tvnag.unkk.fr>
-References: <BLU0-SMTP122315AAE364595FDA4A30AC78F0@phx.gbl> <alpine.DEB.2.00.1105181615180.26343@tvnag.unkk.fr> <BLU0-SMTP207861424D1FA595A51BBBEC78E0@phx.gbl>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] add-interactive: shortcut to add hunk and quit
+Date: Thu, 19 May 2011 12:16:51 +0200
+Message-ID: <201105191216.51709.trast@student.ethz.ch>
+References: <20110517071232.GA19396@mrq1.org> <4DD390AF.9020705@drmicha.warpmail.net> <7vr57wc9ja.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Nir Friedman <nirfri@hotmail.com>
-X-From: git-owner@vger.kernel.org Thu May 19 09:31:40 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Jeff King <peff@peff.net>, Pete Harlan <pgit@pcharlan.com>,
+	Hermann Gausterer <git-mailinglist@mrq1.org>,
+	git list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 19 12:17:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMxhr-0001aV-5G
-	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 09:31:39 +0200
+	id 1QN0Hr-0004jz-VJ
+	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 12:17:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932557Ab1ESHbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2011 03:31:33 -0400
-Received: from giant.haxx.se ([80.67.6.50]:51582 "EHLO giant.haxx.se"
+	id S1751572Ab1ESKQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2011 06:16:54 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:13711 "EHLO edge20.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932449Ab1ESHbd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2011 03:31:33 -0400
-Received: from giant.haxx.se (giant.haxx.se [80.67.6.50])
-	by giant.haxx.se (8.14.4/8.14.4/Debian-2) with ESMTP id p4J7VRcD008657;
-	Thu, 19 May 2011 09:31:27 +0200
-X-X-Sender: dast@giant.haxx.se
-In-Reply-To: <BLU0-SMTP207861424D1FA595A51BBBEC78E0@phx.gbl>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-fromdanielhimself: yes
-X-Greylist: Default is to whitelist mail, not delayed by milter-greylist-4.3.8 (giant.haxx.se [80.67.6.50]); Thu, 19 May 2011 09:31:27 +0200 (CEST)
+	id S1751323Ab1ESKQy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2011 06:16:54 -0400
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.289.1; Thu, 19 May
+ 2011 12:16:44 +0200
+Received: from thomas.inf.ethz.ch (213.55.131.180) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.289.1; Thu, 19 May
+ 2011 12:16:52 +0200
+User-Agent: KMail/1.13.7 (Linux/2.6.38.6-28-desktop; KDE/4.6.3; x86_64; ; )
+In-Reply-To: <7vr57wc9ja.fsf@alter.siamese.dyndns.org>
+X-Originating-IP: [213.55.131.180]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173946>
 
-On Thu, 19 May 2011, Nir Friedman wrote:
+Junio C Hamano wrote:
+> 
+> I think "single-key" was a poorly designed attempt to improve productivity
+> the ("y" <RET>)*5 into "y"*5
 
-> See below the output of GIT_CURL_VERBOSE, I marked the position (POINT 1) 
-> where there seems to be a hang (~20 seconds)
+Actually for me it more often is
 
-Can you detect any difference in the HTTP request when done from the working 
-Windows setup?
+  y RET n RET *think* y RET s RET n RET ...
 
-> < Date: Thu, 19 May 2011 04:37:40 GMT
-> < Server: Apache/2.2.17 (Ubuntu)
-> < Expires: Fri, 01 Jan 1980 00:00:00 GMT
-> < Pragma: no-cache
-> < Cache-Control: no-cache, max-age=0, must-revalidate
-> < Transfer-Encoding: chunked
-> < Content-Type: application/x-git-upload-pack-advertisement
-> <
-> *********************************************///////////POINT
-> 1///////////**************************************
+> while sacrificing the safety net when you
+> are trying to pick and decide one by one (like the accident Thomas had
+> recently during "checkout -p"). If I can say "5y", think for half a second
+> to make sure I typed what I meant, and <RET>, to apply 5 upcoming hunks in
+> one go, I think I would be as efficient as the productivity optimization
+> the single-key offers, while still protecting me from mistakes made by fat
+> fingers.
 
-At this point I'll have to defer this subject to the fine hackers who actually 
-know the inside of git and the git server and what it should and shouldn't do 
-at that point.
+There's nothing stopping us from implementing number prefixes in
+single-key mode, since numbers do not have any meaning yet.
+
+After my little accident I'm also considering an (optional?) safety
+question at the end when in checkout -p mode, since it's inherently
+destructive.  Of course that first requires changing the whole
+operation to be atomic.
 
 -- 
-
-  / daniel.haxx.se
+Thomas Rast
+trast@{inf,student}.ethz.ch
