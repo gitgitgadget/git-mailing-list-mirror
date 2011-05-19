@@ -1,139 +1,153 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [RFC PATCH] unpack-trees: add check_worktree flag to enable dry-run
- functionality
-Date: Thu, 19 May 2011 19:47:27 +0200
-Message-ID: <4DD557AF.4030700@web.de>
-References: <7vd3jm74gv.fsf@alter.siamese.dyndns.org> <4DD0043D.1050101@web.de> <7vfwofpvai.fsf@alter.siamese.dyndns.org> <4DD2CFD4.7060508@web.de> <7vpqnheygi.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] notes remove: --stdin reads from the standard input
+Date: Thu, 19 May 2011 10:55:38 -0700
+Message-ID: <7vliy27exx.fsf@alter.siamese.dyndns.org>
+References: <1305764061-21303-1-git-send-email-gitster@pobox.com>
+ <1305764061-21303-4-git-send-email-gitster@pobox.com>
+ <20110519105009.GA11107@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 19 19:48:05 2011
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 19 19:55:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QN7KP-0007tQ-GB
-	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 19:48:05 +0200
+	id 1QN7Rx-0004rh-1q
+	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 19:55:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933700Ab1ESRsA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2011 13:48:00 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:45349 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932617Ab1ESRr7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2011 13:47:59 -0400
-Received: from smtp08.web.de  ( [172.20.5.216])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 8B78618F3FE84;
-	Thu, 19 May 2011 19:47:27 +0200 (CEST)
-Received: from [93.246.62.6] (helo=[192.168.178.43])
-	by smtp08.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1QN7Jn-000119-00; Thu, 19 May 2011 19:47:27 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
-In-Reply-To: <7vpqnheygi.fsf@alter.siamese.dyndns.org>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1/8Rawnv/gPXMIH7eNlKMFWweGSUcsQDC5MQ4Fm
-	Qp9qCkSeYoY/um50z6DAuwWdUUxYN287C/BCN4wEsVkC/pNxdR
-	pjp9gylxlUXL3gFnQGyQ==
+	id S1756986Ab1ESRzq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2011 13:55:46 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49013 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756828Ab1ESRzp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2011 13:55:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5FCEA5928;
+	Thu, 19 May 2011 13:57:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WnEPukB2lUYy5OyVQtx90ilI9hM=; b=SK4ezD
+	rKdJbThR5vzQKQWXwcR8VooAebK51aBhtPe7/K9TYTVYYLvJwVfdXvDj7PgyBq5P
+	5GSVAr2mnIAKxHiZfHxpnVqY0zfhOqeoOKQHjkSLxuV0XMhNjPXdLNcwU4gDpD1H
+	13VX72+i3/IcLGCIft6wwy6U4tYaKYpHchbEk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Bdo3f9lSHpYhA2XPgxo7kVqdbCDgpZFl
+	s95qWshcpihwNKA+yuTIAftAP94473uRuY/yatzDaAeSwt7EqneAT+dMvwEIO8cI
+	/xW1TUTP50vmNURhOvOU+ti0EgERL9qJ49DwrOihkC9SlAHGMqtz+jeO73rUr1cq
+	aRpP+EgDwY0=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3DBE55927;
+	Thu, 19 May 2011 13:57:49 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 086135923; Thu, 19 May 2011
+ 13:57:45 -0400 (EDT)
+In-Reply-To: <20110519105009.GA11107@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 19 May 2011 06:50:09 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 824CE3A2-8241-11E0-91D5-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173982>
 
-To enable the users of unpack_trees() to check if a work tree update would
-succeed without actually touching the work tree the new check_worktree
-flag is added to struct unpack_trees_options. This is necessary because
-when update is set to 0 testing for absent new files and sparse handling
-were disabled. This is fine when e.g. only the index should be updated but
-is not sufficient when the user wants to check if a work tree update would
-succeed.
+Jeff King <peff@peff.net> writes:
 
-Now users can set update to 0 and check_worktree to 1 to see if an
-unpack_tree() with update=1 run would succeed. The only class of problems
-that are not detected at the moment are file system conditions like ENOSPC
-or missing permissions.
+> On Wed, May 18, 2011 at 05:14:21PM -0700, Junio C Hamano wrote:
+>
+>> +	if (from_stdin) {
+>> +		struct strbuf sb = STRBUF_INIT;
+>> +		while (strbuf_getwholeline(&sb, stdin, '\n') != EOF) {
+>> +			int len = sb.len;
+>> +			if (len && sb.buf[len - 1] == '\n')
+>> +				sb.buf[--len] = '\0';
+>> +			retval |= remove_one_note(t, sb.buf, flag);
+>> +		}
+>> +	}
+>
+> Wouldn't strbuf_rtrim (or even strbuf_trim) be useful here?
 
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
-Am 18.05.2011 00:47, schrieb Junio C Hamano:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
->> The only exceptions where I could not make that replacement without
->> breaking a test were:
->>
->> * t1001:381 (#25) new file conflicts with untracked directory
->>   This should have been detected by verify_absent_1(), but that function
->>   is left early when opts->update is 0. Will look into that.
-> 
-> Thanks. This is the kind of corner case I was worried about when I said
-> "we might have a case where read-tree -m succeeds but read-tree -m -u
-> doesn't". Fixing it would mean that ...
+Thanks for noticing.
 
-Maybe something like this patch?
+I just mimicked what was done to the result of strbuf_getwholeline() in
+other places (I think from revision.c but I am not sure).
 
->> @@ -183,6 +184,8 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
->>  		die("--exclude-per-directory is meaningless unless -u");
->>  	if (opts.merge && !opts.index_only)
->>  		setup_work_tree();
->> +	if (opts.update && dry_run)
->> +		opts.update = 0;
->>
->>  	if (opts.merge) {
->>  		if (stage < 2)
-> 
-> ... this hunk must go, right?
+An incremental correction, relative to what I had in 'pu' overnight, looks
+like this.
 
-But this is the "don't update the work tree when -n is used together
-with -u" part, so it is needed, no? With this patch applied first and
-opts.check_worktree set to 1 inside that if() added there all tests
-succeed.
+ builtin/notes.c  |    5 ++---
+ t/t3301-notes.sh |   26 ++++++++++++++------------
+ 2 files changed, 16 insertions(+), 15 deletions(-)
 
-> Now at this point wouldn't it make more sense to move these helpers to
-> lib-read-tree.sh or something and .-source it from all nine tests?
-
-Sure, will do in the next round.
-
-
- unpack-trees.c |    4 ++--
- unpack-trees.h |    3 ++-
- 2 files changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 500ebcf..b6dca8f 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1001,7 +1001,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 	state.refresh_cache = 1;
-
- 	memset(&el, 0, sizeof(el));
--	if (!core_apply_sparse_checkout || !o->update)
-+	if (!core_apply_sparse_checkout || (!o->update && !o->check_worktree))
- 		o->skip_sparse_checkout = 1;
- 	if (!o->skip_sparse_checkout) {
- 		if (add_excludes_from_file_to_list(git_path("info/sparse-checkout"), "", 0, NULL, &el, 0) < 0)
-@@ -1368,7 +1368,7 @@ static int verify_absent_1(struct cache_entry *ce,
- 	int len;
- 	struct stat st;
-
--	if (o->index_only || o->reset || !o->update)
-+	if (o->index_only || o->reset || (!o->update && !o->check_worktree))
- 		return 0;
-
- 	len = check_leading_path(ce->name, ce_namelen(ce));
-diff --git a/unpack-trees.h b/unpack-trees.h
-index cd11a08..402bbdb 100644
---- a/unpack-trees.h
-+++ b/unpack-trees.h
-@@ -46,7 +46,8 @@ struct unpack_trees_options {
- 		     debug_unpack,
- 		     skip_sparse_checkout,
- 		     gently,
--		     show_all_errors;
-+		     show_all_errors,
-+		     check_worktree; /* check work tree contents even if !update */
- 	const char *prefix;
- 	int cache_bottom;
- 	struct dir_struct *dir;
--- 
-1.7.5.1.340.g5ecaf
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 164d605..f8e437d 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -1000,11 +1000,10 @@ static int remove_cmd(int argc, const char **argv, const char *prefix)
+ 	if (from_stdin) {
+ 		struct strbuf sb = STRBUF_INIT;
+ 		while (strbuf_getwholeline(&sb, stdin, '\n') != EOF) {
+-			int len = sb.len;
+-			if (len && sb.buf[len - 1] == '\n')
+-				sb.buf[--len] = '\0';
++			strbuf_rtrim(&sb);
+ 			retval |= remove_one_note(t, sb.buf, flag);
+ 		}
++		strbuf_release(&sb);
+ 	}
+ 	if (!retval)
+ 		commit_notes(t, "Notes removed by 'git notes remove'");
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index e1b5619..16de05a 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -478,13 +478,14 @@ test_expect_success 'removing with --ignore-missing but bogus ref' '
+ test_expect_success 'remove reads from --stdin' '
+ 	before=$(git rev-parse --verify refs/notes/commits) &&
+ 	test_when_finished "git update-ref refs/notes/commits $before" &&
++
++	# We have only two -- add another and make sure it stays
++	git notes add -m "extra" &&
++	git notes list HEAD >after-removal-expect &&
+ 	git rev-parse HEAD^^ HEAD^^^ >input &&
+ 	git notes remove --stdin <input &&
+-	git diff --name-only refs/notes/commits^ refs/notes/commits >actual &&
+-	test 2 = $(wc -l <actual) &&
+-	git ls-tree -r --name-only refs/notes/commits >actual &&
+-	>empty &&
+-	test_cmp empty actual
++	git notes list | sed -e "s/ .*//" >actual &&
++	test_cmp after-removal-expect actual
+ '
+ 
+ test_expect_success 'remove --stdin is also atomic' '
+@@ -496,16 +497,17 @@ test_expect_success 'remove --stdin is also atomic' '
+ 	test "$before" = "$after"
+ '
+ 
+-test_expect_success 'removing with --stdin --missing-ok' '
++test_expect_success 'removing with --stdin --ignore-missing' '
+ 	before=$(git rev-parse --verify refs/notes/commits) &&
+ 	test_when_finished "git update-ref refs/notes/commits $before" &&
++
++	# We have only two -- add another and make sure it stays
++	git notes add -m "extra" &&
++	git notes list HEAD >after-removal-expect &&
+ 	git rev-parse HEAD^^ HEAD^^^ HEAD^ >input &&
+-	git notes remove --missing-ok --stdin <input &&
+-	git diff --name-only refs/notes/commits^ refs/notes/commits >actual &&
+-	test 2 = $(wc -l <actual) &&
+-	git ls-tree -r --name-only refs/notes/commits >actual &&
+-	>empty &&
+-	test_cmp empty actual
++	git notes remove --ignore-missing --stdin <input &&
++	git notes list | sed -e "s/ .*//" >actual &&
++	test_cmp after-removal-expect actual
+ '
+ 
+ test_expect_success 'list notes with "git notes list"' '
