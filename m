@@ -1,84 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2] add Android support
-Date: Wed, 18 May 2011 23:18:00 -0700
-Message-ID: <7vaaej9pt3.fsf@alter.siamese.dyndns.org>
-References: <B22B44EF-0AFB-44E3-93E3-61FA730431B9@gieschke.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: End year project : minimal Git client based on libgit2
+Date: Thu, 19 May 2011 08:18:48 +0200
+Message-ID: <4DD4B648.8040509@op5.se>
+References: <BANLkTinGPvekMDT5nmsFQp3SpR_QOYq+UA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Rafael Gieschke <rafael@gieschke.de>
-X-From: git-owner@vger.kernel.org Thu May 19 08:18:16 2011
+To: Marc Pegon <pegon.marc@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 19 08:18:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMwYq-0004Rt-A6
-	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 08:18:16 +0200
+	id 1QMwZU-0004k9-U7
+	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 08:18:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932499Ab1ESGSK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2011 02:18:10 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47455 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932267Ab1ESGSI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2011 02:18:08 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6BE265F51;
-	Thu, 19 May 2011 02:20:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8yRbz/GACO4qAMI8W78GBg2smu4=; b=NjenJP
-	0vdqZaQbzwwySUOC8AD4C4nDN/GOd6sxCT1oUG9QWb3aJI8GcukwM4/5qBPj76k1
-	UksJf0m7Wh/me8w2zGrctIcuBLQ33Z5ja2MBTQTLmNyGfIOy8IHeaGGVguwsQE0M
-	pSX8DdZzUrkj3P/uNkHsuJxPcutNkDcxbPdjg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=m4JhABLfpsJ/P0FO+ewkNTLYuzzpZPq+
-	ZG5a/gFyiwJh3fgtn9B50/YE0rixCawJQtuL2St6YMLAQGnZEn38Zqy2mjWVaSMC
-	k4yh8N81gllqbN07tox3GrIJJ3/2lNeo6sRU3V+PyW4egi8qx2fMoFraLnNcwb47
-	tu6g06Ytmg0=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 482E65F50;
-	Thu, 19 May 2011 02:20:13 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 302B75F4F; Thu, 19 May 2011
- 02:20:09 -0400 (EDT)
-In-Reply-To: <B22B44EF-0AFB-44E3-93E3-61FA730431B9@gieschke.de> (Rafael
- Gieschke's message of "Tue, 17 May 2011 01:23:24 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0E2E765E-81E0-11E0-8F20-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+	id S932584Ab1ESGSw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2011 02:18:52 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:62396 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932267Ab1ESGSv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2011 02:18:51 -0400
+Received: by bwz15 with SMTP id 15so2072741bwz.19
+        for <git@vger.kernel.org>; Wed, 18 May 2011 23:18:50 -0700 (PDT)
+Received: by 10.204.14.129 with SMTP id g1mr2732417bka.122.1305785930286;
+        Wed, 18 May 2011 23:18:50 -0700 (PDT)
+Received: from vix.int.op5.se (sth-vpn1.op5.com [193.201.96.49])
+        by mx.google.com with ESMTPS id q25sm1398831bkk.10.2011.05.18.23.18.49
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 18 May 2011 23:18:49 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Thunderbird/3.1.10 ThunderGit/0.1a
+In-Reply-To: <BANLkTinGPvekMDT5nmsFQp3SpR_QOYq+UA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173931>
 
-Rafael Gieschke <rafael@gieschke.de> writes:
+On 05/18/2011 06:42 PM, Marc Pegon wrote:
+> Hello everyone. We are a team of four students from a French school of
+> engineering (Ensimag: http://ensimag.grenoble-inp.fr/). To end the
+> school year, we are supposed to work on a four-week full-time project,
+> under the supervision of Matthieu Moy, who has been following Git's
+> development for quite a few years now. We thought it would be
+> interesting to contribute to git/libgit2. We are especially interested
+> in one of the GSoC2011 ideas : Build a minimal Git client based on
+> libgit2 (http://git.wiki.kernel.org/index.php/SoC2011Ideas#Build_a_minimal_Git_client_based_on_libgit2)
+> 
 
-> Currently, it is not possible to compile git for Android as the C library (Bionic)
-> is neither providing getpass nor pw_gecos in struct passwd. Therefore,
+Cool project :)
 
-Whoa, whoa, wait. That's doing too many things in one patch.
+> We started by taking a look at libgit2 API and Git source code, and we
+> have already begun to write some (quick and dirty) code.
+> We would like to know more about your expectations around the
+> "minimal" git client. What are the key features to implement ?
+> According to the GSoC proposal, we should implement some high level
+> functionalities (push, commit, branch...). Perhaps we should
+> concentrate on more "plumbing" commands ?
+> 
 
-I am still debating myself if this rather huge patch is justifiable, or an
-elaborate joke/hoax. Does anybody seriously want to run git on his phone,
-tablet or set-top box?
+If you can make the plumbing commands work it should be trivial to
+script the other tools on top of the plumbing.
 
-I'd suggest splitting it into three patch series, and justify them
-separately.
+Otoh, coding up the commands currently implemented as scripts in C
+with libgit2 as backend would increase the chance of acceptance into
+git.git proper, since you'd then be doing something worthwhile for
+the git core.
 
- (1) Support NO_GECOS_IN_PWENT (Makefile, ident.c);
- (2) Support NO_GETPASS (Makefile, compat/getpass.c, git-compat-util.h); and
- (3) Add uname_S = Android (Makefile).
+Then again, creating bindings into other languages and writing up
+the minimal git in python or some such would also be extremely
+useful and worthwhile, and probably faster than writing the minimal
+git from scratch in C as well.
 
-The first two would become much easier to justify if presented that
-way. At least you won't hear from anybody "we don't want that much code to
-not to run git on a phone!", as it is not entirely implausible to imagine
-environments without support for one or both of these two facilities.
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-I wonder if you want to emply the rename trick similar to the one used for
-hstrerror/githstrerror you can see in the git-compat-util.h header file in
-the second step, though.
-
-Thanks.
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
