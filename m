@@ -1,83 +1,102 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH] compat: add a getpass() compatibility function
-Date: Thu, 19 May 2011 21:19:14 +0200
-Message-ID: <BANLkTi=y5uk2Oi+yx+f-cjUeBrzKeFzzmg@mail.gmail.com>
-References: <563395AE-A3E5-45FF-9063-F807C2CE3AD0@gieschke.de>
- <BANLkTinPHeSfZXRb7pqt7-XWkR5fH=wAjg@mail.gmail.com> <EC81F772-7149-40A0-891A-973C886AB052@gieschke.de>
- <7v62p68ut0.fsf@alter.siamese.dyndns.org> <BANLkTimDW8W13Wm8i+n0ww9jCeHsXc__iA@mail.gmail.com>
- <8B762D96-54CF-4E42-BF90-7790E900AA30@gieschke.de>
-Reply-To: kusmabite@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] add-interactive: shortcut to add hunk and quit
+Date: Thu, 19 May 2011 12:25:38 -0700
+Message-ID: <7v7h9m7arx.fsf@alter.siamese.dyndns.org>
+References: <20110517071232.GA19396@mrq1.org>
+ <4DD390AF.9020705@drmicha.warpmail.net>
+ <7vr57wc9ja.fsf@alter.siamese.dyndns.org>
+ <201105191216.51709.trast@student.ethz.ch>
+ <20110519110259.GA11507@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Rafael Gieschke <rafael@gieschke.de>
-X-From: git-owner@vger.kernel.org Thu May 19 21:19:44 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Pete Harlan <pgit@pcharlan.com>,
+	Hermann Gausterer <git-mailinglist@mrq1.org>,
+	git list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 19 21:26:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QN8l2-0002wH-0g
-	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 21:19:40 +0200
+	id 1QN8rB-0007i1-A7
+	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 21:26:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933911Ab1ESTTf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2011 15:19:35 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:36439 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753728Ab1ESTTe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 May 2011 15:19:34 -0400
-Received: by pvg12 with SMTP id 12so1327166pvg.19
-        for <git@vger.kernel.org>; Thu, 19 May 2011 12:19:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=hBIRd/6MS0HxvNsqrYJfDOaLr2irnk5hdC41YeL5BBY=;
-        b=ZfvIY1Fqzd7jbzmL20ohe+xy+yNIntDpd0iW6KLEMGLOjItKKh9+nCFfzme71jjjPg
-         7js5uZtLmbkFOb7o3Ar2dcfs67lsI0wi3Hn2pCugDhJ+LUlk97I75hGhDGDeyZ2FEZXj
-         0y2cjDOgwahvD1oc5OucqHMqzzQrDIVucryLo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=km+onBSuAN/hIEuJR6MeS0aRhY6Ijtk2FRKsODBWN0WpuD7ZcxMp7zChD/N9RbypPA
-         BwIjPYRjm7x4ND1MdjFBXBMe6PqqHcm3WuXT6jCMq5l3SgmJndes9k3XWM3GE5TR6YKJ
-         uv//yuBh/mzZIfw2hXe7DVKGPcqc3mmiix28A=
-Received: by 10.68.71.135 with SMTP id v7mr5454512pbu.232.1305832774067; Thu,
- 19 May 2011 12:19:34 -0700 (PDT)
-Received: by 10.68.64.229 with HTTP; Thu, 19 May 2011 12:19:14 -0700 (PDT)
-In-Reply-To: <8B762D96-54CF-4E42-BF90-7790E900AA30@gieschke.de>
+	id S934280Ab1ESTZ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2011 15:25:56 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64460 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934055Ab1ESTZz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2011 15:25:55 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 197FA43B1;
+	Thu, 19 May 2011 15:28:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=aC/4CpzR4Bus2v8bXTzfsOYUCb0=; b=QPhFNB72fiT6T7985vjs
+	vQ0Zu9nRDm/2A5K7+lAhW+0La35p0LyQ7FRSPqvlYz39zeM1eHEThdX45PFqPMyy
+	fTL1n7oEof42kU1XK5rnzotiNgVTDrFuQudLCUiMvcAOi/fab6MIy9BFY2KtLxEW
+	O8P+CrW9DRkWPZCZjYE8UV8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=GPtfoxXLBfSzBgUQ3LBrXjRP5VEpqCxxNqN/ileQ+J9Cu3
+	FWavzkWw5KhSLgsA/VXJXOuFiwnpBrdyZuFc2Pz+Owk2JJ7zAz5GazW8f1/AaffO
+	xb5y3VPGGTZZTZWAIcOCv6DiWfSBwEmMzQzIE6RFGCTlC/VvDbjoA+wpI0aZk=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9B7F043AE;
+	Thu, 19 May 2011 15:27:56 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5B1ED43AC; Thu, 19 May 2011
+ 15:27:48 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1959A51C-824E-11E0-96EF-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173994>
 
-On Thu, May 19, 2011 at 9:16 PM, Rafael Gieschke <rafael@gieschke.de> wrote:
->
-> Am 19.05.2011 um 20:07 schrieb Erik Faye-Lund:
->> diff --git a/compat/mingw.h b/compat/mingw.h
->> index 62eccd3..e37d557 100644
->> --- a/compat/mingw.h
->> +++ b/compat/mingw.h
->> @@ -48,6 +48,8 @@ typedef int socklen_t;
->> #define EAFNOSUPPORT WSAEAFNOSUPPORT
->> #define ECONNABORTED WSAECONNABORTED
->>
->> +#define PASS_MAX 512
->> +
->
-> It might be worth to have this in git-compat-util.h, so it can also be used by compat/getpass.c. I'm not sure about the name, however; it's a remote password and MAX_PASS is about local passwords AFAIK. Maybe PASS_MAX_REMOTE or something similiar. Like that, compat/getpass.c could also be used in case MAX_PASS has some insanely low value on a platform.
->
->
+Jeff King <peff@peff.net> writes:
 
-PASS_MAX should be defined in limits.h (which is included by
-git-compat-util.h) on POSIX platforms:
-http://pubs.opengroup.org/onlinepubs/007908799/xsh/limits.h.html
+> On Thu, May 19, 2011 at 12:16:51PM +0200, Thomas Rast wrote:
+>
+>> Junio C Hamano wrote:
+>> > 
+>> > I think "single-key" was a poorly designed attempt to improve productivity
+>> > the ("y" <RET>)*5 into "y"*5
+>> 
+>> Actually for me it more often is
+>> 
+>>   y RET n RET *think* y RET s RET n RET ...
+>
+> Yeah. I personally find the concept of "5y" crazy; how do you know that
+> it is 5, and not 4 or 6, if you haven't yet seen them?
 
-If it turns out it's not on some platforms, perhaps a define-guarded
-version would make sense in git-compat-util.h instead.
+That one is surprisingly easy to answer. Before I decide to use
+"incremental", I've seen the diff at least once but more often number of
+times. I know where things are when I start my incremental sessions, and
+"5" (just an example) is something I would use when I think I know there
+are 8 or 9, i.e. a number that will surely undershoot but will get me
+to the end sooner. An alternative would be something akin to "/<pattern>"
+but that adds, instead of skips.
+
+> I think a confirmation question is a bad idea. It helps with
+> fat-fingering, but not much else.
+
+I agree, but fat-fingering is a real problem single-key mode introduces,
+and that is why I suggested a similar final confirmation only for 'a' in
+the single-key mode.
+
+> I think a much better safety valve is to store the user's worktree state
+> that we are about to destroy. Then when they accidentally erase
+> something, whether they realize it immediately, or even 5 minutes later,
+> it is recoverable. And in the common case where everything goes well,
+> they needn't be bothered at all.
+
+Intereting.
+
+Where does the data go (perhaps to "stash create", not "stash save"), and
+where would we plug that in ("checkout -p" codepath only)?
