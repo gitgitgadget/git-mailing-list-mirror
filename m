@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 02/11] sha1_object_info_extended(): expose a bit more info
-Date: Thu, 19 May 2011 14:33:37 -0700
-Message-ID: <1305840826-7783-3-git-send-email-gitster@pobox.com>
+Subject: [PATCH v2 06/11] streaming: a new API to read from the object store
+Date: Thu, 19 May 2011 14:33:41 -0700
+Message-ID: <1305840826-7783-7-git-send-email-gitster@pobox.com>
 References: <1305505831-31587-1-git-send-email-gitster@pobox.com>
  <1305840826-7783-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
@@ -11,215 +11,308 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNArI-0006Sr-VV
-	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 23:34:17 +0200
+	id 1QNArJ-0006Sr-MV
+	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 23:34:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934833Ab1ESVeA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2011 17:34:00 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33309 "EHLO
+	id S934852Ab1ESVeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2011 17:34:09 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33514 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934815Ab1ESVd6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2011 17:33:58 -0400
+	with ESMTP id S934834Ab1ESVeD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2011 17:34:03 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9210552A3
-	for <git@vger.kernel.org>; Thu, 19 May 2011 17:36:01 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0354252B0
+	for <git@vger.kernel.org>; Thu, 19 May 2011 17:36:11 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=V0jZ
-	7FdiTgsK2PGji+O75N4/Auo=; b=g3nanCRLnuj4kbwrY3YHl+JYvXesBCzygfF8
-	sGCV1oavi0EhSHldhApIfW43cYrbCnWk6WAenarrM+GzET3/NDg/dIC9EGgyzxq3
-	iYvrNl7muV6YV8Xh11M/++omJG7SFMyd8DMXPXSJOfzbbkizx2xh+BTAZC2G6288
-	DEOLzJs=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=auj8
+	j1h+na1NhuowKoRxhhHPnK4=; b=c/2tWqvXXEoMTrEM0eMHMvXTaC8jEWEYcflx
+	24Vpab095aoyNwXcphgV7hL8G+lEP06Ee97pjAd9FWdxo3nYfJjA+8akGYD25ndz
+	x4ikkPhAwufxY6nyax7HYnb18lPjYFgbs5L2MNEtVNtvXNPBwi/HVI/8NupLd7+C
+	yrH3/7M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=VpiUCa
-	A5XM3cq6THxQfuFAFEkzLAkvqZW1yfeDnr+gwW0JZmSOY6K8LfvliEzv+8B372bx
-	XOubPpgHxPHahWmkV1Z7UjqiBkWNEQdHatYdSn/pNZvQVnC9wYfAtZnphND6zsKz
-	bvkd/tlN4WcCtWUgqY9jtxZpPd13mTM85hXk0=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=KG67uV
+	yDyFN9tOa0SDkohDjgMLf7ByXJl1IZf5faP8sCkCI+71+ZmyyCXhs8x87UrPF2ZV
+	w8qMDoxoJplul6T7kO5jUyXyKGgR6Qz/FPauq9Whz8GKnYj53u6AM5OLwlDwd5Rp
+	jFvZD23hH/1+Lb5ExlxVkPI2Ratv5TbXepQ34=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8E12952A1
-	for <git@vger.kernel.org>; Thu, 19 May 2011 17:36:01 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F3BCD52AF
+	for <git@vger.kernel.org>; Thu, 19 May 2011 17:36:10 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 92AC1529F for
- <git@vger.kernel.org>; Thu, 19 May 2011 17:36:00 -0400 (EDT)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0B4C452AE for
+ <git@vger.kernel.org>; Thu, 19 May 2011 17:36:09 -0400 (EDT)
 X-Mailer: git-send-email 1.7.5.1.416.gac10c8
 In-Reply-To: <1305840826-7783-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: FDDFFCA2-825F-11E0-B6F9-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 0388ABFE-8260-11E0-B6F9-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174016>
 
-The original interface for sha1_object_info() takes an object name and
-gives back a type and its size (the latter is given only when it was
-asked).  The new interface wraps its implementation and exposes a bit
-more pieces of information that the interface used to discard, namely:
+Given an object name, use open_istream() to get a git_istream handle
+that you can read_istream() from as if you are using read(2) to read
+the contents of the object, and close it with close_istream() when
+you are done.
 
- - where the object is stored (loose? cached? packed?)
- - if packed, where in which packfile?
+Currently, we do not do anything fancy--it just calls read_sha1_file()
+and keeps the contents in memory as a whole, and carve it out as you
+request with read_istream().
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
+ Makefile    |    2 +
+ streaming.c |  199 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ streaming.h |   15 +++++
+ 3 files changed, 216 insertions(+), 0 deletions(-)
+ create mode 100644 streaming.c
+ create mode 100644 streaming.h
 
- * In the earlier round, this used u.pack.delta to record the length of
-   the delta chain, but the caller is not necessarily interested in the
-   length of the delta chain per-se, but may only want to know if it is a
-   delta against another object or is stored as a deflated data. Calling
-   packed_object_info_detail() involves walking the reverse index chain to
-   compute the store size of the object and is unnecessarily expensive.
-
-   We could resurrect the code if a new caller wants to know, but I doubt
-   it.
----
- cache.h     |   28 ++++++++++++++++++++++++++++
- sha1_file.c |   42 +++++++++++++++++++++++++++++++-----------
- 2 files changed, 59 insertions(+), 11 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index cdb5112..9fbc07e 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1022,6 +1022,34 @@ extern unsigned long unpack_object_header_buffer(const unsigned char *buf, unsig
- extern unsigned long get_size_from_delta(struct packed_git *, struct pack_window **, off_t);
- extern int packed_object_info_detail(struct packed_git *, off_t, unsigned long *, unsigned long *, unsigned int *, unsigned char *);
- 
-+struct object_info {
-+	/* Request */
-+	unsigned long *sizep;
+diff --git a/Makefile b/Makefile
+index 320ccc7..83bd539 100644
+--- a/Makefile
++++ b/Makefile
+@@ -552,6 +552,7 @@ LIB_H += sha1-lookup.h
+ LIB_H += sideband.h
+ LIB_H += sigchain.h
+ LIB_H += strbuf.h
++LIB_H += streaming.h
+ LIB_H += string-list.h
+ LIB_H += submodule.h
+ LIB_H += tag.h
+@@ -657,6 +658,7 @@ LIB_OBJS += shallow.o
+ LIB_OBJS += sideband.o
+ LIB_OBJS += sigchain.o
+ LIB_OBJS += strbuf.o
++LIB_OBJS += streaming.o
+ LIB_OBJS += string-list.o
+ LIB_OBJS += submodule.o
+ LIB_OBJS += symlinks.o
+diff --git a/streaming.c b/streaming.c
+new file mode 100644
+index 0000000..84330b4
+--- /dev/null
++++ b/streaming.c
+@@ -0,0 +1,199 @@
++/*
++ * Copyright (c) 2011, Google Inc.
++ */
++#include "cache.h"
++#include "streaming.h"
 +
-+	/* Response */
-+	enum {
-+		OI_CACHED,
-+		OI_LOOSE,
-+		OI_PACKED
-+	} whence;
++enum input_source {
++	stream_error = -1,
++	incore = 0,
++	loose = 1,
++	pack_non_delta = 2
++};
++
++typedef int (*open_istream_fn)(struct git_istream *,
++			       struct object_info *,
++			       const unsigned char *,
++			       enum object_type *);
++typedef int (*close_istream_fn)(struct git_istream *);
++typedef ssize_t (*read_istream_fn)(struct git_istream *, char *, size_t);
++
++struct stream_vtbl {
++	close_istream_fn close;
++	read_istream_fn read;
++};
++
++#define open_method_decl(name) \
++	int open_istream_ ##name \
++	(struct git_istream *st, struct object_info *oi, \
++	 const unsigned char *sha1, \
++	 enum object_type *type)
++
++#define close_method_decl(name) \
++	int close_istream_ ##name \
++	(struct git_istream *st)
++
++#define read_method_decl(name) \
++	ssize_t read_istream_ ##name \
++	(struct git_istream *st, char *buf, size_t sz)
++
++/* forward declaration */
++static open_method_decl(incore);
++static open_method_decl(loose);
++static open_method_decl(pack_non_delta);
++
++static open_istream_fn open_istream_tbl[] = {
++	open_istream_incore,
++	open_istream_loose,
++	open_istream_pack_non_delta,
++};
++
++struct git_istream {
++	enum input_source source;
++	const struct stream_vtbl *vtbl;
++	unsigned long size; /* inflated size of full object */
++
 +	union {
-+		/*
-+		 * struct {
-+		 * 	... Nothing to expose in this case
-+		 * } cached;
-+		 * struct {
-+		 * 	... Nothing to expose in this case
-+		 * } loose;
-+		 */
 +		struct {
-+			struct packed_git *pack;
-+			off_t offset;
-+			unsigned int is_delta;
-+		} packed;
++			char *buf; /* from read_object() */
++			unsigned long read_ptr;
++		} incore;
++
++		struct {
++			int fd; /* open for reading */
++			/* NEEDSWORK: what else? */
++		} loose;
++
++		struct {
++			int fd; /* open for reading */
++			/* NEEDSWORK: what else? */
++		} in_pack;
 +	} u;
 +};
-+extern int sha1_object_info_extended(const unsigned char *, struct object_info *);
 +
- /* Dumb servers support */
- extern int update_server_info(int);
- 
-diff --git a/sha1_file.c b/sha1_file.c
-index 4f96eb1..7eed316 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1481,7 +1481,7 @@ static off_t get_delta_base(struct packed_git *p,
- 
- /* forward declaration for a mutually recursive function */
- static int packed_object_info(struct packed_git *p, off_t offset,
--			      unsigned long *sizep);
-+			      unsigned long *sizep, int *rtype);
- 
- static int packed_delta_info(struct packed_git *p,
- 			     struct pack_window **w_curs,
-@@ -1495,7 +1495,7 @@ static int packed_delta_info(struct packed_git *p,
- 	base_offset = get_delta_base(p, w_curs, &curpos, type, obj_offset);
- 	if (!base_offset)
- 		return OBJ_BAD;
--	type = packed_object_info(p, base_offset, NULL);
-+	type = packed_object_info(p, base_offset, NULL, NULL);
- 	if (type <= OBJ_NONE) {
- 		struct revindex_entry *revidx;
- 		const unsigned char *base_sha1;
-@@ -1605,7 +1605,7 @@ int packed_object_info_detail(struct packed_git *p,
- }
- 
- static int packed_object_info(struct packed_git *p, off_t obj_offset,
--			      unsigned long *sizep)
-+			      unsigned long *sizep, int *rtype)
- {
- 	struct pack_window *w_curs = NULL;
- 	unsigned long size;
-@@ -1613,6 +1613,8 @@ static int packed_object_info(struct packed_git *p, off_t obj_offset,
- 	enum object_type type;
- 
- 	type = unpack_object_header(p, &w_curs, &curpos, &size);
-+	if (rtype)
-+		*rtype = type; /* representation type */
- 
- 	switch (type) {
- 	case OBJ_OFS_DELTA:
-@@ -2093,24 +2095,28 @@ static int sha1_loose_object_info(const unsigned char *sha1, unsigned long *size
- 	return status;
- }
- 
--int sha1_object_info(const unsigned char *sha1, unsigned long *sizep)
-+/* returns enum object_type or negative */
-+int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi)
- {
- 	struct cached_object *co;
- 	struct pack_entry e;
--	int status;
-+	int status, rtype;
- 
- 	co = find_cached_object(sha1);
- 	if (co) {
--		if (sizep)
--			*sizep = co->size;
-+		if (oi->sizep)
-+			*(oi->sizep) = co->size;
-+		oi->whence = OI_CACHED;
- 		return co->type;
- 	}
- 
- 	if (!find_pack_entry(sha1, &e)) {
- 		/* Most likely it's a loose object. */
--		status = sha1_loose_object_info(sha1, sizep);
--		if (status >= 0)
-+		status = sha1_loose_object_info(sha1, oi->sizep);
-+		if (status >= 0) {
-+			oi->whence = OI_LOOSE;
- 			return status;
-+		}
- 
- 		/* Not a loose object; someone else may have just packed it. */
- 		reprepare_packed_git();
-@@ -2118,15 +2124,29 @@ int sha1_object_info(const unsigned char *sha1, unsigned long *sizep)
- 			return status;
- 	}
- 
--	status = packed_object_info(e.p, e.offset, sizep);
-+	status = packed_object_info(e.p, e.offset, oi->sizep, &rtype);
- 	if (status < 0) {
- 		mark_bad_packed_object(e.p, sha1);
--		status = sha1_object_info(sha1, sizep);
-+		status = sha1_object_info_extended(sha1, oi);
-+	} else {
-+		oi->whence = OI_PACKED;
-+		oi->u.packed.offset = e.offset;
-+		oi->u.packed.pack = e.p;
-+		oi->u.packed.is_delta = (rtype == OBJ_REF_DELTA ||
-+					 rtype == OBJ_OFS_DELTA);
- 	}
- 
- 	return status;
- }
- 
-+int sha1_object_info(const unsigned char *sha1, unsigned long *sizep)
++int close_istream(struct git_istream *st)
 +{
-+	struct object_info oi;
-+
-+	oi.sizep = sizep;
-+	return sha1_object_info_extended(sha1, &oi);
++	return st->vtbl->close(st);
 +}
 +
- static void *read_packed_sha1(const unsigned char *sha1,
- 			      enum object_type *type, unsigned long *size)
- {
++ssize_t read_istream(struct git_istream *st, char *buf, size_t sz)
++{
++	return st->vtbl->read(st, buf, sz);
++}
++
++static enum input_source istream_source(const unsigned char *sha1,
++					enum object_type *type,
++					struct object_info *oi)
++{
++	unsigned long size;
++	int status;
++
++	oi->sizep = &size;
++	status = sha1_object_info_extended(sha1, oi);
++	if (status < 0)
++		return stream_error;
++	*type = status;
++
++	switch (oi->whence) {
++	case OI_LOOSE:
++		return loose;
++	case OI_PACKED:
++		if (!oi->u.packed.is_delta && big_file_threshold <= size)
++			return pack_non_delta;
++		/* fallthru */
++	default:
++		return incore;
++	}
++}
++
++struct git_istream *open_istream(const unsigned char *sha1,
++				 enum object_type *type,
++				 unsigned long *size)
++{
++	struct git_istream *st;
++	struct object_info oi;
++	const unsigned char *real = lookup_replace_object(sha1);
++	enum input_source src = istream_source(real, type, &oi);
++
++	if (src < 0)
++		return NULL;
++
++	st = xmalloc(sizeof(*st));
++	st->source = src;
++	if (open_istream_tbl[src](st, &oi, real, type)) {
++		if (open_istream_incore(st, &oi, real, type)) {
++			free(st);
++			st = NULL;
++		}
++	}
++	*size = st->size;
++	return st;
++}
++
++/*****************************************************************
++ *
++ * Loose object stream
++ *
++ *****************************************************************/
++
++static open_method_decl(loose)
++{
++	return -1; /* for now */
++}
++
++
++/*****************************************************************
++ *
++ * Non-delta packed object stream
++ *
++ *****************************************************************/
++
++static open_method_decl(pack_non_delta)
++{
++	return -1; /* for now */
++}
++
++
++/*****************************************************************
++ *
++ * In-core stream
++ *
++ *****************************************************************/
++
++static close_method_decl(incore)
++{
++	free(st->u.incore.buf);
++	return 0;
++}
++
++static read_method_decl(incore)
++{
++	size_t read_size = sz;
++	size_t remainder = st->size - st->u.incore.read_ptr;
++
++	if (remainder <= read_size)
++		read_size = remainder;
++	if (read_size) {
++		memcpy(buf, st->u.incore.buf + st->u.incore.read_ptr, read_size);
++		st->u.incore.read_ptr += read_size;
++	}
++	return read_size;
++}
++
++static struct stream_vtbl incore_vtbl = {
++	close_istream_incore,
++	read_istream_incore,
++};
++
++static open_method_decl(incore)
++{
++	st->u.incore.buf = read_sha1_file_extended(sha1, type, &st->size, 0);
++	st->u.incore.read_ptr = 0;
++	st->vtbl = &incore_vtbl;
++
++	if (!st->u.incore.buf) {
++		free(st->u.incore.buf);
++		return -1;
++	}
++	return 0;
++}
+diff --git a/streaming.h b/streaming.h
+new file mode 100644
+index 0000000..18cbe68
+--- /dev/null
++++ b/streaming.h
+@@ -0,0 +1,15 @@
++/*
++ * Copyright (c) 2011, Google Inc.
++ */
++#ifndef STREAMING_H
++#define STREAMING_H 1
++#include "cache.h"
++
++/* opaque */
++struct git_istream;
++
++extern struct git_istream *open_istream(const unsigned char *, enum object_type *, unsigned long *);
++extern int close_istream(struct git_istream *);
++extern ssize_t read_istream(struct git_istream *, char *, size_t);
++
++#endif /* STREAMING_H */
 -- 
 1.7.5.1.416.gac10c8
