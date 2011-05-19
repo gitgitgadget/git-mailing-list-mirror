@@ -1,47 +1,60 @@
-From: Daniel Stenberg <daniel@haxx.se>
-Subject: Re: git over https and http 1.1
-Date: Thu, 19 May 2011 22:36:06 +0200 (CEST)
-Message-ID: <alpine.DEB.2.00.1105192235380.25633@tvnag.unkk.fr>
-References: <OF134A8B76.F0B9B9C0-ON85257894.00462851-85257894.00462862@greenhouse.lotus.com> <1305837109.25259.11.camel@drew-northup.unet.maine.edu>
+From: david@lang.hm
+Subject: Re: plain text only policy prohibits the use of android based mobile
+ devices
+Date: Thu, 19 May 2011 13:42:42 -0700 (PDT)
+Message-ID: <alpine.DEB.2.02.1105191341280.30095@asgard.lang.hm>
+References: <201105182217.p4IMHIk2001872@amd.spinics.net> <alpine.DEB.2.02.1105181612310.12174@asgard.lang.hm> <BANLkTimBxPKx1gWeeyk3YgAd4R-XtyQv3Q@mail.gmail.com> <7vei3u8vi7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Nir.Friedman@greenhouse.lotus.com, git@vger.kernel.org
-To: Drew Northup <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Thu May 19 22:36:29 2011
+Cc: Eugene Sajine <euguess@gmail.com>, ellis@spinics.net,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 19 22:42:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QN9xM-0004LQ-AP
-	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 22:36:28 +0200
+	id 1QNA3b-0000In-Ul
+	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 22:42:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934252Ab1ESUgX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2011 16:36:23 -0400
-Received: from giant.haxx.se ([80.67.6.50]:41387 "EHLO giant.haxx.se"
+	id S934713Ab1ESUmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2011 16:42:50 -0400
+Received: from mail.lang.hm ([64.81.33.126]:50686 "EHLO bifrost.lang.hm"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933968Ab1ESUgW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2011 16:36:22 -0400
-Received: from giant.haxx.se (giant.haxx.se [80.67.6.50])
-	by giant.haxx.se (8.14.4/8.14.4/Debian-2) with ESMTP id p4JKa6E2013295;
-	Thu, 19 May 2011 22:36:06 +0200
-X-X-Sender: dast@giant.haxx.se
-In-Reply-To: <1305837109.25259.11.camel@drew-northup.unet.maine.edu>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-fromdanielhimself: yes
-X-Greylist: Default is to whitelist mail, not delayed by milter-greylist-4.3.8 (giant.haxx.se [80.67.6.50]); Thu, 19 May 2011 22:36:06 +0200 (CEST)
+	id S934077Ab1ESUmt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2011 16:42:49 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id p4JKgg4N019193;
+	Thu, 19 May 2011 13:42:42 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <7vei3u8vi7.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174002>
 
-On Thu, 19 May 2011, Drew Northup wrote:
 
-> Perhaps Git+libcurl isn't using keep-alive? I'd have to check the code.
+On Thu, 19 May 2011, Junio C Hamano wrote:
 
-They do. HTTP 1.1 even does "keep-alive" by default...
+> Eugene Sajine <euguess@gmail.com> writes:
+>
+>> As of now i see the majority doesn't care, so it is up to me to decide
+>> how I'm going to work with this.
+>
+> I only comment on this part. The way I read this thread is not that the
+> majority doesn't care.
+>
+> The majority deeply cares about keeping the list free of HTML cruft, much
+> more than they care about making it easier for people who sometimes (or
+> always) cannot send anything but HTML-mixed messages [*1*].
 
--- 
+to be clear, I also want to keep HTML cruft off the list.
 
-  / daniel.haxx.se
+but if a message is being sent in a multipart format of both HTML and 
+text, I think it is reasonable to strip out the HTML part and send the 
+text part on to the list.
+
+David Lang
