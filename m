@@ -1,109 +1,77 @@
-From: Paul Ebermann <Paul-Ebermann@gmx.de>
-Subject: Re: [PATCH/WIP] completion: complete git diff with only changed files.
-Date: Thu, 19 May 2011 14:31:37 +0200
-Message-ID: <4DD50DA9.8010305@gmx.de>
-References: <4DD30F87.2000807@gmx.de> <7v8vu4efvj.fsf@alter.siamese.dyndns.org> <4DD3C814.8000100@gmx.de> <7voc2zbwz8.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2] add Android support
+Date: Thu, 19 May 2011 07:17:27 -0700
+Message-ID: <7vsjsa93m0.fsf@alter.siamese.dyndns.org>
+References: <B22B44EF-0AFB-44E3-93E3-61FA730431B9@gieschke.de>
+ <7vaaej9pt3.fsf@alter.siamese.dyndns.org>
+ <2218C353-80FC-4540-A60E-608385384FB5@gieschke.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 19 14:31:47 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Rafael Gieschke <rafael@gieschke.de>
+X-From: git-owner@vger.kernel.org Thu May 19 16:17:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QN2OI-0001sb-Li
-	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 14:31:47 +0200
+	id 1QN42r-0007Pk-0r
+	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 16:17:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756521Ab1ESMbl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2011 08:31:41 -0400
-Received: from mailout-de.gmx.net ([213.165.64.23]:52305 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752696Ab1ESMbk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2011 08:31:40 -0400
-Received: (qmail invoked by alias); 19 May 2011 12:31:38 -0000
-Received: from stilgar.mathematik.hu-berlin.de (EHLO [141.20.50.149]) [141.20.50.149]
-  by mail.gmx.net (mp071) with SMTP; 19 May 2011 14:31:38 +0200
-X-Authenticated: #2289940
-X-Provags-ID: V01U2FsdGVkX1+xKMAVEamx0LYbIaWdP1cdtwjRU+0p6S2Aj/YJkU
-	Aw6ZL6TTVZuRwb
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.1.19) Gecko/20110420 SUSE/2.0.14-0.2.1 SeaMonkey/2.0.14
-In-Reply-To: <7voc2zbwz8.fsf@alter.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
+	id S933422Ab1ESORh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2011 10:17:37 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40445 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933378Ab1ESORf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2011 10:17:35 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 36E793A53;
+	Thu, 19 May 2011 10:19:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=UR9cDVPoCfaZpoY6i76rLV/ejzY=; b=tdSXpw
+	vlDUkG+KGsTGcnAGylkYwKhBaQpReAp7Zs5G8Fgr7HLZv3zw3ojrK9xiI9+sijoz
+	7hz1PWDSGJ3V9D0t1sI0N8n+mPD7jWPhPFwpd7D8mFCWWRRLpfU8Hf/cVWL8vxP7
+	m+wmdu/NJ6b2ueD3xQE9b3PFsLh5nGNEqkl/Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YH4CBrIltEXzNIvIh00dEQ04RIHjzikm
+	4A3fTvBC6yhT0nuUMg2TgHXy/OjiF1RQ0Ot+YSK8zsJ2Dh1YY3kjYzyJ7OLiyYlu
+	0k+P8VFtgpPscXGCqOGV7QFcveI+m1PzDkUJ5YiVh4I0zQunHuGNSaPEXLmB4hkt
+	Myo32fD2EwY=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1462C3A51;
+	Thu, 19 May 2011 10:19:39 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 37AF33A4D; Thu, 19 May 2011
+ 10:19:35 -0400 (EDT)
+In-Reply-To: <2218C353-80FC-4540-A60E-608385384FB5@gieschke.de> (Rafael
+ Gieschke's message of "Thu, 19 May 2011 13:37:53 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 07F2649C-8223-11E0-8F93-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173958>
 
-Junio C Hamano schrieb:
-> Paul Ebermann <Paul-Ebermann@gmx.de> writes:
-> 
->> I'm normally using (for differences to head) git status first, and then
->> have a look at the files I really want to see. Then completion of only
->> the changed files seems useful.
-> 
-> By the time completion offers you the choices, you already have spent
-> enough extra cycles to compute the paths, which is half the cost of
-> generating the diff itself.
-> 
-> I have this nagging feeling that you are trying to solve a problem that
-> does not exist.
+Rafael Gieschke <rafael@gieschke.de> writes:
 
-Maybe.
+>> (3) Add uname_S = Android (Makefile).
+>> 
+>> The first two would become much easier to justify if presented that
+>> way. At least you won't hear from anybody "we don't want that much code to
+>> not to run git on a phone!", as it is not entirely implausible to imagine
+>> environments without support for one or both of these two facilities.
+>
+> So, you would prefer to leave out ANDROID and use something like "ifeq
+> ($(uname_S),Android)", so you will have to compile using make
+> uname_S=Android? I would be fine with that, too. But I would also be
+> fine with having to specify the build options on the command line or
+> using a config.mak if you want to keep Android out of the Makefile.
 
-For me, it is not so much about saving CPU cycles (I have enough of
-these) but about not seeing things I don't want to see, and helping me
-decide what to type. This might be against the Git philosophy, I'm
-starting to realize.
-
->  Perhaps you have too many things going on in your working
-> tree at once, and if git helped in such a way that your workflow does not
-> have to touch so many (possibly unrelated) things at once, you do not have
-> to worry about unconstrained "git diff" output overwhelming you?
-
-If I only want to do "git diff" (without any paths), I obviously don't
-need path completion at all.
-
-
-Here is an example:
-
-Yesterday, I addes a new Java class (193 lines)
-  src/de/hub/sam/es/managementclient/ssh/TunnelSocketImpl.java
-and at the same time made some changes to
-  src/de/hub/sam/es/managementclient/ssh/ConnectionManager.java
-to use this new class (adding 29 lines).
-
-I wanted to look only at the changes made to ConnectionManager.java.
-
-(The changes to TunnelSocketImpl.java were obvious: creating the whole
-new class, thus I could look at this in my editor if I wanted).
-
-With the usual filename-completion, this goes like
-
-    git diff -- s<tab><tab><tab><tab><tab><tab>s<tab>C<tab>
-
-If I had a broader package tree (like in some other projects),
-it takes even more work, as I must remember which package name
-starting letters to type between the tabs.
-
-(In some projects I started to choose the package names so that
-there never would be two sibling directories starting with the
-same letter, to help autocompletion.)
-
-With the new completion scheme, this would be
-
-   git diff -- <tab>C<tab>
-
-It might need doubled time to complete-and-execute, but
-my computer is quite faster than I can type (and think),
-even if the .git directory is on a NFS.
-
-(You could ask why my shell working directory is not the
- managementclient directory. The reason is that sometimes
- there are files in ./ which get changed, too.)
-
-
-Paul
+Ignore differences s/Android/ANDROID/; I just typed differently without
+even noticing I was doing so (the same for GECOS-PWENT but if you liked my
+name better that is fine by me as well). The point is that I didn't mean
+to suggest changing names of symbols you used.
