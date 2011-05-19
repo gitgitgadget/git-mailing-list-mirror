@@ -1,10 +1,9 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/3] receive-pack: eliminate duplicate .have refs
-Date: Thu, 19 May 2011 17:34:46 -0400
-Message-ID: <20110519213446.GC29793@sigill.intra.peff.net>
-References: <20110519213231.GA29702@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 09/11] streaming: read non-delta incrementally from a pack
+Date: Thu, 19 May 2011 14:33:44 -0700
+Message-ID: <1305840826-7783-10-git-send-email-gitster@pobox.com>
+References: <1305505831-31587-1-git-send-email-gitster@pobox.com>
+ <1305840826-7783-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Thu May 19 23:35:18 2011
 Return-path: <git-owner@vger.kernel.org>
@@ -12,138 +11,189 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNAsH-00074u-Qm
-	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 23:35:18 +0200
+	id 1QNAsG-00074u-Jr
+	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 23:35:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934860Ab1ESVfB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2011 17:35:01 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39452
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934870Ab1ESVes (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2011 17:34:48 -0400
-Received: (qmail 21183 invoked by uid 107); 19 May 2011 21:36:50 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 19 May 2011 17:36:50 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 May 2011 17:34:46 -0400
-Content-Disposition: inline
-In-Reply-To: <20110519213231.GA29702@sigill.intra.peff.net>
+	id S934863Ab1ESVfD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2011 17:35:03 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33669 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934853Ab1ESVeK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2011 17:34:10 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1E63E52BD
+	for <git@vger.kernel.org>; Thu, 19 May 2011 17:36:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=2d7B
+	ulckC9lhWG90dU1WH7TwUJs=; b=EF8omM8hlqbk+jg82yCNz5+5kTevyZ3wobTX
+	qnsrvDmVwG5W6rkGKtpYBN8cnOlIHvpb+g7SKQXyCK1en/sqnlhbwBmLY099wrIS
+	B+3s+PeYY+4RA5sVk3RXjiL3v/bR/xHRVlCsBQVoSa6j5E9z5dumXdbJzdx6Yg2Y
+	8AwrZjA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=DL45tH
+	Px6lIpRLEJlQKFhU8jE7R7pangJ013w1yItgR/S2SwvmNvQmREaiw27c5MFVoDKP
+	yAhu+SkyGoeXyukYAJfgdrUxx8g4Hi0422992KC3GN/F0BygSe1cUo9OrizUKBqP
+	QZRzAUOm4hhLZWqNv3LfJ/niOUwiGr3s8REgI=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1BE4E52BC
+	for <git@vger.kernel.org>; Thu, 19 May 2011 17:36:18 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 662F552BB for
+ <git@vger.kernel.org>; Thu, 19 May 2011 17:36:17 -0400 (EDT)
+X-Mailer: git-send-email 1.7.5.1.416.gac10c8
+In-Reply-To: <1305840826-7783-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 07CB19CC-8260-11E0-B6F9-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174021>
 
-When receiving a push, we advertise ref tips from any
-alternate repositories, in case that helps the client send a
-smaller pack. Since these refs don't actually exist in the
-destination repository, we don't transmit the real ref
-names, but instead use the pseudo-ref ".have".
-
-If your alternate has a large number of duplicate refs (for
-example, because it is aggregating objects from many related
-repositories, some of which will have the same tags and
-branch tips), then we will send each ".have $sha1" line
-multiple times. This is a pointless waste of bandwidth, as
-we are simply repeating the same fact to the client over and
-over.
-
-This patch eliminates duplicate .have refs early on. It does
-so efficiently by sorting the complete list and skipping
-duplicates. This has the side effect of re-ordering the
-.have lines by ascending sha1; this isn't a problem, though,
-as the original order was meaningless.
-
-There is a similar .have system in fetch-pack, but it
-does not suffer from the same problem. For each alternate
-ref we consider in fetch-pack, we actually open the object
-and mark it with the SEEN flag, so duplicates are
-automatically culled.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/receive-pack.c |   16 +++++++++++++---
- sha1-array.c           |   16 ++++++++++++++++
- sha1-array.h           |    6 ++++++
- 3 files changed, 35 insertions(+), 3 deletions(-)
+ streaming.c |  105 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 102 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 6bb1281..e1a687a 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -10,6 +10,7 @@
- #include "remote.h"
- #include "transport.h"
- #include "string-list.h"
-+#include "sha1-array.h"
+diff --git a/streaming.c b/streaming.c
+index 84330b4..fbe8eb6 100644
+--- a/streaming.c
++++ b/streaming.c
+@@ -52,6 +52,8 @@ struct git_istream {
+ 	enum input_source source;
+ 	const struct stream_vtbl *vtbl;
+ 	unsigned long size; /* inflated size of full object */
++	z_stream z;
++	enum { z_unused, z_used, z_done, z_error } z_state;
  
- static const char receive_pack_usage[] = "git receive-pack <git-dir>";
+ 	union {
+ 		struct {
+@@ -65,8 +67,8 @@ struct git_istream {
+ 		} loose;
  
-@@ -731,14 +732,23 @@ static int delete_only(struct command *commands)
- 	return 1;
+ 		struct {
+-			int fd; /* open for reading */
+-			/* NEEDSWORK: what else? */
++			struct packed_git *pack;
++			off_t pos;
+ 		} in_pack;
+ 	} u;
+ };
+@@ -130,6 +132,20 @@ struct git_istream *open_istream(const unsigned char *sha1,
+ 	return st;
  }
  
--static void add_one_alternate_ref(const struct ref *ref, void *unused)
-+static void add_one_alternate_sha1(const unsigned char sha1[20], void *unused)
- {
--	add_extra_ref(".have", ref->old_sha1, 0);
-+	add_extra_ref(".have", sha1, 0);
++
++/*****************************************************************
++ *
++ * Common helpers
++ *
++ *****************************************************************/
++
++static void close_deflated_stream(struct git_istream *st)
++{
++	if (st->z_state == z_used)
++		git_inflate_end(&st->z);
 +}
 +
-+static void collect_one_alternate_ref(const struct ref *ref, void *data)
-+{
-+	struct sha1_array *sa = data;
-+	sha1_array_append(sa, ref->old_sha1);
- }
++
+ /*****************************************************************
+  *
+  * Loose object stream
+@@ -148,9 +164,92 @@ static open_method_decl(loose)
+  *
+  *****************************************************************/
  
- static void add_alternate_refs(void)
- {
--	for_each_alternate_ref(add_one_alternate_ref, NULL);
-+	struct sha1_array sa = SHA1_ARRAY_INIT;
-+	for_each_alternate_ref(collect_one_alternate_ref, &sa);
-+	sha1_array_for_each_unique(&sa, add_one_alternate_sha1, NULL);
-+	sha1_array_clear(&sa);
- }
- 
- int cmd_receive_pack(int argc, const char **argv, const char *prefix)
-diff --git a/sha1-array.c b/sha1-array.c
-index 5b75a5a..b2f47f9 100644
---- a/sha1-array.c
-+++ b/sha1-array.c
-@@ -41,3 +41,19 @@ void sha1_array_clear(struct sha1_array *array)
- 	array->alloc = 0;
- 	array->sorted = 0;
- }
-+
-+void sha1_array_for_each_unique(struct sha1_array *array,
-+				for_each_sha1_fn fn,
-+				void *data)
++static read_method_decl(pack_non_delta)
 +{
-+	int i;
++	size_t total_read = 0;
 +
-+	if (!array->sorted)
-+		sha1_array_sort(array);
-+
-+	for (i = 0; i < array->nr; i++) {
-+		if (i > 0 && !hashcmp(array->sha1[i], array->sha1[i-1]))
-+			continue;
-+		fn(array->sha1[i], data);
++	switch (st->z_state) {
++	case z_unused:
++		memset(&st->z, 0, sizeof(st->z));
++		git_inflate_init(&st->z);
++		st->z_state = z_used;
++		break;
++	case z_done:
++		return 0;
++	case z_error:
++		return -1;
++	case z_used:
++		break;
 +	}
-+}
-diff --git a/sha1-array.h b/sha1-array.h
-index 15d3b6b..4499b5d 100644
---- a/sha1-array.h
-+++ b/sha1-array.h
-@@ -15,4 +15,10 @@ void sha1_array_sort(struct sha1_array *array);
- int sha1_array_lookup(struct sha1_array *array, const unsigned char *sha1);
- void sha1_array_clear(struct sha1_array *array);
- 
-+typedef void (*for_each_sha1_fn)(const unsigned char sha1[20],
-+				 void *data);
-+void sha1_array_for_each_unique(struct sha1_array *array,
-+				for_each_sha1_fn fn,
-+				void *data);
 +
- #endif /* SHA1_ARRAY_H */
++	while (total_read < sz) {
++		int status;
++		struct pack_window *window = NULL;
++		unsigned char *mapped;
++
++		mapped = use_pack(st->u.in_pack.pack, &window,
++				  st->u.in_pack.pos, &st->z.avail_in);
++
++		st->z.next_out = (unsigned char *)buf + total_read;
++		st->z.avail_out = sz - total_read;
++		st->z.next_in = mapped;
++		status = git_inflate(&st->z, Z_FINISH);
++
++		st->u.in_pack.pos += st->z.next_in - mapped;
++		total_read = st->z.next_out - (unsigned char *)buf;
++		unuse_pack(&window);
++
++		if (status == Z_STREAM_END) {
++			git_inflate_end(&st->z);
++			st->z_state = z_done;
++			break;
++		}
++		if (status != Z_OK && status != Z_BUF_ERROR) {
++			git_inflate_end(&st->z);
++			st->z_state = z_error;
++			return -1;
++		}
++	}
++	return total_read;
++}
++
++static close_method_decl(pack_non_delta)
++{
++	close_deflated_stream(st);
++	return 0;
++}
++
++static struct stream_vtbl pack_non_delta_vtbl = {
++	close_istream_pack_non_delta,
++	read_istream_pack_non_delta,
++};
++
+ static open_method_decl(pack_non_delta)
+ {
+-	return -1; /* for now */
++	struct pack_window *window;
++	enum object_type in_pack_type;
++
++	st->u.in_pack.pack = oi->u.packed.pack;
++	st->u.in_pack.pos = oi->u.packed.offset;
++	window = NULL;
++
++	in_pack_type = unpack_object_header(st->u.in_pack.pack,
++					    &window,
++					    &st->u.in_pack.pos,
++					    &st->size);
++	unuse_pack(&window);
++	switch (in_pack_type) {
++	default:
++		return -1; /* we do not do deltas for now */
++	case OBJ_COMMIT:
++	case OBJ_TREE:
++	case OBJ_BLOB:
++	case OBJ_TAG:
++		break;
++	}
++	st->z_state = z_unused;
++	st->vtbl = &pack_non_delta_vtbl;
++	return 0;
+ }
+ 
+ 
 -- 
-1.7.5.8.ga95ab
+1.7.5.1.416.gac10c8
