@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 11/11] streaming: read loose objects incrementally
-Date: Thu, 19 May 2011 14:33:46 -0700
-Message-ID: <1305840826-7783-12-git-send-email-gitster@pobox.com>
+Subject: [PATCH v2 10/11] sha1_file.c: expose helpers to read loose objects
+Date: Thu, 19 May 2011 14:33:45 -0700
+Message-ID: <1305840826-7783-11-git-send-email-gitster@pobox.com>
 References: <1305505831-31587-1-git-send-email-gitster@pobox.com>
  <1305840826-7783-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
@@ -11,155 +11,99 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNArq-0006jM-Ks
+	id 1QNArr-0006jM-6A
 	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 23:34:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934881Ab1ESVeR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2011 17:34:17 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33735 "EHLO
+	id S934883Ab1ESVef (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2011 17:34:35 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33700 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934876Ab1ESVeP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2011 17:34:15 -0400
+	with ESMTP id S934865Ab1ESVeM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2011 17:34:12 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 96E4252C3
-	for <git@vger.kernel.org>; Thu, 19 May 2011 17:36:22 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5031252C0
+	for <git@vger.kernel.org>; Thu, 19 May 2011 17:36:20 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=NrNz
-	9KOWm6fXu+QXUcVA6yfjW2k=; b=dt3s3zAlQ5DrghdJ1rxZiUVE0SYXCBY06BTc
-	AcTHkpyU6CbrQe1lyw1jY9lCOpODdOrPApmzWhVIqSnepUBk5IXa2qpzcW8/w93Q
-	mfaYPtyEVUAdcHBDvmBP90/CrHGMRTZZ1G0H1cwEHs/uhH6TrVPsolUGy/9rzwsS
-	aQvue7g=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=kh4J
+	qqq4HHLyEXnxFyrAfaWu0GY=; b=pMQ8EOct+sb/WHTfjIqjRCckIu7gfxlu6xC5
+	AP+k3IOoUmNbi9ogltJhBnunv/3xn0ZwYy6zEhsruuNA0cOpXGAuGzGt0A7P693G
+	50n+q8KOaUze41ZzbLP4D7aeAjOQlC/xM01LN3yC/wUIqZkZrIUZGRrpJ5wRV0De
+	fLw5Lbs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=tmwUS0
-	YQC3vi0AT9e9BGV67qGInK7ww567ozc9aHGkb2PbiKMCRVQmbe2t87zdDWRQrj4y
-	v90T9aTfzcppVyL0dy2IjcMqvJMWP/zR59aw5BeI5zKIVIeEppQYgX/A4IcAOvLA
-	O4KuqPj4JHenzGysUa4FBSTedJiQuKf3yiO5A=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=nybUJV
+	y4ptDJLEPMGCt3pWuEUPoOwRtY99TkWop2UPRiE17mCnccFKOV2F/UR9IMa8q7DD
+	61yncd3Uz6XkrDrKbwH1EeItHydMiXQbsoCYYcTjLJ1YZqZM5Zo6i3xf1oOnaSXN
+	+ahw4R76haVT66S6+dhXvddLaEnDbLVfPRzhE=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9431B52C2
-	for <git@vger.kernel.org>; Thu, 19 May 2011 17:36:22 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4D5C352BF
+	for <git@vger.kernel.org>; Thu, 19 May 2011 17:36:20 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E3C3A52C1 for
- <git@vger.kernel.org>; Thu, 19 May 2011 17:36:21 -0400 (EDT)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B054F52BE for
+ <git@vger.kernel.org>; Thu, 19 May 2011 17:36:19 -0400 (EDT)
 X-Mailer: git-send-email 1.7.5.1.416.gac10c8
 In-Reply-To: <1305840826-7783-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 0A78E6AE-8260-11E0-9C1F-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 09188F94-8260-11E0-AE6D-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174018>
 
-Helped-by: Jeff King <peff@peff.net>
+Make map_sha1_file(), parse_sha1_header() and unpack_sha1_header()
+available to the streaming read API by exporting them via cache.h header
+file.
+
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- streaming.c |   85 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 files changed, 82 insertions(+), 3 deletions(-)
+ cache.h     |    3 +++
+ sha1_file.c |    6 +++---
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/streaming.c b/streaming.c
-index fbe8eb6..76a4f4d 100644
---- a/streaming.c
-+++ b/streaming.c
-@@ -62,8 +62,11 @@ struct git_istream {
- 		} incore;
+diff --git a/cache.h b/cache.h
+index 8c5bb8a..52cc4d3 100644
+--- a/cache.h
++++ b/cache.h
+@@ -780,6 +780,9 @@ extern int hash_sha1_file(const void *buf, unsigned long len, const char *type,
+ extern int write_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *return_sha1);
+ extern int pretend_sha1_file(void *, unsigned long, enum object_type, unsigned char *);
+ extern int force_object_loose(const unsigned char *sha1, time_t mtime);
++extern void *map_sha1_file(const unsigned char *sha1, unsigned long *size);
++extern int unpack_sha1_header(z_stream *stream, unsigned char *map, unsigned long mapsize, void *buffer, unsigned long bufsiz);
++extern int parse_sha1_header(const char *hdr, unsigned long *sizep);
  
- 		struct {
--			int fd; /* open for reading */
--			/* NEEDSWORK: what else? */
-+			void *mapped;
-+			unsigned long mapsize;
-+			char hdr[32];
-+			int hdr_avail;
-+			int hdr_used;
- 		} loose;
- 
- 		struct {
-@@ -152,9 +155,85 @@ static void close_deflated_stream(struct git_istream *st)
-  *
-  *****************************************************************/
- 
-+static read_method_decl(loose)
-+{
-+	size_t total_read = 0;
-+
-+	switch (st->z_state) {
-+	case z_done:
-+		return 0;
-+	case z_error:
-+		return -1;
-+	default:
-+		break;
-+	}
-+
-+	if (st->u.loose.hdr_used < st->u.loose.hdr_avail) {
-+		size_t to_copy = st->u.loose.hdr_avail - st->u.loose.hdr_used;
-+		if (sz < to_copy)
-+			to_copy = sz;
-+		memcpy(buf, st->u.loose.hdr + st->u.loose.hdr_used, to_copy);
-+		st->u.loose.hdr_used += to_copy;
-+		total_read += to_copy;
-+	}
-+
-+	while (total_read < sz) {
-+		int status;
-+
-+		st->z.next_out = (unsigned char *)buf + total_read;
-+		st->z.avail_out = sz - total_read;
-+		status = git_inflate(&st->z, Z_FINISH);
-+
-+		total_read = st->z.next_out - (unsigned char *)buf;
-+
-+		if (status == Z_STREAM_END) {
-+			git_inflate_end(&st->z);
-+			st->z_state = z_done;
-+			break;
-+		}
-+		if (status != Z_OK && status != Z_BUF_ERROR) {
-+			git_inflate_end(&st->z);
-+			st->z_state = z_error;
-+			return -1;
-+		}
-+	}
-+	return total_read;
-+}
-+
-+static close_method_decl(loose)
-+{
-+	close_deflated_stream(st);
-+	munmap(st->u.loose.mapped, st->u.loose.mapsize);
-+	return 0;
-+}
-+
-+static struct stream_vtbl loose_vtbl = {
-+	close_istream_loose,
-+	read_istream_loose,
-+};
-+
- static open_method_decl(loose)
- {
--	return -1; /* for now */
-+	st->u.loose.mapped = map_sha1_file(sha1, &st->u.loose.mapsize);
-+	if (!st->u.loose.mapped)
-+		return -1;
-+	if (unpack_sha1_header(&st->z,
-+			       st->u.loose.mapped,
-+			       st->u.loose.mapsize,
-+			       st->u.loose.hdr,
-+			       sizeof(st->u.loose.hdr)) < 0) {
-+		git_inflate_end(&st->z);
-+		munmap(st->u.loose.mapped, st->u.loose.mapsize);
-+		return -1;
-+	}
-+
-+	parse_sha1_header(st->u.loose.hdr, &st->size);
-+	st->u.loose.hdr_used = strlen(st->u.loose.hdr) + 1;
-+	st->u.loose.hdr_avail = st->z.total_out;
-+	st->z_state = z_used;
-+
-+	st->vtbl = &loose_vtbl;
-+	return 0;
+ /* global flag to enable extra checks when accessing packed objects */
+ extern int do_check_packed_object_crc;
+diff --git a/sha1_file.c b/sha1_file.c
+index a28683a..5fc877f 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1186,7 +1186,7 @@ static int open_sha1_file(const unsigned char *sha1)
+ 	return -1;
  }
  
+-static void *map_sha1_file(const unsigned char *sha1, unsigned long *size)
++void *map_sha1_file(const unsigned char *sha1, unsigned long *size)
+ {
+ 	void *map;
+ 	int fd;
+@@ -1245,7 +1245,7 @@ unsigned long unpack_object_header_buffer(const unsigned char *buf,
+ 	return used;
+ }
  
+-static int unpack_sha1_header(z_stream *stream, unsigned char *map, unsigned long mapsize, void *buffer, unsigned long bufsiz)
++int unpack_sha1_header(z_stream *stream, unsigned char *map, unsigned long mapsize, void *buffer, unsigned long bufsiz)
+ {
+ 	unsigned long size, used;
+ 	static const char valid_loose_object_type[8] = {
+@@ -1342,7 +1342,7 @@ static void *unpack_sha1_rest(z_stream *stream, void *buffer, unsigned long size
+  * too permissive for what we want to check. So do an anal
+  * object header parse by hand.
+  */
+-static int parse_sha1_header(const char *hdr, unsigned long *sizep)
++int parse_sha1_header(const char *hdr, unsigned long *sizep)
+ {
+ 	char type[10];
+ 	int i;
 -- 
 1.7.5.1.416.gac10c8
