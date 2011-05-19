@@ -1,82 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] notes remove: allow removing more than one
-Date: Wed, 18 May 2011 23:50:52 -0700
-Message-ID: <7v1uzv9oab.fsf@alter.siamese.dyndns.org>
-References: <1305764061-21303-1-git-send-email-gitster@pobox.com>
- <1305764061-21303-2-git-send-email-gitster@pobox.com>
- <4DD4BC0D.2000805@drmicha.warpmail.net>
+From: Tim Mazid <timmazid@hotmail.com>
+Subject: RE: git & patterns
+Date: Thu, 19 May 2011 16:54:04 +1000
+Message-ID: <SNT124-W262001D726480B1E78D059C48E0@phx.gbl>
+References: <4DD3A402.3040802@hupie.com>,<7vsjsbbx7h.fsf@alter.siamese.dyndns.org>,<4DD4B772.2050404@hupie.com>,<SNT124-w95A0758AAE98C128DB9A2C48E0@phx.gbl>
+ <SNT124-W45CEA4AD8A3564C9F78071C48E0@phx.gbl>,<4DD4BCB2.5080309@hupie.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu May 19 08:51:06 2011
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: <gitster@pobox.com>, Git Mailing List <git@vger.kernel.org>
+To: <mailings@hupie.com>
+X-From: git-owner@vger.kernel.org Thu May 19 08:54:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMx4b-0004Av-Er
-	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 08:51:05 +0200
+	id 1QMx7b-000622-VK
+	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 08:54:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932304Ab1ESGvA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2011 02:51:00 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49508 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754845Ab1ESGu7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2011 02:50:59 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 635C2319D;
-	Thu, 19 May 2011 02:53:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OUyK8Qd9yPP2fnvBmKGeTu53kRI=; b=p6T4Xd
-	MIYzywNo3B/esfpYiXXrj+sy30FbbJ4pRbh7r+6RM9tGcgdT4V3KpI9EsmdP2OEX
-	efAFN//bGpC0thP1lDiFZ3n7brhThKF34oq4+Je+zn/W0HI8ekbDfzWNPUKWijoi
-	nO06n1EC8h5Pd5QgYeibkae0qauqJHrqalPy0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=q1ciCfsxTwpG4a0v+n+BHcNeg0oN3MRy
-	MlG1v3F+E/UwvBD1cUAfL+JPF/Ti8OHlo44cpqGAqzXfbjnwyOxRuVuHINFnG6dZ
-	sI6kTACggWn7tF7PRG71M1u/Ls4GoUgeQb3sqAsShPMvc/RSaUl3m9jAQSJi5p+d
-	yGZOP7BJm1s=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3EFFA319C;
-	Thu, 19 May 2011 02:53:04 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 639203199; Thu, 19 May 2011
- 02:53:01 -0400 (EDT)
-In-Reply-To: <4DD4BC0D.2000805@drmicha.warpmail.net> (Michael J. Gruber's
- message of "Thu, 19 May 2011 08:43:25 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A4FCD7E8-81E4-11E0-9189-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+	id S932760Ab1ESGyG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2011 02:54:06 -0400
+Received: from snt0-omc2-s9.snt0.hotmail.com ([65.55.90.84]:65471 "EHLO
+	snt0-omc2-s9.snt0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932304Ab1ESGyF convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2011 02:54:05 -0400
+Received: from SNT124-W26 ([65.55.90.71]) by snt0-omc2-s9.snt0.hotmail.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Wed, 18 May 2011 23:54:04 -0700
+X-Originating-IP: [27.32.25.138]
+Importance: Normal
+In-Reply-To: <4DD4BCB2.5080309@hupie.com>
+X-OriginalArrivalTime: 19 May 2011 06:54:04.0291 (UTC) FILETIME=[8A903530:01CC15F1]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173940>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-[jc: cull the part you did not comment on, thanks]
-
->> +test_expect_success 'removing more than one' '
->> +	before=$(git rev-parse --verify refs/notes/commits) &&
->> +	test_when_finished "git update-ref refs/notes/commits $before" &&
->> +	git notes remove HEAD^^ HEAD^^^ &&
->> +	git diff --name-only refs/notes/commits^ refs/notes/commits >actual &&
->> +	test 2 = $(wc -l <actual) &&
->> +	git ls-tree -r --name-only refs/notes/commits >actual &&
->> +	>empty &&
->> +	test_cmp empty actual
->> +'
+> From: mailings@hupie.com
+> On 05/19/2011 08:43 AM, Tim Mazid wrote:
+> >
+> >> Is there a "concepts" or "glossary" man page or similar somewhere that
+> >> explains all the terms used in git that an "outsider" (somebody who does
+> >> not develop git and just began to use it) might not be aware of?
+> >
+> > Well, I look like an idiot; I just found the glossary man page.
+> >
+> > However, there is no entry for "glob", or anything about pathnames.
+> >
 >
-> You're not really testing that this removes the correct notes. Actually,
-> you're not even testing that this removes only 2 notes when there are
-> more than 2, are you?
+> Well glob is 'real easy' to find, once you actually know that the code
+> calls fnmatch :-) :-)
+>
+> man fnmatch points to man 7 glob :-)
+>
+> A regular git user will never know this so adding it to the glossary
+> seems a good idea
 
-In the test vector, there are only two notes, and I am testing removal of
-multiple.  What do you want me to do?  Test removing one and make sure the
-other one survives ;-)? 
+Yes... I was merely demonstrating a point... I knew that all along... >.>
 
-Patches on top of it is very welcome, but I wouldn't bother.
+Onto the glossary, though; I did not even know it existed until just now 
+when I tried to look for it. Nothing ever told me "if you're confused
+about anything, go 'git help glossary'". I don't think it was ever in
+the "see also" sections of other pages.
+
+Out of curiosity, did Linus/Junio write the majority of the 
+documentation? I know it is difficult to write documentation for those
+who don't know once you already know what is going on.
+
+
+() ascii ribbon campaign - against html e-mail
+/\ www.asciiribbon.org - against proprietary attachments
+ 		 	   		  
