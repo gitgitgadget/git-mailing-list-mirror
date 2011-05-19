@@ -1,220 +1,207 @@
-From: Rafael Gieschke <rafael@gieschke.de>
-Subject: [PATCH] compat: add a getpass() compatibility function
-Date: Thu, 19 May 2011 13:37:57 +0200
-Message-ID: <563395AE-A3E5-45FF-9063-F807C2CE3AD0@gieschke.de>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 19 13:38:37 2011
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH] compat: add a getpass() compatibility function
+Date: Thu, 19 May 2011 14:17:33 +0200
+Message-ID: <BANLkTinPHeSfZXRb7pqt7-XWkR5fH=wAjg@mail.gmail.com>
+References: <563395AE-A3E5-45FF-9063-F807C2CE3AD0@gieschke.de>
+Reply-To: kusmabite@gmail.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Rafael Gieschke <rafael@gieschke.de>
+X-From: git-owner@vger.kernel.org Thu May 19 14:18:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QN1Yp-00029J-8E
-	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 13:38:35 +0200
+	id 1QN2Az-0001st-GT
+	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 14:18:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932178Ab1ESLi1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2011 07:38:27 -0400
-Received: from smtp2.goneo.de ([212.90.139.82]:60061 "EHLO smtp2.goneo.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754326Ab1ESLi0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 May 2011 07:38:26 -0400
-Received: from smtp2.goneo.de (localhost [127.0.0.1])
-	by scan.goneo.de (Postfix) with ESMTP id DEB9F1D22EF;
-	Thu, 19 May 2011 13:38:24 +0200 (CEST)
-X-Virus-Scanned: by goneo
-X-Spam-Flag: NO
-X-Spam-Score: -2.829
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.829 tagged_above=-999 tests=[ALL_TRUSTED=-1,
-	AWL=0.071, BAYES_00=-1.9] autolearn=ham
-Received: from smtp2.goneo.de ([127.0.0.1])
-	by smtp2.goneo.de (smtp2.goneo.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8LaHGsVcOCQn; Thu, 19 May 2011 13:38:22 +0200 (CEST)
-Received: from [10.163.130.160] (unknown [89.204.137.160])
-	by smtp2-587.goneo.de (Postfix) with ESMTPSA id 147B11D22A9;
-	Thu, 19 May 2011 13:38:20 +0200 (CEST)
-X-Mailer: Apple Mail (2.1084)
+	id S1756749Ab1ESMR5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 May 2011 08:17:57 -0400
+Received: from mail-px0-f173.google.com ([209.85.212.173]:43736 "EHLO
+	mail-px0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755929Ab1ESMRz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 May 2011 08:17:55 -0400
+Received: by pxi16 with SMTP id 16so1739336pxi.4
+        for <git@vger.kernel.org>; Thu, 19 May 2011 05:17:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=E6qSQbbnJf6S1zxuim4BVWYRLl2x3EO79Agax5hAFM4=;
+        b=ALU+7454RCUi8UqhO2vQ0ZiItGtO+XxP64K6bLQP5NN1DeMEP0ZRWye36swgFP1SEa
+         2LnPBdmRhg3Ty8IGZV4Hu9Exg8Suz6rYn7z0moR9w/H8Lt1XdmOBX3RjuGm6VE0T/iAx
+         bJFw3+zQxaliOAUxhDlrLTsB/rV+pyPDz7/7I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=rQKKYMTAbbJ4cmIrO4SFw/tsHIDgFUFvTRHyvWDaPapymlR3ACHUtLg76g7a1m3knD
+         xtCTAK5CLGO4GbWNpBo0ljubLeTE7VkQgR1c7AGMEJQMn1P142MSS6TkMEw07RG+9Ltd
+         AYsYKhc1Jyq6FD+d6QIdibHRSjUiSodxljOQQ=
+Received: by 10.68.71.135 with SMTP id v7mr4780117pbu.232.1305807474099; Thu,
+ 19 May 2011 05:17:54 -0700 (PDT)
+Received: by 10.68.64.229 with HTTP; Thu, 19 May 2011 05:17:33 -0700 (PDT)
+In-Reply-To: <563395AE-A3E5-45FF-9063-F807C2CE3AD0@gieschke.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173954>
+
+On Thu, May 19, 2011 at 1:37 PM, Rafael Gieschke <rafael@gieschke.de> w=
+rote:
+>
+> If NO_GETPASS is set, getpass is provided in compat/getpass.c from
+> https://github.com/CyanogenMod/android_external_dropbear/raw/master/n=
+etbsd_getpass.c
+> (getpass was renamed to gitgetpass).
+
+Nice.
+
+But I can't help to think that this implementation of getpass looks a
+bit heavy, especially since we already have our own getpass
+implementation in compat/mingw.c.
+
+Do we really need two implementations? Wouldn't it be better to factor
+out the mingw-version to a separate source file, and then improve it?
+
+Windows doesn't have /dev/tty, but the logic in this version handles
+that by using stdin/stderr instead. The signal-stuff has a comment
+that indicates it might not even be correct. tcgetattr/tcsetattr isn't
+supported on Windows, but it's not needed if we use getch (as the
+version in compat/mingw.c does). POSIX/curses getch respects the
+echo-setting, while Windows getch never echo.
+
+Given the information above, it sounds to me like we can enhance the
+version we already have to behave as it should also on non-Windows
+platforms, without having to maintain two versions. But it might not
+be worth it, given the simplicity of the Windows version and the
+increased dependency of curses, I dunno.
+
+As a Windows-guy, I'm not entirely comfortable with putting something
+in compat/[function-name].c that is only portable to POSIX-platforms.
+This is not the current trend, but that might not be a conscious
+choice.
+
+> diff --git a/compat/getpass.c b/compat/getpass.c
+> new file mode 100644
+> index 0000000..e13f29f
+> --- /dev/null
+> +++ b/compat/getpass.c
+> @@ -0,0 +1,114 @@
+> +/* =A0 =A0 $NetBSD: getpass.c,v 1.15 2003/08/07 16:42:50 agc Exp $ *=
+/
+> +
+> +/*
+> + * Copyright (c) 1988, 1993
+> + * =A0 =A0 The Regents of the University of California. =A0All right=
+s reserved.
+> + *
+> + * Redistribution and use in source and binary forms, with or withou=
+t
+> + * modification, are permitted provided that the following condition=
+s
+> + * are met:
+> + * 1. Redistributions of source code must retain the above copyright
+> + * =A0 =A0notice, this list of conditions and the following disclaim=
+er.
+> + * 2. Redistributions in binary form must reproduce the above copyri=
+ght
+> + * =A0 =A0notice, this list of conditions and the following disclaim=
+er in the
+> + * =A0 =A0documentation and/or other materials provided with the dis=
+tribution.
+> + * 3. Neither the name of the University nor the names of its contri=
+butors
+> + * =A0 =A0may be used to endorse or promote products derived from th=
+is software
+> + * =A0 =A0without specific prior written permission.
+> + *
+> + * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS=
+'' AND
+> + * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,=
+ THE
+> + * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULA=
+R PURPOSE
+> + * ARE DISCLAIMED. =A0IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS =
+BE LIABLE
+> + * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONS=
+EQUENTIAL
+> + * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE=
+ GOODS
+> + * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPT=
+ION)
+> + * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRAC=
+T, STRICT
+> + * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN=
+ ANY WAY
+> + * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILI=
+TY OF
+> + * SUCH DAMAGE.
+> + */
+> +
+> +#if 0
+> +#include <sys/cdefs.h>
+> +#if defined(LIBC_SCCS) && !defined(lint)
+> +#if 0
+> +static char sccsid[] =3D "@(#)getpass.c =A08.1 (Berkeley) 6/4/93";
+> +#else
+> +__RCSID("$NetBSD: getpass.c,v 1.15 2003/08/07 16:42:50 agc Exp $");
+> +#endif
+> +#endif /* LIBC_SCCS and not lint */
+
+We usually don't keep dead code around. Since you've already edited
+the file, perhaps you should just delete those lines?
+
+> +
+> +#if 0
+> +#ifdef __weak_alias
+> +__weak_alias(getpass,_getpass)
+> +#endif
+> +#endif
 
 
-If NO_GETPASS is set, getpass is provided in compat/getpass.c from
-https://github.com/CyanogenMod/android_external_dropbear/raw/master/netbsd_getpass.c
-(getpass was renamed to gitgetpass).
+Same here.
 
-Signed-off-by: Rafael Gieschke <rafael@gieschke.de>
----
- Makefile          |    6 +++
- compat/getpass.c  |  114 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- git-compat-util.h |    5 ++
- 3 files changed, 125 insertions(+), 0 deletions(-)
- create mode 100644 compat/getpass.c
+> +
+> +char *
+> +gitgetpass(prompt)
+> + =A0 =A0 =A0 const char *prompt;
+> +{
+> + =A0 =A0 =A0 struct termios term;
+> + =A0 =A0 =A0 int ch;
+> + =A0 =A0 =A0 char *p;
+> + =A0 =A0 =A0 FILE *fp, *outfp;
+> + =A0 =A0 =A0 int echo;
+> + =A0 =A0 =A0 static char buf[_PASSWORD_LEN + 1];
 
-diff --git a/Makefile b/Makefile
-index d7147cf..e171fcd 100644
---- a/Makefile
-+++ b/Makefile
-@@ -71,6 +71,8 @@ all::
- #
- # Define NO_STRTOK_R if you don't have strtok_r in the C library.
- #
-+# Define NO_GETPASS if you don't have getpass in the C library.
-+#
- # Define NO_FNMATCH if you don't have fnmatch in the C library.
- #
- # Define NO_FNMATCH_CASEFOLD if your fnmatch function doesn't have the
-@@ -1406,6 +1408,10 @@ ifdef NO_STRTOK_R
- 	COMPAT_CFLAGS += -DNO_STRTOK_R
- 	COMPAT_OBJS += compat/strtok_r.o
- endif
-+ifdef NO_GETPASS
-+	COMPAT_CFLAGS += -DNO_GETPASS
-+	COMPAT_OBJS += compat/getpass.o
-+endif
- ifdef NO_FNMATCH
- 	COMPAT_CFLAGS += -Icompat/fnmatch
- 	COMPAT_CFLAGS += -DNO_FNMATCH
-diff --git a/compat/getpass.c b/compat/getpass.c
-new file mode 100644
-index 0000000..e13f29f
---- /dev/null
-+++ b/compat/getpass.c
-@@ -0,0 +1,114 @@
-+/*	$NetBSD: getpass.c,v 1.15 2003/08/07 16:42:50 agc Exp $	*/
-+
-+/*
-+ * Copyright (c) 1988, 1993
-+ *	The Regents of the University of California.  All rights reserved.
-+ *
-+ * Redistribution and use in source and binary forms, with or without
-+ * modification, are permitted provided that the following conditions
-+ * are met:
-+ * 1. Redistributions of source code must retain the above copyright
-+ *    notice, this list of conditions and the following disclaimer.
-+ * 2. Redistributions in binary form must reproduce the above copyright
-+ *    notice, this list of conditions and the following disclaimer in the
-+ *    documentation and/or other materials provided with the distribution.
-+ * 3. Neither the name of the University nor the names of its contributors
-+ *    may be used to endorse or promote products derived from this software
-+ *    without specific prior written permission.
-+ *
-+ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
-+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
-+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-+ * SUCH DAMAGE.
-+ */
-+
-+#if 0
-+#include <sys/cdefs.h>
-+#if defined(LIBC_SCCS) && !defined(lint)
-+#if 0
-+static char sccsid[] = "@(#)getpass.c	8.1 (Berkeley) 6/4/93";
-+#else
-+__RCSID("$NetBSD: getpass.c,v 1.15 2003/08/07 16:42:50 agc Exp $");
-+#endif
-+#endif /* LIBC_SCCS and not lint */
-+
-+#include "namespace.h"
-+#endif
-+
-+#include <assert.h>
-+#include <paths.h>
-+#include <pwd.h>
-+#include <signal.h>
-+#include <stdio.h>
-+#include <termios.h>
-+#include <unistd.h>
-+
-+#if 0
-+#ifdef __weak_alias
-+__weak_alias(getpass,_getpass)
-+#endif
-+#endif
-+
-+char *
-+gitgetpass(prompt)
-+	const char *prompt;
-+{
-+	struct termios term;
-+	int ch;
-+	char *p;
-+	FILE *fp, *outfp;
-+	int echo;
-+	static char buf[_PASSWORD_LEN + 1];
-+	sigset_t oset, nset;
-+
-+#if 0
-+	_DIAGASSERT(prompt != NULL);
-+#endif
-+
-+	/*
-+	 * read and write to /dev/tty if possible; else read from
-+	 * stdin and write to stderr.
-+	 */
-+	if ((outfp = fp = fopen(_PATH_TTY, "w+")) == NULL) {
-+		outfp = stderr;
-+		fp = stdin;
-+	}
-+
-+	/*
-+	 * note - blocking signals isn't necessarily the
-+	 * right thing, but we leave it for now.
-+	 */
-+	sigemptyset(&nset);
-+	sigaddset(&nset, SIGINT);
-+	sigaddset(&nset, SIGTSTP);
-+	(void)sigprocmask(SIG_BLOCK, &nset, &oset);
-+
-+	(void)tcgetattr(fileno(fp), &term);
-+	if ((echo = (term.c_lflag & ECHO)) != 0) {
-+		term.c_lflag &= ~ECHO;
-+		(void)tcsetattr(fileno(fp), TCSAFLUSH /*|TCSASOFT*/, &term);
-+	}
-+	if (prompt != NULL)
-+		(void)fputs(prompt, outfp);
-+	rewind(outfp);			/* implied flush */
-+	for (p = buf; (ch = getc(fp)) != EOF && ch != '\n';)
-+		if (p < buf + _PASSWORD_LEN)
-+			*p++ = ch;
-+	*p = '\0';
-+	(void)write(fileno(outfp), "\n", 1);
-+	if (echo) {
-+		term.c_lflag |= ECHO;
-+		(void)tcsetattr(fileno(fp), TCSAFLUSH/*|TCSASOFT*/, &term);
-+	}
-+	(void)sigprocmask(SIG_SETMASK, &oset, NULL);
-+	if (fp != stdin)
-+		(void)fclose(fp);
-+	return(buf);
-+}
-diff --git a/git-compat-util.h b/git-compat-util.h
-index e0bb81e..2ea5ac9 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -352,6 +352,11 @@ extern uintmax_t gitstrtoumax(const char *, char **, int);
- extern char *gitstrtok_r(char *s, const char *delim, char **save_ptr);
- #endif
- 
-+#ifdef NO_GETPASS
-+#define getpass gitgetpass
-+extern char *gitgetpass(const char *prompt);
-+#endif
-+
- #ifdef NO_HSTRERROR
- #define hstrerror githstrerror
- extern const char *githstrerror(int herror);
--- 
-1.7.4
+Is _PASSWORD_LEN portable? A google search of "site:opengroup.org
+_PASSWORD_LEN " returns nothing...
+
+The getpass implementation in compat/mingw.c uses a strbuf, so it
+doesn't have a limit on the password-length. Perhaps that would be an
+improvement here?
+
+> + =A0 =A0 =A0 sigset_t oset, nset;
+> +
+> +#if 0
+> + =A0 =A0 =A0 _DIAGASSERT(prompt !=3D NULL);
+> +#endif
+
+Again, dead code.
+
+> +
+> + =A0 =A0 =A0 /*
+> + =A0 =A0 =A0 =A0* read and write to /dev/tty if possible; else read =
+from
+> + =A0 =A0 =A0 =A0* stdin and write to stderr.
+> + =A0 =A0 =A0 =A0*/
+> + =A0 =A0 =A0 if ((outfp =3D fp =3D fopen(_PATH_TTY, "w+")) =3D=3D NU=
+LL) {
+
+Is _PATH_TTY portable? A google search of "site:opengroup.org
+_PATH_TTY" returns nothing...
