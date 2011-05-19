@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 09/11] streaming: read non-delta incrementally from a pack
-Date: Thu, 19 May 2011 14:33:44 -0700
-Message-ID: <1305840826-7783-10-git-send-email-gitster@pobox.com>
+Subject: [PATCH v2 08/11] streaming_write_entry(): support files with holes
+Date: Thu, 19 May 2011 14:33:43 -0700
+Message-ID: <1305840826-7783-9-git-send-email-gitster@pobox.com>
 References: <1305505831-31587-1-git-send-email-gitster@pobox.com>
  <1305840826-7783-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
@@ -11,189 +11,101 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNAsG-00074u-Jr
-	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 23:35:16 +0200
+	id 1QNAsH-00074u-5H
+	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 23:35:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934863Ab1ESVfD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2011 17:35:03 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33669 "EHLO
+	id S934871Ab1ESVfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2011 17:35:04 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33629 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934853Ab1ESVeK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2011 17:34:10 -0400
+	with ESMTP id S934849Ab1ESVeI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2011 17:34:08 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1E63E52BD
-	for <git@vger.kernel.org>; Thu, 19 May 2011 17:36:18 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BEE4252BA
+	for <git@vger.kernel.org>; Thu, 19 May 2011 17:36:15 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=2d7B
-	ulckC9lhWG90dU1WH7TwUJs=; b=EF8omM8hlqbk+jg82yCNz5+5kTevyZ3wobTX
-	qnsrvDmVwG5W6rkGKtpYBN8cnOlIHvpb+g7SKQXyCK1en/sqnlhbwBmLY099wrIS
-	B+3s+PeYY+4RA5sVk3RXjiL3v/bR/xHRVlCsBQVoSa6j5E9z5dumXdbJzdx6Yg2Y
-	8AwrZjA=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=x1v9
+	sB6hi48DkJVxmuUGV6zuYIg=; b=uXaZxJa/1SKvGRMCC2sLZ3WgrZzbvwB+d1DZ
+	TRtaunaaHoidqjrVZt4F8Wb7aLWcNP1feJtMeV12ADpENmRk3A4N8RZv6QfWxh0g
+	pvZMqK1FnJthog+7Lacg7iKcKsRVJ5LGNuu0zBFSA5rspOCiVNgpKW7+nu97tuWx
+	XbmnYE0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=DL45tH
-	Px6lIpRLEJlQKFhU8jE7R7pangJ013w1yItgR/S2SwvmNvQmREaiw27c5MFVoDKP
-	yAhu+SkyGoeXyukYAJfgdrUxx8g4Hi0422992KC3GN/F0BygSe1cUo9OrizUKBqP
-	QZRzAUOm4hhLZWqNv3LfJ/niOUwiGr3s8REgI=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=FZvCnP
+	7jTzJOyZHgTP/biDwQgquVVCY5+qe8Z3joSEgHhPpGj+pp8URzLOA7bqfjaHKSxO
+	IbYpCQHhwwE5UwJu/usj/BqDymU2Ur/DKLtalUco2ptsRWkVi2yx3svChbRySF3F
+	9s/hOx6iqDO8MA44lZ7Kai3p8YUrqU9wZfgV0=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1BE4E52BC
-	for <git@vger.kernel.org>; Thu, 19 May 2011 17:36:18 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BC6DB52B9
+	for <git@vger.kernel.org>; Thu, 19 May 2011 17:36:15 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 662F552BB for
- <git@vger.kernel.org>; Thu, 19 May 2011 17:36:17 -0400 (EDT)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 32CD152B7 for
+ <git@vger.kernel.org>; Thu, 19 May 2011 17:36:14 -0400 (EDT)
 X-Mailer: git-send-email 1.7.5.1.416.gac10c8
 In-Reply-To: <1305840826-7783-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 07CB19CC-8260-11E0-B6F9-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 0665931E-8260-11E0-A4B9-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174022>
 
-Helped-by: Jeff King <peff@peff.net>
+One typical use of a large binary file is to hold a sparse on-disk hash
+table with a lot of holes. Help preserving the holes with lseek().
+
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- streaming.c |  105 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 files changed, 102 insertions(+), 3 deletions(-)
+ entry.c |   21 +++++++++++++++++++--
+ 1 files changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/streaming.c b/streaming.c
-index 84330b4..fbe8eb6 100644
---- a/streaming.c
-+++ b/streaming.c
-@@ -52,6 +52,8 @@ struct git_istream {
- 	enum input_source source;
- 	const struct stream_vtbl *vtbl;
- 	unsigned long size; /* inflated size of full object */
-+	z_stream z;
-+	enum { z_unused, z_used, z_done, z_error } z_state;
+diff --git a/entry.c b/entry.c
+index 7733a6b..f751c60 100644
+--- a/entry.c
++++ b/entry.c
+@@ -123,6 +123,7 @@ static int streaming_write_entry(struct cache_entry *ce, char *path,
+ 	enum object_type type;
+ 	unsigned long sz;
+ 	int result = -1;
++	ssize_t kept = 0;
+ 	int fd = -1;
  
- 	union {
- 		struct {
-@@ -65,8 +67,8 @@ struct git_istream {
- 		} loose;
+ 	st = open_istream(ce->sha1, &type, &sz);
+@@ -136,18 +137,34 @@ static int streaming_write_entry(struct cache_entry *ce, char *path,
+ 		goto close_and_exit;
  
- 		struct {
--			int fd; /* open for reading */
--			/* NEEDSWORK: what else? */
-+			struct packed_git *pack;
-+			off_t pos;
- 		} in_pack;
- 	} u;
- };
-@@ -130,6 +132,20 @@ struct git_istream *open_istream(const unsigned char *sha1,
- 	return st;
- }
+ 	for (;;) {
+-		char buf[10240];
+-		ssize_t wrote;
++		char buf[1024 * 16];
++		ssize_t wrote, holeto;
+ 		ssize_t readlen = read_istream(st, buf, sizeof(buf));
  
-+
-+/*****************************************************************
-+ *
-+ * Common helpers
-+ *
-+ *****************************************************************/
-+
-+static void close_deflated_stream(struct git_istream *st)
-+{
-+	if (st->z_state == z_used)
-+		git_inflate_end(&st->z);
-+}
-+
-+
- /*****************************************************************
-  *
-  * Loose object stream
-@@ -148,9 +164,92 @@ static open_method_decl(loose)
-  *
-  *****************************************************************/
- 
-+static read_method_decl(pack_non_delta)
-+{
-+	size_t total_read = 0;
-+
-+	switch (st->z_state) {
-+	case z_unused:
-+		memset(&st->z, 0, sizeof(st->z));
-+		git_inflate_init(&st->z);
-+		st->z_state = z_used;
-+		break;
-+	case z_done:
-+		return 0;
-+	case z_error:
-+		return -1;
-+	case z_used:
-+		break;
-+	}
-+
-+	while (total_read < sz) {
-+		int status;
-+		struct pack_window *window = NULL;
-+		unsigned char *mapped;
-+
-+		mapped = use_pack(st->u.in_pack.pack, &window,
-+				  st->u.in_pack.pos, &st->z.avail_in);
-+
-+		st->z.next_out = (unsigned char *)buf + total_read;
-+		st->z.avail_out = sz - total_read;
-+		st->z.next_in = mapped;
-+		status = git_inflate(&st->z, Z_FINISH);
-+
-+		st->u.in_pack.pos += st->z.next_in - mapped;
-+		total_read = st->z.next_out - (unsigned char *)buf;
-+		unuse_pack(&window);
-+
-+		if (status == Z_STREAM_END) {
-+			git_inflate_end(&st->z);
-+			st->z_state = z_done;
-+			break;
+ 		if (!readlen)
+ 			break;
++		if (sizeof(buf) == readlen) {
++			for (holeto = 0; holeto < readlen; holeto++)
++				if (buf[holeto])
++					break;
++			if (readlen == holeto) {
++				kept += holeto;
++				continue;
++			}
 +		}
-+		if (status != Z_OK && status != Z_BUF_ERROR) {
-+			git_inflate_end(&st->z);
-+			st->z_state = z_error;
-+			return -1;
-+		}
-+	}
-+	return total_read;
-+}
-+
-+static close_method_decl(pack_non_delta)
-+{
-+	close_deflated_stream(st);
-+	return 0;
-+}
-+
-+static struct stream_vtbl pack_non_delta_vtbl = {
-+	close_istream_pack_non_delta,
-+	read_istream_pack_non_delta,
-+};
-+
- static open_method_decl(pack_non_delta)
- {
--	return -1; /* for now */
-+	struct pack_window *window;
-+	enum object_type in_pack_type;
-+
-+	st->u.in_pack.pack = oi->u.packed.pack;
-+	st->u.in_pack.pos = oi->u.packed.offset;
-+	window = NULL;
-+
-+	in_pack_type = unpack_object_header(st->u.in_pack.pack,
-+					    &window,
-+					    &st->u.in_pack.pos,
-+					    &st->size);
-+	unuse_pack(&window);
-+	switch (in_pack_type) {
-+	default:
-+		return -1; /* we do not do deltas for now */
-+	case OBJ_COMMIT:
-+	case OBJ_TREE:
-+	case OBJ_BLOB:
-+	case OBJ_TAG:
-+		break;
-+	}
-+	st->z_state = z_unused;
-+	st->vtbl = &pack_non_delta_vtbl;
-+	return 0;
- }
  
++		if (kept && lseek(fd, kept, SEEK_CUR) == (off_t) -1)
++			goto close_and_exit;
++		else
++			kept = 0;
+ 		wrote = write_in_full(fd, buf, readlen);
  
+ 		if (wrote != readlen)
+ 			goto close_and_exit;
+ 	}
++	if (kept && (lseek(fd, kept - 1, SEEK_CUR) == (off_t) -1 ||
++		     write(fd, "", 1) != 1))
++		goto close_and_exit;
+ 	*fstat_done = fstat_output(fd, state, statbuf);
+ 
+ close_and_exit:
 -- 
 1.7.5.1.416.gac10c8
