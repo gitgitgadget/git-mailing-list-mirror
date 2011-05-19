@@ -1,70 +1,75 @@
-From: Ferry Huberts <mailings@hupie.com>
-Subject: Re: git & patterns
-Date: Thu, 19 May 2011 08:54:50 +0200
-Message-ID: <4DD4BEBA.7010000@hupie.com>
-References: <4DD3A402.3040802@hupie.com>	<7vsjsbbx7h.fsf@alter.siamese.dyndns.org> <4DD4B772.2050404@hupie.com> <7v62p79og8.fsf@alter.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 0/3] "git notes remove" updates
+Date: Thu, 19 May 2011 09:08:18 +0200
+Message-ID: <201105190908.19080.johan@herland.net>
+References: <1305764061-21303-1-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: Text/Plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 19 08:54:58 2011
+X-From: git-owner@vger.kernel.org Thu May 19 09:08:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QMx8L-0006NT-73
-	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 08:54:57 +0200
+	id 1QMxLQ-0004kH-RX
+	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 09:08:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932768Ab1ESGyw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2011 02:54:52 -0400
-Received: from 82-197-206-98.dsl.cambrium.nl ([82.197.206.98]:53022 "EHLO
-	mail.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932733Ab1ESGyw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2011 02:54:52 -0400
-Received: from stinkpad.internal.hupie.com (82-197-206-98.dsl.cambrium.nl [82.197.206.98])
-	by mail.internal.Hupie.com (Postfix) with ESMTP id 0247721E69C;
-	Thu, 19 May 2011 08:54:50 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Thunderbird/3.1.10
-In-Reply-To: <7v62p79og8.fsf@alter.siamese.dyndns.org>
+	id S1755943Ab1ESHIX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2011 03:08:23 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:33555 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754979Ab1ESHIW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2011 03:08:22 -0400
+Received: from get-mta-scan04.get.basefarm.net ([10.5.16.4])
+ by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LLF008HTL5WNR40@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 19 May 2011 09:08:20 +0200 (MEST)
+Received: from get-mta-scan04.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 53C101EEF069_DD4C1E4B	for <git@vger.kernel.org>; Thu,
+ 19 May 2011 07:08:20 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan04.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 23FFE1EEF000_DD4C1E4F	for <git@vger.kernel.org>; Thu,
+ 19 May 2011 07:08:20 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LLF00L95L5WBV30@get-mta-in03.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 19 May 2011 09:08:20 +0200 (MEST)
+User-Agent: KMail/1.13.7 (Linux/2.6.38-ARCH; KDE/4.6.3; x86_64; ; )
+In-reply-to: <1305764061-21303-1-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173942>
 
-On 05/19/2011 08:47 AM, Junio C Hamano wrote:
-> Ferry Huberts <mailings@hupie.com> writes:
+On Thursday 19 May 2011, Junio C Hamano wrote:
+> I wanted to do a bit better than
 > 
->> - usually patterns are just patterns, without specifying what kind
+> 	for sha1 in ... list of old commit objects
+> 	do
+> 		git notes --ref refs/notes/amlog remove $sha1
+> 	done
 > 
->> - when a pattern type is specified it most of the time is a glob pattern
->> - but sometimes it is called a shell pattern
->> - and  a few cases speak of a wildcard pattern (I think)
+> to remove old entries in my "where did this commit come from" database.
 > 
-> All these three are the same thing. I do not personally feel any strong
-> need to change a lot of documentation to use only one of the terms, if
-> that is what you are getting at.
-> 
-> What I was wondering was perhaps we may need to document the general
-> principle of using globs when matching names that are hierarchically
-> grouped with slash-delimited components.
-> 
-> The branch and tag namespaces are examples of such hiearchically grouped
-> namespaces, and it is not a mere implementation detail as you seem to
-> think. For jk/blame-line-porcelain and jk/diffstat-binary are both branch
-> names, grouped by name initials of the author, and the globbing jk/* is a
-> way to get to the group. With that grouping present, you cannot have a
-> branch called "jk".
+> Junio C Hamano (3):
+>   notes remove: allow removing more than one
+>   notes remove: --missing-ok
+>   notes remove: --stdin reads from the standard input
 
-I would just argue that you layered a grouping abstraction (jk/*) on top
-of something (branch and tag names) that is _conceptually_ _not_ like a path
 
-I understand your reluctance but try to take a step back: _conceptually_
-branches and tags are not paths
+After a cursory reading the series looks good to me. Thanks! :)
 
-I don't want to push my case though :-)
+
+...Johan
 
 -- 
-Ferry Huberts
+Johan Herland, <johan@herland.net>
+www.herland.net
