@@ -1,71 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv2] add Android support
-Date: Thu, 19 May 2011 08:20:26 -0400
-Message-ID: <20110519122026.GA30240@sigill.intra.peff.net>
-References: <B22B44EF-0AFB-44E3-93E3-61FA730431B9@gieschke.de>
- <7vaaej9pt3.fsf@alter.siamese.dyndns.org>
- <2218C353-80FC-4540-A60E-608385384FB5@gieschke.de>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH] compat: add a getpass() compatibility function
+Date: Thu, 19 May 2011 14:21:30 +0200
+Message-ID: <BANLkTinR0F3Pja1DspCGjBsbpgcBhm4=vQ@mail.gmail.com>
+References: <563395AE-A3E5-45FF-9063-F807C2CE3AD0@gieschke.de>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Rafael Gieschke <rafael@gieschke.de>
-X-From: git-owner@vger.kernel.org Thu May 19 14:20:37 2011
+X-From: git-owner@vger.kernel.org Thu May 19 14:21:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QN2DS-0003IF-9q
-	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 14:20:34 +0200
+	id 1QN2En-0004Dq-1j
+	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 14:21:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932433Ab1ESMU2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2011 08:20:28 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60979
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932345Ab1ESMU1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2011 08:20:27 -0400
-Received: (qmail 16283 invoked by uid 107); 19 May 2011 12:22:29 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 19 May 2011 08:22:29 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 May 2011 08:20:26 -0400
-Content-Disposition: inline
-In-Reply-To: <2218C353-80FC-4540-A60E-608385384FB5@gieschke.de>
+	id S932523Ab1ESMVv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 May 2011 08:21:51 -0400
+Received: from mail-px0-f173.google.com ([209.85.212.173]:38180 "EHLO
+	mail-px0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932345Ab1ESMVu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 May 2011 08:21:50 -0400
+Received: by pxi16 with SMTP id 16so1741294pxi.4
+        for <git@vger.kernel.org>; Thu, 19 May 2011 05:21:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=i2LwHBfI5H3Tj6leEIa0a8jKU9g1lo7DlIlHYl20Mfo=;
+        b=oB6O/NUVjTB//xTgaaD3KtqoA/wf9Vv2LJzh7oXDifx8PXCREyQryCuN5sBwWMkakD
+         y2NV6Z22JTOvbpidFSoBDT2JmWNXmS/lDRDSoqT/nmon//x+h2zjLSdLKI6ufnoodfR0
+         y70al4Gl3/sGgpoGNR/YiQ1syb0J+03R9ODaU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=Mt07xb48AZv1bhUBUQELvjMto54BJsL1DyMTFQbbB/SRBVJkuq9/d4NrhWjXBXEXwa
+         4HQ3vg/+omEWMViebn4waFSifdOXDyFtjNU1xkfZh21fJ6/CegSHzf0bhwvOdATMBUKw
+         WqFXBNBYoobPxy+Jhuj/spxSLlQt5iADld/aI=
+Received: by 10.68.29.228 with SMTP id n4mr4499010pbh.500.1305807710365; Thu,
+ 19 May 2011 05:21:50 -0700 (PDT)
+Received: by 10.68.64.229 with HTTP; Thu, 19 May 2011 05:21:30 -0700 (PDT)
+In-Reply-To: <563395AE-A3E5-45FF-9063-F807C2CE3AD0@gieschke.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173956>
 
-On Thu, May 19, 2011 at 01:37:53PM +0200, Rafael Gieschke wrote:
+On Thu, May 19, 2011 at 1:37 PM, Rafael Gieschke <rafael@gieschke.de> w=
+rote:
+> diff --git a/compat/getpass.c b/compat/getpass.c
+> new file mode 100644
+> index 0000000..e13f29f
+> --- /dev/null
+> +++ b/compat/getpass.c
+> @@ -0,0 +1,114 @@
+> +/* =A0 =A0 $NetBSD: getpass.c,v 1.15 2003/08/07 16:42:50 agc Exp $ *=
+/
+> +
+> +/*
+> + * Copyright (c) 1988, 1993
+> + * =A0 =A0 The Regents of the University of California. =A0All right=
+s reserved.
+> + *
+> + * Redistribution and use in source and binary forms, with or withou=
+t
+> + * modification, are permitted provided that the following condition=
+s
+> + * are met:
+> + * 1. Redistributions of source code must retain the above copyright
+> + * =A0 =A0notice, this list of conditions and the following disclaim=
+er.
+> + * 2. Redistributions in binary form must reproduce the above copyri=
+ght
+> + * =A0 =A0notice, this list of conditions and the following disclaim=
+er in the
+> + * =A0 =A0documentation and/or other materials provided with the dis=
+tribution.
 
-> > (3) Add uname_S = Android (Makefile).
-> > 
-> > The first two would become much easier to justify if presented that
-> > way. At least you won't hear from anybody "we don't want that much code to
-> > not to run git on a phone!", as it is not entirely implausible to imagine
-> > environments without support for one or both of these two facilities.
-> 
-> So, you would prefer to leave out ANDROID and use something like "ifeq
-> ($(uname_S),Android)", so you will have to compile using make
-> uname_S=Android? I would be fine with that, too. But I would also be
-> fine with having to specify the build options on the command line or
-> using a config.mak if you want to keep Android out of the Makefile.
-
-The point of uname_S is that it would be found automatically. Sadly,
-There is nothing helpful in uname to tell us that we are on android:
-
-  $ uname -a
-  Linux localhost 2.6.37.4-cyanogenmod-01332-g7f230e8 #1 PREEMPT Tue Apr
-  12 12:54:14 EDT 2011 armv7l GNU/Linux
-
-You could obviously guess from Linux on that architecture, but that
-seems flaky to me. You can also figure it out by looking around the
-filesystem, but that is not something I'm excited about having the
-Makefile do.
-
-So I think we are probably stuck either with the user setting an ANDROID
-meta-flag that sets the other flags appropriately, or leaving it up to
-the user to provide a sane config.mak.
-
--Peff
+How do we plan to adhere to this clause? I guess all
+package-maintainers could explicitly add this to their release notes /
+documentation, but they will have to know that they should. I don't
+think every package maintainer read every patch in-depth enough to
+notice this.
