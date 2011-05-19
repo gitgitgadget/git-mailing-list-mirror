@@ -1,73 +1,91 @@
-From: Arnaud Lacurie <arnaud.lacurie@gmail.com>
-Subject: End of year project : Gate Between Git and Mediawiki
-Date: Thu, 19 May 2011 20:54:23 +0200
-Message-ID: <BANLkTi=k=9-6_ZADug28J2u6tGC0+T-zzg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, sylvain.boulme@imag.fr
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 19 20:54:53 2011
+From: Rafael Gieschke <rafael@gieschke.de>
+Subject: Re: [PATCH] compat: add a getpass() compatibility function
+Date: Thu, 19 May 2011 21:16:00 +0200
+Message-ID: <8B762D96-54CF-4E42-BF90-7790E900AA30@gieschke.de>
+References: <563395AE-A3E5-45FF-9063-F807C2CE3AD0@gieschke.de> <BANLkTinPHeSfZXRb7pqt7-XWkR5fH=wAjg@mail.gmail.com> <EC81F772-7149-40A0-891A-973C886AB052@gieschke.de> <7v62p68ut0.fsf@alter.siamese.dyndns.org> <BANLkTimDW8W13Wm8i+n0ww9jCeHsXc__iA@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1084)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Thu May 19 21:16:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QN8N3-0004Aa-36
-	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 20:54:53 +0200
+	id 1QN8hm-0000m9-Hw
+	for gcvg-git-2@lo.gmane.org; Thu, 19 May 2011 21:16:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933970Ab1ESSyp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 May 2011 14:54:45 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:37796 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933819Ab1ESSyo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 May 2011 14:54:44 -0400
-Received: by vws1 with SMTP id 1so2160519vws.19
-        for <git@vger.kernel.org>; Thu, 19 May 2011 11:54:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:from:date:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=gNLiqJE44Uw+4sfWGpSjsd6e/iLWWy7cXWEFIFCjjk0=;
-        b=FpWJfGpyC/8QL2Iza/NRhJLbR/BPnI8bYaN82IY2a1KKtIIGn9MLcD+DAzGIY92l5C
-         I9RFLg1lUP6zEDEZ6wAjfy9Dw8OREkTyNdhYDyYV7iG0Vbf6lo8MQHCvin1gUjFitaiq
-         JIvs4x/KKaBseEkU5SPkLppRKTbWvtyuMDAT4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=m3JDO4sMaehHF4d4Bk5v9acAKvpksGpuhNnucqHd40mqfEn6kdpiCcItwodz8Rd+Qq
-         fIS6RLoIJuqOx3rsGKpnUONDFny12/HsXJyNjMLXIsEIiPu+KsIgiX9NAmsC70FYpDWr
-         IirzIr66I2JWlkyLWiLZVqw2WnLVtR4R2OQCI=
-Received: by 10.220.102.20 with SMTP id e20mr1060448vco.80.1305831283277; Thu,
- 19 May 2011 11:54:43 -0700 (PDT)
-Received: by 10.220.193.194 with HTTP; Thu, 19 May 2011 11:54:23 -0700 (PDT)
+	id S933897Ab1ESTQN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2011 15:16:13 -0400
+Received: from smtp1.goneo.de ([212.90.139.80]:37042 "EHLO smtp1.goneo.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757088Ab1ESTQM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 May 2011 15:16:12 -0400
+Received: from smtp1.goneo.de (localhost [127.0.0.1])
+	by scan.goneo.de (Postfix) with ESMTP id 9F5113A3BBC;
+	Thu, 19 May 2011 21:16:10 +0200 (CEST)
+X-Virus-Scanned: by goneo
+X-Spam-Flag: NO
+X-Spam-Score: -2.87
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.87 tagged_above=-999 tests=[ALL_TRUSTED=-1,
+	AWL=0.030, BAYES_00=-1.9] autolearn=ham
+Received: from smtp1.goneo.de ([127.0.0.1])
+	by smtp1.goneo.de (smtp1.goneo.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id rQqjF1uopmcX; Thu, 19 May 2011 21:16:09 +0200 (CEST)
+Received: from [10.167.157.160] (unknown [89.204.137.160])
+	by smtp1-587.goneo.de (Postfix) with ESMTPSA id 80BE43A3BAC;
+	Thu, 19 May 2011 21:16:05 +0200 (CEST)
+In-Reply-To: <BANLkTimDW8W13Wm8i+n0ww9jCeHsXc__iA@mail.gmail.com>
+X-Mailer: Apple Mail (2.1084)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/173992>
 
-Hi,
 
-We are 4 students from Ensimag, a French engineering school of
-computer science=A0 and are planning to develop during four weeks a gat=
-e
-between Git and Mediawiki as our end of year project.
-Our goal is to create something in the line of git svn, applied to
-mediawiki powered wikis.
-Matthieu Moy, active member of the community and our teacher, is
-supervising the project along with Sylvain Boulm=E9 (in CC of this
-mail), and sent you the idea a few months ago. In the process, Jeff
-King sent a quick and dirty perl code which does the mediawiki
-fetching part. We intend to improve it in order to facilitate
-mediawiki -> git. We also plan to use remote-helpers and fast-import
-to have the best compatibility overtime.
-We will most likely contact you during the next weeks to report status
-on this project and get suggestions on more specific points. In the
-meantime, feel free to give any suggestion on such a project.
+Am 19.05.2011 um 20:07 schrieb Erik Faye-Lund:
 
-Thank you for your help,
-Best regards,
+> On Thu, May 19, 2011 at 7:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> 
+>> Probably a properly abstracted common version would look like a function
+>> that calls four platform-dependent helper funcions in this order:
+>> 
+>>        0. prompt
+>>        1. start "noecho" mode
+>>        2. get whole line
+>>        3. exit "noecho" mode
+>> 
+> 
+> When I think about it a bit more, it feels a bit pointless:
+> 0. is identical (fputs)
+> 1. is different (tc[gs]etattr vs nop)
+> 2. is different (getc vs _getch)
+> 3. is different (tcsetattr vs nop)
+> 
+> So there's probably not much code to share here. There's a bit of
+> logic, but I'm not entirely sure this should be the same either,
+> because on Windows we have to take care of '\r' (since we open stdin
+> in binary mode at start-up).
+> 
 
-David Amouyal, Claire Fousse, J=E9r=E9mie Nikaes & Arnaud Lacurie
+I agree, 0 would even have to be different, too, as we have to write to /dev/tty (which would have to be opened first) or (as fallback) stderr on POSIX.
+
+
+> diff --git a/compat/mingw.h b/compat/mingw.h
+> index 62eccd3..e37d557 100644
+> --- a/compat/mingw.h
+> +++ b/compat/mingw.h
+> @@ -48,6 +48,8 @@ typedef int socklen_t;
+> #define EAFNOSUPPORT WSAEAFNOSUPPORT
+> #define ECONNABORTED WSAECONNABORTED
+> 
+> +#define PASS_MAX 512
+> +
+
+It might be worth to have this in git-compat-util.h, so it can also be used by compat/getpass.c. I'm not sure about the name, however; it's a remote password and MAX_PASS is about local passwords AFAIK. Maybe PASS_MAX_REMOTE or something similiar. Like that, compat/getpass.c could also be used in case MAX_PASS has some insanely low value on a platform.
