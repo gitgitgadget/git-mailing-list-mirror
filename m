@@ -1,99 +1,123 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: git difftool does does not respect current working directory
-Date: Thu, 19 May 2011 21:48:52 -0700
-Message-ID: <20110520044851.GD13582@gmail.com>
-References: <loom.20110514T160931-46@post.gmane.org>
- <7v1uzznr09.fsf@alter.siamese.dyndns.org>
- <20110520035856.GA13582@gmail.com>
- <20110520041045.GB13582@gmail.com>
- <7vwrhm3scl.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git 1.7.5.2
+Date: Thu, 19 May 2011 22:58:52 -0700
+Message-ID: <7voc2x52w3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?RnLDqWTDqXJpYw==?= Heitzmann 
-	<frederic.heitzmann@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 20 06:49:04 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Fri May 20 07:59:16 2011
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNHe4-0004ia-3D
-	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 06:49:04 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1QNIjz-0000ll-OF
+	for glk-linux-kernel-3@lo.gmane.org; Fri, 20 May 2011 07:59:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932176Ab1ETEs6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2011 00:48:58 -0400
-Received: from mail-px0-f173.google.com ([209.85.212.173]:38873 "EHLO
-	mail-px0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752233Ab1ETEs5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2011 00:48:57 -0400
-Received: by pxi16 with SMTP id 16so2248699pxi.4
-        for <git@vger.kernel.org>; Thu, 19 May 2011 21:48:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=x2TVaT3uGPorSvmjrT6QoJH+oHyciVGjsvmqkI+5f78=;
-        b=q4svb5sz+zU7k16aK+X+Ejuedfbk+kwod8CkCL+CryQjJpZ/JJ7dZDsPgmAKFN0Z5i
-         bGpkiUVsm3UfzLfhJfGQtwGtWINaMEIXThFBgOLHO+gJkaGiNIGazaWXjUs51id6V8KL
-         y7KMlZXIJeQhPyVXyWU1svs1Bh/JKmDgOuuUU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=MWMLpzZBTMGnYEZsl3FIpFRG42u3ydasUxBfnTszFyQKR49vdu8Wn7p1LqxN1vn1st
-         WxbMUdEuH5FILPHL+0IusvpC0qqutFe4C7PxF5Htbo3LHZ1i5GiTD3AVv4WWxVVFc7K/
-         JMqyZbzKsEaVvqYxzO16m6pfkuWTqOpe6Ellc=
-Received: by 10.68.28.133 with SMTP id b5mr5810177pbh.264.1305866936857;
-        Thu, 19 May 2011 21:48:56 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id y5sm2204947pbb.99.2011.05.19.21.48.54
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 19 May 2011 21:48:55 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vwrhm3scl.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-Sender: git-owner@vger.kernel.org
+	id S933070Ab1ETF7G (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Fri, 20 May 2011 01:59:06 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:39994 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753157Ab1ETF7D (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Fri, 20 May 2011 01:59:03 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 50D6E3074;
+	Fri, 20 May 2011 02:01:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=L
+	CDcHjr6wcxBoFXVBFXvRwRYKyE=; b=MEtRO3CFm6hAzr5Uln6GaBDhnLEbufza3
+	Qwunxpe4n8CsrIq/lIu5b2WGaA/A2F04f6pDyOOM1ao9DrhagoGAfE7tt+ZhiFsT
+	fQjUFa8fl1uNGdJvtw0Tqm3PygbGZFnntKT3Kj2m4Yb2NC1z2nrdCbYmAUEwsVY6
+	qJR45V00Vc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=wn7WPvjvsPs9jLMbMc0qmWGRFrzLnR4vDzP/YF1rYcMMxRnxvCaY6+o7
+	rRKjSUtkEz4tzSWo2y0PUKVxlfh5rP8xB3w31l3lB+SidtmfWwwa9O3Xug/pCSxB
+	pWwOCCXEr+WZkAThBkqcJSxzmtiB3bXcRJNxAiR9UPQqJJr9am4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1F3B33073;
+	Fri, 20 May 2011 02:01:06 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B18A83072; Fri, 20 May 2011
+ 02:01:01 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8CDAC838-82A6-11E0-A1D6-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174040>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174041>
 
-On Thu, May 19, 2011 at 09:31:54PM -0700, Junio C Hamano wrote:
-> David Aguilar <davvid@gmail.com> writes:
-> 
-> > We would have to change the way $GIT_EXTERNAL_DIFF works so
-> > that it preserves the current directory and constructs
-> > paths relative to it.  Patches welcome :-)
-> 
-> I am afraild that would break a lot more than difftool.
-> 
-> If we really wanted to change the behaviour, the external diff interface
-> needs to export the value of prefix (i.e. what the original subdirectory
-> was), and the script that is spawned as $GIT_EXTERNAL_DIFF (optionally
-> optionally) take it into account, perhaps by cd'ing back to that
-> subdirectory and possibly moving or renaming the temporary files to suit
-> its needs (I think recently we also saw a request to rename the temporary
-> files).
-> 
-> Or something like that.
+The latest maintenance release Git 1.7.5.2 is available at the
+usual places:
 
-Yup, yup.  That's a lot of machinery for a relatively small
-gain.  Simple is simple, simple is good.  Thanks for
-outlining how someone could implement it, though.
+  http://www.kernel.org/pub/software/scm/git/
 
-I won't do it myself but if someone is motivated enough then
-your email at least gives an idea about how to go about doing
-it.  git-difftool--helper could chdir to $prefix and diff each
-file with $(git rev-parse --show-cdup)/$path as the path since
-it may no longer be at the root.
+  git-1.7.5.2.tar.{gz,bz2}			(source tarball)
+  git-htmldocs-1.7.5.2.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.7.5.2.tar.{gz,bz2}		(preformatted docs)
 
-This seems very messy so I don't really want to sound too
-encouraging about going down this route.  I probably
-shouldn't have encouraged looking at the temporary files
-thing in the other thread either.
+The RPM binary packages for a few architectures are found in:
 
-Thanks,
--- 
-					David
+  RPMS/$arch/git-*-1.7.5.2-1.fc13.$arch.rpm	(RPM)
+
+Git v1.7.5.2 Release Notes
+==========================
+
+The release notes to 1.7.5.1 forgot to mention:
+
+ * "git stash -p --no-keep-index" and "git stash --no-keep-index -p" now
+   mean the same thing.
+
+ * "git upload-pack" (hence "git push" over git native protocol) had a
+   subtle race condition that could lead to a deadlock.
+
+Fixes since v1.7.5.1
+--------------------
+
+ * "git add -p" did not work correctly when a hunk is split and then
+   one of them was given to the editor.
+
+ * "git add -u" did not resolve a conflict where our history deleted and
+   their history modified the same file, and the working tree resolved to
+   keep a file.
+
+ * "git cvsimport" did not know that CVSNT stores its password file in a
+   location different from the traditional CVS.
+
+ * "git diff-files" did not show the mode information from the working
+   tree side of an unmerged path correctly.
+
+ * "git diff -M --cached" used to use unmerged path as a possible rename
+   source candidate, which made no sense.
+
+ * The option name parser in "git fast-import" used prefix matches for
+   some options where it shouldn't, and accepted non-existent options,
+   e.g. "--relative-marksmith" or "--forceps".
+
+ * "git format-patch" did not quote RFC822 special characters in the
+   email address (e.g From: Junio C. Hamano <jch@example.com>, not
+   From: "Junio C. Hamano" <jch@example.com>).
+
+ * "git format-patch" when run with "--quiet" option used to produce a
+   nonsense result that consists of alternating empty output.
+
+ * In "git merge", per-branch branch.<name>.mergeoptions configuration
+   variables did not override the fallback default merge.<option>
+   configuration variables such as merge.ff, merge.log, etc.
+
+ * "git merge-one-file" did not honor GIT_WORK_TREE settings when
+   handling a "both sides added, differently" conflict.
+
+ * "git mergetool" did not handle conflicted submoudules gracefully.
+
+ * "git-p4" (in contrib) used a wrong base image while merge a file that
+   was added on both branches differently.
+
+ * "git rebase -i -p" failed to preserve the history when there is a
+   redundant merge created with the --no-ff option.
+
+And other minor fixes and documentation updates.
