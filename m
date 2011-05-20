@@ -1,123 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git 1.7.5.2
-Date: Thu, 19 May 2011 22:58:52 -0700
-Message-ID: <7voc2x52w3.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 1/8] revert: Improve error handling by cascading errors upwards
+Date: Fri, 20 May 2011 12:09:55 +0530
+Message-ID: <BANLkTimJ-BSBiyKd1dAcUEUmfLGVjdioNQ@mail.gmail.com>
+References: <1305100822-20470-1-git-send-email-artagnon@gmail.com>
+ <1305100822-20470-2-git-send-email-artagnon@gmail.com> <20110511095949.GA2676@elie>
+ <20110519091831.GA28723@ramkum.desktop.amazon.com> <20110519180314.GA26248@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
-To: git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Fri May 20 07:59:16 2011
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 20 08:40:55 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1QNIjz-0000ll-OF
-	for glk-linux-kernel-3@lo.gmane.org; Fri, 20 May 2011 07:59:16 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1QNJOJ-0003rc-05
+	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 08:40:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933070Ab1ETF7G (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Fri, 20 May 2011 01:59:06 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:39994 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753157Ab1ETF7D (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Fri, 20 May 2011 01:59:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 50D6E3074;
-	Fri, 20 May 2011 02:01:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=L
-	CDcHjr6wcxBoFXVBFXvRwRYKyE=; b=MEtRO3CFm6hAzr5Uln6GaBDhnLEbufza3
-	Qwunxpe4n8CsrIq/lIu5b2WGaA/A2F04f6pDyOOM1ao9DrhagoGAfE7tt+ZhiFsT
-	fQjUFa8fl1uNGdJvtw0Tqm3PygbGZFnntKT3Kj2m4Yb2NC1z2nrdCbYmAUEwsVY6
-	qJR45V00Vc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; q=dns; s=
-	sasl; b=wn7WPvjvsPs9jLMbMc0qmWGRFrzLnR4vDzP/YF1rYcMMxRnxvCaY6+o7
-	rRKjSUtkEz4tzSWo2y0PUKVxlfh5rP8xB3w31l3lB+SidtmfWwwa9O3Xug/pCSxB
-	pWwOCCXEr+WZkAThBkqcJSxzmtiB3bXcRJNxAiR9UPQqJJr9am4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1F3B33073;
-	Fri, 20 May 2011 02:01:06 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B18A83072; Fri, 20 May 2011
- 02:01:01 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8CDAC838-82A6-11E0-A1D6-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	id S933433Ab1ETGkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2011 02:40:20 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:39168 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933375Ab1ETGkS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2011 02:40:18 -0400
+Received: by wwa36 with SMTP id 36so3655449wwa.1
+        for <git@vger.kernel.org>; Thu, 19 May 2011 23:40:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=w2cIhNYYpUWpNer+v5pDd4eqmZh842HmVk0xHwArXp4=;
+        b=JsmKrHJUiRUyMS35h4Egb+eezOKZYWB3V0R7/D0D9Ufb29Wfg0FelVPiK+OxivTnDf
+         eZTI7hO9bgAQ8Z0efCCww7E9UtzL/RVh0Ca+8jCNBcvRFySsr7U7mpYg85OioTT5ahR6
+         6AD+T6AqtwM90aErc60Tg9uVwNsoMSXleUCpc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=dej+UfkFE8pG5d4a47/Bgri0GFwDAnM6vUjUC3G1hJLihALV054cepfGXkuqdQfyqb
+         zq2EFFCtGUtOns1RZM3GZN8KpUf7TBFnS+53NTGzxTCjt5sheskqA5gQ0mwTym9sb0sT
+         2UvrQM70hDtFGGwNJ8YWeDk9f7cxGbg9qh52s=
+Received: by 10.216.235.196 with SMTP id u46mr3802374weq.25.1305873616924;
+ Thu, 19 May 2011 23:40:16 -0700 (PDT)
+Received: by 10.216.20.65 with HTTP; Thu, 19 May 2011 23:39:55 -0700 (PDT)
+In-Reply-To: <20110519180314.GA26248@elie>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174041>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174042>
 
-The latest maintenance release Git 1.7.5.2 is available at the
-usual places:
+Hi Jonathan,
 
-  http://www.kernel.org/pub/software/scm/git/
+I'm a little confused, so I'm also including a commit message
+justifying the change.
+Have I understood the issue correctly? Does this diff look alright?
 
-  git-1.7.5.2.tar.{gz,bz2}			(source tarball)
-  git-htmldocs-1.7.5.2.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.7.5.2.tar.{gz,bz2}		(preformatted docs)
+Note: I've removed the die from get_message in another unrelated
+patch; essentially, do_pick_commit never calls die.
 
-The RPM binary packages for a few architectures are found in:
+    Since do_pick_commit is only delegated the job of picking a single
+    commit in an entire cherry-pick or revert operation, don't die in this
+    function.  Instead, return an error to be handled by the caller
+    appropriately.
 
-  RPMS/$arch/git-*-1.7.5.2-1.fc13.$arch.rpm	(RPM)
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 
-Git v1.7.5.2 Release Notes
-==========================
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 0cc3b6b..138485f 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -415,20 +415,20 @@ static int do_pick_commit(void)
+ 		struct commit_list *p;
 
-The release notes to 1.7.5.1 forgot to mention:
+ 		if (!mainline)
+-			die(_("Commit %s is a merge but no -m option was given."),
+-			    sha1_to_hex(commit->object.sha1));
++			return error(_("%s: Commit %s is a merge but no -m option was given."),
++				me, sha1_to_hex(commit->object.sha1));
 
- * "git stash -p --no-keep-index" and "git stash --no-keep-index -p" now
-   mean the same thing.
+ 		for (cnt = 1, p = commit->parents;
+ 		     cnt != mainline && p;
+ 		     cnt++)
+ 			p = p->next;
+ 		if (cnt != mainline || !p)
+-			die(_("Commit %s does not have parent %d"),
+-			    sha1_to_hex(commit->object.sha1), mainline);
++			return error(_("%s: Commit %s does not have parent %d"),
++				me, sha1_to_hex(commit->object.sha1), mainline);
+ 		parent = p->item;
+ 	} else if (0 < mainline)
+-		die(_("Mainline was specified but commit %s is not a merge."),
+-		    sha1_to_hex(commit->object.sha1));
++		return error(_("%s: Mainline was specified but commit %s is not a merge."),
++			me, sha1_to_hex(commit->object.sha1));
+ 	else
+ 		parent = commit->parents->item;
 
- * "git upload-pack" (hence "git push" over git native protocol) had a
-   subtle race condition that could lead to a deadlock.
+@@ -438,8 +438,8 @@ static int do_pick_commit(void)
+ 	if (parent && parse_commit(parent) < 0)
+ 		/* TRANSLATORS: The first %s will be "revert" or
+ 		   "cherry-pick", the second %s a SHA1 */
+-		die(_("%s: cannot parse parent commit %s"),
+-		    me, sha1_to_hex(parent->object.sha1));
++		return error(_("%s: cannot parse parent commit %s"),
++			me, sha1_to_hex(parent->object.sha1));
 
-Fixes since v1.7.5.1
---------------------
+ 	/*
+ 	 * "commit" is an existing commit.  We would want to apply
+@@ -578,8 +578,8 @@ static int revert_or_cherry_pick(int argc, const
+char **argv)
 
- * "git add -p" did not work correctly when a hunk is split and then
-   one of them was given to the editor.
+ 	while ((commit = get_revision(&revs))) {
+ 		int res = do_pick_commit();
+-		if (res)
+-			return res;
++		if (res < 0)
++			exit(128);
+ 	}
 
- * "git add -u" did not resolve a conflict where our history deleted and
-   their history modified the same file, and the working tree resolved to
-   keep a file.
-
- * "git cvsimport" did not know that CVSNT stores its password file in a
-   location different from the traditional CVS.
-
- * "git diff-files" did not show the mode information from the working
-   tree side of an unmerged path correctly.
-
- * "git diff -M --cached" used to use unmerged path as a possible rename
-   source candidate, which made no sense.
-
- * The option name parser in "git fast-import" used prefix matches for
-   some options where it shouldn't, and accepted non-existent options,
-   e.g. "--relative-marksmith" or "--forceps".
-
- * "git format-patch" did not quote RFC822 special characters in the
-   email address (e.g From: Junio C. Hamano <jch@example.com>, not
-   From: "Junio C. Hamano" <jch@example.com>).
-
- * "git format-patch" when run with "--quiet" option used to produce a
-   nonsense result that consists of alternating empty output.
-
- * In "git merge", per-branch branch.<name>.mergeoptions configuration
-   variables did not override the fallback default merge.<option>
-   configuration variables such as merge.ff, merge.log, etc.
-
- * "git merge-one-file" did not honor GIT_WORK_TREE settings when
-   handling a "both sides added, differently" conflict.
-
- * "git mergetool" did not handle conflicted submoudules gracefully.
-
- * "git-p4" (in contrib) used a wrong base image while merge a file that
-   was added on both branches differently.
-
- * "git rebase -i -p" failed to preserve the history when there is a
-   redundant merge created with the --no-ff option.
-
-And other minor fixes and documentation updates.
+ 	return 0;
