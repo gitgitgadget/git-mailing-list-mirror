@@ -1,63 +1,60 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [BUG] merge-recursive triggered "BUG"
-Date: Thu, 19 May 2011 21:17:34 -0400
-Message-ID: <BANLkTinG329ZBdf0TgnwA1m8Uo+6OZv-ow@mail.gmail.com>
-References: <7v4o7260no.fsf@alter.siamese.dyndns.org>
-	<BANLkTimNnRrJ_2UJUSWWd1QS=e0YH2p=_Q@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fetch: avoid repeated commits in mark_complete
+Date: Thu, 19 May 2011 18:42:17 -0700
+Message-ID: <7vliy25erq.fsf@alter.siamese.dyndns.org>
+References: <20110519204851.GA28574@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 20 03:17:42 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, git-dev@github.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 20 03:42:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNELU-000828-Sh
-	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 03:17:41 +0200
+	id 1QNEjY-0001j0-TD
+	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 03:42:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934632Ab1ETBRg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2011 21:17:36 -0400
-Received: from mail-px0-f173.google.com ([209.85.212.173]:58427 "EHLO
-	mail-px0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934259Ab1ETBRf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2011 21:17:35 -0400
-Received: by pxi16 with SMTP id 16so2162749pxi.4
-        for <git@vger.kernel.org>; Thu, 19 May 2011 18:17:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=1HimKGdliIwtJBrqSKVCp7HeQD1dvHzlbNI2Umw2M7E=;
-        b=vqTptTjJZ8zu8XgIicbKPiCuAOA+PsUJ6IkUdGYBnmVu+7kPZev3OklkWeIdZYw/II
-         UYS0DeizVVUeViyz7AdA/KnFnR9cdtFne1qWS/vCCiN9NiLGNQRe6+ZfPlpO2iGeTGIO
-         SjYFfZT7+y+PzMWFTwYIIXYj6FAI9mDyPaEKI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=exg2O/8C+dGt0igA6NgRzT0jcGW0FCmP0lwCFSqWZU/p/DpJBof2KZPx46MiUWYI57
-         Ujl7AK6WZtkeN0fuh6PSO2karW8mUbr0EzgmSX82mR9sUS2VDSQRirQwyAtQ8xED7eVU
-         ZW8OfkAyHD15dZx46bAhYdW4tL32VFFnEmrT8=
-Received: by 10.142.107.12 with SMTP id f12mr2227260wfc.226.1305854254789;
- Thu, 19 May 2011 18:17:34 -0700 (PDT)
-Received: by 10.142.13.8 with HTTP; Thu, 19 May 2011 18:17:34 -0700 (PDT)
-In-Reply-To: <BANLkTimNnRrJ_2UJUSWWd1QS=e0YH2p=_Q@mail.gmail.com>
+	id S934699Ab1ETBm2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 May 2011 21:42:28 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58893 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934682Ab1ETBm1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2011 21:42:27 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2B4965A1D;
+	Thu, 19 May 2011 21:44:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gG50GtfUcnAbddWjrorBxcKaeKw=; b=yGIZPd
+	/VZeLlTXaVSk5xQDVwqiS/BsCopEe+t5tIdgYqNmo7hNYeGBFamfJDnS/LxAcfdh
+	KB1murZ6FUGblvZImLT96JXzXCvi+TlqiGQfsiTGAdLOu3nH79SKKDLcehurspwt
+	fs3RpnK0sqc8FtYyaDeZP4rTBaodlDkgZmEwA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NuawL7Hdl6+u68qKBEH/20EVgpEp4f7E
+	PcD3Q6wamaVbKm5wbTRBylKgVks00gOfCpP+CwXColdP+MsLnF9MP+HqOZ/lP0pI
+	4n1so5B3byY7HU3isAGR2Iej4i2Vbp0x6l3VAkKRsBUiGKUAyK7TPDd1u3q8/nbR
+	uHDQlqJkn1c=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D87605A1C;
+	Thu, 19 May 2011 21:44:30 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D1BD45A1A; Thu, 19 May 2011
+ 21:44:26 -0400 (EDT)
+In-Reply-To: <20110519204851.GA28574@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 19 May 2011 16:48:51 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B493E61C-8282-11E0-932C-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174032>
 
-On Thu, May 19, 2011 at 9:14 PM, Jay Soffian <jaysoffian@gmail.com> wrote:
-> I just ran into this. It's not in a repo I can share however. But, why
-> did b2c8c0a make it into master with this known issue?
+Trivially correct and the right thing to do.  I love this kind of patches
+;-)
 
-Sorry, let me clarify. I got the:
-
-  error: addinfo_cache failed for path '...'
-
-line, but not the BUG. I can try to bisect git if this is a different issue.
-
-j.
+Thanks.
