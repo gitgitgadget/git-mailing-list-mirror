@@ -1,126 +1,162 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 1/8] revert: Improve error handling by cascading errors upwards
-Date: Fri, 20 May 2011 12:09:55 +0530
-Message-ID: <BANLkTimJ-BSBiyKd1dAcUEUmfLGVjdioNQ@mail.gmail.com>
-References: <1305100822-20470-1-git-send-email-artagnon@gmail.com>
- <1305100822-20470-2-git-send-email-artagnon@gmail.com> <20110511095949.GA2676@elie>
- <20110519091831.GA28723@ramkum.desktop.amazon.com> <20110519180314.GA26248@elie>
+Subject: Better error-handling around revert
+Date: Fri, 20 May 2011 07:16:12 +0000
+Message-ID: <20110520071609.GA6755@domU-12-31-39-06-A8-0A.compute-1.internal>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 20 08:40:55 2011
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 20 09:16:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNJOJ-0003rc-05
-	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 08:40:55 +0200
+	id 1QNJwc-0006Gi-TW
+	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 09:16:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933433Ab1ETGkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2011 02:40:20 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:39168 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933375Ab1ETGkS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2011 02:40:18 -0400
-Received: by wwa36 with SMTP id 36so3655449wwa.1
-        for <git@vger.kernel.org>; Thu, 19 May 2011 23:40:17 -0700 (PDT)
+	id S933959Ab1ETHQR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2011 03:16:17 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:35867 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932327Ab1ETHQQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2011 03:16:16 -0400
+Received: by vws1 with SMTP id 1so2486975vws.19
+        for <git@vger.kernel.org>; Fri, 20 May 2011 00:16:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=w2cIhNYYpUWpNer+v5pDd4eqmZh842HmVk0xHwArXp4=;
-        b=JsmKrHJUiRUyMS35h4Egb+eezOKZYWB3V0R7/D0D9Ufb29Wfg0FelVPiK+OxivTnDf
-         eZTI7hO9bgAQ8Z0efCCww7E9UtzL/RVh0Ca+8jCNBcvRFySsr7U7mpYg85OioTT5ahR6
-         6AD+T6AqtwM90aErc60Tg9uVwNsoMSXleUCpc=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:mime-version
+         :content-type:content-disposition:user-agent;
+        bh=6d7B4z+Q5PPvqjgB0Kmwa2WPYiDou2VtC9Nufkb5W94=;
+        b=IINRUfG/1bN0t2lUd3zci6ip7f8EZj0C63xsa88RA7yMF2e0aYyF1CcdGiio5GUb49
+         sO3yjZnz3qjY06G30nbPhWwe9TjekkeRl8ih+dTeAEPz68TDVXgGDULhRpTwcoJRGZ1q
+         y4GWYjdGPmJA2+Uv9IOqUjc2dBq+4nvtWaeaU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=dej+UfkFE8pG5d4a47/Bgri0GFwDAnM6vUjUC3G1hJLihALV054cepfGXkuqdQfyqb
-         zq2EFFCtGUtOns1RZM3GZN8KpUf7TBFnS+53NTGzxTCjt5sheskqA5gQ0mwTym9sb0sT
-         2UvrQM70hDtFGGwNJ8YWeDk9f7cxGbg9qh52s=
-Received: by 10.216.235.196 with SMTP id u46mr3802374weq.25.1305873616924;
- Thu, 19 May 2011 23:40:16 -0700 (PDT)
-Received: by 10.216.20.65 with HTTP; Thu, 19 May 2011 23:39:55 -0700 (PDT)
-In-Reply-To: <20110519180314.GA26248@elie>
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        b=DDjX5yLqb03gvJ+BMl8kXYPIB4wRFfUHcP68NMulVZX+/otDRb/mJPiy5gE2YntDBL
+         z1iDIKF0AufKYe4KxGA6imdUJe2XAGfRtJpkzo++VzaPCZr30YPj7puDs2bQoiSAAz7U
+         UOjCVXS8FdzvR0N4yiz9PrD4HNqQtJkSb8Chs=
+Received: by 10.52.181.230 with SMTP id dz6mr102862vdc.297.1305875775593;
+        Fri, 20 May 2011 00:16:15 -0700 (PDT)
+Received: from domU-12-31-39-06-A8-0A.compute-1.internal (ec2-184-72-137-52.compute-1.amazonaws.com [184.72.137.52])
+        by mx.google.com with ESMTPS id b5sm755057vcx.4.2011.05.20.00.16.14
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 20 May 2011 00:16:14 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174043>
 
-Hi Jonathan,
+Hi,
 
-I'm a little confused, so I'm also including a commit message
-justifying the change.
-Have I understood the issue correctly? Does this diff look alright?
+Instead of hijacking the Sequencer thread with tons of emails related
+to error-handling, I thought I'd start a new thread.  I'm currently
+preparing a large series to fix error-handling issues around revert,
+but I'm afraid I need a lot of feedback to get it done right.  Expect
+lots of RFC patches and diffs, and other discussions related to
+error-handling in revert on this thread.
 
-Note: I've removed the die from get_message in another unrelated
-patch; essentially, do_pick_commit never calls die.
+Ref: http://thread.gmane.org/gmane.comp.version-control.git/173408/focus=173413
 
-    Since do_pick_commit is only delegated the job of picking a single
-    commit in an entire cherry-pick or revert operation, don't die in this
-    function.  Instead, return an error to be handled by the caller
-    appropriately.
+Anyway, here's the first:
 
+Does this look like something callers can use? What should callers do
+when an error is returned? Should I also modify callers in the same
+patch?
+
+- do_pick_commit calls write_cherry_pick_head, so I think it should
+  propgate an error upwards to revert_or_cherry_pick which should
+  ultimately handle the error.
+- do_pick_commit also calls write_message in two places. What should
+  happen when the recursive merge fails and the write_message
+  succeeds, and viceversa? Again, I think we should propgate the error
+  updwards and let revert_or_cherry_pick exit(128).
+
+write_cherry_pick_head and write_message used to die when an operation
+such as write_in_full failed.  Instead, clean up correctly, and return
+an error to be handled by the caller.
+
+Mentored-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ builtin/revert.c |   41 +++++++++++++++++++++++++++--------------
+ 1 files changed, 27 insertions(+), 14 deletions(-)
 
 diff --git a/builtin/revert.c b/builtin/revert.c
-index 0cc3b6b..138485f 100644
+index 138485f..bb0db66 100644
 --- a/builtin/revert.c
 +++ b/builtin/revert.c
-@@ -415,20 +415,20 @@ static int do_pick_commit(void)
- 		struct commit_list *p;
-
- 		if (!mainline)
--			die(_("Commit %s is a merge but no -m option was given."),
--			    sha1_to_hex(commit->object.sha1));
-+			return error(_("%s: Commit %s is a merge but no -m option was given."),
-+				me, sha1_to_hex(commit->object.sha1));
-
- 		for (cnt = 1, p = commit->parents;
- 		     cnt != mainline && p;
- 		     cnt++)
- 			p = p->next;
- 		if (cnt != mainline || !p)
--			die(_("Commit %s does not have parent %d"),
--			    sha1_to_hex(commit->object.sha1), mainline);
-+			return error(_("%s: Commit %s does not have parent %d"),
-+				me, sha1_to_hex(commit->object.sha1), mainline);
- 		parent = p->item;
- 	} else if (0 < mainline)
--		die(_("Mainline was specified but commit %s is not a merge."),
--		    sha1_to_hex(commit->object.sha1));
-+		return error(_("%s: Mainline was specified but commit %s is not a merge."),
-+			me, sha1_to_hex(commit->object.sha1));
- 	else
- 		parent = commit->parents->item;
-
-@@ -438,8 +438,8 @@ static int do_pick_commit(void)
- 	if (parent && parse_commit(parent) < 0)
- 		/* TRANSLATORS: The first %s will be "revert" or
- 		   "cherry-pick", the second %s a SHA1 */
--		die(_("%s: cannot parse parent commit %s"),
--		    me, sha1_to_hex(parent->object.sha1));
-+		return error(_("%s: cannot parse parent commit %s"),
-+			me, sha1_to_hex(parent->object.sha1));
-
- 	/*
- 	 * "commit" is an existing commit.  We would want to apply
-@@ -578,8 +578,8 @@ static int revert_or_cherry_pick(int argc, const
-char **argv)
-
- 	while ((commit = get_revision(&revs))) {
- 		int res = do_pick_commit();
--		if (res)
--			return res;
-+		if (res < 0)
-+			exit(128);
- 	}
-
- 	return 0;
+@@ -195,20 +195,29 @@ static void add_message_to_msg(struct strbuf *msgbuf, const char *message)
+   strbuf_addstr(msgbuf, p);
+ }
+ 
+-static void write_cherry_pick_head(void)
++static int write_cherry_pick_head(void)
+ {
+-	int fd;
++	int fd, ret = 0;
+ 	struct strbuf buf = STRBUF_INIT;
+ 
+	strbuf_addf(&buf, "%s\n", sha1_to_hex(commit->object.sha1));
+ 
+	fd = open(git_path("CHERRY_PICK_HEAD"), O_WRONLY | O_CREAT, 0666);
+-	if (fd < 0)
+-	   die_errno(_("Could not open '%s' for writing"),
+-	   		      	    git_path("CHERRY_PICK_HEAD"));
+-				    if (write_in_full(fd, buf.buf, buf.len) != buf.len || close(fd))
+-				       die_errno(_("Could not write to '%s'"), git_path("CHERRY_PICK_HEAD"));
++				       if (fd < 0) {
++				       	  strbuf_release(&buf);
++						return error(_("Could not open '%s' for writing: %s"),
++						       		      git_path("CHERRY_PICK_HEAD"), strerror(errno));
++								      }
++								      if (write_in_full(fd, buf.buf, buf.len) != buf.len)
++								      	 ret = error(_("Could not write to '%s': %s"),
++									       git_path("CHERRY_PICK_HEAD"), strerror(errno));
++									       if (xclose(fd)) {
++									       	  ret = error(_("Could not close '%s': %s"),
++										      	git_path("CHERRY_PICK_HEAD"), strerror(errno));
++														      unlink_or_warn(git_path("CHERRY_PICK_HEAD"));
++														      }
+ 														      strbuf_release(&buf);
++														      return ret;
+ }
+ 
+ static void advise(const char *advice, ...)
+@@ -240,17 +249,21 @@ static void print_advice(void)
+   advise("and commit the result with 'git commit'");
+ }
+ 
+-static void write_message(struct strbuf *msgbuf, const char *filename)
++static int write_message(struct strbuf *msgbuf, const char *filename)
+ {
+	static struct lock_file msg_file;
++	int ret = 0;
+ 
+-	int msg_fd = hold_lock_file_for_update(&msg_file, filename,
+-	    	     					         LOCK_DIE_ON_ERROR);
+-								 if (write_in_full(msg_fd, msgbuf->buf, msgbuf->len) < 0)
+-								    die_errno(_("Could not write to %s."), filename);
++								    int msg_fd = hold_lock_file_for_update(&msg_file, filename, 0);
++								    if (write_in_full(msg_fd, msgbuf->buf, msgbuf->len) < 0) {
++								       rollback_lock_file(&msg_fd);
++									ret = error(_("Could not write to %s: %s"), filename,
++									      strerror(errno));
++									      }
++									      else if (commit_lock_file(&msg_file) < 0)
++									      	   ret = error(_("Error wrapping up %s"), filename);
+ 										   strbuf_release(msgbuf);
+-										   if (commit_lock_file(&msg_file) < 0)
+-										      die(_("Error wrapping up %s"), filename);
++										      return ret;
+ }
+ 
+ static struct tree *empty_tree(void)
