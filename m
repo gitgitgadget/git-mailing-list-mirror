@@ -1,834 +1,102 @@
-From: Nir Friedman <nirfri@hotmail.com>
-Subject: RE: FW: git over https and http 1.1
-Date: Fri, 20 May 2011 11:21:07 +0300
-Message-ID: <BLU0-SMTP137AF095D4D8FC4E92AA60CC7710@phx.gbl>
-References: <BLU0-SMTP122315AAE364595FDA4A30AC78F0@phx.gbl>	<alpine.DEB.2.00.1105181615180.26343@tvnag.unkk.fr>	<BLU0-SMTP207861424D1FA595A51BBBEC78E0@phx.gbl> <BANLkTin6LQ-UoaJObJ3pyJOp0TfeJXw9Qw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1255
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 20 10:21:25 2011
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [RFC PATCH] cache-tree: Teach write_cache_as_tree to discard_cache
+Date: Fri, 20 May 2011 08:30:21 +0000
+Message-ID: <1305880223-7542-1-git-send-email-artagnon@gmail.com>
+References: <20110520071609.GA6755@domU-12-31-39-06-A8-0A.compute-1.internal>
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <christian.couder@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 20 10:30:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNKxV-0000Rd-MI
-	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 10:21:22 +0200
+	id 1QNL6R-0005jM-U2
+	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 10:30:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934634Ab1ETIVN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 May 2011 04:21:13 -0400
-Received: from blu0-omc3-s24.blu0.hotmail.com ([65.55.116.99]:59840 "EHLO
-	blu0-omc3-s24.blu0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933781Ab1ETIVL convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2011 04:21:11 -0400
-Received: from BLU0-SMTP137 ([65.55.116.74]) by blu0-omc3-s24.blu0.hotmail.com with Microsoft SMTPSVC(6.0.3790.4675);
-	 Fri, 20 May 2011 01:21:10 -0700
-X-Originating-IP: [212.179.48.132]
-X-Originating-Email: [nirfri@hotmail.com]
-Received: from nirftp ([212.179.48.132]) by BLU0-SMTP137.phx.gbl over TLS secured channel with Microsoft SMTPSVC(6.0.3790.4675);
-	 Fri, 20 May 2011 01:21:08 -0700
-In-Reply-To: <BANLkTin6LQ-UoaJObJ3pyJOp0TfeJXw9Qw@mail.gmail.com>
-X-Mailer: Microsoft Office Outlook 12.0
-Thread-Index: AcwWPirfVP2cuSUFTIyzzxKa4z1PHwAiCjKA
-Content-Language: en-us
-X-OriginalArrivalTime: 20 May 2011 08:21:09.0127 (UTC) FILETIME=[DF38A970:01CC16C6]
+	id S934837Ab1ETIa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2011 04:30:28 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:47304 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934634Ab1ETIa0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2011 04:30:26 -0400
+Received: by qyg14 with SMTP id 14so1988937qyg.19
+        for <git@vger.kernel.org>; Fri, 20 May 2011 01:30:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references;
+        bh=Nk5cwFz9Vo3iJnB2+6KsmioNywqGiGMt4r7CKmFzmfU=;
+        b=r2n+3V7sYsetstWhxfFbVx/Hhi0WbQeWWMXTB4wTG+QDwFsxASbNWaYFwJ+jyy8CG/
+         UsNtQaaKFELsVRncC7Ix6hon7lXpBH26tPbKcKwIlHxz8Yev+C6VxDOixjU6I08oNqx9
+         iuJ7Pvou+HtL/3L4g2kpQtc3l+VnODfv4Kj3A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=P9pk6nEkkJQ/8Y+o4iHtaw1N7QYRqUypwlLNA8Azp6kBuExCjJdtDDIHkP85/cZJVH
+         wMZb3Gy1xgA3tyTRGka+M+bL/AbXTb1iPvsBQO5pvQxIJF6KRl/zhcX3iSxaT39KeNtH
+         fNwODyWOx4OnWyrQNoxAu3w9bPycFCBel7V88=
+Received: by 10.224.69.225 with SMTP id a33mr3176403qaj.209.1305880225434;
+        Fri, 20 May 2011 01:30:25 -0700 (PDT)
+Received: from localhost.localdomain (ec2-184-72-137-52.compute-1.amazonaws.com [184.72.137.52])
+        by mx.google.com with ESMTPS id m9sm2128759qcu.15.2011.05.20.01.30.24
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 20 May 2011 01:30:24 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.1
+In-Reply-To: <20110520071609.GA6755@domU-12-31-39-06-A8-0A.compute-1.internal>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174050>
 
-Trace is below, freeze happens right after the first two lines are disp=
-layed
+If the read_cache() call succeeds, the function must call
+discard_cache() before returning to the caller.
 
+Suggested-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
+ cache-tree.c |    9 +++++++--
+ 1 files changed, 7 insertions(+), 2 deletions(-)
 
-trace: built-in: git 'clone' 'https://10.1.30.61/git/WebGui'
-trace: run_command: 'git-remote-https' 'origin'
-'https://10.1.30.61/git/WebGui'
-Cloning into WebGui...
-trace: run_command: 'fetch-pack' '--stateless-rpc' '--lock-pack' '--thi=
-n'
-'--no-progress' 'https://10.1.30.61/git/WebGui/' 'refs/heads/master'
-'refs/tags/3.6.1227_rdirplus' 'refs/tags/3.6.1227_rdirplus2'
-'refs/tags/3.7.1.0000' 'refs/tags/3.7.1.0001' 'refs/tags/3.7.1.0002'
-'refs/tags/3.7.1.0003' 'refs/tags/3.7.1.0004' 'refs/tags/3.7.1.0005'
-'refs/tags/3.7.1.0006' 'refs/tags/3.7.1.0007' 'refs/tags/3.7.1.0008'
-'refs/tags/3.7.1.0009' 'refs/tags/3.7.1.0010' 'refs/tags/3.7.1.0011'
-'refs/tags/3.7.1.0012' 'refs/tags/3.7.1.0013' 'refs/tags/3.7.1.0014'
-'refs/tags/3.7.1.0015' 'refs/tags/3.7.1.0016' 'refs/tags/3.7.1.0017'
-'refs/tags/3.7.1.0018' 'refs/tags/3.7.1.0019' 'refs/tags/3.7.1.0020'
-'refs/tags/3.7.1.0021' 'refs/tags/3.7.1.0022' 'refs/tags/3.7.1.0023'
-'refs/tags/3.7.1.0024' 'refs/tags/3.7.1.0025' 'refs/tags/3.7.1.0026'
-'refs/tags/3.7.1.0027' 'refs/tags/3.7.1.0028' 'refs/tags/3.7.1.0029'
-'refs/tags/3.7.1.0030' 'refs/tags/5.12' 'refs/tags/5.13' 'refs/tags/5.1=
-4'
-'refs/tags/5.15' 'refs/tags/5.16' 'refs/tags/5.17' 'refs/tags/5.18'
-'refs/tags/5.19' 'refs/tags/5.21' 'refs/tags/5.22' 'refs/tags/5.24'
-'refs/tags/5.25' 'refs/tags/5.26' 'refs/tags/5.27' 'refs/tags/5.27.1'
-'refs/tags/5.27.10' 'refs/tags/5.27.11' 'refs/tags/5.27.12'
-'refs/tags/5.27.13' 'refs/tags/5.27.14' 'refs/tags/5.27.15'
-'refs/tags/5.27.16' 'refs/tags/5.27.17' 'refs/tags/5.27.2'
-'refs/tags/5.27.3' 'refs/tags/5.27.4' 'refs/tags/5.27.4a'
-'refs/tags/5.27.4b' 'refs/tags/5.27.4c' 'refs/tags/5.27.4d'
-'refs/tags/5.27.4e' 'refs/tags/5.27.4f' 'refs/tags/5.27.4g'
-'refs/tags/5.27.4h' 'refs/tags/5.27.4i' 'refs/tags/5.27.4j'
-'refs/tags/5.27.4k' 'refs/tags/5.27.4l' 'refs/tags/5.27.4m'
-'refs/tags/5.27.4n' 'refs/tags/5.27.4o' 'refs/tags/5.27.4o_nir'
-'refs/tags/5.27.4p' 'refs/tags/5.27.4q' 'refs/tags/5.27.4r'
-'refs/tags/5.27.4s' 'refs/tags/5.27.4s1' 'refs/tags/5.27.4t'
-'refs/tags/5.27.4u' 'refs/tags/5.27.4v' 'refs/tags/5.27.4w'
-'refs/tags/5.27.5' 'refs/tags/5.27.6' 'refs/tags/5.27.7' 'refs/tags/5.2=
-7.7a'
-'refs/tags/5.27.7b' 'refs/tags/5.27.8' 'refs/tags/5.27.9' 'refs/tags/5.=
-27a'
-'refs/tags/5.28' 'refs/tags/5.29' 'refs/tags/5.30' 'refs/tags/5.31'
-'refs/tags/5.32' 'refs/tags/5.33' 'refs/tags/5.34' 'refs/tags/5.35'
-'refs/tags/5.36' 'refs/tags/5.37' 'refs/tags/5.38' 'refs/tags/5.39'
-'refs/tags/5.40' 'refs/tags/5.41' 'refs/tags/5.42' 'refs/tags/5.43'
-'refs/tags/5.44' 'refs/tags/5.45' 'refs/tags/5.46' 'refs/tags/5.47'
-'refs/tags/5.48' 'refs/tags/5.48a' 'refs/tags/5.48a1' 'refs/tags/5.48a1=
-1'
-'refs/tags/5.48a2' 'refs/tags/5.48b' 'refs/tags/5.48c' 'refs/tags/5.49'
-'refs/tags/5.50' 'refs/tags/5.51' 'refs/tags/AV_IP_4master'
-'refs/tags/non_released_3.7.1.0014' 'refs/tags/v3.5.0064'
-'refs/tags/v3.5.0065' 'refs/tags/v3.5.0066' 'refs/tags/v3.5.0067'
-'refs/tags/v3.5.0068' 'refs/tags/v3.5.0069' 'refs/tags/v3.5.0070'
-'refs/tags/v3.5.0071' 'refs/tags/v3.5.0072' 'refs/tags/v3.5.0073'
-'refs/tags/v3.5.0074' 'refs/tags/v3.5.0075' 'refs/tags/v3.5.0076'
-'refs/tags/v3.5.0077' 'refs/tags/v3.5.0078' 'refs/tags/v3.5.0079'
-'refs/tags/v3.5.0080' 'refs/tags/v3.5.0081' 'refs/tags/v3.5.0082'
-'refs/tags/v3.5.0083' 'refs/tags/v3.5.0084' 'refs/tags/v3.5.0085'
-'refs/tags/v3.5.0086' 'refs/tags/v3.5.0087' 'refs/tags/v3.5.0088'
-'refs/tags/v3.5.0089' 'refs/tags/v3.5.0090' 'refs/tags/v3.5.0091'
-'refs/tags/v3.5.0092' 'refs/tags/v3.5.0092.1' 'refs/tags/v3.5.0092.2'
-'refs/tags/v3.5.0092.3' 'refs/tags/v3.5.0092.4' 'refs/tags/v3.5.0093'
-'refs/tags/v3.5.0094' 'refs/tags/v3.5.0095' 'refs/tags/v3.5.0096'
-'refs/tags/v3.5.0097' 'refs/tags/v3.5.0098' 'refs/tags/v3.5.0099'
-'refs/tags/v3.5.0100' 'refs/tags/v3.5.0101' 'refs/tags/v3.5.0102'
-'refs/tags/v3.5.1103' 'refs/tags/v3.5.1104' 'refs/tags/v3.5.1105'
-'refs/tags/v3.5.1106' 'refs/tags/v3.5.1106.1' 'refs/tags/v3.5.1106.10'
-'refs/tags/v3.5.1106.11' 'refs/tags/v3.5.1106.12' 'refs/tags/v3.5.1106.=
-13'
-'refs/tags/v3.5.1106.2' 'refs/tags/v3.5.1106.3' 'refs/tags/v3.5.1106.4'
-'refs/tags/v3.5.1106.5' 'refs/tags/v3.5.1106.6' 'refs/tags/v3.5.1106.7'
-'refs/tags/v3.5.1106.8' 'refs/tags/v3.5.1106.9' 'refs/tags/v3.5.1107'
-'refs/tags/v3.5.1108' 'refs/tags/v3.5.1109' 'refs/tags/v3.5.1110'
-'refs/tags/v3.5.1111' 'refs/tags/v3.5.1112' 'refs/tags/v3.5.1113'
-'refs/tags/v3.5.1114' 'refs/tags/v3.5.1115' 'refs/tags/v3.5.1116'
-'refs/tags/v3.5.1117' 'refs/tags/v3.5.1117.0.1' 'refs/tags/v3.5.1117.0.=
-2'
-'refs/tags/v3.5.1117.0.3' 'refs/tags/v3.5.1117.0.4' 'refs/tags/v3.5.111=
-7.1'
-'refs/tags/v3.5.1117.1.1' 'refs/tags/v3.5.1118' 'refs/tags/v3.5.1119'
-'refs/tags/v3.5.1120' 'refs/tags/v3.5.1121' 'refs/tags/v3.5.1122'
-'refs/tags/v3.5.1123' 'refs/tags/v3.5.1124' 'refs/tags/v3.5.1125'
-'refs/tags/v3.5.1126' 'refs/tags/v3.5.1127' 'refs/tags/v3.5.1128'
-'refs/tags/v3.5.1129' 'refs/tags/v3.5.1130' 'refs/tags/v3.5.1130.0.1'
-'refs/tags/v3.5.1130.0.2' 'refs/tags/v3.5.1130.0.3'
-'refs/tags/v3.5.1130.0.3.1.1' 'refs/tags/v3.5.1130.0.3.1.2'
-'refs/tags/v3.5.1130.0.3.1.3' 'refs/tags/v3.5.1130.0.3.1.3.1'
-'refs/tags/v3.5.1130.0.3.1.3.2' 'refs/tags/v3.5.1130.0.3.1.3.3'
-'refs/tags/v3.5.1130.0.3.1.3.4' 'refs/tags/v3.5.1130.0.3.1.3.5'
-'refs/tags/v3.5.1130.0.3.1.3.6' 'refs/tags/v3.5.1130.0.3.1.4'
-'refs/tags/v3.5.1130.0.3.1.5' 'refs/tags/v3.5.1130.0.4'
-'refs/tags/v3.5.1130.0.5' 'refs/tags/v3.5.1130.0.6' 'refs/tags/v3.5.113=
-0.1'
-'refs/tags/v3.5.1130.2' 'refs/tags/v3.5.1130.3' 'refs/tags/v3.5.1130.3.=
-1'
-'refs/tags/v3.5.1130.3.2' 'refs/tags/v3.5.1130.3.3'
-'refs/tags/v3.5.1130.3.4' 'refs/tags/v3.5.1130.3.5' 'refs/tags/v3.5.113=
-0.4'
-'refs/tags/v3.5.1130.5' 'refs/tags/v3.5.1130.6' 'refs/tags/v3.5.1130.7'
-'refs/tags/v3.5.1130.7.1' 'refs/tags/v3.5.1130.7.10'
-'refs/tags/v3.5.1130.7.11' 'refs/tags/v3.5.1130.7.12'
-'refs/tags/v3.5.1130.7.13' 'refs/tags/v3.5.1130.7.14'
-'refs/tags/v3.5.1130.7.15' 'refs/tags/v3.5.1130.7.16'
-'refs/tags/v3.5.1130.7.17' 'refs/tags/v3.5.1130.7.18'
-'refs/tags/v3.5.1130.7.19' 'refs/tags/v3.5.1130.7.2'
-'refs/tags/v3.5.1130.7.20' 'refs/tags/v3.5.1130.7.21'
-'refs/tags/v3.5.1130.7.22' 'refs/tags/v3.5.1130.7.23'
-'refs/tags/v3.5.1130.7.24' 'refs/tags/v3.5.1130.7.25'
-'refs/tags/v3.5.1130.7.25.0.1' 'refs/tags/v3.5.1130.7.25.0.2'
-'refs/tags/v3.5.1130.7.25.0.3' 'refs/tags/v3.5.1130.7.25.0.4'
-'refs/tags/v3.5.1130.7.25.0.5' 'refs/tags/v3.5.1130.7.25.0.5.0.1'
-'refs/tags/v3.5.1130.7.25.0.6' 'refs/tags/v3.5.1130.7.25.0.7'
-'refs/tags/v3.5.1130.7.25.0.8' 'refs/tags/v3.5.1130.7.25.0.9'
-'refs/tags/v3.5.1130.7.3' 'refs/tags/v3.5.1130.7.4'
-'refs/tags/v3.5.1130.7.5' 'refs/tags/v3.5.1130.7.6'
-'refs/tags/v3.5.1130.7.7' 'refs/tags/v3.5.1130.7.8'
-'refs/tags/v3.5.1130.7.9' 'refs/tags/v3.5.1130.8'
-'refs/tags/v3.5.1130.UBS_TEST' 'refs/tags/v3.5.1130a'
-'refs/tags/v3.5.1130a2' 'refs/tags/v3.5.1131' 'refs/tags/v3.6.1132'
-'refs/tags/v3.6.1133' 'refs/tags/v3.6.1134' 'refs/tags/v3.6.1135'
-'refs/tags/v3.6.1136' 'refs/tags/v3.6.1137' 'refs/tags/v3.6.1138'
-'refs/tags/v3.6.1138FC' 'refs/tags/v3.6.1138FC.1' 'refs/tags/v3.6.1138F=
-C.2'
-'refs/tags/v3.6.1138FC.3' 'refs/tags/v3.6.1138FC.4'
-'refs/tags/v3.6.1138FC.5' 'refs/tags/v3.6.1138FC.6'
-'refs/tags/v3.6.1138FC.7' 'refs/tags/v3.6.1139' 'refs/tags/v3.6.1140'
-'refs/tags/v3.6.1141' 'refs/tags/v3.6.1142' 'refs/tags/v3.6.1143'
-'refs/tags/v3.6.1144' 'refs/tags/v3.6.1145' 'refs/tags/v3.6.1146'
-'refs/tags/v3.6.1147' 'refs/tags/v3.6.1148' 'refs/tags/v3.6.1148.1.1'
-'refs/tags/v3.6.1148.1.2' 'refs/tags/v3.6.1148.1.3'
-'refs/tags/v3.6.1148.1.4' 'refs/tags/v3.6.1148.1.5'
-'refs/tags/v3.6.1148.1.6' 'refs/tags/v3.6.1148.1.7'
-'refs/tags/v3.6.1148.1.8' 'refs/tags/v3.6.1148.1.9' 'refs/tags/v3.6.114=
-9'
-'refs/tags/v3.6.1150' 'refs/tags/v3.6.1151' 'refs/tags/v3.6.1152'
-'refs/tags/v3.6.1153' 'refs/tags/v3.6.1154' 'refs/tags/v3.6.1155'
-'refs/tags/v3.6.1156' 'refs/tags/v3.6.1157' 'refs/tags/v3.6.1158'
-'refs/tags/v3.6.1159' 'refs/tags/v3.6.1159.1.1' 'refs/tags/v3.6.1159.1.=
-2'
-'refs/tags/v3.6.1159.1.3' 'refs/tags/v3.6.1159.1.4'
-'refs/tags/v3.6.1159.1.5' 'refs/tags/v3.6.1159.1.6' 'refs/tags/v3.6.116=
-0'
-'refs/tags/v3.6.1161' 'refs/tags/v3.6.1162' 'refs/tags/v3.6.1163'
-'refs/tags/v3.6.1164' 'refs/tags/v3.6.1165' 'refs/tags/v3.6.1166'
-'refs/tags/v3.6.1168' 'refs/tags/v3.6.1169' 'refs/tags/v3.6.1170'
-'refs/tags/v3.6.1171' 'refs/tags/v3.6.1171.0.1' 'refs/tags/v3.6.1171.0.=
-2'
-'refs/tags/v3.6.1171.0.3' 'refs/tags/v3.6.1172' 'refs/tags/v3.6.1173'
-'refs/tags/v3.6.1174' 'refs/tags/v3.6.1175' 'refs/tags/v3.6.1176'
-'refs/tags/v3.6.1177' 'refs/tags/v3.6.1177.0.1' 'refs/tags/v3.6.1177.0.=
-2'
-'refs/tags/v3.6.1177.1.0' 'refs/tags/v3.6.1177.2.1'
-'refs/tags/v3.6.1177.2.10' 'refs/tags/v3.6.1177.2.11'
-'refs/tags/v3.6.1177.2.12' 'refs/tags/v3.6.1177.2.13'
-'refs/tags/v3.6.1177.2.13.10' 'refs/tags/v3.6.1177.2.14'
-'refs/tags/v3.6.1177.2.15' 'refs/tags/v3.6.1177.2.2'
-'refs/tags/v3.6.1177.2.3' 'refs/tags/v3.6.1177.2.4'
-'refs/tags/v3.6.1177.2.5' 'refs/tags/v3.6.1177.2.6'
-'refs/tags/v3.6.1177.2.7' 'refs/tags/v3.6.1177.2.8'
-'refs/tags/v3.6.1177.2.9' 'refs/tags/v3.6.1178' 'refs/tags/v3.6.1179'
-'refs/tags/v3.6.1180' 'refs/tags/v3.6.1181' 'refs/tags/v3.6.1182'
-'refs/tags/v3.6.1183' 'refs/tags/v3.6.1184' 'refs/tags/v3.6.1185'
-'refs/tags/v3.6.1186' 'refs/tags/v3.6.1187' 'refs/tags/v3.6.1188'
-'refs/tags/v3.6.1189' 'refs/tags/v3.6.1190' 'refs/tags/v3.6.1191'
-'refs/tags/v3.6.1192' 'refs/tags/v3.6.1193' 'refs/tags/v3.6.1194'
-'refs/tags/v3.6.1195' 'refs/tags/v3.6.1196' 'refs/tags/v3.6.1197'
-'refs/tags/v3.6.1198' 'refs/tags/v3.6.1199' 'refs/tags/v3.6.1200'
-'refs/tags/v3.6.1201' 'refs/tags/v3.6.1202' 'refs/tags/v3.6.1203'
-'refs/tags/v3.6.1204' 'refs/tags/v3.6.1205' 'refs/tags/v3.6.1206'
-'refs/tags/v3.6.1207' 'refs/tags/v3.6.1208' 'refs/tags/v3.6.1209'
-'refs/tags/v3.6.1210' 'refs/tags/v3.6.1211' 'refs/tags/v3.6.1212'
-'refs/tags/v3.6.1213' 'refs/tags/v3.6.1214' 'refs/tags/v3.6.1215'
-'refs/tags/v3.6.1216' 'refs/tags/v3.6.1217' 'refs/tags/v3.6.1218'
-'refs/tags/v3.6.1219' 'refs/tags/v3.6.1220' 'refs/tags/v3.6.1221'
-'refs/tags/v3.6.1222' 'refs/tags/v3.6.1223' 'refs/tags/v3.6.1224'
-'refs/tags/v3.6.1225' 'refs/tags/v3.6.1226' 'refs/tags/v3.6.1227'
-'refs/tags/v3.6.1227.0.1.1' 'refs/tags/v3.6.1227.1.1' 'refs/tags/v3.6.1=
-228'
-'refs/tags/v3.6.1228_2phase.1' 'refs/tags/v3.6.1229' 'refs/tags/v3.6.12=
-30'
-'refs/tags/v3.6.1231' 'refs/tags/v3.6.1232' 'refs/tags/v3.6.1233'
-'refs/tags/v3.6.1234' 'refs/tags/v3.6.1235' 'refs/tags/v3.6.1236'
-'refs/tags/v3.6.1237' 'refs/tags/v3.6.1238' 'refs/tags/v3.6.1239'
-'refs/tags/v3.6.1240' 'refs/tags/v3.6.1241' 'refs/tags/v3.6.1242'
-'refs/tags/v3.6.1243' 'refs/tags/v3.6.1244' 'refs/tags/v3.6.1245'
-'refs/tags/v3.6.1246' 'refs/tags/v3.6.1247' 'refs/tags/v3.6.1248'
-'refs/tags/v3.6.1249' 'refs/tags/v3.6.1250' 'refs/tags/v3.6.1251'
-'refs/tags/v3.6.1252' 'refs/tags/v3.6.1253' 'refs/tags/v3.6.1254'
-'refs/tags/v3.6.1255' 'refs/tags/v3.6.1256' 'refs/tags/v3.6.1257'
-'refs/tags/v3.6.1258' 'refs/tags/v3.6.1259' 'refs/tags/v3.6.1260'
-'refs/tags/v3.6.1261' 'refs/tags/v3.6.1262' 'refs/tags/v3.6.1263'
-'refs/tags/v3.6.1264' 'refs/tags/v3.6.1265' 'refs/tags/v3.6.1266'
-'refs/tags/v3.6.1267' 'refs/tags/v3.6.1267.0.1.1'
-'refs/tags/v3.6.1267.0.1.10' 'refs/tags/v3.6.1267.0.1.11'
-'refs/tags/v3.6.1267.0.1.12' 'refs/tags/v3.6.1267.0.1.2'
-'refs/tags/v3.6.1267.0.1.3' 'refs/tags/v3.6.1267.0.1.4'
-'refs/tags/v3.6.1267.0.1.5' 'refs/tags/v3.6.1267.0.1.6'
-'refs/tags/v3.6.1267.0.1.7' 'refs/tags/v3.6.1267.0.1.7.0.1'
-'refs/tags/v3.6.1267.0.1.7.0.2' 'refs/tags/v3.6.1267.0.1.7.0.3'
-'refs/tags/v3.6.1267.0.1.7.0.4' 'refs/tags/v3.6.1267.0.1.7.0.5'
-'refs/tags/v3.6.1267.0.1.7.0.6' 'refs/tags/v3.6.1267.0.1.7.0.7'
-'refs/tags/v3.6.1267.0.1.8' 'refs/tags/v3.6.1267.0.1.9'
-'refs/tags/v3.6.1268' 'refs/tags/v3.6.1269' 'refs/tags/v3.7.0001'
-'refs/tags/v3.7.0002' 'refs/tags/v3.7.0003' 'refs/tags/v3.7.0004'
-'refs/tags/v3.7.0005' 'refs/tags/v3.7.0006' 'refs/tags/v3.7.0007'
-'refs/tags/v3.7.0008' 'refs/tags/v3.7.0009' 'refs/tags/v3.7.0010'
-'refs/tags/v3.7.0011' 'refs/tags/v3.7.0012' 'refs/tags/v3.7.0013'
-'refs/tags/v3.7.0014' 'refs/tags/v3.7.0015' 'refs/tags/v3.7.0016'
-'refs/tags/v3.7.0017' 'refs/tags/v3.7.0017.0.1.1'
-'refs/tags/v3.7.0017.0.1.2' 'refs/tags/v3.7.0017.0.1.2.0.1.1'
-'refs/tags/v3.7.0017.0.1.2.0.1.2' 'refs/tags/v3.7.0017.0.1.2.0.1.3'
-'refs/tags/v3.7.0017.0.1.2.0.1.4' 'refs/tags/v3.7.0017.0.1.2.0.1.5'
-'refs/tags/v3.7.0017.0.1.2.0.1.6' 'refs/tags/v3.7.0017.0.1.2.0.1.7'
-'refs/tags/v3.7.0017.0.1.3' 'refs/tags/v3.7.0018' 'refs/tags/v3.7.0019'
-'refs/tags/v3.8.0000' 'refs/tags/v3.8.0001' 'refs/tags/v3.8.0002'
-'refs/tags/v3.8.0003' 'refs/tags/v3.8.0004' 'refs/tags/v3.8.0005'
-'refs/tags/v3.8.0006' 'refs/tags/v5.48a.13' 'refs/tags/v5.48a11a'
-'refs/tags/v5.48a12' 'refs/tags/v5.48a14' 'refs/tags/v5.48a15'
-'refs/tags/v5.48a17' 'refs/tags/v5.48a18' 'refs/tags/v5.48a19'
-'refs/tags/v5.48a20' 'refs/tags/v5.48a21' 'refs/tags/v5.48a22'
-'refs/tags/v5.48a23' 'refs/tags/v5.48a24' 'refs/tags/v5.48a25'
-'refs/tags/v5.48a26' 'refs/tags/v5.48a27' 'refs/tags/v5.48a28'
-'refs/tags/v5.48a29' 'refs/tags/v5.48a29.1' 'refs/tags/v5.48a30'
-'refs/tags/v5.48a31' 'refs/tags/v5.48a31.0.1' 'refs/tags/v5.48a31.0.10'
-'refs/tags/v5.48a31.0.11' 'refs/tags/v5.48a31.0.12'
-'refs/tags/v5.48a31.0.13' 'refs/tags/v5.48a31.0.14'
-'refs/tags/v5.48a31.0.15' 'refs/tags/v5.48a31.0.16'
-'refs/tags/v5.48a31.0.17' 'refs/tags/v5.48a31.0.18'
-'refs/tags/v5.48a31.0.18.1' 'refs/tags/v5.48a31.0.18.10'
-'refs/tags/v5.48a31.0.18.11' 'refs/tags/v5.48a31.0.18.12'
-'refs/tags/v5.48a31.0.18.12.1' 'refs/tags/v5.48a31.0.18.12.1.1'
-'refs/tags/v5.48a31.0.18.12.2' 'refs/tags/v5.48a31.0.18.12.3'
-'refs/tags/v5.48a31.0.18.12.4' 'refs/tags/v5.48a31.0.18.14'
-'refs/tags/v5.48a31.0.18.2' 'refs/tags/v5.48a31.0.18.3'
-'refs/tags/v5.48a31.0.18.4' 'refs/tags/v5.48a31.0.18.5'
-'refs/tags/v5.48a31.0.18.6' 'refs/tags/v5.48a31.0.18.7'
-'refs/tags/v5.48a31.0.18.8' 'refs/tags/v5.48a31.0.18.8.0.1'
-'refs/tags/v5.48a31.0.18.8.0.2' 'refs/tags/v5.48a31.0.18.8.0.3'
-'refs/tags/v5.48a31.0.18.9' 'refs/tags/v5.48a31.0.19'
-'refs/tags/v5.48a31.0.2' 'refs/tags/v5.48a31.0.20' 'refs/tags/v5.48a31.=
-0.21'
-'refs/tags/v5.48a31.0.22' 'refs/tags/v5.48a31.0.23'
-'refs/tags/v5.48a31.0.24' 'refs/tags/v5.48a31.0.3' 'refs/tags/v5.48a31.=
-0.4'
-'refs/tags/v5.48a31.0.5' 'refs/tags/v5.48a31.0.6' 'refs/tags/v5.48a31.0=
-=2E7'
-'refs/tags/v5.48a31.0.8' 'refs/tags/v5.48a31.0.9' 'refs/tags/v5.48a31.1=
-'
-'refs/tags/v5.48a32' 'refs/tags/v5.48a33' 'refs/tags/v5.48a34'
-'refs/tags/v5.52' 'refs/tags/v5.53' 'refs/tags/v5.54' 'refs/tags/v5.55'
-'refs/tags/v5.56' 'refs/tags/v5.57' 'refs/tags/v5.58'=20
-trace: exec: 'git' 'fetch-pack' '--stateless-rpc' '--lock-pack' '--thin=
-'
-'--no-progress' 'https://10.1.30.61/git/WebGui/' 'refs/heads/master'
-'refs/tags/3.6.1227_rdirplus' 'refs/tags/3.6.1227_rdirplus2'
-'refs/tags/3.7.1.0000' 'refs/tags/3.7.1.0001' 'refs/tags/3.7.1.0002'
-'refs/tags/3.7.1.0003' 'refs/tags/3.7.1.0004' 'refs/tags/3.7.1.0005'
-'refs/tags/3.7.1.0006' 'refs/tags/3.7.1.0007' 'refs/tags/3.7.1.0008'
-'refs/tags/3.7.1.0009' 'refs/tags/3.7.1.0010' 'refs/tags/3.7.1.0011'
-'refs/tags/3.7.1.0012' 'refs/tags/3.7.1.0013' 'refs/tags/3.7.1.0014'
-'refs/tags/3.7.1.0015' 'refs/tags/3.7.1.0016' 'refs/tags/3.7.1.0017'
-'refs/tags/3.7.1.0018' 'refs/tags/3.7.1.0019' 'refs/tags/3.7.1.0020'
-'refs/tags/3.7.1.0021' 'refs/tags/3.7.1.0022' 'refs/tags/3.7.1.0023'
-'refs/tags/3.7.1.0024' 'refs/tags/3.7.1.0025' 'refs/tags/3.7.1.0026'
-'refs/tags/3.7.1.0027' 'refs/tags/3.7.1.0028' 'refs/tags/3.7.1.0029'
-'refs/tags/3.7.1.0030' 'refs/tags/5.12' 'refs/tags/5.13' 'refs/tags/5.1=
-4'
-'refs/tags/5.15' 'refs/tags/5.16' 'refs/tags/5.17' 'refs/tags/5.18'
-'refs/tags/5.19' 'refs/tags/5.21' 'refs/tags/5.22' 'refs/tags/5.24'
-'refs/tags/5.25' 'refs/tags/5.26' 'refs/tags/5.27' 'refs/tags/5.27.1'
-'refs/tags/5.27.10' 'refs/tags/5.27.11' 'refs/tags/5.27.12'
-'refs/tags/5.27.13' 'refs/tags/5.27.14' 'refs/tags/5.27.15'
-'refs/tags/5.27.16' 'refs/tags/5.27.17' 'refs/tags/5.27.2'
-'refs/tags/5.27.3' 'refs/tags/5.27.4' 'refs/tags/5.27.4a'
-'refs/tags/5.27.4b' 'refs/tags/5.27.4c' 'refs/tags/5.27.4d'
-'refs/tags/5.27.4e' 'refs/tags/5.27.4f' 'refs/tags/5.27.4g'
-'refs/tags/5.27.4h' 'refs/tags/5.27.4i' 'refs/tags/5.27.4j'
-'refs/tags/5.27.4k' 'refs/tags/5.27.4l' 'refs/tags/5.27.4m'
-'refs/tags/5.27.4n' 'refs/tags/5.27.4o' 'refs/tags/5.27.4o_nir'
-'refs/tags/5.27.4p' 'refs/tags/5.27.4q' 'refs/tags/5.27.4r'
-'refs/tags/5.27.4s' 'refs/tags/5.27.4s1' 'refs/tags/5.27.4t'
-'refs/tags/5.27.4u' 'refs/tags/5.27.4v' 'refs/tags/5.27.4w'
-'refs/tags/5.27.5' 'refs/tags/5.27.6' 'refs/tags/5.27.7' 'refs/tags/5.2=
-7.7a'
-'refs/tags/5.27.7b' 'refs/tags/5.27.8' 'refs/tags/5.27.9' 'refs/tags/5.=
-27a'
-'refs/tags/5.28' 'refs/tags/5.29' 'refs/tags/5.30' 'refs/tags/5.31'
-'refs/tags/5.32' 'refs/tags/5.33' 'refs/tags/5.34' 'refs/tags/5.35'
-'refs/tags/5.36' 'refs/tags/5.37' 'refs/tags/5.38' 'refs/tags/5.39'
-'refs/tags/5.40' 'refs/tags/5.41' 'refs/tags/5.42' 'refs/tags/5.43'
-'refs/tags/5.44' 'refs/tags/5.45' 'refs/tags/5.46' 'refs/tags/5.47'
-'refs/tags/5.48' 'refs/tags/5.48a' 'refs/tags/5.48a1' 'refs/tags/5.48a1=
-1'
-'refs/tags/5.48a2' 'refs/tags/5.48b' 'refs/tags/5.48c' 'refs/tags/5.49'
-'refs/tags/5.50' 'refs/tags/5.51' 'refs/tags/AV_IP_4master'
-'refs/tags/non_released_3.7.1.0014' 'refs/tags/v3.5.0064'
-'refs/tags/v3.5.0065' 'refs/tags/v3.5.0066' 'refs/tags/v3.5.0067'
-'refs/tags/v3.5.0068' 'refs/tags/v3.5.0069' 'refs/tags/v3.5.0070'
-'refs/tags/v3.5.0071' 'refs/tags/v3.5.0072' 'refs/tags/v3.5.0073'
-'refs/tags/v3.5.0074' 'refs/tags/v3.5.0075' 'refs/tags/v3.5.0076'
-'refs/tags/v3.5.0077' 'refs/tags/v3.5.0078' 'refs/tags/v3.5.0079'
-'refs/tags/v3.5.0080' 'refs/tags/v3.5.0081' 'refs/tags/v3.5.0082'
-'refs/tags/v3.5.0083' 'refs/tags/v3.5.0084' 'refs/tags/v3.5.0085'
-'refs/tags/v3.5.0086' 'refs/tags/v3.5.0087' 'refs/tags/v3.5.0088'
-'refs/tags/v3.5.0089' 'refs/tags/v3.5.0090' 'refs/tags/v3.5.0091'
-'refs/tags/v3.5.0092' 'refs/tags/v3.5.0092.1' 'refs/tags/v3.5.0092.2'
-'refs/tags/v3.5.0092.3' 'refs/tags/v3.5.0092.4' 'refs/tags/v3.5.0093'
-'refs/tags/v3.5.0094' 'refs/tags/v3.5.0095' 'refs/tags/v3.5.0096'
-'refs/tags/v3.5.0097' 'refs/tags/v3.5.0098' 'refs/tags/v3.5.0099'
-'refs/tags/v3.5.0100' 'refs/tags/v3.5.0101' 'refs/tags/v3.5.0102'
-'refs/tags/v3.5.1103' 'refs/tags/v3.5.1104' 'refs/tags/v3.5.1105'
-'refs/tags/v3.5.1106' 'refs/tags/v3.5.1106.1' 'refs/tags/v3.5.1106.10'
-'refs/tags/v3.5.1106.11' 'refs/tags/v3.5.1106.12' 'refs/tags/v3.5.1106.=
-13'
-'refs/tags/v3.5.1106.2' 'refs/tags/v3.5.1106.3' 'refs/tags/v3.5.1106.4'
-'refs/tags/v3.5.1106.5' 'refs/tags/v3.5.1106.6' 'refs/tags/v3.5.1106.7'
-'refs/tags/v3.5.1106.8' 'refs/tags/v3.5.1106.9' 'refs/tags/v3.5.1107'
-'refs/tags/v3.5.1108' 'refs/tags/v3.5.1109' 'refs/tags/v3.5.1110'
-'refs/tags/v3.5.1111' 'refs/tags/v3.5.1112' 'refs/tags/v3.5.1113'
-'refs/tags/v3.5.1114' 'refs/tags/v3.5.1115' 'refs/tags/v3.5.1116'
-'refs/tags/v3.5.1117' 'refs/tags/v3.5.1117.0.1' 'refs/tags/v3.5.1117.0.=
-2'
-'refs/tags/v3.5.1117.0.3' 'refs/tags/v3.5.1117.0.4' 'refs/tags/v3.5.111=
-7.1'
-'refs/tags/v3.5.1117.1.1' 'refs/tags/v3.5.1118' 'refs/tags/v3.5.1119'
-'refs/tags/v3.5.1120' 'refs/tags/v3.5.1121' 'refs/tags/v3.5.1122'
-'refs/tags/v3.5.1123' 'refs/tags/v3.5.1124' 'refs/tags/v3.5.1125'
-'refs/tags/v3.5.1126' 'refs/tags/v3.5.1127' 'refs/tags/v3.5.1128'
-'refs/tags/v3.5.1129' 'refs/tags/v3.5.1130' 'refs/tags/v3.5.1130.0.1'
-'refs/tags/v3.5.1130.0.2' 'refs/tags/v3.5.1130.0.3'
-'refs/tags/v3.5.1130.0.3.1.1' 'refs/tags/v3.5.1130.0.3.1.2'
-'refs/tags/v3.5.1130.0.3.1.3' 'refs/tags/v3.5.1130.0.3.1.3.1'
-'refs/tags/v3.5.1130.0.3.1.3.2' 'refs/tags/v3.5.1130.0.3.1.3.3'
-'refs/tags/v3.5.1130.0.3.1.3.4' 'refs/tags/v3.5.1130.0.3.1.3.5'
-'refs/tags/v3.5.1130.0.3.1.3.6' 'refs/tags/v3.5.1130.0.3.1.4'
-'refs/tags/v3.5.1130.0.3.1.5' 'refs/tags/v3.5.1130.0.4'
-'refs/tags/v3.5.1130.0.5' 'refs/tags/v3.5.1130.0.6' 'refs/tags/v3.5.113=
-0.1'
-'refs/tags/v3.5.1130.2' 'refs/tags/v3.5.1130.3' 'refs/tags/v3.5.1130.3.=
-1'
-'refs/tags/v3.5.1130.3.2' 'refs/tags/v3.5.1130.3.3'
-'refs/tags/v3.5.1130.3.4' 'refs/tags/v3.5.1130.3.5' 'refs/tags/v3.5.113=
-0.4'
-'refs/tags/v3.5.1130.5' 'refs/tags/v3.5.1130.6' 'refs/tags/v3.5.1130.7'
-'refs/tags/v3.5.1130.7.1' 'refs/tags/v3.5.1130.7.10'
-'refs/tags/v3.5.1130.7.11' 'refs/tags/v3.5.1130.7.12'
-'refs/tags/v3.5.1130.7.13' 'refs/tags/v3.5.1130.7.14'
-'refs/tags/v3.5.1130.7.15' 'refs/tags/v3.5.1130.7.16'
-'refs/tags/v3.5.1130.7.17' 'refs/tags/v3.5.1130.7.18'
-'refs/tags/v3.5.1130.7.19' 'refs/tags/v3.5.1130.7.2'
-'refs/tags/v3.5.1130.7.20' 'refs/tags/v3.5.1130.7.21'
-'refs/tags/v3.5.1130.7.22' 'refs/tags/v3.5.1130.7.23'
-'refs/tags/v3.5.1130.7.24' 'refs/tags/v3.5.1130.7.25'
-'refs/tags/v3.5.1130.7.25.0.1' 'refs/tags/v3.5.1130.7.25.0.2'
-'refs/tags/v3.5.1130.7.25.0.3' 'refs/tags/v3.5.1130.7.25.0.4'
-'refs/tags/v3.5.1130.7.25.0.5' 'refs/tags/v3.5.1130.7.25.0.5.0.1'
-'refs/tags/v3.5.1130.7.25.0.6' 'refs/tags/v3.5.1130.7.25.0.7'
-'refs/tags/v3.5.1130.7.25.0.8' 'refs/tags/v3.5.1130.7.25.0.9'
-'refs/tags/v3.5.1130.7.3' 'refs/tags/v3.5.1130.7.4'
-'refs/tags/v3.5.1130.7.5' 'refs/tags/v3.5.1130.7.6'
-'refs/tags/v3.5.1130.7.7' 'refs/tags/v3.5.1130.7.8'
-'refs/tags/v3.5.1130.7.9' 'refs/tags/v3.5.1130.8'
-'refs/tags/v3.5.1130.UBS_TEST' 'refs/tags/v3.5.1130a'
-'refs/tags/v3.5.1130a2' 'refs/tags/v3.5.1131' 'refs/tags/v3.6.1132'
-'refs/tags/v3.6.1133' 'refs/tags/v3.6.1134' 'refs/tags/v3.6.1135'
-'refs/tags/v3.6.1136' 'refs/tags/v3.6.1137' 'refs/tags/v3.6.1138'
-'refs/tags/v3.6.1138FC' 'refs/tags/v3.6.1138FC.1' 'refs/tags/v3.6.1138F=
-C.2'
-'refs/tags/v3.6.1138FC.3' 'refs/tags/v3.6.1138FC.4'
-'refs/tags/v3.6.1138FC.5' 'refs/tags/v3.6.1138FC.6'
-'refs/tags/v3.6.1138FC.7' 'refs/tags/v3.6.1139' 'refs/tags/v3.6.1140'
-'refs/tags/v3.6.1141' 'refs/tags/v3.6.1142' 'refs/tags/v3.6.1143'
-'refs/tags/v3.6.1144' 'refs/tags/v3.6.1145' 'refs/tags/v3.6.1146'
-'refs/tags/v3.6.1147' 'refs/tags/v3.6.1148' 'refs/tags/v3.6.1148.1.1'
-'refs/tags/v3.6.1148.1.2' 'refs/tags/v3.6.1148.1.3'
-'refs/tags/v3.6.1148.1.4' 'refs/tags/v3.6.1148.1.5'
-'refs/tags/v3.6.1148.1.6' 'refs/tags/v3.6.1148.1.7'
-'refs/tags/v3.6.1148.1.8' 'refs/tags/v3.6.1148.1.9' 'refs/tags/v3.6.114=
-9'
-'refs/tags/v3.6.1150' 'refs/tags/v3.6.1151' 'refs/tags/v3.6.1152'
-'refs/tags/v3.6.1153' 'refs/tags/v3.6.1154' 'refs/tags/v3.6.1155'
-'refs/tags/v3.6.1156' 'refs/tags/v3.6.1157' 'refs/tags/v3.6.1158'
-'refs/tags/v3.6.1159' 'refs/tags/v3.6.1159.1.1' 'refs/tags/v3.6.1159.1.=
-2'
-'refs/tags/v3.6.1159.1.3' 'refs/tags/v3.6.1159.1.4'
-'refs/tags/v3.6.1159.1.5' 'refs/tags/v3.6.1159.1.6' 'refs/tags/v3.6.116=
-0'
-'refs/tags/v3.6.1161' 'refs/tags/v3.6.1162' 'refs/tags/v3.6.1163'
-'refs/tags/v3.6.1164' 'refs/tags/v3.6.1165' 'refs/tags/v3.6.1166'
-'refs/tags/v3.6.1168' 'refs/tags/v3.6.1169' 'refs/tags/v3.6.1170'
-'refs/tags/v3.6.1171' 'refs/tags/v3.6.1171.0.1' 'refs/tags/v3.6.1171.0.=
-2'
-'refs/tags/v3.6.1171.0.3' 'refs/tags/v3.6.1172' 'refs/tags/v3.6.1173'
-'refs/tags/v3.6.1174' 'refs/tags/v3.6.1175' 'refs/tags/v3.6.1176'
-'refs/tags/v3.6.1177' 'refs/tags/v3.6.1177.0.1' 'refs/tags/v3.6.1177.0.=
-2'
-'refs/tags/v3.6.1177.1.0' 'refs/tags/v3.6.1177.2.1'
-'refs/tags/v3.6.1177.2.10' 'refs/tags/v3.6.1177.2.11'
-'refs/tags/v3.6.1177.2.12' 'refs/tags/v3.6.1177.2.13'
-'refs/tags/v3.6.1177.2.13.10' 'refs/tags/v3.6.1177.2.14'
-'refs/tags/v3.6.1177.2.15' 'refs/tags/v3.6.1177.2.2'
-'refs/tags/v3.6.1177.2.3' 'refs/tags/v3.6.1177.2.4'
-'refs/tags/v3.6.1177.2.5' 'refs/tags/v3.6.1177.2.6'
-'refs/tags/v3.6.1177.2.7' 'refs/tags/v3.6.1177.2.8'
-'refs/tags/v3.6.1177.2.9' 'refs/tags/v3.6.1178' 'refs/tags/v3.6.1179'
-'refs/tags/v3.6.1180' 'refs/tags/v3.6.1181' 'refs/tags/v3.6.1182'
-'refs/tags/v3.6.1183' 'refs/tags/v3.6.1184' 'refs/tags/v3.6.1185'
-'refs/tags/v3.6.1186' 'refs/tags/v3.6.1187' 'refs/tags/v3.6.1188'
-'refs/tags/v3.6.1189' 'refs/tags/v3.6.1190' 'refs/tags/v3.6.1191'
-'refs/tags/v3.6.1192' 'refs/tags/v3.6.1193' 'refs/tags/v3.6.1194'
-'refs/tags/v3.6.1195' 'refs/tags/v3.6.1196' 'refs/tags/v3.6.1197'
-'refs/tags/v3.6.1198' 'refs/tags/v3.6.1199' 'refs/tags/v3.6.1200'
-'refs/tags/v3.6.1201' 'refs/tags/v3.6.1202' 'refs/tags/v3.6.1203'
-'refs/tags/v3.6.1204' 'refs/tags/v3.6.1205' 'refs/tags/v3.6.1206'
-'refs/tags/v3.6.1207' 'refs/tags/v3.6.1208' 'refs/tags/v3.6.1209'
-'refs/tags/v3.6.1210' 'refs/tags/v3.6.1211' 'refs/tags/v3.6.1212'
-'refs/tags/v3.6.1213' 'refs/tags/v3.6.1214' 'refs/tags/v3.6.1215'
-'refs/tags/v3.6.1216' 'refs/tags/v3.6.1217' 'refs/tags/v3.6.1218'
-'refs/tags/v3.6.1219' 'refs/tags/v3.6.1220' 'refs/tags/v3.6.1221'
-'refs/tags/v3.6.1222' 'refs/tags/v3.6.1223' 'refs/tags/v3.6.1224'
-'refs/tags/v3.6.1225' 'refs/tags/v3.6.1226' 'refs/tags/v3.6.1227'
-'refs/tags/v3.6.1227.0.1.1' 'refs/tags/v3.6.1227.1.1' 'refs/tags/v3.6.1=
-228'
-'refs/tags/v3.6.1228_2phase.1' 'refs/tags/v3.6.1229' 'refs/tags/v3.6.12=
-30'
-'refs/tags/v3.6.1231' 'refs/tags/v3.6.1232' 'refs/tags/v3.6.1233'
-'refs/tags/v3.6.1234' 'refs/tags/v3.6.1235' 'refs/tags/v3.6.1236'
-'refs/tags/v3.6.1237' 'refs/tags/v3.6.1238' 'refs/tags/v3.6.1239'
-'refs/tags/v3.6.1240' 'refs/tags/v3.6.1241' 'refs/tags/v3.6.1242'
-'refs/tags/v3.6.1243' 'refs/tags/v3.6.1244' 'refs/tags/v3.6.1245'
-'refs/tags/v3.6.1246' 'refs/tags/v3.6.1247' 'refs/tags/v3.6.1248'
-'refs/tags/v3.6.1249' 'refs/tags/v3.6.1250' 'refs/tags/v3.6.1251'
-'refs/tags/v3.6.1252' 'refs/tags/v3.6.1253' 'refs/tags/v3.6.1254'
-'refs/tags/v3.6.1255' 'refs/tags/v3.6.1256' 'refs/tags/v3.6.1257'
-'refs/tags/v3.6.1258' 'refs/tags/v3.6.1259' 'refs/tags/v3.6.1260'
-'refs/tags/v3.6.1261' 'refs/tags/v3.6.1262' 'refs/tags/v3.6.1263'
-'refs/tags/v3.6.1264' 'refs/tags/v3.6.1265' 'refs/tags/v3.6.1266'
-'refs/tags/v3.6.1267' 'refs/tags/v3.6.1267.0.1.1'
-'refs/tags/v3.6.1267.0.1.10' 'refs/tags/v3.6.1267.0.1.11'
-'refs/tags/v3.6.1267.0.1.12' 'refs/tags/v3.6.1267.0.1.2'
-'refs/tags/v3.6.1267.0.1.3' 'refs/tags/v3.6.1267.0.1.4'
-'refs/tags/v3.6.1267.0.1.5' 'refs/tags/v3.6.1267.0.1.6'
-'refs/tags/v3.6.1267.0.1.7' 'refs/tags/v3.6.1267.0.1.7.0.1'
-'refs/tags/v3.6.1267.0.1.7.0.2' 'refs/tags/v3.6.1267.0.1.7.0.3'
-'refs/tags/v3.6.1267.0.1.7.0.4' 'refs/tags/v3.6.1267.0.1.7.0.5'
-'refs/tags/v3.6.1267.0.1.7.0.6' 'refs/tags/v3.6.1267.0.1.7.0.7'
-'refs/tags/v3.6.1267.0.1.8' 'refs/tags/v3.6.1267.0.1.9'
-'refs/tags/v3.6.1268' 'refs/tags/v3.6.1269' 'refs/tags/v3.7.0001'
-'refs/tags/v3.7.0002' 'refs/tags/v3.7.0003' 'refs/tags/v3.7.0004'
-'refs/tags/v3.7.0005' 'refs/tags/v3.7.0006' 'refs/tags/v3.7.0007'
-'refs/tags/v3.7.0008' 'refs/tags/v3.7.0009' 'refs/tags/v3.7.0010'
-'refs/tags/v3.7.0011' 'refs/tags/v3.7.0012' 'refs/tags/v3.7.0013'
-'refs/tags/v3.7.0014' 'refs/tags/v3.7.0015' 'refs/tags/v3.7.0016'
-'refs/tags/v3.7.0017' 'refs/tags/v3.7.0017.0.1.1'
-'refs/tags/v3.7.0017.0.1.2' 'refs/tags/v3.7.0017.0.1.2.0.1.1'
-'refs/tags/v3.7.0017.0.1.2.0.1.2' 'refs/tags/v3.7.0017.0.1.2.0.1.3'
-'refs/tags/v3.7.0017.0.1.2.0.1.4' 'refs/tags/v3.7.0017.0.1.2.0.1.5'
-'refs/tags/v3.7.0017.0.1.2.0.1.6' 'refs/tags/v3.7.0017.0.1.2.0.1.7'
-'refs/tags/v3.7.0017.0.1.3' 'refs/tags/v3.7.0018' 'refs/tags/v3.7.0019'
-'refs/tags/v3.8.0000' 'refs/tags/v3.8.0001' 'refs/tags/v3.8.0002'
-'refs/tags/v3.8.0003' 'refs/tags/v3.8.0004' 'refs/tags/v3.8.0005'
-'refs/tags/v3.8.0006' 'refs/tags/v5.48a.13' 'refs/tags/v5.48a11a'
-'refs/tags/v5.48a12' 'refs/tags/v5.48a14' 'refs/tags/v5.48a15'
-'refs/tags/v5.48a17' 'refs/tags/v5.48a18' 'refs/tags/v5.48a19'
-'refs/tags/v5.48a20' 'refs/tags/v5.48a21' 'refs/tags/v5.48a22'
-'refs/tags/v5.48a23' 'refs/tags/v5.48a24' 'refs/tags/v5.48a25'
-'refs/tags/v5.48a26' 'refs/tags/v5.48a27' 'refs/tags/v5.48a28'
-'refs/tags/v5.48a29' 'refs/tags/v5.48a29.1' 'refs/tags/v5.48a30'
-'refs/tags/v5.48a31' 'refs/tags/v5.48a31.0.1' 'refs/tags/v5.48a31.0.10'
-'refs/tags/v5.48a31.0.11' 'refs/tags/v5.48a31.0.12'
-'refs/tags/v5.48a31.0.13' 'refs/tags/v5.48a31.0.14'
-'refs/tags/v5.48a31.0.15' 'refs/tags/v5.48a31.0.16'
-'refs/tags/v5.48a31.0.17' 'refs/tags/v5.48a31.0.18'
-'refs/tags/v5.48a31.0.18.1' 'refs/tags/v5.48a31.0.18.10'
-'refs/tags/v5.48a31.0.18.11' 'refs/tags/v5.48a31.0.18.12'
-'refs/tags/v5.48a31.0.18.12.1' 'refs/tags/v5.48a31.0.18.12.1.1'
-'refs/tags/v5.48a31.0.18.12.2' 'refs/tags/v5.48a31.0.18.12.3'
-'refs/tags/v5.48a31.0.18.12.4' 'refs/tags/v5.48a31.0.18.14'
-'refs/tags/v5.48a31.0.18.2' 'refs/tags/v5.48a31.0.18.3'
-'refs/tags/v5.48a31.0.18.4' 'refs/tags/v5.48a31.0.18.5'
-'refs/tags/v5.48a31.0.18.6' 'refs/tags/v5.48a31.0.18.7'
-'refs/tags/v5.48a31.0.18.8' 'refs/tags/v5.48a31.0.18.8.0.1'
-'refs/tags/v5.48a31.0.18.8.0.2' 'refs/tags/v5.48a31.0.18.8.0.3'
-'refs/tags/v5.48a31.0.18.9' 'refs/tags/v5.48a31.0.19'
-'refs/tags/v5.48a31.0.2' 'refs/tags/v5.48a31.0.20' 'refs/tags/v5.48a31.=
-0.21'
-'refs/tags/v5.48a31.0.22' 'refs/tags/v5.48a31.0.23'
-'refs/tags/v5.48a31.0.24' 'refs/tags/v5.48a31.0.3' 'refs/tags/v5.48a31.=
-0.4'
-'refs/tags/v5.48a31.0.5' 'refs/tags/v5.48a31.0.6' 'refs/tags/v5.48a31.0=
-=2E7'
-'refs/tags/v5.48a31.0.8' 'refs/tags/v5.48a31.0.9' 'refs/tags/v5.48a31.1=
-'
-'refs/tags/v5.48a32' 'refs/tags/v5.48a33' 'refs/tags/v5.48a34'
-'refs/tags/v5.52' 'refs/tags/v5.53' 'refs/tags/v5.54' 'refs/tags/v5.55'
-'refs/tags/v5.56' 'refs/tags/v5.57' 'refs/tags/v5.58' 'refs/tags/v5.59'
-'refs/tags/v5.60' 'refs/tags/v5.61' 'refs/tags/v5.62' 'refs/tags/v5.63'=
-=20
-trace: built-in: git 'fetch-pack' '--stateless-rpc' '--lock-pack' '--th=
-in'
-'--no-progress' 'https://10.1.30.61/git/WebGui/' 'refs/heads/master'
-'refs/tags/3.6.1227_rdirplus' 'refs/tags/3.6.1227_rdirplus2'
-'refs/tags/3.7.1.0000' 'refs/tags/3.7.1.0001' 'refs/tags/3.7.1.0002'
-'refs/tags/3.7.1.0003' 'refs/tags/3.7.1.0004' 'refs/tags/3.7.1.0005'
-'refs/tags/3.7.1.0006' 'refs/tags/3.7.1.0007' 'refs/tags/3.7.1.0008'
-'refs/tags/3.7.1.0009' 'refs/tags/3.7.1.0010' 'refs/tags/3.7.1.0011'
-'refs/tags/3.7.1.0012' 'refs/tags/3.7.1.0013' 'refs/tags/3.7.1.0014'
-'refs/tags/3.7.1.0015' 'refs/tags/3.7.1.0016' 'refs/tags/3.7.1.0017'
-'refs/tags/3.7.1.0018' 'refs/tags/3.7.1.0019' 'refs/tags/3.7.1.0020'
-'refs/tags/3.7.1.0021' 'refs/tags/3.7.1.0022' 'refs/tags/3.7.1.0023'
-'refs/tags/3.7.1.0024' 'refs/tags/3.7.1.0025' 'refs/tags/3.7.1.0026'
-'refs/tags/3.7.1.0027' 'refs/tags/3.7.1.0028' 'refs/tags/3.7.1.0029'
-'refs/tags/3.7.1.0030' 'refs/tags/5.12' 'refs/tags/5.13' 'refs/tags/5.1=
-4'
-'refs/tags/5.15' 'refs/tags/5.16' 'refs/tags/5.17' 'refs/tags/5.18'
-'refs/tags/5.19' 'refs/tags/5.21' 'refs/tags/5.22' 'refs/tags/5.24'
-'refs/tags/5.25' 'refs/tags/5.26' 'refs/tags/5.27' 'refs/tags/5.27.1'
-'refs/tags/5.27.10' 'refs/tags/5.27.11' 'refs/tags/5.27.12'
-'refs/tags/5.27.13' 'refs/tags/5.27.14' 'refs/tags/5.27.15'
-'refs/tags/5.27.16' 'refs/tags/5.27.17' 'refs/tags/5.27.2'
-'refs/tags/5.27.3' 'refs/tags/5.27.4' 'refs/tags/5.27.4a'
-'refs/tags/5.27.4b' 'refs/tags/5.27.4c' 'refs/tags/5.27.4d'
-'refs/tags/5.27.4e' 'refs/tags/5.27.4f' 'refs/tags/5.27.4g'
-'refs/tags/5.27.4h' 'refs/tags/5.27.4i' 'refs/tags/5.27.4j'
-'refs/tags/5.27.4k' 'refs/tags/5.27.4l' 'refs/tags/5.27.4m'
-'refs/tags/5.27.4n' 'refs/tags/5.27.4o' 'refs/tags/5.27.4o_nir'
-'refs/tags/5.27.4p' 'refs/tags/5.27.4q' 'refs/tags/5.27.4r'
-'refs/tags/5.27.4s' 'refs/tags/5.27.4s1' 'refs/tags/5.27.4t'
-'refs/tags/5.27.4u' 'refs/tags/5.27.4v' 'refs/tags/5.27.4w'
-'refs/tags/5.27.5' 'refs/tags/5.27.6' 'refs/tags/5.27.7' 'refs/tags/5.2=
-7.7a'
-'refs/tags/5.27.7b' 'refs/tags/5.27.8' 'refs/tags/5.27.9' 'refs/tags/5.=
-27a'
-'refs/tags/5.28' 'refs/tags/5.29' 'refs/tags/5.30' 'refs/tags/5.31'
-'refs/tags/5.32' 'refs/tags/5.33' 'refs/tags/5.34' 'refs/tags/5.35'
-'refs/tags/5.36' 'refs/tags/5.37' 'refs/tags/5.38' 'refs/tags/5.39'
-'refs/tags/5.40' 'refs/tags/5.41' 'refs/tags/5.42' 'refs/tags/5.43'
-'refs/tags/5.44' 'refs/tags/5.45' 'refs/tags/5.46' 'refs/tags/5.47'
-'refs/tags/5.48' 'refs/tags/5.48a' 'refs/tags/5.48a1' 'refs/tags/5.48a1=
-1'
-'refs/tags/5.48a2' 'refs/tags/5.48b' 'refs/tags/5.48c' 'refs/tags/5.49'
-'refs/tags/5.50' 'refs/tags/5.51' 'refs/tags/AV_IP_4master'
-'refs/tags/non_released_3.7.1.0014' 'refs/tags/v3.5.0064'
-'refs/tags/v3.5.0065' 'refs/tags/v3.5.0066' 'refs/tags/v3.5.0067'
-'refs/tags/v3.5.0068' 'refs/tags/v3.5.0069' 'refs/tags/v3.5.0070'
-'refs/tags/v3.5.0071' 'refs/tags/v3.5.0072' 'refs/tags/v3.5.0073'
-'refs/tags/v3.5.0074' 'refs/tags/v3.5.0075' 'refs/tags/v3.5.0076'
-'refs/tags/v3.5.0077' 'refs/tags/v3.5.0078' 'refs/tags/v3.5.0079'
-'refs/tags/v3.5.0080' 'refs/tags/v3.5.0081' 'refs/tags/v3.5.0082'
-'refs/tags/v3.5.0083' 'refs/tags/v3.5.0084' 'refs/tags/v3.5.0085'
-'refs/tags/v3.5.0086' 'refs/tags/v3.5.0087' 'refs/tags/v3.5.0088'
-'refs/tags/v3.5.0089' 'refs/tags/v3.5.0090' 'refs/tags/v3.5.0091'
-'refs/tags/v3.5.0092' 'refs/tags/v3.5.0092.1' 'refs/tags/v3.5.0092.2'
-'refs/tags/v3.5.0092.3' 'refs/tags/v3.5.0092.4' 'refs/tags/v3.5.0093'
-'refs/tags/v3.5.0094' 'refs/tags/v3.5.0095' 'refs/tags/v3.5.0096'
-'refs/tags/v3.5.0097' 'refs/tags/v3.5.0098' 'refs/tags/v3.5.0099'
-'refs/tags/v3.5.0100' 'refs/tags/v3.5.0101' 'refs/tags/v3.5.0102'
-'refs/tags/v3.5.1103' 'refs/tags/v3.5.1104' 'refs/tags/v3.5.1105'
-'refs/tags/v3.5.1106' 'refs/tags/v3.5.1106.1' 'refs/tags/v3.5.1106.10'
-'refs/tags/v3.5.1106.11' 'refs/tags/v3.5.1106.12' 'refs/tags/v3.5.1106.=
-13'
-'refs/tags/v3.5.1106.2' 'refs/tags/v3.5.1106.3' 'refs/tags/v3.5.1106.4'
-'refs/tags/v3.5.1106.5' 'refs/tags/v3.5.1106.6' 'refs/tags/v3.5.1106.7'
-'refs/tags/v3.5.1106.8' 'refs/tags/v3.5.1106.9' 'refs/tags/v3.5.1107'
-'refs/tags/v3.5.1108' 'refs/tags/v3.5.1109' 'refs/tags/v3.5.1110'
-'refs/tags/v3.5.1111' 'refs/tags/v3.5.1112' 'refs/tags/v3.5.1113'
-'refs/tags/v3.5.1114' 'refs/tags/v3.5.1115' 'refs/tags/v3.5.1116'
-'refs/tags/v3.5.1117' 'refs/tags/v3.5.1117.0.1' 'refs/tags/v3.5.1117.0.=
-2'
-'refs/tags/v3.5.1117.0.3' 'refs/tags/v3.5.1117.0.4' 'refs/tags/v3.5.111=
-7.1'
-'refs/tags/v3.5.1117.1.1' 'refs/tags/v3.5.1118' 'refs/tags/v3.5.1119'
-'refs/tags/v3.5.1120' 'refs/tags/v3.5.1121' 'refs/tags/v3.5.1122'
-'refs/tags/v3.5.1123' 'refs/tags/v3.5.1124' 'refs/tags/v3.5.1125'
-'refs/tags/v3.5.1126' 'refs/tags/v3.5.1127' 'refs/tags/v3.5.1128'
-'refs/tags/v3.5.1129' 'refs/tags/v3.5.1130' 'refs/tags/v3.5.1130.0.1'
-'refs/tags/v3.5.1130.0.2' 'refs/tags/v3.5.1130.0.3'
-'refs/tags/v3.5.1130.0.3.1.1' 'refs/tags/v3.5.1130.0.3.1.2'
-'refs/tags/v3.5.1130.0.3.1.3' 'refs/tags/v3.5.1130.0.3.1.3.1'
-'refs/tags/v3.5.1130.0.3.1.3.2' 'refs/tags/v3.5.1130.0.3.1.3.3'
-'refs/tags/v3.5.1130.0.3.1.3.4' 'refs/tags/v3.5.1130.0.3.1.3.5'
-'refs/tags/v3.5.1130.0.3.1.3.6' 'refs/tags/v3.5.1130.0.3.1.4'
-'refs/tags/v3.5.1130.0.3.1.5' 'refs/tags/v3.5.1130.0.4'
-'refs/tags/v3.5.1130.0.5' 'refs/tags/v3.5.1130.0.6' 'refs/tags/v3.5.113=
-0.1'
-'refs/tags/v3.5.1130.2' 'refs/tags/v3.5.1130.3' 'refs/tags/v3.5.1130.3.=
-1'
-'refs/tags/v3.5.1130.3.2' 'refs/tags/v3.5.1130.3.3'
-'refs/tags/v3.5.1130.3.4' 'refs/tags/v3.5.1130.3.5' 'refs/tags/v3.5.113=
-0.4'
-'refs/tags/v3.5.1130.5' 'refs/tags/v3.5.1130.6' 'refs/tags/v3.5.1130.7'
-'refs/tags/v3.5.1130.7.1' 'refs/tags/v3.5.1130.7.10'
-'refs/tags/v3.5.1130.7.11' 'refs/tags/v3.5.1130.7.12'
-'refs/tags/v3.5.1130.7.13' 'refs/tags/v3.5.1130.7.14'
-'refs/tags/v3.5.1130.7.15' 'refs/tags/v3.5.1130.7.16'
-'refs/tags/v3.5.1130.7.17' 'refs/tags/v3.5.1130.7.18'
-'refs/tags/v3.5.1130.7.19' 'refs/tags/v3.5.1130.7.2'
-'refs/tags/v3.5.1130.7.20' 'refs/tags/v3.5.1130.7.21'
-'refs/tags/v3.5.1130.7.22' 'refs/tags/v3.5.1130.7.23'
-'refs/tags/v3.5.1130.7.24' 'refs/tags/v3.5.1130.7.25'
-'refs/tags/v3.5.1130.7.25.0.1' 'refs/tags/v3.5.1130.7.25.0.2'
-'refs/tags/v3.5.1130.7.25.0.3' 'refs/tags/v3.5.1130.7.25.0.4'
-'refs/tags/v3.5.1130.7.25.0.5' 'refs/tags/v3.5.1130.7.25.0.5.0.1'
-'refs/tags/v3.5.1130.7.25.0.6' 'refs/tags/v3.5.1130.7.25.0.7'
-'refs/tags/v3.5.1130.7.25.0.8' 'refs/tags/v3.5.1130.7.25.0.9'
-'refs/tags/v3.5.1130.7.3' 'refs/tags/v3.5.1130.7.4'
-'refs/tags/v3.5.1130.7.5' 'refs/tags/v3.5.1130.7.6'
-'refs/tags/v3.5.1130.7.7' 'refs/tags/v3.5.1130.7.8'
-'refs/tags/v3.5.1130.7.9' 'refs/tags/v3.5.1130.8'
-'refs/tags/v3.5.1130.UBS_TEST' 'refs/tags/v3.5.1130a'
-'refs/tags/v3.5.1130a2' 'refs/tags/v3.5.1131' 'refs/tags/v3.6.1132'
-'refs/tags/v3.6.1133' 'refs/tags/v3.6.1134' 'refs/tags/v3.6.1135'
-'refs/tags/v3.6.1136' 'refs/tags/v3.6.1137' 'refs/tags/v3.6.1138'
-'refs/tags/v3.6.1138FC' 'refs/tags/v3.6.1138FC.1' 'refs/tags/v3.6.1138F=
-C.2'
-'refs/tags/v3.6.1138FC.3' 'refs/tags/v3.6.1138FC.4'
-'refs/tags/v3.6.1138FC.5' 'refs/tags/v3.6.1138FC.6'
-'refs/tags/v3.6.1138FC.7' 'refs/tags/v3.6.1139' 'refs/tags/v3.6.1140'
-'refs/tags/v3.6.1141' 'refs/tags/v3.6.1142' 'refs/tags/v3.6.1143'
-'refs/tags/v3.6.1144' 'refs/tags/v3.6.1145' 'refs/tags/v3.6.1146'
-'refs/tags/v3.6.1147' 'refs/tags/v3.6.1148' 'refs/tags/v3.6.1148.1.1'
-'refs/tags/v3.6.1148.1.2' 'refs/tags/v3.6.1148.1.3'
-'refs/tags/v3.6.1148.1.4' 'refs/tags/v3.6.1148.1.5'
-'refs/tags/v3.6.1148.1.6' 'refs/tags/v3.6.1148.1.7'
-'refs/tags/v3.6.1148.1.8' 'refs/tags/v3.6.1148.1.9' 'refs/tags/v3.6.114=
-9'
-'refs/tags/v3.6.1150' 'refs/tags/v3.6.1151' 'refs/tags/v3.6.1152'
-'refs/tags/v3.6.1153' 'refs/tags/v3.6.1154' 'refs/tags/v3.6.1155'
-'refs/tags/v3.6.1156' 'refs/tags/v3.6.1157' 'refs/tags/v3.6.1158'
-'refs/tags/v3.6.1159' 'refs/tags/v3.6.1159.1.1' 'refs/tags/v3.6.1159.1.=
-2'
-'refs/tags/v3.6.1159.1.3' 'refs/tags/v3.6.1159.1.4'
-'refs/tags/v3.6.1159.1.5' 'refs/tags/v3.6.1159.1.6' 'refs/tags/v3.6.116=
-0'
-'refs/tags/v3.6.1161' 'refs/tags/v3.6.1162' 'refs/tags/v3.6.1163'
-'refs/tags/v3.6.1164' 'refs/tags/v3.6.1165' 'refs/tags/v3.6.1166'
-'refs/tags/v3.6.1168' 'refs/tags/v3.6.1169' 'refs/tags/v3.6.1170'
-'refs/tags/v3.6.1171' 'refs/tags/v3.6.1171.0.1' 'refs/tags/v3.6.1171.0.=
-2'
-'refs/tags/v3.6.1171.0.3' 'refs/tags/v3.6.1172' 'refs/tags/v3.6.1173'
-'refs/tags/v3.6.1174' 'refs/tags/v3.6.1175' 'refs/tags/v3.6.1176'
-'refs/tags/v3.6.1177' 'refs/tags/v3.6.1177.0.1' 'refs/tags/v3.6.1177.0.=
-2'
-'refs/tags/v3.6.1177.1.0' 'refs/tags/v3.6.1177.2.1'
-'refs/tags/v3.6.1177.2.10' 'refs/tags/v3.6.1177.2.11'
-'refs/tags/v3.6.1177.2.12' 'refs/tags/v3.6.1177.2.13'
-'refs/tags/v3.6.1177.2.13.10' 'refs/tags/v3.6.1177.2.14'
-'refs/tags/v3.6.1177.2.15' 'refs/tags/v3.6.1177.2.2'
-'refs/tags/v3.6.1177.2.3' 'refs/tags/v3.6.1177.2.4'
-'refs/tags/v3.6.1177.2.5' 'refs/tags/v3.6.1177.2.6'
-'refs/tags/v3.6.1177.2.7' 'refs/tags/v3.6.1177.2.8'
-'refs/tags/v3.6.1177.2.9' 'refs/tags/v3.6.1178' 'refs/tags/v3.6.1179'
-'refs/tags/v3.6.1180' 'refs/tags/v3.6.1181' 'refs/tags/v3.6.1182'
-'refs/tags/v3.6.1183' 'refs/tags/v3.6.1184' 'refs/tags/v3.6.1185'
-'refs/tags/v3.6.1186' 'refs/tags/v3.6.1187' 'refs/tags/v3.6.1188'
-'refs/tags/v3.6.1189' 'refs/tags/v3.6.1190' 'refs/tags/v3.6.1191'
-'refs/tags/v3.6.1192' 'refs/tags/v3.6.1193' 'refs/tags/v3.6.1194'
-'refs/tags/v3.6.1195' 'refs/tags/v3.6.1196' 'refs/tags/v3.6.1197'
-'refs/tags/v3.6.1198' 'refs/tags/v3.6.1199' 'refs/tags/v3.6.1200'
-'refs/tags/v3.6.1201' 'refs/tags/v3.6.1202' 'refs/tags/v3.6.1203'
-'refs/tags/v3.6.1204' 'refs/tags/v3.6.1205' 'refs/tags/v3.6.1206'
-'refs/tags/v3.6.1207' 'refs/tags/v3.6.1208' 'refs/tags/v3.6.1209'
-'refs/tags/v3.6.1210' 'refs/tags/v3.6.1211' 'refs/tags/v3.6.1212'
-'refs/tags/v3.6.1213' 'refs/tags/v3.6.1214' 'refs/tags/v3.6.1215'
-'refs/tags/v3.6.1216' 'refs/tags/v3.6.1217' 'refs/tags/v3.6.1218'
-'refs/tags/v3.6.1219' 'refs/tags/v3.6.1220' 'refs/tags/v3.6.1221'
-'refs/tags/v3.6.1222' 'refs/tags/v3.6.1223' 'refs/tags/v3.6.1224'
-'refs/tags/v3.6.1225' 'refs/tags/v3.6.1226' 'refs/tags/v3.6.1227'
-'refs/tags/v3.6.1227.0.1.1' 'refs/tags/v3.6.1227.1.1' 'refs/tags/v3.6.1=
-228'
-'refs/tags/v3.6.1228_2phase.1' 'refs/tags/v3.6.1229' 'refs/tags/v3.6.12=
-30'
-'refs/tags/v3.6.1231' 'refs/tags/v3.6.1232' 'refs/tags/v3.6.1233'
-'refs/tags/v3.6.1234' 'refs/tags/v3.6.1235' 'refs/tags/v3.6.1236'
-'refs/tags/v3.6.1237' 'refs/tags/v3.6.1238' 'refs/tags/v3.6.1239'
-'refs/tags/v3.6.1240' 'refs/tags/v3.6.1241' 'refs/tags/v3.6.1242'
-'refs/tags/v3.6.1243' 'refs/tags/v3.6.1244' 'refs/tags/v3.6.1245'
-'refs/tags/v3.6.1246' 'refs/tags/v3.6.1247' 'refs/tags/v3.6.1248'
-'refs/tags/v3.6.1249' 'refs/tags/v3.6.1250' 'refs/tags/v3.6.1251'
-'refs/tags/v3.6.1252' 'refs/tags/v3.6.1253' 'refs/tags/v3.6.1254'
-'refs/tags/v3.6.1255' 'refs/tags/v3.6.1256' 'refs/tags/v3.6.1257'
-'refs/tags/v3.6.1258' 'refs/tags/v3.6.1259' 'refs/tags/v3.6.1260'
-'refs/tags/v3.6.1261' 'refs/tags/v3.6.1262' 'refs/tags/v3.6.1263'
-'refs/tags/v3.6.1264' 'refs/tags/v3.6.1265' 'refs/tags/v3.6.1266'
-'refs/tags/v3.6.1267' 'refs/tags/v3.6.1267.0.1.1'
-'refs/tags/v3.6.1267.0.1.10' 'refs/tags/v3.6.1267.0.1.11'
-'refs/tags/v3.6.1267.0.1.12' 'refs/tags/v3.6.1267.0.1.2'
-'refs/tags/v3.6.1267.0.1.3' 'refs/tags/v3.6.1267.0.1.4'
-'refs/tags/v3.6.1267.0.1.5' 'refs/tags/v3.6.1267.0.1.6'
-'refs/tags/v3.6.1267.0.1.7' 'refs/tags/v3.6.1267.0.1.7.0.1'
-'refs/tags/v3.6.1267.0.1.7.0.2' 'refs/tags/v3.6.1267.0.1.7.0.3'
-'refs/tags/v3.6.1267.0.1.7.0.4' 'refs/tags/v3.6.1267.0.1.7.0.5'
-'refs/tags/v3.6.1267.0.1.7.0.6' 'refs/tags/v3.6.1267.0.1.7.0.7'
-'refs/tags/v3.6.1267.0.1.8' 'refs/tags/v3.6.1267.0.1.9'
-'refs/tags/v3.6.1268' 'refs/tags/v3.6.1269' 'refs/tags/v3.7.0001'
-'refs/tags/v3.7.0002' 'refs/tags/v3.7.0003' 'refs/tags/v3.7.0004'
-'refs/tags/v3.7.0005' 'refs/tags/v3.7.0006' 'refs/tags/v3.7.0007'
-'refs/tags/v3.7.0008' 'refs/tags/v3.7.0009' 'refs/tags/v3.7.0010'
-'refs/tags/v3.7.0011' 'refs/tags/v3.7.0012' 'refs/tags/v3.7.0013'
-'refs/tags/v3.7.0014' 'refs/tags/v3.7.0015' 'refs/tags/v3.7.0016'
-'refs/tags/v3.7.0017' 'refs/tags/v3.7.0017.0.1.1'
-'refs/tags/v3.7.0017.0.1.2' 'refs/tags/v3.7.0017.0.1.2.0.1.1'
-'refs/tags/v3.7.0017.0.1.2.0.1.2' 'refs/tags/v3.7.0017.0.1.2.0.1.3'
-'refs/tags/v3.7.0017.0.1.2.0.1.4' 'refs/tags/v3.7.0017.0.1.2.0.1.5'
-'refs/tags/v3.7.0017.0.1.2.0.1.6' 'refs/tags/v3.7.0017.0.1.2.0.1.7'
-'refs/tags/v3.7.0017.0.1.3' 'refs/tags/v3.7.0018' 'refs/tags/v3.7.0019'
-'refs/tags/v3.8.0000' 'refs/tags/v3.8.0001' 'refs/tags/v3.8.0002'
-'refs/tags/v3.8.0003' 'refs/tags/v3.8.0004' 'refs/tags/v3.8.0005'
-'refs/tags/v3.8.0006' 'refs/tags/v5.48a.13' 'refs/tags/v5.48a11a'
-'refs/tags/v5.48a12' 'refs/tags/v5.48a14' 'refs/tags/v5.48a15'
-'refs/tags/v5.48a17' 'refs/tags/v5.48a18' 'refs/tags/v5.48a19'
-'refs/tags/v5.48a20' 'refs/tags/v5.48a21' 'refs/tags/v5.48a22'
-'refs/tags/v5.48a23' 'refs/tags/v5.48a24' 'refs/tags/v5.48a25'
-'refs/tags/v5.48a26' 'refs/tags/v5.48a27' 'refs/tags/v5.48a28'
-'refs/tags/v5.48a29' 'refs/tags/v5.48a29.1' 'refs/tags/v5.48a30'
-'refs/tags/v5.48a31' 'refs/tags/v5.48a31.0.1' 'refs/tags/v5.48a31.0.10'
-'refs/tags/v5.48a31.0.11' 'refs/tags/v5.48a31.0.12'
-'refs/tags/v5.48a31.0.13' 'refs/tags/v5.48a31.0.14'
-'refs/tags/v5.48a31.0.15' 'refs/tags/v5.48a31.0.16'
-'refs/tags/v5.48a31.0.17' 'refs/tags/v5.48a31.0.18'
-'refs/tags/v5.48a31.0.18.1' 'refs/tags/v5.48a31.0.18.10'
-'refs/tags/v5.48a31.0.18.11' 'refs/tags/v5.48a31.0.18.12'
-'refs/tags/v5.48a31.0.18.12.1' 'refs/tags/v5.48a31.0.18.12.1.1'
-'refs/tags/v5.48a31.0.18.12.2' 'refs/tags/v5.48a31.0.18.12.3'
-'refs/tags/v5.48a31.0.18.12.4' 'refs/tags/v5.48a31.0.18.14'
-'refs/tags/v5.48a31.0.18.2' 'refs/tags/v5.48a31.0.18.3'
-'refs/tags/v5.48a31.0.18.4' 'refs/tags/v5.48a31.0.18.5'
-'refs/tags/v5.48a31.0.18.6' 'refs/tags/v5.48a31.0.18.7'
-'refs/tags/v5.48a31.0.18.8' 'refs/tags/v5.48a31.0.18.8.0.1'
-'refs/tags/v5.48a31.0.18.8.0.2' 'refs/tags/v5.48a31.0.18.8.0.3'
-'refs/tags/v5.48a31.0.18.9' 'refs/tags/v5.48a31.0.19'
-'refs/tags/v5.48a31.0.2' 'refs/tags/v5.48a31.0.20' 'refs/tags/v5.48a31.=
-0.21'
-'refs/tags/v5.48a31.0.22' 'refs/tags/v5.48a31.0.23'
-'refs/tags/v5.48a31.0.24' 'refs/tags/v5.48a31.0.3' 'refs/tags/v5.48a31.=
-0.4'
-'refs/tags/v5.48a31.0.5' 'refs/tags/v5.48a31.0.6' 'refs/tags/v5.48a31.0=
-=2E7'
-'refs/tags/v5.48a31.0.8' 'refs/tags/v5.48a31.0.9' 'refs/tags/v5.48a31.1=
-'
-'refs/tags/v5.48a32' 'refs/tags/v5.48a33' 'refs/tags/v5.48a34'
-'refs/tags/v5.52' 'refs/tags/v5.53' 'refs/tags/v5.54' 'refs/tags/v5.55'
-'refs/tags/v5.56' 'refs/tags/v5.57' 'refs/tags/v5.58' 'refs/tags/v5.59'
-'refs/tags/v5.60' 'refs/tags/v5.61' 'refs/tags/v5.62' 'refs/tags/v5.63'=
-=20
-trace: run_command: 'index-pack' '--stdin' '--fix-thin' '--keep=3Dfetch=
--pack
-1607 on Nirf' '--pack_header=3D2,33641'
-trace: exec: 'git' 'index-pack' '--stdin' '--fix-thin' '--keep=3Dfetch-=
-pack
-1607 on Nirf' '--pack_header=3D2,33641'
-trace: built-in: git 'index-pack' '--stdin' '--fix-thin' '--keep=3Dfetc=
-h-pack
-1607 on Nirf' '--pack_header=3D2,33641'
-
-
-
------Original Message-----
-=46rom: Tay Ray Chuan [mailto:rctay89@gmail.com]=20
-Sent: Thursday, May 19, 2011 7:03 PM
-To: Nir Friedman
-Cc: git@vger.kernel.org
-Subject: Re: FW: git over https and http 1.1
-
-On Thu, May 19, 2011 at 12:43 PM, Nir Friedman <nirfri@hotmail.com> wro=
-te:
-> < HTTP/1.1 200 OK
-> < Date: Thu, 19 May 2011 04:37:40 GMT
-> < Server: Apache/2.2.17 (Ubuntu)
-> < Expires: Fri, 01 Jan 1980 00:00:00 GMT
-> < Pragma: no-cache
-> < Cache-Control: no-cache, max-age=3D0, must-revalidate
-> < Transfer-Encoding: chunked
-> < Content-Type: application/x-git-upload-pack-advertisement
-> <
-> *********************************************///////////POINT
-> 1///////////**************************************
-> * Connection #0 to host 10.1.30.61 left intact
-> * Couldn't find host 10.1.30.61 in the .netrc file; using defaults
-> * About to connect() to 10.1.30.61 port 80 (#0)
-> * =A0 Trying 10.1.30.61... * connected
-> * Connected to 10.1.30.61 (10.1.30.61) port 80 (#0)
-
-=46rom where the pause is occurring, it seems the issue isn't one with
-curl/transport. Can you try running the clone also with GIT_TRACE=3D1?
-
---=20
-Cheers,
-Ray Chuan
+diff --git a/cache-tree.c b/cache-tree.c
+index f755590..17c5bab 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -573,8 +573,10 @@ int write_cache_as_tree(unsigned char *sha1, int flags, const char *prefix)
+ 
+ 		if (cache_tree_update(active_cache_tree,
+ 				      active_cache, active_nr,
+-				      missing_ok, 0) < 0)
++				      missing_ok, 0) < 0) {
++			discard_cache();
+ 			return WRITE_TREE_UNMERGED_INDEX;
++		}
+ 		if (0 <= newfd) {
+ 			if (!write_cache(newfd, active_cache, active_nr) &&
+ 			    !commit_lock_file(lock_file))
+@@ -591,8 +593,10 @@ int write_cache_as_tree(unsigned char *sha1, int flags, const char *prefix)
+ 	if (prefix) {
+ 		struct cache_tree *subtree =
+ 			cache_tree_find(active_cache_tree, prefix);
+-		if (!subtree)
++		if (!subtree) {
++			discard_cache();
+ 			return WRITE_TREE_PREFIX_ERROR;
++		}
+ 		hashcpy(sha1, subtree->sha1);
+ 	}
+ 	else
+@@ -601,6 +605,7 @@ int write_cache_as_tree(unsigned char *sha1, int flags, const char *prefix)
+ 	if (0 <= newfd)
+ 		rollback_lock_file(lock_file);
+ 
++	discard_cache();
+ 	return 0;
+ }
+ 
+-- 
+1.7.5.GIT
