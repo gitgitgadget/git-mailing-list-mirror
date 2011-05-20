@@ -1,80 +1,129 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] merge-recursive triggered "BUG"
-Date: Thu, 19 May 2011 20:21:07 -0700
-Message-ID: <7v1uzu5a70.fsf@alter.siamese.dyndns.org>
-References: <7v4o7260no.fsf@alter.siamese.dyndns.org>
- <BANLkTimNnRrJ_2UJUSWWd1QS=e0YH2p=_Q@mail.gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: git difftool does does not respect current working directory
+Date: Thu, 19 May 2011 20:59:00 -0700
+Message-ID: <20110520035856.GA13582@gmail.com>
+References: <loom.20110514T160931-46@post.gmane.org>
+ <7v1uzznr09.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ciaran <ciaranj@gmail.com>, Elijah Newren <newren@gmail.com>,
-	git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 20 05:21:26 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?utf-8?B?RnLDqWTDqXJpYw==?= Heitzmann 
+	<frederic.heitzmann@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 20 05:59:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNGHF-0002ir-DF
-	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 05:21:25 +0200
+	id 1QNGrv-0001FS-2q
+	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 05:59:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932620Ab1ETDVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 May 2011 23:21:20 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33647 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932096Ab1ETDVT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2011 23:21:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C6EA75458;
-	Thu, 19 May 2011 23:23:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+3NrzV077s9K7elS5Ot828jwiPI=; b=aODcon
-	+Qgxk9dU2tPWY2e7XpdWnS+Q/iQsy/76ZuMupvePQl2u9axt1yr0OTuvPDEVJuxZ
-	QDwHYGi4CBt0RBrwMdJndnV8Apu0ZxeVaibcXvW/SmL6vsG1i4YQvEc4q2EkmXyf
-	7SpeZksTcRCK4ewJEfYjxMgl7iE5ljoPlxQbI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oPJ2EBHmfKQWGEcY6FHtKwFMYS8I3AZW
-	niKF0XYKwyzerKqKv2kN3TUkTZDHTeEy50nt/pLRFCzLpQZUnMkRkSW4SL/3y2vI
-	sDKNwHDrVhZvkZSRWABx1ZKG8J+gh+KmxDxG8h/kNDHkqf7b63IT9PiFcR1Ur9QT
-	hXJxtXiDbT0=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 78BBC5454;
-	Thu, 19 May 2011 23:23:21 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1EEA65453; Thu, 19 May 2011
- 23:23:15 -0400 (EDT)
-In-Reply-To: <BANLkTimNnRrJ_2UJUSWWd1QS=e0YH2p=_Q@mail.gmail.com> (Jay
- Soffian's message of "Thu, 19 May 2011 21:14:53 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 837E2AD4-8290-11E0-83AD-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+	id S934767Ab1ETD7O convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 May 2011 23:59:14 -0400
+Received: from mail-px0-f173.google.com ([209.85.212.173]:51759 "EHLO
+	mail-px0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934188Ab1ETD7N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2011 23:59:13 -0400
+Received: by pxi16 with SMTP id 16so2229545pxi.4
+        for <git@vger.kernel.org>; Thu, 19 May 2011 20:59:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=Z1Q5DqhzerfRdjq8Nc5W/+q21JJZjWtvW6KiRodjOVg=;
+        b=jq8u5oD8bYV+SgOmWvSCH5s/ilEN0mvsZ3KwnZThqWHBuh/ECIb46E2/2+Qe/WqFZV
+         0Nf6odDi/5HuHCMFqkEFmUXwxnjDSxIsmznIKKTVvxoYR51OyDOushjs24Jt2V3bc3UD
+         4tDjBOdooe+6p2ozHM5jRHqY/B/2CSJLc4kkI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=ttrOSUhbdrwy15b/eB8UQqaY+W6X59g+gWGBEOOEUgs50sBkXtXbdlljYs4+QQEiGD
+         A40+mlWntQwJddILiodWkSH1jIyGz2s6bXy9KU4jE00oQ7uvfjnVLJg8+0uI4C7EM81R
+         qLql9JLbOeIkNjFdKWdGywD3GCdkxjuDMdN8s=
+Received: by 10.68.35.99 with SMTP id g3mr6300446pbj.53.1305863953186;
+        Thu, 19 May 2011 20:59:13 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id a20sm2180218pbu.59.2011.05.19.20.59.06
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 19 May 2011 20:59:07 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v1uzznr09.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174036>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
 
-> On Wed, Mar 16, 2011 at 8:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> As a part of my today's merge, I used 'next' that contains b2c8c0a
->> (merge-recursive: When we detect we can skip an update, actually skip it,
->> 2011-02-28) to merge 'maint' into 'master' to propagate older releases up.
->>
->> It triggered a "BUG" per merged path, and I bisected this breakage down to
->> the said commit. Luckily 'master' is not contaminated with the breakage,
->> so I used it to finish today's work.
->
-> I just ran into this. It's not in a repo I can share however. But, why
-> did b2c8c0a make it into master with this known issue?
+Hello,
 
-Because it was patched by another band-aid, and apparently it was not
-enough?
+On Sun, May 15, 2011 at 10:39:18PM -0700, Junio C Hamano wrote:
+> Fr=C3=A9d=C3=A9ric Heitzmann  <frederic.heitzmann@gmail.com> writes:
+>=20
+> > Unfortunately, 'git difftool' does not keep the current working dir=
+ectory while
+> > launching gvimdiff.
+> >
+> > =3D> Is it done on purpose ?
+> > If not, it is probably a good idea to fix this.
+>=20
+> I will not comment on "on purpose?" part, as I do not use difftool my=
+self.
+>=20
+> But the right set of questions to ask is not the above, but these:
+>=20
+>  - Is it on purpose that difftool runs its diff viewer from the top o=
+f the
+>    working tree?
+>=20
+>  - Is there any existing user who depends on that current behaviour? =
+ IOW,
+>    would anybody suffer if difftool suddenly starts to run the diff v=
+iewer
+>    from the subdirectory that the user started "git difftool" from?
+>=20
+> If the answers to both of them are No, then it might be a good idea t=
+o
+> change the behaviour.
 
-You are the second person to report the same regression, so let's revert
-the merge of the entire topic, ac9666f (Merge branch 'en/merge-recursive',
-2011-04-28) from master for now.
+Another thing to consider is ensuring that there is a
+consistency between 'diff' and 'difftool'.
 
-Thanks.
+When you run 'git diff' from a subdirectory git will show you
+a diff against the entire tree.  In this respect, 'difftool' is
+consistent.  In that sense, yes, this is very much "on purpose".
+
+Is there something that isn't working because of the internal
+chdir?  I'm not sure if you want to change the chdir behavior
+for aesthetic purposes or if there's something it is
+preventing you from doing.  If what you're trying to accomplish
+is to have 'difftool' only show you changes within the current
+directory then you can accomplish that today by passing ".",
+e.g. "git difftool ."
+
+
+Implementation details:
+
+difftool is a thin wrapper around 'git diff'.  Specifically,
+it is implemented as a $GIT_EXTERNAL_DIFF script which means
+that it inherits most of its behavior from 'diff'.
+The "chdir to root" behavior actually happens inside of
+'git diff'.
+
+Can we can change the behavior? Sure, anything is possible.
+The question is *should* we change the behavior?
+Even though I highly doubt there are any scripts relying on it,
+I don't think we gain much by doing so.  The downside to
+changing it is that we lose consistency, which is not so good.
+I hope that's a compelling enough argument :-)
+
+I hope the "." thing helps.
+
+Cheers,
+--=20
+					David
