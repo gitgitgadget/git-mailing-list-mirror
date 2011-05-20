@@ -1,123 +1,190 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] do not read beyond end of malloc'd buffer
-Date: Fri, 20 May 2011 11:41:06 -0700
-Message-ID: <7vfwo92p19.fsf@alter.siamese.dyndns.org>
-References: <877h9lb86r.fsf@rho.meyering.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC PATCH] wrapper: Introduce xclose to restart close on EINTR
+Date: Fri, 20 May 2011 14:05:38 -0500
+Message-ID: <20110520190538.GG17177@elie>
+References: <20110520071609.GA6755@domU-12-31-39-06-A8-0A.compute-1.internal>
+ <1305880223-7542-1-git-send-email-artagnon@gmail.com>
+ <1305880223-7542-3-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Jim Meyering <jim@meyering.net>
-X-From: git-owner@vger.kernel.org Fri May 20 20:41:21 2011
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <christian.couder@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 20 21:05:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNUdT-0004Hp-5S
-	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 20:41:19 +0200
+	id 1QNV1B-0001ZV-L2
+	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 21:05:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934501Ab1ETSlO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2011 14:41:14 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44596 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933901Ab1ETSlN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2011 14:41:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D42AA403E;
-	Fri, 20 May 2011 14:43:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=q3l+43mF4wApJf9mGO6ZjOThehY=; b=QMS4yc
-	gwhCNXhVaXT/yKmsRoke8IkUHEsXXqxMReTvyXPZZSUD/zCBVXALZEiUvV+mTRP2
-	AVsTAP282OhzovIX+3iTtLpyLrzW6yM/d2GMJU4mzYjM1kc5IAjWFiCeWhscbJfK
-	XcNpfJ5XMBdBz4a+F1KG0Ne+DBfvL9vt00BuA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kiTEoecG3WFB30VTvc8WNyNEtd/MnR7O
-	rm9SLt+7+141a8UgYln1N0nzbQMPLcW+rCcSLB61WeNz+C9qFKZ4dUuX6aD7kLyb
-	e21Uc3fpjTnCkXLGxInj4f1VsT3fBHdNCSqJ4yKTlfRT60UzWBBSvsjf4iXvzIN2
-	Q3PouPTOW0g=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B109A403D;
-	Fri, 20 May 2011 14:43:18 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B703E4038; Fri, 20 May 2011
- 14:43:15 -0400 (EDT)
-In-Reply-To: <877h9lb86r.fsf@rho.meyering.net> (Jim Meyering's message of
- "Fri, 20 May 2011 19:20:12 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 079A4804-8311-11E0-B99B-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+	id S935481Ab1ETTFo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2011 15:05:44 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:38109 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934841Ab1ETTFn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2011 15:05:43 -0400
+Received: by iwn34 with SMTP id 34so3262777iwn.19
+        for <git@vger.kernel.org>; Fri, 20 May 2011 12:05:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=bsEKvz7pksTK0Noq72UfXG4zQmAwGwADnDlNhycvoEk=;
+        b=h+OEuAfZl+QduonvyClAfudrTAPQkQDYtY0ER7sZachdNJcBKVWKOmxtXk4UZAKyEl
+         uGwiBY+jPeiTVWGPICkGHrfDaKALVMbERYx/O8tNqCfRLTZjjW+++76Q52WgYnL1RnOf
+         j5BBfAeW6zMnnqyy5IqgIdacZKUB4iy9eCkNQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=KGQCogVbzHJ0UChswXKA4zCyx8S9jie5RYVmUhmUD3nnSKGbKEhllYiEl/KAmBqeQp
+         vFeNldwTsbzpx5ht/53aR1v9V7KXHIoOZp6Ssf9mb+3K07r10QLqlNYiLJU4sOZaQdLA
+         3AsvB7GKn+QDXUH9AmhwHjlXWiKgERanTueiQ=
+Received: by 10.42.228.68 with SMTP id jd4mr5057532icb.142.1305918342957;
+        Fri, 20 May 2011 12:05:42 -0700 (PDT)
+Received: from elie (adsl-69-209-78-180.dsl.chcgil.sbcglobal.net [69.209.78.180])
+        by mx.google.com with ESMTPS id hn6sm1218848icb.19.2011.05.20.12.05.40
+        (version=SSLv3 cipher=OTHER);
+        Fri, 20 May 2011 12:05:41 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1305880223-7542-3-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174075>
 
-Jim Meyering <jim@meyering.net> writes:
+Ramkumar Ramachandra wrote:
 
-> I was surprised to see "git diff --word-diff" output a ton of
-> garbage, and tracked it down to a bug that's triggered when the
-> diff.suppress-blank-empty config option to true and when at least
-> one of the context lines is empty.
+> [Subject: [RFC PATCH] wrapper: Introduce xclose to restart close on EINTR]
 
-Heh, I am not that surprised ;-) 
+close never returns with errno == EINTR on Linux, but it can happen on
+Solaris, for example.
 
-I think the real culprit is a year-old 882749a (diff: add --word-diff
-option that generalizes --color-words, 2010-04-14); it probably shows that
-not many people use diff.s-b-e settings?
+I can't think of a reason git would want to call close() without this
+loop.  Maybe it would make sense to wrap close() unconditionally (see
+below).
 
->     printf 'a\n\n[-b-]{+c+}\n' > exp
->     git init && git config diff.suppress-blank-empty true
->     printf 'a\n\nb\n' > f && git add . && git commit -m. .
->     printf 'a\n\nc\n' > f
->     git diff --word-diff | tail -3 > out
->     diff out exp
->
-> Before the patch, the git diff ... command would read from beyond
-> the end of a heap buffer, and "out" would contain far more than the
-> expected 5 bytes.
+> --- a/wrapper.c
+> +++ b/wrapper.c
+> @@ -141,6 +141,21 @@ ssize_t xwrite(int fd, const void *buf, size_t len)
+>  	}
+>  }
+>  
+> +/*
+> + * xclose() is the same a close(), but it automatically restarts close()
+> + * operations with a recoverable error (EINTR).
+> + */
 
-It is a bit unfortunate that we cannot make this into a test script, as it
-depends on what is on the uninitialized part of the heap, which might
-happen to be a NUL in which case the test would pass.
+If there is to be an xclose, I think I'd say something like
 
-Running tests under the valgrind mode may catch issues, though.
+	/*
+	 * xclose() is like close(), but it retries if interrupted by
+	 * a signal on platforms like Solaris that allow that to avoid
+	 * unnecessarily leaking a file descriptor.  It quietly returns
+	 * -1 with errno set appropriately on failure.
+	 */
 
-Thanks. Will queue with this test squashed in.
+to avoid confusion with the semantics of xmalloc.
 
-diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
-index 37aeab0..c374aa4 100755
---- a/t/t4034-diff-words.sh
-+++ b/t/t4034-diff-words.sh
-@@ -307,4 +307,30 @@ test_language_driver python
- test_language_driver ruby
- test_language_driver tex
+> +int xclose(int fd)
+> +{
+> +	int ret;
+> +	while (1) {
+> +		ret = close(fd);
+> +		if ((ret < 0) && errno == EINTR)
+> +			continue;
+> +		return ret;
+> +	}
+> +}
+
+Micronit: close() can only return 0 or -1, so this can be written more
+simply as
+
+	while (close(fd)) {
+		if (errno == EINTR)
+			continue;
+		return -1;
+	}
+	return 0;
+
+Untested.
+
+-- >8 --
+Subject: compat: wrap close() to avoid having to worry about EINTR
+
+On some non-Linux platforms, close() can return EINTR to indicate
+interruption by a signal.  In a poll or select loop, that could be
+good behavior to prevent hangs, but that doesn't apply anywhere within
+git.  Let close() loop unconditionally in this case to avoid
+preventable file descriptor leaks.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ git-compat-util.h |   12 +++++++++++-
+ wrapper.c         |   15 ---------------
+ 2 files changed, 11 insertions(+), 16 deletions(-)
+
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 6e06ad4..1326edb 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -428,7 +428,6 @@ extern void *xcalloc(size_t nmemb, size_t size);
+ extern void *xmmap(void *start, size_t length, int prot, int flags, int fd, off_t offset);
+ extern ssize_t xread(int fd, void *buf, size_t len);
+ extern ssize_t xwrite(int fd, const void *buf, size_t len);
+-extern int xclose(int fd);
+ extern int xdup(int fd);
+ extern FILE *xfdopen(int fd, const char *mode);
+ extern int xmkstemp(char *template);
+@@ -450,6 +449,17 @@ static inline int has_extension(const char *filename, const char *ext)
+ 	return len > extlen && !memcmp(filename + len - extlen, ext, extlen);
+ }
  
-+test_expect_success 'word-diff with diff.sbe' '
-+	cat >expect <<-\EOF &&
-+	diff --git a/pre b/post
-+	index a1a53b5..bc8fe6d 100644
-+	--- a/pre
-+	+++ b/post
-+	@@ -1,3 +1,3 @@
-+	a
++/* Sane close - resumes after interruption by signals */
++static inline int git_close(int fd)
++{
++	while (close(fd)) {
++		if (errno != EINTR)
++			return -1;
++	}
++	return 0;
++}
++#define close git_close
 +
-+	[-b-]{+c+}
-+	EOF
-+	cat >pre <<-\EOF &&
-+	a
-+
-+	b
-+	EOF
-+	cat >post <<-\EOF &&
-+	a
-+
-+	c
-+	EOF
-+	test_when_finished "git config --unset diff.suppress-blank-empty" &&
-+	git config diff.suppress-blank-empty true &&
-+	word_diff --word-diff=plain
-+'
-+
- test_done
+ /* Sane ctype - no locale, and works with signed chars */
+ #undef isascii
+ #undef isspace
+diff --git a/wrapper.c b/wrapper.c
+index 717e989..2829000 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -141,21 +141,6 @@ ssize_t xwrite(int fd, const void *buf, size_t len)
+ 	}
+ }
+ 
+-/*
+- * xclose() is the same a close(), but it automatically restarts close()
+- * operations with a recoverable error (EINTR).
+- */
+-int xclose(int fd)
+-{
+-	int ret;
+-	while (1) {
+-		ret = close(fd);
+-		if ((ret < 0) && errno == EINTR)
+-			continue;
+-		return ret;
+-	}
+-}
+-
+ ssize_t read_in_full(int fd, void *buf, size_t count)
+ {
+ 	char *p = buf;
+-- 
+1.7.5.1
