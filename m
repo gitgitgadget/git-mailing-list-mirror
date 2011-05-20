@@ -1,44 +1,58 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: Bernt Hansen <bernt@norang.ca>
 Subject: [PATCHv2 maint] git-svn: Fix git svn log --show-commit
-Date: Fri, 20 May 2011 13:16:34 +0200
-Message-ID: <3dd919897d4a5eca34f421457cc8da461574ee78.1305890184.git.git@drmicha.warpmail.net>
-References: <87y622doa7.fsf@norang.ca>
+Date: Fri, 20 May 2011 07:48:26 -0400
+Message-ID: <1305892106-4584-1-git-send-email-bernt@norang.ca>
+References: <3dd919897d4a5eca34f421457cc8da461574ee78.1305890184.git.git@drmicha.warpmail.net>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Eric Wong <normalperson@yhbt.net>,
-	Bernt Hansen <bernt@norang.ca>
+	Michael J Gruber <git@drmicha.warpmail.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 20 13:16:47 2011
+X-From: git-owner@vger.kernel.org Fri May 20 13:48:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNNhD-0000UG-Pp
-	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 13:16:44 +0200
+	id 1QNOCL-00034j-In
+	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 13:48:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935420Ab1ETLQi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2011 07:16:38 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:39279 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S935149Ab1ETLQh (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 May 2011 07:16:37 -0400
-Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 7D1B420658;
-	Fri, 20 May 2011 07:16:36 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute5.internal (MEProxy); Fri, 20 May 2011 07:16:36 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=N7iAV3it+z7RaOLer255pSKzSaM=; b=Sm3/6lKhJcX8jfBx7ULWklAf5tp8CyX04qL7C+oDPEP64WPn1Sh2dD9B5fnX7GUDxXE8yCR6bytdUgTKNixzskL7UXkkPRedQFZaGaYfuydtbfqtfkR/aGnGDKZ66tdoL9KJPUp1xEa0ozK+/tuhby3GR/bnBlOPvw/z+kvuwxg=
-X-Sasl-enc: G2IRN+MZs/z0Pl6QBNtSni2OEJkjEDGcHHcbtYBelO2n 1305890196
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id F202E409096;
-	Fri, 20 May 2011 07:16:35 -0400 (EDT)
-X-Mailer: git-send-email 1.7.5.1.558.gc8bec
-In-Reply-To: <87y622doa7.fsf@norang.ca>
+	id S935653Ab1ETLst (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2011 07:48:49 -0400
+Received: from mho-04-ewr.mailhop.org ([204.13.248.74]:40887 "EHLO
+	mho-02-ewr.mailhop.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S935453Ab1ETLsp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2011 07:48:45 -0400
+Received: from cpe000102d0fe75-cm0012256ecbde.cpe.net.cable.rogers.com ([99.239.148.180] helo=mail.norang.ca)
+	by mho-02-ewr.mailhop.org with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.72)
+	(envelope-from <bernt@norang.ca>)
+	id 1QNOCB-0005uQ-KB; Fri, 20 May 2011 11:48:43 +0000
+X-Mail-Handler: MailHop Outbound by DynDNS
+X-Originating-IP: 99.239.148.180
+X-Report-Abuse-To: abuse@dyndns.com (see http://www.dyndns.com/services/mailhop/outbound_abuse.html for abuse reporting information)
+X-MHO-User: U2FsdGVkX18jpx/anUB72gnOq+AWxAvY
+Received-SPF: none (mail.norang.ca: bernt@gollum.intra.norang.ca does not designate permitted sender hosts) receiver=mail.norang.ca; client-ip=192.168.1.5; helo=localhost.localdomain; envelope-from=bernt@gollum.intra.norang.ca; x-software=spfmilter 0.97 http://www.acme.com/software/spfmilter/ with libspf-unknown;
+Received: from localhost.localdomain (gollum.intra.norang.ca [192.168.1.5])
+	by mail.norang.ca (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p4KBmegs000775
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 20 May 2011 07:48:41 -0400
+Received: from localhost.localdomain (gollum [127.0.0.1])
+	by localhost.localdomain (8.14.3/8.14.3/Debian-9.4) with ESMTP id p4KBmeHt004625;
+	Fri, 20 May 2011 07:48:40 -0400
+Received: (from bernt@localhost)
+	by localhost.localdomain (8.14.3/8.14.3/Submit) id p4KBmduh004624;
+	Fri, 20 May 2011 07:48:39 -0400
+X-Mailer: git-send-email 1.7.5.2.316.g687f
+In-Reply-To: <3dd919897d4a5eca34f421457cc8da461574ee78.1305890184.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174056>
+
+From: Michael J Gruber <git@drmicha.warpmail.net>
+
+From: Michael J Gruber <git@drmicha.warpmail.net>
 
 git svn log --show-commit had no tests and, consequently, no attention
 by the author of
@@ -51,24 +65,19 @@ Introduce a test and fix it.
 
 Reported-by: Bernt Hansen <bernt@norang.ca>
 Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+Tested-by: Bernt Hansen <bernt@norang.ca>
 ---
-git svn scares me. It exits with 0 even with these problems!
-Consequently, the tests in t9116 completely ignore the return codes
-because of the pipes.
+This patch works for me.  Thanks!
 
-Patch directly on top of b1b4755. Thanks for the report!
-
-v2 uses the grouped regexp again. I've learned to count to 2 meanwhile.
----
  git-svn.perl           |    2 +-
  t/t9116-git-svn-log.sh |   15 +++++++++++++++
  2 files changed, 16 insertions(+), 1 deletions(-)
 
 diff --git a/git-svn.perl b/git-svn.perl
-index a5857c1..0cee0e9 100755
+index 0fd2fd2..28d037f 100755
 --- a/git-svn.perl
 +++ b/git-svn.perl
-@@ -5735,7 +5735,7 @@ sub cmd_show_log {
+@@ -5766,7 +5766,7 @@ sub cmd_show_log {
  	my $esc_color = qr/(?:\033\[(?:(?:\d+;)*\d*)?m)*/;
  	while (<$log>) {
  		if (/^${esc_color}commit (- )?($::sha1_short)/o) {
@@ -104,4 +113,4 @@ index 5d477e4..cf4c052 100755
  
  test_expect_success 'test descending revision range' "
 -- 
-1.7.5.1.558.gc8bec
+1.7.5.2.316.g687f
