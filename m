@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [RFC PATCH] revert: Use assert to catch inherent program bugs
-Date: Fri, 20 May 2011 08:30:22 +0000
-Message-ID: <1305880223-7542-2-git-send-email-artagnon@gmail.com>
+Subject: [RFC PATCH] wrapper: Introduce xclose to restart close on EINTR
+Date: Fri, 20 May 2011 08:30:23 +0000
+Message-ID: <1305880223-7542-3-git-send-email-artagnon@gmail.com>
 References: <20110520071609.GA6755@domU-12-31-39-06-A8-0A.compute-1.internal>
  <1305880223-7542-1-git-send-email-artagnon@gmail.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
@@ -15,91 +15,89 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNL6a-0005pS-SU
-	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 10:30:45 +0200
+	id 1QNL6a-0005pS-AQ
+	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 10:30:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934881Ab1ETIad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2011 04:30:33 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:59660 "EHLO
+	id S934852Ab1ETIac (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2011 04:30:32 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:47304 "EHLO
 	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934743Ab1ETIa1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2011 04:30:27 -0400
-Received: by qyg14 with SMTP id 14so1988948qyg.19
-        for <git@vger.kernel.org>; Fri, 20 May 2011 01:30:26 -0700 (PDT)
+	with ESMTP id S934846Ab1ETIa2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2011 04:30:28 -0400
+Received: by mail-qy0-f181.google.com with SMTP id 14so1988937qyg.19
+        for <git@vger.kernel.org>; Fri, 20 May 2011 01:30:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=GXIC0sFg6VO623vhmWTmFXFHiwLbHADgc6uezz7c68Q=;
-        b=GfQdeOvI8FvO9hvCUyFWXj0fUDw2GxaQ7QLXtmwOxZ/Ls9OLXWSmC9ATpOWZC27+/1
-         jeb4bOPMN0h1bZZh+eGZ9KLy8Cs7+f1NsWF6AopRaRE1dNhYEl04uJQwEJ7D2XVb+SG2
-         BnNGITf/UJUmlebDZKYhhsznz7umd6Ttr+yuE=
+        bh=hqoAut7wYOM2s9VgPH87NUbyOuQ2liw/LPoFvdR+bxE=;
+        b=YCRruvRGXiGp8o5f4MpDOgyCkI3JHhplvlugQGJwbwLt/sjrwHkBylb28WmIxh1Ij4
+         DR306QcNbLzPjOrrMrt8cfSdMySJzcTcx8IcRQmuQcDQe6xSSKhjlOvPBANobaLC9qmu
+         jvGJ5+59uTtlK6ishLIhc6dNW8RLn0NP7qgPo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=XZTKM9AUouqwk2nonQearVTKoZd1b4yL28uR7S2g59EXUDKJpGJTkP3uNZuHEKBHeM
-         zRCHPD+kpJCNHJrTgZ9bhhPhyjMKQpS3aN13eRcYpaYNDKACd/V5P3svhIrEmYT3M63r
-         1b/vKN5jsWlwAr4wDksiGxywVAILb72IcK54Q=
-Received: by 10.229.26.203 with SMTP id f11mr3180051qcc.16.1305880226827;
-        Fri, 20 May 2011 01:30:26 -0700 (PDT)
+        b=tdrevycGEmzbxQwAZi1m9fPGRJUulRg8wZaY8QdlvE1/g1gIpHNS/HZ0tfOKPVcnkD
+         QsZu8jldMstdSACm3FcjOFDrkq20kFhzo6WkeQnhEZVe84dXGey3FCl1SiECIcAt2CXA
+         Q81d7muCtLM2UKO44G2Uq8CGrw+KKlSLRZRO0=
+Received: by 10.229.107.21 with SMTP id z21mr3092165qco.187.1305880228219;
+        Fri, 20 May 2011 01:30:28 -0700 (PDT)
 Received: from localhost.localdomain (ec2-184-72-137-52.compute-1.amazonaws.com [184.72.137.52])
-        by mx.google.com with ESMTPS id m9sm2128759qcu.15.2011.05.20.01.30.25
+        by mx.google.com with ESMTPS id m9sm2128759qcu.15.2011.05.20.01.30.26
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 20 May 2011 01:30:26 -0700 (PDT)
+        Fri, 20 May 2011 01:30:27 -0700 (PDT)
 X-Mailer: git-send-email 1.7.5.1
 In-Reply-To: <1305880223-7542-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174052>
 
-Instead of returning and error status or calling die, use an assert
-statement to guard against callers who don't call the functions with
-sane arguments.  This situation is hence treated as an inherent bug in
-the program, rather than a runtime error.
-
-Mentored-by: Jonathan Nieder <jrnieder@gmail.com>
+Suggested-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- builtin/revert.c |   11 +++--------
- 1 files changed, 3 insertions(+), 8 deletions(-)
+ git-compat-util.h |    1 +
+ wrapper.c         |   15 +++++++++++++++
+ 2 files changed, 16 insertions(+), 0 deletions(-)
 
-diff --git a/builtin/revert.c b/builtin/revert.c
-index f697e66..8102d77 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -123,8 +123,7 @@ static int get_message(const char *raw_message, struct commit_message *out)
- 	int abbrev_len, subject_len;
- 	char *q;
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 40498b3..6e06ad4 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -428,6 +428,7 @@ extern void *xcalloc(size_t nmemb, size_t size);
+ extern void *xmmap(void *start, size_t length, int prot, int flags, int fd, off_t offset);
+ extern ssize_t xread(int fd, void *buf, size_t len);
+ extern ssize_t xwrite(int fd, const void *buf, size_t len);
++extern int xclose(int fd);
+ extern int xdup(int fd);
+ extern FILE *xfdopen(int fd, const char *mode);
+ extern int xmkstemp(char *template);
+diff --git a/wrapper.c b/wrapper.c
+index 2829000..717e989 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -141,6 +141,21 @@ ssize_t xwrite(int fd, const void *buf, size_t len)
+ 	}
+ }
  
--	if (!raw_message)
--		return -1;
-+	assert(raw_message);
- 	encoding = get_encoding(raw_message);
- 	if (!encoding)
- 		encoding = "UTF-8";
-@@ -167,9 +166,7 @@ static char *get_encoding(const char *message)
++/*
++ * xclose() is the same a close(), but it automatically restarts close()
++ * operations with a recoverable error (EINTR).
++ */
++int xclose(int fd)
++{
++	int ret;
++	while (1) {
++		ret = close(fd);
++		if ((ret < 0) && errno == EINTR)
++			continue;
++		return ret;
++	}
++}
++
+ ssize_t read_in_full(int fd, void *buf, size_t count)
  {
- 	const char *p = message, *eol;
- 
--	if (!p)
--		die (_("Could not read commit message of %s"),
--				sha1_to_hex(commit->object.sha1));
-+	assert(p);
- 	while (*p && *p != '\n') {
- 		for (eol = p + 1; *eol && *eol != '\n'; eol++)
- 			; /* do nothing */
-@@ -444,9 +441,7 @@ static int do_pick_commit(void)
- 		die(_("%s: cannot parse parent commit %s"),
- 		    me, sha1_to_hex(parent->object.sha1));
- 
--	if (get_message(commit->buffer, &msg) != 0)
--		die(_("Cannot get commit message for %s"),
--				sha1_to_hex(commit->object.sha1));
-+	get_message(commit->buffer, &msg);
- 
- 	/*
- 	 * "commit" is an existing commit.  We would want to apply
+ 	char *p = buf;
 -- 
 1.7.5.GIT
