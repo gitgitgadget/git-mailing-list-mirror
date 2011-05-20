@@ -1,103 +1,71 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [RFC PATCH] wrapper: Introduce xclose to restart close on EINTR
-Date: Fri, 20 May 2011 08:30:23 +0000
-Message-ID: <1305880223-7542-3-git-send-email-artagnon@gmail.com>
-References: <20110520071609.GA6755@domU-12-31-39-06-A8-0A.compute-1.internal>
- <1305880223-7542-1-git-send-email-artagnon@gmail.com>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 20 10:30:45 2011
+From: Rafael Gieschke <rafael@gieschke.de>
+Subject: Re: [PATCH] compat: add a getpass() compatibility function
+Date: Fri, 20 May 2011 12:06:36 +0200
+Message-ID: <A4C82C4A-4A6A-412C-89D5-803F6DC85FD3@gieschke.de>
+References: <563395AE-A3E5-45FF-9063-F807C2CE3AD0@gieschke.de> <BANLkTinPHeSfZXRb7pqt7-XWkR5fH=wAjg@mail.gmail.com> <EC81F772-7149-40A0-891A-973C886AB052@gieschke.de> <7v62p68ut0.fsf@alter.siamese.dyndns.org> <BANLkTimDW8W13Wm8i+n0ww9jCeHsXc__iA@mail.gmail.com> <8B762D96-54CF-4E42-BF90-7790E900AA30@gieschke.de> <BANLkTi=y5uk2Oi+yx+f-cjUeBrzKeFzzmg@mail.gmail.com> <74D1D7FC-A747-4F85-8B1E-7ABFC9DA70A3@gieschke.de> <BANLkTimG8E_Riz3rYC9PMw_2-D=Za0Ar6w@mail.gmail.com> <BANLkTingSqEM5=4=rLq7Yu1x9YXstiSsNw@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1084)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Fri May 20 12:09:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNL6a-0005pS-AQ
-	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 10:30:44 +0200
+	id 1QNMe6-0003pG-Sz
+	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 12:09:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934852Ab1ETIac (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2011 04:30:32 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:47304 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934846Ab1ETIa2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2011 04:30:28 -0400
-Received: by mail-qy0-f181.google.com with SMTP id 14so1988937qyg.19
-        for <git@vger.kernel.org>; Fri, 20 May 2011 01:30:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references;
-        bh=hqoAut7wYOM2s9VgPH87NUbyOuQ2liw/LPoFvdR+bxE=;
-        b=YCRruvRGXiGp8o5f4MpDOgyCkI3JHhplvlugQGJwbwLt/sjrwHkBylb28WmIxh1Ij4
-         DR306QcNbLzPjOrrMrt8cfSdMySJzcTcx8IcRQmuQcDQe6xSSKhjlOvPBANobaLC9qmu
-         jvGJ5+59uTtlK6ishLIhc6dNW8RLn0NP7qgPo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=tdrevycGEmzbxQwAZi1m9fPGRJUulRg8wZaY8QdlvE1/g1gIpHNS/HZ0tfOKPVcnkD
-         QsZu8jldMstdSACm3FcjOFDrkq20kFhzo6WkeQnhEZVe84dXGey3FCl1SiECIcAt2CXA
-         Q81d7muCtLM2UKO44G2Uq8CGrw+KKlSLRZRO0=
-Received: by 10.229.107.21 with SMTP id z21mr3092165qco.187.1305880228219;
-        Fri, 20 May 2011 01:30:28 -0700 (PDT)
-Received: from localhost.localdomain (ec2-184-72-137-52.compute-1.amazonaws.com [184.72.137.52])
-        by mx.google.com with ESMTPS id m9sm2128759qcu.15.2011.05.20.01.30.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 20 May 2011 01:30:27 -0700 (PDT)
-X-Mailer: git-send-email 1.7.5.1
-In-Reply-To: <1305880223-7542-1-git-send-email-artagnon@gmail.com>
+	id S935541Ab1ETKJS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2011 06:09:18 -0400
+Received: from smtp2.goneo.de ([212.90.139.82]:56582 "EHLO smtp2.goneo.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S935518Ab1ETKJR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 May 2011 06:09:17 -0400
+Received: from smtp2.goneo.de (localhost [127.0.0.1])
+	by scan.goneo.de (Postfix) with ESMTP id 4DEDB1D23A1;
+	Fri, 20 May 2011 12:09:16 +0200 (CEST)
+X-Virus-Scanned: by goneo
+X-Spam-Flag: NO
+X-Spam-Score: -2.832
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.832 tagged_above=-999 tests=[ALL_TRUSTED=-1,
+	AWL=0.068, BAYES_00=-1.9] autolearn=ham
+Received: from smtp2.goneo.de ([127.0.0.1])
+	by smtp2.goneo.de (smtp2.goneo.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id YV2IZuSkmfWV; Fri, 20 May 2011 12:09:15 +0200 (CEST)
+Received: from [10.151.37.67] (unknown [89.204.153.195])
+	by smtp2.goneo.de (Postfix) with ESMTPSA id 88C401D23A7;
+	Fri, 20 May 2011 12:09:11 +0200 (CEST)
+In-Reply-To: <BANLkTingSqEM5=4=rLq7Yu1x9YXstiSsNw@mail.gmail.com>
+X-Mailer: Apple Mail (2.1084)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174053>
 
-Suggested-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- git-compat-util.h |    1 +
- wrapper.c         |   15 +++++++++++++++
- 2 files changed, 16 insertions(+), 0 deletions(-)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 40498b3..6e06ad4 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -428,6 +428,7 @@ extern void *xcalloc(size_t nmemb, size_t size);
- extern void *xmmap(void *start, size_t length, int prot, int flags, int fd, off_t offset);
- extern ssize_t xread(int fd, void *buf, size_t len);
- extern ssize_t xwrite(int fd, const void *buf, size_t len);
-+extern int xclose(int fd);
- extern int xdup(int fd);
- extern FILE *xfdopen(int fd, const char *mode);
- extern int xmkstemp(char *template);
-diff --git a/wrapper.c b/wrapper.c
-index 2829000..717e989 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -141,6 +141,21 @@ ssize_t xwrite(int fd, const void *buf, size_t len)
- 	}
- }
- 
-+/*
-+ * xclose() is the same a close(), but it automatically restarts close()
-+ * operations with a recoverable error (EINTR).
-+ */
-+int xclose(int fd)
-+{
-+	int ret;
-+	while (1) {
-+		ret = close(fd);
-+		if ((ret < 0) && errno == EINTR)
-+			continue;
-+		return ret;
-+	}
-+}
-+
- ssize_t read_in_full(int fd, void *buf, size_t count)
- {
- 	char *p = buf;
--- 
-1.7.5.GIT
+Am 19.05.2011 um 23:16 schrieb Erik Faye-Lund:
+>> 
+>> Well, those platforms would currently fail, since that's the limit on
+>> the string returned from getpass. Since that hasn't happened yet, I
+>> suspect that this is a very theoretical problem.
+>> 
+>> If we created our own define we could fix such problems by setting
+>> NO_GETPASS and having a reasonable lengthy GIT_MAX_PASS. But let's
+>> leave that theoretical fix for when/if it turns out to be real, huh?
+>> 
+> 
+> Whoa: http://www.opengroup.org/csq/view.mhtml?norationale=1&noreferences=1&RID=sun%2FSE2%2F10
+> 
+> It seems that Solaris has a MAX_PASS of 8... That should mean that
+> prompted passwords can't be above 8 characters there (without using
+> GIT_ASKPASS). Can this really be the case?
+
+Good find. At least under "SunOS opensolaris 5.11 snv_111b i86pc i386 i86pc" with packages from http://sunfreeware.com/indexintel10.html, I can confirm exactly this behavior. If you try to connect to an account with password > 8 chars, git-imap-send prints "IMAP command 'LOGIN <user> <pass>' returned response (NO) - incorrect password or account name", using <= 8 chars it works fine (couldn't check git clone on https because I only have an internal IP without NAT/proxy).
+
+So maybe it would make sense to define NO_GETPASS and use compat/getpass.c on Solaris in the Makefile?
