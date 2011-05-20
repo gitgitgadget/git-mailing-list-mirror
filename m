@@ -1,85 +1,103 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH] compat: add a getpass() compatibility function
-Date: Fri, 20 May 2011 19:26:42 +0200
-Message-ID: <BANLkTinX2Nvq9OtDs6DGdtE7qFL9QjZTbw@mail.gmail.com>
-References: <563395AE-A3E5-45FF-9063-F807C2CE3AD0@gieschke.de>
- <BANLkTinPHeSfZXRb7pqt7-XWkR5fH=wAjg@mail.gmail.com> <EC81F772-7149-40A0-891A-973C886AB052@gieschke.de>
- <7v62p68ut0.fsf@alter.siamese.dyndns.org> <BANLkTimDW8W13Wm8i+n0ww9jCeHsXc__iA@mail.gmail.com>
- <8B762D96-54CF-4E42-BF90-7790E900AA30@gieschke.de> <BANLkTi=y5uk2Oi+yx+f-cjUeBrzKeFzzmg@mail.gmail.com>
- <74D1D7FC-A747-4F85-8B1E-7ABFC9DA70A3@gieschke.de> <BANLkTimG8E_Riz3rYC9PMw_2-D=Za0Ar6w@mail.gmail.com>
- <BANLkTingSqEM5=4=rLq7Yu1x9YXstiSsNw@mail.gmail.com> <A4C82C4A-4A6A-412C-89D5-803F6DC85FD3@gieschke.de>
- <BANLkTikRCXLJfOJFZ7j0TV_rxsySgQwSsw@mail.gmail.com> <7vtycp2sva.fsf@alter.siamese.dyndns.org>
-Reply-To: kusmabite@gmail.com
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC PATCH] cache-tree: Teach write_cache_as_tree to
+ discard_cache
+Date: Fri, 20 May 2011 13:07:45 -0500
+Message-ID: <20110520180745.GC17177@elie>
+References: <20110520071609.GA6755@domU-12-31-39-06-A8-0A.compute-1.internal>
+ <1305880223-7542-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Rafael Gieschke <rafael@gieschke.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 20 19:27:10 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <christian.couder@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 20 20:07:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNTTi-0002mK-DM
-	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 19:27:10 +0200
+	id 1QNU79-0001Pe-Vq
+	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 20:07:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935419Ab1ETR1E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2011 13:27:04 -0400
-Received: from mail-px0-f173.google.com ([209.85.212.173]:57252 "EHLO
-	mail-px0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934043Ab1ETR1C (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2011 13:27:02 -0400
-Received: by pxi16 with SMTP id 16so2628107pxi.4
-        for <git@vger.kernel.org>; Fri, 20 May 2011 10:27:02 -0700 (PDT)
+	id S1757247Ab1ETSHv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2011 14:07:51 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:43847 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757241Ab1ETSHu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2011 14:07:50 -0400
+Received: by iyb14 with SMTP id 14so3128958iyb.19
+        for <git@vger.kernel.org>; Fri, 20 May 2011 11:07:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=37L4jlTM3TOSMYAr0oS/awI0tW7uqDkMzAvTGfcty3M=;
-        b=NAE5OJUrZ+1/HJj/v9DKVkkHl8zkbBeEYfCZpiSgsODDU/6f9do3QSndfdBdJxr9ji
-         /fTE9ImgsGGx0tG9wwJmHo1NjBctQsq2dPbLG/vvPq2yQcrTZC2vIHLiojqsyPGhP8Vp
-         64J7HZG1TPDGFpvF3Q36gzOYGGNsLKKhuFRy4=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=o6lCPdM0iMft38Fxp+Vdll0ZOV8k3Bnicu98kSMFbe4=;
+        b=DjcMxsk2WZgHyta+5Qc1teMeq6Zi68lN/g/kT6tlI5l4vEyNiHZe3hHF+/LpS417Gx
+         Q/pK3/oA6RFtzQ9HdlMwYPRL7PSd/CeFP7WiMWcGq/EdGOj3OoRmehBgcQjU0OluM/U8
+         yHAhD+fI92n6/QAOcs8/YDfDZtc/sBzEjCXgU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        b=h3dSgpPKcd4KbRTUDFPJwVyMj28xul1SKEM2MMPZqZPEZ/UWVUUF3bUm98/6nLSfJS
-         LfenMIYWpqBDo8BkrrMX3S6TKd3IKMzYiY/R8xcuJwXZ3HtLOj6zaOuxrlpdgGyGK8B2
-         ZGh3wLfj4gMBsOipE8R+yMU53sajOSpz8QNjU=
-Received: by 10.68.71.135 with SMTP id v7mr7464944pbu.232.1305912422055; Fri,
- 20 May 2011 10:27:02 -0700 (PDT)
-Received: by 10.68.47.131 with HTTP; Fri, 20 May 2011 10:26:42 -0700 (PDT)
-In-Reply-To: <7vtycp2sva.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=la6CuE/XX2K8NGzjyNhcEsC3UjSK7HkC68m1gPwZNgTWWgUwt7qav4E+1u05mTAFEe
+         wMTSLmkICOGOICgkTbNXNwJUMRqpEs8aQ7a1RBE2+l5iSV832yHyFEe79aOGsCaN1qr9
+         jAYRdMQJdv6XACaDsrKVh314lhwIawLbsH7Ao=
+Received: by 10.42.117.5 with SMTP id r5mr5265975icq.377.1305914869625;
+        Fri, 20 May 2011 11:07:49 -0700 (PDT)
+Received: from elie (adsl-69-209-78-180.dsl.chcgil.ameritech.net [69.209.78.180])
+        by mx.google.com with ESMTPS id 4sm1623874ibc.15.2011.05.20.11.07.47
+        (version=SSLv3 cipher=OTHER);
+        Fri, 20 May 2011 11:07:48 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1305880223-7542-1-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174072>
 
-On Fri, May 20, 2011 at 7:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Erik Faye-Lund <kusmabite@gmail.com> writes:
->> Instead,
->> we should make our own function (based on your most recent patch?)
->> that fills a caller-specified strbuf instead (git_getpass already have
->> a static strbuf that we can fill).
+Hi,
+
+Ramkumar Ramachandra wrote:
+
+> If the read_cache() call succeeds, the function must call
+> discard_cache() before returning to the caller.
 >
-> Heh, I thought you earlier felt "a bit pointless" to "a properly
-> abstracted common version" I outlined earlier in the thread ;-)
+> Suggested-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Well, if we're going to change git_getpass to not use getpass, then we
-need to do something; the mingw-version is a getpass-interface.
+Sorry, I was unclear.  What I meant is this: currently all three
+callers to write_cache_as_tree() call die() or exit() if it fails.
+When a new caller wants to carry on after failure, that requires some
+careful thinking about what the state should be when it resumes.
 
-Sure, we could continue to use the getpass-interface for the
-POSIX-version, but it feels silly to limit the password-length when we
-could just pass in that strbuf that is already there (for the
-GIT_GETPASS-case). The Windows-version still should be fixed to avoid
-the leak that is already there - passing the strbuf in from the caller
-would solve that.
+Toward that end, your patch "[PATCH 1/8] revert: Improve error
+handling by..." included
 
-I'm fine with just having two implementations, one for POSIX and one
-for Windows. In fact, that's probably the right thing to do; my
-experiment lead to more lines of code, not less.
+> -		if (write_cache_as_tree(head, 0, NULL))
+> -			die (_("Your index file is unmerged."));
+> +		if (write_cache_as_tree(head, 0, NULL)) {
+> +			discard_cache();
 
-My patches were more of an experiment than a proposal :)
+but it doesn't feel right.  Why after trying to write-tree do we undo
+the _reading_ of a tree?  It seemed strange.
+
+So let's think carefully about what the state should be after
+write-tree fails.  Does it discard_cache() to make valgrind happier?
+Or do we keep the in-core index cached for use in later operations?
+Whichever is the right choice would be likely to apply equally well to
+"git cherry-pick" and other write_cache_as_tree callers.
+
+I foolishly did not ask "do you really want to discard_cache() here?"
+and instead said something to the effect of "if you are going to
+discard_cache(), won't that apply equally to all callers?", while the
+former is a better question.  Of course this would all be easier if we
+had an example to think about that cared about the index state on
+error one way or another.
+
+If I understand correctly, the sequencer does not care about the state
+at all, and just wants to write a few files under .git and print a
+message.  It could do that just as well by keeping the die() and
+setting up a die handler.
