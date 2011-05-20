@@ -1,93 +1,85 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: [PATCH] do not read beyond end of malloc'd buffer
-Date: Fri, 20 May 2011 19:20:12 +0200
-Message-ID: <877h9lb86r.fsf@rho.meyering.net>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH] compat: add a getpass() compatibility function
+Date: Fri, 20 May 2011 19:26:42 +0200
+Message-ID: <BANLkTinX2Nvq9OtDs6DGdtE7qFL9QjZTbw@mail.gmail.com>
+References: <563395AE-A3E5-45FF-9063-F807C2CE3AD0@gieschke.de>
+ <BANLkTinPHeSfZXRb7pqt7-XWkR5fH=wAjg@mail.gmail.com> <EC81F772-7149-40A0-891A-973C886AB052@gieschke.de>
+ <7v62p68ut0.fsf@alter.siamese.dyndns.org> <BANLkTimDW8W13Wm8i+n0ww9jCeHsXc__iA@mail.gmail.com>
+ <8B762D96-54CF-4E42-BF90-7790E900AA30@gieschke.de> <BANLkTi=y5uk2Oi+yx+f-cjUeBrzKeFzzmg@mail.gmail.com>
+ <74D1D7FC-A747-4F85-8B1E-7ABFC9DA70A3@gieschke.de> <BANLkTimG8E_Riz3rYC9PMw_2-D=Za0Ar6w@mail.gmail.com>
+ <BANLkTingSqEM5=4=rLq7Yu1x9YXstiSsNw@mail.gmail.com> <A4C82C4A-4A6A-412C-89D5-803F6DC85FD3@gieschke.de>
+ <BANLkTikRCXLJfOJFZ7j0TV_rxsySgQwSsw@mail.gmail.com> <7vtycp2sva.fsf@alter.siamese.dyndns.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 20 19:20:28 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Rafael Gieschke <rafael@gieschke.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 20 19:27:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNTNC-0007G3-OU
-	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 19:20:27 +0200
+	id 1QNTTi-0002mK-DM
+	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 19:27:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756958Ab1ETRUV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2011 13:20:21 -0400
-Received: from smtp1-g21.free.fr ([212.27.42.1]:45150 "EHLO smtp1-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751956Ab1ETRUV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2011 13:20:21 -0400
-Received: from mx.meyering.net (unknown [82.230.74.64])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id 53DE394004B
-	for <git@vger.kernel.org>; Fri, 20 May 2011 19:20:14 +0200 (CEST)
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id 07B6C600AE; Fri, 20 May 2011 19:20:12 +0200 (CEST)
+	id S935419Ab1ETR1E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2011 13:27:04 -0400
+Received: from mail-px0-f173.google.com ([209.85.212.173]:57252 "EHLO
+	mail-px0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934043Ab1ETR1C (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2011 13:27:02 -0400
+Received: by pxi16 with SMTP id 16so2628107pxi.4
+        for <git@vger.kernel.org>; Fri, 20 May 2011 10:27:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=37L4jlTM3TOSMYAr0oS/awI0tW7uqDkMzAvTGfcty3M=;
+        b=NAE5OJUrZ+1/HJj/v9DKVkkHl8zkbBeEYfCZpiSgsODDU/6f9do3QSndfdBdJxr9ji
+         /fTE9ImgsGGx0tG9wwJmHo1NjBctQsq2dPbLG/vvPq2yQcrTZC2vIHLiojqsyPGhP8Vp
+         64J7HZG1TPDGFpvF3Q36gzOYGGNsLKKhuFRy4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        b=h3dSgpPKcd4KbRTUDFPJwVyMj28xul1SKEM2MMPZqZPEZ/UWVUUF3bUm98/6nLSfJS
+         LfenMIYWpqBDo8BkrrMX3S6TKd3IKMzYiY/R8xcuJwXZ3HtLOj6zaOuxrlpdgGyGK8B2
+         ZGh3wLfj4gMBsOipE8R+yMU53sajOSpz8QNjU=
+Received: by 10.68.71.135 with SMTP id v7mr7464944pbu.232.1305912422055; Fri,
+ 20 May 2011 10:27:02 -0700 (PDT)
+Received: by 10.68.47.131 with HTTP; Fri, 20 May 2011 10:26:42 -0700 (PDT)
+In-Reply-To: <7vtycp2sva.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174071>
 
-I was surprised to see "git diff --word-diff" output a ton of
-garbage, and tracked it down to a bug that's triggered when the
-diff.suppress-blank-empty config option to true and when at least
-one of the context lines is empty.
+On Fri, May 20, 2011 at 7:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Erik Faye-Lund <kusmabite@gmail.com> writes:
+>> Instead,
+>> we should make our own function (based on your most recent patch?)
+>> that fills a caller-specified strbuf instead (git_getpass already have
+>> a static strbuf that we can fill).
+>
+> Heh, I thought you earlier felt "a bit pointless" to "a properly
+> abstracted common version" I outlined earlier in the thread ;-)
 
-Here's a quick demo you can run in an empty directory:
+Well, if we're going to change git_getpass to not use getpass, then we
+need to do something; the mingw-version is a getpass-interface.
 
-    printf 'a\n\n[-b-]{+c+}\n' > exp
-    git init && git config diff.suppress-blank-empty true
-    printf 'a\n\nb\n' > f && git add . && git commit -m. .
-    printf 'a\n\nc\n' > f
-    git diff --word-diff | tail -3 > out
-    diff out exp
+Sure, we could continue to use the getpass-interface for the
+POSIX-version, but it feels silly to limit the password-length when we
+could just pass in that strbuf that is already there (for the
+GIT_GETPASS-case). The Windows-version still should be fixed to avoid
+the leak that is already there - passing the strbuf in from the caller
+would solve that.
 
-Before the patch, the git diff ... command would read from beyond
-the end of a heap buffer, and "out" would contain far more than the
-expected 5 bytes.
+I'm fine with just having two implementations, one for POSIX and one
+for Windows. In fact, that's probably the right thing to do; my
+experiment lead to more lines of code, not less.
 
-Here's the patch:
-
--- >8 --
-Subject: [PATCH] do not read beyond end of malloc'd buffer
-
-With diff.suppress-blank-empty=true, "git diff --word-diff" would
-output data that had been read from uninitialized heap memory.
-The problem was that fn_out_consume did not account for the
-possibility of a line with length 1, i.e., the empty context line
-that diff.suppress-blank-empty=true converts from " \n" to "\n".
-Since it assumed there would always be a prefix character (the space),
-it decremented "len" unconditionally, thus passing len=0 to emit_line,
-which would then blindly call emit_line_0 with len=-1 which would
-pass that value on to fwrite as SIZE_MAX.  Boom.
-
-Signed-off-by: Jim Meyering <meyering@redhat.com>
----
- diff.c |    9 +++++++--
- 1 files changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index ba5f7aa..57eea74 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1117,8 +1117,13 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
- 			emit_line(ecbdata->opt, plain, reset, line, len);
- 			fputs("~\n", ecbdata->opt->file);
- 		} else {
--			/* don't print the prefix character */
--			emit_line(ecbdata->opt, plain, reset, line+1, len-1);
-+			/* If there is a prefix character, skip it.
-+			   With diff_suppress_blank_empty, there may be none. */
-+			if (line[0] != '\n') {
-+			      line++;
-+			      len--;
-+			}
-+			emit_line(ecbdata->opt, plain, reset, line, len);
- 		}
- 		return;
- 	}
---
-1.7.5.2.316.gbcebc8b
+My patches were more of an experiment than a proposal :)
