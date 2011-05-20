@@ -1,115 +1,107 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH] compat: add a getpass() compatibility function
-Date: Fri, 20 May 2011 12:48:28 +0200
-Message-ID: <BANLkTikRCXLJfOJFZ7j0TV_rxsySgQwSsw@mail.gmail.com>
-References: <563395AE-A3E5-45FF-9063-F807C2CE3AD0@gieschke.de>
- <BANLkTinPHeSfZXRb7pqt7-XWkR5fH=wAjg@mail.gmail.com> <EC81F772-7149-40A0-891A-973C886AB052@gieschke.de>
- <7v62p68ut0.fsf@alter.siamese.dyndns.org> <BANLkTimDW8W13Wm8i+n0ww9jCeHsXc__iA@mail.gmail.com>
- <8B762D96-54CF-4E42-BF90-7790E900AA30@gieschke.de> <BANLkTi=y5uk2Oi+yx+f-cjUeBrzKeFzzmg@mail.gmail.com>
- <74D1D7FC-A747-4F85-8B1E-7ABFC9DA70A3@gieschke.de> <BANLkTimG8E_Riz3rYC9PMw_2-D=Za0Ar6w@mail.gmail.com>
- <BANLkTingSqEM5=4=rLq7Yu1x9YXstiSsNw@mail.gmail.com> <A4C82C4A-4A6A-412C-89D5-803F6DC85FD3@gieschke.de>
-Reply-To: kusmabite@gmail.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCHv2 maint] git-svn: Fix git svn log --show-commit
+Date: Fri, 20 May 2011 13:16:34 +0200
+Message-ID: <3dd919897d4a5eca34f421457cc8da461574ee78.1305890184.git.git@drmicha.warpmail.net>
+References: <87y622doa7.fsf@norang.ca>
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Rafael Gieschke <rafael@gieschke.de>
-X-From: git-owner@vger.kernel.org Fri May 20 12:49:00 2011
+	Eric Wong <normalperson@yhbt.net>,
+	Bernt Hansen <bernt@norang.ca>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 20 13:16:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNNGO-0000x4-A4
-	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 12:49:00 +0200
+	id 1QNNhD-0000UG-Pp
+	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 13:16:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934080Ab1ETKst (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2011 06:48:49 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:54256 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933732Ab1ETKss convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 May 2011 06:48:48 -0400
-Received: by pvg12 with SMTP id 12so1610389pvg.19
-        for <git@vger.kernel.org>; Fri, 20 May 2011 03:48:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=fMQdJFXrGcBEkV6d38Dt12pk4H9JcaB81/GzwR3ruJM=;
-        b=th+Pxhjgk2m3m7V1nH3TfdR1TAc6YzpZ4B2pHSgq9bMLPXw+455xVgDkaO7FCatzUx
-         iB5nMulKu+TxjqWyGl4djJZI7uVrChALKWxiRlP+/btjAy9cRHkbUhBggjnXQPDtAxeA
-         pTOGzDjU2c+ZP5usYO4RboLtydvysmv9P2zK0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=rHTnLGzUXHjzygRPrVkFugWoCsgdBrj+HMDqcamP1IhU8OSo0DpPTNtLE7Rcqe1r+W
-         WSMalETLJFzUtFqo1Ut6kWv5uHJB3W3xsSFjiVn0uBlttMd/Sb50m40AhBbky8Ic2uAD
-         q+JZgh7Jtf09ze1zQnZbget4iZaxPN6cKL5N4=
-Received: by 10.68.28.132 with SMTP id b4mr1030059pbh.433.1305888528166; Fri,
- 20 May 2011 03:48:48 -0700 (PDT)
-Received: by 10.68.47.131 with HTTP; Fri, 20 May 2011 03:48:28 -0700 (PDT)
-In-Reply-To: <A4C82C4A-4A6A-412C-89D5-803F6DC85FD3@gieschke.de>
+	id S935420Ab1ETLQi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2011 07:16:38 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:39279 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S935149Ab1ETLQh (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 May 2011 07:16:37 -0400
+Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 7D1B420658;
+	Fri, 20 May 2011 07:16:36 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute5.internal (MEProxy); Fri, 20 May 2011 07:16:36 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=N7iAV3it+z7RaOLer255pSKzSaM=; b=Sm3/6lKhJcX8jfBx7ULWklAf5tp8CyX04qL7C+oDPEP64WPn1Sh2dD9B5fnX7GUDxXE8yCR6bytdUgTKNixzskL7UXkkPRedQFZaGaYfuydtbfqtfkR/aGnGDKZ66tdoL9KJPUp1xEa0ozK+/tuhby3GR/bnBlOPvw/z+kvuwxg=
+X-Sasl-enc: G2IRN+MZs/z0Pl6QBNtSni2OEJkjEDGcHHcbtYBelO2n 1305890196
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id F202E409096;
+	Fri, 20 May 2011 07:16:35 -0400 (EDT)
+X-Mailer: git-send-email 1.7.5.1.558.gc8bec
+In-Reply-To: <87y622doa7.fsf@norang.ca>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174055>
 
-On Fri, May 20, 2011 at 12:06 PM, Rafael Gieschke <rafael@gieschke.de> wrote:
->
-> Am 19.05.2011 um 23:16 schrieb Erik Faye-Lund:
->>>
->>> Well, those platforms would currently fail, since that's the limit on
->>> the string returned from getpass. Since that hasn't happened yet, I
->>> suspect that this is a very theoretical problem.
->>>
->>> If we created our own define we could fix such problems by setting
->>> NO_GETPASS and having a reasonable lengthy GIT_MAX_PASS. But let's
->>> leave that theoretical fix for when/if it turns out to be real, huh?
->>>
->>
->> Whoa: http://www.opengroup.org/csq/view.mhtml?norationale=1&noreferences=1&RID=sun%2FSE2%2F10
->>
->> It seems that Solaris has a MAX_PASS of 8... That should mean that
->> prompted passwords can't be above 8 characters there (without using
->> GIT_ASKPASS). Can this really be the case?
->
-> Good find. At least under "SunOS opensolaris 5.11 snv_111b i86pc i386 i86pc" with packages from http://sunfreeware.com/indexintel10.html, I can confirm exactly this behavior. If you try to connect to an account with password > 8 chars, git-imap-send prints "IMAP command 'LOGIN <user> <pass>' returned response (NO) - incorrect password or account name", using <= 8 chars it works fine (couldn't check git clone on https because I only have an internal IP without NAT/proxy).
->
-> So maybe it would make sense to define NO_GETPASS and use compat/getpass.c on Solaris in the Makefile?
->
+git svn log --show-commit had no tests and, consequently, no attention
+by the author of
 
-Actually, I'm thinking that we should avoid ever using getpass: it
-(and MAX_PASS) seems to have been deprecated from POSIX long ago, and
-is even removed from the latest version of the specification. Instead,
-we should make our own function (based on your most recent patch?)
-that fills a caller-specified strbuf instead (git_getpass already have
-a static strbuf that we can fill).
+b1b4755 (git-log: put space after commit mark, 2011-03-10)
 
-By the way, I gave merging the POSIX and Win32 code-paths a stab, by
-implementing minimal tc[gs]etattr :
-http://repo.or.cz/w/git/kusma.git/shortlog/refs/heads/work/win32-termios
+who kept git svn log working only without --show-commit.
 
-It's close to working, but the fact that we set stdin to binary mode
-by default makes it misbehave and append '\r' to the end of the input.
-I have some patches to try to avoid the nasty _setmode(...,
-_O_BINARY)-hack in our mingw main-wrapper; perhaps this is the right
-timing to finish those?
+Introduce a test and fix it.
 
-Another thing I tried, was to make the call to fopen use the path
-"con" (which is the path to the terminal on Windows) instead of
-"/dev/tty"; this made SetConsoleMode fail, claiming that the handle
-was invalid. This failure baffles me, because the handle was valid a
-few lines earlier, when I called GetConsoleMode... The idea was that
-the handle would be explicitly opened in text-mode (since there's no
-'b'-character in the mode-string), but I forgot that we also set
-_fmode to _O_BINARY. Ugghhh, Git's handling of new-lines on Windows is
-hacky... :P
+Reported-by: Bernt Hansen <bernt@norang.ca>
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+git svn scares me. It exits with 0 even with these problems!
+Consequently, the tests in t9116 completely ignore the return codes
+because of the pipes.
 
-So, it seems to me that the _setmode-hack should be killed to get this
-code POSIX/Windows-unified (or the _fmode-hack and the
-SetConsoleMode-failure should be combated).
+Patch directly on top of b1b4755. Thanks for the report!
+
+v2 uses the grouped regexp again. I've learned to count to 2 meanwhile.
+---
+ git-svn.perl           |    2 +-
+ t/t9116-git-svn-log.sh |   15 +++++++++++++++
+ 2 files changed, 16 insertions(+), 1 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index a5857c1..0cee0e9 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -5735,7 +5735,7 @@ sub cmd_show_log {
+ 	my $esc_color = qr/(?:\033\[(?:(?:\d+;)*\d*)?m)*/;
+ 	while (<$log>) {
+ 		if (/^${esc_color}commit (- )?($::sha1_short)/o) {
+-			my $cmt = $1;
++			my $cmt = $2;
+ 			if ($c && cmt_showable($c) && $c->{r} != $r_last) {
+ 				$r_last = $c->{r};
+ 				process_commit($c, $r_min, $r_max, \@k) or
+diff --git a/t/t9116-git-svn-log.sh b/t/t9116-git-svn-log.sh
+index 5d477e4..cf4c052 100755
+--- a/t/t9116-git-svn-log.sh
++++ b/t/t9116-git-svn-log.sh
+@@ -60,6 +60,21 @@ test_expect_success 'test ascending revision range' "
+ 	git svn log -r 1:4 | grep '^r[0-9]' | cut -d'|' -f1 | test_cmp expected-range-r1-r2-r4 -
+ 	"
+ 
++test_expect_success 'test ascending revision range with --show-commit' "
++	git reset --hard trunk &&
++	git svn log --show-commit -r 1:4 | grep '^r[0-9]' | cut -d'|' -f1 | test_cmp expected-range-r1-r2-r4 -
++	"
++
++test_expect_success 'test ascending revision range with --show-commit (sha1)' "
++	git svn find-rev r1 >expected-range-r1-r2-r4-sha1 &&
++	git svn find-rev r2 >>expected-range-r1-r2-r4-sha1 &&
++	git svn find-rev r4 >>expected-range-r1-r2-r4-sha1 &&
++	git reset --hard trunk &&
++	git svn log --show-commit -r 1:4 | grep '^r[0-9]' | cut -d'|' -f2 >out &&
++	git rev-parse \$(cat out) >actual &&
++	test_cmp expected-range-r1-r2-r4-sha1 actual
++	"
++
+ printf 'r4 \nr2 \nr1 \n' > expected-range-r4-r2-r1
+ 
+ test_expect_success 'test descending revision range' "
+-- 
+1.7.5.1.558.gc8bec
