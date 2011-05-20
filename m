@@ -1,104 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 maint] git-svn: Fix git svn log --show-commit
-Date: Fri, 20 May 2011 09:17:16 -0700
-Message-ID: <7vk4dl4a9f.fsf@alter.siamese.dyndns.org>
-References: <87y622doa7.fsf@norang.ca>
- <3dd919897d4a5eca34f421457cc8da461574ee78.1305890184.git.git@drmicha.warpmail.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>,
-	Bernt Hansen <bernt@norang.ca>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri May 20 18:17:39 2011
+From: "George Spelvin" <linux@horizon.com>
+Subject: RE: git  --  how to revert build to as-originally-cloned?
+Date: 20 May 2011 12:25:02 -0400
+Message-ID: <20110520162502.7854.qmail@science.horizon.com>
+Cc: linux@horizon.com
+To: git@vger.kernel.org, johnlumby@hotmail.com, timmazid@hotmail.com
+X-From: git-owner@vger.kernel.org Fri May 20 18:25:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNSOO-0002JI-52
-	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 18:17:36 +0200
+	id 1QNSVq-0006hx-AL
+	for gcvg-git-2@lo.gmane.org; Fri, 20 May 2011 18:25:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935043Ab1ETQRa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2011 12:17:30 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42745 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934520Ab1ETQR3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2011 12:17:29 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 468A54E6F;
-	Fri, 20 May 2011 12:19:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=20J+WO/9HLk94sy9gWbO+qovcNU=; b=YPv7cP
-	SYntK3eQliD2iNgvxVeERUJMbqSa1omoYz1xEstc0lpJkjCf2NopMHZeUTHV6spF
-	ponAoEBmQNczreEn51vUvY5E4DRV+IJ+qt5ETmKwi9cTPgcbscRmIPSi7ZzC9DJh
-	ECLaApd8x9BdKU4ZjLI8bn1/4PkZGB2uQcFHo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NSz7Cx4rJlTSYFgX8QWz0R3tJHANjqPN
-	VuPZ2wGJUz+qzsDqj99/meUEzjV3npG4NQ/bbVXAt6mEHeRUuOO/23SUlLUCrxP7
-	V8WDMlmqx1D7khIdU7+ylIRX8o/2XZV0nYbshril+lA3KCGe91sjU+b5X4ZmJGtv
-	67pGrc31+KQ=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 04B694E6E;
-	Fri, 20 May 2011 12:19:32 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7B9354E66; Fri, 20 May 2011
- 12:19:26 -0400 (EDT)
-In-Reply-To: <3dd919897d4a5eca34f421457cc8da461574ee78.1305890184.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Fri, 20 May 2011 13:16:34 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F1AF922E-82FC-11E0-9B22-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+	id S935167Ab1ETQZH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2011 12:25:07 -0400
+Received: from science.horizon.com ([71.41.210.146]:28899 "HELO
+	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S934305Ab1ETQZE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2011 12:25:04 -0400
+Received: (qmail 7855 invoked by uid 1000); 20 May 2011 12:25:02 -0400
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174064>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Ah - I should have said that I selected only merges in my git log 
+command  -
+git log --merges
+(With no qualifier, git log returns about 3.8 million lines /  150 MBytes,
+hard to work with)
 
-> git svn log --show-commit had no tests and, consequently, no attention
-> by the author of
->
-> b1b4755 (git-log: put space after commit mark, 2011-03-10)
->
-> who kept git svn log working only without --show-commit.
->
-> Introduce a test and fix it.
->
-> Reported-by: Bernt Hansen <bernt@norang.ca>
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
-> git svn scares me.
+> And,  based on what the command now returns,  it seems that the first two
+> that I listed before (which are no longer present) were as a result of my
+> (single) merge command,  i.e. my merge resulted in merging :
+>     .  two merges that were done by someone else in the master that I 
+> cloned into my /b filesystem,
+>      .  maybe some other non-merge commits that I did not query before 
+> and now don't know
 
-Sorry about this breakage. 
+Er, no.  One "git merge" command produces (at most) one commit.
+It may be that the head of the branch you merged in was already
+a merge commit, but tha
 
-> diff --git a/git-svn.perl b/git-svn.perl
-> index a5857c1..0cee0e9 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -5735,7 +5735,7 @@ sub cmd_show_log {
->  	my $esc_color = qr/(?:\033\[(?:(?:\d+;)*\d*)?m)*/;
->  	while (<$log>) {
->  		if (/^${esc_color}commit (- )?($::sha1_short)/o) {
-> -			my $cmt = $1;
-> +			my $cmt = $2;
+You may find "gitk" useful for for visualizing all of this.
 
-Even more defensive approach would be not to grab the grouping by doing:
 
--  		if (/^${esc_color}commit (- )?($::sha1_short)/o) {
-+  		if (/^${esc_color}commit (?:- )?($::sha1_short)/o) {
+> You've lost me here.  If a merge can consist of many commits,
+> including other merges (see above), then how can one commit be a merge?
+> Note that in my original git log --merges output that I posted in my
+> earlier post, i.e. the one before I reset, there was *no* record of *my*
+> merge command itself, only of the sub-merges that my merge dragged along.
+> I think this is the crucial (to me) point - git did not record what I did,
+> only the effects of what I did.  Not saying this is wrong or right,
+> but significant.
 
-and not to change anything else. I should have noticed the $1 reference
-that was immediately on the next line when I saw and applied your patch,
-but if there were more references in the scope that is outside of the
-patch context, the same bug would be likely to have gone unnoticed.
+Okay, here's the basic confusion.  Commits have pointers to other commits,
+and are organized into a linked list.  (Actually, a directed acyclic graph,
+since a commit can have more than one ancestor pointer.)
+Thus, a commit identifies *both* a single snapshot *and* a complete
+development history.  We tend to talk about a "commit" when describing
+the former, and "branch" when talking about the latter, but they're
+actually the same object.
 
-I do not have enough bandwidth to read every single line of the patch from
-everybody, so small bugs in patches from known to be good people (you
-included) can slip through, unless marked with "I am not familiar with
-this codepath" or "I am not strong in Perl regexp" or somesuch, in which
-case I try to allocate more time to give it another pass of eyeballing.
+A merge *is* exactly one commit.  A "merge commit" is just a commit with
+more than one ancestor.  Now, that merge can *point to* lots of other
+commits, but it doesn't exactly "consist of" them.
 
-In any case, thanks for the fix. I think being defensive with (?:) would
-be a better idea, so I'll tweak the patch before applying with your test.
+The other thing is that the ancestors of a merge are symmetrical.
+They are numbered for reference, but the practical results of "merge
+A with B" and "merge B with A" are identical.  Every commit points
+to the full development history that produced it.
+
+
+Now, what might have happened to you was a "fast forward" merge.
+If you have a history like this:
+
+o--o--o--a--b--c--d
+
+And you ask git to merge a and d together, the result will be simply d.
+Git, by default, avoids creating useless merges in such a case.  So if
+you merge in someone else's work, and you haven't done anything locally
+since their branch split off from your HEAD, the result will not include
+a merge commit at all.  (A NEW merge commit; they branch might include
+merge commits.)
+
+Since the top merges in your example are by Dave Miller (and not by you),
+it looks like that's what happened in this case.
