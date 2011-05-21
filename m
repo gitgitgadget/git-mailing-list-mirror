@@ -1,106 +1,372 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 7/7] tests: make test_expect_code quieter on success
-Date: Sat, 21 May 2011 14:40:32 -0500
-Message-ID: <20110521194032.GH10530@elie>
-References: <BANLkTi=OXznTspN-CJjM0YXfqARxL=J+Ow@mail.gmail.com>
- <20110521185314.GA10530@elie>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 4/4] streaming filter: ident filter and filter cascading
+Date: Sat, 21 May 2011 23:05:53 +0200
+Message-ID: <4DD82931.6000101@lsrfire.ath.cx>
+References: <1305961127-26540-1-git-send-email-gitster@pobox.com> <1305961127-26540-5-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 21 21:40:44 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 21 23:06:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNs2V-0004ZU-Vb
-	for gcvg-git-2@lo.gmane.org; Sat, 21 May 2011 21:40:44 +0200
+	id 1QNtNS-0004ok-JV
+	for gcvg-git-2@lo.gmane.org; Sat, 21 May 2011 23:06:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757272Ab1EUTkj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 May 2011 15:40:39 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:65150 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757145Ab1EUTkg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 May 2011 15:40:36 -0400
-Received: by iyb14 with SMTP id 14so3676322iyb.19
-        for <git@vger.kernel.org>; Sat, 21 May 2011 12:40:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=xsQ82zm23XZdsgRk6bDd5gvHIR8EEhT4rHFec3GzRtc=;
-        b=V08DmHclIZHt6yTJy7v3aOZ7n34a/BxsezgXB85dOcFcdsj6TNSvIuhHPOhRCvqhoF
-         rFoEF7rs8gpzfnKsO62Fdm8PEK8LBHxDdI6+cF19x7f514c1/KOhTJaDMKdbD3LqDrN/
-         9FkFHrLzOPIC+8UjTL4NkZgVgKD4MYMMhUy7c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Fb5n8lleVS4L/cAYKwzbOvXOMwYfc+nnXo7m7acnyYajahqfXw34ITVhPJjmXnE1Og
-         Cv1prHHURU8iktyo+D0ctdKFDvYVkuS7MA38gNSOe+rQVGbY7j2AawLEmemgOA4+G3SM
-         XpFqFvF9x1uF8M8rJGygz2oOsw9fG96Po1aAU=
-Received: by 10.231.117.93 with SMTP id p29mr659451ibq.126.1306006836303;
-        Sat, 21 May 2011 12:40:36 -0700 (PDT)
-Received: from elie (adsl-69-209-78-180.dsl.chcgil.sbcglobal.net [69.209.78.180])
-        by mx.google.com with ESMTPS id 10sm2076691ibc.45.2011.05.21.12.40.34
-        (version=SSLv3 cipher=OTHER);
-        Sat, 21 May 2011 12:40:35 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20110521185314.GA10530@elie>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755559Ab1EUVGQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 May 2011 17:06:16 -0400
+Received: from india601.server4you.de ([85.25.151.105]:57831 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755326Ab1EUVGO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 May 2011 17:06:14 -0400
+Received: from [192.168.2.106] (p579BE3D8.dip.t-dialin.net [87.155.227.216])
+	by india601.server4you.de (Postfix) with ESMTPSA id B31AF2F8086;
+	Sat, 21 May 2011 23:06:12 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; de; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
+In-Reply-To: <1305961127-26540-5-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174175>
 
-A command exiting with the expected status is not particularly
-notable.
+Am 21.05.2011 08:58, schrieb Junio C Hamano:
+> Add support for "ident" filter on the output codepath. Because we now have
+> more than one filter active, also add support to cascade them together.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> 
+>  * There is one known issue in this "ident" filter implementation. If the
+>    input data ends while the filter is still in the "SKIPPING" state, it
+>    should go to the "DRAINING" codepath using the same logic that triggers
+>    when it gets to the end of line, copying out what was already queued.
+>    However, the API does not offer an explicit way for the input side to
+>    say "that's all". We probably need to make a zero-byte input to the
+>    filter function as an explicit EOF signal or something---currently I
+>    think it will loop forever, but it is getting late, so I will not be
+>    further touching this code tonight.
 
-While the indication of progress might be useful when tracking down
-where in a test a failure has happened, the same applies to most other
-test helpers, which are quiet about success, so this single helper's
-output stands out in an unpleasant way.  An alternative method for
-showing progress information might to invent a --progress option that
-runs tests with "set -x", or until that is available, to run tests
-using commands like
+AFAIU it will leave skipping mode once there is no input data anymore
+instead of looping forever.  The accumulated stuff will be discarded.
 
-	prove -v -j2 --shuffle --exec='sh -x' t2202-add-addremove.sh
+The test suite is passed, by the way, even though t0021 seems to contain
+a test for this issue (NoTerminatingSymbolAtEOF).  It uses echo to
+create the files so there will be a terminating newline before the end
+of the file, though, so this subtest probably needs to be changed.
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-That's the end of the series.  This last one should probably have
-been called 7/6 or sent separately as an RFC, since it's more a
-matter of taste.  It was just something I ran into while trying out
-the tests.
+> 
+>  convert.c |  254 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+>  1 files changed, 246 insertions(+), 8 deletions(-)
+> 
 
-Hopefully the series wasn't too boring.  Thanks for reading.
+Perhaps split off the cascading part into its own patch?
 
- t/test-lib.sh |    7 +++----
- 1 files changed, 3 insertions(+), 4 deletions(-)
+> diff --git a/convert.c b/convert.c
+> index 82fb75b..6b90c4d 100644
+> --- a/convert.c
+> +++ b/convert.c
+> @@ -868,6 +868,10 @@ int is_null_stream_filter(struct stream_filter *filter)
+>  	return filter == &null_filter_singleton;
+>  }
+>  
+> +
+> +/*
+> + * LF-to-CRLF filter
+> + */
+>  static int lf_to_crlf_filter_fn(struct stream_filter *filter,
+>  				const char *input, size_t *isize_p,
+>  				char *output, size_t *osize_p)
+> @@ -901,6 +905,237 @@ static struct stream_filter lf_to_crlf_filter_singleton = {
+>  	&lf_to_crlf_vtbl,
+>  };
+>  
+> +
+> +/*
+> + * Cascade filter
+> + */
+> +#define FILTER_BUFFER 1024
+> +struct cascade_filter {
+> +	struct stream_filter filter;
+> +	struct stream_filter *one;
+> +	struct stream_filter *two;
+> +	char ibuf[FILTER_BUFFER];
+> +	char obuf[FILTER_BUFFER];
+> +	int i_end, i_ptr;
+> +	int o_end, o_ptr;
+> +};
+> +
+> +static int cascade_filter_fn(struct stream_filter *filter,
+> +			     const char *input, size_t *isize_p,
+> +			     char *output, size_t *osize_p)
+> +{
+> +	struct cascade_filter *cas = (struct cascade_filter *) filter;
+> +	size_t filled = 0;
+> +	size_t sz = *osize_p;
+> +	size_t to_feed, remaining;
+> +
+> +	/*
+> +	 * input --> ibuf --(one)--> obuf --(two)--> output
+> +	 */
+> +	while (filled < sz) {
+> +		/* do we already have output to feed two? */
+> +		if (cas->o_ptr < cas->o_end) {
+> +			to_feed = cas->o_end - cas->o_ptr;
+> +			remaining = sz - filled;
+> +			if (stream_filter(cas->two,
+> +					  cas->obuf + cas->o_ptr, &to_feed,
+> +					  output + filled, &remaining))
+> +				return -1;
+> +			cas->o_ptr += (cas->o_end - cas->o_ptr) - to_feed;
+> +			filled = sz - remaining;
+> +			continue;
+> +		}
+> +		cas->o_end = cas->o_ptr = 0;
+> +
+> +		/* do we have anything to feed one? */
+> +		if (cas->i_ptr < cas->i_end) {
+> +			to_feed = cas->i_end - cas->i_ptr;
+> +			remaining = sizeof(cas->obuf);
+> +			if (stream_filter(cas->one,
+> +					  cas->ibuf + cas->i_ptr, &to_feed,
+> +					  cas->obuf, &remaining))
+> +				return -1;
+> +			cas->i_ptr += (cas->i_end - cas->i_ptr) - to_feed;
+> +			cas->o_end = sizeof(cas->obuf) - remaining;
+> +			continue;
+> +		}
+> +		cas->i_end = cas->i_ptr = 0;
+> +
+> +		/* read from our upstream */
+> +		to_feed = *isize_p;
+> +		if (sizeof(cas->ibuf) < to_feed)
+> +			to_feed = sizeof(cas->ibuf);
+> +		if (!to_feed)
+> +			break;
+> +		memcpy(cas->ibuf, input, to_feed);
+> +		input += to_feed;
+> +		*isize_p -= to_feed;
+> +		cas->i_end = to_feed;
+> +	}
+> +	*osize_p -= filled;
+> +	return 0;
+> +}
+> +
+> +static void cascade_free_fn(struct stream_filter *filter)
+> +{
+> +	struct cascade_filter *cas = (struct cascade_filter *)filter;
+> +	free_stream_filter(cas->one);
+> +	free_stream_filter(cas->two);
+> +	free(filter);
+> +}
+> +
+> +static struct stream_filter_vtbl cascade_vtbl = {
+> +	cascade_filter_fn,
+> +	cascade_free_fn,
+> +};
+> +
+> +static struct stream_filter *cascade_filter(struct stream_filter *one,
+> +					    struct stream_filter *two)
+> +{
+> +	struct cascade_filter *cascade;
+> +
+> +	if (!one || is_null_stream_filter(one))
+> +		return two;
+> +	if (!two || is_null_stream_filter(two))
+> +		return one;
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 8a274fb..a174f66 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -731,12 +731,11 @@ test_expect_code () {
- 	exit_code=$?
- 	if test $exit_code = $want_code
- 	then
--		echo >&2 "test_expect_code: command exited with $exit_code: $*"
- 		return 0
--	else
--		echo >&2 "test_expect_code: command exited with $exit_code, we wanted $want_code $*"
--		return 1
- 	fi
-+
-+	echo >&2 "test_expect_code: command exited with $exit_code, we wanted $want_code $*"
-+	return 1
- }
- 
- # test_cmp is a helper function to compare actual and expected output.
--- 
-1.7.5.1
+The is_null_stream_filter() check could be left out initially.  This
+would allow for testing the cascading part with null filters.
+
+> +
+> +	cascade = xmalloc(sizeof(*cascade));
+> +	cascade->one = one;
+> +	cascade->two = two;
+> +	cascade->i_end = cascade->i_ptr = 0;
+> +	cascade->o_end = cascade->o_ptr = 0;
+> +	cascade->filter.vtbl = &cascade_vtbl;
+> +	return (struct stream_filter *)cascade;
+> +}
+> +
+> +/*
+> + * ident filter
+> + */
+> +#define IDENT_DRAINING (-1)
+> +#define IDENT_SKIPPING (-2)
+> +struct ident_filter {
+> +	struct stream_filter filter;
+> +	struct strbuf left;
+> +	int state;
+> +	char ident[45]; /* ": x40 $" */
+> +};
+> +
+> +static int is_foreign_ident(const char *str)
+> +{
+> +	int i;
+> +
+> +	if (prefixcmp(str, "$Id: "))
+> +		return 0;
+> +	for (i = 5; str[i]; i++) {
+> +		if (isspace(str[i]) && str[i+1] != '$')
+> +			return 1;
+> +	}
+> +	return 0;
+> +}
+> +
+> +static int ident_filter_fn(struct stream_filter *filter,
+> +			   const char *input, size_t *isize_p,
+> +			   char *output, size_t *osize_p)
+> +{
+> +	struct ident_filter *ident = (struct ident_filter *)filter;
+> +	static const char head[] = "$Id";
+> +
+> +	while (*isize_p || (ident->state == IDENT_DRAINING)) {
+> +		int ch;
+> +
+> +		if (ident->state == IDENT_DRAINING) {
+> +			/* Draining what is in left */
+> +			size_t to_drain = ident->left.len;
+> +
+> +			if (!to_drain) {
+> +				ident->state = 0;
+> +				continue;
+> +			}
+> +			if (!*osize_p)
+> +				break;
+> +			if (*osize_p < to_drain)
+> +				to_drain = *osize_p;
+> +			memcpy(output, ident->left.buf, to_drain);
+> +			strbuf_remove(&ident->left, 0, to_drain);
+> +			output += to_drain;
+> +			(*osize_p) -= to_drain;
+> +			continue;
+> +		}
+> +
+> +		ch = *(input++);
+> +		(*isize_p)--;
+> +
+> +		if (ident->state == IDENT_SKIPPING) {
+> +			/*
+> +			 * Skipping until '$' or LF, but keeping them
+> +			 * in case it is a foreign ident.
+> +			 */
+> +			strbuf_addch(&ident->left, ch);
+> +			if (ch != '\n' && ch != '$')
+> +				continue;
+> +			if (ch == '$' && !is_foreign_ident(ident->left.buf)) {
+> +				strbuf_reset(&ident->left);
+> +				strbuf_addstr(&ident->left, head);
+> +				strbuf_addstr(&ident->left, ident->ident);
+> +			}
+> +			ident->state = IDENT_DRAINING;
+> +			continue;
+> +		}
+> +
+> +		if (ident->state < sizeof(head) &&
+
+		// minus one because otherwise we'd compare the
+		// terminating NUL as well even though we're not
+		// actually looking for a NUL
+		if (ident->state < sizeof(head) - 1 &&
+
+> +		    head[ident->state] == ch) {
+> +			ident->state++;
+> +			continue;
+> +		}
+> +
+> +		if (ident->state)
+> +			strbuf_add(&ident->left, head, ident->state);
+> +		if (ident->state == sizeof(head) - 1) {
+> +			if (ch != ':' && ch != '$') {
+> +				strbuf_addch(&ident->left, ch);
+> +				ident->state = 0;
+
+				// clean the plate right here and now;
+				// can be combined with the case at the
+				// end of the loop
+				ident->state = IDENT_DRAINING;
+
+> +				continue;
+> +			}
+> +
+> +			if (ch == ':') {
+> +				strbuf_addch(&ident->left, ch);
+> +				ident->state = IDENT_SKIPPING;
+> +			} else {
+> +				strbuf_addstr(&ident->left, ident->ident);
+> +				ident->state = IDENT_DRAINING;
+> +			}
+> +			continue;
+> +		}
+> +
+> +		strbuf_addch(&ident->left, ch);
+> +		ident->state = IDENT_DRAINING;
+> +	}
+> +	return 0;
+> +}
+> +
+> +static void ident_free_fn(struct stream_filter *filter)
+> +{
+> +	struct ident_filter *ident = (struct ident_filter *)filter;
+> +	strbuf_release(&ident->left);
+> +	free(filter);
+> +}
+> +
+> +static struct stream_filter_vtbl ident_vtbl = {
+> +	ident_filter_fn,
+> +	ident_free_fn,
+> +};
+> +
+> +static struct stream_filter *ident_filter(const unsigned char *sha1)
+> +{
+> +	struct ident_filter *ident = xmalloc(sizeof(*ident));
+> +
+> +	sprintf(ident->ident, ": %s $", sha1_to_hex(sha1));
+> +	strbuf_init(&ident->left, 0);
+> +	ident->filter.vtbl = &ident_vtbl;
+> +	ident->state = 0;
+> +	return (struct stream_filter *)ident;
+> +}
+> +
+>  /*
+>   * Return an appropriately constructed filter for the path, or NULL if
+>   * the contents cannot be filtered without reading the whole thing
+> @@ -913,23 +1148,26 @@ struct stream_filter *get_stream_filter(const char *path, const unsigned char *s
+>  {
+>  	struct conv_attrs ca;
+>  	enum crlf_action crlf_action;
+> +	struct stream_filter *filter = NULL;
+>  
+>  	convert_attrs(&ca, path);
+>  
+> -	if (ca.ident ||
+> -	    (ca.drv && (ca.drv->smudge || ca.drv->clean)))
+> -		return NULL;
+> +	if (ca.drv && (ca.drv->smudge || ca.drv->clean))
+> +		return filter;
+> +
+> +	if (ca.ident)
+> +		filter = ident_filter(sha1);
+>  
+>  	crlf_action = input_crlf_action(ca.crlf_action, ca.eol_attr);
+>  	if ((crlf_action == CRLF_BINARY) || (crlf_action == CRLF_INPUT) ||
+>  	    (crlf_action == CRLF_GUESS && auto_crlf == AUTO_CRLF_FALSE))
+> -		return &null_filter_singleton;
+> +		filter = cascade_filter(filter, &null_filter_singleton);
+>  
+> -	if (output_eol(crlf_action) == EOL_CRLF &&
+> -	    !(crlf_action == CRLF_AUTO || crlf_action == CRLF_GUESS))
+> -		return &lf_to_crlf_filter_singleton;
+> +	else if (output_eol(crlf_action) == EOL_CRLF &&
+> +		 !(crlf_action == CRLF_AUTO || crlf_action == CRLF_GUESS))
+> +		filter = cascade_filter(filter, &lf_to_crlf_filter_singleton);
+>  
+> -	return NULL;
+> +	return filter;
+>  }
+>  
+>  void free_stream_filter(struct stream_filter *filter)
