@@ -1,58 +1,465 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 4/4] streaming filter: ident filter and filter cascading
-Date: Sun, 22 May 2011 00:08:46 +0200
-Message-ID: <4DD837EE.3010608@lsrfire.ath.cx>
-References: <1305961127-26540-1-git-send-email-gitster@pobox.com> <1305961127-26540-5-git-send-email-gitster@pobox.com> <4DD82931.6000101@lsrfire.ath.cx>
+From: "jonsmirl@gmail.com" <jonsmirl@gmail.com>
+Subject: Recovering from a bad object
+Date: Sat, 21 May 2011 19:03:11 -0400
+Message-ID: <BANLkTindTWzeTFKYA3if4HYG3mj+NZX8oQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Sun May 22 00:09:21 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 22 01:06:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNuMK-0000ur-IR
-	for gcvg-git-2@lo.gmane.org; Sun, 22 May 2011 00:09:20 +0200
+	id 1QNvFv-0002Ck-9Q
+	for gcvg-git-2@lo.gmane.org; Sun, 22 May 2011 01:06:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757270Ab1EUWJI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 May 2011 18:09:08 -0400
-Received: from india601.server4you.de ([85.25.151.105]:42837 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754389Ab1EUWJH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 May 2011 18:09:07 -0400
-Received: from [192.168.2.106] (p579BE3D8.dip.t-dialin.net [87.155.227.216])
-	by india601.server4you.de (Postfix) with ESMTPSA id 586842F8086;
-	Sun, 22 May 2011 00:09:06 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; de; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
-In-Reply-To: <4DD82931.6000101@lsrfire.ath.cx>
+	id S1757299Ab1EUXDN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 May 2011 19:03:13 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:46348 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753553Ab1EUXDM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 May 2011 19:03:12 -0400
+Received: by iwn34 with SMTP id 34so3831933iwn.19
+        for <git@vger.kernel.org>; Sat, 21 May 2011 16:03:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=8ToJLKLJCHvkpwNzB2eoOQuO+DHx09xzYa23LNffaHE=;
+        b=w7buWB+6DU7uzT5rOubuU8JLn4nZdUKTLYavzl5NY155Eqim/3T+qJvhfu886ycUKo
+         xeOCBkheayPoxOcwt9kZc0DzPajuOpOJcglExdGgGdLRKnZInJ0TyMxLv2J+AGPDE79A
+         jt6U/t3UqpVzVrm9depJ+Ve5J5VveoXmfUfQk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=Ba5NV1Jie5K/Owxj17dqZj1+yPEp9gWSlPtj9CY4M4ZYrkkUSs/dAa9hxwWv8Jg7x0
+         NlVpwiblVVzU0sJpaBJmo8fyOdh9ZuaWuHkgjA0509IXz1qt/xreyOVk3EVCBUUmP7eg
+         t0nJFKDMs1qyhAAgd+AjxKjts71p0bFpYKApE=
+Received: by 10.42.177.197 with SMTP id bj5mr6859168icb.64.1306018991163; Sat,
+ 21 May 2011 16:03:11 -0700 (PDT)
+Received: by 10.42.28.200 with HTTP; Sat, 21 May 2011 16:03:11 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174178>
 
-Am 21.05.2011 23:05, schrieb Ren=E9 Scharfe:
->> +		if (ident->state < sizeof(head) &&
->=20
-> 		// minus one because otherwise we'd compare the
-> 		// terminating NUL as well even though we're not
-> 		// actually looking for a NUL
-> 		if (ident->state < sizeof(head) - 1 &&
+I just ran git repack on my kernel tree and got these results....
 
-Possibly, but that doesn't matter, as the right number of characters is
-remembered and the second test below is not passed if we sailed past th=
-e
-NUL.  Sorry for the noise.
+I have all of my work saved in patches so this doesn't really need to
+get fixed, I can just whack the tree and start over.  I'm just
+wondering if there is a way to recover from this in case I actually
+had something irrecoverable in the tree.  I've probably been using
+this same tree for about six years so it has seen a lot of git
+revisions.
 
->=20
->> +		    head[ident->state] =3D=3D ch) {
->> +			ident->state++;
->> +			continue;
->> +		}
->> +
->> +		if (ident->state)
->> +			strbuf_add(&ident->left, head, ident->state);
->> +		if (ident->state =3D=3D sizeof(head) - 1) {
+jonsmirl@terra:/home/linus$ git repack -ad
+Counting objects: 2065160, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (462609/462609), done.
+error: inflate: data stream error (invalid distance too far back)
+error: corrupt packed object for 392ad4a422913ecc0eb76caaa6d2d10de0ea1505
+error: inflate: data stream error (invalid distance too far back)
+error: failed to unpack compressed delta at offset 131682613 from
+.git/objects/pack/pack-93e2de1939a33ce0b64fb5bd2c9d9897167ae820.pack
+error: failed to read object 392ad4a422913ecc0eb76caaa6d2d10de0ea1505
+at offset 131682590 from
+.git/objects/pack/pack-93e2de1939a33ce0b64fb5bd2c9d9897167ae820.pack
+Writing objects: 100% (2065160/2065160), done.
+Total 2065160 (delta 1724066), reused 1921643 (delta 1584095)
+jonsmirl@terra:/home/linus$
+
+The corrupt object is probably an ancient object in the kernel tree
+that I don't care about and it is unlikely that I will bump into it.
+But, how do you recover from this? The object is likely at kernel.org.
+ Can git go fetch it somehow?
+
+I can show the object...
+jonsmirl@terra:/home/linus$ git show 392ad4a422913ecc0eb76caaa6d2d10de0ea1505
+/************************************************************************
+ * s2io.c: A Linux PCI-X Ethernet driver for Neterion 10GbE Server NIC
+ * Copyright(c) 2002-2007 Neterion Inc.
+
+ * This software may be used and distributed according to the terms of
+ * the GNU General Public License (GPL), incorporated herein by reference.
+ * Drivers based on or derived from this code fall under the GPL and must
+ * retain the authorship, copyright and license notice.  This file is not
+ * a complete program and may only be used when the entire operating
+ * system is licensed under the GPL.
+ * See the file COPYING in this distribution for more information.
+ *
+ * Credits:
+ * Jeff Garzik          : For pointing out the improper error condition
+ *                        check in the s2io_xmit routine and also some
+ *                        issues in the Tx watch dog function. Also for
+ *                        patiently answering all those innumerable
+ *                        questions regaring the 2.6 porting issues.
+.....
+
+git fsck isn't happy....
+
+jonsmirl@terra:/home/linus$ git fsck
+dangling commit 845ec0df08169c6f47c8748a897942ebe4bc8581
+dangling commit 346500d4aae3ffd3cc29459aee2bf1b7e7f4bc18
+dangling blob ff86c029e61a08a27bb1718eaa7ff7bb2d95a2f1
+dangling commit 5a914009070f0a1594de78733e772dbd7610bff6
+dangling blob 28ca00ee764dadd4b1690fd87c28f3af7cffca71
+dangling blob 09d5c0f49a8fb69521e43c119b40e88cabde6798
+dangling blob add5c06df4b1e34c94302ae2c24c502184856521
+dangling commit e8ffc0b98818e593f8401ff70507b1b7798ccd4d
+dangling blob e500417468aed21d98768936df4904f592b4582a
+dangling blob 5927413db99be229b64461f5b17022b6ea77264a
+dangling commit 044ec1020fe5f784a7e49dc5f3c076d64cfa86a3
+dangling blob 997f41dae800abe377134760a4ab9655907710f7
+dangling commit 16d1812a9e1aff71620157c0566764cbcd071dbc
+dangling blob 42fa81cdf822dc9939085332e648b6692296c53f
+dangling blob 47fe4133de20cc59004c8f7e0c4d104f68714543
+dangling blob 8775c2cc30d814f5399d2a0ce743b04d9158b402
+dangling commit 8582028577fcb79dd3e9d46a11729ee03c709b1b
+dangling blob bad042c38c687cffb7d57df062bdc8a443578e9d
+dangling blob 1fecc266586857d9e0f184ac667743a3189cddb5
+dangling commit 35f702078696af7d95935f605828c2e332ba58b5
+dangling commit 2213034e89c3ff1e964a01ed2f65f370aa94f93c
+dangling blob 4c1683b5e32d5ecb027b6b07d2fb51f3ead91d4b
+dangling commit 9b608384d505cb9c0ae43c45afbdc4f9dc4aae2e
+dangling commit 1e7543bf6bf6dc722306d0f0d0f582d42d8fbcad
+dangling commit 4393433fda87538c73d057c4477333063a8e4e58
+dangling commit d99703d2e413120ec32381d4f49a7cf345b08b9b
+dangling commit 75db03a034002e1fbf716acca376633148565ab9
+dangling commit 40f8c306295df0c57fcd897e6ab82415281073a8
+dangling commit d31d04cc785bebacf520ef440dac6c65491047ad
+dangling commit 59848413540b27ab507f2cbf3d5b7c820bed82d9
+dangling blob d1ca44b0c12b217f97e3dfc20fc564376a2e84d7
+dangling commit 73cb44773bc99aee52376a351f82b409aa30766a
+dangling commit 890105a26915c0add093132ccd6c19d0c6f057ef
+dangling blob 590d85e2d8c1d2ae8bb07331f8fe57937ec7c200
+dangling blob b440c51d51b382a3d8d891798bd445c38f28430e
+dangling commit 3f41c525e9fd16a7d9de5f5617fac2d34775f2a5
+dangling blob ff7505edad43601d28c1f08c9123c5a833f06ffa
+dangling blob 5a8085bd57f8bda3ea82abde8b5d44bc5f421b95
+dangling commit 4983052a3f04f4e2f2b37d6fc476b8c56096c164
+dangling blob 483946b7b3d87fab217755366384b1e4ee4c675d
+dangling commit 4b6fc65755dfeaedde629d26202585931b4fd492
+dangling blob 267786344ede919223d3814adebb9ef34d722bf6
+dangling blob e2dd868e326bd6902561fde5678138dc0890496d
+dangling blob 43fb464cefcc829d39efafd2f3a02a595695a43a
+dangling blob d211c7cbb9b842f3ca511f38b17db47ddbf9ab38
+dangling commit c8360711a95d2fc587ef237f1d8a80253e225bf2
+dangling blob 504bc7d3f26fbdbc6b5ab7aa2bb88a8a4874a7ac
+dangling blob f7a307fbc28506950d9eae2b35a5a0b8bb888441
+dangling blob fcb9c772192b6123aac434ac3219b008ee4250dc
+dangling blob f820c80f1d5d78dd529d4c6f7d40d6448f3be7af
+dangling commit eb2fc88213c5db7aba685d67bc743e3ec15ad3b9
+dangling commit 4c628876e19eeb0e5c6a0f26d289e73713a787a5
+dangling blob a067c88d3e9f6c8151824e9af993a6c9361c925a
+dangling blob 536b882f9be157f8a684cb02066adc92fa1fa5c0
+dangling commit ec6f88e28570f98a08b68e02ae87edd029487e53
+dangling blob 3887c81b6a01df65d3a9e044344844138ca1edcf
+dangling commit c6970861ac2a49f04d66ac9354ec7ab54531f97a
+dangling blob d89d08faf72451173088afbc82c60dfb2ae3e968
+dangling blob c20e89fce8bdbe8dfbe1404b8d5cdf51ff83df72
+dangling blob a73e8933d46f4ea01e8542914358cc8c7d99164a
+dangling blob 0861c9da50fcb74205d6085d276028b7b6b5b062
+dangling commit 7bcd09a125b71a8f368a8283ccce6c1e312c7d62
+dangling blob bbebc98647155363c48bd09df93aaedf26d206fb
+dangling commit 01f3093904fba462e8ffe5a7dc3e47882cf234b0
+dangling blob 3111caefb835e016dbe6db462c7df279d20f02b5
+dangling commit d22dca0b473d676e02120d6a8199718f8d7fb7fd
+dangling commit bf730af9efafee47ba9e704d88d9bda9cb450115
+dangling blob e3aa8a1a62e7b343c60755c9bd1241be31d5e2e2
+dangling commit 4e558b0a79c3af7465641ce1b4a0c61be6db8092
+dangling blob 17ca0b39a173bed56fbbe004927fad0e2a8c5b82
+dangling blob 7cd74be8a344652b5e13fd1afc0f4d193aed33c8
+dangling commit 86ed0b0b86d28e266adeb36e4798ee16beae3c1b
+dangling commit 6905cc33959830b073279b2ad3033a94f5a6860c
+dangling commit 147d4ccc240b9455e2cc05888abfd142e07bff57
+dangling blob f5accc7b0753d9f0a469a67adcdcd44a616be399
+dangling tree 72e34c0e313d7a339aeffb46b90645a8b7ccbb16
+dangling commit b6fd0cb979418e1ea4609593e9e775ef6e0537ba
+dangling blob 945d8d7ced74537fc62e6f413ef6b6e0cd14a1f1
+dangling commit 82b20de566042c68c83a5f79113a14ba80dbaa31
+dangling blob d5edcda524df9e8d86dccd8aa66ce5616ca5c372
+dangling blob a1130e6c9069f1a45209a92b07f223ad780249d3
+dangling commit 0088ce578117a1dc08286fe1084beb420f4ad250
+dangling blob 70924e1ce47d052b7454ef3c093dc24a4cec57dd
+dangling commit b9980e14c091b083b5e07abf0b618b42927ab49c
+dangling blob a89d8e13f2ff7fc616eac69bb808b6edad7fc522
+dangling commit c1ab8edbd19d5e2632f2cc4beff62c28537b155b
+dangling commit 6de90e97d58b988c8ce4af29ceb43e0e825d505c
+dangling blob e91f8fdfb2e36a090a4db62f8670c26a9c399355
+dangling blob c2460ffc55955ea45718b57b830873f2ef5d2a8e
+dangling commit 798a4f5be414e05530a510361a5c51778a9aee70
+dangling blob b38a0f2f6e90a60420eaae280b78b25ac506f590
+dangling blob f9d08f3a2df921ff7aea63dcdb4e8c766980872b
+dangling commit 32d74ff5ae16ac8704b927f2f991226bfd044aac
+dangling commit 53d84f99d8f841e90d6c8e741fc5084afe4389a2
+dangling blob 68d94fd538070e7c3eec24014c4d9fd5f28c793c
+dangling blob baf08f8e73c5649a4c3062d613a4c81cb94be13c
+dangling blob 6c5d90d30a73ed5510241ad3137ced36b3f9852f
+dangling commit 6c65d040545db98fbb6ebb2e6b9b3510a6e02f8b
+dangling blob 6c69500077f6604d5ee56b4aae6ee7a81db4a3cc
+dangling commit 5ae9d0c5975e9a9b1f6ca1361903cdabd2af10d5
+dangling commit b0f15034ccadb5189408a3e10da47cf83222435f
+dangling blob ccf4105029bf1c1c7db155e56f46056edc37286f
+dangling commit fff91026631f8c1e5c9c7b38a89a404de59d7f23
+dangling commit a73fd1858981be48f2f944d9738301222b738612
+dangling blob 2651d1554890e45564aa7328077faad6e3bc6c3f
+dangling blob 145e11de6f48c38fffd11dff56659c90be312aba
+dangling blob 47825110fc7a11b50808cb392910ee0c249bf35a
+dangling blob d7a4115a8acfc52ef9fe35906c1c5225a792c5c0
+dangling blob 98f7112f732bf08003b71c9acd95a932f1023059
+dangling commit 304e1213d2bd30ba80b1837c0247f47700974084
+dangling tag bb7e52c5e603644a5e97b89693114047866b51d0
+dangling commit 9094122c60251b0c86787f33e1e5a5c806ea8488
+dangling blob 13d7d21f889bc8b057ce614df33af464d9c0bf38
+dangling commit 381593c6454400df426713336ebc7881406a3674
+dangling commit ad16135632b8f33bfd923338992282ae83248a6b
+dangling commit da489344e471db1e2f7e75ba13a1ed4fc91aabf5
+dangling commit 99f4533ff06a9599b86276548642bd2a757892ab
+dangling commit d80f9485d071fda5ae7041ab87cc2dafa453d27d
+dangling commit a35d54f1d989572970b5302c3729dd5ede2f673e
+dangling blob 816454638c44df92ab5dc1631775be44c101f48d
+dangling commit cb6fd4d6d7b09dc6faf475768842b9367de9ec98
+dangling blob a181d4826e4b1de718e0bb70146093b4525ecaf8
+dangling blob 7bcb14c26a4fcf25d036b608e60fd52c766b9a6b
+dangling commit aecf54d96d1dfcdcd44ffcc92275d88a4227dad4
+dangling blob 06d4d4cb7e264923fe420d99bfd7a8ec1958fea1
+dangling blob 26dc14f54a5375d96bb8b8071f1048c7bfe84324
+dangling blob ecf5945f4d83c21bdf493623ec0aa835f081b913
+dangling blob c52d1521a228168647c01a9d3f930d157cf81b11
+dangling blob 1276d5710747cf2035cbe07c58ee43e22c8149bd
+dangling commit 6692954010c395001d62ad1a81142434805ed197
+dangling commit 341016bb55142ff428e2c0359a26210482353f07
+dangling blob 8954d6916a30caea0cc905723b3824b599af1ebb
+dangling commit 30b1963e21f6d5218cfbfd8a73f724f4f5334ef3
+dangling blob aab956f7ade7ec81a952cdbbf2a92171adb05a08
+dangling commit 4d3857e92cc9bc349ba500cc39064a22809f97a8
+dangling blob 9db89702c5f827e51ecc29deb77cffcb2e6b4d5b
+dangling commit c62298af3ee55d0231102ee3445299b7c0de0cbd
+dangling blob 784e587543aa6bed1cb84c101a5b60475ec0e009
+dangling commit 4e7498c3008db8e57c136ff762630a949a51f305
+dangling commit 0e95181a93bff842435450edf89bf15f8ec2b880
+dangling commit b2275915b6ab6321a5a058d4041352307ece0afd
+dangling blob 983c1975f88cdddd5ea037213709d321f0f007a4
+dangling commit 179c9978005b7653dbb04c925e52f1b2a52c3c3f
+dangling commit 66bf59fa35886cdc5b288fecae6366a377d66ae4
+dangling blob e3cc59f0efd3fa72d8be0b2abffd50589a154342
+dangling blob dcecd91e16145cafded390fc64b622c7cd877e91
+dangling blob 9b36da1ecd47f7554402e2d00bd38e6fc923c07c
+dangling commit e65b5a81b942a852e76bc17fa2909cd76aed7ee2
+dangling blob 70c95ac419952d4b6c1488ed028d8714b109f1c7
+dangling commit 23345bca7653107885e8e66e518da4c909ba9d88
+dangling commit 20471bd9c3c1f93dcd8bdef9b9d979f2bba37db2
+dangling blob 7e4fdb6cd7f4cdb4aa911dc5a8b69b66f4921b02
+dangling blob 8267dbf2416d67a0a31afded78305cc0a9cddb01
+dangling commit 23929b28858d9729d0a17e7eca5004d737eaee72
+dangling blob 529e9b91b9f37328bafc27ce47d9c7b4e9a5b767
+dangling blob bda5dba9ef805c99139d60844c6e7bcd3253ca02
+dangling blob cec21b8ba6b7f798dc0b3a5e15c061b1feb8a4bc
+dangling blob f2d75bae2c2465cc2cfa3494b0ff7de7964ab107
+dangling blob 28289cd330bbbe7df14a175a9e1379627eb9471c
+dangling commit 3e46dcafb6e64ee1cab7de5fc079a270a884b5a4
+dangling blob d7545c239eff2b3e560ac0919a605f211f1beac6
+dangling blob 498a1ccd919bf040506bddde755b70be1968e7d1
+dangling commit aa96dc2459563fa362bc53597cb076d93bcc884a
+dangling blob 35a1dc4cbc34b24843d9b79b1f78a61fb5657dcb
+dangling commit 54ab1cbfdacca97d0dcf322e4bd6f68cc257a40c
+dangling commit 3f029d36e264e5883f8367e183c899316ba38244
+dangling blob db5eddd87c729681e9d9059735d760e1b0b3a1f7
+dangling commit d17e9d0b66f687caf4b5c3ff8b2d7698ee98e51b
+dangling blob 68dd1d94d92447c1771fc9b4dc8124be7d325aae
+dangling commit 4e25de5c1b225d3e451cd30db114af9654398f5e
+dangling commit 578a1e72a5f4b6cb0dd9b2822558f0348f9ce4bb
+dangling commit 05ab9e98a7fe795f81f97ea2d50b38e6aa411ebf
+dangling blob 78c9deec01a07286ca28b02ef7f63a934c8a8dc8
+dangling commit 4df49e062610faafe373b01329d3e0b6f8351425
+dangling blob 887c1f483c428bdd52e20c26e8103de96214a231
+dangling blob be909fae0f32aceb6cdf74b64876c2fdf1a8f18e
+dangling commit 15949f2e93f5f385623d016ace893eb9b28ed540
+dangling commit 41e7df5c25f4ec0b7a265d6a231c4f6472188a72
+dangling blob 5cfb5f48d279426843b33cdb95b158acb085493c
+dangling commit 8363e0dca1c9391e9458ef256782a1f017117a9e
+dangling blob 709d20a2ae8769119bc208413270a5cc12b90906
+dangling commit 2ac0603b23d77db81d0e2c1a90720480f6a401ae
+dangling commit a2d36001334c688b69309f4b5ebd6ce405428623
+dangling blob 1e4ca1372073b5f0583403678e8233227b967f5b
+dangling blob 6f76a1755871d0bb48fb6c3b465b1925c2f4b159
+dangling commit 1177e1e2bb65ae738c9766bef47a17e26ebf7250
+dangling commit 307fa14523a191a0add12b9f68425f90a31e9d14
+dangling commit cee8e1ae0033ba599ef17415baf40937ecef6837
+dangling commit 16ffa1fbdfde251072340bdfe0f8c84a782e8a0f
+dangling blob e92ae23c3dac18f9cb27ad9c54ec3bc0ab15ad2a
+dangling blob 5058a2948fdda5cde70f6f622ff851f2216c0eb4
+dangling commit 719d22842ddf5705fddb41445d6db8c61be8e7bb
+dangling blob f3c622a434ababeef4a726176c3844671ab1c352
+dangling commit bed822ac7c19983172051323bf3c5ed8d2b8f307
+dangling commit 29d922545c5c4d6e9a5358ac18d4b3b941ca9d7b
+dangling blob 86efe246ba9ee8d5289c532ce3627200cde7731e
+dangling blob a1fca2da4588b48fd33a4db19c20ec13a154cfa9
+dangling commit e11823d8a48dfbbafe238b79c6a6a9321233643a
+dangling commit 54b1238cb9491fb369db0446acfcf83657283239
+dangling commit 03c223c2a4c645e17e43b27a19f8dbba2152e5dd
+dangling blob 43fea394e4b2cf91364301131ce478f7bc021f40
+dangling blob 140d2470861114dff645ac82788446abe4260fb6
+dangling commit 633aa41497bbd8f25aab0937fd28385c7695ad21
+dangling blob 195ee498cacf738344143b94cc121628364145b2
+dangling blob b9b5e4d014b4c4d9c2c9a3a3ca0bb59d09032877
+dangling commit 1bece44727dd13cda1d63d8d1f06c21ea6c7f3e5
+dangling blob c9fa64410c70a4dc4d7d70ab20ffc2847a506852
+dangling commit 6630a5c19645c14931fa93551bf6ee56124c2752
+dangling commit ff47257bdb90d19c95058dfb082238d1ac63410d
+dangling blob d553255bd9bec5e249a19937ce1597a462cdea38
+dangling blob a574a56bcb003791125fbfd09e21fffbead9ab8f
+dangling commit ae79a58e4b9f28776bf9a45e53053d222605b0ce
+dangling commit 1195e535f87ebe75070cf2d5044650c227a0d97b
+dangling blob 22e925e566988304a3af883a0980fd0059816cb9
+dangling commit 7f61e65eb3c1e74b6fe515d7629f24861eb8b73a
+dangling blob 3998e67bfef8ab30ac503c836591b3309a83a5bc
+dangling blob 219f26b5db04548d455bc38a3f92694ea2b3b0d4
+dangling blob efb0e69c50e09cba84bcf07b5ac09252e5db59c6
+dangling commit ecbe6673610fb95b6f8b651d02c93d3aabb0a347
+dangling blob f6db66c940e34f4caa44a96b2e6db71b5c4fd667
+dangling blob f0e626a10bb33c32af57db3448828b22d6b27967
+dangling blob e77027146cc11b8526b760458b78ce44e17b8300
+dangling commit 7078a7e486145e3e59bb8b6e7f212c7f30566db6
+dangling blob 689ba7485a050090b0b32381936c24fc0f0b2e55
+dangling blob 17ae67763f82815b8a7a4a8cfe6509c40396db23
+dangling commit d6baa70788433bed9dbb0e7da37caa0f96b667a2
+dangling blob 3bbf67370e175b75524f7d65224a46f6a7c4ef9a
+dangling commit a107e83536581cf3a39dcc35165d41c89a805dc3
+dangling blob 36036955a17bcf953809ed7c259e37e473fa6e5d
+dangling blob 6708298511f5a1afdec34cb245c6db76ef1c4d46
+dangling blob ba37e94c84cc5a97fa19bd511427ce92b1d5fadf
+dangling blob 3196a908d3ebc232921f00a02b1961fc5d2db5b4
+dangling commit d3a0693ba1cb29923825480002e25d5770f296ad
+dangling blob c7aba92d009e9b6284a37a3efc083f9ee5fbc2a7
+dangling blob 01d5a9394cd94f8e3fb9daa108bc883ba1ead279
+dangling blob 24fc69f98d24b1d589bced34ed7232001f85c0da
+dangling commit 23036ae8c889d70469810cddef3be94b9f129b93
+dangling commit ab4d6a5e2177a27202e6fa9a272080a263bbec4c
+dangling blob 4c9cea26c4997419b706acf1bb9e2aaa0debd370
+dangling blob 20acaa9e798529f24f77bc32cb75fc2552190b9f
+dangling commit 35acea7b321e319704afff70591829841931f851
+dangling commit 00d0ea49d980d07efc99fb5521da8b68b874a30b
+dangling commit f32a2b389a0dd39c1d33c3f1a1eea5505187b834
+dangling commit 95dbeb7e2925459e7ad82a5e6c3ef9a648027b69
+dangling commit 54e96b6fc2fb888cc2dcc9b0b16e60da302eed9c
+dangling commit 8d43ac832e27288d33fc509c6f55872a01f6aea1
+dangling blob 2a44ec8ce31bbcd6ea248c5d7d874b06ea7eb5d7
+dangling blob 09bdac47f7f2ab452f2d6d82c4f814080a86c4ff
+dangling blob 65efec7285ee51230050b05bade0e09162b5474d
+dangling blob 6ef8ac9dd5c709bad29a565535bcc6e77d615a19
+dangling blob 2439edac4c67cf6cba3a7157d9da0891e5368034
+dangling commit f87d2d22209cc0cc389b5e0b200517210442d774
+dangling blob 07e66d2ee04ad3da860788b072fbb5d4bfbf3765
+dangling commit 3412eea4570e5e4fca4916d2fdfcf07dcc71aa9a
+dangling blob a630ae5896de763fca20bf75375125b7772b8886
+dangling blob 283a2ea5038eeabbd4f98da212f7cff4736c6b4d
+dangling commit d6422eb9642d5111e205395b2dda4dd9e8521cc8
+dangling commit c149ae8396112b8f5ca511f29404a3dc1affa7b2
+dangling blob 104daeaa5a76f1d055a6f382d130f30f11686c50
+dangling commit 9b562e5b68b941d6a38cc1722f587dd12ab1d67b
+dangling commit 7800afa205cc749ee406a29da1fcc642e124ed23
+dangling blob 922defe7ecbb2dcbdfb137877caee4ec1a75b78c
+dangling commit c3702f45877bee805e2daafd08bf4f5da7b6c10a
+dangling commit 3ac42f8a24b79c9b4676ac07f6781b56e753c580
+dangling blob 6a127014d91491447f9c0425a71376028aea3d8e
+dangling blob ab157069f9b90c971e1db009348286429252f350
+dangling commit a417b0fd2b46b6cd9e517f277cbc909efb29bea4
+dangling blob d14c305e8d60f01fc9056b6cb3e45661e66aadc5
+dangling commit 744d7016c8bc41d01b0e57a9f221cc67204cfdd9
+dangling blob f29330d818cdc826ae581956648bd2d11dac5ef6
+dangling blob a0f7704d3ee8580ce924fee9be337711ba3f844c
+dangling blob 240831a96c736ae3c28a2191f96d3504c1efa207
+dangling commit a212f1c1cd799557bc6eece08be1a3436b37c1b1
+dangling blob 8322f1934eba28803268adab41f46b0d170af17c
+dangling commit 9e37b146835f379d633a8da2a782422f677e73f1
+dangling commit 513e71aa5b695d22abb2938b90bf870d040380ad
+dangling blob 1f7f717eb5d1518d33b5a4b06812f6de6533f6b2
+dangling blob 86a5f10089879310a2794bb6ace917c8b7a57252
+dangling blob 8ca971e6df9ee6dcc56917c22d6b1921012a6c48
+dangling blob a7f371f738527fe63503a19538400f0d26c3cf09
+dangling blob e411b291c127b4af0257430af4f533be8fef92db
+dangling blob 3616b273890474f39ae0ab9887836bd44f3f3d58
+dangling commit d25972c94e13b5eb240938c86c9e2a07e58bbb64
+dangling commit 0274b25be6393911edcaa008bc44c733007bb43e
+dangling blob 03bd32785238f85e3e30f5abac8fc9700e08badc
+dangling blob 74e8b2c9c7af8166d984d6140150677f6075ef27
+dangling commit e5f0f25336038419868645fc30007dbf8872135e
+dangling blob 7ddd33e52d14121e44268a984e2b230635b1b129
+dangling commit 2706f4770a03560277df7531a993ebcf4e158515
+dangling commit aa5ab4b2952418167f1fe2e5ff518b6556683325
+dangling blob 965b745943901f7017420e3373f6c8ded64526f9
+dangling commit c96b746b30461561a35960c589b0ed01017ac6ff
+dangling blob 0b8874ec7158b7918345dc1adb9cfb170e240d9e
+dangling commit 35b3b4023af1b7182b5f93e262e6fbaadcd3d025
+dangling commit 11b9340312cd972696ee036375dbdee43e7763e6
+dangling blob fdd5f4285d306c9364b817bc61def8a8a23b785d
+dangling blob 17dcb46acceb8051e302abdd46442a4f03782f14
+dangling blob 6fe034961f69d6e704e9a5bc853b8e6e214320b2
+dangling blob a2e974fcdb05ed575346ad46d78bd16c9d78cbb5
+dangling commit 09477549ca9ed4a3d7a2995d1c07c0cb9895423a
+dangling commit 4c76350a7133c147c9fd6ab0a4faf1c4c8e7bbe1
+dangling commit b49af5af255bb8d9c55a6f3bcc2961996af1c551
+dangling commit f19df54dd5769d0ed8801911b92bde12a581afe0
+dangling commit eabc75f063a5e49e5ae8bdff18115b0dcb1ad2cc
+dangling blob 0ce9f5cb7ab154f12ad59478cfdcd53a526431d7
+dangling commit 8ffab59d916b787a2ba6a3338fb1f12e637c0d8b
+dangling commit 27057658556b742b631e42b8fefc0dcd865786e1
+dangling blob 9109763e1c603627a954c88c2780d74ce6aaddea
+dangling blob 0b2976ebf8f4a24bec1b1b2cb4182c647f9d5233
+dangling blob ce63f69b7e472aa757db4dd0da4846c1493afb86
+dangling commit 9dba7642b5de82301e19154262cf9875f7757ea8
+dangling blob bbbf36962f9531d73d689c5f20bfc95aad9cc092
+dangling blob dce27697f7650dc5839b2b061bd9b4df20ac0517
+dangling blob 7cfaf6c4b1cd93b7d81cab4f47a715b4161c0ddc
+dangling commit a20c772209fc620d33373543375ac1ec99e0b8ee
+dangling blob dd6a37a3ab7d054941939b7d72ceb5100ff3c827
+dangling blob f460382fda40c911fe13731a04f5b2b80f595751
+dangling blob 1679b8e7feb39089e5a9c409d6e571f8e359609e
+dangling blob fa80b8b4a6f7d4e0f10f69764cdb51fdd2a8809b
+dangling tree 01a8382835648e237fb4406620f3baa939865a39
+dangling blob 25e6782258b1bad56118e9c58d9147434972a899
+dangling blob 33eb78e5df34f61234b35cc7199f24df5ae167e9
+dangling commit a72cb98d9af49df5229a59717e9beffc6510a5aa
+dangling commit 434e3900ec12e85790982a5b5665dd8b29b253fd
+dangling commit c95e399e8ff9f86a413403289b3fd8cde6be4c16
+dangling commit 28b179df1b47a677ce914fd9f77e9d7f668e12f1
+dangling commit 3c293a00c6be7f74428af6e0af7b243e59b52738
+dangling blob f166ba02b61329d0140f2325ea36ab4f8a07b00a
+dangling commit c3697a535521a8b47d4b64346bbf0bb908ae4a01
+dangling blob d4717a97d3d7648d549c8a932c8e9ae019dc818a
+dangling commit 5b887a5d711723377bfa3b1048ff466254293686
+dangling blob f99cfa49eee83e02e9f2e0512dda7383fade73cf
+dangling commit b19ffaf823e1d72d6838b7d77d25feef16bfb372
+dangling commit f0d1bade08051a2c9dd4e6b2ff6dabeae3a1944b
+dangling blob 0ee87a68ba75e51dd4d3d5591a879e01577e2012
+dangling blob 06fafaae0109a09e49a81a24900ca39b7b720cfc
+dangling blob 819ebba9f46af36e9bdf58ccda41e2eb8379bd63
+dangling blob 8df8bb5c326c638b3aaec2e016445c36ab1894c0
+dangling blob 53cbbcb0aaed4108351d5eb10469b3b99cfbe673
+dangling commit 9efcbc6ff163f076354a5c5a0898243abc9725b2
+dangling blob 9efdbc744dc1f9a7acfd18538e7aba7ad8518780
+dangling blob 0528fd5f975a6549e44d104a9d8fe11d0f8371ef
+dangling commit bc2efda61170897c2afce80bfc723716bd0c2a90
+dangling blob fd31bd5fd91c23809b55cc888eb05abdf2ea51cb
+dangling blob 69503d76394ec04a4fd97cf0395f803be2ffdb3a
+dangling blob c1e3bd1c01a15295399f39969ec75eb35d5c9104
+dangling blob 00febd97733fde95cfbd4391dad5d72f7e83fb4b
+dangling blob c22d7eebe75907675056b617b6fb1a03643223f9
+dangling blob 9345fe9adddab0d4df523350b9a488eb9d1f7f9f
+dangling commit df6ebe65981dcde036e42d0a2d55b496638cc4f3
+dangling blob edadfec854848d94a640a53095d05e91db535a70
+dangling blob 6df0fe623288ac88a2960212cdb2347520af339a
+dangling blob 15fe3e705a4305dbacc461734f8284f2a91b2f6f
+dangling commit db63bf7a1aa915fac7e1458fee4929dfc8af414b
+dangling blob f0907fe2b363da62b33fb68abd961cefbb672e00
+dangling commit 95a5ff04f1bc0a60327c6ec4889ce30f1e5c4b60
+dangling commit e7a5bfb988caf3122b95b7d6b63627bb3448fb45
+jonsmirl@terra:/home/linus$
+
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
