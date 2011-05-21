@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH v2 03/48] i18n: git-am multi-line getttext $msg; echo
-Date: Sat, 21 May 2011 18:43:44 +0000
-Message-ID: <1306003469-22939-4-git-send-email-avarab@gmail.com>
+Subject: [PATCH v2 08/48] i18n: git-am clean_abort messages
+Date: Sat, 21 May 2011 18:43:49 +0000
+Message-ID: <1306003469-22939-9-git-send-email-avarab@gmail.com>
 References: <1306003469-22939-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -18,85 +18,83 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNrDR-0001WK-Bc
+	id 1QNrDQ-0001WK-Io
 	for gcvg-git-2@lo.gmane.org; Sat, 21 May 2011 20:47:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757259Ab1EUSr0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 May 2011 14:47:26 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:64800 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754884Ab1EUSpG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 May 2011 14:45:06 -0400
-Received: by eyx24 with SMTP id 24so1444610eyx.19
-        for <git@vger.kernel.org>; Sat, 21 May 2011 11:45:05 -0700 (PDT)
+	id S1757251Ab1EUSrY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 May 2011 14:47:24 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:45234 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753172Ab1EUSpK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 May 2011 14:45:10 -0400
+Received: by mail-ew0-f46.google.com with SMTP id 4so1451059ewy.19
+        for <git@vger.kernel.org>; Sat, 21 May 2011 11:45:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references:mime-version:content-type
          :content-transfer-encoding;
-        bh=Lvtmej9bo/wiMFinUTBVE011BWEK/lkQHfLFGTk9FDc=;
-        b=i1uTP+Q0sbNHgoDZn4WT3aSuSZkZXAUOkticrIE7f90woS9Ke6kQ9vsjMm7dsSn+dM
-         DIPJza13UgPzx/fgWHoRw7bWx8zQOjTz6btJaomxRGVEkZ8c/PbMRmhInAFOl5I9ZbzS
-         mRcdFpfSTAN8hyj6Jzgdncpeepdlx/dwhdh7o=
+        bh=DJAQtnIS8Qsm6V0xP1MqnVVjkgTG52SQFHoBp+OdV/M=;
+        b=LF2JLL/crEu0yMr/Lm+PDVYLtZdQ0adzAtQrqxDG+ye646tQdp6j5q/ha1WP/Q9e7u
+         qAEz9MqJHuzKES1eehabtVAZf/e9oYxkK9zvGkMvjXbgTjwjuizN+5gQY/sc+r/ffzTl
+         IUT67+GLSqKIVlwk8BWqrfTimmH0dtN9qJooY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=heTvNMHSmwNYjPuqjds/9tdyjfTfYnpYOYQk3KjIjIgFLupfF2UNA/F9Du9q+uZ7h4
-         oaQIWe7Iyz9jYrnys4bDXbZZ8tEelRAkqseWAu32ViT5DqYN0T47Bqp5jYNU2diU8PRW
-         AJYCnXFTudxIzPTW9PkEKJluKmUDEHKKKqC/A=
-Received: by 10.14.22.5 with SMTP id s5mr264789ees.94.1306003504964;
-        Sat, 21 May 2011 11:45:04 -0700 (PDT)
+        b=JDLETbiCPfGeajSl1upcYY921yA3E7UW0Bw64MJBj4HSyoy72GvU3gq41jPA7xLUIw
+         q9rai6RBtICZgXwGkfcWm9RrpziAcuYpudaAB/npJuPdgqCdQ+ijCdn20j3oaotLv6v3
+         4O7fRpM6qRhNDCGCR2MQwVBV/m32SLrrbjrzw=
+Received: by 10.213.19.136 with SMTP id a8mr610345ebb.87.1306003509413;
+        Sat, 21 May 2011 11:45:09 -0700 (PDT)
 Received: from w.nix.is (w.nix.is [188.40.98.140])
-        by mx.google.com with ESMTPS id y14sm1130434eeh.3.2011.05.21.11.45.04
+        by mx.google.com with ESMTPS id y14sm1130434eeh.3.2011.05.21.11.45.08
         (version=SSLv3 cipher=OTHER);
-        Sat, 21 May 2011 11:45:04 -0700 (PDT)
+        Sat, 21 May 2011 11:45:08 -0700 (PDT)
 X-Mailer: git-send-email 1.7.5.1
 In-Reply-To: <1306003469-22939-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174165>
 
-When we have multi-line `gettext $msg; echo' messages we can't
-preserve the existing indenting because gettext(1) can't accept input
-on stdin.
+Messages that used the clean_abort function needed both gettext(1) and
+eval_gettext(). These need to be interpolated in a string like the die
+and cannot_fallback messages.
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- git-am.sh |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
+ git-am.sh |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/git-am.sh b/git-am.sh
-index f54f13d..5a152b0 100755
+index ac2d202..bb58c1c 100755
 --- a/git-am.sh
 +++ b/git-am.sh
-@@ -757,16 +757,16 @@ do
- 		# working tree.
- 		resolved=3D
- 		git diff-index --quiet --cached HEAD -- && {
--			echo "No changes - did you forget to use 'git add'?"
--			echo "If there is nothing left to stage, chances are that something=
- else"
--			echo "already introduced the same changes; you might want to skip t=
-his patch."
-+			gettext "No changes - did you forget to use 'git add'?
-+If there is nothing left to stage, chances are that something else
-+already introduced the same changes; you might want to skip this patch=
-=2E"; echo
- 			stop_here_user_resolve $this
- 		}
- 		unmerged=3D$(git ls-files -u)
- 		if test -n "$unmerged"
+@@ -258,7 +258,7 @@ split_patches () {
+ 	stgit-series)
+ 		if test $# -ne 1
  		then
--			echo "You still have unmerged paths in your index"
--			echo "did you forget to use 'git add'?"
-+			gettext "You still have unmerged paths in your index
-+did you forget to use 'git add'?"; echo
- 			stop_here_user_resolve $this
+-			clean_abort "Only one StGIT patch series can be applied at once"
++			clean_abort "$(gettext "Only one StGIT patch series can be applied =
+at once")"
  		fi
- 		apply_status=3D0
+ 		series_dir=3D`dirname "$1"`
+ 		series_file=3D"$1"
+@@ -310,9 +310,9 @@ split_patches () {
+ 		;;
+ 	*)
+ 		if test -n "$parse_patch" ; then
+-			clean_abort "Patch format $patch_format is not supported."
++			clean_abort "$(eval_gettext "Patch format \$patch_format is not sup=
+ported.")"
+ 		else
+-			clean_abort "Patch format detection failed."
++			clean_abort "$(gettext "Patch format detection failed.")"
+ 		fi
+ 		;;
+ 	esac
 --=20
 1.7.5.1
