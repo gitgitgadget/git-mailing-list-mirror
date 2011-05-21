@@ -1,178 +1,69 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 0/7] Re: Problems with Git's "perl" userdiff driver
-Date: Sat, 21 May 2011 13:53:14 -0500
-Message-ID: <20110521185314.GA10530@elie>
-References: <BANLkTi=OXznTspN-CJjM0YXfqARxL=J+Ow@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 00/48] i18n: mark core shell programs for translation
+Date: Sat, 21 May 2011 11:56:38 -0700
+Message-ID: <7v8vtzzxuh.fsf@alter.siamese.dyndns.org>
+References: <1306003469-22939-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
 To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 21 20:53:35 2011
+X-From: git-owner@vger.kernel.org Sat May 21 20:56:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNrIs-0003b9-Ur
-	for gcvg-git-2@lo.gmane.org; Sat, 21 May 2011 20:53:35 +0200
+	id 1QNrM5-0004jF-Ue
+	for gcvg-git-2@lo.gmane.org; Sat, 21 May 2011 20:56:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751327Ab1EUSx0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 May 2011 14:53:26 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:44111 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751227Ab1EUSxY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 May 2011 14:53:24 -0400
-Received: by iyb14 with SMTP id 14so3661067iyb.19
-        for <git@vger.kernel.org>; Sat, 21 May 2011 11:53:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=3G1xqWBVp22DBRtje6JE9PX2NnuqntQntZKisQh09D8=;
-        b=Npe87gKYKD2gSfNc3KrcDUM0dx3Je38H2e4K55zIa+xyZ0ybJuz2oTczLThyo4pa26
-         DJpWvGhB0TFDPwC0nSpMubEei9hEvW3Qqa5a4sryejazr8fe8PQxhUP/eCbcVdNqgYVk
-         NSmowq2lKHoMgfIL/UZhqpN2eDMjtlRWY8TcY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=RgIfpjmeDlQiiniWeLRxnBYqIbsGKtvprIQ5Yog9kTIx9rMpGKB4lyBenzrW05cLvy
-         P/Bosfyv47t2hbKGeVh9LK8iPlXVZWaKoer/U4Qtr+PZWpmzHo2rA49qxBLN5xJItNxw
-         ydfp/WXSU7BVjsn04walAfU010me+/fixIKIc=
-Received: by 10.42.243.7 with SMTP id lk7mr5854730icb.191.1306004003360;
-        Sat, 21 May 2011 11:53:23 -0700 (PDT)
-Received: from elie ([69.209.78.180])
-        by mx.google.com with ESMTPS id c6sm2064439ibj.4.2011.05.21.11.53.19
-        (version=SSLv3 cipher=OTHER);
-        Sat, 21 May 2011 11:53:20 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <BANLkTi=OXznTspN-CJjM0YXfqARxL=J+Ow@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751804Ab1EUS4u convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 May 2011 14:56:50 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51998 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751450Ab1EUS4s convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 May 2011 14:56:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 125F3421F;
+	Sat, 21 May 2011 14:58:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=CcvZfunPuX4a
+	0EKwZSMH+k5jLFM=; b=BKAoA1BN90H3F/vBfEU4cwRwqctehSnpsJu7W8pqgDB/
+	Cmnc8IMBYy6a9dF69hFSP/wnvAjA1DZO8Y10pDNs1qEo4C3/J4vz7UMgVVl8945D
+	anS3hch0w3LH5xA/xgQPxD0PaA9W55wzrUCFLvpjGV7IUr4eY2hfwRbRVXkbEuQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=CvE6EQ
+	Xj+iLM6OAg9xE5OYdG6ds4iDsNZl8WJUtH4Ha0pvAo5q2MbGvqIxeewSTTTB9jh6
+	ngA6mRfMG/V0IOF5TCoQTbnWmi/PMYpVfmDJHLTC5XibRDT2Qq3OP6HGhoo0l4oT
+	KKsaBQ6XF80CnhEjOrIC5dADbDusqvUbKfPt4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D4B50421E;
+	Sat, 21 May 2011 14:58:51 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D351A421C; Sat, 21 May 2011
+ 14:58:47 -0400 (EDT)
+In-Reply-To: <1306003469-22939-1-git-send-email-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sat, 21 May
+ 2011 18:43:41 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5E382A84-83DC-11E0-BD28-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174167>
 
-Hi =C3=86var,
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-
-> The POD rule doesn't work properly. I suspect it has to be:
-
-Thanks.  Some context is here (thanks to Thomas for his notes/full
-branch).
-
- http://thread.gmane.org/gmane.comp.version-control.git/164184
-
-Quick thoughts before fixing them:
-
->     "^=3Dhead[0-9] .*",
+> This series can be retrieved from:
 >
-> Instead of the current:
+>     git://github.com/avar/git.git ab/i18n-sh-only
 >
->     "^=3Dhead[0-9] ",
+> As explained above I didn't have time to fix all the blockers. Help
+> would be *great* and very appreciated.
 
-Good catch.
-
-> And actually it applies very badly to POD in general, since the "sub"
-> rule will be tried first, so e.g. in Perldoc we'll often end up
-> finding some "sub" example halfway up the file, instead of the =3Dhea=
-d1*
-> or =3Ditem* section a few lines up.
-
-I have another worry of the same kind.  If my source file consists of
-multiple packages (like git-svn.perl does), then the "package" rule
-can be useful for getting bearings in a diff:
-
-	diff --git a/git-svn.perl b/git-svn.perl
-	index dc66803..74d8612 100755
-	--- a/git-svn.perl
-	+++ b/git-svn.perl
-	@@ -4000,7 +4000,6 @@ package SVN::Git::Fetcher;
-	 use strict;
-	 use warnings;
-	 use Carp qw/croak/;
-	-use File::Temp qw/tempfile/;
-	 use IO::File qw//;
-	 use vars qw/$_ignore_regex/;
-
-But as soon as "git diff" encounters a subroutine, that replaces the
-context.  It seems that the --show-function mechanism works best for
-files structured such that every line has a scope, with no nesting:
-
-	sub foo {
-		... lines of foo come here ...
-	}
-
-	sub bar {
-		... lines of bar come here ...
-	}
-
-and does not cope as well with nested scopes or lines that do not
-fall in any scope.
-
-The upshot is that all these patterns should be anchored at the left
-margin for now, and it might be worth considering teaching userdiff to
-push and pop scopes so that lines outside the innermost scope are
-correctly attributed, as in the last two lines below:
-
-	package Foo::Bar::Baz
-
-	=3Dhead1 NAME
-
-	Foo::Bar::Baz - well-documented frobber
-
-	=3Dcut
-
-	use strict;
-	use Qux::Quux;
-
-That would also take care of your example of
-
-	=3Ditem B<something>
-
-	Use it like so:
-
-		sub example {
-			something else;
-		}
-
-	... more documentation that should be attributed to the =3Ditem,
-	not the sub ...
-
-> And it looks like the regex only catches:
->
->     sub foo {
->     }
->
-> Not:
->
->     sub foo
->     {
->     }
-
-Yep, that seems worth fixing, too.  Patches follow, with a few unrelate=
-d
-cleanups thrown in.  These patches are based against "maint" for no
-particular reason.  Bugs and improvements welcome, of course. :)
-
-Jonathan Nieder (7):
-  t4018 (diff funcname patterns): make .gitattributes state easier to
-    track
-  t4018 (diff funcname patterns): make configuration easier to track
-  t4018 (diff funcname patterns): minor tweaks
-  userdiff/perl: anchor "sub" and "package" patterns on the left
-  userdiff/perl: match full line of POD headers
-  userdiff/perl: catch subs with brace on second line
-  tests: make test_expect_code quieter on success
-
- t/t4018-diff-funcname.sh |  148 ++++++++++++++++++++++++++++++++++++--=
--------
- t/test-lib.sh            |    7 +-
- userdiff.c               |   22 ++++++-
- 3 files changed, 139 insertions(+), 38 deletions(-)
+This URL still seems to point at the old series with echo >&2 "$(gettex=
+t)".
