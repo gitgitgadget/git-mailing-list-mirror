@@ -1,321 +1,107 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH v2 06/11] streaming: a new API to read from the object
- store
-Date: Sat, 21 May 2011 01:05:36 +0200
-Message-ID: <4DD6F3C0.4060107@lsrfire.ath.cx>
-References: <1305505831-31587-1-git-send-email-gitster@pobox.com> <1305840826-7783-1-git-send-email-gitster@pobox.com> <1305840826-7783-7-git-send-email-gitster@pobox.com>
+From: Kazuki Tsujimoto <kazuki@callcc.net>
+Subject: [BUG] realloc failed
+Date: Sat, 21 May 2011 10:01:32 +0900
+Message-ID: <20110521100126.E3CD.BA9123DE@callcc.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 21 01:06:05 2011
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 21 03:11:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNYlg-0001KC-EO
-	for gcvg-git-2@lo.gmane.org; Sat, 21 May 2011 01:06:04 +0200
+	id 1QNajK-0006vs-A4
+	for gcvg-git-2@lo.gmane.org; Sat, 21 May 2011 03:11:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755988Ab1ETXF6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 May 2011 19:05:58 -0400
-Received: from india601.server4you.de ([85.25.151.105]:45832 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754774Ab1ETXF4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2011 19:05:56 -0400
-Received: from [192.168.2.106] (p4FFDA965.dip.t-dialin.net [79.253.169.101])
-	by india601.server4you.de (Postfix) with ESMTPSA id CCA012F8086;
-	Sat, 21 May 2011 01:05:54 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; de; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
-In-Reply-To: <1305840826-7783-7-git-send-email-gitster@pobox.com>
+	id S1753425Ab1EUBKh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 May 2011 21:10:37 -0400
+Received: from callcc.net ([173.230.149.188]:56191 "EHLO mx01.callcc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751600Ab1EUBKf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 May 2011 21:10:35 -0400
+X-Greylist: delayed 536 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 May 2011 21:10:35 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by mx01.callcc.net (Postfix) with ESMTP id 2212E26B13
+	for <git@vger.kernel.org>; Sat, 21 May 2011 10:01:32 +0900 (JST)
+X-Virus-Scanned: Debian amavisd-new at callcc.net
+Received: from mx01.callcc.net ([127.0.0.1])
+	by localhost (mx01.callcc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id EZd6OGq4E4vJ for <git@vger.kernel.org>;
+	Sat, 21 May 2011 10:01:31 +0900 (JST)
+Received: from [192.168.0.128] (p6eb203.tkyoac00.ap.so-net.ne.jp [218.110.178.3])
+	by mx01.callcc.net (Postfix) with ESMTPSA id A3A3426282
+	for <git@vger.kernel.org>; Sat, 21 May 2011 10:01:30 +0900 (JST)
+X-Mailer: Becky! ver. 2.56.04 [ja]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174085>
 
-Am 19.05.2011 23:33, schrieb Junio C Hamano:
-> Given an object name, use open_istream() to get a git_istream handle
-> that you can read_istream() from as if you are using read(2) to read
-> the contents of the object, and close it with close_istream() when
-> you are done.
-> 
-> Currently, we do not do anything fancy--it just calls read_sha1_file()
-> and keeps the contents in memory as a whole, and carve it out as you
-> request with read_istream().
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Makefile    |    2 +
->  streaming.c |  199 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  streaming.h |   15 +++++
->  3 files changed, 216 insertions(+), 0 deletions(-)
->  create mode 100644 streaming.c
->  create mode 100644 streaming.h
-> 
-> diff --git a/Makefile b/Makefile
-> index 320ccc7..83bd539 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -552,6 +552,7 @@ LIB_H += sha1-lookup.h
->  LIB_H += sideband.h
->  LIB_H += sigchain.h
->  LIB_H += strbuf.h
-> +LIB_H += streaming.h
->  LIB_H += string-list.h
->  LIB_H += submodule.h
->  LIB_H += tag.h
-> @@ -657,6 +658,7 @@ LIB_OBJS += shallow.o
->  LIB_OBJS += sideband.o
->  LIB_OBJS += sigchain.o
->  LIB_OBJS += strbuf.o
-> +LIB_OBJS += streaming.o
->  LIB_OBJS += string-list.o
->  LIB_OBJS += submodule.o
->  LIB_OBJS += symlinks.o
-> diff --git a/streaming.c b/streaming.c
-> new file mode 100644
-> index 0000000..84330b4
-> --- /dev/null
-> +++ b/streaming.c
-> @@ -0,0 +1,199 @@
-> +/*
-> + * Copyright (c) 2011, Google Inc.
-> + */
-> +#include "cache.h"
-> +#include "streaming.h"
-> +
-> +enum input_source {
-> +	stream_error = -1,
-> +	incore = 0,
-> +	loose = 1,
-> +	pack_non_delta = 2
-> +};
-> +
-> +typedef int (*open_istream_fn)(struct git_istream *,
-> +			       struct object_info *,
-> +			       const unsigned char *,
-> +			       enum object_type *);
-> +typedef int (*close_istream_fn)(struct git_istream *);
-> +typedef ssize_t (*read_istream_fn)(struct git_istream *, char *, size_t);
-> +
-> +struct stream_vtbl {
-> +	close_istream_fn close;
-> +	read_istream_fn read;
-> +};
-> +
-> +#define open_method_decl(name) \
-> +	int open_istream_ ##name \
-> +	(struct git_istream *st, struct object_info *oi, \
-> +	 const unsigned char *sha1, \
-> +	 enum object_type *type)
-> +
-> +#define close_method_decl(name) \
-> +	int close_istream_ ##name \
-> +	(struct git_istream *st)
-> +
-> +#define read_method_decl(name) \
-> +	ssize_t read_istream_ ##name \
-> +	(struct git_istream *st, char *buf, size_t sz)
+The following command causes "fatal: Out of memory, realloc failed" error.
 
-It would be nice if those macros could be got rid of once the interface
-stabilizes.
+$ ./git --version
+git version 1.7.5.GIT
 
-> +
-> +/* forward declaration */
-> +static open_method_decl(incore);
-> +static open_method_decl(loose);
-> +static open_method_decl(pack_non_delta);
-> +
-> +static open_istream_fn open_istream_tbl[] = {
-> +	open_istream_incore,
-> +	open_istream_loose,
-> +	open_istream_pack_non_delta,
-> +};
+$ cat ~/.gitconfig
+[alias]
+    a = -c n=v status
 
-These three uses of the macro can be avoided by moving open_istream_tbl
-and open_istream() to the end of the file.  It would be just as clear
-and clean, albeit not as close to literal programming style.
+$ MALLOC_CHECK_=0 ./git a
+fatal: Out of memory, realloc failed
 
-> +
-> +struct git_istream {
-> +	enum input_source source;
+$ gdb --args ./git a
+(gdb) run
+*** glibc detected *** /tmp/git/git: realloc(): invalid pointer: 0x00000000007cd328 ***
+...snip...
+(gdb) bt
+#0  0x00007ffff72c8a75 in raise () from /lib/libc.so.6
+#1  0x00007ffff72cc5c0 in abort () from /lib/libc.so.6
+#2  0x00007ffff73024fb in ?? () from /lib/libc.so.6
+#3  0x00007ffff730c5b6 in ?? () from /lib/libc.so.6
+#4  0x00007ffff73132e2 in realloc () from /lib/libc.so.6
+#5  0x0000000000510bfb in xrealloc (ptr=0x7cd328, size=16) at wrapper.c:82
+#6  0x0000000000405013 in handle_alias (argcp=0x7fffffffdfdc, argv=0x7fffffffdfd0) at git.c:236
+#7  0x000000000040550a in run_argv (argcp=0x7fffffffdfdc, argv=0x7fffffffdfd0) at git.c:515
+#8  0x000000000040566a in main (argc=1, argv=0x7fffffffe0f0) at git.c:579
 
-source seems to be write-only.
 
-> +	const struct stream_vtbl *vtbl;
-> +	unsigned long size; /* inflated size of full object */
-> +
-> +	union {
-> +		struct {
-> +			char *buf; /* from read_object() */
-> +			unsigned long read_ptr;
-> +		} incore;
-> +
-> +		struct {
-> +			int fd; /* open for reading */
-> +			/* NEEDSWORK: what else? */
-> +		} loose;
-> +
-> +		struct {
-> +			int fd; /* open for reading */
-> +			/* NEEDSWORK: what else? */
-> +		} in_pack;
-> +	} u;
-> +};
-> +
-> +int close_istream(struct git_istream *st)
-> +{
-> +	return st->vtbl->close(st);
-> +}
-> +
-> +ssize_t read_istream(struct git_istream *st, char *buf, size_t sz)
-> +{
-> +	return st->vtbl->read(st, buf, sz);
-> +}
-> +
-> +static enum input_source istream_source(const unsigned char *sha1,
-> +					enum object_type *type,
-> +					struct object_info *oi)
-> +{
-> +	unsigned long size;
-> +	int status;
-> +
-> +	oi->sizep = &size;
-> +	status = sha1_object_info_extended(sha1, oi);
-> +	if (status < 0)
-> +		return stream_error;
-> +	*type = status;
-> +
-> +	switch (oi->whence) {
-> +	case OI_LOOSE:
-> +		return loose;
-> +	case OI_PACKED:
-> +		if (!oi->u.packed.is_delta && big_file_threshold <= size)
-> +			return pack_non_delta;
-> +		/* fallthru */
-> +	default:
-> +		return incore;
-> +	}
-> +}
-> +
-> +struct git_istream *open_istream(const unsigned char *sha1,
-> +				 enum object_type *type,
-> +				 unsigned long *size)
-> +{
-> +	struct git_istream *st;
-> +	struct object_info oi;
-> +	const unsigned char *real = lookup_replace_object(sha1);
-> +	enum input_source src = istream_source(real, type, &oi);
-> +
-> +	if (src < 0)
-> +		return NULL;
-> +
-> +	st = xmalloc(sizeof(*st));
-> +	st->source = src;
-> +	if (open_istream_tbl[src](st, &oi, real, type)) {
-> +		if (open_istream_incore(st, &oi, real, type)) {
-> +			free(st);
-> +			st = NULL;
+When the "-c" option is specified, setenv will be called in git_config_push_parameter.
+So it seems "envchanged" flag must be set to true in this case.
 
-			return NULL;
-			// Otherwise we get a problem three lines down.
+ git.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-> +		}
-> +	}
-> +	*size = st->size;
-> +	return st;
-> +}
-> +
-> +/*****************************************************************
-> + *
-> + * Loose object stream
-> + *
-> + *****************************************************************/
-> +
-> +static open_method_decl(loose)
-> +{
-> +	return -1; /* for now */
-> +}
-> +
-> +
-> +/*****************************************************************
-> + *
-> + * Non-delta packed object stream
-> + *
-> + *****************************************************************/
-> +
-> +static open_method_decl(pack_non_delta)
-> +{
-> +	return -1; /* for now */
-> +}
-> +
-> +
-> +/*****************************************************************
-> + *
-> + * In-core stream
-> + *
-> + *****************************************************************/
-> +
-> +static close_method_decl(incore)
-> +{
-> +	free(st->u.incore.buf);
-> +	return 0;
-> +}
-> +
-> +static read_method_decl(incore)
-> +{
-> +	size_t read_size = sz;
-> +	size_t remainder = st->size - st->u.incore.read_ptr;
-> +
-> +	if (remainder <= read_size)
-> +		read_size = remainder;
-> +	if (read_size) {
-> +		memcpy(buf, st->u.incore.buf + st->u.incore.read_ptr, read_size);
-> +		st->u.incore.read_ptr += read_size;
-> +	}
-> +	return read_size;
-> +}
-> +
-> +static struct stream_vtbl incore_vtbl = {
-> +	close_istream_incore,
-> +	read_istream_incore,
-> +};
-> +
-> +static open_method_decl(incore)
-> +{
-> +	st->u.incore.buf = read_sha1_file_extended(sha1, type, &st->size, 0);
-> +	st->u.incore.read_ptr = 0;
-> +	st->vtbl = &incore_vtbl;
-> +
-> +	if (!st->u.incore.buf) {
-> +		free(st->u.incore.buf);
+diff --git a/git.c b/git.c
+index a5ef3c6..e04e4d4 100644
+--- a/git.c
++++ b/git.c
+@@ -153,6 +153,8 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 				usage(git_usage_string);
+ 			}
+ 			git_config_push_parameter((*argv)[1]);
++			if (envchanged)
++				*envchanged = 1;
+ 			(*argv)++;
+ 			(*argc)--;
+ 		} else {
 
-free(NULL) is a noop.
+After applying this patch, it works.
 
-> +		return -1;
-> +	}
-> +	return 0;
-> +}
-> diff --git a/streaming.h b/streaming.h
-> new file mode 100644
-> index 0000000..18cbe68
-> --- /dev/null
-> +++ b/streaming.h
-> @@ -0,0 +1,15 @@
-> +/*
-> + * Copyright (c) 2011, Google Inc.
-> + */
-> +#ifndef STREAMING_H
-> +#define STREAMING_H 1
-> +#include "cache.h"
-> +
-> +/* opaque */
-> +struct git_istream;
-> +
-> +extern struct git_istream *open_istream(const unsigned char *, enum object_type *, unsigned long *);
-> +extern int close_istream(struct git_istream *);
-> +extern ssize_t read_istream(struct git_istream *, char *, size_t);
-> +
-> +#endif /* STREAMING_H */
+$ ./git a
+fatal: alias 'a' changes environment variables
+You can use '!git' in the alias to do this.
+
+$ vi ~/.gitconfig
+[alias]
+    a = !git -c n=v status
+        ~~~~
+
+$ ./git a
+# On branch master
+nothing to commit (working directory clean)
+
+-- 
+Kazuki Tsujimoto
