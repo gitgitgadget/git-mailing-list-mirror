@@ -1,84 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 06/11] streaming: a new API to read from the object
- store
-Date: Fri, 20 May 2011 18:49:41 -0700
-Message-ID: <7v1uzs256y.fsf@alter.siamese.dyndns.org>
-References: <1305505831-31587-1-git-send-email-gitster@pobox.com>
- <1305840826-7783-1-git-send-email-gitster@pobox.com>
- <1305840826-7783-7-git-send-email-gitster@pobox.com>
- <4DD6F3C0.4060107@lsrfire.ath.cx>
+From: fREW Schmidt <frioux@gmail.com>
+Subject: git-svn feature idea
+Date: Fri, 20 May 2011 22:41:39 -0500
+Message-ID: <BANLkTi=OHfHaHE86z8Ufj44J+Oxu8ec5ug@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sat May 21 03:50:57 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 21 05:42:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNbLF-0001w6-1M
-	for gcvg-git-2@lo.gmane.org; Sat, 21 May 2011 03:50:57 +0200
+	id 1QNd4v-0002JR-N3
+	for gcvg-git-2@lo.gmane.org; Sat, 21 May 2011 05:42:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754472Ab1EUBtt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 May 2011 21:49:49 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43879 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751600Ab1EUBtt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 May 2011 21:49:49 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A1C1849EC;
-	Fri, 20 May 2011 21:51:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=7jfvcQ2sh53H1PH4HvI30PK7t
-	j4=; b=g2hI7ybCmWo4hqOydkbAleSMARO8KC/16hXJ8a3bxEthS4LnEY9RGGmJY
-	olnhcyqspEs0Eb2vjN8IbXNwaJIhjJKAUl5NecY1+3TYOYowsmf3sak0GSOyFdUm
-	Wq0kjiPgEJSNlP9M2uYb9nj84bjWU8Ke+0Gkm/KpoKDnqAEegc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=q5w55Im4zZ3oxZq9lvJ
-	s8rlEdBzauR9w/bZPJ9kmENXdJCGDZip6eZetiONuRtz/xHSOsJCLmvrzTJIAjD8
-	L4dRjRQDUIK9FXcqkjISA5LiTYRd57U3imH01+vBVWYe/cc2QI4/PjgPRQbGhd5b
-	DMpLDfM1vgvBHe/y/GHjBLmo=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 80A4C49EA;
-	Fri, 20 May 2011 21:51:53 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A6BFB49E9; Fri, 20 May 2011
- 21:51:50 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E6D3255A-834C-11E0-9277-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+	id S1752632Ab1EUDmB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 May 2011 23:42:01 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:45946 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752486Ab1EUDmA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 May 2011 23:42:00 -0400
+Received: by gwaa18 with SMTP id a18so1540662gwa.19
+        for <git@vger.kernel.org>; Fri, 20 May 2011 20:41:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to
+         :content-type:content-transfer-encoding;
+        bh=FWOlISPK2jP2/mD3OqWBKYvOX8fXLC9Jr1TvtQ2Vc0k=;
+        b=srJQhT8zK5Oml0np2mNDuesIDcTK6A+zU/B4STj1dhFPtOfBVIMunxxoFUfr7qNCPt
+         C/BJwOURQAsC8HcUS0PqViwIAZ/oweRLUqbTCBsLj03egzFjfHdasvIR2AuLoZrZgf4l
+         1UPKMfKDXfK5XqinxEe+I4hFxZ5p6Z+OZX/5c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        b=F0tFVdUgADKx4VMz7uJBQ0rg/KYmFOJkwRUHuQJHAZhjv60PFfSOqgDSM/B0zmbQH1
+         Vt7YMr4kxX9Q1pNV9xhxojENpJH1ZrxjaKO3x5cEfDiL5XRluvKwCmPxILAfHpKbeH52
+         2+YhOo5PS2lQT+Uo5ijn9hnzu4t/ywxJmOe3E=
+Received: by 10.150.131.3 with SMTP id e3mr1103812ybd.236.1305949319065; Fri,
+ 20 May 2011 20:41:59 -0700 (PDT)
+Received: by 10.150.230.4 with HTTP; Fri, 20 May 2011 20:41:39 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174089>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+Hey guys,
+Lately I've been doing a lot of permanent subversion to git
+conversions, and I keep running into braindead repo structures that
+give me pain to export.=A0 The main one is this:
 
->> +#define read_method_decl(name) \
->> +	ssize_t read_istream_ ##name \
->> +	(struct git_istream *st, char *buf, size_t sz)
->
-> It would be nice if those macros could be got rid of once the interfa=
-ce
-> stabilizes.
+trying to check out MyProject:
 
-Probably, but not while it is still in flux in 'pu'. I already had to
-tweak something to support my unpublished series I was working on today=
-=2E
+trunk/MyProject
+trunk/OtherProject
+tags/MyProject-1.0
+tags/MyProject-1.1
+tags/OtherProject-1.0
 
->> +struct git_istream {
->> +	enum input_source source;
->
-> source seems to be write-only.
+So you see I can't just specify to git-svn that tags is the tags dir.
+I know a workaround (check out each tag separately and then use git
+fetch to put them all in the same repo) but that's really inefficient.
 
-Yes, I had this initially but later ended up with a design that makes
-everything go through vtbl, so this is only useful for debugging and ca=
-n
-be removed.
+So really what would be great would be to be able to do the following:
 
-Thanks.
+git svn clone $repo --trunk=3Dtrunk/MyProject --tag=3Dtags/MyProject-1.=
+0
+(and --branch would be great too)
+
+Anyway, I am fairly well versed with perl, so I could try my hand at
+writing such a feature, but I wouldn't really know where to start or
+if anyone other than me is even interested in something this.
+
+Thoughts?
+
+--
+fREW Schmidt
+http://blog.afoolishmanifesto.com
