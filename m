@@ -1,107 +1,66 @@
-From: Kazuki Tsujimoto <kazuki@callcc.net>
-Subject: Re: [BUG] realloc failed
-Date: Sat, 21 May 2011 14:50:58 +0900
-Message-ID: <20110521145056.E3F5.BA9123DE@callcc.net>
-References: <20110521100126.E3CD.BA9123DE@callcc.net> <7vhb8o25tt.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: [RFC] Interactive-rebase doesn't pick all children of "upstream"
+Date: Sat, 21 May 2011 01:51:17 -0400
+Message-ID: <1305957078-19111-1-git-send-email-andrew.kw.w@gmail.com>
+References: <20110517161234.GA21388@sigill.intra.peff.net>
+Cc: Andrew Wong <andrew.kw.w@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 21 07:56:34 2011
+X-From: git-owner@vger.kernel.org Sat May 21 08:53:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNfAu-0002Ob-CW
-	for gcvg-git-2@lo.gmane.org; Sat, 21 May 2011 07:56:32 +0200
+	id 1QNg4H-000538-4p
+	for gcvg-git-2@lo.gmane.org; Sat, 21 May 2011 08:53:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751507Ab1EUFu6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 May 2011 01:50:58 -0400
-Received: from callcc.net ([173.230.149.188]:53435 "EHLO mx01.callcc.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751435Ab1EUFu5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 May 2011 01:50:57 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mx01.callcc.net (Postfix) with ESMTP id C1A8D26B19
-	for <git@vger.kernel.org>; Sat, 21 May 2011 14:50:56 +0900 (JST)
-X-Virus-Scanned: Debian amavisd-new at callcc.net
-Received: from mx01.callcc.net ([127.0.0.1])
-	by localhost (mx01.callcc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QR6OAZ1iJ0hd for <git@vger.kernel.org>;
-	Sat, 21 May 2011 14:50:56 +0900 (JST)
-Received: from [192.168.0.128] (p6eb203.tkyoac00.ap.so-net.ne.jp [218.110.178.3])
-	by mx01.callcc.net (Postfix) with ESMTPSA id A52E326B13
-	for <git@vger.kernel.org>; Sat, 21 May 2011 14:50:55 +0900 (JST)
-In-Reply-To: <7vhb8o25tt.fsf@alter.siamese.dyndns.org>
-X-Mailer: Becky! ver. 2.56.04 [ja]
+	id S1751728Ab1EUGxk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 May 2011 02:53:40 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:35536 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751258Ab1EUGxi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 May 2011 02:53:38 -0400
+Received: by iyb14 with SMTP id 14so3434773iyb.19
+        for <git@vger.kernel.org>; Fri, 20 May 2011 23:53:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references;
+        bh=oE7E/bEzcKCIr9g57CngliQi040sAEoWIumzqZsT1oU=;
+        b=M9rmpJHeODRde6Jbt+fBK/4Dazn89vHwDy6fnF/bAfAkT2LxOQMDg4Kb1NFJnblHE4
+         urvLpyPbcFfRICzJCwKS3yql5GrJ8Qsd+GkQHKpPTUyUfeHH7mbbRa8MegcqOyH6BGQc
+         1/p9QCMUksRjI0mtPfOslWPH31gaHlUhOy4Uo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=GJ9V8q7+EVtGXSBIM1zpiulMjnuI8f9neWbC5APwhi75NRm6jixsKGcN/7KEoXJcKS
+         uHWLKVkuGsA92QFhshtcFYIr+igDG6wTlpqc9M4geoPptePYde4pb2VSVu8u+a0oDn1I
+         4YKOjU/bGZK59RRdbyfugsLSPnWFtyyPsG71U=
+Received: by 10.42.171.9 with SMTP id h9mr6033013icz.37.1305960818410;
+        Fri, 20 May 2011 23:53:38 -0700 (PDT)
+Received: from localhost.localdomain (24-246-58-202.cable.teksavvy.com [24.246.58.202])
+        by mx.google.com with ESMTPS id xe5sm1665579icb.22.2011.05.20.23.53.37
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 20 May 2011 23:53:37 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.2.316.gd7d8c.dirty
+In-Reply-To: <20110517161234.GA21388@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174092>
 
-From: Junio C Hamano <gitster@pobox.com>
-Date: Fri, 20 May 2011 18:35:58 -0700
+This is a work-in-progress patch for this issue.  Since this patch changes a
+fairly significant behavior in interactive-rebase, I want to try to get some
+feedbacks before I go ahead and start writing some tests for this new behavior.
 
-> Care to send a patch with test (see Documentation/SubmittingPatches)?
+Andrew Wong (1):
+  Interactive-rebase doesn't pick all children of "upstream"
 
-Thanks for your comment.
-Here is a patch with test.
-
-
-[PATCH] Avoid "realloc failed" error in alias expansion including -c option
-
-When the -c option is specified, setenv will be called.
-Therefore, set envchanged flag to true so that git exits with
-"alias '%s' changes environment variables" error.
-
-Signed-off-by: Kazuki Tsujimoto <kazuki@callcc.net>
----
- git.c                   |    2 ++
- t/t1020-subdirectory.sh |   15 +++++++++++++++
- 2 files changed, 17 insertions(+), 0 deletions(-)
-
-diff --git a/git.c b/git.c
-index a5ef3c6..e04e4d4 100644
---- a/git.c
-+++ b/git.c
-@@ -153,6 +153,8 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 				usage(git_usage_string);
- 			}
- 			git_config_push_parameter((*argv)[1]);
-+			if (envchanged)
-+				*envchanged = 1;
- 			(*argv)++;
- 			(*argc)--;
- 		} else {
-diff --git a/t/t1020-subdirectory.sh b/t/t1020-subdirectory.sh
-index ddc3921..94fed9c 100755
---- a/t/t1020-subdirectory.sh
-+++ b/t/t1020-subdirectory.sh
-@@ -119,6 +119,21 @@ test_expect_success 'alias expansion' '
- 	)
- '
- 
-+test_expect_success 'alias expansion including "-c <name>=<value>" option' '
-+	printf "%s\n%s\n" \
-+	       "fatal: alias '"'ss'"' changes environment variables" \
-+	       "You can use '"'!git'"' in the alias to do this.">expect &&
-+	(
-+		cat > .git/config <<EOF &&
-+[alias]
-+ss = -c name=value status
-+EOF
-+		cd dir &&
-+		test_must_fail git ss 2> ../actual
-+	) &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success '!alias expansion' '
- 	pwd >expect &&
- 	(
-
+ git-rebase--interactive.sh               |    7 +++++--
+ t/t3404-rebase-interactive.sh            |    2 +-
+ t/t3411-rebase-preserve-around-merges.sh |    2 +-
+ 3 files changed, 7 insertions(+), 4 deletions(-)
 
 -- 
-Kazuki Tsujimoto
+1.7.5.2.316.gd7d8c.dirty
