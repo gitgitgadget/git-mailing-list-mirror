@@ -1,135 +1,311 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 05/12] write_entry(): separate two helper functions out
-Date: Fri, 20 May 2011 23:56:28 -0700
-Message-ID: <1305960995-25738-6-git-send-email-gitster@pobox.com>
+Subject: [PATCH v3 06/12] streaming: a new API to read from the object store
+Date: Fri, 20 May 2011 23:56:29 -0700
+Message-ID: <1305960995-25738-7-git-send-email-gitster@pobox.com>
 References: <1305960995-25738-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 21 08:57:32 2011
+X-From: git-owner@vger.kernel.org Sat May 21 08:57:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNg7w-0006Ar-Bu
-	for gcvg-git-2@lo.gmane.org; Sat, 21 May 2011 08:57:32 +0200
+	id 1QNg82-0006Cg-6X
+	for gcvg-git-2@lo.gmane.org; Sat, 21 May 2011 08:57:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752169Ab1EUG52 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 May 2011 02:57:28 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:54828 "EHLO
+	id S1752228Ab1EUG5b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 May 2011 02:57:31 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:54893 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751009Ab1EUG50 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 May 2011 02:57:26 -0400
+	with ESMTP id S1751009Ab1EUG53 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 May 2011 02:57:29 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C095F5DBD
-	for <git@vger.kernel.org>; Sat, 21 May 2011 02:59:32 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CD4265DC4
+	for <git@vger.kernel.org>; Sat, 21 May 2011 02:59:35 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=Q97C
-	UviCwbGZP2MetHBEA/2Krtg=; b=fpfdkM2STiYWj+q3eaQA0D+95DcgI7ZsJu0C
-	IxYcYfEMEwBxPL8fEE8pRvXSYUPuDfWfVClP0iRxsM8ElnbotQl2z1mSsjeiyAx7
-	OIL745jWmvJDXXDoCTWkNlDFUEDmk99y74sTcYibOQ5JNtYrpB7A6Y71t2/V8HDc
-	v7RZNwg=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=wBBQ
+	k+AssabSw19cCcKdaDEf40k=; b=FdCqYjn/46Ib9Tg6ONPSPN7lZL5ZAi3BRp62
+	6sZvel/8GMMiSviupzDOcb+3gpyrpwEctnuUsD45OSJr9HTwDoelGVg00pE/rv+A
+	OjI5qLugbZbVfAURbhY+Sc5YcQ4/yLO/vsbJKx2R+FkWE6j75eV4ATreyQ8ErstW
+	ch3FDcs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=wV61R/
-	+gaiKsdVq37yG9U9daS23iW1AFkS6ehKrDwCFj4LAq/4RBtoJrPZSuBBDPGTvwrN
-	MkuyEqEtqjBD9mvlb7IutA3coDSZUUsw8GHSejbCmvP2LmRGI0iMj8zoYmTcB7lm
-	bee7H0VMVJk09ty+pgFV1VP7klP36/rEU/+3U=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=d9igp+
+	MiLoz5mkdVhP+8x8yYaD3FBLcpb+z/XXPq9+U4hxtoDaUOCxiAhpBW/S25LYMFxk
+	/Fb5qkhxxwkuyKQoO+jm2+uWbeoLFa+jYxNSDhEEwe6RLk3ZV6DcwRkX3MGDDdLZ
+	3NudWC+2RyUD6dybP0YKuKSRTAtEWZeTg1qVw=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BD03E5DBC
-	for <git@vger.kernel.org>; Sat, 21 May 2011 02:59:32 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C950D5DC3
+	for <git@vger.kernel.org>; Sat, 21 May 2011 02:59:35 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0D3005DB7 for
- <git@vger.kernel.org>; Sat, 21 May 2011 02:59:31 -0400 (EDT)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B36D45DC2 for
+ <git@vger.kernel.org>; Sat, 21 May 2011 02:59:34 -0400 (EDT)
 X-Mailer: git-send-email 1.7.5.2.369.g8fc017
 In-Reply-To: <1305960995-25738-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: E164A834-8377-11E0-ADB3-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: E335931C-8377-11E0-9DC1-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174100>
 
-In the write-out codepath, a block of code determines what file in the
-working tree to write to, and opens an output file descriptor to it.
+Given an object name, use open_istream() to get a git_istream handle
+that you can read_istream() from as if you are using read(2) to read
+the contents of the object, and close it with close_istream() when
+you are done.
 
-After writing the contents out to the file, another block of code runs
-fstat() on the file descriptor when appropriate.
-
-Separate these blocks out to open_output_fd() and fstat_output()
-helper functions.
+Currently, we do not do anything fancy--it just calls read_sha1_file()
+and keeps the contents in memory as a whole, and carve it out as you
+request with read_istream().
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- entry.c |   43 ++++++++++++++++++++++++++-----------------
- 1 files changed, 26 insertions(+), 17 deletions(-)
+ Makefile    |    2 +
+ streaming.c |  193 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ streaming.h |   15 +++++
+ 3 files changed, 210 insertions(+), 0 deletions(-)
+ create mode 100644 streaming.c
+ create mode 100644 streaming.h
 
-diff --git a/entry.c b/entry.c
-index b017167..cc6502a 100644
---- a/entry.c
-+++ b/entry.c
-@@ -91,6 +91,29 @@ static void *read_blob_entry(struct cache_entry *ce, unsigned long *size)
- 	return NULL;
- }
- 
-+static int open_output_fd(char *path, struct cache_entry *ce, int to_tempfile)
+diff --git a/Makefile b/Makefile
+index 320ccc7..83bd539 100644
+--- a/Makefile
++++ b/Makefile
+@@ -552,6 +552,7 @@ LIB_H += sha1-lookup.h
+ LIB_H += sideband.h
+ LIB_H += sigchain.h
+ LIB_H += strbuf.h
++LIB_H += streaming.h
+ LIB_H += string-list.h
+ LIB_H += submodule.h
+ LIB_H += tag.h
+@@ -657,6 +658,7 @@ LIB_OBJS += shallow.o
+ LIB_OBJS += sideband.o
+ LIB_OBJS += sigchain.o
+ LIB_OBJS += strbuf.o
++LIB_OBJS += streaming.o
+ LIB_OBJS += string-list.o
+ LIB_OBJS += submodule.o
+ LIB_OBJS += symlinks.o
+diff --git a/streaming.c b/streaming.c
+new file mode 100644
+index 0000000..13cbce7
+--- /dev/null
++++ b/streaming.c
+@@ -0,0 +1,193 @@
++/*
++ * Copyright (c) 2011, Google Inc.
++ */
++#include "cache.h"
++#include "streaming.h"
++
++enum input_source {
++	stream_error = -1,
++	incore = 0,
++	loose = 1,
++	pack_non_delta = 2
++};
++
++typedef int (*open_istream_fn)(struct git_istream *,
++			       struct object_info *,
++			       const unsigned char *,
++			       enum object_type *);
++typedef int (*close_istream_fn)(struct git_istream *);
++typedef ssize_t (*read_istream_fn)(struct git_istream *, char *, size_t);
++
++struct stream_vtbl {
++	close_istream_fn close;
++	read_istream_fn read;
++};
++
++#define open_method_decl(name) \
++	int open_istream_ ##name \
++	(struct git_istream *st, struct object_info *oi, \
++	 const unsigned char *sha1, \
++	 enum object_type *type)
++
++#define close_method_decl(name) \
++	int close_istream_ ##name \
++	(struct git_istream *st)
++
++#define read_method_decl(name) \
++	ssize_t read_istream_ ##name \
++	(struct git_istream *st, char *buf, size_t sz)
++
++/* forward declaration */
++static open_method_decl(incore);
++static open_method_decl(loose);
++static open_method_decl(pack_non_delta);
++
++static open_istream_fn open_istream_tbl[] = {
++	open_istream_incore,
++	open_istream_loose,
++	open_istream_pack_non_delta,
++};
++
++struct git_istream {
++	const struct stream_vtbl *vtbl;
++	unsigned long size; /* inflated size of full object */
++
++	union {
++		struct {
++			char *buf; /* from read_object() */
++			unsigned long read_ptr;
++		} incore;
++
++		struct {
++			int fd; /* open for reading */
++			/* NEEDSWORK: what else? */
++		} loose;
++
++		struct {
++			int fd; /* open for reading */
++			/* NEEDSWORK: what else? */
++		} in_pack;
++	} u;
++};
++
++int close_istream(struct git_istream *st)
 +{
-+	int symlink = (ce->ce_mode & S_IFMT) != S_IFREG;
-+	if (to_tempfile) {
-+		strcpy(path, symlink
-+		       ? ".merge_link_XXXXXX" : ".merge_file_XXXXXX");
-+		return mkstemp(path);
-+	} else {
-+		return create_file(path, !symlink ? ce->ce_mode : 0666);
++	return st->vtbl->close(st);
++}
++
++ssize_t read_istream(struct git_istream *st, char *buf, size_t sz)
++{
++	return st->vtbl->read(st, buf, sz);
++}
++
++static enum input_source istream_source(const unsigned char *sha1,
++					enum object_type *type,
++					struct object_info *oi)
++{
++	unsigned long size;
++	int status;
++
++	oi->sizep = &size;
++	status = sha1_object_info_extended(sha1, oi);
++	if (status < 0)
++		return stream_error;
++	*type = status;
++
++	switch (oi->whence) {
++	case OI_LOOSE:
++		return loose;
++	case OI_PACKED:
++		if (!oi->u.packed.is_delta && big_file_threshold <= size)
++			return pack_non_delta;
++		/* fallthru */
++	default:
++		return incore;
 +	}
 +}
 +
-+static int fstat_output(int fd, const struct checkout *state, struct stat *st)
++struct git_istream *open_istream(const unsigned char *sha1,
++				 enum object_type *type,
++				 unsigned long *size)
 +{
-+	/* use fstat() only when path == ce->name */
-+	if (fstat_is_reliable() &&
-+	    state->refresh_cache && !state->base_dir_len) {
-+		fstat(fd, st);
-+		return 1;
++	struct git_istream *st;
++	struct object_info oi;
++	const unsigned char *real = lookup_replace_object(sha1);
++	enum input_source src = istream_source(real, type, &oi);
++
++	if (src < 0)
++		return NULL;
++
++	st = xmalloc(sizeof(*st));
++	if (open_istream_tbl[src](st, &oi, real, type)) {
++		if (open_istream_incore(st, &oi, real, type)) {
++			free(st);
++			return NULL;
++		}
 +	}
++	*size = st->size;
++	return st;
++}
++
++/*****************************************************************
++ *
++ * Loose object stream
++ *
++ *****************************************************************/
++
++static open_method_decl(loose)
++{
++	return -1; /* for now */
++}
++
++
++/*****************************************************************
++ *
++ * Non-delta packed object stream
++ *
++ *****************************************************************/
++
++static open_method_decl(pack_non_delta)
++{
++	return -1; /* for now */
++}
++
++
++/*****************************************************************
++ *
++ * In-core stream
++ *
++ *****************************************************************/
++
++static close_method_decl(incore)
++{
++	free(st->u.incore.buf);
 +	return 0;
 +}
 +
- static int write_entry(struct cache_entry *ce, char *path, const struct checkout *state, int to_tempfile)
- {
- 	unsigned int ce_mode_s_ifmt = ce->ce_mode & S_IFMT;
-@@ -128,17 +151,7 @@ static int write_entry(struct cache_entry *ce, char *path, const struct checkout
- 			size = newsize;
- 		}
- 
--		if (to_tempfile) {
--			if (ce_mode_s_ifmt == S_IFREG)
--				strcpy(path, ".merge_file_XXXXXX");
--			else
--				strcpy(path, ".merge_link_XXXXXX");
--			fd = mkstemp(path);
--		} else if (ce_mode_s_ifmt == S_IFREG) {
--			fd = create_file(path, ce->ce_mode);
--		} else {
--			fd = create_file(path, 0666);
--		}
-+		fd = open_output_fd(path, ce, to_tempfile);
- 		if (fd < 0) {
- 			free(new);
- 			return error("unable to create file %s (%s)",
-@@ -146,12 +159,8 @@ static int write_entry(struct cache_entry *ce, char *path, const struct checkout
- 		}
- 
- 		wrote = write_in_full(fd, new, size);
--		/* use fstat() only when path == ce->name */
--		if (fstat_is_reliable() &&
--		    state->refresh_cache && !to_tempfile && !state->base_dir_len) {
--			fstat(fd, &st);
--			fstat_done = 1;
--		}
-+		if (!to_tempfile)
-+			fstat_done = fstat_output(fd, state, &st);
- 		close(fd);
- 		free(new);
- 		if (wrote != size)
++static read_method_decl(incore)
++{
++	size_t read_size = sz;
++	size_t remainder = st->size - st->u.incore.read_ptr;
++
++	if (remainder <= read_size)
++		read_size = remainder;
++	if (read_size) {
++		memcpy(buf, st->u.incore.buf + st->u.incore.read_ptr, read_size);
++		st->u.incore.read_ptr += read_size;
++	}
++	return read_size;
++}
++
++static struct stream_vtbl incore_vtbl = {
++	close_istream_incore,
++	read_istream_incore,
++};
++
++static open_method_decl(incore)
++{
++	st->u.incore.buf = read_sha1_file_extended(sha1, type, &st->size, 0);
++	st->u.incore.read_ptr = 0;
++	st->vtbl = &incore_vtbl;
++
++	return st->u.incore.buf ? 0 : -1;
++}
+diff --git a/streaming.h b/streaming.h
+new file mode 100644
+index 0000000..18cbe68
+--- /dev/null
++++ b/streaming.h
+@@ -0,0 +1,15 @@
++/*
++ * Copyright (c) 2011, Google Inc.
++ */
++#ifndef STREAMING_H
++#define STREAMING_H 1
++#include "cache.h"
++
++/* opaque */
++struct git_istream;
++
++extern struct git_istream *open_istream(const unsigned char *, enum object_type *, unsigned long *);
++extern int close_istream(struct git_istream *);
++extern ssize_t read_istream(struct git_istream *, char *, size_t);
++
++#endif /* STREAMING_H */
 -- 
 1.7.5.2.369.g8fc017
