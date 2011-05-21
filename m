@@ -1,72 +1,87 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: Re: [PATCH] do not read beyond end of malloc'd buffer
-Date: Sat, 21 May 2011 11:42:40 +0200
-Message-ID: <87ei3s75kf.fsf@rho.meyering.net>
-References: <877h9lb86r.fsf@rho.meyering.net>
-	<7vfwo92p19.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git-svn feature idea
+Date: Sat, 21 May 2011 12:03:26 +0200
+Message-ID: <4DD78DEE.5060206@drmicha.warpmail.net>
+References: <BANLkTi=OHfHaHE86z8Ufj44J+Oxu8ec5ug@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 21 11:42:58 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: fREW Schmidt <frioux@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 21 12:08:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QNihy-0003Fx-So
-	for gcvg-git-2@lo.gmane.org; Sat, 21 May 2011 11:42:55 +0200
+	id 1QNj6g-0003XY-HF
+	for gcvg-git-2@lo.gmane.org; Sat, 21 May 2011 12:08:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754448Ab1EUJmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 May 2011 05:42:50 -0400
-Received: from smtp1-g21.free.fr ([212.27.42.1]:38080 "EHLO smtp1-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753183Ab1EUJms (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 May 2011 05:42:48 -0400
-Received: from mx.meyering.net (unknown [82.230.74.64])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id 1163D940119
-	for <git@vger.kernel.org>; Sat, 21 May 2011 11:42:41 +0200 (CEST)
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id 6A492600C7; Sat, 21 May 2011 11:42:40 +0200 (CEST)
-In-Reply-To: <7vfwo92p19.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 20 May 2011 11:41:06 -0700")
+	id S1753247Ab1EUKDb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 May 2011 06:03:31 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:60008 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751793Ab1EUKD3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 May 2011 06:03:29 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id C1CFD20A21;
+	Sat, 21 May 2011 06:03:28 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute3.internal (MEProxy); Sat, 21 May 2011 06:03:28 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=LpARRwnjJ6WAJN92QTeyyFSW6Bo=; b=M3LyElLcoESDDYfIrcQVC2etHK7eDXI9LbheIQUu7IoNMPrfKa6tDA6D8ehchbffeMJSTImlLPEsiVgKx3A6bk3jSokyuaDxit+8qAg16p//m8TDw3KJWV2PuIeheS+pdhJYpSlF0yjVAjwQ1FCdLK4OnYgKXNUuDTHjskkXWfE=
+X-Sasl-enc: F4S2ftT7JQWCAbDJl3HoHx+uNuUgEgQK6DeiwFv8hwyj 1305972208
+Received: from localhost.localdomain (p548599DE.dip0.t-ipconnect.de [84.133.153.222])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 23A0F4431C3;
+	Sat, 21 May 2011 06:03:27 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Lightning/1.0b3pre Thunderbird/3.1.10
+In-Reply-To: <BANLkTi=OHfHaHE86z8Ufj44J+Oxu8ec5ug@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174116>
 
-Junio C Hamano wrote:
-> Jim Meyering <jim@meyering.net> writes:
->> I was surprised to see "git diff --word-diff" output a ton of
->> garbage, and tracked it down to a bug that's triggered when the
->> diff.suppress-blank-empty config option to true and when at least
->> one of the context lines is empty.
->
-> Heh, I am not that surprised ;-)
->
-> I think the real culprit is a year-old 882749a (diff: add --word-diff
-> option that generalizes --color-words, 2010-04-14); it probably shows that
-> not many people use diff.s-b-e settings?
+fREW Schmidt venit, vidit, dixit 21.05.2011 05:41:
+> Hey guys,
+> Lately I've been doing a lot of permanent subversion to git
+> conversions, and I keep running into braindead repo structures that
+> give me pain to export.  The main one is this:
+> 
+> trying to check out MyProject:
+> 
+> trunk/MyProject
+> trunk/OtherProject
+> tags/MyProject-1.0
+> tags/MyProject-1.1
+> tags/OtherProject-1.0
+> 
+> So you see I can't just specify to git-svn that tags is the tags dir.
+> I know a workaround (check out each tag separately and then use git
+> fetch to put them all in the same repo) but that's really inefficient.
+> 
+> So really what would be great would be to be able to do the following:
+> 
+> git svn clone $repo --trunk=trunk/MyProject --tag=tags/MyProject-1.0
+> (and --branch would be great too)
+> 
+> Anyway, I am fairly well versed with perl, so I could try my hand at
+> writing such a feature, but I wouldn't really know where to start or
+> if anyone other than me is even interested in something this.
 
-That must be the issue: too few people know to use diff.s-b-e.
-If a few more of us were to set that option by running this command:
+If you scroll down to the config section in git-svn(1) you will find
+that you can use things like this:
 
-    git config --global diff.suppress-blank-empty true
+fetch = trunk/MyProject:refs/remotes/foo/trunk
+tags = tags/MyProject-*:refs/remotes/foo/tags/*
 
-(to suppress emission of trailing blanks on empty context lines)
-then bugs like this would be exposed more quickly.
+I seem to remember you can even specify these as arguments to -t and
+such but haven't checked.
 
-...
-> It is a bit unfortunate that we cannot make this into a test script, as it
-> depends on what is on the uninitialized part of the heap, which might
-> happen to be a NUL in which case the test would pass.
->
-> Running tests under the valgrind mode may catch issues, though.
+Uh. Wait. We allow only .../*/... and .../* on the left hand side, at
+least per the doc. So, you could either use the existing variant
 
-Right, since reading the trailing NUL byte after the
-end of the buffer would be detected.
+tags = tags/{MyProject-1.0,MyProject-1.}:refs/remotes/foo/tags/*
 
-> Thanks. Will queue with this test squashed in.
+or use your perl foo and lift the /*/ requirement.
 
-Thanks for adding the test!
+Michael
