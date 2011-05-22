@@ -1,89 +1,70 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: git difftool does does not respect current working directory
-Date: Sat, 21 May 2011 23:50:53 -0700
-Message-ID: <20110522065051.GB49297@gmail.com>
-References: <loom.20110514T160931-46@post.gmane.org>
- <7v1uzznr09.fsf@alter.siamese.dyndns.org>
- <20110520035856.GA13582@gmail.com>
- <20110520041045.GB13582@gmail.com>
- <7vwrhm3scl.fsf@alter.siamese.dyndns.org>
- <20110520044851.GD13582@gmail.com>
- <4DD7874A.2050604@gmail.com>
- <20110522061446.GA49297@gmail.com>
- <7vwrhjxn4t.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH v2 00/48] i18n: mark core shell programs for translation
+Date: Sun, 22 May 2011 09:46:30 +0200
+Message-ID: <BANLkTi=YfWafLXQ=BZx4bAkeyd6aDz4u6A@mail.gmail.com>
+References: <1306003469-22939-1-git-send-email-avarab@gmail.com>
+	<7v8vtzzxuh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?RnLDqWTDqXJpYw==?= Heitzmann 
-	<frederic.heitzmann@gmail.com>, git@vger.kernel.org,
-	Michael J Gruber <git@drmicha.warpmail.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 22 08:51:05 2011
+X-From: git-owner@vger.kernel.org Sun May 22 09:46:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QO2VE-0003fr-T4
-	for gcvg-git-2@lo.gmane.org; Sun, 22 May 2011 08:51:05 +0200
+	id 1QO3NI-0002hn-Ma
+	for gcvg-git-2@lo.gmane.org; Sun, 22 May 2011 09:46:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751973Ab1EVGvA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 May 2011 02:51:00 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:58242 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750895Ab1EVGu6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 May 2011 02:50:58 -0400
-Received: by pvg12 with SMTP id 12so2214050pvg.19
-        for <git@vger.kernel.org>; Sat, 21 May 2011 23:50:58 -0700 (PDT)
+	id S1752283Ab1EVHqc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 May 2011 03:46:32 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:63140 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751826Ab1EVHqb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 May 2011 03:46:31 -0400
+Received: by fxm17 with SMTP id 17so3374506fxm.19
+        for <git@vger.kernel.org>; Sun, 22 May 2011 00:46:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=WYs+kS3TpaUET4hlmOdV+0x4SRN+y6y9+5IDW0tlE4o=;
-        b=rWyCNKmDOJe35FYwAMOY8626tPtJ1CJblKnMcBeSjxs4iOd0OCo4+KqVOQVuFDgTO8
-         Lk27UxpufR4Z8dDqNRd7codXRrciI0Z4AtHVMghslauvxIDQRz/10VW9Hp2aOWMkdjrI
-         qugjNK5NyMSajlHDWa8ak8+16aHz72cJDHo6s=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=9KuY6BOYu8QP+igj0s4qAWzJv1oQxs98kH8CQb9AzcY=;
+        b=Qc6PaJvfMZXcoUv/IMhZU5+qZ78R22N3r/reCRDT42kcKF9c7qSZ9VxvLfsOqJCJ6H
+         gxEZAW+mTBsdcXWPY+y/rQtcAWw5x1oaJjHgV5n/yFCM9VH0J1MkFpv9Ta8wK67z8aMa
+         LdF36u5hBXQsU2kYKiXauqxfXHQ6rIdsRpp4s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Tu9kNcg7H7hWBUm597luBB/ncXNESRcit7nnBCBhIF7BRwF3lcqYgd3hWjFxaTqxF2
-         Xe5r7SKIaKHkh9pC4xrCJgYAfjoNIykE082dT4yBttIGdWoYysky5mmtg+m2uxHQ7tbR
-         E1vplKPT580urGR6c+hYxGqWj1XGbXZjeC4Gg=
-Received: by 10.142.246.17 with SMTP id t17mr682938wfh.26.1306047058328;
-        Sat, 21 May 2011 23:50:58 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id x11sm4759156wfd.13.2011.05.21.23.50.56
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 21 May 2011 23:50:57 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vwrhjxn4t.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=bPCXcw7Cz27jSp2NjLZE3IYn1SiMIW+z5b9o377/oEL9xNeVXQ2+bhnjDY2aE8eEcv
+         MNik9mHddm2GmM7irbaMxyLe8WSOqYW9JKpUoDF9o0SEyWGTs/z/P6yKBRESAPKD5JMn
+         Yn038XkaDc8l7wVxTH2EAUZorjDgTbaQFWF6M=
+Received: by 10.223.55.201 with SMTP id v9mr1198646fag.76.1306050390244; Sun,
+ 22 May 2011 00:46:30 -0700 (PDT)
+Received: by 10.223.117.72 with HTTP; Sun, 22 May 2011 00:46:30 -0700 (PDT)
+In-Reply-To: <7v8vtzzxuh.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174184>
 
-On Sat, May 21, 2011 at 11:30:58PM -0700, Junio C Hamano wrote:
-> David Aguilar <davvid@gmail.com> writes:
-> 
-> > I think updating git-difftool--helper.sh to pass a chdir to vim
-> > might be just the thing to do.  git-difftool.perl can be
-> > updated to set $GIT_DIFFTOOL_PWD so that the helper can use it
-> > as -c 'cd $GIT_DIFFTOOL_PWD'.  I'll see if I can whip up a patch
-> > in a lil bit.
-> 
-> Hmm, would this benefit from sharing some concepts with 7cf16a1
-> (handle_alias: provide GIT_PREFIX to !alias, 2011-04-27)?
-> 
-> If it helps, we might want to uniformly give this information to all
-> external processes and programs, including hooks.
+On Sat, May 21, 2011 at 20:56, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =C2=A0<avarab@gmail.com> write=
+s:
+>
+>> This series can be retrieved from:
+>>
+>> =C2=A0 =C2=A0 git://github.com/avar/git.git ab/i18n-sh-only
+>>
+>> As explained above I didn't have time to fix all the blockers. Help
+>> would be *great* and very appreciated.
+>
+> This URL still seems to point at the old series with echo >&2 "$(gett=
+ext)".
 
-Yes, this would be very helpful.
-Without this my patch would have to touch git-difftool.perl,
-git-mergetool.sh, and git-mergetool--helper.sh.
-
-With $GIT_PREFIX it would touch git-mergetool--helper.sh only.
--- 
-					David
+Oops, forgot to push. Fixed now.
