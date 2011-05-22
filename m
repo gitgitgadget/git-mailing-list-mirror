@@ -1,123 +1,197 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Gate between git and mediawiki : remote-helpers
-Date: Sun, 22 May 2011 12:31:27 -0700
-Message-ID: <7vfwo6y1kg.fsf@alter.siamese.dyndns.org>
-References: <BANLkTikTpfpBYddfWcBfzGTuHqLyQ0sE5A@mail.gmail.com>
- <BANLkTim+2Mv7bnfsNVAsn80MUx8-fjYZow@mail.gmail.com>
+Subject: Re: [BUG] realloc failed
+Date: Sun, 22 May 2011 12:34:14 -0700
+Message-ID: <7v8vtyy1ft.fsf@alter.siamese.dyndns.org>
+References: <20110521100126.E3CD.BA9123DE@callcc.net>
+ <7vhb8o25tt.fsf@alter.siamese.dyndns.org>
+ <20110521145056.E3F5.BA9123DE@callcc.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Sylvain Boulme <Sylvain.Boulme@imag.fr>,
-	"matthieu.moy" <matthieu.moy@grenoble-inp.fr>
-To: Claire Fousse <claire.fousse@gmail.com>,
-	Arnaud Lacurie <arnaud.lacurie@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 22 21:31:57 2011
+Cc: git@vger.kernel.org
+To: Kazuki Tsujimoto <kazuki@callcc.net>
+X-From: git-owner@vger.kernel.org Sun May 22 21:34:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOENY-00008H-JN
-	for gcvg-git-2@lo.gmane.org; Sun, 22 May 2011 21:31:56 +0200
+	id 1QOEPz-0001dX-QD
+	for gcvg-git-2@lo.gmane.org; Sun, 22 May 2011 21:34:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754180Ab1EVTbq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 May 2011 15:31:46 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49662 "EHLO
+	id S1754185Ab1EVTeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 May 2011 15:34:23 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51312 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752378Ab1EVTbo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 May 2011 15:31:44 -0400
+	with ESMTP id S1752790Ab1EVTeW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 May 2011 15:34:22 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 29E8C45EE;
-	Sun, 22 May 2011 15:33:48 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5C82F460B;
+	Sun, 22 May 2011 15:36:28 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TgmirCOgFyq68Xvkydbvfpx9y3I=; b=n97jXa
-	NvJ6DK2iEAvecHkFpCisbu4DtnW7BdO5mppUuYuiETCv77dLPvOLcX6aS2EMFKC9
-	ta+0TEqmJ9u8zqFKEObvf/odqTPwKi9Ye3lKIkLHxQf7OqMkaDK2jAETuDj8/pO0
-	oAxZmxOrZLQyPoPNKUWeJqyvId0qhEmGfOQCc=
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=su3epyX7Itshr7R6y0l1heUhVi8=; b=PaJjv0zxIJwUpfFU00et
+	dxPt88ef8fDlauFZHlr7hVfgaG64XfSXI6D/kJ/8XQTytJo2TCyNhfQBWdH5+G0a
+	Uk3hoLRqZtNjUHD1Gt2XBr1cf3nlL839+s9k3LQQvkeKXVOEIZuIbgLbK5PmI+Ak
+	YtaZ7H9j9j8c8hxaLHHBSvM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=U7ARvBfS1UgKceU/xZjrAdofIOWD5SrB
-	jpibNPLC4bZhd7whU4OmyaODNqf2IW1ou/G5h68R6Wg/XpEXouZ2YXELg0SZvxpG
-	iVkrtjasRoUfZ+pyl8V0APlBlDPohFi6xzA6a443JujuQ7y7/4+vgbnU3vkARz7I
-	3/IRsT6isY8=
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=DkCO4fldC9XbW/xswLpKCDkL20gzp5ANF5HuVI2AqmwSjB
+	kcIS+W3a2NNhpCqHrKo5yuNnYfAOa9IVFgOmkJNDHm4yK3LppbKN8PfQ6ZGMUXaH
+	xmPWx2d6S/la+7t19rDXnWAzM/TzE7NHuUmBMbrF9X+O4Wv6YZ3sOo+0iEQXU=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CC4ED45EB;
-	Sun, 22 May 2011 15:33:42 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3B8D2460A;
+	Sun, 22 May 2011 15:36:26 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 15A2F45E8; Sun, 22 May 2011
- 15:33:35 -0400 (EDT)
-In-Reply-To: <BANLkTim+2Mv7bnfsNVAsn80MUx8-fjYZow@mail.gmail.com> (Arnaud
- Lacurie's message of "Sun, 22 May 2011 19:58:00 +0200")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 27E0B4609; Sun, 22 May 2011
+ 15:36:22 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 66EAC2DA-84AA-11E0-89E6-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: C85858DE-84AA-11E0-89E6-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174196>
 
-Arnaud Lacurie <arnaud.lacurie@gmail.com> writes:
+Kazuki Tsujimoto <kazuki@callcc.net> writes:
 
-> This mail referred to that previous one :
-> http://article.gmane.org/gmane.comp.version-control.git/173991
+> From: Junio C Hamano <gitster@pobox.com>
+> Date: Fri, 20 May 2011 18:35:58 -0700
 >
-> 2011/5/22 Claire Fousse <claire.fousse@gmail.com>:
->> Hi,
->>
->> I'm a member of the team trying to establish a gate between mediawiki
->> powered wiki and git.
->>
->> We've tried several things which seems to work. However, it is
->> something like git-svn and would require some commands such as git-mw
->> to work. Is it recommended to use remote-helpers instead of that ?
+>> Care to send a patch with test (see Documentation/SubmittingPatches)?
+>
+> Thanks for your comment.
+> Here is a patch with test.
+>
+> [PATCH] Avoid "realloc failed" error in alias expansion including -c option
 
-I am not Matthew, but my gut feeling is that it largely depends on what
-you are interacting with, and how you envision the result to be used in a
-larger MediaWiki ecosystem.
+Just for your future reference.
 
-In the case of SVN interoperability, there is an established community
-that exchanges their work via:
+Retitle the "Subject:" to the above line, and move everything above after
+the "---" line. Another style that is usable in a discussion thread is to
+use a scissors-line "-- >8 --" to say "ignore everything above this line"
+(I'll use this message as a demonstration), but we didn't have a long
+thread here, so just a straight patch with comment after "---" is preferred
+in this case.
 
-	svn checkout svn://some.where.xz/project
-        svn update
-	svn commit
+>
+> When the -c option is specified, setenv will be called.
+> Therefore, set envchanged flag to true so that git exits with
+> "alias '%s' changes environment variables" error.
+>
+> Signed-off-by: Kazuki Tsujimoto <kazuki@callcc.net>
+> ---
+>  git.c                   |    2 ++
+>  t/t1020-subdirectory.sh |   15 +++++++++++++++
+>  2 files changed, 17 insertions(+), 0 deletions(-)
+>
+> diff --git a/git.c b/git.c
+> index a5ef3c6..e04e4d4 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -153,6 +153,8 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+>  				usage(git_usage_string);
+>  			}
+>  			git_config_push_parameter((*argv)[1]);
+> +			if (envchanged)
+> +				*envchanged = 1;
+>  			(*argv)++;
+>  			(*argc)--;
+>  		} else {
 
-and although people on the git side can already participate with:
+Sorry, but I have to say that you are solving a wrong problem with a wrong
+approach.
 
-	git svn init svn://some.where.xz/project
-        git svn rebase
-        git svn dcommit
+The realloc() failure you saw is caused by this sequence:
 
-it is understandable that they wish to be able to say:
+        option_count = handle_options(&new_argv, &count, &envchanged);
+        ...
+        new_argv -= option_count;
+        ...
+        new_argv = xrealloc(new_argv, sizeof(char *) * (count + *argcp));
 
-	git clone svn://some.where.xz/project
-        git pull -s rebase
-        git push
+The "handle_options()" function advances new_argv, trying to strip the
+earlier items it recognized, and indicates how many it stripped by its
+return value. When the caller wants to resize the arguments array, it
+no longer points at the beginning of the buffer returned by malloc(),
+and compensates what handle_options() did by subtracting option_count
+before calling realloc().
 
-to make it feel more similar to the native git experience. Now, even if
-there may be no "svn checkout/update/commit" equivalents in the workflow
-of established MediaWiki users, it may be nice to be able to work with:
+The immediate cause of the problem is that handle_options() returns a
+wrong count when it sees a "-c <config-specification>". If you look at its
+implementation, you see "handled++" paired with "(*argv)++" everywhere but
+the place it parsed "-c".
 
-	git clone --vcs=mediawiki http://some.where.xz/wiki/
-        git pull
-        git push
+There is no inherent reason to forbid "-c <config-specification>" in
+the alias, e.g. "-c ui.color=no diff". Your patch may avoid the failure
+from the realloc, but breaks uses of such aliases.
 
->> There is one problem though : nobody wants to git clone the whole
->> Wikipedia for instance.
+The "envchanged" thing is there to avoid a situation like this:
 
-Then don't let them in your initial version. I do not see any problem in
-that. People can gain experience with smaller projects, like so:
+ * You have an alias "foo" in .git/config;
 
-	git clone --vcs=mediawiki https://git.wiki.kernel.org/
-        git pull
-        git push
+ * You run "git --git-dir=/some/where/else foo";
 
-When we need narrow (in the tree dimention) or shallow (in the history
-dimention) in either native or foreign transports, somebody would
-eventually add proper support. Currently we do not do "narrow" even for
-native transport (I have one cooking privately but it is progressing only
-slowly, and I think there may be others who are interested in it).
+ * We may read that "foo" alias from .git/config in your current
+   directory, or we may notice the "--git-dir" on the command line, and
+   may not to even read from that particular .git/config file that has
+   "foo". Depending on the implementation of git (and its vintage), this
+   will lead to an unexpected behaviour.
 
-I would suggest not to be worried too much about narrow/shallow in your
-initial round.
+So a patch to fix the "immediate cause" would probably look like this
+instead.
+
+-- >8 --
+Subject: handle_options(): do not miscount how many arguments were used
+
+The handle_options() function advances the base of the argument array and
+returns the number of arguments it used. The caller in handle_alias()
+wants to reallocate the argv array it passes to this function, and
+attempts to do so by subtracting the returned value to compensate for the
+change handle_options() makes to the new_argv.
+
+But handle_options() did not correctly count when "-c <config=value>" is
+given, causing a wrong pointer to be passed to realloc().
+
+Fix it by saving the original argv at the beginning of handle_options(),
+and return the difference between the final value of argv, which will
+relieve the places that move the array pointer from the additional burden
+of keeping track of "handled" counter.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ git.c |    6 ++----
+ 1 files changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/git.c b/git.c
+index ef598c3..df4306d 100644
+--- a/git.c
++++ b/git.c
+@@ -66,7 +66,7 @@ static void commit_pager_choice(void) {
+ 
+ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ {
+-	int handled = 0;
++	const char **orig_argv = *argv;
+ 
+ 	while (*argc > 0) {
+ 		const char *cmd = (*argv)[0];
+@@ -116,7 +116,6 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 				*envchanged = 1;
+ 			(*argv)++;
+ 			(*argc)--;
+-			handled++;
+ 		} else if (!prefixcmp(cmd, "--git-dir=")) {
+ 			setenv(GIT_DIR_ENVIRONMENT, cmd + 10, 1);
+ 			if (envchanged)
+@@ -156,9 +155,8 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 
+ 		(*argv)++;
+ 		(*argc)--;
+-		handled++;
+ 	}
+-	return handled;
++	return (*argv) - orig_argv;
+ }
+ 
+ static int handle_alias(int *argcp, const char ***argv)
