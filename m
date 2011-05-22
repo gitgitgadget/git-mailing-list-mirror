@@ -1,75 +1,113 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 0/7] Re: Problems with Git's "perl" userdiff driver
-Date: Sun, 22 May 2011 10:04:53 +0200
-Message-ID: <BANLkTik0KS=JRjgKXxjuUhRx4TVv8d8cQg@mail.gmail.com>
-References: <BANLkTi=OXznTspN-CJjM0YXfqARxL=J+Ow@mail.gmail.com>
-	<20110521185314.GA10530@elie>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 22 10:06:37 2011
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH 1/3] setup: Provide GIT_PREFIX to built-ins
+Date: Sun, 22 May 2011 02:57:07 -0700
+Message-ID: <1306058229-93800-1-git-send-email-davvid@gmail.com>
+References: <7vwrhjxn4t.fsf@alter.siamese.dyndns.org>
+Cc: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Heitzmann?= 
+	<frederic.heitzmann@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 22 11:57:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QO3gI-0008LQ-Sq
-	for gcvg-git-2@lo.gmane.org; Sun, 22 May 2011 10:06:35 +0200
+	id 1QO5PW-0000iL-2b
+	for gcvg-git-2@lo.gmane.org; Sun, 22 May 2011 11:57:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752579Ab1EVIE6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 May 2011 04:04:58 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:37831 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752243Ab1EVIEz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 May 2011 04:04:55 -0400
-Received: by fxm17 with SMTP id 17so3377811fxm.19
-        for <git@vger.kernel.org>; Sun, 22 May 2011 01:04:53 -0700 (PDT)
+	id S1753198Ab1EVJ5R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 May 2011 05:57:17 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:35699 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753106Ab1EVJ5Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 May 2011 05:57:16 -0400
+Received: by pzk9 with SMTP id 9so2242016pzk.19
+        for <git@vger.kernel.org>; Sun, 22 May 2011 02:57:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=iTlpzcxznZwwX7OvzMttkqzL6bXWVZ4edlgoqlx/IEg=;
-        b=v4S89HSDPaK6zvXzvbM68DxDuizUEXJmzSxMECe1RVEo82pxDHB1KooZFHuAbpL92x
-         0aTR6MMU+cOqZb5RRYGZVkro4iqvdLpAwsvWlJ50iXb7Yunwtdda7d+F/tBirPzjoJhY
-         3eYpCyTEGHvVtjvwLE4u3HjSoA1JNyvLfJ7aY=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references;
+        bh=S2WZYDMLfnyWBNFEyME1pGkgCI+kHDaT6sfV5FwbYsc=;
+        b=s5FSiK1e4pF+PB6wTxHgtTYsDStiBQUcubZW5S3LgqJSyL8K//BIrDxOxBebJBJQe5
+         b7mZeX/vZmCLFyK5SmHoceHDW46XSuKj6cT+TXpgf1iX/cIZoLdbGcoF+Xfe2ojEWYxB
+         cYh/LZeS6Ec2WVHP1klENaBkwDy16ZkYZVJ8k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=pJ1/TTWb2Gi2EvZpG7nMdMHMDw19AXX+UpPHhsI165OeSzsStKHKaqpeF8aYidXFvD
-         e70ZZNemwFO35/Hf9senh6mOyWSbShwKWYvfRErsJKwHyO4qS102h0Ak/3WdW2xAFbge
-         XqcIxc/L6vn1DHYXqx6eZVps5J2llIpGlk8pw=
-Received: by 10.223.59.81 with SMTP id k17mr1207575fah.94.1306051493866; Sun,
- 22 May 2011 01:04:53 -0700 (PDT)
-Received: by 10.223.117.72 with HTTP; Sun, 22 May 2011 01:04:53 -0700 (PDT)
-In-Reply-To: <20110521185314.GA10530@elie>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=J7TgJLysHKgzZOLWUWmSsWRzXhVi//xSvWSzI04pRPrqPb8fZEqZRG8gQ37lAsY03d
+         h4dNFkRVyTmEmgnNfgPRbai8ycQ4mQGXtht0xeO6oGrZqDY3hVJDo0jKhGmgtBelnz0p
+         hXqhyNXtAKNck/qYfrNNjfWfopSzKSr1R86VU=
+Received: by 10.143.61.20 with SMTP id o20mr606028wfk.367.1306058235516;
+        Sun, 22 May 2011 02:57:15 -0700 (PDT)
+Received: from localhost.localdomain (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id 25sm4866325wfb.22.2011.05.22.02.57.13
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 22 May 2011 02:57:14 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.2.317.g391b14
+In-Reply-To: <7vwrhjxn4t.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174186>
 
-On Sat, May 21, 2011 at 20:53, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
+GIT_PREFIX was added in 7cf16a14f5c070f7b14cf28023769450133172ae so that
+aliases can know the directory from which a !alias was called.
 
-> Jonathan Nieder (7):
-> =C2=A0t4018 (diff funcname patterns): make .gitattributes state easie=
-r to
-> =C2=A0 =C2=A0track
-> =C2=A0t4018 (diff funcname patterns): make configuration easier to tr=
-ack
-> =C2=A0t4018 (diff funcname patterns): minor tweaks
-> =C2=A0userdiff/perl: anchor "sub" and "package" patterns on the left
-> =C2=A0userdiff/perl: match full line of POD headers
-> =C2=A0userdiff/perl: catch subs with brace on second line
-> =C2=A0tests: make test_expect_code quieter on success
+Knowing the prefix relative to the root is helpful in other programs
+so export it to built-ins as well.
 
-This series gets my acked-by, it's a good improvement.
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+ setup.c                 |    6 ++++++
+ t/t1020-subdirectory.sh |   16 ++++++++++++++++
+ 2 files changed, 22 insertions(+), 0 deletions(-)
 
-I agree that we should have some sort of scoring mechanism so that the
-root cause of these issues can be solved. But that's something for
-another series.
+diff --git a/setup.c b/setup.c
+index b6e6b5a..fc169a4 100644
+--- a/setup.c
++++ b/setup.c
+@@ -603,6 +603,12 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 	const char *prefix;
+ 
+ 	prefix = setup_git_directory_gently_1(nongit_ok);
++	/* Provide the prefix to all external processes and programs */
++	if (prefix)
++		setenv("GIT_PREFIX", prefix, 1);
++	else
++		unsetenv("GIT_PREFIX");
++
+ 	if (startup_info) {
+ 		startup_info->have_repository = !nongit_ok || !*nongit_ok;
+ 		startup_info->prefix = prefix;
+diff --git a/t/t1020-subdirectory.sh b/t/t1020-subdirectory.sh
+index ddc3921..a85b594 100755
+--- a/t/t1020-subdirectory.sh
++++ b/t/t1020-subdirectory.sh
+@@ -139,6 +139,22 @@ test_expect_success 'GIT_PREFIX for !alias' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'GIT_PREFIX for built-ins' '
++	# Use GIT_EXTERNAL_DIFF to test that the "diff" built-in
++	# receives the GIT_PREFIX variable.
++	printf "dir/" >expect &&
++	printf "#!/bin/sh\n" >diff &&
++	printf "printf \"\$GIT_PREFIX\"\n" >>diff &&
++	chmod +x diff &&
++	(
++		cd dir &&
++		printf "change" >two &&
++		env GIT_EXTERNAL_DIFF=./diff git diff >../actual
++		git checkout -- two
++	) &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'no file/rev ambiguity check inside .git' '
+ 	git commit -a -m 1 &&
+ 	(
+-- 
+1.7.5.2.317.g391b14
