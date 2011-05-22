@@ -1,91 +1,57 @@
-From: Christopher Wilson <cwilson@cdwilson.us>
-Subject: Why does adding an existing repo as a submodule modify .git/config?
-Date: Sun, 22 May 2011 13:02:54 -0700
-Message-ID: <irbq5a$h38$1@dough.gmane.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: combined diff does not detect binary files and ignores -diff attribute
+Date: Sun, 22 May 2011 16:12:53 -0400
+Message-ID: <BANLkTi=FtkiUjwAa7e3KAC5FF3GNxWzd3Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 22 22:03:10 2011
+Content-Type: text/plain; charset=UTF-8
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 22 22:13:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOErm-0000ng-7H
-	for gcvg-git-2@lo.gmane.org; Sun, 22 May 2011 22:03:10 +0200
+	id 1QOF1I-0006Xx-B8
+	for gcvg-git-2@lo.gmane.org; Sun, 22 May 2011 22:13:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754241Ab1EVUDF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 May 2011 16:03:05 -0400
-Received: from lo.gmane.org ([80.91.229.12]:49556 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751531Ab1EVUDD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 May 2011 16:03:03 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1QOErd-0000hF-Ab
-	for git@vger.kernel.org; Sun, 22 May 2011 22:03:01 +0200
-Received: from c-98-210-218-165.hsd1.ca.comcast.net ([98.210.218.165])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 22 May 2011 22:03:01 +0200
-Received: from cwilson by c-98-210-218-165.hsd1.ca.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 22 May 2011 22:03:01 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: c-98-210-218-165.hsd1.ca.comcast.net
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
+	id S1753800Ab1EVUMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 May 2011 16:12:55 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:44794 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752791Ab1EVUMy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 May 2011 16:12:54 -0400
+Received: by pwi15 with SMTP id 15so2372913pwi.19
+        for <git@vger.kernel.org>; Sun, 22 May 2011 13:12:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=0zr/+VyUjV7U79+orCI09JrQBCkoQwRyn7XxVTeh9GQ=;
+        b=F/1A7k/zE3LUkLsIwKs0oWeVxSI2x2KT2LYV1v1SOFxapoOA9ViMZyzv5MNiPlPCvd
+         69DlQfY+b3uE7BSvkTLCmUIo+bxP9YAz9BIiD4ycUtWgfFANh/pNuKqIvZxLsoJPmbCy
+         a5rh9gOgdtbudyGjN9iBeCB/4rg1VEQpLFK2c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=JZZKLT9mP/JaKzrEd3vvkEE7OJ3R0YnCjylIwPdSvApS8/HfZo+XjlXgnvjm74o1so
+         EeEFZc8IGGi172qjoP6bjO3BW1c5UPUG5yitr6P7zJPLD1dQl4by56rjCYbsUXkOsURl
+         dMnftG8ga8e3poE6JRclovgxYHZrHYc/37qYg=
+Received: by 10.142.225.6 with SMTP id x6mr721035wfg.55.1306095173835; Sun, 22
+ May 2011 13:12:53 -0700 (PDT)
+Received: by 10.142.13.8 with HTTP; Sun, 22 May 2011 13:12:53 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174200>
 
-(I posted this question below on
-http://stackoverflow.com/questions/6083357/why-does-adding-an-existing-repo-as-a-submodule-modify-git-config
-and was recommended to ask the mailing list)
+In a merge commit, I added some PNGs (so they were new to both
+parents). I was surprised when I did a "git show" on the commit and
+had the binary bits spewed to the terminal.
 
-If I add a submodule that does not currently exist, no submodule
-information is added to .git/config.
+I thought it was just git not detecting the PNG as a binary file, but
+adding "*.png -diff" to .git/info/attributes made no difference.
 
-$ mkdir testing
-$ cd testing
-$ git init
-$ git submodule add git@git.server:submodule.git
-$ cat .git/config
-[core]
-    repositoryformatversion = 0
-    filemode = true
-    bare = false
-    logallrefupdates = true
-    ignorecase = true
+Just reporting this for now, as I don't have time to investigate.
 
-However, if I add a repo that currently exists as a submodule, the url
-is added to .git/config:
-
-$ mkdir testing
-$ cd testing
-$ git init
-$ git clone git@git.server:submodule.git
-$ git submodule add git@git.server:submodule.git
-$ cat .git/config
-[core]
-    repositoryformatversion = 0
-    filemode = true
-    bare = false
-    logallrefupdates = true
-    ignorecase = true
-[submodule "submodule"]
-    url = git@git.server:submodule.git
-
-I would have assumed that in both cases, git submodule add would have
-only modified .gitmodules, and that git submodule init would have
-updated the project's .git/config.
-
-I'm aware this is intentional behavior
-(https://github.com/git/git/commit/c2f939170c65173076bbd752bb3c764536b3b09b),
-but I don't understand why.
-
-Why is .git/config modified in the second case but not the first? Can
-somebody explain the rational for this behavior?
+j.
