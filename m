@@ -1,177 +1,86 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 8/7] userdiff/perl: tighten BEGIN/END block pattern to reject
- here-doc delimiters
-Date: Sun, 22 May 2011 12:29:32 -0500
-Message-ID: <20110522172932.GA21159@elie>
-References: <BANLkTi=OXznTspN-CJjM0YXfqARxL=J+Ow@mail.gmail.com>
- <20110521185314.GA10530@elie>
- <20110521193826.GG10530@elie>
+From: Arnaud Lacurie <arnaud.lacurie@gmail.com>
+Subject: Re: Gate between git and mediawiki : remote-helpers
+Date: Sun, 22 May 2011 19:58:00 +0200
+Message-ID: <BANLkTim+2Mv7bnfsNVAsn80MUx8-fjYZow@mail.gmail.com>
+References: <BANLkTikTpfpBYddfWcBfzGTuHqLyQ0sE5A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 22 19:29:54 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sylvain Boulme <Sylvain.Boulme@imag.fr>,
+	"matthieu.moy" <matthieu.moy@grenoble-inp.fr>
+To: Claire Fousse <claire.fousse@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 22 19:58:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOCTR-00018F-TD
-	for gcvg-git-2@lo.gmane.org; Sun, 22 May 2011 19:29:54 +0200
+	id 1QOCvW-00080a-EH
+	for gcvg-git-2@lo.gmane.org; Sun, 22 May 2011 19:58:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753377Ab1EVR3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 May 2011 13:29:43 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:41835 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752905Ab1EVR3l (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 May 2011 13:29:41 -0400
-Received: by iwn34 with SMTP id 34so4162517iwn.19
-        for <git@vger.kernel.org>; Sun, 22 May 2011 10:29:41 -0700 (PDT)
+	id S1753890Ab1EVR6W convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 May 2011 13:58:22 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:51890 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753036Ab1EVR6V convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 May 2011 13:58:21 -0400
+Received: by vws1 with SMTP id 1so3644244vws.19
+        for <git@vger.kernel.org>; Sun, 22 May 2011 10:58:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=ug4sEtQPAdpKEkfXEvbAQYDgVHJmxV6ItuK9kHc1b/Y=;
-        b=rMfM23P+krLBo+wp4ycGKCF2lwGWyjclC66s0+0pCmy1KpxBWUWAwd8wMQA7/QIX+M
-         eN/322thx+AW4me2ouNrxsAKeBda2uzoAfu0ngssFXz6k3go1/tUeAijo3zmrxsKXdAS
-         xeMshpf0Fc2snMYgGz0xXHnY3jKVCoIatrJ/U=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=Ol/kTC+iOlXhuiByzZoXHh7mXPQm8Aj93Z8VPj0SsBo=;
+        b=LZkA3cFzJbpREs0HsnpqIY0IoTpNDBK5TWkVe1Fc0b3KwAAtGd0GH2EBqMmIofIYIs
+         oF2TpoT2lkjMqpi545KLHGCIjJHXLcmjTWByPI3f9fU2PU8XNIpOO+iJhvUON9pckxpK
+         kYkDJCS/gNKSDI/8C/CiF6NmzQca3vwZGdcyQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=odQFGaWCLWpsZN9BikwT7BkvV4LBAU821rAnDflbHkDlvYcF/rIYUKJR0D+Pt84PUB
-         BByBMRzM/qoDbNfNp1nw9q7dyvs9yf3X6XNVyHJZ+dStok5qWTk7GmuuSZXOrute0Bxp
-         vJR9B0EN2zM8H7k5WQG2FYM2pC5Zh2aFiYGvg=
-Received: by 10.42.151.72 with SMTP id d8mr7810817icw.26.1306085380919;
-        Sun, 22 May 2011 10:29:40 -0700 (PDT)
-Received: from elie (adsl-69-209-78-180.dsl.chcgil.ameritech.net [69.209.78.180])
-        by mx.google.com with ESMTPS id o3sm2481801ibd.61.2011.05.22.10.29.39
-        (version=SSLv3 cipher=OTHER);
-        Sun, 22 May 2011 10:29:40 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20110521193826.GG10530@elie>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=Aq6C0Un3p9j6qUX9Q7pUC6TMrJow49rup1pwsUb6fWEy2lS/9uu4EbVI6pw5LzZ/Ab
+         etfnEhQXiQl6nk0QxzQYraMmBOuHCkZckcFbOhfbGaFWp35nEThM0ArrcOhV6lePstkp
+         pcoq+xbZn96S5wBSMq/A7/bnuyO/M2MZ/NnM0=
+Received: by 10.221.9.136 with SMTP id ow8mr501257vcb.78.1306087100146; Sun,
+ 22 May 2011 10:58:20 -0700 (PDT)
+Received: by 10.220.189.8 with HTTP; Sun, 22 May 2011 10:58:00 -0700 (PDT)
+In-Reply-To: <BANLkTikTpfpBYddfWcBfzGTuHqLyQ0sE5A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174194>
 
-A naive method of treating BEGIN/END blocks with a brace on the second
-line as diff/grep funcname context involves also matching unrelated
-lines that consist of all-caps letters:
+This mail referred to that previous one :
+http://article.gmane.org/gmane.comp.version-control.git/173991
 
-	sub foo {
-		print <<'EOF'
-	text goes here
-	...
-	EOF
-		... rest of foo ...
-	}
-
-That's not so great, because it means that "git diff" and "git grep
---show-function" would write "=EOF" or "@@ EOF" as context instead of
-a more useful reminder like "@@ sub foo {".
-
-To avoid this, tighten the pattern to only match the special block
-names that perl accepts (namely BEGIN, END, INIT, CHECK, UNITCHECK,
-AUTOLOAD, and DESTROY).  The list is taken from perl's toke.c.
-
-Suggested-by: Jakub Narebski <jnareb@gmail.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Jonathan Nieder wrote:
-
-> Accept
+2011/5/22 Claire Fousse <claire.fousse@gmail.com>:
+> Hi,
 >
-> 	sub foo
-> 	{
-> 	}
+> I'm a member of the team trying to establish a gate between mediawiki
+> powered wiki and git.
 >
-> as an alternative to a more common style that introduces perl
-> functions with a brace on the first line (and likewise for BEGIN/END
-> blocks).
+> We've tried several things which seems to work. However, it is
+> something like git-svn and would require some commands such as git-mw
+> to work. Is it recommended to use remote-helpers instead of that ?
+>
+> There is one problem though : nobody wants to git clone the whole
+> Wikipedia for instance. And we should add a functionality which allow=
+s
+> the user to clone only a part of a wiki. Are partial clonings doable
+> with remote helpers ?
+>
+> Thank you for your help,
+>
+> Best Regards
+>
+>
+> --
+> Claire Fousse
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+>
 
-I just remembered that this pattern is overzealous since it will match
-here-document terminators, as in:
-
-	sub foo {
-		print <<'FINIS'
-	here-doc goes here
-	FINIS
-		... rest of foo, a change to which might be described in
-		a diff ...
-	}
-
-Fix follows.
-
- t/t4018-diff-funcname.sh |   17 +++++++++++++++--
- userdiff.c               |    2 +-
- 2 files changed, 16 insertions(+), 3 deletions(-)
-
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index b2fd1a9..b68c56b 100755
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -29,7 +29,7 @@ public class Beer
- }
- EOF
- sed 's/beer\\/beer,\\/' <Beer.java >Beer-correct.java
--cat >Beer.perl <<\EOF
-+cat >Beer.perl <<\EOT
- package Beer;
- 
- use strict;
-@@ -56,6 +56,15 @@ sub finalround
- 	print "99 bottles of beer on the wall.\n");
- }
- 
-+sub withheredocument {
-+	print <<"EOF"
-+decoy here-doc
-+EOF
-+	# some lines of context
-+	# to pad it out
-+	print "hello\n";
-+}
-+
- __END__
- 
- =head1 NAME
-@@ -76,7 +85,7 @@ Beer - subroutine to output fragment of a drinking song
- 	song;
- 
- =cut
--EOF
-+EOT
- sed -e '
- 	s/hello/goodbye/
- 	s/beer\\/beer,\\/
-@@ -138,6 +147,10 @@ test_expect_success 'perl pattern accepts K&R style brace placement, too' '
- 	test_expect_funcname "sub finalround\$" perl
- '
- 
-+test_expect_success 'but is not distracted by end of <<here document' '
-+	test_expect_funcname "sub withheredocument {\$" perl
-+'
-+
- test_expect_success 'perl pattern is not distracted by sub within POD' '
- 	test_expect_funcname "=head" perl
- '
-diff --git a/userdiff.c b/userdiff.c
-index 42b86ac..e55310c 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -74,7 +74,7 @@ PATTERNS("perl",
- 		"(:[^;#]*)?"
- 		"(\\{[ \t]*)?" /* brace can come here or on the next line */
- 		"(#.*)?$\n" /* comment */
--	 "^[A-Z]+[ \t]*"	/* BEGIN, END, ... */
-+	 "^(BEGIN|END|INIT|CHECK|UNITCHECK|AUTOLOAD|DESTROY)[ \t]*"
- 		"(\\{[ \t]*)?" /* brace can come here or on the next line */
- 		"(#.*)?$\n"
- 	 "^=head[0-9] .*",	/* POD */
--- 
-1.7.5.1
+Arnaud Lacurie
