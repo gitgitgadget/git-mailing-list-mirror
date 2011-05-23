@@ -1,107 +1,127 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Improve errors from 'git diff --no-index'.
-Date: Sun, 22 May 2011 20:18:09 -0700
-Message-ID: <7vhb8mw1e6.fsf@alter.siamese.dyndns.org>
-References: <4dd98da1.1bf98e0a.4eb4.6fc5@mx.google.com>
- <7vlixyw4cx.fsf@alter.siamese.dyndns.org>
- <BANLkTinKpSP5oEms914TWD7Tsjab1B87QQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Anthony Foiani <anthony.foiani@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 23 05:18:32 2011
+From: Grant Limberg <glimberg@gmail.com>
+Subject: Re: [git-p4] Trouble importing all perforce branches into git repository
+Date: Sun, 22 May 2011 20:27:48 -0700
+Message-ID: <398FA881-E4A1-49AC-80F2-2D46E9F2ABB9@gmail.com>
+References: <20110522114917.GA19927@arf.padd.com>
+Mime-Version: 1.0 (Apple Message framework v1084)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-4--750929581"
+Content-Transfer-Encoding: 7bit
+Cc: Vitor Antunes <vitor.hda@gmail.com>, git@vger.kernel.org
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Mon May 23 05:28:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOLf5-0002q6-SQ
-	for gcvg-git-2@lo.gmane.org; Mon, 23 May 2011 05:18:32 +0200
+	id 1QOLoM-0006ZN-4U
+	for gcvg-git-2@lo.gmane.org; Mon, 23 May 2011 05:28:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754746Ab1EWDSV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 May 2011 23:18:21 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:52796 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751823Ab1EWDST (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 May 2011 23:18:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7CEA85B8F;
-	Sun, 22 May 2011 23:20:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nLt5smbvIQcr9wZROuuDvvRR9W0=; b=I2wO5a
-	8LCQPiljSeUwzGE0BC2lLL8D/e23cq1HlNk3Xyw9vIJT1uigN2f5DhcMMfPpWuHJ
-	mBR7iYrnULyMplxF03JiCyWe+IHWdJJheNrk4vTF8T7711GJjvDV3CnqeZ6nUORN
-	9eHW7yoXfpIk2wGMZL0r2lCPal2ujL1FSN+vs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aYWfgqzrh7rd4UtiTuuuu9h+W/j+NH8W
-	T61PYjKCmRUSwOi4MvhwJjisMO0hdJO7AgVQClb2yIX/bhtBheiGrUovzUrKJOBD
-	BHT1/iOg6J79Tsx3xG6kCip24tXn7V/3BdynwnsWG192u0pmzcpOKwdnu4yJhfNG
-	hB88KPkvlWE=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5A2C05B8E;
-	Sun, 22 May 2011 23:20:23 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 396565B87; Sun, 22 May 2011
- 23:20:18 -0400 (EDT)
-In-Reply-To: <BANLkTinKpSP5oEms914TWD7Tsjab1B87QQ@mail.gmail.com> (Anthony
- Foiani's message of "Sun, 22 May 2011 20:35:40 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 988F12AA-84EB-11E0-A2BF-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+	id S1752334Ab1EWD2A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 May 2011 23:28:00 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:33018 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751823Ab1EWD17 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 May 2011 23:27:59 -0400
+Received: by pvg12 with SMTP id 12so2406957pvg.19
+        for <git@vger.kernel.org>; Sun, 22 May 2011 20:27:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:subject:mime-version:content-type:from
+         :in-reply-to:date:cc:content-transfer-encoding:message-id:references
+         :to:x-pgp-agent:x-mailer;
+        bh=Yc+CNItXGje04VfiPwqi7ZjT093Py42jrVbgAsFIOtY=;
+        b=gBzONfVswE3iMow1Hwmw1a0qyKRIPRFQsaEhwKrpj+4/YrOPOh8z3e3KEFyk9HsdBB
+         abW4dbiopiVspuCkMEPkse7zWfTox7baan5WfKRzuHbUvRWFFkxqr7d17ujq5lbQDQqH
+         UXNAuKOjgk3yWwzrq8Ub6hIasFDfT4TSBEPks=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:mime-version:content-type:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to:x-pgp-agent
+         :x-mailer;
+        b=E/ueisSr2h+8xtSZyJGIYsOpombE+sAwucmYeaiH06+yQNTxr6q6mNUz5wxe0xAU8n
+         JnWH0dW2T7bkvh52XiWK6xQwTlKCyEZpvXkTkkO38yROTr4OE6PKFJTRBW/rAlRxhNTl
+         KLUFYrnQ5TRFbtH9GE/Sflv3WnSZC1f22lC+k=
+Received: by 10.68.30.226 with SMTP id v2mr1967438pbh.186.1306121279103;
+        Sun, 22 May 2011 20:27:59 -0700 (PDT)
+Received: from [192.168.15.2] (ip68-4-195-196.oc.oc.cox.net [68.4.195.196])
+        by mx.google.com with ESMTPS id j2sm4070032pbg.60.2011.05.22.20.27.54
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 22 May 2011 20:27:57 -0700 (PDT)
+In-Reply-To: <20110522114917.GA19927@arf.padd.com>
+X-Pgp-Agent: GPGMail 1.3.3
+X-Mailer: Apple Mail (2.1084)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174222>
 
-Anthony Foiani <anthony.foiani@gmail.com> writes:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-4--750929581
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
 
-> On Sun, May 22, 2011 at 8:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Anthony Foiani <anthony.foiani@gmail.com> writes:
->>
->>> I accidentally tried to use "git diff" when I wasn't within a git
->>> repository, only to be confused by getting a usage message with no
->>> particular error output.
->>
->> I do not understand this at all.
->>
->>    $ cd /
->>    $ git diff
->>    usage: git diff [--no-index] <path> <path>
->>
->> What's unclear about it?
->
-> It's hard for me to explain right now,...
+On May 22, 2011, at 4:49 AM, Pete Wyckoff wrote:
 
-No, it was only your 'I tried to use "git diff"' that was confusing to me.
+> glimberg@gmail.com wrote on Thu, 19 May 2011 19:32 +0000:
+>> [git-p4 automatic branch detection]
+>>> git p4 clone --verbose --detect-branches --max-changes=3D100 =
+//project/...@all
+>=20
+> I worry that --max-changes prevents it from pulling in the
+> ref for Branch-foo, and this confuses the automatic branch
+> detection that assumes it has all its parents.
+>=20
+> It would certainly be more reliable if you did "git-p4 sync
+> --branch foo //project/foo@all" for each branch you care about.
+>=20
+> Vitor has some modifications to auto-branch detection that might
+> be useful, or maybe some thoughts as to what's going on.
+>=20
+> 		-- Pete
+>=20
+> (Vitor: full mail is here:
+> http://article.gmane.org/gmane.comp.version-control.git/173996/ )
+>=20
 
-With pathspecs or any other options, it is understandable that you were
-confused, for example from an output like this:
+Removing --max-changes=3D100 has no effect on the crash I'm =
+experiencing.   Same crash still happens on the very first imported =
+commit.
 
-> $ git diff -b main.c
-> usage: git diff [--no-index] <path> <path>
+If i do "git-p4 sync --branch foo //project/foo@all" for each branch, =
+does that convert 'p4 integrate' commands into git merges?  I"m trying =
+to keep all history intact when importing from p4 into git.
 
-At that point we are committed to no-index codepath, so probably a good
-thing to do is to update that confusing usage message a bit better.
+Thanks,
 
-It already does change the behaviour when --no-index is not given by the
-end user, so perhaps it would be sufficient to change this part:
+-Grant
 
-	if (argc != i + 2)
-        	usagef("git diff %s <path> <path>",
-                	no_index ? "--no-index" : "[--no-index]");
 
-to something like (caution: I am not typing this in my MUA):
+--Apple-Mail-4--750929581
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
 
-	if (argc != i + 2) {
-        	if (no_index)
-			warning("Assuming '--no-index'; you are in no repository");
-        	usagef("git diff %s <path> <path>",
-                	no_index ? "--no-index" : "[--no-index]");
-	}
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG/MacGPG2 v2.0.17 (Darwin)
+Comment: GPGTools - http://gpgtools.org
 
-without changing anything else.
+iQIcBAEBAgAGBQJN2dQ1AAoJEH+RGVrhASuPkR0P/iQYDmCJC67UpxKZxykQV0hS
+tGdNAeOHGTPQ4ZP7v9Axw1n5YXtsiBkVsKMQwHVyPQGpk3ISfSBxo78gnktvlJbF
+NMrKyUsjupH/TqpdLaTmO+TCtKbzpgwoM+3A7y3LONO1QvCNiscsD+7E1H1KVwGw
+XkIYkxaygch/0ZeCYSHeHcR313MXXfKmpghVrCFN9wfuw2EbFPfVwI/3PUSqKmzk
+438SU2eEJHfJbvA8OTPbbehfbc91diHjfaYgUIxmyQ1qlo1baUzFHiNf2E5EqCfF
+K8UMVKfWluxT0sirzC2AEpa1lfvmLnyTQ2XBwgIy0jnvVUtBzwZ8mLcGNru7uhXn
+iMngbAOo9hB1B4tZYDJMrLMP4ak9NufdL68czXPIjbtmupY/zZQwEWVGz9picDn9
+oH4CEMadVql4MfDVPY5UdIbELeM1QirbbatsFHjxSwegatIIjj/cfN0Az44tUtW7
+BmsJbGg+V+gnTIthV8APQ2eofDur2e3+SetO4skqDN9uOAK+RVPkpLtD33hfOirF
+ZbGXLNtPUsx6A6/+npdQTrNVoYA5qTgnSwDt+am3yvxe4F5try4mDn3i6CA1Xs4f
+fq4vnnCyenHJ7A4DweqBDjYxoy3cl6mEoil3naRlj41LvxS3ah1L6H2oFGIQ4ZYO
+3nTb8b1pToI2c7zncaoC
+=+SKn
+-----END PGP SIGNATURE-----
 
-That would be just a patch with 1 line removed, 4 lines added, no?
+--Apple-Mail-4--750929581--
