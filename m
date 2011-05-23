@@ -1,83 +1,104 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: combined diff does not detect binary files and ignores -diff attribute
-Date: Mon, 23 May 2011 18:55:07 -0400
-Message-ID: <BANLkTikvPjO=bbhAoPCftdXzGSYtryNvzw@mail.gmail.com>
-References: <BANLkTi=FtkiUjwAa7e3KAC5FF3GNxWzd3Q@mail.gmail.com>
-	<4DDA618E.4030604@drmicha.warpmail.net>
-	<BANLkTinu3AbTmtswn6DLQKAWdLL=gBvAqA@mail.gmail.com>
-	<20110523181147.GA26035@sigill.intra.peff.net>
-	<20110523201529.GA6281@sigill.intra.peff.net>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCHv4 02/10] send-pack: Attempt to retrieve remote status even
+ if pack-objects fails
+Date: Tue, 24 May 2011 00:58:10 +0200
+Message-ID: <201105240058.10974.johan@herland.net>
+References: <1306111923-16859-1-git-send-email-johan@herland.net>
+ <1306111923-16859-3-git-send-email-johan@herland.net>
+ <7vei3puqp2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 24 00:55:16 2011
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 24 00:58:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOe1q-0007VZ-JL
-	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 00:55:14 +0200
+	id 1QOe4p-00019X-Gx
+	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 00:58:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757591Ab1EWWzK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 May 2011 18:55:10 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:55972 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757852Ab1EWWzI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 May 2011 18:55:08 -0400
-Received: by pwi15 with SMTP id 15so2792043pwi.19
-        for <git@vger.kernel.org>; Mon, 23 May 2011 15:55:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=+wR42ZR1gfbqTzdbDbaeJmiyQdhK2LrNh4c6ZTopBnA=;
-        b=MAehJHBCNXHJMV1TKXF+aUU0lLZ2e6ApB2G9+n3vX+RlUncdLDsD8S/tiKG8Fkgcv+
-         ioFBeu1Oa5cAK0dES37rF/pba7fdRWB3B/BCSNaduOBOHVymYjSTdakMMB1OJZG0Uduy
-         MzxyZpLvELxO3E37KTbXjTMIM8H6sii/SXcCY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=emvbD20VJiUmezW5+meaFsVH2Up1hqWsNYxgmSj/75npymQVP/g2gRjmyUFUiPdHnw
-         FY3XWNwUYQfUMvPrxkUQaA4+0jChiJdM70i9jr4layisKZXztPzn6il0CTmaJF1CL4hu
-         S7sIblEFE24LJORKPL/M0IeobieBlIUIHrumY=
-Received: by 10.142.122.8 with SMTP id u8mr856715wfc.283.1306191307953; Mon,
- 23 May 2011 15:55:07 -0700 (PDT)
-Received: by 10.142.13.8 with HTTP; Mon, 23 May 2011 15:55:07 -0700 (PDT)
-In-Reply-To: <20110523201529.GA6281@sigill.intra.peff.net>
+	id S1757698Ab1EWW6O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2011 18:58:14 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:41486 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757650Ab1EWW6O (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2011 18:58:14 -0400
+Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
+ by get-mta-out03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LLO00BG07T03140@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 24 May 2011 00:58:12 +0200 (MEST)
+Received: from get-mta-scan02.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 5985B1EA559C_DDAE684B	for <git@vger.kernel.org>; Mon,
+ 23 May 2011 22:58:12 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 386711EA2B83_DDAE683F	for <git@vger.kernel.org>; Mon,
+ 23 May 2011 22:58:11 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LLO001J97SZFO00@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 24 May 2011 00:58:11 +0200 (MEST)
+User-Agent: KMail/1.13.7 (Linux/2.6.38-ARCH; KDE/4.6.3; x86_64; ; )
+In-reply-to: <7vei3puqp2.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174286>
 
-On Mon, May 23, 2011 at 4:15 PM, Jeff King <peff@peff.net> wrote:
-> It turned out not too bad:
->
-> =C2=A0[1/5]: combine-diff: split header printing into its own functio=
-n
-> =C2=A0[2/5]: combine-diff: calculate mode_differs earlier
-> =C2=A0[3/5]: combine-diff: handle binary files as binary
+On Monday 23 May 2011, Junio C Hamano wrote:
+> Johan Herland <johan@herland.net> writes:
+> > @@ -339,25 +339,18 @@ int send_pack(struct send_pack_args *args,
+> > 
+> >  	}
+> >  	
+> >  	if (new_refs && cmds_sent) {
+> > 
+> > -		if (pack_objects(out, remote_refs, extra_have, args) < 0) {
+> > -			for (ref = remote_refs; ref; ref = ref->next)
+> > -				ref->status = REF_STATUS_NONE;
+> > +		if ((ret = pack_objects(out, remote_refs, extra_have, args))) {
+> 
+> I am not very familiar with this codepath, but you no longer set
+> ref->status to REF_STATUS_NONE ...
+> 
+> > ...
+> > 
+> >  	if (status_report && cmds_sent)
+> > 
+> > -		ret = receive_status(in, remote_refs);
+> > -	else
+> > -		ret = 0;
+> > +		ret |= receive_status(in, remote_refs);
+> 
+> ... before calling receive_status() here, and that function can return
+> early without setting anything.
+> 
+> Would that have any negative effect on the code that comes after this
+> part in the codepath?  or if receive_status() returns a failure, we do
+> not even look at ref->status?
 
-Tested-by: Jay Soffian <jaysoffian@gmail.com>
+Hmm... I believe I proved the correctness of this to myself when I first 
+wrote the patch, but looking at it a second time, I see that I only did so 
+for send_pack() itself. The remote_refs (that no longer has each ref->status 
+set to REF_STATUS_NONE on pack_objects() failure) are given as an argument 
+to send_pack(), and are still used by the caller after send_pack() has 
+returned (even when it returns with errors).
 
-In a real-world merge, png's were correctly shown as "Binary files
-differ". I also tested with "*.xib -diff" and that worked as expected.
+Therefore, I was wrong to remove this "ref->status = REF_STATUS_NONE" loop. 
+Will be fixed in the next iteration.
 
-However, custom diff drivers (still) don't work. :-)
 
-Also read the patches and they LGTM.
+Thanks for noticing,
 
-> =C2=A0[4/5]: refactor get_textconv to not require diff_filespec
-> =C2=A0[5/5]: combine-diff: respect textconv attributes
+...Johan
 
-Didn't test explicitly, but don't see anything obviously wrong.
-
-Thanks Peff,
-
-j.
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
