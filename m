@@ -1,75 +1,118 @@
-From: Scott Chacon <schacon@gmail.com>
-Subject: Re: Talk about Git (slides etc.) for intermediate + advanced audience
- that I can steal?
-Date: Mon, 23 May 2011 12:06:54 -0700
-Message-ID: <BANLkTinzj_UAROyJo-hpDF0GR4m5e0Q1-g@mail.gmail.com>
-References: <BANLkTi=uF0qXKGAJhF+OPEqx2P1=YJRSXQ@mail.gmail.com>
-	<BANLkTinX5KN+9ot1DGxxOqmCgAO4+4kr-A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Improve errors from 'git diff --no-index'.
+Date: Mon, 23 May 2011 12:22:34 -0700
+Message-ID: <7vpqn9usqt.fsf@alter.siamese.dyndns.org>
+References: <4dd98da1.1bf98e0a.4eb4.6fc5@mx.google.com>
+ <7vlixyw4cx.fsf@alter.siamese.dyndns.org>
+ <BANLkTinKpSP5oEms914TWD7Tsjab1B87QQ@mail.gmail.com>
+ <7vhb8mw1e6.fsf@alter.siamese.dyndns.org>
+ <BANLkTi=Uf8X+Bkd+CZ9qz0wXhHn8wwYzrA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 23 21:07:04 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Anthony Foiani <anthony.foiani@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 23 21:22:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOaT1-0006qw-1T
-	for gcvg-git-2@lo.gmane.org; Mon, 23 May 2011 21:07:03 +0200
+	id 1QOaiK-0002Bw-FL
+	for gcvg-git-2@lo.gmane.org; Mon, 23 May 2011 21:22:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932299Ab1EWTGz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 May 2011 15:06:55 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:58788 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756324Ab1EWTGy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 May 2011 15:06:54 -0400
-Received: by yxs7 with SMTP id 7so2248558yxs.19
-        for <git@vger.kernel.org>; Mon, 23 May 2011 12:06:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=2P2iErfmYiOw0adlVedNM2dd8Vbw6Kk3pDeJAPtrbj8=;
-        b=rg0xeqByB0v2ziHN/RDA7ewSrHAJ6a/ynqDxltozQDZU+YtmCItwq0eAg2pFtftFOt
-         k8VcCjkLd3krok4ihSj0oV8wHtzNFR5VaAGks0XFBCGmVjO+p7Lhb3HEWgRfmqqAhcKv
-         k9bHPz1hS6KyNKRahfz/SFwwhoEAbYBZhu9Qk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=jrbeYqwXX4rUehkHKfviS+Auk/1zORXaR15W7d6VeMnD/rACUaB8l355eapCZ/SVPF
-         KZMH6fVcwH4ZDAF5z0vzxF37GAde8r8xLY4zaKv7jEv2e+HuGZHBwWJI8j+zzgcmoYGE
-         vBwml7E82frzTsIsGNL6kWrY+ASdrMoAaUIrA=
-Received: by 10.236.125.234 with SMTP id z70mr3272047yhh.357.1306177614209;
- Mon, 23 May 2011 12:06:54 -0700 (PDT)
-Received: by 10.236.61.74 with HTTP; Mon, 23 May 2011 12:06:54 -0700 (PDT)
-In-Reply-To: <BANLkTinX5KN+9ot1DGxxOqmCgAO4+4kr-A@mail.gmail.com>
+	id S933295Ab1EWTWp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2011 15:22:45 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:39791 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932429Ab1EWTWn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2011 15:22:43 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 12EDB4CE0;
+	Mon, 23 May 2011 15:24:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=L9X3ccAcvdlZN6hSrLQEFBBw8eA=; b=U3vmUF
+	HYLUMtpHkpmm92ks8YYEe7/cek25W2/TuWUEQxHO7IA4BPB4S1O/AeRGa3mIBTN1
+	qtxr0n1l1rPz1B4xvblPa0IAAwq6Kz8r3Pl57tdtv9d7X2ZAi3v0V8/FNppI/Tiz
+	8XgIwjHURHAiEMCxqci63BQQJikOXW6fMH1lQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YGLtltsUkwHheqBlpyinP0/ohkCVMe8G
+	ur3RcJZcJxJRTjkTiuA1BUnOhI/M6826NlJQXSkvz08H8ai01FY/4moc8YkLDtZ/
+	MpRD9+joVd17JVZcJCqP7Jwb/DP528My8i2PBf/rMHPy7J0pkKZW8FVONAr3fbb7
+	hHdx4GCy0IQ=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E4A004CDF;
+	Mon, 23 May 2011 15:24:47 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id F27724CDE; Mon, 23 May 2011
+ 15:24:44 -0400 (EDT)
+In-Reply-To: <BANLkTi=Uf8X+Bkd+CZ9qz0wXhHn8wwYzrA@mail.gmail.com> (Anthony
+ Foiani's message of "Sun, 22 May 2011 22:05:36 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 52883D86-8572-11E0-B0DD-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174262>
 
-Hey,
+Anthony Foiani <anthony.foiani@gmail.com> writes:
 
-On Mon, May 23, 2011 at 12:58 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmaso=
-n
-<avarab@gmail.com> wrote:
->> Does anyone have slides for something like this already that I could
->> look at and steal ideas from? If not I can just write my own.
+> $ ls -al /tmp/{foo,bar}
+> -rw-rw-r--. 1 tony tony 0 May 22 10:09 /tmp/bar
+> -rw-rw-r--. 1 tony tony 0 May 22 10:00 /tmp/foo
+>
+> $ # current git tip:
+> $ git diff /tmp/{foo,bar}
+>
+> $ # with my patch:
+> $ ../git/git-diff /tmp/{foo,bar}
+> warning: neither '/tmp/foo' nor '/tmp/bar' are tracked, forcing --no-index
 
-I've done Wrangling Git a few times - here are a bunch of slides
-online and PDF download:
+I actually consider this a regression. We are giving an output that the
+user wanted to see, and I do not see a reason why we need to warn.
 
-http://speakerdeck.com/u/schacon/p/wrangling-git
+A tangent.
 
-I do my presentations in ShowOff (an HTML/Markdown based system), so
-you can get the source for the slides here:
+One thing that I have always been unhappy about --no-index is that it does
+not really mesh well with the notion of what a "git diff" is. "git diff"
+inherently is an operation to take two collections of contents labeled
+with paths, and show series of patch output between corresponding paths in
+these collections, while rename/copy detection may affect the definition
+of "correspoinding paths".
 
-https://github.com/schacon/showoff-wrangling-git
+A typical "I know 'git diff' has a lot more features like color-words that
+my platform 'diff' does not support, so let me use 'git diff' instead"
+session does something like:
 
-Hope that's helpful,
-Scott
+	$ git diff [--no-index] /tmp/foo /tmp/bar
+
+but such a request does not compare "two collections of paths that have
+corresponding paths" at all. We could say we are comparing a collection
+that has tmp/foo with another that has tmp/bar, but then we should either
+emit a delete patch for tmp/foo and a create patch for tmp/bar, or emit a
+rename patch to create tmp/bar out of tmp/foo if we want to be consistent.
+
+But that consistency goes totally against what the users would expect.
+This inconsistency is not a fault of either the definition of "git diff"
+nor the user's expectation. They are fundamentally different and the root
+cause of it is that we support --no-index diff between randomly chosen two
+files. I am not saying we should drop that feature, but it does not change
+the fact that we had to add extra code in the output codepath only to
+support this "outside git" use case to suppress rename information (and
+probably other things I do not remember).
+
+The _only_ use of --no-index that is in line with what "git diff" does is
+to compare two directories as the "two collections of contents" above,
+i.e.
+
+	$ git diff --no-index old/ new/
+
+and then support pathspecs, like this:
+
+	$ git diff --no-index old/ new/ -- Makefile '*.c'
+
+But I do not think the current implementation does not even support this
+only sane usecase.
