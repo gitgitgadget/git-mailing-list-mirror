@@ -1,81 +1,73 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] setup: Provide GIT_PREFIX to built-ins
-Date: Mon, 23 May 2011 09:43:26 -0700
-Message-ID: <7v8vtxweoh.fsf@alter.siamese.dyndns.org>
-References: <7vwrhjxn4t.fsf@alter.siamese.dyndns.org>
- <1306058055-93672-1-git-send-email-davvid@gmail.com>
- <4DDA0044.2060207@drmicha.warpmail.net>
- <FE7878D1-20E4-4CD4-B3FB-96322AA75855@gmail.com>
+Subject: Re: Gate between git and mediawiki : remote-helpers
+Date: Mon, 23 May 2011 09:54:04 -0700
+Message-ID: <7v4o4lwe6r.fsf@alter.siamese.dyndns.org>
+References: <BANLkTikTpfpBYddfWcBfzGTuHqLyQ0sE5A@mail.gmail.com>
+ <BANLkTim+2Mv7bnfsNVAsn80MUx8-fjYZow@mail.gmail.com>
+ <7vfwo6y1kg.fsf@alter.siamese.dyndns.org>
+ <BANLkTinvnm7NvUs4BuGpBYsYKR0D1eP+cQ@mail.gmail.com>
+ <vpqk4dhzsvh.fsf@bauges.imag.fr> <7vd3j9wll0.fsf@alter.siamese.dyndns.org>
+ <BANLkTikax2T3BFs_wac-W8tWeiZ=YHsxvg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	=?utf-8?B?RnLDqWTDqXJp?= =?utf-8?B?Yw==?= Heitzmann 
-	<frederic.heitzmann@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 23 18:43:46 2011
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Arnaud Lacurie <arnaud.lacurie@gmail.com>, git@vger.kernel.org,
+	Claire Fousse <claire.fousse@gmail.com>,
+	Sylvain Boulme <Sylvain.Boulme@imag.fr>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 23 18:54:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOYEL-0000BI-Qr
-	for gcvg-git-2@lo.gmane.org; Mon, 23 May 2011 18:43:46 +0200
+	id 1QOYOf-0007LM-NJ
+	for gcvg-git-2@lo.gmane.org; Mon, 23 May 2011 18:54:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756625Ab1EWQnj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2011 12:43:39 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35207 "EHLO
+	id S1756687Ab1EWQyV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2011 12:54:21 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47278 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756561Ab1EWQni (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2011 12:43:38 -0400
+	with ESMTP id S1756518Ab1EWQyU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2011 12:54:20 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AFEF557C8;
-	Mon, 23 May 2011 12:45:44 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7B9435932;
+	Mon, 23 May 2011 12:56:26 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8EHkUuIlqNyLbAD2OMFL173Fw8Y=; b=GE89XT
-	kQAfRZWBazvFYyiEfW///9Zujn3Lmv4fgq4YRElDQQ9GXi7mnK303Ue9FQP4rkqO
-	HjQ7qS7iopjJ3746aUIBZwnC9qK3sOu6YZ8/OGsXHVBITiZo7y+AjJGuFUVZrVvL
-	Qd4/uhcltDRbKr5PiLq5KwXrWKH7VeqP7VjsI=
+	:content-type; s=sasl; bh=fG9if2nL72604gEzVwtTz6tKxBc=; b=oyz5pG
+	NJVa7+l5Y7uT6YL0GLR8kHJN3cmuiiaxtFAI4HLBPIz0jzzIGT6PdL4YOqW+Qenx
+	tLNKGZrOIaX4ao0W1Ui3/QzFpleGLD4gAljFf/7pEna/daa3nRc5FrES9ICt26JY
+	rVeg2C7SrlsBXr459Zq/H/PgwfJ4FVGL8xVH4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EUqr1SMCdc8ugyM9WjnJwCQWVGGOEMF2
-	+fVikmxQPfaV5FnyALs57ZACoCnT4zl/5GiJDJKadc3dk8PG0CdyJKHQtEWuxqhO
-	4mLYEVB2I4w2Wdk8Q8A3h7wyORCuBk+IVJpJvHHRkeT3bTS047wS/+7nC/Wufvn9
-	u5mpLzsdsls=
+	:content-type; q=dns; s=sasl; b=oSa9bE8bg4tubAQ1FSWrGDX5ymgXQbyR
+	4M11ymRP2dIK22npErucXQc33gJXQabyeUE5vh/r0DbDV/chM8ZRxgkWwK9Y3/Jy
+	livp4MCKap1UVpFXGISbVtwDcFLpuFF6BU5I7/OsOfzvN3qgU/jcJP6aZLPS4LpV
+	DU10QPdMvbQ=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7062457C6;
-	Mon, 23 May 2011 12:45:40 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 142D5592C;
+	Mon, 23 May 2011 12:56:20 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3131E57C3; Mon, 23 May 2011
- 12:45:34 -0400 (EDT)
-In-Reply-To: <FE7878D1-20E4-4CD4-B3FB-96322AA75855@gmail.com> (David
- Aguilar's message of "Mon, 23 May 2011 01:40:48 -0700")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 630DA5929; Mon, 23 May 2011
+ 12:56:12 -0400 (EDT)
+In-Reply-To: <BANLkTikax2T3BFs_wac-W8tWeiZ=YHsxvg@mail.gmail.com> (Sverre
+ Rabbelier's message of "Mon, 23 May 2011 08:54:13 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 17CA4BC8-855C-11E0-AD3C-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 950989EA-855D-11E0-AD3C-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174252>
 
-David Aguilar <davvid@gmail.com> writes:
+Sverre Rabbelier <srabbelier@gmail.com> writes:
 
-> I guess external scripts can call rev-parse --show-prefix themselves?
+> We currently support either:
+>
+> git clone mediawiki::http://some.where.xz/wiki
 
-That has always been the case, I think, and it shouldn't be a problem.
+Ok, I forgot that we settled on that double-colon prefix.
 
-The real reason you want the new GIT_PREFIX for alias/hooks is otherwise
-they would not have a way to even say --show-prefix to figure it out
-themselves.
-
->> Overall I think it's a good change, btw. But it leaves it up to the
->> (script) user to know whether git has actually changed the cwd or not,
->> i.e.: Is $(pwd) where the user called us from or $(pwd)/$GIT_PREFIX?
-
-As long as there is a way for a script to figure it out when it wants to
-know, I think it should be Ok.
-
-Isn't it just the matter of reading --show-prefix and comparing it with
-what came in $GIT_PREFIX?
+Thanks for fact-checking.
