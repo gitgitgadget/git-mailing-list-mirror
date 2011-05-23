@@ -1,94 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: combined diff does not detect binary files and ignores -diff
- attribute
-Date: Mon, 23 May 2011 10:07:13 -0700
-Message-ID: <7vzkmduz0e.fsf@alter.siamese.dyndns.org>
-References: <BANLkTi=FtkiUjwAa7e3KAC5FF3GNxWzd3Q@mail.gmail.com>
- <4DDA618E.4030604@drmicha.warpmail.net>
- <BANLkTinu3AbTmtswn6DLQKAWdLL=gBvAqA@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCHv4 09/10] pack-objects: Estimate pack size; abort early if pack size limit is exceeded
+Date: Mon, 23 May 2011 19:07:27 +0200
+Message-ID: <201105231907.27639.johan@herland.net>
+References: <1306111923-16859-1-git-send-email-johan@herland.net> <1306111923-16859-10-git-send-email-johan@herland.net> <BANLkTimQURetDxYeAJr5sVRB-ja9yuqT7Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	git <git@vger.kernel.org>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 23 19:07:36 2011
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon May 23 19:08:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOYbO-0007OS-4u
-	for gcvg-git-2@lo.gmane.org; Mon, 23 May 2011 19:07:34 +0200
+	id 1QOYcM-00082D-3K
+	for gcvg-git-2@lo.gmane.org; Mon, 23 May 2011 19:08:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756773Ab1EWRHZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2011 13:07:25 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62849 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756324Ab1EWRHX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2011 13:07:23 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3D9B15B09;
-	Mon, 23 May 2011 13:09:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SJzWB6rcx1OHkd7AUk8dCIQUSME=; b=Qb+HzS
-	gD1RsWYOldK/NQk+hU6hwlx3tFQrxsY40tWGyk2Ir7Jye37evBbxIJksHFgPDBnh
-	xxwSoVUwIGIexnRyb6z5UpXvmkAWKwsLbZ/IgmzuKRcHW8qeT72M9DcaiWkHQsI5
-	wq2KImrvt2za5eT6IDMjyZPTKs4DW/5TIDp10=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZZhDRnBJOmP2BCMAAQjIIsbRYbuWM3w4
-	yzKsin7RzKTBuJJf07jNW1en70q/tFqdqfpagBXBHzCkOD1KzO1zGaiO/MIXVXTk
-	LfLo9DxHNZfisaeDsDdOUIFxMxL43G+Y0zxmffOKDCIc1EeYP+nBktAjpfca4hiZ
-	m0c8bYfvCX8=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 09E1C5B08;
-	Mon, 23 May 2011 13:09:26 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id EC2D15B04; Mon, 23 May 2011
- 13:09:21 -0400 (EDT)
-In-Reply-To: <BANLkTinu3AbTmtswn6DLQKAWdLL=gBvAqA@mail.gmail.com> (Jay
- Soffian's message of "Mon, 23 May 2011 11:17:14 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 69812574-855F-11E0-ABF9-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+	id S1756809Ab1EWRI3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2011 13:08:29 -0400
+Received: from smtp.opera.com ([213.236.208.81]:59037 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756621Ab1EWRI2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2011 13:08:28 -0400
+Received: from johanh.localnet (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p4NH7veu001609
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 23 May 2011 17:07:57 GMT
+User-Agent: KMail/1.13.7 (Linux/2.6.38-ARCH; KDE/4.6.3; x86_64; ; )
+In-Reply-To: <BANLkTimQURetDxYeAJr5sVRB-ja9yuqT7Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174254>
 
-Here is a quick summary of what I have in the "talked about, sounded
-interesting, and never got completed" list.
+On Monday 23. May 2011, Shawn Pearce wrote:
+> We can still get a tighter estimate if we wanted to. I wouldn't mix
+> it into this patch, but make a new one on top of it. During delta
+> compression we hold onto deltas, or at least compute and retain the
+> size of the chosen delta. We could re-check the pack size after the
+> Compressing phase by including the delta sizes in the estimate, and
+> if we are over, abort before writing.
+
+Ok. Not sure when I'll have the time/courage to dive into this, but I'll 
+at least give it a try.
+
+> For non-delta, non-reuse we may be able to guess by just using the
+> loose object size. The loose object is most likely compressed at the
+> same compression ratio as the outgoing pack stream will use, so a
+> deflate(inflate(loose)) cycle is going to be very close in total
+> bytes used. If we over shoot the limit by more than some fudge
+> factor (say 8K in 1M limit or 0.7%), abort before writing.
+
+I already have an unsubmitted patch on top of the series that includes 
+the on-disk/compressed size of loose objects in the estimate. However, 
+it's quite intrusive (need to extend sha1_object_info() to return 
+compressed size of loose objects). Also, since I don't yet take the 
+delta compression into account, these numbers are obviously unreliable.
+
+That said, in the cases where loose objects are not deltified it seems 
+the compressed/loose versions are about 3 to 7 bytes larger than the 
+corresponding compressed/packed versions. I guess this is due to the 
+loose files using a "<type> SP <size> NUL" text header (deflated), 
+whereas the pack uses a more compact binary format (not deflated).
+
+We could test a large corpus (e.g. linux-kernel) to find the average 
+difference between compressed/loose size and compressed/packed size, and 
+then multiply this with the number of non-delta, non-reuse object to 
+determine the fudge factor you describe above.
 
 
-gmane=http://thread.gmane.org/gmane.comp.version-control.git/
+Have fun! :)
 
-* Teach pack protocol to transfer estimated pack size and history
-  depth to allow receiving end make more intelligent decision between
-  unpack-objects and index-pack.
+...Johan
 
-  $gmane/173610
-
-* The "combined" diff always assumes it deals with text files. Teach it
-  to punt on binary and also use the textconv.
-
-  $gname/171613
-
-* Audit use of symbolic-ref without -m in our scripts and for each
-  case decide if leaving a reflog entry for the HEAD is desirable.
-  If so, add them.
-
-  $gmane/172516
-
-* "git status" on intent-to-add index entries (say "I" in the first
-  column instead of "A" for short status, add "(needs 'git add')" at the
-  end of "new file: $path " in long status).
-
-  $gmane/170658
-
-* synopsys: use {} instead of () for grouping alternatives (Jari Aalto)
-  $gmane/72243
-
-* "[alias] st = status" and "cd .git && git st" (Jeff King)
-  $gmane/72327
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
