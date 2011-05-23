@@ -1,80 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Gate between git and mediawiki : remote-helpers
-Date: Mon, 23 May 2011 07:14:19 -0700
-Message-ID: <7vd3j9wll0.fsf@alter.siamese.dyndns.org>
-References: <BANLkTikTpfpBYddfWcBfzGTuHqLyQ0sE5A@mail.gmail.com>
- <BANLkTim+2Mv7bnfsNVAsn80MUx8-fjYZow@mail.gmail.com>
- <7vfwo6y1kg.fsf@alter.siamese.dyndns.org>
- <BANLkTinvnm7NvUs4BuGpBYsYKR0D1eP+cQ@mail.gmail.com>
- <vpqk4dhzsvh.fsf@bauges.imag.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: Cross-compiling git (was: [PATCHv2] add Android support)
+Date: Mon, 23 May 2011 10:30:40 -0400
+Message-ID: <20110523143040.GB17743@sigill.intra.peff.net>
+References: <B22B44EF-0AFB-44E3-93E3-61FA730431B9@gieschke.de>
+ <7vaaej9pt3.fsf@alter.siamese.dyndns.org>
+ <2218C353-80FC-4540-A60E-608385384FB5@gieschke.de>
+ <20110519122026.GA30240@sigill.intra.peff.net>
+ <m3k4dhzynr.fsf_-_@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Arnaud Lacurie <arnaud.lacurie@gmail.com>, git@vger.kernel.org,
-	Claire Fousse <claire.fousse@gmail.com>,
-	Sylvain Boulme <Sylvain.Boulme@imag.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon May 23 16:14:41 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Rafael Gieschke <rafael@gieschke.de>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 23 16:30:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOVu4-0004wc-Is
-	for gcvg-git-2@lo.gmane.org; Mon, 23 May 2011 16:14:40 +0200
+	id 1QOW9g-0007MW-Jq
+	for gcvg-git-2@lo.gmane.org; Mon, 23 May 2011 16:30:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754756Ab1EWOOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2011 10:14:35 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57243 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753004Ab1EWOOe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2011 10:14:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 586C14322;
-	Mon, 23 May 2011 10:16:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jCNPPpI+T1SCuaPiM6ijdaH/BlA=; b=LUdf0l
-	6tdzT5lDFmiOxBqlW8Iz9uzdA6ZQpmh5wcVMn4ReHCXc3n7LAg+S0xZokVRdpIBJ
-	jpnc8ilp2G4IPjleRMmcteZ/GXN85CxZES+2usI+ePgAlVzEk5QgsLaqj+jKUHHW
-	rXewNMWQXhEqGDNRbbFrN2CzSFpBJdveYhRew=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mISCrOgggwjCYFk40Jg3c0PkeoIPxtnm
-	GZYfTl2xgFEb4+urkOb5npO9MSbgV5JQqBV6vuy5Q178KKYaOzyZyM4vVwzLL/Db
-	6NXSTKS7ovigO0MJ54VxHMM8YU7FDwc1OUDvpSBpAjq53ObpbHDwTotwrbEe+YYo
-	uc9UG2weSuw=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 06BFA4315;
-	Mon, 23 May 2011 10:16:35 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 89AB04314; Mon, 23 May 2011
- 10:16:28 -0400 (EDT)
-In-Reply-To: <vpqk4dhzsvh.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Mon, 23 May 2011 11:08:34 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 43E5EF6A-8547-11E0-89DC-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
+	id S1755507Ab1EWOan (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2011 10:30:43 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45578
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754389Ab1EWOan (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2011 10:30:43 -0400
+Received: (qmail 18911 invoked by uid 107); 23 May 2011 14:32:46 -0000
+Received: from sigill-wired.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.8)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 23 May 2011 10:32:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 23 May 2011 10:30:40 -0400
+Content-Disposition: inline
+In-Reply-To: <m3k4dhzynr.fsf_-_@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174245>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On Mon, May 23, 2011 at 12:04:44AM -0700, Jakub Narebski wrote:
 
->>>        git clone --vcs=mediawiki http://some.where.xz/wiki/
->...
->> Is vcs a standard argument (I can't see it anywhere) or do we have to
->> change something in order to implement it?
->
-> I don't know, but anyway, it could be
->
-> git clone mediawiki+http://some.where.xz/wiki
+> > So I think we are probably stuck either with the user setting an ANDROID
+> > meta-flag that sets the other flags appropriately, or leaving it up to
+> > the user to provide a sane config.mak.
+> 
+> By the way, how well Git supports cross-compiling (which from the
+> thread is necessity to generate binaries for Android)?  `uname -a`
+> trick works only when compiling on same machine.
 
-I know it doesn't ;-)
+It should work fine if you set the make variables appropriately for the
+target platform. But I've never tried it. Didn't msysgit people
+cross-compile for a while (or maybe still do)?
 
-As "clone" is a moral equivalent of "init" possibly followed by some
-auto-configuration followed by "fetch" and "checkout", it is a natural
-consequence of already supporting the "remove.<name>.vcs" configuration
-variable, and if we want to avoid the insane svn+http:// syntax, it is a
-logical thing to add such support.
+> ./configure supports --host and --build options, but I don't know if
+> it pass them down to make somehow.  ANDROID=YesPlease seems wasteful:
+> what about setting HOST or MACHINE, or even uname_* variables, or just
+> using Autoconf's `host` (in the form of CPU-VENDOR-OS)?
+
+I know very little about autoconf internals, but what would
+CPU-VENDOR-OS look like? Your CPU is probably some arm variant, though
+it will vary from device to device. Your kernel is Linux. The special
+steps in this case are about some weird userspace issues. So the
+equivalent would be more like finding a Linux distro that ships a crappy
+libc.  I guess that is what the "vendor" slot is for?
+
+But even if you somehow tell autoconf or the Makefile "yes, this is
+android", you are still going to need to manually specify the set of
+knobs that should be tweaked in that case. Whether you call it
+"ANDROID=YesPlease" or some other form.
+
+-Peff
