@@ -1,8 +1,8 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv4 02/10] send-pack: Attempt to retrieve remote status even if
- pack-objects fails
-Date: Mon, 23 May 2011 02:51:55 +0200
-Message-ID: <1306111923-16859-3-git-send-email-johan@herland.net>
+Subject: [PATCHv4 03/10] Tighten rules for matching server capabilities in
+ server_supports()
+Date: Mon, 23 May 2011 02:51:56 +0200
+Message-ID: <1306111923-16859-4-git-send-email-johan@herland.net>
 References: <1306111923-16859-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
@@ -16,112 +16,144 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOJNs-0000SO-Rt
+	id 1QOJNt-0000SO-CP
 	for gcvg-git-2@lo.gmane.org; Mon, 23 May 2011 02:52:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752011Ab1EWAw1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 May 2011 20:52:27 -0400
+	id S1752468Ab1EWAw2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 May 2011 20:52:28 -0400
 Received: from smtp.getmail.no ([84.208.15.66]:53497 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751385Ab1EWAwZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 May 2011 20:52:25 -0400
+	id S1751509Ab1EWAw0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 May 2011 20:52:26 -0400
 Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
  by get-mta-out03.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LLM001QHIFA4YA0@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Mon, 23 May 2011 02:52:22 +0200 (MEST)
+ with ESMTP id <0LLM001QLIFB4YA0@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 23 May 2011 02:52:23 +0200 (MEST)
 Received: from get-mta-scan02.get.basefarm.net
  (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 943581EA55EB_DD9AFC6B	for <git@vger.kernel.org>; Mon,
- 23 May 2011 00:52:22 +0000 (GMT)
+ with SMTP id 029921EA5745_DD9AFC7B	for <git@vger.kernel.org>; Mon,
+ 23 May 2011 00:52:23 +0000 (GMT)
 Received: from smtp.getmail.no (unknown [10.5.16.4])
 	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id E2AE11EA2C9C_DD9AFC5F	for <git@vger.kernel.org>; Mon,
- 23 May 2011 00:52:21 +0000 (GMT)
+ with ESMTP id 427361EA3369_DD9AFC6F	for <git@vger.kernel.org>; Mon,
+ 23 May 2011 00:52:22 +0000 (GMT)
 Received: from alpha.herland ([84.215.68.234]) by get-mta-in02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0LLM005PMIF9TE20@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Mon, 23 May 2011 02:52:21 +0200 (MEST)
+ git@vger.kernel.org; Mon, 23 May 2011 02:52:22 +0200 (MEST)
 X-Mailer: git-send-email 1.7.5.rc1.3.g4d7b
 In-reply-to: <1306111923-16859-1-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174209>
 
-When pushing, send-pack uses pack-objects to write the pack data to the
-receive-pack process running on the remote end. The scenarios where
-pack-objects dies unexpectedly, can be roughly divided based on whether
-the reason for the failure is _local_ (i.e. something in pack-objects
-caused it to fail of its own accord), or _remote_ (i.e. something in
-the remote receive-pack process caused it to fail, leaving the local
-pack-objects process with a broken pipe)
+When using server_supports() to match a given "feature" against the server
+capabilities, follow these rules:
 
-If the reason for the failure is local, we expect pack-objects to report
-an appropriate error message to the user.
+ - "feature" must appear at the beginning of server_capabilities, or the
+   byte immediately before the matched location in server_capabilities
+   must be a SP; and
 
-However, if the reason for the failure is remote, pack-objects will merely
-abort because of the broken pipe, and the user is left with no clue as to
-the reason why the remote receive-pack process died.
+ - if "feature" does not end with an equal sign, it does not expect a
+   value. The byte after the matched location in server_capabilities must
+   be either the end of string or a SP. A feature that expects a value is
+   checked with 'server_supports("feature=")' and the matched location in
+   server_capabilities can be followed by anything (i.e. if at the end of
+   string or a SP, it gets an empty string as the value, and otherwise it
+   will get the stretch of bytes after the '=' up to the next SP).
 
-In certain cases, though, the receive-pack process on the other end may have
-produced an error message immediately before exiting. This error message may
-be currently waiting to be read by the local send-pack process.
+Given the server_capabilities string "foo=ab bar=froboz boz",
+this patch should make it behave as follows:
 
-Therefore, we should try to read from the remote end, even when pack-objects
-dies unexepectedly. We accomplish this by _always_ calling receive_status()
-after pack_objects(). If the remote end managed to produce a well-formed
-status report before exiting, then receive_status() simply presents that to
-the user. Even if the data from the remote end cannot be understood by
-receive_status(), it will print that data as part of its error message. In
-any case, we give the user as much information about the failure as possible.
+  server_supports("foo=") matches "foo=ab", returns "ab";
 
+  server_supports("ab") does not match anything;
+
+  server_supports("bar") does not match anything;
+
+  server_supports("boz") matches (and returns "boz"), without failing
+                         at the end of bar=froboz that comes earlier.
+
+Suggested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- builtin/send-pack.c |   13 +++----------
- 1 files changed, 3 insertions(+), 10 deletions(-)
+ cache.h   |    2 +-
+ connect.c |   30 +++++++++++++++++++++++++++---
+ 2 files changed, 28 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index c1f6ddd..5ba5262 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -251,7 +251,7 @@ int send_pack(struct send_pack_args *args,
- 	int status_report = 0;
- 	int use_sideband = 0;
- 	unsigned cmds_sent = 0;
--	int ret;
-+	int ret = 0;
- 	struct async demux;
+diff --git a/cache.h b/cache.h
+index 009b365..1a9338f 100644
+--- a/cache.h
++++ b/cache.h
+@@ -995,7 +995,7 @@ struct extra_have_objects {
+ 	unsigned char (*array)[20];
+ };
+ extern struct ref **get_remote_heads(int in, struct ref **list, int nr_match, char **match, unsigned int flags, struct extra_have_objects *);
+-extern int server_supports(const char *feature);
++extern const char *server_supports(const char *feature);
  
- 	/* Does the other end support the reporting? */
-@@ -339,25 +339,18 @@ int send_pack(struct send_pack_args *args,
- 	}
+ extern struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_path);
  
- 	if (new_refs && cmds_sent) {
--		if (pack_objects(out, remote_refs, extra_have, args) < 0) {
--			for (ref = remote_refs; ref; ref = ref->next)
--				ref->status = REF_STATUS_NONE;
-+		if ((ret = pack_objects(out, remote_refs, extra_have, args))) {
- 			if (args->stateless_rpc)
- 				close(out);
- 			if (git_connection_is_socket(conn))
- 				shutdown(fd[0], SHUT_WR);
--			if (use_sideband)
--				finish_async(&demux);
--			return -1;
+diff --git a/connect.c b/connect.c
+index 2119c3f..3c0a706 100644
+--- a/connect.c
++++ b/connect.c
+@@ -8,6 +8,7 @@
+ #include "url.h"
+ 
+ static char *server_capabilities;
++static size_t server_capabilities_len;
+ 
+ static int check_ref(const char *name, int len, unsigned int flags)
+ {
+@@ -80,8 +81,16 @@ struct ref **get_remote_heads(int in, struct ref **list,
+ 
+ 		name_len = strlen(name);
+ 		if (len != name_len + 41) {
++			char *p;
+ 			free(server_capabilities);
+ 			server_capabilities = xstrdup(name + name_len + 1);
++			server_capabilities_len = strlen(server_capabilities);
++			/* split capabilities on SP */
++			for (p = server_capabilities;
++			     p < server_capabilities + server_capabilities_len;
++			     p++)
++				if (*p == ' ')
++					*p = '\0';
  		}
- 	}
- 	if (args->stateless_rpc && cmds_sent)
- 		packet_flush(out);
  
- 	if (status_report && cmds_sent)
--		ret = receive_status(in, remote_refs);
--	else
--		ret = 0;
-+		ret |= receive_status(in, remote_refs);
- 	if (args->stateless_rpc)
- 		packet_flush(out);
+ 		if (extra_have &&
+@@ -102,10 +111,25 @@ struct ref **get_remote_heads(int in, struct ref **list,
+ 	return list;
+ }
  
+-int server_supports(const char *feature)
++const char *server_supports(const char *feature)
+ {
+-	return server_capabilities &&
+-		strstr(server_capabilities, feature) != NULL;
++	const char *p = server_capabilities;
++	size_t feature_len = strlen(feature);
++	int need_value = feature[feature_len - 1] == '=';
++
++	if (!server_capabilities)
++		return NULL;
++
++	for (p = server_capabilities;
++	     p < server_capabilities + server_capabilities_len;
++	     p += strlen(p) + 1) {
++		if (need_value) {
++			if (!strncmp(p, feature, feature_len))
++				return p + feature_len;
++		} else if (!strcmp(p, feature))
++			return p;
++	}
++	return NULL;
+ }
+ 
+ int path_match(const char *path, int nr, char **match)
 -- 
 1.7.5.rc1.3.g4d7b
