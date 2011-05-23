@@ -1,64 +1,77 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: combined diff does not detect binary files and ignores -diff
- attribute
-Date: Mon, 23 May 2011 15:30:54 +0200
-Message-ID: <4DDA618E.4030604@drmicha.warpmail.net>
-References: <BANLkTi=FtkiUjwAa7e3KAC5FF3GNxWzd3Q@mail.gmail.com>
+From: =?ISO-8859-1?Q?J=E9r=E9mie_NIKAES?= <jeremie.nikaes@gmail.com>
+Subject: Re: Gate between git and mediawiki : remote-helpers
+Date: Mon, 23 May 2011 15:48:40 +0200
+Message-ID: <BANLkTikO9+Rsmdk+V4E9nnOAFeqqhtsBsQ@mail.gmail.com>
+References: <BANLkTikTpfpBYddfWcBfzGTuHqLyQ0sE5A@mail.gmail.com>
+ <BANLkTim+2Mv7bnfsNVAsn80MUx8-fjYZow@mail.gmail.com> <7vfwo6y1kg.fsf@alter.siamese.dyndns.org>
+ <BANLkTinvnm7NvUs4BuGpBYsYKR0D1eP+cQ@mail.gmail.com> <vpqk4dhzsvh.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 23 15:31:05 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Arnaud Lacurie <arnaud.lacurie@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Claire Fousse <claire.fousse@gmail.com>,
+	Sylvain Boulme <Sylvain.Boulme@imag.fr>
+To: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon May 23 15:49:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOVDq-0000Ob-Cg
-	for gcvg-git-2@lo.gmane.org; Mon, 23 May 2011 15:31:02 +0200
+	id 1QOVVL-00046s-2q
+	for gcvg-git-2@lo.gmane.org; Mon, 23 May 2011 15:49:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753610Ab1EWNa5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2011 09:30:57 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:33894 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751531Ab1EWNa4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 May 2011 09:30:56 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id BB1D320F63;
-	Mon, 23 May 2011 09:30:55 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Mon, 23 May 2011 09:30:55 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=M9dG3mNXT8KrnLE0OaK2bxdoXLY=; b=dFtOZdQJ9MX/Wgmc4mad/zLaGaHXRWZw/zEwJXOViywt80qX/+nwyCnwOKwJQMz2xYFaF0kjKp8p3KsnOHjEhlAHwpKOk1TJ1BOGQc2cGOPIlP/VP+LArmcRQbe8d3GUXGH4MJiQ+pBDXvwBLiYp+VqXWBNsWyEC+X2sHT1/WzM=
-X-Sasl-enc: nRYnHXOAxXK7ImnkWOjqd8PyE3IWZeMQiwIAKh1GBGxk 1306157455
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 4A054401D3C;
-	Mon, 23 May 2011 09:30:55 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Lightning/1.0b3pre Thunderbird/3.1.10
-In-Reply-To: <BANLkTi=FtkiUjwAa7e3KAC5FF3GNxWzd3Q@mail.gmail.com>
+	id S1754658Ab1EWNtB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 May 2011 09:49:01 -0400
+Received: from mail-px0-f173.google.com ([209.85.212.173]:57620 "EHLO
+	mail-px0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753994Ab1EWNtA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 May 2011 09:49:00 -0400
+Received: by pxi16 with SMTP id 16so3814542pxi.4
+        for <git@vger.kernel.org>; Mon, 23 May 2011 06:49:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=UQ77yj6HvpSiFi2MeuTqjBE98Bs4fgMEakg2VgrvulU=;
+        b=WVAMmpt+af/pTD75oIDSCGgAASfDGR+WDevO9QuVKVE/ROWaIa6QZdKsFWfbl5kGR7
+         nSJYD8r8rhHcA7wOlRMzrusPAbflqaT2YR8NiE82DepADNVPyTgjAib4RZ/q+rZIVlb7
+         WSkvYsKFY8V+WVzXdqHIAb0hH0W88GXmDw60E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=I9/Y2Bu72Si47rugRV2KpwQd1UCc8u7141er8subwHTrKvfc5o4xJKICVYQBw7BbFu
+         Wy5C3wTpX/qJtO3HYWIz4+JGtWmGeUvq60xcJ2w1PeXiGo0qGlwDdAYqh1fPi4GErsbl
+         VWAcSFeoUXEpXpEojFaa8881iUX7ofvcfTKX0=
+Received: by 10.143.63.10 with SMTP id q10mr815459wfk.291.1306158540212; Mon,
+ 23 May 2011 06:49:00 -0700 (PDT)
+Received: by 10.142.13.11 with HTTP; Mon, 23 May 2011 06:48:40 -0700 (PDT)
+In-Reply-To: <vpqk4dhzsvh.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174243>
 
-Jay Soffian venit, vidit, dixit 22.05.2011 22:12:
-> In a merge commit, I added some PNGs (so they were new to both
-> parents). I was surprised when I did a "git show" on the commit and
-> had the binary bits spewed to the terminal.
-> 
-> I thought it was just git not detecting the PNG as a binary file, but
-> adding "*.png -diff" to .git/info/attributes made no difference.
-> 
-> Just reporting this for now, as I don't have time to investigate.
-> 
-> j.
+Hi, we are in a little bit of trouble trying to understand how remote
+helpers work and thus how to create our own.
+Trying to understand this, we created a git that we access through
+http on a local server on which we push files with
 
-We know, but we somehow got stuck, see:
+git remote-http http://login@localip/git
+push +master:master
 
-http://permalink.gmane.org/gmane.comp.version-control.git/171613
+The problem is we don't really understand which files are involved
+with remote helpers.
+We have perl scripts helping us to fetch and push files from mediawiki
+and we don't know how to implement them as a remote helper. Does
+anyone have some information regarding this ?
 
-I don't have the time to follow up on this currently, it got out of
-proportion.
+Thanks,
+Regards
 
-Michael
+--
+J=E9r=E9mie Nikaes
+Second year student at Ensimag
