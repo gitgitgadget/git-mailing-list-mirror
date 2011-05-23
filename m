@@ -1,156 +1,77 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH 1/3] setup: Provide GIT_PREFIX to built-ins
-Date: Mon, 23 May 2011 01:40:48 -0700
-Message-ID: <FE7878D1-20E4-4CD4-B3FB-96322AA75855@gmail.com>
-References: <7vwrhjxn4t.fsf@alter.siamese.dyndns.org> <1306058055-93672-1-git-send-email-davvid@gmail.com> <4DDA0044.2060207@drmicha.warpmail.net>
-Mime-Version: 1.0 (iPhone Mail 8C148a)
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?GB2312?Q?Fr=A8=A6d=A8=A6ric_Heitzmann?= 
-	<frederic.heitzmann@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon May 23 10:41:14 2011
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Gate between git and mediawiki : remote-helpers
+Date: Mon, 23 May 2011 11:08:34 +0200
+Message-ID: <vpqk4dhzsvh.fsf@bauges.imag.fr>
+References: <BANLkTikTpfpBYddfWcBfzGTuHqLyQ0sE5A@mail.gmail.com>
+	<BANLkTim+2Mv7bnfsNVAsn80MUx8-fjYZow@mail.gmail.com>
+	<7vfwo6y1kg.fsf@alter.siamese.dyndns.org>
+	<BANLkTinvnm7NvUs4BuGpBYsYKR0D1eP+cQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Claire Fousse <claire.fousse@gmail.com>,
+	Sylvain Boulme <Sylvain.Boulme@imag.fr>
+To: Arnaud Lacurie <arnaud.lacurie@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 23 11:08:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOQhO-0007t0-1K
-	for gcvg-git-2@lo.gmane.org; Mon, 23 May 2011 10:41:14 +0200
+	id 1QOR86-0007Xi-AU
+	for gcvg-git-2@lo.gmane.org; Mon, 23 May 2011 11:08:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753094Ab1EWIlI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2011 04:41:08 -0400
-Received: from mail-px0-f173.google.com ([209.85.212.173]:64302 "EHLO
-	mail-px0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752870Ab1EWIlG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 May 2011 04:41:06 -0400
-Received: by pxi16 with SMTP id 16so3692509pxi.4
-        for <git@vger.kernel.org>; Mon, 23 May 2011 01:41:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:references:in-reply-to:mime-version
-         :content-transfer-encoding:content-type:message-id:cc:x-mailer:from
-         :subject:date:to;
-        bh=tXcC81WHMr1YpnTiuGucSbFAidMuNETggEKt5l3FVUE=;
-        b=VmLkRn3I+KZMxCo8f10rUU+qLKu4t+VmDbnJUOuM5THe6hHNNY+6Lb8/331foIWtPj
-         wuCSmJBGgwL1F3pWRAOTyDwQSCBi4uljQLmoPCKYYle+qEZncyN66Bnl4Ns0Uw56kiWC
-         QoOgQVPHy/oAx4K8/TfFp+x9eIbn6O3hrsCis=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=references:in-reply-to:mime-version:content-transfer-encoding
-         :content-type:message-id:cc:x-mailer:from:subject:date:to;
-        b=TIGE+471zaR7IJ41koWWpweBkA6bPP45efQmGdup2JLMh4oJYRa+Arx9JXFL2XAi/R
-         ptwfWrqOIEBZTci2nodCc3G8/HpFo6IZWL6397Q0LpkELuzEX4BQkJ9pEjseb3KXuCTj
-         CcUiPxefOCSFZyfby2Vk9vwuAwBUW5s9kYhC0=
-Received: by 10.68.47.131 with SMTP id d3mr2102655pbn.223.1306140065595;
-        Mon, 23 May 2011 01:41:05 -0700 (PDT)
-Received: from [10.14.221.172] (mobile-198-228-208-243.mycingular.net [198.228.208.243])
-        by mx.google.com with ESMTPS id k7sm4211190pbe.32.2011.05.23.01.40.56
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 23 May 2011 01:41:02 -0700 (PDT)
-In-Reply-To: <4DDA0044.2060207@drmicha.warpmail.net>
-X-Mailer: iPhone Mail (8C148a)
+	id S1751990Ab1EWJIn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 May 2011 05:08:43 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:40624 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751776Ab1EWJIm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2011 05:08:42 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p4N98Yx3011776
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 23 May 2011 11:08:34 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1QOR7r-0000h2-5M; Mon, 23 May 2011 11:08:35 +0200
+In-Reply-To: <BANLkTinvnm7NvUs4BuGpBYsYKR0D1eP+cQ@mail.gmail.com> (Arnaud
+	Lacurie's message of "Mon, 23 May 2011 10:31:14 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 23 May 2011 11:08:34 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p4N98Yx3011776
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1306746514.99422@VLx0grWCZbTVkVGnX6NX3w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174234>
 
-Added git@vger to the cc list. I sent y'all two copies of these patches because I forgot to cc the list the first time...
+Arnaud Lacurie <arnaud.lacurie@gmail.com> writes:
 
-On May 22, 2011, at 11:35 PM, Michael J Gruber <git@drmicha.warpmail.net> wrote:
+> Thank you for your advice.
+>
+> 2011/5/22 Junio C Hamano <gitster@pobox.com>:
+>
+>>
+>> =A0 =A0 =A0 =A0git clone --vcs=3Dmediawiki http://some.where.xz/wiki=
+/
+>> =A0 =A0 =A0 =A0git pull
+>> =A0 =A0 =A0 =A0git push
+>>
+>
+> Is vcs a standard argument (I can't see it anywhere) or do we have to
+> change something in order to implement it?
 
-> David Aguilar venit, vidit, dixit 22.05.2011 11:54:
->> GIT_PREFIX was added in 7cf16a14f5c070f7b14cf28023769450133172ae so that
->> aliases can know the directory from which a !alias was called.
->> 
->> Knowing the prefix relative to the root is helpful in other programs
->> so export it to built-ins as well.
->> 
->> Signed-off-by: David Aguilar <davvid@gmail.com>
->> ---
->> setup.c                 |    6 ++++++
->> t/t1020-subdirectory.sh |   16 ++++++++++++++++
->> 2 files changed, 22 insertions(+), 0 deletions(-)
->> 
->> diff --git a/setup.c b/setup.c
->> index b6e6b5a..fc169a4 100644
->> --- a/setup.c
->> +++ b/setup.c
->> @@ -603,6 +603,12 @@ const char *setup_git_directory_gently(int *nongit_ok)
->>    const char *prefix;
->> 
->>    prefix = setup_git_directory_gently_1(nongit_ok);
->> +    /* Provide the prefix to all external processes and programs */
->> +    if (prefix)
->> +        setenv("GIT_PREFIX", prefix, 1);
->> +    else
->> +        unsetenv("GIT_PREFIX");
->> +
-> 
-> Do we really want to unset it? This is different from the existing
-> behaviour (but not more useful). But see also my comment on 3/3: We may
-> want to do something different which is also more useful.
+I don't know, but anyway, it could be
 
-I thought the behavior was actually the same.
+git clone mediawiki+http://some.where.xz/wiki
 
-The current alias code sets the value GIT_PREFIX= in the strbuf. When prefix is empty nothing else is added to the strbuf. The run_command  function actually checks for FOO= with empty after the equals sign and translates it into unsetenv. That allows code to unset vars using that interface.
-
-If we can do something better that'd be good. Unsetting the variable also protects us from whatever randomness might be in there, which was my primary concern.
-
-> 
->>    if (startup_info) {
->>        startup_info->have_repository = !nongit_ok || !*nongit_ok;
->>        startup_info->prefix = prefix;
->> diff --git a/t/t1020-subdirectory.sh b/t/t1020-subdirectory.sh
->> index ddc3921..a85b594 100755
->> --- a/t/t1020-subdirectory.sh
->> +++ b/t/t1020-subdirectory.sh
->> @@ -139,6 +139,22 @@ test_expect_success 'GIT_PREFIX for !alias' '
->>    test_cmp expect actual
->> '
->> 
->> +test_expect_success 'GIT_PREFIX for built-ins' '
->> +    # Use GIT_EXTERNAL_DIFF to test that the "diff" built-in
->> +    # receives the GIT_PREFIX variable.
->> +    printf "dir/" >expect &&
->> +    printf "#!/bin/sh\n" >diff &&
->> +    printf "printf \"\$GIT_PREFIX\"\n" >>diff &&
->> +    chmod +x diff &&
->> +    (
->> +        cd dir &&
->> +        printf "change" >two &&
->> +        env GIT_EXTERNAL_DIFF=./diff git diff >../actual
-> 
-> In passsing, this also tests the fact that GIT_EXTERNAL_DIFF is relative
-> to the repo root and not to cwd...
-
-That's true. Another thing is that this only affects built-ins. I wanted to set the variable for git-foo external programs too but that means adding a call to setup_git_directory_gently() which we currently do not do in that codepath.  I guess external scripts can call rev-parse --show-prefix themselves? Or is this worth making consistent?
-
-> 
->> +        git checkout -- two
->> +    ) &&
->> +    test_cmp expect actual
->> +'
->> +
->> test_expect_success 'no file/rev ambiguity check inside .git' '
->>    git commit -a -m 1 &&
->>    (
-> 
-> Overall I think it's a good change, btw. But it leaves it up to the
-> (script) user to know whether git has actually changed the cwd or not,
-> i.e.: Is $(pwd) where the user called us from or $(pwd)/$GIT_PREFIX?
-> That may may be a non-issue, though.
-> 
-> Michael
-
-It's a non-issue for my use case but I can see it being confusing.
-
-For example, mergetool--lib's merge mode codepath can be run from subdirectories. The diff mode codepaths all assume that we are at the root (because git diff put us there).
-
-Thanks (and please let me know if my unsetenv analysis is incorrect),
--- 
-                                        David
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
