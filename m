@@ -1,77 +1,80 @@
-From: =?ISO-8859-1?Q?J=E9r=E9mie_NIKAES?= <jeremie.nikaes@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Gate between git and mediawiki : remote-helpers
-Date: Mon, 23 May 2011 15:48:40 +0200
-Message-ID: <BANLkTikO9+Rsmdk+V4E9nnOAFeqqhtsBsQ@mail.gmail.com>
+Date: Mon, 23 May 2011 07:14:19 -0700
+Message-ID: <7vd3j9wll0.fsf@alter.siamese.dyndns.org>
 References: <BANLkTikTpfpBYddfWcBfzGTuHqLyQ0sE5A@mail.gmail.com>
- <BANLkTim+2Mv7bnfsNVAsn80MUx8-fjYZow@mail.gmail.com> <7vfwo6y1kg.fsf@alter.siamese.dyndns.org>
- <BANLkTinvnm7NvUs4BuGpBYsYKR0D1eP+cQ@mail.gmail.com> <vpqk4dhzsvh.fsf@bauges.imag.fr>
+ <BANLkTim+2Mv7bnfsNVAsn80MUx8-fjYZow@mail.gmail.com>
+ <7vfwo6y1kg.fsf@alter.siamese.dyndns.org>
+ <BANLkTinvnm7NvUs4BuGpBYsYKR0D1eP+cQ@mail.gmail.com>
+ <vpqk4dhzsvh.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Arnaud Lacurie <arnaud.lacurie@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Arnaud Lacurie <arnaud.lacurie@gmail.com>, git@vger.kernel.org,
 	Claire Fousse <claire.fousse@gmail.com>,
 	Sylvain Boulme <Sylvain.Boulme@imag.fr>
-To: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon May 23 15:49:08 2011
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon May 23 16:14:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOVVL-00046s-2q
-	for gcvg-git-2@lo.gmane.org; Mon, 23 May 2011 15:49:07 +0200
+	id 1QOVu4-0004wc-Is
+	for gcvg-git-2@lo.gmane.org; Mon, 23 May 2011 16:14:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754658Ab1EWNtB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 May 2011 09:49:01 -0400
-Received: from mail-px0-f173.google.com ([209.85.212.173]:57620 "EHLO
-	mail-px0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753994Ab1EWNtA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 May 2011 09:49:00 -0400
-Received: by pxi16 with SMTP id 16so3814542pxi.4
-        for <git@vger.kernel.org>; Mon, 23 May 2011 06:49:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=UQ77yj6HvpSiFi2MeuTqjBE98Bs4fgMEakg2VgrvulU=;
-        b=WVAMmpt+af/pTD75oIDSCGgAASfDGR+WDevO9QuVKVE/ROWaIa6QZdKsFWfbl5kGR7
-         nSJYD8r8rhHcA7wOlRMzrusPAbflqaT2YR8NiE82DepADNVPyTgjAib4RZ/q+rZIVlb7
-         WSkvYsKFY8V+WVzXdqHIAb0hH0W88GXmDw60E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=I9/Y2Bu72Si47rugRV2KpwQd1UCc8u7141er8subwHTrKvfc5o4xJKICVYQBw7BbFu
-         Wy5C3wTpX/qJtO3HYWIz4+JGtWmGeUvq60xcJ2w1PeXiGo0qGlwDdAYqh1fPi4GErsbl
-         VWAcSFeoUXEpXpEojFaa8881iUX7ofvcfTKX0=
-Received: by 10.143.63.10 with SMTP id q10mr815459wfk.291.1306158540212; Mon,
- 23 May 2011 06:49:00 -0700 (PDT)
-Received: by 10.142.13.11 with HTTP; Mon, 23 May 2011 06:48:40 -0700 (PDT)
-In-Reply-To: <vpqk4dhzsvh.fsf@bauges.imag.fr>
+	id S1754756Ab1EWOOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2011 10:14:35 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57243 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753004Ab1EWOOe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2011 10:14:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 586C14322;
+	Mon, 23 May 2011 10:16:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jCNPPpI+T1SCuaPiM6ijdaH/BlA=; b=LUdf0l
+	6tdzT5lDFmiOxBqlW8Iz9uzdA6ZQpmh5wcVMn4ReHCXc3n7LAg+S0xZokVRdpIBJ
+	jpnc8ilp2G4IPjleRMmcteZ/GXN85CxZES+2usI+ePgAlVzEk5QgsLaqj+jKUHHW
+	rXewNMWQXhEqGDNRbbFrN2CzSFpBJdveYhRew=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mISCrOgggwjCYFk40Jg3c0PkeoIPxtnm
+	GZYfTl2xgFEb4+urkOb5npO9MSbgV5JQqBV6vuy5Q178KKYaOzyZyM4vVwzLL/Db
+	6NXSTKS7ovigO0MJ54VxHMM8YU7FDwc1OUDvpSBpAjq53ObpbHDwTotwrbEe+YYo
+	uc9UG2weSuw=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 06BFA4315;
+	Mon, 23 May 2011 10:16:35 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 89AB04314; Mon, 23 May 2011
+ 10:16:28 -0400 (EDT)
+In-Reply-To: <vpqk4dhzsvh.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Mon, 23 May 2011 11:08:34 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 43E5EF6A-8547-11E0-89DC-BBB7F5B2FB1A-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174244>
 
-Hi, we are in a little bit of trouble trying to understand how remote
-helpers work and thus how to create our own.
-Trying to understand this, we created a git that we access through
-http on a local server on which we push files with
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-git remote-http http://login@localip/git
-push +master:master
+>>>        git clone --vcs=mediawiki http://some.where.xz/wiki/
+>...
+>> Is vcs a standard argument (I can't see it anywhere) or do we have to
+>> change something in order to implement it?
+>
+> I don't know, but anyway, it could be
+>
+> git clone mediawiki+http://some.where.xz/wiki
 
-The problem is we don't really understand which files are involved
-with remote helpers.
-We have perl scripts helping us to fetch and push files from mediawiki
-and we don't know how to implement them as a remote helper. Does
-anyone have some information regarding this ?
+I know it doesn't ;-)
 
-Thanks,
-Regards
-
---
-J=E9r=E9mie Nikaes
-Second year student at Ensimag
+As "clone" is a moral equivalent of "init" possibly followed by some
+auto-configuration followed by "fetch" and "checkout", it is a natural
+consequence of already supporting the "remove.<name>.vcs" configuration
+variable, and if we want to avoid the insane svn+http:// syntax, it is a
+logical thing to add such support.
