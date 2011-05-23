@@ -1,138 +1,106 @@
-From: Grant Limberg <glimberg@gmail.com>
-Subject: Re: [git-p4] Trouble importing all perforce branches into git repository
-Date: Mon, 23 May 2011 13:06:15 -0700
-Message-ID: <0AC6DD14-3042-4A18-91AC-1CE77D8B4CD2@gmail.com>
-References: <20110522114917.GA19927@arf.padd.com> <398FA881-E4A1-49AC-80F2-2D46E9F2ABB9@gmail.com> <BANLkTi=TCyyS7Q=3BnLcG=yhL_boH=w1XA@mail.gmail.com> <34E33A18-B9C4-4CA9-B96C-79B0E2BDCD44@gmail.com> <BANLkTik+Zp1Fvi_zABCtAZH0RKA68n5Svw@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-8--691022654"
-Content-Transfer-Encoding: 7bit
-Cc: Pete Wyckoff <pw@padd.com>, git@vger.kernel.org
-To: Vitor Antunes <vitor.hda@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 23 22:06:27 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv4 02/10] send-pack: Attempt to retrieve remote status
+ even if pack-objects fails
+Date: Mon, 23 May 2011 13:06:49 -0700
+Message-ID: <7vei3puqp2.fsf@alter.siamese.dyndns.org>
+References: <1306111923-16859-1-git-send-email-johan@herland.net>
+ <1306111923-16859-3-git-send-email-johan@herland.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon May 23 22:07:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QObOV-00077W-7Z
-	for gcvg-git-2@lo.gmane.org; Mon, 23 May 2011 22:06:27 +0200
+	id 1QObP8-0007aF-4B
+	for gcvg-git-2@lo.gmane.org; Mon, 23 May 2011 22:07:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933880Ab1EWUGW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2011 16:06:22 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:64451 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932909Ab1EWUGV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2011 16:06:21 -0400
-Received: by gyd10 with SMTP id 10so2272397gyd.19
-        for <git@vger.kernel.org>; Mon, 23 May 2011 13:06:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:subject:mime-version:content-type:from
-         :in-reply-to:date:cc:content-transfer-encoding:message-id:references
-         :to:x-pgp-agent:x-mailer;
-        bh=9HrgB+Uymyx+93tcLhbV8aNV6xF/UEtD1MlRUDizpUQ=;
-        b=m5eEYjSqMIhLgwr1XfUbCcKReXxPMCJozwuIEZyTPqRe/KDVy4e4ywvj5YYlSkKwQ8
-         +xxxolhLu8BU4D1FdAJmUC1wQ7TxpfWTKcNhJ2dkp+H++jK6YAfqPnC1e7XmPMZrn5II
-         dvu4nFUPGAaqWWOJ9xKfKBUZK46hZ8ym2kRFo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-pgp-agent
-         :x-mailer;
-        b=hetZ04D5ntU2Vv0DG0F8Sawk19tfiPj24nBZf5KDZbGJeopa96sFNnXF3t2feBVYSx
-         qguqBUVoBZTDKQvZugqgCb/HplCRh/Z7uPzbAf9htIvz4RNeasDQtPDa7EJxTGFETPyP
-         Z1Zgl8UtpdwVeEg+O+9c00PB5iok3xFyAAaog=
-Received: by 10.236.76.197 with SMTP id b45mr3710733yhe.147.1306181180591;
-        Mon, 23 May 2011 13:06:20 -0700 (PDT)
-Received: from [192.168.169.66] ([12.186.225.162])
-        by mx.google.com with ESMTPS id 44sm2865383yhl.53.2011.05.23.13.06.18
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 23 May 2011 13:06:19 -0700 (PDT)
-In-Reply-To: <BANLkTik+Zp1Fvi_zABCtAZH0RKA68n5Svw@mail.gmail.com>
-X-Pgp-Agent: GPGMail 1.3.3
-X-Mailer: Apple Mail (2.1084)
+	id S1030198Ab1EWUHA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2011 16:07:00 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38013 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932909Ab1EWUG7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2011 16:06:59 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1918052DE;
+	Mon, 23 May 2011 16:09:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=69qHOIw0qBMq0l7MH2iy5JmV+n8=; b=o89QP/
+	uDphC6YXhvTFWYQ69okUenbDi6VpSzEz7d9Z/vh1pIGahQRM7sS7QkQ6Zt2iUIkX
+	RIu0uTSKU6gupswiCtsTCR6hYUHUalTq93Kz8m2mk2zNpv8dvb0NuHjojCAdPg/q
+	Cgkgc6w/Ke0qa42K4HBtpvVnkNxkgikxaDYAw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GmyM9LpwAsxGV/aKf01/cdbE4DXtnPVu
+	fdvePnFI5UhYtXjuWmMGuo1UB8NpwMDZxsGr9TCFb5dJMe5LpjFzgl92bql73V+T
+	eLv+ZX5bOmTYn5JWjar+klgKz2ytFowx2vtsqUm0z3azDxKuwLeby6/7zEgZ6WR/
+	oi3O1tgt2J0=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DC49C52DA;
+	Mon, 23 May 2011 16:09:03 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A48BC52D5; Mon, 23 May 2011
+ 16:08:59 -0400 (EDT)
+In-Reply-To: <1306111923-16859-3-git-send-email-johan@herland.net> (Johan
+ Herland's message of "Mon, 23 May 2011 02:51:55 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 819BFD1E-8578-11E0-B12A-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174265>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---Apple-Mail-8--691022654
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=us-ascii
+Johan Herland <johan@herland.net> writes:
 
-On May 23, 2011, at 10:38 AM, Vitor Antunes wrote:
+> Therefore, we should try to read from the remote end, even when pack-objects
+> dies unexepectedly. We accomplish this by _always_ calling receive_status()
+> after pack_objects(). If the remote end managed to produce a well-formed
+> status report before exiting, then receive_status() simply presents that to
+> the user. Even if the data from the remote end cannot be understood by
+> receive_status(), it will print that data as part of its error message. In
+> any case, we give the user as much information about the failure as possible.
 
-> Hi Grant,
->=20
->> The "Branch-foo" that git-p4 is crashing on does have a branchspec in
->> Perforce.  I cannot, however guarantee that branchspecs were
->> correctly created and used for all integrates in the repository.  It
->> was created long before I started working here.
->=20
-> You can create the branch specs now. There is no requirement for them =
-to
-> have been created at the time of the integration.
->=20
-> I've sent a patch to this mailing list [1] that adds the possibility =
-of
-> creating these branches in a gitconfig file. If you feel brave enough,
-> please give it a try. The patch is missing a test case, which I still
-> did not have time to review and send
->=20
->> Is there a way to limit --detect-branches to only certain branches
->> that I can ensure do have branchspecs?
->=20
-> If you have an incremental structure you could limit the cloning to a
-> subset of the directories. I am not aware of any other way. Maybe
-> someone else in the mailing list can shed some light...? :)
->=20
-> Vitor
->=20
-> [1] =
-http://thread.gmane.org/gmane.comp.version-control.git/167998/focus=3D1680=
-00
+> diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+> index c1f6ddd..5ba5262 100644
+> --- a/builtin/send-pack.c
+> +++ b/builtin/send-pack.c
+> @@ -251,7 +251,7 @@ int send_pack(struct send_pack_args *args,
+>  	int status_report = 0;
+>  	int use_sideband = 0;
+>  	unsigned cmds_sent = 0;
+> -	int ret;
+> +	int ret = 0;
+>  	struct async demux;
+>  
+>  	/* Does the other end support the reporting? */
+> @@ -339,25 +339,18 @@ int send_pack(struct send_pack_args *args,
+>  	}
+>  
+>  	if (new_refs && cmds_sent) {
+> -		if (pack_objects(out, remote_refs, extra_have, args) < 0) {
+> -			for (ref = remote_refs; ref; ref = ref->next)
+> -				ref->status = REF_STATUS_NONE;
+> +		if ((ret = pack_objects(out, remote_refs, extra_have, args))) {
 
-I think I just figured out the problem.  The branch mapping between =
-//project/MAIN/... and //project/Branch-foo/... was done backwards, thus =
-git-p4 was expecting Branch-foo to be a parent of MAIN when the inverse =
-was actually true.  MAIN's first changelist number was 771.  =
-Branch-foo's first changelist number was 7652.  That's why git-p4 was =
-getting confused.  I fixed the branch mapping in Perforce and the clone =
-with --detect-branches seems to be working fine now.=20
+I am not very familiar with this codepath, but you no longer set ref->status
+to REF_STATUS_NONE ...
 
-Grant Limberg
-glimberg@gmail.com
+> ...
+>  	if (status_report && cmds_sent)
+> -		ret = receive_status(in, remote_refs);
+> -	else
+> -		ret = 0;
+> +		ret |= receive_status(in, remote_refs);
 
+... before calling receive_status() here, and that function can return
+early without setting anything.
 
-
-
-
---Apple-Mail-8--691022654
-content-type: application/pgp-signature; x-mac-type=70674453;
-	name=PGP.sig
-content-description: This is a digitally signed message part
-content-disposition: inline; filename=PGP.sig
-content-transfer-encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG/MacGPG2 v2.0.17 (Darwin)
-Comment: GPGTools - http://gpgtools.org
-
-iQIcBAEBAgAGBQJN2r44AAoJEH+RGVrhASuPKpwQAJZ7Zte4sgJRBHWQRUN80Sli
-Uyou6thf97021LahdMX98S8YTfk7SdNqHncxe7VdTlXMbxjLLfKanaVaysRv1OPg
-b0K9t1thQW35JhaNMQmp2A7MVGStWBEA/ntzsKgkvvEg4Aq0JcqfqbavXyDHa1u1
-2EOza/9Kq3hhfwBETOM9B2zKJSRclBIdvvOINQcTAp5wFOkpY9w4u1ukXLyy3TZd
-+3zXihZ1uNSo5FgteqyZi/l7rn7YpFD+XuT5vG4CUJimXFeTvJOhAvexsy2hRWzQ
-fVYFs8103iMdgfR49cwAAlGYy2DYPtuXE7re8GjsMdr4S/xOpnxDV9OxAZy7aG5X
-6sfOHvQrvDSJdmcBtipu8V4ewwnrjxJ433If4wptPWvQZipxIqX+5r4k9CZPF5gH
-9Ol2Gvoh2gq0rjNxdpD3EZN29VvNPNWA1s8sgKfyuT2kvQbsH3lgPWSXYrLhlKwR
-4ufRnUWEPdlNfvJtDsENdGM+5z9Pr3ue3Of0zKJzgOZahZkDDeJWq0Jp+EZS1DzQ
-nawuE7o/rfTAO+Ug5ZY1lT+8otGDi3WFPQ08sM+YgPlRr38GO1/FxOXE0MzDTxdr
-kzlzsGYpf+oQP/6G94D+wo3j2BLurPLzSllJk7rxb3ETdEexpsNln+urSoRFC43t
-7zLTl7xTfAUGsbBThc4H
-=TlBH
------END PGP SIGNATURE-----
-
---Apple-Mail-8--691022654--
+Would that have any negative effect on the code that comes after this part
+in the codepath?  or if receive_status() returns a failure, we do not even
+look at ref->status?
