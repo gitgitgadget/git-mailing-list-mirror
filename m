@@ -1,104 +1,75 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCHv4 02/10] send-pack: Attempt to retrieve remote status even
- if pack-objects fails
-Date: Tue, 24 May 2011 00:58:10 +0200
-Message-ID: <201105240058.10974.johan@herland.net>
-References: <1306111923-16859-1-git-send-email-johan@herland.net>
- <1306111923-16859-3-git-send-email-johan@herland.net>
- <7vei3puqp2.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/5] combine-diff: handle binary files as binary
+Date: Mon, 23 May 2011 16:02:58 -0700
+Message-ID: <7vk4dht3z1.fsf@alter.siamese.dyndns.org>
+References: <20110523201529.GA6281@sigill.intra.peff.net>
+ <20110523202734.GC6298@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 24 00:58:20 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 24 01:03:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOe4p-00019X-Gx
-	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 00:58:19 +0200
+	id 1QOe9d-00048V-E0
+	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 01:03:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757698Ab1EWW6O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2011 18:58:14 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:41486 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757650Ab1EWW6O (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2011 18:58:14 -0400
-Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
- by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LLO00BG07T03140@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Tue, 24 May 2011 00:58:12 +0200 (MEST)
-Received: from get-mta-scan02.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 5985B1EA559C_DDAE684B	for <git@vger.kernel.org>; Mon,
- 23 May 2011 22:58:12 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 386711EA2B83_DDAE683F	for <git@vger.kernel.org>; Mon,
- 23 May 2011 22:58:11 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LLO001J97SZFO00@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Tue, 24 May 2011 00:58:11 +0200 (MEST)
-User-Agent: KMail/1.13.7 (Linux/2.6.38-ARCH; KDE/4.6.3; x86_64; ; )
-In-reply-to: <7vei3puqp2.fsf@alter.siamese.dyndns.org>
+	id S1756880Ab1EWXDN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2011 19:03:13 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45723 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752504Ab1EWXDL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2011 19:03:11 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0866F4AA0;
+	Mon, 23 May 2011 19:05:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=xIqk0FQYxlzUl9b8sNvKc/ZYhHg=; b=D1GT2qWDkTmL7cbQAlZb
+	IeIAdl4XYyY0Uuq8p3oLGXKa6Y1KWC60hWxFC703Jm1RGAtzWPfUZvBXQkbmZQfP
+	jp1bqkRpe+50z8NzjEuaMK1GJlg60LUkkla0v8FbFPZJO7tS6geXf2XSEsYkHC8R
+	qLmZ46szVOJ2n68xxjMT74g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=pcxHW3z3jrBT5h2tAsLoCifW3lt77G99fNq/aYTkOtl4yi
+	EIbVUwWDiGD1jTk5rSQXA+0p20vGT/naChZpE12cvIbB2jYV5ovTYo8XXbTyJ88z
+	T6xO5XZtPuCQxMQj1d+LuDEwXOWTtOdanDrsF4TU91LZe2CrwflSX+Z4WD1Ow=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B8DEA4A9F;
+	Mon, 23 May 2011 19:05:13 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 730B94A9B; Mon, 23 May 2011
+ 19:05:08 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 1DBC42B8-8591-11E0-A41F-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174287>
 
-On Monday 23 May 2011, Junio C Hamano wrote:
-> Johan Herland <johan@herland.net> writes:
-> > @@ -339,25 +339,18 @@ int send_pack(struct send_pack_args *args,
-> > 
-> >  	}
-> >  	
-> >  	if (new_refs && cmds_sent) {
-> > 
-> > -		if (pack_objects(out, remote_refs, extra_have, args) < 0) {
-> > -			for (ref = remote_refs; ref; ref = ref->next)
-> > -				ref->status = REF_STATUS_NONE;
-> > +		if ((ret = pack_objects(out, remote_refs, extra_have, args))) {
-> 
-> I am not very familiar with this codepath, but you no longer set
-> ref->status to REF_STATUS_NONE ...
-> 
-> > ...
-> > 
-> >  	if (status_report && cmds_sent)
-> > 
-> > -		ret = receive_status(in, remote_refs);
-> > -	else
-> > -		ret = 0;
-> > +		ret |= receive_status(in, remote_refs);
-> 
-> ... before calling receive_status() here, and that function can return
-> early without setting anything.
-> 
-> Would that have any negative effect on the code that comes after this
-> part in the codepath?  or if receive_status() returns a failure, we do
-> not even look at ref->status?
+Jeff King <peff@peff.net> writes:
 
-Hmm... I believe I proved the correctness of this to myself when I first 
-wrote the patch, but looking at it a second time, I see that I only did so 
-for send_pack() itself. The remote_refs (that no longer has each ref->status 
-set to REF_STATUS_NONE on pack_objects() failure) are given as an argument 
-to send_pack(), and are still used by the caller after send_pack() has 
-returned (even when it returns with errors).
+> The big question here is what we want the output to look like. I chose
+> this:
+>
+>   diff --combined foo
+>   index 7ea6ded,6197570..9563691
+>   Binary files differ
+>
+> which contains all of the information we have: for file "foo" there were
+> two parents (at 7ea6ded and 6197570 respectively), and the resolution
+> was 9563691.
 
-Therefore, I was wrong to remove this "ref->status = REF_STATUS_NONE" loop. 
-Will be fixed in the next iteration.
+Yeah, I think the above is sane and matches more-or-less the conclusion of
+the previous discussion Michael quoted.
 
-
-Thanks for noticing,
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+I've only read up to this patch (I wanted to conclude the first round of
+today's integration round before 17:00 local) and they all looked good;
+will queue the whole thing to 'pu' in the meantime.
