@@ -1,69 +1,64 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: Re: [git-p4] Trouble importing all perforce branches into git repository
-Date: Mon, 23 May 2011 11:54:18 +0100
-Message-ID: <BANLkTi=TCyyS7Q=3BnLcG=yhL_boH=w1XA@mail.gmail.com>
-References: <20110522114917.GA19927@arf.padd.com> <398FA881-E4A1-49AC-80F2-2D46E9F2ABB9@gmail.com>
+From: Gergely Buday <gbuday@gmail.com>
+Subject: git branch
+Date: Mon, 23 May 2011 13:36:09 +0200
+Message-ID: <BANLkTinzped82Njnw4ZUeHY6Qu4R4hKK-w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Pete Wyckoff <pw@padd.com>, git@vger.kernel.org
-To: Grant Limberg <glimberg@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 23 12:54:56 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 23 13:36:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOSml-0002y3-Of
-	for gcvg-git-2@lo.gmane.org; Mon, 23 May 2011 12:54:56 +0200
+	id 1QOTQm-0003bI-OC
+	for gcvg-git-2@lo.gmane.org; Mon, 23 May 2011 13:36:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752184Ab1EWKyu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2011 06:54:50 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:51538 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751905Ab1EWKyt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2011 06:54:49 -0400
-Received: by iwn34 with SMTP id 34so4650909iwn.19
-        for <git@vger.kernel.org>; Mon, 23 May 2011 03:54:49 -0700 (PDT)
+	id S1754222Ab1EWLgL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2011 07:36:11 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:42397 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754211Ab1EWLgJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2011 07:36:09 -0400
+Received: by pvg12 with SMTP id 12so2523793pvg.19
+        for <git@vger.kernel.org>; Mon, 23 May 2011 04:36:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=1qb6KOQK+tTosaabDxuFEg+0fepWUUOulRzgtJvahSU=;
-        b=bNSNzf0U+HGicsO5HTtj0+tNqwzoVicbaQnGOdFKSKvwIb4vR5iicKIY7i+nhq/2qv
-         rqVEiTb4fIoIO8JBsxlVLMaUVF81otf2/2wvkU3fHMif+yxs97OTUtlqa+K/+4kpyWtd
-         ypXVrXuTO2oZtkSgLGvDNvaSFV70uAHrHdpRY=
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=IjwtReZWAQBSFHYsOeBqzdsF+TykUXa6LojCrtGKNX4=;
+        b=sMQzQALflnAxmkRpuYdWiP9xBe97evzaLgoJ62Il1HYpmnGvFboJaEcnQteVpH4gxk
+         VnAt6B3qmG/s1rNL/frK/OhJdKhtJYHrT6uGU54ZVCNr6QUqG3B/ntf84M/nhJYpP8NA
+         tjg42/sNu7eTWRH1ie52lSgbhsMZOg/v90vjQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=T/jzlnf39B8qloqBLE+vV7yuTRpQBsyESHMUwbs2rrBoxQ/AjB0mC4c1VepUh2rc5w
-         sWYeeaDF1qLiC2SF9zTOU0vSoUs+w7X6HhES86UJie+wpQzx6TigJ/IZIbNefLrcKbfV
-         Avm4+1lvCNHAR/AOdi3hexritGn4BkksUXlI0=
-Received: by 10.231.197.27 with SMTP id ei27mr1938982ibb.198.1306148089124;
- Mon, 23 May 2011 03:54:49 -0700 (PDT)
-Received: by 10.231.17.66 with HTTP; Mon, 23 May 2011 03:54:18 -0700 (PDT)
-In-Reply-To: <398FA881-E4A1-49AC-80F2-2D46E9F2ABB9@gmail.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=PQKypJEZmwaq+fZ/ZPtYTdIfggolkO7lCtG9U2jqit57arDNnRt2kit6oWEU4v/s9y
+         nzfqAJvOqi/iyJ3DfaM7Fo2f/Utga2vbN1NtS3DSvx3H6QD6kVfNpfCRTzNmiFsAyE5i
+         3IEEQfc4VKJbiaBkSq462LuavnJQ9CV4e7qls=
+Received: by 10.142.207.11 with SMTP id e11mr776546wfg.127.1306150569531; Mon,
+ 23 May 2011 04:36:09 -0700 (PDT)
+Received: by 10.143.91.18 with HTTP; Mon, 23 May 2011 04:36:09 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174237>
 
-Hi Grant,
+Hi there,
 
-I think I saw that happening when there is nothing to import or in
-situations where the parent of a certain branch does not exist.
+I created
 
-Perforce does not strictly require branch definitions to allow a branch
-structure/flow. It is quite possible that you are integrating stuff
-around without using "branch specs". When git-p4 is importing your P4
-database it will look at all branches available in the server, including
-ones from other depots. So it is possible that while you are seeing a
-big list of branches being processed, none apply to the branch structure
-you are trying to import.
+git branch install_2.0
 
-Could you please confirm that you have Perforce branch specs for all
-branches that you are trying to import?
+for my install script. Then pushed to
 
-Thanks,
-Vitor
+git push origin install_2.0
+
+so that github stores by branch
+
+after another commit I tried to push again but git told me that I'm
+not on that branch. Why git loses the state that I'm on a branch? What
+should I do to have my expected behaviour?
+
+- Gergely
