@@ -1,74 +1,61 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Cross-compiling git (was: [PATCHv2] add Android support)
-Date: Mon, 23 May 2011 10:30:40 -0400
-Message-ID: <20110523143040.GB17743@sigill.intra.peff.net>
-References: <B22B44EF-0AFB-44E3-93E3-61FA730431B9@gieschke.de>
- <7vaaej9pt3.fsf@alter.siamese.dyndns.org>
- <2218C353-80FC-4540-A60E-608385384FB5@gieschke.de>
- <20110519122026.GA30240@sigill.intra.peff.net>
- <m3k4dhzynr.fsf_-_@localhost.localdomain>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: [idea] separate .git dir and the working tree
+Date: Mon, 23 May 2011 14:40:57 +0000
+Message-ID: <BANLkTinL_y8oAW2kQdyP-+CmdmrRWOrEsA@mail.gmail.com>
+References: <AANLkTik4MjnpOzPdGy7ZDiH0in4e1DpjrhQFOHjUiEEE@mail.gmail.com>
+ <20110205032339.GA15303@mg1> <20110205132708.GA18391@elie>
+ <20110206002009.GA13594@mg1> <20110206004013.GB13594@mg1>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Rafael Gieschke <rafael@gieschke.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 23 16:30:49 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: redstun <redstun@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>,
+	git@vger.kernel.org
+To: Mike Gant <mike@gantsfort.com>
+X-From: git-owner@vger.kernel.org Mon May 23 16:41:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOW9g-0007MW-Jq
-	for gcvg-git-2@lo.gmane.org; Mon, 23 May 2011 16:30:49 +0200
+	id 1QOWK5-0005jR-38
+	for gcvg-git-2@lo.gmane.org; Mon, 23 May 2011 16:41:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755507Ab1EWOan (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2011 10:30:43 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45578
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754389Ab1EWOan (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2011 10:30:43 -0400
-Received: (qmail 18911 invoked by uid 107); 23 May 2011 14:32:46 -0000
-Received: from sigill-wired.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.8)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 23 May 2011 10:32:46 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 23 May 2011 10:30:40 -0400
-Content-Disposition: inline
-In-Reply-To: <m3k4dhzynr.fsf_-_@localhost.localdomain>
+	id S1755769Ab1EWOl2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2011 10:41:28 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:47929 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755722Ab1EWOl1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2011 10:41:27 -0400
+Received: by iwn34 with SMTP id 34so4818392iwn.19
+        for <git@vger.kernel.org>; Mon, 23 May 2011 07:41:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=x5DgjGq7puDPkMsV384u342GXMSC7yd0GmUBR+g4xC4=;
+        b=u0cTWAGQ5XZIAo59ussFIBobWK8AMB1OH3b81NCe+Cbk0W29taoPYfcKATJF7gUuLC
+         eiIbBEy5iZzWEvl9+V9sOYdemYK+NIoZq03fpBkn1T3yOzr0Wm1z++6Hj+sUITS5qKLZ
+         BcyvQigN1+I1yzNwEq6zw84nS11EHVhqKk+u0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=gXq3FZyDbf4N+Eutb14/qw0WJgb66y5Jl0XTS63OpLM/j0WVySi0l+8buxPzAJfAy9
+         ef4OEsP4cXB1OFldcn1wWgVy6pB2+JnWtkopP0h6dRkkOrLg9Q3un3MAavQSesCYPW5c
+         YRfN0ROQWM+0J7MnM9OdbqeAzjlgH+PCnixOk=
+Received: by 10.42.159.134 with SMTP id l6mr8589143icx.16.1306161687112; Mon,
+ 23 May 2011 07:41:27 -0700 (PDT)
+Received: by 10.42.173.72 with HTTP; Mon, 23 May 2011 07:40:57 -0700 (PDT)
+In-Reply-To: <20110206004013.GB13594@mg1>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174246>
 
-On Mon, May 23, 2011 at 12:04:44AM -0700, Jakub Narebski wrote:
+On Sun, Feb 6, 2011 at 00:40, Mike Gant <mike@gantsfort.com> wrote:
+> So does anyone use Mutt? And do they know a recipe to move the sender
+> address to the cc list? If not, I'll figure it out.
 
-> > So I think we are probably stuck either with the user setting an ANDROID
-> > meta-flag that sets the other flags appropriately, or leaving it up to
-> > the user to provide a sane config.mak.
-> 
-> By the way, how well Git supports cross-compiling (which from the
-> thread is necessity to generate binaries for Android)?  `uname -a`
-> trick works only when compiling on same machine.
-
-It should work fine if you set the make variables appropriately for the
-target platform. But I've never tried it. Didn't msysgit people
-cross-compile for a while (or maybe still do)?
-
-> ./configure supports --host and --build options, but I don't know if
-> it pass them down to make somehow.  ANDROID=YesPlease seems wasteful:
-> what about setting HOST or MACHINE, or even uname_* variables, or just
-> using Autoconf's `host` (in the form of CPU-VENDOR-OS)?
-
-I know very little about autoconf internals, but what would
-CPU-VENDOR-OS look like? Your CPU is probably some arm variant, though
-it will vary from device to device. Your kernel is Linux. The special
-steps in this case are about some weird userspace issues. So the
-equivalent would be more like finding a Linux distro that ships a crappy
-libc.  I guess that is what the "vendor" slot is for?
-
-But even if you somehow tell autoconf or the Makefile "yes, this is
-android", you are still going to need to manually specify the set of
-knobs that should be tweaked in that case. Whether you call it
-"ANDROID=YesPlease" or some other form.
-
--Peff
+Your `To:' header should list the sender (usually what's listed in the
+`From:' header); the `Cc:' header should list everything else
+(including the mailing list(s) in question).
