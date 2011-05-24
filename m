@@ -1,274 +1,204 @@
-From: Josh Triplett <josh@joshtriplett.org>
-Subject: [PATCH] Support multiple virtual repositories with a single object
- store and refs
-Date: Mon, 23 May 2011 18:02:52 -0700
-Message-ID: <20110524010252.GA5368@leaf>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCHv4 06/10] send-pack/receive-pack: Allow server to refuse
+ pushes with too many commits
+Date: Tue, 24 May 2011 03:11:41 +0200
+Message-ID: <201105240311.41440.johan@herland.net>
+References: <1306111923-16859-1-git-send-email-johan@herland.net>
+ <1306111923-16859-7-git-send-email-johan@herland.net>
+ <7vpqn9rnpd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Jamey Sharp <jamey@minilop.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 24 03:03:14 2011
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 24 03:11:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOg1h-0000sw-7Q
-	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 03:03:13 +0200
+	id 1QOgA2-0003L7-Cl
+	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 03:11:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758041Ab1EXBDH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2011 21:03:07 -0400
-Received: from relay3-d.mail.gandi.net ([217.70.183.195]:38218 "EHLO
-	relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758038Ab1EXBDF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2011 21:03:05 -0400
-X-Originating-IP: 217.70.178.134
-Received: from mfilter4-d.gandi.net (mfilter4-d.gandi.net [217.70.178.134])
-	by relay3-d.mail.gandi.net (Postfix) with ESMTP id DF690A8076;
-	Tue, 24 May 2011 03:03:01 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at #File managed by puppet, do not edit
-	locally
-Received: from relay3-d.mail.gandi.net ([217.70.183.195])
-	by mfilter4-d.gandi.net (mfilter4-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id cU91oYm0S2Fg; Tue, 24 May 2011 03:03:00 +0200 (CEST)
-X-Originating-IP: 131.252.248.161
-Received: from leaf (host-248-161.pubnet.pdx.edu [131.252.248.161])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 4D3D1A8072;
-	Tue, 24 May 2011 03:02:54 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753776Ab1EXBLo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2011 21:11:44 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:38668 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753383Ab1EXBLo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2011 21:11:44 -0400
+Received: from get-mta-scan01.get.basefarm.net ([10.5.16.4])
+ by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LLO008GBDZIGS30@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 24 May 2011 03:11:42 +0200 (MEST)
+Received: from get-mta-scan01.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 3DA7D1799C9A_DDB05CEB	for <git@vger.kernel.org>; Tue,
+ 24 May 2011 01:11:42 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan01.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id E77E91796B28_DDB05CDF	for <git@vger.kernel.org>; Tue,
+ 24 May 2011 01:11:41 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LLO00K5JDZHF930@get-mta-in03.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 24 May 2011 03:11:41 +0200 (MEST)
+User-Agent: KMail/1.13.7 (Linux/2.6.38-ARCH; KDE/4.6.3; x86_64; ; )
+In-reply-to: <7vpqn9rnpd.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174306>
 
-Given many repositories with copies of the same objects (such as
-branches of the same source), sharing a common object store will avoid
-duplication.  Alternates provide a single baseline, but don't handle
-ongoing activity in the various repositories.  Git safely handles
-concurrent accesses to the same object store across repositories, but
-operations such as gc need to know about all of the refs.
+On Tuesday 24 May 2011, Junio C Hamano wrote:
+> Johan Herland <johan@herland.net> writes:
+> > However, older clients that do not understand the capability will not
+> > check their pack against the limit, and will end up pushing the pack
+> > to the server. Currently there is no extra check on the server to
+> > detect a push that exceeds receive.commitCountLimit. However, such a
+> > check could be done in a pre-receive or update hook.
+> 
+> I found the above a reasonable thing to do. In other words, this is an
+> advisory configuration at this point (and from a cursory scanning of the
+> rest of the series, throughout the series), and that is OK.
+> 
+> > diff --git a/Documentation/config.txt b/Documentation/config.txt
+> > index 1a060ec..c18faac 100644
+> > --- a/Documentation/config.txt
+> > +++ b/Documentation/config.txt
+> > 
+> > @@ -1592,6 +1592,15 @@ receive.unpackLimit::
+> >  	especially on slow filesystems.  If not set, the value of
+> >  	`transfer.unpackLimit` is used instead.
+> > 
+> > +receive.commitCountLimit::
+> > +	If the number of commits received in a push exceeds this limit,
+> > +	then the entire push will be refused. This is meant to prevent
+> > +	an unintended large push (typically a result of the user not
+> > +	being aware of exactly what is being pushed, e.g. pushing a
+> > +	large rewritten history) from entering the repo. If not set,
+> > +	there is no upper limit on the number of commits transferred
+> > +	in a single push.
+> 
+> But then it may probably be a good idea to reword this a bit, to clarify
+> the refusal happens voluntarily by the pusher.  E.g.
+> 
+> 	Tell "git push" not to push more than this many commits at once
+>         into this repository. This is meant to prevent ... in a single
+>         push. Note that older versions of "git push" may ignore this
+>         advisory, so if you really want to refuse such a push, you would
+>         need to arrange to do so in either the pre-receive hook or the
+>         update hook.
 
-This change adds support in upload-pack and receive-pack to simulate
-multiple virtual repositories within the object store and references of
-a single underlying repository.  The refs and heads of the virtual
-repositories get stored in the underlying repository using prefixed
-names specified by the --ref-prefix and --head options; for instance,
---ref-prefix=repo1/ will use refs/repo1/heads/* and refs/repo1/tags/*.
-upload-pack and receive-pack will not expose any references that do not
-match the specified prefix.
+Agreed. Thanks for the rewording.
 
-These options implement the underlying mechanism for virtual
-repositories; the higher-level protocol handler (such as http-backend or
-a custom server) can pass these options when invoking upload-pack or
-receive-pack, providing values based on components of the repository
-path.  For a simple local test, git-remote-ext works:
+> > diff --git a/Documentation/technical/protocol-capabilities.txt
+> > b/Documentation/technical/protocol-capabilities.txt index
+> > 11849a3..0240967 100644
+> > --- a/Documentation/technical/protocol-capabilities.txt
+> > +++ b/Documentation/technical/protocol-capabilities.txt
+> > @@ -205,5 +205,7 @@ the server. If the check fails, the client must
+> > abort the upload, and
+> > 
+> >  report the reason for the aborted push back to the user.
+> > 
+> >  The following "limit-*" capabilites are recognized:
+> > + - limit-commit-count=<num> (Maximum number of commits in a pack)
+> > +
+> 
+> I think s/in a pack/to transfer/ is more appropriate.
+> 
+> It is a non-essential detail that the current implementation carries only
+> one pack in a single session between send-pack and receive-pack.  When we
+> update the protocol (with another capability) so that we can send more
+> than one packs in a single session, we would want the maximum number of
+> commits to be honored.
 
-git clone ext::'git %s --ref-prefix=prefix/ --head=prefix-HEAD /tmp/prefixed.git'
+Agreed.
 
-Commit by Josh Triplett and Jamey Sharp.
-Signed-off-by: Josh Triplett <josh@joshtriplett.org>
-Signed-off-by: Jamey Sharp <jamey@minilop.net>
----
- builtin/receive-pack.c |   38 +++++++++++++++++++++++++++++---------
- upload-pack.c          |   34 +++++++++++++++++++++++++++-------
- 2 files changed, 56 insertions(+), 16 deletions(-)
+> Come to think of it, I do not necessarily agree with the earlier "max
+> commit count can only be used with max pack size"; I can accept it if the
+> statement is qualified with "for now", though.
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index e1ba4dc..45d0b35 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -34,6 +34,8 @@ static int prefer_ofs_delta = 1;
- static int auto_update_server_info;
- static int auto_gc = 1;
- static const char *head_name;
-+static const char *head_path = "HEAD";
-+static const char *ref_prefix = "refs/";
- static int sent_capabilities;
- 
- static enum deny_action parse_deny_action(const char *var, const char *value)
-@@ -108,11 +110,12 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
- 
- static int show_ref(const char *path, const unsigned char *sha1, int flag, void *cb_data)
- {
-+	const char *refnameprefix = cb_data;
- 	if (sent_capabilities)
--		packet_write(1, "%s %s\n", sha1_to_hex(sha1), path);
-+		packet_write(1, "%s %s%s\n", sha1_to_hex(sha1), refnameprefix, path);
- 	else
--		packet_write(1, "%s %s%c%s%s\n",
--			     sha1_to_hex(sha1), path, 0,
-+		packet_write(1, "%s %s%s%c%s%s\n",
-+			     sha1_to_hex(sha1), refnameprefix, path, 0,
- 			     " report-status delete-refs side-band-64k",
- 			     prefer_ofs_delta ? " ofs-delta" : "");
- 	sent_capabilities = 1;
-@@ -121,9 +124,9 @@ static int show_ref(const char *path, const unsigned char *sha1, int flag, void
- 
- static void write_head_info(void)
- {
--	for_each_ref(show_ref, NULL);
-+	for_each_ref_in(ref_prefix, show_ref, "refs/");
- 	if (!sent_capabilities)
--		show_ref("capabilities^{}", null_sha1, 0, NULL);
-+		show_ref("capabilities^{}", null_sha1, 0, "");
- 
- }
- 
-@@ -332,6 +335,8 @@ static void refuse_unconfigured_deny_delete_current(void)
- static const char *update(struct command *cmd)
- {
- 	const char *name = cmd->ref_name;
-+	struct strbuf prefixed_name_buf = STRBUF_INIT;
-+	const char *prefixed_name;
- 	unsigned char *old_sha1 = cmd->old_sha1;
- 	unsigned char *new_sha1 = cmd->new_sha1;
- 	struct ref_lock *lock;
-@@ -342,7 +347,12 @@ static const char *update(struct command *cmd)
- 		return "funny refname";
- 	}
- 
--	if (is_ref_checked_out(name)) {
-+	strbuf_addf(&prefixed_name_buf, "%s%s", ref_prefix, name + 5);
-+	prefixed_name = strbuf_detach(&prefixed_name_buf, NULL);
-+
-+	rp_warning("name \"%s\", prefixed_name \"%s\"", name, prefixed_name);
-+
-+	if (is_ref_checked_out(prefixed_name)) {
- 		switch (deny_current_branch) {
- 		case DENY_IGNORE:
- 			break;
-@@ -370,7 +380,7 @@ static const char *update(struct command *cmd)
- 			return "deletion prohibited";
- 		}
- 
--		if (!strcmp(name, head_name)) {
-+		if (!strcmp(prefixed_name, head_name)) {
- 			switch (deny_delete_current) {
- 			case DENY_IGNORE:
- 				break;
-@@ -426,14 +436,14 @@ static const char *update(struct command *cmd)
- 			rp_warning("Allowing deletion of corrupt ref.");
- 			old_sha1 = NULL;
- 		}
--		if (delete_ref(name, old_sha1, 0)) {
-+		if (delete_ref(prefixed_name, old_sha1, 0)) {
- 			rp_error("failed to delete %s", name);
- 			return "failed to delete";
- 		}
- 		return NULL; /* good */
- 	}
- 	else {
--		lock = lock_any_ref_for_update(name, old_sha1, 0);
-+		lock = lock_any_ref_for_update(prefixed_name, old_sha1, 0);
- 		if (!lock) {
- 			rp_error("failed to lock %s", name);
- 			return "failed to lock";
-@@ -760,6 +770,16 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 				advertise_refs = 1;
- 				continue;
- 			}
-+			if (!prefixcmp(arg, "--head=")) {
-+				head_path = arg+7;
-+				continue;
-+			}
-+			if (!prefixcmp(arg, "--ref-prefix=")) {
-+				struct strbuf prefixbuf = STRBUF_INIT;
-+				strbuf_addf(&prefixbuf, "refs/%s", arg+13);
-+				ref_prefix = strbuf_detach(&prefixbuf, NULL);
-+				continue;
-+			}
- 			if (!strcmp(arg, "--stateless-rpc")) {
- 				stateless_rpc = 1;
- 				continue;
-diff --git a/upload-pack.c b/upload-pack.c
-index ce5cbbe..a1e495f 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -34,6 +34,8 @@ static int shallow_nr;
- static struct object_array have_obj;
- static struct object_array want_obj;
- static struct object_array extra_edge_obj;
-+static const char *head_path = "HEAD";
-+static const char *ref_prefix = "";
- static unsigned int timeout;
- /* 0 for no sideband,
-  * otherwise maximum packet size (up to 65520 bytes).
-@@ -640,17 +642,18 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
- 	static const char *capabilities = "multi_ack thin-pack side-band"
- 		" side-band-64k ofs-delta shallow no-progress"
- 		" include-tag multi_ack_detailed";
-+	const char *refnameprefix = cb_data;
- 	struct object *o = parse_object(sha1);
- 
- 	if (!o)
- 		die("git upload-pack: cannot find object %s:", sha1_to_hex(sha1));
- 
- 	if (capabilities)
--		packet_write(1, "%s %s%c%s%s\n", sha1_to_hex(sha1), refname,
-+		packet_write(1, "%s %s%s%c%s%s\n", sha1_to_hex(sha1), refnameprefix, refname,
- 			     0, capabilities,
- 			     stateless_rpc ? " no-done" : "");
- 	else
--		packet_write(1, "%s %s\n", sha1_to_hex(sha1), refname);
-+		packet_write(1, "%s %s%s\n", sha1_to_hex(sha1), refnameprefix, refname);
- 	capabilities = NULL;
- 	if (!(o->flags & OUR_REF)) {
- 		o->flags |= OUR_REF;
-@@ -659,7 +662,7 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
- 	if (o->type == OBJ_TAG) {
- 		o = deref_tag(o, refname, 0);
- 		if (o)
--			packet_write(1, "%s %s^{}\n", sha1_to_hex(o->sha1), refname);
-+			packet_write(1, "%s %s%s^{}\n", sha1_to_hex(o->sha1), refnameprefix, refname);
- 	}
- 	return 0;
- }
-@@ -678,15 +681,24 @@ static int mark_our_ref(const char *refname, const unsigned char *sha1, int flag
- 
- static void upload_pack(void)
- {
-+	struct strbuf prefix = STRBUF_INIT;
-+	unsigned char sha1[20];
-+	int flag;
-+
-+	strbuf_addf(&prefix, "refs/%s", ref_prefix);
- 	if (advertise_refs || !stateless_rpc) {
- 		reset_timeout();
--		head_ref(send_ref, NULL);
--		for_each_ref(send_ref, NULL);
-+		if (resolve_ref(head_path, sha1, 1, &flag))
-+			send_ref("HEAD", sha1, flag, "");
-+		for_each_ref_in(prefix.buf, send_ref, "refs/");
- 		packet_flush(1);
- 	} else {
--		head_ref(mark_our_ref, NULL);
--		for_each_ref(mark_our_ref, NULL);
-+		if (resolve_ref(head_path, sha1, 1, &flag))
-+			mark_our_ref("HEAD", sha1, flag, NULL);
-+		for_each_ref_in(prefix.buf, mark_our_ref, NULL);
- 	}
-+	strbuf_release(&prefix);
-+
- 	if (advertise_refs)
- 		return;
- 
-@@ -716,6 +728,14 @@ int main(int argc, char **argv)
- 			advertise_refs = 1;
- 			continue;
- 		}
-+		if (!prefixcmp(arg, "--head=")) {
-+			head_path = arg+7;
-+			continue;
-+		}
-+		if (!prefixcmp(arg, "--ref-prefix=")) {
-+			ref_prefix = arg+13;
-+			continue;
-+		}
- 		if (!strcmp(arg, "--stateless-rpc")) {
- 			stateless_rpc = 1;
- 			continue;
+I'll add the qualification.
+
+> It is entirely reasonable to say that I want to split packs in 2GB
+> chunks, and I want to keep the number of commits in the resulting packs
+> (notice the plural) under this fixed ceiling to avoid mistakes, no?
+
+I guess it depends on whether you interpret the commit count limit as a per-
+pack threshold that triggers pack splitting (similar to how we interpret the 
+pack size limit), or as an upper bound which aborts pack-objects if 
+exceeded.
+
+I initially found it more intuitive to interpret all of these as a fixed 
+upper bound when paired with --stdout (since that implicitly limits us to a 
+single pack), and as a pack splitting threshold when used without --stdout 
+(except that triggering pack splits based on commit count is not useful).
+
+> > @@ -112,6 +118,9 @@ static const char *capabilities()
+> > 
+> >  	int ret = snprintf(buf, sizeof(buf),
+> >  	
+> >  			   " report-status delete-refs side-band-64k%s",
+> >  			   prefer_ofs_delta ? " ofs-delta" : "");
+> > 
+> > +	if (limit_commit_count > 0)
+> > +		ret += snprintf(buf + ret, sizeof(buf) - ret,
+> > +				" limit-commit-count=%lu", limit_commit_count);
+> > 
+> >  	assert(ret < sizeof(buf));
+> 
+> Hmm, at this point wouldn't it become attractive to stop using the static
+> fixed sized buffer and instead start using a strbuf or something?
+
+Yeah. Will fix in next iteration.
+
+> > diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+> > index 5ba5262..f91924f 100644
+> > --- a/builtin/send-pack.c
+> > +++ b/builtin/send-pack.c
+> > @@ -49,9 +49,11 @@ static int pack_objects(int fd, struct ref *refs,
+> > struct extra_have_objects *ext
+> > 
+> >  		NULL,
+> >  		NULL,
+> >  		NULL,
+> > 
+> > +		NULL,
+> > 
+> >  	};
+> >  	struct child_process po;
+> >  	int i;
+> > 
+> > +	char buf[40];
+> 
+> 40 is 19 plus terminating NUL plus 20-decimal digits to hold the count?
+
+Indeed. I will document this more clearly.
+
+> > @@ -263,6 +271,8 @@ int send_pack(struct send_pack_args *args,
+> > 
+> >  		args->use_ofs_delta = 1;
+> >  	
+> >  	if (server_supports("side-band-64k"))
+> >  	
+> >  		use_sideband = 1;
+> > 
+> > +	if ((p = server_supports("limit-commit-count=")))
+> > +		args->max_commit_count = strtoul(p, NULL, 10);
+> 
+> If we find garbage in *p, we would just run with a random limit, which
+> may cause the pack-objects to abort, but that still is a controlled
+> failure and is acceptable.
+
+Agreed.
+
+
+...Johan
+
 -- 
-1.7.5.1
+Johan Herland, <johan@herland.net>
+www.herland.net
