@@ -1,107 +1,88 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [RFC PATCH] unpack-trees: add the dry_run flag to unpack_trees_options
-Date: Tue, 24 May 2011 23:07:05 +0200
-Message-ID: <4DDC1DF9.9030109@web.de>
+From: Chris Wilson <cwilson@vigilantsw.com>
+Subject: Simple dead assignment
+Date: Tue, 24 May 2011 17:07:58 -0400
+Message-ID: <20110524210758.GH16052@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 24 23:07:13 2011
+Content-Type: multipart/mixed; boundary="TRYliJ5NKNqkz5bu"
+Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 24 23:08:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOyoq-0001L3-W2
-	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 23:07:13 +0200
+	id 1QOypq-00022V-20
+	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 23:08:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755571Ab1EXVHJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2011 17:07:09 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:58091 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757559Ab1EXVHH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2011 17:07:07 -0400
-Received: from smtp04.web.de  ( [172.20.0.225])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 43CAC18F7C7F6;
-	Tue, 24 May 2011 23:07:06 +0200 (CEST)
-Received: from [93.246.53.235] (helo=[192.168.178.43])
-	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1QOyok-0002Z3-00; Tue, 24 May 2011 23:07:06 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1+bvdh9tPkt/U66UdcsxkAfEP/EQUZEDOJztR4R
-	EbC5a4QQNAjhnfFvlTZiwXF5mDQTui1SqbBw+Z9EoVu2pGaKpn
-	r889GqH05PcEla4KQ7EA==
+	id S1757215Ab1EXVIF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2011 17:08:05 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:42617 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754751Ab1EXVIE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2011 17:08:04 -0400
+Received: by pwi15 with SMTP id 15so3182041pwi.19
+        for <git@vger.kernel.org>; Tue, 24 May 2011 14:08:02 -0700 (PDT)
+Received: by 10.68.38.98 with SMTP id f2mr2934116pbk.462.1306271282632;
+        Tue, 24 May 2011 14:08:02 -0700 (PDT)
+Received: from localhost (c-76-126-142-103.hsd1.ca.comcast.net [76.126.142.103])
+        by mx.google.com with ESMTPS id b4sm5216331pbo.80.2011.05.24.14.08.01
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 24 May 2011 14:08:01 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174341>
-
-Until now there was no way to test if unpack_trees() with update=1 would
-succeed without really updating the work tree. The reason for that is that
-setting update to 0 does skip the tests for new files and deactivates the
-sparse handling, thereby making that unsuitable as a dry run.
-
-Add the new dry_run flag to struct unpack_trees_options unpack_trees().
-Setting that together with the update flag will check if the work tree
-update would be successful without doing it for real.
-
-The only class of problems that is not detected at the moment are file
-system conditions like ENOSPC or missing permissions. Also the index
-entries of updated files are not as they would be after a real checkout
-because lstat() isn't run as the files aren't updated for real.
-
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
-
-AFAICS this patch enables the user to achieve a dry run by calling
-unpack_trees() with both update and dry_run set.
-
-My "Teach read-tree the -n|--dry-run option" adapted to this new flag
-runs all tests successfully ...
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174342>
 
 
- unpack-trees.c |    4 ++--
- unpack-trees.h |    3 ++-
- 2 files changed, 4 insertions(+), 3 deletions(-)
+--TRYliJ5NKNqkz5bu
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 500ebcf..e26a710 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -203,7 +203,7 @@ static int check_updates(struct unpack_trees_options *o)
+Hi Folks,
 
- 		if (ce->ce_flags & CE_WT_REMOVE) {
- 			display_progress(progress, ++cnt);
--			if (o->update)
-+			if (o->update && !o->dry_run)
- 				unlink_entry(ce);
- 			continue;
- 		}
-@@ -217,7 +217,7 @@ static int check_updates(struct unpack_trees_options *o)
- 		if (ce->ce_flags & CE_UPDATE) {
- 			display_progress(progress, ++cnt);
- 			ce->ce_flags &= ~CE_UPDATE;
--			if (o->update) {
-+			if (o->update && !o->dry_run) {
- 				errs |= checkout_entry(ce, &state, NULL);
- 			}
- 		}
-diff --git a/unpack-trees.h b/unpack-trees.h
-index cd11a08..64f02cb 100644
---- a/unpack-trees.h
-+++ b/unpack-trees.h
-@@ -46,7 +46,8 @@ struct unpack_trees_options {
- 		     debug_unpack,
- 		     skip_sparse_checkout,
- 		     gently,
--		     show_all_errors;
-+		     show_all_errors,
-+		     dry_run;
- 	const char *prefix;
- 	int cache_bottom;
- 	struct dir_struct *dir;
+Sentry picked up this dead assignment commited yesterday in ba67aaf.
+I've provided a patch to remove it. It might also be a good idea to
+ask the author if that value was supposed to be used for something
+in particular before pulling it out.
+
+Thanks,
+Chris
+
 -- 
-1.7.5.1.340.g7f395.dirty
+Chris Wilson
+http://vigilantsw.com/
+Vigilant Software, LLC
+
+--TRYliJ5NKNqkz5bu
+Content-Type: text/x-diff; charset=us-ascii
+Content-Disposition: attachment; filename="da.diff"
+
+diff --git a/sh-i18n--envsubst.c b/sh-i18n--envsubst.c
+index 7125093..5829463 100644
+--- a/sh-i18n--envsubst.c
++++ b/sh-i18n--envsubst.c
+@@ -67,9 +67,6 @@ static void subst_from_stdin (void);
+ int
+ main (int argc, char *argv[])
+ {
+-  /* Default values for command line options.  */
+-  unsigned short int show_variables = 0;
+-
+   switch (argc)
+ 	{
+ 	case 1:
+@@ -88,7 +85,6 @@ main (int argc, char *argv[])
+ 	  /* git sh-i18n--envsubst --variables '$foo and $bar' */
+ 	  if (strcmp(argv[1], "--variables"))
+ 		error ("first argument must be --variables when two are given");
+-	  show_variables = 1;
+       print_variables (argv[2]);
+ 	  break;
+ 	default:
+
+--TRYliJ5NKNqkz5bu--
