@@ -1,69 +1,52 @@
 From: Jamey Sharp <jamey@minilop.net>
-Subject: [PATCHv2 1/2] Support multiple virtual repositories with a single object store and refs
-Date: Tue, 24 May 2011 14:54:25 -0700
-Message-ID: <1306274066-4092-1-git-send-email-jamey@minilop.net>
+Subject: [PATCHv2 2/2] Support virtual repositories in smart http-backend, specified by environment
+Date: Tue, 24 May 2011 14:54:26 -0700
+Message-ID: <1306274066-4092-2-git-send-email-jamey@minilop.net>
+References: <1306274066-4092-1-git-send-email-jamey@minilop.net>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Josh Triplett <josh@joshtriplett.org>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Johannes Sixt <johannes.sixt@telecom.at>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 24 23:54:54 2011
+X-From: git-owner@vger.kernel.org Tue May 24 23:55:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOzYy-00036X-9L
-	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 23:54:52 +0200
+	id 1QOzZ6-0003BI-OL
+	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 23:55:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757017Ab1EXVyq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2011 17:54:46 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:54796 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752177Ab1EXVyp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2011 17:54:45 -0400
-Received: by pwi15 with SMTP id 15so3195949pwi.19
-        for <git@vger.kernel.org>; Tue, 24 May 2011 14:54:45 -0700 (PDT)
-Received: by 10.142.150.17 with SMTP id x17mr1257185wfd.102.1306274085119;
-        Tue, 24 May 2011 14:54:45 -0700 (PDT)
+	id S932939Ab1EXVyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2011 17:54:54 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:57438 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757251Ab1EXVyw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2011 17:54:52 -0400
+Received: by pvg12 with SMTP id 12so3154759pvg.19
+        for <git@vger.kernel.org>; Tue, 24 May 2011 14:54:52 -0700 (PDT)
+Received: by 10.68.21.164 with SMTP id w4mr3167578pbe.268.1306274092178;
+        Tue, 24 May 2011 14:54:52 -0700 (PDT)
 Received: from oh.minilop.net (host-247-13.pubnet.pdx.edu [131.252.247.13])
-        by mx.google.com with ESMTPS id p40sm7067072wfc.19.2011.05.24.14.54.43
+        by mx.google.com with ESMTPS id f1sm5244932pbm.93.2011.05.24.14.54.51
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 24 May 2011 14:54:44 -0700 (PDT)
+        Tue, 24 May 2011 14:54:51 -0700 (PDT)
 Received: from jamey by oh.minilop.net with local (Exim 4.76)
 	(envelope-from <jamey@oh.minilop.net>)
-	id 1QOzYp-00014e-47; Tue, 24 May 2011 14:54:43 -0700
+	id 1QOzYw-00014v-Kd; Tue, 24 May 2011 14:54:50 -0700
 X-Mailer: git-send-email 1.7.4.4
+In-Reply-To: <1306274066-4092-1-git-send-email-jamey@minilop.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174350>
 
-Given many repositories with copies of the same objects (such as
-branches of the same source), sharing a common object store will avoid
-duplication.  Alternates provide a single baseline, but don't handle
-ongoing activity in the various repositories.  Git safely handles
-concurrent accesses to the same object store across repositories, but
-operations such as gc need to know about all of the refs.
+Translate the GIT_REF_PREFIX and GIT_HEAD environment variables to the
+--ref-prefix= and --head= options to upload-pack and receive-pack.
 
-This change adds support in upload-pack and receive-pack to simulate
-multiple virtual repositories within the object store and references of
-a single underlying repository.  The refs and heads of the virtual
-repositories get stored in the underlying repository using prefixed
-names specified by the --ref-prefix and --head options; for instance,
---ref-prefix=repo1/ will use refs/repo1/heads/* and refs/repo1/tags/*.
-upload-pack and receive-pack will not expose any references that do not
-match the specified prefix.
-
-These options implement the underlying mechanism for virtual
-repositories; the higher-level protocol handler (such as http-backend or
-a custom server) can pass these options when invoking upload-pack or
-receive-pack, providing values based on components of the repository
-path.  For a simple local test, git-remote-ext works:
-
-git clone ext::'git %s --ref-prefix=prefix/ --head=prefix-HEAD /tmp/prefixed.git'
+Add documentation, including a sample Apache configuration snippet.
 
 Commit by Josh Triplett and Jamey Sharp.
 Signed-off-by: Josh Triplett <josh@joshtriplett.org>
@@ -72,204 +55,144 @@ Cc: Shawn O. Pearce <spearce@spearce.org>
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc: Johannes Sixt <johannes.sixt@telecom.at>
 ---
-v2: remove accidentally-included debug message; and add patch 2/2 for
-    git-http-backend.
+v2: add patch 2/2 for git-http-backend.
 
- builtin/receive-pack.c |   36 +++++++++++++++++++++++++++---------
- upload-pack.c          |   34 +++++++++++++++++++++++++++-------
- 2 files changed, 54 insertions(+), 16 deletions(-)
+ Documentation/git-http-backend.txt |   14 ++++++++++++
+ http-backend.c                     |   39 +++++++++++++++++++++++++++++------
+ 2 files changed, 46 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index e1ba4dc..76dacd0 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -34,6 +34,8 @@ static int prefer_ofs_delta = 1;
- static int auto_update_server_info;
- static int auto_gc = 1;
- static const char *head_name;
-+static const char *head_path = "HEAD";
-+static const char *ref_prefix = "refs/";
- static int sent_capabilities;
+diff --git a/Documentation/git-http-backend.txt b/Documentation/git-http-backend.txt
+index 277d9e1..4e0b243 100644
+--- a/Documentation/git-http-backend.txt
++++ b/Documentation/git-http-backend.txt
+@@ -119,6 +119,14 @@ ScriptAliasMatch \
  
- static enum deny_action parse_deny_action(const char *var, const char *value)
-@@ -108,11 +110,12 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
+ ScriptAlias /git/ /var/www/cgi-bin/gitweb.cgi/
+ ----------------------------------------------------------------
+++
++To serve multiple virtual repositories from a single storage
++repository:
+++
++----------------------------------------------------------------
++SetEnvIf Request_URI "^/git/([^/]*)" GIT_REF_PREFIX=$1/ GIT_HEAD=$1-HEAD
++ScriptAliasMatch ^/git/[^/]*(.*) /usr/libexec/git-core/git-http-backend/storage.git$1
++----------------------------------------------------------------
  
- static int show_ref(const char *path, const unsigned char *sha1, int flag, void *cb_data)
- {
-+	const char *refnameprefix = cb_data;
- 	if (sent_capabilities)
--		packet_write(1, "%s %s\n", sha1_to_hex(sha1), path);
-+		packet_write(1, "%s %s%s\n", sha1_to_hex(sha1), refnameprefix, path);
- 	else
--		packet_write(1, "%s %s%c%s%s\n",
--			     sha1_to_hex(sha1), path, 0,
-+		packet_write(1, "%s %s%s%c%s%s\n",
-+			     sha1_to_hex(sha1), refnameprefix, path, 0,
- 			     " report-status delete-refs side-band-64k",
- 			     prefer_ofs_delta ? " ofs-delta" : "");
- 	sent_capabilities = 1;
-@@ -121,9 +124,9 @@ static int show_ref(const char *path, const unsigned char *sha1, int flag, void
+ Accelerated static Apache 2.x::
+ 	Similar to the above, but Apache can be used to return static
+@@ -167,6 +175,12 @@ The GIT_HTTP_EXPORT_ALL environmental variable may be passed to
+ 'git-http-backend' to bypass the check for the "git-daemon-export-ok"
+ file in each repository before allowing export of that repository.
  
- static void write_head_info(void)
- {
--	for_each_ref(show_ref, NULL);
-+	for_each_ref_in(ref_prefix, show_ref, "refs/");
- 	if (!sent_capabilities)
--		show_ref("capabilities^{}", null_sha1, 0, NULL);
-+		show_ref("capabilities^{}", null_sha1, 0, "");
- 
++The GIT_REF_PREFIX and GIT_HEAD environment variables allow
++http-backend to support multiple virtual repositories within a single
++storage repository.  If set, 'git http-backend' will operate on
++'refs/${GIT_REF_PREFIX}' rather than 'refs/', and '$GIT_HEAD' rather
++than HEAD.
++
+ The backend process sets GIT_COMMITTER_NAME to '$REMOTE_USER' and
+ GIT_COMMITTER_EMAIL to '$\{REMOTE_USER}@http.$\{REMOTE_ADDR\}',
+ ensuring that any reflogs created by 'git-receive-pack' contain some
+diff --git a/http-backend.c b/http-backend.c
+index 8501504..3d9e3b1 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -315,16 +315,23 @@ done:
+ 	close(out);
  }
  
-@@ -332,6 +335,8 @@ static void refuse_unconfigured_deny_delete_current(void)
- static const char *update(struct command *cmd)
- {
- 	const char *name = cmd->ref_name;
-+	struct strbuf prefixed_name_buf = STRBUF_INIT;
-+	const char *prefixed_name;
- 	unsigned char *old_sha1 = cmd->old_sha1;
- 	unsigned char *new_sha1 = cmd->new_sha1;
- 	struct ref_lock *lock;
-@@ -342,7 +347,10 @@ static const char *update(struct command *cmd)
- 		return "funny refname";
- 	}
- 
--	if (is_ref_checked_out(name)) {
-+	strbuf_addf(&prefixed_name_buf, "%s%s", ref_prefix, name + 5);
-+	prefixed_name = strbuf_detach(&prefixed_name_buf, NULL);
+-static void run_service(const char **argv)
++#define RUN_SERVICE_LAST_EXTRA_ARG 2
++#define RUN_SERVICE_EXTRA_ARGS NULL, NULL, NULL
 +
-+	if (is_ref_checked_out(prefixed_name)) {
- 		switch (deny_current_branch) {
- 		case DENY_IGNORE:
- 			break;
-@@ -370,7 +378,7 @@ static const char *update(struct command *cmd)
- 			return "deletion prohibited";
- 		}
++static void run_service(const char *argv0, const char **argv)
+ {
+ 	const char *encoding = getenv("HTTP_CONTENT_ENCODING");
+ 	const char *user = getenv("REMOTE_USER");
+ 	const char *host = getenv("REMOTE_ADDR");
++	char *ref_prefix = getenv("GIT_REF_PREFIX");
++	char *head = getenv("GIT_HEAD");
+ 	char *env[3];
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int gzipped_request = 0;
+ 	struct child_process cld;
  
--		if (!strcmp(name, head_name)) {
-+		if (!strcmp(prefixed_name, head_name)) {
- 			switch (deny_delete_current) {
- 			case DENY_IGNORE:
- 				break;
-@@ -426,14 +434,14 @@ static const char *update(struct command *cmd)
- 			rp_warning("Allowing deletion of corrupt ref.");
- 			old_sha1 = NULL;
- 		}
--		if (delete_ref(name, old_sha1, 0)) {
-+		if (delete_ref(prefixed_name, old_sha1, 0)) {
- 			rp_error("failed to delete %s", name);
- 			return "failed to delete";
- 		}
- 		return NULL; /* good */
- 	}
- 	else {
--		lock = lock_any_ref_for_update(name, old_sha1, 0);
-+		lock = lock_any_ref_for_update(prefixed_name, old_sha1, 0);
- 		if (!lock) {
- 			rp_error("failed to lock %s", name);
- 			return "failed to lock";
-@@ -760,6 +768,16 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 				advertise_refs = 1;
- 				continue;
- 			}
-+			if (!prefixcmp(arg, "--head=")) {
-+				head_path = arg+7;
-+				continue;
-+			}
-+			if (!prefixcmp(arg, "--ref-prefix=")) {
-+				struct strbuf prefixbuf = STRBUF_INIT;
-+				strbuf_addf(&prefixbuf, "refs/%s", arg+13);
-+				ref_prefix = strbuf_detach(&prefixbuf, NULL);
-+				continue;
-+			}
- 			if (!strcmp(arg, "--stateless-rpc")) {
- 				stateless_rpc = 1;
- 				continue;
-diff --git a/upload-pack.c b/upload-pack.c
-index ce5cbbe..a1e495f 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -34,6 +34,8 @@ static int shallow_nr;
- static struct object_array have_obj;
- static struct object_array want_obj;
- static struct object_array extra_edge_obj;
-+static const char *head_path = "HEAD";
-+static const char *ref_prefix = "";
- static unsigned int timeout;
- /* 0 for no sideband,
-  * otherwise maximum packet size (up to 65520 bytes).
-@@ -640,17 +642,18 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
- 	static const char *capabilities = "multi_ack thin-pack side-band"
- 		" side-band-64k ofs-delta shallow no-progress"
- 		" include-tag multi_ack_detailed";
-+	const char *refnameprefix = cb_data;
- 	struct object *o = parse_object(sha1);
++	argv += RUN_SERVICE_LAST_EXTRA_ARG;
++
+ 	if (encoding && !strcmp(encoding, "gzip"))
+ 		gzipped_request = 1;
+ 	else if (encoding && !strcmp(encoding, "x-gzip"))
+@@ -343,6 +350,24 @@ static void run_service(const char **argv)
+ 	env[1] = strbuf_detach(&buf, NULL);
+ 	env[2] = NULL;
  
- 	if (!o)
- 		die("git upload-pack: cannot find object %s:", sha1_to_hex(sha1));
- 
- 	if (capabilities)
--		packet_write(1, "%s %s%c%s%s\n", sha1_to_hex(sha1), refname,
-+		packet_write(1, "%s %s%s%c%s%s\n", sha1_to_hex(sha1), refnameprefix, refname,
- 			     0, capabilities,
- 			     stateless_rpc ? " no-done" : "");
- 	else
--		packet_write(1, "%s %s\n", sha1_to_hex(sha1), refname);
-+		packet_write(1, "%s %s%s\n", sha1_to_hex(sha1), refnameprefix, refname);
- 	capabilities = NULL;
- 	if (!(o->flags & OUR_REF)) {
- 		o->flags |= OUR_REF;
-@@ -659,7 +662,7 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
- 	if (o->type == OBJ_TAG) {
- 		o = deref_tag(o, refname, 0);
- 		if (o)
--			packet_write(1, "%s %s^{}\n", sha1_to_hex(o->sha1), refname);
-+			packet_write(1, "%s %s%s^{}\n", sha1_to_hex(o->sha1), refnameprefix, refname);
- 	}
- 	return 0;
++	if (ref_prefix && !*ref_prefix)
++		ref_prefix = NULL;
++	if (ref_prefix) {
++		strbuf_addf(&buf, "--ref-prefix=%s", ref_prefix);
++		ref_prefix = strbuf_detach(&buf, NULL);
++		*argv-- = ref_prefix;
++	}
++
++	if (head && !*head)
++		head = NULL;
++	if (head) {
++		strbuf_addf(&buf, "--head=%s", head);
++		head = strbuf_detach(&buf, NULL);
++		*argv-- = head;
++	}
++
++	*argv = argv0;
++
+ 	memset(&cld, 0, sizeof(cld));
+ 	cld.argv = argv;
+ 	cld.env = (const char *const *)env;
+@@ -362,6 +387,8 @@ static void run_service(const char **argv)
+ 		exit(1);
+ 	free(env[0]);
+ 	free(env[1]);
++	free(ref_prefix);
++	free(head);
+ 	strbuf_release(&buf);
  }
-@@ -678,15 +681,24 @@ static int mark_our_ref(const char *refname, const unsigned char *sha1, int flag
  
- static void upload_pack(void)
- {
-+	struct strbuf prefix = STRBUF_INIT;
-+	unsigned char sha1[20];
-+	int flag;
-+
-+	strbuf_addf(&prefix, "refs/%s", ref_prefix);
- 	if (advertise_refs || !stateless_rpc) {
- 		reset_timeout();
--		head_ref(send_ref, NULL);
--		for_each_ref(send_ref, NULL);
-+		if (resolve_ref(head_path, sha1, 1, &flag))
-+			send_ref("HEAD", sha1, flag, "");
-+		for_each_ref_in(prefix.buf, send_ref, "refs/");
+@@ -391,7 +418,7 @@ static void get_info_refs(char *arg)
+ 	hdr_nocache();
+ 
+ 	if (service_name) {
+-		const char *argv[] = {NULL /* service name */,
++		const char *argv[] = {RUN_SERVICE_EXTRA_ARGS,
+ 			"--stateless-rpc", "--advertise-refs",
+ 			".", NULL};
+ 		struct rpc_service *svc = select_service(service_name);
+@@ -404,8 +431,7 @@ static void get_info_refs(char *arg)
+ 		packet_write(1, "# service=git-%s\n", svc->name);
  		packet_flush(1);
- 	} else {
--		head_ref(mark_our_ref, NULL);
--		for_each_ref(mark_our_ref, NULL);
-+		if (resolve_ref(head_path, sha1, 1, &flag))
-+			mark_our_ref("HEAD", sha1, flag, NULL);
-+		for_each_ref_in(prefix.buf, mark_our_ref, NULL);
- 	}
-+	strbuf_release(&prefix);
-+
- 	if (advertise_refs)
- 		return;
  
-@@ -716,6 +728,14 @@ int main(int argc, char **argv)
- 			advertise_refs = 1;
- 			continue;
- 		}
-+		if (!prefixcmp(arg, "--head=")) {
-+			head_path = arg+7;
-+			continue;
-+		}
-+		if (!prefixcmp(arg, "--ref-prefix=")) {
-+			ref_prefix = arg+13;
-+			continue;
-+		}
- 		if (!strcmp(arg, "--stateless-rpc")) {
- 			stateless_rpc = 1;
- 			continue;
+-		argv[0] = svc->name;
+-		run_service(argv);
++		run_service(svc->name, argv);
+ 
+ 	} else {
+ 		select_getanyfile();
+@@ -462,7 +488,7 @@ static void check_content_type(const char *accepted_type)
+ 
+ static void service_rpc(char *service_name)
+ {
+-	const char *argv[] = {NULL, "--stateless-rpc", ".", NULL};
++	const char *argv[] = {RUN_SERVICE_EXTRA_ARGS, "--stateless-rpc", ".", NULL};
+ 	struct rpc_service *svc = select_service(service_name);
+ 	struct strbuf buf = STRBUF_INIT;
+ 
+@@ -478,8 +504,7 @@ static void service_rpc(char *service_name)
+ 
+ 	end_headers();
+ 
+-	argv[0] = svc->name;
+-	run_service(argv);
++	run_service(svc->name, argv);
+ 	strbuf_release(&buf);
+ }
+ 
 -- 
 1.7.5.1
