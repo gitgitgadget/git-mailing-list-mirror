@@ -1,111 +1,107 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] checkout: honor advice.detachedHead when reattaching to
- a branch
-Date: Tue, 24 May 2011 16:27:23 -0400
-Message-ID: <20110524202723.GG584@sigill.intra.peff.net>
-References: <7vei4bzhwm.fsf@alter.siamese.dyndns.org>
- <20110506223847.GC17848@sigill.intra.peff.net>
- <7vzkmc6n1s.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [RFC PATCH] unpack-trees: add the dry_run flag to unpack_trees_options
+Date: Tue, 24 May 2011 23:07:05 +0200
+Message-ID: <4DDC1DF9.9030109@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 24 22:27:32 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 24 23:07:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOyCR-0001IT-CW
-	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 22:27:31 +0200
+	id 1QOyoq-0001L3-W2
+	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 23:07:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932821Ab1EXU10 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2011 16:27:26 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50777
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754455Ab1EXU1Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2011 16:27:25 -0400
-Received: (qmail 21380 invoked by uid 107); 24 May 2011 20:27:24 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 24 May 2011 16:27:24 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 May 2011 16:27:23 -0400
-Content-Disposition: inline
-In-Reply-To: <7vzkmc6n1s.fsf@alter.siamese.dyndns.org>
+	id S1755571Ab1EXVHJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2011 17:07:09 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:58091 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757559Ab1EXVHH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2011 17:07:07 -0400
+Received: from smtp04.web.de  ( [172.20.0.225])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 43CAC18F7C7F6;
+	Tue, 24 May 2011 23:07:06 +0200 (CEST)
+Received: from [93.246.53.235] (helo=[192.168.178.43])
+	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1QOyok-0002Z3-00; Tue, 24 May 2011 23:07:06 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1+bvdh9tPkt/U66UdcsxkAfEP/EQUZEDOJztR4R
+	EbC5a4QQNAjhnfFvlTZiwXF5mDQTui1SqbBw+Z9EoVu2pGaKpn
+	r889GqH05PcEla4KQ7EA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174341>
 
-On Tue, May 24, 2011 at 10:11:43AM -0700, Junio C Hamano wrote:
+Until now there was no way to test if unpack_trees() with update=1 would
+succeed without really updating the work tree. The reason for that is that
+setting update to 0 does skip the tests for new files and deactivates the
+sparse handling, thereby making that unsuitable as a dry run.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Hopefully the above made sense, but to be clear, what I think we should
-> > do is:
-> >
-> >   1. Suppress the "If you want to keep it..." advice on exit with the
-> >      existing advice.detachedhead.
-> >
-> >   2. Optionally, if anybody cares (and I don't), introduce
-> >      advice.detachedOrphanCheck to suppress the check entirely.
-> >
-> >   3. Optionally remove "Previous HEAD position" in the non-orphan case.
-> >      I think it's superfluous, but it's so short that I don't really
-> >      care either way.
-> 
-> I think the above makes sense (sorry for replying a three-week old thread,
-> but I am trying to rid as many topics as I can from the Stalled category),
+Add the new dry_run flag to struct unpack_trees_options unpack_trees().
+Setting that together with the update flag will check if the work tree
+update would be successful without doing it for real.
 
-No problem. I have an embarrassing number of stalled topics myself.
+The only class of problems that is not detected at the moment are file
+system conditions like ENOSPC or missing permissions. Also the index
+entries of updated files are not as they would be after a real checkout
+because lstat() isn't run as the files aren't updated for real.
 
-> except that #3. might be useful after manually bisecting the existing
-> history.  You may not be losing any commit (all are connected), but you
-> would be losing the point you have spent efforts to locate by switching
-> out.
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
 
-Yeah, I thought of the "you have found this point via some work" as
-something valuable but dismissed it because I couldn't think of a good
-example.  But bisection is one such example.
+AFAICS this patch enables the user to achieve a dry run by calling
+unpack_trees() with both update and dry_run set.
 
-> I also think #2 would not be necessary; scripts that know what they are
-> doing should be using -q to suppress output from checkout anyway, and the
-> check is disabled in that case.
+My "Teach read-tree the -n|--dry-run option" adapted to this new flag
+runs all tests successfully ...
 
-Ah, I didn't realize that "-q" would suppress it, but yes, that makes
-perfect sense.
 
-> So on top of 8e2dc6a (commit: give final warning when reattaching HEAD to
-> leave commits behind, 2011-02-18), here is a re-roll.
+ unpack-trees.c |    4 ++--
+ unpack-trees.h |    3 ++-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-The output looks good to me. I have an almost-complaint, though. I
-applied on top of 8e2dc6a and did a quick test. It is actually quite bad
-there, because you get:
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 500ebcf..e26a710 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -203,7 +203,7 @@ static int check_updates(struct unpack_trees_options *o)
 
-  Warning: you are leaving 1 commit behind, not connected to
-  any of your branches:
-
-    - some subject
-
-and nothing actually tells you the sha1 of the thing you are losing. :)
-
-However, once it is merged into master, you will get:
-
-     abcd1234 some subject
-
-which is more helpful. Not a big deal, as that merge should happen
-before release. But you may want to just apply on top of my 0be240c
-(checkout: tweak detached-orphan warning format, 2011-03-20).
-
-> @@ -668,8 +671,6 @@ static void orphaned_commit_warning(struct commit *commit)
->  		die("internal error in revision walk");
->  	if (!(commit->object.flags & UNINTERESTING))
->  		suggest_reattach(commit, &revs);
-> -	else
-> -		describe_detached_head("Previous HEAD position was", commit);
->  }
-
-Wait, I thought we were keeping this, per your argument above?
-
--Peff
+ 		if (ce->ce_flags & CE_WT_REMOVE) {
+ 			display_progress(progress, ++cnt);
+-			if (o->update)
++			if (o->update && !o->dry_run)
+ 				unlink_entry(ce);
+ 			continue;
+ 		}
+@@ -217,7 +217,7 @@ static int check_updates(struct unpack_trees_options *o)
+ 		if (ce->ce_flags & CE_UPDATE) {
+ 			display_progress(progress, ++cnt);
+ 			ce->ce_flags &= ~CE_UPDATE;
+-			if (o->update) {
++			if (o->update && !o->dry_run) {
+ 				errs |= checkout_entry(ce, &state, NULL);
+ 			}
+ 		}
+diff --git a/unpack-trees.h b/unpack-trees.h
+index cd11a08..64f02cb 100644
+--- a/unpack-trees.h
++++ b/unpack-trees.h
+@@ -46,7 +46,8 @@ struct unpack_trees_options {
+ 		     debug_unpack,
+ 		     skip_sparse_checkout,
+ 		     gently,
+-		     show_all_errors;
++		     show_all_errors,
++		     dry_run;
+ 	const char *prefix;
+ 	int cache_bottom;
+ 	struct dir_struct *dir;
+-- 
+1.7.5.1.340.g7f395.dirty
