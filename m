@@ -1,161 +1,192 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: combined diff does not detect binary files and ignores -diff
- attribute
-Date: Tue, 24 May 2011 18:38:36 +0200
-Message-ID: <4DDBDF0C.2040708@drmicha.warpmail.net>
-References: <BANLkTi=FtkiUjwAa7e3KAC5FF3GNxWzd3Q@mail.gmail.com> <4DDA618E.4030604@drmicha.warpmail.net> <BANLkTinu3AbTmtswn6DLQKAWdLL=gBvAqA@mail.gmail.com> <20110523181147.GA26035@sigill.intra.peff.net> <20110523201529.GA6281@sigill.intra.peff.net> <BANLkTikvPjO=bbhAoPCftdXzGSYtryNvzw@mail.gmail.com> <20110523234131.GB10488@sigill.intra.peff.net> <7v39k4aeos.fsf@alter.siamese.dyndns.org> <4DDB5C0F.1080102@drmicha.warpmail.net> <7vsjs48616.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] Fix usage of git-init and git-init-db documentation
+Date: Tue, 24 May 2011 23:40:32 +0700
+Message-ID: <20110524164032.GA2059@do>
+References: <1306248113-19948-1-git-send-email-pegon.marc@gmail.com>
+ <7voc2s850z.fsf@alter.siamese.dyndns.org>
+ <BANLkTingh__Yxy_rEM2mV6wB453OdarrwA@mail.gmail.com>
+ <7vfwo483qe.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Jay Soffian <jaysoffian@gmail.com>,
-	git <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Marc Pegon <pegon.marc@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 24 18:38:47 2011
+X-From: git-owner@vger.kernel.org Tue May 24 18:40:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOud5-0007Km-4l
-	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 18:38:47 +0200
+	id 1QOuf3-00006z-QK
+	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 18:40:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756042Ab1EXQil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2011 12:38:41 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:60470 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753413Ab1EXQil (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 May 2011 12:38:41 -0400
-Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 7340920A28;
-	Tue, 24 May 2011 12:38:40 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute6.internal (MEProxy); Tue, 24 May 2011 12:38:40 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=duhBPYAKklO3Lf1bXQ47qir+Y+I=; b=pJjUgZo/xdsMAI09gtLtpTAv+ufUblRAy2UQMU3XYu7wsnLCcBNvdU5XZ0a2z8taD9Xzj12h1daoQslRL4Gi5xxQIUkyybYGa5BwPA+rhocbG0ygaHsiJHVkg3TfZEKgU16EWsicRDf+1indMvUFnbU0tkPI85q4QB0N9X+L74E=
-X-Sasl-enc: kRF7uCXIPs4Oz/+K5IiOpgJJyWXAcekhQIn2kkzSZtMz 1306255120
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 64C39400AB3;
-	Tue, 24 May 2011 12:38:38 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Lightning/1.0b3pre Thunderbird/3.1.10
-In-Reply-To: <7vsjs48616.fsf@alter.siamese.dyndns.org>
+	id S1756536Ab1EXQko convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 May 2011 12:40:44 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:41240 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756458Ab1EXQkn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2011 12:40:43 -0400
+Received: by pwi15 with SMTP id 15so3088889pwi.19
+        for <git@vger.kernel.org>; Tue, 24 May 2011 09:40:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=nzZzX7IKzB55sjgnku8Ih6MxsXZzIjxIomQcUiJokGs=;
+        b=rXrIUGFlr1V4Itc/zaoNsOPOrdAMKjR0iu2ej/OdEM12spcBjQqlpYs+0wEA3qQsEI
+         8vmxDx4jioHjxEK4zsmVURTCxZeuvWaqlXegx2+9Fted46nDuStCC9S1bmKmguoPIVl1
+         dOJ8Q8bXphSCzLVr4L61+mpYBF4miq93T/fpc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=sgXPbZBY1MNee3K7sV5DpDpqPMBlAGop2e+x4Uh1yyLJymlhDwD6TLhy+/IKejwG6n
+         KGem3FsRW+Izv2kyvzzJPpwH34syjBXXs8TuM8FepQ2KxrZxTpmOnenq+9finDWqGzJe
+         L+ufcHuWTvXGR4tf9Y+AvO/V4groxsTjURcT8=
+Received: by 10.68.57.168 with SMTP id j8mr3102659pbq.111.1306255242268;
+        Tue, 24 May 2011 09:40:42 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.73.240.200])
+        by mx.google.com with ESMTPS id v8sm5097189pbk.95.2011.05.24.09.40.38
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 24 May 2011 09:40:40 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 24 May 2011 23:40:32 +0700
+Content-Disposition: inline
+In-Reply-To: <7vfwo483qe.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174329>
 
-Junio C Hamano venit, vidit, dixit 24.05.2011 17:36:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> Jeff, thanks a bunch for taking this up again! That's a great
->> improvement. (I'm not sure I can devote enough time to reviewing, but
->> I'll see.)
-> 
-> Thanks. I've given a cursory look at the rest of the series (including the
-> addendum to be squashed in) and they seemed Ok. Will give it another round
-> of eyeballing before merging to "next".
-> 
->>> I however highly doubt that such an interface would make sense. For
->>> example, what would be the desirable format to compare three versions of
->>> "What's cooking" postings, and how would the updated compare-cooking.perl
->>> script would look like?
->>
->> Yeah, currently --cc with external makes no sense, but there are several
->> external tools which could present a 3-way diff in a useful way (or even
->> n-way with n>3), e.g. vimdiff, kdiff3, meld.
-> 
-> With an external command that can make 3-way diffs of arbitrary three
-> directories, you can trivially do something like:
-> 
-> 	#!/bin/sh
-> 	mkdir tmp-head tmp-index &&
->         ( cd tmp-head &&
->           GIT_DIR=../.git GIT_INDEX_FILE=$GIT_DIR/.index-head &&
->           git checkout -f HEAD
-> 	) &&
->         ( cd tmp-index &&
->           GIT_DIR=../.git &&
->           git checkout -f .
-> 	) &&
->         $ext_diff3_cmd tmp-head/ tmp-index/ . &
->         wait
->         rm -fr tmp-index tmp-head
-> 
+On Tue, May 24, 2011 at 09:26:01AM -0700, Junio C Hamano wrote:
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+>=20
+> >> As it hasn't been advertised in the documentation (lucky us), it p=
+robably is not too
+> >> late to remove it.
+> >
+> > No objection if you remove it. I was probably thinking of git
+> > "symlink" but the traditional -l was taken, so -L.
+>=20
+> I do not care deeply enough to remove it myself, but it is a bad tast=
+e to
+> give a short variant to an option that hasn't yet proven to be freque=
+ntly
+> useful, especially to a command whose other command has no short vari=
+ant.
 
-and the fancy version of that is "difftool" in a sense, yes.
+Just had a look at it. The option is documented in init and
+clone. init-db is deprecated so I did not bother. I hope this obscure
+feature has not been widely used yet and this patch can still apply
 
-> But that seems totally offtopic and has nothing to do with the "combined
-> diff" discussion, no?
+-- 8< --
+Subject: [PATCH] init/clone: remove short option -L
 
-Well, it seemed that Jay wanted an external tool for merge diffs. "-m"
-does a series of simple 2way diffs, but "--cc" is special in that it
-looks at all diffs at once, so a corresponding external tool would have
-to do the same.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Documentation/git-clone.txt |    3 +--
+ Documentation/git-init.txt  |    3 +--
+ builtin/clone.c             |    2 +-
+ builtin/init-db.c           |    2 +-
+ t/t0001-init.sh             |    2 +-
+ 5 files changed, 5 insertions(+), 7 deletions(-)
 
-> If you want to plug in an external command that can make n-way diff of n
-> files when some paths are still shown using the usual --cc codepath, then
-> you would need an interface totally different from the diff.<driver>.cmd
-> interface for two-way diff to the external diff.  I pointed at where to
-> plug such a thing, but I do not think it would be of much use unless you
-> are handing the whole n-trees to the external command (which essentially
-> is what the above outline does). How would the user read the output that
-> comes out mixed from different codepaths, some from our own --cc while
-> others come from the external command, possibly opening separate windows
-> and even worse grabbing control and getting the caller stuck until the
-> user closes that window?
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 86eb4c9..b093e45 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 'git clone' [--template=3D<template_directory>]
+ 	  [-l] [-s] [--no-hardlinks] [-q] [-n] [--bare] [--mirror]
+ 	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository=
+>]
+-	  [--separate-git-dir|-L <git dir>]
++	  [--separate-git-dir <git dir>]
+ 	  [--depth <depth>] [--recursive|--recurse-submodules] [--] <reposito=
+ry>
+ 	  [<directory>]
+=20
+@@ -177,7 +177,6 @@ objects from the source repository into a pack in t=
+he cloned repository.
+ 	repository does not have a worktree/checkout (i.e. if any of
+ 	`--no-checkout`/`-n`, `--bare`, or `--mirror` is given)
+=20
+--L=3D<git dir>::
+ --separate-git-dir=3D<git dir>::
+ 	Instead of placing the cloned repository where it is supposed
+ 	to be, place the cloned repository at the specified directory,
+diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
+index 58cd011..f2777a7 100644
+--- a/Documentation/git-init.txt
++++ b/Documentation/git-init.txt
+@@ -9,7 +9,7 @@ git-init - Create an empty git repository or reinitiali=
+ze an existing one
+ SYNOPSIS
+ --------
+ 'git init' [-q | --quiet] [--bare] [--template=3D<template_directory>]
+-	  [--separate-git-dir|-L <git dir>]
++	  [--separate-git-dir <git dir>]
+ 	  [--shared[=3D<permissions>]] [directory]
+=20
+=20
+@@ -54,7 +54,6 @@ current working directory.
+ Specify the directory from which templates will be used.  (See the "TE=
+MPLATE
+ DIRECTORY" section below.)
+=20
+--L=3D<git dir>::
+ --separate-git-dir=3D<git dir>::
+=20
+ Instead of initializing the repository where it is supposed to be,
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 49c838f..f579794 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -81,7 +81,7 @@ static struct option builtin_clone_options[] =3D {
+ 		   "path to git-upload-pack on the remote"),
+ 	OPT_STRING(0, "depth", &option_depth, "depth",
+ 		    "create a shallow clone of that depth"),
+-	OPT_STRING('L', "separate-git-dir", &real_git_dir, "gitdir",
++	OPT_STRING(0, "separate-git-dir", &real_git_dir, "gitdir",
+ 		   "separate git dir from working tree"),
+=20
+ 	OPT_END()
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index ba13a54..025aa47 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -490,7 +490,7 @@ int cmd_init_db(int argc, const char **argv, const =
+char *prefix)
+ 			"specify that the git repository is to be shared amongst several us=
+ers",
+ 			PARSE_OPT_OPTARG | PARSE_OPT_NONEG, shared_callback, 0},
+ 		OPT_BIT('q', "quiet", &flags, "be quiet", INIT_DB_QUIET),
+-		OPT_STRING('L', "separate-git-dir", &real_git_dir, "gitdir",
++		OPT_STRING(0, "separate-git-dir", &real_git_dir, "gitdir",
+ 			   "separate git dir from working tree"),
+ 		OPT_END()
+ 	};
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index 8106af8..ad66410 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -409,7 +409,7 @@ test_expect_success SYMLINKS 're-init to move gitdi=
+r symlink' '
+ 	cd newdir &&
+ 	mv .git here &&
+ 	ln -s here .git &&
+-	git init -L ../realgitdir
++	git init --separate-git-dir ../realgitdir
+ 	) &&
+ 	echo "gitdir: `pwd`/realgitdir" >expected &&
+ 	test_cmp expected newdir/.git &&
+--=20
+1.7.4.74.g639db
 
-I don't quite follow, I think I/we/? am/are mixing external diff drivers
-and difftools. I agree that is a side track/off-topic.
-
-> 
-> 	Side note: about getting stuck, will we see an update to the
-> 	diffstat count series by the end of this cycle? I do not mind
-> 	carrying it over to the next cycle at all, but I'd rather see
-> 	something already started gets finished.
-
-Yes, on my list. End of month you said, right?
-
->> When the --cc/textconv issue came up I looked into this, and maybe
->> difftool is a place where one could plug this in first in the sense of
->> refactoring that even more and providing a diff3tool or such to view a
->> merge commit (or compare any 3 versions), or/and provide "git diff3 A B
->> C" which creates a fake merge (A+B -> C).
-> 
-> You do not need "git diff3 A B C" for a fake merge.
-> 
-> 	$ git diff 61d7503d 2d22086 5bf29b9
-> 
-> already is a way to show you how the commit 61d7503d was created by
-> merging the other two (the merge result comes first and then its parents).
-
-Yes. (I came across this when I investigated a bit back then but failed
-to mention it.)
-
-> You could put the index into the mix by doing something like:
-> 
-> 	$ git diff next master $(git write-tree)
-> 
-> Trying to show combined diff to merge the index and the working tree into
-> the current HEAD (which may be an example that does not make much sense)
-> would look like this:
-> 
-> 	$ git diff HEAD $(git write-tree) $(
-> 		git read-tree --index-output=.tmp-index HEAD &&
-> 		GIT_INDEX_FILE=.tmp-index git add -A :/ &&
->                 GIT_INDEX_FILE=.tmp-index git write-tree
-> 	)
-> 
-> But for the "working tree" set, which paths should be included? The same
-> set as what is in the index? Or would we use the set that is the union of
-> other tree-like things that are being compared, including the ones that
-> are not in the index? Or everything in the working tree, as we are
-> interested in what the user _could_ add?  That is one of the reasons why I
-> do not think it makes much sense trying to throw the working tree into the
-> picture, as it would have to open a large can of worms.
-
-I've simply been drooling too much over vim-fugitive and was wondering
-which aspects would fit into our ui. I was thinking of a 3-way-diff
-version of git status, so to say. Next would be a 3-way-merge interface
-which does all your add/reset/checkout -p from 3 vim bufs in diff mode,
-which even vim-fugitive doesn't do. We can all dream, can't we?
-
-Michael
+-- 8< --
+--=20
+Duy
