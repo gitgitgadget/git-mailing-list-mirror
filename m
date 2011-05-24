@@ -1,181 +1,109 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/4] config: always parse GIT_CONFIG_PARAMETERS during
- git_config
-Date: Tue, 24 May 2011 18:49:55 -0400
-Message-ID: <20110524224955.GC24527@sigill.intra.peff.net>
+Subject: [PATCH 4/4] handle_options(): do not miscount how many arguments
+ were used
+Date: Tue, 24 May 2011 18:50:35 -0400
+Message-ID: <20110524225035.GD24527@sigill.intra.peff.net>
 References: <20110524224903.GA16265@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 25 00:50:05 2011
+X-From: git-owner@vger.kernel.org Wed May 25 00:50:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QP0QO-0004Jy-NA
-	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 00:50:05 +0200
+	id 1QP0R0-0004YC-O4
+	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 00:50:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932170Ab1EXWt7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2011 18:49:59 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36214
+	id S932686Ab1EXWui (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2011 18:50:38 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36217
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757746Ab1EXWt5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2011 18:49:57 -0400
-Received: (qmail 22772 invoked by uid 107); 24 May 2011 22:49:56 -0000
+	id S932302Ab1EXWuh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2011 18:50:37 -0400
+Received: (qmail 22801 invoked by uid 107); 24 May 2011 22:50:37 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 24 May 2011 18:49:56 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 May 2011 18:49:55 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 24 May 2011 18:50:37 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 May 2011 18:50:35 -0400
 Content-Disposition: inline
 In-Reply-To: <20110524224903.GA16265@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174358>
 
-Previously we parsed GIT_CONFIG_PARAMETERS lazily into a
-linked list, and then checked that list during future
-invocations of git_config. However, that ignores the fact
-that the environment variable could change during our run
-(e.g., because we parse more "-c" as part of an alias).
+From: Junio C Hamano <gitster@pobox.com>
 
-Instead, let's just re-parse the environment variable each
-time. It's generally not very big, and it's no more work
-than parsing the config files, anyway.
+The handle_options() function advances the base of the argument array and
+returns the number of arguments it used. The caller in handle_alias()
+wants to reallocate the argv array it passes to this function, and
+attempts to do so by subtracting the returned value to compensate for the
+change handle_options() makes to the new_argv.
 
-As a bonus, we can ditch all of the linked list storage code
-entirely, making the code much simpler.
+But handle_options() did not correctly count when "-c <config=value>" is
+given, causing a wrong pointer to be passed to realloc().
 
-The test unfortunately still does not pass because of an
-unrelated bug in handle_options.
+Fix it by saving the original argv at the beginning of handle_options(),
+and return the difference between the final value of argv, which will
+relieve the places that move the array pointer from the additional burden
+of keeping track of "handled" counter.
 
+Noticed-by: Kazuki Tsujimoto
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- config.c               |   50 ++++++++++-------------------------------------
- t/t1300-repo-config.sh |    7 ++++++
- 2 files changed, 18 insertions(+), 39 deletions(-)
+ git.c                  |    6 ++----
+ t/t1300-repo-config.sh |    2 +-
+ 2 files changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/config.c b/config.c
-index fb88839..e0b3b80 100644
---- a/config.c
-+++ b/config.c
-@@ -20,14 +20,6 @@ static int zlib_compression_seen;
+diff --git a/git.c b/git.c
+index a5ef3c6..89721d4 100644
+--- a/git.c
++++ b/git.c
+@@ -66,7 +66,7 @@ static void commit_pager_choice(void) {
  
- const char *config_exclusive_filename = NULL;
- 
--struct config_item {
--	struct config_item *next;
--	char *name;
--	char *value;
--};
--static struct config_item *config_parameters;
--static struct config_item **config_parameters_tail = &config_parameters;
--
- static void lowercase(char *p)
+ static int handle_options(const char ***argv, int *argc, int *envchanged)
  {
- 	for (; *p; p++)
-@@ -47,9 +39,9 @@ void git_config_push_parameter(const char *text)
- 	strbuf_release(&env);
- }
+-	int handled = 0;
++	const char **orig_argv = *argv;
  
--static int git_config_parse_parameter(const char *text)
-+static int git_config_parse_parameter(const char *text,
-+				      config_fn_t fn, void *data)
- {
--	struct config_item *ct;
- 	struct strbuf tmp = STRBUF_INIT;
- 	struct strbuf **pair;
- 	strbuf_addstr(&tmp, text);
-@@ -59,22 +51,19 @@ static int git_config_parse_parameter(const char *text)
- 	strbuf_trim(pair[0]);
- 	if (!pair[0]->len) {
- 		strbuf_list_free(pair);
--		return -1;
-+		return error("bogus config parameter: %s", text);
+ 	while (*argc > 0) {
+ 		const char *cmd = (*argv)[0];
+@@ -122,7 +122,6 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 				*envchanged = 1;
+ 			(*argv)++;
+ 			(*argc)--;
+-			handled++;
+ 		} else if (!prefixcmp(cmd, "--git-dir=")) {
+ 			setenv(GIT_DIR_ENVIRONMENT, cmd + 10, 1);
+ 			if (envchanged)
+@@ -162,9 +161,8 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 
+ 		(*argv)++;
+ 		(*argc)--;
+-		handled++;
  	}
--	ct = xcalloc(1, sizeof(struct config_item));
--	ct->name = strbuf_detach(pair[0], NULL);
--	if (pair[1]) {
--		strbuf_trim(pair[1]);
--		ct->value = strbuf_detach(pair[1], NULL);
-+	lowercase(pair[0]->buf);
-+	if (fn(pair[0]->buf, pair[1] ? pair[1]->buf : NULL, data) < 0) {
-+		strbuf_list_free(pair);
-+		return -1;
- 	}
- 	strbuf_list_free(pair);
--	lowercase(ct->name);
--	*config_parameters_tail = ct;
--	config_parameters_tail = &ct->next;
- 	return 0;
+-	return handled;
++	return (*argv) - orig_argv;
  }
  
--static int git_config_parse_environment(void) {
-+int git_config_from_parameters(config_fn_t fn, void *data)
-+{
- 	const char *env = getenv(CONFIG_DATA_ENVIRONMENT);
- 	char *envw;
- 	const char **argv = NULL;
-@@ -92,8 +81,7 @@ static int git_config_parse_environment(void) {
- 	}
- 
- 	for (i = 0; i < nr; i++) {
--		if (git_config_parse_parameter(argv[i]) < 0) {
--			error("bogus config parameter: %s", argv[i]);
-+		if (git_config_parse_parameter(argv[i], fn, data) < 0) {
- 			free(argv);
- 			free(envw);
- 			return -1;
-@@ -102,7 +90,7 @@ static int git_config_parse_environment(void) {
- 
- 	free(argv);
- 	free(envw);
--	return 0;
-+	return nr > 0;
- }
- 
- static int get_next_char(void)
-@@ -837,22 +825,6 @@ int git_config_system(void)
- 	return !git_env_bool("GIT_CONFIG_NOSYSTEM", 0);
- }
- 
--int git_config_from_parameters(config_fn_t fn, void *data)
--{
--	static int loaded_environment;
--	const struct config_item *ct;
--
--	if (!loaded_environment) {
--		if (git_config_parse_environment() < 0)
--			return -1;
--		loaded_environment = 1;
--	}
--	for (ct = config_parameters; ct; ct = ct->next)
--		if (fn(ct->name, ct->value, data) < 0)
--			return -1;
--	return config_parameters != NULL;
--}
--
- int git_config_early(config_fn_t fn, void *data, const char *repo_config)
- {
- 	int ret = 0, found = 0;
+ static int handle_alias(int *argcp, const char ***argv)
 diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 53fb822..fe7a153 100755
+index fe7a153..3db5626 100755
 --- a/t/t1300-repo-config.sh
 +++ b/t/t1300-repo-config.sh
-@@ -897,4 +897,11 @@ test_expect_success 'key sanity-checking' '
+@@ -897,7 +897,7 @@ test_expect_success 'key sanity-checking' '
  	git config foo."ba =z".bar false
  '
  
-+test_expect_failure 'git -c works with aliases of builtins' '
-+	git config alias.checkconfig "-c foo.check=bar config foo.check" &&
-+	echo bar >expect &&
-+	git checkconfig >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+-test_expect_failure 'git -c works with aliases of builtins' '
++test_expect_success 'git -c works with aliases of builtins' '
+ 	git config alias.checkconfig "-c foo.check=bar config foo.check" &&
+ 	echo bar >expect &&
+ 	git checkconfig >actual &&
 -- 
 1.7.4.5.7.g2e01
