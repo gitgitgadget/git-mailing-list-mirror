@@ -1,74 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4 08/10] send-pack/receive-pack: Allow server to refuse
- pushing too large packs
-Date: Mon, 23 May 2011 17:12:47 -0700
-Message-ID: <7vhb8lrm68.fsf@alter.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCHv4 04/10] receive-pack: Prepare for addition of the new
+ 'limit-*' family of capabilities
+Date: Tue, 24 May 2011 02:16:48 +0200
+Message-ID: <201105240216.49225.johan@herland.net>
 References: <1306111923-16859-1-git-send-email-johan@herland.net>
- <1306111923-16859-9-git-send-email-johan@herland.net>
+ <1306111923-16859-5-git-send-email-johan@herland.net>
+ <7v8vtxt3yf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
 Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue May 24 02:13:17 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 24 02:18:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOfFK-0001aJ-CH
-	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 02:13:14 +0200
+	id 1QOfKD-0002po-UY
+	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 02:18:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757817Ab1EXAND (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2011 20:13:03 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:54242 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757729Ab1EXAM5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2011 20:12:57 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id ECD3352CC;
-	Mon, 23 May 2011 20:15:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=72H3N2/Os00bCs0HC8Q7v+d8Kug=; b=vPb7dh
-	q9RKRLYCAyMh3Kw8JAitXlequ4OheDzuYODxMGtnNa1WTcySzmRoN1s+mRkoTV8E
-	hhcgJ8SSVNR/L1CLbk8j8iPGYZfXYU8Rn74YCK5bLW6dCQwN/LzFGYyyIIF6PyIH
-	qh6z40kHgDec79u8jztzscYXCVRxWxN+NKJl8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ozCcVjaojcdLo1kwSaLwCA+9DQH3FklG
-	B8e9zKLBlnYoQ+WEudVXte/O8puUJjqpiUyAOJ4Fs3F/Zr2REd+OvqMgEk5ME7G2
-	fK6DUSTcQq5zCLEt9cVrHlkhPVhCtt5kpFzLQlp3vZxqJ6PVWqbIoQKD+Dw4XQou
-	JSn6GpRSMBc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 97D3852CB;
-	Mon, 23 May 2011 20:15:01 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4A20052CA; Mon, 23 May 2011
- 20:14:57 -0400 (EDT)
-In-Reply-To: <1306111923-16859-9-git-send-email-johan@herland.net> (Johan
- Herland's message of "Mon, 23 May 2011 02:52:01 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DDE3D0C0-859A-11E0-8693-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+	id S1757860Ab1EXASP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 May 2011 20:18:15 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:43720 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757836Ab1EXASN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2011 20:18:13 -0400
+Received: from get-mta-scan01.get.basefarm.net ([10.5.16.4])
+ by get-mta-out03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LLO00BVWBIC3160@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 24 May 2011 02:18:12 +0200 (MEST)
+Received: from get-mta-scan01.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 504AC179971F_DDAF8F2B	for <git@vger.kernel.org>; Tue,
+ 24 May 2011 00:16:50 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan01.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id F3BD017971D7_DDAF8F1F	for <git@vger.kernel.org>; Tue,
+ 24 May 2011 00:16:49 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LLO00KRDBG1F910@get-mta-in03.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 24 May 2011 02:16:49 +0200 (MEST)
+User-Agent: KMail/1.13.7 (Linux/2.6.38-ARCH; KDE/4.6.3; x86_64; ; )
+In-reply-to: <7v8vtxt3yf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174299>
 
-Johan Herland <johan@herland.net> writes:
+On Monday 23 May 2011, Junio C Hamano wrote:
+> Johan Herland <johan@herland.net> writes:
+> > This adds some technical documentation on the 'limit-*' family of
+> > capabilities that will be added in the following commits.
+> > 
+> > Also refactor the generation of the capabilities declaration in
+> > receive-pack. This will also be further expanded in the following
+> > commits.
+> > 
+> > Signed-off-by: Johan Herland <johan@herland.net>
+> > ---
+> > ...
+> > diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> > index e1ba4dc..c55989d 100644
+> > --- a/builtin/receive-pack.c
+> > +++ b/builtin/receive-pack.c
+> > @@ -106,15 +106,23 @@ static int receive_pack_config(const char *var,
+> > const char *value, void *cb)
+> > 
+> >  	return git_default_config(var, value, cb);
+> >  
+> >  }
+> > 
+> > +static const char *capabilities()
+> 
+> static const char *capabilities(void)
 
-> Add a new receive.packSizeLimit config variable which defines an upper
-> limit on the pack size to accept in a single push.
->
-> This limit is advertised to clients, using the new "limit-pack-size=<num>"
-> capability.
+Thanks, will be in the next iteration
 
-Continuing my comments to 7/10, this shouldn't be closely tied to "pack",
-but a more abstract concept of "total transferred data in bytes".
 
-Aside from the name, the implementation looks fine, modulo that it should
-not be passing --max-pack-size but --max-total-pack-size to the underlying
-pack-objects command.
+...Johan
 
-Thanks.
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
