@@ -1,84 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: combined diff does not detect binary files and ignores -diff
- attribute
-Date: Tue, 24 May 2011 09:43:06 -0700
-Message-ID: <7v7h9g82xx.fsf@alter.siamese.dyndns.org>
-References: <BANLkTi=FtkiUjwAa7e3KAC5FF3GNxWzd3Q@mail.gmail.com>
- <4DDA618E.4030604@drmicha.warpmail.net>
- <BANLkTinu3AbTmtswn6DLQKAWdLL=gBvAqA@mail.gmail.com>
- <20110523181147.GA26035@sigill.intra.peff.net>
- <20110523201529.GA6281@sigill.intra.peff.net>
- <BANLkTikvPjO=bbhAoPCftdXzGSYtryNvzw@mail.gmail.com>
- <20110523234131.GB10488@sigill.intra.peff.net>
- <7v39k4aeos.fsf@alter.siamese.dyndns.org>
- <4DDB5C0F.1080102@drmicha.warpmail.net>
- <7vsjs48616.fsf@alter.siamese.dyndns.org>
- <4DDBDF0C.2040708@drmicha.warpmail.net>
+From: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
+Subject: Re: commit a1f6baa5 (wrap long header lines) breaks my habit
+Date: Tue, 24 May 2011 18:46:16 +0200
+Organization: -no organization-
+Message-ID: <20110524164616.GB7723@scotty.home>
+References: <20110524160253.GA7723@scotty.home>
+ <7vboys83nh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Jay Soffian <jaysoffian@gmail.com>,
-	git <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue May 24 18:43:26 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 24 18:46:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOuhY-0001qD-R7
-	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 18:43:25 +0200
+	id 1QOukT-0003bM-2V
+	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 18:46:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753112Ab1EXQnT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2011 12:43:19 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55466 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752395Ab1EXQnS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2011 12:43:18 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AD8DB5901;
-	Tue, 24 May 2011 12:45:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TZISS0dHo1/w+SeAarXI3DMFuDM=; b=tJQyUT
-	3MXJB/is47i1wBW1a7P2RgvxhJPqU57hvL5dseAlhuoTFS9eTtHO0iA1PmCga8mM
-	dQV960/aYdo4Jr013H627jCSkvSnPC+MEj4WIlpDtyTlqZE1LellQfuGOmiAq3vb
-	o7SYFnjTAvtLleaBoD+ML4Ywpx5BBzCZjKqOo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LUDKRgm3d758It4t8zz08GKI2sCpUViJ
-	tJupeoj+LcDBPkOx+G8btOjhgTc73exg+odnPosZULa95I7hAFjNuGHpsaBbC1tv
-	UxSDEsoEtN9/1V3gk2OBu+qQ81YAx/QR6eLzPlAbA5QQYh+Hd0hbALg9MSCxfob1
-	7c7+pb9NiXk=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 676165900;
-	Tue, 24 May 2011 12:45:21 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 161BF58FE; Tue, 24 May 2011
- 12:45:15 -0400 (EDT)
-In-Reply-To: <4DDBDF0C.2040708@drmicha.warpmail.net> (Michael J. Gruber's
- message of "Tue, 24 May 2011 18:38:36 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 36D8EA5A-8625-11E0-9413-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+	id S1754053Ab1EXQqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2011 12:46:20 -0400
+Received: from moutng.kundenserver.de ([212.227.126.187]:53145 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753272Ab1EXQqT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2011 12:46:19 -0400
+Received: from scotty.home (port-92-196-58-134.dynamic.qsc.de [92.196.58.134])
+	by mrelayeu.kundenserver.de (node=mrbap3) with ESMTP (Nemesis)
+	id 0MD8ge-1QSD4Q0ZJM-00GbZh; Tue, 24 May 2011 18:46:18 +0200
+Received: from scotty.home (hs@localhost [127.0.0.1])
+	by scotty.home (8.14.3/8.14.3/Debian-9.4) with ESMTP id p4OGkHq2016982;
+	Tue, 24 May 2011 18:46:17 +0200
+Received: (from hs@localhost)
+	by scotty.home (8.14.3/8.14.3/Submit) id p4OGkG2L016980;
+	Tue, 24 May 2011 18:46:16 +0200
+X-Authentication-Warning: scotty.home: hs set sender to stefan.hahn@s-hahn.de using -f
+Content-Disposition: inline
+In-Reply-To: <7vboys83nh.fsf@alter.siamese.dyndns.org>
+X-Mailer: Mutt 1.5.20 (2009-06-14) http://www.mutt.org/
+X-Editor: GNU Emacs 23.2.1 http://www.gnu.org/
+X-Accept-Language: de en
+X-Location: Europe, Germany, Wolfenbuettel
+X-GPG-Public-Key: gpg --keyserver keys.gnupg.net --recv-keys E4FCD563
+X-GPG-key-ID/Fingerprint: 0xE4FCD563 / EF09 97BB 3731 7DC7 25BA 5C39 185C
+ F986 E4FC D563
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Virus-Scanned: clamav-milter 0.97 at scotty
+X-Virus-Status: Clean
+X-Provags-ID: V02:K0:z+2XGVSJ008yL7lmG5YLhAIuuvKC94g2wMIDh35OhaX
+ 7uEjnWEYLPmCrN5YtMyi8MBbAckXiuG/HFnjeNRjRDCSiYC7m7
+ YIgoJUdO3gUbLyXN0mc+C+b4RvimpsGgJ2pAphXST+QE+rAlRf
+ NpB6AOIGxWyQ3RUJQWPD/1qUQaABPm8yTO2cLKPpOuhiKJOFCh
+ m7kLoXe9DBLD+5uDM0ltg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174331>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Mail von Junio C Hamano, Tue, 24 May 2011 at 09:27:46 -0700:
 
->> 	Side note: about getting stuck, will we see an update to the
->> 	diffstat count series by the end of this cycle? I do not mind
->> 	carrying it over to the next cycle at all, but I'd rather see
->> 	something already started gets finished.
->
-> Yes, on my list. End of month you said, right?
+> >    git format-patch -k --stdout a..b | git am -k -3
+> 
+> Why -k to am?
 
-Yes, but if you post anything on May 31st, it will never have enough time
-to land in 'master' before the feature freeze ;-).
+Just first "-k", and "git am -3". Wrong in mind here at home before my
+computer.
 
-> I've simply been drooling too much over vim-fugitive and was wondering
-> which aspects would fit into our ui.
+Stefan
 
-Heh.
+-- 
+Stefan-W. Hahn                          It is easy to make things.
+                                        It is hard to make things simple.
