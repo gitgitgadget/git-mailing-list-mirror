@@ -1,205 +1,275 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Allow built-ins to also use -c var=val via alias
-Date: Tue, 24 May 2011 17:52:02 -0400
-Message-ID: <20110524215202.GA22243@sigill.intra.peff.net>
-References: <7vsjs37qcp.fsf@alter.siamese.dyndns.org>
- <7vmxib7q79.fsf@alter.siamese.dyndns.org>
- <20110524214618.GA17727@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 24 23:52:17 2011
+From: Jamey Sharp <jamey@minilop.net>
+Subject: [PATCHv2 1/2] Support multiple virtual repositories with a single object store and refs
+Date: Tue, 24 May 2011 14:54:25 -0700
+Message-ID: <1306274066-4092-1-git-send-email-jamey@minilop.net>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Josh Triplett <josh@joshtriplett.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <johannes.sixt@telecom.at>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 24 23:54:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOzWO-0001pp-AF
-	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 23:52:12 +0200
+	id 1QOzYy-00036X-9L
+	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 23:54:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757628Ab1EXVwG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2011 17:52:06 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55304
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753770Ab1EXVwF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2011 17:52:05 -0400
-Received: (qmail 22187 invoked by uid 107); 24 May 2011 21:52:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 24 May 2011 17:52:04 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 May 2011 17:52:02 -0400
-Content-Disposition: inline
-In-Reply-To: <20110524214618.GA17727@sigill.intra.peff.net>
+	id S1757017Ab1EXVyq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2011 17:54:46 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:54796 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752177Ab1EXVyp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2011 17:54:45 -0400
+Received: by pwi15 with SMTP id 15so3195949pwi.19
+        for <git@vger.kernel.org>; Tue, 24 May 2011 14:54:45 -0700 (PDT)
+Received: by 10.142.150.17 with SMTP id x17mr1257185wfd.102.1306274085119;
+        Tue, 24 May 2011 14:54:45 -0700 (PDT)
+Received: from oh.minilop.net (host-247-13.pubnet.pdx.edu [131.252.247.13])
+        by mx.google.com with ESMTPS id p40sm7067072wfc.19.2011.05.24.14.54.43
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 24 May 2011 14:54:44 -0700 (PDT)
+Received: from jamey by oh.minilop.net with local (Exim 4.76)
+	(envelope-from <jamey@oh.minilop.net>)
+	id 1QOzYp-00014e-47; Tue, 24 May 2011 14:54:43 -0700
+X-Mailer: git-send-email 1.7.4.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174349>
 
-On Tue, May 24, 2011 at 05:46:18PM -0400, Jeff King wrote:
+Given many repositories with copies of the same objects (such as
+branches of the same source), sharing a common object store will avoid
+duplication.  Alternates provide a single baseline, but don't handle
+ongoing activity in the various repositories.  Git safely handles
+concurrent accesses to the same object store across repositories, but
+operations such as gc need to know about all of the refs.
 
-> I think the right fix is simply to drop the "don't re-check the
-> environment after the first time" logic. It's not expensive to parse
-> compared to parsing config files, which is when we would do it. We can
-> just drop the existing list and reparse. You can even get rid of the
-> whole list and drop a bunch of code, I think, like:
+This change adds support in upload-pack and receive-pack to simulate
+multiple virtual repositories within the object store and references of
+a single underlying repository.  The refs and heads of the virtual
+repositories get stored in the underlying repository using prefixed
+names specified by the --ref-prefix and --head options; for instance,
+--ref-prefix=repo1/ will use refs/repo1/heads/* and refs/repo1/tags/*.
+upload-pack and receive-pack will not expose any references that do not
+match the specified prefix.
 
-Ack, wrong patch. That one doesn't even come close to compiling.
+These options implement the underlying mechanism for virtual
+repositories; the higher-level protocol handler (such as http-backend or
+a custom server) can pass these options when invoking upload-pack or
+receive-pack, providing values based on components of the repository
+path.  For a simple local test, git-remote-ext works:
 
-Try this (still not well tested, though).
+git clone ext::'git %s --ref-prefix=prefix/ --head=prefix-HEAD /tmp/prefixed.git'
 
+Commit by Josh Triplett and Jamey Sharp.
+Signed-off-by: Josh Triplett <josh@joshtriplett.org>
+Signed-off-by: Jamey Sharp <jamey@minilop.net>
+Cc: Shawn O. Pearce <spearce@spearce.org>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Johannes Sixt <johannes.sixt@telecom.at>
 ---
- cache.h  |    2 -
- config.c |   68 ++++++++++++++++++++++++-------------------------------------
- 2 files changed, 27 insertions(+), 43 deletions(-)
+v2: remove accidentally-included debug message; and add patch 2/2 for
+    git-http-backend.
 
-diff --git a/cache.h b/cache.h
-index 28a921d..69e09a1 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1037,8 +1037,6 @@ typedef int (*config_fn_t)(const char *, const char *, void *);
- extern int git_default_config(const char *, const char *, void *);
- extern int git_config_from_file(config_fn_t fn, const char *, void *);
- extern void git_config_push_parameter(const char *text);
--extern int git_config_parse_parameter(const char *text);
--extern int git_config_parse_environment(void);
- extern int git_config_from_parameters(config_fn_t fn, void *data);
- extern int git_config(config_fn_t fn, void *);
- extern int git_config_early(config_fn_t fn, void *, const char *repo_config);
-diff --git a/config.c b/config.c
-index 9d36848..90d5e6d 100644
---- a/config.c
-+++ b/config.c
-@@ -20,14 +20,6 @@ static int zlib_compression_seen;
+ builtin/receive-pack.c |   36 +++++++++++++++++++++++++++---------
+ upload-pack.c          |   34 +++++++++++++++++++++++++++-------
+ 2 files changed, 54 insertions(+), 16 deletions(-)
+
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index e1ba4dc..76dacd0 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -34,6 +34,8 @@ static int prefer_ofs_delta = 1;
+ static int auto_update_server_info;
+ static int auto_gc = 1;
+ static const char *head_name;
++static const char *head_path = "HEAD";
++static const char *ref_prefix = "refs/";
+ static int sent_capabilities;
  
- const char *config_exclusive_filename = NULL;
+ static enum deny_action parse_deny_action(const char *var, const char *value)
+@@ -108,11 +110,12 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
  
--struct config_item {
--	struct config_item *next;
--	char *name;
--	char *value;
--};
--static struct config_item *config_parameters;
--static struct config_item **config_parameters_tail = &config_parameters;
--
- static void lowercase(char *p)
+ static int show_ref(const char *path, const unsigned char *sha1, int flag, void *cb_data)
  {
- 	for (; *p; p++)
-@@ -47,9 +39,9 @@ void git_config_push_parameter(const char *text)
- 	strbuf_release(&env);
++	const char *refnameprefix = cb_data;
+ 	if (sent_capabilities)
+-		packet_write(1, "%s %s\n", sha1_to_hex(sha1), path);
++		packet_write(1, "%s %s%s\n", sha1_to_hex(sha1), refnameprefix, path);
+ 	else
+-		packet_write(1, "%s %s%c%s%s\n",
+-			     sha1_to_hex(sha1), path, 0,
++		packet_write(1, "%s %s%s%c%s%s\n",
++			     sha1_to_hex(sha1), refnameprefix, path, 0,
+ 			     " report-status delete-refs side-band-64k",
+ 			     prefer_ofs_delta ? " ofs-delta" : "");
+ 	sent_capabilities = 1;
+@@ -121,9 +124,9 @@ static int show_ref(const char *path, const unsigned char *sha1, int flag, void
+ 
+ static void write_head_info(void)
+ {
+-	for_each_ref(show_ref, NULL);
++	for_each_ref_in(ref_prefix, show_ref, "refs/");
+ 	if (!sent_capabilities)
+-		show_ref("capabilities^{}", null_sha1, 0, NULL);
++		show_ref("capabilities^{}", null_sha1, 0, "");
+ 
  }
  
--int git_config_parse_parameter(const char *text)
-+int git_config_parse_parameter(const char *text,
-+			       char **name, char **value)
+@@ -332,6 +335,8 @@ static void refuse_unconfigured_deny_delete_current(void)
+ static const char *update(struct command *cmd)
  {
--	struct config_item *ct;
- 	struct strbuf tmp = STRBUF_INIT;
- 	struct strbuf **pair;
- 	strbuf_addstr(&tmp, text);
-@@ -61,25 +53,24 @@ int git_config_parse_parameter(const char *text)
- 		strbuf_list_free(pair);
- 		return -1;
+ 	const char *name = cmd->ref_name;
++	struct strbuf prefixed_name_buf = STRBUF_INIT;
++	const char *prefixed_name;
+ 	unsigned char *old_sha1 = cmd->old_sha1;
+ 	unsigned char *new_sha1 = cmd->new_sha1;
+ 	struct ref_lock *lock;
+@@ -342,7 +347,10 @@ static const char *update(struct command *cmd)
+ 		return "funny refname";
  	}
--	ct = xcalloc(1, sizeof(struct config_item));
--	ct->name = strbuf_detach(pair[0], NULL);
-+	*name = strbuf_detach(pair[0], NULL);
- 	if (pair[1]) {
- 		strbuf_trim(pair[1]);
--		ct->value = strbuf_detach(pair[1], NULL);
-+		*value = strbuf_detach(pair[1], NULL);
+ 
+-	if (is_ref_checked_out(name)) {
++	strbuf_addf(&prefixed_name_buf, "%s%s", ref_prefix, name + 5);
++	prefixed_name = strbuf_detach(&prefixed_name_buf, NULL);
++
++	if (is_ref_checked_out(prefixed_name)) {
+ 		switch (deny_current_branch) {
+ 		case DENY_IGNORE:
+ 			break;
+@@ -370,7 +378,7 @@ static const char *update(struct command *cmd)
+ 			return "deletion prohibited";
+ 		}
+ 
+-		if (!strcmp(name, head_name)) {
++		if (!strcmp(prefixed_name, head_name)) {
+ 			switch (deny_delete_current) {
+ 			case DENY_IGNORE:
+ 				break;
+@@ -426,14 +434,14 @@ static const char *update(struct command *cmd)
+ 			rp_warning("Allowing deletion of corrupt ref.");
+ 			old_sha1 = NULL;
+ 		}
+-		if (delete_ref(name, old_sha1, 0)) {
++		if (delete_ref(prefixed_name, old_sha1, 0)) {
+ 			rp_error("failed to delete %s", name);
+ 			return "failed to delete";
+ 		}
+ 		return NULL; /* good */
  	}
- 	strbuf_list_free(pair);
--	lowercase(ct->name);
--	*config_parameters_tail = ct;
--	config_parameters_tail = &ct->next;
-+	lowercase(*name);
+ 	else {
+-		lock = lock_any_ref_for_update(name, old_sha1, 0);
++		lock = lock_any_ref_for_update(prefixed_name, old_sha1, 0);
+ 		if (!lock) {
+ 			rp_error("failed to lock %s", name);
+ 			return "failed to lock";
+@@ -760,6 +768,16 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 				advertise_refs = 1;
+ 				continue;
+ 			}
++			if (!prefixcmp(arg, "--head=")) {
++				head_path = arg+7;
++				continue;
++			}
++			if (!prefixcmp(arg, "--ref-prefix=")) {
++				struct strbuf prefixbuf = STRBUF_INIT;
++				strbuf_addf(&prefixbuf, "refs/%s", arg+13);
++				ref_prefix = strbuf_detach(&prefixbuf, NULL);
++				continue;
++			}
+ 			if (!strcmp(arg, "--stateless-rpc")) {
+ 				stateless_rpc = 1;
+ 				continue;
+diff --git a/upload-pack.c b/upload-pack.c
+index ce5cbbe..a1e495f 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -34,6 +34,8 @@ static int shallow_nr;
+ static struct object_array have_obj;
+ static struct object_array want_obj;
+ static struct object_array extra_edge_obj;
++static const char *head_path = "HEAD";
++static const char *ref_prefix = "";
+ static unsigned int timeout;
+ /* 0 for no sideband,
+  * otherwise maximum packet size (up to 65520 bytes).
+@@ -640,17 +642,18 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
+ 	static const char *capabilities = "multi_ack thin-pack side-band"
+ 		" side-band-64k ofs-delta shallow no-progress"
+ 		" include-tag multi_ack_detailed";
++	const char *refnameprefix = cb_data;
+ 	struct object *o = parse_object(sha1);
+ 
+ 	if (!o)
+ 		die("git upload-pack: cannot find object %s:", sha1_to_hex(sha1));
+ 
+ 	if (capabilities)
+-		packet_write(1, "%s %s%c%s%s\n", sha1_to_hex(sha1), refname,
++		packet_write(1, "%s %s%s%c%s%s\n", sha1_to_hex(sha1), refnameprefix, refname,
+ 			     0, capabilities,
+ 			     stateless_rpc ? " no-done" : "");
+ 	else
+-		packet_write(1, "%s %s\n", sha1_to_hex(sha1), refname);
++		packet_write(1, "%s %s%s\n", sha1_to_hex(sha1), refnameprefix, refname);
+ 	capabilities = NULL;
+ 	if (!(o->flags & OUR_REF)) {
+ 		o->flags |= OUR_REF;
+@@ -659,7 +662,7 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
+ 	if (o->type == OBJ_TAG) {
+ 		o = deref_tag(o, refname, 0);
+ 		if (o)
+-			packet_write(1, "%s %s^{}\n", sha1_to_hex(o->sha1), refname);
++			packet_write(1, "%s %s%s^{}\n", sha1_to_hex(o->sha1), refnameprefix, refname);
+ 	}
  	return 0;
  }
+@@ -678,15 +681,24 @@ static int mark_our_ref(const char *refname, const unsigned char *sha1, int flag
  
--int git_config_parse_environment(void) {
-+int git_config_from_parameters(config_fn_t fn, void *data)
-+{
- 	const char *env = getenv(CONFIG_DATA_ENVIRONMENT);
- 	char *envw;
- 	const char **argv = NULL;
- 	int nr = 0, alloc = 0;
- 	int i;
-+	int ret = 0;
- 
- 	if (!env)
- 		return 0;
-@@ -92,17 +83,25 @@ int git_config_parse_environment(void) {
- 	}
- 
- 	for (i = 0; i < nr; i++) {
--		if (git_config_parse_parameter(argv[i]) < 0) {
-+		char *name, *value;
-+		if (git_config_parse_parameter(argv[i], &name, &value) < 0) {
- 			error("bogus config parameter: %s", argv[i]);
--			free(argv);
--			free(envw);
--			return -1;
-+			ret = -1;
-+			goto out;
- 		}
-+		if (fn(name, value, data) < 0) {
-+			ret = -1;
-+			goto out;
-+		}
-+		free(name);
-+		free(value);
-+		ret++;
- 	}
- 
-+out:
- 	free(argv);
- 	free(envw);
--	return 0;
-+	return ret;
- }
- 
- static int get_next_char(void)
-@@ -837,25 +836,10 @@ int git_config_system(void)
- 	return !git_env_bool("GIT_CONFIG_NOSYSTEM", 0);
- }
- 
--int git_config_from_parameters(config_fn_t fn, void *data)
--{
--	static int loaded_environment;
--	const struct config_item *ct;
--
--	if (!loaded_environment) {
--		if (git_config_parse_environment() < 0)
--			return -1;
--		loaded_environment = 1;
--	}
--	for (ct = config_parameters; ct; ct = ct->next)
--		if (fn(ct->name, ct->value, data) < 0)
--			return -1;
--	return 0;
--}
--
- int git_config_early(config_fn_t fn, void *data, const char *repo_config)
+ static void upload_pack(void)
  {
- 	int ret = 0, found = 0;
-+	int n;
- 	const char *home = NULL;
- 
- 	/* Setting $GIT_CONFIG makes git read _only_ the given config file. */
-@@ -882,9 +866,11 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
- 		found += 1;
++	struct strbuf prefix = STRBUF_INIT;
++	unsigned char sha1[20];
++	int flag;
++
++	strbuf_addf(&prefix, "refs/%s", ref_prefix);
+ 	if (advertise_refs || !stateless_rpc) {
+ 		reset_timeout();
+-		head_ref(send_ref, NULL);
+-		for_each_ref(send_ref, NULL);
++		if (resolve_ref(head_path, sha1, 1, &flag))
++			send_ref("HEAD", sha1, flag, "");
++		for_each_ref_in(prefix.buf, send_ref, "refs/");
+ 		packet_flush(1);
+ 	} else {
+-		head_ref(mark_our_ref, NULL);
+-		for_each_ref(mark_our_ref, NULL);
++		if (resolve_ref(head_path, sha1, 1, &flag))
++			mark_our_ref("HEAD", sha1, flag, NULL);
++		for_each_ref_in(prefix.buf, mark_our_ref, NULL);
  	}
++	strbuf_release(&prefix);
++
+ 	if (advertise_refs)
+ 		return;
  
--	ret += git_config_from_parameters(fn, data);
--	if (config_parameters)
--		found += 1;
-+	n = git_config_from_parameters(fn, data);
-+	if (n < 0)
-+		ret += n;
-+	else
-+		found += n;
- 
- 	return ret == 0 ? found : ret;
- }
+@@ -716,6 +728,14 @@ int main(int argc, char **argv)
+ 			advertise_refs = 1;
+ 			continue;
+ 		}
++		if (!prefixcmp(arg, "--head=")) {
++			head_path = arg+7;
++			continue;
++		}
++		if (!prefixcmp(arg, "--ref-prefix=")) {
++			ref_prefix = arg+13;
++			continue;
++		}
+ 		if (!strcmp(arg, "--stateless-rpc")) {
+ 			stateless_rpc = 1;
+ 			continue;
+-- 
+1.7.5.1
