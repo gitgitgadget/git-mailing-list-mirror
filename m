@@ -1,73 +1,69 @@
-From: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
-Subject: Re: commit a1f6baa5 (wrap long header lines) breaks my habit
-Date: Tue, 24 May 2011 18:46:16 +0200
-Organization: -no organization-
-Message-ID: <20110524164616.GB7723@scotty.home>
-References: <20110524160253.GA7723@scotty.home>
- <7vboys83nh.fsf@alter.siamese.dyndns.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: combined diff does not detect binary files and ignores -diff attribute
+Date: Tue, 24 May 2011 12:52:01 -0400
+Message-ID: <BANLkTi=XbiZ0CVdwi8upnxVG26HyB9pmrg@mail.gmail.com>
+References: <BANLkTi=FtkiUjwAa7e3KAC5FF3GNxWzd3Q@mail.gmail.com>
+	<4DDA618E.4030604@drmicha.warpmail.net>
+	<BANLkTinu3AbTmtswn6DLQKAWdLL=gBvAqA@mail.gmail.com>
+	<20110523181147.GA26035@sigill.intra.peff.net>
+	<20110523201529.GA6281@sigill.intra.peff.net>
+	<BANLkTikvPjO=bbhAoPCftdXzGSYtryNvzw@mail.gmail.com>
+	<20110523234131.GB10488@sigill.intra.peff.net>
+	<7v39k4aeos.fsf@alter.siamese.dyndns.org>
+	<4DDB5C0F.1080102@drmicha.warpmail.net>
+	<7vsjs48616.fsf@alter.siamese.dyndns.org>
+	<4DDBDF0C.2040708@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 24 18:46:28 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue May 24 18:52:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOukT-0003bM-2V
-	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 18:46:25 +0200
+	id 1QOuq2-0006w1-4o
+	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 18:52:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754053Ab1EXQqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2011 12:46:20 -0400
-Received: from moutng.kundenserver.de ([212.227.126.187]:53145 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753272Ab1EXQqT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2011 12:46:19 -0400
-Received: from scotty.home (port-92-196-58-134.dynamic.qsc.de [92.196.58.134])
-	by mrelayeu.kundenserver.de (node=mrbap3) with ESMTP (Nemesis)
-	id 0MD8ge-1QSD4Q0ZJM-00GbZh; Tue, 24 May 2011 18:46:18 +0200
-Received: from scotty.home (hs@localhost [127.0.0.1])
-	by scotty.home (8.14.3/8.14.3/Debian-9.4) with ESMTP id p4OGkHq2016982;
-	Tue, 24 May 2011 18:46:17 +0200
-Received: (from hs@localhost)
-	by scotty.home (8.14.3/8.14.3/Submit) id p4OGkG2L016980;
-	Tue, 24 May 2011 18:46:16 +0200
-X-Authentication-Warning: scotty.home: hs set sender to stefan.hahn@s-hahn.de using -f
-Content-Disposition: inline
-In-Reply-To: <7vboys83nh.fsf@alter.siamese.dyndns.org>
-X-Mailer: Mutt 1.5.20 (2009-06-14) http://www.mutt.org/
-X-Editor: GNU Emacs 23.2.1 http://www.gnu.org/
-X-Accept-Language: de en
-X-Location: Europe, Germany, Wolfenbuettel
-X-GPG-Public-Key: gpg --keyserver keys.gnupg.net --recv-keys E4FCD563
-X-GPG-key-ID/Fingerprint: 0xE4FCD563 / EF09 97BB 3731 7DC7 25BA 5C39 185C
- F986 E4FC D563
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Virus-Scanned: clamav-milter 0.97 at scotty
-X-Virus-Status: Clean
-X-Provags-ID: V02:K0:z+2XGVSJ008yL7lmG5YLhAIuuvKC94g2wMIDh35OhaX
- 7uEjnWEYLPmCrN5YtMyi8MBbAckXiuG/HFnjeNRjRDCSiYC7m7
- YIgoJUdO3gUbLyXN0mc+C+b4RvimpsGgJ2pAphXST+QE+rAlRf
- NpB6AOIGxWyQ3RUJQWPD/1qUQaABPm8yTO2cLKPpOuhiKJOFCh
- m7kLoXe9DBLD+5uDM0ltg==
+	id S1754137Ab1EXQwD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2011 12:52:03 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:37255 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753593Ab1EXQwC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2011 12:52:02 -0400
+Received: by pvg12 with SMTP id 12so3050838pvg.19
+        for <git@vger.kernel.org>; Tue, 24 May 2011 09:52:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=Fb5pvI9Z83mpy6ax0UxxWyV29ogwKEl3ZQ9DVH7mrkk=;
+        b=l6Azbhq7Th+DWayyTazu/eZktHLm1sx1XhYxY76Jk8yNyVttdsVh7ErcPY1XmA2PAP
+         1m/kRqDjw/QWljOMuqzvZHKtKLH0ZLcqQgekwHRgzpxgFzdgTTcEnQcifoM0yfSeW0wy
+         Bus9wYm3lOuHsGZb9WRc/ZpAqA+z02CsSijTg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=knTMSENXJlRsH/YhMj4lbeHqI91xNcGsz5YcW9PLFCteglYUo/Get2Co6zgkbBqEpG
+         kPnMCCyGDbNL2H0Lvc7hPiwSICQs9srIIgpgLgvdnpB8YkOpL64Wk7ONUqLFIvhjw2cY
+         GUzWjNShYZ7XK2xuNo9CFvxXQxAyPrHfVeDTg=
+Received: by 10.142.225.6 with SMTP id x6mr1200749wfg.55.1306255921483; Tue,
+ 24 May 2011 09:52:01 -0700 (PDT)
+Received: by 10.142.13.8 with HTTP; Tue, 24 May 2011 09:52:01 -0700 (PDT)
+In-Reply-To: <4DDBDF0C.2040708@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174332>
 
-Mail von Junio C Hamano, Tue, 24 May 2011 at 09:27:46 -0700:
+On Tue, May 24, 2011 at 12:38 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Well, it seemed that Jay wanted an external tool for merge diffs.
 
-> >    git format-patch -k --stdout a..b | git am -k -3
-> 
-> Why -k to am?
+Only because I wasn't using textconv, but I should have been.
 
-Just first "-k", and "git am -3". Wrong in mind here at home before my
-computer.
-
-Stefan
-
--- 
-Stefan-W. Hahn                          It is easy to make things.
-                                        It is hard to make things simple.
+j.
