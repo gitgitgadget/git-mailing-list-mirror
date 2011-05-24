@@ -1,81 +1,96 @@
 From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH] diff-options.txt: document --[no]-textconv
-Date: Mon, 23 May 2011 20:27:54 -0400
-Message-ID: <1306196874-64687-1-git-send-email-jaysoffian@gmail.com>
-Cc: Jay Soffian <jaysoffian@gmail.com>, Jeff King <peff@peff.net>,
-	Junio C Hamano <junio@kernel.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 24 02:28:08 2011
+Subject: Re: combined diff does not detect binary files and ignores -diff attribute
+Date: Mon, 23 May 2011 20:59:51 -0400
+Message-ID: <BANLkTi=nTZABRPLwq30Khs8KJHRt+jzNbA@mail.gmail.com>
+References: <BANLkTi=FtkiUjwAa7e3KAC5FF3GNxWzd3Q@mail.gmail.com>
+	<4DDA618E.4030604@drmicha.warpmail.net>
+	<BANLkTinu3AbTmtswn6DLQKAWdLL=gBvAqA@mail.gmail.com>
+	<20110523181147.GA26035@sigill.intra.peff.net>
+	<20110523201529.GA6281@sigill.intra.peff.net>
+	<BANLkTikvPjO=bbhAoPCftdXzGSYtryNvzw@mail.gmail.com>
+	<BANLkTikAS63wZ=VP9s6LE44MBd5T1X3gMA@mail.gmail.com>
+	<20110523234934.GC10488@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 24 02:59:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOfTj-00060T-SU
-	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 02:28:08 +0200
+	id 1QOfyX-0007LO-UN
+	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 02:59:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757839Ab1EXA2E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 May 2011 20:28:04 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:58938 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757786Ab1EXA2B (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2011 20:28:01 -0400
-Received: by vws1 with SMTP id 1so4562326vws.19
-        for <git@vger.kernel.org>; Mon, 23 May 2011 17:28:00 -0700 (PDT)
+	id S1757973Ab1EXA7y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 May 2011 20:59:54 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:33619 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757964Ab1EXA7w convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 May 2011 20:59:52 -0400
+Received: by pwi15 with SMTP id 15so2822257pwi.19
+        for <git@vger.kernel.org>; Mon, 23 May 2011 17:59:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
-        bh=1b38l+nYLp4uYo0u/P0aMyDlUSv7vZak8LPhE15Prfw=;
-        b=DJQTWPzY8wTc606HWIDY4PMv+UZ8ahXOTVgEXYGr2ESt6qI9OR1TcHJ1IST8eoO7u3
-         jaQ2m8hsvw0RkR8hgBn0cvmySxOwyxQr11s6noezUWxqBPpQGT7czYN3I4v/frWBZTGD
-         7JYzAsHDe5Yx/Iuj3fdaPlLaubg9JR4Io7cgQ=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=8gNIGoZFfCq5aHr3XZWYuXgsYmZ9y2iVcSmlPUK3+4c=;
+        b=T3YmrD5DKHT17LjEg9FxFJeX+8mMalU9bER8O/osJHai0CeYyxhK/fkTPcY6dDxaYL
+         naWXFSSNhgVuM9usfKl8LI9uIJ9dhxDA97bgN/hZ2Y5vgwlePwbtYZfYTlZluUjlqmc3
+         jvfuz7T3yZRxuDPejSMNKc8++0dcb9pdInlKg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=IlD16DdFwEJYRJiW1xJ0PSJI6j7+/+Ozj/rS2bZ1t2ad2MMCNS3KhOf0Uayjovml8w
-         0+uRdwcEDwWYJzMZwZK5/zZ8V26o4f9kD0q+CeQX0sBLedwKaBGP1VCf4xB1bAZQQvQj
-         /pTedlyHo/2+hBqYpJj27Q8Etg1EEvqEj6VQw=
-Received: by 10.52.71.111 with SMTP id t15mr655730vdu.37.1306196880543;
-        Mon, 23 May 2011 17:28:00 -0700 (PDT)
-Received: from localhost (cpe-071-077-014-091.nc.res.rr.com [71.77.14.91])
-        by mx.google.com with ESMTPS id p1sm1473858vdv.26.2011.05.23.17.27.59
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 23 May 2011 17:27:59 -0700 (PDT)
-X-Mailer: git-send-email 1.7.5.2.323.g00f3d
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=TD0Z4XqtKevU1QqOE96XN3BX3vFdbjUMeECIAxgfv/x5yESEdrxB0G6OaYQBO1DJAg
+         sHknjufyrkbMoEZ8H0WLPVCukk8jWxXUVBy8LyZBpKJ/0WnZO9vU1TGJ7G2SE343/By8
+         6XVbm1iga2Hc5iyTbI7WBFWm92/qi/oQTGWio=
+Received: by 10.142.147.10 with SMTP id u10mr1014668wfd.112.1306198791710;
+ Mon, 23 May 2011 17:59:51 -0700 (PDT)
+Received: by 10.142.13.8 with HTTP; Mon, 23 May 2011 17:59:51 -0700 (PDT)
+In-Reply-To: <20110523234934.GC10488@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174304>
 
+On Mon, May 23, 2011 at 7:49 PM, Jeff King <peff@peff.net> wrote:
+> Hmm, I thought we did preserve the extension. I think it may actually=
+ be
+> related to me making a fake filespec and not passing the path in.
+>
+> Does the (totally untested) patch below fix it for you?
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
-textconv also seems to be supported by blame, it isn't clear to me whether
-it respects --no-textconv.
+Yes.
 
- Documentation/diff-options.txt |    9 +++++++++
- 1 files changed, 9 insertions(+), 0 deletions(-)
+>> 2. It's not really clear to me when one should use textconv vs a
+>> custom diff driver. (Also, --no-textconv isn't documented...).
+>
+> The motivation for textconv was originally a combination of "when you
+> are too lazy to write a full diff driver" and "when you like how git
+> formats the diff with pretty colors and word-diff". But now I think w=
+e
+> can add to that:
+>
+> =C2=A01. When you want something fancy and git-ish like combined diff=
+=2E
+>
+> =C2=A02. When you want free caching to speed up repeated log viewing =
+(try
+> =C2=A0 =C2=A0 setting diff.*.cachetextconv to true).
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index c7ed946357..8b311a60ea 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -412,6 +412,15 @@ endif::git-format-patch[]
- --no-ext-diff::
- 	Disallow external diff drivers.
- 
-+--textconv::
-+	Text conversion of binary files is enabled by default if configured
-+	according to "Performing text diffs of binary files" in
-+	linkgit:gitattributes[5], but may be disabled with `--no-textconv`.
-+	This option overrides a previously given `--no-textconv`.
-+
-+--no-textconv::
-+	Disable text conversion of binary files.
-+
- --ignore-submodules[=<when>]::
- 	Ignore changes to submodules in the diff generation. <when> can be
- 	either "none", "untracked", "dirty" or "all", which is the default
--- 
-1.7.5.2.323.g00f3d
+Gotcha.
+
+> Maybe it is worth adding an "advantages of textconv" section to
+> gitattributes(5) (the advantage of a full external diff command is th=
+at
+> it can be more flexible, or even graphical in nature).
+
+Okay.
+
+j.
