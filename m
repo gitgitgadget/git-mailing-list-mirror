@@ -1,134 +1,124 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] handle_options(): do not miscount how many arguments were
- used
-Date: Tue, 24 May 2011 14:15:02 -0700
-Message-ID: <7vsjs37qcp.fsf@alter.siamese.dyndns.org>
+Subject: [PATCH] Allow built-ins to also use -c var=val via alias
+Date: Tue, 24 May 2011 14:18:18 -0700
+Message-ID: <7vmxib7q79.fsf@alter.siamese.dyndns.org>
+References: <7vsjs37qcp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Kazuki Tsujimoto <kazuki@callcc.net>,
-	Alex Riesen <raa.lkml@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 24 23:15:24 2011
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 24 23:18:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOywk-0006Oq-Rl
-	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 23:15:23 +0200
+	id 1QOyzo-0008D6-Lv
+	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 23:18:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757102Ab1EXVPQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2011 17:15:16 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43639 "EHLO
+	id S1757536Ab1EXVS1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2011 17:18:27 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51033 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754418Ab1EXVPP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2011 17:15:15 -0400
+	with ESMTP id S1757251Ab1EXVS0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2011 17:18:26 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2D2B25DB7;
-	Tue, 24 May 2011 17:17:22 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5FD555E4D;
+	Tue, 24 May 2011 17:20:33 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=I
-	LjGZsXmS+ansylVCFBQpWATeUU=; b=r2XA3eEMzyC/EJc6SXxMfbkd9txOEM6JD
-	lZOAsjDqzfxdBV0t11RKZGHZXH0d/pzdXXWDsW2QZMs88zms6c9pUvlcIDCLZd2n
-	fIQ7oiyYPSmvAczzrbnCPSp6l0S6x/JD0EsFrangexv9G7DlryxdzI4DD/CVORHh
-	VeNcsW/FhA=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8x2ADpNgPwsFUC9/OqmLH34Nc50=; b=GPItsx
+	Y3phYpRDcILSEsU6s0gJr2aMiF1PJrpoytzjY5i9p54PE/NJ4rgQD2PSObdUib1B
+	+ZDd4Kc2AvgaNnufiGdOz0QXOoXjbJs3jEvp/v3hAu8kPHFV+FgXldaeB8YgcrDa
+	+kSctmz8rF6JaeBhu1dMacIOOCTHksc3RBa50=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; q=dns; s=
-	sasl; b=MEuDhb0+0Oc4u4jujCetKtaPQcfIH0fqrNrNzpBsglNOmcFHFAmJXKYL
-	8oFxhYTPhUjow23xFn6k7zzbbxbZl5yoE+b7Gdw7W9mL9HH5tShV90c/2G4GJRX0
-	OaYcsxVtWYohDKGdHp6jtencWE4O6IVwjaxlKW8PtTyGevHkgqA=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gNbZXnLVtfHh0o/UTX72iHNNo2OEviBD
+	FgExP9FCrpGdiDiDmRamHyHvsb7cMFbt2UnT2e2Q5QozyNN10eBd2WsoQowJvo+e
+	4685zleq9UlOhTLrhBIF1AiJ6xm3Vri0hogR1cP4iCcb9YjWjqGn4LFhW7IBE4L1
+	As34gsnMEKQ=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DC5485DB5;
-	Tue, 24 May 2011 17:17:17 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3D8DA5E4C;
+	Tue, 24 May 2011 17:20:31 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E7A635DB4; Tue, 24 May 2011
- 17:17:11 -0400 (EDT)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 314985E4A; Tue, 24 May 2011
+ 17:20:27 -0400 (EDT)
+In-Reply-To: <7vsjs37qcp.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 24 May 2011 14:15:02 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 343CF752-864B-11E0-B55A-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: A77C3ED0-864B-11E0-B55A-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174344>
 
-The handle_options() function advances the base of the argument array and
-returns the number of arguments it used. The caller in handle_alias()
-wants to reallocate the argv array it passes to this function, and
-attempts to do so by subtracting the returned value to compensate for the
-change handle_options() makes to the new_argv.
+The previous commit 2b64fc8 (pass "git -c foo=bar" params through
+environment, 2010-08-23) tried to make all the one-shot configuration
+setting made via the "-c" option to the "git" wrapper go through an
+environment variable, so that the value can be propagated to external
+commands _as well as_ the internal ones, but ended up breaking one of the
+codepaths that invokes internal commands, because it incorrectly assumed
+that git_config_from_parmeters() can never be called in a single process
+after git_config_parse_environment() was called once.
 
-But handle_options() did not correctly count when "-c <config=value>" is
-given, causing a wrong pointer to be passed to realloc().
+Not so.
 
-Fix it by saving the original argv at the beginning of handle_options(),
-and return the difference between the final value of argv, which will
-relieve the places that move the array pointer from the additional burden
-of keeping track of "handled" counter.
+When the options came as part of an alias to an internal command, e.g.
 
-Noticed-by: Kazuki Tsujimoto
+  [alias]
+    aw = -c apply.whitespace=fix apply
+
+and then run as "git aw P.diff", we have already read the configuration to
+find out about the alias definition (setting loaded_environment to true),
+then pushed apply.whitespace=fix to the environment, but not to the
+in-core list of configuration variables. The implementation of the
+internal command, e.g. cmd_apply(), will try to read from git_config() but
+the setting is lost, as the environment is never read in this codepath.
+
+Add the in-core queuing of the parameters back to fix this.
+
+Note that the handling of such an alias is still broken for another reason
+in this codepath; a separate patch fixes it.
+
+While at it, avoid getting our test confused by GIT_CONFIG_PARAMETERS
+exported to the tester's environment.
+
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
 
- * This fixes 8b1fa77 (Allow passing of configuration parameters in the
-   command line, 2010-03-26), and when applied there, the new test passes,
-   but if applied to newer codebase, the test fails for a different
-   reason, for which another fix will be sent out separately.
+ * And this is the other fix. Applying this on top of 2b64fc8 does not
+   make "git aw P.diff" in the test t1300 in the other patch, but this
+   is prerequisite for the other fix to work in a more modern codebase.
 
- git.c                  |    6 ++----
- t/t1300-repo-config.sh |   10 ++++++++++
- 2 files changed, 12 insertions(+), 4 deletions(-)
+ config.c      |    1 +
+ t/test-lib.sh |    1 +
+ 2 files changed, 2 insertions(+), 0 deletions(-)
 
-diff --git a/git.c b/git.c
-index 1753811..55c2eda 100644
---- a/git.c
-+++ b/git.c
-@@ -53,7 +53,7 @@ static void commit_pager_choice(void) {
- 
- static int handle_options(const char ***argv, int *argc, int *envchanged)
- {
--	int handled = 0;
-+	const char **orig_argv = *argv;
- 
- 	if (!getenv("GIT_ASKPASS") && getenv("SSH_ASKPASS"))
- 		setenv("GIT_ASKPASS", getenv("SSH_ASKPASS"), 1);
-@@ -106,7 +106,6 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 				*envchanged = 1;
- 			(*argv)++;
- 			(*argc)--;
--			handled++;
- 		} else if (!prefixcmp(cmd, "--git-dir=")) {
- 			setenv(GIT_DIR_ENVIRONMENT, cmd + 10, 1);
- 			if (envchanged)
-@@ -146,9 +145,8 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 
- 		(*argv)++;
- 		(*argc)--;
--		handled++;
+diff --git a/config.c b/config.c
+index c2c995f..c803ae8 100644
+--- a/config.c
++++ b/config.c
+@@ -43,6 +43,7 @@ void git_config_push_parameter(const char *text)
+ 		strbuf_addstr(&env, old);
+ 		strbuf_addch(&env, ' ');
  	}
--	return handled;
-+	return (*argv) - orig_argv;
- }
- 
- static int handle_alias(int *argcp, const char ***argv)
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 64f0508..5f6766d 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -832,4 +832,14 @@ test_expect_success 'git -c "key=value" support' '
- 	test_must_fail git -c core.name=value config name
- '
- 
-+test_expect_success 'alias to give a configuration value' '
-+	echo "foo and space " >foo &&
-+	git diff HEAD >foo.patch &&
-+	git checkout foo &&
-+	git config alias.aw "-c apply.whitespace=fix apply" &&
-+	git aw foo.patch &&
-+	echo "foo and space" >expect &&
-+	test_cmp expect foo
-+'
-+
- test_done
++	git_config_parse_parameter(text);
+ 	sq_quote_buf(&env, text);
+ 	setenv(CONFIG_DATA_ENVIRONMENT, env.buf, 1);
+ 	strbuf_release(&env);
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index e5523dd..0b1358e 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -57,6 +57,7 @@ GIT_AUTHOR_NAME='A U Thor'
+ unset GIT_COMMITTER_DATE
+ GIT_COMMITTER_EMAIL=committer@example.com
+ GIT_COMMITTER_NAME='C O Mitter'
++unset GIT_CONFIG_PARAMETERS
+ unset GIT_DIFF_OPTS
+ unset GIT_DIR
+ unset GIT_WORK_TREE
 -- 
 1.7.5.2.459.g67e41
