@@ -1,76 +1,393 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] checkout: honor advice.detachedHead when reattaching to
- a branch
-Date: Tue, 24 May 2011 14:24:37 -0700
-Message-ID: <7vipsz7pwq.fsf@alter.siamese.dyndns.org>
-References: <7vei4bzhwm.fsf@alter.siamese.dyndns.org>
- <20110506223847.GC17848@sigill.intra.peff.net>
- <7vzkmc6n1s.fsf@alter.siamese.dyndns.org>
- <20110524202723.GG584@sigill.intra.peff.net>
+Subject: What's cooking in git.git (May 2011, #11; Tue, 24)
+Date: Tue, 24 May 2011 14:45:46 -0700
+Message-ID: <7vboyr7oxh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 24 23:24:54 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 24 23:46:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOz5u-0003bM-UJ
-	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 23:24:51 +0200
+	id 1QOzQN-00072h-26
+	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 23:45:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756380Ab1EXVYp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2011 17:24:45 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60731 "EHLO
+	id S1757436Ab1EXVpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2011 17:45:54 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38726 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753197Ab1EXVYo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2011 17:24:44 -0400
+	with ESMTP id S1752564Ab1EXVpw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2011 17:45:52 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1FCC25EFB;
-	Tue, 24 May 2011 17:26:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5e3r0C2Z+iwqewvI1drnNPa3xNI=; b=X+XvSU
-	bY/j/kqA9a3/IgkvMCFWcNnwCdZ28Brx9r0/ACw1ZvT7sbNkzpa5EIJZM4Lno4YM
-	+twDuNlNa/UgBIBXs3E10Ir1DkIAszU8ZCT3h3Gt8mjk3Q4Kfic9/5c4/9WCDP62
-	ENLgcvZakU73QgdzBOm5CUE9BZMOEkWAw4rVk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hkOiF9uJuk3WrFPof7Vt5nXrpJ3+a6Br
-	t99dsZMC2cFn0I34YTN5Eb8l/+H3d0Uxw5K5dSg9ptb2wu+GGc2wAG0fXz4mCMK1
-	TrwEQXrv/G1mU744z2w67B5+7SnDYO5Yq/ZiECWOT9B9BWdhPngZxxLJMSZzf8Da
-	0bjmddOMTZg=
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9F6C3514E;
+	Tue, 24 May 2011 17:47:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=3
+	uVJ/KzMZs6txZhSKGv1c/kMkZU=; b=nH13qYX62gnJ5/dQ2XRD647b+Zd7w9TT6
+	ODIAIemgndDkoVv+K6GF/DQxEteQ1kuRFfj9kh9VQHKWI2U6QN3DcUj5IZ05RQut
+	qKtighE7EmqbaYGK+qHEsKgRd18vQMmsmtf7ybtGclK8kPwVAamlJf2UqivBbdBW
+	6MGzS6CZSc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=Bvv
+	IzhtVcMipzpiTrEI8uBf5DbIriGF65+MaHCQFGAX9vOZCC4+7RlNmYOslDkNYHQI
+	AbYw1MD17V73ewC6PF49gNSqTJrVzyKjqBhWNxuE7kVecA+CS+Bg1b6eWRxAlcDU
+	gG0sMPA8rtweCzP3zC54S2dTcywXrQMk9g86Az5A=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EFC8C5EF6;
-	Tue, 24 May 2011 17:26:49 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8C86B514D;
+	Tue, 24 May 2011 17:47:58 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 231345EF3; Tue, 24 May 2011
- 17:26:46 -0400 (EDT)
-In-Reply-To: <20110524202723.GG584@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 24 May 2011 16:27:23 -0400")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4F051514C; Tue, 24 May 2011
+ 17:47:56 -0400 (EDT)
+X-master-at: 5df3e2b3ca5ebe8123927a81d682993ad597a584
+X-next-at: 6dbbf00d8c08050a919971f0006f4045e4fec9f1
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 89386D76-864C-11E0-B813-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 7D5B2A18-864F-11E0-8E53-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174346>
 
-Jeff King <peff@peff.net> writes:
+What's cooking in git.git (May 2011, #11; Tue, 24)
+--------------------------------------------------
 
->> @@ -668,8 +671,6 @@ static void orphaned_commit_warning(struct commit *commit)
->>  		die("internal error in revision walk");
->>  	if (!(commit->object.flags & UNINTERESTING))
->>  		suggest_reattach(commit, &revs);
->> -	else
->> -		describe_detached_head("Previous HEAD position was", commit);
->>  }
->
-> Wait, I thought we were keeping this, per your argument above?
+Here are the topics that have been cooking.  Commits prefixed with '-' are
+only in 'pu' while commits prefixed with '+' are in 'next'.
 
-Well, I do not have very strong preference either way. I didn't really
-argue for or against. I just explained it might be useful.
+The main part of this cycle is expected to run thru May, aiming for a
+feature freeze in early June.
 
-Will resurrect.
+We are at the beginning of week #5 of this cycle. Let's plan to tag -rc0
+with what is in 'master' at the end of the month.
+
+--------------------------------------------------
+[New Topics]
+
+* jc/fix-config-environment-passing (2011-05-24) 1 commit
+ - Allow built-ins to also use -c var=val via alias
+
+--------------------------------------------------
+[Stalled]
+
+* jl/read-tree-m-dry-run (2011-05-11) 1 commit
+ - Teach read-tree the -n|--dry-run option
+
+Waiting for a reroll.
+
+* mg/diff-stat-count (2011-05-03) 2 commits
+ - diff-options.txt: describe --stat-{width,name-width,count}
+ - diff: introduce --stat-count to limit the stat lines
+
+There was a miscounting spotted.  Need another round.
+
+* jk/maint-merge-rename-create (2011-03-25) 3 commits
+ - merge: turn on rewrite detection
+ - merge: handle renames with replacement content
+ - t3030: fix accidental success in symlink rename
+
+Peff wanted to reroll this.
+
+* jc/index-pack (2011-02-27) 5 commits
+ - index-pack --verify: read anomalous offsets from v2 idx file
+ - write_idx_file: need_large_offset() helper function
+ - index-pack: --verify
+ - write_idx_file: introduce a struct to hold idx customization options
+ - index-pack: group the delta-base array entries also by type
+
+Still a WIP. Need to put histogram output into index-pack --verify to
+really kill verify-pack.
+
+* jk/tag-contains (2010-07-05) 4 commits
+ - Why is "git tag --contains" so slow?
+ - default core.clockskew variable to one day
+ - limit "contains" traversals based on commit timestamp
+ - tag: speed up --contains calculation
+
+The idea of the bottom one is probably Ok, except that the use of object
+flags needs to be rethought, or at least the helper needs to be moved to
+builtin/tag.c to make it clear that it should not be used outside the
+current usage context.
+
+--------------------------------------------------
+[Cooking]
+
+* da/git-prefix-everywhere (2011-05-23) 3 commits
+ - git-mergetool--lib: Make vimdiff retain the current directory
+ - git: Remove handling for GIT_PREFIX
+ - setup: Provide GIT_PREFIX to built-ins
+
+Is everybody happy with this?
+Will merge to "next".
+
+* jh/receive-count-limit (2011-05-23) 10 commits
+ - receive-pack: Allow server to refuse pushes with too many objects
+ - pack-objects: Estimate pack size; abort early if pack size limit is exceeded
+ - send-pack/receive-pack: Allow server to refuse pushing too large packs
+ - pack-objects: Allow --max-pack-size to be used together with --stdout
+ - send-pack/receive-pack: Allow server to refuse pushes with too many commits
+ - pack-objects: Teach new option --max-commit-count, limiting #commits in pack
+ - receive-pack: Prepare for addition of the new 'limit-*' family of capabilities
+ - Tighten rules for matching server capabilities in server_supports()
+ - send-pack: Attempt to retrieve remote status even if pack-objects fails
+ - Update technical docs to reflect side-band-64k capability in receive-pack
+
+Would need another round to separate per-pack and per-session limits.
+
+* jc/require-work-tree-exists (2011-05-24) 1 commit
+  (merged to 'next' on 2011-05-24 at 6dbbf00)
+ + require-work-tree wants more than what its name says
+
+Rerolled _without_ any in-tree users, just to make sure that we can easily
+adapt scripts when necessary in the future.
+
+Will merge to "master" by the end of week #5.
+
+* jn/gitweb-js (2011-05-24) 11 commits
+  (merged to 'next' on 2011-05-24 at c385b9d)
+ + gitweb: Make JavaScript ability to adjust timezones configurable
+ + gitweb.js: Add UI for selecting common timezone to display dates
+ + gitweb: JavaScript ability to adjust time based on timezone
+ + gitweb: Unify the way long timestamp is displayed
+ + gitweb: Refactor generating of long dates into format_timestamp_html
+ + gitweb.js: Provide getElementsByClassName method (if it not exists)
+ + gitweb.js: Introduce code to handle cookies from JavaScript
+ + gitweb.js: Extract and improve datetime handling
+ + gitweb.js: Provide default values for padding in padLeftStr and padLeft
+ + gitweb.js: Update and improve comments in JavaScript files
+ + gitweb: Split JavaScript for maintability, combining on build
+
+Rebased on top of a more recent "master" that already has the two bottom
+commits in the previous round of series.
+
+Will merge to "master" by the end of week #5.
+
+* jn/ctags-more (2011-04-29) 3 commits
+  (merged to 'next' on 2011-05-24 at 41b50be)
+ + gitweb: Optional grouping of projects by category
+ + gitweb: Modularized git_get_project_description to be more generic
+ + gitweb: Split git_project_list_body in two functions
+
+As nobody seems to be helping gitweb maintenance, I'll merge the above two
+series to "master" and see if anybody screams. That seems to be the only
+way to make any progress.
+
+Will merge to "master" by the end of week #5.
+
+* jc/notes-batch-removal (2011-05-19) 4 commits
+  (merged to 'next' on 2011-05-23 at 5bd78a6)
+ + show: --ignore-missing
+ + notes remove: --stdin reads from the standard input
+ + notes remove: --ignore-missing
+ + notes remove: allow removing more than one
+
+Will merge to "master" by the end of week #5.
+
+* jk/fetch-mark-complete-optimization (2011-05-19) 1 commit
+  (merged to 'next' on 2011-05-23 at b56fb81)
+ + fetch: avoid repeated commits in mark_complete
+
+Trivially correct.
+Will merge to "master" by the end of week #5.
+
+* jk/haves-from-alternate-odb (2011-05-19) 3 commits
+  (merged to 'next' on 2011-05-23 at 53b4735)
+ + receive-pack: eliminate duplicate .have refs
+ + bisect: refactor sha1_array into a generic sha1 list
+ + refactor refs_from_alternate_cb to allow passing extra data
+
+Will merge to "master" by the end of week #5.
+
+* rg/no-gecos-in-pwent (2011-05-19) 1 commit
+  (merged to 'next' on 2011-05-23 at d2c4c33)
+ + ident: add NO_GECOS_IN_PWENT for systems without pw_gecos in struct passwd
+
+Trivially correct and not intrusive, but the real value unknown.
+Will merge to "master" by the end of week #5.
+
+* jc/streaming-filter (2011-05-21) 6 commits
+ - streaming: filter cascading
+ - streaming filter: ident filter
+ - Add LF-to-CRLF streaming conversion
+ - stream filter: add "no more input" to the filters
+ - Add streaming filter API
+ - convert.h: move declarations for conversion from cache.h
+ (this branch uses jc/bigfile, jc/streaming and jc/streaming.)
+
+Trivial lf-to-crlf and ident conversions can be performed without reading
+everything in-core first. Cascading is probably still broken.  Will not
+merge before 1.7.6.
+
+* jn/userdiff-perl-updates (2011-05-23) 8 commits
+  (merged to 'next' on 2011-05-23 at 2595ae1)
+ + userdiff/perl: tighten BEGIN/END block pattern to reject here-doc delimiters
+ + tests: make test_expect_code quieter on success
+ + userdiff/perl: catch sub with brace on second line
+ + userdiff/perl: match full line of POD headers
+ + userdiff/perl: anchor "sub" and "package" patterns on the left
+ + t4018 (funcname patterns): minor cleanups
+ + t4018 (funcname patterns): make configuration easier to track
+ + t4018 (funcname patterns): make .gitattributes state easier to track
+
+Will merge to "master" by the end of week #5.
+
+* jc/git-handle-options-miscount (2011-05-24) 1 commit
+ - handle_options(): do not miscount how many arguments were used
+
+Updated with a trivial test, which turned out to uncover an unrelated bug
+(see jc/fix-config-environment-passing topic).
+
+* jk/combine-diff-binary-etc (2011-05-24) 5 commits
+  (merged to 'next' on 2011-05-24 at 07cf180)
+ + combine-diff: respect textconv attributes
+ + refactor get_textconv to not require diff_filespec
+ + combine-diff: handle binary files as binary
+ + combine-diff: calculate mode_differs earlier
+ + combine-diff: split header printing into its own function
+
+Will merge to "master" by the end of month.
+
+* jc/advice-about-to-lose-commit (2011-05-24) 1 commit
+ - checkout: make advice when reattaching the HEAD less loud
+
+Re-rolled and resurrected from "Stalled" status.
+Will merge to "next".
+
+* js/log-abbrev-commit-config (2011-05-18) 2 commits
+  (merged to 'next' on 2011-05-23 at 4e7e932)
+ + Add log.abbrevCommit config variable
+ + "git log -h": typofix misspelled 'suppress'
+
+Should be fine after several rounds of reviews.
+Will merge to "master" by the middle of week #5.
+
+* jc/streaming (2011-05-20) 13 commits
+  (merged to 'next' on 2011-05-23 at 7fd0b52)
+ + streaming: read loose objects incrementally
+ + sha1_file.c: expose helpers to read loose objects
+ + streaming: read non-delta incrementally from a pack
+ + streaming_write_entry(): support files with holes
+ + convert: CRLF_INPUT is a no-op in the output codepath
+ + streaming_write_entry(): use streaming API in write_entry()
+ + streaming: a new API to read from the object store
+ + write_entry(): separate two helper functions out
+ + unpack_object_header(): make it public
+ + sha1_object_info_extended(): hint about objects in delta-base cache
+ + sha1_object_info_extended(): expose a bit more info
+ + packed_object_info_detail(): do not return a string
+ + Merge branches 'jc/convert', 'jc/bigfile' and 'jc/replacing' into jc/streaming
+ (this branch is used by jc/streaming-filter and jc/streaming-filter; uses jc/bigfile.)
+
+* jc/bigfile (2011-05-13) 3 commits
+  (merged to 'next' on 2011-05-15 at 0ee7144)
+ + Bigfile: teach "git add" to send a large file straight to a pack
+ + index_fd(): split into two helper functions
+ + index_fd(): turn write_object and format_check arguments into one flag
+ (this branch is used by jc/streaming and jc/streaming-filter.)
+
+This covers the entry point for a big file to the system. Other parts that
+need to know about them are the exit point (i.e. write_entry()), packing
+and repacking (as long as bigfilethreshold is sane this should work),
+diffs and status (avoid slurping large binary in core only to do nothing,
+which we already should), and transport (receive-pack/fetch-pack call
+either unpack-objects or index-pack, which still want to hold the full
+object in-core and need to be fixed).
+
+Will merge to "master" by the middle of week #5.
+
+* ab/i18n-scripts (2011-05-21) 48 commits
+  (merged to 'next' on 2011-05-23 at 69164a3)
+ + i18n: git-bisect bisect_next_check "You need to" message
+ + i18n: git-bisect [Y/n] messages
+ + i18n: git-bisect bisect_replay + $1 messages
+ + i18n: git-bisect bisect_reset + $1 messages
+ + i18n: git-bisect bisect_run + $@ messages
+ + i18n: git-bisect die + eval_gettext messages
+ + i18n: git-bisect die + gettext messages
+ + i18n: git-bisect echo + eval_gettext message
+ + i18n: git-bisect echo + gettext messages
+ + i18n: git-bisect gettext + echo message
+ + i18n: git-bisect add git-sh-i18n
+ + i18n: git-stash drop_stash say/die messages
+ + i18n: git-stash "unknown option" message
+ + i18n: git-stash die + eval_gettext $1 messages
+ + i18n: git-stash die + eval_gettext $* messages
+ + i18n: git-stash die + eval_gettext messages
+ + i18n: git-stash die + gettext messages
+ + i18n: git-stash say + gettext messages
+ + i18n: git-stash echo + gettext message
+ + i18n: git-stash add git-sh-i18n
+ + i18n: git-submodule "blob" and "submodule" messages
+ + i18n: git-submodule "path not initialized" message
+ + i18n: git-submodule "[...] path is ignored" message
+ + i18n: git-submodule "Entering [...]" message
+ + i18n: git-submodule $errmsg messages
+ + i18n: git-submodule "Submodule change[...]" messages
+ + i18n: git-submodule "cached cannot be used" message
+ + i18n: git-submodule $update_module say + die messages
+ + i18n: git-submodule die + eval_gettext messages
+ + i18n: git-submodule say + eval_gettext messages
+ + i18n: git-submodule echo + eval_gettext messages
+ + i18n: git-submodule add git-sh-i18n
+ + i18n: git-pull eval_gettext + warning message
+ + i18n: git-pull eval_gettext + die message
+ + i18n: git-pull die messages
+ + i18n: git-pull add git-sh-i18n
+ + i18n: git-am printf(1) message to eval_gettext
+ + i18n: git-am core say messages
+ + i18n: git-am "Falling back" say message
+ + i18n: git-am "Apply?" message
+ + i18n: git-am clean_abort messages
+ + i18n: git-am cannot_fallback messages
+ + i18n: git-am die messages
+ + i18n: git-am gettext + gettext to stderr message
+ + i18n: git-am eval_gettext messages
+ + i18n: git-am multi-line getttext $msg; echo
+ + i18n: git-am one-line gettext $msg; echo
+ + i18n: git-am add git-sh-i18n
+
+Rerolled.
+
+* mk/grep-pcre (2011-05-23) 13 commits
+  (merged to 'next' on 2011-05-23 at fbd4877)
+ + git-grep: Update tests (mainly for -P)
+  (merged to 'next' on 2011-05-16 at 0c6c25e)
+ + Makefile: Pass USE_LIBPCRE down in GIT-BUILD-OPTIONS
+ + git-grep: update tests now regexp type is "last one wins"
+  (merged to 'next' on 2011-05-15 at d110135)
+ + git-grep: do not die upon -F/-P when grep.extendedRegexp is set.
+ + git-grep: Bail out when -P is used with -F or -E
+ + grep: Add basic tests
+ + configure: Check for libpcre
+ + git-grep: Learn PCRE
+ + grep: Extract compile_regexp_failed() from compile_regexp()
+ + grep: Fix a typo in a comment
+  (merged to 'next' on 2011-05-08 at 5d3bede)
+ + grep: Put calls to fixmatch() and regmatch() into patmatch()
+ + contrib/completion: --line-number to git grep
+ + Documentation: Add --line-number to git-grep synopsis
+
+Will merge to "master" by the middle of week #5.
+
+--------------------------------------------------
+[Discarded]
+
+* hg/add-i-qq (2011-05-17) 1 commit
+ . add-interactive: add 'Quit' shortcut to add hunk and quit
+
+The question "why is y+q any more deserving for a short-cut than d+q" was
+raised late in the discussion, and I think it a very valid concern.
+
+* jc/add-delete-default (2011-04-27) 1 commit
+ . git add: notice removal of tracked paths by default
+
+This is ill-thought out. When the user does want to say "take all changes
+into account, not just addition", they can easily say "add -u" (update).
+
+* jc/dotdot-is-parent-directory (2011-05-04) 1 commit
+ . specifying ranges: we did not mean to make ".." an empty set
+
+Updated documentation, but I do not feel a strong enough annoyance to push
+this forward.
