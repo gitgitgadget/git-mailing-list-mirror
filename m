@@ -1,130 +1,134 @@
-From: Christopher Wilson <cwilson@cdwilson.us>
-Subject: Re: Why does adding an existing repo as a submodule modify .git/config?
-Date: Tue, 24 May 2011 00:06:01 -0700
-Message-ID: <4DDB58D9.2090701@cdwilson.us>
-References: <irbq5a$h38$1@dough.gmane.org> <4DDAAAD2.1010708@web.de> <4DDB0786.5020006@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: combined diff does not detect binary files and ignores -diff
+ attribute
+Date: Tue, 24 May 2011 09:19:43 +0200
+Message-ID: <4DDB5C0F.1080102@drmicha.warpmail.net>
+References: <BANLkTi=FtkiUjwAa7e3KAC5FF3GNxWzd3Q@mail.gmail.com> <4DDA618E.4030604@drmicha.warpmail.net> <BANLkTinu3AbTmtswn6DLQKAWdLL=gBvAqA@mail.gmail.com> <20110523181147.GA26035@sigill.intra.peff.net> <20110523201529.GA6281@sigill.intra.peff.net> <BANLkTikvPjO=bbhAoPCftdXzGSYtryNvzw@mail.gmail.com> <20110523234131.GB10488@sigill.intra.peff.net> <7v39k4aeos.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 24 09:06:23 2011
+Cc: Jay Soffian <jaysoffian@gmail.com>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 24 09:19:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOlh8-0004b0-Jq
-	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 09:06:22 +0200
+	id 1QOluB-00028p-Ak
+	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 09:19:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753740Ab1EXHGQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2011 03:06:16 -0400
-Received: from lo.gmane.org ([80.91.229.12]:45909 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753706Ab1EXHGP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2011 03:06:15 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1QOlh0-0004Ye-Nc
-	for git@vger.kernel.org; Tue, 24 May 2011 09:06:14 +0200
-Received: from c-98-210-218-165.hsd1.ca.comcast.net ([98.210.218.165])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 24 May 2011 09:06:14 +0200
-Received: from cwilson by c-98-210-218-165.hsd1.ca.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 24 May 2011 09:06:14 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: c-98-210-218-165.hsd1.ca.comcast.net
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
-In-Reply-To: <4DDB0786.5020006@gmail.com>
+	id S1753245Ab1EXHTq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2011 03:19:46 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:57403 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752499Ab1EXHTq (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 May 2011 03:19:46 -0400
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 540122091B;
+	Tue, 24 May 2011 03:19:45 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Tue, 24 May 2011 03:19:45 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=5qIqEBYv6TS4GP4fJW9VufzHn+g=; b=AZCAjsv4AkGs5R5Sr629n4qwxgHDzpQAG6rxpQBl9FmF667w1R6a5bJTtR7U6LKHyW7USldIwb6vI7i0bPX5j9q2UpS4M+JdmVh2rF1D5V6gJ2qJaBmDTtHNXF/IUMLknLSVo0xt23LB1b3RviL1IILlY4pNZ90qeKOrDdlLcu8=
+X-Sasl-enc: GvRN9sIJCwV4S+mnUxdeLI3Bif8zvmJybPaDQaDmbS+C 1306221584
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 75B2B447C3C;
+	Tue, 24 May 2011 03:19:44 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Lightning/1.0b3pre Thunderbird/3.1.10
+In-Reply-To: <7v39k4aeos.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174315>
 
-On 5/23/11 6:19 PM, Mark Levedahl wrote:
-> On 05/23/2011 02:43 PM, Jens Lehmann wrote:
->> Am 22.05.2011 22:02, schrieb Christopher Wilson:
->>
->> Hmm, this looks like an inconsistency to me too. It would be great
->> to hear about the background, so I added Mark to the CC, maybe he
->> can shed some light.
->>
-> I think the comment in c2f939170c651 describes the reasoning well
-> enough. (You may disagree with the reasoning, but that is a different
-> matter :^).
+First of all:
+
+Jeff, thanks a bunch for taking this up again! That's a great
+improvement. (I'm not sure I can devote enough time to reviewing, but
+I'll see.)
+
+Junio C Hamano venit, vidit, dixit 24.05.2011 06:46:
+> Jeff King <peff@peff.net> writes:
 > 
-> Mark
+>>> However, custom diff drivers (still) don't work. :-)
+>>
+>> Yeah, I didn't add any support for that. I'm not sure what it should do;
+>> custom diff drivers don't know how to handle combined diff, do they?
+>>
+>> If you write me a test case that explains what _should_ happen, I'll see
+>> what I can do. :)
+> 
+> I do not think it is sensible to expect anybody to come up with a sane
+> semantics for combined diff to work with GIT_EXTERNAL_DIFF (and external
+> diff driver that can be specified via the attributes mechanism) in any
+> meaningful way.
+> 
+> The whole point of the external diff mechanism is that an external command
+> can take _two_ files and represent the change between them in a way that
+> is more suited for the need of the user than the patch form. The output
+> from such an external command does not have any obligation to even follow
+> the convention used by the patch output, namely:
+> 
+>   @@ from here to there things have changed @@
+>    this is common
+>   -this was the removed content
+>   +this is the new content
+> 
+> as the _whole_ point of the external diff mechanism is to give something
+> that is _different_ from the patch form, in the hope that it is in a more
+> appropriate form for whoever consumes the output.
+> 
+> On the other hand, combined diff is all about combining multiple patches
+> show them side-by-side in a combined fashion. Without the above four kinds
+> of cues, there is no way to even _align_ the change outputs from two
+> parents, let alone _combining_ them.
+> 
+> Anybody interested can check "compare-cooking.perl" in the todo branch,
+> which is used as an external diff driver to view the differences between
+> "What's cooking" postings via these:
+> 
+>     [diff "whatscooking"]
+>             xfuncname = "^\\[(.*)\\]$"
+>             command = ./compare-cooking.perl
+> 
+> in the .git/config file, together with
+> 
+>     whats-cooking.txt diff=whatscooking
+> 
+> in the .gitattributes file. Running
+> 
+>     $ git log -p --ext-diff todo -- whats-cooking.txt
+> 
+> would give a sample output.
+> 
+> It is conceivable that we _could_ newly define a "combined external diff
+> driver" that would take 3 or more files, and compute and show the combined
+> result by itself, but that will certainly not go through the codepath you
+> touched with the textconv patch. Calling out to such a new type of
+> external diff driver would have to happen at the level where we have 1+N
+> blob object names for a N-parent commit, namely, at the beginning of
+> show_patch_diff(), bypassing the entire contents of that function and
+> instead letting the new n-way external diff driver do everything.
+> 
+> I however highly doubt that such an interface would make sense. For
+> example, what would be the desirable format to compare three versions of
+> "What's cooking" postings, and how would the updated compare-cooking.perl
+> script would look like?
 
-Mark, thanks for the reply.  Maybe I'm a bit daft, but I'm still a
-little confused by your comment in the commit :)
+Yeah, currently --cc with external makes no sense, but there are several
+external tools which could present a 3-way diff in a useful way (or even
+n-way with n>3), e.g. vimdiff, kdiff3, meld.
 
-I've included your commit message below with my questions interlaced.
+When the --cc/textconv issue came up I looked into this, and maybe
+difftool is a place where one could plug this in first in the sense of
+refactoring that even more and providing a diff3tool or such to view a
+merge commit (or compare any 3 versions), or/and provide "git diff3 A B
+C" which creates a fake merge (A+B -> C). Now, imagine we also have
+INDEX and WORKTREE pseudorevs and can do
 
-C: "When adding a new submodule in place, meaning the user created the
-submodule as a git repo in the superproject's tree first, we don't go
-through "git submodule init" to register the module."
+git diff3[tool] HEAD INDEX WORKTREE
 
-Q: Why don't we go through "git submodule init" to register the
-submodule?  Isn't that the whole point of having a separate "submodule
-init" command, to register the module in .git/config?
+:)
 
-C: "Thus, the submodule's origin repository URL is not stored in
-.git/config, and no subsequent submodule operation will ever do so."
-
-I'm not sure this is true.  For example:
-
-$ mkdir testing
-$ cd testing
-$ git init
-$ git clone git@git.server:submodule.git
-$ git submodule add git@git.server:submodule.git
-$ cat .git/config
-[core]
-    repositoryformatversion = 0
-    filemode = true
-    bare = false
-    logallrefupdates = true
-    ignorecase = true
-[submodule "submodule"]
-    url = git@git.server:submodule.git
-
-# At this point, I opened up .git/config in an editor and removed the
-entire submodule section.
-
-$ cat .git/config
-[core]
-    repositoryformatversion = 0
-    filemode = true
-    bare = false
-    logallrefupdates = true
-    ignorecase = true
-$ git submodule init
-$ cat .git/config
-[core]
-    repositoryformatversion = 0
-    filemode = true
-    bare = false
-    logallrefupdates = true
-    ignorecase = true
-[submodule "submodule"]
-    url = git@git.server:submodule.git
-
-Q: As far as I can tell, a subsequent submodule operation (git submodule
-init) has stored the submodule's origin repository URL in .git/config.
-Can you elaborate on what you meant by the statement "no subsequent
-submodule operation will ever do so"?
-
-C: "In this case, assume the URL the user supplies to "submodule add" is
-the one that should be registered, and do so."
-
-Q: Can you elaborate on why a 2 step "git submodule add" + "git
-submodule init" wasn't sufficient?  What is the reason for adding this
-functionality into the "git submodule add" command, when "git submodule
-init" does the same job?
-
-Again, sorry if I'm asking dumb questions... :)  Just want to understand
-the context for your commit.
+Michael
