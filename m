@@ -1,73 +1,81 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 1/3] setup: Provide GIT_PREFIX to built-ins
-Date: Tue, 24 May 2011 09:23:42 +0200
-Message-ID: <4DDB5CFE.4090409@drmicha.warpmail.net>
-References: <7vwrhjxn4t.fsf@alter.siamese.dyndns.org> <1306058055-93672-1-git-send-email-davvid@gmail.com> <4DDA0044.2060207@drmicha.warpmail.net> <FE7878D1-20E4-4CD4-B3FB-96322AA75855@gmail.com> <7v8vtxweoh.fsf@alter.siamese.dyndns.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: combined diff does not detect binary files and ignores -diff attribute
+Date: Tue, 24 May 2011 10:40:34 -0400
+Message-ID: <BANLkTikxcnR_f6UEATfKTDZcq51Cv8V0TQ@mail.gmail.com>
+References: <BANLkTi=FtkiUjwAa7e3KAC5FF3GNxWzd3Q@mail.gmail.com>
+	<4DDA618E.4030604@drmicha.warpmail.net>
+	<BANLkTinu3AbTmtswn6DLQKAWdLL=gBvAqA@mail.gmail.com>
+	<20110523181147.GA26035@sigill.intra.peff.net>
+	<20110523201529.GA6281@sigill.intra.peff.net>
+	<BANLkTikvPjO=bbhAoPCftdXzGSYtryNvzw@mail.gmail.com>
+	<20110523234131.GB10488@sigill.intra.peff.net>
+	<7v39k4aeos.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: David Aguilar <davvid@gmail.com>,
-	=?ISO-8859-1?Q?Fr=E9d=E9ric_Heitz?= =?ISO-8859-1?Q?mann?= 
-	<frederic.heitzmann@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 24 09:23:50 2011
+X-From: git-owner@vger.kernel.org Tue May 24 16:40:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QOly1-00042i-FD
-	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 09:23:49 +0200
+	id 1QOsmx-0005Qf-Ea
+	for gcvg-git-2@lo.gmane.org; Tue, 24 May 2011 16:40:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753363Ab1EXHXo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2011 03:23:44 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:47098 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753049Ab1EXHXo (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 May 2011 03:23:44 -0400
-Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id C492E2094F;
-	Tue, 24 May 2011 03:23:43 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute5.internal (MEProxy); Tue, 24 May 2011 03:23:43 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=5abwdY+dO29qUMgfx6iPx4ocGto=; b=DxudcFbxqCQ+c/a1hZEBLFmGrErYmt+j6w7ufaYYvUMZ3uRPUyMapde2yHJmag6B3k0hVudarLAdMK+frJL5nBcEKwnX5GZC/eOGbISN9+xO3jexxdhe2vvEcA2HpeyPC51dk7RhiI6sSgrpL7v5vBPa0IXAYwl5aPR7Xbbhgkc=
-X-Sasl-enc: 1e5ofuV/GFBeGNkzgdU3Rh0QESO4PAfEd+yBHmBOvyyY 1306221823
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 1B25B40594D;
-	Tue, 24 May 2011 03:23:43 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Lightning/1.0b3pre Thunderbird/3.1.10
-In-Reply-To: <7v8vtxweoh.fsf@alter.siamese.dyndns.org>
+	id S932795Ab1EXOkh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2011 10:40:37 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:57796 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932704Ab1EXOkf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2011 10:40:35 -0400
+Received: by pvg12 with SMTP id 12so3002754pvg.19
+        for <git@vger.kernel.org>; Tue, 24 May 2011 07:40:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=1zSXm1zCXVvSuMOtyNGE3A97eUtKy4QjD5K+EyOER3o=;
+        b=ZZfsB0nP41EVOVbcevibeYYsxoM2GU9gUN0kJ9lJIape9XwPzMqlWBff4gvBsatDrJ
+         CnYppZ5yjX2TkmZUnWV0V36Y+Fb3omzBWrgS5MgcqJZN/rkbqHUuIL0hlLlS29R5xV+R
+         CGQGx9ZQ7fskfqXZG7BVZEx84T7gid517SvMk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=M0PIWDtuzEn6cXspgohjbBncaqb0ZPdKFOZ10OJ/cl2JzyCWXxq6WyRxMygsJFatj7
+         QjWYNrZQaWNr7slbP8/s7OXlrug7Qhoc8eZspiWxA4J+2XFDoK6eg6YkHjedSBvhvcTr
+         gnxzA56VhuMSK/FKaG2iKAp3spPu+WwE3NccI=
+Received: by 10.142.107.12 with SMTP id f12mr1179497wfc.226.1306248034912;
+ Tue, 24 May 2011 07:40:34 -0700 (PDT)
+Received: by 10.142.13.8 with HTTP; Tue, 24 May 2011 07:40:34 -0700 (PDT)
+In-Reply-To: <7v39k4aeos.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174318>
 
-Junio C Hamano venit, vidit, dixit 23.05.2011 18:43:
-> David Aguilar <davvid@gmail.com> writes:
-> 
->> I guess external scripts can call rev-parse --show-prefix themselves?
-> 
-> That has always been the case, I think, and it shouldn't be a problem.
-> 
-> The real reason you want the new GIT_PREFIX for alias/hooks is otherwise
-> they would not have a way to even say --show-prefix to figure it out
-> themselves.
-> 
->>> Overall I think it's a good change, btw. But it leaves it up to the
->>> (script) user to know whether git has actually changed the cwd or not,
->>> i.e.: Is $(pwd) where the user called us from or $(pwd)/$GIT_PREFIX?
-> 
-> As long as there is a way for a script to figure it out when it wants to
-> know, I think it should be Ok.
-> 
-> Isn't it just the matter of reading --show-prefix and comparing it with
-> what came in $GIT_PREFIX?
+On Tue, May 24, 2011 at 12:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
+>
+>>> However, custom diff drivers (still) don't work. :-)
+>>
+>> Yeah, I didn't add any support for that. I'm not sure what it should do;
+>> custom diff drivers don't know how to handle combined diff, do they?
+>>
+>> If you write me a test case that explains what _should_ happen, I'll see
+>> what I can do. :)
+>
+> I do not think it is sensible to expect anybody to come up with a sane
+> semantics for combined diff to work with GIT_EXTERNAL_DIFF (and external
+> diff driver that can be specified via the attributes mechanism) in any
+> meaningful way.
 
-Yep, one is before and one is after any eventual cd'ing which git may
-do. I just wanted to point out the difference. And the technical
-difference (env var. vs. rev-parse option) is due to that difference
-(and thus natural).
+Indeed, it was a thinko that I even considered it. It turns out I had
+been using an external diff command where I should have been using
+textconv all along.
 
-Michael
+j.
