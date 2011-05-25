@@ -1,77 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] sh-18n: quell "unused variable" warning
-Date: Wed, 25 May 2011 09:35:37 -0700
-Message-ID: <7vy61u4u1y.fsf@alter.siamese.dyndns.org>
-References: <62c2e1619edcb37c0411f29a34b6bc10e3899a97.1306317312.git.git@drmicha.warpmail.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Supporting "-v" option for git-log
+Date: Wed, 25 May 2011 18:38:58 +0200
+Message-ID: <201105251838.59548.jnareb@gmail.com>
+References: <BANLkTik70gu0NUzUEnGNWHQr8CfbdPVe5g@mail.gmail.com> <m3boyqzy3f.fsf@localhost.localdomain> <20110525151115.GB8795@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed May 25 18:36:14 2011
+Cc: Elazar Leibovich <elazarl@gmail.com>,
+	Tim Mazid <timmazid@hotmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 25 18:39:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPH48-00035v-Km
-	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 18:36:13 +0200
+	id 1QPH6y-00052N-3i
+	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 18:39:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932773Ab1EYQf4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 May 2011 12:35:56 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37138 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932293Ab1EYQfr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 May 2011 12:35:47 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1055A52F8;
-	Wed, 25 May 2011 12:37:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=r2MfQu96WusV
-	DGKJyIgXR1TMfI8=; b=lwTdYrsjiiTGrkq9rg0wnF8Mgk0NIsHvYxxpi5Q+lj73
-	4uK/f2258Wmd5quW5ia/BTJ/s/ikhzz3nS08D25JyX8+JSZ4BxJ35VcWIPKH/KKM
-	l/MlMPQmy5icaiyVnNU5hqAnvkDiFqg6Q3DjI/yJQwhf1AIR9qyC3wDZw+jXwTE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=N4OyA4
-	90ee+k8mzb+sxWb5uYr+SviENZ/hiMVoEgOkNJwsS4jGAFZPFJEm19jnFgYEX8UF
-	Pz85hsVbjRL08qnPXvgoamTFybPDYLyGmpwtIl86mWrVz8Ehw9HbqJo27rtOcRjp
-	wxdCJzq7CDIVVeW4zmQM918CrqcIVyjwtSn44=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CB9C652F6;
-	Wed, 25 May 2011 12:37:50 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id AEE6952F2; Wed, 25 May 2011
- 12:37:46 -0400 (EDT)
-In-Reply-To: <62c2e1619edcb37c0411f29a34b6bc10e3899a97.1306317312.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Wed, 25 May 2011 11:55:43 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 54B33A80-86ED-11E0-8ABA-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+	id S1757979Ab1EYQjB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 May 2011 12:39:01 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:65426 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757902Ab1EYQjA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2011 12:39:00 -0400
+Received: by wya21 with SMTP id 21so5919489wya.19
+        for <git@vger.kernel.org>; Wed, 25 May 2011 09:38:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=6A0IWFfpbJtAtrNMaDDQhpnQVZgkErRiqte5KYr2z6g=;
+        b=LMQubOTIvXcsPUdXTE+okPzU59u+3g/HcH+T0QayTVapll+hJTzg9HbqH2o1urh2pj
+         7atjLXDwBO0KhB5PVlFiax6CWuMcGUs7dIeageRRoAX4gdjnj1trX7/ed/yVVE/EcTMY
+         5snB5rRDjtydng1GP7Z1e4wjMItBATYQx7VqE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=OgnJR869VtYiX6p3pgMOKvhtMZM8HAub2SIfHJzQLvffGLRDlW5HqS5FtyPx5FVEti
+         u6UPMcSLDkt20HEIYuj44mKZTvpFDHygc5+gAYc6/mwFGnjllTBP8FTMJfWHooHx6lE7
+         onQ2pM+po0Ark7PofulJ3h834VrWgavUykoxA=
+Received: by 10.216.145.195 with SMTP id p45mr4577684wej.61.1306341539580;
+        Wed, 25 May 2011 09:38:59 -0700 (PDT)
+Received: from [192.168.1.13] (abvv43.neoplus.adsl.tpnet.pl [83.8.219.43])
+        by mx.google.com with ESMTPS id m72sm391934weq.4.2011.05.25.09.38.57
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 25 May 2011 09:38:58 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20110525151115.GB8795@sigill.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174427>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Dnia =C5=9Broda 25. maja 2011 17:11, Jeff King napisa=C5=82:
+> On Wed, May 25, 2011 at 06:53:31AM -0700, Jakub Narebski wrote:
+>=20
+> > > Which is a shame, because we already have all of the code for "--=
+and",
+> > > "--or", and "--not" in git-grep. It is just a syntactic conflict.=
+ I
+> > > think you could get away with "--grep-and", "--grep-or", and
+> > > "--grep-not". They are obviously less nice to type, but there wou=
+ld be
+> > > not conflict.
+> >=20
+> > Hmmm... perhaps short -! could be alias for --grep-not (it is the o=
+nly
+> > that needs to be changed to avoid conflict, as there are no --or an=
+d
+> > --and for rev-list).
+>=20
+> Ick. I really hate using shell metacharacters that need quoting
+> (especially "!", which even gets expanded inside double-quotes). But =
+as
+> long as it's an alias, I guess people who care can use --grep-not.
 
->     CC sh-i18n--envsubst.o
-> sh-i18n--envsubst.c: In Funktion =C2=BBmain=C2=AB:
-> sh-i18n--envsubst.c:71:22: Warnung: Variable =C2=BBshow_variables=C2=AB=
- gesetzt,
-> aber nicht verwendet [-Wunused-but-set-variable]
->
-> show_variables is indeed unused. Comment it out rather than remove it=
- so
-> that the relation with upstream remains clear.
->
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
-> Why is it that even with LANG=3DC exported, gcc gives localized warni=
-ngs?
-
-Because you probably do not have LC_ALL=3DC?
-
-In any case, thanks.
+Yeah, I know.  Nevertheless '!' is natural to mean 'not',=20
+and `-\!` is still shorter than `--grep-not`.
+=20
+--=20
+Jakub Narebski
+Poland
