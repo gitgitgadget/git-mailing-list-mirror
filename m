@@ -1,278 +1,193 @@
 From: Jamey Sharp <jamey@minilop.net>
-Subject: [PATCH v3 1/3] Support multiple virtual repositories with a single object store and refs
-Date: Tue, 24 May 2011 17:46:30 -0700
-Message-ID: <1306284392-12034-1-git-send-email-jamey@minilop.net>
+Subject: [PATCH v3 3/3] Add documentation for virtual repositories
+Date: Tue, 24 May 2011 17:46:32 -0700
+Message-ID: <1306284392-12034-3-git-send-email-jamey@minilop.net>
+References: <1306284392-12034-1-git-send-email-jamey@minilop.net>
 Cc: "Shawn O. Pearce" <spearce@spearce.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Johannes Sixt <johannes.sixt@telecom.at>,
 	Junio C Hamano <gitster@pobox.com>,
 	Josh Triplett <josh@joshtriplett.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 25 02:46:58 2011
+X-From: git-owner@vger.kernel.org Wed May 25 02:47:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QP2FU-0003Qd-KK
-	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 02:46:57 +0200
+	id 1QP2Ff-0003XP-PY
+	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 02:47:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933293Ab1EYAqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2011 20:46:50 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:58188 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932271Ab1EYAqu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2011 20:46:50 -0400
-Received: by pzk9 with SMTP id 9so3204882pzk.19
-        for <git@vger.kernel.org>; Tue, 24 May 2011 17:46:50 -0700 (PDT)
-Received: by 10.68.68.196 with SMTP id y4mr2999793pbt.427.1306284409842;
-        Tue, 24 May 2011 17:46:49 -0700 (PDT)
+	id S933361Ab1EYAq5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 May 2011 20:46:57 -0400
+Received: from mail-px0-f173.google.com ([209.85.212.173]:65477 "EHLO
+	mail-px0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932271Ab1EYAq4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2011 20:46:56 -0400
+Received: by pxi16 with SMTP id 16so4727658pxi.4
+        for <git@vger.kernel.org>; Tue, 24 May 2011 17:46:55 -0700 (PDT)
+Received: by 10.143.96.7 with SMTP id y7mr1235985wfl.30.1306284415667;
+        Tue, 24 May 2011 17:46:55 -0700 (PDT)
 Received: from oh.minilop.net (host-247-13.pubnet.pdx.edu [131.252.247.13])
-        by mx.google.com with ESMTPS id n10sm1519518pbk.79.2011.05.24.17.46.48
+        by mx.google.com with ESMTPS id w27sm5887912wfh.21.2011.05.24.17.46.54
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 24 May 2011 17:46:49 -0700 (PDT)
+        Tue, 24 May 2011 17:46:55 -0700 (PDT)
 Received: from jamey by oh.minilop.net with local (Exim 4.76)
 	(envelope-from <jamey@oh.minilop.net>)
-	id 1QP2FM-00038m-7T; Tue, 24 May 2011 17:46:48 -0700
+	id 1QP2FS-00039K-6a; Tue, 24 May 2011 17:46:54 -0700
 X-Mailer: git-send-email 1.7.4.4
+In-Reply-To: <1306284392-12034-1-git-send-email-jamey@minilop.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174363>
 
 From: Josh Triplett <josh@joshtriplett.org>
 
-Given many repositories with copies of the same objects (such as branches of
-the same source), sharing a common object store will avoid duplication.
-Alternates provide a single baseline, but don't handle ongoing activity in the
-various repositories.  Furthermore, operations such as git-gc need to know
-about all of the refs.
+Add a new gitvirtual(5) document, and cross-reference it from
+git-http-backend(1).
 
-Git supports storing multiple virtual repositories within the object store and
-references of a single underlying repository.  The underlying repository
-stores the objects for all of the virtual repositories, and includes all the
-refs and heads of the virtual repositories using prefixed names.
-
-git-upload-pack and git-receive-pack rewrite the names of refs and heads as
-specified by the --ref-prefix and --head options.  For instance,
---ref-prefix=virtual/reponame/ will use refs/virtual/reponame/heads/* and
-refs/virtual/reponame/tags/*.  git-upload-pack and git-receive-pack will
-ignore any references that do not match the specified prefix.
-
-These options implement the underlying mechanism for virtual
-repositories; the higher-level protocol handler (such as http-backend or
-a custom server) can pass these options when invoking upload-pack or
-receive-pack, providing values based on components of the repository
-path.  For a simple local test, git-remote-ext works:
-
-git clone ext::'git %s --ref-prefix=virtual/reponame/ --head=virtual-HEAD/reponame storage.git'
+Thanks to Jeff King for providing the material for the SECURITY section
+and inspiring the CONVENTIONS section.
 
 Commit by Josh Triplett and Jamey Sharp.
 
 Signed-off-by: Josh Triplett <josh@joshtriplett.org>
 Signed-off-by: Jamey Sharp <jamey@minilop.net>
 ---
-v2: remove accidentally-included debug message, and add patch 2/2 for
-    git-http-backend.
 v3: add patch 3/3 with documentation for virtual repositories, and
     incorporated feedback from Jeff King and Junio C Hamano.
 
- builtin/receive-pack.c |   36 +++++++++++++++++++++++++++---------
- upload-pack.c          |   34 +++++++++++++++++++++++++++-------
- 2 files changed, 54 insertions(+), 16 deletions(-)
+ Documentation/Makefile                 |    2 +-
+ Documentation/git-http-backend.txt     |    4 +-
+ Documentation/gitvirtual.txt           |   76 ++++++++++++++++++++++++++++++++
+ contrib/completion/git-completion.bash |    2 +-
+ 4 files changed, 80 insertions(+), 4 deletions(-)
+ create mode 100644 Documentation/gitvirtual.txt
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index e1ba4dc..76dacd0 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -34,6 +34,8 @@ static int prefer_ofs_delta = 1;
- static int auto_update_server_info;
- static int auto_gc = 1;
- static const char *head_name;
-+static const char *head_path = "HEAD";
-+static const char *ref_prefix = "refs/";
- static int sent_capabilities;
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 36989b7..4b4bd2f 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -6,7 +6,7 @@ MAN5_TXT=gitattributes.txt gitignore.txt gitmodules.txt githooks.txt \
+ 	gitrepository-layout.txt
+ MAN7_TXT=gitcli.txt gittutorial.txt gittutorial-2.txt \
+ 	gitcvs-migration.txt gitcore-tutorial.txt gitglossary.txt \
+-	gitdiffcore.txt gitrevisions.txt gitworkflows.txt
++	gitdiffcore.txt gitrevisions.txt gitvirtual.txt gitworkflows.txt
  
- static enum deny_action parse_deny_action(const char *var, const char *value)
-@@ -108,11 +110,12 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
- 
- static int show_ref(const char *path, const unsigned char *sha1, int flag, void *cb_data)
- {
-+	const char *refnameprefix = cb_data;
- 	if (sent_capabilities)
--		packet_write(1, "%s %s\n", sha1_to_hex(sha1), path);
-+		packet_write(1, "%s %s%s\n", sha1_to_hex(sha1), refnameprefix, path);
- 	else
--		packet_write(1, "%s %s%c%s%s\n",
--			     sha1_to_hex(sha1), path, 0,
-+		packet_write(1, "%s %s%s%c%s%s\n",
-+			     sha1_to_hex(sha1), refnameprefix, path, 0,
- 			     " report-status delete-refs side-band-64k",
- 			     prefer_ofs_delta ? " ofs-delta" : "");
- 	sent_capabilities = 1;
-@@ -121,9 +124,9 @@ static int show_ref(const char *path, const unsigned char *sha1, int flag, void
- 
- static void write_head_info(void)
- {
--	for_each_ref(show_ref, NULL);
-+	for_each_ref_in(ref_prefix, show_ref, "refs/");
- 	if (!sent_capabilities)
--		show_ref("capabilities^{}", null_sha1, 0, NULL);
-+		show_ref("capabilities^{}", null_sha1, 0, "");
- 
+ MAN_TXT = $(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT)
+ MAN_XML=$(patsubst %.txt,%.xml,$(MAN_TXT))
+diff --git a/Documentation/git-http-backend.txt b/Documentation/git-http-backend.txt
+index 4e0b243..4a7c42b 100644
+--- a/Documentation/git-http-backend.txt
++++ b/Documentation/git-http-backend.txt
+@@ -120,8 +120,8 @@ ScriptAliasMatch \
+ ScriptAlias /git/ /var/www/cgi-bin/gitweb.cgi/
+ ----------------------------------------------------------------
+ +
+-To serve multiple virtual repositories from a single storage
+-repository:
++To serve multiple virtual repositories (linkgit:gitvirtual[7]) from a
++single storage repository:
+ +
+ ----------------------------------------------------------------
+ SetEnvIf Request_URI "^/git/([^/]*)" GIT_REF_PREFIX=$1/ GIT_HEAD=$1-HEAD
+diff --git a/Documentation/gitvirtual.txt b/Documentation/gitvirtual.txt
+new file mode 100644
+index 0000000..ed5a4c5
+--- /dev/null
++++ b/Documentation/gitvirtual.txt
+@@ -0,0 +1,76 @@
++gitvirtual(7)
++=============
++
++NAME
++----
++gitvirtual - Git virtual repositories
++
++DESCRIPTION
++-----------
++
++Given many repositories with copies of the same objects (such as
++branches of the same source), sharing a common object store will avoid
++duplication.  Alternates provide a single baseline, but don't handle
++ongoing activity in the various repositories.  Furthermore, operations
++such as linkgit:git-gc[1] need to know about all of the refs.
++
++Git supports storing multiple virtual repositories within the object
++store and references of a single underlying repository.  The underlying
++repository stores the objects for all of the virtual repositories, and
++includes all the refs and heads of the virtual repositories using
++prefixed names.
++
++linkgit:git-upload-pack[1] and linkgit:git-receive-pack[1] rewrite the
++names of refs and heads as specified by the --ref-prefix and --head
++options.  For instance, --ref-prefix=`virtual/reponame/` will use
+++pass:[refs/virtual/reponame/heads/*]+ and
+++pass:[refs/virtual/reponame/tags/*]+.  git-upload-pack and
++git-receive-pack will ignore any references that do not match the
++specified prefix.
++
++These options implement the underlying mechanism for virtual
++repositories.  The smart HTTP server, linkgit:git-http-backend[1], can
++accept a ref prefix and HEAD path via environment variables, and pass
++them to the backend programs.  For a simple local test, you can use
++git-remote-ext:
++
++----------
++git clone ext::'git %s --ref-prefix=virtual/prefix/ --head=prefix-HEAD /tmp/prefixed.git'
++----------
++
++CONVENTIONS
++-----------
++
++The --ref-prefix and --head options provide quite a bit of flexibility
++in organizing the refs of virtual repositories within those of the
++underlying repository.  In the absence of a strong reason to do
++otherwise, consider following these conventions:
++
++--ref-prefix=`virtual/reponame/`::
++	This puts refs under `refs/virtual/reponame/`, which avoids a
++	namespace conflict between `reponame` and built-in ref
++	directories such as `heads` and `tags`.
++
++--head=`virtual-HEAD/reponame`::
++	This puts HEADs under `virtual-HEAD/` to avoid namespace
++	conflicts with top-level filenames in a git repository.
++
++SECURITY
++--------
++
++Anyone with access to any virtual repository can potentially access
++objects from any other virtual repository stored in the same underlying
++repository.  You can't directly say "give me object ABCD" if you don't
++have a ref to it, but you can do some other sneaky things like:
++
++. Claiming to push ABCD, at which point the server will optimize out the
++  need for you to actually send it. Now you have a ref to ABCD and can
++  fetch it (claiming not to have it, of course).
++
++. Requesting other refs, claiming that you have ABCD, at which point the
++  server may generate deltas against ABCD.
++
++None of this causes a problem if you only host public repositories, or
++if everyone who may read one virtual repo may also read everything in
++every other virtual repo (for instance, if everyone in an organization
++has read permission to every repository).
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index bb8d7d0..a58d27e 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1469,7 +1469,7 @@ _git_help ()
+ 		attributes cli core-tutorial cvs-migration
+ 		diffcore gitk glossary hooks ignore modules
+ 		repository-layout tutorial tutorial-2
+-		workflows
++		virtual workflows
+ 		"
  }
  
-@@ -332,6 +335,8 @@ static void refuse_unconfigured_deny_delete_current(void)
- static const char *update(struct command *cmd)
- {
- 	const char *name = cmd->ref_name;
-+	struct strbuf prefixed_name_buf = STRBUF_INIT;
-+	const char *prefixed_name;
- 	unsigned char *old_sha1 = cmd->old_sha1;
- 	unsigned char *new_sha1 = cmd->new_sha1;
- 	struct ref_lock *lock;
-@@ -342,7 +347,10 @@ static const char *update(struct command *cmd)
- 		return "funny refname";
- 	}
- 
--	if (is_ref_checked_out(name)) {
-+	strbuf_addf(&prefixed_name_buf, "%s%s", ref_prefix, name + 5);
-+	prefixed_name = strbuf_detach(&prefixed_name_buf, NULL);
-+
-+	if (is_ref_checked_out(prefixed_name)) {
- 		switch (deny_current_branch) {
- 		case DENY_IGNORE:
- 			break;
-@@ -370,7 +378,7 @@ static const char *update(struct command *cmd)
- 			return "deletion prohibited";
- 		}
- 
--		if (!strcmp(name, head_name)) {
-+		if (!strcmp(prefixed_name, head_name)) {
- 			switch (deny_delete_current) {
- 			case DENY_IGNORE:
- 				break;
-@@ -426,14 +434,14 @@ static const char *update(struct command *cmd)
- 			rp_warning("Allowing deletion of corrupt ref.");
- 			old_sha1 = NULL;
- 		}
--		if (delete_ref(name, old_sha1, 0)) {
-+		if (delete_ref(prefixed_name, old_sha1, 0)) {
- 			rp_error("failed to delete %s", name);
- 			return "failed to delete";
- 		}
- 		return NULL; /* good */
- 	}
- 	else {
--		lock = lock_any_ref_for_update(name, old_sha1, 0);
-+		lock = lock_any_ref_for_update(prefixed_name, old_sha1, 0);
- 		if (!lock) {
- 			rp_error("failed to lock %s", name);
- 			return "failed to lock";
-@@ -760,6 +768,16 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 				advertise_refs = 1;
- 				continue;
- 			}
-+			if (!prefixcmp(arg, "--head=")) {
-+				head_path = arg+7;
-+				continue;
-+			}
-+			if (!prefixcmp(arg, "--ref-prefix=")) {
-+				struct strbuf prefixbuf = STRBUF_INIT;
-+				strbuf_addf(&prefixbuf, "refs/%s", arg+13);
-+				ref_prefix = strbuf_detach(&prefixbuf, NULL);
-+				continue;
-+			}
- 			if (!strcmp(arg, "--stateless-rpc")) {
- 				stateless_rpc = 1;
- 				continue;
-diff --git a/upload-pack.c b/upload-pack.c
-index ce5cbbe..a1e495f 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -34,6 +34,8 @@ static int shallow_nr;
- static struct object_array have_obj;
- static struct object_array want_obj;
- static struct object_array extra_edge_obj;
-+static const char *head_path = "HEAD";
-+static const char *ref_prefix = "";
- static unsigned int timeout;
- /* 0 for no sideband,
-  * otherwise maximum packet size (up to 65520 bytes).
-@@ -640,17 +642,18 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
- 	static const char *capabilities = "multi_ack thin-pack side-band"
- 		" side-band-64k ofs-delta shallow no-progress"
- 		" include-tag multi_ack_detailed";
-+	const char *refnameprefix = cb_data;
- 	struct object *o = parse_object(sha1);
- 
- 	if (!o)
- 		die("git upload-pack: cannot find object %s:", sha1_to_hex(sha1));
- 
- 	if (capabilities)
--		packet_write(1, "%s %s%c%s%s\n", sha1_to_hex(sha1), refname,
-+		packet_write(1, "%s %s%s%c%s%s\n", sha1_to_hex(sha1), refnameprefix, refname,
- 			     0, capabilities,
- 			     stateless_rpc ? " no-done" : "");
- 	else
--		packet_write(1, "%s %s\n", sha1_to_hex(sha1), refname);
-+		packet_write(1, "%s %s%s\n", sha1_to_hex(sha1), refnameprefix, refname);
- 	capabilities = NULL;
- 	if (!(o->flags & OUR_REF)) {
- 		o->flags |= OUR_REF;
-@@ -659,7 +662,7 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
- 	if (o->type == OBJ_TAG) {
- 		o = deref_tag(o, refname, 0);
- 		if (o)
--			packet_write(1, "%s %s^{}\n", sha1_to_hex(o->sha1), refname);
-+			packet_write(1, "%s %s%s^{}\n", sha1_to_hex(o->sha1), refnameprefix, refname);
- 	}
- 	return 0;
- }
-@@ -678,15 +681,24 @@ static int mark_our_ref(const char *refname, const unsigned char *sha1, int flag
- 
- static void upload_pack(void)
- {
-+	struct strbuf prefix = STRBUF_INIT;
-+	unsigned char sha1[20];
-+	int flag;
-+
-+	strbuf_addf(&prefix, "refs/%s", ref_prefix);
- 	if (advertise_refs || !stateless_rpc) {
- 		reset_timeout();
--		head_ref(send_ref, NULL);
--		for_each_ref(send_ref, NULL);
-+		if (resolve_ref(head_path, sha1, 1, &flag))
-+			send_ref("HEAD", sha1, flag, "");
-+		for_each_ref_in(prefix.buf, send_ref, "refs/");
- 		packet_flush(1);
- 	} else {
--		head_ref(mark_our_ref, NULL);
--		for_each_ref(mark_our_ref, NULL);
-+		if (resolve_ref(head_path, sha1, 1, &flag))
-+			mark_our_ref("HEAD", sha1, flag, NULL);
-+		for_each_ref_in(prefix.buf, mark_our_ref, NULL);
- 	}
-+	strbuf_release(&prefix);
-+
- 	if (advertise_refs)
- 		return;
- 
-@@ -716,6 +728,14 @@ int main(int argc, char **argv)
- 			advertise_refs = 1;
- 			continue;
- 		}
-+		if (!prefixcmp(arg, "--head=")) {
-+			head_path = arg+7;
-+			continue;
-+		}
-+		if (!prefixcmp(arg, "--ref-prefix=")) {
-+			ref_prefix = arg+13;
-+			continue;
-+		}
- 		if (!strcmp(arg, "--stateless-rpc")) {
- 			stateless_rpc = 1;
- 			continue;
 -- 
 1.7.5.1
