@@ -1,250 +1,202 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Merge made by recursive?
-Date: Wed, 25 May 2011 18:46:26 -0400
-Message-ID: <20110525224626.GA2296@sigill.intra.peff.net>
-References: <loom.20110525T192418-887@post.gmane.org>
- <7vvcwy37de.fsf@alter.siamese.dyndns.org>
- <20110525195032.GC27260@sigill.intra.peff.net>
- <7vei3m3571.fsf@alter.siamese.dyndns.org>
- <7vzkma1p95.fsf@alter.siamese.dyndns.org>
- <20110525210254.GA29716@sigill.intra.peff.net>
- <20110525212510.GA14214@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 03/10] revert: Eliminate global "commit" variable
+Date: Wed, 25 May 2011 16:10:56 -0700
+Message-ID: <7v1uzm1im7.fsf@alter.siamese.dyndns.org>
+References: <1306333025-29893-1-git-send-email-artagnon@gmail.com>
+ <1306333025-29893-4-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 26 00:46:35 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <christian.couder@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 26 01:11:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPMqY-0007m5-4w
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 00:46:34 +0200
+	id 1QPNET-0003Q8-Du
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 01:11:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755945Ab1EYWq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2011 18:46:29 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43335
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755818Ab1EYWq2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2011 18:46:28 -0400
-Received: (qmail 6824 invoked by uid 107); 25 May 2011 22:46:28 -0000
-Received: from sigill-wired.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.8)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 25 May 2011 18:46:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 May 2011 18:46:26 -0400
-Content-Disposition: inline
-In-Reply-To: <20110525212510.GA14214@sigill.intra.peff.net>
+	id S1753996Ab1EYXLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2011 19:11:12 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49953 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753219Ab1EYXLL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2011 19:11:11 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C18A5550D;
+	Wed, 25 May 2011 19:13:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ABVKYtWGT0BOnnZuPSVnlmqLcgI=; b=C3TAPR
+	psgRj9G8HNtFfbRL1Ov1ugzYhlBcHPZ5FkG7y15i3vnpWthGsM7Obzney+fu+zZi
+	MBioEhXQONKGn+Gea1o7pfuek4ydOTiQ0/bYDykD/ET7nS1ObXy1uhFIqy1903ET
+	kl7lmHS46b9of543XXT9jQLGWAroRb1nMvSk0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KI7Bg139XclSB7914wI7Jf4iOhQWQfgA
+	hQ0Y0AjKB7T47nsqfN66/Itsh3k/16zGAcQiuR1unoFxaMxIQTemxdTr5msdLtnF
+	uFmT8hdE7V6JTSofxeDwlcr12H4n0scfDMSDEV8yqjVHCAw6iX4RXQzcDCocRY+2
+	BpGjr2Vq6wA=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6EBEE550B;
+	Wed, 25 May 2011 19:13:12 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7B43F5500; Wed, 25 May 2011
+ 19:13:05 -0400 (EDT)
+In-Reply-To: <1306333025-29893-4-git-send-email-artagnon@gmail.com> (Ramkumar
+ Ramachandra's message of "Wed, 25 May 2011 14:16:58 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8FE0EDDC-8724-11E0-88E9-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174472>
 
-On Wed, May 25, 2011 at 05:25:10PM -0400, Jeff King wrote:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-> Though if we are going to change it, I think my preference would
-> actually be:
-> 
->   8e46cad HEAD@{0}: reset: moving to HEAD^
-> 
-> which reads better. The "updating HEAD" is just pointless. Of course
-> we're updating HEAD; we're in the HEAD reflog and we're running reset!
+> diff --git a/builtin/revert.c b/builtin/revert.c
+> index 523d41a..6c485f6 100644
+> --- a/builtin/revert.c
+> +++ b/builtin/revert.c
+> @@ -37,7 +37,6 @@ static const char * const cherry_pick_usage[] = {
+>  
+>  static int edit, no_replay, no_commit, mainline, signoff, allow_ff;
+>  static enum { REVERT, CHERRY_PICK } action;
+> -static struct commit *commit;
 
-Actually, this gets written also to the branch's reflog, so saying
-"updating HEAD" has a little bit of value. Of course, saying "reset" is
-even better, since that is the command to update HEAD.
+I agree that the stated goal of this change is a worthy one.
 
-> However, if GIT_REFLOG_ACTION is already set (by a script calling us),
-> then we won't say "reset". So for example, I have entries in my reflog
-> like:
-> 
->   944af8c HEAD@{311}: rebase -i (squash): updating HEAD
-> 
-> So maybe it makes sense to leave those ones as-is, and adjust only the
-> case where GIT_REFLOG_ACTION is unset.
+> @@ -116,11 +115,12 @@ struct commit_message {
+>  	const char *message;
+>  };
+>  
+> -static int get_message(const char *raw_message, struct commit_message *out)
+> +static int get_message(const char *sha1_abbrev, const char *raw_message,
+> +		struct commit_message *out)
+>  {
 
-...and for the reason above, it makes sense to leave this as "updating
-HEAD" for the per-branch reflog, since whatever the script put into
-GIT_REFLOG_ACTION may be more clear with that information.
+This somehow feels dubious and also goes against the "let's not rely on
+global variable commit", no?
 
-So here's what I think we should do.
+This function relied on the global variable and also got information
+passed from the caller that this function could have derived from that
+global commit object (i.e. raw_message came from commit->buffer).
 
--- >8 --
-Subject: [PATCH] reset: give better reflog messages
+A logical thing to fix that situation would be to make its signature:
 
-The reset command creates its reflog entry from argv.
-However, it does so after having run parse_options, which
-means the only thing left in argv is any non-option
-arguments. Thus you would end up with confusing reflog
-entries like:
+    static int get_message(struct commit *commit, struct commit_message *out)
 
-  $ git reset --hard HEAD^
-  $ git reset --soft HEAD@{1}
-  $ git log -2 -g --oneline
-  8e46cad HEAD@{0}: HEAD@{1}: updating HEAD
-  1eb9486 HEAD@{1}: HEAD^: updating HEAD
+no?
 
-However, we must also consider that some scripts may set
-GIT_REFLOG_ACTION before calling reset, and we need to show
-their reflog action (with our text appended). For example:
+Especially dubious is this part:
 
-  rebase -i (squash): updating HEAD
+> @@ -139,17 +139,14 @@ static int get_message(const char *raw_message, struct commit_message *out)
+>  	if (out->reencoded_message)
+>  		out->message = out->reencoded_message;
+>  
+> -	abbrev = find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV);
+> -	abbrev_len = strlen(abbrev);
+> -
+>  	subject_len = find_commit_subject(out->message, &subject);
+>  
+> -	out->parent_label = xmalloc(strlen("parent of ") + abbrev_len +
+> +	out->parent_label = xmalloc(strlen("parent of ") + DEFAULT_ABBREV +
+>  			      strlen("... ") + subject_len + 1);
 
-On top of that, we also set the ORIG_HEAD reflog action
-(even though it doesn't generally exist). In that case, the
-reset argument is somewhat meaningless, as it has nothing to
-do with what's in ORIG_HEAD.
+You moved the call to f-u-a() to the caller, and that is why you have to
+pass its return value as an extra parameter.  If you passed commit you do
+not have to.
 
-This patch changes the reset reflog code to show:
+Worse yet, the above xmalloc() and memcpy below are wrong, as you are no
+longer taking the actual length of the abbreviated object name into
+account, like the old code did.  f-u-a() is _about_ uniqueness, and you
+can get a string longer than the minimum length you gave to it.
 
-  $GIT_REFLOG_ACTION: updating {HEAD,ORIG_HEAD}
+>  	q = out->parent_label;
+>  	q = mempcpy(q, "parent of ", strlen("parent of "));
+>  	out->label = q;
+> -	q = mempcpy(q, abbrev, abbrev_len);
+> +	q = mempcpy(q, sha1_abbrev, DEFAULT_ABBREV);
+>  	q = mempcpy(q, "... ", strlen("... "));
+>  	out->subject = q;
+>  	q = mempcpy(q, subject, subject_len);
 
-as before, but only if GIT_REFLOG_ACTION is set. Otherwise,
-show:
 
-   reset: moving to $rev
+> @@ -168,8 +165,7 @@ static char *get_encoding(const char *message)
+>  	const char *p = message, *eol;
+>  
+>  	if (!p)
+> -		die (_("Could not read commit message of %s"),
+> -				sha1_to_hex(commit->object.sha1));
+> +		die (_("BUG: get_encoding() called with NULL"));
 
-for HEAD, and:
+Hmm, do we really want to translate this error message?
 
-   reset: updating ORIG_HEAD
+As the function is file-scope static, I suspect that calling it with NULL
+is a programmer error, not data error (i.e. it is not like we might get an
+object with NULL here in some repository created by a different version or
+implementation of git).  Once you got confident (and I hope you will be
+before this series hits our tree) that no caller calls this function with
+NULL, we might want to demote this to assert(p) or even remove that if
+statement altogether.
 
-for ORIG_HEAD (this is still somewhat superfluous, since we
-are in the ORIG_HEAD reflog, obviously, but at least we now
-mention which command was used to update it).
+> @@ -185,25 +181,26 @@ static char *get_encoding(const char *message)
+>  	return NULL;
+>  }
+>  
+> -static void add_message_to_msg(struct strbuf *msgbuf, const char *message)
+> +static void add_message_to_msg(const char *fallback, struct strbuf *msgbuf,
+> +			const char *message)
+>  {
+>  	const char *p = message;
+>  	while (*p && (*p != '\n' || p[1] != '\n'))
+>  		p++;
+>  
+>  	if (!*p)
+> -		strbuf_addstr(msgbuf, sha1_to_hex(commit->object.sha1));
+> +		strbuf_addstr(msgbuf, fallback);
 
-While we're at it, we can clean up the code a bit:
+Can you explain what the above loop and if statements are doing for me?
+It seems to be doing something a lot more than what the name of the
+function suggests, which is a bad sign that the helper is not designed
+properly with clear semantics in mind.  I would probably prefer to see
+this function removed, and do this kind of thing in the only caller of
+this confused helper function.  You could make an even smaller helper
+function that implements the logic to determine if there are two
+consecutive LFs in a string (seen above), but I suspect that would be just
+the matter of strstr(message, "\n\n")
 
-  1. Use strbufs to make the message.
+> -static void write_cherry_pick_head(void)
+> +static void write_cherry_pick_head(const char *commit_sha1_hex)
+>  {
+>  	int fd;
+>  	struct strbuf buf = STRBUF_INIT;
+>  
+> -	strbuf_addf(&buf, "%s\n", sha1_to_hex(commit->object.sha1));
+> +	strbuf_addf(&buf, "%s\n", commit_sha1_hex);
+>  
+>  	fd = open(git_path("CHERRY_PICK_HEAD"), O_WRONLY | O_CREAT, 0666);
+>  	if (fd < 0)
+> @@ -370,7 +367,7 @@ static int run_git_commit(const char *defmsg)
+>  	return run_command_v_opt(args, RUN_GIT_CMD);
+>  }
+>  
+> -static int do_pick_commit(void)
+> +static int do_pick_commit(struct commit *commit)
+>  {
+>  	unsigned char head[20];
+>  	struct commit *base, *next, *parent;
+> @@ -378,6 +375,7 @@ static int do_pick_commit(void)
+>  	struct commit_message msg = { NULL, NULL, NULL, NULL, NULL };
+>  	char *defmsg = NULL;
+>  	struct strbuf msgbuf = STRBUF_INIT;
+> +	const char *sha1_abbrev = find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV);
 
-  1. Use the "rev" parameter instead of showing all options.
-     This makes more sense, since it is the only thing
-     impacting the writing of the ref.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/reset.c        |   49 +++++++++++++++--------------------------------
- t/t1412-reflog-loop.sh |    8 +++---
- 2 files changed, 20 insertions(+), 37 deletions(-)
-
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 98bca04..27b3426 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -33,25 +33,6 @@ static const char *reset_type_names[] = {
- 	N_("mixed"), N_("soft"), N_("hard"), N_("merge"), N_("keep"), NULL
- };
- 
--static char *args_to_str(const char **argv)
--{
--	char *buf = NULL;
--	unsigned long len, space = 0, nr = 0;
--
--	for (; *argv; argv++) {
--		len = strlen(*argv);
--		ALLOC_GROW(buf, nr + 1 + len, space);
--		if (nr)
--			buf[nr++] = ' ';
--		memcpy(buf + nr, *argv, len);
--		nr += len;
--	}
--	ALLOC_GROW(buf, nr + 1, space);
--	buf[nr] = '\0';
--
--	return buf;
--}
--
- static inline int is_merge(void)
- {
- 	return !access(git_path("MERGE_HEAD"), F_OK);
-@@ -215,14 +196,18 @@ static int read_from_tree(const char *prefix, const char **argv,
- 	return update_index_refresh(index_fd, lock, refresh_flags);
- }
- 
--static void prepend_reflog_action(const char *action, char *buf, size_t size)
-+static void set_reflog_message(struct strbuf *sb, const char *action,
-+			       const char *rev)
- {
--	const char *sep = ": ";
- 	const char *rla = getenv("GIT_REFLOG_ACTION");
--	if (!rla)
--		rla = sep = "";
--	if (snprintf(buf, size, "%s%s%s", rla, sep, action) >= size)
--		warning(_("Reflog action message too long: %.*s..."), 50, buf);
-+
-+	strbuf_reset(sb);
-+	if (rla)
-+		strbuf_addf(sb, "%s: %s", rla, action);
-+	else if (rev)
-+		strbuf_addf(sb, "reset: moving to %s", rev);
-+	else
-+		strbuf_addf(sb, "reset: %s", action);
- }
- 
- static void die_if_unmerged_cache(int reset_type)
-@@ -241,7 +226,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 	unsigned char sha1[20], *orig = NULL, sha1_orig[20],
- 				*old_orig = NULL, sha1_old_orig[20];
- 	struct commit *commit;
--	char *reflog_action, msg[1024];
-+	struct strbuf msg = STRBUF_INIT;
- 	const struct option options[] = {
- 		OPT__QUIET(&quiet, "be quiet, only report errors"),
- 		OPT_SET_INT(0, "mixed", &reset_type,
-@@ -261,8 +246,6 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 
- 	argc = parse_options(argc, argv, prefix, options, git_reset_usage,
- 						PARSE_OPT_KEEP_DASHDASH);
--	reflog_action = args_to_str(argv);
--	setenv("GIT_REFLOG_ACTION", reflog_action, 0);
- 
- 	/*
- 	 * Possible arguments are:
-@@ -357,13 +340,13 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 		old_orig = sha1_old_orig;
- 	if (!get_sha1("HEAD", sha1_orig)) {
- 		orig = sha1_orig;
--		prepend_reflog_action("updating ORIG_HEAD", msg, sizeof(msg));
--		update_ref(msg, "ORIG_HEAD", orig, old_orig, 0, MSG_ON_ERR);
-+		set_reflog_message(&msg, "updating ORIG_HEAD", NULL);
-+		update_ref(msg.buf, "ORIG_HEAD", orig, old_orig, 0, MSG_ON_ERR);
- 	}
- 	else if (old_orig)
- 		delete_ref("ORIG_HEAD", old_orig, 0);
--	prepend_reflog_action("updating HEAD", msg, sizeof(msg));
--	update_ref_status = update_ref(msg, "HEAD", sha1, orig, 0, MSG_ON_ERR);
-+	set_reflog_message(&msg, "updating HEAD", rev);
-+	update_ref_status = update_ref(msg.buf, "HEAD", sha1, orig, 0, MSG_ON_ERR);
- 
- 	switch (reset_type) {
- 	case HARD:
-@@ -380,7 +363,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 
- 	remove_branch_state();
- 
--	free(reflog_action);
-+	strbuf_release(&msg);
- 
- 	return update_ref_status;
- }
-diff --git a/t/t1412-reflog-loop.sh b/t/t1412-reflog-loop.sh
-index 7f519e5..647d888 100755
---- a/t/t1412-reflog-loop.sh
-+++ b/t/t1412-reflog-loop.sh
-@@ -21,10 +21,10 @@ test_expect_success 'setup reflog with alternating commits' '
- 
- test_expect_success 'reflog shows all entries' '
- 	cat >expect <<-\EOF
--		topic@{0} two: updating HEAD
--		topic@{1} one: updating HEAD
--		topic@{2} two: updating HEAD
--		topic@{3} one: updating HEAD
-+		topic@{0} reset: moving to two
-+		topic@{1} reset: moving to one
-+		topic@{2} reset: moving to two
-+		topic@{3} reset: moving to one
- 		topic@{4} branch: Created from HEAD
- 	EOF
- 	git log -g --format="%gd %gs" topic >actual &&
--- 
-1.7.4.5.34.g0787f
+Given the lifetime rule of f-u-a return value, I think it is a bad design
+to call it and pass it as an extra parameter to get_message() much later.
