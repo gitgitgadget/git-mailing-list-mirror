@@ -1,71 +1,72 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: What's cooking in git.git (May 2011, #11; Tue, 24)
-Date: Wed, 25 May 2011 13:46:20 +0200
-Message-ID: <BANLkTi=qt6SER_1i=QuRZu0u4PjbxSkS0w@mail.gmail.com>
-References: <7vboyr7oxh.fsf@alter.siamese.dyndns.org>
-	<4DDCA0D2.2070604@viscovery.net>
-	<BANLkTi=5koa_f_xqaGvKPrEnKMh7ziOT0g@mail.gmail.com>
-	<4DDCD9F8.9080105@viscovery.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed May 25 13:46:34 2011
+From: Brian Gernhardt <brian@gernhardtsoftware.com>
+Subject: Re: t7810.94 (git-grep -E -F -G) never passed
+Date: Wed, 25 May 2011 08:48:08 -0400
+Message-ID: <1AEF57D5-49E0-4F37-BE8D-DEBD25965D83@gernhardtsoftware.com>
+References: <BE19630B-8E48-4CA8-B956-A4DC767BFFDD@gernhardtsoftware.com> <4DDCD845.1030800@drmicha.warpmail.net>
+Mime-Version: 1.0 (Apple Message framework v1084)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org List" <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed May 25 14:48:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPCXi-00072f-PG
-	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 13:46:27 +0200
+	id 1QPDVb-0003AB-KN
+	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 14:48:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754636Ab1EYLqV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 May 2011 07:46:21 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:43504 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752141Ab1EYLqV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 May 2011 07:46:21 -0400
-Received: by fxm17 with SMTP id 17so5296400fxm.19
-        for <git@vger.kernel.org>; Wed, 25 May 2011 04:46:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Nfl848ZKWiUbDkLds/1g2xcCg23fxwDFRcAqcPILv9U=;
-        b=NjPJje1dvjWX9Z+CEhTbu+RH44ouD5Ef3ygR5zyAfFxVNGQwpIvKVroM67COFz4BpI
-         udAoE4PUDLBBwEl7Rq4m07/0OwGQJn0dnc2sYnBlu6ZHSYvEATC1VEsBsaWGLkwz1/kz
-         uW48xynZbn8K1qAdzCu8zpc5UJ/WL3lW8aCRQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=lYcZK761+ZIUvPOiW7G9/pIm115Yv2aNG3pgZ2ceA14X+yt1vYt2IpDrsn4QiWl6JK
-         MLPj+vJJPy3MinnVCZXCPiMndIMX/RHcdW1RW67wRZNE7JRaX2W46jo3E33oz+IITwEE
-         JPJsvIMbjBwy5HyoOAyeHuJjrExRqxr6FTeWs=
-Received: by 10.223.55.201 with SMTP id v9mr922154fag.76.1306323980083; Wed,
- 25 May 2011 04:46:20 -0700 (PDT)
-Received: by 10.223.117.72 with HTTP; Wed, 25 May 2011 04:46:20 -0700 (PDT)
-In-Reply-To: <4DDCD9F8.9080105@viscovery.net>
+	id S932454Ab1EYMsN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2011 08:48:13 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:41559 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932207Ab1EYMsM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 May 2011 08:48:12 -0400
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id E81BB1FFC146; Wed, 25 May 2011 12:48:08 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.9 required=3.5 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [10.10.10.10] (cpe-74-65-60-43.rochester.res.rr.com [74.65.60.43])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id 042001FFC135;
+	Wed, 25 May 2011 12:48:06 +0000 (UTC)
+In-Reply-To: <4DDCD845.1030800@drmicha.warpmail.net>
+X-Mailer: Apple Mail (2.1084)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174389>
 
-On Wed, May 25, 2011 at 12:29, Johannes Sixt <j.sixt@viscovery.net> wro=
-te:
-> Am 5/25/2011 11:36, schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
 
->> But I'll just fix the Windows issue soon and submit a new series for
->> inclusion in next.
->
-> Thanks! I just wanted to be sure that ab/i18n-scripts does not end up=
- in
-> master in a state that leaves Windows in limbo.
+On May 25, 2011, at 6:21 AM, Michael J Gruber wrote:
 
-Me neither. I just read from your mail that master was in limbo now.
+> "Never" is a strong statement when this test always passed for everyone
+> else running tests, assuming they would have reported otherwise. What's
+> your system?
 
-I'll fix the Windows issues before the i18n-ification of the scripts
-lands in master.
+My apologies.  It was late and I wasn't explicit enough.  What I meant was:
+
+"This test has failed on my system ever since the commit that introduced it."
+
+My system is running OS X 10.6.7.
+
+> reg-ex.info says:
+> 
+> "The other BRE metacharacters require a backslash to give them their
+> special meaning."
+> 
+> "Some implementations support \? and \+... but \? and \+ are not part of
+> the POSIX standard."
+> 
+> So I guess we're going with "some".
+
+Some would be right.  I tend to find that the BSD (and BSD-like) libraries on OS X are more strict and have less features than the GNU equivalents.  (The fact that OS X's libreadline is actually the only mostly compatible libedit drives me batty sometimes.)
+
+This does leave us with the question of what to do with the test.  Perhaps a pattern like "a*+b" to match "aa+b"?  Plain + should always match just + in a BRE, even if \+ is special, and the * makes sure that it is a regex instead of plain string matching.
+
+~~ Brian
