@@ -1,125 +1,126 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/3] Support multiple virtual repositories with a
- single object store and refs
-Date: Tue, 24 May 2011 18:21:00 -0700
-Message-ID: <7vr57n60eb.fsf@alter.siamese.dyndns.org>
-References: <1306284392-12034-1-git-send-email-jamey@minilop.net>
+Subject: [PATCH] t0021: test application of both crlf and ident
+Date: Tue, 24 May 2011 19:18:28 -0700
+Message-ID: <7vlixv5xqj.fsf_-_@alter.siamese.dyndns.org>
+References: <1305961127-26540-1-git-send-email-gitster@pobox.com>
+ <1305961127-26540-5-git-send-email-gitster@pobox.com>
+ <4DD82931.6000101@lsrfire.ath.cx> <4DD82DB2.8000101@lsrfire.ath.cx>
+ <7vy61v612b.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <johannes.sixt@telecom.at>,
-	Josh Triplett <josh@joshtriplett.org>
-To: Jamey Sharp <jamey@minilop.net>
-X-From: git-owner@vger.kernel.org Wed May 25 03:21:26 2011
+Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 25 04:18:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QP2mq-0007m6-QU
-	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 03:21:25 +0200
+	id 1QP3gI-0002fO-E3
+	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 04:18:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754725Ab1EYBVR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 May 2011 21:21:17 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37800 "EHLO
+	id S1753111Ab1EYCSh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 May 2011 22:18:37 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58165 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754658Ab1EYBVR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 May 2011 21:21:17 -0400
+	with ESMTP id S1751648Ab1EYCSg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 May 2011 22:18:36 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D733B57C2;
-	Tue, 24 May 2011 21:23:23 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 12C525D78;
+	Tue, 24 May 2011 22:20:43 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=DbwIrtM6SbVC
-	nUEHT4aokoAWIfU=; b=OWqtdqiTemzgWwo/pxi6TEjAEw+zGQ6ly3MvCDpyAZML
-	yQcMbkATnPvRndD/BHu5cCCk24f5zRlgRL902qs9JmmupO6bERDeN2IOYbx1ugZz
-	CLSyErfmiTfWgLE0Q49B7F5edGrYmwT4g+iY0qY3+2acbDW9oVA6iJzgpC7RcU8=
+	:content-type:content-transfer-encoding; s=sasl; bh=RGZ7LXApqd8N
+	pt9oVv1LqkaCXao=; b=wtx8N7AyxT3pwiyi7Hh06t5h9eNN38Ts+ci2DdkoNh/M
+	M1DNqo4udyYlelH56D79/31B5atc4NZberILbZ4ybXAvaDy6TWMU6nbD5kO5Bnor
+	ryfOw8S0k3aX7GI/O3mGjqVgi32GaeqLjZccCB/o3GwOCPVlrkAxC+oto9kz3JY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=yHfBJ5
-	damADDOQNwuPbno80U+cCDZ9/9e4lC5GqA1DzUNTwFS3d+cFwcDeUA/nGJJ/8UP0
-	1MbncZg0uSyzxUywnTc61coqMCh3AlKSUpdhMUqRUpi03W54r//9OiWlqCTdzOvk
-	8KxRdjzUIlntmmgl34cQlAFa/jcgmnCVXwUt4=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=OtIuYE
+	YSCRfbLW8Sxjxjle5B1RQk4o5LyQF0g5H8YB5tPSNt4hbBmPbTH52KikMI/tDYYI
+	iotmoE/S0+STsIV3+uOL2dnMHWSXfGOKo5l/qkr1Oo3aLIoK1IY+jvJ/KoBCe/eN
+	DSirex3ww8KI53N00ryBDZ1ZRlHrJMo+Uh1v0=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6889E57BE;
-	Tue, 24 May 2011 21:23:17 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E42AE5D77;
+	Tue, 24 May 2011 22:20:40 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 69AF857BB; Tue, 24 May 2011
- 21:23:09 -0400 (EDT)
-In-Reply-To: <1306284392-12034-1-git-send-email-jamey@minilop.net> (Jamey
- Sharp's message of "Tue, 24 May 2011 17:46:30 -0700")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B302D5D76; Tue, 24 May 2011
+ 22:20:37 -0400 (EDT)
+In-Reply-To: <7vy61v612b.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 24 May 2011 18:06:36 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 91986F4A-866D-11E0-8D0E-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 9617128A-8675-11E0-836E-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174367>
 
-Jamey Sharp <jamey@minilop.net> writes:
 
-> From: Josh Triplett <josh@joshtriplett.org>
->
-> Given many repositories with copies of the same objects (such as bran=
-ches of
-> the same source), sharing a common object store will avoid duplicatio=
-n.
-> Alternates provide a single baseline, but don't handle ongoing activi=
-ty in the
-> various repositories.  Furthermore, operations such as git-gc need to=
- know
-> about all of the refs.
->
-> Git supports storing multiple virtual repositories within the object =
-store and
-> references of a single underlying repository.  The underlying reposit=
-ory
-> stores the objects for all of the virtual repositories, and includes =
-all the
-> refs and heads of the virtual repositories using prefixed names.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-I do not see anything changed up to this point since the previous
-round... sent a wrong patch?
+ * This comes on top of Ren=C3=A9's updates to the test.=20
 
-In any case, I _think_ what you are trying to say is:
+ t/t0021-conversion.sh |   32 ++++++++++++++++++++++++--------
+ 1 files changed, 24 insertions(+), 8 deletions(-)
 
- - Implemented in the most na=C3=AFve way, you can host multiple instan=
-ces of
-   related projects, but that is wasteful; their object stores will hav=
-e
-   duplicated objects without sharing. (This is the crucial part missin=
-g
-   from your description that confused me when trying to _guess_ what
-   problem you are trying to solve in the first place).
-
- - You _could_ use alternates mechanism to alleviate that problem, but =
-it
-   has issues, e.g. gc needs to be aware of other repositories (This is=
- in
-   your first paragraph).
-
- - Instead, we could store a single, large, repository and carve out it=
-s
-   refs namespaces into multiple hierarchies, to make it look as if the=
-re
-   are multiple repositories. (The first sentence of the second paragra=
-ph
-   also confused me, as you said "Git supports storing multiple ..." in
-   present tense).
-
-One thing you would want to be careful with is what to do with the HEAD
-symrefs, which should appear to read "ref: refs/heads/<some-branch>" fr=
-om
-the point of view of the clients that are under the illusion that they =
-are
-interacting with one specific repository among others, while for the
-purpose of gc and things in the huge single repository they should be
-pointing at something like "refs/hosted-1-project/heads/<that-branch>",
-but other than that, after a lot of guesswork, the problem you are tryi=
-ng
-to solve seems clearer to me.
-
-But please do not make me guess.
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index 275421e..f19e651 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -66,10 +66,14 @@ test_expect_success expanded_in_repo '
+ 		echo "\$Id:NoSpaceAtEitherEnd\$"
+ 		echo "\$Id: NoTerminatingSymbol"
+ 		echo "\$Id: Foreign Commit With Spaces \$"
+-		printf "\$Id: NoTerminatingSymbolAtEOF"
+-	} > expanded-keywords &&
++	} >expanded-keywords.0 &&
+=20
+-	git add expanded-keywords &&
++	{
++		cat expanded-keywords.0 &&
++		printf "\$Id: NoTerminatingSymbolAtEOF"
++	} >expanded-keywords &&
++	cat expanded-keywords >expanded-keywords-crlf &&
++	git add expanded-keywords expanded-keywords-crlf &&
+ 	git commit -m "File with keywords expanded" &&
+ 	id=3D$(git rev-parse --verify :expanded-keywords) &&
+=20
+@@ -83,15 +87,27 @@ test_expect_success expanded_in_repo '
+ 		echo "\$Id: $id \$"
+ 		echo "\$Id: NoTerminatingSymbol"
+ 		echo "\$Id: Foreign Commit With Spaces \$"
++	} >expected-output.0 &&
++	{
++		cat expected-output.0 &&
+ 		printf "\$Id: NoTerminatingSymbolAtEOF"
+-	} > expected-output &&
++	} >expected-output &&
++	{
++		append_cr <expected-output.0 &&
++		printf "\$Id: NoTerminatingSymbolAtEOF"
++	} >expected-output-crlf &&
++	{
++		echo "expanded-keywords ident"
++		echo "expanded-keywords-crlf ident text eol=3Dcrlf"
++	} >>.gitattributes &&
+=20
+-	echo "expanded-keywords ident" >> .gitattributes &&
++	rm -f expanded-keywords expanded-keywords-crlf &&
+=20
+-	rm -f expanded-keywords &&
+ 	git checkout -- expanded-keywords &&
+-	cat expanded-keywords &&
+-	cmp expanded-keywords expected-output
++	test_cmp expanded-keywords expected-output &&
++
++	git checkout -- expanded-keywords-crlf &&
++	test_cmp expanded-keywords-crlf expected-output-crlf
+ '
+=20
+ # The use of %f in a filter definition is expanded to the path to
+--=20
+1.7.5.2.483.gc61ca
