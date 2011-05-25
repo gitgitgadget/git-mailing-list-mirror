@@ -1,96 +1,138 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: combined diff does not detect binary files and ignores -diff
- attribute
-Date: Wed, 25 May 2011 11:29:35 -0400
-Message-ID: <20110525152935.GD8795@sigill.intra.peff.net>
-References: <4DDA618E.4030604@drmicha.warpmail.net>
- <BANLkTinu3AbTmtswn6DLQKAWdLL=gBvAqA@mail.gmail.com>
- <20110523181147.GA26035@sigill.intra.peff.net>
- <20110523201529.GA6281@sigill.intra.peff.net>
- <BANLkTikvPjO=bbhAoPCftdXzGSYtryNvzw@mail.gmail.com>
- <20110523234131.GB10488@sigill.intra.peff.net>
- <7v39k4aeos.fsf@alter.siamese.dyndns.org>
- <4DDB5C0F.1080102@drmicha.warpmail.net>
- <20110524191337.GB584@sigill.intra.peff.net>
- <4DDCB203.3020802@drmicha.warpmail.net>
+From: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
+Subject: Re: commit a1f6baa5 (wrap long header lines) breaks my habit
+Date: Wed, 25 May 2011 17:40:46 +0200
+Organization: -no organization-
+Message-ID: <20110525154046.GC7723@scotty.home>
+References: <20110524160253.GA7723@scotty.home>
+ <7vboys83nh.fsf@alter.siamese.dyndns.org>
+ <20110524164616.GB7723@scotty.home>
+ <20110524200716.GF584@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jay Soffian <jaysoffian@gmail.com>, git <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed May 25 17:29:44 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 25 17:41:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPG1m-00017i-Mm
-	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 17:29:43 +0200
+	id 1QPGCi-0000A4-76
+	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 17:41:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757029Ab1EYP3h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2011 11:29:37 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34323
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756044Ab1EYP3h (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2011 11:29:37 -0400
-Received: (qmail 1054 invoked by uid 107); 25 May 2011 15:29:37 -0000
-Received: from sigill-wired.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.8)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 25 May 2011 11:29:37 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 May 2011 11:29:35 -0400
+	id S932560Ab1EYPky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2011 11:40:54 -0400
+Received: from moutng.kundenserver.de ([212.227.126.186]:54926 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932396Ab1EYPkx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2011 11:40:53 -0400
+Received: from scotty.home (port-92-196-31-162.dynamic.qsc.de [92.196.31.162])
+	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
+	id 0MeOaJ-1Q0Kmn1ylL-00QACl; Wed, 25 May 2011 17:40:47 +0200
+Received: from scotty.home (hs@localhost [127.0.0.1])
+	by scotty.home (8.14.3/8.14.3/Debian-9.4) with ESMTP id p4PFelKT031844;
+	Wed, 25 May 2011 17:40:47 +0200
+Received: (from hs@localhost)
+	by scotty.home (8.14.3/8.14.3/Submit) id p4PFekfT031842;
+	Wed, 25 May 2011 17:40:46 +0200
+X-Authentication-Warning: scotty.home: hs set sender to stefan.hahn@s-hahn.de using -f
 Content-Disposition: inline
-In-Reply-To: <4DDCB203.3020802@drmicha.warpmail.net>
+In-Reply-To: <20110524200716.GF584@sigill.intra.peff.net>
+X-Mailer: Mutt 1.5.20 (2009-06-14) http://www.mutt.org/
+X-Editor: GNU Emacs 23.2.1 http://www.gnu.org/
+X-Accept-Language: de en
+X-Location: Europe, Germany, Wolfenbuettel
+X-GPG-Public-Key: gpg --keyserver keys.gnupg.net --recv-keys E4FCD563
+X-GPG-key-ID/Fingerprint: 0xE4FCD563 / EF09 97BB 3731 7DC7 25BA 5C39 185C
+ F986 E4FC D563
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Virus-Scanned: clamav-milter 0.97 at scotty
+X-Virus-Status: Clean
+X-Provags-ID: V02:K0:kUm0fFi8zbl0RDaX5d5oluJV588y6DSq6/4cfOMoB6A
+ odp7OHuWY7Mur4hK4Ns4Te7ck2KbUI7pPDDB//t8ZMNXzfoMW6
+ WGat1mTkiGRDyxyQAox9P3Tj+fkNKAPRwSqEwC8bfAzEIxb/TE
+ pzOHCwwI1hzbMfn/PVNAPGABeIN45tD5xkUyrdJ5Q3ZBVjj149
+ OXQIR9H37q2Aqoosl+6Lw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174416>
 
-On Wed, May 25, 2011 at 09:38:43AM +0200, Michael J Gruber wrote:
+Mail von Jeff King, Tue, 24 May 2011 at 16:07:16 -0400:
 
-> > I agree with Junio that we would need a new config option and external
-> > interface for "n-way combined diff". However, isn't what things like
-> > vimdiff and meld do the reverse of our combined diff? That is, don't
-> > they assume the 3 trees are: ours, theirs, and ancestor (i.e., merge
-> > base)? Whereas in a combined diff, it is actually: merge parent 1
-> > (ours), merge parent 2 (theirs), and merge _result_.
+Hello,
+
+> > > >    git format-patch -k --stdout a..b | git am -k -3
+> > > 
+> > > Why -k to am?
 > > 
-> > Also, do those tools generally handle n-way comparisons as opposed to
-> > 3-way?
+> > Just first "-k", and "git am -3". Wrong in mind here at home before my
+> > computer.
+
+Wrong. I really typed the second "-k". (Local intelligence in
+fingers.)
+
+> Then it should preserve your long subject line just fine, as mailsplit
+> (called by "am") will reassemble the folded line according to rfc822
+> header folding rules.
 > 
-> "Those" tools do "that" which I mean :)
+> With "am -k", it does keep the fold. This is an artifact of the original
+> behavior, where the folds were literally included from a multi-line
 
-OK, they are more capable than I realized, then. :)
+Correct, I checked this, so with
 
-> So, in vimdiff, you could in principle change and write any buffer but
-> our tools don't support it so far because it is not needed for a merge
-> which has one "target" only. In the ui of my dreams, I would have 3
-> buffers HEAD INDEX WORKTREE (H I W) and moving hunks between them would
-> do all of add -p, reset -p and checkout -p (the HEAD buf would be
-> read-only).
+   git format-patch -k --stdout a..b | git am -3
+(no second -k)
 
-This should be relatively easy to implement on the git side, as you are
-doing the hard parts of the "-p" operation in vim already. You just need
-to write vim's buffer into the worktree or into the index via
-hash-object / update-index.
+all is as before. 
 
-Also, wouldn't you potentially want more than 3 buffers, if you were
-cherry-picking changes from another commit (as in "git checkout -p
-$commit" or even putting and taking things from a stash? I think that
-would be a simple generalization of what you are proposing though.
+Thanks for your clarification, sorry for the noise.
 
-> With "differently abled" tools it could still be useful to have, say a
-> tool invoked for the merge HEAD+WORKTREE -> INDEX (with the current
-> state of the INDEX as the automatic resolution to start off from) so
-> that you can do add+reset -p with your mergetool, and maybe similarly
-> for HEAD+INDEX -> WORKTREE. I.e. addtool and checkouttool in addition to
-> the difftool and mergetool which we have. Just not for the current
-> release cycle any more.
+Stefan
 
-Yeah, getting back to the original discussion. How badly do people
-actually want an external diff driver that can do fancy things with
-multiple parents? It seems that for non-text diff viewers, the preferred
-solution is to use difftool these days (but that is just my impression;
-I don't use either difftool or external diff drivers).
+Perhaps a little clarification like this:
 
--Peff
+commit e8069848dffe72579aa7f2c542e39fde9eab84b1
+Author: Stefan-W. Hahn <stefan.hahn@s-hahn.de>
+Date:   Wed May 25 17:33:03 2011 +0200
+
+    format-patch: Clarify the behaviour of '-k'.
+    
+    Added clarification in documentation of of 'git format-patch'.
+    
+    When using 'git format-patch' together with 'git am' for rebasing,
+    'git am' should be called without '-k' if long subject lines should be
+    reassembled. This is neccesary, because a wrapping of long header lines
+    was introduced with commit:
+    
+    commit a1f6baa5c97abc8b579fa7ac7c4dc21971bdc048
+    format-patch: wrap long header lines
+    
+    Signed-off-by: Stefan-W. Hahn <stefan.hahn@s-hahn.de>
+
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index d13c9b2..4e62248 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -468,6 +468,16 @@ the current branch using 'git am' to cherry-pick them:
+ ------------
+ $ git format-patch -k --stdout R1..R2 | git am -3 -k
+ ------------
+++
++In this example the subject lines of the commits will be folded after
++78 characters and 'git am' will keep this folding.
+++
++To preserve long subject lines, 'git am' will reassemble the folded
++lines according to rfc822 if called without '-k' like this:
+++
++------------
++$ git format-patch -k --stdout R1..R2 | git am -3
++------------
+ 
+ * Extract all commits which are in the current branch but not in the
+ origin branch:
+
+-- 
+Stefan-W. Hahn                          It is easy to make things.
+                                        It is hard to make things simple.
