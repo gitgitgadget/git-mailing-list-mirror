@@ -1,157 +1,158 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 3/3] Add documentation for virtual repositories
-Date: Wed, 25 May 2011 12:07:08 -0400
-Message-ID: <20110525160708.GE8795@sigill.intra.peff.net>
+From: Jamey Sharp <jamey@minilop.net>
+Subject: Re: [PATCH v3 1/3] Support multiple virtual repositories with a
+ single object store and refs
+Date: Wed, 25 May 2011 09:08:16 -0700
+Message-ID: <20110525160816.GB4839@oh.minilop.net>
 References: <1306284392-12034-1-git-send-email-jamey@minilop.net>
- <1306284392-12034-3-git-send-email-jamey@minilop.net>
+ <7vr57n60eb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="CUfgB8w4ZwR/yMy5"
 Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Johannes Sixt <johannes.sixt@telecom.at>,
-	Junio C Hamano <gitster@pobox.com>,
 	Josh Triplett <josh@joshtriplett.org>
-To: Jamey Sharp <jamey@minilop.net>
-X-From: git-owner@vger.kernel.org Wed May 25 18:07:36 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 25 18:08:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPGcR-00010P-9g
-	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 18:07:35 +0200
+	id 1QPGdH-0001YO-RU
+	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 18:08:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933038Ab1EYQHP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2011 12:07:15 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35898
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757457Ab1EYQHL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2011 12:07:11 -0400
-Received: (qmail 1533 invoked by uid 107); 25 May 2011 16:07:10 -0000
-Received: from sigill-wired.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.8)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 25 May 2011 12:07:10 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 May 2011 12:07:08 -0400
+	id S1757194Ab1EYQIW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2011 12:08:22 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:38116 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753119Ab1EYQIV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2011 12:08:21 -0400
+Received: by pwi15 with SMTP id 15so3493191pwi.19
+        for <git@vger.kernel.org>; Wed, 25 May 2011 09:08:20 -0700 (PDT)
+Received: by 10.68.14.234 with SMTP id s10mr3455970pbc.12.1306339700518;
+        Wed, 25 May 2011 09:08:20 -0700 (PDT)
+Received: from oh.minilop.net (69-71-169-164.mammothnetworks.com [69.71.169.164])
+        by mx.google.com with ESMTPS id h6sm5751543pbn.56.2011.05.25.09.08.18
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 25 May 2011 09:08:19 -0700 (PDT)
+Received: from jamey by oh.minilop.net with local (Exim 4.76)
+	(envelope-from <jamey@oh.minilop.net>)
+	id 1QPGd6-0001Jz-Dm; Wed, 25 May 2011 09:08:16 -0700
 Content-Disposition: inline
-In-Reply-To: <1306284392-12034-3-git-send-email-jamey@minilop.net>
+In-Reply-To: <7vr57n60eb.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174421>
 
-On Tue, May 24, 2011 at 05:46:32PM -0700, Jamey Sharp wrote:
 
->  Documentation/Makefile                 |    2 +-
->  Documentation/git-http-backend.txt     |    4 +-
->  Documentation/gitvirtual.txt           |   76 ++++++++++++++++++++++++++++++++
->  contrib/completion/git-completion.bash |    2 +-
+--CUfgB8w4ZwR/yMy5
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Maybe it would make sense to mention your new options to upload-pack and
-receive-pack in their manpages; the description can be short, but refer
-the user to gitvirtual.
+On Tue, May 24, 2011 at 06:21:00PM -0700, Junio C Hamano wrote:
+> Jamey Sharp <jamey@minilop.net> writes:
+>=20
+> > From: Josh Triplett <josh@joshtriplett.org>
+> >
+> > Given many repositories with copies of the same objects (such as branch=
+es of
+> > the same source), sharing a common object store will avoid duplication.
+> > Alternates provide a single baseline, but don't handle ongoing activity=
+ in the
+> > various repositories.  Furthermore, operations such as git-gc need to k=
+now
+> > about all of the refs.
+> >
+> > Git supports storing multiple virtual repositories within the object st=
+ore and
+> > references of a single underlying repository.  The underlying repository
+> > stores the objects for all of the virtual repositories, and includes al=
+l the
+> > refs and heads of the virtual repositories using prefixed names.
+>=20
+> I do not see anything changed up to this point since the previous
+> round... sent a wrong patch?
 
-> +Given many repositories with copies of the same objects (such as
-> +branches of the same source), sharing a common object store will avoid
-> +duplication.  Alternates provide a single baseline, but don't handle
-> +ongoing activity in the various repositories.  Furthermore, operations
-> +such as linkgit:git-gc[1] need to know about all of the refs.
+Apparently so. I watched Josh fix up that commit message, and then I
+don't know where it went.
 
-It's not quite true that alternates provide only a single baseline. They
-can be updated and objects consolidated over time (e.g., with a nightly
-repack). The problem is that they require management to do so (this is
-also a benefit, if you want a sharing policy besides "all repos have all
-objects").
+> In any case, I _think_ what you are trying to say is:
+>=20
+>  - Implemented in the most na=EFve way, you can host multiple instances of
+>    related projects, but that is wasteful; their object stores will have
+>    duplicated objects without sharing. (This is the crucial part missing
+>    from your description that confused me when trying to _guess_ what
+>    problem you are trying to solve in the first place).
+>=20
+>  - You _could_ use alternates mechanism to alleviate that problem, but it
+>    has issues, e.g. gc needs to be aware of other repositories (This is in
+>    your first paragraph).
+>=20
+>  - Instead, we could store a single, large, repository and carve out its
+>    refs namespaces into multiple hierarchies, to make it look as if there
+>    are multiple repositories. (The first sentence of the second paragraph
+>    also confused me, as you said "Git supports storing multiple ..." in
+>    present tense).
 
-> +linkgit:git-upload-pack[1] and linkgit:git-receive-pack[1] rewrite the
-> +names of refs and heads as specified by the --ref-prefix and --head
-> +options.  For instance, --ref-prefix=`virtual/reponame/` will use
-> ++pass:[refs/virtual/reponame/heads/*]+ and
-> ++pass:[refs/virtual/reponame/tags/*]+.  git-upload-pack and
-> +git-receive-pack will ignore any references that do not match the
-> +specified prefix.
+Yes. I hope you won't mind if we blatantly steal this description. :-)
 
-Thinking on the whole idea a bit more, is there a reason to restrict
-this to upload-pack and receive-pack? Sure, they are the most obvious
-places to use it for hosting, but might I not want to be able to do:
+> One thing you would want to be careful with is what to do with the HEAD
+> symrefs, which should appear to read "ref: refs/heads/<some-branch>" from
+> the point of view of the clients that are under the illusion that they are
+> interacting with one specific repository among others, while for the
+> purpose of gc and things in the huge single repository they should be
+> pointing at something like "refs/hosted-1-project/heads/<that-branch>",
 
-  cd /path/to/mega-repository.git
-  git --ref-prefix=virtual/repo1 log master
+As far as I can tell, that isn't true. Judging by the pack-protocol
+documentation, my reading of the implementation, and the results of some
+tests I ran, symrefs are resolved to hashes before being sent over the
+wire, and then HEAD is magically re-inferred back into a symref on the
+other end.
 
-to do server-side scripting inside the virtual repos (or more likely,
-setting GIT_REF_PREFIX at the top of your script).
+(This has the odd property that if you create a repository containing
+two branches with identical heads, then clone that repository, the
+clone's origin/HEAD will point to a randomly-selected one of the two
+branches. Tested in version 1.7.4.4, and seems to be a necessary
+consequence of the protocol design.)
 
-> +The --ref-prefix and --head options provide quite a bit of flexibility
-> +in organizing the refs of virtual repositories within those of the
-> +underlying repository.  In the absence of a strong reason to do
-> +otherwise, consider following these conventions:
-> +
-> +--ref-prefix=`virtual/reponame/`::
-> +	This puts refs under `refs/virtual/reponame/`, which avoids a
-> +	namespace conflict between `reponame` and built-in ref
-> +	directories such as `heads` and `tags`.
-> +
-> +--head=`virtual-HEAD/reponame`::
-> +	This puts HEADs under `virtual-HEAD/` to avoid namespace
-> +	conflicts with top-level filenames in a git repository.
+As a result, symrefs only need to be valid in the underlying repository;
+there's no mapping needed for the protocol. However, you probably do
+want a different HEAD for each virtual repository, which is why we added
+the --head option.
 
-I'm curious if you have a use for this much flexibility. In particular,
-why do the HEAD and refs prefixes need the ability to be separate? Also,
-what about other non-HEAD top-level refs? IOW, a true "virtual
-repository" to me would just be:
+We didn't actually think about impact of these virtual HEADs on gc. As
+long as they're all symrefs, they can't matter for gc, right? The head
+they reference is already a suitable gc root. If the virtual HEADs do
+need to participate in gc, then I guess we should update the conventions
+documentation to recommend that they live somewhere under refs/.
 
-  GIT_REF_PREFIX=refs/virtual/repo1
+> but other than that, after a lot of guesswork, the problem you are trying
+> to solve seems clearer to me.
+>=20
+> But please do not make me guess.
 
-and then _every_ ref resolution would just prefix that, whether it was
-in refs/ or not. So you would have:
+Indeed. We'll get that right next round, honest this time. :-/
 
-  .git/refs/virtual/repo1/HEAD
-  .git/refs/virtual/repo1/refs/heads/master
-  .git/refs/virtual/repo1/refs/tags/v1.0
+Now that you have the problem statement down, is the proposed solution
+acceptable for merge?
 
-and so on. And this fits in with the idea of it not just being an
-upload-pack and receive-pack thing. I could do:
+Jamey
 
-  GIT_REF_PREFIX=refs/virtual/repo1; export GIT_REF_PREFIX
-  git fetch some-remote
+--CUfgB8w4ZwR/yMy5
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-and it would write to .git/refs/virtual/repo1/FETCH_HEAD.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
 
-So the virtual repository is basically just a "chroot" of the ref
-namespace. And it's dirt simple to implement, because you do the
-translation at the refs.c layer.
+iEYEARECAAYFAk3dKW0ACgkQp1aplQ4I9mUw3QCfQ77QDsQXgRxllOt2LE7Ku2CL
+2OAAn1gNUGkAdEo0ufcBaR90VKtEik2T
+=4jMN
+-----END PGP SIGNATURE-----
 
-> +SECURITY
-> +--------
-> +
-> +Anyone with access to any virtual repository can potentially access
-> +objects from any other virtual repository stored in the same underlying
-> +repository.  You can't directly say "give me object ABCD" if you don't
-> +have a ref to it, but you can do some other sneaky things like:
-> +
-> +. Claiming to push ABCD, at which point the server will optimize out the
-> +  need for you to actually send it. Now you have a ref to ABCD and can
-> +  fetch it (claiming not to have it, of course).
-> +
-> +. Requesting other refs, claiming that you have ABCD, at which point the
-> +  server may generate deltas against ABCD.
-> +
-> +None of this causes a problem if you only host public repositories, or
-> +if everyone who may read one virtual repo may also read everything in
-> +every other virtual repo (for instance, if everyone in an organization
-> +has read permission to every repository).
-
-Well, this text is obviously correct and written by a very smart person.
-;)
-
-You might want to mention that if you do need to handle these security
-concerns, then the alternates route, even though it creates more
-management headache, is going to be more flexible with respect to which
-objects are shared.
-
-In fact, given what I said at the very top of the email, I wonder if the
-documentation would be better structured as "here are two methods for
-sharing objects, here are reasons why you might choose one or the other,
-and here is how to use each".
-
--Peff
+--CUfgB8w4ZwR/yMy5--
