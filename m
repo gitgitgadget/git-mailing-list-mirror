@@ -1,84 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] unpack-trees: add the dry_run flag to
- unpack_trees_options
-Date: Wed, 25 May 2011 14:36:01 -0700
-Message-ID: <7vr57m1n0e.fsf@alter.siamese.dyndns.org>
-References: <4DDC1DF9.9030109@web.de>
- <7v39k37kmo.fsf@alter.siamese.dyndns.org> <4DDD615E.7020809@web.de>
- <4DDD6197.7060209@web.de>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH 2/2] Include unistd.h.
+Date: Wed, 25 May 2011 23:52:44 +0200
+Message-ID: <BANLkTi=w1hpmrK8_Vv8vTLtDF+qf6cETEw@mail.gmail.com>
+References: <1306332924-28587-1-git-send-email-mduft@gentoo.org>
+ <1306332924-28587-3-git-send-email-mduft@gentoo.org> <7vd3j64oq6.fsf@alter.siamese.dyndns.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed May 25 23:36:17 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: mduft@gentoo.org, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 25 23:53:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPLkX-00062D-2I
-	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 23:36:17 +0200
+	id 1QPM0u-00070F-RI
+	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 23:53:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754202Ab1EYVgK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2011 17:36:10 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60377 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753075Ab1EYVgJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2011 17:36:09 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F04C35A04;
-	Wed, 25 May 2011 17:38:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zh0Son9qsw0WqQG9z1hUr0OZZqc=; b=YFVfxb
-	mTnPr0xSb4TgKLA89E3zgUriEg+pHUWODU1OVPQaRl0poIvelAm0XE9qqZ8g0jfV
-	raIdZGvsIvt1g3FDRzx9oczEDUCjYStB0bkdUiJTTsVGoTVq+eeRBTU7tDQSZXOa
-	JDrNT4WH07/7BjFxUz9tIjO1vA4+E5mDOjsbY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=a2RimvkWj8eCzIQxE4MSAsYAN9OUWWj6
-	hhXaDYznhYHXS6RcxveR+07GcbfWC/+2eIlW0s5qdMvmeG2Jy43bJWeB4RvBgnq1
-	QKIzh1CZZjPLpKZBInlX1pMt3tfPycujd7TO6Qm1xb1j60I6MJmQJaFyhbJ09ToJ
-	fNh9OkU9mZM=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BBBA75A03;
-	Wed, 25 May 2011 17:38:13 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C74055A02; Wed, 25 May 2011
- 17:38:10 -0400 (EDT)
-In-Reply-To: <4DDD6197.7060209@web.de> (Jens Lehmann's message of "Wed, 25
- May 2011 22:07:51 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4B3431CE-8717-11E0-A2D7-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+	id S932071Ab1EYVxG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 May 2011 17:53:06 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:34467 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753272Ab1EYVxE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 May 2011 17:53:04 -0400
+Received: by mail-pz0-f46.google.com with SMTP id 9so37360pzk.19
+        for <git@vger.kernel.org>; Wed, 25 May 2011 14:53:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=onOAxQl9QdVYHPcu92FQC0v/0Bo/kkFy1CzqaB5A1jc=;
+        b=KDhjeOfVS9tYag8MD/BJkxtcLRpex398RbdE702DyDgpVgchi7XLHEZKxPvezqwwa3
+         LinGFbRJM0yCmkm1Gh8xXau2pzMDf42lYhi/twc4I4tjNYheQ9nYmhnbPNbTN5JTKI9C
+         y5n87bl4NIOwkOoO+lCgZTjc0fvnH6/FInKiI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=LC7kVevRgPYAeT0xRPDcaze35vKArzmEgVJJIB3tMezHf7wlw0Hm20PeyJ+rzLai41
+         9NVu/Sv8eJGgcLyGU1qc46y+uRhyv6/II1z5P/7RqWvwYkAxMpKVDsQ3ihp5mSR3zpgW
+         WXSS2sC4RmGrSFpHo0BR8jt23FGGJX/9aTOaE=
+Received: by 10.68.12.72 with SMTP id w8mr40410pbb.165.1306360384593; Wed, 25
+ May 2011 14:53:04 -0700 (PDT)
+Received: by 10.68.47.131 with HTTP; Wed, 25 May 2011 14:52:44 -0700 (PDT)
+In-Reply-To: <7vd3j64oq6.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174468>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
-
-> Until now there was no way to test if unpack_trees() with update=1 would
-> succeed without really updating the work tree. The reason for that is that
-> setting update to 0 does skip the tests for new files and deactivates the
-> sparse handling, thereby making that unsuitable as a dry run.
+On Wed, May 25, 2011 at 8:30 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> mduft@gentoo.org writes:
 >
-> Add the new dry_run flag to struct unpack_trees_options unpack_trees().
-> Setting that together with the update flag will check if the work tree
-> update would be successful without doing it for real.
+>> At least on Interix, NULL is defined in unistd.h, and not including =
+it
+>> causes compilation failure.
+>>
+>> Signed-off-by: Markus Duft <mduft@gentoo.org>
+>> ---
+>> =A0compat/fnmatch/fnmatch.c | =A0 =A01 +
+>> =A01 files changed, 1 insertions(+), 0 deletions(-)
+>>
+>> diff --git a/compat/fnmatch/fnmatch.c b/compat/fnmatch/fnmatch.c
+>> index 14feac7..0238cca 100644
+>> --- a/compat/fnmatch/fnmatch.c
+>> +++ b/compat/fnmatch/fnmatch.c
+>> @@ -25,6 +25,7 @@
+>> =A0# define _GNU_SOURCE 1
+>> =A0#endif
+>>
+>> +#include <unistd.h>
+>> =A0#include <errno.h>
+>> =A0#include <fnmatch.h>
+>> =A0#include <ctype.h>
 >
-> The only class of problems that is not detected at the moment are file
-> system conditions like ENOSPC or missing permissions. Also the index
-> entries of updated files are not as they would be after a real checkout
-> because lstat() isn't run as the files aren't updated for real.
+> The header stddef.h is where NULL is supposed to be defined, and comm=
+only
+> used headers are supposed to define NULL the same way as stddef.h doe=
+s.
+> There is a conditional inclusion of stdlib.h in fnmatch.c and stdlib.=
+h is
+> one of those files; probably that is how the upstream pulls in NULL w=
+hen
+> compiling this.
 >
-> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
-> ---
+> But we don't define STDC_HEADERS nor _LIBC (and we shouldn't), so I d=
+on't
+> know how the existing users of compat/fnmatch/ gets the defintion of =
+NULL
+> from. Output from "gcc -E -dD -DNO_FNMATCH compat/fnmatch/fnmatch.c" =
+does
+> not seem to show any NULL defined.
+>
+> Other platforms (e.g. SunOS, IRIX, HPUX, Windows) use NO_FNMATCH_CASE=
+=46OLD
+> and compile this file. =A0How are they getting their NULLs?
 
-Looks good.  remove_marked_cache_entries() does not touch the working
-tree, and because you are not calling unlink_entry(), you won't trigger
-schedule_dir_for_removal() hence remove_scheduled_dirs() won't cause us
-any trouble either.
+Windows/MinGW:
 
-Will queue.  Thanks.
+$ gcc -E -dD -DNO_FNMATCH compat/fnmatch/fnmatch.c | grep NULL
+compat/fnmatch/fnmatch.c:29:21: error: fnmatch.h: No such file or direc=
+tory
+#define __MINGW_ATTRIB_NONNULL(arg) __attribute__ ((__nonnull__ (arg)))
+#undef __need_NULL
+#define __need_NULL
+#undef NULL
+#define NULL ((void *)0)
+#undef __need_NULL
+
+The "#define NULL ((void *)0)"-line comes from stddef.h, which is
+included from string.h, which in turn is included by fnmatch.c.
