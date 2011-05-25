@@ -1,84 +1,125 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: Why does adding an existing repo as a submodule modify .git/config?
-Date: Tue, 24 May 2011 21:06:52 -0400
-Message-ID: <4DDC562C.2000204@gmail.com>
-References: <irbq5a$h38$1@dough.gmane.org> <4DDAAAD2.1010708@web.de> <4DDB0786.5020006@gmail.com> <4DDB58D9.2090701@cdwilson.us>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/3] Support multiple virtual repositories with a
+ single object store and refs
+Date: Tue, 24 May 2011 18:21:00 -0700
+Message-ID: <7vr57n60eb.fsf@alter.siamese.dyndns.org>
+References: <1306284392-12034-1-git-send-email-jamey@minilop.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
-To: Christopher Wilson <cwilson@cdwilson.us>
-X-From: git-owner@vger.kernel.org Wed May 25 03:07:06 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <johannes.sixt@telecom.at>,
+	Josh Triplett <josh@joshtriplett.org>
+To: Jamey Sharp <jamey@minilop.net>
+X-From: git-owner@vger.kernel.org Wed May 25 03:21:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QP2Yz-0002PJ-6S
-	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 03:07:05 +0200
+	id 1QP2mq-0007m6-QU
+	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 03:21:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932664Ab1EYBG7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 May 2011 21:06:59 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:49501 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932686Ab1EYBG6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2011 21:06:58 -0400
-Received: by vws1 with SMTP id 1so5428926vws.19
-        for <git@vger.kernel.org>; Tue, 24 May 2011 18:06:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:date:from:user-agent:mime-version
-         :newsgroups:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=6pQ6ss2SaD+DcB5M/UmwDSa7f+oLNWFuLlYBa5Vb4R8=;
-        b=TjxlHZloBCI6IFjtaUXbQzYf4eMfuvQQpboxCFJ/rReNAQY2/xOXavl8Rb0le9W+Yb
-         oM2SzZPOJ1+RD2i946COy/+/f2KwVH4BsyVtFOzUvAj5wJqdumBHAeSr7KBtA8l4PYKp
-         bOV8WEvvMlq15weeT9wu4OX1gSPRZLg8mx3GE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        b=Z6PvaoX+GkeDBmFR7GaTwLc6mZfXj7PqcnKNEqbViPEaUO1I+KgR8Lo5I0tzQ02Yy5
-         jAkRY6nqSUvUGb69JRwsq+s6BqgeN4Sb4qi6D3CapVijeEcXMX+anI2RC48ruRglCBGM
-         Pniq/8oyjZrTs6QhVYEu39GXa5GwhPssWbsbU=
-Received: by 10.52.175.6 with SMTP id bw6mr6228253vdc.210.1306285615038;
-        Tue, 24 May 2011 18:06:55 -0700 (PDT)
-Received: from mark-laptop.lan (pool-108-28-57-40.washdc.fios.verizon.net [108.28.57.40])
-        by mx.google.com with ESMTPS id br11sm133561vdb.1.2011.05.24.18.06.53
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 24 May 2011 18:06:54 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Lightning/1.0b2 Thunderbird/3.1.10
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <4DDB58D9.2090701@cdwilson.us>
+	id S1754725Ab1EYBVR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 May 2011 21:21:17 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37800 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754658Ab1EYBVR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 May 2011 21:21:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D733B57C2;
+	Tue, 24 May 2011 21:23:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=DbwIrtM6SbVC
+	nUEHT4aokoAWIfU=; b=OWqtdqiTemzgWwo/pxi6TEjAEw+zGQ6ly3MvCDpyAZML
+	yQcMbkATnPvRndD/BHu5cCCk24f5zRlgRL902qs9JmmupO6bERDeN2IOYbx1ugZz
+	CLSyErfmiTfWgLE0Q49B7F5edGrYmwT4g+iY0qY3+2acbDW9oVA6iJzgpC7RcU8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=yHfBJ5
+	damADDOQNwuPbno80U+cCDZ9/9e4lC5GqA1DzUNTwFS3d+cFwcDeUA/nGJJ/8UP0
+	1MbncZg0uSyzxUywnTc61coqMCh3AlKSUpdhMUqRUpi03W54r//9OiWlqCTdzOvk
+	8KxRdjzUIlntmmgl34cQlAFa/jcgmnCVXwUt4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6889E57BE;
+	Tue, 24 May 2011 21:23:17 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 69AF857BB; Tue, 24 May 2011
+ 21:23:09 -0400 (EDT)
+In-Reply-To: <1306284392-12034-1-git-send-email-jamey@minilop.net> (Jamey
+ Sharp's message of "Tue, 24 May 2011 17:46:30 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 91986F4A-866D-11E0-8D0E-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174366>
 
-On 05/24/2011 03:06 AM, Christopher Wilson wrote:
->>
->> Mark
+Jamey Sharp <jamey@minilop.net> writes:
+
+> From: Josh Triplett <josh@joshtriplett.org>
 >
+> Given many repositories with copies of the same objects (such as bran=
+ches of
+> the same source), sharing a common object store will avoid duplicatio=
+n.
+> Alternates provide a single baseline, but don't handle ongoing activi=
+ty in the
+> various repositories.  Furthermore, operations such as git-gc need to=
+ know
+> about all of the refs.
 >
-> Q: Can you elaborate on why a 2 step "git submodule add" + "git
-> submodule init" wasn't sufficient?  What is the reason for adding this
-> functionality into the "git submodule add" command, when "git submodule
-> init" does the same job?
->
+> Git supports storing multiple virtual repositories within the object =
+store and
+> references of a single underlying repository.  The underlying reposit=
+ory
+> stores the objects for all of the virtual repositories, and includes =
+all the
+> refs and heads of the virtual repositories using prefixed names.
 
-git-submodule.sh has evolved considerably over the last couple of years, 
-and the behaviour of submodule-init on an already existing module may 
-well be different.
+I do not see anything changed up to this point since the previous
+round... sent a wrong patch?
 
-However, while you could then change submodule-add to not register the 
-submodule, you would now have the condition of having a submodule that 
-is checked out in the current tree but *not* registered in .git/config. 
-This is the key: .git/config is modified to include all submodules that 
-are checked out in your current tree. If you add a remote submodule, 
-that submodule is not checked out in your current tree so no entry is 
-created in .git/config, while adding one that is already checked out in 
-place does modify .git/config. I see no inconsistency here.
+In any case, I _think_ what you are trying to say is:
 
-Mark
+ - Implemented in the most na=C3=AFve way, you can host multiple instan=
+ces of
+   related projects, but that is wasteful; their object stores will hav=
+e
+   duplicated objects without sharing. (This is the crucial part missin=
+g
+   from your description that confused me when trying to _guess_ what
+   problem you are trying to solve in the first place).
+
+ - You _could_ use alternates mechanism to alleviate that problem, but =
+it
+   has issues, e.g. gc needs to be aware of other repositories (This is=
+ in
+   your first paragraph).
+
+ - Instead, we could store a single, large, repository and carve out it=
+s
+   refs namespaces into multiple hierarchies, to make it look as if the=
+re
+   are multiple repositories. (The first sentence of the second paragra=
+ph
+   also confused me, as you said "Git supports storing multiple ..." in
+   present tense).
+
+One thing you would want to be careful with is what to do with the HEAD
+symrefs, which should appear to read "ref: refs/heads/<some-branch>" fr=
+om
+the point of view of the clients that are under the illusion that they =
+are
+interacting with one specific repository among others, while for the
+purpose of gc and things in the huge single repository they should be
+pointing at something like "refs/hosted-1-project/heads/<that-branch>",
+but other than that, after a lot of guesswork, the problem you are tryi=
+ng
+to solve seems clearer to me.
+
+But please do not make me guess.
