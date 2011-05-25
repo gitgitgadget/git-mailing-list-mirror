@@ -1,67 +1,63 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] sh-18n: quell "unused variable" warning
-Date: Thu, 26 May 2011 01:33:26 +0200
-Message-ID: <BANLkTi=Mgd7=eriOsz1phDBJ25Com2Y=mQ@mail.gmail.com>
-References: <62c2e1619edcb37c0411f29a34b6bc10e3899a97.1306317312.git.git@drmicha.warpmail.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCHv2 1/2] Support multiple virtual repositories with a single
+ object store and refs
+Date: Thu, 26 May 2011 01:53:42 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1105260152430.2701@bonsai2>
+References: <1306274066-4092-1-git-send-email-jamey@minilop.net> <7v7h9f7kzx.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.1105250847380.2701@bonsai2> <20110525154405.GA4839@oh.minilop.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu May 26 01:33:37 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Josh Triplett <josh@joshtriplett.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Sixt <johannes.sixt@telecom.at>
+To: Jamey Sharp <jamey@minilop.net>
+X-From: git-owner@vger.kernel.org Thu May 26 01:53:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPNa1-0005qN-G1
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 01:33:33 +0200
+	id 1QPNti-00087l-5w
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 01:53:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754504Ab1EYXd2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 May 2011 19:33:28 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:61616 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753289Ab1EYXd1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 May 2011 19:33:27 -0400
-Received: by fxm17 with SMTP id 17so268079fxm.19
-        for <git@vger.kernel.org>; Wed, 25 May 2011 16:33:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=mQ9d6N0jUoA4Q5mmGhjH1Zb5EGvOLhwYafFJEYbAcn8=;
-        b=fvbOqvpTDg48vTkmiONzNVGllgL/q5EblA6IIWx1CnRgo3iB0UCzIryeDiheCF/Hyh
-         caLK8hll3MKYTyCMLcTxOZd4E7foGNsH+Z0eGEJpvinELTXf1gmfMWNYyNepiW8VNPuU
-         ck1/s6Sz7ET6EGNbyolG1M5u04qoqrlA4wCks=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Z64oABTLhfb94XyqXvoIrKiOsK+ShsNB/+rXpgHuuEYS/i61pYQiih2XN1W6uwcRGf
-         c5XVtBaw0dFjFSD6PH0lEVvlDi49qd7DfyIxGLaNU3bEd78T+ZT5SA4eOOpmmF+5dqiI
-         6iFKn8VKYh6koBAtd+tkDdA58KR0Lm9XTLZJg=
-Received: by 10.223.145.78 with SMTP id c14mr189752fav.75.1306366406524; Wed,
- 25 May 2011 16:33:26 -0700 (PDT)
-Received: by 10.223.117.72 with HTTP; Wed, 25 May 2011 16:33:26 -0700 (PDT)
-In-Reply-To: <62c2e1619edcb37c0411f29a34b6bc10e3899a97.1306317312.git.git@drmicha.warpmail.net>
+	id S1756771Ab1EYXxr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2011 19:53:47 -0400
+Received: from mailout-de.gmx.net ([213.165.64.22]:37901 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1756089Ab1EYXxq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2011 19:53:46 -0400
+Received: (qmail invoked by alias); 25 May 2011 23:53:44 -0000
+Received: from pD9EB28BC.dip0.t-ipconnect.de (EHLO noname) [217.235.40.188]
+  by mail.gmx.net (mp018) with SMTP; 26 May 2011 01:53:44 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+jc2kGB3aj70IDktUbdKq4SEWrR5j0IX1TMA7uG8
+	Q55oeWUOhcdhGB
+X-X-Sender: gene099@bonsai2
+In-Reply-To: <20110525154405.GA4839@oh.minilop.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174482>
 
-On Wed, May 25, 2011 at 11:55, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
+Hi,
 
-I suppose it was inevitable that we'd end up maintaining this since
-upstream only maintains the GPLv3 version now.
+On Wed, 25 May 2011, Jamey Sharp wrote:
 
-> =C2=A0 /* Default values for command line options. =C2=A0*/
-> - =C2=A0unsigned short int show_variables =3D 0;
-> + =C2=A0/* unsigned short int show_variables =3D 0; */
+> On Wed, May 25, 2011 at 08:51:07AM +0200, Johannes Schindelin wrote:
+>
+> > 2) You're extending the protocol by appending the prefix after the 
+> >    SHA-1, and I stopped halfway through the patch trying to find 
+> >    information which I now think should be in the commit message: a)  
+> >    why? b) why does it not break when one of the two sides is a 
+> >    previous version?
+> 
+> I don't think we're changing the protocol in any way...?
 
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 show_variables =3D 1;
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* show_variables =3D 1; */
+Did your patch series not contain a change that sends a capability with 
+the prefix appended?
 
-Can we just remove these lines instead of commenting them out?
+Ciao,
+Johannes
