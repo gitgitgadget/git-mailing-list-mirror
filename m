@@ -1,73 +1,72 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: t7810.94 (git-grep -E -F -G) never passed
-Date: Wed, 25 May 2011 12:21:57 +0200
-Message-ID: <4DDCD845.1030800@drmicha.warpmail.net>
-References: <BE19630B-8E48-4CA8-B956-A4DC767BFFDD@gernhardtsoftware.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: What's cooking in git.git (May 2011, #11; Tue, 24)
+Date: Wed, 25 May 2011 12:29:12 +0200
+Message-ID: <4DDCD9F8.9080105@viscovery.net>
+References: <7vboyr7oxh.fsf@alter.siamese.dyndns.org>	<4DDCA0D2.2070604@viscovery.net> <BANLkTi=5koa_f_xqaGvKPrEnKMh7ziOT0g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org List" <git@vger.kernel.org>
-To: Brian Gernhardt <brian@gernhardtsoftware.com>
-X-From: git-owner@vger.kernel.org Wed May 25 12:22:06 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 25 12:29:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPBE5-0007jP-7I
-	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 12:22:05 +0200
+	id 1QPBLF-0004v8-9Z
+	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 12:29:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752536Ab1EYKV7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2011 06:21:59 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:58236 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751512Ab1EYKV7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 May 2011 06:21:59 -0400
-Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id C141A2095C;
-	Wed, 25 May 2011 06:21:58 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute5.internal (MEProxy); Wed, 25 May 2011 06:21:58 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=I2McqVRPB+j5xsJMNKpfwBusjZs=; b=NXdkOj9mNA30J+CNXkSE7qzFKw/0rhkNgnTUlSDgnOGjpdjqPHdserWyd+T5eT4slp6rhBbwItY4mtLsAE7+QWjyvipE2Yt8OpzyUPXqo36qDh1BIAtVt6o4RJ01WYh1C39ESyqSs7PrLm3HFPHYYJe2lYsP+F406uk+hjMu8hc=
-X-Sasl-enc: XreqYKutzMRYCmXJKFoKT2TFO71nLAuy70LjeRVuvWqz 1306318918
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 506EC445463;
-	Wed, 25 May 2011 06:21:58 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc15 Lightning/1.0b3pre Thunderbird/3.1.10
-In-Reply-To: <BE19630B-8E48-4CA8-B956-A4DC767BFFDD@gernhardtsoftware.com>
+	id S1752048Ab1EYK3T convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 May 2011 06:29:19 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:2068 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751512Ab1EYK3T convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 May 2011 06:29:19 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1QPBKz-0001cw-Hz; Wed, 25 May 2011 12:29:13 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 45EFD1660F;
+	Wed, 25 May 2011 12:29:13 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
+In-Reply-To: <BANLkTi=5koa_f_xqaGvKPrEnKMh7ziOT0g@mail.gmail.com>
+X-Enigmail-Version: 1.1.1
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174380>
 
-Brian Gernhardt venit, vidit, dixit 25.05.2011 05:27:
-> I'm not sure why it's supposed to pass, actually.  -G makes the pattern be a basic regex and basic regexen don't recognize the + repetition operator.
-> 
-> expecting success: 
-> 	echo ab:aab >expected &&
-> 	git grep -E -F -G a\\+b >actual &&
-> 	test_cmp expected actual
-> 
-> --- expected	2011-05-25 03:19:05.000000000 +0000
-> +++ actual	2011-05-25 03:19:05.000000000 +0000
-> @@ -1 +1 @@
-> -ab:aab
-> +ab:a+b
-> not ok - 94 grep -E -F -G pattern
+Am 5/25/2011 11:36, schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+> Aren't you confusing ab/i18n-scripts-basic with ab/i18n-scripts?
 
-"Never" is a strong statement when this test always passed for everyone
-else running tests, assuming they would have reported otherwise. What's
-your system?
+No, I'm aware of the difference and purposes of the two topics.
 
-reg-ex.info says:
+>> ... if there were a NO_GETTEXT switch that simply avoids all
+>> the problems on Windows. Is there such a switch?
+>=20
+> There isn't and can't be without major re-organizations because
+> shellscripts don't have something like the C preprocessor.
 
-"The other BRE metacharacters require a backslash to give them their
-special meaning."
+Well, we do preprocess the shell scripts. Wouldn't it be a matter of
 
-"Some implementations support \? and \+... but \? and \+ are not part of
-the POSIX standard."
+if test -z '@@NO_GETTEXT@@'
+then
+	... regular eval_gettext definition ...
+else
+	... dummy eval_gettext definition ...
+fi
 
-So I guess we're going with "some".
+with a corresponding extension of the sed script in the Makefile?
 
-Michael
+> But I'll just fix the Windows issue soon and submit a new series for
+> inclusion in next.
+
+Thanks! I just wanted to be sure that ab/i18n-scripts does not end up i=
+n
+master in a state that leaves Windows in limbo.
+
+-- Hannes
