@@ -1,82 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 1/2] Support multiple virtual repositories with a
- single object store and refs
-Date: Wed, 25 May 2011 12:43:32 -0700
-Message-ID: <7vipsy36sb.fsf@alter.siamese.dyndns.org>
-References: <1306274066-4092-1-git-send-email-jamey@minilop.net>
- <7v7h9f7kzx.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.1.00.1105250847380.2701@bonsai2>
- <20110525154405.GA4839@oh.minilop.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Remove a dead assignment
+Date: Wed, 25 May 2011 15:45:05 -0400
+Message-ID: <20110525194505.GB27260@sigill.intra.peff.net>
+References: <20110524210758.GH16052@localhost>
+ <20110524224525.GI16052@localhost>
+ <vpqfwo3ush3.fsf@bauges.imag.fr>
+ <20110525150631.GA29161@localhost>
+ <4DDD3A01.6040407@elegosoft.com>
+ <20110525184514.GA20005@localhost>
+ <7v4o4i4mte.fsf@alter.siamese.dyndns.org>
+ <7vzkma37pb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Josh Triplett <josh@joshtriplett.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Sixt <johannes.sixt@telecom.at>
-To: Jamey Sharp <jamey@minilop.net>
-X-From: git-owner@vger.kernel.org Wed May 25 21:43:56 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Chris Wilson <cwilson@vigilantsw.com>,
+	Johannes Gilger <heipei@hackvalue.de>,
+	Michael Schubert <mschub@elegosoft.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 25 21:45:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPJzn-0002ux-NX
-	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 21:43:56 +0200
+	id 1QPK16-0003b3-O2
+	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 21:45:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754736Ab1EYTnu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2011 15:43:50 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61864 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751420Ab1EYTnu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2011 15:43:50 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AFDD75CAD;
-	Wed, 25 May 2011 15:45:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/PXnuy0mcayo94fUJgtpojhicSY=; b=JoOHOH
-	tlYuZbEufRLweGyNDPETb7fiipJ+ogLUyAxN4ZIhsgYrs6ziw56ZQcBKWw4zCmmp
-	7WpwAqimnQXOC6hivGWB+myP+shzgWpU1wX4dJSAa6euXplgj0QuRX7gbWKhlitH
-	/8059JKCt8NPn+yCJ0x+e47AO5IOuzI5PhgKo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yNZVnqq1SUjXC7k1lT9FLsxK432LmWNk
-	heJ7HZ6yjKMq27UwNYnBqX4zt98P+k77j1jqyJh5oZcG5Raler6mEmRkmfG3ZERU
-	+1Uv9kcpZBUp29f/7i6TvhyCtjBq+oxbr725oIdDjaER48KR8q8TB/LfS/DJepV8
-	Vtr3+NvSPKQ=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 41BF95C9F;
-	Wed, 25 May 2011 15:45:49 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 78A9D5C9A; Wed, 25 May 2011
- 15:45:41 -0400 (EDT)
-In-Reply-To: <20110525154405.GA4839@oh.minilop.net> (Jamey Sharp's message of
- "Wed, 25 May 2011 08:44:05 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 972B6792-8707-11E0-8906-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+	id S1754884Ab1EYTpJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2011 15:45:09 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41050
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751420Ab1EYTpI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2011 15:45:08 -0400
+Received: (qmail 4616 invoked by uid 107); 25 May 2011 19:45:06 -0000
+Received: from sigill-wired.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.8)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 25 May 2011 15:45:06 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 May 2011 15:45:05 -0400
+Content-Disposition: inline
+In-Reply-To: <7vzkma37pb.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174454>
 
-Jamey Sharp <jamey@minilop.net> writes:
+On Wed, May 25, 2011 at 12:23:44PM -0700, Junio C Hamano wrote:
 
->> I had to read the example call to understand that 'virtual repository' 
->> means 'one real catch-em-all repository'.
->> 
->> I wonder about two things, though:
->> 
->> 1) Would teaching git clone to understand "-t this/repo/*" help?
->
-> Sure, that would be an improvement for our use case,...
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > The if statement says "we might be passing NULL in fmt and in that case
+> > please fall back to user_format" to human readers, but the compiler is too
+> > stupid to infer such an intention, so you have to help it with your brain.
+> > I have to wonder if the strbuf_expand() should be passing fmt instead of
+> > user_format.  "git blame -L1082,+7 pretty.c" points at 5b16360 (pretty:
+> > Initialize notes if %N is used, 2010-04-13).
+> >
+> > The only callsite that is introduced by that patch passes NULL to fmt, so
+> > a better fix might be to do something like this instead.
+> 
+> If somebody cares about the reusability of the code for other callsites
+> added in the future, we could do this instead.
+> 
+> I think this is what Johannes wanted to do from the beginning, and is a
+> better fix than my previous one to remove the fmt parameter altogether.
 
-Hmm, what does the "-t" option do?  Is there a side-band communication
-between you guys that I am not seeing?  I didn't see anything to make me
-say "Sure" or otherwise.
+Actually, I am to blame for this interface, see:
 
-I had a feeling that you wanted to keep the illusion to the users that you
-are serving multiple repositories independently, so a solution that does
-not have to make "git clone" on the other side aware of the layout on your
-server would probably be more preferrable to you anyway.
+  http://article.gmane.org/gmane.comp.version-control.git/144650
+
+and my response:
+
+  http://article.gmane.org/gmane.comp.version-control.git/144715
+
+The resulting patch definitely has a bug (albeit one that could not be
+triggered by current users), and should have had this:
+
+> -	strbuf_expand(&dummy, user_format, userformat_want_item, w);
+> +	strbuf_expand(&dummy, fmt, userformat_want_item, w);
+
+all along.
+
+I'm also OK with just tightening the interface to always use
+user_format, as no callers who wanted the extra parameter have come up
+in the past year.
+
+> Subject: userformat_find_requirements(): find requirement for the correct format
+> 
+> This function was introduced in 5b16360 (pretty: Initialize notes if %N is
+> used, 2010-04-13) to check what kind of information the "log --format=..."
+> user format string wants. The function can be passed a NULL instead of a
+> format string to ask it to check user_format variable kept by an earlier
+> call to save_user_format().
+> 
+> But it unconditionally checked user_format and not the string it was
+> given.  The only caller introduced by the change passes NULL, which
+> kept the bug unnoticed, until a new GCC noticed that there is an
+> assignment to fmt that is never used.
+
+Acked-by: Jeff King <peff@peff.net>
+
+> Noticed-by: Chris Wilson's compiler
+
+Heh.
+
+-Peff
