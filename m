@@ -1,68 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Supporting "-v" option for git-log
-Date: Wed, 25 May 2011 16:01:36 -0400
-Message-ID: <20110525200136.GD27260@sigill.intra.peff.net>
-References: <BANLkTik70gu0NUzUEnGNWHQr8CfbdPVe5g@mail.gmail.com>
- <SNT124-W39164C74A457129811245DC4740@phx.gbl>
- <BANLkTi=v8j=VdBNgThRTFXk+YbPFOFvzwQ@mail.gmail.com>
- <SNT124-W5207D5461CD80509763B79C4740@phx.gbl>
- <BANLkTikT4s+Twfip2g7Zo-XcML1Wbd3qBg@mail.gmail.com>
- <20110525132816.GA6709@sigill.intra.peff.net>
- <7vlixu4reu.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH v2 0/2] Teach read-tree the -n|--dry-run option
+Date: Wed, 25 May 2011 22:06:54 +0200
+Message-ID: <4DDD615E.7020809@web.de>
+References: <4DDC1DF9.9030109@web.de> <7v39k37kmo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Elazar Leibovich <elazarl@gmail.com>,
-	Tim Mazid <timmazid@hotmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 25 22:01:47 2011
+X-From: git-owner@vger.kernel.org Wed May 25 22:07:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPKH3-0005JP-KU
-	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 22:01:45 +0200
+	id 1QPKMH-0000Yg-Kh
+	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 22:07:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752608Ab1EYUBk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2011 16:01:40 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45638
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751938Ab1EYUBj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2011 16:01:39 -0400
-Received: (qmail 4927 invoked by uid 107); 25 May 2011 20:01:38 -0000
-Received: from sigill-wired.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.8)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 25 May 2011 16:01:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 May 2011 16:01:36 -0400
-Content-Disposition: inline
-In-Reply-To: <7vlixu4reu.fsf@alter.siamese.dyndns.org>
+	id S1753935Ab1EYUHA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2011 16:07:00 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:46332 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753219Ab1EYUHA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2011 16:07:00 -0400
+Received: from smtp04.web.de  ( [172.20.0.225])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 5406118F6CAE4;
+	Wed, 25 May 2011 22:06:58 +0200 (CEST)
+Received: from [217.249.54.24] (helo=[192.168.178.43])
+	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1QPKM6-0006yz-00; Wed, 25 May 2011 22:06:58 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
+In-Reply-To: <7v39k37kmo.fsf@alter.siamese.dyndns.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX18zeFQBlg4gQr8EXTBijq8A9zifz3IA487RETIl
+	VuSTCWkprOquq1SBKnYdcWS95LzY0GlI0TCdTgYK1bx0JJ5BQs
+	a0R7NDm1DqUoM3snjjTQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174457>
 
-On Wed, May 25, 2011 at 10:32:41AM -0700, Junio C Hamano wrote:
-
-> > (which now means "grep for b, but do not include commits in c"). And
-> > even if we wanted to do that, there is a parsing ambiguity. Does the
-> > "--not" apply _just_ to the grep, or does it also include "not c"?
-> >
-> > Which is a shame, because we already have all of the code for "--and",
-> > "--or", and "--not" in git-grep.
+Am 25.05.2011 01:18, schrieb Junio C Hamano:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+>> My "Teach read-tree the -n|--dry-run option" adapted to this new flag
+>> runs all tests successfully ...
+>>
+>>
+>>  unpack-trees.c |    4 ++--
+>>  unpack-trees.h |    3 ++-
+>>  2 files changed, 4 insertions(+), 3 deletions(-)
 > 
-> True, that has always been an accepted limitation.
-> 
-> You could add --grep="-e A --and --not -e B --all-match", split_cmdline()
-> and then give the result to append_grep_pattern(), or something like that,
-> but I do not think it is worth doing.
+> But on which change does this come?
 
-Besides being ambiguous with current usage (e.g., grepping for something
-starting with "-e"), I do not long for the quoting nightmare of:
+As a preparing step for "read-tree the -n|--dry-run" (and adding
+a dry-run option to other users of unpack_trees() should be pretty
+straightforward now too).
 
-  git log --grep="-e 'something with spaces'
-      --and --not -e 'something with \"double quotes\"'
-      --and --not -e 'something with '\\''single quotes'\\''"
+The first patch in this series enables unpack_trees() to do a dry-run.
+That enables users of unpack_trees() to see if running this function
+with the update flag set would succeed.
 
--Peff
+The second patch uses this new dry_run flag to teach read-tree the
+-n|--dry-run option.
+
+
+Jens Lehmann (2):
+  unpack-trees: add the dry_run flag to unpack_trees_options
+  Teach read-tree the -n|--dry-run option
+
+ Documentation/git-read-tree.txt      |    5 ++
+ builtin/read-tree.c                  |    3 +-
+ t/lib-read-tree.sh                   |   43 ++++++++++++++++++
+ t/t1000-read-tree-m-3way.sh          |   81 +++++++++++++++++-----------------
+ t/t1001-read-tree-m-2way.sh          |   45 ++++++++++---------
+ t/t1002-read-tree-m-u-2way.sh        |   81 +++++++++++++++++-----------------
+ t/t1004-read-tree-m-u-wf.sh          |   23 +++++-----
+ t/t1005-read-tree-reset.sh           |   13 +++---
+ t/t1008-read-tree-overlay.sh         |    3 +-
+ t/t1011-read-tree-sparse-checkout.sh |   27 ++++++-----
+ t/t1012-read-tree-df.sh              |    9 ++--
+ t/t1020-subdirectory.sh              |    5 +-
+ unpack-trees.c                       |    4 +-
+ unpack-trees.h                       |    3 +-
+ 14 files changed, 202 insertions(+), 143 deletions(-)
+ create mode 100644 t/lib-read-tree.sh
+
+-- 
+1.7.5.2.355.gdceb0
