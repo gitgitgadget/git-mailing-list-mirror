@@ -1,138 +1,125 @@
-From: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
-Subject: Re: commit a1f6baa5 (wrap long header lines) breaks my habit
-Date: Wed, 25 May 2011 17:40:46 +0200
-Organization: -no organization-
-Message-ID: <20110525154046.GC7723@scotty.home>
-References: <20110524160253.GA7723@scotty.home>
- <7vboys83nh.fsf@alter.siamese.dyndns.org>
- <20110524164616.GB7723@scotty.home>
- <20110524200716.GF584@sigill.intra.peff.net>
+From: Jamey Sharp <jamey@minilop.net>
+Subject: Re: [PATCHv2 1/2] Support multiple virtual repositories with a
+ single object store and refs
+Date: Wed, 25 May 2011 08:44:05 -0700
+Message-ID: <20110525154405.GA4839@oh.minilop.net>
+References: <1306274066-4092-1-git-send-email-jamey@minilop.net>
+ <7v7h9f7kzx.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.1.00.1105250847380.2701@bonsai2>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 25 17:41:02 2011
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="tThc/1wpZn/ma/RB"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Josh Triplett <josh@joshtriplett.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Sixt <johannes.sixt@telecom.at>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed May 25 17:44:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPGCi-0000A4-76
-	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 17:41:00 +0200
+	id 1QPGFt-0002Zt-Ei
+	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 17:44:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932560Ab1EYPky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2011 11:40:54 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:54926 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932396Ab1EYPkx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2011 11:40:53 -0400
-Received: from scotty.home (port-92-196-31-162.dynamic.qsc.de [92.196.31.162])
-	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
-	id 0MeOaJ-1Q0Kmn1ylL-00QACl; Wed, 25 May 2011 17:40:47 +0200
-Received: from scotty.home (hs@localhost [127.0.0.1])
-	by scotty.home (8.14.3/8.14.3/Debian-9.4) with ESMTP id p4PFelKT031844;
-	Wed, 25 May 2011 17:40:47 +0200
-Received: (from hs@localhost)
-	by scotty.home (8.14.3/8.14.3/Submit) id p4PFekfT031842;
-	Wed, 25 May 2011 17:40:46 +0200
-X-Authentication-Warning: scotty.home: hs set sender to stefan.hahn@s-hahn.de using -f
+	id S932779Ab1EYPoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2011 11:44:12 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:35122 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932560Ab1EYPoL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2011 11:44:11 -0400
+Received: by pvg12 with SMTP id 12so3442516pvg.19
+        for <git@vger.kernel.org>; Wed, 25 May 2011 08:44:10 -0700 (PDT)
+Received: by 10.68.65.198 with SMTP id z6mr3566591pbs.129.1306338250481;
+        Wed, 25 May 2011 08:44:10 -0700 (PDT)
+Received: from oh.minilop.net (69-71-169-164.mammothnetworks.com [69.71.169.164])
+        by mx.google.com with ESMTPS id l3sm5744511pbq.75.2011.05.25.08.44.07
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 25 May 2011 08:44:09 -0700 (PDT)
+Received: from jamey by oh.minilop.net with local (Exim 4.76)
+	(envelope-from <jamey@oh.minilop.net>)
+	id 1QPGFh-0001HQ-Tb; Wed, 25 May 2011 08:44:05 -0700
 Content-Disposition: inline
-In-Reply-To: <20110524200716.GF584@sigill.intra.peff.net>
-X-Mailer: Mutt 1.5.20 (2009-06-14) http://www.mutt.org/
-X-Editor: GNU Emacs 23.2.1 http://www.gnu.org/
-X-Accept-Language: de en
-X-Location: Europe, Germany, Wolfenbuettel
-X-GPG-Public-Key: gpg --keyserver keys.gnupg.net --recv-keys E4FCD563
-X-GPG-key-ID/Fingerprint: 0xE4FCD563 / EF09 97BB 3731 7DC7 25BA 5C39 185C
- F986 E4FC D563
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Virus-Scanned: clamav-milter 0.97 at scotty
-X-Virus-Status: Clean
-X-Provags-ID: V02:K0:kUm0fFi8zbl0RDaX5d5oluJV588y6DSq6/4cfOMoB6A
- odp7OHuWY7Mur4hK4Ns4Te7ck2KbUI7pPDDB//t8ZMNXzfoMW6
- WGat1mTkiGRDyxyQAox9P3Tj+fkNKAPRwSqEwC8bfAzEIxb/TE
- pzOHCwwI1hzbMfn/PVNAPGABeIN45tD5xkUyrdJ5Q3ZBVjj149
- OXQIR9H37q2Aqoosl+6Lw==
+In-Reply-To: <alpine.DEB.1.00.1105250847380.2701@bonsai2>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174417>
 
-Mail von Jeff King, Tue, 24 May 2011 at 16:07:16 -0400:
 
-Hello,
+--tThc/1wpZn/ma/RB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> > > >    git format-patch -k --stdout a..b | git am -k -3
-> > > 
-> > > Why -k to am?
-> > 
-> > Just first "-k", and "git am -3". Wrong in mind here at home before my
-> > computer.
+On Wed, May 25, 2011 at 08:51:07AM +0200, Johannes Schindelin wrote:
+> On Tue, 24 May 2011, Junio C Hamano wrote:
+> > Jamey Sharp <jamey@minilop.net> writes:
+> > > Given many repositories with copies of the same objects (such as=20
+> > > branches of the same source), sharing a common object store will avoi=
+d=20
+> > > duplication.  Alternates provide a single baseline, but don't handle=
+=20
+> > > ongoing activity in the various repositories.  Git safely handles=20
+> > > concurrent accesses to the same object store across repositories, but=
+=20
+> > > operations such as gc need to know about all of the refs.
+> > >
+> > > This change adds support in upload-pack and receive-pack to simulate=
+=20
+> > > multiple virtual repositories within the object store and references=
+=20
+> > > of
+> >=20
+> > Is it just me to read the above and then have to re-read the first=20
+> > sentence of the second paragraph over and over again?  There seems to b=
+e=20
+> > a huge gap in logic flow, probably largely due to the use of undefined=
+=20
+> > term "virtual repository".
+>=20
+> I had to read the example call to understand that 'virtual repository'=20
+> means 'one real catch-em-all repository'.
+>=20
+> I wonder about two things, though:
+>=20
+> 1) Would teaching git clone to understand "-t this/repo/*" help?
 
-Wrong. I really typed the second "-k". (Local intelligence in
-fingers.)
+Sure, that would be an improvement for our use case, but we expect to
+have lots of these virtual repositories, so I think we'd rather have the
+server-side help we proposed in these patches. Seems to me that
+wildcards in git-clone would be nice for other use cases, though.
 
-> Then it should preserve your long subject line just fine, as mailsplit
-> (called by "am") will reassemble the folded line according to rfc822
-> header folding rules.
-> 
-> With "am -k", it does keep the fold. This is an artifact of the original
-> behavior, where the folds were literally included from a multi-line
+> 2) You're extending the protocol by appending the prefix after the SHA-1,=
+=20
+>    and I stopped halfway through the patch trying to find information=20
+>    which I now think should be in the commit message: a) why? b) why does=
+=20
+>    it not break when one of the two sides is a previous version?
 
-Correct, I checked this, so with
+I don't think we're changing the protocol in any way...? In all of our
+tests, the client was Debian's package of git version 1.7.5.1. And note
+that none of these patches touch client-side protocol code; it's all in
+the server-side upload-pack and receive-pack.
 
-   git format-patch -k --stdout a..b | git am -3
-(no second -k)
+If we have changed the protocol, it was unintentional and we should fix
+it.
 
-all is as before. 
+Jamey
 
-Thanks for your clarification, sorry for the noise.
+--tThc/1wpZn/ma/RB
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-Stefan
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
 
-Perhaps a little clarification like this:
+iEYEARECAAYFAk3dI7EACgkQp1aplQ4I9mV5lwCfZo3lPqdLGm3VgOH4yiX9UFr5
+W3wAnjKTMp+bS7vUAirmvqB491B31NEs
+=sWND
+-----END PGP SIGNATURE-----
 
-commit e8069848dffe72579aa7f2c542e39fde9eab84b1
-Author: Stefan-W. Hahn <stefan.hahn@s-hahn.de>
-Date:   Wed May 25 17:33:03 2011 +0200
-
-    format-patch: Clarify the behaviour of '-k'.
-    
-    Added clarification in documentation of of 'git format-patch'.
-    
-    When using 'git format-patch' together with 'git am' for rebasing,
-    'git am' should be called without '-k' if long subject lines should be
-    reassembled. This is neccesary, because a wrapping of long header lines
-    was introduced with commit:
-    
-    commit a1f6baa5c97abc8b579fa7ac7c4dc21971bdc048
-    format-patch: wrap long header lines
-    
-    Signed-off-by: Stefan-W. Hahn <stefan.hahn@s-hahn.de>
-
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index d13c9b2..4e62248 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -468,6 +468,16 @@ the current branch using 'git am' to cherry-pick them:
- ------------
- $ git format-patch -k --stdout R1..R2 | git am -3 -k
- ------------
-++
-+In this example the subject lines of the commits will be folded after
-+78 characters and 'git am' will keep this folding.
-++
-+To preserve long subject lines, 'git am' will reassemble the folded
-+lines according to rfc822 if called without '-k' like this:
-++
-+------------
-+$ git format-patch -k --stdout R1..R2 | git am -3
-+------------
- 
- * Extract all commits which are in the current branch but not in the
- origin branch:
-
--- 
-Stefan-W. Hahn                          It is easy to make things.
-                                        It is hard to make things simple.
+--tThc/1wpZn/ma/RB--
