@@ -1,88 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Merge made by recursive?
-Date: Wed, 25 May 2011 17:02:54 -0400
-Message-ID: <20110525210254.GA29716@sigill.intra.peff.net>
-References: <loom.20110525T192418-887@post.gmane.org>
- <7vvcwy37de.fsf@alter.siamese.dyndns.org>
- <20110525195032.GC27260@sigill.intra.peff.net>
- <7vei3m3571.fsf@alter.siamese.dyndns.org>
- <7vzkma1p95.fsf@alter.siamese.dyndns.org>
+From: =?utf-8?b?TWljaGHFgg==?= Kiedrowicz <michal.kiedrowicz@gmail.com>
+Subject: Re: t7810.94 (git-grep -E -F -G) never passed
+Date: Wed, 25 May 2011 21:22:30 +0000 (UTC)
+Message-ID: <loom.20110525T231844-341@post.gmane.org>
+References: <BE19630B-8E48-4CA8-B956-A4DC767BFFDD@gernhardtsoftware.com> <4DDCD845.1030800@drmicha.warpmail.net> <1AEF57D5-49E0-4F37-BE8D-DEBD25965D83@gernhardtsoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Shawn Ligocki <sligocki@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 25 23:03:03 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 25 23:22:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPLEM-0003QM-14
-	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 23:03:02 +0200
+	id 1QPLXa-0006oV-91
+	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 23:22:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755144Ab1EYVC5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2011 17:02:57 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54405
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753181Ab1EYVC4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2011 17:02:56 -0400
-Received: (qmail 5989 invoked by uid 107); 25 May 2011 21:02:56 -0000
-Received: from sigill-wired.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.8)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 25 May 2011 17:02:56 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 May 2011 17:02:54 -0400
-Content-Disposition: inline
-In-Reply-To: <7vzkma1p95.fsf@alter.siamese.dyndns.org>
+	id S1755282Ab1EYVWt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2011 17:22:49 -0400
+Received: from lo.gmane.org ([80.91.229.12]:59755 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752717Ab1EYVWs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2011 17:22:48 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1QPLXN-0006iz-P3
+	for git@vger.kernel.org; Wed, 25 May 2011 23:22:42 +0200
+Received: from 85-177-78-94.net.stream.pl ([94.78.177.85])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 25 May 2011 23:22:41 +0200
+Received: from michal.kiedrowicz by 85-177-78-94.net.stream.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 25 May 2011 23:22:41 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 94.78.177.85 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110511 Gentoo Firefox/3.6.17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174465>
 
-On Wed, May 25, 2011 at 01:47:34PM -0700, Junio C Hamano wrote:
+Brian Gernhardt <brian <at> gernhardtsoftware.com> writes:
 
-> I am reluctant to do this (including the rewording of the end-user facing
-> message) until we decide what to do with the reflog. Right now, I think no
-> tool looks at the reflog, but contaminating the reflog with translatable
-> messages mean that we will never be able to support "3 merges ago" just
-> like we support "the previous branch".
+> 
+> Some would be right.  I tend to find that the BSD (and BSD-like) libraries on
+OS X are more strict and have less
+> features than the GNU equivalents.  (The fact that OS X's libreadline is
+actually the only mostly
+> compatible libedit drives me batty sometimes.)
+> 
+> This does leave us with the question of what to do with the test.  Perhaps a
+pattern like "a*+b" to match
+> "aa+b"?  Plain + should always match just + in a BRE, even if \+ is special,
+and the * makes sure that it is a
+> regex instead of plain string matching.
+> 
+> ~~ Brian
+> 
+> 
 
-The reflog messages look like:
-
-  merge $branch: Merge made by recursive.
-
-So it seems to me that we could localize everything after the colon and
-still do "3 merges ago". The only thing you would be losing is a
-machine-readable description of which strategy was used. In practice,
-I'm not sure how much it matters.
-
-But for others, like:
-
-  checkout: moving from $old to $new
-
-a localized version loses useful information.
-
-> Either we split the messages into two, one translatable and given to the
-> end user and the other untranslatable and sent to the reflog,
-
-That seems like the safe choice for now, as it still opens the
-possibility of localizing reflogs later if people care to do so.  Being
-a native English speaker, I have no clue how much people actually care
-about localized reflog entries.
-
-> place in reflog entry where we can hide machine readable and stable
-> representation of what happened and store both the end-user facing message
-> and the machine readable one separately. In the longer term I would prefer
-> the latter.
-
-If we assume that reflog entries are machine-readable (or at least
-_some_ of them that are generated by a few well-known git programs), you
-could always translate on the fly while displaying them.
-
-That solves the storage question, and it allows two people with
-different language preferences to both read the same reflog. And the
-implementation probably wouldn't be too hard, since we'd only have to
-match a few well-known strings, and we could display anything we didn't
-match as it appears in the reflog.
-
--Peff
+You're right about \+ in BRE. I guess I missed that because glibc's
+implementation isn't strict BRE. I'll post a patch that fixes this problem.
+Thanks for catching this up!
