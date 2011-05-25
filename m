@@ -1,90 +1,60 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: What's cooking in git.git (May 2011, #11; Tue, 24)
-Date: Wed, 25 May 2011 11:36:13 +0200
-Message-ID: <BANLkTi=5koa_f_xqaGvKPrEnKMh7ziOT0g@mail.gmail.com>
-References: <7vboyr7oxh.fsf@alter.siamese.dyndns.org>
-	<4DDCA0D2.2070604@viscovery.net>
+From: Elazar Leibovich <elazarl@gmail.com>
+Subject: Supporting "-v" option for git-log
+Date: Wed, 25 May 2011 12:40:48 +0300
+Message-ID: <BANLkTik70gu0NUzUEnGNWHQr8CfbdPVe5g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed May 25 11:36:24 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 25 11:40:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPAVp-0001lE-9D
-	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 11:36:21 +0200
+	id 1QPAaE-0004nK-V4
+	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 11:40:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752973Ab1EYJgQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 May 2011 05:36:16 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:38944 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752111Ab1EYJgO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 May 2011 05:36:14 -0400
-Received: by fxm17 with SMTP id 17so5220049fxm.19
-        for <git@vger.kernel.org>; Wed, 25 May 2011 02:36:13 -0700 (PDT)
+	id S1754275Ab1EYJkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2011 05:40:49 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:39674 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752848Ab1EYJkt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2011 05:40:49 -0400
+Received: by gyd10 with SMTP id 10so2942036gyd.19
+        for <git@vger.kernel.org>; Wed, 25 May 2011 02:40:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=86H0p/Wl52OzXY/keZ0T9yx7iU2vFCB18DBEEPSnbO0=;
-        b=mY8HNRRBQtl97xPao3VZMw9+JXuN8XYgf1ZOOgmJ54EQ3xwjsol7+gV1dXXRx4hDKt
-         s5W3eaMJI8orpTct996WPhgUyYsqaqpSgbptMT/WjYWaRfFVBN86d5WXSNl72QlqV9j5
-         +aFw6zy3bRpEMF/38TCDPz38zOMgLac/JReXY=
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=NtyiUx0J2yD1uEsnpFaJX78J5nRHtYpViKUKR7gfels=;
+        b=HfbRyFtyQubJx8C//G65eqpZrz2ehjiQBDfRPXzVQ0tLaJe6+VfZMKd+3VOh1qE2i6
+         cPOUJZfATpMAhWfEoWUI5FS1wfQUr9gWfvTljDkRuV/Tmcdu8tGwZNScR9+wQdEnKKMV
+         yx+8uQxAIPhPyh2aKZ9Pj58zBOOKzUQdaJM74=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=xvknKwK55Re0Wva/ZISQeyKmwyzeR7zsopNEhjOYxUx/m2vQvJoSmlOODDOsVeBR4j
-         lOkhHcTqEQPQ9R0U1V3f+gvvC4zVhUa5rZq+Ygz+A/+yUcnvh8XotYpNBj0n3Oqr0eoV
-         0d67t7CV5YSbgbstoSfz2jW3iNtn9GUB5KVB8=
-Received: by 10.223.77.92 with SMTP id f28mr4763733fak.37.1306316173523; Wed,
- 25 May 2011 02:36:13 -0700 (PDT)
-Received: by 10.223.117.72 with HTTP; Wed, 25 May 2011 02:36:13 -0700 (PDT)
-In-Reply-To: <4DDCA0D2.2070604@viscovery.net>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=n/OPWKdDM/nbfXKSEzf/Kqp1EPSnKwu3Yq+lj7AZle822PrOOzZ/e0oa7HCGC9k6cs
+         E4rJJWZPCJhQxLkSqP0LPnI8JH7T4stO062l4Y77/gtMbXeSOAG8jOS8ydHJWP1ZYKKy
+         ZUVZ2jr8VMwBx2oyzGsEAtdN00MFp2PEAYcr4=
+Received: by 10.236.157.129 with SMTP id o1mr1313592yhk.93.1306316448475; Wed,
+ 25 May 2011 02:40:48 -0700 (PDT)
+Received: by 10.236.208.134 with HTTP; Wed, 25 May 2011 02:40:48 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174377>
 
-On Wed, May 25, 2011 at 08:25, Johannes Sixt <j.sixt@viscovery.net> wro=
-te:
-> Am 5/24/2011 23:45, schrieb Junio C Hamano:
->> * ab/i18n-scripts (2011-05-21) 48 commits
->> =C2=A0 (merged to 'next' on 2011-05-23 at 69164a3)
->> =C2=A0...
->>
->> Rerolled.
->
-> I see you promoted ab/i18n-scripts-basic to master. What are your pla=
-ns
-> with this topic? In its current form, git-submodule breaks in an obvi=
-ous
-> way on Windows, and other pitfalls may hide elsewhere.
+I want to use git log to show all commits that do not match a given
+pattern. I know I can use the following to show all commits that do
+match a pattern, similar to the "grep -v" command line option:
 
-Aren't you confusing ab/i18n-scripts-basic with ab/i18n-scripts? The
-former just adds the infrastructure, the latter adds some eval_gettext
-invocations that break on Windows while I haven't submitted some fixup
-patches for what's now in *next*, not master.
+    git log -v --grep=<pattern> # results all commits that do NOT match pattern
 
-If anything's breaking on Windows in master it would be the
-t/t0201-gettext-fallbacks.sh test which uses some eval_gettext()
-calls, but nothing else uses it currently.
+Is there a way invert the sense of matching?
 
-> I don't have enough energy to help out with this issue, particularly
-> because i18n is not exactly my own itch. Personally, I wouldn't mind =
-the
-> fate of the topic if there were a NO_GETTEXT switch that simply avoid=
-s all
-> the problems on Windows. Is there such a switch?
+If not, is it OK to submit a patch? Anything to consider for this patch?
 
-There isn't and can't be without major re-organizations because
-shellscripts don't have something like the C preprocessor.
 
-But I'll just fix the Windows issue soon and submit a new series for
-inclusion in next.
+[*] x-post from here
+http://stackoverflow.com/questions/5602204/how-to-invert-git-log-grep-pattern-or-how-to-show-git-logs-that-dont-match
