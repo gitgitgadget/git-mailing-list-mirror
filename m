@@ -1,86 +1,73 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] sh-18n: quell "unused variable" warning
-Date: Wed, 25 May 2011 11:55:43 +0200
-Message-ID: <62c2e1619edcb37c0411f29a34b6bc10e3899a97.1306317312.git.git@drmicha.warpmail.net>
+Subject: Re: t7810.94 (git-grep -E -F -G) never passed
+Date: Wed, 25 May 2011 12:21:57 +0200
+Message-ID: <4DDCD845.1030800@drmicha.warpmail.net>
+References: <BE19630B-8E48-4CA8-B956-A4DC767BFFDD@gernhardtsoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 25 11:56:31 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org List" <git@vger.kernel.org>
+To: Brian Gernhardt <brian@gernhardtsoftware.com>
+X-From: git-owner@vger.kernel.org Wed May 25 12:22:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPApK-0007R8-UV
-	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 11:56:31 +0200
+	id 1QPBE5-0007jP-7I
+	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 12:22:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754504Ab1EYJzu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 May 2011 05:55:50 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:45401 "EHLO
+	id S1752536Ab1EYKV7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2011 06:21:59 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:58236 "EHLO
 	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753315Ab1EYJzt (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 May 2011 05:55:49 -0400
+	by vger.kernel.org with ESMTP id S1751512Ab1EYKV7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 May 2011 06:21:59 -0400
 Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id B0A742092A;
-	Wed, 25 May 2011 05:55:48 -0400 (EDT)
+	by gateway1.messagingengine.com (Postfix) with ESMTP id C141A2095C;
+	Wed, 25 May 2011 06:21:58 -0400 (EDT)
 Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute5.internal (MEProxy); Wed, 25 May 2011 05:55:48 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:mime-version:content-type:content-transfer-encoding; s=smtpout; bh=gcRPtU+/CyBx7FmTOCZXTRINPBo=; b=o8HNgliREKratNVPkUfZfgmTG4sKi/1P144ScwIYuTtsUFsqnt3fsWnWRzC6WLhZWYgobsoxDzhUJ9aLgoi2xUPugMFSAdwrTmafgV+kPbpiAw1C6ZY0NBTl12pp69V5MzLcgINliuZk4Q1K3ac2aGQ+d3GzkZjPsvu/UTRZ9vk=
-X-Sasl-enc: 2L4j+nlBsqkFOWbmPbs0XejfHaW0EAgkvB9nOnxf2TiE 1306317348
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 3854544059E;
-	Wed, 25 May 2011 05:55:48 -0400 (EDT)
-X-Mailer: git-send-email 1.7.5.2.639.gce8e1
+  by compute5.internal (MEProxy); Wed, 25 May 2011 06:21:58 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=I2McqVRPB+j5xsJMNKpfwBusjZs=; b=NXdkOj9mNA30J+CNXkSE7qzFKw/0rhkNgnTUlSDgnOGjpdjqPHdserWyd+T5eT4slp6rhBbwItY4mtLsAE7+QWjyvipE2Yt8OpzyUPXqo36qDh1BIAtVt6o4RJ01WYh1C39ESyqSs7PrLm3HFPHYYJe2lYsP+F406uk+hjMu8hc=
+X-Sasl-enc: XreqYKutzMRYCmXJKFoKT2TFO71nLAuy70LjeRVuvWqz 1306318918
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 506EC445463;
+	Wed, 25 May 2011 06:21:58 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc15 Lightning/1.0b3pre Thunderbird/3.1.10
+In-Reply-To: <BE19630B-8E48-4CA8-B956-A4DC767BFFDD@gernhardtsoftware.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174379>
 
-    CC sh-i18n--envsubst.o
-sh-i18n--envsubst.c: In Funktion =C2=BBmain=C2=AB:
-sh-i18n--envsubst.c:71:22: Warnung: Variable =C2=BBshow_variables=C2=AB=
- gesetzt,
-aber nicht verwendet [-Wunused-but-set-variable]
+Brian Gernhardt venit, vidit, dixit 25.05.2011 05:27:
+> I'm not sure why it's supposed to pass, actually.  -G makes the pattern be a basic regex and basic regexen don't recognize the + repetition operator.
+> 
+> expecting success: 
+> 	echo ab:aab >expected &&
+> 	git grep -E -F -G a\\+b >actual &&
+> 	test_cmp expected actual
+> 
+> --- expected	2011-05-25 03:19:05.000000000 +0000
+> +++ actual	2011-05-25 03:19:05.000000000 +0000
+> @@ -1 +1 @@
+> -ab:aab
+> +ab:a+b
+> not ok - 94 grep -E -F -G pattern
 
-show_variables is indeed unused. Comment it out rather than remove it s=
-o
-that the relation with upstream remains clear.
+"Never" is a strong statement when this test always passed for everyone
+else running tests, assuming they would have reported otherwise. What's
+your system?
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-Why is it that even with LANG=3DC exported, gcc gives localized warning=
-s?
+reg-ex.info says:
 
-And yes, I'm on gcc 4.6 now (F15)...
----
- sh-i18n--envsubst.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+"The other BRE metacharacters require a backslash to give them their
+special meaning."
 
-diff --git a/sh-i18n--envsubst.c b/sh-i18n--envsubst.c
-index 7125093..2eb0ee4 100644
---- a/sh-i18n--envsubst.c
-+++ b/sh-i18n--envsubst.c
-@@ -68,7 +68,7 @@ int
- main (int argc, char *argv[])
- {
-   /* Default values for command line options.  */
--  unsigned short int show_variables =3D 0;
-+  /* unsigned short int show_variables =3D 0; */
-=20
-   switch (argc)
- 	{
-@@ -88,7 +88,7 @@ main (int argc, char *argv[])
- 	  /* git sh-i18n--envsubst --variables '$foo and $bar' */
- 	  if (strcmp(argv[1], "--variables"))
- 		error ("first argument must be --variables when two are given");
--	  show_variables =3D 1;
-+	  /* show_variables =3D 1; */
-       print_variables (argv[2]);
- 	  break;
- 	default:
---=20
-1.7.5.2.639.gce8e1
+"Some implementations support \? and \+... but \? and \+ are not part of
+the POSIX standard."
+
+So I guess we're going with "some".
+
+Michael
