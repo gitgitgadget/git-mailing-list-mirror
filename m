@@ -1,105 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 3/3] Add documentation for virtual repositories
-Date: Wed, 25 May 2011 13:10:22 -0400
-Message-ID: <20110525171021.GA24038@sigill.intra.peff.net>
-References: <1306284392-12034-1-git-send-email-jamey@minilop.net>
- <1306284392-12034-3-git-send-email-jamey@minilop.net>
- <20110525160708.GE8795@sigill.intra.peff.net>
- <BANLkTikwxiBTVdqnQtdvr-VTCm2hSOcRjw@mail.gmail.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: gitk normal use on linux repo and severe memory pressure
+Date: Wed, 25 May 2011 13:17:49 -0400
+Message-ID: <BANLkTikoqxRBMQvKRsJ0-vNd+cW5k-jQWw@mail.gmail.com>
+References: <BANLkTinrj2AOCMMWazf2F4eKy7Sy56K0vg@mail.gmail.com> <m2pqn667f9.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jamey Sharp <jamey@minilop.net>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <johannes.sixt@telecom.at>,
-	Junio C Hamano <gitster@pobox.com>,
-	Josh Triplett <josh@joshtriplett.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed May 25 19:10:37 2011
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Wed May 25 19:18:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPHbO-000434-Vh
-	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 19:10:35 +0200
+	id 1QPHiq-0001EJ-AV
+	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 19:18:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753250Ab1EYRK0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 May 2011 13:10:26 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36429
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751819Ab1EYRKY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2011 13:10:24 -0400
-Received: (qmail 2225 invoked by uid 107); 25 May 2011 17:10:23 -0000
-Received: from sigill-wired.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.8)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 25 May 2011 13:10:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 May 2011 13:10:22 -0400
-Content-Disposition: inline
-In-Reply-To: <BANLkTikwxiBTVdqnQtdvr-VTCm2hSOcRjw@mail.gmail.com>
+	id S1752343Ab1EYRSL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 May 2011 13:18:11 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:58544 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751496Ab1EYRSK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 May 2011 13:18:10 -0400
+Received: by yxs7 with SMTP id 7so3127521yxs.19
+        for <git@vger.kernel.org>; Wed, 25 May 2011 10:18:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=X37HsLjjJr953Qinc2XrmH9G4FkrI0XACxLcjUFhNJ8=;
+        b=ResgR7hWB/y0Ffbmj5KCBM/mkqsw9wXbf7pxeT6wsVseyxG/GK+nIYWQ2fS8+BrA0A
+         H9glBU4w4NV0jxBW2h48b1yBn9aAQmisnEs6FZuhH9cKnRi3cSZh9B2CsCqpy+bXbpUf
+         E2MULkLhG2cxkEfmCkCu3fMGZaM8Sg3RGPbN4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=xXGNtswG5xpjcCWxdD0dL6yHwSuxNtKox2+KyGRF6nstIxZjlizTqmHnn0fS4J7c/L
+         1m46cg8Xcv9gb1lZ2cC7iZ6wTXnwt2JAe+u9CiBy/PrEBJ0fM0lhQOeOIWb0l8MJB2dG
+         wH8H29AVUD3VG+xnAk0621YkzL7zFjqFdKKxY=
+Received: by 10.91.198.11 with SMTP id a11mr5610507agq.184.1306343889125; Wed,
+ 25 May 2011 10:18:09 -0700 (PDT)
+Received: by 10.90.65.10 with HTTP; Wed, 25 May 2011 10:17:49 -0700 (PDT)
+In-Reply-To: <m2pqn667f9.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174432>
 
-On Wed, May 25, 2011 at 10:01:20AM -0700, Shawn O. Pearce wrote:
+On Wed, May 25, 2011 at 1:01 PM, Andreas Schwab <schwab@linux-m68k.org>=
+ wrote:
+> You can start gitk with --max-count=3DN
 
-> > and so on. And this fits in with the idea of it not just being an
-> > upload-pack and receive-pack thing. I could do:
-> >
-> > =C2=A0GIT_REF_PREFIX=3Drefs/virtual/repo1; export GIT_REF_PREFIX
-> > =C2=A0git fetch some-remote
->=20
-> +1 * 1000. This should be a single environment variable / top level
-> option. HEAD should also use the GIT_REF_PREFIX, like any other ref.
+Or --since=3D2.weeks.ago. Of course I can -- and sometimes do. But gitk
+defaults to OOMing my box if I forget to do so on a large repo.
 
-Good, I am glad I'm not the only one thinking this. :)
+> and if you need more commits you
+> can edit the current view to increase that number. =A0No need to rest=
+art
+> gitk.
 
-> FETCH_HEAD and MERGE_HEAD probably should as well if GIT_REF_PREFIX i=
-s
-> set, however these are going to be a bit harder to move. Not all tool=
-s
-> that read them are GIT_REF_PREFIX aware, or go through C code that ca=
-n
-> be modified to be GIT_REF_PREFIX aware. (git-gui and EGit, I'm talkin=
-g
-> about you here!)  They can obviously be fixed, but until then using a
-> working directory with GIT_REF_PREFIX set will be slightly
-> interesting.
+Ah, that's news to me! I just tried it and it's... awkward. In fact,
+the dialog box seems to be missing an 'apply' button.
 
-Yeah, most scripts these days will need to go through the C programs to
-handle packed-refs. But the top-level pseudo-refs are a bit more
-magical. That is perhaps why they split HEAD and refs handling in the
-original patch. Still, I don't think it's insurmountable.
 
-> > So the virtual repository is basically just a "chroot" of the ref
-> > namespace. And it's dirt simple to implement, because you do the
-> > translation at the refs.c layer.
->=20
-> Yes, exactly.
 
-Like chroots, there is a sticky point with symbolic links. What should
-"refs/virtual/repo1/HEAD" have in it? Either:
-
-  ref: refs/virtual/repo1/refs/heads/master
-
-or
-
-  ref: refs/heads/master
-
-?
-
-If the former, then we will have to make sure the ref is inside our
-prefix, and strip it out. If the latter, then you will get different
-results for:
-
-  git show refs/virtual/repo1/HEAD
-
-versus
-
-  GIT_REF_PREFIX=3Drefs/virtual/repo1 git show HEAD
-
-which I think is a bad thing.
-
--Peff
+m
+--=20
+=A0martin.langhoff@gmail.com
+=A0martin@laptop.org -- Software Architect - OLPC
+=A0- ask interesting questions
+=A0- don't get distracted with shiny stuff=A0 - working code first
+=A0- http://wiki.laptop.org/go/User:Martinlanghoff
