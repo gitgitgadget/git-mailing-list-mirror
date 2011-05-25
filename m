@@ -1,8 +1,7 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCHv1 2/2 (version A)] gitweb: Mention read_config_file in gitweb/README
-Date: Wed, 25 May 2011 18:35:27 +0200
-Message-ID: <1306341328-11108-3-git-send-email-jnareb@gmail.com>
-References: <1306341328-11108-1-git-send-email-jnareb@gmail.com>
+Subject: [PATCH 0/2] gitweb: Improve handling of configuration files
+Date: Wed, 25 May 2011 18:35:25 +0200
+Message-ID: <1306341328-11108-1-git-send-email-jnareb@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Drew Northup <drew.northup@maine.edu>,
 	John 'Warthog9' Hawley <warthog9@kernel.org>,
@@ -14,109 +13,84 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPH3o-0002q9-T5
-	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 18:35:53 +0200
+	id 1QPH3n-0002q9-Ob
+	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 18:35:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932569Ab1EYQfu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2011 12:35:50 -0400
+	id S932159Ab1EYQfp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2011 12:35:45 -0400
 Received: from mail-fx0-f46.google.com ([209.85.161.46]:37415 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932590Ab1EYQfs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2011 12:35:48 -0400
-Received: by mail-fx0-f46.google.com with SMTP id 17so5498279fxm.19
-        for <git@vger.kernel.org>; Wed, 25 May 2011 09:35:47 -0700 (PDT)
+	with ESMTP id S1757793Ab1EYQfo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2011 12:35:44 -0400
+Received: by fxm17 with SMTP id 17so5498279fxm.19
+        for <git@vger.kernel.org>; Wed, 25 May 2011 09:35:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references;
-        bh=wHEdGUnLJP1CWEvjvRUws705ud0p6HUtOx+gvbwuqHM=;
-        b=vrFJPu35urHtR6pA9RRHVAcNIToliYAZeOOXw2dZxuqYw0+B6Gp60shEkygdVjPEmC
-         oiWDTvjfaZL00pr/7kBF118wifhTi3PL7xLmk0m5kGLE4YJckNCcNH9naJfkLryyQBvE
-         Y+AW69RCzJhJ2MvoUXveep1G77ReXiF0fQT+U=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=7rEI0AOrxr+8b2FrbTUKdiY+6unjVRKN+Gr/s1/OLE4=;
+        b=aKKqfb6gbdyN6jGgOjHFC10ERuk4NFYFU/03SADzFPELdhNmA+Mydk7BRp8ClqdNCb
+         eJFWBalBAk3J+atGD4SQqH7f4LCGZkKlxs0D566zOLYu+AkVdCEcJSZZxfpSXD1w/duC
+         brHq9AHtmTvmljb7h8G4rbSium4f3y5f+ZUU8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=tyVuRpxg9dY7UMlhcLP/XFy2RX+65+zydDMBaZhPURJDkQ8Cvl7cqVexj7qq8txEoe
-         Iogcx63BRyXoLTa122X7SmX79pUC76QJGvXBpBkg8r7KjpXqeVI1JRRJfWwQrLXWNbgS
-         OppIDrBeMR1lYQ125q4utdLyV2eb2MRbkLK2k=
-Received: by 10.223.83.3 with SMTP id d3mr5168260fal.89.1306341347057;
-        Wed, 25 May 2011 09:35:47 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=nrIbZ3igW+doWURSXc8XJeIi+1DpY9oPQOwzw7vs4Q4+wfHUURTqsN+DqT0VKSJDip
+         W/0kjhw8Y3ehYQ0IbBtGhr0MOzqHeGFs91A2qx+YDuQyKZ/0sMdaPZeTL59daSXAMDoo
+         Eo870VlF7arV4LNC322JrjH6Em1dL3frfHvJw=
+Received: by 10.223.41.89 with SMTP id n25mr5336520fae.7.1306341343440;
+        Wed, 25 May 2011 09:35:43 -0700 (PDT)
 Received: from localhost.localdomain (abvv43.neoplus.adsl.tpnet.pl [83.8.219.43])
-        by mx.google.com with ESMTPS id i6sm295066faa.10.2011.05.25.09.35.45
+        by mx.google.com with ESMTPS id i6sm295066faa.10.2011.05.25.09.35.41
         (version=SSLv3 cipher=OTHER);
-        Wed, 25 May 2011 09:35:46 -0700 (PDT)
+        Wed, 25 May 2011 09:35:42 -0700 (PDT)
 X-Mailer: git-send-email 1.7.5.189.gcec93
-In-Reply-To: <1306341328-11108-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174424>
 
-Using
+This two-in-one series is response to Junio's concerns about being
+backwards-incompatibile and different ways of solving "system-wide
+policy" problem.
 
-  read_config_file($GITWEB_CONFIG_SYSTEM);
+Patches 2/2 version A and 2/2 version B are mutually exclusive.
+Junio, you would have to choose which one to include.
 
-at the very beginning of per-instance GITWEB_CONFIG file is quite
-similar to e.g. using
+Drew, is the solution proposed in version A (making it easy to include
+system-wide config in per-instance config) acceptable solution?
 
-  if [ -f /etc/bashrc ]; then
-    . /etc/bashrc
-  fi
+Table of contents:
+~~~~~~~~~~~~~~~~~~
+ [PATCH 1/2] gitweb: Refactor reading and parsing config file into
+ [PATCHv1 2/2 (version A)] gitweb: Mention read_config_file in gitweb/README
+ [PATCHv3 2/2 (version B)] gitweb: Use /etc/gitweb.conf even if gitweb_conf.perl exist
 
-in ~/.bashrc to read system-wide defaults.
+Shortlog:
+~~~~~~~~~
+Jakub Narebski (2):
+  gitweb: Refactor reading and parsing config file into read_config_file
+  gitweb: Mention read_config_file in gitweb/README
 
-This solution is backwards compatibile, but it requires to explicitly
-request system-wide defaults... which otherwise are _not used at all_
-when per-instance config file exists.
+or
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-This is alternate solution to "system-wide policy" problem, the other
-way to make things convenient.  It was (soft of) suggested by Junio
-in
-
-  Re: [PATCHv2] gitweb: Use GITWEB_CONFIG_SYSTEM even if GITWEB_CONFIG does exist
-  http://thread.gmane.org/gmane.comp.version-control.git/173603/focus=173815
-
-While usually user's (here per-instance) configuration file overrides
-system-wide configuration file settings (or in other words first
-obtained value from user's and system-wide configuration file, in that
-order, is used), like e.g. the case for ssh_config,... it is not
-universal, as described in commit message.
+Jakub Narebski (2):
+  gitweb: Refactor reading and parsing config file into read_config_file
+  gitweb: Use /etc/gitweb.conf even if gitweb_conf.perl exist
 
 
-This commit should be thought as exclusive to
+Diffstat:
+~~~~~~~~~
+ gitweb/README      |   10 ++++++++++
+ gitweb/gitweb.perl |   28 ++++++++++++++++++++--------
+ 2 files changed, 30 insertions(+), 8 deletions(-)
 
-  [PATCH 2/2 (version B)] gitweb: Use /etc/gitweb.conf even if gitweb_conf.perl exist
+or
 
-We have to choose one or the other.  Note that this other version
-includes also change to gitweb/INSTALL...
+ gitweb/INSTALL     |    8 +++++---
+ gitweb/README      |    2 +-
+ gitweb/gitweb.perl |   29 +++++++++++++++++++++--------
+ 3 files changed, 27 insertions(+), 12 deletions(-)
 
- gitweb/README |   10 ++++++++++
- 1 files changed, 10 insertions(+), 0 deletions(-)
-
-diff --git a/gitweb/README b/gitweb/README
-index a92bde7..ea10c91 100644
---- a/gitweb/README
-+++ b/gitweb/README
-@@ -127,6 +127,16 @@ Runtime gitweb configuration
- You can adjust gitweb behaviour using the file specified in `GITWEB_CONFIG`
- (defaults to 'gitweb_config.perl' in the same directory as the CGI), and
- as a fallback `GITWEB_CONFIG_SYSTEM` (defaults to /etc/gitweb.conf).
-+You can read defaults in system-wide GITWEB_CONFIG_SYSTEM from GITWEB_CONFIG
-+by adding
-+
-+  read_config_file($GITWEB_CONFIG_SYSTEM);
-+
-+at very beginning of per-instance GITWEB_CONFIG file.  In this case
-+settings in said per-instance file will override settings from
-+system-wide configuration file.  Note that read_config_file checks
-+itself that the $GITWEB_CONFIG_SYSTEM file exists.
-+
- The most notable thing that is not configurable at compile time are the
- optional features, stored in the '%features' variable.
- 
 -- 
 1.7.5
