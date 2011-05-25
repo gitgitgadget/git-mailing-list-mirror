@@ -1,151 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Merge made by recursive?
-Date: Wed, 25 May 2011 17:25:10 -0400
-Message-ID: <20110525212510.GA14214@sigill.intra.peff.net>
-References: <loom.20110525T192418-887@post.gmane.org>
- <7vvcwy37de.fsf@alter.siamese.dyndns.org>
- <20110525195032.GC27260@sigill.intra.peff.net>
- <7vei3m3571.fsf@alter.siamese.dyndns.org>
- <7vzkma1p95.fsf@alter.siamese.dyndns.org>
- <20110525210254.GA29716@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/2] unpack-trees: add the dry_run flag to
+ unpack_trees_options
+Date: Wed, 25 May 2011 14:36:01 -0700
+Message-ID: <7vr57m1n0e.fsf@alter.siamese.dyndns.org>
+References: <4DDC1DF9.9030109@web.de>
+ <7v39k37kmo.fsf@alter.siamese.dyndns.org> <4DDD615E.7020809@web.de>
+ <4DDD6197.7060209@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 25 23:25:25 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed May 25 23:36:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPLZx-0008AX-NC
-	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 23:25:22 +0200
+	id 1QPLkX-00062D-2I
+	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 23:36:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754892Ab1EYVZO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2011 17:25:14 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46289
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753289Ab1EYVZN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2011 17:25:13 -0400
-Received: (qmail 6139 invoked by uid 107); 25 May 2011 21:25:12 -0000
-Received: from sigill-wired.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.8)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 25 May 2011 17:25:12 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 May 2011 17:25:10 -0400
-Content-Disposition: inline
-In-Reply-To: <20110525210254.GA29716@sigill.intra.peff.net>
+	id S1754202Ab1EYVgK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2011 17:36:10 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60377 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753075Ab1EYVgJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2011 17:36:09 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F04C35A04;
+	Wed, 25 May 2011 17:38:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zh0Son9qsw0WqQG9z1hUr0OZZqc=; b=YFVfxb
+	mTnPr0xSb4TgKLA89E3zgUriEg+pHUWODU1OVPQaRl0poIvelAm0XE9qqZ8g0jfV
+	raIdZGvsIvt1g3FDRzx9oczEDUCjYStB0bkdUiJTTsVGoTVq+eeRBTU7tDQSZXOa
+	JDrNT4WH07/7BjFxUz9tIjO1vA4+E5mDOjsbY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=a2RimvkWj8eCzIQxE4MSAsYAN9OUWWj6
+	hhXaDYznhYHXS6RcxveR+07GcbfWC/+2eIlW0s5qdMvmeG2Jy43bJWeB4RvBgnq1
+	QKIzh1CZZjPLpKZBInlX1pMt3tfPycujd7TO6Qm1xb1j60I6MJmQJaFyhbJ09ToJ
+	fNh9OkU9mZM=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BBBA75A03;
+	Wed, 25 May 2011 17:38:13 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C74055A02; Wed, 25 May 2011
+ 17:38:10 -0400 (EDT)
+In-Reply-To: <4DDD6197.7060209@web.de> (Jens Lehmann's message of "Wed, 25
+ May 2011 22:07:51 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4B3431CE-8717-11E0-A2D7-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174467>
 
-On Wed, May 25, 2011 at 05:02:54PM -0400, Jeff King wrote:
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-> On Wed, May 25, 2011 at 01:47:34PM -0700, Junio C Hamano wrote:
-> 
-> > I am reluctant to do this (including the rewording of the end-user facing
-> > message) until we decide what to do with the reflog. Right now, I think no
-> > tool looks at the reflog, but contaminating the reflog with translatable
-> > messages mean that we will never be able to support "3 merges ago" just
-> > like we support "the previous branch".
-> 
-> The reflog messages look like:
-> 
->   merge $branch: Merge made by recursive.
+> Until now there was no way to test if unpack_trees() with update=1 would
+> succeed without really updating the work tree. The reason for that is that
+> setting update to 0 does skip the tests for new files and deactivates the
+> sparse handling, thereby making that unsuitable as a dry run.
+>
+> Add the new dry_run flag to struct unpack_trees_options unpack_trees().
+> Setting that together with the update flag will check if the work tree
+> update would be successful without doing it for real.
+>
+> The only class of problems that is not detected at the moment are file
+> system conditions like ENOSPC or missing permissions. Also the index
+> entries of updated files are not as they would be after a real checkout
+> because lstat() isn't run as the files aren't updated for real.
+>
+> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+> ---
 
-While peeking in my reflog, I noticed some very confusing entries, which
-this patch addresses.
+Looks good.  remove_marked_cache_entries() does not touch the working
+tree, and because you are not calling unlink_entry(), you won't trigger
+schedule_dir_for_removal() hence remove_scheduled_dirs() won't cause us
+any trouble either.
 
--- >8 --
-Subject: [PATCH] reset: give more verbose reflog messages
-
-The reset command creates its reflog entry from argv.
-However, it does so after having run parse_options, which
-means the only thing left in argv is any non-option
-arguments. Thus you would end up with confusing reflog
-entries like:
-
-  $ git reset --hard HEAD^
-  $ git reset --soft HEAD@{1}
-  $ git log -2 -g --oneline
-  8e46cad HEAD@{0}: HEAD@{1}: updating HEAD
-  1eb9486 HEAD@{1}: HEAD^: updating HEAD
-
-This patch sets up the reflog before argv is munged, so you
-get the command name and any other options, like:
-
-  8e46cad HEAD@{0}: reset --soft HEAD@{1}: updating HEAD
-  1eb9486 HEAD@{1}: reset --hard HEAD^: updating HEAD
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I am not sure if this was the original intent of the code or not; I had
-to update a test vector which codified it. Any options like "--hard" or
-"--soft" are actually superfluous to the ref update (not to mention
-something like "-q"). So another option would be to just take what's
-left after parsing options and putting "reset" in front of it, like:
-
-  8e46cad HEAD@{0}: reset: HEAD^: updating HEAD
-
-which is a little more readable. Though if we are going to change it, I
-think my preference would actually be:
-
-  8e46cad HEAD@{0}: reset: moving to HEAD^
-
-which reads better. The "updating HEAD" is just pointless. Of course
-we're updating HEAD; we're in the HEAD reflog and we're running reset!
-
-However, if GIT_REFLOG_ACTION is already set (by a script calling us),
-then we won't say "reset". So for example, I have entries in my reflog
-like:
-
-  944af8c HEAD@{311}: rebase -i (squash): updating HEAD
-
-So maybe it makes sense to leave those ones as-is, and adjust only the
-case where GIT_REFLOG_ACTION is unset.
-
- builtin/reset.c        |    5 +++--
- t/t1412-reflog-loop.sh |    8 ++++----
- 2 files changed, 7 insertions(+), 6 deletions(-)
-
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 98bca04..77103fb 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -259,11 +259,12 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 
- 	git_config(git_default_config, NULL);
- 
--	argc = parse_options(argc, argv, prefix, options, git_reset_usage,
--						PARSE_OPT_KEEP_DASHDASH);
- 	reflog_action = args_to_str(argv);
- 	setenv("GIT_REFLOG_ACTION", reflog_action, 0);
- 
-+	argc = parse_options(argc, argv, prefix, options, git_reset_usage,
-+						PARSE_OPT_KEEP_DASHDASH);
-+
- 	/*
- 	 * Possible arguments are:
- 	 *
-diff --git a/t/t1412-reflog-loop.sh b/t/t1412-reflog-loop.sh
-index 7f519e5..a92875f 100755
---- a/t/t1412-reflog-loop.sh
-+++ b/t/t1412-reflog-loop.sh
-@@ -21,10 +21,10 @@ test_expect_success 'setup reflog with alternating commits' '
- 
- test_expect_success 'reflog shows all entries' '
- 	cat >expect <<-\EOF
--		topic@{0} two: updating HEAD
--		topic@{1} one: updating HEAD
--		topic@{2} two: updating HEAD
--		topic@{3} one: updating HEAD
-+		topic@{0} reset two: updating HEAD
-+		topic@{1} reset one: updating HEAD
-+		topic@{2} reset two: updating HEAD
-+		topic@{3} reset one: updating HEAD
- 		topic@{4} branch: Created from HEAD
- 	EOF
- 	git log -g --format="%gd %gs" topic >actual &&
--- 
-1.7.4.5.34.g0787f
+Will queue.  Thanks.
