@@ -1,60 +1,86 @@
-From: Elazar Leibovich <elazarl@gmail.com>
-Subject: Supporting "-v" option for git-log
-Date: Wed, 25 May 2011 12:40:48 +0300
-Message-ID: <BANLkTik70gu0NUzUEnGNWHQr8CfbdPVe5g@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] sh-18n: quell "unused variable" warning
+Date: Wed, 25 May 2011 11:55:43 +0200
+Message-ID: <62c2e1619edcb37c0411f29a34b6bc10e3899a97.1306317312.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 25 11:40:55 2011
+X-From: git-owner@vger.kernel.org Wed May 25 11:56:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPAaE-0004nK-V4
-	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 11:40:55 +0200
+	id 1QPApK-0007R8-UV
+	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 11:56:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754275Ab1EYJkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2011 05:40:49 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:39674 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752848Ab1EYJkt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2011 05:40:49 -0400
-Received: by gyd10 with SMTP id 10so2942036gyd.19
-        for <git@vger.kernel.org>; Wed, 25 May 2011 02:40:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=NtyiUx0J2yD1uEsnpFaJX78J5nRHtYpViKUKR7gfels=;
-        b=HfbRyFtyQubJx8C//G65eqpZrz2ehjiQBDfRPXzVQ0tLaJe6+VfZMKd+3VOh1qE2i6
-         cPOUJZfATpMAhWfEoWUI5FS1wfQUr9gWfvTljDkRuV/Tmcdu8tGwZNScR9+wQdEnKKMV
-         yx+8uQxAIPhPyh2aKZ9Pj58zBOOKzUQdaJM74=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=n/OPWKdDM/nbfXKSEzf/Kqp1EPSnKwu3Yq+lj7AZle822PrOOzZ/e0oa7HCGC9k6cs
-         E4rJJWZPCJhQxLkSqP0LPnI8JH7T4stO062l4Y77/gtMbXeSOAG8jOS8ydHJWP1ZYKKy
-         ZUVZ2jr8VMwBx2oyzGsEAtdN00MFp2PEAYcr4=
-Received: by 10.236.157.129 with SMTP id o1mr1313592yhk.93.1306316448475; Wed,
- 25 May 2011 02:40:48 -0700 (PDT)
-Received: by 10.236.208.134 with HTTP; Wed, 25 May 2011 02:40:48 -0700 (PDT)
+	id S1754504Ab1EYJzu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 May 2011 05:55:50 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:45401 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753315Ab1EYJzt (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 May 2011 05:55:49 -0400
+Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id B0A742092A;
+	Wed, 25 May 2011 05:55:48 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute5.internal (MEProxy); Wed, 25 May 2011 05:55:48 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:mime-version:content-type:content-transfer-encoding; s=smtpout; bh=gcRPtU+/CyBx7FmTOCZXTRINPBo=; b=o8HNgliREKratNVPkUfZfgmTG4sKi/1P144ScwIYuTtsUFsqnt3fsWnWRzC6WLhZWYgobsoxDzhUJ9aLgoi2xUPugMFSAdwrTmafgV+kPbpiAw1C6ZY0NBTl12pp69V5MzLcgINliuZk4Q1K3ac2aGQ+d3GzkZjPsvu/UTRZ9vk=
+X-Sasl-enc: 2L4j+nlBsqkFOWbmPbs0XejfHaW0EAgkvB9nOnxf2TiE 1306317348
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 3854544059E;
+	Wed, 25 May 2011 05:55:48 -0400 (EDT)
+X-Mailer: git-send-email 1.7.5.2.639.gce8e1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174378>
 
-I want to use git log to show all commits that do not match a given
-pattern. I know I can use the following to show all commits that do
-match a pattern, similar to the "grep -v" command line option:
+    CC sh-i18n--envsubst.o
+sh-i18n--envsubst.c: In Funktion =C2=BBmain=C2=AB:
+sh-i18n--envsubst.c:71:22: Warnung: Variable =C2=BBshow_variables=C2=AB=
+ gesetzt,
+aber nicht verwendet [-Wunused-but-set-variable]
 
-    git log -v --grep=<pattern> # results all commits that do NOT match pattern
+show_variables is indeed unused. Comment it out rather than remove it s=
+o
+that the relation with upstream remains clear.
 
-Is there a way invert the sense of matching?
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+Why is it that even with LANG=3DC exported, gcc gives localized warning=
+s?
 
-If not, is it OK to submit a patch? Anything to consider for this patch?
+And yes, I'm on gcc 4.6 now (F15)...
+---
+ sh-i18n--envsubst.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-
-[*] x-post from here
-http://stackoverflow.com/questions/5602204/how-to-invert-git-log-grep-pattern-or-how-to-show-git-logs-that-dont-match
+diff --git a/sh-i18n--envsubst.c b/sh-i18n--envsubst.c
+index 7125093..2eb0ee4 100644
+--- a/sh-i18n--envsubst.c
++++ b/sh-i18n--envsubst.c
+@@ -68,7 +68,7 @@ int
+ main (int argc, char *argv[])
+ {
+   /* Default values for command line options.  */
+-  unsigned short int show_variables =3D 0;
++  /* unsigned short int show_variables =3D 0; */
+=20
+   switch (argc)
+ 	{
+@@ -88,7 +88,7 @@ main (int argc, char *argv[])
+ 	  /* git sh-i18n--envsubst --variables '$foo and $bar' */
+ 	  if (strcmp(argv[1], "--variables"))
+ 		error ("first argument must be --variables when two are given");
+-	  show_variables =3D 1;
++	  /* show_variables =3D 1; */
+       print_variables (argv[2]);
+ 	  break;
+ 	default:
+--=20
+1.7.5.2.639.gce8e1
