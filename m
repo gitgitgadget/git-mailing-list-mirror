@@ -1,68 +1,151 @@
-From: =?utf-8?b?TWljaGHFgg==?= Kiedrowicz <michal.kiedrowicz@gmail.com>
-Subject: Re: t7810.94 (git-grep -E -F -G) never passed
-Date: Wed, 25 May 2011 21:22:30 +0000 (UTC)
-Message-ID: <loom.20110525T231844-341@post.gmane.org>
-References: <BE19630B-8E48-4CA8-B956-A4DC767BFFDD@gernhardtsoftware.com> <4DDCD845.1030800@drmicha.warpmail.net> <1AEF57D5-49E0-4F37-BE8D-DEBD25965D83@gernhardtsoftware.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Merge made by recursive?
+Date: Wed, 25 May 2011 17:25:10 -0400
+Message-ID: <20110525212510.GA14214@sigill.intra.peff.net>
+References: <loom.20110525T192418-887@post.gmane.org>
+ <7vvcwy37de.fsf@alter.siamese.dyndns.org>
+ <20110525195032.GC27260@sigill.intra.peff.net>
+ <7vei3m3571.fsf@alter.siamese.dyndns.org>
+ <7vzkma1p95.fsf@alter.siamese.dyndns.org>
+ <20110525210254.GA29716@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 25 23:22:58 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 25 23:25:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPLXa-0006oV-91
-	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 23:22:54 +0200
+	id 1QPLZx-0008AX-NC
+	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 23:25:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755282Ab1EYVWt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2011 17:22:49 -0400
-Received: from lo.gmane.org ([80.91.229.12]:59755 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752717Ab1EYVWs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2011 17:22:48 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1QPLXN-0006iz-P3
-	for git@vger.kernel.org; Wed, 25 May 2011 23:22:42 +0200
-Received: from 85-177-78-94.net.stream.pl ([94.78.177.85])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 25 May 2011 23:22:41 +0200
-Received: from michal.kiedrowicz by 85-177-78-94.net.stream.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 25 May 2011 23:22:41 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 94.78.177.85 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110511 Gentoo Firefox/3.6.17)
+	id S1754892Ab1EYVZO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2011 17:25:14 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46289
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753289Ab1EYVZN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2011 17:25:13 -0400
+Received: (qmail 6139 invoked by uid 107); 25 May 2011 21:25:12 -0000
+Received: from sigill-wired.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.8)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 25 May 2011 17:25:12 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 May 2011 17:25:10 -0400
+Content-Disposition: inline
+In-Reply-To: <20110525210254.GA29716@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174466>
 
-Brian Gernhardt <brian <at> gernhardtsoftware.com> writes:
+On Wed, May 25, 2011 at 05:02:54PM -0400, Jeff King wrote:
 
+> On Wed, May 25, 2011 at 01:47:34PM -0700, Junio C Hamano wrote:
 > 
-> Some would be right.  I tend to find that the BSD (and BSD-like) libraries on
-OS X are more strict and have less
-> features than the GNU equivalents.  (The fact that OS X's libreadline is
-actually the only mostly
-> compatible libedit drives me batty sometimes.)
+> > I am reluctant to do this (including the rewording of the end-user facing
+> > message) until we decide what to do with the reflog. Right now, I think no
+> > tool looks at the reflog, but contaminating the reflog with translatable
+> > messages mean that we will never be able to support "3 merges ago" just
+> > like we support "the previous branch".
 > 
-> This does leave us with the question of what to do with the test.  Perhaps a
-pattern like "a*+b" to match
-> "aa+b"?  Plain + should always match just + in a BRE, even if \+ is special,
-and the * makes sure that it is a
-> regex instead of plain string matching.
+> The reflog messages look like:
 > 
-> ~~ Brian
-> 
-> 
+>   merge $branch: Merge made by recursive.
 
-You're right about \+ in BRE. I guess I missed that because glibc's
-implementation isn't strict BRE. I'll post a patch that fixes this problem.
-Thanks for catching this up!
+While peeking in my reflog, I noticed some very confusing entries, which
+this patch addresses.
+
+-- >8 --
+Subject: [PATCH] reset: give more verbose reflog messages
+
+The reset command creates its reflog entry from argv.
+However, it does so after having run parse_options, which
+means the only thing left in argv is any non-option
+arguments. Thus you would end up with confusing reflog
+entries like:
+
+  $ git reset --hard HEAD^
+  $ git reset --soft HEAD@{1}
+  $ git log -2 -g --oneline
+  8e46cad HEAD@{0}: HEAD@{1}: updating HEAD
+  1eb9486 HEAD@{1}: HEAD^: updating HEAD
+
+This patch sets up the reflog before argv is munged, so you
+get the command name and any other options, like:
+
+  8e46cad HEAD@{0}: reset --soft HEAD@{1}: updating HEAD
+  1eb9486 HEAD@{1}: reset --hard HEAD^: updating HEAD
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I am not sure if this was the original intent of the code or not; I had
+to update a test vector which codified it. Any options like "--hard" or
+"--soft" are actually superfluous to the ref update (not to mention
+something like "-q"). So another option would be to just take what's
+left after parsing options and putting "reset" in front of it, like:
+
+  8e46cad HEAD@{0}: reset: HEAD^: updating HEAD
+
+which is a little more readable. Though if we are going to change it, I
+think my preference would actually be:
+
+  8e46cad HEAD@{0}: reset: moving to HEAD^
+
+which reads better. The "updating HEAD" is just pointless. Of course
+we're updating HEAD; we're in the HEAD reflog and we're running reset!
+
+However, if GIT_REFLOG_ACTION is already set (by a script calling us),
+then we won't say "reset". So for example, I have entries in my reflog
+like:
+
+  944af8c HEAD@{311}: rebase -i (squash): updating HEAD
+
+So maybe it makes sense to leave those ones as-is, and adjust only the
+case where GIT_REFLOG_ACTION is unset.
+
+ builtin/reset.c        |    5 +++--
+ t/t1412-reflog-loop.sh |    8 ++++----
+ 2 files changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 98bca04..77103fb 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -259,11 +259,12 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 
+ 	git_config(git_default_config, NULL);
+ 
+-	argc = parse_options(argc, argv, prefix, options, git_reset_usage,
+-						PARSE_OPT_KEEP_DASHDASH);
+ 	reflog_action = args_to_str(argv);
+ 	setenv("GIT_REFLOG_ACTION", reflog_action, 0);
+ 
++	argc = parse_options(argc, argv, prefix, options, git_reset_usage,
++						PARSE_OPT_KEEP_DASHDASH);
++
+ 	/*
+ 	 * Possible arguments are:
+ 	 *
+diff --git a/t/t1412-reflog-loop.sh b/t/t1412-reflog-loop.sh
+index 7f519e5..a92875f 100755
+--- a/t/t1412-reflog-loop.sh
++++ b/t/t1412-reflog-loop.sh
+@@ -21,10 +21,10 @@ test_expect_success 'setup reflog with alternating commits' '
+ 
+ test_expect_success 'reflog shows all entries' '
+ 	cat >expect <<-\EOF
+-		topic@{0} two: updating HEAD
+-		topic@{1} one: updating HEAD
+-		topic@{2} two: updating HEAD
+-		topic@{3} one: updating HEAD
++		topic@{0} reset two: updating HEAD
++		topic@{1} reset one: updating HEAD
++		topic@{2} reset two: updating HEAD
++		topic@{3} reset one: updating HEAD
+ 		topic@{4} branch: Created from HEAD
+ 	EOF
+ 	git log -g --format="%gd %gs" topic >actual &&
+-- 
+1.7.4.5.34.g0787f
