@@ -1,124 +1,250 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 02/10] revert: Propogate errors upwards from
- do_pick_commit
-Date: Wed, 25 May 2011 15:44:22 -0700
-Message-ID: <7v62oy1juh.fsf@alter.siamese.dyndns.org>
-References: <1306333025-29893-1-git-send-email-artagnon@gmail.com>
- <1306333025-29893-3-git-send-email-artagnon@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Merge made by recursive?
+Date: Wed, 25 May 2011 18:46:26 -0400
+Message-ID: <20110525224626.GA2296@sigill.intra.peff.net>
+References: <loom.20110525T192418-887@post.gmane.org>
+ <7vvcwy37de.fsf@alter.siamese.dyndns.org>
+ <20110525195032.GC27260@sigill.intra.peff.net>
+ <7vei3m3571.fsf@alter.siamese.dyndns.org>
+ <7vzkma1p95.fsf@alter.siamese.dyndns.org>
+ <20110525210254.GA29716@sigill.intra.peff.net>
+ <20110525212510.GA14214@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 26 00:44:43 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 26 00:46:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPMok-0006qL-Nd
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 00:44:43 +0200
+	id 1QPMqY-0007m5-4w
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 00:46:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755814Ab1EYWoh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2011 18:44:37 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49886 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755784Ab1EYWoh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2011 18:44:37 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B065E521A;
-	Wed, 25 May 2011 18:46:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=g9aUTAY9fjPw8rpSavE9cPdfLGQ=; b=SsIuAY
-	JQGBMH50TESSWy3LYQ1/2XS+zUY2IqlGlhaV2UNY6jNqwgUkGQDf0y5/CwU4aGah
-	NTF2tghAok+TlXy2PKU7TcJ7e1k81WlMXQ9Kwsu6nf96sHMb+Yu3JIT5aA4xEuJr
-	c2vUbF4QION9Yu1i+xO0AN/UK6sovHoeNLloQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=olLGPco8J0F5/tusvd8bqtsTpnn6eeQs
-	AUtTsbsUPad9W2V8GFeXP3LqGWWZAb5zRS3eWiR4tYdwbNKCsqiNk0UjZV+Mk4au
-	eFTqNkf0T2CjFrrO+aMFH1Sy3T2gErSCcxb4u192cFrT+s4WPCWmOHA/1lZv5zd0
-	iOhHkrp+jZY=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5BB615216;
-	Wed, 25 May 2011 18:46:38 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B25A65215; Wed, 25 May 2011
- 18:46:31 -0400 (EDT)
-In-Reply-To: <1306333025-29893-3-git-send-email-artagnon@gmail.com> (Ramkumar
- Ramachandra's message of "Wed, 25 May 2011 14:16:57 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D9BDD5A4-8720-11E0-A96B-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+	id S1755945Ab1EYWq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2011 18:46:29 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43335
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755818Ab1EYWq2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2011 18:46:28 -0400
+Received: (qmail 6824 invoked by uid 107); 25 May 2011 22:46:28 -0000
+Received: from sigill-wired.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.8)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 25 May 2011 18:46:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 May 2011 18:46:26 -0400
+Content-Disposition: inline
+In-Reply-To: <20110525212510.GA14214@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174471>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+On Wed, May 25, 2011 at 05:25:10PM -0400, Jeff King wrote:
 
-> +static int error_dirty_index(const char *me)
->  {
-> +	if (read_cache_unmerged())
-> +		return error_resolve_conflict(me);
-> +
-> +	int ret = error(_("Your local changes would be overwritten by %s.\n"), me);
-> +	if (advice_commit_before_merge)
-> +		advise(_("Please, commit your changes or stash them to proceed."));
-> +	return ret;
->  }
+> Though if we are going to change it, I think my preference would
+> actually be:
+> 
+>   8e46cad HEAD@{0}: reset: moving to HEAD^
+> 
+> which reads better. The "updating HEAD" is just pointless. Of course
+> we're updating HEAD; we're in the HEAD reflog and we're running reset!
 
-I like this rewrite whose result is short-and-sweet, but you do not even
-need the "ret" variable. error() always yields -1, no?
+Actually, this gets written also to the branch's reflog, so saying
+"updating HEAD" has a little bit of value. Of course, saying "reset" is
+even better, since that is the command to update HEAD.
 
-> @@ -594,14 +584,28 @@ static int revert_or_cherry_pick(int argc, const char **argv)
->  
->  int cmd_revert(int argc, const char **argv, const char *prefix)
->  {
-> +	int res = 0;
->  	if (isatty(0))
->  		edit = 1;
->  	action = REVERT;
-> -	return revert_or_cherry_pick(argc, argv);
-> +	res = revert_or_cherry_pick(argc, argv);
-> +	if (res > 0)
-> +		/* Exit status from conflict */
-> +		return res;
-> +	if (res < 0)
-> +		/* Other error */
-> +		exit(128);
-> +	return 0;
->  }
->  
->  int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
->  {
-> +	int res = 0;
->  	action = CHERRY_PICK;
-> -	return revert_or_cherry_pick(argc, argv);
-> +	res = revert_or_cherry_pick(argc, argv);
-> +	if (res > 0)
-> +		return res;
-> +	if (res < 0)
-> +		exit(128);
-> +	return 0;
->  }
+> However, if GIT_REFLOG_ACTION is already set (by a script calling us),
+> then we won't say "reset". So for example, I have entries in my reflog
+> like:
+> 
+>   944af8c HEAD@{311}: rebase -i (squash): updating HEAD
+> 
+> So maybe it makes sense to leave those ones as-is, and adjust only the
+> case where GIT_REFLOG_ACTION is unset.
 
-This hunk is dubious.
+...and for the reason above, it makes sense to leave this as "updating
+HEAD" for the per-branch reflog, since whatever the script put into
+GIT_REFLOG_ACTION may be more clear with that information.
 
- - Why initialize res to zero if it always is assigned the return value of
-   revert_or_cherry_pick() before it is used?
+So here's what I think we should do.
 
- - The called function seems to return errors from various places but as
-   far as I see they are all return value of error(), so it would be
-   equivalent to
+-- >8 --
+Subject: [PATCH] reset: give better reflog messages
 
-	if (r_o_c_p(...))
-		exit(128);
-	return 0;
+The reset command creates its reflog entry from argv.
+However, it does so after having run parse_options, which
+means the only thing left in argv is any non-option
+arguments. Thus you would end up with confusing reflog
+entries like:
 
-If you are going to introduce different return values from r-o-c-p() in a
-later patch, these functions should be updated in that patch, I think.
+  $ git reset --hard HEAD^
+  $ git reset --soft HEAD@{1}
+  $ git log -2 -g --oneline
+  8e46cad HEAD@{0}: HEAD@{1}: updating HEAD
+  1eb9486 HEAD@{1}: HEAD^: updating HEAD
+
+However, we must also consider that some scripts may set
+GIT_REFLOG_ACTION before calling reset, and we need to show
+their reflog action (with our text appended). For example:
+
+  rebase -i (squash): updating HEAD
+
+On top of that, we also set the ORIG_HEAD reflog action
+(even though it doesn't generally exist). In that case, the
+reset argument is somewhat meaningless, as it has nothing to
+do with what's in ORIG_HEAD.
+
+This patch changes the reset reflog code to show:
+
+  $GIT_REFLOG_ACTION: updating {HEAD,ORIG_HEAD}
+
+as before, but only if GIT_REFLOG_ACTION is set. Otherwise,
+show:
+
+   reset: moving to $rev
+
+for HEAD, and:
+
+   reset: updating ORIG_HEAD
+
+for ORIG_HEAD (this is still somewhat superfluous, since we
+are in the ORIG_HEAD reflog, obviously, but at least we now
+mention which command was used to update it).
+
+While we're at it, we can clean up the code a bit:
+
+  1. Use strbufs to make the message.
+
+  1. Use the "rev" parameter instead of showing all options.
+     This makes more sense, since it is the only thing
+     impacting the writing of the ref.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/reset.c        |   49 +++++++++++++++--------------------------------
+ t/t1412-reflog-loop.sh |    8 +++---
+ 2 files changed, 20 insertions(+), 37 deletions(-)
+
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 98bca04..27b3426 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -33,25 +33,6 @@ static const char *reset_type_names[] = {
+ 	N_("mixed"), N_("soft"), N_("hard"), N_("merge"), N_("keep"), NULL
+ };
+ 
+-static char *args_to_str(const char **argv)
+-{
+-	char *buf = NULL;
+-	unsigned long len, space = 0, nr = 0;
+-
+-	for (; *argv; argv++) {
+-		len = strlen(*argv);
+-		ALLOC_GROW(buf, nr + 1 + len, space);
+-		if (nr)
+-			buf[nr++] = ' ';
+-		memcpy(buf + nr, *argv, len);
+-		nr += len;
+-	}
+-	ALLOC_GROW(buf, nr + 1, space);
+-	buf[nr] = '\0';
+-
+-	return buf;
+-}
+-
+ static inline int is_merge(void)
+ {
+ 	return !access(git_path("MERGE_HEAD"), F_OK);
+@@ -215,14 +196,18 @@ static int read_from_tree(const char *prefix, const char **argv,
+ 	return update_index_refresh(index_fd, lock, refresh_flags);
+ }
+ 
+-static void prepend_reflog_action(const char *action, char *buf, size_t size)
++static void set_reflog_message(struct strbuf *sb, const char *action,
++			       const char *rev)
+ {
+-	const char *sep = ": ";
+ 	const char *rla = getenv("GIT_REFLOG_ACTION");
+-	if (!rla)
+-		rla = sep = "";
+-	if (snprintf(buf, size, "%s%s%s", rla, sep, action) >= size)
+-		warning(_("Reflog action message too long: %.*s..."), 50, buf);
++
++	strbuf_reset(sb);
++	if (rla)
++		strbuf_addf(sb, "%s: %s", rla, action);
++	else if (rev)
++		strbuf_addf(sb, "reset: moving to %s", rev);
++	else
++		strbuf_addf(sb, "reset: %s", action);
+ }
+ 
+ static void die_if_unmerged_cache(int reset_type)
+@@ -241,7 +226,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 	unsigned char sha1[20], *orig = NULL, sha1_orig[20],
+ 				*old_orig = NULL, sha1_old_orig[20];
+ 	struct commit *commit;
+-	char *reflog_action, msg[1024];
++	struct strbuf msg = STRBUF_INIT;
+ 	const struct option options[] = {
+ 		OPT__QUIET(&quiet, "be quiet, only report errors"),
+ 		OPT_SET_INT(0, "mixed", &reset_type,
+@@ -261,8 +246,6 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 
+ 	argc = parse_options(argc, argv, prefix, options, git_reset_usage,
+ 						PARSE_OPT_KEEP_DASHDASH);
+-	reflog_action = args_to_str(argv);
+-	setenv("GIT_REFLOG_ACTION", reflog_action, 0);
+ 
+ 	/*
+ 	 * Possible arguments are:
+@@ -357,13 +340,13 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 		old_orig = sha1_old_orig;
+ 	if (!get_sha1("HEAD", sha1_orig)) {
+ 		orig = sha1_orig;
+-		prepend_reflog_action("updating ORIG_HEAD", msg, sizeof(msg));
+-		update_ref(msg, "ORIG_HEAD", orig, old_orig, 0, MSG_ON_ERR);
++		set_reflog_message(&msg, "updating ORIG_HEAD", NULL);
++		update_ref(msg.buf, "ORIG_HEAD", orig, old_orig, 0, MSG_ON_ERR);
+ 	}
+ 	else if (old_orig)
+ 		delete_ref("ORIG_HEAD", old_orig, 0);
+-	prepend_reflog_action("updating HEAD", msg, sizeof(msg));
+-	update_ref_status = update_ref(msg, "HEAD", sha1, orig, 0, MSG_ON_ERR);
++	set_reflog_message(&msg, "updating HEAD", rev);
++	update_ref_status = update_ref(msg.buf, "HEAD", sha1, orig, 0, MSG_ON_ERR);
+ 
+ 	switch (reset_type) {
+ 	case HARD:
+@@ -380,7 +363,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 
+ 	remove_branch_state();
+ 
+-	free(reflog_action);
++	strbuf_release(&msg);
+ 
+ 	return update_ref_status;
+ }
+diff --git a/t/t1412-reflog-loop.sh b/t/t1412-reflog-loop.sh
+index 7f519e5..647d888 100755
+--- a/t/t1412-reflog-loop.sh
++++ b/t/t1412-reflog-loop.sh
+@@ -21,10 +21,10 @@ test_expect_success 'setup reflog with alternating commits' '
+ 
+ test_expect_success 'reflog shows all entries' '
+ 	cat >expect <<-\EOF
+-		topic@{0} two: updating HEAD
+-		topic@{1} one: updating HEAD
+-		topic@{2} two: updating HEAD
+-		topic@{3} one: updating HEAD
++		topic@{0} reset: moving to two
++		topic@{1} reset: moving to one
++		topic@{2} reset: moving to two
++		topic@{3} reset: moving to one
+ 		topic@{4} branch: Created from HEAD
+ 	EOF
+ 	git log -g --format="%gd %gs" topic >actual &&
+-- 
+1.7.4.5.34.g0787f
