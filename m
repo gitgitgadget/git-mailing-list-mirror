@@ -1,104 +1,66 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH v3 3/3] Add documentation for virtual repositories
-Date: Wed, 25 May 2011 10:01:20 -0700
-Message-ID: <BANLkTikwxiBTVdqnQtdvr-VTCm2hSOcRjw@mail.gmail.com>
-References: <1306284392-12034-1-git-send-email-jamey@minilop.net>
- <1306284392-12034-3-git-send-email-jamey@minilop.net> <20110525160708.GE8795@sigill.intra.peff.net>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: gitk normal use on linux repo and severe memory pressure
+Date: Wed, 25 May 2011 19:01:30 +0200
+Message-ID: <m2pqn667f9.fsf@igel.home>
+References: <BANLkTinrj2AOCMMWazf2F4eKy7Sy56K0vg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jamey Sharp <jamey@minilop.net>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <johannes.sixt@telecom.at>,
-	Junio C Hamano <gitster@pobox.com>,
-	Josh Triplett <josh@joshtriplett.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 25 19:01:55 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 25 19:02:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPHT1-0004qA-0h
-	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 19:01:55 +0200
+	id 1QPHSi-0001ny-BC
+	for gcvg-git-2@lo.gmane.org; Wed, 25 May 2011 19:01:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755316Ab1EYRBm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 May 2011 13:01:42 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:51568 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755289Ab1EYRBk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 May 2011 13:01:40 -0400
-Received: by vxi39 with SMTP id 39so5911860vxi.19
-        for <git@vger.kernel.org>; Wed, 25 May 2011 10:01:40 -0700 (PDT)
-Received: by 10.52.109.36 with SMTP id hp4mr7339776vdb.97.1306342900070; Wed,
- 25 May 2011 10:01:40 -0700 (PDT)
-Received: by 10.52.167.228 with HTTP; Wed, 25 May 2011 10:01:20 -0700 (PDT)
-In-Reply-To: <20110525160708.GE8795@sigill.intra.peff.net>
+	id S1755147Ab1EYRBe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2011 13:01:34 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:40478 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753044Ab1EYRBd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2011 13:01:33 -0400
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id A38EE188B5A1;
+	Wed, 25 May 2011 19:01:31 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
+	by mail.m-online.net (Postfix) with ESMTP id A963B1C00085;
+	Wed, 25 May 2011 19:01:31 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
+	with ESMTP id UFokZKtARr-1; Wed, 25 May 2011 19:01:31 +0200 (CEST)
+Received: from igel.home (ppp-88-217-117-194.dynamic.mnet-online.de [88.217.117.194])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Wed, 25 May 2011 19:01:30 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id 3E6BDCA29C; Wed, 25 May 2011 19:01:30 +0200 (CEST)
+X-Yow: It don't mean a THING if you ain't got that SWING!!
+In-Reply-To: <BANLkTinrj2AOCMMWazf2F4eKy7Sy56K0vg@mail.gmail.com> (Martin
+	Langhoff's message of "Wed, 25 May 2011 11:20:24 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174430>
 
-On Wed, May 25, 2011 at 09:07, Jeff King <peff@peff.net> wrote:
->
-> Thinking on the whole idea a bit more, is there a reason to restrict
-> this to upload-pack and receive-pack? Sure, they are the most obvious
-> places to use it for hosting, but might I not want to be able to do:
+Martin Langhoff <martin.langhoff@gmail.com> writes:
 
-No, there isn't. I had the same impression reading this series... that
-doing it in upload-pack receive-pack was wrong, but I couldn't put my
-finger on why. I think you did (below), so thank you.
+> I am tempted to set a global config option limiting gitk to a couple
+> thousand commits, but it's not really the right solution. If I am
+> trawling older history, I'll hit the limit and have to close gitk and
+> reopen overriding the parameter.
 
-> =A0cd /path/to/mega-repository.git
-> =A0git --ref-prefix=3Dvirtual/repo1 log master
->
-> to do server-side scripting inside the virtual repos (or more likely,
-> setting GIT_REF_PREFIX at the top of your script).
->
->> +The --ref-prefix and --head options provide quite a bit of flexibil=
-ity
-=2E..
-> I'm curious if you have a use for this much flexibility. In particula=
-r,
-> why do the HEAD and refs prefixes need the ability to be separate? Al=
-so,
-> what about other non-HEAD top-level refs? IOW, a true "virtual
-> repository" to me would just be:
->
-> =A0GIT_REF_PREFIX=3Drefs/virtual/repo1
->
-> and then _every_ ref resolution would just prefix that, whether it wa=
-s
-> in refs/ or not. So you would have:
->
-> =A0.git/refs/virtual/repo1/HEAD
-> =A0.git/refs/virtual/repo1/refs/heads/master
-> =A0.git/refs/virtual/repo1/refs/tags/v1.0
->
-> and so on. And this fits in with the idea of it not just being an
-> upload-pack and receive-pack thing. I could do:
->
-> =A0GIT_REF_PREFIX=3Drefs/virtual/repo1; export GIT_REF_PREFIX
-> =A0git fetch some-remote
+You can start gitk with --max-count=N and if you need more commits you
+can edit the current view to increase that number.  No need to restart
+gitk.
 
-+1 * 1000. This should be a single environment variable / top level
-option. HEAD should also use the GIT_REF_PREFIX, like any other ref.
+Andreas.
 
-=46ETCH_HEAD and MERGE_HEAD probably should as well if GIT_REF_PREFIX i=
-s
-set, however these are going to be a bit harder to move. Not all tools
-that read them are GIT_REF_PREFIX aware, or go through C code that can
-be modified to be GIT_REF_PREFIX aware. (git-gui and EGit, I'm talking
-about you here!)  They can obviously be fixed, but until then using a
-working directory with GIT_REF_PREFIX set will be slightly
-interesting.
-
-> So the virtual repository is basically just a "chroot" of the ref
-> namespace. And it's dirt simple to implement, because you do the
-> translation at the refs.c layer.
-
-Yes, exactly.
-
---=20
-Shawn.
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
