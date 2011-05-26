@@ -1,467 +1,406 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 05/10] revert: Introduce struct to keep command-line options
-Date: Thu, 26 May 2011 15:53:48 +0000
-Message-ID: <1306425233-504-6-git-send-email-artagnon@gmail.com>
-References: <1306333025-29893-1-git-send-email-artagnon@gmail.com>
- <1306425233-504-1-git-send-email-artagnon@gmail.com>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 26 17:54:39 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's cooking in git.git (May 2011, #12; Thu, 26)
+Date: Thu, 26 May 2011 09:02:08 -0700
+Message-ID: <7vd3j5zbzz.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 26 18:02:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPctS-0001ZT-G2
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 17:54:39 +0200
+	id 1QPd0w-0006xh-CJ
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 18:02:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758033Ab1EZPye (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 11:54:34 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:44180 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757606Ab1EZPyF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 11:54:05 -0400
-Received: by mail-qy0-f181.google.com with SMTP id 14so475045qyg.19
-        for <git@vger.kernel.org>; Thu, 26 May 2011 08:54:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references;
-        bh=gRhy0AHMLPv+J0zb6rW35Ar6bsMxx5jE+qcXUk5jQyE=;
-        b=avtytX6FfzuqHMQdTWw8pSW9vOw2ULIQLL9ioukJnRsF/1a3H8uH2+5PbWI1AgVYe/
-         MwJUArd3zrTz9oxK+SvNUkdY4mzMsB3W50+4Yiufslavu5D8jq7GLE2ghQ6vXrEUIosx
-         b4lLv7o4PrFySXKoUOv7GpwiC1worG7cWAy6w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=dBTHQV8myzW4MlBH3PH8OuHpah5OymS+wCn6yBywI0HvAFPM7Qk/3vT8ExLysb/cgv
-         JYytrOX1BAkPD5KZTunDITxxti2UswjFllO9lK3ldDBvuL8eM8+Kt3KxGS+QkYwj/4a6
-         soRuRuoGjo6MzgBYcEuuKfHPYzcVRYNhoIkwQ=
-Received: by 10.229.141.70 with SMTP id l6mr742244qcu.30.1306425245463;
-        Thu, 26 May 2011 08:54:05 -0700 (PDT)
-Received: from localhost.localdomain (ec2-184-72-137-52.compute-1.amazonaws.com [184.72.137.52])
-        by mx.google.com with ESMTPS id j18sm513435qck.27.2011.05.26.08.54.03
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 26 May 2011 08:54:04 -0700 (PDT)
-X-Mailer: git-send-email 1.7.5.1
-In-Reply-To: <1306425233-504-1-git-send-email-artagnon@gmail.com>
+	id S1757889Ab1EZQCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 12:02:14 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:46849 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757113Ab1EZQCN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 12:02:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5F7B24B41;
+	Thu, 26 May 2011 12:04:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=4
+	K/4sKRPZ0lkyjqoYk86ZmbBBlU=; b=bW6Q0NoAQvTVpI7KjV9A29tIRQhgRCU8D
+	Iq69n5tyAKpX2lvq3j+01g6XqQO2zI7P1L+JH3CR2s199urVlXImoLDsKywE8X6c
+	1O0lJaE8sckq9XUNIp6k27ybnWwa90YLRWH0PIWtfyNpKqcDMEwtbR7at7lQVbEb
+	R4j4m2UXlk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=kgk
+	r1QSJarbNRvWFzC7ANxbAZVmuqBBsZJApZl8hgahtpqvGCKueESg/wkzBBTC5cJ1
+	FujoL0Ea4LxZEomWfJH/0I7URzLX1ZxrE3Va17AgaVP6XbZY8el9mUbv/jBf0AmE
+	AVXqkxlcoi4NmEIT/4dPWB2Xep0/OFm0EPUhYZEc=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4B8EB4B3F;
+	Thu, 26 May 2011 12:04:19 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 199984B3B; Thu, 26 May 2011
+ 12:04:16 -0400 (EDT)
+X-master-at: 5cfe4256d98af22a570c78c5e3048391a90f5f98
+X-next-at: 9f46ca0aec6956294992cda67b91c2fc82a8efa6
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D0220952-87B1-11E0-9383-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174537>
 
-The current code uses a set of file-scope static variables to tell the
-cherry-pick/ revert machinery how to replay the changes, and
-initializes them by parsing the command-line arguments.  In later
-steps in this series, we would like to introduce an API function that
-calls into this machinery directly and have a way to tell it what to
-do.  Hence, introduce a structure to group these variables, so that
-the API can take them as a single replay_options parameter.
+Here are the topics that have been cooking.  Commits prefixed with '-' are
+only in 'pu' while commits prefixed with '+' are in 'next'.
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- builtin/revert.c |  174 ++++++++++++++++++++++++++++++------------------------
- 1 files changed, 97 insertions(+), 77 deletions(-)
+The main part of this cycle is expected to run thru May, aiming for a
+feature freeze in early June.
 
-diff --git a/builtin/revert.c b/builtin/revert.c
-index e9b8533..cc2fa73 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -35,76 +35,88 @@ static const char * const cherry_pick_usage[] = {
- 	NULL
- };
- 
--static int edit, record_origin, no_commit, mainline, signoff, allow_ff;
--static enum { REVERT, CHERRY_PICK } action;
--static int commit_argc;
--static const char **commit_argv;
--static int allow_rerere_auto;
--
- static const char *me;
- 
--/* Merge strategy. */
--static const char *strategy;
--static const char **xopts;
--static size_t xopts_nr, xopts_alloc;
-+struct replay_opts {
-+	enum { REVERT, CHERRY_PICK } action;
-+
-+	/* Boolean options */
-+	int edit;
-+	int record_origin;
-+	int no_commit;
-+	int signoff;
-+	int allow_ff;
-+	int allow_rerere_auto;
-+
-+	int mainline;
-+	int commit_argc;
-+	const char **commit_argv;
-+
-+	/* Merge strategy */
-+	const char *strategy;
-+	const char **xopts;
-+	size_t xopts_nr, xopts_alloc;
-+};
- 
- #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
- 
- static char *get_encoding(const char *message);
- 
--static const char * const *revert_or_cherry_pick_usage(void)
-+static const char * const *revert_or_cherry_pick_usage(struct replay_opts *opts)
- {
--	return action == REVERT ? revert_usage : cherry_pick_usage;
-+	return opts->action == REVERT ? revert_usage : cherry_pick_usage;
- }
- 
- static int option_parse_x(const struct option *opt,
- 			  const char *arg, int unset)
- {
-+	struct replay_opts **opts = opt->value;
-+
- 	if (unset)
- 		return 0;
- 
--	ALLOC_GROW(xopts, xopts_nr + 1, xopts_alloc);
--	xopts[xopts_nr++] = xstrdup(arg);
-+	ALLOC_GROW((*opts)->xopts, (*opts)->xopts_nr + 1, (*opts)->xopts_alloc);
-+	(*opts)->xopts[(*opts)->xopts_nr++] = xstrdup(arg);
- 	return 0;
- }
- 
--static void parse_args(int argc, const char **argv)
-+static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- {
--	const char * const * usage_str = revert_or_cherry_pick_usage();
-+	const char * const * usage_str = revert_or_cherry_pick_usage(opts);
- 	int noop;
- 	struct option options[] = {
--		OPT_BOOLEAN('n', "no-commit", &no_commit, "don't automatically commit"),
--		OPT_BOOLEAN('e', "edit", &edit, "edit the commit message"),
-+		OPT_BOOLEAN('n', "no-commit", &opts->no_commit, "don't automatically commit"),
-+		OPT_BOOLEAN('e', "edit", &opts->edit, "edit the commit message"),
- 		{ OPTION_BOOLEAN, 'r', NULL, &noop, NULL, "no-op (backward compatibility)",
- 		  PARSE_OPT_NOARG | PARSE_OPT_HIDDEN, NULL, 0 },
--		OPT_BOOLEAN('s', "signoff", &signoff, "add Signed-off-by:"),
--		OPT_INTEGER('m', "mainline", &mainline, "parent number"),
--		OPT_RERERE_AUTOUPDATE(&allow_rerere_auto),
--		OPT_STRING(0, "strategy", &strategy, "strategy", "merge strategy"),
--		OPT_CALLBACK('X', "strategy-option", &xopts, "option",
-+		OPT_BOOLEAN('s', "signoff", &opts->signoff, "add Signed-off-by:"),
-+		OPT_INTEGER('m', "mainline", &opts->mainline, "parent number"),
-+		OPT_RERERE_AUTOUPDATE(&opts->allow_rerere_auto),
-+		OPT_STRING(0, "strategy", &opts->strategy, "strategy", "merge strategy"),
-+		OPT_CALLBACK('X', "strategy-option", &opts, "option",
- 			"option for merge strategy", option_parse_x),
- 		OPT_END(),
- 		OPT_END(),
- 		OPT_END(),
- 	};
- 
--	if (action == CHERRY_PICK) {
-+	if (opts->action == CHERRY_PICK) {
- 		struct option cp_extra[] = {
--			OPT_BOOLEAN('x', NULL, &record_origin, "append commit name"),
--			OPT_BOOLEAN(0, "ff", &allow_ff, "allow fast-forward"),
-+			OPT_BOOLEAN('x', NULL, &opts->record_origin, "append commit name"),
-+			OPT_BOOLEAN(0, "ff", &opts->allow_ff, "allow fast-forward"),
- 			OPT_END(),
- 		};
- 		if (parse_options_concat(options, ARRAY_SIZE(options), cp_extra))
- 			die(_("program error"));
- 	}
- 
--	commit_argc = parse_options(argc, argv, NULL, options, usage_str,
--				    PARSE_OPT_KEEP_ARGV0 |
--				    PARSE_OPT_KEEP_UNKNOWN);
--	if (commit_argc < 2)
-+	opts->commit_argc = parse_options(argc, argv, NULL, options, usage_str,
-+					PARSE_OPT_KEEP_ARGV0 |
-+					PARSE_OPT_KEEP_UNKNOWN);
-+	if (opts->commit_argc < 2)
- 		usage_with_options(usage_str, options);
- 
--	commit_argv = argv;
-+	opts->commit_argv = argv;
- }
- 
- struct commit_message {
-@@ -273,7 +285,8 @@ static int fast_forward_to(const unsigned char *to, const unsigned char *from)
- 
- static int do_recursive_merge(struct commit *base, struct commit *next,
- 			      const char *base_label, const char *next_label,
--			      unsigned char *head, struct strbuf *msgbuf)
-+			      unsigned char *head, struct strbuf *msgbuf,
-+			      struct replay_opts *opts)
- {
- 	struct merge_options o;
- 	struct tree *result, *next_tree, *base_tree, *head_tree;
-@@ -294,7 +307,7 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
- 	next_tree = next ? next->tree : empty_tree();
- 	base_tree = base ? base->tree : empty_tree();
- 
--	for (xopt = xopts; xopt != xopts + xopts_nr; xopt++)
-+	for (xopt = opts->xopts; xopt != opts->xopts + opts->xopts_nr; xopt++)
- 		parse_merge_opt(&o, *xopt);
- 
- 	clean = merge_trees(&o,
-@@ -334,7 +347,7 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
-  * If we are revert, or if our cherry-pick results in a hand merge,
-  * we had better say that the current user is responsible for that.
-  */
--static int run_git_commit(const char *defmsg)
-+static int run_git_commit(const char *defmsg, struct replay_opts *opts)
- {
- 	/* 6 is max possible length of our args array including NULL */
- 	const char *args[6];
-@@ -342,9 +355,9 @@ static int run_git_commit(const char *defmsg)
- 
- 	args[i++] = "commit";
- 	args[i++] = "-n";
--	if (signoff)
-+	if (opts->signoff)
- 		args[i++] = "-s";
--	if (!edit) {
-+	if (!opts->edit) {
- 		args[i++] = "-F";
- 		args[i++] = defmsg;
- 	}
-@@ -353,7 +366,7 @@ static int run_git_commit(const char *defmsg)
- 	return run_command_v_opt(args, RUN_GIT_CMD);
- }
- 
--static int do_pick_commit(struct commit *commit)
-+static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
- {
- 	unsigned char head[20];
- 	struct commit *base, *next, *parent;
-@@ -363,7 +376,7 @@ static int do_pick_commit(struct commit *commit)
- 	struct strbuf msgbuf = STRBUF_INIT;
- 	int res;
- 
--	if (no_commit) {
-+	if (opts->no_commit) {
- 		/*
- 		 * We do not intend to commit immediately.  We just want to
- 		 * merge the differences in, so let's compute the tree
-@@ -381,7 +394,7 @@ static int do_pick_commit(struct commit *commit)
- 	discard_cache();
- 
- 	if (!commit->parents) {
--		if (action == REVERT)
-+		if (opts->action == REVERT)
- 			return error(_("Cannot revert a root commit"));
- 		parent = NULL;
- 	}
-@@ -390,25 +403,25 @@ static int do_pick_commit(struct commit *commit)
- 		int cnt;
- 		struct commit_list *p;
- 
--		if (!mainline)
-+		if (!opts->mainline)
- 			return error(_("Commit %s is a merge but no -m option was given."),
- 				sha1_to_hex(commit->object.sha1));
- 
- 		for (cnt = 1, p = commit->parents;
--		     cnt != mainline && p;
-+		     cnt != opts->mainline && p;
- 		     cnt++)
- 			p = p->next;
--		if (cnt != mainline || !p)
-+		if (cnt != opts->mainline || !p)
- 			return error(_("Commit %s does not have parent %d"),
--				sha1_to_hex(commit->object.sha1), mainline);
-+				sha1_to_hex(commit->object.sha1), opts->mainline);
- 		parent = p->item;
--	} else if (0 < mainline)
-+	} else if (0 < opts->mainline)
- 		return error(_("Mainline was specified but commit %s is not a merge."),
- 			sha1_to_hex(commit->object.sha1));
- 	else
- 		parent = commit->parents->item;
- 
--	if (allow_ff && parent && !hashcmp(parent->object.sha1, head))
-+	if (opts->allow_ff && parent && !hashcmp(parent->object.sha1, head))
- 		return fast_forward_to(commit->object.sha1, head);
- 
- 	if (parent && parse_commit(parent) < 0)
-@@ -430,7 +443,7 @@ static int do_pick_commit(struct commit *commit)
- 
- 	defmsg = git_pathdup("MERGE_MSG");
- 
--	if (action == REVERT) {
-+	if (opts->action == REVERT) {
- 		base = commit;
- 		base_label = msg.label;
- 		next = parent;
-@@ -456,18 +469,18 @@ static int do_pick_commit(struct commit *commit)
- 		p = p ? p + 2 : sha1_to_hex(commit->object.sha1);
- 		strbuf_addstr(&msgbuf, p);
- 
--		if (record_origin) {
-+		if (opts->record_origin) {
- 			strbuf_addstr(&msgbuf, "(cherry picked from commit ");
- 			strbuf_addstr(&msgbuf, sha1_to_hex(commit->object.sha1));
- 			strbuf_addstr(&msgbuf, ")\n");
- 		}
--		if (!no_commit)
-+		if (!opts->no_commit)
- 			write_cherry_pick_head(sha1_to_hex(commit->object.sha1));
- 	}
- 
--	if (!strategy || !strcmp(strategy, "recursive") || action == REVERT) {
-+	if (!opts->strategy || !strcmp(opts->strategy, "recursive") || opts->action == REVERT) {
- 		res = do_recursive_merge(base, next, base_label, next_label,
--					 head, &msgbuf);
-+					 head, &msgbuf, opts);
- 		write_message(&msgbuf, defmsg);
- 	} else {
- 		struct commit_list *common = NULL;
-@@ -477,23 +490,23 @@ static int do_pick_commit(struct commit *commit)
- 
- 		commit_list_insert(base, &common);
- 		commit_list_insert(next, &remotes);
--		res = try_merge_command(strategy, xopts_nr, xopts, common,
--					sha1_to_hex(head), remotes);
-+		res = try_merge_command(opts->strategy, opts->xopts_nr, opts->xopts,
-+					common, sha1_to_hex(head), remotes);
- 		free_commit_list(common);
- 		free_commit_list(remotes);
- 	}
- 
- 	if (res) {
--		error(action == REVERT
-+		error(opts->action == REVERT
- 		      ? _("could not revert %s... %s")
- 		      : _("could not apply %s... %s"),
- 		      find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV),
- 		      msg.subject);
- 		print_advice();
--		rerere(allow_rerere_auto);
-+		rerere(opts->allow_rerere_auto);
- 	} else {
--		if (!no_commit)
--			res = run_git_commit(defmsg);
-+		if (!opts->no_commit)
-+			res = run_git_commit(defmsg, opts);
- 	}
- 
- 	free_message(&msg);
-@@ -502,18 +515,18 @@ static int do_pick_commit(struct commit *commit)
- 	return res;
- }
- 
--static void prepare_revs(struct rev_info *revs)
-+static void prepare_revs(struct rev_info *revs, struct replay_opts *opts)
- {
- 	int argc;
- 
- 	init_revisions(revs, NULL);
- 	revs->no_walk = 1;
--	if (action != REVERT)
-+	if (opts->action != REVERT)
- 		revs->reverse = 1;
- 
--	argc = setup_revisions(commit_argc, commit_argv, revs, NULL);
-+	argc = setup_revisions(opts->commit_argc, opts->commit_argv, revs, NULL);
- 	if (argc > 1)
--		usage(*revert_or_cherry_pick_usage());
-+		usage(*revert_or_cherry_pick_usage(opts));
- 
- 	if (prepare_revision_walk(revs))
- 		die(_("revision walk setup failed"));
-@@ -522,7 +535,7 @@ static void prepare_revs(struct rev_info *revs)
- 		die(_("empty commit set passed"));
- }
- 
--static void read_and_refresh_cache(const char *me)
-+static void read_and_refresh_cache(const char *me, struct replay_opts *opts)
- {
- 	static struct lock_file index_lock;
- 	int index_fd = hold_locked_index(&index_lock, 0);
-@@ -537,33 +550,34 @@ static void read_and_refresh_cache(const char *me)
- 	rollback_lock_file(&index_lock);
- }
- 
--static int revert_or_cherry_pick(int argc, const char **argv)
-+static int revert_or_cherry_pick(int argc, const char **argv,
-+				struct replay_opts *opts)
- {
- 	struct rev_info revs;
- 	struct commit *commit;
- 
- 	git_config(git_default_config, NULL);
--	me = action == REVERT ? "revert" : "cherry-pick";
-+	me = opts->action == REVERT ? "revert" : "cherry-pick";
- 	setenv(GIT_REFLOG_ACTION, me, 0);
--	parse_args(argc, argv);
-+	parse_args(argc, argv, opts);
- 
--	if (allow_ff) {
--		if (signoff)
-+	if (opts->allow_ff) {
-+		if (opts->signoff)
- 			die(_("cherry-pick --ff cannot be used with --signoff"));
--		if (no_commit)
-+		if (opts->no_commit)
- 			die(_("cherry-pick --ff cannot be used with --no-commit"));
--		if (record_origin)
-+		if (opts->record_origin)
- 			die(_("cherry-pick --ff cannot be used with -x"));
--		if (edit)
-+		if (opts->edit)
- 			die(_("cherry-pick --ff cannot be used with --edit"));
- 	}
- 
--	read_and_refresh_cache(me);
-+	read_and_refresh_cache(me, opts);
- 
--	prepare_revs(&revs);
-+	prepare_revs(&revs, opts);
- 
- 	while ((commit = get_revision(&revs))) {
--		int res = do_pick_commit(commit);
-+		int res = do_pick_commit(commit, opts);
- 		if (res)
- 			return res;
- 	}
-@@ -574,10 +588,13 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- int cmd_revert(int argc, const char **argv, const char *prefix)
- {
- 	int res;
-+	struct replay_opts opts;
-+
-+	memset(&opts, 0, sizeof(struct replay_opts));
- 	if (isatty(0))
--		edit = 1;
--	action = REVERT;
--	res = revert_or_cherry_pick(argc, argv);
-+		opts.edit = 1;
-+	opts.action = REVERT;
-+	res = revert_or_cherry_pick(argc, argv, &opts);
- 	if (res > 0)
- 		/* Exit status from conflict */
- 		return res;
-@@ -590,8 +607,11 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
- int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
- {
- 	int res;
--	action = CHERRY_PICK;
--	res = revert_or_cherry_pick(argc, argv);
-+	struct replay_opts opts;
-+
-+	memset(&opts, 0, sizeof(struct replay_opts));
-+	opts.action = CHERRY_PICK;
-+	res = revert_or_cherry_pick(argc, argv, &opts);
- 	if (res > 0)
- 		return res;
- 	if (res < 0)
--- 
-1.7.5.GIT
+We are in the middle of week #5 of this cycle. Let's plan to tag -rc0 with
+what is in 'master' at the end of the month.
+
+--------------------------------------------------
+[New Topics]
+
+* jc/fmt-req-fix (2011-05-25) 1 commit
+  (merged to 'next' on 2011-05-25 at 9f46ca0)
+ + userformat_find_requirements(): find requirement for the correct format
+
+* jk/maint-config-alias-fix (2011-05-24) 4 commits
+  (merged to 'next' on 2011-05-25 at 25b86e4)
+ + handle_options(): do not miscount how many arguments were used
+ + config: always parse GIT_CONFIG_PARAMETERS during git_config
+ + git_config: don't peek at global config_parameters
+ + config: make environment parsing routines static
+
+--------------------------------------------------
+[Graduated to "master"]
+
+* jc/bigfile (2011-05-13) 3 commits
+  (merged to 'next' on 2011-05-15 at 0ee7144)
+ + Bigfile: teach "git add" to send a large file straight to a pack
+ + index_fd(): split into two helper functions
+ + index_fd(): turn write_object and format_check arguments into one flag
+ (this branch is used by jc/streaming and jc/streaming-filter.)
+
+This covers the entry point for a big file to the system. Other parts that
+need to know about them are the exit point (i.e. write_entry()), packing
+and repacking (as long as bigfilethreshold is sane this should work),
+diffs and status (avoid slurping large binary in core only to do nothing,
+which we already should), and transport (receive-pack/fetch-pack call
+either unpack-objects or index-pack, which still want to hold the full
+object in-core and need to be fixed).
+
+* js/log-abbrev-commit-config (2011-05-18) 2 commits
+  (merged to 'next' on 2011-05-23 at 4e7e932)
+ + Add log.abbrevCommit config variable
+ + "git log -h": typofix misspelled 'suppress'
+
+--------------------------------------------------
+[Stalled]
+
+* mg/diff-stat-count (2011-05-03) 2 commits
+ - diff-options.txt: describe --stat-{width,name-width,count}
+ - diff: introduce --stat-count to limit the stat lines
+
+There was a miscounting spotted.  Needs another round.
+
+* jk/maint-merge-rename-create (2011-03-25) 3 commits
+ - merge: turn on rewrite detection
+ - merge: handle renames with replacement content
+ - t3030: fix accidental success in symlink rename
+
+Peff wanted to reroll this.
+
+* jc/index-pack (2011-02-27) 5 commits
+ - index-pack --verify: read anomalous offsets from v2 idx file
+ - write_idx_file: need_large_offset() helper function
+ - index-pack: --verify
+ - write_idx_file: introduce a struct to hold idx customization options
+ - index-pack: group the delta-base array entries also by type
+
+Still a WIP. Need to put histogram output into index-pack --verify to
+really kill verify-pack.
+
+* jk/tag-contains (2010-07-05) 4 commits
+ - Why is "git tag --contains" so slow?
+ - default core.clockskew variable to one day
+ - limit "contains" traversals based on commit timestamp
+ - tag: speed up --contains calculation
+
+The idea of the bottom one is probably Ok, except that the use of object
+flags needs to be rethought, or at least the helper needs to be moved to
+builtin/tag.c to make it clear that it should not be used outside the
+current usage context.
+
+--------------------------------------------------
+[Cooking]
+
+* jl/read-tree-m-dry-run (2011-05-25) 2 commits
+ - Teach read-tree the -n|--dry-run option
+ - unpack-trees: add the dry_run flag to unpack_trees_options
+
+Will merge to "next".
+
+* da/git-prefix-everywhere (2011-05-23) 3 commits
+ - git-mergetool--lib: Make vimdiff retain the current directory
+ - git: Remove handling for GIT_PREFIX
+ - setup: Provide GIT_PREFIX to built-ins
+
+Is everybody happy with this?
+Will merge to "next".
+
+* jh/receive-count-limit (2011-05-23) 10 commits
+ - receive-pack: Allow server to refuse pushes with too many objects
+ - pack-objects: Estimate pack size; abort early if pack size limit is exceeded
+ - send-pack/receive-pack: Allow server to refuse pushing too large packs
+ - pack-objects: Allow --max-pack-size to be used together with --stdout
+ - send-pack/receive-pack: Allow server to refuse pushes with too many commits
+ - pack-objects: Teach new option --max-commit-count, limiting #commits in pack
+ - receive-pack: Prepare for addition of the new 'limit-*' family of capabilities
+ - Tighten rules for matching server capabilities in server_supports()
+ - send-pack: Attempt to retrieve remote status even if pack-objects fails
+ - Update technical docs to reflect side-band-64k capability in receive-pack
+
+Would need another round to separate per-pack and per-session limits.
+
+* jc/require-work-tree-exists (2011-05-24) 1 commit
+  (merged to 'next' on 2011-05-24 at 6dbbf00)
+ + require-work-tree wants more than what its name says
+
+Rerolled _without_ any in-tree users, just to make sure that we can easily
+adapt scripts when necessary in the future.
+
+Will merge to "master" by the end of week #5.
+
+* jn/gitweb-js (2011-05-24) 11 commits
+  (merged to 'next' on 2011-05-24 at c385b9d)
+ + gitweb: Make JavaScript ability to adjust timezones configurable
+ + gitweb.js: Add UI for selecting common timezone to display dates
+ + gitweb: JavaScript ability to adjust time based on timezone
+ + gitweb: Unify the way long timestamp is displayed
+ + gitweb: Refactor generating of long dates into format_timestamp_html
+ + gitweb.js: Provide getElementsByClassName method (if it not exists)
+ + gitweb.js: Introduce code to handle cookies from JavaScript
+ + gitweb.js: Extract and improve datetime handling
+ + gitweb.js: Provide default values for padding in padLeftStr and padLeft
+ + gitweb.js: Update and improve comments in JavaScript files
+ + gitweb: Split JavaScript for maintability, combining on build
+
+Rebased on top of a more recent "master" that already has the two bottom
+commits in the previous round of series.
+
+Will merge to "master" by the end of week #5.
+
+* jn/ctags-more (2011-04-29) 3 commits
+  (merged to 'next' on 2011-05-24 at 41b50be)
+ + gitweb: Optional grouping of projects by category
+ + gitweb: Modularized git_get_project_description to be more generic
+ + gitweb: Split git_project_list_body in two functions
+
+As nobody seems to be helping gitweb maintenance, I'll merge the above two
+series to "master" and see if anybody screams. That seems to be the only
+way to make any progress.
+
+Will merge to "master" by the end of week #5.
+
+* jc/notes-batch-removal (2011-05-19) 4 commits
+  (merged to 'next' on 2011-05-23 at 5bd78a6)
+ + show: --ignore-missing
+ + notes remove: --stdin reads from the standard input
+ + notes remove: --ignore-missing
+ + notes remove: allow removing more than one
+
+Will merge to "master" by the end of week #5.
+
+* jk/fetch-mark-complete-optimization (2011-05-19) 1 commit
+  (merged to 'next' on 2011-05-23 at b56fb81)
+ + fetch: avoid repeated commits in mark_complete
+
+Trivially correct.
+Will merge to "master" by the end of week #5.
+
+* jk/haves-from-alternate-odb (2011-05-19) 3 commits
+  (merged to 'next' on 2011-05-23 at 53b4735)
+ + receive-pack: eliminate duplicate .have refs
+ + bisect: refactor sha1_array into a generic sha1 list
+ + refactor refs_from_alternate_cb to allow passing extra data
+
+Will merge to "master" by the end of week #5.
+
+* rg/no-gecos-in-pwent (2011-05-19) 1 commit
+  (merged to 'next' on 2011-05-23 at d2c4c33)
+ + ident: add NO_GECOS_IN_PWENT for systems without pw_gecos in struct passwd
+
+Trivially correct and not intrusive, but the real value unknown.
+Will merge to "master" by the end of week #5.
+
+* jc/streaming-filter (2011-05-24) 8 commits
+ - t0021: test application of both crlf and ident
+ - t0021-conversion.sh: fix NoTerminatingSymbolAtEOF test
+ - streaming: filter cascading
+ - streaming filter: ident filter
+ - Add LF-to-CRLF streaming conversion
+ - stream filter: add "no more input" to the filters
+ - Add streaming filter API
+ - convert.h: move declarations for conversion from cache.h
+ (this branch uses jc/streaming.)
+
+Trivial lf-to-crlf and ident conversions can be performed without reading
+everything in-core first.
+Not urgent. Will not merge before 1.7.6.
+
+* jn/userdiff-perl-updates (2011-05-23) 8 commits
+  (merged to 'next' on 2011-05-23 at 2595ae1)
+ + userdiff/perl: tighten BEGIN/END block pattern to reject here-doc delimiters
+ + tests: make test_expect_code quieter on success
+ + userdiff/perl: catch sub with brace on second line
+ + userdiff/perl: match full line of POD headers
+ + userdiff/perl: anchor "sub" and "package" patterns on the left
+ + t4018 (funcname patterns): minor cleanups
+ + t4018 (funcname patterns): make configuration easier to track
+ + t4018 (funcname patterns): make .gitattributes state easier to track
+
+Will merge to "master" by the end of week #5.
+
+* jk/combine-diff-binary-etc (2011-05-24) 5 commits
+  (merged to 'next' on 2011-05-24 at 07cf180)
+ + combine-diff: respect textconv attributes
+ + refactor get_textconv to not require diff_filespec
+ + combine-diff: handle binary files as binary
+ + combine-diff: calculate mode_differs earlier
+ + combine-diff: split header printing into its own function
+
+Will merge to "master" by the end of month.
+
+* jc/advice-about-to-lose-commit (2011-05-24) 1 commit
+ - checkout: make advice when reattaching the HEAD less loud
+
+Re-rolled and resurrected from "Stalled" status.
+Will merge to "next".
+
+* jc/streaming (2011-05-20) 13 commits
+  (merged to 'next' on 2011-05-23 at 7fd0b52)
+ + streaming: read loose objects incrementally
+ + sha1_file.c: expose helpers to read loose objects
+ + streaming: read non-delta incrementally from a pack
+ + streaming_write_entry(): support files with holes
+ + convert: CRLF_INPUT is a no-op in the output codepath
+ + streaming_write_entry(): use streaming API in write_entry()
+ + streaming: a new API to read from the object store
+ + write_entry(): separate two helper functions out
+ + unpack_object_header(): make it public
+ + sha1_object_info_extended(): hint about objects in delta-base cache
+ + sha1_object_info_extended(): expose a bit more info
+ + packed_object_info_detail(): do not return a string
+ + Merge branches 'jc/convert', 'jc/bigfile' and 'jc/replacing' into jc/streaming
+ (this branch is used by jc/streaming-filter.)
+
+Not urgent. Will not merge before 1.7.6.
+
+* ab/i18n-scripts (2011-05-21) 48 commits
+  (merged to 'next' on 2011-05-23 at 69164a3)
+ + i18n: git-bisect bisect_next_check "You need to" message
+ + i18n: git-bisect [Y/n] messages
+ + i18n: git-bisect bisect_replay + $1 messages
+ + i18n: git-bisect bisect_reset + $1 messages
+ + i18n: git-bisect bisect_run + $@ messages
+ + i18n: git-bisect die + eval_gettext messages
+ + i18n: git-bisect die + gettext messages
+ + i18n: git-bisect echo + eval_gettext message
+ + i18n: git-bisect echo + gettext messages
+ + i18n: git-bisect gettext + echo message
+ + i18n: git-bisect add git-sh-i18n
+ + i18n: git-stash drop_stash say/die messages
+ + i18n: git-stash "unknown option" message
+ + i18n: git-stash die + eval_gettext $1 messages
+ + i18n: git-stash die + eval_gettext $* messages
+ + i18n: git-stash die + eval_gettext messages
+ + i18n: git-stash die + gettext messages
+ + i18n: git-stash say + gettext messages
+ + i18n: git-stash echo + gettext message
+ + i18n: git-stash add git-sh-i18n
+ + i18n: git-submodule "blob" and "submodule" messages
+ + i18n: git-submodule "path not initialized" message
+ + i18n: git-submodule "[...] path is ignored" message
+ + i18n: git-submodule "Entering [...]" message
+ + i18n: git-submodule $errmsg messages
+ + i18n: git-submodule "Submodule change[...]" messages
+ + i18n: git-submodule "cached cannot be used" message
+ + i18n: git-submodule $update_module say + die messages
+ + i18n: git-submodule die + eval_gettext messages
+ + i18n: git-submodule say + eval_gettext messages
+ + i18n: git-submodule echo + eval_gettext messages
+ + i18n: git-submodule add git-sh-i18n
+ + i18n: git-pull eval_gettext + warning message
+ + i18n: git-pull eval_gettext + die message
+ + i18n: git-pull die messages
+ + i18n: git-pull add git-sh-i18n
+ + i18n: git-am printf(1) message to eval_gettext
+ + i18n: git-am core say messages
+ + i18n: git-am "Falling back" say message
+ + i18n: git-am "Apply?" message
+ + i18n: git-am clean_abort messages
+ + i18n: git-am cannot_fallback messages
+ + i18n: git-am die messages
+ + i18n: git-am gettext + gettext to stderr message
+ + i18n: git-am eval_gettext messages
+ + i18n: git-am multi-line getttext $msg; echo
+ + i18n: git-am one-line gettext $msg; echo
+ + i18n: git-am add git-sh-i18n
+
+Rerolled.
+
+* mk/grep-pcre (2011-05-23) 13 commits
+  (merged to 'next' on 2011-05-23 at fbd4877)
+ + git-grep: Update tests (mainly for -P)
+  (merged to 'next' on 2011-05-16 at 0c6c25e)
+ + Makefile: Pass USE_LIBPCRE down in GIT-BUILD-OPTIONS
+ + git-grep: update tests now regexp type is "last one wins"
+  (merged to 'next' on 2011-05-15 at d110135)
+ + git-grep: do not die upon -F/-P when grep.extendedRegexp is set.
+ + git-grep: Bail out when -P is used with -F or -E
+ + grep: Add basic tests
+ + configure: Check for libpcre
+ + git-grep: Learn PCRE
+ + grep: Extract compile_regexp_failed() from compile_regexp()
+ + grep: Fix a typo in a comment
+  (merged to 'next' on 2011-05-08 at 5d3bede)
+ + grep: Put calls to fixmatch() and regmatch() into patmatch()
+ + contrib/completion: --line-number to git grep
+ + Documentation: Add --line-number to git-grep synopsis
+
+There was a confused test around BRE caused by GNU extension people so
+used to use without even realizing it is GNU extension.
+
+Will merge to "master" by the middle of week #5.
+
+--------------------------------------------------
+[Discarded]
+
+* hg/add-i-qq (2011-05-17) 1 commit
+ . add-interactive: add 'Quit' shortcut to add hunk and quit
+
+The question "why is y+q any more deserving for a short-cut than d+q" was
+raised late in the discussion, and I think it a very valid concern.
+
+* jc/add-delete-default (2011-04-27) 1 commit
+ . git add: notice removal of tracked paths by default
+
+This is ill-thought out. When the user does want to say "take all changes
+into account, not just addition", they can easily say "add -u" (update).
+
+* jc/dotdot-is-parent-directory (2011-05-04) 1 commit
+ . specifying ranges: we did not mean to make ".." an empty set
+
+Updated documentation, but I do not feel a strong enough annoyance to push
+this forward.
+
+* jc/fix-config-environment-passing (2011-05-24) 1 commit
+ . Allow built-ins to also use -c var=val via alias
+
+* jc/git-handle-options-miscount (2011-05-24) 1 commit
+ . handle_options(): do not miscount how many arguments were used
+
+These two have been discarded; jk/maint-config-alias-fix replaces them.
