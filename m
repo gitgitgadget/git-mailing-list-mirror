@@ -1,67 +1,93 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git-Mediawiki : Question about Jeff King's import script
-Date: Thu, 26 May 2011 11:42:14 -0400
-Message-ID: <20110526154214.GA4049@sigill.intra.peff.net>
-References: <BANLkTi=nLZV_QCyKT8LOhzkJYoJD6J4wPA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] Include unistd.h.
+Date: Thu, 26 May 2011 08:48:47 -0700
+Message-ID: <7vhb8hzcm8.fsf@alter.siamese.dyndns.org>
+References: <1306332924-28587-1-git-send-email-mduft@gentoo.org>
+ <1306332924-28587-3-git-send-email-mduft@gentoo.org>
+ <20110526022045.GA8172@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, "matthieu.moy" <Matthieu.Moy@grenoble-inp.fr>,
-	Sylvain Boulme <Sylvain.Boulme@imag.fr>
-To: Claire Fousse <claire.fousse@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 26 17:42:25 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: mduft@gentoo.org, git@vger.kernel.org,
+	Tor Arntsen <tor@spacetec.no>,
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 26 17:49:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPcha-0001oU-Pp
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 17:42:23 +0200
+	id 1QPcoC-0006M1-5R
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 17:49:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757113Ab1EZPmR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 11:42:17 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59406
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752392Ab1EZPmR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 11:42:17 -0400
-Received: (qmail 12850 invoked by uid 107); 26 May 2011 15:42:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 May 2011 11:42:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 May 2011 11:42:14 -0400
-Content-Disposition: inline
-In-Reply-To: <BANLkTi=nLZV_QCyKT8LOhzkJYoJD6J4wPA@mail.gmail.com>
+	id S1758000Ab1EZPtF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 11:49:05 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:65250 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755125Ab1EZPtD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 11:49:03 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E4B20494E;
+	Thu, 26 May 2011 11:51:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=L5nog9jeFDg1lwEWKUGNIsmZmU0=; b=gYaNSO
+	8rDy/yuaxfDigjoTCw3uqH1bjJgSPENHH2oMTUsrw8KFuC6ekdYb8UKCw0sdKfNq
+	0psFaRdR3r0kLzpmXGf086WYXp8qxqei3N5Clkvn0uMk3HbUFjfuTdT4z39BT6Jp
+	gMzYDgak1HZstY3WvwYiPPpmx9F6eP+xRJxBU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sGD+toa+sPU39OyHsahyyC0kEdIPFpz1
+	jUG9LlP0ntnIX3D1/necGyDJJ7cJiyaXA6sW5KDXSVY+h+FlJLbIhEkILzEI9pk3
+	VjtaLApwRTzATl2QYYUoJ5ZgFvy4E7KeufecThv/jh7nJZePDkkQbWmMIxHJN555
+	zclZjhNYWc4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 90B0E494D;
+	Thu, 26 May 2011 11:51:04 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 09076494C; Thu, 26 May 2011
+ 11:50:56 -0400 (EDT)
+In-Reply-To: <20110526022045.GA8172@elie> (Jonathan Nieder's message of "Wed,
+ 25 May 2011 21:20:45 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F676310C-87AF-11E0-8E0D-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174525>
 
-On Thu, May 26, 2011 at 05:18:11PM +0200, Claire Fousse wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> We based our script on what you called a few months ago the "quick and
-> dirty perl script" for the import part and have a few questions about
-> it.
-> First of all, just in case, here is your original script :
-> http://article.gmane.org/gmane.comp.version-control.git/167560
-> 
-> It seems like you first used a hashmap for it to be transformed later
-> into a flat list / array. What is the reasoning behind this ? Why not
-> create an array right away ?
+> Given that we are touching this file anyway, how about relying on
+> git-compat-util for this?
 
-The hashmap is actually backed by an on-disk key/value database.  The
-purpose of this was to allow resuming an import that had failed in the
-middle (since even for a moderate-sized wiki like the git wiki, the
-import was quite slow).
+Many files in compat/ implementation already includes this header, so it
+logically feels like a sane thing to do. I vaguely recall there was one
+corner case where we didn't want to do this, but I do not remember the
+details.
 
-So the hashmap is indexed by page id, and each value contains an array
-of revisions for that page. If we see a page id that we've already done,
-we can skip importing it.
+But I am tempted to do the following, as Tor Arntsen suggested, which I
+think is the least risky solution. I deliberately spelled "0" without the
+(void *) pointer cast, as this code borrowed from upstream is in old K&R
+style and nobody talks about "void" elsewhere in the code.
 
-If you wanted to do it all at once, yes, you could build a flat array of
-revisions, with each revision mentioning the page that it came from, and
-just keep appending to the array as you read more data from the wiki.
-And then at the end, sort that array based on timestamp to get the
-chronological ordering of changes.
+ compat/fnmatch/fnmatch.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-Hope that helps,
--Peff
+diff --git a/compat/fnmatch/fnmatch.c b/compat/fnmatch/fnmatch.c
+index 14feac7..9473aed 100644
+--- a/compat/fnmatch/fnmatch.c
++++ b/compat/fnmatch/fnmatch.c
+@@ -127,6 +127,10 @@ extern char *getenv ();
+ extern int errno;
+ # endif
+ 
++# ifndef NULL
++#  define NULL 0
++# endif
++
+ /* This function doesn't exist on most systems.  */
+ 
+ # if !defined HAVE___STRCHRNUL && !defined _LIBC
