@@ -1,64 +1,65 @@
 From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] Documentation/technical/api-diff.txt: correct name of diff_unmerge()
-Date: Thu, 26 May 2011 13:46:56 -0700
-Message-ID: <1OYUkoTZ9lnzCtR8b7JelpPejr-QfrYvT8fEnZLPLk-TdnsgvRcAtTw7sncEtReLmIdxE8dB2ikYxpOO4ViEhQ@cipher.nrlssc.navy.mil>
-Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
+Subject: [PATCH 1/2] t7508: demonstrate status's failure to use --porcelain format with -z
+Date: Thu, 26 May 2011 13:43:20 -0700
+Message-ID: <vdMu20HxiNaWL_IogfamtfZCd6xRyKanIqTSw0k4f2SrbLfUYHDzKT2EGkwdFRlaLzX-5vGGtDCZRGu84HrJzw@cipher.nrlssc.navy.mil>
+Cc: peff@peff.net, git@vger.kernel.org,
+	Brandon Casey <drafnel@gmail.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu May 26 22:56:39 2011
+X-From: git-owner@vger.kernel.org Thu May 26 22:56:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPhbj-0005bd-3W
+	id 1QPhbj-0005bd-Jn
 	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 22:56:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758540Ab1EZU41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 16:56:27 -0400
+	id S1758542Ab1EZU43 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 16:56:29 -0400
 Received: from mail2.nrlssc.navy.mil ([128.160.25.4]:48670 "EHLO
 	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758389Ab1EZU40 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 16:56:26 -0400
+	with ESMTP id S1758493Ab1EZU41 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 16:56:27 -0400
 X-Greylist: delayed 369 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 May 2011 16:56:26 EDT
-Received: by mail.nrlssc.navy.mil id p4QKo2W2028043; Thu, 26 May 2011 15:50:06 -0500
-X-OriginalArrivalTime: 26 May 2011 20:47:21.0404 (UTC) FILETIME=[1C0E77C0:01CC1BE6]
+Received: by mail.nrlssc.navy.mil id p4QKo2Vu028043; Thu, 26 May 2011 15:50:02 -0500
+X-OriginalArrivalTime: 26 May 2011 20:45:31.0369 (UTC) FILETIME=[DA787590:01CC1BE5]
 X-Virus-Scanned: clamav-milter 0.95.3 at mail2
 X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174567>
 
 From: Brandon Casey <drafnel@gmail.com>
 
+When 'git status' is supplied the -z switch, and no output format has been
+selected, it is supposed to use the --porcelain format.  This does not
+happen.  Instead, the standard long format is used.  Add a test to
+demonstrate this failure.
 
 Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
 ---
- Documentation/technical/api-diff.txt |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ t/t7508-status.sh |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
 
-diff --git a/Documentation/technical/api-diff.txt b/Documentation/technical/api-diff.txt
-index 20b0241..2d2ebc0 100644
---- a/Documentation/technical/api-diff.txt
-+++ b/Documentation/technical/api-diff.txt
-@@ -32,7 +32,7 @@ Calling sequence
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index cd6e2c5..9601258 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -533,6 +533,13 @@ test_expect_success 'status --porcelain ignores -b' '
  
- * As you find different pairs of files, call `diff_change()` to feed
-   modified files, `diff_addremove()` to feed created or deleted files,
--  or `diff_unmerged()` to feed a file whose state is 'unmerged' to the
-+  or `diff_unmerge()` to feed a file whose state is 'unmerged' to the
-   API.  These are thin wrappers to a lower-level `diff_queue()` function
-   that is flexible enough to record any of these kinds of changes.
+ '
  
-@@ -50,7 +50,7 @@ Data structures
- This is the internal representation for a single file (blob).  It
- records the blob object name (if known -- for a work tree file it
- typically is a NUL SHA-1), filemode and pathname.  This is what the
--`diff_addremove()`, `diff_change()` and `diff_unmerged()` synthesize and
-+`diff_addremove()`, `diff_change()` and `diff_unmerge()` synthesize and
- feed `diff_queue()` function with.
- 
- * `struct diff_filepair`
++test_expect_failure 'status -z implies porcelain' '
++	echo " M dir1/modifiedQA  dir2/addedQ?? dir1/untrackedQ?? dir2/modifiedQ?? dir2/untrackedQ?? expectQ?? outputQ?? untrackedQ" |
++		q_to_nul | tr -d "\\012" >expect &&
++	git status -z >output &&
++	test_cmp expect output
++'
++
+ cat >expect <<\EOF
+ # On branch master
+ # Changes to be committed:
 -- 
 1.7.4.4
