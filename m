@@ -1,70 +1,53 @@
-From: Claire Fousse <claire.fousse@gmail.com>
-Subject: Git-Mediawiki : Question about Jeff King's import script
-Date: Thu, 26 May 2011 17:18:11 +0200
-Message-ID: <BANLkTi=nLZV_QCyKT8LOhzkJYoJD6J4wPA@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] remote: allow "-t" with fetch mirrors
+Date: Thu, 26 May 2011 17:26:14 +0200
+Message-ID: <4DDE7116.4070900@viscovery.net>
+References: <20110526151100.GA2881@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, "matthieu.moy" <Matthieu.Moy@grenoble-inp.fr>,
-	Sylvain Boulme <Sylvain.Boulme@imag.fr>
-To: peff@peff.net
-X-From: git-owner@vger.kernel.org Thu May 26 17:18:20 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jimmie WESTER <jimmie.wester@stericsson.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 26 17:26:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPcKJ-0001Mc-Kr
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 17:18:19 +0200
+	id 1QPcS6-0007J6-Tj
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 17:26:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754843Ab1EZPSM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 11:18:12 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:43404 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752762Ab1EZPSL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 11:18:11 -0400
-Received: by pvg12 with SMTP id 12so347643pvg.19
-        for <git@vger.kernel.org>; Thu, 26 May 2011 08:18:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to:cc
-         :content-type;
-        bh=aDqGnrOHuUnmctOP1ZVWMGr+0Z4IFG3jP3AosrsRmC8=;
-        b=jlSCkCwZrWVmIfcHgmp5Dgc3/EvmZymNuARHD4nfGzKV4IOK47ErKv6+xxXzb7GVGH
-         o5aSDUvy2Fvqisxo4HdPCV7Xgg6HEVcyVZEBNozPPsSs3xXQEntu7gf96Xz6qFZzp/7v
-         zs0N1WRF02JglMGbEUjaSYiSwmB0sWPX4S24k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        b=nWREye5fsKMTRg2trbJIZ3gU2inTjcwyWH9PF5zdSyFc3bUX3/xIlrZTOgXlpRH1/9
-         geJd/7xZTO0Exb3/IuPZkN3tWVw29foeK0v/Gh6lF3P+C6HwfUFbxYXPEFN5YHFEqkOA
-         HtxNbPJ0p4IP9/F6vLFNkQtVTe8JTNswCon7Q=
-Received: by 10.142.144.8 with SMTP id r8mr155161wfd.142.1306423091137; Thu,
- 26 May 2011 08:18:11 -0700 (PDT)
-Received: by 10.143.155.9 with HTTP; Thu, 26 May 2011 08:18:11 -0700 (PDT)
+	id S932439Ab1EZP0R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 11:26:17 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:6989 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757774Ab1EZP0R (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 11:26:17 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1QPcRy-0002jY-Ko; Thu, 26 May 2011 17:26:15 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 5E61F1660F;
+	Thu, 26 May 2011 17:26:14 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
+In-Reply-To: <20110526151100.GA2881@sigill.intra.peff.net>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174522>
 
-Dear Jeff King,
-We are the four students in charge of the Git-Mediawiki project
-proposed by Matthieu Moy.
-In case you skipped our email, here is a link to our last mail with a
-few information about the project
-http://www.spinics.net/lists/git/msg158701.html
-We based our script on what you called a few months ago the "quick and
-dirty perl script" for the import part and have a few questions about
-it.
-First of all, just in case, here is your original script :
-http://article.gmane.org/gmane.comp.version-control.git/167560
+Am 5/26/2011 17:11, schrieb Jeff King:
+> +	if (mirror && !(mirror & MIRROR_FETCH) && track.nr)
+> +		die("specifying branches to track makes no sense with non-fetch mirrors");
 
-It seems like you first used a hashmap for it to be transformed later
-into a flat list / array. What is the reasoning behind this ? Why not
-create an array right away ?
+Don't proliferate no double negation. How about:
 
-Thanks for the script and for any information you can give us,
++		die("specifying branches to track makes sense only with fetch mirrors");
 
-Regards,
-The Git-Mediawiki team, Arnaud Lacurie, David Amouyal, Claire Fousse &
-Jeremie Nikaes.
+?
+
+-- Hannes
