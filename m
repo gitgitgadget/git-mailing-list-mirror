@@ -1,140 +1,189 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 5/5] format-patch: preserve subject newlines with -k
-Date: Thu, 26 May 2011 18:28:17 -0400
-Message-ID: <20110526222817.GC21775@sigill.intra.peff.net>
-References: <20110526222450.GA20077@sigill.intra.peff.net>
+From: =?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+Subject: [PATCH] git-grep: Fix problems with recently added tests
+Date: Fri, 27 May 2011 00:43:59 +0200
+Message-ID: <1306449839-7491-1-git-send-email-michal.kiedrowicz@gmail.com>
+References: <7vvcwxunbt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
-X-From: git-owner@vger.kernel.org Fri May 27 00:28:25 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Brian Gernhardt <brian@gernhardtsoftware.com>,
+	Git List <git@vger.kernel.org>,
+	=?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 27 00:44:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPj2X-0008Ch-3E
-	for gcvg-git-2@lo.gmane.org; Fri, 27 May 2011 00:28:25 +0200
+	id 1QPjI6-0007me-4h
+	for gcvg-git-2@lo.gmane.org; Fri, 27 May 2011 00:44:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758598Ab1EZW2U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 18:28:20 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46267
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758450Ab1EZW2U (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 18:28:20 -0400
-Received: (qmail 18677 invoked by uid 107); 26 May 2011 22:28:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 May 2011 18:28:20 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 May 2011 18:28:17 -0400
-Content-Disposition: inline
-In-Reply-To: <20110526222450.GA20077@sigill.intra.peff.net>
+	id S1758610Ab1EZWoZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 May 2011 18:44:25 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:41112 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758210Ab1EZWoY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 18:44:24 -0400
+Received: by wya21 with SMTP id 21so861940wya.19
+        for <git@vger.kernel.org>; Thu, 26 May 2011 15:44:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references:mime-version:content-type
+         :content-transfer-encoding;
+        bh=tNWIcGf+RGDEJAa2kE50Zq+vZG+c/1tftZmev9VioNk=;
+        b=vOTMaM4HIOgYGkJn1dsl+FKAKx9CtP/RURZ+suWsYdy3SxkreaXcU2mLIWvh/+kGa5
+         NE5+mL8hBuAIoT/k7VOcpJZf6RLUdzVeywEEmFY+NBVzTVDe1wq/qjVj71ok9zrp14ok
+         0oVok0grjrKCecsUohqnwssOVCUMQn0VvkIkk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=Ulfj0pArozHp/XI3v7oLjV2zrvOFvSoT8mbHo8gV0euQHPEtxB1dO2GrTtHb2HVAWJ
+         hVOrpB1pWBrA+EqjOd7MIQnpWwzlpSofKcrFlEobxi8gcNua1xidEhHHMx/4KmI+26JA
+         qjQaK7DLMKgXtp2WPxgO78chl3hKoD7rVsEQ4=
+Received: by 10.227.91.81 with SMTP id l17mr1417879wbm.29.1306449863008;
+        Thu, 26 May 2011 15:44:23 -0700 (PDT)
+Received: from localhost (85-177-78-94.net.stream.pl [94.78.177.85])
+        by mx.google.com with ESMTPS id ex2sm785505wbb.48.2011.05.26.15.44.21
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 26 May 2011 15:44:22 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.4
+In-Reply-To: <7vvcwxunbt.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174589>
 
-In older versions of git, we used rfc822 header folding to
-indicate that the original subject line had multiple lines
-in it.  But since a1f6baa (format-patch: wrap long header
-lines, 2011-02-23), we now use header folding whenever there
-is a long line.
+Brian Gernhardt reported that test 'git grep -E -F -G a\\+b' fails on
+OS X 10.6.7. This is because I assumed \+ is part of BRE, which isn't
+true on all platforms.
 
-This means that "git am" cannot trust header folding as a
-sign from format-patch that newlines should be preserved.
-Instead, format-patch needs to signal more explicitly that
-the newlines are significant.  This patch does so by
-rfc2047-encoding the newlines in the subject line. No
-changes are needed on the "git am" end; it already decodes
-the newlines properly.
+The easiest way to make this test pass is to just update expected
+output, but that would make the test pointless. Its real purpose is to
+check whether 'git grep -E -F -G' is different from 'git grep -E -G -F'=
+=2E
+To check that, let's change pattern to "a+b*c". This should return
+different match for -G, -F and -E.
 
-Signed-off-by: Jeff King <peff@peff.net>
+I also made two small tweaks to the tests. First, I added path "ab" to
+all calls to future-proof tests. Second, I updated last two tests to
+better show that 'git grep -P -E' is different from 'git grep -E -P'.
+
+Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
 ---
- builtin/log.c          |    1 +
- commit.h               |    1 +
- log-tree.c             |    1 +
- pretty.c               |    3 ++-
- revision.h             |    3 ++-
- t/t4152-am-subjects.sh |    2 +-
- 6 files changed, 8 insertions(+), 3 deletions(-)
+ t/t7810-grep.sh |   56 ++++++++++++++++++++++++-----------------------=
+-------
+ 1 files changed, 25 insertions(+), 31 deletions(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 8d842cb..0e46e5a 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1131,6 +1131,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		die ("-n and -k are mutually exclusive.");
- 	if (keep_subject && subject_prefix)
- 		die ("--subject-prefix and -k are mutually exclusive.");
-+	rev.preserve_subject = keep_subject;
- 
- 	argc = setup_revisions(argc, argv, &rev, &s_r_opt);
- 	if (argc > 1)
-diff --git a/commit.h b/commit.h
-index 2935740..e985dcc 100644
---- a/commit.h
-+++ b/commit.h
-@@ -74,6 +74,7 @@ struct pretty_print_context
- 	int abbrev;
- 	const char *subject;
- 	const char *after_subject;
-+	int preserve_subject;
- 	enum date_mode date_mode;
- 	int need_8bit_cte;
- 	int show_notes;
-diff --git a/log-tree.c b/log-tree.c
-index 0d8cc7a..0c41789 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -504,6 +504,7 @@ void show_log(struct rev_info *opt)
- 	ctx.date_mode = opt->date_mode;
- 	ctx.abbrev = opt->diffopt.abbrev;
- 	ctx.after_subject = extra_headers;
-+	ctx.preserve_subject = opt->preserve_subject;
- 	ctx.reflog_info = opt->reflog_info;
- 	ctx.fmt = opt->commit_format;
- 	pretty_print_commit(&ctx, commit, &msgbuf);
-diff --git a/pretty.c b/pretty.c
-index f920205..905a082 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1122,7 +1122,8 @@ void pp_title_line(const struct pretty_print_context *pp,
- 	struct strbuf title;
- 
- 	strbuf_init(&title, 80);
--	*msg_p = format_subject(&title, *msg_p, " ");
-+	*msg_p = format_subject(&title, *msg_p,
-+				pp->preserve_subject ? "\n" : " ");
- 
- 	strbuf_grow(sb, title.len + 1024);
- 	if (pp->subject) {
-diff --git a/revision.h b/revision.h
-index 05659c6..f8ddd83 100644
---- a/revision.h
-+++ b/revision.h
-@@ -90,7 +90,8 @@ struct rev_info {
- 			abbrev_commit:1,
- 			use_terminator:1,
- 			missing_newline:1,
--			date_mode_explicit:1;
-+			date_mode_explicit:1,
-+			preserve_subject:1;
- 	unsigned int	disable_stdin:1;
- 
- 	enum date_mode date_mode;
-diff --git a/t/t4152-am-subjects.sh b/t/t4152-am-subjects.sh
-index 37e5c03..4c68245 100755
---- a/t/t4152-am-subjects.sh
-+++ b/t/t4152-am-subjects.sh
-@@ -70,7 +70,7 @@ test_expect_success 'multiline subject unwrapped (format-patch -k | am)' '
- 	check_subject multiline-k
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index e061108..e1d8c40 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -33,9 +33,9 @@ test_expect_success setup '
+ 		echo HeLLo_world
+ 	} >hello_world &&
+ 	{
+-		echo aab
+-		echo a+b
+-		echo a\\+b
++		echo "a+b*c"
++		echo "a+bc"
++		echo "abc"
+ 	} >ab &&
+ 	echo vvv >v &&
+ 	echo ww w >w &&
+@@ -233,14 +233,14 @@ do
+ 		test_cmp expected actual
+ 	'
+ 	test_expect_success "grep $L with grep.extendedRegexp=3Dfalse" '
+-		echo "ab:a+b" >expected &&
+-		git -c grep.extendedRegexp=3Dfalse grep "a+b" >actual &&
++		echo "ab:a+bc" >expected &&
++		git -c grep.extendedRegexp=3Dfalse grep "a+b*c" ab >actual &&
+ 		test_cmp expected actual
+ 	'
+=20
+ 	test_expect_success "grep $L with grep.extendedRegexp=3Dtrue" '
+-		echo "ab:aab" >expected &&
+-		git -c grep.extendedRegexp=3Dtrue grep "a+b" >actual &&
++		echo "ab:abc" >expected &&
++		git -c grep.extendedRegexp=3Dtrue grep "a+b*c" ab >actual &&
+ 		test_cmp expected actual
+ 	'
+ done
+@@ -650,10 +650,10 @@ test_expect_success LIBPCRE 'grep -P pattern with=
+ grep.extendedRegexp=3Dtrue' '
+=20
+ test_expect_success LIBPCRE 'grep -P -v pattern' '
+ 	{
+-		echo ab:a+b
+-		echo ab:a\\+b
++		echo "ab:a+b*c"
++		echo "ab:a+bc"
+ 	} >expected &&
+-	git grep -P -v "aab" ab >actual &&
++	git grep -P -v "abc" ab >actual &&
+ 	test_cmp expected actual
  '
- echo "$MULTILINE_SUBJECT" >expect
--test_expect_failure 'multiline subject preserved (format-patch -k | am -k)' '
-+test_expect_success 'multiline subject preserved (format-patch -k | am -k)' '
- 	check_subject multiline-k -k
+=20
+@@ -686,39 +686,33 @@ test_expect_success LIBPCRE 'grep -P invalidpatte=
+rn properly dies ' '
+ 	test_must_fail git grep -P "a["
  '
- 
--- 
-1.7.4.5.26.g0c6a2
+=20
+-test_expect_success 'grep -F -E -G pattern' '
+-	echo ab:a+b >expected &&
+-	git grep -F -E -G a+b >actual &&
+-	test_cmp expected actual
+-'
+-
+-test_expect_success 'grep -F -G -E pattern' '
+-	echo ab:aab >expected &&
+-	git grep -F -G -E a+b >actual &&
++test_expect_success 'grep -G -E -F pattern' '
++	echo "ab:a+b*c" >expected &&
++	git grep -G -E -F "a+b*c" ab >actual &&
+ 	test_cmp expected actual
+ '
+=20
+ test_expect_success 'grep -E -F -G pattern' '
+-	echo ab:aab >expected &&
+-	git grep -E -F -G a\\+b >actual &&
++	echo "ab:a+bc" >expected &&
++	git grep -E -F -G "a+b*c" ab >actual &&
+ 	test_cmp expected actual
+ '
+=20
+-test_expect_success 'grep -E -G -F pattern' '
+-	echo ab:a\\+b >expected &&
+-	git grep -E -G -F a\\+b >actual &&
++test_expect_success 'grep -F -G -E pattern' '
++	echo "ab:abc" >expected &&
++	git grep -F -G -E "a+b*c" ab >actual &&
+ 	test_cmp expected actual
+ '
+=20
+-test_expect_success 'grep -G -F -E pattern' '
+-	echo ab:a+b >expected &&
+-	git grep -G -F -E a\\+b >actual &&
+-	test_cmp expected actual
++test_expect_success 'grep -G -F -P -E pattern' '
++	:>empty &&
++	test_must_fail git grep -G -F -P -E "a\x{2b}b\x{2a}c" ab >actual &&
++	test_cmp empty actual
+ '
+=20
+-test_expect_success LIBPCRE 'grep -E -G -F -P pattern' '
+-	echo ab:a+b >expected &&
+-	git grep -E -G -F -P a\\+b >actual &&
++test_expect_success LIBPCRE 'grep -G -F -E -P pattern' '
++	echo "ab:a+b*c" >expected &&
++	git grep -G -F -E -P "a\x{2b}b\x{2a}c" ab >actual &&
+ 	test_cmp expected actual
+ '
+=20
+--=20
+1.7.3.4
