@@ -1,87 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] remove unnecessary test and dead diagnostic
-Date: Thu, 26 May 2011 12:28:44 -0400
-Message-ID: <20110526162844.GB4049@sigill.intra.peff.net>
-References: <87tych5zrh.fsf@rho.meyering.net>
- <20110526141130.GB18520@sigill.intra.peff.net>
- <87mxi95y4z.fsf@rho.meyering.net>
+From: Stephen Bash <bash@genarts.com>
+Subject: Re: Git EOL Normalization
+Date: Thu, 26 May 2011 12:28:48 -0400 (EDT)
+Message-ID: <22629514.41388.1306427328539.JavaMail.root@mail.hq.genarts.com>
+References: <7v1uzlzbra.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git list <git@vger.kernel.org>
-To: Jim Meyering <jim@meyering.net>
-X-From: git-owner@vger.kernel.org Thu May 26 18:28:54 2011
+Content-Transfer-Encoding: 7bit
+Cc: Dmitry Potapov <dpotapov@gmail.com>, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 26 18:29:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPdQa-0001su-SA
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 18:28:53 +0200
+	id 1QPdQo-00023I-Aq
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 18:29:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756464Ab1EZQ2r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 12:28:47 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:40957
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757567Ab1EZQ2q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 12:28:46 -0400
-Received: (qmail 13547 invoked by uid 107); 26 May 2011 16:28:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 May 2011 12:28:46 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 May 2011 12:28:44 -0400
-Content-Disposition: inline
-In-Reply-To: <87mxi95y4z.fsf@rho.meyering.net>
+	id S1757582Ab1EZQ24 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 12:28:56 -0400
+Received: from hq.genarts.com ([173.9.65.1]:19341 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754891Ab1EZQ2z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 12:28:55 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id C3946EA2359;
+	Thu, 26 May 2011 12:28:54 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id GcIRtx83lRtT; Thu, 26 May 2011 12:28:48 -0400 (EDT)
+Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 9561AEA233B;
+	Thu, 26 May 2011 12:28:48 -0400 (EDT)
+In-Reply-To: <7v1uzlzbra.fsf@alter.siamese.dyndns.org>
+X-Mailer: Zimbra 6.0.10_GA_2692 (ZimbraWebClient - SAF3 (Mac)/6.0.10_GA_2692)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174543>
 
-On Thu, May 26, 2011 at 04:34:20PM +0200, Jim Meyering wrote:
-
-> Argh.  I went in with blinders on, thinking that the caller was
-> right in using a type of size_t, and then read this "xread" name and
-> assumed that it would exit upon failure.
-
-I've made the same mistake, as many of our x* functions are designed to
-die on error.
-
-> Subject: [PATCH] use the correct type (ssize_t, not size_t) for read-style function
+----- Original Message -----
+> From: "Junio C Hamano" <gitster@pobox.com>
+> To: "Jakub Narebski" <jnareb@gmail.com>
+> Sent: Thursday, May 26, 2011 12:07:21 PM
+> Subject: Re: Git EOL Normalization
 > 
-> * sha1_file.c (index_stream): Using an unsigned type,
-> we would fail to detect a read error and then proceed to
-> try to write (size_t)-1 bytes.
+> > I think git examines only first block of a file or so. The heuristic
+> > to detect binary-ness of a file is, as I have heard, the same or
+> > similar to the one that GNU diff uses.
+> 
+> Yes, the binary detection was designed to be compatible with GNU diff. But
+> I do not think it has much to do with the topic of this thread. Aren't
+> other people discussing the line ending?
 
-This version looks right to me.
+The binary detection may be apropos because there are situations (core.autocrlf={true,input} and text=auto) where Git will only do line ending conversion if it detects a text file...  But I'll leave it to people who know the code better to say if this binary detection is in fact part of the decision process.
 
-There's another one, too:
-
--- >8 --
-Subject: [PATCH] read_gitfile_gently: use ssize_t to hold read result
-
-Otherwise, a negative error return becomes a very large read
-value. We catch this in practice because we compare the
-expected and actual numbers of bytes (and you are not likely
-to be reading (size_t)-1 bytes), but this makes the
-correctness a little more obvious.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- setup.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/setup.c b/setup.c
-index 013ad11..ce87900 100644
---- a/setup.c
-+++ b/setup.c
-@@ -382,7 +382,7 @@ const char *read_gitfile_gently(const char *path)
- 	const char *slash;
- 	struct stat st;
- 	int fd;
--	size_t len;
-+	ssize_t len;
- 
- 	if (stat(path, &st))
- 		return NULL;
--- 
-1.7.4.5.13.gd3ff5
+Thanks,
+Stephen
