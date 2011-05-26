@@ -1,86 +1,140 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 1/6] i18n win32: add git-am eval_gettext variable prefix
-Date: Thu, 26 May 2011 16:59:21 +0200
-Message-ID: <4DDE6AC9.9090003@viscovery.net>
-References: <1306365594-22061-1-git-send-email-avarab@gmail.com> <1306365594-22061-2-git-send-email-avarab@gmail.com> <4DDDF483.70805@viscovery.net> <7vlixtzh1q.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] remote: allow "-t" with fetch mirrors
+Date: Thu, 26 May 2011 11:11:00 -0400
+Message-ID: <20110526151100.GA2881@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Jimmie WESTER <jimmie.wester@stericsson.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 26 16:59:32 2011
+X-From: git-owner@vger.kernel.org Thu May 26 17:11:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPc27-0004lm-KE
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 16:59:31 +0200
+	id 1QPcDP-0004eZ-6P
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 17:11:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757800Ab1EZO70 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 May 2011 10:59:26 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:50049 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753670Ab1EZO70 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 May 2011 10:59:26 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1QPc1y-0001Bw-3s; Thu, 26 May 2011 16:59:22 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id CAAE91660F;
-	Thu, 26 May 2011 16:59:21 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
-In-Reply-To: <7vlixtzh1q.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.1.1
-X-Spam-Score: -1.4 (-)
+	id S1754017Ab1EZPLF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 11:11:05 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38372
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752693Ab1EZPLD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 11:11:03 -0400
+Received: (qmail 12251 invoked by uid 107); 26 May 2011 15:11:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 May 2011 11:11:02 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 May 2011 11:11:00 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174519>
 
-Am 5/26/2011 16:13, schrieb Junio C Hamano:
-> This started on windows that confuses between $path and $PATH, we wou=
-ldn't
-> be doing this, right?  In git-submodule.sh uses $path variable for
-> something other than the search-path, and the definition updated by y=
-ou
-> would become in the larger picture:
->=20
-> 	path=3D... ;# git-submodule uses the variable for not-a-search-path
->         _I18N__path=3D$path
->         export _I18N__path
->         git sh-i18n--envsubst "... $_I18N__path"
->=20
-> Is the RHS of the second assignment safe on Windows?  Are environment
-> variables case insane but normal variables are safe?
+Commit 13fc2c1 (remote: disallow some nonsensical option
+combinations, 2011-03-30) made it impossible to use "remote
+add -t foo --mirror". The argument was that specifying
+specific branches is useless because:
 
-Yes, the second assignment is safe, because at this point everything is
-internal to bash; it does the right thing.
+  1. Push mirrors do not want a refspec at all.
 
-Problems start only when exported variables are transported from bash t=
-o
-another process.
+  2. The point of fetch mirroring is to use a broad refspec
+     like "refs/*", but using "-t" overrides that.
 
-But ... wait a minute - I've another idea!
+Point (1) is valid; "-t" with push mirrors is useless. But
+point (2) ignored another side effect of using --mirror: it
+fetches the refs directly into the refs/ namespace as they
+are found upstream, instead of placing them in a
+separate-remote layout.
 
-bash -c "path=3Dz env"
+So 13fc2c1 was overly constrictive, and disallowed
+reasonable specific-branch mirroring, like:
 
-*does* list both 'path' and 'PATH'
+  git remote add -t heads/foo -t heads/bar --mirror=fetch
 
-=2E.. hack hack ...
+which makes the local "foo" and "bar" branches direct
+mirrors of the remote, but does not fetch anything else.
 
-and so does a home-grown equivalent of 'env', both for MinGW and Visual
-Studio. It looks like the environment was transfered just fine, only th=
-e
-*lookup* by getenv() was case-insensitive. This means we would just hav=
-e
-to supply a POSIX conformant getenv() for sh-i18n--envsubst.
+This patch restores the original behavior, but only for
+fetch mirrors.
 
-I can write one, no problem; and, =C6var, I'm awfully sorry for sending=
- you
-in the wrong direction.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This is on top of the jk/maint-remote-mirror-safer branch which made it
+into 1.7.5 (the tip of which was 0990248).
 
--- Hannes
+If I were designing "git remote" from scratch, I would probably have
+"-t" specify branches in refs/heads, even in mirror mode, for
+consistency with non-mirror mode. But making them relative to refs/ in
+mirror mode is how it has always worked, and I look at this patch not as
+adding a new feature but as unbreaking a feature that worked before.
+So:
+
+  git remote add -t heads/foo -t heads/bar --mirror
+
+will continue to work as it did before the original series (though it
+will nag that you should be using --mirror=fetch).
+
+ builtin/remote.c  |    4 ++--
+ t/t5505-remote.sh |   22 ++++++++++++++++++++++
+ 2 files changed, 24 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/remote.c b/builtin/remote.c
+index eb1229d..c2eaa2d 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -193,8 +193,8 @@ static int add(int argc, const char **argv)
+ 
+ 	if (mirror && master)
+ 		die("specifying a master branch makes no sense with --mirror");
+-	if (mirror && track.nr)
+-		die("specifying branches to track makes no sense with --mirror");
++	if (mirror && !(mirror & MIRROR_FETCH) && track.nr)
++		die("specifying branches to track makes no sense with non-fetch mirrors");
+ 
+ 	name = argv[0];
+ 	url = argv[1];
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 4e69c90..0d0222e 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -347,6 +347,21 @@ test_expect_success 'fetch mirrors do not act as mirrors during push' '
+ 	)
+ '
+ 
++test_expect_success 'add fetch mirror with specific branches' '
++	git init --bare mirror-fetch/track &&
++	(cd mirror-fetch/track &&
++	 git remote add --mirror=fetch -t heads/new parent ../parent
++	)
++'
++
++test_expect_success 'fetch mirror respects specific branches' '
++	(cd mirror-fetch/track &&
++	 git fetch parent &&
++	 git rev-parse --verify refs/heads/new &&
++	 test_must_fail git rev-parse --verify refs/heads/renamed
++	)
++'
++
+ test_expect_success 'add --mirror=push' '
+ 	mkdir mirror-push &&
+ 	git init --bare mirror-push/public &&
+@@ -382,6 +397,13 @@ test_expect_success 'push mirrors do not act as mirrors during fetch' '
+ 	)
+ '
+ 
++test_expect_success 'push mirrors do not allow you to specify refs' '
++	git init mirror-push/track &&
++	(cd mirror-push/track &&
++	 test_must_fail git remote add --mirror=push -t new public ../public
++	)
++'
++
+ test_expect_success 'add alt && prune' '
+ 	(mkdir alttst &&
+ 	 cd alttst &&
+-- 
+1.7.4.5.13.gd3ff5
