@@ -1,98 +1,77 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PULL svn-fe/maint] t0081-*.sh: Fix failure of the 'long read' tests
-Date: Wed, 25 May 2011 23:33:35 -0500
-Message-ID: <20110526043335.GB17479@elie>
-References: <4DB70972.20308@ramsay1.demon.co.uk>
- <20110426234850.GC32491@sigill.intra.peff.net>
- <4DBC45F9.7090804@ramsay1.demon.co.uk>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v2 3/3] git-mergetool--lib: Make vimdiff retain the
+ current directory
+Date: Wed, 25 May 2011 22:05:32 -0700
+Message-ID: <BANLkTinWUK8NDDd3i7fRRTEXjSmTtMwL_Q@mail.gmail.com>
+References: <1306381034-44190-1-git-send-email-davvid@gmail.com>
+	<1306381034-44190-3-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Jeff King <peff@peff.net>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	David Barr <david.barr@cordelta.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?B?RnLDqWTDqXJpYyBIZWl0em1hbm4=?= 
+	<frederic.heitzmann@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 26 06:34:06 2011
+X-From: git-owner@vger.kernel.org Thu May 26 07:05:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPSGo-0007pZ-KS
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 06:34:02 +0200
+	id 1QPSlS-00046O-Pl
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 07:05:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751234Ab1EZEdu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 00:33:50 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:34624 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751206Ab1EZEdr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 00:33:47 -0400
-Received: by iwn34 with SMTP id 34so266445iwn.19
-        for <git@vger.kernel.org>; Wed, 25 May 2011 21:33:45 -0700 (PDT)
+	id S1754304Ab1EZFFe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 May 2011 01:05:34 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:63494 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751150Ab1EZFFd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 May 2011 01:05:33 -0400
+Received: by pwi15 with SMTP id 15so180715pwi.19
+        for <git@vger.kernel.org>; Wed, 25 May 2011 22:05:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=dXn7fD6E2uIuTlcQ1E5XsaQ4c5Fi9xIGg4PoYqgFplA=;
-        b=JnlPTNe7/eC8f0AvCJcklGaGqOAcLP3Hg1DR+G+KiZRO6UitpvLtXUmnmS6CHbJ/u0
-         47Um5OcjZH5KGGboGA/2l4b7Qf+izugfSnG2tBq0fjaiBiOOhKlqVWSBuKrnXCGwX87m
-         uo4Q3QLmGhxjdsChQ6+yPULYvMR/6teNA836w=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=w7ppw67Zb/W4CHq3kwm+ybJVRDcrjUl2em9pdH+UNKw=;
+        b=PEc0BWGsGTjKi0ZzEv5jDPY+04thwBppxwlQ/EKuE+smH9qlYJmUDPjOURjzmxwuFv
+         FKgsZz3HQUXH1XFSVwfpIoJ0qTYwDuKDB+gtrVf6qkG2pYeXwIzxyl81QIqQDgsDdptO
+         oXotA16NXbUgDBkOAiqPBoFBkmYE5LP0PFYlo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=vy1yirRyTNQXMJStLWcZL/m6jdBPjSIy6hnhYX5vgIzwDqxqIvhl1nsfLEj4CT4JXo
-         2el5IyIgsP0Ka4yqKcOLkf+q/1pMxLYmZooZ55opOjmLE1sLGjujn6XqbPGpgXaBF5DV
-         C+iSdMwm1HFAeRBE7bPICg1zWUA56vEwPRQ2A=
-Received: by 10.42.243.7 with SMTP id lk7mr519658icb.191.1306384424598;
-        Wed, 25 May 2011 21:33:44 -0700 (PDT)
-Received: from elie (adsl-69-209-65-98.dsl.chcgil.ameritech.net [69.209.65.98])
-        by mx.google.com with ESMTPS id w5sm264810icv.4.2011.05.25.21.33.41
-        (version=SSLv3 cipher=OTHER);
-        Wed, 25 May 2011 21:33:42 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4DBC45F9.7090804@ramsay1.demon.co.uk>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ggJF4L69/M4V9XYJkUOyVjXUWbRzurAFpNGCq/hNsdHCqqqrhl6Bkv5M8LNmzNqMji
+         r+Smglp2L3A515y6Eox1IZKxM7MlKm2h4gPTKxD7DI59tytQM+Pp2kNmb7NPj+jOLRfG
+         jyE7SFXI8pokOUHoxoWGu+ZeaYZXil9UKkN68=
+Received: by 10.142.74.1 with SMTP id w1mr63085wfa.121.1306386332542; Wed, 25
+ May 2011 22:05:32 -0700 (PDT)
+Received: by 10.143.58.8 with HTTP; Wed, 25 May 2011 22:05:32 -0700 (PDT)
+In-Reply-To: <1306381034-44190-3-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174494>
 
-Hi,
+On Wed, May 25, 2011 at 8:37 PM, David Aguilar <davvid@gmail.com> wrote=
+:
+> +
+> +resolve_git_prefix() {
+> + =C2=A0 =C2=A0 =C2=A0 # If GIT_PREFIX is empty then we cannot use it=
+ in tools
+> + =C2=A0 =C2=A0 =C2=A0 # that expect to be able to chdir() to its val=
+ue.
+> + =C2=A0 =C2=A0 =C2=A0 if test -z "$GIT_PREFIX"; then
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GIT_PREFIX=3D.
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 export GIT_PREFIX
+> + =C2=A0 =C2=A0 =C2=A0 fi
+> +}
 
-Ramsay Jones wrote:
-
-> So, the patch is correct, but (apart from the last sentence) the
-> commit message is *absolute rubbish*. I won't bore you with the
-> details of my lunacy! :-P
->
-> However, I much prefer Jonathan's patch which removes this test
-> completely!
-
-Junio, please pull
-
-  git://repo.or.cz/git/jrn.git svn-fe-maint
-
-to receive the following fix.  The patch first visited the list two
-months ago[1] and was discussed again last month[2] and seems to have
-been well liked both times (well, I know I like it).
-
-The tests it removes
-
- - are missing an EXECKEEPSPID prerequisite on Windows
- - use a : $((i = i + 1)) construct which does not seem to be portable
-   to old versions of dash
- - are pointless, an eyesore, and a pain to maintain
-
-What was the author thinking?  Sorry to let this sit for so long.  
-
-Jonathan Nieder (1):
-      Revert "t0081 (line-buffer): add buffering tests"
-
- t/t0081-line-buffer.sh |  106 +-----------------------------------------------
- 1 files changed, 2 insertions(+), 104 deletions(-)
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/170307/focus=170365
-[2] http://thread.gmane.org/gmane.comp.version-control.git/172120/focus=172523
+Oops, I forgot to replace the function call with : GIT_PREFIX=3D${GIT_P=
+REFIX:-.}
+--=20
+=C2=A0 =C2=A0 David
