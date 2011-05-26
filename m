@@ -1,89 +1,68 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [1.7.2] Please cherry-pick "upload-pack: start pack-objects before
- async rev-list"
-Date: Thu, 26 May 2011 01:45:48 -0500
-Message-ID: <20110526064547.GA18777@elie>
-References: <20110404053626.GA26529@sigill.intra.peff.net>
- <7v8vvnjnyg.fsf@alter.siamese.dyndns.org>
- <20110406175413.GA8205@sigill.intra.peff.net>
- <20110406213333.GA18481@sigill.intra.peff.net>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: Git EOL Normalization
+Date: Thu, 26 May 2011 11:20:13 +0400
+Message-ID: <BANLkTim6DbteE4CYUBUsKbTdNCHOu0_+Dg@mail.gmail.com>
+References: <20833035.39857.1306334468204.JavaMail.root@mail.hq.genarts.com>
+	<29536877.39971.1306336806278.JavaMail.root@mail.hq.genarts.com>
+	<BANLkTik3iRKx4P_3nbzygadmLPEOr2vGhA@mail.gmail.com>
+	<m3y61uxan2.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Aman Gupta <aman@github.com>, Ryan Tomayko <ryan@github.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 26 08:46:07 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Stephen Bash <bash@genarts.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 26 09:20:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPUKc-0001CE-3n
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 08:46:06 +0200
+	id 1QPUrm-0001mI-N9
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 09:20:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751307Ab1EZGp7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 02:45:59 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:58046 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750709Ab1EZGp7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 02:45:59 -0400
-Received: by iwn34 with SMTP id 34so333864iwn.19
-        for <git@vger.kernel.org>; Wed, 25 May 2011 23:45:57 -0700 (PDT)
+	id S1754475Ab1EZHUP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 03:20:15 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:44182 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754177Ab1EZHUP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 03:20:15 -0400
+Received: by qwk3 with SMTP id 3so218569qwk.19
+        for <git@vger.kernel.org>; Thu, 26 May 2011 00:20:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=7EDxnZcz7GBK4GrBKeWq8w0KNfaQGyoG7XLtq4Y4qGs=;
-        b=UACMWveL+aH03N/y4j4CI0i+JjMSylBnJTgx2nlXeCmuh/muaIHdY8akXcw7SLfYCX
-         2CIR4pCi2LKJzEDXRB1icDkRK8/h5PpJAu71wyZhs3qvV1rxyRF71G7Rq/PPdFp1XdZh
-         52phN0iNAY7Oii3zCU5le+Kxhszb7JzME/Bz8=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=vAkvmY9+698n0mnedKNkEet+RaFkUrvpHs/urocHH1A=;
+        b=JdD79v5VgGSXfW5kEN+jQ9kGLVbpQd5FbS+MZZJLEW3F0FIfSHlzI4s+0HSRATAq9K
+         NO0vSP6tzcAX5w/Na4Nm+pv+b0l5vSl3CeFKzycQQss2NYQSEzUtk3sUs9s7ca/qjVsP
+         Hch3NuIRQe3Ujh1RI78iNHheOGY8w2DXND+Wk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=YaA8p9so/FXj4RnNBaYdD1u9lNyl3qEJSHn1rPkNod43Cd0m5C3AlnBXPN+qHZIyPW
-         qHuigNeafMeeShM003jPiVWjIG6OwUhvJxJM0BC4aaObm1X4JQy9TpCHMPl4Ha9X8NJG
-         8FEKKKF2/kDkICRaXn3WLh0QtO59bxBKNxtLA=
-Received: by 10.42.221.135 with SMTP id ic7mr878646icb.394.1306392357102;
-        Wed, 25 May 2011 23:45:57 -0700 (PDT)
-Received: from elie (adsl-69-209-65-98.dsl.chcgil.sbcglobal.net [69.209.65.98])
-        by mx.google.com with ESMTPS id w5sm348158icv.4.2011.05.25.23.45.54
-        (version=SSLv3 cipher=OTHER);
-        Wed, 25 May 2011 23:45:55 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20110406213333.GA18481@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=TJcipETqscVdvnD8lJZsqrgEREW4Jv6cNMgz+wmKLWOEtQTUBVm+vPS3n7CAsW2jH5
+         UOA1pJh0SIrMFe02OSEzdSqfFrSZZnAEBB9Yi+yr3YYVcJdAtI0x4lU9vEe+Rl1sDgS7
+         0ehU0EwdxViaiBK/b8IsufiH8+Q4y3+vUkyCU=
+Received: by 10.229.136.1 with SMTP id p1mr310792qct.218.1306394413595; Thu,
+ 26 May 2011 00:20:13 -0700 (PDT)
+Received: by 10.229.77.226 with HTTP; Thu, 26 May 2011 00:20:13 -0700 (PDT)
+In-Reply-To: <m3y61uxan2.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174501>
 
-Hi Junio,
-
-Jeff King wrote:
-
-> Subject: [PATCH] upload-pack: start pack-objects before async rev-list
+On Thu, May 26, 2011 at 10:02 AM, Jakub Narebski <jnareb@gmail.com> wrote:
 >
-> In a pthread-enabled version of upload-pack, there's a race condition
-> that can cause a deadlock on the fflush(NULL) we call from run-command.
+> I think git examines only first block of a file or so.
 
-This server-side deadlock started being triggered by shallow clones
-when sv.gnu.org upgraded to v1.7.2.5 a couple of months ago[1].  So it
-might be worth thinking about how to help upgrade-averse server admins
-to fix it.
+I have looked at convert.c:
 
-Luckily, Jeff's patch (v1.7.5.1~4^2, upload-pack: start pack-objects
-before async rev-list, 2011-04-06) applies cleanly on top of the
-oldest commit with the problem that I can find (v1.7.2-rc0~31^2~3,
-Reimplement async procedures using pthreads, 2010-03-06).  Could you
-queue it for inclusion in maint-1.7.2?
+http://git.kernel.org/?p=git/git.git;a=blob;f=convert.c;h=efc7e07d475c66f7835dc6cbbd3bc358f01c41c3;hb=HEAD
 
-If I understand correctly, Windows with threaded async rev-list before
-then would not have suffered from this deadlock because it did not
-fflush(NULL) in start_command until v1.7.4.1~18 (start_command: flush
-buffers in the WIN32 code path as well, 2011-02-04).
+and gather_stats works on the whole file as far as I can tell.
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/172042
+Did I miss something?
+
+
+Dmitry
