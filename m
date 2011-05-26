@@ -1,81 +1,69 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PULL svn-fe/maint] t0081-*.sh: Fix failure of the 'long read'
- tests
-Date: Thu, 26 May 2011 09:03:22 -0700
-Message-ID: <7v8vttzbxx.fsf@alter.siamese.dyndns.org>
-References: <4DB70972.20308@ramsay1.demon.co.uk>
- <20110426234850.GC32491@sigill.intra.peff.net>
- <4DBC45F9.7090804@ramsay1.demon.co.uk> <20110526043335.GB17479@elie>
+Subject: Re: Git EOL Normalization
+Date: Thu, 26 May 2011 09:07:21 -0700
+Message-ID: <7v1uzlzbra.fsf@alter.siamese.dyndns.org>
+References: <20833035.39857.1306334468204.JavaMail.root@mail.hq.genarts.com>
+ <29536877.39971.1306336806278.JavaMail.root@mail.hq.genarts.com>
+ <BANLkTik3iRKx4P_3nbzygadmLPEOr2vGhA@mail.gmail.com>
+ <m3y61uxan2.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Jeff King <peff@peff.net>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	David Barr <david.barr@cordelta.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 26 18:03:43 2011
+Cc: Dmitry Potapov <dpotapov@gmail.com>,
+	Stephen Bash <bash@genarts.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 26 18:07:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPd2F-00080Z-DK
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 18:03:43 +0200
+	id 1QPd63-0002ow-9d
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 18:07:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756120Ab1EZQDi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 12:03:38 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48220 "EHLO
+	id S1757889Ab1EZQHe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 12:07:34 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53379 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752519Ab1EZQDh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 12:03:37 -0400
+	with ESMTP id S1756289Ab1EZQHd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 12:07:33 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A07334B63;
-	Thu, 26 May 2011 12:05:44 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3ADA74BE1;
+	Thu, 26 May 2011 12:09:40 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=O1Kw0EWDfhT6tPVxRD08v4pQsss=; b=QyrndD
-	eTy/cUdBU9jjaA86Cfa9SgL+SiiSgtO/QpzQMAACWDaMbuex3DW+LPUyyw+zU5RM
-	dO5GMiw/nVcbPtcgeCZFgWQT0VaoNxMxRbXMNwAxGxRByeNBooQUeWx5nWXJUV0E
-	V24KPpCH3STTboPzwL3GtY4hqD80HP0gJJw7w=
+	:content-type; s=sasl; bh=UKTe80S4gYONhNtzGrkTSsql5K4=; b=vnB9K8
+	qYhhIWMVCr+QdaQAoaI1kBF3gWEjX1X+aCSG9Atu0D33pfG+K3ejspWA9l/OiBOg
+	Hcc3ovAYPBIH1/PzL3xTqkBbgc1REgvRgqTY8ORLSYUqZ84YriCSYfWGxVx01/bf
+	xDmSSerBeqTeoQ3+MSUYAyOrLSO+n4NHpCON4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=I9gOprihvvBxTx8x3JPtdJqIQjV+ALlu
-	xbocD5kEWv6Yl0/hwRVTXXvMjeAsdXbxKZ5WjtsNsEbo0ENwpc7tZq/X0gtqPMnr
-	fZdTgAJmrkjN8EPQrQ7/TAbgN1up8eeNGzEck7NXEkIgcXQRAN75rjAiYeIbsTSz
-	TGBVt/z5+68=
+	:content-type; q=dns; s=sasl; b=VdkxJjO/DIcPnPviWO9iVWG3ZwByntOk
+	AJJCBoKavilMzZsUVq2zhcW7GaipEI6Uw6+flxVM6L3SV55gq4zYfijMF1DQLrEK
+	UoXph89cyQg6ShPsW15eGSZPm/6Qp/IXoqfo6Xjx7Q9H9e/DFJtuHUmtGguayRhK
+	hKJq4eecelM=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4B4774B5F;
-	Thu, 26 May 2011 12:05:39 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id ED9324BDF;
+	Thu, 26 May 2011 12:09:35 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8B4794B5B; Thu, 26 May 2011
- 12:05:31 -0400 (EDT)
-In-Reply-To: <20110526043335.GB17479@elie> (Jonathan Nieder's message of
- "Wed, 25 May 2011 23:33:35 -0500")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A49644BDD; Thu, 26 May 2011
+ 12:09:30 -0400 (EDT)
+In-Reply-To: <m3y61uxan2.fsf@localhost.localdomain> (Jakub Narebski's message
+ of "Wed, 25 May 2011 23:02:35 -0700 (PDT)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FFD1EBD6-87B1-11E0-985F-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 8CE66470-87B2-11E0-B4E1-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174539>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> Junio, please pull
->
->   git://repo.or.cz/git/jrn.git svn-fe-maint
->
-> to receive the following fix.  The patch first visited the list two
-> months ago[1] and was discussed again last month[2] and seems to have
-> been well liked both times (well, I know I like it).
->
-> The tests it removes
->
->  - are missing an EXECKEEPSPID prerequisite on Windows
->  - use a : $((i = i + 1)) construct which does not seem to be portable
->    to old versions of dash
->  - are pointless, an eyesore, and a pain to maintain
+> I think git examines only first block of a file or so.  The heuristic
+> to detect binary-ness of a file is, as I have heard, the same or
+> similar to the one that GNU diff uses.
 
-Done, and thanks.
+Yes, the binary detection was designed to be compatible with GNU diff. But
+I do not think it has much to do with the topic of this thread. Aren't
+other people discussing the line ending?
