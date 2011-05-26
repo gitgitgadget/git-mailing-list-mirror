@@ -1,144 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] read_in_full: always report errors
-Date: Thu, 26 May 2011 13:53:09 -0700
-Message-ID: <7vlixtw5e2.fsf@alter.siamese.dyndns.org>
-References: <87tych5zrh.fsf@rho.meyering.net>
- <20110526141130.GB18520@sigill.intra.peff.net>
- <87hb8h5y09.fsf@rho.meyering.net>
- <20110526163027.GC4049@sigill.intra.peff.net>
- <7vy61twbqw.fsf@alter.siamese.dyndns.org>
- <20110526184839.GA6910@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 2/3] mailinfo: always clean up rfc822 header folding
+Date: Thu, 26 May 2011 16:53:38 -0400
+Message-ID: <20110526205338.GB31340@sigill.intra.peff.net>
+References: <20110526203625.GA31018@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jim Meyering <jim@meyering.net>, git list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 26 22:53:32 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
+X-From: git-owner@vger.kernel.org Thu May 26 22:53:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPhYg-0003lp-G9
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 22:53:30 +0200
+	id 1QPhYz-0003xA-Kd
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 22:53:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754440Ab1EZUxU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 16:53:20 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61515 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752321Ab1EZUxT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 16:53:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D7A1653C5;
-	Thu, 26 May 2011 16:55:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3H4UK6eMgxfAKkI07RfaZvgrNLU=; b=jw9XFW
-	+bxKKdhu79CqhNqisoyeYOgj9uf7sVgWF7zPu1yI5VAIq+PNsHvjke9sUE+n7QJj
-	SQaRj+dpMOAGoeCvVUXrpoOEYZrxkTDsOYReh4KCafND1pbRn5vgsAZGXj6BIf3E
-	hnfc+wlyZfaf15fugJWXWZnUJRProKpxU2QU0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CyObxYDPxeBnMC62VA2ZVo9A9GI8ugm1
-	BZZEppFi26qLPls3vFVXEDjMsdSz1cNsPpi+1zRRqPn/4U4ZsOMZ3YVysKoPeYCp
-	Ecoz0ng7/+ELiHk6n1j94/oj391kLCsre8djGbTJJoZCUxLSxV2lg4uqOZyH08tL
-	AynRIxXrM8s=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A4D3F53B8;
-	Thu, 26 May 2011 16:55:22 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2AC0553B7; Thu, 26 May 2011
- 16:55:17 -0400 (EDT)
-In-Reply-To: <20110526184839.GA6910@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 26 May 2011 14:48:40 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 791E8346-87DA-11E0-AB38-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+	id S1758281Ab1EZUxm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 16:53:42 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51496
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755061Ab1EZUxl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 16:53:41 -0400
+Received: (qmail 17185 invoked by uid 107); 26 May 2011 20:53:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 May 2011 16:53:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 May 2011 16:53:38 -0400
+Content-Disposition: inline
+In-Reply-To: <20110526203625.GA31018@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174564>
 
-Jeff King <peff@peff.net> writes:
+Without the "-k" option, mailinfo will convert a folded
+subject header like:
 
-> The problem is that most callers are not careful enough to repeatedly
-> call read_in_full and find out that there might have been an error in
-> the previous result. They see a read shorter than what they asked, and
-> assume it was EOF.
+  Subject: this is a
+    subject that doesn't
+    fit on one line
 
-I can buy that argument, but then shouldn't we change the "careful"
-callers to treat any short-read from read_in_full() as an error?
+into a single line. With "-k", however, we assumed that
+these newlines were significant and represented something
+that the sending side would want us to preserve.
 
-After this patch, which you convinced me is a good thing to do overall,
-they are no longer careful but are merely misguided that they can catch
-and tell two kinds of errors apart.
+For messages created by format-patch, this assumption was
+broken by a1f6baa (format-patch: wrap long header lines,
+2011-02-23).  For messages sent by arbitrary MUAs, this was
+probably never a good assumption to make, as they may have
+been folding subjects in accordance with rfc822's line
+length recommendations all along.
 
-Perhaps like this.  I notice that overall they are good changes, but the
-one in pkt-line.c does not look very good.
+This patch now joins folded lines with a single whitespace
+character. This treats header folding purely as a syntactic
+feature of the transport mechanism, not as something that
+format-patch is trying to tell us about the original
+subject.
 
- combine-diff.c |    5 +----
- csum-file.c    |    2 --
- pkt-line.c     |    6 ++----
- sha1_file.c    |    2 +-
- 4 files changed, 4 insertions(+), 11 deletions(-)
+Signed-off-by: Jeff King <peff@peff.net>
+---
+The astute reader will notice that even with this patch, there is still
+a regression when using new versions of format-patch (with a1f6baa) with
+an older version of "git am". But you only see it when using "am -k", so
+interoperability is probably not a huge deal:
 
-diff --git a/combine-diff.c b/combine-diff.c
-index be67cfc..176231e 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -845,11 +845,8 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 			result = xmalloc(len + 1);
- 
- 			done = read_in_full(fd, result, len);
--			if (done < 0)
-+			if (done != len)
- 				die_errno("read error '%s'", elem->path);
--			else if (done < len)
--				die("early EOF '%s'", elem->path);
--
- 			result[len] = 0;
- 
- 			/* If not a fake symlink, apply filters, e.g. autocrlf */
-diff --git a/csum-file.c b/csum-file.c
-index fc97d6e..f5ac31f 100644
---- a/csum-file.c
-+++ b/csum-file.c
-@@ -19,8 +19,6 @@ static void flush(struct sha1file *f, void *buf, unsigned int count)
- 
- 		if (ret < 0)
- 			die_errno("%s: sha1 file read error", f->name);
--		if (ret < count)
--			die("%s: sha1 file truncated", f->name);
- 		if (memcmp(buf, check_buffer, count))
- 			die("sha1 file '%s' validation error", f->name);
+  1. Before this patch, "am -k" was arguably broken anyway for applying
+     random patches via email, since MUAs may have been doing arbitrary
+     header folding. So we can probably discount people running "am -k"
+     on random input as insane.
+
+  2. People doing "git format-patch -k | git am -k" will presumably use
+     the same version for both, and are OK.
+
+  3. People doing "git format-patch -k >file", followed by upgrading
+     git, and t hen "git am file" are still OK, since the newer version
+     of "am" handles the output of both old and new format-patch.
+
+  4. The problematic case is "git format-patch -k >file" with v1.7.5 or
+     newer, then _downgrading_ git, then using "git am -k" to apply. Or
+     more likely, using a newer version to create an mbox, shipping the
+     mbox to another machine, and then using an older "git am" to apply.
+
+So I don't see it as all that likely a problem in practice. If we do
+care, we can't fix it with a simple patch. We would have to revert the
+header-folding from format-patch, fix am, wait N time units until all of
+the old "am" no longer exists, and then re-apply.
+
+ builtin/mailinfo.c     |    2 +-
+ t/t4152-am-subjects.sh |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/mailinfo.c b/builtin/mailinfo.c
+index 71e6262..bfb32b7 100644
+--- a/builtin/mailinfo.c
++++ b/builtin/mailinfo.c
+@@ -400,7 +400,7 @@ static int read_one_header_line(struct strbuf *line, FILE *in)
+ 			break;
+ 		if (strbuf_getline(&continuation, in, '\n'))
+ 			break;
+-		continuation.buf[0] = '\n';
++		continuation.buf[0] = ' ';
+ 		strbuf_rtrim(&continuation);
+ 		strbuf_addbuf(line, &continuation);
  	}
-diff --git a/pkt-line.c b/pkt-line.c
-index 5a04984..5628801 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -138,10 +138,8 @@ void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
- static void safe_read(int fd, void *buffer, unsigned size)
- {
- 	ssize_t ret = read_in_full(fd, buffer, size);
--	if (ret < 0)
--		die_errno("read error");
--	else if (ret < size)
--		die("The remote end hung up unexpectedly");
-+	if (ret != size)
-+		die_errno("The remote end hung up unexpectedly");
- }
+diff --git a/t/t4152-am-subjects.sh b/t/t4152-am-subjects.sh
+index 7222c06..37e5c03 100755
+--- a/t/t4152-am-subjects.sh
++++ b/t/t4152-am-subjects.sh
+@@ -58,7 +58,7 @@ test_expect_success 'long subject preserved (format-patch | am)' '
+ test_expect_success 'long subject preserved (format-patch -k | am)' '
+ 	check_subject long-k
+ '
+-test_expect_failure 'long subject preserved (format-patch -k | am -k)' '
++test_expect_success 'long subject preserved (format-patch -k | am -k)' '
+ 	check_subject long-k -k
+ '
  
- static int packet_length(const char *linelen)
-diff --git a/sha1_file.c b/sha1_file.c
-index 8a85217..d1332c4 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2736,7 +2736,7 @@ static int index_stream(unsigned char *sha1, int fd, size_t size,
- 		ssize_t actual;
- 
- 		actual = read_in_full(fd, buf, sz);
--		if (actual < 0)
-+		if (actual != sz)
- 			die_errno("index-stream: reading input");
- 		if (write_in_full(fast_import.in, buf, actual) != actual)
- 			die_errno("index-stream: feeding fast-import");
+-- 
+1.7.4.5.26.g0c6a2
