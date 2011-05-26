@@ -1,93 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Include unistd.h.
-Date: Thu, 26 May 2011 08:48:47 -0700
-Message-ID: <7vhb8hzcm8.fsf@alter.siamese.dyndns.org>
-References: <1306332924-28587-1-git-send-email-mduft@gentoo.org>
- <1306332924-28587-3-git-send-email-mduft@gentoo.org>
- <20110526022045.GA8172@elie>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: mduft@gentoo.org, git@vger.kernel.org,
-	Tor Arntsen <tor@spacetec.no>,
-	Erik Faye-Lund <kusmabite@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 26 17:49:13 2011
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH v4 00/10] Sequencer Foundations
+Date: Thu, 26 May 2011 15:53:43 +0000
+Message-ID: <1306425233-504-1-git-send-email-artagnon@gmail.com>
+References: <1306333025-29893-1-git-send-email-artagnon@gmail.com>
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <christian.couder@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 26 17:54:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPcoC-0006M1-5R
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 17:49:12 +0200
+	id 1QPcsu-0001Db-Mc
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 17:54:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758000Ab1EZPtF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 11:49:05 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:65250 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755125Ab1EZPtD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 11:49:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E4B20494E;
-	Thu, 26 May 2011 11:51:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=L5nog9jeFDg1lwEWKUGNIsmZmU0=; b=gYaNSO
-	8rDy/yuaxfDigjoTCw3uqH1bjJgSPENHH2oMTUsrw8KFuC6ekdYb8UKCw0sdKfNq
-	0psFaRdR3r0kLzpmXGf086WYXp8qxqei3N5Clkvn0uMk3HbUFjfuTdT4z39BT6Jp
-	gMzYDgak1HZstY3WvwYiPPpmx9F6eP+xRJxBU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sGD+toa+sPU39OyHsahyyC0kEdIPFpz1
-	jUG9LlP0ntnIX3D1/necGyDJJ7cJiyaXA6sW5KDXSVY+h+FlJLbIhEkILzEI9pk3
-	VjtaLApwRTzATl2QYYUoJ5ZgFvy4E7KeufecThv/jh7nJZePDkkQbWmMIxHJN555
-	zclZjhNYWc4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 90B0E494D;
-	Thu, 26 May 2011 11:51:04 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 09076494C; Thu, 26 May 2011
- 11:50:56 -0400 (EDT)
-In-Reply-To: <20110526022045.GA8172@elie> (Jonathan Nieder's message of "Wed,
- 25 May 2011 21:20:45 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F676310C-87AF-11E0-8E0D-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+	id S1753274Ab1EZPx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 11:53:58 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:47458 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751928Ab1EZPx5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 11:53:57 -0400
+Received: by qyk7 with SMTP id 7so2796499qyk.19
+        for <git@vger.kernel.org>; Thu, 26 May 2011 08:53:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references;
+        bh=W/u8u6KLT1Opi2cEhLcI1rCs2Ku/b9qVglX2onn8Nws=;
+        b=H7toFqZiXBGth4Ora4evgqCzjp+VZ3SCZDHnYyU8KBNQyXzwgSDYj5UKQaVfgt32Up
+         gh28omHa8JgTHlvOjIEyE+Muwi53TyeBgYqfRTpSbRg5NA9n9w4sorjQ5em9ZaE22yf2
+         UB6jO98Dbe0guVE5I96UAxDAIu8tO245+VZhI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=kTdQyv1gQ0TkfkuLYpJ0rksmQINWZZFrMINI542UJFP9hxsDJnvcKudYiGLZsQ4tvA
+         PuT9svOliTqMuWo+OaJRE8j3gda+xzh5r4Ej49EvsfL1DWmYLwqbbWT7KHS4nmRW8RIL
+         FrxjsFuIxkCJW1v+SSr3jKt0PEmhaqnq9SnU8=
+Received: by 10.224.201.130 with SMTP id fa2mr703068qab.364.1306425236986;
+        Thu, 26 May 2011 08:53:56 -0700 (PDT)
+Received: from localhost.localdomain (ec2-184-72-137-52.compute-1.amazonaws.com [184.72.137.52])
+        by mx.google.com with ESMTPS id j18sm513435qck.27.2011.05.26.08.53.54
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 26 May 2011 08:53:55 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.1
+In-Reply-To: <1306333025-29893-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174526>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Hi,
 
-> Given that we are touching this file anyway, how about relying on
-> git-compat-util for this?
+This is a quick re-roll after Junio's review of the previous
+iteration; the previous iteration was posted less than 24 hours ago.
+I'm in a hurry, because I want to make sure that this is ready (or
+nearly ready) for merge before I actually implement more features.
 
-Many files in compat/ implementation already includes this header, so it
-logically feels like a sane thing to do. I vaguely recall there was one
-corner case where we didn't want to do this, but I do not remember the
-details.
+Thanks for reading.
 
-But I am tempted to do the following, as Tor Arntsen suggested, which I
-think is the least risky solution. I deliberately spelled "0" without the
-(void *) pointer cast, as this code borrowed from upstream is in old K&R
-style and nobody talks about "void" elsewhere in the code.
+Ramkumar Ramachandra (10):
+  advice: Introduce error_resolve_conflict
+  revert: Propogate errors upwards from do_pick_commit
+  revert: Eliminate global "commit" variable
+  revert: Rename no_replay to record_origin
+  revert: Introduce struct to keep command-line options
+  revert: Separate cmdline parsing from functional code
+  revert: Catch incompatible command-line options early
+  revert: Introduce HEAD, TODO files to persist state, plan
+  revert: Implement parsing --continue, --abort and --skip
+  revert: Implement --abort processing
 
- compat/fnmatch/fnmatch.c |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+ advice.c         |   17 ++-
+ advice.h         |    1 +
+ builtin/revert.c |  492 ++++++++++++++++++++++++++++++++++++++----------------
+ 3 files changed, 360 insertions(+), 150 deletions(-)
 
-diff --git a/compat/fnmatch/fnmatch.c b/compat/fnmatch/fnmatch.c
-index 14feac7..9473aed 100644
---- a/compat/fnmatch/fnmatch.c
-+++ b/compat/fnmatch/fnmatch.c
-@@ -127,6 +127,10 @@ extern char *getenv ();
- extern int errno;
- # endif
- 
-+# ifndef NULL
-+#  define NULL 0
-+# endif
-+
- /* This function doesn't exist on most systems.  */
- 
- # if !defined HAVE___STRCHRNUL && !defined _LIBC
+-- 
+1.7.5.GIT
