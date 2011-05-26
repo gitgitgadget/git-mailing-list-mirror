@@ -1,68 +1,47 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: Git EOL Normalization
-Date: Thu, 26 May 2011 11:20:13 +0400
-Message-ID: <BANLkTim6DbteE4CYUBUsKbTdNCHOu0_+Dg@mail.gmail.com>
-References: <20833035.39857.1306334468204.JavaMail.root@mail.hq.genarts.com>
-	<29536877.39971.1306336806278.JavaMail.root@mail.hq.genarts.com>
-	<BANLkTik3iRKx4P_3nbzygadmLPEOr2vGhA@mail.gmail.com>
-	<m3y61uxan2.fsf@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Stephen Bash <bash@genarts.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 26 09:20:25 2011
+From: Nicole Hamilt <nikkie615@aol.com>
+Subject: (unknown)
+Date: Thu, 26 May 2011 02:02:37 -0700
+Message-ID: <0r6orccmgmtqn3l7cl8vafuh.1306400557948@email.android.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 26 11:05:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPUrm-0001mI-N9
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 09:20:23 +0200
+	id 1QPWVu-0001wm-Tu
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 11:05:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754475Ab1EZHUP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 03:20:15 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:44182 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754177Ab1EZHUP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 03:20:15 -0400
-Received: by qwk3 with SMTP id 3so218569qwk.19
-        for <git@vger.kernel.org>; Thu, 26 May 2011 00:20:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=vAkvmY9+698n0mnedKNkEet+RaFkUrvpHs/urocHH1A=;
-        b=JdD79v5VgGSXfW5kEN+jQ9kGLVbpQd5FbS+MZZJLEW3F0FIfSHlzI4s+0HSRATAq9K
-         NO0vSP6tzcAX5w/Na4Nm+pv+b0l5vSl3CeFKzycQQss2NYQSEzUtk3sUs9s7ca/qjVsP
-         Hch3NuIRQe3Ujh1RI78iNHheOGY8w2DXND+Wk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=TJcipETqscVdvnD8lJZsqrgEREW4Jv6cNMgz+wmKLWOEtQTUBVm+vPS3n7CAsW2jH5
-         UOA1pJh0SIrMFe02OSEzdSqfFrSZZnAEBB9Yi+yr3YYVcJdAtI0x4lU9vEe+Rl1sDgS7
-         0ehU0EwdxViaiBK/b8IsufiH8+Q4y3+vUkyCU=
-Received: by 10.229.136.1 with SMTP id p1mr310792qct.218.1306394413595; Thu,
- 26 May 2011 00:20:13 -0700 (PDT)
-Received: by 10.229.77.226 with HTTP; Thu, 26 May 2011 00:20:13 -0700 (PDT)
-In-Reply-To: <m3y61uxan2.fsf@localhost.localdomain>
+	id S1757139Ab1EZJFt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 05:05:49 -0400
+Received: from imr-db02.mx.aol.com ([205.188.91.96]:65313 "EHLO
+	imr-db02.mx.aol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757114Ab1EZJFr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 05:05:47 -0400
+Received: from mtaout-da03.r1000.mx.aol.com (mtaout-da03.r1000.mx.aol.com [172.29.51.131])
+	by imr-db02.mx.aol.com (8.14.1/8.14.1) with ESMTP id p4Q95e4q025205
+	for <git@vger.kernel.org>; Thu, 26 May 2011 05:05:40 -0400
+Received: from localhost (cpe-76-166-204-150.socal.res.rr.com [76.166.204.150])
+	by mtaout-da03.r1000.mx.aol.com (MUA/Third Party Client Interface) with ESMTPA id DBD3AE0000DF
+	for <git@vger.kernel.org>; Thu, 26 May 2011 05:05:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mx.aol.com;
+	s=20110426; t=1306400740;
+	bh=far3fwKf8K07UggUOUUMRvQymT1wpud+CcpNpYPA544=;
+	h=Date:Message-ID:From:To:Content-Type;
+	b=E6x1woMtWFGd4VqJJKGdaYLNcq5TELYU2LIltKNekA15lMhYEzD6OXNFyGnBVlrf9
+	 wJ7J9iIgmFA1Tk68XCBoQbfXTvRCzybvt4nLtu+sLgg3Sg/LVdxiP3tKR8y5WSCWmP
+	 vbdVPoHpxpCqsi7mdh5bhaAHqNmS7jQN1tP2fCXg=
+x-aol-global-disposition: G
+X-AOL-SCOLL-SCORE: 0:2:138855952:93952408  
+X-AOL-SCOLL-URL_COUNT: 0  
+x-aol-sid: 3039ac1d33834dde17e35938
+X-AOL-IP: 76.166.204.150
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174502>
 
-On Thu, May 26, 2011 at 10:02 AM, Jakub Narebski <jnareb@gmail.com> wrote:
->
-> I think git examines only first block of a file or so.
-
-I have looked at convert.c:
-
-http://git.kernel.org/?p=git/git.git;a=blob;f=convert.c;h=efc7e07d475c66f7835dc6cbbd3bc358f01c41c3;hb=HEAD
-
-and gather_stats works on the whole file as far as I can tell.
-
-Did I miss something?
-
-
-Dmitry
+CgpTZW50IGZyb20gbXkgVmVyaXpvbiBXaXJlbGVzcyBQaG9uZQ==
