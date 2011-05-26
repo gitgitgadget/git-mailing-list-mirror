@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 09/10] revert: Implement parsing --continue, --abort and --skip
-Date: Thu, 26 May 2011 15:53:52 +0000
-Message-ID: <1306425233-504-10-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 10/10] revert: Implement --abort processing
+Date: Thu, 26 May 2011 15:53:53 +0000
+Message-ID: <1306425233-504-11-git-send-email-artagnon@gmail.com>
 References: <1306333025-29893-1-git-send-email-artagnon@gmail.com>
  <1306425233-504-1-git-send-email-artagnon@gmail.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
@@ -9,170 +9,136 @@ Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Christian Couder <christian.couder@gmail.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 26 17:54:23 2011
+X-From: git-owner@vger.kernel.org Thu May 26 17:54:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPctA-0001N6-F7
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 17:54:20 +0200
+	id 1QPctA-0001N6-VR
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 17:54:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757992Ab1EZPyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 11:54:13 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:62865 "EHLO
+	id S1758012Ab1EZPyQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 11:54:16 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:43880 "EHLO
 	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754017Ab1EZPyM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 11:54:12 -0400
-Received: by mail-qw0-f46.google.com with SMTP id 3so441172qwk.19
-        for <git@vger.kernel.org>; Thu, 26 May 2011 08:54:11 -0700 (PDT)
+	with ESMTP id S1754017Ab1EZPyO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 11:54:14 -0400
+Received: by mail-qw0-f46.google.com with SMTP id 3so441227qwk.19
+        for <git@vger.kernel.org>; Thu, 26 May 2011 08:54:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=xq2cvdAaDfKmhwU9Vbu78f4pBDMN4GE2+Q/wVWd53y0=;
-        b=un0iBuAjzNZw8MWFu8NGCRDychHdCqhNZN4IKbmzfirsv2/JuborOrc7e7XCrfeBGN
-         TuLi4WlDrxTjca3rcnW6fIibdsWA+qkFJjKMxlfKVdFKeC56ImWsAByGy7MPWg8c2BDR
-         luH7aoFMZU4eBPVb2Stg0tnJce91E0YsUvBS8=
+        bh=vhXAPNZfwGws8Zo48iWzt83Y3UXN9vnhqpWuJ5l1d/g=;
+        b=Hl2D9e9rNQtBPe4Q7rfMUvihdIAyg15MU3D8aTe8x5EUj9tt0PksIWpU/J0GIvTI2c
+         6CnaI34eO9gvZMyz3Qy/ajtg9LIwOP/29BqWDzG7AzqjOy+faZDBrNa6CASjoAKC57pc
+         FGVI8d8EOOHrYG0h1qo48Z9/h05CACp9LXntc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=ngAe1DAbEu1qbAhmM9D6Kj4ub65NBle6YuMC2hERvMh1fXjwAfUBzi1Ta6UowtnTwS
-         06ta80UCQNmZRf+AXJo79gQ4rIXs0Voci1qH4b4BALO/0yNLhhmWGTHZ3eZh4yUyY71J
-         5HaC/eUC146eKtDzSr10NN5jYuP4UKZGpSvis=
-Received: by 10.229.18.81 with SMTP id v17mr752641qca.7.1306425251728;
-        Thu, 26 May 2011 08:54:11 -0700 (PDT)
+        b=ZHbhokIxHiHmY9jlE2gxDjVVGNTvZ7+4ETCpps+U+55Xz00X3nSZCDld15SGu3f9Gw
+         98++JRvl41D/wErTkLs59SLymaZnNIwY2MUPMoeNlWwkPP4dv1kFfIjuy8qbvyxWRH2t
+         9TnkijOhYfrrMEJMSapFHzrG16U2rhBI4p6II=
+Received: by 10.229.34.75 with SMTP id k11mr351417qcd.18.1306425253667;
+        Thu, 26 May 2011 08:54:13 -0700 (PDT)
 Received: from localhost.localdomain (ec2-184-72-137-52.compute-1.amazonaws.com [184.72.137.52])
-        by mx.google.com with ESMTPS id j18sm513435qck.27.2011.05.26.08.54.10
+        by mx.google.com with ESMTPS id j18sm513435qck.27.2011.05.26.08.54.11
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 26 May 2011 08:54:10 -0700 (PDT)
+        Thu, 26 May 2011 08:54:12 -0700 (PDT)
 X-Mailer: git-send-email 1.7.5.1
 In-Reply-To: <1306425233-504-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174531>
 
-Introduce three new command-line options: --continue, --abort, and
---skip resembling the correspoding options in "rebase -i".  For now,
-just parse the options into the replay_opts structure, making sure
-that two of them are not specified together.  They will actually be
-implemented later in the series.
+To abort, perform a "rerere clear" and "reset --hard" to the ref
+specified by the HEAD file introduced earlier in the series.
 
-Mentored-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- builtin/revert.c |   71 +++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 70 insertions(+), 1 deletions(-)
+ builtin/revert.c |   46 ++++++++++++++++++++++++++++++++++++++++++----
+ 1 files changed, 42 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/revert.c b/builtin/revert.c
-index 306f5b0..f33d40a 100644
+index f33d40a..be63aee 100644
 --- a/builtin/revert.c
 +++ b/builtin/revert.c
-@@ -47,6 +47,11 @@ static const char *me;
- struct replay_opts {
- 	enum { REVERT, CHERRY_PICK } action;
+@@ -208,8 +208,6 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+ 				NULL);
  
-+	/* --abort, --skip, and --continue */
-+	int abort_oper;
-+	int skip_oper;
-+	int continue_oper;
-+
- 	/* Boolean options */
- 	int edit;
- 	int record_origin;
-@@ -103,11 +108,36 @@ static void verify_opt_compatible(const char *me, const char *base_opt, ...)
- 	va_end(ap);
+ 	/* Remove these when the options are actually implemented */
+-	if (opts->abort_oper)
+-		die("--abort is not implemented yet");
+ 	if (opts->skip_oper)
+ 		die("--skip is not implemented yet");
+ 	if (opts->continue_oper)
+@@ -732,6 +730,46 @@ static int pick_commits(struct replay_opts *opts)
+ 	return 0;
  }
  
-+static void verify_opt_mutually_compatible(const char *me, ...)
++static int process_continuation(struct replay_opts *opts)
 +{
-+	const char *opt1, *opt2;
-+	va_list ap;
-+	int set;
++	if (opts->abort_oper) {
++		char head[DEFAULT_ABBREV];
++		unsigned char sha1[20];
++		int fd;
++		rerere_clear(0);
 +
-+	va_start(ap, me);
-+	while ((opt1 = va_arg(ap, const char *))) {
-+		set = va_arg(ap, int);
-+		if (set)
-+			break;
++		if (!file_exists(HEAD_FILE))
++			goto error;
++		fd = open(HEAD_FILE, O_RDONLY, 0666);
++		if (fd < 0)
++			return error(_("Could not open '%s' for reading: %s"),
++				HEAD_FILE, strerror(errno));
++		if (xread(fd, head, DEFAULT_ABBREV) < DEFAULT_ABBREV) {
++			close(fd);
++			return error(_("Corrupt '%s': %s"), HEAD_FILE, strerror(errno));
++		}
++		close(fd);
++
++		if (get_sha1(head, sha1))
++			return error(_("Failed to resolve '%s' as a valid ref."), head);
++		update_ref(NULL, "HEAD", sha1, NULL, 0, MSG_ON_ERR);
 +	}
-+	if (!opt1) return;
-+	while ((opt2 = va_arg(ap, const char *))) {
-+		set = va_arg(ap, int);
-+		if (set)
-+			die(_("%s: %s cannot be used with %s"),
-+				me, opt1, opt2);
++	else if (opts->skip_oper) {
++		if (!file_exists(TODO_FILE))
++			goto error;
++		return 0;
 +	}
-+	va_end(ap);
++	else if (opts->continue_oper) {
++		if (!file_exists(TODO_FILE))
++			goto error;
++		return 0;
++	}
++
++	return pick_commits(opts);
++error:
++	return error(_("No %s in progress"), me);
 +}
 +
- static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+ int cmd_revert(int argc, const char **argv, const char *prefix)
  {
- 	const char * const * usage_str = revert_or_cherry_pick_usage(opts);
- 	int noop;
- 	struct option options[] = {
-+		OPT_BOOLEAN(0, "abort", &opts->abort_oper, "abort the current operation"),
-+		OPT_BOOLEAN(0, "skip", &opts->skip_oper, "skip the current commit"),
-+		OPT_BOOLEAN(0, "continue", &opts->continue_oper, "continue the current operation"),
- 		OPT_BOOLEAN('n', "no-commit", &opts->no_commit, "don't automatically commit"),
- 		OPT_BOOLEAN('e', "edit", &opts->edit, "edit the commit message"),
- 		{ OPTION_BOOLEAN, 'r', NULL, &noop, NULL, "no-op (backward compatibility)",
-@@ -136,7 +166,37 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 	opts->commit_argc = parse_options(argc, argv, NULL, options, usage_str,
- 					PARSE_OPT_KEEP_ARGV0 |
- 					PARSE_OPT_KEEP_UNKNOWN);
--	if (opts->commit_argc < 2)
-+
-+	/* Check for mutually incompatible command line arguments */
-+	verify_opt_mutually_compatible(me,
-+				"--abort", opts->abort_oper,
-+				"--skip", opts->skip_oper,
-+				"--continue", opts->continue_oper,
-+				NULL);
-+
-+	/* Check for incompatible command line arguments */
-+	if (opts->abort_oper || opts->skip_oper || opts->continue_oper) {
-+		char *this_oper;
-+		if (opts->abort_oper)
-+			this_oper = "--abort";
-+		else if (opts->skip_oper)
-+			this_oper = "--skip";
-+		else
-+			this_oper = "--continue";
-+
-+		verify_opt_compatible(me, this_oper,
-+				"--no-commit", opts->no_commit,
-+				"--edit", opts->edit,
-+				"--signoff", opts->signoff,
-+				"--mainline", opts->mainline,
-+				"--strategy", opts->strategy ? 1 : 0,
-+				"--strategy-option", opts->xopts ? 1 : 0,
-+				"-x", opts->record_origin,
-+				"--ff", opts->allow_ff,
-+				NULL);
-+	}
-+
-+	else if (opts->commit_argc < 2)
- 		usage_with_options(usage_str, options);
- 
- 	if (opts->allow_ff)
-@@ -146,6 +206,15 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 				"-x", opts->record_origin,
- 				"--edit", opts->edit,
- 				NULL);
-+
-+	/* Remove these when the options are actually implemented */
-+	if (opts->abort_oper)
-+		die("--abort is not implemented yet");
-+	if (opts->skip_oper)
-+		die("--skip is not implemented yet");
-+	if (opts->continue_oper)
-+		die("--continue is not implemented yet");
-+
- 	opts->commit_argv = argv;
- }
- 
+ 	int res;
+@@ -744,7 +782,7 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
+ 	git_config(git_default_config, NULL);
+ 	me = "revert";
+ 	parse_args(argc, argv, &opts);
+-	res = pick_commits(&opts);
++	res = process_continuation(&opts);
+ 	if (res > 0)
+ 		/* Exit status from conflict */
+ 		return res;
+@@ -764,7 +802,7 @@ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
+ 	git_config(git_default_config, NULL);
+ 	me = "cherry-pick";
+ 	parse_args(argc, argv, &opts);
+-	res = pick_commits(&opts);
++	res = process_continuation(&opts);
+ 	if (res > 0)
+ 		return res;
+ 	if (res < 0)
 -- 
 1.7.5.GIT
