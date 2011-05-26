@@ -1,70 +1,70 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 1/6] i18n win32: add git-am eval_gettext variable prefix
-Date: Thu, 26 May 2011 17:16:04 +0200
-Message-ID: <BANLkTiku4RuY=3CCSxsbSgWgVna5UL9Qww@mail.gmail.com>
-References: <1306365594-22061-1-git-send-email-avarab@gmail.com>
-	<1306365594-22061-2-git-send-email-avarab@gmail.com>
-	<4DDDF483.70805@viscovery.net>
-	<7vlixtzh1q.fsf@alter.siamese.dyndns.org>
-	<4DDE6AC9.9090003@viscovery.net>
+From: Claire Fousse <claire.fousse@gmail.com>
+Subject: Git-Mediawiki : Question about Jeff King's import script
+Date: Thu, 26 May 2011 17:18:11 +0200
+Message-ID: <BANLkTi=nLZV_QCyKT8LOhzkJYoJD6J4wPA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu May 26 17:16:14 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, "matthieu.moy" <Matthieu.Moy@grenoble-inp.fr>,
+	Sylvain Boulme <Sylvain.Boulme@imag.fr>
+To: peff@peff.net
+X-From: git-owner@vger.kernel.org Thu May 26 17:18:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPcIG-0008Jc-QS
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 17:16:13 +0200
+	id 1QPcKJ-0001Mc-Kr
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 17:18:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755125Ab1EZPQH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 May 2011 11:16:07 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:43787 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754050Ab1EZPQF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 May 2011 11:16:05 -0400
-Received: by fxm17 with SMTP id 17so757681fxm.19
-        for <git@vger.kernel.org>; Thu, 26 May 2011 08:16:04 -0700 (PDT)
+	id S1754843Ab1EZPSM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 11:18:12 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:43404 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752762Ab1EZPSL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 11:18:11 -0400
+Received: by pvg12 with SMTP id 12so347643pvg.19
+        for <git@vger.kernel.org>; Thu, 26 May 2011 08:18:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=rOKiuOkpTZSkKjgQKQR5DwhVgng4jE7a1ala2MHqOsc=;
-        b=MtA13V94IT2Td+gO4DJwC9DSMVdpYTTkyPlcs9qJmBk/dpdidw+XYPHJUvuQXv+FFY
-         f9o6tDWwvOiHAzf/GupCx5/dcT63Dt83jr017eP172fU7VCT75m9SrWoW5ZWReFrHJvE
-         wIfjNAHU27qVcmf0QQSfhQNd7AjOTfma1P9kA=
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to:cc
+         :content-type;
+        bh=aDqGnrOHuUnmctOP1ZVWMGr+0Z4IFG3jP3AosrsRmC8=;
+        b=jlSCkCwZrWVmIfcHgmp5Dgc3/EvmZymNuARHD4nfGzKV4IOK47ErKv6+xxXzb7GVGH
+         o5aSDUvy2Fvqisxo4HdPCV7Xgg6HEVcyVZEBNozPPsSs3xXQEntu7gf96Xz6qFZzp/7v
+         zs0N1WRF02JglMGbEUjaSYiSwmB0sWPX4S24k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=SDMKgkXH0DWnmBmdl/4qtggtrjCKHCk0lKxcE7Vt7ldN3WkMdI/0pGgC3Mih2KLjS5
-         v++rAM9XSb8y9WUKXO7tfn+ccZHm5cdfbS3m3MUBiXVbyebCDixzL+oOOXwXDLKDghHO
-         w0YSzAm19qDKgvCKoVbbaLHtjE92DpqErp/y4=
-Received: by 10.223.73.139 with SMTP id q11mr1081363faj.56.1306422964390; Thu,
- 26 May 2011 08:16:04 -0700 (PDT)
-Received: by 10.223.117.72 with HTTP; Thu, 26 May 2011 08:16:04 -0700 (PDT)
-In-Reply-To: <4DDE6AC9.9090003@viscovery.net>
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        b=nWREye5fsKMTRg2trbJIZ3gU2inTjcwyWH9PF5zdSyFc3bUX3/xIlrZTOgXlpRH1/9
+         geJd/7xZTO0Exb3/IuPZkN3tWVw29foeK0v/Gh6lF3P+C6HwfUFbxYXPEFN5YHFEqkOA
+         HtxNbPJ0p4IP9/F6vLFNkQtVTe8JTNswCon7Q=
+Received: by 10.142.144.8 with SMTP id r8mr155161wfd.142.1306423091137; Thu,
+ 26 May 2011 08:18:11 -0700 (PDT)
+Received: by 10.143.155.9 with HTTP; Thu, 26 May 2011 08:18:11 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174521>
 
-On Thu, May 26, 2011 at 16:59, Johannes Sixt <j.sixt@viscovery.net> wro=
-te:
+Dear Jeff King,
+We are the four students in charge of the Git-Mediawiki project
+proposed by Matthieu Moy.
+In case you skipped our email, here is a link to our last mail with a
+few information about the project
+http://www.spinics.net/lists/git/msg158701.html
+We based our script on what you called a few months ago the "quick and
+dirty perl script" for the import part and have a few questions about
+it.
+First of all, just in case, here is your original script :
+http://article.gmane.org/gmane.comp.version-control.git/167560
 
-> I can write one, no problem; and, =C3=86var, I'm awfully sorry for se=
-nding you
-> in the wrong direction.
+It seems like you first used a hashmap for it to be transformed later
+into a flat list / array. What is the reasoning behind this ? Why not
+create an array right away ?
 
-That's very nice. Having a compat/getenv.c to solve this would be great=
-=2E
+Thanks for the script and for any information you can give us,
 
-I look forward to seeing it. Thanks for writing it, since I can't test
-stuff on Windows.
+Regards,
+The Git-Mediawiki team, Arnaud Lacurie, David Amouyal, Claire Fousse &
+Jeremie Nikaes.
