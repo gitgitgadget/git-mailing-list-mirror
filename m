@@ -1,90 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] remote: allow "-t" with fetch mirrors
-Date: Thu, 26 May 2011 10:08:48 -0700
-Message-ID: <7vk4ddxucf.fsf@alter.siamese.dyndns.org>
-References: <20110526151100.GA2881@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [1.7.2] Please cherry-pick "upload-pack: start pack-objects
+ before async rev-list"
+Date: Thu, 26 May 2011 12:11:10 -0500
+Message-ID: <20110526171110.GE24931@elie>
+References: <20110404053626.GA26529@sigill.intra.peff.net>
+ <7v8vvnjnyg.fsf@alter.siamese.dyndns.org>
+ <20110406175413.GA8205@sigill.intra.peff.net>
+ <20110406213333.GA18481@sigill.intra.peff.net>
+ <20110526064547.GA18777@elie>
+ <7voc2pxutw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jimmie WESTER <jimmie.wester@stericsson.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 26 19:09:06 2011
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Aman Gupta <aman@github.com>, Ryan Tomayko <ryan@github.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 26 19:11:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPe3V-0003dJ-5H
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 19:09:05 +0200
+	id 1QPe5h-0005Ip-5D
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 19:11:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757672Ab1EZRI7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 13:08:59 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51962 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756933Ab1EZRI6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 13:08:58 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0516B53AE;
-	Thu, 26 May 2011 13:11:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YW+A42rf7Z5LnGICudG7dF65yGs=; b=arYpMT
-	e0DhwgGI9rAXZJQraJiLMh3I4+/INGBB2S8FAWALvUVNgargAZ0Y5g79Xys7wwq1
-	hvpChZP6DFFl5TBU7xrANajSfgBV795gfBrQnUGzxUvYJyc0IspsVXPqaE3RSKZS
-	iWvKVJkj6VKbfnG2lFZaKm04HLWSAScRxvab8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KqX5WtBw8Mfn7zW4k3/y6hSkG5Ve69Tc
-	tywXVY7FMxfzVKhY9tfW+iV+CuffQceHSjLDEGFRDbQkp/uQVAczXpBhNMj6b5zz
-	ntl9mlG9c+djgPzodrJjGifLm85lhHOgSTjhLS2VK38cr0eVlM2a0drsOIzmJLYl
-	8ywe7sJdV9Q=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 689B153AC;
-	Thu, 26 May 2011 13:11:01 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 22BDD53A7; Thu, 26 May 2011
- 13:10:56 -0400 (EDT)
-In-Reply-To: <20110526151100.GA2881@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 26 May 2011 11:11:00 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 2196C8E6-87BB-11E0-81E8-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+	id S1757522Ab1EZRLQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 13:11:16 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:48542 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753168Ab1EZRLP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 13:11:15 -0400
+Received: by vws1 with SMTP id 1so698559vws.19
+        for <git@vger.kernel.org>; Thu, 26 May 2011 10:11:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=zl7sfIMJYxsEZmA8H0AooyH8tnrEGbGmORvvPEfihaM=;
+        b=aeImOJESi8grgmVnMwvAW5//pkll4Lm7F+G2ojgir83rS8iwGtewGvD4wFhyblCM1Z
+         FYIG98V/NwbSG7gG6JEsMu6kaQiAunDQa8njd2XWovIsLiN2620R9SYBxyed05xuk+T5
+         wmuRLSXlvEqNFUiAO/7rTIpyfW8cDvUIM689I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Q22n2IWFoVbYTdsfXJYsDIDii98noXA+/sm0IU+o3piP5F9vNvbTAjX+BHxNoqPpfS
+         RPKzcKx4O30fHFcBcxgMO2gj0f80QvakRbxbdWBJypxlcsVofVcM4NWwmuIqx9X94CsE
+         YwL8gmcFYuoJErK+ukO1wemL0BLSV/vQJMT1Y=
+Received: by 10.52.0.130 with SMTP id 2mr1590922vde.180.1306429874871;
+        Thu, 26 May 2011 10:11:14 -0700 (PDT)
+Received: from elie (adsl-69-209-65-98.dsl.chcgil.ameritech.net [69.209.65.98])
+        by mx.google.com with ESMTPS id a1sm175365vce.24.2011.05.26.10.11.13
+        (version=SSLv3 cipher=OTHER);
+        Thu, 26 May 2011 10:11:13 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7voc2pxutw.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174550>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Commit 13fc2c1 (remote: disallow some nonsensical option
-> combinations, 2011-03-30) made it impossible to use "remote
-> add -t foo --mirror". The argument was that specifying
-> specific branches is useless because:
+>> This server-side deadlock started being triggered by shallow clones
+>> when sv.gnu.org upgraded to v1.7.2.5 a couple of months ago[1].  So it
+>> might be worth thinking about how to help upgrade-averse server admins
+>> to fix it.
 >
->   1. Push mirrors do not want a refspec at all.
+> Upgrade-averse people can be fixed by keeping them closer to the tip, no?
+> I don't plan to issue any more maintenance release on 1.7.2.X track beyond
+> what is already released, unless there is a high priority security fix or
+> something.
 >
->   2. The point of fetch mirroring is to use a broad refspec
->      like "refs/*", but using "-t" overrides that.
->
-> Point (1) is valid; "-t" with push mirrors is useless. But
-> point (2) ignored another side effect of using --mirror: it
-> fetches the refs directly into the refs/ namespace as they
-> are found upstream, instead of placing them in a
-> separate-remote layout.
+> Placing it on 1.7.4.X and newer maintenance tracks is a separate matter.
 
-Hmmm, I still fail to see the point of ignoring "mirror" aspect and
-constricting that with -t.
+Ok, that's fine with me.  (To be clear, I was suggesting
+cherry-picking to the branches but not making a release, though I
+realize that would mean more time wasted the next time it is time to
+make a high priority security fix.)
 
-> So 13fc2c1 was overly constrictive, and disallowed
-> reasonable specific-branch mirroring, like:
->
->   git remote add -t heads/foo -t heads/bar --mirror=fetch
-
-I mildly disagree that it is "reasonable".  I would understand if it were
-something like this:
-
-  git remote add -t heads/foo:heads/foo -t heads/bar:heads/bar
-
-I am not saying selective copying is bad or useless.  It would be useful
-in some situations.  I am saying that is not a mirror, and reusing the
-same --mirror option for a different meaning may introduce confusion.
+I'll cherry-pick it as a Debian-specific patch, which should be good
+enough to get shallow clones working again on the affected servers.
