@@ -1,90 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 1/2] Support multiple virtual repositories with a
- single object store and refs
-Date: Wed, 25 May 2011 21:08:21 -0700
-Message-ID: <7vsjs2yuh6.fsf@alter.siamese.dyndns.org>
-References: <1306274066-4092-1-git-send-email-jamey@minilop.net>
- <7v7h9f7kzx.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.1.00.1105250847380.2701@bonsai2>
- <20110525154405.GA4839@oh.minilop.net>
- <alpine.DEB.1.00.1105260152430.2701@bonsai2> <20110526000104.GA3439@leaf>
- <alpine.DEB.1.00.1105260239480.2701@bonsai2>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PULL svn-fe/maint] t0081-*.sh: Fix failure of the 'long read' tests
+Date: Wed, 25 May 2011 23:33:35 -0500
+Message-ID: <20110526043335.GB17479@elie>
+References: <4DB70972.20308@ramsay1.demon.co.uk>
+ <20110426234850.GC32491@sigill.intra.peff.net>
+ <4DBC45F9.7090804@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Josh Triplett <josh@joshtriplett.org>,
-	Jamey Sharp <jamey@minilop.net>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Sixt <johannes.sixt@telecom.at>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu May 26 06:08:56 2011
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Jeff King <peff@peff.net>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	David Barr <david.barr@cordelta.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 26 06:34:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPRsT-0006da-Hy
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 06:08:53 +0200
+	id 1QPSGo-0007pZ-KS
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 06:34:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750753Ab1EZEIj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 00:08:39 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34643 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750735Ab1EZEIh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 00:08:37 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A71935467;
-	Thu, 26 May 2011 00:10:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wNujov17UT8MTDINOWSAx4R7wPc=; b=vQxbEd
-	CDLBonxvrmHH7PQb0cnX7uxT3MaREWQRGBRAsqdMQvZnUjMMMlMYvU9BP31ZjONK
-	6SKl4smP4uzFmxl0EMbJ5FkByOvXw8BSwsPx4Fq6RI9wzNffG80ygtOWoXAOcjgH
-	BdrtUg1znkuZ0TDx3tNeiUGui43qRT/juNDF4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cjKIVGJFweWDEoPfIBW7hx/B66ZjvyHy
-	y3tU5+3NSf3vqKOFsb65un7dK+79xuqw6rMjywTeAQ/2ZY0V7VzpfeZh2/f7ZN1U
-	4XtUWvY7QzFgE5S3P2T2KYIqD6uBluq+wFgPau8yyzP/tyJtwYBonT/Yy5xOAgG7
-	kX528/+1f7o=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 383895463;
-	Thu, 26 May 2011 00:10:37 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 82CE65462; Thu, 26 May 2011
- 00:10:29 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.1105260239480.2701@bonsai2> (Johannes
- Schindelin's message of "Thu, 26 May 2011 02:40:49 +0200 (CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1C341AD8-874E-11E0-B979-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+	id S1751234Ab1EZEdu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 00:33:50 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:34624 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751206Ab1EZEdr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 00:33:47 -0400
+Received: by iwn34 with SMTP id 34so266445iwn.19
+        for <git@vger.kernel.org>; Wed, 25 May 2011 21:33:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=dXn7fD6E2uIuTlcQ1E5XsaQ4c5Fi9xIGg4PoYqgFplA=;
+        b=JnlPTNe7/eC8f0AvCJcklGaGqOAcLP3Hg1DR+G+KiZRO6UitpvLtXUmnmS6CHbJ/u0
+         47Um5OcjZH5KGGboGA/2l4b7Qf+izugfSnG2tBq0fjaiBiOOhKlqVWSBuKrnXCGwX87m
+         uo4Q3QLmGhxjdsChQ6+yPULYvMR/6teNA836w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=vy1yirRyTNQXMJStLWcZL/m6jdBPjSIy6hnhYX5vgIzwDqxqIvhl1nsfLEj4CT4JXo
+         2el5IyIgsP0Ka4yqKcOLkf+q/1pMxLYmZooZ55opOjmLE1sLGjujn6XqbPGpgXaBF5DV
+         C+iSdMwm1HFAeRBE7bPICg1zWUA56vEwPRQ2A=
+Received: by 10.42.243.7 with SMTP id lk7mr519658icb.191.1306384424598;
+        Wed, 25 May 2011 21:33:44 -0700 (PDT)
+Received: from elie (adsl-69-209-65-98.dsl.chcgil.ameritech.net [69.209.65.98])
+        by mx.google.com with ESMTPS id w5sm264810icv.4.2011.05.25.21.33.41
+        (version=SSLv3 cipher=OTHER);
+        Wed, 25 May 2011 21:33:42 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4DBC45F9.7090804@ramsay1.demon.co.uk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174493>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
->> Not that we know of.  Are we missing something?
+Ramsay Jones wrote:
+
+> So, the patch is correct, but (apart from the last sentence) the
+> commit message is *absolute rubbish*. I won't bore you with the
+> details of my lunacy! :-P
 >
-> This is a change of protocol by my understanding:
->
-> -- snip --
->  	if (sent_capabilities)
-> -		packet_write(1, "%s %s\n", sha1_to_hex(sha1), path);
-> +		packet_write(1, "%s %s%s\n", sha1_to_hex(sha1), refnameprefix, path);
-> -- snap --
+> However, I much prefer Jonathan's patch which removes this test
+> completely!
 
-I think this is not a change in the protocol per-se, but rather a botched
-attempt to make refs/virt/one/refsheads/foo this side has appear as if it
-is refs/heads/foo to the other side. In other words, you probably spotted
-a bug.
+Junio, please pull
 
-When read with the "chroot" analogy of Peff and Shawn earlier in the
-thread in mind, shouldn't the sending end that is pretending that only a
-part of its ref namespace is actually the whole thing _stripping_ the
-prefix from the real namespace, rather than appending the extra prefix?
+  git://repo.or.cz/git/jrn.git svn-fe-maint
 
-I've been down sick, feeling feverish, this afternoon, so I may be
-remembering what I understood while reading the code incorrectly, but that
-was the impression I got.
+to receive the following fix.  The patch first visited the list two
+months ago[1] and was discussed again last month[2] and seems to have
+been well liked both times (well, I know I like it).
+
+The tests it removes
+
+ - are missing an EXECKEEPSPID prerequisite on Windows
+ - use a : $((i = i + 1)) construct which does not seem to be portable
+   to old versions of dash
+ - are pointless, an eyesore, and a pain to maintain
+
+What was the author thinking?  Sorry to let this sit for so long.  
+
+Jonathan Nieder (1):
+      Revert "t0081 (line-buffer): add buffering tests"
+
+ t/t0081-line-buffer.sh |  106 +-----------------------------------------------
+ 1 files changed, 2 insertions(+), 104 deletions(-)
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/170307/focus=170365
+[2] http://thread.gmane.org/gmane.comp.version-control.git/172120/focus=172523
