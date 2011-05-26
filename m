@@ -1,188 +1,129 @@
-From: =?iso-8859-1?Q?J=F6rg?= Sommer <joerg@alea.gnuu.de>
-Subject: git dies with sigseg due to enless recursion on broken repo
-Date: Thu, 26 May 2011 03:33:16 +0200
-Message-ID: <20110526013316.GA22589@alea.gnuu.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/2] Include unistd.h.
+Date: Wed, 25 May 2011 21:20:45 -0500
+Message-ID: <20110526022045.GA8172@elie>
+References: <1306332924-28587-1-git-send-email-mduft@gentoo.org>
+ <1306332924-28587-3-git-send-email-mduft@gentoo.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="GvXjxJ+pjyke8COw"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 26 03:53:14 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Tor Arntsen <tor@spacetec.no>,
+	Junio C Hamano <gitster@pobox.com>,
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: mduft@gentoo.org
+X-From: git-owner@vger.kernel.org Thu May 26 04:21:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPPl8-0007RL-Ce
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 03:53:10 +0200
+	id 1QPQC5-0000x2-4F
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 04:21:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757263Ab1EZBxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2011 21:53:06 -0400
-Received: from uucp.gnuu.de ([83.246.114.63]:1170 "EHLO uucp.gnuu.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756118Ab1EZBxE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2011 21:53:04 -0400
-Received: by uucp.gnuu.de (Postfix, from userid 10)
-	id AF73F48802D; Thu, 26 May 2011 03:34:34 +0200 (CEST)
-X-DKIM: Sendmail DKIM Filter v2.5.2 uucp.gnuu.de AF73F48802D
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=gnuu.de; s=banki;
-	t=1306373674; i=@alea.gnuu.de; bh=yJKRCNDo2QA3Z+Vmxm409e1HVrLjGRi7q
-	Fp8790G6oM=; h=Date:From:To:Subject:Message-ID:MIME-Version:
-	 Content-Type; b=uqQJedDralpsWxDv2C0DJqKvkPCpNxHvi1q57qMge03Uidp54W
-	MyQDRr3DJUVWzPXtwYUHVta+V2UTRDGFLzE0OmjjwWdl6cuugfPi/DCsd3YrWzzzN2i
-	WFWsysXf6j+v23pX/PHRLrMIO1PCEDUfHIOSiI1oONh2CtD4OVwnHQ=
-Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
-	by alea.gnuu.de with esmtp (Exim 4.69)
-	(envelope-from <joerg@alea.gnuu.de>)
-	id 1QPPSD-0007uA-2r
-	for git@vger.kernel.org; Thu, 26 May 2011 03:33:37 +0200
-Received: from joerg by alea.gnuu.de with local (Exim 4.76)
-	(envelope-from <joerg@alea.gnuu.de>)
-	id 1QPPRt-0000RD-8i
-	for git@vger.kernel.org; Thu, 26 May 2011 03:33:17 +0200
+	id S932802Ab1EZCUz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2011 22:20:55 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:51132 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756767Ab1EZCUz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2011 22:20:55 -0400
+Received: by ywe9 with SMTP id 9so140382ywe.19
+        for <git@vger.kernel.org>; Wed, 25 May 2011 19:20:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=lysKBzINW/U+iembYUv97M09eo5qww/rkrB4ynKuWF0=;
+        b=chOUGfzjcDhsEa4TFVDgE84hy+eEc4knjXsz2HY2QliMOpvnyw2ldVCOukwSGYyC96
+         rN9slxPG9MHNCp3uP+hOKfsTzBagLyT414zk2BaTujzwos8XZ8/QlPJmVUEhX1hwLYzw
+         XbNuIMyW/bg1x70uOHD/ihF31bxqygU2JHjeQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=MmzBOcaJb/hof8XsN7zYtpJ4ARnu8Z1Qs/QVqBRTd9gwqPi9+TEJogvHKhFrqoZ8NQ
+         n182WqE3vaEWQgFkjZLX5D3WnQ1alWa6kDxBD3J7UwJ0jHZDOFXDp/0fyHO5Bm1fpO7g
+         Ne8nJ7B2w4tbDNnQnib86qndqZ2khE/1yAyrA=
+Received: by 10.236.80.104 with SMTP id j68mr378444yhe.197.1306376454505;
+        Wed, 25 May 2011 19:20:54 -0700 (PDT)
+Received: from elie (adsl-69-209-65-98.dsl.chcgil.sbcglobal.net [69.209.65.98])
+        by mx.google.com with ESMTPS id h27sm514574yhe.34.2011.05.25.19.20.52
+        (version=SSLv3 cipher=OTHER);
+        Wed, 25 May 2011 19:20:53 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <1306332924-28587-3-git-send-email-mduft@gentoo.org>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174486>
-
-
---GvXjxJ+pjyke8COw
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174487>
 
 Hi,
 
-I've a broken repository which causes git goes into an endless recursion
-until it gets a segmentation fault. I can reproduce this problem with
-version 1.7.5.2.353.g5df3e.
+mduft@gentoo.org wrote:
 
-% gdb -batch -ex "run --git-dir=3D$HOME/broken-git fsck" -ex bt\ full git
+> --- a/compat/fnmatch/fnmatch.c
+> +++ b/compat/fnmatch/fnmatch.c
+> @@ -25,6 +25,7 @@
+>  # define _GNU_SOURCE	1
+>  #endif
+>  
+> +#include <unistd.h>
+>  #include <errno.h>
 
-[Thread debugging using libthread_db enabled]
+Given that we are touching this file anyway, how about relying on
+git-compat-util for this?
 
-Program received signal SIGSEGV, Segmentation fault.
-use_pack (p=3DCannot access memory at address 0xbf7ffff8
-) at sha1_file.c:837
-837     {
-#0  use_pack (p=3DCannot access memory at address 0xbf7ffff8
-) at sha1_file.c:837
-        win =3D <error reading variable win (Cannot access memory at addres=
-s 0xbf7fffd8)>
-#1  0x10140290 in get_delta_base (p=3D0x10222470, w_curs=3D0xbf800140, curp=
-os=3D0xbf800100, type=3DOBJ_REF_DELTA, delta_o
-        base_info =3D 0x0
-        base_offset =3D 0
-#2  0x1014131c in unpack_delta_entry (p=3D0x10222470, w_curs=3D0xbf800140, =
-curpos=3D13082, delta_size=3D7, obj_offset=3D130
-        delta_data =3D 0xbf800120
-        result =3D 0x10140720
-        base =3D 0x48054319
-        base_size =3D 1208304409
-        base_offset =3D -4647713764261494296
-#3  0x1014173c in unpack_entry (p=3D0x10222470, obj_offset=3D13081, type=3D=
-0xbfffe1a8, sizep=3D0xbf8001e8) at sha1_file.c
-        w_curs =3D 0x1021a570
-        curpos =3D 13082
-        data =3D 0x48021018
-#4  0x10140e48 in cache_or_unpack_entry (p=3D0x10222470, base_offset=3D1308=
-1, base_size=3D0xbf8001e8, type=3D0xbfffe1a8,=20
-        ret =3D 0x0
-        hash =3D 2
-        ent =3D 0x10201388
-#5  0x10141394 in unpack_delta_entry (p=3D0x10222470, w_curs=3D0xbf800240, =
-curpos=3D13102, delta_size=3D7, obj_offset=3D130
-        delta_data =3D 0xbf800220
-        result =3D 0x10140720
-        base =3D 0x48054319
-        base_size =3D 7
-        base_offset =3D 13081
-#6  0x1014173c in unpack_entry (p=3D0x10222470, obj_offset=3D13081, type=3D=
-0xbfffe1a8, sizep=3D0xbf8002e8) at sha1_file.c
-        w_curs =3D 0x0
-        curpos =3D 13082
-        data =3D 0x48021018
-#7  0x10140e48 in cache_or_unpack_entry (p=3D0x10222470, base_offset=3D1308=
-1, base_size=3D0xbf8002e8, type=3D0xbfffe1a8,=20
-        ret =3D 0x0
-        hash =3D 2
-        ent =3D 0x10201388
-#8  0x10141394 in unpack_delta_entry (p=3D0x10222470, w_curs=3D0xbf800340, =
-curpos=3D13102, delta_size=3D7, obj_offset=3D130
-        delta_data =3D 0xbf800320
-        result =3D 0x10140720
-        base =3D 0x48054319
-        base_size =3D 7
-        base_offset =3D 13081
-#9  0x1014173c in unpack_entry (p=3D0x10222470, obj_offset=3D13081, type=3D=
-0xbfffe1a8, sizep=3D0xbf8003e8) at sha1_file.c
-        w_curs =3D 0x0
-        curpos =3D 13082
-        data =3D 0x48021018
-#10 0x10140e48 in cache_or_unpack_entry (p=3D0x10222470, base_offset=3D1308=
-1, base_size=3D0xbf8003e8, type=3D0xbfffe1a8,=20
-        ret =3D 0x0
-        hash =3D 2
-        ent =3D 0x10201388
-#11 0x10141394 in unpack_delta_entry (p=3D0x10222470, w_curs=3D0xbf800440, =
-curpos=3D13102, delta_size=3D7, obj_offset=3D130
-        delta_data =3D 0xbf800420
-        result =3D 0x10140720
-        base =3D 0x48054319
-        base_size =3D 7
-        base_offset =3D 13081
-#12 0x1014173c in unpack_entry (p=3D0x10222470, obj_offset=3D13081, type=3D=
-0xbfffe1a8, sizep=3D0xbf8004e8) at sha1_file.c
-        w_curs =3D 0x0
-        curpos =3D 13082
-        data =3D 0x48021018
-#13 0x10140e48 in cache_or_unpack_entry (p=3D0x10222470, base_offset=3D1308=
-1, base_size=3D0xbf8004e8, type=3D0xbfffe1a8,=20
-        ret =3D 0x0
-        hash =3D 2
-        ent =3D 0x10201388
-#14 0x10141394 in unpack_delta_entry (p=3D0x10222470, w_curs=3D0xbf800540, =
-curpos=3D13102, delta_size=3D7, obj_offset=3D130
-        delta_data =3D 0xbf800520
-        result =3D 0x10140720
-        base =3D 0x48054319
-        base_size =3D 7
-        base_offset =3D 13081
-#15 0x1014173c in unpack_entry (p=3D0x10222470, obj_offset=3D13081, type=3D=
-0xbfffe1a8, sizep=3D0xbf8005e8) at sha1_file.c
-        w_curs =3D 0x0
-        curpos =3D 13082
-        data =3D 0x48021018
-#16 0x10140e48 in cache_or_unpack_entry (p=3D0x10222470, base_offset=3D1308=
-1, base_size=3D0xbf8005e8, type=3D0xbfffe1a8,=20
-        ret =3D 0x0
-        hash =3D 2
-        ent =3D 0x10201388
+That way, there is no need to debug feature test macros, order of
+#includes, etc.  Untested.
 
-There are more than 133205 stack frames.
+-- >8 --
+Subject: compat/fnmatch: use git-compat-util.h for system headers
 
-The problem is, this repository contains private data. I don't want to
-put it in public, but I would send it to someone in the hope he doesn't
-expose its contents. Or you tell me, what you are interested in and I dig
-for it.
+Finding the right feature test macros and ordering of #includes to
+get the desired functionality from all operating systems can be a big
+pain.  Take advantage of the debugging already done and avoid future
+churn by using git's usual git-compat-util for this.
 
-Bye, J=C3=B6rg.
---=20
-Nichts ist so langweilig, wie die Wiederholung seinerselbst.
-                                        (Marcel Reich=E2=80=90Ranicki)
+In particular, the current fnmatch.c doesn't #include anything that
+ought to provide NULL unless HAVE_STRING_H is defined, and it fails to
+compile on Interix because of this.  Other platforms must have been
+getting the macro through another header.
 
---GvXjxJ+pjyke8COw
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature http://en.wikipedia.org/wiki/OpenPGP
+To make this code easier to reuse and to simplify future automated
+merges from upstream, still keep the old #includes, just disabled with
+"#if 0".
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+Reported-by: Markus Duft <mduft@gentoo.org>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Maybe the old #includes after #include-ing git-compat-util should be
+left uncommented because harmless.
 
-iEYEARECAAYFAk3drdwACgkQwe0mZwH1VICdxQCfRJxbp3ZxtGSB6aXgpB3VuKzx
-wakAn0q1YQiTXhXzLrxoyr5Hw+jxeMBb
-=JZbz
------END PGP SIGNATURE-----
+ compat/fnmatch/fnmatch.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
---GvXjxJ+pjyke8COw--
+diff --git a/compat/fnmatch/fnmatch.c b/compat/fnmatch/fnmatch.c
+index 14feac7..4bf3b5c 100644
+--- a/compat/fnmatch/fnmatch.c
++++ b/compat/fnmatch/fnmatch.c
+@@ -16,6 +16,9 @@
+    write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+    Boston, MA 02111-1307, USA.  */
+ 
++#include "git-compat-util.h"
++
++#if 0
+ #if HAVE_CONFIG_H
+ # include <config.h>
+ #endif
+@@ -46,6 +49,7 @@
+ # include <wchar.h>
+ # include <wctype.h>
+ #endif
++#endif
+ 
+ /* Comment out all this code if we are using the GNU C Library, and are not
+    actually compiling the library itself.  This code is part of the GNU C
+-- 
+1.7.5.1
