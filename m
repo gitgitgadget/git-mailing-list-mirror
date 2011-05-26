@@ -1,66 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/5] pretty: add pp_commit_easy function for simple
- callers
-Date: Thu, 26 May 2011 15:47:29 -0700
-Message-ID: <7v4o4hulj2.fsf@alter.siamese.dyndns.org>
-References: <20110526222450.GA20077@sigill.intra.peff.net>
- <20110526222724.GA21775@sigill.intra.peff.net>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH 1/2] t7508: demonstrate status's failure to use --porcelain
+ format with -z
+Date: Thu, 26 May 2011 17:51:26 -0500
+Message-ID: <oxsohkXWsdC5MeWOTaXZMEPAVeHglxeXSUXEWJ6xA_rmLcm2iqjtpg@cipher.nrlssc.navy.mil>
+References: <vdMu20HxiNaWL_IogfamtfZCd6xRyKanIqTSw0k4f2SrbLfUYHDzKT2EGkwdFRlaLzX-5vGGtDCZRGu84HrJzw@cipher.nrlssc.navy.mil> <7v4o4hw2zm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 27 00:47:50 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: peff@peff.net, git@vger.kernel.org,
+	Brandon Casey <drafnel@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 27 00:51:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPjLI-0000o8-LD
-	for gcvg-git-2@lo.gmane.org; Fri, 27 May 2011 00:47:48 +0200
+	id 1QPjP7-0002xs-7D
+	for gcvg-git-2@lo.gmane.org; Fri, 27 May 2011 00:51:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758624Ab1EZWro (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 18:47:44 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51298 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758210Ab1EZWrn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 18:47:43 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 86B8A5FC2;
-	Thu, 26 May 2011 18:49:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AaVU5RKrPzpZ4w3whB8VnUUDOGo=; b=fL19+p
-	r8ZjjRMeJEZSX4lU2ya7jag6/yECFSGP5b88sefToaNxo8dqxaPPGNZLXF4UrRi1
-	9aFSTg+dr1Ql3F8e7/qabdS3/4vukk1HDVFKMlBtBbPWkq/XHJLJLYHMQCXwWIb5
-	NmvpFbS5y6yhqfzOIg+Jy6lXN9L36Z6l/3NFQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KQ6Az+Sdwa9vPd0SczRhOlCx/GyB2LW9
-	kNCu064INT4NZmNvcgJt+6NAknWDlnnn07EiUxsdXZopP5+FQ9DcK03QkW5myZsu
-	XSA6h1DxVUpz5YOIgju9JXfSt+gWaA906TZa1FFEXjnIcrSExFMycNnKPlq/2bH0
-	aOVC+oWVXd8=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 53FA55FC1;
-	Thu, 26 May 2011 18:49:46 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BA85D5FC0; Thu, 26 May 2011
- 18:49:40 -0400 (EDT)
-In-Reply-To: <20110526222724.GA21775@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 26 May 2011 18:27:24 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7430EE36-87EA-11E0-822B-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+	id S1758638Ab1EZWvk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 18:51:40 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:60748 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758210Ab1EZWvk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 18:51:40 -0400
+Received: by mail.nrlssc.navy.mil id p4QMpR7D003142; Thu, 26 May 2011 17:51:27 -0500
+In-Reply-To: <7v4o4hw2zm.fsf@alter.siamese.dyndns.org>
+X-OriginalArrivalTime: 26 May 2011 22:51:26.0927 (UTC) FILETIME=[71EF1DF0:01CC1BF7]
+X-Virus-Scanned: clamav-milter 0.95.3 at mail1
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174591>
 
-Jeff King <peff@peff.net> writes:
+On 05/26/2011 04:45 PM, Junio C Hamano wrote:
+> Brandon Casey <casey@nrlssc.navy.mil> writes:
+> 
+>> From: Brandon Casey <drafnel@gmail.com>
+>>
+>> When 'git status' is supplied the -z switch, and no output format has been
+>> selected, it is supposed to use the --porcelain format.  This does not
+>> happen.  Instead, the standard long format is used.  Add a test to
+>> demonstrate this failure.
+>>
+>> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+> 
+> I didn't even know we attempted to default to porcelain when -z is given,
+> even though it is a logical thing to do in the sense that nobody sane
+> would want to read a NUL-terminated human readable format.
 
-> Many callers don't actually care about the pretty print context at all;
-> let's just give them a simple way of pretty-printing a commit without
-> having to create a context struct.
+The behavior is derived from your original behavior where -z was
+supposed to imply --short (see 173e6c8).  You even documented
+it: 9e4b7ab :)  Later, Jeff added --porcelain (6f15787), and
+updated the documentation:
 
-Very nice ;-).
+   -z::
+  -       Terminate entries with NUL, instead of LF.  This implies `-s`
+  -       (short status) output format.
+  +       Terminate entries with NUL, instead of LF.  This implies
+  +       the `--porcelain` output format if no other format is given.
+
+> I'll rewrite the test to avoid hardcoded and context dependent
+> test vector, like this:
+> 
+>     test_expect_failure 'status -z implies porcelain' '
+>            git status --porcelain |
+>            perl -pe "s/\012/\000/g" >expect
+
+Missing '&&' here.
+
+>            git status -z >output &&
+>            test_cmp expect output
+>     '
+> 
+> as the only thing you are interested in is the two output to match
+> identically modulo the record termination.
+
+Thanks.
+
+> By the way, don't we however also want to make sure -z does not kick in
+> automatically when other options like "short" or "normal" is given?
+
+It seems it was intended to be able to do
+
+   git status -z --short
+
+and since -z implies --porcelain if --short is not given, it is not
+possible to produce "normal" long format and NUL termination at
+the same time.
+
+So, building on your modified test above, we could add something like:
+
+     test_expect_failure 'status -z with -s works correctly' '
+            git status -s |
+            perl -pe "s/\012/\000/g" >expect &&
+            git status -s -z >output &&
+            test_cmp expect output
+     '
+
+Hopefully, the existing tests for status, without -z, will notice
+if NUL termination kicks in when it is not supposed to.
+
+-Brandon
