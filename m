@@ -1,121 +1,179 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/3] mailinfo: always clean up rfc822 header folding
-Date: Thu, 26 May 2011 16:53:38 -0400
-Message-ID: <20110526205338.GB31340@sigill.intra.peff.net>
+Subject: [PATCH 3/3] format-patch: preserve subject newlines with -k
+Date: Thu, 26 May 2011 16:55:04 -0400
+Message-ID: <20110526205504.GC31340@sigill.intra.peff.net>
 References: <20110526203625.GA31018@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
-X-From: git-owner@vger.kernel.org Thu May 26 22:53:54 2011
+X-From: git-owner@vger.kernel.org Thu May 26 22:55:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPhYz-0003xA-Kd
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 22:53:49 +0200
+	id 1QPhaO-0004mK-8R
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 22:55:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758281Ab1EZUxm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 16:53:42 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51496
+	id S1758369Ab1EZUzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 16:55:08 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51501
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755061Ab1EZUxl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 16:53:41 -0400
-Received: (qmail 17185 invoked by uid 107); 26 May 2011 20:53:41 -0000
+	id S1756699Ab1EZUzH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 16:55:07 -0400
+Received: (qmail 17239 invoked by uid 107); 26 May 2011 20:55:07 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 May 2011 16:53:41 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 May 2011 16:53:38 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 May 2011 16:55:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 May 2011 16:55:04 -0400
 Content-Disposition: inline
 In-Reply-To: <20110526203625.GA31018@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174565>
 
-Without the "-k" option, mailinfo will convert a folded
-subject header like:
+In older versions of git, we used rfc822 header folding to
+indicate that the original subject line had multiple lines
+in it.  But since a1f6baa (format-patch: wrap long header
+lines, 2011-02-23), we now use header folding whenever there
+is a long line.
 
-  Subject: this is a
-    subject that doesn't
-    fit on one line
-
-into a single line. With "-k", however, we assumed that
-these newlines were significant and represented something
-that the sending side would want us to preserve.
-
-For messages created by format-patch, this assumption was
-broken by a1f6baa (format-patch: wrap long header lines,
-2011-02-23).  For messages sent by arbitrary MUAs, this was
-probably never a good assumption to make, as they may have
-been folding subjects in accordance with rfc822's line
-length recommendations all along.
-
-This patch now joins folded lines with a single whitespace
-character. This treats header folding purely as a syntactic
-feature of the transport mechanism, not as something that
-format-patch is trying to tell us about the original
-subject.
+This means that "git am" cannot trust header folding as a
+sign from format-patch that newlines should be preserved.
+Instead, format-patch needs to signal more explicitly that
+the newlines are significant.  This patch does so by
+rfc2047-encoding the newlines in the subject line. No
+changes are needed on the "git am" end; it already decodes
+the newlines properly.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-The astute reader will notice that even with this patch, there is still
-a regression when using new versions of format-patch (with a1f6baa) with
-an older version of "git am". But you only see it when using "am -k", so
-interoperability is probably not a huge deal:
+We have always treated multi-line subjects as second-class citizens, so
+this is not a must-have patch. But I think it makes sense to do,
+considering how simple it is, and the fact that it makes "format-patch
+-k | am -k" always a no-op, even with multi-line subjects.
 
-  1. Before this patch, "am -k" was arguably broken anyway for applying
-     random patches via email, since MUAs may have been doing arbitrary
-     header folding. So we can probably discount people running "am -k"
-     on random input as insane.
-
-  2. People doing "git format-patch -k | git am -k" will presumably use
-     the same version for both, and are OK.
-
-  3. People doing "git format-patch -k >file", followed by upgrading
-     git, and t hen "git am file" are still OK, since the newer version
-     of "am" handles the output of both old and new format-patch.
-
-  4. The problematic case is "git format-patch -k >file" with v1.7.5 or
-     newer, then _downgrading_ git, then using "git am -k" to apply. Or
-     more likely, using a newer version to create an mbox, shipping the
-     mbox to another machine, and then using an older "git am" to apply.
-
-So I don't see it as all that likely a problem in practice. If we do
-care, we can't fix it with a simple patch. We would have to revert the
-header-folding from format-patch, fix am, wait N time units until all of
-the old "am" no longer exists, and then re-apply.
-
- builtin/mailinfo.c     |    2 +-
+ builtin/log.c          |    3 ++-
+ commit.h               |    4 +++-
+ log-tree.c             |    1 +
+ pretty.c               |    8 +++++---
+ revision.h             |    3 ++-
  t/t4152-am-subjects.sh |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ 6 files changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/mailinfo.c b/builtin/mailinfo.c
-index 71e6262..bfb32b7 100644
---- a/builtin/mailinfo.c
-+++ b/builtin/mailinfo.c
-@@ -400,7 +400,7 @@ static int read_one_header_line(struct strbuf *line, FILE *in)
- 			break;
- 		if (strbuf_getline(&continuation, in, '\n'))
- 			break;
--		continuation.buf[0] = '\n';
-+		continuation.buf[0] = ' ';
- 		strbuf_rtrim(&continuation);
- 		strbuf_addbuf(line, &continuation);
- 	}
+diff --git a/builtin/log.c b/builtin/log.c
+index d8c6c28..3fdf488 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -768,7 +768,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 	pp_user_info(NULL, CMIT_FMT_EMAIL, &sb, committer, DATE_RFC2822,
+ 		     encoding);
+ 	pp_title_line(CMIT_FMT_EMAIL, &msg, &sb, subject_start, extra_headers,
+-		      encoding, need_8bit_cte);
++		      encoding, need_8bit_cte, 0);
+ 	pp_remainder(CMIT_FMT_EMAIL, &msg, &sb, 0);
+ 	printf("%s\n", sb.buf);
+ 
+@@ -1130,6 +1130,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		die ("-n and -k are mutually exclusive.");
+ 	if (keep_subject && subject_prefix)
+ 		die ("--subject-prefix and -k are mutually exclusive.");
++	rev.preserve_subject = keep_subject;
+ 
+ 	argc = setup_revisions(argc, argv, &rev, &s_r_opt);
+ 	if (argc > 1)
+diff --git a/commit.h b/commit.h
+index eb6c5af..30cb7bc 100644
+--- a/commit.h
++++ b/commit.h
+@@ -73,6 +73,7 @@ struct pretty_print_context
+ 	int abbrev;
+ 	const char *subject;
+ 	const char *after_subject;
++	int preserve_subject;
+ 	enum date_mode date_mode;
+ 	int need_8bit_cte;
+ 	int show_notes;
+@@ -107,7 +108,8 @@ void pp_title_line(enum cmit_fmt fmt,
+ 		   const char *subject,
+ 		   const char *after_subject,
+ 		   const char *encoding,
+-		   int need_8bit_cte);
++		   int need_8bit_cte,
++		   int preserve_lines);
+ void pp_remainder(enum cmit_fmt fmt,
+ 		  const char **msg_p,
+ 		  struct strbuf *sb,
+diff --git a/log-tree.c b/log-tree.c
+index b46ed3b..9b9aaf2 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -504,6 +504,7 @@ void show_log(struct rev_info *opt)
+ 	ctx.date_mode = opt->date_mode;
+ 	ctx.abbrev = opt->diffopt.abbrev;
+ 	ctx.after_subject = extra_headers;
++	ctx.preserve_subject = opt->preserve_subject;
+ 	ctx.reflog_info = opt->reflog_info;
+ 	pretty_print_commit(opt->commit_format, commit, &msgbuf, &ctx);
+ 
+diff --git a/pretty.c b/pretty.c
+index 65d20a7..315f1d2 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1121,12 +1121,13 @@ void pp_title_line(enum cmit_fmt fmt,
+ 		   const char *subject,
+ 		   const char *after_subject,
+ 		   const char *encoding,
+-		   int need_8bit_cte)
++		   int need_8bit_cte,
++		   int preserve_lines)
+ {
+ 	struct strbuf title;
+ 
+ 	strbuf_init(&title, 80);
+-	*msg_p = format_subject(&title, *msg_p, " ");
++	*msg_p = format_subject(&title, *msg_p, preserve_lines ? "\n" : " ");
+ 
+ 	strbuf_grow(sb, title.len + 1024);
+ 	if (subject) {
+@@ -1254,7 +1255,8 @@ void pretty_print_commit(enum cmit_fmt fmt, const struct commit *commit,
+ 	/* These formats treat the title line specially. */
+ 	if (fmt == CMIT_FMT_ONELINE || fmt == CMIT_FMT_EMAIL)
+ 		pp_title_line(fmt, &msg, sb, context->subject,
+-			      context->after_subject, encoding, need_8bit_cte);
++			      context->after_subject, encoding, need_8bit_cte,
++			      context->preserve_subject);
+ 
+ 	beginning_of_body = sb->len;
+ 	if (fmt != CMIT_FMT_ONELINE)
+diff --git a/revision.h b/revision.h
+index 05659c6..f8ddd83 100644
+--- a/revision.h
++++ b/revision.h
+@@ -90,7 +90,8 @@ struct rev_info {
+ 			abbrev_commit:1,
+ 			use_terminator:1,
+ 			missing_newline:1,
+-			date_mode_explicit:1;
++			date_mode_explicit:1,
++			preserve_subject:1;
+ 	unsigned int	disable_stdin:1;
+ 
+ 	enum date_mode date_mode;
 diff --git a/t/t4152-am-subjects.sh b/t/t4152-am-subjects.sh
-index 7222c06..37e5c03 100755
+index 37e5c03..4c68245 100755
 --- a/t/t4152-am-subjects.sh
 +++ b/t/t4152-am-subjects.sh
-@@ -58,7 +58,7 @@ test_expect_success 'long subject preserved (format-patch | am)' '
- test_expect_success 'long subject preserved (format-patch -k | am)' '
- 	check_subject long-k
+@@ -70,7 +70,7 @@ test_expect_success 'multiline subject unwrapped (format-patch -k | am)' '
+ 	check_subject multiline-k
  '
--test_expect_failure 'long subject preserved (format-patch -k | am -k)' '
-+test_expect_success 'long subject preserved (format-patch -k | am -k)' '
- 	check_subject long-k -k
+ echo "$MULTILINE_SUBJECT" >expect
+-test_expect_failure 'multiline subject preserved (format-patch -k | am -k)' '
++test_expect_success 'multiline subject preserved (format-patch -k | am -k)' '
+ 	check_subject multiline-k -k
  '
  
 -- 
