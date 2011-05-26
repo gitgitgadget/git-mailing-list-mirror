@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 10/10] revert: Implement --abort processing
-Date: Thu, 26 May 2011 15:53:53 +0000
-Message-ID: <1306425233-504-11-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 07/10] revert: Catch incompatible command-line options early
+Date: Thu, 26 May 2011 15:53:50 +0000
+Message-ID: <1306425233-504-8-git-send-email-artagnon@gmail.com>
 References: <1306333025-29893-1-git-send-email-artagnon@gmail.com>
  <1306425233-504-1-git-send-email-artagnon@gmail.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
@@ -15,130 +15,120 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPctA-0001N6-VR
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 17:54:21 +0200
+	id 1QPct9-0001N6-Uy
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 17:54:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758012Ab1EZPyQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 11:54:16 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:43880 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754017Ab1EZPyO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 11:54:14 -0400
-Received: by mail-qw0-f46.google.com with SMTP id 3so441227qwk.19
-        for <git@vger.kernel.org>; Thu, 26 May 2011 08:54:13 -0700 (PDT)
+	id S1757946Ab1EZPyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 11:54:11 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:44180 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757878Ab1EZPyJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 11:54:09 -0400
+Received: by mail-qy0-f181.google.com with SMTP id 14so475045qyg.19
+        for <git@vger.kernel.org>; Thu, 26 May 2011 08:54:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=vhXAPNZfwGws8Zo48iWzt83Y3UXN9vnhqpWuJ5l1d/g=;
-        b=Hl2D9e9rNQtBPe4Q7rfMUvihdIAyg15MU3D8aTe8x5EUj9tt0PksIWpU/J0GIvTI2c
-         6CnaI34eO9gvZMyz3Qy/ajtg9LIwOP/29BqWDzG7AzqjOy+faZDBrNa6CASjoAKC57pc
-         FGVI8d8EOOHrYG0h1qo48Z9/h05CACp9LXntc=
+        bh=DbYyngpgDLVNTbFst7LVRAyF78IQTtP/XP1BB22f/04=;
+        b=jMFRFoL3Fo2QJqTl8nsmShCOjubWbGlg6ClZygdthoaRkt5nRjkuyod7izOZxBoDwa
+         3XnLaH+sfEUMs+04XKsTEMHyFwc1NTMa506UB9saNmFfuQ20UbzzPNNtKWcNKoiWyhTO
+         1o6TfO8JllXtLPRJIs2CPnZCZbH+E7HkQBRc8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=ZHbhokIxHiHmY9jlE2gxDjVVGNTvZ7+4ETCpps+U+55Xz00X3nSZCDld15SGu3f9Gw
-         98++JRvl41D/wErTkLs59SLymaZnNIwY2MUPMoeNlWwkPP4dv1kFfIjuy8qbvyxWRH2t
-         9TnkijOhYfrrMEJMSapFHzrG16U2rhBI4p6II=
-Received: by 10.229.34.75 with SMTP id k11mr351417qcd.18.1306425253667;
-        Thu, 26 May 2011 08:54:13 -0700 (PDT)
+        b=MHNuWT8Lt3XuZ8vARcf91hOoDXSaAGi5CUWs6w4P0dzXBsma75HJo+jNIfn0RXZVkb
+         tLoYPkajCrLQh3YU4HjrmghnBgZIa8oBsBJrXHezP0/3TGnVeAfbFzBfa9UxyXrsV//i
+         d+n3BcCNv51aI+lKDboEf3FODNxHoo9p6Wx3U=
+Received: by 10.224.212.2 with SMTP id gq2mr725775qab.88.1306425248906;
+        Thu, 26 May 2011 08:54:08 -0700 (PDT)
 Received: from localhost.localdomain (ec2-184-72-137-52.compute-1.amazonaws.com [184.72.137.52])
-        by mx.google.com with ESMTPS id j18sm513435qck.27.2011.05.26.08.54.11
+        by mx.google.com with ESMTPS id j18sm513435qck.27.2011.05.26.08.54.07
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 26 May 2011 08:54:12 -0700 (PDT)
+        Thu, 26 May 2011 08:54:08 -0700 (PDT)
 X-Mailer: git-send-email 1.7.5.1
 In-Reply-To: <1306425233-504-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174532>
 
-To abort, perform a "rerere clear" and "reset --hard" to the ref
-specified by the HEAD file introduced earlier in the series.
+Earlier, incompatible command-line options used to be caught in
+pick_commits after parse_args has parsed the options and populated the
+options structure; a lot of unncessary work has already been done, and
+significant amount of cleanup is required to die at this stage.
+Instead, hand over this responsibility to parse_args so that the
+program can die early.  Also write a die_opt_incompabile function to
+handle incompatible options in a general manner; it will be used more
+extensively as more command-line options are introduced later in the
+series.
 
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- builtin/revert.c |   46 ++++++++++++++++++++++++++++++++++++++++++----
- 1 files changed, 42 insertions(+), 4 deletions(-)
+ builtin/revert.c |   34 +++++++++++++++++++++++-----------
+ 1 files changed, 23 insertions(+), 11 deletions(-)
 
 diff --git a/builtin/revert.c b/builtin/revert.c
-index f33d40a..be63aee 100644
+index 2e5f260..1c6c102 100644
 --- a/builtin/revert.c
 +++ b/builtin/revert.c
-@@ -208,8 +208,6 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 				NULL);
- 
- 	/* Remove these when the options are actually implemented */
--	if (opts->abort_oper)
--		die("--abort is not implemented yet");
- 	if (opts->skip_oper)
- 		die("--skip is not implemented yet");
- 	if (opts->continue_oper)
-@@ -732,6 +730,46 @@ static int pick_commits(struct replay_opts *opts)
+@@ -80,6 +80,22 @@ static int option_parse_x(const struct option *opt,
  	return 0;
  }
  
-+static int process_continuation(struct replay_opts *opts)
++static void verify_opt_compatible(const char *me, const char *base_opt, ...)
 +{
-+	if (opts->abort_oper) {
-+		char head[DEFAULT_ABBREV];
-+		unsigned char sha1[20];
-+		int fd;
-+		rerere_clear(0);
++	const char *this_opt;
++	va_list ap;
++	int set;
 +
-+		if (!file_exists(HEAD_FILE))
-+			goto error;
-+		fd = open(HEAD_FILE, O_RDONLY, 0666);
-+		if (fd < 0)
-+			return error(_("Could not open '%s' for reading: %s"),
-+				HEAD_FILE, strerror(errno));
-+		if (xread(fd, head, DEFAULT_ABBREV) < DEFAULT_ABBREV) {
-+			close(fd);
-+			return error(_("Corrupt '%s': %s"), HEAD_FILE, strerror(errno));
-+		}
-+		close(fd);
-+
-+		if (get_sha1(head, sha1))
-+			return error(_("Failed to resolve '%s' as a valid ref."), head);
-+		update_ref(NULL, "HEAD", sha1, NULL, 0, MSG_ON_ERR);
++	va_start(ap, base_opt);
++	while ((this_opt = va_arg(ap, const char *))) {
++		set = va_arg(ap, int);
++		if (set)
++			die(_("%s: %s cannot be used with %s"),
++				me, this_opt, base_opt);
 +	}
-+	else if (opts->skip_oper) {
-+		if (!file_exists(TODO_FILE))
-+			goto error;
-+		return 0;
-+	}
-+	else if (opts->continue_oper) {
-+		if (!file_exists(TODO_FILE))
-+			goto error;
-+		return 0;
-+	}
-+
-+	return pick_commits(opts);
-+error:
-+	return error(_("No %s in progress"), me);
++	va_end(ap);
 +}
 +
- int cmd_revert(int argc, const char **argv, const char *prefix)
+ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
  {
- 	int res;
-@@ -744,7 +782,7 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
- 	git_config(git_default_config, NULL);
- 	me = "revert";
- 	parse_args(argc, argv, &opts);
--	res = pick_commits(&opts);
-+	res = process_continuation(&opts);
- 	if (res > 0)
- 		/* Exit status from conflict */
- 		return res;
-@@ -764,7 +802,7 @@ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
- 	git_config(git_default_config, NULL);
- 	me = "cherry-pick";
- 	parse_args(argc, argv, &opts);
--	res = pick_commits(&opts);
-+	res = process_continuation(&opts);
- 	if (res > 0)
- 		return res;
- 	if (res < 0)
+ 	const char * const * usage_str = revert_or_cherry_pick_usage(opts);
+@@ -116,6 +132,13 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+ 	if (opts->commit_argc < 2)
+ 		usage_with_options(usage_str, options);
+ 
++	if (opts->allow_ff)
++		verify_opt_compatible(me, "--ff",
++				"--signoff", opts->signoff,
++				"--no-commit", opts->no_commit,
++				"-x", opts->record_origin,
++				"--edit", opts->edit,
++				NULL);
+ 	opts->commit_argv = argv;
+ }
+ 
+@@ -556,17 +579,6 @@ static int pick_commits(struct replay_opts *opts)
+ 	struct commit *commit;
+ 
+ 	setenv(GIT_REFLOG_ACTION, me, 0);
+-	if (opts->allow_ff) {
+-		if (opts->signoff)
+-			die(_("cherry-pick --ff cannot be used with --signoff"));
+-		if (opts->no_commit)
+-			die(_("cherry-pick --ff cannot be used with --no-commit"));
+-		if (opts->record_origin)
+-			die(_("cherry-pick --ff cannot be used with -x"));
+-		if (opts->edit)
+-			die(_("cherry-pick --ff cannot be used with --edit"));
+-	}
+-
+ 	read_and_refresh_cache(me, opts);
+ 
+ 	prepare_revs(&revs, opts);
 -- 
 1.7.5.GIT
