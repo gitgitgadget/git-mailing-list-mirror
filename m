@@ -1,75 +1,57 @@
 From: Jim Meyering <jim@meyering.net>
-Subject: [PATCH] remove tests of always-false condition
-Date: Thu, 26 May 2011 15:58:16 +0200
-Message-ID: <87zkm95zt3.fsf@rho.meyering.net>
+Subject: [PATCH] remove unnecessary test and dead diagnostic
+Date: Thu, 26 May 2011 15:59:14 +0200
+Message-ID: <87tych5zrh.fsf@rho.meyering.net>
 Mime-Version: 1.0
 Content-Type: text/plain
 To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 26 15:58:30 2011
+X-From: git-owner@vger.kernel.org Thu May 26 15:59:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPb53-0001Yx-G5
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 15:58:29 +0200
+	id 1QPb5y-0002ER-WA
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 15:59:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757607Ab1EZN6Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 09:58:24 -0400
-Received: from smtp1-g21.free.fr ([212.27.42.1]:51939 "EHLO smtp1-g21.free.fr"
+	id S1757863Ab1EZN7W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 09:59:22 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1]:54133 "EHLO smtp1-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754540Ab1EZN6X (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 09:58:23 -0400
+	id S1756616Ab1EZN7V (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 09:59:21 -0400
 Received: from mx.meyering.net (unknown [82.230.74.64])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id B64FE940210
-	for <git@vger.kernel.org>; Thu, 26 May 2011 15:58:17 +0200 (CEST)
+	by smtp1-g21.free.fr (Postfix) with ESMTP id EDAF19400F4
+	for <git@vger.kernel.org>; Thu, 26 May 2011 15:59:15 +0200 (CEST)
 Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id 78AB06026C; Thu, 26 May 2011 15:58:16 +0200 (CEST)
+	id AEF4160355; Thu, 26 May 2011 15:59:14 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174511>
 
 
-* fsck.c (fsck_error_function): Don't test obj->sha1 == 0.
-It can never be true, since that sha1 member is an array.
-* transport.c (set_upstreams): Likewise for ref->new_sha1.
+* sha1_file.c (index_stream): Don't check for size_t < 0.
+read_in_full does not return an indication of failure.
 
 Signed-off-by: Jim Meyering <meyering@redhat.com>
 ---
-Fix some coverity-spotted nits.
-Relative to "next".
+ sha1_file.c |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
 
- fsck.c      |    2 +-
- transport.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+diff --git a/sha1_file.c b/sha1_file.c
+index 5fc877f..ea4549c 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2736,8 +2736,6 @@ static int index_stream(unsigned char *sha1, int fd, size_t size,
+ 		size_t actual;
 
-diff --git a/fsck.c b/fsck.c
-index 6f266c1..60bd4bb 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -349,7 +349,7 @@ int fsck_error_function(struct object *obj, int type, const char *fmt, ...)
- 	va_list ap;
- 	struct strbuf sb = STRBUF_INIT;
-
--	strbuf_addf(&sb, "object %s:", obj->sha1?sha1_to_hex(obj->sha1):"(null)");
-+	strbuf_addf(&sb, "object %s:", sha1_to_hex(obj->sha1));
-
- 	va_start(ap, fmt);
- 	strbuf_vaddf(&sb, fmt, ap);
-diff --git a/transport.c b/transport.c
-index 1a3998e..c9c8056 100644
---- a/transport.c
-+++ b/transport.c
-@@ -156,7 +156,7 @@ static void set_upstreams(struct transport *transport, struct ref *refs,
- 			continue;
- 		if (!ref->peer_ref)
- 			continue;
--		if (!ref->new_sha1 || is_null_sha1(ref->new_sha1))
-+		if (is_null_sha1(ref->new_sha1))
- 			continue;
-
- 		/* Follow symbolic refs (mainly for HEAD). */
+ 		actual = read_in_full(fd, buf, sz);
+-		if (actual < 0)
+-			die_errno("index-stream: reading input");
+ 		if (write_in_full(fast_import.in, buf, actual) != actual)
+ 			die_errno("index-stream: feeding fast-import");
+ 		size -= actual;
 --
 1.7.5.2.660.g9f46c
