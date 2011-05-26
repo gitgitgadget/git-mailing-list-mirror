@@ -1,106 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] read_in_full: always report errors
-Date: Thu, 26 May 2011 17:04:24 -0400
-Message-ID: <20110526210424.GD31340@sigill.intra.peff.net>
-References: <87tych5zrh.fsf@rho.meyering.net>
- <20110526141130.GB18520@sigill.intra.peff.net>
- <87hb8h5y09.fsf@rho.meyering.net>
- <20110526163027.GC4049@sigill.intra.peff.net>
- <7vy61twbqw.fsf@alter.siamese.dyndns.org>
- <20110526184839.GA6910@sigill.intra.peff.net>
- <7vlixtw5e2.fsf@alter.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Whitespace and '&nbsp'
+Date: Thu, 26 May 2011 14:12:31 -0700
+Message-ID: <BANLkTik7eJ=BC9Bekqu-W1-r0cheCjC+wg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jim Meyering <jim@meyering.net>, git list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 26 23:04:34 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 26 23:13:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPhjN-0001zK-33
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 23:04:33 +0200
+	id 1QPhrX-0007OI-37
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 23:12:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758350Ab1EZVE2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 17:04:28 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39063
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755056Ab1EZVE1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 17:04:27 -0400
-Received: (qmail 17392 invoked by uid 107); 26 May 2011 21:04:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 May 2011 17:04:27 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 May 2011 17:04:24 -0400
-Content-Disposition: inline
-In-Reply-To: <7vlixtw5e2.fsf@alter.siamese.dyndns.org>
+	id S1758210Ab1EZVMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 17:12:55 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:59149 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754440Ab1EZVMy (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 May 2011 17:12:54 -0400
+Received: from mail-ew0-f46.google.com (mail-ew0-f46.google.com [209.85.215.46])
+	(authenticated bits=0)
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p4QLCqNZ021261
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Thu, 26 May 2011 14:12:53 -0700
+Received: by ewy4 with SMTP id 4so407450ewy.19
+        for <git@vger.kernel.org>; Thu, 26 May 2011 14:12:51 -0700 (PDT)
+Received: by 10.14.16.16 with SMTP id g16mr281124eeg.193.1306444371647; Thu,
+ 26 May 2011 14:12:51 -0700 (PDT)
+Received: by 10.14.127.70 with HTTP; Thu, 26 May 2011 14:12:31 -0700 (PDT)
+X-Spam-Status: No, hits=-102.981 required=5 tests=AWL,BAYES_00,USER_IN_WHITELIST
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174571>
 
-On Thu, May 26, 2011 at 01:53:09PM -0700, Junio C Hamano wrote:
+So I just got a patch that had a hidden &nbsp in it (unicode: u00a0,
+utf-8: \0302\0240) and sad to say my terminal window shows no
+indication of that what-so-ever. It looks exactly like a regular
+space, except gcc won't actually accept it.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > The problem is that most callers are not careful enough to repeatedly
-> > call read_in_full and find out that there might have been an error in
-> > the previous result. They see a read shorter than what they asked, and
-> > assume it was EOF.
-> 
-> I can buy that argument, but then shouldn't we change the "careful"
-> callers to treat any short-read from read_in_full() as an error?
+So I'm wondering whether git shouldn't be escaping things like that in
+diffs, for example. Looking at binary noise (using "git diff --text"),
+I notice we have other things that don't get escaped either, although
+at least then "less" will escape it for us. Again, for &nbsp, less
+doesn't show it any different than a regular space either.
 
-I don't think so. A short-read could still be EOF, and you can
-distinguish between the two. Before, if you asked for n bytes, you would
-get back an 'r' that was one of:
+Yeah, I'm sure there is some programming font out there that makes it
+visible, but I do wonder whether git should help.
 
-  r < 0: error on first read
-  r < n: short read via EOF, or error on subsequent read
-  r == n: OK, got n bytes
+I even used "--whitespace=fix" to apply the patch, but git doesn't
+even recognize the thing as whitespace, so that didn't make any real
+difference.
 
-With my patch, you get:
-
-  r < 0: error on any read
-  r < n: short read via EOF
-  r == n: OK, got n bytes
-
-So any negative return is an error, and less than n now _always_ means a
-short read. So your "careful" callers will now get the error
-automatically. If you want to update any callers, it would be ones like:
-
-  if (read_in_full(fd, buf, len) != len))
-          die("unable to read %d bytes", len);
-
-which are not _wrong_, but could be more specific in doing:
-
-  ssize_t r = read_in_full(fd, buf, len);
-  if (r < 0)
-          die_errno("unable to read");
-  else if (r < len)
-          die("short read");
-
-But that is just a quality-of-error-message issue, not a correctness
-issue.
-
-> diff --git a/combine-diff.c b/combine-diff.c
-> index be67cfc..176231e 100644
-> --- a/combine-diff.c
-> +++ b/combine-diff.c
-> @@ -845,11 +845,8 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
->  			result = xmalloc(len + 1);
->  
->  			done = read_in_full(fd, result, len);
-> -			if (done < 0)
-> +			if (done != len)
->  				die_errno("read error '%s'", elem->path);
-> -			else if (done < len)
-> -				die("early EOF '%s'", elem->path);
-> -
-
-This is backwards. We now _can_ tell the two apart, so more callers
-could be like this.
-
--Peff
+                          Linus
