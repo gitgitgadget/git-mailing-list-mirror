@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 07/10] revert: Catch incompatible command-line options early
-Date: Thu, 26 May 2011 15:53:50 +0000
-Message-ID: <1306425233-504-8-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 02/10] revert: Propogate errors upwards from do_pick_commit
+Date: Thu, 26 May 2011 15:53:45 +0000
+Message-ID: <1306425233-504-3-git-send-email-artagnon@gmail.com>
 References: <1306333025-29893-1-git-send-email-artagnon@gmail.com>
  <1306425233-504-1-git-send-email-artagnon@gmail.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
@@ -9,126 +9,201 @@ Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Christian Couder <christian.couder@gmail.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 26 17:54:24 2011
+X-From: git-owner@vger.kernel.org Thu May 26 17:54:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPct9-0001N6-Uy
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 17:54:20 +0200
+	id 1QPctQ-0001ZT-Ep
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 17:54:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757946Ab1EZPyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 11:54:11 -0400
+	id S1757612Ab1EZPyF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 11:54:05 -0400
 Received: from mail-qy0-f181.google.com ([209.85.216.181]:44180 "EHLO
 	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757878Ab1EZPyJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 11:54:09 -0400
-Received: by mail-qy0-f181.google.com with SMTP id 14so475045qyg.19
-        for <git@vger.kernel.org>; Thu, 26 May 2011 08:54:08 -0700 (PDT)
+	with ESMTP id S1751928Ab1EZPyC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 11:54:02 -0400
+Received: by qyg14 with SMTP id 14so475045qyg.19
+        for <git@vger.kernel.org>; Thu, 26 May 2011 08:54:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=DbYyngpgDLVNTbFst7LVRAyF78IQTtP/XP1BB22f/04=;
-        b=jMFRFoL3Fo2QJqTl8nsmShCOjubWbGlg6ClZygdthoaRkt5nRjkuyod7izOZxBoDwa
-         3XnLaH+sfEUMs+04XKsTEMHyFwc1NTMa506UB9saNmFfuQ20UbzzPNNtKWcNKoiWyhTO
-         1o6TfO8JllXtLPRJIs2CPnZCZbH+E7HkQBRc8=
+        bh=sTZXGvvihLCo0mtX2PAZVYjZslPEwE2VtUsTKXQhz3k=;
+        b=Ot8iSxIlvQ7QVYGGM+Mvu98cOrtyurkrR/T6rqmAPjLLvyEJl6egG6gisJkoGkTVOP
+         ZGelAbDB5YxcEERXE1mWULHdmAc+eIoRi7Hi6qBUT4BG+vtzLbjuDATcdWRF9H63Irsb
+         rktwRkCGF7eUoajKdKicY5r+qd/gisxm+XEoM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=MHNuWT8Lt3XuZ8vARcf91hOoDXSaAGi5CUWs6w4P0dzXBsma75HJo+jNIfn0RXZVkb
-         tLoYPkajCrLQh3YU4HjrmghnBgZIa8oBsBJrXHezP0/3TGnVeAfbFzBfa9UxyXrsV//i
-         d+n3BcCNv51aI+lKDboEf3FODNxHoo9p6Wx3U=
-Received: by 10.224.212.2 with SMTP id gq2mr725775qab.88.1306425248906;
-        Thu, 26 May 2011 08:54:08 -0700 (PDT)
+        b=hFEUtTO6sIxncW4UftVuzqKBTQvAm3arFIx11ZC49DnyhPQWieYWnMcv91o5Nq51xV
+         mFUvyEo8hFOQQhIJ0WMEHDll1Fotf+3lmCmOwYeuYgXruUrcK2uLUxL40RIglqQ7A9gz
+         lYvHm2m+G0fEolLCTZdcecQ6ll04ekZkWASZg=
+Received: by 10.229.105.162 with SMTP id t34mr736713qco.14.1306425240218;
+        Thu, 26 May 2011 08:54:00 -0700 (PDT)
 Received: from localhost.localdomain (ec2-184-72-137-52.compute-1.amazonaws.com [184.72.137.52])
-        by mx.google.com with ESMTPS id j18sm513435qck.27.2011.05.26.08.54.07
+        by mx.google.com with ESMTPS id j18sm513435qck.27.2011.05.26.08.53.58
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 26 May 2011 08:54:08 -0700 (PDT)
+        Thu, 26 May 2011 08:53:59 -0700 (PDT)
 X-Mailer: git-send-email 1.7.5.1
 In-Reply-To: <1306425233-504-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174533>
 
-Earlier, incompatible command-line options used to be caught in
-pick_commits after parse_args has parsed the options and populated the
-options structure; a lot of unncessary work has already been done, and
-significant amount of cleanup is required to die at this stage.
-Instead, hand over this responsibility to parse_args so that the
-program can die early.  Also write a die_opt_incompabile function to
-handle incompatible options in a general manner; it will be used more
-extensively as more command-line options are introduced later in the
-series.
+Introduce error_dirty_index, based on die_dirty_index which prints
+some hints, and returns an error to be handled by its caller,
+do_pick_commit.  do_pick_commit, in turn, propogates the error
+upwards, and the error is finally handled by cmd_cherry_pick and
+cmd_revert.  Set a simple convention for error-handling as follows:
+positive return values from do_pick_commit indicate conflicts, while
+negative ones indicate other errors.
 
+Mentored-by: Jonathan Nieder <jrnieder@gmail.com>
 Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- builtin/revert.c |   34 +++++++++++++++++++++++-----------
- 1 files changed, 23 insertions(+), 11 deletions(-)
+ builtin/revert.c |   72 ++++++++++++++++++++++++++++-------------------------
+ 1 files changed, 38 insertions(+), 34 deletions(-)
 
 diff --git a/builtin/revert.c b/builtin/revert.c
-index 2e5f260..1c6c102 100644
+index f697e66..ff26856 100644
 --- a/builtin/revert.c
 +++ b/builtin/revert.c
-@@ -80,6 +80,22 @@ static int option_parse_x(const struct option *opt,
- 	return 0;
+@@ -266,25 +266,15 @@ static struct tree *empty_tree(void)
+ 	return tree;
  }
  
-+static void verify_opt_compatible(const char *me, const char *base_opt, ...)
-+{
-+	const char *this_opt;
-+	va_list ap;
-+	int set;
-+
-+	va_start(ap, base_opt);
-+	while ((this_opt = va_arg(ap, const char *))) {
-+		set = va_arg(ap, int);
-+		if (set)
-+			die(_("%s: %s cannot be used with %s"),
-+				me, this_opt, base_opt);
-+	}
-+	va_end(ap);
-+}
-+
- static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+-static NORETURN void die_dirty_index(const char *me)
++static int error_dirty_index(const char *me)
  {
- 	const char * const * usage_str = revert_or_cherry_pick_usage(opts);
-@@ -116,6 +132,13 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 	if (opts->commit_argc < 2)
- 		usage_with_options(usage_str, options);
- 
-+	if (opts->allow_ff)
-+		verify_opt_compatible(me, "--ff",
-+				"--signoff", opts->signoff,
-+				"--no-commit", opts->no_commit,
-+				"-x", opts->record_origin,
-+				"--edit", opts->edit,
-+				NULL);
- 	opts->commit_argv = argv;
+-	if (read_cache_unmerged()) {
+-		die_resolve_conflict(me);
+-	} else {
+-		if (advice_commit_before_merge) {
+-			if (action == REVERT)
+-				die(_("Your local changes would be overwritten by revert.\n"
+-					  "Please, commit your changes or stash them to proceed."));
+-			else
+-				die(_("Your local changes would be overwritten by cherry-pick.\n"
+-					  "Please, commit your changes or stash them to proceed."));
+-		} else {
+-			if (action == REVERT)
+-				die(_("Your local changes would be overwritten by revert.\n"));
+-			else
+-				die(_("Your local changes would be overwritten by cherry-pick.\n"));
+-		}
+-	}
++	if (read_cache_unmerged())
++		return error_resolve_conflict(me);
++
++	error(_("Your local changes would be overwritten by %s.\n"), me);
++	if (advice_commit_before_merge)
++		advise(_("Please, commit your changes or stash them to proceed."));
++	return -1;
  }
  
-@@ -556,17 +579,6 @@ static int pick_commits(struct replay_opts *opts)
- 	struct commit *commit;
+ static int fast_forward_to(const unsigned char *to, const unsigned char *from)
+@@ -398,18 +388,18 @@ static int do_pick_commit(void)
+ 		 * to work on.
+ 		 */
+ 		if (write_cache_as_tree(head, 0, NULL))
+-			die (_("Your index file is unmerged."));
++			return error(_("Your index file is unmerged."));
+ 	} else {
+ 		if (get_sha1("HEAD", head))
+-			die (_("You do not have a valid HEAD"));
++			return error(_("You do not have a valid HEAD"));
+ 		if (index_differs_from("HEAD", 0))
+-			die_dirty_index(me);
++			return error_dirty_index(me);
+ 	}
+ 	discard_cache();
  
- 	setenv(GIT_REFLOG_ACTION, me, 0);
--	if (opts->allow_ff) {
--		if (opts->signoff)
--			die(_("cherry-pick --ff cannot be used with --signoff"));
--		if (opts->no_commit)
--			die(_("cherry-pick --ff cannot be used with --no-commit"));
--		if (opts->record_origin)
--			die(_("cherry-pick --ff cannot be used with -x"));
--		if (opts->edit)
--			die(_("cherry-pick --ff cannot be used with --edit"));
--	}
--
- 	read_and_refresh_cache(me, opts);
+ 	if (!commit->parents) {
+ 		if (action == REVERT)
+-			die (_("Cannot revert a root commit"));
++			return error(_("Cannot revert a root commit"));
+ 		parent = NULL;
+ 	}
+ 	else if (commit->parents->next) {
+@@ -418,20 +408,20 @@ static int do_pick_commit(void)
+ 		struct commit_list *p;
  
- 	prepare_revs(&revs, opts);
+ 		if (!mainline)
+-			die(_("Commit %s is a merge but no -m option was given."),
+-			    sha1_to_hex(commit->object.sha1));
++			return error(_("Commit %s is a merge but no -m option was given."),
++				sha1_to_hex(commit->object.sha1));
+ 
+ 		for (cnt = 1, p = commit->parents;
+ 		     cnt != mainline && p;
+ 		     cnt++)
+ 			p = p->next;
+ 		if (cnt != mainline || !p)
+-			die(_("Commit %s does not have parent %d"),
+-			    sha1_to_hex(commit->object.sha1), mainline);
++			return error(_("Commit %s does not have parent %d"),
++				sha1_to_hex(commit->object.sha1), mainline);
+ 		parent = p->item;
+ 	} else if (0 < mainline)
+-		die(_("Mainline was specified but commit %s is not a merge."),
+-		    sha1_to_hex(commit->object.sha1));
++		return error(_("Mainline was specified but commit %s is not a merge."),
++			sha1_to_hex(commit->object.sha1));
+ 	else
+ 		parent = commit->parents->item;
+ 
+@@ -441,12 +431,12 @@ static int do_pick_commit(void)
+ 	if (parent && parse_commit(parent) < 0)
+ 		/* TRANSLATORS: The first %s will be "revert" or
+ 		   "cherry-pick", the second %s a SHA1 */
+-		die(_("%s: cannot parse parent commit %s"),
+-		    me, sha1_to_hex(parent->object.sha1));
++		return error(_("%s: cannot parse parent commit %s"),
++			me, sha1_to_hex(parent->object.sha1));
+ 
+ 	if (get_message(commit->buffer, &msg) != 0)
+-		die(_("Cannot get commit message for %s"),
+-				sha1_to_hex(commit->object.sha1));
++		return error(_("Cannot get commit message for %s"),
++			sha1_to_hex(commit->object.sha1));
+ 
+ 	/*
+ 	 * "commit" is an existing commit.  We would want to apply
+@@ -594,14 +584,28 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 
+ int cmd_revert(int argc, const char **argv, const char *prefix)
+ {
++	int res;
+ 	if (isatty(0))
+ 		edit = 1;
+ 	action = REVERT;
+-	return revert_or_cherry_pick(argc, argv);
++	res = revert_or_cherry_pick(argc, argv);
++	if (res > 0)
++		/* Exit status from conflict */
++		return res;
++	if (res < 0)
++		/* Other error */
++		exit(128);
++	return 0;
+ }
+ 
+ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
+ {
++	int res;
+ 	action = CHERRY_PICK;
+-	return revert_or_cherry_pick(argc, argv);
++	res = revert_or_cherry_pick(argc, argv);
++	if (res > 0)
++		return res;
++	if (res < 0)
++		exit(128);
++	return 0;
+ }
 -- 
 1.7.5.GIT
