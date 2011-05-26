@@ -1,61 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] format-patch: preserve subject newlines with -k
-Date: Thu, 26 May 2011 17:19:52 -0400
-Message-ID: <20110526211952.GA32097@sigill.intra.peff.net>
-References: <20110526203625.GA31018@sigill.intra.peff.net>
- <20110526205504.GC31340@sigill.intra.peff.net>
- <7vboypw47q.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 26 23:20:02 2011
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH] git-submodule.sh: separate parens by a space to avoid confusing some shells
+Date: Thu, 26 May 2011 13:52:04 -0700
+Message-ID: <vWPtQ6mu-P8TxddTGAsNGMxxRy-vaOeaUiF8WZQpA2J8HcdAc02vCzYpygwdejLhR6OIWYLtPtK7E4oxXk50vg@cipher.nrlssc.navy.mil>
+Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu May 26 23:21:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPhyK-00032X-B8
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 23:20:00 +0200
+	id 1QPi07-0004Kr-C4
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 23:21:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758483Ab1EZVTz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 17:19:55 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56733
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758350Ab1EZVTz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 17:19:55 -0400
-Received: (qmail 17982 invoked by uid 107); 26 May 2011 21:19:55 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 May 2011 17:19:55 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 May 2011 17:19:52 -0400
-Content-Disposition: inline
-In-Reply-To: <7vboypw47q.fsf@alter.siamese.dyndns.org>
+	id S1757300Ab1EZVVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 17:21:46 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:55546 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752779Ab1EZVVp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 17:21:45 -0400
+X-Greylist: delayed 1438 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 May 2011 17:21:45 EDT
+Received: by mail.nrlssc.navy.mil id p4QKup07027553; Thu, 26 May 2011 15:57:40 -0500
+X-OriginalArrivalTime: 26 May 2011 20:52:17.0522 (UTC) FILETIME=[CC8E7D20:01CC1BE6]
+X-Virus-Scanned: clamav-milter 0.95.3 at mail1
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174575>
 
-On Thu, May 26, 2011 at 02:18:33PM -0700, Junio C Hamano wrote:
+From: Brandon Casey <drafnel@gmail.com>
 
-> > diff --git a/builtin/log.c b/builtin/log.c
-> > index d8c6c28..3fdf488 100644
-> > --- a/builtin/log.c
-> > +++ b/builtin/log.c
-> > @@ -768,7 +768,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
-> >  	pp_user_info(NULL, CMIT_FMT_EMAIL, &sb, committer, DATE_RFC2822,
-> >  		     encoding);
-> >  	pp_title_line(CMIT_FMT_EMAIL, &msg, &sb, subject_start, extra_headers,
-> > -		      encoding, need_8bit_cte);
-> > +		      encoding, need_8bit_cte, 0);
-> 
-> I do not appreciate a single-bit tweak as separate parameter to a
-> function.  Back when pp_title_line() had only "do we need 8-bit cte", it
-> was Ok, but now that you are adding another bit, could we make it an
-> "unsigned flag"?
+Some shells interpret '(( ))' according to the rules for arithmetic
+expansion.  This may not follow POSIX, but is prevalent in commonly used
+shells.  Bash does not have a problem with this particular instance of
+'((', likely because it is not followed by a '))', but the public domain
+ksh does, and so does ksh on IRIX 6.5.
 
-Actually, I wonder if we can refactor to just pass the pretty_context to
-pp_title_line. Let me see what I can do.
+So, add a space between the parenthesis to avoid confusing these shells.
 
--Peff
+Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+---
+ git-submodule.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git-submodule.sh b/git-submodule.sh
+index bf110e9..d189a24 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -495,7 +495,7 @@ cmd_update()
+ 				# Run fetch only if $sha1 isn't present or it
+ 				# is not reachable from a ref.
+ 				(clear_local_git_env; cd "$path" &&
+-					((rev=$(git rev-list -n 1 $sha1 --not --all 2>/dev/null) &&
++					( (rev=$(git rev-list -n 1 $sha1 --not --all 2>/dev/null) &&
+ 					 test -z "$rev") || git-fetch)) ||
+ 				die "Unable to fetch in submodule path '$path'"
+ 			fi
+-- 
+1.7.4.4
