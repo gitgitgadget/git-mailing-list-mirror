@@ -1,78 +1,188 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCHv2 1/2] Support multiple virtual repositories with a single
- object store and refs
-Date: Thu, 26 May 2011 02:40:49 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1105260239480.2701@bonsai2>
-References: <1306274066-4092-1-git-send-email-jamey@minilop.net> <7v7h9f7kzx.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.1105250847380.2701@bonsai2> <20110525154405.GA4839@oh.minilop.net> <alpine.DEB.1.00.1105260152430.2701@bonsai2>
- <20110526000104.GA3439@leaf>
+From: =?iso-8859-1?Q?J=F6rg?= Sommer <joerg@alea.gnuu.de>
+Subject: git dies with sigseg due to enless recursion on broken repo
+Date: Thu, 26 May 2011 03:33:16 +0200
+Message-ID: <20110526013316.GA22589@alea.gnuu.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jamey Sharp <jamey@minilop.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Sixt <johannes.sixt@telecom.at>
-To: Josh Triplett <josh@joshtriplett.org>
-X-From: git-owner@vger.kernel.org Thu May 26 02:41:51 2011
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="GvXjxJ+pjyke8COw"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 26 03:53:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPOe7-0003PL-7U
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 02:41:51 +0200
+	id 1QPPl8-0007RL-Ce
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 03:53:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754289Ab1EZAky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 May 2011 20:40:54 -0400
-Received: from mailout-de.gmx.net ([213.165.64.23]:35422 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1754046Ab1EZAkx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2011 20:40:53 -0400
-Received: (qmail invoked by alias); 26 May 2011 00:40:51 -0000
-Received: from pD9EB28BC.dip0.t-ipconnect.de (EHLO noname) [217.235.40.188]
-  by mail.gmx.net (mp059) with SMTP; 26 May 2011 02:40:51 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18m7K8Uzlgm3LyRoP1atStekTW2SM+JgCJUrE1HvG
-	sR8e7I0nnfYQaJ
-X-X-Sender: gene099@bonsai2
-In-Reply-To: <20110526000104.GA3439@leaf>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1757263Ab1EZBxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 May 2011 21:53:06 -0400
+Received: from uucp.gnuu.de ([83.246.114.63]:1170 "EHLO uucp.gnuu.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756118Ab1EZBxE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2011 21:53:04 -0400
+Received: by uucp.gnuu.de (Postfix, from userid 10)
+	id AF73F48802D; Thu, 26 May 2011 03:34:34 +0200 (CEST)
+X-DKIM: Sendmail DKIM Filter v2.5.2 uucp.gnuu.de AF73F48802D
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=gnuu.de; s=banki;
+	t=1306373674; i=@alea.gnuu.de; bh=yJKRCNDo2QA3Z+Vmxm409e1HVrLjGRi7q
+	Fp8790G6oM=; h=Date:From:To:Subject:Message-ID:MIME-Version:
+	 Content-Type; b=uqQJedDralpsWxDv2C0DJqKvkPCpNxHvi1q57qMge03Uidp54W
+	MyQDRr3DJUVWzPXtwYUHVta+V2UTRDGFLzE0OmjjwWdl6cuugfPi/DCsd3YrWzzzN2i
+	WFWsysXf6j+v23pX/PHRLrMIO1PCEDUfHIOSiI1oONh2CtD4OVwnHQ=
+Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
+	by alea.gnuu.de with esmtp (Exim 4.69)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1QPPSD-0007uA-2r
+	for git@vger.kernel.org; Thu, 26 May 2011 03:33:37 +0200
+Received: from joerg by alea.gnuu.de with local (Exim 4.76)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1QPPRt-0000RD-8i
+	for git@vger.kernel.org; Thu, 26 May 2011 03:33:17 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174486>
+
+
+--GvXjxJ+pjyke8COw
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
 Hi,
 
-On Wed, 25 May 2011, Josh Triplett wrote:
+I've a broken repository which causes git goes into an endless recursion
+until it gets a segmentation fault. I can reproduce this problem with
+version 1.7.5.2.353.g5df3e.
 
-> On Thu, May 26, 2011 at 01:53:42AM +0200, Johannes Schindelin wrote:
-> > On Wed, 25 May 2011, Jamey Sharp wrote:
-> > > On Wed, May 25, 2011 at 08:51:07AM +0200, Johannes Schindelin wrote:
-> > > > 2) You're extending the protocol by appending the prefix after the 
-> > > >    SHA-1, and I stopped halfway through the patch trying to find 
-> > > >    information which I now think should be in the commit message: a)  
-> > > >    why? b) why does it not break when one of the two sides is a 
-> > > >    previous version?
-> > > 
-> > > I don't think we're changing the protocol in any way...?
-> > 
-> > Did your patch series not contain a change that sends a capability with 
-> > the prefix appended?
-> 
-> Not that we know of.  Are we missing something?
+% gdb -batch -ex "run --git-dir=3D$HOME/broken-git fsck" -ex bt\ full git
 
-This is a change of protocol by my understanding:
+[Thread debugging using libthread_db enabled]
 
--- snip --
- 	if (sent_capabilities)
--		packet_write(1, "%s %s\n", sha1_to_hex(sha1), path);
-+		packet_write(1, "%s %s%s\n", sha1_to_hex(sha1), refnameprefix, path);
--- snap --
+Program received signal SIGSEGV, Segmentation fault.
+use_pack (p=3DCannot access memory at address 0xbf7ffff8
+) at sha1_file.c:837
+837     {
+#0  use_pack (p=3DCannot access memory at address 0xbf7ffff8
+) at sha1_file.c:837
+        win =3D <error reading variable win (Cannot access memory at addres=
+s 0xbf7fffd8)>
+#1  0x10140290 in get_delta_base (p=3D0x10222470, w_curs=3D0xbf800140, curp=
+os=3D0xbf800100, type=3DOBJ_REF_DELTA, delta_o
+        base_info =3D 0x0
+        base_offset =3D 0
+#2  0x1014131c in unpack_delta_entry (p=3D0x10222470, w_curs=3D0xbf800140, =
+curpos=3D13082, delta_size=3D7, obj_offset=3D130
+        delta_data =3D 0xbf800120
+        result =3D 0x10140720
+        base =3D 0x48054319
+        base_size =3D 1208304409
+        base_offset =3D -4647713764261494296
+#3  0x1014173c in unpack_entry (p=3D0x10222470, obj_offset=3D13081, type=3D=
+0xbfffe1a8, sizep=3D0xbf8001e8) at sha1_file.c
+        w_curs =3D 0x1021a570
+        curpos =3D 13082
+        data =3D 0x48021018
+#4  0x10140e48 in cache_or_unpack_entry (p=3D0x10222470, base_offset=3D1308=
+1, base_size=3D0xbf8001e8, type=3D0xbfffe1a8,=20
+        ret =3D 0x0
+        hash =3D 2
+        ent =3D 0x10201388
+#5  0x10141394 in unpack_delta_entry (p=3D0x10222470, w_curs=3D0xbf800240, =
+curpos=3D13102, delta_size=3D7, obj_offset=3D130
+        delta_data =3D 0xbf800220
+        result =3D 0x10140720
+        base =3D 0x48054319
+        base_size =3D 7
+        base_offset =3D 13081
+#6  0x1014173c in unpack_entry (p=3D0x10222470, obj_offset=3D13081, type=3D=
+0xbfffe1a8, sizep=3D0xbf8002e8) at sha1_file.c
+        w_curs =3D 0x0
+        curpos =3D 13082
+        data =3D 0x48021018
+#7  0x10140e48 in cache_or_unpack_entry (p=3D0x10222470, base_offset=3D1308=
+1, base_size=3D0xbf8002e8, type=3D0xbfffe1a8,=20
+        ret =3D 0x0
+        hash =3D 2
+        ent =3D 0x10201388
+#8  0x10141394 in unpack_delta_entry (p=3D0x10222470, w_curs=3D0xbf800340, =
+curpos=3D13102, delta_size=3D7, obj_offset=3D130
+        delta_data =3D 0xbf800320
+        result =3D 0x10140720
+        base =3D 0x48054319
+        base_size =3D 7
+        base_offset =3D 13081
+#9  0x1014173c in unpack_entry (p=3D0x10222470, obj_offset=3D13081, type=3D=
+0xbfffe1a8, sizep=3D0xbf8003e8) at sha1_file.c
+        w_curs =3D 0x0
+        curpos =3D 13082
+        data =3D 0x48021018
+#10 0x10140e48 in cache_or_unpack_entry (p=3D0x10222470, base_offset=3D1308=
+1, base_size=3D0xbf8003e8, type=3D0xbfffe1a8,=20
+        ret =3D 0x0
+        hash =3D 2
+        ent =3D 0x10201388
+#11 0x10141394 in unpack_delta_entry (p=3D0x10222470, w_curs=3D0xbf800440, =
+curpos=3D13102, delta_size=3D7, obj_offset=3D130
+        delta_data =3D 0xbf800420
+        result =3D 0x10140720
+        base =3D 0x48054319
+        base_size =3D 7
+        base_offset =3D 13081
+#12 0x1014173c in unpack_entry (p=3D0x10222470, obj_offset=3D13081, type=3D=
+0xbfffe1a8, sizep=3D0xbf8004e8) at sha1_file.c
+        w_curs =3D 0x0
+        curpos =3D 13082
+        data =3D 0x48021018
+#13 0x10140e48 in cache_or_unpack_entry (p=3D0x10222470, base_offset=3D1308=
+1, base_size=3D0xbf8004e8, type=3D0xbfffe1a8,=20
+        ret =3D 0x0
+        hash =3D 2
+        ent =3D 0x10201388
+#14 0x10141394 in unpack_delta_entry (p=3D0x10222470, w_curs=3D0xbf800540, =
+curpos=3D13102, delta_size=3D7, obj_offset=3D130
+        delta_data =3D 0xbf800520
+        result =3D 0x10140720
+        base =3D 0x48054319
+        base_size =3D 7
+        base_offset =3D 13081
+#15 0x1014173c in unpack_entry (p=3D0x10222470, obj_offset=3D13081, type=3D=
+0xbfffe1a8, sizep=3D0xbf8005e8) at sha1_file.c
+        w_curs =3D 0x0
+        curpos =3D 13082
+        data =3D 0x48021018
+#16 0x10140e48 in cache_or_unpack_entry (p=3D0x10222470, base_offset=3D1308=
+1, base_size=3D0xbf8005e8, type=3D0xbfffe1a8,=20
+        ret =3D 0x0
+        hash =3D 2
+        ent =3D 0x10201388
 
-Of course, you're free to ignore my comments just like everybody else on 
-the Git mailing list.
+There are more than 133205 stack frames.
 
-Ciao,
-Johannes
+The problem is, this repository contains private data. I don't want to
+put it in public, but I would send it to someone in the hope he doesn't
+expose its contents. Or you tell me, what you are interested in and I dig
+for it.
+
+Bye, J=C3=B6rg.
+--=20
+Nichts ist so langweilig, wie die Wiederholung seinerselbst.
+                                        (Marcel Reich=E2=80=90Ranicki)
+
+--GvXjxJ+pjyke8COw
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature http://en.wikipedia.org/wiki/OpenPGP
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iEYEARECAAYFAk3drdwACgkQwe0mZwH1VICdxQCfRJxbp3ZxtGSB6aXgpB3VuKzx
+wakAn0q1YQiTXhXzLrxoyr5Hw+jxeMBb
+=JZbz
+-----END PGP SIGNATURE-----
+
+--GvXjxJ+pjyke8COw--
