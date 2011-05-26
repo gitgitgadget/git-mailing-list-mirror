@@ -1,118 +1,89 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 1/6] i18n win32: add git-am eval_gettext variable prefix
-Date: Thu, 26 May 2011 08:34:43 +0200
-Message-ID: <4DDDF483.70805@viscovery.net>
-References: <1306365594-22061-1-git-send-email-avarab@gmail.com> <1306365594-22061-2-git-send-email-avarab@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [1.7.2] Please cherry-pick "upload-pack: start pack-objects before
+ async rev-list"
+Date: Thu, 26 May 2011 01:45:48 -0500
+Message-ID: <20110526064547.GA18777@elie>
+References: <20110404053626.GA26529@sigill.intra.peff.net>
+ <7v8vvnjnyg.fsf@alter.siamese.dyndns.org>
+ <20110406175413.GA8205@sigill.intra.peff.net>
+ <20110406213333.GA18481@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 26 08:35:06 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Aman Gupta <aman@github.com>, Ryan Tomayko <ryan@github.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 26 08:46:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPU9o-0003e8-Pr
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 08:34:57 +0200
+	id 1QPUKc-0001CE-3n
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 08:46:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753470Ab1EZGev convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 May 2011 02:34:51 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:7445 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752667Ab1EZGeu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 May 2011 02:34:50 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1QPU9b-0001RQ-Oy; Thu, 26 May 2011 08:34:43 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 777C01660F;
-	Thu, 26 May 2011 08:34:43 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
-In-Reply-To: <1306365594-22061-2-git-send-email-avarab@gmail.com>
-X-Enigmail-Version: 1.1.1
-X-Spam-Score: -1.4 (-)
+	id S1751307Ab1EZGp7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 02:45:59 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:58046 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750709Ab1EZGp7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 02:45:59 -0400
+Received: by iwn34 with SMTP id 34so333864iwn.19
+        for <git@vger.kernel.org>; Wed, 25 May 2011 23:45:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=7EDxnZcz7GBK4GrBKeWq8w0KNfaQGyoG7XLtq4Y4qGs=;
+        b=UACMWveL+aH03N/y4j4CI0i+JjMSylBnJTgx2nlXeCmuh/muaIHdY8akXcw7SLfYCX
+         2CIR4pCi2LKJzEDXRB1icDkRK8/h5PpJAu71wyZhs3qvV1rxyRF71G7Rq/PPdFp1XdZh
+         52phN0iNAY7Oii3zCU5le+Kxhszb7JzME/Bz8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=YaA8p9so/FXj4RnNBaYdD1u9lNyl3qEJSHn1rPkNod43Cd0m5C3AlnBXPN+qHZIyPW
+         qHuigNeafMeeShM003jPiVWjIG6OwUhvJxJM0BC4aaObm1X4JQy9TpCHMPl4Ha9X8NJG
+         8FEKKKF2/kDkICRaXn3WLh0QtO59bxBKNxtLA=
+Received: by 10.42.221.135 with SMTP id ic7mr878646icb.394.1306392357102;
+        Wed, 25 May 2011 23:45:57 -0700 (PDT)
+Received: from elie (adsl-69-209-65-98.dsl.chcgil.sbcglobal.net [69.209.65.98])
+        by mx.google.com with ESMTPS id w5sm348158icv.4.2011.05.25.23.45.54
+        (version=SSLv3 cipher=OTHER);
+        Wed, 25 May 2011 23:45:55 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20110406213333.GA18481@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174500>
 
-Am 5/26/2011 1:19, schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
-> -		eval_gettext 'Patch failed at $msgnum $FIRSTLINE'; echo
-> +		GIT_I18N_VARIABLE_msgnum=3D$msgnum
-> +		GIT_I18N_VARIABLE_FIRSTLINE=3D$FIRSTLINE
-> +		eval_gettext 'Patch failed at $GIT_I18N_VARIABLE_msgnum $GIT_I18N_=
-VARIABLE_FIRSTLINE'; echo
+Hi Junio,
 
-That's not pretty.
+Jeff King wrote:
 
-I wonder whether it is possible to automate the variable prefix. Lookin=
-g
-at the definition of eval_gettext()
+> Subject: [PATCH] upload-pack: start pack-objects before async rev-list
+>
+> In a pthread-enabled version of upload-pack, there's a race condition
+> that can cause a deadlock on the fflush(NULL) we call from run-command.
 
-eval_gettext () {
-	printf "%s" "$1" | (
-		export PATH $(git sh-i18n--envsubst --variables "$1");
-		git sh-i18n--envsubst "$1"
-	)
-}
+This server-side deadlock started being triggered by shallow clones
+when sv.gnu.org upgraded to v1.7.2.5 a couple of months ago[1].  So it
+might be worth thinking about how to help upgrade-averse server admins
+to fix it.
 
-I gather that the actual substitution of variable values is done by
-sh-i18n--envsubst, and not by the shell (right?). Let's look at an exam=
-ple:
+Luckily, Jeff's patch (v1.7.5.1~4^2, upload-pack: start pack-objects
+before async rev-list, 2011-04-06) applies cleanly on top of the
+oldest commit with the problem that I can find (v1.7.2-rc0~31^2~3,
+Reimplement async procedures using pthreads, 2010-03-06).  Could you
+queue it for inclusion in maint-1.7.2?
 
-	git sh-i18n--envsubst --variables '$foo and $bar'
+If I understand correctly, Windows with threaded async rev-list before
+then would not have suffered from this deadlock because it did not
+fflush(NULL) in start_command until v1.7.4.1~18 (start_command: flush
+buffers in the WIN32 code path as well, 2011-02-04).
 
-produces
-
-	foo
-	bar
-
-What if it produced
-
-	GIT_I18N_VARIABLE_foo=3D$foo
-	GIT_I18N_VARIABLE_bar=3D$bar
-	export GIT_I18N_VARIABLE_foo GIT_I18N_VARIABLE_bar
-
-then the definition of eval_gettext() would look like
-
-eval_gettext () {
-	printf "%s" "$1" | (
-		export PATH
-		eval "$(git sh-i18n--envsubst --variables "$1")"
-		git sh-i18n--envsubst "$1"
-	)
-}
-
-and the second call of sh-i18n--envsubst should replace $foo and $bar t=
-hat
-it sees on stdin by the values of GIT_I18N_VARIABLE_foo and
-GIT_I18N_VARIABLE_bar from the environment.
-
-What do you think?
-
-BTW, if you re-roll the series, would you mind shortening the prefix to=
-,
-say, _I18N__ because on Windows the variables names count towards the
-environment budget, which is restricted to 32k characters.
-
-BTW2, the following patch is needed to avoid a crash of an invocation o=
-f
-'git sh-i18n--envsubst' without arguments.
-
--- Hannes
-
-(Warning: hand-edited patch text)
-
-diff --git a/sh-i18n--envsubst.c b/sh-i18n--envsubst.c
-index 7125093..8104973 100644
---- a/sh-i18n--envsubst.c
-+++ b/sh-i18n--envsubst.c
-@@ -76,2 +76,3 @@ main (int argc, char *argv[])
- 	  error ("we won't substitute all variables on stdin for you");
-+	  break;
- 	  /*
+[1] http://thread.gmane.org/gmane.comp.version-control.git/172042
