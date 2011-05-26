@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 01/10] advice: Introduce error_resolve_conflict
-Date: Thu, 26 May 2011 15:53:44 +0000
-Message-ID: <1306425233-504-2-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 06/10] revert: Separate cmdline parsing from functional code
+Date: Thu, 26 May 2011 15:53:49 +0000
+Message-ID: <1306425233-504-7-git-send-email-artagnon@gmail.com>
 References: <1306333025-29893-1-git-send-email-artagnon@gmail.com>
  <1306425233-504-1-git-send-email-artagnon@gmail.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
@@ -9,106 +9,110 @@ Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Christian Couder <christian.couder@gmail.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 26 17:54:10 2011
+X-From: git-owner@vger.kernel.org Thu May 26 17:54:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPcsv-0001Db-8B
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 17:54:05 +0200
+	id 1QPct9-0001N6-Ep
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 17:54:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755543Ab1EZPyA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 11:54:00 -0400
+	id S1757889Ab1EZPyJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 11:54:09 -0400
 Received: from mail-qw0-f46.google.com ([209.85.216.46]:62865 "EHLO
 	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751928Ab1EZPx7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 11:53:59 -0400
-Received: by qwk3 with SMTP id 3so441172qwk.19
-        for <git@vger.kernel.org>; Thu, 26 May 2011 08:53:58 -0700 (PDT)
+	with ESMTP id S1757266Ab1EZPyH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 11:54:07 -0400
+Received: by mail-qw0-f46.google.com with SMTP id 3so441172qwk.19
+        for <git@vger.kernel.org>; Thu, 26 May 2011 08:54:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=/uspFwYO1R6qphHkD4iAtIFRAPHg4RI9Xb3IX/0nB0c=;
-        b=mF4+McKqFy0DkpCAwX4Ir0loVdfQilhNtdximcg4dcTe4s4D0ZH4fEBdzdRWd964og
-         gwKpl3UfhK1WEGr65Kq4K54F6dIMp7GeBQZy3LVXx0ELiDG+twLfhd86pOnPATajKHtz
-         ZXH2j4JRJ+alObuCfBSKV/5euwXRTHCSV3wcY=
+        bh=swm03JcpoaxtR22nzqO2wDb8fbSn9jjVI07vK87ACRk=;
+        b=ARbZ0MOIRgtIKJrTsTt2TAGEFAbAZ+jt0IazBuK+fTZPmlssCWvwL2XN4zfGOFsXS2
+         LN6v/xLPQXYba4GforEVUGGrU/qUvrL6JOjNAIFJFu3hPSwWWOFACewt8uyJuJdya2S0
+         kK1ytU0/U2iuAzQwT1fidzSHQkHjjdsD9YZXU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=bU+OWBG0xcGqkwzjG86PYTSVkLSEf4f6P2i6Te7j2E0b2qcmxdS03dPgJVoiuxSa5G
-         9MOl22X418R5s0ukORkBZvajwkaC3JDqNjN17VHxr3UYDV9pRpY7La6R4HngUjgpRerr
-         GB4NKIv/Jkor4JKt8LeAh6bmAmGp5Xh54Rwb8=
-Received: by 10.224.197.132 with SMTP id ek4mr672509qab.382.1306425238502;
-        Thu, 26 May 2011 08:53:58 -0700 (PDT)
+        b=GAgw+MCmLGj6VEb+yEh0Q/Mcl4tgG8YfPTwEETwm3RgKME+poS1LJwEJ1ChrveMk4P
+         6g9/qOQTFIeXFmJAmieg9Ni8/wCa+9OObed7XxfTOlO+RGZ5W/IZHbCJfuwpnzJcIS+s
+         Ln6TiQgjVQ7aqH8P6wz5VNCJWyCJIgmz5M0FE=
+Received: by 10.224.172.142 with SMTP id l14mr702764qaz.165.1306425247277;
+        Thu, 26 May 2011 08:54:07 -0700 (PDT)
 Received: from localhost.localdomain (ec2-184-72-137-52.compute-1.amazonaws.com [184.72.137.52])
-        by mx.google.com with ESMTPS id j18sm513435qck.27.2011.05.26.08.53.57
+        by mx.google.com with ESMTPS id j18sm513435qck.27.2011.05.26.08.54.05
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 26 May 2011 08:53:57 -0700 (PDT)
+        Thu, 26 May 2011 08:54:06 -0700 (PDT)
 X-Mailer: git-send-email 1.7.5.1
 In-Reply-To: <1306425233-504-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174528>
 
-Introduce error_resolve_conflict corresponding to
-die_resolve_conflict, and implement the latter function in terms of
-the former.
+Make cmd_cherry_pick and cmd_revert call parse_args and parse all the
+command-line arguments into an opts structure before sending it off to
+a simplified pick_commits function.  pick_commits, in turn will set up
+the revision walker and call do_pick_commit in a loop- later in the
+series, it will serve as the starting point for continuation.
 
-Based-on-patch-by: Christian Couder <chistian.couder@gmail.com>
+Based-on-patch-by: Christian Couder <chriscool@tuxfamily.org>
 Helped-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- advice.c |   17 +++++++++++------
- advice.h |    1 +
- 2 files changed, 12 insertions(+), 6 deletions(-)
+ builtin/revert.c |   17 +++++++++--------
+ 1 files changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/advice.c b/advice.c
-index 0be4b5f..80aaa14 100644
---- a/advice.c
-+++ b/advice.c
-@@ -34,16 +34,21 @@ int git_default_advice_config(const char *var, const char *value)
- 	return 0;
+diff --git a/builtin/revert.c b/builtin/revert.c
+index cc2fa73..2e5f260 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -550,17 +550,12 @@ static void read_and_refresh_cache(const char *me, struct replay_opts *opts)
+ 	rollback_lock_file(&index_lock);
  }
  
--void NORETURN die_resolve_conflict(const char *me)
-+int error_resolve_conflict(const char *me)
+-static int revert_or_cherry_pick(int argc, const char **argv,
+-				struct replay_opts *opts)
++static int pick_commits(struct replay_opts *opts)
  {
- 	if (advice_resolve_conflict)
- 		/*
- 		 * Message used both when 'git commit' fails and when
- 		 * other commands doing a merge do.
- 		 */
--		die("'%s' is not possible because you have unmerged files.\n"
--		    "Please, fix them up in the work tree, and then use 'git add/rm <file>' as\n"
--		    "appropriate to mark resolution and make a commit, or use 'git commit -a'.", me);
--	else
--		die("'%s' is not possible because you have unmerged files.", me);
-+		return error("'%s' is not possible because you have unmerged files.\n"
-+			"Please, fix them up in the work tree, and then use 'git add/rm <file>' as\n"
-+			"appropriate to mark resolution and make a commit, or use 'git commit -a'.", me);
-+	return error("'%s' is not possible because you have unmerged files.", me);
-+}
-+
-+void NORETURN die_resolve_conflict(const char *me)
-+{
-+	error_resolve_conflict(me);
-+	exit(128);
- }
-diff --git a/advice.h b/advice.h
-index 3244ebb..f537366 100644
---- a/advice.h
-+++ b/advice.h
-@@ -12,6 +12,7 @@ extern int advice_detached_head;
+ 	struct rev_info revs;
+ 	struct commit *commit;
  
- int git_default_advice_config(const char *var, const char *value);
+-	git_config(git_default_config, NULL);
+-	me = opts->action == REVERT ? "revert" : "cherry-pick";
+ 	setenv(GIT_REFLOG_ACTION, me, 0);
+-	parse_args(argc, argv, opts);
+-
+ 	if (opts->allow_ff) {
+ 		if (opts->signoff)
+ 			die(_("cherry-pick --ff cannot be used with --signoff"));
+@@ -594,7 +589,10 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
+ 	if (isatty(0))
+ 		opts.edit = 1;
+ 	opts.action = REVERT;
+-	res = revert_or_cherry_pick(argc, argv, &opts);
++	git_config(git_default_config, NULL);
++	me = "revert";
++	parse_args(argc, argv, &opts);
++	res = pick_commits(&opts);
+ 	if (res > 0)
+ 		/* Exit status from conflict */
+ 		return res;
+@@ -611,7 +609,10 @@ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
  
-+int error_resolve_conflict(const char *me);
- extern void NORETURN die_resolve_conflict(const char *me);
- 
- #endif /* ADVICE_H */
+ 	memset(&opts, 0, sizeof(struct replay_opts));
+ 	opts.action = CHERRY_PICK;
+-	res = revert_or_cherry_pick(argc, argv, &opts);
++	git_config(git_default_config, NULL);
++	me = "cherry-pick";
++	parse_args(argc, argv, &opts);
++	res = pick_commits(&opts);
+ 	if (res > 0)
+ 		return res;
+ 	if (res < 0)
 -- 
 1.7.5.GIT
