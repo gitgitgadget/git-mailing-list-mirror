@@ -1,62 +1,60 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Whitespace and '&nbsp'
-Date: Thu, 26 May 2011 14:12:31 -0700
-Message-ID: <BANLkTik7eJ=BC9Bekqu-W1-r0cheCjC+wg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] builtin/commit.c: set status_format _after_ option
+ parsing
+Date: Thu, 26 May 2011 17:17:23 -0400
+Message-ID: <20110526211723.GE31340@sigill.intra.peff.net>
+References: <vdMu20HxiNaWL_IogfamtfZCd6xRyKanIqTSw0k4f2SrbLfUYHDzKT2EGkwdFRlaLzX-5vGGtDCZRGu84HrJzw@cipher.nrlssc.navy.mil>
+ <vdMu20HxiNaWL_IogfamtflLupHrDNZVtQH5MK7obj8IjaOAuDtj-EwLzysKLoeGXYfBRtJqF-hgEQF5bfRzsQ@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 26 23:13:00 2011
+Content-Type: text/plain; charset=utf-8
+Cc: gitster@pobox.com, git@vger.kernel.org,
+	Brandon Casey <drafnel@gmail.com>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Thu May 26 23:17:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPhrX-0007OI-37
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 23:12:59 +0200
+	id 1QPhvy-0001eX-87
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 23:17:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758210Ab1EZVMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 17:12:55 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:59149 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754440Ab1EZVMy (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 May 2011 17:12:54 -0400
-Received: from mail-ew0-f46.google.com (mail-ew0-f46.google.com [209.85.215.46])
-	(authenticated bits=0)
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p4QLCqNZ021261
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL)
-	for <git@vger.kernel.org>; Thu, 26 May 2011 14:12:53 -0700
-Received: by ewy4 with SMTP id 4so407450ewy.19
-        for <git@vger.kernel.org>; Thu, 26 May 2011 14:12:51 -0700 (PDT)
-Received: by 10.14.16.16 with SMTP id g16mr281124eeg.193.1306444371647; Thu,
- 26 May 2011 14:12:51 -0700 (PDT)
-Received: by 10.14.127.70 with HTTP; Thu, 26 May 2011 14:12:31 -0700 (PDT)
-X-Spam-Status: No, hits=-102.981 required=5 tests=AWL,BAYES_00,USER_IN_WHITELIST
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1758252Ab1EZVR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 17:17:29 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34394
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756699Ab1EZVR2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 17:17:28 -0400
+Received: (qmail 17764 invoked by uid 107); 26 May 2011 21:17:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 May 2011 17:17:26 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 May 2011 17:17:23 -0400
+Content-Disposition: inline
+In-Reply-To: <vdMu20HxiNaWL_IogfamtflLupHrDNZVtQH5MK7obj8IjaOAuDtj-EwLzysKLoeGXYfBRtJqF-hgEQF5bfRzsQ@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174572>
 
-So I just got a patch that had a hidden &nbsp in it (unicode: u00a0,
-utf-8: \0302\0240) and sad to say my terminal window shows no
-indication of that what-so-ever. It looks exactly like a regular
-space, except gcc won't actually accept it.
+On Thu, May 26, 2011 at 01:43:21PM -0700, Brandon Casey wrote:
 
-So I'm wondering whether git shouldn't be escaping things like that in
-diffs, for example. Looking at binary noise (using "git diff --text"),
-I notice we have other things that don't get escaped either, although
-at least then "less" will escape it for us. Again, for &nbsp, less
-doesn't show it any different than a regular space either.
+> 'git status' should use --porcelain output format when -z is given.
+> It was not doing so since the _effect_ of using -z, namely that
+> null_termination would be set, was being checked _before_ option parsing
+> was performed.
+> 
+> So, move the check so that it is performed after option parsing.
 
-Yeah, I'm sure there is some programming font out there that makes it
-visible, but I do wonder whether git should help.
+Wow, that's an embarrassing bug. I was about to own up to it, but it
+actually looks like it is Junio's bug from 173e6c8 (git stat -s: short
+status output, 2009-08-04). Of course, I _twice_ modified the
+conditional afterwards and failed to notice that it was doing absolutely
+nothing. So I'm not sure which one of us deserves the brown paper bag. :)
 
-I even used "--whitespace=fix" to apply the patch, but git doesn't
-even recognize the thing as whitespace, so that didn't make any real
-difference.
+Your fix looks obviously correct.
 
-                          Linus
+Acked-by: Jeff King <peff@peff.net>
+
+-Peff
