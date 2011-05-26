@@ -1,62 +1,123 @@
-From: Stephen Bash <bash@genarts.com>
-Subject: Re: Git EOL Normalization
-Date: Thu, 26 May 2011 12:28:48 -0400 (EDT)
-Message-ID: <22629514.41388.1306427328539.JavaMail.root@mail.hq.genarts.com>
-References: <7v1uzlzbra.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] read_in_full: always report errors
+Date: Thu, 26 May 2011 12:30:27 -0400
+Message-ID: <20110526163027.GC4049@sigill.intra.peff.net>
+References: <87tych5zrh.fsf@rho.meyering.net>
+ <20110526141130.GB18520@sigill.intra.peff.net>
+ <87hb8h5y09.fsf@rho.meyering.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Dmitry Potapov <dpotapov@gmail.com>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 26 18:29:07 2011
+Cc: git list <git@vger.kernel.org>
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Thu May 26 18:30:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPdQo-00023I-Aq
-	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 18:29:06 +0200
+	id 1QPdSF-00034N-Dk
+	for gcvg-git-2@lo.gmane.org; Thu, 26 May 2011 18:30:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757582Ab1EZQ24 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 12:28:56 -0400
-Received: from hq.genarts.com ([173.9.65.1]:19341 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754891Ab1EZQ2z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 12:28:55 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id C3946EA2359;
-	Thu, 26 May 2011 12:28:54 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id GcIRtx83lRtT; Thu, 26 May 2011 12:28:48 -0400 (EDT)
-Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 9561AEA233B;
-	Thu, 26 May 2011 12:28:48 -0400 (EDT)
-In-Reply-To: <7v1uzlzbra.fsf@alter.siamese.dyndns.org>
-X-Mailer: Zimbra 6.0.10_GA_2692 (ZimbraWebClient - SAF3 (Mac)/6.0.10_GA_2692)
+	id S1757600Ab1EZQaa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 12:30:30 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:40963
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756480Ab1EZQa3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 12:30:29 -0400
+Received: (qmail 13612 invoked by uid 107); 26 May 2011 16:30:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 May 2011 12:30:30 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 May 2011 12:30:27 -0400
+Content-Disposition: inline
+In-Reply-To: <87hb8h5y09.fsf@rho.meyering.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174544>
 
------ Original Message -----
-> From: "Junio C Hamano" <gitster@pobox.com>
-> To: "Jakub Narebski" <jnareb@gmail.com>
-> Sent: Thursday, May 26, 2011 12:07:21 PM
-> Subject: Re: Git EOL Normalization
+On Thu, May 26, 2011 at 04:37:10PM +0200, Jim Meyering wrote:
+
+> > It looks like if we get -1 on the _first_ read, we will then return -1.
+> > Subsequent errors are then ignored, and we return the (possibly
+> > truncated) result.
+> >
+> > Which, to be honest, seems kind of insane to me. I'd think:
+> >
+> >   while (count > 0) {
+> >           ssize_t loaded = xread(fd, p, count);
+> >           if (loaded < 0)
+> >                   return loaded;
+> >           if (loaded == 0)
+> >                   return total;
+> >           ...
+> >   }
+> >
+> > would be much more sensible semantics.
 > 
-> > I think git examines only first block of a file or so. The heuristic
-> > to detect binary-ness of a file is, as I have heard, the same or
-> > similar to the one that GNU diff uses.
-> 
-> Yes, the binary detection was designed to be compatible with GNU diff. But
-> I do not think it has much to do with the topic of this thread. Aren't
-> other people discussing the line ending?
+> That looks better to me, too.
 
-The binary detection may be apropos because there are situations (core.autocrlf={true,input} and text=auto) where Git will only do line ending conversion if it detects a text file...  But I'll leave it to people who know the code better to say if this binary detection is in fact part of the decision process.
+I was worried that some caller might care about the truncated output,
+but after looking through the code, that is not the case. So I think we
+should do this.
 
-Thanks,
-Stephen
+-- >8 --
+Subject: [PATCH] read_in_full: always report errors
+
+The read_in_full function repeatedly calls read() to fill a
+buffer. If the first read() returns an error, we notify the
+caller by returning the error. However, if we read some data
+and then get an error on a subsequent read, we simply return
+the amount of data that we did read, and the caller is
+unaware of the error.
+
+This makes the tradeoff that seeing the partial data is more
+important than the fact that an error occurred. In practice,
+this is generally not the case; we care more if an error
+occurred, and should throw away any partial data.
+
+I audited the current callers. In most cases, this will make
+no difference at all, as they do:
+
+  if (read_in_full(fd, buf, size) != size)
+	  error("short read");
+
+However, it will help in a few cases:
+
+  1. In sha1_file.c:index_stream, we would fail to notice
+     errors in the incoming stream.
+
+  2. When reading symbolic refs in resolve_ref, we would
+     fail to notice errors and potentially use a truncated
+     ref name.
+
+  3. In various places, we will get much better error
+     messages. For example, callers of safe_read would
+     erroneously print "the remote end hung up unexpectedly"
+     instead of showing the read error.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ wrapper.c |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/wrapper.c b/wrapper.c
+index 2829000..85f09df 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -148,8 +148,10 @@ ssize_t read_in_full(int fd, void *buf, size_t count)
+ 
+ 	while (count > 0) {
+ 		ssize_t loaded = xread(fd, p, count);
+-		if (loaded <= 0)
+-			return total ? total : loaded;
++		if (loaded < 0)
++			return -1;
++		if (loaded == 0)
++			return total;
+ 		count -= loaded;
+ 		p += loaded;
+ 		total += loaded;
+-- 
+1.7.4.5.13.gd3ff5
