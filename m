@@ -1,116 +1,55 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH/RFC] contrib: git-c2t converts tag creating commits to tags
-Date: Fri, 27 May 2011 15:55:33 +0200
-Message-ID: <59fe17310157f99d5f20173ed65408d9e1f33462.1306504473.git.git@drmicha.warpmail.net>
-References: <59fe17310157f99d5f20173ed65408d9e1f33462.1306504356.git.git@drmicha.warpmail.net>
+From: Kazuki Tsujimoto <kazuki@callcc.net>
+Subject: Re: [BUG] realloc failed
+Date: Fri, 27 May 2011 22:59:15 +0900
+Message-ID: <20110527225913.075B.BA9123DE@callcc.net>
+References: <7v8vtyy1ft.fsf@alter.siamese.dyndns.org> <7v4o4my11c.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 27 15:55:41 2011
+X-From: git-owner@vger.kernel.org Fri May 27 15:59:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPxVs-0000SR-W6
-	for gcvg-git-2@lo.gmane.org; Fri, 27 May 2011 15:55:41 +0200
+	id 1QPxZN-0002hS-3E
+	for gcvg-git-2@lo.gmane.org; Fri, 27 May 2011 15:59:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753247Ab1E0Nzg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2011 09:55:36 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:38687 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750794Ab1E0Nzf (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 May 2011 09:55:35 -0400
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 58BE0209FE
-	for <git@vger.kernel.org>; Fri, 27 May 2011 09:55:35 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute4.internal (MEProxy); Fri, 27 May 2011 09:55:35 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:subject:date:message-id:in-reply-to:references; s=smtpout; bh=4MWwbyLd5P0HMR2SOwLVY9YM+q4=; b=sERX58455ePjIyoFRRj5uKwJ03j16qtO0R16in6lEryzhK2sR5T/vC7fKXCk4J7jPjjJaf87yl8fSqQ3U3FwXXHWQ7n6jl+yeV1UCQw1Iu9TVtYrSqiytPibJZCVVpdMAjsl8WQ2DCW6WM/grTHwVQ8uhA04Lib3GyYgrBHCWwY=
-X-Sasl-enc: y3PT3GsfvA7bcKn86bewvbdM4koODevxAu30597kLAK2 1306504534
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id BBBE2403EBC;
-	Fri, 27 May 2011 09:55:34 -0400 (EDT)
-X-Mailer: git-send-email 1.7.5.3.688.g647459
-In-Reply-To: <59fe17310157f99d5f20173ed65408d9e1f33462.1306504356.git.git@drmicha.warpmail.net>
+	id S1753628Ab1E0N7M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2011 09:59:12 -0400
+Received: from callcc.net ([173.230.149.188]:47762 "EHLO mx01.callcc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750794Ab1E0N7L (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2011 09:59:11 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mx01.callcc.net (Postfix) with ESMTP id C76B026B18
+	for <git@vger.kernel.org>; Fri, 27 May 2011 22:59:10 +0900 (JST)
+X-Virus-Scanned: Debian amavisd-new at callcc.net
+Received: from mx01.callcc.net ([127.0.0.1])
+	by localhost (mx01.callcc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id SzxndJIozUxW for <git@vger.kernel.org>;
+	Fri, 27 May 2011 22:59:10 +0900 (JST)
+Received: from [192.168.0.128] (p6eb203.tkyoac00.ap.so-net.ne.jp [218.110.178.3])
+	by mx01.callcc.net (Postfix) with ESMTPSA id 36F87266C2
+	for <git@vger.kernel.org>; Fri, 27 May 2011 22:59:10 +0900 (JST)
+In-Reply-To: <7v4o4my11c.fsf@alter.siamese.dyndns.org>
+X-Mailer: Becky! ver. 2.56.04 [ja]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174622>
 
-Introduce git-c2t <commit> <tag> which converts a commit object <commit>
-into a tag object (and tags it with <tagname>), under the provision that
-<commit> has exactly one parent and has the same tree. That tag points
-at the parent commit.
+Subject: Re: [BUG] realloc failed
+From: Junio C Hamano <gitster@pobox.com>
+Date: Sun, 22 May 2011 12:34:14 -0700
 
-This is useful for converting "tag creating commits" such as those
-produced by git-svn into proper git tags. Tag creating commits typically
-create a "1-commit side branch" whereas the tag created by c2t points at
-the pseudo fork point (the commit being tagged).
+> Just for your future reference.
+> ...snip...
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-[And here with the notes, sorry.]
-This is super useful for me but I dunno whether it should live in contrib/
-(or a subdir thereof).
+Thanks for useful information, and reviewing the patch.
+I got it.
 
-Also, it is not that polished. I'd be happy to put it somewhere else if that's
-more appropriate. (Noting again that we miss make install contrib/feature.)
----
- contrib/git-c2t.sh |   46 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 46 insertions(+), 0 deletions(-)
- create mode 100755 contrib/git-c2t.sh
-
-diff --git a/contrib/git-c2t.sh b/contrib/git-c2t.sh
-new file mode 100755
-index 0000000..14c9bf0
---- /dev/null
-+++ b/contrib/git-c2t.sh
-@@ -0,0 +1,46 @@
-+#!/bin/sh
-+
-+die () {
-+	echo "$@"
-+	rm -f "$tagfile"
-+ 	exit 1
-+}
-+
-+warn () {
-+	echo "$@"
-+}
-+
-+test $# -eq 2 || die "Usage: $0 <commit> <tagname>"
-+
-+tagname="$2"
-+commit="$1"
-+
-+git rev-parse --verify -q "$commit" >/dev/null || die "Cannot parse $commit."
-+
-+test x$(git cat-file -t $commit) == "xcommit" || die "$commit is no commit."
-+
-+tagfile=$(mktemp)
-+
-+git cat-file commit "$commit" | {
-+	read drop tree
-+	test $drop == "tree" || die "No tree."
-+	read drop parent
-+	test $drop = "parent" || die "No parent."
-+	read drop author
-+	test $drop == "author" || die "No author."
-+	read drop committer
-+	test $drop == "committer" || die "No committer."
-+	test "$author" == "$committer" || warn "author $author != committer $committer, taking author."
-+	ptree=$(git cat-file -p $parent|fgrep tree|head -1|cut -d' ' -f2)
-+	test $ptree == $tree || die "commit $commit introduces a diff."
-+	cat <<EOF >$tagfile
-+object $parent
-+type commit
-+tag $tagname
-+tagger $author
-+EOF
-+	cat >>$tagfile
-+	hash=$(git hash-object -t tag -w "$tagfile")
-+	git tag "$tagname" $hash
-+}
-+rm -f $tagfile
 -- 
-1.7.5.3.688.g647459
+Kazuki Tsujimoto
