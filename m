@@ -1,84 +1,58 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 4/4] docs: fix some antique example output
-Date: Thu, 26 May 2011 22:33:15 -0400
-Message-ID: <20110527023315.GD25362@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/4] docs: fix some antique example output
+Date: Thu, 26 May 2011 22:16:33 -0700
+Message-ID: <7vr57ku3im.fsf@alter.siamese.dyndns.org>
 References: <30543.1305828072@plover.com>
+ <20110527023315.GD25362@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 27 04:33:24 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 27 07:16:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPmra-0003Nh-L5
-	for gcvg-git-2@lo.gmane.org; Fri, 27 May 2011 04:33:22 +0200
+	id 1QPpPk-0007D2-0f
+	for gcvg-git-2@lo.gmane.org; Fri, 27 May 2011 07:16:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758649Ab1E0CdS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 22:33:18 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44709
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753145Ab1E0CdR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 22:33:17 -0400
-Received: (qmail 20788 invoked by uid 107); 27 May 2011 02:33:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 May 2011 22:33:18 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 May 2011 22:33:15 -0400
-Content-Disposition: inline
-In-Reply-To: <30543.1305828072@plover.com>
+	id S1751008Ab1E0FQn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2011 01:16:43 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57329 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750804Ab1E0FQm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2011 01:16:42 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D435F5AE7;
+	Fri, 27 May 2011 01:18:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=grgY7gdYsrPl+f5X3+xMicNwvEk=; b=Nv7FvQ
+	FH+kzdCabGsvQop55Do2pdwMhlUi/oCoSPKrUt29qG1CPOOB6zvhlvlkdHmJA8dl
+	VsrgqY5lZe8f/INXq7RGg4flftWSzH+Whd4hJZvTfS9HyCvdhYNx7xXW+WznvlCW
+	x4jNKendse2j8USeFWPa2vp/13c1CNF7euF48=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=r3l5ZCs+A95L+hkQUfcinjvzO1EvA+a5
+	zTYkB2dJymAzUCfoc84lDuywoJijyvOGF5HDco6dZJvBlA17Q/GE/05h4OH3js1C
+	tZianieXNLFNKxktboua87XSYEDOKdW6+QZYpqvJ/BUVUmjIaZYOJuH0zTzC5mMi
+	4bzc9P3XQrI=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B23B35AE4;
+	Fri, 27 May 2011 01:18:47 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id AD9E75AE1; Fri, 27 May 2011
+ 01:18:43 -0400 (EDT)
+In-Reply-To: <20110527023315.GD25362@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 26 May 2011 22:33:15 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CCBE8D16-8820-11E0-8F6C-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174599>
 
-These diff-index and diff-tree sample outputs date back to
-the first month of git's existence. The output format has
-changed slightly since then, so let's have it match the
-current output.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I just noticed these while auditing all of the "->" in the docs
-directory. I didn't read through the whole text to make sure there were
-no other inaccuracies, though.
-
- Documentation/git-diff-index.txt |    4 ++--
- Documentation/git-diff-tree.txt  |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-diff-index.txt b/Documentation/git-diff-index.txt
-index 6d18486..2ea22ab 100644
---- a/Documentation/git-diff-index.txt
-+++ b/Documentation/git-diff-index.txt
-@@ -96,8 +96,8 @@ show that. So let's say that you have edited `kernel/sched.c`, but
- have not actually done a 'git update-index' on it yet - there is no
- "object" associated with the new state, and you get:
- 
--  torvalds@ppc970:~/v2.6/linux> git diff-index HEAD
--  *100644->100664 blob    7476bb......->000000......      kernel/sched.c
-+  torvalds@ppc970:~/v2.6/linux> git diff-index --abbrev HEAD
-+  :100644 100664 7476bb... 000000...      kernel/sched.c
- 
- i.e., it shows that the tree has changed, and that `kernel/sched.c` has is
- not up-to-date and may contain new stuff. The all-zero sha1 means that to
-diff --git a/Documentation/git-diff-tree.txt b/Documentation/git-diff-tree.txt
-index 4e5f127..1439486 100644
---- a/Documentation/git-diff-tree.txt
-+++ b/Documentation/git-diff-tree.txt
-@@ -138,8 +138,8 @@ so it can be used to name subdirectories.
- 
- An example of normal usage is:
- 
--  torvalds@ppc970:~/git> git diff-tree 5319e4......
--  *100664->100664 blob    ac348b.......->a01513.......      git-fsck-objects.c
-+  torvalds@ppc970:~/git> git diff-tree --abbrev 5319e4
-+  :100664 100664 ac348b... a01513...	git-fsck-objects.c
- 
- which tells you that the last commit changed just one file (it's from
- this one:
--- 
-1.7.4.5.26.g0c6a2
+Thanks. All patches look good.
