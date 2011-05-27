@@ -1,7 +1,7 @@
 From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH 1/3] A Windows path starting with a backslash is absolute
-Date: Fri, 27 May 2011 18:00:38 +0200
-Message-ID: <1306512040-1468-2-git-send-email-kusmabite@gmail.com>
+Subject: [PATCH 2/3] real_path: do not assume '/' is the path seperator
+Date: Fri, 27 May 2011 18:00:39 +0200
+Message-ID: <1306512040-1468-3-git-send-email-kusmabite@gmail.com>
 References: <1306512040-1468-1-git-send-email-kusmabite@gmail.com>
 Cc: gitster@pobox.com, johannes.schindelin@gmx.de,
 	j.sixt@viscovery.net, Theo Niessink <theo@taletn.com>
@@ -12,68 +12,119 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPzTC-0000SD-Q5
+	id 1QPzTD-0000SD-BV
 	for gcvg-git-2@lo.gmane.org; Fri, 27 May 2011 18:01:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755997Ab1E0QAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2011 12:00:51 -0400
+	id S1756056Ab1E0QAx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2011 12:00:53 -0400
 Received: from mail-ew0-f46.google.com ([209.85.215.46]:34670 "EHLO
 	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755674Ab1E0QAu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2011 12:00:50 -0400
-Received: by ewy4 with SMTP id 4so679469ewy.19
-        for <git@vger.kernel.org>; Fri, 27 May 2011 09:00:48 -0700 (PDT)
+	with ESMTP id S1755674Ab1E0QAw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2011 12:00:52 -0400
+Received: by mail-ew0-f46.google.com with SMTP id 4so679469ewy.19
+        for <git@vger.kernel.org>; Fri, 27 May 2011 09:00:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=l6vNHpgp1jHEWe8jkEEIb7RBUe3ghuUXzU9+HMvOL3w=;
-        b=eOo0O0p883PtwIDowcQ+BPbhXlwV/kY4/LN35P4cS5y+e+JyfC2bBjSNyljYqQowUQ
-         sHReyMISBQgxEz2LMrMXH92MQGBA7bxwG4Rikj4rzhCpsEJMfiI48J2Cik/VG+16M/V/
-         JmfmR6P+MfYnKlPehFk6JMAyJEjYn3MYdQMIk=
+        bh=UdxyuJyoJ6TrXtace1sXzvVRfJyKJjCLCsHPyXbXggE=;
+        b=fyujfxwuLGLsXdSyF8NRStlenWFfwHbLdGruDUABWrF+qB0mn3sWSPmnt1LHN6FDoF
+         Z+pek7qi3M1m/vElKGBIqsphimlzEvr7nr3fOuOENxN1BMnwDSsO/NQi5ZSswwB1u3zB
+         b92xC6ALiEggzbpgIIdUqFrglZX8n/nzNdGaU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=hafVddZTnIBmD4vDnl+aXKxfsSqb67wbpAcnjhH18EBHGvmPkFNCoxxwsyptlwHyrq
-         48ciaGZye7DAf3Yfnasmxw5LEacaFiEYcoUnaUAVMd/VJJRLVbERWuF5WCX5ewo6b6EA
-         6QOBDGCPCOh5GW8BctFN/MYGhQt2dd3OiawKw=
-Received: by 10.14.4.209 with SMTP id 57mr841424eej.87.1306512048765;
-        Fri, 27 May 2011 09:00:48 -0700 (PDT)
+        b=mtzcoe6YW9Z8AmzNevVT0wDUf6bHpheL+XFRHF9JuyTjau/LaV3sKWf0v8DbFqkg1y
+         cMztCG2qcn24HTP8T2k3am6LLgpDhziZ5vAIaCX1ciIJpJVhiUai/+oIWmyMvD5fdIeX
+         s8b6RHKdB8mARQx+L8xHNrWsOA8M7Xg5GNnuo=
+Received: by 10.213.98.201 with SMTP id r9mr859563ebn.42.1306512051786;
+        Fri, 27 May 2011 09:00:51 -0700 (PDT)
 Received: from localhost ([77.40.159.131])
-        by mx.google.com with ESMTPS id c46sm1340524eei.17.2011.05.27.09.00.46
+        by mx.google.com with ESMTPS id 10sm1339270een.15.2011.05.27.09.00.49
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 27 May 2011 09:00:47 -0700 (PDT)
+        Fri, 27 May 2011 09:00:50 -0700 (PDT)
 X-Mailer: git-send-email 1.7.5.3775.ga8770a
 In-Reply-To: <1306512040-1468-1-git-send-email-kusmabite@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174627>
 
 From: Theo Niessink <theo@taletn.com>
 
-This fixes prefix_path() not recognizing e.g. \foo\bar as an absolute path
-on Windows.
+real_path currently assumes it's input had '/' as path seperator.
+This assumption does not hold true for the code-path from
+prefix_path (on Windows), where real_path can be called before
+normalize_path_copy.
+
+Fix real_path so it doesn't make this assumption. Create a helper
+function to reverse-search for the last path-seperator in a string.
 
 Signed-off-by: Theo Niessink <theo@taletn.com>
 Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
 ---
- cache.h |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ abspath.c         |    4 ++--
+ compat/mingw.h    |    9 +++++++++
+ git-compat-util.h |    4 ++++
+ 3 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index dd34fed..555bf7f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -734,7 +734,7 @@ extern char *expand_user_path(const char *path);
- char *enter_repo(char *path, int strict);
- static inline int is_absolute_path(const char *path)
- {
--	return path[0] == '/' || has_dos_drive_prefix(path);
-+	return is_dir_sep(path[0]) || has_dos_drive_prefix(path);
- }
- int is_directory(const char *);
- const char *real_path(const char *path);
+diff --git a/abspath.c b/abspath.c
+index 3005aed..01858eb 100644
+--- a/abspath.c
++++ b/abspath.c
+@@ -40,7 +40,7 @@ const char *real_path(const char *path)
+ 
+ 	while (depth--) {
+ 		if (!is_directory(buf)) {
+-			char *last_slash = strrchr(buf, '/');
++			char *last_slash = find_last_dir_sep(buf);
+ 			if (last_slash) {
+ 				*last_slash = '\0';
+ 				last_elem = xstrdup(last_slash + 1);
+@@ -65,7 +65,7 @@ const char *real_path(const char *path)
+ 			if (len + strlen(last_elem) + 2 > PATH_MAX)
+ 				die ("Too long path name: '%s/%s'",
+ 						buf, last_elem);
+-			if (len && buf[len-1] != '/')
++			if (len && !is_dir_sep(buf[len-1]))
+ 				buf[len++] = '/';
+ 			strcpy(buf + len, last_elem);
+ 			free(last_elem);
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 62eccd3..b188776 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -297,6 +297,15 @@ int winansi_fprintf(FILE *stream, const char *format, ...) __attribute__((format
+ 
+ #define has_dos_drive_prefix(path) (isalpha(*(path)) && (path)[1] == ':')
+ #define is_dir_sep(c) ((c) == '/' || (c) == '\\')
++static inline char *mingw_find_last_dir_sep(const char *path)
++{
++	char *ret = NULL;
++	for (; *path; ++path)
++		if (is_dir_sep(*path))
++			ret = (char *)path;
++	return ret;
++}
++#define find_last_dir_sep mingw_find_last_dir_sep
+ #define PATH_SEP ';'
+ #define PRIuMAX "I64u"
+ 
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 40498b3..08d58f1 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -215,6 +215,10 @@ extern char *gitbasename(char *);
+ #define is_dir_sep(c) ((c) == '/')
+ #endif
+ 
++#ifndef find_last_dir_sep
++#define find_last_dir_sep(path) strrchr(path, '/')
++#endif
++
+ #if __HP_cc >= 61000
+ #define NORETURN __attribute__((noreturn))
+ #define NORETURN_PTR
 -- 
 1.7.5.3.3.g435ff
