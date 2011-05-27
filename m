@@ -1,84 +1,74 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: Whitespace and '&nbsp'
-Date: Fri, 27 May 2011 18:50:13 +0200
-Message-ID: <m262owhyuy.fsf@igel.home>
+Date: Fri, 27 May 2011 10:01:17 -0700
+Message-ID: <BANLkTimPfN6LQBhWj6rW3Zcm9JHPsMWsjA@mail.gmail.com>
 References: <BANLkTik7eJ=BC9Bekqu-W1-r0cheCjC+wg@mail.gmail.com>
-	<7vzkm9unu0.fsf@alter.siamese.dyndns.org>
-	<BANLkTi=hYR4ow1eMR3rHkMuVRsHJ=TFDZA@mail.gmail.com>
+ <7vzkm9unu0.fsf@alter.siamese.dyndns.org> <BANLkTi=hYR4ow1eMR3rHkMuVRsHJ=TFDZA@mail.gmail.com>
+ <m262owhyuy.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri May 27 18:50:26 2011
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Fri May 27 19:02:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QQ0Ez-00015s-O3
-	for gcvg-git-2@lo.gmane.org; Fri, 27 May 2011 18:50:26 +0200
+	id 1QQ0QW-0000DC-Uv
+	for gcvg-git-2@lo.gmane.org; Fri, 27 May 2011 19:02:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756406Ab1E0QuT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 May 2011 12:50:19 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:51066 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754725Ab1E0QuS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2011 12:50:18 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id E2306182446B;
-	Fri, 27 May 2011 18:50:14 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
-	by mail.m-online.net (Postfix) with ESMTP id D97FC1C00052;
-	Fri, 27 May 2011 18:50:14 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
-	with ESMTP id tOLK8tGwhIkJ; Fri, 27 May 2011 18:50:14 +0200 (CEST)
-Received: from igel.home (ppp-88-217-115-48.dynamic.mnet-online.de [88.217.115.48])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Fri, 27 May 2011 18:50:13 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 5DD8FCA29C; Fri, 27 May 2011 18:50:13 +0200 (CEST)
-X-Yow: WHOA!!  I'm having a RELIGIOUS EXPERIENCE right NOW!!
-In-Reply-To: <BANLkTi=hYR4ow1eMR3rHkMuVRsHJ=TFDZA@mail.gmail.com> (Linus
-	Torvalds's message of "Thu, 26 May 2011 15:08:44 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+	id S1755070Ab1E0RCP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2011 13:02:15 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:39685 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752279Ab1E0RCP (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 May 2011 13:02:15 -0400
+Received: from mail-wy0-f174.google.com (mail-wy0-f174.google.com [74.125.82.174])
+	(authenticated bits=0)
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p4RH2DU8007126
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Fri, 27 May 2011 10:02:14 -0700
+Received: by wya21 with SMTP id 21so1402675wya.19
+        for <git@vger.kernel.org>; Fri, 27 May 2011 10:02:12 -0700 (PDT)
+Received: by 10.216.79.5 with SMTP id h5mr2204682wee.110.1306515732141; Fri,
+ 27 May 2011 10:02:12 -0700 (PDT)
+Received: by 10.216.164.195 with HTTP; Fri, 27 May 2011 10:01:17 -0700 (PDT)
+In-Reply-To: <m262owhyuy.fsf@igel.home>
+X-Spam-Status: No, hits=-102.931 required=5 tests=AWL,BAYES_00,USER_IN_WHITELIST
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174631>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
-
-> On Thu, May 26, 2011 at 2:57 PM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->>
->> But in the longer term, I think we should find what MUA causes this
->> breakage and yell at them. It might be some mail relays, but I am no=
-t sure
->> where these come from. =C2=A0I often see alternating real whitespace=
- and nbsp
-                         ^^ Like this...
->> in "> " indented quotes.
+On Fri, May 27, 2011 at 9:50 AM, Andreas Schwab <schwab@linux-m68k.org> wrote:
 >
-> In this case, it was
->
->   Content-Type: text/plain; charset=3Dutf-8
->   Content-Disposition: inline
->   Content-Transfer-Encoding: 8bit
->   User-Agent: Mutt/1.5.21 (2010-09-15)
->
-> so there was nothing odd in the MUA.
+> Is this a gmail thing?
 
-Is this a gmail thing?
+Gmail on the sending side - quite possibly part of a reflowing thing,
+especially with quoting. I send patches as attachments because gmail
+is crap in this regard (and yes, I hate it, and I go back to alpine
+for any bigger issues).
 
-Andreas.
+But on the receiving side? Sounds unlikely, since I've used gmail for
+the last year to receive patches, and this is the first time I've seen
+it.
 
---=20
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
-ED5
-"And now for something completely different."
+And the sent email that had the issue this time implied mutt, not gmail.
+
+Regardless, what took me by surprise was how (a) the patch applied
+fine, (b) it _looked_ fine in all the normal tools, and (c) it just
+didn't work.
+
+Now, very arguably this is not a git issue at all. Having the odd nbsp
+be more visible in my other tools would have been fine - either 'less'
+showing it (the way it shows other control characters) or my terminal
+making some visual distinction. That said, I think it's something that
+git could perhaps protect against a bit.
+
+                    Linus
