@@ -1,75 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Whitespace and '&nbsp'
-Date: Fri, 27 May 2011 11:31:32 -0700
-Message-ID: <7vipswro57.fsf@alter.siamese.dyndns.org>
-References: <BANLkTik7eJ=BC9Bekqu-W1-r0cheCjC+wg@mail.gmail.com>
- <7vzkm9unu0.fsf@alter.siamese.dyndns.org>
- <BANLkTi=hYR4ow1eMR3rHkMuVRsHJ=TFDZA@mail.gmail.com>
- <m262owhyuy.fsf@igel.home>
- <BANLkTimPfN6LQBhWj6rW3Zcm9JHPsMWsjA@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 3/3] verify_path: consider dos drive prefix
+Date: Fri, 27 May 2011 20:58:59 +0200
+Message-ID: <4DDFF473.7030104@kdbg.org>
+References: <1306512040-1468-1-git-send-email-kusmabite@gmail.com> <1306512040-1468-4-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Schwab <schwab@linux-m68k.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri May 27 20:31:50 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
+	Theo Niessink <theo@taletn.com>
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 27 20:59:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QQ1p8-0005Ud-6o
-	for gcvg-git-2@lo.gmane.org; Fri, 27 May 2011 20:31:50 +0200
+	id 1QQ2Fh-0005Kl-Hu
+	for gcvg-git-2@lo.gmane.org; Fri, 27 May 2011 20:59:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752005Ab1E0Sbp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2011 14:31:45 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36794 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751089Ab1E0Sbo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2011 14:31:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 944A25DE4;
-	Fri, 27 May 2011 14:33:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=w4tqPF9JwNoYzBFqdfhZZe1P5to=; b=bFR33K
-	oLGVH/Fw8G5gFBzNOqbPC7Qe0FrF/U4U1jQ2esvw043b2pKvr0Vaz9ubmyWMubu4
-	Jy3ACBIRZ6xBRzrcDQvdw5EQ7CJiiER+PL0wp4PjtF+Md5D20yAJ7oKsZO46GacV
-	C0DVX4kOdx09BdIM7nygmzz4EUCw7Ew73JqQQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oOCo80B4DW20MEVEozwV1hE98x3PZYPv
-	8fUfpRALXV1HV9u9JszzqKo52CSMn4bsMuDkhkXT1/dw0NM1msYaFJn+ek+2E8J8
-	WxN83iVzKBhIIJ0ISd8tJlge7RdOIaYu8/Lz9lY6vZNXbHtelcx9WZd0H5+uaT0i
-	Fbv1Y1uKF0w=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 562705DD8;
-	Fri, 27 May 2011 14:33:46 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1EBBE5DD5; Fri, 27 May 2011
- 14:33:40 -0400 (EDT)
-In-Reply-To: <BANLkTimPfN6LQBhWj6rW3Zcm9JHPsMWsjA@mail.gmail.com> (Linus
- Torvalds's message of "Fri, 27 May 2011 10:01:17 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DB56DD00-888F-11E0-959F-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+	id S1751928Ab1E0S7H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2011 14:59:07 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:47208 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750977Ab1E0S7F (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2011 14:59:05 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 65BC41000B;
+	Fri, 27 May 2011 20:59:00 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 9EED019F359;
+	Fri, 27 May 2011 20:58:59 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.17) Gecko/20110414 SUSE/3.1.10 Thunderbird/3.1.10
+In-Reply-To: <1306512040-1468-4-git-send-email-kusmabite@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174638>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Am 27.05.2011 18:00, schrieb Erik Faye-Lund:
+> If someone manage to create a repo with a 'C:' entry in the
+> root-tree, files can be written outside of the working-dir. This
+> opens up a can-of-worms of exploits.
+> 
+> Fix it by explicitly checking for a dos drive prefix when verifying
+> a paht. While we're at it, make sure that paths beginning with '\' is
+> considered absolute as well.
 
-> Now, very arguably this is not a git issue at all. Having the odd nbsp
-> be more visible in my other tools would have been fine - either 'less'
-> showing it (the way it shows other control characters) or my terminal
-> making some visual distinction. That said, I think it's something that
-> git could perhaps protect against a bit.
+I think we do agree that the only way to avoid the security breach is to
+check a path before it is used to write a file. In practice, it means to
+disallow paths in the top-most level of the index that are two
+characters long and are letter-colon.
 
-Yeah. I would have expected that "git log -p" would at least show after
-the fact, relying on "less" being aware about it, but that does not seem
-to be the case.  Setting my pager to "cat -e" is the only workaround I can
-think of right now (shows "M-BM- " there), but of course that wouldn't be
-practical at all. We want to notice this during patch application.
+IMHO, it is pointless to avoid that an evil path enters the repository,
+because there are so many and a few more ways to create an evil repository.
+
+> diff --git a/read-cache.c b/read-cache.c
+> index f38471c..68faa51 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -753,11 +753,14 @@ int verify_path(const char *path)
+>  {
+>  	char c;
+>  
+> +	if (has_dos_drive_prefix(path))
+> +		return 0;
+> +
+
+Isn't verify_path used to avoid that a bogus path enters the index? (I
+don't know, I'm not familiar with this infrastructure.)
+
+>  	goto inside;
+>  	for (;;) {
+>  		if (!c)
+>  			return 1;
+> -		if (c == '/') {
+> +		if (is_dir_sep(c)) {
+>  inside:
+
+And if so, at this point, all backslashes should have been converted to
+forward-slashes already. If not, then this would just paper over the
+real bug.
+
+>  			c = *path++;
+>  			switch (c) {
+
+-- Hannes
