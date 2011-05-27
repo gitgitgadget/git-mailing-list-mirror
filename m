@@ -1,59 +1,96 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv3 0/3] diff.c: --stat-count=<n>
-Date: Fri, 27 May 2011 14:36:39 +0200
-Message-ID: <cover.1306499600.git.git@drmicha.warpmail.net>
+Subject: [PATCHv3 1/3] diff.c: omit hidden entries from namelen calculation with --stat
+Date: Fri, 27 May 2011 14:36:40 +0200
+Message-ID: <b47e2f0865bac1ad0e7b777ce9f27493292c502c.1306499600.git.git@drmicha.warpmail.net>
 References: <4DC0FD3D.9010004@drmicha.warpmail.net>
 Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 27 14:36:53 2011
+X-From: git-owner@vger.kernel.org Fri May 27 14:36:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPwHc-0005GB-Eb
-	for gcvg-git-2@lo.gmane.org; Fri, 27 May 2011 14:36:52 +0200
+	id 1QPwHd-0005GB-0J
+	for gcvg-git-2@lo.gmane.org; Fri, 27 May 2011 14:36:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753989Ab1E0Mgp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2011 08:36:45 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:47583 "EHLO
+	id S1754525Ab1E0Mgs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2011 08:36:48 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:60285 "EHLO
 	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753648Ab1E0Mgp (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 May 2011 08:36:45 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id C8C7820520;
-	Fri, 27 May 2011 08:36:44 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Fri, 27 May 2011 08:36:44 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=EJ8fgeCGMWmVKIVgegvZERs6de0=; b=XlPLvIiC0iZgXSKBaiypf5HU6FQ0H/rWJjPNJ9t8CqIWQtDkZFg7FYxzeZAIYHnz3sLxtswF8pj0oGoekaYtf9ITlMotCMgQiziQ8jpEPruPTaL2VxynWcrkgOrAi0t2Sj+hDPZB6p/X4bAy27hKRzTNFvTv5NeQu1WszsDA1xI=
-X-Sasl-enc: BFFhyl3Ia3s5Q4P/UmwAZi1xVmafVItvQQJvZyIM4OWF 1306499804
+	by vger.kernel.org with ESMTP id S1753688Ab1E0Mgr (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 May 2011 08:36:47 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 98D9C20A18;
+	Fri, 27 May 2011 08:36:46 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 27 May 2011 08:36:46 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references:in-reply-to:references; s=smtpout; bh=qis5wrIYkpOZ89SrjL9vDiu2r8E=; b=faG7qmXFPjqBFujTMW6YseBvWUsQSxDWyLfpua6QSXskwD1/MylN1ITwHtqbwVIhdzvCttagujvVO0pf1SjugIcadnPGk4EonYxfndbOtL5plQ1sX6A9vixZPLqFWej9nm5NGDRNBOm6dodSPdrvfTBsBya+ba0T4FscOSTvKb4=
+X-Sasl-enc: TTNNxvDi4Sa/UYegbIiDbYij15INKVYLfSWe5AK6p6nV 1306499806
 Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 5083F4492BC;
-	Fri, 27 May 2011 08:36:44 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 1FA5740777D;
+	Fri, 27 May 2011 08:36:46 -0400 (EDT)
 X-Mailer: git-send-email 1.7.5.2.657.g62c2
 In-Reply-To: <4DC0FD3D.9010004@drmicha.warpmail.net>
+In-Reply-To: <cover.1306499600.git.git@drmicha.warpmail.net>
+References: <cover.1306499600.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174611>
 
-So, this grew into a little series because of the issue in 1/3. The fact
-that we looked up the name for a diff item  even when we don't display it
-was never great but started being bad when we started not to fill in
-unnecessary names... With that segv out of the way, here's v3 of the series.
+Currently, --stat calculates the longest name from all items but then
+drops some (mode changes) from the output later on.
 
-Compared to v2, I hope I have learned to count.
+Instead, drop them from the namelen generation and calculation.
 
-Michael J Gruber (3):
-  diff.c: omit hidden entries from namelen calculation with --stat
-  diff: introduce --stat-lines to limit the stat lines
-  diff-options.txt: describe --stat-{width,name-width,count}
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+This optimizes (tightens) the display potentially, but we never had tests
+which are sensitive to that.
+---
+ diff.c |   14 +++++++++-----
+ 1 files changed, 9 insertions(+), 5 deletions(-)
 
- Documentation/diff-options.txt |    8 +++++-
- diff.c                         |   52 +++++++++++++++++++++++++++++++++-------
- diff.h                         |    1 +
- 3 files changed, 51 insertions(+), 10 deletions(-)
-
+diff --git a/diff.c b/diff.c
+index feced34..4541939 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1278,6 +1278,10 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+ 	for (i = 0; i < data->nr; i++) {
+ 		struct diffstat_file *file = data->files[i];
+ 		uintmax_t change = file->added + file->deleted;
++		if (!data->files[i]->is_renamed &&
++			 (change == 0)) {
++			continue;
++		}
+ 		fill_print_name(file);
+ 		len = strlen(file->print_name);
+ 		if (max_len < len)
+@@ -1309,6 +1313,11 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+ 		uintmax_t deleted = data->files[i]->deleted;
+ 		int name_len;
+ 
++		if (!data->files[i]->is_renamed &&
++			 (added + deleted == 0)) {
++			total_files--;
++			continue;
++		}
+ 		/*
+ 		 * "scale" the filename
+ 		 */
+@@ -1343,11 +1352,6 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+ 			fprintf(options->file, "  Unmerged\n");
+ 			continue;
+ 		}
+-		else if (!data->files[i]->is_renamed &&
+-			 (added + deleted == 0)) {
+-			total_files--;
+-			continue;
+-		}
+ 
+ 		/*
+ 		 * scale the add/delete
 -- 
 1.7.5.2.657.g62c2
