@@ -1,122 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git commit -a reports untracked files after a clone
-Date: Fri, 27 May 2011 14:13:21 -0400
-Message-ID: <20110527181321.GB29119@sigill.intra.peff.net>
-References: <7B399C74-8048-42BA-8672-9D7964F24888@goli.at>
- <7v39kgr5ln.fsf@alter.siamese.dyndns.org>
- <4501A58F-46F8-410C-BCEF-DD2FC10BC3A5@goli.at>
- <20110516103829.GA23889@sigill.intra.peff.net>
- <7C2AE1EE-4CAE-4E86-A53C-C97BE1F2573B@goli.at>
- <20110516120825.GA24418@sigill.intra.peff.net>
- <1D7CF554-A4AC-49EF-A095-9B05167BC458@goli.at>
- <20110516145535.GA25930@sigill.intra.peff.net>
- <20110527180045.GA29119@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Whitespace and '&nbsp'
+Date: Fri, 27 May 2011 11:31:32 -0700
+Message-ID: <7vipswro57.fsf@alter.siamese.dyndns.org>
+References: <BANLkTik7eJ=BC9Bekqu-W1-r0cheCjC+wg@mail.gmail.com>
+ <7vzkm9unu0.fsf@alter.siamese.dyndns.org>
+ <BANLkTi=hYR4ow1eMR3rHkMuVRsHJ=TFDZA@mail.gmail.com>
+ <m262owhyuy.fsf@igel.home>
+ <BANLkTimPfN6LQBhWj6rW3Zcm9JHPsMWsjA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Joshua Jensen <jjensen@workspacewhiz.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Philipp Metzler <phil@goli.at>
-X-From: git-owner@vger.kernel.org Fri May 27 20:13:29 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri May 27 20:31:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QQ1XM-00028P-PP
-	for gcvg-git-2@lo.gmane.org; Fri, 27 May 2011 20:13:29 +0200
+	id 1QQ1p8-0005Ud-6o
+	for gcvg-git-2@lo.gmane.org; Fri, 27 May 2011 20:31:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753845Ab1E0SNY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2011 14:13:24 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56161
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752050Ab1E0SNX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2011 14:13:23 -0400
-Received: (qmail 25655 invoked by uid 107); 27 May 2011 18:13:24 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 27 May 2011 14:13:24 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 27 May 2011 14:13:21 -0400
-Content-Disposition: inline
-In-Reply-To: <20110527180045.GA29119@sigill.intra.peff.net>
+	id S1752005Ab1E0Sbp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2011 14:31:45 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36794 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751089Ab1E0Sbo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2011 14:31:44 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 944A25DE4;
+	Fri, 27 May 2011 14:33:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=w4tqPF9JwNoYzBFqdfhZZe1P5to=; b=bFR33K
+	oLGVH/Fw8G5gFBzNOqbPC7Qe0FrF/U4U1jQ2esvw043b2pKvr0Vaz9ubmyWMubu4
+	Jy3ACBIRZ6xBRzrcDQvdw5EQ7CJiiER+PL0wp4PjtF+Md5D20yAJ7oKsZO46GacV
+	C0DVX4kOdx09BdIM7nygmzz4EUCw7Ew73JqQQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oOCo80B4DW20MEVEozwV1hE98x3PZYPv
+	8fUfpRALXV1HV9u9JszzqKo52CSMn4bsMuDkhkXT1/dw0NM1msYaFJn+ek+2E8J8
+	WxN83iVzKBhIIJ0ISd8tJlge7RdOIaYu8/Lz9lY6vZNXbHtelcx9WZd0H5+uaT0i
+	Fbv1Y1uKF0w=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 562705DD8;
+	Fri, 27 May 2011 14:33:46 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1EBBE5DD5; Fri, 27 May 2011
+ 14:33:40 -0400 (EDT)
+In-Reply-To: <BANLkTimPfN6LQBhWj6rW3Zcm9JHPsMWsjA@mail.gmail.com> (Linus
+ Torvalds's message of "Fri, 27 May 2011 10:01:17 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DB56DD00-888F-11E0-959F-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174637>
 
-On Fri, May 27, 2011 at 02:00:45PM -0400, Jeff King wrote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
->   1. We load the index, and for each entry, insert it into the index's
->      name_hash. In addition, if ignorecase is turned on, we make an
->      entry in the name_hash for the directory (e.g., "contrib/"), which
->      uses the following code from 5102c61's hash_index_entry_directories:
-> 
->         hash = hash_name(ce->name, ptr - ce->name);
->         if (!lookup_hash(hash, &istate->name_hash)) {
->                 pos = insert_hash(hash, &istate->name_hash);
->                 ce->next = *pos;
->                 *pos = ce;
->         }
+> Now, very arguably this is not a git issue at all. Having the odd nbsp
+> be more visible in my other tools would have been fine - either 'less'
+> showing it (the way it shows other control characters) or my terminal
+> making some visual distinction. That said, I think it's something that
+> git could perhaps protect against a bit.
 
-Urgh, sorry, I was looking at this on one of my topic branches which
-tweaked the calling convention of the hash code. All of my analysis is still
-valid, but the code in question actually looks like this:
-
-          hash = hash_name(ce->name, ptr - ce->name);
-          if (!lookup_hash(hash, &istate->name_hash)) {
-                  pos = insert_hash(hash, ce, &istate->name_hash);
-                  if (pos) {
-                          ce->next = *pos;
-                          *pos = ce;
-                  }
-          }
-
-And therefore my patch needs tweaked slightly, too. Updated version is below.
-
-diff --git a/cache.h b/cache.h
-index 009b365..54f8c05 100644
---- a/cache.h
-+++ b/cache.h
-@@ -153,6 +153,7 @@ struct cache_entry {
- 	unsigned int ce_flags;
- 	unsigned char sha1[20];
- 	struct cache_entry *next;
-+	struct cache_entry *dir_next;
- 	char name[FLEX_ARRAY]; /* more */
- };
- 
-diff --git a/name-hash.c b/name-hash.c
-index c6b6a3f..225dd76 100644
---- a/name-hash.c
-+++ b/name-hash.c
-@@ -57,12 +57,10 @@ static void hash_index_entry_directories(struct index_state *istate, struct cach
- 		if (*ptr == '/') {
- 			++ptr;
- 			hash = hash_name(ce->name, ptr - ce->name);
--			if (!lookup_hash(hash, &istate->name_hash)) {
--				pos = insert_hash(hash, ce, &istate->name_hash);
--				if (pos) {
--					ce->next = *pos;
--					*pos = ce;
--				}
-+			pos = insert_hash(hash, ce, &istate->name_hash);
-+			if (pos) {
-+				ce->dir_next = *pos;
-+				*pos = ce;
- 			}
- 		}
- 	}
-@@ -166,7 +164,10 @@ struct cache_entry *index_name_exists(struct index_state *istate, const char *na
- 			if (same_name(ce, name, namelen, icase))
- 				return ce;
- 		}
--		ce = ce->next;
-+		if (icase && name[namelen - 1] == '/')
-+			ce = ce->dir_next;
-+		else
-+			ce = ce->next;
- 	}
- 
- 	/*
--- 
-1.7.5.3.12.g99e25.dirty
+Yeah. I would have expected that "git log -p" would at least show after
+the fact, relying on "less" being aware about it, but that does not seem
+to be the case.  Setting my pager to "cat -e" is the only workaround I can
+think of right now (shows "M-BM- " there), but of course that wouldn't be
+practical at all. We want to notice this during patch application.
