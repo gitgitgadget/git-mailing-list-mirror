@@ -1,67 +1,74 @@
-From: "Mail Administrator" <gavin@lodown.com.au>
-Subject: Email Quota Exceeded
-Date: Thu, 26 May 2011 11:13:53 +0100
-Message-ID: <201105260227.p4Q2RIm28571@mta01.t-net.net.ve>
-Reply-To: <mail.a6@gmx.us>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 1/4] docs: minor grammar fixes to git-status
+Date: Thu, 26 May 2011 22:31:11 -0400
+Message-ID: <20110527023111.GA25362@sigill.intra.peff.net>
+References: <30543.1305828072@plover.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="Windows-1251"
-Content-Transfer-Encoding: 7bit
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Fri May 27 02:23:31 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 27 04:32:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QPkpu-0003RS-Jg
-	for gcvg-git-2@lo.gmane.org; Fri, 27 May 2011 02:23:30 +0200
+	id 1QPmqS-0002u7-Lz
+	for gcvg-git-2@lo.gmane.org; Fri, 27 May 2011 04:32:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758394Ab1E0AXZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 May 2011 20:23:25 -0400
-Received: from mta01.t-net.net.ve ([200.35.65.10]:49290 "EHLO
-	mta01.t-net.net.ve" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757394Ab1E0AXY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2011 20:23:24 -0400
-X-Greylist: delayed 49937 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 May 2011 20:23:24 EDT
-Received: from User ([41.203.64.250])
-	(authenticated (0 bits))
-	by mta01.t-net.net.ve (Switch-2.0.1/Switch-2.0.1) with ESMTP id p4Q2RIm28571;
-	Thu, 26 May 2011 06:27:19 +0400 (GMT)
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2800.1081
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1081
+	id S1753141Ab1E0CbP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 May 2011 22:31:15 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59473
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753074Ab1E0CbO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2011 22:31:14 -0400
+Received: (qmail 20662 invoked by uid 107); 27 May 2011 02:31:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 May 2011 22:31:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 May 2011 22:31:11 -0400
+Content-Disposition: inline
+In-Reply-To: <30543.1305828072@plover.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 10.5 points;
- *  1.9 DATE_IN_FUTURE_06_12 Date: is 6 to 12 hours after Received: date
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.4128]
- *  0.6 RCVD_IN_SORBS_WEB RBL: SORBS: sender is a abuseable web server
- *      [41.203.64.250 listed in dnsbl.sorbs.net]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?41.203.64.250>]
- *  1.0 XMAILER_MIMEOLE_OL_1ECD5 XMAILER_MIMEOLE_OL_1ECD5
- *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
- *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174595>
 
-This is to inform you that you have exceeded your E-mail Quota Limit and
-you need to increase your E-mail Quota Limit because in less than 96 hours
-your E- mail Account will be disabled.Increase your E-mail Quota Limit and
-continue to use your Webmail Account.
 
-To increase your E-mail Quota Limit to 2.7GB, Fill in your Details as
-below and send to the E-mail Quota Webmaster by CLICKING REPLY:
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Noticed these while working on 2/4.
 
-EMAIL ADDRESS:
-USERNAME:
-PASSWORD:
-CONFIRM PASSWORD:
-DATE OF BIRTH:
+ Documentation/git-status.txt |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
-Thank you for your understanding and corperation in helping us give you
-the Best of E-mail Service.
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+index 00b699f..7702727 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -78,18 +78,19 @@ OUTPUT
+ The output from this command is designed to be used as a commit
+ template comment, and all the output lines are prefixed with '#'.
+ The default, long format, is designed to be human readable,
+-verbose and descriptive.  They are subject to change in any time.
++verbose and descriptive.  Its contents and format are subject to change
++at any time.
+ 
+ The paths mentioned in the output, unlike many other git commands, are
+ made relative to the current directory if you are working in a
+ subdirectory (this is on purpose, to help cutting and pasting). See
+ the status.relativePaths config option below.
+ 
+-In short-format, the status of each path is shown as
++In the short-format, the status of each path is shown as
+ 
+ 	XY PATH1 -> PATH2
+ 
+-where `PATH1` is the path in the `HEAD`, and ` -> PATH2` part is
++where `PATH1` is the path in the `HEAD`, and the ` -> PATH2` part is
+ shown only when `PATH1` corresponds to a different path in the
+ index/worktree (i.e. the file is renamed). The 'XY' is a two-letter
+ status code.
+-- 
+1.7.4.5.26.g0c6a2
