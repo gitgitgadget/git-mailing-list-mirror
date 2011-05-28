@@ -1,95 +1,103 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase: learn --discard subcommand
-Date: Sat, 28 May 2011 11:51:32 -0700
-Message-ID: <7vpqn2psjv.fsf@alter.siamese.dyndns.org>
-References: <1306551495-26685-1-git-send-email-martin.von.zweigbergk@gmail.com>
+Subject: Re: git show and the --quiet option
+Date: Sat, 28 May 2011 12:17:40 -0700
+Message-ID: <7vhb8eprcb.fsf@alter.siamese.dyndns.org>
+References: <4DE12888.1040506@isy.liu.se>
+ <20110528172611.GB28708@centaur.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 28 20:51:47 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Gustaf Hendeby <hendeby@isy.liu.se>, git@vger.kernel.org
+To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Sat May 28 21:17:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QQObz-00006r-71
-	for gcvg-git-2@lo.gmane.org; Sat, 28 May 2011 20:51:47 +0200
+	id 1QQP1H-0001VY-VO
+	for gcvg-git-2@lo.gmane.org; Sat, 28 May 2011 21:17:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755935Ab1E1Svm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 May 2011 14:51:42 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40297 "EHLO
+	id S1755308Ab1E1TRv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 May 2011 15:17:51 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49218 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755671Ab1E1Svl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 May 2011 14:51:41 -0400
+	with ESMTP id S1755086Ab1E1TRu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 28 May 2011 15:17:50 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7040B495B;
-	Sat, 28 May 2011 14:53:49 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8F73F4B9B;
+	Sat, 28 May 2011 15:19:57 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GAi0b3J5Iq9rEoaW87PXgF2Dz6I=; b=qp+I6e
-	ZC6nDUX11TLjav7+3la2x113fs7jenmD0InGd3p2ii+SMm0N2PLCoNBc6HPgo9+r
-	H/veml9ixfp3aTZrbkJIAOlraqvXvi02BsTDrYjUCmxGVsBYpsIYza9ewTvjPRhd
-	su/BS/sPR6jPbWn5aYzjiWY/6CP8ykxvaJ9DE=
+	:content-type:content-transfer-encoding; s=sasl; bh=kWpwCgs6b612
+	PS+XyN0v8SJQbmE=; b=U3E60XjDZTkXzTxXCl5Y/cDj1DC7QDrljHowSoQkp1SX
+	E6HTArfKpU6C7CZtmvCM2VeU/GodeLjRIX/yErLpmfbkHEtSrigtBw0GiLxbBMBg
+	5EE+TxsNJpUgPRhri3AxkqoaBAbxki2jwfQLGE5LjQshiKnVdcRirnZla+dWrLQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=B4nY8ic9w+oTz4w6JP6AFFaHsaRVBhug
-	NT9u9VWryV686xRaDLrdW/xjha764YqzL/tP2rt++N7gbr/fAdMRlNWMeIKYKLP2
-	Sjz3RQIdm/17AYXMH320CHwWIf94r6dHzPyKHpWOfN/3cGaIhBT2CICRpQxYHPoH
-	oUKdbgHtsFU=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=WVmX57
+	JYzIDcW2YJXKORM34rbkFmvktFf4Rnt+NafSzGLII1Foh0bYfZ8WiRXoagEickHj
+	/xYywHaTT9o6bhP/Ff8J9i0jw5zGkGmKNpAIbrot3eDH45Xf+apsAFWfL2gMpInK
+	/FCy9zquHHxm8LKeEWAvqy1opgEPnaTTJOvkA=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3DEE7495A;
-	Sat, 28 May 2011 14:53:46 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5F2DF4B91;
+	Sat, 28 May 2011 15:19:54 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1F88F4956; Sat, 28 May 2011
- 14:53:41 -0400 (EDT)
-In-Reply-To: <1306551495-26685-1-git-send-email-martin.von.zweigbergk@gmail.com> (Martin
- von Zweigbergk's message of "Fri, 27 May 2011 22:58:15 -0400")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4DEC74B90; Sat, 28 May 2011
+ 15:19:50 -0400 (EDT)
+In-Reply-To: <20110528172611.GB28708@centaur.lab.cmartin.tk> ("Carlos
+ =?utf-8?Q?Mart=C3=ADn?= Nieto"'s message of "Sat, 28 May 2011 19:26:11
+ +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D0F2F598-895B-11E0-9C85-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 77A190FE-895F-11E0-B980-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174672>
 
-Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
+Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
 
-> ... I think Junio then
-> hinted that he sometimes wished that he could abort rebase without
-> moving to anywhere else at all, which is what this patch implements.
+>> 1c40c36b ("log: convert to parse-options").  Was this intentional?
+>
+> Very much so.
+>> ...
+> The long answer is that the log family (and git-format-patch, which
+> is where this started) never actually accepted --quiet, so it would
+> get passed down to the diff machinery. This (for complicated reasons
+> I'm not sure I comletely understand, but that have to do with the
+> internal handling of 'quiet' as 'quick') caused every second commit
+> not to show.
 
-I am not opposed to this particular patch, but thinking about a bigger
-picture, I am not sure if we want to solve it this way.
+Yes, "git format-patch" that gives empty patch for every other commit
+would have been incorrect, but "--quiet" to squelch patch output,
+especially in the context of "show" whose default is to show patch, is
+something people would naturally expect, even though admittedly it was
+doing so by accident.
 
-We have multiple "sequence" operations that want to do things in multiple
-steps, each of which can stop and give control back to the user, while
-leaving some information in the .git directory for it to know where it was
-when resuming. I think "am" knows about what "rebase" does (and
-vice-versa) so it can detect an attempt to run it while "rebase" is in
-still progress and refuse to continue to limit the damage, but if we have
-N such "sequence" commands that want to refrain from interfering with each
-other, and want to offer an advice to abort the in-progress operation
-initiated by other commands, that would mean we would need N * N pieces of
-logic to detect other's in-limbo state and offer advices, which would not
-scale.
+How does this patch look?
 
-A user who is given back the control from a "sequence" operation may be
-confused either (1) immediately after such an event (often some sort of
-merge conflict) or (2) much later after first abandoning the working tree
-altogether and taking a walk and then coming back to continue working
-while forgetting what he was doing. Such a user may want to say "I know I
-am in a strange state, give me a state that I can work from, at this point
-I do not care about continuing what I was originally doing". The user may
-probably not know if "git rebase" was in progress or "git cherry-pick"
-was.
+It does not fix "git show master~10 master^..master", but instead of ju=
+st
+hijacking and ignoring the --quiet option like your patch did, it actua=
+lly
+flips the option the user wanted to affect from the command line.
 
-"git reset --hard" used to be such a command in simpler times. It removes
-MERGE_HEAD unconditionally, so that a confused user can start from scratch
-without having to worry about what was in progress. As a devil's advocate,
-I am wondering if it is a good idea to simply teach "reset --hard" to also
-remove any and all "sequence" cruft (.git/rebase-apply, .git/rebase-merge,
-CHERRY_PICK_HEAD; we might have others I do not recall offhand) and be
-done with it. It is a large hammer, but it is certainly the easiest to
-explain and the simplest to understand way to get out of any troubles.
+ builtin/log.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/builtin/log.c b/builtin/log.c
+index 27849dc..224b167 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -107,6 +107,8 @@ static void cmd_log_init_finish(int argc, const cha=
+r **argv, const char *prefix,
+ 			     PARSE_OPT_KEEP_DASHDASH);
+=20
+ 	argc =3D setup_revisions(argc, argv, rev, opt);
++	if (quiet)
++		rev->diffopt.output_format |=3D DIFF_FORMAT_NO_OUTPUT;
+=20
+ 	/* Any arguments at this point are not recognized */
+ 	if (argc > 1)
