@@ -1,68 +1,88 @@
-From: =?UTF-8?B?RnLDqWTDqXJpYyBEZWxhbm95?= <frederic.delanoy@gmail.com>
-Subject: Using really empty start prefixes for git-format-patch numbered patches?
-Date: Sat, 28 May 2011 23:57:01 +0200
-Message-ID: <BANLkTikVQWN2kZ4gc8kd-kJWZhLXgkvTAA@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] rebase: learn --discard subcommand
+Date: Sat, 28 May 2011 17:50:46 -0500
+Message-ID: <20110528225046.GA31449@elie>
+References: <1306551495-26685-1-git-send-email-martin.von.zweigbergk@gmail.com>
+ <7vpqn2psjv.fsf@alter.siamese.dyndns.org>
+ <SNT124-W247D44D043F692CA06747EC4790@phx.gbl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 29 00:00:31 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, martin.von.zweigbergk@gmail.com,
+	Git Mailing List <git@vger.kernel.org>, artagnon@gmail.com
+To: Tim Mazid <timmazid@hotmail.com>
+X-From: git-owner@vger.kernel.org Sun May 29 00:51:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QQRYc-00013c-BV
-	for gcvg-git-2@lo.gmane.org; Sun, 29 May 2011 00:00:30 +0200
+	id 1QQSLV-0000KK-FG
+	for gcvg-git-2@lo.gmane.org; Sun, 29 May 2011 00:51:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755702Ab1E1V5d convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 May 2011 17:57:33 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:38189 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752379Ab1E1V5c convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 May 2011 17:57:32 -0400
-Received: by ewy4 with SMTP id 4so983923ewy.19
-        for <git@vger.kernel.org>; Sat, 28 May 2011 14:57:31 -0700 (PDT)
+	id S1756398Ab1E1Wu4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 May 2011 18:50:56 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:59711 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753712Ab1E1Wuy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 May 2011 18:50:54 -0400
+Received: by gyd10 with SMTP id 10so1087240gyd.19
+        for <git@vger.kernel.org>; Sat, 28 May 2011 15:50:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:from:date:message-id:subject:to
-         :content-type:content-transfer-encoding;
-        bh=NRFirTaiWZzv94aXailj5gL1YiLdy4DoyOzIFx3uTkI=;
-        b=IuX0rLt2psbITA6/CdzIoPzeDGzIawFOvofN3VlYhNBQyWiFEcvqSP6TpE94/sQJc8
-         wZU400xjQi39Mb7J4hY3EjnyMiikOfLzb07plznMGZzzquxUUHp7vsEjF15KErRWRUaK
-         A7MbLHjeKbxgO5I0AYiwHUT+x/DyqJaXhFo60=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=+xCc/M5pISRtuLnSxy1+wEunBTpqlBQ/CccDvGzSUIE=;
+        b=tCH8yFGd2WxRWrnW5Lx19FF6hiEFtAa8m/mjl6k7Azxtf8etHhd8WaNxMajiEwlX7Y
+         Sny+hNkJpIqWWLI3j0C4L8PvknT0oc57GbxjRtYlIjeYhE+R01FXifNP4S9YEqAAWLkE
+         3qPtp/9c752BQORPxpTmGU5cte5os2pGShWK8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        b=GjmCy11nP29TbX9lRhh8vULyZQl8IIA6BOsGWBohOz2fzYkYUHhzjxSmF6gvIZJpfP
-         HzC0P/oCh5Zx1p3fs3HQaHAhTXMK17TPn3vtSmfRWFQD46P3Q6/u9RPypp5iQ3vnEilb
-         wif2bBHZNn5JX8vheBGvN9KsXYPOJx0uEUwAM=
-Received: by 10.14.53.136 with SMTP id g8mr1282261eec.239.1306619851237; Sat,
- 28 May 2011 14:57:31 -0700 (PDT)
-Received: by 10.14.100.16 with HTTP; Sat, 28 May 2011 14:57:01 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=n0etIdOg6kU2XlSDl4JZDXWmldzfCXESz0Gz6OEzz6XN75OANa1kmqsNa+/LeEjh6s
+         MQrr1GMXjNRKlOhW2kkN8qtlKd9Ese/2rPm1Ma4BWESAGVCiizcFwaSpHzkEj6jBbwo9
+         nF97ZphlengKpaAFjxktj0/KLkuP8IJNagaBM=
+Received: by 10.236.103.172 with SMTP id f32mr3162839yhg.260.1306623054091;
+        Sat, 28 May 2011 15:50:54 -0700 (PDT)
+Received: from elie (adsl-69-209-65-98.dsl.chcgil.ameritech.net [69.209.65.98])
+        by mx.google.com with ESMTPS id a5sm1489241yhj.78.2011.05.28.15.50.52
+        (version=SSLv3 cipher=OTHER);
+        Sat, 28 May 2011 15:50:53 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <SNT124-W247D44D043F692CA06747EC4790@phx.gbl>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174682>
 
 Hi,
 
-I'm trying to generate numbered patches using git-format-patch such
-that I get e.g. [1/2] instead of [PATCH 1/2]
+Tim Mazid wrote:
 
-However, if I use an empty string as prefix, for instance in
+> I'd just like to say that I sometime use "git reset --hard" in the middle
+> of a "git rebase" when I want to get rid of some changes completely.
+> Now, I'm not saying that this is the best way of doing it ("git checkout --"
+> is probably far superior?)
 
-git-format-patch --subject-prefix=3D"" -2
+ . "git checkout -- ." to discard unadded changes
+ . "git checkout HEAD -- ." to discard uncommitted changes
+ . "git reset --keep HEAD^" to work against a different commit
+ . "git reset --merge" to discard a merge resolution in progress
 
-an extraneous space is inserted, and I get [ 1/2] instead of desired
-[1/2] in the Subject line
+While I also would be happy to see "git reset --hard" to abort
+am/rebase, I see two problems, one with an obvious solution, the other
+not:
 
-(I also tried using a single backspace char as prefix, but that didn't
-change anything, as might have been expected)
+1. It would be a big change in behavior that directly goes against
+muscle memory, as you mentioned.  This part could be mitigated by
+providing "undo" functionality (e.g., renaming the .git/rebase-merge
+directory instead of deleting it) and printing advice including a
+command that gets the sequencer state back.
 
-Is there a way to get rid of this space? IMO the space should only be
-added if the prefix is non-empty
-
-=46r=C3=A9d=C3=A9ric Delanoy
+2. It does not help people like me who are fearful about scribbling
+over accidentally unstaged or uncommitted changes.  This could be
+mitigated by also providing forget-sequence functionality through
+separate commands like "git rebase --discard".
