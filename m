@@ -1,103 +1,68 @@
-From: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: git show and the --quiet option
-Date: Sat, 28 May 2011 19:26:11 +0200
-Message-ID: <20110528172611.GB28708@centaur.lab.cmartin.tk>
+Date: Sat, 28 May 2011 10:55:30 -0700
+Message-ID: <7vy61qpv59.fsf@alter.siamese.dyndns.org>
 References: <4DE12888.1040506@isy.liu.se>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="rS8CxjVDS/+yyDmU"
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
 To: Gustaf Hendeby <hendeby@isy.liu.se>
-X-From: git-owner@vger.kernel.org Sat May 28 19:34:15 2011
+X-From: git-owner@vger.kernel.org Sat May 28 19:56:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QQNOw-0001gN-C1
-	for gcvg-git-2@lo.gmane.org; Sat, 28 May 2011 19:34:14 +0200
+	id 1QQNkU-00039Q-EH
+	for gcvg-git-2@lo.gmane.org; Sat, 28 May 2011 19:56:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754611Ab1E1ReA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 May 2011 13:34:00 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:37615 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754103Ab1E1Rd7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 May 2011 13:33:59 -0400
-X-Greylist: delayed 463 seconds by postgrey-1.27 at vger.kernel.org; Sat, 28 May 2011 13:33:59 EDT
-Received: from centaur.lab.cmartin.tk (brln-4db9cec2.pool.mediaWays.net [77.185.206.194])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id CB58E4615D;
-	Sat, 28 May 2011 19:25:48 +0200 (CEST)
-Received: (nullmailer pid 28803 invoked by uid 1000);
-	Sat, 28 May 2011 17:26:11 -0000
-Mail-Followup-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	Gustaf Hendeby <hendeby@isy.liu.se>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <4DE12888.1040506@isy.liu.se>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754364Ab1E1Rzl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 May 2011 13:55:41 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:46532 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753550Ab1E1Rzl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 May 2011 13:55:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8AE26442B;
+	Sat, 28 May 2011 13:57:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZI2Enl0c0sX4OLd+JAyNa7/M4jg=; b=dLo6FD
+	GwDFTuK8wBe6WbvQsMJR7AFNdgYM1fp91aPMyiZXK0pyR4BS+Pm85PptUDStmhSG
+	3oHZglClMXzWGTnxwS+w/6MS9O14qQuNLPpZy6TUMFXdQbpLuzY5Fw+qT+FsLzv9
+	OnqsivfgXmE0XxoS0lZaZesRzxnqJS3HZ/C9E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=F92rYAFU7fCSZMzRfg2c9Kgtt7oMJJWG
+	JVWFd1sJ9taD4WH8d5BBbRPwdLkCU8TpQrE1Z1MNLoJZKhEtoZ+HyZcd3b6PpivH
+	KcV10YOfZvPo7HRcrrBSReZN5gECnK+mt5bFPjsdJzLmeDHMu6e40M8VNydB+2W+
+	EhAuS4CvUEE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3650E442A;
+	Sat, 28 May 2011 13:57:45 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 317BF4428; Sat, 28 May 2011
+ 13:57:40 -0400 (EDT)
+In-Reply-To: <4DE12888.1040506@isy.liu.se> (Gustaf Hendeby's message of "Sat,
+ 28 May 2011 18:53:28 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FD9E1C24-8953-11E0-8728-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174667>
 
+Gustaf Hendeby <hendeby@isy.liu.se> writes:
 
---rS8CxjVDS/+yyDmU
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Sat, May 28, 2011 at 06:53:28PM +0200, Gustaf Hendeby wrote:
-> Hello everyone,
->=20
 > I was playing around with "git show" lately and realized it has changed
 > its behavior regarding the --quiet option, which no longer suppresses
-> the diff output as it used to.  The behavior change happened in
-> 1c40c36b ("log: convert to parse-options").  Was this intentional?
+> the diff output as it used to.
 
-Very much so.
+The official and right way to suppress diff output from "show" has always
+been with the "-s" option, and it should still work. Otherwise please
+report a bug here.
 
->=20
-> The commit message talks about the --quiet handling being improved and
-> the "git show" help doesn't mention a --quiet option.  Is the simple
-> answer that the previous behavior was incorrect?
-
-Yes.
-
- The long answer is that the log family (and git-format-patch, which
-is where this started) never actually accepted --quiet, so it would
-get passed down to the diff machinery. This (for complicated reasons
-I'm not sure I comletely understand, but that have to do with the
-internal handling of 'quiet' as 'quick') caused every second commit
-not to show.
-
- As you noticed, the man page never mentions a --quiet option
-(because, honestly, it doesn't make any sense), so any use of that
-flag is wrong. Part of what the patch does is make --quiet a no-op to
-guard against the effect of disappearing commits.
-
- How are you using the --quiet option and why would you even need it?
-
-Cheers,
-   cmn
---=20
-Carlos Mart=C3=ADn Nieto | http://cmartin.tk
-
-"=C2=BFC=C3=B3mo voy a decir bobadas si soy mudo?" -- CACHAI
-
---rS8CxjVDS/+yyDmU
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAEBAgAGBQJN4TAzAAoJEHKRP1jG7ZzTFXQIAJZwMJYDb3xqtv+Lv47CfpA5
-Nz5F2zr28FhPK650KbEcLBlA5OJPpVKqDUGHggyP43tFkz3fKp1dUpFXm7QJfaiG
-3aCjIb2mqOnnqccwFYGlhAQJAWL9OGUQH9jpNWUx4M6shmtM0zxdbPpCShhNRPP4
-ZBnlBTkGO9Cak4Q2vKUsfH2zClmzBpWCB6Hxc+kn3gfzyE1Ix69ElYUy8REmFNwT
-5RCdHSAIBLjpH1GUeqwu4fM6xERWUPwY2afUj1cereJb7FIj9MjRHFHZIoG99yLe
-cDsT3VMSXJRfbO0fJtyyjslxhEMDMyXbHzi7VmwE3E8v9DtSQASFbAilyS2LZ6k=
-=elYu
------END PGP SIGNATURE-----
-
---rS8CxjVDS/+yyDmU--
+Thanks.
