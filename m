@@ -1,190 +1,173 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 4/3] War on nbsp: teach "git apply" to check and fix nbsp
-Date: Fri, 27 May 2011 18:31:58 -0700
-Message-ID: <7vboynr4oh.fsf_-_@alter.siamese.dyndns.org>
-References: <BANLkTik7eJ=BC9Bekqu-W1-r0cheCjC+wg@mail.gmail.com>
- <7vzkm9unu0.fsf@alter.siamese.dyndns.org>
- <BANLkTi=hYR4ow1eMR3rHkMuVRsHJ=TFDZA@mail.gmail.com>
- <m262owhyuy.fsf@igel.home>
- <BANLkTimPfN6LQBhWj6rW3Zcm9JHPsMWsjA@mail.gmail.com>
- <7vipswro57.fsf@alter.siamese.dyndns.org>
- <7vboyorm4i.fsf@alter.siamese.dyndns.org>
- <BANLkTinwOr5Yzp_N6BNyNK5Y1FcVtdtbUw@mail.gmail.com>
- <7vy61rrcae.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Schwab <schwab@linux-m68k.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat May 28 03:36:08 2011
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: [PATCH] rebase: learn --discard subcommand
+Date: Fri, 27 May 2011 22:58:15 -0400
+Message-ID: <1306551495-26685-1-git-send-email-martin.von.zweigbergk@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 28 04:58:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QQ8Rk-0007JY-3r
-	for gcvg-git-2@lo.gmane.org; Sat, 28 May 2011 03:36:08 +0200
+	id 1QQ9js-0007im-IG
+	for gcvg-git-2@lo.gmane.org; Sat, 28 May 2011 04:58:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757710Ab1E1BcK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 May 2011 21:32:10 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55524 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752645Ab1E1BcI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2011 21:32:08 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8B33A5953;
-	Fri, 27 May 2011 21:34:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tNyN2jCFEyOQ9AdHE2lrNCddulU=; b=I4gEdt
-	mnmLOWSUhrJrzO/HvWEnYuSCjALNdPj8Lw1bByCTnoq7yk7ydh4AZVC1tM8okZP3
-	u4XhOx0nS5Oc+ZKX4ChigPzey84xbsgXnjk3Zr87m6t4DuNbaZmY7nizr4kcEWnv
-	sPnUEAic7UPFjmBBvcweYfkXRkERbZoMjFhqc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yVAZWYwJpMH5Gr+EOZwKnYhqkIk7WHf3
-	xH8LIWdweQT0AalcDIicN3YutEVUdrbOBXs5EQ9VM+NWr+HeayEkeoX1h4KTR1p6
-	N++u0Rdwu7/BSLBdzm7w0umneXetn2CT091ayzDknwZMfqxeoOetiGEXF3HHHMyw
-	JUjw7r5WK+c=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 50EAA5951;
-	Fri, 27 May 2011 21:34:12 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 140925950; Fri, 27 May 2011
- 21:34:07 -0400 (EDT)
-In-Reply-To: <7vy61rrcae.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri, 27 May 2011 15:47:37 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9731B7EA-88CA-11E0-BE65-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+	id S1755962Ab1E1C6v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 May 2011 22:58:51 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:60519 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753402Ab1E1C6u (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2011 22:58:50 -0400
+Received: by qyg14 with SMTP id 14so1240868qyg.19
+        for <git@vger.kernel.org>; Fri, 27 May 2011 19:58:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=en96cMzwyp8jF9FZkvvXi/BIKWi6MxmPzGuWPFyyQ5E=;
+        b=BLO+PHKl4KVq00/Wb7izHcfhdeN3+bsRDStmtVZ4JfURuZCTblkgDktoDmBLYK0jxP
+         uTlEPQhoK7p7IfBIAY7aiuLXHEKy8KD5YFR0UZlRqq41YmG8/R0Bn9k6aJhpFJc05FVT
+         DLCvr84sx8pDpRlc408Rb3llLwJ2A99Vr+Q4g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=YE0Zqm6vaBU6Ep12tj0YmCEL9huG39KxOP2P70o9doFAf5/ilNcKdIQDCipdiEfy17
+         eZcPuEoXjWSMouFsCK4MQjq1uCrNjJ8ixv6Ropr4e2mXsyDhOmR3h8fv1BO3tHDryhzJ
+         HY0nA6hiWobsIFfG4iSu3TyaSDXeusbktTOk0=
+Received: by 10.224.188.212 with SMTP id db20mr2111024qab.141.1306551529809;
+        Fri, 27 May 2011 19:58:49 -0700 (PDT)
+Received: from localhost.localdomain (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
+        by mx.google.com with ESMTPS id i34sm1455748qck.31.2011.05.27.19.58.47
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 27 May 2011 19:58:48 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.3.640.gd1066
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174655>
 
-This still does not work to apply in reverse "git apply -R", but I thought
-it is a good place to stop, as it is dubious if this series makes much
-sense to begin with.
+Teach git-rebase the --discard subcommand, which is similar to
+--abort, but does not move back to the original branch. Suggest this
+new subcommand to the user where we currently suggest to delete
+$GIT_DIR/rebase-apply (or rebase-merge).
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 ---
- ws.c |   72 +++++++++++++++++++++++++++++++++++++++++++++++++----------------
- 1 files changed, 54 insertions(+), 18 deletions(-)
 
-diff --git a/ws.c b/ws.c
-index 53e263d..4413f95 100644
---- a/ws.c
-+++ b/ws.c
-@@ -374,6 +374,7 @@ void ws_fix_copy(struct strbuf *dst, const char *src, int len, unsigned ws_rule,
- 	int last_tab_in_indent = -1;
- 	int last_space_in_indent = -1;
- 	int need_fix_leading_space = 0;
-+	int col_offset = 0;
+A long time ago I said I wished that 'git rebase --abort' would move
+back to the where HEAD was when the rebase was initiated, instead of
+moving back to the branch that was about to be rebased (which may be
+different for "git rebase $upstream $branch"). I think Junio then
+hinted that he sometimes wished that he could abort rebase without
+moving to anywhere else at all, which is what this patch implements. I
+don't feel strongly about this patch, but I would probably also use
+this subcommand once in a while. However, maybe the greatest value in
+it is that we don't have to tell users to mess with the .git
+directory?
+
+I used "rm -r" without -f to match how it is done in --abort, but
+maybe -f should be used? That is what we recommend to the end-user to
+use today.
+
+A difference from --abort is that --discard does not clear
+rerere. Need this be mentioned in the documentation?
+
+I have not been involved in Ramkumar's work on the sequencer to know
+if and how this might impact it.
+
+
+ Documentation/git-rebase.txt |    5 ++++-
+ git-rebase.sh                |   17 +++++++++++------
+ 2 files changed, 15 insertions(+), 7 deletions(-)
+
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 9a075bc..e841c21 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 'git rebase' [-i | --interactive] [options] --onto <newbase>
+ 	--root [<branch>]
  
- 	/*
- 	 * Strip trailing whitespace
-@@ -387,10 +388,17 @@ void ws_fix_copy(struct strbuf *dst, const char *src, int len, unsigned ws_rule,
- 				len--;
- 			}
- 		}
--		if (0 < len && isspace(src[len - 1])) {
--			while (0 < len && isspace(src[len-1]))
--				len--;
--			fixed = 1;
-+		if (0 < len) {
-+			int orig_len = len;
-+			while (len) {
-+				if (isspace(src[len - 1]))
-+					len--;
-+				else if (1 < len && is_nbsp(&src[len - 2]))
-+					len -= 2;
-+				else
-+					break;
-+			}
-+			fixed = (orig_len != len);
- 		}
- 	}
+-'git rebase' --continue | --skip | --abort
++'git rebase' --continue | --skip | --abort | --discard
  
-@@ -404,13 +412,23 @@ void ws_fix_copy(struct strbuf *dst, const char *src, int len, unsigned ws_rule,
- 			if ((ws_rule & WS_SPACE_BEFORE_TAB) &&
- 			    0 <= last_space_in_indent)
- 			    need_fix_leading_space = 1;
--		} else if (ch == ' ') {
--			last_space_in_indent = i;
--			if ((ws_rule & WS_INDENT_WITH_NON_TAB) &&
--			    ws_tab_width(ws_rule) <= i - last_tab_in_indent)
--				need_fix_leading_space = 1;
--		} else
-+			col_offset = 0;
-+			continue;
-+		}
+ DESCRIPTION
+ -----------
+@@ -238,6 +238,9 @@ leave out at most one of A and B, in which case it defaults to HEAD.
+ --skip::
+ 	Restart the rebasing process by skipping the current patch.
+ 
++--discard::
++	Abort the rebase operation without restoring the original branch.
 +
-+		if (ch == ' ') {
-+			;
-+		} else if ((i < len - 1) && is_nbsp(src + i)) {
-+			i++;
-+			col_offset++;
-+		} else {
- 			break;
-+		}
-+		last_space_in_indent = i;
-+
-+		if ((ws_rule & WS_INDENT_WITH_NON_TAB) &&
-+		    ws_tab_width(ws_rule) <= (i - col_offset) - last_tab_in_indent)
-+			need_fix_leading_space = 1;
- 	}
+ -m::
+ --merge::
+ 	Use merging strategies to rebase.  When the recursive (default) merge
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 7a54bfc..befee92 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -32,7 +32,7 @@ OPTIONS_KEEPDASHDASH=
+ OPTIONS_SPEC="\
+ git rebase [-i] [options] [--onto <newbase>] [<upstream>] [<branch>]
+ git rebase [-i] [options] --onto <newbase> --root [<branch>]
+-git-rebase [-i] --continue | --abort | --skip
++git-rebase [-i] --continue | --abort | --skip | --discard
+ --
+  Available options are
+ v,verbose!         display a diffstat of what changed upstream
+@@ -60,6 +60,7 @@ C=!                passed to 'git apply'
+ continue!          continue rebasing process
+ abort!             abort rebasing process and restore original branch
+ skip!              skip current patch and continue rebasing process
++discard!           abort rebasing process, but do not restore original branch
+ "
+ . git-sh-setup
+ set_reflog_action rebase
+@@ -93,7 +94,7 @@ in_progress=
+ type=
+ # One of {"$GIT_DIR"/rebase-apply, "$GIT_DIR"/rebase-merge}
+ state_dir=
+-# One of {'', continue, skip, abort}, as parsed from command line
++# One of {'', continue, skip, abort, discard}, as parsed from command line
+ action=
+ preserve_merges=
+ autosquash=
+@@ -206,7 +207,7 @@ do
+ 	--verify)
+ 		ok_to_skip_pre_rebase=
+ 		;;
+-	--continue|--skip|--abort)
++	--continue|--skip|--abort|--discard)
+ 		test $total_argc -eq 2 || usage
+ 		action=${1##--}
+ 		;;
+@@ -340,6 +341,10 @@ abort)
+ 	rm -r "$state_dir"
+ 	exit
+ 	;;
++discard)
++	rm -r "$state_dir"
++	exit
++	;;
+ esac
  
- 	if (need_fix_leading_space) {
-@@ -432,15 +450,20 @@ void ws_fix_copy(struct strbuf *dst, const char *src, int len, unsigned ws_rule,
- 		 */
- 		for (i = 0; i < last; i++) {
- 			char ch = src[i];
--			if (ch != ' ') {
-+
-+			if (ch == ' ') {
-+				;
-+			} else if ((i < last - 1) && is_nbsp(src + i)) {
-+				i++;
-+			} else {
- 				consecutive_spaces = 0;
- 				strbuf_addch(dst, ch);
--			} else {
--				consecutive_spaces++;
--				if (consecutive_spaces == ws_tab_width(ws_rule)) {
--					strbuf_addch(dst, '\t');
--					consecutive_spaces = 0;
--				}
-+				continue;
-+			}
-+			consecutive_spaces++;
-+			if (consecutive_spaces == ws_tab_width(ws_rule)) {
-+				strbuf_addch(dst, '\t');
-+				consecutive_spaces = 0;
- 			}
- 		}
- 		while (0 < consecutive_spaces--)
-@@ -465,7 +488,20 @@ void ws_fix_copy(struct strbuf *dst, const char *src, int len, unsigned ws_rule,
- 		fixed = 1;
- 	}
- 
--	strbuf_add(dst, src, len);
-+	if (ws_rule & WS_NBSP) {
-+		while (len--) {
-+			if (len && is_nbsp(src)) {
-+				src++;
-+				len--;
-+				strbuf_addch(dst, ' ');
-+			} else {
-+				strbuf_addch(dst, *src);
-+			}
-+			src++;
-+		}
-+	} else {
-+		strbuf_add(dst, src, len);
-+	}
- 	if (add_cr_to_tail)
- 		strbuf_addch(dst, '\r');
- 	if (add_nl_to_tail)
+ # Make sure no rebase is in progress
+@@ -349,9 +354,9 @@ then
+ It seems that there is already a '"${state_dir##*/}"' directory, and
+ I wonder if you are in the middle of another rebase.  If that is the
+ case, please try
+-	git rebase (--continue | --abort | --skip)
+-If that is not the case, please
+-	rm -fr '"$state_dir"'
++	git rebase (--continue | --abort | --skip | --discard)
++If that is not the case, please run
++	git rebase --discard
+ and run me again.  I am stopping in case you still have something
+ valuable there.'
+ fi
 -- 
-1.7.5.3.503.g893a4
+1.7.4.79.gcbe20
