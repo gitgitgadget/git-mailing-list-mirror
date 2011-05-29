@@ -1,110 +1,77 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH] rebase: learn --discard subcommand
-Date: Sun, 29 May 2011 13:28:26 -0400 (EDT)
-Message-ID: <alpine.DEB.2.00.1105290916470.28815@debian>
-References: <1306551495-26685-1-git-send-email-martin.von.zweigbergk@gmail.com> <20110528230844.GA31498@elie>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH v0 3/3] Bigfile: teach "git add" to send a large file
+ straight to a pack
+Date: Sun, 29 May 2011 20:20:01 +0200
+Message-ID: <BANLkTikB3VhB4nTZhjE+3znfVTuBYsnehg@mail.gmail.com>
+References: <1304844455-23570-1-git-send-email-gitster@pobox.com>
+	<1304844455-23570-4-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Tim Mazid <timmazid@hotmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 29 19:28:38 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 29 20:20:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QQjn4-0001VS-6d
-	for gcvg-git-2@lo.gmane.org; Sun, 29 May 2011 19:28:38 +0200
+	id 1QQkay-00059V-Si
+	for gcvg-git-2@lo.gmane.org; Sun, 29 May 2011 20:20:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753826Ab1E2R2a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 May 2011 13:28:30 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:51941 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752153Ab1E2R2a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 May 2011 13:28:30 -0400
-Received: by qyk7 with SMTP id 7so508123qyk.19
-        for <git@vger.kernel.org>; Sun, 29 May 2011 10:28:29 -0700 (PDT)
+	id S1755270Ab1E2SUE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 May 2011 14:20:04 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:36041 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755246Ab1E2SUC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 May 2011 14:20:02 -0400
+Received: by fxm17 with SMTP id 17so2111636fxm.19
+        for <git@vger.kernel.org>; Sun, 29 May 2011 11:20:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:x-x-sender:to:cc:subject:in-reply-to
-         :message-id:references:user-agent:mime-version:content-type;
-        bh=V/hdAoP19SUJENgay3VhhntdFBlwmaOaw+oEpgVkeT0=;
-        b=xItnsGX5w9eYm7LxbxDXw8vr1Ody4k6NZKQsSyg0qEdHIRK0e3ppra3+kMlxihAY70
-         IVeLVEKxNLM/63hZK8gUGjjTe510NiRWstM1W5rH22ZjK65Ndx5XadAVlj+wFxYWUH92
-         Pf4eNRj3pf/Ltje1f1qdRzPtS6dLg/vXBAGPE=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=UG0X0hXNM6JRFOZ48LKZkX38IbpjswankFzYlHn9SXc=;
+        b=xFX8hfrmkUhiZ03AASICJ5e9qiO2Qry4zgaYgzjuus3PaCF35pPGwMT2QkZz7Ea0AP
+         +k/SZFZ0abIc/z9RU4oNfKb6+r8eKRkIwOpEil4+5XhuwXKAB7sRnno658rYD1SlWGhh
+         4LCPMBavcmjygfIbvCb6jzKyAG7FJIDabusaI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
-         :references:user-agent:mime-version:content-type;
-        b=ZuaWp1voR3vXehXFw71jHT+u6DCit+l+dO8WMiL35A1N+Is+AiDpfVHt5MOWz92zBj
-         ky58C5g1adR8isI9KPd0c1skCQGtevnsQoNYE4Cwy3USbKH0AohEoM2Dd79GJ12X2GEw
-         viwDmqlCI/WwVXC+PnaxPTp1UXxDbI65+5AEk=
-Received: by 10.224.212.196 with SMTP id gt4mr3027000qab.74.1306690109182;
-        Sun, 29 May 2011 10:28:29 -0700 (PDT)
-Received: from [192.168.1.103] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id g1sm2355849qck.8.2011.05.29.10.28.27
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 29 May 2011 10:28:28 -0700 (PDT)
-X-X-Sender: martin@debian
-In-Reply-To: <20110528230844.GA31498@elie>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=g0yw06C6aC3jAdJvRSpRvqcGjT1qFmuucDkt3bP7Y24eqB94Ot9zSfN//lmfTPDWit
+         82GaXLcYiDBFOi2AYL78rlaf8CpQsapIxNKjLLByE812rknc6kOOu3Y5Q5nC1/AFdJCH
+         6+ocw64YDhr+DiyXCvBLwtWLoBdgbWjOR0h18=
+Received: by 10.223.145.78 with SMTP id c14mr4613794fav.75.1306693201344; Sun,
+ 29 May 2011 11:20:01 -0700 (PDT)
+Received: by 10.223.117.72 with HTTP; Sun, 29 May 2011 11:20:01 -0700 (PDT)
+In-Reply-To: <1304844455-23570-4-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174697>
 
+On Sun, May 8, 2011 at 10:47, Junio C Hamano <gitster@pobox.com> wrote:
 
-On Sat, 28 May 2011, Jonathan Nieder wrote:
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 char buf[10240];
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 size_t sz =3D size=
+ < sizeof(buf) ? size : sizeof(buf);
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 size_t actual;
+> +
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 actual =3D read_in=
+_full(fd, buf, sz);
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (actual < 0)
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 die_errno("index-stream: reading input");
 
-> At first the name --discard made me think it was going to move back to
-> the original branch and discard the reset of the patch series being
-> rebased.  Not sure what a better name would be, though.
+=46rom clang:
 
-Maybe --stop as Tim suggested, but I think that also makes it sound
-like we're dropping the rest of the patches. Other names would be
---cancel or --forget.
+    sha1_file.c:2710:14: warning: comparison of unsigned expression <
+0 is always false [-Wtautological-compare]
+                    if (actual < 0)
+                        ~~~~~~ ^ ~
 
-> > --- a/Documentation/git-rebase.txt
-> > +++ b/Documentation/git-rebase.txt
-> > @@ -238,6 +238,9 @@ leave out at most one of A and B, in which case it defaults to HEAD.
-> [...]
-> > +--discard::
-> > +	Abort the rebase operation without restoring the original branch.
-> 
-> A reader without a complete mental model for what "git rebase" does
-> could be very confused by this.  One might think: does this mean that
-> git has been scribbling over the original branch, and this switch
-> almost completely cancels that but leaves the branch still
-> scribbled-on?
-
-The --abort subcommand is currently described as "Restore the original
-branch and abort the rebase operation.", so that would be in need of
-the same clarification.
-
-> How about something like:
-> 
->  --keep-head::
-> 	When aborting a rebase, do not check out the original branch
-> 	but leave the HEAD alone.  This can be useful if you forgot
-> 	about a conflicted or interactive rebase in progress and have
-> 	been committing on top of one of the commits being replayed.
-> 
-> ?
-
-Thanks. I like it. Maybe with "... or if you have moved to an
-unrelated commit" or something like that be added to the end.
-
-> Agh, "git rebase --abort --keep-head" feels a little too long to be
-> memorable.  Still, hope that helps.
-
-I intended --discard to be used _instead_ of --abort. Do you think it
-makes more sense to have it as an option to --abort or was it just
-that the word "subcommand" confused you? I meant it as "subcommand of
-git rebase".
-
-
-/Martin
+Looks like it's right. size_t is unsigned according to the standard,
+so that die_errno() is never reached.
