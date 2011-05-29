@@ -1,79 +1,110 @@
-From: =?ISO-8859-1?Q?J=E9r=E9mie_NIKAES?= <jeremie.nikaes@gmail.com>
-Subject: Git fast-import : Warning duplicated ref: refs/remotes/origin/master
-Date: Sun, 29 May 2011 18:09:31 +0200
-Message-ID: <BANLkTinTuEppMGO16z2sMkjV8FveCbrwEQ@mail.gmail.com>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: [PATCH] rebase: learn --discard subcommand
+Date: Sun, 29 May 2011 13:28:26 -0400 (EDT)
+Message-ID: <alpine.DEB.2.00.1105290916470.28815@debian>
+References: <1306551495-26685-1-git-send-email-martin.von.zweigbergk@gmail.com> <20110528230844.GA31498@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Sylvain Boulme <Sylvain.Boulme@imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 29 18:09:59 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Tim Mazid <timmazid@hotmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 29 19:28:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QQiYv-0003oC-5U
-	for gcvg-git-2@lo.gmane.org; Sun, 29 May 2011 18:09:57 +0200
+	id 1QQjn4-0001VS-6d
+	for gcvg-git-2@lo.gmane.org; Sun, 29 May 2011 19:28:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754082Ab1E2QJw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 May 2011 12:09:52 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:64078 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753796Ab1E2QJv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 May 2011 12:09:51 -0400
-Received: by pwi15 with SMTP id 15so1355260pwi.19
-        for <git@vger.kernel.org>; Sun, 29 May 2011 09:09:51 -0700 (PDT)
+	id S1753826Ab1E2R2a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 May 2011 13:28:30 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:51941 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752153Ab1E2R2a (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 May 2011 13:28:30 -0400
+Received: by qyk7 with SMTP id 7so508123qyk.19
+        for <git@vger.kernel.org>; Sun, 29 May 2011 10:28:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:from:date:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=QrMzBax+mvmgJKLVI/za2w/XNzBWpzhdl0lHJDPTWac=;
-        b=PDl2lwV8e+TnK8ycjyH9FZj35AwuVnwY+FhCJbBrbc8aq5nRcmtlIYJpbvtIpkkO7Q
-         E6o5OTqtbPGwYYX+zqAktAOUpXlB4jqKX5cmN3Mh3G5tzKPBEi52IuDOefuO6NdJdcft
-         ESOyk3rwExdRlqI4ASznLCZrBLXHB9A2vxQcs=
+        h=domainkey-signature:date:from:x-x-sender:to:cc:subject:in-reply-to
+         :message-id:references:user-agent:mime-version:content-type;
+        bh=V/hdAoP19SUJENgay3VhhntdFBlwmaOaw+oEpgVkeT0=;
+        b=xItnsGX5w9eYm7LxbxDXw8vr1Ody4k6NZKQsSyg0qEdHIRK0e3ppra3+kMlxihAY70
+         IVeLVEKxNLM/63hZK8gUGjjTe510NiRWstM1W5rH22ZjK65Ndx5XadAVlj+wFxYWUH92
+         Pf4eNRj3pf/Ltje1f1qdRzPtS6dLg/vXBAGPE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=KaxbLM0nDN6rOX6X0PcO98YpY0qEy1WDKLGN/TsBBpl942o6DBAbyH27KRflip4xSS
-         d06iWZi/r+4gCzidB8Ne7ollBRtGN6QZKkc3IL42+UDBkT9ffLdLsiIv0+xVSspqKmJ5
-         9osJb+J4+tbio/UvucLClAZ4jlSAE2+i9+ZPw=
-Received: by 10.142.43.15 with SMTP id q15mr564015wfq.348.1306685391313; Sun,
- 29 May 2011 09:09:51 -0700 (PDT)
-Received: by 10.142.13.11 with HTTP; Sun, 29 May 2011 09:09:31 -0700 (PDT)
+        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version:content-type;
+        b=ZuaWp1voR3vXehXFw71jHT+u6DCit+l+dO8WMiL35A1N+Is+AiDpfVHt5MOWz92zBj
+         ky58C5g1adR8isI9KPd0c1skCQGtevnsQoNYE4Cwy3USbKH0AohEoM2Dd79GJ12X2GEw
+         viwDmqlCI/WwVXC+PnaxPTp1UXxDbI65+5AEk=
+Received: by 10.224.212.196 with SMTP id gt4mr3027000qab.74.1306690109182;
+        Sun, 29 May 2011 10:28:29 -0700 (PDT)
+Received: from [192.168.1.103] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
+        by mx.google.com with ESMTPS id g1sm2355849qck.8.2011.05.29.10.28.27
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 29 May 2011 10:28:28 -0700 (PDT)
+X-X-Sender: martin@debian
+In-Reply-To: <20110528230844.GA31498@elie>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174695>
 
-Hi,
-I am currently working on the git-mediawiki gateway project.
-This project uses fast-import to get data from mediawiki. For each
-revision from mediawiki, we generate a chunk of fast-export stream
-looking like this :
 
-commit refs/remotes/origin/master
-mark :<int>
-commiter <user> <address> <timestamp> +0000
-data <sizeofcomment>
-<comment>
-M 644 inline <title>.wiki
-data <sizeoffile>
-<content>
+On Sat, 28 May 2011, Jonathan Nieder wrote:
 
-At the end of a git clone mediawiki::http://ourwikitest, everything
-looks perfectly fine, including the git log, but a "Warning duplicated
-ref: refs/remotes/origin/master" is thrown. And indeed, it is
-duplicated in .git/packedrefs
+> At first the name --discard made me think it was going to move back to
+> the original branch and discard the reset of the patch series being
+> rebased.  Not sure what a better name would be, though.
 
-A git gc solves everything, but I wondered if there was a way to fix
-this or if this was a known bug.
+Maybe --stop as Tim suggested, but I think that also makes it sound
+like we're dropping the rest of the patches. Other names would be
+--cancel or --forget.
 
-Thank you,
-Regards,
+> > --- a/Documentation/git-rebase.txt
+> > +++ b/Documentation/git-rebase.txt
+> > @@ -238,6 +238,9 @@ leave out at most one of A and B, in which case it defaults to HEAD.
+> [...]
+> > +--discard::
+> > +	Abort the rebase operation without restoring the original branch.
+> 
+> A reader without a complete mental model for what "git rebase" does
+> could be very confused by this.  One might think: does this mean that
+> git has been scribbling over the original branch, and this switch
+> almost completely cancels that but leaves the branch still
+> scribbled-on?
 
---
-J=E9r=E9mie Nikaes
+The --abort subcommand is currently described as "Restore the original
+branch and abort the rebase operation.", so that would be in need of
+the same clarification.
+
+> How about something like:
+> 
+>  --keep-head::
+> 	When aborting a rebase, do not check out the original branch
+> 	but leave the HEAD alone.  This can be useful if you forgot
+> 	about a conflicted or interactive rebase in progress and have
+> 	been committing on top of one of the commits being replayed.
+> 
+> ?
+
+Thanks. I like it. Maybe with "... or if you have moved to an
+unrelated commit" or something like that be added to the end.
+
+> Agh, "git rebase --abort --keep-head" feels a little too long to be
+> memorable.  Still, hope that helps.
+
+I intended --discard to be used _instead_ of --abort. Do you think it
+makes more sense to have it as an option to --abort or was it just
+that the word "subcommand" confused you? I meant it as "subcommand of
+git rebase".
+
+
+/Martin
