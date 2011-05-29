@@ -1,102 +1,86 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] rebase: learn --discard subcommand
-Date: Sat, 28 May 2011 18:08:44 -0500
-Message-ID: <20110528230844.GA31498@elie>
-References: <1306551495-26685-1-git-send-email-martin.von.zweigbergk@gmail.com>
+From: Dave Zarzycki <zarzycki@apple.com>
+Subject: Re: [RFD] Proposal for git-svn: storing SVN metadata (git-svn-id) in
+ notes
+Date: Sat, 28 May 2011 23:37:45 -0700
+Message-ID: <0DF6602C-9DF3-42B3-AFB1-CDAA71D9E2F0@apple.com>
+References: <201105281154.25223.jnareb@gmail.com>
+ <BANLkTinorqTQOBw46mYJYfEWTEXC+Myzpw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Tim Mazid <timmazid@hotmail.com>
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 29 01:09:05 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 29 08:40:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QQScy-0004yL-HP
-	for gcvg-git-2@lo.gmane.org; Sun, 29 May 2011 01:09:04 +0200
+	id 1QQZfc-0003t9-E2
+	for gcvg-git-2@lo.gmane.org; Sun, 29 May 2011 08:40:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756010Ab1E1XIw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 May 2011 19:08:52 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:39218 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755210Ab1E1XIw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 May 2011 19:08:52 -0400
-Received: by iyb14 with SMTP id 14so2171919iyb.19
-        for <git@vger.kernel.org>; Sat, 28 May 2011 16:08:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=loqOu7BZz8L0Ldh6s+Q3ReNsmRku93AAbJWi6vvJhoE=;
-        b=M5x2VKnKpEEvpvVs2briE0rpAM0Ur4wtD7ggGDNQCQGP7Zf94ucVu/su5q0Pc3lPXv
-         2HDyhUCVM5bOACeVLfyb5TYZEOcjW1oH9eONuVwi6YqKHk+ZecvuVlH2+nhqptaQkSh1
-         6a7+iNjHPjJ9C/0DkL1Pk9h8YrFiGkZ0RsVJE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=TYQyvQooqVo/7D51/XvNfxEqv0eW2SqWZjjI2QJj2T7thtWzb5tfRfdjD3c1UjIEKX
-         cfG3m7TY/T6T0p5sVOcedRZe1tn89nwV1Sga7LwVIA14tKhCiUCh/rI3RmKCu6Dka2zu
-         7EzJmJQmnWuKCkNm2wWUfcr0Fb0i12CGysjC4=
-Received: by 10.42.150.6 with SMTP id y6mr4110785icv.409.1306624131314;
-        Sat, 28 May 2011 16:08:51 -0700 (PDT)
-Received: from elie (adsl-69-209-65-98.dsl.chcgil.sbcglobal.net [69.209.65.98])
-        by mx.google.com with ESMTPS id d8sm728048icy.21.2011.05.28.16.08.49
-        (version=SSLv3 cipher=OTHER);
-        Sat, 28 May 2011 16:08:50 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1306551495-26685-1-git-send-email-martin.von.zweigbergk@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751239Ab1E2GkA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 May 2011 02:40:00 -0400
+Received: from crispin.apple.com ([17.151.62.50]:42482 "EHLO
+	mail-out.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751065Ab1E2GkA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 May 2011 02:40:00 -0400
+Received: from relay11.apple.com ([17.128.113.48])
+ by mail-out.apple.com (Oracle Communications Messaging Exchange Server
+ 7u4-20.01 64bit (built Nov 21 2010))
+ with ESMTPS id <0LLY00AHA2ERJLJ0@mail-out.apple.com> for git@vger.kernel.org;
+ Sat, 28 May 2011 23:37:46 -0700 (PDT)
+X-AuditID: 11807130-b7c15ae000005aca-5d-4de1e9badfd1
+Received: from kencur (kencur.apple.com [17.151.62.38])
+	(using TLS with cipher RC4-MD5 (RC4-MD5/128 bits))
+	(Client did not present a certificate)	by relay11.apple.com (Apple SCV relay)
+ with SMTP id 36.E3.23242.AB9E1ED4; Sat, 28 May 2011 23:37:46 -0700 (PDT)
+Received: from [10.0.1.254]
+ (adsl-70-231-253-68.dsl.snfc21.sbcglobal.net [70.231.253.68])
+ by cardamom.apple.com
+ (Oracle Communications Messaging Exchange Server 7u4-20.01 64bit (built Nov 21
+ 2010)) with ESMTPSA id <0LLY00L4F2EXIG30@cardamom.apple.com> for
+ git@vger.kernel.org; Sat, 28 May 2011 23:37:46 -0700 (PDT)
+In-reply-to: <BANLkTinorqTQOBw46mYJYfEWTEXC+Myzpw@mail.gmail.com>
+X-Mailer: Apple Mail (2.1233)
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174684>
 
-Hi,
+On May 28, 2011, at 8:55 AM, =C6var Arnfj=F6r=F0 Bjarmason wrote:
 
-Martin von Zweigbergk wrote:
+> One good thing about git-svn's current system is that you can easily
+> share your repository with someone else, and they can bootstrap from
+> the same commits.
 
-> Teach git-rebase the --discard subcommand, which is similar to
-> --abort, but does not move back to the original branch.  Suggest this
-> new subcommand to the user where we currently suggest to delete
-> $GIT_DIR/rebase-apply (or rebase-merge).
+I wish that was practical for some projects.
 
-Good idea.
+It would be a huge improvement if git-svn could fully incorporate *all*=
+ of the metadata that it needs into native git objects (notes/tags/some=
+thing). That way a git clone of a git-svn repository doesn't need to re=
+-bootstrap anything. :-)
 
-At first the name --discard made me think it was going to move back to
-the original branch and discard the reset of the patch series being
-rebased.  Not sure what a better name would be, though.
+=46or example, a project that I follow has 26k branches (one per bug fi=
+x due to organizational workflow/policy). The project took five days to=
+ "git svn clone -s" and the re-bootstrap after blowing away the .git/sv=
+n directory is similarly painful. Why? Well, let's consider how much da=
+ta must be rebuilt:
 
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -238,6 +238,9 @@ leave out at most one of A and B, in which case it defaults to HEAD.
-[...]
-> +--discard::
-> +	Abort the rebase operation without restoring the original branch.
+$ git svn gc
+$ find */.git/svn -type f -name unhandled.log.gz -print0 | xargs -0 rm
+$ du -sh .git/svn
+445M	.git/svn
+$ find .git/svn | wc -l
+   52467
+$=20
 
-A reader without a complete mental model for what "git rebase" does
-could be very confused by this.  One might think: does this mean that
-git has been scribbling over the original branch, and this switch
-almost completely cancels that but leaves the branch still
-scribbled-on?
+Crazy, huh?
 
-How about something like:
+davez
 
- --keep-head::
-	When aborting a rebase, do not check out the original branch
-	but leave the HEAD alone.  This can be useful if you forgot
-	about a conflicted or interactive rebase in progress and have
-	been committing on top of one of the commits being replayed.
 
-?
-
-Agh, "git rebase --abort --keep-head" feels a little too long to be
-memorable.  Still, hope that helps.
-
-Ciao,
-Jonathan
+P.S. -- To the credit of git, the space savings are incredible for this=
+ project. The svn repository is 33.6 GiB vs 133.2 MiB for git (minus gi=
+t-svn and git-reflog overhead). That's ~260x!
