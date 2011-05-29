@@ -1,103 +1,85 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH] git-sh-i18n--envsubst: add SYNOPSIS section to the documentation
-Date: Sun, 29 May 2011 11:00:35 +0000
-Message-ID: <1306666835-8978-1-git-send-email-avarab@gmail.com>
-References: <BANLkTikjfyxAzLu2e5aJFVhgKq8UBiJAQw@mail.gmail.com>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: [PATCH] rebase: learn --discard subcommand
+Date: Sun, 29 May 2011 08:50:19 -0400 (EDT)
+Message-ID: <alpine.DEB.2.00.1105290841400.28815@debian>
+References: <1306551495-26685-1-git-send-email-martin.von.zweigbergk@gmail.com> <BANLkTim-Wva018BFeTUPqZuiK02-X01XJQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 29 13:00:55 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 29 14:50:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QQdjp-0003nX-Jp
-	for gcvg-git-2@lo.gmane.org; Sun, 29 May 2011 13:00:53 +0200
+	id 1QQfRw-00023v-Qv
+	for gcvg-git-2@lo.gmane.org; Sun, 29 May 2011 14:50:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752849Ab1E2LAs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 May 2011 07:00:48 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:55933 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751433Ab1E2LAr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 May 2011 07:00:47 -0400
-Received: by ewy4 with SMTP id 4so1064160ewy.19
-        for <git@vger.kernel.org>; Sun, 29 May 2011 04:00:46 -0700 (PDT)
+	id S1753444Ab1E2Mu1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 May 2011 08:50:27 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:48464 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752631Ab1E2Mu0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 May 2011 08:50:26 -0400
+Received: by qyk7 with SMTP id 7so451969qyk.19
+        for <git@vger.kernel.org>; Sun, 29 May 2011 05:50:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=aFG20ODFwoUfgc1VUOd0S8nVgNdsI78EFNOxewfkIh0=;
-        b=Hst6Ta2ZMyrvoVSz1ka0RvEDTk7O9HRdryhRBZHXJ2fz9RH2hwDXMwR/3Mgcofw6Q9
-         /NVXidy1oO3hkHaZiXsSrLDVUU71U7XyuFjfddi0CRWgv5U+OEQgWkuYo/sSfCvOWAiS
-         VePBBCz+GODJBgyw+Te71UUZWtyP/rtqgWKJw=
+        h=domainkey-signature:date:from:x-x-sender:to:cc:subject:in-reply-to
+         :message-id:references:user-agent:mime-version:content-type;
+        bh=HrFflcMRbaNJm5ykqz1oQP181FOu/iuom6DwodgJw4E=;
+        b=hZ8ICCRLCdGWoUTIMM+vwCU5h6I85e/qOgZmWh4r0rF/O6udAP9erzGaRuo7DHzOwr
+         lz1pDKtk+hEmBzyMw7jkrM5JVP1at38QbRSkmJVKF9JrpsiVbgw43yloQmHeaXREOpoN
+         rD3mcilwOo1PPwhajl2jJdIQ1lmTIJVx8c9qw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=GpDlAanCvb2t+PznoQUAGgoW56PX0kQNrcwu7klYjBWX6omXhGLpbHu/osvD9xIU40
-         TBXgh6Obf920QRMjWUo6RSOtQ51eFUWthUYM1dz1h8bsZFeVeBUFv9GaE1SFzQK8jatU
-         GIK5Vre2siuBv4SdGEl/40VdxxvI4E/KByJFE=
-Received: by 10.213.110.6 with SMTP id l6mr1439580ebp.48.1306666846323;
-        Sun, 29 May 2011 04:00:46 -0700 (PDT)
-Received: from w.nix.is (w.nix.is [188.40.98.140])
-        by mx.google.com with ESMTPS id s53sm1689969ees.21.2011.05.29.04.00.45
-        (version=SSLv3 cipher=OTHER);
-        Sun, 29 May 2011 04:00:45 -0700 (PDT)
-X-Mailer: git-send-email 1.7.5.1
-In-Reply-To: <BANLkTikjfyxAzLu2e5aJFVhgKq8UBiJAQw@mail.gmail.com>
+        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version:content-type;
+        b=I3uMO1jk4mvpLOmR4m5+j2FBuoUA1RF1vIcGO2+56k1VpEfQDCrAc6NdwsBXmaaoz8
+         iEK/Uv0puf8+Yd+bEzaaXL0UI9frS0r9eDekNY7HyBi/9vygJKxnvmS6oiNqzF91e0Ym
+         J1U4h/B44iJV/4gQt5GD5DRgReaKhRx5jVkAY=
+Received: by 10.224.184.204 with SMTP id cl12mr2903927qab.69.1306673425711;
+        Sun, 29 May 2011 05:50:25 -0700 (PDT)
+Received: from [192.168.1.103] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
+        by mx.google.com with ESMTPS id j18sm2242017qck.15.2011.05.29.05.50.23
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 29 May 2011 05:50:24 -0700 (PDT)
+X-X-Sender: martin@debian
+In-Reply-To: <BANLkTim-Wva018BFeTUPqZuiK02-X01XJQ@mail.gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174688>
 
-Change the documentation for the git-sh-i18n--envsubst program to
-include a SYNOPSIS section. Include the invocation of the program from
-git-sh-i18n.sh.
+On Sat, 28 May 2011, Ramkumar Ramachandra wrote:
 
-Not having a SYNOPSIS section caused the "doc" target to fail on
-Centos 5.5 with asciidoc 8.2.5, while building with 8.6.4 on Debian
-works just fine.
+> > I used "rm -r" without -f to match how it is done in --abort, but
+> > maybe -f should be used? That is what we recommend to the end-user to
+> > use today.
+> 
+> If you've verified that a rebase is already in progress, I don't see
+> the point of using '-f'. Otherwise, it should error out and say that
+> "no rebase is in progress", like the other command-line options
+> currently do.
 
-The relevant error was:
+Yep, it does verify that a rebase is in progress. I think rm without
+-f still asks the user to confirm if the file is read-only. I can't
+see why that would happen, so maybe it's good to have the user confirm
+it it does happen.
 
-    ERROR: git-sh-i18n--envsubst.txt: line 9: second section must be na=
-med SYNOPSIS
+> > A difference from --abort is that --discard does not clear
+> > rerere. Need this be mentioned in the documentation?
+> 
+> It depends on what you're expecting the user to do in this detached
+> HEAD state, no?
 
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
----
- Documentation/git-sh-i18n--envsubst.txt |   10 ++++++++++
- 1 files changed, 10 insertions(+), 0 deletions(-)
+The subcommand will most likely be run when the user had forgotten the
+current rebase and tries to start a new rebase and get's the message
+that a rebase is already in progress. At this point, the user is not
+necessarily in a detached HEAD state any more.
 
-diff --git a/Documentation/git-sh-i18n--envsubst.txt b/Documentation/gi=
-t-sh-i18n--envsubst.txt
-index f5bbf77..61e4c08 100644
---- a/Documentation/git-sh-i18n--envsubst.txt
-+++ b/Documentation/git-sh-i18n--envsubst.txt
-@@ -5,6 +5,16 @@ NAME
- ----
- git-sh-i18n--envsubst - Git's own envsubst(1) for i18n fallbacks
-=20
-+SYNOPSIS
-+--------
-+[verse]
-+eval_gettext () {
-+	printf "%s" "$1" | (
-+		export PATH $('git sh-i18n--envsubst' --variables "$1");
-+		'git sh-i18n--envsubst' "$1"
-+	)
-+}
-+
- DESCRIPTION
- -----------
-=20
---=20
-1.7.5.1
+/Martin
