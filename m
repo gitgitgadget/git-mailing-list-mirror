@@ -1,88 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/5] combine-diff: handle binary files as binary
-Date: Mon, 30 May 2011 12:32:40 -0700
-Message-ID: <7vipssm1bb.fsf@alter.siamese.dyndns.org>
-References: <20110523201529.GA6281@sigill.intra.peff.net>
- <20110523202734.GC6298@sigill.intra.peff.net>
- <7vpqn0ofy5.fsf@alter.siamese.dyndns.org>
- <20110530143627.GC31490@sigill.intra.peff.net>
- <20110530161927.GC24431@sigill.intra.peff.net>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH v2 3/3] gitk: Allow displaying time zones from author and commit timestamps
+Date: Mon, 30 May 2011 21:35:50 +0200
+Message-ID: <m2sjrw9e21.fsf@igel.home>
+References: <alpine.DEB.2.02.1101191445130.23868@dr-wily.mit.edu>
+	<alpine.DEB.2.02.1101191447340.23868@dr-wily.mit.edu>
+	<20110529044656.GA8881@brick.ozlabs.ibm.com>
+	<alpine.DEB.2.02.1105291740410.23145@dr-wily.mit.edu>
+	<alpine.DEB.2.02.1105292305390.23145@dr-wily.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon May 30 21:33:08 2011
+Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+To: Anders Kaseorg <andersk@MIT.EDU>
+X-From: git-owner@vger.kernel.org Mon May 30 21:36:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QR8D5-0007vh-OC
-	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 21:33:08 +0200
+	id 1QR8Ft-0000ff-0P
+	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 21:36:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752233Ab1E3Tcw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2011 15:32:52 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56424 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752051Ab1E3Tcw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2011 15:32:52 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 055DE5448;
-	Mon, 30 May 2011 15:34:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Nzh87w1AON3nB6i0lQGZWPUtaDw=; b=mlVd7c
-	+FxoFKqoYZjg9CWcMh1jY9VLDd1NMARWPVfQSF3m3eaKUzZoJ4RD0t9JB/W8+jcj
-	PsQCAgB4NvA+J7a20m8aZ449F+PqEIbhoM1qOWFUF5DnPbbcHh4MKQkg3HZAqoaA
-	1SQU7VL64rGtOpv8j+PPJCzwKYSkB5z9cwPu4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=W/uSWtBOYkwm9dQ9PkdqtNiN5VJIxQk0
-	3Kia/zoxpqaobWzpnPqjArOpO9Z/pke6lh6r2YUuWRdOSvt4YuW8FpoCWp8QFA6B
-	kuNvTcBZKZqa/wk93u21q+8HoNoJOF8HjUiuCjRWudXMxJjkUVTxs0gp0whhWvKl
-	4tELq5Hm1s8=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B60F95447;
-	Mon, 30 May 2011 15:34:54 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4F4615446; Mon, 30 May 2011
- 15:34:49 -0400 (EDT)
-In-Reply-To: <20110530161927.GC24431@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 30 May 2011 12:19:27 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E51BE7FC-8AF3-11E0-AA47-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+	id S1752654Ab1E3Tfz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2011 15:35:55 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:50381 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750816Ab1E3Tfy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2011 15:35:54 -0400
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id A42E2188B580;
+	Mon, 30 May 2011 21:35:51 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
+	by mail.m-online.net (Postfix) with ESMTP id A2DDE1C0009D;
+	Mon, 30 May 2011 21:35:51 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
+	with ESMTP id cjjhLQPGHfjG; Mon, 30 May 2011 21:35:51 +0200 (CEST)
+Received: from igel.home (ppp-88-217-112-53.dynamic.mnet-online.de [88.217.112.53])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Mon, 30 May 2011 21:35:51 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id B9619CA29C; Mon, 30 May 2011 21:35:50 +0200 (CEST)
+X-Yow: I'm in ATLANTIC CITY riding in a comfortable ROLLING CHAIR...
+In-Reply-To: <alpine.DEB.2.02.1105292305390.23145@dr-wily.mit.edu> (Anders
+	Kaseorg's message of "Sun, 29 May 2011 23:06:34 -0400 (EDT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174770>
 
-Jeff King <peff@peff.net> writes:
+Anders Kaseorg <andersk@MIT.EDU> writes:
 
->   git log -p --cc --merges origin/master
->
-> on git.git using both v1.7.5.3 and the jk/combine-diff-binary-etc
-> branch. And it turns out that the extra loads really don't make a
-> difference in practice. My best-of-5 for the two cases were:
+> +		catch {set savedTZ $env(TZ)}
+                if {[info exits env(TZ)]} {set savedTZ $env(TZ)}
 
-I am not surprised. git.git is small enough and developer machines these
-days are beefy enough so that most of the data from the disk are sitting
-in the buffer cache, and if you are well packed and Linus's law "a file
-always grows" holds true, it is likely that you are also benefiting from
-the delta-base cache, as the history traversal of the command goes newer
-to older.
+Andreas.
 
->   $ time git.v1.7.5.3 log -p --cc --merges origin/master >/dev/null
->   real    0m59.518s
->   user    0m58.672s
->   sys     0m0.688s
-
-Comparing that with the run time of the same log without patch generation
-would roughly give the cost of "all text combined" diff. I suspect more
-than 90% of the time goes to running the textual diff algorithm.
-
-I guess you are hinting that we should optimize that part before worrying
-about the wastage of reading these blobs always twice.
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
