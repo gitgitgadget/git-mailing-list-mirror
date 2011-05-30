@@ -1,87 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: blame --reverse selecting wrong commit
-Date: Mon, 30 May 2011 13:01:25 -0700
-Message-ID: <7vei3glzze.fsf@alter.siamese.dyndns.org>
-References: <BANLkTikuFEg686VH_RojEe-zmBZRBOx6eA@mail.gmail.com>
- <BANLkTimAij28ibW3DV2HaHPK5z0D-CrDHQ@mail.gmail.com>
- <BANLkTimXppE9sCW8tMntbD8p5-bRVFLHmQ@mail.gmail.com>
- <7vlixoofaj.fsf@alter.siamese.dyndns.org>
- <BANLkTikvmQgW=x0GYY6Yu=BnOgG+RXOCug@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Git fast-import : Warning duplicated ref:
+ refs/remotes/origin/master
+Date: Mon, 30 May 2011 15:13:51 -0500
+Message-ID: <20110530201351.GB14427@elie>
+References: <BANLkTinTuEppMGO16z2sMkjV8FveCbrwEQ@mail.gmail.com>
+ <20110529232405.GA8369@elie>
+ <BANLkTinhH7ksP8EZV+Sd4ryCT1_bhVhgaw@mail.gmail.com>
+ <20110530173517.GA13539@elie>
+ <vpqzkm4gef2.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon May 30 22:01:42 2011
+Cc: =?utf-8?B?SsOpcsOpbWll?= NIKAES <jeremie.nikaes@gmail.com>,
+	git@vger.kernel.org, Sylvain Boulme <Sylvain.Boulme@imag.fr>,
+	Mike Hommey <mh@glandium.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon May 30 22:14:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QR8ef-0004WV-8S
-	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 22:01:37 +0200
+	id 1QR8qg-000232-CU
+	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 22:14:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757852Ab1E3UBe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2011 16:01:34 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:46450 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753144Ab1E3UBc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2011 16:01:32 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5AA955781;
-	Mon, 30 May 2011 16:03:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Vq0t3KmyysIB5Pj3Xsrrdv6UqFM=; b=ifDMnp
-	tR91tGg+pgjg4Hz9CoP35TsWGhc8TW67CpCB+V6OOGEs5lU6PDvaVm6MupyEs0HT
-	hAdNNq1sM+r/iXYv0pHG0NTGOl74WJ1Oha2/n3b7ZL6CSEbNy8xNWt/t86b5NoVT
-	mV23YlJPFC04cGQJGm11lHoTPGCI7KAUz4G/c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DbwNVbMOSiwU8ySnXMjE30FInaltIwvi
-	oW/8+UZX3vGKHPhSz55ZxsPgKnjX0pS8ZCpWw+Nt4pVjRsJhhhFfBNrO8z+QJeKM
-	u9bPB4qjqRsMzwr3aB/ZR9e+GrKGOB/1W2dynAIx0vVPeeuHXDDYfRl07TsWZVVU
-	ii1BZJ6rfzY=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 37E695780;
-	Mon, 30 May 2011 16:03:37 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0EF0B5779; Mon, 30 May 2011
- 16:03:33 -0400 (EDT)
-In-Reply-To: <BANLkTikvmQgW=x0GYY6Yu=BnOgG+RXOCug@mail.gmail.com> (Shawn
- Pearce's message of "Mon, 30 May 2011 10:57:54 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E7CA2866-8AF7-11E0-A1DA-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+	id S1754010Ab1E3UN5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2011 16:13:57 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:41150 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753292Ab1E3UN4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2011 16:13:56 -0400
+Received: by iyb14 with SMTP id 14so3179161iyb.19
+        for <git@vger.kernel.org>; Mon, 30 May 2011 13:13:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=LwJXwGEf9oBrbSgYoQEf1IpEFRAw4l6gNYGKQExXTSU=;
+        b=JT4dNuzZ/T7/BXmpay13tR/gW8ZZNTUa26rnbRnF1ZWVdZ5foR/Npj9YWoKZcr6Mu0
+         Tl+A93A3igD4I7MEsosJaQjun7dcx7Xs/XfcH4y08Xo1S7uLg/A742e4BzR86LLZzhsz
+         i8U+t99lwY2j0Y4yE3TZPPZwFk3BiTVL9+o1c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=hGntXs4E2sxgLr0lFKoffYw9ycheqgsSBUghuQ8PCmrll9m2bT4kllXvULkrzc+14A
+         jWrzpkKwW5iRa9mloJDY7ZkNx3p+ast9t4aC2G6XQjCXHtzsUtt2b8HHxHaJAY/CXQeR
+         Lmt6n7T2jQqsuNTL9hhJktoK56sE39hyBfiws=
+Received: by 10.42.155.70 with SMTP id t6mr7866698icw.405.1306786435883;
+        Mon, 30 May 2011 13:13:55 -0700 (PDT)
+Received: from elie (adsl-69-209-65-98.dsl.chcgil.ameritech.net [69.209.65.98])
+        by mx.google.com with ESMTPS id q15sm1318354ibb.14.2011.05.30.13.13.54
+        (version=SSLv3 cipher=OTHER);
+        Mon, 30 May 2011 13:13:55 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <vpqzkm4gef2.fsf@bauges.imag.fr>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174774>
 
-Shawn Pearce <spearce@spearce.org> writes:
+Hi,
 
->> Yeah.
->>
->> It has always been my opinion that asking for "one commit past the blamed
->> one" is a undefined request (after all, blame for the line fell on that
->> commit exactly why the next commit does _not_ have any corresponding
->> line), so that is why I punted there.
+Matthieu Moy wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+
+>>  sub mw_capabilities {
+>>  #	print STDOUT "fetch\n";
+>> +	print STDOUT "refspec refs/heads/*:refs/mediawiki/$remotename/*\n";
 >
-> I don't think its undefined. Normally with blame/annotate we want to
-> discover who put this line here, that is who did the insertion or
-> replacement that made this line show up in the result file.
+> Is this "mediawiki" comming from the URL (mediawiki::...), or is it just
+> a convention you've set?
+>
+> We've tried with refspec refs/heads/*:refs/remotes/origin/*, but without
+> success.
 
-Very true. The question that does not have a defined answer is "what
-content was before this commit on that blamed line", and that is very
-different from "what commit was there before this commit the line is
-blamed for". The topic of this thread is the latter, and I was referring
-the former which is offtopic because I was confused and tired.
+Yes, I stole the convention for the namespace name from the commit message
+to v1.7.0-rc0~62^2~19 (Allow helper to map private ref names into
+normal names, 2009-11-18).
 
-> The catch is, its slightly more expensive than forward because we pass
-> blame down *all* paths of a fork, rather than only the one that was
-> identical.
+> Do I understand correctly that the "pull" is done in 3 stages:
+>
+> 1) import into refs/mediawiki/origin
+>
+> 2) fetch the imported ref into refs/remotes/origin
+>
+> 3) and merge as usual into the current branch
+>
+> ?
+>
+> If so, I don't understand why the distinction between 1) and 2) is
+> necessary, and why not to fetch directly into refs/remotes/origin/. IOW,
+> in which case is refs/remotes/origin/master different from
+> refs/mediawiki/origin/master for example?
 
-Hmm, I don't know. Isn't it just the matter of running the current
-"reverse blame" to find the newest revision that had the line (without any
-"dig wider"), and then dig a single level wider by comparing that revision
-and all its children to see which child has the line in question removed?
+That's a good question.  One answer is that fetching to elsewhere
+allows the transport machinery to take care of rejecting non-fast-forward
+fetches and pretty-printing the ref update information:
+
+ From mediawiki::http://localhost/mediawiki
+    479ee21..accd2c1  master     -> origin/master
+
+I think in the long term, importing to no ref at all as Sverre
+suggested and teaching the transport-helper to do the ref update would
+make more sense.
+
+Regards,
+Jonathan
