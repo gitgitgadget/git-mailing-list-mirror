@@ -1,74 +1,57 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: What's cooking in git.git (May 2011, #13; Mon, 30)
-Date: Mon, 30 May 2011 14:19:45 +0200
-Message-ID: <4DE38B61.6030400@viscovery.net>
-References: <7v62osob67.fsf@alter.siamese.dyndns.org> <BANLkTi=reSnAVgt6k-JaDDu27HP_DEGdhQ@mail.gmail.com>
+From: =?ISO-8859-1?Q?Daniel_Nystr=F6m?= <daniel.nystrom@timeterminal.se>
+Subject: Re: Whitespace and '&nbsp'
+Date: Mon, 30 May 2011 14:52:38 +0200
+Message-ID: <BANLkTinNwfuiFtg+y66zmgTJWSoWbB0wXw@mail.gmail.com>
+References: <BANLkTik7eJ=BC9Bekqu-W1-r0cheCjC+wg@mail.gmail.com>
+ <7vzkm9unu0.fsf@alter.siamese.dyndns.org> <BANLkTi=hYR4ow1eMR3rHkMuVRsHJ=TFDZA@mail.gmail.com>
+ <m262owhyuy.fsf@igel.home> <BANLkTimPfN6LQBhWj6rW3Zcm9JHPsMWsjA@mail.gmail.com>
+ <7vipswro57.fsf@alter.siamese.dyndns.org> <7vboyorm4i.fsf@alter.siamese.dyndns.org>
+ <BANLkTinwOr5Yzp_N6BNyNK5Y1FcVtdtbUw@mail.gmail.com> <7vy61rrcae.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 30 14:19:58 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 30 14:53:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QR1Rs-0003pF-Nk
-	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 14:19:57 +0200
+	id 1QR1xs-0003HU-U7
+	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 14:53:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756836Ab1E3MTv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 May 2011 08:19:51 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:21042 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752987Ab1E3MTv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 May 2011 08:19:51 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1QR1Ri-00019f-B0; Mon, 30 May 2011 14:19:46 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 128E41660F;
-	Mon, 30 May 2011 14:19:45 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
-In-Reply-To: <BANLkTi=reSnAVgt6k-JaDDu27HP_DEGdhQ@mail.gmail.com>
-X-Enigmail-Version: 1.1.1
-X-Spam-Score: -1.4 (-)
+	id S1755719Ab1E3Mwz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2011 08:52:55 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:58881 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753841Ab1E3Mwy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2011 08:52:54 -0400
+Received: by fxm17 with SMTP id 17so2433281fxm.19
+        for <git@vger.kernel.org>; Mon, 30 May 2011 05:52:53 -0700 (PDT)
+Received: by 10.223.98.4 with SMTP id o4mr3334846fan.120.1306759973100; Mon,
+ 30 May 2011 05:52:53 -0700 (PDT)
+Received: by 10.223.89.141 with HTTP; Mon, 30 May 2011 05:52:38 -0700 (PDT)
+X-Originating-IP: [85.24.181.147]
+In-Reply-To: <7vy61rrcae.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: 0IMaAyJVFVhRtPhJpiG-u2DV2jo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174743>
 
-Am 5/30/2011 14:08, schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
-> On Mon, May 30, 2011 at 10:16, Junio C Hamano <gitster@pobox.com> wro=
-te:
->=20
->> * ab/i18n-scripts (2011-05-21) 48 commits
->>  (merged to 'next' on 2011-05-23 at 69164a3)
->> [...]
->> Rerolled.
->> Will cook a bit longer.
->=20
-> This being ready for master is waiting on Johannes Sixt's patches to
-> supply a fallback getenv() on Win32.
->=20
-> Johannes, what's the status of that, and is there anything I can do t=
-o
-> help with that?
+2011/5/28 Junio C Hamano <gitster@pobox.com>:
+>> Again, I'm not convinced git should really care, but I'm also not
+>> convinced that sbsp is necessarily all about the git whitespace
+>> fixups.
+>
+> I am not convinced git should care, either, but if nobody else helps us,
+> we need to help ourselves ;-).
 
-I've started with something I thought would be trivial, but I early
-tripped over a pitfall where getenv is asked to look for "PATH", and it=
- is
-expected to find "Path" when we only have the latter in the environment=
-=2E
-Sigh. I think that's solvable.
+Or write a standalone tool through which patches (and code for that
+matter) could be piped, with the only purpose of showing "misleading"
+unicode characters and the likes?
 
-Another worry is that the home-grown getenv is not thread-safe. I think=
- it
-does not matter today, but who knows...
-
-Anyway, I've at most an hour of quality git time during the week, so it
-will take some time...
-
--- Hannes
+I can see even wider use of such a tool.
