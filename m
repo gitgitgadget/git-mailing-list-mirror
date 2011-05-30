@@ -1,98 +1,135 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: What's cooking in git.git (May 2011, #13; Mon, 30)
-Date: Mon, 30 May 2011 15:55:38 +0200
-Message-ID: <BANLkTinLAB3XrDtgzzZGLQXRTzzMRukV2g@mail.gmail.com>
-References: <7v62osob67.fsf@alter.siamese.dyndns.org>
-	<BANLkTi=reSnAVgt6k-JaDDu27HP_DEGdhQ@mail.gmail.com>
-	<4DE38B61.6030400@viscovery.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Using really empty start prefixes for git-format-patch numbered
+ patches?
+Date: Mon, 30 May 2011 10:19:05 -0400
+Message-ID: <20110530141905.GA31490@sigill.intra.peff.net>
+References: <BANLkTikVQWN2kZ4gc8kd-kJWZhLXgkvTAA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon May 30 15:55:45 2011
+To: =?utf-8?B?RnLDqWTDqXJpYw==?= Delanoy <frederic.delanoy@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 30 16:19:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QR2wa-0001Q3-OD
-	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 15:55:45 +0200
+	id 1QR3JN-0005YU-UT
+	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 16:19:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754165Ab1E3Nzk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 May 2011 09:55:40 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:49958 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753104Ab1E3Nzj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 May 2011 09:55:39 -0400
-Received: by fxm17 with SMTP id 17so2468452fxm.19
-        for <git@vger.kernel.org>; Mon, 30 May 2011 06:55:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=nJ5YHcDc35a3/T1MSZjTDTIswwoU+OPv0FAv5LXqyq4=;
-        b=TJzdRMrXtifvuhBg4LP6gS6JXwgXImVs1TQr2NXcsZt3fecSnRpdRK36ObmrqGGryG
-         Tx9I/QKfwZgMETXWqbXEmZRY7aPWYGpE2SCR9+c2MzpMa3VRBwCHQxMRdWtyM7+HSe6W
-         ReOKYwkyV9Ld6pJGS7tNwlGYD/zsjnA2I69Bs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=dRb9KoRptZhqkM5ZEVSEUr+OxSu16xxNv5OTKB+Q4HDre15DXjOJiuYizIfSbgYm7E
-         WIusFx4GPNwtoV1Dw68gHPZLUEk+B3K00mJCqZVzIFwU5cKyeqzeyLhKLA/KBoyZK0hQ
-         KJcmBzCIiGEY3IuFwbN935lzuVx1PRszY7e9c=
-Received: by 10.223.145.78 with SMTP id c14mr5575404fav.75.1306763738048; Mon,
- 30 May 2011 06:55:38 -0700 (PDT)
-Received: by 10.223.117.72 with HTTP; Mon, 30 May 2011 06:55:38 -0700 (PDT)
-In-Reply-To: <4DE38B61.6030400@viscovery.net>
+	id S1756917Ab1E3OTK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 May 2011 10:19:10 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39021
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753781Ab1E3OTJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2011 10:19:09 -0400
+Received: (qmail 15135 invoked by uid 107); 30 May 2011 14:19:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 30 May 2011 10:19:11 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 30 May 2011 10:19:05 -0400
+Content-Disposition: inline
+In-Reply-To: <BANLkTikVQWN2kZ4gc8kd-kJWZhLXgkvTAA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174746>
 
-On Mon, May 30, 2011 at 14:19, Johannes Sixt <j.sixt@viscovery.net> wro=
-te:
-> Am 5/30/2011 14:08, schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->> On Mon, May 30, 2011 at 10:16, Junio C Hamano <gitster@pobox.com> wr=
+On Sat, May 28, 2011 at 11:57:01PM +0200, Fr=C3=A9d=C3=A9ric Delanoy wr=
 ote:
->>
->>> * ab/i18n-scripts (2011-05-21) 48 commits
->>> =C2=A0(merged to 'next' on 2011-05-23 at 69164a3)
->>> [...]
->>> Rerolled.
->>> Will cook a bit longer.
->>
->> This being ready for master is waiting on Johannes Sixt's patches to
->> supply a fallback getenv() on Win32.
->>
->> Johannes, what's the status of that, and is there anything I can do =
-to
->> help with that?
->
-> I've started with something I thought would be trivial, but I early
-> tripped over a pitfall where getenv is asked to look for "PATH", and =
-it is
-> expected to find "Path" when we only have the latter in the environme=
-nt.
-> Sigh. I think that's solvable.
 
-Great.
+> I'm trying to generate numbered patches using git-format-patch such
+> that I get e.g. [1/2] instead of [PATCH 1/2]
+>=20
+> However, if I use an empty string as prefix, for instance in
+>=20
+> git-format-patch --subject-prefix=3D"" -2
+>=20
+> an extraneous space is inserted, and I get [ 1/2] instead of desired
+> [1/2] in the Subject line
+>=20
+> (I also tried using a single backspace char as prefix, but that didn'=
+t
+> change anything, as might have been expected)
+>=20
+> Is there a way to get rid of this space? IMO the space should only be
+> added if the prefix is non-empty
 
-> Another worry is that the home-grown getenv is not thread-safe. I thi=
-nk it
-> does not matter today, but who knows...
+I don't think there is currently a way to do what you want short of
+post-processing the output of format-patch. You can use "-k" to preserv=
+e
+the subject, but then you don't get the "1/2" that you want.
 
-Doesn't matter for git-sh-i18n--envsubst at least, but if we want to
-use it everywhere it might.
+So I think we should do this:
 
-We could just start with git-sh-i18n--envsubst and maybe use it for
-other stuff later.
+-- >8 --
+Subject: [PATCH] format-patch: make zero-length subject prefixes pretti=
+er
 
-> Anyway, I've at most an hour of quality git time during the week, so =
-it
-> will take some time...
+If you give a zero-length subject prefix to format-patch
+(e.g., "format-patch --subject-prefix=3D"), we will print the
+ugly:
 
-No problem.
+  Subject: [ 1/2] your subject here
+
+because we always insert a space between the prefix and
+numbering. Requiring the user to provide the space in their
+prefix would be more flexible, but would break existing
+usage. This patch provides a DWIM and suppresses the space
+for zero-length prefixes, under the assumption that nobody
+actually wants "[ 1/2]".
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ log-tree.c              |    3 ++-
+ t/t4014-format-patch.sh |   18 ++++++++++++++++++
+ 2 files changed, 20 insertions(+), 1 deletions(-)
+
+diff --git a/log-tree.c b/log-tree.c
+index 2a1e3a9..296f417 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -294,8 +294,9 @@ void log_write_email_headers(struct rev_info *opt, =
+struct commit *commit,
+ 	if (opt->total > 0) {
+ 		static char buffer[64];
+ 		snprintf(buffer, sizeof(buffer),
+-			 "Subject: [%s %0*d/%d] ",
++			 "Subject: [%s%s%0*d/%d] ",
+ 			 opt->subject_prefix,
++			 *opt->subject_prefix ? " " : "",
+ 			 digits_in_number(opt->total),
+ 			 opt->nr, opt->total);
+ 		subject =3D buffer;
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index 045cee3..92248d2 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -851,4 +851,22 @@ test_expect_success 'subject lines do not have 822=
+ atom-quoting' '
+ 	test_cmp expect actual
+ '
+=20
++cat >expect <<'EOF'
++Subject: [PREFIX 1/1] header with . in it
++EOF
++test_expect_success 'subject prefixes have space prepended' '
++	git format-patch -n -1 --stdout --subject-prefix=3DPREFIX >patch &&
++	grep ^Subject: patch >actual &&
++	test_cmp expect actual
++'
++
++cat >expect <<'EOF'
++Subject: [1/1] header with . in it
++EOF
++test_expect_success 'empty subject prefix does not have extra space' '
++	git format-patch -n -1 --stdout --subject-prefix=3D >patch &&
++	grep ^Subject: patch >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+--=20
+1.7.5.3.12.g99e25
