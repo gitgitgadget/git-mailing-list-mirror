@@ -1,88 +1,84 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 3/3] verify_path: consider dos drive prefix
-Date: Mon, 30 May 2011 22:23:21 +0200
-Message-ID: <4DE3FCB9.1010401@kdbg.org>
-References: <1306512040-1468-1-git-send-email-kusmabite@gmail.com> <1306512040-1468-4-git-send-email-kusmabite@gmail.com> <4DDFF473.7030104@kdbg.org> <BANLkTikdeq7cuhi0uo7Q6wqDJK3nxjmP-g@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Non-error messages appears in STDERR
+Date: Mon, 30 May 2011 15:29:42 -0500
+Message-ID: <20110530202942.GA14913@elie>
+References: <86adad09-bba9-4415-834c-c004071fd9c2@l14g2000pro.googlegroups.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
-	Theo Niessink <theo@taletn.com>
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Mon May 30 22:23:34 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: msysGit <msysgit@googlegroups.com>, git@vger.kernel.org
+To: Pok Man Lau <pokman.pml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 30 22:29:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QR8zs-0006Nx-VL
-	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 22:23:33 +0200
+	id 1QR964-0002M6-0R
+	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 22:29:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753363Ab1E3UX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2011 16:23:27 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:27813 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751011Ab1E3UX1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2011 16:23:27 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 0B166A7EB4;
-	Mon, 30 May 2011 22:18:54 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id A993219F3CC;
-	Mon, 30 May 2011 22:23:21 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.17) Gecko/20110414 SUSE/3.1.10 Thunderbird/3.1.10
-In-Reply-To: <BANLkTikdeq7cuhi0uo7Q6wqDJK3nxjmP-g@mail.gmail.com>
+	id S1757906Ab1E3U3v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2011 16:29:51 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:60476 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751986Ab1E3U3u (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2011 16:29:50 -0400
+Received: by gxk21 with SMTP id 21so1530672gxk.19
+        for <git@vger.kernel.org>; Mon, 30 May 2011 13:29:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=AtR0kfZfj8Tjgg4p+eE+4L2gvm9eELv/VhYMyknOmXU=;
+        b=jtkrlCN9hqZWjHKR34E6z230iWRWqpVZ4N4New/PD6UqGlzMfnNObYEnyPvhp9BxkU
+         kLO4eVWcz/WjxC3t2UAYWpKbdBl87NUjbQTDZkzYXqMiidHV/9PaDhE7d1s1usHDaXJD
+         fAXt4T6+riZr/vUCC7UXY7j5KBhWrAT5YhqgE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=pgAt1iHFyz/QQsbsnCB/tc6ozgSza4DqIyAhET6drmbto6MvHmOlLAZXwGgxlYxUhS
+         rit3Y1fqjfEhS9+yVtB/hJWJUM2A2lO1l6/ryheyO5gmMTRHO7jqAdG0XQq3DxJDBV0l
+         S8Bacl9zSioK62sj111XU+8GQPLR220KTH6o0=
+Received: by 10.150.240.6 with SMTP id n6mr1630565ybh.397.1306787390120;
+        Mon, 30 May 2011 13:29:50 -0700 (PDT)
+Received: from elie (adsl-69-209-65-98.dsl.chcgil.ameritech.net [69.209.65.98])
+        by mx.google.com with ESMTPS id s9sm854249ybm.23.2011.05.30.13.29.48
+        (version=SSLv3 cipher=OTHER);
+        Mon, 30 May 2011 13:29:49 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <86adad09-bba9-4415-834c-c004071fd9c2@l14g2000pro.googlegroups.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174777>
 
-Am 30.05.2011 11:32, schrieb Erik Faye-Lund:
-> On Fri, May 27, 2011 at 8:58 PM, Johannes Sixt <j6t@kdbg.org> wrote:
->> Am 27.05.2011 18:00, schrieb Erik Faye-Lund:
->>> If someone manage to create a repo with a 'C:' entry in the
->>> root-tree, files can be written outside of the working-dir. This
->>> opens up a can-of-worms of exploits.
->>>
->>> Fix it by explicitly checking for a dos drive prefix when verifying
->>> a paht. While we're at it, make sure that paths beginning with '\' is
->>> considered absolute as well.
->>
->> I think we do agree that the only way to avoid the security breach is to
->> check a path before it is used to write a file. In practice, it means to
->> disallow paths in the top-most level of the index that are two
->> characters long and are letter-colon.
->>
->> IMHO, it is pointless to avoid that an evil path enters the repository,
->> because there are so many and a few more ways to create an evil repository.
->>
-> 
-> Yes, but this patch doesn't prevent that; it prevents an evil path
-> from entering the index and from being checked out if the index is
-> evil.
-> 
->>> diff --git a/read-cache.c b/read-cache.c
->>> index f38471c..68faa51 100644
->>> --- a/read-cache.c
->>> +++ b/read-cache.c
->>> @@ -753,11 +753,14 @@ int verify_path(const char *path)
->>>  {
->>>       char c;
->>>
->>> +     if (has_dos_drive_prefix(path))
->>> +             return 0;
->>> +
->>
->> Isn't verify_path used to avoid that a bogus path enters the index? (I
->> don't know, I'm not familiar with this infrastructure.)
->>
-> 
-> Yes, it's being used to do that. But it's also being used when reading
-> the index into memory, which is "the good stuf" for our purposes.
+Hi,
 
-OK, I agree with the changes proposed in this patch. git reset and git
-checkout go through this function via unpack_trees(). Are there other
-ways to write a file, e.g., in merge-recursive?
+Pok Man Lau wrote:
 
--- Hannes
+> I am writing a class library to wrap bin\git.exe and trying to be a
+> bit more accurate on error handling. Here are something interesting I
+> found so far with git version 1.7.2.3.msysgit.0
+>
+> Some of the command output returned by git.exe appeared to be STDERR
+> instead of STDOUT even they are not error message.
+>
+> For example:
+> checkout <branch_name>
+>
+> I would expected the message "Switched to branch '<branch_name>'" to
+> be a STDOUT, but it appears to be STDERR.
+
+Yes, generally speaking the intent is the "result" or output that
+could be conceivably parsed will go to stdout, while progress
+information goes to stderr.
+
+I think it would make sense to document this somewhere, e.g., in the
+"git help cli" text.  Do you think that's the right place?  Any ideas
+for wording?
+
+Thanks much,
+Jonathan
