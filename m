@@ -1,61 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: How would Git chapter look like in "The Architecture of Open
- Source Applications"?
-Date: Sun, 29 May 2011 23:40:45 -0400
-Message-ID: <20110530034044.GC27691@sigill.intra.peff.net>
-References: <201105281417.39883.jnareb@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] rebase: learn --discard subcommand
+Date: Mon, 30 May 2011 06:46:48 +0200
+Message-ID: <4DE32138.4050104@alum.mit.edu>
+References: <1306551495-26685-1-git-send-email-martin.von.zweigbergk@gmail.com> <20110528230844.GA31498@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 30 05:40:52 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Tim Mazid <timmazid@hotmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 30 06:47:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QQtLY-0001kK-AY
-	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 05:40:52 +0200
+	id 1QQuNY-0002SX-VY
+	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 06:47:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754083Ab1E3Dkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 May 2011 23:40:47 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49472
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753275Ab1E3Dkq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 May 2011 23:40:46 -0400
-Received: (qmail 11806 invoked by uid 107); 30 May 2011 03:40:49 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 29 May 2011 23:40:49 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 29 May 2011 23:40:45 -0400
-Content-Disposition: inline
-In-Reply-To: <201105281417.39883.jnareb@gmail.com>
+	id S1750901Ab1E3Eqz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2011 00:46:55 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:50644 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750807Ab1E3Eqz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2011 00:46:55 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.69.134] (p54BECF4D.dip.t-dialin.net [84.190.207.77])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p4U4kneL018979
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 30 May 2011 06:46:50 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.17) Gecko/20110424 Lightning/1.0b2 Thunderbird/3.1.10
+In-Reply-To: <20110528230844.GA31498@elie>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174718>
 
-On Sat, May 28, 2011 at 02:17:38PM +0200, Jakub Narebski wrote:
+On 05/29/2011 01:08 AM, Jonathan Nieder wrote:
+> Agh, "git rebase --abort --keep-head" feels a little too long to be
+> memorable.  Still, hope that helps.
 
-> Among covered programs is Mercurial (chapter by Dirkjan Ochtman)...
-> but unfortunately no Git (they probably thought that one DVCS is enough).
-> 
-> How would such chapter on Git look like?  Authors of this book
-> encourage (among others) to write new chapters.
+It seems like the distinction is analogous to "git reset --soft", so maybe
 
-I just skimmed the Mercurial chapter, but they do cover a fair bit of
-general DVCS architecture. For git, I would guess a good approach would
-be to describe the data structures (i.e., content-addressable object
-database, DAG of commits, refs storing branches and tags), as everything
-else falls out from there. Most of the basic commands can be explained
-as "do some simple operation to the history graph or object db" and the
-more complex commands are compositions of the simple ones. So the
-architecture is really about having a data structure that represents the
-problem, exposing it to the user, and then building some niceties around
-the basic data structure operations.
+    git rebase --abort --soft
 
-Of course that's just my perspective. Linus might have written something
-totally different. :)
+?
 
--Peff
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
