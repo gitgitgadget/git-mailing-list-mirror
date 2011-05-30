@@ -1,109 +1,49 @@
-From: Anders Kaseorg <andersk@MIT.EDU>
-Subject: [PATCH v3 3/3] gitk: Allow displaying time zones from author and
- commit timestamps
-Date: Mon, 30 May 2011 17:47:58 -0400 (EDT)
-Message-ID: <alpine.DEB.2.02.1105301745580.23145@dr-wily.mit.edu>
-References: <alpine.DEB.2.02.1101191445130.23868@dr-wily.mit.edu> <alpine.DEB.2.02.1101191447340.23868@dr-wily.mit.edu> <20110529044656.GA8881@brick.ozlabs.ibm.com> <alpine.DEB.2.02.1105291740410.23145@dr-wily.mit.edu> <alpine.DEB.2.02.1105292305390.23145@dr-wily.mit.edu>
- <m2sjrw9e21.fsf@igel.home> <alpine.DEB.2.02.1105301739290.23145@dr-wily.mit.edu>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Andreas Schwab <schwab@linux-m68k.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Tim Guirgies <lt.infiltrator@gmail.com>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Mon May 30 23:48:38 2011
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: [PATCH 0/2] Tests for some submodule corner cases.
+Date: Mon, 30 May 2011 17:51:18 -0400
+Message-ID: <1306792280-12768-1-git-send-email-marcnarc@xiplink.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 31 00:05:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRAKD-0003ch-0X
-	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 23:48:37 +0200
+	id 1QRAb0-0004E5-G3
+	for gcvg-git-2@lo.gmane.org; Tue, 31 May 2011 00:05:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753990Ab1E3VsI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 May 2011 17:48:08 -0400
-Received: from DMZ-MAILSEC-SCANNER-4.MIT.EDU ([18.9.25.15]:63644 "EHLO
-	dmz-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752655Ab1E3VsG convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2011 17:48:06 -0400
-X-AuditID: 1209190f-b7c4dae0000007bd-ae-4de41097fdbf
-Received: from mailhub-auth-4.mit.edu ( [18.7.62.39])
-	by dmz-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id A4.3D.01981.79014ED4; Mon, 30 May 2011 17:48:07 -0400 (EDT)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-4.mit.edu (8.13.8/8.9.2) with ESMTP id p4ULm0Tk029266;
-	Mon, 30 May 2011 17:48:00 -0400
-Received: from localhost (DR-WILY.MIT.EDU [18.181.0.233])
-	(authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id p4ULlwUa024090
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Mon, 30 May 2011 17:47:59 -0400 (EDT)
-In-Reply-To: <alpine.DEB.2.02.1105301739290.23145@dr-wily.mit.edu>
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnleLIzCtJLcpLzFFi42IRYrdT150u8MTX4O9mA4uuK91MFiuuzmG2
-	eHVVy2LNkcXsFv1LO9gcWD12zrrL7nHocAejx9xdfYwenzfJBbBEcdmkpOZklqUW6dslcGX8
-	XbiFrWAuT8X8v5tZGhjvcXYxcnJICJhINH9cyQZhi0lcuLceyObiEBLYxyhx988GFghnA6NE
-	y4fHUJk9TBK9G36ygLSwCGhLXN98D8xmE1CTmLthMnsXIweHiICqxPoLQiD1zAJzGSUmd/xm
-	BKkRFoiVeP97ISuIzSngJDH77RYmkHpeAUeJr/syQMJCAo+ZJDqWmoLYogK6Epu7l4Jdxysg
-	KHFy5hOwVcwC6hIHPl1khLC1Je7fbGObwCg4C0nZLCRls5CULWBkXsUom5JbpZubmJlTnJqs
-	W5ycmJeXWqRropebWaKXmlK6iREU7pyS/DsYvx1UOsQowMGoxMObcPCxrxBrYllxZe4hRkkO
-	JiVR3h7+J75CfEn5KZUZicUZ8UWlOanFhxglOJiVRHi/8QHleFMSK6tSi/JhUtIcLErivLMk
-	1X2FBNITS1KzU1MLUotgsjIcHEoSvBNBhgoWpaanVqRl5pQgpJk4OEGG8wANDwKp4S0uSMwt
-	zkyHyJ9iVJQS5z0PkhAASWSU5sH1wtLRK0ZxoFeEeQ+BVPEAUxlc9yugwUxAg3vfPQQZXJKI
-	kJJqYPSNklHqOm5gK7aWX/eez4oKtsnxio+WZFtl3NWoUAm6/OPg0rkJwpseuR3el/uoInWH
-	t2ft/cXn2UpmzQs4cvPqmswpln822rxbMbnu1Hof0Qlbb8y6Ne91zvYft14a1zXW 
+	id S1753217Ab1E3WFw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2011 18:05:52 -0400
+Received: from 208-85-112-101.zerofail.com ([208.85.112.101]:39545 "EHLO
+	farnsworth.xiplink.com" rhost-flags-OK-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752355Ab1E3WFu (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 May 2011 18:05:50 -0400
+X-Greylist: delayed 853 seconds by postgrey-1.27 at vger.kernel.org; Mon, 30 May 2011 18:05:50 EDT
+Received: from rincewind.xiplink.com ([192.168.1.136])
+	by farnsworth.xiplink.com (8.14.2/8.14.2/Debian-2build1) with ESMTP id p4ULpZN4011591;
+	Mon, 30 May 2011 17:51:35 -0400
+X-Mailer: git-send-email 1.7.5.3.686.g35b8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174782>
 
-Now gitk can be configured to display author and commit dates in their
-original timezone, by putting %z into datetimeformat in ~/.gitk.
+Ran across some submodule behavior that seems wrong to me.  I don't have the
+chops to fix the issues, so I thought I'd just point them out with some unit
+tests.
 
-Signed-off-by: Anders Kaseorg <andersk@mit.edu>
----
- gitk |   24 +++++++++++++++++++++++-
- 1 files changed, 23 insertions(+), 1 deletions(-)
+Patch 1 tests the case where "submodule add" fails if the path to the
+submodule repo is relative (i.e. starts with "../").  This currently fails
+with "remote (origin) does not have a url defined in .git/config".  Maybe
+there's a reason to fail?  If so, a better error message would be appreciated.
 
-diff --git a/gitk b/gitk
-index 8e15572..6a4c8ed 100755
---- a/gitk
-+++ b/gitk
-@@ -11021,7 +11021,29 @@ proc prefsok {} {
- proc formatdate {d} {
-     global datetimeformat
-     if {$d ne {}} {
--	set d [clock format [lindex $d 0] -format $datetimeformat]
-+	# If $datetimeformat includes a timezone, display in the
-+	# timezone of the argument.  Otherwise, display in local time.
-+	if {[string match {*%[zZ]*} $datetimeformat]} {
-+	    if {[catch {set d [clock format [lindex $d 0] -timezone [lindex $=
-d 1] -format $datetimeformat]}]} {
-+		# Tcl < 8.5 does not support -timezone.  Emulate it by
-+		# setting TZ=3DUnknown=C2=B1NN:NN.
-+		global env
-+		if {[info exists env(TZ)]} {
-+		    set savedTZ $env(TZ)
-+		}
-+		set zone [lindex $d 1]
-+		set sign [string map {+ - - +} [string index $zone 0]]
-+		set env(TZ) Unknown$sign[string range $zone 1 2]:[string range $zone=
- 3 4]
-+		set d [clock format [lindex $d 0] -format $datetimeformat]
-+		if {[info exists savedTZ]} {
-+		    set env(TZ) $savedTZ
-+		} else {
-+		    unset env(TZ)
-+		}
-+	    }
-+	} else {
-+	    set d [clock format [lindex $d 0] -format $datetimeformat]
-+	}
-     }
-     return $d
- }
---=20
-1.7.5.3
+Patch 2 exposes an anomaly in "submodule status", which reports that a
+submodule is OK even though it has deleted files.  "git status" inside
+the submodule (and in the super-repo) both identify any deleted files, but
+"submodule status" doesn't prefix the submodule's HEAD SHA-ID with a "+".
+
+(ps. I didn't sign-off these two patches, since they're just failing unit
+tests.  Should I sign-off on them?)
+
+		M.
