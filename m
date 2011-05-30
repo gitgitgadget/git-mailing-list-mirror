@@ -1,63 +1,72 @@
-From: Markus Duft <mduft@gentoo.org>
-Subject: Re: [PATCH 2/2] Include unistd.h.
-Date: Mon, 30 May 2011 08:51:01 +0200
-Message-ID: <4DE33E55.6090505@gentoo.org>
-References: <1306332924-28587-1-git-send-email-mduft@gentoo.org> <1306332924-28587-3-git-send-email-mduft@gentoo.org> <20110526022045.GA8172@elie> <7vhb8hzcm8.fsf@alter.siamese.dyndns.org> <20110526163921.GD24931@elie>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 2/3] diff: introduce --stat-lines to limit the stat
+ lines
+Date: Mon, 30 May 2011 00:36:34 -0700
+Message-ID: <7vhb8cod19.fsf@alter.siamese.dyndns.org>
+References: <4DC0FD3D.9010004@drmicha.warpmail.net>
+ <cover.1306499600.git.git@drmicha.warpmail.net>
+ <5da631c64438ec3f669f0c2b7456bcfbc371e2f5.1306499600.git.git@drmicha.warpmail.net> <7v39jzqvny.fsf@alter.siamese.dyndns.org> <4DE33BF0.7060607@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Tor Arntsen <tor@spacetec.no>,
-	Erik Faye-Lund <kusmabite@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 30 08:50:56 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon May 30 09:36:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QQwJT-0000Nr-8E
-	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 08:50:55 +0200
+	id 1QQx1t-0001mn-FL
+	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 09:36:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754325Ab1E3Guv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2011 02:50:51 -0400
-Received: from smtp.salomon.at ([193.186.16.13]:56096 "EHLO sauxb.salomon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752484Ab1E3Guu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2011 02:50:50 -0400
-Received: from servex01.wamas.com (servex01.salomon.at [172.28.2.2])
-	by sauxb.salomon.at (8.12.10/8.12.10) with ESMTP id p4U6oUJR025194;
-	Mon, 30 May 2011 08:50:30 +0200 (METDST)
-Received: from [172.28.8.166] ([172.28.8.166]) by servex01.wamas.com with Microsoft SMTPSVC(6.0.3790.4675);
-	 Mon, 30 May 2011 08:50:24 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.17) Gecko/20110506 Lightning/1.0b3pre Thunderbird/3.1.10
-In-Reply-To: <20110526163921.GD24931@elie>
-X-OriginalArrivalTime: 30 May 2011 06:50:24.0511 (UTC) FILETIME=[DA1BB0F0:01CC1E95]
-X-Scanned-By: MIMEDefang 2.54 on 172.28.2.13
+	id S1754804Ab1E3Hgo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2011 03:36:44 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63760 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752731Ab1E3Hgn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2011 03:36:43 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8B7EC6D90;
+	Mon, 30 May 2011 03:38:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZfvAIJpv6TBcNMbwOr4zP2/cU54=; b=RIDD4Q
+	7Qsju9zdt9CJgRosPQAFZJy30+jOzWtJejra33bau/N0TG0cFTD580n5gKNE9px9
+	fee0ubhuKtzlUmfROwT5VuipbBf+JXOIrnysd3sWUQDK4jbsf9PshPvISPzwvBPB
+	gaC77wEsuJKUpfFzHhX9jHuFBCCjRKrpR0H20=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PQGQLq+w57QODY74fS0AEh8Jm6JlKqrV
+	WRELspnIq02lEuIVGIjFOG4EEev8XUi0O935OfbknXRp7M5QQJwSGXgnuGNKSSfX
+	PYGkf5pWGjvPHVrSwOjjQv98QLfVEBrIlUviMs0rn52BvAgE8jQRa4EjrUpvigaw
+	H3aZzekPWNw=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6A34B6D8F;
+	Mon, 30 May 2011 03:38:47 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8DE6B6D8E; Mon, 30 May 2011
+ 03:38:44 -0400 (EDT)
+In-Reply-To: <4DE33BF0.7060607@drmicha.warpmail.net> (Michael J. Gruber's
+ message of "Mon, 30 May 2011 08:40:48 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: DA98B6E8-8A8F-11E0-9525-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174730>
 
-On 05/26/11 18:39, Jonathan Nieder wrote:
-> Junio C Hamano wrote:
-> 
->> --- a/compat/fnmatch/fnmatch.c
->> +++ b/compat/fnmatch/fnmatch.c
->> @@ -127,6 +127,10 @@ extern char *getenv ();
->>  extern int errno;
->>  # endif
->> +
->> +# ifndef NULL
->> +#  define NULL 0
->> +# endif
-> 
-> Makes a lot of sense.  This fits well with the style of the rest of
-> the file and other projects using glibc fnmatch could reuse the fix
-> even if targeting ancient platforms.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-I tested, and it works well on interix. Will you commit, or should i prepare a patch?
+> That works, thanks also for the test.
+>
+> Should I squash this in or go for a clearer use of "count"? (Also, I may
+> have to take into account your notes about the workflow.)
 
-Thanks
-Markus
+I do not recall any "notes about the workflow" but if you feel it is worth
+keeping, please go ahead. I've queued the fix-up as a "finishing touches"
+separate commit, but the series is still in 'pu' so it is a fair game for
+you to do whatever you think is the most appropriate for it.
+
+Thanks.
