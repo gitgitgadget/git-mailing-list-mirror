@@ -1,82 +1,96 @@
-From: =?ISO-8859-1?Q?J=E9r=E9mie_NIKAES?= <jeremie.nikaes@gmail.com>
-Subject: Re: Git fast-import : Warning duplicated ref: refs/remotes/origin/master
-Date: Mon, 30 May 2011 16:44:08 +0200
-Message-ID: <BANLkTinhH7ksP8EZV+Sd4ryCT1_bhVhgaw@mail.gmail.com>
-References: <BANLkTinTuEppMGO16z2sMkjV8FveCbrwEQ@mail.gmail.com> <20110529232405.GA8369@elie>
+From: David Glesser <glesserd@ensimag.fr>
+Subject: tag format and tests
+Date: Mon, 30 May 2011 16:12:30 +0200
+Message-ID: <db6ec478a7cb9b963d90651f5315ffec@ensimag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Sylvain Boulme <Sylvain.Boulme@imag.fr>,
-	Mike Hommey <mh@glandium.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 30 16:44:43 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: <Matthieu.Moy@grenoble-inp.fr>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 30 16:45:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QR3hy-0001wF-UH
-	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 16:44:43 +0200
+	id 1QR3iY-0002Eg-1c
+	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 16:45:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757292Ab1E3Oo3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 May 2011 10:44:29 -0400
-Received: from mail-px0-f179.google.com ([209.85.212.179]:61439 "EHLO
-	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751687Ab1E3Oo2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 May 2011 10:44:28 -0400
-Received: by mail-px0-f179.google.com with SMTP id 2so2509890pxi.10
-        for <git@vger.kernel.org>; Mon, 30 May 2011 07:44:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=CtWTVZ172QNN+75yS9qAWRrdt+4QVhtDMTROE9t322U=;
-        b=j9wwuLNbyXg7OGi/E2LbHOf0n2YAAK6sMw0v1IOKXvXDy9+Qtrn5hUw/voEmlmLbib
-         IgGiIXQcTurQYfIBCtnDMC9VLAIXwpJYzhtd9fjbaALAYZdHdPfIEWfBZXsnKiJdPuBI
-         ihlvZ3y8obMZUsye1WW0my4aXbMZUm+Od0MXI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=BNrsgAC5zIVvxsNjJVRJOhGdSZT/R64nS9GOwIUN6AW3/atrS90iC8cj/r559XAcyW
-         Ggk/EfzxvtH6YQ4oAFpi0CvlB5H0LGHGN2AbVWBRPC+fmzFqI/n7q6HjT/wz7Q5/DkUs
-         LZi1P1vh0ixth3NzpAT3wREf3pnDIpX/9pjJ8=
-Received: by 10.143.63.10 with SMTP id q10mr702237wfk.291.1306766668071; Mon,
- 30 May 2011 07:44:28 -0700 (PDT)
-Received: by 10.142.13.11 with HTTP; Mon, 30 May 2011 07:44:08 -0700 (PDT)
-In-Reply-To: <20110529232405.GA8369@elie>
+	id S1757328Ab1E3Ooq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2011 10:44:46 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:60851 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757246Ab1E3Oop (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2011 10:44:45 -0400
+X-Greylist: delayed 1933 seconds by postgrey-1.27 at vger.kernel.org; Mon, 30 May 2011 10:44:45 EDT
+Received: from ensimag.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p4UECTJe006707
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 30 May 2011 16:12:29 +0200
+Received: from web-ensimag.imag.fr (web-ensimag [195.221.228.24])
+	by ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id p4UECUPL013919;
+	Mon, 30 May 2011 16:12:30 +0200
+Received: from webmail.ensimag.fr (localhost [127.0.0.1])
+	by web-ensimag.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens) with ESMTP id p4UECUBC026538;
+	Mon, 30 May 2011 16:12:30 +0200
+X-Sender: glesserd@ensimag.fr
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 30 May 2011 16:12:29 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p4UECTJe006707
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: glesserd@ensimag.fr
+MailScanner-NULL-Check: 1307369550.01328@YVs/NJi6UPXqFQxqy3htNw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174751>
 
-Jonathan,
+Hello,
 
-> I just wanted to say, thank you for working on this[1].
->
-> This code answers some questions I had about the remote helper
-> protocol, among other things.
+We are currently coding a minimal git client using libgit2. We use git
+tests to test our git client. We have an error caused by the tag format
+used by libgit2.
+The test t1006-cat-file.sh report many errors, the first one is:
+not ok - 23 Size of tag is correct
+This error comes from libgit2 and how it writes the timestamp, see below:
 
-Glad we can help !
+$ cat tag && echo
+object 5e1c309dae7f45e0f39b1bf3ac3cd9db12e7d689
+type blob
+tag hellotag
+tagger SpongeBob <spongebob.square@crusty-crabs.com> 0000000000 +0000
 
->
->> a "Warning duplicated
->> ref: refs/remotes/origin/master" is thrown.
->
-> To end the suspense: I assume this was fixed by 9055039c (Bug fix for
-> pulls with multiple revisions pulled, 2011-05-29).
+cheeseburger
+$ git mktag < tag
+7eade44ddd1b9ee24a44e0b2dde2561efea7f7d6
+$ echo 7eade44ddd1b9ee24a44e0b2dde2561efea7f7d6 | git cat-file --batch
+7eade44ddd1b9ee24a44e0b2dde2561efea7f7d6 tag 154
+object 5e1c309dae7f45e0f39b1bf3ac3cd9db12e7d689
+type blob
+tag hellotag
+tagger SpongeBob <spongebob.square@crusty-crabs.com> 0000000000 +0000
 
-No, I actually still have the problem. The version commited on github
-is pulling revisions straight to refs/heads/master which is gross
-After discussing this matter with our teacher Matthieu Moy, I wanted
-to change this to refs/remotes/origin/master but then this warning
-gets thrown.
+cheeseburger
 
-Does anyone have an idea ?
 
-Thanks,
-Cheers,
---=20
-J=E9r=E9mie Nikaes
+And now using libgit2 :
+
+$ git2 mktag < tag
+49bc784cd2071c97a14841b3eab1181dd1c8fbcd
+$ echo 49bc784cd2071c97a14841b3eab1181dd1c8fbcd | git cat-file --batch
+49bc784cd2071c97a14841b3eab1181dd1c8fbcd tag 145
+object 5e1c309dae7f45e0f39b1bf3ac3cd9db12e7d689
+type blob
+tag hellotag
+tagger SpongeBob <spongebob.square@crusty-crabs.com> 0 +0000
+
+cheeseburger
+
+Both formats are accepted by git.
+It's reasonable to say that the test is wrong because it doesn't fit
+exactly with the format ?
+
+
+David G.
