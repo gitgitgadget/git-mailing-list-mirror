@@ -1,71 +1,75 @@
-From: Romain Geissler <romain.geissler@gmail.com>
-Subject: Git global usage and tests
-Date: Mon, 30 May 2011 16:58:14 +0200
-Message-ID: <754E784F-51C6-4B8D-B15D-3FF8B7AF1321@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1082.1)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 30 16:58:22 2011
+From: =?ISO-8859-1?Q?J=E9r=E9mie_NIKAES?= <jeremie.nikaes@gmail.com>
+Subject: Re: Git fast-import : Warning duplicated ref: refs/remotes/origin/master
+Date: Mon, 30 May 2011 17:07:26 +0200
+Message-ID: <BANLkTinRscvPLHbob55pxhXSTKqm+eSF6g@mail.gmail.com>
+References: <BANLkTinTuEppMGO16z2sMkjV8FveCbrwEQ@mail.gmail.com>
+ <20110529232405.GA8369@elie> <BANLkTinhH7ksP8EZV+Sd4ryCT1_bhVhgaw@mail.gmail.com>
+ <20110530145203.GA10879@elie>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Sylvain Boulme <Sylvain.Boulme@imag.fr>,
+	Mike Hommey <mh@glandium.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 30 17:08:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QR3vA-0000pw-Pn
-	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 16:58:21 +0200
+	id 1QR44O-0005e4-CF
+	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 17:07:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757161Ab1E3O6Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2011 10:58:16 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:34630 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753658Ab1E3O6P convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 May 2011 10:58:15 -0400
-Received: by wwa36 with SMTP id 36so3983682wwa.1
-        for <git@vger.kernel.org>; Mon, 30 May 2011 07:58:14 -0700 (PDT)
+	id S1752391Ab1E3PHr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 May 2011 11:07:47 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:33887 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751753Ab1E3PHr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 May 2011 11:07:47 -0400
+Received: by pzk9 with SMTP id 9so1641786pzk.19
+        for <git@vger.kernel.org>; Mon, 30 May 2011 08:07:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:content-type:content-transfer-encoding
-         :subject:date:message-id:cc:to:mime-version:x-mailer;
-        bh=Huw/mNp4ZbvvnxYB66FNev3hSsKjTldRkn5NkcSDlJA=;
-        b=XX51abyLYHVIch/+TlqwCYaf9PgRFlaHr6JOefCvGNM3bxLb92wE4yCiyfyARlZW+C
-         hSgrNnkWTQEjbVjAvfvhN5vCMyaRCvZeC5NtQYzFTtTdgudqmzMP23vgEEwN1cRyjgAP
-         oT0cy46iVFw/CnsJhg6QUDl2V8/fNg07p3Juo=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=VJuRls03Ahc0iv7uITm6iIslKUqJ10i9/wQKmC6Sv80=;
+        b=d0bHIqKVYzsC/uokyuDYyX646rttvZkjFzJ5/9HkQ9UqeFsBlWEMwwNwDlC7RkLvyW
+         3CZ33S5X1DfTjD5DSfkJMHElxRaiFVghY7kmVWKpuZ3tAJSqgekRqQgJu7IjJUKtUe/Q
+         RKouSwYyk+k3K7S2n/jO9gzE6XhygxaKWPJjc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:content-type:content-transfer-encoding:subject:date:message-id
-         :cc:to:mime-version:x-mailer;
-        b=ERfi6uJZTgr1yoptD6X45u+C6n3sBUA2NW+idB+iKghW5KtOP2m+FBaM+zMYcFMa7E
-         hAVxmKnC6Z4K052wRIVm6P4QQRRQlu8Zqr7AVXX8haOMK1uip8BelBbWKS5SqWmGf68O
-         0tUGwnLsBogRIhOAR6VhjpDviJDBipehaY8jQ=
-Received: by 10.216.141.1 with SMTP id f1mr4972042wej.35.1306767494196;
-        Mon, 30 May 2011 07:58:14 -0700 (PDT)
-Received: from ensi-vpn-107.imag.fr (ensi-vpn-107.imag.fr [129.88.57.107])
-        by mx.google.com with ESMTPS id o75sm2542404weq.40.2011.05.30.07.58.13
-        (version=SSLv3 cipher=OTHER);
-        Mon, 30 May 2011 07:58:13 -0700 (PDT)
-X-Mailer: Apple Mail (2.1082.1)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=tVOBrU8rm5tTzkEI48NW+sBfuECaNe8BgnhUOsGpeNK4OFmkN4H31PzdHQxuPye81B
+         CzlmW+Kgm8kzVr+Tv1S/xP+ZFo+hRGkEif5Y/KR3XTjrk1Ret6i4AJTAPDkzBStX8V28
+         hMGQ5GlVIjx4Mp46X5S7CPoe5tZtaDIBmzGRw=
+Received: by 10.142.43.15 with SMTP id q15mr695815wfq.348.1306768066348; Mon,
+ 30 May 2011 08:07:46 -0700 (PDT)
+Received: by 10.142.13.11 with HTTP; Mon, 30 May 2011 08:07:26 -0700 (PDT)
+In-Reply-To: <20110530145203.GA10879@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174754>
 
-Hello,
+>
+> Could you push a branch exhibiting the problem? =A0The reason I ask
+> is that searching with
+>
+> =A0 =A0 =A0 =A0git grep -F -e 'duplicated ref' origin/master
+>
+> in git.git yields no hits for me, so I wanted to reproduce this to ge=
+t
+> the exact error message or figure out which program is printing it.
+>
+> Thanks.
+>
 
-We are currently coding a minimal git client using libgit2, and as quoted by David Glesser in another mail, we use the git test base on our client to validate it. We found a test that tries to run git with a specified --git-dir but don't use the way it's described in the help.
+Ok I just committed my changes to the master branch, feel free to pull
+and try it out.
 
-Indeed the test t2050-git-dir-relative.sh run :
-
-echo changed >top &&
-git --git-dir subdir/.git add top &&
-git --git-dir subdir/.git commit -m topcommit &&
-test -r "${COMMIT_FILE}"
-
-But according to the git help, it should have specified a git-dir with --git-dir=value ie
-git --git-dir=subdir/.git add top
-
-Am i wrong or the test must be rewritten ?
-
-Romain Geissler
+Thanks for your help
+--=20
+J=E9r=E9mie Nikaes
