@@ -1,64 +1,104 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH v2 3/3] gitk: Allow displaying time zones from author and commit timestamps
-Date: Mon, 30 May 2011 21:35:50 +0200
-Message-ID: <m2sjrw9e21.fsf@igel.home>
-References: <alpine.DEB.2.02.1101191445130.23868@dr-wily.mit.edu>
-	<alpine.DEB.2.02.1101191447340.23868@dr-wily.mit.edu>
-	<20110529044656.GA8881@brick.ozlabs.ibm.com>
-	<alpine.DEB.2.02.1105291740410.23145@dr-wily.mit.edu>
-	<alpine.DEB.2.02.1105292305390.23145@dr-wily.mit.edu>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Git fast-import : Warning duplicated ref: refs/remotes/origin/master
+Date: Mon, 30 May 2011 21:46:09 +0200
+Message-ID: <vpqzkm4gef2.fsf@bauges.imag.fr>
+References: <BANLkTinTuEppMGO16z2sMkjV8FveCbrwEQ@mail.gmail.com>
+	<20110529232405.GA8369@elie>
+	<BANLkTinhH7ksP8EZV+Sd4ryCT1_bhVhgaw@mail.gmail.com>
+	<20110530173517.GA13539@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-To: Anders Kaseorg <andersk@MIT.EDU>
-X-From: git-owner@vger.kernel.org Mon May 30 21:36:01 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?iso-8859-1?Q?J=E9r=E9mie?= NIKAES <jeremie.nikaes@gmail.com>,
+	git@vger.kernel.org, Sylvain Boulme <Sylvain.Boulme@imag.fr>,
+	Mike Hommey <mh@glandium.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 30 21:46:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QR8Ft-0000ff-0P
-	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 21:36:01 +0200
+	id 1QR8QR-0005zc-6p
+	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 21:46:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752654Ab1E3Tfz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2011 15:35:55 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:50381 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750816Ab1E3Tfy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2011 15:35:54 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id A42E2188B580;
-	Mon, 30 May 2011 21:35:51 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
-	by mail.m-online.net (Postfix) with ESMTP id A2DDE1C0009D;
-	Mon, 30 May 2011 21:35:51 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
-	with ESMTP id cjjhLQPGHfjG; Mon, 30 May 2011 21:35:51 +0200 (CEST)
-Received: from igel.home (ppp-88-217-112-53.dynamic.mnet-online.de [88.217.112.53])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Mon, 30 May 2011 21:35:51 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id B9619CA29C; Mon, 30 May 2011 21:35:50 +0200 (CEST)
-X-Yow: I'm in ATLANTIC CITY riding in a comfortable ROLLING CHAIR...
-In-Reply-To: <alpine.DEB.2.02.1105292305390.23145@dr-wily.mit.edu> (Anders
-	Kaseorg's message of "Sun, 29 May 2011 23:06:34 -0400 (EDT)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+	id S1751923Ab1E3Tqj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 May 2011 15:46:39 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:45689 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750871Ab1E3Tqi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2011 15:46:38 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p4UJk7f4003205
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 30 May 2011 21:46:07 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1QR8Ph-0003Tj-M0; Mon, 30 May 2011 21:46:09 +0200
+In-Reply-To: <20110530173517.GA13539@elie> (Jonathan Nieder's message of "Mon,
+	30 May 2011 12:35:17 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 30 May 2011 21:46:07 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p4UJk7f4003205
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1307389572.3037@c6QMlk+cnY4ACjVwHpfMBw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174771>
 
-Anders Kaseorg <andersk@MIT.EDU> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> +		catch {set savedTZ $env(TZ)}
-                if {[info exits env(TZ)]} {set savedTZ $env(TZ)}
+> J=E9r=E9mie NIKAES wrote:
+>
+>> No, I actually still have the problem. The version commited on githu=
+b
+>> is pulling revisions straight to refs/heads/master which is gross
+>> After discussing this matter with our teacher Matthieu Moy, I wanted
+>> to change this to refs/remotes/origin/master but then this warning
+>> gets thrown.
+>
+> The following fixes it for me.
 
-Andreas.
+It seems it does, thanks!
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+clone does not give the warning anymore, and incremental pull work.
+
+>  sub mw_capabilities {
+>  #	print STDOUT "fetch\n";
+> +	print STDOUT "refspec refs/heads/*:refs/mediawiki/$remotename/*\n";
+
+Is this "mediawiki" comming from the URL (mediawiki::...), or is it jus=
+t
+a convention you've set?
+
+We've tried with refspec refs/heads/*:refs/remotes/origin/*, but withou=
+t
+success.
+
+Do I understand correctly that the "pull" is done in 3 stages:
+
+1) import into refs/mediawiki/origin
+
+2) fetch the imported ref into refs/remotes/origin
+
+3) and merge as usual into the current branch
+
+?
+
+If so, I don't understand why the distinction between 1) and 2) is
+necessary, and why not to fetch directly into refs/remotes/origin/. IOW=
+,
+in which case is refs/remotes/origin/master different from
+refs/mediawiki/origin/master for example?
+
+Thanks,
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
