@@ -1,127 +1,115 @@
-From: Tim Mazid <timmazid@hotmail.com>
-Subject: Re: [PATCH] rebase: learn --discard subcommand
-Date: Mon, 30 May 2011 15:14:35 +1000
-Message-ID: <20110530051434.GA3723@Imperial-SD-Longsword>
-References: <1306551495-26685-1-git-send-email-martin.von.zweigbergk@gmail.com>
- <20110528230844.GA31498@elie>
- <4DE32138.4050104@alum.mit.edu>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 3/3] gitk: Allow displaying time zones from author and commit timestamps
+Date: Sun, 29 May 2011 22:35:08 -0700 (PDT)
+Message-ID: <m3mxi4yco5.fsf@localhost.localdomain>
+References: <alpine.DEB.2.02.1101191445130.23868@dr-wily.mit.edu>
+	<alpine.DEB.2.02.1101191447340.23868@dr-wily.mit.edu>
+	<20110529044656.GA8881@brick.ozlabs.ibm.com>
+	<alpine.DEB.2.02.1105291740410.23145@dr-wily.mit.edu>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="mP3DRpeJDSE+ciuQ"
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon May 30 07:14:49 2011
+Content-Type: text/plain; charset=macintosh
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+To: Anders Kaseorg <andersk@MIT.EDU>
+X-From: git-owner@vger.kernel.org Mon May 30 07:35:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QQuoQ-0001iN-Ef
-	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 07:14:46 +0200
+	id 1QQv8N-0007km-NS
+	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 07:35:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752033Ab1E3FOl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2011 01:14:41 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:46673 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751737Ab1E3FOl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2011 01:14:41 -0400
-Received: by pwi15 with SMTP id 15so1494584pwi.19
-        for <git@vger.kernel.org>; Sun, 29 May 2011 22:14:40 -0700 (PDT)
+	id S1752325Ab1E3FfM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 May 2011 01:35:12 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:46650 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751449Ab1E3FfL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 May 2011 01:35:11 -0400
+Received: by fxm17 with SMTP id 17so2253153fxm.19
+        for <git@vger.kernel.org>; Sun, 29 May 2011 22:35:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=8hWUww3pOr0sanV8q6yy9XhfQiBCreDUaFHPENk86lY=;
-        b=qeKU6awH4fuN2hGLDlBDa7Qp5jp5SSfZmvqp6uRTJoA+YT3v6m4Bce7a/tsjEp1Umf
-         ZxkfoXaDghpfDMQYYqp2m6jArq9x/5nfC1lPcl/R811ksFqc8GLhr72NEN2GXK+Zm9Ar
-         BvFbfGVec4FGb48C1WyiL93AOgq3aqXkpA+ps=
+        h=domainkey-signature:x-authentication-warning:to:cc:subject
+         :references:from:date:in-reply-to:message-id:lines:user-agent
+         :mime-version:content-type:content-transfer-encoding;
+        bh=1fmFXgd7ttZogU6wYTK0EuvVHFnGK2pRyyX/5EC5cN8=;
+        b=oWIxhEh0ZQs75JfFcUtq8znLyvrzARICkwghPSjjXpfGLqvX7CAnWC/oYeNjJ6oNYj
+         ITVVTpw+HTYVCQiL/pKEsDZOulXet20M+xJjrIzIpXIRooYFvbnicyJaGEIPn0Jvegq4
+         nFzS3xCq1VE9M6/8TmagrIP2qHE7lGi5DIIVY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=MTp3sL7hIocqfyV0CZTLvOrs40e1+uuvWBHAxk5UUbW49675YAZMIFelLDsbMw76c3
-         JDclHpu3e0rGYe+qGUPAMg1+yzsD03E+XxkVUROsMqJEWtY1wr80AmTbCsndIl6opIo6
-         SMwxQ6bKGDEipHgOTrcW5OAzMr+ZvG2rBOHEo=
-Received: by 10.142.208.1 with SMTP id f1mr620932wfg.412.1306732480216;
-        Sun, 29 May 2011 22:14:40 -0700 (PDT)
-Received: from longsword.imperial.fleet (c114-76-222-200.rivrw3.nsw.optusnet.com.au [114.76.222.200])
-        by mx.google.com with ESMTPS id z7sm2893341wff.17.2011.05.29.22.14.37
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=H+59Qkxd9RIj5pI2YP/WQVhGueUjL59+R7oNjuoA3UcMtQC+POlyb5ZhVxB0hZVjVE
+         VpoqzjKb0RLAYO7rLr1+wCTS1r8Lvsu9IIc0eO/Qwpa8N17CFqlsdqVEKdJicg1AsSKC
+         3BQey4ceX2c0zZBKuHES6VyaBV2N7k2q+jlxM=
+Received: by 10.223.27.18 with SMTP id g18mr5114886fac.52.1306733709520;
+        Sun, 29 May 2011 22:35:09 -0700 (PDT)
+Received: from localhost.localdomain (abvg56.neoplus.adsl.tpnet.pl [83.8.204.56])
+        by mx.google.com with ESMTPS id b25sm593276fab.28.2011.05.29.22.35.08
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 29 May 2011 22:14:39 -0700 (PDT)
-Received: from tim by longsword.imperial.fleet with local (Exim 4.76)
-	(envelope-from <tim@imperial-sd-longsword>)
-	id 1QQuoF-000127-7w; Mon, 30 May 2011 15:14:35 +1000
-Content-Disposition: inline
-In-Reply-To: <4DE32138.4050104@alum.mit.edu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        Sun, 29 May 2011 22:35:08 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p4U5YY92006386;
+	Mon, 30 May 2011 07:34:45 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p4U5YIMp006379;
+	Mon, 30 May 2011 07:34:18 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <alpine.DEB.2.02.1105291740410.23145@dr-wily.mit.edu>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174722>
 
+Anders Kaseorg <andersk@MIT.EDU> writes:
+> On Sun, 29 May 2011, Paul Mackerras wrote:
 
---mP3DRpeJDSE+ciuQ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, May 30, 2011 at 06:46:48AM +0200, Michael Haggerty wrote:
-> On 05/29/2011 01:08 AM, Jonathan Nieder wrote:
-> > Agh, "git rebase --abort --keep-head" feels a little too long to be
-> > memorable.  Still, hope that helps.
+> > > @@ -11018,7 +11018,18 @@ proc prefsok {} {
+> > >  proc formatdate {d} {
+> > >      global datetimeformat
+> > >      if {$d ne {}} {
+> > > -	set d [clock format [lindex $d 0] -format $datetimeformat]
+> > > +	if {[string match {*%[zZ]*} $datetimeformat]} {
+> > > +	    if {[catch {set d [clock format [lindex $d 0] -timezone [li=
+ndex $d 1] -format $datetimeformat]}]} {
+> > > +		# Tcl < 8.5 does not support -timezone.
+> > > +		global env
+> > > +		set zone [lindex $d 1]
+> > > +		set env(TZ) "IDK[string range $zone 0 2]:[string range $zone 3=
+ end]"
+> >=20
+> > What is this about?  Where is the IDK prefix for timezones defined =
+or
+> > described?
 >=20
-> It seems like the distinction is analogous to "git reset --soft", so maybe
+> Yeah, sorry, that deserved a bit more explanation.  This is a kludge =
+to=20
+> get Tcl 8.4 to format dates in the right timezone.  IDK is an arbitra=
+ry=20
+> made up 3-letter code (=D2I Don=D5t Know=D3), since a UTC offset can=D5=
+t generally=20
+> be converted into a zone name.  The format of TZ is described at:
+> http://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html
+> http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.ht=
+ml
 >=20
->     git rebase --abort --soft
+> Actually, reading that again, I just realized that I need to invert t=
+he=20
+> sign.  Also that it can be longer than 3 letters; I=D5ll use =D2Unkno=
+wn=D3=20
+> instead.
 
-Well, the only problem with that is the "--soft" option refers to the
-"reset" command given to git, whereas in your proposed syntax, the
-"--soft" option refers to the _other_ option, "--abort".
+Why not use UTC+N timezone (note: please check of for +HHMM it is
+UTC+HH or UTC-HH) for timezone with given numeric offset from
+Coordinated Universal Time?
 
-This may seem a little nit-picky, but such a difference could lead to
-confusion.  Perhaps "--soft-abort" or "--soft-abort" would be better?  A
-single option to the "git rebase" command rather than a "sub-option"
-given to another option.
-
-It just seems to me that all the git commands work this way; "git
-command --options-to-command".  An option to another option just seems
-too confusing.
-
-Of course, there's the floodgate problem; once you have options to
-options, are you going to have options to options to options, ad
-infinitum?
-
+BTW. UTC because http://www.nist.gov/pml/div688/utcnist.cfm#cut
 --=20
-Tim
-
-() ascii ribbon campaign - against html e-mail
-/\ www.asciiribbon.org   - against proprietary attachments
-
---mP3DRpeJDSE+ciuQ
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQIcBAEBCgAGBQJN4ye5AAoJEGNoa2q+dzQWkhcP/00q2vEtltCJEN3Ty4NdI18R
-4SDcmgcwFwnqzfU1UkO+a/8KwOXMSnQo+h5ZuD/Mv8ozikPeHPvkCrwQz5sGCS2x
-Aj5CDj+P0DPkt6NzhT4+5FTmfYgjdGqksMIzGBMDM6OxqvVPXIKnPLqjhivsHNrH
-RBVnvjjlNev6BPjvTm3NluV6Ka5bSu/Uash6+oDsGjFKCp/1ZCl00hZh5SZZ3t06
-hDsCSgdHRb0uDv9pJ7jF3DS/UY1CRbpLRnxpTwcYk1DNm7g7H+MR+pe0gDgcGM3W
-mmMXdpnRvaAo2S09M1Pf+r9GYA+RIw+vGJE3ikoSRMAb7Qz6D0ZvAxdE6S6jcl3X
-26Un/oAx+CdpkLDZkNqBdBJwwMTBb9OvCcILOiiOe2ozjBQ9nGxuqkLax1iJ1LTu
-4lWHOlAjXA0ZBbTHqNCNI0qYQgV6RMzdYycAksCbVBAjsKIWFZoI7j4YmCWD7U0z
-/86+L1/G1t3mMHdxIveFTqJ8w73G6UFX8BqMkL3ykrO5uJa3/FVzyKx54XyqD4ku
-kWhM7IejChRvu06ZU0GnLYMvr/W90Smxs65C0Czw69hCpwkNBA9iINfF6QmeV+ae
-RuNq7iF8ZX9qa32M3yXGb8eZFp7Q00WL2uEZ5xmnUlOowORIWZGZvJhmWHwP8aPU
-w0gPCZdoxyVDOg0OGvdK
-=spbA
------END PGP SIGNATURE-----
-
---mP3DRpeJDSE+ciuQ--
+Jakub Narebski
+Poland
+ShadeHawk on #git
