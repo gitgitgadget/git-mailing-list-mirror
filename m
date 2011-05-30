@@ -1,85 +1,71 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Git fast-import : Warning duplicated ref:
- refs/remotes/origin/master
-Date: Mon, 30 May 2011 09:52:04 -0500
-Message-ID: <20110530145203.GA10879@elie>
-References: <BANLkTinTuEppMGO16z2sMkjV8FveCbrwEQ@mail.gmail.com>
- <20110529232405.GA8369@elie>
- <BANLkTinhH7ksP8EZV+Sd4ryCT1_bhVhgaw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Sylvain Boulme <Sylvain.Boulme@imag.fr>,
-	Mike Hommey <mh@glandium.org>
-To: =?utf-8?B?SsOpcsOpbWll?= NIKAES <jeremie.nikaes@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 30 16:52:22 2011
+From: Romain Geissler <romain.geissler@gmail.com>
+Subject: Git global usage and tests
+Date: Mon, 30 May 2011 16:58:14 +0200
+Message-ID: <754E784F-51C6-4B8D-B15D-3FF8B7AF1321@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1082.1)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 30 16:58:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QR3pO-00060u-JL
-	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 16:52:22 +0200
+	id 1QR3vA-0000pw-Pn
+	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 16:58:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757387Ab1E3OwQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 May 2011 10:52:16 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:40833 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757224Ab1E3OwO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 May 2011 10:52:14 -0400
-Received: by iyb14 with SMTP id 14so3008541iyb.19
-        for <git@vger.kernel.org>; Mon, 30 May 2011 07:52:13 -0700 (PDT)
+	id S1757161Ab1E3O6Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2011 10:58:16 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:34630 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753658Ab1E3O6P convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 May 2011 10:58:15 -0400
+Received: by wwa36 with SMTP id 36so3983682wwa.1
+        for <git@vger.kernel.org>; Mon, 30 May 2011 07:58:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=h9Zw9sN2752RLsoGP++ZUlxqDPF9vN57FdE4nkxUJcw=;
-        b=TrKj2XnmRmTlwNsr6zltx35pwbkU+TV5FBu5HQSEpS0hD+04QfNbB270+VTnVT3AkN
-         BUUi8/jN5lWNEdhZ5VWmxTnEZHTlu777qEjnlHnyw3vBBRI2E4qVI6wyiKJHKomEMaCT
-         uX3sfK69zv5Pc1r+uiguY6ZETsB5YFzrZo4vE=
+        h=domainkey-signature:from:content-type:content-transfer-encoding
+         :subject:date:message-id:cc:to:mime-version:x-mailer;
+        bh=Huw/mNp4ZbvvnxYB66FNev3hSsKjTldRkn5NkcSDlJA=;
+        b=XX51abyLYHVIch/+TlqwCYaf9PgRFlaHr6JOefCvGNM3bxLb92wE4yCiyfyARlZW+C
+         hSgrNnkWTQEjbVjAvfvhN5vCMyaRCvZeC5NtQYzFTtTdgudqmzMP23vgEEwN1cRyjgAP
+         oT0cy46iVFw/CnsJhg6QUDl2V8/fNg07p3Juo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=sKbwnus6y+MpjlHJEbqSufoUmdxV4D3LK8nbaijLdxZYDfmJzg5w89RuPgKBqZU5Ja
-         r1XOZhqJIlITipB6QSuW7o6gnjh69hCyiZHJapp1KSG9TusYaq+28vlMFDF4cQgLZEvK
-         5cEVGSYrmoYhr7BH/RO75JAxXsaNK2w+uxbbM=
-Received: by 10.42.152.74 with SMTP id h10mr8728907icw.484.1306767133751;
-        Mon, 30 May 2011 07:52:13 -0700 (PDT)
-Received: from elie (adsl-69-209-65-98.dsl.chcgil.ameritech.net [69.209.65.98])
-        by mx.google.com with ESMTPS id d6sm1280560ibj.57.2011.05.30.07.52.09
+        h=from:content-type:content-transfer-encoding:subject:date:message-id
+         :cc:to:mime-version:x-mailer;
+        b=ERfi6uJZTgr1yoptD6X45u+C6n3sBUA2NW+idB+iKghW5KtOP2m+FBaM+zMYcFMa7E
+         hAVxmKnC6Z4K052wRIVm6P4QQRRQlu8Zqr7AVXX8haOMK1uip8BelBbWKS5SqWmGf68O
+         0tUGwnLsBogRIhOAR6VhjpDviJDBipehaY8jQ=
+Received: by 10.216.141.1 with SMTP id f1mr4972042wej.35.1306767494196;
+        Mon, 30 May 2011 07:58:14 -0700 (PDT)
+Received: from ensi-vpn-107.imag.fr (ensi-vpn-107.imag.fr [129.88.57.107])
+        by mx.google.com with ESMTPS id o75sm2542404weq.40.2011.05.30.07.58.13
         (version=SSLv3 cipher=OTHER);
-        Mon, 30 May 2011 07:52:10 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <BANLkTinhH7ksP8EZV+Sd4ryCT1_bhVhgaw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        Mon, 30 May 2011 07:58:13 -0700 (PDT)
+X-Mailer: Apple Mail (2.1082.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174753>
 
-J=C3=A9r=C3=A9mie NIKAES wrote:
->> J=C3=A9r=C3=A9mie NIKAES wrote:
+Hello,
 
->>> a "Warning duplicated
->>> ref: refs/remotes/origin/master" is thrown.
-[...]
-> No, I actually still have the problem. The version commited on github
-> is pulling revisions straight to refs/heads/master which is gross
-> After discussing this matter with our teacher Matthieu Moy, I wanted
-> to change this to refs/remotes/origin/master but then this warning
-> gets thrown.
+We are currently coding a minimal git client using libgit2, and as quoted by David Glesser in another mail, we use the git test base on our client to validate it. We found a test that tries to run git with a specified --git-dir but don't use the way it's described in the help.
 
-Could you push a branch exhibiting the problem?  The reason I ask
-is that searching with
+Indeed the test t2050-git-dir-relative.sh run :
 
-	git grep -F -e 'duplicated ref' origin/master
+echo changed >top &&
+git --git-dir subdir/.git add top &&
+git --git-dir subdir/.git commit -m topcommit &&
+test -r "${COMMIT_FILE}"
 
-in git.git yields no hits for me, so I wanted to reproduce this to get
-the exact error message or figure out which program is printing it.
+But according to the git help, it should have specified a git-dir with --git-dir=value ie
+git --git-dir=subdir/.git add top
 
-Thanks.
+Am i wrong or the test must be rewritten ?
+
+Romain Geissler
