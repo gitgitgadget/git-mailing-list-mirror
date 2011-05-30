@@ -1,95 +1,91 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/5] combine-diff: handle binary files as binary
-Date: Mon, 30 May 2011 12:19:27 -0400
-Message-ID: <20110530161927.GC24431@sigill.intra.peff.net>
-References: <20110523201529.GA6281@sigill.intra.peff.net>
- <20110523202734.GC6298@sigill.intra.peff.net>
- <7vpqn0ofy5.fsf@alter.siamese.dyndns.org>
- <20110530143627.GC31490@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: remote helpers: best practices for using the "refspec" capability
+Date: Mon, 30 May 2011 11:40:13 -0500
+Message-ID: <20110530164013.GG10879@elie>
+References: <BANLkTinTuEppMGO16z2sMkjV8FveCbrwEQ@mail.gmail.com>
+ <20110529232405.GA8369@elie>
+ <BANLkTinhH7ksP8EZV+Sd4ryCT1_bhVhgaw@mail.gmail.com>
+ <20110530145203.GA10879@elie>
+ <BANLkTinRscvPLHbob55pxhXSTKqm+eSF6g@mail.gmail.com>
+ <20110530155256.GC10879@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 30 18:19:35 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Sylvain Boulme <Sylvain.Boulme@imag.fr>,
+	Mike Hommey <mh@glandium.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: =?utf-8?B?SsOpcsOpbWll?= NIKAES <jeremie.nikaes@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 30 18:40:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QR5Bm-0007hx-W3
-	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 18:19:35 +0200
+	id 1QR5W2-00016g-Vf
+	for gcvg-git-2@lo.gmane.org; Mon, 30 May 2011 18:40:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756662Ab1E3QTa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 May 2011 12:19:30 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60717
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753432Ab1E3QT3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2011 12:19:29 -0400
-Received: (qmail 17096 invoked by uid 107); 30 May 2011 16:19:32 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 30 May 2011 12:19:32 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 30 May 2011 12:19:27 -0400
+	id S1755094Ab1E3QkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 May 2011 12:40:19 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:64162 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752401Ab1E3QkS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2011 12:40:18 -0400
+Received: by gwaa18 with SMTP id a18so1466672gwa.19
+        for <git@vger.kernel.org>; Mon, 30 May 2011 09:40:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=Xs6I7TV2YsUcrsaOpdg4o8oDVje0ytDvpdAMqLxiGt0=;
+        b=KPL/qFoyZTBixVbySRktTnuWfAZhQ9EjOgO1TRCRTD6GtbP67iRPv3UTkZi7sBAM1c
+         Z1VdmyiwJogVsC8LzeFQs5VZJp1uSw5EEzb9rdnzPao17+BYl/vrF0PjOwfkQIZetmny
+         mNxi4tyxJ4KChgN11UytAKyoDck56iFxKfRhA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=XTwdWny1fKou4f7cy3rL9bWjjlUxakV9tsnIfKVdg3KqRCSiVq0fRg90KApM1IuZc7
+         LsCjWdsVuNFavvXfy9pV2+SUqwcSFBxCLmKqCE2rjYy/2Kin7k/OrI0lAdMg4cqVDUHB
+         s0bw3/ZMpJUHMF4JPW+pLdISWCRpWZY8pJdJY=
+Received: by 10.236.187.103 with SMTP id x67mr6298335yhm.102.1306773617906;
+        Mon, 30 May 2011 09:40:17 -0700 (PDT)
+Received: from elie (adsl-69-209-65-98.dsl.chcgil.sbcglobal.net [69.209.65.98])
+        by mx.google.com with ESMTPS id a5sm2610146yhj.22.2011.05.30.09.40.16
+        (version=SSLv3 cipher=OTHER);
+        Mon, 30 May 2011 09:40:17 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20110530143627.GC31490@sigill.intra.peff.net>
+In-Reply-To: <20110530155256.GC10879@elie>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174762>
 
-On Mon, May 30, 2011 at 10:36:27AM -0400, Jeff King wrote:
+Jonathan Nieder wrote:
 
->   1. Grab each blob, check binary-ness, and free. This double-loads in
->      the common, non-binary case.
-> [...]
+> | error: Ref refs/remotes/origin/master is at d94a46270250454f1fc6c1fb47abfde31a2196c9 but expected dfb79bbc658333d5c9b0427b71f6b1bc48629949
+> | From mediawiki::http://localhost/mediawiki
+> |  ! dfb79bb...c57c15b master     -> origin/master  (unable to update local ref)
+> | error: Could not fetch origin
 >
-> I'll try to take a look at it this week and get some measurements on (1)
-> versus (2) for both speed and peak memory usage. And then see if I can
-> do better with (3), and implement the "peek" solution both here and in
-> regular diff.
+> which means that the transport machinery thought the helper was going
+> to be fetching directly to "master".  I suspect you will want a
+> 'refspec' capability like
+>
+>	refspec refs/heads/*:refs/mediawiki/${remotename}/*
+>
+> to fix this.
+>
+> Cc-ing Daniel who invented v1.7.0-rc0~62^2~19 (Allow helper to map
+> private ref names into normal names, 2009-11-18).  What namespace
+> should a helper use when asked to fetch to FETCH_HEAD without a remote
+> name, like
+>
+>	git fetch mediawiki::testwiki
+>
+> ?
 
-I was curious about this, so I stole a few minutes to do some
-preliminary benchmarks this morning.
-
-The first thing to look at is the performance of the original code, that
-does not check binary-ness at all. It's going to represent the best we
-can do with any strategy. So I tried:
-
-  git log -p --cc --merges origin/master
-
-on git.git using both v1.7.5.3 and the jk/combine-diff-binary-etc
-branch. And it turns out that the extra loads really don't make a
-difference in practice. My best-of-5 for the two cases were:
-
-  $ time git.v1.7.5.3 log -p --cc --merges origin/master >/dev/null
-  real    0m59.518s
-  user    0m58.672s
-  sys     0m0.688s
-
-  $ time git.jk.binary-combined-diff log -p --cc \
-      --merges origin/master >/dev/null
-  real    0m58.949s
-  user    0m58.220s
-  sys     0m0.572s
-
-The new code actually came out slightly faster.  One reason may be that
-there are 3 combined diffs of git-gui/lib/git-gui.ico that we avoid
-doing (and just say "Binary files differ"). That's not a lot, but it
-gives us a very tiny edge (though that edge is very close to the amount
-of noise between runs). Still, I think it implies that the extra loads
-in the common non-binary case are not actually measurable.
-
-The peak memory use between the two should be the same (since we free
-each blob immediately), but I didn't measure it.
-
-So I think in practice it's not a big deal. I'll still take a look at
-the "peek" optimization later this week, since that can make a
-difference in some corner cases. And as part of that, it will probably
-make sense to keep the buffers around for small-ish files, so we'll get
-the optimization I mentioned more or less for free. I'll also do the
-check for duplicated sha1s that you mentioned.
-
--Peff
+Actually cc-ing this time.  Sorry for the noise.
