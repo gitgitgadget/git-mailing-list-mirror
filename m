@@ -1,97 +1,151 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/4] test-svn-fe: split off "test-svn-fe -d" into a
- separate function
-Date: Tue, 31 May 2011 11:32:59 -0500
-Message-ID: <20110531163259.GC390@elie>
-References: <BANLkTi=O9AeOZTHVLbq+rKv5k-CqNGb+LQ@mail.gmail.com>
- <BANLkTinpta+a4MAr0e2YtMa1Kr1QcJmYWg@mail.gmail.com>
- <20110525235520.GA6971@elie>
- <BANLkTinBGnCKsUOXY_RD-7yNyM7XqNTsRw@mail.gmail.com>
- <20110527110828.GA7972@elie>
- <20110527110914.GB7972@elie>
- <1306858704.13283.2.camel@drew-northup.unet.maine.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re* diff: --quiet does not imply --exit-code if --diff-filter is
+ present
+Date: Tue, 31 May 2011 10:06:44 -0700
+Message-ID: <7vd3iykdej.fsf_-_@alter.siamese.dyndns.org>
+References: <87wrh7jgzk.wl@dns1.atmark-techno.com>
+ <20110531153356.GB2594@sigill.intra.peff.net>
+ <7vvcwqkh4a.fsf@alter.siamese.dyndns.org>
+ <20110531162546.GA11321@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Barr <davidbarr@google.com>, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>
-To: Drew Northup <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Tue May 31 18:33:14 2011
+Cc: Yasushi SHOJI <yashi@atmark-techno.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 31 19:07:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRRsY-0000uj-65
-	for gcvg-git-2@lo.gmane.org; Tue, 31 May 2011 18:33:14 +0200
+	id 1QRSPF-0002Th-Fi
+	for gcvg-git-2@lo.gmane.org; Tue, 31 May 2011 19:07:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757437Ab1EaQdI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2011 12:33:08 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:50295 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757389Ab1EaQdG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2011 12:33:06 -0400
-Received: by ywe9 with SMTP id 9so1866952ywe.19
-        for <git@vger.kernel.org>; Tue, 31 May 2011 09:33:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=OfC04upfBVFFVsh7yy8+SMhmIqQijyWxdyD8OPwdwPE=;
-        b=vpXjyCnKdHHM4QA+tb9JrlPqPe4OjwtjfnAgtCmAjz9rA7fRjekh71DQ3zpdDmFcUa
-         jI1y7UsbozbeNaSA8O7pAYaJTUJjd4d5tHJ1Ysqx4LQ+Y7IZ+hrBugx6KLKA5oCt3YMv
-         lv1aTPN+jZij8Qu1m8es9ITKcLfgtdwG8vIG4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=pGNxm0/VLqXk1wRqlmois6vypJOIoA3cR+4YhGIWmxPdbSrlwAJBOhY+u67oW/1Ei7
-         4lmCaL5Vq+cgXBav3eMC99nmXt/eBg5P4fV2B0OJKzTVpp+R0ELoRNhFf+AC98759hlJ
-         qde/kAz88FfNUEqEjHW166q5VDFpQNrqNOWgM=
-Received: by 10.236.79.70 with SMTP id h46mr7725794yhe.278.1306859585712;
-        Tue, 31 May 2011 09:33:05 -0700 (PDT)
-Received: from elie (adsl-69-209-65-98.dsl.chcgil.sbcglobal.net [69.209.65.98])
-        by mx.google.com with ESMTPS id i62sm180534yhm.80.2011.05.31.09.33.03
-        (version=SSLv3 cipher=OTHER);
-        Tue, 31 May 2011 09:33:04 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1306858704.13283.2.camel@drew-northup.unet.maine.edu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757728Ab1EaRG4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 May 2011 13:06:56 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59818 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752018Ab1EaRGy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2011 13:06:54 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 35C444ECB;
+	Tue, 31 May 2011 13:09:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1VQqBRtDThJRNxlsDP5kXVjayVA=; b=vdhAH9
+	kRRo8Ae3QPZmS/QhJO22bAwi1Rxt6KvjPqkUwZzZFO/HiCznwWtxY5UNjt2XioGZ
+	YDFPt6iz09/ttPwrwXp0pZF6qzOAr9r+t+a8I5YFpfh8YRCMSDOrzmOIPJ+eO6Vs
+	5CNm8wRXwDiLDcLnnISm3kMhKhgM1l4QLILh4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cEQ2/mWvf/3qRzqroGYyM0ppnDf0Fx45
+	bbFpa4GhMRssarKwM3jmzoT8O7Ng61yJQHvw9M2N4xoBpCpgB42+/u/Rl4LtBTbn
+	Fr/svzIi8h6NXJDECRToDkVJHD33yUX6/l+P/03Feg0rng76f8zh/Wiuhsi/vt2n
+	xEUiIBaHDfk=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EFD814ECA;
+	Tue, 31 May 2011 13:08:59 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 87F0C4EC9; Tue, 31 May 2011
+ 13:08:55 -0400 (EDT)
+In-Reply-To: <20110531162546.GA11321@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 31 May 2011 12:25:46 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AD44C776-8BA8-11E0-9070-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174813>
 
-Drew Northup wrote:
-> On Fri, 2011-05-27 at 06:09 -0500, Jonathan Nieder wrote:
+Jeff King <peff@peff.net> writes:
 
->> +static const char test_svnfe_usage[] =
->> +	"test-svn-fe (<dumpfile> | [-d] <preimage> <delta> <len>)";
-[...]
-> How is this germane to the original intent? Is there a gain by making it
-> global (to that file) that I'm missing?
+>> Thanks; a natural question is if we need the same for diff-index, then.
+>
+> No, it calls straight into unpack_trees. So I think the question is
+> "should unpack_trees respect the QUICK optimization". I suspect it
+> didn't happen simply because unpack_trees is so complex, and there are
+> probably corner cases with merging.
 
-It allows this variable with information about the program in general
-to be shared by the two functions.  Many examples of that style show
-up with
+Yeah, a somewhat hacky version would look like this.
 
-	git grep -l -F -e 'main(' | xargs git grep -F -e 'usage[]' --
-	git grep -F -e 'usage[]' -- builtin
+-- >8 --
+diff-index --quiet: learn the "stop feeding the backend early" logic
 
-I should have mentioned so in the commit message, though; maybe
-something like this:
+A negative return from the unpack callback function usually means unpack
+failed for the entry and signals the unpack_trees() machinery to fail the
+entire merge operation, immediately and there is no other way for the
+callback to tell the machinery to exit early without reporting an error.
 
-	The helper for testing the svndiff library is getting
-	dangerously close to the right margin.  Split it off into a
-	separate function so it is easier to contemplate on its own.
+This is what we usually want to make a merge all-or-nothing operation, but
+the machinery is also used for diff-index codepath by using a custom
+unpack callback function. And we do sometimes want to exit early without
+failing, namely when we are under --quiet and can short-cut the diff upon
+finding the first difference.
 
-	In other words, this just unindents the code a little.  In the
-	process, make the test_svnfe_usage[] string static so it can
-	be shared by the two functions (and other future functions in
-	this test program) without fuss.  No noticeable change
-	intended.
+Add "exiting_early" field to unpack_trees_options structure, to signal the
+unpack_trees() machinery that the negative return value is not signaling
+an error but an early return from the unpack_trees() machinery. As this by
+definition hasn't unpacked everything, discard the resulting index just
+like the failure codepath.
 
-Thanks for noticing,
-Jonathan
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ diff-lib.c     |    7 ++++++-
+ unpack-trees.c |    4 +++-
+ unpack-trees.h |    1 +
+ 3 files changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/diff-lib.c b/diff-lib.c
+index 9c29293..2e09500 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -433,8 +433,13 @@ static int oneway_diff(struct cache_entry **src, struct unpack_trees_options *o)
+ 	if (tree == o->df_conflict_entry)
+ 		tree = NULL;
+ 
+-	if (ce_path_match(idx ? idx : tree, &revs->prune_data))
++	if (ce_path_match(idx ? idx : tree, &revs->prune_data)) {
+ 		do_oneway_diff(o, idx, tree);
++		if (diff_can_quit_early(&revs->diffopt)) {
++			o->exiting_early = 1;
++			return -1;
++		}
++	}
+ 
+ 	return 0;
+ }
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 07f8364..3a61d82 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -593,7 +593,7 @@ static int unpack_nondirectories(int n, unsigned long mask,
+ static int unpack_failed(struct unpack_trees_options *o, const char *message)
+ {
+ 	discard_index(&o->result);
+-	if (!o->gently) {
++	if (!o->gently && !o->exiting_early) {
+ 		if (message)
+ 			return error("%s", message);
+ 		return -1;
+@@ -1133,6 +1133,8 @@ return_failed:
+ 		display_error_msgs(o);
+ 	mark_all_ce_unused(o->src_index);
+ 	ret = unpack_failed(o, NULL);
++	if (o->exiting_early)
++		ret = 0;
+ 	goto done;
+ }
+ 
+diff --git a/unpack-trees.h b/unpack-trees.h
+index 64f02cb..4b07683 100644
+--- a/unpack-trees.h
++++ b/unpack-trees.h
+@@ -47,6 +47,7 @@ struct unpack_trees_options {
+ 		     skip_sparse_checkout,
+ 		     gently,
+ 		     show_all_errors,
++		     exiting_early,
+ 		     dry_run;
+ 	const char *prefix;
+ 	int cache_bottom;
