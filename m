@@ -1,76 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (May 2011, #13; Mon, 30)
-Date: Mon, 30 May 2011 23:21:31 -0700
-Message-ID: <7v39jvl79w.fsf@alter.siamese.dyndns.org>
-References: <7v62osob67.fsf@alter.siamese.dyndns.org>
- <BANLkTi=reSnAVgt6k-JaDDu27HP_DEGdhQ@mail.gmail.com>
- <7vsjrwm4sj.fsf@alter.siamese.dyndns.org> <4DE4857A.70605@viscovery.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFD] Proposal for git-svn: storing SVN metadata (git-svn-id) in notes
+Date: Tue, 31 May 2011 09:20:12 +0200
+Message-ID: <201105310920.13323.jnareb@gmail.com>
+References: <201105281154.25223.jnareb@gmail.com> <20110531045324.GA13661@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue May 31 08:21:48 2011
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Tue May 31 09:20:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRIKp-0001u0-ME
-	for gcvg-git-2@lo.gmane.org; Tue, 31 May 2011 08:21:48 +0200
+	id 1QRJFf-0007Zp-6g
+	for gcvg-git-2@lo.gmane.org; Tue, 31 May 2011 09:20:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756954Ab1EaGVn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2011 02:21:43 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51589 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756066Ab1EaGVm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2011 02:21:42 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4A0895B9E;
-	Tue, 31 May 2011 02:23:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GMMX/5+N6rsGtgsay543jnAdFcQ=; b=bBuZzT
-	4E+KulLgzJx6KM1FN/hUchclRAMpDoPr/KNaIhrrOmm0o3jB/iWa9nuw4tQcbAMF
-	VIOzzCh5tQ1nhu4YnZrqVfVTIfGvMq2BWHLVJnhfBj4fr+8vbKxKrjlTtmwTqxXn
-	DDUa8AfLgz6BSwqVY6EaqcYgF8fCTgY9ACiBg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=f5G6Dp1SNpr2gaOObRc9PdlzPnIlfQIr
-	RfSWG+pVPNEwPreQrzMMM54m51bIST/ewl9PX1+6GyiA3lBRn1vCfIQeg1asXxH7
-	heX5kxXvHulTzN5h8AKdDhh2Ei1h3h7G7swMpqbCGpAJ/FbNFpHJV8pWOAWO/mya
-	Nu8774KNjo4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 190425B9C;
-	Tue, 31 May 2011 02:23:46 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 085975B9A; Tue, 31 May 2011
- 02:23:41 -0400 (EDT)
-In-Reply-To: <4DE4857A.70605@viscovery.net> (Johannes Sixt's message of "Tue,
- 31 May 2011 08:06:50 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8A0196F4-8B4E-11E0-A518-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+	id S1752667Ab1EaHUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 May 2011 03:20:25 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:62884 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750767Ab1EaHUZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2011 03:20:25 -0400
+Received: by bwz15 with SMTP id 15so3388471bwz.19
+        for <git@vger.kernel.org>; Tue, 31 May 2011 00:20:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=JmjGZ9Y+rknVvN1+/Qlu0q9BSZnJfKFUCtXxp15a6nM=;
+        b=SPmyf7DX6xkcX5Zk7KeG33UM07hYevTRHJjECFHpjoKS9QazLTEY6EPJEwlLMLHGFc
+         CV6RmA7OZ0q+1bBlSdkp004fxBeGrLmBSIzh1akVQeCi+lbS1hjjYsg7M6owyc1akC4H
+         +Y6n6vhwLlxFq4A0oOQueXZ3mpiLq6WpNuf6k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=WuitFARYuchZTJZh3saipbK+H1ZG/lnbrhFN3WC34mondmmNzlyJV3uoo3iY6yGxMU
+         NJI5jkxEBdxTDZVOBjWTJDH27hDr1CFNy73KSTfmazYBkUGfgMTqFfc7f0IRhV1P6gdx
+         u8W0+cZpMEbyM8L0PeqmBA8QFCz7DS4+PuRRQ=
+Received: by 10.204.127.1 with SMTP id e1mr5319387bks.77.1306826423901;
+        Tue, 31 May 2011 00:20:23 -0700 (PDT)
+Received: from [192.168.1.13] (abwc243.neoplus.adsl.tpnet.pl [83.8.226.243])
+        by mx.google.com with ESMTPS id ag6sm3971922bkc.18.2011.05.31.00.20.21
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 31 May 2011 00:20:22 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20110531045324.GA13661@dcvr.yhbt.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174796>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+On Tue, 31 May 2011, Eric Wong wrote:
+> Jakub Narebski <jnareb@gmail.com> wrote:
 
-> ... But as far as I am concerned, I do not mind backing out changes
-> that break on Windows until a solution is found.
->
-> [*] I do include cooking topics where I think that there is a chance that
-> they break on Windows.
+> > Eric, from what I remember you don't have time nor inclination for 
+> > adding new features to git-svn, is it?
+> 
+> Yes, that's mostly the case.  I suggest anybody interested in working on
+> git-svn further to split out the Perl modules into separate files before
+> doing any more work on it.
 
-Very much appreciated. We want more people to help keeping the tip of
-"master" stable by running "next", or selected topics in it that may
-affect you in the future, like you do. Hearing that "master" is broken
-due to recent merge of topic X is, while better than hearing the same
-after the tip of "master" is tagged, a bit saddening, as the reason "next"
-exists in the first place is exactly to prevent such accidents by catching
-buggy topics while they are in "next".
+Could you please at least review patches?  Would you have enough time
+(and inclination) to do at least this?
 
-Thanks.
+TIA
+-- 
+Jakub Narebski
+Poland
