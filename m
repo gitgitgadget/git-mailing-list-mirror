@@ -1,74 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] config.c: Remove unused git_config_global() function
-Date: Tue, 31 May 2011 10:51:06 -0700
-Message-ID: <7vy61miws5.fsf@alter.siamese.dyndns.org>
-References: <4DE5241E.9030000@ramsay1.demon.co.uk>
+From: Stephen Bash <bash@genarts.com>
+Subject: Effectively navigating branch history (was: Re: [PATCH] config.c:
+ Remove unused git_config_global() function)
+Date: Tue, 31 May 2011 14:21:24 -0400 (EDT)
+Message-ID: <18203023.45200.1306866084905.JavaMail.root@mail.hq.genarts.com>
+References: <7vy61miws5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Tue May 31 19:51:20 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 31 20:21:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRT66-0007fZ-W4
-	for gcvg-git-2@lo.gmane.org; Tue, 31 May 2011 19:51:19 +0200
+	id 1QRTZT-0003as-38
+	for gcvg-git-2@lo.gmane.org; Tue, 31 May 2011 20:21:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757937Ab1EaRvO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2011 13:51:14 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64571 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753920Ab1EaRvN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2011 13:51:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1069C563C;
-	Tue, 31 May 2011 13:53:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=a9VXXfUowsdzGFHwubAL0Swoh4s=; b=K09AQl
-	FM3E1OOWER9skN+44nTzr6+/evl1pEhibenKHJknckYOqyMiDTkYeG+cVkYTvOCH
-	cUrbzSRVJ8fezlXxPAYv+sq5w9wg6b2zZqS3e9IxVTP3Uv+KjJ7xPL8ZdyJ5L8a2
-	EOLBhdP/+mxNCuYcEH6WDkmt5ESLw3DRPiWrM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=P5w9a2/bB2nx/W5Ba6CnaZEsTyzeYc3J
-	2vrHCAF+lv8jw+sDPj6rxIKC7BSmiYXyt2jBrZ4rRol29deylUkq5gh4kipGGXl6
-	jV7j2irio1FG2cwj3rHRmgeoYd2eORoOmdF0ZHtET1TjoO3sXL+7P5I3rY+Cybul
-	2BPOYbAZRnQ=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E1194563B;
-	Tue, 31 May 2011 13:53:19 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 13FC1563A; Tue, 31 May 2011
- 13:53:16 -0400 (EDT)
-In-Reply-To: <4DE5241E.9030000@ramsay1.demon.co.uk> (Ramsay Jones's message
- of "Tue, 31 May 2011 18:23:42 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DEBA1AC6-8BAE-11E0-AAFC-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+	id S932213Ab1EaSVd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 May 2011 14:21:33 -0400
+Received: from hq.genarts.com ([173.9.65.1]:44286 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932108Ab1EaSVc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2011 14:21:32 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 6C192EA2306;
+	Tue, 31 May 2011 14:21:31 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 4KlalFxTsFCx; Tue, 31 May 2011 14:21:25 -0400 (EDT)
+Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 122CEEA2302;
+	Tue, 31 May 2011 14:21:25 -0400 (EDT)
+In-Reply-To: <7vy61miws5.fsf@alter.siamese.dyndns.org>
+X-Mailer: Zimbra 6.0.10_GA_2692 (ZimbraWebClient - SAF3 (Mac)/6.0.10_GA_2692)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174818>
 
-Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+----- Original Message -----
+> From: "Junio C Hamano" <gitster@pobox.com>
+> Sent: Tuesday, May 31, 2011 1:51:06 PM
+> Subject: Re: [PATCH] config.c: Remove unused git_config_global() function
+> 
+> > Commit 8f323c00 (drop support for GIT_CONFIG_NOGLOBAL, 15-03-2011)
+> > removed the git_config_global() function, among other things, since
+> > it is no longer required. Unfortunately, this function has since
+> > been unintentionally restored; I suspect by merge commit 25b86e45
+> > (Merge branch 'jk/maint-config-alias-fix' into next, 25-05-2011).
+> 
+> Yeah, I think it was 1f9a980636 which was a merge between fb674d7 and
+> 73546c0. I just compared the output between these two:
+> 
+> $ git diff fb674d7...73546c0 -- config.c ;# what the topic did
+> $ git diff fb674d7 1f9a980 -- config.c ;# what was merged
 
-> Commit 8f323c00 (drop support for GIT_CONFIG_NOGLOBAL, 15-03-2011)
-> removed the git_config_global() function, among other things, since
-> it is no longer required. Unfortunately, this function has since
-> been unintentionally restored; I suspect by merge commit 25b86e45
-> (Merge branch 'jk/maint-config-alias-fix' into next, 25-05-2011).
+Junio - I'd like to take a chance to learn from a master here if you don't mind.  I often find myself wanting to do the "what the topic did" operation but once the branch is merged and deleted, I have difficulty finding useful SHAs to diff.
 
-Yeah, I think it was 1f9a980636 which was a merge between fb674d7 and
-73546c0.  I just compared the output between these two:
+So in an attempt to educate myself, I tried to track down fb674d7 and 1f9a980 (and failed miserably).  I can easily find 8f323c00 using 'git log -S git_config_global', but conceptually I want to trace children of 8f323c00 to see where it merged, and that seems ... complicated.  Do you mind walking through your thought process on this problem?
 
-   $ git diff fb674d7...73546c0 -- config.c ;# what the topic did
-   $ git diff fb674d7 1f9a980 -- config.c   ;# what was merged
-
-and indeed I can see these four lines snuck in by accidental faulty
-conflict resolution. My bad.
-
-Thanks for spotting.
+Thanks!
+Stephen
