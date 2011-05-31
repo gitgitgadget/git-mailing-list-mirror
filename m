@@ -1,69 +1,75 @@
-From: Fabian Zeindl <fabian.zeindl@gmail.com>
-Subject: Re: weird rename
-Date: Tue, 31 May 2011 21:19:49 +0200
-Message-ID: <9FA9D80A-F970-4B3F-95DD-2B5DE73D27EB@gmail.com>
-References: <7760D048-5534-42A2-82D2-D5BB9C75739C@gmail.com> <BANLkTikuZ-ig0einn+GhMh9EJp4jp2TCxg@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: text/plain; charset=us-ascii
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 0/2] Tests for some submodule corner cases.
+Date: Tue, 31 May 2011 21:30:52 +0200
+Message-ID: <4DE541EC.7010202@web.de>
+References: <1306792280-12768-1-git-send-email-marcnarc@xiplink.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Reece Dunn <msclrhd@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue May 31 21:19:59 2011
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Tue May 31 21:31:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRUTu-0000EA-L2
-	for gcvg-git-2@lo.gmane.org; Tue, 31 May 2011 21:19:58 +0200
+	id 1QRUeb-00062p-V7
+	for gcvg-git-2@lo.gmane.org; Tue, 31 May 2011 21:31:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757581Ab1EaTTy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2011 15:19:54 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:33561 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751022Ab1EaTTx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2011 15:19:53 -0400
-Received: by fxm17 with SMTP id 17so3290497fxm.19
-        for <git@vger.kernel.org>; Tue, 31 May 2011 12:19:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:subject:mime-version:content-type:from
-         :in-reply-to:date:cc:content-transfer-encoding:message-id:references
-         :to:x-mailer;
-        bh=0KklDlFi28VBDeHmcpUCa18om/X99khiE++GW2gwx2E=;
-        b=NN03XthNv2zb1cw+Mu7zoxhwI0+1A0vl9BKT9umVHesfdFarFsRYGQDiknmGpualW8
-         akiIV/nyGseaHrD8oHjs0ZQH9Yiydc1P/iuJY5ysZ9v6ifO0jVAfGtGmfAL+n11ffct2
-         w2/iIOpZkg7Xfs7MXou2S3nSD+x07ylw3QgMg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        b=lrIOgg0zGu1XdZgPwDRgtDwr/P06wREfeL1pg8TBVrfSjxhWrO1TXPFedQ+pN29Q0r
-         jIGLI7OyVmKc14UpBfan6U3YGFeJA0vyDZZYqGSc4SGJE+X3eC87Qy+D+VSjw+cuEZLP
-         +OA2bEd+A0piaG9bmmpNHpo+Z762Occhq3Pi0=
-Received: by 10.223.29.132 with SMTP id q4mr2881650fac.17.1306869592338;
-        Tue, 31 May 2011 12:19:52 -0700 (PDT)
-Received: from [192.168.1.105] (chello062178219088.12.15.vie.surfer.at [62.178.219.88])
-        by mx.google.com with ESMTPS id e16sm139061fak.17.2011.05.31.12.19.50
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 31 May 2011 12:19:51 -0700 (PDT)
-In-Reply-To: <BANLkTikuZ-ig0einn+GhMh9EJp4jp2TCxg@mail.gmail.com>
-X-Mailer: Apple Mail (2.1084)
+	id S1758024Ab1EaTa4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 May 2011 15:30:56 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:40499 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753523Ab1EaTa4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2011 15:30:56 -0400
+Received: from smtp01.web.de  ( [172.20.0.243])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 03FB418FFD43C;
+	Tue, 31 May 2011 21:30:54 +0200 (CEST)
+Received: from [93.240.123.160] (helo=[192.168.178.43])
+	by smtp01.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1QRUeT-0005cb-00; Tue, 31 May 2011 21:30:53 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
+In-Reply-To: <1306792280-12768-1-git-send-email-marcnarc@xiplink.com>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX19nQRGFpWieldJOmSyGSeZjYOor8KFlEPxkllM5
+	MRZB4tLy6774T8uxEyOimOaImTSHd91QH0mIcSbWJPinw+WnF7
+	MPMiPoZ6Y/OTTPdkhWRQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174825>
 
-On May 31, 2011, at 9:18 PM, Reece Dunn wrote:
-> /dev/null is used to indicate "does not exist" 
+Am 30.05.2011 23:51, schrieb Marc Branchaud:
+> Ran across some submodule behavior that seems wrong to me.  I don't have the
+> chops to fix the issues, so I thought I'd just point them out with some unit
+> tests.
 
-yeah i know that :)
+Thanks for bringing these issues to our attention this way, having a way
+to easily reproduce them is very much appreciated.
 
-> Comparing /dev/null with A -- A is a new (added) file.
-> Comparing A with /dev/null -- A is deleted.
+> Patch 1 tests the case where "submodule add" fails if the path to the
+> submodule repo is relative (i.e. starts with "../").  This currently fails
+> with "remote (origin) does not have a url defined in .git/config".  Maybe
+> there's a reason to fail?  If so, a better error message would be appreciated.
 
-ok, i deleted a similar sounding file (3.7M3 instead of 3.7M7), i just wonder
-why git got that as a rename. or the GUI (GitX) at least.
+I stumbled across this behavior now and then too, but according to the
+commit it added (f31a522a2d) it is intended that adding a relative path
+behaves differently than using an absolute path (it resolves relative to
+the superproject's origin, not the filesystem, and to be able to do that
+the superproject's .git/config has to have an url defined for it). But
+you are right about the error message, it really isn't that helpful ...
 
-fabian
+> Patch 2 exposes an anomaly in "submodule status", which reports that a
+> submodule is OK even though it has deleted files.  "git status" inside
+> the submodule (and in the super-repo) both identify any deleted files, but
+> "submodule status" doesn't prefix the submodule's HEAD SHA-ID with a "+".
+
+That is documented behavior. "git submodule status" only cares about the
+commit recorded in the superproject vs the HEAD in the submodule, work
+tree modifications are never shown by it.
+
+But try a "git status" in the superproject, that will give you the following
+output:
+#	modified:   init (modified content)
