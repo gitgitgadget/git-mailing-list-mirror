@@ -1,89 +1,111 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: Git EOL Normalization
-Date: Tue, 31 May 2011 11:01:02 -0400
-Message-ID: <1306854062.12429.11.camel@drew-northup.unet.maine.edu>
-References: <22629514.41388.1306427328539.JavaMail.root@mail.hq.genarts.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git global usage and tests
+Date: Tue, 31 May 2011 11:04:55 -0400
+Message-ID: <20110531150455.GA2594@sigill.intra.peff.net>
+References: <754E784F-51C6-4B8D-B15D-3FF8B7AF1321@gmail.com>
+ <20110530153620.GA24431@sigill.intra.peff.net>
+ <B369AA28-DEF2-48F3-8E4E-F387E8A57D26@gmail.com>
+ <20110530161230.GA25291@sigill.intra.peff.net>
+ <7v7h97la4s.fsf@alter.siamese.dyndns.org>
+ <BANLkTinW_se8VAhF9wk3KyzNHVc_wH_PqA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Dmitry Potapov <dpotapov@gmail.com>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-To: Stephen Bash <bash@genarts.com>
-X-From: git-owner@vger.kernel.org Tue May 31 17:01:49 2011
+	Romain Geissler <romain.geissler@gmail.com>,
+	git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 31 17:05:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRQS3-0002WB-AK
-	for gcvg-git-2@lo.gmane.org; Tue, 31 May 2011 17:01:47 +0200
+	id 1QRQVE-0004FH-SS
+	for gcvg-git-2@lo.gmane.org; Tue, 31 May 2011 17:05:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756521Ab1EaPBm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2011 11:01:42 -0400
-Received: from beryl.its.maine.edu ([130.111.32.94]:52878 "EHLO
-	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754808Ab1EaPBl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2011 11:01:41 -0400
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p4VF16BN016555
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 31 May 2011 11:01:06 -0400
-In-Reply-To: <22629514.41388.1306427328539.JavaMail.root@mail.hq.genarts.com>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=5 Fuz1=5
-	Fuz2=5
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p4VF16BN016555
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1307458867.61156@fNpZvoDhG13dvsb+Q2iK8Q
+	id S1756609Ab1EaPE7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 May 2011 11:04:59 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45418
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755348Ab1EaPE6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2011 11:04:58 -0400
+Received: (qmail 25410 invoked by uid 107); 31 May 2011 15:05:01 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 31 May 2011 11:05:01 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 May 2011 11:04:55 -0400
+Content-Disposition: inline
+In-Reply-To: <BANLkTinW_se8VAhF9wk3KyzNHVc_wH_PqA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174804>
 
+On Tue, May 31, 2011 at 01:52:31PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason wrote:
 
-On Thu, 2011-05-26 at 12:28 -0400, Stephen Bash wrote:
-> ----- Original Message -----
-> > From: "Junio C Hamano" <gitster@pobox.com>
-> > To: "Jakub Narebski" <jnareb@gmail.com>
-> > Sent: Thursday, May 26, 2011 12:07:21 PM
-> > Subject: Re: Git EOL Normalization
-> > 
-> > > I think git examines only first block of a file or so. The heuristic
-> > > to detect binary-ness of a file is, as I have heard, the same or
-> > > similar to the one that GNU diff uses.
-> > 
-> > Yes, the binary detection was designed to be compatible with GNU diff. But
-> > I do not think it has much to do with the topic of this thread. Aren't
-> > other people discussing the line ending?
-> 
-> The binary detection may be apropos because there are situations
-> (core.autocrlf={true,input} and text=auto) where Git will only do line
-> ending conversion if it detects a text file...  But I'll leave it to
-> people who know the code better to say if this binary detection is in
-> fact part of the decision process.
+> > IIRC, libgit2 has a lot looser license than ours, and the core GPLv=
+2 part
+> > of C git cannot be directly copied without authors' consent; relice=
+nsing
+> > of necessary parts of C git needs to be arranged.
+>=20
+> Seems like a PITA:
 
-Currently UTF-16 and UTF-32 (which many consider to be text files) are
-detected as binary files by Git (due to said compatibility with GNU
-diff). Therefore EOL normalization does not happen on those files. 
+Some of the permission has already been granted. There is a file in
+libgit2 documenting who has done so.  The set difference is:
 
-I have played a little with detecting (and eventually do the same for
-normalizing) reasonably valid UTF-16 (BE and LE), but my code is nowhere
-near ready for the big time, much less properly tested.
+  $ git log --format=3D%an parse-options.[ch] | sort -u >need
+  $ perl -lne 'print $1 if /^ok\s+(.*) </' libgit2/git.git-authors >hav=
+e
+  $ comm -23 need have >remaining; cat remaining
+  Alex Riesen
+  Andreas Schwab
+  Carlos Rica
+  Gary V. Vaughan
+  Giuseppe Scrivano
+  Jake Goulding
+  Jonathan Nieder
+  Mark Lodato
+  Michael J Gruber
+  Michele Ballabio
+  Mike Ralphson
+  Miklos Vajna
+  Nanako Shiraishi
+  Olivier Marin
+  Stephen Boyd
+  Thomas Rast
+  Tuncer Ayaz
 
-As for diff-ing UTF-16/UTF-32 for purely human consumption, I would be
-tempted to iconv (smudge?) the text into UTF-8 and then let the diff-ing
-algorithm deal with it. Not a perfect solution, but perfect should not
-be the enemy of good in that case. Unfortunately this would not produce
-proper patches for mailing. (As for how we'd know it is UTF-32 and not a
-binary, I'll leave that for further discussion should we need it. I
-suspect we'd have to trust the user. UGH.)
+which gets us halfway there. A few of the remaining contributions are
+quite small, too:
 
--- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+  $ git blame --line-porcelain parse-options.c |
+      perl -lne 'print $1 if /author (.*)/' |
+      sort | uniq -c |
+      perl -pe 's/(\d+) /$1\t/' >count
+  $ join -1 1 -2 2 -t "`printf '\t'`" -o "2.1 2.2" remaining count
+      4 Alex Riesen
+      3 Andreas Schwab
+     23 Giuseppe Scrivano
+     16 Jake Goulding
+     38 Jonathan Nieder
+     16 Mark Lodato
+      7 Michele Ballabio
+      1 Nanako Shiraishi
+      1 Olivier Marin
+     46 Stephen Boyd
+     24 Thomas Rast
+     22 Tuncer Ayaz
+
+=46ixing a typo or tweaking the "static" designator on a function is
+probably not copyrightable. And some of the medium-sized bits could
+possibly be dropped. Still, it is nice to be mindful of the
+contributions of others and get permission from everyone.
+
+At any rate, the parse-options code would be linked into the new git2
+binary, which should probably be GPL'd, anyway.
+
+-Peff
