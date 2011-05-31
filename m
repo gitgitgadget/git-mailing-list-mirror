@@ -1,77 +1,74 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: [PATCH 1/4] test-svn-fe: split off "test-svn-fe -d" into a
-	separate function
-Date: Tue, 31 May 2011 12:18:24 -0400
-Message-ID: <1306858704.13283.2.camel@drew-northup.unet.maine.edu>
-References: <BANLkTi=O9AeOZTHVLbq+rKv5k-CqNGb+LQ@mail.gmail.com>
-	 <BANLkTinpta+a4MAr0e2YtMa1Kr1QcJmYWg@mail.gmail.com>
-	 <20110525235520.GA6971@elie>
-	 <BANLkTinBGnCKsUOXY_RD-7yNyM7XqNTsRw@mail.gmail.com>
-	 <20110527110828.GA7972@elie>  <20110527110914.GB7972@elie>
+From: Jeff King <peff@peff.net>
+Subject: Re: diff: --quiet does not imply --exit-code if --diff-filter is
+ present
+Date: Tue, 31 May 2011 12:25:46 -0400
+Message-ID: <20110531162546.GA11321@sigill.intra.peff.net>
+References: <87wrh7jgzk.wl@dns1.atmark-techno.com>
+ <20110531153356.GB2594@sigill.intra.peff.net>
+ <7vvcwqkh4a.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: David Barr <davidbarr@google.com>, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 31 18:18:57 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Yasushi SHOJI <yashi@atmark-techno.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 31 18:25:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRReh-0001xx-BE
-	for gcvg-git-2@lo.gmane.org; Tue, 31 May 2011 18:18:55 +0200
+	id 1QRRlS-0005fL-Av
+	for gcvg-git-2@lo.gmane.org; Tue, 31 May 2011 18:25:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757284Ab1EaQSu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2011 12:18:50 -0400
-Received: from beryl.its.maine.edu ([130.111.32.94]:54798 "EHLO
-	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757143Ab1EaQSt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2011 12:18:49 -0400
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p4VGISp7000573
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 31 May 2011 12:18:28 -0400
-In-Reply-To: <20110527110914.GB7972@elie>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=5 Fuz1=5
-	Fuz2=5
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p4VGISp7000573
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1307463510.00286@7pCD0CQJQHyDOVX7ompb+Q
+	id S1757455Ab1EaQZs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 May 2011 12:25:48 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37096
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757396Ab1EaQZs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2011 12:25:48 -0400
+Received: (qmail 26250 invoked by uid 107); 31 May 2011 16:25:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 31 May 2011 12:25:51 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 May 2011 12:25:46 -0400
+Content-Disposition: inline
+In-Reply-To: <7vvcwqkh4a.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174811>
 
+On Tue, May 31, 2011 at 08:46:29AM -0700, Junio C Hamano wrote:
 
-On Fri, 2011-05-27 at 06:09 -0500, Jonathan Nieder wrote:
-> The helper for testing the svndiff library is getting dangerously
-> close to the right margin.  Split it off into a separate function so
-> it is easier to contemplate on its own.
+> Jeff King <peff@peff.net> writes:
 > 
-> In other words, this just unindents the code a little.  No functional
-> change intended.
+> > Commit 2cfe8a6 (diff --quiet: disable optimization when
+> > --diff-filter=X is used, 2011-03-16) fixes this in some
+> > cases by disabling the optimization when a filter is
+> > present. However, it only tweaked run_diff_files, missing
+> > the similar case in diff_tree. Thus the fix worked only for
+> > diffing the working tree and index, but not between trees.
+> 
+> Thanks; a natural question is if we need the same for diff-index, then.
 
->  
-> +static const char test_svnfe_usage[] =
-> +	"test-svn-fe (<dumpfile> | [-d] <preimage> <delta> <len>)";
+No, it calls straight into unpack_trees. So I think the question is
+"should unpack_trees respect the QUICK optimization". I suspect it
+didn't happen simply because unpack_trees is so complex, and there are
+probably corner cases with merging.
 
->  int main(int argc, char *argv[])
->  {
-> -	static const char test_svnfe_usage[] =
-> -		"test-svn-fe (<dumpfile> | [-d] <preimage> <delta> <len>)";
+> We probably want to have a helper in diff.c that does
+> 
+> 	int diff_can_quit_early(struct diff_options *opt)
+>         {
+>         	return (DIFF_OPT_TST(opt, QUICK) &&
+>                 	!opt->filter &&
+>                         DIFF_OPT_TST(opt, HAS_CHANGES));
+> 	}
+> 
+> It is possible for us to later add new diffcore transformations that need
+> a similar "do not stop feeding early, as results may be filtered".
 
-How is this germane to the original intent? Is there a gain by making it
-global (to that file) that I'm missing?
+Yeah, that is a good refactoring. It's more readable, and it would have
+prevented this bug. :)
 
--- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+-Peff
