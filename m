@@ -1,60 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Re* diff: --quiet does not imply --exit-code if --diff-filter is
- present
-Date: Tue, 31 May 2011 13:14:01 -0400
-Message-ID: <20110531171401.GA12466@sigill.intra.peff.net>
-References: <87wrh7jgzk.wl@dns1.atmark-techno.com>
- <20110531153356.GB2594@sigill.intra.peff.net>
- <7vvcwqkh4a.fsf@alter.siamese.dyndns.org>
- <20110531162546.GA11321@sigill.intra.peff.net>
- <7vd3iykdej.fsf_-_@alter.siamese.dyndns.org>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] config.c: Remove unused git_config_global() function
+Date: Tue, 31 May 2011 18:23:42 +0100
+Message-ID: <4DE5241E.9030000@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Yasushi SHOJI <yashi@atmark-techno.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 31 19:14:12 2011
+X-From: git-owner@vger.kernel.org Tue May 31 19:24:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRSWB-0007Dl-4J
-	for gcvg-git-2@lo.gmane.org; Tue, 31 May 2011 19:14:11 +0200
+	id 1QRSgP-0005gL-4m
+	for gcvg-git-2@lo.gmane.org; Tue, 31 May 2011 19:24:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757679Ab1EaROF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2011 13:14:05 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45097
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756285Ab1EaROE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2011 13:14:04 -0400
-Received: (qmail 28048 invoked by uid 107); 31 May 2011 17:14:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 31 May 2011 13:14:06 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 May 2011 13:14:01 -0400
-Content-Disposition: inline
-In-Reply-To: <7vd3iykdej.fsf_-_@alter.siamese.dyndns.org>
+	id S1757864Ab1EaRYj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 May 2011 13:24:39 -0400
+Received: from lon1-post-1.mail.demon.net ([195.173.77.148]:43559 "EHLO
+	lon1-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757794Ab1EaRYj (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 May 2011 13:24:39 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by lon1-post-1.mail.demon.net with esmtp (Exim 4.69)
+	id 1QRSgH-0002Dj-YW; Tue, 31 May 2011 17:24:38 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174815>
 
-On Tue, May 31, 2011 at 10:06:44AM -0700, Junio C Hamano wrote:
 
-> Add "exiting_early" field to unpack_trees_options structure, to signal the
-> unpack_trees() machinery that the negative return value is not signaling
-> an error but an early return from the unpack_trees() machinery. As this by
-> definition hasn't unpacked everything, discard the resulting index just
-> like the failure codepath.
+Commit 8f323c00 (drop support for GIT_CONFIG_NOGLOBAL, 15-03-2011)
+removed the git_config_global() function, among other things, since
+it is no longer required. Unfortunately, this function has since
+been unintentionally restored; I suspect by merge commit 25b86e45
+(Merge branch 'jk/maint-config-alias-fix' into next, 25-05-2011).
 
-Maybe it is just me, but I would think that it's a little more intuitive
-to set exiting_early and then return "0" to indicate "success, but I
-didn't look at everything".
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
 
-I guess you did it this way to better share the discard-the-result
-codepath. Maybe it wouldn't be too painful to refactor unpack_failed()
-into the failed bits plus a call to a new unpack_discard() that does the
-non-error bits. It may not be worth the trouble though.
+Hi Junio,
 
--Peff
+A few days ago, when the next branch was @ d10669c, I noticed that
+"make sparse" on next was complaining thus:
+
+    config.c:828:5: warning: symbol 'git_config_global' was not \
+        declared. Should it be static?
+
+However, I remembered that this function had recently been removed, so
+I took a quick look ...
+
+ATB,
+Ramsay Jones
+
+ config.c |    5 -----
+ 1 files changed, 0 insertions(+), 5 deletions(-)
+
+diff --git a/config.c b/config.c
+index a8267e9..e0b3b80 100644
+--- a/config.c
++++ b/config.c
+@@ -825,11 +825,6 @@ int git_config_system(void)
+ 	return !git_env_bool("GIT_CONFIG_NOSYSTEM", 0);
+ }
+ 
+-int git_config_global(void)
+-{
+-	return !git_env_bool("GIT_CONFIG_NOGLOBAL", 0);
+-}
+-
+ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
+ {
+ 	int ret = 0, found = 0;
+-- 
+1.7.5
