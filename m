@@ -1,60 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: speed of git reset -- file
-Date: Tue, 31 May 2011 17:26:39 -0400
-Message-ID: <20110531212639.GA13234@sigill.intra.peff.net>
-References: <20110531190015.GA12113@gnu.kitenet.net>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 0/2] Tests for some submodule corner cases.
+Date: Tue, 31 May 2011 23:26:39 +0200
+Message-ID: <4DE55D0F.1020905@web.de>
+References: <1306792280-12768-1-git-send-email-marcnarc@xiplink.com> <4DE541EC.7010202@web.de> <4DE55857.3090706@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Joey Hess <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Tue May 31 23:26:48 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Tue May 31 23:27:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRWSd-0003rl-JY
-	for gcvg-git-2@lo.gmane.org; Tue, 31 May 2011 23:26:47 +0200
+	id 1QRWTa-0004HT-NY
+	for gcvg-git-2@lo.gmane.org; Tue, 31 May 2011 23:27:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932543Ab1EaV0m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2011 17:26:42 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34851
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932529Ab1EaV0m (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2011 17:26:42 -0400
-Received: (qmail 32510 invoked by uid 107); 31 May 2011 21:26:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 31 May 2011 17:26:44 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 May 2011 17:26:39 -0400
-Content-Disposition: inline
-In-Reply-To: <20110531190015.GA12113@gnu.kitenet.net>
+	id S932621Ab1EaV1m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 May 2011 17:27:42 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:60827 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932529Ab1EaV1l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2011 17:27:41 -0400
+Received: from smtp03.web.de  ( [172.20.0.65])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 846641A0CE334;
+	Tue, 31 May 2011 23:26:39 +0200 (CEST)
+Received: from [93.240.123.160] (helo=[192.168.178.43])
+	by smtp03.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1QRWSV-0002Yh-00; Tue, 31 May 2011 23:26:39 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
+In-Reply-To: <4DE55857.3090706@xiplink.com>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1+XZ8PxRXF2/E9yoXzbjGZ4KjZmMFYmbBQgTx1t
+	i3tmger1D2+xTR0ZtFQNtQpfB/tbVg6oXWuWdoK30PkvybrPQm
+	S4IQ86mVEVBJGpmgywSA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174830>
 
-On Tue, May 31, 2011 at 03:00:15PM -0400, Joey Hess wrote:
-
-> I'd expect that resetting a single file would need to update the index,
-> reading some objects from .git to do it.
+Am 31.05.2011 23:06, schrieb Marc Branchaud:
+> On 11-05-31 03:30 PM, Jens Lehmann wrote:
+>> Am 30.05.2011 23:51, schrieb Marc Branchaud:
+>>> Patch 2 exposes an anomaly in "submodule status", which reports that a
+>>> submodule is OK even though it has deleted files.  "git status" inside
+>>> the submodule (and in the super-repo) both identify any deleted files, but
+>>> "submodule status" doesn't prefix the submodule's HEAD SHA-ID with a "+".
+>>
+>> That is documented behavior. "git submodule status" only cares about the
+>> commit recorded in the superproject vs the HEAD in the submodule, work
+>> tree modifications are never shown by it.
+>>
+>> But try a "git status" in the superproject, that will give you the following
+>> output:
+>> #	modified:   init (modified content)
 > 
-> But according to strace, it also stats every file in the working tree.
-> I have lots of files, and so that is very slow. Is it really necessary?
+> I understand.  My apologies for not reading the man page closely enough.
 
-Conceptually, no, I don't think so. But remember that your "file" is not
-really a file at all, but a pathspec that may match many entries. Also,
-we try not to overwrite things that would not be changed. So that
-complicates it a little bit.
+No problem, maybe that's just an indication that a reference to "git status"
+being more capable of telling what is going on inside a submodule is missing
+to the man page for "git submodule status".
 
-You can see the implementation in builtin/reset.c:read_from_tree. We
-actually diff the tree (e.g., HEAD) against the index, and update only
-the differences. Unfortunately this seems to trash the index (see the
-comment there), and we end up having to refresh it. I'm not sure how
-avoidable that trashing is. I think we're getting deep into how
-unpack_trees works, and it handles a lot more cases than just "unpack a
-few entries". So I don't know how easy it would be to separate this
-relatively simple case from more complex ones.
+> I know there's been a lot of recent work on making "git status"
+> submodule-friendly, but would there be any interest in having another prefix
+> for submodule status to cover this case?  Maybe ! could indicate that the
+> submodule's HEAD is correct, but the working directory doesn't match it exactly.
 
--Peff
+I'd rather leave "git submodule status" as it is and incorporate this kind
+of functionality into core git (for "submodule status" it already arrived there
+in 1.7.0/1.7.1, so that part is finished ;-). I hope making the "git submodule"
+script mostly obsolete in the long run and would want to avoid teaching it new
+stuff already covered by core git.
