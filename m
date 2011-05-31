@@ -1,79 +1,81 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH] config.c: Remove unused git_config_global() function
-Date: Tue, 31 May 2011 18:23:42 +0100
-Message-ID: <4DE5241E.9030000@ramsay1.demon.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Re* diff: --quiet does not imply --exit-code if --diff-filter is
+ present
+Date: Tue, 31 May 2011 10:36:12 -0700
+Message-ID: <7v8vtmkc1f.fsf@alter.siamese.dyndns.org>
+References: <87wrh7jgzk.wl@dns1.atmark-techno.com>
+ <20110531153356.GB2594@sigill.intra.peff.net>
+ <7vvcwqkh4a.fsf@alter.siamese.dyndns.org>
+ <20110531162546.GA11321@sigill.intra.peff.net>
+ <7vd3iykdej.fsf_-_@alter.siamese.dyndns.org>
+ <20110531171401.GA12466@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 31 19:24:46 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Yasushi SHOJI <yashi@atmark-techno.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 31 19:36:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRSgP-0005gL-4m
-	for gcvg-git-2@lo.gmane.org; Tue, 31 May 2011 19:24:45 +0200
+	id 1QRSrj-0005C1-Oq
+	for gcvg-git-2@lo.gmane.org; Tue, 31 May 2011 19:36:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757864Ab1EaRYj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2011 13:24:39 -0400
-Received: from lon1-post-1.mail.demon.net ([195.173.77.148]:43559 "EHLO
-	lon1-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757794Ab1EaRYj (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 May 2011 13:24:39 -0400
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by lon1-post-1.mail.demon.net with esmtp (Exim 4.69)
-	id 1QRSgH-0002Dj-YW; Tue, 31 May 2011 17:24:38 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+	id S932192Ab1EaRgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 May 2011 13:36:22 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:46230 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932133Ab1EaRgV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2011 13:36:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8861452D1;
+	Tue, 31 May 2011 13:38:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Ws4shWuywxgHApVX2yT4J3GxecM=; b=CxsUfj
+	Fbucmt9uq86+mJr/B1oXSEVHuRcqCKUfXhEO+sqSuwUPk/pJTC97sJwgODcGze6z
+	O6eLTTZG8ZARr4/4IAkqL7QgVFxXiZmbauZqmbNTau/qbhZpk4ybM9A12bmgzEYw
+	79EFTu16CleE0MduWkEpjxXPoRp7k8kTbxTqw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Hj20B4OYdLsVC9i1euAJZs3dAEISmgNK
+	9g9wHhTWolSgOCOSXrn64yN696712g1VJkAvzd9spWiCzx37sNfqEog4zLKd7QR1
+	/MNWtoa44f+935HMOlPVQXkLIDd8QMm5KlA1RCk4OFQgMnJXykfQKGypQcvfAyDr
+	GnSf9CnYsx0=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5627A52D0;
+	Tue, 31 May 2011 13:38:27 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3F29F52CF; Tue, 31 May 2011
+ 13:38:22 -0400 (EDT)
+In-Reply-To: <20110531171401.GA12466@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 31 May 2011 13:14:01 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CAB6EDE4-8BAC-11E0-94D4-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174816>
 
+Jeff King <peff@peff.net> writes:
 
-Commit 8f323c00 (drop support for GIT_CONFIG_NOGLOBAL, 15-03-2011)
-removed the git_config_global() function, among other things, since
-it is no longer required. Unfortunately, this function has since
-been unintentionally restored; I suspect by merge commit 25b86e45
-(Merge branch 'jk/maint-config-alias-fix' into next, 25-05-2011).
+> I guess you did it this way to better share the discard-the-result
+> codepath.
 
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
+No, I did it as a hack because many places already do:
 
-Hi Junio,
+	if (... sub helper function that eventually call_callback ... < 0)
+        	break; // or
+                return; // or
+                goto fail_return; // or whatever to exit recursion and loop
 
-A few days ago, when the next branch was @ d10669c, I noticed that
-"make sparse" on next was complaining thus:
+and obviously it was too much pain to change everybody to also pay
+attention to the new flag.
 
-    config.c:828:5: warning: symbol 'git_config_global' was not \
-        declared. Should it be static?
-
-However, I remembered that this function had recently been removed, so
-I took a quick look ...
-
-ATB,
-Ramsay Jones
-
- config.c |    5 -----
- 1 files changed, 0 insertions(+), 5 deletions(-)
-
-diff --git a/config.c b/config.c
-index a8267e9..e0b3b80 100644
---- a/config.c
-+++ b/config.c
-@@ -825,11 +825,6 @@ int git_config_system(void)
- 	return !git_env_bool("GIT_CONFIG_NOSYSTEM", 0);
- }
- 
--int git_config_global(void)
--{
--	return !git_env_bool("GIT_CONFIG_NOGLOBAL", 0);
--}
--
- int git_config_early(config_fn_t fn, void *data, const char *repo_config)
- {
- 	int ret = 0, found = 0;
--- 
-1.7.5
+A possibly cleaner way would be to designate a single negative value that
+is not -1 as "early return but not failure" without using an extra bit,
+but that also needs full vetting of the existing callchain, which I didn't
+want to do just to write a "it would be as little as this" patch.
