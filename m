@@ -1,111 +1,107 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Git global usage and tests
-Date: Tue, 31 May 2011 11:04:55 -0400
-Message-ID: <20110531150455.GA2594@sigill.intra.peff.net>
-References: <754E784F-51C6-4B8D-B15D-3FF8B7AF1321@gmail.com>
- <20110530153620.GA24431@sigill.intra.peff.net>
- <B369AA28-DEF2-48F3-8E4E-F387E8A57D26@gmail.com>
- <20110530161230.GA25291@sigill.intra.peff.net>
- <7v7h97la4s.fsf@alter.siamese.dyndns.org>
- <BANLkTinW_se8VAhF9wk3KyzNHVc_wH_PqA@mail.gmail.com>
+Subject: Re: diff: --quiet does not imply --exit-code if --diff-filter is
+ present
+Date: Tue, 31 May 2011 11:33:56 -0400
+Message-ID: <20110531153356.GB2594@sigill.intra.peff.net>
+References: <87wrh7jgzk.wl@dns1.atmark-techno.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Romain Geissler <romain.geissler@gmail.com>,
-	git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 31 17:05:05 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Yasushi SHOJI <yashi@atmark-techno.com>
+X-From: git-owner@vger.kernel.org Tue May 31 17:34:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRQVE-0004FH-SS
-	for gcvg-git-2@lo.gmane.org; Tue, 31 May 2011 17:05:05 +0200
+	id 1QRQxK-0004CF-Jn
+	for gcvg-git-2@lo.gmane.org; Tue, 31 May 2011 17:34:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756609Ab1EaPE7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 May 2011 11:04:59 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45418
+	id S1757060Ab1EaPd7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 May 2011 11:33:59 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56613
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755348Ab1EaPE6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2011 11:04:58 -0400
-Received: (qmail 25410 invoked by uid 107); 31 May 2011 15:05:01 -0000
+	id S1754549Ab1EaPd7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2011 11:33:59 -0400
+Received: (qmail 25571 invoked by uid 107); 31 May 2011 15:34:01 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 31 May 2011 11:05:01 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 May 2011 11:04:55 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 31 May 2011 11:34:01 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 May 2011 11:33:56 -0400
 Content-Disposition: inline
-In-Reply-To: <BANLkTinW_se8VAhF9wk3KyzNHVc_wH_PqA@mail.gmail.com>
+In-Reply-To: <87wrh7jgzk.wl@dns1.atmark-techno.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174805>
 
-On Tue, May 31, 2011 at 01:52:31PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
+On Tue, May 31, 2011 at 07:34:39PM +0900, Yasushi SHOJI wrote:
 
-> > IIRC, libgit2 has a lot looser license than ours, and the core GPLv=
-2 part
-> > of C git cannot be directly copied without authors' consent; relice=
-nsing
-> > of necessary parts of C git needs to be arranged.
->=20
-> Seems like a PITA:
+> just noticed that quiet does not return exit code when I set
+> diff-filter.  at the current tip (v1.7.5.3-401-gfb674d7):
+> 
+>   git diff --quiet     --diff-filter=A v1.7.5 v1.7.5.1 -- t  #=> 0
+>   git diff --exit-code --diff-filter=A v1.7.5 v1.7.5.1 -- t  #=> 1
+> 
+> these two line returns different exit code.
+> 
+> is this a bug or a feature?
 
-Some of the permission has already been granted. There is a file in
-libgit2 documenting who has done so.  The set difference is:
+It's a bug.
 
-  $ git log --format=3D%an parse-options.[ch] | sort -u >need
-  $ perl -lne 'print $1 if /^ok\s+(.*) </' libgit2/git.git-authors >hav=
-e
-  $ comm -23 need have >remaining; cat remaining
-  Alex Riesen
-  Andreas Schwab
-  Carlos Rica
-  Gary V. Vaughan
-  Giuseppe Scrivano
-  Jake Goulding
-  Jonathan Nieder
-  Mark Lodato
-  Michael J Gruber
-  Michele Ballabio
-  Mike Ralphson
-  Miklos Vajna
-  Nanako Shiraishi
-  Olivier Marin
-  Stephen Boyd
-  Thomas Rast
-  Tuncer Ayaz
+-- >8 --
+Subject: [PATCH] diff_tree: disable QUICK optimization with diff filter
 
-which gets us halfway there. A few of the remaining contributions are
-quite small, too:
+We stop looking for changes early with QUICK, so our diff
+queue contains only a subset of the changes. However, we
+don't apply diff filters until later; it will appear at that
+point as though there are no changes matching our filter,
+when in reality we simply didn't keep looking for changes
+long enough.
 
-  $ git blame --line-porcelain parse-options.c |
-      perl -lne 'print $1 if /author (.*)/' |
-      sort | uniq -c |
-      perl -pe 's/(\d+) /$1\t/' >count
-  $ join -1 1 -2 2 -t "`printf '\t'`" -o "2.1 2.2" remaining count
-      4 Alex Riesen
-      3 Andreas Schwab
-     23 Giuseppe Scrivano
-     16 Jake Goulding
-     38 Jonathan Nieder
-     16 Mark Lodato
-      7 Michele Ballabio
-      1 Nanako Shiraishi
-      1 Olivier Marin
-     46 Stephen Boyd
-     24 Thomas Rast
-     22 Tuncer Ayaz
+Commit 2cfe8a6 (diff --quiet: disable optimization when
+--diff-filter=X is used, 2011-03-16) fixes this in some
+cases by disabling the optimization when a filter is
+present. However, it only tweaked run_diff_files, missing
+the similar case in diff_tree. Thus the fix worked only for
+diffing the working tree and index, but not between trees.
 
-=46ixing a typo or tweaking the "static" designator on a function is
-probably not copyrightable. And some of the medium-sized bits could
-possibly be dropped. Still, it is nice to be mindful of the
-contributions of others and get permission from everyone.
+Noticed by Yasushi SHOJI.
 
-At any rate, the parse-options code would be linked into the new git2
-binary, which should probably be GPL'd, anyway.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Grepping around, I think this was the only other missed case.
 
--Peff
+ t/t4040-whitespace-status.sh |    5 +++++
+ tree-diff.c                  |    1 +
+ 2 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/t/t4040-whitespace-status.sh b/t/t4040-whitespace-status.sh
+index abc4934..3c728a3 100755
+--- a/t/t4040-whitespace-status.sh
++++ b/t/t4040-whitespace-status.sh
+@@ -67,4 +67,9 @@ test_expect_success 'diff-files --diff-filter --quiet' '
+ 	test_must_fail git diff-files --diff-filter=M --quiet
+ '
+ 
++test_expect_success 'diff-tree --diff-filter --quiet' '
++	git commit -a -m "worktree state" &&
++	test_must_fail git diff-tree --diff-filter=M --quiet HEAD^ HEAD
++'
++
+ test_done
+diff --git a/tree-diff.c b/tree-diff.c
+index 7a79660..3d08f78 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -143,6 +143,7 @@ int diff_tree(struct tree_desc *t1, struct tree_desc *t2,
+ 
+ 	for (;;) {
+ 		if (DIFF_OPT_TST(opt, QUICK) &&
++		    !opt->filter &&
+ 		    DIFF_OPT_TST(opt, HAS_CHANGES))
+ 			break;
+ 		if (opt->pathspec.nr) {
+-- 
+1.7.5.3.7.g7dde6.dirty
