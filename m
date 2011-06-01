@@ -1,97 +1,105 @@
-From: Joey Hess <joey@kitenet.net>
-Subject: Re: speed of git reset -- file
-Date: Wed, 1 Jun 2011 18:05:02 -0400
-Message-ID: <20110601220502.GA28493@gnu.kitenet.net>
-References: <20110531190015.GA12113@gnu.kitenet.net>
- <20110531212639.GA13234@sigill.intra.peff.net>
- <7v62oqignm.fsf@alter.siamese.dyndns.org>
- <20110601195831.GA30070@sigill.intra.peff.net>
- <20110601201629.GA25354@gnu.kitenet.net>
- <20110601211847.GA31958@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: git clone (ssh://) skips detached HEAD
+Date: Wed, 1 Jun 2011 18:05:18 -0400
+Message-ID: <20110601220518.GA32681@sigill.intra.peff.net>
+References: <BANLkTi=xK+hmvGTLnKREScABU=7v_SKqPQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="nFreZHaLTZJo0R7j"
-To: GIT Mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 02 00:05:20 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Dmitry Ivankov <divanorama@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 02 00:05:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRtXS-0002IE-Kn
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 00:05:19 +0200
+	id 1QRtXd-0002Nj-EY
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 00:05:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754900Ab1FAWFK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jun 2011 18:05:10 -0400
-Received: from wren.kitenet.net ([80.68.85.49]:40475 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754579Ab1FAWFJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jun 2011 18:05:09 -0400
-Received: from gnu.kitenet.net (dialup-4.154.7.116.Dial1.Atlanta1.Level3.net [4.154.7.116])
-	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
-	by kitenet.net (Postfix) with ESMTPS id D4A3B11914F
-	for <git@vger.kernel.org>; Wed,  1 Jun 2011 18:05:06 -0400 (EDT)
-Received: by gnu.kitenet.net (Postfix, from userid 1000)
-	id 7FE3D51494; Wed,  1 Jun 2011 18:05:02 -0400 (EDT)
+	id S1755146Ab1FAWFW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jun 2011 18:05:22 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37121
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755098Ab1FAWFV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jun 2011 18:05:21 -0400
+Received: (qmail 18038 invoked by uid 107); 1 Jun 2011 22:05:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 01 Jun 2011 18:05:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Jun 2011 18:05:18 -0400
 Content-Disposition: inline
-In-Reply-To: <20110601211847.GA31958@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <BANLkTi=xK+hmvGTLnKREScABU=7v_SKqPQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174906>
 
+On Thu, Jun 02, 2011 at 03:30:37AM +0600, Dmitry Ivankov wrote:
 
---nFreZHaLTZJo0R7j
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> For some reason git doesn't try to fetch detached HEAD object if it's
+> not needed by needed heads.
 
-Jeff King wrote:
-> > My experience with semi-large trees[1] is that I have to remember to use
-> > "git status ." in a subdir; that "git commit -a" is of course slow when
-> > I need to use it; and that the index gets big and things that need to
-> > update it can become somewhat slow especially on slow disks, but that
->=20
-> Generally I find that the stats are very fast because everything is in
-> cache, and the disk doesn't come into it at all. Are you on an OS
-> besides Linux, or on a machine with low memory?
+The reason is that the default refspec on clone is:
 
-I have Linux and a gigabyte of ram and a not particularly good SSD.
-Here `git reset file` takes 30 seconds, `git status` 45 seconds.
+  $ git config remote.origin.fetch
+  +refs/heads/*:refs/remotes/origin/*
 
-I do not seem to be alone in finding git reset file to be slow, the
-problem was reported to me by another user.
+And HEAD is not under refs/heads/.
 
-> Yeah, Junio's autorefresh suggestion is much better.
+So you can do:
 
-That did seem reasonable and something I'd probably use.
+  git init test2 && cd test2
+  git fetch ../test HEAD
 
---=20
-see shy jo
+if you want. So I don't think it's a bug that we don't fetch it, but...
 
---nFreZHaLTZJo0R7j
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+> Steps to reproduce:
+> git init test && cd test
+> touch 1 && git add 1 && git commit -m 123
+> touch 2 && git add 2 && git commit -m 345
+> git reset --hard HEAD^
+> git checkout HEAD@{1}
+> 
+> cd ../
+> git clone ssh://127.0.0.1/`pwd`/test test2
+> remote: Counting objects: 3, done.
+> remote: Total 3 (delta 0), reused 0 (delta 0)
+> Receiving objects: 100% (3/3), done.
+> error: Trying to write ref HEAD with nonexistant object
+> 91dbc2403853783f637744c31036f94a66084286
+> fatal: Cannot update the ref 'HEAD'.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+This is quite bad behavior. In addition to the ugly error messages, it
+actually aborts the clone. So it is impossible to clone a repo with a
+detached HEAD that is not otherwise referenced.
 
-iQIVAwUBTea3jckQ2SIlEuPHAQjOuQ/7BNnl7Jo9jgmcwxuQ47v6L3uCp0HZAVQS
-Hy4d7hG2rupgdBWgpzA84KkrCq/VVmpfsT8AQkB2sliar95Cg3V4le6rf/Iqv6zR
-aCDVJX2QlSzcaXeQUBweFmFx/CySqCW9IM4dtTpF9y+SnSCvjN7xqaaMLIRzZ2LN
-I+BNGppeegi+Nvb9kZqZegQu74F5W8ALM1z7yVc6C+XGHAvcM/Uetx0hEwKGiZoy
-/VCJ7C+5h4c9OrdLV3Q50QvI740i6ffSrWRbn1/PoSG6aGwBcyZIfoEbQc4R0uue
-U2A82j8IQHyFEq3kU4lTdPRPDKAOVMa09ZiJBYa+fTsVD34nDs+aKC81mKsYFBpw
-aqADnfyZ80nZmaUrOgdp5enW4NLVfZRIWvZnm0TxPE+v6SeYlclxSTliW95ApR/Z
-1IC99yoGDm2BurMFbFc0yftevAoEXDp82ZHx89H5ojWIxbGqw0Q1AP0Ohm16jgHu
-E2YkOnVLJkEJA/w6Mtlznc3N9/721cr5vapp54SfgqWK0StW2Rju72S1h2k+1TwF
-BKcYODYs1jXyvGyLn7qyNRa7ubDhfep55mr0Jtlo1c9NtVi53Oiac84E9IfX4/yL
-MhroAFJGsGeoapbPHE83a6qDyfn+rBI0jF0qLp6SHX3flc87d9gR1HOcx7K+5TTY
-Yk8mqOyTO/g=
-=lpXG
------END PGP SIGNATURE-----
+We basically have two choices:
 
---nFreZHaLTZJo0R7j--
+  1. Fetch objects for HEAD on clone.
+
+  2. Don't checkout a detached HEAD if we don't have the object (or
+     possibly, don't checkout a detached HEAD at all; we already do
+     something similar for the case of a HEAD that points to a bogus
+     branch).
+
+I think (2) is more consistent with the refspec we set up, but (1) is
+probably more convenient to users (and better matches the case where the
+remote is on a detached HEAD that _does_ point to something we have).
+
+> HEAD seems to be treated in a special way in various places, so
+> haven't found any easy patch to fix this.
+
+I think it should just be a matter of adding HEAD to the list of things
+we fetch, although we don't actually want to write it to a ref. I'll
+take a look.
+
+> And by the way, clone --no-hardlinks test test2 still goes to is_local
+> codepath and avoids the bug.
+
+Yeah. --no-hardlinks still avoids the git-transport; it just copies
+instead of hardlinking. I saw you used ssh://localhost above to do your
+test. You can also use file://$PWD/test to accomplish the same thing
+without having to run an ssh daemon.
+
+-Peff
