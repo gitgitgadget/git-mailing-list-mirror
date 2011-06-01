@@ -1,94 +1,84 @@
-From: Felipe Balbi <balbi@ti.com>
-Subject: [PATCH] commit: use generic sha1_pos()
-Date: Wed,  1 Jun 2011 16:20:16 +0300
-Organization: Texas Instruments\n
-Message-ID: <1306934416-4205-1-git-send-email-balbi@ti.com>
-Cc: Felipe Balbi <balbi@ti.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 01 15:22:40 2011
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Created branch in wrong place... how to fix?
+Date: Wed, 01 Jun 2011 06:32:24 -0700 (PDT)
+Message-ID: <m362opy8xz.fsf@localhost.localdomain>
+References: <BANLkTingMK3Zv6NZdFAiLXZzJpSZYZmjQA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Howard Miller <howard@e-learndesign.co.uk>
+X-From: git-owner@vger.kernel.org Wed Jun 01 15:32:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRlNf-0003rn-Ky
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Jun 2011 15:22:39 +0200
+	id 1QRlXT-0001IG-Sl
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Jun 2011 15:32:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752493Ab1FANWf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jun 2011 09:22:35 -0400
-Received: from na3sys009aog113.obsmtp.com ([74.125.149.209]:43335 "EHLO
-	na3sys009aog113.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751411Ab1FANWd (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Jun 2011 09:22:33 -0400
-Received: from mail-bw0-f49.google.com ([209.85.214.49]) (using TLSv1) by na3sys009aob113.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKTeY9FrLe9xJh+9+8sJ9fJ7biW3Z7tHAE@postini.com; Wed, 01 Jun 2011 06:22:32 PDT
-Received: by mail-bw0-f49.google.com with SMTP id 1so46844bwz.36
-        for <git@vger.kernel.org>; Wed, 01 Jun 2011 06:22:30 -0700 (PDT)
-Received: by 10.204.8.141 with SMTP id h13mr1253107bkh.64.1306934421304;
-        Wed, 01 Jun 2011 06:20:21 -0700 (PDT)
-Received: from localhost (cs181221225.pp.htv.fi [82.181.221.225])
-        by mx.google.com with ESMTPS id k16sm853554bks.13.2011.06.01.06.20.19
+	id S1757171Ab1FANca (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jun 2011 09:32:30 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:57046 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758915Ab1FANc1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jun 2011 09:32:27 -0400
+Received: by fxm17 with SMTP id 17so39210fxm.19
+        for <git@vger.kernel.org>; Wed, 01 Jun 2011 06:32:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:x-authentication-warning:to:cc:subject
+         :references:from:date:in-reply-to:message-id:lines:user-agent
+         :mime-version:content-type;
+        bh=7WIjSxI5BoF+M9gm4MYETU3gBiFRGk1Rkr0/HXPxYBw=;
+        b=X8A7d4WxnT1OAgK7lRP4vvvlSNKbWnl31S6pfAqme3iylNCvd9sV6cGRVoV7+JWpRq
+         rnUh93f8/4+Mw+MELVJqJccspI7U5+JoYoHP2ZVgXz3NpUrw1UjDGJA5vITkdQasQcOv
+         MsUzHXhpKm58XtopPxT1J3FrsgrBRikbxcEAU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=VA2PNT6v4jvu2iUuDX8ZrTsZ3vPR9JJFWKc/8hrj/Xxe+77xMk1t8xUgupxTVdShof
+         pAw1VHdezYUt1u6sDn8S9hDKehf5b2sR0ZvzkdBwlUMWl9B69Zn1ffB706Wp2mCZJyBc
+         C7Gpvj3XIBdT+fwVLAF+7rpvTrfeCdKGopHlY=
+Received: by 10.223.55.78 with SMTP id t14mr49082fag.43.1306935145876;
+        Wed, 01 Jun 2011 06:32:25 -0700 (PDT)
+Received: from localhost.localdomain (abwk140.neoplus.adsl.tpnet.pl [83.8.234.140])
+        by mx.google.com with ESMTPS id n7sm416598fam.19.2011.06.01.06.32.23
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 01 Jun 2011 06:20:20 -0700 (PDT)
-X-Mailer: git-send-email 1.7.5.1.300.gc565c
+        Wed, 01 Jun 2011 06:32:24 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p51DVqMR014376;
+	Wed, 1 Jun 2011 15:32:02 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p51DVaL9014372;
+	Wed, 1 Jun 2011 15:31:36 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <BANLkTingMK3Zv6NZdFAiLXZzJpSZYZmjQA@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174867>
 
-instead of reimplementing the binary search,
-use the generic sha1_pos().
+Howard Miller <howard@e-learndesign.co.uk> writes:
 
-Signed-off-by: Felipe Balbi <balbi@ti.com>
----
- commit.c |   25 ++++++++++---------------
- 1 files changed, 10 insertions(+), 15 deletions(-)
+> I created a branch in a project and did a series of commits. I now
+> discover that I really wanted to make all those changes against a
+> completely different branch of the same project. There shouldn't be
+> any issues as the branch introduces entirely new files (no changes to
+> existing code).
+>
+> I'm struggling to see a way to do this without loosing the history.
+> Some Google'ing suggests 'rebase --onto' but I'm struggling to see how
+> this works or if it is appropriate. Any pointers much appreciated :)
+> Thanks.
 
-diff --git a/commit.c b/commit.c
-index ac337c7..ee8788f 100644
---- a/commit.c
-+++ b/commit.c
-@@ -6,6 +6,7 @@
- #include "diff.h"
- #include "revision.h"
- #include "notes.h"
-+#include "sha1-lookup.h"
- 
- int save_commit_buffer = 1;
- 
-@@ -92,23 +93,17 @@ static unsigned long parse_commit_date(const char *buf, const char *tail)
- static struct commit_graft **commit_graft;
- static int commit_graft_alloc, commit_graft_nr;
- 
-+static const unsigned char *commit_graft_access(size_t index, void *table)
-+{
-+	struct commit_graft **graft = table;
-+
-+	return graft[index]->sha1;
-+}
-+
- static int commit_graft_pos(const unsigned char *sha1)
- {
--	int lo, hi;
--	lo = 0;
--	hi = commit_graft_nr;
--	while (lo < hi) {
--		int mi = (lo + hi) / 2;
--		struct commit_graft *graft = commit_graft[mi];
--		int cmp = hashcmp(sha1, graft->sha1);
--		if (!cmp)
--			return mi;
--		if (cmp < 0)
--			hi = mi;
--		else
--			lo = mi + 1;
--	}
--	return -lo - 1;
-+	return sha1_pos(sha1, commit_graft, commit_graft_nr,
-+			commit_graft_access);
- }
- 
- int register_commit_graft(struct commit_graft *graft, int ignore_dups)
+This is decidely work for git rebase:
+
+  $ git rebase --onto <where it should be based> <where it is based> <branch>
+
 -- 
-1.7.5.1.300.gc565c
+Jakub Narebski
+Poland
+ShadeHawk on #git
