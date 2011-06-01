@@ -1,111 +1,64 @@
-From: Sekhar Nori <nsekhar@ti.com>
-Subject: [PATCH 1/1] git-am: provide configuration to enable signoff by default
-Date: Wed, 1 Jun 2011 14:12:31 +0530
-Message-ID: <1306917751-27999-1-git-send-email-nsekhar@ti.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Git svn dcommit -> ignore one commit
+Date: Wed, 01 Jun 2011 10:44:27 +0200
+Message-ID: <vpqaae2lz4k.fsf@bauges.imag.fr>
+References: <4DE5DA6A.8020201@codepill.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, Sekhar Nori <nsekhar@ti.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 01 10:43:00 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?Dominik_=5C=22Socek=5C=22_D=C5=82ugajczyk?= 
+	<dominik.dlugajczyk@codepill.com>
+X-From: git-owner@vger.kernel.org Wed Jun 01 10:44:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRh12-00052Q-7a
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Jun 2011 10:43:00 +0200
+	id 1QRh2i-0005p9-NO
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Jun 2011 10:44:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1162739Ab1FAImv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jun 2011 04:42:51 -0400
-Received: from comal.ext.ti.com ([198.47.26.152]:49849 "EHLO comal.ext.ti.com"
+	id S1162712Ab1FAIoj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Jun 2011 04:44:39 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:50401 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161961Ab1FAImj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jun 2011 04:42:39 -0400
-Received: from dbdp20.itg.ti.com ([172.24.170.38])
-	by comal.ext.ti.com (8.13.7/8.13.7) with ESMTP id p518gZMf002569
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 1 Jun 2011 03:42:37 -0500
-Received: from dbde70.ent.ti.com (localhost [127.0.0.1])
-	by dbdp20.itg.ti.com (8.13.8/8.13.8) with ESMTP id p518gXNg027664;
-	Wed, 1 Jun 2011 14:12:33 +0530 (IST)
-Received: from dbdp31.itg.ti.com (172.24.170.98) by DBDE70.ent.ti.com
- (172.24.170.148) with Microsoft SMTP Server id 8.3.106.1; Wed, 1 Jun 2011
- 14:12:33 +0530
-Received: from psplinux051.india.ti.com (psplinux051.india.ti.com
- [172.24.162.244])	by dbdp31.itg.ti.com (8.13.8/8.13.8) with ESMTP id
- p518gVsj022682;	Wed, 1 Jun 2011 14:12:32 +0530 (IST)
-Received: from psplinux051.india.ti.com (localhost [127.0.0.1])	by
- psplinux051.india.ti.com (8.13.1/8.13.1) with ESMTP id p518gVX0028035;	Wed, 1
- Jun 2011 14:12:31 +0530
-Received: (from a0875516@localhost)	by psplinux051.india.ti.com
- (8.13.1/8.13.1/Submit) id p518gVAM028032;	Wed, 1 Jun 2011 14:12:31 +0530
-X-Mailer: git-send-email 1.6.2.4
+	id S1162682Ab1FAIof convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Jun 2011 04:44:35 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p518iQbR030302
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 1 Jun 2011 10:44:26 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1QRh2R-0000SD-L6; Wed, 01 Jun 2011 10:44:27 +0200
+In-Reply-To: <4DE5DA6A.8020201@codepill.com> ("Dominik \"Socek\"
+ =?utf-8?Q?D=C5=82ugajczyk=22's?=
+	message of "Wed, 01 Jun 2011 08:21:30 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 01 Jun 2011 10:44:26 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p518iQbR030302
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1307522667.85396@5pDGyEPKlXJwgk6wcuu50w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174855>
 
-Provide a git config option to enable --signoff a
-default when using git-am. This should be handy
-for maintainers who regularly apply patches from
-mailing lists to send them upstream and want to
-be on the sign-off path.
+"Dominik \"Socek\" D=C5=82ugajczyk" <dominik.dlugajczyk@codepill.com> w=
+rites:
 
-Signed-off-by: Sekhar Nori <nsekhar@ti.com>
----
- Documentation/config.txt |    7 +++++++
- Documentation/git-am.txt |    3 ++-
- git-am.sh                |    5 +++++
- 3 files changed, 14 insertions(+), 1 deletions(-)
+> My question: is there posibility to make dcommit ignore one specyfic =
+commit?
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 6b93777..5da7ca8 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -597,6 +597,13 @@ am.keepcr::
- 	by giving '--no-keep-cr' from the command line.
- 	See linkgit:git-am[1], linkgit:git-mailsplit[1].
- 
-+am.signoff::
-+	A boolean value which lets you enable the `-s/--signoff` option of
-+	am by default. *Note:* Adding the Signed-off-by: line to a patch
-+	should be a conscious act and means that you certify you have
-+	the rights to submit this work under the same open source license.
-+	Please see the 'SubmittingPatches' document for further discussion.
-+
- apply.ignorewhitespace::
- 	When set to 'change', tells 'git apply' to ignore changes in
- 	whitespace, in the same way as the '--ignore-space-change'
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index 6b1b5af..6b2c51a 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -33,7 +33,8 @@ OPTIONS
- -s::
- --signoff::
- 	Add a `Signed-off-by:` line to the commit message, using
--	the committer identity of yourself.
-+	the committer identity of yourself. `am.signoff` configuration
-+	variable can be used to make this the defaut.
- 
- -k::
- --keep::
-diff --git a/git-am.sh b/git-am.sh
-index 6cdd591..8e2a693 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -328,6 +328,11 @@ then
-     keepcr=t
- fi
- 
-+if test "$(git config --bool --get am.signoff)" = true
-+then
-+    sign=t
-+fi
-+
- while test $# != 0
- do
- 	case "$1" in
--- 
-1.7.3.2
+You can probably use "git svn set-tree" for the commit after the one yo=
+u
+want to ignore. Test on a dumb repo before doing it in production ;-).
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
