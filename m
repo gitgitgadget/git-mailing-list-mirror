@@ -1,85 +1,121 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: gitosis asking for password
-Date: Wed, 01 Jun 2011 14:24:18 -0400
-Message-ID: <1306952658.19722.18.camel@drew-northup.unet.maine.edu>
-References: <20110531154218.GA4483@Imperial-SSD-Overlord>
+From: "Nori, Sekhar" <nsekhar@ti.com>
+Subject: RE: [PATCH 1/1] git-am: provide configuration to enable signoff by
+ default
+Date: Wed, 1 Jun 2011 23:57:25 +0530
+Message-ID: <B85A65D85D7EB246BE421B3FB0FBB593024D2D22DE@dbde02.ent.ti.com>
+References: <1306917751-27999-1-git-send-email-nsekhar@ti.com>
+ <7voc2hh3t5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Tim Guirgies <lt.infiltrator@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 01 20:24:36 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 01 20:27:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRq5q-0002PN-2v
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Jun 2011 20:24:34 +0200
+	id 1QRq8s-00042b-4G
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Jun 2011 20:27:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752037Ab1FASY3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jun 2011 14:24:29 -0400
-Received: from beryl.its.maine.edu ([130.111.32.94]:54699 "EHLO
-	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751501Ab1FASY2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jun 2011 14:24:28 -0400
-Received: from [IPv6:2610:48:100:827::97] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827::97])
-	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p51IOM7G008090
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 1 Jun 2011 14:24:22 -0400
-In-Reply-To: <20110531154218.GA4483@Imperial-SSD-Overlord>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=2 Fuz1=2
-	Fuz2=2
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p51IOM7G008090
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1307557463.50492@fnW4JIcKlzYO+JqB+N4CiA
+	id S1754205Ab1FAS1h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jun 2011 14:27:37 -0400
+Received: from comal.ext.ti.com ([198.47.26.152]:57366 "EHLO comal.ext.ti.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753103Ab1FAS1g convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Jun 2011 14:27:36 -0400
+Received: from dbdp20.itg.ti.com ([172.24.170.38])
+	by comal.ext.ti.com (8.13.7/8.13.7) with ESMTP id p51IRSVQ018287
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 1 Jun 2011 13:27:31 -0500
+Received: from dbde70.ent.ti.com (localhost [127.0.0.1])
+	by dbdp20.itg.ti.com (8.13.8/8.13.8) with ESMTP id p51IRRU6007400;
+	Wed, 1 Jun 2011 23:57:28 +0530 (IST)
+Received: from dbde02.ent.ti.com ([172.24.170.145]) by dbde70.ent.ti.com
+ ([172.24.170.148]) with mapi; Wed, 1 Jun 2011 23:57:27 +0530
+Thread-Topic: [PATCH 1/1] git-am: provide configuration to enable signoff by
+ default
+Thread-Index: Acwgf2R/8Qk59lYiQ+Cz2pV34XQPVwAAkYrg
+In-Reply-To: <7voc2hh3t5.fsf@alter.siamese.dyndns.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174889>
 
+Hi Junio,
 
-On Wed, 2011-06-01 at 01:42 +1000, Tim Guirgies wrote:
-> Hi List,
+On Wed, Jun 01, 2011 at 22:44:30, Junio C Hamano wrote:
+> Sekhar Nori <nsekhar@ti.com> writes:
 > 
-> I've been trying to sort this out for a couple of days now, but have
-> gotten absolutely nowhere.
+> > +am.signoff::
+> > +	A boolean value which lets you enable the `-s/--signoff` option of
+> > +	am by default. *Note:* Adding the Signed-off-by: line to a patch
+> > +	should be a conscious act and means that you certify you have
+> > +	the rights to submit this work under the same open source license.
+> > +	Please see the 'SubmittingPatches' document for further discussion.
 > 
-> For some reason, a few days ago, gitosis just stopped liking me, and I
-> was unable to push or fetch from my gitosis server, getting the error
-> message 'fatal: x does not appear to be a git repo'.
+> I see you already have done your homework, which is much better than
+> previous attempts by other people to add an option to add sign-off to
+> various commands (commit and format-patch), but there are at least three
+> problems here:
+
+Yes, I guessed there would have been previous attempts at this
+and actually did search the mail archives a bit before sending
+the patch. I actually didn't hit anything so looks like I probably
+used the wrong keywords.
+
+>  * This is an end-user document, not a document for git developers, so
+>    they are not bound by SubmittingPatches at all. They do not necessarily
+>    have SubmittingPatches document in the first place;
+
+I will be honest here, I just took this note from the existing documentation 
+for format.signoff config option. May be I can instead say: "Please check the 
+guidelines on submitting patches for your project for further discussion on 
+this. 'SubmittingPatches' document in Linux kernel or 'git' sources is an 
+example of such a document."
+
+>  * Once you set this configuration variable, I do not see a way to
+>    countermand "This is not signed-off" from the command line for a single
+>    invocation of "am" in your patch;
+
+Okay. I guess adding an --no-signoff to git am should help here?
+
 > 
-> So, I decided to remove gitosis and start again.  Following this [1]
-> guide, this is what I did/got:
-<snip>
-
-> $ git clone gitosis@overlord.imperial.fleet:gitosis-admin
-> Cloning into gitosis-admin...
-> gitosis@localhost's password: 
+>  * If it should be a "conscious act", it shouldn't be "set once and forget
+>    about it" configuration option. You should be making the conscious
+>    decision for each piece of e-mail if it is in line with the project's
+>    Sign-off policy.
 > 
-> But of course, it shouldn't be asking me for a password, and nothing I
-> type will work anyway, as it's a disabled password.
+> The last one means that the patch is internally inconsistent. In a project
+> (not this project) where sign-off is used but it does not require signing
+> off to be a conscious act, I see it may make sense to make it easier to
+> sign-off a patch when generating (i.e. "commit -s"), preparing to send
+> (i.e. "format-patch -s"), or accepting (i.e. "am -s"). And this option
+> might be a possible way to do so. But in that case, the option description
+> wouldn't say "it should be a conscious act".
 > 
-> I've tried it a few times, completely purging the gitosis user and its
-> home directory, but with the same results.  Has anybody had similar
-> experiences?  Or does somebody know some magic trick to get gitosis
-> working?  Did I miss a step?
+> Also if it doesn't have to be a conscious act, what value does such a
+> boilerplate have? Such a project may be better off not using sign-off at
+> all to begin with.
 
-> [1] http://scie.nti.st/2007/11/14/hosting-git-repositories-the-easy-and-secure-way
+Its hard to argue against this. All I would say is it is probably
+much safer to enable sign off by default when accepting a patch
+than when preparing to send it. Yet, we have format.signoff but
+no am.signoff. On any project with conscious sign-off rules, one
+would never accept a patch without a sign-off from the original
+developer.
 
-Hi Tim,
-You'll notice that the year on that is 2007. I seem to recall the lack
-of support factor is [a large part of] why Sitaram Chamarty gave the
-world Gitolite (https://github.com/sitaramc/gitolite ). 
-You may still be able to find some help with Gitosis, but I'd not risk
-blacking out due to holding my breath too long if I were you.
+So, just making it easier to accept patches which are already
+signed-off should be okay, I guess? May be we should look for
+an existing sign-off in the mbox and only then have this option
+come into play?
 
--- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+Thanks,
+Sekhar
