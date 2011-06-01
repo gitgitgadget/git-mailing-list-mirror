@@ -1,152 +1,102 @@
 From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH] submodule add: improve message when resolving a relative
- url fails
-Date: Wed, 01 Jun 2011 11:55:14 -0400
-Message-ID: <4DE660E2.9080500@xiplink.com>
-References: <1306792280-12768-1-git-send-email-marcnarc@xiplink.com> <4DE541EC.7010202@web.de> <4DE548C4.2010600@web.de> <4DE5561C.3010200@xiplink.com> <4DE565DF.7050207@cisco.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Phil Hord <hordp@cisco.com>
-X-From: git-owner@vger.kernel.org Wed Jun 01 17:55:27 2011
+Subject: [PATCH] Clarified how "git submodule add" handles relative paths.
+Date: Wed,  1 Jun 2011 11:56:32 -0400
+Message-ID: <1306943792-1825-1-git-send-email-marcnarc@xiplink.com>
+References: <7vaae2ihe1.fsf@alter.siamese.dyndns.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 01 17:56:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRnlX-0007NE-GD
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Jun 2011 17:55:27 +0200
+	id 1QRnmr-000872-Om
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Jun 2011 17:56:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755531Ab1FAPzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jun 2011 11:55:22 -0400
-Received: from smtp112.iad.emailsrvr.com ([207.97.245.112]:37886 "EHLO
-	smtp112.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752037Ab1FAPzV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jun 2011 11:55:21 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp41.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id ABF61298425;
-	Wed,  1 Jun 2011 11:55:20 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp41.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id EB40B298436;
-	Wed,  1 Jun 2011 11:55:19 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110424 Thunderbird/3.1.10
-In-Reply-To: <4DE565DF.7050207@cisco.com>
+	id S1757263Ab1FAP4p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jun 2011 11:56:45 -0400
+Received: from 208-85-112-101.zerofail.com ([208.85.112.101]:47456 "EHLO
+	farnsworth.xiplink.com" rhost-flags-OK-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1757136Ab1FAP4o (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Jun 2011 11:56:44 -0400
+Received: from rincewind.xiplink.com ([192.168.1.136])
+	by farnsworth.xiplink.com (8.14.2/8.14.2/Debian-2build1) with ESMTP id p51Fugnc022969;
+	Wed, 1 Jun 2011 11:56:43 -0400
+X-Mailer: git-send-email 1.7.5.3.1.ge85f0
+In-Reply-To: <7vaae2ihe1.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174871>
 
-On 11-05-31 06:04 PM, Phil Hord wrote:
-> On 05/31/2011 04:57 PM, Marc Branchaud wrote:
->> Thanks for the cogent explanation & patch.  I think the message could be
->> improved a bit:
->>
->> 	Cannot resolve "../sub" relative to this repository's "origin"
->> 	remote: The remote's URL is not set in .git/config
->>
->> However, overall I think this is a pretty fragile way to handle relative
->> paths.  Consider:
->>
->>  - The super-repo must be a clone in order for this to work at all.
-> 
-> Yes, but that constraint (mostly) makes sense to me.  But if 'git
-> submodule add' did not initialize .git/config, this constraint could be
-> dropped.
-> 
->>  - The super-repo cannot be checked out on a detached HEAD.
-> 
-> Why do you think that?  I just tried this and it worked fine for me.  I
-> can't think of a reason for it to fail.
+Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
+---
+ Documentation/git-submodule.txt |   13 +++++++++++--
+ 1 files changed, 11 insertions(+), 2 deletions(-)
 
-Whoops, right.  I was confusing a different error with the fact that "git
-symbolic-ref HEAD" fails on a detached HEAD.  The code defaults to "origin"
-as the remote name in this case (perhaps that's not strictly the right thing
-to do, but I'm sure this isn't the only part of git that assumes there's a
-remote called "origin").
-
->>  - The current code rewrites the URL so that any relative path is either
->>    rejected or munged into an absolute remote URL.
-> 
-> I don't see the URL getting munged away from being relative.  Can you
-> point to an example?
-
-I reached this conclusion because if I go into my clone of git.git and do
-
-	git submodule add ../MyThing
-
-where ../MyThing is a regular git repo, I get
-
-Cloning into MyThing...
-fatal: The remote end hung up unexpectedly
-Clone of 'git://git.kernel.org/pub/scm/git/MyThing' into submodule path
-'MyThing' failed
-
-So it seemed the relative URL became an absolute URL.
-
-Looking more closely at a working example, I can see that (as you show below)
-the URL in the super-repo's .gitmodules file retains the relative path, but
-the submodule's remote.origin.url is an absolute path.
-
-In any case, "submodule add" isn't doing what I expected: make my local
-MyThing repo a submodule of my git.git clone.
-
->> It seems to me that this feature will only work in a fairly narrow set of
->> circumstances, and even when it does work it's likely to do something
->> unexpected (think of a super-repo with several remotes).
-> 
-> I use it this way with several remotes. 
+On 11-05-31 07:23 PM, Junio C Hamano wrote:
+> Marc Branchaud <marcnarc@xiplink.com> writes:
 > 
 >> Back when Junio accepted the original patch, he said "If you maintain and
 >> serve a set related projects you need to give the users a single URL (per
->> where the user is and how to reach the server)."  I'm not sure I understand
->> that:  Why would the users be adding their own submodules to the
->> superproject?  Wouldn't the superproject define the submodules in for them?
-> I am a user.  I admin a super-project for other users.  This project
-> lives at three remotes, remotes/public, remotes/shared and remotes/build. 
+>> where the user is and how to reach the server)."
 > 
-> I add a new submodule to the superproject like this:
+> I think it was phrased badly. At least it should have s/need/only need/;
 > 
->    mkdir sub && cd sub && git init
->    cd ..
->    git submodule add ../sub sub
+> Imagine ta project has many components, all of which are kept as
+> submodules of a single top-level superproject. You wrote and manage
+> everything; there is no borrowed code. In that context, imagine that I am
+> talking to the maintainer of that set of projects and calling the person
+> "you".
 > 
-> This results in the new submodule being inserted into my .gitmodules
-> file and my .git/config:
+> By giving the URL for the top-level superproject, without having to give
+> any other URL for the subprojects, you can let your users fetch from you,
+> as everything underneath is relative. Another convenience this may give
+> you and your users is when the user needs to talk to you over different
+> transport. You may give "git://your.site/project.git" to the users, but
+> they may come to "http://your.site/project.git".
 > 
->    tail -3 .gitmodules
->    [submodule "sub"]
->        path = sub
->        url = ../sub
+> By recording submodule.<path>.url as relative to where your users happen
+> to have fetched your project in the superproject's .gitmodules file, your
+> users do not have to run around fixing URLs for 47 different component
+> submodules.
 > 
->    tail -2 .git/config
->    [submodule "sub"]
->        url = public:git/sub
-> 
-> I do have to make sure to push my submodule to the correct location on
-> each remote before pushing my new .gitmodules.
-> 
-> But the exact same commands work for me if I do this first and then do
-> 'git submodule add ../sub' afterwards. 
-> 
-> So, I don't understand your objections.  Do you understand my use case
-> any better?
+> At least I think that is what I meant back then.
 
-It's not so much an objection as confusion over how "submodule add" works.
+I see -- I was confused by the phrase "give ... a single URL" (since the
+URLs are already in the .gitmodules file, how is there ever any need to
+give more than one URL?).
 
-I believe your case works smoothly only because in your super-project you're
-careful to make sure you have checked out a branch that remotely tracks a
-something in remotes/public.  If you checked out a branch that tracks a
-different remote you'd get different results.  This seems fragile to me.
-
-When you tried the detached-HEAD scenario, did you get URLs for
-"public:git/sub" or "origin:git/sub"?  Does "origin" just happen to be the
-remote you want to use in any case?
-
-My fundamental point is that "git submodule add" seems to do confusing things
-with relative paths.  Maybe all that's needed is to clarify the
-documentation.  I'll post a patch.
+So this is really about saving the users the hassle of modifying all the
+URLs in the .gitmodules file.  Does this patch document what you mean?
 
 		M.
+
+
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 1a16ff6..54dfebb 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -77,8 +77,17 @@ to exist in the superproject. If <path> is not given, the
+ +
+ <repository> is the URL of the new submodule's origin repository.
+ This may be either an absolute URL, or (if it begins with ./
+-or ../), the location relative to the superproject's origin
+-repository.
++or ../) a URL relative to one of the superproject's remote
++repostories:  If the superprojet's currently checked-out branch tracks
++a remote branch then that remote's URL is used, otherwise the "origin"
++remote's URL is used.  Relative URLs allow users to easily clone the
++superproject and its submodules using a different URL than what the
++superproject's maintainer might use (e.g. the maintainer can use ssh://
++URLs while the users might use git:// URLs).  With relative URLs in the
++.gitmodules file, the users won't have to edit all the submodule URLs.
+++
++*NOTE*: This means that you can *not* use a relative path to refer to a
++repository in your local filesystem.
+ +
+ <path> is the relative location for the cloned submodule to
+ exist in the superproject. If <path> does not exist, then the
+-- 
+1.7.5.3.1.ge85f0
