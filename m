@@ -1,200 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Git 1.7.6-rc0
-Date: Wed, 01 Jun 2011 16:03:13 -0700
-Message-ID: <7v39jtf93i.fsf@alter.siamese.dyndns.org>
+From: Joey Hess <joey@kitenet.net>
+Subject: Re: speed of git reset -- file
+Date: Wed, 1 Jun 2011 19:31:57 -0400
+Message-ID: <20110601233157.GA2468@gnu.kitenet.net>
+References: <20110531190015.GA12113@gnu.kitenet.net>
+ <20110531212639.GA13234@sigill.intra.peff.net>
+ <7v62oqignm.fsf@alter.siamese.dyndns.org>
+ <20110601195831.GA30070@sigill.intra.peff.net>
+ <20110601201629.GA25354@gnu.kitenet.net>
+ <20110601211847.GA31958@sigill.intra.peff.net>
+ <20110601220502.GA28493@gnu.kitenet.net>
+ <20110601225647.GD16820@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 02 01:03:30 2011
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="RnlQjJ0d97Da+TV1"
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 02 01:35:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRuRj-0007Yk-Lp
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 01:03:28 +0200
+	id 1QRuws-0001MK-99
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 01:35:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932633Ab1FAXDV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jun 2011 19:03:21 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53928 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932620Ab1FAXDT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jun 2011 19:03:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A8B4B4BFC;
-	Wed,  1 Jun 2011 19:05:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=X
-	OqqPzZ7kyd0c3r8b1Cr03MU6Wc=; b=XxquObqXKd5ikaTdMJlW/r8WZiIouP8Dz
-	roPyj62ePrKGMNEBqhgxDn6OJuWKlp8ks2nim+Qz4QWU/Cdv0A2iK4J1VSAlfDjy
-	zDpezbFr2CC9M+wyk6ixs5x6NsCxwzlnl0Lg1uMiPrpF4ilyQsLx2ZaDcG5c8AjQ
-	jEdfKqJatg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=KGn
-	EBvdIlT+N/u3au9TxBfGhoJ/mZP1JINcU/T4spZ+bYnTH46qB1D3MGhJoolCmE4V
-	BAJPvkGr9mKQSK3y03XcaW9TqUtFuZdi5ClTcvipNi6m4q2JAO3PhmFzopp9YLoX
-	7c3KTQWjVE2Vu8CRxyx0E/x+Zh25uTuXT5pKGjZ8=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 950A54BFA;
-	Wed,  1 Jun 2011 19:05:25 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9CEBE4BF9; Wed,  1 Jun 2011
- 19:05:23 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A28299CA-8CA3-11E0-B5D9-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+	id S1759102Ab1FAXfa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jun 2011 19:35:30 -0400
+Received: from wren.kitenet.net ([80.68.85.49]:45789 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759066Ab1FAXf1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jun 2011 19:35:27 -0400
+Received: from gnu.kitenet.net (dialup-4.154.7.116.Dial1.Atlanta1.Level3.net [4.154.7.116])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id C00A4119014;
+	Wed,  1 Jun 2011 19:35:24 -0400 (EDT)
+Received: by gnu.kitenet.net (Postfix, from userid 1000)
+	id 2D15B464B9; Wed,  1 Jun 2011 19:31:57 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20110601225647.GD16820@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174919>
-
-I just tagged and pushed out the rc0 for this cycle.
-
-It is likely that we would merge a few more topics (namely, "'status -z'
-defaults to the porcelain format and "'diff -q --diff-filter=A' should not
-stop too early"), but other than that, from here on, I'd like to stop
-merging anything to "master" that is not a fix to regressions since 1.7.5
-until the final release.
-
-Please switch to the tip of 'master' for your daily use so that we can
-ship 1.7.6 without regressions and bugs in new features.
-
-Thanks.
-
-----------------------------------------------------------------
-
-Git v1.7.6 Release Notes (draft)
-========================
-
-Updates since v1.7.5
---------------------
-
- * Various git-svn updates.
-
- * Updates the way content tags are handled in gitweb.  Also adds
-   a UI to choose common timezone for displaying the dates.
-
- * Similar to branch names, tagnames that begin with "-" are now
-   disallowed.
-
- * Clean-up of the C part of i18n (but not l10n---please wait)
-   continues.
-
- * The scripting part of the codebase is getting prepared for i18n/l10n.
-
- * Pushing and pulling from a repository with large number of refs that
-   point to identical commits are optimized by not listing the same commit
-   during the common ancestor negotiation exchange with the other side.
-
- * Adding a file larger than core.bigfilethreshold (defaults to 1/2 Gig)
-   using "git add" will send the contents straight to a packfile without
-   having to hold it and its compressed representation both at the same
-   time in memory.
-
- * Processes spawned by "[alias] <name> = !process" in the configuration
-   can inspect GIT_PREFIX environment variable to learn where in the
-   working tree the original command was invoked.
-
- * A magic pathspec ":/" tells a command that limits its operation to
-   the current directory when ran from a subdirectory to work on the
-   entire working tree. In general, ":/path/to/file" would be relative
-   to the root of the working tree hierarchy.
-
-   After "git reset --hard; edit Makefile; cd t/", "git add -u" would
-   be a no-op, but "git add -u :/" would add the updated contents of
-   the Makefile at the top level. If you want to name a path in the
-   current subdirectory whose unusual name begins with ":/", you can
-   name it by "./:/that/path" or by "\:/that/path".
-
- * "git blame" learned "--abbrev[=<n>]" option to control the minimum
-   number of hexdigits shown for commit object names.
-
- * "git blame" learned "--line-porcelain" that is less efficient but is
-   easier to parse.
-
- * Aborting "git commit --interactive" discards updates to the index
-   made during the interctive session.
-
- * "git commit" learned a "--patch" option to directly jump to the
-   per-hunk selection UI of the interactive mode.
-
- * "git diff" and its family of commands learned --dirstat=0 to show
-   directories that contribute less than 0.1% of changes.
-
- * "git diff" and its family of commands learned --dirstat=lines mode to
-   assess damage to the directory based on number of lines in the patch
-   output, not based on the similarity numbers.
-
- * "git format-patch" learned "--quiet" option to suppress the output of
-   the names of generated files.
-
- * "git format-patch" quotes people's names when it has RFC822 special
-   characters in it, e.g. "Junio C. Hamano" <jch@example.com>.  Earlier
-   it was up to the user to do this when using its output.
-
- * "git format-patch" can take an empty --subject-prefix now.
-
- * "git log" and friends learned a new "--notes" option to replace the
-   "--show-notes" option.  Unlike "--show-notes", "--notes=<ref>" does
-   not imply showing the default notes.
-
- * They also learned a log.abbrevCommit configuration variable to augment
-   the --abbrev-commit command line option.
-
- * "git ls-remote" learned "--exit-code" option to consider it a
-   different kind of error when no remote ref to be shown.
-
- * "git merge" learned "-" as a short-hand for "the previous branch", just
-   like the way "git checkout -" works.
-
- * "git merge" uses "merge.ff" configuration variable to decide to always
-   create a merge commit (i.e. --no-ff, aka merge.ff=no), refuse to create
-   a merge commit (i.e. --ff-only, aka merge.ff=only). Setting merge.ff=yes
-   (or not setting it at all) restores the default behaviour of allowing
-   fast-forward to happen when possible.
-
- * p4-import (from contrib) learned a new option --preserve-user.
-
- * "git read-tree -m" learned "--dry-run" option that reports if a merge
-   would fail without touching the index nor the working tree.
-
- * "git rebase" that does not specify on top of which branch to rebase
-   the current branch now uses @{upstream} of the current branch.
-
- * "git rebase" finished either normally or with --abort did not
-   update the reflog for HEAD to record the event to come back to
-   where it started from.
-
- * "git remote add -t only-this-branch --mirror=fetch" is now allowed. Earlier
-   a fetch-mode mirror meant mirror everything, but now it only means refs are
-   not renamed.
-
- * "git rev-list --count" used with "--cherry-mark" counts the cherry-picked
-   commits separately, producing more a useful output.
-
- * "git submodule update" learned "--force" option to get rid of local
-   changes in submodules and replace them with the up-to-date version.
-
- * "git status" and friends ignore .gitmodules file while the file is
-   still in a conflicted state during a merge, to avoid using information
-   that is not final and possibly corrupt with conflict markers.
-
-Also contains various documentation updates and minor miscellaneous
-changes.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174920>
 
 
-Fixes since v1.7.5
-------------------
+--RnlQjJ0d97Da+TV1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Unless otherwise noted, all the fixes in 1.7.5.X maintenance track are
-included in this release.
+Jeff King wrote:
+> OK, that's horrific. For me, the stat information for linux-2.6 all sits
+> in cache and it takes about 0.3 seconds to refresh the index. I have 8G
+> of ram and a nice SSD, though it doesn't actually hit the disk at all.
+>=20
+> Is it really faulting the stat information from disk that takes so long?
+> Have you tried running "perf" on "git update-index --refresh"?
 
- * "git config" used to choke with an insanely long line.
-   (merge ef/maint-strbuf-init later)
+Cold cache:
 
----
-exec >/var/tmp/1
-echo O=$(git describe master)
-O=v1.7.5.3-365-g7eacc2b
-git shortlog --no-merges ^maint ^$O master
+ Performance counter stats for 'git update-index --refresh':
+
+       9725.574501 task-clock-msecs         #      0.337 CPUs=20
+            58,163 context-switches         #      0.006 M/sec
+                94 CPU-migrations           #      0.000 M/sec
+             8,637 page-faults              #      0.001 M/sec
+    12,825,956,531 cycles                   #   1318.787 M/sec  (scaled fro=
+m 33.43%)
+     2,696,089,912 instructions             #      0.210 IPC    (scaled fro=
+m 50.03%)
+       457,705,110 branches                 #     47.062 M/sec  (scaled fro=
+m 51.30%)
+        40,033,685 branch-misses            #      8.747 %      (scaled fro=
+m 50.19%)
+       149,071,234 cache-references         #     15.328 M/sec  (scaled fro=
+m 32.83%)
+         9,662,661 cache-misses             #      0.994 M/sec  (scaled fro=
+m 32.27%)
+
+       28.846625099  seconds time elapsed
+
+Warm cache is 0.88 seconds, but cold cache is typical; I use a cheap netbook
+for a lot of different stuff.
+
+Also, I can get much worse cold cache numbers on eg, a fairly average
+VPS node, where it takes > 1 minute.
+
+--=20
+see shy jo
+
+--RnlQjJ0d97Da+TV1
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQIVAwUBTebL5skQ2SIlEuPHAQg4rw/+LSHXTzcuh1j+CyAdqtoZ/dzqwwOzE9yZ
+x+OhmFwHP/0P7vhnrofmBpm8k3SEJJjUibW7hGkMVGR0kg8l9iuV7ILRbtA1qjOH
+UoTaTHr3V1KiERyL9/dEcPGo/gIFg1EScAA+k0Z+p7q7+D+xdh06lxYzPW35rguk
+lR0FQDZMEgf1eF8skNKbYzrycL2pUcvI69dmAHiFdSRBOa8teuigDghbAgo8+iAX
+baGujPy5O/d+7di3exF9sUvlBplnGcWJc2rxp/rc5Pf54YYAbMCBcqVyhevdiKYO
+5Kg4fJJiCBt3nVdflONpKdKmTr8FlV8UecUIIA7r5a3GADkva/40kX10pon8VNdj
+K/ecuOLIEV8Qpr/vITuyWzQo1RT528uYiGf4mM0IcvClntyLbjMiyKwoBvakcLl0
+zM2xtqxZ6R1IAlwtdxZ2AkXxbA2dlXWc3rh1NGqXZdzCvbo7fZ4ZWxJTx6j8gfei
+8+jtRK17grSlYaSWj4/8TciO8pO5GMBeqzH4dBDmpWFuoah/ExwXUCbKTlURCONE
+CMiZ4wEzW+8dsm1nKpBHRh3aEsL48Q/Fh8QB2VfM4DMOaL3hmhAFTR/FPSEt0/aW
+ULIlZJ060OB/o/iDiFW+XCwDNCmXLRWEZEeCLaiYJw+OmUzC1kzpp/2Uvr/N5ySy
+WhpBgI3jaXs=
+=dviO
+-----END PGP SIGNATURE-----
+
+--RnlQjJ0d97Da+TV1--
