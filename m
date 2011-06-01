@@ -1,93 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: speed of git reset -- file
-Date: Wed, 01 Jun 2011 13:51:43 -0700
-Message-ID: <7vvcwpff6o.fsf@alter.siamese.dyndns.org>
+Date: Wed, 1 Jun 2011 17:18:47 -0400
+Message-ID: <20110601211847.GA31958@sigill.intra.peff.net>
 References: <20110531190015.GA12113@gnu.kitenet.net>
  <20110531212639.GA13234@sigill.intra.peff.net>
  <7v62oqignm.fsf@alter.siamese.dyndns.org>
  <20110601195831.GA30070@sigill.intra.peff.net>
+ <20110601201629.GA25354@gnu.kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Joey Hess <joey@kitenet.net>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jun 01 22:51:59 2011
+Content-Type: text/plain; charset=utf-8
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Joey Hess <joey@kitenet.net>
+X-From: git-owner@vger.kernel.org Wed Jun 01 23:18:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRsOU-00047k-SP
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Jun 2011 22:51:59 +0200
+	id 1QRsoa-0007qx-J1
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Jun 2011 23:18:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759830Ab1FAUvy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jun 2011 16:51:54 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58416 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759797Ab1FAUvx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jun 2011 16:51:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 12F2C59AE;
-	Wed,  1 Jun 2011 16:54:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZjZ81KhC/QAkGxWZnnoYKW+Fy48=; b=KVL3cx
-	dDUhANULGyXOPbzFeS2qzbcqlWmaRx0FcQkahYIj6X2M23cu3f1z5vgBR4OZK6Yd
-	F8hOWGBpIbewHSOihwuyoHL6bwguVn592jyex5IvwUrpuELESVVVEIKVI+7uCSQr
-	EqWQNalh9g8tSRqDowabZJnLikjy3/iwK+fno=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=t4XQIKpT5YjzTlopA3KmnWNK1IB+DrmD
-	Dh22q7hzTRZAYfV3iZc4daMyvJ0HcJ5SimRagbGboWNM+ZHJpDKaJ+wgk0jQqYzq
-	qJn07TETZrF73iO07KochkDXXP2NLQPx4vy2It930c3QZXxZti442Zo3HXigGiqX
-	hso2z81R0xM=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CFB2F59AA;
-	Wed,  1 Jun 2011 16:53:57 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B04FE59A9; Wed,  1 Jun 2011
- 16:53:53 -0400 (EDT)
-In-Reply-To: <20110601195831.GA30070@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 1 Jun 2011 15:58:31 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 450DBEDA-8C91-11E0-9161-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+	id S1759517Ab1FAVSv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jun 2011 17:18:51 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50684
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753648Ab1FAVSu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jun 2011 17:18:50 -0400
+Received: (qmail 17665 invoked by uid 107); 1 Jun 2011 21:18:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 01 Jun 2011 17:18:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Jun 2011 17:18:47 -0400
+Content-Disposition: inline
+In-Reply-To: <20110601201629.GA25354@gnu.kitenet.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174902>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Jun 01, 2011 at 04:16:29PM -0400, Joey Hess wrote:
 
-> So implementing the "optimization" to drop the refresh here doesn't seem
-> worth it. It inroduces an awful inconsistency, and it probably isn't
-> saving much in practice...
+> Jeff King wrote:
+> > So implementing the "optimization" to drop the refresh here doesn't seem
+> > worth it. It inroduces an awful inconsistency, and it probably isn't
+> > saving much in practice. Lots of other commands will end up stat'ing
+> > everything, anyway. Users with giant repos or slow stat calls are
+> > probably better off using assume-unchanged, which would help this and
+> > many other situations.
+> 
+> Sounded like git-reset -q file could be optimised to not reread the
+> index without any visible inconsistency?
 
-You could make it less inconsistent by introducing core.autorefreshindex
-for people who _do_ care about the latency. We already have a precedent in
-diff.autorefreshindex and the new configuration would supercede it.
+No, there would still be a visible inconsistency. For example:
 
-Usually we refresh the cached lstat information in the index at strategic
-places so that later operations do not have to pay the penalty, but at the
-same time, the higher level commands that want to make sure they are not
-fooled by stale lstat differences do refresh the index themselves anyway,
-so leaving cached stat information stale is not exactly the end of the
-world.
+  $ git reset -q -- file
+  $ git diff-files
 
-All the high-level commands like "reset" that do _not_ absolutely need to
-refresh the index for them to work, but do refresh the index to help later
-invocation of other commands, could be taught to pay attention to the
-core.autorefreshindex. After many operations the users usually do not see
-changes from diff-files, people who set this to false will see phantom
-changes due to stale cached lstat information, and they will see them
-consistently. They know exactly when having up-to-date lstat information
-in the index really matters, and they will run "update-index --refresh"
-themselves when needed.
+might leave stat-dirty entries in the index, but:
 
-I however personally doubt it would be worth the effort. The _only_ person
-who complained about this doesn't even use "update-index --refresh" but
-uses "git status", which does more than refreshing the index, and seems to
-think the extra latency coming from the overhead is acceptable.
+  $ git reset -- file
+  $ git diff-files
 
-So...
+would not.
+
+In practice, it doesn't matter that much, because you would probably run
+the porcelain "git diff" instead of the plumbing "git diff-files"
+anyway. And "git diff" refreshes the index itself, so the behavior
+change is not that important. But then, as you see, we end up refreshing
+the index defensively a lot, anyway, so saving the one refresh from
+reset may be lost in the noise (unless you are doing some tight loop of
+resets).
+
+So what you could do with assume-unchanged (or much better, the
+autorefreshindex variable that Junio recommends), would be to shut off
+_all_ of the unnecessary refreshes, not just this one.
+
+> My experience with semi-large trees[1] is that I have to remember to use
+> "git status ." in a subdir; that "git commit -a" is of course slow when
+> I need to use it; and that the index gets big and things that need to
+> update it can become somewhat slow especially on slow disks, but that
+
+Generally I find that the stats are very fast because everything is in
+cache, and the disk doesn't come into it at all. Are you on an OS
+besides Linux, or on a machine with low memory?
+
+> otherwise git scales fairly well and has good locality, and that it's
+> easy to reason about what operations are global and avoid them.
+> So this git-reset behavior was surprising.
+
+Yeah, git is generally very good about touching only the pieces of data
+you need to complete the current operation. But I think the decision was
+made long ago that "update-index --refresh" was not too expensive to do
+it in most porcelain-ish commands, especially since the results are much
+better (e.g., more accurately indicating modified files after a reset).
+
+> assume-unchanged seems like it would add a lot of work when merging.
+
+Yeah, Junio's autorefresh suggestion is much better.
+
+-Peff
