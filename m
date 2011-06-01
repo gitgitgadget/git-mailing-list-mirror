@@ -1,108 +1,152 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 08/10] revert: Introduce HEAD, TODO files to persist
- state, plan
-Date: Wed, 1 Jun 2011 20:58:08 +0530
-Message-ID: <BANLkTino5gmfXjeOVih7+LHcMu1usPWAoQ@mail.gmail.com>
-References: <1306333025-29893-1-git-send-email-artagnon@gmail.com>
- <1306425233-504-1-git-send-email-artagnon@gmail.com> <1306425233-504-9-git-send-email-artagnon@gmail.com>
- <20110526161102.GC24931@elie>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCH] submodule add: improve message when resolving a relative
+ url fails
+Date: Wed, 01 Jun 2011 11:55:14 -0400
+Message-ID: <4DE660E2.9080500@xiplink.com>
+References: <1306792280-12768-1-git-send-email-marcnarc@xiplink.com> <4DE541EC.7010202@web.de> <4DE548C4.2010600@web.de> <4DE5561C.3010200@xiplink.com> <4DE565DF.7050207@cisco.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 01 17:28:36 2011
+Content-Transfer-Encoding: 7bit
+Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Phil Hord <hordp@cisco.com>
+X-From: git-owner@vger.kernel.org Wed Jun 01 17:55:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRnLY-0001in-2G
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Jun 2011 17:28:36 +0200
+	id 1QRnlX-0007NE-GD
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Jun 2011 17:55:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758096Ab1FAP2b convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Jun 2011 11:28:31 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:47846 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757921Ab1FAP23 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Jun 2011 11:28:29 -0400
-Received: by wwa36 with SMTP id 36so6170659wwa.1
-        for <git@vger.kernel.org>; Wed, 01 Jun 2011 08:28:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=EMhRpwBJ7xc2VqYk3zqQapvQLMhSgnWd/R8qo+YiMUE=;
-        b=g1PCowqXEEE28lH1stZiWxfmAgr0ViKKv40kVm0R2mbnwL9zrtB0BKnDKCISUysKE1
-         un003+QroQ5nI31C/F17Se0ZsyEnDo3i0nZUpi2yyNb30KR6UL34+TDKA6kbFahj00W5
-         BsJwVsilBnnYmavjBlPfdzEvIttaSsfL9B3mI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=QbxElZzKrznVv1f+aeKQHX5YX0n/CWmaCqjVxI8QjfFwYW0o0J9LT7V+uCmF/Dh23L
-         snyznchG/DA5nYuwGGfeKPNPrYqjqHy2YQ509ddGcxjfzoGqOpnJe0O12MN1TUxZo0zs
-         UH2eeJktoWFSBYbwxBtdbDW9uOyHxc7HX3QFE=
-Received: by 10.216.145.234 with SMTP id p84mr7071458wej.64.1306942108073;
- Wed, 01 Jun 2011 08:28:28 -0700 (PDT)
-Received: by 10.216.51.68 with HTTP; Wed, 1 Jun 2011 08:28:08 -0700 (PDT)
-In-Reply-To: <20110526161102.GC24931@elie>
+	id S1755531Ab1FAPzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jun 2011 11:55:22 -0400
+Received: from smtp112.iad.emailsrvr.com ([207.97.245.112]:37886 "EHLO
+	smtp112.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752037Ab1FAPzV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jun 2011 11:55:21 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp41.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id ABF61298425;
+	Wed,  1 Jun 2011 11:55:20 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp41.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id EB40B298436;
+	Wed,  1 Jun 2011 11:55:19 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110424 Thunderbird/3.1.10
+In-Reply-To: <4DE565DF.7050207@cisco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174870>
 
-Hi Jonathan and others,
+On 11-05-31 06:04 PM, Phil Hord wrote:
+> On 05/31/2011 04:57 PM, Marc Branchaud wrote:
+>> Thanks for the cogent explanation & patch.  I think the message could be
+>> improved a bit:
+>>
+>> 	Cannot resolve "../sub" relative to this repository's "origin"
+>> 	remote: The remote's URL is not set in .git/config
+>>
+>> However, overall I think this is a pretty fragile way to handle relative
+>> paths.  Consider:
+>>
+>>  - The super-repo must be a clone in order for this to work at all.
+> 
+> Yes, but that constraint (mostly) makes sense to me.  But if 'git
+> submodule add' did not initialize .git/config, this constraint could be
+> dropped.
+> 
+>>  - The super-repo cannot be checked out on a detached HEAD.
+> 
+> Why do you think that?  I just tried this and it worked fine for me.  I
+> can't think of a reason for it to fail.
 
-Jonathan Nieder writes:
-> Ramkumar Ramachandra wrote:
-> Almost there. =C2=A0To comfort overly-worried people like me that thi=
-nk we
-> have not finished converted all die() calls yet, wouldn't this need t=
-o
-> look like
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0persist_head(head);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0while ((commit =3D ...)) {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0int status_or_=
-error;
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/*
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * Checkpoint.=
- =C2=A0If do_pick_commit exits, make sure the user
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * can still u=
-se "git cherry-pick --continue" to recover.
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 */
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0persist_todo(r=
-evs.commits, opts);
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0status_or_erro=
-r =3D do_pick_commit(...);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (status_or_=
-error)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0return status_or_error;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0/* Success! */
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0remove_todo(opts);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0remove_head();
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0return 0;
+Whoops, right.  I was confusing a different error with the fact that "git
+symbolic-ref HEAD" fails on a detached HEAD.  The code defaults to "origin"
+as the remote name in this case (perhaps that's not strictly the right thing
+to do, but I'm sure this isn't the only part of git that assumes there's a
+remote called "origin").
 
-It's a little embarrassing, but I'm not able to figure out how to
-persist the TODO early. prepare_revs() sets up the revision walker and
-populates the rev_info struct: it contains a commit_list * in its
-commits member, but I apparently can't access those directly -- I went
-through some literature about revision walking and inspected how
-get_revision must be used to iterate over all the individual commits.
-Now, to persist the TODO, I need a commit_list to use: is there some
-API I can use to avoid iterating over all the commits twice? Once to
-populate the commit_list to persist the TODO, and the second time to
-actually pick them?
+>>  - The current code rewrites the URL so that any relative path is either
+>>    rejected or munged into an absolute remote URL.
+> 
+> I don't see the URL getting munged away from being relative.  Can you
+> point to an example?
 
-Thanks.
+I reached this conclusion because if I go into my clone of git.git and do
 
--- Ram
+	git submodule add ../MyThing
+
+where ../MyThing is a regular git repo, I get
+
+Cloning into MyThing...
+fatal: The remote end hung up unexpectedly
+Clone of 'git://git.kernel.org/pub/scm/git/MyThing' into submodule path
+'MyThing' failed
+
+So it seemed the relative URL became an absolute URL.
+
+Looking more closely at a working example, I can see that (as you show below)
+the URL in the super-repo's .gitmodules file retains the relative path, but
+the submodule's remote.origin.url is an absolute path.
+
+In any case, "submodule add" isn't doing what I expected: make my local
+MyThing repo a submodule of my git.git clone.
+
+>> It seems to me that this feature will only work in a fairly narrow set of
+>> circumstances, and even when it does work it's likely to do something
+>> unexpected (think of a super-repo with several remotes).
+> 
+> I use it this way with several remotes. 
+> 
+>> Back when Junio accepted the original patch, he said "If you maintain and
+>> serve a set related projects you need to give the users a single URL (per
+>> where the user is and how to reach the server)."  I'm not sure I understand
+>> that:  Why would the users be adding their own submodules to the
+>> superproject?  Wouldn't the superproject define the submodules in for them?
+> I am a user.  I admin a super-project for other users.  This project
+> lives at three remotes, remotes/public, remotes/shared and remotes/build. 
+> 
+> I add a new submodule to the superproject like this:
+> 
+>    mkdir sub && cd sub && git init
+>    cd ..
+>    git submodule add ../sub sub
+> 
+> This results in the new submodule being inserted into my .gitmodules
+> file and my .git/config:
+> 
+>    tail -3 .gitmodules
+>    [submodule "sub"]
+>        path = sub
+>        url = ../sub
+> 
+>    tail -2 .git/config
+>    [submodule "sub"]
+>        url = public:git/sub
+> 
+> I do have to make sure to push my submodule to the correct location on
+> each remote before pushing my new .gitmodules.
+> 
+> But the exact same commands work for me if I do this first and then do
+> 'git submodule add ../sub' afterwards. 
+> 
+> So, I don't understand your objections.  Do you understand my use case
+> any better?
+
+It's not so much an objection as confusion over how "submodule add" works.
+
+I believe your case works smoothly only because in your super-project you're
+careful to make sure you have checked out a branch that remotely tracks a
+something in remotes/public.  If you checked out a branch that tracks a
+different remote you'd get different results.  This seems fragile to me.
+
+When you tried the detached-HEAD scenario, did you get URLs for
+"public:git/sub" or "origin:git/sub"?  Does "origin" just happen to be the
+remote you want to use in any case?
+
+My fundamental point is that "git submodule add" seems to do confusing things
+with relative paths.  Maybe all that's needed is to clarify the
+documentation.  I'll post a patch.
+
+		M.
