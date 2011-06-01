@@ -1,76 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] Tests for some submodule corner cases.
-Date: Wed, 01 Jun 2011 10:44:45 -0700
-Message-ID: <7vboyhh2eq.fsf@alter.siamese.dyndns.org>
-References: <1306792280-12768-1-git-send-email-marcnarc@xiplink.com>
- <4DE541EC.7010202@web.de> <4DE55857.3090706@xiplink.com>
- <4DE55D0F.1020905@web.de> <4DE664A1.5060206@xiplink.com>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: gitosis asking for password
+Date: Wed, 01 Jun 2011 14:24:18 -0400
+Message-ID: <1306952658.19722.18.camel@drew-northup.unet.maine.edu>
+References: <20110531154218.GA4483@Imperial-SSD-Overlord>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Wed Jun 01 19:45:02 2011
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Tim Guirgies <lt.infiltrator@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 01 20:24:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRpTZ-0007S1-Sl
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Jun 2011 19:45:02 +0200
+	id 1QRq5q-0002PN-2v
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Jun 2011 20:24:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759012Ab1FARo5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jun 2011 13:44:57 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37381 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755133Ab1FARoz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jun 2011 13:44:55 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 37EAB455A;
-	Wed,  1 Jun 2011 13:47:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0GxhNQeTAH30g/sQaMO9WLEeAkk=; b=IAHueX
-	zNvMtm+OVMVh8FmNwfDX5ulnN+dtDfb5d6Y8gGdNittmQkK3nUZou1nQBIAHKGTf
-	ZuTwNMjD8LSrZpzL1E9RR8X+eyDNydwrNkuB1vSZkCo/54bfQfcncQGNwf6K2k1g
-	2GSCHXGwf+6HtFyGinKfu0nrLE4OZX2gd8rnQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qj5vGmhnViXDWcrXF7xbAa2tVNtSbV86
-	5IvrVXZeL0RkJM9tqx2m94cjpqgvkBtAsuefEOmj7V2EK2f9LEmEN62KyoaYoxh9
-	MUCh6/ECEBWT+Xj1UFjN9ad1jg5/R/FNiHI7JBEt89a5jZoMOncf/4oQe5GSTDwB
-	RXcYWRnWVG0=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E971E4559;
-	Wed,  1 Jun 2011 13:47:00 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B5C794558; Wed,  1 Jun 2011
- 13:46:55 -0400 (EDT)
-In-Reply-To: <4DE664A1.5060206@xiplink.com> (Marc Branchaud's message of
- "Wed, 01 Jun 2011 12:11:13 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 273EE9AC-8C77-11E0-9263-D6B6226F3D4C-77302942!a-pb-sasl-sd.pobox.com
+	id S1752037Ab1FASY3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jun 2011 14:24:29 -0400
+Received: from beryl.its.maine.edu ([130.111.32.94]:54699 "EHLO
+	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751501Ab1FASY2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jun 2011 14:24:28 -0400
+Received: from [IPv6:2610:48:100:827::97] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827::97])
+	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p51IOM7G008090
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 1 Jun 2011 14:24:22 -0400
+In-Reply-To: <20110531154218.GA4483@Imperial-SSD-Overlord>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=2 Fuz1=2
+	Fuz2=2
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: p51IOM7G008090
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1307557463.50492@fnW4JIcKlzYO+JqB+N4CiA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174888>
 
-Marc Branchaud <marcnarc@xiplink.com> writes:
 
-> Note that my automated builds don't really care about possibly-modified files
-> or anything like that.  They just want the exact tree that corresponds to the
-> commit ID recorded in the superproject.  (Previous builds might've left some
-> cruft lying around, and the automated build wants to be sure that's eliminated.)
->
-> Maybe I should just forego the status-checking altogether, and do "git
-> submodule update path/to/sub && (cd path/to/sub; git reset --hard HEAD; git
-> clean -dx)".
+On Wed, 2011-06-01 at 01:42 +1000, Tim Guirgies wrote:
+> Hi List,
+> 
+> I've been trying to sort this out for a couple of days now, but have
+> gotten absolutely nowhere.
+> 
+> For some reason, a few days ago, gitosis just stopped liking me, and I
+> was unable to push or fetch from my gitosis server, getting the error
+> message 'fatal: x does not appear to be a git repo'.
+> 
+> So, I decided to remove gitosis and start again.  Following this [1]
+> guide, this is what I did/got:
+<snip>
 
-It really depends on what you really care about. If the working tree is
-shared between your build-bot and a human user, the build-bot may want to
-make sure it does not overwrite and lose work by a human, but otherwise,
-instead of checking if something is stale (and having to design what to do
-when it actually finds something is stale), actively causing the state it
-wants to see appear in the working tree sounds like a simpler, more robust
-and much saner thing to do.
+> $ git clone gitosis@overlord.imperial.fleet:gitosis-admin
+> Cloning into gitosis-admin...
+> gitosis@localhost's password: 
+> 
+> But of course, it shouldn't be asking me for a password, and nothing I
+> type will work anyway, as it's a disabled password.
+> 
+> I've tried it a few times, completely purging the gitosis user and its
+> home directory, but with the same results.  Has anybody had similar
+> experiences?  Or does somebody know some magic trick to get gitosis
+> working?  Did I miss a step?
+
+> [1] http://scie.nti.st/2007/11/14/hosting-git-repositories-the-easy-and-secure-way
+
+Hi Tim,
+You'll notice that the year on that is 2007. I seem to recall the lack
+of support factor is [a large part of] why Sitaram Chamarty gave the
+world Gitolite (https://github.com/sitaramc/gitolite ). 
+You may still be able to find some help with Gitosis, but I'd not risk
+blacking out due to holding my breath too long if I were you.
+
+-- 
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
