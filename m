@@ -1,96 +1,110 @@
-From: Qingning Huo <qingninghuo@gmail.com>
-Subject: out of memory error with git push and pull
-Date: Wed, 1 Jun 2011 23:33:33 +0100
-Message-ID: <BANLkTin3-XnVsVd1-CAiWDBzQG6m=a4Rvw@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git clone (ssh://) skips detached HEAD
+Date: Wed, 01 Jun 2011 15:42:58 -0700 (PDT)
+Message-ID: <m31uzdxjf9.fsf@localhost.localdomain>
+References: <BANLkTi=xK+hmvGTLnKREScABU=7v_SKqPQ@mail.gmail.com>
+	<20110601220518.GA32681@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 02 00:33:40 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Dmitry Ivankov <divanorama@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 02 00:43:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRtyu-0005Lq-DK
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 00:33:40 +0200
+	id 1QRu84-0000gS-0b
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 00:43:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758804Ab1FAWdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jun 2011 18:33:35 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:62487 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758458Ab1FAWde (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jun 2011 18:33:34 -0400
-Received: by vws1 with SMTP id 1so235364vws.19
-        for <git@vger.kernel.org>; Wed, 01 Jun 2011 15:33:34 -0700 (PDT)
+	id S932510Ab1FAWnB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jun 2011 18:43:01 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:55150 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756938Ab1FAWnA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jun 2011 18:43:00 -0400
+Received: by fxm17 with SMTP id 17so371231fxm.19
+        for <git@vger.kernel.org>; Wed, 01 Jun 2011 15:42:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=W4+CHlnMTLNzeOMCVY6kjYO/XkpaZrFY9IdNi9WMuXQ=;
-        b=efwugxntEZL92NsgDzqgJwYEn8z6QSw0KVDNSFL+LKwYXVWhoSLPlq+ELaZUEOt7qv
-         TaxVo3rJ5w5psnSY+YkxjpfiT+f4jKCsh6Jo7IPjF95adFaTsUysKtuoh/Sw+0uY7SlB
-         4Hk6rz+MbL/6SHSY9b/l9ZK2b1L//04FecVFA=
+        h=domainkey-signature:x-authentication-warning:to:cc:subject
+         :references:from:date:in-reply-to:message-id:lines:user-agent
+         :mime-version:content-type;
+        bh=IagaENHwaK75wv1MA0a2tw7tSNhAHZDhxLqNtdGGmHA=;
+        b=J1OYXgKYkaIId478hBaTACpb6fhKwCjzIXo9iB7+mUijL4GNfIhKEVGT/s1YU684ZA
+         vsluwfahKiWbTjaUGEyajEaCmlDGqVm52w7AO3YU4Mk8U6cjLcPsLfsVY/Tmfj2zXIa3
+         WwZVq+rzelTIk4/2QMTsCFla8QxiLfJ37PP6A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=x2T3QSlCwbYuBW1RrP78PFmkP2decV9vR8wRmqJcyWU6L5st5GQj4Tg9nE3euFyy7u
-         2/Zj01bPMsw0vjF9tDR8yBeffXRvXuYUl1SP3OoLeYvmz+HzZo3Em3Vl5zkv0PF4NumD
-         LUPIBdapabkCGi6VRenyMka8Lj1AxAW8omySo=
-Received: by 10.52.73.2 with SMTP id h2mr44301vdv.104.1306967613831; Wed, 01
- Jun 2011 15:33:33 -0700 (PDT)
-Received: by 10.52.181.201 with HTTP; Wed, 1 Jun 2011 15:33:33 -0700 (PDT)
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=FbKOj1uV0KiVi7g8NrsPE5eSsXdMgP3hEO/FcgLzohngw2TPDMqLxWAHMc9wbETAEz
+         LvAdvhPTq08wCh9n5NB5ZOFDTRlcZQbXtaFLj8oQcE4C/hlms9qY21HH/LlUj5KwznL1
+         12Tt9LST6+3HcHpnASTRMqEN9eBrEGd8CmR88=
+Received: by 10.223.22.130 with SMTP id n2mr39039fab.50.1306968179613;
+        Wed, 01 Jun 2011 15:42:59 -0700 (PDT)
+Received: from localhost.localdomain (abvc230.neoplus.adsl.tpnet.pl [83.8.200.230])
+        by mx.google.com with ESMTPS id o23sm7216faa.9.2011.06.01.15.42.57
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 01 Jun 2011 15:42:58 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p51Mh7Ql022244;
+	Thu, 2 Jun 2011 00:43:12 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p51MgoQ1022237;
+	Thu, 2 Jun 2011 00:42:50 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20110601220518.GA32681@sigill.intra.peff.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174913>
 
-Hi All,
+Jeff King <peff@peff.net> writes:
 
-I tried to use git to manage my digital photos but encountered some
-problems. The typical file sizes are hundreds of KB or a few MB. In
-total, about 15GB data in about 10,000 files. My intention is to get
-them into a git repository and cloned into a few computers. Probably I
-will make some occasionally changes like editing and deleting. But I
-think most of the files would stay at version one.
+> On Thu, Jun 02, 2011 at 03:30:37AM +0600, Dmitry Ivankov wrote:
+> 
+> > For some reason git doesn't try to fetch detached HEAD object if it's
+> > not needed by needed heads.
+> 
+> The reason is that the default refspec on clone is:
+> 
+>   $ git config remote.origin.fetch
+>   +refs/heads/*:refs/remotes/origin/*
+> 
+> And HEAD is not under refs/heads/.
 
-The setup I used is a centralized repository for pulling from and
-pushing into. There is a gitweb interface for the centralised repo.
+Hmmm... HEAD is a bit of special case, as HEAD should really land in
+refs/remotes/origin/HEAD from what I understand.
 
-I started by creating a small repository on the server (ubuntu), and
-keeps pushing data into it from a windows machine (using cygwin). Half
-way through the process, (after pushed about 8GB of data), I found
-that I cannot run git push any more. This is the error message I got:
+[...] 
+> > Steps to reproduce:
+> > git init test && cd test
+> > touch 1 && git add 1 && git commit -m 123
+> > touch 2 && git add 2 && git commit -m 345
+> > git reset --hard HEAD^
+> > git checkout HEAD@{1}
+> > 
+> > cd ../
+> > git clone ssh://127.0.0.1/`pwd`/test test2
+> > remote: Counting objects: 3, done.
+> > remote: Total 3 (delta 0), reused 0 (delta 0)
+> > Receiving objects: 100% (3/3), done.
+> > error: Trying to write ref HEAD with nonexistant object
+> > 91dbc2403853783f637744c31036f94a66084286
+> > fatal: Cannot update the ref 'HEAD'.
+> 
+> This is quite bad behavior. In addition to the ugly error messages, it
+> actually aborts the clone. So it is impossible to clone a repo with a
+> detached HEAD that is not otherwise referenced.
 
-$ git push
-Counting objects: 621, done.
-Delta compression using up to 4 threads.
-fatal: Out of memory? mmap failed: Cannot allocate memory
-error: pack-objects died with strange error
-error: failed to push some refs to 'ssh://huo@ubuntu/mnt/share/git/photo.git'
+It _might_ be the case that the fact that git protocol doesn't have
+mechanism to transfer information about symref, and ends up guessing
+where HEAD points to, bites use here.
 
-At the same time, I found that I cannot pull from this repository either.
-
-$ git pull
-remote: Counting objects: 8088, done.
-error: pack-objects died of signal 983/8057)
-error: git upload-pack: git-pack-objects died with error.
-fatal: git upload-pack: aborting due to possible repository corruption
-on the remote side.
-remote: aborting due to possible repository corruption on the remote side.
-fatal: protocol error: bad pack header
-
-[The second line is probably "died of signal 9", because it was
-counting ???/8057 upwards before the crash.]
-
-I wonder whether anyone has tried using git in a similar scenario. Is
-git capable of handling this kind of data? And, are there any settings
-and/or command line options that I should use? I had a quick look of
-git help push (and pull/fetch) but cannot see anything obvious.
-
-BTW, I am using git version 1.7.0.4 on the ubuntu server, and version
-1.7.2.3 for cygwin on the client side.
-
-Thanks in advance.
-
-Qingning
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
