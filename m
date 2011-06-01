@@ -1,7 +1,7 @@
 From: Jamey Sharp <jamey@minilop.net>
-Subject: [PATCHv4 3/4] Support ref namespaces for remote repositories via upload-pack and receive-pack
-Date: Tue, 31 May 2011 17:24:29 -0700
-Message-ID: <1306887870-3875-3-git-send-email-jamey@minilop.net>
+Subject: [PATCHv4 4/4] Add documentation for ref namespaces
+Date: Tue, 31 May 2011 17:24:30 -0700
+Message-ID: <1306887870-3875-4-git-send-email-jamey@minilop.net>
 References: <1306887870-3875-1-git-send-email-jamey@minilop.net>
 Cc: "Shawn O. Pearce" <spearce@spearce.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -10,216 +10,260 @@ Cc: "Shawn O. Pearce" <spearce@spearce.org>,
 	Jeff King <peff@peff.net>,
 	Josh Triplett <josh@joshtriplett.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 01 02:25:02 2011
+X-From: git-owner@vger.kernel.org Wed Jun 01 02:25:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRZF6-000390-On
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Jun 2011 02:25:01 +0200
+	id 1QRZFI-0003FS-Fc
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Jun 2011 02:25:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932980Ab1FAAY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 May 2011 20:24:57 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:33065 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932959Ab1FAAYv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2011 20:24:51 -0400
-Received: by pwi15 with SMTP id 15so2297026pwi.19
+	id S932978Ab1FAAY4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 May 2011 20:24:56 -0400
+Received: from mail-px0-f179.google.com ([209.85.212.179]:63274 "EHLO
+	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932650Ab1FAAYu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2011 20:24:50 -0400
+Received: by pxi2 with SMTP id 2so3356546pxi.10
         for <git@vger.kernel.org>; Tue, 31 May 2011 17:24:50 -0700 (PDT)
-Received: by 10.68.28.136 with SMTP id b8mr1187781pbh.457.1306887890551;
+Received: by 10.68.20.106 with SMTP id m10mr2840351pbe.137.1306887890083;
         Tue, 31 May 2011 17:24:50 -0700 (PDT)
 Received: from oh.minilop.net (host-249-168.pubnet.pdx.edu [131.252.249.168])
-        by mx.google.com with ESMTPS id k4sm487445pbl.59.2011.05.31.17.24.47
+        by mx.google.com with ESMTPS id n1sm488276pbi.47.2011.05.31.17.24.47
         (version=TLSv1/SSLv3 cipher=OTHER);
         Tue, 31 May 2011 17:24:48 -0700 (PDT)
 Received: from jamey by oh.minilop.net with local (Exim 4.76)
 	(envelope-from <jamey@oh.minilop.net>)
-	id 1QRZEt-00011k-38; Tue, 31 May 2011 17:24:47 -0700
+	id 1QRZEt-000123-41; Tue, 31 May 2011 17:24:47 -0700
 X-Mailer: git-send-email 1.7.4.4
 In-Reply-To: <1306887870-3875-1-git-send-email-jamey@minilop.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174844>
 
 From: Josh Triplett <josh@joshtriplett.org>
 
-Change upload-pack and receive-pack to use the namespace-prefixed refs
-when working with the repository, and use the unprefixed refs when
-talking to the client, maintaining the masquerade.  This allows
-clone, pull, fetch, and push to work with a suitably configured
-GIT_NAMESPACE.
+Document the namespace mechanism in a new gitnamespaces(7) page.
+Reference it from receive-pack and upload-pack.
 
-With appropriate configuration, this also allows http-backend to expose
-namespaces as multiple repositories with different paths.  This only
-requires setting GIT_NAMESPACE, which http-backend passes through to
-upload-pack and receive-pack.
+Document the new --namespace option and GIT_NAMESPACE environment
+variable in git(1), and reference gitnamespaces(7).
+
+Add a sample Apache configuration to http-backend(1) to support
+namespaced repositories, and reference gitnamespaces(7).
 
 Commit by Josh Triplett and Jamey Sharp.
 
 Signed-off-by: Josh Triplett <josh@joshtriplett.org>
 Signed-off-by: Jamey Sharp <jamey@minilop.net>
 ---
-This patch is not that different from v3, but now uses general
-infrastructure from refs.c introduced in patch 2/4.
+In v4 we've tried to address reviewers' concerns about unclear and
+inadequate documentation, and of course updated for functional changes
+and revised terminology in this revision of the patch series.
 
- builtin/receive-pack.c |   32 +++++++++++++++++++++++++-------
- upload-pack.c          |   15 ++++++++-------
- 2 files changed, 33 insertions(+), 14 deletions(-)
+Note that the "CONVENTIONS" section from v3's documentation is gone
+because there is now only one way to set up namespaces.
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index e1a687a..9bb268a 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -109,6 +109,7 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
+ Documentation/Makefile                 |    2 +-
+ Documentation/git-http-backend.txt     |    8 ++++
+ Documentation/git-receive-pack.txt     |    2 +-
+ Documentation/git-upload-pack.txt      |    4 ++
+ Documentation/git.txt                  |   13 +++++-
+ Documentation/gitnamespaces.txt        |   71 ++++++++++++++++++++++++++++++++
+ contrib/completion/git-completion.bash |    2 +-
+ 7 files changed, 97 insertions(+), 5 deletions(-)
+ create mode 100644 Documentation/gitnamespaces.txt
+
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 36989b7..2004fbe 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -6,7 +6,7 @@ MAN5_TXT=gitattributes.txt gitignore.txt gitmodules.txt githooks.txt \
+ 	gitrepository-layout.txt
+ MAN7_TXT=gitcli.txt gittutorial.txt gittutorial-2.txt \
+ 	gitcvs-migration.txt gitcore-tutorial.txt gitglossary.txt \
+-	gitdiffcore.txt gitrevisions.txt gitworkflows.txt
++	gitdiffcore.txt gitnamespaces.txt gitrevisions.txt gitworkflows.txt
  
- static int show_ref(const char *path, const unsigned char *sha1, int flag, void *cb_data)
- {
-+	path = path ? strip_namespace(path) : "capabilities^{}";
- 	if (sent_capabilities)
- 		packet_write(1, "%s %s\n", sha1_to_hex(sha1), path);
- 	else
-@@ -122,9 +123,9 @@ static int show_ref(const char *path, const unsigned char *sha1, int flag, void
+ MAN_TXT = $(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT)
+ MAN_XML=$(patsubst %.txt,%.xml,$(MAN_TXT))
+diff --git a/Documentation/git-http-backend.txt b/Documentation/git-http-backend.txt
+index 277d9e1..f4e0741 100644
+--- a/Documentation/git-http-backend.txt
++++ b/Documentation/git-http-backend.txt
+@@ -119,6 +119,14 @@ ScriptAliasMatch \
  
- static void write_head_info(void)
- {
--	for_each_ref(show_ref, NULL);
-+	for_each_namespaced_ref(show_ref, NULL);
- 	if (!sent_capabilities)
--		show_ref("capabilities^{}", null_sha1, 0, NULL);
-+		show_ref(NULL, null_sha1, 0, NULL);
+ ScriptAlias /git/ /var/www/cgi-bin/gitweb.cgi/
+ ----------------------------------------------------------------
+++
++To serve multiple repositories from different linkgit:gitnamespaces[7] in a
++single repository:
+++
++----------------------------------------------------------------
++SetEnvIf Request_URI "^/git/([^/]*)" GIT_NAMESPACE=$1
++ScriptAliasMatch ^/git/[^/]*(.*) /usr/libexec/git-core/git-http-backend/storage.git$1
++----------------------------------------------------------------
  
- }
+ Accelerated static Apache 2.x::
+ 	Similar to the above, but Apache can be used to return static
+diff --git a/Documentation/git-receive-pack.txt b/Documentation/git-receive-pack.txt
+index f34e0ae..3534ba0 100644
+--- a/Documentation/git-receive-pack.txt
++++ b/Documentation/git-receive-pack.txt
+@@ -149,7 +149,7 @@ if the repository is packed and is served via a dumb transport.
  
-@@ -333,6 +334,8 @@ static void refuse_unconfigured_deny_delete_current(void)
- static const char *update(struct command *cmd)
- {
- 	const char *name = cmd->ref_name;
-+	struct strbuf namespaced_name_buf = STRBUF_INIT;
-+	const char *namespaced_name;
- 	unsigned char *old_sha1 = cmd->old_sha1;
- 	unsigned char *new_sha1 = cmd->new_sha1;
- 	struct ref_lock *lock;
-@@ -343,7 +346,10 @@ static const char *update(struct command *cmd)
- 		return "funny refname";
- 	}
+ SEE ALSO
+ --------
+-linkgit:git-send-pack[1]
++linkgit:git-send-pack[1], linkgit:gitnamespaces[7]
  
--	if (is_ref_checked_out(name)) {
-+	strbuf_addf(&namespaced_name_buf, "%s%s", get_git_namespace(), name);
-+	namespaced_name = strbuf_detach(&namespaced_name_buf, NULL);
+ GIT
+ ---
+diff --git a/Documentation/git-upload-pack.txt b/Documentation/git-upload-pack.txt
+index 4c0ca9d..61a9a04 100644
+--- a/Documentation/git-upload-pack.txt
++++ b/Documentation/git-upload-pack.txt
+@@ -33,6 +33,10 @@ OPTIONS
+ <directory>::
+ 	The repository to sync from.
+ 
++SEE ALSO
++--------
++linkgit:gitnamespaces[7]
 +
-+	if (is_ref_checked_out(namespaced_name)) {
- 		switch (deny_current_branch) {
- 		case DENY_IGNORE:
- 			break;
-@@ -371,7 +377,7 @@ static const char *update(struct command *cmd)
- 			return "deletion prohibited";
- 		}
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 65317cc..297590f 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -10,8 +10,8 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git' [--version] [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+-    [-p|--paginate|--no-pager] [--no-replace-objects]
+-    [--bare] [--git-dir=<path>] [--work-tree=<path>]
++    [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
++    [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+     [-c <name>=<value>]
+     [--help] <command> [<args>]
  
--		if (!strcmp(name, head_name)) {
-+		if (!strcmp(namespaced_name, head_name)) {
- 			switch (deny_delete_current) {
- 			case DENY_IGNORE:
- 				break;
-@@ -427,14 +433,14 @@ static const char *update(struct command *cmd)
- 			rp_warning("Allowing deletion of corrupt ref.");
- 			old_sha1 = NULL;
- 		}
--		if (delete_ref(name, old_sha1, 0)) {
-+		if (delete_ref(namespaced_name, old_sha1, 0)) {
- 			rp_error("failed to delete %s", name);
- 			return "failed to delete";
- 		}
- 		return NULL; /* good */
- 	}
- 	else {
--		lock = lock_any_ref_for_update(name, old_sha1, 0);
-+		lock = lock_any_ref_for_update(namespaced_name, old_sha1, 0);
- 		if (!lock) {
- 			rp_error("failed to lock %s", name);
- 			return "failed to lock";
-@@ -491,17 +497,29 @@ static void run_update_post_hook(struct command *commands)
+@@ -324,6 +324,11 @@ help ...`.
+ 	variable (see core.worktree in linkgit:git-config[1] for a
+ 	more detailed discussion).
  
- static void check_aliased_update(struct command *cmd, struct string_list *list)
- {
-+	struct strbuf buf = STRBUF_INIT;
-+	const char *dst_name;
- 	struct string_list_item *item;
- 	struct command *dst_cmd;
- 	unsigned char sha1[20];
- 	char cmd_oldh[41], cmd_newh[41], dst_oldh[41], dst_newh[41];
- 	int flag;
- 
--	const char *dst_name = resolve_ref(cmd->ref_name, sha1, 0, &flag);
-+	strbuf_addf(&buf, "%s%s", get_git_namespace(), cmd->ref_name);
-+	dst_name = resolve_ref(buf.buf, sha1, 0, &flag);
-+	strbuf_release(&buf);
- 
- 	if (!(flag & REF_ISSYMREF))
- 		return;
- 
-+	dst_name = strip_namespace(dst_name);
-+	if (!dst_name) {
-+		rp_error("refusing update to broken symref '%s'", cmd->ref_name);
-+		cmd->skip_update = 1;
-+		cmd->error_string = "broken symref";
-+		return;
-+	}
++--namespace=<path>::
++	Set the git namespace.  See linkgit:gitnamespaces[7] for more
++	details.  Equivalent to setting the `GIT_NAMESPACE` environment
++	variable.
 +
- 	if ((item = string_list_lookup(list, dst_name)) == NULL)
- 		return;
+ --bare::
+ 	Treat the repository as a bare repository.  If GIT_DIR
+ 	environment is not set, it is set to the current working
+@@ -588,6 +593,10 @@ git so take care if using Cogito etc.
+ 	This can also be controlled by the '--work-tree' command line
+ 	option and the core.worktree configuration variable.
  
-diff --git a/upload-pack.c b/upload-pack.c
-index ce5cbbe..267e5b1 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -641,16 +641,17 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
- 		" side-band-64k ofs-delta shallow no-progress"
- 		" include-tag multi_ack_detailed";
- 	struct object *o = parse_object(sha1);
-+	const char *refname_nons = strip_namespace(refname);
- 
- 	if (!o)
- 		die("git upload-pack: cannot find object %s:", sha1_to_hex(sha1));
- 
- 	if (capabilities)
--		packet_write(1, "%s %s%c%s%s\n", sha1_to_hex(sha1), refname,
-+		packet_write(1, "%s %s%c%s%s\n", sha1_to_hex(sha1), refname_nons,
- 			     0, capabilities,
- 			     stateless_rpc ? " no-done" : "");
- 	else
--		packet_write(1, "%s %s\n", sha1_to_hex(sha1), refname);
-+		packet_write(1, "%s %s\n", sha1_to_hex(sha1), refname_nons);
- 	capabilities = NULL;
- 	if (!(o->flags & OUR_REF)) {
- 		o->flags |= OUR_REF;
-@@ -659,7 +660,7 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
- 	if (o->type == OBJ_TAG) {
- 		o = deref_tag(o, refname, 0);
- 		if (o)
--			packet_write(1, "%s %s^{}\n", sha1_to_hex(o->sha1), refname);
-+			packet_write(1, "%s %s^{}\n", sha1_to_hex(o->sha1), refname_nons);
- 	}
- 	return 0;
++'GIT_NAMESPACE'::
++	Set the git namespace; see linkgit:gitnamespaces[7] for details.
++	The '--namespace' command-line option also sets this value.
++
+ 'GIT_CEILING_DIRECTORIES'::
+ 	This should be a colon-separated list of absolute paths.
+ 	If set, it is a list of directories that git should not chdir
+diff --git a/Documentation/gitnamespaces.txt b/Documentation/gitnamespaces.txt
+new file mode 100644
+index 0000000..c11dd56
+--- /dev/null
++++ b/Documentation/gitnamespaces.txt
+@@ -0,0 +1,71 @@
++gitnamespaces(7)
++================
++
++NAME
++----
++gitnamespaces - Git namespaces
++
++DESCRIPTION
++-----------
++
++Git supports dividing the refs of a single repository into multiple
++namespaces, each of which has its own branches, tags, and HEAD.  Git can
++expose each namespace as an independent repository to pull from and push
++to, while sharing the object store, and exposing all the refs to
++operations such as linkgit:git-gc[1].
++
++Storing multiple repositories as namespaces of a single repository
++avoids storing duplicate copies of the same objects, such as when
++storing multiple branches of the same source.  The alternates mechanism
++provides similar support for avoiding duplicates, but alternates do not
++prevent duplication between new objects added to the repositories
++without ongoing maintenance, while namespaces do.
++
++To specify a namespace, set the `GIT_NAMESPACE` environment variable to
++the namespace.  For each ref namespace, git stores the corresponding
++refs in a directory under `refs/namespaces/`.  For example,
++`GIT_NAMESPACE=foo` will store refs under `refs/namespaces/foo/`.  You
++can also specify namespaces via the `--namespace` option to
++linkgit:git[1].
++
++Note that namespaces which include a `/` will expand to a hierarchy of
++namespaces; for example, `GIT_NAMESPACE=foo/bar` will store refs under
++`refs/namespaces/foo/refs/namespaces/bar/`.  This makes `GIT_NAMESPACE`
++behave hierarchically, and avoids ambiguity with namespaces such as
++`foo/refs/heads`.
++
++linkgit:git-upload-pack[1] and linkgit:git-receive-pack[1] rewrite the
++names of refs as specified by `GIT_NAMESPACE`.  git-upload-pack and
++git-receive-pack will ignore all references outside the specified
++namespace.
++
++The smart HTTP server, linkgit:git-http-backend[1], will pass
++GIT_NAMESPACE through to the backend programs; see
++linkgit:git-http-backend[1] for sample configuration to expose
++repository namespaces as repositories.
++
++For a simple local test, you can use linkgit:git-remote-ext[1]:
++
++----------
++git clone ext::'git --namespace=foo %s /tmp/prefixed.git'
++----------
++
++SECURITY
++--------
++
++Anyone with access to any namespace within a repository can potentially
++access objects from any other namespace stored in the same repository.
++You can't directly say "give me object ABCD" if you don't have a ref to
++it, but you can do some other sneaky things like:
++
++. Claiming to push ABCD, at which point the server will optimize out the
++  need for you to actually send it. Now you have a ref to ABCD and can
++  fetch it (claiming not to have it, of course).
++
++. Requesting other refs, claiming that you have ABCD, at which point the
++  server may generate deltas against ABCD.
++
++None of this causes a problem if you only host public repositories, or
++if everyone who may read one namespace may also read everything in every
++other namespace (for instance, if everyone in an organization has read
++permission to every repository).
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index b10a1ec..ec1c986 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1469,7 +1469,7 @@ _git_help ()
+ 	__gitcomp "$__git_all_commands $(__git_aliases)
+ 		attributes cli core-tutorial cvs-migration
+ 		diffcore gitk glossary hooks ignore modules
+-		repository-layout tutorial tutorial-2
++		namespaces repository-layout tutorial tutorial-2
+ 		workflows
+ 		"
  }
-@@ -680,12 +681,12 @@ static void upload_pack(void)
- {
- 	if (advertise_refs || !stateless_rpc) {
- 		reset_timeout();
--		head_ref(send_ref, NULL);
--		for_each_ref(send_ref, NULL);
-+		head_ref_namespaced(send_ref, NULL);
-+		for_each_namespaced_ref(send_ref, NULL);
- 		packet_flush(1);
- 	} else {
--		head_ref(mark_our_ref, NULL);
--		for_each_ref(mark_our_ref, NULL);
-+		head_ref_namespaced(mark_our_ref, NULL);
-+		for_each_namespaced_ref(mark_our_ref, NULL);
- 	}
- 	if (advertise_refs)
- 		return;
 -- 
 1.7.5.3
