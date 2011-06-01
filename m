@@ -1,87 +1,57 @@
-From: Robert Garrigos <robert@garrigos.cat>
-Subject: Re: unable to get type of object
-Date: Wed, 01 Jun 2011 12:05:47 +0200
-Message-ID: <4DE60EFB.40601@garrigos.cat>
-References: <4DE5E60B.2030903@garrigos.cat> <m3ei3dyjqe.fsf@localhost.localdomain>
+From: =?UTF-8?B?RnLDqWTDqXJpYyBEZWxhbm95?= <frederic.delanoy@gmail.com>
+Subject: Configuring diff --color-words using git-config?
+Date: Wed, 1 Jun 2011 12:12:18 +0200
+Message-ID: <BANLkTikMPDM7ce0mJhx=Hmm4bhLFCREUCQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 01 12:01:48 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 01 12:12:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRiFH-0007ua-IM
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Jun 2011 12:01:47 +0200
+	id 1QRiQ3-0004at-Ar
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Jun 2011 12:12:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758660Ab1FAKBg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Jun 2011 06:01:36 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:57206 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757574Ab1FAKBf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jun 2011 06:01:35 -0400
-Received: by wwa36 with SMTP id 36so5845747wwa.1
-        for <git@vger.kernel.org>; Wed, 01 Jun 2011 03:01:33 -0700 (PDT)
-Received: by 10.227.203.145 with SMTP id fi17mr6983217wbb.106.1306922493346;
-        Wed, 01 Jun 2011 03:01:33 -0700 (PDT)
-Received: from robert-garrigoss-macbook-pro-3.local (r15.santpau.es [193.146.15.253])
-        by mx.google.com with ESMTPS id et5sm621839wbb.50.2011.06.01.03.01.31
-        (version=SSLv3 cipher=OTHER);
-        Wed, 01 Jun 2011 03:01:32 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; ca; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
-In-Reply-To: <m3ei3dyjqe.fsf@localhost.localdomain>
-X-TagToolbar-Keys: D20110601120547075
+	id S933302Ab1FAKMu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Jun 2011 06:12:50 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:54150 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933260Ab1FAKMt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Jun 2011 06:12:49 -0400
+Received: by ewy4 with SMTP id 4so1928422ewy.19
+        for <git@vger.kernel.org>; Wed, 01 Jun 2011 03:12:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to
+         :content-type:content-transfer-encoding;
+        bh=Yrrm2ucy23kwZcAcl3MstBHFDeDPEXAGKqTfQ5F32dU=;
+        b=bcKmEBmFBxehlm9AGPRExMY7G765Fn+1xEVNhMSk/oTJmU1i7wsZOTHIOOvQjf3XV2
+         wKm/htn+I6Nd+1J4HVgoroNeN+OKLkeZfKDSR8XP00d2vu/jo7tnK1Y4AoOJ/pr6C27E
+         1HJIQANXUTcsxrL0EsZcWiYyzQKECv8jO381M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        b=daRxKnp09YJ7ExSHUsqJRjZqROS8qWxoAYq9s13XEb89v3UllZ4ENcU4eA2F53gdMc
+         dcUnINC8TXbWidKeyKRwH6FxTQHGun86IQ+HBhw+lTpZvPA/HVxbKHATbjQeLhaffveB
+         kXjsB7Bawv6uSDP2vWJZmrRP+plGr9jhrhuwc=
+Received: by 10.14.53.136 with SMTP id g8mr2734298eec.239.1306923168351; Wed,
+ 01 Jun 2011 03:12:48 -0700 (PDT)
+Received: by 10.14.100.16 with HTTP; Wed, 1 Jun 2011 03:12:18 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174861>
 
-Al 01/06/11 11:39, En/na Jakub Narebski ha escrit:
-> Robert Garrigos<robert@garrigos.cat>  writes:
->
->> I'm having one of those nasty 128 errors which I cannot debug:
->>
->> ************
->> predircam@eduab:~/public_html/idosing>  git pull
->> Generating pack...
->> Done counting 117 objects.
->> error: unable to find c3117d23df0c01ba8558bad81ad3488f0e8d430a
->> fatal: unable to get type of object c3117d23df0c01ba8558bad81ad3488f=
-0e8d430a
->> fatal: early EOF
->> fatal: git-unpack-objects died with error code 128
->> Fetch failure: /home/predircam/gitrepos/idosing.git
->> ***************
->>
->> google suggests me to run git fsck to get a list of corrupted
->> files. Besides that I'm running git 1.2.4 and that the git command f=
-or
->> that version is fsck-objects, I'm not having any result at all.
->>
->> Could this be a compatibility problem? As I said, I run git 1.2.4 on
->> the repo server and git 1.7.0.2 on my development server. BTW, on my
->> devel server running the git command fsck gives no result either.
-> Do this repository uses submodules?  IIRC pre 1.4.x (or even later)
-> git didn't understand modules.
->
-> Or it might be problem with deltabaseoffset, i.e. when objects is
-> stored in pack as a difference (delta) from other objects, it refers
-> to base by offset in pack, and not by sha-1 id.  I don't remember if
-> ancient 1.2.4 supports this feature.  This is more likely.
->
-> Why don't you upgrade git (perhaps installing it locally in your home
-> directory)?
-Upgrading doesn't depend on me, unfortunately.
+Hi
 
-The problem arouse when creating a first branch and merging later into=20
-master branch. Does this give a clue?
---=20
+Is it possible to use a config option so that "--color-words" is used
+as default for diff?
 
-Robert Garrig=F3s
-Tf. 607 997 973
-http://garrigos.cat
+I RTFM'ed git-config but didn't find such an option.
+
+=46r=C3=A9d=C3=A9ric
