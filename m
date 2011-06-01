@@ -1,62 +1,70 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: How to make fetch get everything?
-Date: Wed, 01 Jun 2011 08:59:35 +0200
-Message-ID: <4DE5E357.1050408@viscovery.net>
-References: <1306886776234-6425155.post@n2.nabble.com>
+From: Robert Garrigos <robert@garrigos.cat>
+Subject: unable to get type of object
+Date: Wed, 01 Jun 2011 09:11:07 +0200
+Message-ID: <4DE5E60B.2030903@garrigos.cat>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: garyc618 <gary.carter@eigen.com>
-X-From: git-owner@vger.kernel.org Wed Jun 01 08:59:43 2011
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 01 09:07:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRfP4-0008Cb-IN
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Jun 2011 08:59:42 +0200
+	id 1QRfW9-0002Uo-Cf
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Jun 2011 09:07:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754841Ab1FAG7h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jun 2011 02:59:37 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:15794 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753235Ab1FAG7h (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jun 2011 02:59:37 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1QRfOx-0003Ro-KX; Wed, 01 Jun 2011 08:59:35 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 5A05A1660F;
-	Wed,  1 Jun 2011 08:59:35 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
-In-Reply-To: <1306886776234-6425155.post@n2.nabble.com>
-X-Spam-Score: -1.4 (-)
+	id S1755100Ab1FAHG4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Jun 2011 03:06:56 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:64082 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753753Ab1FAHGz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jun 2011 03:06:55 -0400
+Received: by wwa36 with SMTP id 36so5689851wwa.1
+        for <git@vger.kernel.org>; Wed, 01 Jun 2011 00:06:54 -0700 (PDT)
+Received: by 10.227.204.197 with SMTP id fn5mr6870057wbb.36.1306912014131;
+        Wed, 01 Jun 2011 00:06:54 -0700 (PDT)
+Received: from robert-garrigoss-macbook-pro-3.local (r15.santpau.es [193.146.15.253])
+        by mx.google.com with ESMTPS id en1sm530175wbb.35.2011.06.01.00.06.52
+        (version=SSLv3 cipher=OTHER);
+        Wed, 01 Jun 2011 00:06:52 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; ca; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174852>
 
-Am 6/1/2011 2:06, schrieb garyc618:
-> Hi List,
-> 
-> In one book it says that "git fetch [remote]" pulls down everything you
-> don't currently have in your local repository.  However, when I look at
-> FETCH_HEAD it only has the master head.  Other branches don't seem to get
-> fetched.
-> 
-> I tried "git fetch [remote] *:*" but that gave fatal error messages.
-> 
-> Then I tried "git fetch [remote] "*:foo/*" which worked great - I got every
-> single branch.
+I'm having one of those nasty 128 errors which I cannot debug:
 
-Assuming you have either cloned from the remote or have set it up using
-"git remote add origin /where/the/remote/is", you should have tried
+************
+predircam@eduab:~/public_html/idosing> git pull
+Generating pack...
+Done counting 117 objects.
+error: unable to find c3117d23df0c01ba8558bad81ad3488f0e8d430a
+fatal: unable to get type of object c3117d23df0c01ba8558bad81ad3488f0e8=
+d430a
+fatal: early EOF
+fatal: git-unpack-objects died with error code 128
+=46etch failure: /home/predircam/gitrepos/idosing.git
+***************
 
-   git fetch origin
+google suggests me to run git fsck to get a list of corrupted files.=20
+Besides that I'm running git 1.2.4 and that the git command for that=20
+version is fsck-objects, I'm not having any result at all.
 
-which would give you all remote branches in [refs/]remotes/origin/*.
+Could this be a compatibility problem? As I said, I run git 1.2.4 on th=
+e=20
+repo server and git 1.7.0.2 on my development server. BTW, on my devel=20
+server running the git command fsck gives no result either.
 
--- Hannes
+I would appreciate any help.
+
+Thanks
+--=20
+
+Robert Garrig=F3s
+Tf. 607 997 973
+http://garrigos.cat
