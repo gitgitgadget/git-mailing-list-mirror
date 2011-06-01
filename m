@@ -1,112 +1,61 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/1] git-am: provide configuration to enable signoff by
- default
-Date: Wed, 1 Jun 2011 14:23:57 -0500
-Message-ID: <20110601191623.GA9836@elie>
-References: <1306917751-27999-1-git-send-email-nsekhar@ti.com>
- <7voc2hh3t5.fsf@alter.siamese.dyndns.org>
- <B85A65D85D7EB246BE421B3FB0FBB593024D2D22DE@dbde02.ent.ti.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 0/2] Tests for some submodule corner cases.
+Date: Wed, 01 Jun 2011 21:26:50 +0200
+Message-ID: <4DE6927A.8010902@web.de>
+References: <1306792280-12768-1-git-send-email-marcnarc@xiplink.com> <4DE541EC.7010202@web.de> <4DE55857.3090706@xiplink.com> <4DE55D0F.1020905@web.de> <4DE664A1.5060206@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: "Nori, Sekhar" <nsekhar@ti.com>
-X-From: git-owner@vger.kernel.org Wed Jun 01 21:24:21 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Wed Jun 01 21:27:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRr1c-0007cY-A8
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Jun 2011 21:24:16 +0200
+	id 1QRr4G-0000f3-IA
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Jun 2011 21:27:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759161Ab1FATYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jun 2011 15:24:11 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:48949 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759128Ab1FATYK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jun 2011 15:24:10 -0400
-Received: by ywe9 with SMTP id 9so60420ywe.19
-        for <git@vger.kernel.org>; Wed, 01 Jun 2011 12:24:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=jpq8CI/LXCLiEWSWx/ytxcqrzbMhkGVd8rINBmQXYT4=;
-        b=WBsZ5heqLJV7V2MpDs8r1MNKw/InSJhBKp6q2XaSV6zXsH3d8WkgV5G2d8OCMPoOIb
-         ZsC0B51oQJ14PRpDWfBu1qQfC2HKShu5Lev7ka8vH6fz0t6GgcrcaDWJG0ez+IyJNP4a
-         D395R/7VNBN7NoyWK3DmBWky74ZajJuuvDyvk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=apx1KC3sGV8Omb2AMg1XLGNEdQW1mY1lPcnwwuX9uCoJvM7h3PBdsxq8LHSrlN+mMo
-         hNu71iYasxqcqls4RefEt1RZRJpv/i1ZnIXI4gaS0yUfpMYMUasFmzcCRbUXBxCCBW0Q
-         HDcrEWBR1P/hEgMQ8UeFjjU+j4QhK+JlheAwg=
-Received: by 10.150.114.11 with SMTP id m11mr6367853ybc.426.1306956249845;
-        Wed, 01 Jun 2011 12:24:09 -0700 (PDT)
-Received: from elie (adsl-69-209-65-98.dsl.chcgil.ameritech.net [69.209.65.98])
-        by mx.google.com with ESMTPS id a21sm533721ybf.15.2011.06.01.12.24.08
-        (version=SSLv3 cipher=OTHER);
-        Wed, 01 Jun 2011 12:24:08 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <B85A65D85D7EB246BE421B3FB0FBB593024D2D22DE@dbde02.ent.ti.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758946Ab1FAT04 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jun 2011 15:26:56 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:58481 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756080Ab1FAT0z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jun 2011 15:26:55 -0400
+Received: from smtp07.web.de  ( [172.20.5.215])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 307BA1A101458;
+	Wed,  1 Jun 2011 21:26:54 +0200 (CEST)
+Received: from [93.246.50.133] (helo=[192.168.178.43])
+	by smtp07.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1QRr4A-0001RQ-00; Wed, 01 Jun 2011 21:26:54 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
+In-Reply-To: <4DE664A1.5060206@xiplink.com>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX19ImeePgBW6GnCKxULcWbEI8n+wy8UNirROcy1M
+	iml8uk2kbuPNPizJqGM3nUsKyjhb2ila7fjnrDzktnYfXk/awU
+	+HcoNkAj+CxB7l2wCdPg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174895>
 
-Nori, Sekhar wrote:
-> On Wed, Jun 01, 2011 at 22:44:30, Junio C Hamano wrote:
+Am 01.06.2011 18:11, schrieb Marc Branchaud:
+> On 11-05-31 05:26 PM, Jens Lehmann wrote:
+>> No problem, maybe that's just an indication that a reference to "git status"
+>> being more capable of telling what is going on inside a submodule is missing
+>> to the man page for "git submodule status".
+> 
+> Yes, that'd possibly help.
 
->> Also if it doesn't have to be a conscious act, what value does such a
->> boilerplate have? Such a project may be better off not using sign-off at
->> all to begin with.
->
-> Its hard to argue against this. All I would say is it is probably
-> much safer to enable sign off by default when accepting a patch
-> than when preparing to send it. Yet, we have format.signoff but
-> no am.signoff. On any project with conscious sign-off rules, one
-> would never accept a patch without a sign-off from the original
-> developer.
+Ok, I'll see if I can come up with something ...
 
-In that case, just the first sign-off should be enough and there is no
-need to record the later ones, no?
+> So here's my basic question: How can my build system be sure that a submodule
+> contains the correct working directory?  Do I need to do both "git submodule
+> status" to check the submodule's HEAD, then also use "git status" to see if
+> that HEAD is correctly checked out?
 
-In practice, with format.signoff hopefully people read the patches
-they are sending out before mailing them.  It is very easy to remove
-the sign-off in an MUA or by editing patch files before running
-"git send-email" if it was inappropriate.  On the contrary, importing
-patches en masse with "git am" is a common operation and I suspect
-looking over the new history in detail before a "git push" is rare, so
-the possibility of someone forgetting that an "[am] signOff" variable
-is in effect is much more dangerous.
-
-That said, I am all for giving people rope as long as there is some
-legitimate use case documented to explain how not to hang themselves.
-Could you say more about the example that motivated this?  What
-benefit would this provide to motivate not using "git am -3sc" (which
-contains the -s on the commandline as a reminder)?
-
-> So, just making it easier to accept patches which are already
-> signed-off should be okay, I guess?
-
-A related idea seems interesting: would a --check-sign-off option that
-prevents applying a patch unless the last sign-off matches the email
-sender be useful?  Unfortunately individual people sometimes use
-different addresses for the From and Signed-off-by lines in some
-projects (like git and the Linux kernel) so I don't think I'd use such
-a thing but in a more controlled environment I can imagine it might be
-nice.
-
-Thanks.
-
-Sorry for the longwinded message; still, hope that helps.
-
-Regards,
-Jonathan
+No, "git status" will do both. The only thing it will be silent about is when
+a submodule isn't initialized at all ("git submodule status" shows this with
+a '-').
