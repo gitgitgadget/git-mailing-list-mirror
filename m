@@ -1,111 +1,86 @@
-From: dabrown@physics.syr.edu (Duncan Brown)
-Subject: [PATCH/RFC] http: pass http.cookiefile using CURLOPT_COOKIEFILE
-Date: Thu,  2 Jun 2011 16:31:25 -0400 (EDT)
-Message-ID: <20110602203125.0E04C734F12@antares.phy.syr.edu>
-Cc: dabrown@physics.syr.edu, gitster@pobox.com,
-	skoranda@gravity.phys.uwm.edu
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 03 00:26:16 2011
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/PATCH] Added a remote helper to interact with mediawiki, pull & clone handled
+Date: Fri, 03 Jun 2011 00:37:04 +0200
+Message-ID: <vpqy61jami7.fsf@bauges.imag.fr>
+References: <1307006911-4326-1-git-send-email-arnaud.lacurie@ensimag.imag.fr>
+	<20110602170327.GA2928@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>,
+	git@vger.kernel.org,
+	=?iso-8859-1?Q?J=E9r=E9mie?= Nikaes 
+	<jeremie.nikaes@ensimag.imag.fr>,
+	Claire Fousse <claire.fousse@ensimag.imag.fr>,
+	David Amouyal <david.amouyal@ensimag.imag.fr>,
+	Sylvain =?iso-8859-1?Q?Boulm=E9?= <sylvain.boulme@imag.fr>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jun 03 00:37:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QSGLH-0006zq-D0
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Jun 2011 00:26:15 +0200
+	id 1QSGW5-0002cF-FE
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Jun 2011 00:37:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751471Ab1FBW0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jun 2011 18:26:10 -0400
-Received: from smtp1.syr.edu ([128.230.18.82]:58483 "EHLO smtp1.syr.edu"
+	id S1752458Ab1FBWhS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2011 18:37:18 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:41821 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751077Ab1FBW0I (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jun 2011 18:26:08 -0400
-X-Greylist: delayed 6876 seconds by postgrey-1.27 at vger.kernel.org; Thu, 02 Jun 2011 18:26:08 EDT
-Received: from antares.phy.syr.edu (antares.phy.syr.edu [128.230.52.80])
-	by smtp1.syr.edu (8.14.3/8.14.3) with ESMTP id p52KVPsL023873;
-	Thu, 2 Jun 2011 16:31:25 -0400
-Received: by antares.phy.syr.edu (Postfix, from userid 501)
-	id 0E04C734F12; Thu,  2 Jun 2011 16:31:25 -0400 (EDT)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.4.6813,1.0.148,0.0.0000
- definitions=2011-06-02_07:2011-06-02,2011-06-02,1970-01-01 signatures=0
-X-Proofpoint-Spam-Reason: safe
+	id S1751903Ab1FBWhR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2011 18:37:17 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p52Mb2mr004570
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 3 Jun 2011 00:37:02 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1QSGVl-0000VQ-AW; Fri, 03 Jun 2011 00:37:05 +0200
+In-Reply-To: <20110602170327.GA2928@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 2 Jun 2011 13:03:27 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 03 Jun 2011 00:37:03 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p52Mb2mr004570
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1307659024.88239@eZ1dq5rsz9RQJl6TexUG9Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174982>
 
-If the config option http.cookiefile is set, pass this file to libCURL using
-the CURLOPT_COOKIEFILE option. This is similar to calling curl with the -b
-option.  This allows git http authorization with authentication mechanisms
-that use cookies, such as SAML Enhanced Client or Proxy (ECP) used by
-Shibboleth.
+Jeff King <peff@peff.net> writes:
 
-To use SAML/ECP, the user needs to request a session cookie with their own ECP
-code. See for example:
+> Overall, it's looking pretty good. I like that I can resume a
+> half-finished import via "git fetch". Though I do have one complaint:
+> running "git fetch" fetches the metainfo for every revision of every
+> page, just as it does for an initial clone. Is there something in the
+> mediawiki API to say "show me revisions since N" (where N would be the
+> mediawiki revision of the tip of what we imported)?
 
-<https://wiki.shibboleth.net/confluence/display/SHIB2/ECP>
+The idea is that we ultimately want to be able to import a subset of a
+large wiki. In Wikipedia, for example, "show me revisions since N" will
+be very large after a few minutes. OTOH, "show me revisions touching the
+few pages I'm following" should be fast. And at least, it's O(imported
+wiki size), not O(complete wiki size)
 
-Once the cookie file has been created, it can be passed to git with, e.g.
+Ideally, there could be heuristics like
 
-git config --global http.cookiefile "/home/dbrown/.curlcookies"
+"show me how many revisions since N"
+if (not many) {
+    "OK, show me them all in details"
+} else {
+    "hmm, we'll do it another way, show me revisions touching my pages"
+}
 
-libCURL will then pass the appropriate session cookies to the git http server.
+but let's not be too ambitious for now: it's a student's project,
+completing one week from now, and the goal is to have something clean
+and extensible. Bells and whistles will come later ;-).
 
-Signed-off-by: Duncan Brown <duncan.brown@ligo.org>
----
- Documentation/config.txt |    8 ++++++++
- http.c                   |    5 +++++
- 2 files changed, 13 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 6b93777..c631d1c 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1196,6 +1196,14 @@ http.proxy::
- 	environment variable (see linkgit:curl[1]).  This can be overridden
- 	on a per-remote basis; see remote.<name>.proxy
- 
-+http.cookiefile::
-+	File containing previously stored cookie lines which should be used
-+	in the git http session, if they match the server. The file format
-+	of the file to read cookies from should be plain HTTP headers or
-+	the Netscape/Mozilla cookie file format (see linkgit:curl[1]).
-+	NOTE that the file specified with http.cookiefile is only used as
-+	input. No cookies will be stored in the file.
-+
- http.sslVerify::
- 	Whether to verify the SSL certificate when fetching or pushing
- 	over HTTPS. Can be overridden by the 'GIT_SSL_NO_VERIFY' environment
-diff --git a/http.c b/http.c
-index b2ae8de..a1ea3db 100644
---- a/http.c
-+++ b/http.c
-@@ -41,6 +41,7 @@ static long curl_low_speed_limit = -1;
- static long curl_low_speed_time = -1;
- static int curl_ftp_no_epsv;
- static const char *curl_http_proxy;
-+static const char *curl_cookie_file;
- static char *user_name, *user_pass;
- static const char *user_agent;
- 
-@@ -191,6 +192,9 @@ static int http_options(const char *var, const char *value, void *cb)
- 	if (!strcmp("http.proxy", var))
- 		return git_config_string(&curl_http_proxy, var, value);
- 
-+	if (!strcmp("http.cookiefile", var))
-+		return git_config_string(&curl_cookie_file, var, value);
-+
- 	if (!strcmp("http.postbuffer", var)) {
- 		http_post_buffer = git_config_int(var, value);
- 		if (http_post_buffer < LARGE_PACKET_MAX)
-@@ -531,6 +535,7 @@ struct active_request_slot *get_active_slot(void)
- 	slot->finished = NULL;
- 	slot->callback_data = NULL;
- 	slot->callback_func = NULL;
-+	curl_easy_setopt(slot->curl, CURLOPT_COOKIEFILE, curl_cookie_file);
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, pragma_header);
- 	curl_easy_setopt(slot->curl, CURLOPT_ERRORBUFFER, curl_errorstr);
- 	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, NULL);
 -- 
-1.7.3.4
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
