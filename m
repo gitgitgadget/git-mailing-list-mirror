@@ -1,71 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] Added a remote helper to interact with mediawiki,
- pull & clone handled
-Date: Thu, 2 Jun 2011 18:49:31 -0400
-Message-ID: <20110602224931.GA28189@sigill.intra.peff.net>
-References: <1307006911-4326-1-git-send-email-arnaud.lacurie@ensimag.imag.fr>
- <20110602170327.GA2928@sigill.intra.peff.net>
- <BANLkTi=eYg3uT1hQZO03i4MLyhRkPzXK6w@mail.gmail.com>
+From: Cesar Eduardo Barros <cesarb@cesarb.net>
+Subject: Re: [PATCH v2] Embed an application manifest on MinGW
+Date: Thu, 02 Jun 2011 19:56:47 -0300
+Message-ID: <4DE8152F.3010903@cesarb.net>
+References: <1307010937-2894-1-git-send-email-cesarb@cesarb.net> <7vfwnsdwqf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org,
-	=?utf-8?B?SsOpcsOpbWll?= Nikaes <jeremie.nikaes@ensimag.imag.fr>,
-	Claire Fousse <claire.fousse@ensimag.imag.fr>,
-	David Amouyal <david.amouyal@ensimag.imag.fr>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Sylvain =?utf-8?Q?Boulm=C3=A9?= <sylvain.boulme@imag.fr>
-To: Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 03 00:49:43 2011
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: msysgit@googlegroups.com,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 03 00:57:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QSGhy-00073h-H5
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Jun 2011 00:49:42 +0200
+	id 1QSGp2-0001Nu-5V
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Jun 2011 00:57:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753177Ab1FBWtf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jun 2011 18:49:35 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50654
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753019Ab1FBWte (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jun 2011 18:49:34 -0400
-Received: (qmail 584 invoked by uid 107); 2 Jun 2011 22:49:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 02 Jun 2011 18:49:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Jun 2011 18:49:31 -0400
-Content-Disposition: inline
-In-Reply-To: <BANLkTi=eYg3uT1hQZO03i4MLyhRkPzXK6w@mail.gmail.com>
+	id S1754553Ab1FBW4z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2011 18:56:55 -0400
+Received: from smtp-02.mandic.com.br ([200.225.81.133]:51046 "EHLO
+	smtp-02.mandic.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753019Ab1FBW4y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2011 18:56:54 -0400
+Received: (qmail 29284 invoked from network); 2 Jun 2011 22:56:48 -0000
+Received: from unknown (HELO cesarb-inspiron.home.cesarb.net) (zcncxNmDysja2tXBptWToZWJlF6Wp6IuYnI=@[200.157.204.20])
+          (envelope-sender <cesarb@cesarb.net>)
+          by smtp-02.mandic.com.br (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
+          for <gitster@pobox.com>; 2 Jun 2011 22:56:48 -0000
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Thunderbird/3.1.10
+In-Reply-To: <7vfwnsdwqf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174985>
 
-On Thu, Jun 02, 2011 at 10:28:33PM +0200, Arnaud Lacurie wrote:
+Em 02-06-2011 13:27, Junio C Hamano escreveu:
+> Does the output from $WINDRES define any external symbol the rest of the
+> code can refer to?  If so, you could throw resource.o into one of the .a
+> file and make sure that the symbol is referred to from main(); perhaps the
+> definition of main in compat/mingw.h can refer to it.
 
-> > Overall, it's looking pretty good. I like that I can resume a
-> > half-finished import via "git fetch". Though I do have one complaint:
-> > running "git fetch" fetches the metainfo for every revision of every
-> > page, just as it does for an initial clone. Is there something in the
-> > mediawiki API to say "show me revisions since N" (where N would be the
-> > mediawiki revision of the tip of what we imported)?
-> 
-> I am not sure I understand your question. Because actually, we are
-> supporting this, thanks to git notes. Like when you git fetch after a
-> clone, it checks only the last revisions
+Unfortunately no:
 
-Sorry, I was partially wrong in what I wrote above. I was resuming a
-failed import (because of the bogus timestamp), so the numbers of
-revisions were still high, and I thought they were the same as in the
-original version. I see now doing a fetch on the completed import that
-it properly finds 0 revisions for each page. So that's good.
+$ i686-pc-mingw32-nm compat/win32/resource.o
+00000000 d .rsrc
 
-However, it does still take O(number of pages) requests just to find out
-that there is nothing to fetch. For the git wiki, this takes on the
-order of 1.5 minutes to do an empty fetch. When getting the list of
-pages, I wonder if there is a way in the mediawiki API to say "show me
-only pages which have been modified since rev N".
+The only thing it has is the .rsrc section.
 
--Peff
+I could perhaps create a dummy C file with a dummy variable, compile it, 
+and use incremental linking (ld -r) to bolt both object files together. 
+I am not sure this hack wouldn't be uglier than the Makefile changes.
+
+Another possibility would be a linker script (like /usr/lib/libc.so on 
+modern distributions). This might be the most elegant option if it 
+works. I will have to take a look on how it works to see if it is a 
+viable alternative.
+
+> If you can do that, you wouldn't need any change to the Makefile other
+> than the rule to build compat/win32/resource.o and conditionally add that
+> object to LIB_OBJS, perhaps like this (obviously untested as I do not have
+> access to windows boxes).
+
+You do not need access to Windows boxes, you can always use Wine ;-) 
+(msysgit even has a script to open a shell under Wine with everything 
+set up).
+
+-- 
+Cesar Eduardo Barros
+cesarb@cesarb.net
+cesar.barros@gmail.com
