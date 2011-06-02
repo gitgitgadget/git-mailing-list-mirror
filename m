@@ -1,169 +1,99 @@
-From: Tim Guirgies <lt.infiltrator@gmail.com>
+From: Howard Miller <howard@e-learndesign.co.uk>
 Subject: Re: Can't get git rebase --onto to work
-Date: Thu, 2 Jun 2011 20:38:35 +1000
-Message-ID: <20110602103833.GA4709@Imperial-SSD-Overlord>
+Date: Thu, 2 Jun 2011 11:38:53 +0100
+Message-ID: <BANLkTikTi7nryTsyNV5incW3TxaOROyzMw@mail.gmail.com>
 References: <BANLkTikF7p_XsU6YJ81bq10S3nL6tBsApg@mail.gmail.com>
+	<20110602103259.GA30081@centaur.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="9jxsPFA5p3P2qPhR"
-Cc: git@vger.kernel.org
-To: Howard Miller <howard@e-learndesign.co.uk>
-X-From: git-owner@vger.kernel.org Thu Jun 02 12:38:49 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <carlos@cmartin.tk>,
+	Howard Miller <howard@e-learndesign.co.uk>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 02 12:39:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QS5Ie-0004TG-JZ
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 12:38:48 +0200
+	id 1QS5Is-0004Xh-QQ
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 12:39:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933457Ab1FBKin (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jun 2011 06:38:43 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:52578 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933354Ab1FBKim (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jun 2011 06:38:42 -0400
-Received: by pwi15 with SMTP id 15so442406pwi.19
-        for <git@vger.kernel.org>; Thu, 02 Jun 2011 03:38:42 -0700 (PDT)
+	id S933458Ab1FBKi4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Jun 2011 06:38:56 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:59231 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933431Ab1FBKiy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2011 06:38:54 -0400
+Received: by yxs7 with SMTP id 7so269873yxs.19
+        for <git@vger.kernel.org>; Thu, 02 Jun 2011 03:38:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=awub9svdkBehwiBoFK3SSLjsY6/L4BJjq312uhm1smE=;
-        b=fGqcnwX9AdP626e9JOu/u4NGGRPmYk27oYQ8r9BidK0cDgRad1sCGHo58PfHYbyyV1
-         S6/kQaNAuSgU0JwJmKxyn9HxTTntDPX71Mo6dqE9cwR3de8PJ3g1HKwLX9u8serU54ie
-         6VC9Cjum6KBKpYB61FGC/P/7Yjxzi/bkeE3W8=
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=b4OWjxIEk69k9pa4w0wK6P5/gl9ewSI5izP2emy/pyU=;
+        b=QjV7QZxjq6AYb+O9+D6zmGdMNcJMu97gi4SpSdJ0P4V3TNr2jIwvl5iueaP8UK7VC1
+         2le4SO2+PkuuPsECEQTKtglQRw8MHNYSPIdFCrBYc45jp5SNuWSy8ZuSz/O5xdBarFaT
+         pLq/4+riFKLXeBwl988t1fU5GnXW3e+J6L2iU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Yv2bJtXvPH4TXxOiSzDNFOQWcO8BVj/34VNEveFusW/xSIpVaYtOTthaHqe5IIxhyP
-         qleR8lbUB+Yur9iy2D5596YqxpDyUzDTmoksSxjf5579IORft687VMeOwQCDEVwVQd0t
-         dFqpQXUsrqXmXZO8/KbQCfLZDGAYL187OZpJk=
-Received: by 10.68.59.169 with SMTP id a9mr234335pbr.60.1307011122152;
-        Thu, 02 Jun 2011 03:38:42 -0700 (PDT)
-Received: from overlord.imperial.fleet (27-32-25-138.static.tpgi.com.au [27.32.25.138])
-        by mx.google.com with ESMTPS id b8sm483210pbj.30.2011.06.02.03.38.39
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 02 Jun 2011 03:38:41 -0700 (PDT)
-Received: from tim by overlord.imperial.fleet with local (Exim 4.76)
-	(envelope-from <tim@imperial-ssd-overlord>)
-	id 1QS5IR-0002Ll-FA; Thu, 02 Jun 2011 20:38:35 +1000
-Content-Disposition: inline
-In-Reply-To: <BANLkTikF7p_XsU6YJ81bq10S3nL6tBsApg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=orKtLcMT8APYuGsU5A4EQpwdTZ7/mzIj34sseUl0KVZSNIlAMMBb++YNq1gteduFe1
+         AciYBdk+1Y2QvTVKqMHN7a4c/Zyc6NFZB53Nayobrbzok7Wo22swxh+8A4pBJKSAOUie
+         IOLQUqkqs/Zkhia59yzEeBi28OZ3dH4vGGPxE=
+Received: by 10.90.249.30 with SMTP id w30mr528026agh.3.1307011133309; Thu, 02
+ Jun 2011 03:38:53 -0700 (PDT)
+Received: by 10.90.116.15 with HTTP; Thu, 2 Jun 2011 03:38:53 -0700 (PDT)
+In-Reply-To: <20110602103259.GA30081@centaur.lab.cmartin.tk>
+X-Google-Sender-Auth: _9qHCskFJ--gwBFjIu9HozgehDQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174938>
 
+On 2 June 2011 11:32, Carlos Mart=EDn Nieto <carlos@cmartin.tk> wrote:
+> On Thu, Jun 02, 2011 at 11:17:41AM +0100, Howard Miller wrote:
+>> Trying to explain this as concisely as possible.
+>>
+>> I started with the following branches (names changed to protect the =
+guilty)...
+>>
+>> * clientA
+>> * clientB
+>>
+>> both have a common ancestry....
+>>
+>> I then checked out clientB created a new branch clientB_patch and di=
+d
+>> a load of work and commits.
+>>
+>> However, I actually wanted all those commits to apply to clientA
+>> branch instead so....
+>>
+>> git checkout clientA
+>> git checkout -b clientA_patch =A0 =A0 (to ensure I didn't wreck orig=
+inal branch)
+>> git rebase --onto clientA_patch clientB clientB_patch
+>
+> The man page for git-rebase covers this exact situation (around line
+> 88 in my version) . In its case, it's
+>
+> =A0 =A0git rebase --onto master next topic
+>
+> which translates to your case as
+>
+> =A0 =A0git rebase --onto clientA clientB clientB_patch
+>
 
---9jxsPFA5p3P2qPhR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks. That's what I said (except I added an extra branch onto
+ClientA because I interpreted the instructions - wrongly - to say that
+ClientA would change).
 
-On Thu, Jun 02, 2011 at 11:17:41AM +0100, Howard Miller wrote:
-> Trying to explain this as concisely as possible.
->=20
-> I started with the following branches (names changed to protect the guilt=
-y)...
->=20
-> * clientA
-> * clientB
->=20
-> both have a common ancestry....
->=20
-> I then checked out clientB created a new branch clientB_patch and did
-> a load of work and commits.
->=20
-> However, I actually wanted all those commits to apply to clientA
-> branch instead so....
->=20
-> git checkout clientA
-> git checkout -b clientA_patch     (to ensure I didn't wreck original bran=
-ch)
-> git rebase --onto clientA_patch clientB clientB_patch
->=20
-> It says "rewinding" head and then applies the commits I would have expect=
-ed.
->=20
-> However, I have now been switched to the 'clientB_patch' branch and it
-> says that it differs from its tracked remote branch by hundreds of
-> commits.
->=20
-> clientA_patch is unchanged. It seems to have mangled clientB_patch and
-> done nothing to clientA_patch. Where did I go wrong?
-
-"--onto clientA_patch"
-
-Please read that out loud.  It's meaning in git is the same as in
-English.  What you did was rebase clientB_patch _onto_ clientA_patch.
-For more information, see "git help rebase".
-
-What you should have done instead:
-
-git checkout -b clientA_patch clientB_patch
-git rebase -i clientA
-
-What that does is create and then checkout a branch called clientA_patch
-at the same commit as clientB_patch, then rebase your currently checked
-out branch (clientA_patch) on top of clientA; the "-i" option allows you
-double check what's being rebased, as otherwise it would take a whole
-lot clientB history with it.  Simply delete the lines with the commits
-you don't want.
-
-
-To fix what you currently have, though, you must do the following.  Take
-heed, however, as I making assumptions that the situation is unchanged
-=66rom what you described above.
-
-git checkout clientB_patch
-git reset --hard origin/clientB_patch
-
-I'm assuming your remote is called origin, and also that whatever you
-pushed last is the latest.  If not, you'll have to look at "git reflog"
-to see which commit to reset the branch to.
-
-Now do:
-
-git checkout clientA_patch
-git reset --hard clientB_patch
-git rebase -i clientA
-
-That should give you what you want.
-
-Good luck.
-
-
-Tim
-
---=20
-() ascii ribbon campaign - against html e-mail
-/\ www.asciiribbon.org   - against proprietary attachments
-
---9jxsPFA5p3P2qPhR
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQIcBAEBCgAGBQJN52gpAAoJEGNoa2q+dzQWoosP/3vJkVOwdh1uwPvqc63G++fa
-uGkej1awEJV6F8DFLd+d4DT8RZPCIlokA0BEHyibGnjuM7+gBobjQDbteSy/5d3y
-wNCip5esdXX7u0kXKu2I2LscSkRDJimf3w8kqiVAEW9i7V7HOui/CF8v3ZTAiOGN
-HWohy8h4VkcmTAL0KET095JmwqK6myjZ+LlS3ND9q3dpyNk2mWSJpbtQBMrCXJRI
-EssYsmSo2P2OkdKl/83N37qrVKRPjm9imebjylWnzBT0USIDVGOhtK9+OvuS2BB1
-LsoWsgWCr1XQDUpf1eqdeVTjZCEtuF3p30EoJPJhh5+90WggAjuMLqUAXiirCtqw
-NV7tJbPr8ColBl5eW8lO0q0VJrG+KHyh5yDjuwkSzwYFoHnGP/JuGtHDotplmHSU
-F8Pi284g1TczNcy9H30aYpwHir9SoafFDXpjMEGHshRYH2TPgO+izoDrhTaWXNk5
-BmYS9RPV1vZpwfcTeAqbxiRUUofGgjpmP/PgaTXfQzLNxaXzgw+eQ7qF569Z16Sl
-Y+MaHvK4KVWxVKYEts7tMUtIfpzbucP9xk846htMLFhEfRMjKvVp/77GGwN7BK+C
-eY2BXzH1c9mTl1D2ALRpSzl9TAGDW4L5BtnhN5ZOxfWjyw9ydcJQHJkmEqes2HIq
-LqPCg5pAmvE0NNkvfWPn
-=YWDr
------END PGP SIGNATURE-----
-
---9jxsPFA5p3P2qPhR--
+However, I've just realised the bit I missed. I still need to do a
+(fast forward) merge to get my ClientA_patch branch to actually
+reflect the changes. I can't help thinking that (although the diagrams
+are perfectly correct) that a line to the effect in the manpage might
+have saved some thinking time :)
