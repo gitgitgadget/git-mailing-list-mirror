@@ -1,54 +1,105 @@
-From: Andrew Spiers <aspiers@vpac.org>
-Subject: git status --ignored
-Date: Thu, 02 Jun 2011 14:34:22 +1000
-Message-ID: <4DE712CE.20509@vpac.org>
+From: Joey Hess <joey@kitenet.net>
+Subject: Re: out of memory error with git push and pull
+Date: Thu, 2 Jun 2011 00:46:03 -0400
+Message-ID: <20110602044603.GB5081@gnu.kitenet.net>
+References: <BANLkTin3-XnVsVd1-CAiWDBzQG6m=a4Rvw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 02 06:44:19 2011
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="wq9mPyueHGvFACwf"
+Cc: git@vger.kernel.org
+To: Qingning Huo <qingninghuo@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 02 06:46:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRzlZ-00046M-6g
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 06:44:17 +0200
+	id 1QRznU-0004hM-Kg
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 06:46:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752903Ab1FBEnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jun 2011 00:43:20 -0400
-Received: from mail.vpac.org ([202.158.218.6]:34887 "EHLO mail.vpac.org"
+	id S1752945Ab1FBEqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2011 00:46:11 -0400
+Received: from wren.kitenet.net ([80.68.85.49]:38010 "EHLO kitenet.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752561Ab1FBEnT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jun 2011 00:43:19 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.vpac.org (Postfix) with ESMTP id 1F481C01A76FE
-	for <git@vger.kernel.org>; Thu,  2 Jun 2011 14:33:29 +1000 (EST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.91
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.91 tagged_above=-10 required=5
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, T_RP_MATCHES_RCVD=-0.01]
-	autolearn=ham
-Received: from mail.vpac.org ([127.0.0.1])
-	by localhost (mail.vpac.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id VH2Xa-I0uw0R for <git@vger.kernel.org>;
-	Thu,  2 Jun 2011 14:33:28 +1000 (EST)
-Received: from [172.31.4.36] (cape.in.vpac.org [172.31.4.36])
-	by mail.vpac.org (Postfix) with ESMTPSA id 68E1CC01A76FD
-	for <git@vger.kernel.org>; Thu,  2 Jun 2011 14:33:28 +1000 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110424 Lightning/1.0b2 Thunderbird/3.1.10
+	id S1752542Ab1FBEqK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2011 00:46:10 -0400
+Received: from gnu.kitenet.net (dialup-4.152.108.216.Dial1.Atlanta1.Level3.net [4.152.108.216])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id 9FF1011914F;
+	Thu,  2 Jun 2011 00:46:08 -0400 (EDT)
+Received: by gnu.kitenet.net (Postfix, from userid 1000)
+	id CD820401C9; Thu,  2 Jun 2011 00:46:03 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <BANLkTin3-XnVsVd1-CAiWDBzQG6m=a4Rvw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174926>
 
-This looks like a bug in git 1.7.4.1.
 
-git status --ignored does not show my ignored files and directories. git 
-status -h suggests it should.
-git status --ignored -h does show my ignored files and directories.
+--wq9mPyueHGvFACwf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Also, git help status does not mention the --ignored switch.
+Qingning Huo wrote:
+> I tried to use git to manage my digital photos but encountered some
+> problems. The typical file sizes are hundreds of KB or a few MB. In
+> total, about 15GB data in about 10,000 files. My intention is to get
+> them into a git repository and cloned into a few computers. Probably I
+> will make some occasionally changes like editing and deleting. But I
+> think most of the files would stay at version one.
+
+I try not to mention git-annex too much here, but this is a perfect
+use-case for it. http://git-annex.branchable.com/=20
+
+Well, it would be more perfect if you had enough data in your repo that
+you didn't necessarily want to clone it all to every computer. Like so:
+
+# git annex status
+local annex size: 58 megabytes
+total annex keys: 38158
+total annex size: 6 terabytes
+
+:)
+
+> I wonder whether anyone has tried using git in a similar scenario. Is
+> git capable of handling this kind of data? And, are there any settings
+> and/or command line options that I should use? I had a quick look of
+> git help push (and pull/fetch) but cannot see anything obvious.
+
+There is a tunable you can use to improve things, see core.bigFileThreshold
+
+That originally came from this project.
+http://caca.zoy.org/wiki/git-bigfiles -- it may have some other
+improvements that have not landed in git, I'm not sure.
+
+--=20
+see shy jo
+
+--wq9mPyueHGvFACwf
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQIVAwUBTecVi8kQ2SIlEuPHAQhD+w/8DLHYft2QjmQ65f1Y3F89v9isvFXc+W1T
+iFnPxbPFvwgayxOyBkx65KVCUMoKGdZWj3g5OC4uU/4mfKnEHdF9x9X3EguI7NUp
+h0DnJZo4VachfOTf5KIKXuvbA6bodIMY1w3wVStVhtetBfLDXs9BMAX7Ly7eyxkT
+WjlVC1EHmLj5PcYKcv09oKfPN3Xh+NAzFJ33f7t4vGDugHbFhxvcKVsGLNwdrgIp
+TKpohOoEgsFFnmGx9hbTb5Fe57W8k+4rItAKg7Uz9MWvwDha6j5SFhvd3EeJL7t4
+MUnggBMHcEwx41QxigMCBVIryXlk+WwYdz+3j+9fecd8wvmI88cR4aERkGGzmMyh
+jbZ1n/4FHIZ76/R6HdsZ5PHnpBqXf93nMV123LYGJIm2GbUZgA4JtycgXVia1Wif
+iFsuQ1rNspT7B/ZJzysJPbu+8b9IxLvVY/A9ysjtAFS7QlDGTbcsHrohO7yCRgzJ
+s69vBjRSZpdLX3qVnK5iC8zAhybNsnrtzQDuf2+8SVkbZYl71mTgbH0TIIO4GN3T
+1jcHxXYz3+ihk2bziRqvvhDllSdAKnRlVp8OP5nqhr4KZguKzUrBvGM6oVL/fB5N
+lg/BSnKlawxgIgDSDv4Yv2Fv+Fa9N9hAtJYRGNt57lqt7t2mUPL6gfHwNxQ8yE79
+/E+Qin3USFY=
+=EasA
+-----END PGP SIGNATURE-----
+
+--wq9mPyueHGvFACwf--
