@@ -1,105 +1,106 @@
 From: Joey Hess <joey@kitenet.net>
-Subject: Re: out of memory error with git push and pull
-Date: Thu, 2 Jun 2011 00:46:03 -0400
-Message-ID: <20110602044603.GB5081@gnu.kitenet.net>
-References: <BANLkTin3-XnVsVd1-CAiWDBzQG6m=a4Rvw@mail.gmail.com>
+Subject: Re: speed of git reset -- file
+Date: Thu, 2 Jun 2011 00:46:38 -0400
+Message-ID: <20110602044638.GC5081@gnu.kitenet.net>
+References: <20110531212639.GA13234@sigill.intra.peff.net>
+ <7v62oqignm.fsf@alter.siamese.dyndns.org>
+ <20110601195831.GA30070@sigill.intra.peff.net>
+ <20110601201629.GA25354@gnu.kitenet.net>
+ <20110601211847.GA31958@sigill.intra.peff.net>
+ <20110601220502.GA28493@gnu.kitenet.net>
+ <20110601225647.GD16820@sigill.intra.peff.net>
+ <20110601233157.GA2468@gnu.kitenet.net>
+ <20110602031831.GA21008@sigill.intra.peff.net>
+ <20110602043630.GA5081@gnu.kitenet.net>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="wq9mPyueHGvFACwf"
-Cc: git@vger.kernel.org
-To: Qingning Huo <qingninghuo@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 02 06:46:19 2011
+	protocol="application/pgp-signature"; boundary="oJ71EGRlYNjSvfq7"
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 02 06:46:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QRznU-0004hM-Kg
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 06:46:17 +0200
+	id 1QRzo2-0004rH-PB
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 06:46:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752945Ab1FBEqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jun 2011 00:46:11 -0400
-Received: from wren.kitenet.net ([80.68.85.49]:38010 "EHLO kitenet.net"
+	id S1753278Ab1FBEqq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2011 00:46:46 -0400
+Received: from wren.kitenet.net ([80.68.85.49]:38015 "EHLO kitenet.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752542Ab1FBEqK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jun 2011 00:46:10 -0400
+	id S1752989Ab1FBEqp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2011 00:46:45 -0400
 Received: from gnu.kitenet.net (dialup-4.152.108.216.Dial1.Atlanta1.Level3.net [4.152.108.216])
 	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
 	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
-	by kitenet.net (Postfix) with ESMTPS id 9FF1011914F;
-	Thu,  2 Jun 2011 00:46:08 -0400 (EDT)
+	by kitenet.net (Postfix) with ESMTPS id 73B7611914F;
+	Thu,  2 Jun 2011 00:46:43 -0400 (EDT)
 Received: by gnu.kitenet.net (Postfix, from userid 1000)
-	id CD820401C9; Thu,  2 Jun 2011 00:46:03 -0400 (EDT)
+	id C9406401C9; Thu,  2 Jun 2011 00:46:38 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <BANLkTin3-XnVsVd1-CAiWDBzQG6m=a4Rvw@mail.gmail.com>
+In-Reply-To: <20110602043630.GA5081@gnu.kitenet.net>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174927>
 
 
---wq9mPyueHGvFACwf
+--oJ71EGRlYNjSvfq7
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Qingning Huo wrote:
-> I tried to use git to manage my digital photos but encountered some
-> problems. The typical file sizes are hundreds of KB or a few MB. In
-> total, about 15GB data in about 10,000 files. My intention is to get
-> them into a git repository and cloned into a few computers. Probably I
-> will make some occasionally changes like editing and deleting. But I
-> think most of the files would stay at version one.
+Joey Hess wrote:
+> Jeff King wrote:
+> > Yeah, it is going to be painful on a cold cache. But I wonder whether
+> > your workflow would really permit the "reset" thing to make a
+> > difference. That is, are you doing "git reset -- file" from a cold
+> > cache, and then doing _nothing_ else with git? Because while yes, it may
+> > be annoying for the "reset" to take 30 seconds, it's warming the cache
+> > so that the subsequent "diff" or "status" will take 29.1 seconds less.
+> >=20
+> > Which isn't to say I'm not sympathetic to the performance problems of
+> > large repos on a cold cache. But I'm not sure there's really a way
+> > around that. You're going to want to see the stat information eventually
+> > if you are doing anything meaningful with git, and once it's loaded, the
+> > warm cache delay isn't too bad. Trying to avoid it seems like a losing
+> > battle.
+>=20
+> Could be true in general. While I've gotten the reset out of this
+> workflow (realized I could just `git checkout HEAD file` and that would
+> also clear staged changes), in this case it was actually *unlikely* that
+> the cache would be unused, as I was resetting to throw unwanted changes
+> away.
 
-I try not to mention git-annex too much here, but this is a perfect
-use-case for it. http://git-annex.branchable.com/=20
-
-Well, it would be more perfect if you had enough data in your repo that
-you didn't necessarily want to clone it all to every computer. Like so:
-
-# git annex status
-local annex size: 58 megabytes
-total annex keys: 38158
-total annex size: 6 terabytes
-
-:)
-
-> I wonder whether anyone has tried using git in a similar scenario. Is
-> git capable of handling this kind of data? And, are there any settings
-> and/or command line options that I should use? I had a quick look of
-> git help push (and pull/fetch) but cannot see anything obvious.
-
-There is a tunable you can use to improve things, see core.bigFileThreshold
-
-That originally came from this project.
-http://caca.zoy.org/wiki/git-bigfiles -- it may have some other
-improvements that have not landed in git, I'm not sure.
+Typo, meant to say unlikly that the cache would be used.
 
 --=20
 see shy jo
 
---wq9mPyueHGvFACwf
+--oJ71EGRlYNjSvfq7
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: Digital signature
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.11 (GNU/Linux)
 
-iQIVAwUBTecVi8kQ2SIlEuPHAQhD+w/8DLHYft2QjmQ65f1Y3F89v9isvFXc+W1T
-iFnPxbPFvwgayxOyBkx65KVCUMoKGdZWj3g5OC4uU/4mfKnEHdF9x9X3EguI7NUp
-h0DnJZo4VachfOTf5KIKXuvbA6bodIMY1w3wVStVhtetBfLDXs9BMAX7Ly7eyxkT
-WjlVC1EHmLj5PcYKcv09oKfPN3Xh+NAzFJ33f7t4vGDugHbFhxvcKVsGLNwdrgIp
-TKpohOoEgsFFnmGx9hbTb5Fe57W8k+4rItAKg7Uz9MWvwDha6j5SFhvd3EeJL7t4
-MUnggBMHcEwx41QxigMCBVIryXlk+WwYdz+3j+9fecd8wvmI88cR4aERkGGzmMyh
-jbZ1n/4FHIZ76/R6HdsZ5PHnpBqXf93nMV123LYGJIm2GbUZgA4JtycgXVia1Wif
-iFsuQ1rNspT7B/ZJzysJPbu+8b9IxLvVY/A9ysjtAFS7QlDGTbcsHrohO7yCRgzJ
-s69vBjRSZpdLX3qVnK5iC8zAhybNsnrtzQDuf2+8SVkbZYl71mTgbH0TIIO4GN3T
-1jcHxXYz3+ihk2bziRqvvhDllSdAKnRlVp8OP5nqhr4KZguKzUrBvGM6oVL/fB5N
-lg/BSnKlawxgIgDSDv4Yv2Fv+Fa9N9hAtJYRGNt57lqt7t2mUPL6gfHwNxQ8yE79
-/E+Qin3USFY=
-=EasA
+iQIVAwUBTecVrskQ2SIlEuPHAQhm+A//Y7UZuqGJpBoXET7s6xyFc8mL/alX+wVC
+KcEjdrBKQcq61R37Y7+wcYzuyb9njaB4rsY/w4KZVJ8763Sho3c6UODzQS0OkDwL
+erV89EyOiRrURlD1cXBo43Oj6LWvG/BnB5iYZL0oecEW9K83P96om9qtZSz5XRG/
+1se1EPq0CWv05o+hYILFWU9wY1DQ6WASRLqqmbzMUVqBvjnrQq4megt5xSOAgRLd
+PkHkJbj5oIPzeFHvenjYYdC8jmChoE2uKW0WC8TksTJFQAW3w6aFFj4I+YICrJay
+datV4T0ILTc+dnTJ7A4/QNwejEhOEp177PFGm2ED/H2c1ZKtnOKPe0Hsoh1heaqf
+2d5HoU2ZemKZGFJkb8KUdE54j21MXV9KmaDBTqUJkvOxXohLeToRjf2237Yv1wBM
+cv1QNe1KSTeZSQhlHMzDT5RQgwBOycoOaeRzA1Qt5wcHhGeTxhWswDo1PSxnElZG
+izO0rssB19IZuy5T3JFq7T1tCAbwhhPvhL8N3bjmkJ5CIWR4xiJvVoBJUHkFRwZF
+747Evl0RVSq4X8ou9Ki6XlFTXZwbACSD1MOVjO01n9ss461PFP5cYVW/rI/psZ0Z
+q1jb5ayXLVHzimfi+ocygQ+V+q+NXS3XKNypZuYEzCAP2flOtdRdQSECjTnp8Naz
+4gWp28WpxpM=
+=r6gk
 -----END PGP SIGNATURE-----
 
---wq9mPyueHGvFACwf--
+--oJ71EGRlYNjSvfq7--
