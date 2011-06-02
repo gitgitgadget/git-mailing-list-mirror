@@ -1,93 +1,183 @@
-From: Randy Brandenburg <randy.brandenburg@woh.rr.com>
-Subject: Re: Unable to fork off sideband demultiplexer
-Date: Thu, 2 Jun 2011 15:29:04 +0000 (UTC)
-Message-ID: <loom.20110602T172442-653@post.gmane.org>
-References: <loom.20110601T161508-689@post.gmane.org> <7vk4d5h3qt.fsf@alter.siamese.dyndns.org> <20110601173524.GF7132@sigill.intra.peff.net> <loom.20110601T210757-955@post.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git status --ignored
+Date: Thu, 02 Jun 2011 09:08:18 -0700
+Message-ID: <7vk4d4dxn1.fsf@alter.siamese.dyndns.org>
+References: <4DE712CE.20509@vpac.org>
+ <7vr57cerxo.fsf@alter.siamese.dyndns.org>
+ <20110602055449.GA28292@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 02 17:29:28 2011
+Cc: Andrew Spiers <aspiers@vpac.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 02 18:09:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QS9pu-0002Dh-Oc
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 17:29:27 +0200
+	id 1QSASB-0005lL-6z
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 18:08:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751992Ab1FBP3V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jun 2011 11:29:21 -0400
-Received: from lo.gmane.org ([80.91.229.12]:45260 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751346Ab1FBP3U (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jun 2011 11:29:20 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1QS9pj-000288-Pl
-	for git@vger.kernel.org; Thu, 02 Jun 2011 17:29:16 +0200
-Received: from pm2-users.caci.com ([204.194.77.3])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 02 Jun 2011 17:29:15 +0200
-Received: from randy.brandenburg by pm2-users.caci.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 02 Jun 2011 17:29:15 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 204.194.77.3 (Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; InfoPath.2; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; MS-RTC LM 8))
+	id S1752960Ab1FBQIa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2011 12:08:30 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50862 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752625Ab1FBQI3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2011 12:08:29 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 01A4352EC;
+	Thu,  2 Jun 2011 12:10:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9/t9mfU6Kv2chQ3Be0GYcrBg3O0=; b=FQC6BS
+	Wc/ub7pwVvska4PR0fYpPk0MJKS90IpOCWqa2s/f2CpoqFkBIB5nMglio/TG1Oad
+	N82inNS04zhkZVSqkOWdiIk5HN51WoWVLspZhW0AlNuLDeaBH5Koyht+UTIQt10y
+	Xpc+6kH3rZTloeotGfZMtlfk5lidp94jTFKt0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NnGetWF242jvZdUBuIA6Ndbt3QZC+IaX
+	yRIbvVU0NtdfrylKgrKRxizEmF/CfntIbmvhGNJMWxHAx8pRK+WTK+aSBGhtDmV8
+	ZKSr1z4E3e2rZlaxwHcaJsxFKGzazU83mPhwC0DnKA53IoIwdW0TnE7lltTQqKUr
+	aTOE7qMq2i4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C163452EB;
+	Thu,  2 Jun 2011 12:10:33 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 54F6652EA; Thu,  2 Jun 2011
+ 12:10:29 -0400 (EDT)
+In-Reply-To: <20110602055449.GA28292@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 2 Jun 2011 01:54:49 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D8408FF6-8D32-11E0-AB77-EA23C7C1A288-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174958>
 
-Randy Brandenburg <randy.brandenburg <at> woh.rr.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> 
-> Jeff King <peff <at> peff.net> writes:
-> > 
-> > I suspect it is more subtle than that. We've had several people recently
-> > reporting the same issue, and all are using pre-built binaries on
-> > Solaris 9. Given the weird errno value ("unknown error"), my guess is
-> > that the packages are built on Solaris 10, and there is some ABI
-> > incompatibility between the two platforms.
-> > 
-> > I'd be curious if building on Solaris 9, even without NO_PTHREADS set,
-> > fixes the issue.
-> > 
-> > -Peff
-> > 
-> 
-> Thank you for the insight. I will attempt to rebuild on the target platform 
-and 
-> see what happens. 
-> 
-> I will post the results when I have an answer on whther that helped or not.
-> 
-> 
+> I can reproduce here. The faulty logic means the bug only shows when you
+> actually have no real untracked files. You should keep your git
+> directory cleaner. ;)
 
-I rebuilt git-1.7.5 from source on the Solaris 9 platform with gcc-3.4.6, GNU 
-make 3.82, and GNU install (from coreutils 8.11). Following these steps
+Ok.
 
-----------------------------------------------------------------------------
-# ./configure CC=gcc
+-- >8 --
+Subject: [PATCH] git status --ignored: tests and docs
 
-Edit the Makefile - set the path to "ar", "gcc" and GNU "install".
-CC = /usr/local/bin/gcc
-AR = /usr/ccs/bin/ar
-INSTALL = /usr/local/bin/install
-Look for ifeq ($(uname_S),SunOS) and set INSTALL to /usr/lcoal/bin/install
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/git-status.txt |    6 ++++
+ t/t7508-status.sh            |   64 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 70 insertions(+), 0 deletions(-)
 
-# gmake NO_TCLTK=1 NO_CURL=1 NO_PTHREADS=YesPlease install prefix=/opt/sfw
-# git --version
-git version 1.7.5
-----------------------------------------------------------------------------
-Preliminary testing indicates a working system -- will investigate thourough 
-today and tomorrow.
-
-Thanks for the tips!
-
-- Randy
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+index 1cab91b..b663e51 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -49,6 +49,9 @@ See linkgit:git-config[1] for configuration variable
+ used to change the default for when the option is not
+ specified.
+ 
++--ignored::
++	Show ignored files as well.
++
+ -z::
+ 	Terminate entries with NUL, instead of LF.  This implies
+ 	the `--porcelain` output format if no other format is given.
+@@ -80,6 +83,8 @@ shows the status of stage #3 (i.e. theirs).
+ For entries that do not have conflicts, `X` shows the status of the index,
+ and `Y` shows the status of the work tree.  For untracked paths, `XY` are
+ `??`.
++For ignored paths, `XY` are `!!`; they are shown only when the `--ignored`
++option is in effect.
+ 
+     X          Y     Meaning
+     -------------------------------------------------
+@@ -102,6 +107,7 @@ and `Y` shows the status of the work tree.  For untracked paths, `XY` are
+     U           U    unmerged, both modified
+     -------------------------------------------------
+     ?           ?    untracked
++    !           !    ignored
+     -------------------------------------------------
+ 
+ 
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index 556d0fa..b47aad8 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -86,6 +86,70 @@ test_expect_success 'status -s (2)' '
+ 
+ '
+ 
++test_expect_success 'status with gitignore' '
++	{
++		echo ".gitignore" &&
++		echo "expect" &&
++		echo "output" &&
++		echo "untracked"
++	} >.gitignore &&
++
++	cat >expect <<-\EOF &&
++	 M dir1/modified
++	A  dir2/added
++	?? dir2/modified
++	EOF
++	git status -s >output &&
++	test_cmp expect output &&
++
++	cat >expect <<-\EOF &&
++	 M dir1/modified
++	A  dir2/added
++	?? dir2/modified
++	!! .gitignore
++	!! dir1/untracked
++	!! dir2/untracked
++	!! expect
++	!! output
++	!! untracked
++	EOF
++	git status -s --ignored >output &&
++	test_cmp expect output
++'
++
++test_expect_success 'status with gitignore' '
++	{
++		echo ".gitignore" &&
++		echo "expect" &&
++		echo "dir2/modified" &&
++		echo "output" &&
++		echo "untracked"
++	} >.gitignore &&
++
++	cat >expect <<-\EOF &&
++	 M dir1/modified
++	A  dir2/added
++	EOF
++	git status -s >output &&
++	test_cmp expect output &&
++
++	cat >expect <<-\EOF &&
++	 M dir1/modified
++	A  dir2/added
++	!! .gitignore
++	!! dir1/untracked
++	!! dir2/modified
++	!! dir2/untracked
++	!! expect
++	!! output
++	!! untracked
++	EOF
++	git status -s --ignored >output &&
++	test_cmp expect output
++'
++
++rm -f .gitignore
++
+ cat >expect <<EOF
+ # On branch master
+ # Changes to be committed:
+-- 
+1.7.6.rc0.98.gc12085
