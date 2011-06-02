@@ -1,157 +1,120 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: git svn clone failing
-Date: Thu, 02 Jun 2011 08:55:08 -0400
-Message-ID: <1307019308.28941.4.camel@drew-northup.unet.maine.edu>
-References: <AANLkTi=Y64ohHnduBqxs--aLW3AYKCxrag2YoAFt58NC@mail.gmail.com>
-	 <1298033812.10893.23.camel@drew-northup.unet.maine.edu>
-	 <AANLkTim9obiU2H_PLb=O1=YxTr1nZ0v-zXC7mxUORVAH@mail.gmail.com>
-	 <1298587459.22431.19.camel@drew-northup.unet.maine.edu>
-	 <AANLkTikA2iRWH8Bh16CmpFpACSOjCiqc3c9cU69Jduv3@mail.gmail.com>
-	 <BANLkTine4g7LyiXmE6zYpNs7aa2FfXYGUg@mail.gmail.com>
-	 <BANLkTin7bxu_XZVYaVy+eXuhcJR83hXSew@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [RFC PATCH] revert: Implement --abort processing
+Date: Thu, 2 Jun 2011 18:33:42 +0530
+Message-ID: <BANLkTikgY_Kc6gu_iTtpiiayo9e=DPxOLw@mail.gmail.com>
+References: <1306944446-11031-1-git-send-email-artagnon@gmail.com> <20110601190006.GB9730@elie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Vampire <Vampire@Masters-of-Disaster.de>
-X-From: git-owner@vger.kernel.org Thu Jun 02 14:55:28 2011
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 02 15:04:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QS7Qu-0008Vx-2R
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 14:55:28 +0200
+	id 1QS7ZM-0004ZV-8e
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 15:04:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933553Ab1FBMzX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Jun 2011 08:55:23 -0400
-Received: from beryl.its.maine.edu ([130.111.32.94]:46551 "EHLO
-	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933510Ab1FBMzW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jun 2011 08:55:22 -0400
-Received: from [IPv6:2610:48:100:827::97] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827::97])
-	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p52CtB9c024675
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 2 Jun 2011 08:55:11 -0400
-In-Reply-To: <BANLkTin7bxu_XZVYaVy+eXuhcJR83hXSew@mail.gmail.com>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=2 Fuz1=2
-	Fuz2=2
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p52CtB9c024675
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1307624112.44594@vhexdK7jwbYkFPd/E4HrCg
+	id S1752152Ab1FBNEF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Jun 2011 09:04:05 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:59866 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751346Ab1FBNED convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2011 09:04:03 -0400
+Received: by wya21 with SMTP id 21so580401wya.19
+        for <git@vger.kernel.org>; Thu, 02 Jun 2011 06:04:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=wAtcuHrJlNa7f8m7DfgAx5sLRkEpIpQtWdjry/8scFU=;
+        b=xr074atJIYNOVFAKnwfGFyHb1R6ecPKcNT/2Q9kDA3SSznIvNT7OJZFT/t+YI07+Vb
+         yAbpRxO0hjVK+wKRXpFpZPLn2Dbnky5uLiUhLuWFoBp0B80QEuHjRMp05I78dR/U/J4W
+         1UywXo62jS9pa5Mqrg/tVpKDPvKPgtmeiddXU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=fdBgJluDitJcussUBwd7WTJbS6/TFmo56d/SrH+RkV9YYcIB/Hao2lqSVxmD1Dcs9W
+         sRNf322LLTo6Ym46nliN3SLD3qHZ2RRT6OUFoHT2JQ2Lm0XcimbTWHMYjt2Ol6/q1UDB
+         Nya6RI+pgbymSdUch0MBaJFpDXZT1nLozRclw=
+Received: by 10.216.234.80 with SMTP id r58mr664433weq.109.1307019842088; Thu,
+ 02 Jun 2011 06:04:02 -0700 (PDT)
+Received: by 10.216.51.68 with HTTP; Thu, 2 Jun 2011 06:03:42 -0700 (PDT)
+In-Reply-To: <20110601190006.GB9730@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174947>
 
+Hi Sverre, Junio and Jonathan,
 
-On Thu, 2011-06-02 at 14:22 +0200, Vampire wrote:
-> Drew?
->=20
-I have no idea. If anybody else on the list does I'd welcome it, but I
-don't have any more time I can spend on this.
+Sverre Rabbelier writes:
+> Isn't this the kind of usecase we added 'git reset --merge' for?
 
-> 2011/4/3 Vampire <Vampire@masters-of-disaster.de>
->         Any news on this one?
->        =20
->        =20
->         2011/2/25 Vampire <Vampire@masters-of-disaster.de>
->         >
->         > I tried it with 1.6.3.3 and with a self-compiled version
->         from latest git code.
->         >
->         > 2011/2/24 Drew Northup <drew.northup@maine.edu>
->         > >
->         > > On Fri, 2011-02-18 at 15:21 +0100, Vampire wrote:
->         > > > Hi Drew,
->         > > >
->         > > > SVN client is in version 1.6.5.
->         > > > svn co http://svn.apache.org/repos/asf/ant/core/trunk .
->         > > > works fine and without problem.
->         > > > I guess it is in the phase of searching for history in
->         other places in
->         > > > the repository and there some place is accessed that is
->         password
->         > > > protected.
->         > > > I did not contact the server admin as the normal svn
->         client works fine
->         > > > and so it seems to be a problem of git-svn, not of the
->         SVN server.
->         > > > Did you try the command I gave you and does it succeed
->         for you? It is
->         > > > a publicly available repository so you should be able t=
-o
->         reproduce the
->         > > > problem.
->         > > >
->         > > > Regards
->         > > > Bj=C3=B6rn
->         > >
->         > > The error is reproducible, and I'm running a newer
->         subversion client
->         > > than you are. It definitely isn't making it through all o=
-f
->         the revisions
->         > > available before dying.
->         > >
->         > > .....
->         > > Checked through r161300
->         > > Checked through r161400
->         > > RA layer request failed: Server sent unexpected return
->         value (403 Forbidden) in response to REPORT request for
->         '/repos/asf/!svn/vcc
->         > > /default' at /usr/libexec/git-core/git-svn line 5131
->         > >
->         > > I forgot to ask, which version git are you running? I am
->         running 1.7.4
->         > > on the machine I tried this (RHEL5 RPM, compiled locally)=
+Yes, I can see that now.
+
+Junio Hamano writes:
+> Even if you dropped the unconditional "rerere clear" from the patch, =
+I am
+> not sure what this new feature buys us. Some people would want the re=
+rere
+> cache cleared, some others don't. "revert --abort" will forever be to
+> aborting revert and restoring some but not all the parts of the opera=
+tion
+> the user wants to be undone, as you cannot satisfy everybody. =C2=A0S=
+o I am a
+> bit puzzled why you thought this was even a good idea to begin with.
+
+It's actually very specific to the way I work/ think -- I would have
+expected an abort to go back in time, and make it look like the
+operation wasn't performed in the first place. My normal workflow: I
+make my changes, create a "fixup!" commit, abort, and cherry-pick that
+commit from my reflog. Yes, I use "reset --hard" a lot, and yes, it's
+a very powerful hammer.
+
+I see now that this probably doesn't fit everyone's usecase. So the
+changes I propose are:
+1. Don't rerere clear. We can probably document this fact somewhere,
+and hint the user about this during the time of abort.
+2. Use reset --merge as Sverre suggested.
+
+I'll think about this workflow and post a patch soon.
+
+Jonathan Nieder writes:
+> I have some changes to files that did not participate in the automati=
+c
+> cherry-pick:
+>
+> =C2=A01. for unrelated reasons, I bumped the version number in the Ma=
+kefile
+> =C2=A0as a reminder not to forget later, without commiting it or mark=
+ing
+> =C2=A0with "git add";
+>
+> =C2=A02. I (manually) moved a declaration to a different header file =
+to
+> =C2=A0reflect differences between the codebase at the time of foo^ an=
+d HEAD,
+> =C2=A0to get it to compile. =C2=A0Which works, so I mark it with "git=
+ add" for
+> =C2=A0incorporation into the corrected cherry-pick commit.
+>
+> With "git reset --merge", (1) is left alone, while (2) is backed out,
+> unmerged entries are of course clobbered, and hazy cases in which I
+> make some changes, "git add", and then make more changes without "git
+> add" cause the operation to error out. =C2=A0It would be nicer if git=
+ could
+> read my mind, but at first glance this seems like an okay second-best=
 =2E
->         > >
->         > > > 2011/2/18 Drew Northup <drew.northup@maine.edu>:
->         > > > >
->         > > > > On Mon, 2011-02-14 at 18:24 +0100, Vampire wrote:
->         > > > >> Hi,
->         > > > >>
->         > > > >> I'm trying to issue the following command:
->         > > > >>
->         > > > >> git svn clone --stdlayout
->         http://svn.apache.org/repos/asf/ant/core/ .
->         > > > >>
->         > > > >> But unfortunately this fails after some time with th=
-e
->         message:
->         > > > >>
->         > > > >> RA layer request failed: Server sent unexpected
->         return value (403
->         > > > >> Forbidden) in response to REPORT request for
->         > > > >> '/repos/asf/!svn/vcc/default'
->         at /usr/lib/git-core/git-svn line 4354
->         > > > >>
->         > > > >> Regards
->         > > > >> Bj=C3=B6rn
->         > > > >
->         > > > > Bj=C3=B6rn,
->         > > > > Have you made sure your subversion client is
->         up-to-date? Does this work
->         > > > > as a plain svn clone? Have you contacted the server
->         admin?
->         > > > > Without context we cannot act on this.
->         > > > >
->         > >
->         > > --
->         > > -Drew Northup
->         > > ________________________________________________
->         > > "As opposed to vegetable or mineral error?"
->         > > -John Pescatore, SANS NewsBites Vol. 12 Num. 59
->         > >
->        =20
 
---=20
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+Thanks for the excellent explanation. I'll think about this workflow
+for a while before posting another iteration of this patch.
+
+-- Ram
