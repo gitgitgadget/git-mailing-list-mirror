@@ -1,150 +1,117 @@
-From: Howard Miller <howard@e-learndesign.co.uk>
+From: Tim Guirgies <lt.infiltrator@gmail.com>
 Subject: Re: Can't get git rebase --onto to work
-Date: Thu, 2 Jun 2011 11:43:19 +0100
-Message-ID: <BANLkTin92KXYO3YF1UytcesWUV-Nh_LaGg@mail.gmail.com>
+Date: Thu, 2 Jun 2011 20:52:24 +1000
+Message-ID: <20110602105223.GB4709@Imperial-SSD-Overlord>
 References: <BANLkTikF7p_XsU6YJ81bq10S3nL6tBsApg@mail.gmail.com>
-	<20110602103833.GA4709@Imperial-SSD-Overlord>
+ <20110602103833.GA4709@Imperial-SSD-Overlord>
+ <BANLkTin92KXYO3YF1UytcesWUV-Nh_LaGg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="SkvwRMAIpAhPCcCJ"
 Cc: git@vger.kernel.org
-To: Tim Guirgies <lt.infiltrator@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 02 12:43:27 2011
+To: Howard Miller <howard@e-learndesign.co.uk>
+X-From: git-owner@vger.kernel.org Thu Jun 02 12:52:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QS5N7-0006Mk-Cr
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 12:43:25 +0200
+	id 1QS5W0-0001ta-K2
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 12:52:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933441Ab1FBKnU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Jun 2011 06:43:20 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:64884 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932803Ab1FBKnT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2011 06:43:19 -0400
-Received: by yia27 with SMTP id 27so275733yia.19
-        for <git@vger.kernel.org>; Thu, 02 Jun 2011 03:43:19 -0700 (PDT)
+	id S933471Ab1FBKwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2011 06:52:32 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:62492 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933459Ab1FBKwb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2011 06:52:31 -0400
+Received: by pwi15 with SMTP id 15so446333pwi.19
+        for <git@vger.kernel.org>; Thu, 02 Jun 2011 03:52:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=vIZV31PE1W6PJeRO1YSp6t6MoqE2F3c6NqbOSYAGTE0=;
-        b=wHUvex5WayCLoGSBFpsAr3msW488h4PATcuFeBdpRV11kKpFwPLnnb17PFklLc51gG
-         L7tbxAxgH30gO8wez5VRsM4w3a8mCgfbiOaR75QD8NhhnPgZfXYaxbmNtBlbOYzDycrd
-         7CWFIf4AC38+/eM9aEvsLA5FADGrlEVCdBWPw=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=UnH76/Qi9jvaz9Hnas7/RJiNAEXDYnKSmv4J+p/FiJo=;
+        b=LK2DEy7UN6aFoAume7aq93+WKCzPCQ7Q4khUahHD8XbRi8RYfknXjPtss47skvKCpT
+         CkbQiVZyh98Dl7IIB8B2DcfR+gacQWL2LH9aw7FoGT870dSm5f1gji8hoi6v4/aSlrDg
+         MKzz/B7q1+70hj2FUnT/qGwC3bMZU3GD9dxIU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=AO+p3VF2Wsya2yeR7MzNt7OPyRq4RnzfjWp/Se774/LIcBPaftLn049CnQSbWoRWcu
-         tM3kEYxQb3WoiDFIoybxHVKdCGkYhPHExqdG3Ct+hwhM12dMz85HHCZukFaIeWHgWhjN
-         2XCR+0nlZSLyNXKyDWj+x7I2ioSQ4AggaVilQ=
-Received: by 10.91.87.15 with SMTP id p15mr502472agl.192.1307011399210; Thu,
- 02 Jun 2011 03:43:19 -0700 (PDT)
-Received: by 10.90.116.15 with HTTP; Thu, 2 Jun 2011 03:43:19 -0700 (PDT)
-In-Reply-To: <20110602103833.GA4709@Imperial-SSD-Overlord>
-X-Google-Sender-Auth: WDslGfPu-beHmdvz87qQVHybrMA
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=u3wK7Aqwp82fCVrRN85ym/S5T+UHsgrH9ihpVNM5wD9kbKVJhrZKXIqCkv4k4CrVOl
+         L+Ghc3f51DPviaJln1xsKcyZ+5J0jnZC2CqbWPBvrBz+Q/OZpb08mgWdp1fVXUftUK1C
+         iEwvuHScsa0MDbfvLe2iNcTuApyMPFbJ3izxI=
+Received: by 10.68.8.131 with SMTP id r3mr8914pba.299.1307011949436;
+        Thu, 02 Jun 2011 03:52:29 -0700 (PDT)
+Received: from overlord.imperial.fleet (27-32-25-138.static.tpgi.com.au [27.32.25.138])
+        by mx.google.com with ESMTPS id k9sm490124pbc.38.2011.06.02.03.52.27
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 02 Jun 2011 03:52:28 -0700 (PDT)
+Received: from tim by overlord.imperial.fleet with local (Exim 4.76)
+	(envelope-from <tim@imperial-ssd-overlord>)
+	id 1QS5Vo-0002qY-UC; Thu, 02 Jun 2011 20:52:24 +1000
+Content-Disposition: inline
+In-Reply-To: <BANLkTin92KXYO3YF1UytcesWUV-Nh_LaGg@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174940>
 
-On 2 June 2011 11:38, Tim Guirgies <lt.infiltrator@gmail.com> wrote:
-> On Thu, Jun 02, 2011 at 11:17:41AM +0100, Howard Miller wrote:
->> Trying to explain this as concisely as possible.
->>
->> I started with the following branches (names changed to protect the =
-guilty)...
->>
->> * clientA
->> * clientB
->>
->> both have a common ancestry....
->>
->> I then checked out clientB created a new branch clientB_patch and di=
-d
->> a load of work and commits.
->>
->> However, I actually wanted all those commits to apply to clientA
->> branch instead so....
->>
->> git checkout clientA
->> git checkout -b clientA_patch =A0 =A0 (to ensure I didn't wreck orig=
-inal branch)
->> git rebase --onto clientA_patch clientB clientB_patch
->>
->> It says "rewinding" head and then applies the commits I would have e=
-xpected.
->>
->> However, I have now been switched to the 'clientB_patch' branch and =
-it
->> says that it differs from its tracked remote branch by hundreds of
->> commits.
->>
->> clientA_patch is unchanged. It seems to have mangled clientB_patch a=
-nd
->> done nothing to clientA_patch. Where did I go wrong?
->
-> "--onto clientA_patch"
->
-> Please read that out loud. =A0It's meaning in git is the same as in
-> English. =A0What you did was rebase clientB_patch _onto_ clientA_patc=
-h.
-> For more information, see "git help rebase".
->
-> What you should have done instead:
->
-> git checkout -b clientA_patch clientB_patch
-> git rebase -i clientA
->
-> What that does is create and then checkout a branch called clientA_pa=
-tch
-> at the same commit as clientB_patch, then rebase your currently check=
-ed
-> out branch (clientA_patch) on top of clientA; the "-i" option allows =
-you
-> double check what's being rebased, as otherwise it would take a whole
-> lot clientB history with it. =A0Simply delete the lines with the comm=
-its
-> you don't want.
->
->
-> To fix what you currently have, though, you must do the following. =A0=
-Take
-> heed, however, as I making assumptions that the situation is unchange=
-d
-> from what you described above.
->
-> git checkout clientB_patch
-> git reset --hard origin/clientB_patch
->
-> I'm assuming your remote is called origin, and also that whatever you
-> pushed last is the latest. =A0If not, you'll have to look at "git ref=
-log"
-> to see which commit to reset the branch to.
->
-> Now do:
->
-> git checkout clientA_patch
-> git reset --hard clientB_patch
-> git rebase -i clientA
->
-> That should give you what you want.
->
-> Good luck.
->
->
 
-Hi Tim,
+--SkvwRMAIpAhPCcCJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for the lengthy post :) As I said in my previous post, I
-think/hope I have resolved it. I did read the manpage first (I'm not
-so brave not to before posting here!!) and it did what it said it
-would. I just misinterpreted it. A final merge was required. I
-actually picked that up from the "Pro Git" book page which mentions
-that extra step.
+On Thu, Jun 02, 2011 at 11:43:19AM +0100, Howard Miller wrote:
+> Hi Tim,
+>=20
+> Thanks for the lengthy post :) As I said in my previous post, I
+> think/hope I have resolved it. I did read the manpage first (I'm not
+> so brave not to before posting here!!) and it did what it said it
+> would. I just misinterpreted it. A final merge was required. I
+> actually picked that up from the "Pro Git" book page which mentions
+> that extra step.
+
+Well, I'm confused, but that'll be due to my ignorance.
+
+As long as you're sorted out.
+
+
+As for the manpage, though, as someone who read and misunderstood it, do
+you have any suggestions for its improvements?
+
+
+Tim
+
+--=20
+() ascii ribbon campaign - against html e-mail
+/\ www.asciiribbon.org   - against proprietary attachments
+
+--SkvwRMAIpAhPCcCJ
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQIcBAEBCgAGBQJN52tnAAoJEGNoa2q+dzQWZVoQAKKrvisTd8YVpuJs6B8MOn6V
+AJDOZ0FHkm7pAmuCUrS9w295O7ySBAr3lGBYiC/LRdFvja34eu3bGtshF94dq1b0
+O9oI9xu66Vp8gRm59xQRnuTEeJJ+vC/z3WG52fXxTyaAPxkoE0eJmOVWnwAdLaFW
+rYsHU5H63zDibZzvxc8KJtY+5Emy9vIz0qP7WhqqJhDOAqeliRAD9to5OkmOex0R
+NnGjaVShhA6EIOsM5CgUJC2HmU+FDHJRMiQqrnLQEDSwJ1PiiHnw7ambq4//+Ti+
+8+wBtMONFznL102/2GYrYllaF6yaQFYUUsPEMuDbZMpgsyKZgAS1ZOflGUneglm6
+XT2wZlQXS2Xx8zL+1kpJe/dPE7HtZ8C4MfZZEDaT7CtnGGvUr47WJopmfk3+ZrXW
+RLIh3O0crvQW/JBGpSBTDcZgBeT3QIiAAVbYtPF4qQ8kT6zc9ilAf2OQHzYtWW2Q
+YpaDdVXrpMoKGkInmNP3/Yi4zdZARPGhgZp0K9c9F4conlJnmXKaeDRSl+WN2von
+5z4a1NJY+KTOug4689NWrq2/0xN/lgVy1AbJy3hlZeTzaCka4+/bVl1ZtQehnytN
+U8PPVnjHVWkgVmXONQc8ee5Hk2ieRWe+3IHz2lCCxqvKTlktmtvsJ5TSvLUxaSLN
+wqQwjfi6m+ihESUTiRXX
+=2X0t
+-----END PGP SIGNATURE-----
+
+--SkvwRMAIpAhPCcCJ--
