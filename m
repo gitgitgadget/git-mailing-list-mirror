@@ -1,104 +1,93 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 2/2] gitweb: Describe CSSMIN and JSMIN in gitweb/INSTALL
-Date: Thu,  2 Jun 2011 16:55:53 +0200
-Message-ID: <1307026553-1181-3-git-send-email-jnareb@gmail.com>
-References: <1307026553-1181-1-git-send-email-jnareb@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Drew Northup <drew.northup@maine.edu>,
-	Jakub Narebski <jnareb@gmail.com>
+From: Randy Brandenburg <randy.brandenburg@woh.rr.com>
+Subject: Re: Unable to fork off sideband demultiplexer
+Date: Thu, 2 Jun 2011 15:29:04 +0000 (UTC)
+Message-ID: <loom.20110602T172442-653@post.gmane.org>
+References: <loom.20110601T161508-689@post.gmane.org> <7vk4d5h3qt.fsf@alter.siamese.dyndns.org> <20110601173524.GF7132@sigill.intra.peff.net> <loom.20110601T210757-955@post.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 02 17:05:44 2011
+X-From: git-owner@vger.kernel.org Thu Jun 02 17:29:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QS9Sy-0006Ry-9K
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 17:05:44 +0200
+	id 1QS9pu-0002Dh-Oc
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 17:29:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751516Ab1FBPFj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jun 2011 11:05:39 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:45369 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751131Ab1FBPFj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jun 2011 11:05:39 -0400
-Received: by fxm17 with SMTP id 17so754843fxm.19
-        for <git@vger.kernel.org>; Thu, 02 Jun 2011 08:05:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references;
-        bh=9mVoE+cM/ku1tqH/2KbrzGENhpzVv9LX/fNJhNEphdg=;
-        b=VKhStyXpeGqxF2zSjnS2XOAkF4TfnEbl780CQYkoWhi7PK0hBmns1fWNeiFgBH+OjC
-         gqaEQvgHan97r5SaUv2yDf1H6YDwEibu66CR4AHsR71enN3i3vYawzsZoPOI2L2eVgwC
-         Lw00AnVRlqIG3OhxL550vclZEqBKvDRBZo7VQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=L1L7nyGV5CmPivanHY6W1BuAHhaXNL2AQWGypomflp6sOSTaEQcUJ7b80YR0JNKJK7
-         o4ZFsX3B/H+ScGAv/X9vEy1P9AwW6qsrUbqtyo1p1ZnrLDqFyylH0DZgsrf/oj0szXyj
-         Ng4mYNQJ3bZljRA+WPOu7Y8Rw4yy/IMJO5OIY=
-Received: by 10.223.94.129 with SMTP id z1mr9219fam.144.1307026592851;
-        Thu, 02 Jun 2011 07:56:32 -0700 (PDT)
-Received: from localhost.localdomain (abvc230.neoplus.adsl.tpnet.pl [83.8.200.230])
-        by mx.google.com with ESMTPS id c1sm204029faa.37.2011.06.02.07.56.31
-        (version=SSLv3 cipher=OTHER);
-        Thu, 02 Jun 2011 07:56:32 -0700 (PDT)
-X-Mailer: git-send-email 1.7.5
-In-Reply-To: <1307026553-1181-1-git-send-email-jnareb@gmail.com>
+	id S1751992Ab1FBP3V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2011 11:29:21 -0400
+Received: from lo.gmane.org ([80.91.229.12]:45260 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751346Ab1FBP3U (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2011 11:29:20 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1QS9pj-000288-Pl
+	for git@vger.kernel.org; Thu, 02 Jun 2011 17:29:16 +0200
+Received: from pm2-users.caci.com ([204.194.77.3])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 02 Jun 2011 17:29:15 +0200
+Received: from randy.brandenburg by pm2-users.caci.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 02 Jun 2011 17:29:15 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 204.194.77.3 (Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; InfoPath.2; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; MS-RTC LM 8))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174957>
 
-The build-time configuration variables JSMIN and CSSMIN were mentioned
-only in Makefile; add their description to gitweb/INSTALL.
+Randy Brandenburg <randy.brandenburg <at> woh.rr.com> writes:
 
-This required moving description of GITWEB_JS up, near GITWEB_CSS and
-just introduced CSMIN and JSMIN.
+> 
+> Jeff King <peff <at> peff.net> writes:
+> > 
+> > I suspect it is more subtle than that. We've had several people recently
+> > reporting the same issue, and all are using pre-built binaries on
+> > Solaris 9. Given the weird errno value ("unknown error"), my guess is
+> > that the packages are built on Solaris 10, and there is some ABI
+> > incompatibility between the two platforms.
+> > 
+> > I'd be curious if building on Solaris 9, even without NO_PTHREADS set,
+> > fixes the issue.
+> > 
+> > -Peff
+> > 
+> 
+> Thank you for the insight. I will attempt to rebuild on the target platform 
+and 
+> see what happens. 
+> 
+> I will post the results when I have an answer on whther that helped or not.
+> 
+> 
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- gitweb/INSTALL |   19 +++++++++++++------
- 1 files changed, 13 insertions(+), 6 deletions(-)
+I rebuilt git-1.7.5 from source on the Solaris 9 platform with gcc-3.4.6, GNU 
+make 3.82, and GNU install (from coreutils 8.11). Following these steps
 
-diff --git a/gitweb/INSTALL b/gitweb/INSTALL
-index 32a52b7..2346aad 100644
---- a/gitweb/INSTALL
-+++ b/gitweb/INSTALL
-@@ -147,6 +147,19 @@ You can specify the following configuration variables when building GIT:
-    the gitweb config file.  [Default: static/gitweb.css (or
-    static/gitweb.min.css if the CSSMIN variable is defined / CSS minifier
-    is used)]
-+ * GITWEB_JS
-+   Points to the location where you put gitweb.js on your web server
-+   (or to be more generic URI of JavaScript code used by gitweb).
-+   Relative to base URI of gitweb.  [Default: static/gitweb.js (or
-+   static/gitweb.min.js if JSMIN build variable is defined / JavaScript
-+   minifier is used)]
-+ * CSSMIN, JSMIN
-+   Invocation of a CSS minifier or a JavaScript minifier, respectively,
-+   working as a filter (source on standard input, minified result on
-+   standard output).  If set, it is used to generate a minified version of
-+   'static/gitweb.css' or 'static/gitweb.js', respectively.  *Note* that
-+   minified files would have *.min.css and *.min.js extension, which is
-+   important if you also set GITWEB_CSS and/or GITWEB_JS.  [No default]
-  * GITWEB_LOGO
-    Points to the location where you put git-logo.png on your web server
-    (or to be more generic URI of logo, 72x27 size, displayed in top right
-@@ -158,12 +171,6 @@ You can specify the following configuration variables when building GIT:
-    web browsers that support favicons (website icons) may display them
-    in the browser's URL bar and next to site name in bookmarks).  Relative
-    to base URI of gitweb.  [Default: static/git-favicon.png]
-- * GITWEB_JS
--   Points to the location where you put gitweb.js on your web server
--   (or to be more generic URI of JavaScript code used by gitweb).
--   Relative to base URI of gitweb.  [Default: static/gitweb.js (or
--   static/gitweb.min.js if JSMIN build variable is defined / JavaScript
--   minifier is used)]
-  * GITWEB_CONFIG
-    This Perl file will be loaded using 'do' and can be used to override any
-    of the options above as well as some other options -- see the "Runtime
--- 
-1.7.5
+----------------------------------------------------------------------------
+# ./configure CC=gcc
+
+Edit the Makefile - set the path to "ar", "gcc" and GNU "install".
+CC = /usr/local/bin/gcc
+AR = /usr/ccs/bin/ar
+INSTALL = /usr/local/bin/install
+Look for ifeq ($(uname_S),SunOS) and set INSTALL to /usr/lcoal/bin/install
+
+# gmake NO_TCLTK=1 NO_CURL=1 NO_PTHREADS=YesPlease install prefix=/opt/sfw
+# git --version
+git version 1.7.5
+----------------------------------------------------------------------------
+Preliminary testing indicates a working system -- will investigate thourough 
+today and tomorrow.
+
+Thanks for the tips!
+
+- Randy
