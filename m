@@ -1,80 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4 1/4] Refactor for_each_ref variants to use
- for_each_ref_in and avoid magic numbers
-Date: Thu, 02 Jun 2011 16:29:00 -0700
-Message-ID: <7v4o47dd8j.fsf@alter.siamese.dyndns.org>
+From: Josh Triplett <josh@joshtriplett.org>
+Subject: Re: [PATCHv4 2/4] Add infrastructure for ref namespaces
+Date: Thu, 2 Jun 2011 16:36:19 -0700
+Message-ID: <20110602233619.GA1931@leaf>
 References: <1306887870-3875-1-git-send-email-jamey@minilop.net>
- <7vk4d4c6ns.fsf@alter.siamese.dyndns.org> <20110602205747.GA2022@leaf>
+ <1306887870-3875-2-git-send-email-jamey@minilop.net>
+ <7vfwnrdfam.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jamey Sharp <jamey@minilop.net>, git@vger.kernel.org,
+Cc: Jamey Sharp <jamey@minilop.net>, git@vger.kernel.org,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Johannes Sixt <johannes.sixt@telecom.at>,
 	Jeff King <peff@peff.net>
-To: Josh Triplett <josh@joshtriplett.org>
-X-From: git-owner@vger.kernel.org Fri Jun 03 01:29:31 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 03 01:36:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QSHKS-0003Rd-VS
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Jun 2011 01:29:29 +0200
+	id 1QSHRV-0005VR-Ki
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Jun 2011 01:36:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752672Ab1FBX3V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jun 2011 19:29:21 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33118 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752199Ab1FBX3U (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jun 2011 19:29:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B1EB848B9;
-	Thu,  2 Jun 2011 19:31:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=U/QnpqfjsoiSg8NjoCKFrHwYCZ4=; b=vRdmYA
-	Tp0U1F16OxcUDKh7WhJgra3z6R+xoN9BjTcLqbhX10CMvs4muHksGlLdneBMAcnC
-	kO8J4QQigmpM9GXfe/XrzjJIJRfCp87wP0cCtr1Ob5fJCyd1lMg+qnZ2sE4Dfppn
-	uKQHA7e7w95993TbABHq9l+QhCj6CqF/nUW/c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FA4kLnqegBxHEdDcoHrAooIsGjQVoMTn
-	W8aq1j3OUjserHueqGMJPXL//uv78ljhgDpVIxTi5dRGA4t89tWtFZDQCgNiYgNJ
-	B/DL3Jh8+NaNhAnRw6hR0Z1v1KA0FXr8lgDpmmOMjWH0OyWQvje+V6W7SpOJqTZx
-	uFOVD5MLQOY=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3E9FF48B5;
-	Thu,  2 Jun 2011 19:31:20 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0E51148AD; Thu,  2 Jun 2011
- 19:31:09 -0400 (EDT)
-In-Reply-To: <20110602205747.GA2022@leaf> (Josh Triplett's message of "Thu, 2
- Jun 2011 13:57:47 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6B922372-8D70-11E0-911C-EA23C7C1A288-77302942!a-pb-sasl-sd.pobox.com
+	id S1753449Ab1FBXgg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2011 19:36:36 -0400
+Received: from relay4-d.mail.gandi.net ([217.70.183.196]:44896 "EHLO
+	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752567Ab1FBXgg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2011 19:36:36 -0400
+X-Originating-IP: 217.70.178.134
+Received: from mfilter4-d.gandi.net (mfilter4-d.gandi.net [217.70.178.134])
+	by relay4-d.mail.gandi.net (Postfix) with ESMTP id 0415817206D;
+	Fri,  3 Jun 2011 01:36:34 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at #File managed by puppet, do not edit
+	locally
+Received: from relay4-d.mail.gandi.net ([217.70.183.196])
+	by mfilter4-d.gandi.net (mfilter4-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
+	with ESMTP id sMyCdwxeMYx0; Fri,  3 Jun 2011 01:36:32 +0200 (CEST)
+X-Originating-IP: 131.252.166.156
+Received: from leaf (unknown [131.252.166.156])
+	(Authenticated sender: josh@joshtriplett.org)
+	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 48669172084;
+	Fri,  3 Jun 2011 01:36:21 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vfwnrdfam.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174988>
 
-Josh Triplett <josh@joshtriplett.org> writes:
+On Thu, Jun 02, 2011 at 03:44:33PM -0700, Junio C Hamano wrote:
+> Jamey Sharp <jamey@minilop.net> writes:
+> 
+> > Note that namespaces which include a / will expand to a hierarchy of
+> > namespaces; for example, GIT_NAMESPACE=foo/bar will store refs under
+> > refs/namespaces/foo/refs/namespaces/bar/.  This makes GIT_NAMESPACE
+> > behave hierarchically, and avoids ambiguity with namespaces such as
+> > foo/refs/heads.
+> 
+> Sorry, but I fail to see what problem you are trying to solve here.  I am
+> not suggesting that it would be better to do things in a way different
+> from what your patch does, but what problem will you have if you stored
+> the branch head for baz in refs/namespaces/foo/bar/refs/heads/baz given
+> the namespace foo/bar, and how does it solve that problem to store it
+> instead at refs/namespaces/foo/refs/namespaces/bar/refs/heads/baz?
 
->> Shouldn't you be passing prefix and trim the same way as we have always
->> done, but just fixing the strncmp() at the beginning of do_one_ref()?
->
-> I still think prefixcmp makes the most sense; if you pass a given base,
+Two reasons.  First, if you use GIT_NAMESPACE=foo (which puts its refs
+under refs/namespaces/foo/refs/{heads,tags}), and also used
+GIT_NAMESPACE=foo/refs/heads, that would put its refs under
+refs/namespaces/foo/refs/heads/refs/{heads,tags}, which would make them
+potentially conflict with foo's references.  So, for instance, you could
+end up with directory/file conflicts in the refs directory.  Using
+hierarchies avoids any possible conflicts and corner cases there.
 
-Using prefixcmp() instead of strncmp() there is what I meant by "fixing
-the strncmp() at the beginning of do_one_ref()", so we are in agreement on
-that point. What I found questionable was the removal of the trim
-value. IOW, I would have expected the patch to be something like:
+Second, by making the namespaces hierarchical, we provide a kind of
+composability, similar to that suggested by the analogy to chroots.
+With the way we've constructed them, cloning a repo with
+GIT_NAMESPACE=foo/bar has the same effect as cloning a repo with
+GIT_NAMESPACE=foo and cloning from that repo with GIT_NAMESPACE=bar.
 
-	if (prefixcmp(base, entry->name))
-        	return 0; /* outside of our area -- ignore */
-	... some other logic ...
-        /* feed the callback, stripping the prefix */
-        return fn(entry->name + trim, entry->sha1, entry->flag, cb_data);
+> > +int for_each_namespaced_ref(each_ref_fn fn, void *cb_data)
+> 
+> Just a naming and interface preference, but I would have called this
+> for-each-ref-in-namespace, perhaps giving the namespace as a parameter.
+
+for_each_ref_in and other variants already exist for that purpose;
+for_each_namespaced_ref exists to automatically uses GIT_NAMESPACE.
+Happy to rename it if you have another preference, but I don't think it
+makes sense to support passing in arbitrary namespaces when the callers
+only use it to access the currently requested namespace.  If some
+situation arises in later code that needs to handle arbitrary
+namespaces, it seems easy enough to provide a more generalized function
+at that point, but doing so now would just make the existing callers
+more complex by forcing them to do the call to get_git_namespace()
+rather than allowing for_each_namespaced_ref to do it.
+
+As far as naming, though, we have no preference whatsoever about the
+color of the bikeshed. :)
+
+- Josh Triplett
