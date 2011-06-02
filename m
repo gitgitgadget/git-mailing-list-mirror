@@ -1,79 +1,66 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: git show and the --quiet option
-Date: Thu, 02 Jun 2011 14:26:09 -0400
-Message-ID: <1307039169.28941.35.camel@drew-northup.unet.maine.edu>
-References: <4DE12888.1040506@isy.liu.se>
-	 <20110528172611.GB28708@centaur.lab.cmartin.tk>
-	 <7vhb8eprcb.fsf@alter.siamese.dyndns.org>
-	 <20110530093259.GA2990@bee.lab.cmartin.tk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git status --ignored
+Date: Thu, 02 Jun 2011 11:30:37 -0700
+Message-ID: <7voc2gcche.fsf@alter.siamese.dyndns.org>
+References: <4DE712CE.20509@vpac.org>
+ <7vr57cerxo.fsf@alter.siamese.dyndns.org>
+ <20110602055449.GA28292@sigill.intra.peff.net>
+ <7vk4d4dxn1.fsf@alter.siamese.dyndns.org>
+ <20110602172021.GB2928@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Gustaf Hendeby <hendeby@isy.liu.se>, git@vger.kernel.org
-To: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Thu Jun 02 20:26:58 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Andrew Spiers <aspiers@vpac.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 02 20:30:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QSCbf-00022b-IN
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 20:26:55 +0200
+	id 1QSCfV-00046O-Mk
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 20:30:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754498Ab1FBS0v convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Jun 2011 14:26:51 -0400
-Received: from basalt.its.maine.edu ([130.111.32.66]:54583 "EHLO
-	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754188Ab1FBS0t (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jun 2011 14:26:49 -0400
-Received: from [IPv6:2610:48:100:827::97] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827::97])
-	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id p52IQD1q025215
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 2 Jun 2011 14:26:18 -0400
-In-Reply-To: <20110530093259.GA2990@bee.lab.cmartin.tk>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-URT-Metrics: basalt.its.maine.edu 1060; Body=4 Fuz1=4 Fuz2=4
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p52IQD1q025215
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1307643979.2062@V1UljWMNtsgcbdu42wVvow
+	id S1754459Ab1FBSas (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2011 14:30:48 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60355 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752317Ab1FBSar (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2011 14:30:47 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 21DA84592;
+	Thu,  2 Jun 2011 14:32:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WIr1jePIuCemi8uUxIYGCj68208=; b=YBlupn
+	QydjONpZZr/PcAWLkVwchrG1YOlIv5DJthqLRRsSaF6QxYy4t0mKJRvHAmdDX0FG
+	QntrzUJ0vaHwmBvmKEnQQaauMmJ1AtSet6dRCUzFWi0xkLF6YVtGV4HpELdMiz47
+	GFj1BSkPJ70Y6UVwVoSnOVTglgvKaEFX0+KeE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=h+KHU4LCgHblW6MQNa0l4w0+epfcc2r7
+	+cAZ/XNMD0KkYFfi2kxcUo4IYDL2T65R5nGkD9yyTetcGUVAluy3a93io0diAONt
+	NQXydmgMKHKORKcND1G0EzYoqWAxzip/woqyUgwxZzeknGHqRDupbunP2mZLSKr5
+	tZ7Jz6LhIDU=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DE5484588;
+	Thu,  2 Jun 2011 14:32:51 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 95DFC4582; Thu,  2 Jun 2011
+ 14:32:47 -0400 (EDT)
+In-Reply-To: <20110602172021.GB2928@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 2 Jun 2011 13:20:21 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B95CB42A-8D46-11E0-BFA2-EA23C7C1A288-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174968>
 
+Jeff King <peff@peff.net> writes:
 
-On Mon, 2011-05-30 at 11:32 +0200, Carlos Mart=C3=ADn Nieto wrote:
-> On Sat, May 28, 2011 at 12:17:40PM -0700, Junio C Hamano wrote:
-> > Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
-> >=20
+> it doesn't change all that much, so maybe it is worth doing. Squashable
+> patch below.
 
-> > How does this patch look?
-> >=20
-> > It does not fix "git show master~10 master^..master", but instead o=
-f just
-> > hijacking and ignoring the --quiet option like your patch did, it a=
-ctually
-> > flips the option the user wanted to affect from the command line.
->=20
-> It's fine if that's what we want to do. The reason I blocked --quiet
-> instead of converting it to -s is because it seemed less surprising
-> than passing --quiet and still getting output (if I pass --quiet, I'd
-> expect the application to really be quiet), which doesn't happen in
-> the commands that accept --quiet on purpose. Then again, the log
-> family doesn't make any sense without any output, so if you argue tha=
-t
-> way, --quiet means "quieter", which makes the interface less
-> consistent, but I don't feel that strongly about it
-
-There's a lot of stuff out there for which --quiet does not imply
---silent. I side with Junio on the solution.
-
---=20
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+Thanks.
