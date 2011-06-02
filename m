@@ -1,150 +1,98 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] Added a remote helper to interact with mediawiki,
- pull & clone handled
-Date: Thu, 2 Jun 2011 13:03:27 -0400
-Message-ID: <20110602170327.GA2928@sigill.intra.peff.net>
-References: <1307006911-4326-1-git-send-email-arnaud.lacurie@ensimag.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Clarified how "git submodule add" handles relative
+ paths.
+Date: Thu, 02 Jun 2011 10:14:04 -0700
+Message-ID: <7v39jsdulf.fsf@alter.siamese.dyndns.org>
+References: <7vaae2ihe1.fsf@alter.siamese.dyndns.org>
+ <1306943792-1825-1-git-send-email-marcnarc@xiplink.com>
+ <7vsjrth4iy.fsf@alter.siamese.dyndns.org> <4DE69945.1080601@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?B?SsOpcsOpbWll?= Nikaes <jeremie.nikaes@ensimag.imag.fr>,
-	Claire Fousse <claire.fousse@ensimag.imag.fr>,
-	David Amouyal <david.amouyal@ensimag.imag.fr>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Sylvain =?utf-8?Q?Boulm=C3=A9?= <sylvain.boulme@imag.fr>
-To: Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Thu Jun 02 19:03:35 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Marc Branchaud <marcnarc@xiplink.com>, git@vger.kernel.org,
+	Mark Levedahl <mlevedahl@gmail.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Jun 02 19:14:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QSBJ1-0000hU-K0
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 19:03:35 +0200
+	id 1QSBTR-0006e8-QZ
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 19:14:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753529Ab1FBRDa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Jun 2011 13:03:30 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52449
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753262Ab1FBRDa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jun 2011 13:03:30 -0400
-Received: (qmail 29799 invoked by uid 107); 2 Jun 2011 17:03:34 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 02 Jun 2011 13:03:34 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Jun 2011 13:03:27 -0400
-Content-Disposition: inline
-In-Reply-To: <1307006911-4326-1-git-send-email-arnaud.lacurie@ensimag.imag.fr>
+	id S1753532Ab1FBROR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2011 13:14:17 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64890 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753076Ab1FBROQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2011 13:14:16 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2747F5AFB;
+	Thu,  2 Jun 2011 13:16:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=E+SCTIwrD8+Pb2AXJPMsRrqN90o=; b=Ewakzp
+	zHm5nCBPQphpnmOnJGzvEaOd2znA7uL/CnOebmlJZ7A9V9X6+32aEEl0b1R5DaDK
+	YOD8HeZpn+BX235ad2uI7BRjQBG0zYHFnQc3NFO/61PGh0QoOK9cXJ0/U+My5skb
+	bPmjKDuYGnq/asPpJhHfNX8599iQNH/xfobpA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EvEoJRvhcWK6wHAxZ9a11rPU7KPF660v
+	NJkoBRdWYERzwtYSJ+HGD8HnE3hi6WptdqjJhOTiMNt7rUAp3oXxiQ1Q9gse/3yU
+	SAZnPRuL2A0IVCuzKStnpm8XvXtQRvCDx2sXSz54A4usBX1pPV+A1Hcw8QKPeo4M
+	gyjh7UKy/lI=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D467F5AF9;
+	Thu,  2 Jun 2011 13:16:19 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5CE895AF0; Thu,  2 Jun 2011
+ 13:16:14 -0400 (EDT)
+In-Reply-To: <4DE69945.1080601@web.de> (Jens Lehmann's message of "Wed, 01
+ Jun 2011 21:55:49 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 084B36FC-8D3C-11E0-8500-EA23C7C1A288-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174962>
 
-On Thu, Jun 02, 2011 at 11:28:31AM +0200, Arnaud Lacurie wrote:
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-> +sub mw_import {
-> [...]
-> +		# Get 500 revisions at a time due to the mediawiki api limit
-> +		while (1) {
-> +			my $result =3D $mediawiki->api($query);
-> +
-> +			# Parse each of those 500 revisions
-> +			foreach my $revision (@{$result->{query}->{pages}->{$id}->{revisi=
-ons}}) {
-> +				my $page_rev_ids;
-> +				$page_rev_ids->{pageid} =3D $page->{pageid};
-> +				$page_rev_ids->{revid} =3D $revision->{revid};
-> +				push (@revisions, $page_rev_ids);
-> +				$revnum++;
-> +			}
-> +			last unless $result->{'query-continue'};
-> +			$query->{rvstartid} =3D $result->{'query-continue'}->{revisions}-=
->{rvstartid};
-> +			print "\n";
-> +		}
+> I often use a local filesystem location for shared code I'm using in some
+> personal projects, mainly because I want to avoid the hassle of setting
+> up a server location for it (and the git test suite uses that feature too
+> for similar reasons). That doesn't make much sense when working together
+> with others, but that is not an issue in these use cases.
+>
+> So I see three different location types supported by current submodule
+> add:
+>   1) a URL reachable by you and your coworkers
+>   2) a path relative to the URL of the superproject's default remote
+>   3) A local filesystem location which can only be shared locally
+> And each of them has its merits and uses (and using two of them everyday
+> might make it easy to overlook the third ;-)
 
-What is this newline at the end here for? With it, my import reliably
-fails with:
+I suspect that it would be a relatively easy fix if your toplevel
+superproject is its own authoritative upstream.  Something along the line
+of this patch, perhaps?  It is obviously untested, and we may want to
+issue an "echo >&2 'info:...'" to tell the user what we are assuming in
+this codepath.
 
-  fatal: Unsupported command:=20
-  fast-import: dumping crash report to .git/fast_import_crash_6091
+ git-submodule.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Removing it seems to make things work.
-
-> +		my $user =3D $rev->{user} || 'Anonymous';
-> +		my $dt =3D DateTime::Format::ISO8601->parse_datetime($rev->{timest=
-amp});
-> +
-> +		my $comment =3D defined $rev->{comment} ? $rev->{comment} : '*Empt=
-y MediaWiki Message*';
-
-In importing the git wiki, I ran into an empty timestamp. This throws a=
-n
-exception which kills the whole import:
-
-  $ git clone mediawiki::https://git.wiki.kernel.org/ git-wiki
-  2821/7949: Revision n=C2=B04210 of GitSurvey
-  Invalid date format:  at /home/peff/compile/git/contrib/mw-to-git/git=
--remote-mediawiki line 195
-          main::mw_import('https://git.wiki.kernel.org/') called at /ho=
-me/peff/compile/git/contrib/mw-to-git/git-remote-mediawiki line 42
-
-At the very least, we should intercept this and put in some placeholder
-timestamp. I'm not sure what the best placeholder would be. Maybe use
-the date from the previous revision, plus one second? Or maybe there is
-some other bug causing us to have an empty timestamp. I didn't dig
-deeper yet.
-
-> +		# mediawiki revision number in the git note
-> +		my $note_comment =3D encode_utf8("note added by git-mediawiki");
-> +		my $note_comment_length =3D bytes::length($note_comment);
-> +		my $note_content =3D encode_utf8("mediawiki_revision: " . $pagerev=
-ids->{revid} . "\n");
-> +		my $note_content_length =3D bytes::length($note_content);
-> +
-> +		if ($fetch_from =3D=3D 1 && $n =3D=3D 1) {
-> +			print "reset refs/notes/commits\n";
-> +		}
-> +		print "commit refs/notes/commits\n";
-
-Should these go in refs/notes/commits? I don't think we have a "best
-practices" yet for the notes namespaces, as it is still a relatively ne=
-w
-concept. But I always thought "refs/notes/commits" would be for the
-user's "regular" notes, and that programmatic things would get their ow=
-n
-notes, like "refs/notes/mediawiki".
-
-That wouldn't show them by default, but you could do:
-
-  git log --notes=3Dmediawiki
-
-to see them (and maybe that is a feature, because most of the time you
-won't care about the mediawiki revision).
-
-> +		} else {
-> +			print STDERR "You appear to have cloned an empty mediawiki\n";
-> +			#What do we have to do here ? If nothing is done, an error is thr=
-own saying that
-> +			#HEAD is refering to unknown object 0000000000000000000
-> +		}
-
-Hmm. We do allow cloning empty git repos. It might be nice for there to
-be some way for a remote helper to signal "everything OK, but the resul=
-t
-is empty". But I think that is probably something that needs to be adde=
-d
-to the remote-helper protocol, and so is outside the scope of your
-script (maybe it is as simple as interpreting the null sha1 as "empty";
-I dunno).
-
-Overall, it's looking pretty good. I like that I can resume a
-half-finished import via "git fetch". Though I do have one complaint:
-running "git fetch" fetches the metainfo for every revision of every
-page, just as it does for an initial clone. Is there something in the
-mediawiki API to say "show me revisions since N" (where N would be the
-mediawiki revision of the tip of what we imported)?
-
--Peff
+diff --git a/git-submodule.sh b/git-submodule.sh
+index b010a67..6d27729 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -34,7 +34,7 @@ resolve_relative_url ()
+ {
+ 	remote=$(get_default_remote)
+ 	remoteurl=$(git config "remote.$remote.url") ||
+-		die "remote ($remote) does not have a url defined in .git/config"
++	remoteurl=$(pwd) # the repository is its own authoritative upstream
+ 	url="$1"
+ 	remoteurl=${remoteurl%/}
+ 	sep=/
