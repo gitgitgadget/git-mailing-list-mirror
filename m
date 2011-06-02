@@ -1,102 +1,230 @@
-From: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <carlos@cmartin.tk>
-Subject: Re: Can't get git rebase --onto to work
-Date: Thu, 2 Jun 2011 12:32:59 +0200
-Message-ID: <20110602103259.GA30081@centaur.lab.cmartin.tk>
-References: <BANLkTikF7p_XsU6YJ81bq10S3nL6tBsApg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="sm4nu43k4a2Rpi4c"
-Cc: git@vger.kernel.org
-To: Howard Miller <howard@e-learndesign.co.uk>
-X-From: git-owner@vger.kernel.org Thu Jun 02 12:33:08 2011
+From: Cesar Eduardo Barros <cesarb@cesarb.net>
+Subject: [PATCH v2] Embed an application manifest on MinGW
+Date: Thu,  2 Jun 2011 07:35:37 -0300
+Message-ID: <1307010937-2894-1-git-send-email-cesarb@cesarb.net>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Cesar Eduardo Barros <cesarb@cesarb.net>
+To: msysgit@googlegroups.com
+X-From: git-owner@vger.kernel.org Thu Jun 02 12:36:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QS5DA-00023Z-8D
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 12:33:08 +0200
+	id 1QS5G0-0003D3-UK
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 12:36:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933381Ab1FBKdB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jun 2011 06:33:01 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:47451 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932749Ab1FBKdA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jun 2011 06:33:00 -0400
-Received: from centaur.lab.cmartin.tk (brln-4db9cba1.pool.mediaWays.net [77.185.203.161])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id 835D1461D9;
-	Thu,  2 Jun 2011 12:32:31 +0200 (CEST)
-Received: (nullmailer pid 32697 invoked by uid 1000);
-	Thu, 02 Jun 2011 10:32:59 -0000
-Mail-Followup-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <carlos@cmartin.tk>,
-	Howard Miller <howard@e-learndesign.co.uk>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <BANLkTikF7p_XsU6YJ81bq10S3nL6tBsApg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S933426Ab1FBKf7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2011 06:35:59 -0400
+Received: from smtp-04.mandic.com.br ([200.225.81.151]:35538 "EHLO
+	smtp-04.mandic.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933369Ab1FBKf5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2011 06:35:57 -0400
+Received: (qmail 25288 invoked from network); 2 Jun 2011 10:35:53 -0000
+Received: from unknown (HELO localhost.localdomain) (zcncxNmDysja2tXBptWToZWJlF6Wp6IuYnI=@[200.157.204.20])
+          (envelope-sender <cesarb@cesarb.net>)
+          by smtp-04.mandic.com.br (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
+          for <msysgit@googlegroups.com>; 2 Jun 2011 10:35:53 -0000
+X-Mailer: git-send-email 1.7.4.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174936>
 
+On Windows Vista, not having an application manifest with a
+requestedExecutionLevel can cause several kinds of confusing behavior.
 
---sm4nu43k4a2Rpi4c
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The first and more obvious is Installer Detection, where sometimes
+Windows decides (by looking at things like the file name and even
+sequences of bytes within the executable) that an executable is an
+installer and should run elevated (causing the well-known popup dialog
+to appear). On git, this happens for executables with names containing
+"patch" or "update".
 
-On Thu, Jun 02, 2011 at 11:17:41AM +0100, Howard Miller wrote:
-> Trying to explain this as concisely as possible.
->=20
-> I started with the following branches (names changed to protect the guilt=
-y)...
->=20
-> * clientA
-> * clientB
->=20
-> both have a common ancestry....
->=20
-> I then checked out clientB created a new branch clientB_patch and did
-> a load of work and commits.
->=20
-> However, I actually wanted all those commits to apply to clientA
-> branch instead so....
->=20
-> git checkout clientA
-> git checkout -b clientA_patch     (to ensure I didn't wreck original bran=
-ch)
-> git rebase --onto clientA_patch clientB clientB_patch
+The second and more confusing is File Virtualization. With it, writes to
+some files which should fail are instead redirected to somewhere else,
+and reads to files might return different contents if a previous write
+was redirected. Even more confusing, not all writes are redirected; I
+recall reading somewhere that for instance writes to .exe files will
+fail instead of redirecting.
 
-The man page for git-rebase covers this exact situation (around line
-88 in my version) . In its case, it's
+Needless to say, git wants none of that. Not only that, but File
+Virtualization has been blamed for dramatic slowdowns in git (see for
+instance http://code.google.com/p/msysgit/issues/detail?id=320).
 
-    git rebase --onto master next topic
+There are two ways to turn off these annoyances. Either you embed an
+application manifest within all your executables, or you add an external
+manifest (a file with the same name followed by .manifest) to all your
+executables. Since for git some executables are copied (or hardlinked)
+with several names, it is simpler and more robust to embed an internal
+manifest.
 
-which translates to your case as
+A recent enough MSVC compiler should already embed a working internal
+manifest, but for mingw you have to do so by hand.
 
-    git rebase --onto clientA clientB clientB_patch
+Very lightly tested on Wine, where like on Windows XP it should not make
+any difference.
 
-Cheers,
-   cmn
---=20
-Carlos Mart=C3=ADn Nieto | http://cmartin.tk
+References:
+  - New UAC Technologies for Windows Vista
+    http://msdn.microsoft.com/en-us/library/bb756960.aspx
+  - Create and Embed an Application Manifest (UAC)
+    http://msdn.microsoft.com/en-us/library/bb756929.aspx
 
-"=C2=BFC=C3=B3mo voy a decir bobadas si soy mudo?" -- CACHAI
+v2: Create GITLIBDEPS and use it instead of GITLIBS. RESOURCE_OBJS
+    cannot be added directly to GITLIBS because it would add the
+    manifest twice to executables which use $(filter %.o,$^) in the
+    Makefile rule (since LIBS also includes GITLIBS).
 
---sm4nu43k4a2Rpi4c
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+Signed-off-by: Cesar Eduardo Barros <cesarb@cesarb.net>
+---
+ Makefile                  |   31 +++++++++++++++++++++++--------
+ compat/win32/git.manifest |   11 +++++++++++
+ compat/win32/resource.rc  |    1 +
+ 3 files changed, 35 insertions(+), 8 deletions(-)
+ create mode 100644 compat/win32/git.manifest
+ create mode 100644 compat/win32/resource.rc
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAEBAgAGBQJN52bbAAoJEHKRP1jG7ZzTqMMH/0kwKZJaL42wRrrJdqvCCOZz
-d2Un1UlBLiexK+KkL750n0UvEfsT2IKl56njIGAV14IJYzeM+B1zok7pgKZDpFTA
-nXy7kgnr9pbappHR5tbwOmye+OYFJgXx2Rre/fa+OO+TGP4I8jWEljYdCVGQHwzS
-hUIl2IDNzE1cLdk+lnyrGsh8sQ5iafMgtd66cW7EPP+zcpOkzanuj0BvAyf/Fp1z
-482c1pIxX2lHRvkPFDA7gUDIRnO7haFYpjGEoE6ys/nIdR9tW3GIC8km8zwXKqaq
-HpEA7jnq2GIyPxRHkb38+WfAsX88faCsggroE3lGctCdGAAFY5S6ILvv4AQFZv4=
-=j9jX
------END PGP SIGNATURE-----
-
---sm4nu43k4a2Rpi4c--
+diff --git a/Makefile b/Makefile
+index b2e1759..da371c2 100644
+--- a/Makefile
++++ b/Makefile
+@@ -324,6 +324,7 @@ XGETTEXT = xgettext
+ PTHREAD_LIBS = -lpthread
+ PTHREAD_CFLAGS =
+ GCOV = gcov
++WINDRES = windres
+ 
+ export TCL_PATH TCLTK_PATH
+ 
+@@ -344,6 +345,7 @@ BUILTIN_OBJS =
+ BUILT_INS =
+ COMPAT_CFLAGS =
+ COMPAT_OBJS =
++RESOURCE_OBJS =
+ EXTRA_CPPFLAGS =
+ LIB_H =
+ LIB_OBJS =
+@@ -786,6 +788,8 @@ BUILTIN_OBJS += builtin/write-tree.o
+ GITLIBS = $(LIB_FILE) $(XDIFF_LIB)
+ EXTLIBS =
+ 
++GITLIBDEPS = $(RESOURCE_OBJS) $(GITLIBS)
++
+ #
+ # Platform specific tweaks
+ #
+@@ -1181,6 +1185,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	NO_INET_PTON = YesPlease
+ 	NO_INET_NTOP = YesPlease
+ 	NO_POSIX_GOODIES = UnfortunatelyYes
++	APPLICATION_MANIFEST = YesPlease
+ 	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat -Icompat/win32
+ 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
+ 	COMPAT_OBJS += compat/mingw.o compat/winansi.o \
+@@ -1575,6 +1580,11 @@ ifdef USE_NED_ALLOCATOR
+        COMPAT_OBJS += compat/nedmalloc/nedmalloc.o
+ endif
+ 
++ifdef APPLICATION_MANIFEST
++	# Cannot be in LIB_OBJS because it must always be linked in
++	RESOURCE_OBJS += compat/win32/resource.o
++endif
++
+ ifdef GIT_TEST_CMP_USE_COPIED_CONTEXT
+ 	export GIT_TEST_CMP_USE_COPIED_CONTEXT
+ endif
+@@ -1610,6 +1620,7 @@ ifndef V
+ 	QUIET_LNCP     = @echo '   ' LN/CP $@;
+ 	QUIET_XGETTEXT = @echo '   ' XGETTEXT $@;
+ 	QUIET_GCOV     = @echo '   ' GCOV $@;
++	QUIET_WINDRES  = @echo '   ' RC $@;
+ 	QUIET_SP       = @echo '   ' SP $<;
+ 	QUIET_SUBDIR0  = +@subdir=
+ 	QUIET_SUBDIR1  = ;$(NO_SUBDIR) echo '   ' SUBDIR $$subdir; \
+@@ -1711,9 +1722,9 @@ git.sp git.s git.o: EXTRA_CPPFLAGS = -DGIT_VERSION='"$(GIT_VERSION)"' \
+ 	'-DGIT_MAN_PATH="$(mandir_SQ)"' \
+ 	'-DGIT_INFO_PATH="$(infodir_SQ)"'
+ 
+-git$X: git.o $(BUILTIN_OBJS) $(GITLIBS)
++git$X: git.o $(BUILTIN_OBJS) $(GITLIBDEPS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ git.o \
+-		$(BUILTIN_OBJS) $(ALL_LDFLAGS) $(LIBS)
++		$(BUILTIN_OBJS) $(RESOURCE_OBJS) $(ALL_LDFLAGS) $(LIBS)
+ 
+ help.sp help.o: common-cmds.h
+ 
+@@ -2011,17 +2022,17 @@ compat/nedmalloc/nedmalloc.sp compat/nedmalloc/nedmalloc.o: EXTRA_CPPFLAGS = \
+ 	-DNDEBUG -DOVERRIDE_STRDUP -DREPLACE_SYSTEM_ALLOCATOR
+ endif
+ 
+-git-%$X: %.o $(GITLIBS)
++git-%$X: %.o $(GITLIBDEPS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
+ 
+-git-imap-send$X: imap-send.o $(GITLIBS)
++git-imap-send$X: imap-send.o $(GITLIBDEPS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(LIBS) $(OPENSSL_LINK) $(OPENSSL_LIBSSL) $(LIB_4_CRYPTO)
+ 
+-git-http-fetch$X: revision.o http.o http-walker.o http-fetch.o $(GITLIBS)
++git-http-fetch$X: revision.o http.o http-walker.o http-fetch.o $(GITLIBDEPS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(LIBS) $(CURL_LIBCURL)
+-git-http-push$X: revision.o http.o http-push.o $(GITLIBS)
++git-http-push$X: revision.o http.o http-push.o $(GITLIBDEPS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
+ 
+@@ -2031,10 +2042,14 @@ $(REMOTE_CURL_ALIASES): $(REMOTE_CURL_PRIMARY)
+ 	ln -s $< $@ 2>/dev/null || \
+ 	cp $< $@
+ 
+-$(REMOTE_CURL_PRIMARY): remote-curl.o http.o http-walker.o $(GITLIBS)
++$(REMOTE_CURL_PRIMARY): remote-curl.o http.o http-walker.o $(GITLIBDEPS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
+ 
++%.o: %.rc
++	$(QUIET_WINDRES)$(WINDRES) $< $@
++compat/win32/resource.o: compat/win32/git.manifest
++
+ $(LIB_FILE): $(LIB_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $(LIB_OBJS)
+ 
+@@ -2172,7 +2187,7 @@ test-svn-fe$X: vcs-svn/lib.a
+ 
+ .PRECIOUS: $(TEST_OBJS)
+ 
+-test-%$X: test-%.o $(GITLIBS)
++test-%$X: test-%.o $(GITLIBDEPS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(filter %.a,$^) $(LIBS)
+ 
+ check-sha1:: test-sha1$X
+diff --git a/compat/win32/git.manifest b/compat/win32/git.manifest
+new file mode 100644
+index 0000000..a82605c
+--- /dev/null
++++ b/compat/win32/git.manifest
+@@ -0,0 +1,11 @@
++<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
++<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
++	<assemblyIdentity type="win32" name="Git" processorArchitecture="x86" version="0.0.0.0" />
++	<trustInfo xmlns="urn:schemas-microsoft-com:asm.v2">
++		<security>
++			<requestedPrivileges>
++				<requestedExecutionLevel level="asInvoker" uiAccess="false" />
++			</requestedPrivileges>
++		</security>
++	</trustInfo>
++</assembly>
+diff --git a/compat/win32/resource.rc b/compat/win32/resource.rc
+new file mode 100644
+index 0000000..c2bf4a6
+--- /dev/null
++++ b/compat/win32/resource.rc
+@@ -0,0 +1 @@
++1 24 "git.manifest"
+-- 
+1.7.4.4
