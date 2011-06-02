@@ -1,93 +1,157 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 08/10] revert: Introduce HEAD, TODO files to persist
- state, plan
-Date: Thu, 2 Jun 2011 18:23:03 +0530
-Message-ID: <BANLkTinc=9aW_y6s-Zb578QsMawnxFD55Q@mail.gmail.com>
-References: <1306333025-29893-1-git-send-email-artagnon@gmail.com>
- <1306425233-504-1-git-send-email-artagnon@gmail.com> <1306425233-504-9-git-send-email-artagnon@gmail.com>
- <20110526161102.GC24931@elie> <BANLkTino5gmfXjeOVih7+LHcMu1usPWAoQ@mail.gmail.com>
- <20110601193126.GC9730@elie>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: git svn clone failing
+Date: Thu, 02 Jun 2011 08:55:08 -0400
+Message-ID: <1307019308.28941.4.camel@drew-northup.unet.maine.edu>
+References: <AANLkTi=Y64ohHnduBqxs--aLW3AYKCxrag2YoAFt58NC@mail.gmail.com>
+	 <1298033812.10893.23.camel@drew-northup.unet.maine.edu>
+	 <AANLkTim9obiU2H_PLb=O1=YxTr1nZ0v-zXC7mxUORVAH@mail.gmail.com>
+	 <1298587459.22431.19.camel@drew-northup.unet.maine.edu>
+	 <AANLkTikA2iRWH8Bh16CmpFpACSOjCiqc3c9cU69Jduv3@mail.gmail.com>
+	 <BANLkTine4g7LyiXmE6zYpNs7aa2FfXYGUg@mail.gmail.com>
+	 <BANLkTin7bxu_XZVYaVy+eXuhcJR83hXSew@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 02 14:53:30 2011
+Cc: git@vger.kernel.org
+To: Vampire <Vampire@Masters-of-Disaster.de>
+X-From: git-owner@vger.kernel.org Thu Jun 02 14:55:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QS7P0-0007dF-50
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 14:53:30 +0200
+	id 1QS7Qu-0008Vx-2R
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 14:55:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933411Ab1FBMxZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Jun 2011 08:53:25 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:58436 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758408Ab1FBMxY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2011 08:53:24 -0400
-Received: by wya21 with SMTP id 21so574047wya.19
-        for <git@vger.kernel.org>; Thu, 02 Jun 2011 05:53:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=C7Vnd7AfAcJ7NhPqnlWA5nqjsTbrwHwQltMmjOSgoxg=;
-        b=DmqS+Im2ybeA2ad07wu66kGWOXrTA2WbkwwUoMe6ODNxUM5MfeuLV6R7y+as5t6qyG
-         YKjGvbvH+HjzGVrVuECyWUCUMeP8szeGvZrNSQR54OcOGEhJbOsQg/HzqD9uFzir5N3H
-         pmBjBeiU8kj870CV+GqKOdc4tE5LTO9RQ/oxQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=th7RM2ULuj+lOrJmUQZ3f0NIEmyX8qLOexiVd37rEal8iXGwOa7mw/fTrb3bUirN6T
-         lAvbGqWOoJdAxAAcZSGLTow88ptevMpcpLPTTMFX2anq9H2jBFKPHXHZXMbTzhSjYiod
-         zoYjv1smQ9DSdq4XxNHVITL7zQPg2Er1z+2OI=
-Received: by 10.216.145.200 with SMTP id p50mr6084544wej.79.1307019203106;
- Thu, 02 Jun 2011 05:53:23 -0700 (PDT)
-Received: by 10.216.51.68 with HTTP; Thu, 2 Jun 2011 05:53:03 -0700 (PDT)
-In-Reply-To: <20110601193126.GC9730@elie>
+	id S933553Ab1FBMzX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Jun 2011 08:55:23 -0400
+Received: from beryl.its.maine.edu ([130.111.32.94]:46551 "EHLO
+	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933510Ab1FBMzW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2011 08:55:22 -0400
+Received: from [IPv6:2610:48:100:827::97] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827::97])
+	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p52CtB9c024675
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 2 Jun 2011 08:55:11 -0400
+In-Reply-To: <BANLkTin7bxu_XZVYaVy+eXuhcJR83hXSew@mail.gmail.com>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=2 Fuz1=2
+	Fuz2=2
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: p52CtB9c024675
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1307624112.44594@vhexdK7jwbYkFPd/E4HrCg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174946>
 
-Hi Jonathan,
 
-Jonathan Nieder writes:
-> . If no, the "todo list" needs to be fully resolved to start out, and
-> =C2=A0then the cherry-pick loop can just walk through it. =C2=A0In gi=
-t API
-> =C2=A0terms, that means first populating the commit_list (for example
-> =C2=A0using a loop that gets revisions and inserts them at the end of=
- a
-> =C2=A0commit_list, or by preparing the revision walk with "limited" f=
-lag
-> =C2=A0set), then walking through it with commit_list APIs.
+On Thu, 2011-06-02 at 14:22 +0200, Vampire wrote:
+> Drew?
+>=20
+I have no idea. If anybody else on the list does I'd welcome it, but I
+don't have any more time I can spend on this.
 
-Thanks. I picked this approach :)
+> 2011/4/3 Vampire <Vampire@masters-of-disaster.de>
+>         Any news on this one?
+>        =20
+>        =20
+>         2011/2/25 Vampire <Vampire@masters-of-disaster.de>
+>         >
+>         > I tried it with 1.6.3.3 and with a self-compiled version
+>         from latest git code.
+>         >
+>         > 2011/2/24 Drew Northup <drew.northup@maine.edu>
+>         > >
+>         > > On Fri, 2011-02-18 at 15:21 +0100, Vampire wrote:
+>         > > > Hi Drew,
+>         > > >
+>         > > > SVN client is in version 1.6.5.
+>         > > > svn co http://svn.apache.org/repos/asf/ant/core/trunk .
+>         > > > works fine and without problem.
+>         > > > I guess it is in the phase of searching for history in
+>         other places in
+>         > > > the repository and there some place is accessed that is
+>         password
+>         > > > protected.
+>         > > > I did not contact the server admin as the normal svn
+>         client works fine
+>         > > > and so it seems to be a problem of git-svn, not of the
+>         SVN server.
+>         > > > Did you try the command I gave you and does it succeed
+>         for you? It is
+>         > > > a publicly available repository so you should be able t=
+o
+>         reproduce the
+>         > > > problem.
+>         > > >
+>         > > > Regards
+>         > > > Bj=C3=B6rn
+>         > >
+>         > > The error is reproducible, and I'm running a newer
+>         subversion client
+>         > > than you are. It definitely isn't making it through all o=
+f
+>         the revisions
+>         > > available before dying.
+>         > >
+>         > > .....
+>         > > Checked through r161300
+>         > > Checked through r161400
+>         > > RA layer request failed: Server sent unexpected return
+>         value (403 Forbidden) in response to REPORT request for
+>         '/repos/asf/!svn/vcc
+>         > > /default' at /usr/libexec/git-core/git-svn line 5131
+>         > >
+>         > > I forgot to ask, which version git are you running? I am
+>         running 1.7.4
+>         > > on the machine I tried this (RHEL5 RPM, compiled locally)=
+=2E
+>         > >
+>         > > > 2011/2/18 Drew Northup <drew.northup@maine.edu>:
+>         > > > >
+>         > > > > On Mon, 2011-02-14 at 18:24 +0100, Vampire wrote:
+>         > > > >> Hi,
+>         > > > >>
+>         > > > >> I'm trying to issue the following command:
+>         > > > >>
+>         > > > >> git svn clone --stdlayout
+>         http://svn.apache.org/repos/asf/ant/core/ .
+>         > > > >>
+>         > > > >> But unfortunately this fails after some time with th=
+e
+>         message:
+>         > > > >>
+>         > > > >> RA layer request failed: Server sent unexpected
+>         return value (403
+>         > > > >> Forbidden) in response to REPORT request for
+>         > > > >> '/repos/asf/!svn/vcc/default'
+>         at /usr/lib/git-core/git-svn line 4354
+>         > > > >>
+>         > > > >> Regards
+>         > > > >> Bj=C3=B6rn
+>         > > > >
+>         > > > > Bj=C3=B6rn,
+>         > > > > Have you made sure your subversion client is
+>         up-to-date? Does this work
+>         > > > > as a plain svn clone? Have you contacted the server
+>         admin?
+>         > > > > Without context we cannot act on this.
+>         > > > >
+>         > >
+>         > > --
+>         > > -Drew Northup
+>         > > ________________________________________________
+>         > > "As opposed to vegetable or mineral error?"
+>         > > -John Pescatore, SANS NewsBites Vol. 12 Num. 59
+>         > >
+>        =20
 
-On a slightly unrelated note, I just found out that the persist_todo
-can't be called twice due to a lockfile API limitation* -- the
-atexit(3) cleanup handler is supposed to have a linked list of
-lockfiles to clean up. When one lockfile is used twice, it becomes a
-circularly linked list, and the entire program hangs at exit time
-since traversing a circularly linked list is never-ending. Couple of
-comments:
-1. By reading the lockfile implementation, I understand why this
-happens -- can't it be implemented differently to remove this
-limitation? If not, shouldn't this limitation be documented somewhere?
-2. What can I do? It'll be inelegant to use the lockfile API while
-persisting the first time, but not the second time -- is there any way
-out of this?
-
-Thanks again.
-
-* You brought this up during one of our IRC conversations, but I
-didn't understand it then. I do now.
-
--- Ram
+--=20
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
