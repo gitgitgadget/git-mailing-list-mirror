@@ -1,81 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4 2/4] Add infrastructure for ref namespaces
-Date: Thu, 02 Jun 2011 15:44:33 -0700
-Message-ID: <7vfwnrdfam.fsf@alter.siamese.dyndns.org>
-References: <1306887870-3875-1-git-send-email-jamey@minilop.net>
- <1306887870-3875-2-git-send-email-jamey@minilop.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH] Added a remote helper to interact with mediawiki,
+ pull & clone handled
+Date: Thu, 2 Jun 2011 18:49:31 -0400
+Message-ID: <20110602224931.GA28189@sigill.intra.peff.net>
+References: <1307006911-4326-1-git-send-email-arnaud.lacurie@ensimag.imag.fr>
+ <20110602170327.GA2928@sigill.intra.peff.net>
+ <BANLkTi=eYg3uT1hQZO03i4MLyhRkPzXK6w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <johannes.sixt@telecom.at>,
-	Jeff King <peff@peff.net>,
-	Josh Triplett <josh@joshtriplett.org>
-To: Jamey Sharp <jamey@minilop.net>
-X-From: git-owner@vger.kernel.org Fri Jun 03 00:44:59 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org,
+	=?utf-8?B?SsOpcsOpbWll?= Nikaes <jeremie.nikaes@ensimag.imag.fr>,
+	Claire Fousse <claire.fousse@ensimag.imag.fr>,
+	David Amouyal <david.amouyal@ensimag.imag.fr>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	Sylvain =?utf-8?Q?Boulm=C3=A9?= <sylvain.boulme@imag.fr>
+To: Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Fri Jun 03 00:49:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QSGdN-0005EG-N6
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Jun 2011 00:44:58 +0200
+	id 1QSGhy-00073h-H5
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Jun 2011 00:49:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752276Ab1FBWow (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jun 2011 18:44:52 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63098 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751903Ab1FBWow (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jun 2011 18:44:52 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1D818444B;
-	Thu,  2 Jun 2011 18:46:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Fpu2tJICSLUbTgKzp48xp4XL5x0=; b=Ur6vqT
-	IiSDeuMsikpN7JJIrnzVcDDgQpFSs0cvg3Ytt2OJrKKlIHgT7iuVf2Upj3Y4HMHs
-	TbqPxksZa9b/DzcTqdOVcNybzpMLpEQcZ6dgWDhcUoZkRjbUI0Dzzj/7XvTp3Cxm
-	re2KRrH/chsF69MB9C+q67tAZxjFiWqHeYIQk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iJsbpU0vC2tkJnYYq4gibqAHoEn0tYMf
-	/wJPQdT1zK8NN66sMLyP2ewSrnl3pIlFwwSa/u2v/OTZqny1S/GVefx11nusyTs/
-	n06PPTAalwQl/PrRtYIs2m7QO5qPyBl8grQGVtbrmvKKot0+vQmTYk3y2rU1JmEE
-	8X9Cwwrqik4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9E366444A;
-	Thu,  2 Jun 2011 18:46:51 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A5BF44449; Thu,  2 Jun 2011
- 18:46:42 -0400 (EDT)
-In-Reply-To: <1306887870-3875-2-git-send-email-jamey@minilop.net> (Jamey
- Sharp's message of "Tue, 31 May 2011 17:24:28 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 34F59192-8D6A-11E0-9A8B-EA23C7C1A288-77302942!a-pb-sasl-sd.pobox.com
+	id S1753177Ab1FBWtf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2011 18:49:35 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50654
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753019Ab1FBWte (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2011 18:49:34 -0400
+Received: (qmail 584 invoked by uid 107); 2 Jun 2011 22:49:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 02 Jun 2011 18:49:38 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Jun 2011 18:49:31 -0400
+Content-Disposition: inline
+In-Reply-To: <BANLkTi=eYg3uT1hQZO03i4MLyhRkPzXK6w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174984>
 
-Jamey Sharp <jamey@minilop.net> writes:
+On Thu, Jun 02, 2011 at 10:28:33PM +0200, Arnaud Lacurie wrote:
 
-> Note that namespaces which include a / will expand to a hierarchy of
-> namespaces; for example, GIT_NAMESPACE=foo/bar will store refs under
-> refs/namespaces/foo/refs/namespaces/bar/.  This makes GIT_NAMESPACE
-> behave hierarchically, and avoids ambiguity with namespaces such as
-> foo/refs/heads.
+> > Overall, it's looking pretty good. I like that I can resume a
+> > half-finished import via "git fetch". Though I do have one complaint:
+> > running "git fetch" fetches the metainfo for every revision of every
+> > page, just as it does for an initial clone. Is there something in the
+> > mediawiki API to say "show me revisions since N" (where N would be the
+> > mediawiki revision of the tip of what we imported)?
+> 
+> I am not sure I understand your question. Because actually, we are
+> supporting this, thanks to git notes. Like when you git fetch after a
+> clone, it checks only the last revisions
 
-Sorry, but I fail to see what problem you are trying to solve here.  I am
-not suggesting that it would be better to do things in a way different
-from what your patch does, but what problem will you have if you stored
-the branch head for baz in refs/namespaces/foo/bar/refs/heads/baz given
-the namespace foo/bar, and how does it solve that problem to store it
-instead at refs/namespaces/foo/refs/namespaces/bar/refs/heads/baz?
+Sorry, I was partially wrong in what I wrote above. I was resuming a
+failed import (because of the bogus timestamp), so the numbers of
+revisions were still high, and I thought they were the same as in the
+original version. I see now doing a fetch on the completed import that
+it properly finds 0 revisions for each page. So that's good.
 
+However, it does still take O(number of pages) requests just to find out
+that there is nothing to fetch. For the git wiki, this takes on the
+order of 1.5 minutes to do an empty fetch. When getting the list of
+pages, I wonder if there is a way in the mediawiki API to say "show me
+only pages which have been modified since rev N".
 
-> +int for_each_namespaced_ref(each_ref_fn fn, void *cb_data)
-
-Just a naming and interface preference, but I would have called this
-for-each-ref-in-namespace, perhaps giving the namespace as a parameter.
+-Peff
