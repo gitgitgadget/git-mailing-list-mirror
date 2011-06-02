@@ -1,174 +1,114 @@
-From: Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>
-Subject: Re: [RFC/PATCH] Added a remote helper to interact with mediawiki,
- pull & clone handled
-Date: Thu, 2 Jun 2011 22:28:33 +0200
-Message-ID: <BANLkTi=eYg3uT1hQZO03i4MLyhRkPzXK6w@mail.gmail.com>
-References: <1307006911-4326-1-git-send-email-arnaud.lacurie@ensimag.imag.fr> <20110602170327.GA2928@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv4 1/4] Refactor for_each_ref variants to use
+ for_each_ref_in and avoid magic numbers
+Date: Thu, 02 Jun 2011 13:36:23 -0700
+Message-ID: <7vk4d4c6ns.fsf@alter.siamese.dyndns.org>
+References: <1306887870-3875-1-git-send-email-jamey@minilop.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?ISO-8859-1?Q?J=E9r=E9mie_Nikaes?= 
-	<jeremie.nikaes@ensimag.imag.fr>,
-	Claire Fousse <claire.fousse@ensimag.imag.fr>,
-	David Amouyal <david.amouyal@ensimag.imag.fr>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	=?ISO-8859-1?Q?Sylvain_Boulm=E9?= <sylvain.boulme@imag.fr>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 02 22:29:13 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <johannes.sixt@telecom.at>,
+	Jeff King <peff@peff.net>,
+	Josh Triplett <josh@joshtriplett.org>
+To: Jamey Sharp <jamey@minilop.net>
+X-From: git-owner@vger.kernel.org Thu Jun 02 22:36:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QSEW1-0006zZ-26
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 22:29:13 +0200
+	id 1QSEdM-0002Rr-D3
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Jun 2011 22:36:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753730Ab1FBU3F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Jun 2011 16:29:05 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:55857 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753424Ab1FBU2y convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2011 16:28:54 -0400
-Received: by vws1 with SMTP id 1so928846vws.19
-        for <git@vger.kernel.org>; Thu, 02 Jun 2011 13:28:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:in-reply-to:references:from
-         :date:x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=0AJTMNPkAWR+Ii6b/NURHMdU9oJKOjtdqbryCiS8X8Q=;
-        b=Zjja/RzmNAhtYHjkcvjQagWAjZ8qfUnSOYIJUmAOkwh+99TDD5+xUy89QccXnQ4YSl
-         A7aTwJ+QzF8Yiz5DYntsd3Xhd78JnX7HBzEFd4ti++M25y0lLfdiU+5poGRXwAwpXJvE
-         AIB1DQm25Fb7r85s2umR2mOVJK/YEz+Jy4UUk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=Sofdmr+LXHmXdexsdKb/iyQBIWs0yEtd5p4Q6ByHpsBluemwPlKnULus6H+f0p/Rji
-         C3CXHw3NtQ0z4lQ9xT8SmGsOMSF4u32W6NMNjlwVzMkqM4EyvhFfA96k8ZXPMzbc1oD2
-         zctGByreHpy/4GXFvosCTMPn21/CikhB5NElc=
-Received: by 10.220.15.8 with SMTP id i8mr438482vca.113.1307046533136; Thu, 02
- Jun 2011 13:28:53 -0700 (PDT)
-Received: by 10.220.189.8 with HTTP; Thu, 2 Jun 2011 13:28:33 -0700 (PDT)
-In-Reply-To: <20110602170327.GA2928@sigill.intra.peff.net>
-X-Google-Sender-Auth: kya7Jc4kbv-R-rGRfIQNt6Jt0Fs
+	id S1752317Ab1FBUgn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2011 16:36:43 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50111 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751194Ab1FBUgm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2011 16:36:42 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F053A5459;
+	Thu,  2 Jun 2011 16:38:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=frAml3pY4pVR1OidqsM6qyM7hyo=; b=PaHjhi
+	ukcPV6szEd9zj1IaK+60NoSEPpNmhXbPyCnzKD+qv8hSWm8Uis6Bi0kSyxZafJo/
+	YjbLwHGIu0oiD7FJpUtlk+Sup1icn8c1gwMs53vDDdZ61PrQdlwu+J4kBpGmCLMn
+	dPpexnBUOdmhbXol06tWZXtdNdstumSB1YcJw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WC7k7mmjnaNag0uSp2t90iiFT8T2SWqk
+	wvVH85TQIncD00i3Pv1BExE5G8Nj97ah8WUvdckzjf3FRDwId151bcTRw34yGdFG
+	8dOfi1l07Yiz3oJCVDT46DtVnAd6MdVAmWuMz0mjYKoKHYMAE6O2I2s0ziwIf1zb
+	ug2KMAcv4ro=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7F77C5458;
+	Thu,  2 Jun 2011 16:38:42 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 75B425457; Thu,  2 Jun 2011
+ 16:38:33 -0400 (EDT)
+In-Reply-To: <1306887870-3875-1-git-send-email-jamey@minilop.net> (Jamey
+ Sharp's message of "Tue, 31 May 2011 17:24:27 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4DE0D5AC-8D58-11E0-9464-EA23C7C1A288-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174977>
 
-2011/6/2 Jeff King <peff@peff.net>:
-> On Thu, Jun 02, 2011 at 11:28:31AM +0200, Arnaud Lacurie wrote:
->
->> +sub mw_import {
->> [...]
->> + =A0 =A0 =A0 =A0 =A0 =A0 # Get 500 revisions at a time due to the m=
-ediawiki api limit
->> + =A0 =A0 =A0 =A0 =A0 =A0 while (1) {
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 my $result =3D $mediawiki-=
->api($query);
->> +
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 # Parse each of those 500 =
-revisions
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 foreach my $revision (@{$r=
-esult->{query}->{pages}->{$id}->{revisions}}) {
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 my $page_r=
-ev_ids;
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 $page_rev_=
-ids->{pageid} =3D $page->{pageid};
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 $page_rev_=
-ids->{revid} =3D $revision->{revid};
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 push (@rev=
-isions, $page_rev_ids);
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 $revnum++;
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 last unless $result->{'que=
-ry-continue'};
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 $query->{rvstartid} =3D $r=
-esult->{'query-continue'}->{revisions}->{rvstartid};
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 print "\n";
->> + =A0 =A0 =A0 =A0 =A0 =A0 }
->
-> What is this newline at the end here for? With it, my import reliably
-> fails with:
->
-> =A0fatal: Unsupported command:
-> =A0fast-import: dumping crash report to .git/fast_import_crash_6091
->
-> Removing it seems to make things work.
+Jamey Sharp <jamey@minilop.net> writes:
 
- Yes we actually found it today. It slipped as we've never fetched
-pages with more than 500 revisions since it got there...
+> Furthermore, for_each_ref and for_each_ref_submodule passed "refs/" but
+> a length of 0, which caused do_for_each_ref to ignore the "refs/".
 
->> + =A0 =A0 =A0 =A0 =A0 =A0 # mediawiki revision number in the git not=
-e
->> + =A0 =A0 =A0 =A0 =A0 =A0 my $note_comment =3D encode_utf8("note add=
-ed by git-mediawiki");
->> + =A0 =A0 =A0 =A0 =A0 =A0 my $note_comment_length =3D bytes::length(=
-$note_comment);
->> + =A0 =A0 =A0 =A0 =A0 =A0 my $note_content =3D encode_utf8("mediawik=
-i_revision: " . $pagerevids->{revid} . "\n");
->> + =A0 =A0 =A0 =A0 =A0 =A0 my $note_content_length =3D bytes::length(=
-$note_content);
->> +
->> + =A0 =A0 =A0 =A0 =A0 =A0 if ($fetch_from =3D=3D 1 && $n =3D=3D 1) {
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 print "reset refs/notes/co=
-mmits\n";
->> + =A0 =A0 =A0 =A0 =A0 =A0 }
->> + =A0 =A0 =A0 =A0 =A0 =A0 print "commit refs/notes/commits\n";
->
-> Should these go in refs/notes/commits? I don't think we have a "best
-> practices" yet for the notes namespaces, as it is still a relatively =
-new
-> concept. But I always thought "refs/notes/commits" would be for the
-> user's "regular" notes, and that programmatic things would get their =
-own
-> notes, like "refs/notes/mediawiki".
->
-That's a good idea, we didn't think notes could actually not go in
-refs/notes/commits. This will be perfect to distinguish the user notes
-from ours.
->
->> + =A0 =A0 =A0 =A0 =A0 =A0 } else {
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 print STDERR "You appear t=
-o have cloned an empty mediawiki\n";
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 #What do we have to do her=
-e ? If nothing is done, an error is thrown saying that
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 #HEAD is refering to unkno=
-wn object 0000000000000000000
->> + =A0 =A0 =A0 =A0 =A0 =A0 }
->
-> Hmm. We do allow cloning empty git repos. It might be nice for there =
-to
-> be some way for a remote helper to signal "everything OK, but the res=
-ult
-> is empty". But I think that is probably something that needs to be ad=
-ded
-> to the remote-helper protocol, and so is outside the scope of your
-> script (maybe it is as simple as interpreting the null sha1 as "empty=
-";
-> I dunno).
->
+I had to read, stop, think for two days, until finally get to the point
+that I _think_ I understand what you wanted to say.
 
-Yes, that's a problem we've been running into. We didn't really know
-how to solve it.
+As we use the same "trim" (meant to say "strip this many bytes from the
+beginning of the full refname when calling the callback") to reject refs
+outside the area we are interested in with the strncmp() at the beginning
+of do_one_ref(), if do_for_each_ref() that is called by for_each_ref() fed
+something outside "refs/" hierarchy to the function, the garbage ref that
+is not a ref (as it is outside "refs/") will _not_ get filtered, which I
+think is what you are trying to say by 'ignore the "refs/"'.
 
-> Overall, it's looking pretty good. I like that I can resume a
-> half-finished import via "git fetch". Though I do have one complaint:
-> running "git fetch" fetches the metainfo for every revision of every
-> page, just as it does for an initial clone. Is there something in the
-> mediawiki API to say "show me revisions since N" (where N would be th=
-e
-> mediawiki revision of the tip of what we imported)?
+Which is technically a bug (we should be rejecting anything outside
+"refs/", even when trim is set to 0) that dates as far back as e1e22e3
+(Start handling references internally as a sorted in-memory list,
+2006-09-11), but it didn't matter an iota because everything we read from
+either loose or packed refs have "refs/" prefix.
 
-I am not sure I understand your question. Because actually, we are
-supporting this,
-thanks to git notes. Like when you git fetch after a clone, it checks
-only the last revisions
+Am I following your train of thought correctly so far?
 
-Thank you very much for your help !
+> diff --git a/refs.c b/refs.c
+> index e3c0511..60cebe6 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -584,7 +584,7 @@ int read_ref(const char *ref, unsigned char *sha1)
+>  static int do_one_ref(const char *base, each_ref_fn fn, int trim,
+>  		      int flags, void *cb_data, struct ref_list *entry)
+>  {
+> -	if (strncmp(base, entry->name, trim))
+> +	if (prefixcmp(entry->name, base))
+>  		return 0;
+>  
+>  	if (!(flags & DO_FOR_EACH_INCLUDE_BROKEN)) {
+> ...
+>  int for_each_ref(each_ref_fn fn, void *cb_data)
+>  {
+> -	return do_for_each_ref(NULL, "refs/", fn, 0, 0, cb_data);
+> +	return for_each_ref_in("", fn, cb_data);
+>  }
 
-Arnaud Lacurie
+But then this looks like a bad way to fix that issue.  It will be a
+non-issue as long as do-for-each-ref will never give anything outside
+"refs/", but once that happens (say, a contaminated .git/packed-refs
+file), this will show whatever that is outside "refs/", i.e. the issue the
+proposed commit log message claims to address, which is "... which caused
+do_for_each_ref to ignore", is not fixed here at all.
+
+Shouldn't you be passing prefix and trim the same way as we have always
+done, but just fixing the strncmp() at the beginning of do_one_ref()?
