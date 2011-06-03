@@ -1,102 +1,126 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/4] index-pack: a miniscule refactor
-Date: Fri,  3 Jun 2011 15:32:14 -0700
-Message-ID: <1307140337-27676-2-git-send-email-gitster@pobox.com>
+Subject: [PATCH 3/4] index-pack: show histogram when emulating "verify-pack
+ -v"
+Date: Fri,  3 Jun 2011 15:32:16 -0700
+Message-ID: <1307140337-27676-4-git-send-email-gitster@pobox.com>
 References: <1307140337-27676-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 04 00:32:48 2011
+X-From: git-owner@vger.kernel.org Sat Jun 04 00:32:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QScvA-0005VB-6w
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Jun 2011 00:32:48 +0200
+	id 1QScvA-0005VB-OF
+	for gcvg-git-2@lo.gmane.org; Sat, 04 Jun 2011 00:32:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756262Ab1FCWcY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2011 18:32:24 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41706 "EHLO
+	id S1756527Ab1FCWc3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jun 2011 18:32:29 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41891 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754344Ab1FCWcY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jun 2011 18:32:24 -0400
+	with ESMTP id S1754591Ab1FCWc2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2011 18:32:28 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 97A4056E8
-	for <git@vger.kernel.org>; Fri,  3 Jun 2011 18:34:32 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1462056EF
+	for <git@vger.kernel.org>; Fri,  3 Jun 2011 18:34:37 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=ONmo
-	Ihz6igdkja9nDpt3B/bVZDo=; b=EF2g63jCZx2Q7+3Vaja97Y6L3sbpgG/mEVoT
-	oSJ2bTk1U4+LcA5Fud/9zMLTWcVyka/UpCIJETg9ttVCBEoiPWefsJXsM8Vk+37E
-	EngoU93qjpZx/YyvbACP/q5EOTV8YDZbuM0PTyKy6vrDgpskeBBoUw+r6jRTFD5V
-	MdFwAo0=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=jCPC
+	5byJ+hp1Tkm5Hv57NHMnHvo=; b=a48UiLG7VxvonyfpHE+ZRacVz9wz4A+oaAa9
+	S6c9ZBSzZgDFk1ZDislx15Qg1n5xBf5dE6oSDNnU5spU3U/Mz0+zmYNhLTYsO7Co
+	XSDR6DO53gdCoScz+naBVXYzZjrqxo6fFfeveWMJfU8ozUf1OUBaLgyqo9uWtS8j
+	P7EMu+c=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=CW9ywI
-	AhIx1EkXfVdJV4LzWGnrhDPGRfuldoGF0DxnBcrGyBdMwWOPA5cxx+4VGgby7s7u
-	6OfC++A/yAHxbhlvzenKEWcdSJQrgEfMBJFXc02wCxwA5jE9vBc3szyNLgOqpDrI
-	LNqknSic+TDLOcuLEDz3d2ozKrf4MJCOCs2f0=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=Iymp3n
+	IR3QEJEepOQs0zGXok9ZUQwrlmyjdwsaqmR9o0L3n1d75Z9fsWofaXuHTbRjdOGi
+	6ciDLqcdPiBPnalsTrFTVbtsD/HEX3OET87bPL9BG0ZyQHAs2Uss8cSC38/N3ueT
+	61TVrwHdDMBjDkUCu7g7TvcWtIpWWCbDd8b7c=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9470056E7
-	for <git@vger.kernel.org>; Fri,  3 Jun 2011 18:34:32 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1287A56EE
+	for <git@vger.kernel.org>; Fri,  3 Jun 2011 18:34:37 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0AA8356E6 for
- <git@vger.kernel.org>; Fri,  3 Jun 2011 18:34:31 -0400 (EDT)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7BBC456ED for
+ <git@vger.kernel.org>; Fri,  3 Jun 2011 18:34:36 -0400 (EDT)
 X-Mailer: git-send-email 1.7.6.rc0.106.g68174
 In-Reply-To: <1307140337-27676-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: A6DE88E6-8E31-11E0-9611-EA23C7C1A288-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: A98876C4-8E31-11E0-97F6-EA23C7C1A288-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175035>
 
-Introduce a helper function that takes the type of an object and
-tell if it is a delta, as we seem to use this check in many places.
+The histogram produced by "verify-pack -v" always had an artificial
+limit of 50, but index-pack knows what the maximum delta depth is, so
+we do not have to limit it.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/index-pack.c |   11 ++++++++---
- 1 files changed, 8 insertions(+), 3 deletions(-)
+ * We could limit it, but I do not see a practical value of doing so.
+
+ builtin/index-pack.c |   26 +++++++++++++++++++++++---
+ 1 files changed, 23 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 513fbbc..0216af7 100644
+index aa3c9c6..ed4c3bb 100644
 --- a/builtin/index-pack.c
 +++ b/builtin/index-pack.c
-@@ -498,12 +498,17 @@ static void sha1_object(const void *data, unsigned long size,
+@@ -70,6 +70,7 @@ static struct progress *progress;
+ static unsigned char input_buffer[4096];
+ static unsigned int input_offset, input_len;
+ static off_t consumed_bytes;
++static unsigned deepest_delta;
+ static git_SHA_CTX input_ctx;
+ static uint32_t input_crc32;
+ static int input_fd, output_fd, pack_fd;
+@@ -538,6 +539,8 @@ static void resolve_delta(struct object_entry *delta_obj,
+ 
+ 	delta_obj->real_type = base->obj->real_type;
+ 	delta_obj->delta_depth = base->obj->delta_depth + 1;
++	if (deepest_delta < delta_obj->delta_depth)
++		deepest_delta = delta_obj->delta_depth;
+ 	delta_obj->base_object_no = base->obj - objects;
+ 	delta_data = get_data_from_pack(delta_obj);
+ 	base_data = get_base_data(base);
+@@ -973,12 +976,17 @@ static void read_idx_option(struct pack_idx_option *opts, const char *pack_name)
+ 
+ static void show_pack_info(int stat_only)
+ {
+-	int i;
++	int i, baseobjects = nr_objects - nr_deltas;
++	unsigned long *chain_histogram = NULL;
++
++	if (deepest_delta)
++		chain_histogram = xcalloc(deepest_delta, sizeof(unsigned long));
++
+ 	for (i = 0; i < nr_objects; i++) {
+ 		struct object_entry *obj = &objects[i];
+ 
+-		/* NEEDSWORK: Compute data necessary for the "histogram" here */
+-
++		if (is_delta_type(obj->type))
++			chain_histogram[obj->delta_depth - 1]++;
+ 		if (stat_only)
+ 			continue;
+ 		printf("%s %-6s %lu %lu %"PRIuMAX,
+@@ -992,6 +1000,18 @@ static void show_pack_info(int stat_only)
+ 		}
+ 		putchar('\n');
  	}
++
++	if (baseobjects)
++		printf("non delta: %d object%s\n",
++		       baseobjects, baseobjects > 1 ? "s" : "");
++	for (i = 0; i < deepest_delta; i++) {
++		if (!chain_histogram[i])
++			continue;
++		printf("chain length = %d: %lu object%s\n",
++		       i + 1,
++		       chain_histogram[i],
++		       chain_histogram[i] > 1 ? "s" : "");
++	}
  }
  
-+static int is_delta_type(enum object_type type)
-+{
-+	return (type == OBJ_REF_DELTA || type == OBJ_OFS_DELTA);
-+}
-+
- static void *get_base_data(struct base_data *c)
- {
- 	if (!c->data) {
- 		struct object_entry *obj = c->obj;
- 
--		if (obj->type == OBJ_REF_DELTA || obj->type == OBJ_OFS_DELTA) {
-+		if (is_delta_type(obj->type)) {
- 			void *base = get_base_data(c->base);
- 			void *raw = get_data_from_pack(obj);
- 			c->data = patch_delta(
-@@ -629,7 +634,7 @@ static void parse_pack_objects(unsigned char *sha1)
- 		struct object_entry *obj = &objects[i];
- 		void *data = unpack_raw_entry(obj, &delta->base);
- 		obj->real_type = obj->type;
--		if (obj->type == OBJ_REF_DELTA || obj->type == OBJ_OFS_DELTA) {
-+		if (is_delta_type(obj->type)) {
- 			nr_deltas++;
- 			delta->obj_no = i;
- 			delta++;
-@@ -676,7 +681,7 @@ static void parse_pack_objects(unsigned char *sha1)
- 		struct object_entry *obj = &objects[i];
- 		struct base_data base_obj;
- 
--		if (obj->type == OBJ_REF_DELTA || obj->type == OBJ_OFS_DELTA)
-+		if (is_delta_type(obj->type))
- 			continue;
- 		base_obj.obj = obj;
- 		base_obj.data = NULL;
+ int cmd_index_pack(int argc, const char **argv, const char *prefix)
 -- 
 1.7.6.rc0.106.g68174
