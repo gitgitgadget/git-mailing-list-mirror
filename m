@@ -1,60 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] clone: always fetch remote HEAD
-Date: Fri, 3 Jun 2011 01:43:03 -0400
-Message-ID: <20110603054303.GA5341@sigill.intra.peff.net>
-References: <20110603050901.GA883@sigill.intra.peff.net>
- <20110603051805.GC1008@sigill.intra.peff.net>
- <BANLkTim03_3DLdDkc3QgFrcUa0Fqhhqnbw@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv4 1/4] Refactor for_each_ref variants to use for_each_ref_in and avoid magic numbers
+Date: Fri, 03 Jun 2011 01:33:21 -0700 (PDT)
+Message-ID: <m3wrh3wc0x.fsf@localhost.localdomain>
+References: <1306887870-3875-1-git-send-email-jamey@minilop.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Dmitry Ivankov <divanorama@gmail.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 03 07:43:13 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Josh Triplett <josh@joshtriplett.org>
+To: Jamey Sharp <jamey@minilop.net>
+X-From: git-owner@vger.kernel.org Fri Jun 03 10:33:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QSNA9-0001pc-Da
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Jun 2011 07:43:13 +0200
+	id 1QSPow-000454-Nx
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Jun 2011 10:33:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752292Ab1FCFnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2011 01:43:08 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45444
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751565Ab1FCFnH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jun 2011 01:43:07 -0400
-Received: (qmail 5471 invoked by uid 107); 3 Jun 2011 05:43:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 03 Jun 2011 01:43:10 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Jun 2011 01:43:03 -0400
-Content-Disposition: inline
-In-Reply-To: <BANLkTim03_3DLdDkc3QgFrcUa0Fqhhqnbw@mail.gmail.com>
+	id S1753347Ab1FCIdZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jun 2011 04:33:25 -0400
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:51921 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752978Ab1FCIdY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2011 04:33:24 -0400
+Received: by wwk4 with SMTP id 4so4890262wwk.1
+        for <git@vger.kernel.org>; Fri, 03 Jun 2011 01:33:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:x-authentication-warning:to:cc:subject
+         :references:from:date:in-reply-to:message-id:lines:user-agent
+         :mime-version:content-type;
+        bh=KKklPV0Skvqae6Vkzq/LDTaijMVLFJbBhbT1VaXAlIo=;
+        b=au8Xl2aHlugA9PmHkBZ/1PDenmnGHYdbEIwUHnwwZnyX4z4ThYQ4LGOc/NI3ChYZum
+         FuZM2p6avv8iYjJwQ9isqv2anoqDC1Aj5prccuajnR5hu9GUJelsvQcpdzeyVsYKmZhu
+         oQLZ3yXnTaRVGRI3c3MxFzuX1ayjyyyXsVvvo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=w0Iy9dEZTOwnxB9Ln+saJ5fJC+oLTjJl+3PEtofFr/2wEJ8ObKzrM4Xqp47GRSfgMT
+         MoprGBMIB/ZbYSXorYjuZYP1EriizfRk98xqNyapsJCU4gmtAub7Ridoi8hhPSnlOiE3
+         0b4LdbFwrnEeOkc4hYS+lCA0Tk2FYa6PN2Zus=
+Received: by 10.227.11.148 with SMTP id t20mr1600867wbt.98.1307090002799;
+        Fri, 03 Jun 2011 01:33:22 -0700 (PDT)
+Received: from localhost.localdomain (abwo192.neoplus.adsl.tpnet.pl [83.8.238.192])
+        by mx.google.com with ESMTPS id o38sm874688wba.54.2011.06.03.01.33.20
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 03 Jun 2011 01:33:21 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p538Wltc014364;
+	Fri, 3 Jun 2011 10:32:57 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p538WVkl014360;
+	Fri, 3 Jun 2011 10:32:31 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1306887870-3875-1-git-send-email-jamey@minilop.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175002>
 
-On Fri, Jun 03, 2011 at 12:36:50AM -0500, Sverre Rabbelier wrote:
+This patch series would surely benefit from a cover letter...
 
-> On Fri, Jun 3, 2011 at 00:18, Jeff King <peff@peff.net> wrote:
-> > So I guess it doesn't like us asking for HEAD. But the fact that it
-> > sends weird data to fast-import instead of saying "hey, HEAD doesn't
-> > exist" has me confused. I'm not sure if this is something one should not
-> > be doing with remote helpers, or if the testgit helper is simply buggy
-> > or incomplete.
+Jamey Sharp <jamey@minilop.net> writes:
+
+> From: Josh Triplett <josh@joshtriplett.org>
 > 
-> Definitely the latter, quite possibly the former. I don't know if
-> asking for "HEAD" makes much sense in a remote-helper context though.
-> In Mercurial it does (e.g., tip), and in svn sort of, but I don't know
-> about other vcs-es. Perhaps it should be guarded by a capability?
+> Several variants of the for_each_ref functions call do_for_each_ref with
+> both a fixed string prefix and the hardcoded length of that prefix.
+> Furthermore, for_each_ref and for_each_ref_submodule passed "refs/" but
+> a length of 0, which caused do_for_each_ref to ignore the "refs/".
+[...]
 
-Yeah, I think it depends on the helper. Definitely smart-http should be
-able to do it. But protecting it with a capability does make sense, and
-then remote helpers can opt into it.
-
--Peff
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
