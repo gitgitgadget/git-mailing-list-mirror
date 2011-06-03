@@ -1,71 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] clone: always fetch remote HEAD
-Date: Fri, 03 Jun 2011 09:28:23 -0700
-Message-ID: <7v39jqc21k.fsf@alter.siamese.dyndns.org>
-References: <20110603050901.GA883@sigill.intra.peff.net>
- <20110603051805.GC1008@sigill.intra.peff.net>
- <BANLkTim03_3DLdDkc3QgFrcUa0Fqhhqnbw@mail.gmail.com>
- <20110603054303.GA5341@sigill.intra.peff.net>
- <20110603145154.GB11273@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 2/3] gitweb: Move "Requirements" up in gitweb/INSTALL
+Date: Fri, 3 Jun 2011 18:31:48 +0200
+Message-ID: <201106031831.50496.jnareb@gmail.com>
+References: <1307026553-1181-1-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 03 18:28:44 2011
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Drew Northup <drew.northup@maine.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 03 18:32:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QSXEp-0003rq-84
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Jun 2011 18:28:43 +0200
+	id 1QSXI6-0005Xo-DM
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Jun 2011 18:32:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751500Ab1FCQ2i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2011 12:28:38 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50591 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750956Ab1FCQ2h (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jun 2011 12:28:37 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 23448586F;
-	Fri,  3 Jun 2011 12:30:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=y7MrRof6c1CX2BbYkFY0OjonmBQ=; b=bUHvT3
-	0acFKN4pU6zI0DIocJkFvO9JoPbzbSsRa9Pv04wVEyf03oR5bjto3Gb9JwXqp3SR
-	iu1JGZMJMJMgQ08Ks+E4tDV40+/zGyJeV+2e9PBMSOJibtgWXS9m+aOUDh0gvF87
-	g5rZGwjQg7ELAzfzSkVYTWxCH7Dp8zOkMegBI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=X38zqjo6tIgF+Yijpm4J1P+yO5LaLg5H
-	oRPGlFV/ZhhLQVmgwvST9zUrAyor9vJmpoAnx/qC2VNhsooX/CXrbf7Kk68hfLwO
-	pMoXY8a5ESs2NhOscEON9S6bdiS2hM+RtzSUGdfsfsU8ti/ErB+sbYYDKfO7rSiB
-	AUoPCYdgLp4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BEFA8586E;
-	Fri,  3 Jun 2011 12:30:39 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3ECDD586B; Fri,  3 Jun 2011
- 12:30:33 -0400 (EDT)
-In-Reply-To: <20110603145154.GB11273@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 3 Jun 2011 10:51:54 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D17E1AC2-8DFE-11E0-8849-EA23C7C1A288-77302942!a-pb-sasl-sd.pobox.com
+	id S1751903Ab1FCQcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jun 2011 12:32:00 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:60246 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751052Ab1FCQcA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2011 12:32:00 -0400
+Received: by bwz15 with SMTP id 15so1884730bwz.19
+        for <git@vger.kernel.org>; Fri, 03 Jun 2011 09:31:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=AEqBUm2zbszfvMjoyIexbaleRNbEYICmyAxJ7ix6x14=;
+        b=JjU69xphHvX5Q0W54yGnXkDzo3mQLzT015rSJ3aqhfO29SzOtnRDVggBE5u+dZdRC9
+         J52OsPlkaMKIk2hlOZi4vomu5QQFGBtQMlRxtXz304D7ZTSEiNHV5LpCPbSVepG25L5S
+         te7eQG8nDvHC/9VqPnuYP7cs2fd4bnj9tqwuU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=mDxrYukU0m1S+tYTi0F5Eqo9PP8Up+imxVsrY11p5FY2CU2geQp/M7X0difEMIfbYg
+         X468WSrUloctlop7laSNxvdBycNA+wxg/QrYd7vXS7rOXTp5wGGYlHvsQ1TAA9OYGr6j
+         JWhyq1Xkpvd/u5BkufI9ZDktAC7SWyOVtj02k=
+Received: by 10.204.127.68 with SMTP id f4mr2081308bks.42.1307118718581;
+        Fri, 03 Jun 2011 09:31:58 -0700 (PDT)
+Received: from [192.168.1.13] (abwc24.neoplus.adsl.tpnet.pl [83.8.226.24])
+        by mx.google.com with ESMTPS id l24sm1378279bkw.15.2011.06.03.09.31.56
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 03 Jun 2011 09:31:57 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1307026553-1181-1-git-send-email-jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175016>
 
-Jeff King <peff@peff.net> writes:
+This way you can examine prerequisites at first glance, before
+detailed instructions on installing gitweb.  Straightforward
+text movement.
 
-> Actually, I forgot that I did consider this when writing the original
-> patch. The clone code will only ask for HEAD if the remote side
-> advertises it. So there is no capability required; either the helper
-> advertises a HEAD ref or it doesn't. If it does, it should be prepared
-> for us to ask for its sha1.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+This is another fall off from my work on continuing Drew Northup and
+mine work of adding gitweb.conf(5) and gitweb(1) manpages (moving
+gitweb documentation to manpages).
 
-Sounds very sensible ;-).
+ gitweb/INSTALL |   30 +++++++++++++++---------------
+ 1 files changed, 15 insertions(+), 15 deletions(-)
+
+diff --git a/gitweb/INSTALL b/gitweb/INSTALL
+index 2346aad..c5236fe 100644
+--- a/gitweb/INSTALL
++++ b/gitweb/INSTALL
+@@ -25,6 +25,21 @@ The above example assumes that your web server is configured to run
+ scripts).
+ 
+ 
++Requirements
++------------
++
++ - Core git tools
++ - Perl
++ - Perl modules: CGI, Encode, Fcntl, File::Find, File::Basename.
++ - web server
++
++The following optional Perl modules are required for extra features
++ - Digest::MD5 - for gravatar support
++ - CGI::Fast and FCGI - for running gitweb as FastCGI script
++ - HTML::TagCloud - for fancy tag cloud in project list view
++ - HTTP::Date or Time::ParseDate - to support If-Modified-Since for feeds
++
++
+ Build time configuration
+ ------------------------
+ 
+@@ -347,21 +362,6 @@ $projects_list variable in gitweb config):
+ 	perl -- /var/www/cgi-bin/gitweb.cgi
+ 
+ 
+-Requirements
+-------------
+-
+- - Core git tools
+- - Perl
+- - Perl modules: CGI, Encode, Fcntl, File::Find, File::Basename.
+- - web server
+-
+-The following optional Perl modules are required for extra features
+- - Digest::MD5 - for gravatar support
+- - CGI::Fast and FCGI - for running gitweb as FastCGI script
+- - HTML::TagCloud - for fancy tag cloud in project list view
+- - HTTP::Date or Time::ParseDate - to support If-Modified-Since for feeds
+-
+-
+ Example web server configuration
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+-- 
+1.7.5
