@@ -1,66 +1,69 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: Unable to fork off sideband demultiplexer
-Date: Fri, 03 Jun 2011 17:18:19 -0500
-Message-ID: <hHoAK3_nb0Xfx67o9GUPrCAUvVBvhjmiF5J8x5abCUQeaCChUD3Q3Q@cipher.nrlssc.navy.mil>
-References: <loom.20110601T161508-689@post.gmane.org> <7vk4d5h3qt.fsf@alter.siamese.dyndns.org> <20110601173524.GF7132@sigill.intra.peff.net> <loom.20110601T210757-955@post.gmane.org> <loom.20110602T172442-653@post.gmane.org> <20110602192927.GA21262@sigill.intra.peff.net> <loom.20110603T151012-143@post.gmane.org> <20110603144907.GA11273@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Randy Brandenburg <randy.brandenburg@woh.rr.com>,
-	Brandon Casey <drafnel@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jun 04 00:18:37 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/4] index-pack (continued)
+Date: Fri,  3 Jun 2011 15:32:13 -0700
+Message-ID: <1307140337-27676-1-git-send-email-gitster@pobox.com>
+Cc: Shawn O Pearce <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 04 00:32:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QSchQ-0000DR-IX
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Jun 2011 00:18:36 +0200
+	id 1QScus-0005LU-72
+	for gcvg-git-2@lo.gmane.org; Sat, 04 Jun 2011 00:32:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756514Ab1FCWSa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2011 18:18:30 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:35900 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752716Ab1FCWS3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jun 2011 18:18:29 -0400
-Received: by mail.nrlssc.navy.mil id p53MIJwp019582; Fri, 3 Jun 2011 17:18:19 -0500
-In-Reply-To: <20110603144907.GA11273@sigill.intra.peff.net>
-X-OriginalArrivalTime: 03 Jun 2011 22:18:19.0364 (UTC) FILETIME=[248F1240:01CC223C]
-X-Virus-Scanned: clamav-milter 0.95.3 at mail1
-X-Virus-Status: Clean
+	id S1756263Ab1FCWcZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jun 2011 18:32:25 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41715 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754591Ab1FCWcY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2011 18:32:24 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7EED156E5;
+	Fri,  3 Jun 2011 18:34:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id; s=sasl; bh=E9/Sb46Or1JDKiwfIhJ4+2Lc9hI
+	=; b=AAo3qKTvYYhFyAWTqDtLIC5/kLKH9p9qjn5kDg5iuYOoMLN6ADEqqBNMfU0
+	TobAjQns8fbFMVEDDMrBugsKKFfDDPZV21AliQptAa29IeCZaly2Ucpyg0IKbIqa
+	4agRAzo2SCikETMxt7A7r4o9kEcade5qwPI0qP0ZkHSNnAGU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id; q=dns; s=sasl; b=ck9dIkJBESB1BUIDjDBex
+	VSt15QciMe0aweAPCarYSJ7fIMtRapsx15Y6RLuGe0JyWcW1O9IBzB7w2gYM76V7
+	GsDfBO01bZrcrnA6q2ngsr7LiVraLm8eC3gt6dwxXynpkpOodKdm+q4dM8dyQBup
+	8wZnVELuPhPC3EfU9ZXymA=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6A76056E3;
+	Fri,  3 Jun 2011 18:34:30 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id AE82756E1; Fri,  3 Jun 2011
+ 18:34:28 -0400 (EDT)
+X-Mailer: git-send-email 1.7.6.rc0.106.g68174
+X-Pobox-Relay-ID: A592E89C-8E31-11E0-BD2E-EA23C7C1A288-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175032>
 
-On 06/03/2011 09:49 AM, Jeff King wrote:
-> On Fri, Jun 03, 2011 at 01:30:00PM +0000, Randy Brandenburg wrote:
-> 
->>> If you build without NO_PTHREADS set on a Solaris 9 box, does it
->>> work on that same box? That would confirm or deny my ABI
->>> compatibility theory (and hopefully point us in the right direction
->>> for the sunfreeware people to build a binary that works on Solaris 9
->>> and 10).
->>>
->>
->> Building without NO_PTHREADS set results in the original "broken"
->> behaviour. I am staying with the working version in the interest of
->> time. May investigate more later.
-> 
-> Thanks, that's a good data point. I know you are probably out of time
-> for fooling with such things, but if you get a chance, could you try
-> building also with "-pthreads" in PTHREAD_CFLAGS? I'm wondering if the
-> problem is as simple as that.
+This is a contination of the earlier index-pack series that has been
+in "stalled" state. I do not plan to push this forward for 1.7.6 (the
+endgame of this series is a 2.0 material but it will be a long way to
+get there).
 
-I generally build on 5.7 using Sun WSPro compilers and then test that
-binary on 5.7 and 5.9.  The latest that I have compiled is 1.7.5.3 and
-I haven't seen this thread error.
+Junio C Hamano (4):
+  index-pack: a miniscule refactor
+  index-pack: start learning to emulate "verify-pack -v"
+  index-pack: show histogram when emulating "verify-pack -v"
+  verify-pack: use index-pack --verify
 
-Also note, I only do the above for testing purposes (and fun :). Solaris
-is not a primary development platform, so it does not get a lot of
-active testing in practice.  The 5.9 system doesn't even have a compiler
-installed, so I can't try to duplicate this problem.
+ builtin/index-pack.c  |   74 +++++++++++++++++++++++++--
+ builtin/verify-pack.c |  132 +++++++++---------------------------------------
+ cache.h               |    1 -
+ sha1_file.c           |   55 --------------------
+ t/t5302-pack-index.sh |    5 +-
+ 5 files changed, 95 insertions(+), 172 deletions(-)
 
--Brandon
+-- 
+1.7.6.rc0.106.g68174
