@@ -1,69 +1,108 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] clone: always fetch remote HEAD
-Date: Fri, 3 Jun 2011 10:51:54 -0400
-Message-ID: <20110603145154.GB11273@sigill.intra.peff.net>
-References: <20110603050901.GA883@sigill.intra.peff.net>
- <20110603051805.GC1008@sigill.intra.peff.net>
- <BANLkTim03_3DLdDkc3QgFrcUa0Fqhhqnbw@mail.gmail.com>
- <20110603054303.GA5341@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Use clean.requireforce to protect untracked files.
+Date: Fri, 03 Jun 2011 08:11:00 -0700
+Message-ID: <7vipsnar23.fsf@alter.siamese.dyndns.org>
+References: <4DE8C1AE.4000007@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Dmitry Ivankov <divanorama@gmail.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 03 16:52:14 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 03 17:11:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QSVjR-00058G-Sr
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Jun 2011 16:52:14 +0200
+	id 1QSW26-0000mG-Jb
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Jun 2011 17:11:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751859Ab1FCOv4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2011 10:51:56 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54050
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750862Ab1FCOv4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jun 2011 10:51:56 -0400
-Received: (qmail 8569 invoked by uid 107); 3 Jun 2011 14:52:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 03 Jun 2011 10:52:00 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Jun 2011 10:51:54 -0400
-Content-Disposition: inline
-In-Reply-To: <20110603054303.GA5341@sigill.intra.peff.net>
+	id S1755629Ab1FCPLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jun 2011 11:11:10 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61004 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754023Ab1FCPLI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2011 11:11:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E5F645F22;
+	Fri,  3 Jun 2011 11:13:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8rSBtIaB11vCHWTtTI2c+s0FKRA=; b=xJQJcs
+	/NAiGit1OnIaW5pZZ7R7J6xB77jTLxxEk8vb47gndDvTUWHlROZpIKGPAlyOLIiW
+	kgAXrKoYw3G3341q8FP9oZNbmvhuJ1kzyTsSpPVxKpd+nqFdiOwo7/2N22X4getS
+	5+kiKPseOXm9MY/iZnm0cUG9iOuZu/6SEgDB0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LDEuVcZswr1BJh6h4w6WmumuE4+Cu4lQ
+	cseCzqErQH+jAcZe/sEqKnmLwOuGmo3YvckQ/ERRwVFrdJa74XpxTdvqOCCVySfP
+	GZG0KceJ/hvwz6Iuu134TsRTa8n7a/bBRWePjCL0gk0JGawHTtQf3LazgrcHBJz0
+	BHsYRSNcx/I=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C36A95F21;
+	Fri,  3 Jun 2011 11:13:13 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C62855F1F; Fri,  3 Jun 2011
+ 11:13:10 -0400 (EDT)
+In-Reply-To: <4DE8C1AE.4000007@gmail.com> (Jiang Xin's message of "Fri, 03
+ Jun 2011 19:12:46 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 00455BE6-8DF4-11E0-B01D-EA23C7C1A288-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175011>
 
-On Fri, Jun 03, 2011 at 01:43:03AM -0400, Jeff King wrote:
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-> On Fri, Jun 03, 2011 at 12:36:50AM -0500, Sverre Rabbelier wrote:
-> 
-> > On Fri, Jun 3, 2011 at 00:18, Jeff King <peff@peff.net> wrote:
-> > > So I guess it doesn't like us asking for HEAD. But the fact that it
-> > > sends weird data to fast-import instead of saying "hey, HEAD doesn't
-> > > exist" has me confused. I'm not sure if this is something one should not
-> > > be doing with remote helpers, or if the testgit helper is simply buggy
-> > > or incomplete.
-> > 
-> > Definitely the latter, quite possibly the former. I don't know if
-> > asking for "HEAD" makes much sense in a remote-helper context though.
-> > In Mercurial it does (e.g., tip), and in svn sort of, but I don't know
-> > about other vcs-es. Perhaps it should be guarded by a capability?
-> 
-> Yeah, I think it depends on the helper. Definitely smart-http should be
-> able to do it. But protecting it with a capability does make sense, and
-> then remote helpers can opt into it.
+> Untracked files may be significant for certain repositories, but if run the
+> command "git clean -fdx" by accident, all untracked files will be lost.
 
-Actually, I forgot that I did consider this when writing the original
-patch. The clone code will only ask for HEAD if the remote side
-advertises it. So there is no capability required; either the helper
-advertises a HEAD ref or it doesn't. If it does, it should be prepared
-for us to ask for its sha1.
+Don't add -x without thinking, then. It is the way to tell the command "I
+want to remove all the untracked files and I REALLY MEAN IT".  It is often
+used to say "I do not trust Makefile and I want to remove what 'make
+clean' would leave behind".
 
--Peff
+A slightly related tangent is that we only have three classes of paths:
+
+ - tracked ones
+ - untracked ones, where there are two subclasses
+   - unignored ones (e.g. new source file you haven't added)
+   - ignored ones (e.g. build artifacts like *.o files)
+
+and because of that, the general design is to consider "ignored" files
+expendable during various operations. Sometimes people deliberately "ignore"
+files that they consider not expendable, which is (by today's definition)
+a wrong thing to do, but I think in the longer term we should add a way to
+mark them as "ignored but precious".
+
+  http://thread.gmane.org/gmane.comp.version-control.git/172818/focus=172846
+
+Nobody has designed how this fourth class should behave (and how the
+behaviour of the "ignored" should change, if any) yet, but a rough outline
+would probably be:
+
+ - precious files are the ones that are ignored (by today's definition,
+   i.e. .gitignore mechanism consideres they are ignored) but marked as
+   "precious" in some other way [*1*]. They will
+
+   - not appear in "Untracked files:" section in "git status" output;
+   - not be added by "git add" without "-f", just like other ignored files;
+   - not be overwritten or removed to make room while switching branches;
+   - not be removed with "clean -f -x" [*2*].
+
+ - ignored files will stay to be "expendable".
+
+I suspect there may be some codepaths that incorrectly treat them as not
+expendable, and protect their lossage. We would want to fix them after we
+introduce the "precious" class.
+
+[Footnotes]
+
+*1* We could invent a way to sneak such entries in .gitignore, but I am
+inclined to think it would be cleaner to define "precious" attribute and
+let the attributes mechanism handle this.
+
+*2* This is just off the top of my head without thinking things
+through. It might turn out that it makes more sense ot remove them.
