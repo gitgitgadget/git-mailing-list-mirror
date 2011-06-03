@@ -1,62 +1,104 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH/RFC] http: pass http.cookiefile using CURLOPT_COOKIEFILE
-Date: Thu, 2 Jun 2011 17:01:19 -0700
-Message-ID: <BANLkTi=3cQx9L4rrkniBhqFfL1TuNgu0doaSpdV8ajgsWJvw1Q@mail.gmail.com>
-References: <20110602203125.0E04C734F12@antares.phy.syr.edu>
+From: josh@joshtriplett.org
+Subject: Re: [PATCHv4 3/4] Support ref namespaces for remote repositories
+ via upload-pack and receive-pack
+Date: Thu, 2 Jun 2011 17:06:12 -0700
+Message-ID: <20110603000612.GB30975@cloud>
+References: <1306887870-3875-1-git-send-email-jamey@minilop.net>
+ <1306887870-3875-3-git-send-email-jamey@minilop.net>
+ <7v8vtjdebw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, skoranda@gravity.phys.uwm.edu
-To: Duncan Brown <dabrown@physics.syr.edu>, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Jun 03 02:01:45 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jamey Sharp <jamey@minilop.net>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <johannes.sixt@telecom.at>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 03 02:20:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QSHph-0005Hd-71
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Jun 2011 02:01:45 +0200
+	id 1QSI7d-0002V3-Mh
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Jun 2011 02:20:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753899Ab1FCABk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Jun 2011 20:01:40 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:54593 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753703Ab1FCABk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2011 20:01:40 -0400
-Received: by gwaa18 with SMTP id a18so563867gwa.19
-        for <git@vger.kernel.org>; Thu, 02 Jun 2011 17:01:39 -0700 (PDT)
-Received: by 10.236.76.69 with SMTP id a45mr32921yhe.56.1307059299113; Thu, 02
- Jun 2011 17:01:39 -0700 (PDT)
-Received: by 10.146.82.5 with HTTP; Thu, 2 Jun 2011 17:01:19 -0700 (PDT)
-In-Reply-To: <20110602203125.0E04C734F12@antares.phy.syr.edu>
+	id S1754084Ab1FCAUK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2011 20:20:10 -0400
+Received: from relay3-d.mail.gandi.net ([217.70.183.195]:58641 "EHLO
+	relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753881Ab1FCAUJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2011 20:20:09 -0400
+Received: from cloud (joshtriplett.org [IPv6:2604:3400:dc1:41:216:3eff:fe9f:2070])
+	(Authenticated sender: josh@joshtriplett.org)
+	by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 8CF6EA8072;
+	Fri,  3 Jun 2011 02:20:00 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7v8vtjdebw.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174990>
 
-On Thu, Jun 2, 2011 at 13:31, Duncan Brown <dabrown@physics.syr.edu> wr=
-ote:
-> If the config option http.cookiefile is set, pass this file to libCUR=
-L using
-> the CURLOPT_COOKIEFILE option. This is similar to calling curl with t=
-he -b
-> option. =A0This allows git http authorization with authentication mec=
-hanisms
-> that use cookies, such as SAML Enhanced Client or Proxy (ECP) used by
-> Shibboleth.
+On Thu, Jun 02, 2011 at 04:05:23PM -0700, Junio C Hamano wrote:
+> Jamey Sharp <jamey@minilop.net> writes:
+> 
+> > diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> > index e1a687a..9bb268a 100644
+> > --- a/builtin/receive-pack.c
+> > +++ b/builtin/receive-pack.c
+> > @@ -109,6 +109,7 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
+> >  
+> >  static int show_ref(const char *path, const unsigned char *sha1, int flag, void *cb_data)
+> >  {
+> > +	path = path ? strip_namespace(path) : "capabilities^{}";
+> >  	if (sent_capabilities)
+> >  		packet_write(1, "%s %s\n", sha1_to_hex(sha1), path);
+> >  	else
+> 
+> This feels really ugly.
+> 
+> Logically the stripping of "path" should happen before the caller calls
+> this function, as the purpose of this function is "given a token and
+> object name, produce one line of 'I have this at here' protocol message,
+> which is defined to have the capability list tucked after the first of
+> such messages in an exchange". It now is "the token has to be a path in a
+> namespace; the only exception is when the token is NULL, in which case we
+> always send 'capabilities^{}'".
+> 
+> It also is a very selfish solution for an immediate issue(*) that does not
+> give much considertation for people who may want to add new things in the
+> future, as the _only_ possible special case is to send in NULL.
+> 
+> The immediate issue you wanted to solve, I think, is that it is not
+> convenient to strip in the caller as this is a callback. Still, I think it
+> should be easy to do something like...
+> 
+> 	static int show_ref_message(const char *path,
+>         				 const unsigned char *sha1)
+> 	{
+> 		... original show_ref() implementation comes here ...
+> 	}
+> 
+>         static int show_ref_cb(const char *path,
+> 			        const unsigned char *sha1,
+>                                 int flag, void *cb_data)
+> 	{
+> 		return show_ref_message(strip_namespace(path), sha1);
+>         }
+>         
+> and give the latter as the callback to for_each_ref_in_namespace().
+> 
+> And the call to run "capabilities^{}" when there is no ref can call
+> show_ref_message() directly.
 
-Wow, the patch was this simple?
+Fair enough.  We'd thought of NULL as a fairly logical representation
+for a null ref sent as a dummy ref just to send capabilities, but we can
+easily rework the functions so that show_ref has the semantic you
+suggest and expects an un-namespaced ref, since show_ref doesn't need
+the original namespaced ref.  We'll do this in the next version of the
+patch series.
 
-Thanks Duncan!
-
-> ---
-> =A0Documentation/config.txt | =A0 =A08 ++++++++
-> =A0http.c =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 | =A0 =A05 +++++
-> =A02 files changed, 13 insertions(+), 0 deletions(-)
-
-Junio, I didn't test this myself, but the code looks good to me. I
-don't see any obvious issues with it.
-
---=20
-Shawn.
+- Josh Triplett
