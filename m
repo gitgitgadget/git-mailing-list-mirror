@@ -1,115 +1,89 @@
-From: Duncan Brown <dabrown@physics.syr.edu>
-Subject: Re: [PATCH/RFC] http: pass http.cookiefile using CURLOPT_COOKIEFILE
-Date: Thu, 2 Jun 2011 22:43:11 -0400
-Message-ID: <BD4E94C2-E51C-44CA-8E6B-BE9371131DC5@physics.syr.edu>
-References: <20110602203125.0E04C734F12@antares.phy.syr.edu> <BANLkTi=3cQx9L4rrkniBhqFfL1TuNgu0doaSpdV8ajgsWJvw1Q@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1084)
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv4 2/4] Add infrastructure for ref namespaces
+Date: Thu, 02 Jun 2011 19:51:22 -0700
+Message-ID: <7vvcwnbpat.fsf@alter.siamese.dyndns.org>
+References: <1306887870-3875-1-git-send-email-jamey@minilop.net>
+ <1306887870-3875-2-git-send-email-jamey@minilop.net>
+ <7vfwnrdfam.fsf@alter.siamese.dyndns.org> <20110602233619.GA1931@leaf>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 03 04:43:20 2011
+Cc: Jamey Sharp <jamey@minilop.net>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <johannes.sixt@telecom.at>,
+	Jeff King <peff@peff.net>
+To: Josh Triplett <josh@joshtriplett.org>
+X-From: git-owner@vger.kernel.org Fri Jun 03 04:51:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QSKM2-0007Hr-Le
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Jun 2011 04:43:19 +0200
+	id 1QSKUE-0001E6-AX
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Jun 2011 04:51:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752332Ab1FCCnN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jun 2011 22:43:13 -0400
-Received: from smtp1.syr.edu ([128.230.18.82]:57786 "EHLO smtp1.syr.edu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751401Ab1FCCnN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2011 22:43:13 -0400
-Received: from [10.0.1.11] (pool-96-249-48-108.syrcny.fios.verizon.net [96.249.48.108])
-	(authenticated bits=0)
-	by smtp1.syr.edu (8.14.3/8.14.3) with ESMTP id p532hBWD010488
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
-	for <git@vger.kernel.org>; Thu, 2 Jun 2011 22:43:12 -0400
-In-Reply-To: <BANLkTi=3cQx9L4rrkniBhqFfL1TuNgu0doaSpdV8ajgsWJvw1Q@mail.gmail.com>
-X-Mailer: Apple Mail (2.1084)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.4.6813,1.0.148,0.0.0000
- definitions=2011-06-03_01:2011-06-03,2011-06-03,1970-01-01 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 ipscore=0 suspectscore=1
- phishscore=0 bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
- engine=6.0.2-1012030000 definitions=main-1106020212
+	id S1753230Ab1FCCvm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jun 2011 22:51:42 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50729 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752195Ab1FCCvl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2011 22:51:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0D2095CAC;
+	Thu,  2 Jun 2011 22:53:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gNXW0gCU9yqByaaUM+8EbqutASg=; b=SAnui+
+	wEkvK+EOyVxcfVBqOLJcNsy6RguRSJwLeaUFVPDEZMibP+rb1FyhPU2W67WDb5yq
+	3AakFLvqH4lyoExMgiQgOVdCJyYyC3CpGld0s6PzT/iUTK2D/PYA4atO7c2GocJV
+	pp7JLO/K6GaGb16GqNfGn0GVMdPriXJcoozqM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=x48HV+XK63f1+eeqrvjfaD+iJE5cDwPJ
+	JQEAAMazu6VukWNsThmePy/qW/qRAbnHpG/rRDU+AhZmW3u6rf9s9+5NSP0OxEKt
+	qJVUq02ZiarVIn3I2xRqqOzbUcIISr1o0Qqixv4h9glJNxG0Cq7xAqg+HIjGisbR
+	iDAX0bbITJg=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8F48C5CAB;
+	Thu,  2 Jun 2011 22:53:42 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 847255C9E; Thu,  2 Jun 2011
+ 22:53:33 -0400 (EDT)
+In-Reply-To: <20110602233619.GA1931@leaf> (Josh Triplett's message of "Thu, 2
+ Jun 2011 16:36:19 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B0F7851C-8D8C-11E0-B4EF-EA23C7C1A288-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/174992>
 
-Hi Shawn,
+Josh Triplett <josh@joshtriplett.org> writes:
 
-On Jun 2, 2011, at 8:01 PM, Shawn Pearce wrote:
+> ... I don't think it
+> makes sense to support passing in arbitrary namespaces when the callers
+> only use it to access the currently requested namespace.  If some
+> situation arises in later code that needs to handle arbitrary
+> namespaces, it seems easy enough to provide a more generalized function
+> at that point, but doing so now would just make the existing callers
+> more complex by forcing them to do the call to get_git_namespace()
+> rather than allowing for_each_namespaced_ref to do it.
 
-> On Thu, Jun 2, 2011 at 13:31, Duncan Brown <dabrown@physics.syr.edu> wrote:
->> If the config option http.cookiefile is set, pass this file to libCURL using
->> the CURLOPT_COOKIEFILE option. This is similar to calling curl with the -b
->> option.  This allows git http authorization with authentication mechanisms
->> that use cookies, such as SAML Enhanced Client or Proxy (ECP) used by
->> Shibboleth.
-> 
-> Wow, the patch was this simple?
+If you do not pass the namespace around from day one, wouldn't it make it
+more cumbersome to later extend the API so that you can have more than one
+namespace active at the same time? For example, even with today's code,
+when responding to a push, the receiving repository issues a ls-remote
+request to its alternate repository to learn the tips of its refs, and at
+that point, the side of you who is responding to a push is using the
+namespace from the push client, while you acting as a fetch/ls-remote
+client would be in a different namespace. The different namespace happens
+to be "no funny namespace business" plain vanilla one, but I think you get
+the point. I do not mind seeing the very top-level caller of ref iterator
+calling get-namespace, but I would find it a bad taste if a function very
+deep in a callchain has to call get-namespace (meaning, you can only have
+one namespace active at a time) only because the caller does not pass it
+in.
 
-Yep, it took longer to google for the libCURL docs than it did to write the code! With this patch, I can do the following:
-
-[dbrown@spice-dev2 test]$ ./ecp.sh SUGWG https://sugwg-git.phy.syr.edu/git/qm/info/refs?service=git-upload-pack dbrown
-Enter host password for user 'dbrown':
-
-001e# service=git-upload-pack
-0000009b0b31a9bef84542ff7dd5a10eb72ef2a67d176a35 HEADmulti_ack thin-pack side-band side-band-64k ofs-delta shallow no-progress include-tag multi_ack_detailed
-003f0b31a9bef84542ff7dd5a10eb72ef2a67d176a35 refs/heads/master
-00424b2259eb6bada1a160e8dcf394b93fa60a60c90d refs/tags/first_corr
-004266eea9443af5f0026a44d58990547f8ff60897c6 refs/tags/pre_double
-0043f8d991153a857af157e9dfaa9e8851ae2440cafd refs/tags/ptf_test_01
-0000
-
-ecp.sh is Scott Koranda's demonstration ECP client:
-
-<https://wiki.shibboleth.net/confluence/display/SHIB2/Contributions#Contributions-simplebash>
-
-It gets a Shib session cookie and stores it in ~/.curlcookies with curl and xlstproc command line tools. Now that I have my session cookie, I can do
-
-[dbrown@spice-dev2 test]$ git config --global http.cookiefile "/home/dbrown/.curlcookies"
-[dbrown@spice-dev2 test]$ git clone https://sugwg-git.phy.syr.edu/git/qm
-Cloning into qm...
-remote: Counting objects: 2071, done.
-remote: Compressing objects: 100% (833/833), done.
-remote: Total 2071 (delta 1352), reused 1851 (delta 1224)
-Receiving objects: 100% (2071/2071), 681.53 KiB, done.
-Resolving deltas: 100% (1352/1352), done.
-
-Without the session cookie:
-
-[dbrown@spice-dev2 test]$ rm ~/.curlcookies 
-[dbrown@spice-dev2 test]$ git clone https://sugwg-git.phy.syr.edu/git/qm
-Cloning into qm...
-warning: remote HEAD refers to nonexistent ref, unable to checkout.
-
-> Thanks Duncan!
-
-No problem.
-
-Cheers,
-Duncan.
-
-> 
->> ---
->>  Documentation/config.txt |    8 ++++++++
->>  http.c                   |    5 +++++
->>  2 files changed, 13 insertions(+), 0 deletions(-)
-> 
-> Junio, I didn't test this myself, but the code looks good to me. I
-> don't see any obvious issues with it.
-> 
-> -- 
-> Shawn.
-> 
-
--- 
-
-Duncan Brown                          Room 263-1, Department of Physics,
-Associate Professor of Physics        Syracuse University, NY 13244, USA
-Phone: (315) 443 5993             http://www.gravity.phy.syr.edu/~duncan
+But perhaps I am looking too far into the future and worried too much.
