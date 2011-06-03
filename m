@@ -1,76 +1,66 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git: 'daemon' is not a git command. See 'git --help'.
-Date: Fri, 03 Jun 2011 13:18:52 +0200
-Message-ID: <4DE8C31C.5060409@drmicha.warpmail.net>
-References: <201105301258.08178.lucio@sulweb.org> <BANLkTim17a53hP8N-nG-Gad1oB_-g7wSfw@mail.gmail.com>
+From: Randy Brandenburg <randy.brandenburg@woh.rr.com>
+Subject: Re: Unable to fork off sideband demultiplexer
+Date: Fri, 3 Jun 2011 12:29:21 +0000 (UTC)
+Message-ID: <loom.20110603T142235-877@post.gmane.org>
+References: <loom.20110601T161508-689@post.gmane.org> <1307043315-sup-5292@pinkfloyd.chass.utoronto.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Lucio Crusca <lucio@sulweb.org>, git@vger.kernel.org
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Fri Jun 03 13:19:03 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 03 14:29:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QSSP7-0004gQ-Ml
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Jun 2011 13:19:02 +0200
+	id 1QSTVW-0003Jx-6v
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Jun 2011 14:29:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752555Ab1FCLS4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2011 07:18:56 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:47502 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752066Ab1FCLSz (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2011 07:18:55 -0400
-Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 450B020B13;
-	Fri,  3 Jun 2011 07:18:55 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute6.internal (MEProxy); Fri, 03 Jun 2011 07:18:55 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=JAgbejku/sf07gPVrRy89d5zcFo=; b=VMVRUN9yNgp0uQJrmizDCjzNd1pQpqfwC2/CH7LdpMMHV4EcxndTmXOl8NGe9lj6veMEmACy8CDlliF+DinuMX8MpBmb/MOOeuAcxmvw8pLgme0dPvGA66x9mSbV1DB6YzfAe24PQS3qSXWGcW7qsA2vgyhBJIimlop5Wv0qmnw=
-X-Sasl-enc: xRaHedumnauUnSdP0MpfX6yIY5YzBjxCbj1N35UJrB0g 1307099934
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 990ED443BAD;
-	Fri,  3 Jun 2011 07:18:54 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc15 Lightning/1.0b3pre Thunderbird/3.1.10
-In-Reply-To: <BANLkTim17a53hP8N-nG-Gad1oB_-g7wSfw@mail.gmail.com>
+	id S1754628Ab1FCM3h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jun 2011 08:29:37 -0400
+Received: from lo.gmane.org ([80.91.229.12]:41402 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752950Ab1FCM3g (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2011 08:29:36 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1QSTVM-0003FI-MU
+	for git@vger.kernel.org; Fri, 03 Jun 2011 14:29:35 +0200
+Received: from pm2-users.caci.com ([204.194.77.3])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 03 Jun 2011 14:29:32 +0200
+Received: from randy.brandenburg by pm2-users.caci.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 03 Jun 2011 14:29:32 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 204.194.77.3 (Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; InfoPath.2; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; MS-RTC LM 8))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175006>
 
-Erik Faye-Lund venit, vidit, dixit 30.05.2011 13:27:
-> On Mon, May 30, 2011 at 12:58 PM, Lucio Crusca <lucio@sulweb.org> wrote:
->> Hi *,
->>
->> I'm very new to git and I'm trying to share a git repo on a Centos 5.6 server.
->> I've installaed git 1.7.4.1 with yum (I already had the epel repo setup).
->> git init, add, commit work as expected, but when I
->>
->> # touch .git/git-daemon-export-ok
->>
->> and
->>
->> # git daemon
->>
->> I get:
->>
->> git: 'daemon' is not a git command. See 'git --help'.
->>
->> And no git-daemon file can be found in /usr (find /usr -name git-daemon). Google
->> seems to be aware of this problem only about msysGit (windows).
->>
->> What am I doing wrong?
+Ben Walton <bwalton <at> artsci.utoronto.ca> writes:
+
+Hey Ben,
+
 > 
-> A quick google search tells me that git-daemon is a separate package
-> for Red Hat.
+> Have you considered the OpenCSW git[1] packages?  I'm a little stale
+> at 1.7.3 right now but I have 1.7.5 ready to go...
+> 
 
-For future reference:
+I did download the 1.7.3.2 version using pkg-get as the next option if I 
+couldnt get the 1.7.5 to build and install. I would be all for a working 
+package install if available, since we will have to install Git on a developer 
+machine each time one is upgraded from a standard install of Solaris 9. I would 
+like to add a package to our install instead of actually building from source 
+each time.
 
-yum provides '*/git-daemon'
+Please keep me posted when the package is available for download!
 
-gives you the package providing that file.
-
-Michael
+Thanks,
+Randy Brandenburg
