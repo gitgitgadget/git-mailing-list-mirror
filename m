@@ -1,216 +1,94 @@
-From: Jamey Sharp <jamey@minilop.net>
-Subject: [PATCHv6 3/4] Support ref namespaces for remote repositories via upload-pack and receive-pack
-Date: Fri,  3 Jun 2011 17:11:42 -0700
-Message-ID: <1307146303-4524-4-git-send-email-jamey@minilop.net>
-References: <1307146303-4524-1-git-send-email-jamey@minilop.net>
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org, Josh Triplett <josh@joshtriplett.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 04 02:12:33 2011
+From: John Szakmeister <john@szakmeister.net>
+Subject: Re: pre-commit hook to reject whitespace
+Date: Fri, 3 Jun 2011 20:12:45 -0400
+Message-ID: <BANLkTi=Gh9CStVkgp5gBs7XzG-dCXB+oUw@mail.gmail.com>
+References: <isbqsf$vh8$1@dough.gmane.org>
+	<isbsf8$6id$1@dough.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Neal Kreitzinger <nkreitzinger@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 04 02:12:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QSeTg-0004ez-TC
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Jun 2011 02:12:33 +0200
+	id 1QSeU0-0004lf-3V
+	for gcvg-git-2@lo.gmane.org; Sat, 04 Jun 2011 02:12:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755576Ab1FDAMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2011 20:12:09 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:39651 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754229Ab1FDAMH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jun 2011 20:12:07 -0400
-Received: by pzk9 with SMTP id 9so1013622pzk.19
-        for <git@vger.kernel.org>; Fri, 03 Jun 2011 17:12:07 -0700 (PDT)
-Received: by 10.68.6.229 with SMTP id e5mr1042038pba.21.1307146327152;
-        Fri, 03 Jun 2011 17:12:07 -0700 (PDT)
-Received: from oh.minilop.net (host-242-103.pubnet.pdx.edu [131.252.242.103])
-        by mx.google.com with ESMTPS id o2sm1818569pbj.33.2011.06.03.17.12.05
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 03 Jun 2011 17:12:05 -0700 (PDT)
-Received: from jamey by oh.minilop.net with local (Exim 4.76)
-	(envelope-from <jamey@oh.minilop.net>)
-	id 1QSeTE-0001CN-Si; Fri, 03 Jun 2011 17:12:04 -0700
-X-Mailer: git-send-email 1.7.4.4
-In-Reply-To: <1307146303-4524-1-git-send-email-jamey@minilop.net>
+	id S1756589Ab1FDAMr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Jun 2011 20:12:47 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:39238 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756526Ab1FDAMq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2011 20:12:46 -0400
+Received: by wwa36 with SMTP id 36so2156885wwa.1
+        for <git@vger.kernel.org>; Fri, 03 Jun 2011 17:12:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=I/j6y0onRmNAtWsZhs/3oWCd0n/Z8SQST3zCyBGH4Oc=;
+        b=RLrD4LxNcBZeeBYeiXpfXBZ7srWkyrewk6u/bFXJjFLFsNt/s0GEXWFUKvH5lu1MjA
+         GeeE+seUSQLddMsP1hhDjnyxqfUamI1fD1hI0kPI1wMGM55WdwoXrhDaH9AVNP0ZoEgJ
+         CNN6RGOLgD9ptN38KPhy5pFRbS7xLuNLaZMYw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=fXyCBI8nbvChL/MTZz/MIcrWaSYp3DcCC3hGS44paBzMZB7Xkc+GAInKFMy4vpruBi
+         xHMZQ1KJJy34PEDq6adlUMPVKzdm/V843X9csla8Dj/F+59LZTNrW320e7Ik6QiJqzvH
+         JGKyB8/ee3gXw+5aOo6RmHPxkld9QtQXfRS6Q=
+Received: by 10.216.132.133 with SMTP id o5mr2087wei.94.1307146365325; Fri, 03
+ Jun 2011 17:12:45 -0700 (PDT)
+Received: by 10.216.89.212 with HTTP; Fri, 3 Jun 2011 17:12:45 -0700 (PDT)
+In-Reply-To: <isbsf8$6id$1@dough.gmane.org>
+X-Google-Sender-Auth: 7sQ9yameWk3NECa7yj9VuiHASOg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175051>
 
-From: Josh Triplett <josh@joshtriplett.org>
+On Fri, Jun 3, 2011 at 7:58 PM, Neal Kreitzinger <nkreitzinger@gmail.co=
+m> wrote:
+> On 6/3/2011 6:31 PM, Neal Kreitzinger wrote:
+>>
+>> The reference manuals state in the hooks documentation that the pre-=
+commit
+>> hook sample will reject whitespace only changes. =C2=A0However, the
+>> pre-commit.sample in the 1.7.1 and 1.7.5.4 downloads do not appear t=
+o do
+>> this (I'm new to linux scripts). =C2=A0The appear to only reject non=
+-ascii
+>> filenames. =C2=A0Does someone have a pre-commit hook example I can u=
+se to
+>> reject
+>> whitespace-only changes? =C2=A0Thanks!
+>>
+> As someone kindly pointed out, the documentation actually says:
+> "The default 'pre-commit' hook, when enabled, catches introduction of=
+ lines
+> with trailing whitespaces and aborts the commit when such a line is f=
+ound."
+>
+> I'm not seeing this functionality in the pre-commit.sample for 1.7.1 =
+or
+> 1.7.5.4.
 
-Change upload-pack and receive-pack to use the namespace-prefixed refs
-when working with the repository, and use the unprefixed refs when
-talking to the client, maintaining the masquerade.  This allows
-clone, pull, fetch, and push to work with a suitably configured
-GIT_NAMESPACE.
+I've never tried that hook script myself, but it appears to be on the l=
+ast line:
+   exec git diff-index --check --cached $against --
 
-With appropriate configuration, this also allows http-backend to expose
-namespaces as multiple repositories with different paths.  This only
-requires setting GIT_NAMESPACE, which http-backend passes through to
-upload-pack and receive-pack.
+In particular, the --check option says:
+    Warn if changes introduce trailing whitespace or an indent that
+uses a space before a tab. Exits with non-zero status if problems are
+found. Not compatible with --exit-code.
 
-Commit by Josh Triplett and Jamey Sharp.
+HTH!
 
-Signed-off-by: Josh Triplett <josh@joshtriplett.org>
-Signed-off-by: Jamey Sharp <jamey@minilop.net>
----
- builtin/receive-pack.c |   34 ++++++++++++++++++++++++++++------
- upload-pack.c          |   15 ++++++++-------
- 2 files changed, 36 insertions(+), 13 deletions(-)
-
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index e1a687a..54dd5d4 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -120,9 +120,14 @@ static int show_ref(const char *path, const unsigned char *sha1, int flag, void
- 	return 0;
- }
- 
-+static int show_ref_cb(const char *path, const unsigned char *sha1, int flag, void *cb_data)
-+{
-+	return show_ref(strip_namespace(path), sha1, flag, cb_data);
-+}
-+
- static void write_head_info(void)
- {
--	for_each_ref(show_ref, NULL);
-+	for_each_namespaced_ref(show_ref_cb, NULL);
- 	if (!sent_capabilities)
- 		show_ref("capabilities^{}", null_sha1, 0, NULL);
- 
-@@ -333,6 +338,8 @@ static void refuse_unconfigured_deny_delete_current(void)
- static const char *update(struct command *cmd)
- {
- 	const char *name = cmd->ref_name;
-+	struct strbuf namespaced_name_buf = STRBUF_INIT;
-+	const char *namespaced_name;
- 	unsigned char *old_sha1 = cmd->old_sha1;
- 	unsigned char *new_sha1 = cmd->new_sha1;
- 	struct ref_lock *lock;
-@@ -343,7 +350,10 @@ static const char *update(struct command *cmd)
- 		return "funny refname";
- 	}
- 
--	if (is_ref_checked_out(name)) {
-+	strbuf_addf(&namespaced_name_buf, "%s%s", get_git_namespace(), name);
-+	namespaced_name = strbuf_detach(&namespaced_name_buf, NULL);
-+
-+	if (is_ref_checked_out(namespaced_name)) {
- 		switch (deny_current_branch) {
- 		case DENY_IGNORE:
- 			break;
-@@ -371,7 +381,7 @@ static const char *update(struct command *cmd)
- 			return "deletion prohibited";
- 		}
- 
--		if (!strcmp(name, head_name)) {
-+		if (!strcmp(namespaced_name, head_name)) {
- 			switch (deny_delete_current) {
- 			case DENY_IGNORE:
- 				break;
-@@ -427,14 +437,14 @@ static const char *update(struct command *cmd)
- 			rp_warning("Allowing deletion of corrupt ref.");
- 			old_sha1 = NULL;
- 		}
--		if (delete_ref(name, old_sha1, 0)) {
-+		if (delete_ref(namespaced_name, old_sha1, 0)) {
- 			rp_error("failed to delete %s", name);
- 			return "failed to delete";
- 		}
- 		return NULL; /* good */
- 	}
- 	else {
--		lock = lock_any_ref_for_update(name, old_sha1, 0);
-+		lock = lock_any_ref_for_update(namespaced_name, old_sha1, 0);
- 		if (!lock) {
- 			rp_error("failed to lock %s", name);
- 			return "failed to lock";
-@@ -491,17 +501,29 @@ static void run_update_post_hook(struct command *commands)
- 
- static void check_aliased_update(struct command *cmd, struct string_list *list)
- {
-+	struct strbuf buf = STRBUF_INIT;
-+	const char *dst_name;
- 	struct string_list_item *item;
- 	struct command *dst_cmd;
- 	unsigned char sha1[20];
- 	char cmd_oldh[41], cmd_newh[41], dst_oldh[41], dst_newh[41];
- 	int flag;
- 
--	const char *dst_name = resolve_ref(cmd->ref_name, sha1, 0, &flag);
-+	strbuf_addf(&buf, "%s%s", get_git_namespace(), cmd->ref_name);
-+	dst_name = resolve_ref(buf.buf, sha1, 0, &flag);
-+	strbuf_release(&buf);
- 
- 	if (!(flag & REF_ISSYMREF))
- 		return;
- 
-+	dst_name = strip_namespace(dst_name);
-+	if (!dst_name) {
-+		rp_error("refusing update to broken symref '%s'", cmd->ref_name);
-+		cmd->skip_update = 1;
-+		cmd->error_string = "broken symref";
-+		return;
-+	}
-+
- 	if ((item = string_list_lookup(list, dst_name)) == NULL)
- 		return;
- 
-diff --git a/upload-pack.c b/upload-pack.c
-index ce5cbbe..267e5b1 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -641,16 +641,17 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
- 		" side-band-64k ofs-delta shallow no-progress"
- 		" include-tag multi_ack_detailed";
- 	struct object *o = parse_object(sha1);
-+	const char *refname_nons = strip_namespace(refname);
- 
- 	if (!o)
- 		die("git upload-pack: cannot find object %s:", sha1_to_hex(sha1));
- 
- 	if (capabilities)
--		packet_write(1, "%s %s%c%s%s\n", sha1_to_hex(sha1), refname,
-+		packet_write(1, "%s %s%c%s%s\n", sha1_to_hex(sha1), refname_nons,
- 			     0, capabilities,
- 			     stateless_rpc ? " no-done" : "");
- 	else
--		packet_write(1, "%s %s\n", sha1_to_hex(sha1), refname);
-+		packet_write(1, "%s %s\n", sha1_to_hex(sha1), refname_nons);
- 	capabilities = NULL;
- 	if (!(o->flags & OUR_REF)) {
- 		o->flags |= OUR_REF;
-@@ -659,7 +660,7 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
- 	if (o->type == OBJ_TAG) {
- 		o = deref_tag(o, refname, 0);
- 		if (o)
--			packet_write(1, "%s %s^{}\n", sha1_to_hex(o->sha1), refname);
-+			packet_write(1, "%s %s^{}\n", sha1_to_hex(o->sha1), refname_nons);
- 	}
- 	return 0;
- }
-@@ -680,12 +681,12 @@ static void upload_pack(void)
- {
- 	if (advertise_refs || !stateless_rpc) {
- 		reset_timeout();
--		head_ref(send_ref, NULL);
--		for_each_ref(send_ref, NULL);
-+		head_ref_namespaced(send_ref, NULL);
-+		for_each_namespaced_ref(send_ref, NULL);
- 		packet_flush(1);
- 	} else {
--		head_ref(mark_our_ref, NULL);
--		for_each_ref(mark_our_ref, NULL);
-+		head_ref_namespaced(mark_our_ref, NULL);
-+		for_each_namespaced_ref(mark_our_ref, NULL);
- 	}
- 	if (advertise_refs)
- 		return;
--- 
-1.7.5.3
+-John
