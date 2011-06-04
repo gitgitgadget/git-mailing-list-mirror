@@ -1,79 +1,73 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 3/3] clone: always fetch remote HEAD
-Date: Fri, 3 Jun 2011 20:50:41 -0500
-Message-ID: <BANLkTimuU6fxS+CoL=rpQbN4vfRyMNOMJQ@mail.gmail.com>
-References: <20110603050901.GA883@sigill.intra.peff.net> <20110603051805.GC1008@sigill.intra.peff.net>
- <BANLkTim03_3DLdDkc3QgFrcUa0Fqhhqnbw@mail.gmail.com> <20110603181052.GA17538@sigill.intra.peff.net>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: [PATCH] Clarified how "git submodule add" handles relative paths.
+Date: Fri, 03 Jun 2011 22:23:32 -0400
+Message-ID: <4DE99724.9090607@gmail.com>
+References: <7vaae2ihe1.fsf@alter.siamese.dyndns.org> <1306943792-1825-1-git-send-email-marcnarc@xiplink.com> <7vsjrth4iy.fsf@alter.siamese.dyndns.org> <4DE69945.1080601@web.de> <7v39jsdulf.fsf@alter.siamese.dyndns.org> <4DE93B29.4030401@web.de> <7vhb86a4kt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Dmitry Ivankov <divanorama@gmail.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jun 04 03:52:26 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Marc Branchaud <marcnarc@xiplink.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 04 04:23:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QSg2L-0006Kf-VW
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Jun 2011 03:52:26 +0200
+	id 1QSgWq-0005vz-Iv
+	for gcvg-git-2@lo.gmane.org; Sat, 04 Jun 2011 04:23:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753980Ab1FDBvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jun 2011 21:51:23 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:53432 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751876Ab1FDBvW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jun 2011 21:51:22 -0400
-Received: by qwk3 with SMTP id 3so1041625qwk.19
-        for <git@vger.kernel.org>; Fri, 03 Jun 2011 18:51:21 -0700 (PDT)
+	id S1755713Ab1FDCXh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jun 2011 22:23:37 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:36267 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753247Ab1FDCXh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2011 22:23:37 -0400
+Received: by vxi39 with SMTP id 39so1773790vxi.19
+        for <git@vger.kernel.org>; Fri, 03 Jun 2011 19:23:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=ok1o0DXvgBdwhw2s29hoR9C3MG/VziCQR0Jh336gd10=;
-        b=tm1hHfpQdrCNlbwgqU+0kIKAIg4wzu8mF1vwK9Ny5NQLb+wk86J6GwA1hF/H1b0iMp
-         9icx55Y7H2dlO+mYmeGvnzcy+Vy5js51hhCQG8oxX5DxV1mUQ6CUkhv35Xt7Meng+MUB
-         fIc25iU7ENqJhbzT9AGOI7xk2XII7VzlUwGog=
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=7gzGx4xWYsQZvwsPU5wAhvgkzKCYSSg42mxRRwHSwGI=;
+        b=t2fC146zdzyZBeQInHWWDzAjyMGR1jRp/B/a1h5LVpJ82C11Gjx2mLcv3yLgTQRrSq
+         KuT7QwywPcI8IGoeogr7UF/tx5oLCELWIv1Qg1TmzfPNPjwhfgmEu+0RQGONqmc4zj6U
+         zOiSciWErtv3+7cl8lCc/FEia5PZMgXBkfpj8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=BdXKsW0vbNL3oem+9QO8dWVLjRRAbgFer2UxL0K6TUrXWPL2nBwE367I6ACHs4wSmU
-         9d0QWj79fkmR85A4cBoXPsJ79kFYVQ4Z6tU5G6oaPXg3tvbhVp24h/CS0w/GFfcox/NG
-         CWNxNjithnurc01DV9g9J9rSS5rRg9ZVDsmEQ=
-Received: by 10.229.126.167 with SMTP id c39mr1913812qcs.119.1307152281277;
- Fri, 03 Jun 2011 18:51:21 -0700 (PDT)
-Received: by 10.229.20.6 with HTTP; Fri, 3 Jun 2011 18:50:41 -0700 (PDT)
-In-Reply-To: <20110603181052.GA17538@sigill.intra.peff.net>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=hbp5wda74KcGWYk2CjlgYhWzTrzX5ftNGZGZsULyKykT9Jacv8faAV44zaSt96F8yx
+         WrWLZwX65S/ocwKAJsGDa5H3hS6OhRQRTQJJRLsJIzNyYXlPZ8hIKWrj0fr/LTBFsfXb
+         RE7Awrd5wkJRSA6DsFK2sJ+U4aoR+fT7EqKMQ=
+Received: by 10.52.73.3 with SMTP id h3mr3477283vdv.106.1307154216158;
+        Fri, 03 Jun 2011 19:23:36 -0700 (PDT)
+Received: from mark-laptop.lan (pool-173-79-111-180.washdc.fios.verizon.net [173.79.111.180])
+        by mx.google.com with ESMTPS id da4sm578045vdb.21.2011.06.03.19.23.33
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 03 Jun 2011 19:23:34 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Lightning/1.0b2 Thunderbird/3.1.10
+In-Reply-To: <7vhb86a4kt.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175055>
 
-Heya,
+On 06/03/2011 07:16 PM, Junio C Hamano wrote:
+> Jens Lehmann<Jens.Lehmann@web.de>  writes:
+> The "how about this" patch you are voting against (I am neutral by the
+> way) is a response to your earlier "I have three use cases and the current
+> implementation is forgetting the third", which in turn was a response to
+> my "your third use case does not count, so the updated wording of the
+> documentation is wrong---it should say 'do not', not 'cannot'".
+>
+> So what should the updated document say?
+>
+If I understand this correctly, the third use case isn't actually 
+unique: if the upstream repo is on a local file system, why not just use 
+a file://... url for the super project's origin?
 
-On Fri, Jun 3, 2011 at 13:10, Jeff King <peff@peff.net> wrote:
-> Or is it the fault of testgit for calling exporter.export_repo twice? It
-> seems to ignore the ref argument it gets to import, and just dumps the
-> whole repo, albeit into an alternate namespace. Should we then be doing
-> something per-ref with the result? Or since our particular import
-> imports everything, should we simply ignore further imports after the
-> first one?
-
-I never tested testgit with multiple import arguments, as I wasn't
-sure how it was supposed to work in the first place.
-
-> Does that make sense? If so, then I think the right fix is for testgit
-> ti ignore all imports after the first one (since the first one will have
-> done all available refs). And the patch is:
-
-We can do that yes, although it would be even better if we could make
-testgit implement importing only a limited set of branches, as I
-assume that will be common. Nonetheless, this will do for now I think.
-
--- 
-Cheers,
-
-Sverre Rabbelier
+Mark
