@@ -1,106 +1,122 @@
-From: Matt McCutchen <matt@mattmccutchen.net>
-Subject: Re: Implementing CSP (Content Security Policy) for gitweb in the
- future
-Date: Sun, 05 Jun 2011 12:46:10 -0400
-Message-ID: <1307292370.23564.10.camel@localhost>
-References: <1307177015-880-1-git-send-email-jnareb@gmail.com>
-	 <201106051103.59541.jnareb@gmail.com> <1307278350.23564.5.camel@localhost>
-	 <201106051533.51735.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Clarified how "git submodule add" handles relative
+ paths.
+Date: Sun, 05 Jun 2011 11:27:36 -0700
+Message-ID: <7vipskb0br.fsf@alter.siamese.dyndns.org>
+References: <7vaae2ihe1.fsf@alter.siamese.dyndns.org>
+ <1306943792-1825-1-git-send-email-marcnarc@xiplink.com>
+ <7vsjrth4iy.fsf@alter.siamese.dyndns.org> <4DE69945.1080601@web.de>
+ <7v39jsdulf.fsf@alter.siamese.dyndns.org> <4DE93B29.4030401@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 05 18:46:21 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Marc Branchaud <marcnarc@xiplink.com>, git@vger.kernel.org,
+	Mark Levedahl <mlevedahl@gmail.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Sun Jun 05 20:27:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QTGSz-0003Wz-C2
-	for gcvg-git-2@lo.gmane.org; Sun, 05 Jun 2011 18:46:21 +0200
+	id 1QTI3H-0004uO-M1
+	for gcvg-git-2@lo.gmane.org; Sun, 05 Jun 2011 20:27:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752216Ab1FEQqP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Jun 2011 12:46:15 -0400
-Received: from caiajhbdccac.dreamhost.com ([208.97.132.202]:48465 "EHLO
-	homiemail-a38.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751703Ab1FEQqO (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Jun 2011 12:46:14 -0400
-Received: from homiemail-a38.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a38.g.dreamhost.com (Postfix) with ESMTP id E09D610AFAA;
-	Sun,  5 Jun 2011 09:46:13 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=mattmccutchen.net; h=subject:from
-	:to:cc:in-reply-to:references:content-type:date:message-id
-	:mime-version:content-transfer-encoding; q=dns; s=
-	mattmccutchen.net; b=b4fd/oYiVs2qgiY6WrE8NTOyi/Chk9DtzIAzb9MJPkv
-	+KCS06dVvyx2LS7lIeOXNOnLw5aMMmwNNEC+Xsu+bfRVVIm9vwRPBt7ScSzlZWVF
-	LdfqonvqmUIQkt40BanNNWfEf5IKGh7CJuBAKZOhk/2UK2XJTBTHYmoXcci5j6nU
-	=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=mattmccutchen.net; h=
-	subject:from:to:cc:in-reply-to:references:content-type:date
-	:message-id:mime-version:content-transfer-encoding; s=
-	mattmccutchen.net; bh=zkX7qefoA7tUnMZFTQ4BMJ9zgKQ=; b=utpUW2ZV7g
-	dGXoyGN5VqkQzMT9fRROch0rGcl+TUdlDuEfCIxyx8aL0GUP8iF9PuYtfXic+XD3
-	ZfdR/pGRmlqkjbpYMTb+5Iethy2z2RQUyBmcpfjpUsLM/klktf1pn1XHdW80lcvz
-	ipBY6qiVp7UppvlZ1N4lqhg/M9MTHi/Q0=
-Received: from [192.168.1.40] (pool-74-96-127-26.washdc.east.verizon.net [74.96.127.26])
-	(using SSLv3 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: matt@mattmccutchen.net)
-	by homiemail-a38.g.dreamhost.com (Postfix) with ESMTPSA id 6ED8510AFA1;
-	Sun,  5 Jun 2011 09:46:13 -0700 (PDT)
-In-Reply-To: <201106051533.51735.jnareb@gmail.com>
-X-Mailer: Evolution 2.32.3 
+	id S1754936Ab1FES1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Jun 2011 14:27:50 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55368 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753414Ab1FES1t (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Jun 2011 14:27:49 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 86D374330;
+	Sun,  5 Jun 2011 14:29:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BCRz83FY/ZFQ11FbamZyHLTWB80=; b=b9Z1wW
+	fsc9ez9HEGxfZf7qnnqIhpc0BFAEBn1G5i9muYFqOJCTRbC4KUIiQfwRrb3G8YDi
+	jD/xMR3Ws9VNKGFS+ltuP2If8sJx0hzRffnosj1nhR4RPl8poN00V7gBLeWDVUJ1
+	ytIrnznIvm50s+Qy3HG/p6QtXtFtlQkp1GPYc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uhL3H60xOufrPkVHHnFzYWya8/JaAZQZ
+	6JkTCLAf0xX5DiF+bf7dYodfTdLs4JxiNYZxF2FXI1yGy94ZTqHAquu74usFxcbG
+	kHAN1M/Om3uJynMYkFI+xo4kAlTVwYZtR7Y/VF6kzO7i2pjfCVZZwzcEcyodZbJi
+	YDJwspiesVc=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4068E432C;
+	Sun,  5 Jun 2011 14:29:53 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B27E7432B; Sun,  5 Jun 2011
+ 14:29:47 -0400 (EDT)
+In-Reply-To: <4DE93B29.4030401@web.de> (Jens Lehmann's message of "Fri, 03
+ Jun 2011 21:51:05 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CE1D5F74-8FA1-11E0-8B2A-EA23C7C1A288-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175082>
 
-On Sun, 2011-06-05 at 15:33 +0200, Jakub Narebski wrote:
-> On Sun, 5 July 2011, Matt McCutchen wrote:
-> > On Sun, 2011-06-05 at 11:03 +0200, Jakub Narebski wrote:
-> 
-> > > In the future however it might be better solution for gitweb to implement
-> > > (as an option) support for CSP (Content Security Policy), which IIRC did
-> > > not exists in 2009, in addition to current $prevent_xss.
-> > 
-> > Sure.  CSP is not a substitute for designing to prevent harmful HTML
-> > injection, but a mitigation for some of its worst effects in case some
-> > injection points are overlooked.  There's no reason not to enable it by
-> > default with $prevent_xss, though third parties adding functionality to
-> > gitweb would need to know to disable it or modify the policy
-> > accordingly.
-> 
-> I propose CSP support _in addition to_ and not replacing $prevent_xss
-> (which would be nice to have more fine-grained control over).
-> 
-> Well, while we can whitelist HTML fragment from README.html, or render
-> README.md / README.rs / README.pod etc. instead of blocking it like gitweb
-> currently does if $prevent_xss is enabled, I don't think it would be
-> feasible to do the same for text/html 'blob_plain' pages. 
-> 
-> Serving HTML pages etc. from 'blob_plain' view with path_info links
-> is quite useful feature; this way one can use gitweb as a cheap and easy
-> way to deploy web pages
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-Yes.
+> Am 02.06.2011 19:14, schrieb Junio C Hamano:
+>> I suspect that it would be a relatively easy fix if your toplevel
+>> superproject is its own authoritative upstream.  Something along the line
+>> of this patch, perhaps?  It is obviously untested, and we may want to
+>> issue an "echo >&2 'info:...'" to tell the user what we are assuming in
+>> this codepath.
+>
+> Maybe it is better to not automagically switch from "path is relative to
+> url configured in superproject" to "path is relative to $(pwd)" depending
+> on the presence or absence of a default remote in the superproject. When
+> a user wants to set up his submodules relative to the superproject and
+> simply did forget to configure the url of the superproject first he won't
+> notice that anymore after this patch. But instead he will get a local
+> submodule url only to find out later that this was not what I wanted (and
+> an 'info' can easily be missed).
 
-> and web apps;
+Sorry, I don't get this. The "how-about-this" patch was not about
+"automagically switch depending on ...". Absense of the remote in the
+superproject means that the project originates from here, iow, it is its
+own "origin" (that is your third use case).
 
-Probably not: the browser features needed to make a nontrivial web app
-are probably the same ones that are dangerous to other web apps.
+I think I understand the scenario you are worried about; let me illustrate
+to make sure I got it right:
 
-> or just test results of development.
-> CSP would serve this purpose well; current $prevent_xss behavior of
-> serving as attachment (forcing download), or serving them as text/plain
-> as e.g. GitHub does simply remove this feature.
+ 1. You are starting your project that will have subproject locally. You do
+    not have "origin" yet.
 
-CSP is not intended to be used by itself as a sandbox, although it might
-almost work for the purpose.  It would be more appropriate to set up a
-wildcard virtual host and appropriate rewrite rules to expose each
-repository at a different DNS name and take advantage of the usual
-same-origin policy.
+ 2. You create a subproject "xyzzy", still locally, and add it with
+    "submodule add ./xyzzy" with a relative URL.
 
--- 
-Matt
+ 3. You will deploy your superproject and subproject at "git://host.xz/mine/"
+    and "git://host.xz/mine/xyzzy", respectively.
+
+ 4. But because in step 2. your .git/config is already set up to point
+    your local $(pwd)/xyzzy as the submodule location. This is not what
+    you want and you may not notice it.
+
+Is that the problem you are worried about? If so, I think you are solving
+it in a wrong way.
+
+By not allowing a relative path, in step 2. you would entice the user to
+say "submodule add $(pwd)/xyzzy" (as there is no final upstream location
+yet), no? If the project is going to be eventually published at a
+different location, not just .git/config but .gitmodules also needs to be
+updated as part of step 3. Isn't that going backwards?  If you allow the
+user to say "./xyzzy" in step 2., the .gitmodules entry can stay the same
+from the get-go.
+
+If you think about "absense of the remote in the superproject means the
+project originates from here", what you are doing in step 3. is to
+changing the origin of these set of projects. After changing the origin of
+these set of projects, isn't "git submodule sync" an established way to
+adjust to the change? I was hoping that that would update .git/config in
+step 3. so you wouldn't have the problem in step 4. at all.
+
+It is likely I am missing something in the above analysis. Please correct
+me.
+
+Thanks.
