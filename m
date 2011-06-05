@@ -1,170 +1,106 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 3/3] grep: add --heading
-Date: Sun, 05 Jun 2011 17:24:36 +0200
-Message-ID: <4DEB9FB4.8020904@lsrfire.ath.cx>
-References: <4DEB9F07.1070006@lsrfire.ath.cx>
+From: Matt McCutchen <matt@mattmccutchen.net>
+Subject: Re: Implementing CSP (Content Security Policy) for gitweb in the
+ future
+Date: Sun, 05 Jun 2011 12:46:10 -0400
+Message-ID: <1307292370.23564.10.camel@localhost>
+References: <1307177015-880-1-git-send-email-jnareb@gmail.com>
+	 <201106051103.59541.jnareb@gmail.com> <1307278350.23564.5.camel@localhost>
+	 <201106051533.51735.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Mark Lodato <lodatom@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jun 05 17:24:56 2011
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 05 18:46:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QTFCA-0008Ut-5g
-	for gcvg-git-2@lo.gmane.org; Sun, 05 Jun 2011 17:24:54 +0200
+	id 1QTGSz-0003Wz-C2
+	for gcvg-git-2@lo.gmane.org; Sun, 05 Jun 2011 18:46:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752928Ab1FEPYt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Jun 2011 11:24:49 -0400
-Received: from india601.server4you.de ([85.25.151.105]:46537 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751974Ab1FEPYt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Jun 2011 11:24:49 -0400
-Received: from [192.168.2.106] (p4FFD8E69.dip.t-dialin.net [79.253.142.105])
-	by india601.server4you.de (Postfix) with ESMTPSA id 7E2EC2F8003;
-	Sun,  5 Jun 2011 17:24:47 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; de; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
-In-Reply-To: <4DEB9F07.1070006@lsrfire.ath.cx>
+	id S1752216Ab1FEQqP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Jun 2011 12:46:15 -0400
+Received: from caiajhbdccac.dreamhost.com ([208.97.132.202]:48465 "EHLO
+	homiemail-a38.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751703Ab1FEQqO (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Jun 2011 12:46:14 -0400
+Received: from homiemail-a38.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a38.g.dreamhost.com (Postfix) with ESMTP id E09D610AFAA;
+	Sun,  5 Jun 2011 09:46:13 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=mattmccutchen.net; h=subject:from
+	:to:cc:in-reply-to:references:content-type:date:message-id
+	:mime-version:content-transfer-encoding; q=dns; s=
+	mattmccutchen.net; b=b4fd/oYiVs2qgiY6WrE8NTOyi/Chk9DtzIAzb9MJPkv
+	+KCS06dVvyx2LS7lIeOXNOnLw5aMMmwNNEC+Xsu+bfRVVIm9vwRPBt7ScSzlZWVF
+	LdfqonvqmUIQkt40BanNNWfEf5IKGh7CJuBAKZOhk/2UK2XJTBTHYmoXcci5j6nU
+	=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=mattmccutchen.net; h=
+	subject:from:to:cc:in-reply-to:references:content-type:date
+	:message-id:mime-version:content-transfer-encoding; s=
+	mattmccutchen.net; bh=zkX7qefoA7tUnMZFTQ4BMJ9zgKQ=; b=utpUW2ZV7g
+	dGXoyGN5VqkQzMT9fRROch0rGcl+TUdlDuEfCIxyx8aL0GUP8iF9PuYtfXic+XD3
+	ZfdR/pGRmlqkjbpYMTb+5Iethy2z2RQUyBmcpfjpUsLM/klktf1pn1XHdW80lcvz
+	ipBY6qiVp7UppvlZ1N4lqhg/M9MTHi/Q0=
+Received: from [192.168.1.40] (pool-74-96-127-26.washdc.east.verizon.net [74.96.127.26])
+	(using SSLv3 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: matt@mattmccutchen.net)
+	by homiemail-a38.g.dreamhost.com (Postfix) with ESMTPSA id 6ED8510AFA1;
+	Sun,  5 Jun 2011 09:46:13 -0700 (PDT)
+In-Reply-To: <201106051533.51735.jnareb@gmail.com>
+X-Mailer: Evolution 2.32.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175081>
 
-With --heading, the filename is printed once before matches from that
-file instead of at the start of each line, giving more screen space to
-the actual search results.
+On Sun, 2011-06-05 at 15:33 +0200, Jakub Narebski wrote:
+> On Sun, 5 July 2011, Matt McCutchen wrote:
+> > On Sun, 2011-06-05 at 11:03 +0200, Jakub Narebski wrote:
+> 
+> > > In the future however it might be better solution for gitweb to implement
+> > > (as an option) support for CSP (Content Security Policy), which IIRC did
+> > > not exists in 2009, in addition to current $prevent_xss.
+> > 
+> > Sure.  CSP is not a substitute for designing to prevent harmful HTML
+> > injection, but a mitigation for some of its worst effects in case some
+> > injection points are overlooked.  There's no reason not to enable it by
+> > default with $prevent_xss, though third parties adding functionality to
+> > gitweb would need to know to disable it or modify the policy
+> > accordingly.
+> 
+> I propose CSP support _in addition to_ and not replacing $prevent_xss
+> (which would be nice to have more fine-grained control over).
+> 
+> Well, while we can whitelist HTML fragment from README.html, or render
+> README.md / README.rs / README.pod etc. instead of blocking it like gitweb
+> currently does if $prevent_xss is enabled, I don't think it would be
+> feasible to do the same for text/html 'blob_plain' pages. 
+> 
+> Serving HTML pages etc. from 'blob_plain' view with path_info links
+> is quite useful feature; this way one can use gitweb as a cheap and easy
+> way to deploy web pages
 
-This option is taken from ack (http://betterthangrep.com/).  And now
-git grep can dress up like it:
+Yes.
 
-	$ git config alias.ack "grep --break --heading --line-number"
+> and web apps;
 
-	$ git ack -e --heading
-	Documentation/git-grep.txt
-	154:--heading::
-	
-	t/t7810-grep.sh
-	785:test_expect_success 'grep --heading' '
-	786:    git grep --heading -e char -e lo_w hello.c hello_world >actual &&
-	808:    git grep --break --heading -n --color \
+Probably not: the browser features needed to make a nontrivial web app
+are probably the same ones that are dangerous to other web apps.
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- Documentation/git-grep.txt |    4 ++++
- builtin/grep.c             |    2 ++
- grep.c                     |    6 +++++-
- grep.h                     |    1 +
- t/t7810-grep.sh            |   37 +++++++++++++++++++++++++++++++++++++
- 5 files changed, 49 insertions(+), 1 deletions(-)
+> or just test results of development.
+> CSP would serve this purpose well; current $prevent_xss behavior of
+> serving as attachment (forcing download), or serving them as text/plain
+> as e.g. GitHub does simply remove this feature.
 
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index dea7cad..07b3c6a 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -151,6 +151,10 @@ OPTIONS
- --break::
- 	Print an empty line between matches from different files.
- 
-+--heading::
-+	Show the filename above the matches in that file instead of
-+	at the start of each shown line.
-+
- -[ABC] <context>::
- 	Show `context` trailing (`A` -- after), or leading (`B`
- 	-- before), or both (`C` -- context) lines, and place a
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 42bb87f..cccf8da 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -824,6 +824,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		OPT__COLOR(&opt.color, "highlight matches"),
- 		OPT_BOOLEAN(0, "break", &opt.file_break,
- 			"print empty line between matches from different files"),
-+		OPT_BOOLEAN(0, "heading", &opt.heading,
-+			"show filename only once above matches from same file"),
- 		OPT_GROUP(""),
- 		OPT_CALLBACK('C', NULL, &opt, "n",
- 			"show <n> context lines before and after matches",
-diff --git a/grep.c b/grep.c
-index b0b860a..04e9ba4 100644
---- a/grep.c
-+++ b/grep.c
-@@ -735,9 +735,13 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
- 			opt->output(opt, "\n", 1);
- 		}
- 	}
-+	if (opt->heading && opt->last_shown == 0) {
-+		output_color(opt, name, strlen(name), opt->color_filename);
-+		opt->output(opt, "\n", 1);
-+	}
- 	opt->last_shown = lno;
- 
--	if (opt->pathname) {
-+	if (!opt->heading && opt->pathname) {
- 		output_color(opt, name, strlen(name), opt->color_filename);
- 		output_sep(opt, sign);
- 	}
-diff --git a/grep.h b/grep.h
-index 638bee8..c568297 100644
---- a/grep.h
-+++ b/grep.h
-@@ -111,6 +111,7 @@ struct grep_opt {
- 	unsigned last_shown;
- 	int show_hunk_mark;
- 	int file_break;
-+	int heading;
- 	void *priv;
- 
- 	void (*output)(struct grep_opt *opt, const void *data, size_t size);
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index f55793e..1227fa6 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -774,4 +774,41 @@ test_expect_success 'grep --break with context' '
- 	test_cmp expected actual
- '
- 
-+cat >expected <<EOF
-+hello.c
-+int main(int argc, const char **argv)
-+	/* char ?? */
-+hello_world
-+Hello_world
-+EOF
-+
-+test_expect_success 'grep --heading' '
-+	git grep --heading -e char -e lo_w hello.c hello_world >actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >expected <<EOF
-+<BOLD;GREEN>hello.c<RESET>
-+2:int main(int argc, const <BLACK;BYELLOW>char<RESET> **argv)
-+6:	/* <BLACK;BYELLOW>char<RESET> ?? */
-+
-+<BOLD;GREEN>hello_world<RESET>
-+3:Hel<BLACK;BYELLOW>lo_w<RESET>orld
-+EOF
-+
-+test_expect_success 'mimic ack-grep --group' '
-+	test_config color.grep.context		normal &&
-+	test_config color.grep.filename		"bold green" &&
-+	test_config color.grep.function		normal &&
-+	test_config color.grep.linenumber	normal &&
-+	test_config color.grep.match		"black yellow" &&
-+	test_config color.grep.selected		normal &&
-+	test_config color.grep.separator	normal &&
-+
-+	git grep --break --heading -n --color \
-+		-e char -e lo_w hello.c hello_world |
-+	test_decode_color >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
+CSP is not intended to be used by itself as a sandbox, although it might
+almost work for the purpose.  It would be more appropriate to set up a
+wildcard virtual host and appropriate rewrite rules to expose each
+repository at a different DNS name and take advantage of the usual
+same-origin policy.
+
 -- 
-1.7.6.rc0.3.ga805ac
+Matt
