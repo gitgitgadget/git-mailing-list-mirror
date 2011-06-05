@@ -1,92 +1,70 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Implementing CSP (Content Security Policy) for gitweb in the future
-Date: Sun, 5 Jun 2011 15:33:51 +0200
-Message-ID: <201106051533.51735.jnareb@gmail.com>
-References: <1307177015-880-1-git-send-email-jnareb@gmail.com> <201106051103.59541.jnareb@gmail.com> <1307278350.23564.5.camel@localhost>
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: Re: [PATCH] Interactive-rebase doesn't pick all children of "upstream"
+Date: Sun, 05 Jun 2011 10:11:11 -0400
+Message-ID: <4DEB8E7F.60705@gmail.com>
+References: <20110517161234.GA21388@sigill.intra.peff.net> <1307251953-25116-1-git-send-email-andrew.kw.w@gmail.com> <4DEB495F.9080900@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Matt McCutchen <matt@mattmccutchen.net>
-X-From: git-owner@vger.kernel.org Sun Jun 05 15:35:03 2011
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sun Jun 05 16:11:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QTDTq-0004wZ-6M
-	for gcvg-git-2@lo.gmane.org; Sun, 05 Jun 2011 15:35:02 +0200
+	id 1QTE2y-0000Gn-U6
+	for gcvg-git-2@lo.gmane.org; Sun, 05 Jun 2011 16:11:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756015Ab1FENeC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Jun 2011 09:34:02 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:58031 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755692Ab1FENeB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Jun 2011 09:34:01 -0400
-Received: by fxm17 with SMTP id 17so1984539fxm.19
-        for <git@vger.kernel.org>; Sun, 05 Jun 2011 06:33:59 -0700 (PDT)
+	id S1753654Ab1FEOLQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Jun 2011 10:11:16 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:44019 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752680Ab1FEOLP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Jun 2011 10:11:15 -0400
+Received: by iyb14 with SMTP id 14so2496130iyb.19
+        for <git@vger.kernel.org>; Sun, 05 Jun 2011 07:11:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=R4pDKn50y9LpTzoAlzsI3S1Mu6rGUC1WVuHNE8y8AuE=;
-        b=R73nxAirdmSP4a6/FinP+rphg8xiJiJiyniYFwND1E7qDxjz9dL52ZwjNM6s7Az2YU
-         m3PznzB+2eM0dTtONCpCi9pkHJoXjJ4cmm3FUj82GWrSUpMsR+23N3Sg9DaF9pzX/zXu
-         miRFN/uCGMjFcL7aN0F7wAVyUh/Nb8eKmeSWw=
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=i4tFrhWIDlo6n5njm68jvXWHUrMCvGjrE80uoRQ2PwQ=;
+        b=H88xkULcN03HIUhhFWyMeVywa3M4KduWhbvH0dw2/276Crs3TJTTgy5wXLDlyNMZR0
+         9d2JRqNp26nXOkFqY51WnGeiQG0YBQlK0fzDe1ZJkc3II+lipWJAiox1fbRMlqNDDrt1
+         V8ktg1HodgtxnAaWChxihQoATbZVslFU/dMcE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=woONGa2OU5s8uh+hP9c8QHhVfq6UoCU2ziZdbI/bdNspkP5RCl31YNi9tHbOJEpbbn
-         BF4HZQi8yudSOnCn9snZYShwJdoMskeiSPqSUlCnoZ0J2PIhxPh03nHtsa774n0GAwfW
-         KlB8eIn1HMGyLhOSZ/7YbB919M8f3T5Ausq9s=
-Received: by 10.223.13.13 with SMTP id z13mr1169411faz.114.1307280839652;
-        Sun, 05 Jun 2011 06:33:59 -0700 (PDT)
-Received: from [192.168.1.13] (abvi97.neoplus.adsl.tpnet.pl [83.8.206.97])
-        by mx.google.com with ESMTPS id r10sm1031102fah.26.2011.06.05.06.33.57
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=dAAfwPNQM/5ud0cPgnr46N4D2chP9bgykixSlLZYqGlOWLv/nLLdxSNh3/VIJZhQIq
+         HyDRBFCgtm+MWjk0SUExe6qvqwWRcIAlg1qk1lSlh8OgLf04baw4ljeMqZc9MJAb5Ul8
+         lqt1plDKq8Tpv+HLjHdEUW52FbOySguJKqb0o=
+Received: by 10.42.26.83 with SMTP id e19mr7032833icc.387.1307283074406;
+        Sun, 05 Jun 2011 07:11:14 -0700 (PDT)
+Received: from ZanarkandMac.local (24-246-58-202.cable.teksavvy.com [24.246.58.202])
+        by mx.google.com with ESMTPS id e1sm2017836icv.20.2011.06.05.07.11.12
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 05 Jun 2011 06:33:58 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1307278350.23564.5.camel@localhost>
-Content-Disposition: inline
+        Sun, 05 Jun 2011 07:11:13 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
+In-Reply-To: <4DEB495F.9080900@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175076>
 
-On Sun, 5 July 2011, Matt McCutchen wrote:
-> On Sun, 2011-06-05 at 11:03 +0200, Jakub Narebski wrote:
-
-> > In the future however it might be better solution for gitweb to implement
-> > (as an option) support for CSP (Content Security Policy), which IIRC did
-> > not exists in 2009, in addition to current $prevent_xss.
-> 
-> Sure.  CSP is not a substitute for designing to prevent harmful HTML
-> injection, but a mitigation for some of its worst effects in case some
-> injection points are overlooked.  There's no reason not to enable it by
-> default with $prevent_xss, though third parties adding functionality to
-> gitweb would need to know to disable it or modify the policy
-> accordingly.
-
-I propose CSP support _in addition to_ and not replacing $prevent_xss
-(which would be nice to have more fine-grained control over).
-
-Well, while we can whitelist HTML fragment from README.html, or render
-README.md / README.rs / README.pod etc. instead of blocking it like gitweb
-currently does if $prevent_xss is enabled, I don't think it would be
-feasible to do the same for text/html 'blob_plain' pages. 
-
-Serving HTML pages etc. from 'blob_plain' view with path_info links
-is quite useful feature; this way one can use gitweb as a cheap and easy
-way to deploy web pages and web apps; or just test results of development.
-CSP would serve this purpose well; current $prevent_xss behavior of
-serving as attachment (forcing download), or serving them as text/plain
-as e.g. GitHub does simply remove this feature.
-
--- 
-Jakub Narebski
-Poland
+On 11-06-05 5:16 AM, Johannes Sixt wrote:
+> Am 05.06.2011 07:32, schrieb Andrew Wong:
+>> Currently, (1) and (2) will pick B, D, C, and E onto A and F,
+>> respectively.  However, (3) will only pick D and E onto B.  This
+>> behavior of (3) is inconsistent with (1) and (2), and we cannot modify C
+>> in the interactive-rebase.
+> I cannot reproduce your claims:
+>
+> - (1) and (2) picks B,C,D top A and F, but not E because E is a merge.
+>
+> - (3) picks C and D, but not E because E is a merge.
+Ah, all those commands should have "-p" on them to preserve the merges. 
+Thanks for the catch!
