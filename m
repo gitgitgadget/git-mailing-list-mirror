@@ -1,150 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Command-line interface thoughts
-Date: Mon, 06 Jun 2011 12:01:12 -0700
-Message-ID: <7vr576943r.fsf@alter.siamese.dyndns.org>
-References: <BANLkTikTWx7A64vN+hVZgL7cuiZ16Eobgg@mail.gmail.com>
- <m339jps1wt.fsf@localhost.localdomain>
- <BANLkTinidLbQ_FcVEiGSK91uXYWaKk7MKA@mail.gmail.com>
- <201106051311.00951.jnareb@gmail.com>
- <BANLkTik+xhd5QQ09QiPSH1bFAndzipKtrw@mail.gmail.com>
- <7vwrgza3i2.fsf@alter.siamese.dyndns.org>
- <4DEC8322.6040200@drmicha.warpmail.net>
- <7vk4cz9i1b.fsf@alter.siamese.dyndns.org>
- <4DECE147.3060808@drmicha.warpmail.net>
- <7vd3ir9btd.fsf@alter.siamese.dyndns.org>
- <BANLkTi=KZN3g4s9jHSgYcPHA4eM+2U3g4w@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 3/3] clone: always fetch remote HEAD
+Date: Mon, 6 Jun 2011 21:05:11 +0200
+Message-ID: <BANLkTikLZSrsy0D0Gs-tNKgbqJOG7qJNsA@mail.gmail.com>
+References: <20110603050901.GA883@sigill.intra.peff.net> <20110603051805.GC1008@sigill.intra.peff.net>
+ <BANLkTim03_3DLdDkc3QgFrcUa0Fqhhqnbw@mail.gmail.com> <20110603181052.GA17538@sigill.intra.peff.net>
+ <7vei37bxbp.fsf@alter.siamese.dyndns.org> <7vaadvbwpw.fsf@alter.siamese.dyndns.org>
+ <20110606161143.GC11485@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Michael Nahas <mike@nahas.com>, git@vger.kernel.org
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 06 21:01:36 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Dmitry Ivankov <divanorama@gmail.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 06 21:06:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QTf3O-0003Xz-3T
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Jun 2011 21:01:34 +0200
+	id 1QTf7d-0005n0-Ls
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Jun 2011 21:05:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756498Ab1FFTB2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jun 2011 15:01:28 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41343 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753716Ab1FFTB1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2011 15:01:27 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2911D5147;
-	Mon,  6 Jun 2011 15:03:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=V2rI8iE/oGlH
-	5LxekXBl6nfnVc0=; b=u2r2iglG0I7rqQJKBw1b3NmDklkskPq9rjU2KDnZxzrS
-	QTLJBVpQS3YQrzZPtyOiRE/Z3Vuo6kaezY+8A01hz+ZrFcyw+eomMnhL9qMVDJIH
-	V326thZ4xtZZ54xMx5p22b7G3sJnY6hwaP7gZiR+zXH5cM0h88Y5gz+J4mCQIuw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=W1b0L+
-	8HF1/GUKviKYGTeOjmWwAIycpq4l7wTk5a6DK0FEc3VHHvHppENiDNYb5WxJxe1H
-	oQgdD+3pDfyDeibczfRO5+/IqhPD1b95Zwz1O472WA2z7rqY7DMjRK5yRb8RORI+
-	PMPMilvQiUxg9N85vOUHFUPDmOEZNAjXc9Qb0=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BBAB45143;
-	Mon,  6 Jun 2011 15:03:31 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E6818513C; Mon,  6 Jun 2011
- 15:03:24 -0400 (EDT)
-In-Reply-To: <BANLkTi=KZN3g4s9jHSgYcPHA4eM+2U3g4w@mail.gmail.com> (Scott
- Chacon's message of "Mon, 6 Jun 2011 10:42:47 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: ABA5BB52-906F-11E0-8BEE-EA23C7C1A288-77302942!a-pb-sasl-sd.pobox.com
+	id S1757047Ab1FFTFw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2011 15:05:52 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:51557 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753427Ab1FFTFw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2011 15:05:52 -0400
+Received: by qyg14 with SMTP id 14so2113202qyg.19
+        for <git@vger.kernel.org>; Mon, 06 Jun 2011 12:05:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=xPE4QWaZlBl8mJ1tP46E72LsVvtsSaeudolghgTvuGQ=;
+        b=dwoDjKuPhSEgAMN/U7b6GHBMTMshGEnqWUtsnhFy1BaTa4znSSwGTwUd72wpzvvaQp
+         xc13EMkJ81dy7XE8g2av2RjAHSrAZZFUiiBsg/UNTNFOoD/6VY9/Hnm+XhsmfS/L7Lv1
+         jP1CCBJdTXSczy+IA+wMDXRYKJ0iVMj6ab2oU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=HtmAlQO84B4BNZUxCccS+sg5yw04XTAYOWOjsfDDYfZ1IzXc9pS6zYRiFTlrokDI3o
+         lWW0BxJlevpxwtuRptzMY6OHrrEVMGDuYNUZcDcHD3hITMwQ7SrucnNCtvCtaTOApdkg
+         JmAEFEFUmUuq23YU+D7/h1oOvoE0lXY4MnyVE=
+Received: by 10.229.127.105 with SMTP id f41mr3958094qcs.15.1307387151184;
+ Mon, 06 Jun 2011 12:05:51 -0700 (PDT)
+Received: by 10.229.83.203 with HTTP; Mon, 6 Jun 2011 12:05:11 -0700 (PDT)
+In-Reply-To: <20110606161143.GC11485@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175150>
 
-Scott Chacon <schacon@gmail.com> writes:
+Heya,
 
-> On Mon, Jun 6, 2011 at 9:14 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> ...
->>>> That is why I asked what the user experience of "git show NEXT" as=
- opposed
->>>> to "git show INDEX" should look like. So what should it look like =
-during a
->>>> "pull" that did not finish?
->>>
->>> If NEXT is to mean the result of a commit in the current state, and=
- the
->>> current state would or should not allow a commit, then trying to ac=
-cess
->>> that pseudo-commit should error out with a helpful message.
->>
->> What "helpful message"? I asked for the user experience, not handwav=
-ing.
->>
->> Do you mean to say that the error message would teach the user that =
-the
->> current state is not something you can create a commit? What message=
- would
->> that give the end user? =C2=A0I am hoping the following is not what =
-will happen:
->>
->> =C2=A0Q. I tried "git show NEXT" because I wanted to see what the ne=
-xt commit
->> =C2=A0 =C2=A0 would look like, but I got an error, saying NEXT is no=
-t known as I
->> =C2=A0 =C2=A0 haven't resolved a conflict.
->>
->> =C2=A0A. Yes, the message is correct.
->
-> I'm not sure why this wouldn't just list out the index tree,...
+On Mon, Jun 6, 2011 at 18:11, Jeff King <peff@peff.net> wrote:
+> I'll try the nicer fix Sverre mentioned and post a real patch. I wanted
+> to add a test for multiple refs to the test suite, but I got bogged down
+> by other breakages. Some of which I think are the fault of testgit, but
+> one of which I think may be a problem in the transport-helper code.
 
-You are not entitled to say "I'm not sure" ;-). I asked you to show a
-design of the user experience of "git show NEXT", as an advocate for th=
-e
-NEXT/WTREE notation.
+I'm not 100% the current remote-helper code allows that, since there
+might be some interaction where the transport-helper code needs to
+read from the helper before closing the connection. I don't think
+that's the case, but I'm not sure of it either.
 
-I'd take it that you would "just list out the index tree" as the outlin=
-e
-of the user experience.
+> I gave up in frustration after many hours of dealing with it on Friday,
+> but I'll give it another go today. :)
 
->> =C2=A0A. You would say "git diff HEAD NEXT".
->>
->> =C2=A0Q. Ah, that is the same as I always do before making a commit =
-to see what
->> =C2=A0 =C2=A0 I have added so far look sane. Thanks.
->
-> Why would this look sane? I would think this would say "* Unmerged
-> path <file>" just like 'diff --cached would do.
+Sounds familiar.
 
-Either you read it too hastily or I didn't write this clear enough; "sa=
-ne"
-does not refer to the command. In this story, the novice is saying "Bef=
-ore
-I make a commit, I check if my changes so far matches what I wanted to
-achieve, in other words, I check the sanity of my changes. And 'git dif=
-f
-HEAD NEXT' is the command I use when I am not in this weird 'conflicted=
-'
-state. I am happy that I can use the same command".
+-- 
+Cheers,
 
-> But, yes, I assume there would be some difficulty in supporting it
-> everywhere.
-
-I don't care too much about "difficulty in uniformly implementing". I a=
-m
-doubting that you can _design_ uniformly for these new tokens to make
-enough sense to help the new people. That is why I've been asking for
-concrete examples of user experience design, sample transcripts, that
-covers known corner cases.
-
-If NEXT/WTREE advocates cannot come up with one, or if that is just to
-punt and say "NEXT is not defined in this case---use the traditional
-command" in the error message, I don't see much point in discussing thi=
-s
-further. It will end up with the same whine-fest as previous rounds.
+Sverre Rabbelier
