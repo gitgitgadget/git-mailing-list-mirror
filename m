@@ -1,76 +1,65 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH 3/3] submodule add: clean up duplicated code
-Date: Mon, 06 Jun 2011 21:58:43 +0200
-Message-ID: <4DED3173.20804@web.de>
-References: <7vaae2ihe1.fsf@alter.siamese.dyndns.org> <1306943792-1825-1-git-send-email-marcnarc@xiplink.com> <7vsjrth4iy.fsf@alter.siamese.dyndns.org> <4DE69945.1080601@web.de> <7v39jsdulf.fsf@alter.siamese.dyndns.org> <4DE93B29.4030401@web.de> <7vipskb0br.fsf@alter.siamese.dyndns.org> <4DED30E0.6090608@web.de>
+From: Alex Neronskiy <zakmagnus@google.com>
+Subject: Re: [PATCH] Document the underlying protocol used by shallow repositories and --depth commands.
+Date: Mon, 6 Jun 2011 19:56:00 +0000 (UTC)
+Message-ID: <loom.20110606T213817-376@post.gmane.org>
+References: <BANLkTi=SVZPebW2YXRnaLvkxEDGy_rrtJ3jayt8Oco6Sn8hciQ@mail.gmail.com> <7vvcwi95yi.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Marc Branchaud <marcnarc@xiplink.com>, git@vger.kernel.org,
-	Mark Levedahl <mlevedahl@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 06 21:58:50 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 06 22:00:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QTfwo-0004OS-5Z
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Jun 2011 21:58:50 +0200
+	id 1QTfyA-0004tZ-Rx
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Jun 2011 22:00:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755965Ab1FFT6p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jun 2011 15:58:45 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:34237 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753289Ab1FFT6p (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jun 2011 15:58:45 -0400
-Received: from smtp07.web.de  ( [172.20.5.215])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 2E61D1918F185;
-	Mon,  6 Jun 2011 21:58:44 +0200 (CEST)
-Received: from [93.240.124.249] (helo=[192.168.178.43])
-	by smtp07.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1QTfwi-000588-00; Mon, 06 Jun 2011 21:58:44 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
-In-Reply-To: <4DED30E0.6090608@web.de>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX18fYcEV0zBHShJ72z2QZJl1b7yL545IEWdvfiBV
-	96VZMsdijAkV1vXneWG50iJRYOp8+GHikyRDQkHR6MpuhCBXoJ
-	dkmKb0PWM6+rz8Aq4ffA==
+	id S1756079Ab1FFUAI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2011 16:00:08 -0400
+Received: from lo.gmane.org ([80.91.229.12]:51133 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751685Ab1FFUAH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2011 16:00:07 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1QTfy2-0004qZ-3i
+	for git@vger.kernel.org; Mon, 06 Jun 2011 22:00:06 +0200
+Received: from 216-239-45-4.google.com ([216.239.45.4])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 06 Jun 2011 22:00:06 +0200
+Received: from zakmagnus by 216-239-45-4.google.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 06 Jun 2011 22:00:06 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 216.239.45.4 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110422 Ubuntu/10.04 (lucid) Firefox/3.6.17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175158>
 
-In cmd_add() the switch statement used to resolve a relative url was
-present twice. Remove the second one and use the realrepo variable set
-by the first one (lines 194 ff.) instead.
+Junio C Hamano <gitster <at> pobox.com> writes:
 
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
- git-submodule.sh |   10 +---------
- 1 files changed, 1 insertions(+), 9 deletions(-)
+> > +Once all the 'want's and 'shallow's (and optional 'deepen') are
+> > +transferred, clients MUST send a flush-pkt. If the client has all
+> > +the references on the server, and as much of their commit history
+> > +as it is interested in, client flushes and disconnects.
+> 
+> Hmmmmm, are you describing "everything-local then flush and all-done" in
+> do_fetch_pack() with the second sentence? If so, placing the description
+> here is misleading. In that case, I do not think any of the find-common
+> exchange starting from the "upload-request" phase happens.
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 3fbc21e..2a727e1 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -238,15 +238,7 @@ cmd_add()
- 			die "'$path' already exists and is not a valid git repo"
- 		fi
+No, this refers to the same event which was already described in that document,
+which I believe happens from inside find_common. It may just be some confusion
+on the meaning of "having a reference" on my part, but the idea was to point out
+that the client could flush at this stage even if it doesn't have every commit.
 
--		case "$repo" in
--		./*|../*)
--			url=$(resolve_relative_url "$repo") || exit
--		    ;;
--		*)
--			url="$repo"
--			;;
--		esac
--		git config submodule."$path".url "$url"
-+		git config submodule."$path".url "$realrepo"
- 	else
-
- 		module_clone "$path" "$realrepo" "$reference" || exit
--- 
-1.7.6.rc0.3.g28a66
+I tried to amend the existing wording but I suppose it was just misleading, so
+it's better to write something else entirely.
