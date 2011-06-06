@@ -1,206 +1,152 @@
-From: Scott Chacon <schacon@gmail.com>
-Subject: Re: Command-line interface thoughts
-Date: Mon, 6 Jun 2011 10:42:47 -0700
-Message-ID: <BANLkTi=KZN3g4s9jHSgYcPHA4eM+2U3g4w@mail.gmail.com>
-References: <BANLkTikTWx7A64vN+hVZgL7cuiZ16Eobgg@mail.gmail.com>
-	<m339jps1wt.fsf@localhost.localdomain>
-	<BANLkTinidLbQ_FcVEiGSK91uXYWaKk7MKA@mail.gmail.com>
-	<201106051311.00951.jnareb@gmail.com>
-	<BANLkTik+xhd5QQ09QiPSH1bFAndzipKtrw@mail.gmail.com>
-	<7vwrgza3i2.fsf@alter.siamese.dyndns.org>
-	<4DEC8322.6040200@drmicha.warpmail.net>
-	<7vk4cz9i1b.fsf@alter.siamese.dyndns.org>
-	<4DECE147.3060808@drmicha.warpmail.net>
-	<7vd3ir9btd.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Michael Nahas <mike@nahas.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 06 19:42:59 2011
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [RFC/PATCHv3 0/5] Improving gitweb documentation, creating manpages
+Date: Mon,  6 Jun 2011 19:44:26 +0200
+Message-ID: <1307382271-7677-1-git-send-email-jnareb@gmail.com>
+Cc: John 'Warthog9' Hawley <warthog9@kernel.org>,
+	Petr Baudis <pasky@suse.cz>,
+	Drew Northup <drew.northup@maine.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 06 19:51:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QTdpG-0001IL-5T
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Jun 2011 19:42:54 +0200
+	id 1QTdy1-0005Yb-Tf
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Jun 2011 19:51:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756839Ab1FFRms convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jun 2011 13:42:48 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:42283 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756618Ab1FFRms convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2011 13:42:48 -0400
-Received: by gyd10 with SMTP id 10so1555712gyd.19
-        for <git@vger.kernel.org>; Mon, 06 Jun 2011 10:42:47 -0700 (PDT)
+	id S1754758Ab1FFRvb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2011 13:51:31 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:33787 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753427Ab1FFRv2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2011 13:51:28 -0400
+Received: by wwa36 with SMTP id 36so4070004wwa.1
+        for <git@vger.kernel.org>; Mon, 06 Jun 2011 10:51:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=+wn5iFUgXVCj1j+8jds66YXvgvCZsgO/ieI6ey9Kulg=;
-        b=NiIALdZDzY8KNzv9MQ6VVsfS67GJfVVr+/Sq5Vss6OiWN6gytFZu75nwVC2mYN5cXq
-         XioYSQfoNHTx02GEj/62iLRhow8bdfB+d09FwvhBOe0rTdg7mNnhAVaEzL4lDPgdSMQ9
-         jLchHgmKbnBnchOBWhHHVWuglFSjnw3mChq2k=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=x8hbg12M4T9ReacM6PQ7Hx7TP5gJddr3ctNxZYobChA=;
+        b=gf0LZGWu2bpvdvnn4rwxPixphrYENhueSMBrC0RJLcA57tcJQzyMf8QdNUoN89w7Ym
+         v3LSj8pUiY2cynjfu2O6a0fbtKoY9UwTPslKIxo16Sq+8thtMOh2+QxyIX3ZTT+xvzY3
+         ZULipIK7B64mQVPON3HxqA5s9to/yebCe+UxA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=BJrvsL+O5JDoE9O0chDnD0PxOVPlXoZrtWw6qoF0TbP5RNHYA+bqSaDKtyTPQfKUn+
-         2l7UmFvgXjjiJ/Xp6+o1XYPlOkMHwV++XjJbpY3wbhV1gTfYYX0dLOXgS1yv/SpkdzAp
-         8Eqfe8jbKHbl36YHiYAgrHGzTGY6CKHtxB2ks=
-Received: by 10.236.173.40 with SMTP id u28mr5072083yhl.229.1307382167188;
- Mon, 06 Jun 2011 10:42:47 -0700 (PDT)
-Received: by 10.236.36.1 with HTTP; Mon, 6 Jun 2011 10:42:47 -0700 (PDT)
-In-Reply-To: <7vd3ir9btd.fsf@alter.siamese.dyndns.org>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=dH3KtM71qNWpQKMaST78IDkbyEaDCbI90lxw53lq6vF9vXCvcExirDyW+CjY+cerpX
+         Hi1rhvujY3TziCenEUAuqnWZH4cIHF241mixpkPBvx0/YdTUmWp31ynjDHIz8jLNuRBm
+         FkYoEJd8vbgiPOx85fNcLgUZIyfYB5ESIQ/Lk=
+Received: by 10.216.171.18 with SMTP id q18mr3707780wel.47.1307382686571;
+        Mon, 06 Jun 2011 10:51:26 -0700 (PDT)
+Received: from localhost.localdomain (abwr100.neoplus.adsl.tpnet.pl [83.8.241.100])
+        by mx.google.com with ESMTPS id t79sm2440982weq.5.2011.06.06.10.51.23
+        (version=SSLv3 cipher=OTHER);
+        Mon, 06 Jun 2011 10:51:24 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175140>
 
-Hey,
+This is yet a work in progress.
 
-On Mon, Jun 6, 2011 at 9:14 AM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
->
->>> That is why I asked what the user experience of "git show NEXT" as =
-opposed
->>> to "git show INDEX" should look like. So what should it look like d=
-uring a
->>> "pull" that did not finish?
->>
->> If NEXT is to mean the result of a commit in the current state, and =
-the
->> current state would or should not allow a commit, then trying to acc=
-ess
->> that pseudo-commit should error out with a helpful message.
->
-> What "helpful message"? I asked for the user experience, not handwavi=
-ng.
->
-> Do you mean to say that the error message would teach the user that t=
-he
-> current state is not something you can create a commit? What message =
-would
-> that give the end user? =C2=A0I am hoping the following is not what w=
-ill happen:
->
-> =C2=A0Q. I tried "git show NEXT" because I wanted to see what the nex=
-t commit
-> =C2=A0 =C2=A0 would look like, but I got an error, saying NEXT is not=
- known as I
-> =C2=A0 =C2=A0 haven't resolved a conflict.
->
-> =C2=A0A. Yes, the message is correct.
+0. The first three patches are improvements to gitweb's INSTALL and
+README files, before moving or copying most of the contents to
+gitweb.txt and gitweb.conf.txt i.e. newly introduced gitweb's
+manpages.
 
-I'm not sure why this wouldn't just list out the index tree, having
-some message for entries that have more than one stage.  Like a
-porcelain-ized version of 'git ls-files --stage', maybe in this case
-with a warning at the bottom that a subsequent commit command will not
-complete.  Even something similar to what would happen if you ran
-'commit' right then:
+The first two were sent to git mailing list as
 
-  fatal: 'commit' will not be possible because you have unmerged files.
+  [PATCH 0/2] Improving gitweb documentation
+  http://thread.gmane.org/gmane.comp.version-control.git/174954
 
-> =C2=A0Q. But then how can I see what the next commit would look like?
->
-> =C2=A0A. You would say "git diff HEAD NEXT".
->
-> =C2=A0Q. Ah, that is the same as I always do before making a commit t=
-o see what
-> =C2=A0 =C2=A0 I have added so far look sane. Thanks.
+Third one was sent as reply in thread mentioned above
 
-Why would this look sane? I would think this would say "* Unmerged
-path <file>" just like 'diff --cached would do.
+  [PATCH 3/2] gitweb: Move "Requirements" up in gitweb/INSTALL
+  http://thread.gmane.org/gmane.comp.version-control.git/174954/focus=175016
 
->
-> =C2=A0 =C2=A0 ...after 2 minutes...
->
-> =C2=A0Q. Sorry, it does not work. I get the same error, that says NEX=
-T is not
-> =C2=A0 =C2=A0 known yet.
->
-> =C2=A0A. Ok, you would say "git diff HEAD" the old fashioned way. The=
- person
-> =C2=A0 =C2=A0 who thought NEXT would be useful didn't think things th=
-rough.
+1. The man page for /etc/gitweb.conf is modified, extended and
+improved version of patch by Drew Northup from
 
-I think the point would be that "git diff HEAD WTREE" would give you
-this same output and if you had the basic concept of these three
-important areas of Git that you could be explicit about what you
-wanted to see or compare rather than having to look up the specific
-special case that will show you what you want. Consider these very
-common scenarios from a new user perspective: you want to see what is
-changed in your working tree but not added yet, you want to see what
-is added but not committed, you want to see the sum total of all
-changes since your last commit and you want to see what the index
-currently looks like.
+  "[PATCH/WIP] Starting work on a man page for /etc/gitweb.conf"
+  http://thread.gmane.org/gmane.comp.version-control.git/173422
 
-Here are the commands currently:
+Drew version was mostly pulled directly from the README and INSTALL
+files of gitweb.  I have tried to incorporate comments in mentioned
+thread, and to group config variables by category.
 
-a) diff
-b) diff --cached
-c) diff HEAD
-d) ls-files --stage
+This version now moves, rather than copies, contents from
+gitweb/README file.
 
-Here would be the commands with the proposed pseudo-trees.
+2. The man page for gitweb is slightly extended version of patch I
+have sent to git mailing list as
 
-a) diff NEXT WTREE
-b) diff HEAD NEXT
-c) diff HEAD WTREE
-d) show NEXT
+  "[RFC/PATCH] gitweb: Starting work on a man page for gitweb (WIP)"
+  http://thread.gmane.org/gmane.comp.version-control.git/173422/focus=173625
 
-It seems to me to be more guessable and straightforward for new users.
- But, yes, I assume there would be some difficulty in supporting it
-everywhere.
+This version now moves, rather than copies, contents from
+gitweb/README and gitweb/INSTALL files.
 
->
-> =C2=A0Q. Now I am seeing a diff between the conflicted state and the =
-previous
-> =C2=A0 =C2=A0 commit, I think I can get to where I want to go from he=
-re. Thanks.
->
->
->> Another option is to make NEXT/INDEX mean a tree (:0:). I have not
->> thought this through (and have not made a suggestion, accordingly) b=
-ut I
->> do see a problem in the UI. (I don't think we need to change the
->> existing ui in that respect but can amend and improve it.)
->>
->> Anyway, it's rc phase :)
->
-> Rc or not rc, just repeating a fuzzy and uncooked "idea" around phone=
-y
-> ref-looking names that will end up confusing the users, and selling t=
-hat
-> as if it is a logical conclusion to "we want to give an easier to
-> understand UI", without presenting a solid user experience design tha=
-t is
-> convincing enough that the "idea" will reduce confusion will not get =
-us
-> anywhere, especially when it is sprinkled with ad hominem attack at m=
-e.
+......................................................................
 
-I think I'm the only one that mentioned your name so I apologize if
-you saw that as an attack.  I was not saying you are unreasonable in
-not changing the UI all the time, or that you are unreasonable for not
-liking the NEXT/WTREE - there are certainly cases I'm not considering.
-(For example, I'm more concerned about things like 'git commit-tree
-NEXT' or 'git rev-parse NEXT' if the index is in a weird state - it
-obviously has to be special-cased and I would assume only usable at
-the porcelain level, possibly only by 'diff', 'show' and 'grep'. It's
-the implementation I'm mainly worried about, I feel that the UI would
-be pretty straightforward in all these cases.)
+The part that is left is turn references to chapters/sections into
+hyperlinks, fix and unify AsciiDoc formatting (it is quite
+inconsistent now), checking for leftover unintended duplication,
+cleaning up gitweb/README.
 
-Re: the ad-hominim stuff, I was simply remarking that the
-'reset'/'checkout' debate has been had several times and there is
-precedent for it being a non-starter.  I also see and understand the
-argument from you and Linus about that, I just happen to disagree with
-it. It was not meant to be an attack.
+NOTE also that I have only tested that both generated manpages _looks_
+(halfway) reasonable.  I didn't check HTML output.
 
-Scott
+
+Those commits also available in 'gitweb/doc' branch in both of my
+repositories:
+
+  git://repo.or.cz/git/jnareb-git.git
+  git://github.com/jnareb/git.git
+
+
+Shortlog:
+~~~~~~~~~
+Drew Northup (1):
+  gitweb: Starting work on a man page for /etc/gitweb.conf (WIP)
+
+The one that started this.  Drew, could you comment on this thread?
+Thanks in advance.
+
+Jakub Narebski (4):
+  gitweb: Move information about installation from README to INSTALL
+  gitweb: Describe CSSMIN and JSMIN in gitweb/INSTALL
+  gitweb: Move "Requirements" up in gitweb/INSTALL
+  gitweb: Starting work on a man page for gitweb (WIP)
+
+My contributions.
+
+Table of contents:
+~~~~~~~~~~~~~~~~~~
+ [PATCHv3 1/5] gitweb: Move information about installation from
+ [PATCHv3 2/5] gitweb: Describe CSSMIN and JSMIN in gitweb/INSTALL
+ [PATCHv3 3/5] gitweb: Move "Requirements" up in gitweb/INSTALL
+ [RFC/PATCHv3 4/5] gitweb: Starting work on a man page for /etc/gitweb.conf (WIP)
+ [RFC/PATCHv3 5/5] gitweb: Starting work on a man page for gitweb (WIP)
+
+Diffstat:
+~~~~~~~~~
+ Documentation/Makefile        |    9 +-
+ Documentation/gitweb.conf.txt |  724 +++++++++++++++++++++++++++++++++++++++++
+ Documentation/gitweb.txt      |  702 +++++++++++++++++++++++++++++++++++++++
+ gitweb/INSTALL                |  246 ++++++++------
+ gitweb/Makefile               |    7 +-
+ gitweb/README                 |  519 +----------------------------
+ 6 files changed, 1599 insertions(+), 608 deletions(-)
+ create mode 100644 Documentation/gitweb.conf.txt
+ create mode 100644 Documentation/gitweb.txt
+
+Dirstat:
+~~~~~~~~
+  62.4% Documentation/
+  37.5% gitweb/
+-- 
+1.7.5
