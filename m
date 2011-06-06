@@ -1,89 +1,71 @@
-From: Victor Engmark <victor.engmark@terreactive.ch>
-Subject: Re: Jabber, question on push,pull and --tags, and no help but
- jabber
-Date: Mon, 6 Jun 2011 17:34:05 +0200
-Message-ID: <20110606153405.GA15894@victor.terreactive.ch>
-References: <20110606130205.GA41674@sherwood.local>
- <9215090.63086.1307370716794.JavaMail.trustmail@mail1.terreactive.ch>
+From: Jeff King <peff@peff.net>
+Subject: Re: Re* [BUG] "git checkout -b" erronously thinks a branch already
+ exists
+Date: Mon, 6 Jun 2011 12:05:38 -0400
+Message-ID: <20110606160538.GA11485@sigill.intra.peff.net>
+References: <201106051305.13723.stefano.lattarini@gmail.com>
+ <7v62ojbuyh.fsf@alter.siamese.dyndns.org>
+ <7v1uz7bkc9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Steffen Daode Nurpmeso <sdaoden@googlemail.com>,
+Content-Type: text/plain; charset=utf-8
+Cc: Stefano Lattarini <stefano.lattarini@gmail.com>,
 	git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Jun 06 17:34:22 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 06 18:05:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QTbor-0006jH-DQ
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Jun 2011 17:34:21 +0200
+	id 1QTcJP-0004yy-UD
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Jun 2011 18:05:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757569Ab1FFPeQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jun 2011 11:34:16 -0400
-Received: from gate.terreactive.ch ([212.90.202.121]:38067 "EHLO
-	mail.terreactive.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752893Ab1FFPeP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jun 2011 11:34:15 -0400
+	id S1753122Ab1FFQFu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2011 12:05:50 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35504
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751429Ab1FFQFt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2011 12:05:49 -0400
+Received: (qmail 7037 invoked by uid 107); 6 Jun 2011 16:05:53 -0000
+Received: from c-76-21-13-32.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (76.21.13.32)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 06 Jun 2011 12:05:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Jun 2011 12:05:38 -0400
 Content-Disposition: inline
-In-Reply-To: <9215090.63086.1307370716794.JavaMail.trustmail@mail1.terreactive.ch>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-terreActive-From: victor.engmark@terreactive.ch
-X-Spam-Status: No
+In-Reply-To: <7v1uz7bkc9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175130>
 
-On Mon, Jun 06, 2011 at 04:31:50PM +0200, Michael J Gruber wrote:
-> Steffen Daode Nurpmeso venit, vidit, dixit 06.06.2011 15:02:
-> > Hello GIT,
-> >     first paragraph is reserved for praising your existence.
-> >     'Used cvs(1) for long years in small team projects with local
-> >     private repos and never felt the need for anything else.  2011
-> >     is different.  I first tried you but failed resoundingly.  Due
-> >     to vim(1) and mutt(1) i discovered hg(1) and i still love it's
-> >     simple usage.  'Talking about the front-end anyway.  It's huge
-> >     memory consumption and slow performance forbids it's usage on
-> >     our old PCs (e.g. Cyrix 166+) though.  So i came back and
-> >     found you still receptive!  And the more i work, the less
-> >     i hurt, the greater the knowledge, the smoother the
-> >     interaction.  Are you the final word on RC in the end?
-> > 
-> > I stumbled over one thing i don't understand, because it seems
-> > illogical: why do i need to use --tags to force pushing of tags?
-> > Because there is even a config option for the latter, i suspect
-> > this is because of intention.  It would be nice to get some
-> > information on the background of that, like a link to yet existing
-> > documentation.  Anyway i was a bit astonished to look at some
+On Sun, Jun 05, 2011 at 10:27:34PM -0700, Junio C Hamano wrote:
+
+> Let's do this instead. I don't know what I was thinking when I wrote that
+> inefficient "loop refs to see if there is that one" patch.
 > 
-> Tags may contain private information. Say you pull some changes from
-> your head of group, find a strange commit you want to look at later and
-> tag it with "what-is-this-crap"...
+> -- >8 --
+> Subject: [PATCH] checkout -b <name>: correctly detect existing branch
 
-You could use the same argument about commit log messages, branch names
-and code comments. No go ;)
+Yeah, I did a double-take seeing your other patch and wondering why you
+weren't just using resolve_ref.
 
-> More seriously, tags are not part of the "remotes layout", so when you
-> push them and others pull them they overwrite their tags if there's a
-> name clash.
+So this patch looks good to me.
 
-That's odd - I wouldn't expect anything handled by Git to be simply
-overwritten without merging. Is there some technical reason for this, or
-is it just not implemented yet?
+> +int ref_exists(char *refname)
+> +{
+> +	unsigned char sha1[20];
+> +	return !!resolve_ref(refname, sha1, 1, NULL);
+> +}
 
-If it makes more sense to casual users, how about simply making --tags
-the default, and --no-tags optional?
+I was tempted to suggest that ref_exists could be used in lots of other
+places to make the code slightly more readable. But in many cases, the
+variable holding the dummy sha1 cannot go away (because it is used
+elsewhere in the function), which means manually figuring out whether or
+not the sha1 was actually a dummy or not[1]. So it's probably not worth
+the effort for such minor gain.
 
-Cheers
--- 
-Victor
-terreActive AG
-Kasinostrasse 30
-CH-5001 Aarau
-Tel: +41 62 834 00 55
-Fax: +41 62 823 93 56
-www.terreactive.ch
+-Peff
 
-Wir sichern Ihren Erfolg - seit 15 Jahren
+[1] For example, the one in create_branch is OK to change, but the one
+in delete_branch is not.
