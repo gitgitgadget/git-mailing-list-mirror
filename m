@@ -1,65 +1,97 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv3 3/5] gitweb: Move "Requirements" up in gitweb/INSTALL
-Date: Mon, 6 Jun 2011 15:05:10 -0500
-Message-ID: <20110606200510.GC30588@elie>
-References: <1307382271-7677-1-git-send-email-jnareb@gmail.com>
- <1307382271-7677-4-git-send-email-jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] clone: always fetch remote HEAD
+Date: Mon, 06 Jun 2011 13:31:54 -0700
+Message-ID: <7vipsi8zwl.fsf@alter.siamese.dyndns.org>
+References: <20110603050901.GA883@sigill.intra.peff.net>
+ <20110603051805.GC1008@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, John 'Warthog9' Hawley <warthog9@kernel.org>,
-	Petr Baudis <pasky@ucw.cz>,
-	Drew Northup <drew.northup@maine.edu>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 06 22:05:24 2011
+Cc: Dmitry Ivankov <divanorama@gmail.com>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 06 22:32:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QTg39-0007Qv-5k
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Jun 2011 22:05:23 +0200
+	id 1QTgTA-0003JQ-Bt
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Jun 2011 22:32:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755832Ab1FFUFR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jun 2011 16:05:17 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:48162 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753367Ab1FFUFP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jun 2011 16:05:15 -0400
-Received: by iyb14 with SMTP id 14so3391054iyb.19
-        for <git@vger.kernel.org>; Mon, 06 Jun 2011 13:05:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=5ENYpdFlJQEEOt0hL+1VYZ8sDbjgo4yStpAo0ay6R6I=;
-        b=VpD4G5BD5BxmbyG7Y24FuqUF2j7UeMjgQWb0jlZ2C+q9ryDRBj5kjHUGEoU4RYdsIS
-         WaAeoY2zGRH+HcSHBUCNzMJCs55FLlBg1cWl0AroAU6J1VA5CW7ctnGgC6LIanx/TEiI
-         WWFVKiJS0FHpzgbxg8EOExoJF+hvGacqsAy7U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=JcZLgYPVKApAfvQN0ZyxGEMXKqgFvdBru4I8M5pufipseU0pJPtOlxAnVt7V/I+LUv
-         38vylkPYm4dtPkwMvI3YJi0UThShhRsH3uD2/ZYOoOkoCEDMq0aoAc/A+DzfVLZwAiKa
-         4OzkjBEGQREs+kH9dzkmOHO7YV2Q4N7p9ulds=
-Received: by 10.42.100.141 with SMTP id a13mr8452989ico.72.1307390714570;
-        Mon, 06 Jun 2011 13:05:14 -0700 (PDT)
-Received: from elie (adsl-68-255-97-40.dsl.chcgil.sbcglobal.net [68.255.97.40])
-        by mx.google.com with ESMTPS id s2sm2962367icw.17.2011.06.06.13.05.12
-        (version=SSLv3 cipher=OTHER);
-        Mon, 06 Jun 2011 13:05:13 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1307382271-7677-4-git-send-email-jnareb@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757965Ab1FFUcK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2011 16:32:10 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44443 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756071Ab1FFUcI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2011 16:32:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 533865032;
+	Mon,  6 Jun 2011 16:34:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zfM3/LilYPx1r3SfsoUCTjP79cM=; b=YfNhoo
+	0IgNFOHI9vgXwBiQVPEIQoaSlphWlG3bLY2GRXyyj/i9W98E62q4+mpUAa9T4nZ/
+	pgBisuwf0/xdll7VzG0UR2lPvlj19vlz5NoBabIFmOpHkbxPCv1YryE0k5+QbL8k
+	zGPLDYjd988TO14LFkb+7SZDptWsCXQDeMAJ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=c75vU+Sx7F+guPiLonL9KDqQlh8ebSmK
+	wLPqqEpLmIB5icytJGtneQOC+PUDVZ+9024JQPT0qgUiTZ16ki8rrY1CNsU4vN3Z
+	iyBmqX8jgEFVsMAaX8amjvNr/FDmiuqwQPxd9t+8wrRxM0kEYpuHiVu/VH2ySnlY
+	6CbgD1ononE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F06FF502D;
+	Mon,  6 Jun 2011 16:34:12 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 51B9B5026; Mon,  6 Jun 2011
+ 16:34:06 -0400 (EDT)
+In-Reply-To: <20110603051805.GC1008@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 3 Jun 2011 01:18:05 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 56DF8A82-907C-11E0-828D-EA23C7C1A288-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175161>
 
-Jakub Narebski wrote:
+Jeff King <peff@peff.net> writes:
 
-> This way you can examine prerequisites at first glance
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index f579794..a99f1c8 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -343,8 +343,9 @@ static void remove_junk_on_signal(int signo)
+>  static struct ref *wanted_peer_refs(const struct ref *refs,
+>  		struct refspec *refspec)
+>  {
+> -	struct ref *local_refs = NULL;
+> -	struct ref **tail = &local_refs;
+> +	struct ref *head = get_remote_ref(refs, "HEAD");
 
-Yes, good idea.
+The rest of the patch looked quite sane but I wonder if this should be
+using get_remote_ref() that calls find_ref_by_name_abbrev() which in turn
+would hit "refs/heads/HEAD" if the remote side didn't give you "HEAD".
+Shouldn't it be using find_ref_by_name() directly?
+
+> @@ -357,8 +358,11 @@ static void write_remote_refs(const struct ref *local_refs)
+>  {
+>  	const struct ref *r;
+>  
+> -	for (r = local_refs; r; r = r->next)
+> +	for (r = local_refs; r; r = r->next) {
+> +		if (!r->peer_ref)
+> +			continue;
+
+As this is part of this patch, I presume this test reliably catch "HEAD"
+and only "HEAD", but what is it that gives us this guarantee?  Is it that
+in all three possible configurations (i.e. traditional no-separate remote
+layout, separate remote layout, or mirrored layout), we never map anything
+outside refs/heads/* and refs/tags/* namespace, hence things like HEAD
+will never have peer_ref defined?
+
+This is not a complaint but is an honest question. I am wondering how
+future possible enhancements to "clone" (like the rumored "track only this
+branch") will affect codepaths around this area.
