@@ -1,462 +1,406 @@
-From: Jeremie Nikaes <jeremie.nikaes@ensimag.imag.fr>
-Subject: [PATCH] Add a remote helper to interact with mediawiki, pull & clone handled
-Date: Mon,  6 Jun 2011 12:20:35 +0200
-Message-ID: <1307355635-5580-1-git-send-email-jeremie.nikaes@ensimag.imag.fr>
+From: JD Horelick <jdhore1@gmail.com>
+Subject: New CIA.vc script
+Date: Mon, 6 Jun 2011 06:36:33 -0400
+Message-ID: <BANLkTi=_nXGOcqC1PMLFJfgkdx8HbsweEg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: jrnieder@gmail.com,
-	Jeremie Nikaes <jeremie.nikaes@ensimag.imag.fr>,
-	Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>,
-	Claire Fousse <claire.fousse@ensimag.imag.fr>,
-	David Amouyal <david.amouyal@ensimag.imag.fr>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	=?UTF-8?q?Sylvain=20Boulm=C3=A9?= <sylvain.boulme@imag.fr>
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 06 12:21:19 2011
+X-From: git-owner@vger.kernel.org Mon Jun 06 12:36:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QTWvt-0002v5-A2
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Jun 2011 12:21:17 +0200
+	id 1QTXAm-00007d-GG
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Jun 2011 12:36:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753104Ab1FFKVM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jun 2011 06:21:12 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:63201 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753105Ab1FFKVJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jun 2011 06:21:09 -0400
-Received: by wwa36 with SMTP id 36so3631819wwa.1
-        for <git@vger.kernel.org>; Mon, 06 Jun 2011 03:21:08 -0700 (PDT)
+	id S1755495Ab1FFKgi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2011 06:36:38 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:50607 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752133Ab1FFKgf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2011 06:36:35 -0400
+Received: by fxm17 with SMTP id 17so2311282fxm.19
+        for <git@vger.kernel.org>; Mon, 06 Jun 2011 03:36:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:sender:from:to:cc:subject:date:message-id
-         :x-mailer:mime-version:content-type:content-transfer-encoding;
-        bh=TRaBKaMr/GkvkOvmqBwUzpqpy1RvvrOWz/Wqk/nqx9o=;
-        b=lyDnXqNyMqznhAaIQdLXI48RWbgh+Uxd5C1SJFSw5vBo7vndxr/aQI0Ng2iXs9pzci
-         ceXwDLwef05Q2wl1vOqbe1h5ut9ZaJs/+xVsdTVrFVXNnrLv6bFMv6NbnXt7oCTQPSYa
-         9VXgSJYo6qZ7LkVcjqErTxyms7e+TBuKcpvbg=
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=gLdLWgFL5Y+RBFHdjFsFooWPboPN0o4aCwphrm5nFzc=;
+        b=pD0/wNpxFh8UBdIXcTukHkxcv9cqxnhuYIhEFlSI7pFd23mWLykQwynJQ3GDoTmLzd
+         7avWz3v5Xvx0Lc7g8zUvXTm/u0L/m45kZzCx2IlJjfrab9eSH1u9X2gXNRRi1X1+m3YX
+         m2gn2OQmd61Jv7OIOCBOt+pjbcQ/Tm/S26q3I=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=N/jivFLgOkOFcdhCJPJgvtasKRzNCht4xC7tZ5tvhydUT+tdqAhxqIFj9l3Qdif4FN
-         3Zz1QI9d0yAmBwMBo0hbodFeHhJ2Yzyvi0Bvk1SGIn0IQR1MxTnEZpb1Q3QvAhxq3pYY
-         1e7DrjckCGGkH8weI8uqwZCRxbDfujdIa6xE4=
-Received: by 10.227.57.78 with SMTP id b14mr4779503wbh.106.1307355667788;
-        Mon, 06 Jun 2011 03:21:07 -0700 (PDT)
-Received: from localhost.localdomain (100.46.23.93.rev.sfr.net [93.23.46.100])
-        by mx.google.com with ESMTPS id et5sm2748107wbb.50.2011.06.06.03.21.04
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 06 Jun 2011 03:21:06 -0700 (PDT)
-X-Mailer: git-send-email 1.7.4.1
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=caObDkNfQ+E9Lu3FTjIb+6FcLBhUUL1Ph1FXXQfHDXaj2kwf1SP/YIOE1rDwunItxb
+         G2qodGHx6k2LPH/qlXw3xBKDAA0td2/bt8FekFaDdJFjxGW8CbhmbdbX1D4jCASFIeh+
+         rbBtG4xDkl2ZLrWHU1bF8Otgi+8NdZoT0TFcQ=
+Received: by 10.223.95.198 with SMTP id e6mr2459591fan.13.1307356593518; Mon,
+ 06 Jun 2011 03:36:33 -0700 (PDT)
+Received: by 10.223.29.138 with HTTP; Mon, 6 Jun 2011 03:36:33 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175116>
 
-Implement a gate between git and mediawiki, allowing git users to
-push and pull objects from mediawiki just as one would do with a
-classic git repository thanks to remote-helpers.
+Hello all,
 
-Currently supported commands are :
-      git clone mediawiki::http://onewiki.com
-      git pull
+I'm apologizing in advance if this email is formatted badly or done
+wrong. I'm not really a mailing list guy.
+I recently decided to take the ciabot.pl script for Git and improve
+upon it and now I am submitting it for inclusion in upstream Git.
 
-You need the following packages installed (available on common
-repositories):
-      libmediawiki-api-perl
-      libdatetime-format-iso8601-perl
+I decided to use the Perl version for many reasons including: I know
+Perl better than I know Python, Git seems more Perl-centric to me and
+the Perl script was already closest to what I needed.
 
-Use remote helpers in order to be as transparent as possible
-to the git user.
+Here are the things this script does better than any other CIA.vc
+client script implementations i've seen for Git:
+1. It can use both RPC and email for sending commit notifications to
+CIA.vc. The Python and Shell versions only use email, which has been
+deprecated by CIA.vc for a long while.
+2. It uses Git's config system for storing the options that will
+change on a per-project basis if the script is running on a central
+host.
+3. It has support for the "module" variable allowing (for example) a
+seperate plugins repository to go to the same project page as the main
+repository, just prefixed with plugins (or whatever) so it's
+discernable. If it is empty, no module variable is sent to CIA.
 
-Download Mediawiki revisions through the Mediawiki API and then
-fast-import into git.
+I'm attaching the new ciabot.pl inline here:
 
-Mediawiki revisions and git commits are linked thanks to notes bound to
-commits.
+#!/usr/bin/perl -w
+#
+# ciabot -- Mail a git log message to a given address, for the purposes of CIA
+#
+# Loosely based on cvslog by Russ Allbery <rra@stanford.edu>
+# Copyright 1998  Board of Trustees, Leland Stanford Jr. University
+#
+# Copyright 2001, 2003, 2004, 2005  Petr Baudis <pasky@ucw.cz>
+# Copyright 2011 JD Horelick <jdhore1@gmail.com>
+#
+# This program is free software; you can redistribute it and/or modify it under
+# the terms of the GNU General Public License version 2, as published by the
+# Free Software Foundation.
+#
+# The master location of this file is in the Cogito repository
+# (see http://www.kernel.org/git/).
+#
+# This program is designed to run as the .git/hooks/post-commit hook. It takes
+# the commit information, massages it and mails it to the address given below.
+#
+# The calling convention of the post-commit hook is:
+#
+#    .git/hooks/post-commit $commit_sha1 $branch_name
+#
+# If it does not work, try to disable $xml_rpc in the configuration section
+# below. Also, remember to make the hook file executable.
+#
+#
+# Note that you can (and it might be actually more desirable) also use this
+# script as the GIT update hook:
+#
+#    refname=${1#refs/heads/}
+#    [ "$refname" = "master" ] && refname=
+#    oldhead=$2
+#    newhead=$3
+#    for merged in $(git rev-list $newhead ^$oldhead | tac); do
+#        /path/to/ciabot.pl $merged $refname
+#    done
+#
+# This is useful when you use a remote repository that you only push to. The
+# update hook will be triggered each time you push into that repository, and
+# the pushed commits will be reported through CIA.
+# This script no longer TinyURL's the link to gitweb as the link will be
+# short enough anyway as it's sent on its own line
 
-The import part is done on a refs/mediawiki/<remote> branch before
-coming to refs/remote/origin/master (Huge thanks to Jonathan Nieder
-for his help)
+use strict;
+use Carp;
+use vars qw ($project $module $repo $baseurl $from_email $dest_email
+$noisy $rpc_uri $sendmail
+        $xml_rpc $ignore_regexp $alt_local_message_target);
 
-=46or now, the whole wiki is cloned, but it will be possible to clone o=
-nly
-some pages: the clone is based on a list of pages which is now all
-pages.
 
-Code clarified & improved with the help of Jeff King and Junio C Hamano=
-=2E
+### Configuration
 
-We were not able to reproduce the empty timestamp bug noticed by Jeff
-King, thus needing some further testing. A placeholder is still
-implemented in case.
+# Project name (as known to CIA).
+chomp($project = `git config --get cia.project`);
 
-Signed-off-by: J=C3=A9r=C3=A9mie Nikaes <jeremie.nikaes@ensimag.imag.fr=
->
-Signed-off-by: Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>
-Signed-off-by: Claire Fousse <claire.fousse@ensimag.imag.fr>
-Signed-off-by: David Amouyal <david.amouyal@ensimag.imag.fr>
-Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Signed-off-by: Sylvain Boulm=C3=A9 <sylvain.boulme@imag.fr>
----
- contrib/mw-to-git/git-remote-mediawiki     |  306 ++++++++++++++++++++=
-++++++++
- contrib/mw-to-git/git-remote-mediawiki.txt |    7 +
- 2 files changed, 313 insertions(+), 0 deletions(-)
- create mode 100755 contrib/mw-to-git/git-remote-mediawiki
- create mode 100644 contrib/mw-to-git/git-remote-mediawiki.txt
+# Module name (if applicable)
+chomp($module = `git config --get cia.module`);
 
-diff --git a/contrib/mw-to-git/git-remote-mediawiki b/contrib/mw-to-git=
-/git-remote-mediawiki
-new file mode 100755
-index 0000000..9db64c2
---- /dev/null
-+++ b/contrib/mw-to-git/git-remote-mediawiki
-@@ -0,0 +1,306 @@
-+#! /usr/bin/perl
-+
-+use strict;
-+use Switch;
-+use MediaWiki::API;
-+use Storable qw(freeze thaw);
-+use DateTime::Format::ISO8601;
-+use Encode qw(encode_utf8);
-+
-+# Mediawiki filenames can contain forward slashes. This variable decid=
-es by which pattern they should be replaced
-+my $slash_replacement =3D "<slash>";
-+
-+my $remotename =3D $ARGV[0];
-+my $url =3D $ARGV[1];
-+
-+print STDERR "$url\n";
-+
-+# commands parser
-+my $loop =3D 1;
-+my $entry;
-+my @cmd;
-+while ($loop) {
-+	$| =3D 1; #flush STDOUT
-+	$entry =3D <STDIN>;
-+	print STDERR $entry;
-+	chomp($entry);
-+	@cmd =3D undef;
-+	@cmd =3D split(/ /,$entry);
-+	switch ($cmd[0]) {
-+		case "capabilities" {
-+			if ($cmd[1] eq "") {
-+				mw_capabilities();
-+			} else {
-+			       $loop =3D 0;
-+			}
-+		}
-+		case "list" {
-+			if ($cmd[2] eq "") {
-+				mw_list($cmd[1]);
-+			} else {
-+			       $loop =3D 0;
-+			}
-+		}
-+		case "import" {
-+			if ($cmd[1] ne "" && $cmd[2] eq "") {
-+				mw_import($cmd[1]);
-+			}=20
-+		}
-+		case "option" {
-+			if ($cmd[1] ne "" && $cmd[2] ne "" && $cmd[3] eq "") {
-+				mw_option($cmd[1],$cmd[2]);
-+			}=20
-+		}
-+		case "push" {
-+			#check the pattern <src>:<dst>
-+			my @pushargs =3D split(/:/,$cmd[1]);
-+			if ($pushargs[1] ne "" && $pushargs[2] eq "") {
-+				mw_push($pushargs[0],$pushargs[1]);
-+			} else {
-+			       $loop =3D 0;
-+			}
-+		} else {
-+			$loop =3D 0;
-+		}
-+	}
-+	close(FILE);
-+}
-+
-+########################## Functions ##############################
-+
-+sub get_last_local_revision {
-+	# Get last commit sha1
-+	my $commit_sha1 =3D `git rev-parse refs/mediawiki/$remotename/master =
-2>/dev/null`;
-+
-+	# Get note regarding that commit
-+	chomp($commit_sha1);
-+	my $note =3D `git log --notes=3Dmediawiki 2>/dev/null | grep "mediawi=
-ki_revision: " | sed -n 1p`;
-+	$note =3D~ s/^\s+//; #left trim of note=20
-+	my @note_info =3D split(/ /, $note);
-+
-+	my $lastrevision_number;
-+	if (!($note_info[0] eq "mediawiki_revision:")) {
-+		print STDERR "No previous mediawiki revision found";
-+		$lastrevision_number =3D 0;
-+	} else {
-+		# Notes are formatted : mediawiki_revision: #number
-+		$lastrevision_number =3D $note_info[1];
-+		chomp($lastrevision_number);
-+		print STDERR "Last local mediawiki revision found is $lastrevision_n=
-umber ";
-+	}
-+	return $lastrevision_number;
-+}
-+
-+sub get_last_remote_revision {
-+	my $mediawiki =3D MediaWiki::API->new;
-+	$mediawiki->{config}->{api_url} =3D "$url/api.php";
-+
-+	my $pages =3D $mediawiki->list({
-+		action =3D> 'query',
-+		list =3D> 'allpages',
-+		aplimit =3D> 500,
-+	});
-+
-+	my $max_rev_num =3D 0;
-+
-+	foreach my $page (@$pages) {
-+		my $id =3D $page->{pageid};
-+
-+
-+		my $query =3D {
-+			action =3D> 'query',
-+			prop =3D> 'revisions',
-+			rvprop =3D> 'ids',
-+			pageids =3D> $id,
-+		};
-+
-+		my $result =3D $mediawiki->api($query);
-+	=09
-+		my $lastrev =3D pop(@{$result->{query}->{pages}->{$id}->{revisions}}=
-);
-+	=09
-+		$max_rev_num =3D ($lastrev->{revid} > $max_rev_num ? $lastrev->{revi=
-d} : $max_rev_num);
-+	}
-+
-+	print STDERR "Last remote revision found is $max_rev_num\n";
-+	return $max_rev_num;
-+}
-+
-+sub literal_data {
-+	my ($content) =3D @_;
-+	print "data ", bytes::length($content), "\n", $content;
-+}
-+
-+sub mw_capabilities {
-+	# Revisions are imported to the private namespace
-+	# refs/mediawiki/$remotename/ by the helper and fetched into
-+	# refs/remotes/$remotename later by fetch.
-+	print STDOUT "refspec refs/heads/*:refs/mediawiki/$remotename/*\n";
-+	print STDOUT "import\n";
-+	print STDOUT "list\n";
-+	print STDOUT "option\n";
-+	print STDOUT "push\n";
-+	print STDOUT "\n";
-+}
-+
-+sub mw_list {
-+	# MediaWiki do not have branches, we consider one branch arbitrarily
-+	# called master
-+	print STDOUT "? refs/heads/master\n";
-+	print STDOUT '@'."refs/heads/master HEAD\n";
-+	print STDOUT "\n";
-+
-+}
-+
-+sub mw_option {
-+	print STDERR "not yet implemented \n";
-+	print STDOUT "unsupported\n";
-+}
-+
-+sub mw_import {
-+	my @wiki_name =3D split(/:\/\//,$url);
-+	my $wiki_name =3D $wiki_name[1];
-+
-+	my $mediawiki =3D MediaWiki::API->new;
-+	$mediawiki->{config}->{api_url} =3D "$url/api.php";
-+
-+	my $pages =3D $mediawiki->list({
-+		action =3D> 'query',
-+		list =3D> 'allpages',
-+		aplimit =3D> 500,
-+	});
-+	if ($pages =3D=3D undef) {
-+		print STDERR "fatal: '$url' does not appear to be a mediawiki\n";
-+		exit;
-+	}
-+
-+	my @revisions;
-+	print STDERR "Searching revisions...\n";
-+	my $fetch_from =3D get_last_local_revision() + 1;
-+	if ($fetch_from =3D=3D 1) {
-+		print STDERR ", fetching from beginning\n";
-+	} else {
-+		print STDERR ", fetching from here\n";
-+	}
-+	my $n =3D 1;
-+	my $last_timestamp =3D 0;
-+	foreach my $page (@$pages) {
-+		my $id =3D $page->{pageid};
-+
-+		print STDERR "$n/", scalar(@$pages), ": ". encode_utf8($page->{title=
-})."\n";
-+		$n++;
-+
-+		my $query =3D {
-+			action =3D> 'query',
-+			prop =3D> 'revisions',
-+			rvprop =3D> 'ids',
-+			rvdir =3D> 'newer',
-+			rvstartid =3D> $fetch_from,
-+			rvlimit =3D> 500,
-+			pageids =3D> $page->{pageid},
-+		};
-+
-+		my $revnum =3D 0;
-+		# Get 500 revisions at a time due to the mediawiki api limit
-+		while (1) {
-+			my $result =3D $mediawiki->api($query);
-+
-+			# Parse each of those 500 revisions
-+			foreach my $revision (@{$result->{query}->{pages}->{$id}->{revision=
-s}}) {
-+				my $page_rev_ids;
-+				$page_rev_ids->{pageid} =3D $page->{pageid};
-+				$page_rev_ids->{revid} =3D $revision->{revid};
-+				push (@revisions, $page_rev_ids);
-+				$revnum++;
-+			}
-+			last unless $result->{'query-continue'};
-+			$query->{rvstartid} =3D $result->{'query-continue'}->{revisions}->{=
-rvstartid};
-+		}
-+		print STDERR "  Found ", $revnum, " revision(s).\n";
-+	}
-+
-+	# Creation of the fast-import stream
-+	print STDERR "Fetching & writing export data...\n";
-+	binmode STDOUT, ':binary';
-+	$n =3D 0;
-+
-+	foreach my $pagerevids (sort {$a->{revid} <=3D> $b->{revid}} @revisio=
-ns) {
-+		#fetch the content of the pages
-+		my $query =3D {
-+			action =3D> 'query',
-+			prop =3D> 'revisions',
-+			rvprop =3D> 'content|timestamp|comment|user|ids',
-+			revids =3D> $pagerevids->{revid},
-+		};
-+
-+		my $result =3D $mediawiki->api($query);
-+
-+		my $rev =3D pop(@{$result->{query}->{pages}->{$pagerevids->{pageid}}=
-->{revisions}});
-+
-+		$n++;
-+		my $user =3D $rev->{user} || 'Anonymous';
-+		my $dt;
-+
-+		# This has to be verified, haven't been able to reproduce the scenar=
-io
-+		if ($rev->{timestamp} !=3D undef) {
-+			$dt =3D DateTime::Format::ISO8601->parse_datetime($rev->{timestamp}=
-);
-+		} else {
-+			$dt =3D $last_timestamp + 1;
-+		}
-+		$last_timestamp =3D $dt;
-+
-+
-+		my $comment =3D defined $rev->{comment} ? $rev->{comment} : '*Empty =
-MediaWiki Message*';
-+		my $title =3D encode_utf8($result->{query}->{pages}->{$pagerevids->{=
-pageid}}->{title});
-+		my $content =3D $rev->{'*'};
-+	=09
-+		$title =3D~ y/ /_/;
-+		$title =3D~ s/\//$slash_replacement/g;
-+
-+		print STDERR "$n/", scalar(@revisions), ": Revision n=C2=B0$pagerevi=
-ds->{revid} of $title\n";
-+
-+		print "commit refs/mediawiki/$remotename/master\n";
-+		print "mark :$n\n";
-+		print "committer $user <$user\@$wiki_name> ", $dt->epoch, " +0000\n"=
+# Repository name in the web interface
+chomp($repo = `git config --get cia.repo`);
+
+# Base URL for a GitWeb or cgit instance
+# You must comment all the baseurl lines out if you do not have a web interface
+# or do not want the web interface URL for the commit displayed
+# Gitweb
+#$baseurl = "http://git.example.com/cgi-bin/gitweb.cgi?p=$repo;a=commit;h=";
+# cgit
+#$baseurl = "http://git.example.com/$repo/commit/?id=";
+
+# The from address in generated mails.
+$from_email = 'cia@example.com';
+
+# Mail all reports to this address.
+$dest_email = 'cia@cia.vc';
+
+# If using XML-RPC, connect to this URI.
+$rpc_uri = 'http://cia.vc/RPC2';
+
+# Path to your USCD sendmail compatible binary (your mailer daemon created this
+# program somewhere).
+$sendmail = '/usr/sbin/sendmail';
+
+# If set, the script will send CIA the full commit message. If unset, only the
+# first line of the commit message will be sent.
+$noisy = 1;
+
+# This script can communicate with CIA either by mail or by an XML-RPC
+# interface. The XML-RPC interface is faster and more efficient, however you
+# need to have RPC::XML perl module installed, and some large CVS hosting sites
+# (like Savannah or Sourceforge) might not allow outgoing HTTP connections
+# while they allow outgoing mail. Also, this script will hang and eventually
+# not deliver the event at all if CIA server happens to be down, which is
+# unfortunately not an uncommon condition.
+$xml_rpc = 1;
+
+# This variable should contain a regexp, against which each file will be
+# checked, and if the regexp is matched, the file is ignored. This can be
+# useful if you do not want auto-updated files, such as e.g. ChangeLog, to
+# appear via CIA.
+#
+# The following example will make the script ignore all changes in two specific
+# files in two different modules, and everything concerning module 'admin':
+#
+# $ignore_regexp = "^(gentoo/Manifest|elinks/src/bfu/inphist.c|admin/)";
+$ignore_regexp = "";
+
+# It can be useful to also grab the generated XML message by some other
+# programs and e.g. autogenerate some content based on it. Here you can specify
+# a file to which it will be appended.
+$alt_local_message_target = "";
+
+
+
+
+### The code itself
+
+use vars qw ($commit $tree @parent $author $committer);
+use vars qw ($user $branch $rev @files $logmsg $message $shorturl);
+my $line;
+
+if ($project eq "") {
+    croak "Project variable is required. Please set one with git
+config --add cia.project";
+}
+
+if ($repo eq "") {
+    undef $baseurl;
+}
+
+# Let's be extra-safe here
+if ($module eq "") {
+    undef $module;
+}
+
+
+### Input data loading
+
+
+# The commit stuff
+$commit = $ARGV[0];
+$branch = $ARGV[1];
+
+open COMMIT, "git cat-file commit $commit|" or die "git cat-file
+commit $commit: $!";
+my $state = 0;
+$logmsg = '';
+while (defined ($line = <COMMIT>)) {
+  if ($state == 1) {
+    $logmsg .= $line;
+    $noisy or $state++;
+    next;
+  } elsif ($state > 1) {
+    next;
+  }
+
+  chomp $line;
+  unless ($line) {
+    $state = 1;
+    next;
+  }
+
+  my ($key, $value) = split(/ /, $line, 2);
+  if ($key eq 'tree') {
+    $tree = $value;
+  } elsif ($key eq 'parent') {
+    push(@parent, $value);
+  } elsif ($key eq 'author') {
+    $author = $value;
+  } elsif ($key eq 'committer') {
+    $committer = $value;
+  }
+}
+close COMMIT;
+
+
+open DIFF, "git diff-tree -r $parent[0] $tree|" or die "git diff-tree
+$parent[0] $tree: $!";
+while (defined ($line = <DIFF>)) {
+  chomp $line;
+  my @f;
+  (undef, @f) = split(/\t/, $line, 2);
+  push (@files, @f);
+}
+close DIFF;
+
+
+# Figure out who is doing the update.
+# XXX: Too trivial this way?
+($user) = $author =~ /<(.*?)@/;
+
+
+$rev = substr($commit, 0, 12);
+
+
+
+
+### Remove to-be-ignored files
+
+@files = grep { $_ !~ m/$ignore_regexp/; } @files
+  if ($ignore_regexp);
+exit unless @files;
+
+
+
+### Compose the mail message
+
+
+my ($VERSION) = '2.0';
+my $ts = time;
+
+$message = <<EM
+<message>
+   <generator>
+       <name>CIA Perl client for Git</name>
+       <version>$VERSION</version>
+   </generator>
+   <source>
+       <project>$project</project>
+
+EM
 ;
-+		literal_data(encode_utf8($comment));
-+		# If it's not a clone, needs to know where to start from
-+		if ($fetch_from !=3D 1 && $n =3D=3D 1) {
-+			print "from refs/mediawiki/$remotename/master^0\n";
-+		}
-+		print "M 644 inline $title.mw\n";
-+		literal_data(encode_utf8($content));
-+		print "\n\n";
-+
-+
-+		# mediawiki revision number in the git note
-+		if ($fetch_from =3D=3D 1 && $n =3D=3D 1) {
-+			print "reset refs/notes/mediawiki\n";
-+		}
-+		print "commit refs/notes/mediawiki\n";
-+		print "committer $user <$user\@$wiki_name> ", $dt->epoch, " +0000\n"=
+$message .= "       <module>$module</module>" if ($module);
+$message .= "       <branch>$branch</branch>" if ($branch);
+$message .= <<EM
+   </source>
+   <timestamp>
+       $ts
+   </timestamp>
+   <body>
+       <commit>
+           <author>$user</author>
+           <revision>$rev</revision>
+           <files>
+EM
 ;
-+		literal_data(encode_utf8("note added by git-mediawiki"));
-+		if ($fetch_from !=3D 1 && $n =3D=3D 1) {
-+			print "from refs/notes/mediawiki^0\n";
-+		}
-+		print "N inline :$n\n";
-+		literal_data(encode_utf8("mediawiki_revision: " . $pagerevids->{revi=
-d}));
-+		print "\n\n";
-+	}
-+
-+	if ($fetch_from =3D=3D 1) {
-+		if ($n !=3D 0) {
-+			print "reset $_[0]\n"; #$_[0] contains refs/heads/master
-+			print "from :$n\n";
-+		} else {
-+			print STDERR "You appear to have cloned an empty mediawiki\n";
-+			#What do we have to do here ? If nothing is done, an error is throw=
-n saying that
-+			#HEAD is refering to unknown object 0000000000000000000
-+		}
-+	}
-+
-+}
-+
-+sub mw_push {
-+
-+	print STDERR "Not yet implemented";
-+	print "\n";
-+}
-diff --git a/contrib/mw-to-git/git-remote-mediawiki.txt b/contrib/mw-to=
--git/git-remote-mediawiki.txt
-new file mode 100644
-index 0000000..4d211f5
---- /dev/null
-+++ b/contrib/mw-to-git/git-remote-mediawiki.txt
-@@ -0,0 +1,7 @@
-+Git-Mediawiki is a project which aims the creation of a gate
-+between git and mediawiki, allowing git users to push and pull
-+objects from mediawiki just as one would do with a classic git
-+repository thanks to remote-helpers.
-+
-+For more information, visit the wiki at
-+https://github.com/Bibzball/Git-Mediawiki/wiki
---=20
-1.7.4.1
+
+foreach (@files) {
+  s/&/&amp;/g;
+  s/</&lt;/g;
+  s/>/&gt;/g;
+  $message .= "  <file>$_</file>\n";
+}
+
+$logmsg =~ s/&/&amp;/g;
+$logmsg =~ s/</&lt;/g;
+$logmsg =~ s/>/&gt;/g;
+
+if (defined $baseurl) {
+    $shorturl = $baseurl . $rev;
+    $logmsg = $logmsg . $shorturl;
+}
+
+$message .= <<EM
+           </files>
+    <log>$logmsg</log>
+       </commit>
+   </body>
+</message>
+EM
+;
+
+
+
+### Write the message to an alt-target
+
+if ($alt_local_message_target and open (ALT, ">>$alt_local_message_target")) {
+  print ALT $message;
+  close ALT;
+}
+
+
+
+### Send out the XML-RPC message
+
+
+if ($xml_rpc) {
+  # We gotta be careful from now on. We silence all the warnings because
+  # RPC::XML code is crappy and works with undefs etc.
+  $^W = 0;
+  $RPC::XML::ERROR if (0); # silence perl's compile-time warning
+
+  require RPC::XML;
+  require RPC::XML::Client;
+
+  my $rpc_client = new RPC::XML::Client $rpc_uri;
+  my $rpc_request = RPC::XML::request->new('hub.deliver', $message);
+  my $rpc_response = $rpc_client->send_request($rpc_request);
+
+  unless (ref $rpc_response) {
+    die "XML-RPC Error: $RPC::XML::ERROR\n";
+  }
+  exit;
+}
+
+
+
+### Send out the mail
+
+
+# Open our mail program
+
+open (MAIL, "| $sendmail -t -oi -oem") or die "Cannot execute
+$sendmail : " . ($?>>8);
+
+
+# The mail header
+
+print MAIL <<EOM;
+From: $from_email
+To: $dest_email
+Content-type: text/xml
+Subject: DeliverXML
+
+EOM
+
+print MAIL $message;
+
+
+# Close the mail
+
+close MAIL;
+die "$0: sendmail exit status " . ($? >> 8) . "\n" unless ($? == 0);
+
+# vi: set sw=2:
+
+
+I welcome any constructive criticism and I hope to see this in
+contrib/ciabot soon. :)
+
+Thanks
+JD
