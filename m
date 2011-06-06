@@ -1,45 +1,56 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: [PATCH 0/2] Improve "git submodule add" documentation.
-Date: Mon,  6 Jun 2011 16:49:11 -0400
-Message-ID: <1307393353-32389-1-git-send-email-marcnarc@xiplink.com>
-References: <4DED314C.3000203@web.de>
-Cc: Jens.Lehmann@web.de, gitster@pobox.com, mlevedahl@gmail.com
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [RFC PATCH 0/2] Add an update=none option for 'loose' submodules
+Date: Mon,  6 Jun 2011 22:57:30 +0200
+Message-ID: <cover.1307374519.git.hvoigt@hvoigt.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 06 22:50:02 2011
+X-From: git-owner@vger.kernel.org Mon Jun 06 22:57:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QTgkL-0002SZ-26
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Jun 2011 22:50:01 +0200
+	id 1QTgry-0005qJ-Di
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Jun 2011 22:57:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758047Ab1FFUtr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jun 2011 16:49:47 -0400
-Received: from 208-85-112-101.zerofail.com ([208.85.112.101]:32816 "EHLO
-	farnsworth.xiplink.com" rhost-flags-OK-FAIL-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1757302Ab1FFUtr (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2011 16:49:47 -0400
-Received: from rincewind.xiplink.com ([192.168.1.136])
-	by farnsworth.xiplink.com (8.14.2/8.14.2/Debian-2build1) with ESMTP id p56KnVBH002061;
-	Mon, 6 Jun 2011 16:49:31 -0400
-X-Mailer: git-send-email 1.7.6.rc0.17.g3eac3
-In-Reply-To: <4DED314C.3000203@web.de>
+	id S1752036Ab1FFU5s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2011 16:57:48 -0400
+Received: from darksea.de ([83.133.111.250]:38026 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750884Ab1FFU5s (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2011 16:57:48 -0400
+Received: (qmail 6136 invoked from network); 6 Jun 2011 22:57:45 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 6 Jun 2011 22:57:45 +0200
+X-Mailer: git-send-email 1.7.5.1.219.g4c6b2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175165>
 
-This series applies atop Jens's 2/3 patch.  Jens, please feel free to
-squash these into your commit if you like.
+If a submodule is used to seperate some bigger parts of a project into
+an optional directory it is helpful to not clone/update them by default.
 
-The first commit makes the documentation (hopefully) more accurately
-describe how git chooses which superproject remote to use.
+This series implements a new value 'none' for submodule.<name>.update.
+If this option is set a submodule will not be updated or cloned by
+default. If the user wants to work with the submodule he either needs
+to explicitely configure the update option to 'checkout' or pass
+--checkout as an option to the submodules. I chose this name to be
+consistent with the existing --merge/--rebase options.
 
-The second commit moves the paragraph describing the utility of relative
-submodule URLs right after their description, making it more likely for
-readers to see it (instead of assuming it's part of the <path> parameter's
-documentation -- as I did on previous occasions).
+What do you think about this approach?
 
-		M.
+If we agree that this is the correct way to approach this use case I
+would proceed to implement tests and documentation.
+
+Cheers Heiko
+
+Heiko Voigt (2):
+  submodule: move update configuration variable further up
+  add update 'none' flag to disable update of submodule by default
+
+ git-submodule.sh |   22 ++++++++++++++++------
+ 1 files changed, 16 insertions(+), 6 deletions(-)
+
+-- 
+1.7.5.1.219.g4c6b2
