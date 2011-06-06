@@ -1,138 +1,108 @@
-From: Magnus =?iso-8859-1?Q?B=E4ck?= <magnus.back@sonyericsson.com>
-Subject: Re: merging bare repository
-Date: Mon, 6 Jun 2011 23:54:33 +0200
-Message-ID: <20110606215433.GC29348@jpl.local>
-References: <533718318.20110513145132@gmail.com>
- <20110513135348.GB10857@jpl.local>
- <1306807292356-6421097.post@n2.nabble.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] clone: always fetch remote HEAD
+Date: Mon, 6 Jun 2011 18:08:21 -0400
+Message-ID: <20110606220821.GB13697@sigill.intra.peff.net>
+References: <20110603050901.GA883@sigill.intra.peff.net>
+ <20110603051805.GC1008@sigill.intra.peff.net>
+ <7vipsi8zwl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Ilya Basin <basinilya@gmail.com>
-To: garyc618 <gary.carter@eigen.com>
-X-From: git-owner@vger.kernel.org Mon Jun 06 23:54:47 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Dmitry Ivankov <divanorama@gmail.com>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 07 00:08:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QThl0-0004mg-AC
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Jun 2011 23:54:46 +0200
+	id 1QThyf-000291-Rr
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Jun 2011 00:08:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758089Ab1FFVyi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jun 2011 17:54:38 -0400
-Received: from smtprelay-b22.telenor.se ([195.54.99.213]:51228 "EHLO
-	smtprelay-b22.telenor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758055Ab1FFVyh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jun 2011 17:54:37 -0400
-Received: from ipb4.telenor.se (ipb4.telenor.se [195.54.127.167])
-	by smtprelay-b22.telenor.se (Postfix) with ESMTP id 899F3EA22A
-	for <git@vger.kernel.org>; Mon,  6 Jun 2011 23:54:35 +0200 (CEST)
-X-SMTPAUTH-B2: [b627879]
-X-SENDER-IP: [83.227.167.132]
-X-LISTENER: [smtp.bredband.net]
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AhggALBL7U1T46eEPGdsb2JhbABTiRKOHY5hCwEBAQE3MohxwhWGIQSgNQ
-X-IronPort-AV: E=Sophos;i="4.65,328,1304287200"; 
-   d="scan'208";a="1737116535"
-Received: from ua-83-227-167-132.cust.bredbandsbolaget.se (HELO elwood.jpl.local) ([83.227.167.132])
-  by ipb4.telenor.se with ESMTP; 06 Jun 2011 23:54:34 +0200
-Received: by elwood.jpl.local (Postfix, from userid 1000)
-	id CE6AF42323; Mon,  6 Jun 2011 23:54:33 +0200 (CEST)
+	id S1758131Ab1FFWI1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2011 18:08:27 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45684
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758069Ab1FFWIZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2011 18:08:25 -0400
+Received: (qmail 9444 invoked by uid 107); 6 Jun 2011 22:08:31 -0000
+Received: from 70-36-146-246.dsl.dynamic.sonic.net (HELO sigill.intra.peff.net) (70.36.146.246)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 06 Jun 2011 18:08:31 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Jun 2011 18:08:21 -0400
 Content-Disposition: inline
-In-Reply-To: <1306807292356-6421097.post@n2.nabble.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <7vipsi8zwl.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175174>
 
-On Tuesday, May 31, 2011 at 04:01 CEST,
-     garyc618 <gary.carter@eigen.com> wrote:
+On Mon, Jun 06, 2011 at 01:31:54PM -0700, Junio C Hamano wrote:
 
-> Magnus B=E4ck-2 wrote:
+> >  static struct ref *wanted_peer_refs(const struct ref *refs,
+> >  		struct refspec *refspec)
+> >  {
+> > -	struct ref *local_refs = NULL;
+> > -	struct ref **tail = &local_refs;
+> > +	struct ref *head = get_remote_ref(refs, "HEAD");
+> 
+> The rest of the patch looked quite sane but I wonder if this should be
+> using get_remote_ref() that calls find_ref_by_name_abbrev() which in turn
+> would hit "refs/heads/HEAD" if the remote side didn't give you "HEAD".
+> Shouldn't it be using find_ref_by_name() directly?
 
-[...]
+Ick, yeah, that was just me blindly cutting down what get_fetch_map was
+doing to the bit that I wanted, and thinking get_remote_ref was it.  I
+didn't even notice the fact that it was using the _abbrev form of
+find_ref_by_name.
 
-> > To deal with upstreams like this I recommend you place the upstream
-> > branch(es) in a separate namespace prefixed by <upstreamname>/, e.g=
-=2E
-> > github/master if your upstream is the master branch from the
-> > official Github repo of the project. Example:
-> >=20
-> >    git fetch ssh://git@some.org/git/project.git
-> >    git push ssh://git@server/git/project.git FETCH_HEAD:github/mast=
-er
-> >=20
-> > If you mirror the upstream branches like this on your server merges
-> > from upstream becomes trivial[*],
-> >=20
-> >    git merge origin/github/master
-> >    git push ssh://git@server/git/project.git HEAD:master
-> >=20
-> > and can be done on any workstation plus it's easy for your users to
-> > e.g. see what they've been up to compared to the upstream:
-> >=20
-> >    git log origin/github/master..origin/master
-> > [...]
-> >=20
->=20
-> Could you explain more about how this works - where do I find the
-> character string to use instead of "github".  It can't be arbitrary,
-> I got an error message.
+It should definitely be an exact match. I'll fix it in my re-roll.
 
-Can you be more specific about the error message? The string *is*
-arbitrary. The only thing I can think of is that you need to specify
-refs/heads/github/master rather than just github/master in the push
-operation.
+> > @@ -357,8 +358,11 @@ static void write_remote_refs(const struct ref *local_refs)
+> >  {
+> >  	const struct ref *r;
+> >  
+> > -	for (r = local_refs; r; r = r->next)
+> > +	for (r = local_refs; r; r = r->next) {
+> > +		if (!r->peer_ref)
+> > +			continue;
+> 
+> As this is part of this patch, I presume this test reliably catch "HEAD"
+> and only "HEAD", but what is it that gives us this guarantee?  Is it that
+> in all three possible configurations (i.e. traditional no-separate remote
+> layout, separate remote layout, or mirrored layout), we never map anything
+> outside refs/heads/* and refs/tags/* namespace, hence things like HEAD
+> will never have peer_ref defined?
 
-> When I did the fetch it said
-> *branch HEAD -> FETCH_HEAD
-> could you explain what this means in more detail?
+Until now, nobody fed us a ref without peer_ref mapped, as doing so
+would segfault. So this gives a NULL peer ref the meaning "don't bother
+saving this into a ref". Which is really the only sensible thing it can
+mean, since the peer ref is the local bit that says where to put it.
 
-Someone might need to correct my here, but I guess it means that the
-local symbolic ref FETCH_HEAD has been updated with the contents of
-the server-side symbolic ref HEAD. The important part to remember
-here is that FETCH_HEAD is a useful shorthand that represent what you
-got in the last fetch operation.
+> This is not a complaint but is an honest question. I am wondering how
+> future possible enhancements to "clone" (like the rumored "track only this
+> branch") will affect codepaths around this area.
 
-Come to think of it, the first example commands that you're commenting
-might not necessarily do what you want. It's probably a good idea to
-specify the ref explicitly instead of FETCH_HEAD, e.g. origin/master,
-or just fetch the branch you want. I don't know what FETCH_HEAD contain=
-s
-when multiple refs are fetched.
+I think it's a good question to ask. The answer is that if you are
+cloning only a subset of the remote refs (or even a single ref), then
+either:
 
-> We enthusiasts-who-don't-have-time-to-become-git-masters really need
-> some well explained examples if we're going to be able to convince
-> management that git is not some super complicated tool that takes
-> weeks to learn.
+  1. You will want to write that subset according to a refspec mapping
+     (e.g., cloning "jk/*" to "remotes/origin/jk/*"). In that case you
+     would have set the peer_ref to show where to put it.
 
-If you're the one who's going to be managing your source code
-repositories, any tool for this task will take weeks if not months to
-master sufficiently well. Learning how to use a source control system
-like Git isn't just about learning the tool itself -- that part is
-usually easy. Regardless of the choice of tool, you'll have to learn it=
-s
-ins and outs and how to apply it to your probably already established
-processes, and/or how you should change your processes to adapt to the
-tool (you probably need a little bit of both).
+  2. You will not want to write out these refs, because you are handling
+     them separately. For example, in this case, we are already handling
+     the detached HEAD case separately when we generally figure out what
+     HEAD is. And in this case, the code does what you want by silently
+     skipping.
 
-Any manager claiming that doing this properly is trivial with any tool
-shouldn't be making decisions about this. Really.
+     I tried to think of another case where you would want this, but I
+     really couldn't come up with one. Even if you are cloning a "track
+     only this branch" ref, you would still have its peer_ref pointing
+     to its local counterpart (even if it's "refs/heads/master" both
+     locally and on the remote).
 
-> The particular use case described in this thread is the last sticking
-> point I have to make work before I can show git doing everything we
-> need it to do to my management.
-
-Luckily integrating upstream development with your own is easy with Git
-and probably all other distributed version control systems. I think it'=
-s
-one of their major strengths.
-
---=20
-Magnus B=E4ck                   Opinions are my own and do not necessar=
-ily
-SW Configuration Manager      represent the ones of my employer, etc.
-Sony Ericsson
+-Peff
