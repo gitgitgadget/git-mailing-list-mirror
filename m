@@ -1,166 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add a remote helper to interact with mediawiki, pull &
- clone handled
-Date: Mon, 06 Jun 2011 12:28:34 -0700
-Message-ID: <7vmxhu92u5.fsf@alter.siamese.dyndns.org>
-References: <1307355635-5580-1-git-send-email-jeremie.nikaes@ensimag.imag.fr>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv3 1/5] gitweb: Move information about installation from
+ README to INSTALL
+Date: Mon, 6 Jun 2011 14:44:44 -0500
+Message-ID: <20110606194422.GA30588@elie>
+References: <1307382271-7677-1-git-send-email-jnareb@gmail.com>
+ <1307382271-7677-2-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, jrnieder@gmail.com,
-	Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>,
-	Claire Fousse <claire.fousse@ensimag.imag.fr>,
-	David Amouyal <david.amouyal@ensimag.imag.fr>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Sylvain =?utf-8?Q?Boulm=C3=A9?= <sylvain.boulme@imag.fr>
-To: Jeremie Nikaes <jeremie.nikaes@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 06 21:29:07 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, John 'Warthog9' Hawley <warthog9@kernel.org>,
+	Petr Baudis <pasky@suse.cz>,
+	Drew Northup <drew.northup@maine.edu>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 06 21:44:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QTfU2-00085D-Gm
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Jun 2011 21:29:07 +0200
+	id 1QTfjO-0006Xt-DT
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Jun 2011 21:44:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757321Ab1FFT25 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jun 2011 15:28:57 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49134 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753712Ab1FFT24 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2011 15:28:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 03C8C5539;
-	Mon,  6 Jun 2011 15:31:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=laTgeBgO+Uc6
-	NUrBuSYaqhMUxw8=; b=uRkpunqnoJM0ZpSLfQ4Nax6qj4yYBryHeuBa8ddT8xpQ
-	Q4/ABpQjB7P9jy4ccDRW2Nu3+MjUeOSjVYmoOnMvbezpiT2yh5WKh241/+OOQ1FE
-	68vDssKEVyU07oPMQW3gMOxVLCZl64lfdpMEp1gpmr+qlkPuXRAMTeMi5ebzBCY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=hONT5r
-	v7+59fEss4iDDEu1gJPa9ZCUkzqf4kC1ewppB2pn1HlLYVq6TKHODGf03sBRq4JN
-	1BMGvadHzW+XlEg3pn2HMc2jJ/1K/38uMPMNcVKeT0Tq5MpPHgdOaQbtie0sVm6g
-	/oDc4f+KCUL3ylAuI8rObNT2zKj0GNyf6wvtU=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5A741552A;
-	Mon,  6 Jun 2011 15:30:57 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id AC8905525; Mon,  6 Jun 2011
- 15:30:46 -0400 (EDT)
-In-Reply-To: <1307355635-5580-1-git-send-email-jeremie.nikaes@ensimag.imag.fr> (Jeremie
- Nikaes's message of "Mon, 6 Jun 2011 12:20:35 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8082885C-9073-11E0-9FA5-EA23C7C1A288-77302942!a-pb-sasl-sd.pobox.com
+	id S1754042Ab1FFTox (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2011 15:44:53 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:41530 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753509Ab1FFTow (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2011 15:44:52 -0400
+Received: by iyb14 with SMTP id 14so3375262iyb.19
+        for <git@vger.kernel.org>; Mon, 06 Jun 2011 12:44:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=5eoJTY5F9eIN7D/5M21Ktv2THvtW1qC39e/RJnzf3To=;
+        b=LH93IBLA1psA6WfoSo5Rh+gSPndH+p7AOz4/fEnO9jTXxRuen0iSGZyTxtagqGwRpj
+         2CKLNFSdUMpuw9iT1azZeJorytNdAbPVZ/9XeJQH/5k7vy3PNmN5pR5fJOkhdHURoG6M
+         SOBn8o+lH4CR4HVsovKLrp5yePIrx9aXv/kYE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=sdCqr5D+/Vio51l22GUpY1RMMMZOEjfdQdIuz2oI1YdIz5VbS/FT1c1R++2jr7iKjk
+         sHS7e8zjfGpkJXOzKKyazP4QvtsYcydpDsXgjn/UnxHZnXR7x8YWhaCnmdnxE6u7YfvH
+         B0CW0bGjIl6CACL5mNx1ds6wakf/qolU4vwWY=
+Received: by 10.42.219.65 with SMTP id ht1mr9358516icb.14.1307389491789;
+        Mon, 06 Jun 2011 12:44:51 -0700 (PDT)
+Received: from elie (adsl-68-255-97-40.dsl.chcgil.sbcglobal.net [68.255.97.40])
+        by mx.google.com with ESMTPS id d8sm2948024icy.21.2011.06.06.12.44.49
+        (version=SSLv3 cipher=OTHER);
+        Mon, 06 Jun 2011 12:44:50 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1307382271-7677-2-git-send-email-jnareb@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175152>
 
-Jeremie Nikaes <jeremie.nikaes@ensimag.imag.fr> writes:
+Jakub Narebski wrote:
 
-> Implement a gate between git and mediawiki, allowing git users to
-> ...
-> For now, the whole wiki is cloned, but it will be possible to clone o=
-nly
-> some pages: the clone is based on a list of pages which is now all
-> pages.
+> Almost straightformard moving of "How to configure gitweb for your
+> local system" section from gitweb/README to gitweb/INSTALL, as it is
+> about build time configuration.  Updated references to it.
 >
-> Code clarified & improved with the help of Jeff King and Junio C Hama=
-no.
->
-> We were not able to reproduce the empty timestamp bug noticed by Jeff
-> King, thus needing some further testing. A placeholder is still
-> implemented in case.
->
-> Signed-off-by: J=C3=A9r=C3=A9mie Nikaes <jeremie.nikaes@ensimag.imag.=
-fr>
-> Signed-off-by: Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>
-> Signed-off-by: Claire Fousse <claire.fousse@ensimag.imag.fr>
-> Signed-off-by: David Amouyal <david.amouyal@ensimag.imag.fr>
-> Signed-off-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-> Signed-off-by: Sylvain Boulm=C3=A9 <sylvain.boulme@imag.fr>
-> ---
->  contrib/mw-to-git/git-remote-mediawiki     |  306 ++++++++++++++++++=
-++++++++++
->  contrib/mw-to-git/git-remote-mediawiki.txt |    7 +
->  2 files changed, 313 insertions(+), 0 deletions(-)
+> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 
-This seems to have grown a bit.
-
-I won't repeat issues I pointed out in the earlier round but not update=
-d
-in this patch to save time.
-
-> +########################## Functions ##############################
-> +
-> +sub get_last_local_revision {
-> +	# Get last commit sha1
-> +	my $commit_sha1 =3D `git rev-parse refs/mediawiki/$remotename/maste=
-r 2>/dev/null`;
-> +
-> +	# Get note regarding that commit
-> +	chomp($commit_sha1);
-> +	my $note =3D `git log --notes=3Dmediawiki 2>/dev/null | grep "media=
-wiki_revision: " | sed -n 1p`;
-
-Two and half issues:
-
- - You are writing Perl no?  Don't call grep/sed from it.  Your
-   environment is much richer and more flexible ;-).
-
- - You grab $commit_sha1 but never use it. Did you mean to throw it at =
-the
-   "git log" above?
-
- - Is there a reason you use "git log" to traverse the history all the =
-way
-   down to the root commit?  Wouldn't
-
-	git notes --ref=3Dmediawiki show $commit_sha1
-
-   or even better yet, just doing
-
-	git notes --ref=3Dmediawiki show refs/mediawiki/$remotename/master
-
-   without the first rev-parse sufficient?
-
-   Are you protecting against the case where some commits in the histor=
-y
-   leading to mediawiki/$remotename/master may not have the "mediawiki"
-   note, and falling back to the latest commit that has note? You may f=
-ind
-   such a commit, but that may be different from the commit at the tip =
-of
-   mediawiki/$remotename/master branch. Is that a correct thing to do?
-   IOW, does _any_ previous version do for the purpose of this function=
-?
-   (This paragraph is not a rhetorical question).
-
-> +sub mw_capabilities {
-> +	# Revisions are imported to the private namespace
-> +	# refs/mediawiki/$remotename/ by the helper and fetched into
-> +	# refs/remotes/$remotename later by fetch.
-> +	print STDOUT "refspec refs/heads/*:refs/mediawiki/$remotename/*\n";
-> +	print STDOUT "import\n";
-> +	print STDOUT "list\n";
-> +	print STDOUT "option\n";
-> +	print STDOUT "push\n";
-> +	print STDOUT "\n";
-
-There are many explicit references to STDOUT like this, and also many
-unqualified "print" that spits out to the default which is STDOUT in th=
-e
-codepath to feed fast-import. Is that intentional, or is it just coming
-from difference in style of people who worked on different parts of the
-code?
-
-If there is no reason to use two styles, please pick one and stick to
-it. If there _is_ reason, please document what are the criteria to choo=
-se
-which one in each codepath.  Otherwise you would waste time of your
-reviewers who have to wonder which one is correct in which codepath.
+s/Updated/Update/.  The patch is obviously good; thanks for taking
+care of it.
