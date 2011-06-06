@@ -1,59 +1,45 @@
 From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: [PATCH 1/2] More precisely described how "git submodule add" handles relative submodule URLs.
-Date: Mon,  6 Jun 2011 16:49:12 -0400
-Message-ID: <1307393353-32389-2-git-send-email-marcnarc@xiplink.com>
+Subject: [PATCH 0/2] Improve "git submodule add" documentation.
+Date: Mon,  6 Jun 2011 16:49:11 -0400
+Message-ID: <1307393353-32389-1-git-send-email-marcnarc@xiplink.com>
 References: <4DED314C.3000203@web.de>
- <1307393353-32389-1-git-send-email-marcnarc@xiplink.com>
 Cc: Jens.Lehmann@web.de, gitster@pobox.com, mlevedahl@gmail.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 06 22:49:46 2011
+X-From: git-owner@vger.kernel.org Mon Jun 06 22:50:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QTgk3-0002K0-IQ
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Jun 2011 22:49:43 +0200
+	id 1QTgkL-0002SZ-26
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Jun 2011 22:50:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758013Ab1FFUtg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jun 2011 16:49:36 -0400
-Received: from 208-85-112-101.zerofail.com ([208.85.112.101]:32808 "EHLO
+	id S1758047Ab1FFUtr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2011 16:49:47 -0400
+Received: from 208-85-112-101.zerofail.com ([208.85.112.101]:32816 "EHLO
 	farnsworth.xiplink.com" rhost-flags-OK-FAIL-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753834Ab1FFUtg (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2011 16:49:36 -0400
+	by vger.kernel.org with ESMTP id S1757302Ab1FFUtr (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2011 16:49:47 -0400
 Received: from rincewind.xiplink.com ([192.168.1.136])
-	by farnsworth.xiplink.com (8.14.2/8.14.2/Debian-2build1) with ESMTP id p56KnVBI002061;
-	Mon, 6 Jun 2011 16:49:32 -0400
+	by farnsworth.xiplink.com (8.14.2/8.14.2/Debian-2build1) with ESMTP id p56KnVBH002061;
+	Mon, 6 Jun 2011 16:49:31 -0400
 X-Mailer: git-send-email 1.7.6.rc0.17.g3eac3
-In-Reply-To: <1307393353-32389-1-git-send-email-marcnarc@xiplink.com>
+In-Reply-To: <4DED314C.3000203@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175164>
 
-Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
----
- Documentation/git-submodule.txt |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
+This series applies atop Jens's 2/3 patch.  Jens, please feel free to
+squash these into your commit if you like.
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 408998e..83c59cc 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -77,8 +77,11 @@ to exist in the superproject. If <path> is not given, the
- +
- <repository> is the URL of the new submodule's origin repository.
- This may be either an absolute URL, or (if it begins with ./
--or ../), the location relative to the superproject's origin
--repository. If the superproject doesn't have an origin configured
-+or ../) a location relative to one of the superproject's remote
-+repositories:  If the superproject's currently checked-out branch tracks
-+a remote branch then that remote's URL is used, otherwise the "origin"
-+remote's URL is used.
-+If the superproject doesn't have an "origin" remote configured
- the superproject is its own authoritative upstream and the current
- working directory is used instead.
- +
--- 
-1.7.6.rc0.17.g3eac3
+The first commit makes the documentation (hopefully) more accurately
+describe how git chooses which superproject remote to use.
+
+The second commit moves the paragraph describing the utility of relative
+submodule URLs right after their description, making it more likely for
+readers to see it (instead of assuming it's part of the <path> parameter's
+documentation -- as I did on previous occasions).
+
+		M.
