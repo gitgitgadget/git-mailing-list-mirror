@@ -1,74 +1,95 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Command-line interface thoughts
-Date: Mon, 06 Jun 2011 16:16:39 +0200
-Message-ID: <4DECE147.3060808@drmicha.warpmail.net>
-References: <BANLkTikTWx7A64vN+hVZgL7cuiZ16Eobgg@mail.gmail.com> <m339jps1wt.fsf@localhost.localdomain> <BANLkTinidLbQ_FcVEiGSK91uXYWaKk7MKA@mail.gmail.com> <201106051311.00951.jnareb@gmail.com> <BANLkTik+xhd5QQ09QiPSH1bFAndzipKtrw@mail.gmail.com> <7vwrgza3i2.fsf@alter.siamese.dyndns.org> <4DEC8322.6040200@drmicha.warpmail.net> <7vk4cz9i1b.fsf@alter.siamese.dyndns.org>
+Subject: Re: Jabber, question on push,pull and --tags, and no help but jabber
+Date: Mon, 06 Jun 2011 16:31:50 +0200
+Message-ID: <4DECE4D6.9000204@drmicha.warpmail.net>
+References: <20110606130205.GA41674@sherwood.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Scott Chacon <schacon@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Michael Nahas <mike@nahas.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 06 16:16:55 2011
+Cc: git@vger.kernel.org
+To: Steffen Daode Nurpmeso <sdaoden@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 06 16:32:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QTabu-0003Xw-JC
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Jun 2011 16:16:54 +0200
+	id 1QTaqT-00021P-RB
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Jun 2011 16:31:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756634Ab1FFOQn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jun 2011 10:16:43 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:38353 "EHLO
+	id S1756848Ab1FFObx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jun 2011 10:31:53 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:46991 "EHLO
 	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756420Ab1FFOQn (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2011 10:16:43 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id B9E8820331;
-	Mon,  6 Jun 2011 10:16:42 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Mon, 06 Jun 2011 10:16:42 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=e/lEgEnPqmb4LVpJqQZJGCTFfeM=; b=r8/FPFLqtw5LPQzQyaulExZ+uSYF+KIrMASIR43KRiZ7777ylAT7hr9jqcljJXivERQ8sgzTYBKvF90IBKEQRig4z6Si0cLngGh9ZjTqci/Ek1wNJY3I8q8OEKE2crtYyieozsSP+o6+zfBc+UtxtWjR11Jh9W/KbZL0btbFCZQ=
-X-Sasl-enc: WQWVR/JfwGI+fP8lq3rIRThEAJ02vcUT+d2ggnevoPkv 1307369802
+	by vger.kernel.org with ESMTP id S1752048Ab1FFObw (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2011 10:31:52 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id E9F782068C;
+	Mon,  6 Jun 2011 10:31:51 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Mon, 06 Jun 2011 10:31:51 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=ceNhPA3JdZfqyditGPeRxUW80IQ=; b=sy3mvIB0ZNDbx+SiubH2DvPk7jhj3EESR1J5ir1tK/mogVvBOBhd788us5o0+EWb2XDQ3nN1ynutmHTIASnHwG6MGZefxufCnfx/k9ho7tVyIqX4UA5H6xxLTF+Hv7GzMJzj3wHz/lv7curJjrjIEqsJ0WMfdPGTDR3p9Pm7LWk=
+X-Sasl-enc: BVMhAFuPi6JnNrhiXO2N4+5d0W+eeMi4lSZOc6xRSRqI 1307370711
 Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 9B777444153;
-	Mon,  6 Jun 2011 10:16:41 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 6B9AC4074EF;
+	Mon,  6 Jun 2011 10:31:51 -0400 (EDT)
 User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc15 Lightning/1.0b3pre Thunderbird/3.1.10
-In-Reply-To: <7vk4cz9i1b.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20110606130205.GA41674@sherwood.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175127>
 
-Junio C Hamano venit, vidit, dixit 06.06.2011 16:00:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
+Steffen Daode Nurpmeso venit, vidit, dixit 06.06.2011 15:02:
+> Hello GIT,
+>     first paragraph is reserved for praising your existence.
+>     'Used cvs(1) for long years in small team projects with local
+>     private repos and never felt the need for anything else.  2011
+>     is different.  I first tried you but failed resoundingly.  Due
+>     to vim(1) and mutt(1) i discovered hg(1) and i still love it's
+>     simple usage.  'Talking about the front-end anyway.  It's huge
+>     memory consumption and slow performance forbids it's usage on
+>     our old PCs (e.g. Cyrix 166+) though.  So i came back and
+>     found you still receptive!  And the more i work, the less
+>     i hurt, the greater the knowledge, the smoother the
+>     interaction.  Are you the final word on RC in the end?
 > 
->> Junio C Hamano venit, vidit, dixit 06.06.2011 08:16:
->> ...
->>> For example, how would you design the user experience of "git show NEXT"?
->>> Try to write a transcript (i.e. "The user starts from this state, runs
->>> these commands, and then says 'git show NEXT'. The user will see this."),
->>> covering various corner cases exhaustively, including what would happen
->>> before the first commit, and during a conflicted "pull" or "rebase -i".
->>>  ...
->> That is why the other Michael suggested "NEXT" as opposed to "INDEX":
+> I stumbled over one thing i don't understand, because it seems
+> illogical: why do i need to use --tags to force pushing of tags?
+> Because there is even a config option for the latter, i suspect
+> this is because of intention.  It would be nice to get some
+> information on the background of that, like a link to yet existing
+> documentation.  Anyway i was a bit astonished to look at some
+
+Tags may contain private information. Say you pull some changes from
+your head of group, find a strange commit you want to look at later and
+tag it with "what-is-this-crap"...
+
+More seriously, tags are not part of the "remotes layout", so when you
+push them and others pull them they overwrite their tags if there's a
+name clash.
+
+> heavily scripted page of my free private repo webhoster :-) and
+> don't see any tags, even though i've pushed multiple times and
+> v0.0.0 was created directly after the first commit.  I would *not*
+> have detected that otherwise ...
+> (Yes i know it's somewhat implied by 'git help push'..--tags.
+> But i'm blonde.)
 > 
-> That is why I asked what the user experience of "git show NEXT" as opposed
-> to "git show INDEX" should look like. So what should it look like during a
-> "pull" that did not finish?
+> Some more i'll pack into this so that it's gone with the wind:
+> 
+> - Due to my weak GPRS or noisy HDSPA radio connection here in the
+>   pampa :) i hope for continuable network actions - failing after
+>   98% is a costly pain.  So it was a real joy to read somewhere
+>   that a GSOC project will address this issue!!
+> - OpenSSL support for signing.  I don't use PGP/GPG.  But i use
+>   HTTPS, POPS, SSH etc., so i'll have an OpenSSL/OpenSSH
+>   environment here on my box ready to use.
 
-If NEXT is to mean the result of a commit in the current state, and the
-current state would or should not allow a commit, then trying to access
-that pseudo-commit should error out with a helpful message.
+"git tag" and "git verify-tag" call out to "gpg". That could be easily
+adapted to call out to "openssl smime", or put your S/MIME signatures in
+a note.
 
-Another option is to make NEXT/INDEX mean a tree (:0:). I have not
-thought this through (and have not made a suggestion, accordingly) but I
-do see a problem in the UI. (I don't think we need to change the
-existing ui in that respect but can amend and improve it.)
-
-Anyway, it's rc phase :)
-
+Cheers
 Michael
