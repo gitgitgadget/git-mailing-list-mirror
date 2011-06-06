@@ -1,218 +1,206 @@
-From: Alexander Neronskiy <zakmagnus@google.com>
-Subject: [PATCH] Document the underlying protocol used by shallow repositories
- and --depth commands.
-Date: Mon, 6 Jun 2011 10:26:44 -0700
-Message-ID: <BANLkTi=SVZPebW2YXRnaLvkxEDGy_rrtJ3jayt8Oco6Sn8hciQ@mail.gmail.com>
+From: Scott Chacon <schacon@gmail.com>
+Subject: Re: Command-line interface thoughts
+Date: Mon, 6 Jun 2011 10:42:47 -0700
+Message-ID: <BANLkTi=KZN3g4s9jHSgYcPHA4eM+2U3g4w@mail.gmail.com>
+References: <BANLkTikTWx7A64vN+hVZgL7cuiZ16Eobgg@mail.gmail.com>
+	<m339jps1wt.fsf@localhost.localdomain>
+	<BANLkTinidLbQ_FcVEiGSK91uXYWaKk7MKA@mail.gmail.com>
+	<201106051311.00951.jnareb@gmail.com>
+	<BANLkTik+xhd5QQ09QiPSH1bFAndzipKtrw@mail.gmail.com>
+	<7vwrgza3i2.fsf@alter.siamese.dyndns.org>
+	<4DEC8322.6040200@drmicha.warpmail.net>
+	<7vk4cz9i1b.fsf@alter.siamese.dyndns.org>
+	<4DECE147.3060808@drmicha.warpmail.net>
+	<7vd3ir9btd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: schacon@gmail.com, Johannes.Schindelin@gmx.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 06 19:26:55 2011
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Michael Nahas <mike@nahas.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 06 19:42:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QTdZn-00017y-4H
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Jun 2011 19:26:55 +0200
+	id 1QTdpG-0001IL-5T
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Jun 2011 19:42:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754555Ab1FFR0t convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jun 2011 13:26:49 -0400
-Received: from smtp-out.google.com ([74.125.121.67]:14045 "EHLO
-	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752121Ab1FFR0s convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2011 13:26:48 -0400
-Received: from wpaz29.hot.corp.google.com (wpaz29.hot.corp.google.com [172.24.198.93])
-	by smtp-out.google.com with ESMTP id p56HQkbq022044
-	for <git@vger.kernel.org>; Mon, 6 Jun 2011 10:26:46 -0700
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
-	t=1307381206; bh=tIVtihPBNxh+x7ElYgnv1Bu7vS4=;
-	h=MIME-Version:Date:Message-ID:Subject:From:To:Cc:Content-Type:
-	 Content-Transfer-Encoding;
-	b=fZPzIdbsRudnaGXA4DvfTlgtey9qEpdu7UX6a4tu76eIDGjWqqJ83bWERdQMzk7hj
-	 e7I7+72KF7KJG7fhtnrLA==
-Received: from gwaa12 (gwaa12.prod.google.com [10.200.27.12])
-	by wpaz29.hot.corp.google.com with ESMTP id p56HQitm030725
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Mon, 6 Jun 2011 10:26:45 -0700
-Received: by gwaa12 with SMTP id a12so1865938gwa.0
-        for <git@vger.kernel.org>; Mon, 06 Jun 2011 10:26:44 -0700 (PDT)
+	id S1756839Ab1FFRms convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jun 2011 13:42:48 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:42283 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756618Ab1FFRms convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2011 13:42:48 -0400
+Received: by gyd10 with SMTP id 10so1555712gyd.19
+        for <git@vger.kernel.org>; Mon, 06 Jun 2011 10:42:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=beta;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=lsvcfPWhmHFv3XQu5GSFrdE/CH4Ebf+xuvaG5cwTklQ=;
-        b=ZP/y63c3kW0wwSy0yDH7mq6Kfi3PVhWV5FYKicNqC2gpN1ACGp4vDAVXf/BS/yH8yM
-         n9Fl4CuozippzIEcT4fw==
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=google.com; s=beta;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        b=MPDiaRGXzUbv2rTdMC/R2QPw8RrMF4ekiTrH/IsqiUFFAll7B09+mzmu6n6Mwo58wD
-         1cof0HZdafURAKhyN/Sw==
-Received: by 10.151.43.15 with SMTP id v15mr4495333ybj.170.1307381204700; Mon,
- 06 Jun 2011 10:26:44 -0700 (PDT)
-Received: by 10.151.46.11 with HTTP; Mon, 6 Jun 2011 10:26:44 -0700 (PDT)
-X-System-Of-Record: true
+        bh=+wn5iFUgXVCj1j+8jds66YXvgvCZsgO/ieI6ey9Kulg=;
+        b=NiIALdZDzY8KNzv9MQ6VVsfS67GJfVVr+/Sq5Vss6OiWN6gytFZu75nwVC2mYN5cXq
+         XioYSQfoNHTx02GEj/62iLRhow8bdfB+d09FwvhBOe0rTdg7mNnhAVaEzL4lDPgdSMQ9
+         jLchHgmKbnBnchOBWhHHVWuglFSjnw3mChq2k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=BJrvsL+O5JDoE9O0chDnD0PxOVPlXoZrtWw6qoF0TbP5RNHYA+bqSaDKtyTPQfKUn+
+         2l7UmFvgXjjiJ/Xp6+o1XYPlOkMHwV++XjJbpY3wbhV1gTfYYX0dLOXgS1yv/SpkdzAp
+         8Eqfe8jbKHbl36YHiYAgrHGzTGY6CKHtxB2ks=
+Received: by 10.236.173.40 with SMTP id u28mr5072083yhl.229.1307382167188;
+ Mon, 06 Jun 2011 10:42:47 -0700 (PDT)
+Received: by 10.236.36.1 with HTTP; Mon, 6 Jun 2011 10:42:47 -0700 (PDT)
+In-Reply-To: <7vd3ir9btd.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175139>
 
-Explain the exchange that occurs between a client and server when
-the client is requesting shallow history and/or is already using
-a shallow repository.
+Hey,
 
-Signed-off-by: Alex Neronskiy <zakmagnus@google.com>
----
-=A0Documentation/technical/pack-protocol.txt |=A0=A0 87 +++++++++++++++=
-+++++++-------
-=A01 files changed, 66 insertions(+), 21 deletions(-)
+On Mon, Jun 6, 2011 at 9:14 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>
+>>> That is why I asked what the user experience of "git show NEXT" as =
+opposed
+>>> to "git show INDEX" should look like. So what should it look like d=
+uring a
+>>> "pull" that did not finish?
+>>
+>> If NEXT is to mean the result of a commit in the current state, and =
+the
+>> current state would or should not allow a commit, then trying to acc=
+ess
+>> that pseudo-commit should error out with a helpful message.
+>
+> What "helpful message"? I asked for the user experience, not handwavi=
+ng.
+>
+> Do you mean to say that the error message would teach the user that t=
+he
+> current state is not something you can create a commit? What message =
+would
+> that give the end user? =C2=A0I am hoping the following is not what w=
+ill happen:
+>
+> =C2=A0Q. I tried "git show NEXT" because I wanted to see what the nex=
+t commit
+> =C2=A0 =C2=A0 would look like, but I got an error, saying NEXT is not=
+ known as I
+> =C2=A0 =C2=A0 haven't resolved a conflict.
+>
+> =C2=A0A. Yes, the message is correct.
 
-diff --git a/Documentation/technical/pack-protocol.txt
-b/Documentation/technical/pack-protocol.txt
-index 369f91d..f576386 100644
---- a/Documentation/technical/pack-protocol.txt
-+++ b/Documentation/technical/pack-protocol.txt
-@@ -187,26 +187,28 @@ server determine what the minimal packfile
-necessary for transport is.
+I'm not sure why this wouldn't just list out the index tree, having
+some message for entries that have more than one stage.  Like a
+porcelain-ized version of 'git ls-files --stage', maybe in this case
+with a warning at the bottom that a subsequent commit command will not
+complete.  Even something similar to what would happen if you ran
+'commit' right then:
 
-=A0Once the client has the initial list of references that the server
-=A0has, as well as the list of capabilities, it will begin telling the
--server what objects it wants and what objects it has, so the server
--can make a packfile that only contains the objects that the client nee=
-ds.
--The client will also send a list of the capabilities it wants to be in
--effect, out of what the server said it could do with the first 'want' =
-line.
-+server what objects it wants, its shallow objects (if any), and the
-+maximum commit depth it wants (if any).=A0 The client will also send a
-+list of the capabilities it wants to be in effect, out of what the
-+server said it could do with the first 'want' line.
+  fatal: 'commit' will not be possible because you have unmerged files.
 
-=A0----
-=A0=A0 upload-request=A0=A0=A0 =3D=A0 want-list
--=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 have-l=
-ist
--=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 comput=
-e-end
-+=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 *shall=
-ow-line
-+=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 *1dept=
-h-request
-+=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 flush-=
-pkt
+> =C2=A0Q. But then how can I see what the next commit would look like?
+>
+> =C2=A0A. You would say "git diff HEAD NEXT".
+>
+> =C2=A0Q. Ah, that is the same as I always do before making a commit t=
+o see what
+> =C2=A0 =C2=A0 I have added so far look sane. Thanks.
 
-=A0=A0 want-list=A0=A0=A0=A0=A0=A0=A0=A0 =3D=A0 first-want
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 *add=
-itional-want
--=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 flush-=
-pkt
-+
-+=A0 shallow-line=A0=A0=A0=A0=A0 =3D=A0 PKT_LINE("shallow" SP obj-id)
-+
-+=A0 depth-request=A0=A0=A0=A0 =3D=A0 PKT_LINE("deepen" SP depth)
+Why would this look sane? I would think this would say "* Unmerged
+path <file>" just like 'diff --cached would do.
 
-=A0=A0 first-want=A0=A0=A0=A0=A0=A0=A0 =3D=A0 PKT-LINE("want" SP obj-id=
- SP capability-list LF)
-=A0=A0 additional-want=A0=A0 =3D=A0 PKT-LINE("want" SP obj-id LF)
+>
+> =C2=A0 =C2=A0 ...after 2 minutes...
+>
+> =C2=A0Q. Sorry, it does not work. I get the same error, that says NEX=
+T is not
+> =C2=A0 =C2=A0 known yet.
+>
+> =C2=A0A. Ok, you would say "git diff HEAD" the old fashioned way. The=
+ person
+> =C2=A0 =C2=A0 who thought NEXT would be useful didn't think things th=
+rough.
 
--=A0 have-list=A0=A0=A0=A0=A0=A0=A0=A0 =3D=A0 *have-line
--=A0 have-line=A0=A0=A0=A0=A0=A0=A0=A0 =3D=A0 PKT-LINE("have" SP obj-id=
- LF)
--=A0 compute-end=A0=A0=A0=A0=A0=A0 =3D=A0 flush-pkt / PKT-LINE("done")
-+=A0 depth=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 =3D=A0 1*DIGIT
-=A0----
+I think the point would be that "git diff HEAD WTREE" would give you
+this same output and if you had the basic concept of these three
+important areas of Git that you could be explicit about what you
+wanted to see or compare rather than having to look up the specific
+special case that will show you what you want. Consider these very
+common scenarios from a new user perspective: you want to see what is
+changed in your working tree but not added yet, you want to see what
+is added but not committed, you want to see the sum total of all
+changes since your last commit and you want to see what the index
+currently looks like.
 
-=A0Clients MUST send all the obj-ids it wants from the reference
-@@ -215,21 +217,64 @@ discovery phase as 'want' lines. Clients MUST
-send at least one
-=A0obj-id in a 'want' command which did not appear in the response
-=A0obtained through ref discovery.
+Here are the commands currently:
 
--If client is requesting a shallow clone, it will now send a 'deepen'
--line with the depth it is requesting.
-+The client MUST write all obj-ids which it only has shallow copies
-+of (meaning that it does not have the parents of a commit) as
-+'shallow' lines so that the server is aware of the limitations of
-+the client's history. Clients MUST NOT mention an obj-id which
-+it does not know exists on the server.
-+
-+The client now sends the maximum commit history depth it wants for
-+this transaction, which is the number of commits it wants from the
-+tip of the history, if any, as a 'deepen' line.=A0 A depth of 0 is the
-+same as not making a depth request. The client does not want to receiv=
-e
-+any commits beyond this depth, nor objects needed only to complete
-+those commits. Commits whose parents are not received as a result are
-+marked as shallow.
-+
-+Once all the 'want's and 'shallow's (and optional 'deepen') are
-+transferred, clients MUST send a flush-pkt. If the client has all
-+the references on the server, and as much of their commit history
-+as it is interested in, client flushes and disconnects.
-+
-+Otherwise, if the client sent a positive depth request, the server
-+will determine which commits will and will not be shallow and
-+send this information to the client. If the client did not request
-+a positive depth, this step is skipped.
+a) diff
+b) diff --cached
+c) diff HEAD
+d) ls-files --stage
 
--Once all the "want"s (and optional 'deepen') are transferred,
--clients MUST send a flush-pkt. If the client has all the references
--on the server, client flushes and disconnects.
-+----
-+=A0 shallow-update=A0=A0=A0 =3D=A0 *shallow-line
-+=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 *unsha=
-llow-line
-+=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 flush-=
-pkt
+Here would be the commands with the proposed pseudo-trees.
 
--TODO: shallow/unshallow response and document the deepen command in th=
-e ABNF.
-+=A0 shallow-line=A0=A0=A0=A0 =3D=A0 PKT-LINE("shallow" SP obj-id)
-+
-+=A0 unshallow-line=A0=A0 =3D=A0 PKT-LINE("unshallow" SP obj-id)
-+----
-+
-+If the client has requested a positive depth, the server will compute
-+the set of commits which are no deeper than the desired depth, startin=
-g
-+at the client's wants. The server writes 'shallow' lines for each
-+commit whose parents will not be sent as a result. The server writes
-+an 'unshallow' line for each commit which the client has indicated is
-+shallow, but is no longer shallow at the currently requested depth
-+(that is, its parents will now be sent). The server MUST NOT mark
-+as unshallow anything which the client has not indicated was shallow.
+a) diff NEXT WTREE
+b) diff HEAD NEXT
+c) diff HEAD WTREE
+d) show NEXT
 
-=A0Now the client will send a list of the obj-ids it has using 'have'
--lines.=A0 In multi_ack mode, the canonical implementation will send up
--to 32 of these at a time, then will send a flush-pkt.=A0 The canonical
--implementation will skip ahead and send the next 32 immediately,
--so that there is always a block of 32 "in-flight on the wire" at a
--time.
-+lines, so the server can make a packfile that only contains the object=
-s
-+that the client needs. In multi_ack mode, the canonical implementation
-+will send up to 32 of these at a time, then will send a flush-pkt. The
-+canonical implementation will skip ahead and send the next 32 immediat=
-ely,
-+so that there is always a block of 32 "in-flight on the wire" at a tim=
+It seems to me to be more guessable and straightforward for new users.
+ But, yes, I assume there would be some difficulty in supporting it
+everywhere.
+
+>
+> =C2=A0Q. Now I am seeing a diff between the conflicted state and the =
+previous
+> =C2=A0 =C2=A0 commit, I think I can get to where I want to go from he=
+re. Thanks.
+>
+>
+>> Another option is to make NEXT/INDEX mean a tree (:0:). I have not
+>> thought this through (and have not made a suggestion, accordingly) b=
+ut I
+>> do see a problem in the UI. (I don't think we need to change the
+>> existing ui in that respect but can amend and improve it.)
+>>
+>> Anyway, it's rc phase :)
+>
+> Rc or not rc, just repeating a fuzzy and uncooked "idea" around phone=
+y
+> ref-looking names that will end up confusing the users, and selling t=
+hat
+> as if it is a logical conclusion to "we want to give an easier to
+> understand UI", without presenting a solid user experience design tha=
+t is
+> convincing enough that the "idea" will reduce confusion will not get =
+us
+> anywhere, especially when it is sprinkled with ad hominem attack at m=
 e.
-+
-+----
-+=A0 upload-haves=A0=A0=A0=A0=A0 =3D=A0 have-list
-+=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 comput=
-e-end
-+
-+=A0 have-list=A0=A0=A0=A0=A0=A0=A0=A0 =3D=A0 *have-line
-+=A0 have-line=A0=A0=A0=A0=A0=A0=A0=A0 =3D=A0 PKT-LINE("have" SP obj-id=
- LF)
-+=A0 compute-end=A0=A0=A0=A0=A0=A0 =3D=A0 flush-pkt / PKT-LINE("done")
-+----
 
-=A0If the server reads 'have' lines, it then will respond by ACKing any
-=A0of the obj-ids the client said it had that the server also has. The
---
-1.7.3.1
+I think I'm the only one that mentioned your name so I apologize if
+you saw that as an attack.  I was not saying you are unreasonable in
+not changing the UI all the time, or that you are unreasonable for not
+liking the NEXT/WTREE - there are certainly cases I'm not considering.
+(For example, I'm more concerned about things like 'git commit-tree
+NEXT' or 'git rev-parse NEXT' if the index is in a weird state - it
+obviously has to be special-cased and I would assume only usable at
+the porcelain level, possibly only by 'diff', 'show' and 'grep'. It's
+the implementation I'm mainly worried about, I feel that the UI would
+be pretty straightforward in all these cases.)
+
+Re: the ad-hominim stuff, I was simply remarking that the
+'reset'/'checkout' debate has been had several times and there is
+precedent for it being a non-starter.  I also see and understand the
+argument from you and Linus about that, I just happen to disagree with
+it. It was not meant to be an attack.
+
+Scott
