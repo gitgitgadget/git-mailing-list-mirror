@@ -1,108 +1,99 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] clone: always fetch remote HEAD
-Date: Mon, 6 Jun 2011 18:08:21 -0400
-Message-ID: <20110606220821.GB13697@sigill.intra.peff.net>
-References: <20110603050901.GA883@sigill.intra.peff.net>
- <20110603051805.GC1008@sigill.intra.peff.net>
- <7vipsi8zwl.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-1?Q?J=E9r=E9mie_NIKAES?= 
+	<jeremie.nikaes@ensimag.imag.fr>
+Subject: Re: [PATCH] Add a remote helper to interact with mediawiki, pull &
+ clone handled
+Date: Tue, 7 Jun 2011 00:11:12 +0200
+Message-ID: <BANLkTi=ABYYY7KwVa6=bY_DXXopKnzZOtg@mail.gmail.com>
+References: <1307355635-5580-1-git-send-email-jeremie.nikaes@ensimag.imag.fr> <BANLkTi=nOa2B_KNfv-XkYFVr8Ngdd2msFA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Dmitry Ivankov <divanorama@gmail.com>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 07 00:08:55 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, jrnieder@gmail.com,
+	Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>,
+	Claire Fousse <claire.fousse@ensimag.imag.fr>,
+	David Amouyal <david.amouyal@ensimag.imag.fr>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	=?ISO-8859-1?Q?Sylvain_Boulm=E9?= <sylvain.boulme@imag.fr>
+To: Thomas Adam <thomas@xteddy.org>
+X-From: git-owner@vger.kernel.org Tue Jun 07 00:11:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QThyf-000291-Rr
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Jun 2011 00:08:54 +0200
+	id 1QTi1K-0003DJ-Ha
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Jun 2011 00:11:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758131Ab1FFWI1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jun 2011 18:08:27 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45684
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758069Ab1FFWIZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jun 2011 18:08:25 -0400
-Received: (qmail 9444 invoked by uid 107); 6 Jun 2011 22:08:31 -0000
-Received: from 70-36-146-246.dsl.dynamic.sonic.net (HELO sigill.intra.peff.net) (70.36.146.246)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 06 Jun 2011 18:08:31 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Jun 2011 18:08:21 -0400
-Content-Disposition: inline
-In-Reply-To: <7vipsi8zwl.fsf@alter.siamese.dyndns.org>
+	id S1758148Ab1FFWLd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jun 2011 18:11:33 -0400
+Received: from mail-px0-f179.google.com ([209.85.212.179]:34896 "EHLO
+	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756963Ab1FFWLc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2011 18:11:32 -0400
+Received: by pxi2 with SMTP id 2so3137369pxi.10
+        for <git@vger.kernel.org>; Mon, 06 Jun 2011 15:11:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:from
+         :date:x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=jumCsb9ElcCov7mvtlODoB+i8z6y7UugGGaS2FZhojc=;
+        b=qKi5pb83VjcX4avHKXXFWpvEBgHd04Fz/Ef4tySqhbz923ovPQ66xfz1+4B5EC8dBP
+         oJZa7Doco+tT2kXodBvindce0xfZQ2APBLdpm5vadXmGIVLzVC998sImzT1jSGnOFYRq
+         SomRziC8VHCkQFSbkEp8WRdDFP2rJ4G9FDv5E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        b=DW8HdCu+tceBaJbILectkhNRL/pm7iYRpYlqlWWAp8ruTDHOlw1sVmu0GbXZqVHpIW
+         gpmDvvplVYHXjyHa9V1RBSU3CmxEYWL95pyALeb3XWEWcdioq6F9/hzTrwMQaHVvZH7n
+         1S5BaTULVqQHqxP8udFBtZ5wKsMJdT4UxPZV8=
+Received: by 10.142.250.6 with SMTP id x6mr826879wfh.243.1307398292075; Mon,
+ 06 Jun 2011 15:11:32 -0700 (PDT)
+Received: by 10.142.136.2 with HTTP; Mon, 6 Jun 2011 15:11:12 -0700 (PDT)
+In-Reply-To: <BANLkTi=nOa2B_KNfv-XkYFVr8Ngdd2msFA@mail.gmail.com>
+X-Google-Sender-Auth: ThT28GdObulp6m2URolpNOZUF-Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175175>
 
-On Mon, Jun 06, 2011 at 01:31:54PM -0700, Junio C Hamano wrote:
+> use warnings; ?
 
-> >  static struct ref *wanted_peer_refs(const struct ref *refs,
-> >  		struct refspec *refspec)
-> >  {
-> > -	struct ref *local_refs = NULL;
-> > -	struct ref **tail = &local_refs;
-> > +	struct ref *head = get_remote_ref(refs, "HEAD");
-> 
-> The rest of the patch looked quite sane but I wonder if this should be
-> using get_remote_ref() that calls find_ref_by_name_abbrev() which in turn
-> would hit "refs/heads/HEAD" if the remote side didn't give you "HEAD".
-> Shouldn't it be using find_ref_by_name() directly?
+Thanks, added this, showed some uses of undefined variables now fixed.
+Will figure in the next patch.
+>
+>> +use Switch;
+>
+> Ugh -- no. =A0This is terrible. =A0Look at this:
+>
+> [~]% corelist Switch
+> Switch was first released with perl v5.7.3 and removed from v5.13.1
+>
+> Since you do not specify a minimum perl version you might be alright,
+> but for those people on 5.14 -- they won't have this module, for good
+> reason. =A0You can, if you wanted use "given/when" as alternate
+> constructs to this.
 
-Ick, yeah, that was just me blindly cutting down what get_fetch_map was
-doing to the bit that I wanted, and thinking get_remote_ref was it.  I
-didn't even notice the fact that it was using the _abbrev form of
-find_ref_by_name.
+Yes, as I said to Junio Hamano in my previous mail, that's a mistake
+from my part, we don't use switch anymore. Sorry about that
 
-It should definitely be an exact match. I'll fix it in my re-roll.
+>
+>> +use MediaWiki::API;
+>> +use Storable qw(freeze thaw);
+>
+> This might have problems transcending storable formats made on a 32bi=
+t
+> machine, and then trying to unpack them again on 64bit. =A0Do you rea=
+lly
+> need the need for these storable items to be encoded as binary?
 
-> > @@ -357,8 +358,11 @@ static void write_remote_refs(const struct ref *local_refs)
-> >  {
-> >  	const struct ref *r;
-> >  
-> > -	for (r = local_refs; r; r = r->next)
-> > +	for (r = local_refs; r; r = r->next) {
-> > +		if (!r->peer_ref)
-> > +			continue;
-> 
-> As this is part of this patch, I presume this test reliably catch "HEAD"
-> and only "HEAD", but what is it that gives us this guarantee?  Is it that
-> in all three possible configurations (i.e. traditional no-separate remote
-> layout, separate remote layout, or mirrored layout), we never map anything
-> outside refs/heads/* and refs/tags/* namespace, hence things like HEAD
-> will never have peer_ref defined?
+Hmmm that is a leftover use from the script of Jeff King that we used.
+We don't use this anymore, so that should not be a problem.
 
-Until now, nobody fed us a ref without peer_ref mapped, as doing so
-would segfault. So this gives a NULL peer ref the meaning "don't bother
-saving this into a ref". Which is really the only sensible thing it can
-mean, since the peer ref is the local bit that says where to put it.
+Thanks for your advices !
 
-> This is not a complaint but is an honest question. I am wondering how
-> future possible enhancements to "clone" (like the rumored "track only this
-> branch") will affect codepaths around this area.
-
-I think it's a good question to ask. The answer is that if you are
-cloning only a subset of the remote refs (or even a single ref), then
-either:
-
-  1. You will want to write that subset according to a refspec mapping
-     (e.g., cloning "jk/*" to "remotes/origin/jk/*"). In that case you
-     would have set the peer_ref to show where to put it.
-
-  2. You will not want to write out these refs, because you are handling
-     them separately. For example, in this case, we are already handling
-     the detached HEAD case separately when we generally figure out what
-     HEAD is. And in this case, the code does what you want by silently
-     skipping.
-
-     I tried to think of another case where you would want this, but I
-     really couldn't come up with one. Even if you are cloning a "track
-     only this branch" ref, you would still have its peer_ref pointing
-     to its local counterpart (even if it's "refs/heads/master" both
-     locally and on the remote).
-
--Peff
+--
+J=E9r=E9mie Nikaes
