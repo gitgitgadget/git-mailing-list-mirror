@@ -1,100 +1,64 @@
-From: Jamey Sharp <jamey@minilop.net>
-Subject: [PATCHv8 0/4] Support ref namespaces
-Date: Tue,  7 Jun 2011 16:04:46 -0700
-Message-ID: <1307487890-3915-1-git-send-email-jamey@minilop.net>
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
-	Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] Document the underlying protocol used by shallow
+ repositories and --depth commands.
+Date: Wed, 8 Jun 2011 01:06:50 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1106080102190.2918@bonsai2>
+References: <loom.20110607T212226-56@post.gmane.org> <7vzklt4c92.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Alex Neronskiy <zakmagnus@google.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 08 01:06:38 2011
+X-From: git-owner@vger.kernel.org Wed Jun 08 01:06:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QU5M0-0006pT-B5
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 01:06:32 +0200
+	id 1QU5MR-0006yf-07
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 01:06:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932674Ab1FGXGP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2011 19:06:15 -0400
-Received: from mail-px0-f179.google.com ([209.85.212.179]:35987 "EHLO
-	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756146Ab1FGXFs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2011 19:05:48 -0400
-Received: by pxi2 with SMTP id 2so4013694pxi.10
-        for <git@vger.kernel.org>; Tue, 07 Jun 2011 16:05:48 -0700 (PDT)
-Received: by 10.68.67.211 with SMTP id p19mr517218pbt.286.1307487948346;
-        Tue, 07 Jun 2011 16:05:48 -0700 (PDT)
-Received: from oh.minilop.net (host-247-89.pubnet.pdx.edu [131.252.247.89])
-        by mx.google.com with ESMTPS id k4sm457379pbl.11.2011.06.07.16.05.46
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 07 Jun 2011 16:05:47 -0700 (PDT)
-Received: from jamey by oh.minilop.net with local (Exim 4.76)
-	(envelope-from <jamey@oh.minilop.net>)
-	id 1QU5LG-00011u-1x; Tue, 07 Jun 2011 16:05:46 -0700
-X-Mailer: git-send-email 1.7.4.4
+	id S932678Ab1FGXGy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2011 19:06:54 -0400
+Received: from mailout-de.gmx.net ([213.165.64.22]:37800 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S932675Ab1FGXGx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2011 19:06:53 -0400
+Received: (qmail invoked by alias); 07 Jun 2011 23:06:52 -0000
+Received: from 3-254.197-178.cust.bluewin.ch (EHLO bonsai2.local) [178.197.254.3]
+  by mail.gmx.net (mp048) with SMTP; 08 Jun 2011 01:06:52 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18unuZzW7suggDMfCnTG/nJIcJXvV4nWeYoAMrM4c
+	lzjOOAJugUWoi9
+X-X-Sender: gene099@bonsai2
+In-Reply-To: <7vzklt4c92.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175286>
 
-This series adds support for dividing the refs of a single repository
-into multiple namespaces, each of which can have its own branches, tags,
-and HEAD. Git can expose each namespace as an independent repository to
-pull from and push to, while sharing the object store, and exposing all
-the refs to operations such as git-gc.
+Dear Junio,
 
-Storing multiple repositories as namespaces of a single repository
-avoids storing duplicate copies of the same objects, such as when
-storing multiple branches of the same source.  The alternates mechanism
-provides similar support for avoiding duplicates, but alternates do not
-prevent duplication between new objects added to the repositories
-without ongoing maintenance, while namespaces do.
+On Tue, 7 Jun 2011, Junio C Hamano wrote:
 
-The first patch improves the prefix handling in the ref iteration
-functions, making it possible for us to implement
-for_each_namespaced_ref later. The next two patches implement and then
-use infrastructure for tracking the current namespace and iterating over
-the refs in that namespace. The last patch adds general documentation
-for namespaces, and specific references from the documentation on
-receive-pack, upload-pack, http-backend, and git.
+> Alex Neronskiy <zakmagnus@google.com> writes:
+> 
+> By the way, Dscho, the shallow extension was your invention 4 and half
+> years ago.
 
-v8: Fix error message in parsing of the --namespace option; noticed by
-Bert Wesarg.
+Yep, I remember. My iBook died in the process. But I got the job.
 
-v7 (unintentionally sent without a version number): Back out the change
-to actually use "refs/" as a filter, which caused t5501 to fail.  Patch
-1/4 now preserves the existing behavior, to avoid breaking assumptions
-like this; that seems preferable to tracking down all the places that
-would break due to this new ref filtering.  Adding that filtering and
-fixing all the resulting breakage seems like an entirely separate
-change.
+> I think the description in this version is mostly accurate (modulo the 
+> part that talks about an early client termination after "shallow" and 
+> "deepen" are sent), but I'd appreciate if you can comment on it to 
+> improve.
 
-Josh Triplett and Jamey Sharp (4):
-  Fix prefix handling in ref iteration functions
-  Add infrastructure for ref namespaces
-  Support ref namespaces for remote repositories via upload-pack and
-    receive-pack
-  Add documentation for ref namespaces
+I will, once I am back to normal after traveling. Unfortunately (for my 
+Git contributions at least), I will be heavily traveling in the next time, 
+maybe for the next two years. But as for the patch you requested my 
+look-over, I expect to have enough time tomorrow, latest coming weekend.
 
- Documentation/Makefile                 |    2 +-
- Documentation/git-http-backend.txt     |    8 +++
- Documentation/git-receive-pack.txt     |    2 +-
- Documentation/git-upload-pack.txt      |    4 ++
- Documentation/git.txt                  |   13 +++++-
- Documentation/gitnamespaces.txt        |   75 ++++++++++++++++++++++++++++++++
- builtin/receive-pack.c                 |   34 ++++++++++++---
- cache.h                                |    3 +
- contrib/completion/git-completion.bash |    3 +-
- environment.c                          |   41 +++++++++++++++++
- git.c                                  |   18 +++++++-
- refs.c                                 |   33 ++++++++++++--
- refs.h                                 |    3 +
- upload-pack.c                          |   15 +++---
- 14 files changed, 230 insertions(+), 24 deletions(-)
- create mode 100644 Documentation/gitnamespaces.txt
-
--- 
-1.7.5.3
+Ciao,
+Johannes
