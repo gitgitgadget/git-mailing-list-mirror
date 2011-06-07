@@ -1,80 +1,66 @@
-From: Josh Triplett <josh@joshtriplett.org>
-Subject: Re: [PATCH 2/4] Add infrastructure for ref namespaces
-Date: Tue, 7 Jun 2011 15:25:21 -0700
-Message-ID: <20110607222520.GA1761@leaf>
-References: <7vsjrna2x2.fsf@alter.siamese.dyndns.org>
- <1307470885-4018-1-git-send-email-jamey@minilop.net>
- <1307470885-4018-3-git-send-email-jamey@minilop.net>
- <BANLkTika2C9iw7E6Z-HRW=4KNstYqMbxrw@mail.gmail.com>
+From: Alex Neronskiy <zakmagnus@google.com>
+Subject: Re: [PATCH] Document the underlying protocol used by shallow repositories and --depth commands.
+Date: Tue, 7 Jun 2011 22:31:12 +0000 (UTC)
+Message-ID: <loom.20110608T001220-765@post.gmane.org>
+References: <BANLkTi=SVZPebW2YXRnaLvkxEDGy_rrtJ3jayt8Oco6Sn8hciQ@mail.gmail.com> <7vvcwi95yi.fsf@alter.siamese.dyndns.org> <loom.20110606T213817-376@post.gmane.org> <7v1uz55r24.fsf@alter.siamese.dyndns.org> <loom.20110607T224355-216@post.gmane.org> <7vr57547sj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jamey Sharp <jamey@minilop.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 08 00:25:40 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 08 00:31:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QU4iQ-0001JF-7b
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 00:25:38 +0200
+	id 1QU4o8-0003TT-6b
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 00:31:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758861Ab1FGWZc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Jun 2011 18:25:32 -0400
-Received: from relay3-d.mail.gandi.net ([217.70.183.195]:39910 "EHLO
-	relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757026Ab1FGWZb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Jun 2011 18:25:31 -0400
-X-Originating-IP: 217.70.178.134
-Received: from mfilter4-d.gandi.net (mfilter4-d.gandi.net [217.70.178.134])
-	by relay3-d.mail.gandi.net (Postfix) with ESMTP id B5DA3A8075;
-	Wed,  8 Jun 2011 00:25:29 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at #File managed by puppet, do not edit
-	locally
-Received: from relay3-d.mail.gandi.net ([217.70.183.195])
-	by mfilter4-d.gandi.net (mfilter4-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id TX9o0N63QRDa; Wed,  8 Jun 2011 00:25:28 +0200 (CEST)
-X-Originating-IP: 131.252.246.221
-Received: from leaf (host-246-221.pubnet.pdx.edu [131.252.246.221])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 883D7A8072;
-	Wed,  8 Jun 2011 00:25:23 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <BANLkTika2C9iw7E6Z-HRW=4KNstYqMbxrw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758864Ab1FGWb1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2011 18:31:27 -0400
+Received: from lo.gmane.org ([80.91.229.12]:56418 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751762Ab1FGWb0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2011 18:31:26 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1QU4o1-0003Qz-Ik
+	for git@vger.kernel.org; Wed, 08 Jun 2011 00:31:25 +0200
+Received: from 216-239-45-4.google.com ([216.239.45.4])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 08 Jun 2011 00:31:25 +0200
+Received: from zakmagnus by 216-239-45-4.google.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 08 Jun 2011 00:31:25 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 216.239.45.4 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110422 Ubuntu/10.04 (lucid) Firefox/3.6.17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175275>
 
-On Tue, Jun 07, 2011 at 09:12:09PM +0200, Bert Wesarg wrote:
-> On Tue, Jun 7, 2011 at 20:21, Jamey Sharp <jamey@minilop.net> wrote:
-> > diff --git a/git.c b/git.c
-> > index 89721d4..98cbf7b 100644
-> > --- a/git.c
-> > +++ b/git.c
-> > @@ -126,6 +126,20 @@ static int handle_options(const char ***argv, =
-int *argc, int *envchanged)
-> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0setenv(GIT_DIR_ENVIR=
-ONMENT, cmd + 10, 1);
-> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (envchanged)
-> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0*env=
-changed =3D 1;
-> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 } else if (!strcmp(cmd, "--namespace"=
-)) {
-> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (*argc < 2) {
-> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 fprin=
-tf(stderr, "No directory given for --namespace.\n" );
->=20
-> This 'directory' is probably misnamed here.
+Junio C Hamano <gitster <at> pobox.com> writes:
 
-Thanks, will fix.
+> Ah, I overlooked that codepath, but if that if statement triggered, that
+> would mean fetching is still 0, which in turn means that you never sent
+> any "want", so "Once all the 'want's' (and optional 'deepen') are
+> transferred" is not even true, is it?
 
-- Josh Triplett
+If you want to get pedantic, it IS true that "all" the 'want's are sent; the
+correct set of wants to send just happens to be empty. What DOES seem incorrect
+is the part about the 'deepen' (as well as the 'shallow's I'm proposing to add);
+that part of the code isn't even reached if this termination happens. So, either
+I'm mistaken and that is NOT the right codepath, or this is a mistake already
+present in the documentation. 
+
+Alternatively, the problem there is that it's just deceptively worded. It
+implies that a 'deepen' can be sent and that termination can still happen
+afterwards; but I don't believe this is possible. If a depth argument is
+present, everything_local is not called and COMPLETEness is not set, so it's
+impossible to skip any refs except in the corner case where there aren't any to
+begin with. The second version of this patch addresses this better.
