@@ -1,126 +1,217 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] clone: always fetch remote HEAD
-Date: Tue, 7 Jun 2011 19:03:22 -0400
-Message-ID: <20110607230322.GB23753@sigill.intra.peff.net>
-References: <20110607230013.GA23409@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Dmitry Ivankov <divanorama@gmail.com>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
+From: Jamey Sharp <jamey@minilop.net>
+Subject: [PATCHv8 3/4] Support ref namespaces for remote repositories via upload-pack and receive-pack
+Date: Tue,  7 Jun 2011 16:04:49 -0700
+Message-ID: <1307487890-3915-4-git-send-email-jamey@minilop.net>
+References: <1307487890-3915-1-git-send-email-jamey@minilop.net>
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
+	Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org,
+	Josh Triplett <josh@joshtriplett.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 08 01:03:38 2011
+X-From: git-owner@vger.kernel.org Wed Jun 08 01:06:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QU5J7-0005pk-Qd
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 01:03:34 +0200
+	id 1QU5LV-0006dI-VD
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 01:06:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932639Ab1FGXD2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2011 19:03:28 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46807
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753982Ab1FGXDZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2011 19:03:25 -0400
-Received: (qmail 23116 invoked by uid 107); 7 Jun 2011 23:03:32 -0000
-Received: from 70-36-146-246.dsl.dynamic.sonic.net (HELO sigill.intra.peff.net) (70.36.146.246)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 07 Jun 2011 19:03:32 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Jun 2011 19:03:22 -0400
-Content-Disposition: inline
-In-Reply-To: <20110607230013.GA23409@sigill.intra.peff.net>
+	id S1758941Ab1FGXFv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2011 19:05:51 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:53521 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753189Ab1FGXFu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2011 19:05:50 -0400
+Received: by pvg12 with SMTP id 12so1100953pvg.19
+        for <git@vger.kernel.org>; Tue, 07 Jun 2011 16:05:49 -0700 (PDT)
+Received: by 10.68.15.170 with SMTP id y10mr428166pbc.364.1307487949723;
+        Tue, 07 Jun 2011 16:05:49 -0700 (PDT)
+Received: from oh.minilop.net (host-247-89.pubnet.pdx.edu [131.252.247.89])
+        by mx.google.com with ESMTPS id w2sm457511pbg.21.2011.06.07.16.05.46
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 07 Jun 2011 16:05:47 -0700 (PDT)
+Received: from jamey by oh.minilop.net with local (Exim 4.76)
+	(envelope-from <jamey@oh.minilop.net>)
+	id 1QU5LG-00012A-3y; Tue, 07 Jun 2011 16:05:46 -0700
+X-Mailer: git-send-email 1.7.4.4
+In-Reply-To: <1307487890-3915-1-git-send-email-jamey@minilop.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175281>
 
-In most cases, fetching the remote HEAD explicitly is
-unnecessary. It's just a symref pointing to a branch which
-we are already fetching, so we will already ask for its sha1.
+From: Josh Triplett <josh@joshtriplett.org>
 
-However, if the remote has a detached HEAD, things are less
-certain. We do not ask for HEAD's sha1, but we do try to
-write it into a local detached HEAD. In most cases this is
-fine, as the remote HEAD is pointing to some part of the
-history graph that we will fetch via the refs.
+Change upload-pack and receive-pack to use the namespace-prefixed refs
+when working with the repository, and use the unprefixed refs when
+talking to the client, maintaining the masquerade.  This allows
+clone, pull, fetch, and push to work with a suitably configured
+GIT_NAMESPACE.
 
-But if the remote HEAD points to an "orphan" commit (one
-which was is not an ancestor of any refs), then we will not
-have the object, and update_ref will complain when we try to
-write the detached HEAD, aborting the whole clone.
+With appropriate configuration, this also allows http-backend to expose
+namespaces as multiple repositories with different paths.  This only
+requires setting GIT_NAMESPACE, which http-backend passes through to
+upload-pack and receive-pack.
 
-This patch makes clone always explicitly ask the remote for
-the sha1 of its HEAD commit. In the non-detached case, this
-is a no-op, as we were going to ask for that sha1 anyway. In
-the regular detached case, this will add an extra "want" to
-the protocol negotiation, but will not change the history
-that gets sent. And in the detached orphan case, we will
-fetch the orphaned history so that we can write it into our
-local detached HEAD.
+Commit by Josh Triplett and Jamey Sharp.
 
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Josh Triplett <josh@joshtriplett.org>
+Signed-off-by: Jamey Sharp <jamey@minilop.net>
 ---
- builtin/clone.c           |   10 +++++++---
- t/t5707-clone-detached.sh |    6 +++---
- 2 files changed, 10 insertions(+), 6 deletions(-)
+ builtin/receive-pack.c |   34 ++++++++++++++++++++++++++++------
+ upload-pack.c          |   15 ++++++++-------
+ 2 files changed, 36 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index f579794..f134ff8 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -343,8 +343,9 @@ static void remove_junk_on_signal(int signo)
- static struct ref *wanted_peer_refs(const struct ref *refs,
- 		struct refspec *refspec)
- {
--	struct ref *local_refs = NULL;
--	struct ref **tail = &local_refs;
-+	struct ref *head = copy_ref(find_ref_by_name(refs, "HEAD"));
-+	struct ref *local_refs = head;
-+	struct ref **tail = head ? &head->next : &local_refs;
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index e1a687a..54dd5d4 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -120,9 +120,14 @@ static int show_ref(const char *path, const unsigned char *sha1, int flag, void
+ 	return 0;
+ }
  
- 	get_fetch_map(refs, refspec, &tail, 0);
- 	if (!option_mirror)
-@@ -357,8 +358,11 @@ static void write_remote_refs(const struct ref *local_refs)
++static int show_ref_cb(const char *path, const unsigned char *sha1, int flag, void *cb_data)
++{
++	return show_ref(strip_namespace(path), sha1, flag, cb_data);
++}
++
+ static void write_head_info(void)
  {
- 	const struct ref *r;
+-	for_each_ref(show_ref, NULL);
++	for_each_namespaced_ref(show_ref_cb, NULL);
+ 	if (!sent_capabilities)
+ 		show_ref("capabilities^{}", null_sha1, 0, NULL);
  
--	for (r = local_refs; r; r = r->next)
-+	for (r = local_refs; r; r = r->next) {
-+		if (!r->peer_ref)
-+			continue;
- 		add_extra_ref(r->peer_ref->name, r->old_sha1, 0);
+@@ -333,6 +338,8 @@ static void refuse_unconfigured_deny_delete_current(void)
+ static const char *update(struct command *cmd)
+ {
+ 	const char *name = cmd->ref_name;
++	struct strbuf namespaced_name_buf = STRBUF_INIT;
++	const char *namespaced_name;
+ 	unsigned char *old_sha1 = cmd->old_sha1;
+ 	unsigned char *new_sha1 = cmd->new_sha1;
+ 	struct ref_lock *lock;
+@@ -343,7 +350,10 @@ static const char *update(struct command *cmd)
+ 		return "funny refname";
+ 	}
+ 
+-	if (is_ref_checked_out(name)) {
++	strbuf_addf(&namespaced_name_buf, "%s%s", get_git_namespace(), name);
++	namespaced_name = strbuf_detach(&namespaced_name_buf, NULL);
++
++	if (is_ref_checked_out(namespaced_name)) {
+ 		switch (deny_current_branch) {
+ 		case DENY_IGNORE:
+ 			break;
+@@ -371,7 +381,7 @@ static const char *update(struct command *cmd)
+ 			return "deletion prohibited";
+ 		}
+ 
+-		if (!strcmp(name, head_name)) {
++		if (!strcmp(namespaced_name, head_name)) {
+ 			switch (deny_delete_current) {
+ 			case DENY_IGNORE:
+ 				break;
+@@ -427,14 +437,14 @@ static const char *update(struct command *cmd)
+ 			rp_warning("Allowing deletion of corrupt ref.");
+ 			old_sha1 = NULL;
+ 		}
+-		if (delete_ref(name, old_sha1, 0)) {
++		if (delete_ref(namespaced_name, old_sha1, 0)) {
+ 			rp_error("failed to delete %s", name);
+ 			return "failed to delete";
+ 		}
+ 		return NULL; /* good */
+ 	}
+ 	else {
+-		lock = lock_any_ref_for_update(name, old_sha1, 0);
++		lock = lock_any_ref_for_update(namespaced_name, old_sha1, 0);
+ 		if (!lock) {
+ 			rp_error("failed to lock %s", name);
+ 			return "failed to lock";
+@@ -491,17 +501,29 @@ static void run_update_post_hook(struct command *commands)
+ 
+ static void check_aliased_update(struct command *cmd, struct string_list *list)
+ {
++	struct strbuf buf = STRBUF_INIT;
++	const char *dst_name;
+ 	struct string_list_item *item;
+ 	struct command *dst_cmd;
+ 	unsigned char sha1[20];
+ 	char cmd_oldh[41], cmd_newh[41], dst_oldh[41], dst_newh[41];
+ 	int flag;
+ 
+-	const char *dst_name = resolve_ref(cmd->ref_name, sha1, 0, &flag);
++	strbuf_addf(&buf, "%s%s", get_git_namespace(), cmd->ref_name);
++	dst_name = resolve_ref(buf.buf, sha1, 0, &flag);
++	strbuf_release(&buf);
+ 
+ 	if (!(flag & REF_ISSYMREF))
+ 		return;
+ 
++	dst_name = strip_namespace(dst_name);
++	if (!dst_name) {
++		rp_error("refusing update to broken symref '%s'", cmd->ref_name);
++		cmd->skip_update = 1;
++		cmd->error_string = "broken symref";
++		return;
 +	}
++
+ 	if ((item = string_list_lookup(list, dst_name)) == NULL)
+ 		return;
  
- 	pack_refs(PACK_REFS_ALL);
- 	clear_extra_refs();
-diff --git a/t/t5707-clone-detached.sh b/t/t5707-clone-detached.sh
-index db4af95..82ecbce 100755
---- a/t/t5707-clone-detached.sh
-+++ b/t/t5707-clone-detached.sh
-@@ -58,18 +58,18 @@ test_expect_success 'cloned HEAD is detached' '
- 	head_is_detached detached-history
- '
+diff --git a/upload-pack.c b/upload-pack.c
+index ce5cbbe..267e5b1 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -641,16 +641,17 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
+ 		" side-band-64k ofs-delta shallow no-progress"
+ 		" include-tag multi_ack_detailed";
+ 	struct object *o = parse_object(sha1);
++	const char *refname_nons = strip_namespace(refname);
  
--test_expect_failure 'clone repo (orphan detached HEAD)' '
-+test_expect_success 'clone repo (orphan detached HEAD)' '
- 	git checkout --detach master &&
- 	echo four >file &&
- 	git commit -a -m four &&
- 	git clone "file://$PWD" detached-orphan
- '
--test_expect_failure 'cloned HEAD matches' '
-+test_expect_success 'cloned HEAD matches' '
- 	echo four >expect &&
- 	git --git-dir=detached-orphan/.git log -1 --format=%s >actual &&
- 	test_cmp expect actual
- '
--test_expect_failure 'cloned HEAD is detached' '
-+test_expect_success 'cloned HEAD is detached' '
- 	head_is_detached detached-orphan
- '
+ 	if (!o)
+ 		die("git upload-pack: cannot find object %s:", sha1_to_hex(sha1));
  
+ 	if (capabilities)
+-		packet_write(1, "%s %s%c%s%s\n", sha1_to_hex(sha1), refname,
++		packet_write(1, "%s %s%c%s%s\n", sha1_to_hex(sha1), refname_nons,
+ 			     0, capabilities,
+ 			     stateless_rpc ? " no-done" : "");
+ 	else
+-		packet_write(1, "%s %s\n", sha1_to_hex(sha1), refname);
++		packet_write(1, "%s %s\n", sha1_to_hex(sha1), refname_nons);
+ 	capabilities = NULL;
+ 	if (!(o->flags & OUR_REF)) {
+ 		o->flags |= OUR_REF;
+@@ -659,7 +660,7 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
+ 	if (o->type == OBJ_TAG) {
+ 		o = deref_tag(o, refname, 0);
+ 		if (o)
+-			packet_write(1, "%s %s^{}\n", sha1_to_hex(o->sha1), refname);
++			packet_write(1, "%s %s^{}\n", sha1_to_hex(o->sha1), refname_nons);
+ 	}
+ 	return 0;
+ }
+@@ -680,12 +681,12 @@ static void upload_pack(void)
+ {
+ 	if (advertise_refs || !stateless_rpc) {
+ 		reset_timeout();
+-		head_ref(send_ref, NULL);
+-		for_each_ref(send_ref, NULL);
++		head_ref_namespaced(send_ref, NULL);
++		for_each_namespaced_ref(send_ref, NULL);
+ 		packet_flush(1);
+ 	} else {
+-		head_ref(mark_our_ref, NULL);
+-		for_each_ref(mark_our_ref, NULL);
++		head_ref_namespaced(mark_our_ref, NULL);
++		for_each_namespaced_ref(mark_our_ref, NULL);
+ 	}
+ 	if (advertise_refs)
+ 		return;
 -- 
-1.7.6.rc0.39.g6b091.dirty
+1.7.5.3
