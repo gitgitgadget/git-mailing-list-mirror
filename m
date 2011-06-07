@@ -1,75 +1,63 @@
-From: David Fries <david@fries.net>
-Subject: Re: [PATCH 2/2] git-gui blame add more common search hotkeys
-Date: Tue, 19 Jul 2011 21:56:01 -0500
-Message-ID: <20110720025601.GE26701@spacedout.fries.net>
-References: <20110716165945.GA9722@spacedout.fries.net>
- <87sjq2cp8t.fsf@fox.patthoyts.tk>
+From: "HUI" <mail.alqabas.com.kw@mail.alsa.co.cr>
+Subject: ARE YOU INTERESTED?
+Date: Tue, 7 Jun 2011 10:01:00 -0300
+Message-ID: <20110707083818.D9E272E0A755@mail.alsa.co.cr>
+Reply-To: <infohsb@mail.mn>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Wed Jul 20 04:56:19 2011
+Content-Type: text/plain;
+	charset="Windows-1251"
+Content-Transfer-Encoding: 7bit
+To: undisclosed-recipients:;
+X-From: git-owner@vger.kernel.org Wed Jul 20 07:30:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QjMxN-0006XY-CN
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Jul 2011 04:56:17 +0200
+	id 1QjPMy-0000db-D0
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Jul 2011 07:30:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752703Ab1GTC4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jul 2011 22:56:11 -0400
-Received: from SpacedOut.fries.net ([67.64.210.234]:57922 "EHLO
-	SpacedOut.fries.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752549Ab1GTC4K (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2011 22:56:10 -0400
-Received: from SpacedOut.fries.net (david@localhost [127.0.0.1])
-	by SpacedOut.fries.net (8.14.3/8.14.3/Debian-9.4) with ESMTP id p6K2u29m021543
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 19 Jul 2011 21:56:02 -0500
-Received: (from david@localhost)
-	by SpacedOut.fries.net (8.14.3/8.14.3/Submit) id p6K2u1KJ021542;
-	Tue, 19 Jul 2011 21:56:01 -0500
-Content-Disposition: inline
-In-Reply-To: <87sjq2cp8t.fsf@fox.patthoyts.tk>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Greylist: Sender passed SPF test, not delayed by milter-greylist-4.3.7 (SpacedOut.fries.net [127.0.0.1]); Tue, 19 Jul 2011 21:56:02 -0500 (CDT)
+	id S1751385Ab1GTFar (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jul 2011 01:30:47 -0400
+Received: from logistix.cr ([201.201.66.140]:6187 "EHLO mail.alsa.co.cr"
+	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750777Ab1GTFaq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jul 2011 01:30:46 -0400
+Received: from mail.alsa.co.cr (localhost [127.0.0.1])
+	by localhost (Postfix) with ESMTP id E7DC02C638DC;
+	Tue, 12 Jul 2011 00:04:23 -0600 (CST)
+Received: from User (35.193.221.87.dynamic.jazztel.es [87.221.193.35])
+	by mail.alsa.co.cr (Postfix) with ESMTP id D9E272E0A755;
+	Thu,  7 Jul 2011 02:38:17 -0600 (CST)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+X-Antivirus: avast! (VPS 110706-1, 06/07/2011), Outbound message
+X-Antivirus-Status: Clean
+X-Antivirus: Scanned by F-Prot Antivirus (http://www.f-prot.com)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177516>
+X-Spam-Report: 8.3 points;
+ *  1.7 DATE_IN_PAST_96_XX Date: is 96 hours or more before Received: date
+ *  2.1 SUBJ_ALL_CAPS Subject is all capitals
+ *  0.6 US_DOLLARS_3 BODY: Mentions millions of $ ($NN,NNN,NNN.NN)
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.4089]
+ *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
+ *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177517>
 
-On Tue, Jul 19, 2011 at 03:35:30PM +0100, Pat Thoyts wrote:
-> David Fries <david@fries.net> writes:
-> 
-> That aside, the goto-line feature works fine for me. I don't think the
-> n, Shift-n binding is working though. When I have the focus in the blame
-> window and enter 'n' it tries to add an 'n' to the text in the search
-> box. The use of Enter and Shift-Enter makes sense and works as I
-> expect. So I will drop the 'n' and 'Shift-n' bindings I think.
+Please I would like you to keep this proposal as a top secret and delete it if you 
+are not interested and get back to me if you are interested for details as regards to
+ the transfer of $24,500,000 to you. this money initially belongs to a client who died 
+and had no next of kin in his account-opening package. in other to achieve this, I shall 
+require your full name, and telephone number to reach you.Most importantly, a confirmation 
+of acceptance from you after which I shall furnish you with the full details of this transaction.
+ Reply via this email only:wohuii@mail.mn
 
-I have some 6000 some line files that I was preparing change sets
-and was needing to jump to a specific line.  That's what prompted me
-to add the goto feature, I just went ahead and added the search
-hotkeys while I was in looking at it.  I apparently didn't do enough
-testing on the search, it's <Key-N> not the <Shift-Key-n> that I had
-in there.  The n and N only work when the search bar is dismissed with
-escape or something.  I'm more used to vi's searching where the search
-field is dismissed with return and there isn't a search field left to
-add to.  I'm fine with dropping the n/N bindings.
 
-> The -accelerator field on a menu specifies the text to show. Its more
-> usual to show "Ctrl-G" than "Control-Key-G" here so I'll adjust that as
-> well. The 'bind' command actually ties up the key binding to the menu
-> action.
-> 
-> With the above changes, I'll apply this to git-gui's master (which lives
-> at repo.or.cz/git-gui.git) and it will get merged into git on the next
-> merge.
-
-Sounds good, thanks for merging it.
-
--- 
-David Fries <david@fries.net>    PGP pub CB1EE8F0
-http://fries.net/~david/
+regards,
+Mr, W.Hui.
