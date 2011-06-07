@@ -1,131 +1,82 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Jabber, question on push,pull and --tags, and no help but jabber
-Date: Tue, 07 Jun 2011 07:47:02 +0200
-Message-ID: <4DEDBB56.7000200@drmicha.warpmail.net>
-References: <20110606130205.GA41674@sherwood.local> <4DECE4D6.9000204@drmicha.warpmail.net> <20110606214639.GA38620@sherwood.local>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [GSoC update] Sequencer: Iterating over a stable series
+Date: Tue, 7 Jun 2011 11:18:50 +0530
+Message-ID: <BANLkTik93BB7p0gNMx5ZfsSCjietXxiG3w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Steffen Daode Nurpmeso <sdaoden@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 07 07:47:13 2011
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Jeff King <peff@peff.net>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 07 07:49:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QTp8C-0004M0-4L
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Jun 2011 07:47:12 +0200
+	id 1QTpAD-0004w8-6o
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Jun 2011 07:49:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750971Ab1FGFrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2011 01:47:06 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:34428 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750882Ab1FGFrF (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Jun 2011 01:47:05 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id D0F152075F;
-	Tue,  7 Jun 2011 01:47:04 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Tue, 07 Jun 2011 01:47:04 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=OEZb2eBS5vWy1hR9Iks6ONNNIIA=; b=FhNF2Yb8aeZty6HpxG/M1xVi2i43ZXj9d6N6B1mk4BtCuMzzKaJQAcmUdlubFdyGCRa5hXsk0DDzmRtMyKO6dlr8dbgoeodUUTcGMJ/Kbd0MkeIJO1pZzxX6CtFpiPA0KZGvDE3FdCmnz3i0DhMI8kpY2Rj7eW7SCCt+foABA+c=
-X-Sasl-enc: EsBvYbjforj34anre3YkA4y20pJQAs2mkvU81Byjt0yK 1307425624
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 1E1234095FF;
-	Tue,  7 Jun 2011 01:47:04 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc15 Lightning/1.0b3pre Thunderbird/3.1.10
-In-Reply-To: <20110606214639.GA38620@sherwood.local>
+	id S1751051Ab1FGFtM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2011 01:49:12 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:37294 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750871Ab1FGFtL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2011 01:49:11 -0400
+Received: by wya21 with SMTP id 21so3290694wya.19
+        for <git@vger.kernel.org>; Mon, 06 Jun 2011 22:49:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to:cc
+         :content-type;
+        bh=BcOi63HQlUTrsvum86LxYmudrpl8Ndv0pBA3UTxeGCE=;
+        b=HuVzK6C0wywCP3E12l0E6bSehhZ8IzQEjAhursn1qDyQDPiYw85Zm2oYY4FosdsJtp
+         udD4C+4DLP/qqB1J2vYQKZmADrWMt/LxPbORShwXQjtVB4535Ak8JD8iEFK5fBdj2OCT
+         lNy5fH1YGZWU3y+HLPzctGBbZdViFdQoougVc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        b=HV3A73mP4rIe9fI2lw+nzBWu1o3kFZVFxhvjdxhx/y6GJCIy5k7rK4Gi5hd0k8mTaI
+         aLf5kFNqkGYCoozi7UjHviDsbsjebuuqrl87lueS/lNyPFpu1AkhHMVV7zxNzmpLSM2Q
+         4DOx2ZQSFMTKoVLlQvLr5eUl0uFvWVfq/UGr8=
+Received: by 10.216.236.208 with SMTP id w58mr3236175weq.62.1307425750072;
+ Mon, 06 Jun 2011 22:49:10 -0700 (PDT)
+Received: by 10.216.51.213 with HTTP; Mon, 6 Jun 2011 22:48:50 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175187>
 
-Steffen Daode Nurpmeso venit, vidit, dixit 06.06.2011 23:46:
-> @ Michael J Gruber <git@drmicha.warpmail.net> wrote (2011-06-06 16:31+0200):
->> "git tag" and "git verify-tag" call out to "gpg". That could be easily
->> adapted to call out to "openssl smime", or put your S/MIME signatures in
->> a note.
->>
->> Cheers
->> Michael
-> 
-> Hum.  It will indeed be possible to place a wrapper script 'gpg'
-> in the path on my box (and catch '--verify' - or sign otherwise).
+Hi,
 
-I didn't mean to shove a disguised openssl-smime into the path, I meant
-that that there is little to change in code because git calls out to gpg
-rather than doing it itself.
+I will start posting weekly updates starting with this one, since I
+now have quite a lot to say :)  Over the first few weeks, my objective
+was to keep iterating the initial series I'd posted until I ended up
+with a more-or-less acceptable version.  This [1] doesn't seem far
+away.  Now, I'm busy writing some tests, and planning out the
+functionality of each of the individual features -- as soon as I
+understand the problem correctly (see discussions in [2] and [3]), I
+will start working on writing new features.  I'm quite hopeful about
+meeting my mid-term target.  Please feel free to email me any
+comments/ queries about this project.  Alternatively, catch me on
+#git-devel on Freenode IRC; I'm almost always available, except when
+I'm sleeping.
 
-> But in the meanwhile i've found out that git(1) is heavily
-> developed, stale .git_vtag_ files of an 1.7.3? version are no
-> longer produced by 'git version 1.7.6.rc0' to which i've updated
-> after i've seen those.  So maybe there is hope that the hardcoded
-> gpg invocation will be replaced by configuration options in the
-> future, too?
+Jeff: I was out of town these last few days. I saw your email about
+the lockfile API confusion- will investigate and comment soon.
 
-I don't know if it needs to be configurable. That may open a can of worms.
+As usual, the latest code can be found on the sequencer branch of my
+GitHub fork [4].
 
-> I still don't understand the design with pull and --tags.
-> Because, if i do 'git log' it'll display the relationship as in
-> 
->     commit fd040fb[...] (tag: refs/tags/v0.3.0, refs/remotes/origin/master)
+Thanks for reading!
 
-git log does that only when you ask it to decorate the commits.
-"decoration" means looking up all refs and checking whether one of them
-references that commit. Neither the tag (object) nor the ref names (tag
-name, branch name) are part of the commit, so:
+-- Ram
 
-> So i'll push this commit object as part of pushing a branch, and
-> the tag refers to *it*.  I don't want to be impertinent though,
-
-The tag name is not pushed, but the commit object is and has the same
-sha1 on "both sides", which is why the remote branch name shows up as a
-decoration.
-
-> and it's better that explicit way than implicitely pushing some
-> distressing stuff.  Still i would have appreciated a note in the
-> docu, because it took a look at the mentioned webspace to realize
-> the situation.  I'll append a short diff to be able to provide
-> something useful.  (No attachments allowed here i guess.)
-> 
-> I'll try to be less tiny from the start the next time.
-> --
-> Ciao, Steffen
-> sdaoden(*)(gmail.com)
-> () ascii ribbon campaign - against html e-mail
-> /\ www.asciiribbon.org - against proprietary attachments
-> 
-> --
-> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-> index 88acfcd..da4a71a 100644
-> --- a/Documentation/git-push.txt
-> +++ b/Documentation/git-push.txt
-> @@ -69,7 +69,7 @@ nor in any Push line of the corresponding remotes file---see below).
->  
->  --all::
->  	Instead of naming each ref to push, specifies that all
-> -	refs under `refs/heads/` be pushed.
-> +	refs under `refs/heads/` be pushed explicitely.
-
-I don't mind but I don't think it adds clarity.
-
->  
->  --mirror::
->  	Instead of naming each ref to push, specifies that all
-> @@ -98,7 +98,7 @@ nor in any Push line of the corresponding remotes file---see below).
->  --tags::
->  	All refs under `refs/tags` are pushed, in
->  	addition to refspecs explicitly listed on the command
-> -	line.
-> +	line.  Note that tags are not pushed automatically.
-
-That is implicit in the line before it. In any case: The main problem of
-git-push(1) seems to be that one has to read all the way down (through
-all options) in order to grasp the default case, so I feel the first
-paragraph needs to improve.
-
->  
->  --receive-pack=<git-receive-pack>::
->  --exec=<git-receive-pack>::
-> 
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/174526
+[2]: http://thread.gmane.org/gmane.comp.version-control.git/174393/focus=174945
+[3]: http://thread.gmane.org/gmane.comp.version-control.git/174874
+[4]: http://github.com/artagnon/git
