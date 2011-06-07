@@ -1,198 +1,131 @@
-From: Andrew Wong <andrew.kw.w@gmail.com>
-Subject: [PATCH] rebase -i -p: doesn't pick certain merge commits that are children of "upstream"
-Date: Tue,  7 Jun 2011 00:08:45 -0400
-Message-ID: <1307419725-4470-2-git-send-email-andrew.kw.w@gmail.com>
-References: <4DEB495F.9080900@kdbg.org>
- <1307419725-4470-1-git-send-email-andrew.kw.w@gmail.com>
-Cc: Andrew Wong <andrew.kw.w@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 07 06:11:57 2011
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Jabber, question on push,pull and --tags, and no help but jabber
+Date: Tue, 07 Jun 2011 07:47:02 +0200
+Message-ID: <4DEDBB56.7000200@drmicha.warpmail.net>
+References: <20110606130205.GA41674@sherwood.local> <4DECE4D6.9000204@drmicha.warpmail.net> <20110606214639.GA38620@sherwood.local>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Steffen Daode Nurpmeso <sdaoden@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 07 07:47:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QTndy-0003OJ-W7
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Jun 2011 06:11:55 +0200
+	id 1QTp8C-0004M0-4L
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Jun 2011 07:47:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751647Ab1FGELu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2011 00:11:50 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:34198 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751498Ab1FGELs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2011 00:11:48 -0400
-Received: by gyd10 with SMTP id 10so1740262gyd.19
-        for <git@vger.kernel.org>; Mon, 06 Jun 2011 21:11:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references;
-        bh=hBquRRCkGWcGR4mMwumG6elxCF3Ou2+Rt4R7jVJuFpg=;
-        b=RqUIyfUyLkV/Uilr2itS7LM4gSsFS16ShBHgCtVT4uIHPwxEiCrVbfWrIESvOKCPQg
-         qDtKibabsYaBOh1eANoP2rr1dq6HL9PdHhdgjCNb5MKkT1EH+SBoL8ybP9lcrSm7o9Wl
-         Se/E2hR1xbgVJzW7kLCIN5zAZpGF+Vk5pspww=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=mYEqpF9CT2I/s4EhzUvS3xTVFqKqUNWaYtk5xSF+AxYEjHc5V9KbXroPzMPMSNUJLN
-         zUF/6ILY1JmmLcyheGpaAMuVYQPXsu7Gw8CYI/e/sB9ELEko5J1OF175AAnz+veV9PMH
-         t+zSaJUFHC6WK2vZemHb3K2fYrNDUw2A3lS5Y=
-Received: by 10.236.185.70 with SMTP id t46mr2785761yhm.129.1307419908182;
-        Mon, 06 Jun 2011 21:11:48 -0700 (PDT)
-Received: from localhost.localdomain (24-246-58-202.cable.teksavvy.com [24.246.58.202])
-        by mx.google.com with ESMTPS id g30sm79793yhn.57.2011.06.06.21.11.46
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 06 Jun 2011 21:11:47 -0700 (PDT)
-X-Mailer: git-send-email 1.7.6.rc0.1.gf20d7
-In-Reply-To: <1307419725-4470-1-git-send-email-andrew.kw.w@gmail.com>
+	id S1750971Ab1FGFrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2011 01:47:06 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:34428 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750882Ab1FGFrF (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Jun 2011 01:47:05 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id D0F152075F;
+	Tue,  7 Jun 2011 01:47:04 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Tue, 07 Jun 2011 01:47:04 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=OEZb2eBS5vWy1hR9Iks6ONNNIIA=; b=FhNF2Yb8aeZty6HpxG/M1xVi2i43ZXj9d6N6B1mk4BtCuMzzKaJQAcmUdlubFdyGCRa5hXsk0DDzmRtMyKO6dlr8dbgoeodUUTcGMJ/Kbd0MkeIJO1pZzxX6CtFpiPA0KZGvDE3FdCmnz3i0DhMI8kpY2Rj7eW7SCCt+foABA+c=
+X-Sasl-enc: EsBvYbjforj34anre3YkA4y20pJQAs2mkvU81Byjt0yK 1307425624
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 1E1234095FF;
+	Tue,  7 Jun 2011 01:47:04 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc15 Lightning/1.0b3pre Thunderbird/3.1.10
+In-Reply-To: <20110606214639.GA38620@sherwood.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175186>
 
-Consider this graph:
+Steffen Daode Nurpmeso venit, vidit, dixit 06.06.2011 23:46:
+> @ Michael J Gruber <git@drmicha.warpmail.net> wrote (2011-06-06 16:31+0200):
+>> "git tag" and "git verify-tag" call out to "gpg". That could be easily
+>> adapted to call out to "openssl smime", or put your S/MIME signatures in
+>> a note.
+>>
+>> Cheers
+>> Michael
+> 
+> Hum.  It will indeed be possible to place a wrapper script 'gpg'
+> in the path on my box (and catch '--verify' - or sign otherwise).
 
-        D---E    (topic, HEAD)
-       /   /
-  A---B---C      (master)
-   \
-    F            (topic2)
+I didn't mean to shove a disguised openssl-smime into the path, I meant
+that that there is little to change in code because git calls out to gpg
+rather than doing it itself.
 
-and the following three commands:
-  1. git rebase -i -p A
-  2. git rebase -i -p --onto F A
-  3. git rebase -i -p B
+> But in the meanwhile i've found out that git(1) is heavily
+> developed, stale .git_vtag_ files of an 1.7.3? version are no
+> longer produced by 'git version 1.7.6.rc0' to which i've updated
+> after i've seen those.  So maybe there is hope that the hardcoded
+> gpg invocation will be replaced by configuration options in the
+> future, too?
 
-Currently, (1) and (2) will pick B, D, C, and E onto A and F,
-respectively.  However, (3) will only pick D and E onto B, but not C,
-which is inconsistent with (1) and (2).  As a result, we cannot modify C
-during the interactive-rebase.
+I don't know if it needs to be configurable. That may open a can of worms.
 
-The current behavior also creates a bug if we do:
-  4. git rebase -i -p C
+> I still don't understand the design with pull and --tags.
+> Because, if i do 'git log' it'll display the relationship as in
+> 
+>     commit fd040fb[...] (tag: refs/tags/v0.3.0, refs/remotes/origin/master)
 
-In (4), E is never picked.  And since interactive-rebase resets "HEAD"
-to "onto" before picking any commits, D and E are lost after the
-interactive-rebase.
+git log does that only when you ask it to decorate the commits.
+"decoration" means looking up all refs and checking whether one of them
+references that commit. Neither the tag (object) nor the ref names (tag
+name, branch name) are part of the commit, so:
 
-This patch fixes the inconsistency and bug by ensuring that all children
-of upstream are always picked.  This essentially reverts the commit:
-  d80d6bc146232d81f1bb4bc58e5d89263fd228d4
+> So i'll push this commit object as part of pushing a branch, and
+> the tag refers to *it*.  I don't want to be impertinent though,
 
-When compiling the "todo" list, commits reachable from "upstream" should
-never be skipped under any conditions.  Otherwise, we lose the ability
-to modify them like (3), and create a bug like (4).
+The tag name is not pushed, but the commit object is and has the same
+sha1 on "both sides", which is why the remote branch name shows up as a
+decoration.
 
-Two of the tests contain a scenario like (3).  Since the new behavior
-added more commits for picking, these tests need to be updated to edit
-the "todo" list properly.  A new test has also been added for (4).
+> and it's better that explicit way than implicitely pushing some
+> distressing stuff.  Still i would have appreciated a note in the
+> docu, because it took a look at the mentioned webspace to realize
+> the situation.  I'll append a short diff to be able to provide
+> something useful.  (No attachments allowed here i guess.)
+> 
+> I'll try to be less tiny from the start the next time.
+> --
+> Ciao, Steffen
+> sdaoden(*)(gmail.com)
+> () ascii ribbon campaign - against html e-mail
+> /\ www.asciiribbon.org - against proprietary attachments
+> 
+> --
+> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+> index 88acfcd..da4a71a 100644
+> --- a/Documentation/git-push.txt
+> +++ b/Documentation/git-push.txt
+> @@ -69,7 +69,7 @@ nor in any Push line of the corresponding remotes file---see below).
+>  
+>  --all::
+>  	Instead of naming each ref to push, specifies that all
+> -	refs under `refs/heads/` be pushed.
+> +	refs under `refs/heads/` be pushed explicitely.
 
-Signed-off-by: Andrew Wong <andrew.kw.w@gmail.com>
----
- git-rebase--interactive.sh               |    3 +--
- t/t3404-rebase-interactive.sh            |    2 +-
- t/t3409-rebase-preserve-merges.sh        |   28 +++++++++++++++++++++++++++-
- t/t3411-rebase-preserve-around-merges.sh |    2 +-
- 4 files changed, 30 insertions(+), 5 deletions(-)
+I don't mind but I don't think it adds clarity.
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 65690af..c6ba7c1 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -713,7 +713,6 @@ then
- 	# parents to rewrite and skipping dropped commits would
- 	# prematurely end our probe
- 	merges_option=
--	first_after_upstream="$(git rev-list --reverse --first-parent $upstream..$orig_head | head -n 1)"
- else
- 	merges_option="--no-merges --cherry-pick"
- fi
-@@ -746,7 +745,7 @@ do
- 			preserve=t
- 			for p in $(git rev-list --parents -1 $sha1 | cut -d' ' -s -f2-)
- 			do
--				if test -f "$rewritten"/$p -a \( $p != $onto -o $sha1 = $first_after_upstream \)
-+				if test -f "$rewritten"/$p
- 				then
- 					preserve=f
- 				fi
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 47c8371..8538813 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -295,7 +295,7 @@ test_expect_success 'preserve merges with -p' '
- '
- 
- test_expect_success 'edit ancestor with -p' '
--	FAKE_LINES="1 edit 2 3 4" git rebase -i -p HEAD~3 &&
-+	FAKE_LINES="1 2 edit 3 4" git rebase -i -p HEAD~3 &&
- 	echo 2 > unrelated-file &&
- 	test_tick &&
- 	git commit -m L2-modified --amend unrelated-file &&
-diff --git a/t/t3409-rebase-preserve-merges.sh b/t/t3409-rebase-preserve-merges.sh
-index 08201e2..16d316d 100755
---- a/t/t3409-rebase-preserve-merges.sh
-+++ b/t/t3409-rebase-preserve-merges.sh
-@@ -37,7 +37,15 @@ export GIT_AUTHOR_EMAIL
- #      \
- #       B2     <-- origin/topic
- #
--# In all cases, 'topic' is rebased onto 'origin/topic'.
-+# Clone 4 ():
-+#
-+# A1--A2--B3   <-- origin/master
-+#  \
-+#   B1--A3--M  <-- topic
-+#    \     /
-+#     \--A4    <-- topic2
-+#      \
-+#       B2     <-- origin/topic
- 
- test_expect_success 'setup for merge-preserving rebase' \
- 	'echo First > A &&
-@@ -57,6 +65,13 @@ test_expect_success 'setup for merge-preserving rebase' \
- 	git merge origin/master
- 	) &&
- 
-+	git clone ./. clone4 &&
-+	(
-+		cd clone4 &&
-+		git checkout -b topic origin/topic &&
-+		git merge origin/master
-+	) &&
-+
- 	echo Fifth > B &&
- 	git add B &&
- 	git commit -m "Add different B" &&
-@@ -123,4 +138,15 @@ test_expect_success 'rebase -p preserves no-ff merges' '
- 	)
- '
- 
-+test_expect_success '' '
-+	(
-+	cd clone4 &&
-+	git fetch &&
-+	git rebase -p HEAD^2 &&
-+	test 1 = $(git rev-list --all --pretty=oneline | grep "Modify A" | wc -l) &&
-+	test 1 = $(git rev-list --all --pretty=oneline | grep "Modify B" | wc -l) &&
-+	test 1 = $(git rev-list --all --pretty=oneline | grep "Merge remote-tracking branch " | wc -l)
-+	)
-+'
-+
- test_done
-diff --git a/t/t3411-rebase-preserve-around-merges.sh b/t/t3411-rebase-preserve-around-merges.sh
-index 14a23cd..ace8e54 100755
---- a/t/t3411-rebase-preserve-around-merges.sh
-+++ b/t/t3411-rebase-preserve-around-merges.sh
-@@ -37,7 +37,7 @@ test_expect_success 'setup' '
- #        -- C1 --
- #
- test_expect_success 'squash F1 into D1' '
--	FAKE_LINES="1 squash 3 2" git rebase -i -p B1 &&
-+	FAKE_LINES="1 squash 4 2 3" git rebase -i -p B1 &&
- 	test "$(git rev-parse HEAD^2)" = "$(git rev-parse C1)" &&
- 	test "$(git rev-parse HEAD~2)" = "$(git rev-parse B1)" &&
- 	git tag E2
--- 
-1.7.6.rc0.1.gf20d7
+>  
+>  --mirror::
+>  	Instead of naming each ref to push, specifies that all
+> @@ -98,7 +98,7 @@ nor in any Push line of the corresponding remotes file---see below).
+>  --tags::
+>  	All refs under `refs/tags` are pushed, in
+>  	addition to refspecs explicitly listed on the command
+> -	line.
+> +	line.  Note that tags are not pushed automatically.
+
+That is implicit in the line before it. In any case: The main problem of
+git-push(1) seems to be that one has to read all the way down (through
+all options) in order to grasp the default case, so I feel the first
+paragraph needs to improve.
+
+>  
+>  --receive-pack=<git-receive-pack>::
+>  --exec=<git-receive-pack>::
+> 
