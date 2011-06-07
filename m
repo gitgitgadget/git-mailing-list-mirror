@@ -1,217 +1,85 @@
-From: Jamey Sharp <jamey@minilop.net>
-Subject: [PATCH 3/4] Support ref namespaces for remote repositories via upload-pack and receive-pack
-Date: Tue,  7 Jun 2011 11:21:24 -0700
-Message-ID: <1307470885-4018-4-git-send-email-jamey@minilop.net>
-References: <7vsjrna2x2.fsf@alter.siamese.dyndns.org>
- <1307470885-4018-1-git-send-email-jamey@minilop.net>
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org, Josh Triplett <josh@joshtriplett.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 07 20:22:12 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [rfd] auto-following tags upon "git push"?
+Date: Tue, 07 Jun 2011 11:45:44 -0700
+Message-ID: <7vpqmp5vl3.fsf@alter.siamese.dyndns.org>
+References: <7v4o417g9s.fsf@alter.siamese.dyndns.org>
+ <20110607173051.GA22216@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 07 20:46:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QU0up-0003Lr-AG
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Jun 2011 20:22:11 +0200
+	id 1QU1Hy-0006AA-8k
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Jun 2011 20:46:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932218Ab1FGSV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2011 14:21:58 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:37507 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756879Ab1FGSVs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2011 14:21:48 -0400
-Received: by pzk9 with SMTP id 9so2668167pzk.19
-        for <git@vger.kernel.org>; Tue, 07 Jun 2011 11:21:47 -0700 (PDT)
-Received: by 10.68.5.137 with SMTP id s9mr328386pbs.61.1307470907614;
-        Tue, 07 Jun 2011 11:21:47 -0700 (PDT)
-Received: from oh.minilop.net (host-246-101.pubnet.pdx.edu [131.252.246.101])
-        by mx.google.com with ESMTPS id i7sm298315pbj.90.2011.06.07.11.21.45
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 07 Jun 2011 11:21:45 -0700 (PDT)
-Received: from jamey by oh.minilop.net with local (Exim 4.76)
-	(envelope-from <jamey@oh.minilop.net>)
-	id 1QU0uO-00013i-EX; Tue, 07 Jun 2011 11:21:44 -0700
-X-Mailer: git-send-email 1.7.4.4
-In-Reply-To: <1307470885-4018-1-git-send-email-jamey@minilop.net>
+	id S1755353Ab1FGSpz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2011 14:45:55 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48049 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755276Ab1FGSpx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2011 14:45:53 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 95A8E52A0;
+	Tue,  7 Jun 2011 14:48:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hICfB7DBgz+nXrOy9FjYOARHCmU=; b=aXVre2
+	g0dL/qTkEgvcNRuNl6tWc82Wg3KYXmoRzo2UanNoepZbhDoKhyJ/Uz96Fk0KuHZt
+	I52vFCHvnICblgxnKqd4+9dfwghoyX91E7qfcDxNlmIMJnKtfjnk4oNDQgVcn7+3
+	jEpIvdUiK1bzx2AuA16Kgv+WBKRsPXGXuP8dc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XKjANCGrzXloRZ4Cj0ciDZwCK/G6HAoX
+	Wc0borUI/0hYD8zT3OHcOmANSef6E/qqkWMqWJtpqkF3nNCBL41SBiLv41wuryGn
+	EafSk2mHxR9JZHwlkU9J27oBPsolSzj4hPgcM/yhpSPuEJYuR7rlw/2cca1q2EYk
+	hY74dFCXvIs=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6AD71529F;
+	Tue,  7 Jun 2011 14:47:59 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7AF73529E; Tue,  7 Jun 2011
+ 14:47:56 -0400 (EDT)
+In-Reply-To: <20110607173051.GA22216@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 7 Jun 2011 13:30:51 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AA5BB676-9136-11E0-9C9D-EA23C7C1A288-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175249>
 
-From: Josh Triplett <josh@joshtriplett.org>
+Jeff King <peff@peff.net> writes:
 
-Change upload-pack and receive-pack to use the namespace-prefixed refs
-when working with the repository, and use the unprefixed refs when
-talking to the client, maintaining the masquerade.  This allows
-clone, pull, fetch, and push to work with a suitably configured
-GIT_NAMESPACE.
+> Hmm. Is it a clear enough hint when the user uses an actual tag object
+> to make a signed or annotated tag? At least for me, private throw-away
+> tags tend to just be refs/tags/foo pointing to a commit, and real,
+> for-public-consumption tags at least get an annotation, if not a
+> signature.
+>
+> I seem to recall we make a similar distinction somewhere else in the
+> code, but I can't remember offhand where. Maybe it was just a proposal
+> that never made it anywhere.
 
-With appropriate configuration, this also allows http-backend to expose
-namespaces as multiple repositories with different paths.  This only
-requires setting GIT_NAMESPACE, which http-backend passes through to
-upload-pack and receive-pack.
+You are thinking about "describe", I think, and the analogy holds
+true. The tag annotation vs lightweight tag is a good hint I forgot to
+take into account.
 
-Commit by Josh Triplett and Jamey Sharp.
+> Anyway, the problem would be somebody who does something like:
+>
+>   $ git tag -m "here is a description of how this wip is going" foo-wip
+>
+> which violates the assumption above.
 
-Signed-off-by: Josh Triplett <josh@joshtriplett.org>
-Signed-off-by: Jamey Sharp <jamey@minilop.net>
----
- builtin/receive-pack.c |   34 ++++++++++++++++++++++++++++------
- upload-pack.c          |   15 ++++++++-------
- 2 files changed, 36 insertions(+), 13 deletions(-)
+True, I think I did that sometimes.
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index e1a687a..54dd5d4 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -120,9 +120,14 @@ static int show_ref(const char *path, const unsigned char *sha1, int flag, void
- 	return 0;
- }
- 
-+static int show_ref_cb(const char *path, const unsigned char *sha1, int flag, void *cb_data)
-+{
-+	return show_ref(strip_namespace(path), sha1, flag, cb_data);
-+}
-+
- static void write_head_info(void)
- {
--	for_each_ref(show_ref, NULL);
-+	for_each_namespaced_ref(show_ref_cb, NULL);
- 	if (!sent_capabilities)
- 		show_ref("capabilities^{}", null_sha1, 0, NULL);
- 
-@@ -333,6 +338,8 @@ static void refuse_unconfigured_deny_delete_current(void)
- static const char *update(struct command *cmd)
- {
- 	const char *name = cmd->ref_name;
-+	struct strbuf namespaced_name_buf = STRBUF_INIT;
-+	const char *namespaced_name;
- 	unsigned char *old_sha1 = cmd->old_sha1;
- 	unsigned char *new_sha1 = cmd->new_sha1;
- 	struct ref_lock *lock;
-@@ -343,7 +350,10 @@ static const char *update(struct command *cmd)
- 		return "funny refname";
- 	}
- 
--	if (is_ref_checked_out(name)) {
-+	strbuf_addf(&namespaced_name_buf, "%s%s", get_git_namespace(), name);
-+	namespaced_name = strbuf_detach(&namespaced_name_buf, NULL);
-+
-+	if (is_ref_checked_out(namespaced_name)) {
- 		switch (deny_current_branch) {
- 		case DENY_IGNORE:
- 			break;
-@@ -371,7 +381,7 @@ static const char *update(struct command *cmd)
- 			return "deletion prohibited";
- 		}
- 
--		if (!strcmp(name, head_name)) {
-+		if (!strcmp(namespaced_name, head_name)) {
- 			switch (deny_delete_current) {
- 			case DENY_IGNORE:
- 				break;
-@@ -427,14 +437,14 @@ static const char *update(struct command *cmd)
- 			rp_warning("Allowing deletion of corrupt ref.");
- 			old_sha1 = NULL;
- 		}
--		if (delete_ref(name, old_sha1, 0)) {
-+		if (delete_ref(namespaced_name, old_sha1, 0)) {
- 			rp_error("failed to delete %s", name);
- 			return "failed to delete";
- 		}
- 		return NULL; /* good */
- 	}
- 	else {
--		lock = lock_any_ref_for_update(name, old_sha1, 0);
-+		lock = lock_any_ref_for_update(namespaced_name, old_sha1, 0);
- 		if (!lock) {
- 			rp_error("failed to lock %s", name);
- 			return "failed to lock";
-@@ -491,17 +501,29 @@ static void run_update_post_hook(struct command *commands)
- 
- static void check_aliased_update(struct command *cmd, struct string_list *list)
- {
-+	struct strbuf buf = STRBUF_INIT;
-+	const char *dst_name;
- 	struct string_list_item *item;
- 	struct command *dst_cmd;
- 	unsigned char sha1[20];
- 	char cmd_oldh[41], cmd_newh[41], dst_oldh[41], dst_newh[41];
- 	int flag;
- 
--	const char *dst_name = resolve_ref(cmd->ref_name, sha1, 0, &flag);
-+	strbuf_addf(&buf, "%s%s", get_git_namespace(), cmd->ref_name);
-+	dst_name = resolve_ref(buf.buf, sha1, 0, &flag);
-+	strbuf_release(&buf);
- 
- 	if (!(flag & REF_ISSYMREF))
- 		return;
- 
-+	dst_name = strip_namespace(dst_name);
-+	if (!dst_name) {
-+		rp_error("refusing update to broken symref '%s'", cmd->ref_name);
-+		cmd->skip_update = 1;
-+		cmd->error_string = "broken symref";
-+		return;
-+	}
-+
- 	if ((item = string_list_lookup(list, dst_name)) == NULL)
- 		return;
- 
-diff --git a/upload-pack.c b/upload-pack.c
-index ce5cbbe..267e5b1 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -641,16 +641,17 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
- 		" side-band-64k ofs-delta shallow no-progress"
- 		" include-tag multi_ack_detailed";
- 	struct object *o = parse_object(sha1);
-+	const char *refname_nons = strip_namespace(refname);
- 
- 	if (!o)
- 		die("git upload-pack: cannot find object %s:", sha1_to_hex(sha1));
- 
- 	if (capabilities)
--		packet_write(1, "%s %s%c%s%s\n", sha1_to_hex(sha1), refname,
-+		packet_write(1, "%s %s%c%s%s\n", sha1_to_hex(sha1), refname_nons,
- 			     0, capabilities,
- 			     stateless_rpc ? " no-done" : "");
- 	else
--		packet_write(1, "%s %s\n", sha1_to_hex(sha1), refname);
-+		packet_write(1, "%s %s\n", sha1_to_hex(sha1), refname_nons);
- 	capabilities = NULL;
- 	if (!(o->flags & OUR_REF)) {
- 		o->flags |= OUR_REF;
-@@ -659,7 +660,7 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
- 	if (o->type == OBJ_TAG) {
- 		o = deref_tag(o, refname, 0);
- 		if (o)
--			packet_write(1, "%s %s^{}\n", sha1_to_hex(o->sha1), refname);
-+			packet_write(1, "%s %s^{}\n", sha1_to_hex(o->sha1), refname_nons);
- 	}
- 	return 0;
- }
-@@ -680,12 +681,12 @@ static void upload_pack(void)
- {
- 	if (advertise_refs || !stateless_rpc) {
- 		reset_timeout();
--		head_ref(send_ref, NULL);
--		for_each_ref(send_ref, NULL);
-+		head_ref_namespaced(send_ref, NULL);
-+		for_each_namespaced_ref(send_ref, NULL);
- 		packet_flush(1);
- 	} else {
--		head_ref(mark_our_ref, NULL);
--		for_each_ref(mark_our_ref, NULL);
-+		head_ref_namespaced(mark_our_ref, NULL);
-+		for_each_namespaced_ref(mark_our_ref, NULL);
- 	}
- 	if (advertise_refs)
- 		return;
--- 
-1.7.5.3
+I personally do not use "private tags" that much anymore; I make liberal
+use of private branches for that kind of work instead, as it is more
+flexible (I can check it out, build on it, rebase -i, and generally whip
+it around in any other way).
