@@ -1,115 +1,75 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Command-line interface thoughts
-Date: Tue, 7 Jun 2011 22:33:27 +0200
-Message-ID: <201106072233.28244.jnareb@gmail.com>
-References: <201106051311.00951.jnareb@gmail.com> <4DEE755C.8030108@ira.uka.de> <20110607191152.GB24929@elie>
+From: Alex Neronskiy <zakmagnus@google.com>
+Subject: Re: [PATCH v2] Document the underlying protocol used by shallow repositories and --depth commands.
+Date: Tue, 7 Jun 2011 20:41:03 +0000 (UTC)
+Message-ID: <loom.20110607T223406-961@post.gmane.org>
+References: <loom.20110607T212226-56@post.gmane.org> <7vzklt4c92.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Holger Hellmuth <hellmuth@ira.uka.de>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Scott Chacon <schacon@gmail.com>,
-	Michael Nahas <mike@nahas.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 07 22:35:28 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 07 22:41:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QU2zn-0005le-C3
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Jun 2011 22:35:27 +0200
+	id 1QU35W-0008NM-A9
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Jun 2011 22:41:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756582Ab1FGUfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2011 16:35:22 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:53952 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756564Ab1FGUfV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2011 16:35:21 -0400
-Received: by bwz15 with SMTP id 15so87697bwz.19
-        for <git@vger.kernel.org>; Tue, 07 Jun 2011 13:35:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=e+4Jf18aiM/CuB1DGFBc8TFPXiRdbNnjlUcEgqQu0cw=;
-        b=GYKD2D4PkrD1Ujgo30DURHSYOMzHThumwtZ5EIueOJJFL1WgKO06SkYgOLDS3kON/+
-         ziWBPodsHzrhiYGRXpB6pwuYSWZC9jhq4Ghs0P1ajO26aJdXy67G3qdcZ57itR3vy3xQ
-         0NNMWeXmL2N4HBYAK2ZsG12mGv7NY8rZr9U7c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=IttStutHBOEkWDxFIzz9UodzbUlYsQXvAcpAloW3r3PhLnuWrXyxeq3naxie/1riVb
-         Tp4V9sRliZzC1LeC3gy5XgStbRuKhyUllLAjmFbkzvY72pY3HMQH9nX9txbuJd01aRkI
-         yaLJimVQ71nh3RIi2ryxs3iMwTa6pt+AfEBos=
-Received: by 10.205.35.1 with SMTP id su1mr71309bkb.129.1307478817203;
-        Tue, 07 Jun 2011 13:33:37 -0700 (PDT)
-Received: from [192.168.1.15] (abvu41.neoplus.adsl.tpnet.pl [83.8.218.41])
-        by mx.google.com with ESMTPS id g2sm4514260bkz.11.2011.06.07.13.33.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 07 Jun 2011 13:33:36 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20110607191152.GB24929@elie>
-Content-Disposition: inline
+	id S1756681Ab1FGUlR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2011 16:41:17 -0400
+Received: from lo.gmane.org ([80.91.229.12]:53221 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756676Ab1FGUlQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2011 16:41:16 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1QU35P-0008LY-0p
+	for git@vger.kernel.org; Tue, 07 Jun 2011 22:41:15 +0200
+Received: from 216-239-45-4.google.com ([216.239.45.4])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 07 Jun 2011 22:41:15 +0200
+Received: from zakmagnus by 216-239-45-4.google.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 07 Jun 2011 22:41:15 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 216.239.45.4 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110422 Ubuntu/10.04 (lucid) Firefox/3.6.17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175266>
 
-On Tue, 7 June 2011, Jonathan Nieder wrote:
-> Holger Hellmuth wrote:
+Junio C Hamano <gitster <at> pobox.com> writes:
+> It seems like you posted from the news interface at gmane, and the
+> annoying &nbsp; are gone now.  The patch is still linewrapped (see the
+> hunk header starting with "@@ -187,26"), but this one I can fix up and
+> actually take a look .
+So is the one starting with "@@ -215,21 +217,65". Sorry, I failed once again.
+It's not cc'ed, either. I'm thinking maybe Scott Chacon also has comments, since
+he seems to have written the file I'm modifying?
+
+> As it is documented for the first time, we didn't have a formal
+> terminology for calling these commits and it is this document's
+> responsibility to come up with a good one. We have used "shallow clone"
+> and "shallow history", and I agree with the use of adjective in these
+> contexts, but I am not sure if it is a good idea to call the commits at
+> the boundary of a shallow history "shallow"---the following sentences do
+> not parse well at least for me:
 > 
-> > If someone finds the three-way diff completely mystifiying, how do
-> > you expect him to resolve a merge conflict at all? Or recognize that
-> > there is one? Or find the command to use after editing out the
-> > conflict markers?
-> >
-> > A novice user will have no real mental model anyway.
+>     "This commit is shallow."
+>     "This commit is not shallow, and it is a direct child of that commit,
+>     which is shallow."
+>     "That commit does not exist in this repository because it is an
+>     ancestor of a shallow commit".
 > 
-> Yes, I think you're getting closer to the point I was trying to make.
-> A novice will have a naive mental model, and a good user interface
-> needs to be close to it but not too close.  Close because the UI must
-> be intuitive on its own.  Not too close because a good UI will help in
-> leading such a person to productive ways of thinking and working, by
-> making common tasks convenient.
-> 
-> So much for generalities.
-
-To reiterate; perhaps it is not stated clearly in documentation:
-
-1. "git diff" is about examining _your_ changes.  This short form is the
-   same in every SCM.
-
-   Because of explicit index (cache, staging area) one needs to know if
-   it is working area against index, or working area against HEAD. 
-   Thinking about merge conflict case helps to remember; in such case
-   you want your changes against partially resolved merge.
-
-   Also advanced users can use index to hide fully cooked changes from
-   having to browse during review.
-
-   Novice users which do not use index (and use "git commit -a") would
-   never notice the difference, if not for the complication of newly
-   added files: in other SCM you would see on "<scm> diff" creation
-   diff (well, there is "git add -N").  Same with removal if one uses
-   "git rm" and not simply "rm".
-
-2. "git diff --cached" is about cached (staged) changes, therefore
-   it is index against HEAD.
-
-3. "git diff <commit>" in general, and "git diff HEAD" in particular,
-   is about your changes (worktree), compared to given commit.
-
-At in no place I _have_ to explain what is compared with what to explain 
-when and what for to use "git diff", "git diff --cached" and "git diff 
-HEAD".
-
--- 
-Jakub Narebski
-Poland
+> But it may be just me. Better wording ideas, anybody?
+Yes, I see... I just transplanted the terminology that the protocol uses. When
+"shallow SHA" is written, it means something is at the history boundary. Then
+again, when "deepen d" is written, it specifies a depth and not an amount to
+increase depth by, so maybe the strings the protocol uses are just bad for human
+comprehension.
