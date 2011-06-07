@@ -1,88 +1,98 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 8/8] git_remote_helpers: push all refs during a non-local
- export
-Date: Tue, 7 Jun 2011 13:21:29 -0400
-Message-ID: <20110607172129.GG22111@sigill.intra.peff.net>
-References: <20110607171838.GA21685@sigill.intra.peff.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [rfd] auto-following tags upon "git push"?
+Date: Tue, 7 Jun 2011 10:21:29 -0700
+Message-ID: <BANLkTikyd9x6+CBdq_yBTPCNYXWVq9qKF+MXbPMk2QRqmU0qhA@mail.gmail.com>
+References: <7v4o417g9s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 07 19:21:42 2011
+X-From: git-owner@vger.kernel.org Tue Jun 07 19:21:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QTzyF-0001PV-Fw
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Jun 2011 19:21:39 +0200
+	id 1QTzyV-0001XR-RL
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Jun 2011 19:21:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753554Ab1FGRVd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2011 13:21:33 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50773
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756379Ab1FGRVd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2011 13:21:33 -0400
-Received: (qmail 17236 invoked by uid 107); 7 Jun 2011 17:21:39 -0000
-Received: from c-76-21-13-32.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (76.21.13.32)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 07 Jun 2011 13:21:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Jun 2011 13:21:29 -0400
-Content-Disposition: inline
-In-Reply-To: <20110607171838.GA21685@sigill.intra.peff.net>
+	id S1756641Ab1FGRVu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Jun 2011 13:21:50 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:59079 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755946Ab1FGRVt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Jun 2011 13:21:49 -0400
+Received: by gxk21 with SMTP id 21so2072094gxk.19
+        for <git@vger.kernel.org>; Tue, 07 Jun 2011 10:21:49 -0700 (PDT)
+Received: by 10.236.190.170 with SMTP id e30mr1210444yhn.226.1307467309131;
+ Tue, 07 Jun 2011 10:21:49 -0700 (PDT)
+Received: by 10.147.182.11 with HTTP; Tue, 7 Jun 2011 10:21:29 -0700 (PDT)
+In-Reply-To: <7v4o417g9s.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175227>
 
-When a remote helper exports to a non-local git repo, the
-steps are roughly:
+On Tue, Jun 7, 2011 at 09:33, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Which also means that there is a social convention among everybody in=
+ the
+> project how public tags are named. Using a tag v2.4.3 to mark your pr=
+ivate
+> progress point, when the project uses tags that match "v*.*.*" to mar=
+k
+> public releases, is not something any sane person would do.
+=2E..
+> This is just me thinking out loud, but a typical end-user transcript =
+may
+> look something like this:
+>
+> =A0 Tell git that v*.* and v*.*.* are release tags (one-time set-up).
+> =A0 $ git config --unset-all push.autotag
+> =A0 $ git config --add push.autotag 'v*.*'
+> =A0 $ git config --add push.autotag 'v*.*.*'
+=2E..
+> =A0 $ git tag v1.2.0
+>
+> =A0 Push it out, with the usual matching (or "upstream") semantics pl=
+us
+> =A0 the new auto-follow tags feature. Note that "wip" tag will not be=
+ sent.
+> =A0 $ git push
 
-  1. fast-export into a local staging area; the set of
-     interesting refs is defined by what is in the fast-export
-     stream
+Questions:
 
-  2. git push from the staging area to the non-local repo
+Does push.autotag apply to all remotes? I'm debating with myself if I
+really want a tag I have created locally immediately pushed to a
+backup repository. Just because I have tagged something on my primary
+work repository, doesn't mean I want that public yet. I may have
+temporarily tagged something, started building a release, then run a
+"git push backup" to send my branch tips to a private backup
+repository and jumped on the transit system to head home.
+Automatically pushing my newly created tag to my backup may be useful,
+but if I later move that tag before I make it public pushes to my
+backup might start failing. If my backup remote doesn't have a
+remote.backup.push refspec that includes refs/tags/* namespace, should
+push.autotag really send there?
 
-In the second step, we should explicitly push all refs, not
-just matching ones. This will let us push refs that do not
-yet exist in the remote repo.
+Does push.autotag trigger if I specify push refspecs on the command
+line? It probably should, as the user might have specifically
+configured certain refs (maint, master, next, pu, todo) to be
+published. Unless the user is pushing to Gerrit Code Review's magical
+"refs/for/*" destination namespace... in which case that tag might
+still only be a tentative tag and isn't really part of the project
+history yet.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- git_remote_helpers/git/non_local.py |    2 +-
- t/t5800-remote-helpers.sh           |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/git_remote_helpers/git/non_local.py b/git_remote_helpers/git/non_local.py
-index f27389b..c53e074 100644
---- a/git_remote_helpers/git/non_local.py
-+++ b/git_remote_helpers/git/non_local.py
-@@ -63,7 +63,7 @@ class NonLocalGit(object):
-         if not os.path.exists(path):
-             die("could not find repo at %s", path)
- 
--        args = ["git", "--git-dir=" + path, "push", "--quiet", self.repo.gitpath]
-+        args = ["git", "--git-dir=" + path, "push", "--quiet", self.repo.gitpath, "--all"]
-         child = subprocess.Popen(args)
-         if child.wait() != 0:
-             raise CalledProcessError
-diff --git a/t/t5800-remote-helpers.sh b/t/t5800-remote-helpers.sh
-index a6cc43b..682f813 100755
---- a/t/t5800-remote-helpers.sh
-+++ b/t/t5800-remote-helpers.sh
-@@ -111,7 +111,7 @@ test_expect_success PYTHON_24 'push when remote has extra refs' '
- 	compare_refs clone master server master
- '
- 
--test_expect_failure PYTHON_24 'push new branch by name' '
-+test_expect_success PYTHON_24 'push new branch by name' '
- 	(cd clone &&
- 	 git checkout -b new-name  &&
- 	 echo content >>file &&
--- 
-1.7.6.rc0.35.gc40cb
+In general I agree with this idea. Its similar to the tag following we
+are doing on fetch/clone, and its similar to the tag visibility that
+Gerrit Code Review does with per-branch access controls.
+
+Unfortunately you need to configure the patterns up front. This is
+advanced user space. But the feature is most likely to help the new
+project maintainer more than an existing user.
+
+--=20
+Shawn.
