@@ -1,82 +1,96 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [GSoC update] Sequencer: Iterating over a stable series
-Date: Tue, 7 Jun 2011 11:18:50 +0530
-Message-ID: <BANLkTik93BB7p0gNMx5ZfsSCjietXxiG3w@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Command-line interface thoughts
+Date: Tue, 07 Jun 2011 08:11:48 +0200
+Message-ID: <4DEDC124.3060302@drmicha.warpmail.net>
+References: <BANLkTikTWx7A64vN+hVZgL7cuiZ16Eobgg@mail.gmail.com> <m339jps1wt.fsf@localhost.localdomain> <BANLkTinidLbQ_FcVEiGSK91uXYWaKk7MKA@mail.gmail.com> <201106051311.00951.jnareb@gmail.com> <BANLkTik+xhd5QQ09QiPSH1bFAndzipKtrw@mail.gmail.com> <7vwrgza3i2.fsf@alter.siamese.dyndns.org> <4DEC8322.6040200@drmicha.warpmail.net> <7vk4cz9i1b.fsf@alter.siamese.dyndns.org> <4DECE147.3060808@drmicha.warpmail.net> <7vd3ir9btd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Jeff King <peff@peff.net>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 07 07:49:17 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Scott Chacon <schacon@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Michael Nahas <mike@nahas.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 07 08:11:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QTpAD-0004w8-6o
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Jun 2011 07:49:17 +0200
+	id 1QTpW8-0003hE-2X
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Jun 2011 08:11:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751051Ab1FGFtM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2011 01:49:12 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:37294 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750871Ab1FGFtL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2011 01:49:11 -0400
-Received: by wya21 with SMTP id 21so3290694wya.19
-        for <git@vger.kernel.org>; Mon, 06 Jun 2011 22:49:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:from:date:message-id:subject:to:cc
-         :content-type;
-        bh=BcOi63HQlUTrsvum86LxYmudrpl8Ndv0pBA3UTxeGCE=;
-        b=HuVzK6C0wywCP3E12l0E6bSehhZ8IzQEjAhursn1qDyQDPiYw85Zm2oYY4FosdsJtp
-         udD4C+4DLP/qqB1J2vYQKZmADrWMt/LxPbORShwXQjtVB4535Ak8JD8iEFK5fBdj2OCT
-         lNy5fH1YGZWU3y+HLPzctGBbZdViFdQoougVc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        b=HV3A73mP4rIe9fI2lw+nzBWu1o3kFZVFxhvjdxhx/y6GJCIy5k7rK4Gi5hd0k8mTaI
-         aLf5kFNqkGYCoozi7UjHviDsbsjebuuqrl87lueS/lNyPFpu1AkhHMVV7zxNzmpLSM2Q
-         4DOx2ZQSFMTKoVLlQvLr5eUl0uFvWVfq/UGr8=
-Received: by 10.216.236.208 with SMTP id w58mr3236175weq.62.1307425750072;
- Mon, 06 Jun 2011 22:49:10 -0700 (PDT)
-Received: by 10.216.51.213 with HTTP; Mon, 6 Jun 2011 22:48:50 -0700 (PDT)
+	id S1751135Ab1FGGLv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2011 02:11:51 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:52004 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751103Ab1FGGLu (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Jun 2011 02:11:50 -0400
+Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 7CDD220726;
+	Tue,  7 Jun 2011 02:11:50 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute4.internal (MEProxy); Tue, 07 Jun 2011 02:11:50 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=++4lrGGbW08jflSUP7zuRcbuWv8=; b=YNa/N6MG6sJjXjSODwOjmQJK1No5k3CmXoJMjXahjhWQb7QefXEBiCvEvx5CKo7qXbH97H+PTNMYsGWvReXOuVxbvOss/3n/IZSiBvrYqlRoa78MDFsU1jGIKVXIWj/KEhkt9W9WkJ70PWkM0VrUcnQAepFTmqpaj5ID61jwhhE=
+X-Sasl-enc: klhdnDpv2iLnXcyb3Aj1pOisud4v/rZfG0zSr04RJViS 1307427110
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 8B3EA446258;
+	Tue,  7 Jun 2011 02:11:49 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc15 Lightning/1.0b3pre Thunderbird/3.1.10
+In-Reply-To: <7vd3ir9btd.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175188>
 
-Hi,
+Junio C Hamano venit, vidit, dixit 06.06.2011 18:14:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>>> That is why I asked what the user experience of "git show NEXT" as opposed
+>>> to "git show INDEX" should look like. So what should it look like during a
+>>> "pull" that did not finish?
+>>
+>> If NEXT is to mean the result of a commit in the current state, and the
+>> current state would or should not allow a commit, then trying to access
+>> that pseudo-commit should error out with a helpful message.
+> 
+> What "helpful message"? I asked for the user experience, not handwaving.
 
-I will start posting weekly updates starting with this one, since I
-now have quite a lot to say :)  Over the first few weeks, my objective
-was to keep iterating the initial series I'd posted until I ended up
-with a more-or-less acceptable version.  This [1] doesn't seem far
-away.  Now, I'm busy writing some tests, and planning out the
-functionality of each of the individual features -- as soon as I
-understand the problem correctly (see discussions in [2] and [3]), I
-will start working on writing new features.  I'm quite hopeful about
-meeting my mid-term target.  Please feel free to email me any
-comments/ queries about this project.  Alternatively, catch me on
-#git-devel on Freenode IRC; I'm almost always available, except when
-I'm sleeping.
+I specified the exit behaviour, that is no handwaving.
 
-Jeff: I was out of town these last few days. I saw your email about
-the lockfile API confusion- will investigate and comment soon.
+[...]
+>> Another option is to make NEXT/INDEX mean a tree (:0:). I have not
+>> thought this through (and have not made a suggestion, accordingly) but I
+>> do see a problem in the UI. (I don't think we need to change the
+>> existing ui in that respect but can amend and improve it.)
+>>
+>> Anyway, it's rc phase :)
+> 
+> Rc or not rc,
 
-As usual, the latest code can be found on the sequencer branch of my
-GitHub fork [4].
+I spend my limited git time running builds and tests for master on
+several systems these days (and following changed build environments
+there which I can't control).
 
-Thanks for reading!
+> just repeating a fuzzy and uncooked "idea" around phoney
+> ref-looking names that will end up confusing the users, and selling that
+> as if it is a logical conclusion to "we want to give an easier to
+> understand UI", without presenting a solid user experience design that is
+> convincing enough that the "idea" will reduce confusion will not get us
+> anywhere, especially when it is sprinkled with ad hominem attack at me.
 
--- Ram
+I've re-read all my posts in this thread and have no idea what you're
+referring to here. If I were more sensitive I could spot attacks at
+myself in the above, though. Just count your usage of terms like
+"phoney", "fuzzy" etc. directed at other people's ideas and arguments.
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/174526
-[2]: http://thread.gmane.org/gmane.comp.version-control.git/174393/focus=174945
-[3]: http://thread.gmane.org/gmane.comp.version-control.git/174874
-[4]: http://github.com/artagnon/git
+I'm actually wondering whether there is any agreement on the sheer fact
+that there is a problem in the ui, namely having too many different
+commands or options (reset/commit/add/checkout resp. diff invocations;
+I've described that already) for different aspects of a "similar"
+concept (cp content version from A to B resp. diff it).
+
+If we don't agree that there's a problem then there's no point
+discussing solutions (or ideas/brainstorms thereof).
+
+Michael
