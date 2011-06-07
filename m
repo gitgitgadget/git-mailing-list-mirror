@@ -1,66 +1,87 @@
-From: Alex Neronskiy <zakmagnus@google.com>
-Subject: Re: [PATCH] Document the underlying protocol used by shallow repositories and --depth commands.
-Date: Tue, 7 Jun 2011 22:31:12 +0000 (UTC)
-Message-ID: <loom.20110608T001220-765@post.gmane.org>
-References: <BANLkTi=SVZPebW2YXRnaLvkxEDGy_rrtJ3jayt8Oco6Sn8hciQ@mail.gmail.com> <7vvcwi95yi.fsf@alter.siamese.dyndns.org> <loom.20110606T213817-376@post.gmane.org> <7v1uz55r24.fsf@alter.siamese.dyndns.org> <loom.20110607T224355-216@post.gmane.org> <7vr57547sj.fsf@alter.siamese.dyndns.org>
+From: Peter Kleiweg <pkleiweg@xs4all.nl>
+Subject: Re: old but persistent problem: bad line length character
+Date: Wed, 8 Jun 2011 00:32:31 +0200
+Organization: -= de Laatste Huismus =-
+Message-ID: <alpine.DEB.1.10.1106072337500.11389@localhost>
+References: <alpine.DEB.1.10.1106071832470.4175@localhost> <20110607180624.GA23752@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 08 00:31:33 2011
+X-From: git-owner@vger.kernel.org Wed Jun 08 00:45:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QU4o8-0003TT-6b
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 00:31:32 +0200
+	id 1QU51P-0008GV-3P
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 00:45:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758864Ab1FGWb1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2011 18:31:27 -0400
-Received: from lo.gmane.org ([80.91.229.12]:56418 "EHLO lo.gmane.org"
+	id S1751515Ab1FGWpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2011 18:45:08 -0400
+Received: from lo.gmane.org ([80.91.229.12]:39208 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751762Ab1FGWb0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2011 18:31:26 -0400
+	id S1750774Ab1FGWpG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2011 18:45:06 -0400
 Received: from list by lo.gmane.org with local (Exim 4.69)
 	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1QU4o1-0003Qz-Ik
-	for git@vger.kernel.org; Wed, 08 Jun 2011 00:31:25 +0200
-Received: from 216-239-45-4.google.com ([216.239.45.4])
+	id 1QU51F-0008EY-F4
+	for git@vger.kernel.org; Wed, 08 Jun 2011 00:45:05 +0200
+Received: from pebbe.xs4all.nl ([80.101.76.238])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 08 Jun 2011 00:31:25 +0200
-Received: from zakmagnus by 216-239-45-4.google.com with local (Gmexim 0.1 (Debian))
+        for <git@vger.kernel.org>; Wed, 08 Jun 2011 00:45:05 +0200
+Received: from pkleiweg by pebbe.xs4all.nl with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 08 Jun 2011 00:31:25 +0200
+        for <git@vger.kernel.org>; Wed, 08 Jun 2011 00:45:05 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 216.239.45.4 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110422 Ubuntu/10.04 (lucid) Firefox/3.6.17)
+X-Gmane-NNTP-Posting-Host: pebbe.xs4all.nl
+X-X-Sender: peter@localhost
+In-Reply-To: <20110607180624.GA23752@sigill.intra.peff.net>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+X-Accept-Language: nl,af,da,de,en,ia,nds,no,sv,fr,it
+X-Face: "K~X:~!ydgSdjNy;]_+BCb\OM^pqyg_q*Le84$l46M\-mL=.^,L4B}bDK>`o#r4_>O*
+X-Mailer: Alpine 1.10 (DEB 962 2008-03-14), Linux 2.6.18-6-686, i686
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175276>
 
-Junio C Hamano <gitster <at> pobox.com> writes:
+Jeff King schreef op de 7e dag van de zomermaand van het jaar 2011:
 
-> Ah, I overlooked that codepath, but if that if statement triggered, that
-> would mean fetching is still 0, which in turn means that you never sent
-> any "want", so "Once all the 'want's' (and optional 'deepen') are
-> transferred" is not even true, is it?
+> On Tue, Jun 07, 2011 at 06:33:07PM +0200, Peter Kleiweg wrote:
+> 
+> > How do bugs in Git get solved? I can't find an issue tracker. 
+> 
+> You send an email to the mailing list and people work on it. :)
 
-If you want to get pedantic, it IS true that "all" the 'want's are sent; the
-correct set of wants to send just happens to be empty. What DOES seem incorrect
-is the part about the 'deepen' (as well as the 'shallow's I'm proposing to add);
-that part of the code isn't even reached if this termination happens. So, either
-I'm mistaken and that is NOT the right codepath, or this is a mistake already
-present in the documentation. 
+Is that git@vger.kernel.org ?
 
-Alternatively, the problem there is that it's just deceptively worded. It
-implies that a 'deepen' can be sent and that termination can still happen
-afterwards; but I don't believe this is possible. If a depth argument is
-present, everything_local is not called and COMPLETEness is not set, so it's
-impossible to skip any refs except in the corner case where there aren't any to
-begin with. The second version of this patch addresses this better.
+
+> > I added some debug code in pkt-line.c, function 
+> > packet_read_line(). This tells me that 'buffer' that is passed 
+> > to packet_read_line() contains nothing but null characters, 
+> > while 'size' is set to 1000.
+> 
+> Yeah, it's expecting data to be written into it. You need to see what
+> packet_read_line reads into linelen via safe_read (which is also printed
+> in the error message, so it looks from the above like it contains NULs).
+
+I made it read some more than 4 bytes. And this is what I get:
+
+{27}]0;github git-receive-pack 'pebbe/Gabmap.git'{7}
+
+Ah, I see! I have a wrapper set-up around ssh that sets the 
+window title of the shell to the ssh command argument. That is 
+what messes things up!
+
+OK. Fixed now.
+
+
+
+
+
+-- 
+Peter Kleiweg
+http://pkleiweg.home.xs4all.nl/
