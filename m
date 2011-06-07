@@ -1,89 +1,114 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: old but persistent problem: bad line length character
-Date: Tue, 7 Jun 2011 14:06:25 -0400
-Message-ID: <20110607180624.GA23752@sigill.intra.peff.net>
-References: <alpine.DEB.1.10.1106071832470.4175@localhost>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Peter Kleiweg <p.c.j.kleiweg@rug.nl>
-X-From: git-owner@vger.kernel.org Tue Jun 07 20:06:49 2011
+From: Jamey Sharp <jamey@minilop.net>
+Subject: [PATCH 1/4] Fix prefix handling in ref iteration functions
+Date: Tue,  7 Jun 2011 11:21:22 -0700
+Message-ID: <1307470885-4018-2-git-send-email-jamey@minilop.net>
+References: <7vsjrna2x2.fsf@alter.siamese.dyndns.org>
+ <1307470885-4018-1-git-send-email-jamey@minilop.net>
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
+	git@vger.kernel.org, Josh Triplett <josh@joshtriplett.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 07 20:21:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QU0fw-0004Tt-My
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Jun 2011 20:06:49 +0200
+	id 1QU0ua-0003Cj-1c
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Jun 2011 20:21:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753046Ab1FGSG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2011 14:06:29 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:40041
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751618Ab1FGSG2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2011 14:06:28 -0400
-Received: (qmail 18646 invoked by uid 107); 7 Jun 2011 18:06:34 -0000
-Received: from c-76-21-13-32.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (76.21.13.32)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 07 Jun 2011 14:06:34 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Jun 2011 14:06:25 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.10.1106071832470.4175@localhost>
+	id S1757819Ab1FGSVt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2011 14:21:49 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:41444 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755102Ab1FGSVr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2011 14:21:47 -0400
+Received: by pzk9 with SMTP id 9so2668160pzk.19
+        for <git@vger.kernel.org>; Tue, 07 Jun 2011 11:21:47 -0700 (PDT)
+Received: by 10.68.67.212 with SMTP id p20mr327150pbt.399.1307470906874;
+        Tue, 07 Jun 2011 11:21:46 -0700 (PDT)
+Received: from oh.minilop.net (host-246-101.pubnet.pdx.edu [131.252.246.101])
+        by mx.google.com with ESMTPS id o2sm300397pbj.49.2011.06.07.11.21.45
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 07 Jun 2011 11:21:45 -0700 (PDT)
+Received: from jamey by oh.minilop.net with local (Exim 4.76)
+	(envelope-from <jamey@oh.minilop.net>)
+	id 1QU0uO-00013Y-DL; Tue, 07 Jun 2011 11:21:44 -0700
+X-Mailer: git-send-email 1.7.4.4
+In-Reply-To: <1307470885-4018-1-git-send-email-jamey@minilop.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175244>
 
-On Tue, Jun 07, 2011 at 06:33:07PM +0200, Peter Kleiweg wrote:
+From: Josh Triplett <josh@joshtriplett.org>
 
-> I get this error message with git version 1.7.5.GIT: 
-> 
->     fatal: protocol error: bad line length character:
-> 
-> Git version 1.4.4.4 works fine.
+The do_for_each_ref iteration function accepts a prefix and a trim, and
+checks for the prefix on each ref before passing in that ref; it also
+supports trimming off part of the ref before passing it.  However,
+do_for_each_ref used trim as the length of the prefix to check, ignoring
+the actual length of the prefix.  Switch to using prefixcmp, checking
+the entire length of the prefix string, to properly support a trim value
+different than the length of the prefix.
 
-I can't reproduce the problem here.  Can you try bisecting to find the
-commit that introduces the problem?
+Several callers passed a prefix of "refs/" to filter out everything
+outside of refs/, but a trim of 0 to avoid trimming off the "refs/"; the
+trim of 0 meant that the filter of "refs/" no longer applied.  Change
+these callers to pass an empty prefix instead, to avoid changing the
+existing behavior.  Various callers count on this lack of filtering,
+such as receive-pack which uses add_extra_ref to add alternates as refs
+named ".have"; adding filtering would break that, causing
+t5501-fetch-push-alternates.sh to fail.  That lack of filtering doesn't
+currently have any other effect, since the loose ref functions can never
+supply refs outside of "refs/", and packed-refs will not normally
+include such refs unless manually edited.
 
-> How do bugs in Git get solved? I can't find an issue tracker. 
+Commit by Josh Triplett and Jamey Sharp.
 
-You send an email to the mailing list and people work on it. :)
+Signed-off-by: Josh Triplett <josh@joshtriplett.org>
+Signed-off-by: Jamey Sharp <jamey@minilop.net>
+---
+ refs.c |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-> Details:
-> 
-> $ export GIT_TRACE=1
-> $ export GIT_TRACE_PACKET=1
-> $ git push 
-> trace: built-in: git 'push'
-> trace: run_command: 'ssh' 'github' 'git-receive-pack '\''pebbe/Gabmap.git'\''' 
-> fatal: protocol error: bad line length character:
-
-Your "ssh github" is weird. Usually that would be "ssh git@github.com",
-unless you have set up an alias in .ssh/config. Is that the case? If so,
-can you show us the alias? Is it going through a proxy machine or
-anything exotic?
-
-> Setting GIT_TRACE_PACKET doesn't seem to have any effect.
-
-That's probably because we never get any packets; the very first one is
-bogus, and we abort.
-
-> I added some debug code in pkt-line.c, function 
-> packet_read_line(). This tells me that 'buffer' that is passed 
-> to packet_read_line() contains nothing but null characters, 
-> while 'size' is set to 1000.
-
-Yeah, it's expecting data to be written into it. You need to see what
-packet_read_line reads into linelen via safe_read (which is also printed
-in the error message, so it looks from the above like it contains NULs).
-
-> Running the ssh command as listed by trace works fine:
-> 
-> $ ssh github git-receive-pack 'pebbe/Gabmap.git'
-> 00720444852406fd34c3eb0c8cdcb05cd2af979d2b34 refs/heads/master report-status delete-refs side-band-64k ofs-delta
-> 0000
-
-That looks normal. I wonder why git is not getting the same data.
-
--Peff
+diff --git a/refs.c b/refs.c
+index e3c0511..858cf92 100644
+--- a/refs.c
++++ b/refs.c
+@@ -584,7 +584,7 @@ int read_ref(const char *ref, unsigned char *sha1)
+ static int do_one_ref(const char *base, each_ref_fn fn, int trim,
+ 		      int flags, void *cb_data, struct ref_list *entry)
+ {
+-	if (strncmp(base, entry->name, trim))
++	if (prefixcmp(entry->name, base))
+ 		return 0;
+ 
+ 	if (!(flags & DO_FOR_EACH_INCLUDE_BROKEN)) {
+@@ -728,12 +728,12 @@ int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
+ 
+ int for_each_ref(each_ref_fn fn, void *cb_data)
+ {
+-	return do_for_each_ref(NULL, "refs/", fn, 0, 0, cb_data);
++	return do_for_each_ref(NULL, "", fn, 0, 0, cb_data);
+ }
+ 
+ int for_each_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
+ {
+-	return do_for_each_ref(submodule, "refs/", fn, 0, 0, cb_data);
++	return do_for_each_ref(submodule, "", fn, 0, 0, cb_data);
+ }
+ 
+ int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data)
+@@ -819,7 +819,7 @@ int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data)
+ 
+ int for_each_rawref(each_ref_fn fn, void *cb_data)
+ {
+-	return do_for_each_ref(NULL, "refs/", fn, 0,
++	return do_for_each_ref(NULL, "", fn, 0,
+ 			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
+ }
+ 
+-- 
+1.7.5.3
