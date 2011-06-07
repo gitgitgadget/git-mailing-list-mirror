@@ -1,78 +1,88 @@
-From: Alex Neronskiy <zakmagnus@google.com>
-Subject: Re: [PATCH] Document the underlying protocol used by shallow repositories and --depth commands.
-Date: Tue, 7 Jun 2011 20:47:34 +0000 (UTC)
-Message-ID: <loom.20110607T224355-216@post.gmane.org>
-References: <BANLkTi=SVZPebW2YXRnaLvkxEDGy_rrtJ3jayt8Oco6Sn8hciQ@mail.gmail.com> <7vvcwi95yi.fsf@alter.siamese.dyndns.org> <loom.20110606T213817-376@post.gmane.org> <7v1uz55r24.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 0/3] submodule add: allow relative repository path even
+ when no url is set
+Date: Tue, 07 Jun 2011 23:03:58 +0200
+Message-ID: <4DEE923E.9030208@web.de>
+References: <7vaae2ihe1.fsf@alter.siamese.dyndns.org> <1306943792-1825-1-git-send-email-marcnarc@xiplink.com> <7vsjrth4iy.fsf@alter.siamese.dyndns.org> <4DE69945.1080601@web.de> <7v39jsdulf.fsf@alter.siamese.dyndns.org> <4DE93B29.4030401@web.de> <7vipskb0br.fsf@alter.siamese.dyndns.org> <4DED30E0.6090608@web.de> <7vei368ylj.fsf@alter.siamese.dyndns.org> <4DED454B.1050105@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 07 22:48:00 2011
+Cc: Marc Branchaud <marcnarc@xiplink.com>, git@vger.kernel.org,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Phil Hord <hordp@cisco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 07 23:04:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QU3Bs-0002ru-CM
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Jun 2011 22:47:56 +0200
+	id 1QU3RY-0002Pt-Kn
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Jun 2011 23:04:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753612Ab1FGUrv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2011 16:47:51 -0400
-Received: from lo.gmane.org ([80.91.229.12]:38043 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753350Ab1FGUrv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2011 16:47:51 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1QU3Bm-0002ph-6a
-	for git@vger.kernel.org; Tue, 07 Jun 2011 22:47:50 +0200
-Received: from 216-239-45-4.google.com ([216.239.45.4])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 07 Jun 2011 22:47:50 +0200
-Received: from zakmagnus by 216-239-45-4.google.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 07 Jun 2011 22:47:50 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 216.239.45.4 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110422 Ubuntu/10.04 (lucid) Firefox/3.6.17)
+	id S1757310Ab1FGVEB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2011 17:04:01 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:32787 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756688Ab1FGVEB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2011 17:04:01 -0400
+Received: from smtp04.web.de  ( [172.20.0.225])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 18E711A293E8A;
+	Tue,  7 Jun 2011 23:03:59 +0200 (CEST)
+Received: from [93.240.108.50] (helo=[192.168.178.43])
+	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1QU3RP-0007tn-00; Tue, 07 Jun 2011 23:03:59 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
+In-Reply-To: <4DED454B.1050105@xiplink.com>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX18W7s2txGNz3j7Ak18U/MbJrUOLAuoqAQekn+SF
+	6VN4xCx8qqe1R0OPay/nP/7z9hsM4C49Au08SbeKLPdOTN2WLq
+	K+292iyUH6kxamve5jWg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175268>
 
-Junio C Hamano <gitster <at> pobox.com> writes:
+Am 06.06.2011 23:23, schrieb Marc Branchaud:
+> On 11-06-06 05:00 PM, Junio C Hamano wrote:
+>> I actually still have a feeling that I may be missing something from the
+>> discussion.  While I do like a solution that lifts existing limitation to
+>> allow workflows that were hitherto impossible, that only makes sense when
+>> the newly allowed workflow makes sense and useful, and when the lifted
+>> limitation was not protecting some silly mistakes from getting made.
+>>
+>> I _think_ our last exchange gave me a fuzzy confirmation that we are not
+>> lifting a useful limitation, but I still do not know if the new workflow
+>> matches the workflow Marc (who kicked off this thread) wanted to use. I
+>> think it does match the set-up Phil Hord mentioned in an earlier message,
+>> though.
 
-> "The same event which was already described in that document" meaning at
-> the beginning of "Packfile Negotiation" section?  That is primarily about
-> the "ls-remote" that probed the server for the list of current refs, which
-> is received in connect.c::get_remote_heads(), but it also covers another
-> case. When fetching, after connect.c::get_remote_heads() finds the list of
-> current refs, do_fetch_pack() is called, and then everything_local() in it
-> checks if we have all the objects we are going to ask. If so, we flush and
-> jump to all_done to terminate the connection, skipping find_common(),
-> without doing any of the want/shallow/depth/etc.
-> 
-> I don't seem to be able to find where in find_common() and its callee we
-> could quit without telling the server anything (unless we crash . Even
-> if get_rev() loop finds nothing, we would at least say "done".
-> 
+After thinking about this issue some more I think the change is good. We
+only affect relative urls and obviously don't change the case where the
+url is already set in the superproject (that case stays like it is and
+users like Phil seem to like it that way).
 
-The part of the document I'm referring to starts at line 221 and reads: 
+For the case where the url is not set I see two use cases: The first for
+people who would like to keep their submodules local (like me and Marc):
+the new behavior enables us to use a relative path too, so we are happy.
+Then there are those who want to have a submodule relative to the super-
+projects url: they won't get an error anymore when using a relative url
+without having a default remote in the superproject. But that is easily
+fixed later by doing a "submodule sync" when they recognize that fact,
+just like Junio explained.
 
- Once all the "want"s (and optional 'deepen') are transferred,
- clients MUST send a flush-pkt. If the client has all the references
- on the server, client flushes and disconnects.
+> There may still be a lingering niggle where git might do something the user
+> doesn't expect.  For example, git might create a submodule out of
+> git://origin/foo.git instead of the local ../foo.git.  You have to be paying
+> attention to git's output to notice that difference, and I could see where a
+> user might get tripped up.  But IMO improving this can be done independently
+> of Jens's patches.
 
-And I believe this refers to the code path beginning at line 308 of fetch-pack.c:
+This behavior exists for some time and is not changed by the patches in
+question. But maybe when this patch is applied and people get used to
+relative paths for local submodules that might become an issue when they
+run into it. But I surely won't have an upstream defined for a superproject
+I want to add a local submodule too, so I doubt that.
 
-        if (!fetching) {
-                strbuf_release(&req_buf);
-                packet_flush(fd[1]);
-                return 1;
-        }
-
-Am I wrong? 
+Or am I still missing something?
