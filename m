@@ -1,70 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] clone: always fetch remote HEAD
-Date: Tue, 07 Jun 2011 16:18:09 -0700
-Message-ID: <7vhb8144em.fsf@alter.siamese.dyndns.org>
-References: <20110603050901.GA883@sigill.intra.peff.net>
- <20110603051805.GC1008@sigill.intra.peff.net>
- <7vipsi8zwl.fsf@alter.siamese.dyndns.org>
- <20110606220821.GB13697@sigill.intra.peff.net>
- <20110607230013.GA23409@sigill.intra.peff.net>
+From: Steffen Daode Nurpmeso <sdaoden@googlemail.com>
+Subject: Re: [rfd] auto-following tags upon "git push"?
+Date: Wed, 8 Jun 2011 01:23:01 +0200
+Message-ID: <20110607232301.GB28023@sherwood.local>
+References: <7v4o417g9s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dmitry Ivankov <divanorama@gmail.com>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jun 08 01:18:29 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jun 08 01:23:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QU5XZ-00027U-A4
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 01:18:29 +0200
+	id 1QU5cD-0003VQ-Gk
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 01:23:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757897Ab1FGXSY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2011 19:18:24 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53086 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752148Ab1FGXSY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2011 19:18:24 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 33A9763AC;
-	Tue,  7 Jun 2011 19:20:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1kMUnn1UF2bBX1+N8zqo7hbka18=; b=DwM+1x
-	8oSuwxEnUr/1DseNqTJYcTRXumjhtqXmnQcECl98p+Wo2yhPpQ09v3sQ5RFjXHZg
-	qzBXN7pbjJjk/hJj3abPme4JOMU4BSGpajcGvDhMt5e5e0I5LBfA4nM+nnf3MscT
-	ftPdsOWUzREWSkyJnzcUO4PWbuI9sGuP4dgkY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lz9iZA5TilYY/qV8Kf+smJ+MsrWsZNIM
-	6YoUkVtpzXq+MhiaCopq5qazQLIuLkGEUVHZ9OuriQoQdTgQqk2DeosKqWMpyYoa
-	Jif8B+OsSlhCLz3h7tN1FPmC5VAgvbhDdCOVrGewkMgMVSC7pHPttGSkAoB16lfa
-	XUhAUg+E7aY=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D331663AB;
-	Tue,  7 Jun 2011 19:20:27 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B3AA463AA; Tue,  7 Jun 2011
- 19:20:20 -0400 (EDT)
-In-Reply-To: <20110607230013.GA23409@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 7 Jun 2011 19:01:42 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B6785B78-915C-11E0-975A-85C8C023C68D-77302942!a-pb-sasl-sd.pobox.com
+	id S1757905Ab1FGXXN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2011 19:23:13 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:62631 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757897Ab1FGXXM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2011 19:23:12 -0400
+Received: by bwz15 with SMTP id 15so183289bwz.19
+        for <git@vger.kernel.org>; Tue, 07 Jun 2011 16:23:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=MRQW1D51OAyLpAmAvU5kMWRWgo65KulDpFisCV2sQxM=;
+        b=J47uqzBIGGbBKDb3MxKjkL5vsOWwWPj6SLbu1pfS42WLLYvrrNX8R6Ih31McBNycYA
+         xrmt3pmFumyYKXigd0j3xUrRgPPbVpO9N/mGKPu10t6RkAy7bcIHrbwh2gv35vcfhAAm
+         XAMJ5I7nj6hcKNgciZPSu31AnrNObw1z2jsoo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=J2NnVFiMB+8RL+sO76KzPiLCe1rI6Lf2gqpalfocMn7xLuRZdSHnxsLYYIcnxdYXrO
+         VREsBuYvWPVTRL3FroPOboDdOarrhN49W2OoM1m3qhOVWsuhVgr7BlzzstxIyK4mcdVk
+         cI/sCSs75kHtS9/qtMJP+w501Op6lfoCwOE40=
+Received: by 10.204.31.226 with SMTP id z34mr1664835bkc.160.1307488990855;
+        Tue, 07 Jun 2011 16:23:10 -0700 (PDT)
+Received: from sherwood.local ([89.204.137.168])
+        by mx.google.com with ESMTPS id ag6sm131137bkc.18.2011.06.07.16.23.06
+        (version=SSLv3 cipher=OTHER);
+        Tue, 07 Jun 2011 16:23:08 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v4o417g9s.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175288>
 
-Jeff King <peff@peff.net> writes:
+If there would be a free bit somewhere in a tag object (or so):
 
->> It should definitely be an exact match. I'll fix it in my re-roll.
+    $ git tag --autopush -ma "This will be pushed along it's commit" T1
+
+This i would understand at a glance!
+And it is both, explicit on the one and automatic on the other
+hand.  I.e.: work, work, work - commit & tag, hours pass until
+internet access and then
+
+    $ if-up-and-push-it-all-and-if-down.sh
+
+.. and that would only do 'cd repo && git push'.
+But having a short look into tag.c does not give much hope on that.
+Maybe a new file .git/AUTOPUSH to which all SHA-1 to be
+pushed automatically are simply appended.
+
+@ Junio C Hamano <gitster@pobox.com> wrote:
+>    Tell git that v*.* and v*.*.* are release tags (one-time set-up).
+>    $ git config --unset-all push.autotag
+>    $ git config --add push.autotag 'v*.*'
+>    $ git config --add push.autotag 'v*.*.*'
+
+I will blow that one, one of these days.
+
+@ Jeff King <peff@peff.net> wrote:
+> Hmm. Is it a clear enough hint when the user uses an actual tag
+> object to make a signed or annotated tag? At least for me,
+> private throw-away tags tend to just be refs/tags/foo pointing
+> to a commit, and real, for-public-consumption tags at least get
+> an annotation, if not a signature.
+> [.] Anyway, the problem would be somebody who does something like:
 >
-> OK, here is the re-roll. I've omitted the first two patches, which are
-> the same as before. So this replaces the old 3/3.
+>  $ git tag -m "here is a description of how this wip is going" foo-wip
+>
+> which violates the assumption above. I have no idea how common that is
 
-Looked sane. Thanks; will replace.
+I did understand that -m/-F required storage and thus force
+creation of a tag object.  But hey - it's a bit odd, isn't it?
+(Thinking about it some more it's very convenient that the
+possibility exists.  But it will require more than one glance.
+You know - that's ok for me, given all those features which will
+make life easier once they're discovered and understood.)
+--
+Ciao, Steffen
+sdaoden(*)(gmail.com)
+() ascii ribbon campaign - against html e-mail
+/\ www.asciiribbon.org - against proprietary attachments
