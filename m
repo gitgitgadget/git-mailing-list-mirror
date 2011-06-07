@@ -1,144 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [rfd] auto-following tags upon "git push"?
-Date: Tue, 07 Jun 2011 09:33:35 -0700
-Message-ID: <7v4o417g9s.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCHv3 4/5] gitweb: Starting work on a man page for /etc/gitweb.conf (WIP)
+Date: Tue, 7 Jun 2011 18:41:05 +0200
+Message-ID: <201106071841.05617.jnareb@gmail.com>
+References: <1307382271-7677-1-git-send-email-jnareb@gmail.com> <20110607134404.GA12730@elie> <1307464037.12888.49.camel@drew-northup.unet.maine.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 07 18:33:47 2011
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	"John 'Warthog9' Hawley" <warthog9@kernel.org>,
+	Petr Baudis <pasky@ucw.cz>
+To: Drew Northup <drew.northup@maine.edu>
+X-From: git-owner@vger.kernel.org Tue Jun 07 18:41:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QTzDu-0004tY-Ol
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Jun 2011 18:33:47 +0200
+	id 1QTzLH-0008Ln-Dg
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Jun 2011 18:41:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755299Ab1FGQdl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2011 12:33:41 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57462 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753055Ab1FGQdk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2011 12:33:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 57C68411D;
-	Tue,  7 Jun 2011 12:35:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=u
-	XwhiGDTOViW4CnANwMbsLKEnWI=; b=ll6fGmppJtUYdsb5oLshMw8hSdOEiS7oi
-	GVLmSoofqpxcqoQxBI4argI3lqy77yQ+1iGUMT1fjcc9zjScRqLPzrV2aHFX9xwn
-	0hDJuFXgMjkuQQ8+K87nTHc9tvM9RFcZVMA8nFFVDT3hFDl2rYzBpE+GbJSZRvCp
-	ET3mS6Rh5s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=o1r
-	Rl5Gf2x/UuBovEgkXR3msCQAO2T5Htj+OLb093tN369JrUNAFuEOHmBRVUwG7WQc
-	neNKL8X3U2SEjEHzWJgOAVZyu/xy1fKMGQO6qcJbctdqmy35rJq4cpqmbnqoNNOr
-	9sDeHDGLXEAIjVMmhdVANYJu9HwTbIfE07F7tNro=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 44A22411C;
-	Tue,  7 Jun 2011 12:35:49 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 643F3411B; Tue,  7 Jun 2011
- 12:35:47 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 339EA820-9124-11E0-BABE-EA23C7C1A288-77302942!a-pb-sasl-sd.pobox.com
+	id S1756584Ab1FGQlR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2011 12:41:17 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:39056 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754020Ab1FGQlQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2011 12:41:16 -0400
+Received: by fxm17 with SMTP id 17so3226574fxm.19
+        for <git@vger.kernel.org>; Tue, 07 Jun 2011 09:41:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=SjuKh37HEKEZqD8qBvQo5Hvg56unTsQpWQ6zEf80egs=;
+        b=vXgFbpTbhlWKJ927R05GiPSCV8MbWzexSe19ltBkWFX2T+eV+6ALYJ2ESQerWM1Tv/
+         LMrn+mO+4Qnlg8G7B5xnbwR3n5QNiON96xELLMYZupMxuIx/Vd1C11wMpJPfh3oQwWPY
+         fkb7fnTvPuc5XZPXxH5o+LGtIygM8ew5j55bY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=Rk9NxcgAijmVL/LuJkf0riv/TkWD0Ya7k6hu1mUiQlmWtrkYc6Mv+RLgjHys/VhXaW
+         ZFgrwLOhfDXFLbiMSIvsFHiFNVwr/GyUHShbVw8ZicSVD4soBDmKVU2CwrxSeOmp4xW9
+         AcL8FxFN+Ms2CMj9z60ojfJ4VE9POQuu+wPKM=
+Received: by 10.223.144.129 with SMTP id z1mr4441296fau.57.1307464875321;
+        Tue, 07 Jun 2011 09:41:15 -0700 (PDT)
+Received: from [192.168.1.15] (aeho108.neoplus.adsl.tpnet.pl [79.186.196.108])
+        by mx.google.com with ESMTPS id r10sm1846040fah.26.2011.06.07.09.41.13
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 07 Jun 2011 09:41:14 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1307464037.12888.49.camel@drew-northup.unet.maine.edu>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175213>
 
-It has been a very conscious design decision that "git push" does not push
-tags without being told, as opposed to "git fetch" that can fetch tags
-that point at commits that are being transferred.
+Quick reply; more detailed responses will follow.
 
-The rationale is quite obvious, once you think about it. When fetching,
-you are interacting with a remote repository somebody has published, which
-means two important things: (1) the set of tags that exist there are all
-the publisher wanted people to see, and (2) not only you but other people
-will also see the same tags. In other words, tags in repositories you
-fetch from are designed to be public and shared. It will facilitate
-communication between developers if it is easy for everybody to fetch
-these same tags.
+On Tue, 7 Jun 2011, Drew Northup wrote:
+> On Tue, 2011-06-07 at 08:44 -0500, Jonathan Nieder wrote:
+>> Drew Northup wrote:
+>>> On Mon, 2011-06-06 at 17:12 -0500, Jonathan Nieder wrote:
+>>>> Jakub Narebski wrote:
 
-When pushing, you are pushing from your working repository, which most of
-the time is not public, and tags in that repository is not designed to be
-public. You can use your own local tags to mark your progress, so it does
-not make sense to blindly push all tags in your repository to the
-repository you are pushing to publish your changes, whose tags are by
-definition public.
+>>>>> +The location of system-wide gitweb configuration file is defined at compile
+>>>>> +time using the configuration value `GITWEB_CONFIG_SYSTEM` and defaults to
+>>>>> +'/etc/gitweb.conf'.  The name of the per-instance configuration file is
+>>>>> +defined in gitweb by `GITWEB_CONFIG`, and defaults to 'gitweb_config.perl'
+>>>>> +(relative path means located in the same directory gitweb is installed).
+>>>>
+>>>> Maybe:
+>>>>
+>>>> 	In addition to the per-instance configuration file, there can
+>>>> 	be a system-wide configuration file to act as a fallback when
+>>>> 	the per-instance configuration file does not exist.
+>>>>
+>>>> 	The system-wide configuration file is named /etc/gitweb.conf
+>>>> 	by default.  Filenames for the system-wide and per-instance
+>>>> 	configuration variables can be overridden at compile time and
+>>>> 	run time; see the FILES section for details.
+>>>
+>>> This is the manpage for the system wide configuration file. If you'd
+>>> like to scrap this effort in favor of something else please speak up.
+>> 
+>> Huh?
+> 
+> If this is what you are proposing then we should be working on a
+> "gitweb_config.perl" manpage and not a "gitweb.conf" manpage. I know a
+> fair number of people around here put priority on the former and would
+> just as soon ignore the latter. That's what your proposed change says to
+> me (while I also understand that your own position is likely far more
+> nuanced than that).
 
-	Side note: the same logic applies to pushing branches. The
-	branches in the remote you fetch from are public, the ones in your
-	repository are mixture of branches for your private work and
-	branches for public consumption.
+I think this manpage is about both system-wide and per-instance config
+file, just like gitignore is about both in-tree .gitignore and private
+$GIT_DIR/info/exclude, like gitattributes is about both in-tree 
+.gitattributes and $GIT_DIR/info/attributes,... just like ssh_config
+is about both system-wide ssh_config and per-user .ssh/config.
 
-So the recommended workflow for publishers has always been:
+And like all of those manpages are named after one file, just like
+this manpage.
 
- - work on private topic branches that do not have corresponding branches
-   at the publishing repository to cook your work-in-progress;
+Perhaps we could even symlink/hardlink gitweb_config.perl manpage
+to gitweb.conf manpage...
 
- - integrate them when they are done to branches that do have
-   corresponding branches at the publishing repository;
 
- - "git push" without any extra configuration will push "matching"
-   branches, so that your private topic branches will stay private, and
-   the integration branches used to communicate with everybody else will
-   be pushed;
+P.S. I am sorry that I didn't state more clear that I modified Drew's
+original submission, and didn't write in more detail what I have changed.
+Some of mistakes are mine, not Drew...
 
- - You can use a private tag to mark your point if you want to, and
-   you can tag a release on a branch that is shared with public.
-
- - A new branch, or a new tag to be made public needs to be pushed
-   explicitly. Requiring an explicit push, instead of blindly pushing
-   everything, avoids contaminating the ref namespace of the public
-   repository with your private topic branches and private tags by
-   accident.
-
-But we could do better.
-
-Tags are designed to promote sharing of common reference points; the goal
-is to ensure that within the scope of a project, when somebody says v1.0
-is buggy, everybody else knows exactly which version v1.0 refers to (this
-is the primary reason why we do not use separate-remote layout for tags).
-
-Which also means that there is a social convention among everybody in the
-project how public tags are named. Using a tag v2.4.3 to mark your private
-progress point, when the project uses tags that match "v*.*.*" to mark
-public releases, is not something any sane person would do.
-
-So, while we still should _never_ automatically push any tag that points
-at a commit that is being pushed out (i.e. inverse of "fetch" that auto
-follows tags), if the user or the project can give a clear enough hint to
-git which tags are for public consumption, we should at least be able to
-push tags that are for public consumption and do point at commits that are
-being pushed out.
-
-This is just me thinking out loud, but a typical end-user transcript may
-look something like this:
-
-   Tell git that v*.* and v*.*.* are release tags (one-time set-up).
-   $ git config --unset-all push.autotag
-   $ git config --add push.autotag 'v*.*'
-   $ git config --add push.autotag 'v*.*.*'
-
-   Usual development process.
-   $ git checkout master
-   $ work work work
-
-   Not very happy as the result is a mess, but it seems to work Ok.
-   $ git tag wip
-
-   Try it again with the wisdom gained from the previous attempt.
-   $ rework rework rework
-
-   How much improvement did we make? Hmm, looks good.
-   $ git diff wip
-
-   Use that for the release.
-   $ git tag v1.2.0
-
-   Push it out, with the usual matching (or "upstream") semantics plus
-   the new auto-follow tags feature. Note that "wip" tag will not be sent.
-   $ git push
+-- 
+Jakub Narebski
+Poland
