@@ -1,7 +1,7 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCH 24/48] merge-recursive: Save D/F conflict filenames instead of unlinking them
-Date: Wed,  8 Jun 2011 01:30:54 -0600
-Message-ID: <1307518278-23814-25-git-send-email-newren@gmail.com>
+Subject: [PATCH 08/48] t6036: Add differently resolved modify/delete conflict in criss-cross test
+Date: Wed,  8 Jun 2011 01:30:38 -0600
+Message-ID: <1307518278-23814-9-git-send-email-newren@gmail.com>
 References: <1307518278-23814-1-git-send-email-newren@gmail.com>
 Cc: jgfouca@sandia.gov, Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
@@ -11,151 +11,142 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUDDN-0005pC-3j
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 09:30:09 +0200
+	id 1QUDDF-0005pC-MJ
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 09:30:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754959Ab1FHH3q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 03:29:46 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:49887 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754754Ab1FHH3o (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 03:29:44 -0400
-Received: by mail-pv0-f174.google.com with SMTP id 12so118724pvg.19
-        for <git@vger.kernel.org>; Wed, 08 Jun 2011 00:29:44 -0700 (PDT)
+	id S1754694Ab1FHH3K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 03:29:10 -0400
+Received: from mail-px0-f179.google.com ([209.85.212.179]:37577 "EHLO
+	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754672Ab1FHH3I (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2011 03:29:08 -0400
+Received: by mail-px0-f179.google.com with SMTP id 2so191910pxi.10
+        for <git@vger.kernel.org>; Wed, 08 Jun 2011 00:29:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=ojgb6jdopCfWIQxscwbLJnCfk5PXAD/9oO1Hj/MeoeE=;
-        b=gbDleGmhZq1QpP8TPHn/hAdJu2LqeO2YGOUuipyqQNoeiG8cTxz/i81Y5mwwWszTBc
-         rpbxD3O9T2KGHpSSl/X2JK79dnThIp+ZUdDs863KWje4AYvadddgfaC0F7mEuKhtLCTh
-         fREucaPOrpvz2LOZnaylX8HGiPgQapN7ACbFw=
+        bh=CcIkK/+TQZbsgeS7S6Ux/RxmsiJZmGEPG3o5xgBAJXc=;
+        b=GFxrItI8iMBr00EHVQ0H/gMwnLfocddpa+nmug2izIWl4pR2/T5eVtSFV9UcG9Cfje
+         Lsd5YM5WpYULL/nmYlRGkTHaBhb8cl6BL2c2DQpA7eqNFDnlWtALUlgr0vmX+o2JWd9s
+         Hy5r/YzDnyWvgJK2y6VZxIotCMCySH8uUdzm4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=gKdQ86NLsTOBj0hmpPc3v1KUSZkQjL3OEMCrHHfRCrgHtBTiv+jLY5THd84kZqD5bW
-         Skd0AVRShVKME/6RKcDs6PX+fAD52xS9o3R04UV0UvKaJ8tMT/O6WzPyE2vR4tfM8SnT
-         G9VlsRKqGP2PCiUsionZKdKThHUhd6D6QsKBQ=
-Received: by 10.68.12.73 with SMTP id w9mr592963pbb.318.1307518184044;
-        Wed, 08 Jun 2011 00:29:44 -0700 (PDT)
+        b=xliZDd9HIzf1zyJGjIwwVU/TQVa7K56PTC6PbfEgH6VTXPFNac8J8p0NK1pga+v2mI
+         WS3ygTSUKVCtm1sNwEuXw5G8xM/+yB/t6Y2YGqY54gRWYp/Pg9BtRLNJvq0y7Ohu1hoj
+         7a8yvpFru79vJzZyg9aK4S4zwsU00ht3GMS3U=
+Received: by 10.68.21.231 with SMTP id y7mr591751pbe.493.1307518148672;
+        Wed, 08 Jun 2011 00:29:08 -0700 (PDT)
 Received: from localhost.localdomain ([216.222.84.34])
-        by mx.google.com with ESMTPS id k4sm296286pbl.59.2011.06.08.00.29.42
+        by mx.google.com with ESMTPS id k4sm296286pbl.59.2011.06.08.00.29.06
         (version=SSLv3 cipher=OTHER);
-        Wed, 08 Jun 2011 00:29:43 -0700 (PDT)
+        Wed, 08 Jun 2011 00:29:07 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6.rc0.62.g2d69f
 In-Reply-To: <1307518278-23814-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175304>
 
-Rename make_room_for_directories_of_df_conflicts() to
-record_df_conflict_files() to reflect the change in functionality.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c |   40 ++++++++++++++++++++++++----------------
- merge-recursive.h |    1 +
- 2 files changed, 25 insertions(+), 16 deletions(-)
+ t/t6036-recursive-corner-cases.sh |   83 +++++++++++++++++++++++++++++++++++++
+ 1 files changed, 83 insertions(+), 0 deletions(-)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 3a8e64e..e59eec0 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -353,20 +353,24 @@ static int string_list_df_name_compare(const void *a, const void *b)
- 			       two->string, strlen(two->string), S_IFDIR);
- }
+diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner-cases.sh
+index 319b6fa..52d2ecf 100755
+--- a/t/t6036-recursive-corner-cases.sh
++++ b/t/t6036-recursive-corner-cases.sh
+@@ -231,4 +231,87 @@ test_expect_success 'git detects differently handled merges conflict' '
+ 	test $(git rev-parse :1:new_a) = $(git hash-object merged)
+ '
  
--
--
--static void make_room_for_directories_of_df_conflicts(struct merge_options *o,
--						      struct string_list *entries)
-+static void record_df_conflict_files(struct merge_options *o,
-+				     struct string_list *entries)
- {
--	/* If there are D/F conflicts, and the paths currently exist
--	 * in the working copy as a file, we want to remove them to
--	 * make room for the corresponding directory.  Such paths will
--	 * later be processed in process_df_entry() at the end.  If
--	 * the corresponding directory ends up being removed by the
--	 * merge, then the file will be reinstated at that time;
--	 * otherwise, if the file is not supposed to be removed by the
--	 * merge, the contents of the file will be placed in another
--	 * unique filename.
-+	/* If there is a D/F conflict and the file for such a conflict
-+	 * currently exist in the working copy, we want to allow it to
-+	 * be removed to make room for the corresponding directory if
-+	 * needed.  The files underneath the directories of such D/F
-+	 * conflicts will be handled in process_entry(), while the
-+	 * files of such D/F conflicts will be processed later in
-+	 * process_df_entry().  If the corresponding directory ends up
-+	 * being removed by the merge, then no additional work needs
-+	 * to be done by process_df_entry() for the conflicting file.
-+	 * If the directory needs to be written to the working copy,
-+	 * then the conflicting file will simply be removed (e.g. in
-+	 * make_room_for_path).  If the directory is written to the
-+	 * working copy but the file also has a conflict that needs to
-+	 * be resolved, then process_df_entry() will reinstate the
-+	 * file with a new unique name.
- 	 */
- 	const char *last_file = NULL;
- 	int last_len = 0;
-@@ -383,6 +387,7 @@ static void make_room_for_directories_of_df_conflicts(struct merge_options *o,
- 	qsort(entries->items, entries->nr, sizeof(*entries->items),
- 	      string_list_df_name_compare);
- 
-+	string_list_clear(&o->df_conflict_file_set, 1);
- 	for (i = 0; i < entries->nr; i++) {
- 		const char *path = entries->items[i].string;
- 		int len = strlen(path);
-@@ -391,14 +396,15 @@ static void make_room_for_directories_of_df_conflicts(struct merge_options *o,
- 		/*
- 		 * Check if last_file & path correspond to a D/F conflict;
- 		 * i.e. whether path is last_file+'/'+<something>.
--		 * If so, remove last_file to make room for path and friends.
-+		 * If so, record that it's okay to remove last_file to make
-+		 * room for path and friends if needed.
- 		 */
- 		if (last_file &&
- 		    len > last_len &&
- 		    memcmp(path, last_file, last_len) == 0 &&
- 		    path[last_len] == '/') {
- 			output(o, 3, "Removing %s to make room for subdirectory; may re-add later.", last_file);
--			unlink(last_file);
-+			string_list_insert(&o->df_conflict_file_set, last_file);
- 		}
- 
- 		/*
-@@ -1574,7 +1580,7 @@ int merge_trees(struct merge_options *o,
- 		get_files_dirs(o, merge);
- 
- 		entries = get_unmerged();
--		make_room_for_directories_of_df_conflicts(o, entries);
-+		record_df_conflict_files(o, entries);
- 		re_head  = get_renames(o, head, common, head, merge, entries);
- 		re_merge = get_renames(o, merge, common, head, merge, entries);
- 		clean = process_renames(o, re_head, re_merge);
-@@ -1800,6 +1806,8 @@ void init_merge_options(struct merge_options *o)
- 	o->current_file_set.strdup_strings = 1;
- 	memset(&o->current_directory_set, 0, sizeof(struct string_list));
- 	o->current_directory_set.strdup_strings = 1;
-+	memset(&o->df_conflict_file_set, 0, sizeof(struct string_list));
-+	o->df_conflict_file_set.strdup_strings = 1;
- }
- 
- int parse_merge_opt(struct merge_options *o, const char *s)
-diff --git a/merge-recursive.h b/merge-recursive.h
-index 7e1e972..58f3435 100644
---- a/merge-recursive.h
-+++ b/merge-recursive.h
-@@ -26,6 +26,7 @@ struct merge_options {
- 	struct strbuf obuf;
- 	struct string_list current_file_set;
- 	struct string_list current_directory_set;
-+	struct string_list df_conflict_file_set;
- };
- 
- /* merge_trees() but with recursive ancestor consolidation */
++#
++# criss-cross + modify/delete:
++#
++#      B   D
++#      o---o
++#     / \ / \
++#  A o   X   ? F
++#     \ / \ /
++#      o---o
++#      C   E
++#
++#   Commit A: file with contents 'A\n'
++#   Commit B: file with contents 'B\n'
++#   Commit C: file not present
++#   Commit D: file with contents 'B\n'
++#   Commit E: file not present
++#
++# Now, when we merge commits D & E, does git detect the conflict?
++
++test_expect_success 'setup criss-cross + modify/delete resolved differently' '
++	git rm -rf . &&
++	git clean -fdqx &&
++	rm -rf .git &&
++	git init &&
++
++	echo A >file &&
++	git add file &&
++	test_tick &&
++	git commit -m A &&
++
++	git branch B &&
++	git checkout -b C &&
++	git rm file &&
++	test_tick &&
++	git commit -m C &&
++
++	git checkout B &&
++	echo B >file &&
++	git add file &&
++	test_tick &&
++	git commit -m B &&
++
++	git checkout B^0 &&
++	test_must_fail git merge C &&
++	echo B >file &&
++	git add file &&
++	test_tick &&
++	git commit -m D &&
++	git tag D &&
++
++	git checkout C^0 &&
++	test_must_fail git merge B &&
++	git rm file &&
++	test_tick &&
++	git commit -m E &&
++	git tag E
++'
++
++test_expect_failure 'git detects conflict merging criss-cross+modify/delete' '
++	git checkout D^0 &&
++
++	test_must_fail git merge -s recursive E^0 &&
++
++	test 2 -eq $(git ls-files -s | wc -l) &&
++	test 2 -eq $(git ls-files -u | wc -l) &&
++
++	test $(git rev-parse :1:file) = $(git rev-parse master:file) &&
++	test $(git rev-parse :2:file) = $(git rev-parse B:file)
++'
++
++test_expect_failure 'git detects conflict merging criss-cross+modify/delete, reverse direction' '
++	git reset --hard &&
++	git checkout E^0 &&
++
++	test_must_fail git merge -s recursive D^0 &&
++
++	test 2 -eq $(git ls-files -s | wc -l) &&
++	test 2 -eq $(git ls-files -u | wc -l) &&
++
++	test $(git rev-parse :1:file) = $(git rev-parse master:file) &&
++	test $(git rev-parse :3:file) = $(git rev-parse B:file)
++'
++
+ test_done
 -- 
 1.7.6.rc0.62.g2d69f
