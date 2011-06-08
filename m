@@ -1,93 +1,141 @@
 From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH 00/19] remote-helper improvements
-Date: Wed,  8 Jun 2011 20:48:31 +0200
-Message-ID: <1307558930-16074-1-git-send-email-srabbelier@gmail.com>
+Subject: [PATCH 04/19] teach remote-testgit to import non-HEAD refs
+Date: Wed,  8 Jun 2011 20:48:35 +0200
+Message-ID: <1307558930-16074-5-git-send-email-srabbelier@gmail.com>
+References: <1307558930-16074-1-git-send-email-srabbelier@gmail.com>
+Cc: Sverre Rabbelier <srabbelier@gmail.com>
 To: Jonathan Nieder <jrnieder@gmail.com>, "Jeff King" <peff@peff.net>,
 	Git List <git@vger.kernel.org>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 08 20:49:35 2011
+X-From: git-owner@vger.kernel.org Wed Jun 08 20:49:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUNot-0007wm-5H
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 20:49:35 +0200
+	id 1QUNou-0007wm-Cl
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 20:49:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751875Ab1FHSta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 14:49:30 -0400
+	id S1752171Ab1FHSte (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 14:49:34 -0400
 Received: from mail-ey0-f174.google.com ([209.85.215.174]:46492 "EHLO
 	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751500Ab1FHSt2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 14:49:28 -0400
-Received: by eyx24 with SMTP id 24so279690eyx.19
-        for <git@vger.kernel.org>; Wed, 08 Jun 2011 11:49:27 -0700 (PDT)
+	with ESMTP id S1751614Ab1FHStd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2011 14:49:33 -0400
+Received: by mail-ey0-f174.google.com with SMTP id 24so279690eyx.19
+        for <git@vger.kernel.org>; Wed, 08 Jun 2011 11:49:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:message-id:x-mailer;
-        bh=kORjd2COuPfHocmJkBCWPsEmPfKbJ/KddmAEHuyT65w=;
-        b=UdFxvaMw0QT6zKWvtwtmUC8hyFcBi+MLQIZWXvet37K92PUax/y2UTMy3S7/BUhuPd
-         sU1ps+ePK3cznpLy6MU99ADplKghW0C8jxlR3RIGSqkRN/BpMak7cSapMNoP7uhb8WX/
-         ZesAE1JrqNNaoahyBz68FHcVZeflo8JbXNbLw=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references;
+        bh=gFS6RIB5TXJyUueEf7MH8r4XNtzMpmuwEDtECozJpoA=;
+        b=uUzF5bpMDXtWd3KgX1wKwb071L/1w0vxxjMllTHPO5kGZn+QDpIFCbA2dT4R5yvUR4
+         Diu1bP5PxHn81MrXmanj9HA1sac8pNAUZhd82d+jt6CAWPeW3SXCQ80HbNoe9HhYjFWw
+         oR7EdLK1fO0vBNp0zartLgvQcPd2HdbGxCGC8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:message-id:x-mailer;
-        b=YZSP41PhiorQ0jIlKgFRJoHqqXIrDUL5WJlKDz5/nNskBvdQW/A3ytK6Q4RJc8IAE0
-         nShf6X9Vphn1gS89HSHSiqW7YsnSjqcnBHmSHVqOPKy/lgqmOihwm6ULBSvQyhYqEG8i
-         zYhW1nBkCdStoHxcF8HeufFo/oecSaYaeeEfU=
-Received: by 10.14.2.27 with SMTP id 27mr3111836eee.9.1307558966260;
-        Wed, 08 Jun 2011 11:49:26 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=hzYUa6eJdWCQ5WNQXzPVmFGVhCPEveHTXD8adnAwVRz75IhAYuqAyDTEZT3AwO2kN/
+         StXvVWimmY2eU0oL/weO3b8uzaeKfZmu3qTRC8HkXgCAMJ+L7SyichlVXFLMQS4w0LkO
+         3ScFmi15NpGgeyDW8plENZL7p2398coajTOpI=
+Received: by 10.14.33.148 with SMTP id q20mr2881425eea.91.1307558972645;
+        Wed, 08 Jun 2011 11:49:32 -0700 (PDT)
 Received: from localhost.localdomain ([188.142.63.148])
-        by mx.google.com with ESMTPS id b1sm729674eeg.19.2011.06.08.11.49.24
+        by mx.google.com with ESMTPS id b1sm729674eeg.19.2011.06.08.11.49.31
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 08 Jun 2011 11:49:25 -0700 (PDT)
+        Wed, 08 Jun 2011 11:49:31 -0700 (PDT)
 X-Mailer: git-send-email 1.7.5.1.292.g728120
+In-Reply-To: <1307558930-16074-1-git-send-email-srabbelier@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175422>
 
-This is a re-roll of Peff's recent series [0] and the series [1] I sent out
-well over half a year ago. My series replaces two from Peff's.
+From: Jeff King <peff@peff.net>
 
-[0] http://thread.gmane.org/gmane.comp.version-control.git/174904
-[1] http://thread.gmane.org/gmane.comp.version-control.git/154669
+Upon receiving an "import" command, the testgit remote
+helper would ignore the ref asked for by git and generate a
+fast-export stream based on HEAD. Instead, we should
+actually give git the ref it asked for.
 
-Jeff King (6):
-      transport-helper: fix minor leak in push_refs_with_export
-      t5800: factor out some ref tests
-      t5800: document some non-functional parts of remote helpers
-      teach remote-testgit to import non-HEAD refs
-      transport-helper: don't feed bogus refs to export push
-      git_remote_helpers: push all refs during a non-local export
+This requires adding a new parameter to the export_repo
+method in the remote-helpers python library, which may be
+used by code outside of git.git. We use a default parameter
+so that callers without the new parameter will get the same
+behavior as before.
 
-Sverre Rabbelier (13):
-      remote-curl: accept empty line as terminator
-      git-remote-testgit: only push for non-local repositories
-      git-remote-testgit: fix error handling
-      fast-import: introduce 'done' command
-      fast-export: support done feature
-      transport-helper: factor out push_update_refs_status
-      transport-helper: check status code of finish_command
-      transport-helper: use the new done feature where possible
-      transport-helper: update ref status after push with export
-      transport-helper: change import semantics
-      transport-helper: export is no longer always the last command
-      transport-helper: Use capname for gitdir capability too
-      transport-helper: implement marks location as capability
+Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
+---
 
- Documentation/git-fast-export.txt   |    4 +
- Documentation/git-fast-import.txt   |   25 ++++
- builtin/fast-export.c               |    9 ++
- fast-import.c                       |    8 ++
- git-remote-testgit.py               |   54 ++++++---
- git_remote_helpers/git/exporter.py  |    8 +-
- git_remote_helpers/git/importer.py  |    5 +-
- git_remote_helpers/git/non_local.py |    2 +-
- remote-curl.c                       |    3 +
- t/t5800-remote-helpers.sh           |   59 ++++++++-
- t/t9300-fast-import.sh              |   42 ++++++
- transport-helper.c                  |  238 ++++++++++++++++++----------------
- 12 files changed, 320 insertions(+), 137 deletions(-)
+  Unchanged from Peff's series.
+
+ git-remote-testgit.py              |    2 +-
+ git_remote_helpers/git/exporter.py |    8 +++++++-
+ t/t5800-remote-helpers.sh          |    2 +-
+ 3 files changed, 9 insertions(+), 3 deletions(-)
+
+diff --git a/git-remote-testgit.py b/git-remote-testgit.py
+index df9d512..e4a99a3 100644
+--- a/git-remote-testgit.py
++++ b/git-remote-testgit.py
+@@ -122,7 +122,7 @@ def do_import(repo, args):
+         die("Need gitdir to import")
+ 
+     repo = update_local_repo(repo)
+-    repo.exporter.export_repo(repo.gitdir)
++    repo.exporter.export_repo(repo.gitdir, args)
+ 
+ 
+ def do_export(repo, args):
+diff --git a/git_remote_helpers/git/exporter.py b/git_remote_helpers/git/exporter.py
+index f40f9d6..8fd83c7 100644
+--- a/git_remote_helpers/git/exporter.py
++++ b/git_remote_helpers/git/exporter.py
+@@ -15,7 +15,7 @@ class GitExporter(object):
+ 
+         self.repo = repo
+ 
+-    def export_repo(self, base):
++    def export_repo(self, base, refs=None):
+         """Exports a fast-export stream for the given directory.
+ 
+         Simply delegates to git fast-epxort and pipes it through sed
+@@ -23,8 +23,13 @@ class GitExporter(object):
+         default refs/heads. This is to demonstrate how the export
+         data can be stored under it's own ref (using the refspec
+         capability).
++
++        If None, refs defaults to ["HEAD"].
+         """
+ 
++        if not refs:
++            refs = ["HEAD"]
++
+         dirname = self.repo.get_base_path(base)
+         path = os.path.abspath(os.path.join(dirname, 'testgit.marks'))
+ 
+@@ -38,6 +43,7 @@ class GitExporter(object):
+         sys.stdout.flush()
+ 
+         args = ["git", "--git-dir=" + self.repo.gitpath, "fast-export", "--export-marks=" + path]
++        args.extend(refs)
+ 
+         if os.path.exists(path):
+             args.append("--import-marks=" + path)
+diff --git a/t/t5800-remote-helpers.sh b/t/t5800-remote-helpers.sh
+index a10a48d..562edf4 100755
+--- a/t/t5800-remote-helpers.sh
++++ b/t/t5800-remote-helpers.sh
+@@ -81,7 +81,7 @@ test_expect_success PYTHON_24 'pushing remote local repo' '
+ 	compare_refs clone HEAD server HEAD
+ '
+ 
+-test_expect_failure PYTHON_24 'fetch new branch' '
++test_expect_success PYTHON_24 'fetch new branch' '
+ 	(cd public &&
+ 	 git checkout -b new &&
+ 	 echo content >>file &&
+-- 
+1.7.5.1.292.g728120
