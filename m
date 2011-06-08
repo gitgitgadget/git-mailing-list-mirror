@@ -1,161 +1,149 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCH 37/48] merge-recursive: Fix modify/delete resolution in the recursive case
-Date: Wed,  8 Jun 2011 01:31:07 -0600
-Message-ID: <1307518278-23814-38-git-send-email-newren@gmail.com>
+Subject: [PATCH 11/48] t6036: criss-cross w/ rename/rename(1to2)/modify+rename/rename(2to1)/modify
+Date: Wed,  8 Jun 2011 01:30:41 -0600
+Message-ID: <1307518278-23814-12-git-send-email-newren@gmail.com>
 References: <1307518278-23814-1-git-send-email-newren@gmail.com>
 Cc: jgfouca@sandia.gov, Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 08 09:31:50 2011
+X-From: git-owner@vger.kernel.org Wed Jun 08 09:31:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUDEq-0006q0-0u
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 09:31:40 +0200
+	id 1QUDEt-0006q0-BB
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 09:31:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754733Ab1FHHbH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 03:31:07 -0400
+	id S1754823Ab1FHH3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 03:29:23 -0400
 Received: from mail-pw0-f46.google.com ([209.85.160.46]:35036 "EHLO
 	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754862Ab1FHHaK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 03:30:10 -0400
+	with ESMTP id S1754758Ab1FHH3Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2011 03:29:16 -0400
 Received: by mail-pw0-f46.google.com with SMTP id 15so118980pwi.19
-        for <git@vger.kernel.org>; Wed, 08 Jun 2011 00:30:10 -0700 (PDT)
+        for <git@vger.kernel.org>; Wed, 08 Jun 2011 00:29:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=EK4wp3ujqT2bBrJZUDnK2zIMLIZ7kBtpDVQmYW8ijtQ=;
-        b=j3yPnUC434qOvzeiGCVX5vgKVZV6fT6iCT0y4+/gv/CbMm0UJGHU+lCS1ATfs8HdWr
-         AQ4b4XAYRU8SR5Nt4IXVh0G+SC7ahWBmirUff9v2llmmwpzp8XwqmcNq/2u4JOgZwi0I
-         1bpHQjuUFl/isC1bgf+oYnJpfQv0UopbeM0lg=
+        bh=OinCjUDVfSg7+iLdBXnIQPpw3HqboUBcdUcnYTL+4PI=;
+        b=LTbML6pQYWk5rbPIAPQgo2iy9mVAk2kgE/unvA+9Z+3uPRYLXpDjlCqUWRLtNaF2v0
+         dKtw0bOMIdA1kNSrH19/dnHIFWCLssBTFexrmrDKNyKlehn7sB/doJUEHQQBQe1sYvke
+         sNpYC7vJZjkB5PyNR/QwhEXikuECGgJZkXD58=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=Wj+fzQ62RA+JfAEcLitgFUeEeK2mI6b2hpTcMeqE5437ka0vftd/fYTpHE1Pof2RJX
-         vP7/z7sFZgUzNm0amBZuW9H3NIK32ugN2yeTeW6YObKVMgl6k2u+xAmDwDOMit5Vmpn4
-         IOuuxjat7VGNB+ZDfT7nu+c5Nh1ZDH+4tXjDk=
-Received: by 10.68.1.137 with SMTP id 9mr590551pbm.475.1307518210387;
-        Wed, 08 Jun 2011 00:30:10 -0700 (PDT)
+        b=M5QGtC79c6xt9zoar0ybN01ijVjD+46ckZ8Pq6ksDgGfbDlliyN1sMJyh0mvV/rJld
+         20nq3yQVhMMZFY8YY6CDlBrwndjirNSTybWApthbo9yBa5wbkDqXt9TfQpQc9G9A0wpm
+         rd7T6m/MHkCpKOlwiBCSW/Pb0hSZk9nYWRM74=
+Received: by 10.68.19.35 with SMTP id b3mr596471pbe.512.1307518156154;
+        Wed, 08 Jun 2011 00:29:16 -0700 (PDT)
 Received: from localhost.localdomain ([216.222.84.34])
-        by mx.google.com with ESMTPS id k4sm296286pbl.59.2011.06.08.00.30.08
+        by mx.google.com with ESMTPS id k4sm296286pbl.59.2011.06.08.00.29.13
         (version=SSLv3 cipher=OTHER);
-        Wed, 08 Jun 2011 00:30:09 -0700 (PDT)
+        Wed, 08 Jun 2011 00:29:15 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6.rc0.62.g2d69f
 In-Reply-To: <1307518278-23814-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175337>
 
-When o->call_depth>0 and we have conflicts, we try to find "middle ground"
-when creating the virtual merge base.  In the case of content conflicts,
-this can be done by doing a three-way content merge and using the result.
-In all parts where the three-way content merge is clean, it is the correct
-middle ground, and in parts where it conflicts there is no middle ground
-but the conflict markers provide a good compromise since they are unlikely
-to accidentally match any further changes.
-
-In the case of a modify/delete conflict, we cannot do the same thing.
-Accepting either endpoint as the resolution for the virtual merge base
-runs the risk that when handling the non-recursive case we will silently
-accept one person's resolution over another without flagging a conflict.
-In this case, the closest "middle ground" we have is actually the merge
-base of the candidate merge bases.  (We could alternatively attempt a
-three way content merge using an empty file in place of the deleted file,
-but that seems to be more work than necessary.)
+This test is mostly just designed for testing optimality of the virtual
+merge base in the event of a rename/rename(1to2) conflict.  The current
+choice for resolving this in git seems somewhat confusing and suboptimal.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c                 |   32 +++++++++++++++++++++-----------
- t/t6036-recursive-corner-cases.sh |    4 ++--
- 2 files changed, 23 insertions(+), 13 deletions(-)
+ t/t6036-recursive-corner-cases.sh |   76 +++++++++++++++++++++++++++++++++++++
+ 1 files changed, 76 insertions(+), 0 deletions(-)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index da507a3..5a70a87 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1309,11 +1309,26 @@ error_return:
- 
- static void handle_delete_modify(struct merge_options *o,
- 				 const char *path,
--				 const char *new_path,
-+				 unsigned char *o_sha, int o_mode,
- 				 unsigned char *a_sha, int a_mode,
- 				 unsigned char *b_sha, int b_mode)
- {
--	if (!a_sha) {
-+	char *new_path = NULL;
-+	int free_me = 0;
-+	if (dir_in_way(path, !o->call_depth)) {
-+		new_path = unique_path(o, path, a_sha ? o->branch1 : o->branch2);
-+		free_me = 1;
-+	}
-+
-+	if (o->call_depth) {
-+		/*
-+		 * We cannot arbitrarily accept either a_sha or b_sha as
-+		 * correct; since there is no true "middle point" between
-+		 * them, simply reuse the base version for virtual merge base.
-+		 */
-+		remove_file_from_cache(path);
-+		update_file(o, 0, o_sha, o_mode, new_path ? new_path : path);
-+	} else if (!a_sha) {
- 		output(o, 1, "CONFLICT (delete/modify): %s deleted in %s "
- 		       "and modified in %s. Version %s of %s left in tree%s%s.",
- 		       path, o->branch1,
-@@ -1330,6 +1345,9 @@ static void handle_delete_modify(struct merge_options *o,
- 		       NULL == new_path ? "" : new_path);
- 		update_file(o, 0, a_sha, a_mode, new_path ? new_path : path);
- 	}
-+	if (free_me)
-+		free(new_path);
-+
- }
- 
- static int merge_content(struct merge_options *o,
-@@ -1482,17 +1500,9 @@ static int process_entry(struct merge_options *o,
- 			remove_file(o, 1, path, !a_sha);
- 		} else {
- 			/* Modify/delete; deleted side may have put a directory in the way */
--			char *new_path = NULL;
--			int free_me = 0;
- 			clean_merge = 0;
--			if (dir_in_way(path, !o->call_depth)) {
--				new_path = unique_path(o, path, a_sha ? o->branch1 : o->branch2);
--				free_me = 1;
--			}
--			handle_delete_modify(o, path, new_path,
-+			handle_delete_modify(o, path, o_sha, o_mode,
- 					     a_sha, a_mode, b_sha, b_mode);
--			if (free_me)
--				free(new_path);
- 		}
- 	} else if ((!o_sha && a_sha && !b_sha) ||
- 		   (!o_sha && !a_sha && b_sha)) {
 diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner-cases.sh
-index 8d1d303..d27477b 100755
+index 4993f67..eee183e 100755
 --- a/t/t6036-recursive-corner-cases.sh
 +++ b/t/t6036-recursive-corner-cases.sh
-@@ -290,7 +290,7 @@ test_expect_success 'setup criss-cross + modify/delete resolved differently' '
- 	git tag E
+@@ -545,5 +545,81 @@ test_expect_failure 'git detects conflict and handles merge of E2 & D correctly'
+ 	test $(git rev-parse :1:a/file) = $(git rev-parse C:a/file)
  '
  
--test_expect_failure 'git detects conflict merging criss-cross+modify/delete' '
-+test_expect_success 'git detects conflict merging criss-cross+modify/delete' '
- 	git checkout D^0 &&
++#
++# criss-cross with rename/rename(1to2)/modify followed by
++# rename/rename(2to1)/modify:
++#
++#      B   D
++#      o---o
++#     / \ / \
++#  A o   X   ? F
++#     \ / \ /
++#      o---o
++#      C   E
++#
++#   Commit A: new file: a
++#   Commit B: rename a->b, modifying by adding a line
++#   Commit C: rename a->c
++#   Commit D: merge B&C, resolving conflict by keeping contents in newname
++#   Commit E: merge B&C, resolving conflict similar to D but adding another line
++#
++# There is a conflict merging B & C, but one of filename not of file
++# content.  Whoever created D and E chose specific resolutions for that
++# conflict resolution.  Now, since: (1) there is no content conflict
++# merging B & C, (2) D does not modify that merged content further, and (3)
++# both D & E resolve the name conflict in the same way, the modification to
++# newname in E should not cause any conflicts when it is merged with D.
++# (Note that this can be accomplished by having the virtual merge base have
++# the merged contents of b and c stored in a file named a, which seems like
++# the most logical choice anyway.)
++
++test_expect_success 'setup rename/rename(1to2)/modify followed by what looks like rename/rename(2to1)/modify' '
++	git reset --hard &&
++	git rm -rf . &&
++	git clean -fdqx &&
++	rm -rf .git &&
++	git init &&
++
++	printf "1\n2\n3\n4\n5\n6\n" >a &&
++	git add a &&
++	git commit -m A &&
++	git tag A &&
++
++	git checkout -b B A &&
++	git mv a b &&
++	echo 7 >>b &&
++	git add -u &&
++	git commit -m B &&
++
++	git checkout -b C A &&
++	git mv a c &&
++	git commit -m C &&
++
++	git checkout -q B^0 &&
++	git merge --no-commit -s ours C^0 &&
++	git mv b newname &&
++	git commit -m "Merge commit C^0 into HEAD" &&
++	git tag D &&
++
++	git checkout -q C^0 &&
++	git merge --no-commit -s ours B^0 &&
++	git mv c newname &&
++	printf "7\n8\n" >>newname &&
++	git add -u &&
++	git commit -m "Merge commit B^0 into HEAD" &&
++	git tag E
++'
++
++test_expect_failure 'handle rename/rename(1to2)/modify followed by what looks like rename/rename(2to1)/modify' '
++	git checkout D^0 &&
++
++	git merge -s recursive E^0 &&
++
++	test 1 -eq $(git ls-files -s | wc -l) &&
++	test 0 -eq $(git ls-files -u | wc -l) &&
++	test 0 -eq $(git ls-files -o | wc -l) &&
++
++	test 8 -eq $(wc -l < newname)
++'
  
- 	test_must_fail git merge -s recursive E^0 &&
-@@ -302,7 +302,7 @@ test_expect_failure 'git detects conflict merging criss-cross+modify/delete' '
- 	test $(git rev-parse :2:file) = $(git rev-parse B:file)
- '
- 
--test_expect_failure 'git detects conflict merging criss-cross+modify/delete, reverse direction' '
-+test_expect_success 'git detects conflict merging criss-cross+modify/delete, reverse direction' '
- 	git reset --hard &&
- 	git checkout E^0 &&
- 
+ test_done
 -- 
 1.7.6.rc0.62.g2d69f
