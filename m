@@ -1,119 +1,214 @@
-From: Holger Hellmuth <hellmuth@ira.uka.de>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: Command-line interface thoughts
-Date: Wed, 08 Jun 2011 15:04:56 +0200
-Message-ID: <4DEF7378.20307@ira.uka.de>
-References: <201106051311.00951.jnareb@gmail.com> <4DEE755C.8030108@ira.uka.de> <20110607191152.GB24929@elie> <201106072233.28244.jnareb@gmail.com>
+Date: Wed, 8 Jun 2011 15:10:02 +0200
+Message-ID: <201106081510.02701.jnareb@gmail.com>
+References: <BANLkTikTWx7A64vN+hVZgL7cuiZ16Eobgg@mail.gmail.com> <201106061419.34599.jnareb@gmail.com> <4DECD406.2010009@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Junio C Hamano <gitster@pobox.com>,
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Scott Chacon <schacon@gmail.com>,
 	Michael Nahas <mike@nahas.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 08 15:04:01 2011
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Jun 08 15:10:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUIQS-0001jZ-Le
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 15:04:00 +0200
+	id 1QUIWa-0004qh-OZ
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 15:10:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753224Ab1FHNDz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 09:03:55 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:59320 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752650Ab1FHNDy (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Jun 2011 09:03:54 -0400
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	id 1QUIQ6-0005dv-UM; Wed, 08 Jun 2011 15:03:44 +0200
-Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
-	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
-	id 1QUIQ6-0005YK-Lr; Wed, 08 Jun 2011 15:03:38 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.17) Gecko/20110414 SUSE/3.1.10 Thunderbird/3.1.10
-In-Reply-To: <201106072233.28244.jnareb@gmail.com>
-X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1307538224.811399000
+	id S1754916Ab1FHNKO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 09:10:14 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:38310 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753786Ab1FHNKM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2011 09:10:12 -0400
+Received: by bwz15 with SMTP id 15so399820bwz.19
+        for <git@vger.kernel.org>; Wed, 08 Jun 2011 06:10:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=OsvLV2g5/Hrg+SnIiRM6fAdeMfgWEODnvbgvRJO2VkE=;
+        b=MEvGCKCE9h1XKsk3hDaAjuBwvAL0zIVQuVmPYeEEC0fQVG+EqpbhoZOpALyV+2DDfH
+         Xw0MNH8p7DCYc3V/SMALuAGVyxLl5Vod1qyIjx669zLfcCkL2iP7xnF9lS4rVrIM9log
+         fhDWn2L1nAQqWGMFHbwYtYebbF2o3tkmFBstI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=OOPB40d8S8AGGix7ebkfRsoLef4H+UB1L9NWvLD1rO6tLicwODzheBX1z6y3qdBDGk
+         IAcN6k0x/XuXTI/H1nelTjWf/9v6cEQ3cx/9WZ4TPpTvGcGrNJ3TESSuyW5XsUd36Rfy
+         i5f7DhghSMn4Tbax3f94GpvY8g1zHvPn2jtMk=
+Received: by 10.204.233.14 with SMTP id jw14mr575345bkb.40.1307538611014;
+        Wed, 08 Jun 2011 06:10:11 -0700 (PDT)
+Received: from [192.168.1.15] (abvu41.neoplus.adsl.tpnet.pl [83.8.218.41])
+        by mx.google.com with ESMTPS id k16sm547181bks.13.2011.06.08.06.10.08
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 08 Jun 2011 06:10:09 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4DECD406.2010009@drmicha.warpmail.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175367>
 
-On 07.06.2011 22:33, Jakub Narebski wrote:
-> To reiterate; perhaps it is not stated clearly in documentation:
- >
-> 1. "git diff" is about examining _your_ changes.  This short form is the
->     same in every SCM.
+On Mon, 6 Jun 2011, Michael J Gruber wrote:
+> Jakub Narebski venit, vidit, dixit 06.06.2011 14:19:
+>> On Mon, 6 June 2011, Michael J Gruber wrote:
+>>> Junio C Hamano venit, vidit, dixit 06.06.2011 08:16:
+>>>> Scott Chacon <schacon@gmail.com> writes:
 
-you are right, more explicit mention in the docs would help about this.
+[...]
+>>> That is why the other Michael suggested "NEXT" as opposed to "INDEX":
+>>> The index has many aspects, only one of which is "the contents of the
+>>> next commit if I would issue 'git commit' right now". (I would even go
+>>> so far as using "STAGE".) Now, it's hard to argue that "the result of a
+>>> commit" is not tree-like, isn't it? And there's no question what "git
+>>> show NEXT" would do. Yes, if you repeat that command, you get a
+>>> different sha1 each time (because of the time field).
+>>>
+>>> I don't think anyone is seriously suggesting to replace the index by a
+>>> pseudo commit; but the one aspect which people use most could be well
+>>> represented like that, and this might even help emphasizing the
+>>> different aspects of the index. Give the index an identity as an
+>>> "object" (no, no new type, not in the object db, but as a ui object),
+>>> not something mysterious behind the scenes!
+>> 
+>> So what you suggest would make
+>> 
+>>   $ git diff NEXT WTREE
+>> 
+>> behave differently from
+>> 
+>>   $ git diff
+>> 
+>> and
+>> 
+>>   $ git diff HEAD NEXT
+>> 
+>> behave differently from
+>> 
+>>   $ git diff --cached
+>> 
+>> Do you really think that it is good idea?
+> 
+> I don't know where you're getting from that someone is suggesting to
+> make them different. (And even if, it's new UI, not changed.) Everyone's
+> been suggesting to make these more accessible.
 
-But other SCMs don't have the additional target 'index'. Much easier to 
-reason there. Also, wouldn't Joe User then conclude that 'git diff' must 
-be comparing working area against HEAD ?
+Here:
 
->     Because of explicit index (cache, staging area) one needs to know if
->     it is working area against index, or working area against HEAD.
->     Thinking about merge conflict case helps to remember; in such case
->     you want your changes against partially resolved merge.
+  That is why the other Michael suggested "NEXT" as opposed to "INDEX":
 
-This is far from a straightforward reasoning that would pop up in 
-anyones mind. In truth, I can't follow that reasoning even now. In case 
-of a merge conflict the working area doesn't concern me at all, I would 
-want a diff between 'ours' and 'theirs'
+It was in response to question how "git diff NEXT WTREE" etc. and
+"git show NEXT" would look like _in presence of merge conflicts_, as
+compared to "git diff" etc. and "git ls-files" / "git ls-files --stage".
 
-Since perl has been brought up as example of this DWIM philosophy: In 
-perl commands have their defaults, but you always can specify exactly 
-what you want if you are not sure or want to make it explicit. You can 
-use 'chomp' or you can use 'chomp $_'. But I can't make it explicit 
-which two targets I want to compare with 'git diff'.
+>>> As for WTREE: git diff against work tree does not look at non-tracked
+>>> ignored files, so why should WTREE?
+>> 
+>> So we tailor WTREE do diff behavior?
+> 
+> There is no WTREE and nothing to tailer. We create it so that it is most
+> useful and consistent, whatever that may be.
 
->     Also advanced users can use index to hide fully cooked changes from
->     having to browse during review.
->
->     Novice users which do not use index (and use "git commit -a") would
->     never notice the difference, if not for the complication of newly
->     added files: in other SCM you would see on "<scm>  diff" creation
->     diff (well, there is "git add -N").  Same with removal if one uses
->     "git rm" and not simply "rm".
+But what if "most useful" contradicts "consistent" (and "user friendly")
+and vice versa?  That is the problem with designing this UI.
 
-> 2. "git diff --cached" is about cached (staged) changes, therefore
->     it is index against HEAD.
+>> Besides, isn't this exercise a bit academic?  New to git wouldn't use
+>> index, and would use 'git commit -a' and 'git diff'... and that would
+>> be enough... well, perhaps except 'git add' + 'git diff'...
+> 
+> But we want them to grasp and use the git concepts! That is why some of
+> us want to make them more accessible.
 
-We use three words to talk about the index: cache, stage, index. So 
-apart from having an additional target for diff that target also is 
-diffused by three words. Sure, index is the real designation and cached 
-and staged are used as verbs, but that is just one more confusing bit. 
-Also 'cache' in computer science is a transparent buffer to access data 
-faster (wikipedia definition). Not what I would think of the index.
+I don't think that making stage/index and working area look like tree-ish
+(which they ain't), or using tree-ish like keyword for some ways of 
+accessing/addressing index and worktree would make them grasp git concepts.
+ 
+All the corner cases of proposed UI must be addressed in detail, and
+examined to tell if it would make git [concepts] more accessible, or if
+it would just move difficulty in other place.
 
-Probably there are good reasons to not use "git diff --index" and 
-probably they have been discussed a few times, but it doesn't make using 
-diff easier. But that's a side issue.
+>>> Full disclosure: I love the index but hate the way we make it difficult
+>>> to use sometimes, and even have to lookup myself what command and option
+>>> to actually use if all I want to do is diff A against B, or take the
+>>> version of a file from A and write it to B, when A and B are a commit,
+>>> the index or the worktree (with a commit being the nonwritable, of course).
+>> 
+>> Note that in case of saving to worktree you can always use
+>> 
+>>   $ git show HEAD:./foo>foo
+>>   $ git show :0:./foo  >foo     # or just :./foo
+> 
+> Exactly, yet another command to add to the list below, and it's not even
+> all git (because of the shell redirection).
 
-If someone sees 'git diff --cached' he might know one target, the index. 
-But how does he get the other? By reasoning that 'git diff' alone is 
-already index against working area? But for that he would have first to 
-conclude that 'git diff' is not working area against HEAD (as it is in 
-other SCMs), see above.
+Orthogonality is good in theory, but having more than one way to do
+something (like Perl's TIMTOWTDI) is a good thing, especially for UI.
+ 
+>>> I mean, this is really crazy: We have 4 commands ("add", "rm
+>>> [--cached]", "checkout [<commit>] --", "reset [<commit>] --") which you
+>>> need to be aware of if all you want to do is moving file contents
+>>> (content at a path) between a commit, the index and the worktree! And
+>>> this is actually worse than having 6 for the 6 cases.
+> 
+> Add to this craziness the fact that "checkout -- <path>" reads from
+> index and writes to worktree, but "checkout <commit> -- path" does not
+> read from commit and write to worktree - it reads from commit and writes
+> to index+worktree.
+> 
+> Note that I'm not suggesting to change any of the beloved
+> reset/checkout/whatever variants.
+> 
+> But the more I look at the commit - index - worktree triangle and the
+> commands we have the more I realize how messed up the ui is, simply
+> because it is determined by the underlying mechanics (e.g.: checkout
+> writes the index to the worktree, possibly after updating the index from
+> a commit) rather than by the concepts.
 
-> 3. "git diff<commit>" in general, and "git diff HEAD" in particular,
->     is about your changes (worktree), compared to given commit.
->
-> At in no place I _have_ to explain what is compared with what to explain
-> when and what for to use "git diff", "git diff --cached" and "git diff
-> HEAD".
->
+Actually it is not determined by underlying mechanics, but by requiring
+sane behavior.  Updating worktree from HEAD without updating index is
+usually something that you do not want, generating unexpected result.
 
-I'm sure every part of the user interface of gimp can be rationalized in 
-the same way by someone deeply involved in the concepts and the 
-structure of gimp, but still it is perceived as difficult by nearly 
-everyone else. You look at it from inside and it looks logical. Others 
-just don't have all the pieces to make that reasoning really work.
+Also, IMVHO the concepts are simple to understand / remember.  All
+checkout variants check out to working area; all reset variants reset
+from HEAD / commit:
 
-Holger.
+                 checkout    reset
+                  /--^--\   /--^--\
+
+  HEAD              |         ||v
+                    |         ||
+  index             ||        |v
+                    ||        |
+  working area      vv        v
+
+And all those update intermediate stages.
+
+> And the bad thing is that even when you look at a single command like
+> reset or checkout, you can get confused easily because of the multiple
+> different functions they overload (e.g. checkout can change HEAD, the
+> index and/or the worktree), and also because of some different defaults
+> (HEAD vs. index). I think we lost consistency here because over time
+> "useful defaults" grew in the wild.
+> 
+> That is why I'm suggesting concept based variants (move this content
+> from A to B, show me the difference between A and B).
+
+Like "git put" proposal by Jeff King (Peff)?
+
+  [RFC/PATCH] git put: an alternative to add/reset/checkout
+  http://thread.gmane.org/gmane.comp.version-control.git/175262
+
+-- 
+Jakub Narebski
+Poland
