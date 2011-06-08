@@ -1,196 +1,161 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCH 48/48] merge-recursive: Fix working copy handling for rename/rename/add/add
-Date: Wed,  8 Jun 2011 01:31:18 -0600
-Message-ID: <1307518278-23814-49-git-send-email-newren@gmail.com>
+Subject: [PATCH 40/48] merge-recursive: Small cleanups for conflict_rename_rename_1to2
+Date: Wed,  8 Jun 2011 01:31:10 -0600
+Message-ID: <1307518278-23814-41-git-send-email-newren@gmail.com>
 References: <1307518278-23814-1-git-send-email-newren@gmail.com>
 Cc: jgfouca@sandia.gov, Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 08 09:31:43 2011
+X-From: git-owner@vger.kernel.org Wed Jun 08 09:31:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUDEn-0006q0-F5
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 09:31:37 +0200
+	id 1QUDEp-0006q0-31
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 09:31:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755258Ab1FHHap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 03:30:45 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:35036 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755233Ab1FHHab (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 03:30:31 -0400
-Received: by mail-pw0-f46.google.com with SMTP id 15so118980pwi.19
-        for <git@vger.kernel.org>; Wed, 08 Jun 2011 00:30:31 -0700 (PDT)
+	id S1755299Ab1FHHa6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 03:30:58 -0400
+Received: from mail-px0-f179.google.com ([209.85.212.179]:37577 "EHLO
+	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754733Ab1FHHaQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2011 03:30:16 -0400
+Received: by mail-px0-f179.google.com with SMTP id 2so191910pxi.10
+        for <git@vger.kernel.org>; Wed, 08 Jun 2011 00:30:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=s9eC1RpC1up3u0kvxH9G2PID2N+n7vTOdRISS0SW6S0=;
-        b=O6sq+zjPk8008kr5rYyoUqWX5CeG3/SkdAoTHIwc02ExKKuJrDX/9sVbhDUDzZf6on
-         AR2b/LuHWigRVT5+XuGndRWbLCRycEWTIFeywpqb13PMPTn84OVnBUo5mrYcwCNDPzDq
-         9SxL3Ee4HtRs0U+TfHsyZbQ0xhzpIl3efhptU=
+        bh=Yj5K4lK6YR5Nyn1oMF8p6hEjN/S3Wls3WvekixiQ/OM=;
+        b=kb4LOKqGka6t+cHtaP0wUyBoP23dVU3k39O8sa/aZYSvoEEkoOB4hDBoc5sIfWY4RU
+         rmRKp/FhXI7lemUPM3eouCeTY5ONXpkXVlqLNqvcJstMks/wQytTGqyKK0r6guXgHc80
+         CsJkO5vdV4PKcAAgL9m3uo/4KCkGdWuayBPhU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=YVkRaSDWFgJJqXVDo8L+KubB9TSJ3FlumhUG1QtUehX80JYBMcAB5ETYDslV4Qzq6r
-         IfnXs7E9UgZ6d0C+ll8UDz77GM/4Dvt6+8e+ubOrybcXnuym43ngMoSDjyJUU4bYSVWG
-         ddBiQIHtVJupMdrkYR/BC+TNexyLmsblwte9E=
-Received: by 10.68.21.130 with SMTP id v2mr692801pbe.338.1307518231612;
-        Wed, 08 Jun 2011 00:30:31 -0700 (PDT)
+        b=gj6d+MnAwBc0i/H8kXRzn8eiwg5BmjZgPt19Ldu3vUfckMeEeGwJI9a0SquhJrNHN9
+         Wt/L6T7dxLAv04LEg4MuUKQNzivGcEsYVy94nNE0CfLBlrE+JcXkZyUgZGsg0Wd2+ias
+         12h44YBRLsVIDzRMC2fS00ErsqLGQiiGj6388=
+Received: by 10.68.35.99 with SMTP id g3mr600637pbj.53.1307518216024;
+        Wed, 08 Jun 2011 00:30:16 -0700 (PDT)
 Received: from localhost.localdomain ([216.222.84.34])
-        by mx.google.com with ESMTPS id k4sm296286pbl.59.2011.06.08.00.30.29
+        by mx.google.com with ESMTPS id k4sm296286pbl.59.2011.06.08.00.30.14
         (version=SSLv3 cipher=OTHER);
-        Wed, 08 Jun 2011 00:30:30 -0700 (PDT)
+        Wed, 08 Jun 2011 00:30:15 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6.rc0.62.g2d69f
 In-Reply-To: <1307518278-23814-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175331>
 
-If either side of a rename/rename(1to2) conflict is itself also involved
-in a rename/add-dest conflict, then we need to make sure both the rename
-and the added file appear in the working copy.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c                    |   73 ++++++++++++++++++++++------------
- t/t6039-merge-rename-corner-cases.sh |   11 +++++-
- 2 files changed, 58 insertions(+), 26 deletions(-)
+ merge-recursive.c |   60 +++++++++++++++++++++++-----------------------------
+ 1 files changed, 27 insertions(+), 33 deletions(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 0cfc215..612a8cb 100644
+index 576e02d..9c0daf5 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -1075,6 +1075,52 @@ static struct diff_filespec* filespec_from_entry(struct diff_filespec *target,
- 	return target;
+@@ -951,58 +951,55 @@ static void conflict_rename_delete(struct merge_options *o,
  }
  
-+static void handle_file(struct merge_options *o,
-+			struct diff_filespec *rename,
-+			int stage,
-+			struct rename_conflict_info *ci)
-+{
-+	char *dst_name = rename->path;
-+	struct stage_data *dst_entry;
-+	const char *cur_branch, *other_branch;
-+	struct diff_filespec other;
-+	struct diff_filespec *add;
-+
-+	if (stage == 2) {
-+		dst_entry = ci->dst_entry1;
-+		cur_branch = ci->branch1;
-+		other_branch = ci->branch2;
-+	} else {
-+		dst_entry = ci->dst_entry2;
-+		cur_branch = ci->branch2;
-+		other_branch = ci->branch1;
-+	}
-+
-+	add = filespec_from_entry(&other, dst_entry, stage ^ 1);
-+	if (stage == 2)
-+		update_stages(rename->path, NULL, rename, add);
-+	else
-+		update_stages(rename->path, NULL, add, rename);
-+
-+	if (add) {
-+		char *add_name = unique_path(o, rename->path, other_branch);
-+		update_file(o, 0, add->sha1, add->mode, add_name);
-+
-+		remove_file(o, 0, rename->path, 0);
-+		dst_name = unique_path(o, rename->path, cur_branch);
-+	} else {
-+		if (dir_in_way(rename->path, !o->call_depth)) {
-+			dst_name = unique_path(o, rename->path, cur_branch);
-+			output(o, 1, "%s is a directory in %s adding as %s instead",
-+			       rename->path, other_branch, dst_name);
-+		}
-+	}
-+	update_file(o, 0, rename->sha1, rename->mode, dst_name);
-+
-+	if (dst_name != rename->path)
-+		free(dst_name);
-+}
-+
  static void conflict_rename_rename_1to2(struct merge_options *o,
- 					struct rename_conflict_info *ci)
+-					struct diff_filepair *pair1,
+-					const char *branch1,
+-					struct diff_filepair *pair2,
+-					const char *branch2)
++					struct rename_conflict_info *ci)
  {
-@@ -1082,10 +1128,6 @@ static void conflict_rename_rename_1to2(struct merge_options *o,
- 	struct diff_filespec *one = ci->pair1->one;
- 	struct diff_filespec *a = ci->pair1->two;
- 	struct diff_filespec *b = ci->pair2->two;
--	const char *dst_name_a = a->path;
--	const char *dst_name_b = b->path;
--	char *del[2];
--	int delp = 0;
+ 	/* One file was renamed in both branches, but to different names. */
++	struct diff_filespec *one = ci->pair1->one;
++	struct diff_filespec *a = ci->pair1->two;
++	struct diff_filespec *b = ci->pair2->two;
++	const char *dst_name_a = a->path;
++	const char *dst_name_b = b->path;
+ 	char *del[2];
+ 	int delp = 0;
+-	const char *src      = pair1->one->path;
+-	const char *ren1_dst = pair1->two->path;
+-	const char *ren2_dst = pair2->two->path;
+-	const char *dst_name1 = ren1_dst;
+-	const char *dst_name2 = ren2_dst;
  
  	output(o, 1, "CONFLICT (rename/rename): "
  	       "Rename \"%s\"->\"%s\" in branch \"%s\" "
-@@ -1093,16 +1135,6 @@ static void conflict_rename_rename_1to2(struct merge_options *o,
- 	       one->path, a->path, ci->branch1,
- 	       one->path, b->path, ci->branch2,
+ 	       "rename \"%s\"->\"%s\" in \"%s\"%s",
+-	       src, pair1->two->path, branch1,
+-	       src, pair2->two->path, branch2,
++	       one->path, a->path, ci->branch1,
++	       one->path, b->path, ci->branch2,
  	       o->call_depth ? " (left unresolved)" : "");
--	if (dir_in_way(a->path, !o->call_depth)) {
--		dst_name_a = del[delp++] = unique_path(o, a->path, ci->branch1);
--		output(o, 1, "%s is a directory in %s adding as %s instead",
--		       a->path, ci->branch2, dst_name_a);
--	}
--	if (dir_in_way(b->path, !o->call_depth)) {
--		dst_name_b = del[delp++] = unique_path(o, b->path, ci->branch2);
--		output(o, 1, "%s is a directory in %s adding as %s instead",
--		       b->path, ci->branch1, dst_name_b);
--	}
+-	if (dir_in_way(ren1_dst, !o->call_depth)) {
+-		dst_name1 = del[delp++] = unique_path(o, ren1_dst, branch1);
++	if (dir_in_way(a->path, !o->call_depth)) {
++		dst_name_a = del[delp++] = unique_path(o, a->path, ci->branch1);
+ 		output(o, 1, "%s is a directory in %s adding as %s instead",
+-		       ren1_dst, branch2, dst_name1);
++		       a->path, ci->branch2, dst_name_a);
+ 	}
+-	if (dir_in_way(ren2_dst, !o->call_depth)) {
+-		dst_name2 = del[delp++] = unique_path(o, ren2_dst, branch2);
++	if (dir_in_way(b->path, !o->call_depth)) {
++		dst_name_b = del[delp++] = unique_path(o, b->path, ci->branch2);
+ 		output(o, 1, "%s is a directory in %s adding as %s instead",
+-		       ren2_dst, branch1, dst_name2);
++		       b->path, ci->branch1, dst_name_b);
+ 	}
  	if (o->call_depth) {
  		struct merge_file_info mfi;
- 		mfi = merge_file(o, one->path,
-@@ -1120,18 +1152,9 @@ static void conflict_rename_rename_1to2(struct merge_options *o,
- 		remove_file_from_cache(a->path);
- 		remove_file_from_cache(b->path);
+-		mfi = merge_file(o, src,
+-				 pair1->one->sha1, pair1->one->mode,
+-				 pair1->two->sha1, pair1->two->mode,
+-				 pair2->two->sha1, pair2->two->mode,
+-				 branch1, branch2);
++		mfi = merge_file(o, one->path,
++				 one->sha1, one->mode,
++				 a->sha1, a->mode,
++				 b->sha1, b->mode,
++				 ci->branch1, ci->branch2);
+ 		/*
+ 		 * FIXME: For rename/add-source conflicts (if we could detect
+ 		 * such), this is wrong.  We should instead find a unique
+ 		 * pathname and then either rename the add-source file to that
+ 		 * unique path, or use that unique path instead of src here.
+ 		 */
+-		update_file(o, 0, mfi.sha, mfi.mode, src);
+-		remove_file_from_cache(ren1_dst);
+-		remove_file_from_cache(ren2_dst);
++		update_file(o, 0, mfi.sha, mfi.mode, one->path);
++		remove_file_from_cache(a->path);
++		remove_file_from_cache(b->path);
  	} else {
--		struct diff_filespec other;
--		update_stages(a->path, NULL,
--			      a, filespec_from_entry(&other, ci->dst_entry1, 3));
--
--		update_stages(b->path, NULL,
--			      filespec_from_entry(&other, ci->dst_entry2, 2), b);
--
--		update_file(o, 0, a->sha1, a->mode, dst_name_a);
--		update_file(o, 0, b->sha1, b->mode, dst_name_b);
-+		handle_file(o, a, 2, ci);
-+		handle_file(o, b, 3, ci);
+-		update_stages(ren1_dst, NULL, pair1->two, NULL);
+-		update_stages(ren2_dst, NULL, NULL, pair2->two);
++		update_stages(a->path, NULL, a, NULL);
++		update_stages(b->path, NULL, NULL, b);
+ 
+-		update_file(o, 0, pair1->two->sha1, pair1->two->mode, dst_name1);
+-		update_file(o, 0, pair2->two->sha1, pair2->two->mode, dst_name2);
++		update_file(o, 0, a->sha1, a->mode, dst_name_a);
++		update_file(o, 0, b->sha1, b->mode, dst_name_b);
  	}
--	while (delp--)
--		free(del[delp]);
- }
- 
- static void conflict_rename_rename_2to1(struct merge_options *o,
-diff --git a/t/t6039-merge-rename-corner-cases.sh b/t/t6039-merge-rename-corner-cases.sh
-index d2d93e7..9db1663 100755
---- a/t/t6039-merge-rename-corner-cases.sh
-+++ b/t/t6039-merge-rename-corner-cases.sh
-@@ -444,11 +444,20 @@ test_expect_success 'rename/rename/add-dest merge still knows about conflicting
- 	test 5 -eq $(git ls-files -s | wc -l) &&
- 	test 2 -eq $(git ls-files -u b | wc -l) &&
- 	test 2 -eq $(git ls-files -u c | wc -l) &&
-+	test 4 -eq $(git ls-files -o | wc -l) &&
- 
- 	test $(git rev-parse :2:b) = $(git rev-parse C:b) &&
- 	test $(git rev-parse :3:b) = $(git rev-parse B:b) &&
- 	test $(git rev-parse :2:c) = $(git rev-parse C:c) &&
--	test $(git rev-parse :3:c) = $(git rev-parse B:c)
-+	test $(git rev-parse :3:c) = $(git rev-parse B:c) &&
-+
-+	test $(git hash-object c~HEAD) = $(git rev-parse C:c) &&
-+	test $(git hash-object c~B\^0) = $(git rev-parse B:c) &&
-+	test $(git hash-object b~HEAD) = $(git rev-parse C:b) &&
-+	test $(git hash-object b~B\^0) = $(git rev-parse B:b) &&
-+
-+	test ! -f b &&
-+	test ! -f c
- '
- 
- test_expect_success 'setup simple rename/rename (1to2) conflict' '
+ 	while (delp--)
+ 		free(del[delp]);
+@@ -1476,10 +1473,7 @@ static int process_entry(struct merge_options *o,
+ 			break;
+ 		case RENAME_ONE_FILE_TO_TWO:
+ 			clean_merge = 0;
+-			conflict_rename_rename_1to2(o, conflict_info->pair1,
+-						    conflict_info->branch1,
+-						    conflict_info->pair2,
+-						    conflict_info->branch2);
++			conflict_rename_rename_1to2(o, conflict_info);
+ 			break;
+ 		default:
+ 			entry->processed = 0;
 -- 
 1.7.6.rc0.62.g2d69f
