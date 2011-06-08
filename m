@@ -1,85 +1,67 @@
-From: Michael Nahas <mike.nahas@gmail.com>
-Subject: Re: Command-line interface thoughts (ad-hominem attacks)
-Date: Wed, 8 Jun 2011 07:39:16 -0400
-Message-ID: <BANLkTinoQCZhyhgw61u7c3eF4e5MEf+eFA@mail.gmail.com>
-References: <BANLkTikTWx7A64vN+hVZgL7cuiZ16Eobgg@mail.gmail.com>
-	<7vd3ir9btd.fsf@alter.siamese.dyndns.org>
-	<4DEDC124.3060302@drmicha.warpmail.net>
-	<201106081312.46377.jnareb@gmail.com>
-Reply-To: mike@nahas.com
+From: Peter Zijlstra <a.p.zijlstra@chello.nl>
+Subject: Re: Q: how can i find the upstream merge point of a commit?
+Date: Wed, 08 Jun 2011 13:51:07 +0200
+Message-ID: <1307533867.2497.997.camel@laptop>
+References: <20110608093648.GA19038@elte.hu>
+	 <20110608203433.61e02ad8.sfr@canb.auug.org.au>
+	 <1307529636.2322.320.camel@twins>
+	 <20110608212910.093ba753.sfr@canb.auug.org.au>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 08 13:39:24 2011
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Stephen Rothwell <sfr@canb.auug.org.au>
+X-From: git-owner@vger.kernel.org Wed Jun 08 13:47:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUH6Z-0002I4-LM
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 13:39:23 +0200
+	id 1QUHEd-00060x-B0
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 13:47:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755053Ab1FHLjS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 07:39:18 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:35768 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754735Ab1FHLjR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 07:39:17 -0400
-Received: by bwz15 with SMTP id 15so334377bwz.19
-        for <git@vger.kernel.org>; Wed, 08 Jun 2011 04:39:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=FGG90g3LJSF3+pn4GA4Kyf6db7hkymIKlWNWcJXwpv8=;
-        b=bvZuQOcoyJ1CWagxjseqyGyyaG6gQu1WL18ilD+taP1CAAdfpIRCi3Jq1zn14Qa3NU
-         O8QFtaCZ/dsnqb6tDuVvLMtrlHNN5LVh5FSsPJqjIcqFPJNZmTaTNNDW96NQdYk2qysW
-         QEc0TQdSwWzNz0MUiqgnd8tnzYUvXQ3LMaCYA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        b=gb1fGxDkg5Icmznb1gO+k0shNUHfH79gGizwYOsdpLGir/AmDal7eYUjiVWc5iWm6q
-         Pyqc3d0mTO7nbM+5sAK4srjVXgrnrEii1d+cm7ja6ZroqWxmTyN9gDK228mTe5nAvVxt
-         QiqcmnXXG5Wf53dYNPzdb8y4RqvFalE4WTeDI=
-Received: by 10.204.62.4 with SMTP id v4mr700173bkh.169.1307533156456; Wed, 08
- Jun 2011 04:39:16 -0700 (PDT)
-Received: by 10.204.100.80 with HTTP; Wed, 8 Jun 2011 04:39:16 -0700 (PDT)
-In-Reply-To: <201106081312.46377.jnareb@gmail.com>
+	id S1755556Ab1FHLri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 07:47:38 -0400
+Received: from merlin.infradead.org ([205.233.59.134]:42863 "EHLO
+	merlin.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755380Ab1FHLri (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2011 07:47:38 -0400
+Received: from canuck.infradead.org ([2001:4978:20e::1])
+	by merlin.infradead.org with esmtps (Exim 4.76 #1 (Red Hat Linux))
+	id 1QUHEW-000187-Gs
+	for git@vger.kernel.org; Wed, 08 Jun 2011 11:47:36 +0000
+Received: from j77219.upc-j.chello.nl ([24.132.77.219] helo=dyad.programming.kicks-ass.net)
+	by canuck.infradead.org with esmtpsa (Exim 4.76 #1 (Red Hat Linux))
+	id 1QUHEU-0002ID-Fe
+	for git@vger.kernel.org; Wed, 08 Jun 2011 11:47:34 +0000
+Received: by dyad.programming.kicks-ass.net (Postfix, from userid 65534)
+	id B97668663C; Wed,  8 Jun 2011 13:51:04 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on dyad
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED
+	autolearn=unavailable version=3.3.1
+Received: from [IPv6:::1] (dyad [192.168.0.60])
+	by dyad.programming.kicks-ass.net (Postfix) with ESMTP id B908986638;
+	Wed,  8 Jun 2011 13:51:00 +0200 (CEST)
+In-Reply-To: <20110608212910.093ba753.sfr@canb.auug.org.au>
+X-Mailer: Evolution 2.30.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175360>
 
-On Wed, Jun 8, 2011 at 7:12 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-> I don't quite think that we need "git diff NEXT WTREE"; the short
-> and sweet "git diff" is short for a reason,
+On Wed, 2011-06-08 at 21:29 +1000, Stephen Rothwell wrote:
+> Hi Peter,
+> 
+> On Wed, 08 Jun 2011 12:40:36 +0200 Peter Zijlstra <a.p.zijlstra@chello.nl> wrote:
+> >
+> > *groan*, I tried that, but got:
+> > 
+> > # git describe --contains  189d3c4a94ef19fca2a71a6a336e9fda900e25e7 --match '^v.*'
+>                                                                                  ^
+> These are globs. not regexps.
 
-To be clear, I'm not advocating and have never advocated getting rid
-of zero-argument "git diff".  I've advocated that every (whole
-project) diff command should be expressible by a "git diff TREE1
-TREE2".  I'm fine with defaults if one or zero trees are specified.
-So "git diff" would default to "git diff NEXT WTREE".
-
-
-> It is not obvious that "git reset" can be used for files, and it requires
-> bit of analysis that it resets index from HEAD:
-...
-> 4. "git reset -- <file>" must set index version of file from HEAD.
->
-> Truth to be told I really just follow what "git status" tells me ;-)
-
-I love those messages but if a user is relying on just copying a
-warning message, then they are learning anything.  They're parroting.
-I believe a user interface should have concepts and commands that make
-sense, so that user will learn them and be able to apply them in other
-areas.
-
-> --
-> Jakub Narebski
-> Poland
->
+Yeah, figured as much, never would have thought of trying that though.
+The man page said pattern, my brain made regex.
