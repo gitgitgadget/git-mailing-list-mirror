@@ -1,74 +1,119 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: Q: how can i find the upstream merge point of a commit?
-Date: Wed, 8 Jun 2011 14:52:42 +0200
-Message-ID: <20110608125242.GA32745@elte.hu>
-References: <20110608093648.GA19038@elte.hu>
- <20110608203433.61e02ad8.sfr@canb.auug.org.au>
+From: Holger Hellmuth <hellmuth@ira.uka.de>
+Subject: Re: Command-line interface thoughts
+Date: Wed, 08 Jun 2011 15:04:56 +0200
+Message-ID: <4DEF7378.20307@ira.uka.de>
+References: <201106051311.00951.jnareb@gmail.com> <4DEE755C.8030108@ira.uka.de> <20110607191152.GB24929@elie> <201106072233.28244.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Peter Zijlstra <a.p.zijlstra@chello.nl>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Stephen Rothwell <sfr@canb.auug.org.au>
-X-From: git-owner@vger.kernel.org Wed Jun 08 14:53:04 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Scott Chacon <schacon@gmail.com>,
+	Michael Nahas <mike@nahas.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 08 15:04:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUIFr-0004Wk-3f
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 14:53:03 +0200
+	id 1QUIQS-0001jZ-Le
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 15:04:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753711Ab1FHMw6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 08:52:58 -0400
-Received: from mx3.mail.elte.hu ([157.181.1.138]:34760 "EHLO mx3.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753790Ab1FHMw6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 08:52:58 -0400
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1QUIFZ-00024o-3c
-	from <mingo@elte.hu>; Wed, 08 Jun 2011 14:52:50 +0200
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id 0259C3E2517; Wed,  8 Jun 2011 14:52:42 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20110608203433.61e02ad8.sfr@canb.auug.org.au>
-User-Agent: Mutt/1.5.20 (2009-08-17)
-Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-SpamScore: -2.0
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-2.0 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.3.1
-	-2.0 BAYES_00               BODY: Bayes spam probability is 0 to 1%
-	[score: 0.0000]
+	id S1753224Ab1FHNDz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 09:03:55 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:59320 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752650Ab1FHNDy (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Jun 2011 09:03:54 -0400
+Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	id 1QUIQ6-0005dv-UM; Wed, 08 Jun 2011 15:03:44 +0200
+Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
+	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
+	id 1QUIQ6-0005YK-Lr; Wed, 08 Jun 2011 15:03:38 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.17) Gecko/20110414 SUSE/3.1.10 Thunderbird/3.1.10
+In-Reply-To: <201106072233.28244.jnareb@gmail.com>
+X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1307538224.811399000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175366>
 
+On 07.06.2011 22:33, Jakub Narebski wrote:
+> To reiterate; perhaps it is not stated clearly in documentation:
+ >
+> 1. "git diff" is about examining _your_ changes.  This short form is the
+>     same in every SCM.
 
-* Stephen Rothwell <sfr@canb.auug.org.au> wrote:
+you are right, more explicit mention in the docs would help about this.
 
-> > But the next-20080501 tag is useless, and i don't have linux-next 
-> > as HEAD, it's only a remote.
-> 
-> You can restict which tags get used:
-> 
-> $ git describe --contains --match 'v*' 189d3c4a94
-> v2.6.26-rc1~155
+But other SCMs don't have the additional target 'index'. Much easier to 
+reason there. Also, wouldn't Joe User then conclude that 'git diff' must 
+be comparing working area against HEAD ?
 
-Ok, that works.
+>     Because of explicit index (cache, staging area) one needs to know if
+>     it is working area against index, or working area against HEAD.
+>     Thinking about merge conflict case helps to remember; in such case
+>     you want your changes against partially resolved merge.
 
-Still it's not entirely logical that 'foreign' tags invade another 
-branch this aggressively.
+This is far from a straightforward reasoning that would pop up in 
+anyones mind. In truth, I can't follow that reasoning even now. In case 
+of a merge conflict the working area doesn't concern me at all, I would 
+want a diff between 'ours' and 'theirs'
 
-Yeah, i know that Git tags are global but still, if i add a remote i 
-do not intuitively expect it to create a union of tags, do i?
+Since perl has been brought up as example of this DWIM philosophy: In 
+perl commands have their defaults, but you always can specify exactly 
+what you want if you are not sure or want to make it explicit. You can 
+use 'chomp' or you can use 'chomp $_'. But I can't make it explicit 
+which two targets I want to compare with 'git diff'.
 
-So it would be nice to have more separation for remotes - right now 
-they do not sit still in their sandboxes! :-)
+>     Also advanced users can use index to hide fully cooked changes from
+>     having to browse during review.
+>
+>     Novice users which do not use index (and use "git commit -a") would
+>     never notice the difference, if not for the complication of newly
+>     added files: in other SCM you would see on "<scm>  diff" creation
+>     diff (well, there is "git add -N").  Same with removal if one uses
+>     "git rm" and not simply "rm".
 
-Thanks,
+> 2. "git diff --cached" is about cached (staged) changes, therefore
+>     it is index against HEAD.
 
-	Ingo
+We use three words to talk about the index: cache, stage, index. So 
+apart from having an additional target for diff that target also is 
+diffused by three words. Sure, index is the real designation and cached 
+and staged are used as verbs, but that is just one more confusing bit. 
+Also 'cache' in computer science is a transparent buffer to access data 
+faster (wikipedia definition). Not what I would think of the index.
+
+Probably there are good reasons to not use "git diff --index" and 
+probably they have been discussed a few times, but it doesn't make using 
+diff easier. But that's a side issue.
+
+If someone sees 'git diff --cached' he might know one target, the index. 
+But how does he get the other? By reasoning that 'git diff' alone is 
+already index against working area? But for that he would have first to 
+conclude that 'git diff' is not working area against HEAD (as it is in 
+other SCMs), see above.
+
+> 3. "git diff<commit>" in general, and "git diff HEAD" in particular,
+>     is about your changes (worktree), compared to given commit.
+>
+> At in no place I _have_ to explain what is compared with what to explain
+> when and what for to use "git diff", "git diff --cached" and "git diff
+> HEAD".
+>
+
+I'm sure every part of the user interface of gimp can be rationalized in 
+the same way by someone deeply involved in the concepts and the 
+structure of gimp, but still it is perceived as difficult by nearly 
+everyone else. You look at it from inside and it looks logical. Others 
+just don't have all the pieces to make that reasoning really work.
+
+Holger.
