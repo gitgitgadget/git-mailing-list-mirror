@@ -1,71 +1,96 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: gc getting called on each git command ... what's wrong?
-Date: Wed, 08 Jun 2011 12:02:10 -0400
-Message-ID: <1307548930.19438.30.camel@drew-northup.unet.maine.edu>
-References: <BANLkTi=oUARfwvNFNj-_FvZdwxQgibqPOg@mail.gmail.com>
-	 <BANLkTiksHRmp102XDJP5+-CLGj8hZXUR=g@mail.gmail.com>
+From: =?ISO-8859-1?Q?J=E9r=E9mie_NIKAES?= <jeremie.nikaes@gmail.com>
+Subject: Re: Git-mediawiki : Encoding problems in perl
+Date: Wed, 8 Jun 2011 18:15:15 +0200
+Message-ID: <BANLkTinKV3k7uu=+QzvUjrLdRD0TUj67pw@mail.gmail.com>
+References: <BANLkTimy85b3nu05FBjXzdnTJP0RBWdxiQ@mail.gmail.com>
+ <20110608150106.GB7805@sigill.intra.peff.net> <vpqhb8049m3.fsf@bauges.imag.fr>
+ <BANLkTi=DLZQM_jzove_g0wLy_zgBF6Z0Xw@mail.gmail.com> <vpqtyc0wc1j.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: geoffrey.russell@gmail.com, git@vger.kernel.org
-To: Peter Harris <git@peter.is-a-geek.org>
-X-From: git-owner@vger.kernel.org Wed Jun 08 18:03:12 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, thomas@xteddy.org, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jun 08 18:15:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QULDr-0002Qg-KI
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 18:03:12 +0200
+	id 1QULPx-0000PR-2t
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 18:15:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756664Ab1FHQDH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 12:03:07 -0400
-Received: from beryl.its.maine.edu ([130.111.32.94]:47697 "EHLO
-	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756084Ab1FHQDE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 12:03:04 -0400
-Received: from [IPv6:2610:48:100:827::97] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827::97])
-	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p58G2EQc017670
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 8 Jun 2011 12:02:14 -0400
-In-Reply-To: <BANLkTiksHRmp102XDJP5+-CLGj8hZXUR=g@mail.gmail.com>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=3 Fuz1=3
-	Fuz2=3
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p58G2EQc017670
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1308153739.77278@FAKB9VrtLQac3uC2FyFkhw
+	id S1750912Ab1FHQPg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Jun 2011 12:15:36 -0400
+Received: from mail-px0-f179.google.com ([209.85.212.179]:56289 "EHLO
+	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750884Ab1FHQPf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Jun 2011 12:15:35 -0400
+Received: by pxi2 with SMTP id 2so466973pxi.10
+        for <git@vger.kernel.org>; Wed, 08 Jun 2011 09:15:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=xgKEFPj76bB5duMHcJrSvgLbAQpvPsWQssih7KhrA5Q=;
+        b=q0/P/MYmr5qJosZ7nZgbaP045K2GsHNQn6dZUcTiEOJDOS6A5v2IMaqGm4XI968/H+
+         3U2ednbVD1mFDmPVlX1umK/dfKAtoisXM+vwNepzJjdOrdBHXB73CJfzjh3NBotpNVY+
+         P6zM0N1scZIGEUBQwxpz3hce8ZiU8r2oIsrtc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=RW9468lXofDPVcoWY30jZxDxl/JCnBYZxGYw8Tv05PJuq+PkEe/63w+nYDzjc3eYUI
+         /yolbkIqa4QFFcDkm8cafmyBXblumkzdS3WISRMpn7TwNMulrhFdP/2sa75PaA2MQHwi
+         pnjMrZQecRmvMRN4bhckCIXjGzkav4H6Pb+PE=
+Received: by 10.142.208.21 with SMTP id f21mr302066wfg.243.1307549735112; Wed,
+ 08 Jun 2011 09:15:35 -0700 (PDT)
+Received: by 10.142.136.2 with HTTP; Wed, 8 Jun 2011 09:15:15 -0700 (PDT)
+In-Reply-To: <vpqtyc0wc1j.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175391>
+
+2011/6/8 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>:
+
+> there should probably have been a $/ =3D 1; or some other perl magic =
+to
+> make sure we don't read only the first line there:
+>
+
+Yes, it indeed currently reads only the first line. I'm going to see
+what kind of magic I need to use.
+
+> Then, make it a helper function to call like
+>
+> my $file_content =3D run_git("cat-file -p $sha1");
+>
+> and use it where needed.
+
+Good idea, doing it right now
 
 
-On Tue, 2011-06-07 at 21:48 -0400, Peter Harris wrote:
-> On Tue, Jun 7, 2011 at 9:33 PM, Geoff Russell wrote:
-> >
-> > As of today, almost every time I do a git command, gc is getting
-> > invoked.
-<re-added>
-> >   I have packSizeLimit set to 30M 
-</re-added>
-> >   There are 96 pack files.
-> 
-> That's why. See gc.autopacklimit in "git help config" -- by default,
-> git will gc if there are more than 50 pack files.
+> My advice, at least in the short-term (already discussed offline): us=
+e
+> urlencode ( http://php.net/manual/en/function.urlencode.php ) on pull=
+,
+> and don't bother with encoding on push. Non-ascii characters in
+> filenames are a nightmare ...
+>
 
-Do we want to consider ignoring (or automatically doubling, or something
-like that) gc.autopacklimit if that number of packs meet or exceed
-gc.packSizeLimit? I have no idea what the patch for this might look
-like, but it seems to make more sense than this situation.
+Yes I tried uri_escape, but that only works in the direction mediawiki =
+-> git.
+A page named "Et=E9" on mediawiki comes as a Et%C3%A9.mw file on the re=
+po.
+However, when I try to send that file "Et%C3%A9" with the mediawiki
+API, I get this error
 
-Just a random brain fart...
+"Can't use an undefined value as a HASH reference at
+/usr/local/share/perl/5.10.1/MediaWiki/API.pm line 554."
 
--- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+So I tried to backslash the '%' but it does not do it...
+Any idea ? Thanks
+
+--
+J=E9r=E9mie Nikaes
