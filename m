@@ -1,7 +1,7 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCH 09/48] t6036: criss-cross with weird content can fool git into clean merge
-Date: Wed,  8 Jun 2011 01:30:39 -0600
-Message-ID: <1307518278-23814-10-git-send-email-newren@gmail.com>
+Subject: [PATCH 07/48] t6039: Ensure rename/rename conflicts leave index and workdir in sane state
+Date: Wed,  8 Jun 2011 01:30:37 -0600
+Message-ID: <1307518278-23814-8-git-send-email-newren@gmail.com>
 References: <1307518278-23814-1-git-send-email-newren@gmail.com>
 Cc: jgfouca@sandia.gov, Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
@@ -11,140 +11,156 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUDFV-0007JK-Gk
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 09:32:21 +0200
+	id 1QUDFT-0007JK-SS
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 09:32:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754461Ab1FHHcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 03:32:00 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:43667 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754672Ab1FHH3L (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 03:29:11 -0400
-Received: by mail-pz0-f46.google.com with SMTP id 9so118978pzk.19
-        for <git@vger.kernel.org>; Wed, 08 Jun 2011 00:29:11 -0700 (PDT)
+	id S1754708Ab1FHH3M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 03:29:12 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:35036 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754575Ab1FHH3G (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2011 03:29:06 -0400
+Received: by mail-pw0-f46.google.com with SMTP id 15so118980pwi.19
+        for <git@vger.kernel.org>; Wed, 08 Jun 2011 00:29:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=jbV1UNZ71xh5GoICoAcTCPSJPd3SNY5NBzv9YcOx1Ug=;
-        b=eJMUcA1dj56Rcak0I+GTTVieBt1EtpNfsUN/ur9s0EMO/1u9ZAYSjoU7VKmUk+AABP
-         TFDDQsGRfie1WifFDyLskYSWMXloe4WY8Og1JdrPkQgqXAHKC4pj+70nVfZA3gQKRsZ2
-         PBkcCH/NmzaFCTZOvHg3qKiq2AgKlbJ59lsMY=
+        bh=CZRlGumIiGUGPGtTeqbZU632TmVBkmnQyQCllHfb8w8=;
+        b=gV0YGaPee1DSbs0j8+JcbStYm5DbN1jy8KTtOAEWWh+3q4txikzGnBMPWt7buiGM3O
+         AXpR6pdUcdVjF9Kxm4viQWAGuLozcnVxBk4Q6ror7f6tsO/gnvMFIZ1CQCOS9wwd+AFS
+         LsgeUgnCS7bP1Z/uKqTgDpypoXOp/T1MLWNdc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=CefZ3hvVjAyrJYTlgdpUKajsvp8Mb786wfdppuJzVYAeDLl6DAzp35cUkX5zKbAJ/X
-         1SRcaCcn3vlT2C08Iee1idxDDSYkwbRPKsqimEqvkZB+whR299nf3e7jz7hJCmr2QUeC
-         zXp+by0e6+6+6UkQ3/eYTOf1MSFyFoA0GVjhY=
-Received: by 10.68.10.105 with SMTP id h9mr593260pbb.108.1307518151063;
-        Wed, 08 Jun 2011 00:29:11 -0700 (PDT)
+        b=B0f5dwO/w8viC4UrHiq1QpVJBVQF7i/CgrS7nAkgc24sxy9qEpI5TBQ+hbWaAleDE2
+         tkHW2i1wgE/CwVwQRroxIWiTzfuO1Z3/3ABzlFIitEWW9QXYKXswmJ6ubp1zXex8CFAk
+         hQtjMcwMRHfR5/NY/Mcto5DIICEGisKsozcZA=
+Received: by 10.68.19.35 with SMTP id b3mr596412pbe.512.1307518146527;
+        Wed, 08 Jun 2011 00:29:06 -0700 (PDT)
 Received: from localhost.localdomain ([216.222.84.34])
-        by mx.google.com with ESMTPS id k4sm296286pbl.59.2011.06.08.00.29.08
+        by mx.google.com with ESMTPS id k4sm296286pbl.59.2011.06.08.00.29.03
         (version=SSLv3 cipher=OTHER);
-        Wed, 08 Jun 2011 00:29:10 -0700 (PDT)
+        Wed, 08 Jun 2011 00:29:04 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6.rc0.62.g2d69f
 In-Reply-To: <1307518278-23814-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175341>
 
+rename/rename conflicts, both with one file being renamed to two different
+files and with two files being renamed to the same file, should leave the
+index and the working copy in a sane state with appropriate conflict
+recording, auxiliary files, etc.  Git seems to handle one of the two cases
+alright, but has some problems with the two files being renamed to one
+case.  Add tests for both cases.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t6036-recursive-corner-cases.sh |   83 +++++++++++++++++++++++++++++++++++++
- 1 files changed, 83 insertions(+), 0 deletions(-)
+ t/t6039-merge-rename-corner-cases.sh |   93 ++++++++++++++++++++++++++++++++++
+ 1 files changed, 93 insertions(+), 0 deletions(-)
 
-diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner-cases.sh
-index 52d2ecf..dab52a4 100755
---- a/t/t6036-recursive-corner-cases.sh
-+++ b/t/t6036-recursive-corner-cases.sh
-@@ -314,4 +314,87 @@ test_expect_failure 'git detects conflict merging criss-cross+modify/delete, rev
- 	test $(git rev-parse :3:file) = $(git rev-parse B:file)
+diff --git a/t/t6039-merge-rename-corner-cases.sh b/t/t6039-merge-rename-corner-cases.sh
+index fd8337f..06c7ea5 100755
+--- a/t/t6039-merge-rename-corner-cases.sh
++++ b/t/t6039-merge-rename-corner-cases.sh
+@@ -451,4 +451,97 @@ test_expect_failure 'rename/rename/add-dest merge still knows about conflicting
+ 	test $(git rev-parse :3:c) = $(git rev-parse B:c)
  '
  
-+#
-+# criss-cross + modify/modify with very contrived file contents:
-+#
-+#      B   D
-+#      o---o
-+#     / \ / \
-+#  A o   X   ? F
-+#     \ / \ /
-+#      o---o
-+#      C   E
-+#
-+#   Commit A: file with contents 'A\n'
-+#   Commit B: file with contents 'B\n'
-+#   Commit C: file with contents 'C\n'
-+#   Commit D: file with contents 'D\n'
-+#   Commit E: file with contents:
-+#      <<<<<<< Temporary merge branch 1
-+#      C
-+#      =======
-+#      B
-+#      >>>>>>> Temporary merge branch 2
-+#
-+# Now, when we merge commits D & E, does git detect the conflict?
-+
-+test_expect_success 'setup differently handled merges of content conflict' '
++test_expect_success 'setup simple rename/rename (1to2) conflict' '
++	git rm -rf . &&
 +	git clean -fdqx &&
 +	rm -rf .git &&
 +	git init &&
 +
-+	echo A >file &&
-+	git add file &&
++	echo stuff >a &&
++	git add a &&
 +	test_tick &&
 +	git commit -m A &&
++	git tag A &&
 +
-+	git branch B &&
-+	git checkout -b C &&
-+	echo C >file &&
-+	git add file &&
-+	test_tick &&
-+	git commit -m C &&
-+
-+	git checkout B &&
-+	echo B >file &&
-+	git add file &&
++	git checkout -b B A &&
++	git mv a b &&
 +	test_tick &&
 +	git commit -m B &&
 +
-+	git checkout B^0 &&
-+	test_must_fail git merge C &&
-+	echo D >file &&
-+	git add file &&
++	git checkout -b C A &&
++	git mv a c &&
 +	test_tick &&
-+	git commit -m D &&
-+	git tag D &&
-+
-+	git checkout C^0 &&
-+	test_must_fail git merge B &&
-+	cat <<EOF >file &&
-+<<<<<<< Temporary merge branch 1
-+C
-+=======
-+B
-+>>>>>>> Temporary merge branch 2
-+EOF
-+	git add file &&
-+	test_tick &&
-+	git commit -m E &&
-+	git tag E
++	git commit -m C
 +'
 +
-+test_expect_failure 'git detects conflict w/ criss-cross+contrived resolution' '
-+	git checkout D^0 &&
++test_expect_success 'merge has correct working tree contents' '
++	git checkout C^0 &&
 +
-+	test_must_fail git merge -s recursive E^0 &&
++	test_must_fail git merge -s recursive B^0 &&
 +
 +	test 3 -eq $(git ls-files -s | wc -l) &&
 +	test 3 -eq $(git ls-files -u | wc -l) &&
 +	test 0 -eq $(git ls-files -o | wc -l) &&
 +
-+	test $(git rev-parse :2:file) = $(git rev-parse D:file) &&
-+	test $(git rev-parse :3:file) = $(git rev-parse E:file)
++	test -f b &&
++	test -f c
++'
++
++# Test for all kinds of things that can go wrong with rename/rename (2to1):
++#   Commit A: new files: a & b
++#   Commit B: rename a->c, modify b
++#   Commit C: rename b->c, modify a
++#
++# Merging of B & C should NOT be clean.  Questions:
++#   * Both a & b should be removed by the merge; are they?
++#   * The two c's should contain modifications to a & b; do they?
++#   * The index should contain two files, both for c; does it?
++#   * The working copy should have two files, both of form c~<unique>; does it?
++#   * Nothing else should be present.  Is anything?
++
++test_expect_success 'setup rename/rename (2to1) + modify/modify' '
++	git rm -rf . &&
++	git clean -fdqx &&
++	rm -rf .git &&
++	git init &&
++
++	printf "1\n2\n3\n4\n5\n" >a &&
++	printf "5\n4\n3\n2\n1\n" >b &&
++	git add a b &&
++	git commit -m A &&
++	git tag A &&
++
++	git checkout -b B A &&
++	git mv a c &&
++	echo 0 >>b &&
++	git add b &&
++	git commit -m B &&
++
++	git checkout -b C A &&
++	git mv b c &&
++	echo 6 >>a &&
++	git add a &&
++	git commit -m C
++'
++
++test_expect_failure 'handle rename/rename (2to1) conflict correctly' '
++	git checkout B^0 &&
++
++	test_must_fail git merge -s recursive C^0 >out &&
++	grep "CONFLICT (rename/rename)" out &&
++
++	test 2 -eq $(git ls-files -s | wc -l) &&
++	test 2 -eq $(git ls-files -u | wc -l) &&
++	test 2 -eq $(git ls-files -u c | wc -l) &&
++	test 3 -eq $(git ls-files -o | wc -l) &&
++
++	test ! -f a &&
++	test ! -f b &&
++	test -f c~HEAD &&
++	test -f c~C^0 &&
++
++	test $(git hash-object c~HEAD) = $(git rev-parse C:a) &&
++	test $(git hash-object c~C^0) = $(git rev-parse B:b)
 +'
 +
  test_done
