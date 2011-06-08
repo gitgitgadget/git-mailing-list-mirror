@@ -1,93 +1,58 @@
-From: Stephen Rothwell <sfr@canb.auug.org.au>
+From: Peter Zijlstra <a.p.zijlstra@chello.nl>
 Subject: Re: Q: how can i find the upstream merge point of a commit?
-Date: Wed, 8 Jun 2011 20:34:33 +1000
-Message-ID: <20110608203433.61e02ad8.sfr@canb.auug.org.au>
+Date: Wed, 08 Jun 2011 12:40:36 +0200
+Message-ID: <1307529636.2322.320.camel@twins>
 References: <20110608093648.GA19038@elte.hu>
+	 <20110608203433.61e02ad8.sfr@canb.auug.org.au>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature";
- micalg="PGP-SHA1";
- boundary="Signature=_Wed__8_Jun_2011_20_34_33_+1000_96x3sc2E26WXOL.O"
-Cc: git@vger.kernel.org, Peter Zijlstra <a.p.zijlstra@chello.nl>,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+Cc: Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org,
 	Linus Torvalds <torvalds@linux-foundation.org>
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Wed Jun 08 12:34:52 2011
+To: Stephen Rothwell <sfr@canb.auug.org.au>
+X-From: git-owner@vger.kernel.org Wed Jun 08 12:41:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUG66-0001YE-CD
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 12:34:50 +0200
+	id 1QUGCC-0003o9-RS
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 12:41:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754920Ab1FHKep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 06:34:45 -0400
-Received: from chilli.pcug.org.au ([203.10.76.44]:43122 "EHLO smtps.tip.net.au"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752955Ab1FHKeo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 06:34:44 -0400
-Received: from canb.auug.org.au (ash.rothwell.emu.id.au [IPv6:2402:b800:7003:7010:223:14ff:fe30:c8e4])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtps.tip.net.au (Postfix) with ESMTPSA id DA46F144BC2;
-	Wed,  8 Jun 2011 20:34:39 +1000 (EST)
-In-Reply-To: <20110608093648.GA19038@elte.hu>
-X-Mailer: Sylpheed 3.1.1 (GTK+ 2.24.4; i486-pc-linux-gnu)
+	id S1754198Ab1FHKlD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 06:41:03 -0400
+Received: from casper.infradead.org ([85.118.1.10]:59170 "EHLO
+	casper.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752171Ab1FHKlB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Jun 2011 06:41:01 -0400
+Received: from j77219.upc-j.chello.nl ([24.132.77.219] helo=twins)
+	by casper.infradead.org with esmtpsa (Exim 4.76 #1 (Red Hat Linux))
+	id 1QUGBl-0005fg-LU; Wed, 08 Jun 2011 10:40:41 +0000
+Received: by twins (Postfix, from userid 1000)
+	id 87CE18277E7C; Wed,  8 Jun 2011 12:40:36 +0200 (CEST)
+In-Reply-To: <20110608203433.61e02ad8.sfr@canb.auug.org.au>
+X-Mailer: Evolution 2.30.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175351>
 
---Signature=_Wed__8_Jun_2011_20_34_33_+1000_96x3sc2E26WXOL.O
-Content-Type: text/plain; charset=US-ASCII
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Wed, 2011-06-08 at 20:34 +1000, Stephen Rothwell wrote:
 
-Hi Ingo,
+> You can restict which tags get used:
+> 
+> $ git describe --contains --match 'v*' 189d3c4a94
+> v2.6.26-rc1~155
 
-On Wed, 8 Jun 2011 11:36:48 +0200 Ingo Molnar <mingo@elte.hu> wrote:
->
->=20
-> This might be a FAQ, but i couldn't find an elegant Git-ish answer=20
-> for it, so please bear with my stupid question :-)
->=20
-> In an upstream Linux kernel Git repo, with linux-next as a remote=20
-> present (but -git checked out), what is the way to find out when a=20
-> particular commit was merged upstream?
->=20
-> So for example when was 189d3c4a94 merged upstream?
->=20
-> The proper Git answer would be:
->=20
->   $ git describe --contains 189d3c4a94
->   next-20080501~97
->=20
-> But the next-20080501 tag is useless, and i don't have linux-next as=20
-> HEAD, it's only a remote.
+*groan*, I tried that, but got:
 
-You can restict which tags get used:
+# git describe --contains  189d3c4a94ef19fca2a71a6a336e9fda900e25e7 --match '^v.*'
+fatal: cannot describe '189d3c4a94ef19fca2a71a6a336e9fda900e25e7'
 
-$ git describe --contains --match 'v*' 189d3c4a94
-v2.6.26-rc1~155
+and
 
---=20
-Cheers,
-Stephen Rothwell                    sfr@canb.auug.org.au
-http://www.canb.auug.org.au/~sfr/
+# git describe --contains  189d3c4a94ef19fca2a71a6a336e9fda900e25e7 --match 'v.*'
+fatal: cannot describe '189d3c4a94ef19fca2a71a6a336e9fda900e25e7'
 
---Signature=_Wed__8_Jun_2011_20_34_33_+1000_96x3sc2E26WXOL.O
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAEBAgAGBQJN71A5AAoJEDMEi1NhKgbsC1wH/AkYhhpOeetUccu3JX1PhFtl
-gPCvz8UVmlyPmc+bSyfmJ8rM9KqRT+8kFFqjZ+0JRgA+J6t6+p92J2xbhVotQPM1
-i8I7pJy7Rjoa9d6ahG8LXm110tjvJxyVgGy5n3BktugBvEmFFuFBlajnIBYt1+aP
-tInse5qA90AXaYiVBbI4Lfj5a0Q8lcOMPU+AFmwGWqn9czZ+20O/2dxVqyfECiwv
-SxjdvmcTDdl6SsON5feWMWcZ9ksXA7uFMYCqQjdwee3h9XsjHg4iUojjVa0SpmA/
-AdJDnsuzubbirnfnsooIbS99T/NyhUQA7iGmjfUtMG1oXpX/sVmPdF/L/UCHrIo=
-=6EOW
------END PGP SIGNATURE-----
-
---Signature=_Wed__8_Jun_2011_20_34_33_+1000_96x3sc2E26WXOL.O--
+at which point I gave up.. 
