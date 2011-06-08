@@ -1,67 +1,94 @@
-From: Peter Zijlstra <a.p.zijlstra@chello.nl>
-Subject: Re: Q: how can i find the upstream merge point of a commit?
-Date: Wed, 08 Jun 2011 13:51:07 +0200
-Message-ID: <1307533867.2497.997.camel@laptop>
-References: <20110608093648.GA19038@elte.hu>
-	 <20110608203433.61e02ad8.sfr@canb.auug.org.au>
-	 <1307529636.2322.320.camel@twins>
-	 <20110608212910.093ba753.sfr@canb.auug.org.au>
+From: "Theo Niessink" <theo@taletn.com>
+Subject: RE: [PATCH 3/3] verify_path: consider dos drive prefix
+Date: Wed, 8 Jun 2011 14:04:41 +0200
+Message-ID: <187961B7EDE84635BD7B3C9A4EF688C3@martinic.local>
+References: <DAFDEB13CE4944C18AAF3F20994AEF2E@martinic.local> <BANLkTinTJh9oOTHi5js7n-sy8+pmMa_vtQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Stephen Rothwell <sfr@canb.auug.org.au>
-X-From: git-owner@vger.kernel.org Wed Jun 08 13:47:43 2011
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "'Junio C Hamano'" <gitster@pobox.com>,
+	"'Johannes Sixt'" <j6t@kdbg.org>, <git@vger.kernel.org>,
+	<johannes.schindelin@gmx.de>
+To: <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 08 14:04:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUHEd-00060x-B0
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 13:47:43 +0200
+	id 1QUHVB-0005Of-0M
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 14:04:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755556Ab1FHLri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 07:47:38 -0400
-Received: from merlin.infradead.org ([205.233.59.134]:42863 "EHLO
-	merlin.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755380Ab1FHLri (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 07:47:38 -0400
-Received: from canuck.infradead.org ([2001:4978:20e::1])
-	by merlin.infradead.org with esmtps (Exim 4.76 #1 (Red Hat Linux))
-	id 1QUHEW-000187-Gs
-	for git@vger.kernel.org; Wed, 08 Jun 2011 11:47:36 +0000
-Received: from j77219.upc-j.chello.nl ([24.132.77.219] helo=dyad.programming.kicks-ass.net)
-	by canuck.infradead.org with esmtpsa (Exim 4.76 #1 (Red Hat Linux))
-	id 1QUHEU-0002ID-Fe
-	for git@vger.kernel.org; Wed, 08 Jun 2011 11:47:34 +0000
-Received: by dyad.programming.kicks-ass.net (Postfix, from userid 65534)
-	id B97668663C; Wed,  8 Jun 2011 13:51:04 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on dyad
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED
-	autolearn=unavailable version=3.3.1
-Received: from [IPv6:::1] (dyad [192.168.0.60])
-	by dyad.programming.kicks-ass.net (Postfix) with ESMTP id B908986638;
-	Wed,  8 Jun 2011 13:51:00 +0200 (CEST)
-In-Reply-To: <20110608212910.093ba753.sfr@canb.auug.org.au>
-X-Mailer: Evolution 2.30.3 
+	id S1753302Ab1FHMEn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 08:04:43 -0400
+Received: from cpsmtpb-ews07.kpnxchange.com ([213.75.39.10]:2737 "EHLO
+	cpsmtpb-ews07.kpnxchange.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751213Ab1FHMEn convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Jun 2011 08:04:43 -0400
+Received: from cpbrm-ews03.kpnxchange.com ([10.94.84.134]) by cpsmtpb-ews07.kpnxchange.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Wed, 8 Jun 2011 14:04:41 +0200
+Received: from CPSMTPM-CMT106.kpnxchange.com ([195.121.3.22]) by cpbrm-ews03.kpnxchange.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Wed, 8 Jun 2011 14:04:42 +0200
+Received: from pc0003 ([77.168.115.212]) by CPSMTPM-CMT106.kpnxchange.com with Microsoft SMTPSVC(7.0.6002.18264);
+	 Wed, 8 Jun 2011 14:04:41 +0200
+X-Mailer: Microsoft Office Outlook 11
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6090
+thread-index: AcwlyYjCD9K2H2mHQaiWelyzZq1fKwAClmOw
+In-Reply-To: <BANLkTinTJh9oOTHi5js7n-sy8+pmMa_vtQ@mail.gmail.com>
+X-OriginalArrivalTime: 08 Jun 2011 12:04:41.0189 (UTC) FILETIME=[3F482950:01CC25D4]
+X-RcptDomain: vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175361>
 
-On Wed, 2011-06-08 at 21:29 +1000, Stephen Rothwell wrote:
-> Hi Peter,
+Erik Faye-Lund wrote:
+> This looks obviously correct to me. Thanks for spotting the problem.
 > 
-> On Wed, 08 Jun 2011 12:40:36 +0200 Peter Zijlstra <a.p.zijlstra@chello.nl> wrote:
-> >
-> > *groan*, I tried that, but got:
-> > 
-> > # git describe --contains  189d3c4a94ef19fca2a71a6a336e9fda900e25e7 --match '^v.*'
->                                                                                  ^
-> These are globs. not regexps.
+> Would you mind writing up a commit-message and supply a sign-off?
 
-Yeah, figured as much, never would have thought of trying that though.
-The man page said pattern, my brain made regex.
+Like this you mean?
+
+-- >8 --
+Subject: [PATCH] verify_dotfile(): do not assume '/' is the path seperator
+
+verify_dotfile() currently assumes that the path seperator is '/', but on
+Windows it can also be '\\', so use is_dir_sep() instead.
+    
+Signed-off-by: Theo Niessink <theo@taletn.com>
+---
+ read-cache.c |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/read-cache.c b/read-cache.c
+index 282c0c1..72be7cd 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -726,11 +726,12 @@ static int verify_dotfile(const char *rest)
+ 	 * has already been discarded, we now test
+ 	 * the rest.
+ 	 */
+-	switch (*rest) {
++
+ 	/* "." is not allowed */
+-	case '\0': case '/':
++	if (*rest == '\0' || is_dir_sep(*rest))
+ 		return 0;
+ 
++	switch (*rest) {
+ 	/*
+ 	 * ".git" followed by  NUL or slash is bad. This
+ 	 * shares the path end test with the ".." case.
+@@ -743,7 +744,7 @@ static int verify_dotfile(const char *rest)
+ 		rest += 2;
+ 	/* fallthrough */
+ 	case '.':
+-		if (rest[1] == '\0' || rest[1] == '/')
++		if (rest[1] == '\0' || is_dir_sep(rest[1]))
+ 			return 0;
+ 	}
+ 	return 1;
+-- 
+1.7.5.3776.g5dcaf.dirty
