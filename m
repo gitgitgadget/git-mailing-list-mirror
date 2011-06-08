@@ -1,74 +1,82 @@
-From: Jeff King <peff@peff.net>
+From: Sverre Rabbelier <srabbelier@gmail.com>
 Subject: Re: [PATCH 06/19] git_remote_helpers: push all refs during a
  non-local export
-Date: Wed, 8 Jun 2011 18:19:10 -0400
-Message-ID: <20110608221908.GB15530@sigill.intra.peff.net>
+Date: Thu, 9 Jun 2011 00:21:07 +0200
+Message-ID: <BANLkTi=TYArAgp_+fXvOSDMqsyteQJrVCg@mail.gmail.com>
 References: <1307558930-16074-1-git-send-email-srabbelier@gmail.com>
- <1307558930-16074-7-git-send-email-srabbelier@gmail.com>
- <20110608194205.GI27715@elie>
+ <1307558930-16074-7-git-send-email-srabbelier@gmail.com> <20110608194205.GI27715@elie>
+ <20110608221908.GB15530@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Git List <git@vger.kernel.org>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 09 00:19:24 2011
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 09 00:21:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUR5v-000054-HW
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 00:19:23 +0200
+	id 1QUR8L-0000wR-5m
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 00:21:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756489Ab1FHWTS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 18:19:18 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55285
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751895Ab1FHWTS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 18:19:18 -0400
-Received: (qmail 5186 invoked by uid 107); 8 Jun 2011 22:19:25 -0000
-Received: from m9a2036d0.tmodns.net (HELO sigill.intra.peff.net) (208.54.32.154)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 08 Jun 2011 18:19:25 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Jun 2011 18:19:10 -0400
-Content-Disposition: inline
-In-Reply-To: <20110608194205.GI27715@elie>
+	id S1755884Ab1FHWVs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Jun 2011 18:21:48 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:38987 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751895Ab1FHWVs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Jun 2011 18:21:48 -0400
+Received: by qwk3 with SMTP id 3so457693qwk.19
+        for <git@vger.kernel.org>; Wed, 08 Jun 2011 15:21:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=CUvX0yDgkRDaDUHnAzG99Oz9+662UofCxaZOD5OVRRM=;
+        b=ol0TAkx4K2CrOp8zqZQ69y1H3GSOFjYJxxSTLlD8Wv8GGkX9oVH/EUTAx+TXg/oa39
+         Qp+NWSbB1k1aaj3OmZn8d7j4VzzT4JqjkvR3jorf+9kwc8TOGOZK1OBChp8sp3f3kQJy
+         DpW+9F6EveVzzc8gDCO0yb0ogAIRsZRlA7J/s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=KqcyktaM0XRZ9ndHK0qGCmvZtX31v2NKx0lgrb5tXDEl01Do6FYUslBNwYzWOhxa84
+         F0ybbVlUiWpNzcJijxTtf+W0LqIBFEyZ5n6/uX2xg4+XA2KiS1fp7l0k1u4GHCER+K8r
+         oB2qOjOoWSdLwiUS2kXUb4+P2Z3rpTjaL7yYY=
+Received: by 10.229.135.12 with SMTP id l12mr5075qct.53.1307571707100; Wed, 08
+ Jun 2011 15:21:47 -0700 (PDT)
+Received: by 10.229.83.203 with HTTP; Wed, 8 Jun 2011 15:21:07 -0700 (PDT)
+In-Reply-To: <20110608221908.GB15530@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175470>
 
-On Wed, Jun 08, 2011 at 02:42:05PM -0500, Jonathan Nieder wrote:
+Heya,
 
-> Sverre Rabbelier wrote:
-> 
-> > --- a/git_remote_helpers/git/non_local.py
-> > +++ b/git_remote_helpers/git/non_local.py
-> > @@ -63,7 +63,7 @@ class NonLocalGit(object):
-> >          if not os.path.exists(path):
-> >              die("could not find repo at %s", path)
-> >  
-> > -        args = ["git", "--git-dir=" + path, "push", "--quiet", self.repo.gitpath]
-> > +        args = ["git", "--git-dir=" + path, "push", "--quiet", self.repo.gitpath, "--all"]
-> >          child = subprocess.Popen(args)
-> 
-> Does this deal with forced (non-fast-forward) pushes?  (Not a
-> complaint, just curious.)
+On Thu, Jun 9, 2011 at 00:19, Jeff King <peff@peff.net> wrote:
+> If we do a fix that allows "refs/heads/foo:refs/heads/bar", then it
+> should also properly allow "+refs/heads/foo:refs/heads/bar". Which I
+> think means changing the single "export" command in the ref-helper to
+> something like:
+>
+> =C2=A0export refs/heads/foo
+> =C2=A0export refs/heads/foo:refs/heads/bar
+> =C2=A0export +refs/heads/force
 
-No, nor can it. The problem is that any information about the ref
-mapping or force-state is lost. All the helper sees is that stuff got
-put into the staging repo, and it has to move it over.
+Or, since we changed import, to:
 
-If we do a fix that allows "refs/heads/foo:refs/heads/bar", then it
-should also properly allow "+refs/heads/foo:refs/heads/bar". Which I
-think means changing the single "export" command in the ref-helper to
-something like:
+export
+refs/heads/foo
+refs/heads/foo:refs/heads/bar
++refs/heads/force
+\n
 
-  export refs/heads/foo
-  export refs/heads/foo:refs/heads/bar
-  export +refs/heads/force
+--=20
+Cheers,
 
--Peff
+Sverre Rabbelier
