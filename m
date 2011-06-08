@@ -1,67 +1,89 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: New CIA.vc script
-Date: Wed, 8 Jun 2011 18:50:21 +0530
-Message-ID: <BANLkTi=PiAa7-OoW6UtTqidk8ut0P8ewyw@mail.gmail.com>
-References: <BANLkTi=_nXGOcqC1PMLFJfgkdx8HbsweEg@mail.gmail.com>
+From: =?ISO-8859-1?Q?J=E9r=E9mie_NIKAES?= <jeremie.nikaes@gmail.com>
+Subject: Git-mediawiki : Encoding problems in perl
+Date: Wed, 8 Jun 2011 15:45:43 +0200
+Message-ID: <BANLkTimy85b3nu05FBjXzdnTJP0RBWdxiQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: JD Horelick <jdhore1@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 08 15:20:50 2011
+To: thomas@xteddy.org
+X-From: git-owner@vger.kernel.org Wed Jun 08 15:46:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUIgi-0001qT-J1
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 15:20:48 +0200
+	id 1QUJ5K-0006ul-Gv
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 15:46:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754928Ab1FHNUn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 09:20:43 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:34190 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754573Ab1FHNUn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 09:20:43 -0400
-Received: by wya21 with SMTP id 21so347781wya.19
-        for <git@vger.kernel.org>; Wed, 08 Jun 2011 06:20:42 -0700 (PDT)
+	id S1755876Ab1FHNqF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Jun 2011 09:46:05 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:54372 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755024Ab1FHNqD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Jun 2011 09:46:03 -0400
+Received: by pvg12 with SMTP id 12so248089pvg.19
+        for <git@vger.kernel.org>; Wed, 08 Jun 2011 06:46:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=5NfG2Tpw4V2BqaKN1TcejmjE0bHhRUfMTBJjY5OwdT8=;
-        b=Aan1OmQIHu1xHzW2H5hqWgGMtEaP9RuNCSQfO6mYrIzEcEj1SlMRKgWgKIQlbyBAwB
-         wAqpu7jBZpsploGM6m18X3kc0JBwr24wEm1Omv9K/opa1EDS2HfsmYTcb9obG67JnDYr
-         M5rvkV93vqQXcQjWSlPgL1cvNYZZMd+YkMR8E=
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=F8ekPdV1A3YUQk8QSHrSezY8IRdrIeIoLMJgWXu8OQQ=;
+        b=N8ft0BbPXZ79sPnYt18eNgRIwuLgQYHPyZel0ih5W/8azJIDZA1I4OTwKBcbhYQM41
+         bdgKF2hnHpdpOKZ/s/5YoiYdlBd8FsunHZuxoMcdsadjBDZDBTsQ4OSbBSlFzftNhDSu
+         6F9FiAr+F3i9FLXDF91t+Lr7wVy9BlnxJfygE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=wERQTIetN2RZ4iD7E5G8L1j0dvfCRH2I9cfR0uoF3tykNFT1jOFF56b+DcXZ1uJyOu
-         LP4mWFMgjmqGHTbRPWvcyFcMmq+Zs2dP0vlKnlYSFdBu1Ra27zugRXgTkghddp81N2eh
-         HlZicLyOED+aZsEVPSJvjjAEAVk4CoWJn1h34=
-Received: by 10.216.28.200 with SMTP id g50mr55048wea.92.1307539241164; Wed,
- 08 Jun 2011 06:20:41 -0700 (PDT)
-Received: by 10.216.51.213 with HTTP; Wed, 8 Jun 2011 06:20:21 -0700 (PDT)
-In-Reply-To: <BANLkTi=_nXGOcqC1PMLFJfgkdx8HbsweEg@mail.gmail.com>
+        h=mime-version:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        b=I+Mbwc4LA+3GPJZiPGaRXLdnfG5/ZJHyiXVKG81zMjmKnYri49TTrCEEv9ZIkJiMrc
+         mepy0XBSOdDQNmuNHrBUsSDkqGf66UInzVoAYsx6R6dX8DpGblhaZDB1jQZUrPNSPkYj
+         NNfo5y3JCLZlvFLaI7vjS//QxRctn4Z+EDA4c=
+Received: by 10.142.50.7 with SMTP id x7mr243557wfx.414.1307540763412; Wed, 08
+ Jun 2011 06:46:03 -0700 (PDT)
+Received: by 10.142.136.2 with HTTP; Wed, 8 Jun 2011 06:45:43 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175371>
 
 Hi,
+While working on the git-mediawiki project[1], we ran into some
+problems regarding utf8 encoding of files. Most of them have been
+solved, however, one is still pretty annoying.
+Let me illustrate it :
 
-JD Horelick writes:
-> I'm attaching the new ciabot.pl inline here:
-[...]
+I want to edit a page on mediawiki using the API, with a very simple ex=
+ample :
 
-> I welcome any constructive criticism and I hope to see this in
-> contrib/ciabot soon. :)
+my $mw =3D MediaWiki::API->new();
+$mw->edit( {
+        action =3D> 'edit',
+        title =3D> 'Main_page',
+        text =3D> '=E9t=E9',
+} ) ;
 
-Thanks.  I haven't read the patch yet, but you must read
-Documentation/SubmittingPatches if this is to be considered for
-inclusion.  The key points are: commit this script to the appropriate
-place, include a signoff in the commit message, and use `git
-format-patch` to generate an email to send to the list.
+But, when I look at the page on mediawiki, I see weird characters : =C3=
+=A9t=C3=A9.
 
--- Ram
+I tried text =3D> encode_utf8('=E9t=E9') with no success.
+
+This makes pushing changes from git to mediawiki buggy since pulling a
+file with accentuated characters and pushing it right after changes
+things on the wiki.
+
+While googling (a lot), I found that utf8 was pretty tricky in perl...
+The only thing that seems to solve things is a simple addition of 'use
+encoding utf8' at the top of our script.
+However
+A) Adding this line requires that I remove 'use strict;'
+B) I found some information about this pragma encoding and it seems to
+be unadvised to use it
+
+Do you have any information regarding this issue ?
+
+Thanks,
+--=20
+J=E9r=E9mie Nikaes
+[1] https://github.com/Bibzball/Git-Mediawiki
