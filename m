@@ -1,87 +1,81 @@
-From: Claire Fousse <claire.fousse@ensimag.imag.fr>
-Subject: Git-Mediawiki : cloning a set of pages
-Date: Wed, 8 Jun 2011 13:19:38 +0200
-Message-ID: <BANLkTim1hOi0JdWZPR=Vw-S+9jTxqQ-=Tw@mail.gmail.com>
+From: Stephen Rothwell <sfr@canb.auug.org.au>
+Subject: Re: Q: how can i find the upstream merge point of a commit?
+Date: Wed, 8 Jun 2011 21:29:10 +1000
+Message-ID: <20110608212910.093ba753.sfr@canb.auug.org.au>
+References: <20110608093648.GA19038@elte.hu>
+	<20110608203433.61e02ad8.sfr@canb.auug.org.au>
+	<1307529636.2322.320.camel@twins>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Sylvain Boulme <Sylvain.Boulme@imag.fr>,
-	"matthieu.moy" <Matthieu.Moy@grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 08 13:19:46 2011
+Content-Type: multipart/signed; protocol="application/pgp-signature";
+ micalg="PGP-SHA1";
+ boundary="Signature=_Wed__8_Jun_2011_21_29_10_+1000_YMcuXhzWi0.O/F0_"
+Cc: Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Peter Zijlstra <a.p.zijlstra@chello.nl>
+X-From: git-owner@vger.kernel.org Wed Jun 08 13:29:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUGnZ-0002AK-J6
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 13:19:45 +0200
+	id 1QUGwu-00067L-Rb
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 13:29:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752986Ab1FHLTk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 07:19:40 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:44884 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750775Ab1FHLTj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 07:19:39 -0400
-Received: by pzk9 with SMTP id 9so193503pzk.19
-        for <git@vger.kernel.org>; Wed, 08 Jun 2011 04:19:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:date:x-google-sender-auth
-         :message-id:subject:from:to:cc:content-type;
-        bh=bS/eDb6CpLUqd1rVwIj9/NWKKCTOkPTDIKcn1HbOD9o=;
-        b=gFIPpo7JHlwFyLiIiXP3Qjxsp/vY+TOaoxyxu4G/jpYAwUhWEWW6oTVfq0Uzym8Rp1
-         gSWKe98t/MsnuCvFpXFu8RkIaaeiZGw21ftCNfge9rLOMUdbgxznJg8zV6Hv8BjqxgW2
-         4MYlW/dN3zm9xBTwmKpmNAoP3Nt6qYiPv72tI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:cc:content-type;
-        b=E9BsCcPhueln8ihOK/9Ibh66p3+5UTTFqyV2vFCh3VbdmUksiaVgz5qALLUf/uc4js
-         5E/vLjL2ydt2f/cGO3frVUMGEkaSI2to0RKJb1fSpX+cmNpqB9C5TzB1mCLu1M4loeQF
-         BpqnA3Vu2AKnxLP9kY+EWXMqxsGhi3kj+Jbv8=
-Received: by 10.68.20.166 with SMTP id o6mr718681pbe.151.1307531978567; Wed,
- 08 Jun 2011 04:19:38 -0700 (PDT)
-Received: by 10.142.97.15 with HTTP; Wed, 8 Jun 2011 04:19:38 -0700 (PDT)
-X-Google-Sender-Auth: 25Jul2jIiRzEblYCDhjStY3_DUY
+	id S1754026Ab1FHL3U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 07:29:20 -0400
+Received: from chilli.pcug.org.au ([203.10.76.44]:57962 "EHLO smtps.tip.net.au"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750999Ab1FHL3T (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2011 07:29:19 -0400
+Received: from canb.auug.org.au (ash.rothwell.emu.id.au [IPv6:2402:b800:7003:7010:223:14ff:fe30:c8e4])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtps.tip.net.au (Postfix) with ESMTPSA id 2A809144BC2;
+	Wed,  8 Jun 2011 21:29:15 +1000 (EST)
+In-Reply-To: <1307529636.2322.320.camel@twins>
+X-Mailer: Sylpheed 3.1.1 (GTK+ 2.24.4; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175356>
 
-Hi,
+--Signature=_Wed__8_Jun_2011_21_29_10_+1000_YMcuXhzWi0.O/F0_
+Content-Type: text/plain; charset=US-ASCII
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I work on the Git-Mediawiki project.
-(http://lists-archives.org/git/746959-gate-between-git-and-mediawiki-remote-helpers.html).
+Hi Peter,
 
-I'm trying to establish a feature to clone and work on some pages of a
-mediawiki instead of all of them.
+On Wed, 08 Jun 2011 12:40:36 +0200 Peter Zijlstra <a.p.zijlstra@chello.nl> =
+wrote:
+>
+> *groan*, I tried that, but got:
+>=20
+> # git describe --contains  189d3c4a94ef19fca2a71a6a336e9fda900e25e7 --mat=
+ch '^v.*'
+                                                                           =
+      ^
+These are globs. not regexps.
 
-The problem is not the feature in itself but the way you call it.
-Just so you remember, here is the command  to clone the mediawiki :
-git clone mediawiki::http://yourwiki.com
+--=20
+Cheers,
+Stephen Rothwell                    sfr@canb.auug.org.au
+http://www.canb.auug.org.au/~sfr/
 
-As it is now, git clone does not implement a way to define a set of pages.
-The 2 solutions we think of are :
-	* git clone mediawiki::http://yourwiki.com$$page1$$page2 ...
-	Where $$ is a separator still to be determined. It should not be
-something which could appear in the title of a page.
-	It is a simple way to proceed but it becomes horrible when you want
-to clone many pages.
+--Signature=_Wed__8_Jun_2011_21_29_10_+1000_YMcuXhzWi0.O/F0_
+Content-Type: application/pgp-signature
 
-	* write a git-mw-clone script which asks the user to enter a set of
-pages  and may store this set of
-	titles in the git config. This script should then call git-clone
-which will call the remote-mediawiki functions.
-	git-mw-clone would clone the entire wiki and git-mw-clone --pages
-would ask the user to enter their set.
-	The problem here is that a not git-like command is required.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
 
-What do you think about those solutions? Do you think of a better one?
+iQEcBAEBAgAGBQJN710GAAoJEDMEi1NhKgbsXM8H/ivkUvWI/bDk5M4xImB13zxm
+M+LW7ym3oKwQIVOs5i/V+uFcyK7fGJn5j6N4YQGrgb/doAwO6H0ybDGP2CelIIXM
+Mu//etG/GPZZsQubtZNrB90CFzsrYAGPPvZw6bT7R4n+N6dHlwRGKnbRXw0qeNWO
+OoEklH91C4zSla9VrYTCYnqxNK/lywP2uOMXvY8bT1+hLu812UkukLp6TpaqKBLR
+BaBL5vWPb2DFOfKwamBounmLRKwYCnyhbFEAe9jm4u9sGRNvjaXQLYXEmVuPCCkt
+5VJ2ZpjqVi3aJArnr3pxaUvJEF126e3mmYk0d32EcbL7gGBW8r2cnPOyhzE2U3Y=
+=Iwkb
+-----END PGP SIGNATURE-----
 
-Thank you very much.
-
---
-Claire Fousse
-Grenoble INP - Ensimag
-claire.fousse@ensimag.imag.fr
+--Signature=_Wed__8_Jun_2011_21_29_10_+1000_YMcuXhzWi0.O/F0_--
