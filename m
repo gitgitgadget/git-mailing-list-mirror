@@ -1,7 +1,7 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCH 27/48] merge-recursive: Consolidate different update_stages functions
-Date: Wed,  8 Jun 2011 01:30:57 -0600
-Message-ID: <1307518278-23814-28-git-send-email-newren@gmail.com>
+Subject: [PATCH 10/48] t6036: tests for criss-cross merges with various directory/file conflicts
+Date: Wed,  8 Jun 2011 01:30:40 -0600
+Message-ID: <1307518278-23814-11-git-send-email-newren@gmail.com>
 References: <1307518278-23814-1-git-send-email-newren@gmail.com>
 Cc: jgfouca@sandia.gov, Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
@@ -11,120 +11,208 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUDDO-0005pC-69
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 09:30:10 +0200
+	id 1QUDDH-0005pC-1f
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 09:30:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755073Ab1FHH34 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 03:29:56 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:35036 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755006Ab1FHH3u (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 03:29:50 -0400
-Received: by mail-pw0-f46.google.com with SMTP id 15so118980pwi.19
-        for <git@vger.kernel.org>; Wed, 08 Jun 2011 00:29:50 -0700 (PDT)
+	id S1754779Ab1FHH3Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 03:29:16 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:43667 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754667Ab1FHH3O (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2011 03:29:14 -0400
+Received: by mail-pz0-f46.google.com with SMTP id 9so118978pzk.19
+        for <git@vger.kernel.org>; Wed, 08 Jun 2011 00:29:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=OyFQna3hPgTWiuttqyphTZoQx9Hxy8u8ihxuhlPLTyQ=;
-        b=K5pg1hQQyaIBJ0Krn3y8oGJvbZvs0yff5LgMJsHbdQ8boW2r7RWOtsQi/ntdO5kUju
-         vhXg06a2AGzXV6jPTKYCWBd7ZENL8ZFrpzpfUAscFmfygvAz3ho7fjBFsoRhonCPd8kE
-         GWhXlTKfNchXGWb8eSei+xWslniKRiTSgSijA=
+        bh=1kmVwB3jkbuZSiOil5AccLvgUTz16qSg4CRRqjDZQg4=;
+        b=hkrctxT7QXLR9zNgnwuioY98DWKKQU1Mqaetli/hFmGpvzB1hQ7nF32NOekdtTPB6D
+         4PjhhnYrD4xG8R8NXdVx8+3Sm95PwF4/62T7IZobSB+4e5iEavEY8U5saXLSnQ3/jZ2C
+         88ENTbaJJwGEKh2KIlC676VbC3mhBb15rFJM0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=pHf8F9WLPBrWBAEuFI3EgbzeK6ixT71fOp3Hgzch08/N9Ra7YZHfoG/WK3le0YCNxl
-         Sjv+vAcyzhG7Jkr7u/Jngu+YhfZBLpWl+vC5DYvMtMMj+QwTM8uVZCpXpYSeMizkRSYp
-         NWAcvHmT7bReiYkIOgwdG5h1Grx/1EfFi+2Bo=
-Received: by 10.68.37.65 with SMTP id w1mr564881pbj.341.1307518190191;
-        Wed, 08 Jun 2011 00:29:50 -0700 (PDT)
+        b=wXaQTqfLTVilSCZl7txjY7UQ6OYtRx1MlN5cytT3mxBmFU/Kd4g3aIQA50Wu/TzFzf
+         0e7NrOJY3CzhC1k/fKN/ul6QaeVvoYczJ3HdiZ2Dy9g5vk7HqULFI7ThpIeUbxYJahcT
+         XQdvnJxfbV3uW+21zZEgR06cCCnc1K4b2EsGE=
+Received: by 10.68.63.100 with SMTP id f4mr730415pbs.339.1307518153846;
+        Wed, 08 Jun 2011 00:29:13 -0700 (PDT)
 Received: from localhost.localdomain ([216.222.84.34])
-        by mx.google.com with ESMTPS id k4sm296286pbl.59.2011.06.08.00.29.48
+        by mx.google.com with ESMTPS id k4sm296286pbl.59.2011.06.08.00.29.11
         (version=SSLv3 cipher=OTHER);
-        Wed, 08 Jun 2011 00:29:49 -0700 (PDT)
+        Wed, 08 Jun 2011 00:29:12 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6.rc0.62.g2d69f
 In-Reply-To: <1307518278-23814-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175309>
 
-We are only calling update_stages_options() one way really, so we can
-consolidate the slightly different variants into one and remove some
-parameters whose values are always the same.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c |   27 +++++++++------------------
- 1 files changed, 9 insertions(+), 18 deletions(-)
+ t/t6036-recursive-corner-cases.sh |  149 +++++++++++++++++++++++++++++++++++++
+ 1 files changed, 149 insertions(+), 0 deletions(-)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index e3033f2..b4baa35 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -495,11 +495,12 @@ static struct string_list *get_renames(struct merge_options *o,
- 	return renames;
- }
+diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner-cases.sh
+index dab52a4..4993f67 100755
+--- a/t/t6036-recursive-corner-cases.sh
++++ b/t/t6036-recursive-corner-cases.sh
+@@ -397,4 +397,153 @@ test_expect_failure 'git detects conflict w/ criss-cross+contrived resolution' '
+ 	test $(git rev-parse :3:file) = $(git rev-parse E:file)
+ '
  
--static int update_stages_options(const char *path, const struct diff_filespec *o,
--				 const struct diff_filespec *a,
--				 const struct diff_filespec *b,
--				 int clear, int options)
-+static int update_stages(const char *path, const struct diff_filespec *o,
-+			 const struct diff_filespec *a,
-+			 const struct diff_filespec *b)
- {
-+	int clear = 1;
-+	int options = ADD_CACHE_OK_TO_ADD | ADD_CACHE_SKIP_DFCHECK;
- 	if (clear)
- 		if (remove_file_from_cache(path))
- 			return -1;
-@@ -515,14 +516,6 @@ static int update_stages_options(const char *path, const struct diff_filespec *o
- 	return 0;
- }
- 
--static int update_stages(const char *path, struct diff_filespec *o,
--			 struct diff_filespec *a, struct diff_filespec *b,
--			 int clear)
--{
--	int options = ADD_CACHE_OK_TO_ADD | ADD_CACHE_OK_TO_REPLACE;
--	return update_stages_options(path, o, a, b, clear, options);
--}
--
- static int update_stages_and_entry(const char *path,
- 				   struct stage_data *entry,
- 				   struct diff_filespec *o,
-@@ -539,8 +532,7 @@ static int update_stages_and_entry(const char *path,
- 	hashcpy(entry->stages[1].sha, o->sha1);
- 	hashcpy(entry->stages[2].sha, a->sha1);
- 	hashcpy(entry->stages[3].sha, b->sha1);
--	options = ADD_CACHE_OK_TO_ADD | ADD_CACHE_SKIP_DFCHECK;
--	return update_stages_options(path, o, a, b, clear, options);
-+	return update_stages(path, o, a, b);
- }
- 
- static int remove_file(struct merge_options *o, int clean,
-@@ -936,8 +928,7 @@ static void conflict_rename_delete(struct merge_options *o,
- 	if (!o->call_depth)
- 		update_stages(dest_name, NULL,
- 			      rename_branch == o->branch1 ? pair->two : NULL,
--			      rename_branch == o->branch1 ? NULL : pair->two,
--			      1);
-+			      rename_branch == o->branch1 ? NULL : pair->two);
- 	if (dir_in_way(dest_name, !o->call_depth)) {
- 		dest_name = unique_path(o, dest_name, rename_branch);
- 		df_conflict = 1;
-@@ -980,8 +971,8 @@ static void conflict_rename_rename_1to2(struct merge_options *o,
- 		 * update_file(o, 0, pair2->two->sha1, pair2->two->mode, dst_name2);
- 		 */
- 	} else {
--		update_stages(ren1_dst, NULL, pair1->two, NULL, 1);
--		update_stages(ren2_dst, NULL, NULL, pair2->two, 1);
-+		update_stages(ren1_dst, NULL, pair1->two, NULL);
-+		update_stages(ren2_dst, NULL, NULL, pair2->two);
- 
- 		update_file(o, 0, pair1->two->sha1, pair1->two->mode, dst_name1);
- 		update_file(o, 0, pair2->two->sha1, pair2->two->mode, dst_name2);
++#
++# criss-cross + d/f conflict via add/add:
++#   Commit A: Neither file 'a' nor directory 'a/' exist.
++#   Commit B: Introduce 'a'
++#   Commit C: Introduce 'a/file'
++# Two different later cases:
++#   Commit D1: Merge B & C, keeping 'a' and deleting 'a/'
++#   Commit E1: Merge B & C, deleting 'a' but keeping 'a/file'
++#
++#   Commit D2: Merge B & C, keeping a modified 'a' and deleting 'a/'
++#   Commit E2: Merge B & C, deleting 'a' but keeping a modified 'a/file'
++#
++#   Note: D == D1.
++# Finally, someone goes to merge D1&E1 or D1&E2 or D2&E1.  What happens?
++#
++#      B   D1 or D2
++#      o---o
++#     / \ / \
++#  A o   X   ? F
++#     \ / \ /
++#      o---o
++#      C   E1 or E2
++#
++
++test_expect_success 'setup differently handled merges of directory/file conflict' '
++	git rm -rf . &&
++	git clean -fdqx &&
++	rm -rf .git &&
++	git init &&
++
++	>irrelevant-file &&
++	git add irrelevant-file &&
++	test_tick &&
++	git commit -m A &&
++
++	git branch B &&
++	git checkout -b C &&
++	mkdir a &&
++	echo 10 >a/file &&
++	git add a/file &&
++	test_tick &&
++	git commit -m C &&
++
++	git checkout B &&
++	echo 5 >a &&
++	git add a &&
++	test_tick &&
++	git commit -m B &&
++
++	git checkout B^0 &&
++	test_must_fail git merge C &&
++	git clean -f &&
++	rm -rf a/ &&
++	echo 5 >a &&
++	git add a &&
++	test_tick &&
++	git commit -m D &&
++	git tag D &&
++
++	git checkout C^0 &&
++	test_must_fail git merge B &&
++	git clean -f &&
++	git rm --cached a &&
++	echo 10 >a/file &&
++	git add a/file &&
++	test_tick &&
++	git commit -m E1 &&
++	git tag E1 &&
++
++	git checkout C^0 &&
++	test_must_fail git merge B &&
++	git clean -f &&
++	git rm --cached a &&
++	printf "10\n11\n" >a/file &&
++	git add a/file &&
++	test_tick &&
++	git commit -m E2 &&
++	git tag E2
++'
++
++test_expect_failure 'git detects conflict and handles merge of D & E1 correctly' '
++	git reset --hard &&
++	git reset --hard &&
++	git clean -fdqx &&
++	git checkout D^0 &&
++
++	# FIXME: If merge-base could keep both a and a/file in its tree, then
++	# we could this merge would actually be able to succeed.
++	test_must_fail git merge -s recursive E1^0 &&
++
++	test 2 -eq $(git ls-files -s | wc -l) &&
++	test 1 -eq $(git ls-files -u | wc -l) &&
++	test 0 -eq $(git ls-files -o | wc -l) &&
++
++	test $(git rev-parse :2:a) = $(git rev-parse B:a)
++'
++
++test_expect_failure 'git detects conflict and handles merge of E1 & D correctly' '
++	git reset --hard &&
++	git reset --hard &&
++	git clean -fdqx &&
++	git checkout E1^0 &&
++
++	# FIXME: If merge-base could keep both a and a/file in its tree, then
++	# we could this merge would actually be able to succeed.
++	test_must_fail git merge -s recursive D^0 &&
++
++	test 2 -eq $(git ls-files -s | wc -l) &&
++	test 1 -eq $(git ls-files -u | wc -l) &&
++	test 0 -eq $(git ls-files -o | wc -l) &&
++
++	test $(git rev-parse :3:a) = $(git rev-parse B:a)
++'
++
++test_expect_success 'git detects conflict and handles merge of D & E2 correctly' '
++	git reset --hard &&
++	git reset --hard &&
++	git clean -fdqx &&
++	git checkout D^0 &&
++
++	test_must_fail git merge -s recursive E2^0 &&
++
++	test 3 -eq $(git ls-files -s | wc -l) &&
++	test 2 -eq $(git ls-files -u | wc -l) &&
++	test 1 -eq $(git ls-files -o | wc -l) &&
++
++	test $(git rev-parse :2:a) = $(git rev-parse B:a) &&
++	test $(git rev-parse :3:a/file) = $(git rev-parse E1:a/file)
++	test $(git rev-parse :1:a/file) = $(git rev-parse C:a/file)
++'
++
++test_expect_failure 'git detects conflict and handles merge of E2 & D correctly' '
++	git reset --hard &&
++	git reset --hard &&
++	git clean -fdqx &&
++	git checkout E2^0 &&
++
++	test_must_fail git merge -s recursive D^0 &&
++
++	test 3 -eq $(git ls-files -s | wc -l) &&
++	test 2 -eq $(git ls-files -u | wc -l) &&
++	test 1 -eq $(git ls-files -o | wc -l) &&
++
++	test $(git rev-parse :3:a) = $(git rev-parse B:a) &&
++	test $(git rev-parse :2:a/file) = $(git rev-parse E1:a/file)
++	test $(git rev-parse :1:a/file) = $(git rev-parse C:a/file)
++'
++
++
+ test_done
 -- 
 1.7.6.rc0.62.g2d69f
