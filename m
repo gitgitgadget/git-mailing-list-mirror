@@ -1,119 +1,152 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCH 46/48] merge-recursive: Have conflict_rename_delete reuse modify/delete code
-Date: Wed,  8 Jun 2011 01:31:16 -0600
-Message-ID: <1307518278-23814-47-git-send-email-newren@gmail.com>
+Subject: [PATCH 36/48] merge-recursive: Provide more info in conflict markers with file renames
+Date: Wed,  8 Jun 2011 01:31:06 -0600
+Message-ID: <1307518278-23814-37-git-send-email-newren@gmail.com>
 References: <1307518278-23814-1-git-send-email-newren@gmail.com>
 Cc: jgfouca@sandia.gov, Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 08 09:31:37 2011
+X-From: git-owner@vger.kernel.org Wed Jun 08 09:31:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUDEm-0006q0-AI
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 09:31:36 +0200
+	id 1QUDEi-0006q0-1J
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 09:31:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755255Ab1FHHad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 03:30:33 -0400
+	id S1755167Ab1FHHaL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 03:30:11 -0400
 Received: from mail-pw0-f46.google.com ([209.85.160.46]:35036 "EHLO
 	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755061Ab1FHHa1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 03:30:27 -0400
+	with ESMTP id S1755061Ab1FHHaI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2011 03:30:08 -0400
 Received: by mail-pw0-f46.google.com with SMTP id 15so118980pwi.19
-        for <git@vger.kernel.org>; Wed, 08 Jun 2011 00:30:27 -0700 (PDT)
+        for <git@vger.kernel.org>; Wed, 08 Jun 2011 00:30:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=BpeFan0i3oBSllP0GZ+xQc/bUPXxaZIKpiGQNea3lUk=;
-        b=HqBLWnSXGA9j1SGpOiJmmkWr8MqTi7TIhy8uUmF9cwjn1hWUPROxHJEi+nvDB2jRxr
-         DUwW88n2et1yZMoGFH75tXMAVwQBx73UHd2ZwBhDWqawGQuQfh/KLeikiVep3me/iMRV
-         bCiiE2rKgAPKfyVWJUFduUEyNpqeZEELG7AeA=
+        bh=AoiHbWxM0FoDOsVJ0g0VJ2IYHzmge26iaskSNPLmrJ4=;
+        b=Gw98ncWYSIQZ6X7ynrdSwRQhECVlRahR4PvwV7offBi8PClT3ooL1Vyofu1ZF8Weo7
+         XTxyawnMvXrHAGJkohX3k+pzQGokCYYD06R/6O8o67F6qQWcu76L0fjUcec3tGWSjsNm
+         RpThvyuryGzniDDGmLPs10KV1wbLOlSA8zbec=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=qORG9LAubGf3TeB4qNDIVqowo7qLsEY/gehXvOU1d6d1prdSqQ0S7P6B/xMdyLERf3
-         O6LO5FPaVyFMvoTliSMOMsM0GvfM6+eTSasGOl1Egb0YIiRgVsvK0DrrVPRdxqPQBGD9
-         BMGt9rYBvyHIBpRW/EyIFTC0r0k7CxvT+gj9I=
-Received: by 10.68.6.5 with SMTP id w5mr688590pbw.15.1307518227677;
-        Wed, 08 Jun 2011 00:30:27 -0700 (PDT)
+        b=m2FBJzidCvy1LOc38df3vfsaYyHWg3NAsDqAKfr0im5iVAke4PHl038RHfXdkFPnWT
+         OuOsyxL6/fkF5H+ZxU94l/JTbGzSQ203ru5rPlFY+D0f6vOAsCvcDiqM537AbfO08VKQ
+         ILaifU7LjySAQd/17oviWarxmL86A3hKZM0dI=
+Received: by 10.68.21.130 with SMTP id v2mr692670pbe.338.1307518208521;
+        Wed, 08 Jun 2011 00:30:08 -0700 (PDT)
 Received: from localhost.localdomain ([216.222.84.34])
-        by mx.google.com with ESMTPS id k4sm296286pbl.59.2011.06.08.00.30.25
+        by mx.google.com with ESMTPS id k4sm296286pbl.59.2011.06.08.00.30.06
         (version=SSLv3 cipher=OTHER);
-        Wed, 08 Jun 2011 00:30:26 -0700 (PDT)
+        Wed, 08 Jun 2011 00:30:07 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6.rc0.62.g2d69f
 In-Reply-To: <1307518278-23814-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175320>
 
+Whenever there are merge conflicts in file contents, we would mark the
+different sides of the conflict with the two branches being merged.
+However, when there is a rename involved as well, the branchname is not
+sufficient to specify where the conflicting content came from.  In such
+cases, mark the two sides of the conflict with branchname:filename rather
+than just branchname.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c |   48 +++++++++++++++++++++++++++++++-----------------
- 1 files changed, 31 insertions(+), 17 deletions(-)
+ merge-recursive.c                    |   20 +++++++++++++++++---
+ t/t6022-merge-rename.sh              |    8 ++++----
+ t/t6039-merge-rename-corner-cases.sh |    2 +-
+ 3 files changed, 22 insertions(+), 8 deletions(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index e38c5b0..93b7da5 100644
+index 5d0a62c..da507a3 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -1028,24 +1028,38 @@ static void conflict_rename_delete(struct merge_options *o,
- 				   const char *rename_branch,
- 				   const char *other_branch)
+@@ -1340,6 +1340,7 @@ static int merge_content(struct merge_options *o,
+ 			 struct rename_conflict_info *rename_conflict_info)
  {
--	char *dest_name = pair->two->path;
--	int df_conflict = 0;
-+	const struct diff_filespec *orig = pair->one;
-+	const struct diff_filespec *dest = pair->two;
-+	const char *path;
-+	const unsigned char *a_sha = NULL;
-+	const unsigned char *b_sha = NULL;
-+	int a_mode = 0;
-+	int b_mode = 0;
-+
-+	if (rename_branch == o->branch1) {
-+		a_sha = dest->sha1;
-+		a_mode = dest->mode;
-+	} else {
-+		b_sha = dest->sha1;
-+		b_mode = dest->mode;
-+	}
+ 	const char *reason = "content";
++	char *side1 = NULL, *side2 = NULL;
+ 	struct merge_file_info mfi;
+ 	struct diff_filespec one, a, b;
+ 	unsigned df_conflict_remains = 0;
+@@ -1356,10 +1357,23 @@ static int merge_content(struct merge_options *o,
+ 	hashcpy(b.sha1, b_sha);
+ 	b.mode = b_mode;
  
--	output(o, 1, "CONFLICT (rename/delete): Rename %s->%s in %s "
--	       "and deleted in %s",
--	       pair->one->path, pair->two->path, rename_branch,
--	       other_branch);
--	if (!o->call_depth)
--		update_stages(dest_name, NULL,
--			      rename_branch == o->branch1 ? pair->two : NULL,
--			      rename_branch == o->branch1 ? NULL : pair->two);
--	if (dir_in_way(dest_name, !o->call_depth)) {
--		dest_name = unique_path(o, dest_name, rename_branch);
--		df_conflict = 1;
-+	if (o->call_depth) {
-+		remove_file_from_cache(dest->path);
-+		path = orig->path;
-+	} else {
-+		path = dest->path;
-+		update_stages(dest->path, NULL,
-+			      rename_branch == o->branch1 ? dest : NULL,
-+			      rename_branch == o->branch1 ? NULL : dest);
+-	mfi = merge_file(o, &one, &a, &b, o->branch1, o->branch2);
+-	if (rename_conflict_info && dir_in_way(path, !o->call_depth)) {
+-		df_conflict_remains = 1;
++	if (rename_conflict_info) {
++		const char *path1 = rename_conflict_info->pair2 ?
++				    rename_conflict_info->pair2->one->path : path;
++		const char *path2 = rename_conflict_info->pair1 ?
++				    rename_conflict_info->pair1->one->path : path;
++		side1 = xmalloc(strlen(o->branch1) + strlen(path1) + 2);
++		side2 = xmalloc(strlen(o->branch2) + strlen(path2) + 2);
++		sprintf(side1, "%s:%s", o->branch1, path1);
++		sprintf(side2, "%s:%s", o->branch2, path2);
++
++		if (dir_in_way(path, !o->call_depth))
++			df_conflict_remains = 1;
  	}
--	update_file(o, 0, pair->two->sha1, pair->two->mode, dest_name);
--	if (df_conflict)
--		free(dest_name);
-+
-+	handle_change_delete(o,
-+			     path,
-+			     orig->sha1, orig->mode,
-+			     a_sha, a_mode,
-+			     b_sha, b_mode,
-+			     "rename", "renamed");
- }
++	mfi = merge_file(o, &one, &a, &b,
++			 side1 ? side1:o->branch1, side2 ? side2:o->branch2);
++	free(side1);
++	free(side2);
  
- static void conflict_rename_rename_1to2(struct merge_options *o,
+ 	if (mfi.clean && !df_conflict_remains &&
+ 	    sha_eq(mfi.sha, a_sha) && mfi.mode == a.mode &&
+diff --git a/t/t6022-merge-rename.sh b/t/t6022-merge-rename.sh
+index cd1e8fb..cfce3d3 100755
+--- a/t/t6022-merge-rename.sh
++++ b/t/t6022-merge-rename.sh
+@@ -351,11 +351,11 @@ cat >expected <<\EOF &&
+ 8
+ 9
+ 10
+-<<<<<<< HEAD
++<<<<<<< HEAD:dir
+ 12
+ =======
+ 11
+->>>>>>> dir-not-in-way
++>>>>>>> dir-not-in-way:sub/file
+ EOF
+ 
+ test_expect_success 'Rename+D/F conflict; renamed file cannot merge, dir not in way' '
+@@ -405,11 +405,11 @@ cat >expected <<\EOF &&
+ 8
+ 9
+ 10
+-<<<<<<< HEAD
++<<<<<<< HEAD:dir
+ 11
+ =======
+ 12
+->>>>>>> renamed-file-has-conflicts
++>>>>>>> renamed-file-has-conflicts:sub/file
+ EOF
+ 
+ test_expect_success 'Same as previous, but merged other way' '
+diff --git a/t/t6039-merge-rename-corner-cases.sh b/t/t6039-merge-rename-corner-cases.sh
+index 18e7821..4d2fd10 100755
+--- a/t/t6039-merge-rename-corner-cases.sh
++++ b/t/t6039-merge-rename-corner-cases.sh
+@@ -258,7 +258,7 @@ test_expect_success 'rename/directory conflict + clean content merge' '
+ 	test -f newfile~HEAD
+ '
+ 
+-test_expect_failure 'rename/directory conflict + content merge conflict' '
++test_expect_success 'rename/directory conflict + content merge conflict' '
+ 	git reset --hard &&
+ 	git reset --hard &&
+ 	git clean -fdqx &&
 -- 
 1.7.6.rc0.62.g2d69f
