@@ -1,7 +1,7 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCH 30/48] merge-recursive: Fix deletion of untracked file in rename/delete conflicts
-Date: Wed,  8 Jun 2011 01:31:00 -0600
-Message-ID: <1307518278-23814-31-git-send-email-newren@gmail.com>
+Subject: [PATCH 34/48] merge-recursive: Consolidate process_entry() and process_df_entry()
+Date: Wed,  8 Jun 2011 01:31:04 -0600
+Message-ID: <1307518278-23814-35-git-send-email-newren@gmail.com>
 References: <1307518278-23814-1-git-send-email-newren@gmail.com>
 Cc: jgfouca@sandia.gov, Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
@@ -11,172 +11,324 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUDEg-0006q0-JZ
+	id 1QUDEh-0006q0-AU
 	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 09:31:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755102Ab1FHHaB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 03:30:01 -0400
-Received: from mail-px0-f179.google.com ([209.85.212.179]:37577 "EHLO
-	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755068Ab1FHH34 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 03:29:56 -0400
-Received: by mail-px0-f179.google.com with SMTP id 2so191910pxi.10
-        for <git@vger.kernel.org>; Wed, 08 Jun 2011 00:29:56 -0700 (PDT)
+	id S1755151Ab1FHHaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 03:30:08 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:35036 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755061Ab1FHHaE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2011 03:30:04 -0400
+Received: by mail-pw0-f46.google.com with SMTP id 15so118980pwi.19
+        for <git@vger.kernel.org>; Wed, 08 Jun 2011 00:30:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=az9D7cVl1sUaAwaPRedW7vIk+ySw9Wj3KtT03LbzWZY=;
-        b=kfWoqBYLYr4N9exoNqFhG/TI0GvjS8ev3s76MxAlZR1SyF6tqaAPImyCpxSwzZ5LD3
-         VB1EzW0zkffU0JO6N3+3DtIEPMluc9FKBdtN2sx1/300QRu9GXtubTHhLFenirlPZ/b3
-         stLTMKLFRLbfSMZfiUQM5hmPD3Md+P8N0eCVg=
+        bh=xeEQFmNzxm00FOL5MXR3TizWKCSbm6qPdk3WJ673daE=;
+        b=uFha2H0IBrq9K1koUOazkR2GOlWCuNYY/ooNUMJNBpVuTnARenrYnqGjs5/lMRa7g3
+         CHi7WvHc8/s1OIaCfWhuJf5OhD9GnIKIVajrsWhakLPqKUz2iEx3KUNqw3BQPCpyqVVK
+         ZIR1KdMxnR7mwKzjtpU/9XqAC7+fwqJlsoSlU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=rmkn9/in+LXisjgx8zV/6IXCs6Bh5lT8vMdGj0UCMWkqAiNJJO+xFR7ObMlGVImkYm
-         lta1c/WT/WzeU5hRZfWk4HFa+Jkx5tfPTXCaq4K4vTDKCy83PR8msgCerWa6P5Ngct/N
-         2JMnFlS0gL28oE/So0AVW0bLEwf1Im7yDHJXE=
-Received: by 10.68.50.164 with SMTP id d4mr583722pbo.261.1307518196207;
-        Wed, 08 Jun 2011 00:29:56 -0700 (PDT)
+        b=Z6xaD3wbEEK+7Gf5NHoy44G3vAcbNLTb2QXD35b6OHKHZ2mzE+fKJnXIQu4p4jWryM
+         l6cBMuiJh25PYP+zZJsGZBW+FeoAOr6wEgZE1XkXKVXZJU2oaeVHauTa+5uU+E50h6Ep
+         ql6rbDMq13CwUE8bqnHgz9I/EMzhj0MuPwS7I=
+Received: by 10.68.6.5 with SMTP id w5mr688477pbw.15.1307518204717;
+        Wed, 08 Jun 2011 00:30:04 -0700 (PDT)
 Received: from localhost.localdomain ([216.222.84.34])
-        by mx.google.com with ESMTPS id k4sm296286pbl.59.2011.06.08.00.29.54
+        by mx.google.com with ESMTPS id k4sm296286pbl.59.2011.06.08.00.30.02
         (version=SSLv3 cipher=OTHER);
-        Wed, 08 Jun 2011 00:29:55 -0700 (PDT)
+        Wed, 08 Jun 2011 00:30:03 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6.rc0.62.g2d69f
 In-Reply-To: <1307518278-23814-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175317>
 
-In the recursive case (o->call_depth > 0), we do not modify the working
-directory.  However, when o->call_depth==0, file renames can mean we need
-to delete the old filename from the working copy.  Since there have been
-lots of changes and mistakes here, let's go through the details.  Let's
-start with a simple explanation of what we are trying to achieve:
-
-  Original goal: If a file is renamed on the side of history being merged
-  into head, the filename serving as the source of that rename needs to be
-  removed from the working directory.
-
-The path to getting the above statement implemented in merge-recursive took
-several steps.  The relevant bits of code may be instructive to keep in
-mind for the explanation, especially since an English-only description
-involves double negatives that are hard to follow.  These bits of code are:
-  int remove_file(..., const char *path, int no_wd)
-  {
-    ...
-    int update_working_directory = !o->call_depth && !no_wd;
-and
-  remove_file(o, 1, ren1_src, <expression>);
-Where the choice for <expression> has morphed over time:
-
-65ac6e9 (merge-recursive: adjust to loosened "working file clobbered"
-check 2006-10-27), introduced the "no_wd" parameter to remove_file() and
-used "1" for <expression>.  This meant ren1_src was never deleted, leaving
-it around in the working copy.
-
-In 8371234 (Remove uncontested renamed files during merge. 2006-12-13),
-<expression> was changed to "index_only" (where index_only ==
-!!o->call_depth; see b7fa51da).   This was equivalent to using "0" for
-<expression> (due to the early logic in remove_file), and is orthogonal to
-the condition we actually want to check at this point; it resulted in the
-source file being removed except when index_only was false.  This was
-problematic because the file could have been renamed on the side of history
-including head, in which case ren1_src could correspond to an untracked
-file that should not be deleted.
-
-In 183d797 (Keep untracked files not involved in a merge. 2007-02-04),
-<expression> was changed to "index_only || stage == 3".  While this gives
-correct behavior, the "index_only ||" portion of <expression> is
-unnecessary and makes the code slightly harder to follow.
-
-There were also two further changes to this expression, though without
-any change in behavior.  First in b7fa51d (merge-recursive: get rid of the
-index_only global variable 2008-09-02), it was changed to "o->call_depth
-|| stage == 3".  (index_only == !!o->call_depth).  Later, in 41d70bd6
-(merge-recursive: Small code clarification -- variable name and comments),
-this was changed to "o->call_depth || renamed_stage == 2" (where stage was
-renamed to other_stage and renamed_stage == other_stage ^ 1).
-
-So we ended with <expression> being "o->call_depth || renamed_stage == 2".
-But the "o->call_depth ||" piece was unnecessary.  We can remove it,
-leaving us with <expression> being "renamed_stage == 2".  This doesn't
-change behavior at all, but it makes the code clearer.  Which is good,
-because it's about to get uglier.
-
-  Corrected goal: If a file is renamed on the side of history being merged
-  into head, the filename serving as the source of that rename needs to be
-  removed from the working directory *IF* that file is tracked in head AND
-  the file tracked in head is related to the original file.
-
-Note that the only difference between the original goal and the corrected
-goal is the two extra conditions added at the end.  The first condition is
-relevant in a rename/delete conflict.  If the file was deleted on the
-HEAD side of the merge and an untracked file of the same name was added to
-the working copy, then without that extra condition the untracked file
-will be erroneously deleted.  This changes <expression> to "renamed_stage
-== 2 || !was_tracked(ren1_src)".
-
-The second additional condition is relevant in two cases.
-
-The first case the second condition can occur is when a file is deleted
-and a completely different file is added with the same name.  To my
-knowledge, merge-recursive has no mechanism for detecting deleted-and-
-replaced-by-different-file cases, so I am simply punting on this
-possibility.
-
-The second case for the second condition to occur is when there is a
-rename/rename/add-source conflict.  That is, when the original file was
-renamed on both sides of history AND the original filename is being
-re-used by some unrelated (but tracked) content.  This case also presents
-some additional difficulties for us since we cannot currently detect these
-rename/rename/add-source conflicts; as long as the rename detection logic
-"optimizes" by ignoring filenames that are present at both ends of the
-diff, these conflicts will go unnoticed.  However, rename/rename conflicts
-are handled by an entirely separate codepath not being discussed here, so
-this case is not relevant for the line of code under consideration.
-
-In summary:
-  Change <expression> from "o->call_depth || renamed_stage == 2" to
-  "renamed_stage == 2 || !was_tracked(ren1_src)", in order to
-  remove unnecessary code and avoid deleting untracked files.
-
-96 lines of explanation in the changelog to describe a one-line fix...
+The whole point of adding process_df_entry() was to ensure that files of
+D/F conflicts were processed after paths under the corresponding
+directory.  However, given that the entries are in sorted order, all we
+need to do is iterate through them in reverse order to achieve the same
+effect.  That lets us remove some duplicated code, and lets us keep
+track of one less thing as we read the code ("do we need to make sure
+this is processed before process_df_entry() or do we need to defer it
+until then?").
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c                    |    3 ++-
- t/t6039-merge-rename-corner-cases.sh |    2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ merge-recursive.c |  194 ++++++++++++++++------------------------------------
+ 1 files changed, 60 insertions(+), 134 deletions(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 987a985..749e501 100644
+index e6a97b2..5673ccb 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -1102,7 +1102,8 @@ static int process_renames(struct merge_options *o,
- 			int renamed_stage = a_renames == renames1 ? 2 : 3;
- 			int other_stage =   a_renames == renames1 ? 3 : 2;
+@@ -116,7 +116,6 @@ static inline void setup_rename_df_conflict_info(enum rename_type rename_type,
+ 		ci->dst_entry2 = dst_entry2;
+ 		ci->pair2 = pair2;
+ 		dst_entry2->rename_df_conflict_info = ci;
+-		dst_entry2->processed = 0;
+ 	}
+ }
  
--			remove_file(o, 1, ren1_src, o->call_depth || renamed_stage == 2);
-+			remove_file(o, 1, ren1_src,
-+				    renamed_stage == 2 || !was_tracked(ren1_src));
+@@ -358,20 +357,17 @@ static void record_df_conflict_files(struct merge_options *o,
+ 				     struct string_list *entries)
+ {
+ 	/* If there is a D/F conflict and the file for such a conflict
+-	 * currently exist in the working copy, we want to allow it to
+-	 * be removed to make room for the corresponding directory if
+-	 * needed.  The files underneath the directories of such D/F
+-	 * conflicts will be handled in process_entry(), while the
+-	 * files of such D/F conflicts will be processed later in
+-	 * process_df_entry().  If the corresponding directory ends up
+-	 * being removed by the merge, then no additional work needs
+-	 * to be done by process_df_entry() for the conflicting file.
+-	 * If the directory needs to be written to the working copy,
+-	 * then the conflicting file will simply be removed (e.g. in
+-	 * make_room_for_path).  If the directory is written to the
+-	 * working copy but the file also has a conflict that needs to
+-	 * be resolved, then process_df_entry() will reinstate the
+-	 * file with a new unique name.
++	 * currently exist in the working copy, we want to allow it to be
++	 * removed to make room for the corresponding directory if needed.
++	 * The files underneath the directories of such D/F conflicts will
++	 * be processed before the corresponding file involved in the D/F
++	 * conflict.  If the D/F directory ends up being removed by the
++	 * merge, then we won't have to touch the D/F file.  If the D/F
++	 * directory needs to be written to the working copy, then the D/F
++	 * file will simply be removed (in make_room_for_path()) to make
++	 * room for the necessary paths.  Note that if both the directory
++	 * and the file need to be present, then the D/F file will be
++	 * reinstated with a new unique name at the time it is processed.
+ 	 */
+ 	const char *last_file = NULL;
+ 	int last_len = 0;
+@@ -1310,17 +1306,17 @@ static void handle_delete_modify(struct merge_options *o,
+ 		       "and modified in %s. Version %s of %s left in tree%s%s.",
+ 		       path, o->branch1,
+ 		       o->branch2, o->branch2, path,
+-		       path == new_path ? "" : " at ",
+-		       path == new_path ? "" : new_path);
+-		update_file(o, 0, b_sha, b_mode, new_path);
++		       NULL == new_path ? "" : " at ",
++		       NULL == new_path ? "" : new_path);
++		update_file(o, 0, b_sha, b_mode, new_path ? new_path : path);
+ 	} else {
+ 		output(o, 1, "CONFLICT (delete/modify): %s deleted in %s "
+ 		       "and modified in %s. Version %s of %s left in tree%s%s.",
+ 		       path, o->branch2,
+ 		       o->branch1, o->branch1, path,
+-		       path == new_path ? "" : " at ",
+-		       path == new_path ? "" : new_path);
+-		update_file(o, 0, a_sha, a_mode, new_path);
++		       NULL == new_path ? "" : " at ",
++		       NULL == new_path ? "" : new_path);
++		update_file(o, 0, a_sha, a_mode, new_path ? new_path : path);
+ 	}
+ }
  
- 			hashcpy(src_other.sha1, ren1->src_entry->stages[other_stage].sha);
- 			src_other.mode = ren1->src_entry->stages[other_stage].mode;
-diff --git a/t/t6039-merge-rename-corner-cases.sh b/t/t6039-merge-rename-corner-cases.sh
-index 06c7ea5..4f94528 100755
---- a/t/t6039-merge-rename-corner-cases.sh
-+++ b/t/t6039-merge-rename-corner-cases.sh
-@@ -26,7 +26,7 @@ test_expect_success 'setup rename/delete + untracked file' '
- 	echo "Myyy PRECIOUSSS" >ring
- '
+@@ -1422,93 +1418,6 @@ static int process_entry(struct merge_options *o,
+ 	unsigned char *a_sha = stage_sha(entry->stages[2].sha, a_mode);
+ 	unsigned char *b_sha = stage_sha(entry->stages[3].sha, b_mode);
  
--test_expect_failure "Does git preserve Gollum's precious artifact?" '
-+test_expect_success "Does git preserve Gollum's precious artifact?" '
- 	test_must_fail git merge -s recursive rename-the-ring &&
+-	if (entry->rename_df_conflict_info)
+-		return 1; /* Such cases are handled elsewhere. */
+-
+-	entry->processed = 1;
+-	if (o_sha && (!a_sha || !b_sha)) {
+-		/* Case A: Deleted in one */
+-		if ((!a_sha && !b_sha) ||
+-		    (!b_sha && blob_unchanged(o_sha, a_sha, normalize, path)) ||
+-		    (!a_sha && blob_unchanged(o_sha, b_sha, normalize, path))) {
+-			/* Deleted in both or deleted in one and
+-			 * unchanged in the other */
+-			if (a_sha)
+-				output(o, 2, "Removing %s", path);
+-			/* do not touch working file if it did not exist */
+-			remove_file(o, 1, path, !a_sha);
+-		} else if (dir_in_way(path, 0 /*check_wc*/)) {
+-			entry->processed = 0;
+-			return 1; /* Assume clean until processed */
+-		} else {
+-			/* Deleted in one and changed in the other */
+-			clean_merge = 0;
+-			handle_delete_modify(o, path, path,
+-					     a_sha, a_mode, b_sha, b_mode);
+-		}
+-
+-	} else if ((!o_sha && a_sha && !b_sha) ||
+-		   (!o_sha && !a_sha && b_sha)) {
+-		/* Case B: Added in one. */
+-		unsigned mode;
+-		const unsigned char *sha;
+-
+-		if (a_sha) {
+-			mode = a_mode;
+-			sha = a_sha;
+-		} else {
+-			mode = b_mode;
+-			sha = b_sha;
+-		}
+-		if (dir_in_way(path, 0 /*check_wc*/)) {
+-			/* Handle D->F conflicts after all subfiles */
+-			entry->processed = 0;
+-			return 1; /* Assume clean until processed */
+-		} else {
+-			output(o, 2, "Adding %s", path);
+-			update_file(o, 1, sha, mode, path);
+-		}
+-	} else if (a_sha && b_sha) {
+-		/* Case C: Added in both (check for same permissions) and */
+-		/* case D: Modified in both, but differently. */
+-		clean_merge = merge_content(o, entry->involved_in_rename, path,
+-					    o_sha, o_mode, a_sha, a_mode, b_sha, b_mode,
+-					    NULL);
+-	} else if (!o_sha && !a_sha && !b_sha) {
+-		/*
+-		 * this entry was deleted altogether. a_mode == 0 means
+-		 * we had that path and want to actively remove it.
+-		 */
+-		remove_file(o, 1, path, !a_mode);
+-	} else
+-		die("Fatal merge failure, shouldn't happen.");
+-
+-	return clean_merge;
+-}
+-
+-/*
+- * Per entry merge function for D/F (and/or rename) conflicts.  In the
+- * cases we can cleanly resolve D/F conflicts, process_entry() can
+- * clean out all the files below the directory for us.  All D/F
+- * conflict cases must be handled here at the end to make sure any
+- * directories that can be cleaned out, are.
+- *
+- * Some rename conflicts may also be handled here that don't necessarily
+- * involve D/F conflicts, since the code to handle them is generic enough
+- * to handle those rename conflicts with or without D/F conflicts also
+- * being involved.
+- */
+-static int process_df_entry(struct merge_options *o,
+-			    const char *path, struct stage_data *entry)
+-{
+-	int clean_merge = 1;
+-	unsigned o_mode = entry->stages[1].mode;
+-	unsigned a_mode = entry->stages[2].mode;
+-	unsigned b_mode = entry->stages[3].mode;
+-	unsigned char *o_sha = stage_sha(entry->stages[1].sha, o_mode);
+-	unsigned char *a_sha = stage_sha(entry->stages[2].sha, a_mode);
+-	unsigned char *b_sha = stage_sha(entry->stages[3].sha, b_mode);
+-
+ 	entry->processed = 1;
+ 	if (entry->rename_df_conflict_info) {
+ 		struct rename_df_conflict_info *conflict_info = entry->rename_df_conflict_info;
+@@ -1543,27 +1452,41 @@ static int process_df_entry(struct merge_options *o,
+ 						    conflict_info->branch1,
+ 						    conflict_info->pair2,
+ 						    conflict_info->branch2);
+-			conflict_info->dst_entry2->processed = 1;
+ 			break;
+ 		default:
+ 			entry->processed = 0;
+ 			break;
+ 		}
+ 	} else if (o_sha && (!a_sha || !b_sha)) {
+-		/* Modify/delete; deleted side may have put a directory in the way */
+-		char *new_path;
+-		int free_me = 0;
+-		if (dir_in_way(path, !o->call_depth)) {
+-			new_path = unique_path(o, path, a_sha ? o->branch1 : o->branch2);
+-			free_me = 1;
++		/* Case A: Deleted in one */
++		if ((!a_sha && !b_sha) ||
++		    (!b_sha && blob_unchanged(o_sha, a_sha, normalize, path)) ||
++		    (!a_sha && blob_unchanged(o_sha, b_sha, normalize, path))) {
++			/* Deleted in both or deleted in one and
++			 * unchanged in the other */
++			if (a_sha)
++				output(o, 2, "Removing %s", path);
++			/* do not touch working file if it did not exist */
++			remove_file(o, 1, path, !a_sha);
++		} else {
++			/* Modify/delete; deleted side may have put a directory in the way */
++			char *new_path = NULL;
++			int free_me = 0;
++			clean_merge = 0;
++			if (dir_in_way(path, !o->call_depth)) {
++				new_path = unique_path(o, path, a_sha ? o->branch1 : o->branch2);
++				free_me = 1;
++			}
++			handle_delete_modify(o, path, new_path,
++					     a_sha, a_mode, b_sha, b_mode);
++			if (free_me)
++				free(new_path);
+ 		}
+-		clean_merge = 0;
+-		handle_delete_modify(o, path, free_me ? new_path : path,
+-				     a_sha, a_mode, b_sha, b_mode);
+-		if (free_me)
+-			free(new_path);
+-	} else if (!o_sha && !!a_sha != !!b_sha) {
+-		/* directory -> (directory, file) or <nothing> -> (directory, file) */
++	} else if ((!o_sha && a_sha && !b_sha) ||
++		   (!o_sha && !a_sha && b_sha)) {
++		/* Case B: Added in one. */
++		/* [nothing|directory] -> ([nothing|directory], file) */
++
+ 		const char *add_branch;
+ 		const char *other_branch;
+ 		unsigned mode;
+@@ -1599,10 +1522,20 @@ static int process_df_entry(struct merge_options *o,
+ 			output(o, 2, "Adding %s", path);
+ 			update_file(o, 1, sha, mode, path);
+ 		}
+-	} else {
+-		entry->processed = 0;
+-		return 1; /* not handled; assume clean until processed */
+-	}
++	} else if (a_sha && b_sha) {
++		/* Case C: Added in both (check for same permissions) and */
++		/* case D: Modified in both, but differently. */
++		clean_merge = merge_content(o, entry->involved_in_rename, path,
++					    o_sha, o_mode, a_sha, a_mode, b_sha, b_mode,
++					    NULL);
++	} else if (!o_sha && !a_sha && !b_sha) {
++		/*
++		 * this entry was deleted altogether. a_mode == 0 means
++		 * we had that path and want to actively remove it.
++		 */
++		remove_file(o, 1, path, !a_mode);
++	} else
++		die("Fatal merge failure, shouldn't happen.");
  
- 	# Make sure git did not delete an untracked file
+ 	return clean_merge;
+ }
+@@ -1650,7 +1583,7 @@ int merge_trees(struct merge_options *o,
+ 		re_head  = get_renames(o, head, common, head, merge, entries);
+ 		re_merge = get_renames(o, merge, common, head, merge, entries);
+ 		clean = process_renames(o, re_head, re_merge);
+-		for (i = 0; i < entries->nr; i++) {
++		for (i = entries->nr-1; i >=0; i--) {
+ 			const char *path = entries->items[i].string;
+ 			struct stage_data *e = entries->items[i].util;
+ 			if (!e->processed
+@@ -1658,13 +1591,6 @@ int merge_trees(struct merge_options *o,
+ 				clean = 0;
+ 		}
+ 		for (i = 0; i < entries->nr; i++) {
+-			const char *path = entries->items[i].string;
+-			struct stage_data *e = entries->items[i].util;
+-			if (!e->processed
+-				&& !process_df_entry(o, path, e))
+-				clean = 0;
+-		}
+-		for (i = 0; i < entries->nr; i++) {
+ 			struct stage_data *e = entries->items[i].util;
+ 			if (!e->processed)
+ 				die("Unprocessed path??? %s",
 -- 
 1.7.6.rc0.62.g2d69f
