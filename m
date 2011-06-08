@@ -1,68 +1,80 @@
-From: Geoff Russell <geoffrey.russell@gmail.com>
-Subject: gc getting called on each git command ... what's wrong?
-Date: Wed, 8 Jun 2011 11:03:41 +0930
-Message-ID: <BANLkTi=oUARfwvNFNj-_FvZdwxQgibqPOg@mail.gmail.com>
-Reply-To: geoffrey.russell@gmail.com
+From: Josh Triplett <josh@joshtriplett.org>
+Subject: Re: [PATCHv8 1/4] Fix prefix handling in ref iteration functions
+Date: Tue, 7 Jun 2011 18:40:01 -0700
+Message-ID: <20110608014001.GA1800@leaf>
+References: <1307487890-3915-1-git-send-email-jamey@minilop.net>
+ <1307487890-3915-2-git-send-email-jamey@minilop.net>
+ <7v4o4141mz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 08 03:33:52 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jamey Sharp <jamey@minilop.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
+	Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 08 03:40:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QU7eZ-0006IB-0i
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 03:33:51 +0200
+	id 1QU7kv-0000Ot-O1
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 03:40:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932746Ab1FHBdn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jun 2011 21:33:43 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:38559 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756263Ab1FHBdm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2011 21:33:42 -0400
-Received: by ewy4 with SMTP id 4so10650ewy.19
-        for <git@vger.kernel.org>; Tue, 07 Jun 2011 18:33:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:reply-to:date:message-id:subject
-         :from:to:content-type;
-        bh=lPNQScxaTDvsjyFQzqTh3TqGJjYbO2T7aVgTBOeeuPk=;
-        b=Yhnn7H4/o2qzKLTE5u0mhPTrFEB1NI4kJG2LyCb/tlhFe95PQxOhpBKJBf9afWMt1t
-         JbuRBZ57QPQmK8Oq7WhFzpivDzPN/pD263yq2HFZF5emXPCW+Inu8kBmMPntLGJg6ozg
-         4e5++SxXECyIHx1U4Xc9YKTS0bVB2991R3rOo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:date:message-id:subject:from:to:content-type;
-        b=B93qtEvXYBBUQLFVCEfYszvjBWtj5u4MKRNgax4ODH3akkfRqel/tihttaBofH+KN+
-         Z46MSPE9S9nKbCwoe0OaIhKA2GBKb0YFH4IVERrAf2a1JhfO2oGE6bzrDmea9TsTBsiz
-         59aIcWoZdLfekUvdbGfGW+Yox9vFiRXSCA4L4=
-Received: by 10.14.95.8 with SMTP id o8mr2541186eef.76.1307496821449; Tue, 07
- Jun 2011 18:33:41 -0700 (PDT)
-Received: by 10.14.98.205 with HTTP; Tue, 7 Jun 2011 18:33:41 -0700 (PDT)
+	id S1753449Ab1FHBkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jun 2011 21:40:19 -0400
+Received: from relay3-d.mail.gandi.net ([217.70.183.195]:56759 "EHLO
+	relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751898Ab1FHBkS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2011 21:40:18 -0400
+X-Originating-IP: 217.70.178.134
+Received: from mfilter4-d.gandi.net (mfilter4-d.gandi.net [217.70.178.134])
+	by relay3-d.mail.gandi.net (Postfix) with ESMTP id 19162A806E;
+	Wed,  8 Jun 2011 03:40:17 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at #File managed by puppet, do not edit
+	locally
+Received: from relay3-d.mail.gandi.net ([217.70.183.195])
+	by mfilter4-d.gandi.net (mfilter4-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
+	with ESMTP id dUuuVDffOC0Q; Wed,  8 Jun 2011 03:40:15 +0200 (CEST)
+X-Originating-IP: 131.252.247.106
+Received: from leaf (host-247-106.pubnet.pdx.edu [131.252.247.106])
+	(Authenticated sender: josh@joshtriplett.org)
+	by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id DE25CA8072;
+	Wed,  8 Jun 2011 03:40:03 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7v4o4141mz.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175291>
 
-Hi all,
+On Tue, Jun 07, 2011 at 05:17:56PM -0700, Junio C Hamano wrote:
+> This round does fix the ".have" issues, but with the --namespace patch
+> later in the series, it seems to break the same test, by filtering .have
+> entries with "refs/" prefix.
 
-I'm running git version 1.7.0.4 on Ubuntu 10.04 LTS
+Ouch, missed that; good catch.  We'll fix that in the next round of the
+patch series.
 
-As of today, almost every time I do a git command, gc is getting
-invoked. This is a multi-gigabyte repository with over
-half a million objects, so this takes a while ... and I'm guessing
-that it shouldn't be happening anyway!
+> > Commit by Josh Triplett and Jamey Sharp.
+> 
+> Didn't I ask you to remove this?
 
-I've run an fsck (which doesn't do a gc!) and the repository looks
-clean ... no output.
+You did ask, we responded (with a citation to a specific recommendation
+from the Git list saying to include such a note), and you hadn't said
+anything further about it until now.  If you insist that we remove it,
+fine, we'll remove it.
 
-I have packSizeLimit set to 30M ... not sure why I did this, was
-investigating something I
-didn't understand.  There are 96 pack files.
+> It is somewhat irritating having to re-edit the log message (not just this
+> part, but what have been queued were retitled, reflowed and reworded to
+> match the style of other commits in the project better) over and over
+> again.
 
-Any help greatly appreciated, many thanks,
+We attempted to follow the usual commit message conventions, and none of
+the feedback we received mentioned anything about any other desired
+changes.  What changes would you like us to make?
 
-Cheers,
-Geoff
+- Josh Triplett
