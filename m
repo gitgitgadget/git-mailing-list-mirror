@@ -1,82 +1,84 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 06/19] git_remote_helpers: push all refs during a
- non-local export
-Date: Thu, 9 Jun 2011 00:21:07 +0200
-Message-ID: <BANLkTi=TYArAgp_+fXvOSDMqsyteQJrVCg@mail.gmail.com>
-References: <1307558930-16074-1-git-send-email-srabbelier@gmail.com>
- <1307558930-16074-7-git-send-email-srabbelier@gmail.com> <20110608194205.GI27715@elie>
- <20110608221908.GB15530@sigill.intra.peff.net>
+From: =?ISO-8859-1?Q?J=E9r=E9mie_NIKAES?= <jeremie.nikaes@gmail.com>
+Subject: Re: Git-mediawiki : Encoding problems in perl
+Date: Thu, 9 Jun 2011 00:36:58 +0200
+Message-ID: <BANLkTikTDPmvj4oepiJdFj9EpSTNpS_Prg@mail.gmail.com>
+References: <BANLkTimy85b3nu05FBjXzdnTJP0RBWdxiQ@mail.gmail.com>
+ <20110608150106.GB7805@sigill.intra.peff.net> <vpqhb8049m3.fsf@bauges.imag.fr>
+ <BANLkTi=DLZQM_jzove_g0wLy_zgBF6Z0Xw@mail.gmail.com> <vpqtyc0wc1j.fsf@bauges.imag.fr>
+ <BANLkTinKV3k7uu=+QzvUjrLdRD0TUj67pw@mail.gmail.com> <vpqsjrkqmdj.fsf@bauges.imag.fr>
+ <BANLkTinE9+1cVk09KCP-iW=+GFbRdDAZFg@mail.gmail.com> <20110608215130.GA13021@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, thomas@xteddy.org,
+	git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 09 00:21:53 2011
+X-From: git-owner@vger.kernel.org Thu Jun 09 00:37:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUR8L-0000wR-5m
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 00:21:53 +0200
+	id 1QURNM-0005sU-Jc
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 00:37:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755884Ab1FHWVs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Jun 2011 18:21:48 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:38987 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751895Ab1FHWVs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Jun 2011 18:21:48 -0400
-Received: by qwk3 with SMTP id 3so457693qwk.19
-        for <git@vger.kernel.org>; Wed, 08 Jun 2011 15:21:47 -0700 (PDT)
+	id S1755011Ab1FHWhU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Jun 2011 18:37:20 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:54179 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751104Ab1FHWhS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Jun 2011 18:37:18 -0400
+Received: by pvg12 with SMTP id 12so457394pvg.19
+        for <git@vger.kernel.org>; Wed, 08 Jun 2011 15:37:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=CUvX0yDgkRDaDUHnAzG99Oz9+662UofCxaZOD5OVRRM=;
-        b=ol0TAkx4K2CrOp8zqZQ69y1H3GSOFjYJxxSTLlD8Wv8GGkX9oVH/EUTAx+TXg/oa39
-         Qp+NWSbB1k1aaj3OmZn8d7j4VzzT4JqjkvR3jorf+9kwc8TOGOZK1OBChp8sp3f3kQJy
-         DpW+9F6EveVzzc8gDCO0yb0ogAIRsZRlA7J/s=
+        bh=YpB4P/KmNIMJgZg+N9z2qqun26BO7RddtgbIgDz+8C4=;
+        b=HFAvZNTfbwdULQ4aD5pewv4+H0bSrOYL5AWD/gpW3ghPIp35Fgu5/4h5EC7pvF8SGh
+         sB/lRHqbqTPEjuBJixjzRIiD6MaYwsy2MpV3LJjiufQY6PzStpFmpy2RjEPFUTgyZHG0
+         sIZPFQZjJDEXOK1pnM8yk2MgzrTQkgTufXehM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=KqcyktaM0XRZ9ndHK0qGCmvZtX31v2NKx0lgrb5tXDEl01Do6FYUslBNwYzWOhxa84
-         F0ybbVlUiWpNzcJijxTtf+W0LqIBFEyZ5n6/uX2xg4+XA2KiS1fp7l0k1u4GHCER+K8r
-         oB2qOjOoWSdLwiUS2kXUb4+P2Z3rpTjaL7yYY=
-Received: by 10.229.135.12 with SMTP id l12mr5075qct.53.1307571707100; Wed, 08
- Jun 2011 15:21:47 -0700 (PDT)
-Received: by 10.229.83.203 with HTTP; Wed, 8 Jun 2011 15:21:07 -0700 (PDT)
-In-Reply-To: <20110608221908.GB15530@sigill.intra.peff.net>
+        b=TMBBXo2Fkgz70c68G/XiruDgE0vFlLvKgfNrl2PIbXyZAFuiRg23SkklX0fx8Nv/80
+         e7299gtYe2UPVc6rgcAnexZAi2WXsje58tLth/SJrmUtSbAp9g81lrH6E2PcUjZJnR7i
+         L4pXUHD3j96WcCAzRBpwXJiA3CdHoroaPDaHI=
+Received: by 10.68.44.130 with SMTP id e2mr1061875pbm.515.1307572638327; Wed,
+ 08 Jun 2011 15:37:18 -0700 (PDT)
+Received: by 10.142.136.2 with HTTP; Wed, 8 Jun 2011 15:36:58 -0700 (PDT)
+In-Reply-To: <20110608215130.GA13021@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175471>
 
-Heya,
-
-On Thu, Jun 9, 2011 at 00:19, Jeff King <peff@peff.net> wrote:
-> If we do a fix that allows "refs/heads/foo:refs/heads/bar", then it
-> should also properly allow "+refs/heads/foo:refs/heads/bar". Which I
-> think means changing the single "export" command in the ref-helper to
-> something like:
+2011/6/8 Jeff King <peff@peff.net>:
 >
-> =C2=A0export refs/heads/foo
-> =C2=A0export refs/heads/foo:refs/heads/bar
-> =C2=A0export +refs/heads/force
+> But if you are parsing "diff", then yes, filenames with high-bit
+> characters (or special characters like tab or double-quote) may be
+> quoted C-style, and you should be unquoting them. Or, as Matthieu
+> suggested, use "-z" to get a NUL-terminated, non-quoted version.
 
-Or, since we changed import, to:
+Yes, we are parsing "diff". The -z helped a lot with non-iso characters=
+=2E
+Everything seems to be working fine now without using uri_escape. The
+problem is, as Matthieu said, different file systems may handle these
+characters in file names differently, so in the long run it could be
+better to use uri_escape / uri_unescape.
 
-export
-refs/heads/foo
-refs/heads/foo:refs/heads/bar
-+refs/heads/force
-\n
+The problem I run into now is that we are using
+use encoding 'utf-8'
+as Jakub suggested.
+Using this mode, when you uri_escape and uri_unescape a string, you
+don't get the original string. I must be missing something but my head
+is kind of fuzzy with all the different existing methods to encode
+things in utf8 and it is getting pretty late.
+
+Thanks a lot to everyone who helped today, a RFC patch should follow to=
+morrow.
 
 --=20
-Cheers,
-
-Sverre Rabbelier
+J=E9r=E9mie Nikaes
