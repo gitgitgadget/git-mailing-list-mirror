@@ -1,67 +1,86 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH 3/3] verify_path: consider dos drive prefix
-Date: Wed, 8 Jun 2011 14:15:22 +0200
-Message-ID: <BANLkTik6mi002mWArJiLcC4rnvmotf5+2A@mail.gmail.com>
-References: <DAFDEB13CE4944C18AAF3F20994AEF2E@martinic.local>
- <BANLkTinTJh9oOTHi5js7n-sy8+pmMa_vtQ@mail.gmail.com> <187961B7EDE84635BD7B3C9A4EF688C3@martinic.local>
-Reply-To: kusmabite@gmail.com
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Command-line interface thoughts (ad-hominem attacks)
+Date: Wed, 8 Jun 2011 14:42:37 +0200
+Message-ID: <201106081442.37849.jnareb@gmail.com>
+References: <BANLkTikTWx7A64vN+hVZgL7cuiZ16Eobgg@mail.gmail.com> <201106081312.46377.jnareb@gmail.com> <BANLkTinoQCZhyhgw61u7c3eF4e5MEf+eFA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	git@vger.kernel.org, johannes.schindelin@gmx.de
-To: Theo Niessink <theo@taletn.com>
-X-From: git-owner@vger.kernel.org Wed Jun 08 14:16:15 2011
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
+To: mike@nahas.com
+X-From: git-owner@vger.kernel.org Wed Jun 08 14:42:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUHgE-0001xl-4l
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 14:16:14 +0200
+	id 1QUI61-0006bu-9u
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 14:42:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753517Ab1FHMQE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 08:16:04 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:45227 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751920Ab1FHMQD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 08:16:03 -0400
-Received: by pwi15 with SMTP id 15so213015pwi.19
-        for <git@vger.kernel.org>; Wed, 08 Jun 2011 05:16:02 -0700 (PDT)
+	id S1753334Ab1FHMms (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 08:42:48 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:38994 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753199Ab1FHMmr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2011 08:42:47 -0400
+Received: by bwz15 with SMTP id 15so378942bwz.19
+        for <git@vger.kernel.org>; Wed, 08 Jun 2011 05:42:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=du7uaqdlvehWg/30jMsK9ZjraJmlulqaUgk+Rtz3PGQ=;
-        b=jNsS6GBIZLRMthOzfhhOVvuiMlJ/6Jgpu67OX05a4o8rdULbcX2B1M/RPA6+Mmg2ap
-         1q/k8/NbQgQfif3CSxCrPGwzfpLl0hiPRjTBPO+XFkrSnhK/v7w3Q9aJwxUsNcxsFbWY
-         cLEmcWi5x6aS/3AB34ipUY9X2NPmb58yUnU2Q=
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=bu2l781j/TLNh3n1UOzhPY9/oC+fkCWwpufhewkBkRo=;
+        b=kiWmC9sdiybfkWcPaYSJPg5pKvf9Rz0OyTs3PHIzbHnR7Ehb86liZJIg+AGnIaL42d
+         jRwU+/WAI3AQvZ9YLoe09J8X7G6VHGzN7GucZZZ17atK17P8BriiG1qUKDtO9X00Zh54
+         dX6WKcCK7Pf6hElpwU3B/1EBn1fNB7u/C1VP0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        b=TEz2HK9a9o7om0lJ9Suhj99HI8frTUPz1sktsVt2SEeKBKefl9NuL/fJLsXIvIl4uZ
-         qz12WzOjSIwNrdg+j/ncvizNaALJv7DU1i3V0jqT3jQ6y6bgndFj09HqtM6aa0v/tuUo
-         NDhevUo+xjY526vxa2IlaXO4m4Ldxr23I8FQc=
-Received: by 10.68.68.106 with SMTP id v10mr731620pbt.115.1307535362170; Wed,
- 08 Jun 2011 05:16:02 -0700 (PDT)
-Received: by 10.68.50.231 with HTTP; Wed, 8 Jun 2011 05:15:22 -0700 (PDT)
-In-Reply-To: <187961B7EDE84635BD7B3C9A4EF688C3@martinic.local>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=qzgCjflheZDchZUJ+qAWZ671DFqw57jZgrDn0JzX14MGVvISoD3ZachE2UN01iIyAO
+         DKzFT7lHR+3eoZh7IfPIHb2tSw/MEOTMemt5TQv2wYGCaNBljA43xVtvzJ9djf6wbod6
+         OlM4OfXsPGz1uzRThUKgoVC6/Ausi6N1CKXec=
+Received: by 10.204.57.135 with SMTP id c7mr612595bkh.88.1307536966547;
+        Wed, 08 Jun 2011 05:42:46 -0700 (PDT)
+Received: from [192.168.1.15] (abvu41.neoplus.adsl.tpnet.pl. [83.8.218.41])
+        by mx.google.com with ESMTPS id a28sm1087494fak.1.2011.06.08.05.42.44
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 08 Jun 2011 05:42:45 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <BANLkTinoQCZhyhgw61u7c3eF4e5MEf+eFA@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175363>
 
-On Wed, Jun 8, 2011 at 2:04 PM, Theo Niessink <theo@taletn.com> wrote:
-> Erik Faye-Lund wrote:
->> This looks obviously correct to me. Thanks for spotting the problem.
->>
->> Would you mind writing up a commit-message and supply a sign-off?
->
-> Like this you mean?
+On Wed, Jun 8, 2011, Michael Nahas wrote:
+> On Wed, Jun 8, 2011 at 7:12 AM, Jakub Narebski <jnareb@gmail.com> wrote:
 
-Just like that, indeed!
+> > I don't quite think that we need "git diff NEXT WTREE"; the short
+> > and sweet "git diff" is short for a reason,
+> 
+> To be clear, I'm not advocating and have never advocated getting rid
+> of zero-argument "git diff".  I've advocated that every (whole
+> project) diff command should be expressible by a "git diff TREE1
+> TREE2".  I'm fine with defaults if one or zero trees are specified.
 
-Junio, what do you think, is this OK? I'd be great if we could have
-this applied upstream, and then rebase-merge our branch on top for the
-next Git for Windows release.
+Those pseudo-almost-refs (almost-tree-ish) are to help new users, isn't it?
+But shouldn't new user learn that he/she should use "git diff" to review
+his changes, rather than use "git diff NEXT WTREE" to compare staged
+contents with working area?
+
+> So "git diff" would default to "git diff NEXT WTREE".
+
+You mean that "git diff NEXT WTREE" output be the same as "git diff",
+except for corner cases (merge conflict), isn't it?
+
+-- 
+Jakub Narebski
+Poland
