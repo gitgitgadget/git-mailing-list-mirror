@@ -1,93 +1,138 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH] git put: an alternative to add/reset/checkout
-Date: Wed, 8 Jun 2011 20:57:47 +0200
-Message-ID: <201106082057.48139.jnareb@gmail.com>
-References: <20110607200659.GA6177@sigill.intra.peff.net> <201106081950.04910.jnareb@gmail.com> <vpq62ogkxs0.fsf@bauges.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] sha1_file.c: zlib can only process 4GB at a time
+Date: Wed, 08 Jun 2011 12:03:35 -0700
+Message-ID: <7v1uz42liw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, Scott Chacon <schacon@gmail.com>,
-	Michael Nahas <mike@nahas.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Jun 08 20:58:02 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 08 21:03:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUNx3-0003az-Ba
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 20:58:01 +0200
+	id 1QUO2d-0006PK-2O
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 21:03:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753464Ab1FHS55 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 14:57:57 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:56062 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751960Ab1FHS54 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 14:57:56 -0400
-Received: by fxm17 with SMTP id 17so524743fxm.19
-        for <git@vger.kernel.org>; Wed, 08 Jun 2011 11:57:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=VXeBtUB7anttZ0m/9p6cT3oHjVdRdYwpNV7tnnCtStQ=;
-        b=qVDmlf0WzjQ0BjMuCnDvgDylnUm4bHl4WMncdmITrLT78ocI+wVGzZ0YGrJBNTRzhn
-         V075KPcuXYnBP+4ezFfUpGtEpq9EHOLtZ2ePT/rH/jYyGa3mZsPc89tFC2xDjftfipGY
-         Pqtq7wuZWWN2WFDRL4pqVpnWNyusnuH2bkH7s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=ntuD/2OufK0H/GLbFTtJeBijpGbbnXVkmobg9CgPXjWc2Jp6DKq9jGDrZMturnEa6x
-         6iTuPZ8PISwzRRV6AEVDHDRV9M8/0r8mKq2CFC9qqJws0SWyrr88p+WtHB3WKqMDHnsk
-         UKj4uqDU0bS2K2eXgg+A0NK3JtqTJnBcCre58=
-Received: by 10.223.55.200 with SMTP id v8mr588745fag.82.1307559473889;
-        Wed, 08 Jun 2011 11:57:53 -0700 (PDT)
-Received: from [192.168.1.15] (abvo166.neoplus.adsl.tpnet.pl. [83.8.212.166])
-        by mx.google.com with ESMTPS id a28sm1190111fak.3.2011.06.08.11.57.52
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 08 Jun 2011 11:57:52 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <vpq62ogkxs0.fsf@bauges.imag.fr>
-Content-Disposition: inline
+	id S1753590Ab1FHTDl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 15:03:41 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50686 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753285Ab1FHTDl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2011 15:03:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 21BDB5BBD;
+	Wed,  8 Jun 2011 15:05:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=4
+	l7eRRqBihVZI5iN81CX5YZrIoo=; b=xv455RuD54Wa41yONy8AFJEjv30tjTfwo
+	wfI1a/CovIkdJwmQr1YY33s6woy5EaVc3cxfXpBbUhHIxQLNC4M/qu/pcR7CHMMU
+	diXfFjFzO1A63IpL3bTl1SJtye+NpX+m7FYzakvDQWcJZvo2ny4GYbtXgZqkh4n1
+	V7dlBTjKa4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=LxF
+	8TiqZtyfKZGSNlEEOPPuLc8tGDp7vqVUxBDSB61b2ag2JwaXxtFKCcJ9RnOaa9p0
+	kGtAQ3KH+5G7Mdc+N6u0l1VCxKDKypHkr7+WkeAfXwmjowHtUlHHM7a4hUJxKdd7
+	jie4O3m4kdM35+98CqLXyf1JxjMbHOkbv4eAPGAI=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0F0E05BBC;
+	Wed,  8 Jun 2011 15:05:49 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2BBEE5BBB; Wed,  8 Jun 2011
+ 15:05:46 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 524F0DD0-9202-11E0-8313-C8CFB7AE1C3C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175445>
 
-Matthieu Moy wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> > Matthieu Moy wrote:
-> >> Jeff King <peff@peff.net> writes:
-> >> > On Wed, Jun 08, 2011 at 07:28:35PM +0200, Matthieu Moy wrote:
-> >> >> > Jeff King <peff@peff.net> writes:
-> >> >> >
-> >> >> > * @{wtree} would confuse users that it has something to do with reflog
-> >> >> 
-> >> >> Well, we already have @{upstream} ...
-> >> >
-> >> > Yes, but like all of the @{} things, it's a modifier for the left-hand
-> >> > side. So "master@{upstream}" is meaningful, and "@{upstream}" is the
-> >> > same as "HEAD@{upstream}".
-> >> >
-> >> > What does "master@{wtree}" mean?
-> >> 
-> >> Nothing, but then we already have @{-1} ;-).
-> >
-> > That's actually HEAD reflog.
-> 
-> Yes, but neither HEAD@{-1} nor master@{-1} work. So we have one instance
-> of @{...} which is unrelated from reflog, and another which isn't a
-> suffix. @{wtree} would be both.
+The size of objects we read from the repository and data we try to put
+into the repository are represented in "unsigned long", so that on larger
+architectures we can handle objects that weigh more than 4GB.
 
-But both are about refs (upstream of a ref, or previously checked-out ref).
-@{wtree} ain't.
+But the interface defined in zlib.h to communicate with inflate/deflate
+limits avail_in (how many bytes of input are we calling zlib with) and
+avail_out (how many bytes of output from zlib are we ready to accept)
+fields effectively to 4GB by defining their type to be uInt.
 
--- 
-Jakub Narebski
-Poland
+In many places in our code, we allocate a large buffer (e.g. mmap'ing a
+large loose object file) and tell zlib its size by assigning the size to
+avail_in field of the stream, but that will truncate the high octets of
+the real size.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ * There are a lot more places than just this call site, but I wanted to
+   send this out to get a quick sanity check by other people if the
+   approach of fixing these issues is sane.
+
+   Of course, we should be using streaming for more codepath, but that is
+   totally a separate issue. We would want our code to work correctly when
+   streaming is not used and your machine is beefy enough with zetabytes
+   of ram, and that is the topic of this patch.
+
+ cache.h     |   11 +++++++++++
+ sha1_file.c |   11 +++++++++--
+ 2 files changed, 20 insertions(+), 2 deletions(-)
+
+diff --git a/cache.h b/cache.h
+index e11cf6a..b917ae5 100644
+--- a/cache.h
++++ b/cache.h
+@@ -24,6 +24,17 @@ void git_inflate_init(z_streamp strm);
+ void git_inflate_end(z_streamp strm);
+ int git_inflate(z_streamp strm, int flush);
+ 
++/*
++ * avail_in and avail_out are counted in uInt, which typically limits
++ * the size of the buffer we can use to 4GB when interacting with zlib
++ * in a single call to inflate/deflate.
++ */
++#define ZLIB_BUF_MAX ((1UL << ((sizeof(uInt) * 8))) - 1)
++static inline uInt zlib_buf_cap(unsigned long len)
++{
++	return (ZLIB_BUF_MAX < len ? ZLIB_BUF_MAX : len);
++}
++
+ #if defined(DT_UNKNOWN) && !defined(NO_D_TYPE_IN_DIRENT)
+ #define DTYPE(de)	((de)->d_type)
+ #else
+diff --git a/sha1_file.c b/sha1_file.c
+index 064a330..51236ab 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2429,6 +2429,7 @@ static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
+ 	unsigned char parano_sha1[20];
+ 	char *filename;
+ 	static char tmpfile[PATH_MAX];
++	unsigned long bytes_to_deflate;
+ 
+ 	filename = sha1_file_name(sha1);
+ 	fd = create_tmpfile(tmpfile, sizeof(tmpfile), filename);
+@@ -2454,14 +2455,20 @@ static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
+ 	git_SHA1_Update(&c, hdr, hdrlen);
+ 
+ 	/* Then the data itself.. */
++	bytes_to_deflate = len;
+ 	stream.next_in = (void *)buf;
+-	stream.avail_in = len;
++	stream.avail_in = zlib_buf_cap(bytes_to_deflate);
+ 	do {
+ 		unsigned char *in0 = stream.next_in;
++		size_t consumed;
++
+ 		ret = deflate(&stream, Z_FINISH);
+-		git_SHA1_Update(&c, in0, stream.next_in - in0);
++		consumed = stream.next_in - in0;
++		git_SHA1_Update(&c, in0, consumed);
+ 		if (write_buffer(fd, compressed, stream.next_out - compressed) < 0)
+ 			die("unable to write sha1 file");
++		bytes_to_deflate -= consumed;
++		stream.avail_in = zlib_buf_cap(bytes_to_deflate);
+ 		stream.next_out = compressed;
+ 		stream.avail_out = sizeof(compressed);
+ 	} while (ret == Z_OK);
