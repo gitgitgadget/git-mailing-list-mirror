@@ -1,110 +1,93 @@
-From: Michael Nahas <mike.nahas@gmail.com>
-Subject: Re: Command-line interface thoughts (ad-hominem attacks)
-Date: Wed, 8 Jun 2011 14:57:09 -0400
-Message-ID: <BANLkTinibF0xmibeuJ6f9FUjaMmxavMJig@mail.gmail.com>
-References: <BANLkTikTWx7A64vN+hVZgL7cuiZ16Eobgg@mail.gmail.com>
-	<7vd3ir9btd.fsf@alter.siamese.dyndns.org>
-	<4DEDC124.3060302@drmicha.warpmail.net>
-	<201106081312.46377.jnareb@gmail.com>
-	<BANLkTinoQCZhyhgw61u7c3eF4e5MEf+eFA@mail.gmail.com>
-	<20110608150537.GC7805@sigill.intra.peff.net>
-Reply-To: mike@nahas.com
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH] git put: an alternative to add/reset/checkout
+Date: Wed, 8 Jun 2011 20:57:47 +0200
+Message-ID: <201106082057.48139.jnareb@gmail.com>
+References: <20110607200659.GA6177@sigill.intra.peff.net> <201106081950.04910.jnareb@gmail.com> <vpq62ogkxs0.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jun 08 20:57:18 2011
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, Scott Chacon <schacon@gmail.com>,
+	Michael Nahas <mike@nahas.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jun 08 20:58:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUNwK-0003Jq-9j
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 20:57:16 +0200
+	id 1QUNx3-0003az-Ba
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 20:58:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753446Ab1FHS5M convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Jun 2011 14:57:12 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:64492 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751960Ab1FHS5K convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Jun 2011 14:57:10 -0400
-Received: by mail-bw0-f46.google.com with SMTP id 15so686177bwz.19
-        for <git@vger.kernel.org>; Wed, 08 Jun 2011 11:57:09 -0700 (PDT)
+	id S1753464Ab1FHS55 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 14:57:57 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:56062 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751960Ab1FHS54 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2011 14:57:56 -0400
+Received: by fxm17 with SMTP id 17so524743fxm.19
+        for <git@vger.kernel.org>; Wed, 08 Jun 2011 11:57:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=T+pcJ7fmz+BU4qc7oAqHM0Xt/LMIWiWVDflMNDWW8VM=;
-        b=BoMs+xcVCQ8wGSXKcCmufKY95RgrtYWnigiYijhac0wTUdiQbwyLX66mzGKlwFehjB
-         yVa4zJbSVOqICYBLbEd0HvKhhZD5oTIQU8iCerb8MiXOwapWYb6aiSvxWAQtOgzf65P3
-         dQc/Lww5pzbYYrl9neVdYtBw2VOi06zfD0h4E=
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=VXeBtUB7anttZ0m/9p6cT3oHjVdRdYwpNV7tnnCtStQ=;
+        b=qVDmlf0WzjQ0BjMuCnDvgDylnUm4bHl4WMncdmITrLT78ocI+wVGzZ0YGrJBNTRzhn
+         V075KPcuXYnBP+4ezFfUpGtEpq9EHOLtZ2ePT/rH/jYyGa3mZsPc89tFC2xDjftfipGY
+         Pqtq7wuZWWN2WFDRL4pqVpnWNyusnuH2bkH7s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=J4heUVu6YRpfj5FuQINr7K9K8nSIdh9CpYGyDVp8HlArUMqrQuiGjkjFwtx4sM2Qy2
-         ja9G3I5bovcx5c0PFAw3zKki125xIE5Lv+N0Gu11nrxqtlxL3t1UZpIEl1aSBprprDtb
-         a3dpM7s8y+W8Hllh0HLAmHylg22cUiQVebyTo=
-Received: by 10.204.62.4 with SMTP id v4mr1097875bkh.169.1307559429388; Wed,
- 08 Jun 2011 11:57:09 -0700 (PDT)
-Received: by 10.204.100.80 with HTTP; Wed, 8 Jun 2011 11:57:09 -0700 (PDT)
-In-Reply-To: <20110608150537.GC7805@sigill.intra.peff.net>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=ntuD/2OufK0H/GLbFTtJeBijpGbbnXVkmobg9CgPXjWc2Jp6DKq9jGDrZMturnEa6x
+         6iTuPZ8PISwzRRV6AEVDHDRV9M8/0r8mKq2CFC9qqJws0SWyrr88p+WtHB3WKqMDHnsk
+         UKj4uqDU0bS2K2eXgg+A0NK3JtqTJnBcCre58=
+Received: by 10.223.55.200 with SMTP id v8mr588745fag.82.1307559473889;
+        Wed, 08 Jun 2011 11:57:53 -0700 (PDT)
+Received: from [192.168.1.15] (abvo166.neoplus.adsl.tpnet.pl. [83.8.212.166])
+        by mx.google.com with ESMTPS id a28sm1190111fak.3.2011.06.08.11.57.52
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 08 Jun 2011 11:57:52 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <vpq62ogkxs0.fsf@bauges.imag.fr>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175444>
 
-On Wed, Jun 8, 2011 at 11:05 AM, Jeff King <peff@peff.net> wrote:
-> On Wed, Jun 08, 2011 at 07:39:16AM -0400, Michael Nahas wrote:
->
->> On Wed, Jun 8, 2011 at 7:12 AM, Jakub Narebski <jnareb@gmail.com> wr=
-ote:
->> > I don't quite think that we need "git diff NEXT WTREE"; the short
->> > and sweet "git diff" is short for a reason,
->>
->> To be clear, I'm not advocating and have never advocated getting rid
->> of zero-argument "git diff". =A0I've advocated that every (whole
->> project) diff command should be expressible by a "git diff TREE1
->> TREE2". =A0I'm fine with defaults if one or zero trees are specified=
-=2E
->
-> I agree with this, but...
->
->> So "git diff" would default to "git diff NEXT WTREE".
->
-> Isn't this going to be behavior change, since your NEXT is not quite =
-the
-> same as the index? How do I now get an n-way combined diff of the
-> unmerged files in the index?
->
-> -Peff
+Matthieu Moy wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> > Matthieu Moy wrote:
+> >> Jeff King <peff@peff.net> writes:
+> >> > On Wed, Jun 08, 2011 at 07:28:35PM +0200, Matthieu Moy wrote:
+> >> >> > Jeff King <peff@peff.net> writes:
+> >> >> >
+> >> >> > * @{wtree} would confuse users that it has something to do with reflog
+> >> >> 
+> >> >> Well, we already have @{upstream} ...
+> >> >
+> >> > Yes, but like all of the @{} things, it's a modifier for the left-hand
+> >> > side. So "master@{upstream}" is meaningful, and "@{upstream}" is the
+> >> > same as "HEAD@{upstream}".
+> >> >
+> >> > What does "master@{wtree}" mean?
+> >> 
+> >> Nothing, but then we already have @{-1} ;-).
+> >
+> > That's actually HEAD reflog.
+> 
+> Yes, but neither HEAD@{-1} nor master@{-1} work. So we have one instance
+> of @{...} which is unrelated from reflog, and another which isn't a
+> suffix. @{wtree} would be both.
 
-The index is a file in .git/ that serves many purposes.  NEXT is an
-image of the whole project.  NEXT can be computed from the index and
-HEAD.
+But both are about refs (upstream of a ref, or previously checked-out ref).
+@{wtree} ain't.
 
-During a conflicted merge, stage 0 of the index holds the resolved
-files.  WTREE holds all merge files: the resolved and the unresolved
-(which have <<<< =3D=3D=3D=3D >>>> blocks in them).  I propose that dur=
-ing a
-conflicted merge, that NEXT be computed as HEAD plus the resolved
-files, that is, the files in stage 0 of the index.
-
-"git diff HEAD NEXT" would print the resolved changes.
-"git diff NEXT WTREE" would print the unresolved changes
-"git diff HEAD WTREE" would print all changes.
-
-I believe that is the same behaviour as "git diff", "git diff
---cached" and "git diff HEAD" during a conflicted merge.
-
-I do not know how "n-way" merge works.  I saw somewhere that indicated
-that it was a series of N-1 two-way merges.
-
-
-Mike
+-- 
+Jakub Narebski
+Poland
