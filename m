@@ -1,71 +1,87 @@
-From: Jeff King <peff@peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: Git-Mediawiki : cloning a set of pages
-Date: Wed, 8 Jun 2011 13:13:38 -0400
-Message-ID: <20110608171338.GA3917@sigill.intra.peff.net>
+Date: Wed, 08 Jun 2011 10:14:22 -0700 (PDT)
+Message-ID: <m3lixcdz67.fsf@localhost.localdomain>
 References: <BANLkTim1hOi0JdWZPR=Vw-S+9jTxqQ-=Tw@mail.gmail.com>
- <20110608151940.GD7805@sigill.intra.peff.net>
- <BANLkTim54YGYN50gZtqwe8w6-du_aTDWTQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Claire Fousse <claire.fousse@ensimag.imag.fr>, git@vger.kernel.org,
-	Sylvain Boulme <Sylvain.Boulme@imag.fr>,
-	"matthieu.moy" <Matthieu.Moy@grenoble-inp.fr>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 08 19:13:47 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Sylvain Boulme <Sylvain.Boulme@imag.fr>,
+	"Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>
+To: Claire Fousse <claire.fousse@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Wed Jun 08 19:14:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUMKA-0003cx-SK
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 19:13:47 +0200
+	id 1QUMKr-0003xI-AV
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 19:14:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752348Ab1FHRNm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 13:13:42 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58139
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751141Ab1FHRNl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 13:13:41 -0400
-Received: (qmail 596 invoked by uid 107); 8 Jun 2011 17:13:48 -0000
-Received: from c-76-21-13-32.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (76.21.13.32)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 08 Jun 2011 13:13:48 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Jun 2011 13:13:38 -0400
-Content-Disposition: inline
-In-Reply-To: <BANLkTim54YGYN50gZtqwe8w6-du_aTDWTQ@mail.gmail.com>
+	id S1752406Ab1FHROY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 13:14:24 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:62012 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751443Ab1FHROY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2011 13:14:24 -0400
+Received: by fxm17 with SMTP id 17so468090fxm.19
+        for <git@vger.kernel.org>; Wed, 08 Jun 2011 10:14:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:x-authentication-warning:to:cc:subject
+         :references:from:date:in-reply-to:message-id:lines:user-agent
+         :mime-version:content-type;
+        bh=m1QEQh4WypuExGFdQpUDELlofryLUMfPG2At6ReVoJg=;
+        b=LzvxhIHFStG231zYgcyCrFgesT/9TpTOuMPi1meQC/UEnFfqChpx90Nv2mugQHxcsU
+         LoIKHLxb38pVcBfA3+s2albzkcjUoc6npMfp6sIW1f+NOkjB75iwDJJ8njjfnLfahoz5
+         3H/MZxXomlPjTGqSHg9aCA6i4HB1/tHldKB9s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=qemMS5rSlIWh2qBN+IBmLCoIK4X4DDdR6OuMQj9dC99kZ3QGqVbGdlBtd3AuJO9ldF
+         AiFoidX+rWEOONbM8pOiFtWjB36Rc49JsLO2SjejVTY+6WHmL4ru1tzhcREQSULYrG6N
+         AG4pwCoNGD1bz2eDCDIEivgB6H3RPHxmYW+70=
+Received: by 10.223.6.11 with SMTP id 11mr3303608fax.92.1307553262980;
+        Wed, 08 Jun 2011 10:14:22 -0700 (PDT)
+Received: from localhost.localdomain (abvo166.neoplus.adsl.tpnet.pl [83.8.212.166])
+        by mx.google.com with ESMTPS id q10sm321370fan.8.2011.06.08.10.14.21
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 08 Jun 2011 10:14:22 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p58HDjEM020132;
+	Wed, 8 Jun 2011 19:13:51 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p58HDKli020122;
+	Wed, 8 Jun 2011 19:13:20 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <BANLkTim1hOi0JdWZPR=Vw-S+9jTxqQ-=Tw@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175406>
 
-On Wed, Jun 08, 2011 at 07:04:27PM +0200, Sverre Rabbelier wrote:
+Claire Fousse <claire.fousse@ensimag.imag.fr> writes:
 
-> On Wed, Jun 8, 2011 at 17:19, Jeff King <peff@peff.net> wrote:
-> > Maybe it would be even simpler and more flexible to give clone a "-c"
-> > flag that writes specific config variables in the newly-created
-> > repository.
+> The problem is not the feature in itself but the way you call it.
+> Just so you remember, here is the command  to clone the mediawiki :
+> git clone mediawiki::http://yourwiki.com
 > 
-> This makes a lot of sense. What about a use case like git-svn supports
-> currently, where you want to indicate "use the default
-> trunk/branches/tags setup"? Yes, you could do `git clone -c defaults
-> svn://example.com` and then git-remote-svn can set the relevant config
-> options itself. The only downside is that git-remote-svn then needs to
-> unset 'defaults' and set the appropriate values itself (to avoid
-> cluttering the config file). Thoughts?
+> As it is now, git clone does not implement a way to define a set of pages.
+[...]
 
-Yeah, I'm not sure. There is a similar case in the mediawiki helper
-itself, too. If I say:
+Well, what you need to do is to implement API for partial _clone_ (we
+have some SPI for partial checkout, but that is slightly different
+beast).
 
-  git clone -c mediawiki.pagesfiles /path/to/pages mediawiki::...
+Currently we have --depth=<n> to limit depth of history when cloning,
+and "git remote add -t <branch>" (repeated if necessary) to consider
+only a subset of branches, though unfortunately not in "git clone"
+yet.
 
-Should that add config that looks at /path/to/pages every time I fetch?
-Should it parse the pages file and load it into the config file as a set
-of config options? Should it copy the pages file into the .git directory
-and rewrite the config option to point to the local version?
-
-So I think that while setting config options may be useful for some
-things, the right model for other things is more like a command-line
-option. Maybe we need to offer both forms.
-
--Peff
+Not what you wanted to hear, I guess... :-(
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
