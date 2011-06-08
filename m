@@ -1,78 +1,136 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: gc getting called on each git command ... what's wrong?
-Date: Wed, 08 Jun 2011 09:50:23 -0700
-Message-ID: <7vhb802row.fsf@alter.siamese.dyndns.org>
-References: <BANLkTi=oUARfwvNFNj-_FvZdwxQgibqPOg@mail.gmail.com>
- <BANLkTiksHRmp102XDJP5+-CLGj8hZXUR=g@mail.gmail.com>
- <1307548930.19438.30.camel@drew-northup.unet.maine.edu>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Git-mediawiki : Encoding problems in perl
+Date: Wed, 08 Jun 2011 10:04:17 -0700 (PDT)
+Message-ID: <m3y61cdzmi.fsf@localhost.localdomain>
+References: <BANLkTimy85b3nu05FBjXzdnTJP0RBWdxiQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Peter Harris <git@peter.is-a-geek.org>, geoffrey.russell@gmail.com,
-	git@vger.kernel.org
-To: Drew Northup <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Wed Jun 08 18:50:42 2011
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: thomas@xteddy.org, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>
+To: =?iso-8859-15?q?J=E9r=E9mie_NIKAES?= <jeremie.nikaes@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 08 19:04:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QULxp-0000a9-PO
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 18:50:42 +0200
+	id 1QUMB8-0007NB-MH
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 19:04:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751710Ab1FHQug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 12:50:36 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:39563 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750986Ab1FHQug (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 12:50:36 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 398FE5819;
-	Wed,  8 Jun 2011 12:52:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JhdZu2iw5JNxkkQpbS7Nh8774wE=; b=gcPO8g
-	nckvarayCfyjwDgYkEXQm+bYcSOSwxi+NLaoZl+gqMLQhLUmT2DYLUu0NYHxGCye
-	C/93eg5wkd5oRLqDUSiNujNim5qaJmHVXBczxl8z/V59sk5O/stLLIhUBS1BQRzC
-	4OAtt3lTjFaGO23BrHfNG1frUMWSS3GLxC2ec=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ot6JskesvscHcBZepljJpiTSDPtw5T0D
-	dUlJuyVoViWZy9BpWt6TV/SJXq6iGtTHT0akeunLIwrG4L71DzueYEjr2CrFOC/P
-	wO5HClqjTcvaDKdBvR0UjPSpRV8mOgkoxL0FCU6e4/5TSEAoLL0WNyuz810pPGqd
-	o0UUDbCfUl8=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E992F5816;
-	Wed,  8 Jun 2011 12:52:40 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9266857EF; Wed,  8 Jun 2011
- 12:52:35 -0400 (EDT)
-In-Reply-To: <1307548930.19438.30.camel@drew-northup.unet.maine.edu> (Drew
- Northup's message of "Wed, 08 Jun 2011 12:02:10 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B9089D2E-91EF-11E0-9600-C8CFB7AE1C3C-77302942!a-pb-sasl-sd.pobox.com
+	id S1751181Ab1FHREV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Jun 2011 13:04:21 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:44438 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751343Ab1FHREV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Jun 2011 13:04:21 -0400
+Received: by bwz15 with SMTP id 15so593775bwz.19
+        for <git@vger.kernel.org>; Wed, 08 Jun 2011 10:04:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:x-authentication-warning:to:cc:subject
+         :references:from:date:in-reply-to:message-id:lines:user-agent
+         :mime-version:content-type:content-transfer-encoding;
+        bh=l+zsVB7mK746VPBSRz1A/0xKbjj3lJ1e7fr04VCNyEw=;
+        b=NOT3mdVTjbVCCo4FwdxMv1f6VdVk5rUbNyTLxXrm9hfRAmnI6EbPAG/o4is1ZGmJCK
+         Zs1RDfsxHQXQJoiU7NzsP+RapcY1ELY5IJHrFAtZbNUyYEk9zHZ99yoWtyTH5JvTu6+R
+         gpbbhEOO8ebVGtpHF2DK4W+ntL7YlQq2gPZuw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=aCsqE+jsWv5FgG9b/pvUQKQsCUkhZBEfBqNPMUv3sbbkmNExoObMKsxA7q2ES4pBYI
+         SNOhYclHcz5zYMhMZDzJywujM9R6Ap8kvvWbR5+1vHz3PvUEX6JNAghCBAXp9BtzNK21
+         0ew9SK8SGFTlTZk81TcsLOMsjjP48pOPloH7U=
+Received: by 10.204.14.147 with SMTP id g19mr1284689bka.11.1307552658323;
+        Wed, 08 Jun 2011 10:04:18 -0700 (PDT)
+Received: from localhost.localdomain (abvo166.neoplus.adsl.tpnet.pl [83.8.212.166])
+        by mx.google.com with ESMTPS id q20sm746867bka.5.2011.06.08.10.04.16
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 08 Jun 2011 10:04:17 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p58H3jFL019974;
+	Wed, 8 Jun 2011 19:03:56 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p58H3Y62019962;
+	Wed, 8 Jun 2011 19:03:34 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <BANLkTimy85b3nu05FBjXzdnTJP0RBWdxiQ@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175400>
 
-Drew Northup <drew.northup@maine.edu> writes:
+J=E9r=E9mie NIKAES <jeremie.nikaes@gmail.com> writes:
 
->> That's why. See gc.autopacklimit in "git help config" -- by default,
->> git will gc if there are more than 50 pack files.
->
-> Do we want to consider ignoring (or automatically doubling, or something
-> like that) gc.autopacklimit if that number of packs meet or exceed
-> gc.packSizeLimit? I have no idea what the patch for this might look
-> like, but it seems to make more sense than this situation.
+> While working on the git-mediawiki project[1], we ran into some
+> problems regarding utf8 encoding of files. Most of them have been
+> solved, however, one is still pretty annoying.
+> Let me illustrate it :
+>=20
+> I want to edit a page on mediawiki using the API, with a very simple =
+example :
+>=20
+> my $mw =3D MediaWiki::API->new();
+> $mw->edit( {
+>         action =3D> 'edit',
+>         title =3D> 'Main_page',
+>         text =3D> '=E9t=E9',
+> } ) ;
+>=20
+> But, when I look at the page on mediawiki, I see weird characters : =C3=
+=A9t=C3=A9.
 
-This is unrelated to the auto-gc, but it also would be fruitful to
-question if it is a sane setting to limit packfiles to 30M, when the
-repository needs 100 of them (total around 3G??). Just like having too
-many loose object files degrade performance (and that is one of the
-reasons we pack them in the first place), having many packs will degrade
-performance unnecessarily and to a worse degree, as "check which pack has
-this particular object" code has to examine all packs, unlike the loose
-object case where we let the .git/objects/?? fan-out to give us some
-hashing and the filesystem to do the heavylifting for us.
+Take a look at
+
+  http://stackoverflow.com/questions/6162484/why-does-modern-perl-avoid=
+-utf-8-by-default
+
+especially accepted answer.
+
+
+In short (I don't agree with everything there, and not everything is
+needed for all but extremal Unicode usage): if your script is written
+using UTF-8 like in above examples, use
+
+  use utf8;
+
+If this is simplification, and this text comes from other file or is
+result of output of some command, use
+
+  use utf8::all;
+
+or take a look what it does and put relevant parts in your script.
+=20
+> I tried text =3D> encode_utf8('=E9t=E9') with no success.
+>=20
+> This makes pushing changes from git to mediawiki buggy since pulling =
+a
+> file with accentuated characters and pushing it right after changes
+> things on the wiki.
+>=20
+> While googling (a lot), I found that utf8 was pretty tricky in perl..=
+=2E
+> The only thing that seems to solve things is a simple addition of 'us=
+e
+> encoding utf8' at the top of our script.
+> However
+> A) Adding this line requires that I remove 'use strict;'
+
+  use encoding ':utf8';
+
+or
+
+  use encoding 'utf8';
+
+> B) I found some information about this pragma encoding and it seems t=
+o
+> be unadvised to use it
+
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
