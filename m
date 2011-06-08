@@ -1,8 +1,7 @@
 From: Andi Kleen <andi@firstfloor.org>
-Subject: [PATCH 2/2] Add profile feedback build to git
-Date: Wed,  8 Jun 2011 14:43:37 -0700
-Message-ID: <1307569417-8924-2-git-send-email-andi@firstfloor.org>
-References: <1307569417-8924-1-git-send-email-andi@firstfloor.org>
+Subject: [PATCH 1/2] Remove noreturn function pointers in usage.c
+Date: Wed,  8 Jun 2011 14:43:36 -0700
+Message-ID: <1307569417-8924-1-git-send-email-andi@firstfloor.org>
 Cc: Andi Kleen <ak@linux.intel.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Wed Jun 08 23:44:56 2011
@@ -11,90 +10,76 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUQYa-0003rM-BT
+	id 1QUQYZ-0003rM-Oi
 	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 23:44:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753301Ab1FHVox (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 17:44:53 -0400
-Received: from mga02.intel.com ([134.134.136.20]:43517 "EHLO mga02.intel.com"
+	id S1753309Ab1FHVou (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 17:44:50 -0400
+Received: from mga11.intel.com ([192.55.52.93]:49991 "EHLO mga11.intel.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754417Ab1FHVov (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 17:44:51 -0400
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga101.jf.intel.com with ESMTP; 08 Jun 2011 14:44:51 -0700
+	id S1752090Ab1FHVot (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2011 17:44:49 -0400
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmsmga102.fm.intel.com with ESMTP; 08 Jun 2011 14:44:49 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="4.65,340,1304319600"; 
-   d="scan'208";a="10910073"
+   d="scan'208";a="13712288"
 Received: from tassilo.jf.intel.com ([10.7.201.108])
-  by orsmga002.jf.intel.com with ESMTP; 08 Jun 2011 14:44:49 -0700
+  by fmsmga002.fm.intel.com with ESMTP; 08 Jun 2011 14:44:49 -0700
 Received: by tassilo.jf.intel.com (Postfix, from userid 501)
-	id 937FD242B3D; Wed,  8 Jun 2011 14:43:41 -0700 (PDT)
+	id 8E4AC242B3F; Wed,  8 Jun 2011 14:43:41 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4.4
-In-Reply-To: <1307569417-8924-1-git-send-email-andi@firstfloor.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175462>
 
 From: Andi Kleen <ak@linux.intel.com>
 
-Add a gcc profile feedback build option "profile-all" to the
-main Makefile. It simply runs the test suite to generate feedback
-data and the recompiles the main executables with that. The basic
-structure is similar to the existing gcov code.
+Due to a bug in gcc 4.6+ it can crash when doing profile feedback
+with a noreturn function pointer
 
-gcc is often able to generate better code with profile feedback
-data. The training load also doesn't need to be too similar
-to the actual load, it still gives benefits.
+(http://gcc.gnu.org/bugzilla/show_bug.cgi?id=49299)
 
-The test suite run is unfortunately quite long. It would
-be good to find a suitable subset that runs faster and still
-gives reasonable feedback.
-
-For now the test suite runs single threaded (I had some
-trouble running the test suite with -jX)
-
-I tested it with git gc and git blame kernel/sched.c on a Linux
-kernel tree. For gc I get about 2.7% improvement in wall clock
-time by using the feedback build, for blame about 2.4%.
-That's not gigantic, but not shabby either for a very small patch.
-
-If anyone has any favourite CPU intensive git benchmarks feel
-free to try them too.
-
-I hope distributors will switch to use a feedback build in their
-packages.
+Remove the NORETURNs from the die functions for now to work
+around this. Doesn't seem to make any difference.
 
 Signed-off-by: Andi Kleen <ak@linux.intel.com>
 ---
- Makefile |   17 +++++++++++++++++
- 1 files changed, 17 insertions(+), 0 deletions(-)
+ usage.c |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index e40ac0c..85e2679 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2486,3 +2486,20 @@ cover_db: coverage-report
+diff --git a/usage.c b/usage.c
+index b5e67e3..4045574 100644
+--- a/usage.c
++++ b/usage.c
+@@ -12,13 +12,13 @@ void vreportf(const char *prefix, const char *err, va_list params)
+ 	fprintf(stderr, "%s%s\n", prefix, msg);
+ }
  
- cover_db_html: cover_db
- 	cover -report html -outputdir cover_db_html cover_db
-+
-+### profile feedback build
-+#
-+.PHONY: profile-all profile-clean
-+
-+PROFILE_GEN_CFLAGS := $(CFLAGS) -fprofile-generate
-+PROFILE_USE_CFLAGS := $(CFLAGS) -fprofile-use -fprofile-correction
-+
-+profile-clean:
-+	$(RM) $(addsuffix *.gcda,$(object_dirs))
-+	$(RM) $(addsuffix *.gcno,$(object_dirs))
-+
-+profile-all: profile-clean
-+	$(MAKE) CFLAGS="$(PROFILE_GEN_CFLAGS)" all
-+	$(MAKE) CFLAGS="$(PROFILE_GEN_CFLAGS)" -j1 test
-+	$(MAKE) CFLAGS="$(PROFILE_USE_CFLAGS)" all
-+	
+-static NORETURN void usage_builtin(const char *err, va_list params)
++static  void usage_builtin(const char *err, va_list params)
+ {
+ 	vreportf("usage: ", err, params);
+ 	exit(129);
+ }
+ 
+-static NORETURN void die_builtin(const char *err, va_list params)
++static  void die_builtin(const char *err, va_list params)
+ {
+ 	vreportf("fatal: ", err, params);
+ 	exit(128);
+@@ -36,8 +36,8 @@ static void warn_builtin(const char *warn, va_list params)
+ 
+ /* If we are in a dlopen()ed .so write to a global variable would segfault
+  * (ugh), so keep things static. */
+-static NORETURN_PTR void (*usage_routine)(const char *err, va_list params) = usage_builtin;
+-static NORETURN_PTR void (*die_routine)(const char *err, va_list params) = die_builtin;
++static void (*usage_routine)(const char *err, va_list params) = usage_builtin;
++static void (*die_routine)(const char *err, va_list params) = die_builtin;
+ static void (*error_routine)(const char *err, va_list params) = error_builtin;
+ static void (*warn_routine)(const char *err, va_list params) = warn_builtin;
+ 
 -- 
 1.7.4.4
