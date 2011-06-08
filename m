@@ -1,78 +1,106 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [RFC/PATCH] git put: an alternative to add/reset/checkout
-Date: Wed, 8 Jun 2011 22:18:38 +0700
-Message-ID: <BANLkTink9T7M5989Ntpnt5jYcn3bdCXKhQ@mail.gmail.com>
-References: <20110607200659.GA6177@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git-Mediawiki : cloning a set of pages
+Date: Wed, 8 Jun 2011 11:19:40 -0400
+Message-ID: <20110608151940.GD7805@sigill.intra.peff.net>
+References: <BANLkTim1hOi0JdWZPR=Vw-S+9jTxqQ-=Tw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Scott Chacon <schacon@gmail.com>,
-	Michael Nahas <mike@nahas.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jun 08 17:19:45 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Sylvain Boulme <Sylvain.Boulme@imag.fr>,
+	"matthieu.moy" <Matthieu.Moy@grenoble-inp.fr>
+To: Claire Fousse <claire.fousse@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Wed Jun 08 17:19:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUKXo-0003ZA-62
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 17:19:44 +0200
+	id 1QUKXu-0003ai-A3
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 17:19:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756365Ab1FHPTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 11:19:39 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:44416 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756020Ab1FHPTj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 11:19:39 -0400
-Received: by bwz15 with SMTP id 15so503682bwz.19
-        for <git@vger.kernel.org>; Wed, 08 Jun 2011 08:19:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=H0CuPE/6uKJaeaunLyW6Xum5jS5+ZaJxk5nhJnl+1sI=;
-        b=sa7ZYgFd5fan2sjrS0Zm4hPvnfMVKRjujTXSARjayth9yXZBtiWgMplgCWk8A/f+hh
-         wvgHLC5VaUemBBalhXCeKLy9RGMy4GlVhnFy/vx/DUmkQrxkRbSPr2b6n6YFKxDL3iDy
-         75d1e6N2daFyokr8PjrYhpKeiqTSemanwV5UA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=uC+UWhlaw1ewUaRxZKYhptHJEBBdYwa5mHLC4rkC5+kUELiA6yYtmnKTFEPwmJq8BX
-         5Da1k28MWwrtGUG9OvLgF9g3Ss7ax07TutkDtXH8ydAOdVmhJZ9We0uIch5fvJ8A6FO8
-         RVyAGc4WNpSCjyVs5nxUlcWHFd+guDaTP58lI=
-Received: by 10.204.74.21 with SMTP id s21mr697020bkj.62.1307546357699; Wed,
- 08 Jun 2011 08:19:17 -0700 (PDT)
-Received: by 10.204.50.150 with HTTP; Wed, 8 Jun 2011 08:18:38 -0700 (PDT)
-In-Reply-To: <20110607200659.GA6177@sigill.intra.peff.net>
+	id S1756420Ab1FHPTo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 11:19:44 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37053
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756399Ab1FHPTn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2011 11:19:43 -0400
+Received: (qmail 31067 invoked by uid 107); 8 Jun 2011 15:19:51 -0000
+Received: from c-76-21-13-32.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (76.21.13.32)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 08 Jun 2011 11:19:51 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Jun 2011 11:19:40 -0400
+Content-Disposition: inline
+In-Reply-To: <BANLkTim1hOi0JdWZPR=Vw-S+9jTxqQ-=Tw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175382>
 
-On Wed, Jun 8, 2011 at 3:06 AM, Jeff King <peff@peff.net> wrote:
-> But another way to think about it is that commits, the index, and the
-> working tree are all "locations" with content. And one common operation
-> you may want to do is to move content from one spot to another, either
-> whole, by file, or by diff hunks.
+On Wed, Jun 08, 2011 at 01:19:38PM +0200, Claire Fousse wrote:
 
-Also "git put --pretend" or "git put --dry-run" may show the diff of
-content movement, without actual moving. "--dry-run --patch"
-combination probably does not make sense though.
+> The problem is not the feature in itself but the way you call it.
+> Just so you remember, here is the command  to clone the mediawiki :
+> git clone mediawiki::http://yourwiki.com
+> 
+> As it is now, git clone does not implement a way to define a set of pages.
+> The 2 solutions we think of are :
+> 	* git clone mediawiki::http://yourwiki.com$$page1$$page2 ...
+> 	Where $$ is a separator still to be determined. It should not be
+> something which could appear in the title of a page.
+> 	It is a simple way to proceed but it becomes horrible when you want
+> to clone many pages.
 
-> As you can see, this handles only three typoes of locations: the
-> worktree, the index, and an arbitrary commit (really a tree-ish). Some
-> other types I've thought of are:
->
->  ....
->
+Ick, yeah, that is kind of ugly. I think this is a general problem with
+the clone and remote helper interface that we are going to need to
+solve. It seems like clone should allow transport-specific options to
+pass through the command line and make it to the transport.
 
-I find it intuitive (given a source tree and destination one(s), you
-can copy content by paths or even by hunks), until you give it more
-powers (creating new branch or commit, move subdirs...). The original
-git-put idea could reduce a lot of confusion for new users. Your extra
-types seem uncommon to me (or can be well covered with current
-commands without much confusion). For advanced use cases, maybe the
-current command set can be enhanced with new options.
--- 
-Duy
+Something like:
+
+  git clone -c option=value mediawiki::http://...
+
+where the "option" is up to the transport to interpret.  It could be
+implemented as a set of in-core options that get passed to the remote
+helper over the pipe. But that leaves the helper with probably having to
+store the options for future runs.
+
+Maybe it would be even simpler and more flexible to give clone a "-c"
+flag that writes specific config variables in the newly-created
+repository. Like:
+
+  git clone -c mediawiki.page=page1 \
+            -c mediawiki.page=page2 \
+            http://...
+
+Then the remote helper can just consult the git config. As a bonus, it
+also lets you do things like:
+
+  git clone -c core.ignorecase=true git://...
+
+which is currently awkward (you either have to have set such variable in
+your ~/.gitconfig, or you must use init+config+fetch to do a clone
+manually.
+
+Getting back to mediawiki, that gives us a slightly nicer syntax, but
+we're still specifying each page on the command line (and now it's even
+more verbose!). I would think two things could help:
+
+  1. Some kind of globbing, like mediawiki.page="foo_*". The usefulness
+     of this will depend on how well pages in the wiki are named,
+     though.
+
+  2. Have a config option to point to a file containing page entries,
+     one per line.
+
+> 	* write a git-mw-clone script which asks the user to enter a set
+> 	of pages  and may store this set of titles in the git config.
+> 	This script should then call git-clone which will call the
+> 	remote-mediawiki functions.  git-mw-clone would clone the entire
+> 	wiki and git-mw-clone --pages would ask the user to enter their
+> 	set.  The problem here is that a not git-like command is
+> 	required.
+
+Yeah, I like this less because you lose a lot of the seamlessness of the
+remote helper solution.
+
+-Peff
