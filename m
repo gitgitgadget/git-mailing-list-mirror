@@ -1,74 +1,152 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCH 13/48] t6022: Remove unnecessary untracked files to make test cleaner
-Date: Wed,  8 Jun 2011 01:30:43 -0600
-Message-ID: <1307518278-23814-14-git-send-email-newren@gmail.com>
+Subject: [PATCH 09/48] t6036: criss-cross with weird content can fool git into clean merge
+Date: Wed,  8 Jun 2011 01:30:39 -0600
+Message-ID: <1307518278-23814-10-git-send-email-newren@gmail.com>
 References: <1307518278-23814-1-git-send-email-newren@gmail.com>
 Cc: jgfouca@sandia.gov, Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 08 09:32:21 2011
+X-From: git-owner@vger.kernel.org Wed Jun 08 09:32:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUDFU-0007JK-UW
+	id 1QUDFV-0007JK-Gk
 	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 09:32:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755346Ab1FHHbu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 03:31:50 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:35036 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754789Ab1FHH3V (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 03:29:21 -0400
-Received: by mail-pw0-f46.google.com with SMTP id 15so118980pwi.19
-        for <git@vger.kernel.org>; Wed, 08 Jun 2011 00:29:20 -0700 (PDT)
+	id S1754461Ab1FHHcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 03:32:00 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:43667 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754672Ab1FHH3L (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2011 03:29:11 -0400
+Received: by mail-pz0-f46.google.com with SMTP id 9so118978pzk.19
+        for <git@vger.kernel.org>; Wed, 08 Jun 2011 00:29:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=Go7wZHsT6v7BUNCIF8hvUd1NenXznSJB0TLFXr5Mtq4=;
-        b=m/SxQcIJx1P6H43pwW2k1DZL/qlQb8lWWZgtVOqtlEqVDUd6UqZxnlv1Pp/dgpB9ch
-         QotwJx54Dyhm+5BphHJ5nB8FfNAk8q6cHYDzxy1GzSl8GYr6gKlK+DFH3bVltokoa5rI
-         GVISUQKZw555wlxpTdwy9EUFoRrMos6Lva1G8=
+        bh=jbV1UNZ71xh5GoICoAcTCPSJPd3SNY5NBzv9YcOx1Ug=;
+        b=eJMUcA1dj56Rcak0I+GTTVieBt1EtpNfsUN/ur9s0EMO/1u9ZAYSjoU7VKmUk+AABP
+         TFDDQsGRfie1WifFDyLskYSWMXloe4WY8Og1JdrPkQgqXAHKC4pj+70nVfZA3gQKRsZ2
+         PBkcCH/NmzaFCTZOvHg3qKiq2AgKlbJ59lsMY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=ffKe2ZskT4utUGBIquMFS0R3jpEWIJE991NMtFZaQMQ0kR0GO61kO/bfONF3IgEUQw
-         J5AskOcRH8peBcX1GA47x5SmLfzQc43lbdWt76s1ESlq4UnpQYn1b8lIkt05I8rercCN
-         oqgQg5CiukfP7OkjAaDUZaPILj2dtVIb/62Z8=
-Received: by 10.68.21.231 with SMTP id y7mr591816pbe.493.1307518160900;
-        Wed, 08 Jun 2011 00:29:20 -0700 (PDT)
+        b=CefZ3hvVjAyrJYTlgdpUKajsvp8Mb786wfdppuJzVYAeDLl6DAzp35cUkX5zKbAJ/X
+         1SRcaCcn3vlT2C08Iee1idxDDSYkwbRPKsqimEqvkZB+whR299nf3e7jz7hJCmr2QUeC
+         zXp+by0e6+6+6UkQ3/eYTOf1MSFyFoA0GVjhY=
+Received: by 10.68.10.105 with SMTP id h9mr593260pbb.108.1307518151063;
+        Wed, 08 Jun 2011 00:29:11 -0700 (PDT)
 Received: from localhost.localdomain ([216.222.84.34])
-        by mx.google.com with ESMTPS id k4sm296286pbl.59.2011.06.08.00.29.18
+        by mx.google.com with ESMTPS id k4sm296286pbl.59.2011.06.08.00.29.08
         (version=SSLv3 cipher=OTHER);
-        Wed, 08 Jun 2011 00:29:19 -0700 (PDT)
+        Wed, 08 Jun 2011 00:29:10 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6.rc0.62.g2d69f
 In-Reply-To: <1307518278-23814-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175340>
 
-Since this test later does a git add -A, we should clean out unnecessary
-untracked files as part of our cleanup.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t6022-merge-rename.sh |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ t/t6036-recursive-corner-cases.sh |   83 +++++++++++++++++++++++++++++++++++++
+ 1 files changed, 83 insertions(+), 0 deletions(-)
 
-diff --git a/t/t6022-merge-rename.sh b/t/t6022-merge-rename.sh
-index 1ed259d..1d1b32e 100755
---- a/t/t6022-merge-rename.sh
-+++ b/t/t6022-merge-rename.sh
-@@ -252,6 +252,7 @@ test_expect_success 'setup for rename + d/f conflicts' '
- 	git reset --hard &&
- 	git checkout --orphan dir-in-way &&
- 	git rm -rf . &&
-+	git clean -fdqx &&
+diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner-cases.sh
+index 52d2ecf..dab52a4 100755
+--- a/t/t6036-recursive-corner-cases.sh
++++ b/t/t6036-recursive-corner-cases.sh
+@@ -314,4 +314,87 @@ test_expect_failure 'git detects conflict merging criss-cross+modify/delete, rev
+ 	test $(git rev-parse :3:file) = $(git rev-parse B:file)
+ '
  
- 	mkdir sub &&
- 	mkdir dir &&
++#
++# criss-cross + modify/modify with very contrived file contents:
++#
++#      B   D
++#      o---o
++#     / \ / \
++#  A o   X   ? F
++#     \ / \ /
++#      o---o
++#      C   E
++#
++#   Commit A: file with contents 'A\n'
++#   Commit B: file with contents 'B\n'
++#   Commit C: file with contents 'C\n'
++#   Commit D: file with contents 'D\n'
++#   Commit E: file with contents:
++#      <<<<<<< Temporary merge branch 1
++#      C
++#      =======
++#      B
++#      >>>>>>> Temporary merge branch 2
++#
++# Now, when we merge commits D & E, does git detect the conflict?
++
++test_expect_success 'setup differently handled merges of content conflict' '
++	git clean -fdqx &&
++	rm -rf .git &&
++	git init &&
++
++	echo A >file &&
++	git add file &&
++	test_tick &&
++	git commit -m A &&
++
++	git branch B &&
++	git checkout -b C &&
++	echo C >file &&
++	git add file &&
++	test_tick &&
++	git commit -m C &&
++
++	git checkout B &&
++	echo B >file &&
++	git add file &&
++	test_tick &&
++	git commit -m B &&
++
++	git checkout B^0 &&
++	test_must_fail git merge C &&
++	echo D >file &&
++	git add file &&
++	test_tick &&
++	git commit -m D &&
++	git tag D &&
++
++	git checkout C^0 &&
++	test_must_fail git merge B &&
++	cat <<EOF >file &&
++<<<<<<< Temporary merge branch 1
++C
++=======
++B
++>>>>>>> Temporary merge branch 2
++EOF
++	git add file &&
++	test_tick &&
++	git commit -m E &&
++	git tag E
++'
++
++test_expect_failure 'git detects conflict w/ criss-cross+contrived resolution' '
++	git checkout D^0 &&
++
++	test_must_fail git merge -s recursive E^0 &&
++
++	test 3 -eq $(git ls-files -s | wc -l) &&
++	test 3 -eq $(git ls-files -u | wc -l) &&
++	test 0 -eq $(git ls-files -o | wc -l) &&
++
++	test $(git rev-parse :2:file) = $(git rev-parse D:file) &&
++	test $(git rev-parse :3:file) = $(git rev-parse E:file)
++'
++
+ test_done
 -- 
 1.7.6.rc0.62.g2d69f
