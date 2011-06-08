@@ -1,102 +1,77 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: old but persistent problem: bad line length character
-Date: Wed, 08 Jun 2011 10:33:20 -0700 (PDT)
-Message-ID: <m3d3iodya5.fsf@localhost.localdomain>
-References: <alpine.DEB.1.10.1106071832470.4175@localhost>
-	<20110607180624.GA23752@sigill.intra.peff.net>
-	<alpine.DEB.1.10.1106072337500.11389@localhost>
-	<7vpqmo2wy7.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/PATCH] git put: an alternative to add/reset/checkout
+Date: Wed, 08 Jun 2011 19:34:09 +0200
+Message-ID: <vpqlixcns6m.fsf@bauges.imag.fr>
+References: <20110607200659.GA6177@sigill.intra.peff.net>
+	<7vvcwh4ako.fsf@alter.siamese.dyndns.org>
+	<20110607214532.GB7663@sigill.intra.peff.net>
+	<m3hb80dynr.fsf@localhost.localdomain>
+	<vpqtyc0nsfw.fsf@bauges.imag.fr>
+	<20110608173012.GA4279@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Peter Kleiweg <pkleiweg@xs4all.nl>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 08 19:33:29 2011
+Content-Type: text/plain
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Scott Chacon <schacon@gmail.com>,
+	Michael Nahas <mike@nahas.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jun 08 19:40:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUMdE-0004cF-TS
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 19:33:29 +0200
+	id 1QUMja-0007Ze-1O
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Jun 2011 19:40:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753334Ab1FHRdY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 13:33:24 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:55579 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751373Ab1FHRdX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 13:33:23 -0400
-Received: by fxm17 with SMTP id 17so477589fxm.19
-        for <git@vger.kernel.org>; Wed, 08 Jun 2011 10:33:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:x-authentication-warning:to:cc:subject
-         :references:from:date:in-reply-to:message-id:lines:user-agent
-         :mime-version:content-type;
-        bh=31mSa0iqUmNxqy92veIjEcGlntIIrk7imU2qiVz/tHA=;
-        b=tCUU2UDgYAWFSiN3KnqKg70wMqHLGphZ5x4v1q5gavkA6cMQoiQo/GvPhXv67oHnuJ
-         Betob8UR00KSBu0AxVHz8ro4tQTt75fFV2YHijqM5eyokz7Dl9F33FwdINkrntl2/C68
-         gU9PBjjLzCOerTbW7ENGivrmK2Vv8N7gt3vpg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=L1JlpmgPYB1yvuZa5URwWzLZ9YUfSJmQyMtA6OOcYcapwvvXSSpkX4Tei/Kez57wce
-         wgd8ib+pecwXWD9fUaqwGd7OsSTZFWQzIDl+ciW6Nq5jmopA4UuvSwBPXs4JL8BAtg+q
-         1nKQOTCAmFpV06H5cWWYRRhzmeXXUpL0jQow8=
-Received: by 10.223.145.24 with SMTP id b24mr1978332fav.89.1307554401592;
-        Wed, 08 Jun 2011 10:33:21 -0700 (PDT)
-Received: from localhost.localdomain (abvo166.neoplus.adsl.tpnet.pl [83.8.212.166])
-        by mx.google.com with ESMTPS id n15sm324811fag.42.2011.06.08.10.33.20
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 08 Jun 2011 10:33:20 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p58HWo6O020430;
-	Wed, 8 Jun 2011 19:32:55 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p58HWYnd020420;
-	Wed, 8 Jun 2011 19:32:34 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <7vpqmo2wy7.fsf@alter.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751654Ab1FHRj4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 13:39:56 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:36028 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751230Ab1FHRj4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2011 13:39:56 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p58HY8wx006421
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 8 Jun 2011 19:34:08 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1QUMdu-0005Mt-1k; Wed, 08 Jun 2011 19:34:10 +0200
+In-Reply-To: <20110608173012.GA4279@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 8 Jun 2011 13:30:12 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 08 Jun 2011 19:34:08 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p58HY8wx006421
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1308159248.99429@e/wj2XDYRw+80ognnVJnlg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175412>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Peter Kleiweg <pkleiweg@xs4all.nl> writes:
-> 
-> > I made it read some more than 4 bytes. And this is what I get:
-> >
-> > {27}]0;github git-receive-pack 'pebbe/Gabmap.git'{7}
-> >
-> > Ah, I see! I have a wrapper set-up around ssh that sets the 
-> > window title of the shell to the ssh command argument. That is 
-> > what messes things up!
-> >
-> > OK. Fixed now.
-> 
-> That does not explain why you earlier said 1.4.4.4 works and more recent
-> versions do not, though.
+> On Wed, Jun 08, 2011 at 07:28:35PM +0200, Matthieu Moy wrote:
+>
+>> > Jeff King <peff@peff.net> writes:
+>> >
+>> > * @{wtree} would confuse users that it has something to do with reflog
+>> 
+>> Well, we already have @{upstream} ...
+>
+> Yes, but like all of the @{} things, it's a modifier for the left-hand
+> side. So "master@{upstream}" is meaningful, and "@{upstream}" is the
+> same as "HEAD@{upstream}".
+>
+> What does "master@{wtree}" mean?
 
+Nothing, but then we already have @{-1} ;-).
 
->From my #git channel logs:
-
-Jun 03 19:09:42 <ShadeHawk>     Hmmm... for a while I had transient (i.e. fixed now) error
-                                when fetching from git.kernel.org repositories
-Jun 03 19:09:50 <ShadeHawk>     $ git fetch origin
-Jun 03 19:09:59 <ShadeHawk>     fatal: protocol error: bad line length character: git:
-Jun 03 19:10:24 <ShadeHawk>     but when I wanted to debug it (with GIT_TRACE_PACKET=2),
-                                it was already fixed ;-P
-
-$ git version
-git version 1.7.5
-
-
-It might be not related with issue that Peter encountered, though.
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
