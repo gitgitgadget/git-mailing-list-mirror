@@ -1,116 +1,99 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
 Subject: Re: Command-line interface thoughts
-Date: Fri, 10 Jun 2011 00:55:59 +0200
-Message-ID: <201106100056.00256.jnareb@gmail.com>
-References: <201106051311.00951.jnareb@gmail.com> <BANLkTinAxWfAgBOOF0gkYDWmXDCRH+6zYg@mail.gmail.com> <20110609223825.GA7771@sigill.intra.peff.net>
+Date: Fri, 10 Jun 2011 01:02:19 +0200
+Message-ID: <4DF150FB.9070304@alum.mit.edu>
+References: <BANLkTikTWx7A64vN+hVZgL7cuiZ16Eobgg@mail.gmail.com> <20110609200403.GA3955@sigill.intra.peff.net> <4DF13D00.2060000@alum.mit.edu> <201106100004.58040.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: mike@nahas.com, Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 10 00:57:34 2011
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Scott Chacon <schacon@gmail.com>,
+	Michael Nahas <mike@nahas.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 10 01:02:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUoAL-0008Az-M9
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 00:57:30 +0200
+	id 1QUoFJ-0001YT-T5
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 01:02:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757146Ab1FIW5U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2011 18:57:20 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:54055 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757098Ab1FIW5R (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2011 18:57:17 -0400
-Received: by fxm17 with SMTP id 17so1297336fxm.19
-        for <git@vger.kernel.org>; Thu, 09 Jun 2011 15:57:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=SOZpbTmonHz6WHA1zKUxNHtTCqPrtD9N9ictuEjPy7c=;
-        b=kwAniwMUTUeMfKdebR2o8Tqo+PAEk0cnI48kycdHKusZAFZ/I0RAkiHyNl2Jg4hEmH
-         peHcARWBtb8roMoxF5QRZGwegUe1UkDtg/HskKsBtBfGtaxwuOmWcgxeZNxOpwytuQyD
-         dOqcJ7mdKGJguiUrTQzpHyfzIzPLDDQK8BHIQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=QP+wXWocmjLFk/HEY2KFHiS16Y/jiZqNhnTdwq7Clvv2W/fmObKzpuemiLz0hWZofr
-         Snqn05EYAE0IHjfaH036IRPJ/vt2dk08UMEF72jq0DaVMKzjMj9rfcp/Y8sy3lyLeuEJ
-         Qutr2U3zgKBvhkc6eowp02jts47iGgart2CBQ=
-Received: by 10.223.62.146 with SMTP id x18mr224fah.54.1307660166095;
-        Thu, 09 Jun 2011 15:56:06 -0700 (PDT)
-Received: from [192.168.1.15] (abvk161.neoplus.adsl.tpnet.pl [83.8.208.161])
-        by mx.google.com with ESMTPS id e16sm827518fak.17.2011.06.09.15.56.03
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 09 Jun 2011 15:56:05 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20110609223825.GA7771@sigill.intra.peff.net>
-Content-Disposition: inline
+	id S1756763Ab1FIXCc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2011 19:02:32 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:60514 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756696Ab1FIXCb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2011 19:02:31 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p59N2KCZ025479
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 10 Jun 2011 01:02:20 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.17) Gecko/20110424 Lightning/1.0b2 Thunderbird/3.1.10
+In-Reply-To: <201106100004.58040.jnareb@gmail.com>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175588>
 
-On Fri, 10 Jun 2011, Jeff King wrote:
-> On Thu, Jun 09, 2011 at 06:27:11PM -0400, Michael Nahas wrote:
-
-> > Jakub: "it is unnecessary power"
-> > Yeah, like that an argument that anyone here will listen to.  "I can't
-> > let you have diff3.  It's too much power for you.  You might trash the
-> > repository with ... uh... diff3."
+On 06/10/2011 12:04 AM, Jakub Narebski wrote:
+> On Thu, 9 Jan 2011, Michael Haggerty wrote:
+>> On 06/09/2011 10:04 PM, Jeff King wrote:
+>>> I'm less sure about these new tokens, for a few reasons:
+>>>
+>>>   1. You get less useful answers in some situations by treating each
+>>>      stage as a separate tree (e.g., lack of combined diff). So why
+>>>      would I want to use them?
+>>
+>> Wouldn't it be nice to be able to do a combined diff between *any* two
+>> trees?  Then the nonuniform merge behavior of "git diff" would be a
+>> special case of a general concept:
+>>
+>>     git diff3 OURS NEXT THEIRS
+>                 ^^^^^^^^^^^^^^^^ -- ???
 > 
-> It's also wrong. Diff already does combined diff on arbitrary trees. So
-> unnecessary, perhaps, but already there.
-
-BTW. I should have written "too much flexibility", not "too much power".
-What I had in mind is _convention_-based branching model in Subversion,
-and its svn:mergeinfo property... which allow things like recording
-cherry-picking, partial merges (of subtree), comitting on a tag or
-commits over more than one branch... but which things are usually user's
-error, not prevented by a tool.
- 
-> > Peff: "... use tokens to describe non-treeish sources and destinations"
-> > What defines "tree-ish"ness?
+> First, it is unnecessary power, unnecessary complication.  WTF. you are
+> doing comparing _abitrary_ trees?
 > 
-> I was using tree-ish there in the sense that it is used in the git
-> documentation, which is: a reference that can resolve to a git
-> tree object. So a tree sha1, a commit sha1 (which would resolve to its
-> tree), a tag that points to a tree or commit, a ref that points to any
-> of the above, and so on.
-> 
-> I think it is actually dying out from git documentation, though.  I was
-> writing to Junio there, who I know understands that term, but I should
-> have been more mindful that other readers of the thread wouldn't.
+> Second, for files with merge conflicts "git diff" is the same as
+> "git diff3 OURS THEIRS WTREE", not "git diff3 OURS NEXT THEIRS".
+> As you can see it is very easy to construct wrong options to git-diff,
+> and end up with nonsense!
 
-Historical note: "tree-ish" (now just "tree") were once called "ents" :-)
-c.f. 3f0073a (Axe the last ent, 2006-08-21)
+Since there is currently no "git diff3" command, I decided to orient the
+hypothetical "git diff3" command based on diff3(1), which uses
 
-    Axe the last ent
-    
-    In the name of Standardization, this cleanses the last usage string of
-    mystical creatures.  But they still dwell deep within the source and in
-    some debug messages, it is said.
+    diff3 [OPTION]... MYFILE OLDFILE YOURFILE
 
-> > Do you know of anything in the INDEX file that would not be visible
-> > from NEXT/WTREE/OURS/THEIRS?
-> 
-> The stat information, but that is usually ignored in porcelain, anyway
-> (we refresh the state information at the beginning of most porcelain
-> commands, so you can just assume everything is up to date with the
-> working tree and will be shown as such).
+By using a new command (diff3) that is somewhat familiar to some users,
+we could reduce the amount of overloading of "git diff".  I, for one,
+was surprised and confused the first few times I typed "git diff" during
+a merge and got a three-way diff rather than what I expected, namely the
+two-way diff that is called "git diff NEXT WTREE" in the proposed notation.
 
-Hmmm... there is additional complication that I haven't thought about,
-namely assume-unchanged bit, and partial checkouts.
+> I won't repear the THIRD time simple and around *three times shorter*
+> explanation on _when_ to use which form: "git diff" for your own remaining
+> changes that can be "git add"-ef, "git diff --staged" for which changes
+> are staged i.e. what you have "git add"-ed, and "git diff HEAD" to compare
+> current with last.
+
+You don't need to repeat for my benefit the existing version of the
+commands; I knew them long before this discussion started.  And
+repeating them does not make them more obvious.
+
+For a beginner, the main goal is not brevity.  It is discoverability and
+memorability.  Obviously our priorities and tastes differ and we will
+not come to agreement.  I would be very interested what people with a
+fresh memory of struggling to learn the git CLI think would have been
+easier to learn.
+
+Michael
 
 -- 
-Jakub Narebski
-Poland
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
