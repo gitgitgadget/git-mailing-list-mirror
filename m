@@ -1,87 +1,73 @@
-From: Dave Zarzycki <zarzycki@apple.com>
-Subject: [PATCH] Only print an error for the last connect() failure
-Date: Thu, 09 Jun 2011 09:18:10 -0700
-Message-ID: <13539E82-3E8D-4210-9A3A-DD83F0CA6F85@apple.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Command-line interface thoughts
+Date: Thu, 9 Jun 2011 12:18:32 -0400
+Message-ID: <20110609161832.GB25885@sigill.intra.peff.net>
+References: <BANLkTikTWx7A64vN+hVZgL7cuiZ16Eobgg@mail.gmail.com>
+ <m339jps1wt.fsf@localhost.localdomain>
+ <BANLkTinidLbQ_FcVEiGSK91uXYWaKk7MKA@mail.gmail.com>
+ <201106051311.00951.jnareb@gmail.com>
+ <BANLkTik+xhd5QQ09QiPSH1bFAndzipKtrw@mail.gmail.com>
+ <7vwrgza3i2.fsf@alter.siamese.dyndns.org>
+ <4DF08D30.7070603@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 09 18:18:46 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Scott Chacon <schacon@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Michael Nahas <mike@nahas.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Jun 09 18:18:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUhwT-0007Bp-L0
+	id 1QUhwU-0007Bp-95
 	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 18:18:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751544Ab1FIQSk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2011 12:18:40 -0400
-Received: from mail-out.apple.com ([17.151.62.49]:32876 "EHLO
-	mail-out.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751031Ab1FIQSj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2011 12:18:39 -0400
-Received: from relay12.apple.com ([17.128.113.53])
- by mail-out.apple.com (Oracle Communications Messaging Exchange Server
- 7u4-20.01 64bit (built Nov 21 2010))
- with ESMTPS id <0LMJ007JB6LICO60@mail-out.apple.com> for git@vger.kernel.org;
- Thu, 09 Jun 2011 09:18:12 -0700 (PDT)
-X-AuditID: 11807135-b7b76ae000001169-2f-4df0f28a1b18
-Received: from jimbu (jimbu.apple.com [17.151.62.37])
-	(using TLS with cipher RC4-MD5 (RC4-MD5/128 bits))
-	(Client did not present a certificate)	by relay12.apple.com (Apple SCV relay)
- with SMTP id 42.CA.04457.A82F0FD4; Thu, 09 Jun 2011 09:19:22 -0700 (PDT)
-Received: from [17.153.30.81] (unknown [17.153.30.81])
- by cardamom.apple.com (Oracle Communications Messaging Exchange Server
- 7u4-20.01 64bit (built Nov 21 2010))
- with ESMTPSA id <0LMJ00GBT6MA2U90@cardamom.apple.com> for git@vger.kernel.org;
- Thu, 09 Jun 2011 09:18:12 -0700 (PDT)
-X-Mailer: Apple Mail (2.1237.1)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrPJMWRmVeSWpSXmKPExsUiON1OVbfr0wdfg9MvzC26rnQzOTB6fN4k
-	F8AYxWWTkpqTWZZapG+XwJUx/cA59oKl7BWzVh9kbmA8ydrFyMEhIWAisXQjYxcjJ5ApJnHh
-	3nq2LkYuDiGBViaJ1X/2sIIkeAUEJX5MvscCUs8sIC9x8LwsSJhZQEvi+6NWFoj6+UwSt2Z9
-	YgdJsAloSHw6dZcZxBYWcJZ4u+IbmM0ioCqxa+s6JoiZNhKPbv0BWywiIC7x9vhMdogj5CW2
-	bXrJPIGRdxaS1bMQVs9CsnoBI/MqRsGi1JzESkMjvcSCgpxUveT83E2MoGBpKDTdwfhoofoh
-	RgEORiUe3o7F732FWBPLiitzDzFKcDArifCWXgQK8aYkVlalFuXHF5XmpBYfYpTmYFES5317
-	39NXSCA9sSQ1OzW1ILUIJsvEwSnVwBjGebArK8w12mB6773sJCsX2W77Yw+il/vxyDgfLf+i
-	1VzQNf8uy9bJBxIvfd0VFBb0cOeaWtGJTJws564oHs2Wm+of49YV7VxZHNVz1mrBCbNJGY3O
-	4T/Wdf1c5G4scyTzZUyhrarFfq9/3cyJMmpKLTf0nY+lLmbc4Hj9UsVjv+veXnsXK7EUZyQa
-	ajEXFScCAMdzB1wSAgAA
+	id S1752092Ab1FIQSn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2011 12:18:43 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41776
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751031Ab1FIQSm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2011 12:18:42 -0400
+Received: (qmail 15180 invoked by uid 107); 9 Jun 2011 16:18:49 -0000
+Received: from c-76-21-13-32.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (76.21.13.32)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 09 Jun 2011 12:18:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Jun 2011 12:18:32 -0400
+Content-Disposition: inline
+In-Reply-To: <4DF08D30.7070603@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175547>
 
-IPv6 hosts are often unreachable on the primarily IPv4 Internet and
-therefore we shouldn't print an error if there are still other hosts we
-can try to connect() to. This helps "git fetch --quiet" stay quiet.
----
- connect.c |   12 +++++++-----
- 1 files changed, 7 insertions(+), 5 deletions(-)
+On Thu, Jun 09, 2011 at 11:06:56AM +0200, Michael Haggerty wrote:
 
-diff --git a/connect.c b/connect.c
-index 2119c3f..7f70ce7 100644
---- a/connect.c
-+++ b/connect.c
-@@ -225,11 +225,13 @@ static int git_tcp_connect_sock(char *host, int flags)
- 		}
- 		if (connect(sockfd, ai->ai_addr, ai->ai_addrlen) < 0) {
- 			saved_errno = errno;
--			fprintf(stderr, "%s[%d: %s]: errno=%s\n",
--				host,
--				cnt,
--				ai_name(ai),
--				strerror(saved_errno));
-+			if (ai->ai_next == NULL) {
-+				fprintf(stderr, "%s[%d: %s]: errno=%s\n",
-+					host,
-+					cnt,
-+					ai_name(ai),
-+					strerror(saved_errno));
-+			}
- 			close(sockfd);
- 			sockfd = -1;
- 			continue;
--- 
-1.7.6.rc1.1.g2e27
+> My naive understanding is that in the case of a merge commit, the index
+> contains information equivalent to *multiple* trees:
+> 
+> NEXT -- HEAD plus the files that have been resolved
+> BASE -- the contents of the common ancestor
+> OURS -- equivalent to the tree from HEAD
+> THEIRS -- equivalent to the tree from MERGE_HEAD
+
+Almost. Remember that as part of the merge resolution process,
+higher-level stages will collapse down to 0. So the "theirs" stage of
+the index is equivalent to MERGE_HEAD only if you have a conflict in
+every file and have resolved nothing. Otherwise, any resolved entries
+will not have a "theirs" entry at all.
+
+So when I do "git diff", we will see for resolved entries that the
+working tree matches stage 0 in the index, and show nothing. Whereas
+unresolved entries will have their diff shown. But with "git diff
+MERGE_HEAD", we will see differences from the other branch, even if
+those differences are simply resolutions or even changes made on the
+"ours" branch.
+
+So the index is not quite simply a set of four trees. The presence of
+various stages for each entry tells us the progress of resolution.
+
+-Peff
