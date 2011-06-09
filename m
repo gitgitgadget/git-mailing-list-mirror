@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: Command-line interface thoughts
-Date: Thu, 9 Jun 2011 15:41:05 -0400
-Message-ID: <20110609194104.GA4026@sigill.intra.peff.net>
+Date: Thu, 9 Jun 2011 16:04:03 -0400
+Message-ID: <20110609200403.GA3955@sigill.intra.peff.net>
 References: <BANLkTikTWx7A64vN+hVZgL7cuiZ16Eobgg@mail.gmail.com>
  <m339jps1wt.fsf@localhost.localdomain>
  <BANLkTinidLbQ_FcVEiGSK91uXYWaKk7MKA@mail.gmail.com>
@@ -11,96 +11,121 @@ References: <BANLkTikTWx7A64vN+hVZgL7cuiZ16Eobgg@mail.gmail.com>
  <4DF08D30.7070603@alum.mit.edu>
  <20110609161832.GB25885@sigill.intra.peff.net>
  <4DF10ADA.5070206@alum.mit.edu>
+ <7v8vtayhnm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
 	Scott Chacon <schacon@gmail.com>,
 	Jakub Narebski <jnareb@gmail.com>,
 	Michael Nahas <mike@nahas.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Jun 09 21:41:15 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 09 22:04:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUl6R-0005Qs-6Z
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 21:41:15 +0200
+	id 1QUlSf-0007BC-JI
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 22:04:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754654Ab1FITlK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2011 15:41:10 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38107
+	id S1755289Ab1FIUEJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2011 16:04:09 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46981
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753574Ab1FITlI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2011 15:41:08 -0400
-Received: (qmail 18631 invoked by uid 107); 9 Jun 2011 19:41:15 -0000
+	id S1752683Ab1FIUEH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2011 16:04:07 -0400
+Received: (qmail 18846 invoked by uid 107); 9 Jun 2011 20:04:14 -0000
 Received: from 70-36-146-246.dsl.dynamic.sonic.net (HELO sigill.intra.peff.net) (70.36.146.246)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 09 Jun 2011 15:41:15 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Jun 2011 15:41:05 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 09 Jun 2011 16:04:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Jun 2011 16:04:03 -0400
 Content-Disposition: inline
-In-Reply-To: <4DF10ADA.5070206@alum.mit.edu>
+In-Reply-To: <7v8vtayhnm.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175570>
 
-On Thu, Jun 09, 2011 at 08:03:06PM +0200, Michael Haggerty wrote:
+On Thu, Jun 09, 2011 at 11:38:21AM -0700, Junio C Hamano wrote:
 
-> Thanks for the correction.  So one interesting pseudo-tree would be
-> 
-> OURS -- The NEXT version of any file that has been resolved; and the
-> stage 2 version of any file that has not yet been resolved.  The name
-> seems consistent with what is meant by, e.g., "git checkout --ours".
+> I think this mega-thread served its purpose. It started to explore "will
+> it make it easier to understand and explain if we use these tokens to name
+> trees that do not exist in reality?" which is a worthy thing to do.  The
+> conclusion appears to be "well we do not even know what exactly these
+> tokens mean in certain situations." but at least people tried, and along
+> the way a few new people seem to have become more aware of the index, so
+> overall we didn't lose that much.
 
-Yeah, that makes sense to me as a definition.
+I think there are actually two questions here:
 
-> > So the index is not quite simply a set of four trees. The presence of
-> > various stages for each entry tells us the progress of resolution.
-> 
-> Wouldn't the four trees described above contain information equivalent
-> to the contents of the index?
+  1. Will it be easier for people to understand "git diff" if we use
+     tokens to describe non-treeish sources and destinations?
 
-Taken together, yes, I think you could represent the whole index. But
-each taken alone is missing some information that might be useful in a
-diff.
+  2. Are there better tokens to use to break down parts of the index?
 
-For example, if I do "git diff THEIRS WTREE" during a merge conflict,
-that is a 2-way diff that is going to show things in THEIRS going away,
-and both things brought by OURS and things that are part of a resolution
-being added. That's less information than "git diff INDEX WTREE" (i.e.,
-what is currently spelled as "git diff") provides, because when looking
-at the whole index we can do a combined diff showing which part came
-from which parent.
+I don't have a big problem with (1). Allowing things like:
 
-> For example, the resolution work that remains to be done that can be
-> inquired using old-fashioned "git diff" (3-way diff) could also be
-> accessed via
-> 
->     git diff NEXT OURS
->     git diff NEXT THEIRS
+  git diff INDEX WTREE
 
-But you don't get to see it together. You have to do two separate diffs,
-which means you will see conflicted regions twice. Try:
+allows one to explain what is going on with the diff syntax in a very
+clear and verbose manner. I wouldn't want to type that every day, but
+that's OK; "git diff" will always mean the same thing as it always has,
+but can now be explained to people who have trouble seeing it in terms
+of "git diff INDEX WTREE".
 
-  git log --merges -p --cc
+There's still a bit of magic in that INDEX is _not_ a tree, but I think
+that's a good thing. When there are no merge conflicts, it will behave
+identically to the proposed NEXT tree. And when there are conflicts, it
+will show you something even more useful.
 
-on a repo of your choice, and compare with:
+It does have the potential to confuse in that "INDEX" is not actually a
+tree, and so we can't expect to use it as a tree-ish everywhere. So now
+diff feels a little inconsistent with other parts of git. One idea,
+which I think is probably too crazy, would be to let INDEX be used as a
+tree-ish everywhere, but only if all entries are at stage 0. Otherwise,
+it will die with an error. That would make it more or less a more
+verbose version of ":" (e.g., I can do "git show :Makefile", but it will
+die with an error if Makefile exists only at higher stages).
 
-  git log --merges -p -m
 
-The former is what "git diff" would show just before marking paths as
-resolved, and the latter is what your two diffs above would show.
+I'm less sure about these new tokens, for a few reasons:
 
-> or even
-> 
->     git diff NEXT WTREE
-> 
-> if you want to see the remaining conflicts in <<<<<======>>>>>> format.
+  1. You get less useful answers in some situations by treating each
+     stage as a separate tree (e.g., lack of combined diff). So why
+     would I want to use them?
 
-As I mentioned in an earlier email, this doesn't show which parts are
-part of the resolution process (including conflict markers), and which
-came from either side of the merge.
+  2. Their answers are different than what diffing against the INDEX
+     could give. So in theory they could be more useful in different
+     situations than a diff against the index. But I haven't seen a good
+     example of what such a situation would be.
+
+  3. They're supposed to introduce consistency in explaining diff
+     behavior. But we're not going to change what "git diff" does to not
+     use the whole index. So "git diff" isn't actually expressible using
+     these tokens.
+
+  4. They're supposed to be simpler to understand than index stages. But
+     are they? The latest definitions seem to be:
+
+       OURS is a tree of each path in the index, either from stage 2 if
+       it exists, or from NEXT otherwise.
+
+       NEXT is a tree of each path in the index, either from stage 0 if
+       it exists, or from HEAD otherwise.
+
+     But that doesn't seem any simpler to me than just saying "the index
+     has numbered stages, and they correspond to resolved, base, ours,
+     and theirs".
+
+I agree that ":2:Makefile" is not exactly an intuitive way to ask for
+"ours". Didn't we have a patch at one point a year or two ago to allow
+using names instead of numbered stages? If we allowed "INDEX" as a
+verbose noise-word in front of ":", then you could say:
+
+  git show INDEX:OURS:Makefile
+
+which is identical to what I wrote above, but is perhaps easier to
+explain.
 
 -Peff
