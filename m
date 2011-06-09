@@ -1,98 +1,139 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Thu, 9 Jun 2011 08:50:27 +0200
-Message-ID: <BANLkTinfVNxYX3kj4DBm1ra=8Ar5ca9UvQ@mail.gmail.com>
-References: <BANLkTimnCqaEBVreMhnbRBV3r-r1ZzkFcg@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH] gitweb: do misparse nonnumeric content tag files that
+ contain a digit
+Date: Thu, 9 Jun 2011 02:08:57 -0500
+Message-ID: <20110609070857.GA735@elie>
+References: <20110301190229.11297.17767.reportbug@cassiopeia.kleinek>
+ <201103030142.17258.jnareb@gmail.com>
+ <20110303081904.GM22310@pengutronix.de>
+ <201103071900.16126.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: NAKAMURA Takumi <geek4civic@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Jun 09 08:51:15 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>, "J.H." <warthog9@kernel.org>,
+	git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 09 09:09:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUZ5H-0008PO-Ce
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 08:51:15 +0200
+	id 1QUZMh-0006dP-1K
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 09:09:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752894Ab1FIGvK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Jun 2011 02:51:10 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:50261 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753619Ab1FIGvI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2011 02:51:08 -0400
-Received: by qyg14 with SMTP id 14so664719qyg.19
-        for <git@vger.kernel.org>; Wed, 08 Jun 2011 23:51:07 -0700 (PDT)
+	id S1756817Ab1FIHJI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2011 03:09:08 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:50467 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756153Ab1FIHJH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2011 03:09:07 -0400
+Received: by iwn34 with SMTP id 34so1073027iwn.19
+        for <git@vger.kernel.org>; Thu, 09 Jun 2011 00:09:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=wbfkbMrpW1Nzpay9ieKeior/viFWrG/iSFTAKNod6m0=;
-        b=Cigpe1ZPIfVVDKiDNWZpWQ5aguYOsS/Pvj6LAFFKUEm/EvH6q2/31lSHWSTzQ0ehi1
-         0G/EN6C8VFbjxDDHwC/xG3CUopN2aKAlBM9lDhhwU67msGVudw6GD+DnJdLWCsI72h8x
-         EYMGkV8Z0h4hrtr6DIj9Wy7GaySWyecw+V7O8=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=YoPZuq5958Ycz1KceJQClaSIhpn5zY8l1EfjJqaDYJQ=;
+        b=HacuD3aEVCqta98EWUTV37Z+JQfajUArq3I998d+3IDdhwrQs225DmhlQT2oW3xlvf
+         pOeb90U6z4MImwePmdW3Lznw436nenefdeGpJmmJE6gy1pDqjUTHLvQUZh34Iro5ane5
+         rvePcv46Lwt0DduG3CgCMrKaaYSEFqryggiN4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=acJMC5mKPQ5KfgUQqbTR4B21xDLLrei1oEpvS/iWis17BdevQw+AtdeJ7kenOyhwd/
-         lPjNeYc+raQ3kUKZbRAj8ghzZkTAbsrIvRRZQnw4nnu+rymJaO/yQwYQnRnUL5dw7Mnv
-         k+eBhZgoHHOp/TN+ncNKQN+XIR3BiavWNBrsA=
-Received: by 10.229.135.12 with SMTP id l12mr270455qct.53.1307602267578; Wed,
- 08 Jun 2011 23:51:07 -0700 (PDT)
-Received: by 10.229.83.203 with HTTP; Wed, 8 Jun 2011 23:50:27 -0700 (PDT)
-In-Reply-To: <BANLkTimnCqaEBVreMhnbRBV3r-r1ZzkFcg@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=nEe9msy8U2Tymr2LLWNGnlFTPR1J41+z9qOtTTSvcG52afinTJz8oheYUXsb9qi/Fi
+         cmzbEDR2QD4w50uGzhlAl62696YOpl5iSPLp16Nxp7gsRTrBabdYosHsr6xdlSQR+2qq
+         T+znqIxp+jeopXF+UhXXMFgEiZzVsFTgkdjZc=
+Received: by 10.42.157.138 with SMTP id d10mr528388icx.490.1307603346180;
+        Thu, 09 Jun 2011 00:09:06 -0700 (PDT)
+Received: from elie (adsl-69-209-61-87.dsl.chcgil.sbcglobal.net [69.209.61.87])
+        by mx.google.com with ESMTPS id d6sm662405ibj.23.2011.06.09.00.09.04
+        (version=SSLv3 cipher=OTHER);
+        Thu, 09 Jun 2011 00:09:05 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <201103071900.16126.jnareb@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175496>
 
-Heya,
+v1.7.6-rc0~27^2~4 (gitweb: Change the way "content tags" ('ctags') are
+handled, 2011-04-29) tried to make gitweb's tag cloud feature more
+intuitive for webmasters by checking whether the ctags/<label> under
+a project's .git dir contains a number (representing the strength of
+association to <label>) before treating it as one.
 
-[+shawn, who runs into something similar with Gerrit]
+So after that change, after putting '$feature{'ctags'}{'default'} =
+[1];' in your $GITWEB_CONFIG, you could do
 
-On Thu, Jun 9, 2011 at 05:44, NAKAMURA Takumi <geek4civic@gmail.com> wr=
-ote:
-> Hello, Git. It is my 1st post here.
->
-> I have tried tagging each commit as "refs/tags/rXXXXXX" on git-svn
-> repo locally. (over 100k refs/tags.)
-> Indeed, it made something extremely slower, even with packed-refs and
-> pack objects.
-> I gave up, then, to push tags to upstream. (it must be terror) :p
->
-> I know it might be crazy in the git way, but it would bring me conven=
-iences.
-> (eg. git log --oneline --decorate shows me each svn revision)
-> I would like to work for Git to live with many tags.
->
-> * Issues as far as I have investigated;
->
-> =C2=A0- git show --decorate is always slow.
-> =C2=A0 =C2=A0in decorate.c, every commits are inspected.
-> =C2=A0- git rev-tree --quiet --objects $upstream --not --all spends s=
-o much time,
-> =C2=A0 =C2=A0even if it is expected to return with 0.
-> =C2=A0 =C2=A0As you know, it is used in builtin/fetch.c.
-> =C2=A0- git-upload-pack shows "all" refs to me if upstream has too ma=
-ny refs.
->
-> I would like to work as below if they were valuable.
->
-> =C2=A0- Get rid of inspecting commits in packed-refs on decorate stuf=
-f.
-> =C2=A0- Implement sort-by-hash packed-refs, (not sort-by-name)
-> =C2=A0- Implement more effective pruning --not --all on revision.c.
-> =C2=A0- Think about enhancement of protocol to transfer many refs mor=
-e effectively.
->
-> I am happy to consider the issue, thank you.
+	echo Linux >.git/ctags/linux
 
---=20
-Cheers,
+and gitweb would treat that as a request to tag the current repository
+with the Linux tag, instead of the previous behavior of writing an
+error page embedded in the projects list that triggers error messages
+from Chromium and Firefox about malformed XML.
 
-Sverre Rabbelier
+Unfortunately the pattern (\d+) used to match numbers is too loose,
+and the "XML declaration allowed only at the start of the document"
+error can still be experienced if you write "Linux-2.6" in place of
+"Linux" in the example above.  Fix it by tightening the pattern to
+^\d+$.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Hi,
+
+Jakub Narebski wrote:
+>> On Thu, Mar 03, 2011 at 01:42:15AM +0100, Jakub Narebski wrote:
+
+>>> 1. Hardening parsing of ctags files, so that gitweb does not crash on
+>>>    malformed entries, but e.g. just ignores them.
+>
+> Done.
+
+Sorry for a (long-) delayed response.  Based on testing rc0 today, it
+works well; thanks!  Patch to fix a small detail noticed while trying
+'-1' follows.
+
+ gitweb/gitweb.perl                     |    2 +-
+ t/t9500-gitweb-standalone-no-errors.sh |    8 ++++++++
+ 2 files changed, 9 insertions(+), 1 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index ebf2d1c..1b83a8d 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2644,7 +2644,7 @@ sub git_get_project_ctags {
+ 			close $ct;
+ 
+ 			(my $ctag = $tagfile) =~ s#.*/##;
+-			if ($val =~ /\d+/) {
++			if ($val =~ /^\d+$/) {
+ 				$ctags->{$ctag} = $val;
+ 			} else {
+ 				$ctags->{$ctag} = 1;
+diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standalone-no-errors.sh
+index f5648a6..5329715 100755
+--- a/t/t9500-gitweb-standalone-no-errors.sh
++++ b/t/t9500-gitweb-standalone-no-errors.sh
+@@ -644,6 +644,14 @@ test_expect_success \
+ 	'ctags: search projects by non existent tag' \
+ 	'gitweb_run "by_tag=non-existent"'
+ 
++test_expect_success \
++	'ctags: malformed tag weights' \
++	'mkdir -p .git/ctags &&
++	 echo "not-a-number" > .git/ctags/nan &&
++	 echo "not-a-number-2" > .git/ctags/nan2 &&
++	 echo "0.1" >.git/ctags/floating-point &&
++	 gitweb_run'
++
+ # ----------------------------------------------------------------------
+ # categories
+ 
+-- 
+1.7.6.rc0
