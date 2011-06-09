@@ -1,187 +1,156 @@
-From: Michael Nahas <mike.nahas@gmail.com>
+From: Holger Hellmuth <hellmuth@ira.uka.de>
 Subject: Re: Command-line interface thoughts
-Date: Thu, 9 Jun 2011 07:44:18 -0400
-Message-ID: <BANLkTimir5nQYJk+GuNQOzmTWMEXb2kWqQ@mail.gmail.com>
-References: <BANLkTikTWx7A64vN+hVZgL7cuiZ16Eobgg@mail.gmail.com>
-	<20110608150537.GC7805@sigill.intra.peff.net>
-	<BANLkTinibF0xmibeuJ6f9FUjaMmxavMJig@mail.gmail.com>
-	<201106091148.35114.jnareb@gmail.com>
-Reply-To: mike@nahas.com
+Date: Thu, 09 Jun 2011 13:55:30 +0200
+Message-ID: <4DF0B4B2.7080007@ira.uka.de>
+References: <201106051311.00951.jnareb@gmail.com> <201106072233.28244.jnareb@gmail.com> <4DEF7378.20307@ira.uka.de> <201106082056.38774.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>,
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
 	Junio C Hamano <gitster@pobox.com>,
-	Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
+	Scott Chacon <schacon@gmail.com>,
+	Michael Nahas <mike@nahas.com>, git@vger.kernel.org
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 09 13:44:27 2011
+X-From: git-owner@vger.kernel.org Thu Jun 09 13:54:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUdf0-0006tu-9O
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 13:44:26 +0200
+	id 1QUdoq-0002v2-7p
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 13:54:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756326Ab1FILoV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Jun 2011 07:44:21 -0400
-Received: from mail-bw0-f52.google.com ([209.85.214.52]:33101 "EHLO
-	mail-bw0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753649Ab1FILoU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2011 07:44:20 -0400
-Received: by bwj24 with SMTP id 24so1877714bwj.11
-        for <git@vger.kernel.org>; Thu, 09 Jun 2011 04:44:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=UjOsL6BtEM5zMLSrDbTC2o5nTDg5O2UCyr0VFUDk32w=;
-        b=d9U6DLQpAhk3tLFeHYrUW+ZBM3US5uqP/PQXBi0lNUKElhAWj3pSUNF2s8STD6Wyps
-         /rycHsJtAUyq1uH7MlNfFRMYVMX25ovItFVHyaCKvfzsuJ3o9LGysod9tlVJgJzy7+hN
-         1TWzTwCDFyCPewuuX3NAz9aQlFsoYJQFE99HM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=Ph2uNmZdwp9j08bnWtqiR4fX9eYv07P8LS5IfEvQPnK18O9TCbJYQjyBe6k6zf40FM
-         IUOvWm+OMDmSwNeER3p646ibMjNpC+13fHYS/eiLNF3n9lRpuNPyBEimQZEYuRuQVfQr
-         EomwgHbW0JCCG3HjOTRLIQxrgOKoed+52r8uE=
-Received: by 10.204.26.132 with SMTP id e4mr642637bkc.142.1307619858820; Thu,
- 09 Jun 2011 04:44:18 -0700 (PDT)
-Received: by 10.204.100.80 with HTTP; Thu, 9 Jun 2011 04:44:18 -0700 (PDT)
-In-Reply-To: <201106091148.35114.jnareb@gmail.com>
+	id S1757235Ab1FILya (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2011 07:54:30 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:58961 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755269Ab1FILya (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2011 07:54:30 -0400
+Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	id 1QUdoT-00011v-Qu; Thu, 09 Jun 2011 13:54:20 +0200
+Received: from i20s141.iaks.uni-karlsruhe.de ([141.3.32.141] helo=[172.16.22.120])
+	by irams1.ira.uni-karlsruhe.de with esmtpsa port 25 
+	id 1QUdoT-0000F0-Lf; Thu, 09 Jun 2011 13:54:13 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.17) Gecko/20110414 SUSE/3.1.10 Thunderbird/3.1.10
+In-Reply-To: <201106082056.38774.jnareb@gmail.com>
+X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1307620460.215960000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175518>
 
-On Thu, Jun 9, 2011 at 5:48 AM, Jakub Narebski <jnareb@gmail.com> wrote=
-:
-> On Wed, 8 June 2011, Michael Nahas wrote:
->> On Wed, Jun 8, 2011 at 11:05 AM, Jeff King <peff@peff.net> wrote:
->>> On Wed, Jun 08, 2011 at 07:39:16AM -0400, Michael Nahas wrote:
->>>
->>>> On Wed, Jun 8, 2011 at 7:12 AM, Jakub Narebski <jnareb@gmail.com> =
-wrote:
->>>>> I don't quite think that we need "git diff NEXT WTREE"; the short
->>>>> and sweet "git diff" is short for a reason,
->>>>
->>>> To be clear, I'm not advocating and have never advocated getting r=
-id
->>>> of zero-argument "git diff". =A0I've advocated that every (whole
->>>> project) diff command should be expressible by a "git diff TREE1
->>>> TREE2". =A0I'm fine with defaults if one or zero trees are specifi=
-ed.
->>>
->>> I agree with this, but...
->>>
->>>> So "git diff" would default to "git diff NEXT WTREE".
->>>
->>> Isn't this going to be behavior change, since your NEXT is not quit=
-e the
->>> same as the index? How do I now get an n-way combined diff of the
->>> unmerged files in the index?
+On 08.06.2011 20:56, Jakub Narebski wrote:
+[...]
+>>>      Because of explicit index (cache, staging area) one needs to know if
+>>>      it is working area against index, or working area against HEAD.
+>>>      Thinking about merge conflict case helps to remember; in such case
+>>>      you want your changes against partially resolved merge.
+          --------
 >>
->> The index is a file in .git/ that serves many purposes. =A0NEXT is a=
-n
->> image of the whole project. =A0NEXT can be computed from the index a=
-nd
->> HEAD.
+>> This is far from a straightforward reasoning that would pop up in
+>> anyones mind. In truth, I can't follow that reasoning even now. In case
+>> of a merge conflict the working area doesn't concern me at all, I would
+>> want a diff between 'ours' and 'theirs'.
+>
+> What you want is irrelevant ;-)
+
+No, because you used my wants in your reasoning above. Makes them highly 
+relevant ;-)
+
+> Because in the case of merge conflict
+> entries in index is populated automatically, *your* changes are changes
+> agains index.  So there.
+>
+> And what "git diff" would show in that case is --cc diff of file with
+> merge markers against stages '1' and '2' in index, which is quite useful.
+> Which is 3-way diff between 'ours' and 'theirs'.
+
+Ah okay. This detail about the merge process never really registered 
+with me. Which shows that your logic deduction what 'git diff' does is 
+often not possible for the casual user
+
+[...]
+>> But I can't make it explicit which two targets I want to compare with
+>> 'git diff'.
+>
+> For me it looks XY problem; instead of wanting to compare two explicit
+> targets, you should specify what you want to see ;-).
+
+Then don't call the command 'diff' (... I proclaim in the knowledge that 
+that isn't possible). 'diff' is the short form of 'difference' which 
+means literally a comparison between *two* things. If someone wants to 
+see something he would pick the words 'show' or 'list'. So user 
+expectation is different from what you want diff to be.
+
+Also there are no good words for what someone wants to see in this case. 
+At least I would assume the git project would have found them if they 
+existed. '--cached' is definitely not one of them. But we have fitting 
+and widely known names for the targets, i.e 'working tree', 'index' and 
+'head'.
+
+[...]
+>>> At in no place I _have_ to explain what is compared with what to explain
+>>> when and what for to use "git diff", "git diff --cached" and "git diff
+>>> HEAD".
 >>
->> During a conflicted merge, stage 0 of the index holds the resolved
->> files.
+>> I'm sure every part of the user interface of gimp can be rationalized in
+>> the same way by someone deeply involved in the concepts and the
+>> structure of gimp, but still it is perceived as difficult by nearly
+>> everyone else. You look at it from inside and it looks logical. Others
+>> just don't have all the pieces to make that reasoning really work.
 >
-> It is simply not true. =A0During a conflicted merge, for conflicted f=
-iles
-> there is _no_ stage 0!!! =A0Conflicted files have stage 1 =3D=3D base=
-, 2 =3D=3D ours
-> and 3 =3D=3D theirs, where those stages have all conflicts that can b=
-e resolved
-> automatically resolved, and places where there is conflict replaced b=
-y
-> merge-base ('base'), current branch into which we merge ('ours') and
-> merged branch ('theirs').
-
-"resolved files" means "NOT conflicted files".  The merge conflicts if
-any one file conflicts, but there may be other files that resolve
-immediately.  And any conflicted files can be resolved by the user
-running "git add" or "git rm"
-
-If a file is resolved - either immediately or by user action - it
-exists only in stage 0.
-
->> WTREE holds all merge files: the resolved and the unresolved
->> (which have <<<< =3D=3D=3D=3D >>>> blocks in them).
+> What I wanted to say here that instead of teaching / trying to teach
+> new people something like the following:
 >
-> Worktree version has files with conflict merge markers added in place
-> where there is conflict.
+>    There is working area, index and current commit (HEAD).  To compare
+>    workdir with index use this, to compare index with HEAD use that, to
+>    compare workdir with HEAD use this one.
 
-I assumed most people knew what I meant by <<<<=3D=3D=3D=3D>>>> blocks.=
-  But,
-yes, I meant that the working tree has both versions present at
-locations of conflicts.
+If they know working area, index and head, you don't have to tell them 
+three times how to compare this with that, they just have to know they 
+can compare any which way they want. In fact, the situation *now* is 
+exactly what you describe, you have to tell everyone for any of the 3 
+combinations the command to use because it is not obvious.
 
->> I propose that during a
->> conflicted merge, that NEXT be computed as HEAD plus the resolved
->> files, that is, the files in stage 0 of the index.
+> we better do explaining higher level concepts
 >
-> Why _HEAD_?
+>    To examine your remaining changes, i.e. what you can "git stage",
+>    use "git diff".  To examine staged changes, i.e. what you
+>    "git stage"-d, use "git diff --staged"; that is what "git commit"
+>    will create.  To compare working version with given older version,
+>    use "git diff<revision>", in particular to compare with last version
+>    use "git diff HEAD"; that is what "git commit --all" would create.
 
-Because we merged changed from another branch into HEAD.
-Or we pull changes from a remote branch into HEAD.
+Do you realize that you are just enumerating all the possible 
+combinations again, exactly what you wanted to avoid? Ok, unfair 
+argument, you want to just make it clear how to remember the commands. 
+But if I already need 3 emails from you to see the concept behind these 
+commands (and lets assume my slow-wittedness is par for the course) many 
+others will probably have the same problems. It may be a nice concept, 
+but the relation to the user interface is only detectable by close 
+examination.
 
-When a commit is written, it will be part of the branch referenced by H=
-EAD.
+Teaching concepts is good. But if git is only usable after having 
+learned all those concepts, the entry barrier is much too big. With 
+commands like 'git put' and an improved diff people can use git first, 
+then learn the concepts while using git. Which is what most people have 
+to do anyway if they encounter git at the work place for example.
 
->> "git diff HEAD NEXT" would print the resolved changes.
->> "git diff NEXT WTREE" would print the unresolved changes
->> "git diff HEAD WTREE" would print all changes.
->>
->> I believe that is the same behaviour as "git diff", "git diff
->> --cached" and "git diff HEAD" during a conflicted merge.
+> The "git diff NEXT WTREE" looks like training wheels to me.  And like
+> training wheels they could become obstacles and not help to learning
+> git.  Neverthemind they can snag on sharp corners^W corner-cases. ;-)))
 >
-> "git diff NEXT WTREE" would not behave (with your proposal) like
-> "git diff", but like "git diff --ours".
 
-OURS and HEAD are the same thing, so I doubt a command that does not
-involve "HEAD" would behave like "--ours"
+If your goal is that anyone who uses git is a git expert, they may be a 
+hindrance (as are all the porcelain commands really). If you also want 
+to make git friendly to people who will never get past intermediate or 
+beginner stage or will only use a small part of git or use git seldomly, 
+training wheels are good.
 
-> "git diff HEAD NEXT" would not behave like "git diff --cached"
-> (which shows only '*Unmerged path foo').
->
-> "git diff HEAD WTREE" would be the same as "git diff HEAD" (just
-> longer to write), only because it doesn't involve index at all.
-
-I refer you to any of my previous emails to which I kindly replied.
-YES, "git diff HEAD" and "git diff HEAD WTREE" would be equivalent.
-I, myself, would probably use "git diff HEAD" most of the time.
-Nonetheless, saying "git diff" ALWAYS takes two arguments and saying
-that if an argument is unspecified that there is a default is much
-clearer and more regular interface than special casing everything and
-using command-line options to say what you want, which is what we have
-now.
-
-
->> I do not know how "n-way" merge works. =A0I saw somewhere that indic=
-ated
->> that it was a series of N-1 two-way merges.
->
-> Where this "n-way merge" came from? =A0Peff wrote about "n-way combin=
-ed
-> diff", which is something different.
-
-N-way merge exists.  It would be bad to say that I was answering a
-question about conflicted merges if I didn't produce an answer for
-N-way merges.  Unfortunately, I don't have enough information about
-N-way merges to answer the question so I decided it was best to
-acknowledge my ignorance and that I was giving an incomplete answer.
-
-
-
-> --
-> Jakub Narebski
-> Poland
->
+Holger.
