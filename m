@@ -1,62 +1,64 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: [PATCH] unpack_sha1_file(): zlib can only process 4GB at a time
-Date: Thu, 09 Jun 2011 13:14:52 -0700
-Message-ID: <7vr572wymb.fsf@alter.siamese.dyndns.org>
+Date: Thu, 09 Jun 2011 13:15:30 -0700
+Message-ID: <7vpqmmwyl9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 09 22:15:07 2011
+X-From: git-owner@vger.kernel.org Thu Jun 09 22:15:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUldB-0003Va-3G
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 22:15:05 +0200
+	id 1QUldl-0003lf-7H
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 22:15:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755587Ab1FIUO7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2011 16:14:59 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42549 "EHLO
+	id S1755459Ab1FIUPg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2011 16:15:36 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43077 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755385Ab1FIUO6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2011 16:14:58 -0400
+	with ESMTP id S1755555Ab1FIUPf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2011 16:15:35 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C27C954E3;
-	Thu,  9 Jun 2011 16:17:06 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A3A575510;
+	Thu,  9 Jun 2011 16:17:44 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=b
-	z3KINcTfarWXp7uQw/y5M8DeW8=; b=kWZtqCeaItazykAwxhe3LXo/gVxl+5+ni
-	fXf2loWpf7xCHJEiCm7IxsD5EnQQaftnBc6qFbVtAS1J0QflJSGqMZ3VQpmikst7
-	n2v+x7o3i5bzIZNU+hMu7BzytAC++dt5nn/UllExTk9Cn+XZfPV7d0MMHSZMLCI3
-	+/CD7tbvxk=
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=8
+	fGktv+wJ+ccFFQkPsy5BlmjF8k=; b=p+o5zvwUWPmXlKvFH9uWxaeujzs7JKRNS
+	jOfLm+UeSlNRWxupdhm6BNacBjY3BfHKskOkngas9GTBUoztbFwO/bC5f6poPMsx
+	iCge3ByqGYkg9ItGD6sfBO3709gGhVhkTV5ehwKPuH2L5GD8ilhNFPon00/FTr1R
+	pyguOlXXTw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=v+n
-	SOw2FVFGmS0/kzdOT4zEVhD6VfoH4+pfZWcek2Jwia24MbIYLxppLok729zhLF7o
-	PTKaqZ3z43mQc9sTofQdmIpv+zuwPVpB7LDbf7G1MXtJUwUAVB+/MbXMnTiAQSl8
-	rNuA26aHP22K+O5naJoJknTPVtEBJqqKpccM7VQw=
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=r5c
+	blW3mdeUQrNVR6khcb7xGfVqi8RYlN5huXMC7Yd4cRR0/NeOkRfFTwn0Srj9HY/9
+	quhyH832coO57IzXrNhU9f4yhW6vysOdnx+p1t8G8E8lagDIuFm4UOQ4gtOQAgZR
+	PXXrO+KMMeHmy58zdJsgVKecItMtukbzg1e8Y7gU=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AE76154E2;
-	Thu,  9 Jun 2011 16:17:05 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 91CC3550F;
+	Thu,  9 Jun 2011 16:17:43 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8175154E1; Thu,  9 Jun 2011
- 16:17:03 -0400 (EDT)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B2938550E; Thu,  9 Jun 2011
+ 16:17:41 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 71B6D576-92D5-11E0-85ED-C8CFB7AE1C3C-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 886435D4-92D5-11E0-9D86-C8CFB7AE1C3C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175574>
 
 The same theme as "unpack-objects" patch.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-
  * On a beefy enough machine, you could register a large binary blob
    and run fsck, fetch, or push to play with that object with these
    patches, but there are many more places that aren't safe.
+
+   I seem to have caught a nasty cold, so this will be the end of the
+   series from me for today.  At least that is what I plan for now.
 
  sha1_file.c |   29 ++++++++++++++++++++---------
  1 files changed, 20 insertions(+), 9 deletions(-)
