@@ -1,94 +1,81 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 06/19] git_remote_helpers: push all refs during a
- non-local export
-Date: Thu, 9 Jun 2011 12:26:11 +0200
-Message-ID: <BANLkTimBF=hVmPLdh1Wqe4WBNFA2kpw6mg@mail.gmail.com>
-References: <1307558930-16074-1-git-send-email-srabbelier@gmail.com>
- <1307558930-16074-7-git-send-email-srabbelier@gmail.com> <20110608194205.GI27715@elie>
- <20110608221908.GB15530@sigill.intra.peff.net> <20110609080912.GB4885@elie>
- <BANLkTincedbjH+ta6g7+uA3=3k_30RQaCg@mail.gmail.com> <20110609084342.GC4885@elie>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Git is not scalable with too many refs/*
+Date: Thu, 09 Jun 2011 04:18:09 -0700 (PDT)
+Message-ID: <m38vtbdzjq.fsf@localhost.localdomain>
+References: <BANLkTimnCqaEBVreMhnbRBV3r-r1ZzkFcg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 09 12:26:58 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: NAKAMURA Takumi <geek4civic@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 09 13:18:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUcS0-0000rG-KT
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 12:26:56 +0200
+	id 1QUdFh-0004JR-Ur
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 13:18:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752219Ab1FIK0w convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Jun 2011 06:26:52 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:50912 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751380Ab1FIK0v convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2011 06:26:51 -0400
-Received: by qyk7 with SMTP id 7so2392687qyk.19
-        for <git@vger.kernel.org>; Thu, 09 Jun 2011 03:26:51 -0700 (PDT)
+	id S1756194Ab1FILSN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2011 07:18:13 -0400
+Received: from mail-bw0-f52.google.com ([209.85.214.52]:37478 "EHLO
+	mail-bw0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753515Ab1FILSL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2011 07:18:11 -0400
+Received: by bwj24 with SMTP id 24so1849692bwj.11
+        for <git@vger.kernel.org>; Thu, 09 Jun 2011 04:18:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=evUlQbstFArhuVqJmLqN7UwzqI5mC8Q/UD6D9AfYwT8=;
-        b=WhRUKGnVO6fjqa3EDyWib3DMdELTnoTzdpUeKu6qc/oHXYPiVyHFVWWC2pYeQjJpFV
-         cX+7BC186rgfnIpZQen+MZMzCQkFEoXov8hbqOtP1pY+5l3VMC5d682xmlglQdwrRxsA
-         cnrpmFNNLijfNTPOfdw1gD54/c/A0Wocp2Ca8=
+        h=domainkey-signature:x-authentication-warning:to:cc:subject
+         :references:from:date:in-reply-to:message-id:lines:user-agent
+         :mime-version:content-type;
+        bh=zacgRMZbW1xM7OIBnbKvpo8bK46ovnsYYnqgU4c/U0g=;
+        b=nCa962XZFKRmXv2sEYftQh4LYX+iEVTlk+gR4KYSwLOZJjVu8IYXCjiiUXRQt4sc1V
+         Pke/RVV20Nro8ctu6WpHVKufZDcpywrjyHe/8k16yscgmzKI2rG+NSMqlSOcXLC0n0Az
+         5uq1hbtNgSmRV/JHgHrPM6xNrB8a+g3EFPlEg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=cMyaSIByCq0zFHvCQx2aqTy+9wzcNYrp0e/vris6tIdzsWCDtOxqmfvBl6cO34yw0q
-         6zQ5CIxLTO35J1ki6sKzbmhzlkKrts9NPopNm8CzF7vw7CX1F6YRX7gAyxEYjlrKhtQ2
-         Pq/wgiEodwdql/GOAaLXcuDGjK2KGi4WS9fXc=
-Received: by 10.229.135.12 with SMTP id l12mr416124qct.53.1307615211083; Thu,
- 09 Jun 2011 03:26:51 -0700 (PDT)
-Received: by 10.229.83.203 with HTTP; Thu, 9 Jun 2011 03:26:11 -0700 (PDT)
-In-Reply-To: <20110609084342.GC4885@elie>
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=dJwm5DzRbrvS0dgQVPCC/cg5vs/0Jv2ThxtVz90oZpfHMARq8fF0PLsgFenEjXOEDY
+         V7P7xlm4703mVJH+NS8X740eLfB2ipAqFAcYb6CEBPlkqH3+0A/Y7wMjx/38svKCV9Tz
+         5xZ3wWW4Zw4dKYKI7SgMWBdbmtT8zrz3j5jBk=
+Received: by 10.204.139.199 with SMTP id f7mr640266bku.23.1307618290205;
+        Thu, 09 Jun 2011 04:18:10 -0700 (PDT)
+Received: from localhost.localdomain (abvo166.neoplus.adsl.tpnet.pl. [83.8.212.166])
+        by mx.google.com with ESMTPS id a28sm1347724fak.1.2011.06.09.04.18.08
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 09 Jun 2011 04:18:09 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p59BHfqv031643;
+	Thu, 9 Jun 2011 13:17:52 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p59BHUhN031634;
+	Thu, 9 Jun 2011 13:17:30 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <BANLkTimnCqaEBVreMhnbRBV3r-r1ZzkFcg@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175516>
 
-Heya,
+NAKAMURA Takumi <geek4civic@gmail.com> writes:
 
-On Thu, Jun 9, 2011 at 10:43, Jonathan Nieder <jrnieder@gmail.com> wrot=
-e:
-> Sverre Rabbelier wrote:
->> On Thu, Jun 9, 2011 at 10:09, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
->
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0export :1 refs/heads/foo
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0export :2 refs/heads/bar
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0export :3 +refs/heads/force
->>>
->>> with :1, :2, and :3 being marks in the fast-import stream.
->>
->> The only problem there is that we don't know the relevant marks befo=
-rehand.
->
-> Since this requires changing "git fast-export" anyway, we could
-> arrange to know.
+> Hello, Git. It is my 1st post here.
+> 
+> I have tried tagging each commit as "refs/tags/rXXXXXX" on git-svn
+> repo locally. (over 100k refs/tags.)
+[...]
 
-How? Or do you mean like, 'reserve' a certain mark?
+That's insane.  You would do much better to mark each commit with
+note.  Notes are designed to be scalable.  See e.g. this thread
 
-> A related problem, though: it is not friendly to stomp on mark number=
-s
-> which an exporter might want to use for some other purpose. =C2=A0So =
-yeah,
-> the precise syntax above is not so great.
+  [RFD] Proposal for git-svn: storing SVN metadata (git-svn-id) in notes
+  http://article.gmane.org/gmane.comp.version-control.git/174657
 
-We might just want to do it _afterward_. We already have some
-communication after the import (the "ok ..." lines), so why not add a
-"update :1 /refs/heads/master"?
-
---=20
-Cheers,
-
-Sverre Rabbelier
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
