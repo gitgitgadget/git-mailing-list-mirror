@@ -1,114 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv3 1/2] Add a remote helper to interact with mediawiki,
- pull & clone handled
-Date: Thu, 9 Jun 2011 18:44:25 -0400
-Message-ID: <20110609224424.GA5364@sigill.intra.peff.net>
-References: <1307625360-10973-1-git-send-email-jeremie.nikaes@ensimag.imag.fr>
+From: Michael Schubert <mschub@elegosoft.com>
+Subject: Re: Sha1 lookup and GIT_USE_LOOKUP
+Date: Fri, 10 Jun 2011 00:51:41 +0200
+Message-ID: <4DF14E7D.50809@elegosoft.com>
+References: <BANLkTintTECbO5X3VMvzHdGgyKmLKe65YE=0mX6Ahj5wutCJ0Q@mail.gmail.com>	<7v62og2lw1.fsf@alter.siamese.dyndns.org> <BANLkTi=b+WKy2_9VeEw5B0QqodHfVJs2XQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org,
-	Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>,
-	Claire Fousse <claire.fousse@ensimag.imag.fr>,
-	David Amouyal <david.amouyal@ensimag.imag.fr>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Sylvain =?utf-8?Q?Boulm=C3=A9?= <sylvain.boulme@imag.fr>
-To: Jeremie Nikaes <jeremie.nikaes@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 10 00:44:37 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Marc Pegon <pegon.marc@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 10 00:52:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUnxs-0003YP-SJ
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 00:44:37 +0200
+	id 1QUo5F-0006CB-PB
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 00:52:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757061Ab1FIWob (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2011 18:44:31 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36938
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757042Ab1FIWo3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2011 18:44:29 -0400
-Received: (qmail 20618 invoked by uid 107); 9 Jun 2011 22:44:36 -0000
-Received: from 70-36-146-246.dsl.dynamic.sonic.net (HELO sigill.intra.peff.net) (70.36.146.246)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 09 Jun 2011 18:44:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Jun 2011 18:44:25 -0400
-Content-Disposition: inline
-In-Reply-To: <1307625360-10973-1-git-send-email-jeremie.nikaes@ensimag.imag.fr>
+	id S1757064Ab1FIWwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2011 18:52:09 -0400
+Received: from mx0.elegosoft.com ([78.47.87.163]:39952 "EHLO mx0.elegosoft.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756661Ab1FIWwI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2011 18:52:08 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id 0C582DE852;
+	Fri, 10 Jun 2011 00:52:07 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id DRexTzKumO8e; Fri, 10 Jun 2011 00:52:02 +0200 (CEST)
+Received: from [192.168.1.101] (p5B2E5376.dip.t-dialin.net [91.46.83.118])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id 1D2AADE851;
+	Fri, 10 Jun 2011 00:52:02 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110601 Thunderbird/3.1.10
+In-Reply-To: <BANLkTi=b+WKy2_9VeEw5B0QqodHfVJs2XQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175586>
 
-On Thu, Jun 09, 2011 at 03:15:59PM +0200, Jeremie Nikaes wrote:
+On 06/09/2011 11:24 AM, Marc Pegon wrote:
+> On Wed, Jun 8, 2011 at 8:55 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Marc Pegon <pegon.marc@gmail.com> writes:
+>>
+>>> Since this environment variable is not set by default, git will always
+>>> use a simple binary search, won't it ?
+>>
+>> Yes.
+>>
+>>> Also, when searching for a sha1 given a sha1 prefix, among packed
+>>> objects, find_short_packed_object also does a simple binary search.
+>>> Wouldn't it be simpler to just use the sha1_entry_pos method ?
+>>
+>> Unknown ;-).
+>>
+>> The environment variable is there exactly for people like you who are
+>> interested in finding out which one yields better performance by
+>> benchmarking.  Once we can get a convincing result, we can either
+>> deprecate the more involved sha1_entry_pos() if it turns out to be not
+>> worth it, or we can always use it if it turns out to be significantly
+>> better.
+> 
+> Perhaps we could compare the two methods by counting for each one the
+> average number of iterations it takes to find an object in a pack.
+> But anyways, I guess GIT_USE_LOOKUP should also have an influence on
+> the method used to find an object given a sha1 prefix, and the code
+> that does a simple binary search should not be duplicated as it is
+> now, right ?
 
-> For now, the whole wiki is cloned, but it will be possible to clone only
-> some pages: the clone is based on a list of pages which is now all
-> pages.
+The commit introducing sha1_entry_pos() comes with some reasoning:
 
-This is not really true anymore, is it? Later you say:
+628522
 
-> Partial cloning is supported using the following syntax :
-> "git clone mediawiki::http://wikiurl##A_Page##Another_Page"
-> As always, this url is kept in .git/config, helping to always keep
-> track of these specific pages
+libgit2 dropped "old and boring binary search" some days ago:
 
-so I think it is not "will be" possible any more.
-
-> +sub get_pages{
-> +	my $mediawiki = MediaWiki::API->new;
-> +	$mediawiki->{config}->{api_url} = "$url/api.php";
-> [...]
-> +	} else {
-> +		#the list of titles should follow the pattern 'page1|page2|...'
-> +		my $titles = "";
-> +		foreach my $title (@pages_titles){
-> +			$titles.="$title|";
-> +		}
-> +		#supress the last | that is add in the foreach
-> +		chop($titles);
-
-This is usually spelled:
-
-  my $titles = join('|', @pages_titles);
-
-> +		$pages = $mediawiki->api({
-> +			action => 'query',
-> +			titles => $titles,
-> +		});
-> +		if (!defined($pages)) {
-> +			print STDERR "fatal: None of the pages exist \n";
-> +			exit 1;
-> +		}
-
-That's not an accurate error message. If the pages don't exist, we will
-actually get back a set of pages with negative ids (so you can tell
-which ones exist and which ones don't). If $pages is undefined, it's
-actually not a valid mediawiki repo.
-
-Also, according to the mediawiki API, we can send only 51 titles at a
-time. So we need to break this into pieces.
-
-However, I wonder if this code path is needed at all. We are mapping
-titles to page ids, so that we can later ask mediawiki for revisions by
-page id. But why not just ask for revisions by title, and skip this
-extra round trip to the server?
-
-Speaking of round trips, I did have an idea for reducing round-trips in
-the "mostly up to date" case. We can ask for the revisions for multiple
-titles at once (apparently up to 51, or 501 if you have special bot
-privileges), but you will only get the latest revision for each. Which
-isn't sufficient for us to do anything except tell whether or not there
-are any revisions to fetch.
-
-So without the optimization, with N pages we will make N requests for
-new revisions. But with it, we will make N/51 requests for the latest
-revisions, and then M (where M <= N) for every page that actually has
-new content. In other words, it is a good optimization as long as less
-than 49/51 pages have changed, on average. So it's bad for "clone", but
-very good for a subsequent "fetch". The best case is a fetch where
-nothing has changed, which should have 1/51th as many round-trips to
-determine that is the case.
-
--Peff
+dd453c
