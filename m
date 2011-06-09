@@ -1,94 +1,87 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 15/19] transport-helper: update ref status after push
- with export
-Date: Thu, 9 Jun 2011 04:10:45 -0500
-Message-ID: <20110609091045.GE4885@elie>
-References: <1307558930-16074-1-git-send-email-srabbelier@gmail.com>
- <1307558930-16074-16-git-send-email-srabbelier@gmail.com>
+From: Marc Pegon <pegon.marc@gmail.com>
+Subject: Re: Sha1 lookup and GIT_USE_LOOKUP
+Date: Thu, 9 Jun 2011 11:24:15 +0200
+Message-ID: <BANLkTi=b+WKy2_9VeEw5B0QqodHfVJs2XQ@mail.gmail.com>
+References: <BANLkTintTECbO5X3VMvzHdGgyKmLKe65YE=0mX6Ahj5wutCJ0Q@mail.gmail.com>
+	<7v62og2lw1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 09 11:11:11 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 09 11:24:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUbGg-00048d-Ok
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 11:11:11 +0200
+	id 1QUbTR-0000xm-Mj
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 11:24:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753973Ab1FIJK5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2011 05:10:57 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:36934 "EHLO
+	id S1752447Ab1FIJYR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Jun 2011 05:24:17 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:59645 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753660Ab1FIJKx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2011 05:10:53 -0400
-Received: by iyb14 with SMTP id 14so1138389iyb.19
-        for <git@vger.kernel.org>; Thu, 09 Jun 2011 02:10:53 -0700 (PDT)
+	with ESMTP id S1752175Ab1FIJYQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2011 05:24:16 -0400
+Received: by iyb14 with SMTP id 14so1146024iyb.19
+        for <git@vger.kernel.org>; Thu, 09 Jun 2011 02:24:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=LxFO0563i9A3DjCPR7loBMzt6bFO+kQdkuFfIAttj3I=;
-        b=FzVgMtAYJWj8P8OlFKGrk+f68X0cqoLZzgHGggr3ubF/FlJb8GhG/1mcgygv2GTf9Z
-         4ZzGD5l58mxQLV8bLRyi3W9hvlMmXtR3wxYftVM8dfK+PqjTIWeJKJWi1ykXAjvEDJpU
-         tUz8V3LC3XG6q9yeWBj2uw/s5spg0FSwMTThE=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=reakUu51fFS8T29zdCz4z/SbbbGgh7TnbSoHJaHC+Sc=;
+        b=W2vqF/5GOshXTUSi5FKELI2RsVyz5uHCxsQVe8fXpDViWdAWQMl+/lf7PySlfwKiv4
+         X+H9bj2NtW4TDa7VULgDi/AvjTJTphsPeXRs8sFd/g4LYJe4SU9OU55bXCd1EApmPwAw
+         Z87P9iKRpsILUOlsjuxUZJCu+FzSaDSo8nCXU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=S9e6tek6gUIVxWMcvvUa3QDHgQdmNDREr/hNgClINncXIo7vVeFsQUIFzCgeET4Gn6
-         FWDRDRdnSoouxUxk2PCGwibYXOUVUiclh9V29QqprwTAoPOLpaqeCWFbPjTMQgBRZZwN
-         ML8CV3k/Aj52wofoqQRF55ozF/+UKUfLdoDYo=
-Received: by 10.42.147.133 with SMTP id n5mr795537icv.203.1307610651420;
-        Thu, 09 Jun 2011 02:10:51 -0700 (PDT)
-Received: from elie ([69.209.61.87])
-        by mx.google.com with ESMTPS id e1sm1169081icv.20.2011.06.09.02.10.48
-        (version=SSLv3 cipher=OTHER);
-        Thu, 09 Jun 2011 02:10:50 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1307558930-16074-16-git-send-email-srabbelier@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Qcz1W4aQlojAzjpF9pNMYQUbwBU3tAf0HZKw1hD4bO964KWW+lisOJYxlq7y3HS0y9
+         WDyletIEqremW45OosUUM4uFHk6gE1VySUlPdH03S+o6O8PrZaUqvXsg+Fg5jEf6DHwn
+         zeP0lEVjTAj4alHxnieSMesaOz/fyZLCa5CMo=
+Received: by 10.42.229.3 with SMTP id jg3mr685449icb.425.1307611455782; Thu,
+ 09 Jun 2011 02:24:15 -0700 (PDT)
+Received: by 10.42.165.6 with HTTP; Thu, 9 Jun 2011 02:24:15 -0700 (PDT)
+In-Reply-To: <7v62og2lw1.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175511>
 
-Sverre Rabbelier wrote:
+On Wed, Jun 8, 2011 at 8:55 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Marc Pegon <pegon.marc@gmail.com> writes:
+>
+>> Since this environment variable is not set by default, git will alwa=
+ys
+>> use a simple binary search, won't it ?
+>
+> Yes.
+>
+>> Also, when searching for a sha1 given a sha1 prefix, among packed
+>> objects, find_short_packed_object also does a simple binary search.
+>> Wouldn't it be simpler to just use the sha1_entry_pos method ?
+>
+> Unknown ;-).
+>
+> The environment variable is there exactly for people like you who are
+> interested in finding out which one yields better performance by
+> benchmarking. =A0Once we can get a convincing result, we can either
+> deprecate the more involved sha1_entry_pos() if it turns out to be no=
+t
+> worth it, or we can always use it if it turns out to be significantly
+> better.
 
->  Obviously the testgit helper shouldn't just print 'ok' for master,
->  but it demonstrates the idea.
-[... and more interesting commentary ...]
+Perhaps we could compare the two methods by counting for each one the
+average number of iterations it takes to find an object in a pack.
+But anyways, I guess GIT_USE_LOOKUP should also have an influence on
+the method used to find an object given a sha1 prefix, and the code
+that does a simple binary search should not be duplicated as it is
+now, right ?
 
-The above probably belongs in the commit message.
-
-[...]
-> --- a/transport-helper.c
-> +++ b/transport-helper.c
-> @@ -760,6 +760,7 @@ static int push_refs_with_export(struct transport *transport,
->  	data->no_disconnect_req = 1;
->  	if (finish_command(&exporter))
->  		die("Error while running fast-export");
-> +	push_update_refs_status(data, remote_refs);
-
-Now the conversation looks like:
-
-	git>          	done [from fast-export]
-	remote helper>	ok refs/heads/master
-	remote helper>	[blank line]
-
-and after patch 17:
-
-	git>         	done
-	remote helper>	ok refs/heads/master
-	remote helper>
-	git>
-
-which is to say, this implements the "approach C" mentioned in reply
-to patch 10 that ensures that the remote helper gets the blank line
-telling it disconnect is imminent.  Good to see.
+> Thanks.
+>
