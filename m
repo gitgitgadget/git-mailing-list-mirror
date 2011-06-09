@@ -1,84 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 02/10] fix "git -c" parsing of values with equals signs
-Date: Thu, 9 Jun 2011 11:51:36 -0400
-Message-ID: <20110609155136.GB25507@sigill.intra.peff.net>
-References: <20110609155001.GA14969@sigill.intra.peff.net>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: Git is not scalable with too many refs/*
+Date: Thu, 09 Jun 2011 11:52:18 -0400
+Message-ID: <4DF0EC32.40001@gmail.com>
+References: <BANLkTimnCqaEBVreMhnbRBV3r-r1ZzkFcg@mail.gmail.com> <BANLkTinfVNxYX3kj4DBm1ra=8Ar5ca9UvQ@mail.gmail.com> <BANLkTi=PnYmJVXe8tuqdb9UiYnethf1GSw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Sylvain Boulme <Sylvain.Boulme@imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Claire Fousse <claire.fousse@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Thu Jun 09 17:51:45 2011
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	NAKAMURA Takumi <geek4civic@gmail.com>,
+	git <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Jun 09 17:52:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUhWL-0006l3-1h
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 17:51:45 +0200
+	id 1QUhX5-0007A9-Az
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 17:52:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754002Ab1FIPvk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2011 11:51:40 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52493
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752781Ab1FIPvj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2011 11:51:39 -0400
-Received: (qmail 13904 invoked by uid 107); 9 Jun 2011 15:51:47 -0000
-Received: from c-76-21-13-32.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (76.21.13.32)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 09 Jun 2011 11:51:47 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Jun 2011 11:51:36 -0400
-Content-Disposition: inline
-In-Reply-To: <20110609155001.GA14969@sigill.intra.peff.net>
+	id S1754223Ab1FIPw1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2011 11:52:27 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:41760 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754026Ab1FIPwY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2011 11:52:24 -0400
+Received: by iyb14 with SMTP id 14so1417633iyb.19
+        for <git@vger.kernel.org>; Thu, 09 Jun 2011 08:52:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:message-id:disposition-notification-to:date
+         :from:user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=DfQoty6xZHi7Uh1N6GJ88s++ceoXQWhU164Zw3RCnqA=;
+        b=N/TXoj5z4bDE6Ii72Nl6xobPsLelrgKHI77j13vLBG6xXOUjIzuQqZK4Pg0XvlcFio
+         2AK4G9PsCSIebpf3b8ilAh6H31wYkBgix5tsQgwYeDmMPD7OmRWkvdzQsnkosEQMTVhT
+         JCxI1PhhuA/4v6nizmA2dcJ3TVH0RlggOdA3A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:disposition-notification-to:date:from:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        b=vYprP6mNnQ/kyp2hKxkhRpY0XNvPeBnIXgyCx+pxATpz2jGIBQpqboBCynpnp55+iz
+         OCnIMN54TbT02vHhS7inDDuLyo9Q/vpbfJjT8fCHGH1g2fKBZWxeAGfTSxRoedovfIWt
+         u6Ev0UtRAwt8B8PBqoCG2AfbNd5C1ia/H+gyw=
+Received: by 10.231.116.132 with SMTP id m4mr1104341ibq.86.1307634744128;
+        Thu, 09 Jun 2011 08:52:24 -0700 (PDT)
+Received: from [10.0.1.133] (cpe-67-248-185-165.nycap.res.rr.com [67.248.185.165])
+        by mx.google.com with ESMTPS id s9sm834690ibe.10.2011.06.09.08.52.22
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 09 Jun 2011 08:52:23 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.16) Gecko/20110505 Iceowl/1.0b1 Icedove/3.0.11
+In-Reply-To: <BANLkTi=PnYmJVXe8tuqdb9UiYnethf1GSw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175535>
 
-If you do something like:
+On 06/09/2011 11:23 AM, Shawn Pearce wrote:
+> On Wed, Jun 8, 2011 at 23:50, Sverre Rabbelier<srabbelier@gmail.com>  wrote:
+>> [+shawn, who runs into something similar with Gerrit]
+>
+>> On Thu, Jun 9, 2011 at 05:44, NAKAMURA Takumi<geek4civic@gmail.com>  wrote:
+>>> Hello, Git. It is my 1st post here.
+>>>
+>>> I have tried tagging each commit as "refs/tags/rXXXXXX" on git-svn
+>>> repo locally. (over 100k refs/tags.)
+>
+> As Jakub pointed out, use git notes for this. They were designed to
+> scale to>100,000 annotations.
+>
+>>> Indeed, it made something extremely slower, even with packed-refs and
+>>> pack objects.
+>
+> Having a reference to every commit in the repository is horrifically
+> slow. We run into this with Gerrit Code Review and I need to find
+> another solution. Git just wasn't meant to process repositories like
+> this.
 
-  git -c core.foo="value with = in it" ...
-
-we would split your option on "=" into three fields and
-throw away the third one. With this patch we correctly take
-everything after the first "=" as the value (keys cannot
-have an equals sign in them, so the parsing is unambiguous).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- config.c               |    2 +-
- t/t1300-repo-config.sh |    6 ++++++
- 2 files changed, 7 insertions(+), 1 deletions(-)
-
-diff --git a/config.c b/config.c
-index e0b3b80..aa5eb78 100644
---- a/config.c
-+++ b/config.c
-@@ -45,7 +45,7 @@ static int git_config_parse_parameter(const char *text,
- 	struct strbuf tmp = STRBUF_INIT;
- 	struct strbuf **pair;
- 	strbuf_addstr(&tmp, text);
--	pair = strbuf_split(&tmp, '=');
-+	pair = strbuf_split_max(&tmp, '=', 2);
- 	if (pair[0]->len && pair[0]->buf[pair[0]->len - 1] == '=')
- 		strbuf_setlen(pair[0], pair[0]->len - 1);
- 	strbuf_trim(pair[0]);
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 3db5626..ca5058e 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -904,4 +904,10 @@ test_expect_success 'git -c works with aliases of builtins' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'git -c does not split values on equals' '
-+	echo "value with = in it" >expect &&
-+	git -c core.foo="value with = in it" config core.foo >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-1.7.6.rc1.36.g91167
+Assuming a very large number of refs, what is it that makes git so 
+horrifically slow? Is there a design or implementation lesson here?
