@@ -1,83 +1,107 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Thu, 09 Jun 2011 11:52:18 -0400
-Message-ID: <4DF0EC32.40001@gmail.com>
-References: <BANLkTimnCqaEBVreMhnbRBV3r-r1ZzkFcg@mail.gmail.com> <BANLkTinfVNxYX3kj4DBm1ra=8Ar5ca9UvQ@mail.gmail.com> <BANLkTi=PnYmJVXe8tuqdb9UiYnethf1GSw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 03/10] config: die on error in command-line config
+Date: Thu, 9 Jun 2011 11:52:32 -0400
+Message-ID: <20110609155232.GC25507@sigill.intra.peff.net>
+References: <20110609155001.GA14969@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	NAKAMURA Takumi <geek4civic@gmail.com>,
-	git <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Jun 09 17:52:37 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Sylvain Boulme <Sylvain.Boulme@imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Claire Fousse <claire.fousse@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Thu Jun 09 17:52:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUhX5-0007A9-Az
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 17:52:31 +0200
+	id 1QUhXP-0007Pu-2Q
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 17:52:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754223Ab1FIPw1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2011 11:52:27 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:41760 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754026Ab1FIPwY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2011 11:52:24 -0400
-Received: by iyb14 with SMTP id 14so1417633iyb.19
-        for <git@vger.kernel.org>; Thu, 09 Jun 2011 08:52:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:disposition-notification-to:date
-         :from:user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=DfQoty6xZHi7Uh1N6GJ88s++ceoXQWhU164Zw3RCnqA=;
-        b=N/TXoj5z4bDE6Ii72Nl6xobPsLelrgKHI77j13vLBG6xXOUjIzuQqZK4Pg0XvlcFio
-         2AK4G9PsCSIebpf3b8ilAh6H31wYkBgix5tsQgwYeDmMPD7OmRWkvdzQsnkosEQMTVhT
-         JCxI1PhhuA/4v6nizmA2dcJ3TVH0RlggOdA3A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:disposition-notification-to:date:from:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        b=vYprP6mNnQ/kyp2hKxkhRpY0XNvPeBnIXgyCx+pxATpz2jGIBQpqboBCynpnp55+iz
-         OCnIMN54TbT02vHhS7inDDuLyo9Q/vpbfJjT8fCHGH1g2fKBZWxeAGfTSxRoedovfIWt
-         u6Ev0UtRAwt8B8PBqoCG2AfbNd5C1ia/H+gyw=
-Received: by 10.231.116.132 with SMTP id m4mr1104341ibq.86.1307634744128;
-        Thu, 09 Jun 2011 08:52:24 -0700 (PDT)
-Received: from [10.0.1.133] (cpe-67-248-185-165.nycap.res.rr.com [67.248.185.165])
-        by mx.google.com with ESMTPS id s9sm834690ibe.10.2011.06.09.08.52.22
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 09 Jun 2011 08:52:23 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.16) Gecko/20110505 Iceowl/1.0b1 Icedove/3.0.11
-In-Reply-To: <BANLkTi=PnYmJVXe8tuqdb9UiYnethf1GSw@mail.gmail.com>
+	id S1754174Ab1FIPwg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2011 11:52:36 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52501
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754013Ab1FIPwf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2011 11:52:35 -0400
+Received: (qmail 13937 invoked by uid 107); 9 Jun 2011 15:52:43 -0000
+Received: from c-76-21-13-32.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (76.21.13.32)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 09 Jun 2011 11:52:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Jun 2011 11:52:32 -0400
+Content-Disposition: inline
+In-Reply-To: <20110609155001.GA14969@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175536>
 
-On 06/09/2011 11:23 AM, Shawn Pearce wrote:
-> On Wed, Jun 8, 2011 at 23:50, Sverre Rabbelier<srabbelier@gmail.com>  wrote:
->> [+shawn, who runs into something similar with Gerrit]
->
->> On Thu, Jun 9, 2011 at 05:44, NAKAMURA Takumi<geek4civic@gmail.com>  wrote:
->>> Hello, Git. It is my 1st post here.
->>>
->>> I have tried tagging each commit as "refs/tags/rXXXXXX" on git-svn
->>> repo locally. (over 100k refs/tags.)
->
-> As Jakub pointed out, use git notes for this. They were designed to
-> scale to>100,000 annotations.
->
->>> Indeed, it made something extremely slower, even with packed-refs and
->>> pack objects.
->
-> Having a reference to every commit in the repository is horrifically
-> slow. We run into this with Gerrit Code Review and I need to find
-> another solution. Git just wasn't meant to process repositories like
-> this.
+The error handling for git_config is somewhat confusing. We
+collect errors from running git_config_from_file on the
+various config files and carefully pass them back up. But
+the two odd things are:
 
-Assuming a very large number of refs, what is it that makes git so 
-horrifically slow? Is there a design or implementation lesson here?
+  1. We actually die on most errors in git_config_from_file.
+     In fact, the only error we actually pass back up is if
+     fopen() fails on the file.
+
+  2. Most callers of git_config do not check the error
+     return at all, but will continue if git_config reports
+     an error.
+
+When the code for "git -c core.foo=bar" was added, it
+dutifully passed errors up the call stack, only for them to
+be eventually ignored. This makes it inconsistent with the
+file-parsing code, which will die when it sees malformed
+config. And it's somewhat unsafe, because it means an error
+in parsing a typo like:
+
+  git -c clean.requireforce=ture clean
+
+will continue the command, ignoring the config the user
+tried to give.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Another option would be to just make git_config call die() on error
+instead of returning the error code that is ignored everywhere. But I
+wasn't sure if anybody was relying on the "fopen failure is silently
+ignored" behavior.
+
+ config.c               |    2 +-
+ t/t1300-repo-config.sh |    8 ++++++++
+ 2 files changed, 9 insertions(+), 1 deletions(-)
+
+diff --git a/config.c b/config.c
+index aa5eb78..ebd404a 100644
+--- a/config.c
++++ b/config.c
+@@ -856,7 +856,7 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
+ 
+ 	switch (git_config_from_parameters(fn, data)) {
+ 	case -1: /* error */
+-		ret--;
++		die("unable to parse command-line config");
+ 		break;
+ 	case 0: /* found nothing */
+ 		break;
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index ca5058e..584e956 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -910,4 +910,12 @@ test_expect_success 'git -c does not split values on equals' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'git -c dies on bogus config' '
++	test_must_fail git -c core.bare=foo rev-parse
++'
++
++test_expect_success 'git -c complains about empty key' '
++	test_must_fail git -c "=foo" rev-parse
++'
++
+ test_done
+-- 
+1.7.6.rc1.36.g91167
