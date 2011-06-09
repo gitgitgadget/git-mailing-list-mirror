@@ -1,72 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: blame -C: adding a line in moved content sometimes affect blame
- result
-Date: Wed, 08 Jun 2011 20:25:25 -0700
-Message-ID: <7v4o3zznx6.fsf@alter.siamese.dyndns.org>
-References: <4DEF041A.9070003@gmail.com>
+From: Josh Triplett <josh@joshtriplett.org>
+Subject: Re: [PATCHv4 2/4] Add infrastructure for ref namespaces
+Date: Wed, 8 Jun 2011 20:38:17 -0700
+Message-ID: <20110609033817.GB6167@leaf>
+References: <1306887870-3875-1-git-send-email-jamey@minilop.net>
+ <m3sjrrwbyp.fsf@localhost.localdomain>
+ <20110603210156.GA1806@leaf>
+ <201106081141.26994.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andrew Wong <andrew.kw.w@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 09 05:25:42 2011
+Cc: Jamey Sharp <jamey@minilop.net>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <johannes.sixt@telecom.at>,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 09 05:39:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUVsH-0005sA-Tw
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 05:25:38 +0200
+	id 1QUW5X-0000rx-70
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 05:39:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755531Ab1FIDZd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 23:25:33 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43953 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755140Ab1FIDZc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 23:25:32 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AE10166C9;
-	Wed,  8 Jun 2011 23:27:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LLUoozEa+tXnLdesu5RWLj6oEfc=; b=LJ5zjl
-	gAT0Wl9d12sDMivSbr2C058U8RttuyF4vg1OhvmmBuYvAHjhXmRQBfzvzRSmmVeZ
-	qJLk2NRwU4G7iv4QIQeN3jFgDvbGwE1BOnHFy35KskhiIPuQjdf76JBBigrcvJos
-	Dh0Slb4ABGSp0A0dvWIWxRmSYCGJGHVxM4+qM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mDngFTL3QsKOJVrV+nsQJJ/JCTNx/s8t
-	NBWqTwwvzL3FJYoi4gEmsL0hABPl9Jq9YlEUeIN2yX4XjDSONFjXn88qsn/tHfWQ
-	OuhYgPDG4IJPEHk/X2ogVNB6QQTOgIb0jR1Iv++pcKs18osOUGLG2NuSMgoNm/rJ
-	iB2ctl9eiCc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8D8DB66C7;
-	Wed,  8 Jun 2011 23:27:40 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id AA41D66B9; Wed,  8 Jun 2011
- 23:27:37 -0400 (EDT)
-In-Reply-To: <4DEF041A.9070003@gmail.com> (Andrew Wong's message of "Wed, 08
- Jun 2011 01:09:46 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6E29D076-9248-11E0-9688-C8CFB7AE1C3C-77302942!a-pb-sasl-sd.pobox.com
+	id S1756128Ab1FIDid (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 23:38:33 -0400
+Received: from relay4-d.mail.gandi.net ([217.70.183.196]:52858 "EHLO
+	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755523Ab1FIDid (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2011 23:38:33 -0400
+X-Originating-IP: 217.70.178.134
+Received: from mfilter4-d.gandi.net (mfilter4-d.gandi.net [217.70.178.134])
+	by relay4-d.mail.gandi.net (Postfix) with ESMTP id 4F35D172055;
+	Thu,  9 Jun 2011 05:38:31 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at #File managed by puppet, do not edit
+	locally
+Received: from relay4-d.mail.gandi.net ([217.70.183.196])
+	by mfilter4-d.gandi.net (mfilter4-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
+	with ESMTP id xNxBt5R9KqoS; Thu,  9 Jun 2011 05:38:29 +0200 (CEST)
+X-Originating-IP: 50.43.15.19
+Received: from leaf (static-50-43-15-19.bvtn.or.frontiernet.net [50.43.15.19])
+	(Authenticated sender: josh@joshtriplett.org)
+	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 77968172079;
+	Thu,  9 Jun 2011 05:38:19 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <201106081141.26994.jnareb@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175487>
 
-Andrew Wong <andrew.kw.w@gmail.com> writes:
->
-> After moving content from file1 to file2, "git blame -C file2"
-> correctly shows that the content came from file1. However, if I add a
-> line in near the top or bottom of the moved content in file2, "git
-> blame -C file2" fails to detect that the top or bottom of the moved
-> contents came from file1.
+On Wed, Jun 08, 2011 at 11:41:25AM +0200, Jakub Narebski wrote:
+> On Fri, 3 June 2011, Josh Triplett wrote:
+> > On Fri, Jun 03, 2011 at 01:35:34AM -0700, Jakub Narebski wrote:
+> > > Jamey Sharp <jamey@minilop.net> writes:
+> > > 
+> > > > From: Josh Triplett <josh@joshtriplett.org>
+> > > > 
+> > > > Add support for dividing the refs of a single repository into multiple
+> > > > namespaces, each of which can have its own branches, tags, and HEAD.
+> > > > Git can expose each namespace as an independent repository to pull from
+> > > > and push to, while sharing the object store, and exposing all the refs
+> > > > to operations such as git-gc.
+> > > [...]
+> > > 
+> > > By the way, after this feature is merged in, would you like for gitweb
+> > > to understand ref namespaces and offer browsing of separate namespaces
+> > > (sub-repositories)?
+> > 
+> > Yes, definitely!  We'd love to see gitweb handling namespaces
+> > transparently, and presenting them identically to top-level
+> > repositories.  (Also, gitweb would need to present the appropriate
+> > repository URIs for cloning.)
+> 
+> Note that for gitweb support we would need some easy way to list all
+> namespaces that given repository provides.  But that is for the future.
+> 
+> BTW. what do you think about treating repository with own refs and with
+> namespaces similarly to how "forks" are handled in gitweb now?
 
-Probably your first few remaining lines of file2 are considered
-insignificant copy by the logic in step 4 described in:
+Different namespaces won't necessarily represent forks of the same
+repository; they may represent entirely separate repositories, with the
+use of namespaces merely a server-side implementation detail to save
+space.  I'd suggest presenting them as separate repositories.
 
-    http://thread.gmane.org/gmane.comp.version-control.git/28826
-
-I didn't actually tried to follow what the code does to your exact input,
-though.
+- Josh Triplett
