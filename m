@@ -1,69 +1,65 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] unpack_sha1_file(): zlib can only process 4GB at a time
-Date: Fri, 10 Jun 2011 00:28:39 +0200
-Message-ID: <BANLkTimtaFGhrzTVsg0=gods5Kza7tZ9=A@mail.gmail.com>
-References: <7vpqmmwyl9.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 10/10] clone: accept config options on the command line
+Date: Fri, 10 Jun 2011 00:34:06 +0200
+Message-ID: <vpqtyby8wip.fsf@bauges.imag.fr>
+References: <20110609155001.GA14969@sigill.intra.peff.net>
+	<20110609155740.GJ25507@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 10 00:29:26 2011
+Content-Type: text/plain
+Cc: Claire Fousse <claire.fousse@ensimag.imag.fr>, git@vger.kernel.org,
+	Sylvain Boulme <Sylvain.Boulme@imag.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jun 10 00:34:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUnjC-0006qU-6x
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 00:29:26 +0200
+	id 1QUnnz-0008VM-LR
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 00:34:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756846Ab1FIW3U convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Jun 2011 18:29:20 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:64255 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755793Ab1FIW3U convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2011 18:29:20 -0400
-Received: by qyg14 with SMTP id 14so1100649qyg.19
-        for <git@vger.kernel.org>; Thu, 09 Jun 2011 15:29:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=XuIku9nRImVqH35T7KfhpUeL4sJjIIbuMFIe4nkrJAc=;
-        b=cvQOoqouteq2Hat9T446+V/p5gL7KHVlOfH1CXidabAFUgmazTL3HbJKOYOBVbS8FT
-         KcGIp/itSwa7nEnHnTjDe+j7kQbvd75TBa3cLsMBS0+vhhTxLAHIj+MEVHnIB/ojxDOa
-         bT2i8gRdiIUqoVcydKg9HrDEWv2ht1NS4IiQQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=NfqPY1iWD17Fjdp2bfyoThF3d76h/Lt7o7rD2PvYt35wNQl7SmDw++1Zb8S4+PWvTs
-         zhpoaE+tsN87VXLPuGcQeCjyG7lX6RzBTqKSy3Hc3bnbXPNmY54Cj3n3KxITSfnPH3Di
-         KTWiKOAnOdETCidMWCeay74Zri8f760mjyiRk=
-Received: by 10.229.100.20 with SMTP id w20mr1086364qcn.129.1307658559311;
- Thu, 09 Jun 2011 15:29:19 -0700 (PDT)
-Received: by 10.229.83.203 with HTTP; Thu, 9 Jun 2011 15:28:39 -0700 (PDT)
-In-Reply-To: <7vpqmmwyl9.fsf@alter.siamese.dyndns.org>
+	id S1756921Ab1FIWeU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2011 18:34:20 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:57669 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755385Ab1FIWeS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2011 18:34:18 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p59MY3T5023150
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 10 Jun 2011 00:34:03 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1QUnni-0006NO-JJ; Fri, 10 Jun 2011 00:34:06 +0200
+In-Reply-To: <20110609155740.GJ25507@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 9 Jun 2011 11:57:40 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 10 Jun 2011 00:34:03 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p59MY3T5023150
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1308263643.97218@XUzgKxiT+Ystx7SfNZdNoA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175583>
 
-Heya,
+Jeff King <peff@peff.net> writes:
 
-On Thu, Jun 9, 2011 at 22:15, Junio C Hamano <gitster@pobox.com> wrote:
-> =C2=A0* On a beefy enough machine, you could register a large binary =
-blob
-> =C2=A0 and run fsck, fetch, or push to play with that object with the=
-se
-> =C2=A0 patches, but there are many more places that aren't safe.
+> Yay, the actual patch. Even if we don't end up using this for transport
+> helpers, I think it's a sane thing to allow (e.g., see the final test
+> below).
 
-Do you know what those places are, and do you plan to fix them when
-you get better? If not, should we record those places somewhere (if
-nothing else just on the list)?
+Ack.
 
---=20
-Cheers,
+I reviewed quickly the serie, which seems OK. Nice work, amazing serie
+of patches to end up with this trivial one ;-).
 
-Sverre Rabbelier
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
