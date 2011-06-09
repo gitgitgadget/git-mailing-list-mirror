@@ -1,66 +1,54 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: Command-line interface thoughts
-Date: Fri, 10 Jun 2011 00:04:56 +0200
-Message-ID: <201106100004.58040.jnareb@gmail.com>
-References: <BANLkTikTWx7A64vN+hVZgL7cuiZ16Eobgg@mail.gmail.com> <20110609200403.GA3955@sigill.intra.peff.net> <4DF13D00.2060000@alum.mit.edu>
+Date: Thu, 9 Jun 2011 18:21:44 -0400
+Message-ID: <20110609222144.GA7413@sigill.intra.peff.net>
+References: <BANLkTinidLbQ_FcVEiGSK91uXYWaKk7MKA@mail.gmail.com>
+ <201106051311.00951.jnareb@gmail.com>
+ <BANLkTik+xhd5QQ09QiPSH1bFAndzipKtrw@mail.gmail.com>
+ <7vwrgza3i2.fsf@alter.siamese.dyndns.org>
+ <4DF08D30.7070603@alum.mit.edu>
+ <20110609161832.GB25885@sigill.intra.peff.net>
+ <4DF10ADA.5070206@alum.mit.edu>
+ <7v8vtayhnm.fsf@alter.siamese.dyndns.org>
+ <20110609200403.GA3955@sigill.intra.peff.net>
+ <4DF13D00.2060000@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Scott Chacon <schacon@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
 	Michael Nahas <mike@nahas.com>, git@vger.kernel.org
 To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Jun 10 00:05:14 2011
+X-From: git-owner@vger.kernel.org Fri Jun 10 00:22:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUnLl-0006pc-Ap
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 00:05:13 +0200
+	id 1QUnc6-0004Gf-JA
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 00:22:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756547Ab1FIWFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2011 18:05:08 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:38113 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755648Ab1FIWFG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2011 18:05:06 -0400
-Received: by fxm17 with SMTP id 17so1278605fxm.19
-        for <git@vger.kernel.org>; Thu, 09 Jun 2011 15:05:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=vRs0i6BJrl/IpYSCnmSQis3BrplChyR9WZrMVbDMcwg=;
-        b=mO8wP99kr/EfNXKo9adIT3LjdpMNqb09Mpaa76nmpJhixGBvrnvGQn8ncW3R03P/3K
-         BqrH4cb3C2/iTZWQKfMu7gq3z5tT9+JPO1I2yfxTdl1LV6pjfyA+aArRMf8fbxtgbti8
-         /Yx3nmvHqd2gg6hq0Ek1MpOPdSB/T3T91nv5U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=V0DGeu6tANyN0PsXk17qfaSorzR+P82F3HI542fc8M5t8QnhcdwY+vfu3UA3Bvi+75
-         LYa6AL8/hpUrzjKNtBwdn+Up/2bNvpUx7Pxv50E3BRqcq1ifvvshvv1XpxB3P0IL8fYx
-         a4jz4S37xIm6a/B59+aF8WeINPqHjuNWfz9pE=
-Received: by 10.223.97.65 with SMTP id k1mr1329908fan.0.1307657105268;
-        Thu, 09 Jun 2011 15:05:05 -0700 (PDT)
-Received: from [192.168.1.15] (abvk161.neoplus.adsl.tpnet.pl [83.8.208.161])
-        by mx.google.com with ESMTPS id h9sm817405fai.6.2011.06.09.15.05.03
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 09 Jun 2011 15:05:04 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4DF13D00.2060000@alum.mit.edu>
+	id S1756820Ab1FIWVx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2011 18:21:53 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44400
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755739Ab1FIWVv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2011 18:21:51 -0400
+Received: (qmail 20311 invoked by uid 107); 9 Jun 2011 22:21:58 -0000
+Received: from 70-36-146-246.dsl.dynamic.sonic.net (HELO sigill.intra.peff.net) (70.36.146.246)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 09 Jun 2011 18:21:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Jun 2011 18:21:44 -0400
 Content-Disposition: inline
+In-Reply-To: <4DF13D00.2060000@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175580>
 
-On Thu, 9 Jan 2011, Michael Haggerty wrote:
+On Thu, Jun 09, 2011 at 11:37:04PM +0200, Michael Haggerty wrote:
+
 > On 06/09/2011 10:04 PM, Jeff King wrote:
 > > I'm less sure about these new tokens, for a few reasons:
 > > 
@@ -73,73 +61,115 @@ On Thu, 9 Jan 2011, Michael Haggerty wrote:
 > special case of a general concept:
 > 
 >     git diff3 OURS NEXT THEIRS
-                ^^^^^^^^^^^^^^^^ -- ???
 
-First, it is unnecessary power, unnecessary complication.  WTF. you are
-doing comparing _abitrary_ trees?
+You can almost already do that with "git diff". For example:
 
-Second, for files with merge conflicts "git diff" is the same as
-"git diff3 OURS THEIRS WTREE", not "git diff3 OURS NEXT THEIRS".
-As you can see it is very easy to construct wrong options to git-diff,
-and end up with nonsense!
+  merge=456a4c08b8d8ddefda939014c15877ace3e3f499
+  git diff $merge $merge^1 $merge^2
 
-Third, "git diff" is not "git diff3 OURS THEIRS WTREE" in general,
-because for resolved files it is "git diff NEXT WTREE", which is
-very useful.  
+which should show the same diff as "git show $merge".
 
-I could agree with STAGE being possibly multi-stage thingy, so that
-"git diff STAGE WTREE" in case of merge conflict is _exactly the same_
-as "git diff".
+To do that in the index case, I think you would want:
 
-> >   4. They're supposed to be simpler to understand than index stages. But
-> >      are they? The latest definitions seem to be:
-> > 
-> >        OURS is a tree of each path in the index, either from stage 2 if
-> >        it exists, or from NEXT otherwise.
-> > 
-> >        NEXT is a tree of each path in the index, either from stage 0 if
-> >        it exists, or from HEAD otherwise.
-> > 
-> >      But that doesn't seem any simpler to me than just saying "the index
-> >      has numbered stages, and they correspond to resolved, base, ours,
-> >      and theirs".
-> 
+  git diff WTREE HEAD MERGE_HEAD
+
+except that you can't say "WTREE" yet.
+
+You might want:
+
+  git diff NEXT HEAD MERGE_HEAD
+
+but I'm not sure it is going to be useful. For resolved paths, it makes
+sense: show the combined diff that would happen if I committed this
+right now. But for unmerged paths, NEXT is going to default to HEAD, so
+it's going to be the combined diff as if you threw out all of the
+changes from both branches. Which is probably not helpful.
+
+I'm not sure about OURS and THEIRS versus HEAD and MERGE_HEAD. They also
+default to HEAD, so I guess that:
+
+  git diff NEXT OURS THEIRS
+
+would omit unresolved paths and give you only the "what would happen if
+I committed this". Which is not something I have ever heard of somebody
+wanting, but is at least something you can't calculate with current git.
+
+I'd be curious to see more concrete examples of situations where these
+tokens could help.
+
 > There is no need to explain the pseudotrees in terms of the index
 > stages; the pseudotrees are easier to understand and should therefore
 > become the primary way to describe the index.  Let me give it a try, at
 > tutorial level.  Assume that the concepts HEAD and WTREE have already
 > been introduced:
-> 
+> [...]
+
+Not too bad. It's long, but I don't think any single concept in it is
+hard. Of course I already understand the index, so maybe I'm not a good
+judge.
+
+I would be most worried about the following spots in terms of confusing
+users:
+
 >   The "index" is a special area that can hold one or more temporary
 >   snapshots of your version-controlled content.  Each snapshot is
 >   called a "tree" because it is analogous to a filesystem tree such
 >   as the working tree [1].
-> 
->   Usually the index holds a single tree called "NEXT".  NEXT is a
->   snapshot of the state of the working tree that is ready to be
->   committed.  This usually consists of the contents from the commit
->   that was last checked out (HEAD), plus any changes that have been
->   staged for commit using "git stage".
-> 
->   It is possible to use "git diff" to view the difference between any
->   two trees, whether they be trees in the index, trees in commits, or
->   the working tree.  For example, to see the difference between the
->   last commit and the working tree, use
-> 
->       git diff HEAD WTREE
 
-[cut very long explanation]
- 
-I won't repear the THIRD time simple and around *three times shorter*
-explanation on _when_ to use which form: "git diff" for your own remaining
-changes that can be "git add"-ef, "git diff --staged" for which changes
-are staged i.e. what you have "git add"-ed, and "git diff HEAD" to compare
-current with last.
+This is giving the user a different mental model than what is actually
+in the index. I haven't yet convinced myself whether that mental model
+is completely isomorphic to what is actually being stored or not. If it
+isn't, then what are the cases where the abstraction is going to leak,
+and what problems is it going to cause?
 
-Those pseudo-trees might be useful if you know what you want to compare,
-but are not useful if you know what you want to see (you have to remember
-what to compare with which).  Never mind they are longer to write...
+IOW, I am worried about the moment where somebody does a diff with one
+of these trees, and it _doesn't_ do what they expect, and the
+explanation for what did happen involves explaining how the index is
+actually stored.
 
--- 
-Jakub Narebski
-Poland
+>   NEXT, as usual, contains the contents that are ready to be committed.
+>   Specifically, NEXT contains:
+> 
+>     * the original contents of the branch being merged into
+>     * plus the merged versions of any files that merged cleanly
+>     * plus any changes that have been staged for commit using
+>       "git stage"; for example, files whose conflicts have been
+>       resolved manually.
+> 
+>   OURS contains all of the resolved merges from NEXT, with any
+>   remaining conflicts resolved by using the version from the branch
+>   being merged *into*.
+> 
+>   THEIRS contains all of the resolved merges from NEXT, with any
+>   remaining conflicts resolved by using the content from the branch
+>   being merged *from*.
+> 
+>   BASE contains all of the resolved merges from NEXT, with any
+>   remaining conflicts resolved by using the content from the most
+>   recent ancestor of the two branches being merged.
+
+So now we have primitive definitions, which is good. They're clear,
+unambiguous, and easy to understand. But what worries me is whether
+people will be able to extrapolate that those definitions mean to the
+various diffs.
+
+It's nice that you give examples of how to ask for some common things,
+but I wonder if we are creating the same situation of "here's the magic
+incantation to show you what you want" without actually creating more
+understanding in the average user. That is, will "git diff NEXT OURS
+THEIRS" be any less magical to most users than "git diff"? Understanding
+_why_ they work seems as difficult to me as understanding the index in
+the first place.
+
+>   As before, "git diff" can be used to view the differences between
+>   these various trees.  For example, the following command displays the
+>   conflicts that still have to be resolved:
+> 
+>       git diff NEXT WTREE
+
+I wouldn't recommend this; the 3-way diff contains more information. I
+know why you introduced this one first. It fits the path of your
+narrative better. But it seems like it is also being recommended as the
+right way to get this information.
+
+-Peff
