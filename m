@@ -1,86 +1,188 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/8] t5800: document some non-functional parts of remote
- helpers
-Date: Wed, 08 Jun 2011 17:43:20 -0700
-Message-ID: <7vzklrzvfb.fsf@alter.siamese.dyndns.org>
-References: <20110607171838.GA21685@sigill.intra.peff.net>
- <20110607172030.GC22111@sigill.intra.peff.net>
- <7vk4cv29oe.fsf@alter.siamese.dyndns.org>
- <20110609001150.GA19715@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Command-line interface thoughts (ad-hominem attacks)
+Date: Wed, 8 Jun 2011 20:43:47 -0400
+Message-ID: <20110609004347.GC19715@sigill.intra.peff.net>
+References: <BANLkTikTWx7A64vN+hVZgL7cuiZ16Eobgg@mail.gmail.com>
+ <7vd3ir9btd.fsf@alter.siamese.dyndns.org>
+ <4DEDC124.3060302@drmicha.warpmail.net>
+ <201106081312.46377.jnareb@gmail.com>
+ <BANLkTinoQCZhyhgw61u7c3eF4e5MEf+eFA@mail.gmail.com>
+ <20110608150537.GC7805@sigill.intra.peff.net>
+ <BANLkTinibF0xmibeuJ6f9FUjaMmxavMJig@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 09 02:43:43 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
+To: mike@nahas.com
+X-From: git-owner@vger.kernel.org Thu Jun 09 02:43:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUTLZ-00052V-OH
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 02:43:42 +0200
+	id 1QUTLn-00058N-QD
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 02:43:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751424Ab1FIAnh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jun 2011 20:43:37 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41792 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750903Ab1FIAng (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2011 20:43:36 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0CCD9562C;
-	Wed,  8 Jun 2011 20:45:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ApDITVXdhJRRx1c7mFgTKM3oyOU=; b=wDPsZp
-	Yxsl4EY8/+uCZrYJQLgCcIQFhNYz5p1BDyWpxWAZ97JB7jdwmXz1T2LxX7s7pTDd
-	OLKBoBTEgaoU+PcXYxHxUBlVKHxgLArhRVvX1VF+FRJY3f4b5WlTq+XfTdHP+FRn
-	8O7RmnFcEe1hz0Q5ME6wfpm/JlD54wQ4VRJVs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=waT+RmYVZxN4E8Md+m7R9pBMSFN/wB/V
-	1rPpszORqscOYi4LjltJTbh6gVgDpLC2NiWOPKANfIC4LZ7Hq1F19KV8sFWpBTYp
-	DG56qdDv7gtSYQ0mPY6CMjU5RHaqh4eMlk639xUpDgNsaoacq9VXTfGcLvco98Ip
-	iALLa+qHhTE=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A0E83562B;
-	Wed,  8 Jun 2011 20:45:38 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CD6A7562A; Wed,  8 Jun 2011
- 20:45:30 -0400 (EDT)
-In-Reply-To: <20110609001150.GA19715@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 8 Jun 2011 20:11:50 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CB7544E8-9231-11E0-9CD9-C8CFB7AE1C3C-77302942!a-pb-sasl-sd.pobox.com
+	id S1751652Ab1FIAnv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jun 2011 20:43:51 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54227
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750903Ab1FIAnv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2011 20:43:51 -0400
+Received: (qmail 6169 invoked by uid 107); 9 Jun 2011 00:43:58 -0000
+Received: from 99-189-169-83.lightspeed.snjsca.sbcglobal.net (HELO sigill.intra.peff.net) (99.189.169.83)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 08 Jun 2011 20:43:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Jun 2011 20:43:47 -0400
+Content-Disposition: inline
+In-Reply-To: <BANLkTinibF0xmibeuJ6f9FUjaMmxavMJig@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175480>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Jun 08, 2011 at 02:57:09PM -0400, Michael Nahas wrote:
 
-> On Wed, Jun 08, 2011 at 04:19:29PM -0700, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->> 
->> > The third test demonstrates a bug in git's side of the
->> > helper code when the upstream has added new refs without us.
->> 
->> without us knowing, you mean?
->
-> I guess it depends what you mean by knowing. The bug is shown when the
-> remote has a ref that we don't; we try to feed the name of that ref to
-> fast-export, which of course doesn't work, because we don't have
-> anything by that name.
->
-> So in that sense, no, we don't know about the ref. But it is not about
-> us knowing about the remote having the ref; the problem is that we _do_
-> know that the remote has that ref, and assume we have a matching one.
+> > Isn't this going to be behavior change, since your NEXT is not quite the
+> > same as the index? How do I now get an n-way combined diff of the
+> > unmerged files in the index?
+> 
+> The index is a file in .git/ that serves many purposes.  NEXT is an
+> image of the whole project.  NEXT can be computed from the index and
+> HEAD.
+> 
+> During a conflicted merge, stage 0 of the index holds the resolved
+> files.  WTREE holds all merge files: the resolved and the unresolved
+> (which have <<<< ==== >>>> blocks in them).  I propose that during a
+> conflicted merge, that NEXT be computed as HEAD plus the resolved
+> files, that is, the files in stage 0 of the index.
 
-Ok, I think I understood what the sentence wanted to say ("the upstream
-added new refs. We do not have them yet", right?); it was just I found the
-phrase "... without us" didn't sit well there to my ears.
+OK. So NEXT actually has less information than the whole index, because
+it doesn't contain information on what was on either side of the merge
+originally (or in the merge base).
+
+> "git diff HEAD NEXT" would print the resolved changes.
+> "git diff NEXT WTREE" would print the unresolved changes
+> "git diff HEAD WTREE" would print all changes.
+> 
+> I believe that is the same behaviour as "git diff", "git diff
+> --cached" and "git diff HEAD" during a conflicted merge.
+
+I assume you don't mean respectively here, but rather:
+
+  git diff          => git diff NEXT WTREE
+  git diff --cached => git diff HEAD NEXT
+  git diff HEAD     => git diff HEAD WTREE
+
+But even still, I don't think "git diff" is the same. Try this:
+
+  git init repo && cd repo
+  echo one >file && git add file && git commit -m one &&
+  echo two >file && git add file && git commit -m two &&
+  git checkout -b other HEAD^ &&
+  echo three >file && git add file && git commit -m three &&
+  ! git merge master &&
+  git diff
+
+I get:
+
+  diff --cc file
+  index 2bdf67a,f719efd..0000000
+  --- a/file
+  +++ b/file
+  @@@ -1,1 -1,1 +1,5 @@@
+  ++<<<<<<< HEAD
+   +three
+  ++=======
+  + two
+  ++>>>>>>> master
+
+Note that this is _not_ a diff between NEXT and the working tree.  It is a
+3-way "combined" diff of what's in the working tree compared to each side of
+the merge.
+
+If NEXT is a tree that contains HEAD plus stage 0 files, then we would
+see a 2-way diff of the HEAD version of "file" and the working tree
+version. I.e., the same as "git diff HEAD -- file":
+
+  diff --git a/file b/file
+  index 2bdf67a..087e97e 100644
+  --- a/file
+  +++ b/file
+  @@ -1 +1,5 @@
+  +<<<<<<< HEAD
+   three
+  +=======
+  +two
+  +>>>>>>> master
+
+which looks similar, because we haven't started resolving anything yet.
+But try resolving it like this:
+
+  cat >file <<'EOF'
+  three
+  and
+  two
+  EOF
+
+Now try "git diff" again. You should get:
+
+  diff --cc file
+  index 2bdf67a,f719efd..0000000
+  --- a/file
+  +++ b/file
+  @@@ -1,1 -1,1 +1,3 @@@
+   +three
+  ++and
+  + two
+
+This shows us that "three" came from one side of the merge, "two" from
+the other, and that "and" was found in neither side.
+
+Compare to the 2-way that shows:
+
+  diff --git a/file b/file
+  index 2bdf67a..1ecff7e 100644
+  --- a/file
+  +++ b/file
+  @@ -1 +1,3 @@
+   three
+  +and
+  +two
+
+There's nothing to distinguish added code pulled from the other side of
+the merge versus changes that were made as part of the resolution.
+
+I think this is what Junio was talking about when he said that the index
+is more than a tree. There may be times when you want to treat the items
+in stage 0 as a tree, but diffing against the index is more than just
+diffing against that tree.
+
+> I do not know how "n-way" merge works.  I saw somewhere that indicated
+> that it was a series of N-1 two-way merges.
+
+Git history can represent a merge of any number of branches (an "octopus
+merge"), because the commits store only the final state and a list of
+parent commits. The combined diff format is capable of handling an
+arbitrary number of parents.
+
+I should have just said "3-way", though, because it's not relevant here.
+The index only has 2 stage bits, so we can only represent four stages
+("resolved", "base", "ours", and "theirs"). So you can't represent an
+n-way merge in the index.
+
+So "git merge" just punts on an octopus merge if there are actual merge
+conflicts that would need to go in the index. So in practice, people
+just tend to do N-1 pair-wise merges.
+
+You can see some example octopus merges (and their combined diff) if you
+have a recent git (that supports --min-parents) with:
+
+  git log --min-parents=3 -p --cc
+
+in both git.git and linux-2.6.git.
+
+-Peff
