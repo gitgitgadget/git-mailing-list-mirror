@@ -1,108 +1,76 @@
-From: Dave Zarzycki <zarzycki@apple.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] Only print an error for the last connect() failure
-Date: Thu, 09 Jun 2011 09:49:28 -0700
-Message-ID: <767D7D04-6089-4C7B-A532-C5EC9FE0CCC6@apple.com>
+Date: Thu, 9 Jun 2011 13:05:54 -0400
+Message-ID: <20110609170554.GA29760@sigill.intra.peff.net>
 References: <13539E82-3E8D-4210-9A3A-DD83F0CA6F85@apple.com>
  <20110609163340.GD25885@sigill.intra.peff.net>
+ <767D7D04-6089-4C7B-A532-C5EC9FE0CCC6@apple.com>
 Mime-Version: 1.0
-Content-Type: text/plain; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 09 18:49:37 2011
+To: Dave Zarzycki <zarzycki@apple.com>
+X-From: git-owner@vger.kernel.org Thu Jun 09 19:06:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUiQK-0002HL-Os
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 18:49:37 +0200
+	id 1QUigG-00042m-6k
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 19:06:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752416Ab1FIQtb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2011 12:49:31 -0400
-Received: from honeycrisp.apple.com ([17.151.62.51]:49278 "EHLO
-	mail-out.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751346Ab1FIQtb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2011 12:49:31 -0400
-Received: from relay11.apple.com ([17.128.113.48])
- by mail-out.apple.com (Oracle Communications Messaging Exchange Server
- 7u4-20.01 64bit (built Nov 21 2010))
- with ESMTPS id <0LMJ00G0682EN991@mail-out.apple.com> for git@vger.kernel.org;
- Thu, 09 Jun 2011 09:49:30 -0700 (PDT)
-X-AuditID: 11807130-b7c15ae000005aca-8a-4df0f99afa91
-Received: from koseret (koseret.apple.com [17.151.62.39])
-	(using TLS with cipher RC4-MD5 (RC4-MD5/128 bits))
-	(Client did not present a certificate)	by relay11.apple.com (Apple SCV relay)
- with SMTP id 9B.F6.23242.A99F0FD4; Thu, 09 Jun 2011 09:49:30 -0700 (PDT)
-Received: from [17.153.30.81] (unknown [17.153.30.81])
- by koseret.apple.com (Oracle Communications Messaging Exchange Server
- 7u4-20.01 64bit (built Nov 21 2010))
- with ESMTPSA id <0LMJ006DR82G9V10@koseret.apple.com> for git@vger.kernel.org;
- Thu, 09 Jun 2011 09:49:30 -0700 (PDT)
-In-reply-to: <20110609163340.GD25885@sigill.intra.peff.net>
-X-Mailer: Apple Mail (2.1237.1)
-X-Brightmail-Tracker: AAAAAA==
+	id S1753278Ab1FIRF7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2011 13:05:59 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54271
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752092Ab1FIRF6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2011 13:05:58 -0400
+Received: (qmail 16461 invoked by uid 107); 9 Jun 2011 17:06:05 -0000
+Received: from c-76-21-13-32.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (76.21.13.32)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 09 Jun 2011 13:06:05 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Jun 2011 13:05:54 -0400
+Content-Disposition: inline
+In-Reply-To: <767D7D04-6089-4C7B-A532-C5EC9FE0CCC6@apple.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175551>
 
-On Jun 9, 2011, at 9:33 AM, Jeff King wrote:
+On Thu, Jun 09, 2011 at 09:49:28AM -0700, Dave Zarzycki wrote:
 
-> On Thu, Jun 09, 2011 at 09:18:10AM -0700, Dave Zarzycki wrote:
+> I'm happy to make that change.
 > 
->> IPv6 hosts are often unreachable on the primarily IPv4 Internet and
->> therefore we shouldn't print an error if there are still other hosts we
->> can try to connect() to. This helps "git fetch --quiet" stay quiet.
->> ---
->> connect.c |   12 +++++++-----
->> 1 files changed, 7 insertions(+), 5 deletions(-)
->> 
->> diff --git a/connect.c b/connect.c
->> index 2119c3f..7f70ce7 100644
->> --- a/connect.c
->> +++ b/connect.c
->> @@ -225,11 +225,13 @@ static int git_tcp_connect_sock(char *host, int flags)
->> 		}
->> 		if (connect(sockfd, ai->ai_addr, ai->ai_addrlen) < 0) {
->> 			saved_errno = errno;
->> -			fprintf(stderr, "%s[%d: %s]: errno=%s\n",
->> -				host,
->> -				cnt,
->> -				ai_name(ai),
->> -				strerror(saved_errno));
->> +			if (ai->ai_next == NULL) {
->> +				fprintf(stderr, "%s[%d: %s]: errno=%s\n",
->> +					host,
->> +					cnt,
->> +					ai_name(ai),
->> +					strerror(saved_errno));
->> +			}
-> 
-> I agree being noisy about early failures when we succeed later is a bad
-> thing. But when we fail completely, doesn't your code now mask early
-> failures and print only the final one? The early failures might be the
-> important ones for the user.
-> 
-> So perhaps we should do something instead like:
-> 
->  struct strbuf error_message = STRBUF_INIT;
->  ...
->  if (connect(...) < 0) {
->          strbuf_addf(&error_message, "%s[%d: %s]: errno=%s\n",
->                      host, cnt, ai_name(ai), strerror(errno));
->          ...
->  }
-> 
->  if (sockfd < 0)
->          die("unable to connect to %s:\n%s", host, error_message.buf);
->  strbuf_release(&error_message);
+> Personally speaking, I don't think we're masking failures any more
+> than git is masking failures when it doesn't find a ref in .git/refs
+> and it falls back to .git/packed-refs. This fallback is by design, and
+> the same is true of any classic loop around getaddrinfo(). Of course,
+> reasonable people may disagree about what the "right" thing to do here
+> is. :-)
 
-I'm happy to make that change.
+When the fallback actually _works_, then yes, there's no reason to say
+anything. But when the fallback fails, it can be useful to get
+information on each of the steps. In your refs analogy, it would just be
+"I couldn't look up this ref; I tried .git/refs and packed refs". Which
+would be the same every time, so it's not really interesting enough to
+print.
 
-Personally speaking, I don't think we're masking failures any more than git is masking failures when it doesn't find a ref in .git/refs and it falls back to .git/packed-refs. This fallback is by design, and the same is true of any classic loop around getaddrinfo(). Of course, reasonable people may disagree about what the "right" thing to do here is. :-)
+But in the case of host lookup (especially with ipv6), it may be very
+useful to say "I tried this address, and it failed for this reason; then
+I tried this address, and it failed for this reason". If I see:
 
-In any case, I'll update the patch later today.
+  $ git fetch git://example.com/foo
+  example.com[0: 192.0.32.10]: errno=Connection timed out
+  example.com[0: 2620:0:2d0:200::10]: errno=Network is unreachable
+  fatal: unable to connect a socket (Network is unreachable)
 
-davez
+then I don't care about the second error. Of course the IPv6 network is
+unreachable; I don't have IPv6 connectivity. The first line contains the
+useful information. But with your patch, it won't be shown at all.
+
+We should perhaps also always print intermediate error messages as we
+get them in verbose mode. Even if we succeed, seeing connection timeouts
+on earlier addresses can explain long pauses before success (but I agree
+they shouldn't be shown by default).
+
+-Peff
