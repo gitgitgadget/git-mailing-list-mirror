@@ -1,86 +1,98 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 06/19] git_remote_helpers: push all refs during a
- non-local export
-Date: Thu, 9 Jun 2011 03:43:42 -0500
-Message-ID: <20110609084342.GC4885@elie>
-References: <1307558930-16074-1-git-send-email-srabbelier@gmail.com>
- <1307558930-16074-7-git-send-email-srabbelier@gmail.com>
- <20110608194205.GI27715@elie>
- <20110608221908.GB15530@sigill.intra.peff.net>
- <20110609080912.GB4885@elie>
- <BANLkTincedbjH+ta6g7+uA3=3k_30RQaCg@mail.gmail.com>
+From: Claire Fousse <claire.fousse@ensimag.imag.fr>
+Subject: Re: Git-Mediawiki : cloning a set of pages
+Date: Thu, 9 Jun 2011 11:06:16 +0200
+Message-ID: <BANLkTin3eEJfXfB7aadxue-QMduimvh-tg@mail.gmail.com>
+References: <BANLkTim1hOi0JdWZPR=Vw-S+9jTxqQ-=Tw@mail.gmail.com>
+	<m3lixcdz67.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 09 10:43:56 2011
+Cc: git@vger.kernel.org, Sylvain Boulme <Sylvain.Boulme@imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jeff King <peff@peff.net>, srabbelier@gmail.com
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 09 11:06:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUaqI-0000q3-R2
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 10:43:55 +0200
+	id 1QUbCA-0002Ja-Nq
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 11:06:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756873Ab1FIInu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Jun 2011 04:43:50 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:52183 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752879Ab1FIInt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2011 04:43:49 -0400
-Received: by iwn34 with SMTP id 34so1120294iwn.19
-        for <git@vger.kernel.org>; Thu, 09 Jun 2011 01:43:48 -0700 (PDT)
+	id S1753595Ab1FIJGT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Jun 2011 05:06:19 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:48075 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753217Ab1FIJGQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2011 05:06:16 -0400
+Received: by mail-pw0-f46.google.com with SMTP id 15so646163pwi.19
+        for <git@vger.kernel.org>; Thu, 09 Jun 2011 02:06:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=2LcMisLUWs3D1DHoAosV2CKD3a/HQOOPx7d9fReI1M0=;
-        b=mqJiMtepZz7slxX+fpORQBcw3u6+BejS4xDsd6rBD4roOeBBOf+zp5L8PqUOSO9FMw
-         n7TR/x8FoARCwytKvi6DvjYCF/4etWbDrW8P1ew+PX7tQT/qq32+y4nKz2YNw8SGY+hM
-         6v6lP10G+4TBtARroX9V5wMgpqi6NCIao7HBg=
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=AMGS+n2b6P72D6PKWPqsVlCjPZKPFdmCMYQvQxx12iI=;
+        b=KLC0usGC16jXhLzVQW1WSgQQPP/y+gKPJnd8oVJ4GvT9c6jJ7mcC5uj3G+eXvQnfLS
+         VK+Xj0d856NR57u2Okh5/TkfVqNYkKQFhuFI9pBV67c+jTOmnByD4hIl8ti2zNRR6/5V
+         fOML5j3ilRNnwNdcywK0I6HPLlunm9twndaPg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=mBwaoX2Ycd99mrTkQ7EcORQP62P74+jQHNi0ffnTzlFTRGsKt7lgFnMMqCIcelOJdg
-         bq8JM4QCzz9vUNFJC0+IUpy17B4MlAnrgzt/rw75ywO5gSYi08UWDUvGslGmLAiJfBul
-         zEFNdNXfJMTXiVwMOX+s743BPBQG2AgpHT4YY=
-Received: by 10.42.168.198 with SMTP id x6mr743977icy.273.1307609028204;
-        Thu, 09 Jun 2011 01:43:48 -0700 (PDT)
-Received: from elie (adsl-69-209-61-87.dsl.chcgil.ameritech.net [69.209.61.87])
-        by mx.google.com with ESMTPS id vo3sm1167841icb.10.2011.06.09.01.43.45
-        (version=SSLv3 cipher=OTHER);
-        Thu, 09 Jun 2011 01:43:46 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <BANLkTincedbjH+ta6g7+uA3=3k_30RQaCg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=ixPwRAHIxL1E/ped0hK1mvUKOZo+zeGBx2ATu5aGetRJFNf8eMFLiBsyqYud4o4cEe
+         Ll+98163tcviY7bijiOBRgvTNQN2rgfKk9l0i7N9NaEhuL5q8TAmKSLefP54it0r7M63
+         xz0mi9p38osx784bKeFP5/xh8eqHhUqpcNOek=
+Received: by 10.142.218.11 with SMTP id q11mr69839wfg.235.1307610376600; Thu,
+ 09 Jun 2011 02:06:16 -0700 (PDT)
+Received: by 10.142.97.15 with HTTP; Thu, 9 Jun 2011 02:06:16 -0700 (PDT)
+In-Reply-To: <m3lixcdz67.fsf@localhost.localdomain>
+X-Google-Sender-Auth: -emAszo-H4KQVt3DbP59nmmN_KA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175507>
 
-Sverre Rabbelier wrote:
-> On Thu, Jun 9, 2011 at 10:09, Jonathan Nieder <jrnieder@gmail.com> wr=
-ote:
-
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0export :1 refs/heads/foo
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0export :2 refs/heads/bar
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0export :3 +refs/heads/force
+>> The problem is not the feature in itself but the way you call it.
+>> Just so you remember, here is the command =A0to clone the mediawiki =
+:
+>> git clone mediawiki::http://yourwiki.com
 >>
->> with :1, :2, and :3 being marks in the fast-import stream.
+>> As it is now, git clone does not implement a way to define a set of =
+pages.
+> [...]
 >
-> The only problem there is that we don't know the relevant marks befor=
-ehand.
+> Well, what you need to do is to implement API for partial _clone_ (we
+> have some SPI for partial checkout, but that is slightly different
+> beast).
+>
+> Currently we have --depth=3D<n> to limit depth of history when clonin=
+g,
+> and "git remote add -t <branch>" (repeated if necessary) to consider
+> only a subset of branches, though unfortunately not in "git clone"
+> yet.
+>
+> Not what you wanted to hear, I guess... :-(
 
-Since this requires changing "git fast-export" anyway, we could
-arrange to know.
 
-A related problem, though: it is not friendly to stomp on mark numbers
-which an exporter might want to use for some other purpose.  So yeah,
-the precise syntax above is not so great.
+Yes, not really what I wanted to hear, but I had the feeling it would
+go this way =3D).
+
+Our school project ends tomorrow, so starting tomorrow we will have les=
+s time
+to work on this.
+
+We chose to implement the first solution with ##:
+git clone mediawiki::http://yourwiki.com##page1##page2..
+This way that feature can be used for now, and It will be really
+simple to change the
+command later.
+
+--=20
+Claire Fousse
+Grenoble INP - Ensimag
+2A T=E9l=E9communication
+claire.fousse@ensimag.imag.fr
