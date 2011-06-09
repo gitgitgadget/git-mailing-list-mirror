@@ -1,78 +1,79 @@
-From: Andi Kleen <andi@firstfloor.org>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 1/2] Remove noreturn function pointers in usage.c
-Date: Thu, 9 Jun 2011 06:59:15 +0200
-Message-ID: <20110609045915.GA15448@one.firstfloor.org>
-References: <1307569417-8924-1-git-send-email-andi@firstfloor.org> <7v4o3z264s.fsf@alter.siamese.dyndns.org>
+Date: Thu, 9 Jun 2011 01:52:24 -0400
+Message-ID: <20110609055224.GA27780@sigill.intra.peff.net>
+References: <1307569417-8924-1-git-send-email-andi@firstfloor.org>
+ <7v4o3z264s.fsf@alter.siamese.dyndns.org>
+ <20110609045915.GA15448@one.firstfloor.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andi Kleen <andi@firstfloor.org>, git@vger.kernel.org,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Andi Kleen <ak@linux.intel.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 09 06:59:26 2011
+To: Andi Kleen <andi@firstfloor.org>
+X-From: git-owner@vger.kernel.org Thu Jun 09 07:52:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUXL3-0004sl-0d
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 06:59:25 +0200
+	id 1QUYAU-0004Gc-8v
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 07:52:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751341Ab1FIE7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2011 00:59:19 -0400
-Received: from one.firstfloor.org ([213.235.205.2]:45579 "EHLO
-	one.firstfloor.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750819Ab1FIE7S (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2011 00:59:18 -0400
-Received: by one.firstfloor.org (Postfix, from userid 503)
-	id 0FE721ED80AD; Thu,  9 Jun 2011 06:59:16 +0200 (CEST)
+	id S1751341Ab1FIFw3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Jun 2011 01:52:29 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:32939
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751315Ab1FIFw2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2011 01:52:28 -0400
+Received: (qmail 7742 invoked by uid 107); 9 Jun 2011 05:52:35 -0000
+Received: from c-76-21-13-32.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (76.21.13.32)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 09 Jun 2011 01:52:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Jun 2011 01:52:24 -0400
 Content-Disposition: inline
-In-Reply-To: <7v4o3z264s.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.4.2.2i
+In-Reply-To: <20110609045915.GA15448@one.firstfloor.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175490>
 
->  - There are many more NORETURN and NORETURN_PTR in the code, and the
->    proposed commit log message does not explain why these two are the only
->    ones that are problematic and needs to be worked around. It does not
->    guide other people who might want to add NORETURN/NORETURN_PTR when
->    deciding if their change would break the "fix" this change brought in.
+On Thu, Jun 09, 2011 at 06:59:15AM +0200, Andi Kleen wrote:
 
-This was the only place where it crashed the compiler.
+> >  - Potential impact to people who do not use Gcc 4.6 with profile f=
+eedback
+> >    is not explained away well, except for "Doesn't seem to make any
+> >    difference."
+>=20
+> I merely went by "there are no new warnings" (I assume that's the mai=
+n
+> motivation)
 
-I don't have a good criterium to decide which cases do crash the compiler
-or not except for trying it.
+On your compiler and settings, perhaps. With your patch I get:
 
-But I believe the crash is relatively unlikely (needs quite a lot of conditions
-to line up), so it doesn't deserve extensive changes all over.
+  usage.c: In function =E2=80=98die=E2=80=99:
+  usage.c:70:1: error: =E2=80=98noreturn=E2=80=99 function does return =
+[-Werror]
 
-> 
->  - Potential impact to people who do not use Gcc 4.6 with profile feedback
->    is not explained away well, except for "Doesn't seem to make any
->    difference."
+And rightfully so:
 
-I merely went by "there are no new warnings" (I assume that's the main
-motivation)
+void NORETURN die(const char *err, ...)
+{
+        va_list params;
 
-> 
->  - If other NORETURN/NORETURN_PTR could/should also go (I don't know due
->    to the first bullet point above) when using the problematic compiler
->    with the profile feedback feature, wouldn't it be a better workaround
->    would be to introduce a Makefile variable to ask git-compat-util.h to
->    make these two a no-op, perhaps?
+        va_start(params, err);
+        die_routine(err, params);
+        va_end(params);
+}
 
-I don't think we need to remove the others for now.
+You've stripped the NORETURN from die_routine, so of course it looks li=
+ke we
+end up returning.
 
-> 
-> A patch to do so may look like this.
-> 
-> I did not like the triple negation "make NO_NORETURN=NoThanks" and wanted
-> to name this AVOID_NORETURN instead, but decided to go with other existing
-> Makefile variables.
+This is with:
 
-Given the explanation above (I can update the description with that)
-do you still want the complete disabling?
+  $ gcc --version | head -n 1
+  gcc (Debian 4.6.0-11) 4.6.1 20110604 (prerelease)
 
--Andi
+-Peff
