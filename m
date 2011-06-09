@@ -1,84 +1,87 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Command-line interface thoughts
-Date: Thu, 09 Jun 2011 11:06:56 +0200
-Message-ID: <4DF08D30.7070603@alum.mit.edu>
-References: <BANLkTikTWx7A64vN+hVZgL7cuiZ16Eobgg@mail.gmail.com> <m339jps1wt.fsf@localhost.localdomain> <BANLkTinidLbQ_FcVEiGSK91uXYWaKk7MKA@mail.gmail.com> <201106051311.00951.jnareb@gmail.com> <BANLkTik+xhd5QQ09QiPSH1bFAndzipKtrw@mail.gmail.com> <7vwrgza3i2.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv4 2/4] Add infrastructure for ref namespaces
+Date: Thu, 9 Jun 2011 11:09:00 +0200
+Message-ID: <201106091109.01168.jnareb@gmail.com>
+References: <1306887870-3875-1-git-send-email-jamey@minilop.net> <201106081141.26994.jnareb@gmail.com> <20110609033817.GB6167@leaf>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Scott Chacon <schacon@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Michael Nahas <mike@nahas.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 09 11:07:11 2011
+Cc: Jamey Sharp <jamey@minilop.net>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <johannes.sixt@telecom.at>,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: Josh Triplett <josh@joshtriplett.org>
+X-From: git-owner@vger.kernel.org Thu Jun 09 11:09:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUbCo-0002WZ-PH
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 11:07:11 +0200
+	id 1QUbEt-0003Jy-3d
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 11:09:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753503Ab1FIJHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2011 05:07:06 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:55395 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753460Ab1FIJHE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2011 05:07:04 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p5996uNZ024106
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 9 Jun 2011 11:06:57 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.17) Gecko/20110424 Lightning/1.0b2 Thunderbird/3.1.10
-In-Reply-To: <7vwrgza3i2.fsf@alter.siamese.dyndns.org>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1753788Ab1FIJJP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2011 05:09:15 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:34787 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752827Ab1FIJJM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2011 05:09:12 -0400
+Received: by fxm17 with SMTP id 17so839867fxm.19
+        for <git@vger.kernel.org>; Thu, 09 Jun 2011 02:09:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=C9AZkeMJEp/t5sOCXwc6b9sjdNw05fNEy2JmhfsAZGE=;
+        b=XXB4JncgUEB+pQ6RmhR/tsQ2c77hjtibrhp4VYqKWoJYUsKW4tJlJWqDe3Z5IU7gkH
+         dWLT2dqtUu9ZXvHlJs6oPEssqM1v1MajYef5iKoOijLqX9zZ389rqsbz/BybYRIkiSpv
+         3V7RWlpqoj68LgUqne7mEj02Ums2U10VQSxt8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=fkwJ8z4711Dben1iDueWeBf08tz8L+na+cp5rIQ3O/e3n8HkhDZ7jFfbXeuREjexEP
+         Y/L6B7soUEwEWxto8OvSMu6o6BdUVwEi3qhfwMNWplscQGTF/deBwPDrzDpZ30tNbvBr
+         A5FVqSKEf2R0pJRYJzNcqGGEnndaknSw43sXE=
+Received: by 10.223.21.140 with SMTP id j12mr511827fab.47.1307610550905;
+        Thu, 09 Jun 2011 02:09:10 -0700 (PDT)
+Received: from [192.168.1.15] (abvo166.neoplus.adsl.tpnet.pl [83.8.212.166])
+        by mx.google.com with ESMTPS id b26sm553587fak.24.2011.06.09.02.09.08
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 09 Jun 2011 02:09:09 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20110609033817.GB6167@leaf>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175509>
 
-On 06/06/2011 08:16 AM, Junio C Hamano wrote:
-> Scott Chacon <schacon@gmail.com> writes:
->> For example, implementation details aside, I think having something
->> like WTREE and NEXT available would help users understand that there
->> are these 3 trees that are important and useful in Git and re-inforce
->> a very non-SVN style workflow in that manner.
+On Thu, 9 Jun 2011, Josh Triplett wrote:
+> On Wed, Jun 08, 2011 at 11:41:25AM +0200, Jakub Narebski wrote:
+
+> > BTW. what do you think about treating repository with own refs and with
+                                                     ^^^^^^^^^^^^^
+> > namespaces similarly to how "forks" are handled in gitweb now?
 > 
-> That's a funny thing to say. Working tree may almost always (to put it
-> another way, "you could make it to") act like a tree, but the index does
-> not act like a tree at all in more important situations.
+> Different namespaces won't necessarily represent forks of the same
+> repository; they may represent entirely separate repositories, with the
+> use of namespaces merely a server-side implementation detail to save
+> space.  I'd suggest presenting them as separate repositories.
 
-My naive understanding is that in the case of a merge commit, the index
-contains information equivalent to *multiple* trees:
+What I wanted to say that if repository with namespaces has its own
+not namespaced refs, then (sub)namespaces are probably forks, and
+"forks"-like behavior would be a good idea.
 
-NEXT -- HEAD plus the files that have been resolved
-BASE -- the contents of the common ancestor
-OURS -- equivalent to the tree from HEAD
-THEIRS -- equivalent to the tree from MERGE_HEAD
-
-If my understanding is correct, then it would be logical to allow *any*
-of these pseudo-trees to participate in a "git diff" during a conflicted
-merge.
-
-If I'm incorrect, then I expect a learning-experience-by-flame :-)
-
-FWIW, when I was learning git, I struggled with exactly the problems
-that Michael is trying to address.  My most frustrating moments always
-involved trying to get my working tree and index from some existing
-state to some desired state, because operations that seemed (in my
-mental model) to be similar typically required using entirely different
-git commands and/or command options.  Having a uniform nomenclature for
-these concepts would be a big improvement (if the resulting abstraction
-does not leak too badly).  I also think that the proposal for "git put"
-would be a great help and would work nicely with the proposed changes to
-"git diff".
-
-Michael
+If namespaced repository serves only to save space, then it wouldn't
+have its own refs, only namespaced ones.  Then we would list them
+as separate repositories.
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Jakub Narebski
+Poland
