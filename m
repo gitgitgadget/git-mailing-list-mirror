@@ -1,75 +1,95 @@
-From: Stephen Bash <bash@genarts.com>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Thu, 9 Jun 2011 11:42:30 -0400 (EDT)
-Message-ID: <5313676.596.1307634150272.JavaMail.root@mail.hq.genarts.com>
-References: <m38vtbdzjq.fsf@localhost.localdomain>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git-Mediawiki : cloning a set of pages
+Date: Thu, 9 Jun 2011 11:50:01 -0400
+Message-ID: <20110609155001.GA14969@sigill.intra.peff.net>
+References: <BANLkTim1hOi0JdWZPR=Vw-S+9jTxqQ-=Tw@mail.gmail.com>
+ <20110608151940.GD7805@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>, NAKAMURA Takumi <geek4civic@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 09 17:42:45 2011
+Cc: git@vger.kernel.org, Sylvain Boulme <Sylvain.Boulme@imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Claire Fousse <claire.fousse@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Thu Jun 09 17:50:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUhNc-0001M9-5B
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 17:42:44 +0200
+	id 1QUhUp-0005jJ-35
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 17:50:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751597Ab1FIPmi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2011 11:42:38 -0400
-Received: from hq.genarts.com ([173.9.65.1]:36580 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751052Ab1FIPmi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2011 11:42:38 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 1CBEFEA22FE;
-	Thu,  9 Jun 2011 11:42:37 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id HznArLCIaPVN; Thu,  9 Jun 2011 11:42:30 -0400 (EDT)
-Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 5B019EA22EC;
-	Thu,  9 Jun 2011 11:42:30 -0400 (EDT)
-In-Reply-To: <m38vtbdzjq.fsf@localhost.localdomain>
-X-Mailer: Zimbra 6.0.10_GA_2692 (ZimbraWebClient - SAF3 (Mac)/6.0.10_GA_2692)
+	id S1753392Ab1FIPuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2011 11:50:05 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52481
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752252Ab1FIPuE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2011 11:50:04 -0400
+Received: (qmail 13818 invoked by uid 107); 9 Jun 2011 15:50:12 -0000
+Received: from c-76-21-13-32.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (76.21.13.32)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 09 Jun 2011 11:50:12 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Jun 2011 11:50:01 -0400
+Content-Disposition: inline
+In-Reply-To: <20110608151940.GD7805@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175532>
 
------ Original Message -----
-> From: "Jakub Narebski" <jnareb@gmail.com>
-> To: "NAKAMURA Takumi" <geek4civic@gmail.com>
-> Cc: "git" <git@vger.kernel.org>
-> Sent: Thursday, June 9, 2011 7:18:09 AM
-> Subject: Re: Git is not scalable with too many refs/*
-> NAKAMURA Takumi <geek4civic@gmail.com> writes:
+On Wed, Jun 08, 2011 at 11:19:40AM -0400, Jeff King wrote:
+
+> Maybe it would be even simpler and more flexible to give clone a "-c"
+> flag that writes specific config variables in the newly-created
+> repository. Like:
 > 
-> > Hello, Git. It is my 1st post here.
-> >
-> > I have tried tagging each commit as "refs/tags/rXXXXXX" on git-svn
-> > repo locally. (over 100k refs/tags.)
-> [...]
+>   git clone -c mediawiki.page=page1 \
+>             -c mediawiki.page=page2 \
+>             http://...
 > 
-> That's insane. You would do much better to mark each commit with
-> note. Notes are designed to be scalable. See e.g. this thread
+> Then the remote helper can just consult the git config. As a bonus, it
+> also lets you do things like:
 > 
-> [RFD] Proposal for git-svn: storing SVN metadata (git-svn-id) in notes
-> http://article.gmane.org/gmane.comp.version-control.git/174657
+>   git clone -c core.ignorecase=true git://...
+> 
+> which is currently awkward (you either have to have set such variable in
+> your ~/.gitconfig, or you must use init+config+fetch to do a clone
+> manually.
 
-As a reformed SVN user (i.e. not using it anymore ;]) I agree that 100k tags seems crazy, but I was contemplating doing the exact same thing as Takumi.  Skimming that thread, I didn't see the key point (IMO): notes can map from commits to a "name" (or other information), tags map from a "name" to commits.
+This turned out to be a very tiny amount of code, but I found a ton
+of other bugs while working on it. :)
 
-I've seen two different workflows develop:
-  1) Hacking on some code in Git the programmer finds something wrong.  Using Git tools he can pickaxe/bisect/etc. and find that the problem traces back to a commit imported from Subversion.
-  2) The programmer finds something wrong, asks coworker, coworker says "see bug XYZ", bug XYZ says "Fixed in r20356".
+So the patch series is long, but the important bits are at the end. I
+factored the code from the existing "git -c", so most of the bugfixes
+are there.
 
-I agree notes is the right answer for (1), but for (2) you really want a cross reference table from Subversion rev number to Git commit.
+  [01/10]: strbuf_split: add a max parameter
+  [02/10]: fix "git -c" parsing of values with equals signs
 
-In our office we created the cross reference table once by walking the Git tree and storing it as a file (we had some degenerate cases where one SVN rev mapped to multiple Git commits, but I don't remember the details), but it's not really usable from Git.  Lightweight tags would be an awesome solution (if they worked).  Perhaps a custom subcommand is a reasonable middle ground.
+These two are the first bugfix.
 
-Thanks,
-Stephen
+  [03/10]: config: die on error in command-line config
+
+Another bugfix.
+
+  [04/10]: config: avoid segfault when parsing command-line config
+
+Another bugfix.
+
+  [05/10]: strbuf: allow strbuf_split to work on non-strbufs
+  [06/10]: config: use strbuf_split_str instead of a temporary strbuf
+
+Plugging a memory leak.
+
+  [07/10]: parse-options: add OPT_STRING_LIST helper
+  [08/10]: remote: use new OPT_STRING_LIST
+  [09/10]: config: make git_config_parse_parameter a public function
+
+These are refactoring for 10/10.
+
+  [10/10]: clone: accept config options on the command line
+
+And this is the actual patch.
+
+-Peff
