@@ -1,98 +1,84 @@
-From: Claire Fousse <claire.fousse@ensimag.imag.fr>
-Subject: Re: Git-Mediawiki : cloning a set of pages
-Date: Thu, 9 Jun 2011 11:06:16 +0200
-Message-ID: <BANLkTin3eEJfXfB7aadxue-QMduimvh-tg@mail.gmail.com>
-References: <BANLkTim1hOi0JdWZPR=Vw-S+9jTxqQ-=Tw@mail.gmail.com>
-	<m3lixcdz67.fsf@localhost.localdomain>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Command-line interface thoughts
+Date: Thu, 09 Jun 2011 11:06:56 +0200
+Message-ID: <4DF08D30.7070603@alum.mit.edu>
+References: <BANLkTikTWx7A64vN+hVZgL7cuiZ16Eobgg@mail.gmail.com> <m339jps1wt.fsf@localhost.localdomain> <BANLkTinidLbQ_FcVEiGSK91uXYWaKk7MKA@mail.gmail.com> <201106051311.00951.jnareb@gmail.com> <BANLkTik+xhd5QQ09QiPSH1bFAndzipKtrw@mail.gmail.com> <7vwrgza3i2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Sylvain Boulme <Sylvain.Boulme@imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jeff King <peff@peff.net>, srabbelier@gmail.com
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 09 11:06:34 2011
+Content-Transfer-Encoding: 7bit
+Cc: Scott Chacon <schacon@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Michael Nahas <mike@nahas.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 09 11:07:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUbCA-0002Ja-Nq
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 11:06:31 +0200
+	id 1QUbCo-0002WZ-PH
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 11:07:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753595Ab1FIJGT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Jun 2011 05:06:19 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:48075 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753217Ab1FIJGQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2011 05:06:16 -0400
-Received: by mail-pw0-f46.google.com with SMTP id 15so646163pwi.19
-        for <git@vger.kernel.org>; Thu, 09 Jun 2011 02:06:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=AMGS+n2b6P72D6PKWPqsVlCjPZKPFdmCMYQvQxx12iI=;
-        b=KLC0usGC16jXhLzVQW1WSgQQPP/y+gKPJnd8oVJ4GvT9c6jJ7mcC5uj3G+eXvQnfLS
-         VK+Xj0d856NR57u2Okh5/TkfVqNYkKQFhuFI9pBV67c+jTOmnByD4hIl8ti2zNRR6/5V
-         fOML5j3ilRNnwNdcywK0I6HPLlunm9twndaPg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=ixPwRAHIxL1E/ped0hK1mvUKOZo+zeGBx2ATu5aGetRJFNf8eMFLiBsyqYud4o4cEe
-         Ll+98163tcviY7bijiOBRgvTNQN2rgfKk9l0i7N9NaEhuL5q8TAmKSLefP54it0r7M63
-         xz0mi9p38osx784bKeFP5/xh8eqHhUqpcNOek=
-Received: by 10.142.218.11 with SMTP id q11mr69839wfg.235.1307610376600; Thu,
- 09 Jun 2011 02:06:16 -0700 (PDT)
-Received: by 10.142.97.15 with HTTP; Thu, 9 Jun 2011 02:06:16 -0700 (PDT)
-In-Reply-To: <m3lixcdz67.fsf@localhost.localdomain>
-X-Google-Sender-Auth: -emAszo-H4KQVt3DbP59nmmN_KA
+	id S1753503Ab1FIJHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2011 05:07:06 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:55395 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753460Ab1FIJHE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2011 05:07:04 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p5996uNZ024106
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 9 Jun 2011 11:06:57 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.17) Gecko/20110424 Lightning/1.0b2 Thunderbird/3.1.10
+In-Reply-To: <7vwrgza3i2.fsf@alter.siamese.dyndns.org>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175508>
 
->> The problem is not the feature in itself but the way you call it.
->> Just so you remember, here is the command =A0to clone the mediawiki =
-:
->> git clone mediawiki::http://yourwiki.com
->>
->> As it is now, git clone does not implement a way to define a set of =
-pages.
-> [...]
->
-> Well, what you need to do is to implement API for partial _clone_ (we
-> have some SPI for partial checkout, but that is slightly different
-> beast).
->
-> Currently we have --depth=3D<n> to limit depth of history when clonin=
-g,
-> and "git remote add -t <branch>" (repeated if necessary) to consider
-> only a subset of branches, though unfortunately not in "git clone"
-> yet.
->
-> Not what you wanted to hear, I guess... :-(
+On 06/06/2011 08:16 AM, Junio C Hamano wrote:
+> Scott Chacon <schacon@gmail.com> writes:
+>> For example, implementation details aside, I think having something
+>> like WTREE and NEXT available would help users understand that there
+>> are these 3 trees that are important and useful in Git and re-inforce
+>> a very non-SVN style workflow in that manner.
+> 
+> That's a funny thing to say. Working tree may almost always (to put it
+> another way, "you could make it to") act like a tree, but the index does
+> not act like a tree at all in more important situations.
 
+My naive understanding is that in the case of a merge commit, the index
+contains information equivalent to *multiple* trees:
 
-Yes, not really what I wanted to hear, but I had the feeling it would
-go this way =3D).
+NEXT -- HEAD plus the files that have been resolved
+BASE -- the contents of the common ancestor
+OURS -- equivalent to the tree from HEAD
+THEIRS -- equivalent to the tree from MERGE_HEAD
 
-Our school project ends tomorrow, so starting tomorrow we will have les=
-s time
-to work on this.
+If my understanding is correct, then it would be logical to allow *any*
+of these pseudo-trees to participate in a "git diff" during a conflicted
+merge.
 
-We chose to implement the first solution with ##:
-git clone mediawiki::http://yourwiki.com##page1##page2..
-This way that feature can be used for now, and It will be really
-simple to change the
-command later.
+If I'm incorrect, then I expect a learning-experience-by-flame :-)
 
---=20
-Claire Fousse
-Grenoble INP - Ensimag
-2A T=E9l=E9communication
-claire.fousse@ensimag.imag.fr
+FWIW, when I was learning git, I struggled with exactly the problems
+that Michael is trying to address.  My most frustrating moments always
+involved trying to get my working tree and index from some existing
+state to some desired state, because operations that seemed (in my
+mental model) to be similar typically required using entirely different
+git commands and/or command options.  Having a uniform nomenclature for
+these concepts would be a big improvement (if the resulting abstraction
+does not leak too badly).  I also think that the proposal for "git put"
+would be a great help and would work nicely with the proposed changes to
+"git diff".
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
