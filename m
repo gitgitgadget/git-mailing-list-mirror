@@ -1,131 +1,108 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Command-line interface thoughts
-Date: Thu, 9 Jun 2011 16:04:03 -0400
-Message-ID: <20110609200403.GA3955@sigill.intra.peff.net>
-References: <BANLkTikTWx7A64vN+hVZgL7cuiZ16Eobgg@mail.gmail.com>
- <m339jps1wt.fsf@localhost.localdomain>
- <BANLkTinidLbQ_FcVEiGSK91uXYWaKk7MKA@mail.gmail.com>
- <201106051311.00951.jnareb@gmail.com>
- <BANLkTik+xhd5QQ09QiPSH1bFAndzipKtrw@mail.gmail.com>
- <7vwrgza3i2.fsf@alter.siamese.dyndns.org>
- <4DF08D30.7070603@alum.mit.edu>
- <20110609161832.GB25885@sigill.intra.peff.net>
- <4DF10ADA.5070206@alum.mit.edu>
- <7v8vtayhnm.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] unpack-objects: zlib can only process 4GB at a time
+Date: Thu, 09 Jun 2011 13:11:58 -0700
+Message-ID: <7vzklqwyr5.fsf@alter.siamese.dyndns.org>
+References: <7v1uz42liw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Scott Chacon <schacon@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Michael Nahas <mike@nahas.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 09 22:04:14 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 09 22:12:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUlSf-0007BC-JI
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 22:04:13 +0200
+	id 1QUlaM-0002E2-DB
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Jun 2011 22:12:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755289Ab1FIUEJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2011 16:04:09 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46981
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752683Ab1FIUEH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2011 16:04:07 -0400
-Received: (qmail 18846 invoked by uid 107); 9 Jun 2011 20:04:14 -0000
-Received: from 70-36-146-246.dsl.dynamic.sonic.net (HELO sigill.intra.peff.net) (70.36.146.246)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 09 Jun 2011 16:04:14 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Jun 2011 16:04:03 -0400
-Content-Disposition: inline
-In-Reply-To: <7v8vtayhnm.fsf@alter.siamese.dyndns.org>
+	id S1755054Ab1FIUMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2011 16:12:06 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:39390 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753574Ab1FIUME (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2011 16:12:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 350925486;
+	Thu,  9 Jun 2011 16:14:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DP4qcGG58OeX/95/eD0zAFsI1yc=; b=qpONae
+	OdKBlKU+cT3ShZcugo4CL2DqtciV/ROnGGgEg0NzDJx1dSnjkFO+ktxoU64b/oms
+	DvNdfIjCwIt57GAzjMdDNL4Hrp0aFNkT27BlrIMfyjOynKVf2OCH2y5nJtTAPJZg
+	0X9v24noLHq0yWm/biCBRKQqMj1AsSQN7X5xA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jIsD2qexGsA2L5VqoMkuvsJ/Cva2dqGg
+	pCX/zX2FKxOi9Y1TGAtXkcTR0QAIFUeDOHymzxMD9YZJmiGaQLhKofNQCEL5K5YX
+	q3EArcYI39s5/LwcDQLqeiy+ut1kOMWR+tkZe4OBg+gahbFWJ1dBSE1/mmhCr5no
+	YfWPntcrisY=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0F6C75485;
+	Thu,  9 Jun 2011 16:14:12 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2BBC15484; Thu,  9 Jun 2011
+ 16:14:09 -0400 (EDT)
+In-Reply-To: <7v1uz42liw.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 08 Jun 2011 12:03:35 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0A4DD7CC-92D5-11E0-8145-C8CFB7AE1C3C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175571>
 
-On Thu, Jun 09, 2011 at 11:38:21AM -0700, Junio C Hamano wrote:
+This codepath tried to tell zlib that we have allocated a large enough
+output buffer and expected a single call to inflate() to succeed, but
+zlib cannot expand into a buffer that is larger than 4GB at a time.
 
-> I think this mega-thread served its purpose. It started to explore "will
-> it make it easier to understand and explain if we use these tokens to name
-> trees that do not exist in reality?" which is a worthy thing to do.  The
-> conclusion appears to be "well we do not even know what exactly these
-> tokens mean in certain situations." but at least people tried, and along
-> the way a few new people seem to have become more aware of the index, so
-> overall we didn't lose that much.
+Ideally we should be transferring a better cue between send-pack and
+receive-pack (or fetch-pack and upload-pack) to tell that we would be
+better off not to explode into individual loose objects, but that is not
+an excuse to leave our use of zlib broken and fail to unpack large objects
+in a pack even on a beefy machine with enough memory.
 
-I think there are actually two questions here:
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/unpack-objects.c |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
 
-  1. Will it be easier for people to understand "git diff" if we use
-     tokens to describe non-treeish sources and destinations?
-
-  2. Are there better tokens to use to break down parts of the index?
-
-I don't have a big problem with (1). Allowing things like:
-
-  git diff INDEX WTREE
-
-allows one to explain what is going on with the diff syntax in a very
-clear and verbose manner. I wouldn't want to type that every day, but
-that's OK; "git diff" will always mean the same thing as it always has,
-but can now be explained to people who have trouble seeing it in terms
-of "git diff INDEX WTREE".
-
-There's still a bit of magic in that INDEX is _not_ a tree, but I think
-that's a good thing. When there are no merge conflicts, it will behave
-identically to the proposed NEXT tree. And when there are conflicts, it
-will show you something even more useful.
-
-It does have the potential to confuse in that "INDEX" is not actually a
-tree, and so we can't expect to use it as a tree-ish everywhere. So now
-diff feels a little inconsistent with other parts of git. One idea,
-which I think is probably too crazy, would be to let INDEX be used as a
-tree-ish everywhere, but only if all entries are at stage 0. Otherwise,
-it will die with an error. That would make it more or less a more
-verbose version of ":" (e.g., I can do "git show :Makefile", but it will
-die with an error if Makefile exists only at higher stages).
-
-
-I'm less sure about these new tokens, for a few reasons:
-
-  1. You get less useful answers in some situations by treating each
-     stage as a separate tree (e.g., lack of combined diff). So why
-     would I want to use them?
-
-  2. Their answers are different than what diffing against the INDEX
-     could give. So in theory they could be more useful in different
-     situations than a diff against the index. But I haven't seen a good
-     example of what such a situation would be.
-
-  3. They're supposed to introduce consistency in explaining diff
-     behavior. But we're not going to change what "git diff" does to not
-     use the whole index. So "git diff" isn't actually expressible using
-     these tokens.
-
-  4. They're supposed to be simpler to understand than index stages. But
-     are they? The latest definitions seem to be:
-
-       OURS is a tree of each path in the index, either from stage 2 if
-       it exists, or from NEXT otherwise.
-
-       NEXT is a tree of each path in the index, either from stage 0 if
-       it exists, or from HEAD otherwise.
-
-     But that doesn't seem any simpler to me than just saying "the index
-     has numbered stages, and they correspond to resolved, base, ours,
-     and theirs".
-
-I agree that ":2:Makefile" is not exactly an intuitive way to ask for
-"ours". Didn't we have a patch at one point a year or two ago to allow
-using names instead of numbered stages? If we allowed "INDEX" as a
-verbose noise-word in front of ":", then you could say:
-
-  git show INDEX:OURS:Makefile
-
-which is identical to what I wrote above, but is perhaps easier to
-explain.
-
--Peff
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index f63973c..b208d6e 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -92,18 +92,22 @@ static void *get_data(unsigned long size)
+ {
+ 	z_stream stream;
+ 	void *buf = xmalloc(size);
++	unsigned long bytes_to_inflate;
+ 
+ 	memset(&stream, 0, sizeof(stream));
+ 
+ 	stream.next_out = buf;
+-	stream.avail_out = size;
++	bytes_to_inflate = size;
++	stream.avail_out = zlib_buf_cap(bytes_to_inflate);
+ 	stream.next_in = fill(1);
+ 	stream.avail_in = len;
+ 	git_inflate_init(&stream);
+ 
+ 	for (;;) {
++		unsigned char *out0 = stream.next_out;
+ 		int ret = git_inflate(&stream, 0);
+ 		use(len - stream.avail_in);
++		bytes_to_inflate -= (stream.next_out - out0);
+ 		if (stream.total_out == size && ret == Z_STREAM_END)
+ 			break;
+ 		if (ret != Z_OK) {
+@@ -117,6 +121,7 @@ static void *get_data(unsigned long size)
+ 		}
+ 		stream.next_in = fill(1);
+ 		stream.avail_in = len;
++		stream.avail_out = zlib_buf_cap(bytes_to_inflate);
+ 	}
+ 	git_inflate_end(&stream);
+ 	return buf;
+-- 
+1.7.6.rc1.118.ge175b4a
