@@ -1,74 +1,50 @@
-From: Fabrizio Chiarello <fabrizio.chiarello@ieee.org>
-Subject: Re: Reverting/cheout files with old modification date
-Date: Fri, 10 Jun 2011 09:17:07 +0200
-Message-ID: <20110610071707.GA4715@hydrogen.black.hole>
-References: <loom.20110609T090306-164@post.gmane.org>
+From: Yann Dirson <dirson@bertin.fr>
+Subject: clone --mirror should be replaced by --mirror=(fetch|push)
+Date: Fri, 10 Jun 2011 09:12:21 +0200
+Organization: Bertin Technologies
+Message-ID: <20110610091221.013ebae6@chalon.bertin.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Peter Pientka <p.pientka@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 10 09:26:17 2011
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 10 09:41:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUw6i-000729-GU
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 09:26:16 +0200
+	id 1QUwLO-0003m2-Oj
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 09:41:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753492Ab1FJH0M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jun 2011 03:26:12 -0400
-Received: from mail1.dei.unipd.it ([147.162.2.111]:59360 "HELO
-	mail.dei.unipd.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1752870Ab1FJH0L (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2011 03:26:11 -0400
-X-Greylist: delayed 536 seconds by postgrey-1.27 at vger.kernel.org; Fri, 10 Jun 2011 03:26:11 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.dei.unipd.it (Postfix) with ESMTP id F0288169A6D7;
-	Fri, 10 Jun 2011 09:17:11 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at dei.unipd.it
-Received: from mail.dei.unipd.it ([127.0.0.1])
-	by localhost (mail1.dei.unipd.it [127.0.0.1]) (amavisd-new, port 10024)
-	with SMTP id 4yM2HX3VEN7d; Fri, 10 Jun 2011 09:17:07 +0200 (CEST)
-Received: from localhost (unknown [172.20.0.160])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mail.dei.unipd.it (Postfix) with ESMTPSA id 9C4DE169A6D3;
-	Fri, 10 Jun 2011 09:17:07 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <loom.20110609T090306-164@post.gmane.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753437Ab1FJHlV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jun 2011 03:41:21 -0400
+Received: from blois.bertin.fr ([195.68.26.9]:41606 "EHLO blois.bertin.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751803Ab1FJHlV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2011 03:41:21 -0400
+X-Greylist: delayed 327 seconds by postgrey-1.27 at vger.kernel.org; Fri, 10 Jun 2011 03:41:21 EDT
+Received: from blois.bertin.fr (localhost [127.0.0.1])
+	by postfix.imss70 (Postfix) with ESMTP id 283B0541C3
+	for <git@vger.kernel.org>; Fri, 10 Jun 2011 09:35:52 +0200 (CEST)
+Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
+	by blois.bertin.fr (Postfix) with ESMTP id D3361541E7
+	for <git@vger.kernel.org>; Fri, 10 Jun 2011 09:35:51 +0200 (CEST)
+Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTPPA id <0LMK00GIWD3RIEA0@yport1.innovation.bertin.fr> for
+ git@vger.kernel.org; Fri, 10 Jun 2011 09:35:51 +0200 (CEST)
+X-Mailer: Claws Mail 3.7.9 (GTK+ 2.24.4; i486-pc-linux-gnu)
+X-TM-AS-Product-Ver: IMSS-7.0.0.8220-6.5.0.1024-18190.005
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175599>
 
-On Thu, Jun 09, 2011 at 07:09:47AM +0000, Peter Pientka wrote:
-> Hi,
-> Is any way to revert/checkout some files from reposotory with old modification
-> date(file parameter). Now, while I revert/checkout some file, modification date
-> of file is set to current date and time.
-> 
-
-I use this hook. On checkout it sets the mtime of all the files to
-the date of the last commit touching them.
-
-===== .git/hooks/post-checkout
-
-#!/bin/sh
-
-for f in `git ls-tree --name-only -r HEAD`; do
-    mtime=`git log -n1 --date=iso --pretty=%ai -- $f`
-    touch -m -d "$mtime" $f
-done
-
-=====
-
+Whereas "git remote add" has depreciated --mirror in favor of
+--mirror=fetch and --mirror=push, "git clone --mirror", which creates a
+"fetch mirror", also sets up things in the old "dangerous and useless"
+(see 0990248) way.
 
 -- 
-Fabrizio Chiarello <fabrizio.chiarello@ieee.org>
-
-You ask: what is the meaning or purpose of life? I can only answer with
-another question: do you think we are wise enough to read God's mind?
-  -- Freeman Dyson
+Yann Dirson - Bertin Technologies
