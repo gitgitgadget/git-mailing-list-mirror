@@ -1,110 +1,95 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Fri, 10 Jun 2011 13:12:12 -0700 (PDT)
-Message-ID: <m3vcwdcuqm.fsf@localhost.localdomain>
-References: <BANLkTimnCqaEBVreMhnbRBV3r-r1ZzkFcg@mail.gmail.com>
-	<BANLkTinfVNxYX3kj4DBm1ra=8Ar5ca9UvQ@mail.gmail.com>
-	<BANLkTi=PnYmJVXe8tuqdb9UiYnethf1GSw@mail.gmail.com>
-	<4DF0EC32.40001@gmail.com>
-	<BANLkTimk06eibz99AO_0BwzoL6FWb5pR8A@mail.gmail.com>
-	<4DF1CAC1.7060705@op5.se>
-	<BANLkTi=4zfO5jKKzbncJk7ihcoHX7Rst4Q@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>,
-	A Large Angry SCM <gitzilla@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	NAKAMURA Takumi <geek4civic@gmail.com>,
-	git <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Jun 10 22:12:21 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/6] zlib only processes 4GB at a time
+Date: Fri, 10 Jun 2011 13:15:42 -0700
+Message-ID: <1307736948-16956-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 10 22:15:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QV845-0004GK-30
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 22:12:21 +0200
+	id 1QV87Z-00061E-Fq
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 22:15:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758055Ab1FJUMP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jun 2011 16:12:15 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:59425 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758006Ab1FJUMP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2011 16:12:15 -0400
-Received: by bwz15 with SMTP id 15so2470060bwz.19
-        for <git@vger.kernel.org>; Fri, 10 Jun 2011 13:12:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:x-authentication-warning:to:cc:subject
-         :references:from:date:in-reply-to:message-id:lines:user-agent
-         :mime-version:content-type;
-        bh=/loboqJDskyHv+mW/zOlgeHq322Uy9OV+6JNmTB1OWU=;
-        b=YIZJZF6Tps94oSe3rKHkJ6ZjUc02sJ/AgYmMy261er4H01+SQSLmvrHHLIe+VwW5pI
-         nqay9NzuIYVeCXhm5z2iruGuKDk+nO3MMSGVhQe5zQETLZ4zQhCzZpW6ZLMvtEZzqn4L
-         HFuUjPCQ1S9Lc3clMeMYVCU7tZXv6N72FdX+Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=shJjvP8Fs1zWQ1OtFlls3Y1XUEXjqqrgQ4O9KvTL8lPwtK0raG+jtHhLRslC9jOJgX
-         BkppGTTyl/3kgP1VvPuL8vMGqDvEu4iC7wYYItgW5ASqbW+6B32eMwgtRXk+e4N4bIqj
-         VP6nM6zclmWqsl1upNXsH8TPC3CLIDCz08CyU=
-Received: by 10.204.7.4 with SMTP id b4mr1177949bkb.39.1307736733455;
-        Fri, 10 Jun 2011 13:12:13 -0700 (PDT)
-Received: from localhost.localdomain (abvz126.neoplus.adsl.tpnet.pl [83.8.223.126])
-        by mx.google.com with ESMTPS id af13sm1353726bkc.19.2011.06.10.13.12.11
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 10 Jun 2011 13:12:12 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p5AKBZBF023454;
-	Fri, 10 Jun 2011 22:11:45 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p5AKBDgm023448;
-	Fri, 10 Jun 2011 22:11:13 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <BANLkTi=4zfO5jKKzbncJk7ihcoHX7Rst4Q@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1758081Ab1FJUPw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jun 2011 16:15:52 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44810 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758034Ab1FJUPv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2011 16:15:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9D06E423E
+	for <git@vger.kernel.org>; Fri, 10 Jun 2011 16:17:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id; s=sasl; bh=BWrRSts0Or8g9dEHUR9R/c7IKl4
+	=; b=ux2xYoLS7v+ruwjjePOy5Gl4zYktl8Px161rGA/vShxHV1ivL3UwQIhgOEN
+	TML9F46nOKH6HTYEAfUakHso/lGeik4eO5At1YKVfAq31nuNqxUiST/FXZrzNi0o
+	RSk01Ex6chVhRkLofWS58HJmvYMS30FsCTOzMAh60+ZN1KbU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id; q=dns; s=sasl; b=KH5zNcSnmZboJqe6+EbwF/64o5EgA
+	59+JgjETmIb91+Q0P8h1MYMN7XromLWKVuJ8O6iCFh7D82z+UNVxM41NkOrcoDMv
+	scoes0vaS/dnlD+jh/3O93QRawhuhkhEG+KdRpR0pNOqq8mWcqfbpBjmpnlLy1AR
+	wWr3ynV3t3ulA4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 77705423D
+	for <git@vger.kernel.org>; Fri, 10 Jun 2011 16:17:59 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C33EF423C for
+ <git@vger.kernel.org>; Fri, 10 Jun 2011 16:17:58 -0400 (EDT)
+X-Mailer: git-send-email 1.7.6.rc1.118.ge175b4a
+X-Pobox-Relay-ID: BC430802-939E-11E0-A88D-C8CFB7AE1C3C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175618>
 
-Shawn Pearce <spearce@spearce.org> writes:
-> On Fri, Jun 10, 2011 at 00:41, Andreas Ericsson <ae@op5.se> wrote:
->> On 06/09/2011 05:56 PM, Shawn Pearce wrote:
->>>
->>> A lot of operations toss every commit that a reference points at into
->>> the revision walker's LRU queue. If you have a tag pointing to every
->>> commit, then the entire project history enters the LRU queue at once,
->>> up front. That queue is managed with O(N^2) insertion time. And the
->>> entire queue has to be filled before anything can be output.
->>
->> Hmm. Since we're using pre-hashed data with an obvious lookup method
->> we should be able to do much, much better than O(n^2) for insertion
->> and better than O(n) for worst-case lookups. I'm thinking a 1-byte
->> trie, resulting in a depth, lookup and insertion complexity of 20. It
->> would waste some memory but it might be worth it for fixed asymptotic
->> complexity for both insertion and lookup.
-> 
-> Not really.
-> 
-> The queue isn't sorting by SHA-1. Its sorting by commit timestamp,
-> descending. Those aren't pre-hashed. The O(N^2) insertion is because
-> the code is trying to find where this commit belongs in the list of
-> commits as sorted by commit timestamp.
-> 
-> There are some priority queue datastructures designed for this sort of
-> work, e.g. a calendar queue might help. But its not as simple as a 1
-> byte trie.
+This is a re-roll from yesterday's series, taking a very different
+approach. Instead of fixing call sites one by one, the goal is to define
+our own API that can give an illusion to the callers that they can feed
+and receive data whose size can fit within "unsigned long", so that they
+can set up the avail_in field of z_stream (now git_zstream) to the total
+size, and expect it to fall down to zero when everything is consumed by
+the library (vice versa for avail_out).
 
-In the case of Subversion numbers (revision number to hash mapping)
-sorted by name (in version order at least) means sorted by date.  I
-wonder if there is data structure for which this is optimum insertion
-order (like for insertion sort almost sorted data is best case).
+The first 5 patches clean up the existing callers that directly call into
+zlib to call git_inflate and git_deflate wrappers.
+
+Patch 6 introduces git_zstream that is a thin wrapper around z_stream,
+but barfs when the caller gives a buffer larger than 4GB that would fit
+the underlying zlib calling convention.
+
+The next step would be to tweak zlib_post_call(), git_inflate() and
+git_deflate() functions to internally loop and call underlying inflate()
+and deflate() when the incoming buffers are larger than 4GB, but that
+part is not done in this series (yet).
+
+Junio C Hamano (6):
+  zlib: refactor error message formatter
+  zlib: wrap remaining calls to direct inflate/inflateEnd
+  zlib: wrap inflateInit2 used to accept only for gzip format
+  zlib: wrap deflate side of the API
+  zlib: wrap deflateBound() too
+  zlib: zlib can only process 4GB at a time
+
+ archive-zip.c            |   10 +-
+ builtin/apply.c          |    2 +-
+ builtin/index-pack.c     |   12 ++--
+ builtin/pack-objects.c   |   18 ++--
+ builtin/unpack-objects.c |    2 +-
+ cache.h                  |   30 +++++--
+ diff.c                   |   10 +-
+ fast-import.c            |   30 +++---
+ http-backend.c           |   11 +--
+ http-push.c              |   16 ++--
+ http.h                   |    2 +-
+ pack-check.c             |    4 +-
+ remote-curl.c            |   14 +--
+ sha1_file.c              |   28 +++---
+ zlib.c                   |  218 +++++++++++++++++++++++++++++++++++++++-------
+ 15 files changed, 283 insertions(+), 124 deletions(-)
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.7.6.rc1.118.ge175b4a
