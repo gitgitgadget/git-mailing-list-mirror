@@ -1,90 +1,94 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 06/19] git_remote_helpers: push all refs during a
- non-local export
-Date: Thu, 9 Jun 2011 21:40:22 -0400
-Message-ID: <20110610014022.GB12256@sigill.intra.peff.net>
-References: <1307558930-16074-1-git-send-email-srabbelier@gmail.com>
- <1307558930-16074-7-git-send-email-srabbelier@gmail.com>
- <20110608194205.GI27715@elie>
- <20110608221908.GB15530@sigill.intra.peff.net>
- <20110609080912.GB4885@elie>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: diff'ing files ...
+Date: Thu, 09 Jun 2011 22:19:54 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.1106092145390.2142@xanadu.home>
+References: <BANLkTi=1vaoLVmhyahDttmUmqw7RTp=8-A@mail.gmail.com>
+ <20110606224356.GC13697@sigill.intra.peff.net>
+ <BANLkTinwSembzVk4gSYSvsRdHhDfqizkyg@mail.gmail.com>
+ <20110607221948.GA10104@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 10 03:40:33 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Albretch Mueller <lbrtchx@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jun 10 04:20:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUqi8-0005Mj-Fx
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 03:40:32 +0200
+	id 1QUrKP-0008Jz-QH
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 04:20:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756527Ab1FJBk1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jun 2011 21:40:27 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58106
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753992Ab1FJBk1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2011 21:40:27 -0400
-Received: (qmail 22786 invoked by uid 107); 10 Jun 2011 01:40:33 -0000
-Received: from 70-36-146-246.dsl.dynamic.sonic.net (HELO sigill.intra.peff.net) (70.36.146.246)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 09 Jun 2011 21:40:33 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Jun 2011 21:40:22 -0400
-Content-Disposition: inline
-In-Reply-To: <20110609080912.GB4885@elie>
+	id S1756754Ab1FJCT4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jun 2011 22:19:56 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:24333 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755655Ab1FJCTz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2011 22:19:55 -0400
+Received: from xanadu.home ([66.130.28.92]) by vl-mo-mrz23.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0LMJ00EMZYFXSX10@vl-mo-mrz23.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 09 Jun 2011 22:19:09 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20110607221948.GA10104@sigill.intra.peff.net>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175594>
 
-On Thu, Jun 09, 2011 at 03:09:12AM -0500, Jonathan Nieder wrote:
+On Tue, 7 Jun 2011, Jeff King wrote:
 
-> If we imagine that the remote helper author wants to write as little
-> code as possible (which seems reasonable), then probably their
-> "export" command will simply feed its input to a vcs-fast-import
-> program.  git fast-export doesn't know how to do ref mapping and
-> neither would vcs-fast-import.  So one is led to wonder which stage in
-> the pipeline can make the adaptations to make "git push hgrepo
-> HEAD:refs/heads/bar" work.
-
-Yeah, when writing the original series, I really had the thought that
-the remote helper would be sitting in the middle and could do the
-mapping. But really, not necessarily; the data is more likely to go
-straight to an importer. And the mapping code may be ugly, which means
-we want git itself to do the heavy lifting, not individual helpers.
-
-> To be friendly to remote helper authors, it would be nice to take
-> care of the ref mapping somewhere on the transport-helper side, unless
-> fast-import learns a new mode that does not label its result with
-> refs.  In the latter case, the "export" command could look like[*]
+> On Tue, Jun 07, 2011 at 10:12:35PM +0000, Albretch Mueller wrote:
 > 
-> 	export :1 refs/heads/foo
-> 	export :2 refs/heads/bar
-> 	export :3 +refs/heads/force
+> > > ... binary diffs, though I don't know offhand the details of the algorithm.
+> > ~
+> >  this is the part that I need ;-)
+> > ~
+> >  Reading the source code without knowing the basic underlying
+> > ideas/algorithm (just an outline if possible) won't help much
 > 
-> with :1, :2, and :3 being marks in the fast-import stream.
+> You could read the comments in the source:
+> 
+>   $ head -n 7 diff-delta.c
+>   /*
+>    * diff-delta.c: generate a delta between two buffers
+>    *
+>    * This code was greatly inspired by parts of LibXDiff from Davide Libenzi
+>    * http://www.xmailserver.org/xdiff-lib.html
+>    *
+>    * Rewritten for GIT by Nicolas Pitre <nico@fluxnic.net>, (C) 2005-2007
+> 
+> According to the xdiff page linked:
+> 
+>   For binary files, LibXDiff implements both (with some modification)
+>   the algorithm described in File System Support for Delta Compression
+>   by Joshua P.  MacDonald, and the algorithm described in Fingerprinting
+>   By Random Polynomials by Michael O. Rabin.
+> 
+> Nicolas (cc'd) might be able to say what, if any, substantive changes
+> were made from those works.
 
-I think we already have something like that with:
+The libxdiff code was pretty generic so to be highly portable and usable 
+for many application types.  What I did is to get rid of everything that 
+git strictly didn't need in order to make the code as simple as 
+possible, and most importantly as fast as possible.  And then the code 
+was optimized even further, sacrificing on clarity a bit, to make it 
+even faster.  Since this code is the very inner loop of every delta 
+search for best delta matches, every bit of optimization counts.
 
-  reset refs/heads/foo
-  from :1
+And then further modifications were made to avoid pathological corner 
+cases which were taking too much time for little gain in the Git 
+context.
 
-in the import stream. And then that matches the concept that the helper
-is really just pushing all of the work to that VCS's fast-import stream.
-And _if_ we can convince fast-export to write a stream of commits that
-are not on any particular ref, then we could just dump the ref-mapping
-at the end of the export stream.
+I also changed the output encoding to make it tighter.
 
-There's nowhere to talk about "forced" pushing there, though. We could
-add in a "force" flag on that reset command. But it's not even
-necessarily a concept that will map to other version control systems. I
-wonder if it is simply something that we might have to live without
-when moving commits between systems.
+So, strictly speaking, the current code in Git doesn't bear any 
+resemblance with the libxdiff code at all.  However the basic algorithm 
+behind both implementations is the same.  Studying the libxdiff version 
+is probably easier in order to gain an understanding of how this works.
 
--Peff
+
+Nicolas
