@@ -1,63 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv3 1/2] Add a remote helper to interact with mediawiki,
- pull & clone handled
-Date: Fri, 10 Jun 2011 03:22:46 -0400
-Message-ID: <20110610072245.GA3385@sigill.intra.peff.net>
-References: <1307625360-10973-1-git-send-email-jeremie.nikaes@ensimag.imag.fr>
- <20110610002137.GA11585@sigill.intra.peff.net>
- <BANLkTimruGZsh0aq7gOKmLUiJFwz3beU3g@mail.gmail.com>
+From: Fabrizio Chiarello <fabrizio.chiarello@ieee.org>
+Subject: Re: Reverting/cheout files with old modification date
+Date: Fri, 10 Jun 2011 09:17:07 +0200
+Message-ID: <20110610071707.GA4715@hydrogen.black.hole>
+References: <loom.20110609T090306-164@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeremie Nikaes <jeremie.nikaes@ensimag.imag.fr>,
-	git@vger.kernel.org, Claire Fousse <claire.fousse@ensimag.imag.fr>,
-	David Amouyal <david.amouyal@ensimag.imag.fr>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Sylvain =?utf-8?Q?Boulm=C3=A9?= <sylvain.boulme@imag.fr>
-To: Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 10 09:22:56 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Peter Pientka <p.pientka@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 10 09:26:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUw3T-0005sG-St
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 09:22:56 +0200
+	id 1QUw6i-000729-GU
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 09:26:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752472Ab1FJHWv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Jun 2011 03:22:51 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52208
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752106Ab1FJHWu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2011 03:22:50 -0400
-Received: (qmail 24209 invoked by uid 107); 10 Jun 2011 07:22:57 -0000
-Received: from c-76-21-13-32.hsd1.ca.comcast.net (HELO sigill.intra.peff.net) (76.21.13.32)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 10 Jun 2011 03:22:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Jun 2011 03:22:46 -0400
+	id S1753492Ab1FJH0M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jun 2011 03:26:12 -0400
+Received: from mail1.dei.unipd.it ([147.162.2.111]:59360 "HELO
+	mail.dei.unipd.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1752870Ab1FJH0L (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2011 03:26:11 -0400
+X-Greylist: delayed 536 seconds by postgrey-1.27 at vger.kernel.org; Fri, 10 Jun 2011 03:26:11 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.dei.unipd.it (Postfix) with ESMTP id F0288169A6D7;
+	Fri, 10 Jun 2011 09:17:11 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at dei.unipd.it
+Received: from mail.dei.unipd.it ([127.0.0.1])
+	by localhost (mail1.dei.unipd.it [127.0.0.1]) (amavisd-new, port 10024)
+	with SMTP id 4yM2HX3VEN7d; Fri, 10 Jun 2011 09:17:07 +0200 (CEST)
+Received: from localhost (unknown [172.20.0.160])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mail.dei.unipd.it (Postfix) with ESMTPSA id 9C4DE169A6D3;
+	Fri, 10 Jun 2011 09:17:07 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <BANLkTimruGZsh0aq7gOKmLUiJFwz3beU3g@mail.gmail.com>
+In-Reply-To: <loom.20110609T090306-164@post.gmane.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175598>
 
-On Fri, Jun 10, 2011 at 08:31:41AM +0200, Arnaud Lacurie wrote:
+On Thu, Jun 09, 2011 at 07:09:47AM +0000, Peter Pientka wrote:
+> Hi,
+> Is any way to revert/checkout some files from reposotory with old modification
+> date(file parameter). Now, while I revert/checkout some file, modification date
+> of file is set to current date and time.
+> 
 
-> > =C2=A0git clone \
-> > =C2=A0 =C2=A0-c mediawiki.page=3DGitWorkflows \
-> > =C2=A0 =C2=A0-c mediawiki.page=3DTig \
-> > =C2=A0 =C2=A0https://git.wiki.kernel.org
-> >
->=20
-> So we give up on the mediawiki prefix (mediawiki::https://git.wiki.ke=
-rnel.org)
-> when it comes to partial cloning ?
+I use this hook. On checkout it sets the mtime of all the files to
+the date of the last commit touching them.
 
-Oops, no, I just forgot it. You need the mediawiki prefix so git knows
-to invoke the mediawiki helper.
+===== .git/hooks/post-checkout
 
-Sorry for the confusion.
+#!/bin/sh
 
--Peff
+for f in `git ls-tree --name-only -r HEAD`; do
+    mtime=`git log -n1 --date=iso --pretty=%ai -- $f`
+    touch -m -d "$mtime" $f
+done
+
+=====
+
+
+-- 
+Fabrizio Chiarello <fabrizio.chiarello@ieee.org>
+
+You ask: what is the meaning or purpose of life? I can only answer with
+another question: do you think we are wise enough to read God's mind?
+  -- Freeman Dyson
