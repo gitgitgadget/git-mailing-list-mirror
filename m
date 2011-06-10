@@ -1,111 +1,96 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: diff'ing files ...
-Date: Fri, 10 Jun 2011 06:12:29 -0700 (PDT)
-Message-ID: <m34o3xesqn.fsf@localhost.localdomain>
-References: <BANLkTi=1vaoLVmhyahDttmUmqw7RTp=8-A@mail.gmail.com>
-	<20110606224356.GC13697@sigill.intra.peff.net>
-	<BANLkTinwSembzVk4gSYSvsRdHhDfqizkyg@mail.gmail.com>
-	<20110607221948.GA10104@sigill.intra.peff.net>
-	<alpine.LFD.2.00.1106092145390.2142@xanadu.home>
+Subject: Re: Git-Mediawiki: Future of the project
+Date: Fri, 10 Jun 2011 06:22:01 -0700 (PDT)
+Message-ID: <m3zklpddqm.fsf@localhost.localdomain>
+References: <BANLkTimViRhN+mDWpHRbcFLs=DDgXU+EMA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Albretch Mueller <lbrtchx@gmail.com>,
-	git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Fri Jun 10 15:12:43 2011
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Sylvain Boulme <sylvain.boulme@imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Claire Fousse <Claire.Fousse@ensimag.imag.fr>,
+	=?iso-8859-15?q?J=E9r=E9mie_Nikaes?= 
+	<Jeremie.Nikaes@ensimag.imag.fr>,
+	David Amouyal <david.amouyal@ensimag.imag.fr>
+To: Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Fri Jun 10 15:22:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QV1Vy-0005Kj-Tw
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 15:12:43 +0200
+	id 1QV1fG-0001NT-Om
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 15:22:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932125Ab1FJNMf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jun 2011 09:12:35 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:41376 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932116Ab1FJNMc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2011 09:12:32 -0400
-Received: by bwz15 with SMTP id 15so2168121bwz.19
-        for <git@vger.kernel.org>; Fri, 10 Jun 2011 06:12:31 -0700 (PDT)
+	id S1756156Ab1FJNWH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Jun 2011 09:22:07 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:45689 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755684Ab1FJNWD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Jun 2011 09:22:03 -0400
+Received: by wwa36 with SMTP id 36so2776397wwa.1
+        for <git@vger.kernel.org>; Fri, 10 Jun 2011 06:22:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:x-authentication-warning:to:cc:subject
          :references:from:date:in-reply-to:message-id:lines:user-agent
-         :mime-version:content-type;
-        bh=Fo8kJ726NOLEaxl+HTJNCP9Oj71kWJXL0CLx0ZxIOco=;
-        b=MLCThiS3kVtFqF/g2QxTTa0626uOOwrtxNM8T4nJORryP0oV7k4ijuYIDXjG2lolwz
-         qak6uPA3cbeCcOrbOaVHbwUohJRlOAIW8lb8c/fI6NgoPe8YG8AFPD7OI7dFtzK7zoV6
-         dm56iJ0wVrbuynSHKEDdQtlzmuCf+PW3aPpLc=
+         :mime-version:content-type:content-transfer-encoding;
+        bh=2pWRx/GFR0sG1XGPx6a/i7ToqHLig65U739sWjXbQfw=;
+        b=GBbQZEVNW5wk9XbdBWr/qXEGZ6t+HISIjMAUi7GnwqGA+l6lHM4uOFgOM1kZrMSaen
+         fpdZXZD0vNdxAp1dECvUBh3asfkCR9tiZp5V6FpJ6I/kw/KJLqkj5Hw2FK9wgRp95WB1
+         ByXc1OcZJIrv+MGwflBP6jLGqOPUyNuCeU6DQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=OcFlesl0sJMn/o1z39xf6TG8EjFKyAF8vfC5+D0/ceWT9MWFIJb6JopDYgdNVnfwKc
-         zUkfCs/+K3zNps3n+CaWJdDJBMOFZeqKS9tkjJocqaw9MYQfehqV1DCQR75nhRI0Kjjz
-         JL/CGPk1p+TkaKHxzrj/qyMSfTHZVrRxMBeXQ=
-Received: by 10.204.141.15 with SMTP id k15mr1799774bku.50.1307711550857;
-        Fri, 10 Jun 2011 06:12:30 -0700 (PDT)
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=OjXjIJMA2yrhvwjQw/1c3MbAu14Kpn5SUhMz5f0gNAP4j6Mes53jSZunG5AiDfYLY/
+         HIO4Fqk7JJAx5NyZVmtKErSHC8+O++C3Y6J1xDYSC29MetKTZ6VQ5mxZ/lxvrJ4GgZiH
+         zvOikxyQzjA0wLE2kPjPuYtIEt3wXMbp9/dE0=
+Received: by 10.227.164.202 with SMTP id f10mr2173099wby.92.1307712122023;
+        Fri, 10 Jun 2011 06:22:02 -0700 (PDT)
 Received: from localhost.localdomain (abvz126.neoplus.adsl.tpnet.pl [83.8.223.126])
-        by mx.google.com with ESMTPS id k10sm2560332bkq.22.2011.06.10.06.12.28
+        by mx.google.com with ESMTPS id b10sm2022386wbh.43.2011.06.10.06.21.54
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 10 Jun 2011 06:12:29 -0700 (PDT)
+        Fri, 10 Jun 2011 06:22:01 -0700 (PDT)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p5ADBovE017917;
-	Fri, 10 Jun 2011 15:12:01 +0200
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p5ADLGv8018078;
+	Fri, 10 Jun 2011 15:21:26 +0200
 Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p5ADBTcD017906;
-	Fri, 10 Jun 2011 15:11:29 +0200
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p5ADKoW9018064;
+	Fri, 10 Jun 2011 15:20:50 +0200
 X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <alpine.LFD.2.00.1106092145390.2142@xanadu.home>
+In-Reply-To: <BANLkTimViRhN+mDWpHRbcFLs=DDgXU+EMA@mail.gmail.com>
 User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175609>
 
-Nicolas Pitre <nico@fluxnic.net> writes:
-> On Tue, 7 Jun 2011, Jeff King wrote:
-> > On Tue, Jun 07, 2011 at 10:12:35PM +0000, Albretch Mueller wrote:
-> > 
-> > > > ... binary diffs, though I don't know offhand the details of the algorithm.
-> > > ~
-> > >  this is the part that I need ;-)
+Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr> writes:
+
+> This is the end of our school project meaning we won't be able to
+> spend as much time as in the past three weeks on Git Mediawiki.
 
 [...]
 
-> > According to the xdiff page linked:
-> > 
-> >   For binary files, LibXDiff implements both (with some modification)
-> >   the algorithm described in File System Support for Delta Compression
-> >   by Joshua P.  MacDonald, and the algorithm described in Fingerprinting
-> >   By Random Polynomials by Michael O. Rabin.
-> > 
-> > Nicolas (cc'd) might be able to say what, if any, substantive changes
-> > were made from those works.
-> 
-> The libxdiff code was pretty generic so to be highly portable and usable 
-> for many application types.  What I did is to get rid of everything that 
-> git strictly didn't need in order to make the code as simple as 
-> possible, and most importantly as fast as possible. [...]
-> 
-> And then further modifications were made to avoid pathological corner 
-> cases which were taking too much time for little gain in the Git 
-> context.
-> 
-> I also changed the output encoding to make it tighter.
+> The full documentation of our project is on this github :
+> https://github.com/Bibzball/Git-Mediawiki/
+>=20
+> Thank you all!
+>=20
+> Best regards.
+>=20
+> Arnaud Lacurie, J=E9r=E9mie Nikaes, Claire Fousse, David Amouyal
 
-Nicolas, do you know how binary diff used by git compares with respect
-to performance and compression with other binary diff algorithms:
+Could you please add short information about this project in correct
+place on "Interfaces, frontends and tools" page on Git Wiki?  Thanks
+in advance.
 
-  * original LibXDiff
-  * bsdiff
-  * xdelta (vcdif algorithm)
-  * vbindiff
+  https://git.wiki.kernel.org/index.php/InterfacesFrontendsAndTools
 
--- 
+--=20
 Jakub Narebski
 Poland
 ShadeHawk on #git
