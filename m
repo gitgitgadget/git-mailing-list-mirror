@@ -1,121 +1,84 @@
-From: NAKAMURA Takumi <geek4civic@gmail.com>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Fri, 10 Jun 2011 12:59:47 +0900
-Message-ID: <BANLkTimEGjBMrbQpkZfWYPTZ93syiKFHdw@mail.gmail.com>
-References: <BANLkTimnCqaEBVreMhnbRBV3r-r1ZzkFcg@mail.gmail.com>
-	<BANLkTinfVNxYX3kj4DBm1ra=8Ar5ca9UvQ@mail.gmail.com>
-	<BANLkTi=PnYmJVXe8tuqdb9UiYnethf1GSw@mail.gmail.com>
-	<4DF0EC32.40001@gmail.com>
-	<BANLkTimk06eibz99AO_0BwzoL6FWb5pR8A@mail.gmail.com>
-	<20110609162604.GC25885@sigill.intra.peff.net>
+From: Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>
+Subject: Re: [PATCHv3 1/2] Add a remote helper to interact with mediawiki,
+ pull & clone handled
+Date: Fri, 10 Jun 2011 08:31:41 +0200
+Message-ID: <BANLkTimruGZsh0aq7gOKmLUiJFwz3beU3g@mail.gmail.com>
+References: <1307625360-10973-1-git-send-email-jeremie.nikaes@ensimag.imag.fr> <20110610002137.GA11585@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Shawn Pearce <spearce@spearce.org>,
-	A Large Angry SCM <gitzilla@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	git <git@vger.kernel.org>
+Cc: Jeremie Nikaes <jeremie.nikaes@ensimag.imag.fr>,
+	git@vger.kernel.org, Claire Fousse <claire.fousse@ensimag.imag.fr>,
+	David Amouyal <david.amouyal@ensimag.imag.fr>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	=?ISO-8859-1?Q?Sylvain_Boulm=E9?= <sylvain.boulme@imag.fr>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 10 05:59:55 2011
+X-From: git-owner@vger.kernel.org Fri Jun 10 08:32:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUst0-0001QW-Ri
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 05:59:55 +0200
+	id 1QUvGL-0004ta-O6
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 08:32:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754710Ab1FJD7t convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Jun 2011 23:59:49 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:44667 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751690Ab1FJD7t convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2011 23:59:49 -0400
-Received: by wya21 with SMTP id 21so1576840wya.19
-        for <git@vger.kernel.org>; Thu, 09 Jun 2011 20:59:48 -0700 (PDT)
+	id S1752472Ab1FJGcE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Jun 2011 02:32:04 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:36833 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751027Ab1FJGcC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Jun 2011 02:32:02 -0400
+Received: by vws1 with SMTP id 1so1849745vws.19
+        for <git@vger.kernel.org>; Thu, 09 Jun 2011 23:32:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:from
+         :date:x-google-sender-auth:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=ZYFVMQl0mJjl9Y+PIdODTIxIhaxVmDMzGWKsmi2aFtg=;
-        b=xjGPDPayPLsnSvOB/fBvn286bulGUwYBDAjEKuicM60tZn2T5wT8xM1lWWysKFOwqB
-         qSZ2nGBGiKSZLNHfsnSsk2jEiksGmGBE/iie13Ual4N4Ts2LUJUROnKXb679LePmjcZh
-         cSDNMolGs5URAiZy+2AgA72pvFxWYNaG8ZxjM=
+        bh=587b+dLdrRuHuuctudf9/YrNdU94F8hVbg0ySvcWnz0=;
+        b=FNwWTX/0vThooiF0fZ5Oe6A+IuLFtzsMvKY5/Y4euOwAjygyr5yb5e1DTSSK0R2lKJ
+         ZNCoS2Iz1E8QjcPAKBXf1A4a22EfI8yYj92B76urY91FCs7Jw0yuYIEJJ03hlcJl/ZDJ
+         qK9Hx6S+7vaicQtBfs3ZxWmVba0JqeI1Mm27Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=D+3qMq+d7eafHDwEjgMRTmWfo7nWYLSkOkKTfR2lexrXTcEX+IZnWPTYtGu2uYcCP1
-         vFOIjtr7EhqdyYkvRdsCEIYDssQf6SM4E4dF+opSP8OaYJYWz97gUjNySkcaDZDbwRkU
-         liSKEmVy8zYYgqbX2VwHRf/v/0whuEpfIrdCg=
-Received: by 10.227.208.85 with SMTP id gb21mr1584963wbb.14.1307678387818;
- Thu, 09 Jun 2011 20:59:47 -0700 (PDT)
-Received: by 10.227.54.76 with HTTP; Thu, 9 Jun 2011 20:59:47 -0700 (PDT)
-In-Reply-To: <20110609162604.GC25885@sigill.intra.peff.net>
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        b=Bon7DxoCIKP4BuUdjTKsxZlIBUrwPecgtiSzktSfrEp41WqIOadvuDI1JteKW1Uz7J
+         RfyBPpbp+J0KiHaoSdusT7SQrQhMwkBTm71373vXanI75lX+kMUsSw/sQgk7IzxZspp/
+         iX0XGOYgqUkbv9rR4JNnG6rI599ZU0fhcKa4k=
+Received: by 10.220.16.80 with SMTP id n16mr654714vca.117.1307687521109; Thu,
+ 09 Jun 2011 23:32:01 -0700 (PDT)
+Received: by 10.220.194.68 with HTTP; Thu, 9 Jun 2011 23:31:41 -0700 (PDT)
+In-Reply-To: <20110610002137.GA11585@sigill.intra.peff.net>
+X-Google-Sender-Auth: Uy7SyuSrCGtGvj3AZBc_fIg_kWw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175596>
 
-Good afternoon Git! Thank you guys to give me comments.
+Hi !
 
-Jakub and Shawn,
+What you did there is great !
+It'll help clarify the command.
 
-Sure, Notes should be used at the case, I agree.
-
-> (eg. git log --oneline --decorate shows me each svn revision)
-
-My example might misunderstand you. I intended tags could show me
-pretty abbrev everywhere on Git. I would be happier if tags might be
-available bi-directional alias, as Stephen mentions.
-
-It would be better git-svn could record metadata into notes, I think, t=
-oo. :D
-
-Stephen,
-
-2011/6/10 Stephen Bash <bash@genarts.com>:
-> I've seen two different workflows develop:
-> =A01) Hacking on some code in Git the programmer finds something wron=
-g. =A0Using Git tools he can pickaxe/bisect/etc. and find that the prob=
-lem traces back to a commit imported from Subversion.
-> =A02) The programmer finds something wrong, asks coworker, coworker s=
-ays "see bug XYZ", bug XYZ says "Fixed in r20356".
+2011/6/10 Jeff King <peff@peff.net>:
+> On Thu, Jun 09, 2011 at 03:15:59PM +0200, Jeremie Nikaes wrote:
+> Earlier today I posted a 10-patch series to allow git to handle
+> something like:
 >
-> I agree notes is the right answer for (1), but for (2) you really wan=
-t a cross reference table from Subversion rev number to Git commit.
+> =A0git clone \
+> =A0 =A0-c mediawiki.page=3DGitWorkflows \
+> =A0 =A0-c mediawiki.page=3DTig \
+> =A0 =A0https://git.wiki.kernel.org
+>
 
-It is the point I wanted to say, thank you! I am working with svn-men.
-They often speak svn revision number. (And I have to tell them svn
-revs then)
+So we give up on the mediawiki prefix (mediawiki::https://git.wiki.kern=
+el.org)
+when it comes to partial cloning ?
 
-> In our office we created the cross reference table once by walking th=
-e Git tree and storing it as a file (we had some degenerate cases where=
- one SVN rev mapped to multiple Git commits, but I don't remember the d=
-etails), but it's not really usable from Git. =A0Lightweight tags would=
- be an awesome solution (if they worked). =A0Perhaps a custom subcomman=
-d is a reasonable middle ground.
+Regards
 
-Reconstructing svnrev-commits mapping can be done by git-svn itself.
-Unfortunately, git-svn's .rev-map is sorted by revision number. I
-think it would be useless to make subcommands unless they were
-pluggable into Git as "smart-tag resolver".
-
-Peff,
-
-At first, thank you to work for Github! Awesome!
-I didn't know Github has refs issues. (yeah, I should not push 100k of
-tags to Github for now :p )
-
-I am working on linux and windows. Many-refs-repo can make Git awfully
-slow (than linux!) I hope I could work also for windows to improve
-various performance issue.
-
-=46YI, I have tweaked git-rev-list for commits not to sort by date with
---quiet. It improves git-fetch (git-rev-list --not --all) performance
-when objects is well-packed.
-
-
-=2E..Takumi
+--=20
+Arnaud Lacurie
