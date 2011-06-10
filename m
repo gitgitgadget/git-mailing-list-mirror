@@ -1,134 +1,87 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] reset: Libify reset_index_file and print_new_head_line
-Date: Fri, 10 Jun 2011 05:35:32 -0500
-Message-ID: <20110610103532.GA32119@elie>
-References: <1307546728-11202-1-git-send-email-artagnon@gmail.com>
+From: Michael Nahas <mike.nahas@gmail.com>
+Subject: Re: Command-line interface thoughts
+Date: Fri, 10 Jun 2011 07:06:02 -0400
+Message-ID: <BANLkTikHkTHP7eJ=_wPosi7yj4BX=c1gaA@mail.gmail.com>
+References: <BANLkTikTWx7A64vN+hVZgL7cuiZ16Eobgg@mail.gmail.com>
+	<201106100004.58040.jnareb@gmail.com>
+	<4DF150FB.9070304@alum.mit.edu>
+	<201106101219.18497.jnareb@gmail.com>
+Reply-To: mike@nahas.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <christian.couder@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 10 12:35:53 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 10 13:06:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QUz49-0005jG-NM
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 12:35:50 +0200
+	id 1QUzXX-00005M-9b
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 13:06:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755452Ab1FJKfn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jun 2011 06:35:43 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:54876 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755315Ab1FJKfn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2011 06:35:43 -0400
-Received: by iyb14 with SMTP id 14so2054112iyb.19
-        for <git@vger.kernel.org>; Fri, 10 Jun 2011 03:35:42 -0700 (PDT)
+	id S1755528Ab1FJLGH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Jun 2011 07:06:07 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:39995 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755498Ab1FJLGE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Jun 2011 07:06:04 -0400
+Received: by bwz15 with SMTP id 15so2082601bwz.19
+        for <git@vger.kernel.org>; Fri, 10 Jun 2011 04:06:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=0IRWYXEbPc0w4M/N5SKgH5U1LLNeGZ14IoesWUUyUV0=;
-        b=EbVsISfsEHVjMpPCEjk2pf8EFGq1eVtH2ynZqNE/FbzijC1wipVo4hADqEZXy2gyFj
-         80f6o47sfJKuHLf90rdnFjCdgNUnOAB+uDCv3t0bxDKXhoU9qpV/IrINk+0+XlJKvmCx
-         ngttwGPSXTaNeDKHYZpsacADm0T928YbfQ9mI=
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=G5UP1wAylisZTVWTTGQetpFTUH10ZBdQrvY8DY1ukVo=;
+        b=Y23qWNdrrbTDqmZ4MLOC5lQ2RJNfNYn7zRMcmu8B3zDhEeuaHk15M9CHUCq0Fkr+Pk
+         Q1um9S6Xvpay7bs1Q0ZXFFnutVuWGP5NGWvGnNwVrA/X8GSiw16GSX93LHeU5Osg42N5
+         +JRqx5SMjQXPwqrSXBkAQDUZi85Qj8KplsQF0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=jhvhh4gtAAebJB+I/a7w+xNMdDTOD8Oct3BBdwTrTxPjb7Ge50eg+JkFVLpbb2cINk
-         1wiNfKRh3OKQcjHrlHsdpwuOGdLv1ofg14cjvbY4xATPhgQk/kukSL3lUrrShanzFJu1
-         JzBJU2onHBrn0a6zwJNOsjKRPbqsS99LMEmlk=
-Received: by 10.42.228.68 with SMTP id jd4mr2325167icb.142.1307702142055;
-        Fri, 10 Jun 2011 03:35:42 -0700 (PDT)
-Received: from elie (adsl-68-255-107-108.dsl.chcgil.ameritech.net [68.255.107.108])
-        by mx.google.com with ESMTPS id vn4sm2132342icb.19.2011.06.10.03.35.38
-        (version=SSLv3 cipher=OTHER);
-        Fri, 10 Jun 2011 03:35:39 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1307546728-11202-1-git-send-email-artagnon@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=m0OMf3gQGnpKsWmT6S5UVWQlXLLXdi0JdwfOx3YrDxvehUCkNfs7GQ9SE55MJAAkdT
+         Ic5KL26dvB8ztwjnwnnODdoRQPrJ4qStZ9T1bhFaZ+kCTPwVE0SP6inuSx1QP4AzyBl6
+         DT4cTZMyohWWBBic0EwaWd7trixXuCnXs0dwY=
+Received: by 10.204.82.149 with SMTP id b21mr1690567bkl.196.1307703962687;
+ Fri, 10 Jun 2011 04:06:02 -0700 (PDT)
+Received: by 10.204.100.80 with HTTP; Fri, 10 Jun 2011 04:06:02 -0700 (PDT)
+In-Reply-To: <201106101219.18497.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175603>
 
-Hi Ram,
+> 'git diff' / 'git diff --cached' / 'git diff HEAD' is about use cases
+> (or "user stories"). =A0'git diff NEXT WTREE' / 'git diff HEAD NEXT' =
+/
+> / 'git diff HEAD WTREE' are about mechanism.
 
-Ramkumar Ramachandra wrote:
+Would you say that the UNIX commands "find", "grep", and "xargs" are
+about use cases?  I rarely use them by themselves.  They clearly
+manipulate concepts: files and lines.  So, it's easy for me to think
+what this does:
 
->  This patch lays the foundation for libifying reset by starting with
->  two "easy" methods.  I'll be using print_new_head_line in the
->  sequencer series while implementing --abort.
+find . | grep "\.h" | xargs grep MyClass | grep public
 
-It should be easier to review this one with a caller in mind to give
-an indication about whether the API is right.  More generally, the
-excitement of patches exposing new library code comes when you can see
-the header with a pleasant API, ideally followed by an example or two
-to see how it plays out in practice.  See "git log --grep=API junio/pu"
-for a few recent examples of this.
+I'm trying to find concepts the concepts that git manipulates and I
+think NEXT and WTREE are part of those concepts.
 
-> --- /dev/null
-> +++ b/reset.c
-> @@ -0,0 +1,81 @@
-> +#include "builtin.h"
-> +#include "refs.h"
-> +#include "diff.h"
-> +#include "diffcore.h"
-> +#include "tree.h"
-> +#include "branch.h"
-> +#include "tree.h"
-> +#include "unpack-trees.h"
-> +#include "reset.h"
+It is my opinion that if we focus on concepts, we'll be able to create
+general commands and that the user will be able to combine the
+commands in new and interesting ways, like I combined the UNIX
+commands above.
 
-Are these all needed?  E.g., where is diffcore used?
+I believe in "common" use cases.  The common case should be fast.  I
+have always recommended still allowing "git diff" by itself.
 
-> --- /dev/null
-> +++ b/reset.h
-> @@ -0,0 +1,11 @@
-> +#ifndef RESET_H
-> +#define RESET_H
-> +
-> +#include "commit.h"
 
-We can avoid unnecessarily rebuilding (if COMPUTE_HEADER_DEPENDENCIES
-is set) for callers that do not use commit.h when commit.h changes by
-just declaring
-
-	struct commit;
-
-Leaving out the declaration altogether would _almost_ work but the
-declaration is needed for type in the function declaration and a later
-definition of "struct commit" to refer to the same type.
-
-Actually more important than the above is avoiding mutual dependencies
-between header files, but the above makes for a more entertaining
-story about why to avoid unnecessary #includes.
-
-> +
-> +enum reset_type { MIXED, SOFT, HARD, MERGE, KEEP, NONE };
-
-The names of these identifiers (especially KEEP, MERGE, and NONE)
-would have a good chance to colliding with other uses after being
-exposed into a global namespace like this, no?
-
-Maybe RESET_MIXED, RESET_SOFT, etc could avoid this while still not
-being too verbose.
-
-> +
-> +int reset_index_file(const unsigned char *sha1, int reset_type, int quiet);
-> +void print_new_head_line(struct commit *commit);
-
-Warning: trivia ahead.
-
-For some odd reason I still remember a patch from Stefan Beyer:
-http://thread.gmane.org/gmane.comp.version-control.git/92023
-which was probably too invasive to apply but made the whole codebase
-oddly more pleasant when I tried it.  It simply added "extern" at the
-start of function prototypes in header files that lacked it.
-
-Sorry I don't have any more substantial comments on this one at the
-moment.  Still, hope that helps.
+BUT if we focus only on use cases, we'll create tools that are
+specific to ONE thing and are NOT general.  They will be harder for
+users to conceptualize and harder to combine in new and interesting
+ways.
