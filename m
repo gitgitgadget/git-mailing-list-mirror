@@ -1,130 +1,133 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Remarks that tags need to be pushed explicitly
-Date: Fri, 10 Jun 2011 14:24:31 -0700
-Message-ID: <7vboy5wfao.fsf@alter.siamese.dyndns.org>
-References: <20110610203943.GA50937@sherwood.local>
+Subject: Re: Command-line interface thoughts
+Date: Fri, 10 Jun 2011 14:48:56 -0700
+Message-ID: <7v4o3xwe5z.fsf@alter.siamese.dyndns.org>
+References: <BANLkTikTWx7A64vN+hVZgL7cuiZ16Eobgg@mail.gmail.com>
+ <m339jps1wt.fsf@localhost.localdomain>
+ <BANLkTinidLbQ_FcVEiGSK91uXYWaKk7MKA@mail.gmail.com>
+ <201106051311.00951.jnareb@gmail.com>
+ <BANLkTik+xhd5QQ09QiPSH1bFAndzipKtrw@mail.gmail.com>
+ <7vwrgza3i2.fsf@alter.siamese.dyndns.org> <4DF08D30.7070603@alum.mit.edu>
+ <20110609161832.GB25885@sigill.intra.peff.net>
+ <4DF10ADA.5070206@alum.mit.edu> <7v8vtayhnm.fsf@alter.siamese.dyndns.org>
+ <20110609200403.GA3955@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Steffen Daode Nurpmeso <sdaoden@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 10 23:24:45 2011
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Scott Chacon <schacon@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Michael Nahas <mike@nahas.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jun 10 23:49:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QV9C9-0006Q2-IO
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 23:24:45 +0200
+	id 1QV9Zx-00065J-GS
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Jun 2011 23:49:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757812Ab1FJVYk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jun 2011 17:24:40 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51059 "EHLO
+	id S1758139Ab1FJVtT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jun 2011 17:49:19 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:46057 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752259Ab1FJVYj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2011 17:24:39 -0400
+	with ESMTP id S1754736Ab1FJVtN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2011 17:49:13 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CB8744B30;
-	Fri, 10 Jun 2011 17:26:47 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C523A4ECE;
+	Fri, 10 Jun 2011 17:51:21 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1QV6J4wDoInH+pLlKKs2BIm67xY=; b=rAuy2W
-	gGz5hJkC6iprvENBQOTDxvkNLTJDr7PVMFmyvLuJhVM9hExv1n9leB3eoUeH/xW2
-	BvIz7VjJ73GQVTqgfPl+Dn0FkoPG07a1DIATUOI8jmSa5Po812nEJnH2r2YtMamH
-	9xXAdUpFj5v9IKWGazYbvgOW/cduV4wPWyijg=
+	:content-type; s=sasl; bh=FrVuCeUcbdG+xtUCFNeN0lzz1h4=; b=MCc5yt
+	LuUj08xNOo0qFovqIdSQlaDawQDD59/nRI9cScFJbdnK8MTIsvobN3qnDSvbGgu0
+	ypfK9JQTH12N2ietWFAHp9emMBHywM16dUdec7vAHa+QigwTcgEG/7BB5nQDFknu
+	2YMQi/aHev3hszibFyUoK14OIZ8Avx171B8d4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QDnKCKL8ndjHHWyCpWCQe53gfJpZeYlB
-	z4XaP15gwFn6+2Q3ddd6gKFtzbogLS8zVqTEN7SlFpqBpRU2ep8Kw6mcxpZcajbV
-	kcGtAUK3ruDN3CrUq8NAg32vVqkJQWX3czuGsqaDhPk6DAM3SFZ7IlnJbp2yROtQ
-	VsX0kzfB5RQ=
+	:content-type; q=dns; s=sasl; b=MOB12zkcIMJH4ZKDFpeBPgwTxByWsY+g
+	is6ytnJMOMIZzW6HYIv0dg6Ilb7Gv6d04H/52P8LyD+gKl8RG90xxSH+cS+5b3I2
+	RpwoARTkoS0hoJ+oHAx9V9SuB5OFdIZP72q5EPhAZVSFGVhlSVsCTeq5T0MFJCIz
+	KUgbBjWXgTA=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A61FD4B2E;
-	Fri, 10 Jun 2011 17:26:45 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5C6174ECC;
+	Fri, 10 Jun 2011 17:51:15 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 6BC834B2D; Fri, 10 Jun 2011
- 17:26:42 -0400 (EDT)
-In-Reply-To: <20110610203943.GA50937@sherwood.local> (Steffen Daode
- Nurpmeso's message of "Fri, 10 Jun 2011 22:39:43 +0200")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id F25B34ECB; Fri, 10 Jun 2011
+ 17:51:06 -0400 (EDT)
+In-Reply-To: <20110609200403.GA3955@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 9 Jun 2011 16:04:03 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 57AC9606-93A8-11E0-B992-C8CFB7AE1C3C-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: C3AE909A-93AB-11E0-83BE-C8CFB7AE1C3C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175629>
 
-Steffen Daode Nurpmeso <sdaoden@googlemail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> (except for the term "branch-related <refspec>", but "any valid
-> <refspec>" is a bit misleading since you will see nowhere that
-> "ref/tags/*" is not a valid <refspec> unless you know this is
-> a logical thing; heroes may know at a glance).
+> I think there are actually two questions here:
+>
+>   1. Will it be easier for people to understand "git diff" if we use
+>      tokens to describe non-treeish sources and destinations?
+>
+>   2. Are there better tokens to use to break down parts of the index?
+>
+> I don't have a big problem with (1). Allowing things like:
+>
+>   git diff INDEX WTREE
+>
+> allows one to explain what is going on with the diff syntax in a very
+> clear and verbose manner. I wouldn't want to type that every day, but
+> that's OK; "git diff" will always mean the same thing as it always has,
+> but can now be explained to people who have trouble seeing it in terms
+> of "git diff INDEX WTREE".
+>
+> There's still a bit of magic in that INDEX is _not_ a tree, but I think
+> that's a good thing. When there are no merge conflicts, it will behave
+> identically to the proposed NEXT tree. And when there are conflicts, it
+> will show you something even more useful.
 
-Sorry, I do not understand this paragraph, nor why the hunk in your patch
-that corresponds to this comment, is a good change.
+Thanks. This is exactly why I love to have people like you on the list,
+who can say what I wanted to say in a matter that is a lot easier to
+understand.
 
-The current document says that any valid <refspec> can be configured as
-the default to push for 'git push backup', so you could say
+In short, the proposed "NEXT" does not help in a situation with conflicts,
+and makes the user experience worse. In order to get the current power of
+"git diff" with various options that are specifically designed to help
+users to make progress (either working on their own changes, rebasing them
+on top of others, or merging other's work in), people _COULD_ introduce
+BASE/OURS/THEIRS in addition to "NEXT", throw the existing HEAD and
+MERGE_HEAD to the mix, derive the same information by spending mental
+effort to choose between which pairs of two entities among these six
+possibilities and take pairwise diffs among those pairs, and combine the
+results of these diffs (the message I responded to with "is that a useful
+question" was an example of that---"Could we pile more kludge on top of
+NEXT to have expressiveness equivalent to what the current index-based
+system offers?"). Yes, that may be possible, but is there a point in
+making users go through that kind of mental contortion by introducing
+these new tokens? I find it highly doubtful that it would help new people
+understand the situation during conflicted merges.
 
-    [remote "backup"]
-	url = /mnt/backup/my-project.git/
-    	push = +refs/heads/*:refs/heads/*
-        push = +refs/tags/*:refs/tags/*
+>   git show INDEX:OURS:Makefile
+>
+> which is identical to what I wrote above, but is perhaps easier to
+> explain.
 
-in your configuration file, and "git push backup" would save the branches
-and tags to your backup location.
+Why does anybody even want to say :2:Makefile to begin with?
 
-Why should this paragraph discourage users to configure refspec that talk
-about refs outside branch-related things?
+Presumably, you are dealing with a merge conflict at that path and trying
+to see how pre-merge version of Makefile looked like, and then the next
+thing you may want to do is how pre-merge version of their Makefile looked
+like.
 
-> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-> index 88acfcd..e3af6da 100644
-> --- a/Documentation/git-push.txt
-> +++ b/Documentation/git-push.txt
-> ...
-> @@ -340,8 +340,8 @@ The default behavior of this command when no <refspec> is given can be
->  configured by setting the `push` option of the remote.
->  +
->  For example, to default to pushing only the current branch to `origin`
-> -use `git config remote.origin.push HEAD`.  Any valid <refspec> (like
-> -the ones in the examples below) can be configured as the default for
-> +use `git config remote.origin.push HEAD`.  Any valid branch-related <refspec>
-> +(like the ones in the examples below) can be configured as the default for
->  `git push origin`.
+Wouldn't it be far more natural to ask for these instead?
 
+    git show HEAD:Makefile
+    git show MERGE_HEAD:Makefile
 
-> @@ -371,6 +371,10 @@ git push origin HEAD:master::
->  	`origin` repository. This form is convenient to push the current
->  	branch without thinking about its local name.
->  
-> +git push origin tag v1.5::
-> +	Push the `v1.5` tag to the `origin` repository.
-> +	Short hand for `git push origin refs/tags/v1.5:refs/tags/v1.5`.
-
-Existing documentation seems to say either "shorthand" (22 occurrences) or
-"short-hand" (12 occurrences).
-
-> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-> index f13a846..168e530 100644
-> --- a/Documentation/user-manual.txt
-> +++ b/Documentation/user-manual.txt
-> @@ -643,9 +643,9 @@ $ git tag stable-1 1b2e1d63ff
->  You can use stable-1 to refer to the commit 1b2e1d63ff.
->  
->  This creates a "lightweight" tag.  If you would also like to include a
-> -comment with the tag, and possibly sign it cryptographically, then you
-> -should create a tag object instead; see the linkgit:git-tag[1] man page
-> -for details.
-> +comment with the tag, possibly sign the tag cryptographically, or publish the
-> +tag in a shared repository, then you should create a tag object instead; see
-> +the linkgit:git-tag[1] man page for details.
-
-Addition of "possibly sign" is a good change, but it is perfectly OK to
-publish a lightweight tag by pushing it into a remote repository via "git
-push", so "if you want to publish, you should create a tag object instead"
-is a misguided suggestion.
-
-Other than that, the patch looks Ok to me.
-
-Thanks.
+I do not think whoever brought that "you can look at individual stages
+with :$n:$path" to this discussion was thinking straight. Yes, it is
+something you _could_ do, I've never found that particularly _useful_
+unless I was debugging git itself.
