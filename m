@@ -1,258 +1,152 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [RFC PATCH v2] revert: Implement --abort processing
-Date: Sat, 11 Jun 2011 12:06:26 +0530
-Message-ID: <1307774186-14207-1-git-send-email-artagnon@gmail.com>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC PATCH v2] revert: Implement --abort processing
+Date: Sat, 11 Jun 2011 06:22:13 -0500
+Message-ID: <20110611112213.GA25268@elie>
+References: <1307774186-14207-1-git-send-email-artagnon@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Christian Couder <chriscool@tuxfamily.org>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 11 08:36:50 2011
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 11 13:26:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QVHoP-0004rh-Ep
-	for gcvg-git-2@lo.gmane.org; Sat, 11 Jun 2011 08:36:49 +0200
+	id 1QVMKW-0002yo-R5
+	for gcvg-git-2@lo.gmane.org; Sat, 11 Jun 2011 13:26:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752584Ab1FKGgg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Jun 2011 02:36:36 -0400
-Received: from mail-px0-f179.google.com ([209.85.212.179]:56153 "EHLO
-	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751836Ab1FKGgf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Jun 2011 02:36:35 -0400
-Received: by pxi2 with SMTP id 2so2077456pxi.10
-        for <git@vger.kernel.org>; Fri, 10 Jun 2011 23:36:34 -0700 (PDT)
+	id S1754547Ab1FKLWY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Jun 2011 07:22:24 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:53280 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754423Ab1FKLWX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Jun 2011 07:22:23 -0400
+Received: by iwn34 with SMTP id 34so2759914iwn.19
+        for <git@vger.kernel.org>; Sat, 11 Jun 2011 04:22:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
-        bh=Mtvo5ya/DUPlC6jQ9PXlvgfjose9PIfwvy0JmHvtYvU=;
-        b=Z1L++feueBf7GPTHvMoyZlT/X1tMUSh+ocPL5gqwr0YB/tuOi4WJsDU+udL5IB10D4
-         qCdbcE+R6VUtTALYuxnuyp38p+jEFF1d/hS6tGfH2/LRRksGCUnpWgnxXtVJGxp96YmF
-         a7H3GIpIFjRp1giF/QRsjIsHBW7at+8/1Z/T0=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=d1iTNjC2oe9RvwP0ENKh+Phm48zNIjgp8Dm8q5x6YzY=;
+        b=d5AdM+9qWn3QMeafqDoxHsRU9JYjZuzCTHodrcqXi4ksoJ+S0KEP0sPVJzACGEeVGf
+         BnGwyDOFgGoQmsGU1POKfFNDLb6n/NSWyhP73AxZFUURBuNpZObW+rgZ72d9sJQg5Fco
+         ifHA1uhQv4MP53tCAn+YyDVXXetGo9jbxinhA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=rj0jJq2WR7wC0Wthuwab/UyH6nD32ktFLc5wfq0nN4QnAUDyu+JlIbAf5AIu7JdONq
-         cEDRAWUykaqIEmrGkRaSKHuLHhti23jSyfCOcIWyHydL2bIK/uzbhcKhgm6qiocSN5Tt
-         K9rz0Au0Si3a/0fn0v/XTWqqYTBrDF6qdUx7Y=
-Received: by 10.142.195.12 with SMTP id s12mr475480wff.307.1307774194488;
-        Fri, 10 Jun 2011 23:36:34 -0700 (PDT)
-Received: from localhost.localdomain ([122.174.121.147])
-        by mx.google.com with ESMTPS id x1sm2925142pbb.50.2011.06.10.23.36.30
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 10 Jun 2011 23:36:33 -0700 (PDT)
-X-Mailer: git-send-email 1.7.4.1
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=OQf6cDWJrOgp97XxnRSu9ssThSWKSK/ooDyGLn6WkKjcsZtp8Wo652Y3ZzhEUm7IHM
+         ucjzs/vA8buMC+LNz1XabTGUJVsmMUY6O7X8S1kpEk4JyXWt9VWNW5GNxExjdbd6QT02
+         2pt+WfMgGIIiOKyltEFRNlDBhPGdC2rjq9TKw=
+Received: by 10.42.155.130 with SMTP id u2mr4037428icw.291.1307791341840;
+        Sat, 11 Jun 2011 04:22:21 -0700 (PDT)
+Received: from elie (adsl-68-255-107-108.dsl.chcgil.sbcglobal.net [68.255.107.108])
+        by mx.google.com with ESMTPS id y1sm3045227ica.16.2011.06.11.04.22.19
+        (version=SSLv3 cipher=OTHER);
+        Sat, 11 Jun 2011 04:22:20 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1307774186-14207-1-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175639>
 
-To abort, simply reset the HEAD to the location specified by the
-HEAD_FILE written earlier, without touching the worktree or index.  It
-is upto the user to execute "rerere clear", "reset --hard", and "reset
---merge" as approprite.
+Ramkumar Ramachandra wrote:
 
-Helped-by: Jonathan Nieder <jrnieder@gmail.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- I've persisted the TODO early, and made it complain when an existing
- cherry-pick/ revert is in progress.  Further, as Junio suggested,
- I've made no attempt to touch the index or the worktree during the
- --abort operation: I simply update HEAD and leave the user to do the
- rest.  Should we print some hints about this?
+>  I've persisted the TODO early, and made it complain when an existing
+>  cherry-pick/ revert is in progress.  Further, as Junio suggested,
+>  I've made no attempt to touch the index or the worktree during the
+>  --abort operation: I simply update HEAD and leave the user to do the
+>  rest.
 
- However, by making it complain everytime a cherry-pick/ revert is in
- progress, I've essentially broken the entire testsuite -- everytime a
- test or even a script (see git-rebase.sh) calls cherry-pick or
- revert, I must call '--abort' to clean up afterwards.  Fixing this
- will require me to touch many seemingly unrelated files.
+Is that what Junio was suggesting?  I thought he was saying that
+cherry-pick shouldn't support an --abort option at all, since the
+"right" semantics are hard to find.
 
- Also, note that I'm depending on the "libify reset" patch I posted a
- few minutes ago to print_new_head_line exactly the way reset does.
+I have sympathy for that point of view, too, but it's hard to
+come up with the right choice.
 
- In other news, I've started writing '--continue' and '--skip'
- operations, but the limiting factor is the instruction sheet's
- format: I'm still wondering if there's any way to avoid being
- verbose/ ugly and flexible (by allowing command-line options for each
- instruction) at the same time.  Will post RFC patches asking more
- directed questions soon.
+On one hand: "git am" has an --abort option so you can say, "Forget
+it; I'm going to go back to my mailer and make a better mailbox."
+"git rebase" has an --abort option to let you to walk away in a
+comfortable state, instead of leaving the HEAD detached and halfway
+through replaying your work.  "git bisect" has a reset subcommand for
+a similar reason.  All of the abort actions just mentioned take a
+somewhat weird state (e.g., patch series partially applied, maybe with
+conflicts) and go back to something more familiar.  Which is useful,
+especially for people just starting out.
 
- Thanks.
+It applies equally to cherry-pick: a user doing something crazy like
 
- builtin/revert.c                |   85 +++++++++++++++++++++++++++++++++++---
- t/t3510-cherry-pick-sequence.sh |   16 +++++++
- 2 files changed, 94 insertions(+), 7 deletions(-)
+	git cherry-pick HEAD..linux-next
 
-diff --git a/builtin/revert.c b/builtin/revert.c
-index e1a05a3..efcc01f 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -14,6 +14,7 @@
- #include "merge-recursive.h"
- #include "refs.h"
- #include "dir.h"
-+#include "reset.h"
- 
- /*
-  * This implements the builtins revert and cherry-pick.
-@@ -208,8 +209,6 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 				NULL);
- 
- 	/* Remove these when the options are actually implemented */
--	if (opts->abort_oper)
--		die("--abort is not implemented yet");
- 	if (opts->skip_oper)
- 		die("--skip is not implemented yet");
- 	if (opts->continue_oper)
-@@ -719,6 +718,7 @@ static int pick_commits(struct replay_opts *opts)
- 	struct commit *commit;
- 	unsigned char sha1[20];
- 	const char *head;
-+	int res;
- 
- 	setenv(GIT_REFLOG_ACTION, me, 0);
- 
-@@ -730,11 +730,30 @@ static int pick_commits(struct replay_opts *opts)
- 	persist_head(head);
- 	prepare_revs(&revs, opts);
- 
-+	/* Prepare todo_list and persist it early before picking */
-+	struct commit_list *todo_list = NULL;
-+	struct commit_list *cur = NULL;
-+	struct commit_list *new_item = NULL;
-+
-+	/* Insert into todo_list in the same order */
- 	while ((commit = get_revision(&revs))) {
--		int res = do_pick_commit(commit, opts);
-+		new_item = xmalloc(sizeof(struct commit_list));
-+		new_item->item = commit;
-+		if (cur)
-+			cur->next = new_item;
-+		else
-+			todo_list = new_item;
-+		cur = new_item;
-+	}
-+	cur->next = NULL;
-+
-+	persist_todo(todo_list, opts);
-+
-+	for (cur = todo_list; cur; cur = cur->next) {
-+		res = do_pick_commit(cur->item, opts);
- 		if (res) {
--			commit_list_insert(commit, &revs.commits);
--			persist_todo(revs.commits, opts);
-+			commit_list_insert(cur->item, &todo_list);
-+			persist_todo(todo_list, opts);
- 			return res;
- 		}
- 	}
-@@ -743,6 +762,58 @@ static int pick_commits(struct replay_opts *opts)
- 	return cleanup_sequencer_dir();
- }
- 
-+static int process_continuation(struct replay_opts *opts)
-+{
-+	unsigned char sha1[20];
-+	struct commit *commit;
-+	char head_hex[40];
-+	char msg[1024];
-+	int fd;
-+
-+	if (opts->abort_oper) {
-+		/* First, read the HEAD_FILE */
-+		if (!file_exists(HEAD_FILE))
-+			goto error;
-+		fd = open(HEAD_FILE, O_RDONLY, 0666);
-+		if (fd < 0)
-+			return error(_("Could not open '%s' for reading: %s"),
-+				HEAD_FILE, strerror(errno));
-+		if (read_in_full(fd, head_hex, 40) < 40 || get_sha1_hex(head_hex, sha1) < 0) {
-+			close(fd);
-+			return error(_("Corrupt '%s': %s"), HEAD_FILE, strerror(errno));
-+		}
-+		close(fd);
-+
-+		/* Update the HEAD ref */
-+		if (snprintf(msg, sizeof(msg), "%s: updating HEAD", me) >= sizeof(msg))
-+			warning(_("Reflog action message too long: %.*s..."), 50, msg);
-+		if (update_ref(msg, "HEAD", sha1, NULL, 0, MSG_ON_ERR))
-+			return -1;
-+		commit = lookup_commit_reference(sha1);
-+		print_new_head_line(commit);
-+
-+		return cleanup_sequencer_dir();
-+	}
-+	else if (opts->skip_oper) {
-+		if (!file_exists(TODO_FILE))
-+			goto error;
-+	}
-+	else if (opts->continue_oper) {
-+		if (!file_exists(TODO_FILE))
-+			goto error;
-+	}
-+	else if (file_exists(HEAD_FILE)) {
-+		error(_("A %s is already in progress"), me);
-+		advise(_("Use %s --continue to continue the operation"), me);
-+		advise(_("or %s --abort to start afresh"), me);
-+		return -1;
-+	}
-+
-+	return pick_commits(opts);
-+error:
-+	return error(_("No %s in progress"), me);
-+}
-+
- int cmd_revert(int argc, const char **argv, const char *prefix)
- {
- 	int res;
-@@ -755,7 +826,7 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
- 	git_config(git_default_config, NULL);
- 	me = "revert";
- 	parse_args(argc, argv, &opts);
--	res = pick_commits(&opts);
-+	res = process_continuation(&opts);
- 	if (res > 0)
- 		/* Exit status from conflict */
- 		return res;
-@@ -775,7 +846,7 @@ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
- 	git_config(git_default_config, NULL);
- 	me = "cherry-pick";
- 	parse_args(argc, argv, &opts);
--	res = pick_commits(&opts);
-+	res = process_continuation(&opts);
- 	if (res > 0)
- 		return res;
- 	if (res < 0)
-diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-index a2e1888..c6ace35 100644
---- a/t/t3510-cherry-pick-sequence.sh
-+++ b/t/t3510-cherry-pick-sequence.sh
-@@ -36,4 +36,20 @@ test_expect_success 'cherry-pick cleans up sequencer directory upon success' '
- 	test_must_fail test -d .git/sequencer
- '
- 
-+test_expect_success '--abort complains when no cherry-pick is in progress' '
-+	pristine_detach initial &&
-+	test_must_fail git cherry-pick --abort >actual 2>&1 &&
-+	echo "error: No cherry-pick in progress" >expect &&
-+	test_i18ncmp expect actual
-+'
-+
-+test_expect_success '--abort restores HEAD after failed cherry-pick' '
-+	pristine_detach initial &&
-+	head=$(git rev-parse HEAD) &&
-+	test_must_fail git cherry-pick base..picked &&
-+	git cherry-pick --abort &&
-+	newhead=$(git rev-parse HEAD) &&
-+	test "$head" = "$newhead"
-+'
-+
- test_done
--- 
-1.7.4.1
+to incorporate all patches from linux-next on top of her local changes
+is creating a mess; there is appeal in having a way to say "clear that
+away and take me back to something I knew".
+
+On the other hand: all three of the above "abort" actions can be a
+pain in the neck in practice.  The worst case is when I forget about
+the sequence in progress and do something else, and only later want to
+clear the state:
+
+ http://thread.gmane.org/gmane.comp.version-control.git/164002/focus=164046
+
+There are other cases, too, like when after partially rebasing I
+decide this isn't a good direction for the original branch after all
+but I want to end the rebase and develop HEAD as a new branch instead.
+The --abort command is quite destructive and not very flexible.
+
+I guess if I were in your shoes, I'd be tempted to start by saving the
+old HEAD and making it visible as a pseudo-ref or something,
+advertising that, and then observing people's behavior with the hope
+of using that knowledge to come up with good semantics for a command
+to cancel cherry-picks of commit ranges.  Do people use "reset --hard"
+or "reset --merge"?  Do they throw away all the commits cherry-picked
+or just a few?  Do they ever intend to abort like this even after
+veering from the standard sequence, like in Linus's example?  After
+aborting a multiple cherry-pick, what does a person generally do next?
+
+The documentation could say:
+
+	To wipe out everything and get back to where you started, use:
+
+		git reset --hard PRE_CHERRY_PICK_HEAD
+
+What if instead of --abort something else were simpler to think about?
+As a random example, I can imagine a "git sequencer --edit" command
+that would present the sequence in an editor and let me revise the
+plan --- would that do the trick?
+
+	1
+	2
+	3
+	4
+	* YOU ARE HERE
+	5
+	6
+	7
+	8
+
+ - Remove lines 5-8: removes sequencer state, leaves HEAD as is
+ - Remove everything: rewinds to abort sequence
+ - Add a line 2.5 between 2 and 3: rewind to 2, cherry-pick 2.5,
+   continue.
+
+And having said that, I personally start to see an --abort command as
+interesting, because it is a specific case that could help flesh out a
+more general behavior of rewinding some day years from now.
+
+Which is to say: if you have a story about what --abort will be used
+for, the life of others evaluating the thing becomes better and the
+upsides and downsides can be seen in perspective.  A story like "am
+and rebase have --abort, so cherry-pick should have one, too" is
+harder to think about.
+
+Hope that helps.
