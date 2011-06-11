@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH 1/4] tag: speed up --contains calculation
-Date: Sat, 11 Jun 2011 19:04:08 +0000
-Message-ID: <1307819051-25748-2-git-send-email-avarab@gmail.com>
+Subject: [PATCH 2/4] limit "contains" traversals based on commit timestamp
+Date: Sat, 11 Jun 2011 19:04:09 +0000
+Message-ID: <1307819051-25748-3-git-send-email-avarab@gmail.com>
 References: <1307819051-25748-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,169 +11,178 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 11 21:05:33 2011
+X-From: git-owner@vger.kernel.org Sat Jun 11 21:05:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QVTUy-0005hG-6B
-	for gcvg-git-2@lo.gmane.org; Sat, 11 Jun 2011 21:05:32 +0200
+	id 1QVTV5-0005k6-F4
+	for gcvg-git-2@lo.gmane.org; Sat, 11 Jun 2011 21:05:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753544Ab1FKTF1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Jun 2011 15:05:27 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:41065 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752489Ab1FKTFX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Jun 2011 15:05:23 -0400
-Received: by eyx24 with SMTP id 24so1229620eyx.19
-        for <git@vger.kernel.org>; Sat, 11 Jun 2011 12:05:22 -0700 (PDT)
+	id S1753739Ab1FKTFa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Jun 2011 15:05:30 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:49518 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753614Ab1FKTF3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Jun 2011 15:05:29 -0400
+Received: by mail-ew0-f46.google.com with SMTP id 4so1232841ewy.19
+        for <git@vger.kernel.org>; Sat, 11 Jun 2011 12:05:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references:mime-version:content-type
          :content-transfer-encoding;
-        bh=pJ0D2vExbW4RorQIrhVBgu+JD7ynPxSwwInddN8c1mI=;
-        b=YnOopLSSRGGlag6HLlDGw0uzlF/knVzf/zvLmLhR/BDeei8cOE1kXVtN7liO7lf09s
-         PZZFcvz+mqY0WxYMPuglkeUaOYeYlTrN9+4wI/Cz79r1hH2vJF2CJ8FZpMoG8I6jMJae
-         MtbobvN6xFQyfGrWE4ZHqFOL/NQF2aTdV4hRw=
+        bh=WtnPzEjo3fF87Nd4mXd9+mzgDu/QfYXcfrsQa3dudZc=;
+        b=fdme9gL2WpR0Y7mVfu9/z63wUM7U9vbhZ1fdblhH1wgU6ZfSaPBdq7wpQ2MtFSUqwI
+         Djcr7vLJoHL/FQgwo5qSzgr1jqkNmlm4DBqc+y2ppSdoM3dHimyC0u250yCSXvBjqdN4
+         6NdbmqUki/Yk51IWIBn0yeuIZTb9JNFhHGSfU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=b2gUVkX8nXNZLdAvHeucWcI+komlFAQ51ggw3WKxx/RD/5tCCFIPp8MXMqzlyWrEt/
-         8EXHcvi1GTepjEZUUKYe+NBja/FNYN6wmOxD0ceARwv9U2ong4PXSIbXj/D3u1YomZcC
-         zL1Y4j7vOw/FjkXIwfGSScWSUbUxBR+usoC7o=
-Received: by 10.213.104.145 with SMTP id p17mr401220ebo.58.1307819122208;
-        Sat, 11 Jun 2011 12:05:22 -0700 (PDT)
+        b=mZKB6pjr/X6BgqqZfKCmq5zxNgSQS9rlkPJV9UndbFNGGTlKUREBa6QzKbltp5+Lp7
+         jOF1Fcakhdw0SLNwiwVDgQ/XPOXJVMbIVfFV9nmgylJlXn1yXHbPQEmhYwHoUHTEMhJP
+         syYF05HCT+zccxgDQmGQc7d7EFhs2MxjZcSd8=
+Received: by 10.14.41.155 with SMTP id h27mr1594007eeb.199.1307819129112;
+        Sat, 11 Jun 2011 12:05:29 -0700 (PDT)
 Received: from w.nix.is (w.nix.is [188.40.98.140])
-        by mx.google.com with ESMTPS id v76sm477161eea.17.2011.06.11.12.05.20
+        by mx.google.com with ESMTPS id v76sm477161eea.17.2011.06.11.12.05.25
         (version=SSLv3 cipher=OTHER);
-        Sat, 11 Jun 2011 12:05:21 -0700 (PDT)
+        Sat, 11 Jun 2011 12:05:28 -0700 (PDT)
 X-Mailer: git-send-email 1.7.5.3
 In-Reply-To: <1307819051-25748-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175645>
 
 =46rom: Jeff King <peff@peff.net>
 
-When we want to know if commit A contains commit B (or any
-one of a set of commits, B through Z), we generally
-calculate the merge bases and see if B is a merge base of A
-(or for a set, if any of the commits B through Z have that
-property).
+When looking for commits that contain other commits (e.g.,
+via "git tag --contains"), we can end up traversing useless
+portions of the graph. For example, if I am looking for a
+tag that contains a commit made last week, there is not much
+point in traversing portions of the history graph made five
+years ago.
 
-When we are going to check a series of commits A1 through An
-to see whether each contains B (e.g., because we are
-deciding which tags to show with "git tag --contains"), we
-do a series of merge base calculations. This can be very
-expensive, as we repeat a lot of traversal work.
+This optimization can provide massive speedups. For example,
+doing "git tag --contains HEAD~200" in the linux-2.6
+repository goes from:
 
-Instead, let's leverage the fact that we are going to use
-the same --contains list for each tag, and mark areas of the
-commit graph is definitely containing those commits, or
-definitely not containing those commits. Later tags can then
-stop traversing as soon as they see a previously calculated
-answer.
-
-This sped up "git tag --contains HEAD~200" in the linux-2.6
-repository from:
-
-  real    0m15.417s
-  user    0m15.197s
-  sys     0m0.220s
+  real    0m5.302s
+  user    0m5.116s
+  sys     0m0.184s
 
 to:
 
-  real    0m5.329s
-  user    0m5.144s
-  sys     0m0.184s
+  real    0m0.030s
+  user    0m0.020s
+  sys     0m0.008s
+
+The downside is that we will no longer find some answers in
+the face of extreme clock skew, as we will stop the
+traversal early when seeing commits skewed too far into the
+past.
+
+Name-rev already implements a similar optimization, using a
+"slop" of one day to allow for a certain amount of clock
+skew in commit timestamps. This patch introduces a
+"core.clockskew" variable, which allows specifying the
+allowable amount of clock skew in seconds.  For safety, it
+defaults to "none", causing a full traversal (i.e., no
+change in behavior from previous versions).
 
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- builtin/tag.c |   46 +++++++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 45 insertions(+), 1 deletions(-)
+ builtin/tag.c |   36 +++++++++++++++++++++++++++++++++---
+ 1 files changed, 33 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/tag.c b/builtin/tag.c
-index ec926fc..575a03c 100644
+index 575a03c..0f0d784 100644
 --- a/builtin/tag.c
 +++ b/builtin/tag.c
-@@ -12,6 +12,8 @@
- #include "tag.h"
- #include "run-command.h"
- #include "parse-options.h"
-+#include "diff.h"
-+#include "revision.h"
+@@ -25,6 +25,8 @@ static const char * const git_tag_usage[] =3D {
 =20
- static const char * const git_tag_usage[] =3D {
- 	"git tag [-a|-s|-u <key-id>] [-f] [-m <msg>|-F <file>] <tagname> [<he=
-ad>]",
-@@ -29,6 +31,48 @@ struct tag_filter {
- 	struct commit_list *with_commit;
- };
+ static char signingkey[1000];
 =20
-+static int in_commit_list(const struct commit_list *want, struct commi=
-t *c)
-+{
-+	for (; want; want =3D want->next)
-+		if (!hashcmp(want->item->object.sha1, c->object.sha1))
-+			return 1;
-+	return 0;
-+}
++static int core_clock_skew =3D -1;
 +
-+static int contains_recurse(struct commit *candidate,
-+			    const struct commit_list *want)
-+{
-+	struct commit_list *p;
-+
-+	/* was it previously marked as containing a want commit? */
-+	if (candidate->object.flags & TMP_MARK)
-+		return 1;
-+	/* or marked as not possibly containing a want commit? */
-+	if (candidate->object.flags & UNINTERESTING)
-+		return 0;
-+	/* or are we it? */
-+	if (in_commit_list(want, candidate))
-+		return 1;
-+
-+	if (parse_commit(candidate) < 0)
+ struct tag_filter {
+ 	const char *pattern;
+ 	int lines;
+@@ -40,7 +42,8 @@ static int in_commit_list(const struct commit_list *w=
+ant, struct commit *c)
+ }
+=20
+ static int contains_recurse(struct commit *candidate,
+-			    const struct commit_list *want)
++			    const struct commit_list *want,
++			    unsigned long cutoff)
+ {
+ 	struct commit_list *p;
+=20
+@@ -57,9 +60,13 @@ static int contains_recurse(struct commit *candidate=
+,
+ 	if (parse_commit(candidate) < 0)
+ 		return 0;
+=20
++	/* stop searching if we go too far back in time */
++	if (candidate->date < cutoff)
 +		return 0;
 +
-+	/* Otherwise recurse and mark ourselves for future traversals. */
-+	for (p =3D candidate->parents; p; p =3D p->next) {
-+		if (contains_recurse(p->item, want)) {
-+			candidate->object.flags |=3D TMP_MARK;
-+			return 1;
+ 	/* Otherwise recurse and mark ourselves for future traversals. */
+ 	for (p =3D candidate->parents; p; p =3D p->next) {
+-		if (contains_recurse(p->item, want)) {
++		if (contains_recurse(p->item, want, cutoff)) {
+ 			candidate->object.flags |=3D TMP_MARK;
+ 			return 1;
+ 		}
+@@ -70,7 +77,22 @@ static int contains_recurse(struct commit *candidate=
+,
+=20
+ int contains(struct commit *candidate, const struct commit_list *want)
+ {
+-	return contains_recurse(candidate, want);
++	unsigned long cutoff =3D 0;
++
++	if (core_clock_skew >=3D 0) {
++		const struct commit_list *c;
++		unsigned long min_date =3D ULONG_MAX;
++		for (c =3D want; c; c =3D c->next) {
++			if (parse_commit(c->item) < 0)
++				continue;
++			if (c->item->date < min_date)
++				min_date =3D c->item->date;
 +		}
++		if (min_date > core_clock_skew)
++			cutoff =3D min_date - core_clock_skew;
 +	}
-+	candidate->object.flags |=3D UNINTERESTING;
-+	return 0;
-+}
 +
-+int contains(struct commit *candidate, const struct commit_list *want)
-+{
-+	return contains_recurse(candidate, want);
-+}
-+
++	return contains_recurse(candidate, want, cutoff);
+ }
+=20
  static int show_reference(const char *refname, const unsigned char *sh=
 a1,
- 			  int flag, void *cb_data)
- {
-@@ -47,7 +91,7 @@ static int show_reference(const char *refname, const =
-unsigned char *sha1,
- 			commit =3D lookup_commit_reference_gently(sha1, 1);
- 			if (!commit)
- 				return 0;
--			if (!is_descendant_of(commit, filter->with_commit))
-+			if (!contains(commit, filter->with_commit))
- 				return 0;
- 		}
+@@ -277,6 +299,14 @@ static int git_tag_config(const char *var, const c=
+har *value, void *cb)
+ 		return 0;
+ 	}
+=20
++	if (!strcmp(var, "core.clockskew")) {
++		if (!value || !strcmp(value, "none"))
++			core_clock_skew =3D -1;
++		else
++			core_clock_skew =3D git_config_int(var, value);
++		return 0;
++	}
++
+ 	return git_default_config(var, value, cb);
+ }
 =20
 --=20
 1.7.5.3
