@@ -1,73 +1,61 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: What's cooking in git.git (Jun 2011, #02; Sat, 11)
-Date: Sun, 12 Jun 2011 18:18:49 +0200
-Message-ID: <BANLkTimHhaLu2ZGFG4ev_jWMu8szH8r=+g@mail.gmail.com>
-References: <7voc23sfxd.fsf@alter.siamese.dyndns.org>
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: Re: [PATCH] rebase -i -p: doesn't pick certain merge commits that
+ are children of "upstream"
+Date: Sun, 12 Jun 2011 12:28:47 -0400
+Message-ID: <4DF4E93F.1020707@gmail.com>
+References: <4DEB495F.9080900@kdbg.org> <1307419725-4470-1-git-send-email-andrew.kw.w@gmail.com> <1307419725-4470-2-git-send-email-andrew.kw.w@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 12 18:19:43 2011
+To: Andrew Wong <andrew.kw.w@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 12 18:29:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QVnO0-0006Bz-4D
-	for gcvg-git-2@lo.gmane.org; Sun, 12 Jun 2011 18:19:40 +0200
+	id 1QVnXP-0001OD-SO
+	for gcvg-git-2@lo.gmane.org; Sun, 12 Jun 2011 18:29:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751208Ab1FLQTa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Jun 2011 12:19:30 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:61297 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751018Ab1FLQTa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Jun 2011 12:19:30 -0400
-Received: by qwk3 with SMTP id 3so1899203qwk.19
-        for <git@vger.kernel.org>; Sun, 12 Jun 2011 09:19:29 -0700 (PDT)
+	id S1751186Ab1FLQ2y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Jun 2011 12:28:54 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:64207 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751141Ab1FLQ2x (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Jun 2011 12:28:53 -0400
+Received: by iwn34 with SMTP id 34so3284557iwn.19
+        for <git@vger.kernel.org>; Sun, 12 Jun 2011 09:28:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=BEIANUkLvktGG7/wYrXC0i25zy9QIpjsSJ4Y+eIquwY=;
-        b=ZiQRErR6GtIXAPJToMdTqHp6y9qPIRMqCKnbrksCoe4BP9ACEJiJFFPkrj/hfLzl2k
-         fEauP5MrVpq/qIS7/RIiEV+t48cxfWGfYuixqyWAoAcw276IF8brPQUu5KnGaJee/2p8
-         bHhlNULQPO59hLlT+yGNVvChmG7O160m18AF8=
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=Ejxj0Av/fFWu43BT0n6EKPf4cstLV6zIfpj4qHLINyY=;
+        b=tQ6tusAzfwO5NWbAs7ZcclHQSZ0AqZtoa3yrPmrELFqNzwP8JmNLUE2dWKU110POMy
+         OpKOueCx2H263PxRxTnjI+s+gNVL9kG5uLujyaxfR+tDtE/qMEjOtBiYD8PNVakUEmwO
+         xhfiPAtlYR6bhF+UfOKwgNvQAIlgzfs0mvowU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=xrvGNWvHvTj+HLuIUG0qmwwr7HM8FlwyRXJrx/RY/j6ayIkDdIIALmgnZwhKtCXVq4
-         is23XzzUCVL7ja6kj+BTAyyCvSIob1rJtSnF6OtYp61DaWEXXj/XjugGTfFZ0EcXBW8h
-         MKBp+ESEByeR7G5BUCH3Lf1+XL612r1XXT7+k=
-Received: by 10.229.40.207 with SMTP id l15mr3100070qce.281.1307895569120;
- Sun, 12 Jun 2011 09:19:29 -0700 (PDT)
-Received: by 10.229.83.203 with HTTP; Sun, 12 Jun 2011 09:18:49 -0700 (PDT)
-In-Reply-To: <7voc23sfxd.fsf@alter.siamese.dyndns.org>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=YCj+Uj6H4DP+2M2hSp2abYhn1VP4S+Jo5s2zJTDjCehD2ltAEnXa2AHFmmJspysPmK
+         P4DXZWGeXo/oUG6X9leLdaUq0Ym2zkcFpZk3IZh54ZsAd0CiPnPXLyId63AaLpPVwb5d
+         Y+d9/ktsn3zgILM9oRO0oh0Zcr36F5HRwpYG4=
+Received: by 10.42.96.10 with SMTP id h10mr5821717icn.485.1307896131656;
+        Sun, 12 Jun 2011 09:28:51 -0700 (PDT)
+Received: from ZanarkandMac.local (24-246-58-202.cable.teksavvy.com [24.246.58.202])
+        by mx.google.com with ESMTPS id in11sm2357559ibb.39.2011.06.12.09.28.48
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 12 Jun 2011 09:28:49 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
+In-Reply-To: <1307419725-4470-2-git-send-email-andrew.kw.w@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175662>
 
-Heya,
+Any chance we can look into getting this patch into git?
 
-On Sun, Jun 12, 2011 at 08:49, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> * jk/transport-helper-fix (2011-06-07) 8 commits
-> =C2=A0- git_remote_helpers: push all refs during a non-local export
-> =C2=A0- transport-helper: don't feed bogus refs to export push
-> =C2=A0- teach remote-testgit to import multiple refs
-> =C2=A0- teach remote-testgit to import non-HEAD refs
-> =C2=A0- t5800: document some non-functional parts of remote helpers
-> =C2=A0- t5800: factor out some ref tests
-> =C2=A0- git-remote-testgit: exit gracefully after push
-> =C2=A0- transport-helper: fix minor leak in push_refs_with_export
-
-Note that I sent a reroll of this series (of which I'll send another
-version soon) which is a little more elegant in some places.
-
---=20
-Cheers,
-
-Sverre Rabbelier
+http://permalink.gmane.org/gmane.comp.version-control.git/175185
