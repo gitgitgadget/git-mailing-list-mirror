@@ -1,64 +1,78 @@
-From: Albretch Mueller <lbrtchx@gmail.com>
-Subject: Re: diff'ing files ...
-Date: Sun, 12 Jun 2011 01:02:37 +0000
-Message-ID: <BANLkTinpYMdLLOj62O=3=ALWsdBiECHR1g@mail.gmail.com>
-References: <BANLkTi=1vaoLVmhyahDttmUmqw7RTp=8-A@mail.gmail.com>
-	<20110606224356.GC13697@sigill.intra.peff.net>
-	<BANLkTinwSembzVk4gSYSvsRdHhDfqizkyg@mail.gmail.com>
-	<20110607221948.GA10104@sigill.intra.peff.net>
-	<alpine.LFD.2.00.1106092145390.2142@xanadu.home>
-	<m34o3xesqn.fsf@localhost.localdomain>
-	<alpine.LFD.2.00.1106101612060.2142@xanadu.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Sun Jun 12 03:02:45 2011
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] ciabot: Add a revamped Perl version.
+Date: Sat, 11 Jun 2011 18:30:17 -0700
+Message-ID: <4BBBDDED-A41F-469B-9F0C-617A3855B41F@gmail.com>
+References: <BANLkTin+U2x-Lk_qKrGD4hbxnRWySgHFLA@mail.gmail.com>
+Mime-Version: 1.0 (iPhone Mail 8C148a)
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"gitster@pobox.com" <gitster@pobox.com>
+To: JD Horelick <jdhore1@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 12 03:39:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QVZ4f-00077F-37
-	for gcvg-git-2@lo.gmane.org; Sun, 12 Jun 2011 03:02:45 +0200
+	id 1QVZeA-0005jt-B2
+	for gcvg-git-2@lo.gmane.org; Sun, 12 Jun 2011 03:39:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753240Ab1FLBCk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Jun 2011 21:02:40 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:32861 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753271Ab1FLBCj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Jun 2011 21:02:39 -0400
-Received: by ewy4 with SMTP id 4so1273002ewy.19
-        for <git@vger.kernel.org>; Sat, 11 Jun 2011 18:02:38 -0700 (PDT)
+	id S1752582Ab1FLBiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Jun 2011 21:38:11 -0400
+Received: from mail-pz0-f51.google.com ([209.85.210.51]:34863 "EHLO
+	mail-pz0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752204Ab1FLBiK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Jun 2011 21:38:10 -0400
+X-Greylist: delayed 465 seconds by postgrey-1.27 at vger.kernel.org; Sat, 11 Jun 2011 21:38:10 EDT
+Received: by pzk26 with SMTP id 26so1724044pzk.10
+        for <git@vger.kernel.org>; Sat, 11 Jun 2011 18:38:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=SlHupw1LlOAc0lAtGB4qYog+QYNQpsq6ZLZi5oS+a88=;
-        b=FWbbLMhzky7LlC9VU5jppBWGa9UFeudE3y1UkkC7I9g9qUZcjxW2+MeawqOOelFPOI
-         f9vdbeN/9DLV1e3fFvqmuuOsnRiLw5/GXFMLVerTmVWrmLdGNBlUrmgG7QQQE8Lgp2Ix
-         MZ+g3OS4qkLyKHsmI45FMMJEr+LChBOkArJ7E=
+        h=domainkey-signature:references:in-reply-to:mime-version
+         :content-transfer-encoding:content-type:message-id:cc:x-mailer:from
+         :subject:date:to;
+        bh=RbLDVD4Trrahv58R/OMgyhad+0doV65f1kia04sErKY=;
+        b=ghHHQLzFKp3V6fCTszXm382iQMzNQeF4DvBml/ryBGG/8KBhl58dWVaxqKw0toFIBQ
+         7PaDB60gHyJrcIqUVs+szEZn+ChhJ7+QGoe9OBvpXjhI3Iv6pkevPZxA0eC9/qJjTCs/
+         8Rh8nqlNdSf7q3s6jCRM3L5WnSmILuGC9CICI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=sqh5/5kQO/ENjsWSHhnyQrB4eavvIpi2yvaX0vvJq1tJ2bYILPCRpJ/G1+cOu5kuAf
-         eR7lQPEA5WGnBuEKeBHscgV5o367VCdxW5bGNxz7F3p/rk6rOA1f5GfuIwWiLdlUZnED
-         +0dgf2ji7pUQW6ftWJY8i1GfjeZs6dvJe0IgU=
-Received: by 10.14.48.6 with SMTP id u6mr1524016eeb.37.1307840557893; Sat, 11
- Jun 2011 18:02:37 -0700 (PDT)
-Received: by 10.14.119.134 with HTTP; Sat, 11 Jun 2011 18:02:37 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.00.1106101612060.2142@xanadu.home>
+        h=references:in-reply-to:mime-version:content-transfer-encoding
+         :content-type:message-id:cc:x-mailer:from:subject:date:to;
+        b=pVDwx2aIiGACxVel1RtBQijms7wkEBg6JptWC7lK99Prbhto8qxOtBb3Go2ryXr36U
+         X9Suf+PjKlt4QgHqtLP8AEZK2iBZrcK17dh52ojyjPTwDTO6XsOaCMcW57YV1e+SORvR
+         A8GXNFh23SSbhVsatWmDETVCUAVbjZBwN46ow=
+Received: by 10.68.19.131 with SMTP id f3mr1617518pbe.379.1307842224639;
+        Sat, 11 Jun 2011 18:30:24 -0700 (PDT)
+Received: from [192.168.1.13] (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id y2sm3488008pbi.51.2011.06.11.18.30.21
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 11 Jun 2011 18:30:22 -0700 (PDT)
+In-Reply-To: <BANLkTin+U2x-Lk_qKrGD4hbxnRWySgHFLA@mail.gmail.com>
+X-Mailer: iPhone Mail (8C148a)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175650>
 
-> further modifications were made to avoid pathological corner cases ...
-~
- Nicolas, did you keep test samples of those pathological corner cases
-you would share?
-~
- lbrtchx
+On Jun 11, 2011, at 3:35 PM, JD Horelick <jdhore1@gmail.com> wrote:
+
+> Attached (and pasted below, but I believe Gmail messes up the
+> whitespace) is a patch for a new ciabot script that is the revamped
+> version of the old Perl script.
+
+You can use "git send-email" with gmail to avoid these issues.  See the manpage for the details; it includes a gmail example.
+
+> [snip]
+> +#
+> +# The master location of this file is in the Cogito repository
+> +# (see http://www.kernel.org/git/).
+> +#
+
+s/Cogito/git/
+
+Cheers,
+David
