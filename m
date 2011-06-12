@@ -1,71 +1,77 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Command-line interface thoughts
-Date: Sun, 12 Jun 2011 08:06:33 +0200
-Message-ID: <4DF45769.4020403@alum.mit.edu>
-References: <BANLkTikTWx7A64vN+hVZgL7cuiZ16Eobgg@mail.gmail.com> <m339jps1wt.fsf@localhost.localdomain> <BANLkTinidLbQ_FcVEiGSK91uXYWaKk7MKA@mail.gmail.com> <201106051311.00951.jnareb@gmail.com> <BANLkTik+xhd5QQ09QiPSH1bFAndzipKtrw@mail.gmail.com> <7vwrgza3i2.fsf@alter.siamese.dyndns.org> <4DF08D30.7070603@alum.mit.edu> <20110609161832.GB25885@sigill.intra.peff.net> <4DF10ADA.5070206@alum.mit.edu> <7v8vtayhnm.fsf@alter.siamese.dyndns.org> <20110609200403.GA3955@sigill.intra.peff.net> <7v4o3xwe5z.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/48] Handling more corner cases in merge-recursive.c
+Date: Sat, 11 Jun 2011 23:18:17 -0700
+Message-ID: <7vzklnshcm.fsf@alter.siamese.dyndns.org>
+References: <1307518278-23814-1-git-send-email-newren@gmail.com>
+ <7vipsctez0.fsf@alter.siamese.dyndns.org>
+ <BANLkTimd0O70e7KhT-G5quxQhF_Nwc30Hg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Scott Chacon <schacon@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Michael Nahas <mike@nahas.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 12 08:06:58 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, jgfouca@sandia.gov
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 12 08:18:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QVdp3-0006Ra-Tz
-	for gcvg-git-2@lo.gmane.org; Sun, 12 Jun 2011 08:06:58 +0200
+	id 1QVe0N-0000Fx-1a
+	for gcvg-git-2@lo.gmane.org; Sun, 12 Jun 2011 08:18:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751432Ab1FLGGw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Jun 2011 02:06:52 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:43593 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750710Ab1FLGGw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Jun 2011 02:06:52 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.69.134] (p54BEC62C.dip.t-dialin.net [84.190.198.44])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p5C66Z4D030039
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 12 Jun 2011 08:06:35 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.17) Gecko/20110424 Lightning/1.0b2 Thunderbird/3.1.10
-In-Reply-To: <7v4o3xwe5z.fsf@alter.siamese.dyndns.org>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1751601Ab1FLGS2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Jun 2011 02:18:28 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60315 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751026Ab1FLGS1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Jun 2011 02:18:27 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 60708585E;
+	Sun, 12 Jun 2011 02:20:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tVAUGm+lgFsYsO3sn0TVcYGWqcM=; b=ULeP8K
+	QD9Reb7/qylcQmpk3BKns17jvbK69SYdSFPRLGHDzMITciXwlz/67DTEd9tuDdhJ
+	FN+7XwlOyaqmpFHjCKTYctomID1QMcMV3LRv+nkCw4BBH0qAUtDR/7kcYK17fdyD
+	G7Dm3PkdxT76sJ61kehZtkPnVXOfC8HbNF/qU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kuQRSnyz9GOyhy4x9jjVjQz3BTWFEnH9
+	/lWV0hPrMFEm8HS8sHs0+lY6ZdkZxGoSaXxvv7qlhNUWn+73LvLU6rfNcRiJDWXi
+	NgwtDj/7wTE8dgOOTzkZ+ukcp6meFJSeVm4b1eXR/CEZxkfBAkLb6+bWaq3dOlWc
+	cn3+c8vJIjw=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 14DB0585D;
+	Sun, 12 Jun 2011 02:20:33 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id F16FF585C; Sun, 12 Jun 2011
+ 02:20:28 -0400 (EDT)
+In-Reply-To: <BANLkTimd0O70e7KhT-G5quxQhF_Nwc30Hg@mail.gmail.com> (Elijah
+ Newren's message of "Sat, 11 Jun 2011 23:42:41 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 13E745BE-94BC-11E0-B020-C8CFB7AE1C3C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175652>
 
-On 06/10/2011 11:48 PM, Junio C Hamano wrote:
-> In short, the proposed "NEXT" does not help in a situation with conflicts,
-> and makes the user experience worse.
+Elijah Newren <newren@gmail.com> writes:
 
-The idea of "NEXT" and its friends would indeed be marginal if it only
-applied to "git diff".  The real gain in learnability comes from using
-the same idioms in other commands where they make sense; for example,
+> It does sound potentially expensive, though, and might mean a lot
+> more work in merge-recursive to handle that extra information.  Is that a
+> path we want to take at some point?
 
-    # More consistent alternative to the special "--ours" option:
-    git checkout OURS -- Makefile
+Probably you can start with backend specific option (e.g. -Xbreak=yes) to
+experiment. We made recursive the default not because it deals with
+renames (in a broken way) but primarily because it handles criss-cross
+better; at some point we might also want to add another backend specific
+option (e.g. -Xrename=off) to allow the users to keep the "recursive"
+aspect of the strategy while declining a more expensive (and brittle)
+rename handling to take effect.
 
-    # This would add more completeness to the
-    # "git checkout <tree-ish> -- PATH" command, and would remain the
-    # default if no <tree-ish> is specified:
-    git checkout NEXT -- Makefile
-
-    # I had to look up the current way to spell this
-    # ("git show :Makefile"), but this variant would be obvious
-    # by analogy with the other uses of NEXT:
-    git show NEXT:Makefile
-
-and of course also in the proposed "git put" command.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+My gut feeling is that -Xbreak=yes, once the code does work well enough,
+would have to become the default. It would make the default mode of merge
+possibly quite expensive but it is Ok as long as we give projects with
+simple/clean history an easy way to use either "recursive -Xrename=off" or
+even "resolve" to avoid cost that is unnecessary to handle their needs.
