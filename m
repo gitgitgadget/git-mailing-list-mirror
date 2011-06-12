@@ -1,98 +1,77 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC PATCH v2] revert: Implement --abort processing
-Date: Sun, 12 Jun 2011 07:21:45 -0500
-Message-ID: <20110612122145.GA20495@elie>
-References: <1307774186-14207-1-git-send-email-artagnon@gmail.com>
- <20110611112213.GA25268@elie>
- <BANLkTi=T0wCg1bKzmtQEQ-J-5ogqRZaqRg@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Best way to check for a "dirty" working tree?
+Date: Sun, 12 Jun 2011 17:53:13 +0530
+Message-ID: <BANLkTi=-HA1_47DvtGbVHx8twuEAxT8STQ@mail.gmail.com>
+References: <4DF381BF.3050301@dirk.my1.cc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 12 14:22:00 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?UTF-8?Q?Dirk_S=C3=BCsserott?= <newsletter@dirk.my1.cc>
+X-From: git-owner@vger.kernel.org Sun Jun 12 14:23:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QVjfz-00071A-UN
-	for gcvg-git-2@lo.gmane.org; Sun, 12 Jun 2011 14:22:00 +0200
+	id 1QVjhc-0007hy-Ag
+	for gcvg-git-2@lo.gmane.org; Sun, 12 Jun 2011 14:23:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753356Ab1FLMVz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Jun 2011 08:21:55 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:35869 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753233Ab1FLMVy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Jun 2011 08:21:54 -0400
-Received: by iwn34 with SMTP id 34so3201608iwn.19
-        for <git@vger.kernel.org>; Sun, 12 Jun 2011 05:21:54 -0700 (PDT)
+	id S1753507Ab1FLMXf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Jun 2011 08:23:35 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:41455 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753475Ab1FLMXe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Jun 2011 08:23:34 -0400
+Received: by wya21 with SMTP id 21so2681048wya.19
+        for <git@vger.kernel.org>; Sun, 12 Jun 2011 05:23:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=cPY3ybZdpzR2y5js0HS8jec/deGNpswhXKCLUjvY8xc=;
-        b=n6HovT3nVrrBnQVUZ+foRPY+NL2X15Bjm+fWO8QF92sEVyBYDZo8WghSaJ+T7AxxRK
-         oH/BGreldkUBD4T3Gk77z6uCk3maqOg4Rp15FoIMZxj3i+lUZEtxRG3skyGkfFBTwKNt
-         ubhPYJKN6VjfIfBF6Qk5zCkwd/poGz3/bZFgI=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=V0Tt0VcAlIowQQp/Xx6kssO8UvB5G5qUBKGhCSbEZlg=;
+        b=SNeZXqJrsLjntVtQzNtckvIeSsr28iEpQrz8G/yPJbltiT+qNvy/fujXGzsnvOJEZ5
+         7MpFg1l651RPm37RCgDdzEC+M8sLlo2oI+T91ijVNYxCZO+QjaDyNt165PJ2r47qhCwf
+         mKXpZUpuTTbv6C8DAN8r3aAX9fcVrbDdQpQVc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=SY0yKkYQeT2vEuVkuLoWRBJACcFLQjs1cTgGbHxzvNsHR32gcvbSGohgv3CdkCU/o5
-         JSzXPwb+3b7RIIvdzVmoLwNnRZVeTcXGRPVChQPw9sKvgkIupHMTXElgLWnuo9Vw9Ibl
-         2E19/uc60eygad0+jb6ebELLxeNsTO6ecr76Y=
-Received: by 10.42.154.198 with SMTP id r6mr5411840icw.276.1307881313958;
-        Sun, 12 Jun 2011 05:21:53 -0700 (PDT)
-Received: from elie (adsl-69-209-71-178.dsl.chcgil.sbcglobal.net [69.209.71.178])
-        by mx.google.com with ESMTPS id a9sm3897332icy.6.2011.06.12.05.21.51
-        (version=SSLv3 cipher=OTHER);
-        Sun, 12 Jun 2011 05:21:52 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <BANLkTi=T0wCg1bKzmtQEQ-J-5ogqRZaqRg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=ainD4eZ4ubKxQ3uIZY3nK2qGM59o1B8pSoRq8gxa4NIzbRrnofKeY7RyYYIPlAgMIh
+         /6nGfwVW90moBJfeSw0yfgJVIlZlIh0U8CujUKiGeFrO6frEMrJ6r78Xn5l66JXX/Is6
+         OzEGRhIWNBgSMhjX0wPBD86cDbdUyY4AkW9Gw=
+Received: by 10.216.212.228 with SMTP id y78mr1471034weo.95.1307881413210;
+ Sun, 12 Jun 2011 05:23:33 -0700 (PDT)
+Received: by 10.216.1.20 with HTTP; Sun, 12 Jun 2011 05:23:13 -0700 (PDT)
+In-Reply-To: <4DF381BF.3050301@dirk.my1.cc>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175658>
 
-Ramkumar Ramachandra wrote:
+Hi Dirk,
 
-> My notion of --abort has changed: I simply want to remove the state
-> files for the cherry-pick so that the user can execute more
-> cherry-pick/ revert commands.  I didn't think a soft reset would be
-> intrusive.
+Dirk S=C3=BCsserott writes:
+> A) if ! git diff-index --quiet HEAD -- foo.bar; then
+> =C2=A0 =C2=A0 =C2=A0 dirty=3D1
+> =C2=A0 fi
+>
+> and
+>
+> B) if ! git diff --quiet -- foo.bar; then
+> =C2=A0 =C2=A0 =C2=A0 dirty=3D1
+> =C2=A0 fi
+>
+> Both A) and B) work. But which one is better/faster/more reliable? Or=
+ is
+> there a better solution? For my purpose, I cannot see a difference
+> between diff and diff-index, except the syntax.
 
-Well, if you understand this part then you can forget most of the
-rest of what I said.  Think about this for a second.  New user (or
-forgetful, experienced user), has just run
+diff is a more porcelain'ish command, while diff-index is closer to
+the plumbing.  Therefore, diff contains some extra argument parsing/
+pretty printing code that your script doesn't utilize -- use
+diff-index.  Also, look at the various scripts in git.git to see what
+they use; for example, require_clean_work_tree in git-sh-setup.sh.
 
-	git cherry-pick HEAD..topic
-
-to integrate the changes from topic in a linear history.  Ran into
-conflicts, wanted to give up.  Ran
-
-	git cherry-pick --abort
-
-Would this person expect:
-
- - that "git diff --cached" would return a pile of changes
- - that "git reset --keep", "git reset --merge", "git checkout",
-   "git merge", and various other commands would refuse to do much,
-   for fear of clobbering the new "local changes"
- - that the worktree would be unchanged
- - etc
-
-Would they be happy about it?  Just put yourself in their shoes.  A
-soft reset is near the most intrusive behavior possible.
-
-And that is a good way to think about the UI for any new facility.  If
-you disregard about how flexible it is in abstract, how easy to
-implement, how elegant-sounding and just think about a person using it
-will find her quality of life improved or worsened, that is (1) a good
-sanity-check on a design and (2) basically the only way to explain it
-to other people.
+-- Ram
