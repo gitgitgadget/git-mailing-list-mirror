@@ -1,77 +1,321 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb: Make $prevent_xss protection for 'blob_plain'
- more usable
-Date: Mon, 13 Jun 2011 09:47:59 -0700
-Message-ID: <7v8vt5ptj4.fsf@alter.siamese.dyndns.org>
-References: <1307177015-880-1-git-send-email-jnareb@gmail.com>
- <201106101401.19108.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matt McCutchen <matt@mattmccutchen.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 13 18:48:18 2011
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: [PATCH v4 2/2] submodule update: continue when a checkout fails
+Date: Mon, 13 Jun 2011 19:15:26 +0200
+Message-ID: <1307985326-3216-1-git-send-email-iveqy@iveqy.com>
+References: <7vlixayl7d.fsf@alter.siamese.dyndns.org>
+Cc: hvoigt@hvoigt.net, iveqy@iveqy.com, jens.lehmann@web.de,
+	git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Jun 13 19:15:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWAJE-0001r2-6G
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Jun 2011 18:48:16 +0200
+	id 1QWAja-0007on-9o
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Jun 2011 19:15:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753928Ab1FMQsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jun 2011 12:48:11 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40611 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753310Ab1FMQsK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jun 2011 12:48:10 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 25A645652;
-	Mon, 13 Jun 2011 12:50:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3Y7yRAAhnhRImSn8DEES1owcOLE=; b=FUoEw0
-	XzkyqNupwdTsi7B4WPAkJWh1P9eU11LjBrnv94L92bBXOUj4SUQlkRWuxvbpC4Zi
-	ei3tzkZxMnwhgxvX+rRDlcskx9b1icaLeL+OFNAnu+3YEX6UIHKhQdCuSh/1MT8i
-	gTxHw5izn4rjr6O7bKO9zrYRwdYLuU1AW6mag=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cL3IEE9c0mcAnlRLZrs7ZPd0/f19eWkr
-	chVUKCS44111IdMV9pUSsxx25gA/0jBIOCTV2D4ekz5fd7JdfXN1tzHDa1ycx0CZ
-	Z6aTXMLHbi3O9j8geV18eJiUY92hVlFHMqwsddQUPm28ZJWF0KU9TTqE29zIJXSG
-	Zvskx9CBuu4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E71885651;
-	Mon, 13 Jun 2011 12:50:15 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A4658564D; Mon, 13 Jun 2011
- 12:50:11 -0400 (EDT)
-In-Reply-To: <201106101401.19108.jnareb@gmail.com> (Jakub Narebski's message
- of "Fri, 10 Jun 2011 14:01:18 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 36A9783E-95DD-11E0-B75E-C8CFB7AE1C3C-77302942!a-pb-sasl-sd.pobox.com
+	id S1754613Ab1FMRPY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jun 2011 13:15:24 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:37254 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753512Ab1FMRPX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jun 2011 13:15:23 -0400
+Received: by ewy4 with SMTP id 4so1676496ewy.19
+        for <git@vger.kernel.org>; Mon, 13 Jun 2011 10:15:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:sender:from:to:cc:subject:date:message-id
+         :x-mailer:in-reply-to:references;
+        bh=OyZ2HPP8WdCh2mB5DcVezBAK3slVDIEmLLUu8+FWxcM=;
+        b=YEAOUAycsO6VtHkp2koVkZFYeeQ0MR776/bTfORK3I6PJ4SfIGp+65Zb3cQnrgTmLD
+         XZ8vKhYUJnWT7Oh66uo3TKCoCwgajTSiPZVhfW7ksU3husMnJ17HKyrmfX0yBasR2nAQ
+         tkgPel4FqitzblqX3Ud5RaocVo0pgIwb3ajy8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        b=nHWsjaAon6s7psmJ+gQU1VJmfaZgPWsBqlaT3c6knes00GKsZB6q5M4qoHXdkFTQhu
+         0eZbvvQG0bmoj3v7G0MSHhNpoJfem9o8wmJpkM13zcuIF3+KHf4OXpYLJGfn29r1cfWx
+         yncrhEob3YtW3pj97o6tmE7K2/RKiuzvO+JHI=
+Received: by 10.213.104.145 with SMTP id p17mr1210751ebo.58.1307985322219;
+        Mon, 13 Jun 2011 10:15:22 -0700 (PDT)
+Received: from kolya (h8n2fls303o1100.telia.com [195.67.191.8])
+        by mx.google.com with ESMTPS id a41sm5367848eeg.7.2011.06.13.10.15.20
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 13 Jun 2011 10:15:21 -0700 (PDT)
+Received: from iveqy by kolya with local (Exim 4.72)
+	(envelope-from <iveqy@kolya>)
+	id 1QWAjh-0000qy-VD; Mon, 13 Jun 2011 19:15:40 +0200
+X-Mailer: git-send-email 1.7.6.rc0.12.g2c6b5
+In-Reply-To: <7vlixayl7d.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175721>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+"git submodule update" stops at the first error and gives control
+back to the user. Only after the user fixes the problematic
+submodule and runs "git submodule update" again, the second error
+is found. And the user needs to repeat until all the problems are
+found and fixed one by one. This is tedious.
 
-> +	# serve text/* as text/plain
-> +	if ($prevent_xss &&
-> +	    $type =~ m!^text/([a-z]+)\b(.*)$!) {
-> +		my ($subtype, $rest) = ($1, $2);
-> +		$rest = defined $rest ? $rest : '';
-> +		$type = "text/plain$rest" if ($subtype ne 'plain');
+Instead, the command can remember which submodules it had trouble with,
+continue updating the ones it can, and report which ones had errors at
+the end. The user can run "git submodule update", find all the ones that
+need minor fixing (e.g. working tree was dirty) to fix them in a single
+pass. Then another "git submodule update" can be run to update all.
 
-Hmph, wouldn't it be more straightforward if you dropped the statement
-modifier?  I.e.
+Note that the problematic submodules are skipped only when they are to
+be integrated with a safer value of submodule.<name>.update option,
+namely "checkout". Fixing a failure in a submodule that uses "rebase" or
+"merge" may need an involved conflict resolution by the user, and
+leaving too many submodules in states that need resolution would not
+reduce the mental burden on the user.
 
-	my ($subtype, $rest) = ($1, $2);
-        $rest = '' unless defined $rest;
-        $type = "text/plain$rest";
+Signed-off-by: Fredrik Gustafsson <iveqy@iveqy.com>
+Mentored-by: Jens Lehmann <Jens.Lehmann@web.de>
+Mentored-by: Heiko Voigt <hvoigt@hvoigt.net>
+---
+I'm sorry. You were reading a mix between two solutions that slipped
+through. Here's a corrected patch.
 
-Other than that, looks good to me.
+I'll changed it to be printed to standard error output instead.
 
-Thanks.
+die will not print an empty line (as of the first patch in this series) but I
+changed this to "exit 1" instead to be more clear.
+
+ git-submodule.sh            |   50 +++++++++++++--
+ t/t7406-submodule-update.sh |  144 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 188 insertions(+), 6 deletions(-)
+
+diff --git a/git-submodule.sh b/git-submodule.sh
+index d189a24..eb5eebc 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -444,7 +444,8 @@ cmd_update()
+ 	fi
+ 
+ 	cloned_modules=
+-	module_list "$@" |
++	module_list "$@" | {
++	err=
+ 	while read mode sha1 stage path
+ 	do
+ 		if test "$stage" = U
+@@ -525,17 +526,54 @@ cmd_update()
+ 				;;
+ 			esac
+ 
+-			(clear_local_git_env; cd "$path" && $command "$sha1") ||
+-			die "Unable to $action '$sha1' in submodule path '$path'"
+-			say "Submodule path '$path': $msg '$sha1'"
++			if (clear_local_git_env; cd "$path" && $command "$sha1")
++			then
++				say "Submodule path '$path': $msg '$sha1'"
++			else
++				case $action in
++				rebase|merge)
++					die_with_status 2 "Unable to $action '$sha1' in submodule path '$path'"
++					;;
++				*)
++					err="${err};Failed to $action in submodule path '$path'"
++					continue
++					;;
++				esac
++			fi
+ 		fi
+ 
+ 		if test -n "$recursive"
+ 		then
+-			(clear_local_git_env; cd "$path" && eval cmd_update "$orig_flags") ||
+-			die "Failed to recurse into submodule path '$path'"
++			(clear_local_git_env; cd "$path" && eval cmd_update "$orig_flags")
++			res=$?
++			if test $res -gt 0
++			then
++				if test $res -eq 1
++				then
++					err="${err};Failed to recurse into submodule path '$path'"
++					continue
++				else
++					die_with_status $res "Failed to recurse into submodule path '$path'"
++				fi
++			fi
+ 		fi
+ 	done
++
++	if test -n "$err"
++	then
++		OIFS=$IFS
++		IFS=';'
++		for e in $err
++		do
++			if test -n "$e"
++			then
++				echo >&2 "$e"
++			fi
++		done
++		IFS=$OIFS
++		exit 1
++	fi
++	}
+ }
+ 
+ set_name_rev () {
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index 4f16fcc..807f761 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -298,4 +298,148 @@ test_expect_success 'submodule update ignores update=rebase config for new submo
+ 	)
+ '
+ 
++test_expect_success 'submodule update continues after checkout error' '
++	(cd super &&
++	 git reset --hard HEAD &&
++	 git submodule add ../submodule submodule2 &&
++	 git submodule init &&
++	 git commit -am "new_submodule" &&
++	 (cd submodule2 &&
++	  git rev-parse --max-count=1 HEAD > ../expect
++	 ) &&
++	 (cd submodule &&
++	  test_commit "update_submodule" file
++	 ) &&
++	 (cd submodule2 &&
++	  test_commit "update_submodule2" file
++	 ) &&
++	 git add submodule &&
++	 git add submodule2 &&
++	 git commit -m "two_new_submodule_commits" &&
++	 (cd submodule &&
++	  echo "" > file
++	 ) &&
++	 git checkout HEAD^ &&
++	 test_must_fail git submodule update &&
++	 (cd submodule2 &&
++	  git rev-parse --max-count=1 HEAD > ../actual
++	 ) &&
++	 test_cmp expect actual
++	)
++'
++test_expect_success 'submodule update continues after recursive checkout error' '
++	(cd super &&
++	 git reset --hard HEAD &&
++	 git checkout master &&
++	 git submodule update &&
++	 (cd submodule &&
++	  git submodule add ../submodule subsubmodule &&
++	  git submodule init &&
++	  git commit -m "new_subsubmodule"
++	 ) &&
++	 git add submodule &&
++	 git commit -m "update_submodule" &&
++	 (cd submodule &&
++	  (cd subsubmodule &&
++	   test_commit "update_subsubmodule" file
++	  ) &&
++	  git add subsubmodule &&
++	  test_commit "update_submodule_again" file &&
++	  (cd subsubmodule &&
++	   test_commit "update_subsubmodule_again" file
++	  ) &&
++	  test_commit "update_submodule_again_again" file
++	 ) &&
++	 (cd submodule2 &&
++	  git rev-parse --max-count=1 HEAD > ../expect &&
++	  test_commit "update_submodule2_again" file
++	 ) &&
++	 git add submodule &&
++	 git add submodule2 &&
++	 git commit -m "new_commits" &&
++	 git checkout HEAD^ &&
++	 (cd submodule &&
++	  git checkout HEAD^ &&
++	  (cd subsubmodule &&
++	   echo "" > file
++	  )
++	 ) &&
++	 test_must_fail git submodule update --recursive &&
++	 (cd submodule2 &&
++	  git rev-parse --max-count=1 HEAD > ../actual
++	 ) &&
++	 test_cmp expect actual
++	)
++'
++
++test_expect_success 'submodule update exit immediately in case of merge conflict' '
++	(cd super &&
++	 git checkout master &&
++	 git reset --hard HEAD &&
++	 (cd submodule &&
++	  (cd subsubmodule &&
++	   git reset --hard HEAD
++	  )
++	 ) &&
++	 git submodule update --recursive &&
++	 (cd submodule &&
++	  test_commit "update_submodule_2" file
++	 ) &&
++	 (cd submodule2 &&
++	  test_commit "update_submodule2_2" file
++	 ) &&
++	 git add submodule &&
++	 git add submodule2 &&
++	 git commit -m "two_new_submodule_commits" &&
++	 (cd submodule &&
++	  git checkout master &&
++	  test_commit "conflict" file &&
++	  echo "conflict" > file
++	 ) &&
++	 git checkout HEAD^ &&
++	 (cd submodule2 &&
++	  git rev-parse --max-count=1 HEAD > ../expect
++	 ) &&
++	 git config submodule.submodule.update merge &&
++	 test_must_fail git submodule update &&
++	 (cd submodule2 &&
++	  git rev-parse --max-count=1 HEAD > ../actual
++	 ) &&
++	 test_cmp expect actual
++	)
++'
++test_expect_success 'submodule update exit immediately after recursive rebase error' '
++	(cd super &&
++	 git checkout master &&
++	 git reset --hard HEAD &&
++	 (cd submodule &&
++	  git reset --hard HEAD &&
++	  git submodule update --recursive
++	 ) &&
++	 (cd submodule &&
++	  test_commit "update_submodule_3" file
++	 ) &&
++	 (cd submodule2 &&
++	  test_commit "update_submodule2_3" file
++	 ) &&
++	 git add submodule &&
++	 git add submodule2 &&
++	 git commit -m "two_new_submodule_commits" &&
++	 (cd submodule &&
++	  git checkout master &&
++	  test_commit "conflict2" file &&
++	  echo "conflict" > file
++	 ) &&
++	 git checkout HEAD^ &&
++	 (cd submodule2 &&
++	  git rev-parse --max-count=1 HEAD > ../expect
++	 ) &&
++	 git config submodule.submodule.update rebase &&
++	 test_must_fail git submodule update &&
++	 (cd submodule2 &&
++	  git rev-parse --max-count=1 HEAD > ../actual
++	 ) &&
++	 test_cmp expect actual
++	)
++'
+ test_done
+-- 
+1.7.6.rc0.14.gc8898.dirty
