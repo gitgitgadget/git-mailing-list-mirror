@@ -1,92 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jun 2011, #02; Sat, 11)
-Date: Mon, 13 Jun 2011 06:16:52 -0700
-Message-ID: <7vd3ihrhvf.fsf@alter.siamese.dyndns.org>
-References: <7voc23sfxd.fsf@alter.siamese.dyndns.org>
- <BANLkTinHCX0vmAdk+su-_Y0th9vLQ6qsnw@mail.gmail.com>
+From: =?UTF-8?B?RGlyayBTw7xzc2Vyb3R0?= <newsletter@dirk.my1.cc>
+Subject: Re: file mode
+Date: Mon, 13 Jun 2011 15:52:52 +0200
+Message-ID: <4DF61634.7020003@dirk.my1.cc>
+References: <alpine.DEB.1.10.1106122055210.6124@localhost> <BANLkTimh=-caLH5dVaUeXXmcF21+=-o0tw@mail.gmail.com> <20110613053814.GA2680@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 13 15:17:07 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Michael Witten <mfwitten@gmail.com>,
+	Peter Kleiweg <pkleiweg@xs4all.nl>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 13 15:53:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QW70s-00078G-VW
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Jun 2011 15:17:07 +0200
+	id 1QW7Zd-0007Ud-EN
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Jun 2011 15:53:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751982Ab1FMNRB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jun 2011 09:17:01 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40596 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751160Ab1FMNRA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jun 2011 09:17:00 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1AB5352EF;
-	Mon, 13 Jun 2011 09:19:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tSyExspVHNccjfxtsBpEvrFtNUc=; b=lcZRrc
-	mrRbjlKEUrWZjH5I64OrXqzGMK+BZla/rBFUFSYdd5iqEIJxtm+l7GQCWaRbOEIn
-	Muhkg+iWJMXUQfRqwnB/cAKeodS8/sKzhxP3Qk3WeVFbTPUvYrMhxkUvjh4xAqzW
-	Zxyf5h3UospUllvw8O+eDj2Cm7ozkATxdg4t8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PBx3EVXNlktXawIdoc8J0Rgm5yU1x+c5
-	rdV3AiFjoJVM90Yy+6WK2M5yMes8tUliFqyJpti9qiON9zP8SXbkXlk/9x6Zb8Oh
-	wOllvHOi+o8WVXAJB4/Zt5HgpRPAHwAh02h6TjGDLg3EXf9d1R1V7tpRnVBY3JyV
-	eQqRsJNoK/U=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EA63F52EE;
-	Mon, 13 Jun 2011 09:19:07 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0BABD52ED; Mon, 13 Jun 2011
- 09:19:04 -0400 (EDT)
-In-Reply-To: <BANLkTinHCX0vmAdk+su-_Y0th9vLQ6qsnw@mail.gmail.com> (Ramkumar
- Ramachandra's message of "Sun, 12 Jun 2011 17:44:39 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B7F4DFF0-95BF-11E0-A372-C8CFB7AE1C3C-77302942!a-pb-sasl-sd.pobox.com
+	id S1753268Ab1FMNw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jun 2011 09:52:56 -0400
+Received: from smtprelay05.ispgateway.de ([80.67.31.98]:53167 "EHLO
+	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753258Ab1FMNwz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jun 2011 09:52:55 -0400
+Received: from [217.87.105.232] (helo=[192.168.2.100])
+	by smtprelay05.ispgateway.de with esmtpa (Exim 4.68)
+	(envelope-from <newsletter@dirk.my1.cc>)
+	id 1QW7ZU-0001WC-V9; Mon, 13 Jun 2011 15:52:53 +0200
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
+In-Reply-To: <20110613053814.GA2680@sigill.intra.peff.net>
+X-Df-Sender: 757646
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175704>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Am 13.06.2011 07:38 schrieb Jeff King:
+> On Sun, Jun 12, 2011 at 07:12:42PM +0000, Michael Witten wrote:
+> 
+>> On Sun, Jun 12, 2011 at 18:57, Peter Kleiweg <pkleiweg@xs4all.nl> wrote:
+>>> I added a file that has file mode 600. When I do a check-out,
+>>> the file comes with mode 644. Is this supposed to happen? Then
+>>> how do I control what permissions files have?
+>>
+>> Do some googling.
+> 
+> I really don't see the point of a response like this. It is one thing to
+> rudely point somebody to lmgtfy or an FAQ link. Then you're still being
+> rude, but at least you are pointing them in the right direction. But
+> this seems simply to make the list a less pleasant place _and_ to be
+> totally useless to the original poster. If you didn't want to give the
+> answer, wouldn't it have been better not to respond at all?
+> 
 
-> Have you seen my "libify reset" patch [1]?  I thought it was an easy candidate.
+My sentiments exactly. Actually this list is one of the best I ever met
+or subscribed to. Even posts with the meaningless subject "Help needed"
+are answered. I've seen some of them. Few, though. Please, people, stick
+to what Peff suggests. I think for most newbees this list is the last
+effort AFTER googling, so googling won't help.
 
-The reset-index-file part might be (but I agree with Jonathan that we can
-wait until we need it), but the other one does not deserve to be called a
-"libified" function if you look at it as an API function.
-
-There are many places we show abbreviated commit object name and its title
-with different frills around that message, but that particular function
-does not help them unless the other callers want the same "HEAD is now at"
-frill. Try this:
-
- $ git checkout HEAD^
- HEAD is now at 2cbd969... Git 1.7.6-rc1
- $ git checkout master
- Previous HEAD position was 2cbd969... Git 1.7.6-rc1
- Switched to branch 'master'
-
-Your helper cannot even help produce "Previous HEAD position was", even
-though I am reasonably sure they share the same logic. 
-
-A helper whose signature is something like
-
-    void pretty_print_commit(FILE *f, const char *fmt, struct commit *commit);
-
-so that the caller can say
-
-    pretty_print_commit(stdout, "HEAD is now at %h... %s\n", commit)
-
-instead of "print_new_head(commit)", might be a good addition to the
-"libified" helper set, but I suspect it is not worth it.
-
-Look at how clearly and succinctly describe_detached_head() is implemented
-in builtin/checkout.c
+Cheers,
+	Dirk
