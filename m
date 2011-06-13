@@ -1,96 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Mon, 13 Jun 2011 18:27:34 -0400
-Message-ID: <20110613222734.GD21390@sigill.intra.peff.net>
-References: <BANLkTimnCqaEBVreMhnbRBV3r-r1ZzkFcg@mail.gmail.com>
- <BANLkTinfVNxYX3kj4DBm1ra=8Ar5ca9UvQ@mail.gmail.com>
- <BANLkTi=PnYmJVXe8tuqdb9UiYnethf1GSw@mail.gmail.com>
- <4DF0EC32.40001@gmail.com>
- <BANLkTimk06eibz99AO_0BwzoL6FWb5pR8A@mail.gmail.com>
- <20110609162604.GC25885@sigill.intra.peff.net>
- <BANLkTimEGjBMrbQpkZfWYPTZ93syiKFHdw@mail.gmail.com>
+From: Holger Hellmuth <holger@gspranz.de>
+Subject: Re: Command-line interface thoughts
+Date: Tue, 14 Jun 2011 00:33:37 +0200
+Message-ID: <4DF69041.9060100@gspranz.de>
+References: <201106051311.00951.jnareb@gmail.com> <201106102035.42525.jnareb@gmail.com> <4DF29EA5.60502@ira.uka.de> <201106131215.24343.jnareb@gmail.com>
+Reply-To: hellmuth@ira.uka.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Shawn Pearce <spearce@spearce.org>,
-	A Large Angry SCM <gitzilla@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	git <git@vger.kernel.org>
-To: NAKAMURA Takumi <geek4civic@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 14 00:27:44 2011
+Content-Type: text/plain; charset=ISO-8859-2
+Content-Transfer-Encoding: 7bit
+Cc: Holger Hellmuth <hellmuth@ira.uka.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Scott Chacon <schacon@gmail.com>,
+	Michael Nahas <mike@nahas.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 14 00:33:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWFbg-0006FK-EC
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 00:27:40 +0200
+	id 1QWFhh-0008S1-SY
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 00:33:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754661Ab1FMW1f convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Jun 2011 18:27:35 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43688
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754282Ab1FMW1f (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jun 2011 18:27:35 -0400
-Received: (qmail 17863 invoked by uid 107); 13 Jun 2011 22:27:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 13 Jun 2011 18:27:44 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Jun 2011 18:27:34 -0400
-Content-Disposition: inline
-In-Reply-To: <BANLkTimEGjBMrbQpkZfWYPTZ93syiKFHdw@mail.gmail.com>
+	id S1755106Ab1FMWds (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jun 2011 18:33:48 -0400
+Received: from moutng.kundenserver.de ([212.227.126.186]:49431 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753975Ab1FMWdr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jun 2011 18:33:47 -0400
+Received: from [192.168.2.231] (dslb-088-066-038-210.pools.arcor-ip.net [88.66.38.210])
+	by mrelayeu.kundenserver.de (node=mreu0) with ESMTP (Nemesis)
+	id 0MCucZ-1QNDQZ1IzT-009Ygd; Tue, 14 Jun 2011 00:33:44 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.1.16) Gecko/20101125 SUSE/3.0.11 Thunderbird/3.0.11
+In-Reply-To: <201106131215.24343.jnareb@gmail.com>
+X-Provags-ID: V02:K0:cE7HmMD3+gNaCGU60v/8uFi0rnFpLlRUuZuCdoZk37s
+ nfiQVSfd/4OYyumWo3H5WtAgSG0/Tu2AXXJ2myW7vkK1N5Pl4n
+ bGYy99hvvRvZDllkOT2Z7uSS/KH1LqxFXRtT/SAxbzhSmvZVz9
+ BBh6SzqypILo2J9iL6A2reeUdhHmZl2LEytuo3QzK7twRzA/Ci
+ fB0sPTZ342doHMpDMTDgg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175736>
 
-On Fri, Jun 10, 2011 at 12:59:47PM +0900, NAKAMURA Takumi wrote:
+Am 13.06.2011 12:15, schrieb Jakub Narebski:
+> For other people getting the reverse of changes can be certainly
+> suprising (I though I added this, not deleted...).  When you specify
+> endpoints manually, there is a chance to get them in wrong direction.
+> Especially that there is NEXT WTREE but HEAD NEXT.
 
-> 2011/6/10 Stephen Bash <bash@genarts.com>:
-> > I've seen two different workflows develop:
-> > =C2=A01) Hacking on some code in Git the programmer finds something=
- wrong. =C2=A0Using Git tools he can pickaxe/bisect/etc. and find that =
-the problem traces back to a commit imported from Subversion.
-> > =C2=A02) The programmer finds something wrong, asks coworker, cowor=
-ker says "see bug XYZ", bug XYZ says "Fixed in r20356".
-> >
-> > I agree notes is the right answer for (1), but for (2) you really w=
-ant a cross reference table from Subversion rev number to Git commit.
->=20
-> It is the point I wanted to say, thank you! I am working with svn-men=
-=2E
-> They often speak svn revision number. (And I have to tell them svn
-> revs then)
+Other people have that problem anyway when they use 'git diff <commit>
+<othercommit>'. Or when they use linux diff, where the man page doesn't
+even specify which direction it compares. Obviously someone thought that
+"--- a.txt,  +++ b.txt" or the direction of '>' and '<' give enough hints.
 
-Yeah, there is no simple way to do the bi-directional mapping in git.
-If all you want are decorations on commits, notes are definitely the wa=
-y
-to go. They are optimized for lookup in of commit -> data. But if you
-want data -> commit, the only mapping we have is refs, and they are not
-well optimized for the many-refs use case.
+[...]
+> BTW. there is code for 'git put'.  Where is code for git diff targets?
 
-Packed-refs are better than loose refs, but I think right now we just
-load them all in to an in-memory linked list. We could load them into a
-more efficient in-memory data structure, or we could perhaps even mmap
-the packed-refs file and binary search it in place.
+Do you accept perl code? ;-) I've never seriously coded in C
 
-But lookup is only part of the problem. There are algorithms that want
-to look at all the refs (notably fetching and pushing), which are going
-to be a bit slower. We don't have a way to tell those algorithms that
-those refs are uninteresting for reachability analysis, because they ar=
-e
-just pointing to parts of the graph that are already reachable by
-regular refs. Maybe there could be a part of the refs namespace that is
-ignored by "--all". I dunno. That seems like a weird inconsistency.
-
-> FYI, I have tweaked git-rev-list for commits not to sort by date with
-> --quiet. It improves git-fetch (git-rev-list --not --all) performance
-> when objects is well-packed.
-
-I'm not sure that is a good solution. Even with --quiet, we will be
-walking the commit graph to find merge bases to see if things are
-connected. The walking code expects date-sorting; I'm not sure what
-changing that assumption will do to the code.
-
--Peff
+Holger.
