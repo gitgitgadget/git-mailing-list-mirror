@@ -1,161 +1,85 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Command-line interface thoughts
-Date: Mon, 13 Jun 2011 12:15:22 +0200
-Message-ID: <201106131215.24343.jnareb@gmail.com>
-References: <201106051311.00951.jnareb@gmail.com> <201106102035.42525.jnareb@gmail.com> <4DF29EA5.60502@ira.uka.de>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH 6/6] zlib: zlib can only process 4GB at a time
+Date: Mon, 13 Jun 2011 13:17:00 +0200
+Message-ID: <BANLkTi=sT_LxRaJSM3Cj-QkSwqGan29K7A@mail.gmail.com>
+References: <1307736948-16956-1-git-send-email-gitster@pobox.com>
+ <1307736948-16956-7-git-send-email-gitster@pobox.com> <BANLkTikmLDZj2qdkmF-kBUkB33o9EjtBpg@mail.gmail.com>
+ <7v4o3uspiy.fsf@alter.siamese.dyndns.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Scott Chacon <schacon@gmail.com>,
-	Michael Nahas <mike@nahas.com>, git@vger.kernel.org
-To: Holger Hellmuth <hellmuth@ira.uka.de>
-X-From: git-owner@vger.kernel.org Mon Jun 13 12:15:44 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 13 13:17:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QW4BL-0002zq-Sj
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Jun 2011 12:15:44 +0200
+	id 1QW59S-0002tL-QE
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Jun 2011 13:17:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751709Ab1FMKPj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Jun 2011 06:15:39 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:50760 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751434Ab1FMKPi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jun 2011 06:15:38 -0400
-Received: by bwz15 with SMTP id 15so3577074bwz.19
-        for <git@vger.kernel.org>; Mon, 13 Jun 2011 03:15:37 -0700 (PDT)
+	id S1752066Ab1FMLRl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jun 2011 07:17:41 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:34594 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751225Ab1FMLRk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jun 2011 07:17:40 -0400
+Received: by pvg12 with SMTP id 12so2066876pvg.19
+        for <git@vger.kernel.org>; Mon, 13 Jun 2011 04:17:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=0drTWVuQsqtv+/2WoHYyK06iBMuw4OyF/33cPuDKbB8=;
-        b=tpaJC5zqN5J6cpa7DDIhfkKG42n1zj9HSgOoXSABy0j3L6afboqd64CgF5DYv/mj1v
-         2Sah91XWYqjgYGzLwIAUttS7y4EtuOGvhGpY6Hm5BUuH8qNUFN7b0SOuIy4ssVBGsNJ9
-         Ep9lj5Q5/D+gnFEFGEWVCxAUMpPuSUw5k5ccM=
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=6pBf3Z8aNrDX9u3nkhNJouaOmqsGh82OTYWkEJAS3GE=;
+        b=AbC0K5h1NmJo56MsgRGda4V5uRshnyj8UP0HkJfHMpGIUYVHupfruAXAQwTHfr0Mgw
+         2qUVT+bY8M0G8g/wQOIY+0RxU2Lt4hTC7jWsd5SyAfQbPL+OBBiJxHgWFmXsMp9wNUpB
+         xr5V66DWQp10rOt/KCcE71qBjoAn4YYMo8Fs8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=JFDFDoofhtQh8WFxMtfrTnhlRDlEAb9kaX+UWomfZ2Zc2Q8js7Zr3ULWdQn6ivnea9
-         jZ0ow9vz2gmqM2gTbiihvkqrDzB8/RkI41jPBf4a6PDa2MSzYDS+J5iVxy9glGkAhQZj
-         iaZU0KjExnTFUuhZa+OrjbaTRoetO0kd+IS/M=
-Received: by 10.204.81.203 with SMTP id y11mr4407467bkk.124.1307960136939;
-        Mon, 13 Jun 2011 03:15:36 -0700 (PDT)
-Received: from [192.168.1.15] (abvk127.neoplus.adsl.tpnet.pl [83.8.208.127])
-        by mx.google.com with ESMTPS id j7sm5195641bka.8.2011.06.13.03.15.33
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 13 Jun 2011 03:15:35 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4DF29EA5.60502@ira.uka.de>
-Content-Disposition: inline
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        b=q7Qx3JVN5+BL8v230FhYUZh9KIwoy5KfEKhYVbcJyOuSipMOAMu6vpw1cJikld+gfT
+         T1FhlFiXE/s0CV3nxClDJuM1lvV4XMGbCH99a1Jr8B/DDE6xM6423VxmCUR76YlWRgup
+         FdeevOrBRyRx/PbY5QMcqIqxZCQQOyAQl/1YA=
+Received: by 10.68.64.69 with SMTP id m5mr1872411pbs.383.1307963860134; Mon,
+ 13 Jun 2011 04:17:40 -0700 (PDT)
+Received: by 10.68.50.231 with HTTP; Mon, 13 Jun 2011 04:17:00 -0700 (PDT)
+In-Reply-To: <7v4o3uspiy.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175697>
 
-On Sat, 11 June 2011, Holger Hellmuth wrote:
-> Am 10.06.2011 20:35, schrieb Jakub Narebski:
->> Dnia pi=B1tek 10. czerwca 2011 20:07, Holger Hellmuth napisa=B3:
->>> On 10.06.2011 18:44, Jakub Narebski wrote:
->>>> On Thu, 9 Jun 2011, Holger Hellmuth wrote:
+On Sun, Jun 12, 2011 at 11:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Erik Faye-Lund <kusmabite@gmail.com> writes:
+>
+>> On Fri, Jun 10, 2011 at 10:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> The size of objects we read from the repository and data we try to put
+>>> into the repository are represented in "unsigned long", so that on larger
+>>> architectures we can handle objects that weigh more than 4GB.
+>>
+>> shouldn't this be "size_t" instead of "unsigned long"?
+>
+> No, this must be unsigned long as that is the internal type we use.
 
->>>>> Also there are no good words for what someone wants to see in thi=
-s case.
->>>>> At least I would assume the git project would have found them if =
-they
->>>>> existed. '--cached' is definitely not one of them. But we have fi=
-tting
->>>>> and widely known names for the targets, i.e 'working tree', 'inde=
-x' and
->>>>> 'head'.
->>>>
->>>> "I want to see if there are any remaining changes", "I want to see=
- what
->>>> 'git commit' would bring", "I want to see what 'git commit -a' wou=
-ld bring".
->>>> Neither of those is about targets for diff.
->>>
->>> Are you proposing a command "git=20
->>> --I-want-to-see-if-there-are-any-remaining-changes" ? ;-). I was lo=
-oking=20
->>> for short command or parameter names that are easy to remember, not=
- for=20
->>> definitions of the output of cryptic commands.
->>>
->>> But lets see. If I didn't know much git, where would I look for the=
-=20
->>> right command for your three needs? Where would I expect the soluti=
-on?=20
->>> (note I'm not proposing any of these commands)
->>>
->>> "I want to see if there are any remaining changes"?
->>> git status
->>> git status --full
->>> git status --detailed
->>=20
->> "Any differences"?
->>=20
->> git diff
->=20
-> But difference to what --> User checks man page, again.
+I'm not sure I even understand what you mean here. "unsigned long" is
+the only choice because it's the type we use? That's sounds pretty
+close to tautology to my ears.
 
-User's changes.  User doesn't need to know what are those two places
-called.
-=20
->>=20
->>=20
->> "I want to see what I staged"
->>=20
->> git diff --staged
->>=20
->=20
-> User never heard of 'staged'. He asks instead "I want to see what I
-> added" --> git diff --added --> Error Message --> User checks man pag=
-e,
-> again
+Looking a bit more at the code, it seems that we currently use
+"unsigned long" a lot of places where "size_t" should have been used.
+And this series is about changing places where "unsigned int" is being
+used instead of "unsigned long". This sounds backwards to me;
+shouldn't all code that deals with sizes (both the ones that are
+"unsigned int" AND the ones that are "unsigned long") be changed to
+size_t instead?
 
-User uses "git stage <file>", so he/she uses "git diff --staged".
-=20
-[...]
->>> git diff WTREE INDEX
->>           ^^^^^^^^^^^ --- reverse to "git diff"
->>=20
->> In this direction it is surely suprising... you see, how again and a=
-gain
->> having to explicitely state what to compare with which leads to mist=
-akes
->> such like this one, and the one in few mails earlier.
->=20
-> I'm a sloopy person as you have noticed. Also very forgetful. I usual=
-ly
-> don't bother with the order of 'diff' parameters when I can get the
-> direction from the diff output.
+> Implementation of git on 32-bit platforms has always been limited to 4GB
+> from day one. This topic is not about changing it.
 
-=46or other people getting the reverse of changes can be certainly
-suprising (I though I added this, not deleted...).  When you specify
-endpoints manually, there is a chance to get them in wrong direction.
-Especially that there is NEXT WTREE but HEAD NEXT.
-
-> Small things like 'git unadd', Jeff Kings 'git put' and git diff with
-> targets probably would help this casual/intermediate/advanced user (t=
-ake
-> your pick).
-
-I agree with 'git unadd'.  Jeff Kings 'git put' and git diff targets ha=
-ve
-the problems that need to be fully solved before considering for inclus=
-ion.
-
-BTW. there is code for 'git put'.  Where is code for git diff targets?
-
---=20
-Jakub Narebski
-Poland
+As Matthieu pointed out, my comment wasn't about 32-bit systems;
+"unsigned long" is 32-bit even on 64-bit versions on Windows. I
+believe TortoiseGit builds Git for Windows as 64-bit, so AFAIK this
+would still be a problem for them.
