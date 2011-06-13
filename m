@@ -1,187 +1,97 @@
-From: "Dmitry S. Kravtsov" <idkravitz@gmail.com>
-Subject: Re: Git pull --rebase with strategy ours doesn't work (possibly bug)
-Date: Mon, 13 Jun 2011 14:41:56 +1100
-Message-ID: <BANLkTinoaznfBQo3ruPP9C8JfMV5E2v_Fw@mail.gmail.com>
-References: <BANLkTi=jLQf6Wp-qqYoy7kND2M1=WRyxXg@mail.gmail.com>
-	<BANLkTikYH9qG6YGEb4k=WMh97JHSJyN8cA@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: git diff --added (Re: Command-line interface thoughts)
+Date: Sun, 12 Jun 2011 22:43:47 -0500
+Message-ID: <20110613034347.GA4222@elie>
+References: <201106051311.00951.jnareb@gmail.com>
+ <201106101844.16146.jnareb@gmail.com>
+ <4DF25D50.5020107@ira.uka.de>
+ <201106102035.42525.jnareb@gmail.com>
+ <4DF29EA5.60502@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 13 05:43:23 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Scott Chacon <schacon@gmail.com>,
+	Michael Nahas <mike@nahas.com>, git@vger.kernel.org
+To: Holger Hellmuth <hellmuth@ira.uka.de>
+X-From: git-owner@vger.kernel.org Mon Jun 13 05:44:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QVy3f-0002Vi-3u
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Jun 2011 05:43:23 +0200
+	id 1QVy4P-0002il-4I
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Jun 2011 05:44:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752380Ab1FMDl6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Jun 2011 23:41:58 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:39976 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752195Ab1FMDl5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Jun 2011 23:41:57 -0400
-Received: by iyb14 with SMTP id 14so3538565iyb.19
-        for <git@vger.kernel.org>; Sun, 12 Jun 2011 20:41:56 -0700 (PDT)
+	id S1752873Ab1FMDn7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Jun 2011 23:43:59 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:46481 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752122Ab1FMDn6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Jun 2011 23:43:58 -0400
+Received: by iwn34 with SMTP id 34so3525618iwn.19
+        for <git@vger.kernel.org>; Sun, 12 Jun 2011 20:43:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type:content-transfer-encoding;
-        bh=nq9f80OsaGXJHicpOaqndAtemvXNYQgSbmDVIrA+6fk=;
-        b=tovA4eaP/Iv7AneEggbiL1tJuyBjNEtCyzhcbEk/2xknHzaWDG/CTfKEoj+4sxe6ul
-         2nfqaJlVX6Ul/L6EtXppJ3s3K5TnzvSL/LGNRTJXDVzbnayX+WM9mcvoRhcC9nYXNa2U
-         mi60D1lLVob3N5VlJKo2bY23p0QzvnArv3zk4=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=Ii+qLG8YhTMAuk0TVSPt8AJ9/3jup2ty6+QKk3E/v1k=;
+        b=VjhqUDdt0arGJ0wHzJgP/moVMc0PPb8ZFEBFa2k8yrMydgORTWOHnF5Cy/lom1ksJg
+         KSz1Zx7FXCQpkg/eQ8J4RkUGIz+PMRuttfjeDa7GSmRHMsCgLB31xHOV2sgtTIznmAW0
+         jtslgkyTAZUHbUIjRL2gCzQZOfuBrTAowCY/I=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=g/SEPHQun2f+CQuS9kB/1sK+LQ7Y5sfiJCyzGMCrWDstQ0F2CQ1Z/gUgfGA5QWCTlz
-         QBKcJwnwiVaYlFtqOJbHiEIpNeuluTKZb2YI44owEl77o7auW5aKUbBC5jN+zsMlSYXD
-         eLFd2gp1G18ymqTGUYoAh2RCnv311DNKOt2fI=
-Received: by 10.231.82.197 with SMTP id c5mr5162091ibl.131.1307936516295; Sun,
- 12 Jun 2011 20:41:56 -0700 (PDT)
-Received: by 10.231.20.69 with HTTP; Sun, 12 Jun 2011 20:41:56 -0700 (PDT)
-In-Reply-To: <BANLkTikYH9qG6YGEb4k=WMh97JHSJyN8cA@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=UmoEhS9gopf9EkENOykcdXEU5kW0jWJtoouJYyAJ+ojLvNMF2F8GSnbCnsSaStfzn7
+         QAqQjTM8kOcFsiHoeUBeziVbrgNxHzUwdIMDgaZ4SWK4KHTV0iSXk9Zq1M1ileFyi5GR
+         x+sn9ZDd5/99OcAEGxPI9LIIzzRcst246vbE0=
+Received: by 10.231.24.143 with SMTP id v15mr5436089ibb.90.1307936637471;
+        Sun, 12 Jun 2011 20:43:57 -0700 (PDT)
+Received: from elie (adsl-69-209-71-178.dsl.chcgil.ameritech.net [69.209.71.178])
+        by mx.google.com with ESMTPS id fw9sm2604057ibb.47.2011.06.12.20.43.54
+        (version=SSLv3 cipher=OTHER);
+        Sun, 12 Jun 2011 20:43:56 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4DF29EA5.60502@ira.uka.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175679>
 
-Also I read that during rebase terms ours and theirs are swapped, but
-it i change strategy to theirs it's still error, but even more
-cryptic:
+Holger Hellmuth wrote:
 
-remote: Counting objects: 5, done.
-remote: Total 3 (delta 0), reused 0 (delta 0)
-Unpacking objects: 100% (3/3), done.
-=46rom /home/kravitz/git-test/A
- * branch            master     -> FETCH_HEAD
-=46irst, rewinding head to replay your work on top of it...
-/usr/libexec/git-core/git-rebase: line 117: git-merge-theirs: command n=
-ot found
-Unknown exit code (127) from command: git-merge-theirs
-1a3b9bcbc737728ae997368d6d850a6a265681b7^ -- HEAD
-1a3b9bcbc737728ae997368d6d850a6a265681b7
+> User never heard of 'staged'. He asks instead "I want to see what I
+> added" --> git diff --added --> Error Message --> User checks man page,
+> again
 
-2011/6/13 Dmitry S. Kravtsov <idkravitz@gmail.com>:
-> Excuse me for russian locale, the part with error in english locale:
->
-> remote: Counting objects: 5, done.
-> remote: Total 3 (delta 0), reused 0 (delta 0)
-> Unpacking objects: 100% (3/3), done.
-> From /home/kravitz/git-test/A
-> =C2=A0* branch =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0master =C2=A0=
- =C2=A0 -> FETCH_HEAD
-> First, rewinding head to replay your work on top of it...
-> Already applied: 0001 3rd
-> /usr/libexec/git-core/git-rebase: line 157:
-> /home/kravitz/git-test/C/.git/rebase-merge/rewritten: No such file or
-> directory
-> All done.
-> kravitz@Vor
->
->
-> 2011/6/13 Dmitry S. Kravtsov <idkravitz@gmail.com>:
->> Hi,
->>
->> So here the steps to reproduce:
->>
->> $ git init A
->> Initialized empty Git repository in /home/catsadmin/git-test/A/.git/
->> $ (cd A && echo 123 > file && git add file && git commit -m "1st")
->> [master (root-commit) 1055edf] 1st
->> =C2=A01 files changed, 1 insertions(+), 0 deletions(-)
->> =C2=A0create mode 100644 file
->> $ git clone A B
->> Cloning into B...
->> done.
->> $ git clone A C
->> Cloning into C...
->> done.
->> $ (cd B && echo 333 >file && git commit -am "2nd")
->> [master 4e9cd67] 2nd
->> =C2=A01 files changed, 1 insertions(+), 1 deletions(-)
->> $ (cd A && git pull ~/git-test/B master)
->> remote: Counting objects: 5, done.
->> remote: Total 3 (delta 0), reused 0 (delta 0)
->> Unpacking objects: 100% (3/3), done.
->> From /home/catsadmin/git-test/B
->> =C2=A0* branch =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0master =C2=A0=
- =C2=A0 -> FETCH_HEAD
->> Updating 1055edf..4e9cd67
->> Fast-forward
->> =C2=A0file | =C2=A0 =C2=A02 +-
->> =C2=A01 files changed, 1 insertions(+), 1 deletions(-)
->> $ (cd C && echo 111 > file && git commit -am "3rd")
->> [master 1c4a368] 3rd
->> =C2=A01 files changed, 1 insertions(+), 1 deletions(-)
->> $ cd C
->> $ git push origin master
->> To /home/catsadmin/git-test/A
->> =C2=A0! [rejected] =C2=A0 =C2=A0 =C2=A0 =C2=A0master -> master (non-=
-fast-forward)
->> error: failed to push some refs to '/home/catsadmin/git-test/A'
->> To prevent you from losing history, non-fast-forward updates were re=
-jected
->> Merge the remote changes (e.g. 'git pull') before pushing again. =C2=
-=A0See the
->> 'Note about fast-forwards' section of 'git push --help' for details.
->>
->> So my idea is to create a straight line history, that will look like
->> "1st"---"2nd"---"3rd",
->> and from git-rebase man page I read, that strategy ours allows us to
->> discard conflicing changes in favor
->> of ours.
->>
->> $ git pull --rebase -s ours origin master
->> remote: Counting objects: 5, done.
->> remote: Total 3 (delta 0), reused 0 (delta 0)
->> Unpacking objects: 100% (3/3), done.
->> From /home/catsadmin/git-test/A
->> =C2=A0* branch =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0master =C2=A0=
- =C2=A0 -> FETCH_HEAD
->> First, rewinding head to replay your work on top of it...
->> Already applied: 0001 3rd
->> /usr/bin/git-rebase: line 157:
->> /home/catsadmin/git-test/C/.git/rebase-merge/rewritten: =D0=9D=D0=B5=
-=D1=82 =D1=82=D0=B0=D0=BA=D0=BE=D0=B3=D0=BE
->> =D1=84=D0=B0=D0=B9=D0=BB=D0=B0 =D0=B8=D0=BB=D0=B8 =D0=BA=D0=B0=D1=82=
-=D0=B0=D0=BB=D0=BE=D0=B3=D0=B0
->> All done.
->>
->> This message not only looks weird, it also discard my "3rd" commit
->> from master tree:
->> $ git branch
->> * master
->> $ git log
->> commit 4e9cd6730b1215b22b65fbcc6cbf87e331e5eb92
->> Author: Your Name <you@example.com>
->> Date: =C2=A0 Mon Jun 13 13:53:27 2011 +1100
->>
->> =C2=A0 =C2=A02nd
->>
->> commit 1055edf3618787ea53231ed6f4b00dfe571c8940
->> Author: Your Name <you@example.com>
->> Date: =C2=A0 Mon Jun 13 13:52:53 2011 +1100
->>
->> =C2=A0 =C2=A01st
->>
->> Am I wrong at something?
->>
->> --
->> Dmitry S. Kravtsov
->>
->
->
->
-> --
-> Dmitry S. Kravtsov
->
+Do you think it would be valuable to introduce --added as a synonym
+for --cached and slowly steer documentation to encourage the latter
+in place of the former?
 
+Examples, to see how it could work in practice:
 
+	# Instead of searching tracked files in the working tree,
+	# search blobs registered in the index file (i.e., accepted
+	# with "git add" instead of the iffy hacks that are up in
+	# the air).  The main advantage of this over plain "git grep"
+	# is speed.
+	git grep --added -e foo
 
---=20
-Dmitry S. Kravtsov
+	# Remove foo.c from the next commit, without touching the
+	# worktree.
+	git rm --added foo.c
+
+	# Apply patch to the index, leaving the worktree alone.
+	git apply --added some-change.patch
+
+	# List changes that I marked with "git add" for inclusion in
+	# the next commit.
+	git diff --added
+
+I like it a lot more than "staged". ;-)  Though --index-only still
+seems a little clearer to me.
