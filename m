@@ -1,160 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 01/10] strbuf_split: add a max parameter
-Date: Mon, 13 Jun 2011 10:30:07 -0700
-Message-ID: <7voc21od0g.fsf@alter.siamese.dyndns.org>
-References: <20110609155001.GA14969@sigill.intra.peff.net>
- <20110609155121.GA25507@sigill.intra.peff.net>
+From: Andrew Wong <andrew.w@sohovfx.com>
+Subject: Re: [PATCH] rebase -i -p: doesn't pick certain merge commits that
+ are children of "upstream"
+Date: Mon, 13 Jun 2011 13:30:26 -0400
+Message-ID: <4DF64932.1090607@sohovfx.com>
+References: <4DEB495F.9080900@kdbg.org> <1307419725-4470-1-git-send-email-andrew.kw.w@gmail.com> <1307419725-4470-2-git-send-email-andrew.kw.w@gmail.com> <7vmxhlpvob.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Claire Fousse <claire.fousse@ensimag.imag.fr>, git@vger.kernel.org,
-	Sylvain Boulme <Sylvain.Boulme@imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 13 19:30:28 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Andrew Wong <andrew.kw.w@gmail.com>, git@vger.kernel.org,
+	Stephen Haberman <stephen@exigencecorp.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 13 19:30:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWAy3-0006T7-SG
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Jun 2011 19:30:28 +0200
+	id 1QWAyE-0006X0-ET
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Jun 2011 19:30:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754108Ab1FMRaX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jun 2011 13:30:23 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53818 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753422Ab1FMRaW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jun 2011 13:30:22 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4FD735CF9;
-	Mon, 13 Jun 2011 13:32:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=uunQHTexkphTBNIhyjmtnOZYvv0=; b=IGU+96pl+72/NtzkOyvE
-	0imR/R5ummYSY5nq6VYnI64fJWFm7vByqV1K70Zg2mDakCPgdJpVB6bhDRDoSfmf
-	hhLhpogXEi0/q+aaW+WMNhM2HeZJHr6LtP4MJl5GG3+gG6PGp9nEYZ5ps7Syr2R9
-	pCwVMDfCpcp/0OCPhVLKFW0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=ZZb3wrD8R9xTzqZ2FcA166HP9DgMVd7/cPTZQOnltgRU1P
-	8HE63mi7BrP5LzvUko8Wos4mXjo6uGuAsKYRt65M3g4D+7wJAzXsOHxt4pYX8EAs
-	2GWLyuI5UA8FTim4hnA65/PnwE6DzM1EQnkLPFE7PG3r09skCzOALgvVKWQwI=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id ED8AB5CEB;
-	Mon, 13 Jun 2011 13:32:25 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id DC0345CE0; Mon, 13 Jun 2011
- 13:32:18 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1AAC6A6E-95E3-11E0-B01F-C8CFB7AE1C3C-77302942!a-pb-sasl-sd.pobox.com
+	id S1754599Ab1FMRad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jun 2011 13:30:33 -0400
+Received: from smtp04.beanfield.com ([76.9.193.173]:56813 "EHLO
+	smtp04.beanfield.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753631Ab1FMRac (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jun 2011 13:30:32 -0400
+X-Spam-Status: No
+X-beanfield-mta04-MailScanner-From: andrew.w@sohovfx.com
+X-beanfield-mta04-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,
+	score=-2.9, required 6, autolearn=not spam, ALL_TRUSTED -1.00,
+	BAYES_00 -1.90)
+X-beanfield-mta04-MailScanner: Found to be clean
+X-beanfield-mta04-MailScanner-ID: 1QWAy3-0009ZT-3G
+Received: from [66.207.196.114] (helo=[192.168.1.112])
+	by mta04.beanfield.com with esmtpa (Exim 4.76)
+	(envelope-from <andrew.w@sohovfx.com>)
+	id 1QWAy3-0009ZT-3G; Mon, 13 Jun 2011 13:30:27 -0400
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101026 SUSE/3.0.10 Thunderbird/3.0.10
+In-Reply-To: <7vmxhlpvob.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175723>
 
-Jeff King <peff@peff.net> writes:
+On 06/13/2011 12:01 PM, Junio C Hamano wrote:
+> There is no title to this test?
+>   
+Ah, that's embarrassing. I'll fix that. Thanks!
 
-> I am tempted to just call this new one strbuf_split and update all
-> callers. There aren't that many.
-
-Yes, that is indeed tempting, and because we have a new parameter the
-compiler will catch any new callers that pop up in a mismerge so that
-would be perfectly safe.
-
-> -struct strbuf **strbuf_split(const struct strbuf *sb, int delim)
-> +struct strbuf **strbuf_split_max(const struct strbuf *sb, int delim, int max)
->  {
->  	int alloc = 2, pos = 0;
->  	char *n, *p;
-> @@ -114,7 +114,10 @@ struct strbuf **strbuf_split(const struct strbuf *sb, int delim)
->  	p = n = sb->buf;
->  	while (n < sb->buf + sb->len) {
->  		int len;
-> -		n = memchr(n, delim, sb->len - (n - sb->buf));
-> +		if (max <= 0 || pos + 1 < max)
-> +			n = memchr(n, delim, sb->len - (n - sb->buf));
-> +		else
-> +			n = NULL;
->  		if (pos + 1 >= alloc) {
->  			alloc = alloc * 2;
->  			ret = xrealloc(ret, sizeof(struct strbuf *) * alloc);
-
-Hmm, even when we know the value of max, we go exponential, and even do so
-by hand without using ALLOC_GROW(). Somewhat sad.
-
-Also do we currently rely on the bug that strbuf_split() returns (NULL,)
-instead of ("", NULL) when given an empty string?  If not, perhaps...
-
- strbuf.c |   50 +++++++++++++++++++++++++++++++-------------------
- 1 files changed, 31 insertions(+), 19 deletions(-)
-
-diff --git a/strbuf.c b/strbuf.c
-index 09c43ae..7a8ee3a 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -103,31 +103,43 @@ void strbuf_ltrim(struct strbuf *sb)
- 	sb->buf[sb->len] = '\0';
- }
- 
--struct strbuf **strbuf_split(const struct strbuf *sb, int delim)
-+struct strbuf **strbuf_split_max(const struct strbuf *sb, int delim, int max)
- {
--	int alloc = 2, pos = 0;
- 	char *n, *p;
--	struct strbuf **ret;
-+	struct strbuf **ret = NULL;
- 	struct strbuf *t;
--
--	ret = xcalloc(alloc, sizeof(struct strbuf *));
--	p = n = sb->buf;
--	while (n < sb->buf + sb->len) {
--		int len;
--		n = memchr(n, delim, sb->len - (n - sb->buf));
--		if (pos + 1 >= alloc) {
--			alloc = alloc * 2;
--			ret = xrealloc(ret, sizeof(struct strbuf *) * alloc);
-+	int pass, count = 0;
-+
-+	for (pass = 0; pass < 2; pass++) {
-+		/* First pass counts, second pass allocates and fills */
-+		if (pass)
-+			ret = xcalloc(count + 1 + !count, sizeof(struct strbuf *));
-+		count = 0;
-+		n = sb->buf;
-+		while (n < sb->buf + sb->len) {
-+			p = n;
-+			if (max <= 0 || count + 1 < max)
-+				n = memchr(n, delim, sb->len - (n - sb->buf));
-+			else
-+				n = NULL;
-+			if (!n)
-+				n = sb->buf + sb->len - 1;
-+
-+			if (pass) {
-+				int len = n - p + 1;
-+				t = xmalloc(sizeof(struct strbuf));
-+				strbuf_init(t, len);
-+				strbuf_add(t, p, len);
-+				ret[count] = t;
-+			}
-+			count++;
-+			n++;
- 		}
--		if (!n)
--			n = sb->buf + sb->len - 1;
--		len = n - p + 1;
-+	}
-+	if (!count) {
- 		t = xmalloc(sizeof(struct strbuf));
--		strbuf_init(t, len);
--		strbuf_add(t, p, len);
--		ret[pos] = t;
--		ret[++pos] = NULL;
--		p = ++n;
-+		strbuf_init(t, 0);
-+		ret[0] = t;
- 	}
- 	return ret;
- }
+> In general I think it is wrong to change behaviour depending on which
+> parent of a merge we are looking at (unless of course the user tells us
+> to, like "git log --first-parent"), so in that sense philosophically I
+> think the patch is going in the right direction, but I do worry about
+> potential regressions.
+>   
+I totally agree.  Ever since Jeff brought up this issue, I've been
+wondering what issue/workflow is that patch trying to fix.  If the
+"todo" list doesn't change the parent of the merge commits, git should
+be able to do a fast-forward on the merge, which means the merge won't
+be rewritten anyway.  Just a wild guess: maybe back then, git will
+actually rewrite the merge regardless?  Anyway, let's wait for a reply
+from Stephen.
