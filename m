@@ -1,87 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: file mode
-Date: Mon, 13 Jun 2011 01:38:14 -0400
-Message-ID: <20110613053814.GA2680@sigill.intra.peff.net>
-References: <alpine.DEB.1.10.1106122055210.6124@localhost>
- <BANLkTimh=-caLH5dVaUeXXmcF21+=-o0tw@mail.gmail.com>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: UsrClass.dat Permission denied (Windows 7)
+Date: Mon, 13 Jun 2011 10:45:54 +0400
+Message-ID: <BANLkTi=HOJAtHDcgf45_y3N-YvsAXQUT8g@mail.gmail.com>
+References: <1307941565243-6469046.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Peter Kleiweg <pkleiweg@xs4all.nl>, git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 13 07:38:30 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: dm2000 <david.matuszak@yahoo.com>
+X-From: git-owner@vger.kernel.org Mon Jun 13 08:46:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QVzr3-0007mw-6z
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Jun 2011 07:38:29 +0200
+	id 1QW0uR-0002fq-C4
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Jun 2011 08:46:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751228Ab1FMFiW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jun 2011 01:38:22 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53365
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750795Ab1FMFiV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jun 2011 01:38:21 -0400
-Received: (qmail 10926 invoked by uid 107); 13 Jun 2011 05:38:29 -0000
-Received: from sigill-wired.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.8)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 13 Jun 2011 01:38:29 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Jun 2011 01:38:14 -0400
-Content-Disposition: inline
-In-Reply-To: <BANLkTimh=-caLH5dVaUeXXmcF21+=-o0tw@mail.gmail.com>
+	id S1753140Ab1FMGp4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jun 2011 02:45:56 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:57897 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752147Ab1FMGp4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jun 2011 02:45:56 -0400
+Received: by qyk7 with SMTP id 7so698079qyk.19
+        for <git@vger.kernel.org>; Sun, 12 Jun 2011 23:45:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=z6IDJoXeige6UxmwlffT5IDLcOcaSY4Z/xroPD00C1A=;
+        b=eVt9RPE6jOY7muYxBNpYpcUr49GvqSrr8D+hR4P3RhQgiFOoF3JVsuDT+LxWu5dcyN
+         C1CzF9UF25MTTDZtxD7c7WQSjYr7MW7g94g+uzA1uhU64zAYbTlTaATsAIp9ajcnTpxM
+         z0gwivDTysIQVqs3mJqmd/yK6Gmg9VM4FM3Q4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=SUiQpuuK7LQlZ6hecKvBaSrCOzMJyIh+u7PDEVXJLBIhr10VgBvqhdozFMSmG0h+aB
+         hqGuJrx495gAJLK+4bAPgt9kRhPdm/YTL0HH/Cgka4FoWLaiXIyDqf+Bys6azXcaamNS
+         2R3muDGdvPinAIyu8tusUBAr+kqDGJNnPb4sw=
+Received: by 10.229.22.138 with SMTP id n10mr3518662qcb.175.1307947555003;
+ Sun, 12 Jun 2011 23:45:55 -0700 (PDT)
+Received: by 10.229.191.68 with HTTP; Sun, 12 Jun 2011 23:45:54 -0700 (PDT)
+In-Reply-To: <1307941565243-6469046.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175686>
 
-On Sun, Jun 12, 2011 at 07:12:42PM +0000, Michael Witten wrote:
+On Mon, Jun 13, 2011 at 9:06 AM, dm2000 <david.matuszak@yahoo.com> wrote:
+>
+> I am studying Ruby on Rails and having problems with the initial setup of
+> Git on my machine. Basically, I am trying to edit the .gitignore file.
+> However, when I enter: 'git add .' it results in the following:
+>
+> error: open("appdata/local/microsoft/windows/usrclass.dat"): Permission
+> Denied
+> error: unable to index file appdata/local/microsoft/windows/usrclass.dat
+> fatal: adding files failed
 
-> On Sun, Jun 12, 2011 at 18:57, Peter Kleiweg <pkleiweg@xs4all.nl> wrote:
-> > I added a file that has file mode 600. When I do a check-out,
-> > the file comes with mode 644. Is this supposed to happen? Then
-> > how do I control what permissions files have?
-> 
-> Do some googling.
+Why are you trying to put your whole home directory in the git repository?
+Basically, it will never work, because Windows locks usrclass.dat and some
+other files...
 
-I really don't see the point of a response like this. It is one thing to
-rudely point somebody to lmgtfy or an FAQ link. Then you're still being
-rude, but at least you are pointing them in the right direction. But
-this seems simply to make the list a less pleasant place _and_ to be
-totally useless to the original poster. If you didn't want to give the
-answer, wouldn't it have been better not to respond at all?
+What you probably want to do is to create a new directory for your project,
+initialize a new git repository in it using 'git init' and then add files
+from this directory to the git repository as you did before.
 
-Peter:
+In Git, usually every project has its own repository. In fact, many developers
+have more than one repository for the same project. For instance, one repository
+can be made public (usually it will be a 'bare' repository) and you also have
+your own private repository with the working tree (i.e. non-bare repository).
+In any case, every developer has their own private repository for each project.
 
-This is by design. While the git data structure can technically store
-unix mode bits in its trees, it was found early on in git's history that
-respecting anything beyond a simple executable bit ended up being more
-cumbersome for git's normal use cases (i.e., people storing code or
-other shared files in a repository).
 
-We could add in a config option to respect file modes, but it has
-generally been seen as not worthwhile. It solves only a part of the
-general metadata problem, as it omits owner and group names or ids, as
-well as extended metadata like ACLs.
-
-If modes are important to you, the suggested fixes are one of:
-
-  1. Use a tool like "metastore" that can be called from git hooks, and
-     will save and restore file permissions in a file that is tracked in
-     the repository. Do note that when using such a tool there is a race
-     condition in protecting files (i.e., git will create your file as
-     644, and then metastore will correct it to 600; in the meantime,
-     somebody could read your file).
-
-  2. Depending on exactly what you're storing, it may make sense to keep
-     your repository in another directory, protected by permissions, and
-     then use a separate tool to deploy your files from the repository
-     to their ultimate location (e.g., a Makefile or other install
-     tool).
-
--Peff
-
-PS I actually _did_ try googling for this, and didn't come up with an
-answer that was as complete or clear (to me, anyway) as what I wrote
-above.
+Dmitry
