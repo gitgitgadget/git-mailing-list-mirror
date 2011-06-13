@@ -1,64 +1,88 @@
-From: Holger Hellmuth <holger@gspranz.de>
-Subject: Re: Command-line interface thoughts
-Date: Tue, 14 Jun 2011 00:33:37 +0200
-Message-ID: <4DF69041.9060100@gspranz.de>
-References: <201106051311.00951.jnareb@gmail.com> <201106102035.42525.jnareb@gmail.com> <4DF29EA5.60502@ira.uka.de> <201106131215.24343.jnareb@gmail.com>
-Reply-To: hellmuth@ira.uka.de
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitweb: Make $prevent_xss protection for 'blob_plain'
+ more usable
+Date: Mon, 13 Jun 2011 16:12:09 -0700
+Message-ID: <7vy615mily.fsf@alter.siamese.dyndns.org>
+References: <1307177015-880-1-git-send-email-jnareb@gmail.com>
+ <201106101401.19108.jnareb@gmail.com>
+ <7v8vt5ptj4.fsf@alter.siamese.dyndns.org>
+ <201106132350.00161.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: 7bit
-Cc: Holger Hellmuth <hellmuth@ira.uka.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Scott Chacon <schacon@gmail.com>,
-	Michael Nahas <mike@nahas.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Matt McCutchen <matt@mattmccutchen.net>
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 14 00:33:58 2011
+X-From: git-owner@vger.kernel.org Tue Jun 14 01:12:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWFhh-0008S1-SY
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 00:33:54 +0200
+	id 1QWGJ5-0005gW-6J
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 01:12:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755106Ab1FMWds (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jun 2011 18:33:48 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:49431 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753975Ab1FMWdr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jun 2011 18:33:47 -0400
-Received: from [192.168.2.231] (dslb-088-066-038-210.pools.arcor-ip.net [88.66.38.210])
-	by mrelayeu.kundenserver.de (node=mreu0) with ESMTP (Nemesis)
-	id 0MCucZ-1QNDQZ1IzT-009Ygd; Tue, 14 Jun 2011 00:33:44 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.1.16) Gecko/20101125 SUSE/3.0.11 Thunderbird/3.0.11
-In-Reply-To: <201106131215.24343.jnareb@gmail.com>
-X-Provags-ID: V02:K0:cE7HmMD3+gNaCGU60v/8uFi0rnFpLlRUuZuCdoZk37s
- nfiQVSfd/4OYyumWo3H5WtAgSG0/Tu2AXXJ2myW7vkK1N5Pl4n
- bGYy99hvvRvZDllkOT2Z7uSS/KH1LqxFXRtT/SAxbzhSmvZVz9
- BBh6SzqypILo2J9iL6A2reeUdhHmZl2LEytuo3QzK7twRzA/Ci
- fB0sPTZ342doHMpDMTDgg==
+	id S1755192Ab1FMXMV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jun 2011 19:12:21 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47219 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755089Ab1FMXMU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jun 2011 19:12:20 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4B1325C1C;
+	Mon, 13 Jun 2011 19:14:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1YXz6AwnGVfc9fjzIFXhmH+PrYo=; b=fYSFZh
+	j47VMycVRkoOQpD88H293uZn7K/gjI9A4dQVXJ0FzOhZptOxK3DnRv7rFcFq2vy+
+	cKDyXg+AouvXS6sRPMi9XXjO/7Zg1vx4a+0CRLXh29cUM7EKx2CwymsVaZNwTJGq
+	KV4g7GM3b3RzvtJox/a7QjRpvSJfmX0bi0oho=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DFMFhBKDH1nVrRf4rf6ENygG/6lQOnit
+	o19ARvNbO25qNGvcSpRvoNfV7puiNC+6o4rXS6N3/mRYt3VmKpApAgNDXHzruapH
+	wdtz+URtDrlm0dpqBbOdACQ1yhGtQieMXATq4oTnY3u0l9bBB+Jej06SABDszKHh
+	WGhZuWPnmHY=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1A3785C1B;
+	Mon, 13 Jun 2011 19:14:26 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B980F5C1A; Mon, 13 Jun 2011
+ 19:14:20 -0400 (EDT)
+In-Reply-To: <201106132350.00161.jnareb@gmail.com> (Jakub Narebski's message
+ of "Mon, 13 Jun 2011 23:49:59 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E1A1D800-9612-11E0-8968-C8CFB7AE1C3C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175737>
 
-Am 13.06.2011 12:15, schrieb Jakub Narebski:
-> For other people getting the reverse of changes can be certainly
-> suprising (I though I added this, not deleted...).  When you specify
-> endpoints manually, there is a chance to get them in wrong direction.
-> Especially that there is NEXT WTREE but HEAD NEXT.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Other people have that problem anyway when they use 'git diff <commit>
-<othercommit>'. Or when they use linux diff, where the man page doesn't
-even specify which direction it compares. Obviously someone thought that
-"--- a.txt,  +++ b.txt" or the direction of '>' and '<' give enough hints.
+>> Hmph, wouldn't it be more straightforward if you dropped the statement
+>> modifier?  I.e.
+>> 
+>> 	my ($subtype, $rest) = ($1, $2);
+>> 	$rest = '' unless defined $rest;
+>> 	$type = "text/plain$rest";
+>
+> Yes, of course.
+>
+> I don't know why I decided that avoiding rewriting 'text/plain; 
+> charset=utf-8' case was important.
 
-[...]
-> BTW. there is code for 'git put'.  Where is code for git diff targets?
+Just to make sure I understand what you are saying...
 
-Do you accept perl code? ;-) I've never seriously coded in C
+    my $type = 'text/plain; charset=utf-8';
+    if ($type =~ m|^text/([a-z]+)\b(.*)$|) {
+ 	my ($subtype, $rest) = ($1, $2);
+ 	$rest = '' unless defined $rest;
+ 	$type = "text/plain$rest";
+        print "Type is now <$type>\n";
+    }
 
-Holger.
+
+does yield "text/plain; charset=utf-8". It does rewrite but rewrite to
+exactly the same thing, so...
