@@ -1,75 +1,91 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: file mode
-Date: Mon, 13 Jun 2011 23:18:58 +0200
-Message-ID: <BANLkTimgby8-aBmXiZ72vtxoLO6Tr7zi2g@mail.gmail.com>
-References: <alpine.DEB.1.10.1106122055210.6124@localhost>
-	<BANLkTimh=-caLH5dVaUeXXmcF21+=-o0tw@mail.gmail.com>
-	<20110613053814.GA2680@sigill.intra.peff.net>
-	<BANLkTikZZsuQ9PoNvMOoRCg=kAnwQOvOSQ@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Make $prevent_xss protection for 'blob_plain' more usable
+Date: Mon, 13 Jun 2011 23:49:59 +0200
+Message-ID: <201106132350.00161.jnareb@gmail.com>
+References: <1307177015-880-1-git-send-email-jnareb@gmail.com> <201106101401.19108.jnareb@gmail.com> <7v8vt5ptj4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Peter Kleiweg <pkleiweg@xs4all.nl>,
-	git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 13 23:30:53 2011
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Matt McCutchen <matt@mattmccutchen.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 13 23:50:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWEif-0000Fu-3N
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Jun 2011 23:30:49 +0200
+	id 1QWF1Q-0008QR-Fn
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Jun 2011 23:50:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754946Ab1FMVaa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jun 2011 17:30:30 -0400
-Received: from mail-fx0-f52.google.com ([209.85.161.52]:52502 "EHLO
-	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754874Ab1FMVaS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jun 2011 17:30:18 -0400
-X-Greylist: delayed 561 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 Jun 2011 17:30:17 EDT
-Received: by fxm6 with SMTP id 6so4595757fxm.11
-        for <git@vger.kernel.org>; Mon, 13 Jun 2011 14:30:17 -0700 (PDT)
+	id S1753322Ab1FMVuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jun 2011 17:50:07 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:42069 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752849Ab1FMVuG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jun 2011 17:50:06 -0400
+Received: by bwz15 with SMTP id 15so4053071bwz.19
+        for <git@vger.kernel.org>; Mon, 13 Jun 2011 14:50:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=196AoqD4JJsWBeZ3jMrd8uYxvq9obWUEIgn6mnqU7KI=;
-        b=sS2I1PTZHIQA5yF5dQBOSj2Q3arhAWTiB+YhSpQ4uy3H5yh5MyTdgUuM4RRdKIxMIr
-         TM6RCzvZyMPDFtgLxGK08QdM+8VaPht6G2AqwJ4I6BM9zfg40L/aOqCAl1HD+lWziEMa
-         76zer9tx6Msj2mAtPQdlBnm7lNIBFzEFLwA7M=
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=xbmkoIef5bKzyOgKEBVOKS0+JwX1cm9cO5qK59ksWsw=;
+        b=owqdVlVndw9fSEIvz3hYwuNslw0vXU9iENBYsDE08bZsXOzJkHZv7LyRns2sDINkeT
+         yeRjamRP38059CxV+DeTcZIdQALVVTuPEovyMHn0nSxkf50FLc4Jr9Nrl+OxB/Z62QgI
+         BXYKrDY+vuhDpoP9r8lpHMkdPeHSntb0pEesA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=NqrUGV0QRjDzOfUPqAbwMMYjV27pzoRRJ0hEkvbFLYEwvXOrZ17NP/BDzMS+JkLrzz
-         bhFOXgJ1Jfy8o9+/ioVeFiO7SQTqJ5MlisHDadpxOLzWXfH9+8RjER+JxYBpdOzLUIZH
-         eIDMdvzZDInHcl5Pses+1DlhCpvwc+nV473Ls=
-Received: by 10.223.73.139 with SMTP id q11mr152299faj.56.1307999938638; Mon,
- 13 Jun 2011 14:18:58 -0700 (PDT)
-Received: by 10.223.117.65 with HTTP; Mon, 13 Jun 2011 14:18:58 -0700 (PDT)
-In-Reply-To: <BANLkTikZZsuQ9PoNvMOoRCg=kAnwQOvOSQ@mail.gmail.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=bywi4DYtzomnUKM9ghqmP3kUd7AV98e1efz/eUJsHsGO/eu1XdCzOCM4qGdpdJN4jX
+         2NeAsXct37nYNIypl5wE+qUp4R4+vZhj6IcNITkt/Ch4kIMCavjRpndQUeyQpSXVbHQf
+         +kEfuAWZK/xgNl2PNNacr4QjbJ2GDMPQ/iRRc=
+Received: by 10.204.66.67 with SMTP id m3mr1196315bki.182.1308001805289;
+        Mon, 13 Jun 2011 14:50:05 -0700 (PDT)
+Received: from [192.168.1.15] (abwt98.neoplus.adsl.tpnet.pl [83.8.243.98])
+        by mx.google.com with ESMTPS id w5sm807835bkf.23.2011.06.13.14.50.02
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 13 Jun 2011 14:50:03 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7v8vt5ptj4.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175733>
 
-On Mon, Jun 13, 2011 at 15:58, Michael Witten <mfwitten@gmail.com> wrote:
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > +	# serve text/* as text/plain
+> > +	if ($prevent_xss &&
+> > +	    $type =~ m!^text/([a-z]+)\b(.*)$!) {
+> > +		my ($subtype, $rest) = ($1, $2);
+> > +		$rest = defined $rest ? $rest : '';
+> > +		$type = "text/plain$rest" if ($subtype ne 'plain');
+> 
+> Hmph, wouldn't it be more straightforward if you dropped the statement
+> modifier?  I.e.
+> 
+> 	my ($subtype, $rest) = ($1, $2);
+> 	$rest = '' unless defined $rest;
+> 	$type = "text/plain$rest";
 
-> Firstly: My response shows that there are abundant answers, which is a
-> nicer answer to receive than no answer at all.
+Yes, of course.
 
-I think having answers like yours is much worse than having no answer
-at all. I happen to know how git handles the storage of file
-permissions, but like Jeff I couldn't find anything useful either with
-some quick searching around.
+I don't know why I decided that avoiding rewriting 'text/plain; 
+charset=utf-8' case was important.  It cretainly is not worth making 
+code harder to follow.
+ 
+Can you fix it during applying, or should I resend it?
 
-But it's very useful that the list have a friendly atmosphere where
-people of different technical capability, or those that haven't found
-the right terms to feed into a search engine can ask questions without
-getting back an answer which at least to me seems very snarky.
+> Other than that, looks good to me.
 
-There's a tendency in a lot of mailing list to accumulate a
-self-congratulating air from regulars "in the know" where people
-asking questions aren't made to feel welcome. Let's try to not become
-one of those lists.
+Thanks.
+-- 
+Jakub Narebski
+Poland
