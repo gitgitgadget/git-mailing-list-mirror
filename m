@@ -1,104 +1,115 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Q: how can i find the upstream merge point of a commit?
-Date: Tue, 14 Jun 2011 13:12:05 -0400
-Message-ID: <20110614171204.GC26764@sigill.intra.peff.net>
-References: <20110608093648.GA19038@elte.hu>
- <BANLkTiku_qvn73cUDBT=OxY-3jR3raoOhg@mail.gmail.com>
- <BANLkTimtxESnZ23tRBYYVN1paUmNOhdPyw@mail.gmail.com>
- <201106141156.56320.johan@herland.net>
+Subject: [PATCH 1/2] archive: factor out write phase of tar format
+Date: Tue, 14 Jun 2011 14:17:33 -0400
+Message-ID: <20110614181732.GA31635@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Ingo Molnar <mingo@elte.hu>,
-	Stephen Rothwell <sfr@canb.auug.org.au>, git@vger.kernel.org,
-	Peter Zijlstra <a.p.zijlstra@chello.nl>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Jun 14 19:12:14 2011
+Cc: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	git-dev@github.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 14 20:17:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWX9x-00006E-0H
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 19:12:13 +0200
+	id 1QWYBJ-0006qX-OQ
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 20:17:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752398Ab1FNRMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2011 13:12:08 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51500
+	id S1752201Ab1FNSRg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2011 14:17:36 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37644
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751686Ab1FNRMH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2011 13:12:07 -0400
-Received: (qmail 28428 invoked by uid 107); 14 Jun 2011 17:12:16 -0000
+	id S1751768Ab1FNSRf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2011 14:17:35 -0400
+Received: (qmail 28972 invoked by uid 107); 14 Jun 2011 18:17:45 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 14 Jun 2011 13:12:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Jun 2011 13:12:05 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 14 Jun 2011 14:17:45 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Jun 2011 14:17:33 -0400
 Content-Disposition: inline
-In-Reply-To: <201106141156.56320.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175785>
 
-On Tue, Jun 14, 2011 at 11:56:56AM +0200, Johan Herland wrote:
+The code to output the tar format for git-archive always
+assumes we are writing directly to stdout. Let's factor out
+that bit of code so that we can put an in-process gzip
+filter in place.
 
-> 2. Interpreting/DWIMing refs
-> 
-> Changing the ref mappings require a revised set of rules for interpreting 
-> shorthand ref names (expanding them into full ref names), and handling 
-> ambiguities when they arise:
-> [...]
-> 
-> - "origin/foo" must continue to work, even if "refs/remotes/origin/foo" has 
-> now become "refs/remotes/origin/heads/foo". In other words, "foo/bar" where 
-> "foo" is a valid remote, must try to resolve "bar" against the refspecs 
-> specified for the "foo" remote.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ archive-tar.c |   22 +++++++++++++++++-----
+ 1 files changed, 17 insertions(+), 5 deletions(-)
 
-What happens if I ask for foo/bar/baz? Should it try to resolve:
-
-  1. refs/remotes/foo/heads/bar/baz
-
-or
-
-  2. refs/remotes/foo/bar/heads/baz
-
-or both (and if both, in which order)?
-
-I don't know offhand if "git remote" and "git clone" allow slashes in
-remote names, but I don't think we forbid it if somebody configures it
-themselves (and of course, remote names aside, they are free to write
-whatever refspecs they like in the config file).
-
-> - If "refs/tags/foo" does not exist, tag name "foo" is unambiguous if it 
-> exists in one or more "refs/remotes/*/tags/foo" and they all point to the 
-> same SHA1.
-> 
-> - If "refs/tags/foo" does not exist, and more than one 
-> "refs/remotes/*/tags/foo" exist, and they do NOT all point to the same SHA1, 
-> then there is an ambiguity.
-> 
-> - The user may resolve the ambiguity by creating "refs/tags/foo" pointing to 
-> the chosen SHA1 ("refs/tags/foo" takes precedence over 
-> "refs/remotes/*/tags/foo").
-> 
-> - The same rules apply to heads, notes, etc.
-
-I'm not sure we need all of these rules for anything but tags. We
-already keep remote heads in a separate namespace, and we don't
-automagically look them up. And that's OK, because the way tags and
-heads work is fundamentally different. I can peek at your remote heads,
-but if I checkout or merge, I better make a local branch that matches
-your remote one.  Whereas with tags, I don't think that is the case.
-They're really a read-only thing, and you want them to stay in the
-remotes namespace.
-
-I think notes should behave more like heads. You can use them as-is if
-you just want to look, but you need to use the full remote name. And if
-you want to do more (like keeping your own notes and merging somebody's
-remote notes in), then you'll make your own local notes branch, and use
-"git notes merge" to keep it up to date.
-
--Peff
+diff --git a/archive-tar.c b/archive-tar.c
+index cee06ce..b1aea87 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -10,6 +10,7 @@
+ 
+ static char block[BLOCKSIZE];
+ static unsigned long offset;
++static void (*output)(const char *buf, unsigned long size);
+ 
+ static int tar_umask = 002;
+ 
+@@ -17,7 +18,7 @@ static int tar_umask = 002;
+ static void write_if_needed(void)
+ {
+ 	if (offset == BLOCKSIZE) {
+-		write_or_die(1, block, BLOCKSIZE);
++		output(block, BLOCKSIZE);
+ 		offset = 0;
+ 	}
+ }
+@@ -42,7 +43,7 @@ static void write_blocked(const void *data, unsigned long size)
+ 		write_if_needed();
+ 	}
+ 	while (size >= BLOCKSIZE) {
+-		write_or_die(1, buf, BLOCKSIZE);
++		output(buf, BLOCKSIZE);
+ 		size -= BLOCKSIZE;
+ 		buf += BLOCKSIZE;
+ 	}
+@@ -66,10 +67,10 @@ static void write_trailer(void)
+ {
+ 	int tail = BLOCKSIZE - offset;
+ 	memset(block + offset, 0, tail);
+-	write_or_die(1, block, BLOCKSIZE);
++	output(block, BLOCKSIZE);
+ 	if (tail < 2 * RECORDSIZE) {
+ 		memset(block, 0, offset);
+-		write_or_die(1, block, BLOCKSIZE);
++		output(block, BLOCKSIZE);
+ 	}
+ }
+ 
+@@ -234,7 +235,7 @@ static int git_tar_config(const char *var, const char *value, void *cb)
+ 	return git_default_config(var, value, cb);
+ }
+ 
+-int write_tar_archive(struct archiver_args *args)
++static int write_tar_archive_internal(struct archiver_args *args)
+ {
+ 	int err = 0;
+ 
+@@ -248,3 +249,14 @@ int write_tar_archive(struct archiver_args *args)
+ 		write_trailer();
+ 	return err;
+ }
++
++static void output_write(const char *buf, unsigned long len)
++{
++	write_or_die(1, buf, len);
++}
++
++int write_tar_archive(struct archiver_args *args)
++{
++	output = output_write;
++	return write_tar_archive_internal(args);
++}
+-- 
+1.7.6.rc1.37.g6d4ed.dirty
