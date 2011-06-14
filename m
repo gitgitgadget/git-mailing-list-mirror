@@ -1,122 +1,185 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Using Transifex in git.git
-Date: Tue, 14 Jun 2011 11:37:13 +0200
-Message-ID: <BANLkTikLJJwfGJp_nshRXGSb-yGOshwzTg@mail.gmail.com>
-References: <BANLkTikQJYYd4sTJoDrL28Bo35+GpV3HgA@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: Q: how can i find the upstream merge point of a commit?
+Date: Tue, 14 Jun 2011 11:56:56 +0200
+Message-ID: <201106141156.56320.johan@herland.net>
+References: <20110608093648.GA19038@elte.hu>
+ <BANLkTiku_qvn73cUDBT=OxY-3jR3raoOhg@mail.gmail.com>
+ <BANLkTimtxESnZ23tRBYYVN1paUmNOhdPyw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Dimitris Glezos <glezos@indifex.com>,
-	Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 14 11:38:46 2011
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: 7BIT
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Ingo Molnar <mingo@elte.hu>, Jeff King <peff@peff.net>,
+	Stephen Rothwell <sfr@canb.auug.org.au>, git@vger.kernel.org,
+	Peter Zijlstra <a.p.zijlstra@chello.nl>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 14 11:57:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWQ58-0008O6-AE
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 11:38:46 +0200
+	id 1QWQMx-0007km-Cr
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 11:57:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755828Ab1FNJil convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jun 2011 05:38:41 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:45116 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752420Ab1FNJik convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Jun 2011 05:38:40 -0400
-Received: by fxm17 with SMTP id 17so3460121fxm.19
-        for <git@vger.kernel.org>; Tue, 14 Jun 2011 02:38:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=/9R69se0dyyCjuFrUyTtzcpvFFhSkCi5YsKjf0snN/k=;
-        b=aajfpjKmCkUqNkJGMKtD9mBnAxXAJSDxuwhmcn33ACus+o+6TTFxLyzVkjKWTZj4Bp
-         jVBGk6BXUlhGGb0QrjFLmk2ynlNP3OekLwDI6C2ZHZ14BJrO2tjn2OsPz0V6Fe/gHL9x
-         Hio/WyYpvcQnCUKjetRtXDO9vidytadOvXuRw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=CiTsK2AoRjq7eKYZZ9PlwLDj4Hfm8x9ArsjNo55R5/gm9ibVrXu5t9u/mRx+xoLpTA
-         ujB54BaH0g6g/KAjcEgJu5UIUcvEf1vQf7n9ftGDCqC2hTNCWdCsMAjJWiaqd/byZdgn
-         xAadGpwmCEOwZLf3bYFMdu5LYQh+guAhmCy9I=
-Received: by 10.223.73.139 with SMTP id q11mr57072faj.56.1308044233787; Tue,
- 14 Jun 2011 02:37:13 -0700 (PDT)
-Received: by 10.223.117.65 with HTTP; Tue, 14 Jun 2011 02:37:13 -0700 (PDT)
-In-Reply-To: <BANLkTikQJYYd4sTJoDrL28Bo35+GpV3HgA@mail.gmail.com>
+	id S1755896Ab1FNJ5B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2011 05:57:01 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:53458 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755586Ab1FNJ47 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2011 05:56:59 -0400
+Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
+ by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LMR00GRIYAXA7D0@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 14 Jun 2011 11:56:57 +0200 (MEST)
+Received: from get-mta-scan02.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 8A9B61EA57CD_DF73069B	for <git@vger.kernel.org>; Tue,
+ 14 Jun 2011 09:56:57 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id EFF971EA2B82_DF73068F	for <git@vger.kernel.org>; Tue,
+ 14 Jun 2011 09:56:56 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LMR00KZIYAWWM20@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 14 Jun 2011 11:56:56 +0200 (MEST)
+User-Agent: KMail/1.13.7 (Linux/2.6.39-ARCH; KDE/4.6.3; x86_64; ; )
+In-reply-to: <BANLkTimtxESnZ23tRBYYVN1paUmNOhdPyw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175755>
 
-On Tue, Jun 14, 2011 at 07:57, Ramkumar Ramachandra <artagnon@gmail.com=
-> wrote:
-> Hi Dimitris et al,
->
-> [+CC: Git List; for wider exposure]
-> [+CC: Jonathan Nieder; he has been involved with translations in the =
-past]
-> [+CC: Junio C Hamano; for authoritative policy advice]
->
-> I think it's a good idea to use a system like Transifex to manage
-> translations for git.git, so that we can attract a large number of
-> non-technical translators. =C2=A0Further, I think it's a good time to=
- start
-> off on this now, since many of the i18n bits from =C3=86var's series =
-are in
-> 'master'. =C2=A0So, I'm looking to start off a discussion about how t=
-o
-> adapt a translation system into our current patch workflow. =C2=A0Dim=
-itris
-> is the lead developer of Transifex, and can help with the details.
+On Wednesday 08 June 2011, Nguyen Thai Ngoc Duy wrote:
+> 2011/6/8 Sverre Rabbelier <srabbelier@gmail.com>:
+> > Heya,
+> > 
+> > [+Peff, Duy, who seemed interested in this]
+> > 
+> > On Wed, Jun 8, 2011 at 14:52, Ingo Molnar <mingo@elte.hu> wrote:
+> >> So it would be nice to have more separation for remotes - right now
+> >> they do not sit still in their sandboxes! :-)
+> > 
+> > Sounds like the "tags should go in their own namespaces in git 1.8.0"
+> > [0] discussion? :)
+> > 
+> > [0]
+> > http://thread.gmane.org/gmane.comp.version-control.git/165799/focus=16
+> > 5837
+> 
+> A lengthy thread. Does anybody remember the outcome? Was Johan's
+> proposal OK and only waiting to be implemented, or is there still
+> unanswered questions?
 
-Turns out I have two E-Mails related to this in my inbox. Below
-follows the reply I sent to the other one in private mail, but applies
-here too:
+(Sorry for the late answer. Unfortunately, I don't have much Git time these 
+days...)
 
-"""
-Sorry, I didn't have time to look at this at the time. I think it's
-really interesting, having translations be easier to manage is
-definitely something we want so that mortals can contribute
-translations to git.
+Browsing that thread, it seems my proposal was largely OK. AFAICS there are 
+no major technical problems with moving to the following ref mapping:
 
-I hadn't followed up on this because git.git still doesn't have
-strings marked up for translation. We have the C bits of that, but the
-patch series for the shellscripts is still in flight.
+  Remote repo    ->   Local repo
+  --------------------------------------------------
+  refs/heads/*        refs/remotes/$remote/heads/*
+  refs/tags/*         refs/remotes/$remote/tags/*
+  refs/replace/*      refs/remotes/$remote/replace/*
+  refs/notes/*        refs/remotes/$remote/notes/*
 
-After that I was going to submit some more patches to add the initial
-po/*.po files, after which I think considering having a web interface
-like this would make sense.
+There was a fair amount of discussion around whether we really _want_ to put 
+all refs (especially tags) in separate per-remote namespaces, and it seems 
+(both from that thread, and from later threads, like this one) that we _do_ 
+want per-remote namespaces for all refs.
 
-Here's a couple of things though:
+That said, there are a couple of outstanding questions/challenges before 
+this can be implemented:
 
- * I don't want people to *have* to use any one interface.
 
- As far as I'm concerned the canonical way to submit translations is
- just to check out git.git's master branch, run "make pot", and then
- submit a patch for a PO file to the list.
+1. How to deal with tag auto-following
 
- Of course we can *also* support doing that through a web UI, the web
- UI is after all just a fancy way of replacing your $EDITOR. But I
- don't think we should be tied to any one UI. I.e. people should be
- able to take git.pot and edit it everywhere, and a web UI like
- Transifex can't assume that it e.g. won't have to resolve conflicts
- because something changed upstream.
+The tag auto-follow behavior currently depends on the implicit 
+"refs/tags/*:refs/tags/*" refspec, and the "refs/tags/" prefix is presently 
+hardcoded both at the local and remote end. If we want to support auto-
+follow behavior in the new ref mappings (e.g. specified with a "~" prefix: 
+"~+refs/tags/*:refs/remotes/$remote/tags/*"), we must change code both on 
+the local and remote side. In order to get optimal behavior we will probably 
+also need to make some protocol changes.
 
- * Any way of editing the translations will have to comply with git's
-  normal patch submission process.
+On the other hand, it is not clear how useful tag auto-following really is. 
+Quoting Peff from the earlier thread ( 
+http://thread.gmane.org/gmane.comp.version-control.git/160503/focus=160726 
+): "Now you could argue that auto-follow is not worth the effort. It is 
+somewhat confusing, and I can't think of a time when it ever actually 
+reduced the set of objects I was fetching (as opposed to just fetching all 
+tags). But maybe others have use cases where it matters."
 
-  When you normally submit a patch to Git you have to write a
-  sensible commit message for it, change one logical thing at a time,
-  and you have to agree to the contributor's agreement by adding a
-  Signed-off-by to your Git commit.
+Or, quoting Junio further down in the thread ( 
+http://thread.gmane.org/gmane.comp.version-control.git/165799/focus=166694 
+): "Also if you give tags a totally separate namespace, I don't see much 
+reason to still give it the "auto-follow" semantics.  It is far simpler to 
+explain if you just fetch all of them and be done with it, no?"
 
-  I think this will probably clash head-on with how any web
-  translation UI with its own user accounts, no way to enter commit
-  messages etc. will work.
-"""
+So far nobody have stood up to defend the current auto-following behavior as 
+a necessary feature.
+
+
+2. Interpreting/DWIMing refs
+
+Changing the ref mappings require a revised set of rules for interpreting 
+shorthand ref names (expanding them into full ref names), and handling 
+ambiguities when they arise:
+
+- "foo" should still be usable for "refs/heads/foo", "refs/tags/foo", etc.
+
+- "origin/foo" must continue to work, even if "refs/remotes/origin/foo" has 
+now become "refs/remotes/origin/heads/foo". In other words, "foo/bar" where 
+"foo" is a valid remote, must try to resolve "bar" against the refspecs 
+specified for the "foo" remote.
+
+- For tag name "foo": "refs/tags/foo" (if exists) is unambiguous.
+
+- If "refs/tags/foo" does not exist, tag name "foo" is unambiguous if it 
+exists in one or more "refs/remotes/*/tags/foo" and they all point to the 
+same SHA1.
+
+- If "refs/tags/foo" does not exist, and more than one 
+"refs/remotes/*/tags/foo" exist, and they do NOT all point to the same SHA1, 
+then there is an ambiguity.
+
+- The user may resolve the ambiguity by creating "refs/tags/foo" pointing to 
+the chosen SHA1 ("refs/tags/foo" takes precedence over 
+"refs/remotes/*/tags/foo").
+
+- The same rules apply to heads, notes, etc.
+
+- Extra care must be taken across different "types" of refs, depending on 
+the context. I.e. in some situations we might want to prefer 
+"refs/remotes/origin/heads/foo" to "refs/remotes/otherremote/tags/foo", or 
+the other way around (or flag the ambiguity and abort).
+
+
+3. Migration path
+
+We need both styles of ref mappings ("traditional", with the implicit and 
+auto-following tag refspec, and "new-style", where all refspecs are 
+explicit) to work side-by-side in the same repo (i.e. having one remote use 
+traditional refspecs, while another uses new-style). At first, we will 
+probably still default to the traditional refspecs when creating a new 
+remote, but over time we should migrate to new-style refspecs, before 
+finally deprecating the traditional refspecs. I'm not sure if traditional 
+vs. new-style can be reliably autodetected from the refspecs themselves, or 
+if we need an explicit per-remote config variable to discern between the 
+two.
+
+
+I think all of the above problems are solvable.
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
