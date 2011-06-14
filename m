@@ -1,160 +1,74 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: Commit notes workflow
-Date: Tue, 14 Jun 2011 16:41:13 +0200
-Message-ID: <201106141641.14257.johan@herland.net>
-References: <20110613090940.664b1b97@chalon.bertin.fr> <201106141215.50689.johan@herland.net> <f81891b81d39.4df76a5c@bertin.fr>
+From: PJ Weisberg <pjweisberg@gmail.com>
+Subject: Re: Objects deleted before first commit
+Date: Tue, 14 Jun 2011 07:44:13 -0700
+Message-ID: <BANLkTin9_jfvtYdCsJLiWAoOvO2e1f=9SA@mail.gmail.com>
+References: <8269100C7056D24A91B672AF7E5E48492D959E@exchange.GottexBrokers.local>
+	<BANLkTikSPNVbGFRUVh5eSFsxabVWT7SVVA@mail.gmail.com>
+	<8269100C7056D24A91B672AF7E5E48492D95BB@exchange.GottexBrokers.local>
+	<BANLkTik1jTq6otRvHwbo342oH7Dwy+vs_w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: dirson@bertin.fr
-X-From: git-owner@vger.kernel.org Tue Jun 14 16:41:27 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Edmondo Porcu <Edmondo.Porcu@gottexbrokers.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: David Barr <davidbarr@google.com>
+X-From: git-owner@vger.kernel.org Tue Jun 14 16:44:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWUnz-0004ZN-KN
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 16:41:24 +0200
+	id 1QWUqp-0006AH-Tp
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 16:44:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751369Ab1FNOlS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2011 10:41:18 -0400
-Received: from smtp.opera.com ([213.236.208.81]:44826 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751181Ab1FNOlR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2011 10:41:17 -0400
-Received: from johanh.localnet (pat-tdc.opera.com [213.236.208.22])
-	(authenticated bits=0)
-	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p5EEfEmN023123
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 14 Jun 2011 14:41:14 GMT
-User-Agent: KMail/1.13.7 (Linux/2.6.38-ARCH; KDE/4.6.3; x86_64; ; )
-In-Reply-To: <f81891b81d39.4df76a5c@bertin.fr>
+	id S1751746Ab1FNOoP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2011 10:44:15 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:52419 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751156Ab1FNOoO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2011 10:44:14 -0400
+Received: by fxm17 with SMTP id 17so3736030fxm.19
+        for <git@vger.kernel.org>; Tue, 14 Jun 2011 07:44:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=SsT7wUYFGRIMLFaLhbEA4ZTlbpI3wpHVIQvGOamAlgc=;
+        b=Psrq21egerlHjpe7trMUpofcTujFR+x2Is5ph4NLltBCcPq79Gmkp0QmStO6uaFquc
+         qK/iOzgqfcGL5j/danOOf5E4/st0osG6SC0KgIeruK4CSiF36IOld1/absHHG80dRUpL
+         TY3D8QE2ayfiaBrcldGUx00mdbaCcVzr9mQ2c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=K85eo/9uEBKLYN1E0AbGF6uG0isqI2K16XPXa7k6VWEIFbyv1CtD3M0TpzOBTpA24E
+         KcBr5G6rak8C9d+3FN05AP0UiOLZEl8SPw81k/oiiwlTkxeNhxxzzNvKj0CcDnzS4kCp
+         irrODD4Hgw5odmFdUlnaLWwtQw51W5qdA9dVI=
+Received: by 10.223.161.194 with SMTP id s2mr23887fax.143.1308062653434; Tue,
+ 14 Jun 2011 07:44:13 -0700 (PDT)
+Received: by 10.223.73.201 with HTTP; Tue, 14 Jun 2011 07:44:13 -0700 (PDT)
+In-Reply-To: <BANLkTik1jTq6otRvHwbo342oH7Dwy+vs_w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175774>
 
-On Tuesday 14. June 2011, dirson@bertin.fr wrote:
-> > > Do we really want to "git notes" to ignore everything not in
-> > >  refs/notes/ ? I can think of 2 possibilities out of this
-> > > situation:
-> > > 
-> > > * remove that limitation
-> > > * decide on a naming convention for remote notes, and teach  "git
-> > > notes" not to ignore it
-> > 
-> > The naming convention I have proposed (in the discussion for
-> > [1]) is
-> > 
-> > refs/notes/*:refs/remotes/$remote/notes/*
-> > 
-> > (but it obviously depends on reorganizing the entire remote refs
-> >  hierarchy)
-> > 
-> > > A (minor) problem with the second possibility is that this naming
-> > > convention could evolve, eg. if we end up with something like was
-> > > proposed in [1] for 1.8.0. Is there any real drawback with  the
-> > > first suggestion ?
-> > > 
-> > > [1] http://marc.info/?l=git&m=129661334011986&w=4
-> > 
-> > My gut feeling is to keep some sort of limit notes refs, and
-> >  if/when we get around to implementing my proposal in [1] (or some
-> > variation  thereof), we will of course extend the limit to put
-> >  "refs/remotes/$remote/notes/*" (or whatever is decided) in the
-> > same category as "refs/notes/*".
-> > 
-> > In the meantime, I'm unsure if it's a good idea to remove the
-> >  limitation altogether (allowing notes refs everywhere), since
-> > re- introducing a limit at a later point will then be MUCH
-> > harder...
-> 
-> So we could introduce something like refs/remote-notes/<remote>/*
-> today to start working, and eventually phase it out when
-> refs/remotes/ gets restructured.
+On Tuesday, June 14, 2011, David Barr <davidbarr@google.com> wrote:
+> On Tue, Jun 14, 2011 at 11:00 PM, Edmondo Porcu
+> <Edmondo.Porcu@gottexbrokers.com> wrote:
+>> dangling blob 43cb00bb9f23b73afc874c4105b136f8c426e4a5
+>> dangling blob 48ef642adb1549ee1d4040ec9337d3a47c19d422
+> [...]
+>
+> Was it 'rm -rf' or 'git rm -rf'?
+> If just the non-git command, maybe 'git checkout -- <missing paths>'?
 
-Yes, if you can't wait for the refs/remotes/ restructuring, then I guess 
-you'll have to do that.
+Not if it was never checked in, unfortunately.
 
-> Then the next point will be how best to provide git-pull-like support
-> for notes refs. We have a number of alternatives, like:
-> 
-> * having "git pull" run "git notes merge" on all notes refs with a
-> tracking-branch set to the repo from which we pull
-> * do the same for a configured set of notes refs only
-> * only have "git pull" and "git status" notify about notes refs being
-> not uptodate, and add an explicit "git notes pull" command of some
-> sort (maybe just "git notes merge" without an argument, which would
-> be consistent with latest "git merge") * surely others
-
-I guess there are a lot of different possibilities here, and there will 
-probably be disagreement on what's the best default, so I'd suggest the 
-following guidelines:
-
-* make it as configurable as possible.
-
-* follow the existing conventions of pull/merge w.r.t. branches, but 
-only so far as it makes sense for notes.
-
-* leave the defaults conservative (e.g. don't do any merging by default, 
-but make pull/status notify about update-able notes refs).
-
-
-My idea so far, is to model the notes configuration on the current 
-branch configuration, e.g. something like this:
-
-  [remote "origin"]
-      ...
-      fetch = +refs/notes/*:refs/remotes/origin/notes/*
-      ...
-
-  [notes "commits"]
-      remote = origin
-      merge = refs/notes/commits
-
-  [notes "bugs"]
-      remote = origin
-      merge = refs/notes/bugs
-      mergeoptions = --strategy=cat_sort_uniq
-      automerge = true
-
-Except for the "automerge" option, everything is analogous to current 
-branch.<name>.* options. The above configuration sets up a default 
-tracking ref for "refs/notes/commits", making
-
-  git notes --ref commits merge
-
-equivalent to
-
-  git notes --ref commits merge refs/remotes/origin/notes/commits
-
-This notes merge would not happen automatically.
-
-The last section, however, would presumably trigger an automatic notes 
-merge (on fetch? pull?) because of notes.bugs.automerge being enabled. 
-In this case, the
-
-  git notes --ref bugs merge
-
-command would be issued, which would be equivalent to
-
-  git notes --ref bugs merge --strategy=cat_sort_uniq \
-      refs/remotes/origin/notes/bugs
-
-This is just a suggestion, and we might want to impose additional 
-restrictions not mentioned above. For example, enabling "automerge" 
-without enabling a non-"manual" notes merge strategy is probably unwise, 
-because it can force the user to resolve conflicts from a notes merge 
-that the user did not explicitly initiate.
-
-
-Have fun! :)
-
-...Johan
+'git cat-file -p <hash>' prints the contents of the file.  It's up to
+you to figure out which is the version you want and what the filenames
+were.
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+
+-PJ
