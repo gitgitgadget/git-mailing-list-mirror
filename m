@@ -1,228 +1,87 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] archive: support gzipped tar files
-Date: Tue, 14 Jun 2011 14:18:21 -0400
-Message-ID: <20110614181821.GA32685@sigill.intra.peff.net>
-References: <20110614181732.GA31635@sigill.intra.peff.net>
+Subject: Re: [RFC/PATCH] config.c: Make git_config() work correctly when
+ called recursively
+Date: Tue, 14 Jun 2011 14:27:26 -0400
+Message-ID: <20110614182726.GA451@sigill.intra.peff.net>
+References: <4DF106B8.2080902@ramsay1.demon.co.uk>
+ <20110609203958.GA4671@sigill.intra.peff.net>
+ <4DF7A627.2080600@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	git-dev@github.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 14 20:18:32 2011
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, johan@herland.net
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Tue Jun 14 20:27:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWYC7-0007J6-Gp
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 20:18:32 +0200
+	id 1QWYKr-0003mZ-Vi
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 20:27:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752874Ab1FNSSY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2011 14:18:24 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48376
+	id S1752321Ab1FNS13 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2011 14:27:29 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39962
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752798Ab1FNSSX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2011 14:18:23 -0400
-Received: (qmail 29051 invoked by uid 107); 14 Jun 2011 18:18:33 -0000
+	id S1751553Ab1FNS12 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2011 14:27:28 -0400
+Received: (qmail 29302 invoked by uid 107); 14 Jun 2011 18:27:38 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 14 Jun 2011 14:18:33 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Jun 2011 14:18:21 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 14 Jun 2011 14:27:38 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Jun 2011 14:27:26 -0400
 Content-Disposition: inline
-In-Reply-To: <20110614181732.GA31635@sigill.intra.peff.net>
+In-Reply-To: <4DF7A627.2080600@ramsay1.demon.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175787>
 
-git-archive already supports the creation of tar files. For
-local cases, one can simply pipe the output to gzip, and
-having git-archive do the gzip is a minor convenience.
+On Tue, Jun 14, 2011 at 07:19:19PM +0100, Ramsay Jones wrote:
 
-However, when running git-archive against a remote site,
-having the remote side do the compression can save
-considerable bandwidth. Service providers could always wrap
-git-archive to provide that functionality, but this makes it
-much simpler.
+> > Since you've nicely encapsulated all of the global data in this struct,
+> > maybe it is worth simply passing a struct pointer down the call-chain
+> > instead of relying on a global pointer. Then you can let the language do
+> > its job and stop managing the stack yourself.
+> 
+> The first version of this patch did exactly that! However, that first patch
+> failed the test-suite. :(
+> 
+> The failure was caused by a change to the die_bad_config() function, which
+> in the current patch looks like this:
+> 
+>     @@ -374,8 +381,8 @@ int git_parse_ulong(const char *value, unsigned long *ret)
+>  
+>      static void die_bad_config(const char *name)
+>      {
+>     -	if (config_file_name)
+>     -		die("bad config value for '%s' in %s", name, config_file_name);
+>     +	if (cf && cf->name)
+>     +		die("bad config value for '%s' in %s", name, cf->name);
+>      	die("bad config value for '%s'", name);
+>      }
 
-Creating gzipped archives is of course more expensive than
-regular tar archives; however, the amount of work should be
-comparable to that of creating a zip file, which is already
-possible. So there should be no new security implications
-with respect to creating load on a remote server.
+Ah, right. We want to keep it as globals, because we end up in a
+callback which does not get the context passed to it.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/git-archive.txt |   17 +++++++++++++++--
- archive-tar.c                 |   27 +++++++++++++++++++++++++++
- archive.c                     |    1 +
- archive.h                     |    1 +
- builtin/archive.c             |    6 ++++++
- t/t5000-tar-tree.sh           |   26 ++++++++++++++++++++++++++
- 6 files changed, 76 insertions(+), 2 deletions(-)
+> In order not to change the public interface (note that git_config_int() and
+> git_config_ulong() call die_bad_config()), I had to change this function so
+> that it only contains the final die() call. Thus, the error message no longer
+> included the config filename. This caused the test called 'invalid unit' in
+> t1300-repo-config.sh to fail.
+> 
+> I could, of course, have simply changed the expect file so that it would pass
+> the test, but I wanted the change to be self-contained and to pass all existing
+> tests (ie. the external interface/behaviour should *not* change).
 
-diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
-index 9c750e2..963bec4 100644
---- a/Documentation/git-archive.txt
-+++ b/Documentation/git-archive.txt
-@@ -34,10 +34,11 @@ OPTIONS
- -------
- 
- --format=<fmt>::
--	Format of the resulting archive: 'tar' or 'zip'. If this option
-+	Format of the resulting archive: 'tar', 'tgz', or 'zip'. If this option
- 	is not given, and the output file is specified, the format is
- 	inferred from the filename if possible (e.g. writing to "foo.zip"
--	makes the output to be in the zip format). Otherwise the output
-+	creates the output in the zip format; "foo.tgz" or "foo.tar.gz"
-+	creates the output in the tgz format). Otherwise the output
- 	format is `tar`.
- 
- -l::
-@@ -89,6 +90,12 @@ zip
- 	Highest and slowest compression level.  You can specify any
- 	number from 1 to 9 to adjust compression speed and ratio.
- 
-+tgz
-+~~~
-+-9::
-+	Highest and slowest compression level. You can specify any
-+	number from 1 to 9 to adjust compression speed and ratio.
-+
- 
- CONFIGURATION
- -------------
-@@ -133,6 +140,12 @@ git archive --format=tar --prefix=git-1.4.0/ v1.4.0 | gzip >git-1.4.0.tar.gz::
- 
- 	Create a compressed tarball for v1.4.0 release.
- 
-+git archive --prefix=git-1.4.0/ -o git-1.4.0.tar.gz v1.4.0
-+
-+	Same as above, except that we use the internal gzip. Note that
-+	the output format is inferred by the extension of the output
-+	file.
-+
- git archive --format=tar --prefix=git-1.4.0/ v1.4.0{caret}\{tree\} | gzip >git-1.4.0.tar.gz::
- 
- 	Create a compressed tarball for v1.4.0 release, but without a
-diff --git a/archive-tar.c b/archive-tar.c
-index b1aea87..86c8aa9 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -260,3 +260,30 @@ int write_tar_archive(struct archiver_args *args)
- 	output = output_write;
- 	return write_tar_archive_internal(args);
- }
-+
-+static gzFile gz_file;
-+static void output_gz(const char *buf, unsigned long len)
-+{
-+	if (!gzwrite(gz_file, buf, len))
-+		die("unable to write compressed stream: %s",
-+		    gzerror(gz_file, NULL));
-+}
-+
-+int write_tgz_archive(struct archiver_args *args)
-+{
-+	int r;
-+
-+	gz_file = gzdopen(1, "w");
-+	if (!gz_file)
-+		die_errno("unable to open compressed stream");
-+	gzsetparams(gz_file, args->compression_level, Z_DEFAULT_STRATEGY);
-+
-+	output = output_gz;
-+	r = write_tar_archive_internal(args);
-+	if (r == 0) {
-+		int zerr = gzclose(gz_file);
-+		if (zerr != Z_OK)
-+			die("unable to write compressed stream (err=%d)", zerr);
-+	}
-+	return r;
-+}
-diff --git a/archive.c b/archive.c
-index 42f2d2f..6073a8d 100644
---- a/archive.c
-+++ b/archive.c
-@@ -23,6 +23,7 @@ static const struct archiver {
- } archivers[] = {
- 	{ "tar", write_tar_archive },
- 	{ "zip", write_zip_archive, USES_ZLIB_COMPRESSION },
-+	{ "tgz", write_tgz_archive, USES_ZLIB_COMPRESSION },
- };
- 
- static void format_subst(const struct commit *commit,
-diff --git a/archive.h b/archive.h
-index 038ac35..c1bf72e 100644
---- a/archive.h
-+++ b/archive.h
-@@ -23,6 +23,7 @@ typedef int (*write_archive_entry_fn_t)(struct archiver_args *args, const unsign
-  */
- extern int write_tar_archive(struct archiver_args *);
- extern int write_zip_archive(struct archiver_args *);
-+extern int write_tgz_archive(struct archiver_args *);
- 
- extern int write_archive_entries(struct archiver_args *args, write_archive_entry_fn_t write_entry);
- extern int write_archive(int argc, const char **argv, const char *prefix, int setup_prefix);
-diff --git a/builtin/archive.c b/builtin/archive.c
-index b14eaba..4f60af5 100644
---- a/builtin/archive.c
-+++ b/builtin/archive.c
-@@ -71,6 +71,12 @@ static const char *format_from_name(const char *filename)
- 	ext++;
- 	if (!strcasecmp(ext, "zip"))
- 		return "--format=zip";
-+	if (!strcasecmp(ext, "tgz"))
-+		return "--format=tgz";
-+	if (!strcasecmp(ext, "gz") &&
-+	    ext - 4 >= filename &&
-+	    !strcasecmp(ext - 4, "tar.gz"))
-+		return "--format=tgz";
- 	return NULL;
- }
- 
-diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
-index cff1b3e..faf2784 100755
---- a/t/t5000-tar-tree.sh
-+++ b/t/t5000-tar-tree.sh
-@@ -26,6 +26,7 @@ commit id embedding:
- 
- . ./test-lib.sh
- UNZIP=${UNZIP:-unzip}
-+GUNZIP=${GUNZIP:-gunzip}
- 
- SUBSTFORMAT=%H%n
- 
-@@ -252,4 +253,29 @@ test_expect_success 'git-archive --prefix=olde-' '
- 	test -f h/olde-a/bin/sh
- '
- 
-+test_expect_success 'git archive --format=tgz' '
-+	git archive --format=tgz HEAD >e.tgz
-+'
-+
-+test_expect_success 'infer tgz from .tgz filename' '
-+	git archive --output=e1.tgz HEAD &&
-+	test_cmp e.tgz e1.tgz
-+'
-+
-+test_expect_success 'infer tgz from .tar.gz filename' '
-+	git archive --output=e2.tar.gz HEAD &&
-+	test_cmp e.tgz e2.tar.gz
-+'
-+
-+if $GUNZIP --version >/dev/null 2>&1; then
-+	test_set_prereq GUNZIP
-+else
-+	say "Skipping tgz tests because gunzip was not found"
-+fi
-+
-+test_expect_success GUNZIP 'extract tgz file' '
-+	gunzip -c <e.tgz >e.tar &&
-+	test_cmp b.tar e.tar
-+'
-+
- test_done
--- 
-1.7.6.rc1.37.g6d4ed.dirty
+No, you did the right thing here. The information on which config file
+we're in is valuable, and taking away the globals is not worth the pain
+of making all of the callers and callbacks of git_config have to deal
+with passing around a context struct.
+
+So the patch you posted looks good to me.
+
+-Peff
