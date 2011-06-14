@@ -1,78 +1,103 @@
-From: David Barr <davidbarr@google.com>
-Subject: Re: Objects deleted before first commit
-Date: Tue, 14 Jun 2011 23:06:58 +1000
-Message-ID: <BANLkTik1jTq6otRvHwbo342oH7Dwy+vs_w@mail.gmail.com>
-References: <8269100C7056D24A91B672AF7E5E48492D959E@exchange.GottexBrokers.local>
-	<BANLkTikSPNVbGFRUVh5eSFsxabVWT7SVVA@mail.gmail.com>
-	<8269100C7056D24A91B672AF7E5E48492D95BB@exchange.GottexBrokers.local>
+From: =?UTF-8?B?RGlyayBTw7xzc2Vyb3R0?= <newsletter@dirk.my1.cc>
+Subject: Re: Best way to check for a "dirty" working tree?
+Date: Tue, 14 Jun 2011 15:28:07 +0200
+Message-ID: <4DF761E7.8040707@dirk.my1.cc>
+References: <4DF381BF.3050301@dirk.my1.cc> <20110613222225.GA14446@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Edmondo Porcu <Edmondo.Porcu@gottexbrokers.com>
-X-From: git-owner@vger.kernel.org Tue Jun 14 15:07:09 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 14 15:28:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWTKn-00046L-3R
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 15:07:09 +0200
+	id 1QWTfE-0006iE-Pq
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 15:28:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751743Ab1FNNHE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2011 09:07:04 -0400
-Received: from smtp-out.google.com ([216.239.44.51]:3683 "EHLO
-	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751397Ab1FNNHC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2011 09:07:02 -0400
-Received: from kpbe11.cbf.corp.google.com (kpbe11.cbf.corp.google.com [172.25.105.75])
-	by smtp-out.google.com with ESMTP id p5ED7087001487
-	for <git@vger.kernel.org>; Tue, 14 Jun 2011 06:07:00 -0700
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
-	t=1308056821; bh=JvVCqpYqyi5TIw1FM11r6CMLdfI=;
-	h=MIME-Version:In-Reply-To:References:Date:Message-ID:Subject:From:
-	 To:Cc:Content-Type;
-	b=n5cVLGabesfP9vPbuH81HNZv/ISBV5IM8RhzVtmuRUL36ectbAljN9RiSVPJPHZYI
-	 JcsXLk0FY0sGmhMuWaJuQ==
-Received: from yic15 (yic15.prod.google.com [10.243.65.143])
-	by kpbe11.cbf.corp.google.com with ESMTP id p5ED6xxq001590
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Tue, 14 Jun 2011 06:06:59 -0700
-Received: by yic15 with SMTP id 15so3904406yic.40
-        for <git@vger.kernel.org>; Tue, 14 Jun 2011 06:06:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=beta;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=l6vD099NV+O7i/VpaQKXyhK4VwzdOqSG0/s25p1XuHA=;
-        b=UzzzJmzyO1lyNBlFzuYkGc0aQyrxYmk70d6SC/I4vEGtxoIPmZWF5COZ4Sxtf/gaJ/
-         cI6cCtG6W0th1fzJI3zg==
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=google.com; s=beta;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=lIbr9l6OqaquSErXQdJvtv+76/SqLqKkaeIquxXmdz4m7j80Oe3oYQtJOg0/N4rKo+
-         QDOJ912K0kQRwzmQeEiw==
-Received: by 10.101.157.19 with SMTP id j19mr6621425ano.113.1308056819009;
- Tue, 14 Jun 2011 06:06:59 -0700 (PDT)
-Received: by 10.101.29.2 with HTTP; Tue, 14 Jun 2011 06:06:58 -0700 (PDT)
-In-Reply-To: <8269100C7056D24A91B672AF7E5E48492D95BB@exchange.GottexBrokers.local>
-X-System-Of-Record: true
+	id S1751888Ab1FNN2M convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jun 2011 09:28:12 -0400
+Received: from smtprelay06.ispgateway.de ([80.67.31.102]:57929 "EHLO
+	smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751312Ab1FNN2K (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2011 09:28:10 -0400
+Received: from [84.176.57.13] (helo=[192.168.2.100])
+	by smtprelay06.ispgateway.de with esmtpa (Exim 4.68)
+	(envelope-from <newsletter@dirk.my1.cc>)
+	id 1QWTf5-0006Bz-GL; Tue, 14 Jun 2011 15:28:07 +0200
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
+In-Reply-To: <20110613222225.GA14446@elie>
+X-Df-Sender: 757646
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175769>
 
-On Tue, Jun 14, 2011 at 11:00 PM, Edmondo Porcu
-<Edmondo.Porcu@gottexbrokers.com> wrote:
-> In fact I have some folders and files there, but I have no idea on how to restore them into "Real Files". I am using windows 7 unluckily, but I have managed to find the files. This is an extract of my git fsck:
->
-> dangling blob 43cb00bb9f23b73afc874c4105b136f8c426e4a5
-> dangling blob 48ef642adb1549ee1d4040ec9337d3a47c19d422
-[...]
+Hi Jonathan,
 
-Was it 'rm -rf' or 'git rm -rf'?
-If just the non-git command, maybe 'git checkout -- <missing paths>'?
+Am 14.06.2011 00:22 schrieb Jonathan Nieder:
+> Hi Dirk,
+>=20
+> Dirk S=C3=BCsserott wrote:
+>=20
+>> I have a script which moves data from somewhere to my local repo and
+>> then checks it in, like so:
+>>
+>> -----------
+>> mv /tmp/foo.bar .
+>> git commit -am "Updated foo.bar at $timestamp"
+>> -----------
+>>
+>> However, before overwriting "foo.bar" in my working directory, I'd l=
+ike
+>> to check whether my working tree is dirty (at least "foo.bar").
+>=20
+> Interesting example.  Sensible, as long as you limit the commit to
+> foo.bar (i.e., "git commit -m ... --only foo.bar")!
 
---
-David Barr.
+Uhh, nice hint. I didn't know that git-commit accepts a path, too.
+That's safer. However, in my particular case the working tree is either
+clean or exactly the file in question has changed. If sth. else changes
+(e.g. my commit-script) I do that in a separate "transaction".
+
+> Now, a word of warning.  One aspect of this "do not second-guess the
+> caller" behavior is that low-level commands like "git diff-index"
+> blindly trust stat() information in the index, rather than going to
+> re-read a seemingly modified file and updating the index if the
+> content is not changed.  You can see this by running "touch foo.bar";
+> "git diff-index" will report the file as changed, until you use "git
+> update-index" to refresh the stat information:
+>=20
+> 	git update-index --refresh --unmerged -q >/dev/null || :
+> 	if ! git diff-index --quiet HEAD -- foo.bar; then
+> 		dirty=3D1
+> 	fi
+>=20
+> Alas, this doesn't seem to be documented anywhere (except for the
+> gitcore-tutorial(7))!  It ought to be.
+
+Hmm, it MUST be documented somewhere, because I have several scripts
+that use "update-index --refresh" to get rid of what I call "phantom
+changes": sometimes I transfer (scp) files from a remote machine to the
+local tree. The set of files is already known to Git, so my first guess
+was that Gitk would only show the "real" diff, but it actually showed
+*all* transferred files as changed. After running "git status" Gitk doe=
+s
+it right and shows only content's diff. Surprisingly, "git status" seem=
+s
+to be a read/write operation and does "update-index --refresh" in the
+background. After some research I learned about "update-index --refresh=
+"
+and use it frequently for scp'ed files.
+
+Unfortunately, I cannot remember *where* I learned about it.
+
+> Hope that helps,
+> Jonathan
+
+That helped a lot. Thank you,
+Dirk
