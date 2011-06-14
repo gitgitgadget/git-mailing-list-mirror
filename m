@@ -1,86 +1,86 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Is current HEAD pointing at a given revision ?
-Date: Tue, 14 Jun 2011 02:00:55 -0700 (PDT)
-Message-ID: <m3mxhkvlcw.fsf@localhost.localdomain>
-References: <BANLkTikFTHc4Qiu1YLxXgPhweNnVqMO11Q@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Using Transifex in git.git
+Date: Tue, 14 Jun 2011 11:16:36 +0200
+Message-ID: <4DF726F4.3000204@op5.se>
+References: <BANLkTikQJYYd4sTJoDrL28Bo35+GpV3HgA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Francis Moreau <francis.moro@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 14 11:01:03 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Dimitris Glezos <glezos@indifex.com>,
+	=?ISO-8859-15?Q?=C6var_Arnfj=F6?= =?ISO-8859-15?Q?r=F0?= 
+	<avarab@gmail.com>, Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 14 11:22:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWPUd-0001Ct-38
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 11:01:03 +0200
+	id 1QWPpi-0001wG-QL
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 11:22:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755662Ab1FNJBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2011 05:01:00 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:57903 "EHLO
+	id S1755736Ab1FNJWp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jun 2011 05:22:45 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:54277 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755638Ab1FNJA6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2011 05:00:58 -0400
-Received: by fxm17 with SMTP id 17so3428047fxm.19
-        for <git@vger.kernel.org>; Tue, 14 Jun 2011 02:00:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:x-authentication-warning:to:cc:subject
-         :references:from:date:in-reply-to:message-id:lines:user-agent
-         :mime-version:content-type;
-        bh=ZjPuZ2qIFOe0pV0EgB/pWupzzF43dEg3zZwFq6066qU=;
-        b=Wx3KVD4mtsk12wJOpCDwfjv3dpSKDxNIKePsg9f0Y3UpCadINGya5SsrQJFRH704Zw
-         +lMZldF31M7Od/g4y5ZCh9NNTWcaZ8ysZljTGkszfvnl3Nwp70D5lwkD+GJEtJQk8gpr
-         ihKdWI6OrDfkmqWF96sQsS1uzHflbjoircZoI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=akCNkzVERx/Y0oGKJhx1ylMYJP5fkVmaZ3OcvW4qLDEb7630dh1abBsF6+DZU4UyAe
-         2g0PwgEdrZQ5nc+jAtOM1nXMmAdYvs5QujYD5ASqZfyKR4ms7lwGuDAU2EOO3lPVu+rX
-         G48PsaQmOw1F2kMLZ9YXM3XGKJRaqmrvqKo0Q=
-Received: by 10.223.13.10 with SMTP id z10mr396483faz.69.1308042056770;
-        Tue, 14 Jun 2011 02:00:56 -0700 (PDT)
-Received: from localhost.localdomain (abwt98.neoplus.adsl.tpnet.pl [83.8.243.98])
-        by mx.google.com with ESMTPS id b26sm2547126fak.24.2011.06.14.02.00.55
+	with ESMTP id S1755298Ab1FNJWo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2011 05:22:44 -0400
+Received: by fxm17 with SMTP id 17so3446388fxm.19
+        for <git@vger.kernel.org>; Tue, 14 Jun 2011 02:22:42 -0700 (PDT)
+Received: by 10.223.55.200 with SMTP id v8mr53987fag.82.1308042999193;
+        Tue, 14 Jun 2011 02:16:39 -0700 (PDT)
+Received: from vix.int.op5.se (sth-vpn1.op5.com [193.201.96.49])
+        by mx.google.com with ESMTPS id e16sm2558078fak.17.2011.06.14.02.16.36
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 14 Jun 2011 02:00:55 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p5E90SZU011268;
-	Tue, 14 Jun 2011 11:00:38 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p5E90HIi011262;
-	Tue, 14 Jun 2011 11:00:17 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <BANLkTikFTHc4Qiu1YLxXgPhweNnVqMO11Q@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Tue, 14 Jun 2011 02:16:37 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Thunderbird/3.1.10 ThunderGit/0.1a
+In-Reply-To: <BANLkTikQJYYd4sTJoDrL28Bo35+GpV3HgA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175753>
 
-Francis Moreau <francis.moro@gmail.com> writes:
+On 06/14/2011 07:57 AM, Ramkumar Ramachandra wrote:
+> Hi Dimitris et al,
+>=20
+> [+CC: Git List; for wider exposure]
+> [+CC: Jonathan Nieder; he has been involved with translations in the =
+past]
+> [+CC: Junio C Hamano; for authoritative policy advice]
+>=20
+> I think it's a good idea to use a system like Transifex to manage
+> translations for git.git, so that we can attract a large number of
+> non-technical translators.  Further, I think it's a good time to star=
+t
+> off on this now, since many of the i18n bits from =C6var's series are=
+ in
+> 'master'.  So, I'm looking to start off a discussion about how to
+> adapt a translation system into our current patch workflow.  Dimitris
+> is the lead developer of Transifex, and can help with the details.
+>=20
 
-> I have a given revision (tag, sha1 ...) and I'd like to know if that
-> revisions corresponds to what the current HEAD is pointing at.
-> 
-> Could anybody give me some advices for achieving this ?
+It's always better to start coding on changes and then show how those
+changes make life easier for people than to suggest something out of
+thin air and start a discussion about it before applying any work.
 
-If you want to know if given revision (or ref) points at the same
-thing as HEAD, you can use
+I for one have no idea what transifex is, how it works or why it's
+superior to any of the currently existing tools to manage .po files.
+I also have no real interest in translations, although I chip in a
+bit with the swedish one when someone else does the grunt part of the
+work to make it happen. I believe many here share that sentiment with
+me, so you'd probably be better off doing a sales-pitch kind of mail
+to the people who have contributed greatly to the actual translations
+earlier so they can voice their opinions on what system they want to
+use.
 
-  [ "$(git rev-parse HEAD)" = "$(git rev-parse $ref^{commit})" ]
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-or something like that.  The '^{commit}' is here in case $ref points
-only indirectly to commit, via a tag object.
-
-If you want to kow if current HEAD is tagged, you can use instead
-
-  git describe --exact-match HEAD
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
