@@ -1,61 +1,97 @@
-From: "J.H." <warthog9@eaglescrag.net>
-Subject: Re: [PATCH] gitweb: allow space as delimiter in mime.types
-Date: Tue, 14 Jun 2011 12:30:52 -0700
-Message-ID: <4DF7B6EC.6010504@eaglescrag.net>
-References: <1308060595-28294-1-git-send-email-ludwig.nussel@suse.de> <m3ips8v4s2.fsf@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: error: error in sideband demultiplexer
+Date: Tue, 14 Jun 2011 12:32:13 -0700
+Message-ID: <7vhb7sky4i.fsf@alter.siamese.dyndns.org>
+References: <9E9413C214124A0980AADBDFAD7DF28E@aggress.net>
+ <20110614164943.GA26764@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Ludwig Nussel <ludwig.nussel@suse.de>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 14 21:31:09 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Richard Shaw <richard@aggress.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 14 21:32:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWZKN-0002M8-Ua
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 21:31:08 +0200
+	id 1QWZLa-0002xS-9D
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 21:32:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753322Ab1FNTbB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2011 15:31:01 -0400
-Received: from shards.monkeyblade.net ([198.137.202.13]:52212 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751101Ab1FNTbA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2011 15:31:00 -0400
-Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.4/8.14.4) with ESMTP id p5EJUqBF004180
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
-	Tue, 14 Jun 2011 12:30:53 -0700
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Lightning/1.0b3pre Thunderbird/3.1.10
-In-Reply-To: <m3ips8v4s2.fsf@localhost.localdomain>
-X-Enigmail-Version: 1.1.2
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.6 (shards.monkeyblade.net [198.137.202.13]); Tue, 14 Jun 2011 12:30:53 -0700 (PDT)
+	id S1753407Ab1FNTcR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2011 15:32:17 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:52842 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752736Ab1FNTcQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2011 15:32:16 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E0B285568;
+	Tue, 14 Jun 2011 15:34:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=61xRrQttu9GAHQaI8bncY6i86xk=; b=ZViXHI
+	ZnL85pwSSSFbVCJVpxUo+OxRYvhLNvwG9Ff/3R8lSvDF7lEC3H+iGjpDYD3ELz6V
+	lwgFLFeIBYX8L/Y4JLgH1k3JwBv3gW9wEayVPw4Y5LUBzqHCF69qDRdnAqKZ5mlV
+	iMN+OKAV7Axyq6QZxAXhwWOsb+d7aehum4K4c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DMPDRNKmBmbRh2PQgEE8De29PtyY1jiS
+	RahtcMhX09eey0tmsihAJPn4sQifoSDggUWAlGeVDO0+UJzJXb2uuQlrHPZA7X8x
+	WD1PQ0U/rtoCj/TN+CnMy5SOTXOp3k23ycAuQN6dU5Pq7x5TEyOoase9HHPClh8M
+	AklQOxfi+KA=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D9C475567;
+	Tue, 14 Jun 2011 15:34:26 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2A6C85566; Tue, 14 Jun 2011
+ 15:34:26 -0400 (EDT)
+In-Reply-To: <20110614164943.GA26764@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 14 Jun 2011 12:49:43 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5054C67C-96BD-11E0-91A6-85C7C023C68D-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175792>
 
-On 06/14/2011 07:59 AM, Jakub Narebski wrote:
-> Ludwig Nussel <ludwig.nussel@suse.de> writes:
-> 
->> Subject: [PATCH] gitweb: allow space as delimiter in mime.types
-> 
-> A very minor nitpick: perhaps "work with" rather than "allow" would be
-> better?
-> 
->> in openSUSE /etc/mime.types has only spaces. I don't know if there's
->> a canonical reference that says that only tabs are allowed. Mutt at
->> least also accepts spaces. So make gitweb more liberal too.
-> 
-> Ack.
-> 
-> It is obviously correct, as names of MUME types cannot contain spaces,
-> it makes gitweb work with openSUSE /etc/mime.types, and it makes code
-> simpler.
+Jeff King <peff@peff.net> writes:
 
-I agree with Jakub, Ack.
+> On Tue, Jun 14, 2011 at 01:20:32PM +0100, Richard Shaw wrote:
+>
+>> Could someone please give me an explanation of what the following error message means:
+>> 
+>> error: error in sideband demultiplexer
+>
+> The git protocol generally operates over a single stream. Most of that
+> stream will have object data on it, but we also want to be able to pass
+> informational messages. So there is a "sideband", which works something
+> like:
+>
+>   1. The remote end puts a header at the beginning of each packet
+>      telling us whether it's for the data stream or the sideband.
+>
+>   2. We either fork or start a thread to read the data from the remote
+>      and demultiplex it. If it's sideband, we output it to stderr. If
+>      it's data, we pass it on to the main git program.
+>
+> The error message indicates that the thread or forked process
+> implementing the sideband demultiplexer returned an error in its exit
+> code. Usually it will have printed some other error message already that
+> is more specific, but you may have found a case where it doesn't.
+>
+> Which platform are you on? Are you building with threads (i.e., are you
+> setting NO_PTHREADS)? Are there any other error messages? If not, is it
+> possible to use "strace -f" to get a trace that shows the error?
 
-- John 'Warthog9' Hawley
+Another common question to ask is...
+
+Do you have something funky in dot files under $HOME on the remote side
+(e.g. .bash_profile or .login) that cause the process started by the
+non-interactive ssh session we make to the remote end give extra output?
+
+IOW,
+
+    $ ssh that-remote-site "cat /dev/null"
+
+should not give us any extra "greeting".
