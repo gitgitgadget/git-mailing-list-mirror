@@ -1,136 +1,135 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 2/2] archive: support gzipped tar files
-Date: Tue, 14 Jun 2011 21:39:55 +0200
-Message-ID: <4DF7B90B.9050802@lsrfire.ath.cx>
-References: <20110614181732.GA31635@sigill.intra.peff.net> <20110614181821.GA32685@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git is not scalable with too many refs/*
+Date: Tue, 14 Jun 2011 15:47:49 -0400
+Message-ID: <20110614194749.GA1567@sigill.intra.peff.net>
+References: <BANLkTimnCqaEBVreMhnbRBV3r-r1ZzkFcg@mail.gmail.com>
+ <7vtybtm3dl.fsf@alter.siamese.dyndns.org>
+ <BANLkTimNoh3-Jde_-arzwBa=aUR+KK3Xhw@mail.gmail.com>
+ <201106141202.46720.johan@herland.net>
+ <20110614170214.GB26764@sigill.intra.peff.net>
+ <BANLkTin0CjnM_hMaEpMroZdDhhavaoKAv00_4xBqeHj9biToVA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, git-dev@github.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 14 21:40:17 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Johan Herland <johan@herland.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Andreas Ericsson <ae@op5.se>,
+	NAKAMURA Takumi <geek4civic@gmail.com>,
+	A Large Angry SCM <gitzilla@gmail.com>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jun 14 21:47:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWZTD-0006iI-Ca
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 21:40:15 +0200
+	id 1QWZaf-0001t4-Po
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 21:47:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753547Ab1FNTkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2011 15:40:10 -0400
-Received: from india601.server4you.de ([85.25.151.105]:58580 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753393Ab1FNTkI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2011 15:40:08 -0400
-Received: from [192.168.2.106] (p579BE7E7.dip.t-dialin.net [87.155.231.231])
-	by india601.server4you.de (Postfix) with ESMTPSA id EB7B92F8055;
-	Tue, 14 Jun 2011 21:40:05 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; de; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
-In-Reply-To: <20110614181821.GA32685@sigill.intra.peff.net>
+	id S1753729Ab1FNTrw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2011 15:47:52 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51821
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753553Ab1FNTrv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2011 15:47:51 -0400
+Received: (qmail 30221 invoked by uid 107); 14 Jun 2011 19:48:01 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 14 Jun 2011 15:48:01 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Jun 2011 15:47:49 -0400
+Content-Disposition: inline
+In-Reply-To: <BANLkTin0CjnM_hMaEpMroZdDhhavaoKAv00_4xBqeHj9biToVA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175795>
 
-Am 14.06.2011 20:18, schrieb Jeff King:
-> git-archive already supports the creation of tar files. For
-> local cases, one can simply pipe the output to gzip, and
-> having git-archive do the gzip is a minor convenience.
+On Tue, Jun 14, 2011 at 12:20:29PM -0700, Shawn O. Pearce wrote:
+
+> > We would want to store the cache in an on-disk format that could be
+> > searched easily. Possibly something like the packed-refs format would be
+> > sufficient, if we mmap'd and binary searched it. It would be dirt simple
+> > if we used an existing key/value store like gdbm or tokyocabinet, but we
+> > usually try to avoid extra dependencies.
 > 
-> However, when running git-archive against a remote site,
-> having the remote side do the compression can save
-> considerable bandwidth. Service providers could always wrap
-> git-archive to provide that functionality, but this makes it
-> much simpler.
-
-That's a good point and one that was overlooked when this topic came up
-earlier (see http://kerneltrap.org/mailarchive/git/2009/9/10/11507 and
-http://kerneltrap.org/mailarchive/git/2009/9/11/11577).  That
-implementation was ... heavier than yours, but it also avoided an
-unnecessary level of buffering.  I wonder if it makes a measurable
-difference, though.
-
-> Creating gzipped archives is of course more expensive than
-> regular tar archives; however, the amount of work should be
-> comparable to that of creating a zip file, which is already
-> possible. So there should be no new security implications
-> with respect to creating load on a remote server.
+> Yea, not a bad idea. Use a series of SSTable like things, like Hadoop
+> uses. It doesn't need to be as complex as the Hadoop SSTable concept.
+> But a simple sorted string to string mapping file that is immutable,
+> with edits applied by creating an overlay file that contains
+> new/updated entries.
 > 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  Documentation/git-archive.txt |   17 +++++++++++++++--
->  archive-tar.c                 |   27 +++++++++++++++++++++++++++
->  archive.c                     |    1 +
->  archive.h                     |    1 +
->  builtin/archive.c             |    6 ++++++
->  t/t5000-tar-tree.sh           |   26 ++++++++++++++++++++++++++
->  6 files changed, 76 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
-> index 9c750e2..963bec4 100644
-> --- a/Documentation/git-archive.txt
-> +++ b/Documentation/git-archive.txt
-> @@ -34,10 +34,11 @@ OPTIONS
->  -------
->  
->  --format=<fmt>::
-> -	Format of the resulting archive: 'tar' or 'zip'. If this option
-> +	Format of the resulting archive: 'tar', 'tgz', or 'zip'. If this option
->  	is not given, and the output file is specified, the format is
->  	inferred from the filename if possible (e.g. writing to "foo.zip"
-> -	makes the output to be in the zip format). Otherwise the output
-> +	creates the output in the zip format; "foo.tgz" or "foo.tar.gz"
-> +	creates the output in the tgz format). Otherwise the output
->  	format is `tar`.
->  
->  -l::
-> @@ -89,6 +90,12 @@ zip
->  	Highest and slowest compression level.  You can specify any
->  	number from 1 to 9 to adjust compression speed and ratio.
->  
-> +tgz
-> +~~~
-> +-9::
-> +	Highest and slowest compression level. You can specify any
-> +	number from 1 to 9 to adjust compression speed and ratio.
-> +
->  
->  CONFIGURATION
->  -------------
-> @@ -133,6 +140,12 @@ git archive --format=tar --prefix=git-1.4.0/ v1.4.0 | gzip >git-1.4.0.tar.gz::
->  
->  	Create a compressed tarball for v1.4.0 release.
->  
-> +git archive --prefix=git-1.4.0/ -o git-1.4.0.tar.gz v1.4.0
-> +
-> +	Same as above, except that we use the internal gzip. Note that
-> +	the output format is inferred by the extension of the output
-> +	file.
-> +
->  git archive --format=tar --prefix=git-1.4.0/ v1.4.0{caret}\{tree\} | gzip >git-1.4.0.tar.gz::
->  
->  	Create a compressed tarball for v1.4.0 release, but without a
-> diff --git a/archive-tar.c b/archive-tar.c
-> index b1aea87..86c8aa9 100644
-> --- a/archive-tar.c
-> +++ b/archive-tar.c
-> @@ -260,3 +260,30 @@ int write_tar_archive(struct archiver_args *args)
->  	output = output_write;
->  	return write_tar_archive_internal(args);
->  }
-> +
-> +static gzFile gz_file;
-> +static void output_gz(const char *buf, unsigned long len)
-> +{
-> +	if (!gzwrite(gz_file, buf, len))
-> +		die("unable to write compressed stream: %s",
-> +		    gzerror(gz_file, NULL));
-> +}
+> As you point out, we can use the notes tree to tell us the validity of
+> the cache, and do incremental updates. If the current cache doesn't
+> match the notes ref, compute the tree diff between the current cache's
+> source tree and the new tree, and create a new SSTable like thing that
+> has the relevant updates as an overlay of the existing tables. After
+> some time you will have many of these little overlay files, and a GC
+> can just merge them down to a single file.
 
-Does this do the right things when faced with interrupted writes or
-truncated pipes?  I ask because the earlier attempt had a
-gzwrite_or_die() which did that, but I don't know anymore if that is
-strictly needed.  Oh, and bridging the gap between unsigned long and int
-was certainly another reason for the existence of this function.
+I was really hoping that it would be fast enough that we could simply
+blow away the old mapping and recreate it from scratch. That gets us out
+of writing any journaling-type code with overlays. For something like
+svn revisions, it's probably fine to take an extra second or two to
+build the cache after we do a fetch. But it wouldn't scale to something
+that was getting updated frequently.
+
+If we're going to start doing clever database-y things, I'd much rather
+use a proven key/value db solution like tokyocabinet. I'm just not sure
+how to degrade gracefully when the db library isn't available. Don't
+allow reverse mappings? Fallback to something slow?
+
+> The only problem is, you probably want this "reverse notes index" to
+> be indexing a portion of the note blob text, not all of it. That is,
+> we want the SVN note text to say something like "SVN Revision: r1828"
+> so `git log --notes=svn` shows us something more useful than just
+> "r1828". But in the reverse index, we may only want the key to be
+> "r1828". So you need some sort of small mapping function to decide
+> what to put into that reverse index.
+
+I had assumed that we would just be writing r1828 into the note. The
+output via git log is actually pretty readable:
+
+  $ git notes --ref=svn/revisions add -m r1828
+  $ git show --notes=svn/revisions
+  ...
+  Notes (svn/revisions):
+      r1828
+
+Of course this is just one use case.
+
+For that matter, we have to figure out how one would actually reference
+the reverse mapping. If we have a simple, pure-reverse mapping, we can
+just generate and cache them on the fly, and give a special syntax.
+Like:
+
+  $ git log notes/svn/revisions@{revnote:r1828}
+
+which would invert the notes/svn/revisions tree, search for r1828, and
+reference the resulting commit.
+
+If you had something more heavyweight that actually needed to parse
+during the mapping, you might have something like:
+
+  $ : set up the mapping
+  $ git config revnote.svn.map 'SVN Revision: (r[0-9]+)'
+
+  $ : do the reverse; we should be able to build the cache on the fly
+  $ git notes reverse r1828
+  346ab9aaa1cf7b1ed2dd2c0a67bccc5b8ec23f7c
+
+  $ : so really you could have a similar ref syntax like, though
+  $ : this would require some ref parser updates, as we currently
+  $ : assume anything to the left of @{} is a real ref
+  $ git log r1828@{revnote:svn}
+
+The syntaxes are not as nice as having a real ref. In the last example,
+we could probably look for the contents of "@{}" as a possible revnote
+mapping (since we've already had to name it via the configuration), to
+make it "r1828@{svn}". Or you could even come up with a default set of
+revnotes to consider, so that if we lookup "r1828" and it isn't a real
+ref, we fall back to trying r1828@{revnote:svn}.
+
+I dunno. I'm just throwing ideas out at this point.
+
+-Peff
