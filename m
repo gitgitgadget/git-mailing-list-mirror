@@ -1,72 +1,89 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Tue, 14 Jun 2011 12:34:47 +0200
-Message-ID: <BANLkTikxwUhrfiYkd0ci0cps2=S4TYcRoQ@mail.gmail.com>
-References: <BANLkTimnCqaEBVreMhnbRBV3r-r1ZzkFcg@mail.gmail.com>
- <7vtybtm3dl.fsf@alter.siamese.dyndns.org> <BANLkTimNoh3-Jde_-arzwBa=aUR+KK3Xhw@mail.gmail.com>
- <201106141202.46720.johan@herland.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Using Transifex in git.git
+Date: Tue, 14 Jun 2011 16:32:16 +0530
+Message-ID: <BANLkTimXLUG-MZC3AndkequF3wVNwqDOeQ@mail.gmail.com>
+References: <BANLkTikQJYYd4sTJoDrL28Bo35+GpV3HgA@mail.gmail.com> <BANLkTikLJJwfGJp_nshRXGSb-yGOshwzTg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Andreas Ericsson <ae@op5.se>,
-	NAKAMURA Takumi <geek4civic@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	A Large Angry SCM <gitzilla@gmail.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Jun 14 12:35:35 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Dimitris Glezos <glezos@indifex.com>,
+	Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Andreas Ericsson <ae@op5.se>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 14 13:02:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWQy5-0006y6-L8
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 12:35:34 +0200
+	id 1QWRON-0001o6-4z
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 13:02:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756045Ab1FNKf2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2011 06:35:28 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:36549 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756042Ab1FNKf2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2011 06:35:28 -0400
-Received: by pwi15 with SMTP id 15so2549047pwi.19
-        for <git@vger.kernel.org>; Tue, 14 Jun 2011 03:35:27 -0700 (PDT)
+	id S1756172Ab1FNLCj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jun 2011 07:02:39 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:58872 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756167Ab1FNLCh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Jun 2011 07:02:37 -0400
+Received: by wwa36 with SMTP id 36so5751761wwa.1
+        for <git@vger.kernel.org>; Tue, 14 Jun 2011 04:02:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=eA1oEWm/AAtlJp4b9SAcTpLQq7M59c+WmtZ0aOOs250=;
-        b=aO8GC0d1m6Z+VzKOo5XDRkE6ftfxIi9xZNzRBbswCrRWkTnOzeEyFFjCWd8bihKibA
-         df/JMmX/Lejd9J8m8tFhVqCQ45hsvjLc1yE2fv7ksWRq3ECT0BM3rUofx455XxCzVQPb
-         3x0g1v76wvFXQA6mIVWnqK3qpj3vUKlwriwP8=
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=efWWhL/ehfIGe0GsHlEvrds15JVscTqfm1uB15mRdxA=;
+        b=JCO/Lc+fwaIOId7bPJV1K16gTzgxXcKAlL08xV6NdCNnR7vfDDg9cIGV2s4HNWdWb/
+         e7FOgnFlFMPtmEZ4y6vmJ4SEYbwc/3go2KUrQ5wahbGjaB7cGt+iSLCq7tjfNcVlRWdZ
+         QVx6Rc+1twoIljAfg0SFqfMq8CSNuB2SHZ5T4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=gmZGEJCIv/DJUydxyfdNGh/k4ytyBlv0LBNlsPzinqItV4PhGVvBuU+LfvSAQLp6s2
-         mLBB6wWzVfHLFYajl9g5bePYDk/c4MqLaE96r3nNf08snxkOx4YEQKwq6scihsm3qL7t
-         d9h/syWfyuLsocUAqlktq2wOSBqDqAMvIYmkw=
-Received: by 10.68.22.3 with SMTP id z3mr2728871pbe.142.1308047727235; Tue, 14
- Jun 2011 03:35:27 -0700 (PDT)
-Received: by 10.68.41.99 with HTTP; Tue, 14 Jun 2011 03:34:47 -0700 (PDT)
-In-Reply-To: <201106141202.46720.johan@herland.net>
+         :cc:content-type:content-transfer-encoding;
+        b=bZae2buBl5Zdk7YvqsynRl3jG7qZ4ieLVYFErGkb7a2hd8CotVJSiLYIUqjt2PYURn
+         PXk5snvbGoreti6qPijVctrmKNwc3yFwrh7hgBxe/RbOzicJM+/2yKBfrz1BbXJ1fFUi
+         jogYtXOU7d7n2YTVEbgcW8+FWoqYzJxVoOxL0=
+Received: by 10.216.143.7 with SMTP id k7mr5920211wej.95.1308049356272; Tue,
+ 14 Jun 2011 04:02:36 -0700 (PDT)
+Received: by 10.216.1.20 with HTTP; Tue, 14 Jun 2011 04:02:16 -0700 (PDT)
+In-Reply-To: <BANLkTikLJJwfGJp_nshRXGSb-yGOshwzTg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175761>
 
-Heya,
+Hi =C3=86var,
 
-On Tue, Jun 14, 2011 at 12:02, Johan Herland <johan@herland.net> wrote:
-> Not quite sure what you mean by "create a note on 'r651235'". You could
-> devise a scheme where you SHA1('r651235'), and then create a note on the
-> resulting hash.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason writes:
+> =C2=A0* I don't want people to *have* to use any one interface.
+> =C2=A0* Any way of editing the translations will have to comply with =
+git's
+> =C2=A0normal patch submission process.
 
-I was thinking they could annotate anything, even non-sha's, but in
-that case, yes, the sha of the revision would work just as well.
+Thanks for the detailed response.  The way I see it, major changes are
+required in two distinct areas:
+1. The way the user interacts with the web-based UI.  In the current
+UI (of Transifex), everything is one continuous stream; everything is
+auto-saved, and the user makes no indication of a logical change.
+This has to be changed to enforce creation of commit messages for the
+Git project: without a valid commit message and signoff, the
+translations are essentially useless.  Also, authorship information
+isn't available -- so, the user accounts should have a way to keep
+this information, and the Git project should be able to demand that
+this information is available.
+2. The way the system stores the various versions of the translation
+information, and gives it back to the individual projects.  Some
+projects might like the continuous stream to be squashed into one
+commit that says something like "Sync translations with Transifex"
+like it does current, some might like a Subversion dumpstream, while
+others like the Git project might like a fast-import stream. When we
+get the stream, we should be able to import it, rebase the commits as
+necessary, and throw away the commits that we don't like before
+integrating it.
 
+I'll start mocking up a solution.  Are there some issues that I
+haven't covered yet?
 
--- 
-Cheers,
-
-Sverre Rabbelier
+-- Ram
