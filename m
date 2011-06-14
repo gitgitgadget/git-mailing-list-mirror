@@ -1,76 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Mon, 13 Jun 2011 21:41:10 -0700
-Message-ID: <7vtybtm3dl.fsf@alter.siamese.dyndns.org>
-References: <BANLkTimnCqaEBVreMhnbRBV3r-r1ZzkFcg@mail.gmail.com>
- <BANLkTinfVNxYX3kj4DBm1ra=8Ar5ca9UvQ@mail.gmail.com>
- <BANLkTi=PnYmJVXe8tuqdb9UiYnethf1GSw@mail.gmail.com>
- <4DF0EC32.40001@gmail.com>
- <BANLkTimk06eibz99AO_0BwzoL6FWb5pR8A@mail.gmail.com>
- <20110609162604.GC25885@sigill.intra.peff.net>
- <BANLkTimEGjBMrbQpkZfWYPTZ93syiKFHdw@mail.gmail.com>
- <4DF6A8B6.9030301@op5.se> <20110614003029.GA31447@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [GSoC update] Sequencer: Debating the UI
+Date: Tue, 14 Jun 2011 00:31:43 -0500
+Message-ID: <20110614053143.GA24882@elie>
+References: <BANLkTinxx5qFuhwsUt3JeXOO7TjBj8wFvw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>,
-	NAKAMURA Takumi <geek4civic@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	A Large Angry SCM <gitzilla@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 14 06:44:29 2011
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 14 07:32:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWLUK-0005W5-Vs
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 06:44:29 +0200
+	id 1QWMEJ-0002Fe-3Q
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 07:31:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751342Ab1FNEla (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2011 00:41:30 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:65292 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750972Ab1FNEl3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2011 00:41:29 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5037D598E;
-	Tue, 14 Jun 2011 00:43:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nfaknDGUD7M6UybT+ro6s+bGreE=; b=RbGEwr
-	slXzdKzZdcAR+lzCoidhX5f056YGzLE15O2e/YY4oX1oHYeb6BgkcHwObp36Pa2u
-	GoJOjdbEggW2frXgtNLuQJEl3cubPTkso734zp5/KNctbzP7kKrp/FYgVxp+xV/O
-	q5tCjPMJUTEIfdFDEBxooQOqnIhvhbDmyB/3k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JLUWG3s6Pix7RsgPZ33OZ9t0gWcEokyJ
-	W3AbyycBMa/YgF9YfEpnOPdobO+W6PBoe7b7dIARhz7Y7DfnRADOsUpFBPeP6aHB
-	WxMb64xVLLXp2mznbunjeTejs/4LASRx81IHYpMCNauEmoBNmXACs+hjPuISPHmp
-	CW7PvuHQ2mA=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CEAFD5989;
-	Tue, 14 Jun 2011 00:43:31 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CCE825988; Tue, 14 Jun 2011
- 00:43:22 -0400 (EDT)
-In-Reply-To: <20110614003029.GA31447@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 13 Jun 2011 20:30:29 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: DB02D840-9640-11E0-BFBB-C8CFB7AE1C3C-77302942!a-pb-sasl-sd.pobox.com
+	id S1752605Ab1FNFbx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2011 01:31:53 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:58515 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752151Ab1FNFbw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2011 01:31:52 -0400
+Received: by iyb14 with SMTP id 14so4413627iyb.19
+        for <git@vger.kernel.org>; Mon, 13 Jun 2011 22:31:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=Jbajsl/QtlRX6JjUvlfFHn/tz+BwwHAkT45fmD+QDe4=;
+        b=nTNGuPJnmpGtBMBVKVcd64h0dEAFbOa5Qd5r8l7B4n03N81IRNv5XZav2QF1Lv597/
+         BF41JyeEpNIKiH+nxbPD+BLlYmdznLnlOYq0T7ur0ARadsB+9ox00nBY7WZcIknksZm8
+         KBBS55Gp+Ot/d4vpaL2h34vFI4wLI0ndfnkng=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=k7yHiq8FuV3OBjhbhu/PSJDRkVhigop/7/6KdvwNmlphNEzF67xq0/vmU0xBWktro9
+         nCTC6eHslmDVTsxuUZYJs2i38z9457XpgMlMlpdYQQ2zMsOJ8IpStn1uwHmCk9gWq2hq
+         NEq1K/jmJOun0CcqhdmjjgnRmSlgQ9Z4C6rTY=
+Received: by 10.42.149.72 with SMTP id u8mr7176952icv.445.1308029512130;
+        Mon, 13 Jun 2011 22:31:52 -0700 (PDT)
+Received: from elie (adsl-68-255-110-0.dsl.chcgil.ameritech.net [68.255.110.0])
+        by mx.google.com with ESMTPS id d6sm5405984icx.13.2011.06.13.22.31.49
+        (version=SSLv3 cipher=OTHER);
+        Mon, 13 Jun 2011 22:31:50 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <BANLkTinxx5qFuhwsUt3JeXOO7TjBj8wFvw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175745>
 
-Jeff King <peff@peff.net> writes:
+Ramkumar Ramachandra wrote:
 
-> I suspect the feature would be really easy to implement, if somebody is
-> looking for a gentle introduction to git, or a fun way to spend an hour.
+> I might like
+> to send a quick series based on my earlier series for inclusion, but I
+> can't figure out a good subset:
 
-I would rather want to see if somebody can come up with a flexible reverse
-mapping feature around notes. It does not have to be completely generic,
-just being flexible enough is fine.
+I would love to use a working "cherry-pick --continue". :)  I would
+use it like this:
+
+	$ : grumble, grumble, source package format that requires a
+	$ : tarball followed by a linear sequence of patches
+	$ git checkout -b release+patches v1.0
+	$ git cherry-pick --no-merges -x -s HEAD..origin/master
+	... ticks away for a while, then presents a conflict
+	$ git diff; fix fix fix; git add -u; make test; git commit -v
+	$ git cherry-pick --continue
+	...
+
+	$ git diff origin/master; # matches up?  good.
+	$ git format-patch -k --patience -o patches v1.0..HEAD
+
+Speaking of which, do you have a git tree that testers should use /
+send patches against?  E.g., is the "sequencer" branch at
+git://github.com/artagnon/git.git the one to play with?
+
+Thanks; exciting times.
+
+Regards,
+Jonathan
