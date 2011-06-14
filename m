@@ -1,113 +1,65 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Is current HEAD pointing at a given revision ?
-Date: Tue, 14 Jun 2011 18:17:22 +0200
-Message-ID: <201106141817.23585.jnareb@gmail.com>
-References: <BANLkTikFTHc4Qiu1YLxXgPhweNnVqMO11Q@mail.gmail.com> <m3mxhkvlcw.fsf@localhost.localdomain> <BANLkTimMkOS_Q9gb_ta2P3NSMGyNJtKgJA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: error: error in sideband demultiplexer
+Date: Tue, 14 Jun 2011 12:49:43 -0400
+Message-ID: <20110614164943.GA26764@sigill.intra.peff.net>
+References: <9E9413C214124A0980AADBDFAD7DF28E@aggress.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Francis Moreau <francis.moro@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 14 18:25:25 2011
+To: Richard Shaw <richard@aggress.net>
+X-From: git-owner@vger.kernel.org Tue Jun 14 18:49:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWWQe-0001SO-IT
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 18:25:24 +0200
+	id 1QWWoJ-0005WS-V1
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 18:49:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751618Ab1FNQZT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jun 2011 12:25:19 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:41073 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751440Ab1FNQZS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2011 12:25:18 -0400
-Received: by fxm17 with SMTP id 17so3823733fxm.19
-        for <git@vger.kernel.org>; Tue, 14 Jun 2011 09:25:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=q3KrLgrrr9SKSNBLyAHQ2ZnqAGkZpuHaL55mdcPzqZQ=;
-        b=QQX7I5jisTvkPEjVIjrckpQ5+qeVMrBQfCly8HKkCfuYj0IHL8+Y1kFL50FTeQtmqB
-         sGN5+YmDTxwTYWtn+81Cui74x7+HAZ3eLz4kdNO5u2b9XYdaXTY3tegfX51DPYrXDLs7
-         8spYF2IVTT6fSiLI+c1Lb/ApPtRhfzp0JnV7A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=TUUQl/3f25+iMDius9JM+zE6/wCvDg7fVX+mDo90rVD22bH8DpYGe6sDUfyHGAalFy
-         JwCkfj6jEDNJmfLEW2sWPnlByBknhRU9v7FmgacQlXu0iiQi5abL3W5EmA2fEDre3+4J
-         tNVX3Jy2Ol8uieq/kPLS05ZmoF51Vu/97itfw=
-Received: by 10.223.76.129 with SMTP id c1mr722901fak.107.1308068245852;
-        Tue, 14 Jun 2011 09:17:25 -0700 (PDT)
-Received: from [192.168.1.15] (abwt98.neoplus.adsl.tpnet.pl [83.8.243.98])
-        by mx.google.com with ESMTPS id n7sm2848057fam.43.2011.06.14.09.17.24
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 14 Jun 2011 09:17:25 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <BANLkTimMkOS_Q9gb_ta2P3NSMGyNJtKgJA@mail.gmail.com>
+	id S1752639Ab1FNQtq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2011 12:49:46 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51383
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751830Ab1FNQtp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2011 12:49:45 -0400
+Received: (qmail 27973 invoked by uid 107); 14 Jun 2011 16:49:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 14 Jun 2011 12:49:55 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Jun 2011 12:49:43 -0400
 Content-Disposition: inline
+In-Reply-To: <9E9413C214124A0980AADBDFAD7DF28E@aggress.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175782>
 
-=46rancis Moreau wrote:
-> On Tue, Jun 14, 2011 at 11:00 AM, Jakub Narebski <jnareb@gmail.com> w=
-rote:
-> > Francis Moreau <francis.moro@gmail.com> writes:
-> >
-> > > I have a given revision (tag, sha1 ...) and I'd like to know if t=
-hat
-> > > revisions corresponds to what the current HEAD is pointing at.
-> > >
-> > > Could anybody give me some advices for achieving this ?
-> >
-> > If you want to know if given revision (or ref) points at the same
-> > thing as HEAD, you can use
-> >
-> > =A0[ "$(git rev-parse HEAD)" =3D "$(git rev-parse $ref^{commit})" ]
-> >
-> > or something like that. =A0The '^{commit}' is here in case $ref poi=
-nts
-> > only indirectly to commit, via a tag object.
-> >
->=20
-> I see thanks.
->=20
-> I'm not sure what the ^{commit} is for because in the case of tag
-> object, git-rev-parse seems to work fine without the suffix:
->=20
-> git rev-parse v2.6.39
-> 8b0753a3df28c21b0570fa21362c5f1b3b4f59bf
->=20
-> This is in a kernel git repository
+On Tue, Jun 14, 2011 at 01:20:32PM +0100, Richard Shaw wrote:
 
-But that is the SHA-1 id of a _tag object_, not of commit (revision)
-it points to. '^{}' means peel to not tag, '^{commit}' means peel to
-commit.
+> Could someone please give me an explanation of what the following error message means:
+> 
+> error: error in sideband demultiplexer
 
-In git repository:
+The git protocol generally operates over a single stream. Most of that
+stream will have object data on it, but we also want to be able to pass
+informational messages. So there is a "sideband", which works something
+like:
 
- $ git rev-parse v1.7.5
- 4d2f8aeba22578022e2d2a56dac37fcdf78d82d4
- $ git rev-parse v1.7.5^{}
- ec014eac0e9e6f30cbbca616090fa2ecf74797e7
- $ git rev-parse v1.7.5^{commit}
- ec014eac0e9e6f30cbbca616090fa2ecf74797e7
- $ git cat-file -t 4d2f8aeba22578022e2d2a56dac37fcdf78d82d4
- tag
- $ git cat-file -t ec014eac0e9e6f30cbbca616090fa2ecf74797e7
- commit
+  1. The remote end puts a header at the beginning of each packet
+     telling us whether it's for the data stream or the sideband.
 
- $ git cat-file -t HEAD
- commit
+  2. We either fork or start a thread to read the data from the remote
+     and demultiplex it. If it's sideband, we output it to stderr. If
+     it's data, we pass it on to the main git program.
 
---=20
-Jakub Narebski
-Poland
+The error message indicates that the thread or forked process
+implementing the sideband demultiplexer returned an error in its exit
+code. Usually it will have printed some other error message already that
+is more specific, but you may have found a case where it doesn't.
+
+Which platform are you on? Are you building with threads (i.e., are you
+setting NO_PTHREADS)? Are there any other error messages? If not, is it
+possible to use "strace -f" to get a trace that shows the error?
+
+-Peff
