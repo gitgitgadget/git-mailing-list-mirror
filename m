@@ -1,85 +1,74 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Tue, 14 Jun 2011 12:02:46 +0200
-Message-ID: <201106141202.46720.johan@herland.net>
-References: <BANLkTimnCqaEBVreMhnbRBV3r-r1ZzkFcg@mail.gmail.com>
- <7vtybtm3dl.fsf@alter.siamese.dyndns.org>
- <BANLkTimNoh3-Jde_-arzwBa=aUR+KK3Xhw@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Using Transifex in git.git
+Date: Tue, 14 Jun 2011 15:42:12 +0530
+Message-ID: <BANLkTinkc6yZ39JVtBaENikFj5xPKnh9mw@mail.gmail.com>
+References: <BANLkTikQJYYd4sTJoDrL28Bo35+GpV3HgA@mail.gmail.com> <4DF726F4.3000204@op5.se>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Andreas Ericsson <ae@op5.se>,
-	NAKAMURA Takumi <geek4civic@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	A Large Angry SCM <gitzilla@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 14 12:04:08 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Dimitris Glezos <glezos@indifex.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Tue Jun 14 12:12:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWQTa-00022D-Vz
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 12:04:03 +0200
+	id 1QWQbv-0005z1-CT
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 12:12:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755902Ab1FNKDx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2011 06:03:53 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:48743 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755840Ab1FNKDw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2011 06:03:52 -0400
-Received: from get-mta-scan01.get.basefarm.net ([10.5.16.4])
- by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LMR00D6TYMDBFB0@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Tue, 14 Jun 2011 12:03:49 +0200 (MEST)
-Received: from get-mta-scan01.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id C1FDF17992DA_DF73205B	for <git@vger.kernel.org>; Tue,
- 14 Jun 2011 10:03:49 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan01.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 1B6371796FB0_DF731C8F	for <git@vger.kernel.org>; Tue,
- 14 Jun 2011 10:02:47 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LMR005YDYKMT030@get-mta-in03.get.basefarm.net> for
- git@vger.kernel.org; Tue, 14 Jun 2011 12:02:47 +0200 (MEST)
-User-Agent: KMail/1.13.7 (Linux/2.6.39-ARCH; KDE/4.6.3; x86_64; ; )
-In-reply-to: <BANLkTimNoh3-Jde_-arzwBa=aUR+KK3Xhw@mail.gmail.com>
+	id S1755971Ab1FNKMe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2011 06:12:34 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:35171 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753764Ab1FNKMd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2011 06:12:33 -0400
+Received: by wya21 with SMTP id 21so3770602wya.19
+        for <git@vger.kernel.org>; Tue, 14 Jun 2011 03:12:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=pIjUsKpQvqu99gxft2Ezs/B0DYY84HjbrJj90ZVCBr8=;
+        b=QIzYCyfsda5mMVyENg/2ZYjjyrJgHttE6oYinbwitlto6/0oTdEaxWDJc1EwraMefA
+         QIN8S1SeMZ7q1LBg6I/s+kbZuK7ZjtGy25ua3IYZ22hA+PlaWB+GUGfxfcJ/sJAyElzc
+         n/TCVgI/wqbltlkCOpkjAN9PETe/6dqg8TDEY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=Xg1Habc8FDET6m+cJ9rG83O1MZqLfvJcA8nBQhhTYjjPSG4lOT5/36mny8HkZ+6D5A
+         6FRq18Xa4FCi6OXt5Ir5wbiIE/LRP+ipRA4Dva2gr/zuhPTY53krJmZzJ0jYrxlT7OpC
+         TguunrQJDbHBdjfA5WVCfrrwGoTf2prlz3ots=
+Received: by 10.216.201.163 with SMTP id b35mr6011312weo.80.1308046352265;
+ Tue, 14 Jun 2011 03:12:32 -0700 (PDT)
+Received: by 10.216.1.20 with HTTP; Tue, 14 Jun 2011 03:12:12 -0700 (PDT)
+In-Reply-To: <4DF726F4.3000204@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175757>
 
-On Tuesday 14 June 2011, Sverre Rabbelier wrote:
-> Heya,
-> 
-> On Tue, Jun 14, 2011 at 06:41, Junio C Hamano <gitster@pobox.com> wrote:
-> > I would rather want to see if somebody can come up with a flexible
-> > reverse mapping feature around notes. It does not have to be
-> > completely generic, just being flexible enough is fine.
-> 
-> Wouldn't it be enough to simply create a note on 'r651235' with as
-> contents the git ref?
+Hi Andreas,
 
-Not quite sure what you mean by "create a note on 'r651235'". You could 
-devise a scheme where you SHA1('r651235'), and then create a note on the 
-resulting hash.
+Andreas Ericsson writes:
+> It's always better to start coding on changes and then show how those
+> changes make life easier for people than to suggest something out of
+> thin air and start a discussion about it before applying any work.
 
-Notes are named by the SHA1 of the object they annotate, but there is no 
-hard requirement (as long as you stay away from "git notes prune") that the 
-SHA1 annotated actually exists as a valid Git object in your repo.
+Yes, this would normally be the case.  My apologies for being unclear
+about the purpose of the original email: It's not a sales pitch where
+I'm trying to sell one translation system - I'm merely trying to find
+out what features the community at large would like from an abstract
+web-based translation engine; what should it look like so that it fits
+into our current patch/ review system?  What this translates to in
+terms of work: evaluation various translation systems, and writing the
+necessary features into the one that comes closest to what we want.
+At a glance, Transifex seems to be a good option, but I could easily
+be wrong about that.
 
-Hence, you can use notes to annotate _anything_ that can be uniquely reduced 
-to a SHA1 hash.
-
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+-- Ram
