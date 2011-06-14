@@ -1,57 +1,86 @@
-From: PJ Weisberg <pjweisberg@gmail.com>
-Subject: Re: Objects deleted before first commit
-Date: Tue, 14 Jun 2011 07:44:13 -0700
-Message-ID: <BANLkTin9_jfvtYdCsJLiWAoOvO2e1f=9SA@mail.gmail.com>
+From: Edmondo Porcu <Edmondo.Porcu@gottexbrokers.com>
+Subject: RE: Objects deleted before first commit
+Date: Tue, 14 Jun 2011 14:46:00 +0000
+Message-ID: <8269100C7056D24A91B672AF7E5E48492D963B@exchange.GottexBrokers.local>
 References: <8269100C7056D24A91B672AF7E5E48492D959E@exchange.GottexBrokers.local>
 	<BANLkTikSPNVbGFRUVh5eSFsxabVWT7SVVA@mail.gmail.com>
 	<8269100C7056D24A91B672AF7E5E48492D95BB@exchange.GottexBrokers.local>
 	<BANLkTik1jTq6otRvHwbo342oH7Dwy+vs_w@mail.gmail.com>
+ <BANLkTin9_jfvtYdCsJLiWAoOvO2e1f=9SA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Edmondo Porcu <Edmondo.Porcu@gottexbrokers.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: David Barr <davidbarr@google.com>
-X-From: git-owner@vger.kernel.org Tue Jun 14 16:44:20 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: PJ Weisberg <pjweisberg@gmail.com>,
+	David Barr <davidbarr@google.com>
+X-From: git-owner@vger.kernel.org Tue Jun 14 16:46:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWUqp-0006AH-Tp
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 16:44:20 +0200
+	id 1QWUsc-0007B3-AU
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 16:46:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751746Ab1FNOoP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2011 10:44:15 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:52419 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751156Ab1FNOoO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2011 10:44:14 -0400
-Received: by fxm17 with SMTP id 17so3736030fxm.19
-        for <git@vger.kernel.org>; Tue, 14 Jun 2011 07:44:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=SsT7wUYFGRIMLFaLhbEA4ZTlbpI3wpHVIQvGOamAlgc=;
-        b=Psrq21egerlHjpe7trMUpofcTujFR+x2Is5ph4NLltBCcPq79Gmkp0QmStO6uaFquc
-         qK/iOzgqfcGL5j/danOOf5E4/st0osG6SC0KgIeruK4CSiF36IOld1/absHHG80dRUpL
-         TY3D8QE2ayfiaBrcldGUx00mdbaCcVzr9mQ2c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=K85eo/9uEBKLYN1E0AbGF6uG0isqI2K16XPXa7k6VWEIFbyv1CtD3M0TpzOBTpA24E
-         KcBr5G6rak8C9d+3FN05AP0UiOLZEl8SPw81k/oiiwlTkxeNhxxzzNvKj0CcDnzS4kCp
-         irrODD4Hgw5odmFdUlnaLWwtQw51W5qdA9dVI=
-Received: by 10.223.161.194 with SMTP id s2mr23887fax.143.1308062653434; Tue,
- 14 Jun 2011 07:44:13 -0700 (PDT)
-Received: by 10.223.73.201 with HTTP; Tue, 14 Jun 2011 07:44:13 -0700 (PDT)
-In-Reply-To: <BANLkTik1jTq6otRvHwbo342oH7Dwy+vs_w@mail.gmail.com>
+	id S1751921Ab1FNOqF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2011 10:46:05 -0400
+Received: from webmail.gottexbrokers.com ([212.203.71.151]:29624 "EHLO
+	Edge.gottexbrokers.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
+	with ESMTP id S1751210Ab1FNOqD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Jun 2011 10:46:03 -0400
+Received: from exchange.GottexBrokers.local (212.203.71.150) by
+ Edge.gottexbrokers.com (212.203.71.151) with Microsoft SMTP Server (TLS) id
+ 14.1.289.1; Tue, 14 Jun 2011 16:46:01 +0200
+Received: from exchange.GottexBrokers.local ([fe80::2516:9680:eb73:c7b9]) by
+ exchange.GottexBrokers.local ([fe80::2516:9680:eb73:c7b9%12]) with mapi id
+ 14.01.0218.012; Tue, 14 Jun 2011 16:46:01 +0200
+Thread-Topic: Objects deleted before first commit
+Thread-Index: Acwqj7T+SjxTfmyrQwaDHlzYRmVyZAAANDGQ///ixwD//95WEIAAJDIAgAAbLID//948oA==
+In-Reply-To: <BANLkTin9_jfvtYdCsJLiWAoOvO2e1f=9SA@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.11.12.203]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175775>
+
+Dear all,
+I have tried to copy my objects folder into my git root folder.
+
+D:\vce\GottwareNet>git cat-file -p 00\1cd91a8a3a3c99ca7aea73c96b3d2174430947
+fatal: Not a valid object name 00\1cd91a8a3a3c99ca7aea73c96b3d2174430947
+
+D:\vce\GottwareNet>ls 00\1cd91a8a3a3c99ca7aea73c96b3d2174430947
+00\1cd91a8a3a3c99ca7aea73c96b3d2174430947
+
+Please help me we are talking about thousands of line of code!!! :(
+
+Edmondo Porcu
+Financial  software architect
+
+
+
+Avenue de Rhodanie 48
+1007 Lausanne
+Switzerland.
+
+Dir  +41 (0) 21  560 30 82
+Fax +41 (0) 21  617 71 55
+Email : edmondo.porcu@gottexbrokers.com
+
+The information in this email is confidential and may be legally privileged. If you are not the intended recipient, you must not read, use or disseminate the information. Although this email and any attachments are believed to be free of any virus or other defect that might affect any computer system into which it is received and opened, it is the responsibility of the recipient to ensure that it is virus free and no responsibility is accepted by the Gottex Group of Companies for any loss or damage arising in any way from its use.
+
+
+-----Original Message-----
+From: PJ Weisberg [mailto:pjweisberg@gmail.com] 
+Sent: mardi 14 juin 2011 16:44
+To: David Barr
+Cc: Edmondo Porcu; git@vger.kernel.org
+Subject: Re: Objects deleted before first commit
 
 On Tuesday, June 14, 2011, David Barr <davidbarr@google.com> wrote:
 > On Tue, Jun 14, 2011 at 11:00 PM, Edmondo Porcu
@@ -72,3 +101,8 @@ were.
 -- 
 
 -PJ
+
+______________________________________________________________________
+This email has been scanned by the MessageLabs Email Security System.
+For more information please visit http://www.messagelabs.com/email 
+______________________________________________________________________
