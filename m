@@ -1,85 +1,104 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Git is not scalable with too many refs/*
-Date: Tue, 14 Jun 2011 13:02:14 -0400
-Message-ID: <20110614170214.GB26764@sigill.intra.peff.net>
-References: <BANLkTimnCqaEBVreMhnbRBV3r-r1ZzkFcg@mail.gmail.com>
- <7vtybtm3dl.fsf@alter.siamese.dyndns.org>
- <BANLkTimNoh3-Jde_-arzwBa=aUR+KK3Xhw@mail.gmail.com>
- <201106141202.46720.johan@herland.net>
+Subject: Re: Q: how can i find the upstream merge point of a commit?
+Date: Tue, 14 Jun 2011 13:12:05 -0400
+Message-ID: <20110614171204.GC26764@sigill.intra.peff.net>
+References: <20110608093648.GA19038@elte.hu>
+ <BANLkTiku_qvn73cUDBT=OxY-3jR3raoOhg@mail.gmail.com>
+ <BANLkTimtxESnZ23tRBYYVN1paUmNOhdPyw@mail.gmail.com>
+ <201106141156.56320.johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Andreas Ericsson <ae@op5.se>,
-	NAKAMURA Takumi <geek4civic@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	A Large Angry SCM <gitzilla@gmail.com>
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Ingo Molnar <mingo@elte.hu>,
+	Stephen Rothwell <sfr@canb.auug.org.au>, git@vger.kernel.org,
+	Peter Zijlstra <a.p.zijlstra@chello.nl>,
+	Linus Torvalds <torvalds@linux-foundation.org>
 To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Jun 14 19:02:24 2011
+X-From: git-owner@vger.kernel.org Tue Jun 14 19:12:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWX0R-00039h-9u
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 19:02:23 +0200
+	id 1QWX9x-00006E-0H
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Jun 2011 19:12:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751511Ab1FNRCR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jun 2011 13:02:17 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50129
+	id S1752398Ab1FNRMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2011 13:12:08 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51500
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751214Ab1FNRCR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2011 13:02:17 -0400
-Received: (qmail 28185 invoked by uid 107); 14 Jun 2011 17:02:26 -0000
+	id S1751686Ab1FNRMH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2011 13:12:07 -0400
+Received: (qmail 28428 invoked by uid 107); 14 Jun 2011 17:12:16 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 14 Jun 2011 13:02:26 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Jun 2011 13:02:14 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 14 Jun 2011 13:12:16 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Jun 2011 13:12:05 -0400
 Content-Disposition: inline
-In-Reply-To: <201106141202.46720.johan@herland.net>
+In-Reply-To: <201106141156.56320.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175784>
 
-On Tue, Jun 14, 2011 at 12:02:46PM +0200, Johan Herland wrote:
+On Tue, Jun 14, 2011 at 11:56:56AM +0200, Johan Herland wrote:
 
-> > Wouldn't it be enough to simply create a note on 'r651235' with as
-> > contents the git ref?
+> 2. Interpreting/DWIMing refs
 > 
-> Not quite sure what you mean by "create a note on 'r651235'". You could 
-> devise a scheme where you SHA1('r651235'), and then create a note on the 
-> resulting hash.
+> Changing the ref mappings require a revised set of rules for interpreting 
+> shorthand ref names (expanding them into full ref names), and handling 
+> ambiguities when they arise:
+> [...]
 > 
-> Notes are named by the SHA1 of the object they annotate, but there is no 
-> hard requirement (as long as you stay away from "git notes prune") that the 
-> SHA1 annotated actually exists as a valid Git object in your repo.
+> - "origin/foo" must continue to work, even if "refs/remotes/origin/foo" has 
+> now become "refs/remotes/origin/heads/foo". In other words, "foo/bar" where 
+> "foo" is a valid remote, must try to resolve "bar" against the refspecs 
+> specified for the "foo" remote.
+
+What happens if I ask for foo/bar/baz? Should it try to resolve:
+
+  1. refs/remotes/foo/heads/bar/baz
+
+or
+
+  2. refs/remotes/foo/bar/heads/baz
+
+or both (and if both, in which order)?
+
+I don't know offhand if "git remote" and "git clone" allow slashes in
+remote names, but I don't think we forbid it if somebody configures it
+themselves (and of course, remote names aside, they are free to write
+whatever refspecs they like in the config file).
+
+> - If "refs/tags/foo" does not exist, tag name "foo" is unambiguous if it 
+> exists in one or more "refs/remotes/*/tags/foo" and they all point to the 
+> same SHA1.
 > 
-> Hence, you can use notes to annotate _anything_ that can be uniquely reduced 
-> to a SHA1 hash.
+> - If "refs/tags/foo" does not exist, and more than one 
+> "refs/remotes/*/tags/foo" exist, and they do NOT all point to the same SHA1, 
+> then there is an ambiguity.
+> 
+> - The user may resolve the ambiguity by creating "refs/tags/foo" pointing to 
+> the chosen SHA1 ("refs/tags/foo" takes precedence over 
+> "refs/remotes/*/tags/foo").
+> 
+> - The same rules apply to heads, notes, etc.
 
-I lean against that as a solution. I think "git gc" will probably
-eventually learn to do "git notes prune", at which point we would start
-losing people's data. So I think it is better to keep the definition of
-notes a little tighter now, and say "the left-hand side of a notes
-mapping must be a referenced object". We can always loosen it later.
+I'm not sure we need all of these rules for anything but tags. We
+already keep remote heads in a separate namespace, and we don't
+automagically look them up. And that's OK, because the way tags and
+heads work is fundamentally different. I can peek at your remote heads,
+but if I checkout or merge, I better make a local branch that matches
+your remote one.  Whereas with tags, I don't think that is the case.
+They're really a read-only thing, and you want them to stay in the
+remotes namespace.
 
-On top of that, though, the sha1 solution is not all that pleasant. It
-lets you do exact lookups, but you have no way of iterating over the
-list of svn revisions.
-
-I also think we can do something a little more lightweight. The user has
-already created and is maintaining a mapping in one direction via the
-notes. We just need the inverse mapping, which we can generate
-programatically. So it can be a straight cache, with the sha1 of the
-notes tree determining the cache validity (i.e., if the forward mapping
-in the notes tree changes, you regenerate the cache from scratch).
-
-We would want to store the cache in an on-disk format that could be
-searched easily. Possibly something like the packed-refs format would be
-sufficient, if we mmap'd and binary searched it. It would be dirt simple
-if we used an existing key/value store like gdbm or tokyocabinet, but we
-usually try to avoid extra dependencies.
+I think notes should behave more like heads. You can use them as-is if
+you just want to look, but you need to use the full remote name. And if
+you want to do more (like keeping your own notes and merging somebody's
+remote notes in), then you'll make your own local notes branch, and use
+"git notes merge" to keep it up to date.
 
 -Peff
