@@ -1,139 +1,82 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [RFC/PATCH] config.c: Make git_config() work correctly when called
- recursively
-Date: Tue, 14 Jun 2011 19:19:19 +0100
-Message-ID: <4DF7A627.2080600@ramsay1.demon.co.uk>
-References: <4DF106B8.2080902@ramsay1.demon.co.uk> <20110609203958.GA4671@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, johan@herland.net
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jun 15 19:52:17 2011
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: [PATCH] Use correct value when hinting strbuf_read()
+Date: Wed, 15 Jun 2011 20:08:38 +0200
+Message-ID: <1308161318-25637-1-git-send-email-iveqy@iveqy.com>
+Cc: iveqy@iveqy.com, jens.lehmann@web.de, hvoigt@hvoigt.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 15 20:08:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWuGC-00025V-Js
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Jun 2011 19:52:12 +0200
+	id 1QWuW1-00038p-Hx
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Jun 2011 20:08:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752383Ab1FORwH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jun 2011 13:52:07 -0400
-Received: from lon1-post-3.mail.demon.net ([195.173.77.150]:33553 "EHLO
-	lon1-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751725Ab1FORwG (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Jun 2011 13:52:06 -0400
-X-Greylist: delayed 84558 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 Jun 2011 13:52:05 EDT
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by lon1-post-3.mail.demon.net with esmtp (Exim 4.69)
-	id 1QWYEL-0000lc-dE; Tue, 14 Jun 2011 18:20:50 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <20110609203958.GA4671@sigill.intra.peff.net>
+	id S1752494Ab1FOSI2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jun 2011 14:08:28 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:59199 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752619Ab1FOSI1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jun 2011 14:08:27 -0400
+Received: by eyx24 with SMTP id 24so262556eyx.19
+        for <git@vger.kernel.org>; Wed, 15 Jun 2011 11:08:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:sender:from:to:cc:subject:date:message-id
+         :x-mailer;
+        bh=Uxk1482GuqwaQCC5CIebiNQ5pFGROMWpY+oBtqoZg8I=;
+        b=InGTDi1EwcYhmrDgeuNn92pjS//0vGr/pSE7y6aleCkKUGAVX7AAWWn55VOI0UNf8D
+         Klxv6Vz0GGSrxtScZ6mP3o+nfZgP8LsL0pD9qSl+VaP2xF1sH5h35FjpAWEQ7gKVyQWe
+         8uKIatHR1M9/hC/95A6Jzb3txcYDq0cmAlup0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:from:to:cc:subject:date:message-id:x-mailer;
+        b=fUZi7lEJZFfZJQS+D8SK+VuH13EyjEk9LmBJ1S/dpSIp4mTqSSL9h9Y1GXW9hXM7sk
+         4Yq+PgLLLe+nded1ZdCujlNrQlUeiIU0pQZQN+VCjGShrIuB3orotmVoEpyoo6Eznb5p
+         emHBd2DWNzBkzVGzlLU4DvcPIu6JAZFr5J6oM=
+Received: by 10.213.27.148 with SMTP id i20mr1292753ebc.145.1308161305993;
+        Wed, 15 Jun 2011 11:08:25 -0700 (PDT)
+Received: from kolya (h8n2fls303o1100.telia.com [195.67.191.8])
+        by mx.google.com with ESMTPS id g48sm617094eea.26.2011.06.15.11.08.24
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 15 Jun 2011 11:08:25 -0700 (PDT)
+Received: from iveqy by kolya with local (Exim 4.72)
+	(envelope-from <iveqy@kolya>)
+	id 1QWuW8-0006g3-OC; Wed, 15 Jun 2011 20:08:43 +0200
+X-Mailer: git-send-email 1.7.5.1.230.ga2029.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175844>
 
-[Sorry for the late reply - I've been away from email for several days...]
+The git strbuf allows for each read to hint about the size of the
+string. In this case the the string can never be longer than 41
+characters, as it cannot contain more than a single hex-sha1 and a
+newline.
 
-Jeff King wrote:
-> On Thu, Jun 09, 2011 at 06:45:28PM +0100, Ramsay Jones wrote:
-> 
->> The recursive call to git_config() is due to the "schizophrenic stat"
->> functions on cygwin, and is arrived at as follows:
+So let's use 41 instead of 1024 to reduce the memory footprint.
 
-[...]
+Signed-off-by: Fredrik Gustafsson <iveqy@iveqy.com>
+Mentored-by: Jens Lehmann <Jens.Lehmann@web.de>
+Mentored-by: Heiko Voigt <hvoigt@hvoigt.net>
+---
+ submodule.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> Wow, that's quite a call-chain.
-
-:-P
-
->> I have not sent this patch to the list before, since I had planned to find
->> a different solution first, so this (updated patch) is more by way of an
->> extended bug-report! Having said that, it works fine ...
-> 
-> I think it's actually a pretty sane approach. Your other option would be
-> not lazily configuring cygwin stat, which means putting an extra very
-> early stat call somewhere.
-> 
-> But look at how deep the call chain above is. And consider how the bug
-> manifested itself: silently ignoring some config. So I wouldn't be
-> terribly surprised if there is another such recursion hiding somewhere,
-> or if we manage to introduce one accidentally in the future.
-> 
-> So making git_config safe for recursion seems like a good solution for
-> future maintainability.
-
-Indeed, that is exactly why this was my first (and so far only) solution
-to this problem; it is simple, safe and resilient in the face of future
-patches! [I'm not going to commit to auditing all of the current calls to
-git_config(), checking all subsequent call-chains for calls to [l]stat(),
-let alone all future changes to git.]
-
-However, I anticipated some resistance to this approach, so I have intended
-to find another solution (for about 4 months now!), in order to present the
-list with some alternatives. I would be quite happy not to bother ;-)
-
-[Actually, one of my preferred solutions is to revert commit adbc0b6 et. seq.,
-but that is a whole different discussion!]
-
-> The patch looks sane from my quick skim, though:
-> 
->> -static FILE *config_file;
->> -static const char *config_file_name;
->> -static int config_linenr;
->> -static int config_file_eof;
->> +typedef struct config_file {
->> +	struct config_file *prev;
->> +	FILE *f;
->> +	const char *name;
->> +	int linenr;
->> +	int eof;
->> +	struct strbuf value;
->> +	char var[MAXNAME];
->> +} config_file;
->> +
->> +static config_file *cf;
-> 
-> Since you've nicely encapsulated all of the global data in this struct,
-> maybe it is worth simply passing a struct pointer down the call-chain
-> instead of relying on a global pointer. Then you can let the language do
-> its job and stop managing the stack yourself.
-
-The first version of this patch did exactly that! However, that first patch
-failed the test-suite. :(
-
-The failure was caused by a change to the die_bad_config() function, which
-in the current patch looks like this:
-
-    @@ -374,8 +381,8 @@ int git_parse_ulong(const char *value, unsigned long *ret)
+diff --git a/submodule.c b/submodule.c
+index b6dec70..86baf42 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -326,7 +326,7 @@ static int is_submodule_commit_present(const char *path, unsigned char sha1[20])
+ 		cp.no_stdin = 1;
+ 		cp.out = -1;
+ 		cp.dir = path;
+-		if (!run_command(&cp) && !strbuf_read(&buf, cp.out, 1024))
++		if (!run_command(&cp) && !strbuf_read(&buf, cp.out, 41))
+ 			is_present = 1;
  
-     static void die_bad_config(const char *name)
-     {
-    -	if (config_file_name)
-    -		die("bad config value for '%s' in %s", name, config_file_name);
-    +	if (cf && cf->name)
-    +		die("bad config value for '%s' in %s", name, cf->name);
-     	die("bad config value for '%s'", name);
-     }
-
-In order not to change the public interface (note that git_config_int() and
-git_config_ulong() call die_bad_config()), I had to change this function so
-that it only contains the final die() call. Thus, the error message no longer
-included the config filename. This caused the test called 'invalid unit' in
-t1300-repo-config.sh to fail.
-
-I could, of course, have simply changed the expect file so that it would pass
-the test, but I wanted the change to be self-contained and to pass all existing
-tests (ie. the external interface/behaviour should *not* change).
-
-So, I ended up with this (even simpler) patch.
-
-Thank you for your comments on the patch.
-
-ATB,
-Ramsay Jones
+ 		close(cp.out);
+-- 
+1.7.5.1.229.g455f
