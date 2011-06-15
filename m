@@ -1,94 +1,87 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Patch-level-format conversion
-Date: Wed, 15 Jun 2011 15:55:07 -0500
-Message-ID: <20110615205507.GB27172@elie>
-References: <BANLkTimRArtFBqA4BFASjkS9BC1sbSfUJQ@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Using Transifex in git.git
+Date: Wed, 15 Jun 2011 22:58:09 +0200
+Message-ID: <BANLkTimSKGdRKCOzVWZ3gmX_xBUwHoDuaw@mail.gmail.com>
+References: <BANLkTikQJYYd4sTJoDrL28Bo35+GpV3HgA@mail.gmail.com>
+	<BANLkTikLJJwfGJp_nshRXGSb-yGOshwzTg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: sedat.dilek@gmail.com
-X-From: git-owner@vger.kernel.org Wed Jun 15 22:55:19 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Dimitris Glezos <glezos@indifex.com>,
+	Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 15 22:58:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWx7O-00017i-PC
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Jun 2011 22:55:19 +0200
+	id 1QWxAG-0002Z5-Nf
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Jun 2011 22:58:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754900Ab1FOUzN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jun 2011 16:55:13 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:44118 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751387Ab1FOUzM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2011 16:55:12 -0400
-Received: by iyb14 with SMTP id 14so586129iyb.19
-        for <git@vger.kernel.org>; Wed, 15 Jun 2011 13:55:12 -0700 (PDT)
+	id S1755500Ab1FOU6M convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Jun 2011 16:58:12 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:62350 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754113Ab1FOU6L convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Jun 2011 16:58:11 -0400
+Received: by fxm17 with SMTP id 17so686568fxm.19
+        for <git@vger.kernel.org>; Wed, 15 Jun 2011 13:58:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=3U6tHPKIJPt0h4rfOwnkMc0b3jus1cFSlWPx3Zfm/Kk=;
-        b=YCqOO/1Uho36YPCNr3pgryvP0BFh0PyCILfYfQB3YArXSJ4pinJ+P6xIm/MQ0AXKS5
-         G1ZDNn/MtLnmBHQOKVztqYp/WphfQj2W2NXCbE3Ef37LnhLR/UDCBtact9rEiHd3BcRG
-         AxtvluS9mfhrd/2tOMAW/50cELP84Telod2MI=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=P8uhpqCcj2u2YcXLY7LsI8OvYZO4PxBw2mdbhvlSgo0=;
+        b=S4bZ0KUL+/haLNEuxU8UpKACzaHcS/c4MQj8D/sOrABrcYhXmEv1GUQ4W5YgfPN+dw
+         2f2ImQ4pkR7uEciLVhcjTK4ExF0ArEfLyVHJhsclRHFlawqnjOM9WkbY4Ilhn5rrxnCW
+         ezrUIXg9AlCLJHpmA+4zu2lpXLKL5qY9JBksk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=TG4fT3KX9PYOsm4EQBZAsCniHN6OojzmfWgWm0WtJzPOpXiuGDEVyqXL0KWGCjNBZZ
-         IFq94wG1Aw8uWmzrach1Kh02MnOc3UXDeBErWc0x5RgnGemKW78dTAhFJow+pRvRSo83
-         wvwB90otKPZo2CbKj6wuVmdyLa40IHVl3cYWM=
-Received: by 10.231.48.71 with SMTP id q7mr63523ibf.68.1308171311808;
-        Wed, 15 Jun 2011 13:55:11 -0700 (PDT)
-Received: from elie (adsl-69-209-57-157.dsl.chcgil.sbcglobal.net [69.209.57.157])
-        by mx.google.com with ESMTPS id hw7sm727543icc.15.2011.06.15.13.55.09
-        (version=SSLv3 cipher=OTHER);
-        Wed, 15 Jun 2011 13:55:10 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <BANLkTimRArtFBqA4BFASjkS9BC1sbSfUJQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=SLxcCBwHXOcsZSB/FhG9cDfDL2/JmfpmE9ZmRidu5ga3973x7cAIv+aLfl+xc7XMtq
+         Nzh/9Ex1BDdiZSIgkZ5BZRfWlis1XKDOW8yMU4Z6eUBrv3Rvn1huHN+ovtT83VuhRrAO
+         8NB0F9Gj6igSiFsSyFfbZ0aUwbL63AXJJEpx0=
+Received: by 10.223.32.142 with SMTP id c14mr105203fad.59.1308171489823; Wed,
+ 15 Jun 2011 13:58:09 -0700 (PDT)
+Received: by 10.223.114.208 with HTTP; Wed, 15 Jun 2011 13:58:09 -0700 (PDT)
+In-Reply-To: <BANLkTikLJJwfGJp_nshRXGSb-yGOshwzTg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175851>
 
-(+cc: the git list so others can correct me.  I hope that's okay.)
+On Tue, Jun 14, 2011 at 11:37, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <=
+avarab@gmail.com> wrote:
 
-Hi,
+To clarify a bit. I think it'd be great if we can get more
+translations through any scheme possible.
 
-Sedat Dilek wrote:
+However, I'd personally prefer if this was delayed a bit until the
+outstanding po/*.po patches I have have landed in master. I already
+have those locally ready for submission, I'm just going to submit them
+after my current series hits master.
 
-> I have here a patchset extracted from my own git-repo (via git format-patch).
->
-> The project for which those patches are want "p0" format, means no
-> ---- a/... +++ b/... but --- ... +++ ...
->
-> IIRC git does "p1" format as default.
-> Any help? Idea?
+The timeline on that is entirely dependent on when Junio merges my
+patches down.
 
-If I understand correctly, you are in luck.  The "git format-patch
---no-prefix" command thanks to Dscho seems to do exactly that:
+But that's just my 0.02c. I don't think I own i18n in any way, so if
+someone wants to set up some web ui, gather PO files, and submit them
+that's great. More power to them.
 
- $ git log -Sno-prefix -- Documentation/diff-options.txt
- commit eab9a40b6dd5c1c571b1deb264133db47bb4794d
- Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
- Date:   Tue Dec 18 19:32:14 2007 +0000
+> =C2=A0* Any way of editing the translations will have to comply with =
+git's
+> =C2=A0normal patch submission process.
 
-     Teach diff machinery to display other prefixes than "a/" and "b/"
+Also, I just mentioned this because those are our existing patch
+submission guidelines, which I thought would be reasonable to assume
+would be the same in this case. Whether we observe this I think would
+be something for the maintainer to answer.
 
-     With the new options "--src-prefix=<prefix>", "--dst-prefix=<prefix>"
-     and "--no-prefix", you can now control the path prefixes of the diff
-     machinery.  These used to by hardwired to "a/" for the source prefix
-     and "b/" for the destination prefix.
-
-     Initial patch by Pascal Obry.  Sane option names suggested by Linus.
-
-     Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-     Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
-     Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-Hope that helps.
-Jonathan
+Personally I think signed-off-by is silly, and wouldn't mind if we got
+new translations in one giant commit with a crappy commit message, but
+I didn't make the rules.
