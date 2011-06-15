@@ -1,67 +1,67 @@
-From: ydirson@free.fr
-Subject: Re: Commit notes workflow
-Date: Wed, 15 Jun 2011 11:20:13 +0200 (CEST)
-Message-ID: <243233943.1008861308129613120.JavaMail.root@zimbra44-e7.priv.proxad.net>
-References: <201106141215.50689.johan@herland.net>
+From: viresh kumar <viresh.kumar@st.com>
+Subject: Copying Git repository from Linux to Windows.
+Date: Wed, 15 Jun 2011 14:58:34 +0530
+Message-ID: <4DF87B42.1020004@st.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset="ISO-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Yann Dirson <dirson@bertin.fr>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Jun 15 11:20:30 2011
+Cc: Shiraz HASHIM <shiraz.hashim@st.com>,
+	Vipin KUMAR <vipin.kumar@st.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 15 11:28:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWmGy-00061i-VH
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Jun 2011 11:20:29 +0200
+	id 1QWmP4-0001xJ-Bl
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Jun 2011 11:28:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754526Ab1FOJUW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jun 2011 05:20:22 -0400
-Received: from smtp4-g21.free.fr ([212.27.42.4]:46917 "EHLO smtp4-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754357Ab1FOJUV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2011 05:20:21 -0400
-Received: from zimbra44-e7.priv.proxad.net (unknown [172.20.243.194])
-	by smtp4-g21.free.fr (Postfix) with ESMTP id 90C644C8182;
-	Wed, 15 Jun 2011 11:20:14 +0200 (CEST)
-In-Reply-To: <201106141215.50689.johan@herland.net>
-X-Originating-IP: [80.150.211.114]
-X-Mailer: Zimbra 5.0 (ZimbraWebClient - SAF3 (Linux)/5.0.15_GA_2815.UBUNTU8_64)
-X-Authenticated-User: ydirson@free.fr
+	id S1754459Ab1FOJ2p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jun 2011 05:28:45 -0400
+Received: from eu1sys200aog102.obsmtp.com ([207.126.144.113]:52453 "EHLO
+	eu1sys200aog102.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754209Ab1FOJ2p (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Jun 2011 05:28:45 -0400
+Received: from beta.dmz-ap.st.com ([138.198.100.35]) (using TLSv1) by eu1sys200aob102.postini.com ([207.126.147.11]) with SMTP
+	ID DSNKTfh7Sk61wXubgQ0x8OHXyql3b3OOQG7s@postini.com; Wed, 15 Jun 2011 09:28:44 UTC
+Received: from zeta.dmz-ap.st.com (ns6.st.com [138.198.234.13])
+	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id B39C4189
+	for <git@vger.kernel.org>; Wed, 15 Jun 2011 09:28:37 +0000 (GMT)
+Received: from Webmail-ap.st.com (eapex1hubcas4.st.com [10.80.176.69])
+	by zeta.dmz-ap.st.com (STMicroelectronics) with ESMTP id 5A162AE1
+	for <git@vger.kernel.org>; Wed, 15 Jun 2011 09:28:37 +0000 (GMT)
+Received: from [10.199.16.92] (10.199.16.92) by Webmail-ap.st.com
+ (10.80.176.7) with Microsoft SMTP Server (TLS) id 8.2.234.1; Wed, 15 Jun 2011
+ 17:28:36 +0800
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.12) Gecko/20101027 Lightning/1.0b2 Thunderbird/3.1.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175813>
 
-> > A (minor) problem with the second possibility is that this naming
-> > convention could evolve, eg. if we end up with something like was
-> > proposed in [1] for 1.8.0.  Is there any real drawback with the
-> first
-> > suggestion ?
-> > 
-> > [1] http://marc.info/?l=git&m=129661334011986&w=4
-> 
-> My gut feeling is to keep some sort of limit notes refs, and if/when we get 
-> around to implementing my proposal in [1] (or some variation thereof), we 
-> will of course extend the limit to put "refs/remotes/$remote/notes/*" (or 
-> whatever is decided) in the same category as "refs/notes/*".
-> 
-> In the meantime, I'm unsure if it's a good idea to remove the limitation 
-> altogether (allowing notes refs everywhere), since re-introducing a limit at 
-> a later point will then be MUCH harder...
+Hello,
 
-I'm still unsure what that limitation brings to us.  OTOH, it has at least one
-funny downside: when someone tries to refer to some forbidden ref using --ref, it
-gets silently requalified:
+I wanted to copy my complete Linux GIT repo from Linux PC to Windows. I also wanted everything
+related to remote branches too, so need to copy and clone and fetch wouldn't work.
 
-$ git notes --ref=refs/remote-notes/foo add
-$ find .git/refs/notes/ -type f
-.git/refs/notes/refs/remote-notes/foo
-$
+I don't have windows on same network, so i need to copy to memory stick and then to Windows PC.
 
-It just seems so wrong...  Surely we can mitigate it by considering a ref starting
-with "refs/" to be absolute, and thus never prepend "refs/notes/" to it, but it rather
-sounds to me a symptom that we may not want to filter things anyway.
+After completing copy operation on mem stick, i found something strange.
+- git branch shows correct results and is exactly same of state at Linux machine.
+- git log is also fine.
+- git status, shows me a lot of files are modified, which is not present in Linux.
+- git reset --hard also doesn't work and fails with following error.
+
+
+$ git reset --hard HEAD
+error: unable to create symlink arch/microblaze/boot/dts/system.dts (Operation not permitted)
+Checking out files: 100% (36696/36696), done.
+fatal: Could not reset index file to revision 'HEAD'.
+
+
+Any help about this issue would be very helpful.
+
+-- 
+viresh
