@@ -1,100 +1,57 @@
-From: Geoff Russell <geoffrey.russell@gmail.com>
-Subject: Re: gc getting called on each git command ... what's wrong?
-Date: Wed, 15 Jun 2011 10:58:54 +0930
-Message-ID: <BANLkTikdP6XKac9t8v2kyUEta3CB+Ue0PQ@mail.gmail.com>
-References: <BANLkTi=oUARfwvNFNj-_FvZdwxQgibqPOg@mail.gmail.com>
-	<BANLkTiksHRmp102XDJP5+-CLGj8hZXUR=g@mail.gmail.com>
-	<m3pqmodzee.fsf@localhost.localdomain>
-Reply-To: geoffrey.russell@gmail.com
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Test 9500 - unhelpful without Perl::CGI
+Date: Tue, 14 Jun 2011 19:37:15 -0700
+Message-ID: <BANLkTikj0GQCN94PvZz6n6fJJb5sHMApig@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 15 03:29:02 2011
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 15 04:37:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWeui-0004m0-S8
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Jun 2011 03:29:01 +0200
+	id 1QWfzF-0005bQ-Sq
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Jun 2011 04:37:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754319Ab1FOB2z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jun 2011 21:28:55 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:40960 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752837Ab1FOB2z convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Jun 2011 21:28:55 -0400
-Received: by ewy4 with SMTP id 4so2278582ewy.19
-        for <git@vger.kernel.org>; Tue, 14 Jun 2011 18:28:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=H8K+LSGHisZiVP/MvKMRru3HU/Yz9nt/P56kCbjLoW4=;
-        b=m1Yepjr9mPTnxAx0USkPJ8Gel6O5T1iU5JoXg1IiPVC4VwBdu7/2zm+cGQZzgiWkRM
-         8PWYmEgIKy8wP58DJjcuP0zBkpkKDuThVY1ZgZZ2SCKUGd3Sh0QamV1/GFj7CZU9IDbJ
-         U/ffgyyJD7fsPIrMag+IoYmCvICouwIqpA/sY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:content-type:content-transfer-encoding;
-        b=UUipj5Gby3cb2QXQJZt2juka1OM5PdGyNxALnIVCea8ImPLgtxXZ/FhZNex1pRbgtU
-         ixWHONxI4sRlfCxon46/rpkBP5XoZmMKfWfPf4ApIOxKviW2HITJM6gsraL0M4IZG2CJ
-         bMbNdzNofWZXIoPscHepvvdg3CCSp8aBdu/B0=
-Received: by 10.14.127.15 with SMTP id c15mr3299086eei.44.1308101334071; Tue,
- 14 Jun 2011 18:28:54 -0700 (PDT)
-Received: by 10.14.98.205 with HTTP; Tue, 14 Jun 2011 18:28:54 -0700 (PDT)
-In-Reply-To: <m3pqmodzee.fsf@localhost.localdomain>
+	id S1753916Ab1FOChh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jun 2011 22:37:37 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:50341 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753508Ab1FOChg (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Jun 2011 22:37:36 -0400
+Received: from mail-vw0-f46.google.com (mail-vw0-f46.google.com [209.85.212.46])
+	(authenticated bits=0)
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p5F2bZ4k015674
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Tue, 14 Jun 2011 19:37:36 -0700
+Received: by vws1 with SMTP id 1so4999039vws.19
+        for <git@vger.kernel.org>; Tue, 14 Jun 2011 19:37:35 -0700 (PDT)
+Received: by 10.52.188.105 with SMTP id fz9mr1044398vdc.90.1308105455162; Tue,
+ 14 Jun 2011 19:37:35 -0700 (PDT)
+Received: by 10.52.108.103 with HTTP; Tue, 14 Jun 2011 19:37:15 -0700 (PDT)
+X-Spam-Status: No, hits=-102.979 required=5 tests=AWL,BAYES_00,USER_IN_WHITELIST
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175806>
 
-On Thu, Jun 9, 2011 at 2:39 AM, Jakub Narebski <jnareb@gmail.com> wrote=
-:
->
-> Peter Harris <git@peter.is-a-geek.org> writes:
->
-> > On Tue, Jun 7, 2011 at 9:33 PM, Geoff Russell wrote:
-> > >
-> > > As of today, almost every time I do a git command, gc is getting
-> > > invoked.
-> >
-> > > =A0=A0There are 96 pack files.
-> >
-> > That's why. See gc.autopacklimit in "git help config" -- by default=
-,
-> > git will gc if there are more than 50 pack files.
+This has probably been going on forever, and the only reason I noticed
+is that I had a machine that doesn't have perl-CGI installed.
 
-Thanks to everybody. This is exactly what was happening and the problem=
-s went
-away when I set the packSizeLimit higher ... 3000M
+I'm talking about t9500-gitweb-standalone-no-errors.
 
->
-> Actually it looks like it is combination of this and packSizeLimit se=
-t
-> to 30M. =A0Git notices that it has too many packfiles, and tries to
-> repack them, but packlimit forces Git to split it into small
-> packfiles... and end up with more packfiles than limit anyway.
->
-> Perhaps git should notice that it has nonsensical combination of
-> options...
+Anyway, if you don't have that, the test fails at everything, and it
+does so without any clues about _why_ it fails. I ended up figuring it
+out by doing a "strace -f" to see what seems to be wrong.
 
-That would be nice. It should be reasonably easy to work out that the
-packSizeLimit
-will guarantee too many pack files after the gc. Disobeying a users
-wishes shouldn't
-be undertaken lightly, but sometimes we stuff up :)
+Maybe that test could have some additional check for "is perl::CGI
+installed at all" and at least give a useful error message rather than
+just saying it failed?
 
-Cheers,
-Geoff.
-
---
-6 Fifth Ave,
-St Morris, S.A. 5068
-Australia
-Ph: 041 8805 184 / 08 8332 5069
-http://perfidy.com.au
+                    Linus
