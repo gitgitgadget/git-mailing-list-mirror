@@ -1,61 +1,133 @@
-From: Stephen Bash <bash@genarts.com>
-Subject: Re: no autocrlf on Visual Studio subdirectory
-Date: Wed, 15 Jun 2011 10:16:08 -0400 (EDT)
-Message-ID: <5843516.7553.1308147368895.JavaMail.root@mail.hq.genarts.com>
-References: <BANLkTikbnKNHxt5wKDjUWYby+p3w0cHcgg@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [msysGit] Re: Trailing spaces in branchname (git-svn)
+Date: Wed, 15 Jun 2011 16:38:15 +0200
+Message-ID: <BANLkTikgF53tKbUsJJznENAiW8Smm5ePPA@mail.gmail.com>
+References: <0014af8a-3b24-4398-88aa-7a3e460f2283@s11g2000yqh.googlegroups.com>
+ <AANLkTinZnd0R8Rnv4kaiJAGP0qKEwgbU+nP=donmbEbp@mail.gmail.com>
+ <12ada6de-4345-4259-b832-371a74df9775@l6g2000vbn.googlegroups.com>
+ <BANLkTikaeXxRMJErAYy3-LSrvfNZXAbEEw@mail.gmail.com> <b8767de1-ab2c-4d2a-9024-9ad9b29c614d@j9g2000vbs.googlegroups.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Aaron Gray <aaronngray.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 15 16:16:30 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: msysGit <msysgit@googlegroups.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Barthus <magnus.kallstrom@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 15 16:39:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWqtO-0006iO-Eh
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Jun 2011 16:16:26 +0200
+	id 1QWrFF-0001xN-IP
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Jun 2011 16:39:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754910Ab1FOOQR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jun 2011 10:16:17 -0400
-Received: from hq.genarts.com ([173.9.65.1]:54622 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754800Ab1FOOQQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2011 10:16:16 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 47D0815C8005;
-	Wed, 15 Jun 2011 10:16:15 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id iZfXyWmwMz1o; Wed, 15 Jun 2011 10:16:09 -0400 (EDT)
-Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
-	by mail.hq.genarts.com (Postfix) with ESMTP id ECA8515C8001;
-	Wed, 15 Jun 2011 10:16:08 -0400 (EDT)
-In-Reply-To: <BANLkTikbnKNHxt5wKDjUWYby+p3w0cHcgg@mail.gmail.com>
-X-Mailer: Zimbra 6.0.10_GA_2692 (ZimbraWebClient - SAF3 (Mac)/6.0.10_GA_2692)
+	id S1755442Ab1FOOi4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Jun 2011 10:38:56 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:62257 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755246Ab1FOOi4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Jun 2011 10:38:56 -0400
+Received: by pzk9 with SMTP id 9so288433pzk.19
+        for <git@vger.kernel.org>; Wed, 15 Jun 2011 07:38:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=2gQRUmHtlzH9LRneWMKvEAMI+4q6+K5+tdFkiDIeohw=;
+        b=BcbgnAdJlhJ50SCe0qpx+OWUg5PVhF02EFotj+TSVDQEuhHNQex2/3NrJkqryFUCuQ
+         BFRo+BnpCCwMrQCnK2j65oHbj5jPZRGceRv6MpWatjSrfBoVjBR4K2RvN4pGRngSeLPq
+         254WPey7Q/8D4pjKGobAj4d2csL/4Q5Osdc1g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=kk3e1Ib1uwXjXpYkfPqi+x+YE1LUx/2Kz4SkQI9gN0tL854Ff8TCUmaR+4+Cr1eOcY
+         4qs5swg4HnpMtwkUun24w0zCOoKEeshDwDX+F/r/yxYdelfbD99/OP1et0wnUj4Y/XNb
+         R0nv70G70bWTxEl+W/KePKOV7YniqTX3/+KRE=
+Received: by 10.68.71.165 with SMTP id w5mr315422pbu.101.1308148735533; Wed,
+ 15 Jun 2011 07:38:55 -0700 (PDT)
+Received: by 10.68.50.197 with HTTP; Wed, 15 Jun 2011 07:38:15 -0700 (PDT)
+In-Reply-To: <b8767de1-ab2c-4d2a-9024-9ad9b29c614d@j9g2000vbs.googlegroups.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175836>
 
------ Original Message -----
-> From: "Aaron Gray" <aaronngray.lists@gmail.com>
-> To: "Git Mailing List" <git@vger.kernel.org>
-> Sent: Wednesday, June 15, 2011 9:52:58 AM
-> Subject: no autocrlf on Visual Studio subdirectory
-> 
-> I am wondering if there is a way of keeping CRLF's under my
-> VisualStudio2010 subdirectory but applying core.autocrlf on all other
-> repository directories.
+Again, please don't cull the CC-list. When replying, hit "reply all"
+in your e-mail client.
 
-Short answer is gitattributes eol setting.  Git will fallback to core.autocrlf for files that aren't named in the .gitattributes file.
+Also, please don't top-post either. It makes it harder for others to
+follow the discussion. I've corrected the quoting this time.
 
-Potentially useful is this [1] thread.
+On Wed, Jun 15, 2011 at 4:12 PM, Barthus <magnus.kallstrom@gmail.com> w=
+rote:
+> On 15 Juni, 16:00, Erik Faye-Lund <kusmab...@gmail.com> wrote:
+>> Please don't cull the CC-list.
+>>
+>> On Wed, Jun 15, 2011 at 3:38 PM, Barthus <magnus.kallst...@gmail.com=
+> wrote:
+>>
+>> >> This kind of question is usually better to ask on the main Git ma=
+iling
+>> >> list, as it's not really Windows specific.
+>>
+>> > I found a similar (older) thread in the git-mailing-list, discussi=
+ng
+>> > the same issue. This led me to try cloning the same repository on =
+a
+>> > Linux-machine - with success. Linux (at least my distro - Ubuntu)
+>> > handles trailing spaces in directory names.
+>>
+>> > Isn't this a msysgit-issue? (I just want to make sure that I don't
+>> > spend my (and your) time in the wrong place)
+>>
+>> If it works on Linux then yes, it's probably a Git for Windows issue=
+=2E
+>>
+>> Some quick testing reveals that paths can have a trailing space on
+>> Linux, but not on Windows. It sounds to me like you need to modify t=
+he
+>> refname subroutine in git-svn.perl to escape this. Something like th=
+is
+>> seems to work for me:
+>> ---8<---
+>> diff --git a/git-svn.perl b/git-svn.perl
+>> index 7849cfc..7a44145 100755
+>> --- a/git-svn.perl
+>> +++ b/git-svn.perl
+>> @@ -2126,6 +2126,9 @@ sub refname {
+>> =A0 =A0 =A0 =A0 # @{ becomes %40{
+>> =A0 =A0 =A0 =A0 $refname =3D~ s{\@\{}{%40\{}g;
+>>
+>> + =A0 =A0 =A0 # trailing space is not not allowed on Windows
+>> + =A0 =A0 =A0 $refname =3D~ s{ $}{%20};
+>> +
+>> =A0 =A0 =A0 =A0 return $refname;
+>> =A0}
+>>
+>> ---8<---
+>> If it works for you, I'll submit a proper patch for it.
+>
+> Ok, thanks. I'll try as soon as possible (will be away for a few
+> days...)
+>
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/174413/focus=174496
+You might want to try this patch instead, as it deals with refnames
+like "foo /bar" and "foo \bar" also:
 
-HTH,
-Stephen
+diff --git a/git-svn.perl b/git-svn.perl
+index 7849cfc..54894e4 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -2126,6 +2126,9 @@ sub refname {
+ 	# @{ becomes %40{
+ 	$refname =3D~ s{\@\{}{%40\{}g;
+
++	# trailing space is not not allowed on Windows
++	$refname =3D~ s{ (?=3D/|\\|$)}{%20}g;
++
+ 	return $refname;
+ }
