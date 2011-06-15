@@ -1,135 +1,110 @@
-From: Sedat Dilek <sedat.dilek@googlemail.com>
-Subject: Re: Patch-level-format conversion
-Date: Thu, 16 Jun 2011 00:28:14 +0200
-Message-ID: <BANLkTi=w1SP6zEZGs1WQ_2L0bWQ2cneNSQ@mail.gmail.com>
-References: <BANLkTimRArtFBqA4BFASjkS9BC1sbSfUJQ@mail.gmail.com>
-	<20110615205507.GB27172@elie>
-	<BANLkTim8bdVGo8u_HzZpE_5+xmPe_O+_Dw@mail.gmail.com>
-	<7v39jakajn.fsf@alter.siamese.dyndns.org>
-Reply-To: sedat.dilek@gmail.com
+From: Jeff King <peff@github.com>
+Subject: [RFC/PATCH 0/7] user-configurable git-archive output formats
+Date: Wed, 15 Jun 2011 18:30:30 -0400
+Message-ID: <20110615223030.GA16110@sigill.intra.peff.net>
+References: <20110614181732.GA31635@sigill.intra.peff.net>
+ <20110614181821.GA32685@sigill.intra.peff.net>
+ <4DF7B90B.9050802@lsrfire.ath.cx>
+ <20110614201433.GB1567@sigill.intra.peff.net>
+ <20110614204521.GA12776@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 16 00:28:21 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"J.H." <warthog19@eaglescrag.net>, git@vger.kernel.org,
+	git-dev@github.com
+To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Thu Jun 16 00:30:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWyZQ-0005VX-O6
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 00:28:21 +0200
+	id 1QWybe-0006Yp-91
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 00:30:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754178Ab1FOW2Q convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Jun 2011 18:28:16 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:62434 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753305Ab1FOW2P convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Jun 2011 18:28:15 -0400
-Received: by qyg14 with SMTP id 14so506821qyg.19
-        for <git@vger.kernel.org>; Wed, 15 Jun 2011 15:28:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=C/fNOQMl/7K4oKpRThl+5+1ElUFnqIdxx2eksZ7CJTs=;
-        b=q4QigMJUBj1Dfq20pXeJ2ZlQ5Hvm1TKVYvIvWu2THdXSPM+BCqKvo7NS4RESZL6Skq
-         sfKv9Z8StCWaw2kAg/Ldy9jBNnpkqGkHonYqGzOAgsY5lI4CRFe0Ed6hQTrbaFAqfXyV
-         phalkxQZQcTpcXW+ZOnLeq51q2fR7zPozFcfE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=PYncVBSlIUKLrVsJ89oAy9ZEnpLjmf+NINk8kIx8/glkSgajJXg6PtjthYxqImW1Kp
-         qFTfIXtA8HMACkBhJEz+3cB2PdLvUAkPRWqLT9pL54ukXnNySbZTrBmkesHCUSaTkoGh
-         JDwIG/SxewVa3c3wJtnC4IuE45cKmG2vuHCNQ=
-Received: by 10.229.117.95 with SMTP id p31mr179197qcq.97.1308176894846; Wed,
- 15 Jun 2011 15:28:14 -0700 (PDT)
-Received: by 10.229.55.148 with HTTP; Wed, 15 Jun 2011 15:28:14 -0700 (PDT)
-In-Reply-To: <7v39jakajn.fsf@alter.siamese.dyndns.org>
+	id S1754832Ab1FOWad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jun 2011 18:30:33 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55152
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752172Ab1FOWac (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jun 2011 18:30:32 -0400
+Received: (qmail 7335 invoked by uid 107); 15 Jun 2011 22:30:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 15 Jun 2011 18:30:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Jun 2011 18:30:30 -0400
+Content-Disposition: inline
+In-Reply-To: <20110614204521.GA12776@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175856>
 
-Hi Junio,
+On Tue, Jun 14, 2011 at 04:45:21PM -0400, Jeff King wrote:
 
-On Thu, Jun 16, 2011 at 12:13 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Sedat Dilek <sedat.dilek@googlemail.com> writes:
->
->> I played a bit with git format-patch and git diff and got some helpf=
-ul
->> hints from friends of #grml and #quassel.de.
->> Attached is the README.txt I produced some hours ago.
->>
->> Regards,
->> - Sedat -
->>
->> Q: How to generate freetz-conform patches out of a GIT repository?
->>
->> A. Follow these instructions.
->>
->> ### Checkout freetz development branch
->> svn co http://svn.freetz.org/trunk/ freetz-trunk
->> cd freetz-trunk/
->>
->> ### Get latest revision
->> revision=3D$(LC_ALL=3DC svn info | grep "Last Changed Rev" | awk {'p=
-rint $4'})
->> echo $revision
->>
->> ### Turn freetz-trunk source-dir into a GIT repository
->> git add --ignore-errors ./ ; git commit -m "`basename $PWD` SVN revi=
-sion $revision"
->
-> Wouldn't "add ./" add all the cruft in .svn (and its huge "pristine"
-> subdirectory)? =C2=A0Why --ignore-errors?
->
+> The gzip path is not configurable at all. Probably it should read the
+> path and arguments from the config file. In fact, we could even allow
+> arbitrary config like:
+> 
+>   [tarfilter "tgz"]
+>     command = gzip -c
+>     extension = tgz
+>     extension = tar.gz
 
-I used to use it after reading the blog-post in [1].
+Here's a series implementing that. You can configure whatever you want,
+and it includes builtin gzip configuration by default. You can override
+to turn it off, or even switch it to run something like pigz instead.
 
->> ### Edit some files and save changes
->> $EDITOR file1 file2
->>
->> ### Extract patchset
->> git format-patch --no-prefix --no-numbered $FIRST..$LAST
->
-> You would need to record your own changes made by the $EDITOR step in
-> commits before asking format-patch to make patch files out of them, b=
-ut I
-> do not see that step.
->
+My biggest reservation with the patches as-is is that they are very
+tar-centric and not orthogonal. Specifically, they won't handle:
 
-Ooops, yeah missed the git commit command(s) :-(.
-Thanks for the pointer!
+  1. Other streamable archive formats you would want to pipe through
+     compressors. Do any of these actually exist? I guess we could offer
+     "pax" as a format eventually, and it might be like tar with
+     different defaults? I dunno.
 
-> Also it is unclear how you determine $FIRST and $LAST. =C2=A0FIRST mu=
-st name
-> the commit that is the _parent_ of your first commit (i.e. your sampl=
-e
-> command line tells $FIRST to be excluded).
->
+     Fixing this would not be too hard. Instead of these being
+     "tarfilters", they would be "archive filters", and they would chain
+     to some format, defaulting to "tar".  Since there is no other
+     format right now, we could even punt on writing most of the code
+     until somebody adds one. But we would want to get the naming of the
+     config options right, since those are user-facing. Maybe
+     "archivefilter" (unfortunately the more readable archive.filter is
+     a little awkward with the way we parse config files)?
 
-It's just an example...
-IIRC I really did "git format-patch --no-prefix -19" (extract last 19 c=
-ommits).
-Hmmm, remember I got no "origine" for initial commit...
+  2. In theory you might want to plug in external helpers that are not
+     just stream filters, but actually their own container formats (like
+     zip). I think people who want 7zip would want this.
 
->> ### Some git format-patch options explained:
->> =C2=A0 =C2=A0 =C2=A0 --no-prefix: Do not show any source or destinat=
-ion prefix.
->> =C2=A0 =C2=A0-n, --numbered: Name output in [PATCH n/m] format, even=
- with a single patch.
->> -N, --no-numbered: Name output in [PATCH] format.
->>
->>
->> - Sedat Dilek <sedat.dilek@gmail.com> (15-Jun-2011)
->
+     But how does git-archive interact with the helper? By definition
+     the data it wants is the set of files, not a single stream. So
+     either:
 
-- Sedat -
+       a. We give the helper a temporary exported checkout, and it
+          generates the stream from that.
 
-[1] http://who-t.blogspot.com/2009/06/git-patches-from-tarballs.html
+       b. We use tar as the lingua franca of streaming file containers,
+          and let the helper deal with converting to its preferred
+          output format.
+
+      Option (a) seems horribly inefficient on disk I/O. And if we did
+      want to do that, I think it's largely unrelated to this patch
+      series.
+
+      You can actually do option (b) with this series. In its worst
+      case, you can do the same as (a): just untar into a temporary
+      directory and compress from there. But a well-written helper could
+      convert tar into the output format on the fly.
+
+The patches are:
+
+  [1/7]: archive: reorder option parsing and config reading
+  [2/7]: archive: add user-configurable tar-filter infrastructure
+  [3/7]: archive: support user tar-filters via --format
+  [4/7]: archive: advertise user tar-filters in --list
+  [5/7]: archive: refactor format-guessing from filename
+  [6/7]: archive: match extensions from user-configured formats
+  [7/7]: archive: provide builtin .tar.gz filter
+
+-Peff
