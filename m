@@ -1,110 +1,115 @@
-From: Jeff King <peff@github.com>
-Subject: [RFC/PATCH 0/7] user-configurable git-archive output formats
-Date: Wed, 15 Jun 2011 18:30:30 -0400
-Message-ID: <20110615223030.GA16110@sigill.intra.peff.net>
-References: <20110614181732.GA31635@sigill.intra.peff.net>
- <20110614181821.GA32685@sigill.intra.peff.net>
- <4DF7B90B.9050802@lsrfire.ath.cx>
- <20110614201433.GB1567@sigill.intra.peff.net>
- <20110614204521.GA12776@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 1/7] archive: reorder option parsing and config reading
+Date: Wed, 15 Jun 2011 18:31:28 -0400
+Message-ID: <20110615223128.GA16807@sigill.intra.peff.net>
+References: <20110615223030.GA16110@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
 	"J.H." <warthog19@eaglescrag.net>, git@vger.kernel.org,
 	git-dev@github.com
 To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Thu Jun 16 00:30:43 2011
+X-From: git-owner@vger.kernel.org Thu Jun 16 00:31:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWybe-0006Yp-91
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 00:30:38 +0200
+	id 1QWycZ-000761-RX
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 00:31:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754832Ab1FOWad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jun 2011 18:30:33 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55152
+	id S1754519Ab1FOWbb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jun 2011 18:31:31 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55166
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752172Ab1FOWac (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2011 18:30:32 -0400
-Received: (qmail 7335 invoked by uid 107); 15 Jun 2011 22:30:43 -0000
+	id S1752415Ab1FOWbb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jun 2011 18:31:31 -0400
+Received: (qmail 7407 invoked by uid 107); 15 Jun 2011 22:31:41 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 15 Jun 2011 18:30:43 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Jun 2011 18:30:30 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 15 Jun 2011 18:31:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Jun 2011 18:31:28 -0400
 Content-Disposition: inline
-In-Reply-To: <20110614204521.GA12776@sigill.intra.peff.net>
+In-Reply-To: <20110615223030.GA16110@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175857>
 
-On Tue, Jun 14, 2011 at 04:45:21PM -0400, Jeff King wrote:
+The archive command does three things during its
+initialization phase:
 
-> The gzip path is not configurable at all. Probably it should read the
-> path and arguments from the config file. In fact, we could even allow
-> arbitrary config like:
-> 
->   [tarfilter "tgz"]
->     command = gzip -c
->     extension = tgz
->     extension = tar.gz
+  1. parse command-line options
 
-Here's a series implementing that. You can configure whatever you want,
-and it includes builtin gzip configuration by default. You can override
-to turn it off, or even switch it to run something like pigz instead.
+  2. setup the git directory
 
-My biggest reservation with the patches as-is is that they are very
-tar-centric and not orthogonal. Specifically, they won't handle:
+  3. read config
 
-  1. Other streamable archive formats you would want to pipe through
-     compressors. Do any of these actually exist? I guess we could offer
-     "pax" as a format eventually, and it might be like tar with
-     different defaults? I dunno.
+During phase (1), if we see any options that do not require
+a git directory (like "--list"), we handle them immediately
+and exit, making it safe to abort step (2) if we are not in
+a git directory.
 
-     Fixing this would not be too hard. Instead of these being
-     "tarfilters", they would be "archive filters", and they would chain
-     to some format, defaulting to "tar".  Since there is no other
-     format right now, we could even punt on writing most of the code
-     until somebody adds one. But we would want to get the naming of the
-     config options right, since those are user-facing. Maybe
-     "archivefilter" (unfortunately the more readable archive.filter is
-     a little awkward with the way we parse config files)?
+Step (3) must come after step (2), since the git directory
+may influence configuration.  However, this leaves no
+possibility of configuration from step (3) impacting the
+command-line options in step (1) (which is useful, for
+example, for supporting user-configurable output formats).
 
-  2. In theory you might want to plug in external helpers that are not
-     just stream filters, but actually their own container formats (like
-     zip). I think people who want 7zip would want this.
+Instead, let's reorder this to:
 
-     But how does git-archive interact with the helper? By definition
-     the data it wants is the set of files, not a single stream. So
-     either:
+  1. setup the git directory, if it exists
 
-       a. We give the helper a temporary exported checkout, and it
-          generates the stream from that.
+  2. read config
 
-       b. We use tar as the lingua franca of streaming file containers,
-          and let the helper deal with converting to its preferred
-          output format.
+  3. parse command-line options
 
-      Option (a) seems horribly inefficient on disk I/O. And if we did
-      want to do that, I think it's largely unrelated to this patch
-      series.
+  4. if we are not in a git repository, die
 
-      You can actually do option (b) with this series. In its worst
-      case, you can do the same as (a): just untar into a temporary
-      directory and compress from there. But a well-written helper could
-      convert tar into the output format on the fly.
+This should have the same external behavior, but puts
+configuration before command-line parsing.
 
-The patches are:
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ archive.c |   18 ++++++++++++++----
+ 1 files changed, 14 insertions(+), 4 deletions(-)
 
-  [1/7]: archive: reorder option parsing and config reading
-  [2/7]: archive: add user-configurable tar-filter infrastructure
-  [3/7]: archive: support user tar-filters via --format
-  [4/7]: archive: advertise user tar-filters in --list
-  [5/7]: archive: refactor format-guessing from filename
-  [6/7]: archive: match extensions from user-configured formats
-  [7/7]: archive: provide builtin .tar.gz filter
-
--Peff
+diff --git a/archive.c b/archive.c
+index 42f2d2f..2616676 100644
+--- a/archive.c
++++ b/archive.c
+@@ -387,17 +387,27 @@ static int parse_archive_args(int argc, const char **argv,
+ int write_archive(int argc, const char **argv, const char *prefix,
+ 		int setup_prefix)
+ {
++	int nongit = 0;
+ 	const struct archiver *ar = NULL;
+ 	struct archiver_args args;
+ 
+-	argc = parse_archive_args(argc, argv, &ar, &args);
+ 	if (setup_prefix && prefix == NULL)
+-		prefix = setup_git_directory();
++		prefix = setup_git_directory_gently(&nongit);
++
++	git_config(git_default_config, NULL);
++
++	argc = parse_archive_args(argc, argv, &ar, &args);
++	if (nongit) {
++		/*
++		 * We know this will die() with an error, so we could just
++		 * die ourselves; but its error message will be more specific
++		 * than what we could write here.
++		 */
++		setup_git_directory();
++	}
+ 
+ 	parse_treeish_arg(argv, &args, prefix);
+ 	parse_pathspec_arg(argv + 1, &args);
+ 
+-	git_config(git_default_config, NULL);
+-
+ 	return ar->write_archive(&args);
+ }
+-- 
+1.7.6.rc1.4.g49204
