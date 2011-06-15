@@ -1,78 +1,72 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Copying Git repository from Linux to Windows.
-Date: Wed, 15 Jun 2011 14:41:58 +0200
-Message-ID: <4DF8A896.7080708@op5.se>
-References: <4DF87B42.1020004@st.com> <m3ei2vv0nw.fsf@localhost.localdomain> <4DF891CC.1040700@st.com> <BANLkTik+oUb1QpVTwJfB30_8FsW=4ZVTxA@mail.gmail.com> <4DF89F56.3060200@st.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: Using Transifex in git.git
+Date: Wed, 15 Jun 2011 15:21:49 +0200
+Message-ID: <BANLkTin9bhtB_OPMWCVsbtKBpRXp2o=uLA@mail.gmail.com>
+References: <BANLkTikQJYYd4sTJoDrL28Bo35+GpV3HgA@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: "kusmabite@gmail.com" <kusmabite@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Shiraz HASHIM <shiraz.hashim@st.com>,
-	Vipin KUMAR <vipin.kumar@st.com>
-To: viresh kumar <viresh.kumar@st.com>
-X-From: git-owner@vger.kernel.org Wed Jun 15 14:42:14 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Dimitris Glezos <glezos@indifex.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 15 15:22:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWpQD-00033o-IJ
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Jun 2011 14:42:13 +0200
+	id 1QWq3H-0000jX-7x
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Jun 2011 15:22:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754070Ab1FOMmF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jun 2011 08:42:05 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:61220 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753840Ab1FOMmD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2011 08:42:03 -0400
-Received: by fxm17 with SMTP id 17so361600fxm.19
-        for <git@vger.kernel.org>; Wed, 15 Jun 2011 05:42:00 -0700 (PDT)
-Received: by 10.223.30.82 with SMTP id t18mr543302fac.106.1308141720591;
-        Wed, 15 Jun 2011 05:42:00 -0700 (PDT)
-Received: from vix.int.op5.se (sth-vpn1.op5.com [193.201.96.49])
-        by mx.google.com with ESMTPS id e15sm198619faa.47.2011.06.15.05.41.59
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 15 Jun 2011 05:42:00 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Thunderbird/3.1.10 ThunderGit/0.1a
-In-Reply-To: <4DF89F56.3060200@st.com>
+	id S1754595Ab1FONWa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jun 2011 09:22:30 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:55887 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753337Ab1FONW3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jun 2011 09:22:29 -0400
+Received: by pzk9 with SMTP id 9so222744pzk.19
+        for <git@vger.kernel.org>; Wed, 15 Jun 2011 06:22:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=AFP2ru+86cdkxEYHgC/qPhDwjUZcwac9DXZW3e3HRpg=;
+        b=AensFSBjkQOC3NLl+xcey9KzCVBNOkGKkb1t21GKZ+8N2sVOZDx8Sg/6UtLs1TWpA4
+         judn5Ia8w47Hx+qpgYFbUGIc37tXBTn76SVLXvARemuhPuuUCUQ7DpokyNEmTyPV+hT1
+         /Y8iiGttL8iIhDnu4Gt4nJCs12MJpeb7QAkW0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        b=AU2h4qFUuYp9DLz41z4d9uDMLNB/fZcKOqBZKpDsij4Y3H0lkFrCR1HAufFqP1e6Ne
+         jJL2EUU6OSL7K6ilKD68oqmBKXevA2dIlqgbZzBuHTI5GG3dGj056ZSb5UL5PJpChL5E
+         YC5aPqJFhOrNNTzhn0CeHK5sWLblUACGRo2GI=
+Received: by 10.68.71.165 with SMTP id w5mr220300pbu.101.1308144149124; Wed,
+ 15 Jun 2011 06:22:29 -0700 (PDT)
+Received: by 10.68.50.197 with HTTP; Wed, 15 Jun 2011 06:21:49 -0700 (PDT)
+In-Reply-To: <BANLkTikQJYYd4sTJoDrL28Bo35+GpV3HgA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175829>
 
-On 06/15/2011 02:02 PM, viresh kumar wrote:
-> 
-> I got rid of them with core.filemode as false, but there is one more issue, as pointed out by
-> Andreas. There are few files in kernel with same file name but in different _cases_ (one in caps
-> and another in small.) and so i am getting issues with these now.
-> 
-> And don't have any idea how to get rid of that?
+On Tue, Jun 14, 2011 at 7:57 AM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> I think it's a good idea to use a system like Transifex to manage
+> translations for git.git, so that we can attract a large number of
+> non-technical translators.
 
-You can't. git dubs such filesystems as "retarded" and simply can't
-work around it. Imo, that's the only sensible thing to do.
+Are we sure we want non-technical translators to translate Git, a
+highly technical program with many technical terms?
 
-> And why does kernel have such file names at all?
-> 
-
-Because linux kernel developers are expected to work with linux
-development work using linux and nowhere near enough find it an
-actual problem for anyone to care about fixing it. Note that all
-build-scripts and configuration stuff will have to be fixed as
-well. Complaining about it on lkml will probably have very little
-effect unless you're a very valuable contributor and/or lots of
-other people chime in to agree with you.
-
-If I may ask; Why do you need to be able to work with a linux kernel
-repository on windows?
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+I'm guessing that Git probably should be translated by it's users,
+because we have a lot of Git-jargon that is difficult for people who
+doesn't know Git to translate. But perhaps an initial translation for
+each language is enough to establish a language-specific translation
+of all Git-jargon, and then afterwards we can get help from
+non-technical people to improve the language? I'm just asking, I don't
+know how Transifex works at all...
