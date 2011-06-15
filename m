@@ -1,112 +1,84 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Copying Git repository from Linux to Windows.
-Date: Wed, 15 Jun 2011 13:29:52 +0200
-Message-ID: <201106151329.53839.jnareb@gmail.com>
-References: <4DF87B42.1020004@st.com> <m3ei2vv0nw.fsf@localhost.localdomain> <4DF891CC.1040700@st.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Shiraz HASHIM <shiraz.hashim@st.com>,
-	Vipin KUMAR <vipin.kumar@st.com>
-To: viresh kumar <viresh.kumar@st.com>
-X-From: git-owner@vger.kernel.org Wed Jun 15 13:30:10 2011
+From: mduft@gentoo.org
+Subject: [PATCH] Update the Interix default build configuration.
+Date: Wed, 15 Jun 2011 13:34:18 +0200
+Message-ID: <1308137658-5509-1-git-send-email-mduft@gentoo.org>
+References: <20110615094842.GA16411@elie>
+Cc: gitster@pobox.com, Markus Duft <mduft@gentoo.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 15 13:31:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWoIT-00086H-Px
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Jun 2011 13:30:10 +0200
+	id 1QWoJw-0000VK-AN
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Jun 2011 13:31:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755017Ab1FOLaF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jun 2011 07:30:05 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:50703 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754941Ab1FOLaE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2011 07:30:04 -0400
-Received: by bwz15 with SMTP id 15so365091bwz.19
-        for <git@vger.kernel.org>; Wed, 15 Jun 2011 04:30:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=G0EMbfa55moDcsl9ADELF9+RSr+8NbYSMigv5GlwCsw=;
-        b=gIZmNzHkrgnbe8U8jQVEhaqyBXf8k1qvRSYNDtfyO/qbqvihdlGH+AxTYgurvGVWNi
-         lrJv3Wx9i/aLn+CiX4hV3efsyXrZnPdbe1OZ+0kKohtWvh8V0pcDjwiP2Hf5TdD7i43n
-         Fdk/EG8bcmV9fdv/X5RpGiOiY80droUvO4kXI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=hVaY42Txguqlk0Alpwp0qhfyxbmjRc0z+aYUIZKw6ikKxYtwn8x8XxTDhKblvxk5Ot
-         T8zdKMqClOxohnVS9GHsXphnHfcoatFIvXqPCNqeYYH7oLZOxOz4Yyzuf+bJyK7seLCb
-         y3Xy0GT/I79Sc2JDe4IvUQNXceYxrhJrAS/ik=
-Received: by 10.205.35.1 with SMTP id su1mr399123bkb.129.1308137402601;
-        Wed, 15 Jun 2011 04:30:02 -0700 (PDT)
-Received: from [192.168.1.15] (abwp5.neoplus.adsl.tpnet.pl [83.8.239.5])
-        by mx.google.com with ESMTPS id k16sm364901bks.1.2011.06.15.04.30.00
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 15 Jun 2011 04:30:01 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4DF891CC.1040700@st.com>
-Content-Disposition: inline
+	id S1755101Ab1FOLbf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jun 2011 07:31:35 -0400
+Received: from smtp.salomon.at ([193.186.16.13]:65365 "EHLO sauxb.salomon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755054Ab1FOLbe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jun 2011 07:31:34 -0400
+Received: from servex01.wamas.com (servex01.salomon.at [172.28.2.2])
+	by sauxb.salomon.at (8.12.10/8.12.10) with ESMTP id p5FBVOJR000496;
+	Wed, 15 Jun 2011 13:31:24 +0200 (METDST)
+Received: from s01en22 ([172.28.8.166]) by servex01.wamas.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Wed, 15 Jun 2011 13:31:22 +0200
+Received: by s01en22 (sSMTP sendmail emulation); Wed, 15 Jun 2011 13:34:20 +0200
+X-Mailer: git-send-email 1.7.3.4
+In-Reply-To: <20110615094842.GA16411@elie>
+X-OriginalArrivalTime: 15 Jun 2011 11:31:22.0872 (UTC) FILETIME=[C1156F80:01CC2B4F]
+X-Scanned-By: MIMEDefang 2.54 on 172.28.2.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175826>
 
-On Wed, 15 June 2011, viresh kumar wrote:
-> On 06/15/2011 04:10 PM, Jakub Narebski wrote:
->> viresh kumar <viresh.kumar@st.com> writes:
+Currently, on Interix, libsuacomp is required for building, see [1].
+Since suacomp provides poll() and inttypes.h for all interix versions,
+the NO_*=YesPleas are removed.
 
->>> After completing copy operation on mem stick, i found something strange.
->>> - git branch shows correct results and is exactly same of state at Linux machine.
->>> - git log is also fine.
->>> - git status, shows me a lot of files are modified, which is not present in Linux.
->> 
->> That is probably because stat information is stale... or stat
->> information doesn't work.  Does second "git status" still show files
->> as modified?
-> 
-> Yes. The files status is same.
-> 
->>> - git reset --hard also doesn't work and fails with following error.
->>>
->>> $ git reset --hard HEAD
->>> error: unable to create symlink arch/microblaze/boot/dts/system.dts (Operation not permitted)
->>> Checking out files: 100% (36696/36696), done.
->>> fatal: Could not reset index file to revision 'HEAD'.
->> 
->> Try setting `core.symlinks` to false, or just try
->> 
->>  $ git -c core.symlinks=false reset --hard HEAD
-[...]
->> BTW. what filesystem do you use?
->> 
-> 
-> It was FAT on memory stick as FAT is also there in Windows PC.
-> More observation: All files marked modified had only changes in file permissions.
-> i.e. 755 instead of 644. chmod doesn't work with FAT so can't change there permissions
-> now.
+Interix versions 3 and 5 miss struct sockaddr_storage, so make git
+avoid using it.
 
-Ah. This is caused by the fact that FAT doesn't store executable
-permission.
+Same for FNMATCH_CASEFOLD, which does not exist for Interix 3 and 5.
 
-> Problem is not only for symlinks but standard c files too.
+[1] http://news.gmane.org/find-root.php?message_id=%3c4DDF4440.4040405%40gentoo.org%3e
 
-So beside setting `core.symlinks` to false, you would have also set
-`core.filemode` to false (and perhaps also `core.ignorecase` to true).
+Signed-off-by: Markus Duft <mduft@gentoo.org>
+---
+ Makefile |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
 
-You might also want to set `core.ignoreStat` to true to try to increase
-performace.
-
-P.S. git-bundle ddidn't work?
-
+diff --git a/Makefile b/Makefile
+index e40ac0c..2939e8d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1124,8 +1124,6 @@ endif
+ 	X = .exe
+ endif
+ ifeq ($(uname_S),Interix)
+-	NO_SYS_POLL_H = YesPlease
+-	NO_INTTYPES_H = YesPlease
+ 	NO_INITGROUPS = YesPlease
+ 	NO_IPV6 = YesPlease
+ 	NO_MEMMEM = YesPlease
+@@ -1136,10 +1134,14 @@ ifeq ($(uname_S),Interix)
+ 	ifeq ($(uname_R),3.5)
+ 		NO_INET_NTOP = YesPlease
+ 		NO_INET_PTON = YesPlease
++		NO_SOCKADDR_STORAGE = YesPlease
++		NO_FNMATCH_CASEFOLD = YesPlease
+ 	endif
+ 	ifeq ($(uname_R),5.2)
+ 		NO_INET_NTOP = YesPlease
+ 		NO_INET_PTON = YesPlease
++		NO_SOCKADDR_STORAGE = YesPlease
++		NO_FNMATCH_CASEFOLD = YesPlease
+ 	endif
+ endif
+ ifneq (,$(findstring MINGW,$(uname_S)))
 -- 
-Jakub Narebski
-Poland
+1.7.3.4
