@@ -1,76 +1,94 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Using Transifex in git.git
-Date: Wed, 15 Jun 2011 22:43:53 +0200
-Message-ID: <BANLkTik7Kb6ae0aRNjL3RcMouhw2gkOwPA@mail.gmail.com>
-References: <BANLkTikQJYYd4sTJoDrL28Bo35+GpV3HgA@mail.gmail.com>
-	<BANLkTin9bhtB_OPMWCVsbtKBpRXp2o=uLA@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Patch-level-format conversion
+Date: Wed, 15 Jun 2011 15:55:07 -0500
+Message-ID: <20110615205507.GB27172@elie>
+References: <BANLkTimRArtFBqA4BFASjkS9BC1sbSfUJQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Dimitris Glezos <glezos@indifex.com>,
-	Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Wed Jun 15 22:44:01 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: sedat.dilek@gmail.com
+X-From: git-owner@vger.kernel.org Wed Jun 15 22:55:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWwwT-0003Pt-Fd
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Jun 2011 22:44:01 +0200
+	id 1QWx7O-00017i-PC
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Jun 2011 22:55:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752901Ab1FOUnz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jun 2011 16:43:55 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:33806 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751260Ab1FOUny (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2011 16:43:54 -0400
-Received: by fxm17 with SMTP id 17so678090fxm.19
-        for <git@vger.kernel.org>; Wed, 15 Jun 2011 13:43:53 -0700 (PDT)
+	id S1754900Ab1FOUzN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jun 2011 16:55:13 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:44118 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751387Ab1FOUzM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jun 2011 16:55:12 -0400
+Received: by iyb14 with SMTP id 14so586129iyb.19
+        for <git@vger.kernel.org>; Wed, 15 Jun 2011 13:55:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=w7RKejA5j+X1I0PgJWEKY1t2imi0BvPRyY0i7LGWCsM=;
-        b=fLpPcplKR4kvI1tcT7vtgatSN1NXHofp5oK/nGI12gm4rW3MroB8xz3LsNcYanFtah
-         mdpJQ4TVXUhOfqHDZoJGcymotncekjBqysHGh/i9oeda/2KXpzvRKBfz3LMvIJ1pTGDZ
-         y1cOxwNXzhDfaKmJBQcfM6sFOoIqhQp0LMiHU=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=3U6tHPKIJPt0h4rfOwnkMc0b3jus1cFSlWPx3Zfm/Kk=;
+        b=YCqOO/1Uho36YPCNr3pgryvP0BFh0PyCILfYfQB3YArXSJ4pinJ+P6xIm/MQ0AXKS5
+         G1ZDNn/MtLnmBHQOKVztqYp/WphfQj2W2NXCbE3Ef37LnhLR/UDCBtact9rEiHd3BcRG
+         AxtvluS9mfhrd/2tOMAW/50cELP84Telod2MI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=cnFnnkP4T7boPfiHnaXwdO4Ys4Yz9cntv8YleSEtyQVTSv4jZSC6AO7GJtjgXyOuub
-         afZKzEh7/3Nd87FYdsH8C8BlTVfTpRN2FxFgrIb9zY0ujkmO6yXen2WehkzYkQTFOqu6
-         HjPeXmYJsba2aHku4jxBL2fAFYzw21hWQaWXk=
-Received: by 10.223.16.136 with SMTP id o8mr109007faa.21.1308170633675; Wed,
- 15 Jun 2011 13:43:53 -0700 (PDT)
-Received: by 10.223.114.208 with HTTP; Wed, 15 Jun 2011 13:43:53 -0700 (PDT)
-In-Reply-To: <BANLkTin9bhtB_OPMWCVsbtKBpRXp2o=uLA@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=TG4fT3KX9PYOsm4EQBZAsCniHN6OojzmfWgWm0WtJzPOpXiuGDEVyqXL0KWGCjNBZZ
+         IFq94wG1Aw8uWmzrach1Kh02MnOc3UXDeBErWc0x5RgnGemKW78dTAhFJow+pRvRSo83
+         wvwB90otKPZo2CbKj6wuVmdyLa40IHVl3cYWM=
+Received: by 10.231.48.71 with SMTP id q7mr63523ibf.68.1308171311808;
+        Wed, 15 Jun 2011 13:55:11 -0700 (PDT)
+Received: from elie (adsl-69-209-57-157.dsl.chcgil.sbcglobal.net [69.209.57.157])
+        by mx.google.com with ESMTPS id hw7sm727543icc.15.2011.06.15.13.55.09
+        (version=SSLv3 cipher=OTHER);
+        Wed, 15 Jun 2011 13:55:10 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <BANLkTimRArtFBqA4BFASjkS9BC1sbSfUJQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175850>
 
-On Wed, Jun 15, 2011 at 15:21, Erik Faye-Lund <kusmabite@gmail.com> wrote:
-> On Tue, Jun 14, 2011 at 7:57 AM, Ramkumar Ramachandra
-> <artagnon@gmail.com> wrote:
->> I think it's a good idea to use a system like Transifex to manage
->> translations for git.git, so that we can attract a large number of
->> non-technical translators.
+(+cc: the git list so others can correct me.  I hope that's okay.)
+
+Hi,
+
+Sedat Dilek wrote:
+
+> I have here a patchset extracted from my own git-repo (via git format-patch).
 >
-> Are we sure we want non-technical translators to translate Git, a
-> highly technical program with many technical terms?
+> The project for which those patches are want "p0" format, means no
+> ---- a/... +++ b/... but --- ... +++ ...
+>
+> IIRC git does "p1" format as default.
+> Any help? Idea?
 
-Well, usually even bad translations (although not horribly bad) are
-better than nothing.
+If I understand correctly, you are in luck.  The "git format-patch
+--no-prefix" command thanks to Dscho seems to do exactly that:
 
-Most translated strings will have little or nothing git-specific about
-them, but will be something like "We couldn't open file %s due to
-XYZ".
+ $ git log -Sno-prefix -- Documentation/diff-options.txt
+ commit eab9a40b6dd5c1c571b1deb264133db47bb4794d
+ Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ Date:   Tue Dec 18 19:32:14 2007 +0000
 
-And even if someone translates e.g. "branch" incorrectly they usually
-do so consistently, so it's easy to search & replace those sort of
-issues out of existence.
+     Teach diff machinery to display other prefixes than "a/" and "b/"
+
+     With the new options "--src-prefix=<prefix>", "--dst-prefix=<prefix>"
+     and "--no-prefix", you can now control the path prefixes of the diff
+     machinery.  These used to by hardwired to "a/" for the source prefix
+     and "b/" for the destination prefix.
+
+     Initial patch by Pascal Obry.  Sane option names suggested by Linus.
+
+     Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+     Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
+     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+Hope that helps.
+Jonathan
