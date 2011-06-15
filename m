@@ -1,93 +1,112 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: Trailing spaces in branchname (git-svn)
-Date: Wed, 15 Jun 2011 16:00:10 +0200
-Message-ID: <BANLkTikaeXxRMJErAYy3-LSrvfNZXAbEEw@mail.gmail.com>
-References: <0014af8a-3b24-4398-88aa-7a3e460f2283@s11g2000yqh.googlegroups.com>
- <AANLkTinZnd0R8Rnv4kaiJAGP0qKEwgbU+nP=donmbEbp@mail.gmail.com> <12ada6de-4345-4259-b832-371a74df9775@l6g2000vbn.googlegroups.com>
-Reply-To: kusmabite@gmail.com
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Copying Git repository from Linux to Windows.
+Date: Wed, 15 Jun 2011 16:14:05 +0200
+Message-ID: <201106151614.06529.jnareb@gmail.com>
+References: <4DF87B42.1020004@st.com> <BANLkTik+oUb1QpVTwJfB30_8FsW=4ZVTxA@mail.gmail.com> <4DF89F56.3060200@st.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: msysGit <msysgit@googlegroups.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Barthus <magnus.kallstrom@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 15 16:01:00 2011
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "kusmabite@gmail.com" <kusmabite@gmail.com>, ae@op5.se,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Shiraz HASHIM <shiraz.hashim@st.com>,
+	Vipin KUMAR <vipin.kumar@st.com>
+To: viresh kumar <viresh.kumar@st.com>
+X-From: git-owner@vger.kernel.org Wed Jun 15 16:14:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWqeO-0006JO-Pv
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Jun 2011 16:00:57 +0200
+	id 1QWqrf-0005gd-PO
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Jun 2011 16:14:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755196Ab1FOOAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jun 2011 10:00:51 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:46589 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754878Ab1FOOAu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2011 10:00:50 -0400
-Received: by pzk9 with SMTP id 9so256413pzk.19
-        for <git@vger.kernel.org>; Wed, 15 Jun 2011 07:00:50 -0700 (PDT)
+	id S1754820Ab1FOOOQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jun 2011 10:14:16 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:57594 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754857Ab1FOOOQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jun 2011 10:14:16 -0400
+Received: by bwz15 with SMTP id 15so489958bwz.19
+        for <git@vger.kernel.org>; Wed, 15 Jun 2011 07:14:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=JfKzYZ+6rpP7rzYCo4/anfOKhDT9NEL2kR6LQXJT0tM=;
-        b=E/2WjiONdZHXM//fbAwM0deH2SLJLGJJCEAOXCjt7LWhpVg9pp3UXIWVH3h1KODmg0
-         SrU3073m0pz+x8J08SRPDzQ9AHNyeVFYg9sq8tpZQdSQs5yBsLR7BDk+XAuuEj0ObT1v
-         Qag5W0L0uUxTotqdcEYobgtDR95YNO8pkAkRY=
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=5rj4wL16033765ZGecuj2SIGDt3xq4gJhFCe6y+MQ6w=;
+        b=aEDImQ9v1DEkn+LeHVu1tNpSvxh8Zr92j8Do7/WRYLqceprAh0QMCIrFW0lwT82zX8
+         4oT/LBxfiQqVaFOloTdmK4j/4xHcft5oREoMFrhrfQQONytlDs30qzDTmKRH76RjrAxO
+         v9EPVuKhPJmAgZ+DmL9XQYEcLzsajdAYBpYMc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        b=B6F7g9nlvxT6rWXDRuL1TP2z2knn1RFEyjf2rJ+ueIw92AgmpmgVUOxduKbv2f54wW
-         39x+2Q/8qnaOIw5U2zXQV0b8bI/5OZYv51lUkDyoWI6+8w+bwf9NvBe/vxd1RddcDbux
-         zEPf2OC3ROZbv+qN7Zg6BhaWZI80Pkvhj/Viw=
-Received: by 10.68.39.132 with SMTP id p4mr269452pbk.369.1308146450092; Wed,
- 15 Jun 2011 07:00:50 -0700 (PDT)
-Received: by 10.68.50.197 with HTTP; Wed, 15 Jun 2011 07:00:10 -0700 (PDT)
-In-Reply-To: <12ada6de-4345-4259-b832-371a74df9775@l6g2000vbn.googlegroups.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=Z4jYhuZg8b14nsGps5xK+JCR/EUGbpCkF9x5KxjN5HaVpeElificmQhyOKQTVrcLdj
+         5HIqUbfsDt/Z3WsFbe+JHXsKwEczxqkrMWyIegf/pRPNDEelpJ1j319Hf8XvFIUlrTef
+         iaqGYwFIVcGZM+Y96YXtuPTz1Sa/o7jcJ8Jwk=
+Received: by 10.204.14.208 with SMTP id h16mr590679bka.35.1308147254678;
+        Wed, 15 Jun 2011 07:14:14 -0700 (PDT)
+Received: from [192.168.1.15] (abwp5.neoplus.adsl.tpnet.pl [83.8.239.5])
+        by mx.google.com with ESMTPS id k16sm491097bks.13.2011.06.15.07.14.12
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 15 Jun 2011 07:14:13 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4DF89F56.3060200@st.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175834>
 
-Please don't cull the CC-list.
+On Wed, 15.06.2011, viresh kumar wrote:
+> On 06/15/2011 04:59 PM, Jakub Narebski wrote:
 
-On Wed, Jun 15, 2011 at 3:38 PM, Barthus <magnus.kallstrom@gmail.com> wrote:
->
->> This kind of question is usually better to ask on the main Git mailing
->> list, as it's not really Windows specific.
->
-> I found a similar (older) thread in the git-mailing-list, discussing
-> the same issue. This led me to try cloning the same repository on a
-> Linux-machine - with success. Linux (at least my distro - Ubuntu)
-> handles trailing spaces in directory names.
->
-> Isn't this a msysgit-issue? (I just want to make sure that I don't
-> spend my (and your) time in the wrong place)
+> > Ah. This is caused by the fact that FAT doesn't store executable
+> > permission.
+> > 
+> > So beside setting `core.symlinks` to false, you would have also set
+> > `core.filemode` to false (and perhaps also `core.ignorecase` to true).
+  
+> [...], but there is one more issue, as pointed out by
+> Andreas. There are few files in kernel with same file name but in different _cases_ (one in caps 
+> and another in small.) and so i am getting issues with these now.
+> 
+> And don't have any idea how to get rid of that?
 
-If it works on Linux then yes, it's probably a Git for Windows issue.
+core.ignorecase::
+        If true, this option enables various workarounds to enable
+        git to work better on filesystems that are not case sensitive,
+        like FAT. For example, if a directory listing finds
+        "makefile" when git expects "Makefile", git will assume
+        it is really the same file, and continue to remember it as
+        "Makefile".
 
-Some quick testing reveals that paths can have a trailing space on
-Linux, but not on Windows. It sounds to me like you need to modify the
-refname subroutine in git-svn.perl to escape this. Something like this
-seems to work for me:
----8<---
-diff --git a/git-svn.perl b/git-svn.perl
-index 7849cfc..7a44145 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -2126,6 +2126,9 @@ sub refname {
- 	# @{ becomes %40{
- 	$refname =~ s{\@\{}{%40\{}g;
+	The default is false
 
-+	# trailing space is not not allowed on Windows
-+	$refname =~ s{ $}{%20};
-+
- 	return $refname;
- }
+But that wouldn't unfortunately help when there are two files which
+filename differs only in case.
 
+You would have to do tricks with `git update-index` and its 
+--assume-unchanged bit (though perhaps `core.ignorecase` would be
+enough) and `--cacheinfo <mode> <object> <path>` together with
+`git hash-object -w`... 
 
----8<---
-If it works for you, I'll submit a proper patch for it.
+Or perhaps delete file which you have in working area, checkout
+one file, add it, checkout other file, add it, use 'git commit'
+and not 'git commit -a'.
+
+But that are only possible solutions; I have sane filesystem.
+
+Can't you work on NTFS, and use USB stick only for transport of
+either tarred repository, or bundle?
+
+> And why does kernel have such file names at all? 
+
+That I don't know.
+
+-- 
+Jakub Narebski
+Poland
