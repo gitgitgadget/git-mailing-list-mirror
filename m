@@ -1,102 +1,53 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Test 9500 - unhelpful without Perl::CGI
-Date: Wed, 15 Jun 2011 10:05:41 -0700
-Message-ID: <7vei2vja8q.fsf@alter.siamese.dyndns.org>
-References: <BANLkTikj0GQCN94PvZz6n6fJJb5sHMApig@mail.gmail.com>
- <7vmxhjk539.fsf@alter.siamese.dyndns.org>
- <BANLkTinAfqysABm+t_NkOGO2U+iy57WbVQ@mail.gmail.com>
- <7vips7jaws.fsf@alter.siamese.dyndns.org>
+From: Aaron Gray <aaronngray.lists@gmail.com>
+Subject: forcing add of CRLF modified files
+Date: Wed, 15 Jun 2011 18:31:46 +0100
+Message-ID: <BANLkTimG+4u4jhgvG9xtEQ02yBu3kxDD2A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 15 19:05:53 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 15 19:32:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWtXK-00018k-18
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Jun 2011 19:05:50 +0200
+	id 1QWtwv-00086h-O3
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Jun 2011 19:32:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751617Ab1FORFp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jun 2011 13:05:45 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:65041 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751274Ab1FORFo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2011 13:05:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7F4DA45C0;
-	Wed, 15 Jun 2011 13:07:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=f0RU0K66cdhZOA2GTJtfh8rrp20=; b=lf/3iM
-	5Jwv8mi1gyoUQRvaJHIR9/1qboIOE2ayJLpHCTV9qmlncb5BYzgCFv8vOLXLHJVt
-	2imCjtJN5JhCAIrsbl/oCiNFRiUtswJKEqUszeyE8hbpHFWUprqhk4dylL+HTiXs
-	FqJif4UGXktsKOtj0+sQgpBKsuL3G1wdkFcVQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=r7iwDWiNbBIJl/qUtcb5DUB5G00DMmYz
-	uDDR7u915ucjne7mqfN52mxxEqWZ5w2UlWVzbsxs/AJY0+N1OP/h4rqCqP72rDxU
-	k1NpgLBEVnDyNX7cXGCFmIdi3jsy4Gpi4qBjMix2H4K6XIDuMwSGQuxfspe9hnua
-	pPBy5CMqGsA=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7757745BF;
-	Wed, 15 Jun 2011 13:07:54 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BCE3645BE; Wed, 15 Jun 2011
- 13:07:53 -0400 (EDT)
-In-Reply-To: <7vips7jaws.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 15 Jun 2011 09:51:15 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0210B4FC-9772-11E0-A5E5-2C88C023C68D-77302942!a-pb-sasl-sd.pobox.com
+	id S1752251Ab1FORcK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jun 2011 13:32:10 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:35190 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752104Ab1FORcH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jun 2011 13:32:07 -0400
+Received: by ewy4 with SMTP id 4so251563ewy.19
+        for <git@vger.kernel.org>; Wed, 15 Jun 2011 10:32:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=FyxLn2f/C2bReYDMb/+JTvRLs8JvPufJaxwewYEjgGQ=;
+        b=WqbEbWPUXUo8sbkoQ1i0i3asCxKYm744afjysaGCwaJZIWuN4elaqrQoj/3HsAZjpA
+         y8ZzB0nQPZFB5k8SwtvhCJWx6yW5MiK/WqraVEc1YQZj+tX+r4f0jRVot1Ta2TfdFBPd
+         52Fz4/DJGgPkMg0o0f2BGNFwtCcXidyapV3EU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=MwKaHPXRJujiZnje0ZRpSPI2PTXWi7LzffhBG7F1Nddgwj8bob//h+VhL2TrLI2818
+         db4L3LPLN3zi6GJeSD1nVUAOfnzWxkyxUvL0ztADku7ovOdaYeLrfpZPdvnhlg7D/b9E
+         pF4vPvPwkNGOw92d1mCfCvh0fLCTLF9/0xtjI=
+Received: by 10.14.42.195 with SMTP id j43mr407207eeb.176.1308159126289; Wed,
+ 15 Jun 2011 10:32:06 -0700 (PDT)
+Received: by 10.14.127.70 with HTTP; Wed, 15 Jun 2011 10:31:46 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175842>
 
-Junio C Hamano <gitster@pobox.com> writes:
+I cannot seem to get GIT to add files with corrected CRLF line endings
+against the repository with incorrect LF only line endings.
 
-> Sverre Rabbelier <srabbelier@gmail.com> writes:
->
->> Isn't the new style to use test_must_succeed CGI_AVAILABLE '...' '...'
->> rather than skip_all+test_done?
->
-> I do not think that adds any value, at least in this case.  Besides, look
-> at the context line above what you quoted ;-)
+Many thanks in advance,
 
-In any case, I'd justify it like this and queue.  Thanks for noticing.
-
--- >8 --
-Subject: [PATCH] t/gitweb-lib.sh: skip gitweb tests when perl dependencies are not met
-
-Linus noticed that we go ahead testing gitweb and fail miserably on a
-box with Perl but not perl-CGI library. We already have a code to detect
-lack of Perl and refrain from testing gitweb in t/gitweb-lib.sh (by the
-way, shouldn't it be called t/lib-gitweb.sh?), so let's extend it
-to cover this case as well.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/gitweb-lib.sh |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
-
-diff --git a/t/gitweb-lib.sh b/t/gitweb-lib.sh
-index 143eb1f..292753f 100644
---- a/t/gitweb-lib.sh
-+++ b/t/gitweb-lib.sh
-@@ -107,4 +107,9 @@ perl -MEncode -e '$e="";decode_utf8($e, Encode::FB_CROAK)' >/dev/null 2>&1 || {
- 	test_done
- }
- 
-+perl -MCGI -MCGI::Util -MCGI::Carp -e 0 >/dev/null 2>&1 || {
-+	skip_all='skipping gitweb tests, CGI module unusable'
-+	test_done
-+}
-+
- gitweb_init
--- 
-1.7.6.rc1.119.g85fc2
+Aaron
