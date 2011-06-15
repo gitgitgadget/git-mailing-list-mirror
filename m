@@ -1,89 +1,84 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git checkout running very slowly (>12s)
-Date: Thu, 16 Jun 2011 00:46:23 +0200
-Message-ID: <4DF9363F.6080009@op5.se>
-References: <loom.20110615T213016-856@post.gmane.org>
+From: Jeff King <peff@github.com>
+Subject: Re: [PATCH 2/2] archive: support gzipped tar files
+Date: Wed, 15 Jun 2011 18:46:40 -0400
+Message-ID: <20110615224640.GA19803@sigill.intra.peff.net>
+References: <20110614181732.GA31635@sigill.intra.peff.net>
+ <20110614181821.GA32685@sigill.intra.peff.net>
+ <7vaadkkvew.fsf@alter.siamese.dyndns.org>
+ <20110614204950.GB12776@sigill.intra.peff.net>
+ <87vcw8f0d5.fsf@catnip.gol.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Andrew Cameron <andrew@worksmartlabs.com>
-X-From: git-owner@vger.kernel.org Thu Jun 16 00:46:35 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	git-dev@github.com
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Jun 16 00:46:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWyr4-0005wT-0E
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 00:46:34 +0200
+	id 1QWyrH-00066I-7l
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 00:46:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755687Ab1FOWq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jun 2011 18:46:29 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:33034 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755677Ab1FOWq2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2011 18:46:28 -0400
-Received: by fxm17 with SMTP id 17so735176fxm.19
-        for <git@vger.kernel.org>; Wed, 15 Jun 2011 15:46:27 -0700 (PDT)
-Received: by 10.223.96.130 with SMTP id h2mr180909fan.142.1308177985384;
-        Wed, 15 Jun 2011 15:46:25 -0700 (PDT)
-Received: from vix.int.op5.se (c83-248-99-226.bredband.comhem.se [83.248.99.226])
-        by mx.google.com with ESMTPS id b25sm480806fab.28.2011.06.15.15.46.23
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 15 Jun 2011 15:46:24 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Thunderbird/3.1.10 ThunderGit/0.1a
-In-Reply-To: <loom.20110615T213016-856@post.gmane.org>
+	id S1755707Ab1FOWqn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Jun 2011 18:46:43 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39816
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755683Ab1FOWqm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jun 2011 18:46:42 -0400
+Received: (qmail 7844 invoked by uid 107); 15 Jun 2011 22:46:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 15 Jun 2011 18:46:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Jun 2011 18:46:40 -0400
+Content-Disposition: inline
+In-Reply-To: <87vcw8f0d5.fsf@catnip.gol.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175866>
 
-On 06/15/2011 09:30 PM, Andrew Cameron wrote:
-> Some git operations (notably checkouts) are taking a very long time to execute.
-> Here is a shell session which illustrates the problem.
-> 
-> $ time git branch foo
-> git branch foo  0.01s user 0.00s system 77% cpu 0.016 total
+On Wed, Jun 15, 2011 at 08:40:22AM +0900, Miles Bader wrote:
 
-Creating a branch is just a matter of creating a new ref. In this
-case, you're doing it on the currently checked out ref. That's a
-constant-time operation that is always very quick.
+> Jeff King <peff@github.com> writes:
+> >> I didn't know it was that easy (primarily because I didn't know zl=
+ib had a
+> >> ready-to-eat interface to do this).
+> >
+> > Yes, though I think it may be worth doing the more flexible,
+> > external-filters approach. See elsewhere in the thread.
+>=20
+> Given the relatively trivial code, isn't it worth doing both...?
+>
+> One method for flexibility/multi-threaded-speed, the other for
+> portability/robustness (doesn't depend on configuration / setup
+> details)...
 
-> $ time git checkout foo
-> Switched to branch 'foo'
-> git checkout foo  11.73s user 0.18s system 99% cpu 11.937 total
+Maybe, although the code is a little less trivial than I hoped (see
+Ren=C3=A9's response for some bugs in my original series).
 
-If this sequence of commands is accurate, that's a bit weird. If
-you've got another branch checked out first and then switch it
-would be understandable, considering the size of the repository.
-We should probably still do a tree-by-tree comparison to see
-which files are changed though, but I thought that's already
-done to avoid superfluous work and allow worktree changes to
-carry over to other branches. What version of git are you using?
+My series allowing external filters via configuration also comes with
+builtin config for gzip. So there's no extra config or setup details fo=
+r
+the user, assuming they can run "gzip" from their PATH.
 
-> $ time git checkout master
-> Switched to branch 'master'
-> git checkout master  11.62s user 0.18s system 99% cpu 11.813 total
-> $ git count-objects -v
-> count: 953
-> size: 527012
-> in-pack: 153432
-> packs: 7
-> size-pack: 1986072
-> prune-packable: 0
-> garbage: 0
-> 
+So I think the only disadvantage now is for people who don't have gzip
+at all. I suspect people on such platforms are going to want another
+format anyway, but we could still help them out. However, I think
+instead of building it specially into the archive code, it would be
+cleaner to simply ship a bare-bones version of gzip that only stdio
+(i.e., a "git-gzip"). It would be no more code than what the internal
+solution would be, it could be easier to read (since the program is
+self-contained), and it benefits from the SMP speedup.
 
-These figures are nowhere near as interesting as those from
-  git ls-files | wc -l
-after the checkout is completed.
+Although at the point we are shipping "git-gzip", I really have to
+wonder if people wouldn't prefer to just install gzip themselves. So I'=
+m
+inclined to wait until somebody complains that git+zlib are easy to get
+on their system, but gzip isn't.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+-Peff
