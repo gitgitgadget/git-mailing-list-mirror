@@ -1,95 +1,87 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: Commit notes workflow
-Date: Wed, 15 Jun 2011 11:37:43 +0200
-Message-ID: <201106151137.43231.johan@herland.net>
-References: <243233943.1008861308129613120.JavaMail.root@zimbra44-e7.priv.proxad.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Copying Git repository from Linux to Windows.
+Date: Wed, 15 Jun 2011 11:47:34 +0200
+Message-ID: <4DF87FB6.2080503@op5.se>
+References: <4DF87B42.1020004@st.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, ydirson@free.fr
-To: Yann Dirson <dirson@bertin.fr>
-X-From: git-owner@vger.kernel.org Wed Jun 15 11:37:55 2011
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Shiraz HASHIM <shiraz.hashim@st.com>,
+	Vipin KUMAR <vipin.kumar@st.com>
+To: viresh kumar <viresh.kumar@st.com>
+X-From: git-owner@vger.kernel.org Wed Jun 15 11:47:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QWmXp-0006bI-3q
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Jun 2011 11:37:53 +0200
+	id 1QWmhL-00030q-Bk
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Jun 2011 11:47:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754582Ab1FOJhs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jun 2011 05:37:48 -0400
-Received: from smtp.opera.com ([213.236.208.81]:48206 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754209Ab1FOJhr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2011 05:37:47 -0400
-Received: from johanh.localnet (pat-tdc.opera.com [213.236.208.22])
-	(authenticated bits=0)
-	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p5F9bieD020388
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 15 Jun 2011 09:37:44 GMT
-User-Agent: KMail/1.13.7 (Linux/2.6.38-ARCH; KDE/4.6.3; x86_64; ; )
-In-Reply-To: <243233943.1008861308129613120.JavaMail.root@zimbra44-e7.priv.proxad.net>
+	id S1754435Ab1FOJri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jun 2011 05:47:38 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:33962 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753136Ab1FOJrh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jun 2011 05:47:37 -0400
+Received: by fxm17 with SMTP id 17so260219fxm.19
+        for <git@vger.kernel.org>; Wed, 15 Jun 2011 02:47:36 -0700 (PDT)
+Received: by 10.223.76.219 with SMTP id d27mr343426fak.87.1308131256290;
+        Wed, 15 Jun 2011 02:47:36 -0700 (PDT)
+Received: from vix.int.op5.se (sth-vpn1.op5.com [193.201.96.49])
+        by mx.google.com with ESMTPS id q10sm121251fan.8.2011.06.15.02.47.35
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 15 Jun 2011 02:47:35 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Thunderbird/3.1.10 ThunderGit/0.1a
+In-Reply-To: <4DF87B42.1020004@st.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175816>
 
-On Wednesday 15. June 2011, ydirson@free.fr wrote:
-> > > A (minor) problem with the second possibility is that this naming
-> > > convention could evolve, eg. if we end up with something like was
-> > > proposed in [1] for 1.8.0.  Is there any real drawback with the
-> > 
-> > first
-> > 
-> > > suggestion ?
-> > > 
-> > > [1] http://marc.info/?l=git&m=129661334011986&w=4
-> > 
-> > My gut feeling is to keep some sort of limit notes refs, and
-> > if/when we get around to implementing my proposal in [1] (or some
-> > variation thereof), we will of course extend the limit to put
-> > "refs/remotes/$remote/notes/*" (or whatever is decided) in the
-> > same category as "refs/notes/*".
-> > 
-> > In the meantime, I'm unsure if it's a good idea to remove the
-> > limitation altogether (allowing notes refs everywhere), since
-> > re-introducing a limit at a later point will then be MUCH
-> > harder...
+On 06/15/2011 11:28 AM, viresh kumar wrote:
+> Hello,
 > 
-> I'm still unsure what that limitation brings to us.  OTOH, it has at
-> least one funny downside: when someone tries to refer to some
-> forbidden ref using --ref, it gets silently requalified:
+> I wanted to copy my complete Linux GIT repo from Linux PC to Windows. I also wanted everything
+> related to remote branches too, so need to copy and clone and fetch wouldn't work.
 > 
-> $ git notes --ref=refs/remote-notes/foo add
-> $ find .git/refs/notes/ -type f
-> .git/refs/notes/refs/remote-notes/foo
-> $
+> I don't have windows on same network, so i need to copy to memory stick and then to Windows PC.
 > 
-> It just seems so wrong...  Surely we can mitigate it by considering a
-> ref starting with "refs/" to be absolute, and thus never prepend
-> "refs/notes/" to it, but it rather sounds to me a symptom that we
-> may not want to filter things anyway.
+> After completing copy operation on mem stick, i found something strange.
+> - git branch shows correct results and is exactly same of state at Linux machine.
+> - git log is also fine.
+> - git status, shows me a lot of files are modified, which is not present in Linux.
+> - git reset --hard also doesn't work and fails with following error.
+> 
+> 
+> $ git reset --hard HEAD
+> error: unable to create symlink arch/microblaze/boot/dts/system.dts (Operation not permitted)
+> Checking out files: 100% (36696/36696), done.
+> fatal: Could not reset index file to revision 'HEAD'.
+> 
+> 
+> Any help about this issue would be very helpful.
+> 
 
-The reason we put the limitation there, is to prevent the notes code 
-from screwing with non-notes trees. The notes code reorganizes the notes 
-tree depending on the number of tree entries, in order to achieve 
-acceptable performance for notes trees of all sizes. Therefore, you 
-definitely DON'T want the notes code rummaging around in non-notes trees 
-(especially if some of your tree entries can be mistaken for strings of 
-hex digits).
+The Linux kernel repository isn't very good to work with on Windows
+machines, or anywhere where the filesystem is either case-insensitive
+or case-agnostic.
 
-That said, the example you give above ("refs/remote-notes/foo" -> 
-"refs/notes/refs/remote-notes/foo" is obviously a stupid failure, and 
-should be fixed. Considering "refs/*" to be absolute seems safe to me. 
-(Obviously we loose the "refs/notes/refs/*" namespace, but I can live 
-with that.)
+One reason is that it contains symlink. The other is that there are
+files sharing the same name and only differ in case.
 
-
-...Johan
+I suppose the main thought behind it is that Linux kernel hackers
+almost exclusively use Linux (which has sane filesystems) to do
+their work, so it hasn't been rectified in the 5 or so years it has
+been a known (non-)problem.
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
