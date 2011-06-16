@@ -1,121 +1,101 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Jun 2011, #02; Sat, 11)
-Date: Thu, 16 Jun 2011 17:05:51 -0400
-Message-ID: <20110616210551.GA15505@sigill.intra.peff.net>
-References: <7voc23sfxd.fsf@alter.siamese.dyndns.org>
- <BANLkTin-sAXAZ4ZJ9z77SSYx+xYTYeZMww@mail.gmail.com>
+From: James Blackburn <jamesblackburn@gmail.com>
+Subject: Re: git log --follow doesn't follow a rename over a merge
+Date: Thu, 16 Jun 2011 22:29:36 +0100
+Message-ID: <BANLkTi=7yFdkNgvGX38JM_GbS7=tqf=1sQ@mail.gmail.com>
+References: <BANLkTimjEp0ntq80qttT9uZN2YGuhsnZBw@mail.gmail.com>
+	<m362o5vrhd.fsf@localhost.localdomain>
+	<BANLkTik1-UvEXqzgdXwcK3x6_o8fDiwB7g@mail.gmail.com>
+	<20110616173451.GB6584@sigill.intra.peff.net>
+	<7vy611hd38.fsf@alter.siamese.dyndns.org>
+	<BANLkTikMNYyV40XM26rc6Ov6ZYO643mukA@mail.gmail.com>
+	<7vlix1h8lz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 16 23:06:02 2011
+Cc: Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 16 23:29:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QXJlH-00055y-P5
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 23:06:00 +0200
+	id 1QXK8F-00011w-29
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 23:29:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758271Ab1FPVFz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Jun 2011 17:05:55 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52957
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755160Ab1FPVFy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jun 2011 17:05:54 -0400
-Received: (qmail 18974 invoked by uid 107); 16 Jun 2011 21:06:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 16 Jun 2011 17:06:04 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Jun 2011 17:05:51 -0400
-Content-Disposition: inline
-In-Reply-To: <BANLkTin-sAXAZ4ZJ9z77SSYx+xYTYeZMww@mail.gmail.com>
+	id S1758387Ab1FPV3i convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Jun 2011 17:29:38 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:62944 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755281Ab1FPV3h convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Jun 2011 17:29:37 -0400
+Received: by qyk29 with SMTP id 29so168264qyk.19
+        for <git@vger.kernel.org>; Thu, 16 Jun 2011 14:29:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=eb9aWeN7Pl4yKvwDeD/keuctpwOEeNA9E9er9Di0iZ4=;
+        b=M9QldYaRy6e0PptybvKdtloYrZVaWx1P37gGMRnD29YsLfAq1nco7nRHxcuWDjso9+
+         9oa19kgMpq2KIL1m+xtPpYGmUaA5fdx8y8f1cvXC9XexlweqHy1zAXpcgTcDOc9rqud/
+         eVJS+PPq27gWLt3yfySB9xsXGMiuhg+jeUxrY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Zuwvk/xRkFgLbexmtQ1Ck0B6KFEYE11NUTlW9O8dt2+wyj9M8lpQ/JH4lMsRj+c1sg
+         zTLXeR0GOcliRqkSM/ieDWsIsXY8LKNtJMmXwHhPSt5gc5I0604oo8t0NqXATeoGnf8m
+         m7DvLn9q7FIBxtXAdYp86XWfqKZ7Gk7oBJl30=
+Received: by 10.229.111.98 with SMTP id r34mr1287375qcp.3.1308259776908; Thu,
+ 16 Jun 2011 14:29:36 -0700 (PDT)
+Received: by 10.229.214.203 with HTTP; Thu, 16 Jun 2011 14:29:36 -0700 (PDT)
+In-Reply-To: <7vlix1h8lz.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175933>
 
-On Mon, Jun 13, 2011 at 10:27:50PM -0600, Elijah Newren wrote:
+On 16 June 2011 20:36, Junio C Hamano <gitster@pobox.com> wrote:
+> James Blackburn <jamesblackburn@gmail.com> writes:
+>
+>> Given the file was removed during my 'merge' graft in commit X,
+>> shouldn't it be visible =A0in log without --simplify-merges?
+>
+> The merge simplification logic does not treat earlier parent commits =
+any
+> differently than later parent commits of a merge (except when two par=
+ents
+> are the same with respect to a given pathspec, and if the logic needs=
+ to
+> pick only one, the earlier parent will be picked), and that is by des=
+ign.
+>
+> So the short answer is no.
 
-> On Sun, Jun 12, 2011 at 12:49 AM, Junio C Hamano <gitster@pobox.com> =
-wrote:
-> > Here are the topics that have been cooking. =C2=A0Commits prefixed =
-with '-' are
-> > only in 'pu' while commits prefixed with '+' are in 'next'.
-> >
-> > --------------------------------------------------
-> > [Stalled]
-> >
-> > * jk/maint-merge-rename-create (2011-03-25) 3 commits
-> > =C2=A0- merge: turn on rewrite detection
-> > =C2=A0- merge: handle renames with replacement content
-> > =C2=A0- t3030: fix accidental success in symlink rename
-> >
-> > Peff wanted to reroll this. Perhaps will discard to make room for E=
-lijah's
-> > merge-recursive series in the meantime.
->=20
-> Peff: Do you want any help rerolling, updating, reviewing, etc.?  I
-> don't want to cause any undue problems with my merge-recursive series=
-,
-> and besides, the idea you have in this series looks like it may be
-> interesting.
+I think this is quite tough to grok.  Git blame shows me a path, and
+git log -- <path> returns no output in the simple example I gave.
 
-Thanks. The sticking point in my series that there is a weird regressio=
-n
-it introduces, and I haven't quite figured out the cause.
+In this case --simplify-merges gives me a complete log for the path,
+but man git-log tells me it should do the opposite:
+       --simplify-merges
+           Additional option to --full-history to remove some needless
+merges from the resulting history, as there are
+           no selected commits contributing to this merge.
 
-I'm cc'ing Jay Soffian, who found it. You can reproduce with this recip=
-e
-(sorry, the chromium repo is huge, but I don't have a smaller test case
-yet):
+I'm not sure how I would have figured out this switch might be just
+the trick to show the commits that touched this path, without your
+input.
 
-  git clone http://git.chromium.org/git/chromium.git &&
-  cd chromium &&
-  git config merge.renameLimit 0 &&
-  git checkout 0f6d00c &&
-  git cherry-pick d7081a74
+As a naive user I expected:
+  git log -- four
+to tell we which commits changed the path 'four'. Especially those
+commits which are reachable from my current HEAD.  I don't really
+understand why one branch of history is worth following over another,
+especially as the branch chosen, the older one, doesn't contain 'four'
+at all.
 
-Looking at d7081a74, you can see that it's a tiny commit, and in fact i=
-t
-should cherry-pick just fine. But due to the 3-way merge that
-cherry-pick does, we still end up considering a lot of renames between
-the merge base (d7081a74^) and 0f6d00c. Which is fine and correct, of
-course, but makes the merge a lot more complex than it would at first
-appear.
-
-With git v1.7.5.3, it works just fine. With my patches on top, it
-reliably fails the merge (even though there were no conflicts!), and
-leaves a ton of crufty temporary files in the working directory.
-
-Bumping up the merge verbosity, it does report a bunch of rename/add
-conflicts. Which are totally bogus, of course. Here's what I wrote
-earlier to Jay:
-
-   The final patch turned on break detection. The patch before it fixed
-   the "source" case: when the source of a rename comes from something
-   besides empty (because the source is a broken pair), we need to merg=
-e
-   properly and not just delete. But I never did the "dest" case, in
-   which merge-recursive assumes that renamed content started as empty.
-
-   And that's why you see the bogus "rename/add" conflict, I think. It'=
-s
-   assuming the file came from nowhere, but it came from a break pair.
-   So the good news is I think I can come up with a simple test case,
-   and the fix is probably something like comparing against the ancesto=
-r
-   sha1 instead of the null sha1.
-
-But then I got sidetracked, and as you probably know from working on
-merge-recursive, it's some pretty hairy code. Every time I start to loo=
-k
-at it I get confused and can't remember what breakthrough I thought I
-was close to making before. :)
-
-If you have any input, I'd appreciate it.
-
--Peff
+Cheers,
+James
