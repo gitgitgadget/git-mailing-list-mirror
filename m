@@ -1,78 +1,59 @@
-From: Geoff Russell <geoffrey.russell@gmail.com>
-Subject: Re: gc getting called on each git command ... what's wrong?
-Date: Thu, 16 Jun 2011 11:16:21 +0930
-Message-ID: <BANLkTimYsvHqZsxYA34o7s94c9V8vzkHbw@mail.gmail.com>
-References: <BANLkTi=oUARfwvNFNj-_FvZdwxQgibqPOg@mail.gmail.com>
-	<m3pqmodzee.fsf@localhost.localdomain>
-	<BANLkTi=w10KQ3MSd5YuYR+S=eMgywNTY-A@mail.gmail.com>
-	<201106151735.07137.jnareb@gmail.com>
-Reply-To: geoffrey.russell@gmail.com
+From: viresh kumar <viresh.kumar@st.com>
+Subject: Re: Copying Git repository from Linux to Windows.
+Date: Thu, 16 Jun 2011 09:03:44 +0530
+Message-ID: <4DF97998.7070604@st.com>
+References: <4DF87B42.1020004@st.com> <m3ei2vv0nw.fsf@localhost.localdomain> <4DF891CC.1040700@st.com> <BANLkTik+oUb1QpVTwJfB30_8FsW=4ZVTxA@mail.gmail.com> <4DF89F56.3060200@st.com> <4DF8A896.7080708@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Peter Harris <git@peter.is-a-geek.org>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 16 03:46:28 2011
+Content-Type: text/plain; charset="ISO-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: "kusmabite@gmail.com" <kusmabite@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Shiraz HASHIM <shiraz.hashim@st.com>,
+	Vipin KUMAR <vipin.kumar@st.com>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Thu Jun 16 05:34:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QX1f9-0001lq-VP
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 03:46:28 +0200
+	id 1QX3LV-0005oJ-NO
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 05:34:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753998Ab1FPBqX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jun 2011 21:46:23 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:37867 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752751Ab1FPBqW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2011 21:46:22 -0400
-Received: by eyx24 with SMTP id 24so381278eyx.19
-        for <git@vger.kernel.org>; Wed, 15 Jun 2011 18:46:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=+QEk5Ky/IbQttTUsjrGmRICjRJJXAQnt1DprYrX617I=;
-        b=E0ZoEDWGwfXLktmj7QGEvs9Irc1AmzLrS2roD8+X7/IDHJvXgFW4239TURQZhSzM3Q
-         Qx07PhL15Cjz6oGiblnOaZFZryXkDUmz3wRCCB29YzK9vcbCoUOuCqoB0bG7XJwCbHIO
-         l79VAplTlfxDlOWce3UkaDZyn4zfMhQf34g5o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        b=gZ2qlrfn0JA8ZBxr9go5QvfD0SZzoiYicZqeYWBVT6rPYLN4xULMbNVwzG2Y4AZ4CQ
-         0TovikLfXlHk/mKFSv+zvo/glc3PGiPhFmvxVxFQxQUlZNpdgPF9zqOnMUwSy1ku7RYV
-         R9tNuAW+LqP4TcEWnrVItXCgvUS0vbF0a34J8=
-Received: by 10.14.10.18 with SMTP id 18mr133776eeu.172.1308188781263; Wed, 15
- Jun 2011 18:46:21 -0700 (PDT)
-Received: by 10.14.98.205 with HTTP; Wed, 15 Jun 2011 18:46:21 -0700 (PDT)
-In-Reply-To: <201106151735.07137.jnareb@gmail.com>
+	id S1752459Ab1FPDeM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jun 2011 23:34:12 -0400
+Received: from eu1sys200aog101.obsmtp.com ([207.126.144.111]:53931 "EHLO
+	eu1sys200aog101.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751546Ab1FPDeL (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Jun 2011 23:34:11 -0400
+Received: from beta.dmz-ap.st.com ([138.198.100.35]) (using TLSv1) by eu1sys200aob101.postini.com ([207.126.147.11]) with SMTP
+	ID DSNKTfl5rtxbasEXJBDHCb/R+eVzuReNMqKj@postini.com; Thu, 16 Jun 2011 03:34:11 UTC
+Received: from zeta.dmz-ap.st.com (ns6.st.com [138.198.234.13])
+	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id C3D61E0;
+	Thu, 16 Jun 2011 03:33:47 +0000 (GMT)
+Received: from Webmail-ap.st.com (eapex1hubcas4.st.com [10.80.176.69])
+	by zeta.dmz-ap.st.com (STMicroelectronics) with ESMTP id AC22E106C;
+	Thu, 16 Jun 2011 03:33:47 +0000 (GMT)
+Received: from [10.199.16.92] (10.199.16.92) by Webmail-ap.st.com
+ (10.80.176.7) with Microsoft SMTP Server (TLS) id 8.2.234.1; Thu, 16 Jun 2011
+ 11:33:46 +0800
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.12) Gecko/20101027 Lightning/1.0b2 Thunderbird/3.1.6
+In-Reply-To: <4DF8A896.7080708@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175880>
 
-2011/6/16 Jakub Narebski <jnareb@gmail.com>
->
->
-> Why did you set packSizeLimit at all?
->
->
+On 06/15/2011 06:11 PM, Andreas Ericsson wrote:
+> If I may ask; Why do you need to be able to work with a linux kernel
+> repository on windows?
 
-Some time ago (31/8/2010) I had a problem which seemed to be caused by
-large packs (>4GB), you
-can find it in the git list with a subject of "Large pack causes git
-clone failures ... what to do?"
+I can't simply install Linux on my office laptop (company policies, support, etc) :(
 
-Anyway, I set packSizeLimit and fiddled around for a bit ...
-eventually the problem went
-away when I moved the central repository to another machine with less load and
-more memory. At which point I gave a sigh of relief and forgot to
-remove the packSizeLimit
-until recently bitten. But the original problem was probably nothing
-to do with large
-packs and hasn't recurred.
+And i wanted just linux source on windows, i will not be creating any patches from
+windows. Just needed code for reference.
 
-Cheers,
-Geoff.
+-- 
+viresh
