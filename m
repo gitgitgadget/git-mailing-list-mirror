@@ -1,84 +1,76 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: rewrite history
-Date: Thu, 16 Jun 2011 17:33:42 -0400
-Message-ID: <4DFA76B6.5030407@xiplink.com>
-References: <362053118.20110616231758@gmail.com>
+From: Ilya Basin <basinilya@gmail.com>
+Subject: Re[2]: rewrite history
+Date: Fri, 17 Jun 2011 01:55:09 +0400
+Message-ID: <7310048292.20110617015509@gmail.com>
+References: <362053118.20110616231758@gmail.com> <20110616192644.GB13466@sigill.intra.peff.net> <7vhb7ph8aj.fsf@alter.siamese.dyndns.org> <20110616194911.GA14355@sigill.intra.peff.net> <17721660.20110617000644@gmail.com> <20110616201300.GA14674@sigill.intra.peff.net>
+Reply-To: Ilya Basin <basinilya@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Ilya Basin <basinilya@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 16 23:33:58 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 16 23:55:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QXKCL-0003b2-LF
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 23:33:57 +0200
+	id 1QXKX7-00076k-6b
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 23:55:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933059Ab1FPVdv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jun 2011 17:33:51 -0400
-Received: from smtp172.iad.emailsrvr.com ([207.97.245.172]:49766 "EHLO
-	smtp172.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932608Ab1FPVdu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jun 2011 17:33:50 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp57.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id 07EB1F87C5;
-	Thu, 16 Jun 2011 17:33:50 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp57.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id D4D17F86D9;
-	Thu, 16 Jun 2011 17:33:49 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110516 Thunderbird/3.1.10
-In-Reply-To: <362053118.20110616231758@gmail.com>
+	id S933119Ab1FPVzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jun 2011 17:55:20 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:55069 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933087Ab1FPVzT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jun 2011 17:55:19 -0400
+Received: by bwz15 with SMTP id 15so321199bwz.19
+        for <git@vger.kernel.org>; Thu, 16 Jun 2011 14:55:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:x-mailer:reply-to:x-priority
+         :message-id:to:cc:subject:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=hcjo7svMWXoO9LzDmHm8i9ZPfrnFTbGIrIvYBPQPGAE=;
+        b=uEUFS69yr3JcBwGPdcrwqkgq0KM0KkZRH2zezUo5htxd98/5ox88ARFU70eZNbggoX
+         EStNaRiaxZSrF05biQqnNwXR3J8r/CVazUq3JOf1AF/c1cKysxiCqzk9daCcaJntBBZ7
+         5GMZ2Jv0q70GPWiZBs8Qpp/JmePMwy23iogQE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:x-mailer:reply-to:x-priority:message-id:to:cc:subject
+         :in-reply-to:references:mime-version:content-type
+         :content-transfer-encoding;
+        b=JQz/g0RFqevCAjGKscUJhw+2NZq59CG1WK8luK3TJIGAzr0Id4kAq4WROgM/oG6Vyn
+         ZiVohL2tKIqhwVzde+YtoEBKffAgM9eENhs60shqaLCXQAsTLESTct4+9qKPrFyPgPQg
+         4gQnLqLWfXNxvNrZ30I95lilFdxJ4WgPuds8I=
+Received: by 10.204.36.206 with SMTP id u14mr1036983bkd.4.1308261317357;
+        Thu, 16 Jun 2011 14:55:17 -0700 (PDT)
+Received: from MAR2.localnet (pppoe.95-55-137-3.dynamic.avangarddsl.ru [95.55.137.3])
+        by mx.google.com with ESMTPS id af13sm1506782bkc.7.2011.06.16.14.55.15
+        (version=SSLv3 cipher=OTHER);
+        Thu, 16 Jun 2011 14:55:16 -0700 (PDT)
+X-Mailer: Voyager (v3.99.4) Professional
+X-Priority: 3 (Normal)
+In-Reply-To: <20110616201300.GA14674@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175935>
 
-On 11-06-16 03:17 PM, Ilya Basin wrote:
-> Hi list. There were 2 branches. One's HEAD was modified to match a
-> specific commit at another branch. Now, how to merge them according to
-> this scheme?
-> 
-> A---B---X---E---F
->                      =>  C---D---X---E---F
-> C---D---X'
-> 
-> X and X' have no difference. I tried to write a script to cherry-pick
-> E and F, but some of commits are merges and cherry-pick fails.
-> 
-> ...
-> 
-> git diff X X' is empty
+>> sorry,
+>> git diff X X' is empty
 
-It sounds like you really want to apply X--E--F on top of D, but I don't know
-how you can do that since you need to do *something* to D in order to get a
-tree that matches X, and that something is (presumably) *different* from the
-change that X applied to B.  So if
+JK> Oh, then ignore everything I said. :)
 
-	diff B X  !=  diff D X'
+JK> I think you want to graft and filter-branch as Junio mentioned.
 
-then I think Junio's right that the best you can do is change the meta-data
-in X' (commit message, Author, etc) to match X then apply E and F on top of
-that.  But filter-branch seems like overkill to me here -- I'd just use
-"rebase -p" but not quite as Peff described:
+JK> -Peff
 
-	git checkout X'
-	git commit --amend ....   # Replaces X' with X"
-	git rebase -p --onto HEAD X F
+I'm puzzled. How to undo an unfortunate attempt of filter-branch?
+git log origin/master returns irrelevant info, although I didn't push
+it to origin and I also tried git branch -D master, -rD master and git
+fetch -f
 
-Giving you
 
-	C---D---X"---E---F
-
-where
-
-	diff D X'  ==   diff D X"
-and	meta_data(X") == meta_data(X)
-
-But if you're happy with C---D---X'---E---F then you can skip the "git commit
---amend" step.
-
-		M.
+-- 
