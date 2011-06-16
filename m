@@ -1,65 +1,70 @@
-From: viresh kumar <viresh.kumar@st.com>
-Subject: Re: Copying Git repository from Linux to Windows.
-Date: Thu, 16 Jun 2011 14:25:19 +0530
-Message-ID: <4DF9C4F7.6020305@st.com>
-References: <4DF87B42.1020004@st.com> <m3ei2vv0nw.fsf@localhost.localdomain> <4DF891CC.1040700@st.com> <BANLkTik+oUb1QpVTwJfB30_8FsW=4ZVTxA@mail.gmail.com> <4DF89F56.3060200@st.com> <4DF8A896.7080708@op5.se> <4DF97998.7070604@st.com> <4DF9C3BA.8010106@viscovery.net>
+From: tumik <tumik@tuomisalo.com>
+Subject: Re: [git-p4] Trouble importing all perforce branches into git
+ repository
+Date: Thu, 16 Jun 2011 02:35:28 -0700 (PDT)
+Message-ID: <1308216928289-6482333.post@n2.nabble.com>
+References: <5A927B4F-7242-48AD-BC1C-BCA490A251C4@gmail.com> <20110522114917.GA19927@arf.padd.com> <398FA881-E4A1-49AC-80F2-2D46E9F2ABB9@gmail.com> <BANLkTi=TCyyS7Q=3BnLcG=yhL_boH=w1XA@mail.gmail.com> <34E33A18-B9C4-4CA9-B96C-79B0E2BDCD44@gmail.com> <BANLkTik+Zp1Fvi_zABCtAZH0RKA68n5Svw@mail.gmail.com> <0AC6DD14-3042-4A18-91AC-1CE77D8B4CD2@gmail.com> <1308212906486-6482174.post@n2.nabble.com> <BANLkTikTt4vMj+iZMhGEi6JefRUkZGZ8dg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-15"
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>,
-	"kusmabite@gmail.com" <kusmabite@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Shiraz HASHIM <shiraz.hashim@st.com>,
-	Vipin KUMAR <vipin.kumar@st.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Jun 16 10:55:53 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 16 11:35:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QX8Mi-0002O0-Om
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 10:55:53 +0200
+	id 1QX8zB-00056e-7a
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 11:35:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754204Ab1FPIzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jun 2011 04:55:48 -0400
-Received: from eu1sys200aog115.obsmtp.com ([207.126.144.139]:44502 "EHLO
-	eu1sys200aog115.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752459Ab1FPIzr (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Jun 2011 04:55:47 -0400
-Received: from beta.dmz-ap.st.com ([138.198.100.35]) (using TLSv1) by eu1sys200aob115.postini.com ([207.126.147.11]) with SMTP
-	ID DSNKTfnFAcQKhQg0iSKo+JuS/3PxU/6cIL6t@postini.com; Thu, 16 Jun 2011 08:55:46 UTC
-Received: from zeta.dmz-ap.st.com (ns6.st.com [138.198.234.13])
-	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id 46F4F147;
-	Thu, 16 Jun 2011 08:55:23 +0000 (GMT)
-Received: from Webmail-ap.st.com (eapex1hubcas4.st.com [10.80.176.69])
-	by zeta.dmz-ap.st.com (STMicroelectronics) with ESMTP id 2F196F26;
-	Thu, 16 Jun 2011 08:55:23 +0000 (GMT)
-Received: from [10.199.16.92] (10.199.16.92) by Webmail-ap.st.com
- (10.80.176.7) with Microsoft SMTP Server (TLS) id 8.2.234.1; Thu, 16 Jun 2011
- 16:55:22 +0800
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.12) Gecko/20101027 Lightning/1.0b2 Thunderbird/3.1.6
-In-Reply-To: <4DF9C3BA.8010106@viscovery.net>
+	id S1756438Ab1FPJfb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jun 2011 05:35:31 -0400
+Received: from sam.nabble.com ([216.139.236.26]:37823 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752422Ab1FPJf3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jun 2011 05:35:29 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <tumik@tuomisalo.com>)
+	id 1QX8z2-0000au-9d
+	for git@vger.kernel.org; Thu, 16 Jun 2011 02:35:28 -0700
+In-Reply-To: <BANLkTikTt4vMj+iZMhGEi6JefRUkZGZ8dg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175890>
 
-On 06/16/2011 02:20 PM, Johannes Sixt wrote:
-> Am 6/16/2011 5:33, schrieb viresh kumar:
->> > And i wanted just linux source on windows, i will not be creating any patches from
->> > windows. Just needed code for reference.
-> If you only want to peek into the files, you don't need the files checked
-> out. Just have them in a bare repository and use, e.g.,
+
+Thomas Berg wrote:
 > 
->   git show master:mm/vmalloc.c
+> git-p4 only uses the branch mapping for the initial commit on a
+> branch. It does not attempt to detect merges after that point. After
+> importing to git, merges just appear as regular commits in the
+> history.
 > 
-> You can also use a sparse checkout to omit the questionable files from the
-> checkout. See man git-read-tree.
+Thank you for the info, that's the way it seems to be working! It's a shame
+if the cloning from perforce -> git can't be made succesfully keeping all
+the history information :(
 
-Thanks. I am doing it this way only.
 
--- 
-viresh
+Thomas Berg wrote:
+> 
+> There was another script called git-p4raw for importing Perforce
+> history to git, which does merge detection. It solved the problem by
+> having configurable rules for what should be regarded as a merge, and
+> it supported manually reviewing the decisions afterwards (iirc).
+> 
+Yes, I tried the git-p4raw too. Actually even several forks of it! But I
+wasn't able to get any of those working, as none of them could load the
+perforce database correctly. Maybe the perforce database has changed lately
+or something, as git-p4raw gave errors that it's database tables don't have
+as much columns as perforce's does. Tried also to change the code to add
+those columns but there were so many of them and in many tables so I decided
+it's too hard and time-consuming to start reverse-engineering them..
+
+- tumik
+
+--
+View this message in context: http://git.661346.n2.nabble.com/git-p4-Trouble-importing-all-perforce-branches-into-git-repository-tp6383422p6482333.html
+Sent from the git mailing list archive at Nabble.com.
