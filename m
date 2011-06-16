@@ -1,76 +1,89 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: git clone and submodules
-Date: Thu, 16 Jun 2011 20:02:46 +0200
-Message-ID: <4DFA4546.1020905@web.de>
-References: <4DFA017A.5070206@micronengineering.it>
+From: Jeff King <peff@peff.net>
+Subject: Re: git log --follow doesn't follow a rename over a merge
+Date: Thu, 16 Jun 2011 14:15:09 -0400
+Message-ID: <20110616181509.GA12689@sigill.intra.peff.net>
+References: <BANLkTimjEp0ntq80qttT9uZN2YGuhsnZBw@mail.gmail.com>
+ <m362o5vrhd.fsf@localhost.localdomain>
+ <BANLkTik1-UvEXqzgdXwcK3x6_o8fDiwB7g@mail.gmail.com>
+ <20110616173451.GB6584@sigill.intra.peff.net>
+ <7vy611hd38.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Massimo Manca <massimo.manca@micronengineering.it>
-X-From: git-owner@vger.kernel.org Thu Jun 16 20:03:12 2011
+Content-Type: text/plain; charset=utf-8
+Cc: James Blackburn <jamesblackburn@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 16 20:15:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QXGuI-0003zs-O1
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 20:03:07 +0200
+	id 1QXH69-0002MC-0Z
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 20:15:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758552Ab1FPSCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jun 2011 14:02:54 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:41654 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758540Ab1FPSCv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jun 2011 14:02:51 -0400
-Received: from smtp04.web.de  ( [172.20.0.225])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 60DC81925EAD5;
-	Thu, 16 Jun 2011 20:02:49 +0200 (CEST)
-Received: from [93.240.117.200] (helo=[192.168.178.43])
-	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1QXGu1-0000sy-00; Thu, 16 Jun 2011 20:02:49 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
-In-Reply-To: <4DFA017A.5070206@micronengineering.it>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX19G6HUQ5yzkDE2RfPGUDKMttxjPfOzvi/ylbtrY
-	qAnG9ruiFmbFV+Yjs/NPLAn8f1xZEQrxQ3ioe8ud8i1K4C//sB
-	PXthwyvw1US4fNVXfORw==
+	id S1757620Ab1FPSPN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jun 2011 14:15:13 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53464
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752687Ab1FPSPM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jun 2011 14:15:12 -0400
+Received: (qmail 15891 invoked by uid 107); 16 Jun 2011 18:15:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 16 Jun 2011 14:15:22 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Jun 2011 14:15:09 -0400
+Content-Disposition: inline
+In-Reply-To: <7vy611hd38.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175910>
 
-Am 16.06.2011 15:13, schrieb Massimo Manca:
-> 2. RepoWR will contain a complex project developed by several engineers
-> and made of some subprojects (already existent) and some libraries. I
-> would manage them as submodules, these are my intents:
-> a) the library mclib (about 50 c files) has its repo on a different
-> location, I would "connect" its repo inside RepoWR as a submodule
-> because I am sure that we need to modify/extend the library and we would
-> to have the ability to modify it and propagate modifications to its
-> repo, forcing all users of mclib to see the modifications and to repeate
-> their regression tests
+On Thu, Jun 16, 2011 at 10:59:23AM -0700, Junio C Hamano wrote:
 
-That sounds like submodules would fit in nicely here.
+> > Doesn't:
+> >
+> >   git log -- plugins/org.eclipse.dd.dsf.debug/src/org/eclipse/dd/dsf/debug/service/IBreakpoints.java
+> >
+> > do that?
+> 
+> If the file emerged in one branch (either the primary or a side branch) in
+> the past as a failed experiment and then got removed before merging back,
+> i.e.
+> 
+>    past ---o----o-----o-----o-----o-----o-----o-----o--- now
+>             \                          /
+>              o----*----o----o----*----o
+>                   ^added         ^removed
+> 
+> then the merges are simplified away and you would not see it.
 
-> How can implement this situation? Where can I find info or documentation?
+Ah, right. The default simplification so often does what I want that I
+forget there are cases it can miss.
 
-http://progit.org/book/ch6-6.html
-http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#submodules
+> Perhaps simplify-merges option may help.
 
-And for questions not answered there feel free to ask.
+This test case shows full-history helping:
 
-> b) every module (not more the 4-5 c files) will be developed and unit
-> tested, so normally every engineer makes a unit test project
-> implementing/using the module to test with TDD workflow. During the
-> progress of the work the modules must be added and committed to RepoWR;
-> the modules are on the working directory of RepoWR (RepoWR\src) and the
-> test files on a specific subfolder (RepoWR\TestModuleOne\src).
-> Is this a viable solution or are there hidden problems and so better
-> solution to implement?
+-- >8 --
+commit() {
+  echo $1 >$1 && git add $1 && git commit -m $1
+}
 
-Did I get that right that the test files should not be put in the same
-submodule (= directory tree) where the to-be-tested code lives? To me
-it makes more sense when the tests and the code that is tested live in
-the same submodule.
+git init repo &&
+cd repo &&
+commit one &&
+commit two &&
+commit three &&
+git checkout -b side HEAD^ &&
+commit four &&
+commit five &&
+git rm five && git commit -m "remove five" &&
+commit six &&
+git checkout master &&
+git merge side &&
+echo "==> default log (shows nothing)" &&
+git --no-pager log -- five
+echo "==> full-history" &&
+git --no-pager log --full-history -- five
