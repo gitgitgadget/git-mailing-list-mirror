@@ -1,103 +1,76 @@
-From: James Blackburn <jamesblackburn@gmail.com>
-Subject: Re: git log --follow doesn't follow a rename over a merge
-Date: Thu, 16 Jun 2011 19:41:14 +0100
-Message-ID: <BANLkTikMNYyV40XM26rc6Ov6ZYO643mukA@mail.gmail.com>
-References: <BANLkTimjEp0ntq80qttT9uZN2YGuhsnZBw@mail.gmail.com>
-	<m362o5vrhd.fsf@localhost.localdomain>
-	<BANLkTik1-UvEXqzgdXwcK3x6_o8fDiwB7g@mail.gmail.com>
-	<20110616173451.GB6584@sigill.intra.peff.net>
-	<7vy611hd38.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 7/7] archive: provide builtin .tar.gz filter
+Date: Thu, 16 Jun 2011 11:42:17 -0700
+Message-ID: <7vpqmdhb3q.fsf@alter.siamese.dyndns.org>
+References: <20110616003800.GC20355@sigill.intra.peff.net>
+ <7v39jai94h.fsf@alter.siamese.dyndns.org>
+ <20110616065146.GA30672@sigill.intra.peff.net>
+ <20110616075621.GA12413@arachsys.com>
+ <20110616174653.GD6584@sigill.intra.peff.net>
+ <7vtybphcym.fsf@alter.siamese.dyndns.org>
+ <20110616182149.GB12689@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 16 20:41:23 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Chris Webb <chris@arachsys.com>,
+	Ren?? Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	"J.H." <warthog19@eaglescrag.net>, git@vger.kernel.org,
+	git-dev@github.com
+To: Jeff King <peff@github.com>
+X-From: git-owner@vger.kernel.org Thu Jun 16 20:42:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QXHVJ-0000eP-Dl
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 20:41:21 +0200
+	id 1QXHWM-0001K0-CG
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 20:42:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753283Ab1FPSlQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Jun 2011 14:41:16 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:36717 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751638Ab1FPSlP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Jun 2011 14:41:15 -0400
-Received: by qyg14 with SMTP id 14so949116qyg.19
-        for <git@vger.kernel.org>; Thu, 16 Jun 2011 11:41:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=HqzEvGWUy9Sddy9NG1IU2T95mOwQR/8dahyFnXWmumE=;
-        b=NNY2q8BXoZXblta6FQcLvDeGAgBaj//BI9ZyB5Fm9tTOV2ncWWeqExSUVjpgD0+WVc
-         Flobo57l6KVZ6dbisWx8/c10+BHN7Hqtl+QDkW56mgXy9y15xK592b0hBh3Qy+eBK2qK
-         S0zkY6uLauwH06QTui0bLrke4Gsp5T6/ik4K8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=lJFV4pZqXIyUvpYeCzvcawuQpRo4IgyILQwGiqVRICkz6f4YoteTSJBI8Dp2dtN3tS
-         WWyQeDeo3oDvjmK2R8Tt92zdKK0+/86ndlAL4BEaHzuiBecPBbo3Sj61AxtuiML//f+O
-         qQrLZniY5jfR8tNgEu5lXtjk5f9CMlKi09tDo=
-Received: by 10.229.41.211 with SMTP id p19mr736407qce.117.1308249674886; Thu,
- 16 Jun 2011 11:41:14 -0700 (PDT)
-Received: by 10.229.214.203 with HTTP; Thu, 16 Jun 2011 11:41:14 -0700 (PDT)
-In-Reply-To: <7vy611hd38.fsf@alter.siamese.dyndns.org>
+	id S1753776Ab1FPSmV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jun 2011 14:42:21 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47648 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752730Ab1FPSmU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jun 2011 14:42:20 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6B1BE6027;
+	Thu, 16 Jun 2011 14:44:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=t+fMjiHpFRRuEnj12cMB5FQQTBQ=; b=na8yEw
+	n0HxOJeu8iAqr2dRMdmsWRmJoGAucXlA8VUg33F37n/6onhiy1lfliwWXuC8i2MF
+	9ypzXu5x/l6u6PRpPP+yaS0o1gQ5FP0o2jxJl/xcL1DN65WC3kAEP53oWfqoZDgB
+	8khMYUbJ8Bq0rYOOM8SpRF7apGSIAfNAbU6Rk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=trkwsCLgDXu/Mgh5QUrHvxd+IlwDRgp8
+	bE5kVU1e1MZe6IElFW+hNennYvnJzEPg8gCeWQXaRY76iHQ1cA5CbMpQqDdflk0Q
+	xxWt3GTz02mHW3sXkgCu6tGw5RGIdyibq9GVrFGSMZclCrtanH/k3n/HGF81N8zW
+	Noc22nCj6f8=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 611D76026;
+	Thu, 16 Jun 2011 14:44:30 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C28C66025; Thu, 16 Jun 2011
+ 14:44:29 -0400 (EDT)
+In-Reply-To: <20110616182149.GB12689@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 16 Jun 2011 14:21:50 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AB2D578A-9848-11E0-BCCD-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175915>
 
-On 16 June 2011 18:59, Junio C Hamano <gitster@pobox.com> wrote:
-> =A0 past ---o----o-----o-----o-----o-----o-----o-----o--- now
-> =A0 =A0 =A0 =A0 =A0 =A0\ =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =
-=A0 =A0/
-> =A0 =A0 =A0 =A0 =A0 =A0 o----*----o----o----*----o
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0^added =A0 =A0 =A0 =A0 ^removed
->
-> then the merges are simplified away and you would not see it.
->
-> Perhaps simplify-merges option may help.
+Jeff King <peff@github.com> writes:
 
-Magic, that works!
+> Also, since it's easy via the external helper route, should there be any
+> other builtin formats? Bzip2? It's not that big a deal for a big hosting
+> site like kernel.org to stick it in their configuration, but I wonder if
+> normal users would find it useful.
 
-What I don't get is that I believe the file is removed in the 'merge'
-commit 'X', which is reachable from master, not in the feature branch:
-
- 2002 ---o----o-----o-----o-----X-----o-----o-----o--- 2011         (CD=
-T)
-                                    /
- 2006 ---o----o-----o-----o--   (2009)                                 =
- (DSF)
-
-> git log --simplify-merges --oneline -- plugins/org.eclipse.dd.dsf.deb=
-ug/src/org/eclipse/dd/dsf/debug/service/IBreakpoints.java
-2f1c904 [memory] DSDP-DD -> CDT initial commit
-5b47187 Migrated DSF and DSF-GDB to the CDT project.
-10580b5 Updated copyright statements.
-=2E..
-
-So 5b48718 is X, and the file exists in the DSF parent of X: c1e6da2
-
-I think 2f1c904 is entirely wrong too -- it's another graft I've done,
-to a different repo, which isn't to do with DSF, and doesn't contain
-IBreakpoints.java:
- > git show 2f1c904:plugins/org.eclipse.dd.dsf.debug/src/org/eclipse/dd=
-/dsf/debug/service/IBreakpoints.java
-fatal: Path 'plugins/org.eclipse.dd.dsf.debug/src/org/eclipse/dd/dsf/de=
-bug/service/IBreakpoints.java'
-does not exist in '2f1c904'
-
-Given the file was removed during my 'merge' graft in commit X,
-shouldn't it be visible  in log without --simplify-merges?
-
-Cheers,
-James
+I know k.org statically prepares *.bz2 for any *.gz in /pub/software/
+hierarchy, but isn't bzip2 significantly more expensive (like taking ten
+times as much memory or four times as much CPI time to squeeze the last
+extra 15% out), making it unsuitable for one-shot online use?
