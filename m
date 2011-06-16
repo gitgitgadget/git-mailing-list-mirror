@@ -1,210 +1,108 @@
-From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: [PATCH] Fix typo: existant->existent
-Date: Thu, 16 Jun 2011 17:26:35 +0600
-Message-ID: <1308223595-6319-1-git-send-email-divanorama@gmail.com>
-Cc: Dmitry Ivankov <divanorama@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 16 13:26:32 2011
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Q: how can i find the upstream merge point of a commit?
+Date: Thu, 16 Jun 2011 04:33:02 -0700 (PDT)
+Message-ID: <m3aadiui6d.fsf@localhost.localdomain>
+References: <20110608093648.GA19038@elte.hu>
+	<201106141156.56320.johan@herland.net>
+	<20110614171204.GC26764@sigill.intra.peff.net>
+	<201106150145.12912.johan@herland.net>
+	<20110615230033.GB19803@sigill.intra.peff.net>
+	<7vips6ircc.fsf@alter.siamese.dyndns.org>
+	<20110616004803.GD20355@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Ingo Molnar <mingo@elte.hu>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Peter Zijlstra <a.p.zijlstra@chello.nl>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Jeff King <peff@github.com>
+X-From: git-owner@vger.kernel.org Thu Jun 16 13:33:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QXAiW-0000Su-6Z
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 13:26:32 +0200
+	id 1QXAp2-0004fp-N3
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 13:33:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755934Ab1FPL0X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jun 2011 07:26:23 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:55177 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755932Ab1FPL0U (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jun 2011 07:26:20 -0400
-Received: by bwz15 with SMTP id 15so1160959bwz.19
-        for <git@vger.kernel.org>; Thu, 16 Jun 2011 04:26:18 -0700 (PDT)
+	id S1755978Ab1FPLdH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jun 2011 07:33:07 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:49853 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755902Ab1FPLdE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jun 2011 07:33:04 -0400
+Received: by fxm17 with SMTP id 17so1032781fxm.19
+        for <git@vger.kernel.org>; Thu, 16 Jun 2011 04:33:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
-        bh=sKhKYcZprykmLLPY+SUXV2C0a3zmPRBJ2ZF6NB27Vf8=;
-        b=Q3j2dSK4Jqjkn1Et45oJ7FPTi3dPxdWaHmzNn+6N3Jb5VGQJNzotwTclGVjo8M5Uvd
-         aIHL9xvumfIqb9B66Q/ff0QHEGjNcCAoR6w2ByMC+oMKjAjWdkZi7vmq6eFcvUBm/XhK
-         Xr9b/7ZhV3VidS5o10NwJh90QIgiK74Vp5Mpw=
+        h=domainkey-signature:x-authentication-warning:to:cc:subject
+         :references:from:date:in-reply-to:message-id:lines:user-agent
+         :mime-version:content-type;
+        bh=6Xk2epLFvU8ODzkR7DuvFiQopkmYT1OJRrwd+TBIQ+U=;
+        b=caueRXmbbhUiBC9n/N1Lu8AQ8pKQSgMXghLUTUylDdhpBnI0YqaQTWFH4eKqO2s/vy
+         gIIAEiej5hCs4eul9mltWbvXSr2XEgmTLkPiAXVuNryQMAsfw3VwGGa5i1DgdKpss+vV
+         nt5G6Hwhh9ZblGlbfNpAHWH2JOwGpe1V2sLXk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=omcvW5rpcjq7+qTqYfYBASV78NkmFOfBvlTbdHJTL+4rX8D0kfGjcexQldgcU6CUd4
-         obBbZbhkhO8qoHjcLOkhogFHxNGrBSEeqJro64Q0R/q+nWeyirL+7kVsnYFYUL5hjrjr
-         QjOnxXBY6t3R8k68vuxVpbgIA/sd4oIRSRyn8=
-Received: by 10.204.189.74 with SMTP id dd10mr499607bkb.174.1308223576582;
-        Thu, 16 Jun 2011 04:26:16 -0700 (PDT)
-Received: from localhost.localdomain (117360277.convex.ru [79.172.62.237])
-        by mx.google.com with ESMTPS id q20sm1134701bka.5.2011.06.16.04.26.14
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=BenvCUnVxT2rAtBqN8k6fnABO5BHM48GdH/6rhZQB+feO22filzu9UQOrCdenJoBhA
+         uf1QxY54TJjhBmgxFaB3Rb0WBHjvzEMusVTZwvD2Inm5hmuGg4wr1hmruOg1dFDnY2jq
+         a4TW2V0b7S0WfiPwzlIkkErVjzqS88O+GsldI=
+Received: by 10.223.13.207 with SMTP id d15mr1022926faa.38.1308223983587;
+        Thu, 16 Jun 2011 04:33:03 -0700 (PDT)
+Received: from localhost.localdomain (abve99.neoplus.adsl.tpnet.pl [83.8.202.99])
+        by mx.google.com with ESMTPS id m5sm167376fai.1.2011.06.16.04.32.55
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 16 Jun 2011 04:26:15 -0700 (PDT)
-X-Mailer: git-send-email 1.7.3.4
+        Thu, 16 Jun 2011 04:33:02 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p5GBVp5L016183;
+	Thu, 16 Jun 2011 13:32:02 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p5GBV6g4016171;
+	Thu, 16 Jun 2011 13:31:06 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20110616004803.GD20355@sigill.intra.peff.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175893>
 
-refs.c had a error message "Trying to write ref with nonexistent object".
-And no tests relied on the wrong spelling.
-Also typo was present in some test scripts internals, these tests still pass.
+Jeff King <peff@github.com> writes:
+> On Wed, Jun 15, 2011 at 04:53:55PM -0700, Junio C Hamano wrote:
 
-Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
----
-This is a reroll of previously sent series 
-http://thread.gmane.org/gmane.comp.version-control.git/174910/focus=174909, git-gui patch will go separately.
-Existant is a valid word in French, so in po/fr it's ok.
+> > Yes, you demonstrated that it is _possible_ to define disambiguation
+> > rules, but do we currently allow (or horrors encourage) hierarchical
+> > remote nicknames, and do people rely on being able to do so?  What
+> > workflows benefit from such a confusing layout?
+> > 
+> > I am not fundamentally opposed to it, but just trying to tell between "we
+> > do so because we can" and "because we need to for such and such reasons".
+> 
+> My reasoning is that we don't disallow remote names with slashes, nor do
+> we disallow people putting arbitrarily nested refs into refs/remotes. So
+> in the name of compatibility, we should assume people are doing it and
+> not break them.
+> 
+> If we want to declare this illegal, I'm not too opposed. The only use
+> case I could think of is somebody who works with two different sets of
+> remotes, like "upstream" people and internal people. E.g., if I'm at
+> company "foo" working on linux internally, I might have a few remotes:
+> 
+>   origin: linus
+>   foo/alice: coworker alice's tree
+>   foo/bob: coworker bob's tree
 
- refs.c                        |    2 +-
- t/t3903-stash.sh              |    2 +-
- t/t4203-mailmap.sh            |    2 +-
- t/t4205-log-pretty-formats.sh |    2 +-
- t/t5506-remote-groups.sh      |    6 +++---
- t/t5516-fetch-push.sh         |   10 +++++-----
- t/t9300-fast-import.sh        |    4 ++--
- 7 files changed, 14 insertions(+), 14 deletions(-)
+I currently have "gsoc2008/gitweb-caching" and "gsoc2010/gitweb-write"
+remotes in my clone of git.git repository...
 
-diff --git a/refs.c b/refs.c
-index e3c0511..b10419a 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1451,7 +1451,7 @@ int write_ref_sha1(struct ref_lock *lock,
- 	}
- 	o = parse_object(sha1);
- 	if (!o) {
--		error("Trying to write ref %s with nonexistant object %s",
-+		error("Trying to write ref %s with nonexistent object %s",
- 			lock->ref_name, sha1_to_hex(sha1));
- 		unlock_ref(lock);
- 		return -1;
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 5c72540..7197aae 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -536,7 +536,7 @@ test_expect_success 'stash pop - fail early if specified stash is not a stash re
- 	git reset --hard HEAD
- '
- 
--test_expect_success 'ref with non-existant reflog' '
-+test_expect_success 'ref with non-existent reflog' '
- 	git stash clear &&
- 	echo bar5 > file &&
- 	echo bar6 > file2 &&
-diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
-index e818de6..1f182f6 100755
---- a/t/t4203-mailmap.sh
-+++ b/t/t4203-mailmap.sh
-@@ -94,7 +94,7 @@ nick1 (1):
- 
- EOF
- 
--test_expect_success 'mailmap.file non-existant' '
-+test_expect_success 'mailmap.file non-existent' '
- 	rm internal_mailmap/.mailmap &&
- 	rmdir internal_mailmap &&
- 	git shortlog HEAD >actual &&
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index cb9f2bd..2ae9faa 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -45,7 +45,7 @@ test_expect_success 'alias user-defined tformat' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'alias non-existant format' '
-+test_expect_success 'alias non-existent format' '
- 	git config pretty.test-alias format-that-will-never-exist &&
- 	test_must_fail git log --pretty=test-alias
- '
-diff --git a/t/t5506-remote-groups.sh b/t/t5506-remote-groups.sh
-index b7b7dda..530b016 100755
---- a/t/t5506-remote-groups.sh
-+++ b/t/t5506-remote-groups.sh
-@@ -43,10 +43,10 @@ test_expect_success 'no group updates all' '
- 	repo_fetched two
- '
- 
--test_expect_success 'nonexistant group produces error' '
--	mark nonexistant &&
-+test_expect_success 'nonexistent group produces error' '
-+	mark nonexistent &&
- 	update_repos &&
--	test_must_fail git remote update nonexistant &&
-+	test_must_fail git remote update nonexistent &&
- 	! repo_fetched one &&
- 	! repo_fetched two
- '
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index d73731e..3abb290 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -367,7 +367,7 @@ test_expect_success 'push with colon-less refspec (4)' '
- 
- '
- 
--test_expect_success 'push head with non-existant, incomplete dest' '
-+test_expect_success 'push head with non-existent, incomplete dest' '
- 
- 	mk_test &&
- 	git push testrepo master:branch &&
-@@ -375,7 +375,7 @@ test_expect_success 'push head with non-existant, incomplete dest' '
- 
- '
- 
--test_expect_success 'push tag with non-existant, incomplete dest' '
-+test_expect_success 'push tag with non-existent, incomplete dest' '
- 
- 	mk_test &&
- 	git tag -f v1.0 &&
-@@ -384,14 +384,14 @@ test_expect_success 'push tag with non-existant, incomplete dest' '
- 
- '
- 
--test_expect_success 'push sha1 with non-existant, incomplete dest' '
-+test_expect_success 'push sha1 with non-existent, incomplete dest' '
- 
- 	mk_test &&
- 	test_must_fail git push testrepo `git rev-parse master`:foo
- 
- '
- 
--test_expect_success 'push ref expression with non-existant, incomplete dest' '
-+test_expect_success 'push ref expression with non-existent, incomplete dest' '
- 
- 	mk_test &&
- 	test_must_fail git push testrepo master^:branch
-@@ -436,7 +436,7 @@ test_expect_success 'push with +HEAD' '
- 
- '
- 
--test_expect_success 'push HEAD with non-existant, incomplete dest' '
-+test_expect_success 'push HEAD with non-existent, incomplete dest' '
- 
- 	mk_test &&
- 	git checkout master &&
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 6b1ba6c..2a53640 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -1893,7 +1893,7 @@ test_expect_success \
-     test_cmp marks.out marks.new'
- 
- cat >input <<EOF
--feature import-marks=nonexistant.marks
-+feature import-marks=nonexistent.marks
- feature export-marks=marks.new
- EOF
- 
-@@ -1904,7 +1904,7 @@ test_expect_success \
- 
- 
- cat >input <<EOF
--feature import-marks=nonexistant.marks
-+feature import-marks=nonexistent.marks
- feature export-marks=combined.marks
- EOF
- 
 -- 
-1.7.3.4
+Jakub Narebski
+Poland
+ShadeHawk on #git
