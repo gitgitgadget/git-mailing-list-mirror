@@ -1,87 +1,101 @@
-From: James Blackburn <jamesblackburn@gmail.com>
-Subject: Re: git log --follow doesn't follow a rename over a merge
-Date: Thu, 16 Jun 2011 14:31:02 +0100
-Message-ID: <BANLkTik1-UvEXqzgdXwcK3x6_o8fDiwB7g@mail.gmail.com>
-References: <BANLkTimjEp0ntq80qttT9uZN2YGuhsnZBw@mail.gmail.com>
-	<m362o5vrhd.fsf@localhost.localdomain>
+From: Massimo Manca <massimo.manca@micronengineering.it>
+Subject: git clone and submodules
+Date: Thu, 16 Jun 2011 15:13:30 +0200
+Organization: Micron Engineering
+Message-ID: <4DFA017A.5070206@micronengineering.it>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 16 15:31:11 2011
+Content-Type: multipart/mixed;
+ boundary="------------090307030401070407090807"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 16 15:42:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QXCf7-0003IF-Sz
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 15:31:10 +0200
+	id 1QXCpx-0003xu-6C
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 15:42:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752138Ab1FPNbF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Jun 2011 09:31:05 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:61686 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751550Ab1FPNbE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Jun 2011 09:31:04 -0400
-Received: by qyk29 with SMTP id 29so187182qyk.19
-        for <git@vger.kernel.org>; Thu, 16 Jun 2011 06:31:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=NAeVvRhzXqX473W6tC/zotXtm+2MCQcj+uGBb922Bxc=;
-        b=Ym2zdeGMjbGssnGY01VdEw5UpF/qRCbLz1yrrl1E+ABSqkUFRsfWhcJuZrDuk9XY4t
-         ndBPIAPUf1dpvyXe2hE4/t38zr6SIgPR157jlJ3GtFxx/tbr4Tgm18ceE+ZV04/+8mhB
-         iLqDAOLuYUFKfxgzRxbE1YYC+i5oPxwA/CvWs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=SpCwTisyq8QhSvz1AEKV9BMySg1/VWJskfCNm6do8kHOxRWvHuv7Bfwkr1HJevHYiJ
-         RIT8Hp2i/LaMSjqIKFk0X2bILRSaEQyHh8V+QK6+AhbmBMUYOgY9HoMFwOWOnHwZUw2y
-         yoEbwCYYaHqh0z7seJvthfWXlTBsja1KwDYMk=
-Received: by 10.229.10.82 with SMTP id o18mr765614qco.79.1308231062243; Thu,
- 16 Jun 2011 06:31:02 -0700 (PDT)
-Received: by 10.229.214.203 with HTTP; Thu, 16 Jun 2011 06:31:02 -0700 (PDT)
-In-Reply-To: <m362o5vrhd.fsf@localhost.localdomain>
+	id S1751648Ab1FPNmP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jun 2011 09:42:15 -0400
+Received: from mp1-smtp-6.eutelia.it ([62.94.10.166]:59120 "EHLO
+	smtp.eutelia.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752029Ab1FPNmO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jun 2011 09:42:14 -0400
+Received: from [127.0.0.1] (ip-227-68.sn1.eutelia.it [62.94.227.68])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp.eutelia.it (Eutelia) with ESMTP id E610361C7A4
+	for <git@vger.kernel.org>; Thu, 16 Jun 2011 15:14:58 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; it; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
+X-Antivirus: avast! (VPS 110616-0, 16/06/2011), Outbound message
+X-Antivirus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175899>
 
-On 16 June 2011 14:25, Jakub Narebski <jnareb@gmail.com> wrote:
-> James Blackburn <jamesblackburn@gmail.com> writes:
->
->> I'm trying, without success, to get git log to show the history of a
->> file across a rename. =A0I'm using=A0git version 1.7.5.4, and git bl=
-ame
->> has no such issues tracking the source of the lines.
->
-> [...]
->
->> Have I done something wrong in grafting history like this, or is thi=
-s
->> just a problem with the way git log --follow tracks renames?
->
-> The `--follow` option to git-log is more of a bolted-on hack rather
-> than proper solution, see 750f7b6 (Finally implement "git log
-> --follow", 2007-06-19), and it might not work in all cases.
+This is a multi-part message in MIME format.
+--------------090307030401070407090807
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
 
-Thanks for the reply Jakub.
+Hello,
+on my windows notebook I have a local repo: h:\Repositories\RepoWR; it
+contains 2 branches: the master and the 1.1.0 (that is a bug correction
+branch). At now the 1.1.0 it is not merged on the master because we will
+correct more other bugs (one bug -> one branch).
 
-I'm also interested in knowing what incantation I need to give to
-actually get history of the file which was previously removed.  e.g. I
-know the full path:
-   plugins/org.eclipse.dd.dsf.debug/src/org/eclipse/dd/dsf/debug/servic=
-e/IBreakpoints.java
-used to exist, but without --follow, git log returns nothing.
+1. I need to clone the Repo, I mean the repo, working directory and
+complete branches and history.
+Actually to do this I must make a brutal copy of the RepoWR folder
+because if I use git clone git doesn't clone also the master branch but
+only the 1.1.0 branch that it is the active one (I used git checkout to
+activate it).
 
-Similarly I can't figure out how to find (without knowing in advance)
-which was the last commit which contained this version of
-IBreakpoints.java. i.e. which commit removed / renamed it?
+So I am sure that I miss something and that this is a very common
+situation, what I am doing wrong?
 
-Cheers,
-James
+2. RepoWR will contain a complex project developed by several engineers
+and made of some subprojects (already existent) and some libraries. I
+would manage them as submodules, these are my intents:
+a) the library mclib (about 50 c files) has its repo on a different
+location, I would "connect" its repo inside RepoWR as a submodule
+because I am sure that we need to modify/extend the library and we would
+to have the ability to modify it and propagate modifications to its
+repo, forcing all users of mclib to see the modifications and to repeate
+their regression tests
+How can implement this situation? Where can I find info or documentation?
+
+b) every module (not more the 4-5 c files) will be developed and unit
+tested, so normally every engineer makes a unit test project
+implementing/using the module to test with TDD workflow. During the
+progress of the work the modules must be added and committed to RepoWR;
+the modules are on the working directory of RepoWR (RepoWR\src) and the
+test files on a specific subfolder (RepoWR\TestModuleOne\src).
+Is this a viable solution or are there hidden problems and so better
+solution to implement?
+
+--------------090307030401070407090807
+Content-Type: text/x-vcard; charset=utf-8;
+ name="massimo_manca.vcf"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="massimo_manca.vcf"
+
+begin:vcard
+fn:Massimo Manca
+n:Manca;Massimo
+org:Micron Engineering di Massimo Manca
+adr:;;via della Ferriera, 48;Pordenone;PN;33170;ITALIA
+email;internet:massimo.manca@micronengineering.it
+tel;work:+39 0434 1856131
+tel;fax:+39 0434 1851032 / 178 273 3543
+tel;cell:+39 349 4504979
+url:http://www.micronengineering.it
+version:2.1
+end:vcard
+
+
+--------------090307030401070407090807--
