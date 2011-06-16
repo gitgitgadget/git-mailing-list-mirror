@@ -1,69 +1,88 @@
-From: Jeff King <peff@github.com>
-Subject: Re: [PATCH 7/7] archive: provide builtin .tar.gz filter
-Date: Thu, 16 Jun 2011 13:46:53 -0400
-Message-ID: <20110616174653.GD6584@sigill.intra.peff.net>
-References: <20110616003800.GC20355@sigill.intra.peff.net>
- <7v39jai94h.fsf@alter.siamese.dyndns.org>
- <20110616065146.GA30672@sigill.intra.peff.net>
- <20110616075621.GA12413@arachsys.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git log --follow doesn't follow a rename over a merge
+Date: Thu, 16 Jun 2011 10:59:23 -0700
+Message-ID: <7vy611hd38.fsf@alter.siamese.dyndns.org>
+References: <BANLkTimjEp0ntq80qttT9uZN2YGuhsnZBw@mail.gmail.com>
+ <m362o5vrhd.fsf@localhost.localdomain>
+ <BANLkTik1-UvEXqzgdXwcK3x6_o8fDiwB7g@mail.gmail.com>
+ <20110616173451.GB6584@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ren?? Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	"J.H." <warthog19@eaglescrag.net>, git@vger.kernel.org,
-	git-dev@github.com
-To: Chris Webb <chris@arachsys.com>
-X-From: git-owner@vger.kernel.org Thu Jun 16 19:47:00 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: James Blackburn <jamesblackburn@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 16 19:59:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QXGei-0003TD-9p
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 19:47:00 +0200
+	id 1QXGqq-0001zY-P2
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 19:59:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758508Ab1FPRq4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jun 2011 13:46:56 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58831
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757205Ab1FPRqz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jun 2011 13:46:55 -0400
-Received: (qmail 15444 invoked by uid 107); 16 Jun 2011 17:47:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 16 Jun 2011 13:47:06 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Jun 2011 13:46:53 -0400
-Content-Disposition: inline
-In-Reply-To: <20110616075621.GA12413@arachsys.com>
+	id S932155Ab1FPR71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jun 2011 13:59:27 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61471 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932107Ab1FPR71 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jun 2011 13:59:27 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C7AE659DA;
+	Thu, 16 Jun 2011 14:01:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=k3df1X35AfvBk7vwi8L2Lz4A4tM=; b=VFHD+K
+	Pj4IzsDAJ5N8UJ5s875BFSDBpoU4K27LdIO/gkxH4VBD44c9cNJpvjw78hrXVm8M
+	JcUrlxmoE3RBpDMHxRtuxuLm2cowsN3HeUp7PH0wZfR98uiykMTNYmK5Cq4/ybAb
+	xDjxWrW3A3Jl6ACRTDZS2FmvEYv86yr8pI+WI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gQpZ8AiFXbQ4lIrL2zDVENtZkXdrxo49
+	LwIId0E56PwO8EWAXJ9f+ATtPFsUa/Schh7LbQTPimWJbkOked/+bWAJtbZpO1xB
+	UzMm1uBkZyS5zc2d7HQszWKteTbIzMlUqBjrHVBYvfpKvOJ/DU+NY2sdf5nvr/h5
+	KkgB31lkCzA=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BFF3859D9;
+	Thu, 16 Jun 2011 14:01:36 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1F49559D8; Thu, 16 Jun 2011
+ 14:01:36 -0400 (EDT)
+In-Reply-To: <20110616173451.GB6584@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 16 Jun 2011 13:34:51 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AD26A132-9842-11E0-A3D1-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175907>
 
-On Thu, Jun 16, 2011 at 08:56:21AM +0100, Chris Webb wrote:
+Jeff King <peff@peff.net> writes:
 
-> Jeff King <peff@github.com> writes:
-> 
-> > No, I mean that people may _want_ the timestamp in day to day use. Using
-> > "-n" all the time suppresses it. And there is no reason to suppress it,
-> > except that our test does not account for it properly. So your patch is
-> > hurting people who don't want "-n" (i.e., want the timestamp) just to
-> > make our test happy.
-> 
-> It's useful to omit the timestamp outside of git too. Source-based package
-> management systems generally store a URL from which to fetch a source
-> tarball, and a hash of that source tarball to ensure it hasn't been tampered
-> with. It's nice to be able to use a gitweb URL like
-> 
->   http://git.kernel.org/?p=git/git.git;a=snapshot;h=e5af0de202e885b793482d416b8ce9d50dd2b8bc;sf=tgz
-> 
-> as the tarball source, and still be able to verify its integrity against a
-> prestored hash.
+> On Thu, Jun 16, 2011 at 02:31:02PM +0100, James Blackburn wrote:
+>
+>> I'm also interested in knowing what incantation I need to give to
+>> actually get history of the file which was previously removed.  e.g. I
+>> know the full path:
+>>    plugins/org.eclipse.dd.dsf.debug/src/org/eclipse/dd/dsf/debug/service/IBreakpoints.java
+>> used to exist, but without --follow, git log returns nothing.
+>
+> Doesn't:
+>
+>   git log -- plugins/org.eclipse.dd.dsf.debug/src/org/eclipse/dd/dsf/debug/service/IBreakpoints.java
+>
+> do that?
 
-OK. I'm totally willing to accept that people actually prefer the "-n"
-behavior. I don't care either way myself. I just don't want the reason
-to default to "-n" to be "because our test scripts need it" and not
-"because this is what people actually want".
+If the file emerged in one branch (either the primary or a side branch) in
+the past as a failed experiment and then got removed before merging back,
+i.e.
 
--Peff
+   past ---o----o-----o-----o-----o-----o-----o-----o--- now
+            \                          /
+             o----*----o----o----*----o
+                  ^added         ^removed
+
+then the merges are simplified away and you would not see it.
+
+Perhaps simplify-merges option may help.
