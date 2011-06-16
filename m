@@ -1,59 +1,65 @@
-From: viresh kumar <viresh.kumar@st.com>
-Subject: Re: Copying Git repository from Linux to Windows.
-Date: Thu, 16 Jun 2011 09:03:44 +0530
-Message-ID: <4DF97998.7070604@st.com>
-References: <4DF87B42.1020004@st.com> <m3ei2vv0nw.fsf@localhost.localdomain> <4DF891CC.1040700@st.com> <BANLkTik+oUb1QpVTwJfB30_8FsW=4ZVTxA@mail.gmail.com> <4DF89F56.3060200@st.com> <4DF8A896.7080708@op5.se>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 7/7] archive: provide builtin .tar.gz filter
+Date: Wed, 15 Jun 2011 23:27:26 -0700
+Message-ID: <7v39jai94h.fsf@alter.siamese.dyndns.org>
+References: <20110616003800.GC20355@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: "kusmabite@gmail.com" <kusmabite@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Shiraz HASHIM <shiraz.hashim@st.com>,
-	Vipin KUMAR <vipin.kumar@st.com>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Thu Jun 16 05:34:23 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	"J.H." <warthog19@eaglescrag.net>, git@vger.kernel.org,
+	git-dev@github.com
+To: Jeff King <peff@github.com>
+X-From: git-owner@vger.kernel.org Thu Jun 16 08:27:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QX3LV-0005oJ-NO
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 05:34:18 +0200
+	id 1QX63I-0003ug-To
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 08:27:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752459Ab1FPDeM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jun 2011 23:34:12 -0400
-Received: from eu1sys200aog101.obsmtp.com ([207.126.144.111]:53931 "EHLO
-	eu1sys200aog101.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751546Ab1FPDeL (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Jun 2011 23:34:11 -0400
-Received: from beta.dmz-ap.st.com ([138.198.100.35]) (using TLSv1) by eu1sys200aob101.postini.com ([207.126.147.11]) with SMTP
-	ID DSNKTfl5rtxbasEXJBDHCb/R+eVzuReNMqKj@postini.com; Thu, 16 Jun 2011 03:34:11 UTC
-Received: from zeta.dmz-ap.st.com (ns6.st.com [138.198.234.13])
-	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id C3D61E0;
-	Thu, 16 Jun 2011 03:33:47 +0000 (GMT)
-Received: from Webmail-ap.st.com (eapex1hubcas4.st.com [10.80.176.69])
-	by zeta.dmz-ap.st.com (STMicroelectronics) with ESMTP id AC22E106C;
-	Thu, 16 Jun 2011 03:33:47 +0000 (GMT)
-Received: from [10.199.16.92] (10.199.16.92) by Webmail-ap.st.com
- (10.80.176.7) with Microsoft SMTP Server (TLS) id 8.2.234.1; Thu, 16 Jun 2011
- 11:33:46 +0800
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.12) Gecko/20101027 Lightning/1.0b2 Thunderbird/3.1.6
-In-Reply-To: <4DF8A896.7080708@op5.se>
+	id S1751987Ab1FPG1a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jun 2011 02:27:30 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62184 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750814Ab1FPG13 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jun 2011 02:27:29 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2D96E3A93;
+	Thu, 16 Jun 2011 02:29:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=i3fvpkgCkmUW9vC4BpTSe3xdZH8=; b=sbVQsh
+	RdoZNyzywqBhwTiIxlC0RoH5/+vvnKwnbTTGb43k1PHSlrzobRzegMSPynoGyCEa
+	K51QyRbd36fTS5iwOd4+DVMcOiDZh/a4dVZnYdNe/TcGH/NZ+NsupmlDvqz7/zO+
+	PeIagWoTZL+gjG1HRPn1l+jG6KRHUgn0KjxUc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ItTTBdF80KiUeXYnw2fbPzFP/dMzzjjX
+	I8Dhizl88m8yvNkswxZMsZR7e+Yz21sytjYQJtm/HOmLw/FVgyVcu3YbYUC6JghB
+	doaz6elmQ0dqRen9ktppP/B8J3qO9IDsvmTaYPTv24FUIgZQ0ZcTY4jkmjeqx1fl
+	EimlNxQFXlE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 267643A92;
+	Thu, 16 Jun 2011 02:29:40 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 86B043A91; Thu, 16 Jun 2011
+ 02:29:39 -0400 (EDT)
+In-Reply-To: <20110616003800.GC20355@sigill.intra.peff.net> (Jeff King's
+ message of "Wed, 15 Jun 2011 20:38:00 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0357DD34-97E2-11E0-862C-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175881>
 
-On 06/15/2011 06:11 PM, Andreas Ericsson wrote:
-> If I may ask; Why do you need to be able to work with a linux kernel
-> repository on windows?
+Jeff King <peff@github.com> writes:
 
-I can't simply install Linux on my office laptop (company policies, support, etc) :(
+> This feels a little wrong, as we are changing what the tool outputs all
+> the time just to appease a poorly-written test.
 
-And i wanted just linux source on windows, i will not be creating any patches from
-windows. Just needed code for reference.
-
--- 
-viresh
+Now you confused me.  Isn't '-n' to tell the tool *not* to write timestamp
+out, so that we can avoid changing what the tool outputs all the time?
