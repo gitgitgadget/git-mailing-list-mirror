@@ -1,61 +1,63 @@
-From: viresh kumar <viresh.kumar@st.com>
-Subject: Re: Copying Git repository from Linux to Windows.
-Date: Thu, 16 Jun 2011 13:52:52 +0530
-Message-ID: <4DF9BD5C.5000901@st.com>
-References: <4DF87B42.1020004@st.com> <m3ei2vv0nw.fsf@localhost.localdomain> <4DF891CC.1040700@st.com> <BANLkTik+oUb1QpVTwJfB30_8FsW=4ZVTxA@mail.gmail.com> <4DF89F56.3060200@st.com> <4DF8A896.7080708@op5.se> <4DF97998.7070604@st.com> <BANLkTinT8oH+aBnn+zqFYyFbcU+PNPVeVA@mail.gmail.com>
+From: Chris Webb <chris@arachsys.com>
+Subject: Re: [PATCH 7/7] archive: provide builtin .tar.gz filter
+Date: Thu, 16 Jun 2011 08:56:21 +0100
+Message-ID: <20110616075621.GA12413@arachsys.com>
+References: <20110616003800.GC20355@sigill.intra.peff.net>
+ <7v39jai94h.fsf@alter.siamese.dyndns.org>
+ <20110616065146.GA30672@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>,
-	"kusmabite@gmail.com" <kusmabite@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Shiraz HASHIM <shiraz.hashim@st.com>,
-	Vipin KUMAR <vipin.kumar@st.com>
-To: Philippe Vaucher <philippe.vaucher@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 16 10:23:31 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ren?? Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	"J.H." <warthog19@eaglescrag.net>, git@vger.kernel.org,
+	git-dev@github.com
+To: Jeff King <peff@github.com>
+X-From: git-owner@vger.kernel.org Thu Jun 16 10:26:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QX7rO-00022v-Te
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 10:23:31 +0200
+	id 1QX7tq-0003Ro-Iv
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 10:26:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751656Ab1FPIXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jun 2011 04:23:23 -0400
-Received: from eu1sys200aog117.obsmtp.com ([207.126.144.143]:55777 "EHLO
-	eu1sys200aog117.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750814Ab1FPIXU (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Jun 2011 04:23:20 -0400
-Received: from beta.dmz-ap.st.com ([138.198.100.35]) (using TLSv1) by eu1sys200aob117.postini.com ([207.126.147.11]) with SMTP
-	ID DSNKTfm9clRgKTcUPaF6xd+2jEB83u5KrFI4@postini.com; Thu, 16 Jun 2011 08:23:20 UTC
-Received: from zeta.dmz-ap.st.com (ns6.st.com [138.198.234.13])
-	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id 10786143;
-	Thu, 16 Jun 2011 08:22:55 +0000 (GMT)
-Received: from Webmail-ap.st.com (eapex1hubcas4.st.com [10.80.176.69])
-	by zeta.dmz-ap.st.com (STMicroelectronics) with ESMTP id E84AFAA7;
-	Thu, 16 Jun 2011 08:22:54 +0000 (GMT)
-Received: from [10.199.16.92] (10.199.16.92) by Webmail-ap.st.com
- (10.80.176.7) with Microsoft SMTP Server (TLS) id 8.2.234.1; Thu, 16 Jun 2011
- 16:22:54 +0800
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.12) Gecko/20101027 Lightning/1.0b2 Thunderbird/3.1.6
-In-Reply-To: <BANLkTinT8oH+aBnn+zqFYyFbcU+PNPVeVA@mail.gmail.com>
+	id S1752985Ab1FPIZ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jun 2011 04:25:59 -0400
+Received: from alpha.arachsys.com ([91.203.57.7]:37467 "EHLO
+	alpha.arachsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751822Ab1FPIZ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jun 2011 04:25:56 -0400
+Received: from [81.2.114.212] (helo=miranda.arachsys.com)
+	by alpha.arachsys.com with esmtpa (Exim 4.72)
+	(envelope-from <chris@arachsys.com>)
+	id 1QX7RP-000774-UH; Thu, 16 Jun 2011 08:56:40 +0100
+Content-Disposition: inline
+In-Reply-To: <20110616065146.GA30672@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175885>
 
-On 06/16/2011 01:47 PM, Philippe Vaucher wrote:
->> I can't simply install Linux on my office laptop (company policies, support, etc) :(
-> 
-> Why not use something like VirtualBox?
-> 
+Jeff King <peff@github.com> writes:
 
-Ya. I can, but for now i really don't have to. Just wanted code for
-reference on windows and i got it at last. Just commited all files still showed
-in git status.
+> No, I mean that people may _want_ the timestamp in day to day use. Using
+> "-n" all the time suppresses it. And there is no reason to suppress it,
+> except that our test does not account for it properly. So your patch is
+> hurting people who don't want "-n" (i.e., want the timestamp) just to
+> make our test happy.
 
--- 
-viresh
+It's useful to omit the timestamp outside of git too. Source-based package
+management systems generally store a URL from which to fetch a source
+tarball, and a hash of that source tarball to ensure it hasn't been tampered
+with. It's nice to be able to use a gitweb URL like
+
+  http://git.kernel.org/?p=git/git.git;a=snapshot;h=e5af0de202e885b793482d416b8ce9d50dd2b8bc;sf=tgz
+
+as the tarball source, and still be able to verify its integrity against a
+prestored hash.
+
+Cheers,
+
+Chris.
