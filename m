@@ -1,63 +1,60 @@
-From: Chris Webb <chris@arachsys.com>
-Subject: Re: [PATCH 7/7] archive: provide builtin .tar.gz filter
-Date: Thu, 16 Jun 2011 08:56:21 +0100
-Message-ID: <20110616075621.GA12413@arachsys.com>
-References: <20110616003800.GC20355@sigill.intra.peff.net>
- <7v39jai94h.fsf@alter.siamese.dyndns.org>
- <20110616065146.GA30672@sigill.intra.peff.net>
+From: tumik <tumik@tuomisalo.com>
+Subject: Re: [git-p4] Trouble importing all perforce branches into git
+ repository
+Date: Thu, 16 Jun 2011 01:28:26 -0700 (PDT)
+Message-ID: <1308212906486-6482174.post@n2.nabble.com>
+References: <5A927B4F-7242-48AD-BC1C-BCA490A251C4@gmail.com> <20110522114917.GA19927@arf.padd.com> <398FA881-E4A1-49AC-80F2-2D46E9F2ABB9@gmail.com> <BANLkTi=TCyyS7Q=3BnLcG=yhL_boH=w1XA@mail.gmail.com> <34E33A18-B9C4-4CA9-B96C-79B0E2BDCD44@gmail.com> <BANLkTik+Zp1Fvi_zABCtAZH0RKA68n5Svw@mail.gmail.com> <0AC6DD14-3042-4A18-91AC-1CE77D8B4CD2@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ren?? Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	"J.H." <warthog19@eaglescrag.net>, git@vger.kernel.org,
-	git-dev@github.com
-To: Jeff King <peff@github.com>
-X-From: git-owner@vger.kernel.org Thu Jun 16 10:26:07 2011
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 16 10:28:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QX7tq-0003Ro-Iv
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 10:26:02 +0200
+	id 1QX7wH-0004rC-QT
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 10:28:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752985Ab1FPIZ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jun 2011 04:25:59 -0400
-Received: from alpha.arachsys.com ([91.203.57.7]:37467 "EHLO
-	alpha.arachsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751822Ab1FPIZ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jun 2011 04:25:56 -0400
-Received: from [81.2.114.212] (helo=miranda.arachsys.com)
-	by alpha.arachsys.com with esmtpa (Exim 4.72)
-	(envelope-from <chris@arachsys.com>)
-	id 1QX7RP-000774-UH; Thu, 16 Jun 2011 08:56:40 +0100
-Content-Disposition: inline
-In-Reply-To: <20110616065146.GA30672@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753086Ab1FPI23 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jun 2011 04:28:29 -0400
+Received: from sam.nabble.com ([216.139.236.26]:49558 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751822Ab1FPI21 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jun 2011 04:28:27 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <tumik@tuomisalo.com>)
+	id 1QX7wB-0002Za-33
+	for git@vger.kernel.org; Thu, 16 Jun 2011 01:28:27 -0700
+In-Reply-To: <0AC6DD14-3042-4A18-91AC-1CE77D8B4CD2@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175886>
 
-Jeff King <peff@github.com> writes:
 
-> No, I mean that people may _want_ the timestamp in day to day use. Using
-> "-n" all the time suppresses it. And there is no reason to suppress it,
-> except that our test does not account for it properly. So your patch is
-> hurting people who don't want "-n" (i.e., want the timestamp) just to
-> make our test happy.
+Grant Limberg wrote:
+> 
+> I think I just figured out the problem.  The branch mapping between
+> //project/MAIN/... and //project/Branch-foo/... was done backwards, thus
+> git-p4 was expecting Branch-foo to be a parent of MAIN when the inverse
+> was actually true.
+> 
 
-It's useful to omit the timestamp outside of git too. Source-based package
-management systems generally store a URL from which to fetch a source
-tarball, and a hash of that source tarball to ensure it hasn't been tampered
-with. It's nice to be able to use a gitweb URL like
+Did you get it working so that the branch integrates at Perforce show up as
+merges in git? I have been trying to do this for tens of hours now and just
+can't get it working.. I have tried making the branch mapping both ways, and
+even both at the same time but with no success.
 
-  http://git.kernel.org/?p=git/git.git;a=snapshot;h=e5af0de202e885b793482d416b8ce9d50dd2b8bc;sf=tgz
+I have succesfully imported the two testing branches to git, but if I look
+at it in gitk for example, the history is linear and there are no merges
+from the other branch (it shows up as a normal commit, without the parent
+from other branch, just adding all lines that the merging did). in p4v it
+shows up as it should!
 
-as the tarball source, and still be able to verify its integrity against a
-prestored hash.
-
-Cheers,
-
-Chris.
+--
+View this message in context: http://git.661346.n2.nabble.com/git-p4-Trouble-importing-all-perforce-branches-into-git-repository-tp6383422p6482174.html
+Sent from the git mailing list archive at Nabble.com.
