@@ -1,74 +1,76 @@
-From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: [PATCH] Fix typo: existant->existent
-Date: Thu, 16 Jun 2011 18:22:39 +0600
-Message-ID: <1308226959-10659-1-git-send-email-divanorama@gmail.com>
-Cc: Dmitry Ivankov <divanorama@gmail.com>,
-	Pat Thoyts <patthoyts@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 16 14:22:29 2011
+From: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <carlos@cmartin.tk>
+Subject: Re: [PATCH] Fix typo: existant->existent
+Date: Thu, 16 Jun 2011 15:19:40 +0200
+Message-ID: <20110616131938.GA7751@centaur.lab.cmartin.tk>
+References: <1308223595-6319-1-git-send-email-divanorama@gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="liOOAslEiF7prFVr"
+Cc: git@vger.kernel.org
+To: Dmitry Ivankov <divanorama@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 16 15:19:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QXBaf-0005JT-8t
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 14:22:29 +0200
+	id 1QXCUA-0002Hq-BB
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 15:19:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757829Ab1FPMWV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jun 2011 08:22:21 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:61511 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757736Ab1FPMWU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jun 2011 08:22:20 -0400
-Received: by bwz15 with SMTP id 15so1194097bwz.19
-        for <git@vger.kernel.org>; Thu, 16 Jun 2011 05:22:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
-        bh=He3E0KXMq9n0g97zOpFHWf9fmZY9ShQuohbd38Dl37s=;
-        b=DHOR6HTwKgqtbokgurgPWFWSYbKgVKNH+5Bw+EwOrAr0YQi6t7HccNtt84iRYenewX
-         r4LVMq4dDSmge4hnFucTao2g9YOEgi61In8UpgUge3aicLxEZ1CAG+Ca0g5+uKVzZfMU
-         w+C6KK/N+OoMFOxRMsZoM6avEpLQrOz8OVWqM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=cPzldJ9Gl+Egl1PO3UO+3pt7sXz5e9mAQe20Bw1QTe5nduVBvNwHt9eJIplPHSZuML
-         dFGMihhj5cMlOO1SSOpN7ktio3htNX+nXxY4EASOwTYWZ0rP8i54+s+JK4fj3DorZJKT
-         c71c6XeJ9zz4bO9V00FkxnwIpKRRwWmoBXEXs=
-Received: by 10.204.61.197 with SMTP id u5mr561034bkh.210.1308226939311;
-        Thu, 16 Jun 2011 05:22:19 -0700 (PDT)
-Received: from localhost.localdomain (117360277.convex.ru [79.172.62.237])
-        by mx.google.com with ESMTPS id ek1sm1166275bkb.9.2011.06.16.05.22.15
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 16 Jun 2011 05:22:17 -0700 (PDT)
-X-Mailer: git-send-email 1.7.3.4
+	id S1752722Ab1FPNTp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jun 2011 09:19:45 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:56274 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751304Ab1FPNTo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jun 2011 09:19:44 -0400
+Received: from centaur.lab.cmartin.tk (brln-4d0c05e5.pool.mediaWays.net [77.12.5.229])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id F2D86461E5;
+	Thu, 16 Jun 2011 15:19:08 +0200 (CEST)
+Received: (nullmailer pid 28241 invoked by uid 1000);
+	Thu, 16 Jun 2011 13:19:40 -0000
+Mail-Followup-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <carlos@cmartin.tk>,
+	Dmitry Ivankov <divanorama@gmail.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <1308223595-6319-1-git-send-email-divanorama@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175895>
 
-This typo was discovered in core git sources.
-Clean in it up in git-gui too.
-There is just one occurence in a comment line.
 
-Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
----
- git-gui/git-gui.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+--liOOAslEiF7prFVr
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index fd6a43d..49efcee 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -1526,7 +1526,7 @@ proc run_prepare_commit_msg_hook {} {
- 
- 	# prepare-commit-msg requires PREPARE_COMMIT_MSG exist.  From git-gui
- 	# it will be .git/MERGE_MSG (merge), .git/SQUASH_MSG (squash), or an
--	# empty file but existant file.
-+	# empty file but existent file.
- 
- 	set fd_pcm [open [gitdir PREPARE_COMMIT_MSG] a]
- 
--- 
-1.7.3.4
+On Thu, Jun 16, 2011 at 05:26:35PM +0600, Dmitry Ivankov wrote:
+> refs.c had a error message "Trying to write ref with nonexistent object".
+
+=46rom the patch, ITYM to say "with nonexistant object" here
+
+Cheers,
+   cmn
+--=20
+Carlos Mart=C3=ADn Nieto | http://cmartin.tk
+
+"=C2=BFC=C3=B3mo voy a decir bobadas si soy mudo?" -- CACHAI
+
+--liOOAslEiF7prFVr
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAEBAgAGBQJN+gLqAAoJEHKRP1jG7ZzTZowH/iBnso/MqMCw8JzZtBIV0PLR
+Jbi1z5JgnG+V/VOiYIVUdWiZZbDq4LjbpGF0LmTUZSBt/ybRCKhARddfW+RvJRW7
+9aMe4/8isEaamKC2I7M+/gYylvIfk/psw916fcTIDPewlACMUlyQq1GYIKTuy4Yj
+CwEZbxhltaAmO+Ohtm/w4Rql0DCEyQf9DZlvqwyFNNgSmnydU/IRxf00umRdRIrQ
+dwG5XoSW2Huck+nAgWOfXS0x1rZu0QYImnMAPKFBcAq3fNp8PCdDi7nBQUQChdDw
+EFpWpBdAfHzgaYFDzB1Cu27WQTD18qmaRshYO7gjjmZeNBlfQ683cdVi8Pls4jg=
+=8NPd
+-----END PGP SIGNATURE-----
+
+--liOOAslEiF7prFVr--
