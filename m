@@ -1,73 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 7/7] archive: provide builtin .tar.gz filter
-Date: Thu, 16 Jun 2011 11:02:09 -0700
-Message-ID: <7vtybphcym.fsf@alter.siamese.dyndns.org>
-References: <20110616003800.GC20355@sigill.intra.peff.net>
- <7v39jai94h.fsf@alter.siamese.dyndns.org>
- <20110616065146.GA30672@sigill.intra.peff.net>
- <20110616075621.GA12413@arachsys.com>
- <20110616174653.GD6584@sigill.intra.peff.net>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: git clone and submodules
+Date: Thu, 16 Jun 2011 20:02:46 +0200
+Message-ID: <4DFA4546.1020905@web.de>
+References: <4DFA017A.5070206@micronengineering.it>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Chris Webb <chris@arachsys.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Ren?? Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	"J.H." <warthog19@eaglescrag.net>, git@vger.kernel.org,
-	git-dev@github.com
-To: Jeff King <peff@github.com>
-X-From: git-owner@vger.kernel.org Thu Jun 16 20:02:19 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Massimo Manca <massimo.manca@micronengineering.it>
+X-From: git-owner@vger.kernel.org Thu Jun 16 20:03:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QXGtV-0003eP-Bv
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 20:02:17 +0200
+	id 1QXGuI-0003zs-O1
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Jun 2011 20:03:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758530Ab1FPSCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jun 2011 14:02:12 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63430 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758508Ab1FPSCL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jun 2011 14:02:11 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A24EA5A5B;
-	Thu, 16 Jun 2011 14:04:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dbtrvQP85PPrDN0gGM5CM7uNgJc=; b=Z3oZ6m
-	YSyPyj4LqoJiwa8qQ3RfR78S5tdR+W8Q59ESaFEMSw2/wOYOs+XsstMUca9h6JRv
-	6IF/sXgk2OuCRc8HBQKK9p6q7jUfvWgRq16qnznPQ/m2aJAHY/JjWpple8mQ5/lo
-	ogF4pEpYg8mb04B/wQ9zDIX0aSvs6K5bIhf5s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HgCgkRK+himDWFr65X9hkdy5vgDs27UI
-	hFscO53AQumpWtNILkihxS5+WazCUhBAHMr+/XnjI3/jWX47Sgil3UE3hIz2ajjf
-	kOnOLcc/lw8+WNLm0vCnKv0KIQ9jMQgtxT6LezxtTlBsdiyVsgPrkOcEspXI8tJs
-	GdYVgXhpdww=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 996EE5A5A;
-	Thu, 16 Jun 2011 14:04:21 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id F1ED15A59; Thu, 16 Jun 2011
- 14:04:20 -0400 (EDT)
-In-Reply-To: <20110616174653.GD6584@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 16 Jun 2011 13:46:53 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0F6F9164-9843-11E0-A93E-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
+	id S1758552Ab1FPSCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jun 2011 14:02:54 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:41654 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758540Ab1FPSCv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jun 2011 14:02:51 -0400
+Received: from smtp04.web.de  ( [172.20.0.225])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 60DC81925EAD5;
+	Thu, 16 Jun 2011 20:02:49 +0200 (CEST)
+Received: from [93.240.117.200] (helo=[192.168.178.43])
+	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1QXGu1-0000sy-00; Thu, 16 Jun 2011 20:02:49 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
+In-Reply-To: <4DFA017A.5070206@micronengineering.it>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX19G6HUQ5yzkDE2RfPGUDKMttxjPfOzvi/ylbtrY
+	qAnG9ruiFmbFV+Yjs/NPLAn8f1xZEQrxQ3ioe8ud8i1K4C//sB
+	PXthwyvw1US4fNVXfORw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175909>
 
-Jeff King <peff@github.com> writes:
+Am 16.06.2011 15:13, schrieb Massimo Manca:
+> 2. RepoWR will contain a complex project developed by several engineers
+> and made of some subprojects (already existent) and some libraries. I
+> would manage them as submodules, these are my intents:
+> a) the library mclib (about 50 c files) has its repo on a different
+> location, I would "connect" its repo inside RepoWR as a submodule
+> because I am sure that we need to modify/extend the library and we would
+> to have the ability to modify it and propagate modifications to its
+> repo, forcing all users of mclib to see the modifications and to repeate
+> their regression tests
 
-> OK. I'm totally willing to accept that people actually prefer the "-n"
-> behavior. I don't care either way myself. I just don't want the reason
-> to default to "-n" to be "because our test scripts need it" and not
-> "because this is what people actually want".
+That sounds like submodules would fit in nicely here.
 
-Surely I share the exact feeling, and that is why I quoted the other "-n"
-added to gitweb because that was what people actually wanted.
+> How can implement this situation? Where can I find info or documentation?
+
+http://progit.org/book/ch6-6.html
+http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#submodules
+
+And for questions not answered there feel free to ask.
+
+> b) every module (not more the 4-5 c files) will be developed and unit
+> tested, so normally every engineer makes a unit test project
+> implementing/using the module to test with TDD workflow. During the
+> progress of the work the modules must be added and committed to RepoWR;
+> the modules are on the working directory of RepoWR (RepoWR\src) and the
+> test files on a specific subfolder (RepoWR\TestModuleOne\src).
+> Is this a viable solution or are there hidden problems and so better
+> solution to implement?
+
+Did I get that right that the test files should not be put in the same
+submodule (= directory tree) where the to-be-tested code lives? To me
+it makes more sense when the tests and the code that is tested live in
+the same submodule.
