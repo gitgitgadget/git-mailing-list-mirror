@@ -1,71 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] t/Makefile: pass test opts to valgrind target properly
-Date: Fri, 17 Jun 2011 04:29:57 -0400
-Message-ID: <20110617082956.GA20414@sigill.intra.peff.net>
+From: Michael Mc Donnell <michael@mcdonnell.dk>
+Subject: git imap-send converting my patches to CRLF line endings?
+Date: Fri, 17 Jun 2011 15:35:04 +0200
+Message-ID: <BANLkTimXQQX_Fu0fgtWneF2cCLUZFhTaCg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 17 10:30:20 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 17 15:35:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QXURV-00008W-6q
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Jun 2011 10:30:17 +0200
+	id 1QXZCb-0008R5-1v
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Jun 2011 15:35:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757153Ab1FQIaE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jun 2011 04:30:04 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52324
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757499Ab1FQIaB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jun 2011 04:30:01 -0400
-Received: (qmail 23787 invoked by uid 107); 17 Jun 2011 08:30:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 17 Jun 2011 04:30:11 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Jun 2011 04:29:57 -0400
-Content-Disposition: inline
+	id S1755350Ab1FQNfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jun 2011 09:35:07 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:64733 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754697Ab1FQNfF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jun 2011 09:35:05 -0400
+Received: by yxi11 with SMTP id 11so1268720yxi.19
+        for <git@vger.kernel.org>; Fri, 17 Jun 2011 06:35:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:date:x-google-sender-auth
+         :message-id:subject:from:to:content-type;
+        bh=bhA7ba9lMMGnvfbmhZph8ZsNbprlOBnl7w04OW8MPCA=;
+        b=dgW5s/3LPM7KZkRjzh4DTFxU7TQUamBjJlkVSaNz8aKsg3j6K7TLa/a/ZbiyuF3EJv
+         c5xwrJPJWI5l2VraEYHqUVtJcrf3xdG93qDgQBhic1KbrsbTq/RP8iGr5bbNt9el5DLW
+         aSN3w/12UCHd011CSwvfjf0VdiXtxBDSehOk0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        b=Srs71qlE8tjmWeYECdKYPxU1Bsqe4P/+kC28bXTYTI/7up+jWj0MmvEECzR82IiI89
+         D5Et6L1l9kMAkjSKCQTXpAFulHqZTBE6IYFL+F/79cbeCUggVI1zgbeP7zPLgvnkknMz
+         5pVWcjV6a2aqyT+iRjsm9OGQ9RGl/CYahKyOg=
+Received: by 10.146.117.15 with SMTP id p15mr175283yac.32.1308317704371; Fri,
+ 17 Jun 2011 06:35:04 -0700 (PDT)
+Received: by 10.147.113.1 with HTTP; Fri, 17 Jun 2011 06:35:04 -0700 (PDT)
+X-Google-Sender-Auth: iZVdZs8BbNbQPf918YW1XZKWlxI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175944>
 
-The valgrind target just reinvokes make with GIT_TEST_OPTS
-set to "--valgrind". However, it does this using an
-environment variable, which means GIT_TEST_OPTS in your
-config.mak would override it, and "make valgrind" would
-simply run the test suite without valgrind on.
+Hi
 
-Instead, we should pass GIT_TEST_OPTS on the command-line,
-overriding what's in config.mak, and take care to append to
-whatever the user has there already.
+I'm using git imap-send to send patches to wine-patches, and it seems
+like it converts all my patches to have CRLF line endings?
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I'm attempting to run the whole test suite under valgrind for 1.7.6-rc2.
-It's been a while since I've done a whole run, as there were some false
-positives in strspn on recent glibc which I've finally addressed.
+I can see it when I download the patch from the Gmail drafts folder.
+Git complains about white space when I apply the downloaded patch. It
+works fine if I just use git to create the patch and then apply it on
+a new branch. Is it git imap-send or just Gmail that's the problem?
 
-We'll see what it comes up with later today. :)
+Is there any way to disable the conversion?
 
- t/Makefile |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+I'm using git 1.7.5.4
 
-diff --git a/t/Makefile b/t/Makefile
-index 47cbeb6..9046ec9 100644
---- a/t/Makefile
-+++ b/t/Makefile
-@@ -71,7 +71,7 @@ gitweb-test:
- 	$(MAKE) $(TGITWEB)
- 
- valgrind:
--	GIT_TEST_OPTS=--valgrind $(MAKE)
-+	$(MAKE) GIT_TEST_OPTS="$(GIT_TEST_OPTS) --valgrind"
- 
- # Smoke testing targets
- -include ../GIT-VERSION-FILE
--- 
-1.7.6.rc1.38.g97f64
+Thanks,
+Michael Mc Donnell
