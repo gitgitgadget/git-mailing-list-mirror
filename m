@@ -1,113 +1,68 @@
-From: Massimo Manca <massimo.manca@micronengineering.it>
-Subject: Re: git bash
-Date: Fri, 17 Jun 2011 17:07:44 +0200
-Organization: Micron Engineering
-Message-ID: <4DFB6DC0.7070101@micronengineering.it>
-References: <4DFB5C37.1090606@micronengineering.it> <20110617141822.GD7751@centaur.lab.cmartin.tk> <4DFB6710.8090105@dirk.my1.cc>
+From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+Subject: Re: git imap-send converting my patches to CRLF line endings?
+Date: Fri, 17 Jun 2011 10:37:54 -0500
+Message-ID: <Oe8m5NtYZicsi6Z4FtNIXAfsB9Q9XcHSsoAYmKdxQkoDVJOKykQTEg@cipher.nrlssc.navy.mil>
+References: <BANLkTimXQQX_Fu0fgtWneF2cCLUZFhTaCg@mail.gmail.com>	<20110617141450.GA12114@sigill.intra.peff.net> <BANLkTin1DAv0pZmZCcrtDyjrUD-ukO6MNQ@mail.gmail.com> <Svak9atXpisIKwqaYKGMzry3LEHEDPnWLLqFpfgP7IOuAVUdRy8brA@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------010003030905010506050007"
-Cc: =?ISO-8859-15?Q?Carlos_Mart=EDn_Nieto?= <carlos@cmartin.tk>,
-	git@vger.kernel.org
-To: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
-X-From: git-owner@vger.kernel.org Fri Jun 17 17:09:32 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Michael Mc Donnell <michael@mcdonnell.dk>
+X-From: git-owner@vger.kernel.org Fri Jun 17 17:38:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QXafr-0005aI-E3
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Jun 2011 17:09:31 +0200
+	id 1QXb7b-0006qW-CQ
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Jun 2011 17:38:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759208Ab1FQPJ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jun 2011 11:09:26 -0400
-Received: from mp1-smtp-5.eutelia.it ([62.94.10.165]:33681 "EHLO
-	smtp.eutelia.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751254Ab1FQPJ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jun 2011 11:09:26 -0400
-Received: from [127.0.0.1] (ip-227-68.sn1.eutelia.it [62.94.227.68])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp.eutelia.it (Eutelia) with ESMTP id 1408E1441D8;
-	Fri, 17 Jun 2011 17:09:24 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; it; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
-In-Reply-To: <4DFB6710.8090105@dirk.my1.cc>
-X-Antivirus: avast! (VPS 110617-0, 17/06/2011), Outbound message
-X-Antivirus-Status: Clean
+	id S1759424Ab1FQPiF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jun 2011 11:38:05 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:46663 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759210Ab1FQPiE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jun 2011 11:38:04 -0400
+Received: by mail.nrlssc.navy.mil id p5HFbrxJ006646; Fri, 17 Jun 2011 10:37:53 -0500
+In-Reply-To: <Svak9atXpisIKwqaYKGMzry3LEHEDPnWLLqFpfgP7IOuAVUdRy8brA@cipher.nrlssc.navy.mil>
+X-OriginalArrivalTime: 17 Jun 2011 15:37:54.0401 (UTC) FILETIME=[86592510:01CC2D04]
+X-Virus-Scanned: clamav-milter 0.95.3 at mail1
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175954>
 
-This is a multi-part message in MIME format.
---------------010003030905010506050007
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 8bit
-
-Il 17/06/2011 16.39, Dirk Süsserott ha scritto:
-> Am 17.06.2011 16:18 schrieb Carlos Martín Nieto:
->> On Fri, Jun 17, 2011 at 03:52:55PM +0200, Massimo Manca wrote:
->>> Hi all,
->>> I am using git on Linux Ubuntu, Windows Vista, , Windows 7 and Windows
->>> XP (several o.s. to develop sw).
->>> In my notebook under Vista if I use bash on mi physical HD (it is
->>> divided in C:, F:, H:) it works, if I try to open a bash console on an
->> Assuming you mean that git doesn't work (rather than bash), could you
->> provide a transcript of what you think went wrong?
+On 06/17/2011 10:08 AM, Brandon Casey wrote:
+> On 06/17/2011 09:45 AM, Michael Mc Donnell wrote:
+>> On Fri, Jun 17, 2011 at 4:14 PM, Jeff King <peff@peff.net> wrote:
+>>> On Fri, Jun 17, 2011 at 03:35:04PM +0200, Michael Mc Donnell wrote:
+> 
+>>> How do you download and apply the patch exactly? If you are speaking
+>>> imap to gmail, generally the client would strip out the CR's from the
+>>> mail.
 >>
->>> external HD (or USB or SD memories) and also on network shared drives it
->>> doesn't work.
->> Are these filsystems FAT32 by any chance. You may need to turn on a
->> couple of compatibility options like case-insensitivity and filemode.
-> But when using msysGit, these options are already set appropriate,
-> aren't they?
-Yes they are.
-> Sometimes I have a similar problem. What do you mean by "opening a bash
-> console on an external HD"?
-Yes, it is more user friendly.
->  Do you right-click a folder and then "Git
-> bash (here)"? I don't use that feature but I always start the bash with
-> its regular icon (so my answer may probably not help you).  It then
-> starts in my $HOME and I change to the external HD (say X:) like so:
->
-> $ cd /x/foo
-Opening a bash shell from the icon and then changing the working
-folder.... it works :)
-Very strange bug.
-> I noticed the following: When the ext. HD is attached/mounted *before* I
-> start the bash, then it works. But if I have a running bash and then
-> mount the drive, I cannot cd to it. "No such path" or sth. It seems,
-> that bash builds a list of available drives only at startup. Might that
-> be your problem? If so, then close all bashs and re-open them after
-> mounting the devices.
->
-In my situation the external HD (an SD card) it is always on.
-> HTH,
-> Dirk
->
->
+>> I'm just downloading it with Chrome.
+>>
+>> Steps to reproduce:
+>> 1. Upload patch via:
+>> $ git format-patch --stdout --keep-subject --attach origin | git imap-send
 
+Wait a second.  You used --attach.
 
---------------010003030905010506050007
-Content-Type: text/x-vcard; charset=utf-8;
- name="massimo_manca.vcf"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="massimo_manca.vcf"
+>> 2. Open Gmail in Chrome.
+>> 3. Open email in drafts folder.
+>> 4. Click attachment download link
 
-begin:vcard
-fn:Massimo Manca
-n:Manca;Massimo
-org:Micron Engineering di Massimo Manca
-adr:;;via della Ferriera, 48;Pordenone;PN;33170;ITALIA
-email;internet:massimo.manca@micronengineering.it
-tel;work:+39 0434 1856131
-tel;fax:+39 0434 1851032 / 178 273 3543
-tel;cell:+39 349 4504979
-url:http://www.micronengineering.it
-version:2.1
-end:vcard
+Then you downloaded the attachment, which should be a _patch_.
 
+>> 5. Apply patch on a fresh branch with git apply.
 
---------------010003030905010506050007--
+Well, scratch what I said before, you were correct in using
+git apply.
+
+Shouldn't the attachment have it's content preserved exactly?  Maybe
+the fault does belong to gmail.
+
+-Brandon
