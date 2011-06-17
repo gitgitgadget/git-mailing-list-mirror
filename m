@@ -1,80 +1,74 @@
-From: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
-Subject: Re: git bash
-Date: Fri, 17 Jun 2011 16:39:12 +0200
-Message-ID: <4DFB6710.8090105@dirk.my1.cc>
-References: <4DFB5C37.1090606@micronengineering.it> <20110617141822.GD7751@centaur.lab.cmartin.tk>
+From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+Subject: Re: git imap-send converting my patches to CRLF line endings?
+Date: Fri, 17 Jun 2011 09:47:17 -0500
+Message-ID: <QMrPJrj9ztlKRRk907LM0hozdFOSLjShMt2uDhbAk6DGxE1OSBFMkg@cipher.nrlssc.navy.mil>
+References: <BANLkTimXQQX_Fu0fgtWneF2cCLUZFhTaCg@mail.gmail.com> <20110617141450.GA12114@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: =?ISO-8859-15?Q?Carlos_Mart=EDn_Nieto?= <carlos@cmartin.tk>,
-	Massimo Manca <massimo.manca@micronengineering.it>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 17 16:47:05 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Michael Mc Donnell <michael@mcdonnell.dk>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jun 17 16:47:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QXaK6-00005k-SB
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Jun 2011 16:47:03 +0200
+	id 1QXaKh-0000X4-1g
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Jun 2011 16:47:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932325Ab1FQOq7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Jun 2011 10:46:59 -0400
-Received: from smtprelay01.ispgateway.de ([80.67.31.35]:46939 "EHLO
-	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932075Ab1FQOq6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jun 2011 10:46:58 -0400
-Received: from [84.176.58.117] (helo=[192.168.2.100])
-	by smtprelay01.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1QXaCY-0007Ki-2s; Fri, 17 Jun 2011 16:39:14 +0200
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
-In-Reply-To: <20110617141822.GD7751@centaur.lab.cmartin.tk>
-X-Df-Sender: 757646
+	id S932328Ab1FQOrc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jun 2011 10:47:32 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:54738 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932075Ab1FQOrc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jun 2011 10:47:32 -0400
+Received: by mail.nrlssc.navy.mil id p5HElGFW002384; Fri, 17 Jun 2011 09:47:16 -0500
+In-Reply-To: <20110617141450.GA12114@sigill.intra.peff.net>
+X-OriginalArrivalTime: 17 Jun 2011 14:47:17.0292 (UTC) FILETIME=[741716C0:01CC2CFD]
+X-Virus-Scanned: clamav-milter 0.95.3 at mail1
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175950>
 
-Am 17.06.2011 16:18 schrieb Carlos Mart=EDn Nieto:
-> On Fri, Jun 17, 2011 at 03:52:55PM +0200, Massimo Manca wrote:
->> Hi all,
->> I am using git on Linux Ubuntu, Windows Vista, , Windows 7 and Windo=
-ws
->> XP (several o.s. to develop sw).
->> In my notebook under Vista if I use bash on mi physical HD (it is
->> divided in C:, F:, H:) it works, if I try to open a bash console on =
-an
->=20
-> Assuming you mean that git doesn't work (rather than bash), could you
-> provide a transcript of what you think went wrong?
->=20
->> external HD (or USB or SD memories) and also on network shared drive=
-s it
->> doesn't work.
->=20
-> Are these filsystems FAT32 by any chance. You may need to turn on a
-> couple of compatibility options like case-insensitivity and filemode.
+On 06/17/2011 09:14 AM, Jeff King wrote:
+> On Fri, Jun 17, 2011 at 03:35:04PM +0200, Michael Mc Donnell wrote:
+> 
+>> I'm using git imap-send to send patches to wine-patches, and it seems
+>> like it converts all my patches to have CRLF line endings?
+> 
+> The canonical line ending for mail is CRLF. So yes, it will convert your
+> patch to CRLF for storage. But anything pulling it out of the IMAP
+> folder should convert it back to native line endings.
 
-But when using msysGit, these options are already set appropriate,
-aren't they?
+Not always.  Modern thunderbird (3.1.10, is that modern? I haven't
+checked), saves mail using CRLF.  I don't have access to gmail at the
+moment, but I'm pretty sure gmail does the same thing, i.e. when you
+select "view original", and then use your browser to "save as...".
 
-Sometimes I have a similar problem. What do you mean by "opening a bash
-console on an external HD"? Do you right-click a folder and then "Git
-bash (here)"? I don't use that feature but I always start the bash with
-its regular icon (so my answer may probably not help you).  It then
-starts in my $HOME and I change to the external HD (say X:) like so:
+mailsplit was modified to strip CRLF when splitting mail here:
 
-$ cd /x/foo
+  c2ca1d7 Allow mailsplit (and hence git-am) to handle mails with CRLF line-endings
 
-I noticed the following: When the ext. HD is attached/mounted *before* =
-I
-start the bash, then it works. But if I have a running bash and then
-mount the drive, I cannot cd to it. "No such path" or sth. It seems,
-that bash builds a list of available drives only at startup. Might that
-be your problem? If so, then close all bashs and re-open them after
-mounting the devices.
+which should have first appeared in git v1.6.5.
 
-HTH,
-Dirk
+>> I can see it when I download the patch from the Gmail drafts folder.
+>> Git complains about white space when I apply the downloaded patch. It
+>> works fine if I just use git to create the patch and then apply it on
+>> a new branch. Is it git imap-send or just Gmail that's the problem?
+> 
+> How do you download and apply the patch exactly? If you are speaking
+> imap to gmail, generally the client would strip out the CR's from the
+> mail.
+
+Michael, how are you applying the "email"?  Are you using 'git am'? or
+possibly are you trying to use 'git apply'?  You need to use 'git am'.
+
+Also, as I mentioned above, you should be using git more recent than
+v1.6.5 so that you have a mailsplit that will strip out the CRLF line
+endings.
+
+-Brandon
