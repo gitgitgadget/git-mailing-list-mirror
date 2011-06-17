@@ -1,90 +1,80 @@
-From: Michael Mc Donnell <michael@mcdonnell.dk>
-Subject: Re: git imap-send converting my patches to CRLF line endings?
-Date: Fri, 17 Jun 2011 16:45:42 +0200
-Message-ID: <BANLkTin1DAv0pZmZCcrtDyjrUD-ukO6MNQ@mail.gmail.com>
-References: <BANLkTimXQQX_Fu0fgtWneF2cCLUZFhTaCg@mail.gmail.com>
-	<20110617141450.GA12114@sigill.intra.peff.net>
+From: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
+Subject: Re: git bash
+Date: Fri, 17 Jun 2011 16:39:12 +0200
+Message-ID: <4DFB6710.8090105@dirk.my1.cc>
+References: <4DFB5C37.1090606@micronengineering.it> <20110617141822.GD7751@centaur.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 17 16:45:55 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: =?ISO-8859-15?Q?Carlos_Mart=EDn_Nieto?= <carlos@cmartin.tk>,
+	Massimo Manca <massimo.manca@micronengineering.it>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 17 16:47:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QXaIw-0007nC-33
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Jun 2011 16:45:50 +0200
+	id 1QXaK6-00005k-SB
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Jun 2011 16:47:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932083Ab1FQOpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jun 2011 10:45:44 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:50253 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758224Ab1FQOpn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jun 2011 10:45:43 -0400
-Received: by gyh3 with SMTP id 3so614184gyh.19
-        for <git@vger.kernel.org>; Fri, 17 Jun 2011 07:45:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=D1ECnuHMpc/kFbj7Qtx7W3yWWDTQF30L0bZtFOhs57o=;
-        b=ro1V+2Ve7OA6+S8MU8DQBlqjs6BDGM0xcd3tsFfRhGbB4uXUUSLwATYLfcEdXRK5F9
-         zjtoxk0+HS87evl4w+t67FTyzFBMiXgvpJRUZ6Bh1eKDCQYi6gcA7za/TqdWM/nK7qLV
-         KaS0f+PKwvrZzLeVUuQ5IIbyUwJB4HQIjmpGU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        b=CfTARhBrq4xj0jrEfVp7yxYEbs+Led2xjjY+yAUY/CO9FrEDZa2LrwcFBX8tXCSXIJ
-         hyLPV60uK2w11zt+BfI7YV/c7wbU41/has0cDtPfc745byYbw0AEye4OfY8pcmUQH74A
-         v+18CM81tEJKdG+M/L5Q/42y6ATAEwEJFLQl0=
-Received: by 10.236.185.202 with SMTP id u50mr2075658yhm.201.1308321942641;
- Fri, 17 Jun 2011 07:45:42 -0700 (PDT)
-Received: by 10.147.113.1 with HTTP; Fri, 17 Jun 2011 07:45:42 -0700 (PDT)
-In-Reply-To: <20110617141450.GA12114@sigill.intra.peff.net>
-X-Google-Sender-Auth: lmpUi1sRlvgWqD8z5v-zBUks-pI
+	id S932325Ab1FQOq7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Jun 2011 10:46:59 -0400
+Received: from smtprelay01.ispgateway.de ([80.67.31.35]:46939 "EHLO
+	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932075Ab1FQOq6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jun 2011 10:46:58 -0400
+Received: from [84.176.58.117] (helo=[192.168.2.100])
+	by smtprelay01.ispgateway.de with esmtpa (Exim 4.68)
+	(envelope-from <newsletter@dirk.my1.cc>)
+	id 1QXaCY-0007Ki-2s; Fri, 17 Jun 2011 16:39:14 +0200
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
+In-Reply-To: <20110617141822.GD7751@centaur.lab.cmartin.tk>
+X-Df-Sender: 757646
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175949>
 
-On Fri, Jun 17, 2011 at 4:14 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Jun 17, 2011 at 03:35:04PM +0200, Michael Mc Donnell wrote:
->
->> I'm using git imap-send to send patches to wine-patches, and it seems
->> like it converts all my patches to have CRLF line endings?
->
-> The canonical line ending for mail is CRLF. So yes, it will convert your
-> patch to CRLF for storage. But anything pulling it out of the IMAP
-> folder should convert it back to native line endings.
+Am 17.06.2011 16:18 schrieb Carlos Mart=EDn Nieto:
+> On Fri, Jun 17, 2011 at 03:52:55PM +0200, Massimo Manca wrote:
+>> Hi all,
+>> I am using git on Linux Ubuntu, Windows Vista, , Windows 7 and Windo=
+ws
+>> XP (several o.s. to develop sw).
+>> In my notebook under Vista if I use bash on mi physical HD (it is
+>> divided in C:, F:, H:) it works, if I try to open a bash console on =
+an
+>=20
+> Assuming you mean that git doesn't work (rather than bash), could you
+> provide a transcript of what you think went wrong?
+>=20
+>> external HD (or USB or SD memories) and also on network shared drive=
+s it
+>> doesn't work.
+>=20
+> Are these filsystems FAT32 by any chance. You may need to turn on a
+> couple of compatibility options like case-insensitivity and filemode.
 
-Ok, so it's the clients responsibility to convert it back?
+But when using msysGit, these options are already set appropriate,
+aren't they?
 
->> I can see it when I download the patch from the Gmail drafts folder.
->> Git complains about white space when I apply the downloaded patch. It
->> works fine if I just use git to create the patch and then apply it on
->> a new branch. Is it git imap-send or just Gmail that's the problem?
->
-> How do you download and apply the patch exactly? If you are speaking
-> imap to gmail, generally the client would strip out the CR's from the
-> mail.
+Sometimes I have a similar problem. What do you mean by "opening a bash
+console on an external HD"? Do you right-click a folder and then "Git
+bash (here)"? I don't use that feature but I always start the bash with
+its regular icon (so my answer may probably not help you).  It then
+starts in my $HOME and I change to the external HD (say X:) like so:
 
-I'm just downloading it with Chrome.
+$ cd /x/foo
 
-Steps to reproduce:
-1. Upload patch via:
-$ git format-patch --stdout --keep-subject --attach origin | git imap-send
-2. Open Gmail in Chrome.
-3. Open email in drafts folder.
-4. Click attachment download link
-5. Apply patch on a fresh branch with git apply.
+I noticed the following: When the ext. HD is attached/mounted *before* =
+I
+start the bash, then it works. But if I have a running bash and then
+mount the drive, I cannot cd to it. "No such path" or sth. It seems,
+that bash builds a list of available drives only at startup. Might that
+be your problem? If so, then close all bashs and re-open them after
+mounting the devices.
 
-Git complains about the white space, which indicates that the
-downloaded version has CRLF line endings.
-
-I guess there's not much to do if the fault lies with Gmail?
-
-Thanks for your reply.
+HTH,
+Dirk
