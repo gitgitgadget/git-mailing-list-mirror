@@ -1,109 +1,112 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Undo last commit?
-Date: Sat, 18 Jun 2011 19:18:22 +0530
-Message-ID: <BANLkTinDBDkUYb=R2USV-T0=h9a3PRcATA@mail.gmail.com>
-References: <BANLkTinWujKYvx_fh2iBDOdMbywqzfgwUA@mail.gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [RFC/PATCH 0/7] user-configurable git-archive output formats
+Date: Sat, 18 Jun 2011 16:52:02 +0200
+Message-ID: <4DFCBB92.5040308@lsrfire.ath.cx>
+References: <20110614181732.GA31635@sigill.intra.peff.net> <20110614181821.GA32685@sigill.intra.peff.net> <4DF7B90B.9050802@lsrfire.ath.cx> <20110614201433.GB1567@sigill.intra.peff.net> <20110614204521.GA12776@sigill.intra.peff.net> <20110615223030.GA16110@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Mike <xandrani@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 18 15:56:59 2011
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"J.H." <warthog19@eaglescrag.net>, git@vger.kernel.org,
+	git-dev@github.com
+To: Jeff King <peff@github.com>
+X-From: git-owner@vger.kernel.org Sat Jun 18 17:00:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QXw19-0002P3-Kj
-	for gcvg-git-2@lo.gmane.org; Sat, 18 Jun 2011 15:56:55 +0200
+	id 1QXx0d-0004Fi-1W
+	for gcvg-git-2@lo.gmane.org; Sat, 18 Jun 2011 17:00:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752772Ab1FRN42 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Jun 2011 09:56:28 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:47902 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752524Ab1FRN41 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Jun 2011 09:56:27 -0400
-Received: by wyb38 with SMTP id 38so831987wyb.19
-        for <git@vger.kernel.org>; Sat, 18 Jun 2011 06:56:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=T/hGNu3EMZrlFGIduatGgZ8Wt1PFRVnJvgCeXF7PT64=;
-        b=Wjq8MrMnszaltNP0Y638xQelnj51sDwet9ks5ucjQLKy1zXsfXBvyzOquB5KH0KqEo
-         mKNVHBslcvaQuiVQywYbBBjYzn1NghOyFDJ4zsNVuqZCvXkgEaYrcUVxTvoWCxZthjO7
-         fjMQARKapzVYt4lik90mAxEayN8qIEHsKfJos=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=MIbBO0I/E60v9TTmz/IRQzSCksvD7op02cGHqFyN2AQmKROd2lybvO1jqFj15wXAd0
-         G0D32l1G45ysDeX6REVXWHA6DOvSxUTP3Mf7Xhxb2gQmzlbQQG1TnYdG1ZD9qP6iPyoe
-         zG1wXh1cdPtibOl3vzO/Cy97CMh9gndJANfp0=
-Received: by 10.216.145.206 with SMTP id p56mr228928wej.80.1308404922079; Sat,
- 18 Jun 2011 06:48:42 -0700 (PDT)
-Received: by 10.216.1.20 with HTTP; Sat, 18 Jun 2011 06:48:22 -0700 (PDT)
-In-Reply-To: <BANLkTinWujKYvx_fh2iBDOdMbywqzfgwUA@mail.gmail.com>
+	id S1752873Ab1FRPAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Jun 2011 11:00:21 -0400
+Received: from india601.server4you.de ([85.25.151.105]:49775 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752256Ab1FRPAU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Jun 2011 11:00:20 -0400
+Received: from [192.168.2.106] (p4FFDB206.dip.t-dialin.net [79.253.178.6])
+	by india601.server4you.de (Postfix) with ESMTPSA id 5C3EE2F80D1;
+	Sat, 18 Jun 2011 16:52:11 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; de; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
+In-Reply-To: <20110615223030.GA16110@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175972>
 
-Hi Mike,
+Am 16.06.2011 00:30, schrieb Jeff King:
+> On Tue, Jun 14, 2011 at 04:45:21PM -0400, Jeff King wrote:
+> 
+>> The gzip path is not configurable at all. Probably it should read the
+>> path and arguments from the config file. In fact, we could even allow
+>> arbitrary config like:
+>>
+>>   [tarfilter "tgz"]
+>>     command = gzip -c
+>>     extension = tgz
+>>     extension = tar.gz
 
-Mike writes:
-> I have performed a 'git commit' on all 'added' files by mistake and
-> now I want to undo this commit to return to the original state. Here's
-> a more detailed description:
+Configuration options whose values are appended instead of overwritten
+by duplicate definitions are a new concept for git, I think.  Perhaps
+it's not a big thing, but I think it's better avoided.
 
-In your situation, the "correct" answer is (arguably) 'git reset
-HEAD~1'.  This is called a mixed reset (see git-reset(1) for more).
+The only (stupid) practical shortcoming I can think if is this, though:
+You can't remove anything from the list of supported extensions in a
+user config if the system config already contains e.g. tgz and tar.gz.
 
-> 2. I accidentally did a commit for ALL files because I forgot to
-> specify the filename at the end of the commit.
-> e.g. instead of 'commit -m "commit message" example3.php' I did
-> 'commit -m "commit message"'.
+> Here's a series implementing that. You can configure whatever you want,
+> and it includes builtin gzip configuration by default. You can override
+> to turn it off, or even switch it to run something like pigz instead.
+> 
+> My biggest reservation with the patches as-is is that they are very
+> tar-centric and not orthogonal. Specifically, they won't handle:
+> 
+>   1. Other streamable archive formats you would want to pipe through
+>      compressors. Do any of these actually exist? I guess we could offer
+>      "pax" as a format eventually, and it might be like tar with
+>      different defaults? I dunno.
+> 
+>      Fixing this would not be too hard. Instead of these being
+>      "tarfilters", they would be "archive filters", and they would chain
+>      to some format, defaulting to "tar".  Since there is no other
+>      format right now, we could even punt on writing most of the code
+>      until somebody adds one. But we would want to get the naming of the
+>      config options right, since those are user-facing. Maybe
+>      "archivefilter" (unfortunately the more readable archive.filter is
+>      a little awkward with the way we parse config files)?
 
-Ideally, you should only stage what you want to commit.  Isn't that
-the reason we have a staging area?
+The pax format is identical to the ustar format, which --format=tar
+produces.  The other major format that comes to mind is cpio.  The
+(never merged) predecessor of tar-tree actually used that format.
 
-> % git commit --amend
+Since then I have been waiting for users to request being able to export
+using cpio format (which is simpler and slightly smaller than tar), but
+that never happened.  It seems the existence of the pax format really
+has pacified the tar vs. cpio war of old.
 
-Remember that 'git commit --amend' behaves a lot like 'git commit'; it
-commits your staged changes.  Except, instead of making a new commit,
-it adds those changes to your previous commit*.  It _additionally_
-gives you the ability to update the commit message -- when you tried
-it without any staged changes, that's what you saw.  Anyway, this is
-not a good option in your particular case;  you'd essentially have to
-stage the inverse of all the changes you didn't intend to make in the
-previous commit before amending the previous commit.
+I'm not sure "filter" is a good name, though.  We have core.pager, which
+is technically a filter as well, but for a specific purpose.  And we
+have the tar.umask setting as a precedence for format specfic config
+options.  So how about tar.<extension>.compressor?
 
-> % git reset --hard HEAD~1
+	[tar "tgz"]
+		compressor = gzip -cn
+	[tar "tar.gz"]
+		compressor = gzip -cn
+	[tar "tar.bz2"]
+		compressor = bzip2 -c
 
-Ouch.  I'm sorry to have to be the one to give you the bad news; the
-changes that you didn't commit (the "unstaged changes" you showed) are
-lost forever**.  This is quite a dangerous command, and must be used
-with care.
+We don't need a compressionlevels option here because we can simply
+assume that the compressor commands do support them.  (Side note: this
+is not fully true for bzip2, as it doesn't support -0, but I don't think
+this is worth special consideration in our code, as long as errors of
+the filter are displayed properly.)
 
-> Any ideas how to rectify this issue? I presume the 'git commit
-> --amend' just changes the commit message? I daren't try anything else
-> myself in case I make matters worse.
+And we can also add a config option to restrict the formats creatable by
+upload-archive, to address concerns over DoS attacks with expensive
+compressors:
 
-First, you must find the commit you made in the reflog and cherry-pick
-it.  See git-reflog(1) and git-cherry-pick(1).  Now you've essentially
-undo the hard reset, sans your unstaged changes.  Perform a 'git reset
-HEAD~1' to move your HEAD back one step, stage the correct changes
-before creating new commits.  A series of commands:
-$ git reflog
-# Look for the commit you made before; let's call this b8bb3f
-$ git cherry-pick b8bb3f
-# Stage, unstage whatever you like
-$ git commit
-
-* Git never actually loses your commits unless you garbage collect, so
-you can still find the old commit (the one that you amended to
-originally)
-** Okay, very difficult to recover.  You'll have to find the tree
-object corresponding to that index state.
-
--- Ram
+	[archive]
+		remoteFormats = tar zip tgz tar.gz
