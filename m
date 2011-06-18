@@ -1,85 +1,128 @@
 From: Yann Dirson <ydirson@free.fr>
-Subject: [PATCH 3/6] Include name of notes ref in template when creating/editing notes.
-Date: Sat, 18 Jun 2011 23:06:45 +0200
-Message-ID: <1308431208-13353-4-git-send-email-ydirson@free.fr>
+Subject: [PATCH 4/6] Allow "git notes merge" to use refs/remote-notes/ as a source.
+Date: Sat, 18 Jun 2011 23:06:46 +0200
+Message-ID: <1308431208-13353-5-git-send-email-ydirson@free.fr>
 References: <201106151253.57908.johan@herland.net>
  <1308431208-13353-1-git-send-email-ydirson@free.fr>
 Cc: Yann Dirson <ydirson@free.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 18 23:07:35 2011
+X-From: git-owner@vger.kernel.org Sat Jun 18 23:07:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QY2jt-0007jg-SD
-	for gcvg-git-2@lo.gmane.org; Sat, 18 Jun 2011 23:07:34 +0200
+	id 1QY2js-0007jg-Qc
+	for gcvg-git-2@lo.gmane.org; Sat, 18 Jun 2011 23:07:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753146Ab1FRVHT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Jun 2011 17:07:19 -0400
-Received: from smtp5-g21.free.fr ([212.27.42.5]:42500 "EHLO smtp5-g21.free.fr"
+	id S1753097Ab1FRVHL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Jun 2011 17:07:11 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:42494 "EHLO smtp5-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752918Ab1FRVHH (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753001Ab1FRVHH (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 18 Jun 2011 17:07:07 -0400
 Received: from home.lan (unknown [81.57.214.146])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 84D52D48114;
-	Sat, 18 Jun 2011 23:07:01 +0200 (CEST)
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 1BD18D48101;
+	Sat, 18 Jun 2011 23:07:00 +0200 (CEST)
 Received: from yann by home.lan with local (Exim 4.76)
 	(envelope-from <ydirson@free.fr>)
-	id 1QY2jF-0003V4-Kj; Sat, 18 Jun 2011 23:06:53 +0200
+	id 1QY2jF-0003V7-MQ; Sat, 18 Jun 2011 23:06:53 +0200
 X-Mailer: git-send-email 1.7.5.3
 In-Reply-To: <1308431208-13353-1-git-send-email-ydirson@free.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175985>
-
-This will still show for the default "commits" notes:
-
- # Write/edit notes for the following object:
-
-For other notes refs it will show:
-
- # Write/edit "foo" notes for the following object:
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175986>
 
 Signed-off-by: Yann Dirson <ydirson@free.fr>
 ---
- builtin/notes.c |    8 ++++++--
- 1 files changed, 6 insertions(+), 2 deletions(-)
+ Documentation/git-notes.txt |    5 +++++
+ builtin/notes.c             |    4 ++--
+ notes.c                     |    5 +++--
+ notes.h                     |    2 +-
+ revision.c                  |    2 +-
+ 5 files changed, 12 insertions(+), 6 deletions(-)
 
+diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+index 6a187f2..7ce8a24 100644
+--- a/Documentation/git-notes.txt
++++ b/Documentation/git-notes.txt
+@@ -104,6 +104,11 @@ and instructs the user to manually resolve the conflicts there.
+ When done, the user can either finalize the merge with
+ 'git notes merge --commit', or abort the merge with
+ 'git notes merge --abort'.
+++
++In addition to `refs/notes/`, the remote notes ref is accepted
++from the `refs/remote-notes/` namespace.  This is intended to
++provide notes with support for a workflow similar to the one used
++for heads references.
+ 
+ remove::
+ 	Remove the notes for given objects (defaults to HEAD). When
 diff --git a/builtin/notes.c b/builtin/notes.c
-index bd342ac..ae89d38 100644
+index ae89d38..6bff44f 100644
 --- a/builtin/notes.c
 +++ b/builtin/notes.c
-@@ -91,7 +91,7 @@ static const char * const git_notes_get_ref_usage[] = {
- static const char note_template[] =
- 	"\n"
- 	"#\n"
--	"# Write/edit the notes for the following object:\n"
-+	"# Write/edit %s%s%snotes for the following object:\n"
- 	"#\n";
+@@ -905,7 +905,7 @@ static int merge(int argc, const char **argv, const char *prefix)
  
- struct msg_arg {
-@@ -167,6 +167,7 @@ static void create_note(const unsigned char *object, struct msg_arg *msg,
+ 	o.local_ref = default_notes_ref();
+ 	strbuf_addstr(&remote_ref, argv[0]);
+-	expand_notes_ref(&remote_ref);
++	expand_notes_ref(&remote_ref, 1);
+ 	o.remote_ref = remote_ref.buf;
  
- 	if (msg->use_editor || !msg->given) {
- 		FILE *fp;
-+		const char *ref = notes_ref_shortname(default_notes_tree.ref);
+ 	if (strategy) {
+@@ -1075,7 +1075,7 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 	if (override_notes_ref) {
+ 		struct strbuf sb = STRBUF_INIT;
+ 		strbuf_addstr(&sb, override_notes_ref);
+-		expand_notes_ref(&sb);
++		expand_notes_ref(&sb, 0);
+ 		setenv("GIT_NOTES_REF", sb.buf, 1);
+ 		strbuf_release(&sb);
+ 	}
+diff --git a/notes.c b/notes.c
+index 1a5676a..12afc02 100644
+--- a/notes.c
++++ b/notes.c
+@@ -1282,9 +1282,10 @@ int copy_note(struct notes_tree *t,
+ 	return 0;
+ }
  
- 		/* write the template message before editing: */
- 		path = git_pathdup("NOTES_EDITMSG");
-@@ -178,7 +179,10 @@ static void create_note(const unsigned char *object, struct msg_arg *msg,
- 			fwrite(msg->buf.buf, 1, msg->buf.len, fp);
- 		else if (prev && !append_only)
- 			write_note_data(fp, prev);
--		fwrite(note_template, 1, strlen(note_template), fp);
-+		if (!ref)
-+			fprintf(fp, note_template, "", "", "");
-+		else
-+			fprintf(fp, note_template, "\"", ref, "\" ");
+-void expand_notes_ref(struct strbuf *sb)
++void expand_notes_ref(struct strbuf *sb, int allow_remotes)
+ {
+-	if (!prefixcmp(sb->buf, "refs/notes/"))
++	if (!prefixcmp(sb->buf, "refs/notes/") ||
++	    (allow_remotes && !prefixcmp(sb->buf, "refs/remote-notes/")))
+ 		return; /* we're happy */
+ 	else if (!prefixcmp(sb->buf, "notes/"))
+ 		strbuf_insert(sb, 0, "refs/", 5);
+diff --git a/notes.h b/notes.h
+index d8ae29d..80219ec 100644
+--- a/notes.h
++++ b/notes.h
+@@ -317,6 +317,6 @@ void string_list_add_refs_from_colon_sep(struct string_list *list,
+ 					 const char *globs);
  
- 		write_commented_object(fp, object);
+ /* Expand inplace a note ref like "foo" or "notes/foo" into "refs/notes/foo" */
+-void expand_notes_ref(struct strbuf *sb);
++void expand_notes_ref(struct strbuf *sb, int allow_remotes);
  
+ #endif
+diff --git a/revision.c b/revision.c
+index c46cfaa..b482314 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1393,7 +1393,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		}
+ 		else
+ 			strbuf_addstr(&buf, arg+8);
+-		expand_notes_ref(&buf);
++		expand_notes_ref(&buf, 1);
+ 		string_list_append(&revs->notes_opt.extra_notes_refs,
+ 				   strbuf_detach(&buf, NULL));
+ 	} else if (!strcmp(arg, "--no-notes")) {
 -- 
 1.7.5.3
