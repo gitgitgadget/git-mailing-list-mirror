@@ -1,110 +1,90 @@
-From: Mike <xandrani@gmail.com>
-Subject: Undo last commit?
-Date: Sat, 18 Jun 2011 14:15:49 +0100
-Message-ID: <BANLkTinWujKYvx_fh2iBDOdMbywqzfgwUA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 18 15:15:58 2011
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: Re: Undo last commit?
+Date: Sat, 18 Jun 2011 09:43:48 -0400
+Message-ID: <1308404291-sup-8978@pinkfloyd.chass.utoronto.ca>
+References: <BANLkTinWujKYvx_fh2iBDOdMbywqzfgwUA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git <git@vger.kernel.org>
+To: Mike <xandrani@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 18 15:44:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QXvNU-0001L0-Fp
-	for gcvg-git-2@lo.gmane.org; Sat, 18 Jun 2011 15:15:56 +0200
+	id 1QXvoe-00054N-95
+	for gcvg-git-2@lo.gmane.org; Sat, 18 Jun 2011 15:44:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751648Ab1FRNPv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Jun 2011 09:15:51 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:41276 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751254Ab1FRNPu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Jun 2011 09:15:50 -0400
-Received: by qwk3 with SMTP id 3so280176qwk.19
-        for <git@vger.kernel.org>; Sat, 18 Jun 2011 06:15:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=NS2YXgxPon+DQKIwi6HGCJcVnrX4YKaMqUX0OwpZiy0=;
-        b=SryaF5MTCWEaXoW7lzuNhCNGqCMksOHzEOAKXfxShkgSq7YnosIb0xFQoX4Ack62jn
-         nIj08dWFFtxqu4tMrhhClPk8NPNaklUDC7SOR77/DkQBi1538SIKsmuFGyMQ9NdkWcsf
-         dobuamqOT8j8fgiu2FZJHp90BKvVuVe//yfh8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=lkg1GfnjlbWPxLCUump1/Bs6PBeVoNN2iAdiSS+Cc1BcHOD9wSdTtJat9nZ3DCp47l
-         2AC37EGmSv4O8ucTYUmLrNgwbxS96oe9F68c4XanYhpuDimVdpGcslQbBMmeQOZwvaX+
-         ALxZQ/GZvWmpGxJyDh4nk3wH29Wd7mYZZEysQ=
-Received: by 10.229.9.8 with SMTP id j8mr2566358qcj.228.1308402949757; Sat, 18
- Jun 2011 06:15:49 -0700 (PDT)
-Received: by 10.229.39.78 with HTTP; Sat, 18 Jun 2011 06:15:49 -0700 (PDT)
+	id S1752264Ab1FRNnu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Jun 2011 09:43:50 -0400
+Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:33632 "EHLO
+	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751560Ab1FRNnt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Jun 2011 09:43:49 -0400
+Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:35497 ident=93)
+	by garcia.cquest.utoronto.ca with esmtp (Exim 4.43)
+	id 1QXvoS-0003Gz-8p; Sat, 18 Jun 2011 09:43:48 -0400
+Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1QXvoS-0000kh-7o; Sat, 18 Jun 2011 09:43:48 -0400
+In-reply-to: <BANLkTinWujKYvx_fh2iBDOdMbywqzfgwUA@mail.gmail.com>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175969>
 
-Hi fellow gitters,
+Excerpts from Mike's message of Sat Jun 18 09:15:49 -0400 2011:
 
-I have performed a 'git commit' on all 'added' files by mistake and
-now I want to undo this commit to return to the original state. Here's
-a more detailed description:
+Hi Mike,
 
+> 3. I googled the problem and it seems everyone has a different way of
+> doing this. (Maybe git is too confusing if everyone has different
+> methods that all work slightly differently!?). Anyway I executed this
+> command:
+> 
+> % git commit --amend
 
-1. I did a 'git status' and there were files which I had 'added' ready
-for a commit. There were also some changes that had not been 'added'
-yet. See below:
+This command lets you modify the last commit by either adding/removing
+changes which you build up with git add or in the case where you've
+not staged anything, simply edit the commit message.
 
-% git status
-# On branch master
-# Your branch is ahead of 'origin/master' by 7 commits.
-#
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#	modified:   cgi-bin/example1.php
-#	modified:   cgi-bin/example2.php
-#	modified:   example3.php
-#
-# Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working directory)
-#
-#	modified:   cgi-bin/example4.php
-#	modified:   example5.php
-#
+> % git reset --hard HEAD~1
 
+What you wanted was:
 
-2. I accidentally did a commit for ALL files because I forgot to
-specify the filename at the end of the commit.
-e.g. instead of 'commit -m "commit message" example3.php' I did
-'commit -m "commit message"'.
+git reset HEAD^
+or
+git reset HEAD~1
 
-3. I googled the problem and it seems everyone has a different way of
-doing this. (Maybe git is too confusing if everyone has different
-methods that all work slightly differently!?). Anyway I executed this
-command:
+The --hard resets your working tree to match that commit exactly,
+throwing away uncommitted changes.  In your case, it threw away the
+unstaged changes you'd made and the last commit.  You should be able
+to salvage your last commit by:
 
-% git commit --amend
+git reset ORIG_HEAD
 
-But I aborted this by exiting my text editor.
+The stuff that had never been git added is likely lost.  Because git
+had never created an object for those changes, there won't be much to
+work with.
 
-4. I then tried:
+You might inspect the output of git reflog to see if that's of any
+value, but I don't think it will be in your case.
 
-% git reset --hard HEAD~1
+> Any ideas how to rectify this issue? I presume the 'git commit
+> --amend' just changes the commit message? I daren't try anything else
+> myself in case I make matters worse.
 
-5. However now when I do a 'git status' none of the files that were
-original listed are there. A git status now gives this:
+As always, take a snapshot of the .git directory before doing further
+mucking.  Maybe one of the git gurus here has ideas about the trashed
+unstaged changes...?
 
-# On branch master
-# Your branch is ahead of 'origin/master' by 7 commits.
-#
-nothing to commit (working directory clean)
-
-
-Any ideas how to rectify this issue? I presume the 'git commit
---amend' just changes the commit message? I daren't try anything else
-myself in case I make matters worse.
-
-Mike
+Thanks
+-Ben
+--
+Ben Walton
+Systems Programmer - CHASS
+University of Toronto
+C:416.407.5610 | W:416.978.4302
