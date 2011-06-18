@@ -1,245 +1,198 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: jk/maint-merge-rename-create [Was: Re: What's cooking in git.git (Jun
- 2011, #02; Sat, 11)]
-Date: Sat, 18 Jun 2011 15:49:52 -0600
-Message-ID: <BANLkTimkm4SU8nML_6Q7Q34faBziJ=gheA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jun 18 23:50:01 2011
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: [PATCH] rebase -i -p: include non-first-parent commits in todo list
+Date: Sat, 18 Jun 2011 18:12:01 -0400
+Message-ID: <1308435121-9692-1-git-send-email-andrew.kw.w@gmail.com>
+References: <20110618121222.03ee0b79@sh9>
+Cc: Andrew Wong <andrew.kw.w@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 19 00:16:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QY3Oz-0003vp-5U
-	for gcvg-git-2@lo.gmane.org; Sat, 18 Jun 2011 23:50:01 +0200
+	id 1QY3oO-000385-9A
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Jun 2011 00:16:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752968Ab1FRVtz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 18 Jun 2011 17:49:55 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:58902 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752741Ab1FRVtx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 18 Jun 2011 17:49:53 -0400
-Received: by fxm17 with SMTP id 17so316868fxm.19
-        for <git@vger.kernel.org>; Sat, 18 Jun 2011 14:49:52 -0700 (PDT)
+	id S1753207Ab1FRWPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Jun 2011 18:15:22 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:40724 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752773Ab1FRWPV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Jun 2011 18:15:21 -0400
+Received: by iyb12 with SMTP id 12so1066828iyb.19
+        for <git@vger.kernel.org>; Sat, 18 Jun 2011 15:15:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=qg6hRwnRIiIvgdVcLxxVqX3pTRlkw+dPdhKWiD66XXk=;
-        b=BFJZdtNc0T0AF2RG78LMumv4f56udNq1LdTEvdoKqqfPPhmeT0j+5x7sG/B3F5M1m9
-         iWxBJCTXyc7WQ8FL5U5fuJILG2bIq4cjBD/Va1ca2XvFaYDw1l3MbFdHkpQ7Od16RVNM
-         y8OBdBTgFhR6J/a2BxnYfLwrc0tQEL3WOwmIU=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references;
+        bh=ylb3/GEZaoW/EYbmkSTEVLYcKkoXhUl6WMUiucOopqE=;
+        b=jQ5s+WFI2tKOoTsa9tWTrRubMlLrPqpr9UZum/xYJ9WQzfQp6ifLHEZnbW4WDzhsnq
+         9Wxd/1ZlhvR3UBL8+S/1JU66Zcpl2Gnmf9Pcka3OXt1nhcdj75EYZ8MSPm9QDqOUgaWi
+         4iU/PWm+h0L/gwyZTCtr2fbObGfLJHwm3+ssE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=dwedEjJCfcfvOOwa9OZG7guuuQMtSavvA0zWPWr5jbLFC33Nhv3U+OI61A8DMHuymO
-         hmm7m2yun2g8/dUzdfwyO8bOQZ09xNSeuGclEeI1OZjOldv4/d2IaYnGokUNgbbcV/81
-         KrstK99/jwFAPU64SZe4p1scHkkHQBrVE4Pko=
-Received: by 10.223.94.153 with SMTP id z25mr1767380fam.104.1308433792530;
- Sat, 18 Jun 2011 14:49:52 -0700 (PDT)
-Received: by 10.223.75.201 with HTTP; Sat, 18 Jun 2011 14:49:52 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=gXSuKZz5BVf+Qk2IpAIPDedRpUMvsaN+Q1orsIb8kFX+brjqud6BHu8QDC7Zbl7eWU
+         Zhd7R+zzbvM12ZYSp/Rrk1KQwnzUY1+fQK6zLkqNQFOoSjvIlg4yfFYfmqZ7+J0wQjus
+         WCdkWteJlPAaNChpoXKDMAXnNO5/rkqDxnPlo=
+Received: by 10.231.63.83 with SMTP id a19mr3375714ibi.104.1308435320483;
+        Sat, 18 Jun 2011 15:15:20 -0700 (PDT)
+Received: from localhost.localdomain (24-246-58-202.cable.teksavvy.com [24.246.58.202])
+        by mx.google.com with ESMTPS id ft12sm2243206ibb.36.2011.06.18.15.15.19
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 18 Jun 2011 15:15:19 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.2
+In-Reply-To: <20110618121222.03ee0b79@sh9>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175991>
 
-Hi,
+Consider this graph:
 
-On Thu, Jun 16, 2011 at 3:05 PM, Jeff King <peff@peff.net> wrote:
-> Thanks. The sticking point in my series that there is a weird regress=
-ion
-> it introduces, and I haven't quite figured out the cause.
->
-> I'm cc'ing Jay Soffian, who found it. You can reproduce with this rec=
-ipe
-> (sorry, the chromium repo is huge, but I don't have a smaller test ca=
-se
-> yet):
->
-> =C2=A0git clone http://git.chromium.org/git/chromium.git &&
-> =C2=A0cd chromium &&
-> =C2=A0git config merge.renameLimit 0 &&
-> =C2=A0git checkout 0f6d00c &&
-> =C2=A0git cherry-pick d7081a74
-=2E..
-> If you have any input, I'd appreciate it.
+        D---E    (topic, HEAD)
+       /   /
+  A---B---C      (master)
+   \
+    F            (topic2)
 
-The length of my email may make you change your mind about that.  :-)
+and the following three commands:
+  1. git rebase -i -p A
+  2. git rebase -i -p --onto F A
+  3. git rebase -i -p B
 
-Turning on break detection looks like it opens a huge can of worms;
-including one issue that I don't understand, namely why break
-detection doesn't work when I expect it to.  Let me start with that:
+Currently, (1) and (2) will pick B, D, C, and E onto A and F,
+respectively.  However, (3) will only pick D and E onto B, but not C,
+which is inconsistent with (1) and (2).  As a result, we cannot modify C
+during the interactive-rebase.
 
---- Why doesn't break detection work as I expect? ---
-$ git init -q
-$ printf "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n" >a
-$ printf "a\nb\nc\nd\ne\nf\ng\nh\ni\nj\n" >b
-$ git add a b
-$ git commit -q -mA
+The current behavior also creates a bug if we do:
+  4. git rebase -i -p C
 
-$ git mv a a2
-$ git mv b b2
-$ git diff --name-status -B -M HEAD
-R100    a       a2
-R100    b       b2
-$ git mv a2 b
-$ git mv b2 a
-$ git diff --name-status -B -M HEAD
-M       a
-M       b
+In (4), E is never picked.  And since interactive-rebase resets "HEAD"
+to "onto" before picking any commits, D and E are lost after the
+interactive-rebase.
 
-I would have expected the output from the last command above to be
-R100    a       b
-R100    b       a
-Why are these renames not detected?  Is there a reason, or is this a bu=
-g?
+This patch fixes the inconsistency and bug by ensuring that all children
+of upstream are always picked.  This essentially reverts the commit:
+  d80d6bc146232d81f1bb4bc58e5d89263fd228d4
 
+When compiling the todo list, commits reachable from "upstream" should
+never be skipped under any conditions.  Otherwise, we lose the ability
+to modify them like (3), and create a bug like (4).
 
---- Issues with merge-recursive and break detection ---
-The chromium repository testcase Jay provided helps uncover a few
-extra issues in merge-recursive when turning on break detection, but I
-believe there are a number of others that need consideration as well.
-Sorry for the lengthy email, but there are lots of little issues.
+Two of the tests contain a scenario like (3).  Since the new behavior
+added more commits for picking, these tests need to be updated to
+account for the additional pick lines.  A new test has also been added
+for (4).
 
-Whenever the read_tree logic can't handle a merge trivially at a given
-path (as per Documentation/technical/trivial-merge.txt), it will load
-the three relevant stages for that path into the index.  For
-simplicity, let's ignore mode changes, and just consider sha1sums.
-Let me name things so we can talk about the various cases:
-  o_sha - sha1sum of given path in the merge-base
-  a_sha - sha1sum of given path in HEAD
-  b_sha - sha1sum of given path on other branch involved in merge
+Signed-off-by: Andrew Wong <andrew.kw.w@gmail.com>
+---
+ git-rebase--interactive.sh               |    3 +--
+ t/t3404-rebase-interactive.sh            |    2 +-
+ t/t3409-rebase-preserve-merges.sh        |   28 +++++++++++++++++++++++++++-
+ t/t3411-rebase-preserve-around-merges.sh |    2 +-
+ 4 files changed, 30 insertions(+), 5 deletions(-)
 
-In the case of a rename, there are two files involved, and thus (up
-to) 6 relevant stages that merge-recursive.c needs to consider.  Let
-me use s_ as a prefix for the source path of a rename and d_ as a
-prefix for the destination path of a rename.  That means for renames
-the sha1sums we need to consider are:
-  old_name -> new_name
-  --------    --------
-  s_o_sha     d_o_sha
-  s_a_sha     d_a_sha
-  s_b_sha     d_b_sha
-
-Simple renames will have 3 of those 6 sha1sums be the null sha1; the 3
-non-null sha1s will either be {s_o_sha, s_a_sha, d_b_sha} or {s_o_sha,
-d_a_sha, s_b_sha}.  Git handles those just fine.
-
-A slight complication is having both of d_[ab]_sha be non-null (while
-d_o_sha remains null).  This case is either a rename/rename(2to1)
-conflict or a rename/add conflict.  Either way, git has long had code
-to handle both of those cases.
-
-A slightly more complicated case is having all three of the s_*_sha be
-non-null as well as exactly one of d_[ab]_sha.  Such cases would have
-previously resulted in git ignoring old_name as a rename candidate,
-since we were not previously using break detection.  Your series is
-aimed at handling these cases, so I won't cover them in detail.  I
-think you do so correctly for almost all such cases, though I'm
-suspicious that there might still be issues with some corner cases
-(e.g. with D/F conflicts or rename/rename(1to2) cases).
-
-The problems the chromium repository is triggering is when all d_*_sha
-are non-null.  That was impossible before your patch series, since
-having all three be non-null meant it was ignored as a rename
-candidate.  It also meant no code was ever needed for that case, so
-none had been written.  There are a number of possibilites, I'll try
-to highlight using example values, using d and e (and later f-i) as
-variables standing for sha1sums:
-
-Basic d_*_sha all non-null case:
-  old_name    -> new_name
-  -----------    -----------
-  s_o_sha =3D d    d_o_sha =3D e
-  s_a_sha =3D d    d_a_sha =3D e
-  s_b_sha =3D 0    d_b_sha =3D d
-This suggests that the content originally stored at new_name was
-unmodified on one side of history and deleted (or renamed to something
-else) on the other.  The content originally stored at old_name has
-moved to new_name, so the correct resolution is to delete old_name and
-write the contents of d to new_name.  git has no code for this; it
-assumes d_o_sha is null and thus sees this case as a rename/add
-conflict.
-
-Slightly more complex; 3-way merge:
-  s_o_sha =3D d1   d_o_sha =3D e
-  s_a_sha =3D d2   d_a_sha =3D e
-  s_b_sha =3D 0    d_b_sha =3D d3
-This is like the last case, but now we need to do a three way merge of
-d1,d2,d3 and store the results at new_name.  It appears that all of
-the conflicts you saw with Jay's chromium testcase would be fixed if
-there were code for this case.
-
-Slightly more complex; 3-way merge + possible conflict:
-  s_o_sha =3D d1   d_o_sha =3D e1
-  s_a_sha =3D d2   d_a_sha =3D e2
-  s_b_sha =3D 0    d_b_sha =3D d3
-In addition to the three-way content merge of d1,d2,d3 that is
-supposed to be stored at new_path, there is also a potential
-modify/delete problem (e1, e2, -nothing-) that ALSO is supposed to be
-stored at new_name.  (What do we call that -- rename+modify/delete
-conflict?)  However, there is also a chance that it's not a
-modify/delete, but rather another rename using new_path as the source
-of the rename -- in which case there would be no conflict at new_path
-after all (unless the 3-way merge of d1,d2,d3 had content conflicts).
-
-Slightly more complex: 3-way merge + add conflict despite base presence=
-:
-  s_o_sha =3D d1   d_o_sha =3D e
-  s_a_sha =3D d2   d_a_sha =3D f
-  s_b_sha =3D 0    d_b_sha =3D d3
-Here the original new_name was either rewritten, deleted, or renamed
-on both sides of history.  e, f, and d3 all have nothing to do with
-each other, which means that in addition to the three-way content
-merge of d1,d2,d3 that is supposed to be stored at new_path, there is
-also an added file that is unrelated.  In other words, we either have
-a rename/add conflict or a rename/rename(2to1) conflict.
-
-Just for fun:
-  file_g         file_h         file_i
-  ------------   ------------   ------------
-  g_o_sha =3D g1   h_o_sha =3D h1   i_o_sha =3D i1
-  g_a_sha =3D g2   h_a_sha =3D h2   i_a_sha =3D i2
-  g_b_sha =3D i3   h_b_sha =3D g3   i_b_sha =3D h3
-cyclic rename; the side of history being merged into head also had fun
-with renames: (file_g, file_h, file_i) -> (file_h, file_i, file_g).
-Also, each of file_g, file_h, and file_i were modified on both sides.
-Correct resolution: 3-way merge of g1,g2,g3 stored in file_h, 3-way
-merge of h1,h2,h3 stored in file_i, and 3-way merge of i1,i2,i3 stored
-in file_g.
-
-More complexity with more renames:
-The rename/rename (either 1to2 or 2to1) conflicts will involve 9
-sha1sums rather than six.  Also, as shown in the previous case, either
-the source or the destination path of a rename could be involved (as
-either source or destination) of yet another rename.
-
-Don't forget the pesky D/F possibilities:
-The possibility of D/F conflicts complicates things slightly -- for
-example, both the source and destination paths of a rename could be
-involved in a D/F conflict, and thus we may need to record the
-conflicts at an alternate location.  Whether we need to do so or not
-cannot be determined in process_renames(); therefore, the extra
-handling we add for both source and destination entries (at least the
-final index/working-directory changes) should be deferred until later.
- There may also be interesting ramifications for criss-cross merges
-due to these break rewrite cases as well.
-
-Stuff I'm still ignoring:
-As Junio noted previously, break detection could be used to note that
-a modify/delete conflict is really a delete/delete/add and thus there
-should be no conflict.  Also, a rename/modify that has odd content
-conflicts might be easier to handle if it was determined that it was
-really a rename/delete/add-source case.  The only thing I'm
-considering above is using break-detection as a way to get better
-rename detection.
-
-
-Elijah
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 65690af..c6ba7c1 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -713,7 +713,6 @@ then
+ 	# parents to rewrite and skipping dropped commits would
+ 	# prematurely end our probe
+ 	merges_option=
+-	first_after_upstream="$(git rev-list --reverse --first-parent $upstream..$orig_head | head -n 1)"
+ else
+ 	merges_option="--no-merges --cherry-pick"
+ fi
+@@ -746,7 +745,7 @@ do
+ 			preserve=t
+ 			for p in $(git rev-list --parents -1 $sha1 | cut -d' ' -s -f2-)
+ 			do
+-				if test -f "$rewritten"/$p -a \( $p != $onto -o $sha1 = $first_after_upstream \)
++				if test -f "$rewritten"/$p
+ 				then
+ 					preserve=f
+ 				fi
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 47c8371..8538813 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -295,7 +295,7 @@ test_expect_success 'preserve merges with -p' '
+ '
+ 
+ test_expect_success 'edit ancestor with -p' '
+-	FAKE_LINES="1 edit 2 3 4" git rebase -i -p HEAD~3 &&
++	FAKE_LINES="1 2 edit 3 4" git rebase -i -p HEAD~3 &&
+ 	echo 2 > unrelated-file &&
+ 	test_tick &&
+ 	git commit -m L2-modified --amend unrelated-file &&
+diff --git a/t/t3409-rebase-preserve-merges.sh b/t/t3409-rebase-preserve-merges.sh
+index 08201e2..6de4e22 100755
+--- a/t/t3409-rebase-preserve-merges.sh
++++ b/t/t3409-rebase-preserve-merges.sh
+@@ -37,7 +37,15 @@ export GIT_AUTHOR_EMAIL
+ #      \
+ #       B2     <-- origin/topic
+ #
+-# In all cases, 'topic' is rebased onto 'origin/topic'.
++# Clone 4 (merge using second parent as base):
++#
++# A1--A2--B3   <-- origin/master
++#  \
++#   B1--A3--M  <-- topic
++#    \     /
++#     \--A4    <-- topic2
++#      \
++#       B2     <-- origin/topic
+ 
+ test_expect_success 'setup for merge-preserving rebase' \
+ 	'echo First > A &&
+@@ -57,6 +65,13 @@ test_expect_success 'setup for merge-preserving rebase' \
+ 	git merge origin/master
+ 	) &&
+ 
++	git clone ./. clone4 &&
++	(
++		cd clone4 &&
++		git checkout -b topic origin/topic &&
++		git merge origin/master
++	) &&
++
+ 	echo Fifth > B &&
+ 	git add B &&
+ 	git commit -m "Add different B" &&
+@@ -123,4 +138,15 @@ test_expect_success 'rebase -p preserves no-ff merges' '
+ 	)
+ '
+ 
++test_expect_success 'rebase -p works when base inside second parent' '
++	(
++	cd clone4 &&
++	git fetch &&
++	git rebase -p HEAD^2 &&
++	test 1 = $(git rev-list --all --pretty=oneline | grep "Modify A" | wc -l) &&
++	test 1 = $(git rev-list --all --pretty=oneline | grep "Modify B" | wc -l) &&
++	test 1 = $(git rev-list --all --pretty=oneline | grep "Merge remote-tracking branch " | wc -l)
++	)
++'
++
+ test_done
+diff --git a/t/t3411-rebase-preserve-around-merges.sh b/t/t3411-rebase-preserve-around-merges.sh
+index 14a23cd..ace8e54 100755
+--- a/t/t3411-rebase-preserve-around-merges.sh
++++ b/t/t3411-rebase-preserve-around-merges.sh
+@@ -37,7 +37,7 @@ test_expect_success 'setup' '
+ #        -- C1 --
+ #
+ test_expect_success 'squash F1 into D1' '
+-	FAKE_LINES="1 squash 3 2" git rebase -i -p B1 &&
++	FAKE_LINES="1 squash 4 2 3" git rebase -i -p B1 &&
+ 	test "$(git rev-parse HEAD^2)" = "$(git rev-parse C1)" &&
+ 	test "$(git rev-parse HEAD~2)" = "$(git rev-parse B1)" &&
+ 	git tag E2
+-- 
+1.7.2.2
