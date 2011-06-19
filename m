@@ -1,121 +1,160 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Undo last commit?
-Date: Sun, 19 Jun 2011 12:37:54 +0200
-Message-ID: <201106191237.55825.jnareb@gmail.com>
-References: <BANLkTinWujKYvx_fh2iBDOdMbywqzfgwUA@mail.gmail.com> <m31uyrutx7.fsf@localhost.localdomain> <20110619003718.GA5628@elie>
+From: Vicent Marti <vicent@github.com>
+Subject: [ANNOUNCE] libgit2 v0.13.0
+Date: Sun, 19 Jun 2011 13:06:42 +0200
+Message-ID: <BANLkTimVueq0UMc6WX0AB64Of=aOBHCLLA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Mike <xandrani@gmail.com>, git@vger.kernel.org,
-	Ben Walton <bwalton@artsci.utoronto.ca>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	=?utf-8?q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-	<pclouds@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 19 12:38:24 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git-dev@github.com
+To: libgit2@librelist.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 19 13:07:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYFOa-0000fl-JS
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Jun 2011 12:38:24 +0200
+	id 1QYFqb-00037e-2G
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Jun 2011 13:07:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753407Ab1FSKiJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jun 2011 06:38:09 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:46004 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753400Ab1FSKiG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jun 2011 06:38:06 -0400
-Received: by fxm17 with SMTP id 17so438967fxm.19
-        for <git@vger.kernel.org>; Sun, 19 Jun 2011 03:38:05 -0700 (PDT)
+	id S1753448Ab1FSLHF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jun 2011 07:07:05 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:41246 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753423Ab1FSLHE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jun 2011 07:07:04 -0400
+Received: by wyb38 with SMTP id 38so1104437wyb.19
+        for <git@vger.kernel.org>; Sun, 19 Jun 2011 04:07:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=FZ1LmJySLgm+BkAFoZEJVWc+V+Qse84JGPIpeecEx6I=;
-        b=mUKZsJ+vpmxUcCstPdZKlm4/N2ubkDzCECZKdE4U5dVbY5URqZyGJo1LoGQEeB+Ws1
-         6Ax0gHurbyiuPTNmgj6qBN2gpKf2F1VKP0psy13ArDhLdkFq6DXOQ9OiYIT+NTwLRwHy
-         X7/YGlGvcc4EWJXQckTseZrWdo1MB752E/DD4=
+        h=domainkey-signature:mime-version:sender:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=OAs8+lD9gAGKgLpsr4Me7oPhMbsPOPq9JTopsrMmILs=;
+        b=hiY4X5xag1GavR2WyOcwRPJAhqQPpum3elb+DeoOmnyl8Jq7n/wwstlrDpHcnDFBNl
+         4DHPcpSelCC0viwMR0fcpNokooEPpHDg6nqRkaV37MtXq4eywLcrhNecSPctj7PNFqzC
+         4NUgOwS+TWU82So24JaODOj6tr9zEa6wJvpcA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=tIa9yGmJQ3LvXlIRbgeSTAnx6FxmPFNyesUVruvN6ZHuuGx2UAoNCKNOjJQXDhFprv
-         O11vKjEgJx8qzx+M4AY/09d2QH1lQkYPt3dRgA5SUJlo/MSy5ODZNUvq7ddkv0k+a1gr
-         g413bPY5lG8y1GJPM7CdUCdPwwta0zp1HLYOE=
-Received: by 10.223.32.142 with SMTP id c14mr2151868fad.59.1308479885430;
-        Sun, 19 Jun 2011 03:38:05 -0700 (PDT)
-Received: from [192.168.1.15] (absh236.neoplus.adsl.tpnet.pl [83.8.127.236])
-        by mx.google.com with ESMTPS id e16sm2204828fak.41.2011.06.19.03.38.02
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 19 Jun 2011 03:38:03 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20110619003718.GA5628@elie>
-Content-Disposition: inline
+        h=mime-version:sender:from:date:x-google-sender-auth:message-id
+         :subject:to:cc:content-type;
+        b=Vi/+6/HaBKVaSXbFu75gXQKCN4O7Vgg3EkLxJ43cQF0SWc9PQJNGG7s7Vmccpp6SVk
+         1be9Cv5MQN+zNnkkPwBfX20lXG8gDkio5raM0JlXxQJhwlVtXFwAokdBotsRLcuNh7Mu
+         kNjCqdZIoi8JWRGzPn3rXu+MuLaar8wLhGKDo=
+Received: by 10.227.196.208 with SMTP id eh16mr3873410wbb.37.1308481622306;
+ Sun, 19 Jun 2011 04:07:02 -0700 (PDT)
+Received: by 10.227.142.11 with HTTP; Sun, 19 Jun 2011 04:06:42 -0700 (PDT)
+X-Google-Sender-Auth: kI1ZbQjvyuJ4vMuL7gFOhSKU0Ys
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176000>
 
-On Sun, 19 Jun 2011, Jonathan Nieder wrote:
-> Jakub Narebski wrote:
-> > Mike <xandrani@gmail.com> writes:
-> 
-> > > % git reset --hard HEAD~1
-> >
-> > Errr... here you screwed up.  This reset state of you working area to
-> > the state at last commit, removing all your changes to tracked files.
-> 
-> Or rather, here we screwed up.  Jakub and others gave some useful
-> advice about how to recover, so let's consider how the UI or
-> documentation could be improved to prevent it from happening again.
-> 
-> * In this example if I understand correctly then the index contained
->   some useful information, perhaps about a larger commit intended for
->   later.  To preserve that, you could have used
-> 
-> 	git reset --soft HEAD~1
-> 
->   which would _just_ undo the effect of "git commit", leaving the index
->   and worktree alone.
+Hello everyone,
 
-Another issue is that Mike haven't realized that `--amend' option can be
-used *in combination* with other "git commit" options, which means that
-the solution to his problem was using "git commit" as it should have
-been done, but with '--amend' added.
- 
-I'm not sure if git documentation talks about 'git reset --soft HEAD^',
-and when to use it; from what I remember it encourages use of 
-'git commit --amend' instead (which was I guess most often used reason
-of using soft reset before there was '--amend').
+one more month, and another minor release of libgit2. We're getting there.
 
-> * Another situation that comes up from time to time is making a change
->   that just turned out to be a bad idea.  After commiting it, you might
->   want to discard the erroneous change, like so:
-> 
-> 	git reset --keep HEAD~1
-> 
->   The "--keep" option uses some safeguards to make sure that only the
->   committed change gets discarded, instead of clobbering local changes
->   at the same time.
->
-> * In the early days of git, the "--keep" option did not exist.  So a lot
->   of old documentation recommends to do
-> 
-> 	git reset --hard HEAD~1
-> 
->   which is the same if you don't have any local changes.
+The release has been tagged at:
 
-Yes, it would be good idea to examine git documentation (tutorials,
-user's manual, manpages, perhaps "Git Community Book" and "Pro Git"
-too) to encourage use of new safer options of hard reset, namely
-'--keep' and '--merge' instead of '--hard'.
- 
--- 
-Jakub Narebski
-Poland
+   https://github.com/libgit2/libgit2/tree/v0.13.0
+
+A dist package can be found at:
+
+   https://github.com/downloads/libgit2/libgit2/libgit2-0.13.0.tar.gz
+
+Updated documentation can be found at:
+
+    http://libgit2.github.com/libgit2/
+
+The full change log follows after the message.
+
+Thanks for your time,
+Vicent
+
+=========================
+
+libgit2 v0.13.0 "Watermelon Wheat"
+
+On this rascalicious minor release of libgit2:
+
+- We've dropped support for Waf. All the build process is now managed
+through CMake for all platforms.
+
+- We've removed the custom backends from the repository. You can now
+find a collection of Custom backends on their own repo, under the
+libgit2 org. Including MySQL and Memcache backends, courtesy of the
+beardful Brian Lopez.
+
+- We are rocking a new documentation system, Docurium, courtesy of the
+insightful Scott Chacon. Check out the details for each single method
+in our external API and the way they've evolved through the history
+of the library:
+
+	http://libgit2.github.com/libgit2/
+
+This will certainly come in handy if you are developing bindings for
+the library.
+
+- You can now check the linked version of the library from your
+application or bindings, using `git_libgit2_version`.
+
+- We have a gazillion new features, courtesy of our invaluable
+collaborators, including:
+
+	* Support for Config files!
+	* Support for prefix-only reads on the ODB
+	* Repository discovery
+	* Support for the Unmerged Entries index extension
+	* Better Windows support
+	* 30.000 bug fixes (actual number may be lower)
+
+Thanks as always to everyone who makes this project possible.
+
+Here's the full list of all external API changes:
+
+- git_index_open_bare
+- git_index_open_inrepo
+- git_odb_backend_sqlite
+- git_oid_mkraw
+- git_oid_mkstr
+- git_reference_listcb
+- git_repository_workdir
+
+= git_index_get
+= git_repository_path
+= git_tree_entry_byindex
+
++ git_blob_lookup_prefix
++ git_commit_lookup_prefix
++ git_config_add_file
++ git_config_add_file_ondisk
++ git_config_file__ondisk
++ git_config_find_global
++ git_config_foreach
++ git_config_free
++ git_config_get_bool
++ git_config_get_int
++ git_config_get_long
++ git_config_get_string
++ git_config_new
++ git_config_open_global
++ git_config_open_ondisk
++ git_config_set_bool
++ git_config_set_int
++ git_config_set_long
++ git_config_set_string
++ git_index_entry_stage
++ git_index_entrycount_unmerged
++ git_index_get_unmerged_byindex
++ git_index_get_unmerged_bypath
++ git_index_open
++ git_object_lookup_prefix
++ git_odb_read_prefix
++ git_oid_fromraw
++ git_oid_fromstr
++ git_oid_ncmp
++ git_reference_foreach
++ git_repository_config
++ git_repository_discover
++ git_repository_is_bare
++ git_tag_lookup_prefix
++ git_tree_entry_type
++ git_tree_lookup_prefix
