@@ -1,7 +1,7 @@
 From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH v2 09/20] git-remote-testgit: only push for non-local repositories
-Date: Sun, 19 Jun 2011 17:18:34 +0200
-Message-ID: <1308496725-22329-10-git-send-email-srabbelier@gmail.com>
+Subject: [PATCH v2 11/20] fast-import: introduce 'done' command
+Date: Sun, 19 Jun 2011 17:18:36 +0200
+Message-ID: <1308496725-22329-12-git-send-email-srabbelier@gmail.com>
 References: <1308496725-22329-1-git-send-email-srabbelier@gmail.com>
 Cc: Sverre Rabbelier <srabbelier@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>,
@@ -9,80 +9,228 @@ To: Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Ramkumar
-X-From: git-owner@vger.kernel.org Sun Jun 19 17:19:58 2011
+X-From: git-owner@vger.kernel.org Sun Jun 19 17:19:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYJn4-0003jn-3x
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Jun 2011 17:19:58 +0200
+	id 1QYJn4-0003jn-Lh
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Jun 2011 17:19:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754391Ab1FSPTv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jun 2011 11:19:51 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:43954 "EHLO
+	id S1754415Ab1FSPTy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jun 2011 11:19:54 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:44389 "EHLO
 	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754354Ab1FSPTs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jun 2011 11:19:48 -0400
-Received: by mail-ew0-f46.google.com with SMTP id 4so981189ewy.19
-        for <git@vger.kernel.org>; Sun, 19 Jun 2011 08:19:47 -0700 (PDT)
+	with ESMTP id S1754387Ab1FSPTv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jun 2011 11:19:51 -0400
+Received: by mail-ew0-f46.google.com with SMTP id 4so981213ewy.19
+        for <git@vger.kernel.org>; Sun, 19 Jun 2011 08:19:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=7A+/Z79XCwrGMGgnXjLCS4SKEZKLlqGey1UvFM/Wtc8=;
-        b=SwkAeoNyow+KB2T/is965r/ox59fgXioojpNKqwZvJi+iZPHqcLMvBliSnGDwBNqR5
-         8djIBnrbriBL5/dRACGCNuMuyKGO4ZueHTvv6zjsBaTDGS5BBa9JPU3hGSNy0cvPrJEz
-         ojsez3r9Vw4iSna1Wz3K2A0/kNHiYgNJO+92Q=
+        bh=qw0IUC/zSITawW6eIPSUQQNU6LUuwhbmc56A+tBxODw=;
+        b=YqGyTpwKdacP9MBcoslNTyNUdRLD5yMDmjVqFKpqkJhLv0j+/Jc0kxOtv8E/PYS3zL
+         BKV3gB3Okn2iOe0NsUt8LGcTTl1hKvvLxT2FevvwCPvA9xvtOMJsYxXGwo3fukFJDaXV
+         Tnnv/R6MwYKDQXZE5V51GVYetq/3nh9CQwl5o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=LmJGXDCbV3agHqFPh+tVguYXzsetweZQGevzu/UodzbXD3XgG1VxkwdTahM/0zuvtc
-         Kh9lEEMNBcMbcBhOTi0wKW60QSkW7CuzikYcPdf8gKIHagnWV5EzvmiRVffj/0cOGTwq
-         Gx/4HnsGr2wjsyYl+7NuE9FXiVD2bH3h6s8u0=
-Received: by 10.213.19.143 with SMTP id a15mr1704573ebb.2.1308496786984;
-        Sun, 19 Jun 2011 08:19:46 -0700 (PDT)
+        b=KlVg2gGeTZa9UQlW5HxW65vL029jjNiK7N+83nFfjsHAx+70o5RLI16HRKEORxo27e
+         EF0+sui+nEkWTgmhcFnI4tWNffHo0MsRdMB8lxyNK5gELWGWUvrV88CsDgYNCIYZtRSP
+         C14Ct0YRPrSwfEdxun8M0eFbAFehvW/mzE1Yw=
+Received: by 10.213.22.131 with SMTP id n3mr1672309ebb.97.1308496791007;
+        Sun, 19 Jun 2011 08:19:51 -0700 (PDT)
 Received: from localhost.localdomain ([188.142.63.148])
-        by mx.google.com with ESMTPS id y6sm3824429eem.18.2011.06.19.08.19.45
+        by mx.google.com with ESMTPS id y6sm3824429eem.18.2011.06.19.08.19.49
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 19 Jun 2011 08:19:45 -0700 (PDT)
+        Sun, 19 Jun 2011 08:19:50 -0700 (PDT)
 X-Mailer: git-send-email 1.7.5.1.292.g728120
 In-Reply-To: <1308496725-22329-1-git-send-email-srabbelier@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176011>
 
-Trying to push for local repositories will fail since there is no
-local checkout in .git/info/... to push from as that is only used for
-non-local repositories (local repositories are pushed to directly).
+Add a 'done' command that causes fast-import to stop reading from the
+stream and exit.
 
-This went unnoticed because the transport helper infrastructure does
-not check the return value of the helper.
+If the new --done command line flag was passed on the command line
+(or a "feature done" declaration included at the start of the stream),
+make the 'done' command mandatory.  So "git fast-import --done"'s
+input format will be prefix-free, making errors easier to detect when
+they show up as early termination at some convenient time of the
+upstream of a pipe writing to fast-import.
 
+Another possible application of the 'done' command would to be allow a
+fast-import stream that is only a small part of a larger encapsulating
+stream to be easily parsed, leaving the file offset after the "done\n"
+so the other application can pick up from there.  This patch does not
+teach fast-import to do that --- fast-import still uses buffered input
+(stdio).
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
 ---
 
   Unchanged.
 
- git-remote-testgit.py |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+ Documentation/git-fast-import.txt |   25 ++++++++++++++++++++++
+ fast-import.c                     |    8 +++++++
+ t/t9300-fast-import.sh            |   42 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 75 insertions(+), 0 deletions(-)
 
-diff --git a/git-remote-testgit.py b/git-remote-testgit.py
-index e4a99a3..9658355 100644
---- a/git-remote-testgit.py
-+++ b/git-remote-testgit.py
-@@ -147,7 +147,9 @@ def do_export(repo, args):
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index 249249a..0fc68a9 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -101,6 +101,12 @@ OPTIONS
+ 	when the `cat-blob` command is encountered in the stream.
+ 	The default behaviour is to write to `stdout`.
  
-     update_local_repo(repo)
-     repo.importer.do_import(repo.gitdir)
--    repo.non_local.push(repo.gitdir)
++--done::
++	Require a `done` command at the end of the stream.
++	This option might be useful for detecting errors that
++	cause the frontend to terminate before it has started to
++	write a stream.
 +
-+    if not repo.local:
-+        repo.non_local.push(repo.gitdir)
+ --export-pack-edges=<file>::
+ 	After creating a packfile, print a line of data to
+ 	<file> listing the filename of the packfile and the last
+@@ -330,6 +336,11 @@ and control the current import process.  More detailed discussion
+ 	standard output.  This command is optional and is not needed
+ 	to perform an import.
  
++`done`::
++	Marks the end of the stream. This command is optional
++	unless the `done` feature was requested using the
++	`--done` command line option or `feature done` command.
++
+ `cat-blob`::
+ 	Causes fast-import to print a blob in 'cat-file --batch'
+ 	format to the file descriptor set with `--cat-blob-fd` or
+@@ -1015,6 +1026,11 @@ notes::
+ 	Versions of fast-import not supporting notes will exit
+ 	with a message indicating so.
  
- def do_gitdir(repo, args):
++done::
++	Error out if the stream ends without a 'done' command.
++	Without this feature, errors causing the frontend to end
++	abruptly at a convenient point in the stream can go
++	undetected.
+ 
+ `option`
+ ~~~~~~~~
+@@ -1044,6 +1060,15 @@ not be passed as option:
+ * cat-blob-fd
+ * force
+ 
++`done`
++~~~~~~
++If the `done` feature is not in use, treated as if EOF was read.
++This can be used to tell fast-import to finish early.
++
++If the `--done` command line option or `feature done` command is
++in use, the `done` command is mandatory and marks the end of the
++stream.
++
+ Crash Reports
+ -------------
+ If fast-import is supplied invalid input it will terminate with a
+diff --git a/fast-import.c b/fast-import.c
+index 78d9786..8a8a915 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -354,6 +354,7 @@ static unsigned int cmd_save = 100;
+ static uintmax_t next_mark;
+ static struct strbuf new_data = STRBUF_INIT;
+ static int seen_data_command;
++static int require_explicit_termination;
+ 
+ /* Signal handling */
+ static volatile sig_atomic_t checkpoint_requested;
+@@ -3139,6 +3140,8 @@ static int parse_one_feature(const char *feature, int from_stream)
+ 		relative_marks_paths = 1;
+ 	} else if (!strcmp(feature, "no-relative-marks")) {
+ 		relative_marks_paths = 0;
++	} else if (!strcmp(feature, "done")) {
++		require_explicit_termination = 1;
+ 	} else if (!strcmp(feature, "force")) {
+ 		force_update = 1;
+ 	} else if (!strcmp(feature, "notes") || !strcmp(feature, "ls")) {
+@@ -3288,6 +3291,8 @@ int main(int argc, const char **argv)
+ 			parse_reset_branch();
+ 		else if (!strcmp("checkpoint", command_buf.buf))
+ 			parse_checkpoint();
++		else if (!strcmp("done", command_buf.buf))
++			break;
+ 		else if (!prefixcmp(command_buf.buf, "progress "))
+ 			parse_progress();
+ 		else if (!prefixcmp(command_buf.buf, "feature "))
+@@ -3307,6 +3312,9 @@ int main(int argc, const char **argv)
+ 	if (!seen_data_command)
+ 		parse_argv();
+ 
++	if (require_explicit_termination && feof(stdin))
++		die("stream ends early");
++
+ 	end_packfile();
+ 
+ 	dump_branches();
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 6b1ba6c..526231b 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -2197,6 +2197,48 @@ test_expect_success 'R: quiet option results in no stats being output' '
+     test_cmp empty output
+ '
+ 
++test_expect_success 'R: feature done means terminating "done" is mandatory' '
++	echo feature done | test_must_fail git fast-import &&
++	test_must_fail git fast-import --done </dev/null
++'
++
++test_expect_success 'R: terminating "done" with trailing gibberish is ok' '
++	git fast-import <<-\EOF &&
++	feature done
++	done
++	trailing gibberish
++	EOF
++	git fast-import <<-\EOF
++	done
++	more trailing gibberish
++	EOF
++'
++
++test_expect_success 'R: terminating "done" within commit' '
++	cat >expect <<-\EOF &&
++	OBJID
++	:000000 100644 OBJID OBJID A	hello.c
++	:000000 100644 OBJID OBJID A	hello2.c
++	EOF
++	git fast-import <<-EOF &&
++	commit refs/heads/done-ends
++	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++	data <<EOT
++	Commit terminated by "done" command
++	EOT
++	M 100644 inline hello.c
++	data <<EOT
++	Hello, world.
++	EOT
++	C hello.c hello2.c
++	done
++	EOF
++	git rev-list done-ends |
++	git diff-tree -r --stdin --root --always |
++	sed -e "s/$_x40/OBJID/g" >actual &&
++	test_cmp expect actual
++'
++
+ cat >input <<EOF
+ option git non-existing-option
+ EOF
 -- 
 1.7.5.1.292.g728120
