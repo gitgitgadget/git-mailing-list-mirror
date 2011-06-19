@@ -1,7 +1,7 @@
 From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH v2 06/20] transport-helper: don't feed bogus refs to export push
-Date: Sun, 19 Jun 2011 17:18:31 +0200
-Message-ID: <1308496725-22329-7-git-send-email-srabbelier@gmail.com>
+Subject: [PATCH v2 09/20] git-remote-testgit: only push for non-local repositories
+Date: Sun, 19 Jun 2011 17:18:34 +0200
+Message-ID: <1308496725-22329-10-git-send-email-srabbelier@gmail.com>
 References: <1308496725-22329-1-git-send-email-srabbelier@gmail.com>
 Cc: Sverre Rabbelier <srabbelier@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>,
@@ -15,95 +15,74 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYJn3-0003jn-3F
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Jun 2011 17:19:57 +0200
+	id 1QYJn4-0003jn-3x
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Jun 2011 17:19:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754365Ab1FSPTp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jun 2011 11:19:45 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:44389 "EHLO
+	id S1754391Ab1FSPTv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jun 2011 11:19:51 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:43954 "EHLO
 	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754336Ab1FSPTl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jun 2011 11:19:41 -0400
-Received: by mail-ew0-f46.google.com with SMTP id 4so981213ewy.19
-        for <git@vger.kernel.org>; Sun, 19 Jun 2011 08:19:40 -0700 (PDT)
+	with ESMTP id S1754354Ab1FSPTs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jun 2011 11:19:48 -0400
+Received: by mail-ew0-f46.google.com with SMTP id 4so981189ewy.19
+        for <git@vger.kernel.org>; Sun, 19 Jun 2011 08:19:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=T0eET7HzH0pS0tr2V/NcNahwYiMEqIeu+fPCgNBoHJE=;
-        b=DXC7pPpzraiIN3rEzWbJhtSRBw34Za5wO81EH96peZl0HBEOCaprUPUgnX/s72EB8z
-         OtK0hle29TJtc3NblvY6K11FT+uNfL9tNULL+6Iexbud2y4n2Hk4U7B9IX19EAjenIpv
-         RuitP1OS22QmDi7Z40Uhw4AQh+Qc8/mc3EFbI=
+        bh=7A+/Z79XCwrGMGgnXjLCS4SKEZKLlqGey1UvFM/Wtc8=;
+        b=SwkAeoNyow+KB2T/is965r/ox59fgXioojpNKqwZvJi+iZPHqcLMvBliSnGDwBNqR5
+         8djIBnrbriBL5/dRACGCNuMuyKGO4ZueHTvv6zjsBaTDGS5BBa9JPU3hGSNy0cvPrJEz
+         ojsez3r9Vw4iSna1Wz3K2A0/kNHiYgNJO+92Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=tlCb9l/Fo+b9LGrgCzbUNDabMFaNx32iSPc+ODdeL/3lENiLiBT7zF4M7Bwa2PVRY7
-         3kLHZb/E1cNKqRS2zqHV/5DTwhq/2xyO2JWfF09bOs0m7DqAlLHQ0/HbX9wwn5rANIC0
-         9bi7PciqBUuDtXjuJg9Y7DCH5jjSLN6wd0KWg=
-Received: by 10.213.9.72 with SMTP id k8mr1624651ebk.1.1308496780700;
-        Sun, 19 Jun 2011 08:19:40 -0700 (PDT)
+        b=LmJGXDCbV3agHqFPh+tVguYXzsetweZQGevzu/UodzbXD3XgG1VxkwdTahM/0zuvtc
+         Kh9lEEMNBcMbcBhOTi0wKW60QSkW7CuzikYcPdf8gKIHagnWV5EzvmiRVffj/0cOGTwq
+         Gx/4HnsGr2wjsyYl+7NuE9FXiVD2bH3h6s8u0=
+Received: by 10.213.19.143 with SMTP id a15mr1704573ebb.2.1308496786984;
+        Sun, 19 Jun 2011 08:19:46 -0700 (PDT)
 Received: from localhost.localdomain ([188.142.63.148])
-        by mx.google.com with ESMTPS id y6sm3824429eem.18.2011.06.19.08.19.38
+        by mx.google.com with ESMTPS id y6sm3824429eem.18.2011.06.19.08.19.45
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 19 Jun 2011 08:19:39 -0700 (PDT)
+        Sun, 19 Jun 2011 08:19:45 -0700 (PDT)
 X-Mailer: git-send-email 1.7.5.1.292.g728120
 In-Reply-To: <1308496725-22329-1-git-send-email-srabbelier@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176010>
 
-From: Jeff King <peff@peff.net>
+Trying to push for local repositories will fail since there is no
+local checkout in .git/info/... to push from as that is only used for
+non-local repositories (local repositories are pushed to directly).
 
-When we want to push to a remote helper that has the
-"export" capability, we collect all of the refs we want to
-push and then feed them to fast-export.
+This went unnoticed because the transport helper infrastructure does
+not check the return value of the helper.
 
-However, the list of refs is actually a list of remote refs,
-not local refs. The mapped local refs are included via the
-peer_ref pointer. So when we add an argument to our
-fast-export command line, we must be sure to use the local
-peer_ref name (and if there is no local name, it is because
-we are not actually sending that ref, or we may not even
-have the ref at all).
-
-Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
 ---
 
   Unchanged.
 
- t/t5800-remote-helpers.sh |    2 +-
- transport-helper.c        |    3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ git-remote-testgit.py |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
-diff --git a/t/t5800-remote-helpers.sh b/t/t5800-remote-helpers.sh
-index ca115cc..ceb0010 100755
---- a/t/t5800-remote-helpers.sh
-+++ b/t/t5800-remote-helpers.sh
-@@ -106,7 +106,7 @@ test_expect_failure 'fetch multiple branches' '
- 	compare_refs server new localclone refs/remotes/origin/new
- '
+diff --git a/git-remote-testgit.py b/git-remote-testgit.py
+index e4a99a3..9658355 100644
+--- a/git-remote-testgit.py
++++ b/git-remote-testgit.py
+@@ -147,7 +147,9 @@ def do_export(repo, args):
  
--test_expect_failure 'push when remote has extra refs' '
-+test_expect_success 'push when remote has extra refs' '
- 	(cd clone &&
- 	 echo content >>file &&
- 	 git commit -a -m six &&
-diff --git a/transport-helper.c b/transport-helper.c
-index b560b64..34d18aa 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -730,7 +730,8 @@ static int push_refs_with_export(struct transport *transport,
- 		}
- 		free(private);
+     update_local_repo(repo)
+     repo.importer.do_import(repo.gitdir)
+-    repo.non_local.push(repo.gitdir)
++
++    if not repo.local:
++        repo.non_local.push(repo.gitdir)
  
--		string_list_append(&revlist_args, ref->name);
-+		if (ref->peer_ref)
-+			string_list_append(&revlist_args, ref->peer_ref->name);
  
- 	}
- 
+ def do_gitdir(repo, args):
 -- 
 1.7.5.1.292.g728120
