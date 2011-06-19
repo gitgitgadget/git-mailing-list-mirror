@@ -1,70 +1,69 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 04/20] t5800: document some non-functional parts of
- remote helpers
-Date: Sun, 19 Jun 2011 17:02:46 -0500
-Message-ID: <20110619220246.GE23893@elie>
-References: <1308496725-22329-1-git-send-email-srabbelier@gmail.com>
- <1308496725-22329-5-git-send-email-srabbelier@gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 1/6] Bring notes.c template handling in line with commit.c.
+Date: Sun, 19 Jun 2011 23:23:09 +0200
+Message-ID: <201106192323.09511.johan@herland.net>
+References: <201106151253.57908.johan@herland.net>
+ <1308431208-13353-1-git-send-email-ydirson@free.fr>
+ <1308431208-13353-2-git-send-email-ydirson@free.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 20 00:03:10 2011
+Content-Type: Text/Plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Yann Dirson <ydirson@free.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 20 00:07:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYQ5C-0006sV-Nc
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 00:03:07 +0200
+	id 1QYQ9i-0008NH-U8
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 00:07:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754799Ab1FSWCx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jun 2011 18:02:53 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:47365 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752366Ab1FSWCw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jun 2011 18:02:52 -0400
-Received: by iwn6 with SMTP id 6so719771iwn.19
-        for <git@vger.kernel.org>; Sun, 19 Jun 2011 15:02:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=y3gdR/xp417al1cDycZOwaYzMaVxY96MiwPM6wns02g=;
-        b=wehJgND7qQehvBmCQgOGDBFgkVr4u3MHfx0fUgLEDvNu57YxQRL6GnYi8gj92K1dsT
-         5gPcCBzGgEJn/IVf1fYWeXR6RsuyFpubhFnmRp0D7UyJ4J0d8980w77oir6QPcm3+I8R
-         cxcmALh9USIAb2ykZPjzGvOZFpYQu2X6sccgo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=eoM7ObcKsp9xvFsrMN2HQtNBZxP0VF2Olu9kYZg0q3s2l92OpzJEGwzq/1fQxyh8QT
-         HE2WLXEdighS8O5es09V9uGPqYY87y9PmcPg603FpyqAXZYZSZClWc2PfbgotReCg+WM
-         QVsEhbmfjFq9BRS3DNprG9KCXJIp84GQPThzU=
-Received: by 10.42.173.9 with SMTP id p9mr5353718icz.268.1308520971972;
-        Sun, 19 Jun 2011 15:02:51 -0700 (PDT)
-Received: from elie (adsl-69-209-50-158.dsl.chcgil.ameritech.net [69.209.50.158])
-        by mx.google.com with ESMTPS id hp8sm4877286icc.23.2011.06.19.15.02.50
-        (version=SSLv3 cipher=OTHER);
-        Sun, 19 Jun 2011 15:02:50 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1308496725-22329-5-git-send-email-srabbelier@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754790Ab1FSWHj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jun 2011 18:07:39 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:59476 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752929Ab1FSWHj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jun 2011 18:07:39 -0400
+Received: from get-mta-scan01.get.basefarm.net ([10.5.16.4])
+ by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LN200I2A5GP0810@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 20 Jun 2011 00:07:37 +0200 (MEST)
+Received: from get-mta-scan01.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 094601798FBD_DFE7329B	for <git@vger.kernel.org>; Sun,
+ 19 Jun 2011 22:07:37 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan01.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id E6D8517962DF_DFE7328F	for <git@vger.kernel.org>; Sun,
+ 19 Jun 2011 22:07:36 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LN200CIB5GO4R00@get-mta-in03.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 20 Jun 2011 00:07:36 +0200 (MEST)
+User-Agent: KMail/1.13.7 (Linux/2.6.39-ARCH; KDE/4.6.3; x86_64; ; )
+In-reply-to: <1308431208-13353-2-git-send-email-ydirson@free.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176030>
 
-Sverre Rabbelier wrote:
+On Saturday 18 June 2011, Yann Dirson wrote:
+> Signed-off-by: Yann Dirson <ydirson@free.fr>
 
->   Culled the part of the commit message that is discussion of a
->   possible implementation, but kept the parts describing the tests
->   and why the last one is failing.
+Please mention in the commit message that the commit merely replaces 
+write_or_die()/int fd with the corresponding stdio functionality, and that 
+there is no (intended) change in behavior. It was not apparent from your 
+commit message that you had not made any other changes.
 
-Looks good.  What happened to the extra tests (e.g., push tag)
-mentioned in the last round?
+Otherwise the patch looks OK.
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
