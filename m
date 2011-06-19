@@ -1,71 +1,56 @@
-From: Dave Abrahams <dave@boostpro.com>
-Subject: Re: git svn fetch error
-Date: Sun, 19 Jun 2011 15:57:34 +0000 (UTC)
-Message-ID: <loom.20110619T175544-191@post.gmane.org>
-References: <3504B354-D3F2-4419-B2EC-E14F83EC0371@apple.com> <4DDA17D7.8020504@alum.mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+From: Boris Faure <billiob@gmail.com>
+Subject: [PATCH/RFC] branch: add optional parameter to -r to specify remote
+Date: Sun, 19 Jun 2011 21:19:08 +0200
+Message-ID: <1308511149-10933-1-git-send-email-billiob@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 19 17:57:59 2011
+X-From: git-owner@vger.kernel.org Sun Jun 19 21:09:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYKNp-0001fU-TF
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Jun 2011 17:57:58 +0200
+	id 1QYNMm-0001xR-3o
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Jun 2011 21:09:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754173Ab1FSP5x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jun 2011 11:57:53 -0400
-Received: from lo.gmane.org ([80.91.229.12]:39248 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754147Ab1FSP5w (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jun 2011 11:57:52 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1QYKNi-0001bt-RG
-	for git@vger.kernel.org; Sun, 19 Jun 2011 17:57:50 +0200
-Received: from 207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com ([207.172.223.249])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 19 Jun 2011 17:57:50 +0200
-Received: from dave by 207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 19 Jun 2011 17:57:50 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 207.172.223.249 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; en-us) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1)
+	id S1754677Ab1FSTI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jun 2011 15:08:58 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:43308 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754651Ab1FSTI5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jun 2011 15:08:57 -0400
+Received: by wyb38 with SMTP id 38so1241443wyb.19
+        for <git@vger.kernel.org>; Sun, 19 Jun 2011 12:08:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:subject:date:message-id:x-mailer;
+        bh=iHZpC0d/WgT+oLYUjjmtKEB97ZU6hehTA+5gYP1yJTI=;
+        b=ZbwThEYGRRRP9qJgco9ewJVHkO+SNWiNRe6XUZanH+hqIFSDzJ69yi2pmlayFI56vA
+         +i/5OdNIIJqZ3b2wisgOB2l7T9L9Q1A2nbdg9mlnWDw6XhEC+TdQWqiTAUF0gPEb97d4
+         Zjf9evRGjl7yhsGIZ4r/z3S9dFCfX1TjWI1pI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:message-id:x-mailer;
+        b=VphymGBYYJO4eKIHAsAzeyGJHgToFan5Kq50Ry39Ueu7P8Y3wFE4k1DucQYcH3X7WZ
+         QROJ1gbbVGg8BRV2tlUvDG/zrFiOJvg4R82nqSmbr5MTouuQ4LXCLSqTCA3rDdlKM5fq
+         5JDENWMpYjQ8tByijkOnD8Yhm9bJiPjOjl8+I=
+Received: by 10.216.254.82 with SMTP id g60mr3907242wes.90.1308510536504;
+        Sun, 19 Jun 2011 12:08:56 -0700 (PDT)
+Received: from localhost.localdomain (ADijon-259-1-31-165.w90-33.abo.wanadoo.fr [90.33.98.165])
+        by mx.google.com with ESMTPS id g2sm2508004weg.38.2011.06.19.12.08.54
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 19 Jun 2011 12:08:55 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.rc2.4.g36bfb.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176026>
 
-Michael Haggerty <mhagger <at> alum.mit.edu> writes:
+The following patch adds an optional parameter to branch -r to use as
+-r=<remote> in order to list branches on a particular remote.
 
-> On 05/23/2011 01:39 AM, Dave Zarzycki wrote:
-> > Has anybody seen the following error with git svn fetch?
-> > I've seen this both with 1.7.4.4 and top-of-tree.
-> > 
-> > Argument "195270*" isn't numeric in numeric le (<=) at 
-> > /usr/libexec/git-core/git-svn line 3840.
+'git branch -d -r one/another' can also be done with
+'git branch -d -r=one another'.
 
-<snip>
- 
-> I haven't looked into the code, but from the argument shown in the error
-> message my guess is that git-svn is being confused by Subversion's
-> non-inheritable merge information.  [1].
-> 
-> [1] http://www.collab.net/community/subversion/articles/merge-info.html
-
-I"m seeing this problem too.  What do I need to do to get this treated as a
-bug report?
-
-Thanks,
---
-Dave Abrahams
-BoostPro Computing
-http://boostpro.com
+I haven't found tests specially crafted for 'git branch -r -d <branch>'. I
+hope the tests I have added are in the correct places.
