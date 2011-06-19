@@ -1,95 +1,97 @@
-From: Mihamina Rakotomandimby <mihamina@bbs.mg>
-Subject: help on importing
-Date: Sun, 19 Jun 2011 18:03:48 +0300
-Message-ID: <20110619180348.576ea06e.mihamina@bbs.mg>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 19 17:11:20 2011
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: [PATCH v2 v2 00/20] remote-helper improvements
+Date: Sun, 19 Jun 2011 17:18:25 +0200
+Message-ID: <1308496725-22329-1-git-send-email-srabbelier@gmail.com>
+Cc: Sverre Rabbelier <srabbelier@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Ramkumar
+X-From: git-owner@vger.kernel.org Sun Jun 19 17:19:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYJei-0000cw-4Q
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Jun 2011 17:11:20 +0200
+	id 1QYJmi-0003bU-Hd
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Jun 2011 17:19:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754231Ab1FSPLO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jun 2011 11:11:14 -0400
-Received: from smtp-out.malagasy.com ([41.204.104.33]:43823 "EHLO
-	smtp-out.malagasy.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754169Ab1FSPLN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jun 2011 11:11:13 -0400
-X-Greylist: delayed 430 seconds by postgrey-1.27 at vger.kernel.org; Sun, 19 Jun 2011 11:11:13 EDT
-Received: from smtp-2.blueline.mg (unknown [41.204.104.56])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp-out.malagasy.com (Postfix) with ESMTPS id 9ECA28DF4B
-	for <git@vger.kernel.org>; Sun, 19 Jun 2011 18:03:59 +0300 (EAT)
-Received: from localhost (spamassassin.malagasy.com [41.204.104.47])
-	by smtp-2.blueline.mg (Postfix) with ESMTP id 9064260065
-	for <git@vger.kernel.org>; Sun, 19 Jun 2011 18:03:59 +0300 (EAT)
-X-Virus-Scanned: par antivirus.malagasy.com
-X-Spam-Flag: NO
-X-Spam-Score: -4.027
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.027 required=7 tests=[ALL_TRUSTED=-1.8, AWL=0.372,
-	BAYES_00=-2.599]
-Received: from smtp-2.blueline.mg ([41.204.104.56])
-	by localhost (spamassassin.malagasy.com [41.204.104.47]) (amavisd-new, port 10024)
-	with ESMTP id O37Bp4SEwHE6 for <git@vger.kernel.org>;
-	Sun, 19 Jun 2011 18:03:53 +0300 (EAT)
-Received: from packard.rktmb.org (staff-104-10.malagasy.com [41.204.104.10])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: mihamina@bbs.mg)
-	by smtp-2.blueline.mg (Postfix) with ESMTPSA id 2466F6004E
-	for <git@vger.kernel.org>; Sun, 19 Jun 2011 18:03:52 +0300 (EAT)
-X-Mailer: Sylpheed 3.1.0beta2 (GTK+ 2.22.0; x86_64-pc-linux-gnu)
+	id S1754249Ab1FSPTa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jun 2011 11:19:30 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:43954 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754199Ab1FSPT3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jun 2011 11:19:29 -0400
+Received: by ewy4 with SMTP id 4so981189ewy.19
+        for <git@vger.kernel.org>; Sun, 19 Jun 2011 08:19:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=Pwbi5gjgCK1Nuj67ouGwqUob3QUjMORXJyKqT3fB12g=;
+        b=aerXCNh1uDib2KvZl/gjkUddUQQDX1uOWPHFCV1y40xqkEUEjT5N+aINGpwQQkjtSK
+         w3ntWkKxG1C1OCOJkDMKf05PyJseENXa9WC12M2ho12kTNB4TWUlM+s1Ej9zle1X9JyE
+         4CLCLSBh3P0YJSGQ/z8V8KQbMn9L8KN+/82as=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=jQIxB86Xjea6JipVrxqoRw57t7UKzvE5Vuh8EMPNxtnZFMSG+SgX3k9+hV2qS6YUWg
+         mX6Nxv66g/9Q8tvf2/HsJofFXjKRa2KJXvn8X9tUUjDSZkGCVqySa63oz+x6r3uaiE++
+         /lsbpXSEy9bQFjcjTRkVegM1K8IaBceY8bMY8=
+Received: by 10.213.9.134 with SMTP id l6mr1700674ebl.20.1308496767966;
+        Sun, 19 Jun 2011 08:19:27 -0700 (PDT)
+Received: from localhost.localdomain ([188.142.63.148])
+        by mx.google.com with ESMTPS id y6sm3824429eem.18.2011.06.19.08.19.25
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 19 Jun 2011 08:19:26 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.1.292.g728120
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176002>
 
-Hi all,
+This is v2 of the series, mostly minor changes.
 
-I made several commits to a small local program.
-When I list them with "git log" I see them.
+Jeff King (6):
+  transport-helper: fix minor leak in push_refs_with_export
+  t5800: factor out some ref tests
+  t5800: document some non-functional parts of remote helpers
+  teach remote-testgit to import non-HEAD refs
+  transport-helper: don't feed bogus refs to export push
+  git_remote_helpers: push all refs during a non-local export
 
-To publish my work, I choosed to sign in a forge (like github, google
-code,...). I choosed forge.ocamlcore.org
+Sverre Rabbelier (14):
+  t5800: use skip_all instead of prereq
+  remote-curl: accept empty line as terminator
+  git-remote-testgit: only push for non-local repositories
+  git-remote-testgit: fix error handling
+  fast-import: introduce 'done' command
+  fast-export: support done feature
+  transport-helper: factor out push_update_refs_status
+  transport-helper: check status code of finish_command
+  transport-helper: use the new done feature where possible
+  transport-helper: update ref status after push with export
+  transport-helper: change import semantics
+  transport-helper: export is no longer always the last command
+  transport-helper: Use capname for gitdir capability too
+  transport-helper: implement marks location as capability
 
-With my account creation, the forge automatically created an empty GIT
-repository.
-
-I clone it with:
-  git clone git+ssh://rakotomandimby@forge.ocamlcore.org/gitroot/ocaml-crypt/ocaml-crypt.git
-  Initialized empty Git repository in /tmp/ocaml-crypt/ocaml-crypt/.git/
-  warning: You appear to have cloned an empty repository.
-I am surprised the initialisation is not in /tmp/ocaml-crypt/ocaml-crypt.git/.git/ 
-as I pulled "ocaml-crypt.git".
-
-Anyway...
-When add+commit a file into "/tmp/ocaml-crypt/ocaml-crypt/", 
-I get no errors, but when pushing:
-  $ git push
-  No refs in common and none specified; doing nothing.
-  Perhaps you should specify a branch such as 'master'.
-  fatal: The remote end hung up unexpectedly
-
-I dont understand...
-
-If I have success on this first simple steps, 
-I could switch to the next level: Importing my local commits
-to that cloned repository ans then push that all.
-
-I read several GIT documentation, but it seems I dont have the 
-right keywords to have good results...
-
-
-Would you help?
+ Documentation/git-fast-export.txt   |    4 +
+ Documentation/git-fast-import.txt   |   25 ++++
+ builtin/fast-export.c               |    9 ++
+ fast-import.c                       |    8 ++
+ git-remote-testgit.py               |   57 ++++++---
+ git_remote_helpers/git/exporter.py  |   15 ++-
+ git_remote_helpers/git/importer.py  |   32 +++++-
+ git_remote_helpers/git/non_local.py |   20 +--
+ git_remote_helpers/git/repo.py      |    7 +-
+ git_remote_helpers/util.py          |   66 ++++++++++
+ remote-curl.c                       |    3 +
+ t/t5800-remote-helpers.sh           |   93 +++++++++++---
+ t/t9300-fast-import.sh              |   42 ++++++
+ transport-helper.c                  |  238 ++++++++++++++++++----------------
+ 14 files changed, 445 insertions(+), 174 deletions(-)
 
 -- 
-RMA.
+1.7.5.1.292.g728120
