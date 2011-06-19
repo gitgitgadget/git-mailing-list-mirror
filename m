@@ -1,193 +1,71 @@
-From: Juergen Kosel <juergen.kosel@gmx.de>
-Subject: git merge failed to detect conflict
-Date: Sun, 19 Jun 2011 17:51:29 +0200
-Message-ID: <4DFE1B01.8050107@gmx.de>
+From: Dave Abrahams <dave@boostpro.com>
+Subject: Re: git svn fetch error
+Date: Sun, 19 Jun 2011 15:57:34 +0000 (UTC)
+Message-ID: <loom.20110619T175544-191@post.gmane.org>
+References: <3504B354-D3F2-4419-B2EC-E14F83EC0371@apple.com> <4DDA17D7.8020504@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 19 17:51:55 2011
+X-From: git-owner@vger.kernel.org Sun Jun 19 17:57:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYKHt-0007Y1-Ak
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Jun 2011 17:51:49 +0200
+	id 1QYKNp-0001fU-TF
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Jun 2011 17:57:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754173Ab1FSPvf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jun 2011 11:51:35 -0400
-Received: from mailout-de.gmx.net ([213.165.64.23]:44813 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1754151Ab1FSPvd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jun 2011 11:51:33 -0400
-Received: (qmail invoked by alias); 19 Jun 2011 15:51:30 -0000
-Received: from nrbg-4d0765ea.pool.mediaWays.net (EHLO [192.168.178.3]) [77.7.101.234]
-  by mail.gmx.net (mp057) with SMTP; 19 Jun 2011 17:51:30 +0200
-X-Authenticated: #4222805
-X-Provags-ID: V01U2FsdGVkX198Y4JvSbh8l00QbNevg6P1aBI3IIryVJAR9z3PLX
-	9CbVAyPd0uLji6
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.16) Gecko/20110505 Icedove/3.0.11
-X-Enigmail-Version: 1.0.1
-X-Y-GMX-Trusted: 0
+	id S1754173Ab1FSP5x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jun 2011 11:57:53 -0400
+Received: from lo.gmane.org ([80.91.229.12]:39248 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754147Ab1FSP5w (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jun 2011 11:57:52 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1QYKNi-0001bt-RG
+	for git@vger.kernel.org; Sun, 19 Jun 2011 17:57:50 +0200
+Received: from 207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com ([207.172.223.249])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 19 Jun 2011 17:57:50 +0200
+Received: from dave by 207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 19 Jun 2011 17:57:50 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 207.172.223.249 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; en-us) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176025>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Michael Haggerty <mhagger <at> alum.mit.edu> writes:
 
-Hello,
+> On 05/23/2011 01:39 AM, Dave Zarzycki wrote:
+> > Has anybody seen the following error with git svn fetch?
+> > I've seen this both with 1.7.4.4 and top-of-tree.
+> > 
+> > Argument "195270*" isn't numeric in numeric le (<=) at 
+> > /usr/libexec/git-core/git-svn line 3840.
 
-I have just steped into a boarder case, where git merge fails to detect
-a merge conflict:
+<snip>
+ 
+> I haven't looked into the code, but from the argument shown in the error
+> message my guess is that git-svn is being confused by Subversion's
+> non-inheritable merge information.  [1].
+> 
+> [1] http://www.collab.net/community/subversion/articles/merge-info.html
 
-The commit A in the remote branch was the following:
+I"m seeing this problem too.  What do I need to do to get this treated as a
+bug report?
 
-diff --git a/LoWPAN.c b/LoWPAN.c
-index 3e929e5..1b768e2 100644 (file)
-- --- a/LoWPAN.c
-+++ b/LoWPAN.c
-@@ -431,12 +431,16 @@ int main (int argc, char **argv)
-       }
-       printf("\n");
- #endif
-- -      // forward into kernel/tap device
-- -      retval=lowpan_writeout(&rx_packet,tap_fd);
-- -      if(retval<0) {
-- -       ERROR_OUTPUT("Failed to forward datagram into tap device: %s",
-- -                    strerror(errno));
-- -       break; // leave the while loop
-+      // ensure that we haven't got our own multicast
-+      if((rx_packet.source.pan_id != own_802154_addr.pan_id)
-+        || (rx_packet.source.short_addr != own_802154_addr.short_addr)) {
-+       // forward into kernel/tap device
-+       retval=lowpan_writeout(&rx_packet,tap_fd);
-+       if(retval<0) {
-+         ERROR_OUTPUT("Failed to forward datagram into tap device: %s",
-+                      strerror(errno));
-+         break; // leave the while loop
-+       }
-       }
-     }
-   }
-
-The commit B in the local branch was:
-diff --git a/LoWPAN.c b/LoWPAN.c
-index 3e929e5..a7c65e3 100644 (file)
-- --- a/LoWPAN.c
-+++ b/LoWPAN.c
-@@ -438,6 +438,8 @@ int main (int argc, char **argv)
-                     strerror(errno));
-        break; // leave the while loop
-       }
-+      DEBUG_OUTPUT("Successfully forwarded %d bytes into the tap device",
-+                  retval);
-     }
-   }
-
-The resulting merge commit AB is:
-diff --cc LoWPAN.c
-index a7c65e3,1b768e2..92ec5f7
-- --- 1/LoWPAN.c
-- --- 2/LoWPAN.c
-+++ b/LoWPAN.c
-@@@ -431,15 -431,17 +431,19 @@@ int main (int argc, char **argv
-        }
-        printf("\n");
-  #endif
-- -       // forward into kernel/tap device
-- -       retval=lowpan_writeout(&rx_packet,tap_fd);
-- -       if(retval<0) {
-- -       ERROR_OUTPUT("Failed to forward datagram into tap device: %s",
-- -                    strerror(errno));
-- -       break; // leave the while loop
-+       // ensure that we haven't got our own multicast
-+       if((rx_packet.source.pan_id != own_802154_addr.pan_id)
-+        || (rx_packet.source.short_addr != own_802154_addr.short_addr)) {
-+       // forward into kernel/tap device
-+       retval=lowpan_writeout(&rx_packet,tap_fd);
-+       if(retval<0) {
-+         ERROR_OUTPUT("Failed to forward datagram into tap device: %s",
-+                      strerror(errno));
-+         break; // leave the while loop
-+       }
-        }
- +      DEBUG_OUTPUT("Successfully forwarded %d bytes into the tap device",
- +                 retval);
-      }
-    }
-
-If you just look at the diff output, it is difficult to see the problem.
-But if you look at the corresponding code sections, than you see that
-diff has splitted the conflictiong section into two none conflicting
-sections.
-
-Code A:
-
- 434       // ensure that we haven't got our own multicast
- 435       if((rx_packet.source.pan_id != own_802154_addr.pan_id)
- 436          || (rx_packet.source.short_addr !=
-own_802154_addr.short_addr)) {
- 437         // forward into kernel/tap device
- 438         retval=lowpan_writeout(&rx_packet,tap_fd);
- 439         if(retval<0) {
- 440           ERROR_OUTPUT("Failed to forward datagram into tap device:
-%s",
- 441                        strerror(errno));
- 442           break; // leave the while loop
- 443         }
- 444       }
-
-Code B:
-
- 434       // forward into kernel/tap device
- 435       retval=lowpan_writeout(&rx_packet,tap_fd);
- 436       if(retval<0) {
- 437         ERROR_OUTPUT("Failed to forward datagram into tap device: %s",
- 438                      strerror(errno));
- 439         break; // leave the while loop
- 440       }
- 441       DEBUG_OUTPUT("Successfully forwarded %d bytes into the tap
-device",
- 442                    retval);
- 443     }
-
-Code AB:
-
- 434       // ensure that we haven't got our own multicast
- 435       if((rx_packet.source.pan_id != own_802154_addr.pan_id)
- 436          || (rx_packet.source.short_addr !=
-own_802154_addr.short_addr)) {
- 437         // forward into kernel/tap device
- 438         retval=lowpan_writeout(&rx_packet,tap_fd);
- 439         if(retval<0) {
- 440           ERROR_OUTPUT("Failed to forward datagram into tap device:
-%s",
- 441                        strerror(errno));
- 442           break; // leave the while loop
- 443         }
- 444       }
- 445       DEBUG_OUTPUT("Successfully forwarded %d bytes into the tap
-device",
- 446                    retval);
- 447     }
-
-Obviously git/diff has failed to detect that human intervention is
-required here. One _workaround_ would be, to demand in the coding style,
-that closing braces get unique comments.
-But what would be the solution of this problem?
-
-
-Greetings
-	Juergen
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iD8DBQFN/hr95JgLPmj5988RAvEZAJ0R23PMc5xXfbKPCYnw3s8FGkqBqACgtpgV
-96GejSM+XaPgg9p4XMpuF/k=
-=zjX3
------END PGP SIGNATURE-----
+Thanks,
+--
+Dave Abrahams
+BoostPro Computing
+http://boostpro.com
