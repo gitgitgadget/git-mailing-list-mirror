@@ -1,126 +1,193 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: help on importing
-Date: Sun, 19 Jun 2011 08:23:16 -0700 (PDT)
-Message-ID: <m3sjr5u9qg.fsf@localhost.localdomain>
-References: <20110619180348.576ea06e.mihamina@bbs.mg>
+From: Juergen Kosel <juergen.kosel@gmx.de>
+Subject: git merge failed to detect conflict
+Date: Sun, 19 Jun 2011 17:51:29 +0200
+Message-ID: <4DFE1B01.8050107@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mihamina Rakotomandimby <mihamina@bbs.mg>
-X-From: git-owner@vger.kernel.org Sun Jun 19 17:23:25 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 19 17:51:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYJqO-00059C-9g
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Jun 2011 17:23:24 +0200
+	id 1QYKHt-0007Y1-Ak
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Jun 2011 17:51:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754306Ab1FSPXT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jun 2011 11:23:19 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:44821 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754239Ab1FSPXS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jun 2011 11:23:18 -0400
-Received: by fxm17 with SMTP id 17so507655fxm.19
-        for <git@vger.kernel.org>; Sun, 19 Jun 2011 08:23:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:x-authentication-warning:to:cc:subject
-         :references:from:date:in-reply-to:message-id:lines:user-agent
-         :mime-version:content-type;
-        bh=aDP8djIx+LVilNiqh2MO+seYaxIX+L5LwaQLW72aMo8=;
-        b=T6Ud4vJMK4iVONk59L0Qemww920NPOAEzExmQsWlajB7d43u6rb8/GgMNbznJJw8Fm
-         /EmVSqcOy1jaP8brXMF26gZy6EGv5YsUcoVeybwiANmggoCbER5hrVr9SK4go+HLGA5q
-         8BSINWfguUbz3erts7DmloJBdxNstw5bjIfqw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=Vj3m1XDQRm/kfgObPqDSJfrwjKZvVjqsTN3bla5ssP0v0EjOwtBftJOYXXpsu5vial
-         bD/hOUxI0YiXnPkpKdBhojiMO9VOg/OYBwMWwK1bbYfOawnsD9mcLPMYM1E5L+FY3L8H
-         spjPOaKgpWi/PTCjCNaprtHP7ROrNPBwlq9IE=
-Received: by 10.223.32.142 with SMTP id c14mr2391763fad.59.1308496997641;
-        Sun, 19 Jun 2011 08:23:17 -0700 (PDT)
-Received: from localhost.localdomain (absh236.neoplus.adsl.tpnet.pl [83.8.127.236])
-        by mx.google.com with ESMTPS id q21sm2309860fan.16.2011.06.19.08.23.15
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 19 Jun 2011 08:23:16 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p5JFMjG0022877;
-	Sun, 19 Jun 2011 17:22:55 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p5JFMVTh022867;
-	Sun, 19 Jun 2011 17:22:31 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20110619180348.576ea06e.mihamina@bbs.mg>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1754173Ab1FSPvf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jun 2011 11:51:35 -0400
+Received: from mailout-de.gmx.net ([213.165.64.23]:44813 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1754151Ab1FSPvd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jun 2011 11:51:33 -0400
+Received: (qmail invoked by alias); 19 Jun 2011 15:51:30 -0000
+Received: from nrbg-4d0765ea.pool.mediaWays.net (EHLO [192.168.178.3]) [77.7.101.234]
+  by mail.gmx.net (mp057) with SMTP; 19 Jun 2011 17:51:30 +0200
+X-Authenticated: #4222805
+X-Provags-ID: V01U2FsdGVkX198Y4JvSbh8l00QbNevg6P1aBI3IIryVJAR9z3PLX
+	9CbVAyPd0uLji6
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.16) Gecko/20110505 Icedove/3.0.11
+X-Enigmail-Version: 1.0.1
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176024>
 
-Mihamina Rakotomandimby <mihamina@bbs.mg> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> I made several commits to a small local program.
-> When I list them with "git log" I see them.
-> 
-> To publish my work, I choosed to sign in a forge (like github, google
-> code,...). I choosed forge.ocamlcore.org
+Hello,
 
-Note that you don't have to choose _one_ place.  With distributed
-version control systems you can interact with many remote repositories
-(though only one would be called "origin" and would be the default
-repository).
+I have just steped into a boarder case, where git merge fails to detect
+a merge conflict:
 
-I for example push both to repo.or.cz and to GitHub.
- 
-> With my account creation, the forge automatically created an empty GIT
-> repository.
-> 
-> I clone it with:
->
->   $ git clone git+ssh://rakotomandimby@forge.ocamlcore.org/gitroot/ocaml-crypt/ocaml-crypt.git
->   Initialized empty Git repository in /tmp/ocaml-crypt/ocaml-crypt/.git/
->   warning: You appear to have cloned an empty repository.
->
-> I am surprised the initialisation is not in /tmp/ocaml-crypt/ocaml-crypt.git/.git/ 
-> as I pulled "ocaml-crypt.git".
+The commit A in the remote branch was the following:
 
-It is Git convention to use 'project/.git' for a working repository,
-which working area (checked out files) in 'project/', while using
-'project.git' for name of _bare_ repository, i.e. without working
-directory.
+diff --git a/LoWPAN.c b/LoWPAN.c
+index 3e929e5..1b768e2 100644 (file)
+- --- a/LoWPAN.c
++++ b/LoWPAN.c
+@@ -431,12 +431,16 @@ int main (int argc, char **argv)
+       }
+       printf("\n");
+ #endif
+- -      // forward into kernel/tap device
+- -      retval=lowpan_writeout(&rx_packet,tap_fd);
+- -      if(retval<0) {
+- -       ERROR_OUTPUT("Failed to forward datagram into tap device: %s",
+- -                    strerror(errno));
+- -       break; // leave the while loop
++      // ensure that we haven't got our own multicast
++      if((rx_packet.source.pan_id != own_802154_addr.pan_id)
++        || (rx_packet.source.short_addr != own_802154_addr.short_addr)) {
++       // forward into kernel/tap device
++       retval=lowpan_writeout(&rx_packet,tap_fd);
++       if(retval<0) {
++         ERROR_OUTPUT("Failed to forward datagram into tap device: %s",
++                      strerror(errno));
++         break; // leave the while loop
++       }
+       }
+     }
+   }
 
-  project/.git  ==  project.git
-  project/          [no workdir]
+The commit B in the local branch was:
+diff --git a/LoWPAN.c b/LoWPAN.c
+index 3e929e5..a7c65e3 100644 (file)
+- --- a/LoWPAN.c
++++ b/LoWPAN.c
+@@ -438,6 +438,8 @@ int main (int argc, char **argv)
+                     strerror(errno));
+        break; // leave the while loop
+       }
++      DEBUG_OUTPUT("Successfully forwarded %d bytes into the tap device",
++                  retval);
+     }
+   }
 
-> Anyway...
-> When add+commit a file into "/tmp/ocaml-crypt/ocaml-crypt/", 
-> I get no errors, but when pushing:
->
->   $ git push
->   No refs in common and none specified; doing nothing.
->   Perhaps you should specify a branch such as 'master'.
->   fatal: The remote end hung up unexpectedly
-> 
-> I don't understand...
+The resulting merge commit AB is:
+diff --cc LoWPAN.c
+index a7c65e3,1b768e2..92ec5f7
+- --- 1/LoWPAN.c
+- --- 2/LoWPAN.c
++++ b/LoWPAN.c
+@@@ -431,15 -431,17 +431,19 @@@ int main (int argc, char **argv
+        }
+        printf("\n");
+  #endif
+- -       // forward into kernel/tap device
+- -       retval=lowpan_writeout(&rx_packet,tap_fd);
+- -       if(retval<0) {
+- -       ERROR_OUTPUT("Failed to forward datagram into tap device: %s",
+- -                    strerror(errno));
+- -       break; // leave the while loop
++       // ensure that we haven't got our own multicast
++       if((rx_packet.source.pan_id != own_802154_addr.pan_id)
++        || (rx_packet.source.short_addr != own_802154_addr.short_addr)) {
++       // forward into kernel/tap device
++       retval=lowpan_writeout(&rx_packet,tap_fd);
++       if(retval<0) {
++         ERROR_OUTPUT("Failed to forward datagram into tap device: %s",
++                      strerror(errno));
++         break; // leave the while loop
++       }
+        }
+ +      DEBUG_OUTPUT("Successfully forwarded %d bytes into the tap device",
+ +                 retval);
+      }
+    }
 
-The default Git behavior is to push *only* matching branches. With
-this workflow you must push a branch explicitly first time. What you
-need to do is to use
+If you just look at the diff output, it is difficult to see the problem.
+But if you look at the corresponding code sections, than you see that
+diff has splitted the conflictiong section into two none conflicting
+sections.
 
-  $ git push --all
+Code A:
 
-to push all branches, or "git push origin HEAD" to push only current
-branch.
+ 434       // ensure that we haven't got our own multicast
+ 435       if((rx_packet.source.pan_id != own_802154_addr.pan_id)
+ 436          || (rx_packet.source.short_addr !=
+own_802154_addr.short_addr)) {
+ 437         // forward into kernel/tap device
+ 438         retval=lowpan_writeout(&rx_packet,tap_fd);
+ 439         if(retval<0) {
+ 440           ERROR_OUTPUT("Failed to forward datagram into tap device:
+%s",
+ 441                        strerror(errno));
+ 442           break; // leave the while loop
+ 443         }
+ 444       }
 
-This behavior is configurable, either via `push.default` config
-variable, or via `remote.origin.push`.
+Code B:
 
-HTH
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+ 434       // forward into kernel/tap device
+ 435       retval=lowpan_writeout(&rx_packet,tap_fd);
+ 436       if(retval<0) {
+ 437         ERROR_OUTPUT("Failed to forward datagram into tap device: %s",
+ 438                      strerror(errno));
+ 439         break; // leave the while loop
+ 440       }
+ 441       DEBUG_OUTPUT("Successfully forwarded %d bytes into the tap
+device",
+ 442                    retval);
+ 443     }
+
+Code AB:
+
+ 434       // ensure that we haven't got our own multicast
+ 435       if((rx_packet.source.pan_id != own_802154_addr.pan_id)
+ 436          || (rx_packet.source.short_addr !=
+own_802154_addr.short_addr)) {
+ 437         // forward into kernel/tap device
+ 438         retval=lowpan_writeout(&rx_packet,tap_fd);
+ 439         if(retval<0) {
+ 440           ERROR_OUTPUT("Failed to forward datagram into tap device:
+%s",
+ 441                        strerror(errno));
+ 442           break; // leave the while loop
+ 443         }
+ 444       }
+ 445       DEBUG_OUTPUT("Successfully forwarded %d bytes into the tap
+device",
+ 446                    retval);
+ 447     }
+
+Obviously git/diff has failed to detect that human intervention is
+required here. One _workaround_ would be, to demand in the coding style,
+that closing braces get unique comments.
+But what would be the solution of this problem?
+
+
+Greetings
+	Juergen
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iD8DBQFN/hr95JgLPmj5988RAvEZAJ0R23PMc5xXfbKPCYnw3s8FGkqBqACgtpgV
+96GejSM+XaPgg9p4XMpuF/k=
+=zjX3
+-----END PGP SIGNATURE-----
