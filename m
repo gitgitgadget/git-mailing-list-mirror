@@ -1,126 +1,213 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH 6/6] RFC - Notes merge: die when asked to merge a
- non-existent ref.
-Date: Mon, 20 Jun 2011 00:03:46 +0200
-Message-ID: <201106200003.46490.johan@herland.net>
-References: <201106151253.57908.johan@herland.net>
- <1308431208-13353-1-git-send-email-ydirson@free.fr>
- <1308431208-13353-7-git-send-email-ydirson@free.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] branch: add optional parameter to -r to specify
+ remote
+Date: Sun, 19 Jun 2011 15:32:55 -0700
+Message-ID: <7vtyble9k8.fsf@alter.siamese.dyndns.org>
+References: <1308511149-10933-1-git-send-email-billiob@gmail.com>
+ <1308511149-10933-2-git-send-email-billiob@gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Yann Dirson <ydirson@free.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 20 00:08:05 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Boris Faure <billiob@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 20 00:33:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYQA0-0008SE-7N
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 00:08:04 +0200
+	id 1QYQYF-0000KW-Ge
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 00:33:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754866Ab1FSWHt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jun 2011 18:07:49 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:59476 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754729Ab1FSWHm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jun 2011 18:07:42 -0400
-Received: from get-mta-scan01.get.basefarm.net ([10.5.16.4])
- by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LN200I2U5GQ0810@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Mon, 20 Jun 2011 00:07:38 +0200 (MEST)
-Received: from get-mta-scan01.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id A5A05179919D_DFE732AB	for <git@vger.kernel.org>; Sun,
- 19 Jun 2011 22:07:38 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan01.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 550EF1796523_DFE7329F	for <git@vger.kernel.org>; Sun,
- 19 Jun 2011 22:07:37 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LN200CIB5GO4R00@get-mta-in03.get.basefarm.net> for
- git@vger.kernel.org; Mon, 20 Jun 2011 00:07:37 +0200 (MEST)
-User-Agent: KMail/1.13.7 (Linux/2.6.39-ARCH; KDE/4.6.3; x86_64; ; )
-In-reply-to: <1308431208-13353-7-git-send-email-ydirson@free.fr>
+	id S1754803Ab1FSWc7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jun 2011 18:32:59 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55448 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754729Ab1FSWc7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jun 2011 18:32:59 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DE26D6740;
+	Sun, 19 Jun 2011 18:35:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rx9FMLb2jTthtuXBebamN91p8VA=; b=RmANxN
+	QMmkTb6oMVUIjK1QpHmaqOKbKKjEKOqrqNnLQkw1jYW/+SeMlpsXhPlXEchuJeJN
+	dN3Zo06Hm3GwuO0rO9E012cYbVXR/jJp2Qn0+i5gWXSdC9lBi43GYjTqJ4oQ3pRs
+	wHTKJ8mKAv+jHpd6UuqxNfV3vOSSmmugJuezM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=w1JKD5xSvukRGjx9CviSY5XNQyVXb2uH
+	z8jUytPy33pFcv1bIAccKXuVgYqWyGotKM7zDp66YnGNuBIPh0CWI2Eu2kuKZq+8
+	RxxBpDcFZSarmJ5cvIxcPXDDTPm5mgoNkNSyZohI5/SQNrR3iTnpzAyoRomZWeGX
+	iyMy1ZbftmE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D746E673F;
+	Sun, 19 Jun 2011 18:35:08 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D5B6A673D; Sun, 19 Jun 2011
+ 18:35:07 -0400 (EDT)
+In-Reply-To: <1308511149-10933-2-git-send-email-billiob@gmail.com> (Boris
+ Faure's message of "Sun, 19 Jun 2011 21:19:09 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 628DD760-9AC4-11E0-AF9A-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176035>
 
-On Saturday 18 June 2011, Yann Dirson wrote:
-> This causes the "merge empty notes ref (z => y)" test in
-> t3308-notes-merge.sh to fail - obviously, it is removing the
-> functionnality that is tested for.
-> 
-> Is there any real use for this ?  It just seems so different from
-> "git merge", which errors out in the similar situation:
-> 
-> $ git merge foo
-> fatal: 'foo' does not point to a commit
+Boris Faure <billiob@gmail.com> writes:
 
-I understand your reasoning, and I don't have a problem with changing this 
-behavior to be in line with "git merge".
+> add '--remote' as long version for '-r'
+> update documentation
+> add tests
 
-> Signed-off-by: Yann Dirson <ydirson@free.fr>
+(style) Sentences begin with a capital letter and ends with a period.
+
+This commit does a lot more than the above, no? It adds an optional remote
+name parameter to the existing "-r" option and limits the output to the
+remote tracking branches of the remote when it is specified.
+
 > ---
->  builtin/notes.c        |    3 +++
->  t/t3308-notes-merge.sh |    6 ------
->  2 files changed, 3 insertions(+), 6 deletions(-)
-> 
-> diff --git a/builtin/notes.c b/builtin/notes.c
-> index 6bff44f..058b14d 100644
-> --- a/builtin/notes.c
-> +++ b/builtin/notes.c
-> @@ -908,6 +908,9 @@ static int merge(int argc, const char **argv, const
-> char *prefix) expand_notes_ref(&remote_ref, 1);
->  	o.remote_ref = remote_ref.buf;
-> 
-> +	if (!peel_to_type(o.remote_ref, 0, NULL, OBJ_COMMIT))
-> +		die("'%s' does not point to a commit", o.remote_ref);
 
-Hmm. I'm not sure requiring the remote ref to always point to a _commit_ is 
-the right solution here. In previous discussions on the notes topic, some 
-people (Peff?) expressed a need/interest for history-less notes refs (i.e. a 
-notes tree where we don't keep track of its development, but only refer to 
-the latest/current version). Obviously, there are two ways to implement 
-history-less notes refs: (a) making the notes ref point to a notes commit 
-without any parents (i.e. each notes commit is a root commit), or (b) making 
-the notes ref point directly at the notes _tree_ object (i.e. no commit 
-object at all).
+Sign-off?
 
-I can't remember off the top of my head whether our earlier discussions on 
-this topic resulted in us excluding support for option (b), but if we 
-didn't, it should be possible to merge notes refs where one or both refs 
-point directly at a tree object, and your above line would break this.
+> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+> index c50f189..242da9c 100644
+> --- a/Documentation/git-branch.txt
+> +++ b/Documentation/git-branch.txt
+> ...
+> @@ -99,8 +99,10 @@ OPTIONS
+>  	default to color output.
+>  	Same as `--color=never`.
+>  
+> --r::
+> -	List or delete (if used with -d) the remote-tracking branches.
+> +-r[=<remote>]::
+> +--remote[=<remote>]::
+> +	List or delete (if used with -d) the remote-tracking branches from
+> +	<remote> if specified.
 
-> [...]
-> 
-> diff --git a/t/t3308-notes-merge.sh b/t/t3308-notes-merge.sh
-> index 24d82b4..2dcc1db 100755
-> --- a/t/t3308-notes-merge.sh
-> +++ b/t/t3308-notes-merge.sh
-> @@ -104,12 +104,6 @@ test_expect_success 'merge notes into empty notes
-> ref (x => y)' ' test "$(git rev-parse refs/notes/x)" = "$(git rev-parse
-> refs/notes/y)" '
-> 
-> -test_expect_success 'merge empty notes ref (z => y)' '
-> -	git notes merge z &&
-> -	# y should not change (still == x)
-> -	test "$(git rev-parse refs/notes/x)" = "$(git rev-parse refs/notes/y)"
-> -'
+It is now unspecified what the command would do when the optional <remote>
+is left unspecified.
 
-Instead of removing the test, please change it into verifying the _new_ 
-expected behavior (that we fail with an appropriate error message when asked 
-to merge a non-existent notes ref).
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index d6ab93b..52dff04 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -17,15 +17,18 @@
+>  #include "revision.h"
+>  
+>  static const char * const builtin_branch_usage[] = {
+> -	"git branch [options] [-r | -a] [--merged | --no-merged]",
+> +	"git branch [options] [-r[=<remote>] | -a] [--merged | --no-merged]",
+>  	"git branch [options] [-l] [-f] <branchname> [<start-point>]",
+> -	"git branch [options] [-r] (-d | -D) <branchname>",
+> +	"git branch [options] [-r[=<remote>]] (-d | -D) <branchname>",
+>  	"git branch [options] (-m | -M) [<oldbranch>] <newbranch>",
+>  	NULL
+>  };
+>  
+>  #define REF_LOCAL_BRANCH    0x01
+>  #define REF_REMOTE_BRANCH   0x02
+> +static int kinds = REF_LOCAL_BRANCH;
 
+This used to be nicely scoped out of global space and got passed around as
+parameter, but now it has become a global? I do not see a good reason for
+this change.
 
-...Johan
+> +static const char *remote = NULL;
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Two issues.
+
+ 1. Presumably you wanted to have this change because you have too many
+    remotes, way more than two, and wanted to filter the output from
+    remotes that you are not interested in. Is it entirely implausible
+    that you might be interested in not just one, but two remotes out of
+    many remotes you have? A single string variable would not suffice for
+    that but you should be able to make this an array of strings.
+
+ 2. The name suck for a global variable (same for the "kinds" that is now
+    global), and caused the patch to become unnecessarily big by renaming
+    concisely named "remote" to ugly "remote_trans" in delete_branches()
+    function. In general, local variables are scoped narrower and readers
+    can rely on the context to tell what the variable is _for_, so it is
+    easy for them to see a variable called "remote" and understand what
+    aspects of "remote" the variable is trying to express. On the other
+    hand, global variables are used in wider context and has to have more
+    descriptive names.  This is about "filtering" set of remote tracking
+    branches we deal with to the subset specified by this variable, so it
+    at least has to have "filter" or "limit" or something to that effect
+    in its name.
+
+> @@ -144,12 +147,12 @@ static int branch_merged(int kind, const char *name,
+>  	return merged;
+>  }
+>  
+> -static int delete_branches(int argc, const char **argv, int force, int kinds)
+> +static int delete_branches(int argc, const char **argv, int force)
+>  {
+>  	struct commit *rev, *head_rev = NULL;
+>  	unsigned char sha1[20];
+>  	char *name = NULL;
+> -	const char *fmt, *remote;
+> +	const char *fmt, *remote_trans;
+
+Unwarranted change caused by a poor choice of the new global variable
+above.
+
+> @@ -610,13 +631,28 @@ static int opt_parse_merge_filter(const struct option *opt, const char *arg, int
+>  	return 0;
+>  }
+>  
+> +static int parse_opt_remote_cb(const struct option *opt, const char *arg,
+> +			       int unset)
+> +{
+> +	kinds = REF_REMOTE_BRANCH;
+> +	if (unset)
+> +		kinds = REF_LOCAL_BRANCH;
+
+What is this "unset" check about? Wouldn't that be an error if the command
+line said "--no-remote"?
+
+And you do not return but proceed to look at "arg", presumably to handle a
+case where the command line said "--no-remote=foobar"?
+
+> +	if (arg) {
+> +		if ( *arg == '=')
+
+(style) Unwanted SP after an open parenthesis.
+
+> +			remote = arg + 1; /* skip '=' */
+
+(style) It is clear enough what this does without the extra comment.
+
+Does this forbid remote names that begin with a "="?  I.e.
+
+	$ git branch -r =temporary
+
+As to the design of the new feature, I see you tried to make it possible
+to perform what
+
+	$ git branch -d -r origin/master
+
+does with
+
+	$ git branch -d --remote=origin master
+
+I do not think it is particularly a good idea. Adding yet another way to
+do the same thing, unless that new way is vastly superiour (e.g. easier to
+use, easier to explain, more efficient to perform, etc.), does not add
+much value to the system.
+
+It would make much more sense to restrict this feature to the "listing"
+side of the branches.  It would be nice if you can do:
+
+	$ git branch -r --match alice --match bob
+
+to show only remote tracking branches under refs/remotes/{alice,bob}
+and also
+
+	$ git branch --match "jk/*"
+
+to show only local topic branches whose names match the given blob.
