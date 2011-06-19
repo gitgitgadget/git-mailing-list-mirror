@@ -1,7 +1,7 @@
 From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH v2 15/20] transport-helper: use the new done feature where possible
-Date: Sun, 19 Jun 2011 17:18:40 +0200
-Message-ID: <1308496725-22329-16-git-send-email-srabbelier@gmail.com>
+Subject: [PATCH v2 17/20] transport-helper: change import semantics
+Date: Sun, 19 Jun 2011 17:18:42 +0200
+Message-ID: <1308496725-22329-18-git-send-email-srabbelier@gmail.com>
 References: <1308496725-22329-1-git-send-email-srabbelier@gmail.com>
 Cc: Sverre Rabbelier <srabbelier@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>,
@@ -9,113 +9,140 @@ To: Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Ramkumar
-X-From: git-owner@vger.kernel.org Sun Jun 19 17:20:30 2011
+X-From: git-owner@vger.kernel.org Sun Jun 19 17:20:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYJnY-00042G-Nw
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Jun 2011 17:20:29 +0200
+	id 1QYJna-00042G-S3
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Jun 2011 17:20:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754452Ab1FSPUI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jun 2011 11:20:08 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:44389 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754358Ab1FSPUF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jun 2011 11:20:05 -0400
-Received: by mail-ew0-f46.google.com with SMTP id 4so981213ewy.19
-        for <git@vger.kernel.org>; Sun, 19 Jun 2011 08:20:04 -0700 (PDT)
+	id S1754486Ab1FSPUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jun 2011 11:20:19 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:53471 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754358Ab1FSPUK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jun 2011 11:20:10 -0400
+Received: by eyx24 with SMTP id 24so294471eyx.19
+        for <git@vger.kernel.org>; Sun, 19 Jun 2011 08:20:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=Ka8CBrodYdfOFKL5/4Bg0wSwvWa+lQ0JIeJuynxq9RU=;
-        b=aPlsW8wUPQ01dYJhCqtCi0EDxChKUu6aLHi+eD3Pj7bn6dMuII2kvOREv9iKC21r3S
-         nWpjIFTkkgvxjh0he8obIIqewoRBnn7qQZgThgJB2/sTecMVEYwdDxucRbiXv/q2vQoJ
-         N3VV0GMuoruLSkse9TDZ8ipUt3EtodyWYuDjI=
+        bh=6oKAN2AgfFEpoCUDK+jCadfCK6HCGnEroyGc6an0Sh8=;
+        b=qR6gXZCeaOSPmC4wezc9RCB4FQ47kIiIINgAFkspElkF7oxXR39SVTeKSym+xlA76a
+         QeM7sD61H9PHJA0n+eDsFwH0JdEaKQm3gOfyU0uQ/d3Pp8J2NlX4jhLGdRjKo5HPGTc4
+         a7gygXPUCWQPAFROMkOxKwWu6LnHxTr1yVRLo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=oeLakNy0WGv6nNR2wNfVmobpCtx1Us9SYPyDtV8wSkp411efLjkqy4kS2MXXcDsTp7
-         ASVy/8QMbN0NC3X8/3PjxDXtX8/NPhSDAKPCL/TMvrWT0UrizHIxc2aq40hnRJGOV9v8
-         tqcHGek7TpZ1ufIKo/mGrFRziN+6vsc1tm250=
-Received: by 10.213.9.134 with SMTP id l6mr1700803ebl.20.1308496804847;
-        Sun, 19 Jun 2011 08:20:04 -0700 (PDT)
+        b=jytj8L4mZtSD7MnfcCIQfS+JajiV1+HIhUERv9bW/3Z7J8taPvw1BDoYihn70DqbsX
+         lMo3HLlx68qw7X/hH4p/CWLeEfqBEHCqEXXn3D8SuQ9XOe3WB1Bh3swu5VZfwr8kBuSh
+         BgwV/njP8RCS5Sty/xW43NZC5e2pmf6NOLPVY=
+Received: by 10.213.103.205 with SMTP id l13mr410744ebo.101.1308496808939;
+        Sun, 19 Jun 2011 08:20:08 -0700 (PDT)
 Received: from localhost.localdomain ([188.142.63.148])
-        by mx.google.com with ESMTPS id y6sm3824429eem.18.2011.06.19.08.20.02
+        by mx.google.com with ESMTPS id y6sm3824429eem.18.2011.06.19.08.20.07
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 19 Jun 2011 08:20:03 -0700 (PDT)
+        Sun, 19 Jun 2011 08:20:07 -0700 (PDT)
 X-Mailer: git-send-email 1.7.5.1.292.g728120
 In-Reply-To: <1308496725-22329-1-git-send-email-srabbelier@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176017>
 
-In other words, use fast-export --use-done-feature to add a 'done'
-command at the end of streams passed to remote helpers' "import"
-commands, and teach the remote helpers implementing "export" to use
-the 'done' command in turn when producing their streams.
+Currently the helper must somehow guess how many import statements to
+read before it starts outputting its fast-export stream. This is
+because the remote helper infrastructure runs fast-import only once,
+so the helper is forced to output one stream for all import commands
+it will receive. The only reason this worked in the past was because
+only one ref was imported at a time.
+
+Change the semantics of the import statement such that it matches
+that of the list statement. That is, 'import\n' is followed by a list
+of refs that should be exported, followed by '\n'.
 
 Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
 ---
 
   Unchanged.
 
- git-remote-testgit.py |    2 ++
- transport-helper.c    |    8 ++------
- 2 files changed, 4 insertions(+), 6 deletions(-)
+ git-remote-testgit.py     |   14 +++++++++++---
+ t/t5800-remote-helpers.sh |    2 +-
+ transport-helper.c        |    7 ++++++-
+ 3 files changed, 18 insertions(+), 5 deletions(-)
 
 diff --git a/git-remote-testgit.py b/git-remote-testgit.py
-index 9658355..a8e47d9 100644
+index 854e27e..4939853 100644
 --- a/git-remote-testgit.py
 +++ b/git-remote-testgit.py
-@@ -124,6 +124,8 @@ def do_import(repo, args):
-     repo = update_local_repo(repo)
-     repo.exporter.export_repo(repo.gitdir, args)
+@@ -115,14 +115,22 @@ def do_import(repo, args):
+     """Exports a fast-import stream from testgit for git to import.
+     """
  
-+    print "done"
+-    if len(args) != 1:
+-        die("Import needs exactly one ref")
++    if args:
++        die("Import expects its ref seperately")
+ 
+     if not repo.gitdir:
+         die("Need gitdir to import")
+ 
++    refs = []
 +
++    while True:
++        line = sys.stdin.readline()
++        if line == '\n':
++            break
++        refs.append(line.strip())
++
+     repo = update_local_repo(repo)
+-    repo.exporter.export_repo(repo.gitdir, args)
++    repo.exporter.export_repo(repo.gitdir, refs)
  
- def do_export(repo, args):
-     """Imports a fast-import stream from git to testgit.
+     print "done"
+ 
+diff --git a/t/t5800-remote-helpers.sh b/t/t5800-remote-helpers.sh
+index 12f471c..1c62001 100755
+--- a/t/t5800-remote-helpers.sh
++++ b/t/t5800-remote-helpers.sh
+@@ -98,7 +98,7 @@ test_expect_success 'fetch new branch' '
+ 	compare_refs public HEAD localclone FETCH_HEAD
+ '
+ 
+-test_expect_failure 'fetch multiple branches' '
++test_expect_success 'fetch multiple branches' '
+ 	(cd localclone &&
+ 	 git fetch
+ 	) &&
 diff --git a/transport-helper.c b/transport-helper.c
-index 7f3c6c6..b0361c2 100644
+index bb1b97f..c089928 100644
 --- a/transport-helper.c
 +++ b/transport-helper.c
-@@ -375,8 +375,9 @@ static int get_exporter(struct transport *transport,
- 	/* we need to duplicate helper->in because we want to use it after
- 	 * fastexport is done with it. */
- 	fastexport->out = dup(helper->in);
--	fastexport->argv = xcalloc(4 + revlist_args->nr, sizeof(*fastexport->argv));
-+	fastexport->argv = xcalloc(5 + revlist_args->nr, sizeof(*fastexport->argv));
- 	fastexport->argv[argc++] = "fast-export";
-+	fastexport->argv[argc++] = "--use-done-feature";
- 	if (export_marks)
- 		fastexport->argv[argc++] = export_marks;
- 	if (import_marks)
-@@ -412,11 +413,8 @@ static int fetch_with_import(struct transport *transport,
+@@ -404,15 +404,20 @@ static int fetch_with_import(struct transport *transport,
+ 	if (get_importer(transport, &fastimport))
+ 		die("Couldn't run fast-import");
+ 
++	write_constant(data->helper->in, "import\n");
++
+ 	for (i = 0; i < nr_heads; i++) {
+ 		posn = to_fetch[i];
+ 		if (posn->status & REF_STATUS_UPTODATE)
+ 			continue;
+ 
+-		strbuf_addf(&buf, "import %s\n", posn->name);
++		strbuf_addf(&buf, "%s\n", posn->name);
  		sendline(data, &buf);
  		strbuf_reset(&buf);
  	}
--	if (disconnect_helper(transport))
--		die("Error while disconnecting helper");
++
++	write_constant(data->helper->in, "\n");
++
  	if (finish_command(&fastimport))
  		die("Error while running fast-import");
--
  	free(fastimport.argv);
- 	fastimport.argv = NULL;
- 
-@@ -762,8 +760,6 @@ static int push_refs_with_export(struct transport *transport,
- 	data->no_disconnect_req = 1;
- 	if (finish_command(&exporter))
- 		die("Error while running fast-export");
--	if (disconnect_helper(transport))
--		die("Error while disconnecting helper");
- 	return 0;
- }
- 
 -- 
 1.7.5.1.292.g728120
