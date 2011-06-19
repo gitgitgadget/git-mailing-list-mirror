@@ -1,7 +1,7 @@
 From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH v2 13/20] transport-helper: factor out push_update_refs_status
-Date: Sun, 19 Jun 2011 17:18:38 +0200
-Message-ID: <1308496725-22329-14-git-send-email-srabbelier@gmail.com>
+Subject: [PATCH v2 14/20] transport-helper: check status code of finish_command
+Date: Sun, 19 Jun 2011 17:18:39 +0200
+Message-ID: <1308496725-22329-15-git-send-email-srabbelier@gmail.com>
 References: <1308496725-22329-1-git-send-email-srabbelier@gmail.com>
 Cc: Sverre Rabbelier <srabbelier@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>,
@@ -9,234 +9,131 @@ To: Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Ramkumar
-X-From: git-owner@vger.kernel.org Sun Jun 19 17:20:30 2011
+X-From: git-owner@vger.kernel.org Sun Jun 19 17:20:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYJnY-00042G-79
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Jun 2011 17:20:28 +0200
+	id 1QYJnb-00042G-CO
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Jun 2011 17:20:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754431Ab1FSPUE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jun 2011 11:20:04 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:43954 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754358Ab1FSPUB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jun 2011 11:20:01 -0400
-Received: by mail-ew0-f46.google.com with SMTP id 4so981189ewy.19
-        for <git@vger.kernel.org>; Sun, 19 Jun 2011 08:20:00 -0700 (PDT)
+	id S1754315Ab1FSPU2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jun 2011 11:20:28 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:52873 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754428Ab1FSPUD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jun 2011 11:20:03 -0400
+Received: by mail-ey0-f174.google.com with SMTP id 24so294388eyx.19
+        for <git@vger.kernel.org>; Sun, 19 Jun 2011 08:20:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=pRCyiLV+CResUwsAwodS0FtOm7XeRdNG0q2IZx4kiCM=;
-        b=YfSeYdCWzYNOO9/VI5NzWmq/znGT1UJb4Y1isiJLZkc6oLkpUxk9destVpGeMBhAaT
-         qqTVb6Bpdi3yxq3g63YUUHnswv3te4MypxoOWmtWftsmLb2zKs9XWJJDAnz38nlAJeeM
-         Ije7Uf+kxK83RPXZJrdGZdLwL0mtg//9/kfbQ=
+        bh=TgLABhYiqIVqUKKtGHvhsSFGY7c9spZxPXOLAntRdeI=;
+        b=CwtDaRJo6j6ELrlgR2fxpsyc40HAMbnjwktW47M0SEVBZZSAGBQy411eQkNLP11nsr
+         vLjPFduh99SwQ/f7gysQh7TJwR6lv5V9NB5U4Te8d3U4OVCZVuO/+/n74PkkbeJelo56
+         SioygZlM9QnoWRVdsJH9Bo4GQFwuaaxmRJrMg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=q7bUeQI1PXMmurGVFh7ZNU3uf+kq9M6X/Zm3e5brqUetzG9bTX8dPh2E1mMbtJltuE
-         RlPitIng9laRXHWyM6s7xGafbzp+qGzGgxXh/lc9wsr+AhFFjnGHdI5va+EbE2M/23GA
-         VTObA4crfVKV0VW7x3hjbFEXOecfOFKJ56ulk=
-Received: by 10.213.106.204 with SMTP id y12mr1604029ebo.64.1308496800221;
-        Sun, 19 Jun 2011 08:20:00 -0700 (PDT)
+        b=oOMZuxgl/zf+9RKD0ipK0fVnJHUsabuWpo4U7y1W0huioLYQXSweOkUj3ayHQRJpLh
+         l6JHd+x2w3xXkYTc6/hzIR4DTgP2fuKo5RQ8e9gbYKJxxOGe4SEU/+x6En+ixcG9VgAp
+         QLWsMDlNKXCdNMmf3xyp9mfa10MXt4EFypIJA=
+Received: by 10.14.3.150 with SMTP id 22mr1634273eeh.196.1308496802613;
+        Sun, 19 Jun 2011 08:20:02 -0700 (PDT)
 Received: from localhost.localdomain ([188.142.63.148])
-        by mx.google.com with ESMTPS id y6sm3824429eem.18.2011.06.19.08.19.54
+        by mx.google.com with ESMTPS id y6sm3824429eem.18.2011.06.19.08.20.00
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 19 Jun 2011 08:19:58 -0700 (PDT)
+        Sun, 19 Jun 2011 08:20:01 -0700 (PDT)
 X-Mailer: git-send-email 1.7.5.1.292.g728120
 In-Reply-To: <1308496725-22329-1-git-send-email-srabbelier@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176019>
 
-The update ref status part of push is useful for the export command
-as well, factor it out into it's own function.
-
-Also factor out push_update_ref_status to avoid a long loop without
-an explicit condition with a non-trivial body.
+Previously the status code of all helpers were ignored, allowing
+errors that occur to go unnoticed if the error text output by the
+helper is not noticed.
 
 Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
 ---
 
   Unchanged.
 
- transport-helper.c |  153 ++++++++++++++++++++++++++++-----------------------
- 1 files changed, 84 insertions(+), 69 deletions(-)
+ transport-helper.c |   23 +++++++++++++++--------
+ 1 files changed, 15 insertions(+), 8 deletions(-)
 
 diff --git a/transport-helper.c b/transport-helper.c
-index 34d18aa..ecb44f6 100644
+index ecb44f6..7f3c6c6 100644
 --- a/transport-helper.c
 +++ b/transport-helper.c
-@@ -554,6 +554,88 @@ static int fetch(struct transport *transport,
- 	return -1;
+@@ -204,6 +204,7 @@ static int disconnect_helper(struct transport *transport)
+ {
+ 	struct helper_data *data = transport->data;
+ 	struct strbuf buf = STRBUF_INIT;
++	int res = 0;
+ 
+ 	if (data->helper) {
+ 		if (debug)
+@@ -215,13 +216,13 @@ static int disconnect_helper(struct transport *transport)
+ 		close(data->helper->in);
+ 		close(data->helper->out);
+ 		fclose(data->out);
+-		finish_command(data->helper);
++		res = finish_command(data->helper);
+ 		free((char *)data->helper->argv[0]);
+ 		free(data->helper->argv);
+ 		free(data->helper);
+ 		data->helper = NULL;
+ 	}
+-	return 0;
++	return res;
  }
  
-+static void push_update_ref_status(struct strbuf *buf,
-+				   struct ref **ref,
-+				   struct ref *remote_refs)
-+{
-+	char *refname, *msg;
-+	int status;
-+
-+	if (!prefixcmp(buf->buf, "ok ")) {
-+		status = REF_STATUS_OK;
-+		refname = buf->buf + 3;
-+	} else if (!prefixcmp(buf->buf, "error ")) {
-+		status = REF_STATUS_REMOTE_REJECT;
-+		refname = buf->buf + 6;
-+	} else
-+		die("expected ok/error, helper said '%s'\n", buf->buf);
-+
-+	msg = strchr(refname, ' ');
-+	if (msg) {
-+		struct strbuf msg_buf = STRBUF_INIT;
-+		const char *end;
-+
-+		*msg++ = '\0';
-+		if (!unquote_c_style(&msg_buf, msg, &end))
-+			msg = strbuf_detach(&msg_buf, NULL);
-+		else
-+			msg = xstrdup(msg);
-+		strbuf_release(&msg_buf);
-+
-+		if (!strcmp(msg, "no match")) {
-+			status = REF_STATUS_NONE;
-+			free(msg);
-+			msg = NULL;
-+		}
-+		else if (!strcmp(msg, "up to date")) {
-+			status = REF_STATUS_UPTODATE;
-+			free(msg);
-+			msg = NULL;
-+		}
-+		else if (!strcmp(msg, "non-fast forward")) {
-+			status = REF_STATUS_REJECT_NONFASTFORWARD;
-+			free(msg);
-+			msg = NULL;
-+		}
-+	}
-+
-+	if (*ref)
-+		*ref = find_ref_by_name(*ref, refname);
-+	if (!*ref)
-+		*ref = find_ref_by_name(remote_refs, refname);
-+	if (!*ref) {
-+		warning("helper reported unexpected status of %s", refname);
-+		return;
-+	}
-+
-+	if ((*ref)->status != REF_STATUS_NONE) {
-+		/*
-+		 * Earlier, the ref was marked not to be pushed, so ignore the ref
-+		 * status reported by the remote helper if the latter is 'no match'.
-+		 */
-+		if (status == REF_STATUS_NONE)
-+			return;
-+	}
-+
-+	(*ref)->status = status;
-+	(*ref)->remote_status = msg;
-+}
-+
-+static void push_update_refs_status(struct helper_data *data,
-+				    struct ref *remote_refs)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	struct ref *ref = remote_refs;
-+	for (;;) {
-+		recvline(data, &buf);
-+		if (!buf.len)
-+			break;
-+
-+		push_update_ref_status(&buf, &ref, remote_refs);
-+	}
-+	strbuf_release(&buf);
-+}
-+
- static int push_refs_with_push(struct transport *transport,
- 		struct ref *remote_refs, int flags)
- {
-@@ -608,76 +690,9 @@ static int push_refs_with_push(struct transport *transport,
+ static const char *unsupported_options[] = {
+@@ -299,12 +300,13 @@ static void standard_options(struct transport *t)
  
- 	strbuf_addch(&buf, '\n');
- 	sendline(data, &buf);
--
--	ref = remote_refs;
--	while (1) {
--		char *refname, *msg;
--		int status;
--
--		recvline(data, &buf);
--		if (!buf.len)
--			break;
--
--		if (!prefixcmp(buf.buf, "ok ")) {
--			status = REF_STATUS_OK;
--			refname = buf.buf + 3;
--		} else if (!prefixcmp(buf.buf, "error ")) {
--			status = REF_STATUS_REMOTE_REJECT;
--			refname = buf.buf + 6;
--		} else
--			die("expected ok/error, helper said '%s'\n", buf.buf);
--
--		msg = strchr(refname, ' ');
--		if (msg) {
--			struct strbuf msg_buf = STRBUF_INIT;
--			const char *end;
--
--			*msg++ = '\0';
--			if (!unquote_c_style(&msg_buf, msg, &end))
--				msg = strbuf_detach(&msg_buf, NULL);
--			else
--				msg = xstrdup(msg);
--			strbuf_release(&msg_buf);
--
--			if (!strcmp(msg, "no match")) {
--				status = REF_STATUS_NONE;
--				free(msg);
--				msg = NULL;
--			}
--			else if (!strcmp(msg, "up to date")) {
--				status = REF_STATUS_UPTODATE;
--				free(msg);
--				msg = NULL;
--			}
--			else if (!strcmp(msg, "non-fast forward")) {
--				status = REF_STATUS_REJECT_NONFASTFORWARD;
--				free(msg);
--				msg = NULL;
--			}
--		}
--
--		if (ref)
--			ref = find_ref_by_name(ref, refname);
--		if (!ref)
--			ref = find_ref_by_name(remote_refs, refname);
--		if (!ref) {
--			warning("helper reported unexpected status of %s", refname);
--			continue;
--		}
--
--		if (ref->status != REF_STATUS_NONE) {
--			/*
--			 * Earlier, the ref was marked not to be pushed, so ignore the ref
--			 * status reported by the remote helper if the latter is 'no match'.
--			 */
--			if (status == REF_STATUS_NONE)
--				continue;
--		}
--
--		ref->status = status;
--		ref->remote_status = msg;
--	}
- 	strbuf_release(&buf);
+ static int release_helper(struct transport *transport)
+ {
++	int res = 0;
+ 	struct helper_data *data = transport->data;
+ 	free_refspec(data->refspec_nr, data->refspecs);
+ 	data->refspecs = NULL;
+-	disconnect_helper(transport);
++	res = disconnect_helper(transport);
+ 	free(transport->data);
+-	return 0;
++	return res;
+ }
+ 
+ static int fetch_with_fetch(struct transport *transport,
+@@ -410,8 +412,11 @@ static int fetch_with_import(struct transport *transport,
+ 		sendline(data, &buf);
+ 		strbuf_reset(&buf);
+ 	}
+-	disconnect_helper(transport);
+-	finish_command(&fastimport);
++	if (disconnect_helper(transport))
++		die("Error while disconnecting helper");
++	if (finish_command(&fastimport))
++		die("Error while running fast-import");
 +
-+	push_update_refs_status(data, remote_refs);
+ 	free(fastimport.argv);
+ 	fastimport.argv = NULL;
+ 
+@@ -755,8 +760,10 @@ static int push_refs_with_export(struct transport *transport,
+ 		die("Couldn't run fast-export");
+ 
+ 	data->no_disconnect_req = 1;
+-	finish_command(&exporter);
+-	disconnect_helper(transport);
++	if (finish_command(&exporter))
++		die("Error while running fast-export");
++	if (disconnect_helper(transport))
++		die("Error while disconnecting helper");
  	return 0;
  }
  
