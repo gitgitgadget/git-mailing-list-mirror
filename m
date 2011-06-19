@@ -1,92 +1,118 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: [PATCH 1/3] help.c: Fix detection of custom merge strategy on
- cygwin
-Date: Sat, 18 Jun 2011 18:46:16 -0400
-Message-ID: <4DFD2AB8.2050907@gmail.com>
-References: <4DFA65F8.5010806@ramsay1.demon.co.uk> <7v1uyth0t9.fsf@alter.siamese.dyndns.org> <4DFCD8E1.3060102@ramsay1.demon.co.uk>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Undo last commit?
+Date: Sat, 18 Jun 2011 19:37:18 -0500
+Message-ID: <20110619003718.GA5628@elie>
+References: <BANLkTinWujKYvx_fh2iBDOdMbywqzfgwUA@mail.gmail.com>
+ <m31uyrutx7.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Sun Jun 19 00:46:26 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Mike <xandrani@gmail.com>, git@vger.kernel.org,
+	Ben Walton <bwalton@artsci.utoronto.ca>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 19 02:41:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QY4HZ-0003Xp-PN
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Jun 2011 00:46:26 +0200
+	id 1QY64Z-0005rR-Ag
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Jun 2011 02:41:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753234Ab1FRWqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Jun 2011 18:46:20 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:50566 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753166Ab1FRWqT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Jun 2011 18:46:19 -0400
-Received: by qwk3 with SMTP id 3so372744qwk.19
-        for <git@vger.kernel.org>; Sat, 18 Jun 2011 15:46:18 -0700 (PDT)
+	id S1751156Ab1FSAh2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Jun 2011 20:37:28 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:62829 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750918Ab1FSAh1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Jun 2011 20:37:27 -0400
+Received: by iwn6 with SMTP id 6so323730iwn.19
+        for <git@vger.kernel.org>; Sat, 18 Jun 2011 17:37:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:date:from:user-agent:mime-version
-         :newsgroups:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=Ymb28RxQDrfkiv/ugQe3RA+Sn1OlRrrM5rkTppLTn1s=;
-        b=UMLkWZAnaZlgbIhBxaDD+fDdI/aXSXaMB6TEIS1vLsxXBVQWxC87DCJA65wZWTkgsQ
-         tCz4n8b7I+/8RaVSykIrT/KiXC48aibIvO5dqxlA+l2a5bYCXgqNI/vWZAxjuFvEMa37
-         PWoqgJC03l97+EFRXLH/PGr4MAHWERLwYY55o=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=wNt/ThhxGPPyly7CwPtwrhCPoMiIjJYN/wZ6MpdxjUY=;
+        b=XNzL9JWu7Ax0JFpl0fdvlPVPacpmG4IKCFBdSdfizVFVE7SZMQMRnvtXqCUuHOcT3i
+         XYJuKCecZEC760jA6qfOEcftVCPfj8k67hG5fqIPlD3nx+Rf+XM6GcPZdUZjC9oBHwd9
+         C/HRYxrdDupyxwZll70p04aPRTzryUkhzJJAQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        b=Y0KgYif28/84bqGQ6JjnjQvR0aoVzhxPqZ8eQ5MFgV7z2/yENUxP174tCyH4532zG2
-         fria5hwFDibakvD8bkDoaWnfIDeET6AmgUIImkVvOzOuU5rPM61WLrEIToOi1usyatSO
-         XaMPPwYBTfuVTmaynIM+E0czuEq9RcFtVWrjA=
-Received: by 10.224.104.141 with SMTP id p13mr2982433qao.128.1308437178522;
-        Sat, 18 Jun 2011 15:46:18 -0700 (PDT)
-Received: from mark-laptop.lan (pool-96-240-137-121.washdc.fios.verizon.net [96.240.137.121])
-        by mx.google.com with ESMTPS id u15sm2966043qcq.24.2011.06.18.15.46.16
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 18 Jun 2011 15:46:17 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Lightning/1.0b2 Thunderbird/3.1.10
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <4DFCD8E1.3060102@ramsay1.demon.co.uk>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=hIsg+K/ocaGmcFWyqkt7JM+iRGb4jci8fi+g3RiDca/MrAM7ZD0wJ4OmVI+M9EGPqo
+         r0ezjiccHiYd0FHO7SPBnsg3EPKmhQQQtgt/7JJLXcTk8dDOmlwAD3ZXKNCQiOlz7fod
+         rUOrZjfOWIpBVkRHez/09qNITjoYJpM+1/018=
+Received: by 10.231.120.68 with SMTP id c4mr1603220ibr.152.1308443846935;
+        Sat, 18 Jun 2011 17:37:26 -0700 (PDT)
+Received: from elie (adsl-69-209-65-244.dsl.chcgil.ameritech.net [69.209.65.244])
+        by mx.google.com with ESMTPS id gb8sm2299254ibb.26.2011.06.18.17.37.24
+        (version=SSLv3 cipher=OTHER);
+        Sat, 18 Jun 2011 17:37:25 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <m31uyrutx7.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175994>
 
-On 06/18/2011 12:57 PM, Ramsay Jones wrote:
->
-> Anyway, if you don't mind executing the "WIN32 code block" unnecessarily
-> on cygwin (I don't think it would be too expensive) then we could simply
-> reduce the patch to:
->
-> -#ifdef WIN32
-> +#if defined(WIN32) || defined(__CYGWIN__)
->   {	/* cannot trust the executable bit, peek into the file instead */
->
-> (I've simply typed the above in my MUA, so not tested, obviously!)
->
-> This is exactly what Johannes proposed last year. :)
->
-> ATB,
-> Ramsay Jones
->
+Hi,
 
-Please, no. Cygwin's git is already slow enough, and adding yet another 
-peek into a file *after* cygwin already did that is just making it worse.
+Jakub Narebski wrote:
+> Mike <xandrani@gmail.com> writes:
 
-(Muttering to self: Cygwin's goal is to replicate Linux / Posix behavior 
-under Windows, why did git ever adopt code to make cygwin more like 
-Windows rather than just treating cygwin as another Posix'y environment? 
-Those who want more speed really should just be using the native win32 
-port and deal with the lack of file modes, crlf issues, etc.)
+>> % git reset --hard HEAD~1
+>
+> Errr... here you screwed up.  This reset state of you working area to
+> the state at last commit, removing all your changes to tracked files.
 
-Mark
+Or rather, here we screwed up.  Jakub and others gave some useful
+advice about how to recover, so let's consider how the UI or
+documentation could be improved to prevent it from happening again.
+
+* In this example if I understand correctly then the index contained
+  some useful information, perhaps about a larger commit intended for
+  later.  To preserve that, you could have used
+
+	git reset --soft HEAD~1
+
+  which would _just_ undo the effect of "git commit", leaving the index
+  and worktree alone.
+
+* Another situation that comes up from time to time is making a change
+  that just turned out to be a bad idea.  After commiting it, you might
+  want to discard the erroneous change, like so:
+
+	git reset --keep HEAD~1
+
+  The "--keep" option uses some safeguards to make sure that only the
+  committed change gets discarded, instead of clobbering local changes
+  at the same time.
+
+* In the early days of git, the "--keep" option did not exist.  So a lot
+  of old documentation recommends to do
+
+	git reset --hard HEAD~1
+
+  which is the same if you don't have any local changes.
+
+It would be useful to fix such documentation by adding a few words
+about local changes.  Recently Duy wrote a patch to improve "reset -h"
+output in that vein, but discussion drifted off:
+
+ http://thread.gmane.org/gmane.comp.version-control.git/170266
+
+I also sent a couple of documentation patches and then dropped the
+ball:
+
+ http://thread.gmane.org/gmane.comp.version-control.git/165358
+ http://thread.gmane.org/gmane.comp.version-control.git/160319
+
+If someone wants to pick any of these up and run with it, I wouldn't
+mind (hey, I'd be happy).
+
+Thanks for a useful example.
+Jonathan
