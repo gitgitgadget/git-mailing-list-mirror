@@ -1,93 +1,101 @@
 From: Andi Kleen <andi@firstfloor.org>
-Subject: [PATCH 1/3] Add option to disable NORETURN
-Date: Sat, 18 Jun 2011 18:07:03 -0700
-Message-ID: <1308445625-30667-1-git-send-email-andi@firstfloor.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Andi Kleen <ak@linux.intel.com>
+Subject: [PATCH 3/3] Add profile feedback build to git v2
+Date: Sat, 18 Jun 2011 18:07:05 -0700
+Message-ID: <1308445625-30667-3-git-send-email-andi@firstfloor.org>
+References: <1308445625-30667-1-git-send-email-andi@firstfloor.org>
+Cc: Andi Kleen <ak@linux.intel.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 19 03:08:42 2011
+X-From: git-owner@vger.kernel.org Sun Jun 19 03:08:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QY6VF-0003Wp-LZ
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Jun 2011 03:08:41 +0200
+	id 1QY6VG-0003Wp-5e
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Jun 2011 03:08:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751552Ab1FSBIe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Jun 2011 21:08:34 -0400
-Received: from mga01.intel.com ([192.55.52.88]:52176 "EHLO mga01.intel.com"
+	id S1751711Ab1FSBIf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Jun 2011 21:08:35 -0400
+Received: from mga11.intel.com ([192.55.52.93]:49219 "EHLO mga11.intel.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751156Ab1FSBId (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751222Ab1FSBId (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 18 Jun 2011 21:08:33 -0400
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga101.fm.intel.com with ESMTP; 18 Jun 2011 18:08:33 -0700
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga102.fm.intel.com with ESMTP; 18 Jun 2011 18:08:33 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="4.65,387,1304319600"; 
-   d="scan'208";a="17899094"
+   d="scan'208";a="19934778"
 Received: from tassilo.jf.intel.com ([10.7.201.108])
-  by fmsmga002.fm.intel.com with ESMTP; 18 Jun 2011 18:08:32 -0700
+  by fmsmga001.fm.intel.com with ESMTP; 18 Jun 2011 18:08:32 -0700
 Received: by tassilo.jf.intel.com (Postfix, from userid 501)
-	id 2A246241C46; Sat, 18 Jun 2011 18:07:08 -0700 (PDT)
+	id 30BA4241C48; Sat, 18 Jun 2011 18:07:08 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4.4
+In-Reply-To: <1308445625-30667-1-git-send-email-andi@firstfloor.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175996>
 
-From: Junio C Hamano <gitster@pobox.com>
+From: Andi Kleen <ak@linux.intel.com>
 
-Due to a bug in gcc 4.6+ it can crash when doing profile feedback
-with a noreturn function pointer
+Add a gcc profile feedback build option "profile-all" to the
+main Makefile. It simply runs the test suite to generate feedback
+data and the recompiles the main executables with that. The basic
+structure is similar to the existing gcov code.
 
-(http://gcc.gnu.org/bugzilla/show_bug.cgi?id=49299)
+gcc is often able to generate better code with profile feedback
+data. The training load also doesn't need to be too similar
+to the actual load, it still gives benefits.
 
-This adds a Makefile variable to disable noreturns.
+The test suite run is unfortunately quite long. It would
+be good to find a suitable subset that runs faster and still
+gives reasonable feedback.
 
-[Patch by Junio, description by Andi Kleen]
+For now the test suite runs single threaded (I had some
+trouble running the test suite with -jX)
 
+I tested it with git gc and git blame kernel/sched.c on a Linux
+kernel tree. For gc I get about 2.7% improvement in wall clock
+time by using the feedback build, for blame about 2.4%.
+That's not gigantic, but not shabby either for a very small patch.
+
+If anyone has any favourite CPU intensive git benchmarks feel
+free to try them too.
+
+I hope distributors will switch to use a feedback build in their
+packages.
+
+v2: Set NO_NORETURN variable in build
 Signed-off-by: Andi Kleen <ak@linux.intel.com>
 ---
- Makefile          |    6 ++++++
- git-compat-util.h |    2 +-
- 2 files changed, 7 insertions(+), 1 deletions(-)
+ Makefile |   17 +++++++++++++++++
+ 1 files changed, 17 insertions(+), 0 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index e40ac0c..03b4499 100644
+index 03b4499..d00718f 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -153,6 +153,9 @@ all::
- # that tells runtime paths to dynamic libraries;
- # "-Wl,-rpath=/path/lib" is used instead.
- #
-+# Define NO_NORETURN if using buggy versions of gcc 4.6+ and profile feedback,
-+# as the compiler can crash (http://gcc.gnu.org/bugzilla/show_bug.cgi?id=49299)
+@@ -2492,3 +2492,20 @@ cover_db: coverage-report
+ 
+ cover_db_html: cover_db
+ 	cover -report html -outputdir cover_db_html cover_db
++
++### profile feedback build
 +#
- # Define USE_NSEC below if you want git to care about sub-second file mtimes
- # and ctimes. Note that you need recent glibc (at least 2.2.4) for this, and
- # it will BREAK YOUR LOCAL DIFFS! show-diff and anything using it will likely
-@@ -1374,6 +1377,9 @@ endif
- ifdef USE_ST_TIMESPEC
- 	BASIC_CFLAGS += -DUSE_ST_TIMESPEC
- endif
-+ifdef NO_NORETURN
-+	BASIC_CFLAGS += -DNO_NORETURN
-+endif
- ifdef NO_NSEC
- 	BASIC_CFLAGS += -DNO_NSEC
- endif
-diff --git a/git-compat-util.h b/git-compat-util.h
-index e0bb81e..9925cf0 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -218,7 +218,7 @@ extern char *gitbasename(char *);
- #if __HP_cc >= 61000
- #define NORETURN __attribute__((noreturn))
- #define NORETURN_PTR
--#elif defined(__GNUC__)
-+#elif defined(__GNUC__) && !defined(NO_NORETURN)
- #define NORETURN __attribute__((__noreturn__))
- #define NORETURN_PTR __attribute__((__noreturn__))
- #elif defined(_MSC_VER)
++.PHONY: profile-all profile-clean
++
++PROFILE_GEN_CFLAGS := $(CFLAGS) -fprofile-generate -DNO_NORETURN=1
++PROFILE_USE_CFLAGS := $(CFLAGS) -fprofile-use -fprofile-correction -DNO_NORETURN=1
++
++profile-clean:
++	$(RM) $(addsuffix *.gcda,$(object_dirs))
++	$(RM) $(addsuffix *.gcno,$(object_dirs))
++
++profile-all: profile-clean
++	$(MAKE) CFLAGS="$(PROFILE_GEN_CFLAGS)" all
++	$(MAKE) CFLAGS="$(PROFILE_GEN_CFLAGS)" -j1 test
++	$(MAKE) CFLAGS="$(PROFILE_USE_CFLAGS)" all
++	
 -- 
 1.7.4.4
