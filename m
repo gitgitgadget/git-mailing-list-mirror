@@ -1,99 +1,55 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC] branch: add optional parameter to -r to specify
- remote
-Date: Mon, 20 Jun 2011 09:09:45 -0400
-Message-ID: <20110620130945.GA19011@sigill.intra.peff.net>
-References: <1308511149-10933-1-git-send-email-billiob@gmail.com>
- <1308511149-10933-2-git-send-email-billiob@gmail.com>
- <7vtyble9k8.fsf@alter.siamese.dyndns.org>
- <4DFEEB60.5000005@viscovery.net>
- <20110620070316.GA15246@sigill.intra.peff.net>
- <4DFF2A1D.3060206@drmicha.warpmail.net>
+From: =?UTF-8?B?cnllbnVzIOKXhw==?= <ryenus@gmail.com>
+Subject: git-svn clone repeatedly fetch revisions?
+Date: Mon, 20 Jun 2011 21:37:10 +0800
+Message-ID: <BANLkTi=Lp6tunX4fRWkD_hGGJo9Fqvm9=g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Boris Faure <billiob@gmail.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Jun 20 15:09:57 2011
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 20 15:37:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYeEk-0007wu-7T
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 15:09:54 +0200
+	id 1QYefY-0006qU-TW
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 15:37:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753378Ab1FTNJt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jun 2011 09:09:49 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38430
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753161Ab1FTNJs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2011 09:09:48 -0400
-Received: (qmail 20976 invoked by uid 107); 20 Jun 2011 13:10:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 20 Jun 2011 09:10:01 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Jun 2011 09:09:45 -0400
-Content-Disposition: inline
-In-Reply-To: <4DFF2A1D.3060206@drmicha.warpmail.net>
+	id S1754397Ab1FTNhc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jun 2011 09:37:32 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:56032 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754178Ab1FTNha (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2011 09:37:30 -0400
+Received: by yxi11 with SMTP id 11so2073732yxi.19
+        for <git@vger.kernel.org>; Mon, 20 Jun 2011 06:37:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=iUftYtwrdGJJc3pacnb/WPL4X21nrcAM7WRJvdGxMGg=;
+        b=imsvoruV33QryIK2C1zYwCwYoyddmCYJ7zarJIuWvc32Y17II20IuBwrEy58Imnu+Q
+         q5AcNTwZGE66gU867+QDtvT/sDcX5x2LshrLzavGnOaDJK1qjfYncBt0HMCRnOO0RsJN
+         lRHy3DFl8r4DqvUXssVn2EDLypMHWlnxpYKIc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=w87fjCYilO6gl/C6ujnJCXhfqSlo3vBtmoWMYYRq+jYHmWmJ0gBkeBBmLwy2fg1upL
+         rDm6tAa64jQ7y4vvbkD0ee6GhfjF9f4gOyp8NKCYEo4yN5fWqbMi6a0LgmFBjzGbFvpH
+         SBctOkBH9iIzjH1N4ueFtlK/QFULvyO4+aT4M=
+Received: by 10.101.139.38 with SMTP id r38mr5525772ann.109.1308577050147;
+ Mon, 20 Jun 2011 06:37:30 -0700 (PDT)
+Received: by 10.100.250.20 with HTTP; Mon, 20 Jun 2011 06:37:10 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176067>
 
-On Mon, Jun 20, 2011 at 01:08:13PM +0200, Michael J Gruber wrote:
+I'm cloning an svn repository which contains 10+ branches and a lot of tags.
 
-> > For that matter, --match should be spelled "--glob", as we already have:
-> > 
-> >   $ git log --glob='jk/*'
-> > 
-> > I think having the ref-selection for "git branch" match that of the
-> > revision walker makes sense.
-> 
-> Well, "branch" is about refs, and "log" about revs.
-
-Sure, and I wouldn't expect "git branch --list 1234abcd" to do anything
-useful. But naming refs is a subset of naming revs. Certainly it seems
-worth it to make the shorthands like "--remotes" behave the same way
-where applicable.
-
-I do agree that "git branch -l 'jk/*'" is less typing than "--glob"; it
-may be worth supporting both forms to provide the least surprise to the
-user (i.e., even though it may not be the shortest, users may expect the
-same syntax to work in both places, and it costs us very little to
-accept either).
-
-> I'd rather have
-> "branch" similar to "tag" in that respect (i.e. '-l'). I'm still meaning
-> to revive that series:
-> 
-> http://permalink.gmane.org/gmane.comp.version-control.git/172228
-
-Modulo Junio's comments on the "-l" transition, I like the idea. One
-thing jumped out at me:
-
-> -       else if (argc == 0)
-> -               return print_ref_list(kinds, detached, verbose, abbrev, with_commit);
-> +       else if (argc == 0 || (verbose && argc == 1))
-> +               return print_ref_list(kinds, detached, verbose, abbrev, with_commit, argc ?  argv[0] : NULL);
-
-Is there any reason not to accept:
-
-  git branch --list jk/* mg/*
-
-? For "tag -l", we seem to silently ignore any arguments past the first:
-
-  $ git tag -l 'v1.7.4.*' 'v1.7.5.*'
-  v1.7.4.1
-  v1.7.4.2
-  v1.7.4.3
-  v1.7.4.4
-  v1.7.4.5
-
-We should at least warn and say "your second argument is being ignored"
-or show the usage message.  But perhaps it is even friendlier to accept
-a list of patterns.
-
--Peff
+looks like git-svn fetches branch by branch, and for each branch it
+fetches all revisions, the problem I observed from its stdout is,  if
+the branches contain common revisions between them, then those common
+revisions will be fetched once for each branch, so if 10 branches all
+have a certain revision, then this revision will be fetch 10 times, in
+my understanding such revision should be fetched only once, right?
