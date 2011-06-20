@@ -1,69 +1,96 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH/RFC] branch: add optional parameter to -r to specify remote
-Date: Mon, 20 Jun 2011 08:40:32 +0200
-Message-ID: <4DFEEB60.5000005@viscovery.net>
-References: <1308511149-10933-1-git-send-email-billiob@gmail.com> <1308511149-10933-2-git-send-email-billiob@gmail.com> <7vtyble9k8.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH/RFC] Move contents of libgit.a to lib subdirectory
+Date: Mon, 20 Jun 2011 01:47:13 -0500
+Message-ID: <20110620064713.GA27992@elie>
+References: <alpine.LNX.2.00.1106192014410.41113@linux.foleyremote.com>
+ <BANLkTimjixOT=j9Xf=Ti-04cRw2noC0NiQ@mail.gmail.com>
+ <7vd3i9dow4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Boris Faure <billiob@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Peter Foley <pefoley2@verizon.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 20 08:40:53 2011
+X-From: git-owner@vger.kernel.org Mon Jun 20 08:47:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYYAG-0004ow-N0
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 08:40:53 +0200
+	id 1QYYGg-0006oh-83
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 08:47:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752382Ab1FTGkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jun 2011 02:40:47 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:18916 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752203Ab1FTGkr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2011 02:40:47 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1QYYA5-0004Nz-Vi; Mon, 20 Jun 2011 08:40:42 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id A323B1660F;
-	Mon, 20 Jun 2011 08:40:41 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
-In-Reply-To: <7vtyble9k8.fsf@alter.siamese.dyndns.org>
-X-Spam-Score: -1.4 (-)
+	id S1753110Ab1FTGrZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jun 2011 02:47:25 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:63809 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752315Ab1FTGrZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2011 02:47:25 -0400
+Received: by iwn6 with SMTP id 6so935585iwn.19
+        for <git@vger.kernel.org>; Sun, 19 Jun 2011 23:47:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=hZF+5JFjCNu5F+aMAbkJiNMcYTqu58FmIYt5iVbciJo=;
+        b=iKeaAuYf/0I3hMIwtkA9ety/YVbQOA/vMPAyAdhhqrVD0J9uz34r4re2lRkPm1c0NB
+         QEv4YH3yutSo5RfW8e6gzmgBtHbikBiswg1A9q9NvngmNWbZqq4cVwEJV6ona9yZfY7q
+         bq/m5HUL/XiVdjBM96XQbRMydJhxdoKNyQyIA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=upoglRyDK1tY3u8K0/eh2rCxA15/XPMWYHk7+7rOn/17boNI+d5ZAk/Er4Il8LzS04
+         AJhVVw8HC5+BLPAm08cQlW9Ri7pQd49YKjwvl+7Ol/mtlGAElJAV8eWoj+jLCDImYQdE
+         ciuo34l34xgrfsX8B9/8Qf1GCYlxDdMrJm/aI=
+Received: by 10.231.117.35 with SMTP id o35mr4805177ibq.149.1308552444461;
+        Sun, 19 Jun 2011 23:47:24 -0700 (PDT)
+Received: from elie (adsl-69-209-50-158.dsl.chcgil.sbcglobal.net [69.209.50.158])
+        by mx.google.com with ESMTPS id ft12sm3005769ibb.36.2011.06.19.23.47.22
+        (version=SSLv3 cipher=OTHER);
+        Sun, 19 Jun 2011 23:47:23 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vd3i9dow4.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176051>
 
-Am 6/20/2011 0:32, schrieb Junio C Hamano:
-> It would make much more sense to restrict this feature to the "listing"
-> side of the branches.  It would be nice if you can do:
+Junio C Hamano wrote:
+> Shawn Pearce <spearce@spearce.org> writes:
 
-I agree with everything you said earlier and the first sentence above. And
-I would have needed the possibility to limit the branch listing to a
-particular remote a lot in the past. But...
+>> ... But why is this amount of churn necessary or being
+>> recommended? What problem does this address? Is that worth the pain
+>> this puts on every other in-flight change that is still being
+>> developed, or is already in the review pipeline?
+>
+> No reason and not recommended; nothing; not worth.
+>
+> Especially during the pre-release freeze.
 
-> 	$ git branch -r --match alice --match bob
-> 
-> to show only remote tracking branches under refs/remotes/{alice,bob}
-> and also
-> 
-> 	$ git branch --match "jk/*"
-> 
-> to show only local topic branches whose names match the given blob.
+It's unlikely the patch would be cooked by the time there is a
+release, or even in the moments of quiet after that.  If this were a
+patch intended for immediate inclusion, the timing would be
+unfortunate, but for an RFC I wouldn't have expected the release
+timing to be very relevant.
 
-I would hate having to learn a new syntax '--match "jk/*"' when we can
-already say
+A better thought out version of this patch, meaning timed
+appropriately and taking into account the comments that came up the
+last times the subject was discussed, would imho be a good thing.
+Part of thinking it through is to consider the effect on in-flight
+patches and to consider whether it's possible to mitigate that.
 
-    $ git log --remotes
-    $ git log --remotes=alice --remotes=bob
-    $ git log --remotes="jk/*"
+In other words, I think Shawn's questions get right to the point.
+I hope the above answers --- which do seem to correctly reflect the
+state of things in absence of such thinking --- will not dissuade
+someone from finding a good answer.
 
-IMO, it is the right approach to have a long option --remotes with an
-optional argument.
+More prior discussion for the sort of masochistic person who wants to
+work on it: [1].  I admit I can imagine easier tasks. :)
 
--- Hannes
+Just my two cents,
+Jonathan
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/165748/focus=165801
