@@ -1,57 +1,112 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: POSIX woes in t7810.87: dash bash or bash dash?
-Date: Mon, 20 Jun 2011 11:58:28 +0200
-Message-ID: <4DFF19C4.5070003@drmicha.warpmail.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH svn-fe 5/7] Fix vcs-svn/fast_export reinit bugs
+Date: Mon, 20 Jun 2011 05:12:55 -0500
+Message-ID: <20110620101254.GG28282@elie>
+References: <1308558173-29672-1-git-send-email-divanorama@gmail.com>
+ <1308558173-29672-5-git-send-email-divanorama@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 20 11:58:38 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, David Barr <davidbarr@google.com>
+To: Dmitry Ivankov <divanorama@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 20 12:13:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYbFd-00047E-Rx
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 11:58:38 +0200
+	id 1QYbTc-0002X2-Pa
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 12:13:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753353Ab1FTJ6b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jun 2011 05:58:31 -0400
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:39144 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753169Ab1FTJ6a (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Jun 2011 05:58:30 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 41BB7206AE
-	for <git@vger.kernel.org>; Mon, 20 Jun 2011 05:58:30 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Mon, 20 Jun 2011 05:58:30 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:subject:content-type:content-transfer-encoding; s=smtpout; bh=KfnySvQYQkOckB+bihS8IOXMYpQ=; b=Ec5gN/IdokaPMbrEZ84HHuxrYCIppA1CXaASL3NQc6WtjsUoUApzJAvvgXGtDoMA0Zo7UwBQtmbpk5VEmO/gkh16ICVyfrMKeaffxgj93GW4D5yp7090s8rFeNA2mKDcUipgulzf3eyZTlEjaDH5yaOd/QK7GbKskrEroJGiDb8=
-X-Sasl-enc: c6J9BLIf1OJJgRKDamo2W8UeGK+l2f7GSc+STYqSp+kp 1308563910
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id DB0DC402B59
-	for <git@vger.kernel.org>; Mon, 20 Jun 2011 05:58:29 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc15 Lightning/1.0b3pre Thunderbird/3.1.10
+	id S1753443Ab1FTKM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jun 2011 06:12:59 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:33526 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752955Ab1FTKM7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2011 06:12:59 -0400
+Received: by iwn6 with SMTP id 6so1048925iwn.19
+        for <git@vger.kernel.org>; Mon, 20 Jun 2011 03:12:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=dXphqN5k5L1j6mnkl2B5zl8OvMeDgOjOVnb7hLeOfkI=;
+        b=rccdpP2GdPk/Twqx83WyWI5FbCfrz3s7zNRsRhxz2d8Mfzi+ykkTkhJlOxtt5BPKol
+         o0aKIPZNA4wGqTTNtKT3RMfmJB6wmtQAw2qx2NoB+Kcmnk+O5C71p2oFHUrlZTt2V194
+         b9jvpeI+yV44aLoBieqUxS7Fnv/r1a+MDEVP0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=uhwUz5AUOdU8fALSHlJYMXG7MQrGx71Ih71XmQwejI63zTdRUjS0/+t/G0lHow0vs5
+         EpJ8qhHro5Q/mbUyALsojZvR7n8/imvEXli64nLPU/1V4dwkWVWr1uo7J2nbSJTeul8P
+         J0wBSO2EaBInG0hRTMfRDfmqJ6XH8jRJpGcW8=
+Received: by 10.231.209.138 with SMTP id gg10mr4948735ibb.107.1308564778744;
+        Mon, 20 Jun 2011 03:12:58 -0700 (PDT)
+Received: from elie (adsl-69-209-50-158.dsl.chcgil.sbcglobal.net [69.209.50.158])
+        by mx.google.com with ESMTPS id s2sm1727466ibe.35.2011.06.20.03.12.57
+        (version=SSLv3 cipher=OTHER);
+        Mon, 20 Jun 2011 03:12:57 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1308558173-29672-5-git-send-email-divanorama@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176060>
 
-GNU bash, Version 4.2.10(1)-release (x86_64-redhat-linux-gnu):
+Hi,
 
-echo "a\"b\n\"c"
-a"b\n"c
+Dmitry Ivankov wrote:
 
-dash-0.5.6:
+> first_commit_done was not set in _init, but it
+> is needed if fast_export_ is used/_init-ed twice.
 
-echo "a\"b\n\"c"
-a"b
-"c
+Thanks, good catch.  I wonder if it's possible to detect this kind of
+thing automatically --- maybe it would make sense for test-svn-fe to
+learn to apply two dumps in sequence so this code could be exercised.
 
-t7810.87 breaks with dash because of this. Escaping the \n does not make
-the test work with both either. So I'd like to know which one's right
-and (independently) how to make it work for both...
+> Same thing for the branch_name.
 
-Cheers,
-Michael
+This one should be squashed with the previous patch for easier review
+imho.  New readers never have to know the details of early mistakes.
+
+>
+> Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
+> ---
+>  vcs-svn/fast_export.c |    4 ++++
+>  1 files changed, 4 insertions(+), 0 deletions(-)
+>
+> diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
+> index 8b14b74..6a4360f 100644
+> --- a/vcs-svn/fast_export.c
+> +++ b/vcs-svn/fast_export.c
+> @@ -32,6 +32,8 @@ static int init_postimage(void)
+>  
+>  void fast_export_init(int fd, const char* branch)
+>  {
+> +	first_commit_done = 0;
+> +	strbuf_reset(&branch_name);
+>  	strbuf_addstr(&branch_name, branch);
+>  	if (buffer_fdinit(&report_buffer, fd))
+>  		die_errno("cannot read from file descriptor %d", fd);
+> @@ -45,7 +47,9 @@ void fast_export_deinit(void)
+>  
+>  void fast_export_reset(void)
+>  {
+> +	first_commit_done = 0;
+
+I don't think this is needed --- fast_export_reset is called when we
+are about to exit.  Maybe the vcs-svn::*_reset functions should be
+renamed to foo_free or something similar to avoid confusion
+(especially when comparing to strbuf_reset).
+
+>  	buffer_reset(&report_buffer);
+> +	strbuf_reset(&branch_name);
+>  }
+>  
+>  void fast_export_delete(const char *path)
+> -- 
+> 1.7.3.4
+> 
