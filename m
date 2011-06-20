@@ -1,85 +1,81 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: POSIX woes in t7810.87: dash bash or bash dash?
-Date: Mon, 20 Jun 2011 06:04:41 -0500
-Message-ID: <20110620110440.GA29270@elie>
-References: <4DFF19C4.5070003@drmicha.warpmail.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH/RFC] branch: add optional parameter to -r to specify remote
+Date: Mon, 20 Jun 2011 13:08:13 +0200
+Message-ID: <4DFF2A1D.3060206@drmicha.warpmail.net>
+References: <1308511149-10933-1-git-send-email-billiob@gmail.com> <1308511149-10933-2-git-send-email-billiob@gmail.com> <7vtyble9k8.fsf@alter.siamese.dyndns.org> <4DFEEB60.5000005@viscovery.net> <20110620070316.GA15246@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Jun 20 13:05:00 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Boris Faure <billiob@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 20 13:08:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYcHq-0001ge-D5
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 13:04:58 +0200
+	id 1QYcL7-0003Zk-Vj
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 13:08:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752127Ab1FTLEu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jun 2011 07:04:50 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:61057 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751669Ab1FTLEu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2011 07:04:50 -0400
-Received: by iyb12 with SMTP id 12so1863473iyb.19
-        for <git@vger.kernel.org>; Mon, 20 Jun 2011 04:04:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=kfdtVqzfJgKBbtZI+9WGhm0U+BjsDebjO6ArBjFyny8=;
-        b=JwJyacVDoHvblN/rZ+vvcofQtC5udshJVTENo/6JQR2Ln6KROD791myIB/ShqFDl28
-         kUvJCGgintmRHvgkvjJLIji0y/Z077Vpf/ALJEI+zzQCkoQdo1Pd4xZVx72fPBT27wci
-         d1gj0j9bpLlH90i3kgfsOp2l/wTQcQ5n4NIXY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Tg0zcZwBx/d4AGNfSguwDBhKE9NKJ8L5rmeH6kQBSkAoGsjKjcT23IrD3yADjRAnqI
-         VQeWp9+xhMjylZ/c7ECnT+I/UhnwfTb6YvfoxByNJx+UeVxpB6lo0o6EjC38iNLsDuS5
-         IaqU4RPU6bsebUIWezY4Gr0zv11zJ3idjdJYM=
-Received: by 10.42.150.8 with SMTP id y8mr6061482icv.471.1308567887693;
-        Mon, 20 Jun 2011 04:04:47 -0700 (PDT)
-Received: from elie (adsl-69-209-50-158.dsl.chcgil.sbcglobal.net [69.209.50.158])
-        by mx.google.com with ESMTPS id w11sm3126070ibw.58.2011.06.20.04.04.46
-        (version=SSLv3 cipher=OTHER);
-        Mon, 20 Jun 2011 04:04:46 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4DFF19C4.5070003@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752194Ab1FTLIR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jun 2011 07:08:17 -0400
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:39295 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751155Ab1FTLIQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Jun 2011 07:08:16 -0400
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id C329E2031E;
+	Mon, 20 Jun 2011 07:08:15 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Mon, 20 Jun 2011 07:08:15 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=d+bFmI8wRkggtMcxMk1Hb68ZLCY=; b=luGOUvzxe87snwPYMCg9UQyg5Q7l2I6W2OPRBOvu5fG74hmPUxxdOQGz3VO79T2k0ut7LK2DBnkbTfIPfTJaBBD2idXCbKTmv2RpJnqas7xyb4FEDhvLv0LKILB7Of9KWn3RRkyeV10/2ROk0CsDB7I7Cfld/4CIA8+vkM7Ygvk=
+X-Sasl-enc: cSn3Zm5BgJ459QRCmNvnVQBZ0e4Ur1bxNkkIveAaWjk4 1308568095
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id C900B446031;
+	Mon, 20 Jun 2011 07:08:14 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc15 Lightning/1.0b3pre Thunderbird/3.1.10
+In-Reply-To: <20110620070316.GA15246@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176063>
 
-Hi Michael,
+Jeff King venit, vidit, dixit 20.06.2011 09:03:
+> On Mon, Jun 20, 2011 at 08:40:32AM +0200, Johannes Sixt wrote:
+> 
+>>> 	$ git branch --match "jk/*"
+>>>
+>>> to show only local topic branches whose names match the given blob.
+>>
+>> I would hate having to learn a new syntax '--match "jk/*"' when we can
+>> already say
+>>
+>>     $ git log --remotes
+>>     $ git log --remotes=alice --remotes=bob
+>>     $ git log --remotes="jk/*"
+>>
+>> IMO, it is the right approach to have a long option --remotes with an
+>> optional argument.
+> 
+> For that matter, --match should be spelled "--glob", as we already have:
+> 
+>   $ git log --glob='jk/*'
+> 
+> I think having the ref-selection for "git branch" match that of the
+> revision walker makes sense.
+> 
+> -Peff
 
-Michael J Gruber wrote:
+Well, "branch" is about refs, and "log" about revs. I'd rather have
+"branch" similar to "tag" in that respect (i.e. '-l'). I'm still meaning
+to revive that series:
 
-> echo "a\"b\n\"c"
-> a"b
-> "c
->
-> t7810.87 breaks with dash because of this. Escaping the \n does not make
-> the test work with both either.
+http://permalink.gmane.org/gmane.comp.version-control.git/172228
 
-This seems to have slipped by because testing it requires USE_LIBPCRE
-to be set.  Thanks for catching it.
+I've reworked a few more things compared to the RFC from back then but
+was caught by lack of time and the rc phase. I'll send what I have asap.
 
-> So I'd like to know which one's right
-> and (independently) how to make it work for both...
-
-Both are right.  The simplest fix is to use printf, as in
-
-	printf "%s\n" "a\"b\n\"c"
-
-See [1] and [2].
-
-Regards,
-Jonathan
-
-[1] http://www.gnu.org/s/hello/manual/autoconf/Limitations-of-Builtins.html#echo
-[2] http://pubs.opengroup.org/onlinepubs/9699919799/utilities/echo.html
+Michael
