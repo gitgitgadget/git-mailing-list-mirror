@@ -1,80 +1,102 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH 1/6] Bring notes.c template handling in line with commit.c.
-Date: Mon, 20 Jun 2011 09:41:54 +0200
-Message-ID: <201106200941.54883.johan@herland.net>
-References: <201106151253.57908.johan@herland.net>
- <201106192323.09511.johan@herland.net>
- <7vpqm9e8rn.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 08/20] remote-curl: accept empty line as terminator
+Date: Mon, 20 Jun 2011 02:55:41 -0500
+Message-ID: <20110620075541.GA28282@elie>
+References: <1308496725-22329-9-git-send-email-srabbelier@gmail.com>
+ <1308537351-23209-1-git-send-email-divanorama@gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, Yann Dirson <ydirson@free.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 20 09:42:12 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Dmitry Ivankov <divanorama@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 20 09:55:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYZ7a-00029Q-Aq
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 09:42:10 +0200
+	id 1QYZKv-00082y-3j
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 09:55:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753501Ab1FTHl6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jun 2011 03:41:58 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:51735 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753438Ab1FTHl5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2011 03:41:57 -0400
-Received: from get-mta-scan01.get.basefarm.net ([10.5.16.4])
- by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LN200968W1WP650@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Mon, 20 Jun 2011 09:41:56 +0200 (MEST)
-Received: from get-mta-scan01.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id DBF94179914A_DFEF9C3B	for <git@vger.kernel.org>; Mon,
- 20 Jun 2011 07:41:55 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan01.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id C0EF41796835_DFEF9C3F	for <git@vger.kernel.org>; Mon,
- 20 Jun 2011 07:41:55 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LN200IU5W1VSB20@get-mta-in03.get.basefarm.net> for
- git@vger.kernel.org; Mon, 20 Jun 2011 09:41:55 +0200 (MEST)
-User-Agent: KMail/1.13.7 (Linux/2.6.39-ARCH; KDE/4.6.3; x86_64; ; )
-In-reply-to: <7vpqm9e8rn.fsf@alter.siamese.dyndns.org>
+	id S1750980Ab1FTHzw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jun 2011 03:55:52 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:39825 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750844Ab1FTHzv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2011 03:55:51 -0400
+Received: by iyb12 with SMTP id 12so1755732iyb.19
+        for <git@vger.kernel.org>; Mon, 20 Jun 2011 00:55:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=7i46lGIH9c6N+EU6+S3vtB4zVhVR4UBfPuMaAdrsdtg=;
+        b=h8uMRchCt0qL1MzJFDui4xSfEqe41DJi5xgN0RZp4wG9Tz5nmK9WxQLemrVOx4dzN0
+         W0c8H2ZqH4xVbpDk21yi+yug1WXTU6OcflMSc1ZfBKW7heLlJ6zSaFK1Mgw0Uq/Y1MxE
+         DcBowEEYuMWfOB+fd1GBuZC75+nRM347TU9Hw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=xNsVchxzKb9pIGt1DV0JnKHSo/aTKbGhnzq1WBNNMBSbe6dgDbID6dHZrudy4jfxyq
+         J+rYTrst3BUrLkwplmci15hKsbPiMFidzNiIGaKJg6oBWel+YoGltUMAChVIlcd2jGGQ
+         6rGEq7mWEv1FlIfL3JSwedHZ5r2jtNw5RIVyE=
+Received: by 10.43.49.137 with SMTP id va9mr5378367icb.218.1308556550131;
+        Mon, 20 Jun 2011 00:55:50 -0700 (PDT)
+Received: from elie (adsl-69-209-50-158.dsl.chcgil.sbcglobal.net [69.209.50.158])
+        by mx.google.com with ESMTPS id 10sm3039087ibn.37.2011.06.20.00.55.46
+        (version=SSLv3 cipher=OTHER);
+        Mon, 20 Jun 2011 00:55:49 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1308537351-23209-1-git-send-email-divanorama@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176057>
 
-On Monday 20 June 2011, Junio C Hamano wrote:
-> Johan Herland <johan@herland.net> writes:
-> > On Saturday 18 June 2011, Yann Dirson wrote:
-> >> Signed-off-by: Yann Dirson <ydirson@free.fr>
-> > 
-> > Please mention in the commit message that the commit merely replaces
-> > write_or_die()/int fd with the corresponding stdio functionality, and
-> > that there is no (intended) change in behavior. It was not apparent
-> > from your commit message that you had not made any other changes.
-> > 
-> > Otherwise the patch looks OK.
-> 
-> I had an impression that you would lose a lot of error checking, unless
-> you are careful, if you go from write_or_die() to stdio.
+Hi,
 
-Yeah, write_or_die() dies on failure, while with fwrite/fprintf I guess one 
-needs to check the return value, and handle errors accordingly.
+Dmitry Ivankov wrote:
 
-An alternative solution would be to drop this patch, and instead use 
-strbuf_addf() to get the format printing functionality needed in PATCH 3/6.
+> As a next step, won't it be better to use "exit\n" or "quit\n"
+> as a terminator?
 
+If we were starting over, a "done" command (or "quit" or some other
+self-descriptive name) would be a no-brainer.  Unfortunately, there
+are existing remote helpers out there --- based on a web search:
 
-...Johan
+ - mediawiki
+ - ccnx
+ - couch
+ - cvs
+ - bzr
+ - hg
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Presumably most already ignore a final blank line and do not check for
+"quit".
+
+One possibility would be to emit "done" instead of a blank line if the
+remote helper has declared a "done" capability.  But what does it buy?
+
+Side note: a "done" capability doesn't sound like a bad idea, though,
+for another reason.  The transport-helper could tell fast-import to
+expect a "done" command at the end when importing from a remote helper
+declaring it, to catch situations in which the pipe prematurely closes
+(for example, because the remote helper has segfaulted).
+
+> I don't see a convention of terminating on a
+> blank line in docs,
+
+Yes, this would be nice to document.
+
+> only on EOF.  Also I can imagine a blank
+> line being read in a case of communication error
+
+A spurious NL, NL, EOF sequence does not sound likely to me.  If the
+command stream is passing through a noisy channel, there are worse
+corruptions to worry about (e.g., fetching to the wrong ref).
