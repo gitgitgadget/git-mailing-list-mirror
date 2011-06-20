@@ -1,81 +1,111 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH/RFC] branch: add optional parameter to -r to specify remote
-Date: Mon, 20 Jun 2011 13:08:13 +0200
-Message-ID: <4DFF2A1D.3060206@drmicha.warpmail.net>
-References: <1308511149-10933-1-git-send-email-billiob@gmail.com> <1308511149-10933-2-git-send-email-billiob@gmail.com> <7vtyble9k8.fsf@alter.siamese.dyndns.org> <4DFEEB60.5000005@viscovery.net> <20110620070316.GA15246@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 15/20] transport-helper: use the new done feature
+ where possible
+Date: Mon, 20 Jun 2011 06:45:56 -0500
+Message-ID: <20110620114556.GA29818@elie>
+References: <1308496725-22329-1-git-send-email-srabbelier@gmail.com>
+ <1308496725-22329-16-git-send-email-srabbelier@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Boris Faure <billiob@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 20 13:08:26 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Git List <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>, Ramkumar@elie
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 20 13:46:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYcL7-0003Zk-Vj
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 13:08:22 +0200
+	id 1QYcvk-0004I5-HK
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 13:46:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752194Ab1FTLIR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jun 2011 07:08:17 -0400
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:39295 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751155Ab1FTLIQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Jun 2011 07:08:16 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id C329E2031E;
-	Mon, 20 Jun 2011 07:08:15 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Mon, 20 Jun 2011 07:08:15 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=d+bFmI8wRkggtMcxMk1Hb68ZLCY=; b=luGOUvzxe87snwPYMCg9UQyg5Q7l2I6W2OPRBOvu5fG74hmPUxxdOQGz3VO79T2k0ut7LK2DBnkbTfIPfTJaBBD2idXCbKTmv2RpJnqas7xyb4FEDhvLv0LKILB7Of9KWn3RRkyeV10/2ROk0CsDB7I7Cfld/4CIA8+vkM7Ygvk=
-X-Sasl-enc: cSn3Zm5BgJ459QRCmNvnVQBZ0e4Ur1bxNkkIveAaWjk4 1308568095
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id C900B446031;
-	Mon, 20 Jun 2011 07:08:14 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc15 Lightning/1.0b3pre Thunderbird/3.1.10
-In-Reply-To: <20110620070316.GA15246@sigill.intra.peff.net>
+	id S1753399Ab1FTLqI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jun 2011 07:46:08 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:61369 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752840Ab1FTLqG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2011 07:46:06 -0400
+Received: by iyb12 with SMTP id 12so1887723iyb.19
+        for <git@vger.kernel.org>; Mon, 20 Jun 2011 04:46:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=jW08MKi9W7czASkZMbneKMbZYHb/r26zPTL/8vQqrNs=;
+        b=Y/wq7K/oX71qBWgt3XVsOcqLbAilrK3r6usOujkV+3jM1PvY1O9/b5aXGeJ0Il4xKg
+         CE+5y3dSc4+0ynmGgT0/BCdWaajvmPx4ROpzmSYIbeFB3xzo7miPqAxnxoIIa4mndNQ2
+         VJMAX6XV2OfYPhssCpjQJiB/eoVkJiFMj+kEA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=An12tnylMuLveJTB9MaIhIzaD+dJ88q8QhrEIyNiNdsaaJPf+yZZl6ksAOQ+8Nqlfz
+         /IcgI0khduXUiD9WMIluAeLuNEkkaEbAIPWwR5G8yQ618eH1AL0Ncrfa+pJQahUrQprP
+         UbDkDHInZqUVxFq+QBYUlQ8kIUL/TdSxZ7ivI=
+Received: by 10.42.19.2 with SMTP id z2mr5779603ica.498.1308570365335;
+        Mon, 20 Jun 2011 04:46:05 -0700 (PDT)
+Received: from elie (adsl-69-209-50-158.dsl.chcgil.ameritech.net [69.209.50.158])
+        by mx.google.com with ESMTPS id ly7sm5597042icb.12.2011.06.20.04.46.02
+        (version=SSLv3 cipher=OTHER);
+        Mon, 20 Jun 2011 04:46:03 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1308496725-22329-16-git-send-email-srabbelier@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176064>
 
-Jeff King venit, vidit, dixit 20.06.2011 09:03:
-> On Mon, Jun 20, 2011 at 08:40:32AM +0200, Johannes Sixt wrote:
-> 
->>> 	$ git branch --match "jk/*"
->>>
->>> to show only local topic branches whose names match the given blob.
->>
->> I would hate having to learn a new syntax '--match "jk/*"' when we can
->> already say
->>
->>     $ git log --remotes
->>     $ git log --remotes=alice --remotes=bob
->>     $ git log --remotes="jk/*"
->>
->> IMO, it is the right approach to have a long option --remotes with an
->> optional argument.
-> 
-> For that matter, --match should be spelled "--glob", as we already have:
-> 
->   $ git log --glob='jk/*'
-> 
-> I think having the ref-selection for "git branch" match that of the
-> revision walker makes sense.
-> 
-> -Peff
+Hi,
 
-Well, "branch" is about refs, and "log" about revs. I'd rather have
-"branch" similar to "tag" in that respect (i.e. '-l'). I'm still meaning
-to revive that series:
+Sverre Rabbelier wrote:
 
-http://permalink.gmane.org/gmane.comp.version-control.git/172228
+> In other words, use fast-export --use-done-feature to add a 'done'
+> command at the end of streams passed to remote helpers' "import"
+> commands, and teach the remote helpers implementing "export" to use
+> the 'done' command in turn when producing their streams.
 
-I've reworked a few more things compared to the RFC from back then but
-was caught by lack of time and the rc phase. I'll send what I have asap.
+Sounds like a reasonable thing to do.  One puzzle:
 
-Michael
+[...]
+> +++ b/transport-helper.c
+> @@ -375,8 +375,9 @@ static int get_exporter(struct transport *transport,
+>  	/* we need to duplicate helper->in because we want to use it after
+>  	 * fastexport is done with it. */
+>  	fastexport->out = dup(helper->in);
+> -	fastexport->argv = xcalloc(4 + revlist_args->nr, sizeof(*fastexport->argv));
+> +	fastexport->argv = xcalloc(5 + revlist_args->nr, sizeof(*fastexport->argv));
+>  	fastexport->argv[argc++] = "fast-export";
+> +	fastexport->argv[argc++] = "--use-done-feature";
+>  	if (export_marks)
+>  		fastexport->argv[argc++] = export_marks;
+>  	if (import_marks)
+> @@ -412,11 +413,8 @@ static int fetch_with_import(struct transport *transport,
+>  		sendline(data, &buf);
+>  		strbuf_reset(&buf);
+>  	}
+> -	if (disconnect_helper(transport))
+> -		die("Error while disconnecting helper");
+>  	if (finish_command(&fastimport))
+>  		die("Error while running fast-import");
+> -
+
+What is this change about?  Is the plan to allow other commands after
+a fetch_with_import?  Sounds reasonable; I think it should be
+advertised in the log message, though.
+
+When does the disconnect_helper call happen (to avoid leaks)?  Ah, in
+release_helper; phew.
+
+The disconnect_helper call writes the blank line that terminates the
+list of "import %s" commands to start the import, so there would need
+to be a
+
+	strbuf_reset(&buf);
+	strbuf_addf(&buf, "\n");
+	sendline(data, &buf);
+
+in its place.
