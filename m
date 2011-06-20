@@ -1,105 +1,146 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH v2 10/20] git-remote-testgit: fix error handling
-Date: Mon, 20 Jun 2011 20:02:10 +0200
-Message-ID: <BANLkTimW8paPUHoYLpB_diY_s0L4aQCcgQ@mail.gmail.com>
-References: <1308496725-22329-1-git-send-email-srabbelier@gmail.com>
- <1308496725-22329-11-git-send-email-srabbelier@gmail.com> <20110619225810.GG23893@elie>
- <jfzVoEhsVKgfY8Vp692jfTk1lNp2lhg9JCJc8MiY6N6th3PzBJoHzw@cipher.nrlssc.navy.mil>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH maint] fetch: Also fetch submodules in subdirectories in on-demand
+ mode
+Date: Mon, 20 Jun 2011 20:18:03 +0200
+Message-ID: <4DFF8EDB.2040502@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Brandon Casey <drafnel@gmail.com>
-To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Mon Jun 20 20:03:00 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 20 20:18:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYioJ-00061g-Rm
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 20:02:56 +0200
+	id 1QYj38-0006Q8-9b
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 20:18:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755462Ab1FTSCv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Jun 2011 14:02:51 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:62335 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755290Ab1FTSCu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Jun 2011 14:02:50 -0400
-Received: by pvg12 with SMTP id 12so931181pvg.19
-        for <git@vger.kernel.org>; Mon, 20 Jun 2011 11:02:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=qlIJa7OAtzbn08PYOyVCgr2ONrYlDxaawssIXHVNNcw=;
-        b=LQM5KhgAcTmi5BeC4BfJpZmhMtuAdS3qsMXh/5fslCFNxPZiuozcb68hekzVOmtSWe
-         lfHTDzH0qCu1pmuC2O7mc/7xg578INDU5nemuK9+6/BminDrhwqM+9R06NhBbkPCbqvX
-         6C+oWwH4Kf+mcRGWjE50U+rY2YxBz68pwxirk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=ZhqEoFMzLpaTgcGMmzR7OzNridnF7JEiCFJgIJyDvVPmbE5Xc6XHICV/DKhHUCSi+l
-         HulOEgYdO2LelwqVrmZ8LVdhycfUqfdW1x4uHOn9ReOoW3bfQ/XHSlq9hwoRJebgSuZZ
-         476Q3Gyv5jBp/ppX0zhtDVjQTF8Y3rBdRUPoI=
-Received: by 10.68.15.101 with SMTP id w5mr2272641pbc.209.1308592970057; Mon,
- 20 Jun 2011 11:02:50 -0700 (PDT)
-Received: by 10.68.41.99 with HTTP; Mon, 20 Jun 2011 11:02:10 -0700 (PDT)
-In-Reply-To: <jfzVoEhsVKgfY8Vp692jfTk1lNp2lhg9JCJc8MiY6N6th3PzBJoHzw@cipher.nrlssc.navy.mil>
+	id S1752158Ab1FTSSJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jun 2011 14:18:09 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:50042 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752153Ab1FTSSI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2011 14:18:08 -0400
+Received: from smtp01.web.de  ( [172.20.0.243])
+	by fmmailgate01.web.de (Postfix) with ESMTP id B4C53191CC9DF;
+	Mon, 20 Jun 2011 20:18:06 +0200 (CEST)
+Received: from [93.246.56.111] (helo=[192.168.178.43])
+	by smtp01.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1QYj30-0005G7-00; Mon, 20 Jun 2011 20:18:06 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX199NqCVueN/gl3h1/D4YDtYheo6pGXOwdu+I1KQ
+	mFdOXX/eVtiaiajpuKB7oyvkdSUsMwywmMeYpDYM22NKV7wiYX
+	4cH18wQHcrRuuz9GwAvw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176083>
 
-Heya,
+When on-demand mode was active examining the new commits just fetched in
+the superproject (to check if they record commits for submodules which are
+not downloaded yet) wasn't done recursively. Because of that fetch did not
+recursively fetch submodules living in subdirectories even when it should
+have.
 
-On Mon, Jun 20, 2011 at 19:50, Brandon Casey
-<brandon.casey.ctr@nrlssc.navy.mil> wrote:
-> Well, I don't see anywhere where CalledProccessError is actually caug=
-ht.
-> i.e. I don't see
->
-> =C2=A0 except subprocess.CalledProcessError:
->
-> anywhere. =C2=A0So, on python 2.5+ if this exception is ever raised, =
-the
-> script would just exit and produce a backtrace right?
+Fix that by adding the RECURSIVE flag to the diff_options used to check
+the new commits and avoid future regressions in this area by moving a
+submodule in t5526 into a subdirectory.
 
-We're not trying to catch it, but we raise it (since that's what the
-python 2.5 implementation of check_call does). But if it's not defined
-in python 2.4, then my patch broke 2.4 again :).
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
 
-> On python 2.4, it would also exit and produce a backtrace that
-> looks like this:
->
-> =C2=A0 =C2=A0 File "test.py", line 11, in check_call
-> =C2=A0 =C2=A0 =C2=A0 raise subprocess.CalledProcessError(retcode, cmd=
-)
-> =C2=A0 AttributeError: 'module' object has no attribute 'CalledProces=
-sError'
+I found this bug after investigating a rather surprising "commits not
+present" message at work today. I suspect most submodules live in the
+top level directory of their superproject ...
 
-Yeah, it would, my bad :(. I'll just define a dummy CalledProcessError
-if it isn't defined to support python 2.4
 
-> Btw. the only reason I submitted those changes to support python 2.4
-> was because RHEL 5.X ships with python 2.4, and the changes were not
-> too intrusive. =C2=A0So, it should be considered whether supporting 2=
-=2E4
-> is desirable. =C2=A0I wouldn't want to increase the maintenance burde=
-n
-> on the real python developers (i.e. not me).
+ submodule.c                 |    1 +
+ t/t5526-fetch-submodules.sh |   16 ++++++++--------
+ 2 files changed, 9 insertions(+), 8 deletions(-)
 
-Wikipedia says RHEL 5.x will ready End of Production 1 on Q4 2011, but
-RHEL 6.x has been out only a little over half a year, so it's probably
-worth doing.
+diff --git a/submodule.c b/submodule.c
+index 5294cef..e43f221 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -362,6 +362,7 @@ void check_for_new_submodule_commits(unsigned char new_sha1[20])
+ 		while (parent) {
+ 			struct diff_options diff_opts;
+ 			diff_setup(&diff_opts);
++			DIFF_OPT_SET(&diff_opts, RECURSIVE);
+ 			diff_opts.output_format |= DIFF_FORMAT_CALLBACK;
+ 			diff_opts.format_callback = submodule_collect_changed_cb;
+ 			if (diff_setup_done(&diff_opts) < 0)
+diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+index a1fddd4..ca5b027 100755
+--- a/t/t5526-fetch-submodules.sh
++++ b/t/t5526-fetch-submodules.sh
+@@ -47,7 +47,7 @@ test_expect_success setup '
+ 		git init &&
+ 		echo subcontent > subfile &&
+ 		git add subfile &&
+-		git submodule add "$pwd/deepsubmodule" deepsubmodule &&
++		git submodule add "$pwd/deepsubmodule" subdir/deepsubmodule &&
+ 		git commit -a -m new
+ 	) &&
+ 	git submodule add "$pwd/submodule" submodule &&
+@@ -58,7 +58,7 @@ test_expect_success setup '
+ 		git submodule update --init --recursive
+ 	) &&
+ 	echo "Fetching submodule submodule" > expect.out &&
+-	echo "Fetching submodule submodule/deepsubmodule" >> expect.out
++	echo "Fetching submodule submodule/subdir/deepsubmodule" >> expect.out
+ '
 
---=20
-Cheers,
-
-Sverre Rabbelier
+ test_expect_success "fetch --recurse-submodules recurses into submodules" '
+@@ -277,12 +277,12 @@ test_expect_success "Recursion picks up all submodules when necessary" '
+ 	(
+ 		cd submodule &&
+ 		(
+-			cd deepsubmodule &&
++			cd subdir/deepsubmodule &&
+ 			git fetch &&
+ 			git checkout -q FETCH_HEAD
+ 		) &&
+ 		head1=$(git rev-parse --short HEAD^) &&
+-		git add deepsubmodule &&
++		git add subdir/deepsubmodule &&
+ 		git commit -m "new deepsubmodule"
+ 		head2=$(git rev-parse --short HEAD) &&
+ 		echo "From $pwd/submodule" > ../expect.err.sub &&
+@@ -309,12 +309,12 @@ test_expect_success "'--recurse-submodules=on-demand' doesn't recurse when no ne
+ 	(
+ 		cd submodule &&
+ 		(
+-			cd deepsubmodule &&
++			cd subdir/deepsubmodule &&
+ 			git fetch &&
+ 			git checkout -q FETCH_HEAD
+ 		) &&
+ 		head1=$(git rev-parse --short HEAD^) &&
+-		git add deepsubmodule &&
++		git add subdir/deepsubmodule &&
+ 		git commit -m "new deepsubmodule"
+ 		head2=$(git rev-parse --short HEAD) &&
+ 		echo "From $pwd/submodule" > ../expect.err.sub &&
+@@ -345,13 +345,13 @@ test_expect_success "'--recurse-submodules=on-demand' recurses as deep as necess
+ 		git config fetch.recurseSubmodules false &&
+ 		(
+ 			cd submodule &&
+-			git config -f .gitmodules submodule.deepsubmodule.fetchRecursive false
++			git config -f .gitmodules submodule.subdir/deepsubmodule.fetchRecursive false
+ 		) &&
+ 		git fetch --recurse-submodules=on-demand >../actual.out 2>../actual.err &&
+ 		git config --unset fetch.recurseSubmodules
+ 		(
+ 			cd submodule &&
+-			git config --unset -f .gitmodules submodule.deepsubmodule.fetchRecursive
++			git config --unset -f .gitmodules submodule.subdir/deepsubmodule.fetchRecursive
+ 		)
+ 	) &&
+ 	test_i18ncmp expect.out actual.out &&
+-- 
+1.7.5.4.3.ge9634
