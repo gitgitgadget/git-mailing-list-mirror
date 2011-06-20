@@ -1,77 +1,67 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: git-new-workdir for Windows (#9)
-Date: Mon, 20 Jun 2011 11:20:21 +0530
-Message-ID: <BANLkTinosK6uDdqoRwk8j20y08JwM2HxTw@mail.gmail.com>
-References: <git/git/pull/9@github.com> <git/git/pull/9/c1372088@github.com> <BANLkTi=x+5yL3XuS8HF1=5S71rsY_=7O9Q@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] Move contents of libgit.a to lib subdirectory
+Date: Sun, 19 Jun 2011 22:59:23 -0700
+Message-ID: <7vd3i9dow4.fsf@alter.siamese.dyndns.org>
+References: <alpine.LNX.2.00.1106192014410.41113@linux.foleyremote.com>
+ <BANLkTimjixOT=j9Xf=Ti-04cRw2noC0NiQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Daniel Smith <dansmith65@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 20 07:50:49 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Peter Foley <pefoley2@verizon.net>, git@vger.kernel.org
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Jun 20 07:59:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYXNo-0004ez-OO
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 07:50:49 +0200
+	id 1QYXWG-0007N8-Dj
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 07:59:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752018Ab1FTFuo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Jun 2011 01:50:44 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:63465 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751447Ab1FTFun convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Jun 2011 01:50:43 -0400
-Received: by wyb38 with SMTP id 38so1403606wyb.19
-        for <git@vger.kernel.org>; Sun, 19 Jun 2011 22:50:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=6ICquQXBFSKis5f5Jxhn2hIdqCeXiiFNWz25FvFQwp4=;
-        b=vHq/98zteUncgK3nthVOIVvLGAulbx7lNIF56GnrnfE2vLGXGbbq8+VeD4c8DRr9pl
-         m92Ysd9OPuna+Movc34JmP57miTwHDcNKx3fPhi+FI4+4d3kEsLQKqix9txcET6rOD1i
-         lwKCS5cldXPkhJYegdfmmhh3lUfZKU/OFVQ4A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=oOkf8oFgw8VxAfFnTwTaNCT0JOuurT/nrQzpPaBmZ21MxTDqrxHZkmo4lJQt3+yyjQ
-         og14bh1+p934bcFlrb02SoFQhftWTNMP11u/kzSSFSgniw9CGx+WdKnXuE/Lwopp556A
-         5GXnQxIc4OBUfY5BChILNWXENhG/xSOxNlPvs=
-Received: by 10.216.66.149 with SMTP id h21mr362976wed.91.1308549042114; Sun,
- 19 Jun 2011 22:50:42 -0700 (PDT)
-Received: by 10.216.18.16 with HTTP; Sun, 19 Jun 2011 22:50:21 -0700 (PDT)
-In-Reply-To: <BANLkTi=x+5yL3XuS8HF1=5S71rsY_=7O9Q@mail.gmail.com>
+	id S1751971Ab1FTF71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jun 2011 01:59:27 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63096 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751489Ab1FTF70 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2011 01:59:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 662582AA4;
+	Mon, 20 Jun 2011 02:01:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LAGNTS92lPBdo9YbX+jQVgyknYM=; b=FLz5FY
+	lYLOr+128roeTLUcxIIwOQFqbMhp9l57NBT2WhC3VAARXjXsFOwzuVAeYk+Yfkh3
+	+vMcfVHk59Dpqt689qAuY8176dAvgeGyZXY1EXSCp1ahscswYXJNXXd/Y9Br1h0W
+	t1SZ4Ho7g3HX91MpRJtDE0kiIeELED0zc6zNg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AxXaUzA3hTP5tqwCmpRdxDWKdVUuHvao
+	5XfjKPH39C59QSur1XHeNyR0eq7va+8OoZWLqZjiOp5YWBIGzk4nD/Qg/rL3YHCN
+	XnXLhEX7/HRELb4BGTPsB+Qev2j5Yk5bJ1q3Ds/KhDywm9+jELH4ZIiUhvQFaVWn
+	u4ZqlPKUzvw=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 53A0C2AA3;
+	Mon, 20 Jun 2011 02:01:37 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id AC7512AA2; Mon, 20 Jun 2011
+ 02:01:36 -0400 (EDT)
+In-Reply-To: <BANLkTimjixOT=j9Xf=Ti-04cRw2noC0NiQ@mail.gmail.com> (Shawn
+ Pearce's message of "Sun, 19 Jun 2011 18:06:24 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C1F10E78-9B02-11E0-B766-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176049>
 
-Hi Daniel,
+Shawn Pearce <spearce@spearce.org> writes:
 
-Daniel Smith writes:
-> The git-new-workdir script creates copies of files instead of symboli=
-c
-> links, when run from Git Bash on Windows Vista. I modified it to use
-> mklink via cmd.exe. =C2=A0I have an open pull request on GitHub:
-> https://github.com/git/git/pull/9.
->
-> I'm not sure how permanent that link is, so here is a link to the fil=
-e
-> in my fork of git:
-> https://github.com/dansmith65/git/blob/master/contrib/workdir/git-new=
--workdir-win
+> ... But why is this amount of churn necessary or being
+> recommended? What problem does this address? Is that worth the pain
+> this puts on every other in-flight change that is still being
+> developed, or is already in the review pipeline?
 
-Thank you for fixing this.  However, we can't accept patches via pull
-requests on GitHub.  Please read Documentation/SubmittingPatches to
-submit a neatly formatted patch so that we can consider it for
-inclusion.  Also, please consider patching the existing
-git-new-workdir script to work with GitBash instead of creating one
-from scratch.
+No reason and not recommended; nothing; not worth.
 
-Thanks.
-
--- Ram
+Especially during the pre-release freeze.
