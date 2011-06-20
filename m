@@ -1,112 +1,126 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH svn-fe 5/7] Fix vcs-svn/fast_export reinit bugs
-Date: Mon, 20 Jun 2011 05:12:55 -0500
-Message-ID: <20110620101254.GG28282@elie>
-References: <1308558173-29672-1-git-send-email-divanorama@gmail.com>
- <1308558173-29672-5-git-send-email-divanorama@gmail.com>
+From: Michael Mc Donnell <michael@mcdonnell.dk>
+Subject: Re: git imap-send converting my patches to CRLF line endings?
+Date: Mon, 20 Jun 2011 12:40:37 +0200
+Message-ID: <BANLkTina7Zo6Lg36y87L=fEAGqox8DTTsg@mail.gmail.com>
+References: <BANLkTimXQQX_Fu0fgtWneF2cCLUZFhTaCg@mail.gmail.com>
+	<20110617141450.GA12114@sigill.intra.peff.net>
+	<BANLkTin1DAv0pZmZCcrtDyjrUD-ukO6MNQ@mail.gmail.com>
+	<Svak9atXpisIKwqaYKGMzry3LEHEDPnWLLqFpfgP7IOuAVUdRy8brA@cipher.nrlssc.navy.mil>
+	<Oe8m5NtYZicsi6Z4FtNIXAfsB9Q9XcHSsoAYmKdxQkoDVJOKykQTEg@cipher.nrlssc.navy.mil>
+	<20110617155031.GA24009@sigill.intra.peff.net>
+	<tJkMDtbNwQ8q_53P87PeL5TSZPj2DgHxteCyO4IoGfk@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Barr <davidbarr@google.com>
-To: Dmitry Ivankov <divanorama@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 20 12:13:05 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Mon Jun 20 12:40:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYbTc-0002X2-Pa
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 12:13:05 +0200
+	id 1QYbuO-0006yT-V5
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 12:40:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753443Ab1FTKM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jun 2011 06:12:59 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:33526 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752955Ab1FTKM7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2011 06:12:59 -0400
-Received: by iwn6 with SMTP id 6so1048925iwn.19
-        for <git@vger.kernel.org>; Mon, 20 Jun 2011 03:12:58 -0700 (PDT)
+	id S1751317Ab1FTKki convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Jun 2011 06:40:38 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:53224 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751108Ab1FTKkh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Jun 2011 06:40:37 -0400
+Received: by ywe9 with SMTP id 9so2016566ywe.19
+        for <git@vger.kernel.org>; Mon, 20 Jun 2011 03:40:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=dXphqN5k5L1j6mnkl2B5zl8OvMeDgOjOVnb7hLeOfkI=;
-        b=rccdpP2GdPk/Twqx83WyWI5FbCfrz3s7zNRsRhxz2d8Mfzi+ykkTkhJlOxtt5BPKol
-         o0aKIPZNA4wGqTTNtKT3RMfmJB6wmtQAw2qx2NoB+Kcmnk+O5C71p2oFHUrlZTt2V194
-         b9jvpeI+yV44aLoBieqUxS7Fnv/r1a+MDEVP0=
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=V3iz+MdO4aX0AQMiti411v1JAJ/uahIWE9Uuwrpo7D4=;
+        b=Cj/ZctVG3Pgi83zhjRVB+Hv1vo5s8dLftTutMku1yCbRY+EKO3KJQ4jdtA+B6K+Ibi
+         hR4jgE2GbVBhdFMG58uaaWFVPNSO7Tq/scdx+NY5bmKkjmmkmA2Gzl9niViLieFHlhu/
+         CDk/6CDPBgg/huyoPhdHyysJbbU44PIQiFlPs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=uhwUz5AUOdU8fALSHlJYMXG7MQrGx71Ih71XmQwejI63zTdRUjS0/+t/G0lHow0vs5
-         EpJ8qhHro5Q/mbUyALsojZvR7n8/imvEXli64nLPU/1V4dwkWVWr1uo7J2nbSJTeul8P
-         J0wBSO2EaBInG0hRTMfRDfmqJ6XH8jRJpGcW8=
-Received: by 10.231.209.138 with SMTP id gg10mr4948735ibb.107.1308564778744;
-        Mon, 20 Jun 2011 03:12:58 -0700 (PDT)
-Received: from elie (adsl-69-209-50-158.dsl.chcgil.sbcglobal.net [69.209.50.158])
-        by mx.google.com with ESMTPS id s2sm1727466ibe.35.2011.06.20.03.12.57
-        (version=SSLv3 cipher=OTHER);
-        Mon, 20 Jun 2011 03:12:57 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1308558173-29672-5-git-send-email-divanorama@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=fZ7Tjq9pb4MhJ7KyDEZcuYPC6g6rXeY6sK6xKBxxVDzjTydeDLl2xKESrYEifIsgAW
+         Hx0z91fByNAvWsvttJHG4shcBRUqLip/0uUrXl9ZtgQqW86aefoQ9fdEp95BucrpFl+P
+         bUiFG0J9NWtX/aS4TTwkg6T04bJLdywGJlQeA=
+Received: by 10.146.193.16 with SMTP id q16mr5440604yaf.22.1308566437174; Mon,
+ 20 Jun 2011 03:40:37 -0700 (PDT)
+Received: by 10.147.113.1 with HTTP; Mon, 20 Jun 2011 03:40:37 -0700 (PDT)
+In-Reply-To: <tJkMDtbNwQ8q_53P87PeL5TSZPj2DgHxteCyO4IoGfk@cipher.nrlssc.navy.mil>
+X-Google-Sender-Auth: F9drQbBjDTfvk-Ss0U45ctEQMBA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176061>
 
-Hi,
-
-Dmitry Ivankov wrote:
-
-> first_commit_done was not set in _init, but it
-> is needed if fast_export_ is used/_init-ed twice.
-
-Thanks, good catch.  I wonder if it's possible to detect this kind of
-thing automatically --- maybe it would make sense for test-svn-fe to
-learn to apply two dumps in sequence so this code could be exercised.
-
-> Same thing for the branch_name.
-
-This one should be squashed with the previous patch for easier review
-imho.  New readers never have to know the details of early mistakes.
-
+On Fri, Jun 17, 2011 at 6:54 PM, Brandon Casey
+<brandon.casey.ctr@nrlssc.navy.mil> wrote:
+> On 06/17/2011 10:50 AM, Jeff King wrote:
+>> On Fri, Jun 17, 2011 at 10:37:54AM -0500, Brandon Casey wrote:
+>>
+>>>>> $ git format-patch --stdout --keep-subject --attach origin | git =
+imap-send
+>>>
+>>> Wait a second. =A0You used --attach.
+>>>
+>>>>> 2. Open Gmail in Chrome.
+>>>>> 3. Open email in drafts folder.
+>>>>> 4. Click attachment download link
+>>>
+>>> Then you downloaded the attachment, which should be a _patch_.
+>>
+>> Yeah, but if it is text/*,
 >
-> Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
-> ---
->  vcs-svn/fast_export.c |    4 ++++
->  1 files changed, 4 insertions(+), 0 deletions(-)
+> It is.
 >
-> diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
-> index 8b14b74..6a4360f 100644
-> --- a/vcs-svn/fast_export.c
-> +++ b/vcs-svn/fast_export.c
-> @@ -32,6 +32,8 @@ static int init_postimage(void)
->  
->  void fast_export_init(int fd, const char* branch)
->  {
-> +	first_commit_done = 0;
-> +	strbuf_reset(&branch_name);
->  	strbuf_addstr(&branch_name, branch);
->  	if (buffer_fdinit(&report_buffer, fd))
->  		die_errno("cannot read from file descriptor %d", fd);
-> @@ -45,7 +47,9 @@ void fast_export_deinit(void)
->  
->  void fast_export_reset(void)
->  {
-> +	first_commit_done = 0;
+>> then according to rfc2046, it must be
+>> represented with CRLF as the line break. And especially if we are
+>> including it unencoded in a message, it is going to need CR's added.
+>>
+>>>>> 5. Apply patch on a fresh branch with git apply.
+>>>
+>>> Well, scratch what I said before, you were correct in using
+>>> git apply.
+>>>
+>>> Shouldn't the attachment have it's content preserved exactly? =A0Ma=
+ybe
+>>> the fault does belong to gmail.
+>>
+>> Is it gmail's fault, or the browser's? =A0If gmail is handing back a
+>> text/* content-type, then my reading of rfc2046 is that it should ha=
+ve
+>> CRLF line breaks. =A0And it would be the browser's responsibility to
+>> convert to native line endings. =A0But that's the MIME spec, and was
+>> written with mail in mind; I don't know what's normal for HTTP in th=
+ese
+>> situations. But if the problem is not "strip CR" but "convert to nat=
+ive
+>> line endings" (which I think it is), then how could gmail know the
+>> user's native line ending preference, anyway?
+>
+> So it's the same issue of line ending ambiguity that affects patches
+> sent inline in the body of the email message. =A0What we really want
+> is the _original_ line ending, not necessarily the native line ending
+> of the platform, but since any text/* content returned from or sent
+> to the mail server must have CRLF line endings, it is impossible to
+> determine whether or not the original content really had LF line
+> endings or not. =A0Currently, mailsplit chooses to assume the origina=
+l
+> line ending was LF, based on the assumption that that's the line
+> ending that most projects use.
+>
+> There doesn't seem to be any advantage to using --attach then, over
+> just including the patch inline. =A0Maybe attachments should always b=
+e
+> base64 encoded? =A0I get the eerie feeling that this topic has alread=
+y
+> been hashed to death.
 
-I don't think this is needed --- fast_export_reset is called when we
-are about to exit.  Maybe the vcs-svn::*_reset functions should be
-renamed to foo_free or something similar to avoid confusion
-(especially when comparing to strbuf_reset).
-
->  	buffer_reset(&report_buffer);
-> +	strbuf_reset(&branch_name);
->  }
->  
->  void fast_export_delete(const char *path)
-> -- 
-> 1.7.3.4
-> 
+It sounds like its a big job to implement all those RFCs correctly. Is
+there a library that could be used for handling imap?
