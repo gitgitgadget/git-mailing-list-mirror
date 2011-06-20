@@ -1,86 +1,93 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 08/20] remote-curl: accept empty line as terminator
-Date: Mon, 20 Jun 2011 12:41:02 -0700
-Message-ID: <7v4o3kcmup.fsf@alter.siamese.dyndns.org>
-References: <1308496725-22329-9-git-send-email-srabbelier@gmail.com>
- <1308537351-23209-1-git-send-email-divanorama@gmail.com>
- <20110620075541.GA28282@elie>
+Subject: Re: [PATCH v2 15/20] transport-helper: use the new done feature
+ where possible
+Date: Mon, 20 Jun 2011 12:51:47 -0700
+Message-ID: <7vzklcb7sc.fsf@alter.siamese.dyndns.org>
+References: <1308496725-22329-1-git-send-email-srabbelier@gmail.com>
+ <1308496725-22329-16-git-send-email-srabbelier@gmail.com>
+ <20110620114556.GA29818@elie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Dmitry Ivankov <divanorama@gmail.com>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Daniel Barkalow <barkalow@iabervon.org>
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Ramkumar@elie.pobox.com
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 20 21:41:13 2011
+X-From: git-owner@vger.kernel.org Mon Jun 20 21:51:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYkLR-0000Bz-Cb
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 21:41:13 +0200
+	id 1QYkVo-0006WY-3c
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Jun 2011 21:51:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755244Ab1FTTlI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jun 2011 15:41:08 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57694 "EHLO
+	id S1753286Ab1FTTvu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jun 2011 15:51:50 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33871 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751352Ab1FTTlF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2011 15:41:05 -0400
+	with ESMTP id S1750945Ab1FTTvu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2011 15:51:50 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 360D053A0;
-	Mon, 20 Jun 2011 15:43:15 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 02593552B;
+	Mon, 20 Jun 2011 15:54:00 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ueA5ZymN5xv5qiWb77b2QMXpy8k=; b=iys0NZ
-	eDguvNkASXtBXFMhaZATLH3Hs5QD9NdXa/vqZhNsiPDqQMkL0HKqxa1fsBh7SSEY
-	sTBXVgsj/5qk/FZY4cmqliuDfa3LmvexW6LQF54+hVIr/9UadsfsC8q6hdM8ak8E
-	pb1xdgzRI4FNWwgLf6wCyGKkqwOkr5V+VLYsU=
+	:content-type; s=sasl; bh=xYHWLnIi3BxKyRkT4JVeHHVdU8o=; b=qxYmZg
+	2TBt9zxk5tcmjnhGKhOeVL4GRXajxu9Kb2q9D68IlWzxBw39lyEXMlYCXj2XW643
+	IdNs4ehK7LNnZk2onzVxRjnnhJry1J97HJnck5k0WvzgoZrLcHkn3MSgY+LmCeDH
+	V3yl4yh1ZPOWHt2rILrIjL75UJA2qrSj4tkRU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PxfOQCUSrFfsdJnZh44xldt5xmaCMo1G
-	OqdsaQodCGClsfZmFfji6KBqA0zoOktSctwaqsQC5BBN3zPluNcytoRR/jPP31T9
-	XSOerYJWnofk7ewxVZA2mLpwzXWjo2kIiWW2r3Q/qjZPplF/0L2tWa72bAG1Ywgt
-	TwJUxcxQBTc=
+	:content-type; q=dns; s=sasl; b=BbZHf4dFE2n0WkZF0OgZ5N3JSukzab+H
+	rciZKRyEKwo3Tp38ZMZN7fywnhGse94gTMziiv2QB0wimYExi7IRXleyUcSsKhxe
+	k1H5QgG7eGVcGUBNUdxQzsc4aC2885/Sha0kL5BKI8vT04Gy/HsvO1/V2lNqc9FY
+	eULPj0oBrfo=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2FD44539F;
-	Mon, 20 Jun 2011 15:43:15 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id ED4B1552A;
+	Mon, 20 Jun 2011 15:53:59 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7BFA3539E; Mon, 20 Jun 2011
- 15:43:14 -0400 (EDT)
-In-Reply-To: <20110620075541.GA28282@elie> (Jonathan Nieder's message of
- "Mon, 20 Jun 2011 02:55:41 -0500")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 427F15529; Mon, 20 Jun 2011
+ 15:53:59 -0400 (EDT)
+In-Reply-To: <20110620114556.GA29818@elie> (Jonathan Nieder's message of
+ "Mon, 20 Jun 2011 06:45:56 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 89B8ED00-9B75-11E0-9CEE-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 0A0D4CDE-9B77-11E0-8620-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176089>
 
 Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Side note: a "done" capability doesn't sound like a bad idea, though,
-> for another reason.  The transport-helper could tell fast-import to
-> expect a "done" command at the end when importing from a remote helper
-> declaring it, to catch situations in which the pipe prematurely closes
-> (for example, because the remote helper has segfaulted).
+>> @@ -412,11 +413,8 @@ static int fetch_with_import(struct transport *transport,
+>>  		sendline(data, &buf);
+>>  		strbuf_reset(&buf);
+>>  	}
+>> -	if (disconnect_helper(transport))
+>> -		die("Error while disconnecting helper");
+>>  	if (finish_command(&fastimport))
+>>  		die("Error while running fast-import");
+>> -
 >
->> I don't see a convention of terminating on a
->> blank line in docs,
+> What is this change about?  Is the plan to allow other commands after
+> a fetch_with_import?  Sounds reasonable; I think it should be
+> advertised in the log message, though.
 >
-> Yes, this would be nice to document.
+> When does the disconnect_helper call happen (to avoid leaks)?  Ah, in
+> release_helper; phew.
 >
->> only on EOF.  Also I can imagine a blank
->> line being read in a case of communication error
+> The disconnect_helper call writes the blank line that terminates the
+> list of "import %s" commands to start the import, so there would need
+> to be a
 >
-> A spurious NL, NL, EOF sequence does not sound likely to me.  If the
-> command stream is passing through a noisy channel, there are worse
-> corruptions to worry about (e.g., fetching to the wrong ref).
+> 	strbuf_reset(&buf);
+> 	strbuf_addf(&buf, "\n");
+> 	sendline(data, &buf);
+>
+> in its place.
 
-I think everything you said in this message makes sense, especially the
-part about "premature EOF detection".
-
-The spurious LF is an issue if you are trying to drive the backend by hand
-for testing, but otherwise probably not.
+All sensible suggestions for a potential reroll.
