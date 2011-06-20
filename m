@@ -1,74 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH 2/3] Add a lot of dummy returns to avoid warnings with
  NO_NORETURN
-Date: Mon, 20 Jun 2011 15:30:56 -0700
-Message-ID: <7vboxsb0f3.fsf@alter.siamese.dyndns.org>
+Date: Mon, 20 Jun 2011 17:31:56 -0500
+Message-ID: <20110620223156.GA695@elie>
 References: <1308445625-30667-1-git-send-email-andi@firstfloor.org>
  <1308445625-30667-2-git-send-email-andi@firstfloor.org>
  <7vsjr4b3tf.fsf@alter.siamese.dyndns.org>
- <7vk4cgb24p.fsf@alter.siamese.dyndns.org>
- <20110620220027.GD32765@one.firstfloor.org>
+ <20110620213001.GB32765@one.firstfloor.org>
+ <7vfwn4b1vb.fsf@alter.siamese.dyndns.org>
+ <20110620220347.GE32765@one.firstfloor.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Andi Kleen <ak@linux.intel.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Andi Kleen <ak@linux.intel.com>
 To: Andi Kleen <andi@firstfloor.org>
-X-From: git-owner@vger.kernel.org Tue Jun 21 00:31:06 2011
+X-From: git-owner@vger.kernel.org Tue Jun 21 00:32:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYmzp-0003rY-Qy
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 00:31:06 +0200
+	id 1QYn0u-0004Vp-6A
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 00:32:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756137Ab1FTWbA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jun 2011 18:31:00 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58993 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755553Ab1FTWa7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2011 18:30:59 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2C59D6968;
-	Mon, 20 Jun 2011 18:33:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2vXnf8QYiMXnVuweOlmrLMtf3wo=; b=DE69vx
-	lBGhzHFB6AmHiS1MYM9SFqy+Wqx81YYM5c1kExAT3YrGxBQfE26Lszv0zJjmgHs9
-	ZjlCooHEfync9NBYnsirlvy6dOkGtBjL58n7wizc6JDbG+QctMkIcZhLNDHKE548
-	oqlt3cPxk8jGGZncScqkAtW1bslUpOO87buJw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fiiCJ2QR8Ku4VTJsPGCFeUHwy6ylOg3v
-	eP2k7lwqjPL08lZLGVfxUBbjLilUjw92rq9w+SbgatwDFeIXtXJ29g/yH6HSt3GM
-	Zyv00jg2Ap7Jr+gFc5oAzYlEzCzP/WD+ckkQHFQFHJnzolpg1c3+UnLgcGF0ZML0
-	TGv8MabnDJ0=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 23CE06967;
-	Mon, 20 Jun 2011 18:33:11 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8364E6966; Mon, 20 Jun 2011
- 18:33:10 -0400 (EDT)
-In-Reply-To: <20110620220027.GD32765@one.firstfloor.org> (Andi Kleen's
- message of "Tue, 21 Jun 2011 00:00:27 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 47076398-9B8D-11E0-88EB-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
+	id S1756147Ab1FTWcH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jun 2011 18:32:07 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:64399 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755553Ab1FTWcE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2011 18:32:04 -0400
+Received: by iwn6 with SMTP id 6so1576349iwn.19
+        for <git@vger.kernel.org>; Mon, 20 Jun 2011 15:32:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=sFzJFjsyOc//bxzU/wPnnMmyYzgVymiHnHPohOwoMts=;
+        b=tyfjSE6n1B/BZWcp+EpDv7VP5lSoPi8o73vCrRzPqBgGYVA1Bnm/nROBnv0/oEN0h6
+         70ZEONW+VM8oOWg6Uic0RdWL5FwnACbvlF/cO7Ew9aSc17o7qTlPWugw0Mt5wnDwZM3b
+         BpSnZLs5ttGfhuHQkSbSUORWhA41udSuickGI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=fhJC+XsCHxh1QMjLBfMm22A5oqgPCrBjx1ZxDcGGeE+7GZkxD5gqC9VaKLZ9y18JB1
+         H2aH4986+pH+NlZOC/W6JjsQahCIKLDhpSfOV2esIwAeHYALpkNpjsokoS/g0mnmsdBC
+         UO5Dy6o45IJkySQ2LXpgtExis3hhS6G//a3ss=
+Received: by 10.42.28.72 with SMTP id m8mr363470icc.242.1308609123494;
+        Mon, 20 Jun 2011 15:32:03 -0700 (PDT)
+Received: from elie (adsl-69-209-79-158.dsl.chcgil.sbcglobal.net [69.209.79.158])
+        by mx.google.com with ESMTPS id q15sm3441103ibb.14.2011.06.20.15.32.01
+        (version=SSLv3 cipher=OTHER);
+        Mon, 20 Jun 2011 15:32:02 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20110620220347.GE32765@one.firstfloor.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176102>
 
-Andi Kleen <andi@firstfloor.org> writes:
+Hi Andi,
 
->> I would need to clarify with s/introduce noise/introduce more noise/; the
->> existing codebase is not noise-free.
->> 
->> But I do not see much point in making things worse, only to squelch
->> "reaches end of non void function" warnings that will be given under the
->> NO_NORETURN workaround configuration.
+Andi Kleen wrote:
+
+>> Sorry, I do not recall suggesting to add these dummy returns. The NO_NORETURN
+>> workaround (your [1/3]) is what I remember.
 >
-> Can you please give specific guidance what I should do to make
-> the patchkit acceptable?
+> It was just a logical followup to quelch the warning storm NO_NORETURN 
+> caused.
 
-I am inclined to apply only 1 and 3, which is what I already have on 'pu'.
+Please remember to think for yourself. ;-)  Junio generally gives good
+advice, but if you don't see the wisdom in it, that's the time to ask
+questions, not blindly do a wrong thing.
+
+In this case, since the NO_NORETURN knob is to work around a gcc bug,
+wouldn't it make sense to add a -Wno-something-or-other option to
+BASIC_CFLAGS or COMPAT_CFLAGS when it is set?
+
+Hope that helps,
+Jonathan
