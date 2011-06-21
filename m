@@ -1,103 +1,95 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: git-union-merge proposal
-Date: Tue, 21 Jun 2011 09:34:33 +0200
-Message-ID: <201106210934.34025.johan@herland.net>
-References: <20110621022049.GA1632@gnu.kitenet.net>
- <20110621052211.GA16919@elie>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: corrupted Git repository
+Date: Tue, 21 Jun 2011 10:19:16 +0200
+Message-ID: <4E005404.5010901@drmicha.warpmail.net>
+References: <BANLkTi=A=DpyfNwEeSd6N6ibCsA5qh_NPQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Joey Hess <joey@kitenet.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 21 09:34:43 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Kasra Khosoussi <kasra.mail@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 21 10:19:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYvTu-0006as-6H
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 09:34:42 +0200
+	id 1QYwBG-0008EV-Nq
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 10:19:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752360Ab1FUHeg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jun 2011 03:34:36 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:65245 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751276Ab1FUHeg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2011 03:34:36 -0400
-Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
- by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LN400C7KQDMFC90@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Tue, 21 Jun 2011 09:34:34 +0200 (MEST)
-Received: from get-mta-scan02.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 8DCDC1EA55F6_E00498AB	for <git@vger.kernel.org>; Tue,
- 21 Jun 2011 07:34:34 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 5828A1EA28F4_E00498AF	for <git@vger.kernel.org>; Tue,
- 21 Jun 2011 07:34:34 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LN40058UQDMJT30@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Tue, 21 Jun 2011 09:34:34 +0200 (MEST)
-User-Agent: KMail/1.13.7 (Linux/2.6.39-ARCH; KDE/4.6.3; x86_64; ; )
-In-reply-to: <20110621052211.GA16919@elie>
+	id S1751200Ab1FUITY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jun 2011 04:19:24 -0400
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:37240 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751317Ab1FUITW (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Jun 2011 04:19:22 -0400
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 0BEE720A69;
+	Tue, 21 Jun 2011 04:19:22 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Tue, 21 Jun 2011 04:19:22 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=VYBh9R1kXtAdW3S5m6oC0TB46lc=; b=LJbOSZiZf+AML+t99M1wm6sGlE15PKxSh/djjOUCVYAdQPNjBFwQAkt84T2gmhKFP/X9HD2swoFvgXSD2K//OS8hmJ2kHtj61LIYJynIhXBxb9IJLTUCtBDDBN1WQr6qCh1oToCL65SooatoZI3fWHVTkZ2p5zBDBjJWqGEITsI=
+X-Sasl-enc: vsBQtr7ipX63JwTm8YkNM/tVvpcHSJJr8rrGqHi/YWU7 1308644361
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 51C4B402947;
+	Tue, 21 Jun 2011 04:19:21 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc15 Lightning/1.0b3pre Thunderbird/3.1.10
+In-Reply-To: <BANLkTi=A=DpyfNwEeSd6N6ibCsA5qh_NPQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176132>
 
-On Tuesday 21 June 2011, Jonathan Nieder wrote:
-> Joey Hess wrote[1]:
-> > * git notes merge -s cat_sort_uniq
-> > 
-> >   Notes are stored in a tree using the object sha, which can be
-> >   union merged, when the notes' format is a series of independant
-> >   lines.
-> > 
-> > [...]
-> > 
-> > So I've written a prototype of a git-union-merge that could be used
-> > for all of these. It works like this:
-> > 
-> > git union-merge foo origin/foo refs/heads/foo
+Kasra Khosoussi venit, vidit, dixit 21.06.2011 08:58:
+> Hi all,
 > 
-> [...]
+> My thesis repository is corrupted and I don't have any recent backup
+> (my files are OK, but the history is lost). I've seen the recovery
+
+Backup now!
+I guess you've done that meanwhile anyways, but it's important before
+any recovery attempts.
+
+Is your reflog OK, i.e. do you get proper output from "git reflog" or
+"git log -g"?
+
+> examples in the manual, but I believe my case is somehow different.
+> The repository is linear.
 > 
-> If the prototype were self-contained, I would encourage you to submit
-> it for inclusion under contrib/ so it can evolve and eventually
-> graduate out of there.  Cc-ing Johan (who has no doubt thought through
-> these things in the context of "git notes") in case he has thoughts on
-> it.
+> 1- At the beginning, git status/log/fsck -full said:
+> 
+>> fatal: object 0a83757505387aacc2fd36b3c996729e6bf9d6e5 is corrupted
 
-Thanks for the CC.
+Hopefully and probably only the most recent commit (the one above) is
+lost, not all of our history.
 
-I must confess that my Haskell skills are exactly nil, but AFAICS the script 
-depends on the filename as the only criteria to identify files that need a 
-line-level merge. How does the script deal with renamed and copied files?
+> 
+> and there was an empty file in .git/objects/01/8375... .
 
-If you depend on the filename only, this script simply will not work for 
-notes. The notes tree reorganizes itself dynamically for optimum 
-performance, and this affects how notes trees can be merged.
+.git/objects/0a83... probably
 
-E.g. given a note for object 01234567..., this note may exist as 
-"01234567..." in one notes tree, while it may exist as "01/234567..." in a 
-bigger notes tree, or even "01/23/4567..." in an even bigger notes tree. 
-Even though the filenames differ, they all refer to the same note, and you 
-cannot merge notes trees correctly without taking that fact into account.
+> 
+> 2- If I move the corrupted object, git fsck --ful would return this:
+> 
+>> error: HEAD: invalid sha1 pointer 0a83757505387aacc2fd36b3c996729e6bf9d6e5
+>> error: refs/heads/master does not point to a valid object!
+>> dangling tree 06f388dc60cfb014b5e1f70ecdaa568efe6bd0fa
+>> dangling tree d86f8c75e836e13b6e0336361641223f48fde722
+> 
+> 3- I guess I have to edit refs/heads/master and replace the corrupted
+> sha1 with another hash, but I'm not sure how I can find the proper
+> commit (e.g.,maybe by using find -mtime?).
+> 
+> Thanks in advance,
+> 
+> -Kasra
 
-Furthermore, if you (union-)merge two notes trees that both have 
-"01/234567...", the result does not necessarily belong in "01/234567...". It 
-could be that the sum/union of the two notes trees have pushed the number of 
-notes in the result so high that "01/23/4567..." is now a more optimal name 
-for this note.
+The reflog will give you the previous value of HEAD. You can set
+refs/heads/master to that (git update-ref) and then rebuild the lost
+commit on top of that (assuming only one commit is lost). The dangling
+trees are not necessarily due to the corrupt commit object. Have you
+changed any files since the corrupt commit? Do you remember which files
+you changed in that commit?
 
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Michael
