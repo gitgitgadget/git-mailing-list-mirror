@@ -1,85 +1,89 @@
-From: Kasra Khosoussi <kasra.mail@gmail.com>
+From: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
 Subject: Re: corrupted Git repository
-Date: Tue, 21 Jun 2011 18:56:55 +0430
-Message-ID: <BANLkTi=6jt7Z3fvK++ontW=F9AJbmEr9Qg@mail.gmail.com>
+Date: Tue, 21 Jun 2011 16:32:11 +0200
+Message-ID: <20110621143211.GA4910@bee.lab.cmartin.tk>
 References: <BANLkTi=A=DpyfNwEeSd6N6ibCsA5qh_NPQ@mail.gmail.com>
-	<4E005404.5010901@drmicha.warpmail.net>
-	<BANLkTi=WVTGcGkUXjkuPYcxhMY0a5KPB7g@mail.gmail.com>
-	<4E006682.80101@drmicha.warpmail.net>
-	<BANLkTi=GdEfXnAGa6V-33wqX2C-2x-9JQQ@mail.gmail.com>
-	<4E00A0E1.8000006@viscovery.net>
+ <4E005404.5010901@drmicha.warpmail.net>
+ <BANLkTi=WVTGcGkUXjkuPYcxhMY0a5KPB7g@mail.gmail.com>
+ <4E006682.80101@drmicha.warpmail.net>
+ <BANLkTi=GdEfXnAGa6V-33wqX2C-2x-9JQQ@mail.gmail.com>
+ <4E00A0E1.8000006@viscovery.net>
+ <BANLkTi=6jt7Z3fvK++ontW=F9AJbmEr9Qg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Jun 21 16:27:02 2011
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="CE+1k2dSO48ffgeK"
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Kasra Khosoussi <kasra.mail@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 21 16:32:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZ1uv-0000Be-Rh
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 16:27:02 +0200
+	id 1QZ204-0003gm-BZ
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 16:32:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756716Ab1FUO04 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jun 2011 10:26:56 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:55503 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756431Ab1FUO04 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2011 10:26:56 -0400
-Received: by pwj7 with SMTP id 7so1033007pwj.19
-        for <git@vger.kernel.org>; Tue, 21 Jun 2011 07:26:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=K2uqaQhTQ0cKeb2Xqbr+xOch3XjMk2AWQ0Kq0uKErZY=;
-        b=kJYl/WxRub2Y9ROEogOv9aVuom/D0XAr0pEb281/TeKKwjxdNR7HvyTNp4aVq6rSHY
-         Y1hgey6rxkV9BOWR809f1U+q6EwEml9FEv9fAMLmMNj5dc9dvceszRyTnCWAqIvkhOiB
-         hzfBOG5AUk5nyLCndxaj5fHxiBm0q2ZWiUcZk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=DqiJk06otKvo9E6m5y5xT6C2vgqIrdBUuVpQiyy8ZUw1sf0MR/j6ykjzHrPljCYcDU
-         1BKVZgxcqr0cDtbT6DPblMc8F61TEv6HLZ/4czjoqDPL8pzmKJ4JUzjpjckt8X3XvOzl
-         803yecWy/yntVm+JCWoBVQirG3RnPuCMyAxPs=
-Received: by 10.68.9.231 with SMTP id d7mr3134144pbb.111.1308666415611; Tue,
- 21 Jun 2011 07:26:55 -0700 (PDT)
-Received: by 10.68.55.132 with HTTP; Tue, 21 Jun 2011 07:26:55 -0700 (PDT)
-In-Reply-To: <4E00A0E1.8000006@viscovery.net>
+	id S1756752Ab1FUOcP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jun 2011 10:32:15 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:36420 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756747Ab1FUOcO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2011 10:32:14 -0400
+Received: from bee.lab.cmartin.tk (i59F7870A.versanet.de [89.247.135.10])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id 0F631461EB;
+	Tue, 21 Jun 2011 16:31:40 +0200 (CEST)
+Received: (nullmailer pid 23482 invoked by uid 1000);
+	Tue, 21 Jun 2011 14:32:11 -0000
+Content-Disposition: inline
+In-Reply-To: <BANLkTi=6jt7Z3fvK++ontW=F9AJbmEr9Qg@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176156>
 
-Good question! Actually I have no idea!
 
-It was fine yesterday. I had to leave home so I just shutdown my
-netbook (I just issued the command and closed the lid). Files were
-open in my editor but I'm sure that there were no Git processes
-running at the time. The battery was empty this morning, so my best
-guess is that the halt operation was somehow failed, but I think it
-can not explain the corruption.
+--CE+1k2dSO48ffgeK
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Any idea?
+On Tue, Jun 21, 2011 at 06:56:55PM +0430, Kasra Khosoussi wrote:
+> Good question! Actually I have no idea!
+>=20
+> It was fine yesterday. I had to leave home so I just shutdown my
+> netbook (I just issued the command and closed the lid). Files were
+> open in my editor but I'm sure that there were no Git processes
+> running at the time. The battery was empty this morning, so my best
+> guess is that the halt operation was somehow failed, but I think it
+> can not explain the corruption.
+>=20
+> Any idea?
 
--Kasra
+Does your computer actually shutdown or suspend? It could be that the
+files still hadn't been flushed to disc when the battery ran out, but
+that is unlikely if it did keep running.
 
-On Tue, Jun 21, 2011 at 6:17 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Am 6/21/2011 12:10, schrieb Kasra Khosoussi:
->> Everything seems fine now
->
-> But it would still be good to know how the corruption could have happened.
-> Do you have any clues?
->
-> Disk full?
-> Ctrl-C in the middle of a git operation?
-> Some cron script interference (unlikely)?
-> Permission problems (unlikely)?
-> Networking problems (only if the repository is on a network mount)?
-> Something else?
->
-> -- Hannes
->
+Cheers,
+   cmn
+
+--CE+1k2dSO48ffgeK
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAEBAgAGBQJOAKtrAAoJEHKRP1jG7ZzTLqkIAID6ddhGrhjEPicSuIHw6boY
+uZQwIP4BWsf3PN6maidw5Pzel52WxM7jsW40VHojt7D0yHfeyLZ5s3obhwAY+FTM
+1Cff+0LwV7cz9Rl9v36IEb4JZ8nxtxGIIg3UGN+VtGmGeSkX8pElgWvU+I7aSevC
+TFJiLd097W3j6tqfdFomnW+gj7Ikaady9RztcyPLOJkyRNx5Xed2kklvhuoqBi4h
+ZNmwJxhv8TfZN6BfdenO26VOjbzhJnnPEcVa+0Wpdl4O1d+6vLB5YSkEigmDK4av
+avaoruClZ8icOn69Ua4HDgZeshbg1h6y7FGNmE6rft9GA2QntqhVMbznlnfeSCA=
+=aMjj
+-----END PGP SIGNATURE-----
+
+--CE+1k2dSO48ffgeK--
