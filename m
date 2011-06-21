@@ -1,70 +1,93 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] stash: Add --clean option to stash and remove all untracked
- files
-Date: Tue, 21 Jun 2011 08:28:31 +0200
-Message-ID: <4E003A0F.5080601@viscovery.net>
-References: <1308612986-26593-1-git-send-email-david@porkrind.org> <20110621003852.GB2050@sigill.intra.peff.net> <4DFFF5AA.4030401@porkrind.org> <4E002762.3050803@sohovfx.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH (amend)] gitweb: 'pickaxe' and 'grep' features requires
+	'search' to be enabled
+Date: Tue, 21 Jun 2011 08:41:16 +0200
+Message-ID: <20110621064037.17169.36375.stgit@localhost.localdomain>
+References: <20110620213904.11650.60345.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: David Caldwell <david@porkrind.org>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Andrew Wong <andrew.w@sohovfx.com>
-X-From: git-owner@vger.kernel.org Tue Jun 21 08:28:47 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 21 08:42:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYuS5-0004mR-P7
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 08:28:46 +0200
+	id 1QYuex-0001F5-4D
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 08:42:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751588Ab1FUG2k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jun 2011 02:28:40 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:17387 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750974Ab1FUG2j (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2011 02:28:39 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1QYuRs-000836-7J; Tue, 21 Jun 2011 08:28:32 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id E6E8D1660F;
-	Tue, 21 Jun 2011 08:28:31 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
-In-Reply-To: <4E002762.3050803@sohovfx.com>
-X-Spam-Score: -1.4 (-)
+	id S1751870Ab1FUGlt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jun 2011 02:41:49 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:32843 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751644Ab1FUGls (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2011 02:41:48 -0400
+Received: by fxm17 with SMTP id 17so1443161fxm.19
+        for <git@vger.kernel.org>; Mon, 20 Jun 2011 23:41:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:subject:to:date:message-id:in-reply-to
+         :references:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=o6lxnZP4ebOCsFH/00nL0gQb0arNhL5dBS25KJ6fruY=;
+        b=c14yN6QmEoV5YErJQkYeDpengxMzxI0xbaelvsuEpZgWmqNiPzfuuofoZl7wL7Iyws
+         72i/qRlJoqE8lEB4h/KenFF2qgKzGthRwVNZqwCF06gnl3Yv+KO+Wn9g0ZqwORjhxqX/
+         q4ILKfAaGuDeM5lr/tEkC3AQrT0qyJNBGpJsU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:subject:to:date:message-id:in-reply-to:references:user-agent
+         :mime-version:content-type:content-transfer-encoding;
+        b=btKrMoatnvxd0ciBjmZt0aldfmK0/OMZjdoIUgVlT4U2sMvBv3gvQAWeHjF5DS3EFd
+         lXpg31BwP3tyAv9JKEocIqZONjqJ87N4J4rEfXJCPCxRe7ciZGiJ1VccmpWXo8/67iop
+         EZ6hpqvsMlm/6iKCZjmLUp6WTSUCoU24DpA30=
+Received: by 10.223.77.92 with SMTP id f28mr2175130fak.37.1308638507130;
+        Mon, 20 Jun 2011 23:41:47 -0700 (PDT)
+Received: from localhost.localdomain (abwr138.neoplus.adsl.tpnet.pl [83.8.241.138])
+        by mx.google.com with ESMTPS id m26sm3185558fab.34.2011.06.20.23.41.45
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 20 Jun 2011 23:41:46 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p5L6fGUV017206;
+	Tue, 21 Jun 2011 08:41:27 +0200
+In-Reply-To: <20110620213904.11650.60345.stgit@localhost.localdomain>
+User-Agent: StGIT/0.14.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176127>
 
-Am 6/21/2011 7:08, schrieb Andrew Wong:
-> Ah, this patch will be very useful. I actually ran into several scenarios
-> before where I wished stash could do exactly this.
-> 
-> On 11-06-20 9:36 PM, David Caldwell wrote:
->> On 6/20/11 5:38 PM, Jeff King wrote:
->>> Hmm. I think I would call this something like "--untracked", as to me
->>> the main function is saving those files, not cleaning them afterwards
->>> (the fact that they are cleaned is really just making the untracked-file
->>> handling in line with what we do for tracked files; we put the changes
->>> in the stash and remove them from the working tree).
->>
->> I see your point but I thought "--clean" was pretty descriptive of how
->> the working dir ended up afterward. Maybe "git stash --everything" (or
->> "--all")?
-> I personally think "--untracked" (and -u) is more intuitive too, since it
-> tells you what "git stash" is about to do. i.e. "git stash" is about to do
-> the usual stash operation *and* also stash the "untracked" files.
+Both 'pickaxe' (searching changes) and 'grep' (searching files)
+require basic 'search' feature to be enabled to work.  Enabling
+e.g. only 'pickaxe' won't work.
 
-Really?
+Add a comment about this.
 
-   $ git stash --untracked
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+I'm sorry, I forgot that this issue applies to 'grep' feature too.
 
-sound like it stashes *only* untracked files. (That by itself may be a
-feature that some people want; so far, I'm not among them.)
+ gitweb/gitweb.perl |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
--- Hannes
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index c9e6426..63af8d4 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -328,6 +328,7 @@ our %feature = (
+ 	# Enable grep search, which will list the files in currently selected
+ 	# tree containing the given string. Enabled by default. This can be
+ 	# potentially CPU-intensive, of course.
++	# Note that you need to have 'search' feature enabled too.
+ 
+ 	# To enable system wide have in $GITWEB_CONFIG
+ 	# $feature{'grep'}{'default'} = [1];
+@@ -342,6 +343,7 @@ our %feature = (
+ 	# Enable the pickaxe search, which will list the commits that modified
+ 	# a given string in a file. This can be practical and quite faster
+ 	# alternative to 'blame', but still potentially CPU-intensive.
++	# Note that you need to have 'search' feature enabled too.
+ 
+ 	# To enable system wide have in $GITWEB_CONFIG
+ 	# $feature{'pickaxe'}{'default'} = [1];
