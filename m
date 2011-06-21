@@ -1,72 +1,95 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: Kasra Khosoussi <kasra.mail@gmail.com>
 Subject: Re: corrupted Git repository
-Date: Tue, 21 Jun 2011 11:38:10 +0200
-Message-ID: <4E006682.80101@drmicha.warpmail.net>
-References: <BANLkTi=A=DpyfNwEeSd6N6ibCsA5qh_NPQ@mail.gmail.com>	<4E005404.5010901@drmicha.warpmail.net> <BANLkTi=WVTGcGkUXjkuPYcxhMY0a5KPB7g@mail.gmail.com>
+Date: Tue, 21 Jun 2011 14:40:47 +0430
+Message-ID: <BANLkTi=GdEfXnAGa6V-33wqX2C-2x-9JQQ@mail.gmail.com>
+References: <BANLkTi=A=DpyfNwEeSd6N6ibCsA5qh_NPQ@mail.gmail.com>
+	<4E005404.5010901@drmicha.warpmail.net>
+	<BANLkTi=WVTGcGkUXjkuPYcxhMY0a5KPB7g@mail.gmail.com>
+	<4E006682.80101@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Kasra Khosoussi <kasra.mail@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 21 11:38:23 2011
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Jun 21 12:10:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYxPZ-0000jA-74
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 11:38:22 +0200
+	id 1QYxv3-0006k6-Ce
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 12:10:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756116Ab1FUJiN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jun 2011 05:38:13 -0400
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:46904 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756014Ab1FUJiM (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Jun 2011 05:38:12 -0400
-Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 276B220CB3;
-	Tue, 21 Jun 2011 05:38:12 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute6.internal (MEProxy); Tue, 21 Jun 2011 05:38:12 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=1t+jMwW38jv7cJ1XzXtDKs5QRPs=; b=A1mPuA7IVxUnMBVMqW75GUmB3Sx9f4sZer6WX1jqMALGgiQNW2zpYrZk68cDG0AtTVUHY4ZvzVPZLa70J0/E8jieLjUpbLH6zzbpbnkppnMxfDQK6HxY6v4lQcBT8CEVkzSeDC9z3a3/hb7vkd04dA2EOKybUJXvG7NOjxABuN8=
-X-Sasl-enc: Zx+2JCgRIgxBbxMSQHd9fj1CuwP7eiMPZ5tdgs8hfvoF 1308649091
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id A132644B639;
-	Tue, 21 Jun 2011 05:38:11 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc15 Lightning/1.0b3pre Thunderbird/3.1.10
-In-Reply-To: <BANLkTi=WVTGcGkUXjkuPYcxhMY0a5KPB7g@mail.gmail.com>
+	id S1755461Ab1FUKKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jun 2011 06:10:48 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:33275 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753738Ab1FUKKr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2011 06:10:47 -0400
+Received: by pvg12 with SMTP id 12so1355386pvg.19
+        for <git@vger.kernel.org>; Tue, 21 Jun 2011 03:10:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=oRqYKmhRSK0tU/GbK5jpQtZY6xKYqZ5tj4V6j7IUzAc=;
+        b=pGtSsxAPjghv0cgGQqJqY7Fo8ZxQyGoa5zw7TzFqtU0R8z7/32FfT/YZY3qsVZnV1t
+         yU/A5K+G7waC+CHEtHFQ4v7u4d4D1ZGLLnqECPFjHfXF2fD62HBH1FpqBsJFYoztAuTe
+         Imr9dr4wN2ATmsAgNLIW1Fg5sd0OI0eBm6vXU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=XfasGJ7AQ8r4SBdfcTLTT0LygoC7jqpWJl9j4DjBSLUG23zdMI736+5boEq5Z6MiU1
+         4m3c8cFXo5NiSi8WgKp3YLjX+qCiTBZkIP7kRV5swjD78Jh6WKfFmSMtMGxHRF2QRvD8
+         bU2Yfxp4EqdoNFA4pKUGjA9D05+N382CCM2L8=
+Received: by 10.68.19.131 with SMTP id f3mr2551408pbe.379.1308651047170; Tue,
+ 21 Jun 2011 03:10:47 -0700 (PDT)
+Received: by 10.68.55.132 with HTTP; Tue, 21 Jun 2011 03:10:47 -0700 (PDT)
+In-Reply-To: <4E006682.80101@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176135>
 
-Kasra Khosoussi venit, vidit, dixit 21.06.2011 11:30:
->> Backup now!
->> I guess you've done that meanwhile anyways, but it's important before
->> any recovery attempts.
-> 
-> Yes, I've done that.
-> 
->> Is your reflog OK, i.e. do you get proper output from "git reflog" or
->> "git log -g"?
-> 
-> No. Before moving the corrupted object git reflog would return:
-> fatal: object 0a83757505387aacc2fd36b3c996729e6bf9d6e5 is corrupted
-> 
-> and after moving the file it would say:
-> fatal: bad object HEAD
+Thanks for your help.
 
-Oh yes, stupid me, sorry. "git reflog" tries to parse HEAD. But you can
-look at the file directly:
+I used update-ref and changed refs/heads/master to the sha1 of
+previous commit. Then I commit the changes. Everything seems fine now
+except (as you previously mentioned), git fsck -full complains about
+dangling trees. Is it critical?
 
-tail .git/logs/HEAD
-tail .git/logs/refs/heads/master
+-Kasra
 
-etc. show you what's been going on with those refs lately.
-
-You should be able to pick the the sha1 before the corrupt one from that
-and do things like "git log that_sha1" if only the most recent commit is
-corrupt.
-
-Michael
+On Tue, Jun 21, 2011 at 2:08 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Kasra Khosoussi venit, vidit, dixit 21.06.2011 11:30:
+>>> Backup now!
+>>> I guess you've done that meanwhile anyways, but it's important before
+>>> any recovery attempts.
+>>
+>> Yes, I've done that.
+>>
+>>> Is your reflog OK, i.e. do you get proper output from "git reflog" or
+>>> "git log -g"?
+>>
+>> No. Before moving the corrupted object git reflog would return:
+>> fatal: object 0a83757505387aacc2fd36b3c996729e6bf9d6e5 is corrupted
+>>
+>> and after moving the file it would say:
+>> fatal: bad object HEAD
+>
+> Oh yes, stupid me, sorry. "git reflog" tries to parse HEAD. But you can
+> look at the file directly:
+>
+> tail .git/logs/HEAD
+> tail .git/logs/refs/heads/master
+>
+> etc. show you what's been going on with those refs lately.
+>
+> You should be able to pick the the sha1 before the corrupt one from that
+> and do things like "git log that_sha1" if only the most recent commit is
+> corrupt.
+>
+> Michael
+>
