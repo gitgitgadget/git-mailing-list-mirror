@@ -1,73 +1,95 @@
-From: Andrew Wong <andrew.w@sohovfx.com>
-Subject: Re: [PATCH] stash: Add --clean option to stash and remove all untracked
- files
-Date: Tue, 21 Jun 2011 01:08:50 -0400
-Message-ID: <4E002762.3050803@sohovfx.com>
-References: <1308612986-26593-1-git-send-email-david@porkrind.org> <20110621003852.GB2050@sigill.intra.peff.net> <4DFFF5AA.4030401@porkrind.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git-union-merge proposal
+Date: Tue, 21 Jun 2011 00:22:34 -0500
+Message-ID: <20110621052211.GA16919@elie>
+References: <20110621022049.GA1632@gnu.kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: David Caldwell <david@porkrind.org>
-X-From: git-owner@vger.kernel.org Tue Jun 21 07:09:35 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Johan Herland <johan@herland.net>
+To: Joey Hess <joey@kitenet.net>
+X-From: git-owner@vger.kernel.org Tue Jun 21 07:22:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYtDT-0003JR-3x
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 07:09:35 +0200
+	id 1QYtQG-0007dg-JB
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 07:22:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751938Ab1FUFJB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jun 2011 01:09:01 -0400
-Received: from smtp04.beanfield.com ([76.9.193.173]:52542 "EHLO
-	smtp04.beanfield.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751072Ab1FUFJA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2011 01:09:00 -0400
-X-Spam-Status: No
-X-beanfield-mta04-MailScanner-From: andrew.w@sohovfx.com
-X-beanfield-mta04-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,
-	score=-2.9, required 6, autolearn=not spam, ALL_TRUSTED -1.00,
-	BAYES_00 -1.90)
-X-beanfield-mta04-MailScanner: Found to be clean
-X-beanfield-mta04-MailScanner-ID: 1QYtCl-0005Fp-8r
-Received: from [24.246.58.202] (helo=ZanarkandMac.local)
-	by mta04.beanfield.com with esmtpsa (TLSv1:CAMELLIA256-SHA:256)
-	(Exim 4.76)
-	(envelope-from <andrew.w@sohovfx.com>)
-	id 1QYtCl-0005Fp-8r; Tue, 21 Jun 2011 01:08:51 -0400
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
-In-Reply-To: <4DFFF5AA.4030401@porkrind.org>
+	id S1751356Ab1FUFWn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jun 2011 01:22:43 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:58920 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750848Ab1FUFWm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2011 01:22:42 -0400
+Received: by iyb12 with SMTP id 12so2569561iyb.19
+        for <git@vger.kernel.org>; Mon, 20 Jun 2011 22:22:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=ZVQ7LQ9yJCdPLS0VcWNeGWbtF5sWNm40L18tsdaI8RU=;
+        b=OvOQITaNO9aE16iEp7UWghBKcovS0gm4+wCVVVXXpS+BXiWCW05IwWG0R6A4QHWUAV
+         yrp5EoxdnEvlOWMibptFKIie8ADjWLKpDJK3oCEsJX6iwXXqjsuNCMjaHSBhwWAifNUu
+         CiyxKtejqxMkzt+lENy8sDsPFw9HClXChm/+I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=AR/K3hcghtThIJLataZEWz60kPuHekcMJtKHxuMoWALATOgRwFm0rgu3cHX8czRb7F
+         E4o0W01Go+btuA7xsJgxID/9mwyYFNLEjNzytErS0nYiQuIFL9J/meVOH/N4Yvr6vPfC
+         PaWDjimL5nNSvNMPcIvsQR0J9kcZsXwz1AkhI=
+Received: by 10.43.51.10 with SMTP id vg10mr6138469icb.6.1308633761841;
+        Mon, 20 Jun 2011 22:22:41 -0700 (PDT)
+Received: from elie (adsl-69-209-79-158.dsl.chcgil.sbcglobal.net [69.209.79.158])
+        by mx.google.com with ESMTPS id hp8sm6455347icc.11.2011.06.20.22.22.40
+        (version=SSLv3 cipher=OTHER);
+        Mon, 20 Jun 2011 22:22:40 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20110621022049.GA1632@gnu.kitenet.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176123>
 
-Ah, this patch will be very useful. I actually ran into several 
-scenarios before where I wished stash could do exactly this.
+Hi Joey,
 
-On 11-06-20 9:36 PM, David Caldwell wrote:
-> On 6/20/11 5:38 PM, Jeff King wrote:
->> Hmm. I think I would call this something like "--untracked", as to me
->> the main function is saving those files, not cleaning them afterwards
->> (the fact that they are cleaned is really just making the untracked-file
->> handling in line with what we do for tracked files; we put the changes
->> in the stash and remove them from the working tree).
+Joey Hess wrote[1]:
+
+> * git-annex stores location tracking information to log files in
+>   .git-annex/; gitattributes is configured to use merge=union,
+>   and the log files have timestamps or are otherwise structured to be
+>   safely merged.
+> * git notes merge -s cat_sort_uniq
+>   Notes are stored in a tree using the object sha, which can be
+>   union merged, when the notes' format is a series of independant lines.
+> * probably other tools do things like this too, or will ...
 >
-> I see your point but I thought "--clean" was pretty descriptive of how
-> the working dir ended up afterward. Maybe "git stash --everything" (or
-> "--all")?
-I personally think "--untracked" (and -u) is more intuitive too, since 
-it tells you what "git stash" is about to do. i.e. "git stash" is about 
-to do the usual stash operation *and* also stash the "untracked" files.
-It seems more clear and precise than saying "git will stash my tree to a 
-state that is clean", which doesn't exactly tell me how is that 
-different from the usual stash.To me, "--clean" might even sounds more 
-like "do a stash, and then do a clean", which doesn't make sense.
+> So I've written a prototype of a git-union-merge that could be used
+> for all of these. It works like this:
+>
+> git union-merge foo origin/foo refs/heads/foo 
 
-I would've liked "--all" too, except it reminds me too much of "git 
-commit --all", which is just committing all tracked files.
+Hm, this makes a lot of sense.  Often a person needs a worktree anyway
+to check the merge result for sanity, but as you say, that needn't
+always be the case.
 
-Again, that's just my personal preference.
+[...]
+> Prototype is attached, I doubt it would be suitable for git as-is,
+
+Does the GitRepo module that it uses come from git-annex?
+
+If the prototype were self-contained, I would encourage you to submit
+it for inclusion under contrib/ so it can evolve and eventually
+graduate out of there.  Cc-ing Johan (who has no doubt thought through
+these things in the context of "git notes") in case he has thoughts on
+it.
+
+Regards,
+Jonathan
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/176119
