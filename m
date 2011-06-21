@@ -1,90 +1,98 @@
-From: Matteo Cypriani <mcy@lm7.fr>
-Subject: Re: Preserve merge changes with rebase -p
-Date: Tue, 21 Jun 2011 17:07:49 +0200
-Message-ID: <201106211707.53486.mcy@lm7.fr>
-References: <201106211411.31739.mcy@lm7.fr> <4E00AE60.5000801@sohovfx.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 00/13] Sequencer with continuation features
+Date: Tue, 21 Jun 2011 10:48:09 -0500
+Message-ID: <20110621154808.GE15461@elie>
+References: <1308661489-20080-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart3404954.kcZ4PPFeDI";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha256
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 21 17:08:02 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 21 17:48:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZ2Yc-0006LJ-5A
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 17:08:02 +0200
+	id 1QZ3Bd-0002Py-Vw
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 17:48:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753210Ab1FUPH4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jun 2011 11:07:56 -0400
-Received: from adagio.lm7.fr ([91.121.68.23]:38632 "EHLO adagio.lm7.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750811Ab1FUPH4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2011 11:07:56 -0400
-Received: from silence.localnet (lifc08.pu-pm.univ-fcomte.fr [194.57.85.147])
-	by adagio.lm7.fr (Postfix) with ESMTPSA id 291A330192
-	for <git@vger.kernel.org>; Tue, 21 Jun 2011 17:07:55 +0200 (CEST)
-User-Agent: KMail/1.13.7 (Linux/2.6.39-2-amd64; KDE/4.6.3; x86_64; ; )
-In-Reply-To: <4E00AE60.5000801@sohovfx.com>
+	id S1756834Ab1FUPsR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jun 2011 11:48:17 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:64041 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756690Ab1FUPsP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2011 11:48:15 -0400
+Received: by iyb12 with SMTP id 12so2951871iyb.19
+        for <git@vger.kernel.org>; Tue, 21 Jun 2011 08:48:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=PgOlwd5FGzk5sK2DD0HXueunKs2NGnEIqc3FphSTNu0=;
+        b=SmbvgY8GD2EC+cOt0QwY6vPM558NIZChd3SFWORVnU/F19XitPCEpYo077CcaGpkMM
+         flD1fvXAxGGcthbYLmZpSYxgUOAdo9WmLgm1OyWEhQyl9ZJiwuiDfZ0Kw5hwRWVCksjf
+         qLdCzdIsP1NYV9ML2O67GaehAgxYx0BRWyCtA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=uXpYbdkfqiX8NK5Y8Y5RFxMYYJBJ+Y9IMAcI1X4T0OH9jgt0wRVYfnqqx2hYs2iFUZ
+         xUFpq/oJIBMxu6KxiGPOd2ncOcrr/SaqBUOPNHmjTf5G+b40GJKQTr7ndd/zXXSRoE/r
+         CvvkBe2h3jXQ3mkP3t59PQy3EKfKjaDgmOteo=
+Received: by 10.42.153.6 with SMTP id k6mr6443047icw.154.1308671294379;
+        Tue, 21 Jun 2011 08:48:14 -0700 (PDT)
+Received: from elie (adsl-69-209-79-158.dsl.chcgil.ameritech.net [69.209.79.158])
+        by mx.google.com with ESMTPS id y1sm1801321ica.16.2011.06.21.08.48.12
+        (version=SSLv3 cipher=OTHER);
+        Tue, 21 Jun 2011 08:48:13 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1308661489-20080-1-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176162>
 
---nextPart3404954.kcZ4PPFeDI
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Le mardi 21 juin 2011 16:44:48, Andrew Wong a =C3=A9crit :
-> Unfortunately, I don't think there's any nice way to do it right now. I
-> think what you could do for now is make the "pick <M>" into a "edit
-> <M>", together with other changes you want to make. And then when you
-> get to "edit M", do a "git cherry-pick -n -m 1 <M>", or "-m 2" depending
-> on how your merge was done. That should bring your changes over. Then
-> you just need resolve and add any conflicts, and do a "rebase --continue".
+Ramkumar Ramachandra wrote:
 
-Thank you, I'll try that the next time.
+> I think I can safely say that
+> I'm quite happy with the general state of this series now.
 
+It's certainly starting to shape up.  I'll quickly review the style
+and commit messages now, since the part I was lobbying for most has
+been dealt with (hoorah!) and the rest of the substantive part seems
+to have some potential changes queued up if I understand correctly.
+In particular, I have high hopes for changes rippling through once
+tests get added to make the detailed behavior more clear. :)
 
-> I imagine this is pretty useful feature to have too. I could look into
-> adding this support when I got a chance.
+General rule of thumb about style, especially commit messages: if
+something looks wrong, it is.  Which is to say, the goal is to make
+the code easy to read and hack on, and part of that means avoiding
+that moment of surprise that might interfere with someone getting on
+with the task at hand.  If I seem to be not making sense, please as
+usual do not assume I am right, but think carefully about it and
+(ideally) gently correct me if I'm wrong.
 
-That would be great, many thanks in advance!
+Okay, on to the patches.  The general shape of the series is a little
+odd --- some die() elimination, removal of globals in preparation for
+making this a reusable API, and then the title feature that does not
+rely on any of the patches before it.  Still, it makes a kind of sense
+from the point of view of development:
 
-Cheers,
+ 1. First, getting to know the API and using that process to come
+    up with obvious improvements.
 
-  Matteo
+ 2. Next, implementing the new feature.
 
-=2D-=20
-Ma clef GPG est disponible sur keyserver.veridis.com
-My GPG key is available on keyserver.veridis.com
+If I had been writing it, I would have rebased the last 4 patches
+against master as a new series (so they could be integrated more
+quickly), but I don't mind reading it this way.
 
---nextPart3404954.kcZ4PPFeDI
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQIcBAABCAAGBQJOALPFAAoJEE6QGOCjKRJrqpgQAJRr/oTxf6uUH3lML5a6NZkd
-6qPCL7gtYwzZrHv6W30kzwqOtAVupyECTe/XcTRgjwtRaVWMnzuCkb7bC5Jx+zLA
-LUyfVwQI+/gciG/PmIPC225f1dQTuQCIpDOKC/pEHgBJ430nTBUKVP1AA0TfzajH
-4ylnH+1ImYecq8W4vrV0bhx7hzMBYxSF0qVcCm5SxljMD9Jv/S5frD7bikwxGCPM
-/rEOKkgdddq72zJHGHpodpMRPSTdOnrw5Fj+F1JXYzeNEaGNew6o0Qwkco233tAv
-5MT8YdsMy9/nXtkG1LeS7kpCvNGLPgc9jMYT+PM9tNLyxjn+QfD9DP5l6afrVgC/
-yFdYmGnbhHip+1lUHhoGmnD+jpnrsWfTjGqSPMYSuaYCXEhgmAPXkQIG3k/Tp0/y
-a4QrYhgKQLHG6MoLCyZWQNOwlWsFKs8rXaqVpN6HA75vcRSVkSmmMHvhLAsxphNf
-HfO1K4ZJGMRbFs/UNqHAyl2rVO1KKHQ9utIZvnwnDbO53EllFc31Eu6PAH3UzvC4
-wUTxVbnScI1FKVAmB6PmkZM2Q9nwqj622dqFl4kd8LiVl/QwGmhFlDGfFNuoM9FJ
-uDXfSbKgo5q7KQrHJxyBUvXq3dv25eqTufoZy2g8I03X5t2pIVycC4e/HwnXXO1M
-FkYE9qaMydr7Ue6j0GUC
-=t1QG
------END PGP SIGNATURE-----
-
---nextPart3404954.kcZ4PPFeDI--
+Regards,
+Jonathan
