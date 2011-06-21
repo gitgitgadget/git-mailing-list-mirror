@@ -1,83 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 07/13] revert: Introduce struct to keep command-line
- options
-Date: Tue, 21 Jun 2011 12:28:15 -0700
-Message-ID: <7vaadb7zn4.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 04/13] revert: Propogate errors upwards from
+ do_pick_commit
+Date: Tue, 21 Jun 2011 14:32:17 -0500
+Message-ID: <20110621193217.GA17390@elie>
 References: <1308661489-20080-1-git-send-email-artagnon@gmail.com>
- <1308661489-20080-8-git-send-email-artagnon@gmail.com>
- <20110621165854.GL15461@elie>
+ <1308661489-20080-5-git-send-email-artagnon@gmail.com>
+ <20110621162232.GI15461@elie>
+ <7viprz8018.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
 	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Daniel Barkalow <barkalow@iabervon.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 21 21:28:24 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 21 21:32:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZ6ca-0003J2-BW
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 21:28:24 +0200
+	id 1QZ6ga-0005Bw-OX
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 21:32:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757449Ab1FUT2T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jun 2011 15:28:19 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47265 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757338Ab1FUT2S (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2011 15:28:18 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 130AF486F;
-	Tue, 21 Jun 2011 15:30:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+xMRKfDzM76U1UdYtEfD+mRiWvE=; b=Ma1Juo
-	pdR/syla2qTYO7pF7cuNT9upRkEXlFbJcKWNfDyrK8ZjZWrusvYF/QPj4+zsgvEh
-	99AT0icnsbXrjPSc98X97nGbmEKerLpwjw0op3YkcSTMpgyyioN+NWtHPEGwjgT1
-	0diFRa3L9i+tERZ7r60tInnaFQeNJua2Yd4oU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=faUfJt+oJE+YjBbmnbLtd4Z+0HYyYoKD
-	dJ6tHqrIc/lOvn3dUBq+dcURLndWKIaKfYznW/ACTWuP0m5hBlnIKq8I7AACasIm
-	jNidFv0Bt5xGrbribnnxY73w5X09O9FepvaO1UiFbfYplnfRZHnwYXzmslj5vpPU
-	DU8N26ZBTJY=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 04CC5486D;
-	Tue, 21 Jun 2011 15:30:30 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4E539486A; Tue, 21 Jun 2011
- 15:30:29 -0400 (EDT)
-In-Reply-To: <20110621165854.GL15461@elie> (Jonathan Nieder's message of
- "Tue, 21 Jun 2011 11:58:54 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EC1178A6-9C3C-11E0-9AD7-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
+	id S1757469Ab1FUTc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jun 2011 15:32:27 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:43032 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757338Ab1FUTc0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2011 15:32:26 -0400
+Received: by iyb12 with SMTP id 12so78033iyb.19
+        for <git@vger.kernel.org>; Tue, 21 Jun 2011 12:32:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=Dz1LVScVQIlK+UdlWnSXpnxEt2cEhZ8vRtSByhbwF0E=;
+        b=bJFq86/LSM9+jBAfZuS82fi8PadI3kZuTs2ndxKuL6YaEaTfUFZi9pTmr/sGUo2B5A
+         Ri7zCkm7IJ+86wdF8WjM2w6+aa+4DMe+ZIPMZPxwWH8OP6HYzL+39wgsvoRlyNMmpDbA
+         0J88dhxcDlAb0oRp5+bJd6nDqXyMfqSHWXqGk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=NQ6vcaWWTgo0Rsi7skyuvnjfN2KGkKseRPqv7OCnE+olvFUWP8AuMk19jfjZthdcGu
+         d/So78uxR/7Qrg6OmgNB3+FzYc0TeqzWrX/3BT27DT4VPqpGbXkUI5TIFY2J+bQTqoEn
+         1tII7md7IMo/WRc8fvg+wdphHpnayoNcn2al8=
+Received: by 10.42.75.67 with SMTP id z3mr7832802icj.208.1308684745658;
+        Tue, 21 Jun 2011 12:32:25 -0700 (PDT)
+Received: from elie ([69.209.79.158])
+        by mx.google.com with ESMTPS id ly7sm7039639icb.12.2011.06.21.12.32.23
+        (version=SSLv3 cipher=OTHER);
+        Tue, 21 Jun 2011 12:32:24 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7viprz8018.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176187>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Jun 21, 2011 at 12:19:47PM -0700, Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Ramkumar Ramachandra wrote:
-> ...
-> The struct leaves out the variable "me".  A person might wonder why
-> the above rationale applies to the other variables but not that one. :)
-
-Good point.
-
->> Unfortunately, parsing strategy-option violates a C89 rule:
->> Initializers cannot refer to variables whose address is not known at
->> compile time.
+>>> +	if (res < 0)
+>>> +		die(_("%s failed"), me);
+>>> +	return 0;
+>>
+>> Should the "revert" or "cherry-pick" here be part of the message
+>> marked for translation?  A translator might want to paraphrase to
+>>
+>> 	fatal: failed to cherry-pick
+>>
+>> if that is more natural in the language at hand.
 >
-> Reading this, one is led to wonder:
-> ...
->  - is this a regression?
+> Wouldn't such a message file simply say
+>
+> 	msgid "%s failed"
+>         msgstr "failed to %s"
+>
+> IOW, I am not sure what problem you are seeing.
 
-Let me add one.
+Ah, sorry for the lack of clarity.  What I meant is that the noun
+and verb will be different words in many languages.  There can also be
+problems of subject/verb agreement.  Also "me" is used elsewhere to
+hold the command name as typed on the command line even when LANG
+points to a language other than English if I remember correctly.
 
- - how does this patch work around that issue?
+If the message were in revert_or_cherry_pick instead of having two
+identical copies in cmd_revert and cmd_cherry_pick, it would have been
+less striking (but still a potential problem).
