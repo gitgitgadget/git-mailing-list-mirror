@@ -1,74 +1,65 @@
-From: Kasra Khosoussi <kasra.mail@gmail.com>
-Subject: corrupted Git repository
-Date: Tue, 21 Jun 2011 11:28:50 +0430
-Message-ID: <BANLkTi=A=DpyfNwEeSd6N6ibCsA5qh_NPQ@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [GSoC update] Cooking --continue
+Date: Tue, 21 Jun 2011 12:57:44 +0530
+Message-ID: <BANLkTikDNjYgZpeitnKEhkPzVKqWaAT24A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 21 08:58:57 2011
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 21 09:28:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYuvI-0007tk-6O
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 08:58:56 +0200
+	id 1QYvNe-0003pS-AM
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 09:28:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752400Ab1FUG6v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jun 2011 02:58:51 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:56934 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751589Ab1FUG6v (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2011 02:58:51 -0400
-Received: by pvg12 with SMTP id 12so1275714pvg.19
-        for <git@vger.kernel.org>; Mon, 20 Jun 2011 23:58:50 -0700 (PDT)
+	id S1755460Ab1FUH2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jun 2011 03:28:08 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:38791 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752770Ab1FUH2F (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2011 03:28:05 -0400
+Received: by wyb38 with SMTP id 38so2176520wyb.19
+        for <git@vger.kernel.org>; Tue, 21 Jun 2011 00:28:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to:cc
          :content-type;
-        bh=oteq2x4HZDGFMfcccrcjlSPLY77zOwrnc60ZQ+U/MUM=;
-        b=Hu5CyST4EW8y7MASEu7gXMWV7rHo0qA4fcnVGl6KMIa6tSYF1sdQTFa1eyzfo3bY62
-         nAzk62pEPXtOSBuhw8LPX1MZaMyyxH+1M8DV5jiCONoaUfX4HSpwVFRFqb0+g5aTMzke
-         mgZwWDCDogieS4oinGq78mRThtRIvEkF/Qrxs=
+        bh=P42zg2OoryjvyPfUcbNnE4dOWK1SGH0GClJiVk0Wop0=;
+        b=q52WjBXchkaNop75+m69bnIM8acHklgOBRueNwRiSrNgKcfWo9tF3PSFMsqud+ea7S
+         MHVNXAwgaR4gWnXWXCv+WtrumsfgWALYaGwlWSOab3fvgCAWhU1HPwXo5fxNRayqRi1k
+         1y8PiLo/mqHu9RMIKkOZMGRXoUkExilI3toj0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=WNIq++Y1vsAg9+T7WgAoS3Ac/G1eWmUOzyQZOSJSXHnRMgcg2BEs1jnZbFWJsBFTk9
-         8pT61nx6L/cHm/enMgQJsjcuNJJpZlA6t0hsbwaOvz5Jw8RzMyE8fjWLzI9iMpr5pmJv
-         CjF6upjjgphk10BJjMF4KICtuL0JZwJl4+A9M=
-Received: by 10.68.9.231 with SMTP id d7mr2852318pbb.111.1308639530547; Mon,
- 20 Jun 2011 23:58:50 -0700 (PDT)
-Received: by 10.68.55.132 with HTTP; Mon, 20 Jun 2011 23:58:50 -0700 (PDT)
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        b=tczqnTdZsFI7/d4OBe9XJoZidMmpxLlC1oUiiLggxo01ZVYlAhHG8WC6qh3bxGS+lm
+         VLtEaSooT2KoxvQQ9HzYVbgNvpPxx+1QFl7gL25yqNnVw47cDf/TVnErrFZ7ZbYKkY04
+         +9WmTqYE01hGqeZGL1fEXvxZvwFXXEa7ojOsE=
+Received: by 10.216.61.1 with SMTP id v1mr2041224wec.61.1308641284085; Tue, 21
+ Jun 2011 00:28:04 -0700 (PDT)
+Received: by 10.216.18.16 with HTTP; Tue, 21 Jun 2011 00:27:44 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176130>
 
-Hi all,
+Hi,
 
-My thesis repository is corrupted and I don't have any recent backup
-(my files are OK, but the history is lost). I've seen the recovery
-examples in the manual, but I believe my case is somehow different.
-The repository is linear.
+Quick update.  I'm currently working on polishing the my series with
+"--continue" implemented, before sending it off to the list for
+inclusion.  There are only a few glitches [1], and I think I've got
+most of it figured out.  The latest work can be found in the
+'sequencer-continue' branch of my Github fork [2].
 
-1- At the beginning, git status/log/fsck -full said:
+Thanks.
 
-> fatal: object 0a83757505387aacc2fd36b3c996729e6bf9d6e5 is corrupted
+-- Ram
 
-and there was an empty file in .git/objects/01/8375... .
-
-2- If I move the corrupted object, git fsck --ful would return this:
-
-> error: HEAD: invalid sha1 pointer 0a83757505387aacc2fd36b3c996729e6bf9d6e5
-> error: refs/heads/master does not point to a valid object!
-> dangling tree 06f388dc60cfb014b5e1f70ecdaa568efe6bd0fa
-> dangling tree d86f8c75e836e13b6e0336361641223f48fde722
-
-3- I guess I have to edit refs/heads/master and replace the corrupted
-sha1 with another hash, but I'm not sure how I can find the proper
-commit (e.g.,maybe by using find -mtime?).
-
-Thanks in advance,
-
--Kasra
+[1]: http://mid.gmane.org/1308636458-19668-1-git-send-email-artagnon@gmail.com
+[2]: http://github.com/artagnon/git
