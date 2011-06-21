@@ -1,54 +1,74 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [RFC PATCH] revert: Introduce skip-all to cleanup sequencer data
-Date: Tue, 21 Jun 2011 08:48:49 +0200
-Message-ID: <201106210848.50884.chriscool@tuxfamily.org>
-References: <1308636458-19668-1-git-send-email-artagnon@gmail.com>
+From: Kasra Khosoussi <kasra.mail@gmail.com>
+Subject: corrupted Git repository
+Date: Tue, 21 Jun 2011 11:28:50 +0430
+Message-ID: <BANLkTi=A=DpyfNwEeSd6N6ibCsA5qh_NPQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 21 08:50:08 2011
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 21 08:58:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYuml-0004Ux-1a
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 08:50:07 +0200
+	id 1QYuvI-0007tk-6O
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 08:58:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751266Ab1FUGtA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jun 2011 02:49:00 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:54293 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751137Ab1FUGs7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2011 02:48:59 -0400
-Received: from style.localnet (unknown [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 4429AA613E;
-	Tue, 21 Jun 2011 08:48:52 +0200 (CEST)
-User-Agent: KMail/1.13.6 (Linux/2.6.38-8-generic; KDE/4.6.2; x86_64; ; )
-In-Reply-To: <1308636458-19668-1-git-send-email-artagnon@gmail.com>
+	id S1752400Ab1FUG6v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jun 2011 02:58:51 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:56934 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751589Ab1FUG6v (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2011 02:58:51 -0400
+Received: by pvg12 with SMTP id 12so1275714pvg.19
+        for <git@vger.kernel.org>; Mon, 20 Jun 2011 23:58:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=oteq2x4HZDGFMfcccrcjlSPLY77zOwrnc60ZQ+U/MUM=;
+        b=Hu5CyST4EW8y7MASEu7gXMWV7rHo0qA4fcnVGl6KMIa6tSYF1sdQTFa1eyzfo3bY62
+         nAzk62pEPXtOSBuhw8LPX1MZaMyyxH+1M8DV5jiCONoaUfX4HSpwVFRFqb0+g5aTMzke
+         mgZwWDCDogieS4oinGq78mRThtRIvEkF/Qrxs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=WNIq++Y1vsAg9+T7WgAoS3Ac/G1eWmUOzyQZOSJSXHnRMgcg2BEs1jnZbFWJsBFTk9
+         8pT61nx6L/cHm/enMgQJsjcuNJJpZlA6t0hsbwaOvz5Jw8RzMyE8fjWLzI9iMpr5pmJv
+         CjF6upjjgphk10BJjMF4KICtuL0JZwJl4+A9M=
+Received: by 10.68.9.231 with SMTP id d7mr2852318pbb.111.1308639530547; Mon,
+ 20 Jun 2011 23:58:50 -0700 (PDT)
+Received: by 10.68.55.132 with HTTP; Mon, 20 Jun 2011 23:58:50 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176129>
 
-On Tuesday 21 June 2011 08:07:38 Ramkumar Ramachandra wrote:
-> When the sequencer data is persisted after a failed cherry-pick, don't
-> allow subsequent calls to cherry-pick to clobber this state: instead,
-> error out with the complaint that an existing cherry-pick is in
-> progress.  To fix existing tests and the "rebase -i" script, introduce
-> a new "--skip-all" command-line option to call after every failed
-> cherry-pick; it essentially clears out the sequencer data, thereby
-> allowing subsequent calls.
+Hi all,
 
-Nitpick: I'd rather call it "--stop" or "--quit" (or maybe "--reset") to 
-convey the meaning that we get out of cherry-pick mode.
+My thesis repository is corrupted and I don't have any recent backup
+(my files are OK, but the history is lost). I've seen the recovery
+examples in the manual, but I believe my case is somehow different.
+The repository is linear.
 
-Thanks,
-Christian.
+1- At the beginning, git status/log/fsck -full said:
+
+> fatal: object 0a83757505387aacc2fd36b3c996729e6bf9d6e5 is corrupted
+
+and there was an empty file in .git/objects/01/8375... .
+
+2- If I move the corrupted object, git fsck --ful would return this:
+
+> error: HEAD: invalid sha1 pointer 0a83757505387aacc2fd36b3c996729e6bf9d6e5
+> error: refs/heads/master does not point to a valid object!
+> dangling tree 06f388dc60cfb014b5e1f70ecdaa568efe6bd0fa
+> dangling tree d86f8c75e836e13b6e0336361641223f48fde722
+
+3- I guess I have to edit refs/heads/master and replace the corrupted
+sha1 with another hash, but I'm not sure how I can find the proper
+commit (e.g.,maybe by using find -mtime?).
+
+Thanks in advance,
+
+-Kasra
