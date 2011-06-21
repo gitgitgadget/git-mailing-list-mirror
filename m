@@ -1,142 +1,98 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 10/13] revert: Persist data for continuation
-Date: Tue, 21 Jun 2011 12:11:39 -0500
-Message-ID: <20110621171139.GO15461@elie>
-References: <1308661489-20080-1-git-send-email-artagnon@gmail.com>
- <1308661489-20080-11-git-send-email-artagnon@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] stash: Add --clean option to stash and remove all
+ untracked files
+Date: Tue, 21 Jun 2011 10:16:27 -0700
+Message-ID: <7vboxr9kb8.fsf@alter.siamese.dyndns.org>
+References: <1308612986-26593-1-git-send-email-david@porkrind.org>
+ <20110621003852.GB2050@sigill.intra.peff.net> <4DFFF5AA.4030401@porkrind.org>
+ <4E002762.3050803@sohovfx.com> <4E003A0F.5080601@viscovery.net>
+ <20110621141843.GA18700@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 21 19:11:54 2011
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Andrew Wong <andrew.w@sohovfx.com>,
+	David Caldwell <david@porkrind.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 21 19:16:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZ4UR-0005EM-MU
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 19:11:52 +0200
+	id 1QZ4Z2-0007zM-JM
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 19:16:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757167Ab1FURLt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jun 2011 13:11:49 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:33884 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757075Ab1FURLp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2011 13:11:45 -0400
-Received: by iyb12 with SMTP id 12so3016207iyb.19
-        for <git@vger.kernel.org>; Tue, 21 Jun 2011 10:11:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=k0fWruACu+aUHXpLupXFR9UNvuGCkCH+IRP5HfQNULQ=;
-        b=a5qrMXKBfWhF5BtIuOb4BG6+JTMOKX2Znu+uDNUPU+XurXfgl+B/IxDA5rQ7+fA2TS
-         zRwfNPe/18L24JT0zbzactVa41oMcUCkviO/SltZqD1/DfqHSqBZ5e0cMCcQJgB20i93
-         8dGMLAB1GoC7hNwzDV4us0bhoHv7VKoFnpJNc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=AZyLAcOAX5JWJzcFFLIhLfgeElF+FVWF04/9SOI5lC13cgqMrLw2UzqPx0ERFDjJFc
-         x7JENY5FWzETTJFZvYi60vBMggut9AXHBjQfBXsC83B+gsibtBbmsZlv0v6sPnNdPDne
-         4NeqzaxXanOVB4cOvyYqY7H9ptHKEVxPYp6u0=
-Received: by 10.42.139.68 with SMTP id f4mr7837956icu.179.1308676304279;
-        Tue, 21 Jun 2011 10:11:44 -0700 (PDT)
-Received: from elie (adsl-69-209-79-158.dsl.chcgil.ameritech.net [69.209.79.158])
-        by mx.google.com with ESMTPS id x13sm3889867ibh.67.2011.06.21.10.11.42
-        (version=SSLv3 cipher=OTHER);
-        Tue, 21 Jun 2011 10:11:43 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1308661489-20080-11-git-send-email-artagnon@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757055Ab1FURQc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jun 2011 13:16:32 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56573 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752986Ab1FURQa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2011 13:16:30 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 39E2253FE;
+	Tue, 21 Jun 2011 13:18:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=u3HNnXWbRYQuY/xiAtYag4aLE+I=; b=NZLA39
+	+FPeoSza/Oj/l/mc3gqJvoYEqZK6dlQJu/4R/I3UdWvLDyjorF19wuPPRXcSMo+5
+	mdE3aujeQFDCeXAhjJQMGV9gLoB5uoYqU4Ru4376U5rC1rbSk9YxZL5YLcsADaY0
+	ibzpL7Erb1wk6/Rvrb+6qLvYMoTjOBIoWD7rE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DvLjqr8LzeXqXxtOrWDqKMJBNbzj60Kn
+	JkO66VI8zV/pHzKYDmidNEKyg8SswtC8shzc3BHQinANuu15aHY8xz1px7RJHudi
+	lgyyP5tHIH6gtMxaqZXaG+LLiYLhiyevChsOV9O5yIuSMf+5nuift3pDN94X2QUJ
+	vubC6t29L4c=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3148353FD;
+	Tue, 21 Jun 2011 13:18:42 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7F53353FB; Tue, 21 Jun 2011
+ 13:18:41 -0400 (EDT)
+In-Reply-To: <20110621141843.GA18700@sigill.intra.peff.net> (Jeff King's
+ message of "Tue, 21 Jun 2011 10:18:43 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 82A1AB32-9C2A-11E0-AE7E-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176175>
 
-Ramkumar Ramachandra wrote:
+Jeff King <peff@peff.net> writes:
 
-> Ever since v1.7.2-rc1~4^2~7 (revert: allow cherry-picking more than
-> one commit, 2010-06-02), a single invocation of "git cherry-pick" or
-> "git revert" can perform picks of several individual commits.  To
-> implement features like "--continue" to continue the whole operation,
-> we will need to store some information about the state and the plan at
-> the beginning.  Introduce a ".git/sequencer/head" file to store this
-> state, and ".git/sequencer/todo" file to store the plan.
+> On Tue, Jun 21, 2011 at 08:28:31AM +0200, Johannes Sixt wrote:
+>
+>> > I personally think "--untracked" (and -u) is more intuitive too, since it
+>> > tells you what "git stash" is about to do. i.e. "git stash" is about to do
+>> > the usual stash operation *and* also stash the "untracked" files.
+>> 
+>> Really?
+>> 
+>>    $ git stash --untracked
+>> 
+>> sound like it stashes *only* untracked files. (That by itself may be a
+>> feature that some people want; so far, I'm not among them.)
+>
+> I would be happy with something that indicated "untracked files in
+> addition to the regular stash". I just think it should be about "add
+> these other files into the stash", not "end up in this directory state".
+>
+> Something like "--untracked-too" fits that, but is horribly ugly.
 
-Makes a lot of sense.
+This I think depends on how you view what stash does. If you concentrate
+on the "saving" aspect too much, your naming would start from "untracked"
+and end up to be that ugly thing. If you start from "what happens to the
+working tree", on the other hand, --clean may not be such a bad name for
+what it does.
 
-> Don't touch
-> CHERRY_PICK_HEAD -- it will still be useful when a conflict is
-> encountered.
-
-I think there's some logical connector or something missing.  Why would
-introducing a .git/sequencer dir involve touching CHERRY_PICK_HEAD?
-
-Maybe the idea is to say: "The purpose of these new files is orthogonal
-to the existing CHERRY_PICK_HEAD" with some explanation of that.
-
-> --- a/builtin/revert.c
-> +++ b/builtin/revert.c
-> @@ -13,6 +13,7 @@
->  #include "rerere.h"
->  #include "merge-recursive.h"
->  #include "refs.h"
-> +#include "dir.h"
->  
->  /*
->   * This implements the builtins revert and cherry-pick.
-> @@ -25,6 +26,10 @@
->   * Copyright (c) 2005 Junio C Hamano
->   */
->  
-> +#define SEQ_DIR		git_path("sequencer")
-> +#define HEAD_FILE	git_path("sequencer/head")
-> +#define TODO_FILE	git_path("sequencer/todo")
-
-I've failed to convince you in the past that these fake constants are
-scary, but believe me, they really are.  Consider the following code
---- what would you expect it to print?  What does it actually print?
-(Hint: there's not one right answer.)
-
-	printf("%s %s %s %s %s\n", SEQ_DIR, HEAD_FILE, TODO_FILE,
-					SEQ_DIR, HEAD_FILE);
-
-> +static void walk_revs_populate_todo(struct commit_list **todo_list,
-> +				struct replay_opts *opts)
->  {
->  	struct rev_info revs;
->  	struct commit *commit;
-> +	struct commit_list *new_item;
-> +	struct commit_list *cur = NULL;
-> +
-> +	/* Insert into todo_list in the same order */
-> +	prepare_revs(&revs, opts);
-> +	while ((commit = get_revision(&revs))) {
-> +		new_item = xmalloc(sizeof(struct commit_list));
-> +		new_item->item = commit;
-> +		if (cur)
-> +			cur->next = new_item;
-> +		else
-> +			*todo_list = new_item;
-> +		cur = new_item;
-> +	}
-> +	cur->next = NULL;
-
-The naive reader, perhaps stupidly, wonders: "why not use
-commit_list_insert"?  A comment or something to explain "NEEDSWORK:
-expose this as commit_list_append" could help him.
-
-[...]
-> -	return 0;
-> +	/* Sequence of picks finished successfully; cleanup by
-> +	   removing the .git/sequencer directory */
-> +	return cleanup_sequencer_data();
-
-GNU-style comment seems to have snuck in.
-
-Thanks; this one was pretty pleasant.
+But I think the previous point you raised about untracked-but-not-ignored
+vs untracked-and-ignored is much more important. I do not think anybody
+would want to put build products in stash and unstash them later, so in
+that sense we can say we would only save the untracked-but-not-ignored in
+the stash and remove them, but then "git stash --clean" (or whatever we
+end up calling it) would still leave non-source material in the working
+tree, which probably does not exactly the original motivation of wanting
+to get a pristine source tree without having to trust the build procedure
+(i.e. "make clean" may leave cruft behind).
