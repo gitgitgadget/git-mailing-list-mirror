@@ -1,78 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 12/13] revert: Introduce skip-all to cleanup sequencer
- data
-Date: Tue, 21 Jun 2011 13:02:13 -0700
-Message-ID: <7vtybj6ji2.fsf@alter.siamese.dyndns.org>
-References: <1308661489-20080-1-git-send-email-artagnon@gmail.com>
- <1308661489-20080-13-git-send-email-artagnon@gmail.com>
+Subject: Re: [PATCH v2 16/20] transport-helper: update ref status after push
+ with export
+Date: Tue, 21 Jun 2011 13:05:14 -0700
+Message-ID: <7vpqm76jd1.fsf@alter.siamese.dyndns.org>
+References: <1308496725-22329-1-git-send-email-srabbelier@gmail.com>
+ <1308496725-22329-17-git-send-email-srabbelier@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 21 22:02:28 2011
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
+	Git List <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 21 22:05:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZ79X-0002iV-U8
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 22:02:28 +0200
+	id 1QZ7CM-00044P-CD
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 22:05:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756985Ab1FUUCS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jun 2011 16:02:18 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56657 "EHLO
+	id S1756474Ab1FUUFS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jun 2011 16:05:18 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61160 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756854Ab1FUUCQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2011 16:02:16 -0400
+	with ESMTP id S1751929Ab1FUUFQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2011 16:05:16 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2856E4CDD;
-	Tue, 21 Jun 2011 16:04:28 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 90AD24D67;
+	Tue, 21 Jun 2011 16:07:28 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pa+FYI22zhngwZafBmJHVI2frYM=; b=bL6kF9
-	nIDYn+/OAsxjcL9wfjouLxt0lt4NUTOlUFTNbAJ067naMf3NhDbn9VPMgMjvEs7X
-	FDu9Vt47GHGjW1GZrVnF95VUTBhqxjuGgKXKHcfPDd2ZbAonmi4sDp1RRZj2s76V
-	qpuB4wKixJ1UCC2s+RZNHXiyjM2zNWh1+pX+A=
+	:content-type; s=sasl; bh=MF3pYXlh5hRvTMSkZqg7KFvz5Yk=; b=HRqSbY
+	LcN0t0vn0Wih74PTGEslM0zm7Wyz6RfhuhGHSCxfC582RlrBgSANce+60jpZXVNJ
+	kvmb0HL4z6UVfEH6BvxAzweav12JeGwkF1hRT1lX8EuMBeQEyRTeT11zuQlxOvuN
+	aTzYFMPNirmBDBRF84y8rfuHJFPzbFJF8HK68=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lMmz8ZVCjT86vvkvmXv00V2ZPd+NfLpV
-	gc+ZAd4L7iMkX0KD+nJ2vEfElYPaP/KAr488vvlXkYPAFxdD01RGG2WIAt3lRBvW
-	5HYlwDCdqVgDOppA/96Z+6iH1I2ADHtA+T1MyYhF0/Vd3WEm7yb5OUYaaz6rpwNz
-	FTPs30pmZg8=
+	:content-type; q=dns; s=sasl; b=OS9KpbB0yWlr7Nsm73kBnHoz8rwnNdG1
+	GmwLDeyAGRYyqhynsZmDS2nkD11/RakfpqVO7bOWQTxhQJYowO9j63OnPdP1jFH8
+	cu5/+lpVAGPaoPkru8dpXCT/MRHUo/TsxJz1u+4guMZPWsMXvDNpTALzcIGVTe9H
+	5/C4PhRlKzM=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 21B544CDC;
-	Tue, 21 Jun 2011 16:04:28 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 89A574D66;
+	Tue, 21 Jun 2011 16:07:28 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 755A34CCB; Tue, 21 Jun 2011
- 16:04:27 -0400 (EDT)
-In-Reply-To: <1308661489-20080-13-git-send-email-artagnon@gmail.com>
- (Ramkumar Ramachandra's message of "Tue, 21 Jun 2011 13:04:48 +0000")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id DE7EE4D65; Tue, 21 Jun 2011
+ 16:07:27 -0400 (EDT)
+In-Reply-To: <1308496725-22329-17-git-send-email-srabbelier@gmail.com>
+ (Sverre Rabbelier's message of "Sun, 19 Jun 2011 17:18:41 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AAE79874-9C41-11E0-A0C3-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 16742EEA-9C42-11E0-80DE-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176193>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Sverre Rabbelier <srabbelier@gmail.com> writes:
 
-> diff --git a/builtin/revert.c b/builtin/revert.c
-> index 5c0b97e..eb68068 100644
-> --- a/builtin/revert.c
-> +++ b/builtin/revert.c
-> @@ -46,6 +46,9 @@ enum replay_action { REVERT, CHERRY_PICK };
->  struct replay_opts {
->  	enum replay_action action;
->  
-> +	/* --skip-all */
-> +	int skipall_oper;
+> +        changed = {}
+> +
+> +        for name, value in refs_after.iteritems():
+> +            if refs_before.get(name) == value:
+> +                continue
+> +
+> +            changed[name] = value
 
-Yikes what is that "oper" doing there?  Don't truncate a word in the
-middle only to shorten names and make it unclear what you want to say. Is
-that operand? operation? In this case, I think "int skip_all" is
-sufficient, and you can lose the comment that adds no extra information.
+This assumes that nobody will ever _remove_ refs. I think it is a sensible
+assumption but somebody might want to give a power to the fast-import stream
+to say "I do not want that ref anymore".
+
+I dunno; it is not a big deal to me either way.  Just something to think
+about.
