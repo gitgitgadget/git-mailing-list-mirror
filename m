@@ -1,181 +1,255 @@
-From: David Caldwell <david@porkrind.org>
-Subject: Re: [PATCH] stash: Add --clean option to stash and remove all untracked
- files
-Date: Mon, 20 Jun 2011 18:36:42 -0700
-Message-ID: <4DFFF5AA.4030401@porkrind.org>
-References: <1308612986-26593-1-git-send-email-david@porkrind.org> <20110621003852.GB2050@sigill.intra.peff.net>
+From: Joey Hess <joey@kitenet.net>
+Subject: git-union-merge proposal
+Date: Mon, 20 Jun 2011 22:20:49 -0400
+Message-ID: <20110621022049.GA1632@gnu.kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 21 03:36:59 2011
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="dc+cDN39EJAMEtIO"
+To: GIT Mailing-list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 21 04:21:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QYptj-0007EO-1k
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 03:36:59 +0200
+	id 1QYqag-0000dn-OD
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 04:21:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932123Ab1FUBgw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jun 2011 21:36:52 -0400
-Received: from kill.porkrind.org ([68.68.97.104]:51433 "EHLO
-	david.xen.prgmr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932085Ab1FUBgv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2011 21:36:51 -0400
-Received: from porkrind.org (cpe-98-151-185-99.socal.res.rr.com [98.151.185.99])
-	by david.xen.prgmr.com (Postfix) with ESMTPS id 744242BD48;
-	Mon, 20 Jun 2011 18:36:47 -0700 (PDT)
-Authentication-Results: david.xen.prgmr.com; dkim=pass
-	(1536-bit key; insecure key) header.i=@porkrind.org
-	header.b=oWT7nUV6; dkim-adsp=pass
-Received-SPF: pass (porkrind.org: authenticated connection) receiver=porkrind.org; client-ip=127.0.0.1; helo=black.porkrind.org; envelope-from=david@porkrind.org; x-software=spfmilter 0.97 http://www.acme.com/software/spfmilter/ with libspf-unknown;
-Received: from black.porkrind.org (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by porkrind.org (8.14.4/8.14.4/Debian-2) with ESMTP id p5L1ahws030968
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NOT);
-	Mon, 20 Jun 2011 18:36:43 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=porkrind.org;
-	s=apoptygma; t=1308620205;
-	bh=gSewQbNWGjs9+yAD36YNEV0PeYw24gFb3lKeW8xGVCU=;
-	h=Message-ID:Date:From:MIME-Version:To:CC:Subject:References:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	b=oWT7nUV6wuaWAzyTuKtjll49aUul2THkMnN5Ww75ilZDjB3i2gl/h8kZl5poW8meT
-	 yCb2/VO1t2ELWBaaCFVaqKAiVFjs6y9xvc/UQaWoljQYtLtcsImkxKmORI3rJGOktH
-	 XmC14sNClBOACAjRlv1LXqqbg5SzB8GmYhazjA0xIJbkMRH3hsQl45J9iPfdJrFwxs
-	 UcNDhBndEUdQOKshK22363igP5pwa1zuYD47qiSaHLTpYirHI2FWqxD9RJr
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10 ThunderBrowse/3.3.5
-In-Reply-To: <20110621003852.GB2050@sigill.intra.peff.net>
-X-Enigmail-Version: 1.1.1
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAAACXBIWXMAAAsTAAALEwEAmpwY
- AAAABGdBTUEAALGOfPtRkwAAACBjSFJNAAB6JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+S
- X8VGAAABiklEQVR42rRYSZIDIQwzLv7/ZXLoEAzeBKG7ag4DRhZeBKQ0Qr5imLWCrKwn0HImc1Mx
- aAvmmc/cuAT7RMYws6v/gHeb0p4/y5792GJJlLZWOPgsdV5NaRes4Xe4632sLljD7wKv1Ta74H/h
- MxecN1Rc2TatYcP7zb+6WFfN/zMSHg1Ymuxjrzd+DuLw6Nlekggt1hvr7KK9tRIX85jjM6GTYhfv
- nzXH3jBdYc4koueBs66M+Xv9O9n5ML4urWssjGeMY3if3bzGSvk30BQ46OOaxJjLCpzPJAzXrOrD
- z5VFh58TIiwESIiCHNxxwPTy97qDei8YdpVdyYEv6EQcK8n+iTyE/Cn1eoe7HwN+F56oErVSGtJY
- Q1sR2ehaUHfjvJuv0tL7qAzEbBmfF2IHrVi8zp9N0pZtQZZHOXp/sLW4+hqKvm3iccaPwP3XgnKX
- n8/YtVeOsnenRG7VCBFlZ5fe3LOyANCVdGAIwDs7tTXGF4hIk15/iAfSgv2UkNFItSszOG3Ha7r0
- GQBerhBkHOAzmQAAAABJRU5ErkJggg==
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_PASS,
-	T_DKIM_INVALID,UNPARSEABLE_RELAY autolearn=ham version=3.3.1
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on kill.porkrind.org
+	id S1752949Ab1FUCU7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jun 2011 22:20:59 -0400
+Received: from wren.kitenet.net ([80.68.85.49]:53127 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752840Ab1FUCU6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2011 22:20:58 -0400
+Received: from gnu.kitenet.net (dialup-4.154.1.215.Dial1.Atlanta1.Level3.net [4.154.1.215])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id C9FD5118120
+	for <git@vger.kernel.org>; Mon, 20 Jun 2011 22:20:54 -0400 (EDT)
+Received: by gnu.kitenet.net (Postfix, from userid 1000)
+	id E5E384DE39; Mon, 20 Jun 2011 22:20:49 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176119>
 
-On 6/20/11 5:38 PM, Jeff King wrote:
-> On Mon, Jun 20, 2011 at 04:36:26PM -0700, David Caldwell wrote:
-> 
->> The --clean option acts like the normal "git stash save" but also adds all
->> untracked files in the working directory to the stash and then calls "git
->> clean --force --quiet" to restore the working directory to a pristine
->> state.
-> 
-> Hmm. I think I would call this something like "--untracked", as to me
-> the main function is saving those files, not cleaning them afterwards
-> (the fact that they are cleaned is really just making the untracked-file
-> handling in line with what we do for tracked files; we put the changes
-> in the stash and remove them from the working tree).
 
-I see your point but I thought "--clean" was pretty descriptive of how
-the working dir ended up afterward. Maybe "git stash --everything" (or
-"--all")?
+--dc+cDN39EJAMEtIO
+Content-Type: multipart/mixed; boundary="n8g4imXOkfNTN/H1"
+Content-Disposition: inline
 
->> "git stash" alone is not enough in this case--it leaves untracked files
->> lying around (configure and automake droppings, for instance) that might
->> mess up a release process that expects everything to be very clean.
-> 
-> For that workflow, do you actually want the files saved and restored
-> via "stash pop"? That is, aren't those untracked files just useless
-> cruft that could be regenerated, and you would be just as happy to do:
-> 
->   $ git tag release-1.0
->   $ git stash
->   $ git clean
->   $ make release
->   $ git stash pop
->
-> and have a pristine state after your pop?
 
-Yes, in that case you are right. My example was poor. I'm more worried
-about junk that might actually affect the release but isn't
-auto-generated. I'm usually too wary to run "git clean" because of the
-random files I have sitting around--todo lists, random patches, new
-files I haven't added but are sitting around possibly affecting tests,
-things like that. I want them back at some point, but I want the
-directory very clean when doing the release just to make sure I have
-everything properly committed (so I could, for example, detect the new
-source file that I forgot to add and commit).
+--n8g4imXOkfNTN/H1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Also, wouldn't you want to "git clean" after your "make release" but
-> before your "git stash pop" in case the build creates cruft that is not
-> overwritten by your stash pop?
+Lately some tools are storing data in git branches or refs, that is not
+source code, and that is designed in some way to be automatically
+merged. Generally merge=3Dunion will work for it, but the problem is that
+git-merge can only operate on the checked out branch, not other
+branches.
 
-Yes, you'd definitely want the git clean before the git stash pop. I
-forgot that step.
+So these things all deal with merging in their own ad-hoc ways:
 
-> Please put your comments on the patch (i.e., anything not destined to go
-> into the commit message) below the "---" marker; that helps "git am"
-> know which part is which.
+* pristine-tar commits the info it needs to reconstruct tarballs
+  to a pristine-tar branch; files in the branch should not easily conflict
+  as each includes the name of the tarball.. but when git pull
+  cannot fast-forward the pristine-tar branch, the user is left to
+  manually fix it.
+* git-annex stores location tracking information to log files in
+  .git-annex/; gitattributes is configured to use merge=3Dunion,
+  and the log files have timestamps or are otherwise structured to be
+  safely merged.
+* git notes merge -s cat_sort_uniq
+  Notes are stored in a tree using the object sha, which can be
+  union merged, when the notes' format is a series of independant lines.
+* probably other tools do things like this too, or will ...
 
-Whoops. That was a copy and paste error. Took multiple tries to get git
-send-email to work ;-).
+So I've written a prototype of a git-union-merge that could be used
+for all of these. It works like this:
 
->>   * I used 'find . -name ".git" -prune -o -print' to get a list of all the
->>     files in the working directory. That assumes ".git" is the name
->>     of the repo--is that assumption valid?
-> 
-> Generally yes, but somebody could do something tricky with GIT_DIR. You
-> should be using "git ls-files -o" instead.
+git union-merge foo origin/foo refs/heads/foo=20
 
-Ah, thanks--I didn't know about that command! I was considering using
-"git status --porcelain", but ls-files looks exactly like what I want.
+That looks up foo and origin/foo and union merges them together,
+producing the new branch refs/heads/foo. New blobs are injected
+as needed for unioned files, and the merge commit is generated,
+without affecting the current working tree, and without any
+expensive checkouts of the branches. It's pretty fast, it only
+needs to write out a temporary index file.
 
-> For that matter, what should this do with gitignored files, like
-> generated object files?
-> 
->>   * Also, that find command does not respect .gitignore. Should it?
-> 
-> I'm not sure of the answer to this. I think it would depend on your
-> workflow and your project (i.e., is your build system fragile enough
-> that you need to get rid of ignored build products between builds, or is
-> it OK to leave them, which is more efficient). I would think respecting
-> ignore would be a sane default, but I don't know if it should be
-> configurable, or have an extra command line option to stash everything.
-> 
-> If you do want to respect .gitignore, then you can add
-> "--exclude-standard" to the "ls-files" command I mentioned above.
+Prototype is attached, I doubt it would be suitable for git as-is,
+but it does show how this is accomplished, if you've not already
+seen how to do it -- just look for ls-tree, diff-tree,
+show, hash-object, and update-index. Note that merging file modes is
+not yet dealt with.
 
-The more I think about it the more I think you're right that it should
-respect .gitignore on the default case and have another option to be
-really thorough (even if my build system isn't always fragile, it's
-sometimes nice to be overly cautious just for my own paranoid peace of
-mind).
+I imagine a git that can have union merge or other custom automated
+merge strategies configured on a per-branch basis, so that git pull
+automatically merges branches. That could be a good basis for adding
+Fossil-like features to git.
 
-Perhaps --clean (or --untracked) respects .gitignore and --all just flat
-out does everything?
+--=20
+see shy jo
 
->> @@ -86,7 +87,7 @@ create_stash () {
->>  			git read-tree --index-output="$TMPindex" -m $i_tree &&
->>  			GIT_INDEX_FILE="$TMPindex" &&
->>  			export GIT_INDEX_FILE &&
->> -			git diff --name-only -z HEAD | git update-index -z --add --remove --stdin &&
->> +			(git diff --name-only -z HEAD; test -n "$clean" && find . -name ".git" -prune -o -print0) | git update-index -z --add --remove --stdin &&
->>  			git write-tree &&
->>  			rm -f "$TMPindex"
->>  		) ) ||
-> 
-> When you apply this stash, what does the resulting index look like? Do
-> the untracked files remain properly untracked? That might be a good
-> thing to double check in the test script.
+--n8g4imXOkfNTN/H1
+Content-Type: text/x-haskell; charset=us-ascii
+Content-Disposition: attachment; filename="git-union-merge.hs"
+Content-Transfer-Encoding: quoted-printable
 
-They do in indeed, but you're right, that would be a good automated test
-to add.
+{- git-union-merge program
+ -
+ - Copyright 2011 Joey Hess <joey@kitenet.net>
+ -
+ - Licensed under the GNU GPL version 3 or higher.
+ -}
 
-Thanks, I greatly appreciate the help.
+import System.Environment
+import System.FilePath
+import System.Directory
+import System.Cmd.Utils
+import System.Posix.Env (setEnv)
+import Control.Monad (when)
+import Data.List
+import Data.Maybe
+import Data.String.Utils
 
--David
+import qualified GitRepo as Git
+import Utility
+
+header :: String
+header =3D "Usage: git-union-merge ref ref newref"
+
+usage :: IO a
+usage =3D error $ "bad parameters\n\n" ++ header
+
+main :: IO ()
+main =3D do
+	[aref, bref, newref] <- parseArgs
+	g <- setup
+	stage g aref bref
+	commit g aref bref newref
+	cleanup g
+
+parseArgs :: IO [String]
+parseArgs =3D do
+	args <- getArgs
+	if (length args /=3D 3)
+		then usage
+		else return args
+
+tmpIndex :: Git.Repo -> FilePath
+tmpIndex g =3D Git.workTree g </> Git.gitDir g </> "index.git-union-merge"
+
+{- Configures git to use a temporary index file. -}
+setup :: IO Git.Repo
+setup =3D do
+	g <- Git.configRead =3D<< Git.repoFromCwd
+	cleanup g -- idempotency
+	setEnv "GIT_INDEX_FILE" (tmpIndex g) True
+	return g
+
+cleanup :: Git.Repo -> IO ()
+cleanup g =3D do
+	e' <- doesFileExist (tmpIndex g)
+	when e' $ removeFile (tmpIndex g)
+
+{- Stages the content of both refs into the index. -}
+stage :: Git.Repo -> String -> String -> IO ()
+stage g aref bref =3D do
+	-- Get the contents of aref, as a starting point.
+	ls <- fromgit
+		["ls-tree", "-z", "-r", "--full-tree", aref]
+	-- Identify files that are different between aref and bref, and
+	-- inject merged versions into git.
+	diff <- fromgit
+		["diff-tree", "--raw", "-z", "-r", "--no-renames", "-l0", aref, bref]
+	ls' <- mapM mergefile (pairs diff)
+	-- Populate the index file. Later lines override earlier ones.
+	togit ["update-index", "-z", "--index-info"]
+		(join "\0" $ ls++catMaybes ls')
+	where
+		fromgit l =3D Git.pipeNullSplit g (map Param l)
+		togit l content =3D Git.pipeWrite g (map Param l) content
+			>>=3D forceSuccess
+		tofromgit l content =3D do
+			(h, s) <- Git.pipeWriteRead g (map Param l) content
+			length s `seq` do
+				forceSuccess h
+				Git.reap
+				return ((), s)
+
+		pairs [] =3D []
+		pairs (_:[]) =3D error "parse error"
+		pairs (a:b:rest) =3D (a,b):pairs rest
+	=09
+		nullsha =3D take shaSize $ repeat '0'
+		ls_tree_line sha file =3D "100644 blob " ++ sha ++ "\t" ++ file
+		unionmerge =3D unlines . nub . lines
+	=09
+		mergefile (info, file) =3D do
+			let [_colonamode, _bmode, asha, bsha, _status] =3D words info
+			if bsha =3D=3D nullsha
+				then return Nothing -- already staged from aref
+				else mergefile' file asha bsha
+		mergefile' file asha bsha =3D do
+			let shas =3D filter (/=3D nullsha) [asha, bsha]
+			content <- Git.pipeRead g $ map Param ("show":shas)
+			sha <- getSha "hash-object" $
+				tofromgit ["hash-object", "-w", "--stdin"] $
+					unionmerge content
+			return $ Just $ ls_tree_line sha file
+
+{- Commits the index into the specified branch. -}
+commit :: Git.Repo -> String -> String -> String -> IO ()
+commit g aref bref newref =3D do
+	tree <- getSha "write-tree"  $
+		pipeFrom "git" ["write-tree"]
+	sha <- getSha "commit-tree" $
+		pipeBoth "git" ["commit-tree", tree, "-p", aref, "-p", bref]
+			"union merge"
+	Git.run g "update-ref" [Param newref, Param sha]
+
+{- Runs an action that causes a git subcommand to emit a sha, and strips
+   any trailing newline, returning the sha. -}
+getSha :: String -> IO (a, String) -> IO String
+getSha subcommand a =3D do
+	(_, t) <- a
+	let t' =3D if last t =3D=3D '\n'
+		then take (length t - 1) t
+		else t
+	when (length t' /=3D shaSize) $
+		error $ "failed to read sha from git " ++ subcommand ++ " (" ++ t' ++ ")"
+	return t'
+
+shaSize :: Int
+shaSize =3D 40
+
+--n8g4imXOkfNTN/H1--
+
+--dc+cDN39EJAMEtIO
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQIVAwUBTgAAAckQ2SIlEuPHAQgt7w//VXB23C3OjcQha4Y5UXEV/5/dE1PaBEvZ
+cwNiPDGuEXwHTAbBEyflgujPtiYSM39cy5zdBGe17X+Rh9o5Txk6u/LL8H24iUN9
+upQJL7VtpcXul0Iru4vepMc6zLqB+etkFs6ct0hZn0iU6ruDYo7EoYm8st2y80xt
+BqBVgMvv2FsYS+a+3ImogHgjQqpvU3xrDJpJ7K/hxYwlOtDP7ZsASK+98taHdZjU
+Y9GS8+NXJ6x6Seo1ULmZl9ZB/jQVIi3lkRs/sMXWLWRs0/shkvIO5siFTFfbfKQe
+SWX66yMHlzledhymjA/C6buxKfkI2ESf8Bz5oJ91sZsnwQZCGzgwWLOM4ap+9UvC
+5Zzxg14LxtKm9qwbvRppudA08fKGXvl1gLEiBKEoKcSbMYXDEutPJ7169e4+U1S1
+LJ+zAehydxYMS7ghNQq5wdrQ6vWluFZkD3G3Aq4QyVUjA5VX2YbbG+nJOiostiMM
+8qkngP/U+PfoDVouwoEQyty9xpTwNRbCsM8eb9xymLhQctoq0YSemXQDpQrmShlx
+DCg1Bo2EhU9yWx+oqJby8tJjI796iEiUI+WJKG8uJV9v3pGngy9VPMPdCy7XlzpP
+a7IwVt/gqUFSeBbYMah2GhNfMIDwphp9d9r81MfihsB78OBfESwbl0hYs7o095UI
+VuJqA+oP87w=
+=c2JV
+-----END PGP SIGNATURE-----
+
+--dc+cDN39EJAMEtIO--
