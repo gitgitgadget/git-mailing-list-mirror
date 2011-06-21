@@ -1,76 +1,116 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 03/13] revert: Don't check lone argument in get_encoding
-Date: Tue, 21 Jun 2011 11:03:06 -0500
-Message-ID: <20110621160306.GH15461@elie>
-References: <1308661489-20080-1-git-send-email-artagnon@gmail.com>
- <1308661489-20080-4-git-send-email-artagnon@gmail.com>
+From: Joey Hess <joey@kitenet.net>
+Subject: Re: git-union-merge proposal
+Date: Tue, 21 Jun 2011 12:10:44 -0400
+Message-ID: <20110621161044.GA8079@gnu.kitenet.net>
+References: <20110621022049.GA1632@gnu.kitenet.net>
+ <20110621052211.GA16919@elie>
+ <201106210934.34025.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 21 18:03:17 2011
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="YiEDa0DAkWCtVeE4"
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Tue Jun 21 18:10:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZ3Q4-0002Fc-Cq
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 18:03:16 +0200
+	id 1QZ3XV-00068w-6w
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 18:10:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753210Ab1FUQDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jun 2011 12:03:12 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:60010 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755153Ab1FUQDL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2011 12:03:11 -0400
-Received: by iyb12 with SMTP id 12so2962894iyb.19
-        for <git@vger.kernel.org>; Tue, 21 Jun 2011 09:03:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=YFo/l08aM24YxW85GebVZ6SElVqu8imATJMbwYv36xY=;
-        b=L/snjpGkAX4GPD3WkNVCVh5xouoYzTtDA0eqZllNKR1Uj8Nc5LTwd+ObId5UFMMc4F
-         S0KKjnx8vuVcnjIQYAOILp+6flTc0AMZNBn9pYLlxWagf20InKokinGMslZNLczJ45hK
-         MFoExF75oyENQ/4Fomf/9V34/6oMAYJP2YbrY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=s3GK6dsOBvEpxk2/5FNVf5P3pPXa/Zc/UDZpH8qDrEDig4C+wdmDp0lfDmM45Y2kkK
-         Qbm0nbCGg6oLQBvkOgq99/K7X3fY1fnn7nGZfVH5nQ49t+bAcn9pRB9d3dkVdUMlrqnV
-         w7m3Hco3lsmqOQFcfmqKLmKiABk9OQNtWwkaY=
-Received: by 10.42.131.65 with SMTP id y1mr7760704ics.172.1308672190318;
-        Tue, 21 Jun 2011 09:03:10 -0700 (PDT)
-Received: from elie (adsl-69-209-79-158.dsl.chcgil.ameritech.net [69.209.79.158])
-        by mx.google.com with ESMTPS id ly7sm6888352icb.12.2011.06.21.09.03.08
-        (version=SSLv3 cipher=OTHER);
-        Tue, 21 Jun 2011 09:03:09 -0700 (PDT)
+	id S1756768Ab1FUQKv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jun 2011 12:10:51 -0400
+Received: from wren.kitenet.net ([80.68.85.49]:48399 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751559Ab1FUQKv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2011 12:10:51 -0400
+Received: from gnu.kitenet.net (dialup-4.153.14.177.Dial1.Atlanta1.Level3.net [4.153.14.177])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id 0CCF5118282;
+	Tue, 21 Jun 2011 12:10:48 -0400 (EDT)
+Received: by gnu.kitenet.net (Postfix, from userid 1000)
+	id 463C44DE39; Tue, 21 Jun 2011 12:10:44 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <1308661489-20080-4-git-send-email-artagnon@gmail.com>
+In-Reply-To: <201106210934.34025.johan@herland.net>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176167>
 
-Ramkumar Ramachandra wrote:
 
-> The get_encoding function has only one callsite, and its caller makes
-> sure that a NULL argument isn't passed.  Don't unnecessarily double
-> check the same argument in get_encoding.
+--YiEDa0DAkWCtVeE4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yes, this one's pretty good, though I suspect the actual reason for
-the patch is not just dead code elimination.
+Jonathan Nieder wrote:
+> Does the GitRepo module that it uses come from git-annex?
+>=20
+> If the prototype were self-contained, I would encourage you to submit
+> it for inclusion under contrib/ so it can evolve and eventually
+> graduate out of there.  Cc-ing Johan (who has no doubt thought through
+> these things in the context of "git notes") in case he has thoughts on
+> it.
 
-The patch itself gives reason to be comfortable: the "while" loop
-right after the removed "if" checks the value of *p immediately, so if
-callers start passing NULL, it will be pretty obvious.
+Yes, this was written in the context of git-annex. I would probably not want
+to submit the haskell implementation to contrib/, but a shell implementation
+could be done that would be perhaps less robust, but also less unusual in
+the context of git's code base.
 
-I suspect the actual motivation is to avoid access to the "commit"
-global, in preparation for making it local.  A nice side-benefit is
-removing a translated message.
+Johan Herland wrote:
+> I must confess that my Haskell skills are exactly nil, but AFAICS the scr=
+ipt=20
+> depends on the filename as the only criteria to identify files that need =
+a=20
+> line-level merge. How does the script deal with renamed and copied files?
+>=20
+> If you depend on the filename only, this script simply will not work for=
+=20
+> notes.
+
+It simply depends on filenames. I saw there was additional complexity
+in notes and I don't see how a general purpose merger can handle that.
+(I wish I could just use notes for my application, but I have data that
+is not tied to any one object in git.)
+
+Although, this is an obvious extension that would add some flexability
+to handle for files that cannot be merged with a naive union:
+
+git union-merge foo origin/foo refs/heads/foo -c "sort * | uniq"
+
+Where the files would be passed in as temp files.
+
+Hmm, that makes it look not unlike git-filter-branch, except
+it's generating a new commit at the tip. I *think* that filter-branch
+can't do this.
+
+--=20
+see shy jo
+
+--YiEDa0DAkWCtVeE4
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQIVAwUBTgDCg8kQ2SIlEuPHAQj64g//Ts7aQRJ6LSiAXqwwMi6Ib2z3b5iC1FJ6
+suz8eKk5uB821nSeIiA1P23cgRzZ4zTlkXhBnv4BdQvRHbPxv7Z4ghiJ7CedHADD
+dbNpcZ9TQrZmLbfOOQFuUi42Q1L1Ea2pa3hAB08iKARPLom8LhUM0ctO0tTPNV7h
+LpWuxZ80tcFKxGWhUNBSz4xW1oq9y4JaRwusy1S+QC7tdVrN4nWYY7fNe1Xo0S0U
+hvgl9vyO7cFeUiv+8LK5o/uuJ6Aj0LVaWwr3oMSWtDv+S92hA3uGF2cPQBxZTvCm
+XYjr6/S4b5Xa11cg2kTOnvihLFWuvppckS1IVFjQRJpOPtqlx/J3lrukoF+kg9X5
+83ISuC3B767uJjt/tZI0Hk/JiGms4gZeg4eanEBjrOn3vnAH5TW2C7qk9ZH5YwWA
+I9oFUTecDh8NevpGw9q4W8bUKND970dbEQ/PrMtayPKxkVIK7kXC9aVeaJpoi6+p
+YIVG3UuNsyxnwxP4xSfIIJo6iL0I4g/ybeQWuplWidQ3vkSISJXPOlECeLgpcJqf
+gfQFOG+m993zsgXSnzu4++0CS6/wacK6Ia7KYrwNgEfjFx7WqUOSt5a22EcFlvvM
+TtyLRJdjachRAeVQVt60hJyH9o6Fd9Q/n2UJZzlwk97rU/9v6pGevrFVXewaUn9E
+SzjKdQ32DxQ=
+=9/kn
+-----END PGP SIGNATURE-----
+
+--YiEDa0DAkWCtVeE4--
