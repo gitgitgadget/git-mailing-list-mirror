@@ -1,88 +1,90 @@
-From: Kasra Khosoussi <kasra.mail@gmail.com>
-Subject: Re: corrupted Git repository
-Date: Tue, 21 Jun 2011 19:29:18 +0430
-Message-ID: <BANLkTinaMfD4YG_Rx1OhixoX7XuPmaiaMQ@mail.gmail.com>
-References: <BANLkTi=A=DpyfNwEeSd6N6ibCsA5qh_NPQ@mail.gmail.com>
-	<4E005404.5010901@drmicha.warpmail.net>
-	<BANLkTi=WVTGcGkUXjkuPYcxhMY0a5KPB7g@mail.gmail.com>
-	<4E006682.80101@drmicha.warpmail.net>
-	<BANLkTi=GdEfXnAGa6V-33wqX2C-2x-9JQQ@mail.gmail.com>
-	<4E00A0E1.8000006@viscovery.net>
-	<BANLkTi=6jt7Z3fvK++ontW=F9AJbmEr9Qg@mail.gmail.com>
-	<20110621143211.GA4910@bee.lab.cmartin.tk>
+From: Matteo Cypriani <mcy@lm7.fr>
+Subject: Re: Preserve merge changes with rebase -p
+Date: Tue, 21 Jun 2011 17:07:49 +0200
+Message-ID: <201106211707.53486.mcy@lm7.fr>
+References: <201106211411.31739.mcy@lm7.fr> <4E00AE60.5000801@sohovfx.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Tue Jun 21 16:59:26 2011
+Content-Type: multipart/signed;
+  boundary="nextPart3404954.kcZ4PPFeDI";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha256
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 21 17:08:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZ2QG-0001mp-KH
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 16:59:24 +0200
+	id 1QZ2Yc-0006LJ-5A
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 17:08:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752160Ab1FUO7U convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Jun 2011 10:59:20 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:42768 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752303Ab1FUO7T convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Jun 2011 10:59:19 -0400
-Received: by pvg12 with SMTP id 12so1503968pvg.19
-        for <git@vger.kernel.org>; Tue, 21 Jun 2011 07:59:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=b8elXCwYTyobjPotwmSZ+fH3ymcUh7rAvgW4MLL9VMc=;
-        b=oCWPMlVhg12FPAgm6M+BU8dk45kNYaRE9+m4esKKB8OgVvC7f/Ft9BMfIwQ5FWqQvC
-         Q9zO4brFC9l4J+PiU9hlwWjDJx/bs5ZpMSUsTuzIozlaXnm6XLv5mbXBMGLBKFkTp27/
-         xPFej8g0qrkfCCUsQS+58zZgw88aPhA73kjEQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=sHtNYXFVBf+XkKyQJDVbPK/LVa9xeR7exRZsxWxHUOY4NQrriuLa+uJRe0HlEbn9qq
-         wtgB74oOvdrziSqDRqASUcFyPFAPZUV5DKa/wo2x6GE8EX1dYe62mf4NE3jExeKJpx6m
-         RvfqgqMRXeirf8QriQTZkNCrJnLt9Gaj5ZiKQ=
-Received: by 10.68.31.234 with SMTP id d10mr2814739pbi.490.1308668358420; Tue,
- 21 Jun 2011 07:59:18 -0700 (PDT)
-Received: by 10.68.55.132 with HTTP; Tue, 21 Jun 2011 07:59:18 -0700 (PDT)
-In-Reply-To: <20110621143211.GA4910@bee.lab.cmartin.tk>
+	id S1753210Ab1FUPH4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jun 2011 11:07:56 -0400
+Received: from adagio.lm7.fr ([91.121.68.23]:38632 "EHLO adagio.lm7.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750811Ab1FUPH4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2011 11:07:56 -0400
+Received: from silence.localnet (lifc08.pu-pm.univ-fcomte.fr [194.57.85.147])
+	by adagio.lm7.fr (Postfix) with ESMTPSA id 291A330192
+	for <git@vger.kernel.org>; Tue, 21 Jun 2011 17:07:55 +0200 (CEST)
+User-Agent: KMail/1.13.7 (Linux/2.6.39-2-amd64; KDE/4.6.3; x86_64; ; )
+In-Reply-To: <4E00AE60.5000801@sohovfx.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176161>
 
-The battery was not empty when I issued the shutdown command, so there
-should have been plenty of time before it ran out.
+--nextPart3404954.kcZ4PPFeDI
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
--Kasra
+Le mardi 21 juin 2011 16:44:48, Andrew Wong a =C3=A9crit :
+> Unfortunately, I don't think there's any nice way to do it right now. I
+> think what you could do for now is make the "pick <M>" into a "edit
+> <M>", together with other changes you want to make. And then when you
+> get to "edit M", do a "git cherry-pick -n -m 1 <M>", or "-m 2" depending
+> on how your merge was done. That should bring your changes over. Then
+> you just need resolve and add any conflicts, and do a "rebase --continue".
 
-On Tue, Jun 21, 2011 at 7:02 PM, Carlos Mart=C3=ADn Nieto <cmn@elego.de=
-> wrote:
-> On Tue, Jun 21, 2011 at 06:56:55PM +0430, Kasra Khosoussi wrote:
->> Good question! Actually I have no idea!
->>
->> It was fine yesterday. I had to leave home so I just shutdown my
->> netbook (I just issued the command and closed the lid). Files were
->> open in my editor but I'm sure that there were no Git processes
->> running at the time. The battery was empty this morning, so my best
->> guess is that the halt operation was somehow failed, but I think it
->> can not explain the corruption.
->>
->> Any idea?
->
-> Does your computer actually shutdown or suspend? It could be that the
-> files still hadn't been flushed to disc when the battery ran out, but
-> that is unlikely if it did keep running.
->
-> Cheers,
-> =C2=A0 cmn
->
+Thank you, I'll try that the next time.
+
+
+> I imagine this is pretty useful feature to have too. I could look into
+> adding this support when I got a chance.
+
+That would be great, many thanks in advance!
+
+Cheers,
+
+  Matteo
+
+=2D-=20
+Ma clef GPG est disponible sur keyserver.veridis.com
+My GPG key is available on keyserver.veridis.com
+
+--nextPart3404954.kcZ4PPFeDI
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQIcBAABCAAGBQJOALPFAAoJEE6QGOCjKRJrqpgQAJRr/oTxf6uUH3lML5a6NZkd
+6qPCL7gtYwzZrHv6W30kzwqOtAVupyECTe/XcTRgjwtRaVWMnzuCkb7bC5Jx+zLA
+LUyfVwQI+/gciG/PmIPC225f1dQTuQCIpDOKC/pEHgBJ430nTBUKVP1AA0TfzajH
+4ylnH+1ImYecq8W4vrV0bhx7hzMBYxSF0qVcCm5SxljMD9Jv/S5frD7bikwxGCPM
+/rEOKkgdddq72zJHGHpodpMRPSTdOnrw5Fj+F1JXYzeNEaGNew6o0Qwkco233tAv
+5MT8YdsMy9/nXtkG1LeS7kpCvNGLPgc9jMYT+PM9tNLyxjn+QfD9DP5l6afrVgC/
+yFdYmGnbhHip+1lUHhoGmnD+jpnrsWfTjGqSPMYSuaYCXEhgmAPXkQIG3k/Tp0/y
+a4QrYhgKQLHG6MoLCyZWQNOwlWsFKs8rXaqVpN6HA75vcRSVkSmmMHvhLAsxphNf
+HfO1K4ZJGMRbFs/UNqHAyl2rVO1KKHQ9utIZvnwnDbO53EllFc31Eu6PAH3UzvC4
+wUTxVbnScI1FKVAmB6PmkZM2Q9nwqj622dqFl4kd8LiVl/QwGmhFlDGfFNuoM9FJ
+uDXfSbKgo5q7KQrHJxyBUvXq3dv25eqTufoZy2g8I03X5t2pIVycC4e/HwnXXO1M
+FkYE9qaMydr7Ue6j0GUC
+=t1QG
+-----END PGP SIGNATURE-----
+
+--nextPart3404954.kcZ4PPFeDI--
