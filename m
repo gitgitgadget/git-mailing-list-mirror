@@ -1,72 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-union-merge proposal
-Date: Tue, 21 Jun 2011 13:19:28 -0700
-Message-ID: <7vaadb6ipb.fsf@alter.siamese.dyndns.org>
-References: <20110621022049.GA1632@gnu.kitenet.net>
- <7v4o3j9izr.fsf@alter.siamese.dyndns.org>
- <20110621184101.GA12108@gnu.kitenet.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCHv4 0/2] Documentation: refactor config variable descriptions
+Date: Tue, 21 Jun 2011 22:36:57 +0200
+Message-ID: <20110621203041.11131.90701.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Joey Hess <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Tue Jun 21 22:19:47 2011
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Rast <trast@student.ethz.ch>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 21 22:37:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZ7QJ-00037B-E9
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 22:19:47 +0200
+	id 1QZ7hl-0003Qd-P2
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 22:37:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757512Ab1FUUTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jun 2011 16:19:32 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47459 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757481Ab1FUUTa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2011 16:19:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 527DE4F64;
-	Tue, 21 Jun 2011 16:21:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AZlh9X2azvw7aPYjWSfn4h33Swc=; b=lJx65i
-	icC5CZszDRoDoauTgI3aFvlP7NWqjq0P/XktO5x5T9g29KlICWLUXyXqhDOp0lz5
-	R526Jv/AwyO5czoUjMlOjUPKyv/9vc/HGqKY0GM9aj7nsB2W+/bWDL+T1T5b+61K
-	rzh+csthrGXB9Xeue+mIrBHtz4XulFZB0AOKE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZVPRLfC1nF1CGrt/D5UNkAyPRnjXmi18
-	Jb8i/6ziSJefMT6W7NhoIguPnNWNndC+MmFn47tdG8Ud6w5UDE7c0gG1v+rDN9d2
-	906cgZY44TETM+7W74ZneWCyR4/VoTVKc2+MgOHybZkH6IzutK2BZhnE7F08G/JV
-	ud+xhMG0RU4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4C5F84F62;
-	Tue, 21 Jun 2011 16:21:42 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A930B4F61; Tue, 21 Jun 2011
- 16:21:41 -0400 (EDT)
-In-Reply-To: <20110621184101.GA12108@gnu.kitenet.net> (Joey Hess's message of
- "Tue, 21 Jun 2011 14:41:01 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1352C850-9C44-11E0-BBD1-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
+	id S1757487Ab1FUUhh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jun 2011 16:37:37 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:35343 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757455Ab1FUUhg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2011 16:37:36 -0400
+Received: by wwe5 with SMTP id 5so153395wwe.1
+        for <git@vger.kernel.org>; Tue, 21 Jun 2011 13:37:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:subject:to:cc:date:message-id:user-agent
+         :mime-version:content-type:content-transfer-encoding;
+        bh=/Dhz2gopxCLm7dVwgXHa/Zoek0lMA/7ipZlPbF/Vldo=;
+        b=mkc+bT925j9hP8wbPJfqTKmuNomirCbLJS3vnGmsxMNah+x6k0bY39HPrfJxp1xg0L
+         p/HNmVJNhYG2eF4b5h4RlRa5DulE8M+JypD/7DdD3MurmmIvQmgnEBbFouSOLT4vhPYG
+         Lc2sdXtqD42/5YKnzqV7jxTZ3crCXcLN2fhPg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:subject:to:cc:date:message-id:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        b=pI0te/WWa9QnjwqR2R9S/MyiDaw1nbqEhciJdM0ErQP13Q4OKBIrW8xcDkTtzUa42p
+         WT0avR7CEWay1N+psUzzueiw2Ssxg9TJDwzLE7RlGCeWdMybDvuIPx5cgszIxvuCdDNr
+         C5mkNJlSne7D0cSIPZTgktInOKzRyznvks5Kg=
+Received: by 10.227.165.10 with SMTP id g10mr343405wby.91.1308688653877;
+        Tue, 21 Jun 2011 13:37:33 -0700 (PDT)
+Received: from localhost.localdomain (abvd183.neoplus.adsl.tpnet.pl [83.8.201.183])
+        by mx.google.com with ESMTPS id et5sm4286273wbb.50.2011.06.21.13.37.31
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 21 Jun 2011 13:37:32 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p5LKavP1011228;
+	Tue, 21 Jun 2011 22:37:08 +0200
+User-Agent: StGIT/0.14.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176198>
 
-Joey Hess <joey@kitenet.net> writes:
+This is something that I noticed while doing cleanup of old unused
+branches.
 
-> Junio C Hamano wrote:
->> In other words, I would prefer to see something like:
->> 
->> 	$ git merge --index-only [-s <strategy>] <other_branch>
->
-> Would this allow merging changes into a branch other than HEAD? If so, I
-> agree, I'd prefer to see it in git-merge itself if possible.
+Last version of this series was sent (IIRC) on 22.10.2010 as
 
-I just said "I would prefer to see", so allowing or not allowing is up to
-you ;-).  If course I would prefer to see it not touch HEAD so that your
-working envirnoment (checked out branch and the working tree) are not
-disrupted.  See my other message in the thread.
+  [RFC PATCH v2 0/3] Documentation: refactor config variable descriptions
+  http://thread.gmane.org/gmane.comp.version-control.git/159641
+
+This series is without
+
+      Documentation: move format.* documentation to format-patch
+
+Rebasing it on top of current version was easy, even though there were
+many conflicts. I simply used the script in commit message of first
+patch to extract config-vars.txt file automatically.
+---
+Thomas Rast (2):
+      Documentation: complete config list from other manpages
+      Documentation: Move variables from config.txt to separate file
+
+ Documentation/Makefile              |   10 
+ Documentation/config-vars-src.txt   | 1760 +++++++++++++++++++++++++++++++++++
+ Documentation/config.txt            | 1759 -----------------------------------
+ Documentation/make-config-list.perl |  234 +++++
+ 4 files changed, 2005 insertions(+), 1758 deletions(-)
+ create mode 100644 Documentation/config-vars-src.txt
+ create mode 100755 Documentation/make-config-list.perl
+
+-- 
+Jakub Narebski
+ShadeHawk on #git
+Poland
