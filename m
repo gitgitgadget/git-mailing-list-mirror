@@ -1,94 +1,66 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 04/13] revert: Propogate errors upwards from
- do_pick_commit
-Date: Tue, 21 Jun 2011 14:32:17 -0500
-Message-ID: <20110621193217.GA17390@elie>
-References: <1308661489-20080-1-git-send-email-artagnon@gmail.com>
- <1308661489-20080-5-git-send-email-artagnon@gmail.com>
- <20110621162232.GI15461@elie>
- <7viprz8018.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Christof=20Kr=C3=BCger?= <git@christof-krueger.de>
+Subject: [PATCH] git-completion: added suggestions for color.grep
+Date: Tue, 21 Jun 2011 21:16:47 +0200
+Message-ID: <1308683807-26069-1-git-send-email-git@christof-krueger.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 21 21:32:33 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?q?Christof=20Kr=C3=BCger?= <git@christof-krueger.de>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jun 21 21:33:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZ6ga-0005Bw-OX
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 21:32:33 +0200
+	id 1QZ6hF-0005XE-2x
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Jun 2011 21:33:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757469Ab1FUTc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jun 2011 15:32:27 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:43032 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757338Ab1FUTc0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2011 15:32:26 -0400
-Received: by iyb12 with SMTP id 12so78033iyb.19
-        for <git@vger.kernel.org>; Tue, 21 Jun 2011 12:32:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=Dz1LVScVQIlK+UdlWnSXpnxEt2cEhZ8vRtSByhbwF0E=;
-        b=bJFq86/LSM9+jBAfZuS82fi8PadI3kZuTs2ndxKuL6YaEaTfUFZi9pTmr/sGUo2B5A
-         Ri7zCkm7IJ+86wdF8WjM2w6+aa+4DMe+ZIPMZPxwWH8OP6HYzL+39wgsvoRlyNMmpDbA
-         0J88dhxcDlAb0oRp5+bJd6nDqXyMfqSHWXqGk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=NQ6vcaWWTgo0Rsi7skyuvnjfN2KGkKseRPqv7OCnE+olvFUWP8AuMk19jfjZthdcGu
-         d/So78uxR/7Qrg6OmgNB3+FzYc0TeqzWrX/3BT27DT4VPqpGbXkUI5TIFY2J+bQTqoEn
-         1tII7md7IMo/WRc8fvg+wdphHpnayoNcn2al8=
-Received: by 10.42.75.67 with SMTP id z3mr7832802icj.208.1308684745658;
-        Tue, 21 Jun 2011 12:32:25 -0700 (PDT)
-Received: from elie ([69.209.79.158])
-        by mx.google.com with ESMTPS id ly7sm7039639icb.12.2011.06.21.12.32.23
-        (version=SSLv3 cipher=OTHER);
-        Tue, 21 Jun 2011 12:32:24 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7viprz8018.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757454Ab1FUTdH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Jun 2011 15:33:07 -0400
+Received: from vserver.localhost.li ([85.214.46.152]:59918 "EHLO
+	mail.localhost.li" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757441Ab1FUTdG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Jun 2011 15:33:06 -0400
+X-Greylist: delayed 963 seconds by postgrey-1.27 at vger.kernel.org; Tue, 21 Jun 2011 15:33:06 EDT
+Received: from p5794ccea.dip.t-dialin.net ([87.148.204.234]:53806 helo=oxylap)
+	by mail.localhost.li with esmtpa (Exim 4.69)
+	(envelope-from <oxygene@localhost.li>)
+	id 1QZ6RV-0000Rr-Ii; Tue, 21 Jun 2011 21:17:00 +0200
+Received: by oxylap (Postfix, from userid 1000)
+	id E77EDDC14D7; Tue, 21 Jun 2011 21:16:55 +0200 (CEST)
+X-Mailer: git-send-email 1.7.6.rc2
+X-Spam-Score: 0.0 (/)
+X-Spam-Report: none
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176188>
 
-Jun 21, 2011 at 12:19:47PM -0700, Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Show the possible settings "always", "never" or "auto" also for color.g=
+rep in
+addition to the the other color.* settings.
 
->>> +	if (res < 0)
->>> +		die(_("%s failed"), me);
->>> +	return 0;
->>
->> Should the "revert" or "cherry-pick" here be part of the message
->> marked for translation?  A translator might want to paraphrase to
->>
->> 	fatal: failed to cherry-pick
->>
->> if that is more natural in the language at hand.
->
-> Wouldn't such a message file simply say
->
-> 	msgid "%s failed"
->         msgstr "failed to %s"
->
-> IOW, I am not sure what problem you are seeing.
+Signed-off-by: Christof Kr=C3=BCger <git@christof-krueger.de>
+---
+ contrib/completion/git-completion.bash |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Ah, sorry for the lack of clarity.  What I meant is that the noun
-and verb will be different words in many languages.  There can also be
-problems of subject/verb agreement.  Also "me" is used elsewhere to
-hold the command name as typed on the command line even when LANG
-points to a language other than English if I remember correctly.
-
-If the message were in revert_or_cherry_pick instead of having two
-identical copies in cmd_revert and cmd_cherry_pick, it would have been
-less striking (but still a potential problem).
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index b36290f..4aeeee6 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1884,7 +1884,7 @@ _git_config ()
+ 		__gitcomp "$__git_merge_strategies"
+ 		return
+ 		;;
+-	color.branch|color.diff|color.interactive|\
++	color.branch|color.diff|color.grep|color.interactive|\
+ 	color.showbranch|color.status|color.ui)
+ 		__gitcomp "always never auto"
+ 		return
+--=20
+1.7.6.rc2
