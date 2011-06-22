@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCHv2 6/9] archive: refactor file extension format-guessing
-Date: Tue, 21 Jun 2011 21:25:25 -0400
-Message-ID: <20110622012525.GF30604@sigill.intra.peff.net>
+Subject: [PATCHv2 7/9] archive: implement configurable tar filters
+Date: Tue, 21 Jun 2011 21:26:31 -0400
+Message-ID: <20110622012631.GG30604@sigill.intra.peff.net>
 References: <20110622011923.GA30370@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -9,94 +9,292 @@ Cc: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
 	"J.H." <warthog19@eaglescrag.net>, git@vger.kernel.org,
 	git-dev@github.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 22 03:25:34 2011
+X-From: git-owner@vger.kernel.org Wed Jun 22 03:26:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZCCC-0005Ni-N9
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Jun 2011 03:25:33 +0200
+	id 1QZCDH-0005oo-MY
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Jun 2011 03:26:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757822Ab1FVBZ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jun 2011 21:25:28 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51559
+	id S932095Ab1FVB0e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jun 2011 21:26:34 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51564
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757798Ab1FVBZ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2011 21:25:27 -0400
-Received: (qmail 7520 invoked by uid 107); 22 Jun 2011 01:25:41 -0000
+	id S1757830Ab1FVB0d (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2011 21:26:33 -0400
+Received: (qmail 7562 invoked by uid 107); 22 Jun 2011 01:26:46 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 21 Jun 2011 21:25:41 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Jun 2011 21:25:25 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 21 Jun 2011 21:26:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Jun 2011 21:26:31 -0400
 Content-Disposition: inline
 In-Reply-To: <20110622011923.GA30370@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176210>
 
-Git-archive will guess a format from the output filename if
-no format is explicitly given.  The current function just
-hardcodes "zip" to the zip format, and leaves everything
-else NULL (which will default to tar). Since we are about
-to add user-specified formats, we need to be more flexible.
-The new rule is "if a filename ends with a dot and the name
-of a format, it matches that format". For the existing "tar"
-and "zip" formats, this is identical to the current
-behavior. For new user-specified formats, this will do what
-the user expects if they name their formats appropriately.
+It's common to pipe the tar output produce by "git archive"
+through gzip or some other compressor. Locally, this can
+easily be done by using a shell pipe. When requesting a
+remote archive, though, it cannot be done through the
+upload-archive interface.
 
-Because we will eventually start matching arbitrary
-user-specified extensions that may include dots, the strrchr
-search for the final dot is not sufficient. We need to do an
-actual suffix match with each extension.
+This patch allows configurable tar filters, so that one
+could define a "tar.gz" format that automatically pipes tar
+output through gzip.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-Similar to v1, except we don't need to special case tar-filter code
-anymore.
+This was split across several commits in the previous version of the
+series, but due to the cleanups it fits nicely into a single commit.
 
- archive.c |   25 +++++++++++++++++++------
- 1 files changed, 19 insertions(+), 6 deletions(-)
+ Documentation/git-archive.txt |   16 ++++++
+ archive-tar.c                 |  107 ++++++++++++++++++++++++++++++++++++++++-
+ t/t5000-tar-tree.sh           |   43 ++++++++++++++++
+ 3 files changed, 165 insertions(+), 1 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index 7d0ca32..41065a8 100644
---- a/archive.c
-+++ b/archive.c
-@@ -419,13 +419,26 @@ int write_archive(int argc, const char **argv, const char *prefix,
- 	return ar->write_archive(ar, &args);
+diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
+index 9c750e2..726bf63 100644
+--- a/Documentation/git-archive.txt
++++ b/Documentation/git-archive.txt
+@@ -101,6 +101,16 @@ tar.umask::
+ 	details.  If `--remote` is used then only the configuration of
+ 	the remote repository takes effect.
+ 
++tar.<format>.command::
++	This variable specifies a shell command through which the tar
++	output generated by `git archive` should be piped. The command
++	is executed using the shell with the generated tar file on its
++	standard input, and should produce the final output on its
++	standard output. Any compression-level options will be passed
++	to the command (e.g., "-9"). An output file with the same
++	extension as `<format>` will be use this format if no other
++	format is given.
++
+ ATTRIBUTES
+ ----------
+ 
+@@ -149,6 +159,12 @@ git archive -o latest.zip HEAD::
+ 	commit on the current branch. Note that the output format is
+ 	inferred by the extension of the output file.
+ 
++git config tar.tar.xz.command "xz -c"::
++
++	Configure a "tar.xz" format for making LZMA-compressed tarfiles.
++	You can use it specifying `--format=tar.xz`, or by creating an
++	output file like `-o foo.tar.xz`.
++
+ 
+ SEE ALSO
+ --------
+diff --git a/archive-tar.c b/archive-tar.c
+index bed9a9b..5c30747 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -4,6 +4,7 @@
+ #include "cache.h"
+ #include "tar.h"
+ #include "archive.h"
++#include "run-command.h"
+ 
+ #define RECORDSIZE	(512)
+ #define BLOCKSIZE	(RECORDSIZE * 20)
+@@ -13,6 +14,9 @@ static unsigned long offset;
+ 
+ static int tar_umask = 002;
+ 
++static int write_tar_filter_archive(const struct archiver *ar,
++				    struct archiver_args *args);
++
+ /* writes out the whole block, but only if it is full */
+ static void write_if_needed(void)
+ {
+@@ -220,6 +224,60 @@ static int write_global_extended_header(struct archiver_args *args)
+ 	return err;
  }
  
-+static int match_extension(const char *filename, const char *ext)
-+{
-+	int prefixlen = strlen(filename) - strlen(ext);
++static struct archiver **tar_filters;
++static int nr_tar_filters;
++static int alloc_tar_filters;
 +
-+	/*
-+	 * We need 1 character for the '.', and 1 character to ensure that the
-+	 * prefix is non-empty (k.e., we don't match .tar.gz with no actual
-+	 * filename).
-+	 */
-+	if (prefixlen < 2 || filename[prefixlen-1] != '.')
-+		return 0;
-+	return !strcmp(filename + prefixlen, ext);
++static struct archiver *find_tar_filter(const char *name, int len)
++{
++	int i;
++	for (i = 0; i < nr_tar_filters; i++) {
++		struct archiver *ar = tar_filters[i];
++		if (!strncmp(ar->name, name, len) && !ar->name[len])
++			return ar;
++	}
++	return NULL;
 +}
 +
- const char *archive_format_from_filename(const char *filename)
- {
--	const char *ext = strrchr(filename, '.');
--	if (!ext)
--		return NULL;
--	ext++;
--	if (!strcasecmp(ext, "zip"))
--		return "zip";
-+	int i;
++static int tar_filter_config(const char *var, const char *value, void *data)
++{
++	struct archiver *ar;
++	const char *dot;
++	const char *name;
++	const char *type;
++	int namelen;
 +
-+	for (i = 0; i < nr_archivers; i++)
-+		if (match_extension(filename, archivers[i]->name))
-+			return archivers[i]->name;
- 	return NULL;
++	if (prefixcmp(var, "tar."))
++		return 0;
++	dot = strrchr(var, '.');
++	if (dot == var + 9)
++		return 0;
++
++	name = var + 4;
++	namelen = dot - name;
++	type = dot + 1;
++
++	ar = find_tar_filter(name, namelen);
++	if (!ar) {
++		ar = xcalloc(1, sizeof(*ar));
++		ar->name = xmemdupz(name, namelen);
++		ar->write_archive = write_tar_filter_archive;
++		ar->flags = ARCHIVER_WANT_COMPRESSION_LEVELS;
++		ALLOC_GROW(tar_filters, nr_tar_filters + 1, alloc_tar_filters);
++		tar_filters[nr_tar_filters++] = ar;
++	}
++
++	if (!strcmp(type, "command")) {
++		if (!value)
++			return config_error_nonbool(var);
++		free(ar->data);
++		ar->data = xstrdup(value);
++		return 0;
++	}
++
++	return 0;
++}
++
+ static int git_tar_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp(var, "tar.umask")) {
+@@ -231,7 +289,8 @@ static int git_tar_config(const char *var, const char *value, void *cb)
+ 		}
+ 		return 0;
+ 	}
+-	return 0;
++
++	return tar_filter_config(var, value, cb);
  }
+ 
+ static int write_tar_archive(const struct archiver *ar,
+@@ -248,6 +307,45 @@ static int write_tar_archive(const struct archiver *ar,
+ 	return err;
+ }
+ 
++static int write_tar_filter_archive(const struct archiver *ar,
++				    struct archiver_args *args)
++{
++	struct strbuf cmd = STRBUF_INIT;
++	struct child_process filter;
++	const char *argv[2];
++	int r;
++
++	if (!ar->data)
++		die("BUG: tar-filter archiver called with no filter defined");
++
++	strbuf_addstr(&cmd, ar->data);
++	if (args->compression_level >= 0)
++		strbuf_addf(&cmd, " -%d", args->compression_level);
++
++	memset(&filter, 0, sizeof(filter));
++	argv[0] = cmd.buf;
++	argv[1] = NULL;
++	filter.argv = argv;
++	filter.use_shell = 1;
++	filter.in = -1;
++
++	if (start_command(&filter) < 0)
++		die_errno("unable to start '%s' filter", argv[0]);
++	close(1);
++	if (dup2(filter.in, 1) < 0)
++		die_errno("unable to redirect descriptor");
++	close(filter.in);
++
++	r = write_tar_archive(ar, args);
++
++	close(1);
++	if (finish_command(&filter) != 0)
++		die("'%s' filter reported error", argv[0]);
++
++	strbuf_release(&cmd);
++	return r;
++}
++
+ static struct archiver tar_archiver = {
+ 	"tar",
+ 	write_tar_archive,
+@@ -256,6 +354,13 @@ static struct archiver tar_archiver = {
+ 
+ void init_tar_archiver(void)
+ {
++	int i;
+ 	register_archiver(&tar_archiver);
++
+ 	git_config(git_tar_config, NULL);
++	for (i = 0; i < nr_tar_filters; i++) {
++		/* omit any filters that never had a command configured */
++		if (tar_filters[i]->data)
++			register_archiver(tar_filters[i]);
++	}
+ }
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index cff1b3e..1f90692 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -252,4 +252,47 @@ test_expect_success 'git-archive --prefix=olde-' '
+ 	test -f h/olde-a/bin/sh
+ '
+ 
++test_expect_success 'setup tar filters' '
++	git config tar.tar.foo.command "tr ab ba" &&
++	git config tar.bar.command "tr ab ba"
++'
++
++test_expect_success 'archive --list mentions user filter' '
++	git archive --list >output &&
++	grep "^tar\.foo\$" output &&
++	grep "^bar\$" output
++'
++
++test_expect_success 'archive --list shows remote user filters' '
++	git archive --list --remote=. >output &&
++	grep "^tar\.foo\$" output &&
++	grep "^bar\$" output
++'
++
++test_expect_success 'invoke tar filter by format' '
++	git archive --format=tar.foo HEAD >config.tar.foo &&
++	tr ab ba <config.tar.foo >config.tar &&
++	test_cmp b.tar config.tar &&
++	git archive --format=bar HEAD >config.bar &&
++	tr ab ba <config.bar >config.tar &&
++	test_cmp b.tar config.tar
++'
++
++test_expect_success 'invoke tar filter by extension' '
++	git archive -o config-implicit.tar.foo HEAD &&
++	test_cmp config.tar.foo config-implicit.tar.foo &&
++	git archive -o config-implicit.bar HEAD &&
++	test_cmp config.tar.foo config-implicit.bar
++'
++
++test_expect_success 'default output format remains tar' '
++	git archive -o config-implicit.baz HEAD &&
++	test_cmp b.tar config-implicit.baz
++'
++
++test_expect_success 'extension matching requires dot' '
++	git archive -o config-implicittar.foo HEAD &&
++	test_cmp b.tar config-implicittar.foo
++'
++
+ test_done
 -- 
 1.7.5.4.44.g4b107
