@@ -1,64 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] stash: Add --clean option to stash and remove all
- untracked files
-Date: Wed, 22 Jun 2011 11:00:15 -0400
-Message-ID: <20110622150015.GB9266@sigill.intra.peff.net>
-References: <1308612986-26593-1-git-send-email-david@porkrind.org>
- <20110621003852.GB2050@sigill.intra.peff.net>
- <4DFFF5AA.4030401@porkrind.org>
- <4E002762.3050803@sohovfx.com>
- <4E003A0F.5080601@viscovery.net>
- <20110621141843.GA18700@sigill.intra.peff.net>
- <4E00C2BD.6000903@esperanto.de>
- <buotybi2tqg.fsf@dhlpc061.dev.necel.com>
+From: Massimo Manca <massimo.manca@micronengineering.it>
+Subject: git archimport
+Date: Wed, 22 Jun 2011 17:07:13 +0200
+Organization: Micron Engineering
+Message-ID: <4E020521.6040507@micronengineering.it>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Paul Ebermann <Paul.Ebermann@esperanto.de>, git@vger.kernel.org,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Andrew Wong <andrew.w@sohovfx.com>,
-	David Caldwell <david@porkrind.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Jun 22 17:00:27 2011
+Content-Type: multipart/mixed;
+ boundary="------------010101010307090307070008"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 22 17:08:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZOun-00026v-DZ
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Jun 2011 17:00:25 +0200
+	id 1QZP2k-0006sZ-41
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Jun 2011 17:08:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932180Ab1FVPAR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jun 2011 11:00:17 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44301
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755582Ab1FVPAR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2011 11:00:17 -0400
-Received: (qmail 13792 invoked by uid 107); 22 Jun 2011 15:00:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 22 Jun 2011 11:00:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Jun 2011 11:00:15 -0400
-Content-Disposition: inline
-In-Reply-To: <buotybi2tqg.fsf@dhlpc061.dev.necel.com>
+	id S1758173Ab1FVPIc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jun 2011 11:08:32 -0400
+Received: from mp1-smtp-6.eutelia.it ([62.94.10.166]:40107 "EHLO
+	smtp.eutelia.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757991Ab1FVPIb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2011 11:08:31 -0400
+Received: from [127.0.0.1] (ip-66-238.sn2.eutelia.it [83.211.66.238])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp.eutelia.it (Eutelia) with ESMTP id A0FCE61C62E
+	for <git@vger.kernel.org>; Wed, 22 Jun 2011 17:08:29 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; it; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
+X-Enigmail-Version: 1.1.1
+X-Antivirus: avast! (VPS 110622-0, 22/06/2011), Outbound message
+X-Antivirus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176240>
 
-On Wed, Jun 22, 2011 at 04:47:03PM +0900, Miles Bader wrote:
+This is a multi-part message in MIME format.
+--------------010101010307090307070008
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
 
-> Paul Ebermann <Paul.Ebermann@esperanto.de> writes:
-> >>   $ git stash --untracked-too --ignored-too
-> >> 
-> >> is fairly clear, but somehow strikes me as unnecessarily ugly and
-> >> verbose.
-> >
-> > I think `--also-untracked` sounds better. It is even longer, though.
-> 
-> "--include-untracked" sounds a bit smoother to my ears.
+Hi all,
+I use git 1.7.4 Win version (msys).
+Is it correct that git returns:
+got: 'archimport' is not a git command. See 'git --help'.
+And git --help returns no git archimport command.
 
-Me too. It's long, but it fits with other git commands.
+Is this correct or I am making some error?
 
--Peff
+--------------010101010307090307070008
+Content-Type: text/x-vcard; charset=utf-8;
+ name="massimo_manca.vcf"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="massimo_manca.vcf"
+
+begin:vcard
+fn:Massimo Manca
+n:Manca;Massimo
+org:Micron Engineering di Massimo Manca
+adr:;;via della Ferriera, 48;Pordenone;PN;33170;ITALIA
+email;internet:massimo.manca@micronengineering.it
+tel;work:+39 0434 1856131
+tel;fax:+39 0434 1851032 / 178 273 3543
+tel;cell:+39 349 4504979
+url:http://www.micronengineering.it
+version:2.1
+end:vcard
+
+
+--------------010101010307090307070008--
