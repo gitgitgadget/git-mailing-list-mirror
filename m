@@ -1,136 +1,137 @@
-From: Phil Hord <hordp@cisco.com>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [PATCH 0/5] gitweb: Improve search code
-Date: Wed, 22 Jun 2011 13:10:39 -0400
-Message-ID: <4E02220F.10800@cisco.com>
-References: <1308756535-29701-1-git-send-email-jnareb@gmail.com>
+Date: Wed, 22 Jun 2011 20:00:03 +0200
+Message-ID: <201106222000.04854.jnareb@gmail.com>
+References: <1308756535-29701-1-git-send-email-jnareb@gmail.com> <4E02220F.10800@cisco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org,
 	"John 'Warthog9' Hawley" <warthog9@kernel.org>, admin@repo.or.cz
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 22 19:11:01 2011
+To: Phil Hord <hordp@cisco.com>
+X-From: git-owner@vger.kernel.org Wed Jun 22 20:00:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZQx9-0003ua-Sx
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Jun 2011 19:11:00 +0200
+	id 1QZRjA-0006BQ-O6
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Jun 2011 20:00:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758010Ab1FVRKx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jun 2011 13:10:53 -0400
-Received: from sj-iport-6.cisco.com ([171.71.176.117]:54996 "EHLO
-	sj-iport-6.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754189Ab1FVRKw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2011 13:10:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=hordp@cisco.com; l=2873; q=dns/txt;
-  s=iport; t=1308762652; x=1309972252;
-  h=message-id:date:from:mime-version:to:cc:subject:
-   references:in-reply-to:content-transfer-encoding;
-  bh=H1k8oXnF7q3pVO50ksJ1mthF+mnNEwHxUku+yGnD/28=;
-  b=hg5byPEDU89J7OKV52dbCbaRjYFhE/JyYomzb6ZxgFOukw4BuN2nY49U
-   EPxc2YNiIjoA3l8qek+r2U6H6MWtlZIYPXHX/vpyS28VfNbVwEOPgG0u6
-   VNlLSpQ65d6pPZjmWyodgfiHaeasHtb/qNiIdxfAhMB17lPmUnTLiHIRO
-   E=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Av0EANogAk6rRDoH/2dsb2JhbABUpxB3qlmeTYYtBJFqhGWLQw
-X-IronPort-AV: E=Sophos;i="4.65,407,1304294400"; 
-   d="scan'208";a="719690896"
-Received: from mtv-core-2.cisco.com ([171.68.58.7])
-  by sj-iport-6.cisco.com with ESMTP; 22 Jun 2011 17:10:41 +0000
-Received: from [10.117.80.99] (rtp-hordp-8912.cisco.com [10.117.80.99])
-	by mtv-core-2.cisco.com (8.14.3/8.14.3) with ESMTP id p5MHAePc028245;
-	Wed, 22 Jun 2011 17:10:40 GMT
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110516 Lightning/1.0b2 Thunderbird/3.1.10
-In-Reply-To: <1308756535-29701-1-git-send-email-jnareb@gmail.com>
-X-Enigmail-Version: 1.1.2
-X-TagToolbar-Keys: D20110622131039607
+	id S1758454Ab1FVSAc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jun 2011 14:00:32 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:55136 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758407Ab1FVSAb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2011 14:00:31 -0400
+Received: by fxm17 with SMTP id 17so801097fxm.19
+        for <git@vger.kernel.org>; Wed, 22 Jun 2011 11:00:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=Ds07+ismXrEj8kXVgyUdOwofwxlZ6LyGEd8Nt8gG8KQ=;
+        b=e2P8F5oymGX7nrUSsQgV7IaibLcB41WllAWlbBUagdRerkd+hO/AeWkL7OckauQ97h
+         xn5721ei1OVjRUuhUVTMsT7mtYV4+DctSpVUNZBMDYJgrpnt+9WZtuJFaEFAR7SKowrR
+         L9xPLzjZU2hM7FWuNrzeSeebT6XUdcuEFfcbw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=LpSaB+Lwpe5V14wnSuf2q7daGoxVpD3wSaZvzP9jMiErP5LwwHd6S1sFPnVe3OpvxZ
+         6ecdrJZMZI98jJvnxNFPyz+GbDDAJ2BJYzKNdFAENF9I55naA6oE6Feg+D6vCIzLDHqu
+         6eLkDfqie9pYYgWFJo4Db6+zhe/b6K1OYpeu0=
+Received: by 10.223.21.141 with SMTP id j13mr1193138fab.79.1308765608285;
+        Wed, 22 Jun 2011 11:00:08 -0700 (PDT)
+Received: from [192.168.1.15] (abuz77.neoplus.adsl.tpnet.pl [83.8.197.77])
+        by mx.google.com with ESMTPS id o23sm470914faa.33.2011.06.22.11.00.05
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 22 Jun 2011 11:00:06 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4E02220F.10800@cisco.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176249>
 
-Admin note: Should I have changed the subject or kept it?
+On Wed, 22 Jun 2011, Phil Hord wrote:
+> On 06/22/2011 11:28 AM, Jakub Narebski wrote:
 
-On 06/22/2011 11:28 AM, Jakub Narebski wrote:
-> P.S. Another addition that I sometimes wanted git to have would be
-> 'filename' or 'find' search: searching for file by name.
->
-> What do you think of it?
+> > P.S. Another addition that I sometimes wanted git to have would be
+                                                  ^^^
 
-I like it.  +1 from me.
+This is a typo: I actually wanted to say "gitweb" here.
 
-I normally revert to 'git log --name-status | less <CR> /filename.foo',
-which is awful, of course.  I've always assumed there's a better way I
-haven't discovered yet.  But if there is, well... I haven't discovered
-it yet.
+Therefore this discussion is totally OFF-TOPIC now.
 
-This syntax works on some files, but is limited and/or broken:
-   # Finds all commits touching the file named './foo.bar', iff
-./foo.bar exists in the current commit.
-   git log -- foo.bar
+> > 'filename' or 'find' search: searching for file by name.
+> >
+> > What do you think of it?
+> 
+> I like it.  +1 from me.
+> 
+> I normally revert to 'git log --name-status | less <CR> /filename.foo',
+> which is awful, of course.  I've always assumed there's a better way I
+> haven't discovered yet.  But if there is, well... I haven't discovered
+> it yet.
+> 
+> This syntax works on some files, but is limited and/or broken:
+>    # Finds all commits touching the file named './foo.bar', iff
+> ./foo.bar exists in the current commit.
+>    git log -- foo.bar
 
-I say 'broken', but maybe it's not; it feels like it is when I do this:
+Errr... if you use "git log foo.bar" it is true, but "git log -- foo.bar"
+will find commits even if foo.bar existed only in the past... though
+history simplification can make git return empty set.
 
-   # Returns zero logs
-   git log -- some-deleted-file.txt
+> 
+> I say 'broken', but maybe it's not; it feels like it is when I do this:
+> 
+>    # Returns zero logs
+>    git log -- some-deleted-file.txt
+> 
+>    # Returns at least two logs
+>    git log --all -- some-deleted-file.txt
 
-   # Returns at least two logs
-   git log --all -- some-deleted-file.txt
+     git log --full-history -- some-deleted-file.txt
 
-I think I understand why that happens (search optimization), but it is
-unexpected from the user's perspective.  I also suspect it will miss the
-'pre-resurrection' commits for files which were deleted and resurrected
-in the past.
+For example in git.git repository:
 
+   $ # git log --full-history --oneline -- gitweb.pl | cat
+   2ad9331 v053
+   185f09e v049
+   ff7669a v048
+   fbb592a v043
+   [...]
+   e0389bd v001
+   ecb378f v000
+   4c02e3c v000
+   161332a first working version
 
-What do you think of these as new 'Commit limiters' for git log:
+(Don't you just love Kay Sievers commit messages ;-) ?).
 
-       --name=<pattern>, --name-glob=<glob>
-           Limit the commits output to ones touching files that match the
-           specified pattern (regular expression) or glob (shell glob
-pattern).
+> I think I understand why that happens (search optimization), but it is
+> unexpected from the user's perspective.  I also suspect it will miss the
+> 'pre-resurrection' commits for files which were deleted and resurrected
+> in the past.
+> 
+> 
+> What do you think of these as new 'Commit limiters' for git log:
+> 
+>        --name=<pattern>, --name-glob=<glob>
+>            Limit the commits output to ones touching files that match the
+>            specified pattern (regular expression) or glob (shell glob
+>            pattern).
 
-This could be further modified by --diff-filter, --all-match, etc.
+Why not use "git log --full-history -- '<glob>'" (i.e. remember about
+shell escaping glob)?  I don't know if it works as intended in current
+git or not...
 
-   # Find all commits which deleted a file named **/foo.**
-   git log --name="/foo[.]" --diff-filter=D
-
-   # Find all commits which deleted a file named **/foo.**
-   #   or one named **/bar.**
-   git log --name="/foo[.]" --name="/bar[.]" --diff-filter=D
-
-   # Find all commits which touched both a file named **/foo.**
-   #   and one named **/bar.**
-   git log --name="/foo[.]" --name="/bar[.]" --all-match
-
-
-Or this alternate form:
-
-       --name-pattern, --name-glob
-           Treat all <path> selectors as pattern (regular expression) or
-glob (shell glob pattern).
-
-I think I prefer the former, since the latter does not allow for a
-combination of raw names, pattern names and glob names.  Also, it does
-not (intuitively) support --all-match.
-
-   # Find all commits which deleted a file named **/foo.**
-   git log --name-pattern --diff-filter=D -- "/foo[.]"
-   git log --name-glob --diff-filter=D -- "/foo.*"
-
-   # Find all commits which deleted a file named **/foo.**
-   #   or one named **/bar.**
-   git log --name-pattern --diff-filter=D -- "/foo[.]" "/bar[.]"
-
-   # Find all commits which touched both a file named **/foo.**
-   #   and one named **/bar.**
-   #  -- Can't be done?
-
-Finally, do the extensions belong on rev-list as well?  The 'git
-rev-list' command seems underpowered compared to 'git log'.
-
-Phil
+-- 
+Jakub Narebski
+Poland
