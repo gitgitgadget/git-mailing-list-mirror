@@ -1,75 +1,136 @@
-From: =?UTF-8?q?Christof=20Kr=C3=BCger?= <git@christof-krueger.de>
-Subject: [PATCH] Documentation: git diff --check respects core.whitespace
-Date: Wed, 22 Jun 2011 17:33:02 +0200
-Message-ID: <1308756782-30241-1-git-send-email-git@christof-krueger.de>
+From: Phil Hord <hordp@cisco.com>
+Subject: Re: [PATCH 0/5] gitweb: Improve search code
+Date: Wed, 22 Jun 2011 13:10:39 -0400
+Message-ID: <4E02220F.10800@cisco.com>
+References: <1308756535-29701-1-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org,
-	=?UTF-8?q?Christof=20Kr=C3=BCger?= <git@christof-krueger.de>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jun 22 17:33:29 2011
+	"John 'Warthog9' Hawley" <warthog9@kernel.org>, admin@repo.or.cz
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 22 19:11:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZPQk-0004ht-Q8
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Jun 2011 17:33:27 +0200
+	id 1QZQx9-0003ua-Sx
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Jun 2011 19:11:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932246Ab1FVPdV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Jun 2011 11:33:21 -0400
-Received: from vserver.localhost.li ([85.214.46.152]:50702 "EHLO
-	mail.localhost.li" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753924Ab1FVPdU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Jun 2011 11:33:20 -0400
-Received: from p5794c765.dip.t-dialin.net ([87.148.199.101]:41052 helo=oxylap)
-	by mail.localhost.li with esmtpa (Exim 4.69)
-	(envelope-from <oxygene@localhost.li>)
-	id 1QZPQY-0005BL-4N; Wed, 22 Jun 2011 17:33:15 +0200
-Received: by oxylap (Postfix, from userid 1000)
-	id 50A72DC14D7; Wed, 22 Jun 2011 17:33:13 +0200 (CEST)
-X-Mailer: git-send-email 1.7.6.rc2
-X-Spam-Score: 0.0 (/)
-X-Spam-Report: none
+	id S1758010Ab1FVRKx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jun 2011 13:10:53 -0400
+Received: from sj-iport-6.cisco.com ([171.71.176.117]:54996 "EHLO
+	sj-iport-6.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754189Ab1FVRKw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2011 13:10:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=hordp@cisco.com; l=2873; q=dns/txt;
+  s=iport; t=1308762652; x=1309972252;
+  h=message-id:date:from:mime-version:to:cc:subject:
+   references:in-reply-to:content-transfer-encoding;
+  bh=H1k8oXnF7q3pVO50ksJ1mthF+mnNEwHxUku+yGnD/28=;
+  b=hg5byPEDU89J7OKV52dbCbaRjYFhE/JyYomzb6ZxgFOukw4BuN2nY49U
+   EPxc2YNiIjoA3l8qek+r2U6H6MWtlZIYPXHX/vpyS28VfNbVwEOPgG0u6
+   VNlLSpQ65d6pPZjmWyodgfiHaeasHtb/qNiIdxfAhMB17lPmUnTLiHIRO
+   E=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av0EANogAk6rRDoH/2dsb2JhbABUpxB3qlmeTYYtBJFqhGWLQw
+X-IronPort-AV: E=Sophos;i="4.65,407,1304294400"; 
+   d="scan'208";a="719690896"
+Received: from mtv-core-2.cisco.com ([171.68.58.7])
+  by sj-iport-6.cisco.com with ESMTP; 22 Jun 2011 17:10:41 +0000
+Received: from [10.117.80.99] (rtp-hordp-8912.cisco.com [10.117.80.99])
+	by mtv-core-2.cisco.com (8.14.3/8.14.3) with ESMTP id p5MHAePc028245;
+	Wed, 22 Jun 2011 17:10:40 GMT
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110516 Lightning/1.0b2 Thunderbird/3.1.10
+In-Reply-To: <1308756535-29701-1-git-send-email-jnareb@gmail.com>
+X-Enigmail-Version: 1.1.2
+X-TagToolbar-Keys: D20110622131039607
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176248>
 
-=46ix documentation on "git diff --check" by adopting the description f=
-rom
-"git apply --whitespace".
+Admin note: Should I have changed the subject or kept it?
 
-Signed-off-by: Christof Kr=C3=BCger <git@christof-krueger.de>
----
- Documentation/diff-options.txt |   12 ++++++++----
- 1 files changed, 8 insertions(+), 4 deletions(-)
+On 06/22/2011 11:28 AM, Jakub Narebski wrote:
+> P.S. Another addition that I sometimes wanted git to have would be
+> 'filename' or 'find' search: searching for file by name.
+>
+> What do you think of it?
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-option=
-s.txt
-index c7ed946..24f189f 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -224,10 +224,14 @@ endif::git-format-patch[]
-=20
- ifndef::git-format-patch[]
- --check::
--	Warn if changes introduce trailing whitespace
--	or an indent that uses a space before a tab. Exits with
--	non-zero status if problems are found. Not compatible with
--	--exit-code.
-+	Warn if changes introduce whitespace errors.  What are
-+	considered whitespace errors is controlled by `core.whitespace`
-+	configuration.  By default, trailing whitespaces (including
-+	lines that solely consist of whitespaces) and a space character
-+	that is immediately followed by a tab character inside the
-+	initial indent of the line are considered whitespace errors.
-+	Exits with non-zero status if problems are found. Not compatible
-+	with --exit-code.
- endif::git-format-patch[]
-=20
- --full-index::
---=20
-1.7.6.rc2
+I like it.  +1 from me.
+
+I normally revert to 'git log --name-status | less <CR> /filename.foo',
+which is awful, of course.  I've always assumed there's a better way I
+haven't discovered yet.  But if there is, well... I haven't discovered
+it yet.
+
+This syntax works on some files, but is limited and/or broken:
+   # Finds all commits touching the file named './foo.bar', iff
+./foo.bar exists in the current commit.
+   git log -- foo.bar
+
+I say 'broken', but maybe it's not; it feels like it is when I do this:
+
+   # Returns zero logs
+   git log -- some-deleted-file.txt
+
+   # Returns at least two logs
+   git log --all -- some-deleted-file.txt
+
+I think I understand why that happens (search optimization), but it is
+unexpected from the user's perspective.  I also suspect it will miss the
+'pre-resurrection' commits for files which were deleted and resurrected
+in the past.
+
+
+What do you think of these as new 'Commit limiters' for git log:
+
+       --name=<pattern>, --name-glob=<glob>
+           Limit the commits output to ones touching files that match the
+           specified pattern (regular expression) or glob (shell glob
+pattern).
+
+This could be further modified by --diff-filter, --all-match, etc.
+
+   # Find all commits which deleted a file named **/foo.**
+   git log --name="/foo[.]" --diff-filter=D
+
+   # Find all commits which deleted a file named **/foo.**
+   #   or one named **/bar.**
+   git log --name="/foo[.]" --name="/bar[.]" --diff-filter=D
+
+   # Find all commits which touched both a file named **/foo.**
+   #   and one named **/bar.**
+   git log --name="/foo[.]" --name="/bar[.]" --all-match
+
+
+Or this alternate form:
+
+       --name-pattern, --name-glob
+           Treat all <path> selectors as pattern (regular expression) or
+glob (shell glob pattern).
+
+I think I prefer the former, since the latter does not allow for a
+combination of raw names, pattern names and glob names.  Also, it does
+not (intuitively) support --all-match.
+
+   # Find all commits which deleted a file named **/foo.**
+   git log --name-pattern --diff-filter=D -- "/foo[.]"
+   git log --name-glob --diff-filter=D -- "/foo.*"
+
+   # Find all commits which deleted a file named **/foo.**
+   #   or one named **/bar.**
+   git log --name-pattern --diff-filter=D -- "/foo[.]" "/bar[.]"
+
+   # Find all commits which touched both a file named **/foo.**
+   #   and one named **/bar.**
+   #  -- Can't be done?
+
+Finally, do the extensions belong on rev-list as well?  The 'git
+rev-list' command seems underpowered compared to 'git log'.
+
+Phil
