@@ -1,252 +1,294 @@
-From: Jonathon Mah <me@JonathonMah.com>
-Subject: [PATCH 2/2] mergetool: Don't assume paths are unmerged
-Date: Tue, 21 Jun 2011 19:46:28 -0700
-Message-ID: <92B6FB42-FE0D-48DC-ABD0-BA1903D842D2@JonathonMah.com>
-Mime-Version: 1.0 (Apple Message framework v1242)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Charles Bailey <charles@hashpling.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 22 04:46:40 2011
+From: Jeff King <peff@github.com>
+Subject: Re: [PATCHv2 9/9] upload-archive: allow user to turn off filters
+Date: Tue, 21 Jun 2011 23:17:35 -0400
+Message-ID: <20110622031735.GA13879@sigill.intra.peff.net>
+References: <20110622011923.GA30370@sigill.intra.peff.net>
+ <20110622013545.GI30604@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	"J.H." <warthog19@eaglescrag.net>, git@vger.kernel.org,
+	git-dev@github.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 22 05:17:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZDSh-0007nd-Iq
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Jun 2011 04:46:40 +0200
+	id 1QZDwl-0001RL-Cr
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Jun 2011 05:17:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757875Ab1FVCqe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jun 2011 22:46:34 -0400
-Received: from ipmail06.adl2.internode.on.net ([150.101.137.129]:48551 "EHLO
-	ipmail06.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757863Ab1FVCqe convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2011 22:46:34 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AlszAP1UAU5i6vJRPGdsb2JhbAAMSIkRngQBAQEBN8hRhisEhyOabw
-Received: from c-98-234-242-81.hsd1.ca.comcast.net (HELO [192.168.120.10]) ([98.234.242.81])
-  by ipmail06.adl2.internode.on.net with ESMTP; 22 Jun 2011 12:16:31 +0930
-X-Mailer: Apple Mail (2.1242)
+	id S1757868Ab1FVDRi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jun 2011 23:17:38 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57284
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757714Ab1FVDRh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2011 23:17:37 -0400
+Received: (qmail 9482 invoked by uid 107); 22 Jun 2011 03:17:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 21 Jun 2011 23:17:50 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Jun 2011 23:17:35 -0400
+Content-Disposition: inline
+In-Reply-To: <20110622013545.GI30604@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176217>
 
-Like commit, mergetool now treats its path arguments as restricting
-operation to the listed paths. Running "git mergetool subdir" will
-prompt to resolve all conflicted blobs under subdir.
+On Tue, Jun 21, 2011 at 09:35:45PM -0400, Jeff King wrote:
 
-Previously mergetool would assume each path was in an unresolved state,
-and get confused when it couldn't check out their other stages.
+> Some tar filters may be very expensive to run, so sites do
+> not want to expose them via upload-archive. This patch lets
+> users configure tar.<filter>.remote to turn them off.
+> 
+> By default, gzip filters are left on, as they are about as
+> expensive as creating zip archives.
 
-Signed-off-by: Jonathon Mah <me@JonathonMah.com>
+Argh, sorry, wrong version of the patch. This one has a slight
+refactoring typo that makes it not compile. Correct patch is below.
+
+-- >8 --
+Subject: upload-archive: allow user to turn off filters
+
+Some tar filters may be very expensive to run, so sites do
+not want to expose them via upload-archive. This patch lets
+users configure tar.<filter>.remote to turn them off.
+
+By default, gzip filters are left on, as they are about as
+expensive as creating zip archives.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
-Apologies, having some issues with my mail agent. This should be in-reply-to: 734F376D-0CF5-4417-8DC2-8A46AA05D995@JonathonMah.com
+ Documentation/git-archive.txt |    6 ++++++
+ archive-tar.c                 |   11 ++++++++++-
+ archive-zip.c                 |    2 +-
+ archive.c                     |   11 ++++++-----
+ archive.h                     |    3 ++-
+ builtin/archive.c             |    2 +-
+ builtin/upload-archive.c      |    2 +-
+ t/t5000-tar-tree.sh           |   25 ++++++++++++++++++++++---
+ 8 files changed, 49 insertions(+), 13 deletions(-)
 
- Documentation/git-mergetool.txt |    7 ++-
- git-mergetool.sh                |   83 +++++++++++++++++---------------------
- t/t7610-mergetool.sh            |   28 +++++++++++--
- 3 files changed, 64 insertions(+), 54 deletions(-)
-
-diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
-index 8c79ae8..f1f4e7a 100644
---- a/Documentation/git-mergetool.txt
-+++ b/Documentation/git-mergetool.txt
-@@ -16,9 +16,10 @@ Use `git mergetool` to run one of several merge utilities to resolve
- merge conflicts.  It is typically run after 'git merge'.
+diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
+index 8b0080a..1320c87 100644
+--- a/Documentation/git-archive.txt
++++ b/Documentation/git-archive.txt
+@@ -114,6 +114,12 @@ tar.<format>.command::
+ The "tar.gz" and "tgz" formats are defined automatically and default to
+ `gzip -cn`. You may override them with custom commands.
  
- If one or more <file> parameters are given, the merge tool program will
--be run to resolve differences on each file.  If no <file> names are
--specified, 'git mergetool' will run the merge tool program on every file
--with merge conflicts.
-+be run to resolve differences on each file (skipping those without
-+conflicts).  Specifying a directory will include all unresolved files in
-+that path.  If no <file> names are specified, 'git mergetool' will run
-+the merge tool program on every file with merge conflicts.
- 
- OPTIONS
- -------
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 3aab5aa..81cf2cb 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -342,64 +342,55 @@ merge_keep_temporaries="$(git config --bool mergetool.keepTemporaries || echo fa
- 
- last_status=0
- rollup_status=0
--rerere=false
--
--files_to_merge() {
--    if test "$rerere" = true
--    then
--	git rerere remaining
--    else
--	git ls-files -u | sed -e 's/^[^	]*	//' | sort -u
--    fi
--}
--
-+files=
- 
- if test $# -eq 0 ; then
-     cd_to_toplevel
- 
-     if test -e "$GIT_DIR/MERGE_RR"
-     then
--	rerere=true
--    fi
--
--    files=$(files_to_merge)
--    if test -z "$files" ; then
--	echo "No files need merging"
--	exit 0
-+	files=$(git rerere remaining)
-+    else
-+	files=$(git ls-files -u | sed -e 's/^[^	]*	//' | sort -u)
-     fi
--
--    # Save original stdin
--    exec 3<&0
--
--    printf "Merging:\n"
--    printf "$files\n"
--
--    files_to_merge |
--    while IFS= read i
--    do
--	if test $last_status -ne 0; then
--	    prompt_after_failed_merge <&3 || exit 1
--	fi
--	printf "\n"
--	merge_file "$i" <&3
--	last_status=$?
--	if test $last_status -ne 0; then
--	    rollup_status=1
--	fi
--    done
- else
-     while test $# -gt 0; do
--	if test $last_status -ne 0; then
--	    prompt_after_failed_merge || exit 1
--	fi
--	printf "\n"
--	merge_file "$1"
--	last_status=$?
--	if test $last_status -ne 0; then
--	    rollup_status=1
-+	matches=$(git ls-files -u -- "$1" | sed -e 's/^[^	]*	//' | sort -u)
-+	if test -n "$matches"; then
-+	    if test -z "$files"; then
-+		files=$matches
-+	    else
-+		files=$(printf "%s\n%s" "$files" "$matches")
-+	    fi
- 	fi
- 	shift
-     done
-+    files=$(printf "%s" "$files" | sort -u)
- fi
- 
-+if test -z "$files" ; then
-+    echo "No files need merging"
-+    exit 0
-+fi
++tar.<format>.remote::
++	If true, enable `<format>` for use by remote clients via
++	linkgit:git-upload-archive[1]. Defaults to false for
++	user-defined formats, but true for the "tar.gz" and "tgz"
++	formats.
 +
-+# Save original stdin
-+exec 3<&0
-+
-+printf "Merging:\n"
-+printf "$files\n"
-+
-+IFS='
-+'; for i in $files
-+do
-+    if test $last_status -ne 0; then
-+	prompt_after_failed_merge <&3 || exit 1
-+    fi
-+    printf "\n"
-+    merge_file "$i" <&3
-+    last_status=$?
-+    if test $last_status -ne 0; then
-+	rollup_status=1
-+    fi
-+done
-+
- exit $rollup_status
-diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index f00caa3..4aab2a7 100755
---- a/t/t7610-mergetool.sh
-+++ b/t/t7610-mergetool.sh
-@@ -81,7 +81,7 @@ test_expect_success 'custom mergetool' '
-     git checkout -b test1 branch1 &&
-     git submodule update -N &&
-     test_must_fail git merge master >/dev/null 2>&1 &&
--    ( yes "" | git mergetool file1 >/dev/null 2>&1 ) &&
-+    ( yes "" | git mergetool file1 file1 ) &&
-     ( yes "" | git mergetool file2 "spaced name" >/dev/null 2>&1 ) &&
-     ( yes "" | git mergetool subdir/file3 >/dev/null 2>&1 ) &&
-     ( yes "d" | git mergetool file11 >/dev/null 2>&1 ) &&
-@@ -184,6 +184,24 @@ test_expect_success 'mergetool skips resolved paths when rerere is active' '
-     git reset --hard
+ ATTRIBUTES
+ ----------
+ 
+diff --git a/archive-tar.c b/archive-tar.c
+index f470ebe..20af005 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -274,6 +274,13 @@ static int tar_filter_config(const char *var, const char *value, void *data)
+ 		ar->data = xstrdup(value);
+ 		return 0;
+ 	}
++	if (!strcmp(type, "remote")) {
++		if (git_config_bool(var, value))
++			ar->flags |= ARCHIVER_REMOTE;
++		else
++			ar->flags &= ~ARCHIVER_REMOTE;
++		return 0;
++	}
+ 
+ 	return 0;
+ }
+@@ -349,7 +356,7 @@ static int write_tar_filter_archive(const struct archiver *ar,
+ static struct archiver tar_archiver = {
+ 	"tar",
+ 	write_tar_archive,
+-	0
++	ARCHIVER_REMOTE
+ };
+ 
+ void init_tar_archiver(void)
+@@ -358,7 +365,9 @@ void init_tar_archiver(void)
+ 	register_archiver(&tar_archiver);
+ 
+ 	tar_filter_config("tar.tgz.command", "gzip -cn", NULL);
++	tar_filter_config("tar.tgz.remote", "true", NULL);
+ 	tar_filter_config("tar.tar.gz.command", "gzip -cn", NULL);
++	tar_filter_config("tar.tar.gz.remote", "true", NULL);
+ 	git_config(git_tar_config, NULL);
+ 	for (i = 0; i < nr_tar_filters; i++) {
+ 		/* omit any filters that never had a command configured */
+diff --git a/archive-zip.c b/archive-zip.c
+index 42df660..3c102a1 100644
+--- a/archive-zip.c
++++ b/archive-zip.c
+@@ -283,7 +283,7 @@ static int write_zip_archive(const struct archiver *ar,
+ static struct archiver zip_archiver = {
+ 	"zip",
+ 	write_zip_archive,
+-	ARCHIVER_WANT_COMPRESSION_LEVELS
++	ARCHIVER_WANT_COMPRESSION_LEVELS|ARCHIVER_REMOTE
+ };
+ 
+ void init_zip_archiver(void)
+diff --git a/archive.c b/archive.c
+index 41065a8..2a7a28e 100644
+--- a/archive.c
++++ b/archive.c
+@@ -299,7 +299,7 @@ static void parse_treeish_arg(const char **argv,
+ 
+ static int parse_archive_args(int argc, const char **argv,
+ 		const struct archiver **ar, struct archiver_args *args,
+-		const char *name_hint)
++		const char *name_hint, int is_remote)
+ {
+ 	const char *format = NULL;
+ 	const char *base = NULL;
+@@ -356,7 +356,8 @@ static int parse_archive_args(int argc, const char **argv,
+ 
+ 	if (list) {
+ 		for (i = 0; i < nr_archivers; i++)
+-			printf("%s\n", archivers[i]->name);
++			if (!is_remote || archivers[i]->flags & ARCHIVER_REMOTE)
++				printf("%s\n", archivers[i]->name);
+ 		exit(0);
+ 	}
+ 
+@@ -369,7 +370,7 @@ static int parse_archive_args(int argc, const char **argv,
+ 	if (argc < 1)
+ 		usage_with_options(archive_usage, opts);
+ 	*ar = lookup_archiver(format);
+-	if (!*ar)
++	if (!*ar || (is_remote && !((*ar)->flags & ARCHIVER_REMOTE)))
+ 		die("Unknown archive format '%s'", format);
+ 
+ 	args->compression_level = Z_DEFAULT_COMPRESSION;
+@@ -390,7 +391,7 @@ static int parse_archive_args(int argc, const char **argv,
+ }
+ 
+ int write_archive(int argc, const char **argv, const char *prefix,
+-		  int setup_prefix, const char *name_hint)
++		  int setup_prefix, const char *name_hint, int remote)
+ {
+ 	int nongit = 0;
+ 	const struct archiver *ar = NULL;
+@@ -403,7 +404,7 @@ int write_archive(int argc, const char **argv, const char *prefix,
+ 	init_tar_archiver();
+ 	init_zip_archiver();
+ 
+-	argc = parse_archive_args(argc, argv, &ar, &args, name_hint);
++	argc = parse_archive_args(argc, argv, &ar, &args, name_hint, remote);
+ 	if (nongit) {
+ 		/*
+ 		 * We know this will die() with an error, so we could just
+diff --git a/archive.h b/archive.h
+index 202d528..2b0884f 100644
+--- a/archive.h
++++ b/archive.h
+@@ -15,6 +15,7 @@ struct archiver_args {
+ };
+ 
+ #define ARCHIVER_WANT_COMPRESSION_LEVELS 1
++#define ARCHIVER_REMOTE 2
+ struct archiver {
+ 	const char *name;
+ 	int (*write_archive)(const struct archiver *, struct archiver_args *);
+@@ -29,7 +30,7 @@ extern void init_zip_archiver(void);
+ typedef int (*write_archive_entry_fn_t)(struct archiver_args *args, const unsigned char *sha1, const char *path, size_t pathlen, unsigned int mode, void *buffer, unsigned long size);
+ 
+ extern int write_archive_entries(struct archiver_args *args, write_archive_entry_fn_t write_entry);
+-extern int write_archive(int argc, const char **argv, const char *prefix, int setup_prefix, const char *name_hint);
++extern int write_archive(int argc, const char **argv, const char *prefix, int setup_prefix, const char *name_hint, int remote);
+ 
+ const char *archive_format_from_filename(const char *filename);
+ 
+diff --git a/builtin/archive.c b/builtin/archive.c
+index 2578cf5..883c009 100644
+--- a/builtin/archive.c
++++ b/builtin/archive.c
+@@ -106,5 +106,5 @@ int cmd_archive(int argc, const char **argv, const char *prefix)
+ 
+ 	setvbuf(stderr, NULL, _IOLBF, BUFSIZ);
+ 
+-	return write_archive(argc, argv, prefix, 1, output);
++	return write_archive(argc, argv, prefix, 1, output, 0);
+ }
+diff --git a/builtin/upload-archive.c b/builtin/upload-archive.c
+index e6bb97d..2d0b383 100644
+--- a/builtin/upload-archive.c
++++ b/builtin/upload-archive.c
+@@ -64,7 +64,7 @@ static int run_upload_archive(int argc, const char **argv, const char *prefix)
+ 	sent_argv[sent_argc] = NULL;
+ 
+ 	/* parse all options sent by the client */
+-	return write_archive(sent_argc, sent_argv, prefix, 0, NULL);
++	return write_archive(sent_argc, sent_argv, prefix, 0, NULL, 1);
+ }
+ 
+ __attribute__((format (printf, 1, 2)))
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index 070250e..9e3ba98 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -256,7 +256,8 @@ test_expect_success 'git-archive --prefix=olde-' '
+ 
+ test_expect_success 'setup tar filters' '
+ 	git config tar.tar.foo.command "tr ab ba" &&
+-	git config tar.bar.command "tr ab ba"
++	git config tar.bar.command "tr ab ba" &&
++	git config tar.bar.remote true
  '
  
-+test_expect_success 'mergetool takes partial path' '
-+    git config rerere.enabled false &&
-+    git checkout -b test12 branch1 &&
-+    git submodule update -N &&
-+    test_must_fail git merge master &&
-+
-+    #shouldnt need these lines
-+    #( yes "d" | git mergetool file11 >/dev/null 2>&1 ) &&
-+    #( yes "d" | git mergetool file12 >/dev/null 2>&1 ) &&
-+    #( yes "l" | git mergetool submod >/dev/null 2>&1 ) &&
-+    #( yes "" | git mergetool file1 file2 >/dev/null 2>&1 ) &&
-+
-+    ( yes "" | git mergetool subdir ) &&
-+
-+    test "$(cat subdir/file3)" = "master new sub" &&
-+    git reset --hard
+ test_expect_success 'archive --list mentions user filter' '
+@@ -265,9 +266,9 @@ test_expect_success 'archive --list mentions user filter' '
+ 	grep "^bar\$" output
+ '
+ 
+-test_expect_success 'archive --list shows remote user filters' '
++test_expect_success 'archive --list shows only enabled remote filters' '
+ 	git archive --list --remote=. >output &&
+-	grep "^tar\.foo\$" output &&
++	! grep "^tar\.foo\$" output &&
+ 	grep "^bar\$" output
+ '
+ 
+@@ -297,6 +298,13 @@ test_expect_success 'extension matching requires dot' '
+ 	test_cmp b.tar config-implicittar.foo
+ '
+ 
++test_expect_success 'only enabled filters are available remotely' '
++	test_must_fail git archive --remote=. --format=tar.foo HEAD \
++		>remote.tar.foo &&
++	git archive --remote=. --format=bar >remote.bar HEAD &&
++	test_cmp remote.bar config.bar
 +'
 +
- test_expect_success 'deleted vs modified submodule' '
-     git checkout -b test6 branch1 &&
-     git submodule update -N &&
-@@ -392,7 +410,7 @@ test_expect_success 'directory vs modified submodule' '
-     test "$(cat submod/file16)" = "not a submodule" &&
-     rm -rf submod.orig &&
- 
--    git reset --hard &&
-+    git reset --hard >/dev/null 2>&1 &&
-     test_must_fail git merge master &&
-     test -n "$(git ls-files -u)" &&
-     test ! -e submod.orig &&
-@@ -404,7 +422,7 @@ test_expect_success 'directory vs modified submodule' '
-     ( cd submod && git clean -f && git reset --hard ) &&
-     git submodule update -N &&
-     test "$(cat submod/bar)" = "master submodule" &&
--    git reset --hard && rm -rf submod-movedaside &&
-+    git reset --hard >/dev/null 2>&1 && rm -rf submod-movedaside &&
- 
-     git checkout -b test11.c master &&
-     git submodule update -N &&
-@@ -414,7 +432,7 @@ test_expect_success 'directory vs modified submodule' '
-     git submodule update -N &&
-     test "$(cat submod/bar)" = "master submodule" &&
- 
--    git reset --hard &&
-+    git reset --hard >/dev/null 2>&1 &&
-     git submodule update -N &&
-     test_must_fail git merge test11 &&
-     test -n "$(git ls-files -u)" &&
-@@ -422,7 +440,7 @@ test_expect_success 'directory vs modified submodule' '
-     ( yes "r" | git mergetool submod ) &&
-     test "$(cat submod/file16)" = "not a submodule" &&
- 
--    git reset --hard master &&
-+    git reset --hard master >/dev/null 2>&1 &&
-     ( cd submod && git clean -f && git reset --hard ) &&
-     git submodule update -N
+ if $GZIP --version >/dev/null 2>&1; then
+ 	test_set_prereq GZIP
+ else
+@@ -333,4 +341,15 @@ test_expect_success GZIP,GUNZIP 'extract tgz file' '
+ 	test_cmp b.tar j.tar
  '
+ 
++test_expect_success GZIP 'remote tar.gz is allowed by default' '
++	git archive --remote=. --format=tar.gz HEAD >remote.tar.gz &&
++	test_cmp j.tgz remote.tar.gz
++'
++
++test_expect_success GZIP 'remote tar.gz can be disabled' '
++	git config tar.tar.gz.remote false &&
++	test_must_fail git archive --remote=. --format=tar.gz HEAD \
++		>remote.tar.gz
++'
++
+ test_done
 -- 
-1.7.4.4
+1.7.5.4.44.g4b107
