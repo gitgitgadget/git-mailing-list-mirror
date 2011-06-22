@@ -1,151 +1,75 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Refactor git_header_html
-Date: Wed, 22 Jun 2011 08:44:34 +0200
-Message-ID: <201106220844.35431.jnareb@gmail.com>
-References: <20110621183550.9315.21922.stgit@localhost.localdomain> <7v4o3i7nkt.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 22 08:44:58 2011
+From: David Barr <davidbarr@google.com>
+Subject: [RFC/PATCH 0/3]
+Date: Wed, 22 Jun 2011 00:33:29 -0700
+Message-ID: <1308728011-14136-1-git-send-email-davidbarr@google.com>
+To: GIT Mailing-list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 22 09:34:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZHBF-0000al-8T
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Jun 2011 08:44:53 +0200
+	id 1QZHxc-0005HD-PU
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Jun 2011 09:34:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753263Ab1FVGos (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jun 2011 02:44:48 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:59933 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752545Ab1FVGor (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2011 02:44:47 -0400
-Received: by fxm17 with SMTP id 17so421991fxm.19
-        for <git@vger.kernel.org>; Tue, 21 Jun 2011 23:44:46 -0700 (PDT)
+	id S1751599Ab1FVHep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jun 2011 03:34:45 -0400
+Received: from smtp-out.google.com ([74.125.121.67]:38502 "EHLO
+	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750724Ab1FVHen (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2011 03:34:43 -0400
+Received: from hpaq5.eem.corp.google.com (hpaq5.eem.corp.google.com [172.25.149.5])
+	by smtp-out.google.com with ESMTP id p5M7YfuC018413
+	for <git@vger.kernel.org>; Wed, 22 Jun 2011 00:34:41 -0700
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
+	t=1308728081; bh=AViSY5Hj4JBTZXXRbAqAId0Hcok=;
+	h=From:To:Subject:Date:Message-Id;
+	b=c6YkXU+Fc5ZptRaR8wgUi5emI5BMen858hpL0Ym/F+Inpm4GabdHDzcoqr/72dZ4/
+	 K+a1ZPnc0hhhRfXV8yc5Q==
+Received: from pwi4 (pwi4.prod.google.com [10.241.219.4])
+	by hpaq5.eem.corp.google.com with ESMTP id p5M7YdIi001982
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Wed, 22 Jun 2011 00:34:40 -0700
+Received: by pwi4 with SMTP id 4so477068pwi.15
+        for <git@vger.kernel.org>; Wed, 22 Jun 2011 00:34:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=zDAjMqB5mWirSqe/3IAJ60p66lWq9syf0ZPUsDAzo1Y=;
-        b=FsleMdiPX5BMrElEEZerGdNZk11HzFbYzK4ufd5xz4AVvDIqJ9e5GvyGokd+qc3Fu4
-         f0VsbLMMp45aTmmcwl0gaaQ2k7qdJLCDojP9Z3fsKzR8eUrvHWe6/8I4SoPoLX4/SHSR
-         HqwrWVj/LQyhtrg5zML8vt+9ijVDNlq7N6I3A=
+        d=google.com; s=beta;
+        h=domainkey-signature:from:to:subject:date:message-id:x-mailer;
+        bh=lboewIhSRC55GQmlz9kaq4VNbkt069205blutMR+s/s=;
+        b=vxUZCg3075omRKwusTi650ZDfNaiwYJVQFnsMA9dP7n2xqDzcU3DLxjMHQtyhCOAGE
+         OII6w7DjBtzvD1F+5FcA==
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=HlLD0ai5AZi985DGQI2neDgR8rayzLN9eU4GgeYpGLU88VGG8RG113P7ODBXv0FsrV
-         RrId8isJpftPQ7E6geEJiINiwepZJ8xcI/TSNegPyylA82Q3hmoxDCJh0FkOcqueU9SF
-         y7TC1KwpwbX9apr50QEfZmNEeum0hun91FuK8=
-Received: by 10.223.56.24 with SMTP id w24mr355518fag.131.1308725086154;
-        Tue, 21 Jun 2011 23:44:46 -0700 (PDT)
-Received: from [192.168.1.15] (abvd183.neoplus.adsl.tpnet.pl [83.8.201.183])
-        by mx.google.com with ESMTPS id h1sm116417fag.35.2011.06.21.23.44.43
+        d=google.com; s=beta;
+        h=from:to:subject:date:message-id:x-mailer;
+        b=KcKdxnOTxYwVHQSiI+z1MrWbdRBYb+1F/D7CsXws6Rt4f/b7yTFDNETKcEOEMvKH11
+         sfUWvih1SMAOidAQbTlg==
+Received: by 10.68.8.105 with SMTP id q9mr146833pba.3.1308728078798;
+        Wed, 22 Jun 2011 00:34:38 -0700 (PDT)
+Received: from localhost.localdomain (173-167-127-66-sfba.hfc.comcastbusiness.net [173.167.127.66])
+        by mx.google.com with ESMTPS id p5sm248637pbd.92.2011.06.22.00.34.37
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 21 Jun 2011 23:44:44 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7v4o3i7nkt.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+        Wed, 22 Jun 2011 00:34:38 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.1
+X-System-Of-Record: true
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176223>
 
-On Wed, 22 Jun 2011, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
-> > P.S. I wonder if print_search_form() should also get passed %opts as
-> > one of its parameters...
-> 
-> I do not particularly care for this:
-> 
-> 	sub foo {
->         	my %opts = @_;
-> 
-> 		if ($opts{-option} eq 'bar') {
->                 	... do this ...
-> 
-> style, which lets a caller pass any random typo to the callee, like so:
-> 
-> 	foo(-optoin => 'value');
-> 
-> But maybe it is just me.
+This series is the early stages of adding infrastructure to git
+to memory-effective but fast and scalable caching of object
+graphs.
+The inspiration comes from a desire to build a libfastimport and
+also the outstanding FIXME in hash.c
+Patches 1 and 2 are the first small components that have emerged
+from my experiments with different ways of representing and
+indexing graphs. Patch 3 doesn't exist at the time of composing
+this summary but will be an alternate hash table implementation
+the builds on the first two.
 
-Well, originally this style was used mainly to pass some extra rarely
-set boolean flags; isn't
+I'm putting this out for early feedback, to be incorporated into
+a future complete series.
 
-        foo($bar, "baz", -quux => 1, -corge => 1);
-
-better than
-
-        foo($bar, "baz", 1, 0, 1);
-
-when it is ordinarily (most times) called as
-
-        foo($bar, "baz");
-
-
-When writing in C, one would probably use #defines for this:
-
-        foo(bar, "baz", FOO_QUUX | FOO_CORGE);
-
-but it is not very Perl-ish, I would think.
-
-> > +sub print_header_links {
-> > +	my %opts = @_;
-> > +
-> > +	# print out each stylesheet that exist, providing backwards capability
-> > +	# for those people who defined $stylesheet in a config file
-> > +	if (defined $stylesheet) {
-> > +		print '<link rel="stylesheet" type="text/css" href="'.esc_url($stylesheet).'"/>'."\n";
-> > +	} else {
-> > +		foreach my $stylesheet (@stylesheets) {
-> > +			next unless $stylesheet;
-> > +			print '<link rel="stylesheet" type="text/css" href="'.esc_url($stylesheet).'"/>'."\n";
-> > +		}
-> > +	}
-> > +	if ($opts{'-feed'}) {
-> > +		print_feed_meta();
-> > +	}
-> 
-> Here, we refrain from showing the <link> elements that are related to the
-> RSS/Atom feeds (if we know what $project we are talking about), or <link>
-> elements that are related to the project list (html top page and opml) if
-> we are not showing a normal return, as $opts{'-feed'} is true only when we
-> are returning '200 OK'.
-> 
-> The original implementation, even though it used statement modifiers after
-> this print_feed_meta(), was much easier to follow, at least for me. The
-> association between "feed-meta" and "200 OK" was close together and more
-> direct.
-
-Hmmm... perhaps then I should have gone with my first thought, namely
-passing $status to print_header_links().  
-
-Will resend.
-
-
-Note that in case of print_nav_breadcrumbs() the code used %opts
-originally, so it is only passed from git_header_html...
-
-> > ...
-> > -		}
-> > -	}
-> > -	print_feed_meta()
-> > -		if ($status eq '200 OK');
-> 
-> Other than that, this looks a correct no-op patch that makes the resulting
-> smaller functions easier to grok.
-
-Thanks. 
-
--- 
-Jakub Narebski
-Poland
+--
+David Barr
