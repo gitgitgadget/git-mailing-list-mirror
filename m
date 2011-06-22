@@ -1,58 +1,166 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Phil Hord <hordp@cisco.com>
 Subject: Re: [PATCH 0/5] gitweb: Improve search code
-Date: Wed, 22 Jun 2011 11:55:23 -0700
-Message-ID: <7vwrgd66hw.fsf@alter.siamese.dyndns.org>
-References: <1308756535-29701-1-git-send-email-jnareb@gmail.com>
+Date: Wed, 22 Jun 2011 15:24:32 -0400
+Message-ID: <4E024170.6000407@cisco.com>
+References: <1308756535-29701-1-git-send-email-jnareb@gmail.com> <4E02220F.10800@cisco.com> <201106222000.04854.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, John 'Warthog9' Hawley <warthog9@kernel.org>,
-	admin@repo.or.cz
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	"John 'Warthog9' Hawley" <warthog9@kernel.org>, admin@repo.or.cz
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 22 20:55:37 2011
+X-From: git-owner@vger.kernel.org Wed Jun 22 21:24:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZSaL-0003aM-JR
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Jun 2011 20:55:33 +0200
+	id 1QZT2W-0004A8-Vm
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Jun 2011 21:24:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758687Ab1FVSz1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jun 2011 14:55:27 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:52070 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758596Ab1FVSz1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2011 14:55:27 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 04000557E;
-	Wed, 22 Jun 2011 14:57:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=o1NTCbsgWLrFieUzpt+YofMk8sI=; b=haSRFP
-	q/zrrZjtieOJr5rdCMFHAHheIbDyJA8wvIFgKXTi8lLDVfMz9tXqij7QQ6E0PQa1
-	vaYHIYF1W4WjcK8D3ReufMI9MLMNeesTLNpy4z+ck3HAQdYcCj1wu7iWjCr5Igjb
-	WBdA++oBocg+KaVj7dx7qIT3oDGqylCKuN02M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KNWai5tN755O50R0xWeBo04ukhRfJwdF
-	/e93DZAN7SAe8p3r+3/DZGcJDZK9T5RrXrKjdznPpUJyDieGGQBc/V39gt8wQd1i
-	FoieSxxWmePcfqHdsOUShXT6Qnb5E3gRaRhX1yjup5XR1lji/YoDi1hWX25mQNL2
-	e41Fjg94EEo=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F1220557D;
-	Wed, 22 Jun 2011 14:57:37 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3ED4E557C; Wed, 22 Jun 2011
- 14:57:37 -0400 (EDT)
-In-Reply-To: <1308756535-29701-1-git-send-email-jnareb@gmail.com> (Jakub
- Narebski's message of "Wed, 22 Jun 2011 17:28:50 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7F04F8A8-9D01-11E0-957D-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
+	id S1758493Ab1FVTYf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jun 2011 15:24:35 -0400
+Received: from sj-iport-3.cisco.com ([171.71.176.72]:4853 "EHLO
+	sj-iport-3.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758056Ab1FVTYf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2011 15:24:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=hordp@cisco.com; l=4134; q=dns/txt;
+  s=iport; t=1308770674; x=1309980274;
+  h=message-id:date:from:mime-version:to:cc:subject:
+   references:in-reply-to:content-transfer-encoding;
+  bh=1vvyzD8cq/n7xSng3+Mz6vDIu0pvwUeAXHYZNUfkYdY=;
+  b=Z+2vVAuUhseIniBaEzQsabXopX0bRugzdpMkL06DB0VKM0lpgMmGOFk5
+   jRl4mVnzMbALcAmMIcdaOTnzTuSl6bXUYAH+BiQpYwR5hdqZZmgbwSTkV
+   2ScVYbFLZXMPVPNPwySGXe7+jNKw6XLwvg+7jw9AVHPEe1sl8Y9BLPsqK
+   o=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av0EADNBAk6rRDoG/2dsb2JhbABOBqcRd4hzojaeQIM5gnQEkWqEZYtD
+X-IronPort-AV: E=Sophos;i="4.65,407,1304294400"; 
+   d="scan'208";a="344325547"
+Received: from mtv-core-1.cisco.com ([171.68.58.6])
+  by sj-iport-3.cisco.com with ESMTP; 22 Jun 2011 19:24:34 +0000
+Received: from [10.117.80.99] (rtp-hordp-8912.cisco.com [10.117.80.99])
+	by mtv-core-1.cisco.com (8.14.3/8.14.3) with ESMTP id p5MJOWuw022350;
+	Wed, 22 Jun 2011 19:24:33 GMT
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110516 Lightning/1.0b2 Thunderbird/3.1.10
+In-Reply-To: <201106222000.04854.jnareb@gmail.com>
+X-Enigmail-Version: 1.1.2
+X-TagToolbar-Keys: D20110622152432307
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176251>
 
-Looks good. Will queue.
+
+On 06/22/2011 02:00 PM, Jakub Narebski wrote:
+> On Wed, 22 Jun 2011, Phil Hord wrote:
+>> On 06/22/2011 11:28 AM, Jakub Narebski wrote:
+>>> P.S. Another addition that I sometimes wanted git to have would be
+>                                                   ^^^
+>
+> This is a typo: I actually wanted to say "gitweb" here.
+>
+> Therefore this discussion is totally OFF-TOPIC now.
+Dang.
+
+>> I normally revert to 'git log --name-status | less <CR> /filename.foo',
+>> which is awful, of course.  I've always assumed there's a better way I
+>> haven't discovered yet.  But if there is, well... I haven't discovered
+>> it yet.
+>>
+>> This syntax works on some files, but is limited and/or broken:
+>>    # Finds all commits touching the file named './foo.bar', iff
+>> ./foo.bar exists in the current commit.
+>>    git log -- foo.bar
+> Errr... if you use "git log foo.bar" it is true, but "git log -- foo.bar"
+> will find commits even if foo.bar existed only in the past... though
+> history simplification can make git return empty set.
+
+That doesn't work for me.  Does it work for you?  I only see the
+gitweb.pl history if I include --full-history.
+
+    git version
+    #-- git version 1.7.5.rc1
+
+    git log -- gitweb.pl | wc
+    #--   0       0       0
+
+    git log --full-history -- gitweb.pl | wc
+    #--    175     412    4087
+
+
+>> I say 'broken', but maybe it's not; it feels like it is when I do this:
+>>
+>>    # Returns zero logs
+>>    git log -- some-deleted-file.txt
+>>
+>>    # Returns at least two logs
+>>    git log --all -- some-deleted-file.txt
+>      git log --full-history -- some-deleted-file.txt
+>
+
+Thanks very much.  That is exactly what I was missing.
+
+I obviously didn't know about --full-history.  I didn't notice it in
+spite of looking for this before and consulting 'git help log'.  So I'm
+guessing the documentation could use some help there.  It's already
+pretty crowded, though.  Maybe just a note next to '--all' which, for
+me, served as a distractingly red herring.
+
+> For example in git.git repository:
+>
+>    $ # git log --full-history --oneline -- gitweb.pl | cat
+>    2ad9331 v053
+>    185f09e v049
+>    ff7669a v048
+>    fbb592a v043
+>    [...]
+>    e0389bd v001
+>    ecb378f v000
+>    4c02e3c v000
+>    161332a first working version
+>
+> (Don't you just love Kay Sievers commit messages ;-) ?).
+>
+>> I think I understand why that happens (search optimization), but it is
+>> unexpected from the user's perspective.  I also suspect it will miss the
+>> 'pre-resurrection' commits for files which were deleted and resurrected
+>> in the past.
+>>
+>>
+>> What do you think of these as new 'Commit limiters' for git log:
+>>
+>>        --name=<pattern>, --name-glob=<glob>
+>>            Limit the commits output to ones touching files that match the
+>>            specified pattern (regular expression) or glob (shell glob
+>>            pattern).
+> Why not use "git log --full-history -- '<glob>'" (i.e. remember about
+> shell escaping glob)?  I don't know if it works as intended in current
+> git or not...
+>
+
+I think that'll work fine.  But glob paths failed for me when I tried it
+while composing the original email.  I think I just mis-interpreted the
+reason for the missing commits when I didn't have --full-history.
+
+Also, globbing is not mentioned in the '[--] <path>' section of 'git log
+--help'.  In fact, the only references to globs in the 'git log' help
+[1] are related to refs, not filenames.  Ditto for 'git rev-list'.
+
+I initially expected "git log -- 'foo.*'" to work.  But it didn't (foo.*
+had been deleted) or it only partially worked (no --full-history).  So I
+interpreted this as it being only partially supported.  I did consult
+the man page, but it did not do anything to correct my wrong
+interpretation.  A now-enwisened google search turned up a thread [2]
+from 2009 apparently pre-dating this feature.
+
+Thanks again for the education, Jakub.  I really appreciate how helpful
+this list is.
+
+[1] excepting '-O'
+[2] http://article.gmane.org/gmane.comp.version-control.git/109506/
+
+
+Phil
