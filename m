@@ -1,63 +1,60 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] Makefile: Track changes to LDFLAGS and relink when necessary
-Date: Wed, 22 Jun 2011 10:51:35 +0200
-Message-ID: <BANLkTi=XOEFyVu-ZEqpmLaD60FL6dV2ndA@mail.gmail.com>
-References: <1308682726-20971-1-git-send-email-frekui@gmail.com>
+From: sandy2010 <sandeeptt@yahoo.com>
+Subject: Migration from CVS to GIT - Multiple directories in CVS repo to a
+ single Git repo
+Date: Wed, 22 Jun 2011 02:06:31 -0700 (PDT)
+Message-ID: <1308733591425-6503493.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Fredrik Kuivinen <frekui@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 22 10:52:54 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 22 11:06:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZJB6-0002Xl-Ox
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Jun 2011 10:52:53 +0200
+	id 1QZJOP-00014Q-FR
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Jun 2011 11:06:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753924Ab1FVIwr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jun 2011 04:52:47 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:46813 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754124Ab1FVIwR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2011 04:52:17 -0400
-Received: by pvg12 with SMTP id 12so371797pvg.19
-        for <git@vger.kernel.org>; Wed, 22 Jun 2011 01:52:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=xyyPe3+l6kddpM0UXVk6H9ujzoq5NGdtFW4/Z8gATo8=;
-        b=W/wMjG3eIYkCk39YhT4V68cjOkH/W45s53juh15XU1hwu38wrAC9fwbvCMOFTzMfw/
-         BGVDALfRck+VpVV5mRYZuyLLlGnUT4jIQ3aaa5PYKH708B8I63icoiXGDX2vJfUyLzPI
-         8PzJUZUZZg8fMbOPCcKc9Jzz+gHBGO4jVLMaQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=TMJahjRmlnUux1aD9q1OHAN/Wj57dT7EZO9AQDoYrzpubmBjFv4M/mgDdpqJcZlBYt
-         XiiW+fSgXaXoh2CPH9OX3U+xBjYKTzPO4XOCyiAAiQfMkq7PVfTMC4UjjeZqA/NNnO9k
-         Ux7UV5c0PsoQl8wbXKnxEC75DTYm/oMw7B7d8=
-Received: by 10.68.11.196 with SMTP id s4mr176961pbb.301.1308732735132; Wed,
- 22 Jun 2011 01:52:15 -0700 (PDT)
-Received: by 10.68.21.106 with HTTP; Wed, 22 Jun 2011 01:51:35 -0700 (PDT)
-In-Reply-To: <1308682726-20971-1-git-send-email-frekui@gmail.com>
+	id S1753450Ab1FVJGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jun 2011 05:06:33 -0400
+Received: from sam.nabble.com ([216.139.236.26]:40337 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752023Ab1FVJGc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2011 05:06:32 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <sandeeptt@yahoo.com>)
+	id 1QZJOJ-0000Ax-Dy
+	for git@vger.kernel.org; Wed, 22 Jun 2011 02:06:31 -0700
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176228>
 
-Heya,
+Hello,
 
-On Tue, Jun 21, 2011 at 20:58, Fredrik Kuivinen <frekui@gmail.com> wrote:
+I'm aware of cvs2git and git fast-import utilities to do this. My
+requirement is little different.
+My CVS Repo is:
+/cvs/BFARM
 
-It might be interesting to note in the commit message why this change
-is made (now), and if there are any other similar flags that we ought
-to track.
+This consists of following directories:
+Misc/suite1
+Misc/suite2
+Misc/suite3
 
--- 
-Cheers,
+Now, I want to Migrate the suite1 and suite2 into a single Git repo
+"/git/Testsuites" and it should look like this:
+/git/Testsuites/suite1
+/git/Testsuites/suite2
 
-Sverre Rabbelier
+How can I do this? I do not want to make suite1 and suite2 as separate git
+repos.
+
+Thanks.
+
+--
+View this message in context: http://git.661346.n2.nabble.com/Migration-from-CVS-to-GIT-Multiple-directories-in-CVS-repo-to-a-single-Git-repo-tp6503493p6503493.html
+Sent from the git mailing list archive at Nabble.com.
