@@ -1,139 +1,81 @@
-From: Gurjeet Singh <singh.gurjeet@gmail.com>
-Subject: Re: Having some problem with instaweb
-Date: Thu, 23 Jun 2011 07:48:11 -0400
-Message-ID: <BANLkTinvSt9xGNSRKLGucsRKoChMfs_b9w@mail.gmail.com>
-References: <BANLkTim6gLg_-UdG36TXWS0Mfj3MOAQ_3w@mail.gmail.com> <m3iprx554t.fsf@localhost.localdomain>
+From: Phil Hord <hordp@cisco.com>
+Subject: Re: ''git submodule sync'' should not add uninitialized submodules
+ to .git/config
+Date: Thu, 23 Jun 2011 09:39:42 -0400
+Message-ID: <4E03421E.1000208@cisco.com>
+References: <0D2618D7-0681-4E71-B412-36D490D45B9D@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 23 13:48:41 2011
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Maarten Billemont <lhunath@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 23 15:39:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZiOk-0002zO-NP
-	for gcvg-git-2@lo.gmane.org; Thu, 23 Jun 2011 13:48:39 +0200
+	id 1QZk8M-0005wj-EE
+	for gcvg-git-2@lo.gmane.org; Thu, 23 Jun 2011 15:39:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759215Ab1FWLse convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Jun 2011 07:48:34 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:43683 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759132Ab1FWLsd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Jun 2011 07:48:33 -0400
-Received: by vws1 with SMTP id 1so1240787vws.19
-        for <git@vger.kernel.org>; Thu, 23 Jun 2011 04:48:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=WrsX+qQT8P8x0B8y9nNrOCxAdw9lUlMNbnGE57BKQDs=;
-        b=bsXp+Wo0md2glqWycDVFjMSYNKQWOo/jTUMc6TBMvz0yfq9uJvKICWxojmbVE9eitx
-         ML/6htXItsnfCZ0mCO6I3DNNH3/5HxMBeXONWB/dA5NbS3pTiFGAQh75CLEP9jZuVdQf
-         p1uuQAb/UT8M2Wq1vOGpqPYi33KrZ3Z3MZynk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=fxV2uHkot70z3YWIovc585kS+sUxdoYKaa7gKQ/6ISUrWUXx1I3s28FSJAH/UBPgRU
-         /YJoxolvaUeK29CiefIFGY8a3zkiDIcvLuZfSB7kJfPo2aEF3WAORTYggkfcKu5BU4N0
-         +ckeJY9XbL68TPlS8POsukr9Vkwc526otJO7k=
-Received: by 10.220.147.201 with SMTP id m9mr642162vcv.264.1308829711141; Thu,
- 23 Jun 2011 04:48:31 -0700 (PDT)
-Received: by 10.220.183.73 with HTTP; Thu, 23 Jun 2011 04:48:11 -0700 (PDT)
-In-Reply-To: <m3iprx554t.fsf@localhost.localdomain>
+	id S1759355Ab1FWNjo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Jun 2011 09:39:44 -0400
+Received: from sj-iport-2.cisco.com ([171.71.176.71]:30361 "EHLO
+	sj-iport-2.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757326Ab1FWNjo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jun 2011 09:39:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=hordp@cisco.com; l=883; q=dns/txt;
+  s=iport; t=1308836383; x=1310045983;
+  h=message-id:date:from:mime-version:to:cc:subject:
+   references:in-reply-to:content-transfer-encoding;
+  bh=ey2TUpVCK6cfofHSgn7m3+9plXTfuN6v5hhF4abVejA=;
+  b=cjjdebSRIz9S1H26YABgov9vmIT5hFpZL6xSC2U84gJxmYLpjd1GIEJW
+   F6AibxmTfMZA4PQuLbiwgm4idSmOMw6RsItQXtY9pbfLWkCBPULzj/unt
+   Y1BjxTPOtW5AvSoOxVaj+Fnca1u3F2HrZPa3CbvbP8ljM/cIXiV5fcVi0
+   o=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av0EAOdAA06rRDoH/2dsb2JhbABSpx53qkSeK4YtBJFyhGWLRQ
+X-IronPort-AV: E=Sophos;i="4.65,413,1304294400"; 
+   d="scan'208";a="384283781"
+Received: from mtv-core-2.cisco.com ([171.68.58.7])
+  by sj-iport-2.cisco.com with ESMTP; 23 Jun 2011 13:39:43 +0000
+Received: from [10.117.80.99] (rtp-hordp-8912.cisco.com [10.117.80.99])
+	by mtv-core-2.cisco.com (8.14.3/8.14.3) with ESMTP id p5NDdgdO008874;
+	Thu, 23 Jun 2011 13:39:43 GMT
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110516 Lightning/1.0b2 Thunderbird/3.1.10
+In-Reply-To: <0D2618D7-0681-4E71-B412-36D490D45B9D@gmail.com>
+X-Enigmail-Version: 1.1.2
+X-TagToolbar-Keys: D20110623093942203
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176270>
 
-On Thu, Jun 23, 2011 at 4:23 AM, Jakub Narebski <jnareb@gmail.com> wrot=
-e:
-> CC-ing Eric Wong, author of git-instaweb.
+On 06/23/2011 07:13 AM, Maarten Billemont wrote:
+> When I initialize 2/3 submodules of my git repository and do git subm=
+odule update, all is fine: Only the 2 submodules that I need are update=
+d.
 >
-> Gurjeet Singh <singh.gurjeet@gmail.com> writes:
+> When I run a git submodule sync to update the URLs that may have been=
+ changed in .gitmodules, it ADDS the URL of the submodule that was NOT =
+initialized, thus "initializing" it.
 >
->> I am on Linux Mint 10 and I tried the following command:
->>
->> $ git instaweb -d apache2 -p 1234 --start
->> Syntax error on line 1 of /mnt/storage/gurjeet/.git/gitweb/httpd.con=
-f:
->> Invalid command 'server.document-root', perhaps misspelled or define=
-d
->> by a module not included in the server configuration
->> Could not execute http daemon apache2 -f.
+> Now, when I run git submodule update, it starts checking out the thir=
+d module and my workflow is broken.
 >
-> Hmmm... it looks like starts apache2, but generates config file
-> (httpd.conf) for lighttpd instead.
->
-> Ahh... actually you started apache2, but didn't generate configuratio=
-n
-> file for it, so git-instaweb re-uses previous config file... which by
-> default is lighttpd:
->
-> =A0start, --start
-> =A0 =A0 =A0Start the httpd instance and exit. This does not generate =
-any of the
-> =A0 =A0 =A0configuration files for spawning a new instance.
+> git submodule sync should not add entries to .git/config, only update=
+ existing ones.--
 
-Now that's very unintuitive.... I am the impatient kind, and didn't
-read the whole paragraph. I assumed --start would just start the
-webserver (maybe run in daemon mode).
+Maarten,
 
->
-> Try using
->
-> =A0$ git instaweb -d apache2 -p 1234 -b lynx
+Is it enough to similarly limit 'submodule sync' the same way you did
+with 'submodule init'? Like this:
+git submodule sync -- A B
 
-That worked.. I do not have lynx, but it did start apache2 and I was
-able to browse the repo.
+=46rom 'git help submodule':
+"git submodule sync" synchronizes all submodules while "git submodule
+sync =97 A" synchronizes submodule "A" only.
 
->
-> then exiting web browser.
->
->
-> BTW. I think that git-instaweb should be more helpful here... will
-> investigate.
->
->> /mnt/storage/gurjeet/ is my $HOME.
->
-> Nb. it doesn't mater where $HOME is, but where is git repository you
-> were in when calling git-instaweb.
-
-Got it. I have some files of my home directory in a Git repository, so
-$HOME is where the repository is.
-
-I have quite a few development related Git repositories under
-$HOME/dev/ and instaweb shows all of them on the first page (with
-description etc). IOW, is it supposed to recurse down all directories
-to look for .git/ directories?
-
-=2Egit
-dev/EDB-ADVISORS/.git
-dev/EDBAS/.git
-dev/PCS/.git
-dev/PEM/.git
-dev/PGAGENT/.git
-dev/POSTGRES/.git
-dev/SERVICESTOOLS/.git
-dev/SLONY/.git
-
-Is this expected?
-
->
->
-> BTW. in the future it would be good idea to tell what git version are
-> you using.
-
-I am at 1.7.1
-
-
-Thanks for the help, and thanks to everyone around Git for a great
-piece of software.
---=20
-Gurjeet Singh
-EnterpriseDB Corporation
-The Enterprise PostgreSQL Company
+Phil
