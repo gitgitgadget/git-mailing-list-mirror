@@ -1,109 +1,97 @@
-From: Namhyung Kim <namhyung@gmail.com>
-Subject: Re: [PATCH] git-remote.txt: fix wrong remote refspec
-Date: Thu, 23 Jun 2011 15:17:29 +0900
-Message-ID: <1308809849.1338.11.camel@leonhard>
-References: <1308804319-6354-1-git-send-email-namhyung@gmail.com>
-	 <7viprx3yay.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Comparison of CVS and Git (was: Re: Migration from CVS to GIT)
+Date: Thu, 23 Jun 2011 01:11:59 -0700 (PDT)
+Message-ID: <m3mxh955nm.fsf_-_@localhost.localdomain>
+References: <1308733591425-6503493.post@n2.nabble.com>
+	<4E01CAD5.8080808@alum.mit.edu>
+	<1308808706969-6507269.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 23 08:17:41 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+To: sandy2010 <sandeeptt@yahoo.com>
+X-From: git-owner@vger.kernel.org Thu Jun 23 10:12:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZdET-0001Ik-CF
-	for gcvg-git-2@lo.gmane.org; Thu, 23 Jun 2011 08:17:41 +0200
+	id 1QZf1J-00058X-3O
+	for gcvg-git-2@lo.gmane.org; Thu, 23 Jun 2011 10:12:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753947Ab1FWGRg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Jun 2011 02:17:36 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:64378 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753896Ab1FWGRf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jun 2011 02:17:35 -0400
-Received: by iwn6 with SMTP id 6so1315851iwn.19
-        for <git@vger.kernel.org>; Wed, 22 Jun 2011 23:17:35 -0700 (PDT)
+	id S1754436Ab1FWIME (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jun 2011 04:12:04 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:63695 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751486Ab1FWIMC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jun 2011 04:12:02 -0400
+Received: by fxm17 with SMTP id 17so1119066fxm.19
+        for <git@vger.kernel.org>; Thu, 23 Jun 2011 01:12:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:subject:from:to:cc:in-reply-to:references
-         :content-type:date:message-id:mime-version:x-mailer
-         :content-transfer-encoding;
-        bh=SJ4nnGKU4GYTXVeS+1hcxLNPNzO7jlDTtoAEmu2M29U=;
-        b=mjifWXlkfK9Q4aGM8eYB52MGoSwjeac4wn3uZBEtoWkRL++DbvRdTNptBLFMeh47Xd
-         QL5T8g+KP3iY70hzR/GgXPH/L8QsU+HoAE84XnO7ofgJLNxb3y67xK3DDM9IBIscptUV
-         E71XpJe0jJm970inDH3+4QLwqb/2lXNWNuEX0=
+        h=domainkey-signature:x-authentication-warning:to:cc:subject
+         :references:from:date:in-reply-to:message-id:lines:user-agent
+         :mime-version:content-type;
+        bh=SBX+U4x2pgWlghrpVkjN6h5vN7O1QHtwPWJ+w2+GOQM=;
+        b=ON9WqSNLgbl166+xv5WawjobdgPSjnEssnosDLKKStary+g3bschtQjBHoqOJjX8Ug
+         0Rq250X0D8QcKFGOIF5G9aWecRMOakCNptobHK0CV/NGfYo3BQ6yri8dE0uAarLYLIgZ
+         A4y5plTO42+QEwLvS/59SEajsgg7+kX8xpIkM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date
-         :message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=vMV2oJNkp4V7pOGlnHbAX6JwdzxvP8A8/sm9xjppoFeVcm+g+iC75HfF3613MUoT/l
-         BAwZSO0rUKTPeU9m+SX92W+YJvFfv8uG+hg1aHtObpfvqVQGVkNfGFHYArQUVl1VzQ6/
-         E6JIRMhUYs3aJGX2MnNLpmLE3Ikw/V9L2nOyo=
-Received: by 10.42.161.138 with SMTP id t10mr1712888icx.3.1308809855062;
-        Wed, 22 Jun 2011 23:17:35 -0700 (PDT)
-Received: from [192.168.111.3] ([118.176.77.244])
-        by mx.google.com with ESMTPS id ly7sm1330378icb.0.2011.06.22.23.17.32
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=TsK6KzAy6sA0pkzq4YvERPPsNd0JlVsKFhY7vB2j6JWR6qrupJ5SuccMYxim3thQUR
+         7+LyRRxb9UXKCso04bEkNjhLVK2r2Ly8pELXP+lMpjv9FGi2DmOYnniOs0MTh+Agoslr
+         XKPk3f5ZrOpCUEkKirf7dKK9qsr9SsUuDK3io=
+Received: by 10.223.5.13 with SMTP id 13mr2290035fat.1.1308816720913;
+        Thu, 23 Jun 2011 01:12:00 -0700 (PDT)
+Received: from localhost.localdomain (abva28.neoplus.adsl.tpnet.pl [83.8.198.28])
+        by mx.google.com with ESMTPS id w15sm816464faj.47.2011.06.23.01.11.58
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 22 Jun 2011 23:17:34 -0700 (PDT)
-In-Reply-To: <7viprx3yay.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 2.28.3 
+        Thu, 23 Jun 2011 01:11:59 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p5N8BPO8007347;
+	Thu, 23 Jun 2011 10:11:36 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p5N8BAMc007342;
+	Thu, 23 Jun 2011 10:11:10 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1308808706969-6507269.post@n2.nabble.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176265>
 
-Hello,
+sandy2010 <sandeeptt@yahoo.com> writes:
 
-2011-06-22 (=EC=88=98), 22:35 -0700, Junio C Hamano:
-> Namhyung Kim <namhyung@gmail.com> writes:
->=20
-> > $GIT_DIR/remotes/<name>/HEAD should be
-> > $GIT_DIR/refs/remotes/<name>/HEAD.
-> >
-> > Signed-off-by: Namhyung Kim <namhyung@gmail.com>
-> > ---
->=20
-> Obviously correct; thanks.
->=20
-> There is another questionable one you did not touch, though.
->=20
->     With `-t <branch>` option, instead of the default glob
->     refspec for the remote to track all branches under
->     `$GIT_DIR/remotes/<name>/`, a refspec to track only `<branch>`
->     is created.  You can give more than one `-t <branch>` to track
->     multiple branches without grabbing all branches.
->=20
-> The above says "$GIT_DIR/remotes/<name>/", but it should say
->=20
->     ... all branches under refs/remotes/<name>/ namespace,...
->=20
+> Thanks Michael! This worked like a charm! I was not aware that we can do such
+> things in CVS. Can you point me to some good docs/articles on such
+> comparison of CVS and Git?
 
-Oh, I didn't aware of that. Will send v2 soon.
+A bit of self-promotion:
+
+  "Difference between GIT and CVS" on StackOverflow (my answer)
+  http://stackoverflow.com/questions/802573/difference-between-git-and-cvs/824241#824241
+
+A blog post I recently found, describing how the workflow changed
+rather that the differences between Git and CVS:
+
+  "From CVS to Git, 9 Things I\u2019ve Learned" on EclipseSource blog
+  http://eclipsesource.com/blogs/2011/06/09/git-lessons-learned/
+
+This article describes how Git could came into being, IMHO quite well
+presenting Git philosophy as well:
+
+  "The Git Parable" by Tom Preston-Werner (of GitHub)
+  http://tom.preston-werner.com/2009/05/19/the-git-parable.html
 
 
-> Also we should try to see if we can come up with a way to say the thi=
-ngs
-> the part your patch touched describe _without_ mentioning $GIT_DIR at
-> all. "Store in $GIT_DIR/refs/$X" talks too much about the implementat=
-ion
-> detail that the ref in question is implemented as a loose ref. We wou=
-ld
-> pack it into a single entry in $GIT_DIR/packed-refs file when we run =
-gc,
-> and at that point "$GIT_DIR/refs/$X" is no longer a correct descripti=
-on.
+And just FYI, another tool to convert CVS to Git (non-incremental):
 
-I see. But I think it is a different issue and should be treated by
-another patch(es). Just omitting $GIT_DIR is not enough? I don't know :=
-)
+  http://cvs2svn.tigris.org/cvs2git.html
 
-Thanks.
-
-
---=20
-Regards,
-Namhyung Kim
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
