@@ -1,7 +1,8 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 3/4] git-instaweb: Move all actions at the end of script
-Date: Thu, 23 Jun 2011 22:59:26 +0200
-Message-ID: <20110623195652.18265.50516.stgit@localhost.localdomain>
+Subject: [PATCH 4/4] git-instaweb: Check that correct config file exists for
+	(re)start
+Date: Thu, 23 Jun 2011 23:01:03 +0200
+Message-ID: <20110623205942.18265.5903.stgit@localhost.localdomain>
 References: <20110623194624.18265.82482.stgit@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
@@ -9,136 +10,139 @@ Content-Transfer-Encoding: 7bit
 Cc: Gurjeet Singh <singh.gurjeet@gmail.com>,
 	Eric Wong <normalperson@yhbt.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 23 23:00:01 2011
+X-From: git-owner@vger.kernel.org Thu Jun 23 23:01:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZr0K-000141-25
-	for gcvg-git-2@lo.gmane.org; Thu, 23 Jun 2011 23:00:00 +0200
+	id 1QZr1s-00028Z-Gf
+	for gcvg-git-2@lo.gmane.org; Thu, 23 Jun 2011 23:01:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752796Ab1FWU7z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jun 2011 16:59:55 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:46754 "EHLO
+	id S1759864Ab1FWVBb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jun 2011 17:01:31 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:39612 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752753Ab1FWU7y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jun 2011 16:59:54 -0400
-Received: by fxm17 with SMTP id 17so1504478fxm.19
-        for <git@vger.kernel.org>; Thu, 23 Jun 2011 13:59:53 -0700 (PDT)
+	with ESMTP id S1759779Ab1FWVBa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jun 2011 17:01:30 -0400
+Received: by fxm17 with SMTP id 17so1505164fxm.19
+        for <git@vger.kernel.org>; Thu, 23 Jun 2011 14:01:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:subject:to:cc:date:message-id:in-reply-to
          :references:user-agent:mime-version:content-type
          :content-transfer-encoding;
-        bh=88qGLM0FuEilqGLNRcwu2X3/h+tfVfe7allqrKULeoo=;
-        b=N+w4wXItGKmVQBlEYICp+ncTSumnj9jCy+jAHR1Qw9njP6If+a5ksFDPqqxys720S4
-         fm4vDhNEo0/aRGNGvZx32qXuRbUkGkSzehKx8+fAIwtNzl1AN8KDHWEENNm5MD9AYc2a
-         +6QQ2bJYu4CQxJ+RlTRM8oaJPaM/tUzPNe3zA=
+        bh=rRokKqG21alPUKjrXRFGt7HGhoAl4hY/V/0jZFeQb2k=;
+        b=sl4h9MCS4Xc+nj0CguA++2cHeQA4+YRvKBRByJt7S2GQAVDRgBD1fNZXbDYQVh0hbD
+         3eL/FpDyFroI5CPu7ORM602S4IMa+1je5DnOyf/bPk1Zi6XTxhThv4kLcll12o/V9t+C
+         057PdT75sN6a200WKbwZj4AUFZIabMLXSPahc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:subject:to:cc:date:message-id:in-reply-to:references
          :user-agent:mime-version:content-type:content-transfer-encoding;
-        b=wVlj/ZlrNfx8LREsN5oVfIgX40/fxtgEzccpMyeDZqIxtzeyTi2ijz6BHchYq06xKD
-         k7M2Vnd2YVEElxIgPjOPUtTWuoY97P89DqrBfhvnFMPz7ZLRWLnRC8lymvu4DpQCqh8K
-         fPMeskamJ2MtN4XFvoPTXGzbwwD1qbUefimao=
-Received: by 10.223.79.139 with SMTP id p11mr3229653fak.118.1308862792899;
-        Thu, 23 Jun 2011 13:59:52 -0700 (PDT)
+        b=AzdIbGRbQTGM5EjUy7OdM7lmyarD+pjYbSo0JA5kUnpwrkeZOVhyxsmRTBv7QkgdtI
+         N6lCQU+v+5krcUQeQuuE35AB2S+fB5XWvgpeD/1GDfMvCAaddjF55faE2avmFO54rhmQ
+         Sm3Xvn9sL76RKPaldfx3zqUe02lkbDvqyL2q8=
+Received: by 10.223.98.82 with SMTP id p18mr3333171fan.64.1308862889131;
+        Thu, 23 Jun 2011 14:01:29 -0700 (PDT)
 Received: from localhost.localdomain (abva28.neoplus.adsl.tpnet.pl [83.8.198.28])
-        by mx.google.com with ESMTPS id n27sm1226819faa.4.2011.06.23.13.59.51
+        by mx.google.com with ESMTPS id o23sm1225393faa.33.2011.06.23.14.01.27
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 23 Jun 2011 13:59:52 -0700 (PDT)
+        Thu, 23 Jun 2011 14:01:28 -0700 (PDT)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p5NKxQk2019465;
-	Thu, 23 Jun 2011 22:59:37 +0200
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p5NL13xc019506;
+	Thu, 23 Jun 2011 23:01:14 +0200
 In-Reply-To: <20110623194624.18265.82482.stgit@localhost.localdomain>
 User-Agent: StGIT/0.14.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176293>
 
-As a nice side-effect now the order of parameters does not matter:
+Currently start/restart does not generate any configuration files for
+spawning a new instance.  This means that
 
-  $ git instaweb --httpd=apache2 --start
+  $ git instaweb --http=<server> --start
 
-is now (after this patch) the same as
+might pick up stale 'httpd.conf' file for a different web server
+(e.g. for default lighttpd when requesting apache2).
 
-  $ git instaweb --start --httpd=apache2
+This commit changes that, and makes git-instaweb generate web server
+config file and/or gitweb config file if don't exists.
 
-Before this commit --start, --stop, --restart (and their subcommand
-versions start, stop, restart) exited immediately.
+This required naming config files after the name of web server
+(alternate solution would be to somehow mark for which web server was
+config file generated).
+
+Note that web servers that embed configuration in server script file,
+namely webrick and plackup, and which delete "$conf" in their *_conf
+function, would have their config (server script) always regenerated.
 
 
-This is preparatory work for making start/restart check that correct
-configuration is set up; this change was required to have access in
-start_httpd to requested web browser etc.
+Note: this commit introduces a bit of code repetition (but only a few
+lines).
 
+Reported-by: Gurjeet Singh <singh.gurjeet@gmail.com>
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
-Unfortunately there are no tests for git-instaweb, so I couldn't test
-if it is really no much of a functional change.
+This is an actual fix.
 
-BTW. if you thought of a better subject for this commit, please speak
-up.
+Though I haven't checked if git-instaweb behaves sanely if you switch
+between web servers with --start...
 
- git-instaweb.sh |   27 ++++++++++++++++++++-------
- 1 files changed, 20 insertions(+), 7 deletions(-)
+ Documentation/git-instaweb.txt |    8 ++++----
+ git-instaweb.sh                |    7 +++++++
+ 2 files changed, 11 insertions(+), 4 deletions(-)
 
+diff --git a/Documentation/git-instaweb.txt b/Documentation/git-instaweb.txt
+index 08f85ba..ea95c90 100644
+--- a/Documentation/git-instaweb.txt
++++ b/Documentation/git-instaweb.txt
+@@ -51,8 +51,8 @@ OPTIONS
+ 
+ start::
+ --start::
+-	Start the httpd instance and exit.  This does not generate
+-	any of the configuration files for spawning a new instance.
++	Start the httpd instance and exit.  Regenerate configuration files
++	as necessary for spawning a new instance.
+ 
+ stop::
+ --stop::
+@@ -62,8 +62,8 @@ stop::
+ 
+ restart::
+ --restart::
+-	Restart the httpd instance and exit.  This does not generate
+-	any of the configuration files for spawning a new instance.
++	Restart the httpd instance and exit.  Regenerate configuration files
++	as necessary for spawning a new instance.
+ 
+ CONFIGURATION
+ -------------
 diff --git a/git-instaweb.sh b/git-instaweb.sh
-index 2be22a0..9a2f20f 100755
+index 9a2f20f..01a1b05 100755
 --- a/git-instaweb.sh
 +++ b/git-instaweb.sh
-@@ -27,6 +27,7 @@ httpd="$(git config --get instaweb.httpd)"
- root="$(git config --get instaweb.gitwebdir)"
- port=$(git config --get instaweb.port)
- module_path="$(git config --get instaweb.modulepath)"
-+action="browse"
+@@ -99,6 +99,12 @@ start_httpd () {
  
- conf="$GIT_DIR/gitweb/httpd.conf"
- 
-@@ -148,17 +149,13 @@ while test $# != 0
- do
- 	case "$1" in
- 	--stop|stop)
--		stop_httpd
--		exit 0
-+		action="stop"
- 		;;
- 	--start|start)
--		start_httpd
--		exit 0
-+		action="start"
- 		;;
- 	--restart|restart)
--		stop_httpd
--		start_httpd
--		exit 0
-+		action="restart"
- 		;;
- 	-l|--local)
- 		local=true
-@@ -611,6 +608,22 @@ configure_httpd() {
- 	esac
- }
- 
-+case "$action" in
-+stop)
-+	stop_httpd
-+	exit 0
-+	;;
-+start)
-+	start_httpd
-+	exit 0
-+	;;
-+restart)
-+	stop_httpd
-+	start_httpd
-+	exit 0
-+	;;
-+esac
+ 	# here $httpd should have a meaningful value
+ 	resolve_full_httpd
++	mkdir -p "$fqgitdir/gitweb/$httpd_only"
++	conf="$fqgitdir/gitweb/$httpd_only.conf"
 +
- gitweb_conf
++	# generate correct config file if it doesn't exist
++	test -f "$conf" || configure_httpd
++	test -f "$fqgitdir/gitweb/gitweb_config.perl" || gitweb_conf
+ 
+ 	# don't quote $full_httpd, there can be arguments to it (-f)
+ 	case "$httpd" in
+@@ -628,6 +634,7 @@ gitweb_conf
  
  resolve_full_httpd
+ mkdir -p "$fqgitdir/gitweb/$httpd_only"
++conf="$fqgitdir/gitweb/$httpd_only.conf"
+ 
+ configure_httpd
+ 
