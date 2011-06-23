@@ -1,118 +1,102 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: [PATCHv2 3/9] archive: refactor list of archive formats
-Date: Thu, 23 Jun 2011 14:05:35 -0300
-Message-ID: <BANLkTim7O3pcJAy4U1d6QiS6cvv2-Og21A@mail.gmail.com>
-References: <20110622011923.GA30370@sigill.intra.peff.net>
-	<20110622012333.GC30604@sigill.intra.peff.net>
+From: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <carlos@cmartin.tk>
+Subject: Re: [PATCH 5/5] glossary: clarify description of HEAD
+Date: Thu, 23 Jun 2011 19:06:58 +0200
+Message-ID: <20110623170658.GC3142@centaur.lab.cmartin.tk>
+References: <7vy60s36mm.fsf@alter.siamese.dyndns.org>
+ <1308847958-3429-1-git-send-email-gitster@pobox.com>
+ <1308847958-3429-6-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	"J.H." <warthog19@eaglescrag.net>, git@vger.kernel.org,
-	git-dev@github.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 23 19:05:48 2011
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="/9DWx/yDrRhgMJTb"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 23 19:06:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZnLZ-0007WW-FD
-	for gcvg-git-2@lo.gmane.org; Thu, 23 Jun 2011 19:05:41 +0200
+	id 1QZnMc-0008KO-Ki
+	for gcvg-git-2@lo.gmane.org; Thu, 23 Jun 2011 19:06:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932535Ab1FWRFg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Jun 2011 13:05:36 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:43959 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932313Ab1FWRFg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Jun 2011 13:05:36 -0400
-Received: by ywe9 with SMTP id 9so791363ywe.19
-        for <git@vger.kernel.org>; Thu, 23 Jun 2011 10:05:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=3mCLk7otHjtAzJW0Raj01u4whAirGVH0XPaKfnDvIWU=;
-        b=kI+qLn4OF0rxqLvvVrCevmZQPlQCglhH5MDLa19nZwJQ3bwY9KaZrTtXlFdSk9HiI8
-         DhfUnzTplZn14M0xktNJWIuoii6PH/Ex6IDrt0qwg8uzZGpIOX0UpL7DqAY7psdmUEPd
-         iIoR9BYkpl5vRPgmGi611XF26yTsL9MlA4C/A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=tq0vXv74vFFO4yM7cajnqn8G3/4tmUONulZDzcgeLfqWDXnc5ujDRqigJePdzpeFhj
-         NgptuBnSIfdAtOZtmv/ywFDdk1xySdiMWv0Aq6j+yluyHtF2RdM9WfYv9wkQbCWUwJPh
-         7MW8LKJxE0FDaXLgaBE+V1I5UEOMXCBBydq+A=
-Received: by 10.150.166.1 with SMTP id o1mr2724945ybe.154.1308848735589; Thu,
- 23 Jun 2011 10:05:35 -0700 (PDT)
-Received: by 10.150.216.12 with HTTP; Thu, 23 Jun 2011 10:05:35 -0700 (PDT)
-In-Reply-To: <20110622012333.GC30604@sigill.intra.peff.net>
+	id S932560Ab1FWRGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jun 2011 13:06:42 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:58339 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932313Ab1FWRGl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jun 2011 13:06:41 -0400
+Received: from centaur.lab.cmartin.tk (brln-4db9e393.pool.mediaWays.net [77.185.227.147])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id C85B9461EB;
+	Thu, 23 Jun 2011 19:06:06 +0200 (CEST)
+Received: (nullmailer pid 30462 invoked by uid 1000);
+	Thu, 23 Jun 2011 17:06:58 -0000
+Mail-Followup-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <carlos@cmartin.tk>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <1308847958-3429-6-git-send-email-gitster@pobox.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176281>
 
-On Tue, Jun 21, 2011 at 10:23 PM, Jeff King <peff@peff.net> wrote:
-> Most of the tar and zip code was nicely split out into two
-> abstracted files which knew only about their specific
-> formats. The entry point to this code was a single "write
-> archive" function.
->
-> However, as these basic formats grow more complex (e.g., by
-> handling multiple file extensions and format names), a
-> static list of the entry point functions won't be enough.
-> Instead, let's provide a way for the tar and zip code to
-> tell the main archive code what they support by registering
-> archiver names and functions.
->
-> Signed-off-by: Jeff King <peff@peff.net>
+
+--/9DWx/yDrRhgMJTb
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, Jun 23, 2011 at 09:52:38AM -0700, Junio C Hamano wrote:
+> HEAD on a branch does reference a commit via the branch ref it refers to.
+> The main difference of a detached HEAD is that it _directly_ refers to
+> a commit.  Clarify this.
+>=20
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 > ---
-> New in v2. This turns archivers more into proper objects, rather than=
- a
-> hard-coded list of functions, and makes the rest of the series much
-> cleaner.
->
-> =C2=A0archive-tar.c | =C2=A0 16 +++++++++++++---
-> =C2=A0archive-zip.c | =C2=A0 13 ++++++++++++-
-> =C2=A0archive.c =C2=A0 =C2=A0 | =C2=A0 33 +++++++++++++++++----------=
-------
-> =C2=A0archive.h =C2=A0 =C2=A0 | =C2=A0 17 ++++++++++-------
-> =C2=A04 files changed, 52 insertions(+), 27 deletions(-)
->
-> diff --git a/archive-tar.c b/archive-tar.c
-> index 1ab1a2c..930375b 100644
-> --- a/archive-tar.c
-> +++ b/archive-tar.c
-> @@ -234,12 +234,10 @@ static int git_tar_config(const char *var, cons=
-t char *value, void *cb)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0return 0;
-> =C2=A0}
->
-> -int write_tar_archive(struct archiver_args *args)
-> +static int write_tar_archive(struct archiver_args *args)
-> =C2=A0{
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0int err =3D 0;
->
-> - =C2=A0 =C2=A0 =C2=A0 git_config(git_tar_config, NULL);
-> -
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (args->commit_sha1)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0err =3D write_=
-global_extended_header(args);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!err)
-> @@ -248,3 +246,15 @@ int write_tar_archive(struct archiver_args *args=
-)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0write_trailer(=
-);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0return err;
-> =C2=A0}
-> +
-> +static struct archiver tar_archiver =3D {
-> + =C2=A0 =C2=A0 =C2=A0 "tar",
-> + =C2=A0 =C2=A0 =C2=A0 write_tar_archive,
-> + =C2=A0 =C2=A0 =C2=A0 0
-A named constant instead of 0, like you did with
-ARCHIVER_WANT_COMPRESSION_LEVELS, would be better? 0 here means the
-archiver does not want compression?
+>  Documentation/glossary-content.txt |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>=20
+> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-=
+content.txt
+> index dd690bd..f79da21 100644
+> --- a/Documentation/glossary-content.txt
+> +++ b/Documentation/glossary-content.txt
+> @@ -170,7 +170,7 @@ to point at the new commit.
+>  	working tree>> is normally derived from the state of the tree
+>  	referred to by HEAD.  HEAD is a reference to one of the
+>  	<<def_head,heads>> in your repository, except when using a
+> -	<<def_detached_HEAD,detached HEAD>>, in which case it may
+> +	<<def_detached_HEAD,detached HEAD>>, in which case it may directly
+
+Why "may"? As I understand it, in detached HEAD, it /does/ point
+directly to a commit
+
+>  	reference an arbitrary commit.
+> =20
+>  [[def_head_ref]]head ref::
+
+Cheers,
+   cmn
+--=20
+Carlos Mart=C3=ADn Nieto | http://cmartin.tk
+
+"=C2=BFC=C3=B3mo voy a decir bobadas si soy mudo?" -- CACHAI
+
+--/9DWx/yDrRhgMJTb
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAEBAgAGBQJOA3KyAAoJEHKRP1jG7ZzTrToH/1qxHYNSt/z1g8y2AsDia0Zr
+43FaLfrOPFvWnEReQUBXZW1xG1khHMznfnRre3/fYqPxbhVUI/fUYaK4sPR9/h2c
+frh3v/VVn7LKTH5/H+dWlouQvjLx+ASRE//ufhahfi/vhaJVcFUcoTL+1sb43ddt
+sAiji9KVJ5UkbSn2sTaIz+nI6RWhqyL2QEgwpGNsifyMITTwhGDv1A1af5KlVSdU
+D6jnBj9/xjgSUYlO6PNhAlnwc7UZs/e8Chh+yNUBr+VpvTOX/uraSMuV4TgZprQk
+49dEwz2bDh8n6keAtr9thSDyBSeiT4zL67pg4Ls//eBZ/uMpnEm1XxqAF4GH6kI=
+=DlJA
+-----END PGP SIGNATURE-----
+
+--/9DWx/yDrRhgMJTb--
