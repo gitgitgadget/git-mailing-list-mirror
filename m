@@ -1,94 +1,85 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 2/4] git-instaweb: Use $conf, not $fqgitdir/gitweb/httpd.conf
-Date: Thu, 23 Jun 2011 21:56:37 +0200
-Message-ID: <20110623195516.18265.825.stgit@localhost.localdomain>
-References: <20110623194624.18265.82482.stgit@localhost.localdomain>
+From: Phil Hord <hordp@cisco.com>
+Subject: Re: ''git submodule sync'' should not add uninitialized submodules
+ to .git/config
+Date: Thu, 23 Jun 2011 16:01:43 -0400
+Message-ID: <4E039BA7.8060302@cisco.com>
+References: <0D2618D7-0681-4E71-B412-36D490D45B9D@gmail.com> <7v7h8c4nv3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Gurjeet Singh <singh.gurjeet@gmail.com>,
-	Eric Wong <normalperson@yhbt.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 23 21:57:11 2011
+Cc: Maarten Billemont <lhunath@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	=?ISO-8859-1?Q?Andreas_K=F6hle?= =?ISO-8859-1?Q?r?= 
+	<andi5.py@gmx.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 23 22:01:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZq1W-0002Zb-95
-	for gcvg-git-2@lo.gmane.org; Thu, 23 Jun 2011 21:57:10 +0200
+	id 1QZq62-0005jK-ED
+	for gcvg-git-2@lo.gmane.org; Thu, 23 Jun 2011 22:01:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932968Ab1FWT5F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jun 2011 15:57:05 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:41834 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932704Ab1FWT5D (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jun 2011 15:57:03 -0400
-Received: by fxm17 with SMTP id 17so1475228fxm.19
-        for <git@vger.kernel.org>; Thu, 23 Jun 2011 12:57:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:subject:to:cc:date:message-id:in-reply-to
-         :references:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=LX48uNd7jek5zC542NJw37VDBvUnTCGVDkxyQB3kO7c=;
-        b=adnb3JiDWI3KxcnP4cSa48L1ewy7CRKDaEhX4HTs2PpKCiIPYGf1/FxzksiFz3Ck3V
-         QJjddWSuN8hfwXzeOhgw3FZSPDFF78lCEpW7zUROBOuPWqr1av/dyiLfgcGuXUKQrEN2
-         VcqTpcgj3gP8JEzHyB1viVZjx/44SfLYcX2mI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:subject:to:cc:date:message-id:in-reply-to:references
-         :user-agent:mime-version:content-type:content-transfer-encoding;
-        b=eAEPfoFeAkJjaGSPfuAkZn598BcawQKcnbz6GA6FT8ihU7Op0c881UF7ayx6N8ojwk
-         laEz4yvrOEeE3U2GMeQSdulJMNEHmnceo3+tZlK7MCV7Zq+FNiQj8r0X0naQhC0ZgOw2
-         CS+3C+Fv9Wzj9Pc/RJwTh4cpJaxXEKUMinokA=
-Received: by 10.223.33.6 with SMTP id f6mr3202296fad.85.1308859022275;
-        Thu, 23 Jun 2011 12:57:02 -0700 (PDT)
-Received: from localhost.localdomain (abva28.neoplus.adsl.tpnet.pl [83.8.198.28])
-        by mx.google.com with ESMTPS id p3sm577653fan.21.2011.06.23.12.57.00
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 23 Jun 2011 12:57:01 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p5NJubVj018475;
-	Thu, 23 Jun 2011 21:56:47 +0200
-In-Reply-To: <20110623194624.18265.82482.stgit@localhost.localdomain>
-User-Agent: StGIT/0.14.3
+	id S933276Ab1FWUBp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jun 2011 16:01:45 -0400
+Received: from sj-iport-2.cisco.com ([171.71.176.71]:47678 "EHLO
+	sj-iport-2.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759457Ab1FWUBo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jun 2011 16:01:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=hordp@cisco.com; l=1092; q=dns/txt;
+  s=iport; t=1308859304; x=1310068904;
+  h=message-id:date:from:mime-version:to:cc:subject:
+   references:in-reply-to:content-transfer-encoding;
+  bh=kIZD1H7b+gj+myujPP3E2Pw/zkOZLKdg84fbCAk/xxQ=;
+  b=GyujrWjvFW81xz9GslZ6DVPyU9xvQ0COvke03S0kZpaDTCJdjrIEoV+Y
+   NzdIra2fYWhIPhgtiMK1b8nGCApCMYpmLPfCaBQaMip8srPbUbBKU9nIN
+   2AjGHsQ4UHJknb45W52Z42rBCfSOgCiVahaokvG9fGfz4xXFbZISW5hGl
+   c=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av0EAB2bA06tJXG9/2dsb2JhbABSpyp3q3adeYYtBJFyhGWER4Z+
+X-IronPort-AV: E=Sophos;i="4.65,414,1304294400"; 
+   d="scan'208";a="384673097"
+Received: from rcdn-core2-2.cisco.com ([173.37.113.189])
+  by sj-iport-2.cisco.com with ESMTP; 23 Jun 2011 20:01:43 +0000
+Received: from [64.100.104.120] (dhcp-64-100-104-120.cisco.com [64.100.104.120])
+	by rcdn-core2-2.cisco.com (8.14.3/8.14.3) with ESMTP id p5NK1hQ3024037;
+	Thu, 23 Jun 2011 20:01:43 GMT
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110516 Lightning/1.0b2 Thunderbird/3.1.10
+In-Reply-To: <7v7h8c4nv3.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.1.2
+X-TagToolbar-Keys: D20110623160143129
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176291>
 
-Don't repeat yourself: use "$conf" instead of its [current] contents,
-namely "$fqgitdir/gitweb/httpd.conf".
+On 06/23/2011 10:35 AM, Junio C Hamano wrote:
+> Maarten Billemont <lhunath@gmail.com> writes:
+>> When I initialize 2/3 submodules of my git repository and do git
+>> submodule update, all is fine: Only the 2 submodules that I need are
+>> updated.
+>>
+>> When I run a git submodule sync to update the URLs that may have been
+>> changed in .gitmodules, it ADDS the URL of the submodule that was NOT
+>> initialized, thus "initializing" it.
+>>
+>> Now, when I run git submodule update, it starts checking out the third
+>> module and my workflow is broken.
+> See 33f072f (submodule sync: Update "submodule.<name>.url" for empty
+> directories, 2010-10-08), which introduced this behaviour.
+>
+> cmd_update considers anything that has submodule.<name>.url defined as
+> "the user is interested", so I suspect "git submodule sync" should not do
+> this.
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-Straighforward improvement.  Note that currently $conf is constant,
-and doesn't change its value.
+What about a compromise?  Change git-submodule-sync to skip submodules
+which are not already initialized.
 
- git-instaweb.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+I have a patch to do this, but I need to test it still.  If it sounds
+right, I'll try to submit it later today.
 
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index 49bab7b..2be22a0 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -103,7 +103,7 @@ start_httpd () {
- 	case "$httpd" in
- 	*mongoose*|*plackup*)
- 		#These servers don't have a daemon mode so we'll have to fork it
--		$full_httpd "$fqgitdir/gitweb/httpd.conf" &
-+		$full_httpd "$conf" &
- 		#Save the pid before doing anything else (we'll print it later)
- 		pid=$!
- 
-@@ -117,7 +117,7 @@ $pid
- EOF
- 		;;
- 	*)
--		$full_httpd "$fqgitdir/gitweb/httpd.conf"
-+		$full_httpd "$conf"
- 		if test $? != 0; then
- 			echo "Could not execute http daemon $httpd."
- 			exit 1
+Phil
