@@ -1,170 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Phil Hord <hordp@cisco.com>
 Subject: Re: ''git submodule sync'' should not add uninitialized submodules
  to .git/config
-Date: Thu, 23 Jun 2011 15:28:30 -0700
-Message-ID: <7vboxo2ne9.fsf@alter.siamese.dyndns.org>
-References: <0D2618D7-0681-4E71-B412-36D490D45B9D@gmail.com>
- <7v7h8c4nv3.fsf@alter.siamese.dyndns.org> <4E0390A7.8040505@web.de>
+Date: Thu, 23 Jun 2011 19:06:31 -0400
+Message-ID: <4E03C6F7.2010506@cisco.com>
+References: <0D2618D7-0681-4E71-B412-36D490D45B9D@gmail.com> <7v7h8c4nv3.fsf@alter.siamese.dyndns.org> <4E039BA7.8060302@cisco.com> <7vhb7g2pbf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: Maarten Billemont <lhunath@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
 	Git Mailing List <git@vger.kernel.org>,
-	Andreas =?utf-8?Q?K=C3=B6hler?= <andi5.py@gmx.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Fri Jun 24 00:28:40 2011
+	=?ISO-8859-1?Q?Andreas_K=F6hle?= =?ISO-8859-1?Q?r?= 
+	<andi5.py@gmx.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 24 01:06:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZsO7-0001Jh-U9
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Jun 2011 00:28:40 +0200
+	id 1QZsys-0004Vo-HJ
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Jun 2011 01:06:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760045Ab1FWW2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jun 2011 18:28:34 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56749 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753179Ab1FWW2d (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jun 2011 18:28:33 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 16BA864F2;
-	Thu, 23 Jun 2011 18:30:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=W388Snl9di9gcOQ0NiHlmOPKTDs=; b=S0uvP2
-	T93eTkk+qu6XBKsQfMjdeRCyZ4JG+/x89QMc4AUD5yCet3txfU/InNOU3XxAMytf
-	tw7dRzfBGuoiKMBbO2yjIKpbScE0Kak2tLJRV9QjGOt3NykZnSxgYIk2VXD37JtP
-	vSaRlfl/f/k0KdNzFyQ2Jue3ed+Tzgk8YADVI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rbN/HKy0AtXsVZD3p1vYtLWWNTER4cHe
-	Zy6ExhyY1JWL6+rbptrrkHUaX1qeev3UV0DLmirPP/UgWz3oKbLIMujLkqYIreBa
-	SCElS0mzmU3kMCJSogupzV72blCwpFMbwVysTIyY2YV5vWui/xRQDlY3XpntbFfD
-	Eveku5OhbSQ=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0719F64F1;
-	Thu, 23 Jun 2011 18:30:44 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 18D6464ED; Thu, 23 Jun 2011
- 18:30:43 -0400 (EDT)
-In-Reply-To: <4E0390A7.8040505@web.de> (Jens Lehmann's message of "Thu, 23
- Jun 2011 21:14:47 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6E63A066-9DE8-11E0-AB77-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
+	id S933959Ab1FWXGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jun 2011 19:06:33 -0400
+Received: from sj-iport-2.cisco.com ([171.71.176.71]:46028 "EHLO
+	sj-iport-2.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933210Ab1FWXGc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jun 2011 19:06:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=hordp@cisco.com; l=944; q=dns/txt;
+  s=iport; t=1308870392; x=1310079992;
+  h=message-id:date:from:mime-version:to:cc:subject:
+   references:in-reply-to:content-transfer-encoding;
+  bh=yFLkWg1djkksOz4t+IwQDaFCIJynR+dxUM2hDnM6E+Y=;
+  b=IFegbbSbLGe04NkPv34KICkDRJvue3SfK3j0ACRtOL0n1sIbTQM0tfLH
+   mQtCdfAJ6swVVhjM7wduOJIBg7wsKuDWfesMlTGV1GkjoeSrnD9jK791Z
+   Zih+jMUfb/5CquX++nv7Efq8SNk/aMPjVnMB9q1hgMwxzvFP3vuCMyUqM
+   Y=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av0EALLGA06tJXG+/2dsb2JhbABSpy13rSmde4YtBJFyhGWLRQ
+X-IronPort-AV: E=Sophos;i="4.65,415,1304294400"; 
+   d="scan'208";a="384854380"
+Received: from rcdn-core2-3.cisco.com ([173.37.113.190])
+  by sj-iport-2.cisco.com with ESMTP; 23 Jun 2011 23:06:32 +0000
+Received: from [64.100.104.120] (dhcp-64-100-104-120.cisco.com [64.100.104.120])
+	by rcdn-core2-3.cisco.com (8.14.3/8.14.3) with ESMTP id p5NN6Vgd012059;
+	Thu, 23 Jun 2011 23:06:31 GMT
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110516 Lightning/1.0b2 Thunderbird/3.1.10
+In-Reply-To: <7vhb7g2pbf.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.1.2
+X-TagToolbar-Keys: D20110623190631365
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176300>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+On 06/23/2011 05:47 PM, Junio C Hamano wrote:
+> Phil Hord <hordp@cisco.com> writes:
+>
+>> On 06/23/2011 10:35 AM, Junio C Hamano wrote:
+>>>> Now, when I run git submodule update, it starts checking out the third
+>>>> module and my workflow is broken.
+>>> See 33f072f (submodule sync: Update "submodule.<name>.url" for empty
+>>> directories, 2010-10-08), which introduced this behaviour.
+>>>
+>>> cmd_update considers anything that has submodule.<name>.url defined as
+>>> "the user is interested", so I suspect "git submodule sync" should not do
+>>> this.
+>> What about a compromise?  Change git-submodule-sync to skip submodules
+>> which are not already initialized.
+> You completely lost me. How's that different from reverting 33f072f? I do
+> not see a room for "compromise" here.
 
-> I agree that 33f072f introduced a regression. One could argue if it was
-> a good idea to let "git submodule init" not do the clone itself but defer
-> it to "git submodule update" by setting the url in .git/config, but that's
-> the way things are done now (and maybe there was a very good reason to do
-> it that way I'm not aware of, because I didn't follow the list that closely
-> back then).
+Your patch does what I meant, so I assume you figured out my compromise.
 
-Actually, shouldn't the fix be more like this patch, which is directly on
-top of 33f072f?  I think this is more in line with what the end user wants
-to tell the system with "submodule init", namely "I am interested in this
-submodule".
+My patch was simpler, but I haven't tested it properly yet.
 
--- >8 --
-Subject: submodule sync: do not auto-vivify uninteresting submodule
-
-Earlier 33f072f (submodule sync: Update "submodule.<name>.url" for empty
-directories, 2010-10-08) attempted to fix a bug where "git submodule sync"
-command does not update the URL if the current superproject does not have
-a checkout of the submodule.
-
-However, it did so by unconditionally registering submodule.$name.url to
-every submodule in the project, even the ones that the user has never
-showed interest in at all by running 'git submodule init' command. This
-caused subsequent 'git submodule update' to start cloning/updating submodules
-that are not interesting to the user at all.
-
-Update the code so that the URL is updated from the .gitmodules file only
-for submodules that already have submodule.$name.url entries, i.e. the
-ones the user has showed interested in having a checkout.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- git-submodule.sh          |   23 +++++++++++++----------
- t/t7403-submodule-sync.sh |   13 +++++++++++--
- 2 files changed, 24 insertions(+), 12 deletions(-)
-
-diff --git a/git-submodule.sh b/git-submodule.sh
-index c291eed..ce65971 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -836,17 +836,20 @@ cmd_sync()
- 			;;
- 		esac
- 
--		say "Synchronizing submodule url for '$name'"
--		git config submodule."$name".url "$url"
--
--		if test -e "$path"/.git
-+		if git config "submodule.$name.url" >/dev/null 2>/dev/null
- 		then
--		(
--			clear_local_git_env
--			cd "$path"
--			remote=$(get_default_remote)
--			git config remote."$remote".url "$url"
--		)
-+			say "Synchronizing submodule url for '$name'"
-+			git config submodule."$name".url "$url"
-+
-+			if test -e "$path"/.git
-+			then
-+			(
-+				clear_local_git_env
-+				cd "$path"
-+				remote=$(get_default_remote)
-+				git config remote."$remote".url "$url"
-+			)
-+			fi
- 		fi
- 	done
- }
-diff --git a/t/t7403-submodule-sync.sh b/t/t7403-submodule-sync.sh
-index e5b1953..597a06f 100755
---- a/t/t7403-submodule-sync.sh
-+++ b/t/t7403-submodule-sync.sh
-@@ -25,7 +25,8 @@ test_expect_success setup '
- 	git clone super super-clone &&
- 	(cd super-clone && git submodule update --init) &&
- 	git clone super empty-clone &&
--	(cd empty-clone && git submodule init)
-+	(cd empty-clone && git submodule init) &&
-+	git clone super top-only-clone
- '
- 
- test_expect_success 'change submodule' '
-@@ -66,7 +67,7 @@ test_expect_success '"git submodule sync" should update submodule URLs' '
- 	)
- '
- 
--test_expect_success '"git submodule sync" should update submodule URLs if not yet cloned' '
-+test_expect_success '"git submodule sync" should update known submodule URLs' '
- 	(cd empty-clone &&
- 	 git pull &&
- 	 git submodule sync &&
-@@ -74,4 +75,12 @@ test_expect_success '"git submodule sync" should update submodule URLs if not ye
- 	)
- '
- 
-+test_expect_success '"git submodule sync" should not vivify uninteresting submodule' '
-+	(cd top-only-clone &&
-+	 git pull &&
-+	 git submodule sync &&
-+	 test -z "$(git config submodule.submodule.url)"
-+	)
-+'
-+
- test_done
+Phil
