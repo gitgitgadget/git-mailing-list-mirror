@@ -1,94 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 1/3] protobuf: minimal implementation for compact
- in-memory structures
-Date: Thu, 23 Jun 2011 10:22:31 -0700
-Message-ID: <7vliws31k8.fsf@alter.siamese.dyndns.org>
-References: <1308728011-14136-1-git-send-email-davidbarr@google.com>
- <1308728011-14136-2-git-send-email-davidbarr@google.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: ''git submodule sync'' should not add uninitialized submodules
+ to .git/config
+Date: Thu, 23 Jun 2011 21:14:47 +0200
+Message-ID: <4E0390A7.8040505@web.de>
+References: <0D2618D7-0681-4E71-B412-36D490D45B9D@gmail.com> <7v7h8c4nv3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: David Barr <davidbarr@google.com>
-X-From: git-owner@vger.kernel.org Thu Jun 23 19:35:18 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Maarten Billemont <lhunath@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	=?ISO-8859-1?Q?Andreas_K=F6hler?= <andi5.py@gmx.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 23 21:15:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZnoD-00026s-Hj
-	for gcvg-git-2@lo.gmane.org; Thu, 23 Jun 2011 19:35:17 +0200
+	id 1QZpN6-0001TK-LC
+	for gcvg-git-2@lo.gmane.org; Thu, 23 Jun 2011 21:15:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932793Ab1FWRe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jun 2011 13:34:57 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35643 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932783Ab1FWRWe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jun 2011 13:22:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 836BF5FCB;
-	Thu, 23 Jun 2011 13:24:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KymgSNmsdO+jN/4FfUIXWSTFy24=; b=qmv7UY
-	qjlNt9k40hM6yihQ/NZPJGkajgxWw8+xzUCRO8355PczhkYZbii8RDH+n9TbxB6I
-	4SN2pJgaBHBSR4axmEQv8FWqlSCpJOCi0ywbfBbv2CR/X0bLyOES5AIYk5+mRmSx
-	FnP8nEbPn636p7zcG6h5LJVRj7k5lpP2NwWtU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LyBc2h711LIrjkSxnBsLv9ROB7NSVolb
-	CBg5nj+7H1s2BQrn31oH+Orku3Cl3Jr414Ocb5RkP4+yCaLbXnSOV98Qjx3elfFI
-	qT0qrwkqcv7bZJzV4s8GicjSJOsTe+LJHULV+5FueDAQaEVPPWg8iqdshNH6ONpx
-	N7bqBP7EJ1Q=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7B35E5FCA;
-	Thu, 23 Jun 2011 13:24:45 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C4E1E5FC9; Thu, 23 Jun 2011
- 13:24:44 -0400 (EDT)
-In-Reply-To: <1308728011-14136-2-git-send-email-davidbarr@google.com> (David
- Barr's message of "Wed, 22 Jun 2011 00:33:30 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AFFDEBBA-9DBD-11E0-812E-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
+	id S933003Ab1FWTPP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jun 2011 15:15:15 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:41509 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932988Ab1FWTPO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jun 2011 15:15:14 -0400
+Received: from smtp07.web.de  ( [172.20.5.215])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 14B2C1A39A005;
+	Thu, 23 Jun 2011 21:14:51 +0200 (CEST)
+Received: from [93.246.54.209] (helo=[192.168.178.43])
+	by smtp07.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1QZpMY-0007BW-00; Thu, 23 Jun 2011 21:14:51 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.18) Gecko/20110616 Lightning/1.0b2 Thunderbird/3.1.11
+In-Reply-To: <7v7h8c4nv3.fsf@alter.siamese.dyndns.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX19oW2bQhp7nBbuMLnd9w4FnPkmbdOXIULYBCSfw
+	Apw03xdp6V/knuGPySyqCL5BPJAdSbj5GOAGfN3QWppeAnnGn+
+	1WaGNm3IsDsb6uL2QgtQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176286>
 
-David Barr <davidbarr@google.com> writes:
+Am 23.06.2011 16:35, schrieb Junio C Hamano:
+> Maarten Billemont <lhunath@gmail.com> writes:
+> 
+>> When I initialize 2/3 submodules of my git repository and do git
+>> submodule update, all is fine: Only the 2 submodules that I need are
+>> updated.
+>>
+>> When I run a git submodule sync to update the URLs that may have been
+>> changed in .gitmodules, it ADDS the URL of the submodule that was NOT
+>> initialized, thus "initializing" it.
+>>
+>> Now, when I run git submodule update, it starts checking out the third
+>> module and my workflow is broken.
+> 
+> See 33f072f (submodule sync: Update "submodule.<name>.url" for empty
+> directories, 2010-10-08), which introduced this behaviour.
+> 
+> cmd_update considers anything that has submodule.<name>.url defined as
+> "the user is interested", so I suspect "git submodule sync" should not do
+> this.
+> 
+> The situation 33f072f cites as needing this behaviour can easily fixed by
+> running 'submodule sync' after switching to the branch to which the
+> submodule _matters_, no?
+> 
+> Jens, what do you think?
 
-> One struct to capture all types, just 4 methods: decode_message,
-> encode_message, sizeof_message, hash_field.
+I agree that 33f072f introduced a regression. One could argue if it was
+a good idea to let "git submodule init" not do the clone itself but defer
+it to "git submodule update" by setting the url in .git/config, but that's
+the way things are done now (and maybe there was a very good reason to do
+it that way I'm not aware of, because I didn't follow the list that closely
+back then).
 
-Adding to the review from yesterday, hash_field() looked quite out of
-place. If you are going to implement a hash table that holds protobuf
-objects in a separate file/module, I would imagine the function belongs
-there, not here.
-
-> +uint32_t hash_field(const struct protobuf_field *field)
-> +{
-> +	uint32_t hc = 0;
-> +	switch (field->type) {
-> +	case WT_VARINT:
-> +	case WT_64BIT:
-> +		hc = (0x9e3779b97f4a7c15ull * field->val.num) >> 32;
-> +		break;
-> +	case WT_SHA1:
-> +		memcpy(&hc, field->val.bin.ptr, sizeof(hc));
-> +		break;
-> +	case WT_STRING:
-> +		hc = x65599(field->val.bin.ptr, field->val.bin.len);
-> +		break;
-> +	case WT_32BIT:
-> +		hc = 0x9e3779b9ul * (uint32_t)field->val.num;
-> +		break;
-> +	}
-> +	return hc;
-> +}
-
-It all depends on how you envision a "hash table of protobuf objects" is
-to be used, but what is the point of using a complex math for 64BIT/32BIT
-integer values? If you plan to have different kinds of protobuf objects
-thrown into a single hash table, it may make sense, but without a crystal
-ball it was kind of hard to judge.
+So while I think 33f072f solved a problem for a valid use case, it breaks
+other use cases that worked so far. So unless we want to change init to do
+the clone itself (which would be a pretty invasive change in behavior),
+I'd vote for a revert.
