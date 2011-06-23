@@ -1,100 +1,84 @@
-From: Namhyung Kim <namhyung@gmail.com>
-Subject: [PATCH] git-remote.txt: fix wrong remote refspec
-Date: Thu, 23 Jun 2011 13:45:19 +0900
-Message-ID: <1308804319-6354-1-git-send-email-namhyung@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-remote.txt: fix wrong remote refspec
+Date: Wed, 22 Jun 2011 22:35:17 -0700
+Message-ID: <7viprx3yay.fsf@alter.siamese.dyndns.org>
+References: <1308804319-6354-1-git-send-email-namhyung@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 23 06:45:35 2011
+To: Namhyung Kim <namhyung@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 23 07:36:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZbnH-0008QL-T3
-	for gcvg-git-2@lo.gmane.org; Thu, 23 Jun 2011 06:45:32 +0200
+	id 1QZcaH-00063U-Qp
+	for gcvg-git-2@lo.gmane.org; Thu, 23 Jun 2011 07:36:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752319Ab1FWEp0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jun 2011 00:45:26 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:57276 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751657Ab1FWEpZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jun 2011 00:45:25 -0400
-Received: by yxi11 with SMTP id 11so591954yxi.19
-        for <git@vger.kernel.org>; Wed, 22 Jun 2011 21:45:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
-        bh=JNfuoM48dwLdWLZ7Uv1WxxSDpkBFtIgrFMvstGmd3W8=;
-        b=pePnheKgDwHmDgh5BJ7l0ML7BadwpZyF2Q02JNtXbfMBuVK+iPZ+Tf5CnfztsA9GI0
-         W1Y+yZMNmGQZiXmwvFkbY0xb2utVIthKX8AxL8X7RYLjHpcC4e0S/YPKAYyFHZKjcohY
-         Wv6F8vtx5kGdRkUJoAFV7fhLfrjinRgvCRFus=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=piyUu2AIdp2hP7YLy3fUvch520dYhyhZU0XWA8v+9FGxsoMwrSZA2bQw83w4O0qsFp
-         U3K00qsu39cRZ4DCnyhAD3sqTF1beHyPsgDPnhPjRWnJG4T3Uz1GGE9FJgPBCEVPlb1D
-         iJ4M1+ckgApbP/xLNC7nMxKRzFIXcE2QkZvsk=
-Received: by 10.91.99.4 with SMTP id b4mr1775176agm.0.1308804325267;
-        Wed, 22 Jun 2011 21:45:25 -0700 (PDT)
-Received: from localhost.localdomain ([118.176.77.244])
-        by mx.google.com with ESMTPS id c19sm1195589anm.41.2011.06.22.21.45.23
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 22 Jun 2011 21:45:24 -0700 (PDT)
-X-Mailer: git-send-email 1.7.5.2
+	id S1752421Ab1FWFfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jun 2011 01:35:21 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38611 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751058Ab1FWFfV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jun 2011 01:35:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F27F069F9;
+	Thu, 23 Jun 2011 01:37:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pakQ2XWarLlYFe+WEGVbPa72Gs8=; b=gS9iMp
+	ef+X/eLBg50720IcuLnRGRPEdZPoqpE8G4uey8nMYzDSk4qNReRQ05HCyRfJ101Y
+	W6v0OlYDLKcTTlFCXJWGP/ZTqpjTdFaeYaHE1mJZzxUcF3JGo7iA/s7pfMP2AfNa
+	6fMCNXWs6BDbl0xWXK+VY0T9Vo+3H1qoPZHGc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GBPPddS4uc8VXmljorDr+1dNyByem+pQ
+	m+EmHHQFPjXFc2Z5LncA24uWCph0A8Be6ByeHDdoL6AGf22Vzi7sc8c1nK24Y9s+
+	RwsVEOsgcDTAC2iAtrB8jMzonR4b4u58X8QhlfZdgfCbyCHWbkvYSsE8JGdzZbT4
+	/WWeY6pK3EY=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E9F6969F7;
+	Thu, 23 Jun 2011 01:37:30 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4154869F6; Thu, 23 Jun 2011
+ 01:37:30 -0400 (EDT)
+In-Reply-To: <1308804319-6354-1-git-send-email-namhyung@gmail.com> (Namhyung
+ Kim's message of "Thu, 23 Jun 2011 13:45:19 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E3093162-9D5A-11E0-8F36-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176262>
 
-$GIT_DIR/remotes/<name>/HEAD should be
-$GIT_DIR/refs/remotes/<name>/HEAD.
+Namhyung Kim <namhyung@gmail.com> writes:
 
-Signed-off-by: Namhyung Kim <namhyung@gmail.com>
----
- Documentation/git-remote.txt |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
+> $GIT_DIR/remotes/<name>/HEAD should be
+> $GIT_DIR/refs/remotes/<name>/HEAD.
+>
+> Signed-off-by: Namhyung Kim <namhyung@gmail.com>
+> ---
 
-diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
-index 528f34a..f5b6e8b 100644
---- a/Documentation/git-remote.txt
-+++ b/Documentation/git-remote.txt
-@@ -64,7 +64,7 @@ refspec for the remote to track all branches under
- is created.  You can give more than one `-t <branch>` to track
- multiple branches without grabbing all branches.
- +
--With `-m <master>` option, `$GIT_DIR/remotes/<name>/HEAD` is set
-+With `-m <master>` option, `$GIT_DIR/refs/remotes/<name>/HEAD` is set
- up to point at remote's `<master>` branch. See also the set-head command.
- +
- When a fetch mirror is created with `\--mirror=fetch`, the refs will not
-@@ -92,23 +92,23 @@ configuration settings for the remote are removed.
- 
- 'set-head'::
- 
--Sets or deletes the default branch (`$GIT_DIR/remotes/<name>/HEAD`) for
-+Sets or deletes the default branch (`$GIT_DIR/refs/remotes/<name>/HEAD`) for
- the named remote. Having a default branch for a remote is not required,
- but allows the name of the remote to be specified in lieu of a specific
- branch. For example, if the default branch for `origin` is set to
- `master`, then `origin` may be specified wherever you would normally
- specify `origin/master`.
- +
--With `-d`, `$GIT_DIR/remotes/<name>/HEAD` is deleted.
-+With `-d`, `$GIT_DIR/refs/remotes/<name>/HEAD` is deleted.
- +
- With `-a`, the remote is queried to determine its `HEAD`, then
--`$GIT_DIR/remotes/<name>/HEAD` is set to the same branch. e.g., if the remote
-+`$GIT_DIR/refs/remotes/<name>/HEAD` is set to the same branch. e.g., if the remote
- `HEAD` is pointed at `next`, "`git remote set-head origin -a`" will set
- `$GIT_DIR/refs/remotes/origin/HEAD` to `refs/remotes/origin/next`. This will
- only work if `refs/remotes/origin/next` already exists; if not it must be
- fetched first.
- +
--Use `<branch>` to set `$GIT_DIR/remotes/<name>/HEAD` explicitly. e.g., "git
-+Use `<branch>` to set `$GIT_DIR/refs/remotes/<name>/HEAD` explicitly. e.g., "git
- remote set-head origin master" will set `$GIT_DIR/refs/remotes/origin/HEAD` to
- `refs/remotes/origin/master`. This will only work if
- `refs/remotes/origin/master` already exists; if not it must be fetched first.
--- 
-1.7.5.2
+Obviously correct; thanks.
+
+There is another questionable one you did not touch, though.
+
+    With `-t <branch>` option, instead of the default glob
+    refspec for the remote to track all branches under
+    `$GIT_DIR/remotes/<name>/`, a refspec to track only `<branch>`
+    is created.  You can give more than one `-t <branch>` to track
+    multiple branches without grabbing all branches.
+
+The above says "$GIT_DIR/remotes/<name>/", but it should say
+
+    ... all branches under refs/remotes/<name>/ namespace,...
+
+Also we should try to see if we can come up with a way to say the things
+the part your patch touched describe _without_ mentioning $GIT_DIR at
+all. "Store in $GIT_DIR/refs/$X" talks too much about the implementation
+detail that the ref in question is implemented as a loose ref. We would
+pack it into a single entry in $GIT_DIR/packed-refs file when we run gc,
+and at that point "$GIT_DIR/refs/$X" is no longer a correct description.
