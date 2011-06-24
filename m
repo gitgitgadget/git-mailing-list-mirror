@@ -1,71 +1,72 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: ''git submodule sync'' should not add uninitialized submodules
- to .git/config
-Date: Fri, 24 Jun 2011 08:17:30 +0200
-Message-ID: <4E042BFA.3020909@web.de>
-References: <0D2618D7-0681-4E71-B412-36D490D45B9D@gmail.com> <7v7h8c4nv3.fsf@alter.siamese.dyndns.org> <4E0390A7.8040505@web.de> <7vboxo2ne9.fsf@alter.siamese.dyndns.org> <4E03C7E5.4050008@gmx.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Maarten Billemont <lhunath@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Andreas_K=F6hler?= <andi5.py@gmx.net>
-X-From: git-owner@vger.kernel.org Fri Jun 24 08:17:39 2011
+From: Namhyung Kim <namhyung@gmail.com>
+Subject: [PATCH] completion: replace core.abbrevguard to core.abbrev
+Date: Fri, 24 Jun 2011 15:17:42 +0900
+Message-ID: <1308896262-6948-1-git-send-email-namhyung@gmail.com>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 24 08:17:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QZzhy-0005vL-N6
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Jun 2011 08:17:39 +0200
+	id 1QZziD-00063E-OX
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Jun 2011 08:17:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752957Ab1FXGRd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Jun 2011 02:17:33 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:57352 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752577Ab1FXGRc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jun 2011 02:17:32 -0400
-Received: from smtp01.web.de  ( [172.20.0.243])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 52F821A39F80D;
-	Fri, 24 Jun 2011 08:17:31 +0200 (CEST)
-Received: from [93.246.52.168] (helo=[192.168.178.43])
-	by smtp01.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1QZzhr-0002zK-00; Fri, 24 Jun 2011 08:17:31 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.18) Gecko/20110616 Lightning/1.0b2 Thunderbird/3.1.11
-In-Reply-To: <4E03C7E5.4050008@gmx.net>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX18TkHv13axhIklADETLvsbs9feTFhoW0Lums4FR
-	JksOCykzBmhT6Jwh6Dk+SoXL+8O/6p4LXRUc9ZRu3uq9pq9d2N
-	z+MnL2QRPBlfACL7ajbg==
+	id S1753143Ab1FXGRt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jun 2011 02:17:49 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:62369 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753063Ab1FXGRs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jun 2011 02:17:48 -0400
+Received: by iwn6 with SMTP id 6so2164037iwn.19
+        for <git@vger.kernel.org>; Thu, 23 Jun 2011 23:17:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=1m02k26TsZF2b3F+svnD2fKhtId2CuC9Auv2yc4rxRs=;
+        b=fl9kzoUTpF4FV0aNbjBpPG5l1ve9QVLx7npakxJ9TIEP7hS12u/eiAnKPrT/xu1PKA
+         BkLMN5EW4i83EWZcHN5hh0YHFly74ayCDv9yidqJ5k6Xr6a773AZZkjKkHg8ZvYhZ00v
+         8UJRkXcDOudC6mVWhTevmJeyGTXH6jyD1/zZM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=sUH/j78U1CO8Bfj5+nbaQwWwa+Wfq4Y5/LUXNDA59o5568wfag8OcoEMJJT0LIWQfm
+         fC6vssc0F9t7MTXMknNzpBN4WOkzU+phtEd6cKQHF+Jgz7QP9HnQc5KidG6Bw3zIKjrO
+         cUACpnXtaIrhMPJeLjDWbR0/5keSwWIlY8GSA=
+Received: by 10.42.155.4 with SMTP id s4mr2921298icw.32.1308896267838;
+        Thu, 23 Jun 2011 23:17:47 -0700 (PDT)
+Received: from localhost.localdomain ([118.176.77.244])
+        by mx.google.com with ESMTPS id s2sm1312930ibe.18.2011.06.23.23.17.45
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 23 Jun 2011 23:17:47 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176304>
 
-Am 24.06.2011 01:10, schrieb Andreas K=F6hler:
-> There are two minor issues for me left.
-> (1) The man page of submodule sync talks about "all submodules" and n=
-ot
-> "registered submodules". I treated it as "subsequent init" and
-> personally do not restrict the list of submodules, simply because my
-> build would not work without them.
+The core.abbrevguard config variable had removed and
+now core.abbrev has been used instead. Teach it.
 
-While investigating this I stumbled across that too, will post a patch.
+Signed-off-by: Namhyung Kim <namhyung@gmail.com>
+---
+ contrib/completion/git-completion.bash |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> (2) It is confusing to have registered submodules in .git/config with=
-out
-> a matching gitlink. Say, you switch between branch a1 with a submodul=
-e s
-> with url u1, to a branch without s, you git clean -xdff (url u1 is st=
-ill
-> in .git/config, right?), and then to a branch a2 with s pointing to u=
-rl
-> u2. This bugged me.
-
-I think that is ok, because that way git remembers that the user cares
-about submodule s even when he switches to a branch where s doesn't
-exist. And the documentation is pretty clear that you'll have to use
-"git submodule sync" to update the url itself from u1 to u2 when needed=
-=2E
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index b36290f..5a83090 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2058,7 +2058,7 @@ _git_config ()
+ 		color.ui
+ 		commit.status
+ 		commit.template
+-		core.abbrevguard
++		core.abbrev
+ 		core.askpass
+ 		core.attributesfile
+ 		core.autocrlf
+-- 
+1.7.5.2
