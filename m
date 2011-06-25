@@ -1,130 +1,438 @@
-From: Alexei Sholik <alcosholik@gmail.com>
-Subject: Re: submodule/index/working tree woes
-Date: Sat, 25 Jun 2011 14:02:29 +0300
-Message-ID: <BANLkTi=4D1qqM+9EFZACHwVwSsVOkWQ4GQ@mail.gmail.com>
-References: <20110624182546.GB30640@vmware.com>
-	<BANLkTik6xij0ZNy9nB2sbiF97Z4EF76sHQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Dmitry Ivankov <divanorama@gmail.com>
+Subject: [PATCH/RFC] Reduce parse-options.o dependencies
+Date: Sat, 25 Jun 2011 17:12:14 +0600
+Message-ID: <1309000334-31980-1-git-send-email-divanorama@gmail.com>
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	David Barr <davidbarr@google.com>,
+	Dmitry Ivankov <divanorama@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 25 13:03:25 2011
+X-From: git-owner@vger.kernel.org Sat Jun 25 13:11:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QaQe4-0006RN-2r
-	for gcvg-git-2@lo.gmane.org; Sat, 25 Jun 2011 13:03:24 +0200
+	id 1QaQlw-00018W-HB
+	for gcvg-git-2@lo.gmane.org; Sat, 25 Jun 2011 13:11:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751472Ab1FYLCd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Jun 2011 07:02:33 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:47469 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751338Ab1FYLCc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Jun 2011 07:02:32 -0400
-Received: by yia27 with SMTP id 27so1363468yia.19
-        for <git@vger.kernel.org>; Sat, 25 Jun 2011 04:02:32 -0700 (PDT)
+	id S1751558Ab1FYLL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Jun 2011 07:11:27 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:49564 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751348Ab1FYLL0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jun 2011 07:11:26 -0400
+Received: by bwd5 with SMTP id 5so323735bwd.19
+        for <git@vger.kernel.org>; Sat, 25 Jun 2011 04:11:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type:content-transfer-encoding;
-        bh=Ut/Ln2QptQlJZgJ6zXuNaEi3U2vSdt9G2Defs0U9oBQ=;
-        b=KhNMDUo+FHuGCg8hms4VAdi1kmc1vPifeow3j9eTZvVg1DfDOqFMr88OVJ9uwlyG2d
-         AlUZkB6gZ85EHIbcqzccj6aD//ABzUzupAJPeFp0MbfA8RGMh7vvRGJIm+Y9kNMuXKJR
-         yb3/LX4Jefbt5RupGTNpen1X2FvENd1KcOi9U=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=3S9Go3CwFFb4t0OeGbpr2hCwcWVqyORhNIWQnEuj2CQ=;
+        b=hafFd8+bzMTndCB//1uM3viCEVm13Hmq3Fj6JX5pAptq0rQS1bUQfvTzHo4u3apMmw
+         AMgVEijib4uAMgGk5IMONTlWWaajs8fV6dG+yYlQwWLvciOYaiaoevdhbkBYsGOMncVT
+         8okuydIapVruhYGTZD7C9OgCWXN5mzay5MQHY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=aWgE6IVVl1X/lzVdf5q1SkzGT9zhdK9TCT7samYd2/EDYH34tR64usyf1NlaU+keK/
-         z0j7Bp4XJf8EDpuim6rqq0wpoxAQFaHr9DH+OSgl2zCM30Ii2XFaP3m3Jaoi//TzNYE2
-         NG6HrIsx0g72wQ5J5BKN0hnPpTIzwl21Cyes4=
-Received: by 10.236.110.176 with SMTP id u36mr6564047yhg.162.1308999749611;
- Sat, 25 Jun 2011 04:02:29 -0700 (PDT)
-Received: by 10.147.172.19 with HTTP; Sat, 25 Jun 2011 04:02:29 -0700 (PDT)
-In-Reply-To: <BANLkTik6xij0ZNy9nB2sbiF97Z4EF76sHQ@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=nCECG/9tt5ZCyrY8cvUE7AuI38mEZR3JfsatQw4AwkxVzbpfYGchrIGTi07o5L0SFz
+         boHANknbLEgs56NXmEoqElExyPn/6nylwxfQ/h8M9UeC37DPPLOdZyRqvR6hy2JFa/r1
+         SAQ9jaVbodNaT5Yu6Scl7gUETEHD4EYWICReE=
+Received: by 10.205.35.1 with SMTP id su1mr2771112bkb.129.1309000284721;
+        Sat, 25 Jun 2011 04:11:24 -0700 (PDT)
+Received: from localhost.localdomain (117360277.convex.ru [79.172.62.237])
+        by mx.google.com with ESMTPS id v6sm2416859bkf.11.2011.06.25.04.11.22
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 25 Jun 2011 04:11:23 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176318>
 
----------- Forwarded message ----------
-=46rom: Alexei Sholik <alcosholik@gmail.com>
-Date: 25 June 2011 14:00
-Subject: Re: submodule/index/working tree woes
-To: masterblaster@vmware.com
+Currently parse-options.o pulls quite a big bunch
+of dependencies. This complicates it's usage in
+contrib/ because it pulls external dependencies
+and it also increases executables size.
 
+Split off less generic and more internal to git
+part of parse-options.c to parse-options-git.c.
+Declare optbug and opterror as extern as they are
+shared between these parts and also may be used
+elsewhere.
 
-On 24 June 2011 21:25, John Powell <jpowell@vmware.com> wrote:
-> I have no changes to be committed (tracked or untracked according to
-> 'git status') and yet when I try and switch branches git complains
-> that I have untracked working tree files that would be overridden
-> and aborts before the switch.
->
-> The change I have just committed locally removes some files from the
-> repository and adds a submodule in it's place to better organize the
-> source for the project.
->
-> Shaka, when the walls fell. =C2=A0Anyone want to assist me with this =
-issue?
-> Feeling clueless.
->
+Move prefix_function from setup.c to abspath.c.
+abspath.o and wrapper.o pull each other, so it's
+unlikely to increase the dependencies. It was a
+dependency of parse-options.o that pulled many
+others.
 
-Git is unable to remove a directory with submodule when switching
-branches. If you have a submodule on one branch and a directory with
-the same name on another branch, you'll have troubles.
+Now parse-options.o pulls just abspath.o, ctype.o,
+strbuf.o, usage.o, wrapper.o, libc directly and
+strlcpy.o indirectly.
 
-I'm speaking of version 1.7.3.4. Here's a small demo:
-$ mkdir test
-$ cd test
-$ git init
-Initialized empty Git repository in /Users/alco/Documents/git/test/.git=
-/
-$ echo "Hello" >file.txt
-$ git add file.txt
-$ git commit -m 'test'
-[master (root-commit) 8e9c724] test
-=C2=A01 files changed, 1 insertions(+), 0 deletions(-)
-=C2=A0create mode 100644 file.txt
-$ git checkout -b another
-Switched to a new branch 'another'
-$ echo "Bye" >file2.txt
-$ git add file2.txt
-$ git commit -m 'second'
-[another 62e6da2] second
-=C2=A01 files changed, 1 insertions(+), 0 deletions(-)
-=C2=A0create mode 100644 file2.txt
-$ git checkout master
-Switched to branch 'master'
-$ git submodule add git://github.com/tweepy/tweepy.git
-Cloning into tweepy...
-=2E..
-$ git commit -m 'submodule'
-[master 3c9b6f7] submodule
-=C2=A02 files changed, 4 insertions(+), 0 deletions(-)
-=C2=A0create mode 100644 .gitmodules
-=C2=A0create mode 160000 tweepy
-$ git checkout another
-warning: unable to rmdir tweepy: Directory not empty
-Switched to branch 'another'
-$ ls tweepy/
-CONTRIBUTORS =C2=A0 =C2=A0INSTALL =C2=A0 =C2=A0 =C2=A0 =C2=A0 LICENSE =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 README =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0docs
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0examples =C2=A0 =C2=A0 =C2=A0 =C2=A0s=
-etup.py =C2=A0 =C2=A0 =C2=A0 =C2=A0tests.py =C2=A0 =C2=A0 =C2=A0 =C2=A0=
-tools
-=C2=A0 tweepy
-$ git version
-git version 1.7.3.4
+Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
+---
+ Makefile            |    3 +-
+ abspath.c           |   28 +++++++++++++
+ parse-options-git.c |  108 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ parse-options.c     |  108 +--------------------------------------------------
+ parse-options.h     |    3 +
+ setup.c             |   28 -------------
+ 6 files changed, 143 insertions(+), 135 deletions(-)
+ create mode 100644 parse-options-git.c
 
---
-Best regards,
-Alexei Sholik
-
-
-
---=20
-Best regards,
-Alexei Sholik
+diff --git a/Makefile b/Makefile
+index e954dff..24ecefa 100644
+--- a/Makefile
++++ b/Makefile
+@@ -631,6 +631,7 @@ LIB_OBJS += pack-revindex.o
+ LIB_OBJS += pack-write.o
+ LIB_OBJS += pager.o
+ LIB_OBJS += parse-options.o
++LIB_OBJS += parse-options-git.o
+ LIB_OBJS += patch-delta.o
+ LIB_OBJS += patch-ids.o
+ LIB_OBJS += path.o
+@@ -2168,7 +2169,7 @@ test-delta$X: diff-delta.o patch-delta.o
+ 
+ test-line-buffer$X: vcs-svn/lib.a
+ 
+-test-parse-options$X: parse-options.o
++test-parse-options$X: parse-options.o parse-options-git.o
+ 
+ test-svn-fe$X: vcs-svn/lib.a
+ 
+diff --git a/abspath.c b/abspath.c
+index 3005aed..aabc383 100644
+--- a/abspath.c
++++ b/abspath.c
+@@ -138,3 +138,31 @@ const char *absolute_path(const char *path)
+ 	}
+ 	return buf;
+ }
++
++/*
++ * Unlike prefix_path, this should be used if the named file does
++ * not have to interact with index entry; i.e. name of a random file
++ * on the filesystem.
++ */
++const char *prefix_filename(const char *pfx, int pfx_len, const char *arg)
++{
++	static char path[PATH_MAX];
++#ifndef WIN32
++	if (!pfx_len || is_absolute_path(arg))
++		return arg;
++	memcpy(path, pfx, pfx_len);
++	strcpy(path + pfx_len, arg);
++#else
++	char *p;
++	/* don't add prefix to absolute paths, but still replace '\' by '/' */
++	if (is_absolute_path(arg))
++		pfx_len = 0;
++	else if (pfx_len)
++		memcpy(path, pfx, pfx_len);
++	strcpy(path + pfx_len, arg);
++	for (p = path + pfx_len; *p; p++)
++		if (*p == '\\')
++			*p = '/';
++#endif
++	return path;
++}
+diff --git a/parse-options-git.c b/parse-options-git.c
+new file mode 100644
+index 0000000..0ddfcd9
+--- /dev/null
++++ b/parse-options-git.c
+@@ -0,0 +1,108 @@
++#include "git-compat-util.h"
++#include "parse-options.h"
++#include "cache.h"
++#include "commit.h"
++#include "color.h"
++
++/*----- some often used options -----*/
++
++int parse_opt_abbrev_cb(const struct option *opt, const char *arg, int unset)
++{
++	int v;
++
++	if (!arg) {
++		v = unset ? 0 : DEFAULT_ABBREV;
++	} else {
++		v = strtol(arg, (char **)&arg, 10);
++		if (*arg)
++			return opterror(opt, "expects a numerical value", 0);
++		if (v && v < MINIMUM_ABBREV)
++			v = MINIMUM_ABBREV;
++		else if (v > 40)
++			v = 40;
++	}
++	*(int *)(opt->value) = v;
++	return 0;
++}
++
++int parse_opt_approxidate_cb(const struct option *opt, const char *arg,
++			     int unset)
++{
++	*(unsigned long *)(opt->value) = approxidate(arg);
++	return 0;
++}
++
++int parse_opt_color_flag_cb(const struct option *opt, const char *arg,
++			    int unset)
++{
++	int value;
++
++	if (!arg)
++		arg = unset ? "never" : (const char *)opt->defval;
++	value = git_config_colorbool(NULL, arg, -1);
++	if (value < 0)
++		return opterror(opt,
++			"expects \"always\", \"auto\", or \"never\"", 0);
++	*(int *)opt->value = value;
++	return 0;
++}
++
++int parse_opt_verbosity_cb(const struct option *opt, const char *arg,
++			   int unset)
++{
++	int *target = opt->value;
++
++	if (unset)
++		/* --no-quiet, --no-verbose */
++		*target = 0;
++	else if (opt->short_name == 'v') {
++		if (*target >= 0)
++			(*target)++;
++		else
++			*target = 1;
++	} else {
++		if (*target <= 0)
++			(*target)--;
++		else
++			*target = -1;
++	}
++	return 0;
++}
++
++int parse_opt_with_commit(const struct option *opt, const char *arg, int unset)
++{
++	unsigned char sha1[20];
++	struct commit *commit;
++
++	if (!arg)
++		return -1;
++	if (get_sha1(arg, sha1))
++		return error("malformed object name %s", arg);
++	commit = lookup_commit_reference(sha1);
++	if (!commit)
++		return error("no such commit %s", arg);
++	commit_list_insert(commit, opt->value);
++	return 0;
++}
++
++int parse_opt_tertiary(const struct option *opt, const char *arg, int unset)
++{
++	int *target = opt->value;
++	*target = unset ? 2 : 1;
++	return 0;
++}
++
++int parse_options_concat(struct option *dst, size_t dst_size, struct option *src)
++{
++	int i, j;
++
++	for (i = 0; i < dst_size; i++)
++		if (dst[i].type == OPTION_END)
++			break;
++	for (j = 0; i < dst_size; i++, j++) {
++		dst[i] = src[j];
++		if (src[j].type == OPTION_END)
++			return 0;
++	}
++	return -1;
++}
+diff --git a/parse-options.c b/parse-options.c
+index 73bd28a..503ab5d 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -11,14 +11,14 @@ static int parse_options_usage(struct parse_opt_ctx_t *ctx,
+ #define OPT_SHORT 1
+ #define OPT_UNSET 2
+ 
+-static int optbug(const struct option *opt, const char *reason)
++int optbug(const struct option *opt, const char *reason)
+ {
+ 	if (opt->long_name)
+ 		return error("BUG: option '%s' %s", opt->long_name, reason);
+ 	return error("BUG: switch '%c' %s", opt->short_name, reason);
+ }
+ 
+-static int opterror(const struct option *opt, const char *reason, int flags)
++int opterror(const struct option *opt, const char *reason, int flags)
+ {
+ 	if (flags & OPT_SHORT)
+ 		return error("switch `%c' %s", opt->short_name, reason);
+@@ -583,107 +583,3 @@ static int parse_options_usage(struct parse_opt_ctx_t *ctx,
+ 	return usage_with_options_internal(ctx, usagestr, opts, 0, err);
+ }
+ 
+-
+-/*----- some often used options -----*/
+-#include "cache.h"
+-
+-int parse_opt_abbrev_cb(const struct option *opt, const char *arg, int unset)
+-{
+-	int v;
+-
+-	if (!arg) {
+-		v = unset ? 0 : DEFAULT_ABBREV;
+-	} else {
+-		v = strtol(arg, (char **)&arg, 10);
+-		if (*arg)
+-			return opterror(opt, "expects a numerical value", 0);
+-		if (v && v < MINIMUM_ABBREV)
+-			v = MINIMUM_ABBREV;
+-		else if (v > 40)
+-			v = 40;
+-	}
+-	*(int *)(opt->value) = v;
+-	return 0;
+-}
+-
+-int parse_opt_approxidate_cb(const struct option *opt, const char *arg,
+-			     int unset)
+-{
+-	*(unsigned long *)(opt->value) = approxidate(arg);
+-	return 0;
+-}
+-
+-int parse_opt_color_flag_cb(const struct option *opt, const char *arg,
+-			    int unset)
+-{
+-	int value;
+-
+-	if (!arg)
+-		arg = unset ? "never" : (const char *)opt->defval;
+-	value = git_config_colorbool(NULL, arg, -1);
+-	if (value < 0)
+-		return opterror(opt,
+-			"expects \"always\", \"auto\", or \"never\"", 0);
+-	*(int *)opt->value = value;
+-	return 0;
+-}
+-
+-int parse_opt_verbosity_cb(const struct option *opt, const char *arg,
+-			   int unset)
+-{
+-	int *target = opt->value;
+-
+-	if (unset)
+-		/* --no-quiet, --no-verbose */
+-		*target = 0;
+-	else if (opt->short_name == 'v') {
+-		if (*target >= 0)
+-			(*target)++;
+-		else
+-			*target = 1;
+-	} else {
+-		if (*target <= 0)
+-			(*target)--;
+-		else
+-			*target = -1;
+-	}
+-	return 0;
+-}
+-
+-int parse_opt_with_commit(const struct option *opt, const char *arg, int unset)
+-{
+-	unsigned char sha1[20];
+-	struct commit *commit;
+-
+-	if (!arg)
+-		return -1;
+-	if (get_sha1(arg, sha1))
+-		return error("malformed object name %s", arg);
+-	commit = lookup_commit_reference(sha1);
+-	if (!commit)
+-		return error("no such commit %s", arg);
+-	commit_list_insert(commit, opt->value);
+-	return 0;
+-}
+-
+-int parse_opt_tertiary(const struct option *opt, const char *arg, int unset)
+-{
+-	int *target = opt->value;
+-	*target = unset ? 2 : 1;
+-	return 0;
+-}
+-
+-int parse_options_concat(struct option *dst, size_t dst_size, struct option *src)
+-{
+-	int i, j;
+-
+-	for (i = 0; i < dst_size; i++)
+-		if (dst[i].type == OPTION_END)
+-			break;
+-	for (j = 0; i < dst_size; i++, j++) {
+-		dst[i] = src[j];
+-		if (src[j].type == OPTION_END)
+-			return 0;
+-	}
+-	return -1;
+-}
+diff --git a/parse-options.h b/parse-options.h
+index d1b12fe..a62c6c3 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -147,6 +147,9 @@ struct option {
+ 		parse_opt_color_flag_cb, (intptr_t)"always" }
+ 
+ 
++extern int optbug(const struct option *opt, const char *reason);
++extern int opterror(const struct option *opt, const char *reason, int flags);
++
+ /* parse_options() will filter out the processed options and leave the
+  * non-option arguments in argv[].
+  * Returns the number of arguments left in argv[].
+diff --git a/setup.c b/setup.c
+index 03cd84f..fc593bf 100644
+--- a/setup.c
++++ b/setup.c
+@@ -40,34 +40,6 @@ char *prefix_path(const char *prefix, int len, const char *path)
+ 	return sanitized;
+ }
+ 
+-/*
+- * Unlike prefix_path, this should be used if the named file does
+- * not have to interact with index entry; i.e. name of a random file
+- * on the filesystem.
+- */
+-const char *prefix_filename(const char *pfx, int pfx_len, const char *arg)
+-{
+-	static char path[PATH_MAX];
+-#ifndef WIN32
+-	if (!pfx_len || is_absolute_path(arg))
+-		return arg;
+-	memcpy(path, pfx, pfx_len);
+-	strcpy(path + pfx_len, arg);
+-#else
+-	char *p;
+-	/* don't add prefix to absolute paths, but still replace '\' by '/' */
+-	if (is_absolute_path(arg))
+-		pfx_len = 0;
+-	else if (pfx_len)
+-		memcpy(path, pfx, pfx_len);
+-	strcpy(path + pfx_len, arg);
+-	for (p = path + pfx_len; *p; p++)
+-		if (*p == '\\')
+-			*p = '/';
+-#endif
+-	return path;
+-}
+-
+ int check_filename(const char *prefix, const char *arg)
+ {
+ 	const char *name;
+-- 
+1.7.3.4
