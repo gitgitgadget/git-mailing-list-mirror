@@ -1,179 +1,159 @@
 From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH v2] submodule sync: do not auto-vivify uninteresting submodule
-Date: Sat, 25 Jun 2011 22:41:25 +0200
-Message-ID: <4E0647F5.2070802@web.de>
-References: <0D2618D7-0681-4E71-B412-36D490D45B9D@gmail.com> <7v7h8c4nv3.fsf@alter.siamese.dyndns.org> <4E0390A7.8040505@web.de> <7vboxo2ne9.fsf@alter.siamese.dyndns.org>
+Subject: [PATCH] submodule add: always initialize .git/config entry
+Date: Sun, 26 Jun 2011 01:26:02 +0200
+Message-ID: <4E066E8A.7060209@web.de>
+References: <0D2618D7-0681-4E71-B412-36D490D45B9D@gmail.com> <7v7h8c4nv3.fsf@alter.siamese.dyndns.org> <4E0390A7.8040505@web.de> <7vboxo2ne9.fsf@alter.siamese.dyndns.org> <7vy60r27et.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Maarten Billemont <lhunath@gmail.com>,
+Cc: Phil Hord <hordp@cisco.com>, Maarten Billemont <lhunath@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	=?ISO-8859-1?Q?Andreas_K=F6hler?= <andi5.py@gmx.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 25 22:44:55 2011
+X-From: git-owner@vger.kernel.org Sun Jun 26 01:27:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QaZin-0003It-U4
-	for gcvg-git-2@lo.gmane.org; Sat, 25 Jun 2011 22:44:54 +0200
+	id 1QacG6-0001JG-Dh
+	for gcvg-git-2@lo.gmane.org; Sun, 26 Jun 2011 01:27:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751383Ab1FYUl2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Jun 2011 16:41:28 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:48517 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751187Ab1FYUl1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jun 2011 16:41:27 -0400
+	id S1752577Ab1FYX0a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Jun 2011 19:26:30 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:40839 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752447Ab1FYX03 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jun 2011 19:26:29 -0400
 Received: from smtp06.web.de  ( [172.20.5.172])
-	by fmmailgate02.web.de (Postfix) with ESMTP id B85811A3BDDD9;
-	Sat, 25 Jun 2011 22:41:25 +0200 (CEST)
+	by fmmailgate01.web.de (Postfix) with ESMTP id 4B8E81920EA5D;
+	Sun, 26 Jun 2011 01:26:03 +0200 (CEST)
 Received: from [93.246.44.86] (helo=[192.168.178.43])
 	by smtp06.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1QaZfR-00051k-00; Sat, 25 Jun 2011 22:41:25 +0200
+	id 1QacEk-0003mT-00; Sun, 26 Jun 2011 01:26:02 +0200
 User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.18) Gecko/20110616 Lightning/1.0b2 Thunderbird/3.1.11
-In-Reply-To: <7vboxo2ne9.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vy60r27et.fsf_-_@alter.siamese.dyndns.org>
 X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX19CMede4Mvv0IrdvNRk3q1V9MC8VhJaYlwwS+3c
-	kuUR8FcM8+SoyqGGoIgJaSVJXXl+IVPF11bzdtb0Zrcts40ZP0
-	OHEnM98cwIbYhHR8RN+w==
+X-Provags-ID: V01U2FsdGVkX19OoVxvlTBPmqwJtsKM9kaQ6bMbTLonAmdXvYcC
+	N99uTxX0gFot3gDbkgqD+QYauVRDXrgf1ppHX86F9rZmBT7A1w
+	73MSUg3FVo8NfzqTAz6A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176320>
 
-From: Junio C Hamano <gitster@pobox.com>
+When "git submodule add $path" is run to add a subdirectory $path to the
+superproject, and $path is already the top of the working tree of the
+submodule repository, the command created submodule.$path.url entry in the
+configuration file in the superproject. However, when adding a repository
+$URL that is outside the respository of the superproject to $path that
+does not exist (yet) with "git submodule add $URL $path", the command
+forgot to set it up.
 
-Earlier 33f072f (submodule sync: Update "submodule.<name>.url" for empty
-directories, 2010-10-08) attempted to fix a bug where "git submodule sync"
-command does not update the URL if the current superproject does not have
-a checkout of the submodule.
+The user is expressing the interest in the submodule and wants to keep a
+checkout, the "submodule add" command should consistently set up the
+submodule.$path.url entry in either case.
 
-However, it did so by unconditionally registering submodule.$name.url to
-every submodule in the project, even the ones that the user has never
-showed interest in at all by running 'git submodule init' command. This
-caused subsequent 'git submodule update' to start cloning/updating submodules
-that are not interesting to the user at all.
+As a result "git submodule init" can't simply skip the initialization of
+those submodules for which it finds an url entry in the git./config
+anymore. That lead to problems when adding a submodule (which now sets the
+url), add the "update" setting to .gitmodules and expect init to copy that
+into .git/config like it is done in t7406. So change init to only then
+copy the "url" and "update" entries when they don't exist yet in the
+.git/config and do nothing otherwise.
 
-Update the code so that the URL is updated from the .gitmodules file only
-for submodules that already have submodule.$name.url entries, i.e. the
-ones the user has showed interested in having a checkout.
-
-Acked-by: Jens Lehmann <Jens.Lehmann@web.de>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
 ---
 
-Am 24.06.2011 00:28, schrieb Junio C Hamano:
-> Actually, shouldn't the fix be more like this patch, which is directly on
-> top of 33f072f?  I think this is more in line with what the end user wants
-> to tell the system with "submodule init", namely "I am interested in this
-> submodule".
+Am 24.06.2011 06:13, schrieb Junio C Hamano:
+> Shouldn't "submodule add" add an entry for .git/config even when it cloned
+> from elsewhere?
 
-Yes, I am convinced your patch is the doing Right Thing. I squashed in a
-change to the git submodule sync documentation (explicitly stating that a
-sync only affects submodules which have an url entry in .git/config) and
-two more lines in the test you added to make sure that explicitly giving
-a submodule on the command line uses the same logic.
+Yes, we should be consistent here.
 
-What do you think?
+> I suspect this fix will cascade to breakage elsewhere, but I've run out of
+> energy and inclination to look at the submodule code tonight, so I'll let
+> the list to take it further from here.
 
-(I'll send another patch shortly addressing the failing tests when
-jl/submodule-add-relurl-wo-upstream is merged into this one)
+Ok, t7406 expected "git submodule init" to copy the new update setting
+into .git/config for a newly added submodule, which it didn't do anymore
+because it already found the url set. I solved that by teaching init to
+only then copy the url and update settings if they aren't present yet.
+Now all tests are running fine and your change to the test I added in
+jl/submodule-add-relurl-wo-upstream isn't necessary anymore.
+
+When I cherry pick that onto cbd0a3c6bc in your current pu branch and
+resolve the conflicts all tests run fine (if you want me to resend this
+patch based on that commit to avoid the conflicts with i18n and the
+"submodule add: clean up duplicated code" patch please just say so).
 
 
- Documentation/git-submodule.txt |    4 +++-
- git-submodule.sh                |   23 +++++++++++++----------
- t/t7403-submodule-sync.sh       |   15 +++++++++++++--
- 3 files changed, 29 insertions(+), 13 deletions(-)
+ git-submodule.sh |   33 +++++++++++++++++----------------
+ 1 files changed, 17 insertions(+), 16 deletions(-)
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 5e7a413..2b31d5f 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -167,7 +167,9 @@ commit for each submodule.
-
- sync::
- 	Synchronizes submodules' remote URL configuration setting
--	to the value specified in .gitmodules.  This is useful when
-+	to the value specified in .gitmodules. It will only affect those
-+	submodules which already have an url entry in .git/config (that is the
-+	case when they are initialized or freshly added). This is useful when
- 	submodule URLs change upstream and you need to update your local
- 	repositories accordingly.
- +
 diff --git a/git-submodule.sh b/git-submodule.sh
-index d189a24..543f1d0 100755
+index 543f1d0..7e39c97 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -874,17 +874,20 @@ cmd_sync()
+@@ -246,7 +246,6 @@ cmd_add()
+ 			url="$repo"
  			;;
  		esac
+-		git config submodule."$path".url "$url"
+ 	else
 
--		say "Synchronizing submodule url for '$name'"
--		git config submodule."$name".url "$url"
+ 		module_clone "$path" "$realrepo" "$reference" || exit
+@@ -260,6 +259,7 @@ cmd_add()
+ 			esac
+ 		) || die "Unable to checkout submodule '$path'"
+ 	fi
++	git config submodule."$path".url "$url"
+
+ 	git add $force "$path" ||
+ 	die "Failed to add submodule '$path'"
+@@ -355,25 +355,26 @@ cmd_init()
+ 	do
+ 		# Skip already registered paths
+ 		name=$(module_name "$path") || exit
+-		url=$(git config submodule."$name".url)
+-		test -z "$url" || continue
 -
--		if test -e "$path"/.git
-+		if git config "submodule.$name.url" >/dev/null 2>/dev/null
- 		then
--		(
--			clear_local_git_env
--			cd "$path"
--			remote=$(get_default_remote)
--			git config remote."$remote".url "$url"
--		)
-+			say "Synchronizing submodule url for '$name'"
-+			git config submodule."$name".url "$url"
+-		url=$(git config -f .gitmodules submodule."$name".url)
+-		test -z "$url" &&
+-		die "No url found for submodule path '$path' in .gitmodules"
+-
+-		# Possibly a url relative to parent
+-		case "$url" in
+-		./*|../*)
+-			url=$(resolve_relative_url "$url") || exit
+-			;;
+-		esac
+-
+-		git config submodule."$name".url "$url" ||
+-		die "Failed to register url for submodule path '$path'"
++		if test -z "$(git config "submodule.$name.url")"
++		then
++			url=$(git config -f .gitmodules submodule."$name".url)
++			test -z "$url" &&
++			die "No url found for submodule path '$path' in .gitmodules"
 +
-+			if test -e "$path"/.git
-+			then
-+			(
-+				clear_local_git_env
-+				cd "$path"
-+				remote=$(get_default_remote)
-+				git config remote."$remote".url "$url"
-+			)
-+			fi
- 		fi
- 	done
- }
-diff --git a/t/t7403-submodule-sync.sh b/t/t7403-submodule-sync.sh
-index d600583..95ffe34 100755
---- a/t/t7403-submodule-sync.sh
-+++ b/t/t7403-submodule-sync.sh
-@@ -25,7 +25,8 @@ test_expect_success setup '
- 	git clone super super-clone &&
- 	(cd super-clone && git submodule update --init) &&
- 	git clone super empty-clone &&
--	(cd empty-clone && git submodule init)
-+	(cd empty-clone && git submodule init) &&
-+	git clone super top-only-clone
- '
++			# Possibly a url relative to parent
++			case "$url" in
++			./*|../*)
++				url=$(resolve_relative_url "$url") || exit
++				;;
++			esac
++			git config submodule."$name".url "$url" ||
++			die "Failed to register url for submodule path '$path'"
++		fi
 
- test_expect_success 'change submodule' '
-@@ -66,7 +67,7 @@ test_expect_success '"git submodule sync" should update submodule URLs' '
- 	)
- '
++		# Copy "update" setting when it is not set yet
+ 		upd="$(git config -f .gitmodules submodule."$name".update)"
+ 		test -z "$upd" ||
++		test -n "$(git config submodule."$name".update)" ||
+ 		git config submodule."$name".update "$upd" ||
+ 		die "Failed to register update mode for submodule path '$path'"
 
--test_expect_success '"git submodule sync" should update submodule URLs if not yet cloned' '
-+test_expect_success '"git submodule sync" should update known submodule URLs' '
- 	(cd empty-clone &&
- 	 git pull &&
- 	 git submodule sync &&
-@@ -74,4 +75,14 @@ test_expect_success '"git submodule sync" should update submodule URLs if not ye
- 	)
- '
-
-+test_expect_success '"git submodule sync" should not vivify uninteresting submodule' '
-+	(cd top-only-clone &&
-+	 git pull &&
-+	 git submodule sync &&
-+	 test -z "$(git config submodule.submodule.url)" &&
-+	 git submodule sync submodule &&
-+	 test -z "$(git config submodule.submodule.url)"
-+	)
-+'
-+
- test_done
 -- 
-1.7.6.rc3.1.g8fd6
+1.7.6.rc3.2.gcfa18
