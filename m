@@ -1,68 +1,80 @@
-From: Pedro Sa Costa <psdc1978@gmail.com>
-Subject: git push in a git-init without --bare option?
-Date: Sun, 26 Jun 2011 11:42:28 +0100
-Message-ID: <201106261142.28142.psdc1978@gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Deleted file is back - how to investigate?
+Date: Sun, 26 Jun 2011 12:32:18 +0200
+Message-ID: <20110626103218.GQ30255@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="uWCTLymdFNG0vGYZ"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 26 12:43:29 2011
+X-From: git-owner@vger.kernel.org Sun Jun 26 12:49:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QamoL-0005u6-5X
-	for gcvg-git-2@lo.gmane.org; Sun, 26 Jun 2011 12:43:29 +0200
+	id 1Qamts-0007jB-9Y
+	for gcvg-git-2@lo.gmane.org; Sun, 26 Jun 2011 12:49:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753144Ab1FZKml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Jun 2011 06:42:41 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:58139 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753112Ab1FZKmi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jun 2011 06:42:38 -0400
-Received: by wyg8 with SMTP id 8so584842wyg.19
-        for <git@vger.kernel.org>; Sun, 26 Jun 2011 03:42:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:mime-version
-         :content-type:content-transfer-encoding:message-id;
-        bh=25Aci9yi/hYwemTErCgjYlDDjxIoRjFVD0JYztBZGGc=;
-        b=rztjS9xLqs/8D/pzMXTWKdSUmUpjsxTZJ8JZvbLwGtCCGpVa9NukaXOHOkEkJ/Z3rO
-         ELCqK/4qnC8yKe5HVNAXh01q7okl9pUxTax0/Bnk5f9JhonYLTEeqeG92g27498r44uq
-         05hY76pdMUbNtdIP8Hd+QH2X3PbYUT3Mc5PSQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:mime-version:content-type
-         :content-transfer-encoding:message-id;
-        b=PfAScz3b3it8t0dvy5opdWd6N78Q7B+iryIyZYQudGN6vwqrYPU1kBJ8ffbb+2CwFT
-         EAFOTQrOvzm/c5LkdGhbJm/zbzwwHiITxe8Q21aac/L2sAdzuK4pTYq3KxaekxTX5ER3
-         XYRX/IUaEtY+uFpJO4LGP0+007zUdSXye7ozA=
-Received: by 10.227.38.101 with SMTP id a37mr4487332wbe.36.1309084955717;
-        Sun, 26 Jun 2011 03:42:35 -0700 (PDT)
-Received: from barcelona.localnet ([81.193.33.138])
-        by mx.google.com with ESMTPS id c17sm3291911wbh.29.2011.06.26.03.42.34
-        (version=SSLv3 cipher=OTHER);
-        Sun, 26 Jun 2011 03:42:35 -0700 (PDT)
-User-Agent: KMail/1.13.6 (Linux/2.6.38-8-generic-pae; KDE/4.6.2; i686; ; )
+	id S1753053Ab1FZKtC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Jun 2011 06:49:02 -0400
+Received: from virgo.iok.hu ([212.40.97.103]:58701 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753167Ab1FZKtA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jun 2011 06:49:00 -0400
+X-Greylist: delayed 999 seconds by postgrey-1.27 at vger.kernel.org; Sun, 26 Jun 2011 06:49:00 EDT
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 37D5258046
+	for <git@vger.kernel.org>; Sun, 26 Jun 2011 12:32:19 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 2608744965
+	for <git@vger.kernel.org>; Sun, 26 Jun 2011 12:32:18 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 03282BAC006; Sun, 26 Jun 2011 12:32:18 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176322>
+
+
+--uWCTLymdFNG0vGYZ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
 Hi,
 
-I'm newbie in git and I'm trying to understand how git works.
+In our public development repo I removed a file in the past, and I guess
+with one of the recent merges we got it back. It looks a bit strange:
 
-- I see that in git, I can't do git-push to a repository that wasn't created 
-with git-init --bare. Why?
+$ git clone http://frugalware.org/git/pub/frugalware/frugalware-current
+$ git checkout 96b33e0
 
-- But doing git-pull and git-checkout to the same repository is possible. I'm 
-really confused. Any help?
+The ogle-gui directory is there:
 
--- 
-Best regards,
+$ git ls-files|grep ogle-gui
+source/xapps-extra/ogle-gui/FrugalBuild
 
------------------------
+But in case I run git log:
+
+$ git log --full-history --name-status -- source/xapps-extra/ogle-gui
+
+The latest listed commit is the one that deletes it. So how can I see
+which commit introduced the file again? (FWIW, we're merging with the
+normal recursive strategy, ideally thing special.)
+
+Thanks.
+
+--uWCTLymdFNG0vGYZ
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iEYEARECAAYFAk4HCrIACgkQe81tAgORUJZWfQCfZDuLGnpnyn1Tkl6zsYZWUeQj
+/dwAn1PKUgXOAzPwsju/GMt4HHE4o8eW
+=HVzi
+-----END PGP SIGNATURE-----
+
+--uWCTLymdFNG0vGYZ--
