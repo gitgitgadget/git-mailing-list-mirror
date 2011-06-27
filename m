@@ -1,87 +1,59 @@
-From: henri GEIST <henri.geist@flying-robots.com>
-Subject: Re: tracking submodules out of main directory.
-Date: Mon, 27 Jun 2011 23:18:08 +0200
-Message-ID: <1309209488.2497.363.camel@Naugrim.eriador.com>
-References: <1309180056.2497.220.camel@Naugrim.eriador.com>
-	 <7vvcvrxlol.fsf@alter.siamese.dyndns.org>  <4E08C89E.5020109@web.de>
-	 <1309200722.2497.294.camel@Naugrim.eriador.com>  <4E08D279.7060202@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/6] rebase: command "ref" and options
+ --rewrite-{refs,heads,tags}
+Date: Mon, 27 Jun 2011 14:23:17 -0700
+Message-ID: <7vtybbufy2.fsf@alter.siamese.dyndns.org>
+References: <cover.1309133817.git.greg@quora.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Jun 27 23:16:49 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Greg Price <greg@quora.com>
+X-From: git-owner@vger.kernel.org Mon Jun 27 23:26:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QbJAn-0006cQ-E5
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Jun 2011 23:16:49 +0200
+	id 1QbJJq-0002Oj-OZ
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Jun 2011 23:26:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754437Ab1F0VQG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Jun 2011 17:16:06 -0400
-Received: from mail14.surf-town.net ([212.97.132.54]:38333 "EHLO
-	mailgw21.surf-town.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754150Ab1F0VPi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2011 17:15:38 -0400
-Received: by mailgw21.surf-town.net (Postfix, from userid 65534)
-	id A6C254093; Mon, 27 Jun 2011 23:15:36 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by mailgw21.surf-town.net (Postfix) with ESMTP id 8128F4006;
-	Mon, 27 Jun 2011 23:15:36 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mailgw21.surf-town.net
-X-Spam-Flag: NO
-X-Spam-Score: -1.44
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.44 tagged_above=-999 required=7
-	tests=[ALL_TRUSTED=-1.44] autolearn=disabled
-Received: from mailgw21.surf-town.net ([127.0.0.1])
-	by localhost (mailgw21.surf-town.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 4c4ZHd9+Pfjh; Mon, 27 Jun 2011 23:15:31 +0200 (CEST)
-Received: from [192.168.0.6] (se167-1-82-242-149-125.fbx.proxad.net [82.242.149.125])
-	by mailgw21.surf-town.net (Postfix) with ESMTPSA id BAF2F40A4;
-	Mon, 27 Jun 2011 23:15:28 +0200 (CEST)
-In-Reply-To: <4E08D279.7060202@web.de>
-X-Mailer: Evolution 2.30.3 
+	id S1754700Ab1F0VY4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jun 2011 17:24:56 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48186 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754729Ab1F0VXT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2011 17:23:19 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A9E475CC3;
+	Mon, 27 Jun 2011 17:25:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JjT0MhVJw6AkYrKl0oQ+Xpr67VY=; b=c+PsAb
+	Ql73q8v4vl+PqI7F36gETyW5GkD73UwWV5qSu44o0Ii0QNtFdIkjTbkhVSPz8vBK
+	gW/V4/r4tzyDAj6CpMkoqcU036yu99z4T5sUzvjPCYGBH38o9pWVZoX7llbN+2Z8
+	XUf/f/oNE7q9+dgLe0jtHRlpBnEWbAANSavDg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uWlNyHJu4DtYsc8lkrKYwUaRVmtN0PQF
+	rkJpXf8yYwqGNepCqCaFY5zXu2JqBPt+j3QMVBAk0aubU7BzMXNTquW2Kk5t+Ivi
+	3OtajKLKImLHw5k+fetg36lNNIFr21oQT6KjAlVqjoWuh5Pwf+N3WICw5lMXA8jo
+	/Hn9Wit3pbo=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A31005CC2;
+	Mon, 27 Jun 2011 17:25:32 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 09F775CC1; Mon, 27 Jun 2011
+ 17:25:31 -0400 (EDT)
+In-Reply-To: <cover.1309133817.git.greg@quora.com> (Greg Price's message of
+ "Sun, 26 Jun 2011 17:16:57 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FCDE23E8-A103-11E0-AE7E-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176371>
 
-Le lundi 27 juin 2011 =C3=A0 20:56 +0200, Jens Lehmann a =C3=A9crit :
-> Am 27.06.2011 20:52, schrieb henri GEIST:
-> > Le lundi 27 juin 2011 =C3=A0 20:14 +0200, Jens Lehmann a =C3=A9crit=
- :
-> >> Am 27.06.2011 18:51, schrieb Junio C Hamano:
-> >>> One possible working tree organization may look like this:
-> >>>
-> >>> 	-+- lib1
-> >>>          +- project1/Makefile -- refers to ../lib1
-> >>>          +- project2/Makefile -- refers to ../lib1
-> >>
-> >> This is what we do at work and it works really well for us. The
-> >> possible downside (that you can't tie project1 and project2 to a
-> >> specific version of lib1 in their own repo) is not a real problem
-> >> in our experience, as the superproject ties the correct combinatio=
-n
-> >> together.
-> >>
-> >=20
-> > That is a good starting point.
-> > I have used this method for some little projects and it work great.
-> >=20
-> > But I had never find a mean to handle the case of project1 dependin=
-g on
-> > both lib1 and lib2.
->=20
-> Hmm, but isn't that covered by having lib1, lib2 & project1 right nex=
-t
-> to each other in your superproject?
->=20
-
-Sorry I havent read well your schema. I have thought that you reversed
-dependency and put project1 and project2 inside libs1.
-
-	Henri GEIST
+Have you ran all tests with the changes in this series, especially the
+ones in t34xx series?
