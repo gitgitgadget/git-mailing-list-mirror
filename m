@@ -1,118 +1,76 @@
-From: henri GEIST <henri.geist@flying-robots.com>
-Subject: Re: tracking submodules out of main directory.
-Date: Mon, 27 Jun 2011 23:57:20 +0200
-Message-ID: <1309211840.2497.401.camel@Naugrim.eriador.com>
-References: <1309180056.2497.220.camel@Naugrim.eriador.com>
-	 <7vvcvrxlol.fsf@alter.siamese.dyndns.org> <4E08C89E.5020109@web.de>
-	 <7vvcvrw0vn.fsf@alter.siamese.dyndns.org>  <4E08DCB1.3080503@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] "branch -d" can remove more than one branches
+Date: Mon, 27 Jun 2011 15:04:32 -0700
+Message-ID: <7voc1jue1b.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Jun 27 23:58:53 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 28 00:07:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QbJpT-0000Iw-DK
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Jun 2011 23:58:51 +0200
+	id 1QbJxL-0003Yx-FY
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Jun 2011 00:06:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754885Ab1F0VzG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Jun 2011 17:55:06 -0400
-Received: from mail13.surf-town.net ([212.97.132.53]:40746 "EHLO
-	mailgw7.surf-town.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754059Ab1F0Vyu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2011 17:54:50 -0400
-Received: by mailgw7.surf-town.net (Postfix, from userid 65534)
-	id 3A28BEBC0F; Mon, 27 Jun 2011 23:54:49 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by mailgw7.surf-town.net (Postfix) with ESMTP id 18E13EBADF;
-	Mon, 27 Jun 2011 23:54:49 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mailgw7.surf-town.net
-X-Spam-Flag: NO
-X-Spam-Score: -1.44
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.44 tagged_above=-999 required=7
-	tests=[ALL_TRUSTED=-1.44] autolearn=disabled
-Received: from mailgw7.surf-town.net ([127.0.0.1])
-	by localhost (mailgw7.surf-town.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id UYGHwtAoLjQK; Mon, 27 Jun 2011 23:54:43 +0200 (CEST)
-Received: from [192.168.0.6] (se167-1-82-242-149-125.fbx.proxad.net [82.242.149.125])
-	by mailgw7.surf-town.net (Postfix) with ESMTPSA id 7C9A9EBC0F;
-	Mon, 27 Jun 2011 23:54:41 +0200 (CEST)
-In-Reply-To: <4E08DCB1.3080503@web.de>
-X-Mailer: Evolution 2.30.3 
+	id S1754822Ab1F0WFx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jun 2011 18:05:53 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53062 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753604Ab1F0WEf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2011 18:04:35 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BA1936152;
+	Mon, 27 Jun 2011 18:06:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=f
+	vr5T2PFYhp5SPvoDXsWcx7LDCE=; b=ZWJXFeWC+qIrzUMs8PGU0jNP1D1fsYSTj
+	Jtnim7BRJ1ObBgkqjR2/OaISudvJzALd3GBwo3tmkJ6NN7DCUavcMJJtXBoiDDmw
+	w9mOX/DRuKDjKV03NgRhsWE8gDEashlwaQwZEzb+ACa0Z9yJUGqGokjjhAHe7mSU
+	9wO6EadR64=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=iLi
+	slm/AvSoxoHsdou9ut5DLUlk6NQTIMY32twR80XYhuArqjzWEd9B2Qc268/C4DJq
+	daPjz/AKerXNMuGYtfdpEdfN1dsIYG7YvKH/7wgdej0bLdgiFleja798Q/8MUSoT
+	QmDPSFmL2fYMxgcbWH0e2gAbFs1M98GlRmHYunAI=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B18926151;
+	Mon, 27 Jun 2011 18:06:47 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1C5966150; Mon, 27 Jun 2011
+ 18:06:47 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C0206AAA-A109-11E0-84BB-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176375>
 
-Le lundi 27 juin 2011 =C3=A0 21:40 +0200, Jens Lehmann a =C3=A9crit :
-> Am 27.06.2011 21:05, schrieb Junio C Hamano:
-> > Jens Lehmann <Jens.Lehmann@web.de> writes:
-> >=20
-> >> Am 27.06.2011 18:51, schrieb Junio C Hamano:
-> >>> One possible working tree organization may look like this:
-> >>>
-> >>> 	-+- lib1
-> >>>          +- project1/Makefile -- refers to ../lib1
-> >>>          +- project2/Makefile -- refers to ../lib1
-> >> ...
-> >>> An interesting point your situation raises is that there is no di=
-rect way
-> >>> to express module dependencies in .gitmodules file right now, I t=
-hink.
-> >>> Ideally you would want "submodule init project1" to infer automat=
-ically
-> >>> that project1 needs lib1 and run "submodule init lib1" for you. M=
-y gut
-> >>> feeling is that it belongs to .gitmodules of the superproject
-> >>
-> >> That is where this is handled now, but having a submodule refer to=
- a
-> >> submodule outside of it as a dependency is an interesting thought.=
- But
-> >> as that only matters at the moment you add project1 (and it won't =
-compile
-> >> because ../lib1 is missing, which can easily handled by: "oh, then=
- I have
-> >> to add lib1 as a submodule to the superproject too"), ...
-> >=20
-> > That is what I called "there is no direct way". Wouldn't it be nice=
-r if
-> > the .gitmodules file in the superproject said something like
-> >=20
-> > 	[module "project one"]
-> > 		path =3D project1
-> >         	url =3D ...
-> >                 depends =3D lib1
-> > 	[module "lib1"]
-> >         	path =3D lib1
-> >                 url =3D ...
-> >=20
-> > and then "git submodule init project1" run by the end user implied =
-running
-> > also "git submodule init lib1"?
->=20
-> And if lib1 happens to have another dependency, that will be initiali=
-zed
-> too? That would make life much easier for users who only want certain
-> submodules populated to work on, as they won't have to chase compile
-> errors anymore until they found all necessary submodules ... very nic=
-e.
->=20
+Since 03feddd (git-check-ref-format: reject funny ref names, 2005-10-13),
+"git branch -d" can take more than one branch names to remove.
 
-That is right.
-But could also be done with the .gitmodules in project1 containing
+The documentation was correct, but the usage string was not.
 
-	[module "lib1"]
-        	path =3D ../lib1
-                url =3D ...
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/branch.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-and making implicite if the module is describe in .gitmodules that
-mean ./ depend on it.
-
-	Henri GEIST
+diff --git a/builtin/branch.c b/builtin/branch.c
+index d6ab93b..3142daa 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -19,7 +19,7 @@
+ static const char * const builtin_branch_usage[] = {
+ 	"git branch [options] [-r | -a] [--merged | --no-merged]",
+ 	"git branch [options] [-l] [-f] <branchname> [<start-point>]",
+-	"git branch [options] [-r] (-d | -D) <branchname>",
++	"git branch [options] [-r] (-d | -D) <branchname>...",
+ 	"git branch [options] (-m | -M) [<oldbranch>] <newbranch>",
+ 	NULL
+ };
+-- 
+1.7.6
