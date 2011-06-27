@@ -1,136 +1,122 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/3] object: reclaim one bit in the flags field
-Date: Mon, 27 Jun 2011 10:50:59 -0700
-Message-ID: <1309197059-7177-3-git-send-email-gitster@pobox.com>
-References: <1309197059-7177-1-git-send-email-gitster@pobox.com>
+Subject: [RFC/PATCH] test: skip clean-up when running under --immediate mode
+Date: Mon, 27 Jun 2011 11:02:22 -0700
+Message-ID: <7vmxh3xidt.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 27 19:54:58 2011
+X-From: git-owner@vger.kernel.org Mon Jun 27 20:02:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QbG1R-0000yR-AE
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Jun 2011 19:54:57 +0200
+	id 1QbG8p-0004X4-DI
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Jun 2011 20:02:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752947Ab1F0Rw7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jun 2011 13:52:59 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45668 "EHLO
+	id S1752992Ab1F0SC0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jun 2011 14:02:26 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56240 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752907Ab1F0RvG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2011 13:51:06 -0400
+	with ESMTP id S1752964Ab1F0SCY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2011 14:02:24 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 27A35657D
-	for <git@vger.kernel.org>; Mon, 27 Jun 2011 13:53:18 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1940966AF;
+	Mon, 27 Jun 2011 14:04:36 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=7htU
-	UUqVOsUt+mW/3+sOEBEdcKE=; b=mpvh2yzBvL2vNMvOGWPUdqtKPJtifpYj+jif
-	/OizXYOPOzAi/MOH1m+B94qjBcUP4hxtSGonsI8FeBDmJ0JLXWeZvPHOtIO62YQB
-	gOUejbOdB2COl2ihfyYYUHu3gD+Bb+YjPXbxOZV1nQcPAH4E3fhGAd9DfroZFM3o
-	SbVhZeA=
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=p
+	/tf9sGNx/93tnDQBUMxuS2DzTw=; b=iaw5jn1TUjh04PqAEqtMIpYphHxxKre6i
+	GVfrwTDH3aJ8cZVGRxBt1UEBTLxT//8qiuz5aNkBMmeVBbEVCU6Fzene72xpDIRf
+	soDEno/OgbqQiWON66nhFQ1Pls8SnLXYrGLss6JZzxl+3YeeAc1WU0R6+o0q5UnG
+	kJrx73AYOg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=Ah0c7V
-	OuK5srgtrY3m6vf6jUJWOu4c7Z0UtMhK3Ell39mErw/8dYXqFLCe21ggRMXyG8Rs
-	3QGM0urMXx7vTnt4CQLjRiVrxRPwVcmB94PuXrAx/bzECZGJH48dWv1GYYjLVVCk
-	mBpgr+AL2zB7j1GqkPH5uEmNDAA9zBQf4XFvI=
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=rPi
+	EHKX9O1S/bVMlz6cQFrQx29ypuMgZQo0pPaQdMUvv2u+xYfRVvsnn+XDeubgSVSt
+	AFFrWHx+/q/WhPkM6pMp1e7vKr1Mh9sSu1NOhaywHWW2LhpJhcb5Ut2deHMHbFxf
+	w/of9KXte+KTpdvDjYGSjRoFWqNvKyIzqoDfwSNI=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 20039657C
-	for <git@vger.kernel.org>; Mon, 27 Jun 2011 13:53:18 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 12A4766AE;
+	Mon, 27 Jun 2011 14:04:36 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4CCEB657B for
- <git@vger.kernel.org>; Mon, 27 Jun 2011 13:53:17 -0400 (EDT)
-X-Mailer: git-send-email 1.7.6
-In-Reply-To: <1309197059-7177-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 5660DA96-A0E6-11E0-A44D-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5472266AD; Mon, 27 Jun 2011
+ 14:04:35 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: EA843A6E-A0E7-11E0-B75C-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176357>
 
-The object layer has "used" bit in the structure that is only used while
-running fsck. Remove it, and instead use one bit from the flags to record
-the fact that an object is referenced from some other object (only during
-fsck).
+Some tests try to be too careful about cleaning themselves up and
+do
+
+    test_expect_success description '
+        set-up some test refs and/or configuration &&
+        test_when_finished "revert the above changes" &&
+	the real test
+    '
+
+Which is nice to make sure that a potential failure would not have
+unexpected interaction with the next test. This however interferes when
+"the real test" fails and we want to see what is going on, by running the
+test with --immediate mode and descending into its trash directory after
+the test stops. The precondition to run the real test and cause it to fail
+is all gone after the clean-up procedure defined by test_when_finished is
+done.
+
+Update test_run_ which is the workhorse of running a test script
+called from test_expect_success and test_expect_failure, so that we do not
+run clean-up script defined with test_when_finished when a test that is
+expected to succeed fails under the --immediate mode.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/fsck.c |    7 ++++---
- object.c       |    1 -
- object.h       |    3 +--
- 3 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 90f5c2c..dde0907 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -14,6 +14,7 @@
+ * Likes, dislikes?
+
+ t/test-lib.sh |   12 ++++++++++--
+ 1 files changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 8c57a00..e36e67a 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -446,9 +446,14 @@ test_debug () {
  
- #define REACHABLE 0x0001
- #define SEEN      0x0002
-+#define USED	  0x0004
+ test_run_ () {
+ 	test_cleanup=:
++	expecting_failure=$1
+ 	eval >&3 2>&4 "$1"
+ 	eval_ret=$?
+-	eval >&3 2>&4 "$test_cleanup"
++
++	if test -z "$immediate" || test $eval_ret = 0 || test -n "$expecting_failure"
++	then
++		eval >&3 2>&4 "$test_cleanup"
++	fi
+ 	if test "$verbose" = "t" && test -n "$HARNESS_ACTIVE"; then
+ 		echo ""
+ 	fi
+@@ -497,7 +502,7 @@ test_expect_failure () {
+ 	if ! test_skip "$@"
+ 	then
+ 		say >&3 "checking known breakage: $2"
+-		test_run_ "$2"
++		test_run_ "$2" expecting_failure
+ 		if [ "$?" = 0 -a "$eval_ret" = 0 ]
+ 		then
+ 			test_known_broken_ok_ "$1"
+@@ -774,6 +779,9 @@ test_cmp() {
+ #
+ # except that the greeting and config --unset must both succeed for
+ # the test to pass.
++#
++# Note that under --immediate mode, no clean-up is done to help diagnose
++# what went wrong.
  
- static int show_root;
- static int show_tags;
-@@ -114,7 +115,7 @@ static int mark_object(struct object *obj, int type, void *data)
- static void mark_object_reachable(struct object *obj)
- {
- 	if (obj) {
--		obj->used = 1;
-+		obj->flags |= USED;
- 		mark_object(obj, OBJ_ANY, NULL);
- 	}
- }
-@@ -156,7 +157,7 @@ static int mark_used(struct object *obj, int type, void *data)
- {
- 	if (!obj)
- 		return 1;
--	obj->used = 1;
-+	obj->flags |= USED;
- 	return 0;
- }
- 
-@@ -214,7 +215,7 @@ static void check_unreachable_object(struct object *obj)
- 	 * deleted a branch by mistake, this is a prime candidate to
- 	 * start looking at, for example.
- 	 */
--	if (!obj->used) {
-+	if (!(obj->flags & USED)) {
- 		printf("dangling %s %s\n", typename(obj->type),
- 		       sha1_to_hex(obj->sha1));
- 		if (write_lost_and_found) {
-diff --git a/object.c b/object.c
-index 31976b5..4a9d77f 100644
---- a/object.c
-+++ b/object.c
-@@ -111,7 +111,6 @@ void *create_object(const unsigned char *sha1, int type, void *o)
- 	struct object *obj = o;
- 
- 	obj->parsed = 0;
--	obj->used = 0;
- 	obj->type = type;
- 	obj->flags = 0;
- 	hashcpy(obj->sha1, sha1);
-diff --git a/object.h b/object.h
-index b6618d9..dbfc88f 100644
---- a/object.h
-+++ b/object.h
-@@ -19,14 +19,13 @@ struct object_array {
- #define OBJECT_ARRAY_INIT { 0, 0, NULL }
- 
- #define TYPE_BITS   3
--#define FLAG_BITS  27
-+#define FLAG_BITS  (31-TYPE_BITS)
- 
- /*
-  * The object type is stored in 3 bits.
-  */
- struct object {
- 	unsigned parsed : 1;
--	unsigned used : 1;
- 	unsigned type : TYPE_BITS;
- 	unsigned flags : FLAG_BITS;
- 	unsigned char sha1[20];
+ test_when_finished () {
+ 	test_cleanup="{ $*
 -- 
 1.7.6
