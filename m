@@ -1,95 +1,87 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: tracking submodules out of main directory.
-Date: Mon, 27 Jun 2011 09:51:06 -0700
-Message-ID: <7vvcvrxlol.fsf@alter.siamese.dyndns.org>
-References: <1309180056.2497.220.camel@Naugrim.eriador.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: henri GEIST <henri.geist@flying-robots.com>
-X-From: git-owner@vger.kernel.org Mon Jun 27 18:51:19 2011
+Subject: [PATCH 1/3] fsck: minor typofix
+Date: Mon, 27 Jun 2011 10:50:57 -0700
+Message-ID: <1309197059-7177-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 27 19:53:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QbF1r-0002aj-5f
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Jun 2011 18:51:19 +0200
+	id 1QbG02-00007z-E2
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Jun 2011 19:53:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752938Ab1F0QvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jun 2011 12:51:11 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64884 "EHLO
+	id S1752938Ab1F0Rw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jun 2011 13:52:56 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45585 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752959Ab1F0QvJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2011 12:51:09 -0400
+	with ESMTP id S1752874Ab1F0RvC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2011 13:51:02 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 47A025C84;
-	Mon, 27 Jun 2011 12:53:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WzpvQqNHw48SRHVqVtytZzE3n/c=; b=MwZCNU
-	YR/EVdKljGfbkcEBdmveEbWM4SYj/jbQiGccSW9i3Lt6l8RdEXRU64ngXsf73rBb
-	wvm1FDvhcSvJwUulyd+hNmPQt2i4krrHSkORhaLkRvAgEGKERkp9d4e1sJTx5sPH
-	3ZzeTZHqyGaDcuqadEMqAwAK7R1y5SNoFxiyA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZiStwM7yS/H22W1q/oVM0272LZROSe5q
-	xz/XxJRSc5tfDSpFHI62WJpzxRaX6R8y+8X+7smKdQ7SmRjAqKOG07VbsIKv+SjJ
-	DIXacFZnsiBUkJT5xOBKF4DEgJ5+XHsglST4DYXKZHID4DhFgX7If4XuzHymsvKk
-	TK/2yYddw54=
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A8CD46577
+	for <git@vger.kernel.org>; Mon, 27 Jun 2011 13:53:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id; s=sasl; bh=6NewUHyiA4eksAkOgyBiVNViGQM
+	=; b=fKdm4xj868tZzfA1ffBho/BGGsbDeGvJxKuq9x2CVVP4l6oSBG6zOoy8j5c
+	7VrnLNFPUg9075Cw7SkE8uUxFdoe8+4+/zcmmL2QQJ/s3w0c7AKgiK7nCJV4mZoZ
+	TjfD394Idzh/lirrf5g2zLx4GJzcrs1pLGc+MeRL3Cc8uHg0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id; q=dns; s=sasl; b=r93sLg5onj2PLwGz76toQ3LhrsRLB
+	zxsPYWShr+uENVnbZzl+uavwPLtJwrMDq8WEycbQsgbhOKzr21jl4uwkBBQbNbfS
+	JtM8lMnM6idPy+eYvVVYGUpmAWmouLww+nOcjJzg/jKb00725KVXb1Ti8b6uQS6T
+	VAE/o8nIcbxKhg=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3E7405C83;
-	Mon, 27 Jun 2011 12:53:20 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 929186576
+	for <git@vger.kernel.org>; Mon, 27 Jun 2011 13:53:13 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8293B5C81; Mon, 27 Jun 2011
- 12:53:19 -0400 (EDT)
-In-Reply-To: <1309180056.2497.220.camel@Naugrim.eriador.com> (henri GEIST's
- message of "Mon, 27 Jun 2011 15:07:36 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F5EF4128-A0DD-11E0-8140-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D3BCE6575 for
+ <git@vger.kernel.org>; Mon, 27 Jun 2011 13:53:12 -0400 (EDT)
+X-Mailer: git-send-email 1.7.6
+X-Pobox-Relay-ID: 53BA216C-A0E6-11E0-A9E9-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176354>
 
-henri GEIST <henri.geist@flying-robots.com> writes:
+There are two places that diagnose the same kind of error in mark_object(),
+that receives an object, the type the object is expected to be, and the
+object that refers to it (IOW, the reason why we want to make sure that
+the first object is in a good order). When the object that is referred to
+is missing, we report "broken link from X; broken link to Y".
 
-> We can obviously solve this by doing trees of submodules just reflecting
-> the trees of dependency but it create somme problems.
->
->   1. In project 4 I have 2 times project 1 and 3 times libraries 1 and 2
->      And 2 times library 4.
->   2. It is a wast of space.
->   3. Different version of the same libraries or projects could be used.
->   4. when linking object, multiples objects will export the same symbols
+However, one of the two places, that is used much less often, said "broken
+link from X; broken link from Y".
 
-All of the above are something your build procedure needs to solve
-regardless, even if you are not using git submodules (or even if you are
-not using any SCM, for that matter).  If you want to (and you do want to)
-avoid duplication, version drift and associated issues of use of the
-common library 1 across project 1 and project 2, you would organize your
-source tree so that both of your (sub)projects to use the library code
-from a common location.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-One possible working tree organization may look like this:
+ This rarely used codepath is triggered only when fsck_walk() calls this
+ function that is set as a callback in traverse_one_object() from one of
+ the type specific scanners, e.g. fsck_walk_tree(), and an object that is
+ referred to is of a wrong type, e.g. a tree entry with mode 100644 is
+ looked up with lookup_blob(), and the type of the named object is already
+ known to us to be something different. The look-up code issues an unrelated
+ error message in such a case, but then this codepath does not know what the
+ object name of the offending object was.
+---
+ builtin/fsck.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-	-+- lib1
-         +- project1/Makefile -- refers to ../lib1
-         +- project2/Makefile -- refers to ../lib1
-
-The top-level superproject (what you called "Anything") binds project1,
-project2 and lib1 as its submodules, and it can say where you want your
-users to fetch these submodules in its .gitmodules, and at what version
-lib1 (and projects) to use in its tree objects as gitlinks.
-
-People who are _only_ interested in project1 can still clone that
-top-level superproject, and "submodule init" only lib1 and project1,
-without running "submodule init" on project2.
-
-An interesting point your situation raises is that there is no direct way
-to express module dependencies in .gitmodules file right now, I think.
-Ideally you would want "submodule init project1" to infer automatically
-that project1 needs lib1 and run "submodule init lib1" for you. My gut
-feeling is that it belongs to .gitmodules of the superproject.
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 5ae0366..64f30d4 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -83,7 +83,7 @@ static int mark_object(struct object *obj, int type, void *data)
+ 		/* ... these references to parent->fld are safe here */
+ 		printf("broken link from %7s %s\n",
+ 			   typename(parent->type), sha1_to_hex(parent->sha1));
+-		printf("broken link from %7s %s\n",
++		printf("broken link to %7s %s\n",
+ 			   (type == OBJ_ANY ? "unknown" : typename(type)), "unknown");
+ 		errors_found |= ERROR_REACHABLE;
+ 		return 1;
+-- 
+1.7.6
