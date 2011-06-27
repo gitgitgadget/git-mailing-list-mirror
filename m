@@ -1,65 +1,95 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [GSoC update] Sequencer --continue in pu
-Date: Mon, 27 Jun 2011 21:49:49 +0530
-Message-ID: <BANLkTi=65mpGmpZmb--2im96ABv74-m3kw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: tracking submodules out of main directory.
+Date: Mon, 27 Jun 2011 09:51:06 -0700
+Message-ID: <7vvcvrxlol.fsf@alter.siamese.dyndns.org>
+References: <1309180056.2497.220.camel@Naugrim.eriador.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 27 18:20:18 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: henri GEIST <henri.geist@flying-robots.com>
+X-From: git-owner@vger.kernel.org Mon Jun 27 18:51:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QbEXp-0003JP-9f
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Jun 2011 18:20:17 +0200
+	id 1QbF1r-0002aj-5f
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Jun 2011 18:51:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752658Ab1F0QUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jun 2011 12:20:12 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:47727 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752573Ab1F0QUK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2011 12:20:10 -0400
-Received: by wyg8 with SMTP id 8so1192608wyg.19
-        for <git@vger.kernel.org>; Mon, 27 Jun 2011 09:20:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:from:date:message-id:subject:to:cc
-         :content-type;
-        bh=StMC7kEF0K1nkh7TmaCGuy7gqVJw/i1DY3feXMJCe+I=;
-        b=HpjRjj4i39+45k7wabtb1Lbx8b+RCS8vsPCd3JQLE72LoMqE5uB06ezLkWWb27eD8i
-         s1nvAiwTN/vusfflmmahy9wSZ0ADImChHbPuGuhR9ddFoEHf7eDxIoras4vjfdpDETQg
-         EXOdRvcmF+RSZPOO3SJPtbEfvYLU0Vs0Vsa+8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        b=EbSnfs8kEysbq2xoLpUZxeGlvpsbVpWwYcAhoQfWfc1cVVPFcYeIkmWvB0JybpMTGC
-         1zCNzdYIfH+hzIKaBsmxHCM1vlyojm1Pw4dQD0LQ1x/GO3hLzB1E/OErHTkkQ3UmRt2z
-         UH+63Zb49I/pHQHl+DegwbM9uWOY+gJG6vd7s=
-Received: by 10.217.0.9 with SMTP id k9mr5435815wes.76.1309191609297; Mon, 27
- Jun 2011 09:20:09 -0700 (PDT)
-Received: by 10.216.18.16 with HTTP; Mon, 27 Jun 2011 09:19:49 -0700 (PDT)
+	id S1752938Ab1F0QvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jun 2011 12:51:11 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64884 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752959Ab1F0QvJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2011 12:51:09 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 47A025C84;
+	Mon, 27 Jun 2011 12:53:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WzpvQqNHw48SRHVqVtytZzE3n/c=; b=MwZCNU
+	YR/EVdKljGfbkcEBdmveEbWM4SYj/jbQiGccSW9i3Lt6l8RdEXRU64ngXsf73rBb
+	wvm1FDvhcSvJwUulyd+hNmPQt2i4krrHSkORhaLkRvAgEGKERkp9d4e1sJTx5sPH
+	3ZzeTZHqyGaDcuqadEMqAwAK7R1y5SNoFxiyA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZiStwM7yS/H22W1q/oVM0272LZROSe5q
+	xz/XxJRSc5tfDSpFHI62WJpzxRaX6R8y+8X+7smKdQ7SmRjAqKOG07VbsIKv+SjJ
+	DIXacFZnsiBUkJT5xOBKF4DEgJ5+XHsglST4DYXKZHID4DhFgX7If4XuzHymsvKk
+	TK/2yYddw54=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3E7405C83;
+	Mon, 27 Jun 2011 12:53:20 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8293B5C81; Mon, 27 Jun 2011
+ 12:53:19 -0400 (EDT)
+In-Reply-To: <1309180056.2497.220.camel@Naugrim.eriador.com> (henri GEIST's
+ message of "Mon, 27 Jun 2011 15:07:36 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F5EF4128-A0DD-11E0-8140-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176353>
 
-Hi,
+henri GEIST <henri.geist@flying-robots.com> writes:
 
-I haven't been able to do much work this week due to travelling and
-some other engagements.  The latest series [1] is now in 'pu'
-(31cd3b18), and should be accessible to a wider audience.  I will
-hopefully have a nicer series with additional tests ready by the end
-of the week.  While this cooks, I plan to sketch out some
-post-mid-term work as RFC patches before the evaluations.
+> We can obviously solve this by doing trees of submodules just reflecting
+> the trees of dependency but it create somme problems.
+>
+>   1. In project 4 I have 2 times project 1 and 3 times libraries 1 and 2
+>      And 2 times library 4.
+>   2. It is a wast of space.
+>   3. Different version of the same libraries or projects could be used.
+>   4. when linking object, multiples objects will export the same symbols
 
-As usual, feel free to contact me about anything.  Thanks for reading.
+All of the above are something your build procedure needs to solve
+regardless, even if you are not using git submodules (or even if you are
+not using any SCM, for that matter).  If you want to (and you do want to)
+avoid duplication, version drift and associated issues of use of the
+common library 1 across project 1 and project 2, you would organize your
+source tree so that both of your (sub)projects to use the library code
+from a common location.
 
--- Ram
+One possible working tree organization may look like this:
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/176139
+	-+- lib1
+         +- project1/Makefile -- refers to ../lib1
+         +- project2/Makefile -- refers to ../lib1
+
+The top-level superproject (what you called "Anything") binds project1,
+project2 and lib1 as its submodules, and it can say where you want your
+users to fetch these submodules in its .gitmodules, and at what version
+lib1 (and projects) to use in its tree objects as gitlinks.
+
+People who are _only_ interested in project1 can still clone that
+top-level superproject, and "submodule init" only lib1 and project1,
+without running "submodule init" on project2.
+
+An interesting point your situation raises is that there is no direct way
+to express module dependencies in .gitmodules file right now, I think.
+Ideally you would want "submodule init project1" to infer automatically
+that project1 needs lib1 and run "submodule init lib1" for you. My gut
+feeling is that it belongs to .gitmodules of the superproject.
