@@ -1,71 +1,67 @@
 From: Greg Price <price@MIT.EDU>
-Subject: Re: [PATCH 4/6] rebase: --rewrite-{refs,heads,tags} to pull refs
-	along with branch
-Date: Tue, 28 Jun 2011 07:19:07 -0400
-Message-ID: <20110628111907.GV5771@dr-wily.mit.edu>
-References: <cover.1309133817.git.greg@quora.com> <c2d11ffe876a540b6fad46e2ecc57a24018cfb73.1309133817.git.greg@quora.com> <4E08ABBB.9060009@cisco.com>
+Subject: Re: [PATCH 6/6] rebase --rewrite-refs: tests
+Date: Tue, 28 Jun 2011 07:20:12 -0400
+Message-ID: <20110628112012.GW5771@dr-wily.mit.edu>
+References: <cover.1309133817.git.greg@quora.com> <ab6d17ba0ea919e0f873597b60d6c7e9a43460c8.1309133817.git.greg@quora.com> <7vy60nugwj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Phil Hord <hordp@cisco.com>
-X-From: git-owner@vger.kernel.org Tue Jun 28 13:20:55 2011
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 28 13:38:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QbWLZ-0001OH-Sy
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Jun 2011 13:20:50 +0200
+	id 1QbWcC-0001Al-5W
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Jun 2011 13:38:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756676Ab1F1LUE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jun 2011 07:20:04 -0400
-Received: from DMZ-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.37]:42319 "EHLO
-	dmz-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756749Ab1F1LTL (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2011 07:19:11 -0400
-X-AuditID: 12074425-b7b82ae000000a2a-4a-4e09b889d505
-Received: from mailhub-auth-4.mit.edu ( [18.7.62.39])
-	by dmz-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 1C.A4.02602.988B90E4; Tue, 28 Jun 2011 07:18:33 -0400 (EDT)
+	id S1757227Ab1F1LVh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jun 2011 07:21:37 -0400
+Received: from DMZ-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.36]:56938 "EHLO
+	dmz-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755022Ab1F1LUO (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2011 07:20:14 -0400
+X-AuditID: 12074424-b7bc6ae000005a77-8b-4e09b8ed43b3
+Received: from mailhub-auth-1.mit.edu ( [18.9.21.35])
+	by dmz-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 98.9D.23159.DE8B90E4; Tue, 28 Jun 2011 07:20:13 -0400 (EDT)
 Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-4.mit.edu (8.13.8/8.9.2) with ESMTP id p5SBJ9V7007675;
-	Tue, 28 Jun 2011 07:19:09 -0400
+	by mailhub-auth-1.mit.edu (8.13.8/8.9.2) with ESMTP id p5SBKDgn008102;
+	Tue, 28 Jun 2011 07:20:13 -0400
 Received: from localhost (DR-WILY.MIT.EDU [18.181.0.233])
 	(authenticated bits=0)
         (User authenticated as price@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id p5SBJ7XU016795;
-	Tue, 28 Jun 2011 07:19:08 -0400 (EDT)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id p5SBKCA4016885;
+	Tue, 28 Jun 2011 07:20:12 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <4E08ABBB.9060009@cisco.com>
+In-Reply-To: <7vy60nugwj.fsf@alter.siamese.dyndns.org>
 User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrLIsWRmVeSWpSXmKPExsUixG6nrtu5g9PPoG+LrEXXlW4mi4beK8wW
-	p45+Z3Vg9pjyeyOrx8VLyh6fN8kFMEdx2aSk5mSWpRbp2yVwZbSeucxW8Ii5YsvPWYwNjD+Z
-	uhg5OSQETCR+r+hihLDFJC7cW8/WxcjFISSwj1Fi79HrzBDOBkaJlnttUM4XRon2ueeBHHYO
-	FgFViReOIM1sAgoSP+avYwaxRQTkJZomXQRbwCxgLbHs9DMWEFtYIFbi04PLrCA2r4CxxKTm
-	PnaIkdMZJV4emAmVEJQ4OfMJC0SzlsSNfy+BBnEA2dISy/9xgIQ5BTQlpp3/wQoSFhVQkVi1
-	NHMCo+AsJM2zkDTPQmhewMi8ilE2JbdKNzcxM6c4NVm3ODkxLy+1SNdCLzezRC81pXQTIziU
-	XVR3ME44pHSIUYCDUYmHl2klh58Qa2JZcWXuIUZJDiYlUd7ObZx+QnxJ+SmVGYnFGfFFpTmp
-	xYcYJTiYlUR4pxoB5XhTEiurUovyYVLSHCxK4rwh3v99hQTSE0tSs1NTC1KLYLIyHBxKEry2
-	24EaBYtS01Mr0jJzShDSTBycIMN5gIZvB6nhLS5IzC3OTIfIn2JUlBLnrQFJCIAkMkrz4Hph
-	qeYVozjQK8K8y0GqeIBpCq77FdBgJqDBZbVgg0sSEVJSDYxTjj3VC/jRVZQhHh2XIlxtuff7
-	z+ll/ivSFTc85L+x5oJ1z/bZsdyxTlcsHlzsvBq0SEFp5tt12x6L6hWL9zDyL00wUp7Uv3HL
-	q8MlqW7ly6d9DFrxQy9lhvfji/JNxl9EmHr+C8vdrg69O+fvnS/NvTXdnCeMWZaH 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrAIsWRmVeSWpSXmKPExsUixCmqrPt2B6efwdJWc4uuK91MFg29V5gd
+	mDwuXlL2+LxJLoApissmJTUnsyy1SN8ugSvj69Pd7AVtTBW/t25jamA8z9jFyMkhIWAi8eHT
+	QVYIW0ziwr31bF2MXBxCAvsYJabNuM0K4WxglNj07zNYlZDAF0aJixs5QGwWAVWJK+s3gE1i
+	E1CQ+DF/HTOILSKgJjGx7RALiM0sIC6xbu559i5GDg5hAVOJ/rdmICavgLHEvsZ0iIlLGCVO
+	XU0GsXkFBCVOznwC1aklcePfSyaQcmYBaYnl/zhATE4BM4n973JATFEBFYlVSzMnMArOQtI7
+	C0nvLITeBYzMqxhlU3KrdHMTM3OKU5N1i5MT8/JSi3TN9XIzS/RSU0o3MYIClt1FZQdj8yGl
+	Q4wCHIxKPLyMKzn8hFgTy4orcw8xSnIwKYnyGgDDXYgvKT+lMiOxOCO+qDQntfgQowQHs5II
+	71QjoBxvSmJlVWpRPkxKmoNFSZy31Pu/r5BAemJJanZqakFqEUxWhoNDSYL323agRsGi1PTU
+	irTMnBKENBMHJ8hwHqDhYIt5iwsSc4sz0yHypxgVpcR5dUASAiCJjNI8uF5YQnnFKA70ijCv
+	KkgVDzAZwXW/AhrMBDS4rBZscEkiQkqqgbHD/sFDDZeWZwtbpSUSDkpc8+BUmOjsz1sz/dDE
+	pXMljCJM1I2UXLfvlZYyu7tqf4TtP67/2+OKbjOpisRfc3ab1hPh/++0cLpr9d2EmQFSew66
+	b1Z2/G0m2H3VN/bblfJKnW6VKZXnc3Y3ZAlHCRcI7Pq56JnCYmuBuUtnzZg8Lf1h 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176394>
 
-On Mon, Jun 27, 2011 at 12:11:39PM -0400, Phil Hord wrote:
-> On 11/18/2009 06:51 PM, Greg Price wrote:
-> > @@ -96,6 +99,7 @@ state_dir=
-> >  # One of {'', continue, skip, abort}, as parsed from command line
-> >  action=
-> >  preserve_merges=
-> > +rebase_refs=
-> >  autosquash=
-> >  test "$(git config --bool rebase.autosquash)" = "true" && autosquash=t
-> I think you meant to spell that "rewrite_refs=" instead of "rebase_refs=".
+On Mon, Jun 27, 2011 at 02:02:36PM -0700, Junio C Hamano wrote:
+> Greg Price <price@MIT.EDU> writes:
+> 
+> > diff --git a/t/t3420-rebase-ref.sh b/t/t3420-rebase-ref.sh
+> > new file mode 100644
+> 
+> Forgot the executable bit?
 
-Ha, so I did.  Fixed.  Thanks!
+Yup, thanks, fixed.
 
 Greg
