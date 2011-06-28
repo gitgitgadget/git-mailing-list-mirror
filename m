@@ -1,103 +1,56 @@
-From: Massimo Manca <massimo.manca@micronengineering.it>
-Subject: Re: refactoring in GIT
-Date: Tue, 28 Jun 2011 17:27:09 +0200
-Organization: Micron Engineering
-Message-ID: <4E09F2CD.6060309@micronengineering.it>
-References: <loom.20110628T151105-908@post.gmane.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] rebase: do not print lots of usage hints after an
+ obvious error message
+Date: Tue, 28 Jun 2011 11:54:34 -0400
+Message-ID: <20110628155434.GA3747@sigill.intra.peff.net>
+References: <4E09CD16.2040800@viscovery.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------000803030603070201040701"
-Cc: git@vger.kernel.org
-To: eugene <eugene@oggtrading.com>
-X-From: git-owner@vger.kernel.org Tue Jun 28 17:50:26 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Jun 28 18:23:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QbaYL-0001Vk-3P
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Jun 2011 17:50:17 +0200
+	id 1Qbb4S-00080I-PU
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Jun 2011 18:23:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757863Ab1F1Pfq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jun 2011 11:35:46 -0400
-Received: from smtplq-out15.aruba.it ([62.149.158.35]:48541 "HELO
-	smtplq02.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1756377Ab1F1Peu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2011 11:34:50 -0400
-X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Tue, 28 Jun 2011 11:34:49 EDT
-Received: (qmail 30720 invoked by uid 89); 28 Jun 2011 15:28:07 -0000
-Received: from unknown (HELO smtp4.aruba.it) (62.149.158.224)
-  by smtplq02.aruba.it with SMTP; 28 Jun 2011 15:28:07 -0000
-Received: (qmail 13149 invoked by uid 89); 28 Jun 2011 15:28:07 -0000
-Received: from unknown (HELO ?127.0.0.1?) (tecoff@micronengineering.it@83.211.66.238)
-  by smtp4.ad.aruba.it with ESMTPA; 28 Jun 2011 15:28:06 -0000
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; it; rv:1.9.2.17) Gecko/20110414 Lightning/1.0b2 Thunderbird/3.1.10
-In-Reply-To: <loom.20110628T151105-908@post.gmane.org>
-X-Enigmail-Version: 1.1.1
-X-Antivirus: avast! (VPS 110628-0, 28/06/2011), Outbound message
-X-Antivirus-Status: Clean
-X-Spam-Rating: smtplq02.aruba.it 1.6.2 0/1000/N
+	id S1757984Ab1F1Pz7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jun 2011 11:55:59 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46489
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758524Ab1F1Pyj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2011 11:54:39 -0400
+Received: (qmail 8972 invoked by uid 107); 28 Jun 2011 15:54:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 28 Jun 2011 11:54:55 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Jun 2011 11:54:34 -0400
+Content-Disposition: inline
+In-Reply-To: <4E09CD16.2040800@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176405>
 
-This is a multi-part message in MIME format.
---------------000803030603070201040701
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
+On Tue, Jun 28, 2011 at 02:46:14PM +0200, Johannes Sixt wrote:
 
-Il 28/06/2011 15.19, eugene ha scritto:
+> The error message was introduced recently by 4ac5356c (rebase: give a
+> better error message for bogus branch, 2011-01-27), and the result was
+> acceptable because the usage text was just two lines. But 45e2acf3
+> (rebase: define options in OPTIONS_SPEC, 2011-02-28) made things worse
+> because the usage text is now 35 lines.
+> 
+> Just drop the usage information because it does not add value to the
+> error message.
 
-Hi,
- I'm new to GIT and have two questions about code refactoring. 
+Acked-by: Jeff King <peff@peff.net>
 
-#1. I want to refactor class A into few classes B,C,D. How should I check them 
-in and mark class A inactive so that development on A stops?
+A git-sh-setup function to print just the summary bit of the usage would
+restore the original behavior, but I agree it's not really adding
+anything.
 
-You can't. 
-If you are working on a shared repository you have to modify the code in your private repository (or working directory), then verify if in the mean time another developer changed something, eventually apply other modification to your code (merge) and solve conflicts manually (if there are) in your working directory/private repository. After this you can push your code to the shared repository.
-
- Note, I do need A 
-stay in repository for backward compt. with prior code releases.
-
-#2. [related question] What if another developer already had A in his local 
-repository, made changes and wants to commit after me. I just made A obsolete. 
-Does he have drop his changes and take B,C,D from me and/or merge?
-
-Same as for #1. The last developer that modifies module A has to update other modifications BEFORE and then apply her modifications.
-
-Shortly: git doesn't block anything unstead git permits to merge changes coming from more the one developer.
-
-It is my opinion that 2 developers haven't to work on the same module at the same time, but this for me is an organization matter it isn't related to git.
-
-Sorry if this question was already answered, pls point me.
-
-Thanks,
-Eugene
-
-
-
---------------000803030603070201040701
-Content-Type: text/x-vcard; charset=utf-8;
- name="massimo_manca.vcf"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="massimo_manca.vcf"
-
-begin:vcard
-fn:Massimo Manca
-n:Manca;Massimo
-org:Micron Engineering di Massimo Manca
-adr:;;via della Ferriera, 48;Pordenone;PN;33170;ITALIA
-email;internet:massimo.manca@micronengineering.it
-tel;work:+39 0434 1856131
-tel;fax:+39 0434 1851032 / 178 273 3543
-tel;cell:+39 349 4504979
-url:http://www.micronengineering.it
-version:2.1
-end:vcard
-
-
---------------000803030603070201040701--
+-Peff
