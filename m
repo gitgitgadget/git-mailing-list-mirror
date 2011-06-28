@@ -1,78 +1,72 @@
-From: Christof =?iso-8859-1?Q?Kr=FCger?= <git@christof-krueger.de>
-Subject: Re: refactoring in GIT
-Date: Tue, 28 Jun 2011 17:59:37 +0200 (CEST)
-Message-ID: <1a25cfcef173d20a259950d6829b2611.squirrel@mail.localhost.li>
-References: <loom.20110628T151105-908@post.gmane.org>
+From: Steffen Daode Nurpmeso <sdaoden@googlemail.com>
+Subject: Re: [PATCH] progress: use \r as EOL only if isatty(stderr) is true
+Date: Tue, 28 Jun 2011 18:51:53 +0200
+Message-ID: <20110628165153.GA59095@sherwood.local>
+References: <1309272009-23076-1-git-send-email-sdaoden@gmail.com>
+ <BANLkTinRe=pA=_obCmPKBjJMXH_pDfwCtw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: "eugene" <eugene@oggtrading.com>
-X-From: git-owner@vger.kernel.org Tue Jun 28 18:23:36 2011
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 28 18:56:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qbb4Z-00080I-Rz
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Jun 2011 18:23:36 +0200
+	id 1QbbaE-0006Ri-Se
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Jun 2011 18:56:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758167Ab1F1QBV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jun 2011 12:01:21 -0400
-Received: from vserver.localhost.li ([85.214.46.152]:52240 "EHLO
-	mail.localhost.li" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758114Ab1F1P7l (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2011 11:59:41 -0400
-Received: from localhost ([127.0.0.1]:60491 helo=mail.localhost.li)
-	by mail.localhost.li with esmtp (Exim 4.69)
-	(envelope-from <git@christof-krueger.de>)
-	id 1QbahN-00026f-ER; Tue, 28 Jun 2011 17:59:38 +0200
-Received: from 194.39.218.10
-        (SquirrelMail authenticated user mail@christof-krueger.de)
-        by mail.localhost.li with HTTP;
-        Tue, 28 Jun 2011 17:59:37 +0200 (CEST)
-In-Reply-To: <loom.20110628T151105-908@post.gmane.org>
-User-Agent: SquirrelMail/1.4.15
-X-Priority: 3 (Normal)
-Importance: Normal
-X-Spam-Score: 0.0 (/)
-X-Spam-Report: none
+	id S1759924Ab1F1Qyo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jun 2011 12:54:44 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:46273 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757988Ab1F1QwD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2011 12:52:03 -0400
+Received: by bwd5 with SMTP id 5so340827bwd.19
+        for <git@vger.kernel.org>; Tue, 28 Jun 2011 09:52:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=IKeRgAD/Eg+xaOyZLKqjQvHjiEkvrzHgeDFYVlFFpuQ=;
+        b=UCBfRQgWfniXRYofqBowBitA8wVb93MebnT/75KC+Ay30yMJj57VjNg9D0SHbHb1Id
+         kf7jGQIO4KXmoJwzf/58osvBXJaQFLfCNfgqou7UceP3F2Dql0lx3NxRjRr+/ai3nAU/
+         AXow2mosSVEuE+SIx8o+N87ClUJ1wjvXdLbWQ=
+Received: by 10.204.46.227 with SMTP id k35mr424192bkf.104.1309279921365;
+        Tue, 28 Jun 2011 09:52:01 -0700 (PDT)
+Received: from sherwood.local ([82.113.99.172])
+        by mx.google.com with ESMTPS id k16sm361727bks.13.2011.06.28.09.51.59
+        (version=SSLv3 cipher=OTHER);
+        Tue, 28 Jun 2011 09:52:00 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <BANLkTinRe=pA=_obCmPKBjJMXH_pDfwCtw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176407>
 
-Hi Eugene
+@ Tay Ray Chuan <rctay89@gmail.com> wrote (2011-06-28 18:27+0200):
+> hmm, shouldn't the onus of checking tty fall on to callers of
+> progress* functions?
 
-> #1. I want to refactor class A into few classes B,C,D. How should I check
-> them
-> in and mark class A inactive so that development on A stops? Note, I do
-> need A
-> stay in repository for backward compt. with prior code releases.
-Well, if you really need to keep that file, how about a huge comment at
-the beginning of the file?  Or move its content somewhere else and
-#include it from the original file.
-Git really can't help you here. This is a communication issue within your
-project.  Resulting from its distributed design git does not have a global
-"lock" feature that could be misused for that matter.
+I dunno and have no overview of the git(1) codebase.  I have a
+"arena/code.extern.repos/" directory tree and use a shell script
+which manages it (e.g.  "$ arena-manager update" to pull all repos).
+The output of this script is (also) redirected into a log file via
+tee(1), and for git(1) invocations the resulting output is not very
+useful.
 
-> #2. [related question] What if another developer already had A in his
-> local
-> repository, made changes and wants to commit after me. I just made A
-> obsolete.
-> Does he have drop his changes and take B,C,D from me and/or merge?
-Git can't help you here either.
-If your changes don't conflict with their changes, they won't notice if
-they do not examine your changes. This again is a
-communication/coordination issue, not a git one. However, if you had moved
-"A" away or changed every line, the other developers would get a conflict
-when trying to pull your stuff.
+I agree that it is maybe silly to not use --no-progress from within
+the script (the script comes from cvs(1) background).  Maybe i should
+change it to not use git porcelain but directly script the plumbing -
+:-) -, but i am *very* new to git(1) and in the meanwhile this simple
+patch pimps up my log output.
 
-Further, git obviously won't automatically refactor other developers code
-to match your changes. Depending on the complexity of your refactoring,
-you might be able to play around with patches manually.
-
-The least thing you can do is to inform the other developers about your
-changes and apologize for not telling them that you planned to make A
-obsolete in advance ;)
+--
+Ciao, Steffen
+sdaoden(*)(gmail.com)
+() ascii ribbon campaign - against html e-mail
+/\ www.asciiribbon.org - against proprietary attachments
