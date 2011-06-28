@@ -1,64 +1,85 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: tracking submodules out of main directory.
-Date: Tue, 28 Jun 2011 09:37:52 +0200
-Message-ID: <4E0984D0.80506@web.de>
-References: <1309180056.2497.220.camel@Naugrim.eriador.com>	 <7vvcvrxlol.fsf@alter.siamese.dyndns.org> <4E08C89E.5020109@web.de>	 <7vvcvrw0vn.fsf@alter.siamese.dyndns.org> <1309211460.2497.395.camel@Naugrim.eriador.com> <4E0980D5.8040004@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: henri GEIST <henri.geist@flying-robots.com>
-X-From: git-owner@vger.kernel.org Tue Jun 28 09:40:33 2011
+From: Fredrik Kuivinen <frekui@gmail.com>
+Subject: [PATCH] Makefile: Use computed header dependencies if the compiler supports it
+Date: Tue, 28 Jun 2011 11:21:25 +0200
+Message-ID: <1309252885-14361-1-git-send-email-frekui@gmail.com>
+Cc: Fredrik Kuivinen <frekui@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 28 11:24:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QbSuO-0005cn-Rs
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Jun 2011 09:40:33 +0200
+	id 1QbUWf-0007vn-Mg
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Jun 2011 11:24:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756671Ab1F1HjI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jun 2011 03:39:08 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:44989 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754630Ab1F1Hh4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2011 03:37:56 -0400
-Received: from smtp08.web.de  ( [172.20.5.216])
-	by fmmailgate03.web.de (Postfix) with ESMTP id D1D36192E28B5;
-	Tue, 28 Jun 2011 09:37:54 +0200 (CEST)
-Received: from [93.246.58.144] (helo=[192.168.178.43])
-	by smtp08.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1QbSrq-0003l4-00; Tue, 28 Jun 2011 09:37:54 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.18) Gecko/20110616 Lightning/1.0b2 Thunderbird/3.1.11
-In-Reply-To: <4E0980D5.8040004@web.de>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1+IbnW/TyZgfFhpEqLHPcOHNniJSAK4yqSBEtye
-	YXeSAdgE2I7jxRFR2kA/s1f0WGRL73Or2ErN9Mgej1ybOLNXy7
-	PfbRr/oE7pL4oy3n3Q/A==
+	id S1756843Ab1F1JW5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jun 2011 05:22:57 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:62163 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756823Ab1F1JVs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2011 05:21:48 -0400
+Received: by bwd5 with SMTP id 5so24312bwd.19
+        for <git@vger.kernel.org>; Tue, 28 Jun 2011 02:21:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=4HFsDvEIVR+qTqd/aKlQbgCedUPPiF5laVhQRGASTdc=;
+        b=glanNvctNWR96NFErhLiOVv0AZNXsv0bT04FQa8N/wgj5W+DiGGVKHSc4PXQ4PqhAx
+         deWuhKes0EhnwkM9bYsnScHG1dC3P/c1LcRARILcA4dN4RXEVhIxhkxD1RYF3zoeDcUR
+         Ran6NmRGYedtvU78bPasaCsHvHyaFxcbBLO3Y=
+Received: by 10.204.65.19 with SMTP id g19mr5328609bki.49.1309252906818;
+        Tue, 28 Jun 2011 02:21:46 -0700 (PDT)
+Received: from localhost.localdomain (c83-250-151-53.bredband.comhem.se [83.250.151.53])
+        by mx.google.com with ESMTPS id l24sm517bkw.15.2011.06.28.02.21.45
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 28 Jun 2011 02:21:46 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.3.368.g8b1b7.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176388>
 
-Am 28.06.2011 09:20, schrieb Jens Lehmann:
->> This could be a way if .gitmodules can contain something like
->>
->> 	[module "project one"]
->> 		path = project1
->>         	url = ...
->>                 depends = lib1	"123456"
->> 	[module "project two"]
->> 		path = project2
->>         	url = ...
->>                 depends = lib1	"abcdef"
->> 	[module "lib1"]
->>         	path = lib1
->>                 url = ...
-> 
-> But there is no need for that as "123456" and "abcdef" are already present
-> as the sha1 values for the gitlinks "lib1" and "lib2".
+Previously you had to manually define COMPUTE_HEADER_DEPENDENCIES to
+enable this feature. It seemed a bit sad that such a useful feature
+had to be enabled manually.
 
-... but of course you would have to decide which sha1 is the right one for
-lib1, while your proposal offers two contradicting sha1s (note to self: must
-drink coffee *before* answering emails in the morning ;-)
+Signed-off-by: Fredrik Kuivinen <frekui@gmail.com>
+---
+ Makefile |   13 +++++++++----
+ 1 files changed, 9 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index e40ac0c..3b9efac 100644
+--- a/Makefile
++++ b/Makefile
+@@ -243,10 +243,6 @@ all::
+ #   DEFAULT_EDITOR='$GIT_FALLBACK_EDITOR',
+ #   DEFAULT_EDITOR='"C:\Program Files\Vim\gvim.exe" --nofork'
+ #
+-# Define COMPUTE_HEADER_DEPENDENCIES if your compiler supports the -MMD option
+-# and you want to avoid rebuilding objects when an unrelated header file
+-# changes.
+-#
+ # Define CHECK_HEADER_DEPENDENCIES to check for problems in the hard-coded
+ # dependency rules.
+ #
+@@ -1211,6 +1207,15 @@ endif
+ ifdef CHECK_HEADER_DEPENDENCIES
+ COMPUTE_HEADER_DEPENDENCIES =
+ USE_COMPUTED_HEADER_DEPENDENCIES =
++else
++dep_check = $(shell sh -c \
++	': > ++empty.c; \
++	$(CC) -c -MF /dev/null -MMD -MP ++empty.c -o /dev/null 2>&1; \
++	echo $$?; \
++	$(RM) ++empty.c')
++ifeq ($(dep_check),0)
++COMPUTE_HEADER_DEPENDENCIES=YesPlease
++endif
+ endif
+ 
+ ifdef COMPUTE_HEADER_DEPENDENCIES
+-- 
+1.7.5.3.368.g8b1b7.dirty
