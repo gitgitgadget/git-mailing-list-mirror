@@ -1,68 +1,139 @@
-From: Steffen Daode Nurpmeso <sdaoden@googlemail.com>
-Subject: Re: [PATCH] progress: use \r as EOL only if isatty(stderr) is true
-Date: Tue, 28 Jun 2011 20:55:56 +0200
-Message-ID: <20110628185556.GB385@sherwood.local>
-References: <1309272009-23076-1-git-send-email-sdaoden@gmail.com>
- <7vwrg5u7oz.fsf@alter.siamese.dyndns.org>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [RFC 2/2] Don't push a repository with unpushed submodules
+Date: Tue, 28 Jun 2011 21:30:35 +0200
+Message-ID: <20110628193034.GB3700@book.hvoigt.net>
+References: <1309112987-3185-1-git-send-email-iveqy@iveqy.com> <1309112987-3185-3-git-send-email-iveqy@iveqy.com> <7v1uydvmh0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org,
+	jens.lehmann@web.de
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 28 21:10:32 2011
+X-From: git-owner@vger.kernel.org Tue Jun 28 21:30:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qbdg7-00075e-L1
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Jun 2011 21:10:32 +0200
+	id 1Qbdzm-0007Mn-Fv
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Jun 2011 21:30:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760857Ab1F1S5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jun 2011 14:57:14 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:46965 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760694Ab1F1S4E (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2011 14:56:04 -0400
-Received: by bwd5 with SMTP id 5so424575bwd.19
-        for <git@vger.kernel.org>; Tue, 28 Jun 2011 11:56:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=/hLmI8mUTSDbpXTHvGZm8D7PHrFkBoMh3gqJjjh92HU=;
-        b=tP27smMPCYRslqp0PoFcRR1cRItTfjt0EDMkWaRZXO1ME8Vv6ASU2Avmanamzyx+xb
-         wTMDGHsWjtRTVqSJkiwzq7Fhyg+Hy5tWQc4qCJbGJXe2TdMBHQ7D2qu5ZgilU4c5wNVx
-         GeZJtGfFO9eiYuhtB/JiHx6gb6s1H10NHTFhc=
-Received: by 10.205.81.76 with SMTP id zx12mr6005098bkb.82.1309287363437;
-        Tue, 28 Jun 2011 11:56:03 -0700 (PDT)
-Received: from sherwood.local ([82.113.99.172])
-        by mx.google.com with ESMTPS id l24sm444506bkw.15.2011.06.28.11.56.01
-        (version=SSLv3 cipher=OTHER);
-        Tue, 28 Jun 2011 11:56:02 -0700 (PDT)
+	id S1752184Ab1F1Tap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jun 2011 15:30:45 -0400
+Received: from darksea.de ([83.133.111.250]:52835 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751123Ab1F1Tal (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2011 15:30:41 -0400
+Received: (qmail 10457 invoked from network); 28 Jun 2011 21:30:35 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 28 Jun 2011 21:30:35 +0200
 Content-Disposition: inline
-In-Reply-To: <7vwrg5u7oz.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <7v1uydvmh0.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176417>
 
-@ Junio C Hamano <gitster@pobox.com> wrote (2011-06-28 20:33+0200):
-> [..]
-> I thought that we try to disable the progress pretty much
-> everywhere when we are not talking to a tty[..]
+Hi,
 
-That is to say, at least some kind of progress_maybe_applicable()
-or the like, instead of having things like
+On Tue, Jun 28, 2011 at 11:29:15AM -0700, Junio C Hamano wrote:
+> Fredrik Gustafsson <iveqy@iveqy.com> writes:
+> 
+> > +static int is_submodule_commit_pushed(const char *path, const unsigned char sha1[20])
+> > +{
+> > +	int is_pushed = 0;
+> > +	if (!add_submodule_odb(path) && lookup_commit_reference(sha1)) {
+> > +		struct child_process cp;
+> > +		const char *argv[] = {"rev-list", NULL, "--not", "--remotes", "-n", "1" , NULL};
+> > +		struct strbuf buf = STRBUF_INIT;
+> > +
+> > +		argv[1] = sha1_to_hex(sha1);
+> > +		memset(&cp, 0, sizeof(cp));
+> > +		cp.argv = argv;
+> > +		cp.env = local_repo_env;
+> > +		cp.git_cmd = 1;
+> > +		cp.no_stdin = 1;
+> > +		cp.out = -1;
+> > +		cp.dir = path;
+> > +		if (!run_command(&cp) && !strbuf_read(&buf, cp.out, 41))
+> > +			is_pushed = 1;
+> > +		close(cp.out);
+> > +		strbuf_release(&buf);
+> > +	}
+> 
+> What if
+> 
+>  (1) you are binding somebody else's project as your own submodule, you do
+>      not make any local changes (you won't be pushing them out anyway),
+>      and you do not have remote tracking branches in that submodule
+>      project?
 
-    builtin/pack-objects.c: progress = isatty(2);
+In this scenario the superproject can not be cloned that way that it
+would contain the submodule right? I would consider this a rather exotic
+way to work since pushing means to share your work somehow. This way you
+would share your work in the superproject but not from the submodule?
+How about not doing the is-pushed check when the submodule has no
+remotes? If we assume that only people having remote tracking branches
+want to share them via push this would allow your usecase.
 
-spread out in the code, and just see what 'git grep -F isatty'
-reports ...
+>  (2) you have a project you can push to that is bound as a submodule, you
+>      have pushed the commit that is bound in the superproject's tree to
+>      that submodule project, but you do not have remote tracking branches
+>      in that submodule project?
 
---
-Ciao, Steffen
-sdaoden(*)(gmail.com)
-() ascii ribbon campaign - against html e-mail
-/\ www.asciiribbon.org - against proprietary attachments
+This could also be solved with the above proposal.
+
+>  (3) you have a project you can push to that is bound as a submodule, you
+>      have multiple remotes defined (e.g. one for the public server you
+>      intend for this check to be in effect, the other is just for your
+>      private backup), and you have pushed the necessary commit to your
+>      backup but not to the public one?
+> 
+> The above check would fail in cases (1) and (2) even though it does not
+> have to. It would succeed in case (3), but people would not be able to use
+> the superproject as the necessary commit is not there but only on your
+> work and backup repositories.
+> 
+> What am I missing?
+> 
+> I am not sure if the check imposed on the client end is such a great
+> idea.
+
+This check is solely meant as a convenience security measure. It should
+and can not enforce a tight check whether a superproject (including its
+submodules) can be cloned/checked out at all times. But it ensures that
+a developer has pushed his submodule commits "somewhere" which is enough
+in practice.
+
+One typical scenario is that people are working together using shared
+remotes. In this scenario this patch provides a consistency check which
+catches typical mistakes.
+
+If you fork a project you might change or add a new url for a submodule
+locally since you cannot directly push to upstream. This is situation 3
+in your above description. All people working with you know which url
+you are using for the submodule. In this situation the check helps you
+and can not be enforced on the remote side since only the client knows
+which remotes the submodule has.
+
+Maybe we should provide a configuration option for this check so that
+people who know what they are doing could switch it off?
+
+> I suspect that it would depend on the superproject which submodule
+> commit must exist "out there" for others to fetch. If you assume a closed
+> environment where all the superprojects and necessary submodule projects
+> are housed at a central location everybody pushes into and have tight
+> control over how project participants clone and check out the
+> superprojects and submodules, you do not have to worry about any of the
+> above, but then the server-side can perform the check when it accepts a
+> push (and you would already be doing other checks there in your hooks
+> anyway in the industrial setup, I would guess).
+
+As mentioned above a check on the remote end is only applicable if you
+have a certain defined remote for the submodule in a superproject. This
+also has to be in an environment which has control over all
+projects/submodules. The presented solution does not just cover that but
+also the case where you fork and use different remotes than upstream.
+
+Cheers Heiko
