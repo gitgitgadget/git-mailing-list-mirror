@@ -1,92 +1,76 @@
-From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Subject: Submodule URL
-Date: Mon, 27 Jun 2011 15:38:01 -0700
-Message-ID: <BANLkTikyZxiW_t27Y4bXCPBjbJd_DYbOyw@mail.gmail.com>
+From: Phil Hord <hordp@cisco.com>
+Subject: Re: [GSoC 11 submodule] Status update
+Date: Mon, 27 Jun 2011 20:29:18 -0400
+Message-ID: <4E09205E.2080904@cisco.com>
+References: <20110627193444.GA26778@paksenarrion.iveqy.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=20cf305b126630e30d04a6b93411
-To: Git Users <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 28 00:42:38 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, hvoigt@hvoigt.net, jens.lehmann@web.de
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Tue Jun 28 02:32:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QbKVp-0001EM-Na
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Jun 2011 00:42:38 +0200
+	id 1QbME6-0005D4-FS
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Jun 2011 02:32:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755156Ab1F0WjF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jun 2011 18:39:05 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:46780 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754456Ab1F0WiD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2011 18:38:03 -0400
-Received: by gyh3 with SMTP id 3so2026833gyh.19
-        for <git@vger.kernel.org>; Mon, 27 Jun 2011 15:38:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=QLr1g7IrIesn6SJwsbtZEiGf8BBWZE+oBNMU1afEhHM=;
-        b=RtHFCgzyFHr7awfQ8c8+1iJ6SBWakvZavhisP73efyJkyt6Wcx8MikljFMyvkBjRDT
-         U8BtlbgnkUfNifCgiAXJMyRFCiDMPiHr4dm8GL0qsqZbIBc7TxlUfjDn+fqD+VSimUp0
-         P8xPm/S8vZwXtmGZF0zSwLt1u+54xk5UBBn7o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=Av4wUE7xnM/kOIcoMannsEjuONSseWWJZfQbZqN61mbbn7/tmqBenYZlNIxo2YrIup
-         wArzGuhES6Y0WyQPe8Xb/ICo3INy0eYn3r6eYvZ1FGjI0ThavtaHPyBMMRGawO5jMfqC
-         8KSJdCNPu+KPRVlSggVz3p3iXkmFx4cOj4fz4=
-Received: by 10.236.181.39 with SMTP id k27mr10628527yhm.7.1309214281622; Mon,
- 27 Jun 2011 15:38:01 -0700 (PDT)
-Received: by 10.236.202.65 with HTTP; Mon, 27 Jun 2011 15:38:01 -0700 (PDT)
+	id S1753982Ab1F1AbS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jun 2011 20:31:18 -0400
+Received: from sj-iport-2.cisco.com ([171.71.176.71]:32187 "EHLO
+	sj-iport-2.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755592Ab1F1AaQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2011 20:30:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=hordp@cisco.com; l=908; q=dns/txt;
+  s=iport; t=1309221016; x=1310430616;
+  h=message-id:date:from:mime-version:to:cc:subject:
+   references:in-reply-to:content-transfer-encoding;
+  bh=wRWnJGtI9IZX1KAAo74vKxxtpH9bOXqm595xzaIZP7Q=;
+  b=RBdj0x3h8oBRsHgA2pp1VcTLUPmSXjDtU8peg99wdXhgvOhfQJAbIf7P
+   gbpY+V3vlqjs49RaA91v+OD5I4FpdM6BLzarppfIihogqhaEGjfgh6iRZ
+   S5bD2WgDeJr8tgym+m1cGw0z3uIeihjBa3FR+t4b1GxMwFk1GOXNpHaXL
+   g=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av0EAHwfCU6rRDoJ/2dsb2JhbABSpzh3qxieK4YwBJIDhG6LSQ
+X-IronPort-AV: E=Sophos;i="4.65,435,1304294400"; 
+   d="scan'208";a="387324946"
+Received: from mtv-core-4.cisco.com ([171.68.58.9])
+  by sj-iport-2.cisco.com with ESMTP; 28 Jun 2011 00:30:15 +0000
+Received: from [10.117.80.100] (rtp-hordp-8913.cisco.com [10.117.80.100])
+	by mtv-core-4.cisco.com (8.14.3/8.14.3) with ESMTP id p5S0UEil017446;
+	Tue, 28 Jun 2011 00:30:15 GMT
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110516 Lightning/1.0b2 Thunderbird/3.1.10
+In-Reply-To: <20110627193444.GA26778@paksenarrion.iveqy.com>
+X-Enigmail-Version: 1.1.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176377>
 
---20cf305b126630e30d04a6b93411
-Content-Type: text/plain; charset=UTF-8
+Hi Fredrik and git-submodule folks,
 
-Hi all,
+On 06/27/2011 03:34 PM, Fredrik Gustafsson wrote:
+> My fourth task (and the main task of this summer) will start on June 27 and
+> will be to move a submodules .git-dir into the super-projects .git-dir.
+> Design of this is already done and approved by my mentors.
 
-As I was creating a script to support a question about submodules I
-ran into something that I don't understand. I've attached a simple
-script that fails to execute properly. I don't understand why.
+This frightens me a bit, so I read the wiki link about it.  Thanks for
+explaining where I can find this information.
 
-In essence, I'm setting up 2 separate, bare repositories on the local
-file system. One is intended to be a submodule, the other the umbrella
-project. I then try to clone the umbrella project. Although I use
-complete, absolute file:// URLs git submodule update --init fails
-because .gitmodules uses a relative URL instead of the absolute URL I
-provided initially. (Naturally, a relative URL could work too but it
-would have to be a different one.) :-)
+But I'm still confused.
 
-Should I use a different syntax? Or are file:// URLs not supported for
-submodules? Or am I simply misunderstanding how this is supposed to
-work?
+If I understand right, the submodule/.git dirs will be moved into the
+top-level at .git/submodule/.git.  The benefit is supposed to be that
+this will free up contention on the non-empty submodule directory when
+the super-project switches branches.
 
-Cheers,
-Hilco
+In the simple case, git warns "unable to rmdir sub: Directory not
+empty".  But I can think of other conflicts as well.
 
---20cf305b126630e30d04a6b93411
-Content-Type: application/octet-stream; name=submodule-repo
-Content-Disposition: attachment; filename=submodule-repo
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_gpg00qk10
+My question is, how does this proposed change help the situation?
 
-IyEvYmluL2Jhc2gKClJPT1Q9JChwd2QpCkRJUj0kUk9PVC8kKGRhdGUgKyVZJW0lZCVIJU0lUykK
-ClJFTU9URT0kRElSL3JlbW90ZQpMT0NBTD0kRElSL2xvY2FsCgpta2RpciAtcCAkTE9DQUwKCmNk
-ICRMT0NBTApnaXQgaW5pdCAtLWJhcmUgJFJFTU9URS90aGUtbW9kdWxlLXJlcG8KZ2l0IGNsb25l
-IGZpbGU6Ly8kUkVNT1RFL3RoZS1tb2R1bGUtcmVwbyB0aGUtbW9kdWxlCmNkIHRoZS1tb2R1bGUK
-dG91Y2ggdGhlLW1vZHVsZS1maWxlLnR4dApnaXQgYWRkIHRoZS1tb2R1bGUtZmlsZS50eHQKZ2l0
-IGNvbW1pdCAtbSAnVmVyc2lvbiAxLicKZ2l0IHB1c2ggb3JpZ2luIG1hc3RlcgpybSAtcmYgJExP
-Q0FML3RoZS1tb2R1bGUKCmNkICRMT0NBTApnaXQgaW5pdCAtLWJhcmUgJFJFTU9URS91bWJyZWxs
-YS1yZXBvCmdpdCBjbG9uZSBmaWxlOi8vJFJFTU9URS91bWJyZWxsYS1yZXBvIHVtYnJlbGxhCmNk
-IHVtYnJlbGxhCnRvdWNoIGZpbGUudHh0CmdpdCBhZGQgZmlsZS50eHQKZ2l0IGNsb25lIGZpbGU6
-Ly8kUkVNT1RFL3RoZS1tb2R1bGUtcmVwbyB0aGUtbW9kdWxlCmdpdCBzdWJtb2R1bGUgYWRkIC4v
-dGhlLW1vZHVsZQpnaXQgY29tbWl0IC1tICdWZXJzaW9uIDEuJwpnaXQgcHVzaCBvcmlnaW4gbWFz
-dGVyCnJtIC1yZiAkTE9DQUwvdW1icmVsbGEKCmNkICRMT0NBTApnaXQgY2xvbmUgZmlsZTovLyRS
-RU1PVEUvdW1icmVsbGEtcmVwbyB1bWJyZWxsYQpjZCB1bWJyZWxsYQpnaXQgY2hlY2tvdXQgbWFz
-dGVyCmdpdCBzdWJtb2R1bGUgdXBkYXRlIC0taW5pdCAtLXJlY3Vyc2l2ZQo=
---20cf305b126630e30d04a6b93411--
+Phil
