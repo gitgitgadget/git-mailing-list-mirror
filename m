@@ -1,85 +1,84 @@
-From: Fredrik Kuivinen <frekui@gmail.com>
-Subject: [PATCH] Makefile: Use computed header dependencies if the compiler supports it
-Date: Tue, 28 Jun 2011 11:21:25 +0200
-Message-ID: <1309252885-14361-1-git-send-email-frekui@gmail.com>
-Cc: Fredrik Kuivinen <frekui@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 28 11:24:10 2011
+From: Alexei Sholik <alcosholik@gmail.com>
+Subject: Re: tracking submodules out of main directory.
+Date: Tue, 28 Jun 2011 13:05:10 +0300
+Message-ID: <BANLkTimsfR4LqDAci0Vr+m9uUE_W-7OSAw@mail.gmail.com>
+References: <1309180056.2497.220.camel@Naugrim.eriador.com>
+	<7vvcvrxlol.fsf@alter.siamese.dyndns.org>
+	<4E08C89E.5020109@web.de>
+	<7vvcvrw0vn.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	henri GEIST <henri.geist@flying-robots.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 28 12:09:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QbUWf-0007vn-Mg
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Jun 2011 11:24:10 +0200
+	id 1QbVEn-00008X-30
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Jun 2011 12:09:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756843Ab1F1JW5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jun 2011 05:22:57 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:62163 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756823Ab1F1JVs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2011 05:21:48 -0400
-Received: by bwd5 with SMTP id 5so24312bwd.19
-        for <git@vger.kernel.org>; Tue, 28 Jun 2011 02:21:46 -0700 (PDT)
+	id S1756037Ab1F1KH0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Jun 2011 06:07:26 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:61461 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756573Ab1F1KFL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2011 06:05:11 -0400
+Received: by gwaa18 with SMTP id a18so2612gwa.19
+        for <git@vger.kernel.org>; Tue, 28 Jun 2011 03:05:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=4HFsDvEIVR+qTqd/aKlQbgCedUPPiF5laVhQRGASTdc=;
-        b=glanNvctNWR96NFErhLiOVv0AZNXsv0bT04FQa8N/wgj5W+DiGGVKHSc4PXQ4PqhAx
-         deWuhKes0EhnwkM9bYsnScHG1dC3P/c1LcRARILcA4dN4RXEVhIxhkxD1RYF3zoeDcUR
-         Ran6NmRGYedtvU78bPasaCsHvHyaFxcbBLO3Y=
-Received: by 10.204.65.19 with SMTP id g19mr5328609bki.49.1309252906818;
-        Tue, 28 Jun 2011 02:21:46 -0700 (PDT)
-Received: from localhost.localdomain (c83-250-151-53.bredband.comhem.se [83.250.151.53])
-        by mx.google.com with ESMTPS id l24sm517bkw.15.2011.06.28.02.21.45
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 28 Jun 2011 02:21:46 -0700 (PDT)
-X-Mailer: git-send-email 1.7.5.3.368.g8b1b7.dirty
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=ndgcwxz4pdEXmt6hQfD1SvT9QLpSmkuVQH0YHbkB4S8=;
+        b=OS4KOP998aYjIThtkfy2vjS6Xd6MGDMh+QgYsSCkxIlNbslWm+iz9gQYCvXQuTd/yW
+         U7o2DNUAFNNiIN+/kQ+ONX1pbk77vJZWoM1h+KSTVAMkJbJ/Y3iqHeTLQ+OM98QJQLsL
+         FfSORu0We/zr4gQloc7VIUytB4/eW2CXY/IIM=
+Received: by 10.236.157.67 with SMTP id n43mr10593247yhk.95.1309255510505;
+ Tue, 28 Jun 2011 03:05:10 -0700 (PDT)
+Received: by 10.146.168.16 with HTTP; Tue, 28 Jun 2011 03:05:10 -0700 (PDT)
+In-Reply-To: <7vvcvrw0vn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176389>
 
-Previously you had to manually define COMPUTE_HEADER_DEPENDENCIES to
-enable this feature. It seemed a bit sad that such a useful feature
-had to be enabled manually.
+On 27 June 2011 22:05, Junio C Hamano <gitster@pobox.com> wrote:
+> That is what I called "there is no direct way". Wouldn't it be nicer =
+if
+> the .gitmodules file in the superproject said something like
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0[module "project one"]
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0path =3D proje=
+ct1
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0url =3D ...
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0depends =3D li=
+b1
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0[module "lib1"]
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0path =3D lib1
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0url =3D ...
+>
+> and then "git submodule init project1" run by the end user implied ru=
+nning
+> also "git submodule init lib1"?
 
-Signed-off-by: Fredrik Kuivinen <frekui@gmail.com>
----
- Makefile |   13 +++++++++----
- 1 files changed, 9 insertions(+), 4 deletions(-)
+This is a very nice idea. In my workflow, I find it that I more often
+need to clone a repo _including_ its submodules, because the top-level
+project won't compile without them. If we had a way to specify
+dependencies on submodules, `git pull` could automatically init and
+update them.
 
-diff --git a/Makefile b/Makefile
-index e40ac0c..3b9efac 100644
---- a/Makefile
-+++ b/Makefile
-@@ -243,10 +243,6 @@ all::
- #   DEFAULT_EDITOR='$GIT_FALLBACK_EDITOR',
- #   DEFAULT_EDITOR='"C:\Program Files\Vim\gvim.exe" --nofork'
- #
--# Define COMPUTE_HEADER_DEPENDENCIES if your compiler supports the -MMD option
--# and you want to avoid rebuilding objects when an unrelated header file
--# changes.
--#
- # Define CHECK_HEADER_DEPENDENCIES to check for problems in the hard-coded
- # dependency rules.
- #
-@@ -1211,6 +1207,15 @@ endif
- ifdef CHECK_HEADER_DEPENDENCIES
- COMPUTE_HEADER_DEPENDENCIES =
- USE_COMPUTED_HEADER_DEPENDENCIES =
-+else
-+dep_check = $(shell sh -c \
-+	': > ++empty.c; \
-+	$(CC) -c -MF /dev/null -MMD -MP ++empty.c -o /dev/null 2>&1; \
-+	echo $$?; \
-+	$(RM) ++empty.c')
-+ifeq ($(dep_check),0)
-+COMPUTE_HEADER_DEPENDENCIES=YesPlease
-+endif
- endif
- 
- ifdef COMPUTE_HEADER_DEPENDENCIES
--- 
-1.7.5.3.368.g8b1b7.dirty
+If a user really wants to clone only the top-level repo without
+submodules, git could provide him with an option for `git pull` (like
+`git pull --shallow`) to do just that. I think this second scenario is
+less common, so it is more reasonable to have a '--shallow' option for
+it, instead of '--recursive' counterpart.
+
+--=20
+Best regards,
+Alexei Sholik
