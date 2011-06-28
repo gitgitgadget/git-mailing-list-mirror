@@ -1,76 +1,95 @@
-From: Phil Hord <hordp@cisco.com>
-Subject: Re: [GSoC 11 submodule] Status update
-Date: Mon, 27 Jun 2011 20:29:18 -0400
-Message-ID: <4E09205E.2080904@cisco.com>
-References: <20110627193444.GA26778@paksenarrion.iveqy.com>
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: Re: Submodule URL
+Date: Mon, 27 Jun 2011 18:28:18 -0700
+Message-ID: <BANLkTinSbV4MQhM5zCDg7WtxKyBMWEqXaw@mail.gmail.com>
+References: <BANLkTikyZxiW_t27Y4bXCPBjbJd_DYbOyw@mail.gmail.com>
+	<201106272258.p5RMwOxK028539@no.baka.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, hvoigt@hvoigt.net, jens.lehmann@web.de
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Tue Jun 28 02:32:27 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Users <git@vger.kernel.org>
+To: Seth Robertson <in-gitvger@baka.org>
+X-From: git-owner@vger.kernel.org Tue Jun 28 03:36:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QbME6-0005D4-FS
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Jun 2011 02:32:26 +0200
+	id 1QbNDc-00079e-Ho
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Jun 2011 03:36:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753982Ab1F1AbS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jun 2011 20:31:18 -0400
-Received: from sj-iport-2.cisco.com ([171.71.176.71]:32187 "EHLO
-	sj-iport-2.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755592Ab1F1AaQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2011 20:30:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=hordp@cisco.com; l=908; q=dns/txt;
-  s=iport; t=1309221016; x=1310430616;
-  h=message-id:date:from:mime-version:to:cc:subject:
-   references:in-reply-to:content-transfer-encoding;
-  bh=wRWnJGtI9IZX1KAAo74vKxxtpH9bOXqm595xzaIZP7Q=;
-  b=RBdj0x3h8oBRsHgA2pp1VcTLUPmSXjDtU8peg99wdXhgvOhfQJAbIf7P
-   gbpY+V3vlqjs49RaA91v+OD5I4FpdM6BLzarppfIihogqhaEGjfgh6iRZ
-   S5bD2WgDeJr8tgym+m1cGw0z3uIeihjBa3FR+t4b1GxMwFk1GOXNpHaXL
-   g=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Av0EAHwfCU6rRDoJ/2dsb2JhbABSpzh3qxieK4YwBJIDhG6LSQ
-X-IronPort-AV: E=Sophos;i="4.65,435,1304294400"; 
-   d="scan'208";a="387324946"
-Received: from mtv-core-4.cisco.com ([171.68.58.9])
-  by sj-iport-2.cisco.com with ESMTP; 28 Jun 2011 00:30:15 +0000
-Received: from [10.117.80.100] (rtp-hordp-8913.cisco.com [10.117.80.100])
-	by mtv-core-4.cisco.com (8.14.3/8.14.3) with ESMTP id p5S0UEil017446;
-	Tue, 28 Jun 2011 00:30:15 GMT
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110516 Lightning/1.0b2 Thunderbird/3.1.10
-In-Reply-To: <20110627193444.GA26778@paksenarrion.iveqy.com>
-X-Enigmail-Version: 1.1.2
+	id S1756118Ab1F1B3Q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Jun 2011 21:29:16 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:55729 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755919Ab1F1B2T convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Jun 2011 21:28:19 -0400
+Received: by yia27 with SMTP id 27so2066062yia.19
+        for <git@vger.kernel.org>; Mon, 27 Jun 2011 18:28:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=6g6G12t4JkHtUNGx7oV+M/nt10KXl7TV4/q4SzHdwi0=;
+        b=RvZyIUmKFnmvE8v8bTk4EUAmC3diBmfuaW1gEAdmSGIrDz2kgqFhc9PjnOqeGS7xET
+         4JT+6HMT5uEBaW03ZJ9GYLGiT6OPlzc2SmFvaVatGRycDK9cLjWa7iOhji2GDb498KA4
+         AUM8nTh5iuQa3dCv6s16KzEastTB+RsQQHhKk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=LZoOiMOgbQlgF2S75mblcJIGGSjNRnhoX+hfYEBhkdmPyG3mjdugwOUpCOfZh0XBfO
+         2SW6sSkRmyUkAsaCwXM208/pSrTgvl0m94cOeWwukpsiIoDe4jWLzRO7DLo6b1YiBIPk
+         1FqG+LtFEqUmRlRq8/vIxxXM7CHsKa/PX7haI=
+Received: by 10.236.145.2 with SMTP id o2mr9551105yhj.141.1309224498150; Mon,
+ 27 Jun 2011 18:28:18 -0700 (PDT)
+Received: by 10.236.202.65 with HTTP; Mon, 27 Jun 2011 18:28:18 -0700 (PDT)
+In-Reply-To: <201106272258.p5RMwOxK028539@no.baka.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176378>
 
-Hi Fredrik and git-submodule folks,
+On 27 June 2011 15:58, Seth Robertson <in-gitvger@baka.org> wrote:
+> In message <BANLkTikyZxiW_t27Y4bXCPBjbJd_DYbOyw@mail.gmail.com>, Hilc=
+o Wijbenga writes:
+>
+> =C2=A0 =C2=A0As I was creating a script to support a question about s=
+ubmodules I
+> =C2=A0 =C2=A0ran into something that I don't understand. I've attache=
+d a simple
+> =C2=A0 =C2=A0script that fails to execute properly. I don't understan=
+d why.
+>
+> Perhaps you should consider gitslave as an alternative to
+> git-submodule, depending on your development workflow it may be bette=
+r
+> (or worse).
 
-On 06/27/2011 03:34 PM, Fredrik Gustafsson wrote:
-> My fourth task (and the main task of this summer) will start on June 27 and
-> will be to move a submodules .git-dir into the super-projects .git-dir.
-> Design of this is already done and approved by my mentors.
+=46YI, yes, somebody read the entire tutorial and learnt something. ;-)
 
-This frightens me a bit, so I read the wiki link about it.  Thanks for
-explaining where I can find this information.
+> gitslave (http://gitslave.sf.net) is useful when you control and
+> develop on the subprojects at more of less the same time as the
+> superproject, and furthermore when you typically want to tag, branch,
+> push, pull, etc all repositories at the same time.
 
-But I'm still confused.
+:-) Perfect! That's seems to be *exactly* what I need.
 
-If I understand right, the submodule/.git dirs will be moved into the
-top-level at .git/submodule/.git.  The benefit is supposed to be that
-this will free up contention on the non-empty submodule directory when
-the super-project switches branches.
+How hard is it to turn an umbrella project with content and quite a
+few submodules (only 1 level deep) into a gitslave repo?
 
-In the simple case, git warns "unable to rmdir sub: Directory not
-empty".  But I can think of other conflicts as well.
+> git-submodule is better when you do not control the subprojects or
+> more specifically wish to fix the subproject at a specific revision
+> even as the subproject changes
+>
+> However, more directly to your question, we see that using absolute
+> pathnames (not file: URLs) works. =C2=A0See
+> https://git.wiki.kernel.org/index.php/GitSubmoduleTutorial
+>
+> If this works for you and file:// does not, I'd say it was a bug in
+> git.
 
-My question is, how does this proposed change help the situation?
-
-Phil
+Well, it seems like a bug to me then. Still, maybe I made a mistake in
+my script. I hope somebody else can chime in too.
