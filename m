@@ -1,89 +1,72 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH] Documentation: quote double-dash in "<commit> -- <filename>"
- for AsciiDoc
-Date: Tue, 28 Jun 2011 12:17:49 -0500
-Message-ID: <20110628171748.GA11485@elie>
+From: Steffen Daode Nurpmeso <sdaoden@googlemail.com>
+Subject: Re: [PATCH] progress: use \r as EOL only if isatty(stderr) is true
+Date: Tue, 28 Jun 2011 20:04:39 +0200
+Message-ID: <20110628180439.GA86588@sherwood.local>
+References: <1309272009-23076-1-git-send-email-sdaoden@gmail.com>
+ <BANLkTinRe=pA=_obCmPKBjJMXH_pDfwCtw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 28 19:32:11 2011
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 28 20:26:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qbc8e-00065t-PJ
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Jun 2011 19:31:53 +0200
+	id 1QbczF-00047P-J7
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Jun 2011 20:26:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757441Ab1F1RTq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jun 2011 13:19:46 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:45557 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760087Ab1F1RR5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2011 13:17:57 -0400
-Received: by iyb12 with SMTP id 12so322552iyb.19
-        for <git@vger.kernel.org>; Tue, 28 Jun 2011 10:17:57 -0700 (PDT)
+	id S1753589Ab1F1SFp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jun 2011 14:05:45 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:37970 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760402Ab1F1SEs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2011 14:04:48 -0400
+Received: by bwd5 with SMTP id 5so390944bwd.19
+        for <git@vger.kernel.org>; Tue, 28 Jun 2011 11:04:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=WJyjmrT4nCxzst/bj89ZNnvSABfSOGjYX2P6NKd93Po=;
-        b=OD5E/l/RIUKWFvpEVyytQd7RcvQMt0Sgs4ggcVG9MQxwNqKRX7Leys+5iewBHFxMmg
-         /W+NhKvIV3tDUuHrVdAwhnMoiMI+OMm011TVVDoeDY+6R/nHgVZJkUacv+D55Q8bW2Ad
-         FFOhuMYKyuca0+yOdJK0zoxY0BQ8bH0sKNCa8=
-Received: by 10.42.117.73 with SMTP id s9mr9209804icq.250.1309281476228;
-        Tue, 28 Jun 2011 10:17:56 -0700 (PDT)
-Received: from elie (adsl-69-209-66-254.dsl.chcgil.sbcglobal.net [69.209.66.254])
-        by mx.google.com with ESMTPS id hp8sm287451icc.11.2011.06.28.10.17.54
+        d=googlemail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=lLEzm3G0dVmirHXF6PG/eLGbHDeGpFZXhUhF5MyjzdM=;
+        b=dyl4NGvW/XlNegb8ScUJnK6mLR9yOevtJoqhJLLCDFSfAxOTA1JbmjTBgZhJmb6rMA
+         TCUcHBq/1Xsq7NAXaRhLFGl8j6UYdKjbB4HzZVNtJv0pkkDLLqsDBUOYModcTugh4dMc
+         p2ANhCrgHQ895ENk1HMdGIhSfy0jTXNbB03sk=
+Received: by 10.204.19.19 with SMTP id y19mr5707816bka.164.1309284286324;
+        Tue, 28 Jun 2011 11:04:46 -0700 (PDT)
+Received: from sherwood.local ([82.113.99.172])
+        by mx.google.com with ESMTPS id u6sm404293bkj.6.2011.06.28.11.04.44
         (version=SSLv3 cipher=OTHER);
-        Tue, 28 Jun 2011 10:17:55 -0700 (PDT)
+        Tue, 28 Jun 2011 11:04:45 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <BANLkTinRe=pA=_obCmPKBjJMXH_pDfwCtw@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176411>
 
-As explained in v1.7.3-rc0~13^2 (Work around em-dash handling in newer
-AsciiDoc, 2010-08-23), outside of verbatim environments, newish
-versions of AsciiDoc will convert double hyphens to en dashes.  Use
-the litdd syntax introduced by that patch to avoid such misformatting
-in sentences where "--" represents the two-character "end of options"
-argument that separates revision names from filename patterns.
+@ Tay Ray Chuan <rctay89@gmail.com> wrote (2011-06-28 18:27+0200):
+> hmm, shouldn't the onus of checking tty fall on to callers of
+> progress* functions?
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- Documentation/git-commit.txt |    2 +-
- Documentation/git-revert.txt |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Ok, in the meanwhile i have understood what you ment, but
+unfortunately i have thrown away the logfile which caused me to
+write the patch, and even more unfortunately i could not reproduce
+in the last hour or what any 'xy  ^Mxy  ^M' dump with the current
+state of the repos.  A short 'git grep -F progress' is useless
+from my current point of view (and with the amount of my free
+time).  The script contains these git(1) related commands anyway:
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 7951cb7b..1764cf10 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -284,7 +284,7 @@ When recording your own work, the contents of modified files in
- your working tree are temporarily stored to a staging area
- called the "index" with 'git add'.  A file can be
- reverted back, only in the index but not in the working tree,
--to that of the last commit with `git reset HEAD -- <file>`,
-+to that of the last commit with `git reset HEAD {litdd} <file>`,
- which effectively reverts 'git add' and prevents the changes to
- this file from participating in the next commit.  After building
- the state to be committed incrementally with these commands,
-diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
-index ac10cfbb..a516d577 100644
---- a/Documentation/git-revert.txt
-+++ b/Documentation/git-revert.txt
-@@ -23,7 +23,7 @@ throw away all uncommitted changes in your working directory, you
- should see linkgit:git-reset[1], particularly the '--hard' option.  If
- you want to extract specific files as they were in another commit, you
- should see linkgit:git-checkout[1], specifically the `git checkout
--<commit> -- <filename>` syntax.  Take care with these alternatives as
-+<commit> {litdd} <filename>` syntax.  Take care with these alternatives as
- both will discard uncommitted changes in your working directory.
- 
- OPTIONS
--- 
-1.7.6.rc3
+    git pull -v --ff-only --stat --prune && git gc
+    git svn rebase [not at the time of the log: && git gc]
+
+But that is true: i have had a log file with the mentioned content.
+
+--
+Ciao, Steffen
+sdaoden(*)(gmail.com)
+() ascii ribbon campaign - against html e-mail
+/\ www.asciiribbon.org - against proprietary attachments
