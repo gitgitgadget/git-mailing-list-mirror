@@ -1,84 +1,148 @@
-From: Alexei Sholik <alcosholik@gmail.com>
-Subject: Re: tracking submodules out of main directory.
-Date: Tue, 28 Jun 2011 13:05:10 +0300
-Message-ID: <BANLkTimsfR4LqDAci0Vr+m9uUE_W-7OSAw@mail.gmail.com>
-References: <1309180056.2497.220.camel@Naugrim.eriador.com>
-	<7vvcvrxlol.fsf@alter.siamese.dyndns.org>
-	<4E08C89E.5020109@web.de>
-	<7vvcvrw0vn.fsf@alter.siamese.dyndns.org>
+From: Greg Price <price@MIT.EDU>
+Subject: Re: Fwd: [PATCH 0/6] rebase: command "ref" and options
+	--rewrite-{refs,heads,tags}
+Date: Tue, 28 Jun 2011 06:47:58 -0400
+Message-ID: <20110628104758.GS5771@dr-wily.mit.edu>
+References: <cover.1309133817.git.greg@quora.com> <7vhb7bxgt9.fsf@alter.siamese.dyndns.org> <BANLkTinDFYsw7-N=_Ex8i42So_0LzVAWvA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	henri GEIST <henri.geist@flying-robots.com>,
-	git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 28 12:09:48 2011
+X-From: git-owner@vger.kernel.org Tue Jun 28 13:01:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QbVEn-00008X-30
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Jun 2011 12:09:45 +0200
+	id 1QbW2r-0001BD-Mh
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Jun 2011 13:01:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756037Ab1F1KH0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Jun 2011 06:07:26 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:61461 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756573Ab1F1KFL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2011 06:05:11 -0400
-Received: by gwaa18 with SMTP id a18so2612gwa.19
-        for <git@vger.kernel.org>; Tue, 28 Jun 2011 03:05:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ndgcwxz4pdEXmt6hQfD1SvT9QLpSmkuVQH0YHbkB4S8=;
-        b=OS4KOP998aYjIThtkfy2vjS6Xd6MGDMh+QgYsSCkxIlNbslWm+iz9gQYCvXQuTd/yW
-         U7o2DNUAFNNiIN+/kQ+ONX1pbk77vJZWoM1h+KSTVAMkJbJ/Y3iqHeTLQ+OM98QJQLsL
-         FfSORu0We/zr4gQloc7VIUytB4/eW2CXY/IIM=
-Received: by 10.236.157.67 with SMTP id n43mr10593247yhk.95.1309255510505;
- Tue, 28 Jun 2011 03:05:10 -0700 (PDT)
-Received: by 10.146.168.16 with HTTP; Tue, 28 Jun 2011 03:05:10 -0700 (PDT)
-In-Reply-To: <7vvcvrw0vn.fsf@alter.siamese.dyndns.org>
+	id S1756811Ab1F1Kt1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Jun 2011 06:49:27 -0400
+Received: from DMZ-MAILSEC-SCANNER-4.MIT.EDU ([18.9.25.15]:45621 "EHLO
+	dmz-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755066Ab1F1KsC (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2011 06:48:02 -0400
+X-AuditID: 1209190f-b7b0eae000000a42-d3-4e09b1623fc5
+Received: from mailhub-auth-1.mit.edu ( [18.9.21.35])
+	by dmz-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id A3.E9.02626.261B90E4; Tue, 28 Jun 2011 06:48:02 -0400 (EDT)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by mailhub-auth-1.mit.edu (8.13.8/8.9.2) with ESMTP id p5SAm0jB006405;
+	Tue, 28 Jun 2011 06:48:00 -0400
+Received: from localhost (DR-WILY.MIT.EDU [18.181.0.233])
+	(authenticated bits=0)
+        (User authenticated as price@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id p5SAlwjH014497;
+	Tue, 28 Jun 2011 06:47:59 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <7vhb7bxgt9.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuphleLIzCtJLcpLzFFi42IR4hRV1k3ayOln0D3Z0qLrSjeTRUPvFWYH
+	Jo+Ll5Q9Pm+SC2CK4rJJSc3JLEst0rdL4Mr4sze84JtUxZ7DX5gbGGeLdjFyckgImEg82HqS
+	FcIWk7hwbz1bFyMXh5DAPkaJldN3MkE4Gxgl1vzpgnK+MEq0rH/FDtLCIqAqcbHlGSOIzSag
+	IPFj/jpmEFtEQE1iYtshFhCbWUBcYt3c82D1wgKxEveeLGQCsXkFjCWWTz7OCDF0AqPEwRNf
+	GSESghInZz6BataR2Ln1DtBNHEC2tMTyfxwQYXmJ5q2zwXZxCphJ3Nq0mR2kRFRARWLV0swJ
+	jEKzkAyahWTQLIRBs5AMWsDIsopRNiW3Sjc3MTOnODVZtzg5MS8vtUjXRC83s0QvNaV0EyM4
+	0CX5dzB+O6h0iFGAg1GJh5dpJYefEGtiWXFl7iFGSQ4mJVHevA2cfkJ8SfkplRmJxRnxRaU5
+	qcWHGCU4mJVEeKcaAeV4UxIrq1KL8mFS0hwsSuK85d7/fYUE0hNLUrNTUwtSi2CyMhwcShK8
+	60GGChalpqdWpGXmlCCkmTg4QYbzAA1fCVLDW1yQmFucmQ6RP8WoKCXOuwIkIQCSyCjNg+uF
+	JaJXjOJArwjz3gep4gEmMbjuV0CDmYAGl9WCDS5JREhJNTAGMv79Y/9rivEKAweVg7sunKvN
+	+8qaqObvejOu7dQ2na91OVaSZ7heME/6XuoZtnVZk+HLA2tS15V3Vf2SOD3zn0ruo+k7d+R7
+	JE9Ov+r1WculO1Ciw+neXa53bDnrnl5r3TJLI7nOunOn/AvWFuEJtxf33uU5f89E 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176390>
 
-On 27 June 2011 22:05, Junio C Hamano <gitster@pobox.com> wrote:
-> That is what I called "there is no direct way". Wouldn't it be nicer =
-if
-> the .gitmodules file in the superproject said something like
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0[module "project one"]
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0path =3D proje=
-ct1
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0url =3D ...
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0depends =3D li=
-b1
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0[module "lib1"]
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0path =3D lib1
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0url =3D ...
->
-> and then "git submodule init project1" run by the end user implied ru=
-nning
-> also "git submodule init lib1"?
+On Mon, Jun 27, 2011 at 11:36 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Thanks for a re-roll.
+>=20
+> I notice that this does not address the "side branch" issue raised du=
+ring
+> the original discussion. I do agree with Michael
+>=20
+> =A0http://thread.gmane.org/gmane.comp.version-control.git/135601/focu=
+s=3D135617
+>=20
+> that having some commits on these part$N side branches is far more co=
+mmon
+> use case that would benefit from a "rewrite together" feature like th=
+is,
+> than moving part$N side branches that just mark points in the topic
+> without doing anything on their own and makes me doubt if doing only =
+the
+> parts that can sanely done within the limitation of the current rebas=
+e-i
+> implementation like this series does adds much value to the system [*=
+1*].
 
-This is a very nice idea. In my workflow, I find it that I more often
-need to clone a repo _including_ its submodules, because the top-level
-project won't compile without them. If we had a way to specify
-dependencies on submodules, `git pull` could automatically init and
-update them.
+I would also like to support that use case.  In my personal
+experience, the case where the part$N are ancestors of the topic has
+actually been the more common case; typically it's that part1 is some
+topic, and then part2 is a further topic that depends on the changes
+in part1, so naturally it goes directly on top of it.  So I'd be
+pleased to get the functionality of the present series in, even before
+supporting the more general case.
 
-If a user really wants to clone only the top-level repo without
-submodules, git could provide him with an option for `git pull` (like
-`git pull --shallow`) to do just that. I think this second scenario is
-less common, so it is more reasonable to have a '--shallow' option for
-it, instead of '--recursive' counterpart.
+I agree with your footnote -- the more general case will require a
+more powerful sequencer to support properly.  And now I see that
+Ramkumar Ramachandra is making progress on such a thing right now!
+That's great news -- this is a project that has been attempted at
+least four times, by five people (including me), in the last three
+years.  I hope to see this round make it in -- I was actually thinking
+about returning to the problem after seeing this series through, but I
+would be glad to see Ram beat me to it.
 
---=20
-Best regards,
-Alexei Sholik
+When the more powerful sequencer comes along, it may be necessary to
+rewrite some of this code in C (IIUC how the new sequencer will work),
+but that shouldn't be hard, and is probably easier starting from a
+shell version than from scratch.  Other than that, this code should go
+in smoothly as the main ingredient, other than the sequencer itself,
+needed for the general "rewrite side branches" feature.  With that and
+because this series is independently useful, my suggestion would be to
+merge it when it's ready in itself, without waiting for the sequencer.
+
+
+
+> It would be nice to have a clear definition of what _should_ happen i=
+n
+> this case, and a test that makes sure that that is the behaviour we g=
+et.
+>=20
+> Starting from this topology
+>=20
+> =A0 =A0 =A0 =A0 =A01 =A0 2 =A0 topic
+> =A0A---X---Y---Z---W
+> =A0 \
+> =A0 =A0B
+>=20
+> where the change going from A to B is an equilvalent to the change go=
+ing
+> from Y to Z, a rebase of A..W would reproduce this topology:
+>=20
+>=20
+> =A0 =A0 =A0 =A0 =A01 =A0 2 =A0 topic
+> =A0A---X---Y---Z---W
+> =A0 \
+> =A0 =A0B---X'--Y'--W'
+> =A0 =A0 =A0 =A0 =A0 =A01' =A0topic'
+>=20
+> What should heppen to ref2? Should it be deleted? Should it point at =
+Y'?
+
+I would have it point at Y'.  That's what would happen if we just said
+"git rebase B ref2" (or threw in --rewrite-heads to pull along ref1),
+and I think it makes the most sense to be consistent.
+
+This consistency also means we can think of the reset that rebase
+performs when it finishes as equivalent to an implicit
+"ref refs/heads/topic" command at the end of the TODO file, which I
+wouldn't point out in explaining to a beginner but I think is a nice
+property for "ref" to have.
+
+I'll add a test for this scenario.
+
+Greg
