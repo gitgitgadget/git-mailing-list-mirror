@@ -1,90 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] progress: use \r as EOL only if isatty(stderr) is true
-Date: Tue, 28 Jun 2011 18:45:16 -0400
-Message-ID: <20110628224516.GB4192@sigill.intra.peff.net>
-References: <1309272009-23076-1-git-send-email-sdaoden@gmail.com>
- <7vwrg5u7oz.fsf@alter.siamese.dyndns.org>
+From: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+Subject: Re: Indelible actions only
+Date: Wed, 29 Jun 2011 00:45:19 +0200
+Message-ID: <20110628224519.GA11733@centaur.lab.cmartin.tk>
+References: <BANLkTinUSoB=GGe+qXpPh+WFgRU2S2jnGw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Steffen Daode Nurpmeso <sdaoden@googlemail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 29 00:45:35 2011
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="AqsLC8rIMeq19msA"
+Cc: git@vger.kernel.org
+To: Walther Bauer <2313218@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 29 00:45:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qbh2F-0002ud-ET
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Jun 2011 00:45:35 +0200
+	id 1Qbh2G-0002ud-0P
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Jun 2011 00:45:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751276Ab1F1WpU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jun 2011 18:45:20 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39045
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750948Ab1F1WpS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2011 18:45:18 -0400
-Received: (qmail 11153 invoked by uid 107); 28 Jun 2011 22:45:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 28 Jun 2011 18:45:35 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Jun 2011 18:45:16 -0400
+	id S1751289Ab1F1WpY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jun 2011 18:45:24 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:38008 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751230Ab1F1WpT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2011 18:45:19 -0400
+Received: from centaur.lab.cmartin.tk (brln-4db9fa7d.pool.mediaWays.net [77.185.250.125])
+	by kimmy.cmartin.tk (Postfix) with ESMTPA id BA7FF461F0;
+	Wed, 29 Jun 2011 00:44:42 +0200 (CEST)
+Received: (nullmailer pid 12465 invoked by uid 1000);
+	Tue, 28 Jun 2011 22:45:19 -0000
+Mail-Followup-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	Walther Bauer <2313218@googlemail.com>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vwrg5u7oz.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <BANLkTinUSoB=GGe+qXpPh+WFgRU2S2jnGw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176428>
 
-On Tue, Jun 28, 2011 at 11:33:48AM -0700, Junio C Hamano wrote:
 
-> > So far progress always uses \r to produce one-line output on stderr.
-> > This only produces useful and easy parsable output if stderr is opened
-> > on a file which does interpret CR as a real carriage return operation.
-> > This patch changes EOL to the plain newline \n control if isatty() is
-> > false instead.
-> >
-> > Signed-off-by: Steffen Daode Nurpmeso <sdaoden@gmail.com>
-> 
-> I kind of like this patch, in the sense that if there is a sane scenario
-> to emit progress to non-tty, we should do just LF not CRLF, but I would
-> like to know the real motivation behind this proposal.
-> 
-> I thought that we try to disable the progress pretty much everywhere when
-> we are not talking to a tty, so ugliness coming from many CRLF appearing
-> in the cron e-mail shouldn't be the issue.
+--AqsLC8rIMeq19msA
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-We certainly do try to turn off progress reporting when stderr isn't a
-tty. So unless "--progress" is being given explicitly, seeing it is a
-bug that should be fixed.
+On Wed, Jun 29, 2011 at 12:18:36AM +0200, Walther Bauer wrote:
+> Hello,
+> how do I configure a git repository in a way, that no modifications of
+> existing history (eg "commit --amend", "branch -d", "rebase") are
+> allowed?
 
-I'm not sure dropping the CR is a good thing, though. One of the uses
-for forcing output to a non-terminal via "--progress", is that something
-_else_ is going to parse the output. And that other thing gets useful
-information from the carriage returns.
+=46rom the git-config man page
 
-For example, you may be piping into a file or a fifo and running 'tail'
-to a terminal on the other end. You want the CR because we are
-ultimately going to a terminal.
+       receive.denyNonFastForwards
+           If set to true, git-receive-pack will deny a ref update which is
+           not a fast-forward. Use this to prevent such an update via a pus=
+h,
+           even if that push is forced. This configuration variable is set
+           when initializing a shared repository.
 
-Another example: you write a GUI wrapper around git that captures and
-parses stderr. You show progress and informative messages in a running
-dialog. The difference between CR and LF is important. The former means
-"clear the progress line and show this new one instead"; the latter
-means "keep this on the screen and show more lines".
 
-I'm willing to accept that there are use cases where you don't want the
-CRs, but just want a list of lines[1]. But it seems like this change
-hurts some existing use cases.
+so set that variable to true. This has to be in the repository you use
+to synchronize. IIRC it can't be avoided locally (but that's not a
+problem, because you shouldn't be working directly on the public repo
+anyway).
 
--Peff
+Cheers,
+   cmn
+--=20
+Carlos Mart=C3=ADn Nieto | http://cmartin.tk
 
-[1] Actually, I would be curious to see such a use case. If you are
-planning on saving the output, is it really useful to have a hundred
-lines saying:
+"=C2=BFC=C3=B3mo voy a decir bobadas si soy mudo?" -- CACHAI
 
-  Compressing objects 1% (100/10000)
-  Compressing objects 2% (200/10000)
+--AqsLC8rIMeq19msA
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-and so forth?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAEBAgAGBQJOCll+AAoJEHKRP1jG7ZzTGSUH/23J4Rys/rVwOKKWlbKgqSYl
+tjxaU7xHFYVq8s/yWwVL7OmzTli+pTEB+PpJI+wdPmEqZs7iTNfdDDFwcDUe2iO5
+USmUFIykxKKK89g3imxt6ZTrtP9bAYW1+khyh7qDVQyZ9qmN8lQNaRZheiz6K0Mi
+ZUl9Lz9t814WAvBAWBjJoEAap0Lmcomq0hHxDSDSc5Tfv2875idwl/VFuSRfnmsM
+M6pqa4GxZK1YeCBOfatRdBHTPZwRecaoH3jf187QH0bM/ac7rHjBw9N0JukIqrsa
+TJJulsY3llAcsTHlqrDyvydqgPpfIiU34O7pt3LehoBoWtUaFKZL6kqohEFod7E=
+=iQZm
+-----END PGP SIGNATURE-----
+
+--AqsLC8rIMeq19msA--
