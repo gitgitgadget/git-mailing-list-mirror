@@ -1,37 +1,37 @@
 From: Christof =?iso-8859-1?Q?Kr=FCger?= <git@christof-krueger.de>
-Subject: Re: importing history
-Date: Wed, 29 Jun 2011 16:25:50 +0200 (CEST)
-Message-ID: <348bd65ad7c7690bcce553fe3c8e0bfb.squirrel@mail.localhost.li>
-References: <20110629164514.58175480.mihamina@bbs.mg>
+Subject: Re: [PATCH] cygwin: set write permission before unlink
+Date: Wed, 29 Jun 2011 16:31:20 +0200 (CEST)
+Message-ID: <09c0b1900a67bd1f701c0b23954a34ab.squirrel@mail.localhost.li>
+References: <1309331898-32247-1-git-send-email-rei.thiessen@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: "Mihamina Rakotomandimby" <mihamina@bbs.mg>
-X-From: git-owner@vger.kernel.org Wed Jun 29 16:26:08 2011
+Cc: git@vger.kernel.org, "Rei Thiessen" <rei.thiessen@gmail.com>
+To: "Rei Thiessen" <rei.thiessen@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 29 16:31:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QbviS-0003R1-AZ
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Jun 2011 16:26:08 +0200
+	id 1Qbvnv-0006d5-JH
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Jun 2011 16:31:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756192Ab1F2OZ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jun 2011 10:25:58 -0400
-Received: from vserver.localhost.li ([85.214.46.152]:54084 "EHLO
+	id S1756424Ab1F2ObZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jun 2011 10:31:25 -0400
+Received: from vserver.localhost.li ([85.214.46.152]:46238 "EHLO
 	mail.localhost.li" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756124Ab1F2OZ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2011 10:25:56 -0400
-Received: from localhost ([127.0.0.1]:48584 helo=mail.localhost.li)
+	with ESMTP id S1754020Ab1F2ObX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2011 10:31:23 -0400
+Received: from localhost ([127.0.0.1]:60262 helo=mail.localhost.li)
 	by mail.localhost.li with esmtp (Exim 4.69)
 	(envelope-from <git@christof-krueger.de>)
-	id 1QbviA-0000P0-5g; Wed, 29 Jun 2011 16:25:50 +0200
+	id 1QbvnU-0000Q2-SR; Wed, 29 Jun 2011 16:31:21 +0200
 Received: from 194.39.218.10
         (SquirrelMail authenticated user mail@christof-krueger.de)
         by mail.localhost.li with HTTP;
-        Wed, 29 Jun 2011 16:25:50 +0200 (CEST)
-In-Reply-To: <20110629164514.58175480.mihamina@bbs.mg>
+        Wed, 29 Jun 2011 16:31:20 +0200 (CEST)
+In-Reply-To: <1309331898-32247-1-git-send-email-rei.thiessen@gmail.com>
 User-Agent: SquirrelMail/1.4.15
 X-Priority: 3 (Normal)
 Importance: Normal
@@ -41,36 +41,22 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176444>
 
-Hi,
+> +#undef unlink
+> +int cygwin_unlink(const char *pathname)
+> +{
+> +	/* "read-only" files can't be unlinked */
+> +	chmod(pathname, 0666);
+> +	return unlink(pathname);
+> +}
 
-> Then I created an account in a forge (like github or so...), where I
-> had to clone an empty GIT repository in order to begin to work.
-> I dont have admin access to the forge, so no "scp" to the repo
-> hosting possible.
-Why did you have to clone an empty repository? It should be enough to add
-the correct remote config directly in your "from-svn" repository and just
-push it.
-
-> Now, I have 2 "local" repos:
-> - the one from the SVN
-> - the empty one from the forge
-
-Now that you already have cloned the empty repository you can just look at
-the remote configuration in it:
-
- git config --list|grep remote
-
-You should see something like the following:
-
-remote.origin.url=user@example.com/path/to/repository.git
-remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
-
-Go to your from-svn repository and add the above configuration, then "git
-push origin master".
-
-Good luck!
+I've no idea on how cygwin maps file permissions to the underlying
+filesystem, but the above raised my attention. Doesn't chmodding the file
+to 0666 open a small windows where "group" and "other" users have read
+access to the file? This might be unwanted by the user and could be
+exploited by some attacker listening for changes on that file.
+Or am I too paranoid?
 
 Regards,
   Chris
