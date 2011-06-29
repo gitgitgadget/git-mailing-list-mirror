@@ -1,108 +1,96 @@
-From: David Caldwell <david@porkrind.org>
-Subject: Re: [PATCH] stash: Add --include-untracked option to stash and
- remove all untracked files
-Date: Wed, 29 Jun 2011 10:11:59 -0700
-Message-ID: <BE416D9D73FF59D8584480F7@black.porkrind.org>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [RFC 2/2] Don't push a repository with unpushed submodules
+Date: Wed, 29 Jun 2011 13:29:34 -0400
+Message-ID: <4E0B60FE.1050000@xiplink.com>
+References: <1309112987-3185-1-git-send-email-iveqy@iveqy.com> <1309112987-3185-3-git-send-email-iveqy@iveqy.com> <4E0A506B.6040407@xiplink.com> <4E0A568E.3040202@web.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="==========AA2BA9933C82DEFB3DBD=========="
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 29 19:12:17 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org,
+	gitster@pobox.com, hvoigt@hvoigt.net
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Jun 29 19:30:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QbyJE-0002ye-NJ
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Jun 2011 19:12:17 +0200
+	id 1QbyaX-0004TJ-Cr
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Jun 2011 19:30:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756198Ab1F2RMK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jun 2011 13:12:10 -0400
-Received: from kill.porkrind.org ([68.68.97.104]:42532 "EHLO
-	david.xen.prgmr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755222Ab1F2RMJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2011 13:12:09 -0400
-Received: from porkrind.org (cpe-98-151-185-99.socal.res.rr.com [98.151.185.99])
-	by david.xen.prgmr.com (Postfix) with ESMTPS id 029B92BFB6;
-	Wed, 29 Jun 2011 10:12:06 -0700 (PDT)
-Authentication-Results: david.xen.prgmr.com; dkim=pass
-	(1536-bit key; insecure key) header.i=@porkrind.org
-	header.b=XdJ5nlqS; dkim-adsp=pass
-Received-SPF: pass (porkrind.org: authenticated connection) receiver=porkrind.org; client-ip=127.0.0.1; helo=[10.0.0.50]; envelope-from=david@porkrind.org; x-software=spfmilter 0.97 http://www.acme.com/software/spfmilter/ with libspf-unknown;
-Received: from [10.0.0.50] (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by porkrind.org (8.14.4/8.14.4/Debian-2) with ESMTP id p5THC4ap023601
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 29 Jun 2011 10:12:05 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=porkrind.org;
-	s=apoptygma; t=1309367526;
-	bh=NPjUXfaBnFP0Yu7H08DzZ1J/OnkGwTpNgRsOuDrDlk0=;
-	h=Date:From:To:cc:Subject:Message-ID:MIME-Version:Content-Type;
-	b=XdJ5nlqSDdODwUXoIzrg3Sslzm6fx/spae6TfV3XSk/lQLAp9c2IQyYku0rlUNZev
-	 kAPD5dOhwcmC+naws5SlRatRcXzK12WXPKW59oOKf/3zOLHY8ANcqv87J9GGUCo1rG
-	 S6RAxwb79RKqRZSuVPaDIBvAcZ1HpyGs1zRF978yVL7vxgVo6GmmwtLCp+bGEXGE5H
-	 2OPg3DREOSlSbd2FHH5ml20OjG+WdU2az8fj7Jkw0CzAitn2JaRdHrANtdT
-X-Mailer: Mulberry/4.0.9b1 (Mac OS X)
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,MIME_QP_LONG_LINE,
-	SPF_PASS,T_DKIM_INVALID,UNPARSEABLE_RELAY autolearn=ham version=3.3.1
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on kill.porkrind.org
+	id S1756751Ab1F2R36 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jun 2011 13:29:58 -0400
+Received: from smtp172.iad.emailsrvr.com ([207.97.245.172]:41415 "EHLO
+	smtp172.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756376Ab1F2R3z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2011 13:29:55 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp47.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id A966B3A8245;
+	Wed, 29 Jun 2011 13:29:54 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp47.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 60BAC3A828B;
+	Wed, 29 Jun 2011 13:29:54 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110516 Thunderbird/3.1.10
+In-Reply-To: <4E0A568E.3040202@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176450>
 
---==========AA2BA9933C82DEFB3DBD==========
-Content-Type: text/plain; charset=us-ascii; FORMAT=flowed
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On 11-06-28 06:32 PM, Jens Lehmann wrote:
+> Am 29.06.2011 00:06, schrieb Marc Branchaud:
+>> First, I expect performance will be terrible in repositories with large
+>> and/or many submodules.  I'd go so far as to say that it's pretty much a
+>> show-stopper for our repository.
+> 
+> Large submodules won't be the problem here, but many submodules and/or
+> many commits might cause some performance degradations here. But please
+> notice that there is no communication with the upstream of the submodules,
+> we only check the refs present locally. Do you still think doing some
+> "git rev-list" invocations in your submodules will be a problem? Then
+> please say so.
 
-On 6/26/11 1:02 PM -0700 Junio C Hamano wrote:
+Yes, that's exactly what I'm saying.  I'm concerned about rev-list's
+performance, particularly when my system's disk cache is empty (or already
+full with something else).  When I saw the patch I tried a quick
+	git rev-list X --not --remotes -n 1
+in a Linux kernel submodule where X was a non-existent ref, and watched my
+disk whirl for a few minutes.
 
-> David Caldwell <david@porkrind.org> writes:
->
->>  create_stash () {
->>  	stash_msg=3D"$1"
->> +	untracked=3D"$2"
-...
->> -	create_stash "$stash_msg"
->> +	create_stash "$stash_msg" $untracked
->
-> Just a minor nit from internal API point of view, I would prefer to see
-> something like
->
-> 	create_stash --untracked=3Dall "message"
->
-> or even
->
-> 	create_stash --untracked=3Dall --message=3D"message"
->
-> once you start enriching these functions with optional behaviour.
+Admittedly that's nothing like what the patch does -- mea culpa.  I see now
+that the check looks for refs in the submodule's recent history, so the scan
+is likely to be pretty short.
 
-I could do that, but doesn't that mean create_stash() would have to have a=20
-whole while loop and case statement just to parse the two options? Because=20
-that seems a little overkill for something that is only called from 2=20
-places. Is there some nice compact way of doing the parsing I'm missing?
+Also, as you say below and Fredrik said in his reply, the patch only checks
+submodules affected by a super-repo ref that is being pushed.  So I agree
+that the performance hit is likely to be minimal even with large submodules.
 
-I could also remove parameter passing part and just leave it as a global=20
-like the --patch option does. ;-)
+(Fredrik, FYI my super-repo itself is large enough to make "git status" take
+up a good part of the disk cache.  This repo has several submodules,
+including a few (different) Linux kernel repos.  I already get bogged down a
+bit when I have to status the main repo and one of the Linux submodules.  So
+anything that adds extra submodule inspection makes me nervous.)
 
--David
+>> Second, there are many times where I'm working in a submodule on branch
+>> "TopicA" but not in branch "TopicB".  If I've made submodule changes in
+>> TopicA then try to push up TopicB, won't I have have to tell push to "-f"?
+>> But that turns off other checks that I'd rather keep.
+> 
+> Nope, this patch only checks the refs to be pushed, not any others. So it
+> will only check that all submodule commits on branch "TopicB" are pushed.
 
---==========AA2BA9933C82DEFB3DBD==========
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
+Thanks for pointing that out!
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (Darwin)
+>> I'd feel a lot better about this patch if the check was *off* by default and
+>> there was a config setting / command-line option to turn it on.
+> 
+> I have no objections against making that configurable, although I tend
+> towards making this check default "on". But please feel free to test this
+> feature and tell us if it really hinders you in your work or does cause
+> performance degradation, we'll really appreciate the feedback!
 
-iQCVAwUBTgtc46f81MBhyqGFAQjtLQP+PKEZgQ2lqpM+kUR4quwUqfeYHCZWKQPF
-+TrIRCNuacCMTGt06RnJD0pS+TvTSBm9xHI8gc0px0FkKg1B3Z70ZVfEdFX4Cvr/
-7Ap7YmEmfinT4TdCBEUDb66WnHckiOFaii2kgO41MB+9VXig6BDeSZG5cVLr1Wxi
-fFxIZ4dx7hI=
-=jDHn
------END PGP SIGNATURE-----
+Well I'm less concerned about it being configurable now.  I did a few more
+tests and the rev-list performance looked fine.
 
---==========AA2BA9933C82DEFB3DBD==========--
+		M.
