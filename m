@@ -1,86 +1,84 @@
-From: Christof =?ISO-8859-1?Q?Kr=FCger?= <git@christof-krueger.de>
-Subject: Re: removing files from history but not filesystem
-Date: Wed, 29 Jun 2011 08:08:27 +0200
-Message-ID: <1309327707.2417.49.camel@oxylap>
-References: <CFCCFA00-B4BF-4A88-88A5-2F588630F7BB@uab.edu>
-	 <218bf1d3b2bf197a5f56d542c6a91960.squirrel@mail.localhost.li>
-	 <D56E9579-BD93-42AC-BA45-E0DC20F4BB48@uab.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Shantanu Pavgi <pavgi@uab.edu>
-X-From: git-owner@vger.kernel.org Wed Jun 29 08:08:42 2011
+From: Rei Thiessen <rei.thiessen@gmail.com>
+Subject: [PATCH] cygwin: set write permission before unlink
+Date: Wed, 29 Jun 2011 01:18:18 -0600
+Message-ID: <1309331898-32247-1-git-send-email-rei.thiessen@gmail.com>
+Cc: Rei Thiessen <rei.thiessen@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 29 09:22:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qbnx4-0001Nt-49
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Jun 2011 08:08:42 +0200
+	id 1Qbp60-0008VD-Uh
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Jun 2011 09:22:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751842Ab1F2GIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jun 2011 02:08:36 -0400
-Received: from vserver.localhost.li ([85.214.46.152]:39009 "EHLO
-	mail.localhost.li" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750892Ab1F2GIf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2011 02:08:35 -0400
-Received: from p5794c8fc.dip.t-dialin.net ([87.148.200.252]:48999 helo=[192.168.0.126])
-	by mail.localhost.li with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <git@christof-krueger.de>)
-	id 1Qbnwr-0006E7-0S; Wed, 29 Jun 2011 08:08:29 +0200
-In-Reply-To: <D56E9579-BD93-42AC-BA45-E0DC20F4BB48@uab.edu>
-X-Mailer: Evolution 2.30.3 
-X-Spam-Score: 0.0 (/)
-X-Spam-Report: none
+	id S1752522Ab1F2HV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jun 2011 03:21:56 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:62241 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751830Ab1F2HVy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2011 03:21:54 -0400
+Received: by pvg12 with SMTP id 12so586480pvg.19
+        for <git@vger.kernel.org>; Wed, 29 Jun 2011 00:21:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=L1hOP3+dCRvxaU3zTO7g/Khw6qooVZYDRNnD0mnN1Xw=;
+        b=kmJf43Qe62bq3fVnOvFzv5LJzW/GdUvsSMte5aOoeFKblBOIPYkFF0gbQtiMN4aMqk
+         9e/Ox2cvdpz7tfiC/H4itKdWa0AO5OjoszTWLIZautWQybIfAGilFbAAXpOu+L69zCld
+         rP1FnEXTcF7kdXbVfU1FKmLhfazQpava2KnxE=
+Received: by 10.143.97.23 with SMTP id z23mr284356wfl.48.1309332114483;
+        Wed, 29 Jun 2011 00:21:54 -0700 (PDT)
+Received: from localhost.localdomain (innisfree.cs.ualberta.ca [129.128.4.225])
+        by mx.google.com with ESMTPS id k4sm732412pbl.11.2011.06.29.00.21.53
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 29 Jun 2011 00:21:54 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176438>
 
-Hi
+On Cygwin 1.7, if filesystems are mounted with the "noacl" option,
+files without write permission (in particular, the temp files created
+in write_loose_object()) have their "read-only" flags set in NTFS.
+"read-only" files can't be unlinked.
 
-> Thanks for the reply Chris. It worked for me. I am not following last
->  command "git reset <branch-name>" though. I have used SHA1 commit
->  object names in 'git reset' command, but I am not sure how <commit> is
->  using branch name here. Is  it because branch is a commit pointer in
->  the git history? 
-While being on the master branch, issuing "git reset temp" tells git to
-"let the master branch point to wherever the symbolic reference temp
-points now".  
-You did something very similar with git filter-branch already. There you
-specified HEAD~1, which is the same as telling git to dereference the
-symbolic ref "HEAD" and take its first parent. I don't know any place
-where git wouldn't accept symbolic references instead of raw sha1 sums.
+For Cygwin, set write permissions on files that are about to be unlinked.
 
-> Also, how do I specify rev-list HEAD-1 so that 'git rm' will be run on
->  all commits excepts latest commit? Following didn't work for me, so I
->  guess I am not following syntax here.
->  {{{ $ git filter-branch
->  --index-filter 'git rm --cached --ignore-unmatch apple' HEAD~1
-> Which ref do you want to rewrite?
->  }}}
-git filter-branch expects a symbolic reference within the rev-list. It
-would be pointless to filter the commits without a symbolic reference
-being bent over to point to the rewritten branch once done.
+Signed-off-by: Rei Thiessen <rei.thiessen@gmail.com>
+---
+ compat/cygwin.c |    7 +++++++
+ compat/cygwin.h |    3 +++
+ 2 files changed, 10 insertions(+), 0 deletions(-)
 
-What you can do is the following:
-
-git filter-branch --index-filter 'test $GIT_COMMIT =
-35644cb5fa34e033593f6f0d27c332443b6867d8 || git rm --cached
---ignore-unmatch foo' HEAD
-
-If "test $GIT_COMMIT = <sha1>" is true, the following git rm command
-won't be executed for that commit. 
-Choose the hash to be the one you want to skip (HEAD).
-
-Another possible way would be to create a temporary branch to point at
-HEAD^, filter-branch it, then add a graft to stitch the remaining commit
-on top of it, then filter-branch HEAD and then remove the branch. But
-this is a bit advanced for the case where you just want to omit one
-commit.
-
-Regards,
-  Chris
+diff --git a/compat/cygwin.c b/compat/cygwin.c
+index b4a51b9..f40ee6d 100644
+--- a/compat/cygwin.c
++++ b/compat/cygwin.c
+@@ -141,3 +141,10 @@ static int cygwin_lstat_stub(const char *file_name, struct stat *buf)
+ stat_fn_t cygwin_stat_fn = cygwin_stat_stub;
+ stat_fn_t cygwin_lstat_fn = cygwin_lstat_stub;
+ 
++#undef unlink
++int cygwin_unlink(const char *pathname)
++{
++	/* "read-only" files can't be unlinked */
++	chmod(pathname, 0666);
++	return unlink(pathname);
++}
+diff --git a/compat/cygwin.h b/compat/cygwin.h
+index a3229f5..aa2ba3e 100644
+--- a/compat/cygwin.h
++++ b/compat/cygwin.h
+@@ -7,3 +7,6 @@ extern stat_fn_t cygwin_lstat_fn;
+ 
+ #define stat(path, buf) (*cygwin_stat_fn)(path, buf)
+ #define lstat(path, buf) (*cygwin_lstat_fn)(path, buf)
++
++int cygwin_unlink(const char *pathname);
++#define unlink cygwin_unlink
+-- 
+1.7.4.1
