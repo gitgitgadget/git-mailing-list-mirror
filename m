@@ -1,82 +1,53 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: importing history
-Date: Wed, 29 Jun 2011 18:56:42 +0200
-Message-ID: <m2sjqswp85.fsf@igel.home>
-References: <20110629164514.58175480.mihamina@bbs.mg>
-	<348bd65ad7c7690bcce553fe3c8e0bfb.squirrel@mail.localhost.li>
+From: Christof =?ISO-8859-1?Q?Kr=FCger?= <git@christof-krueger.de>
+Subject: Re: removing files from history but not filesystem
+Date: Wed, 29 Jun 2011 18:57:10 +0200
+Message-ID: <1309366630.2417.51.camel@oxylap>
+References: <CFCCFA00-B4BF-4A88-88A5-2F588630F7BB@uab.edu>
+	 <218bf1d3b2bf197a5f56d542c6a91960.squirrel@mail.localhost.li>
+	 <D56E9579-BD93-42AC-BA45-E0DC20F4BB48@uab.edu>
+	 <1309327707.2417.49.camel@oxylap>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Mihamina Rakotomandimby" <mihamina@bbs.mg>, git@vger.kernel.org
-To: Christof =?utf-8?Q?Kr=C3=BCger?= <git@christof-krueger.de>
-X-From: git-owner@vger.kernel.org Wed Jun 29 18:56:55 2011
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Shantanu Pavgi <pavgi@uab.edu>
+X-From: git-owner@vger.kernel.org Wed Jun 29 18:57:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qby4L-0002YK-6c
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Jun 2011 18:56:53 +0200
+	id 1Qby4r-0002oR-B9
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Jun 2011 18:57:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754371Ab1F2Q4s convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Jun 2011 12:56:48 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:55872 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752147Ab1F2Q4r (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2011 12:56:47 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 606521C01F19;
-	Wed, 29 Jun 2011 18:56:44 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
-	by mail.m-online.net (Postfix) with ESMTP id 6C45A1C0012A;
-	Wed, 29 Jun 2011 18:56:44 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
-	with ESMTP id r3zhHWZch93s; Wed, 29 Jun 2011 18:56:44 +0200 (CEST)
-Received: from igel.home (ppp-88-217-121-230.dynamic.mnet-online.de [88.217.121.230])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Wed, 29 Jun 2011 18:56:43 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 74617CA2EC; Wed, 29 Jun 2011 18:56:43 +0200 (CEST)
-X-Yow: - if it GLISTENS, gobble it!!
-In-Reply-To: <348bd65ad7c7690bcce553fe3c8e0bfb.squirrel@mail.localhost.li>
-	("Christof =?utf-8?Q?Kr=C3=BCger=22's?= message of "Wed, 29 Jun 2011
- 16:25:50 +0200
-	(CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+	id S1755439Ab1F2Q5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jun 2011 12:57:21 -0400
+Received: from vserver.localhost.li ([85.214.46.152]:39360 "EHLO
+	mail.localhost.li" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754951Ab1F2Q5T (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2011 12:57:19 -0400
+Received: from p5794c8fc.dip.t-dialin.net ([87.148.200.252]:41890 helo=[192.168.0.126])
+	by mail.localhost.li with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <git@christof-krueger.de>)
+	id 1Qby4e-00012F-V6; Wed, 29 Jun 2011 18:57:13 +0200
+In-Reply-To: <1309327707.2417.49.camel@oxylap>
+X-Mailer: Evolution 2.30.3 
+X-Spam-Score: 0.0 (/)
+X-Spam-Report: none
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176447>
 
-Christof Kr=C3=BCger <git@christof-krueger.de> writes:
+> Another possible way would be to create a temporary branch to point at
+> HEAD^, filter-branch it, then add a graft to stitch the remaining commit
+> on top of it, then filter-branch HEAD and then remove the branch. But
+> this is a bit advanced for the case where you just want to omit one
+> commit.
+That should have been "[...] and then remove the _graft_." (and the
+temporary branch).
 
-> Now that you already have cloned the empty repository you can just lo=
-ok at
-> the remote configuration in it:
->
->  git config --list|grep remote
->
-> You should see something like the following:
->
-> remote.origin.url=3Duser@example.com/path/to/repository.git
-> remote.origin.fetch=3D+refs/heads/*:refs/remotes/origin/*
->
-> Go to your from-svn repository and add the above configuration, then =
-"git
-> push origin master".
-
-Careful.  git svn uses the remotes namespace in a non-std way.  Better
-to locally clone the from-svn repository into a new one, then use "git
-remote add origin user@example.com/path/to/repository.git" to add the
-remote repository.  Then you can safely push the master branch.
-
-Andreas.
-
---=20
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
-ED5
-"And now for something completely different."
+Regards,
+  Chris
