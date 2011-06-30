@@ -1,78 +1,89 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [PATCH] progress: use \r as EOL only if isatty(stderr) is true
-Date: Thu, 30 Jun 2011 13:33:55 +0900
-Message-ID: <buohb78aqfg.fsf@dhlpc061.dev.necel.com>
-References: <1309272009-23076-1-git-send-email-sdaoden@gmail.com>
- <7vwrg5u7oz.fsf@alter.siamese.dyndns.org>
- <20110628224516.GB4192@sigill.intra.peff.net>
- <7vtyb8s4kv.fsf@alter.siamese.dyndns.org>
+From: Stephen Rothwell <sfr@canb.auug.org.au>
+Subject: Re: linux-next: manual merge of the security-testing tree with the
+ tree
+Date: Thu, 30 Jun 2011 14:39:15 +1000
+Message-ID: <20110630143915.0b0fdf0f.sfr@canb.auug.org.au>
+References: <20110630142910.2fea4257.sfr@canb.auug.org.au>
+	<20110630143334.90c9d1bc.sfr@canb.auug.org.au>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>,
-	Steffen Daode Nurpmeso <sdaoden@googlemail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 30 06:34:14 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: multipart/signed; protocol="application/pgp-signature";
+ micalg="PGP-SHA1";
+ boundary="Signature=_Thu__30_Jun_2011_14_39_15_+1000_Quq0ZEo9=pQ8V1k="
+Cc: linux-next@vger.kernel.org, linux-kernel@vger.kernel.org,
+	git@vger.kernel.org, Linus <torvalds@linux-foundation.org>
+To: James Morris <jmorris@namei.org>
+X-From: linux-next-owner@vger.kernel.org Thu Jun 30 06:39:25 2011
+Return-path: <linux-next-owner@vger.kernel.org>
+Envelope-to: glkn-linux-next@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qc8xC-0003gQ-44
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Jun 2011 06:34:14 +0200
+	(envelope-from <linux-next-owner@vger.kernel.org>)
+	id 1Qc92C-0004zB-FT
+	for glkn-linux-next@lo.gmane.org; Thu, 30 Jun 2011 06:39:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751459Ab1F3EeA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jun 2011 00:34:00 -0400
-Received: from relmlor1.renesas.com ([210.160.252.171]:41899 "EHLO
-	relmlor1.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751304Ab1F3Ed6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jun 2011 00:33:58 -0400
-Received: from relmlir1.idc.renesas.com ([10.200.68.151])
- by relmlor1.idc.renesas.com ( SJSMS)
- with ESMTP id <0LNL00E6X60L9O80@relmlor1.idc.renesas.com> for
- git@vger.kernel.org; Thu, 30 Jun 2011 13:33:57 +0900 (JST)
-Received: from relmlac2.idc.renesas.com ([10.200.69.22])
- by relmlir1.idc.renesas.com (SJSMS)
- with ESMTP id <0LNL00D0460LEMB0@relmlir1.idc.renesas.com> for
- git@vger.kernel.org; Thu, 30 Jun 2011 13:33:57 +0900 (JST)
-Received: by relmlac2.idc.renesas.com (Postfix, from userid 0)
-	id 1100128070; Thu, 30 Jun 2011 13:33:57 +0900 (JST)
-Received: from relmlac2.idc.renesas.com (localhost [127.0.0.1])
-	by relmlac2.idc.renesas.com (Postfix) with ESMTP id 0FF5828088; Thu,
- 30 Jun 2011 13:33:57 +0900 (JST)
-Received: from relmlii1.idc.renesas.com [10.200.68.65]	by
- relmlac2.idc.renesas.com with ESMTP id PAH20708; Thu,
- 30 Jun 2011 13:33:57 +0900
-X-IronPort-AV: E=Sophos;i="4.65,447,1304262000";   d="scan'208";a="34500856"
-Received: from unknown (HELO relay21.aps.necel.com) ([10.29.19.50])
- by relmlii1.idc.renesas.com with ESMTP; Thu, 30 Jun 2011 13:33:56 +0900
-Received: from relay21.aps.necel.com ([10.29.19.50] [10.29.19.50])
- by relay21.aps.necel.com with ESMTP; Thu, 30 Jun 2011 13:33:56 +0900
-Received: from dhlpc061 ([10.114.97.87] [10.114.97.87])
- by relay21.aps.necel.com with ESMTP; Thu, 30 Jun 2011 13:33:56 +0900
-Received: by dhlpc061 (Postfix, from userid 31295)	id 5F54352E1FB; Thu,
- 30 Jun 2011 13:33:56 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-reply-to: <7vtyb8s4kv.fsf@alter.siamese.dyndns.org>
-Sender: git-owner@vger.kernel.org
+	id S1751062Ab1F3EjX (ORCPT <rfc822;glkn-linux-next@m.gmane.org>);
+	Thu, 30 Jun 2011 00:39:23 -0400
+Received: from chilli.pcug.org.au ([203.10.76.44]:41643 "EHLO smtps.tip.net.au"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750749Ab1F3EjW (ORCPT <rfc822;linux-next@vger.kernel.org>);
+	Thu, 30 Jun 2011 00:39:22 -0400
+Received: from canb.auug.org.au (ibmaus65.lnk.telstra.net [165.228.126.9])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtps.tip.net.au (Postfix) with ESMTPSA id 28ACA144BAA;
+	Thu, 30 Jun 2011 14:39:20 +1000 (EST)
+In-Reply-To: <20110630143334.90c9d1bc.sfr@canb.auug.org.au>
+X-Mailer: Sylpheed 3.1.1 (GTK+ 2.24.4; i486-pc-linux-gnu)
+Sender: linux-next-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176471>
+List-ID: <linux-next.vger.kernel.org>
+X-Mailing-List: linux-next@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176472>
 
-Junio C Hamano <gitster@pobox.com> writes:
-> All valid arguments against the change, I think.  Thanks.
+--Signature=_Thu__30_Jun_2011_14_39_15_+1000_Quq0ZEo9=pQ8V1k=
+Content-Type: text/plain; charset=US-ASCII
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yeah, I think better to leave it alone.
+On Thu, 30 Jun 2011 14:33:34 +1000 Stephen Rothwell <sfr@canb.auug.org.au> =
+wrote:
+>
+> On Thu, 30 Jun 2011 14:29:10 +1000 Stephen Rothwell <sfr@canb.auug.org.au=
+> wrote:
+> >
+> > More information for the git experts:
+> >=20
+>=20
+> $ git version
+> git version 1.7.5.4
+>=20
+> I am running Debian unstable.
 
-I sometimes pipe the output of such progress-meter-using programs
-through a filter that both sends the output to the terminal (where the
-\rs are clearly desired) and logs it to a file -- and the \rs are even
-useful for the latter purpose, and the filter can use them to delete
-all but the last copy of each line before logging.
+Today's linux-next is based on v3.0-rc5-76-gc017d0d (Linus' tree commit
+c017d0d135 ("Merge branch 'kvm-updates/3.0' of
+git://git.kernel.org/pub/scm/virt/kvm/kvm").
 
--Miles
+The point at which I tried to merge the security-testing tree is
+v3.0-rc5-3666-g9fd8fab.
 
--- 
-My books focus on timeless truths.  -- Donald Knuth
+--=20
+Cheers,
+Stephen Rothwell                    sfr@canb.auug.org.au
+http://www.canb.auug.org.au/~sfr/
+
+--Signature=_Thu__30_Jun_2011_14_39_15_+1000_Quq0ZEo9=pQ8V1k=
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAEBAgAGBQJOC/3zAAoJEDMEi1NhKgbsv5IH/RPgvlQTz1o1rAXDW8VDGmVa
+U8yHxXgo2tn+JFLGTzPlI5/742Z7JcJ/ScRYamlVBHZXV7VGj/6Wsp8lZbOnGRpg
+J6CN35lx3ewgDPyz73abblfyHhPGzg9xh42RDnIW9wnaLL+ZHXpyw/k/DVzP1KMw
+5/NQpnTQTeYL/9lBboNBMgMXcOSR/gYEtp/XmMvWxctHSLWrJUJ3Fs2GRuiRu0yy
+SW5NwxB3Q7LmVZpVjV0l7ch9JB3ITvQFKC7Ii7XqTA1S5XKp4FnhatDoEn98Ethb
+SXsBHX6XNYr+dtbr/ZoyROT6CFrCIAM+LRCcbKcPARyrEck1saAyxGoiH8TFw+Y=
+=+9tx
+-----END PGP SIGNATURE-----
+
+--Signature=_Thu__30_Jun_2011_14_39_15_+1000_Quq0ZEo9=pQ8V1k=--
