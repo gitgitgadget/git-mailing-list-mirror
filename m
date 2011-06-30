@@ -1,96 +1,151 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 0/6] rebase: command "ref" and options --rewrite-{refs,heads,tags}
-Date: Thu, 30 Jun 2011 09:55:11 +0530
-Message-ID: <BANLkTimZzMXo17eRQMSq8RBQ9FBM4ui25Q@mail.gmail.com>
-References: <cover.1309133817.git.greg@quora.com> <7vhb7bxgt9.fsf@alter.siamese.dyndns.org>
- <BANLkTinDFYsw7-N=_Ex8i42So_0LzVAWvA@mail.gmail.com> <20110628104758.GS5771@dr-wily.mit.edu>
- <20110628131717.GA6822@dr-wily.mit.edu>
+From: Stephen Rothwell <sfr@canb.auug.org.au>
+Subject: linux-next: manual merge of the security-testing tree with the 
+ tree
+Date: Thu, 30 Jun 2011 14:29:10 +1000
+Message-ID: <20110630142910.2fea4257.sfr@canb.auug.org.au>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Greg Price <price@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Jun 30 06:25:39 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: multipart/signed; protocol="application/pgp-signature";
+ micalg="PGP-SHA1";
+ boundary="Signature=_Thu__30_Jun_2011_14_29_10_+1000_bVTEKV1TNToCoMCY"
+Cc: linux-next@vger.kernel.org, linux-kernel@vger.kernel.org,
+	git@vger.kernel.org, Linus <torvalds@linux-foundation.org>
+To: James Morris <jmorris@namei.org>
+X-From: linux-next-owner@vger.kernel.org Thu Jun 30 06:29:40 2011
+Return-path: <linux-next-owner@vger.kernel.org>
+Envelope-to: glkn-linux-next@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qc8ot-0001TI-1F
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Jun 2011 06:25:39 +0200
+	(envelope-from <linux-next-owner@vger.kernel.org>)
+	id 1Qc8sm-0002W4-FH
+	for glkn-linux-next@lo.gmane.org; Thu, 30 Jun 2011 06:29:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750881Ab1F3EZe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Jun 2011 00:25:34 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:39398 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750714Ab1F3EZc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Jun 2011 00:25:32 -0400
-Received: by wyg8 with SMTP id 8so1281670wyg.19
-        for <git@vger.kernel.org>; Wed, 29 Jun 2011 21:25:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=XLD2yxmBp1XKqx17W3X6DXDzI3QAh/Hq4+o/VFrETxM=;
-        b=tdGI78wSLDJh19yAENiYRBJFsLLfhNdP9JxHeAddp4yv69rjfWxSOlQIqUD0wRw/kv
-         I1mhwo0BHtf4QdCokvRVdt+vuaNMCyzOk8SlgquypqJb1EjHP56cnLaeRygWAMN8E0DX
-         n1xjzrWPtME/JKKTYmhmeo4i4IA92DLaNKlx8=
-Received: by 10.216.238.80 with SMTP id z58mr2141900weq.106.1309407931511;
- Wed, 29 Jun 2011 21:25:31 -0700 (PDT)
-Received: by 10.216.18.16 with HTTP; Wed, 29 Jun 2011 21:25:11 -0700 (PDT)
-In-Reply-To: <20110628131717.GA6822@dr-wily.mit.edu>
-Sender: git-owner@vger.kernel.org
+	id S1751091Ab1F3E3W (ORCPT <rfc822;glkn-linux-next@m.gmane.org>);
+	Thu, 30 Jun 2011 00:29:22 -0400
+Received: from chilli.pcug.org.au ([203.10.76.44]:55053 "EHLO smtps.tip.net.au"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750749Ab1F3E3V (ORCPT <rfc822;linux-next@vger.kernel.org>);
+	Thu, 30 Jun 2011 00:29:21 -0400
+Received: from canb.auug.org.au (ibmaus65.lnk.telstra.net [165.228.126.9])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtps.tip.net.au (Postfix) with ESMTPSA id 18D67144B83;
+	Thu, 30 Jun 2011 14:29:16 +1000 (EST)
+X-Mailer: Sylpheed 3.1.1 (GTK+ 2.24.4; i486-pc-linux-gnu)
+Sender: linux-next-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176468>
+List-ID: <linux-next.vger.kernel.org>
+X-Mailing-List: linux-next@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176469>
 
-Hi Greg!
+--Signature=_Thu__30_Jun_2011_14_29_10_+1000_bVTEKV1TNToCoMCY
+Content-Type: text/plain; charset=US-ASCII
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Greg Price writes:
-> On Tue, Jun 28, 2011 at 06:47:58AM -0400, Greg Price wrote:
->> I agree with your footnote -- the more general case will require a
->> more powerful sequencer to support properly. =C2=A0And now I see tha=
-t
->> Ramkumar Ramachandra is making progress on such a thing right now!
->> That's great news -- this is a project that has been attempted at
->> least four times, by five people (including me), in the last three
->> years. =C2=A0I hope to see this round make it in -- I was actually t=
-hinking
->> about returning to the problem after seeing this series through, but=
- I
->> would be glad to see Ram beat me to it.
+Hi James,
 
-You're more than welcome to join in -- all the work is public :)
-The latest iteration of the sequencer is in 'pu', and I'm currently
-busy rolling out a nicer version.
+Today's linux-next merge of the security-testing tree produced a large
+number of conflicts in files not modified by the security-testing tree.
+I assume that this is a bug in "git merge" but I cannot complete the
+merge as such.
 
-> Hmm, on further reading I'm not sure the sequencer Ram aims to build
-> this summer actually extends to the "mark" and "reset" commands (or
-> the concepts of "the rewritten <commit>" and "detach" in the
-> pseudo-TODO notation of your footnote) that would be required to
-> implement this broader rewrite-side-branches feature. =C2=A0It looks =
-like
-> the focus may be on taking the existing features of rebase and
-> bringing them into C.
+I have used the security-testing tree from next-20110628 for today.
 
-Yes, you're absolutely right.  Bringing the existing features to C is
-quite a challenging task in itself, and is bound to keep me busy for
-the rest of the summer.  I don't plan to implement the features your
-series introduces yet, but it's certainly a great long-term goal -- I
-think the current series has all the right ingredients;  it just
-requires a lot of work before it can start providing more features.
+More information for the git experts:
 
-> This sounds great too -- it should make rebase a lot faster -- but it
-> will leave open the pet project I've thought about returning to, of
-> making "rebase -i -p" work correctly even when the user wants to
-> rearrange the commits rather than just s/pick/edit/ etc. =C2=A0That w=
-ill
-> require implementing a richer sequencer very like the one required fo=
-r
-> a general rewrite-side-branches feature.
+The security-testing tree is at
+git://git.kernel.org/pub/scm/linux/kernel/git/jmorris/security-testing-2.6.=
+git
+and I am trying to merge branch "next" into linux-next at commit
+9fd8fab5e299a ("Merge remote-tracking branch 'voltage/for-next'").
 
-Right.  Since all this will take time, it'll probably be a good idea
-to get your series merged in now.
+I can merge commit 0e4ae0e0dec6 ("TOMOYO: Make several options
+configurable") from the security testing tree without conflict and also
+commit 25e75dff519b ("AppArmor: Fix masking of capabilities in complain
+mode").
 
--- Ram
+I cannot merge commit bcd05ca10420 ("Merge branch 'for-security' of
+git://git.kernel.org/pub/scm/linux/kernel/git/jj/apparmor-dev into next")
+which is the child of the above two commits.
+
+The tree to commit 25e75dff519b only containes two simple commits
+(modifying 2 files) and is based on v3.0-rc5.  The tree to commit
+bcd05ca10420 containes several commits and is based on commit
+06e86849cf40 ("Merge branch 'pm-fixes' of
+git://git.kernel.org/pub/scm/linux/kernel/git/rafael/suspend-2.6") from
+Linus' tree (between v3.0-rc2 and v3.0-rc2).
+
+After attempting the merge I get this:
+
+$ git status
+# On branch master
+# Changes to be committed:
+#
+#	deleted:    Documentation/ABI/testing/sysfs-class-backlight-driver-adp8870
+#	modified:   Documentation/accounting/cgroupstats.txt
+#	modified:   Documentation/cgroups/blkio-controller.txt
+#	modified:   Documentation/cgroups/cgroups.txt
+#	modified:   Documentation/cgroups/cpuacct.txt
+#	modified:   Documentation/cgroups/cpusets.txt
+	.
+	.	[lots elided]
+	.
+#	modified:   tools/perf/util/PERF-VERSION-GEN
+#	modified:   tools/perf/util/trace-event-parse.c
+#
+# Unmerged paths:
+#   (use "git add/rm <file>..." as appropriate to mark resolution)
+#
+#	both modified:      arch/arm/mach-shmobile/board-ag5evm.c
+#	both modified:      arch/arm/mm/context.c
+#	both modified:      arch/arm/mm/proc-v7.S
+#	both modified:      arch/arm/plat-mxc/devices/platform-imx-dma.c
+#	both modified:      arch/arm/plat-s5p/include/plat/map-s5p.h
+#	both modified:      arch/m68k/Kconfig.nommu
+#	both modified:      block/blk-throttle.c
+#	both modified:      drivers/gpu/drm/nouveau/nouveau_fence.c
+#	deleted by them:    drivers/net/usb/kalmia.c
+#	both modified:      drivers/net/wireless/iwlegacy/iwl-dev.h
+#	both modified:      drivers/net/wireless/iwlegacy/iwl4965-base.c
+#	both modified:      drivers/net/wireless/iwlwifi/iwl-agn-rxon.c
+#	both modified:      drivers/net/wireless/iwlwifi/iwl-agn.c
+#	both modified:      drivers/net/wireless/rtlwifi/pci.c
+#	deleted by them:    drivers/video/backlight/adp8870_bl.c
+#	both modified:      fs/namei.c
+#	both modified:      fs/nfs/nfs4proc.c
+#	both modified:      fs/nfs/pnfs.c
+#	both modified:      fs/proc/base.c
+#	both modified:      net/bluetooth/rfcomm/sock.c
+#	both modified:      net/ipv4/ip_output.c
+#	both modified:      net/netfilter/ipvs/ip_vs_core.c
+#	both modified:      sound/pci/hda/patch_via.c
+#	both modified:      sound/soc/codecs/ad1836.h
+#	both modified:      sound/soc/soc-cache.c
+#
+
+None of the "Unmerged paths" are modified in the tree I am merging in.
+
+The linux-next tree will be published later today and James' tree is
+available already (I can publis my copy of it if James modifies his).
+
+--=20
+Cheers,
+Stephen Rothwell                    sfr@canb.auug.org.au
+http://www.canb.auug.org.au/~sfr/
+
+--Signature=_Thu__30_Jun_2011_14_29_10_+1000_bVTEKV1TNToCoMCY
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAEBAgAGBQJOC/uWAAoJEDMEi1NhKgbsQFkH/RrLSNYUWZK25hIoBVYD8Gwm
+ImLWa+VnKW26C55oWNvSPdN26LfnaODhUSs7PRIjDaIOjThLOAmHnpNhlsgjJZ6X
+u2od5zv3mbOybgy7QbWsHliTJoag9E0VX64K8PuNsh+rm/9KPeDiY9RnK6YcoyrB
+ydi8TN7XvvIuu+X79Sxu5/d6WOMgn+5nJnTzQh6WnpEeYnPgBfhfJ0ddszWC84EU
+uG2D9ugpcr1XLL0na/OJuROHleM6cW8JVWJxcS0GQCOOUc6D/rg6+z6cgsn+/4X6
+15wj/3BjgDhbfo9YYlP6ai33bvYaQiWrsZtdpLtRbJEqTzW1OOILfYYwTV9gDck=
+=C6Zn
+-----END PGP SIGNATURE-----
+
+--Signature=_Thu__30_Jun_2011_14_29_10_+1000_bVTEKV1TNToCoMCY--
