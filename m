@@ -1,87 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] submodule add: always initialize .git/config entry
-Date: Wed, 29 Jun 2011 17:47:18 -0700
-Message-ID: <7vwrg4qh61.fsf@alter.siamese.dyndns.org>
-References: <0D2618D7-0681-4E71-B412-36D490D45B9D@gmail.com>
- <7v7h8c4nv3.fsf@alter.siamese.dyndns.org> <4E0390A7.8040505@web.de>
- <7vboxo2ne9.fsf@alter.siamese.dyndns.org>
- <7vy60r27et.fsf_-_@alter.siamese.dyndns.org> <4E066E8A.7060209@web.de>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 0/6] rebase: command "ref" and options --rewrite-{refs,heads,tags}
+Date: Thu, 30 Jun 2011 09:55:11 +0530
+Message-ID: <BANLkTimZzMXo17eRQMSq8RBQ9FBM4ui25Q@mail.gmail.com>
+References: <cover.1309133817.git.greg@quora.com> <7vhb7bxgt9.fsf@alter.siamese.dyndns.org>
+ <BANLkTinDFYsw7-N=_Ex8i42So_0LzVAWvA@mail.gmail.com> <20110628104758.GS5771@dr-wily.mit.edu>
+ <20110628131717.GA6822@dr-wily.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Phil Hord <hordp@cisco.com>,
-	Maarten Billemont <lhunath@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Andreas =?utf-8?Q?K=C3=B6hler?= <andi5.py@gmx.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Jun 30 02:47:28 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Greg Price <price@mit.edu>
+X-From: git-owner@vger.kernel.org Thu Jun 30 06:25:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qc5Pj-0006Wl-Eh
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Jun 2011 02:47:27 +0200
+	id 1Qc8ot-0001TI-1F
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Jun 2011 06:25:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754964Ab1F3ArX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jun 2011 20:47:23 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57997 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752785Ab1F3ArW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2011 20:47:22 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5C1606346;
-	Wed, 29 Jun 2011 20:49:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=R2NT0ghG6HMsksaD9wMO5UMbm6E=; b=e0OvRV
-	mtdhQkwxgsklZwVKmau/Qi9DAQwY0055un+6ZLic9V3etDg4e9imLnvRxIgf/sb4
-	MZxVeftZwamjYf4y6Nr7dQMaGdXcc6rT/9Vze6h2Acn+EZToDVB7+/bAlGz/liUX
-	NepkjyZKNoj2QY0Es1JVJnjsd/Gfz1mVgSZok=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZyzFqN3lb0uzfTzNZLmP2AFcKPtZxR5W
-	He0y/qV1SB4CGdzhTlNzXICDFd6+fZePxRVdMtXwZ4aG+YF1pnwmE70Acu5zgjjg
-	hOpjMvaleug1p4wXXzIPK/MyyZod4UkyCUzCG4N4Qs37unD61wBvBKiQAPfayld7
-	o815zHrnb7Y=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3D93D6344;
-	Wed, 29 Jun 2011 20:49:35 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5F8956343; Wed, 29 Jun 2011
- 20:49:34 -0400 (EDT)
-In-Reply-To: <4E066E8A.7060209@web.de> (Jens Lehmann's message of "Sun, 26
- Jun 2011 01:26:02 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D2B98174-A2B2-11E0-A5F9-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
+	id S1750881Ab1F3EZe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Jun 2011 00:25:34 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:39398 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750714Ab1F3EZc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Jun 2011 00:25:32 -0400
+Received: by wyg8 with SMTP id 8so1281670wyg.19
+        for <git@vger.kernel.org>; Wed, 29 Jun 2011 21:25:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=XLD2yxmBp1XKqx17W3X6DXDzI3QAh/Hq4+o/VFrETxM=;
+        b=tdGI78wSLDJh19yAENiYRBJFsLLfhNdP9JxHeAddp4yv69rjfWxSOlQIqUD0wRw/kv
+         I1mhwo0BHtf4QdCokvRVdt+vuaNMCyzOk8SlgquypqJb1EjHP56cnLaeRygWAMN8E0DX
+         n1xjzrWPtME/JKKTYmhmeo4i4IA92DLaNKlx8=
+Received: by 10.216.238.80 with SMTP id z58mr2141900weq.106.1309407931511;
+ Wed, 29 Jun 2011 21:25:31 -0700 (PDT)
+Received: by 10.216.18.16 with HTTP; Wed, 29 Jun 2011 21:25:11 -0700 (PDT)
+In-Reply-To: <20110628131717.GA6822@dr-wily.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176468>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+Hi Greg!
 
-> Am 24.06.2011 06:13, schrieb Junio C Hamano:
->> Shouldn't "submodule add" add an entry for .git/config even when it cloned
->> from elsewhere?
->
-> Yes, we should be consistent here.
->
->> I suspect this fix will cascade to breakage elsewhere, but I've run out of
->> energy and inclination to look at the submodule code tonight, so I'll let
->> the list to take it further from here.
->
-> Ok, t7406 expected "git submodule init" to copy the new update setting
-> into .git/config for a newly added submodule, which it didn't do anymore
-> because it already found the url set. I solved that by teaching init to
-> only then copy the url and update settings if they aren't present yet.
-> Now all tests are running fine and your change to the test I added in
-> jl/submodule-add-relurl-wo-upstream isn't necessary anymore.
->
-> When I cherry pick that onto cbd0a3c6bc in your current pu branch and
-> resolve the conflicts all tests run fine (if you want me to resend this
-> patch based on that commit to avoid the conflicts with i18n and the
-> "submodule add: clean up duplicated code" patch please just say so).
+Greg Price writes:
+> On Tue, Jun 28, 2011 at 06:47:58AM -0400, Greg Price wrote:
+>> I agree with your footnote -- the more general case will require a
+>> more powerful sequencer to support properly. =C2=A0And now I see tha=
+t
+>> Ramkumar Ramachandra is making progress on such a thing right now!
+>> That's great news -- this is a project that has been attempted at
+>> least four times, by five people (including me), in the last three
+>> years. =C2=A0I hope to see this round make it in -- I was actually t=
+hinking
+>> about returning to the problem after seeing this series through, but=
+ I
+>> would be glad to see Ram beat me to it.
 
-Hmm, now 7610 seems to expect somewhat different behaviour and fails.
+You're more than welcome to join in -- all the work is public :)
+The latest iteration of the sequencer is in 'pu', and I'm currently
+busy rolling out a nicer version.
+
+> Hmm, on further reading I'm not sure the sequencer Ram aims to build
+> this summer actually extends to the "mark" and "reset" commands (or
+> the concepts of "the rewritten <commit>" and "detach" in the
+> pseudo-TODO notation of your footnote) that would be required to
+> implement this broader rewrite-side-branches feature. =C2=A0It looks =
+like
+> the focus may be on taking the existing features of rebase and
+> bringing them into C.
+
+Yes, you're absolutely right.  Bringing the existing features to C is
+quite a challenging task in itself, and is bound to keep me busy for
+the rest of the summer.  I don't plan to implement the features your
+series introduces yet, but it's certainly a great long-term goal -- I
+think the current series has all the right ingredients;  it just
+requires a lot of work before it can start providing more features.
+
+> This sounds great too -- it should make rebase a lot faster -- but it
+> will leave open the pet project I've thought about returning to, of
+> making "rebase -i -p" work correctly even when the user wants to
+> rearrange the commits rather than just s/pick/edit/ etc. =C2=A0That w=
+ill
+> require implementing a richer sequencer very like the one required fo=
+r
+> a general rewrite-side-branches feature.
+
+Right.  Since all this will take time, it'll probably be a good idea
+to get your series merged in now.
+
+-- Ram
