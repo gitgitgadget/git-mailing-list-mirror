@@ -1,85 +1,58 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Undo last commit?
-Date: Thu, 30 Jun 2011 10:20:40 +0530
-Message-ID: <BANLkTim459-Jx2R9GpBdkck7PMAEbamJeA@mail.gmail.com>
-References: <BANLkTinWujKYvx_fh2iBDOdMbywqzfgwUA@mail.gmail.com>
- <m31uyrutx7.fsf@localhost.localdomain> <20110619003718.GA5628@elie>
- <201106191237.55825.jnareb@gmail.com> <4DFF382A.5030206@micronengineering.it>
- <4E09DDAE.30801@ira.uka.de> <BANLkTimZN4swfY13zMjkCbAc9UsGSix02Q@mail.gmail.com>
+From: Christof =?ISO-8859-1?Q?Kr=FCger?= <git@christof-krueger.de>
+Subject: Re: importing history
+Date: Thu, 30 Jun 2011 07:00:43 +0200
+Message-ID: <1309410043.2417.70.camel@oxylap>
+References: <20110629164514.58175480.mihamina@bbs.mg>
+	 <348bd65ad7c7690bcce553fe3c8e0bfb.squirrel@mail.localhost.li>
+	 <m2sjqswp85.fsf@igel.home> <1309366960.2417.55.camel@oxylap>
+	 <m262nofhid.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Holger Hellmuth <hellmuth@ira.uka.de>,
-	Massimo Manca <massimo.manca@micronengineering.it>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Ben Walton <bwalton@artsci.utoronto.ca>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-To: Mike <xandrani@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 30 06:51:09 2011
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Mihamina Rakotomandimby <mihamina@bbs.mg>, git@vger.kernel.org
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Thu Jun 30 07:01:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qc9DX-0007mk-Te
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Jun 2011 06:51:08 +0200
+	id 1Qc9N7-0001uR-FA
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Jun 2011 07:01:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751091Ab1F3EvD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jun 2011 00:51:03 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:65390 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750889Ab1F3EvB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jun 2011 00:51:01 -0400
-Received: by wyg8 with SMTP id 8so1287886wyg.19
-        for <git@vger.kernel.org>; Wed, 29 Jun 2011 21:51:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=gxDqwef5QSVH2wvaOcclILCNnAJnACRcev3MJnhCLuY=;
-        b=KJIRWv1+81zdP2VMbktSzpL62j+254lFhtLgs8bBz6Eg1O/IrD/GYASgCyuCf8YlNi
-         CwZftGxWCrGdSVPIA10ZTK/Ds4RQ2MnGo6xowB7zjPsrHsL6V2AY2pNnK73rPOpdrPIy
-         7c7YJWaYU043oVPJTwxmT+r/Gv8VbMdFoVxBY=
-Received: by 10.216.187.136 with SMTP id y8mr258614wem.106.1309409460076; Wed,
- 29 Jun 2011 21:51:00 -0700 (PDT)
-Received: by 10.216.18.16 with HTTP; Wed, 29 Jun 2011 21:50:40 -0700 (PDT)
-In-Reply-To: <BANLkTimZN4swfY13zMjkCbAc9UsGSix02Q@mail.gmail.com>
+	id S1751091Ab1F3FA5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jun 2011 01:00:57 -0400
+Received: from vserver.localhost.li ([85.214.46.152]:42763 "EHLO
+	mail.localhost.li" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750888Ab1F3FA4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2011 01:00:56 -0400
+Received: from p5794caec.dip.t-dialin.net ([87.148.202.236]:56387 helo=[192.168.0.126])
+	by mail.localhost.li with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <git@christof-krueger.de>)
+	id 1Qc9Mr-0004Xz-6n; Thu, 30 Jun 2011 07:00:46 +0200
+In-Reply-To: <m262nofhid.fsf@igel.home>
+X-Mailer: Evolution 2.30.3 
+X-Spam-Score: 0.0 (/)
+X-Spam-Report: none
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176474>
 
-Hi Mike,
+On Mi, 2011-06-29 at 23:35 +0200, Andreas Schwab wrote:
+> I'm not talking about the config options, but of the ref namespace.  If
+> your svn repository would have a branch named origin it would be stored
+> as refs/remotes/origin by git svn, which would conflict with "git remote
+> add origin ..."
+Ah, thanks for explaining.
+As of now, I only had to do with rather "dump" SVN repositories with
+only a trunk (or only non-stdlayout branches I didn't care about
+anyways).
 
-Mike writes:
-> I do think that git needs polishing in this way. It was designed by a
-> very intelligent programmer... however they can sometimes be the worst
-> at user interface design. I think a lot of people are missing out on
-> how great git is because of the learning curve, and also the slightly
-> odd naming conventions.
->
-> "git reset --soft HEAD^" can't be picked up that quickly by a
-> beginner, but git uncommit would be obvious! So I have to agree with
-> Holger. Good design makes something intuitive. I have used DVD
-> recorder / players that are so badly designed that I needed to read
-> the instruction manual. Something complicated can be designed to such
-> a degree that people rarely have to read a manual, and they can pick
-> it up really quickly because it's obvious. If you disagree then you
-> might need to learn something about good design because what I say
-> isn't opinion it's a fact. Flame away :)
+But do you think things could be seriously screwed up because of this?
+Or would just one of the commands gracefully fail, leaving the
+unexperienced user with an error message he doesn't understand?
 
-I completely agree with you.  Git's user interface can certainly be
-improved -- we have had many many discussions on this topic (like
-{1]).  Unfortunately, the way to go about doing it is not to implement
-every little suggestion and introduce more inconsistencies;  Git is
-very complex, and changing one little thing requires us to think about
-how it'll affect everything else.  Yes, it does seem like a daunting
-task, but the interface IS improving slowly and steadily.  You can
-help by thinking about how a certain new feature will interact with
-every component of Git, and participating in UI discussions.
-
--- Ram
-
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/175061
+Chris.
