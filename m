@@ -1,128 +1,100 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] branch: honor core.abbrev
-Date: Thu, 30 Jun 2011 13:10:20 -0500
-Message-ID: <20110630181020.GA1128@elie>
-References: <1309449762-10476-1-git-send-email-namhyung@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] gitweb: Serve text/* 'blob_plain' as text/plain with
+ $prevent_xss
+Date: Thu, 30 Jun 2011 11:22:03 -0700
+Message-ID: <7v8vsjqiwk.fsf@alter.siamese.dyndns.org>
+References: <1309426761-819-1-git-send-email-jnareb@gmail.com>
+ <1309426761-819-2-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Namhyung Kim <namhyung@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 30 20:10:38 2011
+Cc: git@vger.kernel.org, Matt McCutchen <matt@mattmccutchen.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 30 20:22:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QcLhD-0008QZ-IM
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Jun 2011 20:10:35 +0200
+	id 1QcLsS-0005xU-W3
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Jun 2011 20:22:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753524Ab1F3SKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jun 2011 14:10:30 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:43131 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752976Ab1F3SKa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jun 2011 14:10:30 -0400
-Received: by vxb39 with SMTP id 39so1804445vxb.19
-        for <git@vger.kernel.org>; Thu, 30 Jun 2011 11:10:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=EgWV090ivkgoGNXzg0MOLH/Bq8tBrveg0XZlxDX9MNk=;
-        b=rXAwuKe3wM8whQ7Pwjp92hyhdOAQj4hChAt+NfbMalAXvvwRKZ7KVveDYq1wJSwIgR
-         3t/yLCTxe4gveZd4XTfXLMaN4uo01AVTaD2gB+J3BapSQw5YlN5IvD2xV/d4FnXys1bU
-         tDmXmjtoPi19YZGQXwFhdb50T8EajMXjFWtbk=
-Received: by 10.52.73.196 with SMTP id n4mr3454449vdv.39.1309457429246;
-        Thu, 30 Jun 2011 11:10:29 -0700 (PDT)
-Received: from elie (adsl-68-255-110-41.dsl.chcgil.ameritech.net [68.255.110.41])
-        by mx.google.com with ESMTPS id b9sm932226vdk.13.2011.06.30.11.10.27
-        (version=SSLv3 cipher=OTHER);
-        Thu, 30 Jun 2011 11:10:28 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1309449762-10476-1-git-send-email-namhyung@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751685Ab1F3SWI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jun 2011 14:22:08 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58497 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751091Ab1F3SWG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2011 14:22:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D7D456700;
+	Thu, 30 Jun 2011 14:24:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xnGZBd1CdU997oQKu32y7TiDfWU=; b=Lav/bR
+	7jkoABsrvWnvAy34mqF3zdV47HyX7nJLYOddG68XL+/pjcvsLqyfJkwtLh5krwF/
+	1JMB0eZZ4YtWUfCyqXQI+K8U2qukXAC4rExalSmUXj5w/d1CYM7XQZDSmLYzPLFV
+	SbbZYRezyh0f936xiacAXun84XpvHV0kLFzxY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cHe0PS3xVykt+9xNMdv0qTK/9Ppo/hCH
+	WCUJN5A3VCXOjuHTqDujp53ySwcAXD3LUrwvlGakYlb+yudrCEalFAACkfTF9+Dq
+	byOOOik+uFk6QwmwNGOxWFqw40/O/KNFmY8uwk+BkGLs9XRdPe9rQYrr9nn/d/Yg
+	Xmt5qUP4k50=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D103566FF;
+	Thu, 30 Jun 2011 14:24:19 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2C5FC66FE; Thu, 30 Jun 2011
+ 14:24:19 -0400 (EDT)
+In-Reply-To: <1309426761-819-2-git-send-email-jnareb@gmail.com> (Jakub
+ Narebski's message of "Thu, 30 Jun 2011 11:39:20 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 2B608C4E-A346-11E0-884B-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176497>
 
-Namhyung Kim wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> --- a/Documentation/git-branch.txt
-> +++ b/Documentation/git-branch.txt
-> @@ -114,6 +114,7 @@ OPTIONS
->  --abbrev=<length>::
->  	Alter the sha1's minimum display length in the output listing.
->  	The default value is 7.
-> +	(and can be overrided by the `core.abbrev` config option).
+> One of mechanism enabled by setting $prevent_xss to true is 'blob_plain'
+> view protection.  With XSS prevention on, blobs of all types except a
+> few known safe ones are served with "Content-Disposition: attachment" to
+> make sure they don't run in our security domain.
+>
+> Instead of serving text/* type files, except text/plain (and including
+> text/html), as attachements, downgrade it to text/plain.  This way HTML
+> pages in 'blob_plain' (raw) wiew would be displayed in browser, but
 
-Nitpicks: this would be clearer without the period after "7" and without
-the parentheses around the following phrase.  s/overrided/overridden/.
+A new typo "wiew" is introduced without touching other parts of the
+message. Curious...
 
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -613,7 +613,7 @@ static int opt_parse_merge_filter(const struct option *opt, const char *arg, int
->  int cmd_branch(int argc, const char **argv, const char *prefix)
->  {
->  	int delete = 0, rename = 0, force_create = 0;
-> -	int verbose = 0, abbrev = DEFAULT_ABBREV, detached = 0;
-> +	int verbose = 0, abbrev = -1, detached = 0;
-
-Yes.  (One meaningful "c89 -pedantic" warning down, several to go.)
-
-Some squashable tests follow.  Maybe they can be useful.  Thanks for
-fixing this.  
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- t/t3203-branch-output.sh |   29 +++++++++++++++++++++++++++++
- 1 files changed, 29 insertions(+), 0 deletions(-)
-
-diff --git i/t/t3203-branch-output.sh w/t/t3203-branch-output.sh
-index 6b7c118e..87333b49 100755
---- i/t/t3203-branch-output.sh
-+++ w/t/t3203-branch-output.sh
-@@ -3,6 +3,17 @@
- test_description='git branch display tests'
- . ./test-lib.sh
- 
-+minimum_line_length () {
-+	awk '
-+		BEGIN { minlen = 99 }
-+		{
-+			if (length($1) < minlen)
-+				minlen = length($1)
-+		}
-+		END { print minlen }
-+	'
-+}
-+
- test_expect_success 'make commits' '
- 	echo content >file &&
- 	git add file &&
-@@ -66,6 +77,24 @@ test_expect_success 'git branch -v shows branch summaries' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'git branch -v --abbrev' '
-+	echo 10 >expect &&
-+	git branch -v --abbrev=10 >tmp &&
-+	awk "{print \$(NF - 1)}" <tmp >commitids &&
-+	minimum_line_length <commitids >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git branch -v respects [core] abbrev configuration' '
-+	git config core.abbrev 9 &&
-+	test_when_finished "git config --unset core.abbrev" &&
-+	echo 9 >expect &&
-+	git branch -v >tmp &&
-+	awk "{print \$(NF - 1)}" <tmp >commitids &&
-+	minimum_line_length <commitids >actual &&
-+	test_cmp expect actual
-+'
-+
- cat >expect <<'EOF'
- * (no branch)
-   branch-one
+> safely as a source, and not asked to be saved.
+>
+> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+> ---
+>  gitweb/gitweb.perl |   10 +++++++++-
+>  1 files changed, 9 insertions(+), 1 deletions(-)
+>
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 8620aca..cb2e7bc 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -6139,7 +6139,15 @@ sub git_blob_plain {
+>  	# want to be sure not to break that by serving the image as an
+>  	# attachment (though Firefox 3 doesn't seem to care).
+>  	my $sandbox = $prevent_xss &&
+> -		$type !~ m!^(?:text/plain|image/(?:gif|png|jpeg))(?:[ ;]|$)!;
+> +		$type !~ m!^(?:text/[a-z]+|image/(?:gif|png|jpeg))(?:[ ;]|$)!;
+> +
+> +	# serve text/* as text/plain
+> +	if ($prevent_xss &&
+> +	    $type =~ m!^text/[a-z]+\b(.*)$!) {
+> +		my $rest = $1;
+> +		$rest = defined $rest ? $rest : '';
+> +		$type = "text/plain$rest";
+> +	}
+>  
+>  	print $cgi->header(
+>  		-type => $type,
