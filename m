@@ -1,127 +1,176 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFC/PATCH] test: skip clean-up when running under --immediate
- mode
-Date: Thu, 30 Jun 2011 08:45:34 +0200
-Message-ID: <4E0C1B8E.5070507@drmicha.warpmail.net>
-References: <7vmxh3xidt.fsf@alter.siamese.dyndns.org>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: Re: linux-next: manual merge of the security-testing tree with the
+ tree
+Date: Thu, 30 Jun 2011 09:25:59 +0200
+Message-ID: <20110630072559.GA4048@pengutronix.de>
+References: <20110630142910.2fea4257.sfr@canb.auug.org.au>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 30 08:45:45 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: James Morris <jmorris@namei.org>, linux-next@vger.kernel.org,
+	linux-kernel@vger.kernel.org, git@vger.kernel.org,
+	Linus <torvalds@linux-foundation.org>
+To: Stephen Rothwell <sfr@canb.auug.org.au>
+X-From: linux-next-owner@vger.kernel.org Thu Jun 30 09:26:08 2011
+Return-path: <linux-next-owner@vger.kernel.org>
+Envelope-to: glkn-linux-next@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QcB0S-0006Hv-Pa
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Jun 2011 08:45:45 +0200
+	(envelope-from <linux-next-owner@vger.kernel.org>)
+	id 1QcBdW-0003kH-Ld
+	for glkn-linux-next@lo.gmane.org; Thu, 30 Jun 2011 09:26:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758034Ab1F3Gpj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jun 2011 02:45:39 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:49032 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751333Ab1F3Gpi (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Jun 2011 02:45:38 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 68A1A20CFD;
-	Thu, 30 Jun 2011 02:45:37 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute3.internal (MEProxy); Thu, 30 Jun 2011 02:45:37 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=6P5X7z99xsukASKPZDvVl85SUoc=; b=C8UCe1MDkbnvDxxuHZQESYcHVt/9U2LzYtFgCwvrTqsdAVRXp2jgmcjPYGMeZOz4AG+bErZGjairIQftfqkCNv5Tjk3Tkw7YrX1mTagyuHWUM+nyAuz8oNED4xl0AGRSIHKUglfIcAwMiKCgNK7kW/EvcpbRKweZHOOGpzKK01c=
-X-Sasl-enc: jVpNhXsrV4jU2TdCpeHHDEuSQZzExMGksP3dAW5GcXNh 1309416337
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id CA73F444113;
-	Thu, 30 Jun 2011 02:45:36 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc15 Lightning/1.0b3pre Thunderbird/3.1.10
-In-Reply-To: <7vmxh3xidt.fsf@alter.siamese.dyndns.org>
-Sender: git-owner@vger.kernel.org
+	id S1750988Ab1F3H0F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glkn-linux-next@m.gmane.org>);
+	Thu, 30 Jun 2011 03:26:05 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:36964 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753826Ab1F3H0E (ORCPT
+	<rfc822;linux-next@vger.kernel.org>); Thu, 30 Jun 2011 03:26:04 -0400
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1QcBdR-0007kg-Vs; Thu, 30 Jun 2011 09:26:01 +0200
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.76)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1QcBdP-0001Yf-3t; Thu, 30 Jun 2011 09:25:59 +0200
+Content-Disposition: inline
+In-Reply-To: <20110630142910.2fea4257.sfr@canb.auug.org.au>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-next@vger.kernel.org
+Sender: linux-next-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176477>
+List-ID: <linux-next.vger.kernel.org>
+X-Mailing-List: linux-next@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176478>
 
-Junio C Hamano venit, vidit, dixit 27.06.2011 20:02:
-> Some tests try to be too careful about cleaning themselves up and
-> do
-> 
->     test_expect_success description '
->         set-up some test refs and/or configuration &&
->         test_when_finished "revert the above changes" &&
-> 	the real test
->     '
-> 
-> Which is nice to make sure that a potential failure would not have
-> unexpected interaction with the next test. This however interferes when
-> "the real test" fails and we want to see what is going on, by running the
-> test with --immediate mode and descending into its trash directory after
-> the test stops. The precondition to run the real test and cause it to fail
-> is all gone after the clean-up procedure defined by test_when_finished is
-> done.
-> 
-> Update test_run_ which is the workhorse of running a test script
-> called from test_expect_success and test_expect_failure, so that we do not
-> run clean-up script defined with test_when_finished when a test that is
-> expected to succeed fails under the --immediate mode.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> 
->  * Likes, dislikes?
+On Thu, Jun 30, 2011 at 02:29:10PM +1000, Stephen Rothwell wrote:
+> Hi James,
+>=20
+> Today's linux-next merge of the security-testing tree produced a larg=
+e
+> number of conflicts in files not modified by the security-testing tre=
+e.
+> I assume that this is a bug in "git merge" but I cannot complete the
+> merge as such.
+>=20
+> I have used the security-testing tree from next-20110628 for today.
+>=20
+> More information for the git experts:
+>=20
+> The security-testing tree is at
+> git://git.kernel.org/pub/scm/linux/kernel/git/jmorris/security-testin=
+g-2.6.git
+> and I am trying to merge branch "next" into linux-next at commit
+> 9fd8fab5e299a ("Merge remote-tracking branch 'voltage/for-next'").
+>=20
+> I can merge commit 0e4ae0e0dec6 ("TOMOYO: Make several options
+> configurable") from the security testing tree without conflict and al=
+so
+> commit 25e75dff519b ("AppArmor: Fix masking of capabilities in compla=
+in
+> mode").
+>=20
+> I cannot merge commit bcd05ca10420 ("Merge branch 'for-security' of
+> git://git.kernel.org/pub/scm/linux/kernel/git/jj/apparmor-dev into ne=
+xt")
+> which is the child of the above two commits.
+>=20
+> The tree to commit 25e75dff519b only containes two simple commits
+> (modifying 2 files) and is based on v3.0-rc5.  The tree to commit
+> bcd05ca10420 containes several commits and is based on commit
+> 06e86849cf40 ("Merge branch 'pm-fixes' of
+> git://git.kernel.org/pub/scm/linux/kernel/git/rafael/suspend-2.6") fr=
+om
+> Linus' tree (between v3.0-rc2 and v3.0-rc2).
+>=20
+> After attempting the merge I get this:
+>=20
+> $ git status
+> # On branch master
+> # Changes to be committed:
+> #
+> #	deleted:    Documentation/ABI/testing/sysfs-class-backlight-driver-=
+adp8870
+> #	modified:   Documentation/accounting/cgroupstats.txt
+> #	modified:   Documentation/cgroups/blkio-controller.txt
+> #	modified:   Documentation/cgroups/cgroups.txt
+> #	modified:   Documentation/cgroups/cpuacct.txt
+> #	modified:   Documentation/cgroups/cpusets.txt
+> 	.
+> 	.	[lots elided]
+> 	.
+> #	modified:   tools/perf/util/PERF-VERSION-GEN
+> #	modified:   tools/perf/util/trace-event-parse.c
+> #
+> # Unmerged paths:
+> #   (use "git add/rm <file>..." as appropriate to mark resolution)
+> #
+> #	both modified:      arch/arm/mach-shmobile/board-ag5evm.c
+> #	both modified:      arch/arm/mm/context.c
+> #	both modified:      arch/arm/mm/proc-v7.S
+> #	both modified:      arch/arm/plat-mxc/devices/platform-imx-dma.c
+> #	both modified:      arch/arm/plat-s5p/include/plat/map-s5p.h
+> #	both modified:      arch/m68k/Kconfig.nommu
+> #	both modified:      block/blk-throttle.c
+> #	both modified:      drivers/gpu/drm/nouveau/nouveau_fence.c
+> #	deleted by them:    drivers/net/usb/kalmia.c
+> #	both modified:      drivers/net/wireless/iwlegacy/iwl-dev.h
+> #	both modified:      drivers/net/wireless/iwlegacy/iwl4965-base.c
+> #	both modified:      drivers/net/wireless/iwlwifi/iwl-agn-rxon.c
+> #	both modified:      drivers/net/wireless/iwlwifi/iwl-agn.c
+> #	both modified:      drivers/net/wireless/rtlwifi/pci.c
+> #	deleted by them:    drivers/video/backlight/adp8870_bl.c
+> #	both modified:      fs/namei.c
+> #	both modified:      fs/nfs/nfs4proc.c
+> #	both modified:      fs/nfs/pnfs.c
+> #	both modified:      fs/proc/base.c
+> #	both modified:      net/bluetooth/rfcomm/sock.c
+> #	both modified:      net/ipv4/ip_output.c
+> #	both modified:      net/netfilter/ipvs/ip_vs_core.c
+> #	both modified:      sound/pci/hda/patch_via.c
+> #	both modified:      sound/soc/codecs/ad1836.h
+> #	both modified:      sound/soc/soc-cache.c
+> #
+>=20
+> None of the "Unmerged paths" are modified in the tree I am merging in=
+=2E
+Hmm, looking at bcd05ca10420 and the difference to its first parent:
 
-Likes!
+	$ git diff --stat bcd05ca10420^ bcd05ca10420
+	<void>
 
-> 
->  t/test-lib.sh |   12 ++++++++++--
->  1 files changed, 10 insertions(+), 2 deletions(-)
-> 
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 8c57a00..e36e67a 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -446,9 +446,14 @@ test_debug () {
->  
->  test_run_ () {
->  	test_cleanup=:
-> +	expecting_failure=$1
->  	eval >&3 2>&4 "$1"
->  	eval_ret=$?
-> -	eval >&3 2>&4 "$test_cleanup"
-> +
-> +	if test -z "$immediate" || test $eval_ret = 0 || test -n "$expecting_failure"
+	$ git describe bcd05ca10420
+	v3.0-rc5-28-gbcd05ca
 
-One may argue that a "test_expect_failure" which succeeds is a fail and
-should stop with --immediate (so that it's easier to spot fixed bugs),
-but...
+	$ git describe bcd05ca10420^
+	v3.0-rc2-221-g0e4ae0e
 
-> +	then
-> +		eval >&3 2>&4 "$test_cleanup"
-> +	fi
->  	if test "$verbose" = "t" && test -n "$HARNESS_ACTIVE"; then
->  		echo ""
->  	fi
-> @@ -497,7 +502,7 @@ test_expect_failure () {
->  	if ! test_skip "$@"
->  	then
->  		say >&3 "checking known breakage: $2"
-> -		test_run_ "$2"
-> +		test_run_ "$2" expecting_failure
->  		if [ "$?" = 0 -a "$eval_ret" = 0 ]
->  		then
->  			test_known_broken_ok_ "$1"
+So commit bcd05ca10420 reverted many commits between v3.0-rc2 and v3.0-=
+rc5.
 
-...we would have to change that here also, and it would be a change in
-behaviour of the test suite. Anyway, that is orthogonal to this patch
-which I do like.
+If I redo what should have been done in bcd05ca10420 and compare with
+bcd05ca10420:
 
-> @@ -774,6 +779,9 @@ test_cmp() {
->  #
->  # except that the greeting and config --unset must both succeed for
->  # the test to pass.
-> +#
-> +# Note that under --immediate mode, no clean-up is done to help diagnose
-> +# what went wrong.
->  
->  test_when_finished () {
->  	test_cleanup="{ $*
+	git checkout bcd05ca10420^
+	git merge bcd05ca10420^2
+	git diff --stat bcd05ca10420
+
+I get the same list of touched files as you above.
+
+Long history short: James probably used -s ours or similar and it's fin=
+e
+not to merge that commit into next :-)
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
+    |
+Industrial Linux Solutions                 | http://www.pengutronix.de/=
+  |
