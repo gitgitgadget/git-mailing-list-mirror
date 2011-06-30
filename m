@@ -1,91 +1,90 @@
-From: Namhyung Kim <namhyung@gmail.com>
-Subject: [PATCH] branch: honor core.abbrev
-Date: Fri,  1 Jul 2011 01:02:42 +0900
-Message-ID: <1309449762-10476-1-git-send-email-namhyung@gmail.com>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 30 18:02:53 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: linux-next: manual merge of the security-testing tree with the tree
+Date: Thu, 30 Jun 2011 09:20:35 -0700
+Message-ID: <BANLkTi=usrsF60Popfu55v3_dXe7Yo0GrA@mail.gmail.com>
+References: <20110630142910.2fea4257.sfr@canb.auug.org.au> <20110630072559.GA4048@pengutronix.de>
+ <20110630193023.6056d48e.sfr@canb.auug.org.au> <20110630121710.GJ11559@pengutronix.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Stephen Rothwell <sfr@canb.auug.org.au>,
+	James Morris <jmorris@namei.org>, linux-next@vger.kernel.org,
+	linux-kernel@vger.kernel.org, git@vger.kernel.org
+To: =?ISO-8859-1?Q?Uwe_Kleine=2DK=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+X-From: linux-kernel-owner@vger.kernel.org Thu Jun 30 18:21:28 2011
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QcJhd-00052d-8s
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Jun 2011 18:02:53 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1QcJzb-0006bN-Gy
+	for glk-linux-kernel-3@lo.gmane.org; Thu, 30 Jun 2011 18:21:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751122Ab1F3QCs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jun 2011 12:02:48 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:37522 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750999Ab1F3QCs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jun 2011 12:02:48 -0400
-Received: by qyk9 with SMTP id 9so1373056qyk.19
-        for <git@vger.kernel.org>; Thu, 30 Jun 2011 09:02:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=C0/c9auX4gU9GfNKlWIYVoH/nXvAAs52pQ+j7p8dhkE=;
-        b=X5TXSG6pyDKGjA/KPtrMyd+wUYYhGcdzRixZaVHKOI6ufLSB+oDdLEjzBLd6KNWDqq
-         rmFK23W95QUm1/M9MMihsz23dn3dap5ty8X15CmNFsNAvYDG7fbprf9sNAbcUKg1gR9r
-         1OjewJEOSKQnZDBxON+J4Mp7GmtJVy51YTOIs=
-Received: by 10.224.219.10 with SMTP id hs10mr1695156qab.80.1309449767245;
-        Thu, 30 Jun 2011 09:02:47 -0700 (PDT)
-Received: from localhost.localdomain ([118.176.76.64])
-        by mx.google.com with ESMTPS id t21sm1821462qcs.26.2011.06.30.09.02.45
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 30 Jun 2011 09:02:46 -0700 (PDT)
-X-Mailer: git-send-email 1.7.6
-Sender: git-owner@vger.kernel.org
+	id S1752169Ab1F3QVT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Thu, 30 Jun 2011 12:21:19 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:48770 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750928Ab1F3QVS convert rfc822-to-8bit
+	(ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Thu, 30 Jun 2011 12:21:18 -0400
+Received: from mail-wy0-f174.google.com (mail-wy0-f174.google.com [74.125.82.174])
+	(authenticated bits=0)
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p5UGKuga031281
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL);
+	Thu, 30 Jun 2011 09:20:58 -0700
+Received: by wyg8 with SMTP id 8so1664722wyg.19
+        for <multiple recipients>; Thu, 30 Jun 2011 09:20:56 -0700 (PDT)
+Received: by 10.216.145.234 with SMTP id p84mr1872140wej.24.1309450856106;
+ Thu, 30 Jun 2011 09:20:56 -0700 (PDT)
+Received: by 10.216.66.132 with HTTP; Thu, 30 Jun 2011 09:20:35 -0700 (PDT)
+In-Reply-To: <20110630121710.GJ11559@pengutronix.de>
+X-Spam-Status: No, hits=-103.03 required=5 tests=AWL,BAYES_00,USER_IN_WHITELIST
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176489>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176490>
 
-Honor 'core.abbrev' configuration unless user specifies the
-length on command line. In order to do that, we need to set
-'abbrev' to DEFAULT_ABBREV after config and command line
-parsing done.
+2011/6/30 Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>:
+>
+> A flag would be nice that does what I did: redo the merge and compare
+> bcd05ca10420^{tree} with the result?
 
-Signed-off-by: Namhyung Kim <namhyung@gmail.com>
----
- Documentation/git-branch.txt |    1 +
- builtin/branch.c             |    5 ++++-
- 2 files changed, 5 insertions(+), 1 deletions(-)
+The problem with that is that it's *way* too expensive an operation to
+do for the normal "git log" kind of operations.
 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index c50f189..906cccc 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -114,6 +114,7 @@ OPTIONS
- --abbrev=<length>::
- 	Alter the sha1's minimum display length in the output listing.
- 	The default value is 7.
-+	(and can be overrided by the `core.abbrev` config option).
- 
- --no-abbrev::
- 	Display the full sha1s in the output listing rather than abbreviating them.
-diff --git a/builtin/branch.c b/builtin/branch.c
-index d6ab93b..5a15022 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -613,7 +613,7 @@ static int opt_parse_merge_filter(const struct option *opt, const char *arg, int
- int cmd_branch(int argc, const char **argv, const char *prefix)
- {
- 	int delete = 0, rename = 0, force_create = 0;
--	int verbose = 0, abbrev = DEFAULT_ABBREV, detached = 0;
-+	int verbose = 0, abbrev = -1, detached = 0;
- 	int reflog = 0;
- 	enum branch_track track;
- 	int kinds = REF_LOCAL_BRANCH;
-@@ -696,6 +696,9 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	if (!!delete + !!rename + !!force_create > 1)
- 		usage_with_options(builtin_branch_usage, options);
- 
-+	if (abbrev == -1)
-+		abbrev = DEFAULT_ABBREV;
-+
- 	if (delete)
- 		return delete_branches(argc, argv, delete > 1, kinds);
- 	else if (argc == 0)
--- 
-1.7.6
+Also, truly re-doing the merge actually requires workspace access
+and/or require new objects to be created, so it would be inappropriate
+anyway: git log/show absolutely has to be a read-only operation,
+anything else would be totally insane.
+
+So there's no way - both for performance and 'fundamental' reasons -
+to make the normal logging code truly re-do the merge and then compare
+the end result of the merge with the end result that is in the tree.
+
+That said, what the current "git show/log" does is to just compare the
+end points with the merge result, which means that if the end result
+matches either of the end-points, nothing will be shown. That works
+for the common cases, but it absolutely doesn't work if somebody does
+something crazy, and just picks one end-point over another without
+doing a proper merge (ie "-s ours" or just a mis-merge). But the
+reason it's done that way is that it's possible to do without re-doing
+the merge.
+
+It would be lovely if "git show" (and log operations) had some option
+to do a "expensive merge check" and did actually figure out the common
+ancestor and at least took that into account.
+
+It would be doable to do it at least better than we do now - the
+common ancestor is not cheap to compute, but it's much cheaper than a
+full merge, and would at least allow us to flag dangerous merges. Of
+course, it gets fun when there are multiple common ancestors and
+renames. It's entirely possible that it's never going to be practical
+to do anything but "re-do the merge and compare result".
+
+                      Linus
