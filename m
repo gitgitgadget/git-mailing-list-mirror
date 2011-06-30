@@ -1,52 +1,81 @@
-From: Eric Raible <raible@nextest.com>
-Subject: Should 'git status' understand a .git containing "gitdir: dir"?
-Date: Thu, 30 Jun 2011 02:04:29 -0700
-Message-ID: <4E0C3C1D.1050406@nextest.com>
+From: Stephen Rothwell <sfr@canb.auug.org.au>
+Subject: Re: linux-next: manual merge of the security-testing tree with the
+ tree
+Date: Thu, 30 Jun 2011 19:30:23 +1000
+Message-ID: <20110630193023.6056d48e.sfr@canb.auug.org.au>
+References: <20110630142910.2fea4257.sfr@canb.auug.org.au>
+	<20110630072559.GA4048@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7bit
-To: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 30 11:04:38 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: multipart/signed; protocol="application/pgp-signature";
+ micalg="PGP-SHA1";
+ boundary="Signature=_Thu__30_Jun_2011_19_30_23_+1000_FPHb.q8Ju=toAu/n"
+Cc: James Morris <jmorris@namei.org>, linux-next@vger.kernel.org,
+	linux-kernel@vger.kernel.org, git@vger.kernel.org,
+	Linus <torvalds@linux-foundation.org>
+To: Uwe =?UTF-8?B?S2xlaW5lLUvDtm5pZw==?= 
+	<u.kleine-koenig@pengutronix.de>
+X-From: linux-next-owner@vger.kernel.org Thu Jun 30 11:30:38 2011
+Return-path: <linux-next-owner@vger.kernel.org>
+Envelope-to: glkn-linux-next@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QcDAs-0000JR-7p
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Jun 2011 11:04:38 +0200
+	(envelope-from <linux-next-owner@vger.kernel.org>)
+	id 1QcDa1-0001rK-Bx
+	for glkn-linux-next@lo.gmane.org; Thu, 30 Jun 2011 11:30:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756432Ab1F3JEc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jun 2011 05:04:32 -0400
-Received: from pops.nextest.com ([12.96.234.114]:58406 "EHLO
-	exchange.DOMAIN1.nextest.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754648Ab1F3JEb (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Jun 2011 05:04:31 -0400
-Received: from [131.101.151.1] (131.101.151.1) by Exchange.DOMAIN1.nextest.com
- (131.101.21.39) with Microsoft SMTP Server (TLS) id 8.2.176.0; Thu, 30 Jun
- 2011 02:07:55 -0700
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.18) Gecko/20110616 Lightning/1.0b2 Thunderbird/3.1.11
-Sender: git-owner@vger.kernel.org
+	id S1754426Ab1F3Jag (ORCPT <rfc822;glkn-linux-next@m.gmane.org>);
+	Thu, 30 Jun 2011 05:30:36 -0400
+Received: from chilli.pcug.org.au ([203.10.76.44]:46207 "EHLO smtps.tip.net.au"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753322Ab1F3Jaf (ORCPT <rfc822;linux-next@vger.kernel.org>);
+	Thu, 30 Jun 2011 05:30:35 -0400
+Received: from canb.auug.org.au (ash.rothwell.emu.id.au [IPv6:2402:b800:7003:7010:223:14ff:fe30:c8e4])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtps.tip.net.au (Postfix) with ESMTPSA id B5612144BCA;
+	Thu, 30 Jun 2011 19:30:30 +1000 (EST)
+In-Reply-To: <20110630072559.GA4048@pengutronix.de>
+X-Mailer: Sylpheed 3.1.1 (GTK+ 2.24.4; i486-pc-linux-gnu)
+Sender: linux-next-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176480>
+List-ID: <linux-next.vger.kernel.org>
+X-Mailing-List: linux-next@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176481>
 
-The following sequence sets up a trivial repo that uses "gitdir:":
+--Signature=_Thu__30_Jun_2011_19_30_23_+1000_FPHb.q8Ju=toAu/n
+Content-Type: text/plain; charset=UTF-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-$ git init gitdir-test
-$ cd gitdir-test
-$ mv .git real-git-dir
-$ echo "gitdir: real-git-dir" > .git
-$ git status
+Hi Uwe,
 
-Fine so far.  But git-status shows that "real-git-dir" is untracked:
+On Thu, 30 Jun 2011 09:25:59 +0200 Uwe Kleine-K=C3=B6nig <u.kleine-koenig@p=
+engutronix.de> wrote:
+>
+> Long history short: James probably used -s ours or similar and it's fine
+> not to merge that commit into next :-)
 
-$ git status -sb
-## Initial commit on master
-?? real-git-dir/
+Ah ha!  Thanks for the explanation.  My mind was clearly not up to it
+today. :-)
 
-Which strikes one as a bit inconsistent (since other pars of git-status
-knows to look in real-git-dir to find the index).
+--=20
+Cheers,
+Stephen Rothwell                    sfr@canb.auug.org.au
+http://www.canb.auug.org.au/~sfr/
 
-Sorry - no time to investigate.
+--Signature=_Thu__30_Jun_2011_19_30_23_+1000_FPHb.q8Ju=toAu/n
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAEBAgAGBQJODEIvAAoJEDMEi1NhKgbsaZUH/i64CxxpGaK5mgQXAs0w+dy3
+zg+QMPOvWlztgiJxPSAHTghGcr1sZaeSUZA1qyWGjrt+FQ4mnAjX1UH7JYXTonav
+BaQyXJuVyNQ5Y/EXpIgkRapttS0ExRwBrxPyxC32WCFAD1yqYOlgA15L8yC5RzdY
+zIWBnRaF7pfPMQKHE+bSAf7YZTtL5FDTOhnhi5uYP85tPQJo8KTmiic7gAhrBDAC
+PLf4ZQbtzXtOmSgpz0CwPWNqG16GBJUYLfwmBCQ8m6gdHIjR1IX+5pXrnWQtyWEy
+6qu9mvW6N23QfeDLaafbjNR1gyQsm3WeyXPrKiiMNEyhOsaldkxWQMf7/rbuMJE=
+=jEb5
+-----END PGP SIGNATURE-----
+
+--Signature=_Thu__30_Jun_2011_19_30_23_+1000_FPHb.q8Ju=toAu/n--
