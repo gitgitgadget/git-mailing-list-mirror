@@ -1,90 +1,82 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: linux-next: manual merge of the security-testing tree with the tree
-Date: Thu, 30 Jun 2011 09:20:35 -0700
-Message-ID: <BANLkTi=usrsF60Popfu55v3_dXe7Yo0GrA@mail.gmail.com>
-References: <20110630142910.2fea4257.sfr@canb.auug.org.au> <20110630072559.GA4048@pengutronix.de>
- <20110630193023.6056d48e.sfr@canb.auug.org.au> <20110630121710.GJ11559@pengutronix.de>
+From: Eric Raible <raible@nextest.com>
+Subject: Re: Should 'git status' understand a .git containing "gitdir: dir"?
+Date: Thu, 30 Jun 2011 09:48:57 -0700
+Message-ID: <4E0CA8F9.1080601@nextest.com>
+References: <4E0C3C1D.1050406@nextest.com> <7vsjqrqpzn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stephen Rothwell <sfr@canb.auug.org.au>,
-	James Morris <jmorris@namei.org>, linux-next@vger.kernel.org,
-	linux-kernel@vger.kernel.org, git@vger.kernel.org
-To: =?ISO-8859-1?Q?Uwe_Kleine=2DK=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-X-From: linux-kernel-owner@vger.kernel.org Thu Jun 30 18:21:28 2011
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 30 18:49:09 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1QcJzb-0006bN-Gy
-	for glk-linux-kernel-3@lo.gmane.org; Thu, 30 Jun 2011 18:21:27 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1QcKQL-0003uq-5i
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Jun 2011 18:49:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752169Ab1F3QVT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Thu, 30 Jun 2011 12:21:19 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:48770 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750928Ab1F3QVS convert rfc822-to-8bit
-	(ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Thu, 30 Jun 2011 12:21:18 -0400
-Received: from mail-wy0-f174.google.com (mail-wy0-f174.google.com [74.125.82.174])
-	(authenticated bits=0)
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p5UGKuga031281
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL);
-	Thu, 30 Jun 2011 09:20:58 -0700
-Received: by wyg8 with SMTP id 8so1664722wyg.19
-        for <multiple recipients>; Thu, 30 Jun 2011 09:20:56 -0700 (PDT)
-Received: by 10.216.145.234 with SMTP id p84mr1872140wej.24.1309450856106;
- Thu, 30 Jun 2011 09:20:56 -0700 (PDT)
-Received: by 10.216.66.132 with HTTP; Thu, 30 Jun 2011 09:20:35 -0700 (PDT)
-In-Reply-To: <20110630121710.GJ11559@pengutronix.de>
-X-Spam-Status: No, hits=-103.03 required=5 tests=AWL,BAYES_00,USER_IN_WHITELIST
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1751261Ab1F3Qs7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jun 2011 12:48:59 -0400
+Received: from exchange.domain1.nextest.com ([12.96.234.114]:3677 "EHLO
+	exchange.DOMAIN1.nextest.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750959Ab1F3Qs7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Jun 2011 12:48:59 -0400
+Received: from [131.101.151.1] (131.101.151.1) by Exchange.DOMAIN1.nextest.com
+ (131.101.21.39) with Microsoft SMTP Server (TLS) id 8.2.176.0; Thu, 30 Jun
+ 2011 09:52:23 -0700
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.18) Gecko/20110616 Lightning/1.0b2 Thunderbird/3.1.11
+In-Reply-To: <7vsjqrqpzn.fsf@alter.siamese.dyndns.org>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176490>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176491>
 
-2011/6/30 Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>:
->
-> A flag would be nice that does what I did: redo the merge and compare
-> bcd05ca10420^{tree} with the result?
+On 6/30/2011 8:49 AM, Junio C Hamano wrote:
+> Eric Raible <raible@nextest.com> writes:
+> 
+>> The following sequence sets up a trivial repo that uses "gitdir:":
+>>
+>> $ git init gitdir-test
+>> $ cd gitdir-test
+>> $ mv .git real-git-dir
+>> $ echo "gitdir: real-git-dir" > .git
+>> $ git status
+>>
+>> Fine so far.  But git-status shows that "real-git-dir" is untracked:
+>>
+>> $ git status -sb
+>> ## Initial commit on master
+>> ?? real-git-dir/
+>>
+>> Which strikes one as a bit inconsistent (since other pars of git-status
+>> knows to look in real-git-dir to find the index).
+>>
+>> Sorry - no time to investigate.
+> 
+> You could even have a real git dir of some completely unrelated repository
+> in your working tree, it will get reported as untracked, and you would
+> probably not want to track its contents, either (or you might want to if
+> you are trying to be funny, I dunno).
+> 
+> So I do not see there is anything to investigate. What you observed looks
+> perfectly expected to me, except for the "mv .git real-git-dir" bit that
+> makes a situation that confuses yourself (but not git).
+> .
 
-The problem with that is that it's *way* too expensive an operation to
-do for the normal "git log" kind of operations.
+The fact that the repo is stored in .git is an implementation detail -
+and one which git-status knows about (in the normal case).
 
-Also, truly re-doing the merge actually requires workspace access
-and/or require new objects to be created, so it would be inappropriate
-anyway: git log/show absolutely has to be a read-only operation,
-anything else would be totally insane.
+In the gidir: case one part of git status understands the details
+(after all - it reads real-git-dir/index) while another part doesn't
+(after all - it show the actual repo as a normal directory).
 
-So there's no way - both for performance and 'fundamental' reasons -
-to make the normal logging code truly re-do the merge and then compare
-the end result of the merge with the end result that is in the tree.
+Sure, git-real-dir could be added to git-real-dir/info/exclude.
+But by that logic we could insist on adding .git to .git/info/exclude.
 
-That said, what the current "git show/log" does is to just compare the
-end points with the merge result, which means that if the end result
-matches either of the end-points, nothing will be shown. That works
-for the common cases, but it absolutely doesn't work if somebody does
-something crazy, and just picks one end-point over another without
-doing a proper merge (ie "-s ours" or just a mis-merge). But the
-reason it's done that way is that it's possible to do without re-doing
-the merge.
+The argument about an unrelated repo in the working tree is irrelevant -
+.git wouldn't point to it, so there's nothings special about it.
 
-It would be lovely if "git show" (and log operations) had some option
-to do a "expensive merge check" and did actually figure out the common
-ancestor and at least took that into account.
-
-It would be doable to do it at least better than we do now - the
-common ancestor is not cheap to compute, but it's much cheaper than a
-full merge, and would at least allow us to flag dangerous merges. Of
-course, it gets fun when there are multiple common ancestors and
-renames. It's entirely possible that it's never going to be practical
-to do anything but "re-do the merge and compare result".
-
-                      Linus
+But it's obviously not a big deal either way and I'm gonna drop it.
