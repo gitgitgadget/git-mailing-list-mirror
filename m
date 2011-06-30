@@ -1,84 +1,62 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: linux-next: manual merge of the security-testing tree with the
- tree
-Date: Thu, 30 Jun 2011 14:17:10 +0200
-Message-ID: <20110630121710.GJ11559@pengutronix.de>
-References: <20110630142910.2fea4257.sfr@canb.auug.org.au>
- <20110630072559.GA4048@pengutronix.de>
- <20110630193023.6056d48e.sfr@canb.auug.org.au>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [RFC] status - don't show gitdir
+Date: Thu, 30 Jun 2011 19:32:20 +0700
+Message-ID: <BANLkTikCmWLar4ztZgrWdB-md2X3bUxATg@mail.gmail.com>
+References: <4E0C3C1D.1050406@nextest.com> <1309434388-3536-1-git-send-email-iveqy@iveqy.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: James Morris <jmorris@namei.org>, linux-next@vger.kernel.org,
-	linux-kernel@vger.kernel.org, git@vger.kernel.org,
-	Linus <torvalds@linux-foundation.org>
-To: Stephen Rothwell <sfr@canb.auug.org.au>
-X-From: linux-next-owner@vger.kernel.org Thu Jun 30 14:17:22 2011
-Return-path: <linux-next-owner@vger.kernel.org>
-Envelope-to: glkn-linux-next@lo.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Cc: raible@nextest.com, jens.lehmann@web.de, hvoigt@hvoigt.net,
+	git@vger.kernel.org, gitster@pobox.com
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Thu Jun 30 14:33:16 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-next-owner@vger.kernel.org>)
-	id 1QcGBI-0001wu-Ia
-	for glkn-linux-next@lo.gmane.org; Thu, 30 Jun 2011 14:17:16 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1QcGQl-0001Ig-Sx
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Jun 2011 14:33:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751515Ab1F3MRP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glkn-linux-next@m.gmane.org>);
-	Thu, 30 Jun 2011 08:17:15 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:41701 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750952Ab1F3MRO (ORCPT
-	<rfc822;linux-next@vger.kernel.org>); Thu, 30 Jun 2011 08:17:14 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1QcGBE-0008S7-LY; Thu, 30 Jun 2011 14:17:12 +0200
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.76)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1QcGBD-00067V-0p; Thu, 30 Jun 2011 14:17:11 +0200
-Content-Disposition: inline
-In-Reply-To: <20110630193023.6056d48e.sfr@canb.auug.org.au>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-next@vger.kernel.org
-Sender: linux-next-owner@vger.kernel.org
+	id S1751730Ab1F3Mcy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jun 2011 08:32:54 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:56692 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752374Ab1F3Mcv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2011 08:32:51 -0400
+Received: by bwd5 with SMTP id 5so1778458bwd.19
+        for <git@vger.kernel.org>; Thu, 30 Jun 2011 05:32:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=v7m+Tfde67dXGQLuMsqgtr31KCPnmuGe+IciGGA2Veg=;
+        b=dbNmAop7kZugfsC4Zk7XsZevnIZNE4Ze6jtA1RyiJz/K14L5uJUpps8tTabsl17tiu
+         2pgKJ93g2qLbAKZ+J3sAPiziaFAw+qTHHN/EdLzoHD5DmCJQ6ojXGNdoiBdc5vXORBPM
+         VeZtyKvJJUjHVeOELW6+qeE6YrQ1lvwH0GdEQ=
+Received: by 10.204.77.194 with SMTP id h2mr1937880bkk.144.1309437170188; Thu,
+ 30 Jun 2011 05:32:50 -0700 (PDT)
+Received: by 10.204.56.138 with HTTP; Thu, 30 Jun 2011 05:32:20 -0700 (PDT)
+In-Reply-To: <1309434388-3536-1-git-send-email-iveqy@iveqy.com>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-next.vger.kernel.org>
-X-Mailing-List: linux-next@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176486>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176487>
 
-On Thu, Jun 30, 2011 at 07:30:23PM +1000, Stephen Rothwell wrote:
-> Hi Uwe,
->=20
-> On Thu, 30 Jun 2011 09:25:59 +0200 Uwe Kleine-K=F6nig <u.kleine-koeni=
-g@pengutronix.de> wrote:
-> >
-> > Long history short: James probably used -s ours or similar and it's=
- fine
-> > not to merge that commit into next :-)
->=20
-> Ah ha!  Thanks for the explanation.  My mind was clearly not up to it
-> today. :-)
-The uncomfortable issue here is that=20
+On Thu, Jun 30, 2011 at 6:46 PM, Fredrik Gustafsson <iveqy@iveqy.com> wrote:
+> When gitdir is inside the working dir, don't show it as a untracked
+> directory.
 
-	git show bcd05ca10420
+read_directory_recursive() and friends ignore .git by default. I think
+if you want to ignore the directory that .git file points to, you
+should update there. I'm too lazy to check the code (my
+read_directory_recursive is heavily modified currently), but I think
+it does not check file type for .git entries now.
 
-(or gitk or gitweb or <enteryourfavoritetoolhere>) doesn't indicate tha=
-t
-it's "strange". The patch shown is simply empty, as it would be if the
-tree matched the other parent or if it were a clean merge.
-
-A flag would be nice that does what I did: redo the merge and compare
-bcd05ca10420^{tree} with the result?
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+But if we step back a bit, why do you want git to automatically ignore
+dirs that .git file points to? .git files are used to save real repo
+somewhere safe, e.g. outside working directory. You do not handle
+another case in your patch, where .git is a real symlink. In both
+cases, it's not hard to add "real-git-dir" to .git/info/excludes.
+-- 
+Duy
