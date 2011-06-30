@@ -1,89 +1,85 @@
-From: Stephen Rothwell <sfr@canb.auug.org.au>
-Subject: Re: linux-next: manual merge of the security-testing tree with the
- tree
-Date: Thu, 30 Jun 2011 14:39:15 +1000
-Message-ID: <20110630143915.0b0fdf0f.sfr@canb.auug.org.au>
-References: <20110630142910.2fea4257.sfr@canb.auug.org.au>
-	<20110630143334.90c9d1bc.sfr@canb.auug.org.au>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Undo last commit?
+Date: Thu, 30 Jun 2011 10:20:40 +0530
+Message-ID: <BANLkTim459-Jx2R9GpBdkck7PMAEbamJeA@mail.gmail.com>
+References: <BANLkTinWujKYvx_fh2iBDOdMbywqzfgwUA@mail.gmail.com>
+ <m31uyrutx7.fsf@localhost.localdomain> <20110619003718.GA5628@elie>
+ <201106191237.55825.jnareb@gmail.com> <4DFF382A.5030206@micronengineering.it>
+ <4E09DDAE.30801@ira.uka.de> <BANLkTimZN4swfY13zMjkCbAc9UsGSix02Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature";
- micalg="PGP-SHA1";
- boundary="Signature=_Thu__30_Jun_2011_14_39_15_+1000_Quq0ZEo9=pQ8V1k="
-Cc: linux-next@vger.kernel.org, linux-kernel@vger.kernel.org,
-	git@vger.kernel.org, Linus <torvalds@linux-foundation.org>
-To: James Morris <jmorris@namei.org>
-X-From: linux-next-owner@vger.kernel.org Thu Jun 30 06:39:25 2011
-Return-path: <linux-next-owner@vger.kernel.org>
-Envelope-to: glkn-linux-next@lo.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Holger Hellmuth <hellmuth@ira.uka.de>,
+	Massimo Manca <massimo.manca@micronengineering.it>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Ben Walton <bwalton@artsci.utoronto.ca>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: Mike <xandrani@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 30 06:51:09 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-next-owner@vger.kernel.org>)
-	id 1Qc92C-0004zB-FT
-	for glkn-linux-next@lo.gmane.org; Thu, 30 Jun 2011 06:39:24 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Qc9DX-0007mk-Te
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Jun 2011 06:51:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751062Ab1F3EjX (ORCPT <rfc822;glkn-linux-next@m.gmane.org>);
-	Thu, 30 Jun 2011 00:39:23 -0400
-Received: from chilli.pcug.org.au ([203.10.76.44]:41643 "EHLO smtps.tip.net.au"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750749Ab1F3EjW (ORCPT <rfc822;linux-next@vger.kernel.org>);
-	Thu, 30 Jun 2011 00:39:22 -0400
-Received: from canb.auug.org.au (ibmaus65.lnk.telstra.net [165.228.126.9])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtps.tip.net.au (Postfix) with ESMTPSA id 28ACA144BAA;
-	Thu, 30 Jun 2011 14:39:20 +1000 (EST)
-In-Reply-To: <20110630143334.90c9d1bc.sfr@canb.auug.org.au>
-X-Mailer: Sylpheed 3.1.1 (GTK+ 2.24.4; i486-pc-linux-gnu)
-Sender: linux-next-owner@vger.kernel.org
+	id S1751091Ab1F3EvD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jun 2011 00:51:03 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:65390 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750889Ab1F3EvB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2011 00:51:01 -0400
+Received: by wyg8 with SMTP id 8so1287886wyg.19
+        for <git@vger.kernel.org>; Wed, 29 Jun 2011 21:51:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=gxDqwef5QSVH2wvaOcclILCNnAJnACRcev3MJnhCLuY=;
+        b=KJIRWv1+81zdP2VMbktSzpL62j+254lFhtLgs8bBz6Eg1O/IrD/GYASgCyuCf8YlNi
+         CwZftGxWCrGdSVPIA10ZTK/Ds4RQ2MnGo6xowB7zjPsrHsL6V2AY2pNnK73rPOpdrPIy
+         7c7YJWaYU043oVPJTwxmT+r/Gv8VbMdFoVxBY=
+Received: by 10.216.187.136 with SMTP id y8mr258614wem.106.1309409460076; Wed,
+ 29 Jun 2011 21:51:00 -0700 (PDT)
+Received: by 10.216.18.16 with HTTP; Wed, 29 Jun 2011 21:50:40 -0700 (PDT)
+In-Reply-To: <BANLkTimZN4swfY13zMjkCbAc9UsGSix02Q@mail.gmail.com>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-next.vger.kernel.org>
-X-Mailing-List: linux-next@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176472>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176473>
 
---Signature=_Thu__30_Jun_2011_14_39_15_+1000_Quq0ZEo9=pQ8V1k=
-Content-Type: text/plain; charset=US-ASCII
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hi Mike,
 
-On Thu, 30 Jun 2011 14:33:34 +1000 Stephen Rothwell <sfr@canb.auug.org.au> =
-wrote:
+Mike writes:
+> I do think that git needs polishing in this way. It was designed by a
+> very intelligent programmer... however they can sometimes be the worst
+> at user interface design. I think a lot of people are missing out on
+> how great git is because of the learning curve, and also the slightly
+> odd naming conventions.
 >
-> On Thu, 30 Jun 2011 14:29:10 +1000 Stephen Rothwell <sfr@canb.auug.org.au=
-> wrote:
-> >
-> > More information for the git experts:
-> >=20
->=20
-> $ git version
-> git version 1.7.5.4
->=20
-> I am running Debian unstable.
+> "git reset --soft HEAD^" can't be picked up that quickly by a
+> beginner, but git uncommit would be obvious! So I have to agree with
+> Holger. Good design makes something intuitive. I have used DVD
+> recorder / players that are so badly designed that I needed to read
+> the instruction manual. Something complicated can be designed to such
+> a degree that people rarely have to read a manual, and they can pick
+> it up really quickly because it's obvious. If you disagree then you
+> might need to learn something about good design because what I say
+> isn't opinion it's a fact. Flame away :)
 
-Today's linux-next is based on v3.0-rc5-76-gc017d0d (Linus' tree commit
-c017d0d135 ("Merge branch 'kvm-updates/3.0' of
-git://git.kernel.org/pub/scm/virt/kvm/kvm").
+I completely agree with you.  Git's user interface can certainly be
+improved -- we have had many many discussions on this topic (like
+{1]).  Unfortunately, the way to go about doing it is not to implement
+every little suggestion and introduce more inconsistencies;  Git is
+very complex, and changing one little thing requires us to think about
+how it'll affect everything else.  Yes, it does seem like a daunting
+task, but the interface IS improving slowly and steadily.  You can
+help by thinking about how a certain new feature will interact with
+every component of Git, and participating in UI discussions.
 
-The point at which I tried to merge the security-testing tree is
-v3.0-rc5-3666-g9fd8fab.
+-- Ram
 
---=20
-Cheers,
-Stephen Rothwell                    sfr@canb.auug.org.au
-http://www.canb.auug.org.au/~sfr/
-
---Signature=_Thu__30_Jun_2011_14_39_15_+1000_Quq0ZEo9=pQ8V1k=
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAEBAgAGBQJOC/3zAAoJEDMEi1NhKgbsv5IH/RPgvlQTz1o1rAXDW8VDGmVa
-U8yHxXgo2tn+JFLGTzPlI5/742Z7JcJ/ScRYamlVBHZXV7VGj/6Wsp8lZbOnGRpg
-J6CN35lx3ewgDPyz73abblfyHhPGzg9xh42RDnIW9wnaLL+ZHXpyw/k/DVzP1KMw
-5/NQpnTQTeYL/9lBboNBMgMXcOSR/gYEtp/XmMvWxctHSLWrJUJ3Fs2GRuiRu0yy
-SW5NwxB3Q7LmVZpVjV0l7ch9JB3ITvQFKC7Ii7XqTA1S5XKp4FnhatDoEn98Ethb
-SXsBHX6XNYr+dtbr/ZoyROT6CFrCIAM+LRCcbKcPARyrEck1saAyxGoiH8TFw+Y=
-=+9tx
------END PGP SIGNATURE-----
-
---Signature=_Thu__30_Jun_2011_14_39_15_+1000_Quq0ZEo9=pQ8V1k=--
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/175061
