@@ -1,133 +1,84 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: [RFC] status - don't show gitdir
-Date: Thu, 30 Jun 2011 13:46:28 +0200
-Message-ID: <1309434388-3536-1-git-send-email-iveqy@iveqy.com>
-References: <4E0C3C1D.1050406@nextest.com>
-Cc: iveqy@iveqy.com, jens.lehmann@web.de, hvoigt@hvoigt.net,
-	git@vger.kernel.org, gitster@pobox.com
-To: raible@nextest.com
-X-From: git-owner@vger.kernel.org Thu Jun 30 13:46:28 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: Re: linux-next: manual merge of the security-testing tree with the
+ tree
+Date: Thu, 30 Jun 2011 14:17:10 +0200
+Message-ID: <20110630121710.GJ11559@pengutronix.de>
+References: <20110630142910.2fea4257.sfr@canb.auug.org.au>
+ <20110630072559.GA4048@pengutronix.de>
+ <20110630193023.6056d48e.sfr@canb.auug.org.au>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: James Morris <jmorris@namei.org>, linux-next@vger.kernel.org,
+	linux-kernel@vger.kernel.org, git@vger.kernel.org,
+	Linus <torvalds@linux-foundation.org>
+To: Stephen Rothwell <sfr@canb.auug.org.au>
+X-From: linux-next-owner@vger.kernel.org Thu Jun 30 14:17:22 2011
+Return-path: <linux-next-owner@vger.kernel.org>
+Envelope-to: glkn-linux-next@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QcFhS-0005Dr-P6
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Jun 2011 13:46:27 +0200
+	(envelope-from <linux-next-owner@vger.kernel.org>)
+	id 1QcGBI-0001wu-Ia
+	for glkn-linux-next@lo.gmane.org; Thu, 30 Jun 2011 14:17:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751730Ab1F3LqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jun 2011 07:46:22 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:44897 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751587Ab1F3LqU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jun 2011 07:46:20 -0400
-Received: by bwd5 with SMTP id 5so1747177bwd.19
-        for <git@vger.kernel.org>; Thu, 30 Jun 2011 04:46:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=OitCJoPL3zu6OkM1b/nB2O0gRQMsYQprM7F/i7IWDx0=;
-        b=UXPj8VCMYy19I6smQfJvycn68MMYMZ12Dq/gkeKgUhrs8BNIKAiKNl0DedmHynqBat
-         fTf5YV1RpYL4E7WGh27eilGmmS3F8gmU+NxgFkSY2XdtigXHHouxoF3NtkaTxwWNJBs7
-         togaB6EnAcEfUuT+fcI15hyChzAejgQ4rDLs4=
-Received: by 10.204.84.24 with SMTP id h24mr1883479bkl.185.1309434379290;
-        Thu, 30 Jun 2011 04:46:19 -0700 (PDT)
-Received: from kolya (h-185-240.A189.priv.bahnhof.se [85.24.185.240])
-        by mx.google.com with ESMTPS id l24sm2018960bkw.15.2011.06.30.04.46.18
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 30 Jun 2011 04:46:18 -0700 (PDT)
-Received: from iveqy by kolya with local (Exim 4.72)
-	(envelope-from <iveqy@kolya>)
-	id 1QcFhf-0000wg-DF; Thu, 30 Jun 2011 13:46:39 +0200
-X-Mailer: git-send-email 1.7.6.rc3.dirty
-In-Reply-To: <4E0C3C1D.1050406@nextest.com>
-Sender: git-owner@vger.kernel.org
+	id S1751515Ab1F3MRP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glkn-linux-next@m.gmane.org>);
+	Thu, 30 Jun 2011 08:17:15 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:41701 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750952Ab1F3MRO (ORCPT
+	<rfc822;linux-next@vger.kernel.org>); Thu, 30 Jun 2011 08:17:14 -0400
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1QcGBE-0008S7-LY; Thu, 30 Jun 2011 14:17:12 +0200
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.76)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1QcGBD-00067V-0p; Thu, 30 Jun 2011 14:17:11 +0200
+Content-Disposition: inline
+In-Reply-To: <20110630193023.6056d48e.sfr@canb.auug.org.au>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-next@vger.kernel.org
+Sender: linux-next-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176485>
+List-ID: <linux-next.vger.kernel.org>
+X-Mailing-List: linux-next@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176486>
 
-When gitdir is inside the working dir, don't show it as a untracked
-directory.
+On Thu, Jun 30, 2011 at 07:30:23PM +1000, Stephen Rothwell wrote:
+> Hi Uwe,
+>=20
+> On Thu, 30 Jun 2011 09:25:59 +0200 Uwe Kleine-K=F6nig <u.kleine-koeni=
+g@pengutronix.de> wrote:
+> >
+> > Long history short: James probably used -s ours or similar and it's=
+ fine
+> > not to merge that commit into next :-)
+>=20
+> Ah ha!  Thanks for the explanation.  My mind was clearly not up to it
+> today. :-)
+The uncomfortable issue here is that=20
 
-Signed-off-by: Fredrik Gustafsson <iveqy@iveqy.com>
----
-This patch works but have a few weaknesses. The string manipulations done
-is cumbersome and can possible be done nicer (not what I could to with
-support of strbuf).
+	git show bcd05ca10420
 
-Also, this patch doesn't know why .git isn't showed as untracked. Maybe
-this code is at the wrong place.
+(or gitk or gitweb or <enteryourfavoritetoolhere>) doesn't indicate tha=
+t
+it's "strange". The patch shown is simply empty, as it would be if the
+tree matched the other parent or if it were a clean merge.
 
- dir.c             |   28 ++++++++++++++++++++++++++++
- t/t7508-status.sh |   10 ++++++++++
- 2 files changed, 38 insertions(+), 0 deletions(-)
+A flag would be nice that does what I did: redo the merge and compare
+bcd05ca10420^{tree} with the result?
 
-diff --git a/dir.c b/dir.c
-index 08281d2..9cabc29 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1215,6 +1215,13 @@ int remove_dir_recursively(struct strbuf *path, int flag)
- void setup_standard_excludes(struct dir_struct *dir)
- {
- 	const char *path;
-+	const char *work_tree;
-+	const char *git_dir;
-+	struct strbuf wt_full;
-+	struct strbuf gd_base;
-+	struct strbuf gd_relpath;
-+	struct strbuf gd;
-+	int i = 0;
- 
- 	dir->exclude_per_dir = ".gitignore";
- 	path = git_path("info/exclude");
-@@ -1222,6 +1229,27 @@ void setup_standard_excludes(struct dir_struct *dir)
- 		add_excludes_from_file(dir, path);
- 	if (excludes_file && !access(excludes_file, R_OK))
- 		add_excludes_from_file(dir, excludes_file);
-+	work_tree = get_git_work_tree();
-+	strbuf_init(&wt_full,0);
-+	strbuf_addstr(&wt_full,work_tree);
-+	strbuf_addstr(&wt_full,"/.git");
-+	git_dir = read_gitfile_gently(wt_full.buf);
-+	strbuf_remove(&wt_full,wt_full.len-5,5);
-+	if(git_dir) {
-+		strbuf_init(&gd,0);
-+		strbuf_addstr(&gd,git_dir);
-+		if(gd.len > wt_full.len) {
-+			strbuf_init(&gd_base,0);
-+			strbuf_add(&gd_base,wt_full.buf,wt_full.len);
-+			if(!strbuf_cmp(&gd_base,&wt_full)) {
-+				strbuf_init(&gd_relpath,0);
-+				for(i = gd_base.len + 1; i < gd.len; i++) {
-+					strbuf_addch(&gd_relpath,gd.buf[i]);
-+				}
-+				add_exclude(gd_relpath.buf,"",0,&dir->exclude_list[EXC_FILE]);
-+			}
-+		}
-+	}
- }
- 
- int remove_path(const char *name)
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index 1fdfbd3..1fed0cf 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -1139,4 +1139,14 @@ test_expect_failure '.git/config ignore=all suppresses submodule summary' '
- 	git config -f .gitmodules  --remove-section submodule.subname
- '
- 
-+test_expect_success 'Check if git-dir is ignored when gitfile is used' '
-+	git init gitdir-test &&
-+	cd gitdir-test &&
-+	mv .git real-git-dir &&
-+	echo "gitdir: real-git-dir" > .git &&
-+	git status -s real-git-dir > actual &&
-+	> expect &&
-+	test_cmp actual expect
-+'
-+
- test_done
--- 
-1.7.6.rc3.dirty
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
+    |
+Industrial Linux Solutions                 | http://www.pengutronix.de/=
+  |
