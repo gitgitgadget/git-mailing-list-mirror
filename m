@@ -1,155 +1,611 @@
-From: David Fries <david@fries.net>
-Subject: Re: [PATCH] (trivial) add helpful "use --soft" for bare reset
-Date: Thu, 30 Jun 2011 17:08:43 -0500
-Message-ID: <20110630220843.GC26701@spacedout.fries.net>
-References: <20110626221428.GA26780@spacedout.fries.net>
- <7vk4c3qlqa.fsf@alter.siamese.dyndns.org>
- <20110630190608.GB26701@spacedout.fries.net>
- <7vwrg3ozi5.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's cooking in git.git (Jun 2011, #05; Thu, 30)
+Date: Thu, 30 Jun 2011 16:26:37 -0700
+Message-ID: <7viprmq4sy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Scott Bronson <bronson@rinspin.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 01 00:09:05 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 01 01:26:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QcPPz-0006qA-Ve
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Jul 2011 00:09:04 +0200
+	id 1QcQdF-0007FJ-1p
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Jul 2011 01:26:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753929Ab1F3WI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jun 2011 18:08:57 -0400
-Received: from SpacedOut.fries.net ([67.64.210.234]:49085 "EHLO
-	SpacedOut.fries.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753775Ab1F3WI4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jun 2011 18:08:56 -0400
-Received: from SpacedOut.fries.net (david@localhost [127.0.0.1])
-	by SpacedOut.fries.net (8.14.3/8.14.3/Debian-9.4) with ESMTP id p5UM8i4w024167
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 30 Jun 2011 17:08:44 -0500
-Received: (from david@localhost)
-	by SpacedOut.fries.net (8.14.3/8.14.3/Submit) id p5UM8hR9024154;
-	Thu, 30 Jun 2011 17:08:43 -0500
-Content-Disposition: inline
-In-Reply-To: <7vwrg3ozi5.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Greylist: Sender passed SPF test, not delayed by milter-greylist-4.3.7 (SpacedOut.fries.net [127.0.0.1]); Thu, 30 Jun 2011 17:08:44 -0500 (CDT)
+	id S1752468Ab1F3X0n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jun 2011 19:26:43 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40543 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752118Ab1F3X0l (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2011 19:26:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C61DF670D;
+	Thu, 30 Jun 2011 19:28:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=1
+	n4SWeOsjj5LwfQAW895lBQAp5w=; b=GKdjhXQmjKAFkvk6eqOpLC7LZWADym9Oz
+	DdeXPbRmu3ahXGWum2Xn0MOLOcg5PrVAitzXfBkokSgy+fShoONCXUC62REdHsxl
+	ywDUv51Cbo3rOUIUnuRcxn3PEq7AWjFkWvlsrLIihqysJ8Y7pq26OFcQULzEuMrJ
+	B1sDq+bIqo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=jEl
+	TY6bNNFVnrGElktCgnRUqH1FmSMXm5yw4IjxL/7Kgen8SEv7SUm5fw9UFJpp49YF
+	j1HsNemZcrQXk4S5mN8XrERf4wjZNsz+rzUbun/09M6vfW/fBGkYUgDhGuaS9PjJ
+	UCFozR8kqVG2unPhrcQKuQZ0tKNdWkhya/od0L68=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BE6DE670C;
+	Thu, 30 Jun 2011 19:28:54 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 50829670B; Thu, 30 Jun 2011
+ 19:28:53 -0400 (EDT)
+X-master-at: 033c2dc4364042b9e6dbd44e82e1974f78a72567
+X-next-at: 9901923cf0994582592a34128a466c58735621fd
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B79E2156-A370-11E0-BBCF-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176512>
 
-On Thu, Jun 30, 2011 at 01:06:26PM -0700, Junio C Hamano wrote:
-> David Fries <david@fries.net> writes:
-> 
-> > diff --git a/builtin/reset.c b/builtin/reset.c
-> > index 98bca04..d0d4d66 100644
-> > --- a/builtin/reset.c
-> > +++ b/builtin/reset.c
-> > @@ -332,7 +332,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
-> >  		setup_work_tree();
-> >  
-> >  	if (reset_type == MIXED && is_bare_repository())
-> > -		die(_("%s reset is not allowed in a bare repository"),
-> > +		die(_("%s reset is not allowed in a bare repository, see update-ref"),
-> >  		    _(reset_type_names[reset_type]));
+Here are the topics that have been cooking.  Commits prefixed with '-' are
+only in 'pu' while commits prefixed with '+' are in 'next'.
 
+Now that 1.7.6 is out, 'next' has been rewound and rebuilt to make its
+history appear a bit cleaner.
 
-Let me go back and respond to your first reply,
+Also I updated the order of topics in 'pu' to have the ones that are
+scheduled for 'next' early in the sequence (and fixes and documentation
+updates come earlier than new features), and pushing the stalled ones down
+to the very end.
 
-> Take a step back and think a bit _why_ you wanted to flip the branch to
-> point at a different commit. Did you push an incorrect commit to the
-> repository? The right way to fix that mistake is by pushing the correct
-> one, possibly with --force. You can also repoint a ref at a different
-> commit with "update-ref $the_ref $right_commit". It will let you correct a
-> branch that is not the primary branch pointed at with the HEAD pointer in
-> the bare repository, unlike "reset --soft".
+The tip of 'pu' is broken with respect to t7610 as of today.
 
-Back when I knew less it was a push, rebase, push failed, reset the
-bare repository so it would work.  I didn't know about push -f, but
-that's what you call a learning curve, learn something by figuring out
-how to get something done, then later figure out there's a much easier
-way.
+--------------------------------------------------
+[New Topics]
 
-But at work push -f no longer works, it's administratively denied from
-remote for certain branches, the kind that you generally never want to
-rewind.  But on occasion we do.  The options are to administratively
-change permissions, push -f, change back, or login to the server,
-clone, push -f, or manipulate the bare repository directly.  Modifying
-the bare repository is the quickest and git-update-ref works, it just
-isn't in the porcelain commands, so less likely to be known.
+* bc/submodule-foreach-stdin-fix-1.7.4 (2011-06-29) 2 commits
+ - git-submodule.sh: preserve stdin for the command spawned by foreach
+ - t/t7407: demonstrate that the command called by 'submodule foreach' loses stdin
 
-> There still is one thing that worries me remains here, even though I may
-> be worried too much. I tend to think that giving an incorrect advice is
-> far worse than not giving one.
-> 
-> Are you absolutely sure that the user wanted to update only the tip of a
-> ref without affecting the index nor the working tree, when a mixed reset
-> is issued in a bare repository, and there is _no other_ explanation why
-> the user issued a forbidden command?
+Will merge to 'next'.
 
-I guess I think of reset as moving the current branch and needing to
-know how much collateral damage it can do, modify the branch location,
-modify index, modify working files.  I'm not concerned about a user
-actually being in a bare repository thinking they're not, because
-resetting the index or working directory can loose information that
-you can't get back by looking at the ref-log until gc runs, and
-nothing woring on the index or working directory will work so they'll
-figure it out soon enough.
+* dc/stash-con-untracked (2011-06-26) 1 commit
+ - stash: Add --include-untracked option to stash and remove all untracked files
 
-> For example, I have ~/git.git and /pub/scm/git/git.git on a single machine
-> somewhere. The former is with a working tree and the latter is a bare
-> repository. I usually live in ~/git.git/ on that machine, but sometimes I
-> would do things like:
-> 
-> 	$ git repack -a -d ;# working area
-> 	$ cd /pub/scm/git/git.git ;# clean up from time to time ...
->         $ git repack -a -d ;# ... the public one as well
-> 
-> I may disconnect from my screen session to the machine after I do this,
-> and I may have forgotten where I was the next time I come back to the
-> machine.  After I reconnect to the same screen session, I may say "git
-> reset" to get back to a known state, which is what I often want to do in
-> the working area repository ~/git.git, mistakenly thinking that I am in my
-> usual ~/git.git directory.
+* jn/doc-dashdash (2011-06-29) 2 commits
+ - Documentation/i18n: quote double-dash for AsciiDoc
+ - Merge branch 'jn/maint-doc-dashdash' into jn/doc-dashdash
+ (this branch uses jn/maint-doc-dashdash.)
 
-But you are doing a `git-reset some_ref` to move to some other commit,
-or `git-reset` to discard any index changes and leave the branch where
-it is?  The first makes it clear you want to move where the branch is
-pointing, the second does nothing as far as the commit the branch is
-on.  For the first case they are either in the repository they
-intended to or not, but either way they are intending to move the
-current branch.  In the second case they're not even trying to move
-the branch.
+Will merge to 'next'.
 
-> In such a scenario, the mistake is not that I used a wrong command "reset"
-> in an attempt to update the tip of the branch. The mistake is that I tried
-> to use the right command to update the index, but I did it in a wrong
-> place. "Did you mean to do that somewhere else?" would be a much more
-> appropriate advice in that case.
+* jn/maint-doc-dashdash (2011-06-29) 1 commit
+ - Documentation: quote double-dash for AsciiDoc
+ (this branch is used by jn/doc-dashdash.)
 
-Yes, your message would be appropriate in that case, but there's no
-way for git to guess that.  Besides if it's a knowledgeable user just
-executing the wrong command in the wrong repository, any error message
-is enough for them pause, pay attention, figure out that's not what
-they expected, realize what they did, and go on their merry way.  The
-message is for someone who's used to resetting their non-bare
-repository, goes to the bare repository and left to hang as it doesn't
-work and man git-reset(1) doesn't offer any hints (if they look).
+Will merge to 'next'.
 
-My worry is git-update-ref's behavior is unexpected when someone's
-used to git-commit, git-branch etc, as in
-`git-branch new_branch old_branch^` vs
-`git-update-ref new_branch old_branch^` 
-as someone has to know to add refs/heads to git-update-ref where they
-don't with git-branch.
+* js/rebase-typo-branch-squelch-usage (2011-06-29) 1 commit
+ - rebase: do not print lots of usage hints after an obvious error message
 
-The point of the patch is trying to help out a user who is learning,
-and provide something to point them in the right direction.  
+Will merge to 'next'.
 
--- 
-David Fries <david@fries.net>    PGP pub CB1EE8F0
-http://fries.net/~david/
+* nk/ref-doc (2011-06-23) 7 commits
+ - glossary: clarify description of HEAD
+ - glossary: update description of head and ref
+ - glossary: update description of "tag"
+ - git.txt: de-emphasize the implementation detail of a ref
+ - check-ref-format doc: de-emphasize the implementation detail of a ref
+ - git-remote.txt: avoid sounding as if loose refs are the only ones in the world
+ - git-remote.txt: fix wrong remote refspec
+
+Will merge to 'next'.
+
+* jc/submodule-sync-no-auto-vivify (2011-06-26) 2 commits
+ - submodule add: always initialize .git/config entry
+ - submodule sync: do not auto-vivify uninteresting submodule
+
+* jn/gitweb-search (2011-06-22) 4 commits
+ - gitweb: Make git_search_* subroutines render whole pages
+ - gitweb: Clean up code in git_search_* subroutines
+ - gitweb: Split body of git_search into subroutines
+ - gitweb: Check permissions first in git_search
+
+--------------------------------------------------
+[Graduated to "master"]
+
+* db/http-cookies (2011-06-03) 1 commit
+  (merged to 'next' on 2011-06-06 at 90d736a)
+ + http: pass http.cookiefile using CURLOPT_COOKIEFILE
+
+* ef/maint-win-verify-path (2011-06-08) 5 commits
+ + verify_dotfile(): do not assume '/' is the path seperator
+  (merged to 'next' on 2011-06-07 at b418e05)
+ + verify_path(): simplify check at the directory boundary
+  (merged to 'next' on 2011-06-01 at f316f68)
+ + verify_path: consider dos drive prefix
+ + real_path: do not assume '/' is the path seperator
+ + A Windows path starting with a backslash is absolute
+
+* jc/advice-about-to-lose-commit (2011-05-24) 1 commit
+  (merged to 'next' on 2011-05-30 at 42385cc)
+ + checkout: make advice when reattaching the HEAD less loud
+
+* jc/diff-index-quick-exit-early (2011-05-31) 2 commits
+  (merged to 'next' on 2011-06-01 at 79d868a)
+ + diff-index --quiet: learn the "stop feeding the backend early" logic
+ + Merge remote-tracking branch 'ko/maint' into jc/diff-index-quick-exit-early
+
+* jc/maint-1.7.3-checkout-describe (2011-06-05) 1 commit
+  (merged to 'next' on 2011-06-06 at 6a59bb7)
+ + checkout -b <name>: correctly detect existing branch
+
+* jk/combine-diff-binary-etc (2011-05-24) 5 commits
+  (merged to 'next' on 2011-05-24 at 07cf180)
+ + combine-diff: respect textconv attributes
+ + refactor get_textconv to not require diff_filespec
+ + combine-diff: handle binary files as binary
+ + combine-diff: calculate mode_differs earlier
+ + combine-diff: split header printing into its own function
+
+* jk/maint-1.7.2-status-ignored (2011-06-02) 2 commits
+  (merged to 'next' on 2011-06-02 at 8626cc6)
+ + git status --ignored: tests and docs
+ + status: fix bug with missing --ignore files
+
+* js/i18n-windows (2011-06-06) 3 commits
+  (merged to 'next' on 2011-06-06 at d8c4ba3)
+ + Windows: teach getenv to do a case-sensitive search
+ + mingw.c: move definition of mingw_getenv down
+ + sh-i18n--envsubst: do not crash when no arguments are given
+
+* mg/diff-stat-count (2011-05-27) 4 commits
+  (merged to 'next' on 2011-06-01 at 5cdb776)
+ + diff --stat-count: finishing touches
+ + diff-options.txt: describe --stat-{width,name-width,count}
+ + diff: introduce --stat-lines to limit the stat lines
+ + diff.c: omit hidden entries from namelen calculation with --stat
+
+* rs/grep-color (2011-06-05) 3 commits
+  (merged to 'next' on 2011-06-06 at fd6bae1)
+ + grep: add --heading
+ + grep: add --break
+ + grep: fix coloring of hunk marks between files
+
+--------------------------------------------------
+[Stalled]
+
+* jh/receive-count-limit (2011-05-23) 10 commits
+ - receive-pack: Allow server to refuse pushes with too many objects
+ - pack-objects: Estimate pack size; abort early if pack size limit is exceeded
+ - send-pack/receive-pack: Allow server to refuse pushing too large packs
+ - pack-objects: Allow --max-pack-size to be used together with --stdout
+ - send-pack/receive-pack: Allow server to refuse pushes with too many commits
+ - pack-objects: Teach new option --max-commit-count, limiting #commits in pack
+ - receive-pack: Prepare for addition of the new 'limit-*' family of capabilities
+ - Tighten rules for matching server capabilities in server_supports()
+ - send-pack: Attempt to retrieve remote status even if pack-objects fails
+ - Update technical docs to reflect side-band-64k capability in receive-pack
+
+Would need another round to separate per-pack and per-session limits.
+Not urgent. Will not merge before 1.7.6.
+
+* sr/transport-helper-fix (2011-06-19) 20 commits
+ - transport-helper: implement marks location as capability
+ - transport-helper: Use capname for gitdir capability too
+ - transport-helper: export is no longer always the last command
+ - transport-helper: change import semantics
+ - transport-helper: update ref status after push with export
+ - transport-helper: use the new done feature where possible
+ - transport-helper: check status code of finish_command
+ - transport-helper: factor out push_update_refs_status
+ - fast-export: support done feature
+ - fast-import: introduce 'done' command
+ - git-remote-testgit: fix error handling
+ - git-remote-testgit: only push for non-local repositories
+ - remote-curl: accept empty line as terminator
+ - git_remote_helpers: push all refs during a non-local export
+ - transport-helper: don't feed bogus refs to export push
+ - teach remote-testgit to import non-HEAD refs
+ - t5800: document some non-functional parts of remote helpers
+ - t5800: use skip_all instead of prereq
+ - t5800: factor out some ref tests
+ - transport-helper: fix minor leak in push_refs_with_export
+
+At least Patch 10/20 (git-remote-testgit: fix error handling) and Patch
+15/20 (transport-helper: use the new done feature where possible) need a
+reroll.
+
+* jm/mergetool-pathspec (2011-06-22) 2 commits
+ - mergetool: Don't assume paths are unmerged
+ - mergetool: Add tests for filename with whitespace
+
+I think this is a good idea, but it probably needs a re-roll.
+
+--------------------------------------------------
+[Cooking]
+
+* ak/gcc46-profile-feedback (2011-06-20) 3 commits
+ - Add explanation of the profile feedback build to the README
+ - Add profile feedback build to git
+ - Add option to disable NORETURN
+
+Will merge to 'next'.
+
+* jc/maint-cygwin-trust-executable-bit-default (2011-06-20) 1 commit
+ - cygwin: trust executable bit by default
+
+Fix for an ancient regression.
+Will merge to 'next'.
+
+* jk/tag-list-multiple-patterns (2011-06-20) 1 commit
+ - tag: accept multiple patterns for --list
+
+Will merge to 'next' later.
+
+* jl/maint-fetch-recursive-fix (2011-06-20) 1 commit
+ - fetch: Also fetch submodules in subdirectories in on-demand mode
+
+Will merge to 'next'.
+
+* rr/revert-cherry-pick-continue (2011-06-21) 13 commits
+ - revert: Introduce --continue to continue the operation
+ - revert: Introduce skip-all to cleanup sequencer data
+ - revert: Introduce a layer of indirection over pick_commits
+ - revert: Persist data for continuation
+ - revert: Catch incompatible command-line options early
+ - revert: Separate cmdline parsing from functional code
+ - revert: Introduce struct to keep command-line options
+ - revert: Rename no_replay to record_origin
+ - revert: Eliminate global "commit" variable
+ - revert: Propogate errors upwards from do_pick_commit
+ - revert: Don't check lone argument in get_encoding
+ - revert: Factor out add_message_to_msg function
+ - advice: Introduce error_resolve_conflict
+
+Under discussion, just queued here so that it is not lost.
+
+* fk/relink-upon-ldflags-update (2011-06-22) 1 commit
+ - Makefile: Track changes to LDFLAGS and relink when necessary
+
+Will merge to 'next'.
+
+* jk/maint-config-param (2011-06-22) 6 commits
+ - config: use strbuf_split_str instead of a temporary strbuf
+ - strbuf: allow strbuf_split to work on non-strbufs
+ - config: avoid segfault when parsing command-line config
+ - config: die on error in command-line config
+ - fix "git -c" parsing of values with equals signs
+ - strbuf_split: add a max parameter
+ (this branch is used by jk/clone-cmdline-config.)
+
+Separated earlier parts of jk/clone-cmdline-config for maint.
+Will merge to 'next' later.
+
+* jn/gitweb-split-header-html (2011-06-22) 1 commit
+ - gitweb: Refactor git_header_html
+
+Will merge to 'next' later.
+
+* aw/rebase-i-p (2011-06-19) 1 commit
+ - rebase -i -p: include non-first-parent commits in todo list
+
+Rerolled with a minor tweak.
+Will merge to 'next'.
+
+* en/merge-recursive (2011-06-13) 49 commits
+ - t3030: fix accidental success in symlink rename
+ - merge-recursive: Fix working copy handling for rename/rename/add/add
+ - merge-recursive: add handling for rename/rename/add-dest/add-dest
+ - merge-recursive: Have conflict_rename_delete reuse modify/delete code
+ - merge-recursive: Make modify/delete handling code reusable
+ - merge-recursive: Consider modifications in rename/rename(2to1) conflicts
+ - merge-recursive: Create function for merging with branchname:file markers
+ - merge-recursive: Record more data needed for merging with dual renames
+ - merge-recursive: Defer rename/rename(2to1) handling until process_entry
+ - merge-recursive: Small cleanups for conflict_rename_rename_1to2
+ - merge-recursive: Fix rename/rename(1to2) resolution for virtual merge base
+ - merge-recursive: Introduce a merge_file convenience function
+ - merge-recursive: Fix modify/delete resolution in the recursive case
+ - merge-recursive: Provide more info in conflict markers with file renames
+ - merge-recursive: Cleanup and consolidation of rename_conflict_info
+ - merge-recursive: Consolidate process_entry() and process_df_entry()
+ - merge-recursive: Improve handling of rename target vs. directory addition
+ - merge-recursive: Add comments about handling rename/add-source cases
+ - merge-recursive: Make dead code for rename/rename(2to1) conflicts undead
+ - merge-recursive: Fix deletion of untracked file in rename/delete conflicts
+ - merge-recursive: When we detect we can skip an update, actually skip it
+ - merge-recursive: Split update_stages_and_entry; only update stages at end
+ - merge-recursive: Consolidate different update_stages functions
+ - merge-recursive: Allow make_room_for_path() to remove D/F entries
+ - merge-recursive: Split was_tracked() out of would_lose_untracked()
+ - merge-recursive: Save D/F conflict filenames instead of unlinking them
+ - merge-recursive: Fix code checking for D/F conflicts still being present
+ - merge-recursive: Fix sorting order and directory change assumptions
+ - merge-recursive: Fix recursive case with D/F conflict via add/add conflict
+ - merge-recursive: Avoid working directory changes during recursive case
+ - merge-recursive: Remember to free generated unique path names
+ - merge-recursive: Mark some diff_filespec struct arguments const
+ - merge-recursive: Correct a comment
+ - merge-recursive: Make BUG message more legible by adding a newline
+ - t6022: Add testcase for merging a renamed file with a simple change
+ - t6022: New tests checking for unnecessary updates of files
+ - t6022: Remove unnecessary untracked files to make test cleaner
+ - t6036: criss-cross + rename/rename(1to2)/add-source + modify/modify
+ - t6036: criss-cross w/ rename/rename(1to2)/modify+rename/rename(2to1)/modify
+ - t6036: tests for criss-cross merges with various directory/file conflicts
+ - t6036: criss-cross with weird content can fool git into clean merge
+ - t6036: Add differently resolved modify/delete conflict in criss-cross test
+ - t6042: Ensure rename/rename conflicts leave index and workdir in sane state
+ - t6042: Add failing testcases for rename/rename/add-{source,dest} conflicts
+ - t6042: Add tests for content issues with modify/rename/directory conflicts
+ - t6042: Add a testcase where undetected rename causes silent file deletion
+ - t6042: Add a pair of cases where undetected renames cause issues
+ - t6042: Add failing testcase for rename/modify/add-source conflict
+ - t6042: Add a testcase where git deletes an untracked file
+
+Haven't looked at the whole series yet.
+
+* fg/submodule-keep-updating (2011-06-13) 3 commits
+ - git-submodule.sh: clarify the "should we die now" logic
+ - submodule update: continue when a checkout fails
+ - git-sh-setup: add die_with_status
+
+Will merge to 'next'.
+
+* jc/no-gitweb-test-without-cgi-etc (2011-06-15) 1 commit
+ - t/gitweb-lib.sh: skip gitweb tests when perl dependencies are not met
+
+Will merge to 'next'.
+
+* jn/mime-type-with-params (2011-06-30) 2 commits
+ - gitweb: Serve */*+xml 'blob_plain' as text/plain with $prevent_xss
+ - gitweb: Serve text/* 'blob_plain' as text/plain with $prevent_xss
+
+Will merge to 'next' later.
+
+* ln/gitweb-mime-types-split-at-blank (2011-06-15) 1 commit
+ - gitweb: allow space as delimiter in mime.types
+
+Will merge to 'next'.
+
+* md/interix-update (2011-06-15) 1 commit
+ - Update the Interix default build configuration.
+
+Will merge to 'next'.
+
+* rj/config-cygwin (2011-06-16) 3 commits
+ - config.c: Make git_config() work correctly when called recursively
+ - t1301-*.sh: Fix the 'forced modes' test on cygwin
+ - help.c: Fix detection of custom merge strategy on cygwin
+
+Will merge to 'next'.
+
+* jk/archive-tar-filter (2011-06-22) 9 commits
+ - upload-archive: allow user to turn off filters
+ - archive: provide builtin .tar.gz filter
+ - archive: implement configurable tar filters
+ - archive: refactor file extension format-guessing
+ - archive: move file extension format-guessing lower
+ - archive: pass archiver struct to write_archive callback
+ - archive: refactor list of archive formats
+ - archive-tar: don't reload default config options
+ - archive: reorder option parsing and config reading
+
+Rerolled.
+Will merge to 'next' later.
+
+* jc/index-pack (2011-06-05) 9 commits
+ - verify-pack: use index-pack --verify
+ - index-pack: show histogram when emulating "verify-pack -v"
+ - index-pack: start learning to emulate "verify-pack -v"
+ - index-pack: a miniscule refactor
+ - index-pack --verify: read anomalous offsets from v2 idx file
+ - write_idx_file: need_large_offset() helper function
+ - index-pack: --verify
+ - write_idx_file: introduce a struct to hold idx customization options
+ - index-pack: group the delta-base array entries also by type
+
+Killed "verify-pack" ;-) The next will be to update fsck, which would be a
+bigger task.
+
+Will merge to 'next' later.
+
+* an/shallow-doc (2011-06-08) 2 commits
+ - Document the underlying protocol used by shallow repositories and --depth commands.
+ - Fix documentation of fetch-pack that implies that the client can disconnect after sending wants.
+
+Will merge to 'next'.
+
+* jc/legacy-loose-object (2011-06-08) 1 commit
+ - sha1_file.c: "legacy" is really the current format
+
+Will merge to 'next'.
+
+* jc/zlib-wrap (2011-06-10) 7 commits
+ - zlib: allow feeding more than 4GB in one go
+ - zlib: zlib can only process 4GB at a time
+ - zlib: wrap deflateBound() too
+ - zlib: wrap deflate side of the API
+ - zlib: wrap inflateInit2 used to accept only for gzip format
+ - zlib: wrap remaining calls to direct inflate/inflateEnd
+ - zlib wrapper: refactor error message formatter
+
+This replaces the earlier attempt to deal with the mismatch between our
+expectation and what zlib API actually offers piecemeal.
+
+Will merge to 'next' later.
+
+* jk/clone-cmdline-config (2011-06-22) 4 commits
+ - clone: accept config options on the command line
+ - config: make git_config_parse_parameter a public function
+ - remote: use new OPT_STRING_LIST
+ - parse-options: add OPT_STRING_LIST helper
+ (this branch uses jk/maint-config-param.)
+
+Separated the earlier parts out to make it mergeable to the maintenance
+track.
+
+Will merge to 'next' later.
+
+* jk/tag-contains-ab (2011-06-30) 4 commits
+ - git skew: a tool to find how big a clock skew exists in the history
+ - default core.clockskew variable to one day
+ - limit "contains" traversals based on commit timestamp
+ - tag: speed up --contains calculation
+
+Will merge to 'next' later (at least the first three).
+
+* jk/clone-detached (2011-06-07) 4 commits
+ - clone: always fetch remote HEAD
+ - make copy_ref globally available
+ - consider only branches in guess_remote_head
+ - t: add tests for cloning remotes with detached HEAD
+
+Somewhat involved bugfix.
+
+* jl/submodule-add-relurl-wo-upstream (2011-06-06) 3 commits
+ - submodule add: clean up duplicated code
+ - submodule add: allow relative repository path even when no url is set
+ - submodule add: test failure when url is not configured in superproject
+
+When merged to pu, it seems to break 7610.
+
+* jn/gitweb-js-blame (2011-05-27) 3 commits
+  (merged to 'next' on 2011-06-29 at cce347d)
+ + gitweb.js: use setTimeout rather than setInterval in blame_incremental.js
+ + gitweb.js: No need for loop in blame_incremental's handleResponse()
+ + gitweb.js: No need for inProgress in blame_incremental.js
+
+Originally merged to 'next' on 2011-06-01.
+Will merge to 'master'.
+
+* da/git-prefix-everywhere (2011-06-02) 4 commits
+  (merged to 'next' on 2011-06-29 at 4ed5461)
+ + t/t7503-pre-commit-hook.sh: Add GIT_PREFIX tests
+ + git-mergetool--lib: Make vimdiff retain the current directory
+ + git: Remove handling for GIT_PREFIX
+ + setup: Provide GIT_PREFIX to built-ins
+
+Originally merged to 'next' on 2011-06-02.
+Will merge to 'master'.
+
+* jc/streaming-filter (2011-05-26) 8 commits
+  (merged to 'next' on 2011-06-29 at 9901923)
+ + t0021: test application of both crlf and ident
+ + t0021-conversion.sh: fix NoTerminatingSymbolAtEOF test
+ + streaming: filter cascading
+ + streaming filter: ident filter
+ + Add LF-to-CRLF streaming conversion
+ + stream filter: add "no more input" to the filters
+ + Add streaming filter API
+ + convert.h: move declarations for conversion from cache.h
+ (this branch uses jc/streaming.)
+
+Trivial lf-to-crlf and ident conversions can be performed without reading
+everything in-core first.
+
+Originally merged to 'next' on 2011-06-06.
+Will merge to 'master'.
+
+* jc/streaming (2011-05-26) 14 commits
+  (merged to 'next' on 2011-06-29 at 55ac692)
+ + sha1_file: use the correct type (ssize_t, not size_t) for read-style function
+ + streaming: read loose objects incrementally
+ + sha1_file.c: expose helpers to read loose objects
+ + streaming: read non-delta incrementally from a pack
+ + streaming_write_entry(): support files with holes
+ + convert: CRLF_INPUT is a no-op in the output codepath
+ + streaming_write_entry(): use streaming API in write_entry()
+ + streaming: a new API to read from the object store
+ + write_entry(): separate two helper functions out
+ + unpack_object_header(): make it public
+ + sha1_object_info_extended(): hint about objects in delta-base cache
+ + sha1_object_info_extended(): expose a bit more info
+ + packed_object_info_detail(): do not return a string
+ + Merge branches 'jc/convert', 'jc/bigfile' and 'jc/replacing' into jc/streaming
+ (this branch is used by jc/streaming-filter.)
+
+Originally merged to 'next' on 2011-05-26.
+Will merge to 'master'.
+
+* ab/i18n-scripts (2011-05-21) 48 commits
+  (merged to 'next' on 2011-06-29 at 61f4472)
+ + i18n: git-bisect bisect_next_check "You need to" message
+ + i18n: git-bisect [Y/n] messages
+ + i18n: git-bisect bisect_replay + $1 messages
+ + i18n: git-bisect bisect_reset + $1 messages
+ + i18n: git-bisect bisect_run + $@ messages
+ + i18n: git-bisect die + eval_gettext messages
+ + i18n: git-bisect die + gettext messages
+ + i18n: git-bisect echo + eval_gettext message
+ + i18n: git-bisect echo + gettext messages
+ + i18n: git-bisect gettext + echo message
+ + i18n: git-bisect add git-sh-i18n
+ + i18n: git-stash drop_stash say/die messages
+ + i18n: git-stash "unknown option" message
+ + i18n: git-stash die + eval_gettext $1 messages
+ + i18n: git-stash die + eval_gettext $* messages
+ + i18n: git-stash die + eval_gettext messages
+ + i18n: git-stash die + gettext messages
+ + i18n: git-stash say + gettext messages
+ + i18n: git-stash echo + gettext message
+ + i18n: git-stash add git-sh-i18n
+ + i18n: git-submodule "blob" and "submodule" messages
+ + i18n: git-submodule "path not initialized" message
+ + i18n: git-submodule "[...] path is ignored" message
+ + i18n: git-submodule "Entering [...]" message
+ + i18n: git-submodule $errmsg messages
+ + i18n: git-submodule "Submodule change[...]" messages
+ + i18n: git-submodule "cached cannot be used" message
+ + i18n: git-submodule $update_module say + die messages
+ + i18n: git-submodule die + eval_gettext messages
+ + i18n: git-submodule say + eval_gettext messages
+ + i18n: git-submodule echo + eval_gettext messages
+ + i18n: git-submodule add git-sh-i18n
+ + i18n: git-pull eval_gettext + warning message
+ + i18n: git-pull eval_gettext + die message
+ + i18n: git-pull die messages
+ + i18n: git-pull add git-sh-i18n
+ + i18n: git-am printf(1) message to eval_gettext
+ + i18n: git-am core say messages
+ + i18n: git-am "Falling back" say message
+ + i18n: git-am "Apply?" message
+ + i18n: git-am clean_abort messages
+ + i18n: git-am cannot_fallback messages
+ + i18n: git-am die messages
+ + i18n: git-am gettext + gettext to stderr message
+ + i18n: git-am eval_gettext messages
+ + i18n: git-am multi-line getttext $msg; echo
+ + i18n: git-am one-line gettext $msg; echo
+ + i18n: git-am add git-sh-i18n
+
+Originally merged to 'next' on 2011-05-23.
+Will merge to 'master'.
+
+--------------------------------------------------
+[Discarded]
+
+* js/ref-namespaces (2011-06-07) 4 commits
+ . ref namespaces: documentation
+ . ref namespaces: support remote repositories via upload-pack and receive-pack
+ . ref namespaces: infrastructure
+ . Fix prefix handling in ref iteration functions
+
+Fairly involved feature enhancement, and breaks tests when merged to 'pu'.
+
+* jk/transport-helper-fix (2011-06-07) 8 commits
+ . git_remote_helpers: push all refs during a non-local export
+ . transport-helper: don't feed bogus refs to export push
+ . teach remote-testgit to import multiple refs
+ . teach remote-testgit to import non-HEAD refs
+ . t5800: document some non-functional parts of remote helpers
+ . t5800: factor out some ref tests
+ . git-remote-testgit: exit gracefully after push
+ . transport-helper: fix minor leak in push_refs_with_export
+
+sr/transport-helper-fix is a superset of this.
