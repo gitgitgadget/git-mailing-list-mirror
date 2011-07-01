@@ -1,85 +1,64 @@
-From: Ted Zlatanov <tzz@lifelogs.com>
-Subject: Re: [Wishlist] could git tell which password it is asking when asking a password.
-Date: Fri, 01 Jul 2011 12:04:02 -0500
-Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
- Cienfuegos
-Message-ID: <87aacygcfx.fsf@lifelogs.com>
-References: <877h82nlua.dlv@debian.org>
-Reply-To: git@vger.kernel.org
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2] branch: honor core.abbrev
+Date: Fri, 1 Jul 2011 14:05:58 -0500
+Message-ID: <20110701190558.GC8929@elie>
+References: <20110630181020.GA1128@elie>
+ <1309500368-3729-1-git-send-email-namhyung@gmail.com>
+ <7voc1doo8v.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 01 20:45:15 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Namhyung Kim <namhyung@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 01 21:06:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QciiI-0003QH-3o
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Jul 2011 20:45:14 +0200
+	id 1Qcj2a-000548-8l
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Jul 2011 21:06:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754874Ab1GASpI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Jul 2011 14:45:08 -0400
-Received: from lo.gmane.org ([80.91.229.12]:57137 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757536Ab1GASpH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jul 2011 14:45:07 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Qcii9-0003Nq-PQ
-	for git@vger.kernel.org; Fri, 01 Jul 2011 20:45:05 +0200
-Received: from 38.98.147.133 ([38.98.147.133])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 01 Jul 2011 20:45:05 +0200
-Received: from tzz by 38.98.147.133 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 01 Jul 2011 20:45:05 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-Mail-Followup-To: git@vger.kernel.org
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 38.98.147.133
-X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
-Mail-Copies-To: never
-User-Agent: Gnus/5.110018 (No Gnus v0.18) Emacs/24.0.50 (gnu/linux)
-Cancel-Lock: sha1:i9lkV0SKlecis79+O+kjkJi3Wj8=
+	id S1755804Ab1GATGI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Jul 2011 15:06:08 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:64726 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753546Ab1GATGE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jul 2011 15:06:04 -0400
+Received: by iyb12 with SMTP id 12so3028811iyb.19
+        for <git@vger.kernel.org>; Fri, 01 Jul 2011 12:06:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=HWya/tNvtZ0VI2Gr1SjMcFDdpjQn9VZGGIqNi1JjHDA=;
+        b=C82YO0Ib86VmfR5Cf5SrqDkGvDavma5reO5pHgiw6luWj7UDwfQo+q6UXjtaOJS1Ky
+         3ZBs16nm8q4p7DA6kMlM0eiHoMQV4C9a2veKCCroXlHKKX7ghWhtyt9K3ipBMS7bbmEC
+         ZGaY5A7t+hj3/a2LNT8T9CcZgQXrXwAWkTgQU=
+Received: by 10.42.132.69 with SMTP id c5mr3616285ict.459.1309547164139;
+        Fri, 01 Jul 2011 12:06:04 -0700 (PDT)
+Received: from elie (adsl-68-255-110-41.dsl.chcgil.sbcglobal.net [68.255.110.41])
+        by mx.google.com with ESMTPS id j7sm3622328icq.2.2011.07.01.12.06.02
+        (version=SSLv3 cipher=OTHER);
+        Fri, 01 Jul 2011 12:06:02 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7voc1doo8v.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176531>
 
-On Fri, 01 Jul 2011 15:59:09 +0200 R=E9mi Vanicat <vanicat@debian.org> =
-wrote:=20
+Junio C Hamano wrote:
 
-RV> When git is asking for a password (for example for pushing over htt=
-ps)
-RV> it call the $GIT_ASKPASS script with only "Password: " as a an argu=
-ment,
-RV> so when one have several remote, it might not know which one is ask=
-ing
-RV> the password.=20
+> It is not clear from this description when "git branch" needs to even show
+> abbreviated object name.  I'll retitle it and/or reword the description to
+> hint that you are talking about "branch -v", but do you know of anything
+> in "git branch" that may be affected by this change other than "-v" output?
 
-Seconded, I run into this all the time.  A configurable prompt with %h
-for the host, etc. would be really nice.
+I think it's just add_verbose_info.  "git branch" also uses
+DEFAULT_ABBREV in the message
 
-RV> It would be interesting also to plug some sort of password-safe unt=
-o
-RV> git, or some "git-agent".=20
+	Deleted branch topic (was 980ab98c).
 
-This would also be really nice.  ~/.netrc is not a great place to put
-passwords for the HTTP transport.  In GNU Emacs we have ~/.authinfo.gpg
-with the same content as ~/.netrc but encrypted by GPG and thus more
-secure (the user is either prompted for the password, if the file is
-encrypted symmetrically, or the user simply loads their private key int=
-o
-the GPG agent).  I believe all this can be done with the GPGME library.
-There's also the Secrets API on newer Gnome and KDE installs, which has
-a pretty nice D-Bus interface.
-
-But is this a libcurl feature request?  Or can a Git plugin (an
-alternate HTTPS transport maybe?) handle it?
-
-Thanks
-Ted
+but that is not currently affected by the --abbrev option.
