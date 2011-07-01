@@ -1,70 +1,54 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [Wishlist] could git tell which password it is asking when
- asking a password.
-Date: Fri, 1 Jul 2011 16:48:23 -0400
-Message-ID: <20110701204823.GB32731@sigill.intra.peff.net>
-References: <877h82nlua.dlv@debian.org>
- <7v62nmos0k.fsf@alter.siamese.dyndns.org>
- <7v1uy9q5v1.fsf@alter.siamese.dyndns.org>
- <BANLkTi=aAinh=0jxb5MoqVOdUB7zxoy2XdSqk+pdsewLXU62ZA@mail.gmail.com>
- <7vwrg1opov.fsf@alter.siamese.dyndns.org>
- <87tyb5n6pk.dlv@debian.org>
- <7vfwmpoi9y.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2011, #05; Thu, 30)
+Date: Fri, 1 Jul 2011 23:39:08 +0200
+Message-ID: <BANLkTimwEuZrWkQjaZtfsCb1tGR4FLycLA@mail.gmail.com>
+References: <7viprmq4sy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?UsOpbWk=?= Vanicat <vanicat@debian.org>,
-	git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 01 22:48:33 2011
+X-From: git-owner@vger.kernel.org Fri Jul 01 23:39:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qckda-0001u7-VC
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Jul 2011 22:48:31 +0200
+	id 1QclQj-0006ya-Eh
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Jul 2011 23:39:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756854Ab1GAUs0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Jul 2011 16:48:26 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:40049
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756745Ab1GAUsZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jul 2011 16:48:25 -0400
-Received: (qmail 6779 invoked by uid 107); 1 Jul 2011 20:48:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Jul 2011 16:48:44 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Jul 2011 16:48:23 -0400
-Content-Disposition: inline
-In-Reply-To: <7vfwmpoi9y.fsf@alter.siamese.dyndns.org>
+	id S1757649Ab1GAVjM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Jul 2011 17:39:12 -0400
+Received: from mail-fx0-f52.google.com ([209.85.161.52]:40849 "EHLO
+	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757610Ab1GAVjK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Jul 2011 17:39:10 -0400
+Received: by fxd18 with SMTP id 18so3610351fxd.11
+        for <git@vger.kernel.org>; Fri, 01 Jul 2011 14:39:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=/aiXc2qidqnWLOBea0A7f09kdRq+0/lixYcrFqxB6g0=;
+        b=PwWHs5rbG9CozmKT/JMqVtq7UReknCbeszUh+pWpnH4qpWAwspl9txHB1usGmuiMHk
+         MuxieyJSmU1snxU60sgl7Z4eVizXBu88ZXKcE6U8kFDlcHAuYtuWPR8zCj3a6OT2xJD9
+         VTdd/ewNMsvuZQ+Nf3b4kPVSkN8pYnqKtio9Y=
+Received: by 10.223.145.6 with SMTP id b6mr5428851fav.2.1309556348959; Fri, 01
+ Jul 2011 14:39:08 -0700 (PDT)
+Received: by 10.223.114.208 with HTTP; Fri, 1 Jul 2011 14:39:08 -0700 (PDT)
+In-Reply-To: <7viprmq4sy.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176537>
 
-On Fri, Jul 01, 2011 at 01:30:49PM -0700, Junio C Hamano wrote:
+On Fri, Jul 1, 2011 at 01:26, Junio C Hamano <gitster@pobox.com> wrote:
 
-> R=C3=A9mi Vanicat <vanicat@debian.org> writes:
->=20
-> > I also believe that having the host name would be useful, both for =
-human
-> > (another example would be git remote update when there are several
-> > remote) and script. =20
->=20
-> Patches welcome, but I have to warn you that the code may _not_ know =
-the
-> URL at that point in the callchain.
+> * ab/i18n-scripts (2011-05-21) 48 commits
+> =C2=A0(merged to 'next' on 2011-06-29 at 61f4472)
+> Originally merged to 'next' on 2011-05-23.
+> [...]
+> Will merge to 'master'.
 
-Yeah, you have to save it; the simplest time is when we parse the
-username+password bits out of the URL during http_auth_init, and then
-pass it through to git_getpass.
-
-But see the patch series I just mentioned elsewhere in the thread. Righ=
-t
-now it still uses "Password:" for http authentication, but it would be =
-a
-one-liner to have it use "Password for 'user@example.com':".
-
--Peff
+I'll submit more parts of the i18n series after that's done. Thanks.
