@@ -1,76 +1,49 @@
-From: Namhyung Kim <namhyung@gmail.com>
-Subject: Re: [PATCH] branch: honor core.abbrev
-Date: Fri, 01 Jul 2011 15:10:40 +0900
-Message-ID: <1309500640.1310.53.camel@leonhard>
-References: <1309449762-10476-1-git-send-email-namhyung@gmail.com>
-	 <m2pqlvmayd.fsf@igel.home>
+From: =?utf-8?Q?=D0=9D=D0=B8=D0=BA=D0=BE=D0=BB=D0=B0=D0=B9_=D0=9D=D0=BE=D0=B2=D0=B8=D0=BA=D0=BE=D0=B2?= 
+	<kolan_n@mail.ru>
+Subject: =?utf-8?Q?Fwd=3A_cyrillics?=
+Date: Fri, 01 Jul 2011 12:24:59 +0400
+Message-ID: <E1QcZ23-0000uV-00.kolan_n-mail-ru@f283.mail.ru>
+Reply-To: =?utf-8?Q?=D0=9D=D0=B8=D0=BA=D0=BE=D0=BB=D0=B0=D0=B9_=D0=9D=D0=BE=D0=B2=D0=B8=D0=BA=D0=BE=D0=B2?= 
+	  <kolan_n@mail.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Fri Jul 01 08:10:51 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 01 10:25:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QcWwE-0004vo-Vg
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Jul 2011 08:10:51 +0200
+	id 1QcZ2h-0000Pe-9O
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Jul 2011 10:25:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754829Ab1GAGKq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Jul 2011 02:10:46 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:59076 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754792Ab1GAGKp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jul 2011 02:10:45 -0400
-Received: by gwaa18 with SMTP id a18so1222851gwa.19
-        for <git@vger.kernel.org>; Thu, 30 Jun 2011 23:10:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date
-         :message-id:mime-version:x-mailer:content-transfer-encoding;
-        bh=DCkxzmh0Yg3vCyvlOTV3zHVDigQwLB0F0hqoeSbOnOw=;
-        b=cn7dmK8H5gcDisbzmYhVnZhs4RhhvBVZLnD4NlyQ3DBjMwpIa+4gjaKItixV2J3f/l
-         AAP/e8LU8dudFE6SwhUuPFPOEcTXwVkqAjIa9vQsKRltUMA3tRMGS0uJhuf+mljLVB7U
-         9xOBARB8pXHWfSUxLOuv2fP05mPnlcnh9s1VE=
-Received: by 10.236.181.68 with SMTP id k44mr3419158yhm.143.1309500645084;
-        Thu, 30 Jun 2011 23:10:45 -0700 (PDT)
-Received: from [192.168.111.3] ([118.176.76.64])
-        by mx.google.com with ESMTPS id h70sm2200405yhk.29.2011.06.30.23.10.42
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 30 Jun 2011 23:10:44 -0700 (PDT)
-In-Reply-To: <m2pqlvmayd.fsf@igel.home>
-X-Mailer: Evolution 2.28.3 
+	id S1754961Ab1GAIZc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Jul 2011 04:25:32 -0400
+Received: from fallback2.mail.ru ([94.100.176.87]:43589 "EHLO
+	fallback2.mail.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754895Ab1GAIZb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jul 2011 04:25:31 -0400
+Received: from f283.mail.ru (f283.mail.ru [217.69.128.250])
+	by fallback2.mail.ru (mPOP.Fallback_MX) with ESMTP id 875BD61BC4F8
+	for <git@vger.kernel.org>; Fri,  1 Jul 2011 12:25:29 +0400 (MSD)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail;
+	h=Message-Id:Content-Transfer-Encoding:Content-Type:Reply-To:Date:Mime-Version:Subject:To:From; bh=XejiAjUVvJ9pVT9EWJASxk7HmQZmL9nBG3FETZyDhOc=;
+	b=0EJZZjXySBo0ta9S9PrgaWWv3yNatzDyCk9lKyyTgW9tuRw/cVH7LH2z/WN7j1tGaVSL8aFTRqovTBzTpc4/08EjhsEw6ZYKTxyjiwY6nh7Yuy/KY4Wkehd6nozf02sZ;
+Received: from mail by f283.mail.ru with local 
+	id 1QcZ23-0000uV-00
+	for git@vger.kernel.org; Fri, 01 Jul 2011 12:24:59 +0400
+Received: from [95.28.16.145] by e.mail.ru with HTTP;
+	Fri, 01 Jul 2011 12:24:59 +0400
+X-Mailer: mPOP Web-Mail 2.19
+X-Originating-IP: [95.28.16.145]
+X-Spam: Not detected
+X-Mras: Ok
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176519>
 
-2011-06-30 (=EB=AA=A9), 20:27 +0200, Andreas Schwab:
-> Namhyung Kim <namhyung@gmail.com> writes:
->=20
-> > diff --git a/Documentation/git-branch.txt b/Documentation/git-branc=
-h.txt
-> > index c50f189..906cccc 100644
-> > --- a/Documentation/git-branch.txt
-> > +++ b/Documentation/git-branch.txt
-> > @@ -114,6 +114,7 @@ OPTIONS
-> >  --abbrev=3D<length>::
-> >  	Alter the sha1's minimum display length in the output listing.
-> >  	The default value is 7.
-> > +	(and can be overrided by the `core.abbrev` config option).
->=20
-> overridden
->=20
-> Andreas.
->=20
-
-=46ixed and resent.
-
-Thanks.
-
---=20
-Regards,
-Namhyung Kim
+SGkKbXN5c2dpdCBkb2VzbnQgd29ya3MgcHJvcGVybHkgb24gdGhlIHN5c3RlbXMgd2l0aCBjeXJp
+bGxpYyBwYXRocwpjYW4geW91IGZpeCBpdD8K
