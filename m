@@ -1,99 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] mergetool: check return value from read
-Date: Fri, 01 Jul 2011 16:11:16 -0700
-Message-ID: <7vaacxoauj.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] branch: honor core.abbrev
+Date: Fri, 1 Jul 2011 20:32:00 -0500
+Message-ID: <20110702013200.GA2374@elie>
+References: <1309449762-10476-1-git-send-email-namhyung@gmail.com>
+ <20110630181020.GA1128@elie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 02 01:11:31 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Namhyung Kim <namhyung@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 02 03:32:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qcmrs-0002qJ-BI
-	for gcvg-git-2@lo.gmane.org; Sat, 02 Jul 2011 01:11:24 +0200
+	id 1Qcp4C-0003Ci-Vt
+	for gcvg-git-2@lo.gmane.org; Sat, 02 Jul 2011 03:32:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758014Ab1GAXLU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Jul 2011 19:11:20 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47459 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757914Ab1GAXLT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jul 2011 19:11:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 35B7B5133;
-	Fri,  1 Jul 2011 19:13:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=I
-	+SpO7O9SSOG1B0FEAcAWT4gf8U=; b=nScvnL1qNjx9IAxUQCj3CR+WxW7XHe3iG
-	sZm12v6Jbph0xl+MgEYDNvZdMOEc4EX9lreAmgnoxAP4pOHAdrKmQAiPUaNsdqz2
-	C5+uVcXinFOAvV8E1+zCka2Gh8bgf6RJyhN0O65XUBMCt9ucMElHXiKNJk2c0k/w
-	qe+nZMEtXg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=tcU
-	5+cGtHVW48FYBZHUzOoEQIG0CJOUQg+1XfGm24AyCg1JrI2+R84MudEhj7/DvMuw
-	SM5uItGq/iFm0HlEJEjxqc8Hd0chJfxDY5FoaRa/TH5oHGojQgCzWHdZ4kQOkCYQ
-	7NDFM9QwYuyRZVdp6ieZyJHR9VJDh8YvjUDOs3s0=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2E0B85132;
-	Fri,  1 Jul 2011 19:13:32 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 834EA5131; Fri,  1 Jul 2011
- 19:13:31 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BC99B27A-A437-11E0-8C02-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
+	id S1752071Ab1GBBcL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Jul 2011 21:32:11 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:51684 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751661Ab1GBBcL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jul 2011 21:32:11 -0400
+Received: by iwn6 with SMTP id 6so3216040iwn.19
+        for <git@vger.kernel.org>; Fri, 01 Jul 2011 18:32:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=oSq3V6w5v79TlKJyUMBKNd/w+2RO597wrKNGGVx3aUE=;
+        b=sHSXk+YIZVJ//I+FetoRxv+iIrqJOLokdChQ8WjDTkZNGKSShHjKEPNMN+FZJgz9qm
+         qqYXrkdIe0ZXaGhhKHX6k/p1OSuP3XPrNIm+fUWJmrSk5z1nLJ4zk6C6Xocsxyetxjhq
+         SA8CZzMtg+zeBrjDawG0pc580R6O7YyryRkiQ=
+Received: by 10.231.60.132 with SMTP id p4mr3298464ibh.121.1309570330278;
+        Fri, 01 Jul 2011 18:32:10 -0700 (PDT)
+Received: from elie (adsl-68-255-110-41.dsl.chcgil.sbcglobal.net [68.255.110.41])
+        by mx.google.com with ESMTPS id x4sm1400405ibm.42.2011.07.01.18.32.08
+        (version=SSLv3 cipher=OTHER);
+        Fri, 01 Jul 2011 18:32:09 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20110630181020.GA1128@elie>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176542>
 
-The process may not even have the standard input open in which case it
-will get stuck in an infinite loop to prompt and read nothing.
+Jonathan Nieder wrote:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- git-mergetool.sh |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+> Some squashable tests follow.  Maybe they can be useful.  Thanks for
+> fixing this.  
+>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+>  t/t3203-branch-output.sh |   29 +++++++++++++++++++++++++++++
+>  1 files changed, 29 insertions(+), 0 deletions(-)
 
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 3aab5aa..3c157bc 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -100,7 +100,7 @@ resolve_deleted_merge () {
- 	else
- 	    printf "Use (c)reated or (d)eleted file, or (a)bort? "
- 	fi
--	read ans
-+	read ans || return 1
- 	case "$ans" in
- 	    [mMcC]*)
- 		git add -- "$MERGED"
-@@ -122,7 +122,7 @@ resolve_deleted_merge () {
- resolve_submodule_merge () {
-     while true; do
- 	printf "Use (l)ocal or (r)emote, or (a)bort? "
--	read ans
-+	read ans || return 1
- 	case "$ans" in
- 	    [lL]*)
- 		if ! local_present; then
-@@ -249,7 +249,7 @@ merge_file () {
-     describe_file "$remote_mode" "remote" "$REMOTE"
-     if "$prompt" = true; then
- 	printf "Hit return to start merge resolution tool (%s): " "$merge_tool"
--	read ans
-+	read ans || return 1
-     fi
- 
-     if base_present; then
-@@ -320,7 +320,7 @@ done
- prompt_after_failed_merge() {
-     while true; do
- 	printf "Continue merging other unresolved paths (y/n) ? "
--	read ans
-+	read ans || return 1
- 	case "$ans" in
- 
- 	    [yY]*)
+Are these not wanted?  Or are there improvements needed before they
+can be included?
