@@ -1,89 +1,104 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Gitweb 1.7.5 and Textconv Configuration
-Date: Sat, 2 Jul 2011 23:22:23 +0200
-Message-ID: <201107022322.24832.jnareb@gmail.com>
-References: <CALWDD1x-_rEx+c9bpAgVk-hvnGz1bt0mbJoDkSjZkbe=gLscUg@mail.gmail.com> <m3aacw5t5x.fsf@localhost.localdomain> <20110702211027.GA16294@sigill.intra.peff.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] git svn : hook before 'git svn dcommit'
+Date: Sat, 02 Jul 2011 23:59:11 +0200
+Message-ID: <vpqfwmos5sg.fsf@bauges.imag.fr>
+References: <4E0F1383.8080804@gmail.com> <vpqboxcu6td.fsf@bauges.imag.fr>
+	<4E0F5485.9010201@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Al Haraka <alharaka@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jul 02 23:22:39 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?iso-8859-1?Q?Fr=E9d=E9ric?= Heitzmann 
+	<frederic.heitzmann@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 02 23:59:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qd7eA-0006HF-PA
-	for gcvg-git-2@lo.gmane.org; Sat, 02 Jul 2011 23:22:39 +0200
+	id 1Qd8Dh-0007r8-85
+	for gcvg-git-2@lo.gmane.org; Sat, 02 Jul 2011 23:59:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754535Ab1GBVWd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Jul 2011 17:22:33 -0400
-Received: from mail-fx0-f52.google.com ([209.85.161.52]:41400 "EHLO
-	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752030Ab1GBVWd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jul 2011 17:22:33 -0400
-Received: by fxd18 with SMTP id 18so4158768fxd.11
-        for <git@vger.kernel.org>; Sat, 02 Jul 2011 14:22:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=du2aetRF5dfJPSx1O270NBGAajK7gpQKduYd5hhdu+o=;
-        b=dtlx2hG95HYhdAsy9Ca5VhCPNyNSRId7M/M3tlEttPQWBrErLdjkRgT1aWn/kXyKnT
-         TPTyG0YLM0zLDfU5HFsvqOTm/m05E2IzXoUCVl/4Ycgei2Vu8nvnFf6DNEKWSDkxrsmG
-         batOMWokn+yL7MKdcUle91yOfmjVe3S0LBgls=
-Received: by 10.223.85.155 with SMTP id o27mr6908640fal.109.1309641751779;
-        Sat, 02 Jul 2011 14:22:31 -0700 (PDT)
-Received: from [192.168.1.15] (abvp70.neoplus.adsl.tpnet.pl [83.8.213.70])
-        by mx.google.com with ESMTPS id l9sm238502fal.43.2011.07.02.14.22.30
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 02 Jul 2011 14:22:30 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20110702211027.GA16294@sigill.intra.peff.net>
-Content-Disposition: inline
+	id S1755799Ab1GBV7Q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 2 Jul 2011 17:59:16 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:33122 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754879Ab1GBV7P (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jul 2011 17:59:15 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p62Lx8bN024741
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sat, 2 Jul 2011 23:59:08 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Qd8DX-0004H5-Cn; Sat, 02 Jul 2011 23:59:11 +0200
+In-Reply-To: <4E0F5485.9010201@gmail.com> (=?iso-8859-1?Q?=22Fr=E9d=E9ric?=
+ Heitzmann"'s message of
+	"Sat, 02 Jul 2011 19:25:25 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 02 Jul 2011 23:59:09 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p62Lx8bN024741
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1310248749.53235@8Ip9gmmB4spEGCe705bhKQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176572>
 
-On Sat, 2 Jul 2011, Jeff King wrote:
-> On Sat, Jul 02, 2011 at 01:23:38PM -0700, Jakub Narebski wrote:
-> 
-> > > Ah, I see. That seems like a reasonable solution. Are you sure that the
-> > > user running gitweb as a CGI is the same as the user you log in as? That
-> > > is, are you sure that ~/.gitconfig is being parsed when it is called as
-> > > a CGI, and it's not looking in ~www/.gitconfig or something?
-> > > 
-> > > It would depend how your hosting is set up.
-> > 
-> > Well, there is also system wide $(prefix)/etc/gitconfig file...
-> 
-> Good point. Though if he's on shared hosting, that might not be an
-> option.
+=46r=E9d=E9ric Heitzmann <frederic.heitzmann@gmail.com> writes:
 
-Though on the other hand if he is compiling git himself, $prefix can
-be $HOME...
+> Le 02/07/2011 15:54, Matthieu Moy a =E9crit :
+>> Fr=E9d=E9ric Heitzmann<frederic.heitzmann@gmail.com>  writes:
+>>
+>>> The 'pre-svn-dcommit' hook si called before 'git svn dcommit', whic=
+h aborts
+>>> if return value is not zero.
+>>> ---
+>>>   git-svn.perl |   19 +++++++++++++++++++
+>> What about documentation?
+> Should documentation be part of githooks or git-svn man page ?
+> I vote for the latest, in order to avoid
 
-> > The question is if --textconv works with git-diff-tree, because that
-> > is what gitweb uses.
-> 
-> It does. It just defaults to "--no-textconv", but you can enable it on
-> the command-line.
+I'd also put it in the git-svn page, since git-svn is somehow not reall=
+y
+part of Git.
 
-Undocumented.
+> +prevent some diff to be committed to a SVN repository.
 
-  $ git grep -e --textconv Documentation/
-  Documentation/RelNotes/1.6.3.3.txt: * "git diff --textconv" leaked memory badly when the tex
-  Documentation/git-cat-file.txt:'git cat-file' (-t | -s | -e | -p | <type> | --textconv ) <ob
-  Documentation/git-cat-file.txt:object type, or '-s' is used to find the object size, or '--t
-  Documentation/git-cat-file.txt:--textconv::
+I'd say "an SVN", not "a SVN", but the documentation already use both
+forms.
 
-(on current 'master').
+>>> +       if ($? =3D=3D -1) {
+>>> +               print "[pre_svn_dcommit_hook] failed to execute $ho=
+ok:
+>>> $!\n";
+>> whitespace damage (extra newline)
+>>
+>
+>As for the 'whitespace damage", I do not understand what you mean.
+>The \n look mandatory to me.
+>You may look at 'info perlfunc' for the original code snippet (see
+>system' function).
 
--- 
-Jakub Narebski
-Poland
+I'm not talking about the \n, but the fact that what used to be a singl=
+e
+line of code is broken in two parts in your message.
+
+A patch hunk has lines starting with " ", "+" or "-", yours have a line
+starting with $. It won't apply with "patch" or "git apply", hence extr=
+a
+work for our maintainer.
+
+Try using "git send-email" to avoid that.
+
+And actually, read Documentation/SubmittingPatches, in particular the
+part about Signed-off-by.
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
