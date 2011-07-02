@@ -1,73 +1,93 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 09/13] revert: Catch incompatible command-line options
- early
-Date: Sat, 2 Jul 2011 06:30:08 -0500
-Message-ID: <20110702113008.GA21526@elie>
-References: <1308661489-20080-1-git-send-email-artagnon@gmail.com>
- <1308661489-20080-10-git-send-email-artagnon@gmail.com>
- <20110621170416.GN15461@elie>
- <BANLkTinN6KdPnuMWbrdE4jf4ijKDC=35Aw@mail.gmail.com>
- <20110702095334.GA19090@elie>
- <20110702100436.GB19090@elie>
- <BANLkTik2t=qPfJe7JUsoeka79ZYYRmU_MA@mail.gmail.com>
+From: =?ISO-8859-1?Q?Fr=E9d=E9ric_Heitzmann?= 
+	<frederic.heitzmann@gmail.com>
+Subject: [PATCH] git svn : hook before 'git svn dcommit'
+Date: Sat, 02 Jul 2011 14:48:03 +0200
+Message-ID: <4E0F1383.8080804@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 02 13:30:23 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jul 02 14:48:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QcyP1-0000Va-7c
-	for gcvg-git-2@lo.gmane.org; Sat, 02 Jul 2011 13:30:23 +0200
+	id 1QczcP-00017g-MR
+	for gcvg-git-2@lo.gmane.org; Sat, 02 Jul 2011 14:48:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753956Ab1GBLaR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Jul 2011 07:30:17 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:34103 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753201Ab1GBLaP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jul 2011 07:30:15 -0400
-Received: by iwn6 with SMTP id 6so3406594iwn.19
-        for <git@vger.kernel.org>; Sat, 02 Jul 2011 04:30:15 -0700 (PDT)
+	id S1754669Ab1GBMsN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Jul 2011 08:48:13 -0400
+Received: from mail-fx0-f52.google.com ([209.85.161.52]:45607 "EHLO
+	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754484Ab1GBMsM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jul 2011 08:48:12 -0400
+Received: by fxd18 with SMTP id 18so3961551fxd.11
+        for <git@vger.kernel.org>; Sat, 02 Jul 2011 05:48:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=OMs1CX7vBPTahJE/9nZJJvgndQWONMkgiCt3Cqrodkk=;
-        b=hcluMDKHsoXoa9gZDP/IqZf8Vun+DvsK2nP4RV5/1IVDstlPzcdQ8LZ3FLDj76MNQT
-         mS9DiHy5ysrU5hPZoAopCudIijoRuLKhYp+NP7DC+ahUmtWqQ6AdXm2dT3vV2L6XFKUY
-         HYPoMtBBboCxFlFfM9QtvbD/faO2UIby19+sA=
-Received: by 10.43.133.196 with SMTP id hz4mr4243720icc.331.1309606215364;
-        Sat, 02 Jul 2011 04:30:15 -0700 (PDT)
-Received: from elie (adsl-69-209-57-66.dsl.chcgil.sbcglobal.net [69.209.57.66])
-        by mx.google.com with ESMTPS id ly7sm4353868icb.0.2011.07.02.04.30.13
-        (version=SSLv3 cipher=OTHER);
-        Sat, 02 Jul 2011 04:30:14 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <BANLkTik2t=qPfJe7JUsoeka79ZYYRmU_MA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=LKx9uF0cCGyTezeTRAlQmmuKLWZyYoi3BG7ruIQBXlw=;
+        b=bk4aFH72p9i1iZ9t/oiSZLBl5+lDNll0onxFHSg90J7Sm1XIsbbNhbMlpasTH5MVU4
+         5biPxcbEy5Y7t2tN6KvxH6NsjKum14HgGW8QjGGswa7Ed+H+MN/B6YbyT6f0iYhGAVSH
+         y1AAnFcwfsEOAnpk5VeZLCRhKKp6+fBGyJxho=
+Received: by 10.223.24.134 with SMTP id v6mr6422359fab.146.1309610890903;
+        Sat, 02 Jul 2011 05:48:10 -0700 (PDT)
+Received: from [192.168.0.10] (dra38-7-88-179-84-80.fbx.proxad.net [88.179.84.80])
+        by mx.google.com with ESMTPS id o23sm3059579faa.33.2011.07.02.05.48.04
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 02 Jul 2011 05:48:08 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.17) Gecko/20110424 Thunderbird/3.1.10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176558>
 
-Ramkumar Ramachandra wrote:
+The 'pre-svn-dcommit' hook si called before 'git svn dcommit', which aborts
+if return value is not zero.
+---
+  git-svn.perl |   19 +++++++++++++++++++
+  1 files changed, 19 insertions(+), 0 deletions(-)
 
-> Although pick_commits checks the validity of the
->     replay_opts strucutre before before starting its operation, this is
->     fragile design because the validity of the replay_opts structure
->     depends on pick_commits being called before anything else.
+diff --git a/git-svn.perl b/git-svn.perl
+index 89f83fd..e70afae 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -396,6 +396,23 @@ sub init_subdir {
+         $_repository = Git->repository(Repository => $ENV{GIT_DIR});
+  }
 
-Thanks, that's a bit more concrete.  But it's not fragile, is it?
-pick_commits() is the entry point to the cherry-pick machinery ---
-anything that uses a struct replay_opts is called indirectly by
-pick_commits(), no?
++sub pre_svn_dcommit_hook {
++       my $hook = "$ENV{GIT_DIR}/hooks/pre-svn-dcommit";
++       return 0 if ! -e $hook || ! -x $hook;
++
++       system($hook);
++       if ($? == -1) {
++               print "[pre_svn_dcommit_hook] failed to execute $hook: 
+$!\n";
++               return 1;
++       } elsif ($? & 127) {
++               printf "[pre_svn_dcommit_hook] child died with signal 
+%d, %s coredump\n",
++               ($? & 127),  ($? & 128) ? 'with' : 'without';
++               return 1;
++       } else {
++               return $? >> 8;
++       }
++}
++
+  sub cmd_clone {
+         my ($url, $path) = @_;
+         if (!defined $path &&
+@@ -518,6 +535,8 @@ sub cmd_dcommit {
+                 command(['checkout', $head], STDERR => 0);
+         }
 
-So (genuinely, even when I'm not pretending to be naive) I still don't
-see the point.  I'm not even convinced it's a bad idea, since it's
-still not clear to me what the idea is.
++       return if pre_svn_dcommit_hook();
++
+         my @refs;
+         my ($url, $rev, $uuid, $gs) = working_head_info('HEAD', \@refs);
+         unless ($gs) {
+-- 
