@@ -1,7 +1,7 @@
 From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: [PATCH 6/8] vcs-svn: allow to specify dump destination ref
-Date: Sun,  3 Jul 2011 23:57:55 +0600
-Message-ID: <1309715877-13814-7-git-send-email-divanorama@gmail.com>
+Subject: [PATCH 8/8] vcs-svn: allow to disable 'progress' lines
+Date: Sun,  3 Jul 2011 23:57:57 +0600
+Message-ID: <1309715877-13814-9-git-send-email-divanorama@gmail.com>
 References: <1309715877-13814-1-git-send-email-divanorama@gmail.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	David Barr <davidbarr@google.com>,
@@ -13,307 +13,184 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QdQuw-00025S-Lb
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Jul 2011 19:57:15 +0200
+	id 1QdQuv-00025S-Gk
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Jul 2011 19:57:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754744Ab1GCR5H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Jul 2011 13:57:07 -0400
+	id S1754658Ab1GCR5F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Jul 2011 13:57:05 -0400
 Received: from mail-bw0-f46.google.com ([209.85.214.46]:62342 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753664Ab1GCR4w (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Jul 2011 13:56:52 -0400
+	with ESMTP id S1754203Ab1GCR4z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Jul 2011 13:56:55 -0400
 Received: by mail-bw0-f46.google.com with SMTP id 5so3614734bwd.19
-        for <git@vger.kernel.org>; Sun, 03 Jul 2011 10:56:51 -0700 (PDT)
+        for <git@vger.kernel.org>; Sun, 03 Jul 2011 10:56:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=RfyyeM163Dn4MwT0+9cYZjX/rYDHggozjzKOQo9RRbo=;
-        b=rGqiqMR4l8iyEXLLp3O4o4kU8AxxkjaK7enD2aWhcgyHU8KsgSdwkwxnzee1oTH+eD
-         +2MewFAbRFNL1zSMz48zTm0VL4VrainPMokNkTI7yhGUHi59cNNxLLX+hM2m+hTPpTJM
-         SMdHQuEFNv3mcBuAoMrHKAqQis/NmWFGcBbRc=
-Received: by 10.204.7.17 with SMTP id b17mr4814057bkb.61.1309715811073;
-        Sun, 03 Jul 2011 10:56:51 -0700 (PDT)
+        bh=SDzfYZ3ORXcHXCkRWvC/nT2DOlbH2evL4yQ7yCHepys=;
+        b=xJGtCmFw6/CdRqv71gS7XtVRSH/gKHNJZRIB90dmpqQFU8bgIXb97Hl9KuDxuAPfKf
+         T7yvMTF6sk4xC5lOzEKS43mACvsdrnzeCC48uAd/MSZ9eLYeGLyrIJyxh60amZTv0vp0
+         SA2EhKUkqlYUHZMsntmTcLkoku+uNtj2MIdEM=
+Received: by 10.204.48.88 with SMTP id q24mr1524878bkf.31.1309715814745;
+        Sun, 03 Jul 2011 10:56:54 -0700 (PDT)
 Received: from localhost.localdomain (117360277.convex.ru [79.172.62.237])
-        by mx.google.com with ESMTPS id af13sm4841383bkc.19.2011.07.03.10.56.49
+        by mx.google.com with ESMTPS id af13sm4841383bkc.19.2011.07.03.10.56.53
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 03 Jul 2011 10:56:50 -0700 (PDT)
+        Sun, 03 Jul 2011 10:56:54 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.4
 In-Reply-To: <1309715877-13814-1-git-send-email-divanorama@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176584>
 
-svn-fe produces fast-import stream for a fixed refs/heads/master ref.
-It is usually desired to write to a different ref. In a remote helper
-it would be a ref in private namespace. If svn-fe is used by someone
-directly it'll be more safe to remind where the commits can go. And
-in both cases it may be needed to import from two repos and hence to
-different refs.
+vcs-svn/ writes a progress line after each processed revision. It
+is too noisy for big imports. That's a stress for a terminal and
+any other output can be lost or scrolled away among these lines.
 
-Add a destination ref parameter to vcs-svn/, a corresponding parameter
-to svn-fe and a simple test for it.
-
-$ svn-fe --ref=refs/heads/master ...
-is an explicit way to stay with the default destination.
+For now just add a switch to turn progress lines off:
+$ svn-fe --no-progress ...
 
 Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
 ---
- contrib/svn-fe/svn-fe.c   |    5 +++-
- contrib/svn-fe/svn-fe.txt |    3 ++
- t/t9010-svn-fe.sh         |   49 +++++++++++++++++++++++++++++---------------
- test-svn-fe.c             |    7 ++++-
- vcs-svn/fast_export.c     |    8 +++++-
+ contrib/svn-fe/svn-fe.c   |    6 +++++-
+ contrib/svn-fe/svn-fe.txt |    3 +++
+ test-svn-fe.c             |    2 +-
+ vcs-svn/fast_export.c     |    7 +++++--
  vcs-svn/fast_export.h     |    2 +-
- vcs-svn/svndump.c         |    4 +-
+ vcs-svn/svndump.c         |    4 ++--
  vcs-svn/svndump.h         |    2 +-
- 8 files changed, 54 insertions(+), 26 deletions(-)
+ 7 files changed, 18 insertions(+), 8 deletions(-)
 
 diff --git a/contrib/svn-fe/svn-fe.c b/contrib/svn-fe/svn-fe.c
-index 033dd5b..78c7cd0 100644
+index 32755b1..792ffad 100644
 --- a/contrib/svn-fe/svn-fe.c
 +++ b/contrib/svn-fe/svn-fe.c
-@@ -13,10 +13,13 @@ static const char * const svn_fe_usage[] = {
- };
- 
+@@ -15,8 +15,12 @@ static const char * const svn_fe_usage[] = {
  static const char *url;
-+static const char *ref = "refs/heads/master";
+ static const char *ref = "refs/heads/master";
+ static int backflow_fd = 3;
++static int progress = 1;
  
  static struct option svn_fe_options[] = {
++	OPT_BIT(0, "progress", &progress,
++		"write a progress line after each commit",
++		1),
  	OPT_STRING(0, "git-svn-id-url", &url, "url",
  		"append git-svn metadata line to commit messages"),
-+	OPT_STRING(0, "ref", &ref, "dst_ref",
-+		"write to dst_ref instead of refs/heads/master"),
- 	OPT_END()
- };
- 
-@@ -32,7 +35,7 @@ int main(int argc, const char **argv)
+ 	OPT_STRING(0, "ref", &ref, "dst_ref",
+@@ -38,7 +42,7 @@ int main(int argc, const char **argv)
  		url = argv[0];
  	} else if (argc)
  		usage_with_options(svn_fe_usage, svn_fe_options);
--	if (svndump_init(NULL, url))
-+	if (svndump_init(NULL, url, ref))
+-	if (svndump_init(NULL, url, ref, backflow_fd))
++	if (svndump_init(NULL, url, ref, backflow_fd, progress))
  		return 1;
  	svndump_read();
  	svndump_deinit();
 diff --git a/contrib/svn-fe/svn-fe.txt b/contrib/svn-fe/svn-fe.txt
-index 8c6d347..20c3315 100644
+index a7ad368..f1a459e 100644
 --- a/contrib/svn-fe/svn-fe.txt
 +++ b/contrib/svn-fe/svn-fe.txt
-@@ -32,6 +32,9 @@ OPTIONS
- 	Url to be used in git-svn-id: lines in git-svn
- 	metadata lines format. See NOTES for more detailed
- 	description.
-+--ref=<dst_ref>::
-+	Ref to be written by the generated stream.
-+	Default is refs/heads/master.
+@@ -39,6 +39,9 @@ OPTIONS
+ 	Integer number of file descriptor from which
+ 	responses to 'ls' and 'cat-blob' requests will come.
+ 	Default is fd=3.
++--[no-]progress::
++	Write 'progress' lines to fast-import stream. These
++	can be displayed by fast-import.
  
  INPUT FORMAT
  ------------
-diff --git a/t/t9010-svn-fe.sh b/t/t9010-svn-fe.sh
-index b7eed24..52efabe 100755
---- a/t/t9010-svn-fe.sh
-+++ b/t/t9010-svn-fe.sh
-@@ -16,18 +16,24 @@ reinit_git () {
- 	mkfifo stream backflow
- }
- 
--try_dump () {
-+try_dump_ext () {
-+	args=$1 &&
-+	shift &&
- 	input=$1 &&
- 	maybe_fail_svnfe=${2:+test_$2} &&
- 	maybe_fail_fi=${3:+test_$3} &&
- 
- 	{
--		$maybe_fail_svnfe test-svn-fe "$input" >stream 3<backflow &
-+		$maybe_fail_svnfe test-svn-fe $args "$input" >stream 3<backflow &
- 	} &&
- 	$maybe_fail_fi git fast-import --cat-blob-fd=3 <stream 3>backflow &&
- 	wait $!
- }
- 
-+try_dump () {
-+	try_dump_ext "" $@
-+}
-+
- properties () {
- 	while test "$#" -ne 0
- 	do
-@@ -54,6 +60,22 @@ text_no_props () {
- 
- >empty
- 
-+cat >emptyprop.dump <<-EOF &&
-+SVN-fs-dump-format-version: 3
-+
-+Revision-number: 1
-+Prop-content-length: 10
-+Content-length: 10
-+
-+PROPS-END
-+
-+Revision-number: 2
-+Prop-content-length: 10
-+Content-length: 10
-+
-+PROPS-END
-+EOF
-+
- test_expect_success 'setup: have pipes?' '
- 	rm -f frob &&
- 	if mkfifo frob
-@@ -97,21 +119,6 @@ test_expect_failure PIPE 'empty revision' '
- test_expect_success PIPE 'empty properties' '
- 	reinit_git &&
- 	printf "rev <nobody, nobody@local>: %s\n" "" "" >expect &&
--	cat >emptyprop.dump <<-\EOF &&
--	SVN-fs-dump-format-version: 3
--
--	Revision-number: 1
--	Prop-content-length: 10
--	Content-length: 10
--
--	PROPS-END
--
--	Revision-number: 2
--	Prop-content-length: 10
--	Content-length: 10
--
--	PROPS-END
--	EOF
- 	try_dump emptyprop.dump &&
- 	git log -p --format="rev <%an, %ae>: %s" HEAD >actual &&
- 	test_cmp expect actual
-@@ -1111,4 +1118,12 @@ test_expect_success SVNREPO,PIPE 't9135/svn.dump' '
- 	)
- '
- 
-+test_expect_success PIPE 'import to notmaster ref' '
-+	reinit_git &&
-+	try_dump_ext "--ref=refs/heads/notmaster" emptyprop.dump &&
-+
-+	git rev-parse --verify notmaster &&
-+	test_must_fail git rev-parse --verify master
-+'
-+
- test_done
 diff --git a/test-svn-fe.c b/test-svn-fe.c
-index 603d3fb..afa551c 100644
+index 7885eb1..e4bfda0 100644
 --- a/test-svn-fe.c
 +++ b/test-svn-fe.c
-@@ -10,14 +10,17 @@
- #include "vcs-svn/line_buffer.h"
- 
- static const char * const test_svnfe_usage[] = {
--	"test-svn-fe (<dumpfile> | -d <preimage> <delta> <len>)",
-+	"test-svn-fe ([options] <dumpfile> | -d <preimage> <delta> <len>)",
- 	NULL
- };
- 
-+static const char *ref = "refs/heads/master";
- static int d;
- 
- static struct option test_svnfe_options[] = {
- 	OPT_SET_INT('d', NULL, &d, "test apply_delta", 1),
-+	OPT_STRING(0, "ref", &ref, "dst_ref",
-+		"write to dst_ref instead of refs/heads/master"),
- 	OPT_END()
- };
- 
-@@ -56,7 +59,7 @@ int main(int argc, const char *argv[])
+@@ -62,7 +62,7 @@ int main(int argc, const char *argv[])
  		return apply_delta(argc, argv);
  
  	if (argc == 1) {
--		if (svndump_init(argv[0], NULL))
-+		if (svndump_init(argv[0], NULL, ref))
+-		if (svndump_init(argv[0], NULL, ref, backflow_fd))
++		if (svndump_init(argv[0], NULL, ref, backflow_fd, 1))
  			return 1;
  		svndump_read();
  		svndump_deinit();
 diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
-index 19d7c34..cfb0f2b 100644
+index cfb0f2b..a8b8603 100644
 --- a/vcs-svn/fast_export.c
 +++ b/vcs-svn/fast_export.c
-@@ -18,6 +18,7 @@
- static uint32_t first_commit_done;
+@@ -19,6 +19,7 @@ static uint32_t first_commit_done;
  static struct line_buffer postimage = LINE_BUFFER_INIT;
  static struct line_buffer report_buffer = LINE_BUFFER_INIT;
-+static struct strbuf ref_name = STRBUF_INIT;
+ static struct strbuf ref_name = STRBUF_INIT;
++static int print_progress;
  
  /* NEEDSWORK: move to fast_export_init() */
  static int init_postimage(void)
-@@ -29,15 +30,18 @@ static int init_postimage(void)
+@@ -30,9 +31,10 @@ static int init_postimage(void)
  	return buffer_tmpfile_init(&postimage);
  }
  
--void fast_export_init(int fd)
-+void fast_export_init(int fd, const char *dst_ref)
+-void fast_export_init(int fd, const char *dst_ref)
++void fast_export_init(int fd, const char *dst_ref, int progress)
  {
  	first_commit_done = 0;
-+	strbuf_reset(&ref_name);
-+	strbuf_addstr(&ref_name, dst_ref);
++	print_progress = progress;
+ 	strbuf_reset(&ref_name);
+ 	strbuf_addstr(&ref_name, dst_ref);
  	if (buffer_fdinit(&report_buffer, fd))
- 		die_errno("cannot read from file descriptor %d", fd);
+@@ -112,7 +114,8 @@ void fast_export_begin_commit(uint32_t revision, const char *author,
+ 
+ void fast_export_end_commit(uint32_t revision)
+ {
+-	printf("progress Imported commit %"PRIu32".\n\n", revision);
++	if (print_progress)
++		printf("progress Imported commit %"PRIu32".\n\n", revision);
  }
  
- void fast_export_deinit(void)
- {
-+	strbuf_release(&ref_name);
- 	if (buffer_deinit(&report_buffer))
- 		die_errno("error closing fast-import feedback stream");
- }
-@@ -89,7 +93,7 @@ void fast_export_begin_commit(uint32_t revision, const char *author,
- 	} else {
- 		*gitsvnline = '\0';
- 	}
--	printf("commit refs/heads/master\n");
-+	printf("commit %s\n", ref_name.buf);
- 	printf("mark :%"PRIu32"\n", revision);
- 	printf("committer %s <%s@%s> %ld +0000\n",
- 		   *author ? author : "nobody",
+ static void ls_from_rev(uint32_t rev, const char *path)
 diff --git a/vcs-svn/fast_export.h b/vcs-svn/fast_export.h
-index 43d05b6..d7eb7cc 100644
+index d7eb7cc..7cab7b3 100644
 --- a/vcs-svn/fast_export.h
 +++ b/vcs-svn/fast_export.h
 @@ -4,7 +4,7 @@
  struct strbuf;
  struct line_buffer;
  
--void fast_export_init(int fd);
-+void fast_export_init(int fd, const char *dst_ref);
+-void fast_export_init(int fd, const char *dst_ref);
++void fast_export_init(int fd, const char *dst_ref, int progress);
  void fast_export_deinit(void);
  void fast_export_reset(void);
  
 diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
-index a88d392..f0df381 100644
+index c52faf1..5e3a44d 100644
 --- a/vcs-svn/svndump.c
 +++ b/vcs-svn/svndump.c
-@@ -454,11 +454,11 @@ void svndump_read(void)
+@@ -452,11 +452,11 @@ void svndump_read(void)
  		end_revision();
  }
  
--int svndump_init(const char *filename, const char *url)
-+int svndump_init(const char *filename, const char *url, const char *dst_ref)
+-int svndump_init(const char *filename, const char *url, const char *dst_ref, int report_fileno)
++int svndump_init(const char *filename, const char *url, const char *dst_ref, int report_fileno, int progress)
  {
  	if (buffer_init(&input, filename))
  		return error("cannot open %s: %s", filename, strerror(errno));
--	fast_export_init(REPORT_FILENO);
-+	fast_export_init(REPORT_FILENO, dst_ref);
+-	fast_export_init(report_fileno, dst_ref);
++	fast_export_init(report_fileno, dst_ref, progress);
  	strbuf_init(&dump_ctx.uuid, 4096);
  	strbuf_init(&dump_ctx.url, 4096);
  	strbuf_init(&rev_ctx.log, 4096);
 diff --git a/vcs-svn/svndump.h b/vcs-svn/svndump.h
-index 1bcaab6..08922fb 100644
+index 85c82c5..becea11 100644
 --- a/vcs-svn/svndump.h
 +++ b/vcs-svn/svndump.h
 @@ -1,7 +1,7 @@
  #ifndef SVNDUMP_H_
  #define SVNDUMP_H_
  
--int svndump_init(const char *filename, const char *url);
-+int svndump_init(const char *filename, const char *url, const char *dst_ref);
+-int svndump_init(const char *filename, const char *url, const char *dst_ref, int report_fileno);
++int svndump_init(const char *filename, const char *url, const char *dst_ref, int report_fileno, int progress);
  void svndump_read(void);
  void svndump_deinit(void);
  void svndump_reset(void);
