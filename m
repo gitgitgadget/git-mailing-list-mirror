@@ -1,137 +1,60 @@
-From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: [PATCH 5/8] test-svn-fe: use parse-options
-Date: Sun,  3 Jul 2011 23:57:54 +0600
-Message-ID: <1309715877-13814-6-git-send-email-divanorama@gmail.com>
-References: <1309715877-13814-1-git-send-email-divanorama@gmail.com>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	David Barr <davidbarr@google.com>,
-	Dmitry Ivankov <divanorama@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 03 19:57:14 2011
+From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Heitzmann?= 
+	<frederic.heitzmann@gmail.com>
+Subject: [PATCH] git svn : hook before 'git svn dcommit'
+Date: Sun,  3 Jul 2011 22:49:14 +0200
+Message-ID: <1309726156-31156-1-git-send-email-frederic.heitzmann@gmail.com>
+References: <vpqfwmos5sg.fsf@bauges.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+To: Matthieu.Moy@grenoble-inp.fr, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 03 22:49:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QdQuu-00025S-D3
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Jul 2011 19:57:12 +0200
+	id 1QdTbr-0008OR-LF
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Jul 2011 22:49:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754431Ab1GCR4y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Jul 2011 13:56:54 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:40345 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754203Ab1GCR4u (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Jul 2011 13:56:50 -0400
-Received: by mail-bw0-f46.google.com with SMTP id 5so3614757bwd.19
-        for <git@vger.kernel.org>; Sun, 03 Jul 2011 10:56:49 -0700 (PDT)
+	id S1752287Ab1GCUta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Jul 2011 16:49:30 -0400
+Received: from mail-fx0-f52.google.com ([209.85.161.52]:65040 "EHLO
+	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751829Ab1GCUt3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Jul 2011 16:49:29 -0400
+Received: by fxd18 with SMTP id 18so4671294fxd.11
+        for <git@vger.kernel.org>; Sun, 03 Jul 2011 13:49:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=Xrm/jFuMR6Kc4XKJ1M/qhr60h0dRURDhZItK7HiyaS8=;
-        b=lggStJG+ymi/r81V5fZNdKJrLoRoPbSPtF3G8UP9AI3E+jtmyKEi4/FlR1QxuHKohf
-         mlp3P2/aojpKY7izjJK2MB1iRvVYaBq2iwGL8S1GM0t8w1C2MFUQf/TznrT0IMxGcD/r
-         tE2emttdwdXYjo6ZfN99hsZ6MxlsAchw+knbE=
-Received: by 10.204.9.197 with SMTP id m5mr5129839bkm.38.1309715809291;
-        Sun, 03 Jul 2011 10:56:49 -0700 (PDT)
-Received: from localhost.localdomain (117360277.convex.ru [79.172.62.237])
-        by mx.google.com with ESMTPS id af13sm4841383bkc.19.2011.07.03.10.56.47
+        h=from:to:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=3D2cyxspI6TOvekaQCimMKPBZ5GuoL7aAR0ccQqsR8k=;
+        b=qVfLdi5c3WGpmbtrnEyxglOc5aLaFPP48Z9nTm0J7I4Xt+GzD7R45CEaBhSmaCqOsF
+         RjgGAO3IQnlFqLyC2Mqqy9YgXMRtCQY1DlnAOMT7nSko466tffoxQxfvSMQULqFA28eI
+         ZbqCCg87wkq8WA1RNdWmi6XeoOZdnsf6KV7JI=
+Received: by 10.223.79.139 with SMTP id p11mr8328655fak.118.1309726168399;
+        Sun, 03 Jul 2011 13:49:28 -0700 (PDT)
+Received: from localhost.localdomain (dra38-7-88-179-84-80.fbx.proxad.net [88.179.84.80])
+        by mx.google.com with ESMTPS id n27sm4044550faa.4.2011.07.03.13.49.26
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 03 Jul 2011 10:56:48 -0700 (PDT)
-X-Mailer: git-send-email 1.7.3.4
-In-Reply-To: <1309715877-13814-1-git-send-email-divanorama@gmail.com>
+        Sun, 03 Jul 2011 13:49:27 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.133.gd3b55a
+In-Reply-To: <vpqfwmos5sg.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176586>
 
-There was custom options parsing. As more options arise it will
-be easier to add and document new options with parse-options api.
+The 'pre-svn-dcommit' hook is called by 'git svn dcommit' and can be used to
+prevent some diff to be committed to a SVN repository. It may typically be
+used to filter some intermediate patches, which were committed into git but
+must not find their way to the SVN repository.
 
-Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
----
- test-svn-fe.c |   42 ++++++++++++++++++++++++++++--------------
- 1 files changed, 28 insertions(+), 14 deletions(-)
+It takes a single parameter, the reference given to 'git svn dcommit'. If the
+hook exists with a non zero-status, 'git svn dcommit' will abort.
 
-diff --git a/test-svn-fe.c b/test-svn-fe.c
-index 3ee5559..603d3fb 100644
---- a/test-svn-fe.c
-+++ b/test-svn-fe.c
-@@ -3,28 +3,38 @@
-  */
- 
- #include "git-compat-util.h"
-+#include "parse-options.h"
- #include "vcs-svn/svndump.h"
- #include "vcs-svn/svndiff.h"
- #include "vcs-svn/sliding_window.h"
- #include "vcs-svn/line_buffer.h"
- 
--static const char test_svnfe_usage[] =
--	"test-svn-fe (<dumpfile> | [-d] <preimage> <delta> <len>)";
-+static const char * const test_svnfe_usage[] = {
-+	"test-svn-fe (<dumpfile> | -d <preimage> <delta> <len>)",
-+	NULL
-+};
- 
--static int apply_delta(int argc, char *argv[])
-+static int d;
-+
-+static struct option test_svnfe_options[] = {
-+	OPT_SET_INT('d', NULL, &d, "test apply_delta", 1),
-+	OPT_END()
-+};
-+
-+static int apply_delta(int argc, const char *argv[])
- {
- 	struct line_buffer preimage = LINE_BUFFER_INIT;
- 	struct line_buffer delta = LINE_BUFFER_INIT;
- 	struct sliding_view preimage_view = SLIDING_VIEW_INIT(&preimage, -1);
- 
--	if (argc != 5)
--		usage(test_svnfe_usage);
-+	if (argc != 3)
-+		usage_with_options(test_svnfe_usage, test_svnfe_options);
- 
--	if (buffer_init(&preimage, argv[2]))
-+	if (buffer_init(&preimage, argv[0]))
- 		die_errno("cannot open preimage");
--	if (buffer_init(&delta, argv[3]))
-+	if (buffer_init(&delta, argv[1]))
- 		die_errno("cannot open delta");
--	if (svndiff0_apply(&delta, (off_t) strtoull(argv[4], NULL, 0),
-+	if (svndiff0_apply(&delta, (off_t) strtoull(argv[2], NULL, 0),
- 					&preimage_view, stdout))
- 		return 1;
- 	if (buffer_deinit(&preimage))
-@@ -37,10 +47,16 @@ static int apply_delta(int argc, char *argv[])
- 	return 0;
- }
- 
--int main(int argc, char *argv[])
-+int main(int argc, const char *argv[])
- {
--	if (argc == 2) {
--		if (svndump_init(argv[1], NULL))
-+	argc = parse_options(argc, argv, NULL, test_svnfe_options,
-+						test_svnfe_usage, 0);
-+
-+	if (d)
-+		return apply_delta(argc, argv);
-+
-+	if (argc == 1) {
-+		if (svndump_init(argv[0], NULL))
- 			return 1;
- 		svndump_read();
- 		svndump_deinit();
-@@ -48,7 +64,5 @@ int main(int argc, char *argv[])
- 		return 0;
- 	}
- 
--	if (argc >= 2 && !strcmp(argv[1], "-d"))
--		return apply_delta(argc, argv);
--	usage(test_svnfe_usage);
-+	usage_with_options(test_svnfe_usage, test_svnfe_options);
- }
--- 
-1.7.3.4
+Documentation/git-svn.txt |   14 +++++++++++++-
+git-svn.perl              |   21 +++++++++++++++++++++
+2 files changed, 34 insertions(+), 1 deletions(-)
