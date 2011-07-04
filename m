@@ -1,58 +1,64 @@
-From: Christof =?ISO-8859-1?Q?Kr=FCger?= <git@christof-krueger.de>
-Subject: Re: Merging some existing svn code
-Date: Mon, 04 Jul 2011 18:00:02 +0200
-Message-ID: <1309795202.18226.3.camel@oxylap>
-References: <CAHVO_930ECHRYR7RsKGa61OtBhwyFA5Mt9NxpD6Ysq9jJBgk-g@mail.gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [RFC 2/2] Don't push a repository with unpushed submodules
+Date: Mon, 4 Jul 2011 22:05:09 +0200
+Message-ID: <20110704200509.GA783@book.hvoigt.net>
+References: <1309112987-3185-1-git-send-email-iveqy@iveqy.com> <1309112987-3185-3-git-send-email-iveqy@iveqy.com> <7v1uydvmh0.fsf@alter.siamese.dyndns.org> <20110628193034.GB3700@book.hvoigt.net> <7viprpu1p5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Howard Miller <howard@e-learndesign.co.uk>
-X-From: git-owner@vger.kernel.org Mon Jul 04 18:00:16 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org,
+	jens.lehmann@web.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 04 22:05:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QdlZG-0006cB-L1
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Jul 2011 18:00:14 +0200
+	id 1QdpOR-0008PY-Ly
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Jul 2011 22:05:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757746Ab1GDQAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jul 2011 12:00:09 -0400
-Received: from vserver.localhost.li ([85.214.46.152]:56470 "EHLO
-	mail.localhost.li" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755061Ab1GDQAI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jul 2011 12:00:08 -0400
-Received: from p5794cc85.dip.t-dialin.net ([87.148.204.133]:35866 helo=[192.168.0.126])
-	by mail.localhost.li with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <git@christof-krueger.de>)
-	id 1QdlZ6-0002ea-Mi; Mon, 04 Jul 2011 18:00:06 +0200
-In-Reply-To: <CAHVO_930ECHRYR7RsKGa61OtBhwyFA5Mt9NxpD6Ysq9jJBgk-g@mail.gmail.com>
-X-Mailer: Evolution 2.30.3 
-X-Spam-Score: 0.0 (/)
-X-Spam-Report: none
+	id S1751931Ab1GDUFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jul 2011 16:05:13 -0400
+Received: from darksea.de ([83.133.111.250]:44327 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751834Ab1GDUFM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jul 2011 16:05:12 -0400
+Received: (qmail 27599 invoked from network); 4 Jul 2011 22:05:10 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 4 Jul 2011 22:05:10 +0200
+Content-Disposition: inline
+In-Reply-To: <7viprpu1p5.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176603>
 
-On Mo, 2011-07-04 at 13:59 +0100, Howard Miller wrote:
-> Firstly I have an application "under" git....  years ago I wrote a
-> plugin for the app (and by that I mean that it does not affect the
-> main code in any way) and that used svn. I've cloned the svn
-> repository using git svn so I have the history. I'd like to pull this
-> into the main project by moving the history onto a new branch. There
-> will be no merge issues but I'm unsure of the steps to take. The file
-> structure is not the same as the svn repository only covered the
-> required directory.
-Sounds like a subtree merge could help you, see [1].
-Just ask if there is anything in the description that doesn't work for
-you.
+Hi,
 
-Regards,
-  Chris
+On Tue, Jun 28, 2011 at 01:43:18PM -0700, Junio C Hamano wrote:
+> Heiko Voigt <hvoigt@hvoigt.net> writes:
+> 
+> >> What if
+> >> 
+> >>  (1) you are binding somebody else's project as your own submodule, you do
+> >>      not make any local changes (you won't be pushing them out anyway),
+> >>      and you do not have remote tracking branches in that submodule
+> >>      project?
+> >
+> > In this scenario the superproject can not be cloned that way that it
+> > would contain the submodule right? I would consider this a rather exotic
+> > way to work since pushing means to share your work somehow.
+> 
+> Sorry, I don't follow. Isn't this the classical example of an el-cheapo
+> router firmware project (i.e. superproject) binding unmodified Linux
+> kernel project as one of its submodules without you having any push
+> privilege to Linus's repository, which was one of the original examples
+> used in the very initial submodule discussion?
 
-[1]
-http://www.kernel.org/pub/software/scm/git/docs/howto/using-merge-subtree.html
+But in such an example the Linux submodule (if used with git submodule)
+would have remote tracking branches even though they are not directly
+pushable.
+
+Cheers Heiko
