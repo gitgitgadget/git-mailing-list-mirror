@@ -1,91 +1,58 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: [BUG] gitk update/reload doesn't refresh notes
-Date: Mon, 4 Jul 2011 17:36:00 +0200
-Message-ID: <20110704153600.GF1982@goldbirke>
+From: Christof =?ISO-8859-1?Q?Kr=FCger?= <git@christof-krueger.de>
+Subject: Re: Merging some existing svn code
+Date: Mon, 04 Jul 2011 18:00:02 +0200
+Message-ID: <1309795202.18226.3.camel@oxylap>
+References: <CAHVO_930ECHRYR7RsKGa61OtBhwyFA5Mt9NxpD6Ysq9jJBgk-g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 04 17:41:55 2011
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Howard Miller <howard@e-learndesign.co.uk>
+X-From: git-owner@vger.kernel.org Mon Jul 04 18:00:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QdlHU-0007rV-BF
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Jul 2011 17:41:52 +0200
+	id 1QdlZG-0006cB-L1
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Jul 2011 18:00:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757753Ab1GDPlf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Jul 2011 11:41:35 -0400
-Received: from ex-e-1.perimeter.fzi.de ([141.21.8.250]:16466 "EHLO
-	EX-E-1.perimeter.fzi.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755947Ab1GDPlc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jul 2011 11:41:32 -0400
-X-Greylist: delayed 329 seconds by postgrey-1.27 at vger.kernel.org; Mon, 04 Jul 2011 11:41:32 EDT
-Received: from ex-ca-ht-1.fzi.de (141.21.32.98) by EX-E-1.perimeter.fzi.de
- (141.21.8.250) with Microsoft SMTP Server (TLS) id 14.1.289.1; Mon, 4 Jul
- 2011 17:35:55 +0200
-Received: from localhost6.localdomain6 (141.21.50.31) by ex-ca-ht-1.fzi.de
- (141.21.32.98) with Microsoft SMTP Server (TLS) id 14.1.289.1; Mon, 4 Jul
- 2011 17:36:00 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1757746Ab1GDQAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jul 2011 12:00:09 -0400
+Received: from vserver.localhost.li ([85.214.46.152]:56470 "EHLO
+	mail.localhost.li" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755061Ab1GDQAI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jul 2011 12:00:08 -0400
+Received: from p5794cc85.dip.t-dialin.net ([87.148.204.133]:35866 helo=[192.168.0.126])
+	by mail.localhost.li with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <git@christof-krueger.de>)
+	id 1QdlZ6-0002ea-Mi; Mon, 04 Jul 2011 18:00:06 +0200
+In-Reply-To: <CAHVO_930ECHRYR7RsKGa61OtBhwyFA5Mt9NxpD6Ysq9jJBgk-g@mail.gmail.com>
+X-Mailer: Evolution 2.30.3 
+X-Spam-Score: 0.0 (/)
+X-Spam-Report: none
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176602>
 
-Hi,
+On Mo, 2011-07-04 at 13:59 +0100, Howard Miller wrote:
+> Firstly I have an application "under" git....  years ago I wrote a
+> plugin for the app (and by that I mean that it does not affect the
+> main code in any way) and that used svn. I've cloned the svn
+> repository using git svn so I have the history. I'd like to pull this
+> into the main project by moving the history onto a new branch. There
+> will be no merge issues but I'm unsure of the steps to take. The file
+> structure is not the same as the svn repository only covered the
+> required directory.
+Sounds like a subtree merge could help you, see [1].
+Just ask if there is anything in the description that doesn't work for
+you.
 
+Regards,
+  Chris
 
-I would expect that when I start gitk with '--show-notes' option and
-press update or reload, then it updates not just the commits, but the
-notes shown in the log/diff window, too.  However, as shown below,
-this is not the case.
-
-  notes_vs_gitk$ git init
-  Initialized empty Git repository in
-  /home/szeder/tmp/git/notes_vs_gitk/.git/
-  notes_vs_gitk (master)$ echo 1 >foo
-  notes_vs_gitk (master)$ git add foo
-  notes_vs_gitk (master)$ git commit -m First. foo
-  [master (root-commit) 88dbd6b] First.
-   1 files changed, 1 insertions(+), 0 deletions(-)
-   create mode 100644 foo
-  notes_vs_gitk (master)$ gitk --show-notes master &
-  [1] 15673
-  notes_vs_gitk (master)$ git notes add -m "Note,
-  that these notes will not appear in gitk without restarting it"
-  notes_vs_gitk (master)$ git log
-  commit 88dbd6bf8f1e3e4fc94d1da5e73754c7d2f0f244
-  Author: SZEDER G=E1bor <szeder@ira.uka.de>
-  Date:   2011-07-04 17:18:28 +0200
- =20
-      First.
- =20
-  Notes:
-      Note, that these notes will not appear in gitk without restarting=
- it
- =20
-  # Press F5 in gitk for update.
-  # Nope, notes are not shown.
-  # Press ctrl-F5 in gitk for reload.
-  # Notes are still not shown.
- =20
-  notes_vs_gitk (master)$ kill %1
-  [1]+  Terminated              gitk --show-notes master
-  notes_vs_gitk (master)$ gitk --show-notes master &
-  [1] 15826
- =20
-  # Notes are shown, finally.
-
-  notes_vs_gitk (master)$ git notes remove=20
-  Removing note for object HEAD
-
-  # Press F5/ctrl-F5 in gitk.
-  # The removed notes are still there.
-
-
-Best,
-G=E1bor
+[1]
+http://www.kernel.org/pub/software/scm/git/docs/howto/using-merge-subtree.html
