@@ -1,170 +1,90 @@
-From: Michele Marcionelli <michele.marcionelli@math.ethz.ch>
-Subject: Re: push problem with anonymous access
-Date: Mon, 4 Jul 2011 12:02:24 +0200
-Message-ID: <27A41224-5E1E-4F32-8369-438E48432E60@math.ethz.ch>
-References: <FCA17A33-EC1F-4649-9047-D8D56BE11D46@math.ethz.ch>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: text/plain; charset=iso-8859-1
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 0/8] vcs-svn, svn-fe: add a couple of options
+Date: Mon, 4 Jul 2011 13:06:53 +0200
+Message-ID: <CAGdFq_gQFGy6xWYv_9sN=Txk0hmzT7h=LUfLP-Q4=EFEvS=KLA@mail.gmail.com>
+References: <1309715877-13814-1-git-send-email-divanorama@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Tay Ray Chuan <rctay89@gmail.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 04 12:08:43 2011
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	David Barr <davidbarr@google.com>
+To: Dmitry Ivankov <divanorama@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 04 13:07:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qdg55-0008QA-4J
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Jul 2011 12:08:43 +0200
+	id 1Qdh07-0006ld-Ot
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Jul 2011 13:07:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757088Ab1GDKIh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Jul 2011 06:08:37 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:42313 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754494Ab1GDKIg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Jul 2011 06:08:36 -0400
-X-Greylist: delayed 368 seconds by postgrey-1.27 at vger.kernel.org; Mon, 04 Jul 2011 06:08:36 EDT
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.289.1; Mon, 4 Jul
- 2011 12:02:25 +0200
-Received: from fibonacci.math.ethz.ch (129.132.147.190) by mail.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.289.1; Mon, 4 Jul
- 2011 12:02:24 +0200
-In-Reply-To: <FCA17A33-EC1F-4649-9047-D8D56BE11D46@math.ethz.ch>
-X-Mailer: Apple Mail (2.1084)
-X-Originating-IP: [129.132.147.190]
+	id S1754369Ab1GDLHe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Jul 2011 07:07:34 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:38010 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752364Ab1GDLHd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Jul 2011 07:07:33 -0400
+Received: by pzk9 with SMTP id 9so1586104pzk.19
+        for <git@vger.kernel.org>; Mon, 04 Jul 2011 04:07:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=MEWfSICVKHOgOakMNSyDHQgKL/rfPsnGpxncupV+QFU=;
+        b=fRp7q+YOPVgCnG7XJOcmgL29dEEAd+EA6L/iUNirBEkxvIjneqdD7pRaG/uKT20tNZ
+         ZXwbKWWZQH8+gu1+juJWEoT+0zp+Dlf6a1y09PlndvB9zmuv/aTXxZQRya/d3JxrEJmc
+         TBX0TGeWtSXxtDUeRRinzxpgArg+LHK557qLU=
+Received: by 10.68.51.162 with SMTP id l2mr3274993pbo.100.1309777653093; Mon,
+ 04 Jul 2011 04:07:33 -0700 (PDT)
+Received: by 10.68.21.106 with HTTP; Mon, 4 Jul 2011 04:06:53 -0700 (PDT)
+In-Reply-To: <1309715877-13814-1-git-send-email-divanorama@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176594>
 
-I found out something: with these 2 lines in "public_test.git/config":
+Heya,
 
-[http]
-    receivepack =3D true
+[+Ram]
 
-Now I can push and the log files looks like this:
-=3D=3D> /var/log/httpd/git-ssl.access_log <=3D=3D
-129.132.147.190 - - [04/Jul/2011:11:26:57 +0200] "GET /git/math/public_=
-test.git/info/refs?service=3Dgit-receive-pack HTTP/1.1" 200 153 "-" "gi=
-t/1.7.5.4"
-129.132.147.190 - - [04/Jul/2011:11:26:57 +0200] "POST /git/math/public=
-_test.git/git-receive-pack HTTP/1.1" 406 - "-" "git/1.7.5.4"
-129.132.147.190 - michele [04/Jul/2011:11:26:57 +0200] "POST /git/math/=
-public_test.git/git-receive-pack HTTP/1.1" 200 52 "-" "git/1.7.5.4"
-=3D=3D> /var/log/httpd/git-ssl.error_log <=3D=3D
-[Mon Jul 04 11:26:57 2011] [error] [client 129.132.147.190] no acceptab=
-le variant: /var/www/error/HTTP_UNAUTHORIZED.html.var
-
-So 2 questions:
-1) it is ok to set "receivepack =3D true"? It's not dangerous?
-2) I still get an error 406 (see second line)... is that normal?
-3) shouldn't somebody include this information in some official FAQ or =
-in the man page of git-http-backend?
-
-Regards,
-Michele
-
-
-On Jul 4, 2011, at 9:13 , Michele Marcionelli wrote:
-
-> Hi Ray
->=20
-> I tried as you suggested (even if to clone I don't need a password):
->=20
-> $ git clone https://michele:******@git.math.ethz.ch/git/math/public_t=
-est.git
-> =3D=3D>
-> Cloning into public_test...
-> remote: Counting objects: 15, done.
-> remote: Compressing objects: 100% (7/7), done.
-> remote: Total 15 (delta 0), reused 0 (delta 0)
-> Unpacking objects: 100% (15/15), done.
->=20
-> And in the apache logs:
-> 129.132.147.190 - - [04/Jul/2011:08:14:40 +0200] "GET /git/math/publi=
-c_test.git/info/refs?service=3Dgit-upload-pack HTTP/1.1" 200 264 "-" "g=
-it/1.7.5.4"
-> 129.132.147.190 - - [04/Jul/2011:08:14:40 +0200] "POST /git/math/publ=
-ic_test.git/git-upload-pack HTTP/1.1" 200 1688 "-" "git/1.7.5.4"
->=20
-> But the when I push (and here is my problem):
-> $ cd public_test
-> $ echo foo >> TODO
-> $ git commit TODO -m bar
-> $ git push
-> =3D=3D>
-> error: Cannot access URL https://michele:******@git.math.ethz.ch/git/=
-math/public_test.git/, return code 22
-> fatal: git-http-push failed
->=20
-> I get following in the apache logs:
->=20
-> =3D=3D> /var/log/httpd/git-ssl.access_log <=3D=3D
-> 129.132.147.190 - - [04/Jul/2011:08:17:45 +0200] "GET /git/math/publi=
-c_test.git/info/refs?service=3Dgit-receive-pack HTTP/1.1" 403 - "-" "gi=
-t/1.7.5.4"
-> 129.132.147.190 - - [04/Jul/2011:08:17:45 +0200] "GET /git/math/publi=
-c_test.git/info/refs HTTP/1.1" 200 59 "-" "git/1.7.5.4"
-> =3D=3D> /var/log/httpd/git-ssl.error_log <=3D=3D
-> [Mon Jul 04 08:17:45 2011] [error] [client 129.132.147.190] Service n=
-ot enabled: 'receive-pack'
-> =3D=3D> /var/log/httpd/git-ssl.access_log <=3D=3D
-> 129.132.147.190 - - [04/Jul/2011:08:17:45 +0200] "GET /git/math/publi=
-c_test.git/HEAD HTTP/1.1" 200 23 "-" "git/1.7.5.4"
-> 129.132.147.190 - - [04/Jul/2011:08:17:46 +0200] "PROPFIND /git/math/=
-public_test.git/ HTTP/1.1" 404 - "-" "git/1.7.5.4"
-> =3D=3D> /var/log/httpd/git-ssl.error_log <=3D=3D
-> [Mon Jul 04 08:17:46 2011] [error] [client 129.132.147.190] Request n=
-ot supported: '/var/www/vhosts/git/root/math/public_test.git/'
->=20
->=20
-> The problem that I see is that in the configuration (see also the "ma=
-n git-http-backend") you have this
->=20
->    <LocationMatch "^/git/.*/git-receive-pack$">
->=20
-> and "git push" do following request:
->=20
->    /git/whatever/info/refs?service=3Dgit-receive-pack
->=20
-> which is not matched by the "LocationMarch".
->=20
-> Thx, Michele
->=20
-> PS: I'm not using WebDAV, since it is not documented in the man page.
->=20
->=20
-> On Jul 2, 2011, at 17:19 , Tay Ray Chuan wrote:
->=20
->> On Sat, Jul 2, 2011 at 6:32 AM, Michele Marcionelli
->> <michele.marcionelli <at> math.ethz.ch> wrote:
->>> =3D=3D> /var/log/httpd/git-ssl.access_log <=3D=3D
->>> 85.1.201.213 - - [02/Jul/2011:00:13:32 +0200] "GET
->> /git/math/public_test.git/info/refs?service=3Dgit-receive-pack HTTP/=
-1.1" 403 - "-" "git/1.7.5.4"
->>=20
->> Try
->>=20
->> $ git clone https://<user>:<pwd>@git.math.ethz.ch/git/math/public_te=
-st.git
->>=20
->> or put it in ~/.netrc.
->>=20
->> --=20
->> Cheers,
->> Ray Chuan
->=20
+On Sun, Jul 3, 2011 at 19:57, Dmitry Ivankov <divanorama@gmail.com> wro=
+te:
+> This patch set adds a few options for svn-fe that can be used in
+> a svn remote helper and useful in general for vcs-svn/. The last
+> three patches add the options, others prepare the ground for them.
+>
+> The patch base is svn-fe branch at git://repo.or.cz/git/jrn.git
+>
+> Dmitry Ivankov (8):
+> =C2=A0vcs-svn: move url parameter from _read to _init
+> =C2=A0svn-fe: add man target to Makefile
+> =C2=A0svn-fe: add EXTLIBS needed for parse-options
+> =C2=A0svn-fe: add usage and unpositional arguments versions
+> =C2=A0test-svn-fe: use parse-options
+> =C2=A0vcs-svn: allow to specify dump destination ref
+> =C2=A0vcs-svn: convert REPORT_FILENO to an option
+> =C2=A0vcs-svn: allow to disable 'progress' lines
+>
+> =C2=A0contrib/svn-fe/Makefile =C2=A0 | =C2=A0 18 ++++----
+> =C2=A0contrib/svn-fe/svn-fe.c =C2=A0 | =C2=A0 42 +++++++++++++++++--
+> =C2=A0contrib/svn-fe/svn-fe.txt | =C2=A0 29 +++++++++++--
+> =C2=A0t/t9010-svn-fe.sh =C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=A0 99 +++++=
+++++++++++++++++++++++++++++++++--------
+> =C2=A0test-svn-fe.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=A0=
+ 50 ++++++++++++++++-------
+> =C2=A0vcs-svn/fast_export.c =C2=A0 =C2=A0 | =C2=A0 13 +++++-
+> =C2=A0vcs-svn/fast_export.h =C2=A0 =C2=A0 | =C2=A0 =C2=A02 +-
+> =C2=A0vcs-svn/svndump.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=A0 11 ++---
+> =C2=A0vcs-svn/svndump.h =C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A04 =
++-
+> =C2=A09 files changed, 205 insertions(+), 63 deletions(-)
+>
 > --
-> Michele Marcionelli =B7 mm@ethz.ch =B7 +41 44 632 6193
-> * Please consider the environment before printing
->=20
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 1.7.3.4
 
---
-Michele Marcionelli =B7 mm@ethz.ch =B7 +41 44 632 6193
-* Please consider the environment before printing
+--=20
+Cheers,
+
+Sverre Rabbelier
