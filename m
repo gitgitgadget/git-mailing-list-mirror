@@ -1,82 +1,78 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [PATCH 12/13] revert: Introduce skip-all to cleanup sequencer data
-Date: Mon, 04 Jul 2011 13:59:58 +0900
-Message-ID: <buowrfy8wtt.fsf@dhlpc061.dev.necel.com>
-References: <1308661489-20080-1-git-send-email-artagnon@gmail.com>
- <1308661489-20080-13-git-send-email-artagnon@gmail.com>
- <7vtybj6ji2.fsf@alter.siamese.dyndns.org>
- <BANLkTimy17b-F7eg+R9ReRUrx0rhA1cumg@mail.gmail.com>
+From: =?ISO-8859-1?Q?Fr=E9d=E9ric_Heitzmann?= 
+	<frederic.heitzmann@gmail.com>
+Subject: Re: [PATCH] git svn : hook before 'git svn dcommit'
+Date: Mon, 04 Jul 2011 07:54:19 +0200
+Message-ID: <4E11558B.90708@gmail.com>
+References: <vpqfwmos5sg.fsf@bauges.imag.fr>	<1309726156-31156-1-git-send-email-frederic.heitzmann@gmail.com> <vpq62njaxl2.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 04 07:00:08 2011
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jul 04 07:54:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QdbGR-0002F8-Lf
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Jul 2011 07:00:07 +0200
+	id 1Qdc78-00078J-8D
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Jul 2011 07:54:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751270Ab1GDFAB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jul 2011 01:00:01 -0400
-Received: from relmlor2.renesas.com ([210.160.252.172]:61009 "EHLO
-	relmlor2.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751286Ab1GDFAA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jul 2011 01:00:00 -0400
-Received: from relmlir3.idc.renesas.com ([10.200.68.153])
- by relmlor2.idc.renesas.com ( SJSMS)
- with ESMTP id <0LNS00H2VLVZKO60@relmlor2.idc.renesas.com> for
- git@vger.kernel.org; Mon, 04 Jul 2011 13:59:59 +0900 (JST)
-Received: from relmlac1.idc.renesas.com ([10.200.69.21])
- by relmlir3.idc.renesas.com ( SJSMS)
- with ESMTP id <0LNS002PLLVZQPC0@relmlir3.idc.renesas.com> for
- git@vger.kernel.org; Mon, 04 Jul 2011 13:59:59 +0900 (JST)
-Received: by relmlac1.idc.renesas.com (Postfix, from userid 0)
-	id 5B9DB80088; Mon, 04 Jul 2011 13:59:59 +0900 (JST)
-Received: from relmlac1.idc.renesas.com (localhost [127.0.0.1])
-	by relmlac1.idc.renesas.com (Postfix) with ESMTP id 5626480086; Mon,
- 04 Jul 2011 13:59:59 +0900 (JST)
-Received: from relmlii2.idc.renesas.com [10.200.68.66]	by
- relmlac1.idc.renesas.com with ESMTP id PAP19165; Mon,
- 04 Jul 2011 13:59:59 +0900
-X-IronPort-AV: E=Sophos;i="4.65,470,1304262000";   d="scan'208";a="35102584"
-Received: from unknown (HELO relay31.aps.necel.com) ([10.29.19.54])
- by relmlii2.idc.renesas.com with ESMTP; Mon, 04 Jul 2011 13:59:59 +0900
-Received: from relay31.aps.necel.com ([10.29.19.54] [10.29.19.54])
- by relay31.aps.necel.com with ESMTP; Mon, 04 Jul 2011 13:59:59 +0900
-Received: from dhlpc061 ([10.114.98.166] [10.114.98.166])
- by relay31.aps.necel.com with ESMTP; Mon, 04 Jul 2011 13:59:59 +0900
-Received: by dhlpc061 (Postfix, from userid 31295)	id C6CEC52E1F3; Mon,
- 04 Jul 2011 13:59:58 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-reply-to: <BANLkTimy17b-F7eg+R9ReRUrx0rhA1cumg@mail.gmail.com>
+	id S1753751Ab1GDFy3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Jul 2011 01:54:29 -0400
+Received: from mail-fx0-f52.google.com ([209.85.161.52]:54897 "EHLO
+	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753333Ab1GDFy2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jul 2011 01:54:28 -0400
+Received: by fxd18 with SMTP id 18so4919631fxd.11
+        for <git@vger.kernel.org>; Sun, 03 Jul 2011 22:54:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=f+lbS8gssjq/TMyp/ExBRdyIo0jfvEb4iNcOyWDMQqI=;
+        b=sTRPmjJxI4eyujZT3MJIinRGTOAmrENvMOaCQqrK1g7ibqAQmf3sLGCAbUjx/YZc2W
+         O2IGZ777ZjcSmAEbx0g2tAg569Nijl8KF45LQLlalH5+kYbN4zcfgwJNcO8a7P//JMPm
+         dpmV/Wh6GAMATefTM46KczcWIFCDGrEJqiXtA=
+Received: by 10.223.76.16 with SMTP id a16mr4830494fak.47.1309758867180;
+        Sun, 03 Jul 2011 22:54:27 -0700 (PDT)
+Received: from [192.168.0.10] (dra38-7-88-179-84-80.fbx.proxad.net [88.179.84.80])
+        by mx.google.com with ESMTPS id m5sm4282570fai.1.2011.07.03.22.54.24
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 03 Jul 2011 22:54:24 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.17) Gecko/20110424 Thunderbird/3.1.10
+In-Reply-To: <vpq62njaxl2.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176591>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
-> Interesting side note: I'd initially wanted to use "skip_all" and
-> "continue", but "continue" is a C keyword.  That's why I'd reluctantly
-> suffixed "_oper" to both for consistency.
 
-It seems a good idea to restrict such uglification to only those cases
-where it's necessary, not make _everything_ ugly just for the sake of
-consistency.....
 
-[The traditional thing to do with C-keyword conflicts, when there's no
-obvious and natural alternative, seems to just be intentional mispelling
--- "continu", "kontinue", "cont", "_continue", whatever.  Yes, they're
-ugly, but people will know why you did it, and they'll forgive you.]
+Le 03/07/2011 23:00, Matthieu Moy a =E9crit :
+> Fr=E9d=E9ric Heitzmann<frederic.heitzmann@gmail.com>  writes:
+>
+>> The 'pre-svn-dcommit' hook is called by 'git svn dcommit' and can be=
+ used to
+>> prevent some diff to be committed to a SVN repository. It may typica=
+lly be
+>> used to filter some intermediate patches, which were committed into =
+git but
+>> must not find their way to the SVN repository.
+> Why 2 patches?
+>
+> We usually try to have each commit as correct as possible (e.g. when
+> sending several patches, each commit should still pass the testsuite)=
+=2E
+> With your 2-patches serie, the first commit has documentation for a
+> feature which doesn't exist yet.
+I find it easier to separate commits on documentation from code patch,=20
+especially for rereading and dicussing.
+However, if it is desirable to get them merged, I could do that easily.
 
--Miles
-
--- 
-Helpmate, n. A wife, or bitter half.
+As for the order :
+patch 1/2 : perl magic
+patch 2/2 : documentation update
+=3D>  the serie looks in the right order to me.
