@@ -1,64 +1,58 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: [RFC 2/2] Don't push a repository with unpushed submodules
-Date: Mon, 4 Jul 2011 22:05:09 +0200
-Message-ID: <20110704200509.GA783@book.hvoigt.net>
-References: <1309112987-3185-1-git-send-email-iveqy@iveqy.com> <1309112987-3185-3-git-send-email-iveqy@iveqy.com> <7v1uydvmh0.fsf@alter.siamese.dyndns.org> <20110628193034.GB3700@book.hvoigt.net> <7viprpu1p5.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Jun 2011, #05; Thu, 30)
+Date: Mon, 04 Jul 2011 14:35:44 -0700
+Message-ID: <7v62nhohjj.fsf@alter.siamese.dyndns.org>
+References: <7viprmq4sy.fsf@alter.siamese.dyndns.org>
+ <4E0F67A3.2030001@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org,
-	jens.lehmann@web.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 04 22:05:22 2011
+Cc: git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Jul 04 23:37:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QdpOR-0008PY-Ly
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Jul 2011 22:05:20 +0200
+	id 1Qdqp6-0007ML-RD
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Jul 2011 23:36:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751931Ab1GDUFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jul 2011 16:05:13 -0400
-Received: from darksea.de ([83.133.111.250]:44327 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751834Ab1GDUFM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jul 2011 16:05:12 -0400
-Received: (qmail 27599 invoked from network); 4 Jul 2011 22:05:10 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 4 Jul 2011 22:05:10 +0200
-Content-Disposition: inline
-In-Reply-To: <7viprpu1p5.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1752169Ab1GDVft (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jul 2011 17:35:49 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57918 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752055Ab1GDVfs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jul 2011 17:35:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 016106B93;
+	Mon,  4 Jul 2011 17:38:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iSX8CKyJKgc1RtfE1gp7Qlmts5g=; b=dlyxlD
+	iBEKISvFsepm63lb8/+u+YAsS4qtZqWpqntWwhpm7OcbtCPj8iz8sIeiipzTw8ov
+	ANmeedzteoAoTThP8qTeQzQjX6Z86FPaY3B5tE5jlPV0xHsakzcwrsyKzuR0PCLY
+	zsKtSQkMjSy9dfeO5i1goMIB/aJU4u5wOqRZk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WoitXafJ82oVjGsYysFua7D1mwhxHXG7
+	nBvUWM7CuinYw2NK5BSdZEylN1AMeFEjEKzEUg0OgXHL9v/q6nuiAsIsporZRLvR
+	VpYvNv/pPikcmXU5gk52fohG9bHN2N0eayPH3yiqsdirlN+qCpCZnnYtQv5/TMvb
+	ZPrJAHYgSsU=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id ECE716B92;
+	Mon,  4 Jul 2011 17:38:01 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3F3856B90; Mon,  4 Jul 2011
+ 17:38:01 -0400 (EDT)
+In-Reply-To: <4E0F67A3.2030001@web.de> (Jens Lehmann's message of "Sat, 02
+ Jul 2011 20:46:59 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E4542336-A685-11E0-8879-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176604>
 
-Hi,
-
-On Tue, Jun 28, 2011 at 01:43:18PM -0700, Junio C Hamano wrote:
-> Heiko Voigt <hvoigt@hvoigt.net> writes:
-> 
-> >> What if
-> >> 
-> >>  (1) you are binding somebody else's project as your own submodule, you do
-> >>      not make any local changes (you won't be pushing them out anyway),
-> >>      and you do not have remote tracking branches in that submodule
-> >>      project?
-> >
-> > In this scenario the superproject can not be cloned that way that it
-> > would contain the submodule right? I would consider this a rather exotic
-> > way to work since pushing means to share your work somehow.
-> 
-> Sorry, I don't follow. Isn't this the classical example of an el-cheapo
-> router firmware project (i.e. superproject) binding unmodified Linux
-> kernel project as one of its submodules without you having any push
-> privilege to Linus's repository, which was one of the original examples
-> used in the very initial submodule discussion?
-
-But in such an example the Linux submodule (if used with git submodule)
-would have remote tracking branches even though they are not directly
-pushable.
-
-Cheers Heiko
+Thanks for catching a mismerge before it hits 'next'.
