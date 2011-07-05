@@ -1,76 +1,75 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 17/20] transport-helper: change import semantics
-Date: Mon, 4 Jul 2011 17:37:59 -0500
-Message-ID: <20110704223759.GC8909@elie>
-References: <1308496725-22329-1-git-send-email-srabbelier@gmail.com>
- <1308496725-22329-18-git-send-email-srabbelier@gmail.com>
- <20110619233822.GJ23893@elie>
- <CAGdFq_iTojuvVAdB6sC7-Kro9E49q_1Lfh87Yy4nR5BTdZ1eaA@mail.gmail.com>
- <20110704215859.GA8909@elie>
- <CAGdFq_hFQRTjRZBGZKBejpUqCCzo+wHWG69nM8=57peUBN9yjw@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 12/13] revert: Introduce skip-all to cleanup sequencer data
+Date: Tue, 5 Jul 2011 16:17:06 +0530
+Message-ID: <CALkWK0mfoPOc5bgWBHwCR3+kZRyJWcQVnHgA12COoQimsrh3Vg@mail.gmail.com>
+References: <1308661489-20080-1-git-send-email-artagnon@gmail.com>
+ <1308661489-20080-13-git-send-email-artagnon@gmail.com> <7vtybj6ji2.fsf@alter.siamese.dyndns.org>
+ <BANLkTimy17b-F7eg+R9ReRUrx0rhA1cumg@mail.gmail.com> <buowrfy8wtt.fsf@dhlpc061.dev.necel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 05 00:38:20 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Jul 05 12:47:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QdrmV-0005JI-JC
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Jul 2011 00:38:19 +0200
+	id 1Qe3AD-0008DN-6A
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Jul 2011 12:47:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752495Ab1GDWiH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jul 2011 18:38:07 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:45369 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752465Ab1GDWiG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jul 2011 18:38:06 -0400
-Received: by iwn6 with SMTP id 6so4746685iwn.19
-        for <git@vger.kernel.org>; Mon, 04 Jul 2011 15:38:04 -0700 (PDT)
+	id S1755566Ab1GEKr2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Jul 2011 06:47:28 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:39406 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754772Ab1GEKr1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Jul 2011 06:47:27 -0400
+Received: by wyg8 with SMTP id 8so3895056wyg.19
+        for <git@vger.kernel.org>; Tue, 05 Jul 2011 03:47:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=h8sQNtYMACy5frgA/p8ZwwmUPArBU9rhHg7qr3d57Xw=;
-        b=dfNKwM5yr8Tmk8CWzcQZQgw5E9Q8wlq0gvkPd6AdCM1D1q7AfjFaxS7BjbWAiIgOWs
-         sqLewuF3eGhNHeYleW6Z24bkFCopVCppUh13nsQypXgD+qCUtZmDGW7tMpKSyDnMXi2V
-         FTPJ3b4plKAE/aPFMRMIn1N/Q3m0wTTykwPOs=
-Received: by 10.42.226.132 with SMTP id iw4mr7288087icb.21.1309819084713;
-        Mon, 04 Jul 2011 15:38:04 -0700 (PDT)
-Received: from elie (adsl-68-255-111-183.dsl.chcgil.ameritech.net [68.255.111.183])
-        by mx.google.com with ESMTPS id y1sm6887239ica.16.2011.07.04.15.38.02
-        (version=SSLv3 cipher=OTHER);
-        Mon, 04 Jul 2011 15:38:03 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAGdFq_hFQRTjRZBGZKBejpUqCCzo+wHWG69nM8=57peUBN9yjw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=drMI49BRRtKXj8iscnryoiJEjpQw43+ALZUVuMsd/Cg=;
+        b=BNMS1HPxBK8UBeq6u/5RJORhGIU+ejDyx3lOcpm5i5pWFmKfRn6lirbCCW+A+NKRw+
+         NMT/V5Ci93ozuoGjkwNsMzip4/iak2jI2wxseAiPSni92fiCZAeE8cJlJGRoLC2/E61Z
+         WpvjjukunNOytc3TqaQsFmxW+i3aKRbYBSPrs=
+Received: by 10.216.233.211 with SMTP id p61mr5835253weq.107.1309862846071;
+ Tue, 05 Jul 2011 03:47:26 -0700 (PDT)
+Received: by 10.216.175.198 with HTTP; Tue, 5 Jul 2011 03:47:06 -0700 (PDT)
+In-Reply-To: <buowrfy8wtt.fsf@dhlpc061.dev.necel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176610>
 
-Sverre Rabbelier wrote:
-> On Mon, Jul 4, 2011 at 23:58, Jonathan Nieder <jrnieder@gmail.com> wrote:
+Hi Miles,
 
->> It would mean no change compared to the current behavior. :)
-[...]
-> With the only difference that currently that \n signifies the end of
-> the entire stream, whereas now it will mean the end of the imports?
+Miles Bader writes:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>> Interesting side note: I'd initially wanted to use "skip_all" and
+>> "continue", but "continue" is a C keyword. =C2=A0That's why I'd relu=
+ctantly
+>> suffixed "_oper" to both for consistency.
+>
+> It seems a good idea to restrict such uglification to only those case=
+s
+> where it's necessary, not make _everything_ ugly just for the sake of
+> consistency.....
+>
+> [The traditional thing to do with C-keyword conflicts, when there's n=
+o
+> obvious and natural alternative, seems to just be intentional mispell=
+ing
+> -- "continu", "kontinue", "cont", "_continue", whatever. =C2=A0Yes, t=
+hey're
+> ugly, but people will know why you did it, and they'll forgive you.]
 
-Exactly.  The git-remote-testgit part of the patch would be pretty
-similar to what you have and could even go earlier in the series if
-wanted (since it does not require transport-helper changes), while the
-transport-helper part should be unnecessary as long as patch 15/20
-"use the new done feature where possible" does not remove the \n in
-its output (as discussed in its subthread).
+Interesting.  Are there such examples in the Git codebase as well?
 
-Meanwhile I should probably implement a "capability done" as Dmitry
-hinted, to make blank lines no longer act as a terminator as a way of
-helping people debugging by hand that hit <ENTER> too many times by
-mistake.
+-- Ram
