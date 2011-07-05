@@ -1,75 +1,55 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 12/13] revert: Introduce skip-all to cleanup sequencer data
-Date: Tue, 5 Jul 2011 16:17:06 +0530
-Message-ID: <CALkWK0mfoPOc5bgWBHwCR3+kZRyJWcQVnHgA12COoQimsrh3Vg@mail.gmail.com>
-References: <1308661489-20080-1-git-send-email-artagnon@gmail.com>
- <1308661489-20080-13-git-send-email-artagnon@gmail.com> <7vtybj6ji2.fsf@alter.siamese.dyndns.org>
- <BANLkTimy17b-F7eg+R9ReRUrx0rhA1cumg@mail.gmail.com> <buowrfy8wtt.fsf@dhlpc061.dev.necel.com>
+From: "Long, Martin" <martin@longhome.co.uk>
+Subject: One way GIT SVN sync (no rebase)
+Date: Tue, 5 Jul 2011 16:17:20 +0100
+Message-ID: <CANfMb__rUdhCP7=nu0mgnSf652fkp-V5-iA+CscthVD+B-j3yA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Jul 05 12:47:33 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 05 17:17:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qe3AD-0008DN-6A
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Jul 2011 12:47:33 +0200
+	id 1Qe7NQ-00038y-IU
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Jul 2011 17:17:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755566Ab1GEKr2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Jul 2011 06:47:28 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:39406 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754772Ab1GEKr1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Jul 2011 06:47:27 -0400
-Received: by wyg8 with SMTP id 8so3895056wyg.19
-        for <git@vger.kernel.org>; Tue, 05 Jul 2011 03:47:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=drMI49BRRtKXj8iscnryoiJEjpQw43+ALZUVuMsd/Cg=;
-        b=BNMS1HPxBK8UBeq6u/5RJORhGIU+ejDyx3lOcpm5i5pWFmKfRn6lirbCCW+A+NKRw+
-         NMT/V5Ci93ozuoGjkwNsMzip4/iak2jI2wxseAiPSni92fiCZAeE8cJlJGRoLC2/E61Z
-         WpvjjukunNOytc3TqaQsFmxW+i3aKRbYBSPrs=
-Received: by 10.216.233.211 with SMTP id p61mr5835253weq.107.1309862846071;
- Tue, 05 Jul 2011 03:47:26 -0700 (PDT)
-Received: by 10.216.175.198 with HTTP; Tue, 5 Jul 2011 03:47:06 -0700 (PDT)
-In-Reply-To: <buowrfy8wtt.fsf@dhlpc061.dev.necel.com>
+	id S1754483Ab1GEPRW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jul 2011 11:17:22 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:44403 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751124Ab1GEPRV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jul 2011 11:17:21 -0400
+Received: by vws1 with SMTP id 1so4251728vws.19
+        for <git@vger.kernel.org>; Tue, 05 Jul 2011 08:17:21 -0700 (PDT)
+Received: by 10.220.86.140 with SMTP id s12mr2578692vcl.205.1309879040352;
+ Tue, 05 Jul 2011 08:17:20 -0700 (PDT)
+Received: by 10.220.54.76 with HTTP; Tue, 5 Jul 2011 08:17:20 -0700 (PDT)
+X-Originating-IP: [192.165.213.18]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176611>
 
-Hi Miles,
+Hi,
 
-Miles Bader writes:
-> Ramkumar Ramachandra <artagnon@gmail.com> writes:
->> Interesting side note: I'd initially wanted to use "skip_all" and
->> "continue", but "continue" is a C keyword. =C2=A0That's why I'd relu=
-ctantly
->> suffixed "_oper" to both for consistency.
->
-> It seems a good idea to restrict such uglification to only those case=
-s
-> where it's necessary, not make _everything_ ugly just for the sake of
-> consistency.....
->
-> [The traditional thing to do with C-keyword conflicts, when there's n=
-o
-> obvious and natural alternative, seems to just be intentional mispell=
-ing
-> -- "continu", "kontinue", "cont", "_continue", whatever. =C2=A0Yes, t=
-hey're
-> ugly, but people will know why you did it, and they'll forgive you.]
+I forgot to announce this when I created it.
 
-Interesting.  Are there such examples in the Git codebase as well?
+svnExport.pl by Martin Long, has been written to allow a one way sync
+to a subversion repository, without the need to rebase or write commit
+details back to the GIT repository. This makes is suitable for syncing
+a central or shared GIT repository to a SVN repo for backup, or to
+satisfy corporate/project requirements. The removal of the need to
+rebase prevents issues with downstream repositories. Works on multiple
+repositories, creating new branches in SVN automatically. For
+non-linear histories without a branch in tack, only the first-parent
+chain is committed.
 
--- Ram
+https://github.com/martinlong1978/Git-Svn-push
+
+A little rough around the edges, but feel free to fork, and send me a
+pull request if you have anything to contribute.
+
+-- 
+Martin
