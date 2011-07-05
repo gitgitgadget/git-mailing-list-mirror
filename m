@@ -1,110 +1,57 @@
-From: Josh Triplett <josh@joshtriplett.org>
-Subject: Re: [PATCHv9 3/4] ref namespaces: Support remote repositories via
- upload-pack and receive-pack
-Date: Wed, 6 Jul 2011 22:31:22 -0700
-Message-ID: <20110707053122.GA1798@leaf>
-References: <cover.1309888001.git.josh@joshtriplett.org>
- <fff78c90d7f9deb0a8294fe3158ab0285e1610ff.1309888001.git.josh@joshtriplett.org>
- <7vy60bkzmf.fsf@alter.siamese.dyndns.org>
+From: "Barrister Ardison Brooke" <abrooke_chamber@lawyer.com>
+Subject: For your prompt response
+Date: Tue, 5 Jul 2011 09:02:33 +0200
+Message-ID: <20110705073433.D3C252BDA273@mail.alsa.co.cr>
+Reply-To: <barrabrooke@ymail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jamey Sharp <jamey@minilop.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
-	Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 07 07:31:48 2011
+Content-Type: text/plain;
+	charset="Windows-1251"
+Content-Transfer-Encoding: 7bit
+To: undisclosed-recipients:;
+X-From: git-owner@vger.kernel.org Thu Jul 07 07:56:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QehBk-00022s-9d
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jul 2011 07:31:48 +0200
+	id 1QehZq-0001F2-O9
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jul 2011 07:56:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753355Ab1GGFbn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jul 2011 01:31:43 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:46765 "EHLO
-	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751349Ab1GGFbm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2011 01:31:42 -0400
-X-Originating-IP: 217.70.178.137
-Received: from mfilter8-d.gandi.net (mfilter8-d.gandi.net [217.70.178.137])
-	by relay4-d.mail.gandi.net (Postfix) with ESMTP id 5671117207E;
-	Thu,  7 Jul 2011 07:31:40 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter8-d.gandi.net
-Received: from relay4-d.mail.gandi.net ([217.70.183.196])
-	by mfilter8-d.gandi.net (mfilter8-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id 2b4sU70ycqZE; Thu,  7 Jul 2011 07:31:38 +0200 (CEST)
-X-Originating-IP: 50.43.15.19
-Received: from leaf (static-50-43-15-19.bvtn.or.frontiernet.net [50.43.15.19])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 64B50172074;
-	Thu,  7 Jul 2011 07:31:25 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vy60bkzmf.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753656Ab1GGF4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jul 2011 01:56:38 -0400
+Received: from logistix.cr ([201.201.66.140]:8641 "EHLO mail.alsa.co.cr"
+	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751393Ab1GGF4h (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2011 01:56:37 -0400
+Received: from mail.alsa.co.cr (localhost [127.0.0.1])
+	by localhost (Postfix) with ESMTP id DD5EC2CFD4BE;
+	Wed,  6 Jul 2011 15:54:14 -0600 (CST)
+Received: from User (84.120.69.194.dyn.user.ono.com [84.120.69.194])
+	by mail.alsa.co.cr (Postfix) with ESMTP id D3C252BDA273;
+	Tue,  5 Jul 2011 01:34:33 -0600 (CST)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+X-Antivirus: Scanned by F-Prot Antivirus (http://www.f-prot.com)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176747>
+X-Spam-Report: 5.5 points;
+ *  1.5 MILLION_USD BODY: Talks about millions of dollars
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.5000]
+ *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
+ *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176748>
 
-On Wed, Jul 06, 2011 at 11:55:36AM -0700, Junio C Hamano wrote:
-> Josh Triplett <josh@joshtriplett.org> writes:
-> 
-> > Change upload-pack and receive-pack to use the namespace-prefixed refs
-> > when working with the repository, and use the unprefixed refs when
-> > talking to the client, maintaining the masquerade.  This allows
-> > clone, pull, fetch, and push to work with a suitably configured
-> > GIT_NAMESPACE.
-> >
-> > With appropriate configuration, this also allows http-backend to expose
-> > namespaces as multiple repositories with different paths.  This only
-> > requires setting GIT_NAMESPACE, which http-backend passes through to
-> > upload-pack and receive-pack.
-> >
-> > Signed-off-by: Josh Triplett <josh@joshtriplett.org>
-> > Signed-off-by: Jamey Sharp <jamey@minilop.net>
-> > ---
-> >  builtin/receive-pack.c |   37 +++++++++++++++++++++++++++++++------
-> >  upload-pack.c          |   15 ++++++++-------
-> >  2 files changed, 39 insertions(+), 13 deletions(-)
-> >
-> > diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> > index e1a687a..2d36378 100644
-> > --- a/builtin/receive-pack.c
-> > +++ b/builtin/receive-pack.c
-> > @@ -120,9 +120,17 @@ static int show_ref(const char *path, const unsigned char *sha1, int flag, void
-> >  	return 0;
-> >  }
-> >  
-> > +static int show_ref_cb(const char *path, const unsigned char *sha1, int flag, void *cb_data)
-> > +{
-> > +	path = strip_namespace(path);
-> > +	if (!path)
-> > +		path = ".have";
-> > +	return show_ref(path, sha1, flag, cb_data);
-> 
-> At the first glance, this felt somewhat unoptimal as it forbids us from
-> stuffing fake "ref" entries other than ".have" via the add_extra_ref()
-> interface, and I wondered if it would make sense to do something like this
-> instead:
-> 
-> 	const char *ns_path = strip_namespace(path);
->         if (!ns_path)
->         	ns_path = path;
-> 	return show_ref(ns_path, sha1, flag, cb_data);
-> 
-> But that is flawed, and I think your patch does the right thing.  The
-> justification is a bit subtle [*1*] and I think it needs to be explained
-> in a comment around here, not just in the 0/4 cover letter message.
+Ardison Brooke & Partners'
 
-Will do.  How does the following coment sound?
+On behalf of the Administrator and Executor of the estate of Late Engr. Kruger Kroger . I once again try to notify you as my earlier letter were returned undelivered. I wish to inform you that late Engr. Kruger Kroger  made you a beneficiary to his WILL. He left (11%) of the total sum of Thirty Million, One Hundred Thousand Dollars (USD$30, 100.000.00) to you in the Codicil and last testament to his WILL.
 
-/* We advertise refs outside our current namespace as .have refs, so
- * that the client can use them to minimize data transfer but will
- * otherwise ignore them. */
+This may sound strange and unbelievable to you, but no doubt it is a life reality and true. Being a widely traveled man, he must have been in contact with you in the past or simply you were nominated to him by one of his numerous friends abroad who wished you well and good future.
+Engr. Kruger Kroger until his death was a member of the Helicopter Society and the Institute of Electronic & Electrical Engineers. Please if I reach you as I am hopeful, endeavor to get back to me as soon as possible to enable me conclude my job. For more details contact this Email: barrabrooke@ymail.com
 
-- Josh Triplett
+Yours in Service,
+BARR. ARDISON BROOKE ESQ.
