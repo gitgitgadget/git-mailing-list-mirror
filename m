@@ -1,67 +1,64 @@
-From: Adam Bourg <adam.bourg@gmail.com>
-Subject: Trying to clone a repository in git, getting a error.
-Date: Tue, 5 Jul 2011 15:21:05 -0600
-Message-ID: <CAGGoUy__mjY3S-DUkV59sstaU5Z__EVgFdCuumfVuSTa0XWavQ@mail.gmail.com>
+From: Evan Driscoll <driscoll@cs.wisc.edu>
+Subject: Getting git to help my memory
+Date: Tue, 5 Jul 2011 21:34:18 +0000 (UTC)
+Message-ID: <loom.20110705T232905-603@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 05 23:21:39 2011
+X-From: git-owner@vger.kernel.org Tue Jul 05 23:35:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QeD3r-00073w-CW
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Jul 2011 23:21:39 +0200
+	id 1QeDH0-0003j3-UN
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Jul 2011 23:35:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752691Ab1GEVVI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jul 2011 17:21:08 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:64372 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751754Ab1GEVVH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jul 2011 17:21:07 -0400
-Received: by bwd5 with SMTP id 5so5079556bwd.19
-        for <git@vger.kernel.org>; Tue, 05 Jul 2011 14:21:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=5KqWWficXTDjYmtNPHEuyd64IsyGC51f2nneO34a9TY=;
-        b=gP4L0/S9l8NtGjiW380qA6BTM5g5PwaRhD8D4kc4kVFRJuIAqu8ecaZUmV/I9Cb9zZ
-         ulUPNRIpr34Lruz9jm0tISVxrrx6/K5wU25g/Zx78MjY7WhUBxxoyC05sY2ODxM1sl6r
-         STW4xdUKg1qgB3cNeqBHXwj/6EbHCnoJPG+Yc=
-Received: by 10.204.16.139 with SMTP id o11mr467535bka.177.1309900865597; Tue,
- 05 Jul 2011 14:21:05 -0700 (PDT)
-Received: by 10.205.82.78 with HTTP; Tue, 5 Jul 2011 14:21:05 -0700 (PDT)
+	id S1753326Ab1GEVfI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jul 2011 17:35:08 -0400
+Received: from lo.gmane.org ([80.91.229.12]:47452 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751675Ab1GEVfH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jul 2011 17:35:07 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1QeDGr-0003fI-CD
+	for git@vger.kernel.org; Tue, 05 Jul 2011 23:35:05 +0200
+Received: from hank.cs.wisc.edu ([128.105.181.52])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 05 Jul 2011 23:35:05 +0200
+Received: from driscoll by hank.cs.wisc.edu with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 05 Jul 2011 23:35:05 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 128.105.181.52 (Mozilla/5.0 (X11; U; Linux x86_64; en-US) AppleWebKit/534.16 (KHTML, like Gecko) Chrome/10.0.648.127 Safari/534.16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176627>
 
-I have two boxes, one is my local machine and the other is my dev
-server. Right now I'm testing this method of deploying apps using Git:
-http://blog.wekeroad.com/2009/11/23/deploying-a-web-application-with-git-and-ftp
+I have a somewhat unusual question. I often forget to push after committing,
+and a few times this has come back to bite me. (One time I didn't even really
+realize for a couple months because I was working on other stuff, so
+unraveling the conflicts was "fun".)
 
-I setup my local repository, added the files then committed. I am on
-Windows 7 & my server is Windows Server 2008.
+Is there a way I can get git to print a "don't forget to push!" reminder
+after it commits?
 
-The server is mapped as the W:\ Drive with my 'bare' repository and my
-target 'mock' production folder as child folders. -- I can get to each
-just fine, no connection problems.
+The best way I can think of is to put a post-commit hook in there. I haven't
+tried it but I'd assume it would work, but would have to be on a
+per-repository basis instead of global.
 
-Here's what I did to setup everything:
+(I use git mostly for just my own projects, and almost always mostly in sort
+of a centralized setup: I've got one bare *the* repository that I clone, and
+push to and pull from that rather than between the copies. For a variety of
+reasons, I'm pretty sure that model wouldn't work super well for me.)
 
-    Local dir git remote add origin w:\gitCentral
-
-    Local dir git push origin master
-
-    Type C:, then type CD testDeployment
-
-    Now I'm in my test folder.
-
-    A. I do git clone w:/gitCentral
-
-    Cloning into gitCentral... done. error: refs/remotes/origin/master
-does not point to a valid object! error: Trying to write ref
-refs/heads/master with nonexistant object 559e2165845
-06e14ebef1121059e9461a86dd4f8 fatal: Cannot update the ref 'HEAD'.
+Thanks,
+Evan
