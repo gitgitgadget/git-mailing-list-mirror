@@ -1,82 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Doesn't disambiguate between 'external command failed' and
- 'command not found'
-Date: Tue, 5 Jul 2011 19:22:00 -0400
-Message-ID: <20110705232200.GD12085@sigill.intra.peff.net>
-References: <1309884564.18513.12.camel@umgah>
- <4E137701.1020007@elegosoft.com>
- <20110705231604.GC12085@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Alex Vandiver <alex@chmrr.net>
-To: Michael Schubert <mschub@elegosoft.com>
-X-From: git-owner@vger.kernel.org Wed Jul 06 01:22:25 2011
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: Re: Getting git to help my memory
+Date: Tue, 05 Jul 2011 19:52:53 -0400
+Message-ID: <1309909855-sup-3456@pinkfloyd.chass.utoronto.ca>
+References: <loom.20110705T232905-603@post.gmane.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git <git@vger.kernel.org>
+To: Evan Driscoll <driscoll@cs.wisc.edu>
+X-From: git-owner@vger.kernel.org Wed Jul 06 01:53:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QeEwi-0007Vx-Mq
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Jul 2011 01:22:25 +0200
+	id 1QeFQJ-00087U-Sm
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Jul 2011 01:53:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752461Ab1GEXWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jul 2011 19:22:04 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34545
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752036Ab1GEXWD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jul 2011 19:22:03 -0400
-Received: (qmail 13250 invoked by uid 107); 5 Jul 2011 23:22:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 05 Jul 2011 19:22:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Jul 2011 19:22:00 -0400
-Content-Disposition: inline
-In-Reply-To: <20110705231604.GC12085@sigill.intra.peff.net>
+	id S1752036Ab1GEXwz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jul 2011 19:52:55 -0400
+Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:34169 "EHLO
+	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751449Ab1GEXwy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jul 2011 19:52:54 -0400
+Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:44695 ident=93)
+	by garcia.cquest.utoronto.ca with esmtp (Exim 4.43)
+	id 1QeFQD-0005VG-8v; Tue, 05 Jul 2011 19:52:53 -0400
+Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1QeFQD-00080X-7p; Tue, 05 Jul 2011 19:52:53 -0400
+In-reply-to: <loom.20110705T232905-603@post.gmane.org>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176633>
 
-On Tue, Jul 05, 2011 at 07:16:05PM -0400, Jeff King wrote:
+Excerpts from Evan Driscoll's message of Tue Jul 05 17:34:18 -0400 2011:
 
-> So if you are going to follow this strategy, you are probably better to
-> just skip the entry (or give it a high levenshtein distance) in the main
-> loop where we calculate candidates.
+Hi Evan,
 
-And here's what that would look like.
+> The best way I can think of is to put a post-commit hook in there. I
+> haven't tried it but I'd assume it would work, but would have to be
+> on a per-repository basis instead of global.
 
-diff --git a/help.c b/help.c
-index e925ca1..15e6f0b 100644
---- a/help.c
-+++ b/help.c
-@@ -329,6 +329,11 @@ const char *help_unknown_cmd(const char *cmd)
- 		int cmp = 0; /* avoid compiler stupidity */
- 		const char *candidate = main_cmds.names[i]->name;
- 
-+		if (!strcmp(candidate, cmd)) {
-+			main_cmds.names[i]->len = SIMILARITY_FLOOR + 1;
-+			continue;
-+		}
-+
- 		/* Does the candidate appear in common_cmds list? */
- 		while (n < ARRAY_SIZE(common_cmds) &&
- 		       (cmp = strcmp(common_cmds[n].name, candidate)) < 0)
+I use this script as a post-commit hook in a few places...
 
-I suspect it can create its own brand of confusion, though:
+--snip--
+#!/bin/bash
 
-  $ cat `which git-broken`
-  #!/bin/bogus
-  $ git broken
-  git: 'broken' is not a git command. See 'git --help'.
+echo -e "\e[32;01m"
+echo "Don't forget to \`git push\` this..."
+echo -e "\e[0m"
+--snip--
 
-At which point I search through my PATH and confirm that indeed,
-"git-broken" _is_ a git command. And I'm left on my own to figure out
-that it's a broken #!-line.
-
-So I think I prefer giving some more specific advice. Even if we don't
-mention "#!" lines explicitly, saying "This exists, but exec didn't
-work" is probably more helpful than pretending it's not there. It gives
-clueful people an idea of where to start looking for the problem.
-
--Peff
+HTH.
+-Ben
+--
+Ben Walton
+Systems Programmer - CHASS
+University of Toronto
+C:416.407.5610 | W:416.978.4302
