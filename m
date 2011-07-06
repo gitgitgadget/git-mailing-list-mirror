@@ -1,9 +1,9 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [RFC PATCH 14/14] revert: Change insn sheet format
-Date: Wed, 6 Jul 2011 16:19:14 +0530
-Message-ID: <CALkWK0nThSNg5Os4b1=S=9h38jDB7X77wM8j=1Jr4FvpRbJtZw@mail.gmail.com>
+Subject: Re: [PATCH 12/14] revert: Introduce --reset to cleanup sequencer data
+Date: Wed, 6 Jul 2011 16:25:02 +0530
+Message-ID: <CALkWK0mLaCy3LePYYEpby-sd9Z2a=DWq4uWvFiadin7sa_h2+w@mail.gmail.com>
 References: <1309938868-2028-1-git-send-email-artagnon@gmail.com>
- <1309938868-2028-15-git-send-email-artagnon@gmail.com> <20110706103321.GK15682@elie>
+ <1309938868-2028-13-git-send-email-artagnon@gmail.com> <20110706101423.GI15682@elie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -11,77 +11,85 @@ Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Daniel Barkalow <barkalow@iabervon.org>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 06 12:51:09 2011
+X-From: git-owner@vger.kernel.org Wed Jul 06 12:55:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QePhE-0002YG-DO
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Jul 2011 12:51:08 +0200
+	id 1QePlR-0004ah-BK
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Jul 2011 12:55:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751512Ab1GFKtg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Jul 2011 06:49:36 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:41529 "EHLO
+	id S1751576Ab1GFKzY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Jul 2011 06:55:24 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:64885 "EHLO
 	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750955Ab1GFKtf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Jul 2011 06:49:35 -0400
-Received: by wyg8 with SMTP id 8so4574222wyg.19
-        for <git@vger.kernel.org>; Wed, 06 Jul 2011 03:49:34 -0700 (PDT)
+	with ESMTP id S1751005Ab1GFKzX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Jul 2011 06:55:23 -0400
+Received: by wyg8 with SMTP id 8so4577382wyg.19
+        for <git@vger.kernel.org>; Wed, 06 Jul 2011 03:55:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        bh=K4wH1MfRTYKh9d3j5ntuMPnZmvC3/Oc45tQUJyscfjA=;
-        b=TJPXeLgF1xs9ZOXMIaBpfO0Nus66zvjUPvCYjqlbK1/IbbmlXF1Z+rSNdASd9EfoYP
-         4weuEzwIOsmJThJhkuWmo/PjcbknUeZadqzY5en5Vt2s0UrcWOXa1O+y/X8oeLFRzrkd
-         96Notgs8FaWG3iZSCwTco8tJzJTPErHCTZZu4=
-Received: by 10.216.50.2 with SMTP id y2mr6894371web.77.1309949374083; Wed, 06
- Jul 2011 03:49:34 -0700 (PDT)
-Received: by 10.216.175.198 with HTTP; Wed, 6 Jul 2011 03:49:14 -0700 (PDT)
-In-Reply-To: <20110706103321.GK15682@elie>
+        bh=Pa02WRWQnGSsc9jrotGx/LJs8ZAZQjtU2cGwkL6TNrs=;
+        b=oi/EpFgcFEp26hoWmhop7+LotY8smuVuETBBzGVwUKAehihPmKMeiJJYE6HYrCpU4V
+         g2WjALXDzyqU57p2v7YvYlweDBHbggGcl7s8qOTNSorukyZD6DXCEqOrhGOqGcbEhs7I
+         YLe6+VvFKcHhWF0OsHlo5v+reT8nCoLBAJI5Q=
+Received: by 10.217.3.17 with SMTP id q17mr5261352wes.107.1309949722111; Wed,
+ 06 Jul 2011 03:55:22 -0700 (PDT)
+Received: by 10.216.175.198 with HTTP; Wed, 6 Jul 2011 03:55:02 -0700 (PDT)
+In-Reply-To: <20110706101423.GI15682@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176686>
 
-Hi again,
+Hi,
 
 Jonathan Nieder writes:
 > Ramkumar Ramachandra wrote:
->> =C2=A0I've intentionally left parse_cmdline_args unimplemented
-> [...]
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Existi=
-ng implementations in libraries like Glib are
->> =C2=A0much too heavyweight.
+>> =C2=A0This is perfect but for the fact that 'git reset --hard' doesn=
+'t blow
+>> =C2=A0away the sequencer state. =C2=A0Why I haven't implemented that=
+ yet: should
+>> =C2=A0ONLY a hard reset blow away the state?
 >
-> Wait, how did glib enter the picture? :)
+> I don't know. =C2=A0What do you think?
 
-Completely unrelated -- I just incidentally saw "g_shell_parse_argv"
-in glib which does what we want, but it's an overkill.
+I personally don't think any other kind of reset would warrant blowing
+away the sequencer state.
 
-> The implementation of
-> shell-style quoting in [1] is not very complicated; perhaps it could
-> complement git's existing parsers for shell-style single-quoted
-> expressions and C-style double-quoted expressions in quote.c.
+> The constraints I see are:
+>
+> =C2=A01. outside scripts that use "git cherry-pick" should continue t=
+o work
+>
+> =C2=A02. as a small indication that that's vaguely possible, unrelate=
+d parts
+> =C2=A0 =C2=A0of the test suite should not need to be patched
 
-Okay.
+I don't see how this is possible.  I'm tempted to say that we should
+call this new cherry-picking mechanism with the sequencing
+functionality something else like "git sequencer"; then it's possible
+to avoid breaking existing scripts.
 
-> Of course, a more basic question is whether we want to allow passing
-> arbitrary command-line arguments through the insn sheet at all (a
-> part of me wishes "no", at least at first).
+> =C2=A03. when a person uses commands like "git reset --hard" without
+> =C2=A0 _intending_ to blow away the sequencer state, it should be pos=
+sible
+> =C2=A0 to get the sequencer state back.
 
-I have an overwhelming desire to say "no", but I can't think of an alte=
-rnative.
+I like your suggestion here -- simply move .git/sequencer to
+=2Egit/sequencer-old or similar :)
 
-> Could you give an example to illustrate what this functionality would
-> be used for? =C2=A0I can understand wanting to pass "-s" and "-X" fla=
-gs to
-> a merge insn and "-X" to pick, but that's as far as my imagination
-> goes.
+> For dealing with "git rebase --interactive" and similar porcelain-ish
+> scripts, the CHERRY_PICK_HEAD code-path has its own trick of falling
+> back to traditional behavior when the GIT_CHERRY_PICK_HELP environmen=
+t
+> variable is set (see v1.5.4-rc0~106^2~1, revert/cherry-pick: Allow
+> overriding the help text by the calling Porcelain, 2007-11-28).
 
-I wasn't imagining anything else.  That's just it -- I've just been
-breaking my head trying to figure out how to do it :|
+Ah, I see.
 
 -- Ram
