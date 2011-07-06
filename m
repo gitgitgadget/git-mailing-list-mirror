@@ -1,144 +1,82 @@
-From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: Re: [PATCH 8/8] vcs-svn: allow to disable 'progress' lines
-Date: Wed, 6 Jul 2011 16:14:51 +0600
-Message-ID: <CA+gfSn-LEW36+bbxs1ydnhd3iQu-+wvrsSTuTszTYKm+jmuhOw@mail.gmail.com>
-References: <1309715877-13814-1-git-send-email-divanorama@gmail.com>
-	<1309715877-13814-9-git-send-email-divanorama@gmail.com>
-	<CALkWK0nWSVrrtzwE2ePucK=XTnSHWuojxhoayRSUbZmk1We9Fg@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 13/14] revert: Introduce --continue to continue the
+ operation
+Date: Wed, 6 Jul 2011 05:25:09 -0500
+Message-ID: <20110706102509.GJ15682@elie>
+References: <1309938868-2028-1-git-send-email-artagnon@gmail.com>
+ <1309938868-2028-14-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	David Barr <davidbarr@google.com>
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 06 12:14:59 2011
+X-From: git-owner@vger.kernel.org Wed Jul 06 12:27:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QeP8E-00050L-0t
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Jul 2011 12:14:58 +0200
+	id 1QePKi-0001pi-ET
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Jul 2011 12:27:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751930Ab1GFKOx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Jul 2011 06:14:53 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:44372 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751565Ab1GFKOw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Jul 2011 06:14:52 -0400
-Received: by qwk3 with SMTP id 3so3268614qwk.19
-        for <git@vger.kernel.org>; Wed, 06 Jul 2011 03:14:52 -0700 (PDT)
+	id S1751840Ab1GFKZQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jul 2011 06:25:16 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:51311 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750955Ab1GFKZP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2011 06:25:15 -0400
+Received: by iyb12 with SMTP id 12so5964747iyb.19
+        for <git@vger.kernel.org>; Wed, 06 Jul 2011 03:25:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=mcA8n1oFuC5pgDM1HJrTxg4n8eBkCobX5hylu8j1VaI=;
-        b=Hz9aX/oQCd0GM1tqKIJvRvY94k0CP/vIlv0yjg+t9ifX0lt8NTV094cpllC8WsjF99
-         H8iCLOsxDf5QHlScWlTDBHT8tWjW7Vifzo6PoKdbcFAlItDSvuIC3luDioEbtpvZFkR3
-         rkfHkJDcfDtUWl4Cb7yjMskR6ZFRbRiUv6j7g=
-Received: by 10.229.18.81 with SMTP id v17mr6375405qca.7.1309947291999; Wed,
- 06 Jul 2011 03:14:51 -0700 (PDT)
-Received: by 10.229.212.206 with HTTP; Wed, 6 Jul 2011 03:14:51 -0700 (PDT)
-In-Reply-To: <CALkWK0nWSVrrtzwE2ePucK=XTnSHWuojxhoayRSUbZmk1We9Fg@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=qUZruImimNhjS2Cr8IBDAxZKcOnko/ECmOo8OFbj1WY=;
+        b=O0NVJd0yylFub5tA4ErdIG3izUKsYf9Y2iYKnHUPI3SobaRtyScVuBdmZc3sC3OnGz
+         u6L9a733cfQfA4iaLnmj9vI8csrrXVVz3sjyEVsyJZBA1gncvRx0G9nct4t3GIe9Qnbg
+         uuGnnKnbkiORwAjzteTOgkpsNSNeVy7XbNF7A=
+Received: by 10.231.61.198 with SMTP id u6mr7364140ibh.160.1309947914799;
+        Wed, 06 Jul 2011 03:25:14 -0700 (PDT)
+Received: from elie (adsl-69-209-76-243.dsl.chcgil.sbcglobal.net [69.209.76.243])
+        by mx.google.com with ESMTPS id m18sm791747ibc.28.2011.07.06.03.25.11
+        (version=SSLv3 cipher=OTHER);
+        Wed, 06 Jul 2011 03:25:12 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1309938868-2028-14-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176681>
 
-Hi!
+Ramkumar Ramachandra wrote:
 
-[...]
->> diff --git a/contrib/svn-fe/svn-fe.c b/contrib/svn-fe/svn-fe.c
-[...]
->> - =A0 =A0 =A0 if (svndump_init(NULL, url, ref, backflow_fd))
->> + =A0 =A0 =A0 if (svndump_init(NULL, url, ref, backflow_fd, progress=
-))
+> --- a/builtin/revert.c
+> +++ b/builtin/revert.c
+> @@ -47,6 +47,7 @@ struct replay_opts {
+>  	enum replay_action action;
 >
-> You're modifying the svndump_init API for every new option that's
-> added. =A0This'll clearly break down when you have many options -- ho=
-w
-> about wrapping it up in an options structure and then passing that?
-Well, there has to be a function to init that structure then. And the
-structure will become a part of API.
-So don't know if it's worthy.
+>  	int reset;
+> +	int contin;
 
->> diff --git a/contrib/svn-fe/svn-fe.txt b/contrib/svn-fe/svn-fe.txt
->> index a7ad368..f1a459e 100644
->> --- a/contrib/svn-fe/svn-fe.txt
->> +++ b/contrib/svn-fe/svn-fe.txt
->> @@ -39,6 +39,9 @@ OPTIONS
->> =A0 =A0 =A0 =A0Integer number of file descriptor from which
->> =A0 =A0 =A0 =A0responses to 'ls' and 'cat-blob' requests will come.
->> =A0 =A0 =A0 =A0Default is fd=3D3.
->> +--[no-]progress::
->> + =A0 =A0 =A0 Write 'progress' lines to fast-import stream. These
->> + =A0 =A0 =A0 can be displayed by fast-import.
->
-> Hm, this will make it a little too silent for the end-user. =A0What d=
-o
-> you feel about printing something minimalistic like a '.' for each
-> imported revision? Atleast it won't look like it's hung.
-=46or a medium 8k commit repo it is 100 lines - still too much.
-A single line for the first revision seem harmless and will indicate
-that the remote connection succeeded
-(helps to see that it's not a connection timeout, probably caused by
-dns lookup or a firewall).
+Maybe:
 
-> =A0Also, how does this interact with the 'progress' option of fast-im=
-port protocol?
-git fast-import --quiet prints any progress line produced by a helper.
-transport-helper.c tries to set the option
-but doesn't fail if it is not accepted or if helper doesn't support
-options at all.
-=46or now the helper doesn't use this protocol option.
+	int just_remove_state;
+	int resume;
+	int abort;
 
-A better solution could be to use progress.o api to display progress.
-Or an ad-hoc hack with adaptive progress step, say report a progress
-on each "power of two"-th revision.
+Or:
 
-As a starting point for tests let there bust a simple switch-off.
+	enum replay_subcommand {
+		REPLAY_RESET,
+		REPLAY_CONTINUE,
+		REPLAY_ABORT
+	};
 
-[...]
->> diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
->> index cfb0f2b..a8b8603 100644
->> --- a/vcs-svn/fast_export.c
->> +++ b/vcs-svn/fast_export.c
->> @@ -19,6 +19,7 @@ static uint32_t first_commit_done;
->> =A0static struct line_buffer postimage =3D LINE_BUFFER_INIT;
->> =A0static struct line_buffer report_buffer =3D LINE_BUFFER_INIT;
->> =A0static struct strbuf ref_name =3D STRBUF_INIT;
->> +static int print_progress;
-[...]
->> -void fast_export_init(int fd, const char *dst_ref)
->> +void fast_export_init(int fd, const char *dst_ref, int progress)
->> =A0{
->> =A0 =A0 =A0 =A0first_commit_done =3D 0;
->> + =A0 =A0 =A0 print_progress =3D progress;
->
-> The only reason you're modifying the API of fast_export_init is so
-> that it can set a global static variable?
-Looked once more at how these new variables are used. We can move
-progress lines generation to svndump.c. And also move ref_name from
-_init and being global static to a parameter in fast_export_begin_commi=
-t(),
-and to be more sane s/revision/target_mark/ s/revision - 1/from_mark/ a=
-nd
-add a from_mark parameter, move first_commit_done logic to svndump.o.
-This way fast_export.o can operate on single commits and maybe it'll be
-easier to use it to apply svn branches layout in svn-fe in one run, tho=
-ugh I'm
-not sure I'll use svn-fe to manage svn branches.
+	enum replay_subcommand subcommand;
 
-> =A0Also, this change seems
-> more absurd because progress reporting isn't directly related to
-> fast_export_init. =A0How about having a dedicated function for option
-> parsing that sets all the global statics?
->
-> I'm sorry I haven't been more involved with this project. =A0Still, I
-> hope this review helps.
-This is very helpful, thanks.
-
->
-> -- Ram
->
+Or perhaps this does not need to be part of the replay_opts struct but
+can be communicated by which API function gets called (e.g., via
+parse_args returning an "enum replay_subcommand").  I dunno.
