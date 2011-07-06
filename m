@@ -1,78 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/5] commit: add commit_generation function
-Date: Mon, 11 Jul 2011 17:10:13 -0400
-Message-ID: <20110711211013.GA30155@sigill.intra.peff.net>
-References: <20110711161332.GA10057@sigill.intra.peff.net>
- <20110711161814.GC10418@sigill.intra.peff.net>
- <20110711175709.GA6245@toss.lan>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] Documentation: use [verse] for SYNOPSIS sections
+Date: Wed, 06 Jul 2011 14:31:20 -0700
+Message-ID: <7v1uxwcy6x.fsf@alter.siamese.dyndns.org>
+References: <1309574306-6787-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>, Ted Ts'o <tytso@mit.edu>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Mon Jul 11 23:10:29 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 11 23:19:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QgNkJ-0007WH-2c
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Jul 2011 23:10:27 +0200
+	id 1QgNtG-0003PZ-Md
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jul 2011 23:19:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964782Ab1GKVKQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jul 2011 17:10:16 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56547
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752961Ab1GKVKP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2011 17:10:15 -0400
-Received: (qmail 5228 invoked by uid 107); 11 Jul 2011 21:10:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 11 Jul 2011 17:10:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Jul 2011 17:10:13 -0400
-Content-Disposition: inline
-In-Reply-To: <20110711175709.GA6245@toss.lan>
+	id S1756799Ab1GKVTh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jul 2011 17:19:37 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:39373 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753064Ab1GKVTg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2011 17:19:36 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 333EA69EA;
+	Mon, 11 Jul 2011 17:19:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:references:message-id:mime-version:content-type;
+	 s=sasl; bh=y3ldsXRDfaqmcwjsgN5vfGLADZQ=; b=Z0b1tc8g/yKZ5iohhNtV
+	dRfY24w4+mSKV1uO68T6oox9hEfTnBsCf92NzUAt06pHBMN/f+aSX8S0g8miNnEC
+	Oc5RWZJ/UM9qK7u0jEPjBazUiGCifBUfUasF1HuTjW4HxJ4Gl1rrl1FfO2RDxNAg
+	xJLHGMMy+BzssSRqoH7q7Us=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:references:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=d8NbnDcKGpGmXOAahQ6eu5G7VKlqbAjBxqZhdMC2yUG4S/
+	jDg7hrsfCN9u2VmqvZtiuIHgzXQNOFXaKPhj7eFHhHM8CsIz+uru7kcwlgqNJyj8
+	Hyq+evpGrqcZgXBkfXwUaOWdSs18X5GgFMGIxOWbFfgF+bLtEtnpg2/iAGSJ4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2C87D69E9;
+	Mon, 11 Jul 2011 17:19:36 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8D9AB69E7; Mon, 11 Jul 2011
+ 17:19:35 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7A2EEB66-AC03-11E0-804A-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176894>
 
-On Mon, Jul 11, 2011 at 07:57:09PM +0200, Clemens Buchacher wrote:
+Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
 
-> On Mon, Jul 11, 2011 at 12:18:14PM -0400, Jeff King wrote:
-> >
-> > +unsigned long commit_generation(const struct commit *commit)
-> > +{
-> [...]
-> > +	/* drop const because we may call parse_commit */
-> > +	return commit_generation_recurse((struct commit *)commit);
-> > +}
-> 
-> Out of curiosity, why make it const in the first place?
+> Not the most fun patch I have ever written, but at least it improves
+> consistency a bit.
 
-Two reasons:
-
-  1. At the API layer, it's conceptually const. We're not changing the
-     commit, but the lazy load of parse_commit is an implementation
-     detail.
-
-     In C++, you would stick a "mutable" tag on the parts we lazily load
-     via parse_object. Here, we have to cast.
-
-     This isn't C++, of course, and while we do follow some
-     object-oriented principles, it's not necessarily worth fighting the
-     language like this for the sake of a const. And I would be fine
-     with saying "all commit objects should not be marked const, because
-     we may lazily parse them, and it's well known that they are not to
-     be freed anyway".
-
-     But...
-
-  2. The callsite in pretty.c has a const commit, so we have to cast
-     somewhere, and this spot seemed the most appropriate to me (or we
-     could drop the consts there, which I would be OK with).
-
--Peff
+Thanks.
