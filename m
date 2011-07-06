@@ -1,82 +1,74 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 13/14] revert: Introduce --continue to continue the
- operation
-Date: Wed, 6 Jul 2011 05:25:09 -0500
-Message-ID: <20110706102509.GJ15682@elie>
+Subject: Re: [RFC PATCH 14/14] revert: Change insn sheet format
+Date: Wed, 6 Jul 2011 05:33:21 -0500
+Message-ID: <20110706103321.GK15682@elie>
 References: <1309938868-2028-1-git-send-email-artagnon@gmail.com>
- <1309938868-2028-14-git-send-email-artagnon@gmail.com>
+ <1309938868-2028-15-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Daniel Barkalow <barkalow@iabervon.org>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 06 12:27:53 2011
+X-From: git-owner@vger.kernel.org Wed Jul 06 12:33:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QePKi-0001pi-ET
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Jul 2011 12:27:52 +0200
+	id 1QePQB-0004AA-JW
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Jul 2011 12:33:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751840Ab1GFKZQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Jul 2011 06:25:16 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:51311 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750955Ab1GFKZP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2011 06:25:15 -0400
-Received: by iyb12 with SMTP id 12so5964747iyb.19
-        for <git@vger.kernel.org>; Wed, 06 Jul 2011 03:25:15 -0700 (PDT)
+	id S1752457Ab1GFKd2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jul 2011 06:33:28 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:61820 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752431Ab1GFKd0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2011 06:33:26 -0400
+Received: by iwn6 with SMTP id 6so5958061iwn.19
+        for <git@vger.kernel.org>; Wed, 06 Jul 2011 03:33:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=qUZruImimNhjS2Cr8IBDAxZKcOnko/ECmOo8OFbj1WY=;
-        b=O0NVJd0yylFub5tA4ErdIG3izUKsYf9Y2iYKnHUPI3SobaRtyScVuBdmZc3sC3OnGz
-         u6L9a733cfQfA4iaLnmj9vI8csrrXVVz3sjyEVsyJZBA1gncvRx0G9nct4t3GIe9Qnbg
-         uuGnnKnbkiORwAjzteTOgkpsNSNeVy7XbNF7A=
-Received: by 10.231.61.198 with SMTP id u6mr7364140ibh.160.1309947914799;
-        Wed, 06 Jul 2011 03:25:14 -0700 (PDT)
-Received: from elie (adsl-69-209-76-243.dsl.chcgil.sbcglobal.net [69.209.76.243])
-        by mx.google.com with ESMTPS id m18sm791747ibc.28.2011.07.06.03.25.11
+        bh=wac/T8dHcnxw8A9omZapfGurJBXb1MKbBwG1Mxfs3AE=;
+        b=cZH7q+3JeBs6bbwej4K1q2PRhjdEV7CJIkkKAQB3cNSh8jpjGSZ+E2Tftxs8IN/lZq
+         3m4f3PJdg7ax18Akhq/+rWKIsUS4j/p4mIbJdhvyxD7iQSdxdM9N0gPxVDSU4N+4Hrrc
+         /dHpA/WrfDKYbw+nDpzpOIbsSu4Df46J6NJis=
+Received: by 10.42.27.137 with SMTP id j9mr5259729icc.311.1309948405551;
+        Wed, 06 Jul 2011 03:33:25 -0700 (PDT)
+Received: from elie (adsl-69-209-76-243.dsl.chcgil.ameritech.net [69.209.76.243])
+        by mx.google.com with ESMTPS id ft12sm4794042ibb.53.2011.07.06.03.33.23
         (version=SSLv3 cipher=OTHER);
-        Wed, 06 Jul 2011 03:25:12 -0700 (PDT)
+        Wed, 06 Jul 2011 03:33:24 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1309938868-2028-14-git-send-email-artagnon@gmail.com>
+In-Reply-To: <1309938868-2028-15-git-send-email-artagnon@gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176682>
 
 Ramkumar Ramachandra wrote:
 
-> --- a/builtin/revert.c
-> +++ b/builtin/revert.c
-> @@ -47,6 +47,7 @@ struct replay_opts {
->  	enum replay_action action;
->
->  	int reset;
-> +	int contin;
+>  I've intentionally left parse_cmdline_args unimplemented
+[...]
+>                  Existing implementations in libraries like Glib are
+>  much too heavyweight.
 
-Maybe:
+Wait, how did glib enter the picture? :)  The implementation of
+shell-style quoting in [1] is not very complicated; perhaps it could
+complement git's existing parsers for shell-style single-quoted
+expressions and C-style double-quoted expressions in quote.c.
 
-	int just_remove_state;
-	int resume;
-	int abort;
+Of course, a more basic question is whether we want to allow passing
+arbitrary command-line arguments through the insn sheet at all (a
+part of me wishes "no", at least at first).
 
-Or:
+Could you give an example to illustrate what this functionality would
+be used for?  I can understand wanting to pass "-s" and "-X" flags to
+a merge insn and "-X" to pick, but that's as far as my imagination
+goes.
 
-	enum replay_subcommand {
-		REPLAY_RESET,
-		REPLAY_CONTINUE,
-		REPLAY_ABORT
-	};
-
-	enum replay_subcommand subcommand;
-
-Or perhaps this does not need to be part of the replay_opts struct but
-can be communicated by which API function gets called (e.g., via
-parse_args returning an "enum replay_subcommand").  I dunno.
+> [1]: http://article.gmane.org/gmane.comp.version-control.git/162198
