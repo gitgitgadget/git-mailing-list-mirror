@@ -1,72 +1,103 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: [PATCH 13/14] revert: Introduce --continue to continue the
-	operation
-Date: Wed, 06 Jul 2011 17:52:38 -0400
-Message-ID: <1309989158.13231.7.camel@drew-northup.unet.maine.edu>
-References: <1309938868-2028-1-git-send-email-artagnon@gmail.com>
-	 <1309938868-2028-14-git-send-email-artagnon@gmail.com>
-	 <7vliwbjebk.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] checkout: do not write bogus reflog entry out
+Date: Wed, 06 Jul 2011 16:17:43 -0700
+Message-ID: <7vk4bvhuco.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 06 23:53:47 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 07 01:18:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qea2U-0007DZ-17
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Jul 2011 23:53:46 +0200
+	id 1QebMq-0004sa-Ag
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jul 2011 01:18:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751754Ab1GFVxl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Jul 2011 17:53:41 -0400
-Received: from beryl.its.maine.edu ([130.111.32.94]:41281 "EHLO
-	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751519Ab1GFVxk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2011 17:53:40 -0400
-Received: from [IPv6:2610:48:100:827::97] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827::97])
-	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p66LqiJh013143
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 6 Jul 2011 17:52:44 -0400
-In-Reply-To: <7vliwbjebk.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=6 Fuz1=6
-	Fuz2=6
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p66LqiJh013143
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1310594009.36635@VfiICoIJDoCG9gPO/SmlMQ
+	id S1753787Ab1GFXRr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jul 2011 19:17:47 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45334 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753732Ab1GFXRq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2011 19:17:46 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1663A55D8;
+	Wed,  6 Jul 2011 19:17:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=e
+	xhO0dogueTdU74A+l7FaFLqD/0=; b=QO4BOtHDxtGhw8CU5iIcuk/21t6zhPGFO
+	WjvdYLwvU1Ms/2+Fztvew52ZObjE0TXsZuSjQWCmFip73ZXUKnpiNNfZkN6Tnupu
+	YuxPltRHInG0hk2vO4oFe1P6QsA9ovtoxuPIScVppQSthAfH4Bms7DYceC8/7gwP
+	W895eAYKEk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=Nmm
+	jIF49rACWnJ3bhLPKEb1pHpYOQLaaQR34uqgWhip+7JXoI+Fg1dQHqwZN4NVak/I
+	kai+hy+7hEwTH0dirrX1mdQHTaaEuYLS+KG3HrJiVcf7cS5EZDrVPrfG/woboC3z
+	6M977rchUfhLKos291jOIz1JykkcAtP8TzORig+Y=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0EFED55D7;
+	Wed,  6 Jul 2011 19:17:46 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 54DEE55D6; Wed,  6 Jul 2011
+ 19:17:45 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 27F2A058-A826-11E0-B479-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176734>
 
+The code called resolve_ref("HEAD") and stored the result in old.path to
+record which branch it used to be on, so that it can say between which
+branches the switch took place in the reflog.
 
-On Wed, 2011-07-06 at 14:21 -0700, Junio C Hamano wrote:
-> > +static void verify_opt_mutually_compatible(const char *me, ...)
-> > +{
-> 
-> Isn't "being compatible" by definition "mutual"?  
+However, lookup_commit_reference_gently() is called immediately after
+old.path is initialized.  This call can prime replace-object machinery
+which in turn collects the loose refs, and calls resolve_ref() inside.  As
+the string returned from resolve_ref() is a static buffer that is local to
+it, this ended up clobbering the value of old.path. The reflog either
+recorded a wrong "switched from" branch (when the last call to resolve_ref
+happens to be from the branch namespace), or recorded from a detached HEAD
+(otherwise). Neither is correct.
 
-As a strict matter of language, no. And example we see far too often
-@work is that MS Office 2010 is compatible with MS Office 2007, but the
-same cannot be said the other way around. (Now if I can convince them
-that not everyone in the world has MS Office...)
-> 
-> I.e. verify-option-compatibility perhaps?
+Store the returned string away with xstrdup() to avoid this.
 
-+1 sensible, if that's the intention.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
--- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+ * This was present ever since checkout was rewritten in C at 782c2d6
+   (Build in checkout, 2008-02-07), but probably got a lot easier to
+   trigger recently due to the addition of object replacement code.
+
+   As it depends on the order readdir() in refs.c::get_ref_dir() returns
+   the entries, there is no universally reproducible test, but I found it
+   in real life inside my git.git primary working repository.
+
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 28cdc51..48de146 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -715,10 +715,12 @@ static int switch_branches(struct checkout_opts *opts, struct branch_info *new)
+ 	unsigned char rev[20];
+ 	int flag;
+ 	memset(&old, 0, sizeof(old));
+-	old.path = resolve_ref("HEAD", rev, 0, &flag);
++	old.path = xstrdup(resolve_ref("HEAD", rev, 0, &flag));
+ 	old.commit = lookup_commit_reference_gently(rev, 1);
+-	if (!(flag & REF_ISSYMREF))
++	if (!(flag & REF_ISSYMREF)) {
++		free((char *)old.path);
+ 		old.path = NULL;
++	}
+ 
+ 	if (old.path && !prefixcmp(old.path, "refs/heads/"))
+ 		old.name = old.path + strlen("refs/heads/");
+@@ -741,6 +743,7 @@ static int switch_branches(struct checkout_opts *opts, struct branch_info *new)
+ 	update_refs_for_switch(opts, &old, new);
+ 
+ 	ret = post_checkout_hook(old.commit, new->commit, 1);
++	free((char *)old.path);
+ 	return ret || opts->writeout_error;
+ }
