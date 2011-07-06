@@ -1,88 +1,116 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 11/14] revert: Introduce a layer of indirection over pick_commits
-Date: Wed, 6 Jul 2011 17:14:59 +0530
-Message-ID: <CALkWK0mXQszjM57E==YCisUng8buyMmP6EGkcrncJOkNJhK35Q@mail.gmail.com>
-References: <1309938868-2028-1-git-send-email-artagnon@gmail.com>
- <1309938868-2028-12-git-send-email-artagnon@gmail.com> <20110706103734.GL15682@elie>
- <CALkWK0=0vBUG_UOLWt+SFMctfW1__OOG-=BAY4WwMGM5OfDj4A@mail.gmail.com> <20110706113928.GO15682@elie>
+From: Michael Schubert <mschub@elegosoft.com>
+Subject: Re: Doesn't disambiguate between 'external command failed' and 'command
+ not found'
+Date: Wed, 06 Jul 2011 13:47:33 +0200
+Message-ID: <4E144B55.8020907@elegosoft.com>
+References: <1309884564.18513.12.camel@umgah> <4E137701.1020007@elegosoft.com> <20110705231604.GC12085@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 06 13:45:27 2011
+Content-Transfer-Encoding: 7bit
+To: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Alex Vandiver <alex@chmrr.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 06 13:47:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QeQXm-0000rT-R9
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Jul 2011 13:45:27 +0200
+	id 1QeQa8-0001v9-Ua
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Jul 2011 13:47:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753014Ab1GFLpV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Jul 2011 07:45:21 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:62301 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752591Ab1GFLpU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Jul 2011 07:45:20 -0400
-Received: by wwe5 with SMTP id 5so6861915wwe.1
-        for <git@vger.kernel.org>; Wed, 06 Jul 2011 04:45:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=hqHBWsVPQ46JTq0VXPBjzFn3Q9PbLG3N7ZlMnxHGLHM=;
-        b=VrOFBEOFwQHvxZS0j5dPXcut54m0QZ1AMrcHAtRdr617PiJdwmPFIqc4ATYA5/CmGn
-         uuyTvm1igChCWpc0zfqvJPDD8NZ4i3V0gjTkvEralV/d16s8ps6p3EliQSqwITLQH1vI
-         JdpYz7wQ5rgHYTa4kcxDaqSmymtsxZVQ1iqnU=
-Received: by 10.216.233.211 with SMTP id p61mr6909568weq.107.1309952719074;
- Wed, 06 Jul 2011 04:45:19 -0700 (PDT)
-Received: by 10.216.175.198 with HTTP; Wed, 6 Jul 2011 04:44:59 -0700 (PDT)
-In-Reply-To: <20110706113928.GO15682@elie>
+	id S1753316Ab1GFLrr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jul 2011 07:47:47 -0400
+Received: from mx0.elegosoft.com ([78.47.87.163]:42630 "EHLO mx0.elegosoft.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752983Ab1GFLrq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2011 07:47:46 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id E0136DE856;
+	Wed,  6 Jul 2011 13:47:45 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id bwZcRK70T0Uk; Wed,  6 Jul 2011 13:47:41 +0200 (CEST)
+Received: from [10.10.10.197] (i59F7870A.versanet.de [89.247.135.10])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id EFA93DE855;
+	Wed,  6 Jul 2011 13:47:40 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110628 Thunderbird/5.0
+In-Reply-To: <20110705231604.GC12085@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176696>
 
-Hi,
 
-Jonathan Nieder writes:
-> Ramkumar Ramachandra wrote:
->> Jonathan Nieder writes:
->>> In that case, I'd be mildly tempted to call it something crazy like
->>> start_or_continue_replay()
-> [...]
->> Why? Is introducing new terminology so bad? =C2=A0Should I explain w=
-hat I
->> mean by "continuation" in the commit message/ a comment?
->
-> If "process_continuation" means "parse .git/sequencer state, which we
-> are pretending is a serialized continuation object, and either (a)
-> call it, (b) throw it away, or (c) modify it and then call it", then
-> yes, how do you expect anyone to know what you are talking about?
->
-> Less importantly, starting a cherry-pick (which is what pick_commits(=
-)
-> already does) doesn't seem to fit in that picture.
->
-> A simpler jargon-filled description of this model is checkpoint/
-> restart. =C2=A0But it is an incomplete analogy and still not a great =
-name.
-> With a goal of making future writers' lives happier and more
-> productive in mind, I do not think it is often worth confusing them b=
-y
-> choosing a clever presentation of ideas instead of a clear one.
+> So if you are going to follow this strategy, you are probably better to
+> just skip the entry (or give it a high levenshtein distance) in the main
+> loop where we calculate candidates.
 
-Thanks for the elaborate explanation; I can see what's wrong with it
-now.  However, I "start_or_continue_or_stop_or_[insert more options
-here]_replay" isn't a good name.  I want something future-proof,
-because I intend to extend this with more nifty helpers like "skip
-one".  Your earlier "pick_revisions" suggestion doesn't sound like a
-bad alternative now -- let me know if you have any other suggestions.
+Yes.
 
-Thanks.
+> But I wonder if we can do even better than just omitting it from the
+> candidates list. I mentioned searching the PATH above; but that is
+> exactly what load_command_list does to create this candidate list. So I
+> think the only way we can have an exact match is one of:
+> 
+>   1. There is a race condition. We tried to exec the command, and it was
+>      missing; meanwhile, another process created the command.
+> 
+>   2. Exec'ing the command returned ENOENT because of a bad interpreter.
+> 
+> Option (1) seems fairly unlikely; so maybe we should give the user some
+> advice about (2)?
 
--- Ram
+Like this? I've replaced "Check the #!-line of the git-%s script." with
+"Maybe git-%s is broken?" to be less technical and specific..
+
+-- >8 --
+
+Subject: [PATCH] help_unknown_cmd: do not propose an "unknown" cmd
+
+When executing an external shell script like `git foo` with the following
+shebang "#!/usr/bin/not/existing", execvp returns 127 (ENOENT). Since
+help_unknown_cmd proposes the use of all external commands similar to
+the name of the "unknown" command, it suggests the just failed command
+again. Stop it and give some advice to the user.
+
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Michael Schubert <mschub@elegosoft.com>
+---
+ help.c |   12 ++++++++++++
+ 1 files changed, 12 insertions(+), 0 deletions(-)
+
+diff --git a/help.c b/help.c
+index 7654f1b..a5a0613 100644
+--- a/help.c
++++ b/help.c
+@@ -302,6 +302,10 @@ static void add_cmd_list(struct cmdnames *cmds, struct cmdnames *old)
+ #define SIMILARITY_FLOOR 7
+ #define SIMILAR_ENOUGH(x) ((x) < SIMILARITY_FLOOR)
+ 
++static const char bad_interpreter_advice[] =
++	"'%s' appears to be a git command, but we were not\n"
++	"able to execute it. Maybe git-%s is broken?";
++
+ const char *help_unknown_cmd(const char *cmd)
+ {
+ 	int i, n, best_similarity = 0;
+@@ -326,6 +330,14 @@ const char *help_unknown_cmd(const char *cmd)
+ 		int cmp = 0; /* avoid compiler stupidity */
+ 		const char *candidate = main_cmds.names[i]->name;
+ 
++		/*
++		 * An exact match means we have the command, but
++		 * for some reason exec'ing it gave us ENOENT; probably
++		 * it's a bad interpreter in the #! line.
++		 */
++		if (!strcmp(candidate, cmd))
++			die(bad_interpreter_advice, cmd, cmd);
++
+ 		/* Does the candidate appear in common_cmds list? */
+ 		while (n < ARRAY_SIZE(common_cmds) &&
+ 		       (cmp = strcmp(common_cmds[n].name, candidate)) < 0)
+-- 
+1.7.6.132.g91c244
