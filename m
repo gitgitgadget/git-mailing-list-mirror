@@ -1,98 +1,191 @@
 From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH v2 1/4] xdiff/xprepare: use memset()
-Date: Thu,  7 Jul 2011 00:38:54 +0800
-Message-ID: <1309970337-6016-2-git-send-email-rctay89@gmail.com>
+Subject: [PATCH v2 2/4] xdiff/xprepare: refactor abort cleanups
+Date: Thu,  7 Jul 2011 00:38:55 +0800
+Message-ID: <1309970337-6016-3-git-send-email-rctay89@gmail.com>
 References: <1309970337-6016-1-git-send-email-rctay89@gmail.com>
+ <1309970337-6016-2-git-send-email-rctay89@gmail.com>
 Cc: "Junio C Hamano" <gitster@pobox.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>
 To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 06 18:39:28 2011
+X-From: git-owner@vger.kernel.org Wed Jul 06 18:39:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QeV8G-0006LD-TR
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Jul 2011 18:39:25 +0200
+	id 1QeV8M-0006My-B8
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Jul 2011 18:39:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754666Ab1GFQjT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Jul 2011 12:39:19 -0400
+	id S1754757Ab1GFQjY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jul 2011 12:39:24 -0400
 Received: from mail-qw0-f46.google.com ([209.85.216.46]:33952 "EHLO
 	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754530Ab1GFQjS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2011 12:39:18 -0400
-Received: by qwk3 with SMTP id 3so39836qwk.19
-        for <git@vger.kernel.org>; Wed, 06 Jul 2011 09:39:17 -0700 (PDT)
+	with ESMTP id S1754713Ab1GFQjY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2011 12:39:24 -0400
+Received: by mail-qw0-f46.google.com with SMTP id 3so39836qwk.19
+        for <git@vger.kernel.org>; Wed, 06 Jul 2011 09:39:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=Ou4KArw4V8WaJ3bhfuaUvTI4P5Vl4yf0ol/FbFEHKr0=;
-        b=g/o6GGrqL1KGOc2IOeXXAC+E38Mnsl3ANEKuXqrfoxhVXaI1iSy9s896IXA9h+vM90
-         HP26L4MYb2+ebH/Nvncm6bwsDEzzJSyOELWRh+Fksb7AA6znjPUi1s/kS2ri1LW5e0hn
-         Xl4DsUoqanXVjc6CKxlzvMe4QHO8IvqnPdcDQ=
-Received: by 10.224.204.66 with SMTP id fl2mr6909286qab.78.1309970357692;
-        Wed, 06 Jul 2011 09:39:17 -0700 (PDT)
+        bh=gA3VrYZHT5LlrzoT/y/bwHO1KjCou9bJ8sSjNJYjE0Y=;
+        b=TDZBJSHXhdnJXPfbscD/i9GjN05AscO+LC8OGLZE1DztsQxrltiAeby9UtQ8L12f/H
+         6JnYB0iBNKUTnTEaDD09OdaDmBLkwOA8KkXFpvUSMgDjycqRqMI8PUIGdhPj4fO80pxw
+         s46baEq/wt3pBDy19qF07b6UMeiiI+q/fuhe0=
+Received: by 10.229.137.149 with SMTP id w21mr6738891qct.59.1309970363586;
+        Wed, 06 Jul 2011 09:39:23 -0700 (PDT)
 Received: from localhost (cm119.beta238.maxonline.com.sg [116.86.238.119])
-        by mx.google.com with ESMTPS id i7sm4992595qcb.22.2011.07.06.09.39.14
+        by mx.google.com with ESMTPS id e18sm6512687qcs.5.2011.07.06.09.39.20
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 06 Jul 2011 09:39:16 -0700 (PDT)
+        Wed, 06 Jul 2011 09:39:22 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4.msysgit.0
-In-Reply-To: <1309970337-6016-1-git-send-email-rctay89@gmail.com>
+In-Reply-To: <1309970337-6016-2-git-send-email-rctay89@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176712>
 
-Use memset() instead of a for loop to initialize. This could give a
-performance advantage.
+Group free()'s that are called when a malloc() fails in
+xdl_prepare_ctx(), making for more readable code.
 
 Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
 ---
- xdiff/xprepare.c |   10 +++-------
- 1 files changed, 3 insertions(+), 7 deletions(-)
+ xdiff/xprepare.c |   94 +++++++++++++++++++----------------------------------
+ 1 files changed, 34 insertions(+), 60 deletions(-)
 
 diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-index 1689085..783631a 100644
+index 783631a..6168327 100644
 --- a/xdiff/xprepare.c
 +++ b/xdiff/xprepare.c
-@@ -64,8 +64,6 @@ static int xdl_optimize_ctxs(xdfile_t *xdf1, xdfile_t *xdf2);
+@@ -143,24 +143,15 @@ static int xdl_prepare_ctx(mmfile_t *mf, long narec, xpparam_t const *xpp,
+ 	char *rchg;
+ 	long *rindex;
  
- 
- static int xdl_init_classifier(xdlclassifier_t *cf, long size, long flags) {
--	long i;
+-	if (xdl_cha_init(&xdf->rcha, sizeof(xrecord_t), narec / 4 + 1) < 0) {
 -
- 	cf->flags = flags;
+-		return -1;
+-	}
+-	if (!(recs = (xrecord_t **) xdl_malloc(narec * sizeof(xrecord_t *)))) {
+-
+-		xdl_cha_free(&xdf->rcha);
+-		return -1;
+-	}
++	if (xdl_cha_init(&xdf->rcha, sizeof(xrecord_t), narec / 4 + 1) < 0)
++		goto abort_rcha;
++	if (!(recs = (xrecord_t **) xdl_malloc(narec * sizeof(xrecord_t *))))
++		goto abort_recs;
  
- 	cf->hbits = xdl_hashbits((unsigned int) size);
-@@ -80,8 +78,7 @@ static int xdl_init_classifier(xdlclassifier_t *cf, long size, long flags) {
- 		xdl_cha_free(&cf->ncha);
- 		return -1;
- 	}
--	for (i = 0; i < cf->hsize; i++)
--		cf->rchash[i] = NULL;
-+	memset(cf->rchash, 0, cf->hsize * sizeof(xdlclass_t *));
- 
- 	cf->count = 0;
- 
-@@ -136,7 +133,7 @@ static int xdl_classify_record(xdlclassifier_t *cf, xrecord_t **rhash, unsigned
- static int xdl_prepare_ctx(mmfile_t *mf, long narec, xpparam_t const *xpp,
- 			   xdlclassifier_t *cf, xdfile_t *xdf) {
- 	unsigned int hbits;
--	long i, nrec, hsize, bsize;
-+	long nrec, hsize, bsize;
- 	unsigned long hav;
- 	char const *blk, *cur, *top, *prev;
- 	xrecord_t *crec;
-@@ -164,8 +161,7 @@ static int xdl_prepare_ctx(mmfile_t *mf, long narec, xpparam_t const *xpp,
- 		xdl_cha_free(&xdf->rcha);
- 		return -1;
- 	}
--	for (i = 0; i < hsize; i++)
--		rhash[i] = NULL;
-+	memset(rhash, 0, hsize * sizeof(xrecord_t *));
+ 	hbits = xdl_hashbits((unsigned int) narec);
+ 	hsize = 1 << hbits;
+-	if (!(rhash = (xrecord_t **) xdl_malloc(hsize * sizeof(xrecord_t *)))) {
+-
+-		xdl_free(recs);
+-		xdl_cha_free(&xdf->rcha);
+-		return -1;
+-	}
++	if (!(rhash = (xrecord_t **) xdl_malloc(hsize * sizeof(xrecord_t *))))
++		goto abort_rhash;
+ 	memset(rhash, 0, hsize * sizeof(xrecord_t *));
  
  	nrec = 0;
- 	if ((cur = blk = xdl_mmfile_first(mf, &bsize)) != NULL) {
+@@ -175,63 +166,30 @@ static int xdl_prepare_ctx(mmfile_t *mf, long narec, xpparam_t const *xpp,
+ 			hav = xdl_hash_record(&cur, top, xpp->flags);
+ 			if (nrec >= narec) {
+ 				narec *= 2;
+-				if (!(rrecs = (xrecord_t **) xdl_realloc(recs, narec * sizeof(xrecord_t *)))) {
+-
+-					xdl_free(rhash);
+-					xdl_free(recs);
+-					xdl_cha_free(&xdf->rcha);
+-					return -1;
+-				}
++				if (!(rrecs = (xrecord_t **) xdl_realloc(recs, narec * sizeof(xrecord_t *))))
++					goto abort_rrecs;
+ 				recs = rrecs;
+ 			}
+-			if (!(crec = xdl_cha_alloc(&xdf->rcha))) {
+-
+-				xdl_free(rhash);
+-				xdl_free(recs);
+-				xdl_cha_free(&xdf->rcha);
+-				return -1;
+-			}
++			if (!(crec = xdl_cha_alloc(&xdf->rcha)))
++				goto abort_crec;
+ 			crec->ptr = prev;
+ 			crec->size = (long) (cur - prev);
+ 			crec->ha = hav;
+ 			recs[nrec++] = crec;
+ 
+-			if (xdl_classify_record(cf, rhash, hbits, crec) < 0) {
+-
+-				xdl_free(rhash);
+-				xdl_free(recs);
+-				xdl_cha_free(&xdf->rcha);
+-				return -1;
+-			}
++			if (xdl_classify_record(cf, rhash, hbits, crec) < 0)
++				goto abort_classify;
+ 		}
+ 	}
+ 
+-	if (!(rchg = (char *) xdl_malloc((nrec + 2) * sizeof(char)))) {
+-
+-		xdl_free(rhash);
+-		xdl_free(recs);
+-		xdl_cha_free(&xdf->rcha);
+-		return -1;
+-	}
++	if (!(rchg = (char *) xdl_malloc((nrec + 2) * sizeof(char))))
++		goto abort_rchg;
+ 	memset(rchg, 0, (nrec + 2) * sizeof(char));
+ 
+-	if (!(rindex = (long *) xdl_malloc((nrec + 1) * sizeof(long)))) {
+-
+-		xdl_free(rchg);
+-		xdl_free(rhash);
+-		xdl_free(recs);
+-		xdl_cha_free(&xdf->rcha);
+-		return -1;
+-	}
+-	if (!(ha = (unsigned long *) xdl_malloc((nrec + 1) * sizeof(unsigned long)))) {
+-
+-		xdl_free(rindex);
+-		xdl_free(rchg);
+-		xdl_free(rhash);
+-		xdl_free(recs);
+-		xdl_cha_free(&xdf->rcha);
+-		return -1;
+-	}
++	if (!(rindex = (long *) xdl_malloc((nrec + 1) * sizeof(long))))
++		goto abort_rindex;
++	if (!(ha = (unsigned long *) xdl_malloc((nrec + 1) * sizeof(unsigned long))))
++		goto abort_ha;
+ 
+ 	xdf->nrec = nrec;
+ 	xdf->recs = recs;
+@@ -245,6 +203,22 @@ static int xdl_prepare_ctx(mmfile_t *mf, long narec, xpparam_t const *xpp,
+ 	xdf->dend = nrec - 1;
+ 
+ 	return 0;
++
++abort_ha:
++	xdl_free(rindex);
++abort_rindex:
++	xdl_free(rchg);
++abort_rchg:
++abort_classify:
++abort_crec:
++abort_rrecs:
++	xdl_free(rhash);
++abort_rhash:
++	xdl_free(recs);
++abort_recs:
++	xdl_cha_free(&xdf->rcha);
++abort_rcha:
++	return -1;
+ }
+ 
+ 
 -- 
 1.7.3.4.721.g4666.dirty
