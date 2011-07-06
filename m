@@ -1,60 +1,94 @@
 From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH 0/3] prepare for histogram diff
-Date: Wed,  6 Jul 2011 14:15:42 +0800
-Message-ID: <1309932945-5048-1-git-send-email-rctay89@gmail.com>
+Subject: [PATCH 1/3] xdiff/xprepare: use memset
+Date: Wed,  6 Jul 2011 14:15:43 +0800
+Message-ID: <1309932945-5048-2-git-send-email-rctay89@gmail.com>
+References: <1309932945-5048-1-git-send-email-rctay89@gmail.com>
 Cc: "Junio C Hamano" <gitster@pobox.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>
 To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 06 08:16:22 2011
+X-From: git-owner@vger.kernel.org Wed Jul 06 08:16:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QeLPJ-0003Pf-KW
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Jul 2011 08:16:21 +0200
+	id 1QeLPK-0003Pf-5s
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Jul 2011 08:16:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754100Ab1GFGP6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Jul 2011 02:15:58 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:53949 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753920Ab1GFGP6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2011 02:15:58 -0400
-Received: by gxk21 with SMTP id 21so2518950gxk.19
-        for <git@vger.kernel.org>; Tue, 05 Jul 2011 23:15:57 -0700 (PDT)
+	id S1754191Ab1GFGQF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jul 2011 02:16:05 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:39687 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753920Ab1GFGQE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2011 02:16:04 -0400
+Received: by gyh3 with SMTP id 3so2529682gyh.19
+        for <git@vger.kernel.org>; Tue, 05 Jul 2011 23:16:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=2tnawiJQDi8r/V8xUvtZ3r/Y7/LsyyE2EdQIfQ/GV6U=;
-        b=IEJK6CJxAjKozIRP4j4Nf0gUh670cDm9cIvmVV2T/MXWWW0hoQSzvr2oZKMUXeTPa/
-         bEujTvUX7gstryEn+vJ5tjMrmKlMZR/HitORyGiQN3yG2vzzUdyUBvOyn+dKXPdhpzjW
-         BTBmM7M9F6cvuNDmNROpJvJYMjttWudKBbIak=
-Received: by 10.236.186.65 with SMTP id v41mr7943579yhm.1.1309932957261;
-        Tue, 05 Jul 2011 23:15:57 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=qIouiJRNsn5ezTF3g3DfHIGyuDY268aDMC6M1Zgq1OU=;
+        b=sdY2VViLSYW9zJbieWQpY26TMWDYSTtR6YJCW/jLxC79VmbVtNpRgT/Ea6ssXXLL0B
+         il+a2qN3qwKVJEKxvvQTyweg9WUaQvRqo0y3+iPqS9JwS8mXeXjvBpi4h2kr8kvFHmka
+         KErjFwBFyLClmhq7z2lmLxqfoAFU38Iviz+rs=
+Received: by 10.236.173.7 with SMTP id u7mr9509855yhl.267.1309932962979;
+        Tue, 05 Jul 2011 23:16:02 -0700 (PDT)
 Received: from localhost (cm119.beta238.maxonline.com.sg [116.86.238.119])
-        by mx.google.com with ESMTPS id f4sm2351884yhn.13.2011.07.05.23.15.54
+        by mx.google.com with ESMTPS id v25sm1989711yhk.50.2011.07.05.23.16.00
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 05 Jul 2011 23:15:56 -0700 (PDT)
+        Tue, 05 Jul 2011 23:16:02 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4.msysgit.0
+In-Reply-To: <1309932945-5048-1-git-send-email-rctay89@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176638>
 
-Tay Ray Chuan (3):
-  xdiff/xprepare: use memset
-  xdiff/xpatience: factor out fall-back-diff function
-  t4033-diff-patience: factor out tests
+---
+ xdiff/xprepare.c |   10 +++-------
+ 1 files changed, 3 insertions(+), 7 deletions(-)
 
- t/lib-diff-patience.sh   |  162 ++++++++++++++++++++++++++++++++++++++++++++++
- t/t4033-diff-patience.sh |  162 +---------------------------------------------
- xdiff/xpatience.c        |   27 +-------
- xdiff/xprepare.c         |   10 +--
- xdiff/xutils.c           |   31 +++++++++
- xdiff/xutils.h           |    2 +
- 6 files changed, 203 insertions(+), 191 deletions(-)
- create mode 100644 t/lib-diff-patience.sh
-
+diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
+index 1689085..783631a 100644
+--- a/xdiff/xprepare.c
++++ b/xdiff/xprepare.c
+@@ -64,8 +64,6 @@ static int xdl_optimize_ctxs(xdfile_t *xdf1, xdfile_t *xdf2);
+ 
+ 
+ static int xdl_init_classifier(xdlclassifier_t *cf, long size, long flags) {
+-	long i;
+-
+ 	cf->flags = flags;
+ 
+ 	cf->hbits = xdl_hashbits((unsigned int) size);
+@@ -80,8 +78,7 @@ static int xdl_init_classifier(xdlclassifier_t *cf, long size, long flags) {
+ 		xdl_cha_free(&cf->ncha);
+ 		return -1;
+ 	}
+-	for (i = 0; i < cf->hsize; i++)
+-		cf->rchash[i] = NULL;
++	memset(cf->rchash, 0, cf->hsize * sizeof(xdlclass_t *));
+ 
+ 	cf->count = 0;
+ 
+@@ -136,7 +133,7 @@ static int xdl_classify_record(xdlclassifier_t *cf, xrecord_t **rhash, unsigned
+ static int xdl_prepare_ctx(mmfile_t *mf, long narec, xpparam_t const *xpp,
+ 			   xdlclassifier_t *cf, xdfile_t *xdf) {
+ 	unsigned int hbits;
+-	long i, nrec, hsize, bsize;
++	long nrec, hsize, bsize;
+ 	unsigned long hav;
+ 	char const *blk, *cur, *top, *prev;
+ 	xrecord_t *crec;
+@@ -164,8 +161,7 @@ static int xdl_prepare_ctx(mmfile_t *mf, long narec, xpparam_t const *xpp,
+ 		xdl_cha_free(&xdf->rcha);
+ 		return -1;
+ 	}
+-	for (i = 0; i < hsize; i++)
+-		rhash[i] = NULL;
++	memset(rhash, 0, hsize * sizeof(xrecord_t *));
+ 
+ 	nrec = 0;
+ 	if ((cur = blk = xdl_mmfile_first(mf, &bsize)) != NULL) {
 -- 
 1.7.3.4.678.g170bd
