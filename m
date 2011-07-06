@@ -1,76 +1,87 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 09/14] revert: Don't create invalid replay_opts in
- parse_args
-Date: Wed, 6 Jul 2011 04:20:09 -0500
-Message-ID: <20110706092009.GF15682@elie>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 01/14] advice: Introduce error_resolve_conflict
+Date: Wed, 6 Jul 2011 14:58:42 +0530
+Message-ID: <CALkWK0k57L5vc7oVQKw=G9FXtYkmnp8QaWrW_p1CvupyNGofZg@mail.gmail.com>
 References: <1309938868-2028-1-git-send-email-artagnon@gmail.com>
- <1309938868-2028-10-git-send-email-artagnon@gmail.com>
+ <1309938868-2028-2-git-send-email-artagnon@gmail.com> <20110706083512.GA15682@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Daniel Barkalow <barkalow@iabervon.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 06 11:20:22 2011
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 06 11:29:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QeOHN-0007p5-Tp
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Jul 2011 11:20:22 +0200
+	id 1QeOPt-00031z-R4
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Jul 2011 11:29:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754082Ab1GFJUP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Jul 2011 05:20:15 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:55151 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753964Ab1GFJUO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2011 05:20:14 -0400
-Received: by iyb12 with SMTP id 12so5928400iyb.19
-        for <git@vger.kernel.org>; Wed, 06 Jul 2011 02:20:13 -0700 (PDT)
+	id S1754366Ab1GFJ3F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Jul 2011 05:29:05 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:34849 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754061Ab1GFJ3E convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Jul 2011 05:29:04 -0400
+Received: by wwe5 with SMTP id 5so6751583wwe.1
+        for <git@vger.kernel.org>; Wed, 06 Jul 2011 02:29:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=BQFwxarjldeX+c0BoAlMs4mj8v6AlTlaS1q8oyaUHCM=;
-        b=gTswJjvDQ8yaOUhBRrpM0MF4wB+AMbgIyOJLUq1dwEYvsnBN/QPK7B4cCReQPEqdUv
-         jundlV5IcqShdRAvjfQYfFD37BAQgPuppdJUQ7EO+QuneCT9XJmaAlhP2h0K3rd1VzIi
-         byemHlamclpB4u9bbipqpeAYYCIWzznh6K5Vc=
-Received: by 10.42.18.194 with SMTP id y2mr1230741ica.184.1309944013710;
-        Wed, 06 Jul 2011 02:20:13 -0700 (PDT)
-Received: from elie (adsl-69-209-76-243.dsl.chcgil.sbcglobal.net [69.209.76.243])
-        by mx.google.com with ESMTPS id my4sm4760872ibb.37.2011.07.06.02.20.11
-        (version=SSLv3 cipher=OTHER);
-        Wed, 06 Jul 2011 02:20:12 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1309938868-2028-10-git-send-email-artagnon@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=yD4XG5tEjbWXrkVcfVBvyR9K9scKzfAI8VZOyyZFqgA=;
+        b=uhfOzI575a2YujQ4krMs1cHqXZxW5ITwnRppKBL48NRzxbRfpg+s1XniO0Rfe8z2hI
+         HqWqFNUN7TNXxIOh9QnVqCMLd+2PcTv7CGBrR12H9iYC99fhbdQJ9gfGDpzwmGV2WolA
+         D1e5tTPa9R1LZxCQMSm0RMpzcY6H2a+KGy7Jk=
+Received: by 10.216.60.72 with SMTP id t50mr1781560wec.92.1309944542161; Wed,
+ 06 Jul 2011 02:29:02 -0700 (PDT)
+Received: by 10.216.175.198 with HTTP; Wed, 6 Jul 2011 02:28:42 -0700 (PDT)
+In-Reply-To: <20110706083512.GA15682@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176670>
 
-Ramkumar Ramachandra wrote:
+Hi Jonathan,
 
-> The "--ff" command-line option cannot be used with four other
-> command-line options.  However, when these options are specified with
-> "--ff" on the command-line, parse_args will still parse these
-> incompatible options into a replay_opts structure for use by the rest
-> of the program.  Although pick_commits checks the validity of the
-> replay_opts strucutre before before starting its operation, this is
-> inelegant design; pick_commits is currently the gatekeeper to the
-> cherry-pick machinery, but this will change in future.  To futureproof
-> the code and catch these errors in one place, make sure that an
-> invalid replay_opts structure is not created by parse_args in the
-> first place.  Also ensure that regressions in maintaining this
-> invariant are caught in the future by adding an assertion in
-> pick_commits.
+Jonathan Nieder writes:
+> Ramkumar Ramachandra wrote:
+>> --- a/advice.c
+>> +++ b/advice.c
+>> @@ -19,6 +19,15 @@ static struct {
+>> =C2=A0 =C2=A0 =C2=A0 { "detachedhead", &advice_detached_head },
+>> =C2=A0};
+>>
+>> +static void advise(const char *advice, ...)
+>> +{
+>> + =C2=A0 =C2=A0 va_list params;
+>> +
+>> + =C2=A0 =C2=A0 va_start(params, advice);
+>> + =C2=A0 =C2=A0 vreportf("hint: ", advice, params);
+>> + =C2=A0 =C2=A0 va_end(params);
+>> +}
+>
+> Rather than copy+pasting this code verbatim, wouldn't it make sense t=
+o
+> move it and expose it through advice.h so the old call site can use
+> the same code?
 
-Agh!  The above seems totally convoluted, and worse, I can see some of
-my own words in there so I feel I am to blame.  Could you please
-explain, simply, as though I am just an ordinary person, what the idea
-of this patch is?  I've heard you talk before.  You are quite capable
-of explaining things clearly.
+Yes, but I was worried that I shouldn't expose it because your commit
+message (2a41df) says:
 
-The patch itself looks good.
+    It is local to revert.c for now because I am not sure this is
+    the right API (we may want to take an array of advice lines or a
+    boolean argument for easy suppression of unwanted advice).
+
+So, is it still alright to expose it in advice.h?
+
+> For what it's worth, with that change,
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks.
+
+-- Ram
