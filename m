@@ -1,75 +1,78 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Git's translations need to be updated for submission
-Date: Wed, 6 Jul 2011 21:34:27 +0200
-Message-ID: <CACBZZX4dP-OsrZ3wBOeSkzDFy6XBgeY=eqJUF2acyLC8W-3Vpg@mail.gmail.com>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH 0/4] Speed up git tag --contains
+Date: Wed, 6 Jul 2011 21:06:21 +0200
+Message-ID: <20110706190621.GA3937@toss>
+References: <1307819051-25748-1-git-send-email-avarab@gmail.com>
+ <20110706064012.GA927@sigill.intra.peff.net>
+ <20110706065452.GB927@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jan Engelhardt <jengelh@medozas.de>,
-	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
-	=?UTF-8?Q?Marcin_Cie=C5=9Blak?= <saper@saper.info>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sam Reed <sam@reedyboy.net>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 06 21:34:41 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jul 06 21:38:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QeXrs-0007Co-FC
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Jul 2011 21:34:40 +0200
+	id 1QeXvJ-0000Tm-2Z
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Jul 2011 21:38:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755951Ab1GFTea (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Jul 2011 15:34:30 -0400
-Received: from mail-fx0-f52.google.com ([209.85.161.52]:37058 "EHLO
-	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755235Ab1GFTe3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2011 15:34:29 -0400
-Received: by fxd18 with SMTP id 18so375626fxd.11
-        for <git@vger.kernel.org>; Wed, 06 Jul 2011 12:34:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=JT2QPos7a/AzakfIjcp6aqe3XWj5yOB6eqDlvk+ReOU=;
-        b=FdHfX/n8Nk9So6MihHevEuJZNsv8MUipNBlv8w8Y18gAhGvRosQZSxFadmzIltZJRg
-         5/1zIeI1ByJlRsNqsH45zDzaeIRafquxtiLJwN+ERqtgYK8F9kwclo/rKUkOsvIQromk
-         KAcIiqLQwKzUB0AM7va7BgfcR5kWfsyftl1T0=
-Received: by 10.223.32.142 with SMTP id c14mr13395774fad.59.1309980867764;
- Wed, 06 Jul 2011 12:34:27 -0700 (PDT)
-Received: by 10.223.114.208 with HTTP; Wed, 6 Jul 2011 12:34:27 -0700 (PDT)
+	id S1755957Ab1GFTiE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jul 2011 15:38:04 -0400
+Received: from bsmtp5.bon.at ([195.3.86.187]:40627 "EHLO lbmfmo03.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754329Ab1GFTiD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2011 15:38:03 -0400
+X-Greylist: delayed 1896 seconds by postgrey-1.27 at vger.kernel.org; Wed, 06 Jul 2011 15:38:03 EDT
+Received: from bsmtp.bon.at (unknown [192.168.181.102])
+	by lbmfmo03.bon.at (Postfix) with ESMTP id CDDADCE00A
+	for <git@vger.kernel.org>; Wed,  6 Jul 2011 21:06:31 +0200 (CEST)
+Received: from localhost (p5B22D353.dip.t-dialin.net [91.34.211.83])
+	by bsmtp.bon.at (Postfix) with ESMTP id A2061A7EBB;
+	Wed,  6 Jul 2011 21:06:22 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20110706065452.GB927@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176727>
 
-I was going to submit Git's po/*.po files from the i18n branch but I
-found that while everything else has been cooking they've become out
-of date:
+On Wed, Jul 06, 2011 at 02:54:52AM -0400, Jeff King wrote:
+>
+> From what we've seen, it seems like skewing into the past is more
+> common. It seems to come from importing old commits and using their
+> timestamps as the commit timestamps. It would be nice to find a more
+> accurate set (I _think_ with future skew like the second example above,
+> the patch below will not give wrong answers; it will just be overly
+> pessimal and traverse more commits than it needs to).
 
-    $ parallel -v -k 'msgfmt --statistics {}' ::: *.po
-    msgfmt --statistics de.po
-    622 translated messages, 58 fuzzy translations, 21 untranslated messages.
-    msgfmt --statistics en_GB.po
-    3 translated messages, 698 untranslated messages.
-    msgfmt --statistics hi.po
-    14 translated messages, 45 fuzzy translations, 642 untranslated messages.
-    msgfmt --statistics is.po
-    24 translated messages, 36 fuzzy translations, 641 untranslated messages.
-    msgfmt --statistics pl.po
-    24 translated messages, 46 fuzzy translations, 631 untranslated messages.
-    msgfmt --statistics sv.po
-    531 translated messages, 80 fuzzy translations, 90 untranslated messages.
+Yes, and that was indeed my only concern. Since we cannot tell with
+certainty if we have skew into the past or into the future, it's
+not wrong to always assume skew into the past. It just does not
+always produce the shortest run of skewed commits, as you said. And
+if skews into the future are rare, then that should not be an
+issue.
 
-In particular the fuzzy translations have to be fixed (in some cases
-they're completely wrong), and it would be nice to have the
-untranslated messages translated.
+But considering the complexity behind the timestamp based approach,
+which you have demonstrated in your analysis, the generation number
+concept looks very attractive to me.
 
-The files can be retrieved from the ab/i18n-po branch of
-git://github.com/avar/git.git:
+It even has potential for the push/pull transport protocol.
+(Unreliable) commit timestamps are currently used while searching
+for common commits. And there is still the problem of searching
+down the wrong branch, which can be especially bad for repos with
+multiple disjoint histories. For example, we shouldn't send any
+HAVEs for commits with generation numbers greater than the
+generation number of the wanted ref. Or smaller than half that (in
+which case downloading the complete pack would probably be faster).
 
-    https://github.com/avar/git/tree/ab%2Fi18n-po/po
+Thomas, IIRC you were working on this. Do you think this could
+help?
 
-Submissions to this mailing list or via GitHub pull request (better)
-are welcome. Once these are fixed up I can submit these to the list.
+Clemens
