@@ -1,67 +1,60 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/2] git-rebase.txt: clarify that --abort checks out
- <branch>
-Date: Tue, 5 Jul 2011 21:52:28 -0500
-Message-ID: <20110706025228.GB10015@elie>
-References: <1309574324-6833-1-git-send-email-martin.von.zweigbergk@gmail.com>
- <1309902196.31762.30.camel@drew-northup.unet.maine.edu>
- <alpine.DEB.2.00.1107052148370.7799@debian>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Drew Northup <drew.northup@maine.edu>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 06 04:52:40 2011
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH 0/3] prepare for histogram diff
+Date: Wed,  6 Jul 2011 14:15:42 +0800
+Message-ID: <1309932945-5048-1-git-send-email-rctay89@gmail.com>
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 06 08:16:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QeIEB-0004qH-M1
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Jul 2011 04:52:40 +0200
+	id 1QeLPJ-0003Pf-KW
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Jul 2011 08:16:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755849Ab1GFCwe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jul 2011 22:52:34 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:40391 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755224Ab1GFCwd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jul 2011 22:52:33 -0400
-Received: by yxi11 with SMTP id 11so2137920yxi.19
-        for <git@vger.kernel.org>; Tue, 05 Jul 2011 19:52:33 -0700 (PDT)
+	id S1754100Ab1GFGP6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jul 2011 02:15:58 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:53949 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753920Ab1GFGP6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2011 02:15:58 -0400
+Received: by gxk21 with SMTP id 21so2518950gxk.19
+        for <git@vger.kernel.org>; Tue, 05 Jul 2011 23:15:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=FLKk+oAaWl2FTuR8DiIZ3dPzrtUgjhxJ9jw7LmKMhgg=;
-        b=uZdXo9YsteOEWOSwrKyM8NWTxOcA+drYQ0m+U0uXAVbASkoL5Rpm+dA6d/Yo06FxmS
-         SyAypsBmb0nzujEsu8M+mrsT+i2bFOOz7FTXjxoR9pyxKXHmQxjLtTyso5v6/TMZ+94e
-         WjZuT5I0tQmoZZDlH81Rc9NTGih7nH9t09ODE=
-Received: by 10.101.83.8 with SMTP id k8mr5021918anl.1.1309920753140;
-        Tue, 05 Jul 2011 19:52:33 -0700 (PDT)
-Received: from elie (adsl-69-209-76-243.dsl.chcgil.ameritech.net [69.209.76.243])
-        by mx.google.com with ESMTPS id i20sm5618418anq.9.2011.07.05.19.52.31
-        (version=SSLv3 cipher=OTHER);
-        Tue, 05 Jul 2011 19:52:32 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.00.1107052148370.7799@debian>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=2tnawiJQDi8r/V8xUvtZ3r/Y7/LsyyE2EdQIfQ/GV6U=;
+        b=IEJK6CJxAjKozIRP4j4Nf0gUh670cDm9cIvmVV2T/MXWWW0hoQSzvr2oZKMUXeTPa/
+         bEujTvUX7gstryEn+vJ5tjMrmKlMZR/HitORyGiQN3yG2vzzUdyUBvOyn+dKXPdhpzjW
+         BTBmM7M9F6cvuNDmNROpJvJYMjttWudKBbIak=
+Received: by 10.236.186.65 with SMTP id v41mr7943579yhm.1.1309932957261;
+        Tue, 05 Jul 2011 23:15:57 -0700 (PDT)
+Received: from localhost (cm119.beta238.maxonline.com.sg [116.86.238.119])
+        by mx.google.com with ESMTPS id f4sm2351884yhn.13.2011.07.05.23.15.54
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 05 Jul 2011 23:15:56 -0700 (PDT)
+X-Mailer: git-send-email 1.7.4.msysgit.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176637>
 
-Martin von Zweigbergk wrote:
+Tay Ray Chuan (3):
+  xdiff/xprepare: use memset
+  xdiff/xpatience: factor out fall-back-diff function
+  t4033-diff-patience: factor out tests
 
-> That reminds me that <branch> may not have been specified. How about
-> saying things more explicitly like this?
->
->   Abort the rebase operation and reset HEAD to the original branch. If
->   <branch> was provided when the rebase operation was started, then
->   HEAD will be reset to <branch>. Otherwise HEAD will be reset to
->   where it was when the rebase operation was started.
+ t/lib-diff-patience.sh   |  162 ++++++++++++++++++++++++++++++++++++++++++++++
+ t/t4033-diff-patience.sh |  162 +---------------------------------------------
+ xdiff/xpatience.c        |   27 +-------
+ xdiff/xprepare.c         |   10 +--
+ xdiff/xutils.c           |   31 +++++++++
+ xdiff/xutils.h           |    2 +
+ 6 files changed, 203 insertions(+), 191 deletions(-)
+ create mode 100644 t/lib-diff-patience.sh
 
-Sounds great to me for what it's worth.  (With the caveat that "git
-rebase --abort" reattaches HEAD in addition to what "git reset --hard"
-would do, but I think it's fine to just leave that implied.)  Sorry to
-have been slow to respond lately.
+-- 
+1.7.3.4.678.g170bd
