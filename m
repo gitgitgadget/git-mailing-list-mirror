@@ -1,71 +1,69 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH/RFC 3/3] upload-archive: use start_command instead of fork
-Date: Thu, 7 Jul 2011 20:39:51 +0200
-Message-ID: <CABPQNSYsBjtyGAinh2c6YBXHezpADirhr9_hOknSah-o1oy=0Q@mail.gmail.com>
-References: <1310038989-5724-1-git-send-email-kusmabite@gmail.com>
- <1310038989-5724-4-git-send-email-kusmabite@gmail.com> <4E15F90F.8090300@kdbg.org>
-Reply-To: kusmabite@gmail.com
+From: Scott Bronson <bronson@rinspin.com>
+Subject: Interpreting git merge failures
+Date: Thu, 7 Jul 2011 11:45:57 -0700
+Message-ID: <CAKmUPx5Qt2K+7F+BsW3WTmRjodBSrteuyG8p9oRHZuhApTu4+g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Thu Jul 07 20:40:42 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 07 20:46:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QetV8-0002Tu-5S
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jul 2011 20:40:38 +0200
+	id 1QetaN-00065C-Fm
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jul 2011 20:46:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756003Ab1GGSkd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jul 2011 14:40:33 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:54244 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755937Ab1GGSkc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Jul 2011 14:40:32 -0400
-Received: by pvg12 with SMTP id 12so638148pvg.19
-        for <git@vger.kernel.org>; Thu, 07 Jul 2011 11:40:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=Wc3mzkLCudCgl7hKuQ2flWH49MM5Bgl3SfEzqUp9AE0=;
-        b=OVV2NmhMQgwHq4A4BF7ukM5ZWQe9wwT9FStXialr1IgTnNociW/udCNHN0Mp7i8LP5
-         YQXJmG7W3CAj577nCX+w+AELR0vAC2+lCEEHKGYkKwG3VGZdlYGQ/Ce9YItdZL4tqAP9
-         4InvxIBycMyJD+6pAcIZLx621EoBmpgX4vdyk=
-Received: by 10.68.40.161 with SMTP id y1mr1558193pbk.156.1310064032172; Thu,
- 07 Jul 2011 11:40:32 -0700 (PDT)
-Received: by 10.68.43.198 with HTTP; Thu, 7 Jul 2011 11:39:51 -0700 (PDT)
-In-Reply-To: <4E15F90F.8090300@kdbg.org>
+	id S1755777Ab1GGSp6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jul 2011 14:45:58 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:61538 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755113Ab1GGSp5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2011 14:45:57 -0400
+Received: by qwk3 with SMTP id 3so601279qwk.19
+        for <git@vger.kernel.org>; Thu, 07 Jul 2011 11:45:57 -0700 (PDT)
+Received: by 10.224.109.3 with SMTP id h3mr977863qap.104.1310064357187; Thu,
+ 07 Jul 2011 11:45:57 -0700 (PDT)
+Received: by 10.224.45.66 with HTTP; Thu, 7 Jul 2011 11:45:57 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176768>
 
-On Thu, Jul 7, 2011 at 8:21 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 07.07.2011 13:43, schrieb Erik Faye-Lund:
->> - =A0 =A0 if (!enter_repo(buf, 0))
->> - =A0 =A0 =A0 =A0 =A0 =A0 die("'%s' does not appear to be a git repo=
-sitory", buf);
->> -
->> =A0 =A0 =A0 /* put received options in sent_argv[] */
->> =A0 =A0 =A0 sent_argc =3D 1;
->> - =A0 =A0 sent_argv[0] =3D "git-upload-archive";
->> + =A0 =A0 sent_argv[0] =3D "archive";
->
-> Is git-archive a valid replacement of enter_repo() followed by
-> git-upload-archive?
->
+What is the best way to determine why a git merge failed?
+I'm writing a script that needs to do different things depending
+on what went wrong.
 
-What do you mean "enter_repo() followed by git-upload-archive"? Don't
-you mean "enter_repo() followed by write_archive"? It does work for
-me, and the test-suite didn't reveal any breakages either.
+Right now I'm parsing error messages.  It's obviously a bad
+idea and prone to breakage but it does work.   Example:
 
-write_archive gets called by both versions, but my version doesn't
-call enter_repo directly. It is however called by git-daemon before
-starting git-upload-archive, so perhaps that's why it works for me.
-And that's a regression indeed; I don't respect the path-argument. So
-expect a new version over the week-end ;)
+    `git fetch origin #{tag || :master}`
+    output = `git merge --ff-only FETCH_HEAD 2>&1`
+
+    # warning, bad idea:
+    if output =~ /Not possible to fast-forward/
+      log "has different ancestry from upstream, removing and re-cloning."
+      remove_and_reclone
+    elsif msg =~ /You have unstaged changes/ ||
+          msg =~ /Your local changes [a-z ]* would be overwritten/ ||
+          msg =~ /commit your changes or stash them before you can merge/
+      log "has unsaved changes, invalid doc/tags file in upstream repo?"
+      work_around_tagsfile
+    elsif msg =~ /untracked working tree files would be overwritten/
+      log "has conflicting file, removing and re-cloning."
+      abort  # don't blow away unknown file
+    else
+      log msg
+      abort
+    end
+
+There's got to be a better way!  I could special-case each check
+beforehand using git ls-files and friends but that seems almost as
+ugly...  Hoping a smarter solution exists.
+
+This is for https://github.com/bronson/vim-update-bundles
+
+Thanks!
+
+    - Scott
