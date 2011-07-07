@@ -1,56 +1,75 @@
-From: Peter Vereshagin <peter@vereshagin.org>
-Subject: Re: Fwd: cyrillics
-Date: Fri, 8 Jul 2011 00:14:28 +0400
-Organization: '
-Message-ID: <20110707201423.GC5425@external.screwed.box>
-References: <E1QcZ23-0000uV-00.kolan_n-mail-ru@f283.mail.ru>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: generation numbers
+Date: Thu, 7 Jul 2011 22:31:12 +0200
+Message-ID: <201107072231.13181.jnareb@gmail.com>
+References: <1307819051-25748-1-git-send-email-avarab@gmail.com> <20110707185908.GB12044@sigill.intra.peff.net> <7vliw9hoky.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: =?koi8-r?B?7snLz8zByiDuz9fJy8/X?= <kolan_n@mail.ru>
-X-From: git-owner@vger.kernel.org Thu Jul 07 22:25:41 2011
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Ted Ts'o <tytso@mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 07 22:31:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qev8n-0008Ig-Aw
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jul 2011 22:25:41 +0200
+	id 1QevEO-0003Op-CA
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jul 2011 22:31:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752818Ab1GGUZa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jul 2011 16:25:30 -0400
-Received: from ns1.skyriver.ru ([89.108.118.221]:57491 "EHLO mx1.skyriver.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751930Ab1GGUZ3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Jul 2011 16:25:29 -0400
-X-Greylist: delayed 584 seconds by postgrey-1.27 at vger.kernel.org; Thu, 07 Jul 2011 16:25:29 EDT
-Received: from localhost (raskin.torservers.net [74.120.15.150])
-	by mx1.skyriver.ru (Postfix) with ESMTPSA id B0CC95A88;
-	Thu,  7 Jul 2011 23:47:09 +0400 (MSD)
+	id S1751282Ab1GGUbY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jul 2011 16:31:24 -0400
+Received: from mail-fx0-f52.google.com ([209.85.161.52]:56385 "EHLO
+	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750756Ab1GGUbX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2011 16:31:23 -0400
+Received: by fxd18 with SMTP id 18so1397922fxd.11
+        for <git@vger.kernel.org>; Thu, 07 Jul 2011 13:31:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=iL8Lcon0nBEQ4PwSkETp67i0BTWjzbIZPkVXv1ia5dU=;
+        b=pzs+8I8RjxtgIMgJqAluvg/h95B9+1WLo6zusqlXbePLiJMlj3JqrZaHeInmHmCDXW
+         EYJsDrCda9PhrrmmpqH2/U+6UOCchOEwf+NXG6v0zdiISMqQ1K1bOimU+lzm+0qCxOTN
+         rou3rMDcQkT6NRl2EU6mMmeLNi4Oq1UGCYwDA=
+Received: by 10.223.71.194 with SMTP id i2mr1871137faj.42.1310070682090;
+        Thu, 07 Jul 2011 13:31:22 -0700 (PDT)
+Received: from [192.168.1.15] (abwq132.neoplus.adsl.tpnet.pl [83.8.240.132])
+        by mx.google.com with ESMTPS id n27sm6924900faa.4.2011.07.07.13.31.20
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 07 Jul 2011 13:31:21 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vliw9hoky.fsf@alter.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <E1QcZ23-0000uV-00.kolan_n-mail-ru@f283.mail.ru>
-X-Face: 8T>{1owI$Byj]]a;^G]kRf*dkq>E-3':F>4ODP[#X4s"dr?^b&2G@'3lukno]A1wvJ_L(~u
- 6>I2ra/<,j1%@C[LN=>p#_}RIV+#:KTszp-X$bQOj,K
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176778>
 
-God love is hard to find. You got lucky =EE=C9=CB=CF=CC=C1=CA!
-2011/07/01 12:24:59 +0400 =EE=C9=CB=CF=CC=C1=CA =EE=CF=D7=C9=CB=CF=D7 <=
-kolan_n@mail.ru> =3D> To git :
-> Hi
-> msysgit doesnt works properly on the systems with cyrillic paths
-> can you fix it?
-> N?????r??y????b?X????v?^?)??{.n?+???????=17????}?????z?&j:+v???=07???=
-?zZ+??+zf???h???~????i???z?=1E?w?????????&?)??=1Bf
+On Thu, 7 Jul 2011, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > You could "cheat" and instead of storing the sha1 of a blob object in
+> > the notes tree, use the lower 32 bits to store an actual value. I don't
+> > think that currently breaks any assumptions in the notes code, but it
+> > definitely is against the intent of it.
+> 
+> I highly suspect that it would break fsck rather badly.  You may not even
+> be able to repack a repository with such a notes tree.
 
-=EB=CF=CC=D1=CE =C1 =DC=D4 =DE=CF =D4=C9=D0=C1 =CB=C5=D2=C9=CC=C5=C3=CF=
-?
+Well, we could (ab)use file mode to mark that what would be sha1 actually
+stores fixed-width content of a file, like we do with submodules.
 
-73! Peter pgp: A0E26627 (4A42 6841 2871 5EA7 52AB  12F8 0CE1 4AAC A0E2 =
-6627)
---
-http://vereshagin.org
+This technique is I think quite similar in idea to filesystems storing
+contents of small files in file inode, isn't it?
+
+-- 
+Jakub Narebski
+Poland
