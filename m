@@ -1,75 +1,113 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: generation numbers
-Date: Thu, 07 Jul 2011 16:52:51 -0400
-Message-ID: <4E161CA3.2050001@gmail.com>
-References: <1307819051-25748-1-git-send-email-avarab@gmail.com> <20110707185908.GB12044@sigill.intra.peff.net> <7vliw9hoky.fsf@alter.siamese.dyndns.org> <201107072231.13181.jnareb@gmail.com>
-Reply-To: gitzilla@gmail.com
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Redoing a merge for a particular file
+Date: Fri, 8 Jul 2011 10:24:10 +1200
+Message-ID: <CAFOYHZCFetkokgtn4z0O3nPTEy6GCTEcN0Pzc8ce-joqMzZM1Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Ted Ts'o <tytso@mit.edu>, Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBC?= =?UTF-8?B?amFybWFzb24=?= 
-	<avarab@gmail.com>, Clemens Buchacher <drizzd@aon.at>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 07 22:53:14 2011
+Content-Type: text/plain; charset=UTF-8
+To: GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 08 00:24:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QevZN-0007pw-6E
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jul 2011 22:53:09 +0200
+	id 1Qewzj-0000IC-2J
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Jul 2011 00:24:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751098Ab1GGUxD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jul 2011 16:53:03 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:34646 "EHLO
+	id S1753182Ab1GGWYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jul 2011 18:24:12 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:54655 "EHLO
 	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750798Ab1GGUxB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2011 16:53:01 -0400
-Received: by vws1 with SMTP id 1so1007369vws.19
-        for <git@vger.kernel.org>; Thu, 07 Jul 2011 13:53:00 -0700 (PDT)
+	with ESMTP id S1752888Ab1GGWYL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2011 18:24:11 -0400
+Received: by vws1 with SMTP id 1so1055123vws.19
+        for <git@vger.kernel.org>; Thu, 07 Jul 2011 15:24:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=message-id:disposition-notification-to:date:from:reply-to
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=mT6lrI39iYR3SG/QWe1833jHNx7C1E/bZw4IYsW0kR0=;
-        b=nhKHAoigbmvGegms53o7Aa8cax8dYtGIHUa6DpjJ/7DtLU/fxMn2v722HrFmKLVJy5
-         AGwDk4DLDg8tIQNBYfg38N3HZoqJ2IrjIdOUMExj149ehWt9dAyE5lJBDlaapXOCvakO
-         7TXTf/b/CqPzCzbjrFUE8PFIAhVdjwGLHoY6c=
-Received: by 10.52.161.7 with SMTP id xo7mr288654vdb.159.1310071980693;
-        Thu, 07 Jul 2011 13:53:00 -0700 (PDT)
-Received: from [10.0.1.130] (cpe-67-248-162-240.nycap.res.rr.com [67.248.162.240])
-        by mx.google.com with ESMTPS id q1sm3425510vdt.23.2011.07.07.13.52.59
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 07 Jul 2011 13:53:00 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.16) Gecko/20110505 Icedove/3.0.11
-In-Reply-To: <201107072231.13181.jnareb@gmail.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=lfZzK8b0YFD1jpEMVUTyANX2ntoiVoEabaiqeAUQqxE=;
+        b=I956ANq8ERzcyQpHI2OMBi9JIeJqev+g32GtGTDZjKGK1OAFJ70+AlZK0z5jTIXaly
+         lIlGr2wAzmes7rmsMupS6UXmFF/PFD1d9AVZRUwoeRFhv/W/5XgiRm/4ih5TUB18hCfl
+         pdixm/qV51kmJH993d344zpdjDp3PJGJ7Oj9k=
+Received: by 10.220.209.196 with SMTP id gh4mr497213vcb.50.1310077450555; Thu,
+ 07 Jul 2011 15:24:10 -0700 (PDT)
+Received: by 10.220.200.72 with HTTP; Thu, 7 Jul 2011 15:24:10 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176782>
 
-On 07/07/2011 04:31 PM, Jakub Narebski wrote:
-> On Thu, 7 Jul 2011, Junio C Hamano wrote:
->> Jeff King<peff@peff.net>  writes:
->>
->>> You could "cheat" and instead of storing the sha1 of a blob object in
->>> the notes tree, use the lower 32 bits to store an actual value. I don't
->>> think that currently breaks any assumptions in the notes code, but it
->>> definitely is against the intent of it.
->>
->> I highly suspect that it would break fsck rather badly.  You may not even
->> be able to repack a repository with such a notes tree.
->
-> Well, we could (ab)use file mode to mark that what would be sha1 actually
-> stores fixed-width content of a file, like we do with submodules.
->
-> This technique is I think quite similar in idea to filesystems storing
-> contents of small files in file inode, isn't it?
->
+Hi All,
 
-Are the benefits really worth all these hacks?
+I'm in the middle of merging to branches and I've screwed up my manual
+merge, I've also got rerere enabled and I can't seem to get back into
+a state to trigger git mergetool again.
+
+  $ git merge topic
+  ...
+  $ git mergetool
+  $ make
+  error: foo.c ... oops screwed up that merge.
+
+The merge wasn't too painful so I don't mind starting again.
+
+  $ git reset --hard HEAD^
+  HEAD is now at 59c6097 ...
+  $ git merge topic
+  Auto-merging foo.c
+  CONFLICT (content): Merge conflict in foo.c
+  Auto-merging bar.c
+  CONFLICT (content): bar.c
+  Auto-merging otherfile1.c
+  Auto-merging otherfile2.c
+  Auto-merging otherfile3.c
+  Resolved 'foo.c' using previous resolution.
+  Resolved 'bar.c' using previous resolution.
+  Automatic merge failed; fix conflicts and then commit the result.
+  $ git mergetool
+  No files need merging
+
+So rerere has remembered the bad resolution of foo.c.  But even if I
+run 'git rerere clear' and repeat the above sequence I get the same
+result. I seem to remember something like this coming up before.
+Wasn't there an option added to checkout to allow us to recreate the
+pre-merge state?
+
+  $ git checkout --merge foo.c
+  $ git mergetool
+  No files need merging
+
+I can manually fix the error and amend the merge commit I just thought
+git should be able to give me some help. I could have sworn that
+checkout --merge is the right thing to do. Sure enough the man page
+says it is "When checking out paths from the index, this option lets
+you recreate the conflicted merge in the specified paths." maybe this
+is a bug?
+
+Looking at git status I think checkout is working as advertised but
+maybe the bug is with mergetool.
+
+  $ git status
+  # On branch master
+  # Your branch is behind 'origin/master' by 1 commit, and can be
+fast-forwarded.
+  #
+  # Changes to be committed:
+  ....
+  # Unmerged paths:
+  #   (use "git add/rm <file>..." as appropriate to mark resolution)
+  #
+  #	both modified:      foo.c
+  #
+
+foo.c now does have conflict markers in it so I think it's crying out
+to be re-merged I just can't convince mergetool to do it. Am I doing
+something wrong?
+
+Thanks,
+Chris
+
+P.S.
+  $ git --version
+  git version 1.7.5.4
