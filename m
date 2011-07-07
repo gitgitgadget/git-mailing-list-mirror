@@ -1,96 +1,55 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH] Changed gitweb.remote_heads config key name to gitweb.remoteHeads.
-Date: Thu, 7 Jul 2011 22:36:50 +0200
-Message-ID: <201107072236.51183.jnareb@gmail.com>
-References: <1310061739-4441-1-git-send-email-marcnarc@xiplink.com> <201107072056.25417.jnareb@gmail.com>
+From: jon <jon.rafkind@gmail.com>
+Subject: 1.7.6 configure bugs
+Date: Thu, 07 Jul 2011 14:41:40 -0600
+Message-ID: <4E161A04.8090700@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Thu Jul 07 22:37:15 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 07 22:42:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QevJt-0006ov-Eq
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jul 2011 22:37:09 +0200
+	id 1QevOU-00018q-OC
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jul 2011 22:41:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750986Ab1GGUhB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jul 2011 16:37:01 -0400
-Received: from mail-fx0-f52.google.com ([209.85.161.52]:62331 "EHLO
-	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751471Ab1GGUhB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2011 16:37:01 -0400
-Received: by fxd18 with SMTP id 18so1401017fxd.11
-        for <git@vger.kernel.org>; Thu, 07 Jul 2011 13:36:59 -0700 (PDT)
+	id S1751875Ab1GGUlu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jul 2011 16:41:50 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:61099 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751434Ab1GGUlt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2011 16:41:49 -0400
+Received: by iwn6 with SMTP id 6so1178571iwn.19
+        for <git@vger.kernel.org>; Thu, 07 Jul 2011 13:41:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=Zo9jCFwII7cPthVDuStp6gxw6yAelgno+vWRczlNJbE=;
-        b=WKSN2IME7ClIyzE3KCg0O13sDR6DnhWeivr+oVbfRKvhiOnnEPb5oT6FMi0TYMoY0G
-         fkVT04XZAdgSz98gQIfdPfBnjbgDmxxPePfhVBLKH3g6prKSfWGCRSxeBtrr0BwDy+iS
-         gZbzOVZTas2Hz+5yvezZngENKGHhhnbqpdaZo=
-Received: by 10.223.97.66 with SMTP id k2mr1844201fan.45.1310071019899;
-        Thu, 07 Jul 2011 13:36:59 -0700 (PDT)
-Received: from [192.168.1.15] (abwq132.neoplus.adsl.tpnet.pl [83.8.240.132])
-        by mx.google.com with ESMTPS id l26sm6923708fah.38.2011.07.07.13.36.58
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=SCLac74D9h4P296ZhsEGw8hAOGGkxqc6BAHmx6CU0bI=;
+        b=VJpEn9blOJ4rHYrVxyr8OntusVLyl36KxCSCF0w4Nz2enTqfabq/CcVi/bKwG3cl8S
+         GSgOGjsNx6r3DCVrGEaEffqUWiTNsNhNj+dIHUZ8nLuMa9Aw7LB42AEa3BzA/EnmrkS3
+         D+OTYM+33RnHEuYy26SARxt93jLibUkRjSd3s=
+Received: by 10.43.51.71 with SMTP id vh7mr462122icb.260.1310071308089;
+        Thu, 07 Jul 2011 13:41:48 -0700 (PDT)
+Received: from [192.168.40.36] (crystalis.cs.utah.edu [155.98.68.48])
+        by mx.google.com with ESMTPS id x13sm5636617ibh.67.2011.07.07.13.41.45
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 07 Jul 2011 13:36:58 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <201107072056.25417.jnareb@gmail.com>
-Content-Disposition: inline
+        Thu, 07 Jul 2011 13:41:47 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:5.0) Gecko/20110624 Thunderbird/5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176780>
 
-> -- >8 --
-> From: Jakub Narebski <jnareb@gmail.com>
-> Date: Thu, 7 Jul 2011 20:48:50 +0200
-> Subject: [PATCH] gitweb: Make git config search case insensitive
+'configure' in git 1.7.6 does not check for the presence of zlib.h nor
+tclsh. Compilation will fail without zlib.h and converting the languages
+will fail without tclsh
 
-I should have probably add here the following:
+make[1]: Entering directory `/home/user/tmp/git-1.7.6/git-gui'
+tclsh po/po2msg.sh --statistics --tcl -l de -d po/ po/de.po
+make[1]: tclsh: Command not found
 
-  The section and key part of fully qualified name of config variable
-  are case insensitive in git.  "git config --list -z" that gitweb uses
-  returns them lowercased.
- 
-> Gitweb does not (yet?) use git config variables with subsection, so we
-> can simply lowercase $key in git_get_project_config: section name and
-> key name are case insensitive (only subsection name is case
-> sensitive).
-> 
-> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-> ---
-
-Yet another case where commit message is longer than fix... ;-)
-
->  gitweb/gitweb.perl |    1 +
->  1 files changed, 1 insertions(+), 0 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 589c85b..59147b6 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -2526,6 +2526,7 @@ sub git_get_project_config {
->  
->  	# key sanity check
->  	return unless ($key);
-> +	$key = lc($key); # assuming there is no subsection
->  	$key =~ s/^gitweb\.//;
->  	return if ($key =~ m/\W/);
->  
-> -- 
-> 1.7.5
-> 
-> 
-
--- 
-Jakub Narebski
-Poland
+I am not registered on the list so please CC me for future correspondence.
