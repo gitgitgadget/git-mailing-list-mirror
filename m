@@ -1,66 +1,67 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: changing first commit message
-Date: Thu, 07 Jul 2011 18:08:13 +0200
-Message-ID: <m2pqlm2hw2.fsf@igel.home>
-References: <C1602FFC-8FBE-4E55-94F7-96DF745C0345@uab.edu>
+From: miket99@Safe-mail.net
+Subject: pull from stdin
+Date: Thu, 7 Jul 2011 11:23:04 -0400
+Message-ID: <N1B-u7I8PJ0byN@Safe-mail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Shantanu Pavgi <pavgi@uab.edu>
-X-From: git-owner@vger.kernel.org Thu Jul 07 18:08:32 2011
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 07 19:40:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qer7u-0002ZG-2d
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jul 2011 18:08:30 +0200
+	id 1QesYp-0008JM-OU
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jul 2011 19:40:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752210Ab1GGQIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jul 2011 12:08:18 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:45909 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750830Ab1GGQIR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2011 12:08:17 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 823CE1C01DDC;
-	Thu,  7 Jul 2011 18:08:15 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
-	by mail.m-online.net (Postfix) with ESMTP id 603451C00048;
-	Thu,  7 Jul 2011 18:08:15 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
-	with ESMTP id dpacLccTtFhD; Thu,  7 Jul 2011 18:08:14 +0200 (CEST)
-Received: from igel.home (ppp-88-217-111-131.dynamic.mnet-online.de [88.217.111.131])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Thu,  7 Jul 2011 18:08:14 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 002DFCA29C; Thu,  7 Jul 2011 18:08:13 +0200 (CEST)
-X-Yow: Who wants some OYSTERS with SEN-SEN an' COOL WHIP?
-In-Reply-To: <C1602FFC-8FBE-4E55-94F7-96DF745C0345@uab.edu> (Shantanu Pavgi's
-	message of "Thu, 7 Jul 2011 10:56:57 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+	id S1753102Ab1GGRkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jul 2011 13:40:15 -0400
+Received: from tamar.safe-mail.net ([213.8.161.229]:35997 "EHLO
+	tamar.safe-mail.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752736Ab1GGRkN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2011 13:40:13 -0400
+X-Greylist: delayed 8220 seconds by postgrey-1.27 at vger.kernel.org; Thu, 07 Jul 2011 13:40:13 EDT
+Received: by tamar.safe-mail.net with Safe-mail (Exim 4.66)
+	(envelope-from <miket99@Safe-mail.net>)
+	id 1QeqPw-0007Hl-Co
+	for git@vger.kernel.org; Thu, 07 Jul 2011 11:23:04 -0400
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+	s=N1-0105; d=Safe-mail.net;
+	b=HckV/bcJahF5EtUvl+n8B/ihM01y474Y6GNmFtaT7qx3oeFRbbQbFGdFpCjw4VbO
+	ot6dr8E2Qh2RwDsirImrfFCCFn7+Mrt4SHzXyZHcAv13TPByx1ZPm7WAQFPWfZ+Q
+	w84VZnv7oPZrqtgsrwMji3mOw43mK/BH7ds+ylC5msY=;
+Received: from pc ([199.48.147.4]) by Safe-mail.net with https
+X-SMType: Regular
+X-SMRef: N1B-u7I8PJ0byN
+X-SMSignature: M78QHrlnEde1EGCH2CQA2/glD4TrmNL80TNGUk9ojNthElhQfNDSmRy/Dt2xikF2
+	E6zCe1GP0lQmjQKrXGqPLiDp4rHTZCzy0Nw6fyNIbv/SvOSAFm5AJVeCkEd1DB9T
+	JOJFRVK87rfTeiClEO+ojLHnH/isoqzfJKDS9mUusno=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176763>
 
-Shantanu Pavgi <pavgi@uab.edu> writes:
+Hello,
 
-> How do I reword the first commit message? I was able to reword commit
-> messages after the first commit using 'git rebase -i <first-commit-id>',
-> but I am not sure how to reword the first commit message itself. Any help?
+I am using a rather complicated distributed workflow to keep various git repositories in sync. Basically I am creating bundles, pushing them to a server, and pull them again using a special application which output the bundle content to stdin. Unfortunately git-fetch and friends do not like /dev/stdin as input. Is there any way to pass the bundle contents via stdin to git?
 
-$ git rebase -h
-[...]
-    --root                rebase all reachable commits up to the root(s)
-[...]
-
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Minimal sample:
+~$ mkdir test
+~$ cd test
+~/test$ git init
+Initialized empty Git repository in /home/test/test/.git/
+~/test$ echo a > a
+~/test$ git add -A
+~/test$ git commit -m test
+[master (root-commit) 4ed639a] test
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 a
+~/test$ git bundle create b --all
+Counting objects: 3, done.
+Writing objects: 100% (3/3), 193 bytes, done.
+Total 3 (delta 0), reused 0 (delta 0)
+~/test$ cat b | git pull -- /dev/stdin
+fatal: '/dev/stdin' does not appear to be a git repository
+fatal: The remote end hung up unexpectedly
