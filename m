@@ -1,412 +1,110 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH v3 4/4] t4033-diff-patience: factor out tests
-Date: Thu,  7 Jul 2011 12:23:58 +0800
-Message-ID: <1310012638-3668-5-git-send-email-rctay89@gmail.com>
-References: <1309970337-6016-1-git-send-email-rctay89@gmail.com>
- <1310012638-3668-1-git-send-email-rctay89@gmail.com>
- <1310012638-3668-2-git-send-email-rctay89@gmail.com>
- <1310012638-3668-3-git-send-email-rctay89@gmail.com>
- <1310012638-3668-4-git-send-email-rctay89@gmail.com>
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 07 06:24:46 2011
+From: Josh Triplett <josh@joshtriplett.org>
+Subject: Re: [PATCHv9 3/4] ref namespaces: Support remote repositories via
+ upload-pack and receive-pack
+Date: Wed, 6 Jul 2011 22:31:22 -0700
+Message-ID: <20110707053122.GA1798@leaf>
+References: <cover.1309888001.git.josh@joshtriplett.org>
+ <fff78c90d7f9deb0a8294fe3158ab0285e1610ff.1309888001.git.josh@joshtriplett.org>
+ <7vy60bkzmf.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jamey Sharp <jamey@minilop.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
+	Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 07 07:31:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qeg8p-0008P1-Ka
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jul 2011 06:24:44 +0200
+	id 1QehBk-00022s-9d
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jul 2011 07:31:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752028Ab1GGEYg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jul 2011 00:24:36 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:52104 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751332Ab1GGEYg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2011 00:24:36 -0400
-Received: by mail-iy0-f174.google.com with SMTP id 12so535294iyb.19
-        for <git@vger.kernel.org>; Wed, 06 Jul 2011 21:24:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=rd5Kd0M2QwujlzSXIK3St+aeZHRkWnTLnFndOFcROD0=;
-        b=b1HHq8ni9oKc683m1vdZVCyHHcF+JIlHDIvQlJy3+wRQtLo3MHLp6IKlKEMDabEP7u
-         fQSmV7cE+bGPdxTZwHbTduQukUHmZYNA8a34QcdxgvKyebDlk695Kxvz9Y8Tyk1dk0VH
-         IYsM3e9cKQqS70QqT0FacQe00fmv3+ZSsSsaU=
-Received: by 10.42.155.2 with SMTP id s2mr409220icw.26.1310012675990;
-        Wed, 06 Jul 2011 21:24:35 -0700 (PDT)
-Received: from localhost (cm119.beta238.maxonline.com.sg [116.86.238.119])
-        by mx.google.com with ESMTPS id a9sm1110556icy.18.2011.07.06.21.24.33
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 06 Jul 2011 21:24:35 -0700 (PDT)
-X-Mailer: git-send-email 1.7.4.msysgit.0
-In-Reply-To: <1310012638-3668-4-git-send-email-rctay89@gmail.com>
+	id S1753355Ab1GGFbn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jul 2011 01:31:43 -0400
+Received: from relay4-d.mail.gandi.net ([217.70.183.196]:46765 "EHLO
+	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751349Ab1GGFbm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2011 01:31:42 -0400
+X-Originating-IP: 217.70.178.137
+Received: from mfilter8-d.gandi.net (mfilter8-d.gandi.net [217.70.178.137])
+	by relay4-d.mail.gandi.net (Postfix) with ESMTP id 5671117207E;
+	Thu,  7 Jul 2011 07:31:40 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mfilter8-d.gandi.net
+Received: from relay4-d.mail.gandi.net ([217.70.183.196])
+	by mfilter8-d.gandi.net (mfilter8-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
+	with ESMTP id 2b4sU70ycqZE; Thu,  7 Jul 2011 07:31:38 +0200 (CEST)
+X-Originating-IP: 50.43.15.19
+Received: from leaf (static-50-43-15-19.bvtn.or.frontiernet.net [50.43.15.19])
+	(Authenticated sender: josh@joshtriplett.org)
+	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 64B50172074;
+	Thu,  7 Jul 2011 07:31:25 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vy60bkzmf.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176747>
 
-Group the test cases into two functions, test_diff_(frobnitz|unique).
-This in preparation for the histogram diff algorithm, which would also
-re-use these test cases.
+On Wed, Jul 06, 2011 at 11:55:36AM -0700, Junio C Hamano wrote:
+> Josh Triplett <josh@joshtriplett.org> writes:
+> 
+> > Change upload-pack and receive-pack to use the namespace-prefixed refs
+> > when working with the repository, and use the unprefixed refs when
+> > talking to the client, maintaining the masquerade.  This allows
+> > clone, pull, fetch, and push to work with a suitably configured
+> > GIT_NAMESPACE.
+> >
+> > With appropriate configuration, this also allows http-backend to expose
+> > namespaces as multiple repositories with different paths.  This only
+> > requires setting GIT_NAMESPACE, which http-backend passes through to
+> > upload-pack and receive-pack.
+> >
+> > Signed-off-by: Josh Triplett <josh@joshtriplett.org>
+> > Signed-off-by: Jamey Sharp <jamey@minilop.net>
+> > ---
+> >  builtin/receive-pack.c |   37 +++++++++++++++++++++++++++++++------
+> >  upload-pack.c          |   15 ++++++++-------
+> >  2 files changed, 39 insertions(+), 13 deletions(-)
+> >
+> > diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> > index e1a687a..2d36378 100644
+> > --- a/builtin/receive-pack.c
+> > +++ b/builtin/receive-pack.c
+> > @@ -120,9 +120,17 @@ static int show_ref(const char *path, const unsigned char *sha1, int flag, void
+> >  	return 0;
+> >  }
+> >  
+> > +static int show_ref_cb(const char *path, const unsigned char *sha1, int flag, void *cb_data)
+> > +{
+> > +	path = strip_namespace(path);
+> > +	if (!path)
+> > +		path = ".have";
+> > +	return show_ref(path, sha1, flag, cb_data);
+> 
+> At the first glance, this felt somewhat unoptimal as it forbids us from
+> stuffing fake "ref" entries other than ".have" via the add_extra_ref()
+> interface, and I wondered if it would make sense to do something like this
+> instead:
+> 
+> 	const char *ns_path = strip_namespace(path);
+>         if (!ns_path)
+>         	ns_path = path;
+> 	return show_ref(ns_path, sha1, flag, cb_data);
+> 
+> But that is flawed, and I think your patch does the right thing.  The
+> justification is a bit subtle [*1*] and I think it needs to be explained
+> in a comment around here, not just in the 0/4 cover letter message.
 
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
----
+Will do.  How does the following coment sound?
 
-Changed from v2: refactored tests live in lib-diff-alternative.sh
-instead of lib-diff-patience.sh.
+/* We advertise refs outside our current namespace as .have refs, so
+ * that the client can use them to minimize data transfer but will
+ * otherwise ignore them. */
 
- t/lib-diff-alternative.sh |  165 +++++++++++++++++++++++++++++++++++++++++++++
- t/t4033-diff-patience.sh  |  162 +-------------------------------------------
- 2 files changed, 168 insertions(+), 159 deletions(-)
- create mode 100644 t/lib-diff-alternative.sh
-
-diff --git a/t/lib-diff-alternative.sh b/t/lib-diff-alternative.sh
-new file mode 100644
-index 0000000..75ffd91
---- /dev/null
-+++ b/t/lib-diff-alternative.sh
-@@ -0,0 +1,165 @@
-+#!/bin/sh
-+
-+test_diff_frobnitz() {
-+	cat >file1 <<\EOF
-+#include <stdio.h>
-+
-+// Frobs foo heartily
-+int frobnitz(int foo)
-+{
-+    int i;
-+    for(i = 0; i < 10; i++)
-+    {
-+        printf("Your answer is: ");
-+        printf("%d\n", foo);
-+    }
-+}
-+
-+int fact(int n)
-+{
-+    if(n > 1)
-+    {
-+        return fact(n-1) * n;
-+    }
-+    return 1;
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    frobnitz(fact(10));
-+}
-+EOF
-+
-+	cat >file2 <<\EOF
-+#include <stdio.h>
-+
-+int fib(int n)
-+{
-+    if(n > 2)
-+    {
-+        return fib(n-1) + fib(n-2);
-+    }
-+    return 1;
-+}
-+
-+// Frobs foo heartily
-+int frobnitz(int foo)
-+{
-+    int i;
-+    for(i = 0; i < 10; i++)
-+    {
-+        printf("%d\n", foo);
-+    }
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    frobnitz(fib(10));
-+}
-+EOF
-+
-+	cat >expect <<\EOF
-+diff --git a/file1 b/file2
-+index 6faa5a3..e3af329 100644
-+--- a/file1
-++++ b/file2
-+@@ -1,26 +1,25 @@
-+ #include <stdio.h>
-+ 
-++int fib(int n)
-++{
-++    if(n > 2)
-++    {
-++        return fib(n-1) + fib(n-2);
-++    }
-++    return 1;
-++}
-++
-+ // Frobs foo heartily
-+ int frobnitz(int foo)
-+ {
-+     int i;
-+     for(i = 0; i < 10; i++)
-+     {
-+-        printf("Your answer is: ");
-+         printf("%d\n", foo);
-+     }
-+ }
-+ 
-+-int fact(int n)
-+-{
-+-    if(n > 1)
-+-    {
-+-        return fact(n-1) * n;
-+-    }
-+-    return 1;
-+-}
-+-
-+ int main(int argc, char **argv)
-+ {
-+-    frobnitz(fact(10));
-++    frobnitz(fib(10));
-+ }
-+EOF
-+
-+	STRATEGY=$1
-+
-+	test_expect_success "$STRATEGY diff" '
-+		test_must_fail git diff --no-index "--$STRATEGY" file1 file2 > output &&
-+		test_cmp expect output
-+	'
-+
-+	test_expect_success "$STRATEGY diff output is valid" '
-+		mv file2 expect &&
-+		git apply < output &&
-+		test_cmp expect file2
-+	'
-+}
-+
-+test_diff_unique() {
-+	cat >uniq1 <<\EOF
-+1
-+2
-+3
-+4
-+5
-+6
-+EOF
-+
-+	cat >uniq2 <<\EOF
-+a
-+b
-+c
-+d
-+e
-+f
-+EOF
-+
-+	cat >expect <<\EOF
-+diff --git a/uniq1 b/uniq2
-+index b414108..0fdf397 100644
-+--- a/uniq1
-++++ b/uniq2
-+@@ -1,6 +1,6 @@
-+-1
-+-2
-+-3
-+-4
-+-5
-+-6
-++a
-++b
-++c
-++d
-++e
-++f
-+EOF
-+
-+	STRATEGY=$1
-+
-+	test_expect_success 'completely different files' '
-+		test_must_fail git diff --no-index "--$STRATEGY" uniq1 uniq2 > output &&
-+		test_cmp expect output
-+	'
-+}
-+
-diff --git a/t/t4033-diff-patience.sh b/t/t4033-diff-patience.sh
-index 1eb1498..3c9932e 100755
---- a/t/t4033-diff-patience.sh
-+++ b/t/t4033-diff-patience.sh
-@@ -3,166 +3,10 @@
- test_description='patience diff algorithm'
- 
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-diff-alternative.sh
- 
--cat >file1 <<\EOF
--#include <stdio.h>
-+test_diff_frobnitz "patience"
- 
--// Frobs foo heartily
--int frobnitz(int foo)
--{
--    int i;
--    for(i = 0; i < 10; i++)
--    {
--        printf("Your answer is: ");
--        printf("%d\n", foo);
--    }
--}
--
--int fact(int n)
--{
--    if(n > 1)
--    {
--        return fact(n-1) * n;
--    }
--    return 1;
--}
--
--int main(int argc, char **argv)
--{
--    frobnitz(fact(10));
--}
--EOF
--
--cat >file2 <<\EOF
--#include <stdio.h>
--
--int fib(int n)
--{
--    if(n > 2)
--    {
--        return fib(n-1) + fib(n-2);
--    }
--    return 1;
--}
--
--// Frobs foo heartily
--int frobnitz(int foo)
--{
--    int i;
--    for(i = 0; i < 10; i++)
--    {
--        printf("%d\n", foo);
--    }
--}
--
--int main(int argc, char **argv)
--{
--    frobnitz(fib(10));
--}
--EOF
--
--cat >expect <<\EOF
--diff --git a/file1 b/file2
--index 6faa5a3..e3af329 100644
----- a/file1
--+++ b/file2
--@@ -1,26 +1,25 @@
-- #include <stdio.h>
-- 
--+int fib(int n)
--+{
--+    if(n > 2)
--+    {
--+        return fib(n-1) + fib(n-2);
--+    }
--+    return 1;
--+}
--+
-- // Frobs foo heartily
-- int frobnitz(int foo)
-- {
--     int i;
--     for(i = 0; i < 10; i++)
--     {
---        printf("Your answer is: ");
--         printf("%d\n", foo);
--     }
-- }
-- 
---int fact(int n)
---{
---    if(n > 1)
---    {
---        return fact(n-1) * n;
---    }
---    return 1;
---}
---
-- int main(int argc, char **argv)
-- {
---    frobnitz(fact(10));
--+    frobnitz(fib(10));
-- }
--EOF
--
--test_expect_success 'patience diff' '
--
--	test_must_fail git diff --no-index --patience file1 file2 > output &&
--	test_cmp expect output
--
--'
--
--test_expect_success 'patience diff output is valid' '
--
--	mv file2 expect &&
--	git apply < output &&
--	test_cmp expect file2
--
--'
--
--cat >uniq1 <<\EOF
--1
--2
--3
--4
--5
--6
--EOF
--
--cat >uniq2 <<\EOF
--a
--b
--c
--d
--e
--f
--EOF
--
--cat >expect <<\EOF
--diff --git a/uniq1 b/uniq2
--index b414108..0fdf397 100644
----- a/uniq1
--+++ b/uniq2
--@@ -1,6 +1,6 @@
---1
---2
---3
---4
---5
---6
--+a
--+b
--+c
--+d
--+e
--+f
--EOF
--
--test_expect_success 'completely different files' '
--
--	test_must_fail git diff --no-index --patience uniq1 uniq2 > output &&
--	test_cmp expect output
--
--'
-+test_diff_unique "patience"
- 
- test_done
--- 
-1.7.3.4.676.gf08cd.dirty
+- Josh Triplett
