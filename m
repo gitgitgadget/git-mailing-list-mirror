@@ -1,69 +1,126 @@
-From: Scott Bronson <bronson@rinspin.com>
-Subject: Interpreting git merge failures
-Date: Thu, 7 Jul 2011 11:45:57 -0700
-Message-ID: <CAKmUPx5Qt2K+7F+BsW3WTmRjodBSrteuyG8p9oRHZuhApTu4+g@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH] Changed gitweb.remote_heads config key name to gitweb.remoteHeads.
+Date: Thu, 7 Jul 2011 20:56:24 +0200
+Message-ID: <201107072056.25417.jnareb@gmail.com>
+References: <1310061739-4441-1-git-send-email-marcnarc@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 07 20:46:05 2011
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Thu Jul 07 20:56:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QetaN-00065C-Fm
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jul 2011 20:46:03 +0200
+	id 1Qetkd-0003tZ-Fi
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jul 2011 20:56:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755777Ab1GGSp6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jul 2011 14:45:58 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:61538 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755113Ab1GGSp5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2011 14:45:57 -0400
-Received: by qwk3 with SMTP id 3so601279qwk.19
-        for <git@vger.kernel.org>; Thu, 07 Jul 2011 11:45:57 -0700 (PDT)
-Received: by 10.224.109.3 with SMTP id h3mr977863qap.104.1310064357187; Thu,
- 07 Jul 2011 11:45:57 -0700 (PDT)
-Received: by 10.224.45.66 with HTTP; Thu, 7 Jul 2011 11:45:57 -0700 (PDT)
+	id S1753992Ab1GGS4e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jul 2011 14:56:34 -0400
+Received: from mail-fx0-f52.google.com ([209.85.161.52]:55615 "EHLO
+	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753049Ab1GGS4d (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2011 14:56:33 -0400
+Received: by fxd18 with SMTP id 18so1343029fxd.11
+        for <git@vger.kernel.org>; Thu, 07 Jul 2011 11:56:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=VFDJpv2iRahwCztTNZEH4XX9/ACdT7JDvoWH5exFbws=;
+        b=MRfLuMbxkVMXvR9BlgAV0aDTjUwhB85hKADSNTbXEmvOAiQ5zv+6Y1gZ10gnT/5N5U
+         xPUm8KVCi/yEz5l272aYIq6gBpBCcTP1TPEWk6JMhWjru0GTvTrhosyckdzRTej861O6
+         pVgSUxGCYna7VLcK16apYu+eAZm/Dt7uBLhxc=
+Received: by 10.223.28.65 with SMTP id l1mr1675362fac.136.1310064992579;
+        Thu, 07 Jul 2011 11:56:32 -0700 (PDT)
+Received: from [192.168.1.15] (abwq132.neoplus.adsl.tpnet.pl [83.8.240.132])
+        by mx.google.com with ESMTPS id n27sm6871062faa.28.2011.07.07.11.56.30
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 07 Jul 2011 11:56:31 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1310061739-4441-1-git-send-email-marcnarc@xiplink.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176769>
 
-What is the best way to determine why a git merge failed?
-I'm writing a script that needs to do different things depending
-on what went wrong.
+On Thu, 7 Jul 2011, Marc Branchaud wrote:
 
-Right now I'm parsing error messages.  It's obviously a bad
-idea and prone to breakage but it does work.   Example:
+> Git doesn't accept config key names with underscore characters.
 
-    `git fetch origin #{tag || :master}`
-    output = `git merge --ff-only FETCH_HEAD 2>&1`
+Hmmm... that is strange.  Git accepts '-' (though it is discouraged)
+but not '_' in config key names.
 
-    # warning, bad idea:
-    if output =~ /Not possible to fast-forward/
-      log "has different ancestry from upstream, removing and re-cloning."
-      remove_and_reclone
-    elsif msg =~ /You have unstaged changes/ ||
-          msg =~ /Your local changes [a-z ]* would be overwritten/ ||
-          msg =~ /commit your changes or stash them before you can merge/
-      log "has unsaved changes, invalid doc/tags file in upstream repo?"
-      work_around_tagsfile
-    elsif msg =~ /untracked working tree files would be overwritten/
-      log "has conflicting file, removing and re-cloning."
-      abort  # don't blow away unknown file
-    else
-      log msg
-      abort
-    end
+> Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
 
-There's got to be a better way!  I could special-case each check
-beforehand using git ls-files and friends but that seems almost as
-ugly...  Hoping a smarter solution exists.
+Acked-by: Jakub Narebski <jnareb@gmail.com>
 
-This is for https://github.com/bronson/vim-update-bundles
+With the caveat that included patch must be applied first,
+see below.
 
-Thanks!
+> ---
+> 
+> Came across this today.  The patch is RFC because I have not verified 
+> if it's complete or if gitweb even respects the setting.
+> 
+>  gitweb/gitweb.perl |    4 ++--
+>  1 files changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 81dacf2..edbb080 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -524,9 +524,9 @@ our %feature = (
+>  	# $feature{'remote_heads'}{'default'} = [1];
+>  	# To have project specific config enable override in $GITWEB_CONFIG
+>  	# $feature{'remote_heads'}{'override'} = 1;
+> -	# and in project config gitweb.remote_heads = 0|1;
+> +	# and in project config gitweb.remoteHeads = 0|1;
 
-    - Scott
+Key names are case insensitive...
+
+>  	'remote_heads' => {
+> -		'sub' => sub { feature_bool('remote_heads', @_) },
+> +		'sub' => sub { feature_bool('remoteHeads', @_) },
+
+...but git_get_project_config didn't respect that.  With above, and
+without included patch, gitweb would get from "git config --list -z"
+'gitweb.remoteheads' (turned lowercase), but as it is written here
+it would check if 'gitweb.remoreHeads' key exists... so it would
+never match.
+
+-- >8 --
+From: Jakub Narebski <jnareb@gmail.com>
+Date: Thu, 7 Jul 2011 20:48:50 +0200
+Subject: [PATCH] gitweb: Make git config search case insensitive
+
+Gitweb does not (yet?) use git config variables with subsection, so we
+can simply lowercase $key in git_get_project_config: section name and
+key name are case insensitive (only subsection name is case
+sensitive).
+
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/gitweb.perl |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 589c85b..59147b6 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2526,6 +2526,7 @@ sub git_get_project_config {
+ 
+ 	# key sanity check
+ 	return unless ($key);
++	$key = lc($key); # assuming there is no subsection
+ 	$key =~ s/^gitweb\.//;
+ 	return if ($key =~ m/\W/);
+ 
+-- 
+1.7.5
