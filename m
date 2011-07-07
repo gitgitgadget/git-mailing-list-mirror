@@ -1,636 +1,126 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] po/pl.po: Eliminate fuzzy translations
-Date: Thu, 07 Jul 2011 02:53:57 -0700 (PDT)
-Message-ID: <m3ipre4dtf.fsf@localhost.localdomain>
-References: <CACBZZX4dP-OsrZ3wBOeSkzDFy6XBgeY=eqJUF2acyLC8W-3Vpg@mail.gmail.com>
+From: Dmitry Ivankov <divanorama@gmail.com>
+Subject: long fast-import errors out "failed to apply delta"
+Date: Thu, 7 Jul 2011 16:47:31 +0600
+Message-ID: <CA+gfSn8jjptyv10iVimmfXpf6QHrR_3UpkRdd+Dv1M=KgORtGQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	=?iso-8859-2?q?Marcin_Cie=B6lak?= <saper@saper.info>,
-	=?iso-8859-4?q?Jakub_Nar=EAbski?= <jnareb@gmail.com>
-To: =?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 07 11:54:18 2011
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 07 12:47:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QelHe-0001E4-Oe
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Jul 2011 11:54:11 +0200
+	id 1Qem7T-0004RI-Js
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Jul 2011 12:47:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754067Ab1GGJyF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jul 2011 05:54:05 -0400
-Received: from mail-fx0-f52.google.com ([209.85.161.52]:53473 "EHLO
-	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752456Ab1GGJyB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Jul 2011 05:54:01 -0400
-Received: by fxd18 with SMTP id 18so923026fxd.11
-        for <git@vger.kernel.org>; Thu, 07 Jul 2011 02:53:59 -0700 (PDT)
+	id S1753058Ab1GGKrd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jul 2011 06:47:33 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:61023 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751136Ab1GGKrc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Jul 2011 06:47:32 -0400
+Received: by qyk9 with SMTP id 9so477287qyk.19
+        for <git@vger.kernel.org>; Thu, 07 Jul 2011 03:47:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+        h=mime-version:date:message-id:subject:from:to:content-type
          :content-transfer-encoding;
-        bh=QZrQg7gXjCt1Vbt/sLwHgEw4u+JesRprUgMa3ikKp8Y=;
-        b=DORvxmKEX182qFFy4SQCbje+4HR3ZwXSL/411OQzapfwQn8wLI6GToeYWz/fPDOzg2
-         35XSKUgfHTkxsRPe2dBRYfVlOttcsNc8PigTdVE++SLQkipi/VBDbSO/ENeuxkQwfP4l
-         fkftJ9JYP1pK8djEt/FI7Q+/aMJNkBuYUwcQo=
-Received: by 10.223.145.78 with SMTP id c14mr955272fav.75.1310032439367;
-        Thu, 07 Jul 2011 02:53:59 -0700 (PDT)
-Received: from localhost.localdomain (abwq132.neoplus.adsl.tpnet.pl [83.8.240.132])
-        by mx.google.com with ESMTPS id k26sm6608841fak.24.2011.07.07.02.53.56
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 07 Jul 2011 02:53:57 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p679rSY6026073;
-	Thu, 7 Jul 2011 11:53:39 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p679rHLY026069;
-	Thu, 7 Jul 2011 11:53:17 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <CACBZZX4dP-OsrZ3wBOeSkzDFy6XBgeY=eqJUF2acyLC8W-3Vpg@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        bh=/J/lSmGSw0zSSjtPPgNwRIy4/zT9SeP5ZstYGXfZQN0=;
+        b=O3YHwRCzRXyoxHxMNKPGCmNq2Lc91byXWOvFHTXEURJ5pY6vzwT/MEXh2DItE9+AW0
+         mH+94YXQ4/l2PvvGrieDm+Sz8wNO6bdfwC38Fzy4Fi732FA4yyUyZBqSaY8bu12BwsBa
+         MtYbU2Mkj7JPy/q3T+0cYf30XCWIeNmRjFHoA=
+Received: by 10.229.41.136 with SMTP id o8mr478624qce.83.1310035651164; Thu,
+ 07 Jul 2011 03:47:31 -0700 (PDT)
+Received: by 10.229.212.206 with HTTP; Thu, 7 Jul 2011 03:47:31 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176753>
 
-Remove all fuzzy translations by either correcting them where trivial,
-or removing them altogether.
+Hi,
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+I'm getting a strange error from git-fast-import.
+Tested on v1.7.5 and v1.7.6 on two machines (gentoo amd64 8gb ram,
+3-core amd cpu; gentoo x86 2gb ram, 1-core intel mobile cpu).
+The crash is stable - same message, instruction and deepest function
+(patch_delta) parameters contents.
+
+$ git fast-import --quiet < big_dump
+fatal: failed to apply delta
+fast-import: dumping crash report to fast_import_crash_7700
+
+Where big_dump is produced by svn-fe, 3.3Gb, 43404 sequential commits
+(in fact 43403, 43404th causes a crash in the middle) to a single
+branch with a "mark" and "progress" commands for each commit.
+Crash report doesn't give much hints:
+The last commands are
+commit refs/heads/master
+mark :43404
+committer ...
+data 53
+[a few "ls ..." & "M 100644 ...", one "M 100755 ..."]
+  ls :43402 incubator/directory/seda/trunk/impl/src/java/org/apache/seda/processor/RequestProcessorMonitorAdapter.java
+* M 100644 64d6fb598ba6b6a3f8418e62ea9bceb0cefe4481
+incubator/directory/seda/trunk/api/src/java/org/apache/seda/protocol/RequestProcessorMonitorAdapter.java
+
+The failure is in sha1_file.c:unpack_delta_entry on unpacking
+something like depth=7 tree on the path to that file.
+
+And the failure comes from:
+void *patch_delta(const void *src_buf, unsigned long src_size,
+                  const void *delta_buf, unsigned long delta_size,
+                  unsigned long *dst_size)
+...
+        size = get_delta_hdr_size(&data, top);
+        if (size != src_size)
+                return NULL;
+
+Where size is arount 590(don't remember, can gdb again if needed or it
+can be extracted from the dumped delta_data), and src_size is 396. One
+can inspect the parameters with a program at the bottom of this email.
+
+I tried to add a "checkpoint" command before the failing commit - no effect.
+And then I split the dump, imported commits that don't fail, with
+--export-marks, run fast-import --import-marks on the remaining commit
+dump and it didn't fail.
+
+This looks strange to me.
+Shouldn't checkpoint dump everything on the disk and have the same
+effect as splitting the stream?
+It doesn't look like an interrupted read of object because src_size is
+always the same.
+
+On a split run there is no delta resolution that visually looks like
+the problematic one, the one that suits most has different base_size,
+delta_size, delta_data is completely different and src_datas have some
+common prefix of 14 bytes.
+
+Any advices on debugging this?
+I'll try valgrind for now.
+
 ---
-Only corrected translations that were trivial, trying not to introduce
-any new words / phrases, because I don't know what should be Polish
-translations of English terminology.
+test-apply-delta.c:
+#include "git-compat-util.h"
+#include "delta.h"
 
-=2E..
-The following changes since commit ceb58337358d93caae779b33daf6d7fd58cc=
-df23:
+static const size_t base_size = 396;
+static const unsigned char base_data[397] =
+"\x31\x30\x30\x36\x34\x34\x20\x48\x61\x6E\x64\x6C\x65\x72\x54\x79\x70\x65\x45\x6E\x75\x6D\x2E\x6A\x61\x76\x61\x0\x9D\xF4\x1\x98\xF4\x69\x73\x58\x5\xCD\xC9\x5E\x19\x8E\xD0\x9E\x52\x3D\xA3\x4A\x31\x30\x30\x37\x35\x35\x20\x49\x6E\x65\x74\x53\x65\x72\x76\x69\x63\x65\x45\x6E\x74\x72\x79\x2E\x6A\x61\x76\x61\x0\x2\xA1\x5\x42\x84\xC5\xD0\x36\xFB\x20\x4F\x26\x59\x73\x8F\x8F\x49\x62\x19\x33\x31\x30\x30\x36\x34\x34\x20\x49\x6E\x65\x74\x53\x65\x72\x76\x69\x63\x65\x50\x72\x6F\x76\x69\x64\x65\x72\x2E\x6A\x61\x76\x61\x0\xAC\x24\xC6\x28\x6\x4\xD5\xC5\x4F\xF7\xE0\xBC\x97\x51\xF4\x55\xE5\x76\x17\x22\x31\x30\x30\x37\x35\x35\x20\x49\x6E\x65\x74\x53\x65\x72\x76\x69\x63\x65\x73\x44\x61\x74\x61\x62\x61\x73\x65\x2E\x6A\x61\x76\x61\x0\x6B\x49\x6F\x2E\x48\xDC\xF7\xB7\xD4\x7D\x2C\xFE\x97\xC8\xB\xF1\x39\x8B\x49\xFA\x
+ 31\x30\x30\x36\x34\x34\x20\x4D\x61\x6E\x79\x52\x65\x70\x6C\x79\x48\x61\x6E\x64\x6C\x65\x72\x2E\x6A\x61\x76\x61\x0\x50\xA0\x5B\x3A\x3\xDF\x8B\x8C\x6E\xE4\x79\x3E\xCA\xF6\x90\x48\xDB\xF3\xE9\x1B\x31\x30\x30\x36\x34\x34\x20\x4E\x6F\x52\x65\x70\x6C\x79\x48\x61\x6E\x64\x6C\x65\x72\x2E\x6A\x61\x76\x61\x0\x2F\x90\x8D\xC3\x6D\x8F\x6F\x49\xCC\x38\xF\x51\x4C\x9F\xD8\x2F\x58\x7D\x54\x41\x31\x30\x30\x36\x34\x34\x20\x52\x65\x71\x75\x65\x73\x74\x48\x61\x6E\x64\x6C\x65\x72\x2E\x6A\x61\x76\x61\x0\x13\x66\x67\x26\x2B\x4F\x84\xBF\x97\xC0\x4E\x5F\xEB\x90\x97\xC0\xF8\x72\x10\x75\x31\x30\x30\x36\x34\x34\x20\x53\x69\x6E\x67\x6C\x65\x52\x65\x70\x6C\x79\x48\x61\x6E\x64\x6C\x65\x72\x2E\x6A\x61\x76\x61\x0\xD7\x91\xF0\x9C\x25\xAE\x1E\x4F\xD8\x2\x47\x31\x37\x96\x70\x7E\x5\xCF\x49\x0";
+static const size_t delta_size = 333;
+static const unsigned char delta_data[334] =
+"\xCF\x4\xCF\x4\x90\x1C\x14\xC5\x4F\x12\xA1\x4\xB1\x2D\xD6\xFE\xE9\x44\x66\x9A\xC\x99\x47\x74\xD7\x6C\xC7\x91\x30\x1D\x14\xAF\x4B\x19\xC8\xA3\x8B\xCC\x5C\x3E\x3C\xDA\xF6\xC4\x1C\x78\xF6\x86\xB3\x74\x56\x91\x61\x20\x14\x97\xE8\x87\xB8\xE6\x5A\x45\xB5\x33\x60\xB4\xBA\x87\x7F\xD7\x3B\x80\xA2\x61\x4B\x91\x95\x21\x14\x5\xF3\xED\xFD\xED\x9A\x85\xC2\x12\x23\x76\xCF\xCC\xF\x41\x39\xAA\xEB\x8D\xC1\x91\xCA\x1D\x14\x18\x9F\xB7\x73\xF0\x34\x90\xE4\x50\xA2\xA\x16\x53\x24\x33\xD\x94\x79\xE6\xDE\x91\xFB\x1B\x14\x9B\xC8\x11\x8\x8F\xA9\x7A\x3E\xF7\x16\xE\xDC\x38\x89\xC2\x4D\x93\x78\x16\xCE\x93\x2A\x1\x1B\x14\x83\x13\x6C\xDD\x24\x42\x7B\x36\x7\x77\x7D\x60\x28\x4D\xD1\x80\xDC\xC9\x27\x94\x93\x59\x1\x1D\x14\x1A\x9\x4E\x5E\xEF\x7\x35\x63\xCD\x71\xE9\x70\xBD\xF6\xC0\x27\xEE\x51\x2C\x29\x93\x8A\x1\x24\x7F\x49\x6
+ D\x4B\x33\x55\x49\x95\xC0\x3D\x38\xDF\xA3\xF4\x6D\xBB\x67\x98\xB\xB9\xC1\x31\x30\x30\x36\x34\x34\x20\x53\x69\x6E\x67\x6C\x65\x52\x65\x70\x6C\x79\x48\x61\x6E\x64\x6C\x65\x72\x2E\x6A\x61\x76\x61\x0\x95\x72\x6A\xDA\x7B\x82\xFF\xFC\xD3\xD\x61\x63\xFF\x7A\x46\x34\x8F\x4\xFC\x13\x31\x30\x30\x37\x35\x35\x20\x54\x72\x61\x6E\x73\x70\x6F\x72\x74\x54\x79\x70\x65\x45\x6E\x75\x6D\x2E\x6A\x61\x76\x61\x0\x11\x6E\x4C\xF4\xCB\x97\xCF\x30\x1B\x93\xB3\xA7\x92\x4F\xE9\xB3\x46\xAF\xE3\x2\x31\x30\x30\x36\x34\x34\x93\x2D\x2\x22";
 
-  en_GB is OK now (2011-07-06 19:24:58 +0000)
+static long unsigned result_size;
+static long unsigned *result_size_p = &result_size;
+static void *result = NULL;
 
-are available in the git repository at:
-  git@github.com:jnareb/git.git i18n-po.pl
-
-Jakub Narebski (1):
-      po/pl.po: Eliminate fuzzy translations
-
- po/pl.po |  208 ++++++++++++++++++++++++++++++++++--------------------=
---------
- 1 files changed, 114 insertions(+), 94 deletions(-)
-
-diff --git a/po/pl.po b/po/pl.po
-index f7f2129..414c881 100644
---- a/po/pl.po
-+++ b/po/pl.po
-@@ -3,13 +3,45 @@
- # This file is distributed under the same license as the Git package.
- # Marcin Cie=B6lak <saper@saper.info>, 2010.
- #
-+# Terminologia dla kluczowych termin=F3w z Subversion:
-+# path - =B6cie=BFka
-+# URL - URL
-+# file - plik
-+# directory - katalog
-+# update - aktualizacja
-+# commit - zatwierdzenie, zatwierdzenie zmian
-+# version control - zarz=B1dzanie wersjami
-+# repository - repozytorium
-+# branch - odga=B3=EAzienie
-+# tag - tag
-+# merge - =B3=B1czenie zmian
-+# conflict - konflikt
-+# property - atrybut
-+# revision - wersja
-+# log message - opis zmian
-+# entry/item - element
-+# ancestry - pochodzenie
-+# ancestor - przodek
-+# working copy - kopia robocza
-+# working dir - bie=BF=B1cy katalog
-+# usage - wykorzystanie
-+# source - =BCr=F3d=B3owy
-+# destination - docelowy
-+# hook - skrypt (skrypt repozytorium)
-+# exclude - wykluczy=E6
-+# crop - obci=B1=E6
-+# cache - pami=EA=E6 podr=EAczna
-+# child - obiekt podrz=EAdny
-+# obliteration - obliteracja
-+# patch - =B3ata
-+# notes - adnotacja
- msgid ""
- msgstr ""
- "Project-Id-Version: Git\n"
- "Report-Msgid-Bugs-To: Git Mailing List <git@vger.kernel.org>\n"
- "POT-Creation-Date: 2011-07-06 19:20+0000\n"
--"PO-Revision-Date: 2010-08-30 17:02+0200\n"
--"Last-Translator: Marcin Cie=B6lak <saper@saper.info>\n"
-+"PO-Revision-Date: 2011-07-07 10:53+0200\n"
-+"Last-Translator: Jakub Nar=EAbski <jnareb@gmail.com>\n"
- "Language-Team: Git Mailing List <git@vger.kernel.org>\n"
- "Language: pl\n"
- "MIME-Version: 1.0\n"
-@@ -24,9 +56,9 @@ msgid "  Failed to parse dirstat cut-off percentage '=
-%.*s'\n"
- msgstr ""
-=20
- #: diff.c:109
--#, fuzzy, c-format
-+#, c-format
- msgid "  Unknown dirstat parameter '%.*s'\n"
--msgstr "nie mog=EA tkn=B1=E6 szablonu '%s'"
-+msgstr "  Nieznany argument '%.*s' opcji '--dirstat'\n"
-=20
- #: diff.c:205
- #, c-format
-@@ -192,9 +224,8 @@ msgid "Not currently on any branch."
- msgstr ""
-=20
- #: wt-status.c:731
--#, fuzzy
- msgid "Initial commit"
--msgstr "Utworzy=B3em puste"
-+msgstr ""
-=20
- #: wt-status.c:745
- msgid "Untracked"
-@@ -315,14 +346,13 @@ msgid "Could not open '%s' for writing."
- msgstr ""
-=20
- #: builtin/add.c:288
--#, fuzzy
- msgid "Could not write patch"
--msgstr "Nie mog=EA da=E6 prawa zapisu grupie w %s"
-+msgstr ""
-=20
- #: builtin/add.c:293
--#, fuzzy, c-format
-+#, c-format
- msgid "Could not stat '%s'"
--msgstr "nie mog=EA tkn=B1=E6 '%s'"
-+msgstr "Nie mo=BFna wykona=E6 stat na '%s'"
-=20
- #: builtin/add.c:295
- msgid "Empty patch. Aborted."
-@@ -427,9 +457,8 @@ msgid "remote "
- msgstr ""
-=20
- #: builtin/branch.c:169
--#, fuzzy
- msgid "cannot use -a with -d"
--msgstr "nie wiem w kt=F3rym katalogu jestem"
-+msgstr "nie mo=BFna u=BFy=E6 opcji -a z opcj=B1 -d"
-=20
- #: builtin/branch.c:175
- msgid "Couldn't look up commit object for HEAD"
-@@ -619,9 +648,9 @@ msgid "you need to resolve your current index first=
-"
- msgstr ""
-=20
- #: builtin/checkout.c:527
--#, fuzzy, c-format
-+#, c-format
- msgid "Can not do reflog for '%s'\n"
--msgstr "nie mog=EA otworzy=E6 katalogu '%s'"
-+msgstr "Nie mo=BFna utworzy=E6 reflog dla '%s'\n"
-=20
- #: builtin/checkout.c:557
- msgid "HEAD is now at"
-@@ -720,9 +749,8 @@ msgid "--detach cannot be used with -b/-B/--orphan"
- msgstr ""
-=20
- #: builtin/checkout.c:979
--#, fuzzy
- msgid "--detach cannot be used with -t"
--msgstr "nie wiem w kt=F3rym katalogu jestem"
-+msgstr "--detach nie mo=BFe by=E6 u=BFyte z -t"
-=20
- #: builtin/checkout.c:985
- msgid "--track needs a branch name"
-@@ -813,9 +841,9 @@ msgid "Removing %s\n"
- msgstr ""
-=20
- #: builtin/clean.c:161 builtin/clean.c:181
--#, fuzzy, c-format
-+#, c-format
- msgid "failed to remove %s"
--msgstr "nie mog=EA otworzy=E6 katalogu '%s'"
-+msgstr "nie mog=EA usun=B1=E6 '%s'"
-=20
- #: builtin/clean.c:165
- #, c-format
-@@ -833,24 +861,24 @@ msgid "reference repository '%s' is not a local d=
-irectory."
- msgstr ""
-=20
- #: builtin/clone.c:241
--#, fuzzy, c-format
-+#, c-format
- msgid "failed to open '%s'"
--msgstr "nie mog=EA otworzy=E6 katalogu '%s'"
-+msgstr "nie mog=EA otworzy=E6 '%s'"
-=20
- #: builtin/clone.c:245
--#, fuzzy, c-format
-+#, c-format
- msgid "failed to create directory '%s'"
--msgstr "beznadziejny katalog gita %s"
-+msgstr "nie mog=EA utworzy=E6 katalogu '%s'"
-=20
- #: builtin/clone.c:247 builtin/diff.c:74
--#, fuzzy, c-format
-+#, c-format
- msgid "failed to stat '%s'"
--msgstr "nie mog=EA tkn=B1=E6 '%s'"
-+msgstr "nie mog=EA wykona=E6 stat na '%s'"
-=20
- #: builtin/clone.c:249
--#, fuzzy, c-format
-+#, c-format
- msgid "%s exists and is not a directory"
--msgstr "beznadziejny katalog gita %s"
-+msgstr "%s istnieje i nie jest katalogiem"
-=20
- #: builtin/clone.c:263
- #, c-format
-@@ -863,14 +891,14 @@ msgid "failed to unlink '%s'"
- msgstr ""
-=20
- #: builtin/clone.c:278
--#, fuzzy, c-format
-+#, c-format
- msgid "failed to create link '%s'"
--msgstr "readlink nie zadzia=B3a=B3o dla '%s'"
-+msgstr "nie mog=EA utworzy=E6 dowi=B1zania '%s'"
-=20
- #: builtin/clone.c:282
--#, fuzzy, c-format
-+#, c-format
- msgid "failed to copy file to '%s'"
--msgstr "nie mog=EA skopiowa=E6 '%s' to '%s'"
-+msgstr "nie mog=EA skopiowa=E6 pliku do '%s'"
-=20
- #: builtin/clone.c:311
- #, c-format
-@@ -915,9 +943,9 @@ msgid "could not create leading directories of '%s'=
-"
- msgstr ""
-=20
- #: builtin/clone.c:461
--#, fuzzy, c-format
-+#, c-format
- msgid "could not create work tree dir '%s'."
--msgstr "Nie mog=EA dosta=E6 si=EA do drzewa roboczego '%s'"
-+msgstr "nie mog=EA utworzy=E6 katalogu roboczego '%s'"
-=20
- #: builtin/clone.c:480
- #, c-format
-@@ -983,9 +1011,8 @@ msgid "failed to unpack HEAD tree object"
- msgstr ""
-=20
- #: builtin/commit.c:359
--#, fuzzy
- msgid "unable to create temporary index"
--msgstr "beznadziejny katalog gita %s"
-+msgstr "nie mog=EA utworzy=E6 tymczasowego indeksu"
-=20
- #: builtin/commit.c:365
- msgid "interactive add failed"
-@@ -1001,9 +1028,8 @@ msgid "cannot do a partial commit during a %s."
- msgstr ""
-=20
- #: builtin/commit.c:456
--#, fuzzy
- msgid "cannot read the index"
--msgstr "readlink nie zadzia=B3a=B3o dla '%s'"
-+msgstr "nie mog=EA odczyta=E6 indeksu"
-=20
- #: builtin/commit.c:476
- msgid "unable to write temporary index file"
-@@ -1042,9 +1068,9 @@ msgid "could not read log from standard input"
- msgstr ""
-=20
- #: builtin/commit.c:674
--#, fuzzy, c-format
-+#, c-format
- msgid "could not read log file '%s'"
--msgstr "readlink nie zadzia=B3a=B3o dla '%s'"
-+msgstr ""
-=20
- #: builtin/commit.c:680
- msgid "commit has empty message"
-@@ -1059,14 +1085,14 @@ msgid "could not read SQUASH_MSG"
- msgstr ""
-=20
- #: builtin/commit.c:704
--#, fuzzy, c-format
-+#, c-format
- msgid "could not read '%s'"
--msgstr "readlink nie zadzia=B3a=B3o dla '%s'"
-+msgstr "nie mo=BFna odczyta=E6 '%s'"
-=20
- #: builtin/commit.c:732
--#, fuzzy, c-format
-+#, c-format
- msgid "could not open '%s'"
--msgstr "nie mog=EA otworzy=E6 katalogu '%s'"
-+msgstr "nie mog=EA otworzy=E6 '%s'"
-=20
- #: builtin/commit.c:756
- msgid "could not write commit template"
-@@ -1110,9 +1136,8 @@ msgid "%sCommitter: %s"
- msgstr ""
-=20
- #: builtin/commit.c:829
--#, fuzzy
- msgid "Cannot read index"
--msgstr "readlink nie zadzia=B3a=B3o dla '%s'"
-+msgstr "Nie mog=EA odczyta=E6 indeksu"
-=20
- #: builtin/commit.c:869
- msgid "Error building trees"
-@@ -1272,9 +1297,9 @@ msgid "%s is not a valid '%s' object"
- msgstr ""
-=20
- #: builtin/describe.c:287
--#, fuzzy, c-format
-+#, c-format
- msgid "no tag exactly matches '%s'"
--msgstr "nie mog=EA tkn=B1=E6 szablonu '%s'"
-+msgstr "nie znaleziono taga kt=F3ry dok=B3adnie pasuje do '%s'"
-=20
- #: builtin/describe.c:289
- #, c-format
-@@ -1363,9 +1388,9 @@ msgid "Couldn't find remote ref HEAD"
- msgstr ""
-=20
- #: builtin/fetch.c:252
--#, fuzzy, c-format
-+#, c-format
- msgid "object %s not found"
--msgstr "nie znaleziono szablon=F3w %s"
-+msgstr "nie znaleziono obiektu %s"
-=20
- #: builtin/fetch.c:257
- msgid "[up to date]"
-@@ -1413,9 +1438,9 @@ msgid "(non-fast-forward)"
- msgstr ""
-=20
- #: builtin/fetch.c:361 builtin/fetch.c:684
--#, fuzzy, c-format
-+#, c-format
- msgid "cannot open %s: %s\n"
--msgstr "nie mog=EA otworzy=E6 katalogu '%s'"
-+msgstr "nie mog=EA otworzy=E6 %s: %s\n"
-=20
- #: builtin/fetch.c:439
- #, c-format
-@@ -1528,9 +1553,9 @@ msgid "Too many options specified"
- msgstr ""
-=20
- #: builtin/gc.c:103
--#, fuzzy, c-format
-+#, c-format
- msgid "insanely long object directory %.*s"
--msgstr "beznadziejny katalog gita %s"
-+msgstr ""
-=20
- #: builtin/gc.c:223
- #, c-format
-@@ -1590,9 +1615,9 @@ msgid "switch `%c' expects a numerical value"
- msgstr ""
-=20
- #: builtin/grep.c:691
--#, fuzzy, c-format
-+#, c-format
- msgid "cannot open '%s'"
--msgstr "nie mog=EA otworzy=E6 katalogu '%s'"
-+msgstr "nie mog=EA otworzy=E6 '%s'"
-=20
- #: builtin/grep.c:974
- msgid "no pattern given."
-@@ -1701,14 +1726,14 @@ msgid "unable to handle file type %d"
- msgstr ""
-=20
- #: builtin/init-db.c:357
--#, fuzzy, c-format
-+#, c-format
- msgid "unable to move %s to %s"
--msgstr "nie mog=EA skopiowa=E6 '%s' to '%s'"
-+msgstr "nie mog=EA przenie=B6=E6 %s do %s"
-=20
- #: builtin/init-db.c:362
--#, fuzzy, c-format
-+#, c-format
- msgid "Could not create git link %s"
--msgstr "readlink nie zadzia=B3a=B3o dla '%s'"
-+msgstr "Nie mog=EA utworzy=E6 git-dowi=B1zania %s"
-=20
- #.
- #. * TRANSLATORS: The first '%s' is either "Reinitialized
-@@ -1793,9 +1818,9 @@ msgid "name of output directory is too long"
- msgstr ""
-=20
- #: builtin/log.c:688
--#, fuzzy, c-format
-+#, c-format
- msgid "Cannot open patch file %s"
--msgstr "nie mog=EA otworzy=E6 katalogu '%s'"
-+msgstr "Nie mog=EA otworzy=E6 pliku =B3aty %s"
-=20
- #: builtin/log.c:702
- msgid "Need exactly one range."
-@@ -1814,9 +1839,9 @@ msgid "Cover letter needs email format"
- msgstr ""
-=20
- #: builtin/log.c:872
--#, fuzzy, c-format
-+#, c-format
- msgid "insane in-reply-to: %s"
--msgstr "beznadziejny katalog gita %s"
-+msgstr "niepoprawne in-reply-to: %s"
-=20
- #: builtin/log.c:945
- msgid "Two output directories?"
-@@ -1983,14 +2008,14 @@ msgstr ""
-=20
- #: builtin/merge.c:841 builtin/merge.c:920 builtin/merge.c:1427
- #: builtin/merge.c:1436 builtin/revert.c:210
--#, fuzzy, c-format
-+#, c-format
- msgid "Could not open '%s' for writing"
--msgstr "Nie mog=EA da=E6 prawa zapisu grupie w %s"
-+msgstr "Nie mog=EA otworzy=E6 '%s' do zapisu"
-=20
- #: builtin/merge.c:852
--#, fuzzy, c-format
-+#, c-format
- msgid "Could not read from '%s'"
--msgstr "readlink nie zadzia=B3a=B3o dla '%s'"
-+msgstr "Nie mog=EA czyta=E6 z '%s'"
-=20
- #: builtin/merge.c:869
- #, c-format
-@@ -2123,9 +2148,9 @@ msgid "Automatic merge went well; stopped before =
-committing as requested\n"
- msgstr ""
-=20
- #: builtin/mv.c:103
--#, fuzzy, c-format
-+#, c-format
- msgid "Checking rename of '%s' to '%s'\n"
--msgstr "nie mog=EA skopiowa=E6 '%s' to '%s'"
-+msgstr "Sprawdzanie zmiany nazwy z '%s' na '%s'\n"
-=20
- #: builtin/mv.c:107
- msgid "bad source"
-@@ -2204,9 +2229,9 @@ msgid "failed to finish 'show' for object '%s'"
- msgstr ""
-=20
- #: builtin/notes.c:175 builtin/tag.c:303
--#, fuzzy, c-format
-+#, c-format
- msgid "could not create file '%s'"
--msgstr "readlink nie zadzia=B3a=B3o dla '%s'"
-+msgstr "nie mog=EA utworzy=E6 pliku '%s'"
-=20
- #: builtin/notes.c:189
- msgid "Please supply the note contents using either -m or -F option"
-@@ -2227,14 +2252,14 @@ msgid "The note contents has been left in %s"
- msgstr ""
-=20
- #: builtin/notes.c:251 builtin/tag.c:448
--#, fuzzy, c-format
-+#, c-format
- msgid "cannot read '%s'"
--msgstr "readlink nie zadzia=B3a=B3o dla '%s'"
-+msgstr "nie mo=BFna odczyta=E6 '%s'"
-=20
- #: builtin/notes.c:253 builtin/tag.c:451
--#, fuzzy, c-format
-+#, c-format
- msgid "could not open or read '%s'"
--msgstr "nie mog=EA otworzy=E6 katalogu '%s'"
-+msgstr "nie mog=EA otworzy=E6 ani odczyta=E6 '%s'"
-=20
- #: builtin/notes.c:272 builtin/notes.c:445 builtin/notes.c:447
- #: builtin/notes.c:507 builtin/notes.c:561 builtin/notes.c:644
-@@ -2276,9 +2301,9 @@ msgid "Malformed input line: '%s'."
- msgstr ""
-=20
- #: builtin/notes.c:456
--#, fuzzy, c-format
-+#, c-format
- msgid "Failed to copy notes from '%s' to '%s'"
--msgstr "nie mog=EA skopiowa=E6 '%s' to '%s'"
-+msgstr "Nie uda=B3o si=EA skopiowa=E6 adnotacji z '%s' do '%s'"
-=20
- #: builtin/notes.c:500 builtin/notes.c:554 builtin/notes.c:627
- #: builtin/notes.c:639 builtin/notes.c:712 builtin/notes.c:759
-@@ -2687,9 +2712,9 @@ msgid "tag name too long: %.*s..."
- msgstr ""
-=20
- #: builtin/tag.c:126
--#, fuzzy, c-format
-+#, c-format
- msgid "tag '%s' not found."
--msgstr "nie znaleziono szablon=F3w %s"
-+msgstr "nie znaleziono tagu '%s'."
-=20
- #: builtin/tag.c:141
- #, c-format
-@@ -3027,9 +3052,9 @@ msgid "No logfile given"
- msgstr ""
-=20
- #: git-bisect.sh:372
--#, fuzzy, sh-format
-+#, sh-format
- msgid "cannot read $file for replaying"
--msgstr "readlink nie zadzia=B3a=B3o dla '%s'"
-+msgstr ""
-=20
- #: git-bisect.sh:388
- msgid "?? what are you talking about?"
-@@ -3106,14 +3131,12 @@ msgid "You do not have the initial commit yet"
- msgstr ""
-=20
- #: git-stash.sh:80
--#, fuzzy
- msgid "Cannot save the current index state"
--msgstr "Nie mog=EA dobra=E6 si=EA do bie=BF=B1cego katalogu"
-+msgstr "Nie mog=EA zapisa=E6 bie=BF=B1cego stanu indeksu"
-=20
- #: git-stash.sh:94 git-stash.sh:107
--#, fuzzy
- msgid "Cannot save the current worktree state"
--msgstr "Nie mog=EA dobra=E6 si=EA do bie=BF=B1cego katalogu"
-+msgstr "Nie mog=EA zapisa=E6 bie=BF=B1cego stanu katalogu roboczego"
-=20
- #: git-stash.sh:111
- msgid "No changes selected"
-@@ -3124,9 +3147,8 @@ msgid "Cannot remove temporary index (can't happe=
-n)"
- msgstr ""
-=20
- #: git-stash.sh:127
--#, fuzzy
- msgid "Cannot record working tree state"
--msgstr "Nie mog=EA dosta=E6 si=EA do drzewa roboczego '%s'"
-+msgstr ""
-=20
- #: git-stash.sh:182
- msgid "No local changes to save"
-@@ -3141,9 +3163,8 @@ msgid "Cannot save the current status"
- msgstr ""
-=20
- #: git-stash.sh:207
--#, fuzzy
- msgid "Cannot remove worktree changes"
--msgstr "Nie mog=EA dosta=E6 si=EA do drzewa roboczego '%s'"
-+msgstr "Nie mog=EA usun=B1=E6 zmian w katalogu roboczym"
-=20
- #: git-stash.sh:302
- msgid "No stash found."
-@@ -3182,9 +3203,8 @@ msgid "Conflicts in index. Try without --index."
- msgstr ""
-=20
- #: git-stash.sh:373
--#, fuzzy
- msgid "Could not save index tree"
--msgstr "Nie mog=EA da=E6 prawa zapisu grupie w %s"
-+msgstr ""
-=20
- #: git-stash.sh:399
- msgid "Cannot unstage modified files"
-@@ -3238,9 +3258,9 @@ msgid "repo URL: '$repo' must be absolute or begi=
-n with ./|../"
- msgstr ""
-=20
- #: git-submodule.sh:222
--#, fuzzy, sh-format
-+#, sh-format
- msgid "'$path' already exists in the index"
--msgstr "readlink nie zadzia=B3a=B3o dla '%s'"
-+msgstr "'$path' ju=BF jest w indeksie"
-=20
- #: git-submodule.sh:227
- #, sh-format
-@@ -3256,9 +3276,9 @@ msgid "Adding existing repo at '$path' to the ind=
-ex"
- msgstr ""
-=20
- #: git-submodule.sh:242
--#, fuzzy, sh-format
-+#, sh-format
- msgid "'$path' already exists and is not a valid git repo"
--msgstr "beznadziejny katalog gita %s"
-+msgstr "'$path' ju=BF istnieje i nie jest poprawnym repozytorium Gita"
-=20
- #: git-submodule.sh:265
- #, sh-format
---=20
-1.7.5
+int main() {
+	result = patch_delta(base_data, base_size, delta_data, delta_size,
+result_size_p);
+	return result == NULL ? 1 : 0;
+}
