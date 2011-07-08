@@ -1,7 +1,8 @@
 From: Josh Triplett <josh@joshtriplett.org>
-Subject: [PATCHv10 2/4] ref namespaces: infrastructure
-Date: Fri, 8 Jul 2011 16:13:10 -0700
-Message-ID: <4022201031d7e2ed11dd1a86e95762b6b468b10c.1310166525.git.josh@joshtriplett.org>
+Subject: [PATCHv10 3/4] ref namespaces: Support remote repositories via
+ upload-pack and receive-pack
+Date: Fri, 8 Jul 2011 16:13:32 -0700
+Message-ID: <d62c0f7c4b312d9964d754f0bb3cab0fbf76326a.1310166525.git.josh@joshtriplett.org>
 References: <cover.1310166525.git.josh@joshtriplett.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -11,34 +12,34 @@ Cc: Jamey Sharp <jamey@minilop.net>,
 	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
 	Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 09 01:13:37 2011
+X-From: git-owner@vger.kernel.org Sat Jul 09 01:13:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QfKEp-0001sS-V0
-	for gcvg-git-2@lo.gmane.org; Sat, 09 Jul 2011 01:13:36 +0200
+	id 1QfKF8-00022q-EX
+	for gcvg-git-2@lo.gmane.org; Sat, 09 Jul 2011 01:13:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751075Ab1GHXNb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jul 2011 19:13:31 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:58182 "EHLO
-	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750805Ab1GHXNa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jul 2011 19:13:30 -0400
+	id S1751357Ab1GHXNt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jul 2011 19:13:49 -0400
+Received: from relay3-d.mail.gandi.net ([217.70.183.195]:58130 "EHLO
+	relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750717Ab1GHXNs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jul 2011 19:13:48 -0400
 X-Originating-IP: 217.70.178.134
 Received: from mfilter4-d.gandi.net (mfilter4-d.gandi.net [217.70.178.134])
-	by relay4-d.mail.gandi.net (Postfix) with ESMTP id 12BC8172074;
-	Sat,  9 Jul 2011 01:13:29 +0200 (CEST)
+	by relay3-d.mail.gandi.net (Postfix) with ESMTP id 95CE2A8081;
+	Sat,  9 Jul 2011 01:13:47 +0200 (CEST)
 X-Virus-Scanned: Debian amavisd-new at mfilter4-d.gandi.net
-Received: from relay4-d.mail.gandi.net ([217.70.183.196])
+Received: from relay3-d.mail.gandi.net ([217.70.183.195])
 	by mfilter4-d.gandi.net (mfilter4-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id nbtl-8Xr1z9C; Sat,  9 Jul 2011 01:13:27 +0200 (CEST)
+	with ESMTP id 9f-WCgWc-d2R; Sat,  9 Jul 2011 01:13:45 +0200 (CEST)
 X-Originating-IP: 131.252.247.48
 Received: from leaf (host-247-48.pubnet.pdx.edu [131.252.247.48])
 	(Authenticated sender: josh@joshtriplett.org)
-	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 31A2617206D;
-	Sat,  9 Jul 2011 01:13:12 +0200 (CEST)
+	by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 7890CA805E;
+	Sat,  9 Jul 2011 01:13:33 +0200 (CEST)
 Content-Disposition: inline
 In-Reply-To: <cover.1310166525.git.josh@joshtriplett.org>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -46,250 +47,183 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176811>
 
-Add support for dividing the refs of a single repository into multiple
-namespaces, each of which can have its own branches, tags, and HEAD.
-Git can expose each namespace as an independent repository to pull from
-and push to, while sharing the object store, and exposing all the refs
-to operations such as git-gc.
+Change upload-pack and receive-pack to use the namespace-prefixed refs
+when working with the repository, and use the unprefixed refs when
+talking to the client, maintaining the masquerade.  This allows
+clone, pull, fetch, and push to work with a suitably configured
+GIT_NAMESPACE.
 
-Storing multiple repositories as namespaces of a single repository
-avoids storing duplicate copies of the same objects, such as when
-storing multiple branches of the same source.  The alternates mechanism
-provides similar support for avoiding duplicates, but alternates do not
-prevent duplication between new objects added to the repositories
-without ongoing maintenance, while namespaces do.
+receive-pack advertises refs outside the current namespace as .have refs
+(as it currently does for refs in alternates), so that the client can
+use them to minimize data transfer but will otherwise ignore them.
 
-To specify a namespace, set the GIT_NAMESPACE environment variable to
-the namespace.  For each ref namespace, git stores the corresponding
-refs in a directory under refs/namespaces/.  For example,
-GIT_NAMESPACE=foo will store refs under refs/namespaces/foo/.  You can
-also specify namespaces via the --namespace option to git.
-
-Note that namespaces which include a / will expand to a hierarchy of
-namespaces; for example, GIT_NAMESPACE=foo/bar will store refs under
-refs/namespaces/foo/refs/namespaces/bar/.  This makes paths in
-GIT_NAMESPACE behave hierarchically, so that cloning with
-GIT_NAMESPACE=foo/bar produces the same result as cloning with
-GIT_NAMESPACE=foo and cloning from that repo with GIT_NAMESPACE=bar.  It
-also avoids ambiguity with strange namespace paths such as
-foo/refs/heads/, which could otherwise generate directory/file conflicts
-within the refs directory.
-
-Add the infrastructure for ref namespaces: handle the GIT_NAMESPACE
-environment variable and --namespace option, and support iterating over
-refs in a namespace.
+With appropriate configuration, this also allows http-backend to expose
+namespaces as multiple repositories with different paths.  This only
+requires setting GIT_NAMESPACE, which http-backend passes through to
+upload-pack and receive-pack.
 
 Signed-off-by: Josh Triplett <josh@joshtriplett.org>
 Signed-off-by: Jamey Sharp <jamey@minilop.net>
 ---
- cache.h                                |    3 ++
- contrib/completion/git-completion.bash |    1 +
- environment.c                          |   41 ++++++++++++++++++++++++++++++++
- git.c                                  |   18 ++++++++++++-
- refs.c                                 |   25 +++++++++++++++++++
- refs.h                                 |    3 ++
- 6 files changed, 89 insertions(+), 2 deletions(-)
+ builtin/receive-pack.c |   40 ++++++++++++++++++++++++++++++++++------
+ upload-pack.c          |   15 ++++++++-------
+ 2 files changed, 42 insertions(+), 13 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index bc9e5eb..dc29ef3 100644
---- a/cache.h
-+++ b/cache.h
-@@ -380,6 +380,7 @@ static inline enum object_type object_type(unsigned int mode)
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index e1a687a..7de4841 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -120,9 +120,20 @@ static int show_ref(const char *path, const unsigned char *sha1, int flag, void
+ 	return 0;
  }
  
- #define GIT_DIR_ENVIRONMENT "GIT_DIR"
-+#define GIT_NAMESPACE_ENVIRONMENT "GIT_NAMESPACE"
- #define GIT_WORK_TREE_ENVIRONMENT "GIT_WORK_TREE"
- #define DEFAULT_GIT_DIR_ENVIRONMENT ".git"
- #define DB_ENVIRONMENT "GIT_OBJECT_DIRECTORY"
-@@ -420,6 +421,8 @@ extern char *get_object_directory(void);
- extern char *get_index_file(void);
- extern char *get_graft_file(void);
- extern int set_git_dir(const char *path);
-+extern const char *get_git_namespace(void);
-+extern const char *strip_namespace(const char *namespaced_ref);
- extern const char *get_git_work_tree(void);
- extern const char *read_gitfile_gently(const char *path);
- extern void set_git_work_tree(const char *tree);
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 5a83090..e0b936d 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2640,6 +2640,7 @@ _git ()
- 			--exec-path
- 			--html-path
- 			--work-tree=
-+			--namespace=
- 			--help
- 			"
- 			;;
-diff --git a/environment.c b/environment.c
-index 94d58fd..aad274b 100644
---- a/environment.c
-+++ b/environment.c
-@@ -8,6 +8,7 @@
-  * are.
-  */
- #include "cache.h"
-+#include "refs.h"
- 
- char git_default_email[MAX_GITNAME];
- char git_default_name[MAX_GITNAME];
-@@ -65,6 +66,9 @@ int core_preload_index = 0;
- char *git_work_tree_cfg;
- static char *work_tree;
- 
-+static const char *namespace;
-+static size_t namespace_len;
-+
- static const char *git_dir;
- static char *git_object_dir, *git_index_file, *git_graft_file;
- 
-@@ -86,6 +90,27 @@ const char * const local_repo_env[LOCAL_REPO_ENV_SIZE + 1] = {
- 	NULL
- };
- 
-+static char *expand_namespace(const char *raw_namespace)
++static int show_ref_cb(const char *path, const unsigned char *sha1, int flag, void *cb_data)
 +{
-+	struct strbuf buf = STRBUF_INIT;
-+	struct strbuf **components, **c;
-+
-+	if (!raw_namespace || !*raw_namespace)
-+		return xstrdup("");
-+
-+	strbuf_addstr(&buf, raw_namespace);
-+	components = strbuf_split(&buf, '/');
-+	strbuf_reset(&buf);
-+	for (c = components; *c; c++)
-+		if (strcmp((*c)->buf, "/") != 0)
-+			strbuf_addf(&buf, "refs/namespaces/%s", (*c)->buf);
-+	strbuf_list_free(components);
-+	if (check_ref_format(buf.buf) != CHECK_REF_FORMAT_OK)
-+		die("bad git namespace path \"%s\"", raw_namespace);
-+	strbuf_addch(&buf, '/');
-+	return strbuf_detach(&buf, NULL);
++	path = strip_namespace(path);
++	/* We advertise refs outside our current namespace as .have refs, so
++	 * that the client can use them to minimize data transfer but will
++	 * otherwise ignore them. */
++	if (!path)
++		path = ".have";
++	return show_ref(path, sha1, flag, cb_data);
 +}
 +
- static void setup_git_env(void)
+ static void write_head_info(void)
  {
- 	git_dir = getenv(GIT_DIR_ENVIRONMENT);
-@@ -111,6 +136,8 @@ static void setup_git_env(void)
- 		git_graft_file = git_pathdup("info/grafts");
- 	if (getenv(NO_REPLACE_OBJECTS_ENVIRONMENT))
- 		read_replace_refs = 0;
-+	namespace = expand_namespace(getenv(GIT_NAMESPACE_ENVIRONMENT));
-+	namespace_len = strlen(namespace);
- }
+-	for_each_ref(show_ref, NULL);
++	for_each_ref(show_ref_cb, NULL);
+ 	if (!sent_capabilities)
+ 		show_ref("capabilities^{}", null_sha1, 0, NULL);
  
- int is_bare_repository(void)
-@@ -131,6 +158,20 @@ const char *get_git_dir(void)
- 	return git_dir;
- }
+@@ -333,6 +344,8 @@ static void refuse_unconfigured_deny_delete_current(void)
+ static const char *update(struct command *cmd)
+ {
+ 	const char *name = cmd->ref_name;
++	struct strbuf namespaced_name_buf = STRBUF_INIT;
++	const char *namespaced_name;
+ 	unsigned char *old_sha1 = cmd->old_sha1;
+ 	unsigned char *new_sha1 = cmd->new_sha1;
+ 	struct ref_lock *lock;
+@@ -343,7 +356,10 @@ static const char *update(struct command *cmd)
+ 		return "funny refname";
+ 	}
  
-+const char *get_git_namespace(void)
-+{
-+	if (!namespace)
-+		setup_git_env();
-+	return namespace;
-+}
+-	if (is_ref_checked_out(name)) {
++	strbuf_addf(&namespaced_name_buf, "%s%s", get_git_namespace(), name);
++	namespaced_name = strbuf_detach(&namespaced_name_buf, NULL);
 +
-+const char *strip_namespace(const char *namespaced_ref)
-+{
-+	if (prefixcmp(namespaced_ref, get_git_namespace()) != 0)
-+		return NULL;
-+	return namespaced_ref + namespace_len;
-+}
-+
- static int git_work_tree_initialized;
++	if (is_ref_checked_out(namespaced_name)) {
+ 		switch (deny_current_branch) {
+ 		case DENY_IGNORE:
+ 			break;
+@@ -371,7 +387,7 @@ static const char *update(struct command *cmd)
+ 			return "deletion prohibited";
+ 		}
  
- /*
-diff --git a/git.c b/git.c
-index 8828c18..304522b 100644
---- a/git.c
-+++ b/git.c
-@@ -7,8 +7,8 @@
+-		if (!strcmp(name, head_name)) {
++		if (!strcmp(namespaced_name, head_name)) {
+ 			switch (deny_delete_current) {
+ 			case DENY_IGNORE:
+ 				break;
+@@ -427,14 +443,14 @@ static const char *update(struct command *cmd)
+ 			rp_warning("Allowing deletion of corrupt ref.");
+ 			old_sha1 = NULL;
+ 		}
+-		if (delete_ref(name, old_sha1, 0)) {
++		if (delete_ref(namespaced_name, old_sha1, 0)) {
+ 			rp_error("failed to delete %s", name);
+ 			return "failed to delete";
+ 		}
+ 		return NULL; /* good */
+ 	}
+ 	else {
+-		lock = lock_any_ref_for_update(name, old_sha1, 0);
++		lock = lock_any_ref_for_update(namespaced_name, old_sha1, 0);
+ 		if (!lock) {
+ 			rp_error("failed to lock %s", name);
+ 			return "failed to lock";
+@@ -491,17 +507,29 @@ static void run_update_post_hook(struct command *commands)
  
- const char git_usage_string[] =
- 	"git [--version] [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n"
--	"           [-p|--paginate|--no-pager] [--no-replace-objects]\n"
--	"           [--bare] [--git-dir=<path>] [--work-tree=<path>]\n"
-+	"           [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]\n"
-+	"           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n"
- 	"           [-c name=value] [--help]\n"
- 	"           <command> [<args>]";
- 
-@@ -126,6 +126,20 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 			setenv(GIT_DIR_ENVIRONMENT, cmd + 10, 1);
- 			if (envchanged)
- 				*envchanged = 1;
-+		} else if (!strcmp(cmd, "--namespace")) {
-+			if (*argc < 2) {
-+				fprintf(stderr, "No namespace given for --namespace.\n" );
-+				usage(git_usage_string);
-+			}
-+			setenv(GIT_NAMESPACE_ENVIRONMENT, (*argv)[1], 1);
-+			if (envchanged)
-+				*envchanged = 1;
-+			(*argv)++;
-+			(*argc)--;
-+		} else if (!prefixcmp(cmd, "--namespace=")) {
-+			setenv(GIT_NAMESPACE_ENVIRONMENT, cmd + 12, 1);
-+			if (envchanged)
-+				*envchanged = 1;
- 		} else if (!strcmp(cmd, "--work-tree")) {
- 			if (*argc < 2) {
- 				fprintf(stderr, "No directory given for --work-tree.\n" );
-diff --git a/refs.c b/refs.c
-index 8bf8bb6..6f313a9 100644
---- a/refs.c
-+++ b/refs.c
-@@ -782,6 +782,31 @@ int for_each_replace_ref(each_ref_fn fn, void *cb_data)
- 	return do_for_each_ref(NULL, "refs/replace/", fn, 13, 0, cb_data);
- }
- 
-+int head_ref_namespaced(each_ref_fn fn, void *cb_data)
-+{
+ static void check_aliased_update(struct command *cmd, struct string_list *list)
+ {
 +	struct strbuf buf = STRBUF_INIT;
-+	int ret = 0;
-+	unsigned char sha1[20];
-+	int flag;
-+
-+	strbuf_addf(&buf, "%sHEAD", get_git_namespace());
-+	if (resolve_ref(buf.buf, sha1, 1, &flag))
-+		ret = fn(buf.buf, sha1, flag, cb_data);
++	const char *dst_name;
+ 	struct string_list_item *item;
+ 	struct command *dst_cmd;
+ 	unsigned char sha1[20];
+ 	char cmd_oldh[41], cmd_newh[41], dst_oldh[41], dst_newh[41];
+ 	int flag;
+ 
+-	const char *dst_name = resolve_ref(cmd->ref_name, sha1, 0, &flag);
++	strbuf_addf(&buf, "%s%s", get_git_namespace(), cmd->ref_name);
++	dst_name = resolve_ref(buf.buf, sha1, 0, &flag);
 +	strbuf_release(&buf);
-+
-+	return ret;
-+}
-+
-+int for_each_namespaced_ref(each_ref_fn fn, void *cb_data)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	int ret;
-+	strbuf_addf(&buf, "%srefs/", get_git_namespace());
-+	ret = do_for_each_ref(NULL, buf.buf, fn, 0, 0, cb_data);
-+	strbuf_release(&buf);
-+	return ret;
-+}
-+
- int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
- 	const char *prefix, void *cb_data)
- {
-diff --git a/refs.h b/refs.h
-index 5de06e5..dfb086e 100644
---- a/refs.h
-+++ b/refs.h
-@@ -36,6 +36,9 @@ extern int for_each_tag_ref_submodule(const char *submodule, each_ref_fn fn, voi
- extern int for_each_branch_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data);
- extern int for_each_remote_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data);
  
-+extern int head_ref_namespaced(each_ref_fn fn, void *cb_data);
-+extern int for_each_namespaced_ref(each_ref_fn fn, void *cb_data);
+ 	if (!(flag & REF_ISSYMREF))
+ 		return;
+ 
++	dst_name = strip_namespace(dst_name);
++	if (!dst_name) {
++		rp_error("refusing update to broken symref '%s'", cmd->ref_name);
++		cmd->skip_update = 1;
++		cmd->error_string = "broken symref";
++		return;
++	}
 +
- static inline const char *has_glob_specials(const char *pattern)
+ 	if ((item = string_list_lookup(list, dst_name)) == NULL)
+ 		return;
+ 
+diff --git a/upload-pack.c b/upload-pack.c
+index ce5cbbe..267e5b1 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -641,16 +641,17 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
+ 		" side-band-64k ofs-delta shallow no-progress"
+ 		" include-tag multi_ack_detailed";
+ 	struct object *o = parse_object(sha1);
++	const char *refname_nons = strip_namespace(refname);
+ 
+ 	if (!o)
+ 		die("git upload-pack: cannot find object %s:", sha1_to_hex(sha1));
+ 
+ 	if (capabilities)
+-		packet_write(1, "%s %s%c%s%s\n", sha1_to_hex(sha1), refname,
++		packet_write(1, "%s %s%c%s%s\n", sha1_to_hex(sha1), refname_nons,
+ 			     0, capabilities,
+ 			     stateless_rpc ? " no-done" : "");
+ 	else
+-		packet_write(1, "%s %s\n", sha1_to_hex(sha1), refname);
++		packet_write(1, "%s %s\n", sha1_to_hex(sha1), refname_nons);
+ 	capabilities = NULL;
+ 	if (!(o->flags & OUR_REF)) {
+ 		o->flags |= OUR_REF;
+@@ -659,7 +660,7 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
+ 	if (o->type == OBJ_TAG) {
+ 		o = deref_tag(o, refname, 0);
+ 		if (o)
+-			packet_write(1, "%s %s^{}\n", sha1_to_hex(o->sha1), refname);
++			packet_write(1, "%s %s^{}\n", sha1_to_hex(o->sha1), refname_nons);
+ 	}
+ 	return 0;
+ }
+@@ -680,12 +681,12 @@ static void upload_pack(void)
  {
- 	return strpbrk(pattern, "?*[");
+ 	if (advertise_refs || !stateless_rpc) {
+ 		reset_timeout();
+-		head_ref(send_ref, NULL);
+-		for_each_ref(send_ref, NULL);
++		head_ref_namespaced(send_ref, NULL);
++		for_each_namespaced_ref(send_ref, NULL);
+ 		packet_flush(1);
+ 	} else {
+-		head_ref(mark_our_ref, NULL);
+-		for_each_ref(mark_our_ref, NULL);
++		head_ref_namespaced(mark_our_ref, NULL);
++		for_each_namespaced_ref(mark_our_ref, NULL);
+ 	}
+ 	if (advertise_refs)
+ 		return;
 -- 
 1.7.5.4
