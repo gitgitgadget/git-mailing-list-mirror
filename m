@@ -1,81 +1,78 @@
-From: Stephen Haberman <stephen@exigencecorp.com>
-Subject: Re: [PATCH] test overlapping ignore patterns
-Date: Fri, 8 Jul 2011 13:39:30 -0500
-Organization: Exigence
-Message-ID: <20110708133930.04b04a49@sh9>
-References: <21043430.post@talk.nabble.com>
-	<alpine.LFD.2.00.0812161450010.14014@localhost.localdomain>
-	<7viqpjra57.fsf@gitster.siamese.dyndns.org>
-	<1229620278-25152-1-git-send-email-git@drmicha.warpmail.net>
-	<1310062372893-6559395.post@n2.nabble.com>
-	<7vk4bsfy8c.fsf@alter.siamese.dyndns.org>
+From: Jan Engelhardt <jengelh@medozas.de>
+Subject: Re: Git's translations need to be updated for submission
+Date: Fri, 8 Jul 2011 21:45:09 +0200 (CEST)
+Message-ID: <alpine.LNX.2.01.1107082144240.23703@frira.zrqbmnf.qr>
+References: <CACBZZX4dP-OsrZ3wBOeSkzDFy6XBgeY=eqJUF2acyLC8W-3Vpg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 08 20:39:40 2011
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
+	=?UTF-8?Q?Marcin_Cie=C5=9Blak?= <saper@saper.info>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sam Reed <sam@reedyboy.net>
+To: =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 08 21:45:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QfFxk-0001pA-8Q
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Jul 2011 20:39:40 +0200
+	id 1QfGzI-0006CK-K0
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Jul 2011 21:45:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753246Ab1GHSjf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jul 2011 14:39:35 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:51568 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751600Ab1GHSje (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jul 2011 14:39:34 -0400
-Received: by yia27 with SMTP id 27so883946yia.19
-        for <git@vger.kernel.org>; Fri, 08 Jul 2011 11:39:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=exigencecorp.com; s=google;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :organization:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=q2E/74qCO8i8AmFW1aWNKfpP5zQH1VW2JQTkcU7OM20=;
-        b=dX87v8hrgL7EPIGjw6UWcUug0dUQAZ3wyUtdwjdvk822TBvDz34+FPNTr31iG949eS
-         6dBTClN5/7XUuocQ5bhQxsz7oe76sXwemuKnPrZ0PA3KwGShlt6/IoKQjEKO/qxT4qNF
-         +GjeJhT5uLNTXdj/XIyoRHTJRnPpOG1k/4YHU=
-Received: by 10.150.240.16 with SMTP id n16mr2211347ybh.278.1310150373164;
-        Fri, 08 Jul 2011 11:39:33 -0700 (PDT)
-Received: from sh9 (wsip-184-187-11-226.om.om.cox.net [184.187.11.226])
-        by mx.google.com with ESMTPS id l22sm3265208ybl.12.2011.07.08.11.39.31
-        (version=SSLv3 cipher=OTHER);
-        Fri, 08 Jul 2011 11:39:32 -0700 (PDT)
-In-Reply-To: <7vk4bsfy8c.fsf@alter.siamese.dyndns.org>
-X-Mailer: Claws Mail 3.7.9 (GTK+ 2.24.4; x86_64-pc-linux-gnu)
+	id S1753836Ab1GHTpM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Jul 2011 15:45:12 -0400
+Received: from seven.medozas.de ([188.40.89.202]:41921 "EHLO seven.medozas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752896Ab1GHTpL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jul 2011 15:45:11 -0400
+Received: by seven.medozas.de (Postfix, from userid 25121)
+	id E0DA621A05FF; Fri,  8 Jul 2011 21:45:09 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by seven.medozas.de (Postfix) with ESMTP id BFB9721A0277;
+	Fri,  8 Jul 2011 21:45:09 +0200 (CEST)
+In-Reply-To: <CACBZZX4dP-OsrZ3wBOeSkzDFy6XBgeY=eqJUF2acyLC8W-3Vpg@mail.gmail.com>
+User-Agent: Alpine 2.01 (LNX 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176804>
 
+On Wednesday 2011-07-06 21:34, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason w=
+rote:
 
-> Doesn't the first "*" tells us to not to look at the contents of one/
-> directory at all, so we that we do not have to waste time descending
-> into it?  We wouldn't even know what pathnames are underneath it, so
-> "!*.1" would not have any effect inside one/ at all, I think.
+>I was going to submit Git's po/*.po files from the i18n branch but I
+>found that while everything else has been cooking they've become out
+>of date:
+>
+>    $ parallel -v -k 'msgfmt --statistics {}' ::: *.po
+>    msgfmt --statistics de.po
+>    622 translated messages, 58 fuzzy translations, 21 untranslated me=
+ssages.
+>    msgfmt --statistics en_GB.po
+>    3 translated messages, 698 untranslated messages.
+>    msgfmt --statistics hi.po
+>    14 translated messages, 45 fuzzy translations, 642 untranslated me=
+ssages.
+>    msgfmt --statistics is.po
+>    24 translated messages, 36 fuzzy translations, 641 untranslated me=
+ssages.
+>    msgfmt --statistics pl.po
+>    24 translated messages, 46 fuzzy translations, 631 untranslated me=
+ssages.
+>    msgfmt --statistics sv.po
+>    531 translated messages, 80 fuzzy translations, 90 untranslated me=
+ssages.
+>
+>In particular the fuzzy translations have to be fixed (in some cases
+>they're completely wrong), and it would be nice to have the
+>untranslated messages translated.
 
-If that's the way the feature should work, that's fine.
+Please retrieve from
+	git://dev.medozas.de/git i18n
 
-I came across this thread via google referencing Linus's post from 2008
-which mentioned versioning only jpg files. I want to do the same sort of
-thing, but with a directory hierarchy.
-
-If I say "exclude *.jpg" in my root .gitignore file, that applies into
-sub directories, so I just assumed "exclude !*.jpg" would also apply to
-sub directories.
-
-Am I missing another way to accomplish this?
-
-I understand from an implementation perspective, skipping all
-subdirectories when you see "exlude *" is a smart thing to do, but
-perhaps it should only be done if there are no negative excludes that
-could bring items back into play?
-
-Thanks,
-Stephen
+for German.
