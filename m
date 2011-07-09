@@ -1,261 +1,87 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [RFC PATCH] revert: Persist per-session opts
-Date: Sat,  9 Jul 2011 15:41:58 +0000
-Message-ID: <1310226118-10201-2-git-send-email-artagnon@gmail.com>
-References: <1310226118-10201-1-git-send-email-artagnon@gmail.com>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jul 09 17:42:28 2011
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Git's translations need to be updated for submission
+Date: Sat, 9 Jul 2011 18:45:41 +0200
+Message-ID: <CACBZZX4=nD0j7S-3q97fa7iqXo_7-CGWnxwuA6X6g-bkhE7bmw@mail.gmail.com>
+References: <CACBZZX4dP-OsrZ3wBOeSkzDFy6XBgeY=eqJUF2acyLC8W-3Vpg@mail.gmail.com>
+	<alpine.LNX.2.01.1107082144240.23703@frira.zrqbmnf.qr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
+	=?UTF-8?Q?Marcin_Cie=C5=9Blak?= <saper@saper.info>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sam Reed <sam@reedyboy.net>
+To: Jan Engelhardt <jengelh@medozas.de>
+X-From: git-owner@vger.kernel.org Sat Jul 09 18:45:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QfZfj-00089Y-OX
-	for gcvg-git-2@lo.gmane.org; Sat, 09 Jul 2011 17:42:24 +0200
+	id 1Qfaf6-0006Kn-I5
+	for gcvg-git-2@lo.gmane.org; Sat, 09 Jul 2011 18:45:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754518Ab1GIPmE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Jul 2011 11:42:04 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:48202 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754384Ab1GIPmC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jul 2011 11:42:02 -0400
-Received: by mail-vw0-f46.google.com with SMTP id 1so1974456vws.19
-        for <git@vger.kernel.org>; Sat, 09 Jul 2011 08:42:02 -0700 (PDT)
+	id S1753953Ab1GIQpn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Jul 2011 12:45:43 -0400
+Received: from mail-fx0-f52.google.com ([209.85.161.52]:45917 "EHLO
+	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753779Ab1GIQpm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Jul 2011 12:45:42 -0400
+Received: by fxd18 with SMTP id 18so2828998fxd.11
+        for <git@vger.kernel.org>; Sat, 09 Jul 2011 09:45:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=h8aZPqN1poc3uvccGR3AzAPRmHhCAU+09/PmBbyJ5Ok=;
-        b=Hya4T97iLjltebBw4WsQZI0NDvU1scUh6g0Iw/623RvMwXqu3acGZj/saHI2byStpT
-         xFiX0HHkYDYDyEkVTRSTX/FBD+tX7EeVlB9laJP4IpaL5nZg4OF3PjrtFCgZ471c1GKb
-         MNqZEOsbIfQL/9S2pygs0KMqbXsiTgy756x1o=
-Received: by 10.52.171.79 with SMTP id as15mr3856762vdc.198.1310226121823;
-        Sat, 09 Jul 2011 08:42:01 -0700 (PDT)
-Received: from localhost.localdomain (ec2-184-72-137-52.compute-1.amazonaws.com [184.72.137.52])
-        by mx.google.com with ESMTPS id fm10sm3000306vbb.6.2011.07.09.08.42.00
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 09 Jul 2011 08:42:01 -0700 (PDT)
-X-Mailer: git-send-email 1.7.5.1
-In-Reply-To: <1310226118-10201-1-git-send-email-artagnon@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=8pvYJtEA2SuSXWgLeKKsqo2xnOtRlX7Pnrb78XPUwqE=;
+        b=UNFlzHOogMafwYb/76jEIzejg6okme4AymljxiMPmr5BEen678FhrqATg8DwV7DrZT
+         helxf2ONJeCfCeub+KZzosx30FqW26iBA3TAoyLGVLPegQaVNTLRxEtaLpFuPiZjXuza
+         01rQ17Fwr2blC4qhYm396F72O7DaWrFY77k4Y=
+Received: by 10.223.5.212 with SMTP id 20mr4884246faw.40.1310229941504; Sat,
+ 09 Jul 2011 09:45:41 -0700 (PDT)
+Received: by 10.223.114.208 with HTTP; Sat, 9 Jul 2011 09:45:41 -0700 (PDT)
+In-Reply-To: <alpine.LNX.2.01.1107082144240.23703@frira.zrqbmnf.qr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176818>
 
-Save the replay_opts struct in .git/sequencer/opts using a simple "key
-= value" format.  Parse it and populate the options structure before
-replaying.
+On Fri, Jul 8, 2011 at 21:45, Jan Engelhardt <jengelh@medozas.de> wrote=
+:
+> On Wednesday 2011-07-06 21:34, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason=
+ wrote:
+>
+>>I was going to submit Git's po/*.po files from the i18n branch but I
+>>found that while everything else has been cooking they've become out
+>>of date:
+>>
+>> =C2=A0 =C2=A0$ parallel -v -k 'msgfmt --statistics {}' ::: *.po
+>> =C2=A0 =C2=A0msgfmt --statistics de.po
+>> =C2=A0 =C2=A0622 translated messages, 58 fuzzy translations, 21 untr=
+anslated messages.
+>> =C2=A0 =C2=A0msgfmt --statistics en_GB.po
+>> =C2=A0 =C2=A03 translated messages, 698 untranslated messages.
+>> =C2=A0 =C2=A0msgfmt --statistics hi.po
+>> =C2=A0 =C2=A014 translated messages, 45 fuzzy translations, 642 untr=
+anslated messages.
+>> =C2=A0 =C2=A0msgfmt --statistics is.po
+>> =C2=A0 =C2=A024 translated messages, 36 fuzzy translations, 641 untr=
+anslated messages.
+>> =C2=A0 =C2=A0msgfmt --statistics pl.po
+>> =C2=A0 =C2=A024 translated messages, 46 fuzzy translations, 631 untr=
+anslated messages.
+>> =C2=A0 =C2=A0msgfmt --statistics sv.po
+>> =C2=A0 =C2=A0531 translated messages, 80 fuzzy translations, 90 untr=
+anslated messages.
+>>
+>>In particular the fuzzy translations have to be fixed (in some cases
+>>they're completely wrong), and it would be nice to have the
+>>untranslated messages translated.
+>
+> Please retrieve from
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git://dev.medozas.de/git i18n
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- builtin/revert.c |  143 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- sequencer.h      |    8 +++
- 2 files changed, 151 insertions(+), 0 deletions(-)
-
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 1feecd5..0693fd8 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -635,6 +635,32 @@ static void read_and_refresh_cache(const char *me, struct replay_opts *opts)
- 	rollback_lock_file(&index_lock);
- }
- 
-+static void format_opts(struct strbuf *buf, struct replay_opts *opts)
-+{
-+	int i;
-+
-+	if (opts->no_commit)
-+		strbuf_addstr(buf, "no-commit = true\n");
-+	if (opts->edit)
-+		strbuf_addstr(buf, "edit = true\n");
-+	if (opts->signoff)
-+		strbuf_addstr(buf, "signoff = true\n");
-+	if (opts->record_origin)
-+		strbuf_addstr(buf, "record-origin = true\n");
-+	if (opts->allow_ff)
-+		strbuf_addstr(buf, "ff = true\n");
-+	if (opts->mainline)
-+		strbuf_addf(buf, "mainline = %d\n", opts->mainline);
-+	if (opts->strategy)
-+		strbuf_addf(buf, "strategy = %s\n", opts->strategy);
-+	if (opts->xopts) {
-+		strbuf_addf(buf, "strategy-option = ");
-+		for (i = 0; i < opts->xopts_nr - 1; i ++)
-+			strbuf_addf(buf, "%s | ", opts->xopts[i]);
-+		strbuf_addf(buf, "%s\n", opts->xopts[i]);
-+	}
-+}
-+
- static void format_todo(struct strbuf *buf, struct commit_list *todo_list,
- 			struct replay_opts *opts)
- {
-@@ -733,6 +759,102 @@ error:
- 	die(_("Malformed instruction sheet: %s"), git_path(SEQ_TODO_FILE));
- }
- 
-+static char *parse_opt_value(char *p, void *key, enum seq_opt_type type,
-+			parse_opt_cb *cb_function) {
-+	struct option opt;
-+	char *val, *cur, *end;
-+
-+	if (!(val = strchr(p, '=')))
-+		goto error;
-+	if (!*(val + 1))
-+		goto error;
-+	if (!(end = strchr(p, '\n')))
-+		goto error;
-+	val += 2;
-+	*end = '\0'; /* Remove trailing '\n' */
-+
-+	switch (type) {
-+	case SEQ_OPTION_BOOLEAN:
-+		if (!strncmp(val, "true", strlen("true")))
-+			*(int *)key = 1;
-+		else if (!strncmp(val, "false", strlen("false")))
-+			*(int *)key = 0;
-+		else
-+			goto error;
-+		break;
-+	case SEQ_OPTION_INTEGER:
-+		*(int *)key = strtol(val, NULL, 10);
-+		break;
-+	case SEQ_OPTION_STRING:
-+		*(char **)key = xstrdup(val);
-+		break;
-+	case SEQ_OPTION_CALLBACK:
-+		opt.value = (struct replay_opts **)key;
-+		while (val) {
-+			if ((cur = strchr(val, '|'))) {
-+				*(cur - 1) = '\0';
-+				(*cb_function)(&opt, val, 0);
-+				val = cur + 2;
-+			} else {
-+				(*cb_function)(&opt, val, 0);
-+				break;
-+			}
-+		}
-+		break;
-+	default:
-+		die(_("program error"));
-+	}
-+	return end + 1;
-+error:
-+	die(_("Malformed options sheet: %s"), git_path(SEQ_OPTS_FILE));
-+}
-+
-+static void read_populate_opts(struct replay_opts **opts_ptr)
-+{
-+	struct replay_opts *opts = *opts_ptr;
-+	struct strbuf buf = STRBUF_INIT;
-+	char *p;
-+	int fd;
-+
-+	fd = open(git_path(SEQ_OPTS_FILE), O_RDONLY);
-+	if (fd < 0) {
-+		strbuf_release(&buf);
-+		die_errno(_("Could not open %s."), git_path(SEQ_OPTS_FILE));
-+	}
-+	if (strbuf_read(&buf, fd, 0) < buf.len) {
-+		close(fd);
-+		strbuf_release(&buf);
-+		die(_("Could not read %s."), git_path(SEQ_OPTS_FILE));
-+	}
-+	close(fd);
-+
-+	for (p = buf.buf; *p;) {
-+		if (!strncmp(p, "no-commit ", strlen("no-commit ")))
-+			p = parse_opt_value(p, &opts->no_commit, SEQ_OPTION_BOOLEAN, NULL);
-+		else if (!strncmp(p, "edit ", strlen("edit ")))
-+			p = parse_opt_value(p, &opts->edit, SEQ_OPTION_BOOLEAN, NULL);
-+		else if (!strncmp(p, "signoff ", strlen("signoff ")))
-+			p = parse_opt_value(p, &opts->signoff, SEQ_OPTION_BOOLEAN, NULL);
-+		else if (!strncmp(p, "mainline ", strlen("mainline ")))
-+			p = parse_opt_value(p, &opts->mainline, SEQ_OPTION_INTEGER, NULL);
-+		else if (!strncmp(p, "record-origin ", strlen("record-origin ")))
-+			p = parse_opt_value(p, &opts->record_origin, SEQ_OPTION_BOOLEAN, NULL);
-+		else if (!strncmp(p, "ff ", strlen("ff ")))
-+			p = parse_opt_value(p, &opts->allow_ff, SEQ_OPTION_BOOLEAN, NULL);
-+		else if (!strncmp(p, "strategy ", strlen("strategy ")))
-+			p = parse_opt_value(p, &opts->strategy, SEQ_OPTION_STRING, NULL);
-+		else if (!strncmp(p, "strategy-option ", strlen("strategy-option ")))
-+			p = parse_opt_value(p, &opts, SEQ_OPTION_CALLBACK, option_parse_x);
-+		else
-+			goto error;
-+	}
-+	strbuf_release(&buf);
-+	return;
-+error:
-+	strbuf_release(&buf);
-+	die(_("Malformed options sheet: %s"), git_path(SEQ_OPTS_FILE));
-+}
-+
- static void walk_revs_populate_todo(struct commit_list **todo_list,
- 				struct replay_opts *opts)
- {
-@@ -800,6 +922,25 @@ static void save_todo(struct commit_list *todo_list, struct replay_opts *opts)
- 	strbuf_release(&buf);
- }
- 
-+static void save_opts(struct replay_opts *opts)
-+{
-+	static struct lock_file opts_lock;
-+	struct strbuf buf = STRBUF_INIT;
-+	int fd;
-+
-+	fd = hold_lock_file_for_update(&opts_lock, git_path(SEQ_OPTS_FILE), LOCK_DIE_ON_ERROR);
-+	format_opts(&buf, opts);
-+	if (write_in_full(fd, buf.buf, buf.len) < 0) {
-+		strbuf_release(&buf);
-+		die_errno(_("Could not write to %s."), git_path(SEQ_OPTS_FILE));
-+	}
-+	if (commit_lock_file(&opts_lock) < 0) {
-+		strbuf_release(&buf);
-+		die(_("Error wrapping up %s"), git_path(SEQ_OPTS_FILE));
-+	}
-+	strbuf_release(&buf);
-+}
-+
- static int pick_commits(struct commit_list *todo_list, struct replay_opts *opts)
- {
- 	struct commit_list *cur;
-@@ -849,6 +990,7 @@ static int process_continuation(struct replay_opts *opts)
- 	} else if (opts->subcommand == REPLAY_CONTINUE) {
- 		if (!file_exists(git_path(SEQ_TODO_FILE)))
- 			goto error;
-+		read_populate_opts(&opts);
- 		read_populate_todo(&todo_list, opts);
- 
- 		/* Verify that the conflict has been resolved */
-@@ -871,6 +1013,7 @@ static int process_continuation(struct replay_opts *opts)
- 		create_seq_dir();
- 		if (!get_sha1("HEAD", sha1))
- 			save_head(sha1_to_hex(sha1));
-+		save_opts(opts);
- 		save_todo(todo_list, opts);
- 	}
- 	return pick_commits(todo_list, opts);
-diff --git a/sequencer.h b/sequencer.h
-index d6fe6e0..e7bef5d 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -5,6 +5,14 @@
- #define SEQ_OLD_DIR	"sequencer-old"
- #define SEQ_HEAD_FILE	"sequencer/head"
- #define SEQ_TODO_FILE	"sequencer/todo"
-+#define SEQ_OPTS_FILE	"sequencer/opts"
-+
-+enum seq_opt_type {
-+	SEQ_OPTION_BOOLEAN,
-+	SEQ_OPTION_INTEGER,
-+	SEQ_OPTION_STRING,
-+	SEQ_OPTION_CALLBACK,
-+};
- 
- /* Removes SEQ_OLD_DIR and renames SEQ_DIR to SEQ_OLD_DIR, ignoring
-  * any errors.  Intended to be used by 'git reset --hard'.
--- 
-1.7.5.GIT
+Willdo, Thanks a lot.
