@@ -1,87 +1,84 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Git's translations need to be updated for submission
-Date: Sat, 9 Jul 2011 18:45:41 +0200
-Message-ID: <CACBZZX4=nD0j7S-3q97fa7iqXo_7-CGWnxwuA6X6g-bkhE7bmw@mail.gmail.com>
-References: <CACBZZX4dP-OsrZ3wBOeSkzDFy6XBgeY=eqJUF2acyLC8W-3Vpg@mail.gmail.com>
-	<alpine.LNX.2.01.1107082144240.23703@frira.zrqbmnf.qr>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Do not trust PWD blindly
+Date: Sat, 9 Jul 2011 19:38:08 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1107091935210.1985@bonsai2>
+References: <CABNJ2GKgzXGDq9FhKcVP380bs=rEKqYdrOaCb+A99_TBm7A4_A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
-	=?UTF-8?Q?Marcin_Cie=C5=9Blak?= <saper@saper.info>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sam Reed <sam@reedyboy.net>
-To: Jan Engelhardt <jengelh@medozas.de>
-X-From: git-owner@vger.kernel.org Sat Jul 09 18:45:49 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: msysGit <msysgit@googlegroups.com>,
+	Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org
+To: Pat Thoyts <patthoyts@gmail.com>, gitster@pobox.com, j6t@kdbg.org
+X-From: git-owner@vger.kernel.org Sat Jul 09 19:38:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qfaf6-0006Kn-I5
-	for gcvg-git-2@lo.gmane.org; Sat, 09 Jul 2011 18:45:48 +0200
+	id 1QfbTt-0007iM-WC
+	for gcvg-git-2@lo.gmane.org; Sat, 09 Jul 2011 19:38:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753953Ab1GIQpn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Jul 2011 12:45:43 -0400
-Received: from mail-fx0-f52.google.com ([209.85.161.52]:45917 "EHLO
-	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753779Ab1GIQpm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 Jul 2011 12:45:42 -0400
-Received: by fxd18 with SMTP id 18so2828998fxd.11
-        for <git@vger.kernel.org>; Sat, 09 Jul 2011 09:45:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=8pvYJtEA2SuSXWgLeKKsqo2xnOtRlX7Pnrb78XPUwqE=;
-        b=UNFlzHOogMafwYb/76jEIzejg6okme4AymljxiMPmr5BEen678FhrqATg8DwV7DrZT
-         helxf2ONJeCfCeub+KZzosx30FqW26iBA3TAoyLGVLPegQaVNTLRxEtaLpFuPiZjXuza
-         01rQ17Fwr2blC4qhYm396F72O7DaWrFY77k4Y=
-Received: by 10.223.5.212 with SMTP id 20mr4884246faw.40.1310229941504; Sat,
- 09 Jul 2011 09:45:41 -0700 (PDT)
-Received: by 10.223.114.208 with HTTP; Sat, 9 Jul 2011 09:45:41 -0700 (PDT)
-In-Reply-To: <alpine.LNX.2.01.1107082144240.23703@frira.zrqbmnf.qr>
+	id S1753694Ab1GIRiM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Jul 2011 13:38:12 -0400
+Received: from mailout-de.gmx.net ([213.165.64.22]:49340 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1752810Ab1GIRiM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jul 2011 13:38:12 -0400
+Received: (qmail invoked by alias); 09 Jul 2011 17:38:09 -0000
+Received: from pD9EB0336.dip0.t-ipconnect.de (EHLO noname) [217.235.3.54]
+  by mail.gmx.net (mp030) with SMTP; 09 Jul 2011 19:38:09 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18ZmIkrlB4ZtHB5k/bOhY/HT/+7omJMiILd+qYdpG
+	MrZ1kLiDRaxz6Y
+X-X-Sender: gene099@bonsai2
+In-Reply-To: <CABNJ2GKgzXGDq9FhKcVP380bs=rEKqYdrOaCb+A99_TBm7A4_A@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176819>
 
-On Fri, Jul 8, 2011 at 21:45, Jan Engelhardt <jengelh@medozas.de> wrote=
-:
-> On Wednesday 2011-07-06 21:34, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason=
- wrote:
->
->>I was going to submit Git's po/*.po files from the i18n branch but I
->>found that while everything else has been cooking they've become out
->>of date:
->>
->> =C2=A0 =C2=A0$ parallel -v -k 'msgfmt --statistics {}' ::: *.po
->> =C2=A0 =C2=A0msgfmt --statistics de.po
->> =C2=A0 =C2=A0622 translated messages, 58 fuzzy translations, 21 untr=
-anslated messages.
->> =C2=A0 =C2=A0msgfmt --statistics en_GB.po
->> =C2=A0 =C2=A03 translated messages, 698 untranslated messages.
->> =C2=A0 =C2=A0msgfmt --statistics hi.po
->> =C2=A0 =C2=A014 translated messages, 45 fuzzy translations, 642 untr=
-anslated messages.
->> =C2=A0 =C2=A0msgfmt --statistics is.po
->> =C2=A0 =C2=A024 translated messages, 36 fuzzy translations, 641 untr=
-anslated messages.
->> =C2=A0 =C2=A0msgfmt --statistics pl.po
->> =C2=A0 =C2=A024 translated messages, 46 fuzzy translations, 631 untr=
-anslated messages.
->> =C2=A0 =C2=A0msgfmt --statistics sv.po
->> =C2=A0 =C2=A0531 translated messages, 80 fuzzy translations, 90 untr=
-anslated messages.
->>
->>In particular the fuzzy translations have to be fixed (in some cases
->>they're completely wrong), and it would be nice to have the
->>untranslated messages translated.
->
-> Please retrieve from
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git://dev.medozas.de/git i18n
 
-Willdo, Thanks a lot.
+At least on Windows, chdir() does not update PWD. Unfortunately, stat()
+does not fill any ino or dev fields anymore, so get_pwd_cwd() is not
+able to tell.
+
+But there is a telltale: both ino and dev are 0 when they are not filled
+correctly, so let's be extra cautious.
+
+This happens to fix a bug in "get-receive-pack working_directory/" when
+the GIT_DIR would not be set correctly due to absolute_path(".")
+returning the wrong value.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+
+	On Fri, 8 Jul 2011, Pat Thoyts wrote:
+
+	> ! t5516-fetch-push      (60 receive.denyCurrentBranch = updateInstead)
+
+	This patch fixes that.
+
+	Hannes, I have no idea whether you meant 10c4c881 to fix anything 
+	on Windows.
+
+ abspath.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/abspath.c b/abspath.c
+index 01858eb..37287f8 100644
+--- a/abspath.c
++++ b/abspath.c
+@@ -102,7 +102,8 @@ static const char *get_pwd_cwd(void)
+ 	pwd = getenv("PWD");
+ 	if (pwd && strcmp(pwd, cwd)) {
+ 		stat(cwd, &cwd_stat);
+-		if (!stat(pwd, &pwd_stat) &&
++		if ((cwd_stat.st_dev || cwd_stat.st_ino) &&
++		    !stat(pwd, &pwd_stat) &&
+ 		    pwd_stat.st_dev == cwd_stat.st_dev &&
+ 		    pwd_stat.st_ino == cwd_stat.st_ino) {
+ 			strlcpy(cwd, pwd, PATH_MAX);
+-- 
+1.7.6.rc0.4047.g15f89
