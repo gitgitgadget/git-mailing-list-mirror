@@ -1,95 +1,124 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] Do not trust PWD blindly
-Date: Sun, 10 Jul 2011 22:47:08 +0200
-Message-ID: <4E1A0FCC.7080308@kdbg.org>
-References: <CABNJ2GKgzXGDq9FhKcVP380bs=rEKqYdrOaCb+A99_TBm7A4_A@mail.gmail.com> <alpine.DEB.1.00.1107091935210.1985@bonsai2>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Pat Thoyts <patthoyts@gmail.com>, gitster@pobox.com,
-	msysGit <msysgit@googlegroups.com>,
-	Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jul 10 22:47:21 2011
+From: John Nowak <john@johnnowak.com>
+Subject: reproducible unexpected behavior for 'git reset'
+Date: Sun, 10 Jul 2011 18:30:31 -0400
+Message-ID: <75BBC138-2BD7-41F9-9D84-CEFF23CDC235@johnnowak.com>
+Mime-Version: 1.0 (Apple Message framework v1084)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 11 00:31:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qg0uO-0007Ir-Ru
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Jul 2011 22:47:21 +0200
+	id 1Qg2Wl-0000dS-M1
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jul 2011 00:31:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756534Ab1GJUrO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Jul 2011 16:47:14 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:31408 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753752Ab1GJUrM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jul 2011 16:47:12 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 6D9A4A7EB0;
-	Sun, 10 Jul 2011 22:47:08 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 4922519F3CF;
-	Sun, 10 Jul 2011 22:47:08 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.18) Gecko/20110616 SUSE/3.1.11 Thunderbird/3.1.11
-In-Reply-To: <alpine.DEB.1.00.1107091935210.1985@bonsai2>
+	id S1756744Ab1GJWai (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Jul 2011 18:30:38 -0400
+Received: from birch.site5.com ([174.132.116.226]:43357 "EHLO birch.site5.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753791Ab1GJWah convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Jul 2011 18:30:37 -0400
+X-Greylist: delayed 1665 seconds by postgrey-1.27 at vger.kernel.org; Sun, 10 Jul 2011 18:30:37 EDT
+Received: from user-387hdgh.cable.mindspring.com ([208.120.182.17] helo=[192.168.1.200])
+	by birch.site5.com with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.69)
+	(envelope-from <john@johnnowak.com>)
+	id 1Qg2WJ-00046l-0Q
+	for git@vger.kernel.org; Sun, 10 Jul 2011 17:30:35 -0500
+X-Mailer: Apple Mail (2.1084)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - birch.site5.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - johnnowak.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176828>
 
-Am 09.07.2011 19:38, schrieb Johannes Schindelin:
-> 
-> At least on Windows, chdir() does not update PWD.
+(Apologies if you receive this twice. I sent the first copy before confirming my list subscription and I'm not sure if it went through.)
 
-Very strange wording. chdir() should not update PWD even on POSIX.
+I am able to reproduce a scenario where, after a 'commit' and a 'stash pop' that results in a merge conflict, I need to 'reset' a file twice in order to get the index back to HEAD. It appears that the first 'reset' sets the index to the merge base version instead of HEAD which was, for me, rather unexpected. I encountered this on 1.7.4 but others have reproduced it on the latest master. If this behavior is documented, I cannot find it.
 
-> Unfortunately, stat()
-> does not fill any ino or dev fields anymore, so get_pwd_cwd() is not
-> able to tell.
-> 
-> But there is a telltale: both ino and dev are 0 when they are not filled
-> correctly, so let's be extra cautious.
-> 
-> This happens to fix a bug in "get-receive-pack working_directory/" when
-> the GIT_DIR would not be set correctly due to absolute_path(".")
-> returning the wrong value.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> 
-> 	On Fri, 8 Jul 2011, Pat Thoyts wrote:
-> 
-> 	> ! t5516-fetch-push      (60 receive.denyCurrentBranch = updateInstead)
-> 
-> 	This patch fixes that.
-> 
-> 	Hannes, I have no idea whether you meant 10c4c881 to fix anything 
-> 	on Windows.
+A transcript to reproduce this oddity is below; note how the file is partially staged after the first 'reset' and unstaged after the second:
 
-I think this fix worked for me because when git is called from CMD, PWD
-is not in the enviornment and the if (pwd && ...) branch is never taken.
+---
 
-> 
->  abspath.c |    3 ++-
->  1 files changed, 2 insertions(+), 1 deletions(-)
-> 
-> diff --git a/abspath.c b/abspath.c
-> index 01858eb..37287f8 100644
-> --- a/abspath.c
-> +++ b/abspath.c
-> @@ -102,7 +102,8 @@ static const char *get_pwd_cwd(void)
->  	pwd = getenv("PWD");
->  	if (pwd && strcmp(pwd, cwd)) {
->  		stat(cwd, &cwd_stat);
-> -		if (!stat(pwd, &pwd_stat) &&
-> +		if ((cwd_stat.st_dev || cwd_stat.st_ino) &&
-> +		    !stat(pwd, &pwd_stat) &&
->  		    pwd_stat.st_dev == cwd_stat.st_dev &&
->  		    pwd_stat.st_ino == cwd_stat.st_ino) {
->  			strlcpy(cwd, pwd, PATH_MAX);
+$ git init
+Initialized empty Git repository in /Users/jn/test/.git/
 
-Acked-by: Johannes Sixt <j6t@kdbg.org>
+$ echo "a" > foo
 
--- Hannes
+$ git add foo
+
+$ git commit -a -m "Initial"
+[master (root-commit) 5214837] Initial
+1 files changed, 1 insertions(+), 0 deletions(-)
+create mode 100644 foo
+
+$ echo "b" >> foo
+
+$ git stash
+Saved working directory and index state WIP on master: 5214837 Initial
+HEAD is now at 5214837 Initial
+
+$ echo "c" >> foo
+
+$ git add foo
+
+$ git commit -a -m "Added c"
+[master 69eef48] Added c
+1 files changed, 1 insertions(+), 0 deletions(-)
+
+$ git stash pop
+Auto-merging foo
+CONFLICT (content): Merge conflict in foo
+
+$ git status
+# On branch master
+# Unmerged paths:
+#   (use "git reset HEAD <file>..." to unstage)
+#   (use "git add/rm <file>..." as appropriate to mark resolution)
+#
+#	both modified:      foo
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+
+$ git reset foo
+Unstaged changes after reset:
+M	foo
+
+$ git status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	modified:   foo
+#
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	modified:   foo
+#
+
+$ git reset foo
+Unstaged changes after reset:
+M	foo
+
+$ git status
+# On branch master
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	modified:   foo
+#
+no changes added to commit (use "git add" and/or "git commit -a")
