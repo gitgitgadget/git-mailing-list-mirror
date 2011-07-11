@@ -1,127 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 5/5] limit "contains" traversals based on commit generation
-Date: Mon, 11 Jul 2011 12:18:46 -0400
-Message-ID: <20110711161846.GE10418@sigill.intra.peff.net>
-References: <20110711161332.GA10057@sigill.intra.peff.net>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: git remote show origin (URL)
+Date: Mon, 11 Jul 2011 18:24:38 +0200
+Message-ID: <CA+gHt1AxfgB=zJ2hVZ-7gZzyPFDuTyFW_NqiepobTWHRsafAhw@mail.gmail.com>
+References: <1310400505376-6571492.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>, Ted Ts'o <tytso@mit.edu>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Clemens Buchacher <drizzd@aon.at>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 11 18:18:58 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: frankkany <frankkany@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 11 18:25:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QgJCA-00080G-8Z
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Jul 2011 18:18:54 +0200
+	id 1QgJI8-0002Hn-4e
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jul 2011 18:25:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758068Ab1GKQSt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jul 2011 12:18:49 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39529
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758057Ab1GKQSs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2011 12:18:48 -0400
-Received: (qmail 2879 invoked by uid 107); 11 Jul 2011 16:19:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 11 Jul 2011 12:19:12 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Jul 2011 12:18:46 -0400
-Content-Disposition: inline
-In-Reply-To: <20110711161332.GA10057@sigill.intra.peff.net>
+	id S1758074Ab1GKQY7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jul 2011 12:24:59 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:51238 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757945Ab1GKQY6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2011 12:24:58 -0400
+Received: by pzk9 with SMTP id 9so3276472pzk.19
+        for <git@vger.kernel.org>; Mon, 11 Jul 2011 09:24:58 -0700 (PDT)
+Received: by 10.68.32.193 with SMTP id l1mr6069082pbi.177.1310401498073; Mon,
+ 11 Jul 2011 09:24:58 -0700 (PDT)
+Received: by 10.68.41.134 with HTTP; Mon, 11 Jul 2011 09:24:38 -0700 (PDT)
+In-Reply-To: <1310400505376-6571492.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176867>
 
-When looking for commits that contain other commits (e.g.,
-via "git tag --contains"), we can end up traversing useless
-portions of the graph. For example, if I am looking for a
-tag that contains a commit made last week, there is not much
-point in traversing portions of the history graph made five
-years ago.
+Hello,
 
-This optimization can provide massive speedups. For example,
-doing "git tag --contains HEAD~1000" in the linux-2.6
-repository goes from:
+On Mon, Jul 11, 2011 at 6:08 PM, frankkany <frankkany@gmail.com> wrote:
+> On box (A), when using "git remote show origin", I'm used to seeing something
+> like the following next to the FETCH/PUSH URL:
+> "git@somegitrepo.com:somefolder/someproject.git"
+>
+> The URL is actually pingable.
+>
+> On box (B), when using "git remote show origin" on an unfamiliar project,
+> the FETCH/PUSH URL is: "hidden-repos:repositories/mysteryproject.git".
+>
+> How can I find where the actual url/directory where "hidden-repos" is
+> pointing?
 
-  real    0m3.139s
-  user    0m3.044s
-  sys     0m0.092s
+Maybe it is using an url.<base>.insteadOf that is set to
+"hidden-repos:", check it with "git config -l".
 
-to:
+But here the output of "git remote show $repo" is with the actual url,
+not with the "hidden" ones, so not sure if it is your case.
 
-  real    0m0.035s
-  user    0m0.028s
-  sys     0m0.004s
-
-We could use commit timestamps to know when we are going too
-far back in history, but they are sometimes not trustworthy.
-Extreme clock skew on committers' machines (or bugs in
-commit-generating software) mean that we may stop the
-traversal too early when seeing commits skewed into the
-past.
-
-Instead, we use the calculated commit generation, which is a
-propery of the graph itself (but since we cache it, it's
-still cheap to consult).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/tag.c |   20 +++++++++++++++++---
- 1 files changed, 17 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 63bce6e..df6de47 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -40,7 +40,8 @@ static int in_commit_list(const struct commit_list *want, struct commit *c)
- }
- 
- static int contains_recurse(struct commit *candidate,
--			    const struct commit_list *want)
-+			    const struct commit_list *want,
-+			    unsigned long cutoff)
- {
- 	struct commit_list *p;
- 
-@@ -57,9 +58,13 @@ static int contains_recurse(struct commit *candidate,
- 	if (parse_commit(candidate) < 0)
- 		return 0;
- 
-+	/* stop searching if we go too far back in time */
-+	if (commit_generation(candidate) < cutoff)
-+		return 0;
-+
- 	/* Otherwise recurse and mark ourselves for future traversals. */
- 	for (p = candidate->parents; p; p = p->next) {
--		if (contains_recurse(p->item, want)) {
-+		if (contains_recurse(p->item, want, cutoff)) {
- 			candidate->object.flags |= TMP_MARK;
- 			return 1;
- 		}
-@@ -70,7 +75,16 @@ static int contains_recurse(struct commit *candidate,
- 
- static int contains(struct commit *candidate, const struct commit_list *want)
- {
--	return contains_recurse(candidate, want);
-+	unsigned long cutoff = ULONG_MAX;
-+	const struct commit_list *c;
-+
-+	for (c = want; c; c = c->next) {
-+		unsigned long g = commit_generation(c->item);
-+		if (g < cutoff)
-+			cutoff = g;
-+	}
-+
-+	return contains_recurse(candidate, want, cutoff);
- }
- 
- static int show_reference(const char *refname, const unsigned char *sha1,
--- 
-1.7.6.37.g989c6
+HTH,
+Santi
