@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 10/17] sequencer: Announce sequencer state location
-Date: Mon, 11 Jul 2011 14:54:01 +0000
-Message-ID: <1310396048-24925-11-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 06/17] revert: Eliminate global "commit" variable
+Date: Mon, 11 Jul 2011 14:53:57 +0000
+Message-ID: <1310396048-24925-7-git-send-email-artagnon@gmail.com>
 References: <1310396048-24925-1-git-send-email-artagnon@gmail.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
@@ -14,118 +14,149 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QgHsf-0005F4-J3
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Jul 2011 16:54:41 +0200
+	id 1QgHse-0005F4-6Q
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jul 2011 16:54:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757853Ab1GKOya (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jul 2011 10:54:30 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:60018 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757807Ab1GKOy2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2011 10:54:28 -0400
-Received: by mail-vw0-f46.google.com with SMTP id 1so2748281vws.19
-        for <git@vger.kernel.org>; Mon, 11 Jul 2011 07:54:28 -0700 (PDT)
+	id S1757829Ab1GKOy0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jul 2011 10:54:26 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:46637 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757777Ab1GKOyY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2011 10:54:24 -0400
+Received: by mail-vx0-f174.google.com with SMTP id 39so2716724vxb.19
+        for <git@vger.kernel.org>; Mon, 11 Jul 2011 07:54:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=GmHlDT2695tgVRnyW/W9QNh59S3vOS1OtcaRIe2tsbc=;
-        b=rX78vIUIECWWN8iTBYSb8PGbEz2WIr8orJfH/iSGPTYKH4QMQXxfNI+6IEqwNTgsoM
-         7GHn+AXAH7LUVWyuqBvdzwe2PE9UZd1d8yn+zWKYwCUD86HtD81kwrmb4Sts4eU37XaU
-         vQ7jEonJKUs4L7WmPYQy8QbTyvWIkbErXr1Gc=
-Received: by 10.52.65.208 with SMTP id z16mr836769vds.386.1310396068096;
-        Mon, 11 Jul 2011 07:54:28 -0700 (PDT)
+        bh=BuEU9eBL7g7qXuzrDFb+8YbX5xp+dPjSuV0G7Gq9yC8=;
+        b=mynlaaZCLdjwFrbeFr2bTw4WPNzx9UC7asEXgdFeVy0abKQBn9YyWo9+qSJyHOpOMc
+         ZmK2O2CjGKjkT/Cl4pw9b4C8/2FLb9ucxHO+jvAXRtA8WNa6HMNgC57ZcXKK2EJiDeY5
+         jyZPQyADe+lzj6L4paETfZ6pHiaObYUjB6SoE=
+Received: by 10.52.94.13 with SMTP id cy13mr5779757vdb.33.1310396062248;
+        Mon, 11 Jul 2011 07:54:22 -0700 (PDT)
 Received: from localhost.localdomain (ec2-184-72-137-52.compute-1.amazonaws.com [184.72.137.52])
-        by mx.google.com with ESMTPS id b9sm4510527vdk.25.2011.07.11.07.54.26
+        by mx.google.com with ESMTPS id b9sm4510527vdk.25.2011.07.11.07.54.20
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 11 Jul 2011 07:54:27 -0700 (PDT)
+        Mon, 11 Jul 2011 07:54:21 -0700 (PDT)
 X-Mailer: git-send-email 1.7.5.1
 In-Reply-To: <1310396048-24925-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176848>
 
-The plan to build a generic sequencer involves fist writing the
-functionality into builtin/revert.c (for cherry-pick and revert), and
-then factoring it out into sequencer.c and exposing it through
-sequencer.h as a nice API.  As a prelude to this, announce the
-location of the sequencer state in sequencer.h and write a function to
-remove it.  Later in the series, two indepenent Git programs, namely
-cherry-pick/ revert and reset, will use this to save and clear
-sequencer state in a uniform manner.
+Since we want to develop the functionality to either pick or revert
+individual commits atomically later in the series, make "commit" a
+variable to be passed around explicitly as an argument for clarity.
+This involves changing several functions to take an additional
+argument, but no functional changes.  Additionaly, this will permit
+more than one commit to be cherry-picked at once, should we choose to
+develop this functionality in future.
 
+Inspired-by: Christian Couder <chriscool@tuxfamily.org>
+Helped-by: Jonathan Nieder <jrnieder@gmail.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- Makefile    |    2 ++
- sequencer.c |   17 +++++++++++++++++
- sequencer.h |   14 ++++++++++++++
- 3 files changed, 33 insertions(+), 0 deletions(-)
- create mode 100644 sequencer.c
- create mode 100644 sequencer.h
+ builtin/revert.c |   22 +++++++++++-----------
+ 1 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index f8c72e1..4ac09df 100644
---- a/Makefile
-+++ b/Makefile
-@@ -551,6 +551,7 @@ LIB_H += rerere.h
- LIB_H += resolve-undo.h
- LIB_H += revision.h
- LIB_H += run-command.h
-+LIB_H += sequencer.h
- LIB_H += sha1-array.h
- LIB_H += sha1-lookup.h
- LIB_H += sideband.h
-@@ -655,6 +656,7 @@ LIB_OBJS += revision.o
- LIB_OBJS += run-command.o
- LIB_OBJS += server-info.o
- LIB_OBJS += setup.o
-+LIB_OBJS += sequencer.o
- LIB_OBJS += sha1-array.o
- LIB_OBJS += sha1-lookup.o
- LIB_OBJS += sha1_file.o
-diff --git a/sequencer.c b/sequencer.c
-new file mode 100644
-index 0000000..8c1de63
---- /dev/null
-+++ b/sequencer.c
-@@ -0,0 +1,17 @@
-+#include "cache.h"
-+#include "sequencer.h"
-+#include "strbuf.h"
-+#include "dir.h"
-+
-+void remove_sequencer_state(void)
-+{
-+	struct strbuf seq_dir = STRBUF_INIT;
-+	struct strbuf seq_old_dir = STRBUF_INIT;
-+
-+	strbuf_addf(&seq_dir, "%s", git_path(SEQ_DIR));
-+	strbuf_addf(&seq_old_dir, "%s", git_path(SEQ_OLD_DIR));
-+	remove_dir_recursively(&seq_old_dir, 0);
-+	rename(git_path(SEQ_DIR), git_path(SEQ_OLD_DIR));
-+	strbuf_release(&seq_dir);
-+	strbuf_release(&seq_old_dir);
-+}
-diff --git a/sequencer.h b/sequencer.h
-new file mode 100644
-index 0000000..673616b
---- /dev/null
-+++ b/sequencer.h
-@@ -0,0 +1,14 @@
-+#ifndef SEQUENCER_H
-+#define SEQUENCER_H
-+
-+#define SEQ_DIR		"sequencer"
-+#define SEQ_OLD_DIR	"sequencer-old"
-+#define SEQ_HEAD_FILE	"sequencer/head"
-+#define SEQ_TODO_FILE	"sequencer/todo"
-+
-+/* Removes SEQ_OLD_DIR and renames SEQ_DIR to SEQ_OLD_DIR, ignoring
-+ * any errors.  Intended to be used by 'git reset --hard'.
-+ */
-+void remove_sequencer_state(void);
-+
-+#endif
+diff --git a/builtin/revert.c b/builtin/revert.c
+index e2fd7b0..840e2a3 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -37,7 +37,6 @@ static const char * const cherry_pick_usage[] = {
+ 
+ static int edit, record_origin, no_commit, mainline, signoff, allow_ff;
+ static enum { REVERT, CHERRY_PICK } action;
+-static struct commit *commit;
+ static int commit_argc;
+ static const char **commit_argv;
+ static int allow_rerere_auto;
+@@ -116,25 +115,25 @@ struct commit_message {
+ 	const char *message;
+ };
+ 
+-static int get_message(const char *raw_message, struct commit_message *out)
++static int get_message(struct commit *commit, struct commit_message *out)
+ {
+ 	const char *encoding;
+ 	const char *abbrev, *subject;
+ 	int abbrev_len, subject_len;
+ 	char *q;
+ 
+-	if (!raw_message)
++	if (!commit->buffer)
+ 		return -1;
+-	encoding = get_encoding(raw_message);
++	encoding = get_encoding(commit->buffer);
+ 	if (!encoding)
+ 		encoding = "UTF-8";
+ 	if (!git_commit_encoding)
+ 		git_commit_encoding = "UTF-8";
+ 
+ 	out->reencoded_message = NULL;
+-	out->message = raw_message;
++	out->message = commit->buffer;
+ 	if (strcmp(encoding, git_commit_encoding))
+-		out->reencoded_message = reencode_string(raw_message,
++		out->reencoded_message = reencode_string(commit->buffer,
+ 					git_commit_encoding, encoding);
+ 	if (out->reencoded_message)
+ 		out->message = out->reencoded_message;
+@@ -182,7 +181,7 @@ static char *get_encoding(const char *message)
+ 	return NULL;
+ }
+ 
+-static void write_cherry_pick_head(void)
++static void write_cherry_pick_head(struct commit *commit)
+ {
+ 	int fd;
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -350,7 +349,7 @@ static int run_git_commit(const char *defmsg)
+ 	return run_command_v_opt(args, RUN_GIT_CMD);
+ }
+ 
+-static int do_pick_commit(void)
++static int do_pick_commit(struct commit *commit)
+ {
+ 	unsigned char head[20];
+ 	struct commit *base, *next, *parent;
+@@ -412,7 +411,7 @@ static int do_pick_commit(void)
+ 		return error(_("%s: cannot parse parent commit %s"),
+ 			me, sha1_to_hex(parent->object.sha1));
+ 
+-	if (get_message(commit->buffer, &msg) != 0)
++	if (get_message(commit, &msg) != 0)
+ 		return error(_("Cannot get commit message for %s"),
+ 			sha1_to_hex(commit->object.sha1));
+ 
+@@ -457,7 +456,7 @@ static int do_pick_commit(void)
+ 			strbuf_addstr(&msgbuf, ")\n");
+ 		}
+ 		if (!no_commit)
+-			write_cherry_pick_head();
++			write_cherry_pick_head(commit);
+ 	}
+ 
+ 	if (!strategy || !strcmp(strategy, "recursive") || action == REVERT) {
+@@ -535,6 +534,7 @@ static void read_and_refresh_cache(const char *me)
+ static int revert_or_cherry_pick(int argc, const char **argv)
+ {
+ 	struct rev_info revs;
++	struct commit *commit;
+ 
+ 	git_config(git_default_config, NULL);
+ 	me = action == REVERT ? "revert" : "cherry-pick";
+@@ -557,7 +557,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 	prepare_revs(&revs);
+ 
+ 	while ((commit = get_revision(&revs))) {
+-		int res = do_pick_commit();
++		int res = do_pick_commit(commit);
+ 		if (res)
+ 			return res;
+ 	}
 -- 
 1.7.5.GIT
