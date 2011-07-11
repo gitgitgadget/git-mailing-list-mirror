@@ -1,79 +1,91 @@
-From: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
-Subject: Re: Strange characters
-Date: Mon, 11 Jul 2011 10:51:11 +0200
-Message-ID: <20110711085111.GA6594@bee.lab.cmartin.tk>
-References: <1310066131287-6559596.post@n2.nabble.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="k1lZvvs/B4yU6o8G"
-Cc: git@vger.kernel.org
-To: bryceadamprescott <bryceadamprescott@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 11 10:51:20 2011
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: [PATCH] Documentation: clearly specify what refs are honored by core.logAllRefUpdates
+Date: Mon, 11 Jul 2011 11:14:18 +0200
+Message-ID: <c63583df97ff8dd596d16d4471041d6ebedb67e8.1310375571.git.bert.wesarg@googlemail.com>
+Cc: git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 11 11:14:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QgCD1-0003Cy-6P
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Jul 2011 10:51:19 +0200
+	id 1QgCZP-0005sb-I7
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jul 2011 11:14:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757468Ab1GKIvN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jul 2011 04:51:13 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:59542 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757439Ab1GKIvN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2011 04:51:13 -0400
-Received: from bee.lab.cmartin.tk (z39c5.pia.fu-berlin.de [87.77.57.197])
-	by kimmy.cmartin.tk (Postfix) with ESMTPA id DF96B461FA;
-	Mon, 11 Jul 2011 10:50:32 +0200 (CEST)
-Received: (nullmailer pid 25587 invoked by uid 1000);
-	Mon, 11 Jul 2011 08:51:11 -0000
-Mail-Followup-To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	bryceadamprescott <bryceadamprescott@gmail.com>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <1310066131287-6559596.post@n2.nabble.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751256Ab1GKJOW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jul 2011 05:14:22 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:47506 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750891Ab1GKJOW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2011 05:14:22 -0400
+Received: by bwd5 with SMTP id 5so3067188bwd.19
+        for <git@vger.kernel.org>; Mon, 11 Jul 2011 02:14:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=TqwJy95FMb02ksb9dWo6w0tdCIYL6QBJQ/e5GGKanyY=;
+        b=bsSB7eCjJNWkddXf2kMnwFr86cE2xkmtSOJhev4rjCc6nY5UrPXIG5om/fho4nBIb+
+         HAYIh3ZejojWIMcMpynjNJIv4S7vQyvoAkPRoFy9BJXc8l031J0yEt/t+CJb2BGm31au
+         7vTJB3qKRExDbMML41AvYS4wk6wutMPwIsfdM=
+Received: by 10.204.79.67 with SMTP id o3mr2595332bkk.19.1310375660867;
+        Mon, 11 Jul 2011 02:14:20 -0700 (PDT)
+Received: from localhost (m111.zih.tu-dresden.de [141.30.68.111])
+        by mx.google.com with ESMTPS id v6sm962863bkd.55.2011.07.11.02.14.19
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 11 Jul 2011 02:14:19 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.517.g10515
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176837>
 
+The documentation for logging updates in git-update-ref, doesn't make it
+clear that only a specific subset of refs are honored by this variable.
 
---k1lZvvs/B4yU6o8G
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 
-On Thu, Jul 07, 2011 at 12:15:31PM -0700, bryceadamprescott wrote:
-> I've used subversion before but I've only used git a handful of times. At my
-> new job I am using git and me and my boss (who is also new to git) is having
-> a problem with UTF-8 characters. It seems that git is replacing some
-> characters here and there with strange UTF-8 characters that display as a
-> question mark in a diamond. Strangely enough the code still compiles with
-> thousands of warnings about the UTF-8 characters. Any help would be
-> appreciated.
+---
 
-Git shouldn't modify the contents of the files at all (except for
-line-end if you ask it to). Could you provide a reproducible example
-of what's happening?
+The initial justification in 4057deb (Junio C Hamano, 2006-10-08), leaves
+the impression, that a blacklist would have made more sense, than the
+current whitelist. Maybe we can change this?
+---
+ Documentation/config.txt         |    4 +++-
+ Documentation/git-update-ref.txt |    5 +++--
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-Cheers,
-   cmn
---k1lZvvs/B4yU6o8G
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAEBAgAGBQJOGrl/AAoJEHKRP1jG7ZzTEdoH/3i6gHHk4G8RZhHYEsV+3vov
-aG/2qaL3OhDt0L9tRvI8OBYAF9KGEN2O7hKcty8/l8tu0QivNJwMJ/E0FG485Fcw
-gv03At2dA6FwI0C4elmXBTeY+sKk0P+C0bA0hTFDPYHPOXvJeclZVWf5Z+H8UYjJ
-iGzeBcvuObZaySiY1H75aHtiEDdl2tFC7WWtn4us7KtCNJh+Gf9x+9ASG0CHTRPX
-wnGIuX+efEOAUjheG6rgc4/PKNYZfJ510GadbpwN3c4S27Mt1EYesTPZf8atwtNh
-MAEguz7KhjHg4ckWsroCw4W+QK6Ipmtv03Dik9ZZ7L/afSaAPO4pKj1BOs3V5DM=
-=onUd
------END PGP SIGNATURE-----
-
---k1lZvvs/B4yU6o8G--
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index c631d1c..dd44122 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -344,7 +344,9 @@ core.logAllRefUpdates::
+ 	SHA1, the date/time and the reason of the update, but
+ 	only when the file exists.  If this configuration
+ 	variable is set to true, missing "$GIT_DIR/logs/<ref>"
+-	file is automatically created for branch heads.
++	file is automatically created for branch heads (i.e. under
++	refs/heads/), remote reafs (i.e. under refs/remotes/),
++	note refs (i.e. under refs/notes/), and the symbolic ref HEAD.
+ +
+ This information can be used to determine what commit
+ was the tip of a branch "2 days ago".
+diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-ref.txt
+index e25a65a..18fce69 100644
+--- a/Documentation/git-update-ref.txt
++++ b/Documentation/git-update-ref.txt
+@@ -60,8 +60,9 @@ still contains <oldvalue>.
+ 
+ Logging Updates
+ ---------------
+-If config parameter "core.logAllRefUpdates" is true or the file
+-"$GIT_DIR/logs/<ref>" exists then `git update-ref` will append
++If config parameter "core.logAllRefUpdates" is true and the ref is one under
++"refs/heads/", "refs/remotes/", "refs/notes/", or the symbolic ref HEAD; or
++the file "$GIT_DIR/logs/<ref>" exists then `git update-ref` will append
+ a line to the log file "$GIT_DIR/logs/<ref>" (dereferencing all
+ symbolic refs before creating the log name) describing the change
+ in ref value.  Log lines are formatted as:
+-- 
+1.7.5.517.g10515
