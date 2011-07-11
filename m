@@ -1,123 +1,111 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [GSoC update] Sequencer for inclusion
-Date: Mon, 11 Jul 2011 15:11:24 -0500
-Message-ID: <20110711201124.GA6568@elie>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 11/17] revert: Save data for continuing after conflict
+ resolution
+Date: Mon, 11 Jul 2011 14:01:12 -0700
+Message-ID: <7vbox0cz1j.fsf@alter.siamese.dyndns.org>
 References: <1310396048-24925-1-git-send-email-artagnon@gmail.com>
- <20110711171713.GA5963@elie>
- <CALkWK0msdBdXX4oMkd+WAMR8PXTRT3ivjMrf3ZAMfBrsLoM=dQ@mail.gmail.com>
+ <1310396048-24925-12-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Daniel Barkalow <barkalow@iabervon.org>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 11 22:11:45 2011
+X-From: git-owner@vger.kernel.org Mon Jul 11 23:01:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QgMpS-0006s9-6s
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Jul 2011 22:11:42 +0200
+	id 1QgNbX-0003Iq-Th
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jul 2011 23:01:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753405Ab1GKULh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Jul 2011 16:11:37 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:42976 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750870Ab1GKULg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Jul 2011 16:11:36 -0400
-Received: by ywe9 with SMTP id 9so1648208ywe.19
-        for <git@vger.kernel.org>; Mon, 11 Jul 2011 13:11:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=AOBAVyTyZSeY9xtgvj3iZJFETQoO8174Jk03WXZ4mvo=;
-        b=CHEWxDRQqPXbJnuTUpLIpDOwiXsuLZ8sbAk65ubMmJ/FxqlZyDxiveWi/+rehdRedJ
-         XNMXvz+cw3shJZfEqYE92Z5U2rD8uzGST+bf/fIvnrtF/qlxQYyh40toKqUPjsOjRXqQ
-         c0Guxd47N8BGAfOc00CK3UHSaEGvDQARF9/pY=
-Received: by 10.236.153.4 with SMTP id e4mr5695141yhk.263.1310415095728;
-        Mon, 11 Jul 2011 13:11:35 -0700 (PDT)
-Received: from elie (adsl-69-209-70-6.dsl.chcgil.ameritech.net [69.209.70.6])
-        by mx.google.com with ESMTPS id e24sm2174876yhk.23.2011.07.11.13.11.33
-        (version=SSLv3 cipher=OTHER);
-        Mon, 11 Jul 2011 13:11:34 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0msdBdXX4oMkd+WAMR8PXTRT3ivjMrf3ZAMfBrsLoM=dQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757873Ab1GKVBR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jul 2011 17:01:17 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49734 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757791Ab1GKVBP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2011 17:01:15 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E00576820;
+	Mon, 11 Jul 2011 17:01:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+KsSlYq1okV52lD+4bcXemvefRU=; b=wTkWGt
+	R/mKnOxr6c6wp1ugmnf1gPs2x2ffjP10kP9mAPdbVkY3hAT3XJHe7N5bM46ffO17
+	Ul0T1du3HuaB5lQxLSe7H7Bih8SFVNl0AhMXIAuyp9djF9cYCBEPXK8xXxErc7zS
+	qPalInLP9N+AwauZnoxWENv7UK3SYcIvsO2C4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YwGRLvK1AYe/KikWEwpU0O9eUVRsloTo
+	XpP3R24wHUjdI7jOBhSUqYn/UwZZJcNgft6RXyCa/4VySTuoS7F/L/zsfvknsReC
+	Lx4XKdrvfAsVHPj137pGXETWJj/Ck+NztqvNOjb2ZV5rG3Ycaxn5mGzfUdPXt4Wy
+	vzQ/nObs9b0=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D92F0681F;
+	Mon, 11 Jul 2011 17:01:14 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 303D6681E; Mon, 11 Jul 2011
+ 17:01:14 -0400 (EDT)
+In-Reply-To: <1310396048-24925-12-git-send-email-artagnon@gmail.com>
+ (Ramkumar Ramachandra's message of "Mon, 11 Jul 2011 14:54:02 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E9B53C4A-AC00-11E0-BA97-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176892>
 
-Ramkumar Ramachandra wrote:
-> Jonathan Nieder writes:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
->> To be precise, the format used includes
->>
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0strategy-option =3D patience | renormaliz=
-e
->>
->> to represent the effect of "-Xpatience -Xrenormalize". =C2=A0My only=
- worry
->> about that is that the "|" can sound like "or", which would seem
->> strange to a user that does not necessarily develop software (so is
->> not thinking about bitfields). =C2=A0The format used in config files=
- puts
->>
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0strategy-option =3D patience
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0strategy-option =3D renormalize
->>
->> as separate lines.
->
-> Okay, I can change to that if it's desirable.  My rationale for using
-> "|" is that lines like "key =3D value1" and "key =3D value2" tend to =
-look
-> odd -- it's like I'm reassigning the key a different value.
+> +/* Insert into todo_list in same order; commit_list_insert reverses
+> + * the order
 
-On second thought, I don't think it matters, since this is not meant
-for humans anyway, right?
+Style: end the first line of multi-line comment at "/*".
 
-I.e., it could be
+As you say "in same order", you solicit a question "The same as what?".
+As you say "insert reverses the order", you sound as if you are
+complaining you do not want insert to do so.
 
-	gibberish=3Dpatience renormalize
+And you do not need either of them. The function is "append", and if you
+explain it as "append", you do not have to contrast it with "insert".
+In other words, starting this comment with
 
-and that would work just as well.  Feel free to forget I said anything.
+        /*
+         * Append a commit at the end of the commit_list.
 
->> Once each new feature has been documented and each new feature or
->> fixed bug has an associated test, you've reached the end of this.
->
-> It depends on how rigorously you want to document and test things, no=
-?
->  For example, I haven't documented the formats of the configuration
-> files anywhere but in the commit messages.  Something in
-> Documentation/technical would be nice, but I think we should wait
-> until the format evolves a bit.  Since I haven't exposed anything lik=
-e
-> a "--interactive" functionality, the user will never see it and we ca=
-n
-> change it as and when we like.
+is perfectly adequate, I think. More useful would be (although it could be
+read from the usage example) to help callers what "next" means, perhaps
+like:
 
-Right, I haven't looked through carefully but this didn't look
-underdocumented.
+         * next starts by pointing at the variable that holds the head of
+         * the list when the for an empty commit_list, and is updated to
+         * point at the "next" field of the last item on the list, as new
+         * commits are appended to the list.
 
-I mostly meant about tests:
+> + *
+> + * Usage example:
+> + *
+> + *     struct commit_list *list;
+> + *     struct commit_list **next = &list;
+> + *
+> + *     next = commit_list_append(c1, next);
+> + *     next = commit_list_append(c2, next);
+> + *     *next = NULL;
+> + *     assert(commit_list_count(list) == 2);
+> + *     return list;
+> + *
+> + * Don't forget to NULL-terminate!
 
-> Also, for things like the option parser, how far do you want to go
-> with testing? How many kinds of malformed instruction sheets do you
-> want to test with?  I'll include some more basic tests soon, but I
-> don't think we should go too deep, due to time constraints.
-
-There are other reasons not to test too much, too: the longer tests
-are, the less pleasant an experience it is to run them or to modify
-the testsuite later.  So just the minimum to make sure the feature and
-checks you carefully introduced continue to work as later changes are
-made is not only enough but ideal.
-
-> I have updated many of the commit messages.  Do let me know what's
-> missing where.
-
-Will send relevant links to previous reviews.  Thanks.
+I am still not convinced that making it the caller's responsibility to
+NULL-terminate the list after it finishes to append is a good trade-off
+between run-time performance and ease of API use.  If you are appending
+thousands of commits to a commit list in a tight loop, surely you would
+save the same thousands of assignment of NULL to the next field of the
+element at the tail of the list, which may reduce the instruction count a
+tiny bit, but that field was assigned in the last round in that tight loop
+and the cacheline would likely to be owned by the CPU already, so it might
+not make much practical difference.
