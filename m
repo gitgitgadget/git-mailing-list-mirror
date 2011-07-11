@@ -1,94 +1,100 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [RFC PATCH] revert: Persist per-session opts
-Date: Mon, 11 Jul 2011 11:42:44 +0530
-Message-ID: <CALkWK0ndSWkPudM_sJnyUyh93t9JLk-t-YFQb7=WO2H_svnGdQ@mail.gmail.com>
-References: <1310226118-10201-1-git-send-email-artagnon@gmail.com>
- <1310226118-10201-2-git-send-email-artagnon@gmail.com> <201107101002.06385.chriscool@tuxfamily.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 22/48] merge-recursive: Fix sorting order and directory
+ change assumptions
+Date: Mon, 11 Jul 2011 09:04:37 +0200
+Message-ID: <4E1AA085.9010908@viscovery.net>
+References: <1307518278-23814-1-git-send-email-newren@gmail.com> <1307518278-23814-23-git-send-email-newren@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Jul 11 08:13:12 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, jgfouca@sandia.gov
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 11 09:04:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qg9jz-0005tr-OE
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Jul 2011 08:13:12 +0200
+	id 1QgAXv-0005fo-DS
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jul 2011 09:04:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757003Ab1GKGNH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Jul 2011 02:13:07 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:57958 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756568Ab1GKGNF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Jul 2011 02:13:05 -0400
-Received: by wyg8 with SMTP id 8so2348865wyg.19
-        for <git@vger.kernel.org>; Sun, 10 Jul 2011 23:13:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=SKE6AJ1FgAfioSTEDDPaeWnYFIt6ZP3B5ST5FKVCYNE=;
-        b=YJTSZf0rPsqxX7LH/Z/Gk8fqj6wubCMc60COPGPqTdjPCHrtYuxb/mbXGB3EDeZ6oK
-         Y21gmjE7nqJ9qZnRj98l++Jdeinturz4RUAUI6yExuOZKf1SgJX/daIyB6smAv8zuqnG
-         joKvNIAhocF2pHCQvZi/grWVrpA3e/my43Ty0=
-Received: by 10.216.62.3 with SMTP id x3mr2634271wec.77.1310364784147; Sun, 10
- Jul 2011 23:13:04 -0700 (PDT)
-Received: by 10.216.175.198 with HTTP; Sun, 10 Jul 2011 23:12:44 -0700 (PDT)
-In-Reply-To: <201107101002.06385.chriscool@tuxfamily.org>
+	id S1757208Ab1GKHEm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jul 2011 03:04:42 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:27471 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757083Ab1GKHEl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2011 03:04:41 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1QgAXl-0007Dl-9y; Mon, 11 Jul 2011 09:04:37 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id F0E201660F;
+	Mon, 11 Jul 2011 09:04:36 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.18) Gecko/20110616 Thunderbird/3.1.11
+In-Reply-To: <1307518278-23814-23-git-send-email-newren@gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176834>
 
-Hi Christian,
+Am 6/8/2011 9:30, schrieb Elijah Newren:
+>  test_expect_success 'modify/delete + directory/file conflict; other way' '
+> +	# Yes, we really need the double reset since "letters" appears as
+> +	# both a file and a directory.
+> +	git reset --hard &&
+>  	git reset --hard &&
+>  	git clean -f &&
+>  	git checkout modify^0 &&
+> +
+>  	test_must_fail git merge delete &&
+>  
+> -	test 3 = $(git ls-files -s | wc -l) &&
+> -	test 2 = $(git ls-files -u | wc -l) &&
+> -	test 1 = $(git ls-files -o | wc -l) &&
+> +	test 5 -eq $(git ls-files -s | wc -l) &&
+> +	test 4 -eq $(git ls-files -u | wc -l) &&
+> +	test 1 -eq $(git ls-files -o | wc -l) &&
+>  
+>  	test -f letters/file &&
+> +	test -f letters.txt &&
+>  	test -f letters~HEAD
+>  '
 
-Christian Couder writes:
-> On Saturday 09 July 2011 17:41:58 Ramkumar Ramachandra wrote:
->> Save the replay_opts struct in .git/sequencer/opts using a simple "k=
-ey
->> =3D value" format. =C2=A0Parse it and populate the options structure=
- before
->> replaying.
->
-> [...]
->
->> =C2=A0static void format_todo(struct strbuf *buf, struct commit_list=
- *todo_list,
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 struct replay_opts *opts)
->> =C2=A0{
->> @@ -733,6 +759,102 @@ error:
->> =C2=A0 =C2=A0 =C2=A0 die(_("Malformed instruction sheet: %s"), git_p=
-ath(SEQ_TODO_FILE));
->> =C2=A0}
->>
->> +static char *parse_opt_value(char *p, void *key, enum seq_opt_type =
-type,
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 parse_opt_cb *cb_function) {
->> + =C2=A0 =C2=A0 struct option opt;
->> + =C2=A0 =C2=A0 char *val, *cur, *end;
->> +
->> + =C2=A0 =C2=A0 if (!(val =3D strchr(p, '=3D')))
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto error;
->> + =C2=A0 =C2=A0 if (!*(val + 1))
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto error;
->> + =C2=A0 =C2=A0 if (!(end =3D strchr(p, '\n')))
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto error;
->> + =C2=A0 =C2=A0 val +=3D 2;
->
-> It looks like you rely on all lines ending with \n and having a space=
- after
-> the '=3D'. It may be a little bit too fragile.
+A heads-up: This test case fails here on Windows. The messages produced are:
 
-Right.  Thanks for the review -- will try to reuse bits of the
-git-config parser.
+Merging:
+63e2d2b modified
+virtual delete
+found 1 common ancestor(s):
+e6b31cd initial
+CONFLICT (modify/delete): letters deleted in delete and modified in HEAD.
+Version HEAD of letters left in tree at letters~HEAD.
+Adding letters/file
+error: failed to create path 'letters/file': perhaps a D/F conflict?
+Auto-merging letters.txt
+CONFLICT (add/add): Merge conflict in letters.txt
+Automatic merge failed; fix conflicts and then commit the result.
 
--- Ram
+whereas they are on Linux:
+
+Merging:
+274ce87 modified
+virtual delete
+found 1 common ancestor(s):
+343abf7 initial
+Removing letters to make room for subdirectory; may re-add later.
+Adding letters/file
+CONFLICT (modify/delete): letters deleted in delete and modified in HEAD.
+Version HEAD of letters left in tree at letters~HEAD.
+Auto-merging letters.txt
+CONFLICT (add/add): Merge conflict in letters.txt
+Automatic merge failed; fix conflicts and then commit the result.
+
+As you can see, "Removing letters..." is missing on Windows, and the file
+'letters' is indeed left in the working tree. Any quick ideas where to
+begin debugging this?
+
+-- Hannes
