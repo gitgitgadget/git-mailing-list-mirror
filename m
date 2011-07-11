@@ -1,121 +1,64 @@
-From: John Nowak <john@johnnowak.com>
-Subject: reproducible unexpected behavior for 'git reset'
-Date: Sun, 10 Jul 2011 18:02:48 -0400
-Message-ID: <F5C3C2A9-1A77-4E28-B4B2-508A7F8ACB7E@johnnowak.com>
-Mime-Version: 1.0 (Apple Message framework v1084)
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: [PATCH] Do not trust PWD blindly
+Date: Sun, 10 Jul 2011 18:52:36 -0700
+Message-ID: <86k4bpporf.fsf@red.stonehenge.com>
+References: <CABNJ2GKgzXGDq9FhKcVP380bs=rEKqYdrOaCb+A99_TBm7A4_A@mail.gmail.com>
+	<alpine.DEB.1.00.1107091935210.1985@bonsai2>
+	<4E1A0FCC.7080308@kdbg.org>
+	<alpine.DEB.1.00.1107110057120.3379@bonsai2>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 11 01:16:25 2011
+Cc: Johannes Sixt <j6t@kdbg.org>, Pat Thoyts <patthoyts@gmail.com>,
+	gitster@pobox.com, msysGit <msysgit@googlegroups.com>,
+	Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 11 03:53:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qg3Ef-0004y1-0m
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Jul 2011 01:16:25 +0200
+	id 1Qg5gU-0008Ge-2M
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jul 2011 03:53:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756832Ab1GJXQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Jul 2011 19:16:20 -0400
-Received: from birch.site5.com ([174.132.116.226]:51094 "EHLO birch.site5.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751806Ab1GJXQU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 10 Jul 2011 19:16:20 -0400
-Received: from user-387hdgh.cable.mindspring.com ([208.120.182.17] helo=[192.168.1.200])
-	by birch.site5.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.69)
-	(envelope-from <john@johnnowak.com>)
-	id 1Qg25T-0007oT-V1
-	for git@vger.kernel.org; Sun, 10 Jul 2011 17:02:52 -0500
-X-Mailer: Apple Mail (2.1084)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - birch.site5.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - johnnowak.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1756176Ab1GKBxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Jul 2011 21:53:11 -0400
+Received: from lax-gw06.mailroute.net ([199.89.0.106]:40711 "EHLO
+	mail.mroute.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755753Ab1GKBxK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jul 2011 21:53:10 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by lax-gw06.mroute.net (Postfix) with ESMTP id E135EC5CC;
+	Mon, 11 Jul 2011 01:52:52 +0000 (GMT)
+X-Virus-Scanned: by MailRoute
+Received: from red.stonehenge.com (red.stonehenge.com [208.79.95.2])
+	by lax-gw06.mroute.net (Postfix) with ESMTP id 91475C5CA;
+	Mon, 11 Jul 2011 01:52:36 +0000 (GMT)
+Received: by red.stonehenge.com (Postfix, from userid 1001)
+	id 7329E3B30; Sun, 10 Jul 2011 18:52:36 -0700 (PDT)
+x-mayan-date: Long count = 12.19.18.9.10; tzolkin = 7 Oc; haab = 18 Tzec
+In-Reply-To: <alpine.DEB.1.00.1107110057120.3379@bonsai2> (Johannes
+	Schindelin's message of "Mon, 11 Jul 2011 00:59:03 +0200 (CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176831>
 
-I am able to reproduce a scenario where, after a 'commit' and a 'stash pop' that results in a merge conflict, I need to 'reset' a file twice in order to get the index back to HEAD. It appears that the first 'reset' sets the index to the merge base version instead of HEAD which was, for me, rather unexpected. I encountered this on 1.7.4 but others have reproduced it on the latest master. If this behavior is documented, I cannot find it.
+>>>>> "Johannes" == Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-A transcript to reproduce this oddity is below; note how the file is partially staged after the first 'reset' and unstaged after the second:
+Johannes> You might be very surprised, but that is not true on the Linux system 
+Johannes> where one of the 4msysgit.git test cases does _not_ break, while it does 
+Johannes> on Windows.
 
----
+If you ever depend on a userspace PWD to be your actual current
+directory without at least stat()ing it, you've failed.
 
-$ git init
-Initialized empty Git repository in /Users/jn/test/.git/
+In my experience, it is *never* reliable.  It's just a hint.
 
-$ echo "a" > foo
-
-$ git add foo
-
-$ git commit -a -m "Initial"
-[master (root-commit) 5214837] Initial
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 foo
-
-$ echo "b" >> foo
-
-$ git stash
-Saved working directory and index state WIP on master: 5214837 Initial
-HEAD is now at 5214837 Initial
-
-$ echo "c" >> foo
-
-$ git add foo
-
-$ git commit -a -m "Added c"
-[master 69eef48] Added c
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-$ git stash pop
-Auto-merging foo
-CONFLICT (content): Merge conflict in foo
-
-$ git status
-# On branch master
-# Unmerged paths:
-#   (use "git reset HEAD <file>..." to unstage)
-#   (use "git add/rm <file>..." as appropriate to mark resolution)
-#
-#	both modified:      foo
-#
-no changes added to commit (use "git add" and/or "git commit -a")
-
-$ git reset foo
-Unstaged changes after reset:
-M	foo
-
-$ git status
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#	modified:   foo
-#
-# Changes not staged for commit:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working directory)
-#
-#	modified:   foo
-#
-
-$ git reset foo
-Unstaged changes after reset:
-M	foo
-
-$ git status
-# On branch master
-# Changes not staged for commit:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working directory)
-#
-#	modified:   foo
-#
-no changes added to commit (use "git add" and/or "git commit -a")
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Smalltalk/Perl/Unix consulting, Technical writing, Comedy, etc. etc.
+See http://methodsandmessages.posterous.com/ for Smalltalk discussion
