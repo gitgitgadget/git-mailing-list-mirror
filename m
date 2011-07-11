@@ -1,165 +1,64 @@
-From: "Rice, James M CIV NSWCDD, K73" <james.rice2@navy.mil>
-Subject: Tracking changes in git with a change number....
-Date: Mon, 11 Jul 2011 13:29:52 -0400
-Message-ID: <C785F567A08DDE449FD4590C91E6AD13CB34BE@naeamillez01v.nadsusea.nads.navy.mil>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: git remote show origin (URL)
+Date: Mon, 11 Jul 2011 19:46:07 +0200
+Message-ID: <m2y6041zj4.fsf@igel.home>
+References: <1310400505376-6571492.post@n2.nabble.com>
+	<CA+gHt1AxfgB=zJ2hVZ-7gZzyPFDuTyFW_NqiepobTWHRsafAhw@mail.gmail.com>
+	<1310404255063-6571752.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-	protocol="application/x-pkcs7-signature";
-	micalg=SHA1;
-	boundary="----=_NextPart_000_0025_01CC3FCE.9CF5F780"
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 11 19:45:02 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: frankkany <frankkany@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 11 19:46:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QgKXV-0007PA-DE
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Jul 2011 19:45:02 +0200
+	id 1QgKYi-0008Dn-GJ
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jul 2011 19:46:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758333Ab1GKRo4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jul 2011 13:44:56 -0400
-Received: from naeanrfkax10o.nmci.navy.mil ([138.162.5.154]:54842 "EHLO
-	naeanrfkax10o.nmci.navy.mil" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758287Ab1GKRoz (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Jul 2011 13:44:55 -0400
-X-Greylist: delayed 901 seconds by postgrey-1.27 at vger.kernel.org; Mon, 11 Jul 2011 13:44:55 EDT
-X-AuditID: 8aa20599-b7b64ae0000015f8-d8-4e1b3312f031
-Received: from naeanrfkeg01v.nadsusea.nads.navy.mil (gate1-norfolk.nmci.navy.mil [138.162.0.41])
-	by  (Symantec Mail Security) with SMTP id A5.26.05624.2133B1E4; Mon, 11 Jul 2011 17:29:54 +0000 (GMT)
-Received: from naeanrfkeb09v.nadsusea.nads.navy.mil ([10.16.20.112]) by naeanrfkeg01v.nadsusea.nads.navy.mil with Microsoft SMTPSVC(6.0.3790.4675);
-	 Mon, 11 Jul 2011 13:29:53 -0400
-Received: from naeanrfkeb15v.nadsusea.nads.navy.mil ([10.16.20.118]) by naeanrfkeb09v.nadsusea.nads.navy.mil with Microsoft SMTPSVC(6.0.3790.4675);
-	 Mon, 11 Jul 2011 13:29:53 -0400
-Received: from naeamillez01v.nadsusea.nads.navy.mil ([10.16.20.30]) by naeanrfkeb15v.nadsusea.nads.navy.mil with Microsoft SMTPSVC(6.0.3790.4675);
-	 Mon, 11 Jul 2011 13:29:53 -0400
-x-mimeole: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-Thread-Topic: Tracking changes in git with a change number....
-Thread-Index: Acw/8CP7nPeV2EpzQ2eN41JaVkmepA==
-X-OriginalArrivalTime: 11 Jul 2011 17:29:53.0348 (UTC) FILETIME=[25111840:01CC3FF0]
-X-Brightmail-Tracker: AAAAAA==
+	id S1758366Ab1GKRqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jul 2011 13:46:10 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:60672 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758287Ab1GKRqJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2011 13:46:09 -0400
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 376211C01CC0;
+	Mon, 11 Jul 2011 19:46:08 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
+	by mail.m-online.net (Postfix) with ESMTP id 3428C1C0008C;
+	Mon, 11 Jul 2011 19:46:08 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
+	with ESMTP id 71prboCV962x; Mon, 11 Jul 2011 19:46:08 +0200 (CEST)
+Received: from igel.home (ppp-93-104-147-117.dynamic.mnet-online.de [93.104.147.117])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Mon, 11 Jul 2011 19:46:07 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id 667AFCA293; Mon, 11 Jul 2011 19:46:07 +0200 (CEST)
+X-Yow: Dizzy, are we "REAL PEOPLE" or "AMAZING ANIMALS"?
+In-Reply-To: <1310404255063-6571752.post@n2.nabble.com> (frankkany@gmail.com's
+	message of "Mon, 11 Jul 2011 10:10:55 -0700 (PDT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176880>
 
-This is a multi-part message in MIME format.
+frankkany <frankkany@gmail.com> writes:
 
-------=_NextPart_000_0025_01CC3FCE.9CF5F780
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+> I also checked the /etc/hosts file to make sure "hidden-repos" didn't point
+> to another IP.
 
-We are getting ready to switch over to git as our CM tool, but have an issue.
+That name may only be valid in a certain network.
 
-In our organization we track changes via a Change Request (CR) number.  We may end up with multiple commits, by one or more users under a single CR number.  When we deliver our CM folks want to be able to see all the files that have changed for a particular CR number.  Is there an elegant way to do this in git? 
+Andreas.
 
-Restating the problem.  I wish for our developers to be able to reference multiple commits with one number, and then find those commits via that number.  And I don't mind scripting to accomplish this.  I know, that CR # can be put in the commit message, then I can grep and parse the log, that is the hard way.
-
-It would seem that this would be a relatively common problem.  Any help would be greatly appreciated!
-
-------=_NextPart_000_0025_01CC3FCE.9CF5F780
-Content-Type: application/x-pkcs7-signature;
-	name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
-	filename="smime.p7s"
-
-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
-dsHK0Daw4NKeilKy8gLyn5yhwB5AAtqWJnQwqbvR+T8ABcvKXEIS8YOI4rYvS38fHaUSmdCtb5zV
-kkUHW2QI3XvS21uq1XXqZZT87ePkiK7LX9s+2m0GSnlj9M7vPdOXx5Jg/Umo+Kk3Ssyu/BTE7C2u
-ugBv1O7J+y4TuaXNFhDSkLBqYhm5CGrPayJL2vjSLxlO+lS7yrVv+VQvyVWdqCSX4F4T/a8xgIiz
-HDQ7PXkeMIIEcDCCA1igAwIBAgIDAIVdMA0GCSqGSIb3DQEBBQUAMF0xCzAJBgNVBAYTAlVTMRgw
-FgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAKBgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRgwFgYD
-VQQDEw9ET0QgRU1BSUwgQ0EtMjAwHhcNMDgwODI2MDAwMDAwWhcNMTEwODI1MjM1OTU5WjBzMQsw
-CQYDVQQGEwJVUzEYMBYGA1UEChMPVS5TLiBHb3Zlcm5tZW50MQwwCgYDVQQLEwNEb0QxDDAKBgNV
-BAsTA1BLSTEMMAoGA1UECxMDVVNOMSAwHgYDVQQDExdSSUNFLkpBTUVTLk0uMTIzMDQ2MTY4MjCB
-nzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAvQb9NfvzuH9f1YFCqpbriJfjFXP64ZbXeCYgRM/V
-qCcyKa4w6PUFUq3iq/f5YGDFFOHPmFOHYWQWlDh5XEdQ5HuozH8EYfra0BO5THzYAageNzxWvu1g
-rv3u2TPSMogcMKewaCHidP62Y2fXQ45ZNByMeKylxeBOQUH0dF6yCYkCAwEAAaOCAaUwggGhMB8G
-A1UdIwQYMBaAFLK/bgBtuUBJL2AK9HjVeYQlqTG6MD8GA1UdHwQ4MDYwNKAyoDCGLmh0dHA6Ly9j
-cmwuZGlzYS5taWwvZ2V0Y3JsP0RPRCUyMEVNQUlMJTIwQ0EtMjAwDgYDVR0PAQH/BAQDAgbAMBYG
-A1UdIAQPMA0wCwYJYIZIAWUCAQsJMB0GA1UdDgQWBBQYaBgpSaSUBisfyV7QcvxpKur0AzBtBggr
-BgEFBQcBAQRhMF8wOwYIKwYBBQUHMAKGL2h0dHA6Ly9jcmwuZGlzYS5taWwvZ2V0c2lnbj9ET0Ql
-MjBFTUFJTCUyMENBLTIwMCAGCCsGAQUFBzABhhRodHRwOi8vb2NzcC5kaXNhLm1pbDA/BgNVHREE
-ODA2gRRqYW1lcy5yaWNlMkBuYXZ5Lm1pbKAeBgorBgEEAYI3FAIDoBAMDjEyMzA0NjE2ODJAbWls
-MBsGA1UdCQQUMBIwEAYIKwYBBQUHCQQxBBMCVVMwKQYDVR0lBCIwIAYKKwYBBAGCNxQCAgYIKwYB
-BQUHAwIGCCsGAQUFBwMEMA0GCSqGSIb3DQEBBQUAA4IBAQB9/jZBLRJmg/JMjywlQKQJaoGls9Ji
-BO+LOR34rWAKo0NZaIQmVaI3F/kKaoK80j2qem+cI5yHF8Z0hIJo1UoBNmyKvYLuyt4ghrxo1fB9
-JDU0WBoRkbxbXdGM190ojHDK5IFhPORzWiK2FpHFTG7jOxlTA6FNKIiCrepvZIFSitbCogidX4A2
-G0HmsJBAPpFsNCng3y2w2McLpE4c7jL7g9Sog5kcL29ozKqD4riQ7zMw7jGlcHWpErYno26zzeVT
-5grlxbshHOmDcF+xGgJ0JziMfHaa6VgVpPwULXmL4WV9wR2cgd7CB3sI5+6/VnmR/YRA1zsRqW0s
-uKZip2/AMIIFRjCCBC6gAwIBAgIBKzANBgkqhkiG9w0BAQUFADBbMQswCQYDVQQGEwJVUzEYMBYG
-A1UEChMPVS5TLiBHb3Zlcm5tZW50MQwwCgYDVQQLEwNEb0QxDDAKBgNVBAsTA1BLSTEWMBQGA1UE
-AxMNRG9EIFJvb3QgQ0EgMjAeFw0wODA0MjMyMTA4NTZaFw0xNDA0MjMyMDA4NTZaMF0xCzAJBgNV
-BAYTAlVTMRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAKBgNVBAsTA0RvRDEMMAoGA1UECxMD
-UEtJMRgwFgYDVQQDEw9ET0QgRU1BSUwgQ0EtMjAwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK
-AoIBAQC3GpCJHIAL26G6Jewuo/YtAYhV5hbRT53JU5ymKfmIQfHdnTImnwczIbZHQQIgPKXSSsu7
-y4FPYUHQ9sjuaKbG93h6tCxQHf6LMrZaMnmRMFHwIUqYqRLTLnSZT+b61bgniPjJIaDFs323Vqp7
-l0OcIDROgYk6jjwWEoy7qLOMYNd5vO/hK7R8kQQnjnNOSDQC5fuutM6DndiV5BT4M982rE746VI5
-11bkMsJNbkg3b/XlRjcSYzJJwk+L/jSZyOz45t+uhqB/PUggY6RJLUE+/p1CfIFG5h2S43TSAghU
-iGArZTGpc4D6l/hqNtSDK2TwzWFh4cJYlLbK4jGy2RphAgMBAAGjggIRMIICDTAOBgNVHQ8BAf8E
-BAMCAYYwHwYDVR0jBBgwFoAUSXS7DF66ev4CVO97oMaVxgmAcJYwHQYDVR0OBBYEFLK/bgBtuUBJ
-L2AK9HjVeYQlqTG6MAwGA1UdJAQFMAOAAQAwEgYDVR0TAQH/BAgwBgEB/wIBADBXBgNVHSAEUDBO
-MAsGCWCGSAFlAgELBTALBglghkgBZQIBCwkwCwYJYIZIAWUCAQsKMAsGCWCGSAFlAgELEjALBglg
-hkgBZQIBCxMwCwYJYIZIAWUCAQsUMD8GA1UdHwQ4MDYwNKAyoDCGLmh0dHA6Ly9jcmwuZGlzYS5t
-aWwvZ2V0Y3JsP0RvRCUyMFJvb3QlMjBDQSUyMDIwgf4GCCsGAQUFBwEBBIHxMIHuMD8GCCsGAQUF
-BzAChjNodHRwOi8vY3JsLmRpc2EubWlsL2dldElzc3VlZFRvP0RvRCUyMFJvb3QlMjBDQSUyMDIw
-IAYIKwYBBQUHMAGGFGh0dHA6Ly9vY3NwLmRpc2EubWlsMIGIBggrBgEFBQcwAoZ8bGRhcDovL2Ny
-bC5nZHMuZGlzYS5taWwvY24lM2REb0QlMjBSb290JTIwQ0ElMjAyJTJjb3UlM2RQS0klMmNvdSUz
-ZERvRCUyY28lM2RVLlMuJTIwR292ZXJubWVudCUyY2MlM2RVUz9jQUNlcnRpZmljYXRlO2JpbmFy
-eTANBgkqhkiG9w0BAQUFAAOCAQEAbQVlP8HZ1fGyBtYIzY7li6DmRgJ9paZkmy8TErQBmKH1jDqB
-SwUjpu3N67AFK0QxTgTXbUMd2ilRq/nBr5Z04WgeSE9OXLzKsCRDouxAKxEC2wgjXJW8NXY10GKx
-dvLZOf/Atdio266hafql/l30PgW1DIX3zD7QwrBEWwnD5oNczi5LdSip+O1YLJZLnSYGvXaGjTck
-JFQdz8wXUQjwhpJ8R7+37fs4XRRuLupT06rhrvsmkPT69O9Za3VvLyhZmx8evted3q5VXSsUnxaa
-C3CG85FC0yNoovK/NjevFLqAb2FHMr6HTHd5bqhZzMQXFDkjva4hnP25uvhz3OCnGjGCArEwggKt
-AgEBMGQwXTELMAkGA1UEBhMCVVMxGDAWBgNVBAoTD1UuUy4gR292ZXJubWVudDEMMAoGA1UECxMD
-RG9EMQwwCgYDVQQLEwNQS0kxGDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0yMAIDAIVdMAkGBSsOAwIa
-BQCgggGjMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTExMDcxMTE3
-Mjk1MVowIwYJKoZIhvcNAQkEMRYEFCg2h5TSa9QkLK971LJenqDcIFtoMFgGCSqGSIb3DQEJDzFL
-MEkwCgYIKoZIhvcNAwcwDgYIKoZIhvcNAwICAgCAMAcGBSsOAwIHMA0GCCqGSIb3DQMCAgEoMAcG
-BSsOAwIaMAoGCCqGSIb3DQIFMHMGCSsGAQQBgjcQBDFmMGQwXTELMAkGA1UEBhMCVVMxGDAWBgNV
-BAoTD1UuUy4gR292ZXJubWVudDEMMAoGA1UECxMDRG9EMQwwCgYDVQQLEwNQS0kxGDAWBgNVBAMT
-D0RPRCBFTUFJTCBDQS0yMAIDAIVVMHUGCyqGSIb3DQEJEAILMWagZDBdMQswCQYDVQQGEwJVUzEY
-MBYGA1UEChMPVS5TLiBHb3Zlcm5tZW50MQwwCgYDVQQLEwNEb0QxDDAKBgNVBAsTA1BLSTEYMBYG
-A1UEAxMPRE9EIEVNQUlMIENBLTIwAgMAhVUwDQYJKoZIhvcNAQEBBQAEgYB4LY/U+ZjcfOvJsYS2
-Cq7JEb5D492M41CUGARV/3ZDWtzZvbPvzW81WjblwbgifkdRSQO7ioUXIuzIV4XiFTzhDIwTNsDa
-yZxD+tbgWmM9CdicesVmArPKwZaeAzXtVNWDO+YJA8xoPyWSla41LjFuZ/KzkbWMLG8CdrHZStbO
-nQAAAAAAAA==
-
-------=_NextPart_000_0025_01CC3FCE.9CF5F780--
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
