@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/5] decorate: allow storing values instead of pointers
-Date: Mon, 11 Jul 2011 12:16:50 -0400
-Message-ID: <20110711161649.GA10418@sigill.intra.peff.net>
+Subject: [PATCH 2/5] add object-cache infrastructure
+Date: Mon, 11 Jul 2011 12:17:54 -0400
+Message-ID: <20110711161754.GB10418@sigill.intra.peff.net>
 References: <20110711161332.GA10057@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -11,518 +11,447 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
 	Clemens Buchacher <drizzd@aon.at>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 11 18:16:58 2011
+X-From: git-owner@vger.kernel.org Mon Jul 11 18:18:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QgJAH-00078f-EH
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Jul 2011 18:16:58 +0200
+	id 1QgJBJ-0007aD-VH
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Jul 2011 18:18:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758042Ab1GKQQw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jul 2011 12:16:52 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57694
+	id S1758046Ab1GKQR5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jul 2011 12:17:57 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39505
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754482Ab1GKQQv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2011 12:16:51 -0400
-Received: (qmail 2740 invoked by uid 107); 11 Jul 2011 16:17:15 -0000
+	id S1754482Ab1GKQR4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2011 12:17:56 -0400
+Received: (qmail 2775 invoked by uid 107); 11 Jul 2011 16:18:19 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 11 Jul 2011 12:17:15 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Jul 2011 12:16:50 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 11 Jul 2011 12:18:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Jul 2011 12:17:54 -0400
 Content-Disposition: inline
 In-Reply-To: <20110711161332.GA10057@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176863>
 
-The decorate API provides a mapping of objects to arbitrary
-values. Until now, it did this by allowing you to store a
-void pointer, which could point to other storage. This has
-two problems:
+There is sometimes a need to cache some information about an
+object or set of objects persistently across git
+invocations. The notes-cache interface can be used for this,
+but it is very heavyweight and slow for storing small
+values.
 
-  1. It's inefficient. To store even a small value, you have
-     to allocate persistent storage. So we end up storing
-     both the value and a pointer to it.
-
-  2. It's a pain to use. To avoid heap overhead for small
-     values, you have to either use a custom allocater, or
-     you have to shoe-horn the value into the void pointer
-     (if it's small enough to fit).
-
-This patch lets you store fixed-size values directly in the
-hash table without allocating them elsewhere. This is a
-definite win for any value smaller than or equal to a
-pointer. It's probably a win for slightly larger values, but
-may eventually be slower for storing large structs (because
-the values are copied when the hash grows).
-
-It also provides a more natural interface for storing small
-values; see the changes in fast-export.c, which can now drop
-its pointer arithmetic magic.
-
-The original "store and retrieve a void pointer" API is easy
-to implement on top of this (the values we store are the
-pointers). The add_decoration and lookup_decoration
-functions are kept for compatibility.
+This patch introduces a new API, object-cache, which stores
+a mapping of objects to values in a concise and efficient
+form. See the added API documentation for details.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- Documentation/technical/api-decorate.txt |  170 +++++++++++++++++++++++++++++-
- builtin/fast-export.c                    |   32 ++----
- decorate.c                               |  102 ++++++++++++-------
- decorate.h                               |   22 ++++-
- 4 files changed, 263 insertions(+), 63 deletions(-)
+As I mentioned earlier, I wanted this to be generic and size-agnostic,
+because I'd also like to try caching patch-ids for git-cherry.
+
+ Documentation/technical/api-decorate.txt     |    3 +
+ Documentation/technical/api-object-cache.txt |  101 +++++++++++++
+ Makefile                                     |    2 +
+ object-cache.c                               |  204 ++++++++++++++++++++++++++
+ object-cache.h                               |   32 ++++
+ 5 files changed, 342 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/technical/api-object-cache.txt
+ create mode 100644 object-cache.c
+ create mode 100644 object-cache.h
 
 diff --git a/Documentation/technical/api-decorate.txt b/Documentation/technical/api-decorate.txt
-index 1d52a6c..8d10b66 100644
+index 8d10b66..c851f59 100644
 --- a/Documentation/technical/api-decorate.txt
 +++ b/Documentation/technical/api-decorate.txt
-@@ -1,6 +1,172 @@
- decorate API
- ============
+@@ -13,6 +13,9 @@ could, for example, map objects into 32-bit integers. For ease of use,
+ functions are provided for storing the values of arbitrary pointers,
+ which can point to strings or structs.
  
--Talk about <decorate.h>
-+The decorate API is a system for efficiently mapping objects to values
-+in memory. It is slightly slower than an actual member of an object
-+struct (because it incurs a hash lookup), but it uses less memory when
-+the mapping is not in use, or when the number of decorated objects is
-+small compared to the total number of objects.
++Note that the decorate API only stores the mapping in memory. See the
++object-cache API for persistent storage.
++
+ Data Structures
+ ---------------
  
--(Linus)
-+For efficiency, the mapping is capable of storing actual byte values, as
-+long as the byte values for each element are of a fixed size. So one
-+could, for example, map objects into 32-bit integers. For ease of use,
-+functions are provided for storing the values of arbitrary pointers,
-+which can point to strings or structs.
+diff --git a/Documentation/technical/api-object-cache.txt b/Documentation/technical/api-object-cache.txt
+new file mode 100644
+index 0000000..ecead4c
+--- /dev/null
++++ b/Documentation/technical/api-object-cache.txt
+@@ -0,0 +1,101 @@
++Object Cache API
++================
++
++The object cache API is meant to store a cache of per-object values. The
++aim is for robustness, speed, and simplicity. The stored data must be of
++a fixed size, and the only operations allowed are insertion and
++retrieval with a struct object as the key.
++
++This API is similar to the decorate API, but provides persistence of
++values across multiple invocations. It is also similar to the
++notes-cache API, but is much lighter weight and suitable for storing
++small values. If you are storing large, arbitrary data, consider using
++notes-cache.
++
++
++Storage
++-------
++
++Values are stored both on-disk and in-memory. Newly added values are
++initially stored in a hash table in memory, and written to disk only
++when `object_cache_write` is called.
++
++The disk storage consists of a single file per cache, located in the
++`$GIT_DIR/cache` directory. Each file contains a list of rows ordered by
++sha1. Each row contains a binary sha1, followed by the fixed-size data
++mapped to that sha1.
++
++When the cache is written to disk, the contents of the in-memory data
++and the disk data are merged, with in-memory values taking precedence
++over disk values. The data is written to a temporary file and atomically
++renamed into the new cache file. Thus there is no lock contention
++between competing processes on either reading or writing (though one
++process's updates may be lost).
++
++
++Speed
++-----
++
++Lookup in the cache requires `O(lg(n))` hash comparisons (via binary
++search of the disk contents, or the in-memory hash table).
++
++Insertion into the cache is amortized `O(1)` via the hash table. Writing
++the cache to disk entails `O(n*lg(n) + m)` hash comparisons, where `m`
++is the number of existing disk entries and `n` is the number of newly
++added entries.
++
 +
 +Data Structures
 +---------------
 +
-+`struct decoration`::
++`struct object_cache`::
 +
-+	This structure represents a single mapping of objects to
-+	values. Its fields are:
-+
-+	`name`:::
-+		This field is not used by the decorate API itself, but
-+		may be used by calling code.
-+
-+	`width`:::
-+		This field specifies the width (in units of `char`) of
-+		the values to be stored. This field must be set to its
-+		final value before any objects are added to the mapping.
-+		A width of `0` is equivalent to `sizeof(void *)`.
-+
-+	`nr`:::
-+		The number of objects currently mapped by the
-+		decoration.
-+
-+	`size`:::
-+		The number of hash slots allocated; this is kept to at
-+		least 3/2 of the number of actual slots used, to keep
-+		the hash sparse.
-+
-+	`hash`:::
-+		A pointer to an array of actual `object_decoration`
-+		structs. Note that because the width of `struct
-+		object_decoration` is not known until runtime, this
-+		array is stored with type `unsigned char *`. To access
-+		individual items, one must perform pointer arithmetic
-+		using the `stride` field (see the description of
-+		`stride` below, or the "Examples" section).
-+
-+	`stride`:::
-+		The size of a single object_decoration record.
-+		Technically this can be computed as a function of the
-+		width, but it is here for ease-of-use.
-+
-+	`end`:::
-+		A pointer to storage just past the end of the `hash`
-+		array. This can be used as a boundary for iterating the
-+		items in the hash (see "Examples" below). Technically
-+		this can be computed as a function of the hash pointer,
-+		the size field, and the stride, but is here for
-+		ease-of-use.
-+
-+`struct object_decoration`::
-+
-+	A structure representing the decoration of a single object.
-+	Callers will not normally need to use this object unless they
-+	are iterating all elements in the decoration hash. The `base`
-+	field points to the object being mapped (or `NULL` if it is
-+	an empty hash slot). The `decoration` field stores the mapped
-+	value as a sequence of bytes; use the `width` field in `struct
-+	decoration` to know the exact size.
++	This structure represents a single object cache. Its contents
++	should be considered opaque by calling code.
+++
++	The `fd`, `disk_entries`, `disk_nr`, and `record_size` fields
++	represent the mmap'd on-disk data. The `mem` field represents
++	the in-memory data (see the decorate API for details).
 +
 +
 +Functions
 +---------
 +
-+`add_decoration_value`::
++`object_cache_init`::
 +
-+	Add a mapping from an object to a sequence of bytes. The number
-+	of bytes pointed to by `decoration` should be equal to the
-+	`width` field of the `struct decoration`. If the `old` parameter
-+	is not NULL and a there was already a value for the object, the
-+	bytes of the old value are copied into `old`.  The return value
-+	is `1` if there was a previous value, or `0` otherwise. Note
-+	that if there is no previous value, then `old` is left
-+	untouched; it is the responsibility of the caller to either
-+	check the return value or to set a sentinel value in `old`.
++	Initialize a new object cache; this must be called before any
++	other functions are called on the cache. The `name` parameter
++	specifies a human-readable name which will be used for storage
++	in `$GIT_DIR/cache/$name`. The `width` parameter specifies the
++	size, in units of `char`, of the data to be stored (e.g., pass
++	in `sizeof(uint32_t)` to store 32-bit integers).
 +
-+`lookup_decoration_value`::
++`object_cache_lookup`::
 +
-+	Retrieve a decoration from the mapping. The return value is a
-+	pointer to the sequence of bytes representing the value (of
-+	length `width`), or `NULL` if no value is found.
++	Retrieve a value from the object cache. A void pointer to the
++	stored value will be returned, or `NULL` if there is no value.
 +
-+`add_decoration`::
++`object_cache_add`::
 +
-+	Add a mapping from an object to a void pointer. If a previous
-+	pointer exists for the object, it is returned; otherwise, `NULL`
-+	is returned.
++	Store a value in the object cache. The value pointer should
++	point to exactly `width` bytes of data.
 +
-+`lookup_decoration`::
++`object_cache_write`::
 +
-+	Retrieve a void pointer from the mapping. The return value is
-+	the stored pointer, or `NULL` if there is no stored pointer.
++	Merge the in-memory and existing disk entries, and write the
++	resulting cache to disk, under the name `$GIT_DIR/cache/$name`.
++	If no in-memory entries exist, the on-disk cache will be left
++	unchanged.
 +
++`object_cache_lookup_uint32`::
 +
-+Examples
-+--------
++	Convenience wrapper for retrieving unsigned 32-bit integers. The
++	value will be returned via the `value` pointer. The return value
++	is `0` if a value was found, or negative otherwise (in which
++	case the contents of `value` will be unchanged).
 +
-+Store and retrieve pointers to structs:
++`object_cache_add_uint32`::
 +
-+-------------------------------------------------------------------
-+/* no need to set width parameter; it defaults to sizeof(void *) */
-+static struct decoration commit_foos;
++	Convenience wrapper for storing unsigned 32-bit integers. Note
++	that integers are stored on disk in network-byte order, so it is
++	safe to access caches from any architecture.
+diff --git a/Makefile b/Makefile
+index f8c72e1..dd05579 100644
+--- a/Makefile
++++ b/Makefile
+@@ -535,6 +535,7 @@ LIB_H += merge-recursive.h
+ LIB_H += notes.h
+ LIB_H += notes-cache.h
+ LIB_H += notes-merge.h
++LIB_H += object-cache.h
+ LIB_H += object.h
+ LIB_H += pack.h
+ LIB_H += pack-refs.h
+@@ -628,6 +629,7 @@ LIB_OBJS += name-hash.o
+ LIB_OBJS += notes.o
+ LIB_OBJS += notes-cache.o
+ LIB_OBJS += notes-merge.o
++LIB_OBJS += object-cache.o
+ LIB_OBJS += object.o
+ LIB_OBJS += pack-check.o
+ LIB_OBJS += pack-refs.o
+diff --git a/object-cache.c b/object-cache.c
+new file mode 100644
+index 0000000..d019f0a
+--- /dev/null
++++ b/object-cache.c
+@@ -0,0 +1,204 @@
++#include "cache.h"
++#include "object-cache.h"
++#include "sha1-lookup.h"
++#include "object.h"
 +
-+void store_foo(const struct commit *c, const char *name)
++static const char *object_cache_path(const char *name)
 +{
-+	struct foo *value = alloc_foo(name);
-+	struct foo *old;
-+
-+	old = add_decoration(&commit_foos, c->object, value);
-+	free(old);
++	return git_path("cache/%s", name);
 +}
 +
-+const struct foo *get_foo(const struct commit *c)
++static void open_disk_cache(struct object_cache *c, const char *path)
 +{
-+	return lookup_decoration(&commit_foos, c->object);
++	struct stat sb;
++
++	c->fd = open(path, O_RDONLY);
++	if (c->fd < 0)
++		return;
++
++	if (fstat(c->fd, &sb) < 0) {
++		close(c->fd);
++		c->fd = -1;
++		return;
++	}
++
++	c->disk_entries = xmmap(NULL, sb.st_size, PROT_READ, MAP_PRIVATE,
++				c->fd, 0);
++	c->disk_nr = sb.st_size / c->record_size;
 +}
-+-------------------------------------------------------------------
 +
-+Store and retrieve `unsigned long` integers:
-+
-+-------------------------------------------------------------------
-+static struct decoration longs = { "my longs", sizeof(unsigned long) };
-+
-+void store_long(const struct object *obj, unsigned long value)
++void object_cache_init(struct object_cache *c, const char *name, int width)
 +{
-+	unsigned long old;
-+	if (add_decoration_value(&longs, obj, &value, &old)
-+		printf("old value was %lu\n", old);
++	memset(c, 0, sizeof(*c));
++	c->record_size = 20 + width;
++	c->mem.width = width;
++	open_disk_cache(c, object_cache_path(name));
 +}
 +
-+void print_long(const struct object *obj)
++static void *lookup_disk(const struct object_cache *c,
++			 const struct object *obj)
 +{
-+	unsigned long *value = lookup_decoration_value(&longs, obj);
-+	if (!value)
-+		printf("no value\n");
-+	else
-+		printf("value is %lu\n", *value);
++	int pos;
++
++	pos = sha1_entry_pos(c->disk_entries, c->record_size, 0,
++			     0, c->disk_nr, c->disk_nr, obj->sha1);
++	if (pos < 0)
++		return NULL;
++
++	return c->disk_entries + (pos * c->record_size) + 20;
 +}
-+-------------------------------------------------------------------
 +
-+Iterate over all stored decorations:
++const void *object_cache_lookup(const struct object_cache *c,
++					 const struct object *obj)
++{
++	void *r;
 +
-+-------------------------------------------------------------------
-+void dump_longs(void)
++	r = lookup_decoration_value(&c->mem, obj);
++	if (!r)
++		r = lookup_disk(c, obj);
++	return r;
++}
++
++void object_cache_add(struct object_cache *c, const struct object *obj,
++		      const void *value)
++{
++	add_decoration_value(&c->mem, obj, value, NULL);
++}
++
++static unsigned char *flatten_mem_entries(struct object_cache *c)
 +{
 +	unsigned char *p;
-+	for (p = longs.hash; p < longs.end; p += longs.stride) {
-+		struct object_decoration *e = (struct object_decoration *)p;
-+		unsigned long *value = (unsigned long *)e->decoration;
++	unsigned char *ret;
++	int nr;
 +
-+		/* empty hash slot */
++	ret = xmalloc(c->mem.nr * c->record_size);
++	nr = 0;
++	for (p = c->mem.hash; p < c->mem.end; p += c->mem.stride) {
++		struct object_decoration *e = (struct object_decoration *)p;
++		unsigned char *out;
++
 +		if (!e->base)
 +			continue;
 +
-+		printf("%s -> %lu\n", sha1_to_hex(e->base->sha1), *value);
++		if (nr == c->mem.nr)
++			die("BUG: decorate hash contained extra values");
++
++		out = ret + (nr * c->record_size);
++		hashcpy(out, e->base->sha1);
++		out += 20;
++		memcpy(out, e->decoration, c->mem.width);
++		nr++;
 +	}
++
++	return ret;
 +}
-+-------------------------------------------------------------------
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index daf1945..c053f1f 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -59,7 +59,7 @@ static int parse_opt_tag_of_filtered_mode(const struct option *opt,
- 	return 0;
- }
- 
--static struct decoration idnums;
-+static struct decoration idnums = { NULL, sizeof(uint32_t) };
- static uint32_t last_idnum;
- 
- static int has_unshown_parent(struct commit *commit)
-@@ -73,20 +73,9 @@ static int has_unshown_parent(struct commit *commit)
- 	return 0;
- }
- 
--/* Since intptr_t is C99, we do not use it here */
--static inline uint32_t *mark_to_ptr(uint32_t mark)
--{
--	return ((uint32_t *)NULL) + mark;
--}
--
--static inline uint32_t ptr_to_mark(void * mark)
--{
--	return (uint32_t *)mark - (uint32_t *)NULL;
--}
--
- static inline void mark_object(struct object *object, uint32_t mark)
- {
--	add_decoration(&idnums, object, mark_to_ptr(mark));
-+	add_decoration_value(&idnums, object, &mark, NULL);
- }
- 
- static inline void mark_next_object(struct object *object)
-@@ -96,10 +85,10 @@ static inline void mark_next_object(struct object *object)
- 
- static int get_object_mark(struct object *object)
- {
--	void *decoration = lookup_decoration(&idnums, object);
--	if (!decoration)
-+	uint32_t *mark = lookup_decoration_value(&idnums, object);
-+	if (!mark)
- 		return 0;
--	return ptr_to_mark(decoration);
-+	return *mark;
- }
- 
- static void show_progress(void)
-@@ -536,20 +525,19 @@ static void handle_tags_and_duplicates(struct string_list *extra_refs)
- 
- static void export_marks(char *file)
- {
--	unsigned int i;
--	uint32_t mark;
--	struct object_decoration *deco = idnums.hash;
- 	FILE *f;
- 	int e = 0;
-+	unsigned char *p;
- 
- 	f = fopen(file, "w");
- 	if (!f)
- 		die_errno("Unable to open marks file %s for writing.", file);
- 
--	for (i = 0; i < idnums.size; i++) {
-+	for (p = idnums.hash; p < idnums.end; p += idnums.stride) {
-+		struct object_decoration *deco = (struct object_decoration *)p;
- 		if (deco->base && deco->base->type == 1) {
--			mark = ptr_to_mark(deco->decoration);
--			if (fprintf(f, ":%"PRIu32" %s\n", mark,
-+			uint32_t *mark = (uint32_t *)deco->decoration;
-+			if (fprintf(f, ":%"PRIu32" %s\n", *mark,
- 				sha1_to_hex(deco->base->sha1)) < 0) {
- 			    e = 1;
- 			    break;
-diff --git a/decorate.c b/decorate.c
-index 2f8a63e..55ebaee 100644
---- a/decorate.c
-+++ b/decorate.c
-@@ -6,6 +6,11 @@
- #include "object.h"
- #include "decorate.h"
- 
-+#define WIDTH(n) ((n)->width ? (n)->width : sizeof(void *))
-+#define REF_OFFSET(n, i) ((n)->hash + ((i) * n->stride))
-+#define REF_OBJECT(n, obj) (REF_OFFSET(n, hash_obj(obj, n->size)))
-+#define OBJ(p) ((struct object_decoration *)(p))
 +
- static unsigned int hash_obj(const struct object *obj, unsigned int n)
- {
- 	unsigned int hash;
-@@ -14,75 +19,100 @@ static unsigned int hash_obj(const struct object *obj, unsigned int n)
- 	return hash % n;
- }
- 
--static void *insert_decoration(struct decoration *n, const struct object *base, void *decoration)
-+static int insert_decoration(struct decoration *n, const struct object *base,
-+			     const void *decoration, void *old)
- {
--	int size = n->size;
--	struct object_decoration *hash = n->hash;
--	unsigned int j = hash_obj(base, size);
--
--	while (hash[j].base) {
--		if (hash[j].base == base) {
--			void *old = hash[j].decoration;
--			hash[j].decoration = decoration;
--			return old;
-+	unsigned long width = WIDTH(n);
-+	unsigned char *p = REF_OBJECT(n, base);
++static int void_hashcmp(const void *a, const void *b)
++{
++	return hashcmp(a, b);
++}
 +
-+	while (OBJ(p)->base) {
-+		struct object_decoration *e = OBJ(p);
-+		if (e->base == base) {
-+			if (old)
-+				memcpy(old, e->decoration, width);
-+			memcpy(e->decoration, decoration, width);
-+			return 1;
- 		}
--		if (++j >= size)
--			j = 0;
-+		p += n->stride;
-+		if (p >= n->end)
-+			p = n->hash;
- 	}
--	hash[j].base = base;
--	hash[j].decoration = decoration;
-+	OBJ(p)->base = base;
-+	memcpy(OBJ(p)->decoration, decoration, width);
- 	n->nr++;
--	return NULL;
++int object_cache_write(struct object_cache *c, const char *name)
++{
++	const char *path = object_cache_path(name);
++	struct strbuf tempfile = STRBUF_INIT;
++	int fd;
++	unsigned char *mem_entries;
++	int i, j;
++	int r;
++
++	if (!c->mem.nr)
++		return 0;
++
++	strbuf_addf(&tempfile, "%s.XXXXXX", path);
++	if (safe_create_leading_directories(tempfile.buf) < 0 ||
++	    (fd = git_mkstemp_mode(tempfile.buf, 0755)) < 0) {
++		strbuf_release(&tempfile);
++		return -1;
++	}
++
++	mem_entries = flatten_mem_entries(c);
++	qsort(mem_entries, c->mem.nr, c->record_size, void_hashcmp);
++
++#define WRITE_ENTRY(e) \
++do { \
++	if (write_in_full(fd, e, c->record_size) < 0) { \
++		close(fd); \
++		unlink(tempfile.buf); \
++		strbuf_release(&tempfile); \
++		free(mem_entries); \
++		return -1; \
++	} \
++} while (0)
++
++	i = j = 0;
++	while (i < c->mem.nr && j < c->disk_nr) {
++		unsigned char *mem = mem_entries + (i * c->record_size);
++		unsigned char *disk = c->disk_entries + (j * c->record_size);
++		int cmp = hashcmp(mem, disk);
++
++		/* replace disk entries with in-memory ones */
++		if (cmp == 0)
++			j++;
++		else if (cmp < 0) {
++			WRITE_ENTRY(mem);
++			i++;
++		}
++		else {
++			WRITE_ENTRY(disk);
++			j++;
++		}
++	}
++	while (i < c->mem.nr) {
++		unsigned char *mem = mem_entries + (i * c->record_size);
++		WRITE_ENTRY(mem);
++		i++;
++	}
++	while (j < c->disk_nr) {
++		unsigned char *disk = c->disk_entries + (j * c->record_size);
++		WRITE_ENTRY(disk);
++		j++;
++	}
++#undef WRITE_ENTRY
++
++	free(mem_entries);
++
++	if (close(fd) < 0 || rename(tempfile.buf, path) < 0)
++		r = -1;
++	else
++		r = 0;
++
++	unlink(tempfile.buf);
++	strbuf_release(&tempfile);
++	return r;
++}
++
++int object_cache_lookup_uint32(const struct object_cache *c,
++			       const struct object *obj,
++			       uint32_t *value)
++{
++	const uint32_t *out;
++
++	if (c->record_size != 24)
++		die("BUG: size mismatch in object cache lookup (%d != 24)",
++		    c->record_size);
++
++	out = object_cache_lookup(c, obj);
++	if (!out)
++		return -1;
++
++	*value = ntohl(*out);
 +	return 0;
- }
- 
- static void grow_decoration(struct decoration *n)
- {
--	int i;
--	int old_size = n->size;
--	struct object_decoration *old_hash = n->hash;
-+	unsigned char *old_hash = n->hash;
-+	unsigned char *old_end = n->end;
-+	unsigned char *p;
- 
--	n->size = (old_size + 1000) * 3 / 2;
--	n->hash = xcalloc(n->size, sizeof(struct object_decoration));
-+	n->stride = sizeof(struct object_decoration) + WIDTH(n);
-+	n->size = (n->size + 1000) * 3 / 2;
-+	n->hash = xcalloc(n->size, n->stride);
-+	n->end = n->hash + (n->size * n->stride);
- 	n->nr = 0;
- 
--	for (i = 0; i < old_size; i++) {
--		const struct object *base = old_hash[i].base;
--		void *decoration = old_hash[i].decoration;
--
--		if (!base)
-+	for (p = old_hash; p < old_end; p += n->stride) {
-+		if (!OBJ(p)->base)
- 			continue;
--		insert_decoration(n, base, decoration);
-+		insert_decoration(n, OBJ(p)->base, OBJ(p)->decoration, NULL);
- 	}
- 	free(old_hash);
- }
- 
- /* Add a decoration pointer, return any old one */
- void *add_decoration(struct decoration *n, const struct object *obj,
--		void *decoration)
-+		     void *decoration)
- {
--	int nr = n->nr + 1;
-+	void *old = NULL;
- 
--	if (nr > n->size * 2 / 3)
-+	add_decoration_value(n, obj, &decoration, &old);
-+	return old;
 +}
 +
-+int add_decoration_value(struct decoration *n,
-+			 const struct object *obj,
-+			 const void *decoration,
-+			 void *old)
++void object_cache_add_uint32(struct object_cache *c,
++			     const struct object *obj,
++			     uint32_t value)
 +{
-+	if (n->nr + 1 > n->size * 2 / 3)
- 		grow_decoration(n);
--	return insert_decoration(n, obj, decoration);
-+	return insert_decoration(n, obj, decoration, old);
- }
- 
++	if (c->record_size != 24)
++		die("BUG: size mismatch in object cache add (%d != 24)",
++		    c->record_size);
 +
- /* Lookup a decoration pointer */
--void *lookup_decoration(struct decoration *n, const struct object *obj)
-+void *lookup_decoration(const struct decoration *n, const struct object *obj)
- {
--	unsigned int j;
-+	void **v;
-+
-+	v = lookup_decoration_value(n, obj);
-+	if (!v)
-+		return NULL;
-+	return *v;
++	value = htonl(value);
++	object_cache_add(c, obj, &value);
 +}
+diff --git a/object-cache.h b/object-cache.h
+new file mode 100644
+index 0000000..b869f1e
+--- /dev/null
++++ b/object-cache.h
+@@ -0,0 +1,32 @@
++#ifndef OBJECT_CACHE_H
++#define OBJECT_CACHE_H
 +
-+void *lookup_decoration_value(const struct decoration *n,
-+			      const struct object *obj)
-+{
-+	const unsigned char *p;
- 
- 	/* nothing to lookup */
- 	if (!n->size)
- 		return NULL;
--	j = hash_obj(obj, n->size);
++#include "decorate.h"
 +
-+	p = REF_OBJECT(n, obj);
- 	for (;;) {
--		struct object_decoration *ref = n->hash + j;
-+		struct object_decoration *ref = OBJ(p);
- 		if (ref->base == obj)
- 			return ref->decoration;
- 		if (!ref->base)
- 			return NULL;
--		if (++j == n->size)
--			j = 0;
-+		p += n->stride;
-+		if (p >= n->end)
-+			p = n->hash;
- 	}
- }
-diff --git a/decorate.h b/decorate.h
-index e732804..b75054a 100644
---- a/decorate.h
-+++ b/decorate.h
-@@ -3,16 +3,32 @@
- 
- struct object_decoration {
- 	const struct object *base;
--	void *decoration;
-+	unsigned char decoration[FLEX_ARRAY];
- };
- 
- struct decoration {
- 	const char *name;
-+	/* width of data we're holding; must be set before adding */
-+	unsigned int width;
- 	unsigned int size, nr;
--	struct object_decoration *hash;
-+	/*
-+	 * The hash contains object_decoration structs, but we don't know their
-+	 * size until runtime. So we store is as a pointer to characters to
-+	 * make pointer arithmetic easier.
-+	 */
-+	unsigned char *hash;
-+	unsigned int stride; /* size of a single record */
-+	unsigned char *end; /* end of the hash array */
- };
- 
- extern void *add_decoration(struct decoration *n, const struct object *obj, void *decoration);
--extern void *lookup_decoration(struct decoration *n, const struct object *obj);
-+extern void *lookup_decoration(const struct decoration *n, const struct object *obj);
++struct object_cache {
++	/* mmap'd disk entries */
++	int fd;
++	unsigned char *disk_entries;
++	int disk_nr;
++	int record_size;
 +
-+extern int add_decoration_value(struct decoration *n,
-+				const struct object *obj,
-+				const void *decoration,
-+				void *old);
-+extern void *lookup_decoration_value(const struct decoration *n,
-+				     const struct object *obj);
- 
- #endif
++	/* in memory entries */
++	struct decoration mem;
++};
++
++void object_cache_init(struct object_cache *, const char *name, int width);
++const void *object_cache_lookup(const struct object_cache *,
++				const struct object *);
++void object_cache_add(struct object_cache *, const struct object *,
++		      const void *value);
++int object_cache_write(struct object_cache *, const char *name);
++
++/* Convenience wrappers around object_cache_{lookup,add} */
++int object_cache_lookup_uint32(const struct object_cache *,
++			       const struct object *,
++			       uint32_t *value);
++void object_cache_add_uint32(struct object_cache *,
++			     const struct object *,
++			     uint32_t value);
++
++#endif /* OBJECT_CACHE_H */
 -- 
 1.7.6.37.g989c6
