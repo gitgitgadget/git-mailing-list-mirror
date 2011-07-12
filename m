@@ -1,106 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/5] add object-cache infrastructure
-Date: Tue, 12 Jul 2011 01:35:32 -0400
-Message-ID: <20110712053532.GB11644@sigill.intra.peff.net>
-References: <20110711161332.GA10057@sigill.intra.peff.net>
- <20110711161754.GB10418@sigill.intra.peff.net>
- <7vliw4d1hu.fsf@alter.siamese.dyndns.org>
- <20110711220107.GC30155@sigill.intra.peff.net>
- <7vk4bo9ze5.fsf@alter.siamese.dyndns.org>
- <4E1B91D8.5040500@ronin-capital.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 11/17] revert: Save data for continuing after conflict resolution
+Date: Tue, 12 Jul 2011 11:13:58 +0530
+Message-ID: <CALkWK0=W58pHShDeoPkys2gYNAk+VSP7CCVijvSDq6N_NdLaKw@mail.gmail.com>
+References: <1310396048-24925-1-git-send-email-artagnon@gmail.com>
+ <1310396048-24925-12-git-send-email-artagnon@gmail.com> <7vbox0cz1j.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>, Ted Ts'o <tytso@mit.edu>,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Clemens Buchacher <drizzd@aon.at>
-To: Illia Bobyr <Illia.Bobyr@ronin-capital.com>
-X-From: git-owner@vger.kernel.org Tue Jul 12 07:35:42 2011
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 12 07:45:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QgVdF-0001KX-Id
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 07:35:41 +0200
+	id 1QgVmb-0004Cq-UQ
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 07:45:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753244Ab1GLFff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jul 2011 01:35:35 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:47396
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752846Ab1GLFfe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2011 01:35:34 -0400
-Received: (qmail 8732 invoked by uid 107); 12 Jul 2011 05:35:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 12 Jul 2011 01:35:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Jul 2011 01:35:32 -0400
-Content-Disposition: inline
-In-Reply-To: <4E1B91D8.5040500@ronin-capital.com>
+	id S1752276Ab1GLFoU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Jul 2011 01:44:20 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:54790 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751502Ab1GLFoT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2011 01:44:19 -0400
+Received: by wwe5 with SMTP id 5so4575892wwe.1
+        for <git@vger.kernel.org>; Mon, 11 Jul 2011 22:44:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=4VA2sTt3p+wdbhXOiATfhvIKOhNJTUO3WrCxl0nesT4=;
+        b=gNh2UjQhne63Bue/7mHgT+fOtcGrlivnWyoEKociygexctb77CZK2aiHQe63uDcClG
+         cwUsokFjaAWNNit7k9rg3XMDO9BQMvwXS/fSrVYHLa4V+5/Q1+eZuf5w7RYhgZlNN/Bz
+         RMyaLaGleRZ1xcm7QMbOSO6gP//qgqSZYNKqo=
+Received: by 10.217.3.17 with SMTP id q17mr3593836wes.107.1310449458117; Mon,
+ 11 Jul 2011 22:44:18 -0700 (PDT)
+Received: by 10.216.175.198 with HTTP; Mon, 11 Jul 2011 22:43:58 -0700 (PDT)
+In-Reply-To: <7vbox0cz1j.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176914>
 
-On Mon, Jul 11, 2011 at 07:14:16PM -0500, Illia Bobyr wrote:
+Hi Junio,
 
-> I am not 100% sure that my solution is exactly about this problem, but 
-> it seems to be quite relevant.
-> 
-> I think that if you rebase "step-by-step" by doing, for this particular 
-> example, something like
-> 
-> $ git rebase master^ topic
-> $ git rebase master topic
-> 
-> You will first see the /modified one/one/ conflict that you will resolve 
-> your "two" against and then your second rebase will apply with no conflicts.
-> 
-> I have a set of scripts that help me do this kind of rebases by 
-> essentially rebasing the topic branch against every single commit on the 
-> upstream.
+Junio C Hamano writes:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>> + *
+>> + * Usage example:
+>> + *
+>> + * =C2=A0 =C2=A0 struct commit_list *list;
+>> + * =C2=A0 =C2=A0 struct commit_list **next =3D &list;
+>> + *
+>> + * =C2=A0 =C2=A0 next =3D commit_list_append(c1, next);
+>> + * =C2=A0 =C2=A0 next =3D commit_list_append(c2, next);
+>> + * =C2=A0 =C2=A0 *next =3D NULL;
+>> + * =C2=A0 =C2=A0 assert(commit_list_count(list) =3D=3D 2);
+>> + * =C2=A0 =C2=A0 return list;
+>> + *
+>> + * Don't forget to NULL-terminate!
+>
+> I am still not convinced that making it the caller's responsibility t=
+o
+> NULL-terminate the list after it finishes to append is a good trade-o=
+ff
+> between run-time performance and ease of API use. =C2=A0If you are ap=
+pending
+> thousands of commits to a commit list in a tight loop, surely you wou=
+ld
+> save the same thousands of assignment of NULL to the next field of th=
+e
+> element at the tail of the list, which may reduce the instruction cou=
+nt a
+> tiny bit, but that field was assigned in the last round in that tight=
+ loop
+> and the cacheline would likely to be owned by the CPU already, so it =
+might
+> not make much practical difference.
 
-That makes a lot of sense to me as a strategy. Of course, as you
-mention, it is horribly slow. And when you do have real conflicts, you
-would end up looking at the same conflicts again and again (and as you
-mention, rerere can be some help there, though not necessarily
-perfect).
+Ah, I hadn't thought about it this deeply.  Changed now- thanks for
+the explanation.
 
-> At the same time the less changes are in topic...master the faster it 
-> would be and the more changes are there the more you benefit from a 
-> gradual rebase.
-
-Yeah, this seems like the real problem to me. It's one thing to rebase
-on top of a single series that somebody has applied upstream. But if it
-has been 2 weeks, there may be hundreds of commits, and doing hundreds
-of rebases is awful. I wonder if you could do better by picking out some
-"key" commits in master to rebase on top of using one of:
-
-  1. Divide-and-conquer the commit space. Try the rebase, starting on
-     the HEAD. If it works, great. If the user says "this is too hard",
-     then find the midpoint between where we tried to rebase and the
-     merge base, and try rebasing there. Every time it's too hard, go
-     back halfway to the start. Every time it's easy, try the new result
-     on top of HEAD.
-
-     So it's basically doing a O(lg n) search backwards for an easy
-     place to rebase, and then repeatedly checking if that was a good
-     spot (and repeating the backwards search if not). The worst case
-     complexity is O(n lg n) rebases. But in practice, you can hopefully
-     find the problematic spot in O(lg n), and then everything will just
-     work out after 1 or 2 problematic spots.
-
-  2. Use heuristics (like commit message content) to find related
-     commits. So if I have a 5-patch series, I can perhaps find the
-     likely commits upstream that match my patches, and those are
-     good places to try individual rebases. And then I don't care how
-     many commits are in master. If I have a 5 patch series, I won't do
-     more than 5 rebases.
-
-But I've never tried this in practice. Maybe next time a rebase is ugly
-I'll manually work through one of the methods and see how it fares.
-
--Peff
+-- Ram
