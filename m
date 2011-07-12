@@ -1,113 +1,98 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [GSoC update] Sequencer for inclusion
-Date: Tue, 12 Jul 2011 00:58:17 -0500
-Message-ID: <20110712055817.GA10169@elie>
-References: <1310396048-24925-1-git-send-email-artagnon@gmail.com>
- <20110711171713.GA5963@elie>
- <7vpqlgbjmd.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 12 07:58:35 2011
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [RFC/PATCH 0/3] teach --histogram to diff
+Date: Tue, 12 Jul 2011 14:10:24 +0800
+Message-ID: <1310451027-15148-1-git-send-email-rctay89@gmail.com>
+Cc: "Shawn O. Pearce" <spearce@spearce.org>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 12 08:10:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QgVzO-00004w-2K
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 07:58:34 +0200
+	id 1QgWBK-0003gC-8R
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 08:10:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753468Ab1GLF6a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jul 2011 01:58:30 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:51691 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752846Ab1GLF63 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2011 01:58:29 -0400
-Received: by gxk21 with SMTP id 21so1801713gxk.19
-        for <git@vger.kernel.org>; Mon, 11 Jul 2011 22:58:28 -0700 (PDT)
+	id S1754323Ab1GLGKf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jul 2011 02:10:35 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:64097 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752934Ab1GLGKe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2011 02:10:34 -0400
+Received: by gyh3 with SMTP id 3so1811102gyh.19
+        for <git@vger.kernel.org>; Mon, 11 Jul 2011 23:10:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=4Ibk028SzpZFzO3g8Wo0+v6V5Ewxj1DoNExxgi/ZBuc=;
-        b=ttQYGfBjeNFkLqmpMovS7Tf3BBkHJ7qkC/5sD7dfTmvshJMQYpS/+/sl7AebErt0JH
-         o+T52EtyBDME4A7bvx5Fe0pLpSFfu9RZVKKYH6oodRdGHEn/gAcneD39nOs9u+N0lz43
-         iPaUFsi3zgioHBlyM5gJzwqt9Rkr0P1YlHs8U=
-Received: by 10.150.66.3 with SMTP id o3mr4314545yba.440.1310450308832;
-        Mon, 11 Jul 2011 22:58:28 -0700 (PDT)
-Received: from elie (adsl-69-209-70-6.dsl.chcgil.ameritech.net [69.209.70.6])
-        by mx.google.com with ESMTPS id q10sm1014778ybf.28.2011.07.11.22.58.26
-        (version=SSLv3 cipher=OTHER);
-        Mon, 11 Jul 2011 22:58:27 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vpqlgbjmd.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=XyhvhUKQNGF/Rm9e6PnzpX1fmCVUi2TQEEsbr9KQG5Q=;
+        b=NmFL4mAUkV4j/aIInAzbFpVr1hIoJXC+GCtnEY7baXQ+5v6rskZIn8WqIXvFocS3l7
+         c7yMhL72Ni1i7EC+Z3MDbd4VBWa3Sx8LBTeSMf+3cQezCPYWbcjYeenDhc+nC/J33ruU
+         sH4i0At/fHD11+w2rO9JTTxe0g273DInnqCOY=
+Received: by 10.150.69.30 with SMTP id r30mr4842019yba.342.1310451034329;
+        Mon, 11 Jul 2011 23:10:34 -0700 (PDT)
+Received: from localhost (cm119.beta238.maxonline.com.sg [116.86.238.119])
+        by mx.google.com with ESMTPS id y11sm2716633ybe.16.2011.07.11.23.10.31
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 11 Jul 2011 23:10:33 -0700 (PDT)
+X-Mailer: git-send-email 1.7.4.msysgit.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176921>
 
-Junio C Hamano wrote:
+(Shawn, I was held up with the patch messages, sorry for the delay.)
 
-> After all, this series was labeled "for inclusion", not an RFC, which
-> would mean the submitter, helpers, and reviewers all made reasonable
-> effort to perfect the series to their ability, no?
+Port JGit's HistogramDiff(Index) over to C. This algorithm extends the
+patience algorithm to "support low-occurrence common elements" [1].
 
-Yep, that is how I interpret the subject line, too.
+Rough numbers show that it is a faster alternative to its --patience
+cousin, as well as to the default Meyers algorithm:
 
-Wow, the series has been through a lot of iterations.  I finally found
-a moment to dig up the ones I replied to (a full list would be harder
-since search.gmane.org is still down).  Maybe they can save others
-some time, too.
+  $ time ./git log --histogram -p v1.0.0 >/dev/null
+  
+  real    0m12.998s
+  user    0m11.506s
+  sys     0m1.487s
+  $ time ./git log -p v1.0.0 >/dev/null
+  
+  real    0m13.575s
+  user    0m12.101s
+  sys     0m1.468s
+  $ time ./git log --patience -p v1.0.0 >/dev/null
+  
+  real    0m14.978s
+  user    0m13.508s
+  sys     0m1.464s
 
- - RFC: Sequencer Foundations [1]
-   The basic themes are introduced and Daniel explains the
-   two-levels concept.
+The first patch implements JGit's HistogramDiff(Index) proper. The
+second and third patches aren't essential but yield performance gains.
 
- - Sequencer Foundations[2]
-   Basic discussion of the purpose of die()-to-error() conversion and
-   the suggestion of an almost crash-only design to avoid some of its
-   problems.
+Note: these patches must be applied on top of rc/histogram-diff in pu.
 
- - Better error handling around revert[3]
-   A quick discussion of die() versus assert() and how to unwind
-   after errors.
+Contents:
+[RFC/PATCH 1/3] teach --histogram to diff
+[RFC/PATCH 2/3] xdiff/xprepare: skip classification
+[RFC/PATCH 3/3] xdiff/xprepare: use a smaller sample size for histogram
 
- - Sequencer Foundations v3, v4[4]
-   Capturing globals in a struct.  Whether to save error codes before
-   propagating them (versus the simpler "return -1").  Another round
-   of die()-to-error() versus crash-only code.  Pacing and the idea of
-   merging bit-by-bit.
+ Makefile                  |    2 +-
+ diff.c                    |    2 +
+ merge-recursive.c         |    2 +
+ t/t4048-diff-histogram.sh |   12 ++
+ xdiff/xdiff.h             |    1 +
+ xdiff/xdiffi.c            |    3 +
+ xdiff/xdiffi.h            |    2 +
+ xdiff/xhistogram.c        |  384 +++++++++++++++++++++++++++++++++++++++++++++
+ xdiff/xprepare.c          |   41 ++++--
+ xdiff/xutils.c            |    8 +-
+ xdiff/xutils.h            |    2 +-
+ 11 files changed, 440 insertions(+), 19 deletions(-)
+ create mode 100755 t/t4048-diff-histogram.sh
+ create mode 100644 xdiff/xhistogram.c
 
- - Implementing --abort processing[5][6]
-   UI design is difficult.  The easiest way is to teach the porcelain
-   to do what you were doing by hand already.
+--
+Footnotes:
+[1] http://egit.eclipse.org/w/?p=jgit.git;a=blob;f=org.eclipse.jgit/src/org/eclipse/jgit/diff/HistogramDiff.java;hb=HEAD
 
- - Sequencer with continuation features[7]
-   Commit messages.  Variable names.  commit_list_append().  It seems
-   we are closing in.
-
- - Sequencer: the insn sheet format[8]
-   Various loose ends: i18n, commit messages, relationship between
-   breakage of scripts and workflows and the need to patch tests, the
-   "me" variable, advise(), variable names.
-
-I suspect that getting the workarounds that keep existing scripts
-working will take another round.  However, some of the early patches
-might be ready.  My review will focus on that possibility.
-
-Ram, thanks for your hard work.
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/171255
-[2] http://thread.gmane.org/gmane.comp.version-control.git/173408
-[3] http://thread.gmane.org/gmane.comp.version-control.git/174043/focus=174050
-[4] http://thread.gmane.org/gmane.comp.version-control.git/174393/focus=174540
-[5] http://thread.gmane.org/gmane.comp.version-control.git/174874
-[6] http://thread.gmane.org/gmane.comp.version-control.git/175638
-[7] http://thread.gmane.org/gmane.comp.version-control.git/176139
-[8] http://thread.gmane.org/gmane.comp.version-control.git/176647
+-- 
+1.7.3.4.681.gb718e
