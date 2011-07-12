@@ -1,178 +1,132 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 07/17] revert: Introduce struct to keep command-line
- options
-Date: Tue, 12 Jul 2011 13:05:49 -0500
-Message-ID: <20110712180549.GC14120@elie>
-References: <1310396048-24925-1-git-send-email-artagnon@gmail.com>
- <1310396048-24925-8-git-send-email-artagnon@gmail.com>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [RFC] control, what refs are honored by core.logAllRefUpdates
+Date: Tue, 12 Jul 2011 20:15:21 +0200
+Message-ID: <CAKPyHN0+BaPtrRMVrWCZQ2mbJQz_vxsOOsG4Z=Ksqc1RJvF1Ew@mail.gmail.com>
+References: <CAKPyHN3_br-ndQo9oMzCcU1yOVEbAxmzvHQkwF15LgwQx12KZA@mail.gmail.com>
+	<7vaacj8jq7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 12 20:06:07 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 12 20:15:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QghLR-0008Vq-RO
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 20:06:06 +0200
+	id 1QghUV-0004DX-PX
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 20:15:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754606Ab1GLSGA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jul 2011 14:06:00 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:64355 "EHLO
+	id S1754701Ab1GLSPX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Jul 2011 14:15:23 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:55312 "EHLO
 	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754467Ab1GLSF7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2011 14:05:59 -0400
-Received: by vws1 with SMTP id 1so3647547vws.19
-        for <git@vger.kernel.org>; Tue, 12 Jul 2011 11:05:58 -0700 (PDT)
+	with ESMTP id S1754458Ab1GLSPW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2011 14:15:22 -0400
+Received: by vws1 with SMTP id 1so3654312vws.19
+        for <git@vger.kernel.org>; Tue, 12 Jul 2011 11:15:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=T09EvarVtsI5/Wi9so1IUTa1wJZ/gssL1OJR7UTWb/k=;
-        b=plFftf56gni97N8njvel227noQ+ng/HWh6M2XOJWpqdbFNDd5QQ4AGsTcNbI8Dyt4I
-         BTU3cKWMzTRinNpo/XXebRYsWHLuGchhqV8r7ewJ1e22SrcORlKMtVcYekMR22lOoE7o
-         UF5ZGXfU4dTCgrWlDZoFtAFR4hS34HrFtf0TA=
-Received: by 10.52.94.46 with SMTP id cz14mr232748vdb.501.1310493958709;
-        Tue, 12 Jul 2011 11:05:58 -0700 (PDT)
-Received: from elie ([69.209.70.6])
-        by mx.google.com with ESMTPS id e8sm5089907vdf.9.2011.07.12.11.05.56
-        (version=SSLv3 cipher=OTHER);
-        Tue, 12 Jul 2011 11:05:57 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1310396048-24925-8-git-send-email-artagnon@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=61jl7pSY54Ew4nK0bn8ZCJd8PuF6HFsltUw2abvOPn8=;
+        b=XjZxUDPGp0xe6nKFEpWLCYiHfUmGgQbsdRTGmy5lyevz4i72AQQMQL7iq/R7lXJtaR
+         nfOQi1UmCVcbHbmkTopeTAagrZKX1r/3Kya57GAAplfIdimmi1EZ0NzY1pJYGvAqtdNU
+         5A5d9+JOwYpk2G445JKN+e1SxSft6uIl011Kc=
+Received: by 10.52.76.74 with SMTP id i10mr318808vdw.128.1310494521607; Tue,
+ 12 Jul 2011 11:15:21 -0700 (PDT)
+Received: by 10.52.185.105 with HTTP; Tue, 12 Jul 2011 11:15:21 -0700 (PDT)
+In-Reply-To: <7vaacj8jq7.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176961>
 
-Ramkumar Ramachandra wrote:
+On Tue, Jul 12, 2011 at 19:57, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> Bert Wesarg <bert.wesarg@googlemail.com> writes:
+>
+>> What: Control the refs which are honored by core.logAllRefUpdates.
+>>
+>> How:
+>>
+>> Introduce a new config variable named core.autoRefLog. This variable
+>> is a multi var. The default value is:
+>>
+>> =C2=A0 =C2=A0 [core]
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 autoLogRef =3D heads
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 autoLogRef =3D remotes
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 autoLogRef =3D notes
+>>
+>> This list must be initialize at runtime. Because older repositories
+>> won't have them in existing config files.
+>
+> It sounds as if you mean to update .git/config when you find a reposi=
+tory
+> that is missing these, which is not what we want. =C2=A0I would rephr=
+ase it
+> like this:
 
-> The variable "me" is left as a file-scope static variable because it
-> is not an independent option.  "me" is simply a string that needs to
-> be inferred from the "action" option, and is kept global to save each
-> function the trouble of determining it independently.
+No, that was not my intention. I meant that the list is set to the
+current hard-coded list. And than subsequent code.autoLogRef values
+alter this list. So no 'conversion' will be done.
 
-Why not do something like this[1]?
+>
+> =C2=A0- The new variable core.autoLogRef is a multi-valued configurat=
+ion.
+>
+> =C2=A0- If core.autoLogRef is defined (to any value), core.logAllRefu=
+pdates is
+> =C2=A0 ignored;
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/176647/focus=176730
+I haven't though of this logic. But it sounds good. Specifying any
+core.autoLogRef should be honored, regardless whether
+core.logAllRefupdates is set.
 
-diff --git i/builtin/revert.c w/builtin/revert.c
-index 63baca85..3161e696 100644
---- i/builtin/revert.c
-+++ w/builtin/revert.c
-@@ -36,7 +36,6 @@ static const char * const cherry_pick_usage[] = {
- };
- 
- static struct commit *commit;
--static const char *me;
- enum replay_action { REVERT, CHERRY_PICK };
- 
- struct replay_opts {
-@@ -69,6 +68,11 @@ static const char * const *revert_or_cherry_pick_usage(struct replay_opts *opts)
- 	return opts->action == REVERT ? revert_usage : cherry_pick_usage;
- }
- 
-+static const char *action_name(const struct replay_opts *opts)
-+{
-+	return opts->action == REVERT ? "revert" : "cherry-pick";
-+}
-+
- static int option_parse_x(const struct option *opt,
- 			  const char *arg, int unset)
- {
-@@ -280,20 +284,20 @@ static struct tree *empty_tree(void)
- 	return tree;
- }
- 
--static NORETURN void die_dirty_index(const char *me, enum replay_action action)
-+static NORETURN void die_dirty_index(const struct replay_opts *opts)
- {
- 	if (read_cache_unmerged()) {
--		die_resolve_conflict(me);
-+		die_resolve_conflict(action_name(opts));
- 	} else {
- 		if (advice_commit_before_merge) {
--			if (action == REVERT)
-+			if (opts->action == REVERT)
- 				die(_("Your local changes would be overwritten by revert.\n"
- 					  "Please, commit your changes or stash them to proceed."));
- 			else
- 				die(_("Your local changes would be overwritten by cherry-pick.\n"
- 					  "Please, commit your changes or stash them to proceed."));
- 		} else {
--			if (action == REVERT)
-+			if (opts->action == REVERT)
- 				die(_("Your local changes would be overwritten by revert.\n"));
- 			else
- 				die(_("Your local changes would be overwritten by cherry-pick.\n"));
-@@ -347,7 +351,8 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
- 	    (write_cache(index_fd, active_cache, active_nr) ||
- 	     commit_locked_index(&index_lock)))
- 		/* TRANSLATORS: %s will be "revert" or "cherry-pick" */
--		die(_("%s: Unable to write new index file"), me);
-+		die(_("%s: Unable to write new index file"),
-+		    action_name(opts));
- 	rollback_lock_file(&index_lock);
- 
- 	if (!clean) {
-@@ -418,7 +423,7 @@ static int do_pick_commit(struct replay_opts *opts)
- 		if (get_sha1("HEAD", head))
- 			die (_("You do not have a valid HEAD"));
- 		if (index_differs_from("HEAD", 0))
--			die_dirty_index(me, opts->action);
-+			die_dirty_index(opts);
- 	}
- 	discard_cache();
- 
-@@ -455,7 +460,7 @@ static int do_pick_commit(struct replay_opts *opts)
- 		/* TRANSLATORS: The first %s will be "revert" or
- 		   "cherry-pick", the second %s a SHA1 */
- 		die(_("%s: cannot parse parent commit %s"),
--		    me, sha1_to_hex(parent->object.sha1));
-+		    action_name(opts), sha1_to_hex(parent->object.sha1));
- 
- 	if (get_message(commit->buffer, &msg) != 0)
- 		die(_("Cannot get commit message for %s"),
-@@ -557,10 +562,15 @@ static void prepare_revs(struct rev_info *revs, struct replay_opts *opts)
- 		die(_("empty commit set passed"));
- }
- 
--static void read_and_refresh_cache(const char *me, struct replay_opts *opts)
-+static void read_and_refresh_cache(struct replay_opts *opts)
- {
- 	static struct lock_file index_lock;
--	int index_fd = hold_locked_index(&index_lock, 0);
-+	int index_fd;
-+	const char *me;
-+
-+	me = action_name(opts);
-+
-+	index_fd = hold_locked_index(&index_lock, 0);
- 	if (read_index_preload(&the_index, NULL) < 0)
- 		die(_("git %s: failed to read the index"), me);
- 	refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, NULL, NULL, NULL);
-@@ -578,8 +588,7 @@ static int revert_or_cherry_pick(int argc, const char **argv,
- 	struct rev_info revs;
- 
- 	git_config(git_default_config, NULL);
--	me = opts->action == REVERT ? "revert" : "cherry-pick";
--	setenv(GIT_REFLOG_ACTION, me, 0);
-+	setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
- 	parse_args(argc, argv, opts);
- 
- 	if (opts->allow_ff) {
-@@ -593,7 +602,7 @@ static int revert_or_cherry_pick(int argc, const char **argv,
- 			die(_("cherry-pick --ff cannot be used with --edit"));
- 	}
- 
--	read_and_refresh_cache(me, opts);
-+	read_and_refresh_cache(opts);
- 
- 	prepare_revs(&revs, opts);
- 
+>
+> =C2=A0- Otherwise, the core.logAllRefUpdates variable that is set to =
+true is
+> =C2=A0 equivalent to having a "reasonable default" set in core.autoLo=
+gRef (and
+> =C2=A0 the current "reasonable default" happens to be heads, remotes =
+and
+> =C2=A0 notes), and the core.logAllRefUpdates variable set to false (o=
+r
+> =C2=A0 missing) is equivalent to having an empty string in core.autoL=
+ogRef;
+>
+>> The value given needs to be a valid ref, without leading or trailing
+>> slashes, and wildcards. The names will be prefixed with 'refs/' and
+>> suffixed with '/'. The list is checked against the ref to update, if
+>> any of the values is a prefix of the given ref, than the update will
+>> be logged, regardless whether the log file exists.
+>
+> Ok, except for:
+>
+> =C2=A0- An empty string in core.autoLogRef does not contribute to the=
+ matching
+> =C2=A0 logic above.
+>
+>> Setting core.autoLogRef to the empty value, will reset the list.
+>
+> It is unclear what it is reset to. =C2=A0Do you mean it clears, e.g.
+>
+> =C2=A0 =C2=A0[core]
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0autoLogRef =3D heads
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0autoLogRef =3D remotes
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0autoLogRef =3D notes
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0autoLogRef =3D
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0autoLogRef =3D heads
+>
+> would first create a list of three elements, clears it and then the f=
+inal
+> result has only refs/heads/ in the list?
+>
+
+Exactly. I think the --notes option does have a similar semantics. (I
+added Jeff to the Cc). There is --no-notes, which resets the notes
+list and than subsequent --notes=3D options populate the list again.
+
+Bert
