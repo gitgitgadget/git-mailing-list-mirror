@@ -1,118 +1,111 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 14/17] reset: Make hard reset remove the sequencer state
-Date: Tue, 12 Jul 2011 15:15:32 -0500
-Message-ID: <20110712201532.GE14909@elie>
+Subject: Re: [PATCH 16/17] revert: Introduce --reset to remove sequencer state
+Date: Tue, 12 Jul 2011 15:30:11 -0500
+Message-ID: <20110712203011.GF14909@elie>
 References: <1310396048-24925-1-git-send-email-artagnon@gmail.com>
- <1310396048-24925-15-git-send-email-artagnon@gmail.com>
+ <1310396048-24925-17-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Daniel Barkalow <barkalow@iabervon.org>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 12 22:15:53 2011
+X-From: git-owner@vger.kernel.org Tue Jul 12 22:42:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QgjMz-00036w-Pt
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 22:15:50 +0200
+	id 1QgjnE-0007ex-Q5
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 22:42:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755343Ab1GLUPo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jul 2011 16:15:44 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:57956 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753948Ab1GLUPm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2011 16:15:42 -0400
-Received: by yia27 with SMTP id 27so2107316yia.19
-        for <git@vger.kernel.org>; Tue, 12 Jul 2011 13:15:41 -0700 (PDT)
+	id S1754960Ab1GLUmw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jul 2011 16:42:52 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:50402 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753948Ab1GLUmv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2011 16:42:51 -0400
+Received: by iyb12 with SMTP id 12so4990310iyb.19
+        for <git@vger.kernel.org>; Tue, 12 Jul 2011 13:42:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=OEhx1iK4EOEaPsLMyJvlncnF48UnSOSupPaMcyROs0I=;
-        b=TjJfgEvm0kQYSuyjp7Bl59iPHWjqYCHr3lxHEeN1x4zThudjJWCRB7CvXFmotEhgjn
-         YpZ45cIoXdBdOrBWe5xDP+mYFjdAP9W6j0G7V1ntDj06hvPOLxDfAFoKEBmXvCikb0rG
-         E+MGPXogDswSKXlAcqa3T77DUkZOorG986c6w=
-Received: by 10.236.136.226 with SMTP id w62mr579079yhi.93.1310501740984;
-        Tue, 12 Jul 2011 13:15:40 -0700 (PDT)
+        bh=AyFn8JHn/btBdkDbiPE4oulam43s6otwvs6KPln5Ycs=;
+        b=oO4gGUFciMxB7DTVYXifQ9v1ZNIMfbRXDFz6VqrUDWmyLq7iEWDq2iLKr8eit/AHfl
+         1r147e/OTKNIb8vWrpoe0wbELBJLEUKbV7Z+LD87gk6KNma3QKZEhdAOkh4sTamqm43i
+         SjxyDoY0HfiPwB339c/qbxIHLfLOsQd8e8Uv4=
+Received: by 10.231.82.197 with SMTP id c5mr261253ibl.131.1310502619506;
+        Tue, 12 Jul 2011 13:30:19 -0700 (PDT)
 Received: from elie (adsl-69-209-70-6.dsl.chcgil.sbcglobal.net [69.209.70.6])
-        by mx.google.com with ESMTPS id p50sm5852576yhj.0.2011.07.12.13.15.38
+        by mx.google.com with ESMTPS id s2sm8491893ibe.35.2011.07.12.13.30.17
         (version=SSLv3 cipher=OTHER);
-        Tue, 12 Jul 2011 13:15:39 -0700 (PDT)
+        Tue, 12 Jul 2011 13:30:18 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1310396048-24925-15-git-send-email-artagnon@gmail.com>
+In-Reply-To: <1310396048-24925-17-git-send-email-artagnon@gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176977>
-
-Hi,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176978>
 
 Ramkumar Ramachandra wrote:
 
-> Years of muscle memory have trained users to use "git reset --hard" to
-> remove away the branch state after any sort of operation.  In
-> retrospect, while this may not have been the best design decision, we
-> are stuck with it for historical reasons.
+> Protect the sequencer state from accidentally being stomped by a new
+> cherry-pick or revert invocation by ensuring that an existing one
+> isn't in progress.
 
-Wait, wait!  If that was a bad design decision, we should try to find
-a way to smoothly transition to a world without it, instead of
-layering workarounds on top of it.
+I first read this as "an existing sequencer state isn't in progress".
+But anyway, if I understand correctly the goal isn't to protect the
+sequencer state from corruption but to protect the user from forgetting
+about a pending cherry-pick.
 
-But actually I think it is good UI.  When you do "git merge", it works
-like this:
+> While this patch would normally be expected to
+> break many tests, the earlier patches "reset: Make hard reset remove
+> the sequencer state" and "revert: Remove sequencer state when no
+> commits are pending" make sure that they don't.
 
-	git merge <foo>; # conflicts!
-	... hack hack hack ...
-	# Oh, bother, let me go back to a state I know well and am
-	# comfortable with.
-	git reset --hard <bar>
+Why would I expect a nice change to break tests?
 
-And the same psychological effect applies in the cherry-pick case:
+I suppose you mean: "A naive version of this would break the following
+established way of working:
 
-	git cherry-pick <foo>; # conflicts!
-	... hack hack hack ...
-	# Oh, bother, let me go back to a state I know well and am
-	# comfortable with.
-	git reset --hard <bar>
+	git cherry-pick X; # has conflicts
+	git reset --hard; # no, no!
+	git cherry-pick Y
 
-See, it's about the tool working with you.  When I abandon a merge,
-I don't want to have to search through the owner's manual for the
-button to get git to clear away this unpleasant and unfamiliar state.
+Or even:
 
-Now, by contrast, sometimes one wants something less aggressive.
-For example, to abandon a partial merge conflict resolution but
-keep unrelated changes in the worktree:
+	git cherry-pick X; # has conflicts
+	# ... resolve ...
+	git commit
+	git cherry-pick Y
 
-	git reset --merge HEAD
+But a previous patch takes care of that by making "git reset --hard"
+cancel the pending cherry-pick and by making "git commit" clean up
+after a pending cherry-pick when making the commit that would finish
+it."
 
-Or to get out of the "mergy" state but leave the worktree alone:
+The above text quoted with ">" describes the main impact of the
+change.  The subject line, on the other hand, describes a less
+important part:
 
-	git reset
+> [Subject: revert: Introduce --reset to remove sequencer state]
 
-There's no porcelain or plumbing to abandon a rebase without
-additional side-effects, but "git status" suggests a command for
-it if I remember correctly.
-
-	rm -fr .git/rebase-merge
+Is that fixable?  Maybe this could be split into two patches (since it
+does two different things), or maybe the subject line could be tweaked
+to describe both.
 
 [...]
-> Additionally, this patch ensures that some existing tests don't break
-> when features like "--reset" and "--continue" are introduced later in
-> the series.
+> Ensure that the "rebase -i" script which invokes cherry-pick or revert
+> doesn't change its behavior by using '--reset' to to clear the state
+> after every failed pick.
 
-That's not "Additionally" --- it's the same problem.  One way to
-phrase it would be "Noticed by running such-and-such test after
-such-and-such change".
+This should be avoidable by noticing that commands like "rebase -i"
+use GIT_CHERRY_PICK_HELP to clobber our nice instructions about how to
+resume a cherry-pick anyway and therefore are unlikely to need
+cherry-pick --continue/--abort facilities, no?
 
-> +test_expect_success 'reset --hard cleans up sequencer state' '
-
-Hoorah!  Thanks.
-
-Why isn't the .git/sequencer removal in remove_branch_state() like
-MERGE_MSG and other similar examples are?  (Not a rhetorical question;
-it would be interesting to know.)
+Regards,
+Jonathan
