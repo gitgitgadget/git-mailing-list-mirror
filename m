@@ -1,69 +1,85 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: git-p4, RCS keywords
-Date: Tue, 12 Jul 2011 07:50:36 +0100
-Message-ID: <4E1BEEBC.8060909@diamand.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [GSoC update] Sequencer for inclusion
+Date: Tue, 12 Jul 2011 12:35:32 +0530
+Message-ID: <CALkWK0mT7srC5+Jgk6G5gze+WwVZ-9rJJfCO5OAScaT+YLfZGA@mail.gmail.com>
+References: <1310396048-24925-1-git-send-email-artagnon@gmail.com>
+ <20110711171713.GA5963@elie> <CALkWK0msdBdXX4oMkd+WAMR8PXTRT3ivjMrf3ZAMfBrsLoM=dQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>,
-	Michael Horowitz <michael.horowitz@ieee.org>
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Tue Jul 12 08:50:46 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 12 09:06:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QgWnt-00013h-Tz
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 08:50:46 +0200
+	id 1QgX2d-0006qP-61
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 09:05:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753702Ab1GLGul (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jul 2011 02:50:41 -0400
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:42310 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752704Ab1GLGuk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2011 02:50:40 -0400
-Received: by wwg11 with SMTP id 11so2814122wwg.1
-        for <git@vger.kernel.org>; Mon, 11 Jul 2011 23:50:39 -0700 (PDT)
-Received: by 10.217.1.197 with SMTP id n47mr3811101wes.28.1310453439336;
-        Mon, 11 Jul 2011 23:50:39 -0700 (PDT)
-Received: from [86.30.143.167] (cpc4-cmbg14-2-0-cust166.5-4.cable.virginmedia.com [86.30.143.167])
-        by mx.google.com with ESMTPS id n17sm5959946wed.40.2011.07.11.23.50.37
-        (version=SSLv3 cipher=OTHER);
-        Mon, 11 Jul 2011 23:50:38 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110402 Iceowl/1.0b2 Icedove/3.1.9
+	id S1752948Ab1GLHFy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Jul 2011 03:05:54 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:58722 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751553Ab1GLHFx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2011 03:05:53 -0400
+Received: by wyg8 with SMTP id 8so3046357wyg.19
+        for <git@vger.kernel.org>; Tue, 12 Jul 2011 00:05:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=k+v490RVhghLeQhibQWxv1Kl5oKg0HHjQ7bWGBpOGWg=;
+        b=YaPB9FaUppZJYx0wp5A4K/OaK/Uus/EVAdH11EM+DM6FphXvQi8Jk7nJI+USqB/fuo
+         TjaCu4KYnb587ii0D4M50xic948aVawP2ol9QRzvcMRb96uZo6KArECKNAV8TBuU3XSA
+         NXvnFKU5sGghB7iTl3Ne5QgKVoS65tFeT0ubw=
+Received: by 10.216.187.65 with SMTP id x43mr4905966wem.62.1310454352171; Tue,
+ 12 Jul 2011 00:05:52 -0700 (PDT)
+Received: by 10.216.175.198 with HTTP; Tue, 12 Jul 2011 00:05:32 -0700 (PDT)
+In-Reply-To: <CALkWK0msdBdXX4oMkd+WAMR8PXTRT3ivjMrf3ZAMfBrsLoM=dQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176935>
 
-A bit of an ancient topic now, I'm afraid, but back in May I was 
-attempting to find a way to get git-p4 to cope with RCS keyword 
-expansion causing merge conflicts.
+Hi again,
 
-http://marc.info/?l=git&m=130492741320889&w=2
+Ramkumar Ramachandra writes:
+> Jonathan Nieder writes:
+>> =C2=A0- what changed since last time, for each patch? =C2=A0(For the=
+ future, the
+>> =C2=A0 space under the "---" is generally a good place to put that
+>> =C2=A0 information.)
+>
+> Will comment a little more on this in the morning. =C2=A0The main foc=
+us of
+> this series is to showcase the new option parser, and show how it fit=
+s
+> into the rest of the series.
 
-I've given up trying to make this work.
+Here's the full change manifest (from memory; might have missed a few):
+Patch 1: Exposed advise
+Patch 2: No changes.
+Patch 3: No changes.
+Patch 4: No changes.
+Patch 5: No changes.
+Patch 6: No changes (forgot to update commit message)
+Patch 7: No changes.
+Patch 8: No changes.
+Patch 9: Rewrote commit message
+Patch 10: New!
+Patch 11: Updated commit message, rebased on 10.
+Patch 12: New!
+Patch 13: process_continuation =3D> process_subcommand
+Patch 14: New!
+Patch 15: New!
+Patch 16: Near complete rewrite (subcommand, documentation, tests)
+Patch 17: Complete rewrite.
 
-I had thought that I had a scheme that could plausibly work. git-p4 
-detects when a merge would fail. At this point, look for RCS keywords in 
-the file, and strip them out. For an edit that's easy, for a deletion 
-it's a bit trickier.
+Thanks.
 
-I then discovered that the third way RCS keywords can cause grief is if 
-a user copies a file containing expanded RCS keywords into their git 
-repo. My scheme then gave some very weird results!
-
-Maybe this is now the complete list of ways in which RCS keywords can 
-mess you up, but I'm not sure. We've got ~9.5k files in our repo with 
-RCS keywords. I think it's easier and safer just to go through and turn 
-off ktext everywhere. I've actually only seen two or three merge 
-conflicts caused by this problem in this time (not sure how many commits 
-that is, but it must be in the hundreds).
-
-I'm not saying it's not possible, just that my approach isn't going to work.
-
-Who invented RCS keyword expansion anyway? They need a good talking to!
-
-Luke
+-- Ram
