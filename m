@@ -1,80 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 0/3] teach --histogram to diff
-Date: Tue, 12 Jul 2011 10:43:12 -0700
-Message-ID: <7vfwmb8ken.fsf@alter.siamese.dyndns.org>
-References: <1310451027-15148-1-git-send-email-rctay89@gmail.com>
- <CAJo=hJu5ubkzUyyPM0nqP+J9CU3hBtAHfuzaLSuN214Hux4qTA@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 06/17] revert: Eliminate global "commit" variable
+Date: Tue, 12 Jul 2011 12:45:18 -0500
+Message-ID: <20110712174518.GB14120@elie>
+References: <1310396048-24925-1-git-send-email-artagnon@gmail.com>
+ <1310396048-24925-7-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Tay Ray Chuan <rctay89@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Jul 12 19:43:21 2011
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 12 19:45:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QggzQ-0005mp-J8
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 19:43:20 +0200
+	id 1Qgh1Y-0006n9-L4
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 19:45:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754281Ab1GLRnQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jul 2011 13:43:16 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41105 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753288Ab1GLRnP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2011 13:43:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8A66C47C9;
-	Tue, 12 Jul 2011 13:43:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bV2OjxNBM8y5mf/pJsjnJyhWJek=; b=X2Jvto
-	1uHBbVQzs20hI9LbxcYZP/OlDtsXQ2vdU0TmuL1Lgszhm0z1yaa65sRgxltQMamI
-	8OmLixmt8pC88GEDCUEb9x6bk5151wkSr3GUlQ0GEre7LwG2KxupnwEEE1uTHUwQ
-	wxgr+5aUwbqvd3rQj8XAtSrl8F8kMRzh5xIZw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=W4AKtT3j0Rj6rHa671jdB9vrzeFowOfs
-	IPczJnaeiZaTmxPeUw0mrWNHUq6NT3mh4nzeXOnNukZ6FjKYC9SuuZZd5waX2y12
-	cjjErWGfZ4lLaiFPZv4NLJcsZZUqSFGFGJCv3wdOiaVGZhL9mvynab5qtaKqVZRy
-	tZ2nlWUCMgM=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 837D547BE;
-	Tue, 12 Jul 2011 13:43:14 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CECAA47BB; Tue, 12 Jul 2011
- 13:43:13 -0400 (EDT)
-In-Reply-To: <CAJo=hJu5ubkzUyyPM0nqP+J9CU3hBtAHfuzaLSuN214Hux4qTA@mail.gmail.com> (Shawn
- Pearce's message of "Tue, 12 Jul 2011 07:19:47 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6AE15030-ACAE-11E0-98C4-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
+	id S1754441Ab1GLRp2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jul 2011 13:45:28 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:39443 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754072Ab1GLRp1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2011 13:45:27 -0400
+Received: by iwn6 with SMTP id 6so4840270iwn.19
+        for <git@vger.kernel.org>; Tue, 12 Jul 2011 10:45:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=o7YsZeswCH3A17OTQShCb0eZDVZdCwdwaxsznphZaz8=;
+        b=XLvxEawl2PsKAPUhFHtrD3yj5kk8KgxZm3d+fkeB8ab8FEyhy8G25VzrRBR4aOGrSN
+         ijeUuMCWxpFzSGl5IxanMcBo7bEZjdpMGC5AwmHuhgiM9VbVHFw7mQRsvMWwD94HxXBJ
+         zIdCTxeqkxmrIA8WEPy+7Pawnl3uu0kPevV5c=
+Received: by 10.42.19.69 with SMTP id a5mr185278icb.184.1310492727121;
+        Tue, 12 Jul 2011 10:45:27 -0700 (PDT)
+Received: from elie (adsl-69-209-70-6.dsl.chcgil.sbcglobal.net [69.209.70.6])
+        by mx.google.com with ESMTPS id fw9sm8431597ibb.64.2011.07.12.10.45.24
+        (version=SSLv3 cipher=OTHER);
+        Tue, 12 Jul 2011 10:45:25 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1310396048-24925-7-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176957>
 
-Shawn Pearce <spearce@spearce.org> writes:
+Ramkumar Ramachandra wrote:
 
-> Have you looked at a patch that differs in output between Myers and
-> patience, and then compared those to the histogram version?
+> Since we want to develop the functionality to either pick or revert
+> individual commits atomically later in the series, make "commit" a
+> variable to be passed around explicitly as an argument for clarity.
 
-$ git log -p v1.6.6..v1.7.6 | git patch-id >/var/tmp/md
-$ git log --histogram -p v1.6.6..v1.7.6 | git patch-id >/var/tmp/hd
-$ diff -u0 /var/tmp/md /var/tmp/hd |
-  sed -ne '/^+/s/^+[0-9a-f][0-9a-f][0-9a-f]* //p' |
-  while read commit
-  do
-  	git show "$commit" >/var/tmp/1
-        git show --histogram "$commit" >/var/tmp/2
-        interdiff /var/tmp/1 /var/tmp/2
-  done
+The above explanation is not so clear to me, but the patch looks good.
+Isn't the idea something like
 
-shows there is one that gives vastly different appearance, but it all
-boils down to which lines to take as common, and for this particular
-example neither is more readable over the other (9560808f2ef5a34d2a).
+	commit = grab_a_nice_commit();
+	res = do_pick_commit();
 
-Running the above "show" with larger -U$n value shows there don't seem to
-be any discrepancies between the two.
+being just an unpleasant API relative to
+
+	res = do_pick_commit(grab_a_nice_commit());
+
+because in the latter it is more obvious which commit is being
+cherry-picked?  Likewise with the functions it calls.
+
+Or perhaps the idea is that eventually we will want to expose something
+like do_pick_commit to other translation units, but a static variable
+like "commit" would not be appropriate for exposing.  Or that we save
+a word of global memory.  Or that this way if do_pick_commit or a
+function it calls ever ends up recursing by mistake it won't get
+broken.  Or that we can use multiple threads some day.  Or...
+
+Oh, the uncertainty! :)  It is not clear to me what any of the above
+have to do with wanting the functionality to replay an individual
+commit atomically.  By the way, what does pickiing or reverting a
+commit atomically mean, and how is it different from ordinary
+cherry-picks?
