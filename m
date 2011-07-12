@@ -1,111 +1,165 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 16/17] revert: Introduce --reset to remove sequencer state
-Date: Tue, 12 Jul 2011 15:30:11 -0500
-Message-ID: <20110712203011.GF14909@elie>
+Subject: Re: [PATCH 17/17] revert: Introduce --continue to continue the
+ operation
+Date: Tue, 12 Jul 2011 15:46:50 -0500
+Message-ID: <20110712204650.GG14909@elie>
 References: <1310396048-24925-1-git-send-email-artagnon@gmail.com>
- <1310396048-24925-17-git-send-email-artagnon@gmail.com>
+ <1310396048-24925-18-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Daniel Barkalow <barkalow@iabervon.org>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 12 22:42:58 2011
+X-From: git-owner@vger.kernel.org Tue Jul 12 22:47:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QgjnE-0007ex-Q5
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 22:42:57 +0200
+	id 1QgjrM-0001Q5-Ch
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 22:47:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754960Ab1GLUmw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jul 2011 16:42:52 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:50402 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753948Ab1GLUmv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2011 16:42:51 -0400
-Received: by iyb12 with SMTP id 12so4990310iyb.19
-        for <git@vger.kernel.org>; Tue, 12 Jul 2011 13:42:51 -0700 (PDT)
+	id S1755480Ab1GLUrB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jul 2011 16:47:01 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:45185 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755119Ab1GLUq7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2011 16:46:59 -0400
+Received: by iwn6 with SMTP id 6so4971991iwn.19
+        for <git@vger.kernel.org>; Tue, 12 Jul 2011 13:46:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=AyFn8JHn/btBdkDbiPE4oulam43s6otwvs6KPln5Ycs=;
-        b=oO4gGUFciMxB7DTVYXifQ9v1ZNIMfbRXDFz6VqrUDWmyLq7iEWDq2iLKr8eit/AHfl
-         1r147e/OTKNIb8vWrpoe0wbELBJLEUKbV7Z+LD87gk6KNma3QKZEhdAOkh4sTamqm43i
-         SjxyDoY0HfiPwB339c/qbxIHLfLOsQd8e8Uv4=
-Received: by 10.231.82.197 with SMTP id c5mr261253ibl.131.1310502619506;
-        Tue, 12 Jul 2011 13:30:19 -0700 (PDT)
-Received: from elie (adsl-69-209-70-6.dsl.chcgil.sbcglobal.net [69.209.70.6])
-        by mx.google.com with ESMTPS id s2sm8491893ibe.35.2011.07.12.13.30.17
+        bh=JNNaxGhDkaBfDovyUWWrUusMAchQO+BK1NuRj0etH1o=;
+        b=WCQAqO9eQtwevPddHFcelDhc4PkDokItg4lUK/XFGUzhtwAva++i0ByC1EGd4hwCHD
+         qrFhcV0NMmAqtJuINBAYY8PU+oX628nY6RHALcgRx6oLfRXkbvKo+NST5WafVnyjQEj5
+         d1q7MV7veqPfH2+UXKcKoOeX+YhY6uGXerlA8=
+Received: by 10.231.114.206 with SMTP id f14mr275584ibq.104.1310503618457;
+        Tue, 12 Jul 2011 13:46:58 -0700 (PDT)
+Received: from elie (adsl-69-209-70-6.dsl.chcgil.ameritech.net [69.209.70.6])
+        by mx.google.com with ESMTPS id q13sm5972857ibi.9.2011.07.12.13.46.56
         (version=SSLv3 cipher=OTHER);
-        Tue, 12 Jul 2011 13:30:18 -0700 (PDT)
+        Tue, 12 Jul 2011 13:46:57 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1310396048-24925-17-git-send-email-artagnon@gmail.com>
+In-Reply-To: <1310396048-24925-18-git-send-email-artagnon@gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176979>
 
 Ramkumar Ramachandra wrote:
 
-> Protect the sequencer state from accidentally being stomped by a new
-> cherry-pick or revert invocation by ensuring that an existing one
-> isn't in progress.
-
-I first read this as "an existing sequencer state isn't in progress".
-But anyway, if I understand correctly the goal isn't to protect the
-sequencer state from corruption but to protect the user from forgetting
-about a pending cherry-pick.
-
-> While this patch would normally be expected to
-> break many tests, the earlier patches "reset: Make hard reset remove
-> the sequencer state" and "revert: Remove sequencer state when no
-> commits are pending" make sure that they don't.
-
-Why would I expect a nice change to break tests?
-
-I suppose you mean: "A naive version of this would break the following
-established way of working:
-
-	git cherry-pick X; # has conflicts
-	git reset --hard; # no, no!
-	git cherry-pick Y
-
-Or even:
-
-	git cherry-pick X; # has conflicts
-	# ... resolve ...
-	git commit
-	git cherry-pick Y
-
-But a previous patch takes care of that by making "git reset --hard"
-cancel the pending cherry-pick and by making "git commit" clean up
-after a pending cherry-pick when making the commit that would finish
-it."
-
-The above text quoted with ">" describes the main impact of the
-change.  The subject line, on the other hand, describes a less
-important part:
-
-> [Subject: revert: Introduce --reset to remove sequencer state]
-
-Is that fixable?  Maybe this could be split into two patches (since it
-does two different things), or maybe the subject line could be tweaked
-to describe both.
-
+> Using the information in ".git/sequencer", it is now possible to
+> continue a cherry-pick or continue after a conflict.  To do this, we
+> have to parse the information in ".git/sequencer/opts" into the
+> replay_opts structure and
 [...]
-> Ensure that the "rebase -i" script which invokes cherry-pick or revert
-> doesn't change its behavior by using '--reset' to to clear the state
-> after every failed pick.
 
-This should be avoidable by noticing that commands like "rebase -i"
-use GIT_CHERRY_PICK_HELP to clobber our nice instructions about how to
-resume a cherry-pick anyway and therefore are unlikely to need
-cherry-pick --continue/--abort facilities, no?
+Might be simpler to say:
 
-Regards,
-Jonathan
+	Introduce a new "git cherry-pick --continue" command which uses
+	the information in ".git/sequencer" to continue a cherry-pick that
+	stopped because of a conflict or other error.  It works by dropping
+	the first instruction from .git/sequencer/todo and performing the
+	remaining cherry-picks listed there, with options (think "-s" and
+	"-X") from the initial command listed in .git/sequencer/opts.
+
+	So now you can do:
+
+		$ git cherry-pick -Xpatience foo..bar
+		... description conflict in commit moo ...
+		$ git cherry-pick --continue
+		error: 'cherry-pick' is not possible because you have unmerged files.
+		fatal: failed to resume cherry-pick
+		$ echo resolved >conflictingfile
+		$ git add conflictingfile && git commit
+		$ git cherry-pick --continue; # resumes with the commit after "moo"
+
+> During the "git commit" stage, CHERRY_PICK_HEAD will aid by providing
+> the commit message from the conflicting "moo" commit.  Note that the
+> cherry-pick mechanism has no control at this stage, so the user is
+> free to violate anything that was specified during the first
+> cherry-pick invocation.  For example, if "-x" was specified during the
+> first cherry-pick invocation, the user is free to edit out the message
+> during commit time.  One glitch to note is that the "--signoff" option
+> specified at cherry-pick invocation time is not reflected in the
+> commit message provided by CHERRY_PICK_HEAD; the user must take care
+> to add "--signoff" during the "git commit" invocation.
+
+The -s thing doesn't have much to do with this change.  But is it a
+bug or not?  If it's not a bug, then this is not so much a glitch to
+note as an important feature to ensure people don't sign off on a
+conflict resolution without thinking about it.  (I guess I think it's
+a bug.  It's hard to decide.)
+
+> --- a/t/t3510-cherry-pick-sequence.sh
+> +++ b/t/t3510-cherry-pick-sequence.sh
+> @@ -101,4 +101,97 @@ test_expect_success '--reset cleans up sequencer state' '
+[...]
+> +test_expect_success '--continue complains when no cherry-pick is in progress' '
+> +	pristine_detach initial &&
+> +	test_must_fail git cherry-pick --continue >actual 2>&1 &&
+> +	test_i18ngrep "error" actual
+
+This would start to fail if the message ever changed from "error" to
+"fatal", right?  I don't think that's a good thing.
+
+> +test_expect_success '--continue complains when there are unresolved conflicts' '
+> +	pristine_detach initial &&
+> +	head=$(git rev-parse HEAD) &&
+> +	test_must_fail git cherry-pick base..picked &&
+> +	test_must_fail git cherry-pick --continue &&
+> +	git cherry-pick --reset
+> +'
+> +
+> +test_expect_success '--continue continues after conflicts are resolved' '
+> +	pristine_detach initial &&
+> +	head=$(git rev-parse HEAD) &&
+
+How is $head used?
+
+> +	test_must_fail git cherry-pick base..anotherpick &&
+> +	echo "c" >foo &&
+> +	git add foo &&
+> +	git commit &&
+> +	git cherry-pick --continue &&
+> +	test_path_is_missing .git/sequencer &&
+> +	{
+> +		git rev-list HEAD |
+> +		git diff-tree --root --stdin |
+> +		sed "s/[0-9a-f]\{40\}/OBJID/g"
+> +	} >actual &&
+
+$_x40 is idiomatic and safer with old seds.
+
+> +test_expect_success '--continue respects opts' '
+> +	pristine_detach initial &&
+> +	head=$(git rev-parse HEAD) &&
+> +	test_must_fail git cherry-pick -s -x base..anotherpick &&
+> +	echo "c" >foo &&
+> +	git add foo &&
+> +	git commit -s &&
+> +	git cherry-pick --continue &&
+> +	test_path_is_missing .git/sequencer &&
+> +	git cat-file commit HEAD >anotherpick_msg &&
+> +	git cat-file commit HEAD~1 >picked_msg &&
+> +	git cat-file commit HEAD~2 >unrelatedpick_msg &&
+> +	git cat-file commit HEAD~3 >initial_msg &&
+> +	test_must_fail test_i18ngrep "Signed-off-by:" initial_msg &&
+
+This will break when GETTEXT_POISON is set --- test_i18ngrep
+automatically succeeds in that case.
+
+Is "Signed-off-by" meant to be translated anyway?  I would use
+
+	! grep
+
+if testing that.
+
+By the way, that probably should go in a separate test assertion
+("-s is not automatically propagated to resolved conflict") to make
+it easier to change the behavior later.
