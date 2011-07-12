@@ -1,83 +1,112 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 06/17] revert: Eliminate global "commit" variable
-Date: Tue, 12 Jul 2011 12:45:18 -0500
-Message-ID: <20110712174518.GB14120@elie>
-References: <1310396048-24925-1-git-send-email-artagnon@gmail.com>
- <1310396048-24925-7-git-send-email-artagnon@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] control, what refs are honored by core.logAllRefUpdates
+Date: Tue, 12 Jul 2011 10:57:52 -0700
+Message-ID: <7vaacj8jq7.fsf@alter.siamese.dyndns.org>
+References: <CAKPyHN3_br-ndQo9oMzCcU1yOVEbAxmzvHQkwF15LgwQx12KZA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 12 19:45:33 2011
+Cc: git@vger.kernel.org
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 12 19:58:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qgh1Y-0006n9-L4
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 19:45:33 +0200
+	id 1QghDm-0004dg-Fi
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 19:58:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754441Ab1GLRp2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jul 2011 13:45:28 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:39443 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754072Ab1GLRp1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2011 13:45:27 -0400
-Received: by iwn6 with SMTP id 6so4840270iwn.19
-        for <git@vger.kernel.org>; Tue, 12 Jul 2011 10:45:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=o7YsZeswCH3A17OTQShCb0eZDVZdCwdwaxsznphZaz8=;
-        b=XLvxEawl2PsKAPUhFHtrD3yj5kk8KgxZm3d+fkeB8ab8FEyhy8G25VzrRBR4aOGrSN
-         ijeUuMCWxpFzSGl5IxanMcBo7bEZjdpMGC5AwmHuhgiM9VbVHFw7mQRsvMWwD94HxXBJ
-         zIdCTxeqkxmrIA8WEPy+7Pawnl3uu0kPevV5c=
-Received: by 10.42.19.69 with SMTP id a5mr185278icb.184.1310492727121;
-        Tue, 12 Jul 2011 10:45:27 -0700 (PDT)
-Received: from elie (adsl-69-209-70-6.dsl.chcgil.sbcglobal.net [69.209.70.6])
-        by mx.google.com with ESMTPS id fw9sm8431597ibb.64.2011.07.12.10.45.24
-        (version=SSLv3 cipher=OTHER);
-        Tue, 12 Jul 2011 10:45:25 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1310396048-24925-7-git-send-email-artagnon@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754560Ab1GLR54 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jul 2011 13:57:56 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61545 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754467Ab1GLR5z (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2011 13:57:55 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C1D32496E;
+	Tue, 12 Jul 2011 13:57:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=drn8dJnrniBW4t52ahJehCyGuVg=; b=LnPRIw
+	yKurn7X/78p0RfhT+MIK7ezzS2c8c7BxZQZqDyiXpotiWlRhleT4EplIFYUbRqvl
+	WRwsxohtDAF8qIBK7+8arkkV+RjnJgFq0z2d5J9p/M7mHkuQXTuc/5NsiF189CjI
+	aPEbuvxsbZESYo4EEsDg0Ux17/31e4edOp6Yg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OvumdflV6qps7PO1GfU3edXgE6QMlLtd
+	JrrrMmlCUKdqdWm9uhUPz3ositQdN+LMBArb+WpbgMFahT+JCjZWPqN6aNcHCrvx
+	RZAzOs1RP6EgU37K9To92idb5338DrSb8KCVUydLnWc2sQ7Pc9V/pjJagmRJiIP8
+	I9m1fNA4rSo=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B9A1B496D;
+	Tue, 12 Jul 2011 13:57:54 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0D0FA496C; Tue, 12 Jul 2011
+ 13:57:53 -0400 (EDT)
+In-Reply-To: <CAKPyHN3_br-ndQo9oMzCcU1yOVEbAxmzvHQkwF15LgwQx12KZA@mail.gmail.com> (Bert
+ Wesarg's message of "Tue, 12 Jul 2011 19:23:32 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7786276E-ACB0-11E0-82B5-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176958>
 
-Ramkumar Ramachandra wrote:
+Bert Wesarg <bert.wesarg@googlemail.com> writes:
 
-> Since we want to develop the functionality to either pick or revert
-> individual commits atomically later in the series, make "commit" a
-> variable to be passed around explicitly as an argument for clarity.
+> What: Control the refs which are honored by core.logAllRefUpdates.
+>
+> How:
+>
+> Introduce a new config variable named core.autoRefLog. This variable
+> is a multi var. The default value is:
+>
+>     [core]
+>         autoLogRef = heads
+>         autoLogRef = remotes
+>         autoLogRef = notes
+>
+> This list must be initialize at runtime. Because older repositories
+> won't have them in existing config files.
 
-The above explanation is not so clear to me, but the patch looks good.
-Isn't the idea something like
+It sounds as if you mean to update .git/config when you find a repository
+that is missing these, which is not what we want.  I would rephrase it
+like this:
 
-	commit = grab_a_nice_commit();
-	res = do_pick_commit();
+ - The new variable core.autoLogRef is a multi-valued configuration.
 
-being just an unpleasant API relative to
+ - If core.autoLogRef is defined (to any value), core.logAllRefupdates is
+   ignored;
 
-	res = do_pick_commit(grab_a_nice_commit());
+ - Otherwise, the core.logAllRefUpdates variable that is set to true is
+   equivalent to having a "reasonable default" set in core.autoLogRef (and
+   the current "reasonable default" happens to be heads, remotes and
+   notes), and the core.logAllRefUpdates variable set to false (or
+   missing) is equivalent to having an empty string in core.autoLogRef;
 
-because in the latter it is more obvious which commit is being
-cherry-picked?  Likewise with the functions it calls.
+> The value given needs to be a valid ref, without leading or trailing
+> slashes, and wildcards. The names will be prefixed with 'refs/' and
+> suffixed with '/'. The list is checked against the ref to update, if
+> any of the values is a prefix of the given ref, than the update will
+> be logged, regardless whether the log file exists.
 
-Or perhaps the idea is that eventually we will want to expose something
-like do_pick_commit to other translation units, but a static variable
-like "commit" would not be appropriate for exposing.  Or that we save
-a word of global memory.  Or that this way if do_pick_commit or a
-function it calls ever ends up recursing by mistake it won't get
-broken.  Or that we can use multiple threads some day.  Or...
+Ok, except for:
 
-Oh, the uncertainty! :)  It is not clear to me what any of the above
-have to do with wanting the functionality to replay an individual
-commit atomically.  By the way, what does pickiing or reverting a
-commit atomically mean, and how is it different from ordinary
-cherry-picks?
+ - An empty string in core.autoLogRef does not contribute to the matching
+   logic above.
+
+> Setting core.autoLogRef to the empty value, will reset the list.
+
+It is unclear what it is reset to.  Do you mean it clears, e.g.
+
+    [core]
+    	autoLogRef = heads
+    	autoLogRef = remotes
+        autoLogRef = notes
+        autoLogRef =
+        autoLogRef = heads
+
+would first create a list of three elements, clears it and then the final
+result has only refs/heads/ in the list?
