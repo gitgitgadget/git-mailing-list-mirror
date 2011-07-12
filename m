@@ -1,112 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] control, what refs are honored by core.logAllRefUpdates
-Date: Tue, 12 Jul 2011 10:57:52 -0700
-Message-ID: <7vaacj8jq7.fsf@alter.siamese.dyndns.org>
-References: <CAKPyHN3_br-ndQo9oMzCcU1yOVEbAxmzvHQkwF15LgwQx12KZA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/5] add object-cache infrastructure
+Date: Tue, 12 Jul 2011 13:57:39 -0400
+Message-ID: <20110712175739.GA17031@sigill.intra.peff.net>
+References: <20110711161332.GA10057@sigill.intra.peff.net>
+ <20110711161754.GB10418@sigill.intra.peff.net>
+ <201107121241.40242.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Bert Wesarg <bert.wesarg@googlemail.com>
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Ted Ts'o <tytso@mit.edu>, Jonathan Nieder <jrnieder@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Clemens Buchacher <drizzd@aon.at>,
+	Eric Wong <normalperson@yhbt.net>
+To: Jakub Narebski <jnareb@gmail.com>
 X-From: git-owner@vger.kernel.org Tue Jul 12 19:58:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QghDm-0004dg-Fi
+	id 1QghDl-0004dg-Te
 	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 19:58:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754560Ab1GLR54 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jul 2011 13:57:56 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61545 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754467Ab1GLR5z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2011 13:57:55 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C1D32496E;
-	Tue, 12 Jul 2011 13:57:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=drn8dJnrniBW4t52ahJehCyGuVg=; b=LnPRIw
-	yKurn7X/78p0RfhT+MIK7ezzS2c8c7BxZQZqDyiXpotiWlRhleT4EplIFYUbRqvl
-	WRwsxohtDAF8qIBK7+8arkkV+RjnJgFq0z2d5J9p/M7mHkuQXTuc/5NsiF189CjI
-	aPEbuvxsbZESYo4EEsDg0Ux17/31e4edOp6Yg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OvumdflV6qps7PO1GfU3edXgE6QMlLtd
-	JrrrMmlCUKdqdWm9uhUPz3ositQdN+LMBArb+WpbgMFahT+JCjZWPqN6aNcHCrvx
-	RZAzOs1RP6EgU37K9To92idb5338DrSb8KCVUydLnWc2sQ7Pc9V/pjJagmRJiIP8
-	I9m1fNA4rSo=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B9A1B496D;
-	Tue, 12 Jul 2011 13:57:54 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0D0FA496C; Tue, 12 Jul 2011
- 13:57:53 -0400 (EDT)
-In-Reply-To: <CAKPyHN3_br-ndQo9oMzCcU1yOVEbAxmzvHQkwF15LgwQx12KZA@mail.gmail.com> (Bert
- Wesarg's message of "Tue, 12 Jul 2011 19:23:32 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7786276E-ACB0-11E0-82B5-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
+	id S1754540Ab1GLR5m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jul 2011 13:57:42 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46684
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754467Ab1GLR5m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2011 13:57:42 -0400
+Received: (qmail 14189 invoked by uid 107); 12 Jul 2011 17:58:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 12 Jul 2011 13:58:05 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Jul 2011 13:57:39 -0400
+Content-Disposition: inline
+In-Reply-To: <201107121241.40242.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176959>
 
-Bert Wesarg <bert.wesarg@googlemail.com> writes:
+On Tue, Jul 12, 2011 at 12:41:35PM +0200, Jakub Narebski wrote:
 
-> What: Control the refs which are honored by core.logAllRefUpdates.
->
-> How:
->
-> Introduce a new config variable named core.autoRefLog. This variable
-> is a multi var. The default value is:
->
->     [core]
->         autoLogRef = heads
->         autoLogRef = remotes
->         autoLogRef = notes
->
-> This list must be initialize at runtime. Because older repositories
-> won't have them in existing config files.
+> On Mon, 11 July 2011, Jeff King wrote:
+> 
+> > There is sometimes a need to cache some information about an
+> > object or set of objects persistently across git
+> > invocations. The notes-cache interface can be used for this,
+> > but it is very heavyweight and slow for storing small
+> > values.
+> > 
+> > This patch introduces a new API, object-cache, which stores
+> > a mapping of objects to values in a concise and efficient
+> > form. See the added API documentation for details.
+> > 
+> > Signed-off-by: Jeff King <peff@peff.net>
+> > ---
+> > As I mentioned earlier, I wanted this to be generic and size-agnostic,
+> > because I'd also like to try caching patch-ids for git-cherry.
+> 
+> Could this API be generalized to support "reverse cache", for example
+> to map Subversion revision numbers to Git revision identifiers (for 
+> git-svn)?
 
-It sounds as if you mean to update .git/config when you find a repository
-that is missing these, which is not what we want.  I would rephrase it
-like this:
+I hadn't really considered that. It definitely _could_ be done, but I'm
+not sure if it's a good idea, for two reasons:
 
- - The new variable core.autoLogRef is a multi-valued configuration.
+  1. The in-memory store is based on decorate.[ch], which actually
+     stores pointers to objects instead of sha1s as keys. Which keeps
+     the hash entries a little smaller, and makes comparisons faster.
 
- - If core.autoLogRef is defined (to any value), core.logAllRefupdates is
-   ignored;
+     We can only take that shortcut because we know what the keys are
+     (i.e., objects, and the in-memory store gets pointers and the disk
+     store gets sha1s). So I have some fear that a more generalized form
+     may be a little slower.
 
- - Otherwise, the core.logAllRefUpdates variable that is set to true is
-   equivalent to having a "reasonable default" set in core.autoLogRef (and
-   the current "reasonable default" happens to be heads, remotes and
-   notes), and the core.logAllRefUpdates variable set to false (or
-   missing) is equivalent to having an empty string in core.autoLogRef;
+  2. The disk store uses a binary search over a sorted list of sha1s.
+     Generalizing this to "a sequence of bytes" would not be hard. But
+     we currently have the option of using the uniform distribution of
+     sha1 to make better guesses about our "middle" (see the comments in
+     sha1-lookup.c). That assumption does not hold over arbitrary bytes.
 
-> The value given needs to be a valid ref, without leading or trailing
-> slashes, and wildcards. The names will be prefixed with 'refs/' and
-> suffixed with '/'. The list is checked against the ref to update, if
-> any of the values is a prefix of the given ref, than the update will
-> be logged, regardless whether the log file exists.
-
-Ok, except for:
-
- - An empty string in core.autoLogRef does not contribute to the matching
-   logic above.
-
-> Setting core.autoLogRef to the empty value, will reset the list.
-
-It is unclear what it is reset to.  Do you mean it clears, e.g.
-
-    [core]
-    	autoLogRef = heads
-    	autoLogRef = remotes
-        autoLogRef = notes
-        autoLogRef =
-        autoLogRef = heads
-
-would first create a list of three elements, clears it and then the final
-result has only refs/heads/ in the list?
+-Peff
