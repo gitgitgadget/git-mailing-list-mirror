@@ -1,79 +1,75 @@
-From: Damien Wyart <damien.wyart@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: Tracking changes in git with a change number....
-Date: Tue, 12 Jul 2011 07:37:35 +0200
-Message-ID: <20110712053735.GA4539@brouette>
+Date: Tue, 12 Jul 2011 01:50:08 -0400
+Message-ID: <20110712055008.GC11644@sigill.intra.peff.net>
 References: <C785F567A08DDE449FD4590C91E6AD13CB34BE@naeamillez01v.nadsusea.nads.navy.mil>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="AhhlLboLdkugWU4S"
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: "Rice, James M CIV NSWCDD, K73" <james.rice2@navy.mil>
-X-From: git-owner@vger.kernel.org Tue Jul 12 07:45:25 2011
+X-From: git-owner@vger.kernel.org Tue Jul 12 07:50:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QgVmc-0004Cq-EL
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 07:45:22 +0200
+	id 1QgVrO-0005pp-25
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 07:50:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752704Ab1GLFpG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jul 2011 01:45:06 -0400
-Received: from mailhost-t5-m3.mangoosta.org ([78.40.49.210]:10406 "EHLO
-	smtp-delay2.nerim.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751974Ab1GLFpF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2011 01:45:05 -0400
-X-Greylist: delayed 443 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 Jul 2011 01:45:05 EDT
-Received: from mallaury.nerim.net (smtp-101-monday.noc.nerim.net [62.4.17.101])
-	by smtp-delay2.nerim.net (Postfix) with ESMTP id E9EC419CF3C0
-	for <git@vger.kernel.org>; Tue, 12 Jul 2011 07:21:03 +0200 (CEST)
-Received: from brouette (damien.wyart.pck.nerim.net [213.41.244.197])
-	by mallaury.nerim.net (Postfix) with ESMTP id 2D254153411;
-	Tue, 12 Jul 2011 07:37:36 +0200 (CEST)
-Received: by brouette (Postfix, from userid 1000)
-	id ED75D400FBC; Tue, 12 Jul 2011 07:37:35 +0200 (CEST)
+	id S1752890Ab1GLFuL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jul 2011 01:50:11 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43093
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752295Ab1GLFuK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2011 01:50:10 -0400
+Received: (qmail 8903 invoked by uid 107); 12 Jul 2011 05:50:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 12 Jul 2011 01:50:33 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Jul 2011 01:50:08 -0400
 Content-Disposition: inline
 In-Reply-To: <C785F567A08DDE449FD4590C91E6AD13CB34BE@naeamillez01v.nadsusea.nads.navy.mil>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176916>
 
+On Mon, Jul 11, 2011 at 01:29:52PM -0400, Rice, James M CIV NSWCDD, K73 wrote:
 
---AhhlLboLdkugWU4S
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Restating the problem.  I wish for our developers to be able to
+> reference multiple commits with one number, and then find those
+> commits via that number.  And I don't mind scripting to accomplish
+> this.  I know, that CR # can be put in the commit message, then I can
+> grep and parse the log, that is the hard way.
 
-Hi,
+There are two ways to approach this: tell the CM tool about some git
+commits, or tell some git commits about the CR number.
 
-* Rice, James M CIV NSWCDD, K73 <james.rice2@navy.mil> [2011-07-11 13:29]:
-> In our organization we track changes via a Change Request (CR) number.
-> We may end up with multiple commits, by one or more users under
-> a single CR number. When we deliver our CM folks want to be able to
-> see all the files that have changed for a particular CR number. Is
-> there an elegant way to do this in git?
+For telling the CM tool about git commits, refer to them by their sha1
+commit ids.  If the commits are sequential, you can refer to the
+sequence by its endpoints. And then if you want to know which files were
+touched, you can just diff the endpoints, like:
 
-Hi. The Gerrit code review tool comes with such a feature, explained on
-this page:
-http://gerrit.googlecode.com/svn/documentation/2.2.0/user-changeid.html
+  $ git diff-tree --name-only $start $end
 
-Best,
---=20
-Damien Wyart
+It's not a number, exactly, but it is a fixed size (two 40-byte commit
+ids). Would that work in your CM tool?
 
---AhhlLboLdkugWU4S
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+If the commits aren't sequential, you can do something similar, but you
+have a variable-length list of commit ids, and you get the set of
+changed files like:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+  $ for i in $commits; do
+      git diff-tree --name-only $i |
+      tail -n +2
+    done | sort -u
 
-iEYEARECAAYFAk4b3Z8ACgkQIlmjAUxrhBBMQACfdSxI3Gj0o3rNiKG/snolvKqx
-2poAn3bbEzWUu5kYXbzupACvMZ+afG5w
-=fBtg
------END PGP SIGNATURE-----
+If you want to do the reverse and tell git about CR numbers, then I
+don't think you have much option besides putting them in the commit
+message. Which means you'll need to grep to get them out. You can do
+something like:
 
---AhhlLboLdkugWU4S--
+  $ git log --grep='CR#' --pretty=format: --name-only
+
+-Peff
