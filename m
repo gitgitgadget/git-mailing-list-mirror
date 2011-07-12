@@ -1,7 +1,7 @@
 From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: [PATCH 1/3] doc/fast-import: clarify notemodify command
-Date: Tue, 12 Jul 2011 21:10:26 +0600
-Message-ID: <1310483428-29833-2-git-send-email-divanorama@gmail.com>
+Subject: [PATCH 3/3] doc/remote-helpers: document the gitdir feature
+Date: Tue, 12 Jul 2011 21:10:28 +0600
+Message-ID: <1310483428-29833-4-git-send-email-divanorama@gmail.com>
 References: <1310483428-29833-1-git-send-email-divanorama@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
@@ -10,90 +10,97 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Dmitry Ivankov <divanorama@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 12 17:10:38 2011
+X-From: git-owner@vger.kernel.org Tue Jul 12 17:10:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qgebd-0005YJ-F9
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 17:10:37 +0200
+	id 1Qgebe-0005YJ-1G
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 17:10:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753288Ab1GLPKS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jul 2011 11:10:18 -0400
+	id S1753308Ab1GLPKX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jul 2011 11:10:23 -0400
 Received: from mail-bw0-f46.google.com ([209.85.214.46]:52328 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752208Ab1GLPKN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2011 11:10:13 -0400
-Received: by bwd5 with SMTP id 5so4115732bwd.19
-        for <git@vger.kernel.org>; Tue, 12 Jul 2011 08:10:12 -0700 (PDT)
+	with ESMTP id S1753274Ab1GLPKS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2011 11:10:18 -0400
+Received: by mail-bw0-f46.google.com with SMTP id 5so4115732bwd.19
+        for <git@vger.kernel.org>; Tue, 12 Jul 2011 08:10:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=YZC5R7MtGtKWNRUQgiw3lu5u132Exyj3mgSV6DXZsKc=;
-        b=ce6gWyE/XiAYh3HosbjdgI6VjSxs05iN0G+LNkfh0acS0/5JgM2RW10C6DZ+fjvPiv
-         giYWnbumSHRS7kXBFAmcpK7ALTG5t2uTDLS31Os4KgtCTO8eOayISbaQQ1UmRNvwNHEB
-         +Wpq3nmtEn9CuqwMW3G+tUazBJfaJJJtxRgL0=
-Received: by 10.204.154.201 with SMTP id p9mr14888bkw.283.1310483412636;
-        Tue, 12 Jul 2011 08:10:12 -0700 (PDT)
+        bh=A6mWsCOwMGXWutPNgoHlQg6F07kAZp1s4LjwhB4lnm8=;
+        b=wjeS/CYEJbieP4baeCW8cUrgtmHfvbwWFS0vzwJWaZjJxAoljBiquBIaEFI3nwVrd9
+         olVCo1SJ7YiM05xWxR1rsb6e9DL9HUHSU2XmyLCO8b+qnidIFoulBQ7vHWIo2PXtClle
+         EUjSSX4qaIXoAouPbPUGwb7+qgE/bPRg3GaTY=
+Received: by 10.205.65.9 with SMTP id xk9mr6944bkb.388.1310483417239;
+        Tue, 12 Jul 2011 08:10:17 -0700 (PDT)
 Received: from localhost.localdomain (117360277.convex.ru [79.172.62.237])
-        by mx.google.com with ESMTPS id u32sm1398878bkk.49.2011.07.12.08.10.10
+        by mx.google.com with ESMTPS id u32sm1398878bkk.49.2011.07.12.08.10.14
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 12 Jul 2011 08:10:11 -0700 (PDT)
+        Tue, 12 Jul 2011 08:10:16 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.4
 In-Reply-To: <1310483428-29833-1-git-send-email-divanorama@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176944>
 
-The "notemodify" fast-import command was introduced in commit a8dd2..
-The commit log has slightly different description than the added
-documentation. The latter is somewhat confusing. "notemodify" is a
-subcommand of "commit" command used to add a note for some commit.
-Does this note annotate the commit produced by the "commit" command
-or a commit given by it's committish parameter? Which notes tree
-does it write notes to?
+The gitdir capability is recognized by git and can be used to tell
+the helper where the .git directory is. But it is not mentioned in
+the documentation.
 
-The exact meaning could be deduced with old description and some
-notes machinery knowledge. But let's make it more obvious. This
-command is used in a context like "commit refs/notes/test" to
-add or rewrite an annotation for a committish parameter. So the
-advised way to add notes in a fast-import stream is:
-1) import some commits (optional)
-2) prepare a "commit" to the notes tree:
-2.1) choose notes ref, committer, log message, etc.
-2.2) create annotations with "notemodify", where each can refer to
-a commit being annotated via a branch name, import mark reference,
-sha1 and other expressions specified in the Documentation.
+Document the gitdir feature. Upon reading this capability
+transport-helper sends out "gitdir path_to_dot_git" command to the
+helper. Which looks exactly like sending a command. So let's call
+this a command.
 
 Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
 ---
- Documentation/git-fast-import.txt |   11 ++++++++---
- 1 files changed, 8 insertions(+), 3 deletions(-)
+ Documentation/git-remote-helpers.txt |   15 +++++++++++++++
+ 1 files changed, 15 insertions(+), 0 deletions(-)
 
-diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-index 249249a..3f5b912 100644
---- a/Documentation/git-fast-import.txt
-+++ b/Documentation/git-fast-import.txt
-@@ -648,9 +648,14 @@ paths for a commit are encouraged to do so.
+diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
+index 58f6ad4..a16a5e5 100644
+--- a/Documentation/git-remote-helpers.txt
++++ b/Documentation/git-remote-helpers.txt
+@@ -159,6 +159,14 @@ Supported if the helper has the "import" capability.
+ +
+ Supported if the helper has the "connect" capability.
  
- `notemodify`
- ^^^^^^^^^^^^
--Included in a `commit` command to add a new note (annotating a given
--commit) or change the content of an existing note.  This command has
--two different means of specifying the content of the note.
-+Included in a `commit` `<notes_ref>` command to add a new note
-+annotating a `<committish>` or change this annotation contents.
-+Internally it is similar to filemodify 100644 on `<committish>`
-+path (maybe split into subdirectories). It's not advised to
-+use any other commands to write to the `<notes_ref>` tree except
-+`filedeleteall` to delete all existing notes in this tree.
-+This command has two different means of specifying the content
-+of the note.
++'gitdir' <path>::
++	Tells helper the location of current repository .git
++	directory. The path is absolute. The command is issued
++	immediately after "gitdir" capability line is read by
++	the caller.
+++
++Supported if the helper has the "gitdir" capability.
++
+ If a fatal error occurs, the program writes the error message to
+ stderr and exits. The caller should expect that a suitable error
+ message has been printed if the child closes the connection without
+@@ -175,6 +183,7 @@ CAPABILITIES
+ 'push'::
+ 'import'::
+ 'connect'::
++'gitdir'::
+ 	This helper supports the corresponding command with the same name.
  
- External data format::
- 	The data content for the note was already supplied by a prior
+ 'refspec' 'spec'::
+@@ -187,6 +196,12 @@ CAPABILITIES
+ 	all, it must cover all refs reported by the list command; if
+ 	it is not used, it is effectively "{asterisk}:{asterisk}"
+ 
++'gitdir'::
++	The helper wants to know .git directory location. The gitdir
++	command is sent immediately after reading this capability.
++	The helper can read it immediately too or it can proceed with
++	reporting other capabilities and read it as a next command.
++
+ REF LIST ATTRIBUTES
+ -------------------
+ 
 -- 
 1.7.3.4
