@@ -1,152 +1,186 @@
-From: Jeff King <peff@peff.net>
+From: Illia Bobyr <Illia.Bobyr@ronin-capital.com>
 Subject: Re: [PATCH 2/5] add object-cache infrastructure
-Date: Tue, 12 Jul 2011 17:36:07 -0400
-Message-ID: <20110712213607.GA12447@sigill.intra.peff.net>
+Date: Tue, 12 Jul 2011 16:52:55 -0500
+Message-ID: <4E1CC237.3050401@ronin-capital.com>
 References: <20110711161332.GA10057@sigill.intra.peff.net>
  <20110711161754.GB10418@sigill.intra.peff.net>
  <7vliw4d1hu.fsf@alter.siamese.dyndns.org>
  <20110711220107.GC30155@sigill.intra.peff.net>
  <7vk4bo9ze5.fsf@alter.siamese.dyndns.org>
- <20110712000304.GA32276@sigill.intra.peff.net>
- <20110712193844.GA17322@toss.lan>
- <20110712194540.GA21180@sigill.intra.peff.net>
- <20110712210716.GB17322@toss.lan>
+ <4E1B91D8.5040500@ronin-capital.com>
+ <20110712053532.GB11644@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
 	Jakub Narebski <jnareb@gmail.com>, Ted Ts'o <tytso@mit.edu>,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Tue Jul 12 23:36:21 2011
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Clemens Buchacher <drizzd@aon.at>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 12 23:53:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qgkcu-0007QS-OU
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 23:36:21 +0200
+	id 1QgktU-00070g-1r
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 23:53:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755912Ab1GLVgL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jul 2011 17:36:11 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53810
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755884Ab1GLVgJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2011 17:36:09 -0400
-Received: (qmail 17510 invoked by uid 107); 12 Jul 2011 21:36:33 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 12 Jul 2011 17:36:33 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Jul 2011 17:36:07 -0400
-Content-Disposition: inline
-In-Reply-To: <20110712210716.GB17322@toss.lan>
+	id S1756015Ab1GLVxW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jul 2011 17:53:22 -0400
+Received: from spam01.roncap.com ([64.95.232.121]:55840 "EHLO
+	spam01.roncap.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755623Ab1GLVxU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2011 17:53:20 -0400
+X-ASG-Debug-ID: 1310507597-47416d8f0001-QuoKaX
+Received: from psys-sltc-exhc1.ronin.roncap.com ([10.106.240.21]) by spam01.roncap.com with ESMTP id qzxmwQG16Q2vepRe (version=TLSv1 cipher=AES128-SHA bits=128 verify=NO); Tue, 12 Jul 2011 16:53:17 -0500 (CDT)
+X-Barracuda-Envelope-From: Illia.Bobyr@ronin-capital.com
+Received: from psys-cltc-excl1.ronin.roncap.com ([fe80::6131:9de3:c24c:5b2d])
+ by psys-sltc-exhc1.ronin.roncap.com ([::1]) with mapi; Tue, 12 Jul 2011
+ 16:52:56 -0500
+X-ASG-Orig-Subj: Re: [PATCH 2/5] add object-cache infrastructure
+Thread-Topic: [PATCH 2/5] add object-cache infrastructure
+Thread-Index: AcxA3g69uSo7RI/rSTSeZQ2n5sKrKQ==
+In-Reply-To: <20110712053532.GB11644@sigill.intra.peff.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20110624
+ Thunderbird/5.0
+acceptlanguage: en-US
+X-Barracuda-Connect: UNKNOWN[10.106.240.21]
+X-Barracuda-Start-Time: 1310507597
+X-Barracuda-Encrypted: AES128-SHA
+X-Barracuda-URL: http://spam01.roncap.com:8000/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at roncap.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176985>
 
-On Tue, Jul 12, 2011 at 11:07:16PM +0200, Clemens Buchacher wrote:
-
-> On Tue, Jul 12, 2011 at 03:45:40PM -0400, Jeff King wrote:
-> >
-> > It has been a long time since I've looked at darcs, but from my
-> > recollection, it will only work with specific patch types. That is, it
-> > works if B and C are commutative. For text patches that touch the same
-> > area, that is not the case. But if "B" were a token-renaming patch, for
-> > example, I think it might work.
-> 
-> If they were commutative, we would not have a problem in git
-> either.
-
-Except that git doesn't support many commutative special forms, like
-token-renaming patches.
-
-> > Anyway, that is not really relevant to git. I think we decided long ago
-> > that being simple and stupid about the content changes (i.e., blob A
-> > became blob B) is better in general, even when there are a few corner
-> > cases that might have been better off the other way.
-> 
-> Yes, but that only applies to git merge. When we talk about
-> rebasing we are looking at individual patches rather than a single
-> global merge. For rebase I think "patch algebra" is very relevant,
-> and we have already implemented a simple patch algebra with
-> patch-id's.
-
-I can buy that argument, but I think most of the benefit in darcs comes
-from annotating your patch as "this is just renaming 'foo' to 'bar'" and
-other special patch types. Because the algebraic properties of those
-types is more interesting. And what we really don't want in git is
-having to put the burden on users of making those annotations (not just
-because it's annoying to do, but because when the annotation doesn't
-match what's in the blobs, the results would be extremely confusing).
-
-But if you are proposing that we could do run-time detection on those
-sorts of patch properties and use the result in making a better rebase,
-I don't think that's a bad idea (though I do wonder if the amount of
-code will be worth it).
-
-Again, it has been a long time since I've looked at darcs, and I was
-never a serious user of it, so everything I say above may be utterly
-wrong.
-
-> > I'd be curious to see an example worked out. In my experience, even if
-> > something like patch-ids don't match, it's not a big deal for the hunks
-> > that do match, because when we get to the actual content merge, we will
-> > realize that both sides made the same change to that hunk.  So it's not
-> > like you are getting unrelated conflicts; whatever small part of the
-> > diff made the patch-id different will be the part where you get the
-> > conflict, and the should merge cleanly.
-> 
-> I am reading that last part as "they should not merge cleanly".
-
-Sorry, it was supposed to be "...and the rest should merge cleanly". But
-I think you got my meaning.
-
-> Exactly. The case I am talking about is where the patch-id's are
-> different but there are no conflicts. I have worked out an example
-> for git and darcs. Below are two scripts to demonstrate. In the
-> example, the patch-id is different because upstream changes the
-> patch in a way that does not conflict with the original patch. It
-> simply adds another change that goes into a different hunk. Git
-> fails to merge cleanly because the patch-id's are different. It
-> presents the user with an awkward conflict that looks like a
-> revert. Darcs, on the other hand, merges cleanly. It recognizes the
-> fact that all changes from the original patch are contained
-> upstream and do not conflict with the upstream version. The fact
-> that more changes are added on top does not bother darcs.
-
-Ah, OK, I see. Let me try to amend what I said earlier to make sure.
-
-In the normal case of applying patch B on top of patch A, it doesn't
-matter if we use per-hunk patch-ids or normal patch-ids. Because even if
-we decide to actually go through with the merge of B on top of A, any
-hunks that _would have_ had their per-hunk patch-ids match will merge
-cleanly.
-
-But in the real world, it is about applying patch Z on top of patches
-A..Y, where Z has similar hunks to patch N. And then it _does_ make a
-difference, because it is about skipping hunks from Z that are already
-in N, but will end up applied on top of Y. And what's in Y and what's in
-N may be quite different.
-
-Does that sound right?
-
-> Now, one might argue that this is a corner case. But it's actually
-> very common. In the example, the patch-id changes because of an
-> extra change in a different text area. That is indeed unlikely.
-> However, the same problem will occur in a much more common case.
-> Let's say we have a patch with 10 hunks. The patch is applied
-> upstream, with only one difference in one of the hunks.
-> Subsequently, text areas affected by any of the other hunks change
-> upstream. When the original patch is rebased on top of that, it
-> will conflict with the one hunk that was changed in the upstream
-> version of that patch. And that's ok. Git should not decide which
-> version is correct. But in addition to that conflict there will
-> also be conflicts for all the other hunks, which the upstream patch
-> did _not_ modify. And all of those conflicts will look like
-> reverts.
-
-Right, that makes sense to me now.
-
--Peff
+T24gNy8xMi8yMDExIDEyOjM1IEFNLCBKZWZmIEtpbmcgd3JvdGU6DQo+IE9uIE1vbiwgSnVsIDEx
+LCAyMDExIGF0IDA3OjE0OjE2UE0gLTA1MDAsIElsbGlhIEJvYnlyIHdyb3RlOg0KPg0KPj4gSSBh
+bSBub3QgMTAwJSBzdXJlIHRoYXQgbXkgc29sdXRpb24gaXMgZXhhY3RseSBhYm91dCB0aGlzIHBy
+b2JsZW0sIGJ1dA0KPj4gaXQgc2VlbXMgdG8gYmUgcXVpdGUgcmVsZXZhbnQuDQo+Pg0KPj4gSSB0
+aGluayB0aGF0IGlmIHlvdSByZWJhc2UgInN0ZXAtYnktc3RlcCIgYnkgZG9pbmcsIGZvciB0aGlz
+IHBhcnRpY3VsYXINCj4+IGV4YW1wbGUsIHNvbWV0aGluZyBsaWtlDQo+Pg0KPj4gJCBnaXQgcmVi
+YXNlIG1hc3Rlcl4gdG9waWMNCj4+ICQgZ2l0IHJlYmFzZSBtYXN0ZXIgdG9waWMNCj4+DQo+PiBZ
+b3Ugd2lsbCBmaXJzdCBzZWUgdGhlIC9tb2RpZmllZCBvbmUvb25lLyBjb25mbGljdCB0aGF0IHlv
+dSB3aWxsIHJlc29sdmUNCj4+IHlvdXIgInR3byIgYWdhaW5zdCBhbmQgdGhlbiB5b3VyIHNlY29u
+ZCByZWJhc2Ugd2lsbCBhcHBseSB3aXRoIG5vIGNvbmZsaWN0cy4NCj4+DQo+PiBJIGhhdmUgYSBz
+ZXQgb2Ygc2NyaXB0cyB0aGF0IGhlbHAgbWUgZG8gdGhpcyBraW5kIG9mIHJlYmFzZXMgYnkNCj4+
+IGVzc2VudGlhbGx5IHJlYmFzaW5nIHRoZSB0b3BpYyBicmFuY2ggYWdhaW5zdCBldmVyeSBzaW5n
+bGUgY29tbWl0IG9uIHRoZQ0KPj4gdXBzdHJlYW0uDQo+IFRoYXQgbWFrZXMgYSBsb3Qgb2Ygc2Vu
+c2UgdG8gbWUgYXMgYSBzdHJhdGVneS4gT2YgY291cnNlLCBhcyB5b3UNCj4gbWVudGlvbiwgaXQg
+aXMgaG9ycmlibHkgc2xvdy4gQW5kIHdoZW4geW91IGRvIGhhdmUgcmVhbCBjb25mbGljdHMsIHlv
+dQ0KPiB3b3VsZCBlbmQgdXAgbG9va2luZyBhdCB0aGUgc2FtZSBjb25mbGljdHMgYWdhaW4gYW5k
+IGFnYWluIChhbmQgYXMgeW91DQo+IG1lbnRpb24sIHJlcmVyZSBjYW4gYmUgc29tZSBoZWxwIHRo
+ZXJlLCB0aG91Z2ggbm90IG5lY2Vzc2FyaWx5DQo+IHBlcmZlY3QpLg0KDQpXZWxsLCBJIHdvdWxk
+IGxpa2UgdG8gY29tbWVudCBvbiAiaG9ycmlibHkgc2xvdyIgYSBsaXR0bGUgYml0IDopDQpJdCBp
+cyBzbG93ZXIgdGhhbiBhIG5vcm1hbCByZWJhc2UsIGJ1dCBpdCBpcyBtdWNoIGZhc3RlciB0aGFu
+LCBhdCBsZWFzdCANCmluIG15IGNhc2UsIG1lIGRvaW5nIHRoZSBjb25mbGljdCByZXNvbHV0aW9u
+IG9uIHRoZSBmaW5hbCB2ZXJzaW9ucyANCndpdGhvdXQgaW50ZXJtZWRpYXRlIHN0ZXBzLg0KDQpB
+bHNvLCBpbiBteSBjYXNlLCBpdCBpcyBmYXN0ZXIgdGhhbiBjb21waWxpbmcgZXZlcnkgc2luZ2xl
+IGNvbW1pdCBvZiB0aGUgDQp0b3BpYyBicmFuY2ggYWZ0ZXIgdGhlIHJlYmFzZS4gIFNvbWV0aGlu
+ZyB0aGF0IEkganVzdCBoYXZlIHRvIGRvLCBhZ2FpbiwgDQpiZWNhdXNlIGlmIEkgZG8gdGhpcyBv
+bmx5IHdpdGggdGhlIGZpbmFsIHZlcnNpb24gaXQgZ2l2ZXMgbWUgc28gbXVjaCANCmVycm9ycyBh
+bGwgb3ZlciB0aGUgY29kZSwgdGhhdCBJIGNhbiBoYXJkbHkgZG8gYW55dGhpbmcgd2l0aCBpdC4g
+IA0KQmVzaWRlcyBJIHdvdWxkIGxpa2UgdGhlIGNvbW1pdHMgdGhhdCB3ZXJlICJpbmNvcnJlY3Rs
+eSIgbWVyZ2VkIGFuZCB0aGF0IA0KaW50cm9kdWNlZCB0aGUgY29tcGlsYXRpb24gZXJyb3IgdG8g
+Y29udGFpbiB0aGUgZml4ZXMsIG5vdCBoYXZlIGFsbCB0aGUgDQpmaXhlcyBhcyBhIGZpbmFsICJt
+ZXJnZSIgY29tbWl0Lg0KDQpJbiBvdGhlciB3b3Jkcywgd2hpbGUgYmVlbiBzbG93LCBpdCBpcyBq
+dXN0IG9uZSBzdGVwIGluIGEgZ2VuZXJhbCANCnByb2Nlc3MgdGhhdCwgaW4gbXkgY2FzZSwgaGF2
+ZSBzdGVwcyB0aGF0IGFyZSBzbG93ZXIuDQoNCkFsc28sIG15IGd1ZXNzIGlzIHRoYXQsIGFzIHJl
+YmFzZSBpcyBhbiBzaCBzY3JpcHQgaXQgbWF5IGJlIG1hZGUgZmFzdGVyIA0KYW5kIGEgc3RlcC1i
+eS1zdGVwIHJlYmFzZSB3aWxsIGJlY2FtZSBjb25zaWRlcmFibHkgZmFzdGVyIGFzIHdlbGwsIGlm
+IGl0IA0Kd291bGQgYmUgcmV3cml0dGVuIGluIEMuICBUaG91Z2ggSSBoYXZlIG5vdCBsb29rZWQg
+YSBsb3QgaW5zaWRlIHRoZSANCnNjcmlwdCwgc28gSSBtaWdodCBiZSB3cm9uZy4NCg0KSSB3b3Vs
+ZCBsaWtlIHRvIG5vdGUgdGhhdCBpbiBjYXNlIG9mIGh1bmRyZWRzIG9mIHJlYmFzZXMgd2l0aCBk
+b3plbnMgb2YgDQpjb25mbGljdHMgcmVyZXJlJ3MgaGVscCBpcyBoYXJkIHRvIG92ZXJlc3RpbWF0
+ZS4gIEkgaGF2ZSByZWJhc2VkIG15IA0KdG9waWMgYnJhbmNoIHRocm91Z2ggYXQgbGVhc3QgNTAw
+IGNvbW1pdHMgZm9yIHRoZSBsYXN0IDYgbW9udGggYW5kIGFzIEkgDQphY3R1YWxseSBkbyBub3Qg
+Y29weSBhbnkgY2hhbmdlcyBpbnRvIHRoZSBtYXN0ZXIgYnJhbmNoLCBzb21lIGNvbmZsaWN0cyAN
+CnN0YXkgd2UgbWUgZm9yIHRoZSB3aG9sZSB0aW1lLg0KDQo+PiBBdCB0aGUgc2FtZSB0aW1lIHRo
+ZSBsZXNzIGNoYW5nZXMgYXJlIGluIHRvcGljLi4ubWFzdGVyIHRoZSBmYXN0ZXIgaXQNCj4+IHdv
+dWxkIGJlIGFuZCB0aGUgbW9yZSBjaGFuZ2VzIGFyZSB0aGVyZSB0aGUgbW9yZSB5b3UgYmVuZWZp
+dCBmcm9tIGENCj4+IGdyYWR1YWwgcmViYXNlLg0KPiBZZWFoLCB0aGlzIHNlZW1zIGxpa2UgdGhl
+IHJlYWwgcHJvYmxlbSB0byBtZS4gSXQncyBvbmUgdGhpbmcgdG8gcmViYXNlDQo+IG9uIHRvcCBv
+ZiBhIHNpbmdsZSBzZXJpZXMgdGhhdCBzb21lYm9keSBoYXMgYXBwbGllZCB1cHN0cmVhbS4gQnV0
+IGlmIGl0DQo+IGhhcyBiZWVuIDIgd2Vla3MsIHRoZXJlIG1heSBiZSBodW5kcmVkcyBvZiBjb21t
+aXRzLCBhbmQgZG9pbmcgaHVuZHJlZHMNCj4gb2YgcmViYXNlcyBpcyBhd2Z1bC4gSSB3b25kZXIg
+aWYgeW91IGNvdWxkIGRvIGJldHRlciBieSBwaWNraW5nIG91dCBzb21lDQo+ICJrZXkiIGNvbW1p
+dHMgaW4gbWFzdGVyIHRvIHJlYmFzZSBvbiB0b3Agb2YgdXNpbmcgb25lIG9mOg0KPg0KPiAgICAx
+LiBEaXZpZGUtYW5kLWNvbnF1ZXIgdGhlIGNvbW1pdCBzcGFjZS4gVHJ5IHRoZSByZWJhc2UsIHN0
+YXJ0aW5nIG9uDQo+ICAgICAgIHRoZSBIRUFELiBJZiBpdCB3b3JrcywgZ3JlYXQuIElmIHRoZSB1
+c2VyIHNheXMgInRoaXMgaXMgdG9vIGhhcmQiLA0KPiAgICAgICB0aGVuIGZpbmQgdGhlIG1pZHBv
+aW50IGJldHdlZW4gd2hlcmUgd2UgdHJpZWQgdG8gcmViYXNlIGFuZCB0aGUNCj4gICAgICAgbWVy
+Z2UgYmFzZSwgYW5kIHRyeSByZWJhc2luZyB0aGVyZS4gRXZlcnkgdGltZSBpdCdzIHRvbyBoYXJk
+LCBnbw0KPiAgICAgICBiYWNrIGhhbGZ3YXkgdG8gdGhlIHN0YXJ0LiBFdmVyeSB0aW1lIGl0J3Mg
+ZWFzeSwgdHJ5IHRoZSBuZXcgcmVzdWx0DQo+ICAgICAgIG9uIHRvcCBvZiBIRUFELg0KPg0KPiAg
+ICAgICBTbyBpdCdzIGJhc2ljYWxseSBkb2luZyBhIE8obGcgbikgc2VhcmNoIGJhY2t3YXJkcyBm
+b3IgYW4gZWFzeQ0KPiAgICAgICBwbGFjZSB0byByZWJhc2UsIGFuZCB0aGVuIHJlcGVhdGVkbHkg
+Y2hlY2tpbmcgaWYgdGhhdCB3YXMgYSBnb29kDQo+ICAgICAgIHNwb3QgKGFuZCByZXBlYXRpbmcg
+dGhlIGJhY2t3YXJkcyBzZWFyY2ggaWYgbm90KS4gVGhlIHdvcnN0IGNhc2UNCj4gICAgICAgY29t
+cGxleGl0eSBpcyBPKG4gbGcgbikgcmViYXNlcy4gQnV0IGluIHByYWN0aWNlLCB5b3UgY2FuIGhv
+cGVmdWxseQ0KPiAgICAgICBmaW5kIHRoZSBwcm9ibGVtYXRpYyBzcG90IGluIE8obGcgbiksIGFu
+ZCB0aGVuIGV2ZXJ5dGhpbmcgd2lsbCBqdXN0DQo+ICAgICAgIHdvcmsgb3V0IGFmdGVyIDEgb3Ig
+MiBwcm9ibGVtYXRpYyBzcG90cy4NCg0KSSBoYXZlIHByb2JsZW1zIGFsbCBvdmVyIHRoZSB1cHN0
+cmVhbSBoaXN0b3J5IDopDQpBbmQgdGhlIGlzc3VlIGlzIG5vdCBpbiBleGFjdGx5IGluIGZpbmRp
+bmcgYSBwcm9ibGVtIHNwb3QuICBJdCBpcyBhYm91dCANCmdpdmluZyB0aGUgdXNlciAodGhhdCBp
+cyBtZSBpbiB0aGlzIGNhc2UpIHNvbWV0aGluZyB0aGF0IGhlIGNhbiBtZXJnZSBpbiANCmEgcmVh
+c29uYWJsZSBhbW91bnQgb2YgdGltZS4NCg0KSSBoYXZlIGEgdG9waWMgYnJhbmNoIHdpdGggMTc0
+IGNvbW1pdHMuICBJdCB0YWtlcyBteSBtYWNoaW5lIGFib3V0IDcgDQptaW51dGVzIHRvIHJlYmFz
+ZSBpdC4NCklmIEkgaGF2ZSBhIGNvbmZsaWN0IHRoYXQgSSBkbyBub3QgdW5kZXJzdGFuZCwgaXQg
+bWF5IHRha2UgbWUsIG9uIA0KYXZlcmFnZSwgdHdvIGhvdXJzIHRvIGZpZ3VyZSBvdXQgd2hhdCBh
+IGNvbmZsaWN0IGlzIGFib3V0IGFuZCBmaXggaXQuICANClNvbWV0aW1lcyBpdCBtYXkgdGFrZSA0
+IGhvdXJzIG9yIGV2ZW4gbW9yZSBpZiBJIGhhdmUgdG8gaW52b2x2ZSBvdGhlciANCmRldmVsb3Bl
+cnMuDQpJZiBteSBtYWNoaW5lIHdpbGwgaGF2ZSB0byBkbyAyMCByZWJhc2VzIG9yIGV2ZW4gNDAg
+YW5kIGl0IHdpbGwgcHJlc2VudCANCm1lIHdpdGggc2ltcGxlIGNvbmZsaWN0cyB0aGF0IEkgY2Fu
+IHNvbHZlIGluIHNlY29uZHMgaXQgd291bGQgc3RpbGwgYmUgDQpiZXR0ZXIgdGhhbiBpZiBJIHdp
+bGwgc3BlbmQgaG91cnMgdHJ5aW5nIHRvIGZpZ3VyZSBvdXQgc29tZXRoaW5nIGFuZCANCmdpdmUg
+dXAgYnkgc2F5aW5nICJ0aGlzIGlzIHRvbyBoYXJkIi4gIE5vdGUgdGhhdCB3aGlsZSBpdCByZWJh
+c2VzIEkgYW0gDQp3b3JraW5nIG9uIHNvbWV0aGluZyBlbHNlLg0KDQpJbiBteSBjYXNlIHNvbWV0
+aW1lcyBldmVuIHRoZSBtb3N0IGJhc2ljIGNvbmZsaWN0cyB0aGF0IGFyaXNlIGJlY2F1c2Ugb2Yg
+DQphIHJlYmFzZSBhZ2FpbnN0IGp1c3Qgb25lIGNvbW1pdCBtYXkgYmUgaGFyZCB0byBtZXJnZS4N
+CklmIEkgY2FuIGF2b2lkIGV2ZW4gb25lIG9mIHRoZXNlIEkgd2lsbCBiZSBoYXBweSB0byBsZXQg
+b25lIG9mIG15IA0KbWFjaGluZSBjb3JlcyBydW4gZm9yIGhvdXJzIDopDQoNCk9idmlvdXNseSwg
+bXkgY2FzZSBpcyBhIHdpcmVkIGNhc2UgY2F1c2VkIGJ5IG5vdC10aGUtYmVzdCBkZXZlbG9wbWVu
+dCANCnByYWN0aWNlcy4gIEJ1dCwgSSBndWVzcywgb25lIGNhbiBzdGlsbCBjb25zaWRlciBpdCBh
+cyBvbmUgb2YgdGhlIHBvaW50cyANCm9uIHRoZSBjdXJ2ZSB0aGF0IGFwcHJveGltYXRlIHRoaXMg
+a2luZCBvZiB1c2UgY2FzZXMuICBBIHByZXR0eSBleHRyZW1lIA0KcG9pbnQuDQoNCj4gICAgMi4g
+VXNlIGhldXJpc3RpY3MgKGxpa2UgY29tbWl0IG1lc3NhZ2UgY29udGVudCkgdG8gZmluZCByZWxh
+dGVkDQo+ICAgICAgIGNvbW1pdHMuIFNvIGlmIEkgaGF2ZSBhIDUtcGF0Y2ggc2VyaWVzLCBJIGNh
+biBwZXJoYXBzIGZpbmQgdGhlDQo+ICAgICAgIGxpa2VseSBjb21taXRzIHVwc3RyZWFtIHRoYXQg
+bWF0Y2ggbXkgcGF0Y2hlcywgYW5kIHRob3NlIGFyZQ0KPiAgICAgICBnb29kIHBsYWNlcyB0byB0
+cnkgaW5kaXZpZHVhbCByZWJhc2VzLiBBbmQgdGhlbiBJIGRvbid0IGNhcmUgaG93DQo+ICAgICAg
+IG1hbnkgY29tbWl0cyBhcmUgaW4gbWFzdGVyLiBJZiBJIGhhdmUgYSA1IHBhdGNoIHNlcmllcywg
+SSB3b24ndCBkbw0KPiAgICAgICBtb3JlIHRoYW4gNSByZWJhc2VzLg0KPg0KPiBCdXQgSSd2ZSBu
+ZXZlciB0cmllZCB0aGlzIGluIHByYWN0aWNlLiBNYXliZSBuZXh0IHRpbWUgYSByZWJhc2UgaXMg
+dWdseQ0KPiBJJ2xsIG1hbnVhbGx5IHdvcmsgdGhyb3VnaCBvbmUgb2YgdGhlIG1ldGhvZHMgYW5k
+IHNlZSBob3cgaXQgZmFyZXMuDQoNCkkgZ3Vlc3MgdGhhdCBJIHZpZXcgdGhpcyBwcm9ibGVtIGZy
+b20gYSBsaXR0bGUgZGlmZmVyZW50IGFuZ2xlLCBhcyBpbiBteSANCmNhc2UsIGl0IGlzIG5vdCBi
+ZSBleGFjdGx5IG15IG93biBwYXRjaGVzIHRoYXQgYXJlIGNhdXNpbmcgcHJvYmxlbXMsIGJ1dCAN
+CmFuIHVwc3RyZWFtIGNoYW5nZXMgdGhhdCBoYXZlIG90aGVyIGNoYW5nZXMgYmFzZSBvbiB0aGVt
+Lg0KDQpOb3cgSSBhbSBndWVzc2luZywgYnV0IGhlcmUgaXMgYW5vdGhlciBpZGVhLg0KDQpJIHRo
+aW5rIHRoYXQgb25lIGNhbiBjaGVjayB0aGUgbW9kaWZpY2F0aW9uIGhpc3Rvcnkgb2YgdGhlIGxp
+bmVzIGluIHRoZSANCm1hc3RlciBjb21taXRzIHdlIGFyZSByZWJhc2luZyBhZ2FpbnN0IGFuZCBp
+biBhbGwgdGhlIHRvcGljIGNvbW1pdHMsIA0Kc2ltaWxhciB0byB3aGF0IGJsYW1lIGRvZXMuDQpF
+c3NlbnRpYWxseSB0YWtlIGEgc2V0IG9mIGFsbCBsaW5lcyB0aGF0IHdlcmUgbW9kaWZpZWQgYnkg
+dGhlIHRvcGljIA0KYnJhbmNoIChhbG9uZyB3aXRoIHRoZSBjb250ZXh0IGxpbmVzKSBhbmQgc2V0
+cyBvZiBsaW5lcyBtb2RpZmllZCBieSBldmVyIA0Kc2luZ2xlIGNvbW1pdCAod2l0aG91dCB0aGUg
+Y29udGV4dCBsaW5lcykuDQpJZiBhIGNvbW1pdCBkb2VzIG5vdCB0b3VjaCBsaW5lcyBmcm9tIHRo
+ZSB0b3BpYyBicmFuY2ggc2V0IGl0IHdpbGwgbm90IA0KY2F1c2UgY29uZmxpY3RzIGFuZCB3ZSBj
+YW4gc2tpcCBpdC4gIEl0IHdpbGwganVzdCBjYXVzZSBvZmZzZXRzIGluIHRoZSANCmxpbmUgbnVt
+YmVycyB3aGVuIHRoZSBwYXRjaGVzIHdpbGwgYmUgYXBwbGllZC4NCg0KSWYgeW91IGFyZSByZWJh
+c2luZyBhZ2FpbnN0IGEgbG90IG9mIGNoYW5nZXMgdGhhdCBhcmUgdW5yZWxhdGVkIHRvIHlvdXIg
+DQp0b3BpYyBicmFuY2ggYW5kIGlmIHRoZXkgYXJlIHNwbGl0IGludG8gY29tbWl0cyBjb3JyZWN0
+bHksIHRoaXMgd2F5LCBJIA0KZ3Vlc3MsIGl0IHdvdWxkIGJlIHBvc3NpYmxlIHRvIGZpbmQgdGhv
+c2UgdGhhdCBtYXkgY2F1c2UgY29uZmxpY3RzLg0KVGhlIGFjdHVhbCByZWJhc2UgbWF5IHN0aWxs
+IGJlIGFibGUgdG8gZ28gdGhyb3VnaCBzb21lIG9mIHRoZW0gd2l0aG91dCANCmNvbmZsaWN0cyBi
+dXQgSSBzZWUgdGhpcyBhcyBhIGZpcnN0IGFwcHJveGltYXRpb24gdGhhdCBtaWdodCBzYXZlIHRp
+bWUuICANCkFuZCBpdCBzZWVtcyB0byBnaXZlIG9ubHkgZmFsc2UgbmVnYXRpdmVzLg0KDQpLaW5k
+IG9mIGEgY29uZmxpY3QgcHJlZGljdGlvbiBhcHByb3hpbWF0aW9uLg0KDQpJbHlh
