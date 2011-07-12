@@ -1,82 +1,64 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [GSoC update] Sequencer for inclusion
-Date: Tue, 12 Jul 2011 15:28:34 +0900
-Message-ID: <buo1uxwggh9.fsf@dhlpc061.dev.necel.com>
-References: <1310396048-24925-1-git-send-email-artagnon@gmail.com>
- <20110711171713.GA5963@elie>
+From: Jeff King <peff@peff.net>
+Subject: Re: Interpreting git merge failures
+Date: Tue, 12 Jul 2011 02:33:00 -0400
+Message-ID: <20110712063300.GB12491@sigill.intra.peff.net>
+References: <CAKmUPx5Qt2K+7F+BsW3WTmRjodBSrteuyG8p9oRHZuhApTu4+g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 12 08:28:42 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Scott Bronson <bronson@rinspin.com>
+X-From: git-owner@vger.kernel.org Tue Jul 12 08:33:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QgWSY-0001Oq-2x
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 08:28:42 +0200
+	id 1QgWWr-000357-GS
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 08:33:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753468Ab1GLG2i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jul 2011 02:28:38 -0400
-Received: from relmlor1.renesas.com ([210.160.252.171]:62242 "EHLO
-	relmlor1.renesas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751367Ab1GLG2h (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2011 02:28:37 -0400
-Received: from relmlir2.idc.renesas.com ([10.200.68.152])
- by relmlor1.idc.renesas.com ( SJSMS)
- with ESMTP id <0LO7000WYJBN0M60@relmlor1.idc.renesas.com> for
- git@vger.kernel.org; Tue, 12 Jul 2011 15:28:35 +0900 (JST)
-Received: from relmlac1.idc.renesas.com ([10.200.69.21])
- by relmlir2.idc.renesas.com ( SJSMS)
- with ESMTP id <0LO7007UHJBNESC0@relmlir2.idc.renesas.com> for
- git@vger.kernel.org; Tue, 12 Jul 2011 15:28:35 +0900 (JST)
-Received: by relmlac1.idc.renesas.com (Postfix, from userid 0)
-	id ABF2E80088; Tue, 12 Jul 2011 15:28:35 +0900 (JST)
-Received: from relmlac1.idc.renesas.com (localhost [127.0.0.1])
-	by relmlac1.idc.renesas.com (Postfix) with ESMTP id A4B6380086; Tue,
- 12 Jul 2011 15:28:35 +0900 (JST)
-Received: from relmlii1.idc.renesas.com [10.200.68.65]	by
- relmlac1.idc.renesas.com with ESMTP id RAC05643; Tue,
- 12 Jul 2011 15:28:35 +0900
-X-IronPort-AV: E=Sophos;i="4.65,519,1304262000";   d="scan'208";a="36363571"
-Received: from unknown (HELO relay31.aps.necel.com) ([10.29.19.54])
- by relmlii1.idc.renesas.com with ESMTP; Tue, 12 Jul 2011 15:28:35 +0900
-Received: from relay31.aps.necel.com ([10.29.19.54] [10.29.19.54])
- by relay31.aps.necel.com with ESMTP; Tue, 12 Jul 2011 15:28:35 +0900
-Received: from dhlpc061 ([10.114.97.129] [10.114.97.129])
- by relay31.aps.necel.com with ESMTP; Tue, 12 Jul 2011 15:28:35 +0900
-Received: by dhlpc061 (Postfix, from userid 31295)	id E565B52E22E; Tue,
- 12 Jul 2011 15:28:34 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-reply-to: <20110711171713.GA5963@elie>
+	id S1753928Ab1GLGdE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jul 2011 02:33:04 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43212
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753539Ab1GLGdD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2011 02:33:03 -0400
+Received: (qmail 9684 invoked by uid 107); 12 Jul 2011 06:33:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 12 Jul 2011 02:33:26 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Jul 2011 02:33:00 -0400
+Content-Disposition: inline
+In-Reply-To: <CAKmUPx5Qt2K+7F+BsW3WTmRjodBSrteuyG8p9oRHZuhApTu4+g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176929>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-> To be precise, the format used includes
->
-> 	strategy-option = patience | renormalize
->
-> to represent the effect of "-Xpatience -Xrenormalize".  My only worry
-> about that is that the "|" can sound like "or", which would seem
-> strange to a user that does not necessarily develop software (so is
-> not thinking about bitfields).
+On Thu, Jul 07, 2011 at 11:45:57AM -0700, Scott Bronson wrote:
 
-How about using "+" instead of "|"...?
+> What is the best way to determine why a git merge failed?
+> I'm writing a script that needs to do different things depending
+> on what went wrong.
+> 
+> Right now I'm parsing error messages.  It's obviously a bad
+> idea and prone to breakage but it does work.   Example:
 
-I think that would make sense both for bitfield-thinking and
-non-bitfield-thinking readers ... :]
+Sorry, that's the best you can do with "git merge" currently.
 
--Miles
+The usual advice would be to check the repo status yourself with
+plumbing tools, but:
 
--- 
-Occam's razor split hairs so well, I bought the whole argument!
+  1. That's a lot of work on the part of a script writer.
+
+  2. It's not atomic. You want to know why a merge failed, but
+     circumstances might have changed since the original failure.
+
+It would be nice if "git merge" gave different exit codes for various
+situations. I don't think it would be all that big a change, and you
+might be a good person to suggest which conditions need their own exit
+code, as you are also writing the consuming end of the codes.
+
+Want to write a patch?
+
+-Peff
