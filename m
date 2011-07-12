@@ -1,75 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Interpreting git merge failures
-Date: Tue, 12 Jul 2011 09:40:29 -0700
-Message-ID: <7vy6038nb6.fsf@alter.siamese.dyndns.org>
-References: <CAKmUPx5Qt2K+7F+BsW3WTmRjodBSrteuyG8p9oRHZuhApTu4+g@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 02/17] revert: Inline add_message_to_msg function
+Date: Tue, 12 Jul 2011 11:53:02 -0500
+Message-ID: <20110712165302.GA13578@elie>
+References: <1310396048-24925-1-git-send-email-artagnon@gmail.com>
+ <1310396048-24925-3-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Scott Bronson <bronson@rinspin.com>
-X-From: git-owner@vger.kernel.org Tue Jul 12 18:40:38 2011
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 12 18:53:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qgg0k-0001uw-7j
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 18:40:38 +0200
+	id 1QggD3-0007Q4-Oo
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 18:53:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754092Ab1GLQkd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jul 2011 12:40:33 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36528 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753738Ab1GLQkc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2011 12:40:32 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0DE0A5F9C;
-	Tue, 12 Jul 2011 12:40:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6o2L4G7mg/BJVx3ZAGQLDgzhWMA=; b=AjHFTP
-	7giZY+KEHwEPP9aeuVrDhje+pZEWYFFCKiwBOI6HlFWxLZ0pW1n4sz8SDfztms1v
-	f3D8l7OAg0I3AfGrqKtnMrPBH9jtP8nZaupHJfDhRlsphzkcx1nPP64EdZHSShp/
-	TC6qBT5aMgWsrv09H9MIxF6CGxCg8JHAqkKzQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LZYwWr1rAFwKNaWhLggw3gmkri/ErxB7
-	f1/tnmD8cjceW3+B4i+mYNAhitCLDco+XjMgijOOxpMifWP+7C9HvBId8iuk5dSA
-	Q20HKzXRDSr18J/F9wanJsCfuqBsGkcyyUpZlVtCmJHv9vUumGULVBVB+CSgMruM
-	6RMqiLGwaWI=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 067B25F9B;
-	Tue, 12 Jul 2011 12:40:32 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 66ABE5F9A; Tue, 12 Jul 2011
- 12:40:31 -0400 (EDT)
-In-Reply-To: <CAKmUPx5Qt2K+7F+BsW3WTmRjodBSrteuyG8p9oRHZuhApTu4+g@mail.gmail.com> (Scott
- Bronson's message of "Thu, 7 Jul 2011 11:45:57 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A84C901E-ACA5-11E0-AB88-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
+	id S1754095Ab1GLQxQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jul 2011 12:53:16 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:34230 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753841Ab1GLQxQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2011 12:53:16 -0400
+Received: by gwaa18 with SMTP id a18so2009440gwa.19
+        for <git@vger.kernel.org>; Tue, 12 Jul 2011 09:53:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=nsXnfV1y7Y83zn1i3BxDhatslSfqGQHNVjJMfyfFEv8=;
+        b=oIV1Km086HBtuj4tQ9nq7BI/CX/KXLriHbBwnHf+ZQDZwh2emPoKsS/jeun9TgVReg
+         ZU1uwqmEgtrQsAVkSlNm+M9SShsNDaGOqtqDMWadsdhemRBelKdOJaDZdKayuIpmYe6m
+         GIEiPyPzJP/M5j+jUvdiGatm1WUck6vgXQcxY=
+Received: by 10.101.164.38 with SMTP id r38mr148327ano.106.1310489595483;
+        Tue, 12 Jul 2011 09:53:15 -0700 (PDT)
+Received: from elie (adsl-69-209-70-6.dsl.chcgil.sbcglobal.net [69.209.70.6])
+        by mx.google.com with ESMTPS id m32sm8470374ano.7.2011.07.12.09.53.12
+        (version=SSLv3 cipher=OTHER);
+        Tue, 12 Jul 2011 09:53:13 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1310396048-24925-3-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176949>
 
-Scott Bronson <bronson@rinspin.com> writes:
+Hi,
 
-> What is the best way to determine why a git merge failed?
+Ramkumar Ramachandra wrote:
 
-If you get exit code 0, the merge did not fail.
+> The add_message_to_msg function is poorly implemented, has an unclear
+> API, and only one callsite.  Replace the callsite with a cleaner
+> implementation.  Additionally, fix a bug introduced in 9509af6 (Make
+> git-revert & git-cherry-pick a builtin, 2007-03-01) -- a NULL pointer
+> was being incremented when "\n\n" was not found in "message".
 
-Otherwise you can inspect the index after getting the non-zero exit code.
+Rather than being an optimization, the main impact of this change is
+to avoid a NULL pointer dereference in some cases, right?
 
-If you have an unmerged entry in the index, there could be two cases.  The
-most typical is that the merge was attempted and stopped due to an
-conflict. "ls-files -u" will show these paths. Another is a user error to
-run "git merge" when your index is already unmerged, but you can easily
-avoid this at the beginning of your script, stopping without running "git
-merge" when the index is unmerged to begin with.
+If so, the subject line should say so.  Is it possible to reproduce
+this?  Could we add a test to avoid regressing in the future?
 
-If you do not have an unmerged entry in the index, the merge refrained
-from overwriting either your local modifications in the working tree, or
-your local modifications to the index.  Again the latter is a user error
-that you can detect before running "git merge" in your script.
+Less importantly:
+
+> --- a/builtin/revert.c
+> +++ b/builtin/revert.c
+[...]
+> @@ -462,11 +449,16 @@ static int do_pick_commit(void)
+>  		}
+>  		strbuf_addstr(&msgbuf, ".\n");
+>  	} else {
+> +		const char *p = strstr(msg.message, "\n\n");
+> +
+>  		base = parent;
+>  		base_label = msg.parent_label;
+>  		next = commit;
+>  		next_label = msg.label;
+> -		add_message_to_msg(&msgbuf, msg.message);
+> +
+> +		p = p ? p + 2 : sha1_to_hex(commit->object.sha1);
+> +		strbuf_addstr(&msgbuf, p);
+
+I think this would be clearer like so:
+
+		const char *p;
+		...
+		p = strstr(...);
+		if (p)
+			p += 2;
+		else
+			p = sha1_to_hex...
+		strbuf_addstr(&msgbuf, p);
+
+i.e., putting all the code that manipulates p together.  Besides,
+pre-C99 compilers don't like "p" to be initialized to a non-constant.
+:)
+
+At [1], I also see a suggestion of a comment that could clarify the
+code a little.
+
+Hope that helps,
+Jonathan
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/176139/focus=176183
