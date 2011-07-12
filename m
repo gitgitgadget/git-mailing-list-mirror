@@ -1,7 +1,7 @@
 From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: [PATCH 2/3] doc/fast-import: document feature import-marks-if-exists
-Date: Tue, 12 Jul 2011 21:10:27 +0600
-Message-ID: <1310483428-29833-3-git-send-email-divanorama@gmail.com>
+Subject: [PATCH 1/3] doc/fast-import: clarify notemodify command
+Date: Tue, 12 Jul 2011 21:10:26 +0600
+Message-ID: <1310483428-29833-2-git-send-email-divanorama@gmail.com>
 References: <1310483428-29833-1-git-send-email-divanorama@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
@@ -10,99 +10,90 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Dmitry Ivankov <divanorama@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 12 17:10:37 2011
+X-From: git-owner@vger.kernel.org Tue Jul 12 17:10:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qgebc-0005YJ-RM
+	id 1Qgebd-0005YJ-F9
 	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 17:10:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753267Ab1GLPKR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jul 2011 11:10:17 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:40863 "EHLO
+	id S1753288Ab1GLPKS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jul 2011 11:10:18 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:52328 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751072Ab1GLPKP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2011 11:10:15 -0400
-Received: by mail-bw0-f46.google.com with SMTP id 5so4115707bwd.19
-        for <git@vger.kernel.org>; Tue, 12 Jul 2011 08:10:14 -0700 (PDT)
+	with ESMTP id S1752208Ab1GLPKN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2011 11:10:13 -0400
+Received: by bwd5 with SMTP id 5so4115732bwd.19
+        for <git@vger.kernel.org>; Tue, 12 Jul 2011 08:10:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=ueQ3D6hwuZo0K/PQymNmcVAQi6ifO4YPmciiTmK0W44=;
-        b=Gmlra+vEWqh6LsMlwrNznHugrHTymN5qqEi+E337QNT1ESAL//KwtpNc2S9Jkc9YLq
-         48SxIEoZMzI8K3HGwvoYY86G9MCEiz5werxX5RNmdsD/p5h9Efsy3VGKVUqKrbkYVD9C
-         GhankNeNnsWLJ4AFn0hC9ZM/CozHnZld3jK6s=
-Received: by 10.204.40.134 with SMTP id k6mr27927bke.128.1310483414696;
-        Tue, 12 Jul 2011 08:10:14 -0700 (PDT)
+        bh=YZC5R7MtGtKWNRUQgiw3lu5u132Exyj3mgSV6DXZsKc=;
+        b=ce6gWyE/XiAYh3HosbjdgI6VjSxs05iN0G+LNkfh0acS0/5JgM2RW10C6DZ+fjvPiv
+         giYWnbumSHRS7kXBFAmcpK7ALTG5t2uTDLS31Os4KgtCTO8eOayISbaQQ1UmRNvwNHEB
+         +Wpq3nmtEn9CuqwMW3G+tUazBJfaJJJtxRgL0=
+Received: by 10.204.154.201 with SMTP id p9mr14888bkw.283.1310483412636;
+        Tue, 12 Jul 2011 08:10:12 -0700 (PDT)
 Received: from localhost.localdomain (117360277.convex.ru [79.172.62.237])
-        by mx.google.com with ESMTPS id u32sm1398878bkk.49.2011.07.12.08.10.12
+        by mx.google.com with ESMTPS id u32sm1398878bkk.49.2011.07.12.08.10.10
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 12 Jul 2011 08:10:14 -0700 (PDT)
+        Tue, 12 Jul 2011 08:10:11 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.4
 In-Reply-To: <1310483428-29833-1-git-send-email-divanorama@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176943>
 
-fast-import parameter --import-marks-if-exists was introduced in
-commit dded4.. --import-marks can be set via a "feature" command in
-a fast-import stream and --import-marks-if-exists has support for
-such specification too, for free.
+The "notemodify" fast-import command was introduced in commit a8dd2..
+The commit log has slightly different description than the added
+documentation. The latter is somewhat confusing. "notemodify" is a
+subcommand of "commit" command used to add a note for some commit.
+Does this note annotate the commit produced by the "commit" command
+or a commit given by it's committish parameter? Which notes tree
+does it write notes to?
 
-Document "feature import-marks-if-exists=<file>" command and add a
-minimalistic test for it.
+The exact meaning could be deduced with old description and some
+notes machinery knowledge. But let's make it more obvious. This
+command is used in a context like "commit refs/notes/test" to
+add or rewrite an annotation for a committish parameter. So the
+advised way to add notes in a fast-import stream is:
+1) import some commits (optional)
+2) prepare a "commit" to the notes tree:
+2.1) choose notes ref, committer, log message, etc.
+2.2) create annotations with "notemodify", where each can refer to
+a commit being annotated via a branch name, import mark reference,
+sha1 and other expressions specified in the Documentation.
 
 Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
 ---
- Documentation/git-fast-import.txt |    5 +++++
- t/t9300-fast-import.sh            |   15 +++++++++++++++
- 2 files changed, 20 insertions(+), 0 deletions(-)
+ Documentation/git-fast-import.txt |   11 ++++++++---
+ 1 files changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-index 3f5b912..bdcc81c 100644
+index 249249a..3f5b912 100644
 --- a/Documentation/git-fast-import.txt
 +++ b/Documentation/git-fast-import.txt
-@@ -1005,6 +1005,11 @@ import-marks::
- 	second, an --import-marks= command-line option overrides
- 	any "feature import-marks" command in the stream.
+@@ -648,9 +648,14 @@ paths for a commit are encouraged to do so.
  
-+import-marks-if-exists::
-+	Like import-marks but instead of erroring out, silently
-+	skips the file if it does not exist. Differences from --
-+	version are the same as with import-marks feature above.
-+
- cat-blob::
- ls::
- 	Require that the backend support the 'cat-blob' or 'ls' command.
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 2a53640..eed57df 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -1882,6 +1882,21 @@ test_expect_success 'R: --import-marks-if-exists' '
- 	test_cmp expect io.marks
- '
+ `notemodify`
+ ^^^^^^^^^^^^
+-Included in a `commit` command to add a new note (annotating a given
+-commit) or change the content of an existing note.  This command has
+-two different means of specifying the content of the note.
++Included in a `commit` `<notes_ref>` command to add a new note
++annotating a `<committish>` or change this annotation contents.
++Internally it is similar to filemodify 100644 on `<committish>`
++path (maybe split into subdirectories). It's not advised to
++use any other commands to write to the `<notes_ref>` tree except
++`filedeleteall` to delete all existing notes in this tree.
++This command has two different means of specifying the content
++of the note.
  
-+test_expect_success 'R: feature import-marks-if-exists' '
-+	rm -f io.marks &&
-+	blob=$(echo hi | git hash-object --stdin) &&
-+	echo ":1 $blob" >expect &&
-+	git fast-import --import-marks-if-exists=io.marks --export-marks=io.marks <<-\EOF &&
-+	feature import-marks-if-exists=io.marks
-+	blob
-+	mark :1
-+	data 3
-+	hi
-+
-+	EOF
-+	test_cmp expect io.marks
-+'
-+
- cat >input << EOF
- feature import-marks=marks.out
- feature export-marks=marks.new
+ External data format::
+ 	The data content for the note was already supplied by a prior
 -- 
 1.7.3.4
