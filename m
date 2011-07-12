@@ -1,186 +1,71 @@
-From: Illia Bobyr <Illia.Bobyr@ronin-capital.com>
-Subject: Re: [PATCH 2/5] add object-cache infrastructure
-Date: Tue, 12 Jul 2011 16:52:55 -0500
-Message-ID: <4E1CC237.3050401@ronin-capital.com>
-References: <20110711161332.GA10057@sigill.intra.peff.net>
- <20110711161754.GB10418@sigill.intra.peff.net>
- <7vliw4d1hu.fsf@alter.siamese.dyndns.org>
- <20110711220107.GC30155@sigill.intra.peff.net>
- <7vk4bo9ze5.fsf@alter.siamese.dyndns.org>
- <4E1B91D8.5040500@ronin-capital.com>
- <20110712053532.GB11644@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC] control, what refs are honored by core.logAllRefUpdates
+Date: Tue, 12 Jul 2011 17:21:29 -0500
+Message-ID: <20110712222129.GA15994@elie>
+References: <CAKPyHN3_br-ndQo9oMzCcU1yOVEbAxmzvHQkwF15LgwQx12KZA@mail.gmail.com>
+ <7vaacj8jq7.fsf@alter.siamese.dyndns.org>
+ <CAKPyHN0+BaPtrRMVrWCZQ2mbJQz_vxsOOsG4Z=Ksqc1RJvF1Ew@mail.gmail.com>
+ <20110712182517.GA17787@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>, Ted Ts'o <tytso@mit.edu>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Clemens Buchacher <drizzd@aon.at>
+Content-Type: text/plain; charset=us-ascii
+Cc: Bert Wesarg <bert.wesarg@googlemail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 12 23:53:29 2011
+X-From: git-owner@vger.kernel.org Wed Jul 13 00:21:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QgktU-00070g-1r
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 23:53:28 +0200
+	id 1QglKs-0000bE-6O
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 00:21:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756015Ab1GLVxW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jul 2011 17:53:22 -0400
-Received: from spam01.roncap.com ([64.95.232.121]:55840 "EHLO
-	spam01.roncap.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755623Ab1GLVxU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2011 17:53:20 -0400
-X-ASG-Debug-ID: 1310507597-47416d8f0001-QuoKaX
-Received: from psys-sltc-exhc1.ronin.roncap.com ([10.106.240.21]) by spam01.roncap.com with ESMTP id qzxmwQG16Q2vepRe (version=TLSv1 cipher=AES128-SHA bits=128 verify=NO); Tue, 12 Jul 2011 16:53:17 -0500 (CDT)
-X-Barracuda-Envelope-From: Illia.Bobyr@ronin-capital.com
-Received: from psys-cltc-excl1.ronin.roncap.com ([fe80::6131:9de3:c24c:5b2d])
- by psys-sltc-exhc1.ronin.roncap.com ([::1]) with mapi; Tue, 12 Jul 2011
- 16:52:56 -0500
-X-ASG-Orig-Subj: Re: [PATCH 2/5] add object-cache infrastructure
-Thread-Topic: [PATCH 2/5] add object-cache infrastructure
-Thread-Index: AcxA3g69uSo7RI/rSTSeZQ2n5sKrKQ==
-In-Reply-To: <20110712053532.GB11644@sigill.intra.peff.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20110624
- Thunderbird/5.0
-acceptlanguage: en-US
-X-Barracuda-Connect: UNKNOWN[10.106.240.21]
-X-Barracuda-Start-Time: 1310507597
-X-Barracuda-Encrypted: AES128-SHA
-X-Barracuda-URL: http://spam01.roncap.com:8000/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at roncap.com
+	id S1756050Ab1GLWVm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jul 2011 18:21:42 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:64947 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755990Ab1GLWVm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2011 18:21:42 -0400
+Received: by gwaa18 with SMTP id a18so2139987gwa.19
+        for <git@vger.kernel.org>; Tue, 12 Jul 2011 15:21:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=gTVrrNh3Pi7OYV+a36dhdm4IhtW39lRlYiA5e4ciXu8=;
+        b=vvz8PFiJv+C68gTAb6qv9GHts1c7onwzYOhIRjacXz7i8OdA9ALEesCfLV/qAM1vbd
+         FYzKdmUxPxtBhSurfO9zeeTPN6dsZ6P3ummatOTTuXCj/ZP/kcwD9gOHTZxwc/t9D5yz
+         /ae1AaKO8LQu+/h80fk+RZkNo0WGPvd8kG/h8=
+Received: by 10.236.9.40 with SMTP id 28mr717935yhs.136.1310509300815;
+        Tue, 12 Jul 2011 15:21:40 -0700 (PDT)
+Received: from elie (adsl-69-209-70-6.dsl.chcgil.ameritech.net [69.209.70.6])
+        by mx.google.com with ESMTPS id k8sm4341204yhm.31.2011.07.12.15.21.38
+        (version=SSLv3 cipher=OTHER);
+        Tue, 12 Jul 2011 15:21:39 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20110712182517.GA17787@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176986>
 
-T24gNy8xMi8yMDExIDEyOjM1IEFNLCBKZWZmIEtpbmcgd3JvdGU6DQo+IE9uIE1vbiwgSnVsIDEx
-LCAyMDExIGF0IDA3OjE0OjE2UE0gLTA1MDAsIElsbGlhIEJvYnlyIHdyb3RlOg0KPg0KPj4gSSBh
-bSBub3QgMTAwJSBzdXJlIHRoYXQgbXkgc29sdXRpb24gaXMgZXhhY3RseSBhYm91dCB0aGlzIHBy
-b2JsZW0sIGJ1dA0KPj4gaXQgc2VlbXMgdG8gYmUgcXVpdGUgcmVsZXZhbnQuDQo+Pg0KPj4gSSB0
-aGluayB0aGF0IGlmIHlvdSByZWJhc2UgInN0ZXAtYnktc3RlcCIgYnkgZG9pbmcsIGZvciB0aGlz
-IHBhcnRpY3VsYXINCj4+IGV4YW1wbGUsIHNvbWV0aGluZyBsaWtlDQo+Pg0KPj4gJCBnaXQgcmVi
-YXNlIG1hc3Rlcl4gdG9waWMNCj4+ICQgZ2l0IHJlYmFzZSBtYXN0ZXIgdG9waWMNCj4+DQo+PiBZ
-b3Ugd2lsbCBmaXJzdCBzZWUgdGhlIC9tb2RpZmllZCBvbmUvb25lLyBjb25mbGljdCB0aGF0IHlv
-dSB3aWxsIHJlc29sdmUNCj4+IHlvdXIgInR3byIgYWdhaW5zdCBhbmQgdGhlbiB5b3VyIHNlY29u
-ZCByZWJhc2Ugd2lsbCBhcHBseSB3aXRoIG5vIGNvbmZsaWN0cy4NCj4+DQo+PiBJIGhhdmUgYSBz
-ZXQgb2Ygc2NyaXB0cyB0aGF0IGhlbHAgbWUgZG8gdGhpcyBraW5kIG9mIHJlYmFzZXMgYnkNCj4+
-IGVzc2VudGlhbGx5IHJlYmFzaW5nIHRoZSB0b3BpYyBicmFuY2ggYWdhaW5zdCBldmVyeSBzaW5n
-bGUgY29tbWl0IG9uIHRoZQ0KPj4gdXBzdHJlYW0uDQo+IFRoYXQgbWFrZXMgYSBsb3Qgb2Ygc2Vu
-c2UgdG8gbWUgYXMgYSBzdHJhdGVneS4gT2YgY291cnNlLCBhcyB5b3UNCj4gbWVudGlvbiwgaXQg
-aXMgaG9ycmlibHkgc2xvdy4gQW5kIHdoZW4geW91IGRvIGhhdmUgcmVhbCBjb25mbGljdHMsIHlv
-dQ0KPiB3b3VsZCBlbmQgdXAgbG9va2luZyBhdCB0aGUgc2FtZSBjb25mbGljdHMgYWdhaW4gYW5k
-IGFnYWluIChhbmQgYXMgeW91DQo+IG1lbnRpb24sIHJlcmVyZSBjYW4gYmUgc29tZSBoZWxwIHRo
-ZXJlLCB0aG91Z2ggbm90IG5lY2Vzc2FyaWx5DQo+IHBlcmZlY3QpLg0KDQpXZWxsLCBJIHdvdWxk
-IGxpa2UgdG8gY29tbWVudCBvbiAiaG9ycmlibHkgc2xvdyIgYSBsaXR0bGUgYml0IDopDQpJdCBp
-cyBzbG93ZXIgdGhhbiBhIG5vcm1hbCByZWJhc2UsIGJ1dCBpdCBpcyBtdWNoIGZhc3RlciB0aGFu
-LCBhdCBsZWFzdCANCmluIG15IGNhc2UsIG1lIGRvaW5nIHRoZSBjb25mbGljdCByZXNvbHV0aW9u
-IG9uIHRoZSBmaW5hbCB2ZXJzaW9ucyANCndpdGhvdXQgaW50ZXJtZWRpYXRlIHN0ZXBzLg0KDQpB
-bHNvLCBpbiBteSBjYXNlLCBpdCBpcyBmYXN0ZXIgdGhhbiBjb21waWxpbmcgZXZlcnkgc2luZ2xl
-IGNvbW1pdCBvZiB0aGUgDQp0b3BpYyBicmFuY2ggYWZ0ZXIgdGhlIHJlYmFzZS4gIFNvbWV0aGlu
-ZyB0aGF0IEkganVzdCBoYXZlIHRvIGRvLCBhZ2FpbiwgDQpiZWNhdXNlIGlmIEkgZG8gdGhpcyBv
-bmx5IHdpdGggdGhlIGZpbmFsIHZlcnNpb24gaXQgZ2l2ZXMgbWUgc28gbXVjaCANCmVycm9ycyBh
-bGwgb3ZlciB0aGUgY29kZSwgdGhhdCBJIGNhbiBoYXJkbHkgZG8gYW55dGhpbmcgd2l0aCBpdC4g
-IA0KQmVzaWRlcyBJIHdvdWxkIGxpa2UgdGhlIGNvbW1pdHMgdGhhdCB3ZXJlICJpbmNvcnJlY3Rs
-eSIgbWVyZ2VkIGFuZCB0aGF0IA0KaW50cm9kdWNlZCB0aGUgY29tcGlsYXRpb24gZXJyb3IgdG8g
-Y29udGFpbiB0aGUgZml4ZXMsIG5vdCBoYXZlIGFsbCB0aGUgDQpmaXhlcyBhcyBhIGZpbmFsICJt
-ZXJnZSIgY29tbWl0Lg0KDQpJbiBvdGhlciB3b3Jkcywgd2hpbGUgYmVlbiBzbG93LCBpdCBpcyBq
-dXN0IG9uZSBzdGVwIGluIGEgZ2VuZXJhbCANCnByb2Nlc3MgdGhhdCwgaW4gbXkgY2FzZSwgaGF2
-ZSBzdGVwcyB0aGF0IGFyZSBzbG93ZXIuDQoNCkFsc28sIG15IGd1ZXNzIGlzIHRoYXQsIGFzIHJl
-YmFzZSBpcyBhbiBzaCBzY3JpcHQgaXQgbWF5IGJlIG1hZGUgZmFzdGVyIA0KYW5kIGEgc3RlcC1i
-eS1zdGVwIHJlYmFzZSB3aWxsIGJlY2FtZSBjb25zaWRlcmFibHkgZmFzdGVyIGFzIHdlbGwsIGlm
-IGl0IA0Kd291bGQgYmUgcmV3cml0dGVuIGluIEMuICBUaG91Z2ggSSBoYXZlIG5vdCBsb29rZWQg
-YSBsb3QgaW5zaWRlIHRoZSANCnNjcmlwdCwgc28gSSBtaWdodCBiZSB3cm9uZy4NCg0KSSB3b3Vs
-ZCBsaWtlIHRvIG5vdGUgdGhhdCBpbiBjYXNlIG9mIGh1bmRyZWRzIG9mIHJlYmFzZXMgd2l0aCBk
-b3plbnMgb2YgDQpjb25mbGljdHMgcmVyZXJlJ3MgaGVscCBpcyBoYXJkIHRvIG92ZXJlc3RpbWF0
-ZS4gIEkgaGF2ZSByZWJhc2VkIG15IA0KdG9waWMgYnJhbmNoIHRocm91Z2ggYXQgbGVhc3QgNTAw
-IGNvbW1pdHMgZm9yIHRoZSBsYXN0IDYgbW9udGggYW5kIGFzIEkgDQphY3R1YWxseSBkbyBub3Qg
-Y29weSBhbnkgY2hhbmdlcyBpbnRvIHRoZSBtYXN0ZXIgYnJhbmNoLCBzb21lIGNvbmZsaWN0cyAN
-CnN0YXkgd2UgbWUgZm9yIHRoZSB3aG9sZSB0aW1lLg0KDQo+PiBBdCB0aGUgc2FtZSB0aW1lIHRo
-ZSBsZXNzIGNoYW5nZXMgYXJlIGluIHRvcGljLi4ubWFzdGVyIHRoZSBmYXN0ZXIgaXQNCj4+IHdv
-dWxkIGJlIGFuZCB0aGUgbW9yZSBjaGFuZ2VzIGFyZSB0aGVyZSB0aGUgbW9yZSB5b3UgYmVuZWZp
-dCBmcm9tIGENCj4+IGdyYWR1YWwgcmViYXNlLg0KPiBZZWFoLCB0aGlzIHNlZW1zIGxpa2UgdGhl
-IHJlYWwgcHJvYmxlbSB0byBtZS4gSXQncyBvbmUgdGhpbmcgdG8gcmViYXNlDQo+IG9uIHRvcCBv
-ZiBhIHNpbmdsZSBzZXJpZXMgdGhhdCBzb21lYm9keSBoYXMgYXBwbGllZCB1cHN0cmVhbS4gQnV0
-IGlmIGl0DQo+IGhhcyBiZWVuIDIgd2Vla3MsIHRoZXJlIG1heSBiZSBodW5kcmVkcyBvZiBjb21t
-aXRzLCBhbmQgZG9pbmcgaHVuZHJlZHMNCj4gb2YgcmViYXNlcyBpcyBhd2Z1bC4gSSB3b25kZXIg
-aWYgeW91IGNvdWxkIGRvIGJldHRlciBieSBwaWNraW5nIG91dCBzb21lDQo+ICJrZXkiIGNvbW1p
-dHMgaW4gbWFzdGVyIHRvIHJlYmFzZSBvbiB0b3Agb2YgdXNpbmcgb25lIG9mOg0KPg0KPiAgICAx
-LiBEaXZpZGUtYW5kLWNvbnF1ZXIgdGhlIGNvbW1pdCBzcGFjZS4gVHJ5IHRoZSByZWJhc2UsIHN0
-YXJ0aW5nIG9uDQo+ICAgICAgIHRoZSBIRUFELiBJZiBpdCB3b3JrcywgZ3JlYXQuIElmIHRoZSB1
-c2VyIHNheXMgInRoaXMgaXMgdG9vIGhhcmQiLA0KPiAgICAgICB0aGVuIGZpbmQgdGhlIG1pZHBv
-aW50IGJldHdlZW4gd2hlcmUgd2UgdHJpZWQgdG8gcmViYXNlIGFuZCB0aGUNCj4gICAgICAgbWVy
-Z2UgYmFzZSwgYW5kIHRyeSByZWJhc2luZyB0aGVyZS4gRXZlcnkgdGltZSBpdCdzIHRvbyBoYXJk
-LCBnbw0KPiAgICAgICBiYWNrIGhhbGZ3YXkgdG8gdGhlIHN0YXJ0LiBFdmVyeSB0aW1lIGl0J3Mg
-ZWFzeSwgdHJ5IHRoZSBuZXcgcmVzdWx0DQo+ICAgICAgIG9uIHRvcCBvZiBIRUFELg0KPg0KPiAg
-ICAgICBTbyBpdCdzIGJhc2ljYWxseSBkb2luZyBhIE8obGcgbikgc2VhcmNoIGJhY2t3YXJkcyBm
-b3IgYW4gZWFzeQ0KPiAgICAgICBwbGFjZSB0byByZWJhc2UsIGFuZCB0aGVuIHJlcGVhdGVkbHkg
-Y2hlY2tpbmcgaWYgdGhhdCB3YXMgYSBnb29kDQo+ICAgICAgIHNwb3QgKGFuZCByZXBlYXRpbmcg
-dGhlIGJhY2t3YXJkcyBzZWFyY2ggaWYgbm90KS4gVGhlIHdvcnN0IGNhc2UNCj4gICAgICAgY29t
-cGxleGl0eSBpcyBPKG4gbGcgbikgcmViYXNlcy4gQnV0IGluIHByYWN0aWNlLCB5b3UgY2FuIGhv
-cGVmdWxseQ0KPiAgICAgICBmaW5kIHRoZSBwcm9ibGVtYXRpYyBzcG90IGluIE8obGcgbiksIGFu
-ZCB0aGVuIGV2ZXJ5dGhpbmcgd2lsbCBqdXN0DQo+ICAgICAgIHdvcmsgb3V0IGFmdGVyIDEgb3Ig
-MiBwcm9ibGVtYXRpYyBzcG90cy4NCg0KSSBoYXZlIHByb2JsZW1zIGFsbCBvdmVyIHRoZSB1cHN0
-cmVhbSBoaXN0b3J5IDopDQpBbmQgdGhlIGlzc3VlIGlzIG5vdCBpbiBleGFjdGx5IGluIGZpbmRp
-bmcgYSBwcm9ibGVtIHNwb3QuICBJdCBpcyBhYm91dCANCmdpdmluZyB0aGUgdXNlciAodGhhdCBp
-cyBtZSBpbiB0aGlzIGNhc2UpIHNvbWV0aGluZyB0aGF0IGhlIGNhbiBtZXJnZSBpbiANCmEgcmVh
-c29uYWJsZSBhbW91bnQgb2YgdGltZS4NCg0KSSBoYXZlIGEgdG9waWMgYnJhbmNoIHdpdGggMTc0
-IGNvbW1pdHMuICBJdCB0YWtlcyBteSBtYWNoaW5lIGFib3V0IDcgDQptaW51dGVzIHRvIHJlYmFz
-ZSBpdC4NCklmIEkgaGF2ZSBhIGNvbmZsaWN0IHRoYXQgSSBkbyBub3QgdW5kZXJzdGFuZCwgaXQg
-bWF5IHRha2UgbWUsIG9uIA0KYXZlcmFnZSwgdHdvIGhvdXJzIHRvIGZpZ3VyZSBvdXQgd2hhdCBh
-IGNvbmZsaWN0IGlzIGFib3V0IGFuZCBmaXggaXQuICANClNvbWV0aW1lcyBpdCBtYXkgdGFrZSA0
-IGhvdXJzIG9yIGV2ZW4gbW9yZSBpZiBJIGhhdmUgdG8gaW52b2x2ZSBvdGhlciANCmRldmVsb3Bl
-cnMuDQpJZiBteSBtYWNoaW5lIHdpbGwgaGF2ZSB0byBkbyAyMCByZWJhc2VzIG9yIGV2ZW4gNDAg
-YW5kIGl0IHdpbGwgcHJlc2VudCANCm1lIHdpdGggc2ltcGxlIGNvbmZsaWN0cyB0aGF0IEkgY2Fu
-IHNvbHZlIGluIHNlY29uZHMgaXQgd291bGQgc3RpbGwgYmUgDQpiZXR0ZXIgdGhhbiBpZiBJIHdp
-bGwgc3BlbmQgaG91cnMgdHJ5aW5nIHRvIGZpZ3VyZSBvdXQgc29tZXRoaW5nIGFuZCANCmdpdmUg
-dXAgYnkgc2F5aW5nICJ0aGlzIGlzIHRvbyBoYXJkIi4gIE5vdGUgdGhhdCB3aGlsZSBpdCByZWJh
-c2VzIEkgYW0gDQp3b3JraW5nIG9uIHNvbWV0aGluZyBlbHNlLg0KDQpJbiBteSBjYXNlIHNvbWV0
-aW1lcyBldmVuIHRoZSBtb3N0IGJhc2ljIGNvbmZsaWN0cyB0aGF0IGFyaXNlIGJlY2F1c2Ugb2Yg
-DQphIHJlYmFzZSBhZ2FpbnN0IGp1c3Qgb25lIGNvbW1pdCBtYXkgYmUgaGFyZCB0byBtZXJnZS4N
-CklmIEkgY2FuIGF2b2lkIGV2ZW4gb25lIG9mIHRoZXNlIEkgd2lsbCBiZSBoYXBweSB0byBsZXQg
-b25lIG9mIG15IA0KbWFjaGluZSBjb3JlcyBydW4gZm9yIGhvdXJzIDopDQoNCk9idmlvdXNseSwg
-bXkgY2FzZSBpcyBhIHdpcmVkIGNhc2UgY2F1c2VkIGJ5IG5vdC10aGUtYmVzdCBkZXZlbG9wbWVu
-dCANCnByYWN0aWNlcy4gIEJ1dCwgSSBndWVzcywgb25lIGNhbiBzdGlsbCBjb25zaWRlciBpdCBh
-cyBvbmUgb2YgdGhlIHBvaW50cyANCm9uIHRoZSBjdXJ2ZSB0aGF0IGFwcHJveGltYXRlIHRoaXMg
-a2luZCBvZiB1c2UgY2FzZXMuICBBIHByZXR0eSBleHRyZW1lIA0KcG9pbnQuDQoNCj4gICAgMi4g
-VXNlIGhldXJpc3RpY3MgKGxpa2UgY29tbWl0IG1lc3NhZ2UgY29udGVudCkgdG8gZmluZCByZWxh
-dGVkDQo+ICAgICAgIGNvbW1pdHMuIFNvIGlmIEkgaGF2ZSBhIDUtcGF0Y2ggc2VyaWVzLCBJIGNh
-biBwZXJoYXBzIGZpbmQgdGhlDQo+ICAgICAgIGxpa2VseSBjb21taXRzIHVwc3RyZWFtIHRoYXQg
-bWF0Y2ggbXkgcGF0Y2hlcywgYW5kIHRob3NlIGFyZQ0KPiAgICAgICBnb29kIHBsYWNlcyB0byB0
-cnkgaW5kaXZpZHVhbCByZWJhc2VzLiBBbmQgdGhlbiBJIGRvbid0IGNhcmUgaG93DQo+ICAgICAg
-IG1hbnkgY29tbWl0cyBhcmUgaW4gbWFzdGVyLiBJZiBJIGhhdmUgYSA1IHBhdGNoIHNlcmllcywg
-SSB3b24ndCBkbw0KPiAgICAgICBtb3JlIHRoYW4gNSByZWJhc2VzLg0KPg0KPiBCdXQgSSd2ZSBu
-ZXZlciB0cmllZCB0aGlzIGluIHByYWN0aWNlLiBNYXliZSBuZXh0IHRpbWUgYSByZWJhc2UgaXMg
-dWdseQ0KPiBJJ2xsIG1hbnVhbGx5IHdvcmsgdGhyb3VnaCBvbmUgb2YgdGhlIG1ldGhvZHMgYW5k
-IHNlZSBob3cgaXQgZmFyZXMuDQoNCkkgZ3Vlc3MgdGhhdCBJIHZpZXcgdGhpcyBwcm9ibGVtIGZy
-b20gYSBsaXR0bGUgZGlmZmVyZW50IGFuZ2xlLCBhcyBpbiBteSANCmNhc2UsIGl0IGlzIG5vdCBi
-ZSBleGFjdGx5IG15IG93biBwYXRjaGVzIHRoYXQgYXJlIGNhdXNpbmcgcHJvYmxlbXMsIGJ1dCAN
-CmFuIHVwc3RyZWFtIGNoYW5nZXMgdGhhdCBoYXZlIG90aGVyIGNoYW5nZXMgYmFzZSBvbiB0aGVt
-Lg0KDQpOb3cgSSBhbSBndWVzc2luZywgYnV0IGhlcmUgaXMgYW5vdGhlciBpZGVhLg0KDQpJIHRo
-aW5rIHRoYXQgb25lIGNhbiBjaGVjayB0aGUgbW9kaWZpY2F0aW9uIGhpc3Rvcnkgb2YgdGhlIGxp
-bmVzIGluIHRoZSANCm1hc3RlciBjb21taXRzIHdlIGFyZSByZWJhc2luZyBhZ2FpbnN0IGFuZCBp
-biBhbGwgdGhlIHRvcGljIGNvbW1pdHMsIA0Kc2ltaWxhciB0byB3aGF0IGJsYW1lIGRvZXMuDQpF
-c3NlbnRpYWxseSB0YWtlIGEgc2V0IG9mIGFsbCBsaW5lcyB0aGF0IHdlcmUgbW9kaWZpZWQgYnkg
-dGhlIHRvcGljIA0KYnJhbmNoIChhbG9uZyB3aXRoIHRoZSBjb250ZXh0IGxpbmVzKSBhbmQgc2V0
-cyBvZiBsaW5lcyBtb2RpZmllZCBieSBldmVyIA0Kc2luZ2xlIGNvbW1pdCAod2l0aG91dCB0aGUg
-Y29udGV4dCBsaW5lcykuDQpJZiBhIGNvbW1pdCBkb2VzIG5vdCB0b3VjaCBsaW5lcyBmcm9tIHRo
-ZSB0b3BpYyBicmFuY2ggc2V0IGl0IHdpbGwgbm90IA0KY2F1c2UgY29uZmxpY3RzIGFuZCB3ZSBj
-YW4gc2tpcCBpdC4gIEl0IHdpbGwganVzdCBjYXVzZSBvZmZzZXRzIGluIHRoZSANCmxpbmUgbnVt
-YmVycyB3aGVuIHRoZSBwYXRjaGVzIHdpbGwgYmUgYXBwbGllZC4NCg0KSWYgeW91IGFyZSByZWJh
-c2luZyBhZ2FpbnN0IGEgbG90IG9mIGNoYW5nZXMgdGhhdCBhcmUgdW5yZWxhdGVkIHRvIHlvdXIg
-DQp0b3BpYyBicmFuY2ggYW5kIGlmIHRoZXkgYXJlIHNwbGl0IGludG8gY29tbWl0cyBjb3JyZWN0
-bHksIHRoaXMgd2F5LCBJIA0KZ3Vlc3MsIGl0IHdvdWxkIGJlIHBvc3NpYmxlIHRvIGZpbmQgdGhv
-c2UgdGhhdCBtYXkgY2F1c2UgY29uZmxpY3RzLg0KVGhlIGFjdHVhbCByZWJhc2UgbWF5IHN0aWxs
-IGJlIGFibGUgdG8gZ28gdGhyb3VnaCBzb21lIG9mIHRoZW0gd2l0aG91dCANCmNvbmZsaWN0cyBi
-dXQgSSBzZWUgdGhpcyBhcyBhIGZpcnN0IGFwcHJveGltYXRpb24gdGhhdCBtaWdodCBzYXZlIHRp
-bWUuICANCkFuZCBpdCBzZWVtcyB0byBnaXZlIG9ubHkgZmFsc2UgbmVnYXRpdmVzLg0KDQpLaW5k
-IG9mIGEgY29uZmxpY3QgcHJlZGljdGlvbiBhcHByb3hpbWF0aW9uLg0KDQpJbHlh
+Jeff King wrote:
+
+> I think I'd rather see something more syntactically explicit for
+> resetting, though, like:
+>
+>   [core]
+>     autoLogRef = heads
+>     autoLogRef = remotes
+>     autoLogRef = notes
+>     !autoLogRef
+>     autoLogref = heads
+>
+> (for that matter, I have often wished that "!autoLogRef" was boolean
+> false, just as "autoLogRef" is boolean true). But it may not be worth
+> changing the config syntax for.
+
+Sounds worthwhile to me.  I've (probably irrationally) wished before
+for an abbreviation for "bare = false", too.
