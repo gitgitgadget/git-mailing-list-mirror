@@ -1,59 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Resend: [PATCH] Do not log unless all connect() attempts fail
-Date: Tue, 12 Jul 2011 09:09:37 -0700
-Message-ID: <7v39iba3b2.fsf@alter.siamese.dyndns.org>
-References: <A3C89B89-4E31-400E-9DF8-C0F289D72D81@apple.com>
+From: Dave Zarzycki <zarzycki@apple.com>
+Subject: [PATCH] Do not log unless all connect() attempts fail
+Date: Tue, 12 Jul 2011 09:28:34 -0700
+Message-ID: <1EC2718A-A993-443C-8D7C-DEBD7C424EB9@apple.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Dave Zarzycki <zarzycki@apple.com>
-X-From: git-owner@vger.kernel.org Tue Jul 12 18:09:47 2011
+Content-Type: text/plain; CHARSET=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 12 18:29:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QgfWs-0003Ev-AX
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 18:09:46 +0200
+	id 1Qgfpf-0004Ze-Jc
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Jul 2011 18:29:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753709Ab1GLQJl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jul 2011 12:09:41 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57505 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751846Ab1GLQJk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2011 12:09:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0E8E15B55;
-	Tue, 12 Jul 2011 12:09:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6bbbeqU3spHN1HHwEtFb7TkdFQY=; b=aVYWd4
-	QHp0Rqcb2pzf71ZpIJ6MFUN9VQAJGQibPkUKZ7omT4stfBibardJr4NfrbzuTI2M
-	J1ekTiOT85FTpNRL0UK151Tv9Y/V0aGgtLFlRUsEj/769MDAEgDONQf+8j7IyKHx
-	7LBk8aXV72YEIE/EuDWap3Dg8XHhS2/7IVAKw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ELY5AsZ1qA9SFtNT8vBR94zObDTLmCe1
-	X6ozCQJWUFu/CMrcyJI6/tbqgH5KEahIfhZTqlDMRppzFm6JfTiwsrb2H+oMdOqF
-	Bph4+3FYD2yfbP6Td3uis11+ns7YlVwR7b08iMfaNlxljuGHl0FHRaVmohjfladw
-	Hi+4wNNh7p0=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 025885B54;
-	Tue, 12 Jul 2011 12:09:40 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 662685B53; Tue, 12 Jul 2011
- 12:09:39 -0400 (EDT)
-In-Reply-To: <A3C89B89-4E31-400E-9DF8-C0F289D72D81@apple.com> (Dave
- Zarzycki's message of "Mon, 11 Jul 2011 11:06:15 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 586B7AA0-ACA1-11E0-BD6C-5875C023C68D-77302942!a-pb-sasl-sd.pobox.com
+	id S1754072Ab1GLQ3G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jul 2011 12:29:06 -0400
+Received: from mail-out.apple.com ([17.151.62.50]:38650 "EHLO
+	mail-out.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753738Ab1GLQ3F (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2011 12:29:05 -0400
+Received: from relay11.apple.com ([17.128.113.48])
+ by mail-out.apple.com (Oracle Communications Messaging Exchange Server
+ 7u4-20.01 64bit (built Nov 21 2010))
+ with ESMTPS id <0LO800EQVB2WSIZ0@mail-out.apple.com> for git@vger.kernel.org;
+ Tue, 12 Jul 2011 09:28:36 -0700 (PDT)
+X-AuditID: 11807130-b7c45ae000001381-b4-4e1c7605fcc1
+Received: from jimbu (jimbu.apple.com [17.151.62.37])
+	(using TLS with cipher RC4-MD5 (RC4-MD5/128 bits))
+	(Client did not present a certificate)	by relay11.apple.com (Apple SCV relay)
+ with SMTP id 70.A6.04993.5067C1E4; Tue, 12 Jul 2011 09:27:49 -0700 (PDT)
+Received: from davez.apple.com (davez.apple.com [17.226.34.35])
+ by cardamom.apple.com
+ (Oracle Communications Messaging Exchange Server 7u4-20.01 64bit (built Nov 21
+ 2010)) with ESMTPSA id <0LO800D4XB3N1Q10@cardamom.apple.com> for
+ git@vger.kernel.org; Tue, 12 Jul 2011 09:28:35 -0700 (PDT)
+X-Mailer: Apple Mail (2.1244.3)
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrPJMWRmVeSWpSXmKPExsUiON1OVZe1TMbP4MMdVYuuK91MDowenzfJ
+	BTBGcdmkpOZklqUW6dslcGWcXlhYcJen4mjLAdYGxglcXYycHBICJhIP7vewQ9hiEhfurWfr
+	YuTiEBJoZZI4sG0SE0iCV0BQ4sfkeyxdjBwczALyEgfPy4KEmQW0JL4/amWBqF/BJHHz0XOw
+	ejYBDYlPp+4yg9jCAnYSC9aeZwSxWQRUJZ5uXgY100bizL35bCC2iIC4xNvjM6GOkJdY3PKZ
+	cQIj7ywkq2chrJ6FZPUCRuZVjIJFqTmJlYaGeokFBTmpesn5uZsYQcHSUGiwg3HtT/5DjAIc
+	jEo8vIWJMn5CrIllxZW5hxglOJiVRHhtjIFCvCmJlVWpRfnxRaU5qcWHGKU5WJTEeZ/ZSvsJ
+	CaQnlqRmp6YWpBbBZJk4OKUaGCeL98ox6+VOcOdm7F+1o+8Dcz3r089ZW1/NZo93X6BQW+XZ
+	P/fZ0z/XHUwPN36ulEhwikpatp//5fIlPBFSxoFnKyoefHr7127StvhflUeK7fuVNS5O6fMq
+	2RoT7xU6ufDyeZs9d//Zi/w+u+9gqEiP55tjaoKbAlaKTKvJeN9hrdLTKbEnVImlOCPRUIu5
+	qDgRAIbXHEkSAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176946>
 
-This looks Looks good to me; could you sign-off the patch, please?
+IPv6 hosts are often unreachable on the primarily IPv4 Internet and
+therefore we shouldn't print an error if there are still other hosts we
+can try to connect() to. This helps "git fetch --quiet" stay quiet.
 
-Thanks.
+Signed-off-by: Dave Zarzycki <zarzycki@apple.com>
+---
+ connect.c |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/connect.c b/connect.c
+index 2119c3f..8eb9f44 100644
+--- a/connect.c
++++ b/connect.c
+@@ -192,6 +192,7 @@ static const char *ai_name(const struct addrinfo *ai)
+  */
+ static int git_tcp_connect_sock(char *host, int flags)
+ {
++	struct strbuf error_message = STRBUF_INIT;
+ 	int sockfd = -1, saved_errno = 0;
+ 	const char *port = STR(DEFAULT_GIT_PORT);
+ 	struct addrinfo hints, *ai0, *ai;
+@@ -225,11 +226,8 @@ static int git_tcp_connect_sock(char *host, int flags)
+ 		}
+ 		if (connect(sockfd, ai->ai_addr, ai->ai_addrlen) < 0) {
+ 			saved_errno = errno;
+-			fprintf(stderr, "%s[%d: %s]: errno=%s\n",
+-				host,
+-				cnt,
+-				ai_name(ai),
+-				strerror(saved_errno));
++			strbuf_addf(&error_message, "%s[%d: %s]: errno=%s\n",
++				host, cnt, ai_name(ai), strerror(saved_errno));
+ 			close(sockfd);
+ 			sockfd = -1;
+ 			continue;
+@@ -242,11 +240,13 @@ static int git_tcp_connect_sock(char *host, int flags)
+ 	freeaddrinfo(ai0);
+ 
+ 	if (sockfd < 0)
+-		die("unable to connect a socket (%s)", strerror(saved_errno));
++		die("unable to connect to %s:\n%s", host, error_message.buf);
+ 
+ 	if (flags & CONNECT_VERBOSE)
+ 		fprintf(stderr, "done.\n");
+ 
++	strbuf_release(&error_message);
++
+ 	return sockfd;
+ }
+ 
+-- 
+1.7.6.135.g8cdba
