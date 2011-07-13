@@ -1,83 +1,133 @@
-From: John Szakmeister <john@szakmeister.net>
-Subject: Re: [PATCH 2/5] add object-cache infrastructure
-Date: Tue, 12 Jul 2011 21:33:57 -0400
-Message-ID: <CAEBDL5WYn7v7kZiR8p5GD4r5sMPxMUibcmhMHBjvdZ4n6mSPag@mail.gmail.com>
-References: <20110711161332.GA10057@sigill.intra.peff.net>
-	<20110711161754.GB10418@sigill.intra.peff.net>
-	<7vliw4d1hu.fsf@alter.siamese.dyndns.org>
-	<20110711220107.GC30155@sigill.intra.peff.net>
-	<7vk4bo9ze5.fsf@alter.siamese.dyndns.org>
-	<20110712000304.GA32276@sigill.intra.peff.net>
-	<20110712193844.GA17322@toss.lan>
-	<20110712194540.GA21180@sigill.intra.peff.net>
-	<20110712210716.GB17322@toss.lan>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 02/17] revert: Inline add_message_to_msg function
+Date: Wed, 13 Jul 2011 11:30:40 +0530
+Message-ID: <CALkWK0kHutr41aH7OrmW3REV+YBUeHSryA9n62yxyF0qRd1FEw@mail.gmail.com>
+References: <1310396048-24925-1-git-send-email-artagnon@gmail.com>
+ <1310396048-24925-3-git-send-email-artagnon@gmail.com> <20110712165302.GA13578@elie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
-	"Ted Ts'o" <tytso@mit.edu>, Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Wed Jul 13 03:34:11 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 13 08:02:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QgoL0-0006qx-D7
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 03:34:06 +0200
+	id 1QgsWK-0002aK-3o
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 08:02:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932327Ab1GMBd7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jul 2011 21:33:59 -0400
-Received: from mail-fx0-f52.google.com ([209.85.161.52]:57246 "EHLO
-	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932308Ab1GMBd6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2011 21:33:58 -0400
-Received: by fxd18 with SMTP id 18so5462252fxd.11
-        for <git@vger.kernel.org>; Tue, 12 Jul 2011 18:33:57 -0700 (PDT)
+	id S1752544Ab1GMGBC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jul 2011 02:01:02 -0400
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:39759 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752502Ab1GMGBB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2011 02:01:01 -0400
+Received: by wwg11 with SMTP id 11so172273wwg.1
+        for <git@vger.kernel.org>; Tue, 12 Jul 2011 23:01:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=kcY4hy9bkK5cnf522efUzFjZMAuQSLQidr5LvOAVHFI=;
-        b=UaoJws60LNSZ1nQsRKHKJPnAQ9YZ2MlX6nfRoJ7uX7Z7RYa4wc+yiRLOIyY3rIajBm
-         QpdtMvF9e1nxc2H1mi+Ztzuk0Z4yfXqV7GlDzyYFyctd3odSQ4MaQ49P/NVDVAke8W8+
-         LVwBi7pJydoOjwCll9zYDa8x4HYyvWUBD8svs=
-Received: by 10.223.30.87 with SMTP id t23mr829912fac.51.1310520837427; Tue,
- 12 Jul 2011 18:33:57 -0700 (PDT)
-Received: by 10.223.30.68 with HTTP; Tue, 12 Jul 2011 18:33:57 -0700 (PDT)
-In-Reply-To: <20110712210716.GB17322@toss.lan>
-X-Google-Sender-Auth: 5_fwN6D27WC1WMD5x8uIPkHxw8Q
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=Pp6Tm8QGDb2PJON3D7m28GCUixr7ewmQGJKNUpHCfL4=;
+        b=nw1t1gyd4Yo3zTb4JRrOOEBRxVaN4d/Cr7+j+jp+Hoz4aTv8BQcD000ZQGVBZHq8XO
+         4RiuYQpAtdVUnH/B/V8ZYNY9WUjGGtHQMog5wvgENdSIyE0CWFROHHq4bW7lYm+x05nZ
+         QG7lvywGVlqXj5s+lhAAtCYNBZpkwYvy03zog=
+Received: by 10.216.8.204 with SMTP id 54mr566873wer.92.1310536860127; Tue, 12
+ Jul 2011 23:01:00 -0700 (PDT)
+Received: by 10.216.175.198 with HTTP; Tue, 12 Jul 2011 23:00:40 -0700 (PDT)
+In-Reply-To: <20110712165302.GA13578@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176992>
 
-On Tue, Jul 12, 2011 at 5:07 PM, Clemens Buchacher <drizzd@aon.at> wrote:
-[snip]
-> Now, one might argue that this is a corner case. But it's actually
-> very common. In the example, the patch-id changes because of an
-> extra change in a different text area. That is indeed unlikely.
-> However, the same problem will occur in a much more common case.
-> Let's say we have a patch with 10 hunks. The patch is applied
-> upstream, with only one difference in one of the hunks.
-> Subsequently, text areas affected by any of the other hunks change
-> upstream. When the original patch is rebased on top of that, it
-> will conflict with the one hunk that was changed in the upstream
-> version of that patch. And that's ok. Git should not decide which
-> version is correct. But in addition to that conflict there will
-> also be conflicts for all the other hunks, which the upstream patch
-> did _not_ modify. And all of those conflicts will look like
-> reverts.
+Hi Jonathan,
+
+Jonathan Nieder writes:
+> Ramkumar Ramachandra wrote:
 >
-> I believe that is the main reason why rebase is so painful all the
-> time.
+>> The add_message_to_msg function is poorly implemented, has an unclea=
+r
+>> API, and only one callsite. =C2=A0Replace the callsite with a cleane=
+r
+>> implementation. =C2=A0Additionally, fix a bug introduced in 9509af6 =
+(Make
+>> git-revert & git-cherry-pick a builtin, 2007-03-01) -- a NULL pointe=
+r
+>> was being incremented when "\n\n" was not found in "message".
+>
+> Rather than being an optimization, the main impact of this change is
+> to avoid a NULL pointer dereference in some cases, right?
+>
+> If so, the subject line should say so. =C2=A0Is it possible to reprod=
+uce
+> this? =C2=A0Could we add a test to avoid regressing in the future?
+>
+> Less importantly:
+>
+>> --- a/builtin/revert.c
+>> +++ b/builtin/revert.c
+> [...]
+>> @@ -462,11 +449,16 @@ static int do_pick_commit(void)
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 strbuf_addstr(&msgb=
+uf, ".\n");
+>> =C2=A0 =C2=A0 =C2=A0 } else {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 const char *p =3D strstr=
+(msg.message, "\n\n");
+>> +
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 base =3D parent;
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 base_label =3D msg.=
+parent_label;
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 next =3D commit;
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 next_label =3D msg.=
+label;
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 add_message_to_msg(&msgb=
+uf, msg.message);
+>> +
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 p =3D p ? p + 2 : sha1_t=
+o_hex(commit->object.sha1);
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 strbuf_addstr(&msgbuf, p=
+);
+>
+> I think this would be clearer like so:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0const char *p;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0...
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0p =3D strstr(.=
+=2E.);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (p)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0p +=3D 2;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0else
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0p =3D sha1_to_hex...
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0strbuf_addstr(=
+&msgbuf, p);
+>
+> i.e., putting all the code that manipulates p together. =C2=A0Besides=
+,
+> pre-C99 compilers don't like "p" to be initialized to a non-constant.
+> :)
+>
+> At [1], I also see a suggestion of a comment that could clarify the
+> code a little.
 
-Clemens, that's a great description of the problem.  I've run into
-this several times, and it is really confusing.  I've spent
-considerable time tracking down the real conflict... only to find the
-real issue was in something non-related and easily resolved.  IMHO, I
-agree with you Clemens: this has been my major source of pain.
+=46ixed all issues.  The commit message now reads
 
--John
+revert: Inline add_message_to_msg function
+
+The add_message_to_msg function is poorly implemented, has an unclear
+API, and only one callsite.  Replace the callsite with a cleaner
+implementation.  Additionally, fix a bug introduced in 9509af6 (Make
+git-revert & git-cherry-pick a builtin, 2007-03-01) -- a NULL pointer
+was being dereferenced when "\n\n" was not found in "message".
+
+Thanks.
+
+-- Ram
