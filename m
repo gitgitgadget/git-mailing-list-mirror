@@ -1,89 +1,88 @@
-From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: Re: [PATCH v2 3/3] remote-helpers: export GIT_DIR variable to helpers
-Date: Thu, 14 Jul 2011 00:10:40 +0600
-Message-ID: <CA+gfSn9QeK84xVWrxYBGOwfWbeuS7cU_=D10Lrn8S__iygx+mg@mail.gmail.com>
-References: <1310483428-29833-1-git-send-email-divanorama@gmail.com>
-	<1310577055-6347-3-git-send-email-divanorama@gmail.com>
-	<CAGdFq_gAyjz+WCpK5qW7xcyGxSx4gg-A7Ju-AaHQ2o9mM_=pvQ@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: With errno fix: [PATCH] Do not log unless all connect() attempts fail
+Date: Wed, 13 Jul 2011 20:47:24 +0200
+Message-ID: <CABPQNSYWKVngfoj4AqTCbWixENSmgnbdDBGBt+EpWnBgbqpofg@mail.gmail.com>
+References: <7276ACEE-EF52-49DF-83EA-642DE504B3EA@apple.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johan Herland <johan@herland.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 13 20:10:48 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Dave Zarzycki <zarzycki@apple.com>
+X-From: git-owner@vger.kernel.org Wed Jul 13 20:48:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qh3tW-00063l-Vm
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 20:10:47 +0200
+	id 1Qh4Tm-0002iz-PA
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 20:48:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757193Ab1GMSKm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jul 2011 14:10:42 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:42902 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756648Ab1GMSKl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2011 14:10:41 -0400
-Received: by qyk29 with SMTP id 29so449762qyk.19
-        for <git@vger.kernel.org>; Wed, 13 Jul 2011 11:10:40 -0700 (PDT)
+	id S1752723Ab1GMSsH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jul 2011 14:48:07 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:62450 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752410Ab1GMSsG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2011 14:48:06 -0400
+Received: by pzk9 with SMTP id 9so4992904pzk.19
+        for <git@vger.kernel.org>; Wed, 13 Jul 2011 11:48:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=os6ItbgodiY3AcJ4o5FvdJHaqypMCvyYlOVAp4PJMAs=;
-        b=BeguD5ZbpSF7Rp8AY/k2XIoySpheN2hh9xbHCTdlbnAVSTjbmBaAiralwSGLbShaxC
-         00ikgoZ+8gdyJmVYN8Zl7prucdnnpbd8DT8htZ1hZrnTGnmLGyEGf6VBL7sdLQ/MLSho
-         j8D62RY8ZY2W6jL8vqDjV0hiBIRl4CmUKo00Q=
-Received: by 10.224.185.72 with SMTP id cn8mr1294577qab.108.1310580640398;
- Wed, 13 Jul 2011 11:10:40 -0700 (PDT)
-Received: by 10.229.63.232 with HTTP; Wed, 13 Jul 2011 11:10:40 -0700 (PDT)
-In-Reply-To: <CAGdFq_gAyjz+WCpK5qW7xcyGxSx4gg-A7Ju-AaHQ2o9mM_=pvQ@mail.gmail.com>
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=1IQIDSJWJB1vol78VOTEy4rFgXybBBCAb/QQ0kg75nA=;
+        b=PyTWDgye1SnPO8EUBtQ4BAG3wXKzWjutKAZLOTXPWM3w0/bxyk2T1fJWMkk0Fe949c
+         VLemihsBYxxm34dw0d5j8Wak1b9Dxi0F9xKK/wSLeOyh2LDW7NAEC+ueiy6cEkz0YwbJ
+         6zJ42UI/sgZkIOy3XW2tsk5cR6bzJRORR6RUc=
+Received: by 10.68.48.74 with SMTP id j10mr1628902pbn.37.1310582885068; Wed,
+ 13 Jul 2011 11:48:05 -0700 (PDT)
+Received: by 10.68.48.130 with HTTP; Wed, 13 Jul 2011 11:47:24 -0700 (PDT)
+In-Reply-To: <7276ACEE-EF52-49DF-83EA-642DE504B3EA@apple.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177068>
 
-Hi!
-
-On Wed, Jul 13, 2011 at 11:36 PM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> Heya,
+On Wed, Jul 13, 2011 at 6:28 PM, Dave Zarzycki <zarzycki@apple.com> wro=
+te:
+> IPv6 hosts are often unreachable on the primarily IPv4 Internet and
+> therefore we shouldn't print an error if there are still other hosts =
+we
+> can try to connect() to. This helps "git fetch --quiet" stay quiet.
 >
-> On Wed, Jul 13, 2011 at 19:10, Dmitry Ivankov <divanorama@gmail.com> wrote:
->> Instead of documenting capability gitdir export GIT_DIR. Turned out
->> to be quite straightforward.
+> Signed-off-by: Dave Zarzycki <zarzycki@apple.com>
+> ---
+> =A0connect.c | =A0 15 +++++++++------
+> =A01 files changed, 9 insertions(+), 6 deletions(-)
 >
-> But you _also_ documented the gitdir capability? I'm confused.
-Oww, it was a bad idea to amend previous commit in a hurry and not to
-read the whole diff after.
-Of course Documentation/git-remote-helpers.txt should have only a GIT_DIR hunk:
-
-diff --git a/Documentation/git-remote-helpers.txt
-b/Documentation/git-remote-helpers.txt
-index 58f6ad4..feda03e 100644
---- a/Documentation/git-remote-helpers.txt
-+++ b/Documentation/git-remote-helpers.txt
-@@ -47,6 +47,9 @@ arguments. The first argument specifies a remote
-repository as in git;
- it is either the name of a configured remote or a URL. The second
- argument specifies a URL; it is usually of the form
- '<transport>://<address>', but any arbitrary string is possible.
-+'GIT_DIR' environment variable is set up for the remote helper and
-+can be used to store some additional data or to invoke auxiliary git
-+commands.
-
- When git encounters a URL of the form '<transport>://<address>', where
- '<transport>' is a protocol that it cannot handle natively, it
-
-
-
+> diff --git a/connect.c b/connect.c
+> index 2119c3f..87b2e3f 100644
+> --- a/connect.c
+> +++ b/connect.c
+> @@ -192,6 +192,7 @@ static const char *ai_name(const struct addrinfo =
+*ai)
+> =A0*/
+> =A0static int git_tcp_connect_sock(char *host, int flags)
+> =A0{
+> + =A0 =A0 =A0 struct strbuf error_message =3D STRBUF_INIT;
+> =A0 =A0 =A0 =A0int sockfd =3D -1, saved_errno =3D 0;
+> =A0 =A0 =A0 =A0const char *port =3D STR(DEFAULT_GIT_PORT);
+> =A0 =A0 =A0 =A0struct addrinfo hints, *ai0, *ai;
+> @@ -217,6 +218,11 @@ static int git_tcp_connect_sock(char *host, int =
+flags)
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0fprintf(stderr, "done.\nConnecting to =
+%s (port %s) ... ", host, port);
 >
-> --
-> Cheers,
->
-> Sverre Rabbelier
->
+> =A0 =A0 =A0 =A0for (ai0 =3D ai; ai; ai =3D ai->ai_next) {
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (saved_errno) {
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 strbuf_addf(&error_mess=
+age, "%s[%d: %s]: errno=3D%s\n",
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 host, c=
+nt, ai_name(ai), strerror(saved_errno));
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 saved_errno =3D 0;
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
+
+Uhm, this will still fail to report errors for the very last entry,
+no? When socket returns -1 in the last iteration (and errno gets
+saved), there's no code that reports it...
