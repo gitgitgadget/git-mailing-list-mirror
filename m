@@ -1,116 +1,67 @@
-From: Dave Zarzycki <zarzycki@apple.com>
-Subject: With errno fix: [PATCH] Do not log unless all connect() attempts fail
-Date: Wed, 13 Jul 2011 09:28:18 -0700
-Message-ID: <7276ACEE-EF52-49DF-83EA-642DE504B3EA@apple.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [RFC/PATCH 0/3] teach --histogram to diff
+Date: Thu, 14 Jul 2011 00:34:14 +0800
+Message-ID: <CALUzUxqS8y4HH44t2CuSvfQiLP-Y7hFtbi5x2rtAwPBKSJ+3Bw@mail.gmail.com>
+References: <1310451027-15148-1-git-send-email-rctay89@gmail.com>
+	<CAJo=hJu5ubkzUyyPM0nqP+J9CU3hBtAHfuzaLSuN214Hux4qTA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 13 18:28:28 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Jul 13 18:34:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qh2IU-00016a-K5
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 18:28:26 +0200
+	id 1Qh2OC-00046s-Qq
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 18:34:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756108Ab1GMQ2V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jul 2011 12:28:21 -0400
-Received: from bramley.apple.com ([17.151.62.49]:63099 "EHLO
-	mail-out.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755811Ab1GMQ2V (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2011 12:28:21 -0400
-Received: from relay14.apple.com ([17.128.113.52])
- by mail-out.apple.com (Oracle Communications Messaging Exchange Server
- 7u4-20.01 64bit (built Nov 21 2010))
- with ESMTPS id <0LOA00K3K5QW56Y0@mail-out.apple.com> for git@vger.kernel.org;
- Wed, 13 Jul 2011 09:28:16 -0700 (PDT)
-X-AuditID: 11807134-b7c71ae0000014d0-b0-4e1dc6fd680f
-Received: from kencur (kencur.apple.com [17.151.62.38])
-	(using TLS with cipher RC4-MD5 (RC4-MD5/128 bits))
-	(Client did not present a certificate)	by relay14.apple.com (Apple SCV relay)
- with SMTP id 6F.01.05328.EF6CD1E4; Wed, 13 Jul 2011 09:25:34 -0700 (PDT)
-Received: from [17.153.28.46] (unknown [17.153.28.46])
- by kencur.apple.com (Oracle Communications Messaging Exchange Server 7u4-20.01
- 64bit (built Nov 21 2010)) with ESMTPSA id <0LOA00MCU5R3CS50@kencur.apple.com>
- for git@vger.kernel.org; Wed, 13 Jul 2011 09:28:16 -0700 (PDT)
-X-Mailer: Apple Mail (2.1244.3)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrPJMWRmVeSWpSXmKPExsUiON1OTfffMVk/gzNPOSy6rnQzOTB6fN4k
-	F8AYxWWTkpqTWZZapG+XwJXx6swrpoJd/BUntk5jb2Ccw9PFyMEhIWAice2HWhcjJ5ApJnHh
-	3nq2LkYuDiGBdiaJ7ld7mEASvAKCEj8m32MBqWcWkJc4eF4WJMwsoCXx/VErC0T9TCaJ21P/
-	gtWzCWhIfDp1lxnEFhbwk7jRf5YNxGYRUJVYP302K8RMG4mZjdPZQWwRAXGJt8dnskMcIS+x
-	uOUz4wRG3llIVs9CWD0LyeoFjMyrGAWLUnMSKw1N9BILCnJS9ZLzczcxgoKlodBkB+PBn/yH
-	GAU4GJV4eIsSZfyEWBPLiitzDzFKcDArifDWN8j6CfGmJFZWpRblxxeV5qQWH2KU5mBREued
-	eQCoWiA9sSQ1OzW1ILUIJsvEwSnVwKj1+9vy2HKhCzIcJ+8sF5GeeVWLaYuqYaKq378Vpvpt
-	F5Y2bv359+TtCZHXaz7+Sv7SmGBlmqurs/LQKZG2CSqcLl8SXqfoaMySFmn6HmCy2G7xr8v5
-	G3v2cbBd4ltypP2/wNGCHdN6vOI3m5amsk0uji9M1l7snPCko+cY4y2jCZtuT/aeoqXEUpyR
-	aKjFXFScCAAiiBJbEgIAAA==
+	id S1756247Ab1GMQeQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jul 2011 12:34:16 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:35417 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755811Ab1GMQeP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2011 12:34:15 -0400
+Received: by eyx24 with SMTP id 24so2155495eyx.19
+        for <git@vger.kernel.org>; Wed, 13 Jul 2011 09:34:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Jw4Kc9IDp6uXTeogaVgHigC+ngUWVY+Ac2SMeTQ8nGQ=;
+        b=YkAQbtROzdErytrtrE7X3T9eA5cB2OIWeMK7OZgzl26oTRXraQdGdhULqB9gf4C78O
+         D3TKRLOpUwo9WdJ1oe/blKvEQyuFFDMq6xFKC+FR5Uv6Sphbry4kMYnysXp6NUtedMJU
+         MPtWHVssmgFJDzHeH2b1sa1qxXQxHW2C3p44s=
+Received: by 10.14.20.17 with SMTP id o17mr400445eeo.109.1310574854247; Wed,
+ 13 Jul 2011 09:34:14 -0700 (PDT)
+Received: by 10.14.29.14 with HTTP; Wed, 13 Jul 2011 09:34:14 -0700 (PDT)
+In-Reply-To: <CAJo=hJu5ubkzUyyPM0nqP+J9CU3hBtAHfuzaLSuN214Hux4qTA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177056>
 
-IPv6 hosts are often unreachable on the primarily IPv4 Internet and
-therefore we shouldn't print an error if there are still other hosts we
-can try to connect() to. This helps "git fetch --quiet" stay quiet.
+On Tue, Jul 12, 2011 at 10:19 PM, Shawn Pearce <spearce@spearce.org> wrote:
+> On Mon, Jul 11, 2011 at 23:10, Tay Ray Chuan <rctay89@gmail.com> wrote:
+>> [RFC/PATCH 3/3] xdiff/xprepare: use a smaller sample size for histogram
+>
+> Do we need sampling at all for histogram? Can you skip it?
 
-Signed-off-by: Dave Zarzycki <zarzycki@apple.com>
----
- connect.c |   15 +++++++++------
- 1 files changed, 9 insertions(+), 6 deletions(-)
+Sampling is done to get a guess of lines in the file. This guess is
+then used to preallocated memory for the list of records. (This is
+just a guess; if we find more records we allocate more memory.) By
+doing this preallocation, we can save on malloc()'s, giving a
+performance boost.
 
-diff --git a/connect.c b/connect.c
-index 2119c3f..87b2e3f 100644
---- a/connect.c
-+++ b/connect.c
-@@ -192,6 +192,7 @@ static const char *ai_name(const struct addrinfo *ai)
-  */
- static int git_tcp_connect_sock(char *host, int flags)
- {
-+	struct strbuf error_message = STRBUF_INIT;
- 	int sockfd = -1, saved_errno = 0;
- 	const char *port = STR(DEFAULT_GIT_PORT);
- 	struct addrinfo hints, *ai0, *ai;
-@@ -217,6 +218,11 @@ static int git_tcp_connect_sock(char *host, int flags)
- 		fprintf(stderr, "done.\nConnecting to %s (port %s) ... ", host, port);
- 
- 	for (ai0 = ai; ai; ai = ai->ai_next) {
-+		if (saved_errno) {
-+			strbuf_addf(&error_message, "%s[%d: %s]: errno=%s\n",
-+				host, cnt, ai_name(ai), strerror(saved_errno));
-+			saved_errno = 0;
-+		}
- 		sockfd = socket(ai->ai_family,
- 				ai->ai_socktype, ai->ai_protocol);
- 		if (sockfd < 0) {
-@@ -225,11 +231,6 @@ static int git_tcp_connect_sock(char *host, int flags)
- 		}
- 		if (connect(sockfd, ai->ai_addr, ai->ai_addrlen) < 0) {
- 			saved_errno = errno;
--			fprintf(stderr, "%s[%d: %s]: errno=%s\n",
--				host,
--				cnt,
--				ai_name(ai),
--				strerror(saved_errno));
- 			close(sockfd);
- 			sockfd = -1;
- 			continue;
-@@ -242,11 +243,13 @@ static int git_tcp_connect_sock(char *host, int flags)
- 	freeaddrinfo(ai0);
- 
- 	if (sockfd < 0)
--		die("unable to connect a socket (%s)", strerror(saved_errno));
-+		die("unable to connect to %s:\n%s", host, error_message.buf);
- 
- 	if (flags & CONNECT_VERBOSE)
- 		fprintf(stderr, "done.\n");
- 
-+	strbuf_release(&error_message);
-+
- 	return sockfd;
- }
- 
+But then sampling has its costs - previously, we ran up to 256
+memchr('\n')s within a mmfile "block". For histogram diff, we cut the
+cap down to 20. (But not for the other diff algorithms - see the
+relevant patch text for more.) I think this gives us a good balance -
+time spent in guessing lines, and time gained from preallocating
+memory.
+
 -- 
-1.7.6.135.g8cdba
+Cheers,
+Ray Chuan
