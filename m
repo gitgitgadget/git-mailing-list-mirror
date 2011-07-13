@@ -1,144 +1,84 @@
-From: John Szakmeister <john@szakmeister.net>
-Subject: Re: Nesting a submodule inside of another...
-Date: Tue, 12 Jul 2011 21:21:04 -0400
-Message-ID: <CAEBDL5U0F+QaqhW92i-s82-C9fj2knp6JPNtNvgdJY68kRYwWQ@mail.gmail.com>
-References: <CAEBDL5XQDehUyqKoazxy+YVHh_2iAyt9aE-77H1jZg4oujMJgw@mail.gmail.com>
-	<4E1C9F21.6070300@web.de>
+From: "Wesley J. Landaker" <wjl@icecavern.net>
+Subject: Re: Integrating GIT with Project Management Systems
+Date: Tue, 12 Jul 2011 19:23:59 -0600
+Organization: icecavern.net
+Message-ID: <201107121923.59542.wjl@icecavern.net>
+References: <1310517600171-6577341.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git mailing list <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed Jul 13 03:23:38 2011
+Content-Type: multipart/signed;
+  boundary="nextPart2946169.Zt2haXA0qs";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: thaddeus <t-tcambron@trxtraining.com>
+X-From: git-owner@vger.kernel.org Wed Jul 13 03:29:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QgoAn-0004Fe-5D
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 03:23:33 +0200
+	id 1QgoGZ-0005do-SJ
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 03:29:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755008Ab1GMBVH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Jul 2011 21:21:07 -0400
-Received: from mail-fx0-f52.google.com ([209.85.161.52]:59910 "EHLO
-	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753854Ab1GMBVF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2011 21:21:05 -0400
-Received: by fxd18 with SMTP id 18so5453614fxd.11
-        for <git@vger.kernel.org>; Tue, 12 Jul 2011 18:21:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=l61iGYVVswfbTgzPjpjP5nQwWCM7QXr29bHlfhpNDhU=;
-        b=AOJ8lq4agWQrbggzbbuHryW607cV95j8E16Pk68LXB8x+F9jBhToVuM3Sn0TDwc0no
-         3ovJNlwqguqQ25vwKLB1sH+vJACJJwrS2sIMbVGcT059JekS6bdcWYVcCIDpr1Sknn0s
-         TCrgWNq5uTIolX8P0ZXsB/yrAzHROIZIPgI/w=
-Received: by 10.223.100.3 with SMTP id w3mr580861fan.146.1310520064038; Tue,
- 12 Jul 2011 18:21:04 -0700 (PDT)
-Received: by 10.223.30.68 with HTTP; Tue, 12 Jul 2011 18:21:04 -0700 (PDT)
-In-Reply-To: <4E1C9F21.6070300@web.de>
-X-Google-Sender-Auth: fN170EpePUA_JhK1IPcNSuOznW4
+	id S1756558Ab1GMB30 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jul 2011 21:29:26 -0400
+Received: from rinoa.icecavern.net ([92.243.7.152]:55542 "EHLO icecavern.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756082Ab1GMB30 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2011 21:29:26 -0400
+X-Greylist: delayed 316 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 Jul 2011 21:29:25 EDT
+Received: from tonberry.icecavern.net (c-76-113-110-228.hsd1.nm.comcast.net [76.113.110.228])
+	by icecavern.net (Postfix) with ESMTPSA id 3087E35B28;
+	Tue, 12 Jul 2011 19:24:06 -0600 (MDT)
+User-Agent: KMail/1.13.7 (Linux/2.6.32-5-amd64; KDE/4.6.4; x86_64; ; )
+In-Reply-To: <1310517600171-6577341.post@n2.nabble.com>
+X-Face: #;qMWg=Msk*d]z]X1P2-t9]~6+RoGF$nJo89f%|Y`^whfl3Wj$X2Q_1u)ZAW@Hx|g)J]!)
+ =?utf-8?q?=0A=09Br0=3FK3Imj?=)np=]r*QN,Q8].V99^Og'xl-d9FM~$yaSGB"mfXb>x[QNi[()
+ =?utf-8?q?oob=60/4M42=26We=0A=09cC1jq=3DQ=5CS?=@ck\>H@
+ =?utf-8?q?t=26Y7Y=3Apub=3DHOWqY=7D-d=5CwrCxvsTo7k1Ek=7DqQO=5D5=7EngK=5E=25?=
+ =?utf-8?q?cT5IzmmG=5BQ=0A=09Nha=7D=5DAmI=60R-6m84VcWT4=236c?=)1`>t{$~l6:gZMtv18ge'!d[Yk-/?T3>C5O-|6On4(
+ =?utf-8?q?N=7BAV=23=0A=094Eyw52=5B=3A=25Z?=>#"c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176990>
 
-On Tue, Jul 12, 2011 at 3:23 PM, Jens Lehmann <Jens.Lehmann@web.de> wro=
-te:
-> Am 12.07.2011 14:01, schrieb John Szakmeister:
->> I've got a project where we have several frameworks involved, and
->> external modules we want to pull into the framework tree. =C2=A0We'd=
- like
->> to make use of submodules and have something like this:
->> =C2=A0 =C2=A0 top-level/ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0<-=
-- .gitmodules lives here
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 src/
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 framework1/ =C2=A0 <-- a submodule
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 module/ =C2=A0 =C2=A0 <-- =
-another submodule
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 framework2/ =C2=A0 <-- a submodule
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 module2/ =C2=A0 =C2=A0<-- =
-another submodule
->>
->> Currently, git fails trying to do this. =C2=A0It's not happy about
->> .gitmodules living at the top-level and nesting a submodule inside o=
-f
->> another[1]. =C2=A0Is there a technical reason that this is not allow=
-ed?
->
-> Submodules are repositories of their own, so their work tree is outsi=
-de
-> the superproject's work tree. You're attempting to have a submodule o=
-f
-> the superproject inside another submodule of the superproject, but th=
-is
-> won't work because it does not live in the superproject's work tree (=
-as
-> that doesn't include submodules and their subdirectories).
+--nextPart2946169.Zt2haXA0qs
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-I guess I still don't see how that's a problem.  It seems to me that
-for the superproject the ignore rule needs to be:
-  ignore framework1, except framework1/module
+On Tuesday, July 12, 2011 18:40:00 thaddeus wrote:
+> How important is it to have your repository integrated with your project
+> management system. What if integration is not possible as with Clarizen.
+> Anyone have any idea for a work around or implementing through an API?
 
-And then it could check its status.  Of course, framework1 would
-somehow need to know to ignore it... and I'm not sure how that can be
-communicated.
+Having used several VCS with and without integration into a project=20
+management system on many different projects, my personal experience is tha=
+t=20
+this type of integration usually is more trouble than it's worth.
 
-> To have nested submodules you must add "module" as a submodule of
-> "framework1" and "module2" as a submodule of "framework2". Then git
-> will handle them just fine (assuming you use the --recursive option f=
-or
-> "git submodule update" and friends). Of course that means that if you
-> want to record a new commit of a sub-submodule in the superpoject, yo=
-u'll
-> have to commit that in it's parent submodule first and then can recor=
-d
-> that commit in the superproject. (But if "framework1" wouldn't depend=
- on
-> a specific version of "module", there would be no reason to put it in=
-side
-> it in the first place, right?)
+It's especially annoying with distributed version control systems, because=
+=20
+it promotes an everybody-push-into-the-same-repository type workflow which=
+=20
+causes more problems than any project management system integration could=20
+ever solve.
 
-We can't do that.  The base framework should not include the module in
-its repository.  We drop in different modules that get shared across
-some projects, but not others.  They get mixed and matched.  This was
-pretty straight-forward to do with Subversion.  Admittedly, I don't
-like the layout of it... but unfortunately, I'm not really in control
-of that either.
+Just my 2 cents.
 
->> Limiting the traversal up the tree, etc.? =C2=A0I've worked around t=
-he lack
->> of support to do this for now, but it would be really nice if we cou=
-ld
->> do such a thing.
->
-> I can't think of a sane way to make that work.
+--nextPart2946169.Zt2haXA0qs
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-:-(
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
 
-[snip]
-> But at least since 1.6.2 git should issue a meaningful error message.
-> With current master I get:
->
-> $ git add sub/file
-> fatal: Path 'sub/file' is in submodule 'sub'
+iEYEABECAAYFAk4c868ACgkQ8KmKTEzW49LBEACfdW3KZf9li6cviB1mrLnEMBnd
+KAYAn2tyvCPhw++LOIOINgFCe5jMuKH+
+=3bTo
+-----END PGP SIGNATURE-----
 
-Sorry, I wasn't trying to do a 'git add'.  I was trying to do a 'git
-submodule add'.
-
-> What version are you using?
-
-I'm using 1.7.6rc3.  I updated to the latest trunk and still get the sa=
-me error:
-
-:: git submodule add $PWD/../c b/c
-The following path is ignored by one of your .gitignore files:
-b/c
-Use -f if you really want to add it.
-
-HTH.
-
--John
+--nextPart2946169.Zt2haXA0qs--
