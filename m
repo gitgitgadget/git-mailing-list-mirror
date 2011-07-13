@@ -1,88 +1,167 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: With errno fix: [PATCH] Do not log unless all connect() attempts fail
-Date: Wed, 13 Jul 2011 20:47:24 +0200
-Message-ID: <CABPQNSYWKVngfoj4AqTCbWixENSmgnbdDBGBt+EpWnBgbqpofg@mail.gmail.com>
-References: <7276ACEE-EF52-49DF-83EA-642DE504B3EA@apple.com>
-Reply-To: kusmabite@gmail.com
+From: Jeff King <peff@peff.net>
+Subject: Re: [GSoC update] Sequencer for inclusion
+Date: Wed, 13 Jul 2011 15:07:24 -0400
+Message-ID: <20110713190724.GA31965@sigill.intra.peff.net>
+References: <1310396048-24925-1-git-send-email-artagnon@gmail.com>
+ <20110711171713.GA5963@elie>
+ <7vpqlgbjmd.fsf@alter.siamese.dyndns.org>
+ <20110711221419.GE30155@sigill.intra.peff.net>
+ <CALkWK0n41LZ8-ZU2M1oD_ddJ2g2A47MxuO8w+5Ew6Php8gvF+g@mail.gmail.com>
+ <20110712064706.GA13375@sigill.intra.peff.net>
+ <CALkWK0=EDZ9E1qYg=bEt2h3jmUUvERoiR1TpkUupRO2XrYyt9A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Dave Zarzycki <zarzycki@apple.com>
-X-From: git-owner@vger.kernel.org Wed Jul 13 20:48:16 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Miles Bader <miles@gnu.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 13 21:07:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qh4Tm-0002iz-PA
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 20:48:15 +0200
+	id 1Qh4mS-0006Bk-7D
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 21:07:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752723Ab1GMSsH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jul 2011 14:48:07 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:62450 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752410Ab1GMSsG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2011 14:48:06 -0400
-Received: by pzk9 with SMTP id 9so4992904pzk.19
-        for <git@vger.kernel.org>; Wed, 13 Jul 2011 11:48:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=1IQIDSJWJB1vol78VOTEy4rFgXybBBCAb/QQ0kg75nA=;
-        b=PyTWDgye1SnPO8EUBtQ4BAG3wXKzWjutKAZLOTXPWM3w0/bxyk2T1fJWMkk0Fe949c
-         VLemihsBYxxm34dw0d5j8Wak1b9Dxi0F9xKK/wSLeOyh2LDW7NAEC+ueiy6cEkz0YwbJ
-         6zJ42UI/sgZkIOy3XW2tsk5cR6bzJRORR6RUc=
-Received: by 10.68.48.74 with SMTP id j10mr1628902pbn.37.1310582885068; Wed,
- 13 Jul 2011 11:48:05 -0700 (PDT)
-Received: by 10.68.48.130 with HTTP; Wed, 13 Jul 2011 11:47:24 -0700 (PDT)
-In-Reply-To: <7276ACEE-EF52-49DF-83EA-642DE504B3EA@apple.com>
+	id S1750806Ab1GMTH1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jul 2011 15:07:27 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44774
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750752Ab1GMTH0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2011 15:07:26 -0400
+Received: (qmail 27660 invoked by uid 107); 13 Jul 2011 19:07:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 13 Jul 2011 15:07:50 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Jul 2011 15:07:24 -0400
+Content-Disposition: inline
+In-Reply-To: <CALkWK0=EDZ9E1qYg=bEt2h3jmUUvERoiR1TpkUupRO2XrYyt9A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177069>
 
-On Wed, Jul 13, 2011 at 6:28 PM, Dave Zarzycki <zarzycki@apple.com> wro=
-te:
-> IPv6 hosts are often unreachable on the primarily IPv4 Internet and
-> therefore we shouldn't print an error if there are still other hosts =
-we
-> can try to connect() to. This helps "git fetch --quiet" stay quiet.
->
-> Signed-off-by: Dave Zarzycki <zarzycki@apple.com>
-> ---
-> =A0connect.c | =A0 15 +++++++++------
-> =A01 files changed, 9 insertions(+), 6 deletions(-)
->
-> diff --git a/connect.c b/connect.c
-> index 2119c3f..87b2e3f 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -192,6 +192,7 @@ static const char *ai_name(const struct addrinfo =
-*ai)
-> =A0*/
-> =A0static int git_tcp_connect_sock(char *host, int flags)
-> =A0{
-> + =A0 =A0 =A0 struct strbuf error_message =3D STRBUF_INIT;
-> =A0 =A0 =A0 =A0int sockfd =3D -1, saved_errno =3D 0;
-> =A0 =A0 =A0 =A0const char *port =3D STR(DEFAULT_GIT_PORT);
-> =A0 =A0 =A0 =A0struct addrinfo hints, *ai0, *ai;
-> @@ -217,6 +218,11 @@ static int git_tcp_connect_sock(char *host, int =
-flags)
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0fprintf(stderr, "done.\nConnecting to =
-%s (port %s) ... ", host, port);
->
-> =A0 =A0 =A0 =A0for (ai0 =3D ai; ai; ai =3D ai->ai_next) {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (saved_errno) {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 strbuf_addf(&error_mess=
-age, "%s[%d: %s]: errno=3D%s\n",
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 host, c=
-nt, ai_name(ai), strerror(saved_errno));
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 saved_errno =3D 0;
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
+On Wed, Jul 13, 2011 at 03:11:54PM +0530, Ramkumar Ramachandra wrote:
 
-Uhm, this will still fail to report errors for the very last entry,
-no? When socket returns -1 in the last iteration (and errno gets
-saved), there's no code that reports it...
+> Ha, true.  After all .git/objects/ is "polluted" with lots of files :=
+p
+> A couple of questions arise:
+> 1. Would opening, writing, closing many files not put too much strain
+> on I/O, and hence affect performance significantly?
+
+In a tight loop, perhaps. At the begining of invoking a program,
+probably not. We're talking about what, a dozen or so files?
+
+If you have doubts, then measure.
+
+> 2. Will two options from different instructions (when we extend the
+> instruction sheet to accommodate them) have the same name, but
+> different effects?  Having a gitconfig-like configuration file doesn'=
+t
+> solve this problem either, so it's not a "configfile versus key-value
+> store" question.
+
+If you have per-instruction options, then I think you would want your
+storage of options to be per-instruction. Whether it's a config file or
+files in a directory, you'd want to be accessing ".../opts/$hash" as a
+config file (or ".../opts/$hash/*" for a directory).
+
+But I have only been paying a little attention to the deeper parts of
+this topic, so I may be misunderstanding what you're asking.
+
+> > Using git-config is maybe a little more self-documenting than somet=
+hing
+> > like "sq_quote_argv". And probably not much more code (maybe even l=
+ess,
+> > since it can handle the file update for you).
+>=20
+> Yeah :)
+
+One other advantage of "git config" over sq_quote_argv is that it is
+fairly transparent to outside programs. You can just say "git config
+--file=3D.git/sequencer/opts --get-all strategy" or whatever.
+
+That transparency is one of the things I liked about the "files in a
+directory" approach taken by rebase currently. But given that the "git
+config" command exists, they are probably equivalent in that respect.
+
+> > I recently used the config code to write out a non-standard config =
+file.
+> > My two complaints were:
+> >
+> > =C2=A01. You can't queue up a bunch of changes and then write the f=
+ile once.
+> > =C2=A0 =C2=A0 Every time you call git_config_set, it rewrites the w=
+hole file.
+> >
+> > =C2=A02. There's no way to write to a nonstandard file short of the=
+ horribly
+> > =C2=A0 =C2=A0 hack-ish:
+> >
+> > =C2=A0 =C2=A0 =C2=A0 const char *saved =3D config_exclusive_filenam=
+e;
+> > =C2=A0 =C2=A0 =C2=A0 config_exclusive_filename =3D "foo.conf";
+> > =C2=A0 =C2=A0 =C2=A0 git_config_set(...);
+> > =C2=A0 =C2=A0 =C2=A0 config_exclusive_filename =3D saved;
+> >
+> > Point (2) is pretty easy to fix. But point (1) might be a bit more
+> > involved. I haven't really looked yet.
+>=20
+> Thanks for pointing these out.  Yes, I'm aware of these issues, and
+> it's part of the reason I implemented my own parser.  It'll take some
+> time to refactor config.c so that it's usable by others in a sane
+> manner, no?  What do you suggest I do until then?  Can I try to get m=
+y
+> custom parser merged (and replaced by a more generic configparser whe=
+n
+> it's ready), or should I throw away my parser and go with the
+> key-value store?
+
+I think a reasonable strategy is:
+
+  1. Refactor git_config_set into git_config_set_in_file with a file
+     argument (and make git_config_set a wrapper that uses the current
+     file-selection). This should be easy to do.
+
+  2. Ignore the fact that you are writing the file multiple times. It's
+     not a correctness issue, but rather an optimization. If and when
+     the config code shows itself to be too slow, then we can do that
+     optimization (which will benefit not just your code, but all confi=
+g
+     writers).
+
+And then throw away your parser and just use git_config_from_file and
+git_config_set_in_file.
+
+Between config and a key/value store of files, I think it is largely a
+matter of taste.
+
+> Just to clarify, here's an example to illustrate what I understand
+> when you say key-value store (please correct me if I got the idea
+> wrong):
+> .git/sequencer/opts/ will have files like:
+> $ cat ff
+> true
+> $ cat record-origin
+> true
+> $ cat mainline
+> 1
+> $ cat strategy
+> ours
+> $ cat strategy-option
+> patience + renormalize
+
+Yeah, exactly. Though I would probably use "\n" to split list items in
+strategy-options, which is a little more traditional. I.e.,:
+
+  $ cat strategy-option
+  patience
+  renormalize
+
+-Peff
