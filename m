@@ -1,76 +1,101 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Nesting a submodule inside of another...
-Date: Wed, 13 Jul 2011 10:43:47 +0200
-Message-ID: <4E1D5AC3.5050409@op5.se>
-References: <CAEBDL5XQDehUyqKoazxy+YVHh_2iAyt9aE-77H1jZg4oujMJgw@mail.gmail.com>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [RFC/PATCHv2 2/6] add metadata-cache infrastructure
+Date: Wed, 13 Jul 2011 10:45:52 +0200
+Message-ID: <CAKPyHN1tixwJPJHG+wY34HVLYGT4fD9Sc-qJ8=on8EWfW-H6aw@mail.gmail.com>
+References: <20110713064709.GA18499@sigill.intra.peff.net>
+	<20110713070405.GB18566@sigill.intra.peff.net>
+	<CAKPyHN1FgK6NXqZFZ=OvMgouhfxnGF0aXU+--y-P1u9BcK9Z4A@mail.gmail.com>
+	<20110713083139.GA26838@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git mailing list <git@vger.kernel.org>
-To: John Szakmeister <john@szakmeister.net>
-X-From: git-owner@vger.kernel.org Wed Jul 13 10:44:06 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>, "Ted Ts'o" <tytso@mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Clemens Buchacher <drizzd@aon.at>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jul 13 10:46:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qgv34-0007TQ-2F
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 10:44:02 +0200
+	id 1Qgv4y-000876-9O
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 10:46:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965091Ab1GMIn5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jul 2011 04:43:57 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:36009 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965029Ab1GMIn4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2011 04:43:56 -0400
-Received: by bwd5 with SMTP id 5so4660646bwd.19
-        for <git@vger.kernel.org>; Wed, 13 Jul 2011 01:43:55 -0700 (PDT)
-Received: by 10.204.83.138 with SMTP id f10mr413190bkl.289.1310546634816;
-        Wed, 13 Jul 2011 01:43:54 -0700 (PDT)
-Received: from vix.int.op5.se (c83-248-99-226.bredband.comhem.se [83.248.99.226])
-        by mx.google.com with ESMTPS id o25sm1587623bkf.51.2011.07.13.01.43.52
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 13 Jul 2011 01:43:53 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.17) Gecko/20110428 Fedora/3.1.10-1.fc14 Thunderbird/3.1.10 ThunderGit/0.1a
-In-Reply-To: <CAEBDL5XQDehUyqKoazxy+YVHh_2iAyt9aE-77H1jZg4oujMJgw@mail.gmail.com>
+	id S965100Ab1GMIpx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jul 2011 04:45:53 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:43327 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965073Ab1GMIpx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2011 04:45:53 -0400
+Received: by vws1 with SMTP id 1so4045770vws.19
+        for <git@vger.kernel.org>; Wed, 13 Jul 2011 01:45:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=dzpmh0BoTwpHdrpOvTHbvCBHcjzqshYj9Bi8D3tZLBk=;
+        b=e2+Ep5ip9V6FQpKc3cMVJ5du8FyZAOwSIQPTzllB2ooi/cNHDwXJ+Mir2K3R8ncP20
+         SK8eBRY1DLUSPV5d0acpsvLhhHK9v3P6A9W68FPhdcOsLkzYMydLIey4ViE1Q1I1w3Vb
+         315mPQFsmh8sqUagWvSF0gjfdMNGfn8kR9bD0=
+Received: by 10.52.72.161 with SMTP id e1mr978747vdv.195.1310546752392; Wed,
+ 13 Jul 2011 01:45:52 -0700 (PDT)
+Received: by 10.52.107.228 with HTTP; Wed, 13 Jul 2011 01:45:52 -0700 (PDT)
+In-Reply-To: <20110713083139.GA26838@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177016>
 
-On 07/12/2011 02:01 PM, John Szakmeister wrote:
-> Hi all,
-> 
-> I've got a project where we have several frameworks involved, and
-> external modules we want to pull into the framework tree.  We'd like
-> to make use of submodules and have something like this:
->      top-level/<-- .gitmodules lives here
->          src/
->          framework1/<-- a submodule
->              module/<-- another submodule
->          framework2/<-- a submodule
->              module2/<-- another submodule
-> 
-> Currently, git fails trying to do this.  It's not happy about
-> .gitmodules living at the top-level and nesting a submodule inside of
-> another[1].  Is there a technical reason that this is not allowed?
+On Wed, Jul 13, 2011 at 10:31, Jeff King <peff@peff.net> wrote:
+> On Wed, Jul 13, 2011 at 10:18:28AM +0200, Bert Wesarg wrote:
+>
+>> > +static int record_size(const struct metadata_cache *c)
+>> > +{
+>> > + =C2=A0 =C2=A0 =C2=A0 /* a record is a 20-byte sha1 plus the widt=
+h of the value */
+>> > + =C2=A0 =C2=A0 =C2=A0 return c->mem.width + 20;
+>>
+>> You are circumventing your own API. Why do you don't use the
+>> decoration_width() accessor here? I don't see any check that
+>> METADATA_CACHE_INIT("frotz", 0, NULL) is invalid neither in the
+>> documentation nor in the code.
+>
+> "struct decoration" has the "0 width means store a void pointer" rule
+> for compatibility with existing callers. But I never intended for
+> metadata-cache to have such an exception. Nor would it make sense to
+> store a void pointer. The pointer would be written to disk, and would
+> then be meaningless during the next run of the program.
+>
+> I didn't figure anyone would assume the same special rule held for
+> metadata-cache; the fact that it is implemented using "struct
+> decoration" is not part of its public API. But I guess I was wrong.
 
-Yes. Everything inside a submodule is owned by that submodule, so the
-master repo can't know anything about it. You can have a submodule
-which in turn has submodules though. If you couldn't, it wouldn't be
-possible to checkout only the framework1 repository and get all its
-dependencies.
+You're right here, that it is not part of the public API, but you're
+not wrong about your guess. But when reading this patch series, the
+reader obviously knows that the metadata-cache uses a struct
+decoration for the in-memory values. Thus the reader knows that 0 is
+special for struct decoration, and that there is an API to get the
+width from the struct decoration.
 
-I have no idea what problems you run into with more than 2 tiers of
-submodules though, but I guess that's for you to find out and report
-about.
+>
+> It might make sense to put:
+>
+> =C2=A0if (!c->mem.width)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0die("BUG: zero-width metadata-cache=
+");
+>
+> into the initialization function to make it more clear, and make a no=
+te
+> in the API documentation.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+That should be good. Thanks.
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Bert
+
+> -Peff
+>
