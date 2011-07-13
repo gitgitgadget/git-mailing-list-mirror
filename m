@@ -1,110 +1,83 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: With errno fix: [PATCH] Do not log unless all connect() attempts fail
-Date: Thu, 14 Jul 2011 00:38:20 +0200
-Message-ID: <CABPQNSZj7P6XUMgChgZ6XYEZVtVNmXmVM27_Ms=mXV1c1an6KQ@mail.gmail.com>
-References: <7276ACEE-EF52-49DF-83EA-642DE504B3EA@apple.com>
- <CABPQNSYWKVngfoj4AqTCbWixENSmgnbdDBGBt+EpWnBgbqpofg@mail.gmail.com> <7vtyap6gox.fsf@alter.siamese.dyndns.org>
-Reply-To: kusmabite@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Nesting a submodule inside of another...
+Date: Wed, 13 Jul 2011 15:44:18 -0700
+Message-ID: <7v8vs16bst.fsf@alter.siamese.dyndns.org>
+References: <CAEBDL5XQDehUyqKoazxy+YVHh_2iAyt9aE-77H1jZg4oujMJgw@mail.gmail.com>
+ <4E1C9F21.6070300@web.de>
+ <CAEBDL5U0F+QaqhW92i-s82-C9fj2knp6JPNtNvgdJY68kRYwWQ@mail.gmail.com>
+ <4E1E0C27.60903@web.de> <7vhb6p6fcl.fsf@alter.siamese.dyndns.org>
+ <4E1E1672.7040503@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Dave Zarzycki <zarzycki@apple.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 14 00:39:07 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: John Szakmeister <john@szakmeister.net>,
+	Git mailing list <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Jul 14 00:44:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qh85D-0000x6-3z
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 00:39:07 +0200
+	id 1Qh8AN-0003HG-8o
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 00:44:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752631Ab1GMWjB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jul 2011 18:39:01 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:54447 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752612Ab1GMWjA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2011 18:39:00 -0400
-Received: by pvg12 with SMTP id 12so5103800pvg.19
-        for <git@vger.kernel.org>; Wed, 13 Jul 2011 15:39:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=12/cxBcgsuhUuWjfq/bJ669q74RCuSRw7T37Ok6Ta9s=;
-        b=m5xhYUcELgEGwHUrUSYqDzDg6tme9HF4F+6zQG1E+SNWobxSo9JFjlvaDrTa3UxR8S
-         YK7tTJjQF0hLGW1+rus+EsRw+YqMAWg/NHc9yiKksSt/1hkOCmq+PrAxtuUl0qDJH9zP
-         IEkIK4OW5OX8D8a93IAlaGpmdDfiJD6h4ZJdQ=
-Received: by 10.68.48.74 with SMTP id j10mr1822047pbn.37.1310596740059; Wed,
- 13 Jul 2011 15:39:00 -0700 (PDT)
-Received: by 10.68.48.130 with HTTP; Wed, 13 Jul 2011 15:38:20 -0700 (PDT)
-In-Reply-To: <7vtyap6gox.fsf@alter.siamese.dyndns.org>
+	id S1752777Ab1GMWoX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jul 2011 18:44:23 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41978 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751935Ab1GMWoV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2011 18:44:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7C5515479;
+	Wed, 13 Jul 2011 18:44:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eZIspRZ9UILPBjKY66dPAAMnXEg=; b=yaYpCv
+	kNrcIxsSBxb4CvX3XLy6EPzIALPwyQV+uDRB8RXgIc0WWdz8+c7R6YcLbEfjdqXm
+	CuVGlDHkqaHZkBmIwc4QMS9N9E7mt9+HqRTY0ybdCgicCF+Lw4vvdIYtdt+L2tWb
+	jnMEBeHMe9GNtg36xnWI9Dxa0RcQD+CjuosNY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aCxzNIacvoGYXOyE2LYnIvz7+rWOu3mk
+	52GuxAxq2cnv2s3UhW+3TSpSsAqK6Yjcv/oRKr1Nvxh2YBmt/cvB5T5nl5BoXDcE
+	8M3Zs/XAWA3TxoTS6q21GgFNYZ3u/MbdbOsGmIWIwl0aiKKdtQ67QXXAaRRmPBxJ
+	+qzqwyXsjSI=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 735995478;
+	Wed, 13 Jul 2011 18:44:20 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B96165477; Wed, 13 Jul 2011
+ 18:44:19 -0400 (EDT)
+In-Reply-To: <4E1E1672.7040503@web.de> (Jens Lehmann's message of "Thu, 14
+ Jul 2011 00:04:34 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A56AC742-ADA1-11E0-9A6A-B086C023C68D-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177091>
 
-On Wed, Jul 13, 2011 at 10:58 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Erik Faye-Lund <kusmabite@gmail.com> writes:
->
->> Uhm, this will still fail to report errors for the very last entry,
->> no? When socket returns -1 in the last iteration (and errno gets
->> saved), there's no code that reports it...
->
-> I guess the fix should look something like this.
->
-> By the way, is anybody interested in fixing the other side of the ifd=
-ef
-> that is compiled on IPv4-only installations?
->
-> =A0connect.c | =A0 15 ++++++---------
-> =A01 files changed, 6 insertions(+), 9 deletions(-)
->
-> diff --git a/connect.c b/connect.c
-> index 8eb9f44..844107e 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -193,7 +193,7 @@ static const char *ai_name(const struct addrinfo =
-*ai)
-> =A0static int git_tcp_connect_sock(char *host, int flags)
-> =A0{
-> =A0 =A0 =A0 =A0struct strbuf error_message =3D STRBUF_INIT;
-> - =A0 =A0 =A0 int sockfd =3D -1, saved_errno =3D 0;
-> + =A0 =A0 =A0 int sockfd =3D -1;
-> =A0 =A0 =A0 =A0const char *port =3D STR(DEFAULT_GIT_PORT);
-> =A0 =A0 =A0 =A0struct addrinfo hints, *ai0, *ai;
-> =A0 =A0 =A0 =A0int gai;
-> @@ -220,15 +220,12 @@ static int git_tcp_connect_sock(char *host, int=
- flags)
-> =A0 =A0 =A0 =A0for (ai0 =3D ai; ai; ai =3D ai->ai_next) {
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0sockfd =3D socket(ai->ai_family,
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0ai->ai=
-_socktype, ai->ai_protocol);
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (sockfd < 0) {
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 saved_errno =3D errno;
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 continue;
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (connect(sockfd, ai->ai_addr, ai->ai=
-_addrlen) < 0) {
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 saved_errno =3D errno;
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if ((sockfd < 0) ||
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 (connect(sockfd, ai->ai_addr, a=
-i->ai_addrlen) < 0)) {
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0strbuf_addf(&error_mes=
-sage, "%s[%d: %s]: errno=3D%s\n",
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 host, c=
-nt, ai_name(ai), strerror(saved_errno));
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 close(sockfd);
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
- host, cnt, ai_name(ai), strerror(errno));
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (0 <=3D sockfd)
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 close(s=
-ockfd);
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0sockfd =3D -1;
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0continue;
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0}
->
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-Yeah, this looks like sensible to me.
+> ... (at least when it concerns their work tree, the
+> gitfile effort is trying to introduce some superproject awareness).
+
+I don't think so.
+
+The "gitfile effort" just makes it more convenient and potentially safer
+for superproject to remove submodule working tree by running an equivalent
+of "rm -fr submodule". The submodule shouldn't even care where its .git
+metadirectory is by looking at the "gitfile: " line, nor should it assume
+that location its .git metadirectory moved out of its working tree has
+some fixed relationship with its supermodule's repository.  E.g. the
+superproject could choose to store it under $HOME/cache or /var/state as
+long as it knows where to point it back to after it runs "rm -rf submodule"
+and then it has to re-instantiate the submodule.
+
+IOW, the superproject must be aware of that location, but submodule
+shouldn't depend on what convention the superproject chose to use.
+After all, there may not even be a superproject when gitfile is in use,
+so running "test -f .git" and assuming that it is used as a submodule of
+somebody else is already a bogus test.
