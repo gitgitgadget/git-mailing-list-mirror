@@ -1,78 +1,59 @@
-From: "J. Bakshi" <joydeep@infoservices.in>
-Subject: Coming from SVN world - need help
-Date: Wed, 13 Jul 2011 18:30:56 +0530
-Message-ID: <20110713183056.1cde5b61@shiva.selfip.org>
+From: <Mathieu.Pogeant@renesasmobile.com>
+Subject: Multiple projects with Gitweb
+Date: Wed, 13 Jul 2011 13:10:37 +0000
+Message-ID: <700B9246C3446949B8085B181F2C217804E59B@renexmb01.roe2.renesasmobile.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 13 15:07:36 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 13 15:10:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QgzA4-0002J6-BM
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 15:07:32 +0200
+	id 1QgzDC-0003um-13
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 15:10:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753119Ab1GMNHW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jul 2011 09:07:22 -0400
-Received: from static.206.87.46.78.clients.your-server.de ([78.46.87.206]:46439
-	"EHLO Kolkata.infoservices.in" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752520Ab1GMNHV (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2011 09:07:21 -0400
-X-Greylist: delayed 387 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Jul 2011 09:07:21 EDT
-Received: from shiva.selfip.org (unknown [122.176.30.116])
-	by Kolkata.infoservices.in (Postfix) with ESMTPSA id 683603804001
-	for <git@vger.kernel.org>; Wed, 13 Jul 2011 15:00:51 +0200 (CEST)
-X-Mailer: Claws Mail 3.7.9 (GTK+ 2.24.4; x86_64-pc-linux-gnu)
+	id S1753051Ab1GMNKl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jul 2011 09:10:41 -0400
+Received: from mail216.messagelabs.com ([85.158.143.99]:17634 "EHLO
+	mail216.messagelabs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753011Ab1GMNKk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2011 09:10:40 -0400
+X-VirusChecked: Checked
+X-Env-Sender: Mathieu.Pogeant@renesasmobile.com
+X-Msg-Ref: server-13.tower-216.messagelabs.com!1310562638!11446158!1
+X-StarScan-Version: 6.2.17; banners=-,-,-
+X-Originating-IP: [213.174.82.10]
+Received: (qmail 31108 invoked from network); 13 Jul 2011 13:10:38 -0000
+Received: from renexfe01.roe2.renesasmobile.com (HELO renexfe01.roe2.renesasmobile.com) (213.174.82.10)
+  by server-13.tower-216.messagelabs.com with AES128-SHA encrypted SMTP; 13 Jul 2011 13:10:38 -0000
+Received: from RENEXMB01.roe2.renesasmobile.com ([fe80::e58a:2b9f:54fe:ff5])
+ by renexfe01.roe2.renesasmobile.com ([fe80::ec94:bbb3:68e:a94a%18]) with mapi
+ id 14.01.0255.000; Wed, 13 Jul 2011 16:10:38 +0300
+Thread-Topic: Multiple projects with Gitweb
+Thread-Index: AcxBXjyEPerT1euQRWqUsYOOEgQeKw==
+Accept-Language: fr-FR, da-DK, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.21.22.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177038>
 
-Dear list,
+Hello,
 
-Greetings !!
+I'm trying to have this with GitWeb.
+I have a repo under /project1 and a repo under /project2 on my Git server.
+I would like to access these 2 repo via Gitweb like that: http://mygitserver/project1 and http://mygitserver/project2.
+The problem is that gitweb.conf permit to use just one repo with directive $projectroot.
 
-I have come from SVN world and totally new to GIT. I have managed to set gitweb and git; based on https:// along with authentication ( both for read and right ). And now I like to do the rest of the svn related thing in GIT. Just see the script below. This script first create an empty repo, built the structure; then checkout in a directory to map trunk with it and add contents to the repo.
-
-```````````````````
-svnadmin create ${svn_path}/<repo>
-
-svn mkdir file:///${svn_path}/<repo>/trunk  \
-         file:///${svn_path}/<repo>/tags  \
-         file:///${svn_path}/<repo>/branches \
-         -m "creating repo structure"
-
-# map a directory with trunk 
-
-cd mydir
-mydir $> svn --username ${admin_svn} --password ${admin_svn_pass} co  file:///${svn_path}/${name_site}/trunk ./
-
-#add and commit
-mydir $> svn  add dir1 dir2
-
-##commit
-mydir $> svn  commit -m "adding dir1  dir2"
-mydir $> svn up
-````````````````````````````````
-
-And now the issues when I am trying to do the same with git
-
-[1] git init ${git_path}/<repo>.git  >>> ok , it is working
-
-[2] Problem with mapping a dir with this repo
-
-mydir $> git --username <username> --password <password> clone file:///${git_path}/<repo>.git 
-
-Not working --username and --password .
-
-Also git clone file:///${git_path}/<repo>.git creates a folder <repo>.git where I like map  the working directory with the contents of <repo>.git
-
-[3] git commit -m also not commit into master.
-
-Could any one please give me some clue ?
-
-Thanks
+Did someone face the same problem?
+If needed, I can share configuration file.
+Best regards,
+--
+Mathieu POGEANT
