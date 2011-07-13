@@ -1,97 +1,84 @@
-From: Yggy King <yggy@zeroandone.ca>
-Subject: gitk: make "touching paths" search support backslashes
-Date: Wed, 13 Jul 2011 01:30:26 -0700
-Message-ID: <CAE2ZgT1W1ugfjY4fXdSsa8LzSgwYXhNOT=8jD5AZf5J3+FX9HQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCHv2 2/6] add metadata-cache infrastructure
+Date: Wed, 13 Jul 2011 04:31:39 -0400
+Message-ID: <20110713083139.GA26838@sigill.intra.peff.net>
+References: <20110713064709.GA18499@sigill.intra.peff.net>
+ <20110713070405.GB18566@sigill.intra.peff.net>
+ <CAKPyHN1FgK6NXqZFZ=OvMgouhfxnGF0aXU+--y-P1u9BcK9Z4A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Paul Mackerras <paulus@samba.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 13 10:30:33 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>, Ted Ts'o <tytso@mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Clemens Buchacher <drizzd@aon.at>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 13 10:31:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qguq0-0002aP-S5
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 10:30:33 +0200
+	id 1QgurD-00033W-1C
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 10:31:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965064Ab1GMIa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jul 2011 04:30:28 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:35113 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964995Ab1GMIa1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2011 04:30:27 -0400
-Received: by gwaa18 with SMTP id a18so2280906gwa.19
-        for <git@vger.kernel.org>; Wed, 13 Jul 2011 01:30:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:cc:content-type;
-        bh=p7LNs8BJp1e3YmOAekUD8jLHcXJKijbJ3Jgs/l5mUvY=;
-        b=x77TU6OeOXRdn5pwiuya6Rn6EFdUvqQ9B5m+RfxPV+Nu3iUxCXz4InR7RhHeLH3uqW
-         9+32q2/1SPvoXgVB49UIlszAVrdmam8IfvFHwJ1kNCNoQTC/J0JnG0GFAcvVl2FmTcfj
-         BIRY8fgxzEyLhqsu8g8CDIoNMyzaZX1iPlOI8=
-Received: by 10.236.155.36 with SMTP id i24mr1178943yhk.280.1310545826288;
- Wed, 13 Jul 2011 01:30:26 -0700 (PDT)
-Received: by 10.236.60.231 with HTTP; Wed, 13 Jul 2011 01:30:26 -0700 (PDT)
-X-Google-Sender-Auth: mB3efaNsoS3pkNh-2z4kKK4UkJU
+	id S965075Ab1GMIbm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jul 2011 04:31:42 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42728
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964995Ab1GMIbl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2011 04:31:41 -0400
+Received: (qmail 22800 invoked by uid 107); 13 Jul 2011 08:32:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 13 Jul 2011 04:32:05 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Jul 2011 04:31:39 -0400
+Content-Disposition: inline
+In-Reply-To: <CAKPyHN1FgK6NXqZFZ=OvMgouhfxnGF0aXU+--y-P1u9BcK9Z4A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177013>
 
->From bf31f7cf6faa7b786e231345b69826cc114001e0 Mon Sep 17 00:00:00 2001
-From: Yggy King <yggy@zeroandone.ca>
-Date: Wed, 13 Jul 2011 01:15:51 -0700
-Subject: [PATCH] gitk: make "touching paths" search support backslashes
+On Wed, Jul 13, 2011 at 10:18:28AM +0200, Bert Wesarg wrote:
 
-Gitk can search for commits touching a specified path. The search text is
-always treated as a regular expression, regardless of the matching option
-selected (Exact, IgnCase, or Regexp). In particular, backslashes escape
-the next character. This is inconvenient on Windows systems, where backslashes
-are then norm for path specifiers, for example when copy/pasting from
-Windows Explorer or a cmd shell -- these copy-pasted paths must be manually
-modified in the gitk search text edit box before they will work.
+> > +static int record_size(const struct metadata_cache *c)
+> > +{
+> > + =C2=A0 =C2=A0 =C2=A0 /* a record is a 20-byte sha1 plus the width=
+ of the value */
+> > + =C2=A0 =C2=A0 =C2=A0 return c->mem.width + 20;
+>=20
+> You are circumventing your own API. Why do you don't use the
+> decoration_width() accessor here? I don't see any check that
+> METADATA_CACHE_INIT("frotz", 0, NULL) is invalid neither in the
+> documentation nor in the code.
 
-This change uses the match option "Exact" to mean that a slash is a slash,
-not part of a regular expression. Backslashes are converted to frontslashes
-before searching, thus allowing easy copy/pasting of paths on Windows
-systems. If the previous behaviour of "touching paths" search is desired,
-simply select the "Regexp" search mode.
+"struct decoration" has the "0 width means store a void pointer" rule
+for compatibility with existing callers. But I never intended for
+metadata-cache to have such an exception. Nor would it make sense to
+store a void pointer. The pointer would be written to disk, and would
+then be meaningless during the next run of the program.
 
-One potential drawback is that the default setting for the match option
-($findtype in the code) is "Exact", and so this change alters the default
-behaviour, which may confuse users and lead to bug reports.
+I didn't figure anyone would assume the same special rule held for
+metadata-cache; the fact that it is implemented using "struct
+decoration" is not part of its public API. But I guess I was wrong.
 
-(This is my first submission to the list -- please be gentle if I've
-violated protocol. :-)
+It might make sense to put:
 
-Signed-off-by: Yggy King <yggy@zeroandone.ca>
----
- gitk-git/gitk |    7 ++++++-
- 1 files changed, 6 insertions(+), 1 deletions(-)
+  if (!c->mem.width)
+          die("BUG: zero-width metadata-cache");
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 4cde0c4..d5f604e 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -4528,9 +4528,14 @@ proc makepatterns {l} {
- }
+into the initialization function to make it more clear, and make a note
+in the API documentation.
 
- proc do_file_hl {serial} {
--    global highlight_files filehighlight highlight_paths gdttype fhl_list
-+    global highlight_files filehighlight highlight_paths gdttype
-findtype fhl_list
+I considered briefly that a zero-width cache might actually be useful
+for storing a membership list (i.e., "is this sha1 in the list or not")=
+=2E
+But then you have no way of distinguishing "not in the list" from "have
+no checked whether it should be in the list". You are probably better
+off storing a single byte flag in such cases.
 
-     if {$gdttype eq [mc "touching paths:"]} {
-+    # If "exact" match then convert backslashes to frontslashes. Most useful
-+    # to support Windows-flavoured file paths.
-+    if {$findtype eq [mc "Exact"]} {
-+        set highlight_files [string map {"\\" "/"} $highlight_files]
-+    }
- 	if {[catch {set paths [shellsplit $highlight_files]}]} return
- 	set highlight_paths [makepatterns $paths]
- 	highlight_filelist
--- 
-1.7.6.msysgit.0
+-Peff
