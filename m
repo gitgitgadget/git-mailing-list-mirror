@@ -1,90 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jul 2011, #01; Wed, 6)
-Date: Wed, 13 Jul 2011 15:12:35 -0700
-Message-ID: <7vd3hd6d9o.fsf@alter.siamese.dyndns.org>
-References: <7vpqlmhoi0.fsf@alter.siamese.dyndns.org>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH] Do not log unless all connect() attempts fail
+Date: Thu, 14 Jul 2011 00:29:11 +0200
+Message-ID: <CABPQNSazGsgqcZZ=q9VJ+2u=O32ePeRAjqo4+FuyVwCkX4y4nQ@mail.gmail.com>
+References: <1EC2718A-A993-443C-8D7C-DEBD7C424EB9@apple.com>
+ <CABPQNSaPXmHE1qECUbG9oWU43HbAXxAY42T1P=MNHgkkWM936w@mail.gmail.com> <20110713210636.GF31965@sigill.intra.peff.net>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 14 00:12:43 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Dave Zarzycki <zarzycki@apple.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jul 14 00:29:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qh7ff-00064c-1c
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 00:12:43 +0200
+	id 1Qh7wL-0005Ih-Im
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 00:29:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752401Ab1GMWMj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jul 2011 18:12:39 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38861 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752104Ab1GMWMi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2011 18:12:38 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 836D15198;
-	Wed, 13 Jul 2011 18:12:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CQgDf721TpABNfRaxcO1XQcNg1w=; b=byUQUF
-	91BKjxhmOwG67NgR3pFzvgyZUG/Xo0YHAEznhxCeSnJL+4SMZllCjrvtydlquZBp
-	ALKZOBVd8Yz8i/iZB/PHSATmYFSta3dRzvjo0M8Wb9opxRzSCDMHq+XubUXUZ8HZ
-	1aP5kTbwbeCoR/rLDWPy9xlIBxxsvJT7kv1K0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hicDZBmLBscgKJhY66TYfaQdI7PNXbfm
-	2ixPI2U/BTGZp7I+ULJIdBh69eBiP/lJTb257dIM+yFd3Whz6YX2q31Z5AekSuBb
-	+7/i5br3RIdtGJKCbWXn8UgnqzNQojQ3N/YloKzj9b0fIEYnWtOyZ1MszZJ6WaWM
-	SeX5DoGY8UA=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7C0665197;
-	Wed, 13 Jul 2011 18:12:37 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BF39E5196; Wed, 13 Jul 2011
- 18:12:36 -0400 (EDT)
-In-Reply-To: <7vpqlmhoi0.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 06 Jul 2011 18:24:07 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 37276DDE-AD9D-11E0-B7EC-B086C023C68D-77302942!a-pb-sasl-sd.pobox.com
+	id S1752368Ab1GMW3w convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jul 2011 18:29:52 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:36243 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750877Ab1GMW3v convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2011 18:29:51 -0400
+Received: by pvg12 with SMTP id 12so5098833pvg.19
+        for <git@vger.kernel.org>; Wed, 13 Jul 2011 15:29:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=uqURHtPShkVV5trbfbCrdWDvS2s+vwCT5m3JrwACa5Y=;
+        b=iMoRuZlhyZncWXvN4F3ihApgCyVn7GhVtsatcE/fkVJ5mUnfETk9hH77EzQM7DxV0/
+         5MrYm6b1Ao8veO/ECgFA4B8U6uDCJGXpVc16ZMYQardlXt9CQ++XxPct8rClGul1NwVd
+         o3legigMaAvGuMUBeAIFVMMIucxyGBvNr6tTU=
+Received: by 10.68.12.133 with SMTP id y5mr2068563pbb.104.1310596191092; Wed,
+ 13 Jul 2011 15:29:51 -0700 (PDT)
+Received: by 10.68.48.130 with HTTP; Wed, 13 Jul 2011 15:29:11 -0700 (PDT)
+In-Reply-To: <20110713210636.GF31965@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177089>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> * jk/clone-detached (2011-06-07) 4 commits
->  - clone: always fetch remote HEAD
->  - make copy_ref globally available
->  - consider only branches in guess_remote_head
->  - t: add tests for cloning remotes with detached HEAD
+On Wed, Jul 13, 2011 at 11:06 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Jul 13, 2011 at 11:23:33AM +0200, Erik Faye-Lund wrote:
 >
-> Somewhat involved bugfix.
-> Will merge to "next".
+>> > =A0static int git_tcp_connect_sock(char *host, int flags)
+>> > =A0{
+>> > + =A0 =A0 =A0 struct strbuf error_message =3D STRBUF_INIT;
+>> > =A0 =A0 =A0 =A0int sockfd =3D -1, saved_errno =3D 0;
+>> > =A0 =A0 =A0 =A0const char *port =3D STR(DEFAULT_GIT_PORT);
+>> > =A0 =A0 =A0 =A0struct addrinfo hints, *ai0, *ai;
+>> > @@ -225,11 +226,8 @@ static int git_tcp_connect_sock(char *host, i=
+nt flags)
+>> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0}
+>> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (connect(sockfd, ai->ai_addr, ai=
+->ai_addrlen) < 0) {
+>> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0saved_errno =3D err=
+no;
+>> > - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 fprintf(stderr, "%s[=
+%d: %s]: errno=3D%s\n",
+>> > - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 host=
+,
+>> > - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 cnt,
+>> > - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ai_n=
+ame(ai),
+>> > - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 stre=
+rror(saved_errno));
+>> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 strbuf_addf(&error_m=
+essage, "%s[%d: %s]: errno=3D%s\n",
+>> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 host=
+, cnt, ai_name(ai), strerror(saved_errno));
+>> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0close(sockfd);
+>> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0sockfd =3D -1;
+>> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0continue;
+>> > @@ -242,11 +240,13 @@ static int git_tcp_connect_sock(char *host, =
+int flags)
+>> > =A0 =A0 =A0 =A0freeaddrinfo(ai0);
+>> >
+>> > =A0 =A0 =A0 =A0if (sockfd < 0)
+>> > - =A0 =A0 =A0 =A0 =A0 =A0 =A0 die("unable to connect a socket (%s)=
+", strerror(saved_errno));
+>> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 die("unable to connect to %s:\n%s", =
+host, error_message.buf);
+>> >
+>>
+>> This kills the output from the case where "sockfd < 0" evaluates to
+>> true for the last entry in ai, no (just above your second hunk), no?
+>> In that case errno gets copied to saved_errno, and the old output
+>> would do strerror(old_errno), but now you just print the log you've
+>> gathered, and don't even look at saved_errno.
+>
+> But that's OK, because the value of that saved_errno is in the gather=
+ed
+> log, isn't it?
 
-What is it in this series that causes t5800 to fail when merged to next, i.e.
-
-$ sh t5800-remote-helpers.sh -i -v
-
-expecting success: 
-        git clone "testgit::${PWD}/server" localclone &&
-        test_cmp public/file localclone/file
-
-Cloning into localclone...
-fatal: Got feature command 'relative-marks' after data command
-fast-import: dumping crash report to /srv/project/git/git.git/t/trash
-directory.t5800-remote-helpers/localclone/.git/fast_import_crash_16957
-error: refs/remotes/origin/master does not point to a valid object!
-error: Trying to write ref refs/heads/master with nonexistent object
-0000000000000000000000000000000000000000
-fatal: Cannot update the ref 'HEAD'.
-not ok - 2 cloning from local repo
-#
-#               git clone "testgit::${PWD}/server" localclone &&
-#               test_cmp public/file localclone/file
-#
-
-Stumped...
+No, it's not. In the case where socket fails, we assign errno to
+saved_errno and _continue_. So nothing gets logged about the error. If
+there's only one entry in the address list, we don't end up reporting
+anything; the strbuf is empty. We used to at least report
+strerror(errno) in that case.
