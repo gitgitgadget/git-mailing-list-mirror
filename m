@@ -1,7 +1,7 @@
 From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: [PATCH v2 06/11] vcs-svn: move commit parameters logic to svndump.c
-Date: Wed, 13 Jul 2011 18:21:08 +0600
-Message-ID: <1310559673-5026-7-git-send-email-divanorama@gmail.com>
+Subject: [PATCH v2 11/11] vcs-svn,svn-fe: add an option to write svnrev notes
+Date: Wed, 13 Jul 2011 18:21:13 +0600
+Message-ID: <1310559673-5026-12-git-send-email-divanorama@gmail.com>
 References: <1310559673-5026-1-git-send-email-divanorama@gmail.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	David Barr <davidbarr@google.com>,
@@ -14,232 +14,230 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QgyRf-0004ak-Ak
+	id 1QgyRe-0004ak-PR
 	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 14:21:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752252Ab1GMMV2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jul 2011 08:21:28 -0400
+	id S1752209Ab1GMMVR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jul 2011 08:21:17 -0400
 Received: from mail-bw0-f46.google.com ([209.85.214.46]:35552 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751889Ab1GMMVC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2011 08:21:02 -0400
+	with ESMTP id S1752028Ab1GMMVN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2011 08:21:13 -0400
 Received: by mail-bw0-f46.google.com with SMTP id 5so4787045bwd.19
-        for <git@vger.kernel.org>; Wed, 13 Jul 2011 05:21:02 -0700 (PDT)
+        for <git@vger.kernel.org>; Wed, 13 Jul 2011 05:21:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=5lgZDUZQSR4C3jVlO7exF3xuQqpOaLWTs2Dn6G+pcyc=;
-        b=IJik1lgFEmIgtAGVV898KxG3v85hiu7Al25eHPvCBXMPjeebkLFKOhJ6N/vmeyMwHJ
-         kpfDX839lsX2oc8zyutmqJLcog7JunUOlrV1Nhl51wll5Ts5xoA1ckXioRsMzj/aS/Tu
-         UE5PaM63LGSlbpcJQhmjNoZK4JNqqbH6AyOdc=
-Received: by 10.205.64.135 with SMTP id xi7mr450911bkb.354.1310559662134;
-        Wed, 13 Jul 2011 05:21:02 -0700 (PDT)
+        bh=i0HTkCm1zZZ1PDCRyq0Nt77P+NNvGPsPPpV3d46uO8Y=;
+        b=olLAvdclfjwhlYz/hN1td8PjnYbCA676pTljFT1W93h1UH7JJegXWbGkx6mwu2eoTV
+         UqzLwHEFSDSv1pmUBpoebzdQ3soAtkKBPxTPym8UAzAWEpfpFUVEsG++bdFxXImtHu42
+         XGVQd9nlKsTZp1l5exQAlgWej25+NQbXdijAw=
+Received: by 10.205.64.197 with SMTP id xj5mr463945bkb.407.1310559672444;
+        Wed, 13 Jul 2011 05:21:12 -0700 (PDT)
 Received: from localhost.localdomain (117360277.convex.ru [79.172.62.237])
-        by mx.google.com with ESMTPS id c8sm1653987bkc.15.2011.07.13.05.21.00
+        by mx.google.com with ESMTPS id c8sm1653987bkc.15.2011.07.13.05.21.10
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 13 Jul 2011 05:21:01 -0700 (PDT)
+        Wed, 13 Jul 2011 05:21:11 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.4
 In-Reply-To: <1310559673-5026-1-git-send-email-divanorama@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177036>
 
-fast_export.c had logic to set up commit ref, author name, email,
-parent commit, import mark and git-svn-id: line based on both it's
-own state (current import batch history) and the arguments passed.
+There are already a few options to determine svn revision from which
+a git commit imported with svn-fe came from. One is to make svn-fe
+write a git-svn-id: line to commit messages. Another one is to calc
+distance to the root commit. The former includes a "url" and is for
+git-svn compatibility, the latter is obviously slow and a bit fragile.
 
-Lift the decision on these parameters to the caller. This way it is
-easier to customize them. Move progress lines generation to the caller
-for the same reason.
-
-Now fast_export doesn't have any internal state except the files set
-up in fast_export_init, so it doesn't rely on being passed commits
-sequentially and to one and the same branch. It operates just on a
-current commit. Which makes it possible to generate an incremental
-stream (if stream's first commit parent is set up properly by the
-caller) or maybe to generate a stream for multiple svn branches.
-
-Also progress lines generation is lifted up to svndump.o. So further
-progress indication enhancements won't need to change fast_export.o
-api.
+$ svn-fe --notes_ref=notes_tree --ref=branch...
+will write annotations for branch commits to the notes_tree, each
+annotation is a simple "rN" string. Then these annotations can be
+viewed manually or used in incremental import to detect the last
+imported revision or to (re)create the import marks for further
+imports.
 
 Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
 ---
- vcs-svn/fast_export.c |   44 ++++++++++++++------------------------------
- vcs-svn/fast_export.h |    8 +++++---
- vcs-svn/svndump.c     |   30 ++++++++++++++++++++++++++----
- 3 files changed, 45 insertions(+), 37 deletions(-)
+ contrib/svn-fe/svn-fe.c   |    2 ++
+ contrib/svn-fe/svn-fe.txt |    3 +++
+ t/t9010-svn-fe.sh         |   32 ++++++++++++++++++++++++++++++++
+ test-svn-fe.c             |    2 ++
+ vcs-svn/svndump.c         |   28 ++++++++++++++++++++++++----
+ vcs-svn/svndump.h         |    2 +-
+ 6 files changed, 64 insertions(+), 5 deletions(-)
 
-diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
-index 19d7c34..04001b8 100644
---- a/vcs-svn/fast_export.c
-+++ b/vcs-svn/fast_export.c
-@@ -13,9 +13,6 @@
- #include "sliding_window.h"
- #include "line_buffer.h"
+diff --git a/contrib/svn-fe/svn-fe.c b/contrib/svn-fe/svn-fe.c
+index 211dc4d..8410221 100644
+--- a/contrib/svn-fe/svn-fe.c
++++ b/contrib/svn-fe/svn-fe.c
+@@ -25,6 +25,8 @@ static struct option svn_fe_options[] = {
+ 		"append git-svn metadata line to commit messages"),
+ 	OPT_STRING(0, "ref", &args.ref, "dst_ref",
+ 		"write to dst_ref instead of refs/heads/master"),
++	OPT_STRING(0, "notes-ref", &args.notes_ref, "notes",
++		"write \"rN\" notes to the <notes> tree"),
+ 	OPT_INTEGER(0, "read-blob-fd", &args.backflow_fd,
+ 		"read blobs and trees from this fd instead of 3"),
+ 	OPT_END()
+diff --git a/contrib/svn-fe/svn-fe.txt b/contrib/svn-fe/svn-fe.txt
+index 0b6c29e..ce0582d 100644
+--- a/contrib/svn-fe/svn-fe.txt
++++ b/contrib/svn-fe/svn-fe.txt
+@@ -35,6 +35,9 @@ OPTIONS
+ --ref=<dst_ref>::
+ 	Ref to be written by the generated stream.
+ 	Default is refs/heads/master.
++--notes-ref=<notes_ref>::
++	Write "rN" notes to the notes_ref tree for each
++	imported commit.
+ --read-blob-fd=<fd>::
+ 	Integer number of file descriptor from which
+ 	responses to 'ls' and 'cat-blob' requests will come.
+diff --git a/t/t9010-svn-fe.sh b/t/t9010-svn-fe.sh
+index e5b78a9..2841a3e 100755
+--- a/t/t9010-svn-fe.sh
++++ b/t/t9010-svn-fe.sh
+@@ -1200,4 +1200,36 @@ test_expect_success PIPE 'incremental import' '
+ 	test_line_count = 3 ./history
+ '
  
--#define MAX_GITSVN_LINE_LEN 4096
--
--static uint32_t first_commit_done;
- static struct line_buffer postimage = LINE_BUFFER_INIT;
- static struct line_buffer report_buffer = LINE_BUFFER_INIT;
++test_expect_success PIPE 'write notes' '
++	reinit_git &&
++	cat >expect <<-EOF &&
++	r2
++
++	r1
++
++	EOF
++	try_dump_ext "--notes=refs/notes/test" "" "" emptyprop.dump &&
++	git log --show-notes=refs/notes/test --format=%N >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success PIPE 'write notes incremental' '
++	reinit_git &&
++	>./marks &&
++	cat >expect <<-EOF &&
++	r3
++
++	r2
++
++	r1
++
++	EOF
++
++	try_dump_ext "--notes=refs/notes/test" "" "--export-marks=marks" emptyprop.dump &&
++	try_dump_ext "--incremental --notes=refs/notes/test" "" "--import-marks=marks" moreempty.dump &&
++
++	git log --show-notes=refs/notes/test --format=%N >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+diff --git a/test-svn-fe.c b/test-svn-fe.c
+index 8d3cc99..e6d9ae6 100644
+--- a/test-svn-fe.c
++++ b/test-svn-fe.c
+@@ -27,6 +27,8 @@ static struct option test_svnfe_options[] = {
+ 		1),
+ 	OPT_INTEGER(0, "read-blob-fd", &args.backflow_fd,
+ 		"read blobs and trees from this fd instead of 3"),
++	OPT_STRING(0, "notes-ref", &args.notes_ref, "notes",
++		"write \"rN\" notes to the <notes> tree"),
+ 	OPT_END()
+ };
  
-@@ -31,7 +28,6 @@ static int init_postimage(void)
- 
- void fast_export_init(int fd)
- {
--	first_commit_done = 0;
- 	if (buffer_fdinit(&report_buffer, fd))
- 		die_errno("cannot read from file descriptor %d", fd);
- }
-@@ -73,42 +69,30 @@ void fast_export_modify(const char *path, uint32_t mode, const char *dataref)
- 	putchar('\n');
- }
- 
--static char gitsvnline[MAX_GITSVN_LINE_LEN];
--void fast_export_begin_commit(uint32_t revision, const char *author,
--			const struct strbuf *log,
--			const char *uuid, const char *url,
--			unsigned long timestamp)
-+void fast_export_begin_commit(uint32_t set_mark, const char *committer_name,
-+			const char *committer_login, const char *committer_domain,
-+			const struct strbuf *log, const char *gitsvnline,
-+			unsigned long timestamp, uint32_t from_mark,
-+			const char *dst_ref)
- {
--	static const struct strbuf empty = STRBUF_INIT;
--	if (!log)
--		log = &empty;
--	if (*uuid && *url) {
--		snprintf(gitsvnline, MAX_GITSVN_LINE_LEN,
--				"\n\ngit-svn-id: %s@%"PRIu32" %s\n",
--				 url, revision, uuid);
--	} else {
--		*gitsvnline = '\0';
--	}
--	printf("commit refs/heads/master\n");
--	printf("mark :%"PRIu32"\n", revision);
-+	if (!gitsvnline)
-+		gitsvnline = "";
-+	printf("commit %s\n", dst_ref);
-+	if (set_mark)
-+		printf("mark :%"PRIu32"\n", set_mark);
- 	printf("committer %s <%s@%s> %ld +0000\n",
--		   *author ? author : "nobody",
--		   *author ? author : "nobody",
--		   *uuid ? uuid : "local", timestamp);
-+		committer_name, committer_login, committer_domain,
-+		timestamp);
- 	printf("data %"PRIuMAX"\n",
- 		(uintmax_t) (log->len + strlen(gitsvnline)));
- 	fwrite(log->buf, log->len, 1, stdout);
- 	printf("%s\n", gitsvnline);
--	if (!first_commit_done) {
--		if (revision > 1)
--			printf("from :%"PRIu32"\n", revision - 1);
--		first_commit_done = 1;
--	}
-+	if (from_mark)
-+		printf("from :%"PRIu32"\n", from_mark);
- }
- 
- void fast_export_end_commit(uint32_t revision)
- {
--	printf("progress Imported commit %"PRIu32".\n\n", revision);
- }
- 
- static void ls_from_rev(uint32_t rev, const char *path)
-diff --git a/vcs-svn/fast_export.h b/vcs-svn/fast_export.h
-index 43d05b6..6c1c2be 100644
---- a/vcs-svn/fast_export.h
-+++ b/vcs-svn/fast_export.h
-@@ -10,9 +10,11 @@ void fast_export_reset(void);
- 
- void fast_export_delete(const char *path);
- void fast_export_modify(const char *path, uint32_t mode, const char *dataref);
--void fast_export_begin_commit(uint32_t revision, const char *author,
--			const struct strbuf *log, const char *uuid,
--			const char *url, unsigned long timestamp);
-+void fast_export_begin_commit(uint32_t set_mark, const char *committer_name,
-+			const char *committer_login, const char *committer_domain,
-+			const struct strbuf *log, const char *gitsvnline,
-+			unsigned long timestamp, uint32_t from_mark,
-+			const char *dst_ref);
- void fast_export_end_commit(uint32_t revision);
- void fast_export_data(uint32_t mode, uint32_t len, struct line_buffer *input);
- void fast_export_blob_delta(uint32_t mode,
 diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
-index 60cccad..c58262a 100644
+index 2b11f96..514703f 100644
 --- a/vcs-svn/svndump.c
 +++ b/vcs-svn/svndump.c
-@@ -37,6 +37,8 @@
- #define LENGTH_UNKNOWN (~0)
- #define DATE_RFC2822_LEN 31
- 
-+#define MAX_GITSVN_LINE_LEN 4096
-+
- static struct line_buffer input = LINE_BUFFER_INIT;
- 
- static struct {
-@@ -54,6 +56,7 @@ static struct {
- static struct {
+@@ -57,7 +57,7 @@ static struct {
  	uint32_t version;
  	struct strbuf uuid, url;
-+	int first_commit_done;
+ 	int first_commit_done;
+-	struct strbuf ref_name;
++	struct strbuf ref_name, notes_ref_name;
+ 	int incremental;
  } dump_ctx;
  
- static void reset_node_ctx(char *fname)
-@@ -86,6 +89,7 @@ static void reset_dump_ctx(const char *url)
- 		strbuf_addstr(&dump_ctx.url, url);
- 	dump_ctx.version = 1;
- 	strbuf_reset(&dump_ctx.uuid);
-+	dump_ctx.first_commit_done = 0;
+@@ -84,7 +84,7 @@ static void reset_rev_ctx(uint32_t revision)
+ 	strbuf_reset(&rev_ctx.author);
+ }
+ 
+-static void reset_dump_ctx(const char *url, const char *dst_ref, int incremental)
++static void reset_dump_ctx(const char *url, const char *dst_ref, int incremental, const char *dst_notes_ref)
+ {
+ 	strbuf_reset(&dump_ctx.url);
+ 	if (url)
+@@ -95,6 +95,9 @@ static void reset_dump_ctx(const char *url, const char *dst_ref, int incremental
+ 	strbuf_reset(&dump_ctx.ref_name);
+ 	strbuf_addstr(&dump_ctx.ref_name, dst_ref);
+ 	dump_ctx.incremental = incremental;
++	strbuf_reset(&dump_ctx.notes_ref_name);
++	if (dst_notes_ref)
++		strbuf_addstr(&dump_ctx.notes_ref_name, dst_notes_ref);
  }
  
  static void handle_property(const struct strbuf *key_buf,
-@@ -299,19 +303,37 @@ static void handle_node(void)
- 				node_ctx.textLength, &input);
- }
- 
-+static char gitsvnline[MAX_GITSVN_LINE_LEN];
- static void begin_revision(void)
- {
-+	int from_mark;
-+	const char *author;
-+	const char *domain;
- 	if (!rev_ctx.revision)	/* revision 0 gets no git commit. */
- 		return;
--	fast_export_begin_commit(rev_ctx.revision, rev_ctx.author.buf,
--		&rev_ctx.log, dump_ctx.uuid.buf, dump_ctx.url.buf,
--		rev_ctx.timestamp);
-+	if (*dump_ctx.uuid.buf && *dump_ctx.url.buf) {
-+		snprintf(gitsvnline, MAX_GITSVN_LINE_LEN,
-+				"\n\ngit-svn-id: %s@%"PRIu32" %s\n",
-+				 dump_ctx.url.buf, rev_ctx.revision, dump_ctx.uuid.buf);
-+	} else {
-+		*gitsvnline = 0;
-+	}
-+	from_mark = dump_ctx.first_commit_done ? rev_ctx.revision - 1 : 0;
-+	author = *rev_ctx.author.buf ? rev_ctx.author.buf : "nobody";
-+	domain = *dump_ctx.uuid.buf ? dump_ctx.uuid.buf : "local";
-+
-+	fast_export_begin_commit(rev_ctx.revision, author, author, domain,
-+		&rev_ctx.log, gitsvnline, rev_ctx.timestamp,
-+		from_mark);
- }
+@@ -337,8 +340,25 @@ static void begin_revision(void)
  
  static void end_revision(void)
  {
--	if (rev_ctx.revision)
-+	if (rev_ctx.revision) {
++	char buf[32];
++	char tmbuf[32];
+ 	if (rev_ctx.revision) {
  		fast_export_end_commit(rev_ctx.revision);
-+		printf("progress Imported commit %"PRIu32".\n\n", rev_ctx.revision);
-+		dump_ctx.first_commit_done = 1;
-+	}
- }
++		if (dump_ctx.notes_ref_name.len) {
++			datestamp(tmbuf, 32);
++			printf("commit %s\n", dump_ctx.notes_ref_name.buf);
++			printf("committer %s <%s@%s> %s\n",
++					"vcs-svn", "vcs-svn", "local", tmbuf);
++			printf("data <<EOF\n");
++			printf("imported r%d\n", rev_ctx.revision);
++			printf("EOF\n\n");
++			if (!dump_ctx.first_commit_done && dump_ctx.incremental && rev_ctx.revision > 1)
++				printf("from %s^0\n", dump_ctx.notes_ref_name.buf);
++			snprintf(buf, 32, "r%d", rev_ctx.revision);
++			printf("N inline :%d\n", rev_ctx.revision);
++			printf("data %ld\n", strlen(buf));
++			printf("%s\n", buf);
++		}
+ 		if (print_progress)
+ 			printf("progress Imported commit %"PRIu32".\n\n", rev_ctx.revision);
+ 		dump_ctx.first_commit_done = 1;
+@@ -498,7 +518,7 @@ int svndump_init(const struct svndump_args *args)
+ 	strbuf_init(&rev_ctx.author, 4096);
+ 	strbuf_init(&node_ctx.src, 4096);
+ 	strbuf_init(&node_ctx.dst, 4096);
+-	reset_dump_ctx(args->url, args->ref, args->incremental);
++	reset_dump_ctx(args->url, args->ref, args->incremental, args->notes_ref);
+ 	reset_rev_ctx(0);
+ 	reset_node_ctx(NULL);
+ 	return 0;
+@@ -507,7 +527,7 @@ int svndump_init(const struct svndump_args *args)
+ void svndump_deinit(void)
+ {
+ 	fast_export_deinit();
+-	reset_dump_ctx(NULL, "", 0);
++	reset_dump_ctx(NULL, "", 0, "");
+ 	reset_rev_ctx(0);
+ 	reset_node_ctx(NULL);
+ 	strbuf_release(&rev_ctx.log);
+diff --git a/vcs-svn/svndump.h b/vcs-svn/svndump.h
+index f2bb58c..928bb0b 100644
+--- a/vcs-svn/svndump.h
++++ b/vcs-svn/svndump.h
+@@ -3,7 +3,7 @@
  
- void svndump_read(void)
+ struct svndump_args {
+ 	const char *filename, *url;
+-	const char *ref;
++	const char *ref, *notes_ref;
+ 	int backflow_fd;
+ 	int progress, incremental;
+ };
 -- 
 1.7.3.4
