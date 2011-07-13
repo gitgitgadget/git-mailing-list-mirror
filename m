@@ -1,112 +1,190 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 06/17] revert: Eliminate global "commit" variable
-Date: Wed, 13 Jul 2011 12:27:58 +0530
-Message-ID: <CALkWK0k3muAi_h7GRqgJ9vY8SwHK40-AwMdjA=uCDO8Ng4utCA@mail.gmail.com>
-References: <1310396048-24925-1-git-send-email-artagnon@gmail.com>
- <1310396048-24925-7-git-send-email-artagnon@gmail.com> <20110712174518.GB14120@elie>
+From: Jeff King <peff@peff.net>
+Subject: [RFC/PATCHv2 3/6] commit: add commit_generation function
+Date: Wed, 13 Jul 2011 03:05:17 -0400
+Message-ID: <20110713070517.GC18566@sigill.intra.peff.net>
+References: <20110713064709.GA18499@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 13 08:58:25 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>, Ted Ts'o <tytso@mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Clemens Buchacher <drizzd@aon.at>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 13 09:05:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QgtOq-0003ak-5c
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 08:58:24 +0200
+	id 1QgtVe-0005uT-GO
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 09:05:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964961Ab1GMG6U convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jul 2011 02:58:20 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:37860 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750856Ab1GMG6T convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2011 02:58:19 -0400
-Received: by wwe5 with SMTP id 5so5670229wwe.1
-        for <git@vger.kernel.org>; Tue, 12 Jul 2011 23:58:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ZH82gtM4zs0sFG3aiJebVCisZGFyJ5D2TCXoZzA3IDQ=;
-        b=nrrtCHVGjVGxur3J/2pChuX32qshWXHpnczOvjsOOLulB3dW+XUskUgMT2onn5tLKL
-         vkLK6hLiQBYfcwqad31CGYV81qDCjJD3OpO1Y8kIJHO7WcWH2QPK9n9GkRwnh+5Wnqn/
-         6peFyEZYuuDz2hAVambQoQGBUtsz7UiSw1JyE=
-Received: by 10.216.187.75 with SMTP id x53mr4811465wem.92.1310540298116; Tue,
- 12 Jul 2011 23:58:18 -0700 (PDT)
-Received: by 10.216.175.198 with HTTP; Tue, 12 Jul 2011 23:57:58 -0700 (PDT)
-In-Reply-To: <20110712174518.GB14120@elie>
+	id S1758673Ab1GMHFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jul 2011 03:05:20 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43220
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750856Ab1GMHFU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2011 03:05:20 -0400
+Received: (qmail 21153 invoked by uid 107); 13 Jul 2011 07:05:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 13 Jul 2011 03:05:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Jul 2011 03:05:17 -0400
+Content-Disposition: inline
+In-Reply-To: <20110713064709.GA18499@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/176999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177000>
 
-Hi again,
+A commit's generation is its height in the history graph, as
+measured from the farthest root. It is defined as:
 
-Jonathan Nieder writes:
-> Ramkumar Ramachandra wrote:
->> Since we want to develop the functionality to either pick or revert
->> individual commits atomically later in the series, make "commit" a
->> variable to be passed around explicitly as an argument for clarity.
->
-> The above explanation is not so clear to me, but the patch looks good=
-=2E
-> Isn't the idea something like
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0commit =3D grab_a_nice_commit();
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0res =3D do_pick_commit();
->
-> being just an unpleasant API relative to
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0res =3D do_pick_commit(grab_a_nice_commit(=
-));
->
-> because in the latter it is more obvious which commit is being
-> cherry-picked? =C2=A0Likewise with the functions it calls.
->
-> Or perhaps the idea is that eventually we will want to expose somethi=
-ng
-> like do_pick_commit to other translation units, but a static variable
-> like "commit" would not be appropriate for exposing. =C2=A0Or that we=
- save
-> a word of global memory. =C2=A0Or that this way if do_pick_commit or =
-a
-> function it calls ever ends up recursing by mistake it won't get
-> broken. =C2=A0Or that we can use multiple threads some day. =C2=A0Or.=
-=2E.
->
-> Oh, the uncertainty! :) =C2=A0It is not clear to me what any of the a=
-bove
-> have to do with wanting the functionality to replay an individual
-> commit atomically. =C2=A0By the way, what does pickiing or reverting =
-a
-> commit atomically mean, and how is it different from ordinary
-> cherry-picks?
+  - If the commit has no parents, then its generation is 0.
 
-Right.  How about this?
+  - Otherwise, its generation is 1 more than the maximum of
+    its parents generations.
 
-revert: Eliminate global "commit" variable
+The following diagram shows a sample history with
+generations:
 
-=46unctions which act on commits currently rely on a file-scope static
-variable to be set before they're called.  Consequently, the API and
-corresponding callsites are ugly and unclear.  Remove this variable
-and change their API to accept the commit to act on as additional
-argument so that the callsites change from looking like
+  A(0)--B(1)--C(2)------G(5)--H(6)
+         \             /
+          D(2)--E(3)--F(4)
 
-commit =3D prepare_a_commit();
-act_on_commit();
+Note that C and D have the same generation, as they are both
+children of B. Note also that the merge commit G's
+generation is 5, not 3, as we take the maximum of its
+parents' generations.
 
-to looking like
+Generation numbers can be useful for bounding traversals.
+For example, if we have two commits with generations 500 and
+600, we know that the second cannot be an ancestor of the
+first. The first could be an ancestor of the second, but we
+can't know unless we traverse the history graph. However,
+when walking backwards from the "600" commit, once we reach
+generation "499", we know that the "500" commit cannot be an
+ancestor of the "499" commit, and we can stop the traversal
+without even looking at the earlier parts of the history.
 
-commit =3D prepare_a_commit();
-act_on_commit(commit);
+We already do something similar with commit timestamps in
+many traversals. However, timestamps are somewhat
+untrustworthy, as we have to deal with clock skew and with
+imports from buggy systems.
 
-This change is also in line with our long-term goal of exposing some
-of these functions through a public API.
+Generation numbers are easy to calculate recursively, though
+you have to go to the roots to do so. This patch calculates
+and stores them in a persistent cache.  It uses a simple
+recursive algorithm; you could probably drop the recursion
+by topologically sorting a list of all commits and filling
+in generation numbers left to right. But the recursive
+definition coupled with the cache make it very cheap to
+calculate generation numbers for new commits at the tip of
+history (you only have to traverse back to the last cached
+parents).
 
--- Ram
+We could also store generation numbers in the commit header
+directly. These would be faster to look at than an external
+cache (they would be on par speed-wise with commit
+timestamps). But there are a few reasons not to:
+
+  1. The reason to avoid commit timestamps is that they are
+     unreliable. Generation numbers would probably be more
+     reliable, but they are still redundant with the actual
+     graph structure represented by the parent pointers, and
+     can therefore be out of sync with the parent
+     information. By calculating them ourselves, we know
+     they are correct.
+
+  2. With grafts and replacement objects, the graph
+     structure (and thus the generation numbers) can be
+     changed. So the generation number, while immutable for
+     a given commit object, can be changed when we "lie"
+     about the graph structure via these mechanisms. Being
+     able to simply clear the cache when these things are
+     changed is helpful.
+
+  3. There's a lot of existing git history without
+     generation headers. So we'd still need to have the same
+     cache to handle those cases.
+
+  4. It generally pollutes the header with redundant
+     information, which we try to avoid. Putting it in the
+     commit header is purely a speedup, and it seems we can
+     get similar performance with a generation cache.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Same as before, but rebased onto the new metadata-cache interface.
+
+ commit.c |   36 ++++++++++++++++++++++++++++++++++++
+ commit.h |    2 ++
+ 2 files changed, 38 insertions(+), 0 deletions(-)
+
+diff --git a/commit.c b/commit.c
+index ac337c7..fb37aa0 100644
+--- a/commit.c
++++ b/commit.c
+@@ -6,6 +6,7 @@
+ #include "diff.h"
+ #include "revision.h"
+ #include "notes.h"
++#include "metadata-cache.h"
+ 
+ int save_commit_buffer = 1;
+ 
+@@ -878,3 +879,38 @@ int commit_tree(const char *msg, unsigned char *tree,
+ 	strbuf_release(&buffer);
+ 	return result;
+ }
++
++static struct metadata_cache generations =
++	METADATA_CACHE_INIT("generations", sizeof(uint32_t), NULL);
++
++static unsigned long commit_generation_recurse(struct commit *c)
++{
++	struct commit_list *p;
++	uint32_t r;
++
++	if (!metadata_cache_lookup_uint32(&generations, &c->object, &r))
++		return r;
++
++	if (parse_commit(c) < 0)
++		die("unable to parse commit: %s", sha1_to_hex(c->object.sha1));
++
++	if (!c->parents)
++		return 0;
++
++	r = 0;
++	for (p = c->parents; p; p = p->next) {
++		unsigned long pgen = commit_generation_recurse(p->item);
++		if (pgen > r)
++			r = pgen;
++	}
++	r++;
++
++	metadata_cache_add_uint32(&generations, &c->object, r);
++	return r;
++}
++
++unsigned long commit_generation(const struct commit *commit)
++{
++	/* drop const because we may call parse_commit */
++	return commit_generation_recurse((struct commit *)commit);
++}
+diff --git a/commit.h b/commit.h
+index a2d571b..bff6b36 100644
+--- a/commit.h
++++ b/commit.h
+@@ -176,4 +176,6 @@ extern int commit_tree(const char *msg, unsigned char *tree,
+ 		struct commit_list *parents, unsigned char *ret,
+ 		const char *author);
+ 
++unsigned long commit_generation(const struct commit *commit);
++
+ #endif /* COMMIT_H */
+-- 
+1.7.6.37.g989c6
