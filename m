@@ -1,7 +1,7 @@
 From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: [PATCH v2 10/11] vcs-svn,svn-fe: add --incremental option
-Date: Wed, 13 Jul 2011 18:21:12 +0600
-Message-ID: <1310559673-5026-11-git-send-email-divanorama@gmail.com>
+Subject: [PATCH v2 07/11] vcs-svn,svn-fe: allow to specify dump destination ref
+Date: Wed, 13 Jul 2011 18:21:09 +0600
+Message-ID: <1310559673-5026-8-git-send-email-divanorama@gmail.com>
 References: <1310559673-5026-1-git-send-email-divanorama@gmail.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	David Barr <davidbarr@google.com>,
@@ -14,249 +14,279 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QgyRL-0004QA-Mh
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 14:21:20 +0200
+	id 1QgyRL-0004QA-6D
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 14:21:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752188Ab1GMMVO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jul 2011 08:21:14 -0400
+	id S1752119Ab1GMMVH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jul 2011 08:21:07 -0400
 Received: from mail-bw0-f46.google.com ([209.85.214.46]:35552 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752121Ab1GMMVL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2011 08:21:11 -0400
+	with ESMTP id S1752028Ab1GMMVE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2011 08:21:04 -0400
 Received: by mail-bw0-f46.google.com with SMTP id 5so4787045bwd.19
-        for <git@vger.kernel.org>; Wed, 13 Jul 2011 05:21:10 -0700 (PDT)
+        for <git@vger.kernel.org>; Wed, 13 Jul 2011 05:21:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=AvvgRE5o07lTbL8wSXetrbTYQlAB6h/VTS8OOpaa3fs=;
-        b=MFgQAMNoLxBa6s/zniO7qt6V+g9ket+Fx2kXLCajvK+zfuuXP0onAka/4nKIpXIIm/
-         PDDu3E76wb+5KUELNLr7UPfm9vdPmOilkl94cbHAL290qQEqfqL9BR+gAXtw+YxPSYfG
-         A7ojKZuA5m4j/D7wzMAr8Mb9PNImr5B85hp9Q=
-Received: by 10.205.35.194 with SMTP id sx2mr461904bkb.384.1310559670357;
-        Wed, 13 Jul 2011 05:21:10 -0700 (PDT)
+        bh=2egXLljthSAtPNoBuSq4XjUwmz/RkzRE7CWjcjyElJg=;
+        b=qAAd/Kt+53vfnCWslj853Gg1sepa58XzYDc5UHsBuZqpIsizQPoDgiAt/8JYfRDSuT
+         JLL9wXSYlLlMLs/PPPHRGOSJgM8vdXTJEt6IR9vcXhM42EbSHNSjQjK/icGa8bUdW3rU
+         Q3WOMEtOONhTZeOLYcKbT/npxq1nz6B9EQN14=
+Received: by 10.204.35.195 with SMTP id q3mr524627bkd.174.1310559664162;
+        Wed, 13 Jul 2011 05:21:04 -0700 (PDT)
 Received: from localhost.localdomain (117360277.convex.ru [79.172.62.237])
-        by mx.google.com with ESMTPS id c8sm1653987bkc.15.2011.07.13.05.21.08
+        by mx.google.com with ESMTPS id c8sm1653987bkc.15.2011.07.13.05.21.02
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 13 Jul 2011 05:21:09 -0700 (PDT)
+        Wed, 13 Jul 2011 05:21:03 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.4
 In-Reply-To: <1310559673-5026-1-git-send-email-divanorama@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177032>
 
-This option is to make svn-fe write commits on top of the existing ref
-instead of overwriting it. More precise, the first commit's parent is
-set to be :(first_revision_in_current_dump - 1) mark.
+svn-fe produces fast-import stream for a fixed refs/heads/master ref.
+It is usually desired to write to a different ref. In a remote helper
+it would be a ref in private namespace. If svn-fe is used by someone
+directly it'll be more safe to remind where the commits can go. And
+in both cases it may be needed to import from two repos and hence to
+different refs.
 
-Prerequisite is to (re)use import marks (from previous imports). It is
-safe to use this option on a svn dump that starts with r0/r1. The svn
-dump itself should be incremental too.
+Add a destination ref parameter to vcs-svn/, a corresponding parameter
+to svn-fe and a simple test for it.
+
+$ svn-fe --ref=refs/heads/master ...
+is an explicit way to stay with the default destination.
 
 Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
 ---
- contrib/svn-fe/svn-fe.c   |    3 +++
- contrib/svn-fe/svn-fe.txt |    5 +++++
- t/t9010-svn-fe.sh         |   34 +++++++++++++++++++++++++++++-----
- test-svn-fe.c             |    3 +++
- vcs-svn/svndump.c         |   13 +++++++++----
- vcs-svn/svndump.h         |    2 +-
- 6 files changed, 50 insertions(+), 10 deletions(-)
+ contrib/svn-fe/svn-fe.c   |    3 ++
+ contrib/svn-fe/svn-fe.txt |    3 ++
+ t/t9010-svn-fe.sh         |   49 +++++++++++++++++++++++++++++---------------
+ test-svn-fe.c             |    5 +++-
+ vcs-svn/svndump.c         |   11 ++++++---
+ vcs-svn/svndump.h         |    1 +
+ 6 files changed, 50 insertions(+), 22 deletions(-)
 
 diff --git a/contrib/svn-fe/svn-fe.c b/contrib/svn-fe/svn-fe.c
-index a388750..211dc4d 100644
+index 59141d6..11739bc 100644
 --- a/contrib/svn-fe/svn-fe.c
 +++ b/contrib/svn-fe/svn-fe.c
-@@ -18,6 +18,9 @@ static struct option svn_fe_options[] = {
- 	{ OPTION_BIT, 0, "progress", &args.progress,
- 		NULL, "don't write a progress line after each commit",
- 		PARSE_OPT_NOARG | PARSE_OPT_NEGHELP, NULL, 1 },
-+	OPT_BIT(0, "incremental", &args.incremental,
-+		"resume export, requires marks and incremental dump",
-+		1),
+@@ -17,11 +17,14 @@ static struct svndump_args args;
+ static struct option svn_fe_options[] = {
  	OPT_STRING(0, "git-svn-id-url", &args.url, "url",
  		"append git-svn metadata line to commit messages"),
- 	OPT_STRING(0, "ref", &args.ref, "dst_ref",
++	OPT_STRING(0, "ref", &args.ref, "dst_ref",
++		"write to dst_ref instead of refs/heads/master"),
+ 	OPT_END()
+ };
+ 
+ int main(int argc, const char **argv)
+ {
++	args.ref = "refs/heads/master";
+ 	argc = parse_options(argc, argv, NULL, svn_fe_options,
+ 						svn_fe_usage, 0);
+ 	if (argc == 1) {
 diff --git a/contrib/svn-fe/svn-fe.txt b/contrib/svn-fe/svn-fe.txt
-index f1a459e..0b6c29e 100644
+index 8c6d347..20c3315 100644
 --- a/contrib/svn-fe/svn-fe.txt
 +++ b/contrib/svn-fe/svn-fe.txt
-@@ -42,6 +42,11 @@ OPTIONS
- --[no-]progress::
- 	Write 'progress' lines to fast-import stream. These
- 	can be displayed by fast-import.
-+--incremental::
-+	If the first revision in dump has number greater than
-+	1, make :(revision - 1) it's parent. For this to work
-+	fast-import must be supplied with import-marks file
-+	and the dump must be incremental.
+@@ -32,6 +32,9 @@ OPTIONS
+ 	Url to be used in git-svn-id: lines in git-svn
+ 	metadata lines format. See NOTES for more detailed
+ 	description.
++--ref=<dst_ref>::
++	Ref to be written by the generated stream.
++	Default is refs/heads/master.
  
  INPUT FORMAT
  ------------
 diff --git a/t/t9010-svn-fe.sh b/t/t9010-svn-fe.sh
-index 6dcad94..e5b78a9 100755
+index b7eed24..52efabe 100755
 --- a/t/t9010-svn-fe.sh
 +++ b/t/t9010-svn-fe.sh
-@@ -19,7 +19,8 @@ reinit_git () {
- try_dump_ext () {
- 	args=$1 &&
- 	fd=${2:-3} &&
--	shift 2 &&
-+	fi_args=${3:-} &&
-+	shift 3 &&
+@@ -16,18 +16,24 @@ reinit_git () {
+ 	mkfifo stream backflow
+ }
+ 
+-try_dump () {
++try_dump_ext () {
++	args=$1 &&
++	shift &&
  	input=$1 &&
  	maybe_fail_svnfe=${2:+test_$2} &&
  	maybe_fail_fi=${3:+test_$3} &&
-@@ -27,12 +28,12 @@ try_dump_ext () {
+ 
  	{
- 		eval "$maybe_fail_svnfe test-svn-fe $args "$input" >stream $fd<backflow" &
+-		$maybe_fail_svnfe test-svn-fe "$input" >stream 3<backflow &
++		$maybe_fail_svnfe test-svn-fe $args "$input" >stream 3<backflow &
  	} &&
--	$maybe_fail_fi git fast-import --cat-blob-fd=3 <stream 3>backflow &&
-+	eval "$maybe_fail_fi git fast-import $fi_args --cat-blob-fd=3 <stream 3>backflow" &&
+ 	$maybe_fail_fi git fast-import --cat-blob-fd=3 <stream 3>backflow &&
  	wait $!
  }
  
- try_dump () {
--	try_dump_ext "" "" $@
-+	try_dump_ext "" "" "" $@
- }
- 
++try_dump () {
++	try_dump_ext "" $@
++}
++
  properties () {
-@@ -76,6 +77,15 @@ Content-length: 10
+ 	while test "$#" -ne 0
+ 	do
+@@ -54,6 +60,22 @@ text_no_props () {
  
- PROPS-END
- EOF
-+cat >moreempty.dump <<-EOF &&
+ >empty
+ 
++cat >emptyprop.dump <<-EOF &&
 +SVN-fs-dump-format-version: 3
 +
-+Revision-number: 3
++Revision-number: 1
++Prop-content-length: 10
++Content-length: 10
++
++PROPS-END
++
++Revision-number: 2
 +Prop-content-length: 10
 +Content-length: 10
 +
 +PROPS-END
 +EOF
- 
++
  test_expect_success 'setup: have pipes?' '
  	rm -f frob &&
-@@ -1121,7 +1131,7 @@ test_expect_success SVNREPO,PIPE 't9135/svn.dump' '
- 
- test_expect_success PIPE 'import to notmaster ref' '
+ 	if mkfifo frob
+@@ -97,21 +119,6 @@ test_expect_failure PIPE 'empty revision' '
+ test_expect_success PIPE 'empty properties' '
  	reinit_git &&
--	try_dump_ext "--ref=refs/heads/notmaster" 3 emptyprop.dump &&
-+	try_dump_ext "--ref=refs/heads/notmaster" 3 "" emptyprop.dump &&
- 
- 	git rev-parse --verify notmaster &&
- 	test_must_fail git rev-parse --verify master
-@@ -1170,10 +1180,24 @@ test_expect_success PIPE 'use different backflow fd' '
- 		Node-copyfrom-path: directory/somefile
- 		EOF
- 	} >directory.dump &&
--	try_dump_ext "--read-blob-fd=7" 7 directory.dump &&
-+	try_dump_ext "--read-blob-fd=7" 7 "" directory.dump &&
- 
- 	git checkout HEAD otherfile &&
- 	test_cmp hi otherfile
+ 	printf "rev <nobody, nobody@local>: %s\n" "" "" >expect &&
+-	cat >emptyprop.dump <<-\EOF &&
+-	SVN-fs-dump-format-version: 3
+-
+-	Revision-number: 1
+-	Prop-content-length: 10
+-	Content-length: 10
+-
+-	PROPS-END
+-
+-	Revision-number: 2
+-	Prop-content-length: 10
+-	Content-length: 10
+-
+-	PROPS-END
+-	EOF
+ 	try_dump emptyprop.dump &&
+ 	git log -p --format="rev <%an, %ae>: %s" HEAD >actual &&
+ 	test_cmp expect actual
+@@ -1111,4 +1118,12 @@ test_expect_success SVNREPO,PIPE 't9135/svn.dump' '
+ 	)
  '
  
-+test_expect_success PIPE 'incremental import' '
++test_expect_success PIPE 'import to notmaster ref' '
 +	reinit_git &&
-+	>./marks &&
++	try_dump_ext "--ref=refs/heads/notmaster" emptyprop.dump &&
 +
-+	try_dump_ext "--incremental" "" "--export-marks=./marks" emptyprop.dump &&
-+	test_line_count = 2 ./marks &&
-+
-+	try_dump_ext "--incremental" "" "--import-marks=./marks --export-marks=./marks" moreempty.dump &&
-+	test_line_count = 3 ./marks &&
-+
-+	git log --format=oneline >history &&
-+	test_line_count = 3 ./history
++	git rev-parse --verify notmaster &&
++	test_must_fail git rev-parse --verify master
 +'
 +
  test_done
 diff --git a/test-svn-fe.c b/test-svn-fe.c
-index f2711e6..8d3cc99 100644
+index 9e5b1a6..bc437b3 100644
 --- a/test-svn-fe.c
 +++ b/test-svn-fe.c
-@@ -22,6 +22,9 @@ static struct option test_svnfe_options[] = {
+@@ -10,7 +10,7 @@
+ #include "vcs-svn/line_buffer.h"
+ 
+ static const char * const test_svnfe_usage[] = {
+-	"test-svn-fe (<dumpfile> | -d <preimage> <delta> <len>)",
++	"test-svn-fe ([options] <dumpfile> | -d <preimage> <delta> <len>)",
+ 	NULL
+ };
+ 
+@@ -20,6 +20,8 @@ static int d;
+ 
+ static struct option test_svnfe_options[] = {
  	OPT_SET_INT('d', NULL, &d, "test apply_delta", 1),
- 	OPT_STRING(0, "ref", &args.ref, "dst_ref",
- 		"write to dst_ref instead of refs/heads/master"),
-+	OPT_BIT(0, "incremental", &args.incremental,
-+		"resume export, requires marks and incremental dump",
-+		1),
- 	OPT_INTEGER(0, "read-blob-fd", &args.backflow_fd,
- 		"read blobs and trees from this fd instead of 3"),
++	OPT_STRING(0, "ref", &args.ref, "dst_ref",
++		"write to dst_ref instead of refs/heads/master"),
  	OPT_END()
+ };
+ 
+@@ -51,6 +53,7 @@ static int apply_delta(int argc, const char *argv[])
+ 
+ int main(int argc, const char *argv[])
+ {
++	args.ref = "refs/heads/master";
+ 	argc = parse_options(argc, argv, NULL, test_svnfe_options,
+ 						test_svnfe_usage, 0);
+ 
 diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
-index 6ad9f63..2b11f96 100644
+index c58262a..616f9ec 100644
 --- a/vcs-svn/svndump.c
 +++ b/vcs-svn/svndump.c
-@@ -58,6 +58,7 @@ static struct {
+@@ -57,6 +57,7 @@ static struct {
+ 	uint32_t version;
  	struct strbuf uuid, url;
  	int first_commit_done;
- 	struct strbuf ref_name;
-+	int incremental;
++	struct strbuf ref_name;
  } dump_ctx;
  
  static void reset_node_ctx(char *fname)
-@@ -83,7 +84,7 @@ static void reset_rev_ctx(uint32_t revision)
+@@ -82,7 +83,7 @@ static void reset_rev_ctx(uint32_t revision)
  	strbuf_reset(&rev_ctx.author);
  }
  
--static void reset_dump_ctx(const char *url, const char *dst_ref)
-+static void reset_dump_ctx(const char *url, const char *dst_ref, int incremental)
+-static void reset_dump_ctx(const char *url)
++static void reset_dump_ctx(const char *url, const char *dst_ref)
  {
  	strbuf_reset(&dump_ctx.url);
  	if (url)
-@@ -93,6 +94,7 @@ static void reset_dump_ctx(const char *url, const char *dst_ref)
+@@ -90,6 +91,8 @@ static void reset_dump_ctx(const char *url)
+ 	dump_ctx.version = 1;
+ 	strbuf_reset(&dump_ctx.uuid);
  	dump_ctx.first_commit_done = 0;
- 	strbuf_reset(&dump_ctx.ref_name);
- 	strbuf_addstr(&dump_ctx.ref_name, dst_ref);
-+	dump_ctx.incremental = incremental;
++	strbuf_reset(&dump_ctx.ref_name);
++	strbuf_addstr(&dump_ctx.ref_name, dst_ref);
  }
  
  static void handle_property(const struct strbuf *key_buf,
-@@ -321,7 +323,10 @@ static void begin_revision(void)
- 	} else {
- 		*gitsvnline = 0;
- 	}
--	from_mark = dump_ctx.first_commit_done ? rev_ctx.revision - 1 : 0;
-+	if (dump_ctx.incremental)
-+		from_mark = rev_ctx.revision - 1;
-+	else
-+		from_mark = dump_ctx.first_commit_done ? rev_ctx.revision - 1 : 0;
- 	author = *rev_ctx.author.buf ? rev_ctx.author.buf : "nobody";
- 	domain = *dump_ctx.uuid.buf ? dump_ctx.uuid.buf : "local";
+@@ -324,7 +327,7 @@ static void begin_revision(void)
  
-@@ -493,7 +498,7 @@ int svndump_init(const struct svndump_args *args)
+ 	fast_export_begin_commit(rev_ctx.revision, author, author, domain,
+ 		&rev_ctx.log, gitsvnline, rev_ctx.timestamp,
+-		from_mark);
++		from_mark, dump_ctx.ref_name.buf);
+ }
+ 
+ static void end_revision(void)
+@@ -488,7 +491,7 @@ int svndump_init(const struct svndump_args *args)
  	strbuf_init(&rev_ctx.author, 4096);
  	strbuf_init(&node_ctx.src, 4096);
  	strbuf_init(&node_ctx.dst, 4096);
--	reset_dump_ctx(args->url, args->ref);
-+	reset_dump_ctx(args->url, args->ref, args->incremental);
+-	reset_dump_ctx(args->url);
++	reset_dump_ctx(args->url, args->ref);
  	reset_rev_ctx(0);
  	reset_node_ctx(NULL);
  	return 0;
-@@ -502,7 +507,7 @@ int svndump_init(const struct svndump_args *args)
+@@ -497,7 +500,7 @@ int svndump_init(const struct svndump_args *args)
  void svndump_deinit(void)
  {
  	fast_export_deinit();
--	reset_dump_ctx(NULL, "");
-+	reset_dump_ctx(NULL, "", 0);
+-	reset_dump_ctx(NULL);
++	reset_dump_ctx(NULL, "");
  	reset_rev_ctx(0);
  	reset_node_ctx(NULL);
  	strbuf_release(&rev_ctx.log);
 diff --git a/vcs-svn/svndump.h b/vcs-svn/svndump.h
-index af63edb..f2bb58c 100644
+index b3dbf24..904e628 100644
 --- a/vcs-svn/svndump.h
 +++ b/vcs-svn/svndump.h
-@@ -5,7 +5,7 @@ struct svndump_args {
+@@ -3,6 +3,7 @@
+ 
+ struct svndump_args {
  	const char *filename, *url;
- 	const char *ref;
- 	int backflow_fd;
--	int progress;
-+	int progress, incremental;
++	const char *ref;
  };
  
  int svndump_init(const struct svndump_args *args);
