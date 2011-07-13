@@ -1,59 +1,71 @@
-From: <Mathieu.Pogeant@renesasmobile.com>
-Subject: Multiple projects with Gitweb
-Date: Wed, 13 Jul 2011 13:10:37 +0000
-Message-ID: <700B9246C3446949B8085B181F2C217804E59B@renexmb01.roe2.renesasmobile.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: Coming from SVN world - need help
+Date: Wed, 13 Jul 2011 15:17:36 +0200
+Message-ID: <CABPQNSa1PO6je+4sXMRWLLwLG9sUNTD1a+SMJj=wdPF+_dUPHA@mail.gmail.com>
+References: <20110713183056.1cde5b61@shiva.selfip.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 13 15:10:46 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "J. Bakshi" <joydeep@infoservices.in>
+X-From: git-owner@vger.kernel.org Wed Jul 13 15:18:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QgzDC-0003um-13
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 15:10:46 +0200
+	id 1QgzKn-0007uj-5i
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 15:18:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753051Ab1GMNKl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jul 2011 09:10:41 -0400
-Received: from mail216.messagelabs.com ([85.158.143.99]:17634 "EHLO
-	mail216.messagelabs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753011Ab1GMNKk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2011 09:10:40 -0400
-X-VirusChecked: Checked
-X-Env-Sender: Mathieu.Pogeant@renesasmobile.com
-X-Msg-Ref: server-13.tower-216.messagelabs.com!1310562638!11446158!1
-X-StarScan-Version: 6.2.17; banners=-,-,-
-X-Originating-IP: [213.174.82.10]
-Received: (qmail 31108 invoked from network); 13 Jul 2011 13:10:38 -0000
-Received: from renexfe01.roe2.renesasmobile.com (HELO renexfe01.roe2.renesasmobile.com) (213.174.82.10)
-  by server-13.tower-216.messagelabs.com with AES128-SHA encrypted SMTP; 13 Jul 2011 13:10:38 -0000
-Received: from RENEXMB01.roe2.renesasmobile.com ([fe80::e58a:2b9f:54fe:ff5])
- by renexfe01.roe2.renesasmobile.com ([fe80::ec94:bbb3:68e:a94a%18]) with mapi
- id 14.01.0255.000; Wed, 13 Jul 2011 16:10:38 +0300
-Thread-Topic: Multiple projects with Gitweb
-Thread-Index: AcxBXjyEPerT1euQRWqUsYOOEgQeKw==
-Accept-Language: fr-FR, da-DK, en-US
-Content-Language: fr-FR
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.21.22.233]
+	id S1753478Ab1GMNSR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jul 2011 09:18:17 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:50506 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753392Ab1GMNSQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2011 09:18:16 -0400
+Received: by pvg12 with SMTP id 12so4700916pvg.19
+        for <git@vger.kernel.org>; Wed, 13 Jul 2011 06:18:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=4ISMBy7JWKx3bp2O2AVHYnnH3ITlxTqotKb9/TYNSvw=;
+        b=CF925TKwhe9WhSOIcvzpEApr2hhk9WKOQWi0NNKF0fhCPm8UzYWJR8NeoQvhpqJB/K
+         G8Mv/BPBzO5JrMq3S2ak9y/G9+oIEnKfuFjeEyCnJdFm4V2bzDdIS2rhCggvjLx06OSl
+         r39pUTSWFUUcVAQJZXWj+zWpFYJNVH7Oh8wbA=
+Received: by 10.68.22.41 with SMTP id a9mr1334292pbf.506.1310563096106; Wed,
+ 13 Jul 2011 06:18:16 -0700 (PDT)
+Received: by 10.68.48.130 with HTTP; Wed, 13 Jul 2011 06:17:36 -0700 (PDT)
+In-Reply-To: <20110713183056.1cde5b61@shiva.selfip.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177039>
 
-Hello,
+On Wed, Jul 13, 2011 at 3:00 PM, J. Bakshi <joydeep@infoservices.in> wr=
+ote:
+> And now the issues when I am trying to do the same with git
+>
+> [1] git init ${git_path}/<repo>.git =A0>>> ok , it is working
 
-I'm trying to have this with GitWeb.
-I have a repo under /project1 and a repo under /project2 on my Git server.
-I would like to access these 2 repo via Gitweb like that: http://mygitserver/project1 and http://mygitserver/project2.
-The problem is that gitweb.conf permit to use just one repo with directive $projectroot.
+You probably want to add the "--bare"-flag if this is the repo that
+will be published.
 
-Did someone face the same problem?
-If needed, I can share configuration file.
-Best regards,
---
-Mathieu POGEANT
+> [2] Problem with mapping a dir with this repo
+>
+> mydir $> git --username <username> --password <password> clone file:/=
+//${git_path}/<repo>.git
+>
+> Not working --username and --password .
+>
+
+You don't need username and password to clone over the file-system,
+just the correct file-system permissions.
+
+> [3] git commit -m also not commit into master.
+
+git commit -m"foo" commits into the local branch that HEAD points to
+(should be 'master' by default). You need to do "git push" to update
+the published repo.
