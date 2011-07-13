@@ -1,80 +1,316 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/5] add object-cache infrastructure
-Date: Wed, 13 Jul 2011 10:49:32 -0700
-Message-ID: <7vmxgi6pg3.fsf@alter.siamese.dyndns.org>
-References: <20110711161332.GA10057@sigill.intra.peff.net>
- <20110711161754.GB10418@sigill.intra.peff.net>
- <201107121241.40242.jnareb@gmail.com>
- <20110712175739.GA17031@sigill.intra.peff.net>
- <7v62n78hpk.fsf@alter.siamese.dyndns.org>
- <20110713063701.GA18238@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC/PATCHv2 1/6] decorate: allow storing values instead of
+ pointers
+Date: Wed, 13 Jul 2011 12:52:50 -0500
+Message-ID: <20110713175250.GA1448@elie>
+References: <20110713064709.GA18499@sigill.intra.peff.net>
+ <20110713065700.GA18566@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Ted Ts'o <tytso@mit.edu>, Jonathan Nieder <jrnieder@gmail.com>,
-	=?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason 
-	<avarab@gmail.com>, Clemens Buchacher <drizzd@aon.at>,
-	Eric Wong <normalperson@yhbt.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>, Ted Ts'o <tytso@mit.edu>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Clemens Buchacher <drizzd@aon.at>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	David Barr <davidbarr@google.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jul 13 19:49:43 2011
+X-From: git-owner@vger.kernel.org Wed Jul 13 19:53:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qh3Z7-00023Q-Bk
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 19:49:41 +0200
+	id 1Qh3cW-00044m-1S
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Jul 2011 19:53:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965379Ab1GMRtg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jul 2011 13:49:36 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45436 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964805Ab1GMRtf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2011 13:49:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A3BAB52C5;
-	Wed, 13 Jul 2011 13:49:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IW9+k3o7D+kaY/AKDmVRZ17pqY4=; b=FTzddI
-	Z40Yr0aIy60p1NPKCpcj+bIHvDdkwY0FBuAe2YoiKgrsnup59EfLQ/w9WWd0bht1
-	pXyGSQGtyaWZsnn4iN4I0fi1qC2drc5ZLz6MihcmBOK0CNy/zenW8TIRIokHzM8D
-	uqr6m9x2cT3jfamJIHIJG1JrlEFKnpk/NnLxI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eDJzJm1NO+NHll05hhDoUGhetcSbZX2z
-	UvJi6d6OQImPp/Zsr2v/ShoGqBaGphtd7EnyJqYBLcvD8nGCnJs6Jz+fW8RbWYMO
-	kCbiSIQB12xEHLV4J1FeF0CBfSUGv9vkZHHCbA9yZPzDwZJy6wspSowY69FAs4MH
-	533HfpTfpiU=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 97BEF52C4;
-	Wed, 13 Jul 2011 13:49:34 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D3C4752C3; Wed, 13 Jul 2011
- 13:49:33 -0400 (EDT)
-In-Reply-To: <20110713063701.GA18238@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 13 Jul 2011 02:37:01 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 77D2BCB4-AD78-11E0-857D-B086C023C68D-77302942!a-pb-sasl-sd.pobox.com
+	id S932281Ab1GMRxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jul 2011 13:53:06 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:42324 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932197Ab1GMRxF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2011 13:53:05 -0400
+Received: by iyb12 with SMTP id 12so5750332iyb.19
+        for <git@vger.kernel.org>; Wed, 13 Jul 2011 10:53:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=AcuxvGodpbQZ66KST7+c0npKYAid6ISAJ7NGRpBu/Ek=;
+        b=AdGnYBfrb3LUdSzp1vr/0bpykVVYsV3Yam1RcunLk1IBgPehsOrNzRvd+LzFqxJJAG
+         WVvARB67f7SedfD9vzPusVJBwHuLnD2jtZzMdQdgYA2qFwKQeIZMyXWfaKKAdc+r9X92
+         0oTfvcVVmX/G+RnfV183SIsdpG3DCirl9UtSQ=
+Received: by 10.231.141.207 with SMTP id n15mr1232353ibu.72.1310579583929;
+        Wed, 13 Jul 2011 10:53:03 -0700 (PDT)
+Received: from elie (adsl-69-209-70-6.dsl.chcgil.sbcglobal.net [69.209.70.6])
+        by mx.google.com with ESMTPS id e23sm9020315ibe.40.2011.07.13.10.53.00
+        (version=SSLv3 cipher=OTHER);
+        Wed, 13 Jul 2011 10:53:02 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20110713065700.GA18566@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177066>
 
-Jeff King <peff@peff.net> writes:
+(+cc: David Barr)
+Hi,
 
-> It would be easy to implement sha1_entry_pos in terms of sha1_pos by
-> writing an access function. But it seems unnecessarily slow to add
-> function call overhead in what should be a fairly tight loop.
+Jeff King wrote:
 
-Yeah, that could also be a double-regression as sha1_pos() implementation
-is sloppier and does not protect itself from its guess overshooting the
-target like sha1_entry_pos() does. The first step definitely is to remove
-the duplicated comment, and the second step would probably be to unify the
-"mi" selection logic in sha1_pos() and sha1_entry_pos().
+> The decorate API provides a mapping of objects to arbitrary
+> values. Until now, it did this by allowing you to store a
+> void pointer, which could point to other storage. This has
+> two problems:
+[...]
+> This patch lets you store fixed-size values directly in the
+> hash table without allocating them elsewhere.
 
-Either the simplicity of the former is sufficient for the users of the
-latter, or the users of the former would also benefit from the less
-agressive selection of the latter.
+Nice idea.
+
+> --- a/Documentation/technical/api-decorate.txt
+> +++ b/Documentation/technical/api-decorate.txt
+> @@ -1,6 +1,166 @@
+>  decorate API
+>  ============
+>  
+> -Talk about <decorate.h>
+> +The decorate API is a system for efficiently mapping objects to values
+
+Thanks for filling in the API docs!  That's awesome.
+
+> +`struct object_decoration`::
+> +
+> +	A structure representing the decoration of a single object.
+> +	Callers will not normally need to use this object unless they
+> +	are iterating all elements in the decoration hash. The `base`
+> +	field points to the object being mapped (or `NULL` if it is
+> +	an empty hash slot). The `decoration` field stores the mapped
+> +	value as a sequence of bytes; use the `width` field in `struct
+> +	decoration` to know the exact size.
+
+So the `decoration` field is an array rather than a pointer now,
+hence...
+
+[...]
+> +void dump_longs(void)
+> +{
+> +	int i;
+> +	for (i = 0; i < longs.size; i++) {
+> +		struct object_decoration *e = decoration_slot(&longs, i);
+> +		unsigned long *value = (unsigned long *)e->decoration;
+> +
+> +		/* empty hash slot */
+> +		if (!e->base)
+> +			continue;
+> +
+> +		printf("%s -> %lu\n", sha1_to_hex(e->base->sha1), *value);
+
+... a cast is needed to use it.  Makes some sense.
+
+What alignment guarantees are there for the field, if any?  I'm
+especially worried about platforms like sparc32 where the pointer
+width is 32 bits but some types need to be aligned to 64 bits.
+
+> --- a/builtin/fast-export.c
+> +++ b/builtin/fast-export.c
+[...]
+
+Nice.
+
+> @@ -547,15 +534,15 @@ static void export_marks(char *file)
+>  		die_errno("Unable to open marks file %s for writing.", file);
+>  
+>  	for (i = 0; i < idnums.size; i++) {
+> +		struct object_decoration *deco = decoration_slot(&idnums, i);
+>  		if (deco->base && deco->base->type == 1) {
+> -			mark = ptr_to_mark(deco->decoration);
+> -			if (fprintf(f, ":%"PRIu32" %s\n", mark,
+> +			uint32_t *mark = (uint32_t *)deco->decoration;
+> +			if (fprintf(f, ":%"PRIu32" %s\n", *mark,
+>  				sha1_to_hex(deco->base->sha1)) < 0) {
+
+Is this okay according to strict aliasing rules?  Maybe it would be
+safer to write
+
+			uint32_t mark;
+			memcpy(&mark, deco->decoration, sizeof(mark));
+
+which generates the same code in current versions of gcc on x86 if I
+remember correctly.
+
+> --- a/decorate.c
+> +++ b/decorate.c
+> @@ -14,44 +14,48 @@ static unsigned int hash_obj(const struct object *obj, unsigned int n)
+>  	return hash % n;
+>  }
+>  
+> -static void *insert_decoration(struct decoration *n, const struct object *base, void *decoration)
+> +static int insert_decoration(struct decoration *n, const struct object *base,
+> +			     const void *decoration, void *old)
+>  {
+>  	int size = n->size;
+> -	struct object_decoration *hash = n->hash;
+> +	unsigned long width = decoration_width(n);
+
+Micronit: why not size_t?
+
+>  	unsigned int j = hash_obj(base, size);
+>  
+> -	while (hash[j].base) {
+> -		if (hash[j].base == base) {
+> -			void *old = hash[j].decoration;
+> -			hash[j].decoration = decoration;
+> -			return old;
+> +	while (1) {
+
+Microoptimization: the modulo operation can avoid the conditional (j >= size):
+
+	for (j = hash_obj(base, size); ; j = (j + 1) % size) {
+	}
+
+By the way, how do we know this loop will terminate?  Is it because
+the insertion function is careful to make sure the table never gets
+filled?
+
+[...]
+>  static void grow_decoration(struct decoration *n)
+>  {
+>  	int i;
+>  	int old_size = n->size;
+> -	struct object_decoration *old_hash = n->hash;
+> +	unsigned char *old_hash = n->hash;
+>  
+>  	n->size = (old_size + 1000) * 3 / 2;
+> -	n->hash = xcalloc(n->size, sizeof(struct object_decoration));
+> +	n->hash = xcalloc(n->size, decoration_stride(n));
+>  	n->nr = 0;
+>  
+>  	for (i = 0; i < old_size; i++) {
+> -		const struct object *base = old_hash[i].base;
+> -		void *decoration = old_hash[i].decoration;
+> -
+> -		if (!base)
+> -			continue;
+> -		insert_decoration(n, base, decoration);
+> +		struct object_decoration *e =
+> +			(struct object_decoration *)
+> +			(old_hash + i * decoration_stride(n));
+> +		if (e->base)
+> +			insert_decoration(n, e->base, e->decoration, NULL);
+
+I'm worried about alignment here, too.
+
+[...]
+> @@ -60,15 +64,35 @@ static void grow_decoration(struct decoration *n)
+[...]
+>  /* Lookup a decoration pointer */
+> -void *lookup_decoration(struct decoration *n, const struct object *obj)
+> +void *lookup_decoration(const struct decoration *n, const struct object *obj)
+> +{
+> +	void **v;
+> +
+> +	v = lookup_decoration_value(n, obj);
+> +	if (!v)
+> +		return NULL;
+> +	return *v;
+> +}
+
+Maybe memcpy to avoid alignment problems?
+
+	unsigned char *p;
+	void *v;
+
+	p = lookup_decoration_value(n, obj);
+	if (!p)
+		return NULL;
+	memcpy(v, p, sizeof(v));
+	return v;
+
+But:
+
+> +
+> +void *lookup_decoration_value(const struct decoration *n,
+> +			      const struct object *obj)
+>  {
+>  	unsigned int j;
+>  
+> @@ -77,7 +101,7 @@ void *lookup_decoration(struct decoration *n, const struct object *obj)
+>  		return NULL;
+>  	j = hash_obj(obj, n->size);
+>  	for (;;) {
+> -		struct object_decoration *ref = n->hash + j;
+> +		struct object_decoration *ref = decoration_slot(n, j);
+>  		if (ref->base == obj)
+>  			return ref->decoration;
+
+I worry that this could have alignment trouble anyway.
+
+> --- a/decorate.h
+> +++ b/decorate.h
+> @@ -3,16 +3,47 @@
+>  
+>  struct object_decoration {
+>  	const struct object *base;
+> -	void *decoration;
+> +	unsigned char decoration[FLEX_ARRAY];
+>  };
+
+On some platforms, this becomes
+
+	struct object_decoration {
+		const struct object *base;
+		unsigned char decoration[];
+	};
+
+which I hope would create a type with the alignment of a pointer
+(generally sufficient except in odd cases like sparc32).  But on
+old-fashioned platforms, it is
+
+	struct object_decoration {
+		const struct object *base;
+		unsigned char decoration[1];
+	};
+
+Will that be a problem, or is it standard for compilers to be smart
+enough to pad to a nice alignment?
+
+>  struct decoration {
+>  	const char *name;
+> +	/* width of data we're holding; must be set before adding */
+> +	const unsigned int width;
+
+Makes sense.
+
+>  	unsigned int size, nr;
+> -	struct object_decoration *hash;
+> +	/*
+> +	 * The hash contains object_decoration structs, but we don't know their
+> +	 * size until runtime. So we store is as a pointer to characters to
+> +	 * make pointer arithmetic easier.
+> +	 */
+> +	unsigned char *hash;
+>  };
+[...]
+> +extern int add_decoration_value(struct decoration *n,
+> +				const struct object *obj,
+> +				const void *decoration,
+> +				void *old);
+> +extern void *lookup_decoration_value(const struct decoration *n,
+> +				     const struct object *obj);
+
+If we're willing to incur the cost of a copy that assumes unaligned
+objects, perhaps
+
+	extern int lookup_decoration_value(const struct decoration *n,
+				const struct object *obj,
+				void *result, size_t width);
+
+would be safer.
+
+Aside from the alignment and strict-aliasing worries, this looks very
+nice.  Thanks for writing it.
+
+Regards,
+Jonathan
