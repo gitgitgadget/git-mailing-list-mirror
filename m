@@ -1,63 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/3] implement generic key/value map
-Date: Thu, 14 Jul 2011 14:55:39 -0400
-Message-ID: <20110714185539.GA27141@sigill.intra.peff.net>
-References: <20110714173454.GA21657@sigill.intra.peff.net>
- <20110714175105.GA21771@sigill.intra.peff.net>
- <CAKPyHN0-VbzjMaMJFZeGGrGX6HuGNEBHNVNf0cexB2vu21_13g@mail.gmail.com>
- <CAKPyHN3G41iMGmGgp6jTcWN=Rxt=RTUS7ktgVDhZEXPBRXvTDQ@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Git commit generation numbers
+Date: Thu, 14 Jul 2011 11:55:39 -0700
+Message-ID: <CA+55aFzvib7QF-J3fBj2brcQifXGqoeK1t7vfx6pcJmJAEO0dw@mail.gmail.com>
+References: <CA+55aFxZq1e8u7kXu1rNDy2UPgP3uOyC5y2j7idKSZ_4eL=bWw@mail.gmail.com>
+ <20110714183710.GA26820@sigill.intra.peff.net> <CA+55aFwuK+krTA4OcnYhLXtKM5HQ1yuPK+J_vC-5R7AthrHWbg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>, Ted Ts'o <tytso@mit.edu>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Clemens Buchacher <drizzd@aon.at>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	David Barr <davidbarr@google.com>
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 14 20:55:52 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jul 14 20:56:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhR4d-0004N2-3U
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 20:55:47 +0200
+	id 1QhR5S-0004rE-Dx
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 20:56:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932176Ab1GNSzm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jul 2011 14:55:42 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46852
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754652Ab1GNSzm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2011 14:55:42 -0400
-Received: (qmail 9948 invoked by uid 107); 14 Jul 2011 18:56:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Jul 2011 14:56:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jul 2011 14:55:39 -0400
-Content-Disposition: inline
-In-Reply-To: <CAKPyHN3G41iMGmGgp6jTcWN=Rxt=RTUS7ktgVDhZEXPBRXvTDQ@mail.gmail.com>
+	id S932209Ab1GNS4d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jul 2011 14:56:33 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:32924 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754652Ab1GNS4d (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Jul 2011 14:56:33 -0400
+Received: from mail-wy0-f174.google.com (mail-wy0-f174.google.com [74.125.82.174])
+	(authenticated bits=0)
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p6EItxdi028843
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Thu, 14 Jul 2011 11:56:00 -0700
+Received: by wyg8 with SMTP id 8so352620wyg.19
+        for <git@vger.kernel.org>; Thu, 14 Jul 2011 11:55:59 -0700 (PDT)
+Received: by 10.216.38.76 with SMTP id z54mr2396165wea.102.1310669759139; Thu,
+ 14 Jul 2011 11:55:59 -0700 (PDT)
+Received: by 10.216.158.65 with HTTP; Thu, 14 Jul 2011 11:55:39 -0700 (PDT)
+In-Reply-To: <CA+55aFwuK+krTA4OcnYhLXtKM5HQ1yuPK+J_vC-5R7AthrHWbg@mail.gmail.com>
+X-Spam-Status: No, hits=-102.895 required=5 tests=AWL,BAYES_00,USER_IN_WHITELIST
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177156>
 
-On Thu, Jul 14, 2011 at 08:54:07PM +0200, Bert Wesarg wrote:
+On Thu, Jul 14, 2011 at 11:47 AM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+>
+> Also, I suspect that the cache could easily be done as a *small* and
+> *incomplete* cache, ie you don't need to cache all commits, it would
+> be sufficient to cache a few hundred spread-out commits, and just know
+> that "from any commit, the cached commit will be quickly reachable".
 
-> On Thu, Jul 14, 2011 at 20:52, Bert Wesarg <bert.wesarg@googlemail.com> wrote:
-> > On Thu, Jul 14, 2011 at 19:51, Jeff King <peff@peff.net> wrote:
-> >> +#define MAP_IMPLEMENT(name, ktype, vtype, cmp_fun, hash_fun) \
-> >
-> > This define should probably in the header too. Else this is completely useless.
-> 
-> Ahh. One have to read patch 2/3, to see how to use this. Please feel
-> free to ignore this than.
+Put another way: we could do the cache not as a real dynamic entity,
+but as something that gets generated at "git clone" time or when
+re-packing.
 
-Yeah, you could treat this like a C++ template and assume random bits of
-code will instantiate a map of whatever types they need. But this is C,
-and we only want to instantiate once. So I just figured to keep the
-static list of whatever maps git needs in the map.[ch] files.
+I'm actually much more nervous about a cache being inconsistent than I
+would be about having generation numbers in the tree. The latter we
+can (and should - but my patch didn't) add a fsck test for, and then
+you would never get into some situation where there's some really
+subtle issue with merge base calculation due to a corrupt cache.
 
--Peff
+                    Linus
