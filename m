@@ -1,131 +1,107 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git commit generation numbers
-Date: Thu, 14 Jul 2011 15:08:44 -0400
-Message-ID: <20110714190844.GA26918@sigill.intra.peff.net>
-References: <CA+55aFxZq1e8u7kXu1rNDy2UPgP3uOyC5y2j7idKSZ_4eL=bWw@mail.gmail.com>
- <20110714183710.GA26820@sigill.intra.peff.net>
- <CA+55aFwuK+krTA4OcnYhLXtKM5HQ1yuPK+J_vC-5R7AthrHWbg@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git-archive and tar options
+Date: Thu, 14 Jul 2011 12:12:41 -0700 (PDT)
+Message-ID: <m3oc0wad94.fsf@localhost.localdomain>
+References: <ivla29$liu$1@dough.gmane.org>
+	<20110714015656.GA20136@sigill.intra.peff.net>
+	<4E1F2468.6080409@lsrfire.ath.cx>
+	<20110714172718.GA21341@sigill.intra.peff.net>
+	<4E1F2B23.1020908@lsrfire.ath.cx>
+	<20110714181858.GA25172@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jul 14 21:08:56 2011
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?iso-8859-15?q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jul 14 21:12:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhRHI-0003vK-Ba
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 21:08:52 +0200
+	id 1QhRL7-0006PW-18
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 21:12:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753147Ab1GNTIr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jul 2011 15:08:47 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34138
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753065Ab1GNTIr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2011 15:08:47 -0400
-Received: (qmail 10273 invoked by uid 107); 14 Jul 2011 19:09:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Jul 2011 15:09:11 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jul 2011 15:08:44 -0400
-Content-Disposition: inline
-In-Reply-To: <CA+55aFwuK+krTA4OcnYhLXtKM5HQ1yuPK+J_vC-5R7AthrHWbg@mail.gmail.com>
+	id S1753611Ab1GNTMo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jul 2011 15:12:44 -0400
+Received: from mail-fx0-f52.google.com ([209.85.161.52]:46798 "EHLO
+	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753507Ab1GNTMn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Jul 2011 15:12:43 -0400
+Received: by fxd18 with SMTP id 18so1507150fxd.11
+        for <git@vger.kernel.org>; Thu, 14 Jul 2011 12:12:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=zijwtet025DWAZ4zXMwNieHEYFyvE4KkMvNNUJ+wfLQ=;
+        b=OjNsAl28cvMwBxximMyHW3dBz4KvHcPofUU5V/L1G/LLBapsJGeOjoF/wwTo1HcyXD
+         uH33EfXiFf4cDqVspbfldtJrXON/E0tm7KqlI61NB5KYCNmv4h0d2wLF/2m28LA39/K3
+         vUKoiFSjXIZIXMpFodSrAIbJIvBnEIYOIgHjI=
+Received: by 10.223.52.132 with SMTP id i4mr3954763fag.107.1310670762572;
+        Thu, 14 Jul 2011 12:12:42 -0700 (PDT)
+Received: from localhost.localdomain (abva152.neoplus.adsl.tpnet.pl [83.8.198.152])
+        by mx.google.com with ESMTPS id l22sm319135fam.9.2011.07.14.12.12.35
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 14 Jul 2011 12:12:41 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p6EJC2bK004669;
+	Thu, 14 Jul 2011 21:12:12 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p6EJBZSS004664;
+	Thu, 14 Jul 2011 21:11:35 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20110714181858.GA25172@sigill.intra.peff.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177160>
 
-On Thu, Jul 14, 2011 at 11:47:45AM -0700, Linus Torvalds wrote:
+Jeff King <peff@peff.net> writes:
 
-> On Thu, Jul 14, 2011 at 11:37 AM, Jeff King <peff@peff.net> wrote:
-> >
-> > I'd love to have in-commit generation numbers. I'm just not sure we can
-> > get the speeds we want without caching them for existing commits.
-> 
-> So my argument would be that we'd simply be much better off fixing the
-> fundamental data structure (which we can), and let it become the
-> long-term solution.
-> 
-> Now, if *may* turn out that we'd want to have some cache for
-> generation numbers in commits that don't have them, but I absolutely
-> think that that should be a "add-on" rather than anything fundamental.
-> For example, if we just merge the "add generation numbers to the
-> commit object" logic first, then the "cache" case never really needs
-> to care about us generating new commits. They simply won't need the
-> cache.
+> On Thu, Jul 14, 2011 at 07:45:07PM +0200, Ren=E9 Scharfe wrote:
+>=20
+> > > We didn't when git-archive was written, but these days we have
+> > > get_sha1_with_context to remember incidental things about an obje=
+ct we
+> > > look up. It should perhaps remember the commit (if any) we used t=
+o reach
+> > > a treeish, and then the above command line could still insert the=
+ pax
+> > > header.
+> >=20
+> > That's a good idea to increase consistency, as there shouldn't real=
+ly be
+> > a difference in output between the two subdirectory syntaxes.
+>=20
+> The patch to do this is pretty tiny. See below.
+>=20
+> There are a few issues, though:
+>=20
+>   1. I think this is probably the right thing to do, and most people
+>      will be happy about it. But I guess I can see an argument that t=
+he
+>      commit-id should not be there, as the subtree does not represent
+>      that commit.
+>=20
+>      IOW, if you assume the commit-id in the output means
+>      "by the way, this came from commit X", this change is a good thi=
+ng.
+>      If you assume it means "this is the tree from commit X", then it=
+'s
+>      not.  I have no idea how people use it. I never have, but I alwa=
+ys
+>      assumed the use case was "I have this random tarball. Where did =
+it
+>      come from?".
 
-Sure, I'd be fine with that (modulo the graft issue, which you don't
-seem to care about). I half-toyed with making an extra "add generation
-numbers to commit header" on top of my series, but I wanted to first
-prove that generation numbers actually could yield speedups.
+Perhaps we should embed '<commit-id>:<subtree>' instead in pax header,
+in that case?  Or <commit-id>.<subtree> if ':' is forbidden.
 
-> Also, I suspect that the cache could easily be done as a *small* and
-> *incomplete* cache, ie you don't need to cache all commits, it would
-> be sufficient to cache a few hundred spread-out commits, and just know
-> that "from any commit, the cached commit will be quickly reachable".
-
-Yeah, that would work. Is it worth the trouble? Your cache size is still
-O(n). And you still have the complexity of _having_ a cache.  Yes, the
-size is 1/100th of what it was (dropping from 6M to 600K on linux-2.6).
-But you're also going to spend more time calculating. I think you'd have
-to measure to see how it performs in practice.
-
-> It only ends up being expensive if the commit has parents that don't
-> have generation numbers.
-> 
-> That's a fairly short-term problem. For the kernel, for example,
-> basically no development happens on a base that is older than one or
-> two releases. So if I (and Greg, with the stable tree) start using my
-> patch, within a couple of weeks, pretty much all development would
-> have a generation number in its history.
-
-Sure, that makes generation during commit-time cheaper, and eventually
-the cost just goes away. I'm more concerned that it won't actually speed
-up algorithms where you look at old commits, which was the whole point
-in the first place.
-
-> > As we add new commits with generation numbers, we won't need to do a
-> > calculation to get their numbers. But if you are doing something like
-> > "tag --contains", you are going to want to know the generation number of
-> > old tags (otherwise, you can't know whether your cutoff might hit them
-> > or not). IOW, even if we add generation numbers _today_, every "tag
-> > --contains" in linux-2.6 is going to end up traversing from v3.0-rc7
-> > down to the roots to get its generation number (v3.0-rc8 would get an
-> > embedded generation, of course).
-> 
-> So that could easily be handled by caching. In fact, I suspect that
-> you could make the cache no associate with a commit ID, but be
-> associated with the tags and heads. But again, then the cache would be
-> a "secondary" issue, not something fundamental.
-
-Yeah, you could do that. And it would handle "tag --contains" and
-"branch --contains" (the latter doesn't even really need a cache; as the
-branch tips move, they will get new commits with generation numbers). I
-suspect we could get faster topo-sorting and possibly faster merge-base
-calculation out of generation numbers, too.  But that won't happen if we
-only have generation numbers for a handful of specific commits.
-
-> > So if you aren't going to cache generation numbers, then you might as
-> > well write your traversal algorithm to assume you don't know them for
-> > old commits.
-> 
-> But that's how our algorithms are *already* written.
-
-Sort of. We tend to rely on commit timestamps as a proxy for generation
-numbers. But in the face of clock skew, git will give wrong answers
-(e.g., Ted posted some examples of name-rev giving wrong answers near
-some skew in linux-2.6).
-
-If we aren't going to go whole-hog on generation numbers, I'm much more
-tempted to simply keep using commit timestamps. It's easy to build a
-cache of commits with bogus timestamps (which I've already posted a
-patch for) if you want to better accuracy at the cost of more
-complexity. And as time progresses, you tend to ask about commits near
-the skewed ones less often (and hopefully lessons learned from seeing
-how the skew occurred will help us prevent them from reocurring in new
-commits).
-
--Peff
+--=20
+Jakub Nar=EAbski
+Poland
