@@ -1,77 +1,71 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: How to provide authentication along with git command itself ?
-Date: Thu, 14 Jul 2011 15:02:44 -0500
-Message-ID: <20110714200244.GA14687@elie>
-References: <20110714161508.2378c155@shiva.selfip.org>
- <CAH3AnrqR=xMa6KYWBmybXdudo8C8FoeioCs2PgOVZezAE5BWiw@mail.gmail.com>
- <20110714163149.63bad937@shiva.selfip.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git commit generation numbers
+Date: Thu, 14 Jul 2011 16:07:17 -0400
+Message-ID: <20110714200717.GF26918@sigill.intra.peff.net>
+References: <CA+55aFxZq1e8u7kXu1rNDy2UPgP3uOyC5y2j7idKSZ_4eL=bWw@mail.gmail.com>
+ <20110714183710.GA26820@sigill.intra.peff.net>
+ <CA+55aFwuK+krTA4OcnYhLXtKM5HQ1yuPK+J_vC-5R7AthrHWbg@mail.gmail.com>
+ <CA+55aFzvib7QF-J3fBj2brcQifXGqoeK1t7vfx6pcJmJAEO0dw@mail.gmail.com>
+ <20110714194638.GE8453@thunk.org>
+ <CA+55aFzuQnfo1iywnp-WAajMHe2+6_HOM85aw0bS+p0xv5RyhA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jon Seymour <jon.seymour@gmail.com>, git@vger.kernel.org
-To: "J. Bakshi" <joydeep@infoservices.in>
-X-From: git-owner@vger.kernel.org Thu Jul 14 22:03:00 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Ted Ts'o <tytso@mit.edu>, Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jul 14 22:07:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhS7f-0000wB-Kx
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 22:03:00 +0200
+	id 1QhSBy-0003Rd-3H
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 22:07:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753306Ab1GNUCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jul 2011 16:02:54 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:59151 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753065Ab1GNUCy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2011 16:02:54 -0400
-Received: by iyb12 with SMTP id 12so537894iyb.19
-        for <git@vger.kernel.org>; Thu, 14 Jul 2011 13:02:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=ZkDx22SQO+nCBdjMLTXdjU+Rk6YdT4Pz7pLKZ/ZWmUY=;
-        b=NLwFIFxpiuRdtekLBhonmGXOYPkCElcyTyyliF5/vGfJcT09rWo0t0GI3iMaVDI7Gy
-         w5wiVi4elIP7uZU7w7QMplkH7qzTCjJah1Dti6smXF0KRC9XXRTmqJ/kn+PBfhLiDmy2
-         5XGu2eJ0nXLx0kiupin+x0977809V5KWVVO/Q=
-Received: by 10.43.58.15 with SMTP id wi15mr3093177icb.411.1310673773750;
-        Thu, 14 Jul 2011 13:02:53 -0700 (PDT)
-Received: from elie ([69.209.70.6])
-        by mx.google.com with ESMTPS id d8sm589584icy.21.2011.07.14.13.02.51
-        (version=SSLv3 cipher=OTHER);
-        Thu, 14 Jul 2011 13:02:52 -0700 (PDT)
+	id S1753328Ab1GNUHU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jul 2011 16:07:20 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54277
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753065Ab1GNUHT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2011 16:07:19 -0400
+Received: (qmail 11206 invoked by uid 107); 14 Jul 2011 20:07:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Jul 2011 16:07:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jul 2011 16:07:17 -0400
 Content-Disposition: inline
-In-Reply-To: <20110714163149.63bad937@shiva.selfip.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CA+55aFzuQnfo1iywnp-WAajMHe2+6_HOM85aw0bS+p0xv5RyhA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177170>
 
-J. Bakshi wrote:
+On Thu, Jul 14, 2011 at 12:51:39PM -0700, Linus Torvalds wrote:
 
-> Well, I am using version 1.7, hence not DAV but using git-http-backend 
+> On Thu, Jul 14, 2011 at 12:46 PM, Ted Ts'o <tytso@mit.edu> wrote:
+> >
+> > Would it be considered evil if we put the generation number in the
+> > pack, but not consider it part of the formal object (i.e., it would be
+> > just a cache, but one that wouldn't change once the pack was created)?
+> 
+> That would actually be a major change to data structures, and would
+> require some serious surgery and be hard to support in a
+> backwards-compatible way (think different git versions accessing the
+> same repository).
 
-Ah, I forgot to mention the docs for gitolite and http-backend[1].
+If we put it in the index, but not the pack, then it wouldn't be any
+more painful than pack index v2. I don't recall there being huge fallout
+from that; we just gave a reasonable deprecation period before switching
+it on as the default.
 
-As for your original question about how to set up or cache credentials,
-unfortunately I haven't tried it.  Based on git-push(1), it looks like
-the usual
+I'm not sure it is much less crappy than having the cache in a separate
+file. It does take less space, since the pack index already contains all
+of the sha1s. But if we don't like the on-the-fly writing of what was in
+my series, it would not be hard to generate the same cache during
+pack-index time. Not having it in a separate file makes it hard to
+invalidate the cache when the graph changes (due to grafts or replace
+refs). But maybe we don't care about that. Or maybe it's OK to tell the
+user to manually rebuild the pack index if they tweak those features.
 
-	http://username:pass@domain/path/to/repo
-
-syntax should work if you're passing the full URL on the command line
-or if it's okay to store the usernames and passwords in plaintext in
-.git/config.
-
-If that's not okay, it also might be possible to hack up something
-evil with the GIT_ASKPASS variable.  Some of the patches mentioned in
-the recent discussion about password prompts also might be
-interesting[2].
-
-Regards,
-Jonathan
-
-[1] http://sitaramc.github.com/gitolite/doc/http-backend.html
-[2] http://thread.gmane.org/gmane.comp.version-control.git/176522
+-Peff
