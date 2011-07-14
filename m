@@ -1,57 +1,79 @@
-From: "J. Bakshi" <joydeep@infoservices.in>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
 Subject: Re: How to provide authentication along with git command itself ?
-Date: Thu, 14 Jul 2011 16:31:49 +0530
-Message-ID: <20110714163149.63bad937@shiva.selfip.org>
+Date: Thu, 14 Jul 2011 13:12:55 +0200
+Message-ID: <1310641975.6041.3.camel@centaur.lab.cmartin.tk>
 References: <20110714161508.2378c155@shiva.selfip.org>
-	<CAH3AnrqR=xMa6KYWBmybXdudo8C8FoeioCs2PgOVZezAE5BWiw@mail.gmail.com>
+	 <1310640646.18730.10.camel@bee.lab.cmartin.tk>
+	 <20110714162953.36347b76@shiva.selfip.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-oczxSkWNHP4JNANJEc4l"
 Cc: git@vger.kernel.org
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 14 13:01:52 2011
+To: "J. Bakshi" <joydeep@infoservices.in>
+X-From: git-owner@vger.kernel.org Thu Jul 14 13:13:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhJfz-0005uV-HW
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 13:01:51 +0200
+	id 1QhJrC-00036X-Fq
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 13:13:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754429Ab1GNLBq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jul 2011 07:01:46 -0400
-Received: from static.206.87.46.78.clients.your-server.de ([78.46.87.206]:33049
-	"EHLO Kolkata.infoservices.in" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754371Ab1GNLBq (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Jul 2011 07:01:46 -0400
-Received: from shiva.selfip.org (unknown [122.176.30.116])
-	by Kolkata.infoservices.in (Postfix) with ESMTPSA id A27572004002;
-	Thu, 14 Jul 2011 13:01:43 +0200 (CEST)
-In-Reply-To: <CAH3AnrqR=xMa6KYWBmybXdudo8C8FoeioCs2PgOVZezAE5BWiw@mail.gmail.com>
-X-Mailer: Claws Mail 3.7.9 (GTK+ 2.24.4; x86_64-pc-linux-gnu)
+	id S1754468Ab1GNLNV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jul 2011 07:13:21 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:36036 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754415Ab1GNLNV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2011 07:13:21 -0400
+Received: from [192.168.1.15] (brln-d9ba36b2.pool.mediaWays.net [217.186.54.178])
+	by kimmy.cmartin.tk (Postfix) with ESMTPSA id DF340461FA;
+	Thu, 14 Jul 2011 13:12:32 +0200 (CEST)
+In-Reply-To: <20110714162953.36347b76@shiva.selfip.org>
+X-Mailer: Evolution 2.32.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177116>
 
-On Thu, 14 Jul 2011 20:53:42 +1000
-Jon Seymour <jon.seymour@gmail.com> wrote:
 
-> On Thu, Jul 14, 2011 at 8:45 PM, J. Bakshi <joydeep@infoservices.in> wrote:
-> > Hello list,
-> >
-> > During git push or fetch over http , I need to provide username and password every time, as protected by apache htpasswd file. How can I provide the same along with git command ? Or something so that It save the authentication info somewhere within .git
-> >
-> > Thanks
-> 
-> You probably want to create the client setup section of this:
-> 
->     http://kernel.org/pub/software/scm/git/docs/howto/setup-git-server-over-http.txt
-> 
-> Personally, I prefer to use an ssh hosted repository in such cases,
-> then use an ssh-agent to cache an SSH private key.
-> 
-> jon.
+--=-oczxSkWNHP4JNANJEc4l
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Well, I am using version 1.7, hence not DAV but using git-http-backend 
+On Thu, 2011-07-14 at 16:29 +0530, J. Bakshi wrote:
+[...]
+>=20
+> Thanks for the response. Can I use the same .netrc to store different
+> authentication for different repo ? Is it somehow possible to store
+> the information at the concerned .git of the repo ? I think this will
+> be easier for multiple repos.
+>=20
+
+I'm not sure, but netrc is not specific for any particular protocol. It
+assumes that your login and password are the same for several services
+on the same computer or set of computers.
+
+It's often less hassle (and more efficient wrt. data transfer) to use
+SSH. With gitolite you can give people access to git repositories over
+SSH without giving them SSH access to the machine proper.
+
+Cheers,
+   cmn
+
+--=-oczxSkWNHP4JNANJEc4l
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAABAgAGBQJOHs8qAAoJEHKRP1jG7ZzTSxQH/2CAfOQS66v+ARn6cEbvVmLE
+hXPKKkHM+P5Whl68VAUzMWJRVAwbDREANiPSDOqMAjc4Lz5F1Q+L6xw+TV0X7Oo4
+LvcnvNLSi8UBWw7P1fHf2N+cuBbUM7h6uN2jETRBRz7QOVJZSUJRjHsyq9jhVg5d
+DWzF5ogjn1NbUkY7jknv6JpH6q+DdZDP4V0QoXwGN/yOtRMNUiZUxqtDOJeRa9Xu
+5BjcWpxz1BfZpvIYxF1/ZOL4ZbZ8fhpNbeXLQ+QgZgr8b56lIb1sr8V0TPMGc3Od
+UUjUb2xr2WAqHk1WD3X0hzumwXyjjJe/B011yC+vyEbuD5Hzflq0M6we/LrgCDk=
+=DA8o
+-----END PGP SIGNATURE-----
+
+--=-oczxSkWNHP4JNANJEc4l--
