@@ -1,170 +1,99 @@
-From: Vicent Marti <vicent@github.com>
-Subject: [ANNOUNCE] libgit2 v0.14.0 "watermelon wheat"
-Date: Thu, 14 Jul 2011 03:34:33 +0200
-Message-ID: <CAFFjANRSVJvex9v_2E_QRdJW951+CZF_w4KS_w=afYU+F9H46g@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-archive and tar options
+Date: Wed, 13 Jul 2011 21:56:56 -0400
+Message-ID: <20110714015656.GA20136@sigill.intra.peff.net>
+References: <ivla29$liu$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git-dev@github.com
-To: git@vger.kernel.org, libgit2@librelist.org
-X-From: git-owner@vger.kernel.org Thu Jul 14 03:35:04 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Neal Kreitzinger <neal@rsss.com>
+X-From: git-owner@vger.kernel.org Thu Jul 14 03:57:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhApR-0000UH-Cp
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 03:35:01 +0200
+	id 1QhBAo-00008B-7A
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 03:57:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753393Ab1GNBe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jul 2011 21:34:57 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:50249 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753380Ab1GNBe4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2011 21:34:56 -0400
-Received: by wyg8 with SMTP id 8so512397wyg.19
-        for <git@vger.kernel.org>; Wed, 13 Jul 2011 18:34:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:from:date:x-google-sender-auth:message-id
-         :subject:to:cc:content-type;
-        bh=XgEJ9ZBse4Iw7fTUANnH/6+iEgqDRZM2V49nP4jP1cg=;
-        b=CrDgkRtCCf2R2t6Hig6MopEPEtUrQ+x0icp461oI8HqT64D5fk7hBQFjN/nLuuLkLJ
-         Y7BV5ZcPaz0hlezaymJ3JIg5yUIJqh6x5Gaj440QjA5AwskeEDJNAQPuuZJnjEYVH7ES
-         sr69NPrc32P8nMYmBGen9oDoLothDvm4ICL7s=
-Received: by 10.227.208.148 with SMTP id gc20mr1496654wbb.95.1310607294000;
- Wed, 13 Jul 2011 18:34:54 -0700 (PDT)
-Received: by 10.227.156.82 with HTTP; Wed, 13 Jul 2011 18:34:33 -0700 (PDT)
-X-Google-Sender-Auth: Aj2p852pobBsZ0PcLG4nukUPxvI
+	id S1752259Ab1GNB47 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jul 2011 21:56:59 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48038
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752102Ab1GNB47 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2011 21:56:59 -0400
+Received: (qmail 32504 invoked by uid 107); 14 Jul 2011 01:57:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 13 Jul 2011 21:57:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Jul 2011 21:56:56 -0400
+Content-Disposition: inline
+In-Reply-To: <ivla29$liu$1@dough.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177096>
 
-Hello everyone,
+On Wed, Jul 13, 2011 at 06:34:32PM -0500, Neal Kreitzinger wrote:
 
- this minor release of libgit2 comes very feature packed. Exciting.
+> the git-archive manpage states:
+> 
+> "git archive [--format=<fmt>] [--list] [--prefix=<prefix>/] [<extra>] [-o 
+> | --output=<file>] [--worktree-attributes] [--remote=<repo> 
+> [--exec=<git-upload-archive>]] <tree-ish>  [path\u2026]
+> 
+> <extra>
+>     This can be any options that the archiver backend understands. See next 
+> section."
+>
+> I have tar 1.23 and want to use the --transform option.  How can I feed 
+> git-archive additional tar options?
 
-The release has been tagged at:
+Right. And the next section is "Backend Extra Options", which has:
 
-  https://github.com/libgit2/libgit2/tree/v0.14.0
+   zip
+       -0
+           Store the files instead of deflating them.
 
-A dist package can be found at:
+       -9
+           Highest and slowest compression level. You can specify any number from 1 to 9
+           to adjust compression speed and ratio.
 
-  https://github.com/downloads/libgit2/libgit2/libgit2-0.14.0.tar.gz
+And nothing else. We don't actually call your system "tar" to generate
+the tarball, which is what I assume you thought when you saw "backend".
+A patch to make it more clear would be welcome.
 
-Updated documentation can be found at:
+> Working syntax starting points for git-archive and tar:
+> 
+> git archive --format=tar -o my.tar HEAD Web/Templates/
+> tar -cvf my.tar --transform 's,^Web/Templates/,myPath/myWeb/Templates/,' 
+> WebPortal/Templates/
+> 
+> Failed syntax attempts for feeding tar option to git-archive:
+> 
+> git archive --format=tar -o my.tar HEAD --transform 
+> 's,^Web/Templates/,myPath/myWeb/Templates/,' WebPortal/Templates/
+> error: unknown option `transform'
+> 
+> git archive --format=tar -o my.tar --transform 
+> 's,^Web/Templates/,myPath/myWeb/Templates/,' HEAD WebPortal/Templates/
+> error: unknown option `transform'
 
-   http://libgit2.github.com/libgit2/
+Yeah, that won't work, because there is no such option. We do have
+"--prefix", but I suspect that's not flexible enough for what you want.
 
-The full change log follows after the message.
+So you're probably stuck with extracting the results of "git archive" to
+a temporary directory and then using GNU tar to re-archive them (or if
+you have a checkout, you can just tar that up directly, feeding the list
+from "git ls-files" into tar). It would be nice if GNU tar could act as
+a post-processor, and do something like:
 
-Thanks as always,
-Vicent
+  git archive HEAD | tar --pipe-mode --transform=whatever >my.tar
 
-========================
+But AFAIK, nothing like "--pipe-mode" exists.
 
-libgit2 v0.14.0, "watermelon wheat"
+It would probably not be a very hard feature to add to "git archive" if
+you're interested in doing so.
 
-This a very packed minor release. The usual guilty parties have been
-working harder than usual during the holidays -- thanks to everyone
-involved!
-
-As always, the updated API docs can be found at:
-
-	http://libgit2.github.com/libgit2/
-
-NEW FEATURES:
-
-	- New OS abstraction layer. This should make all POSIX calls much
-	more reliable under Windows.
-
-	- Much faster writes of simple objects (commits, tags, trees) to the
-	ODB via in-memory buffering and direct writes, instead of streaming.
-
-	- Unified & simplified API for object creation. All the `create`
-	methods now take Objects instead of OIDs to ensure that corrupted
-	(dangling) objects cannot be created on the repository.
-
-	- Fully Git-compilant reference renaming (finally!), with
-	the already existing `git_reference_rename`.
-
-	- Deletion of config keys with `git_config_delete`
-
-	- Greatly improved index performance when adding new entries
-
-	- Reflog support with the `git_reflog` API
-
-	- Remotes support with the `git_remote` API
-
-	- First parts of the Networking API, including refspecs and
-	the transport abstraction layer. (Note that there are no actual
-	transports implemented yet)
-
-	- Status support with the `git_status_foreach` and `git_status_file`
-	functions.
-
-	- Tons of bugfixes, including the outstanding bug #127 (wrong sort
-	ordering when querying tree entries).
-
-KNOWN ISSUES:
-
-	- The reference renaming code leaks memory. This is being worked on
-	as part of a reference handling overhaul.
-
-	- The tree-from-index builder has abysmal performance because it
-	doesn't handle the Treecache extension yet. This is also being
-	worked on.
-
-FULL API CHANGELOG:
-
-	- removed, * modified, + added
-
-	- git_commit_create_o
-	- git_commit_create_ov
-	- git_reference_create_oid_f
-	- git_reference_create_symbolic_f
-	- git_reference_rename_f
-	- git_tag_create_f
-	- git_tag_create_fo
-	- git_tag_create_o
-
-	* git_commit_create
-	* git_commit_create_v
-	* git_config_foreach
-	* git_reference_create_oid
-	* git_reference_create_symbolic
-	* git_reference_rename
-	* git_tag_create
-	* git_tag_create_frombuffer
-
-	+ git_clearerror
-	+ git_config_delete
-	+ git_index_uniq
-	+ git_odb_hashfile
-	+ git_oid_fromstrn
-	+ git_reflog_entry_byindex
-	+ git_reflog_entry_committer
-	+ git_reflog_entry_msg
-	+ git_reflog_entry_oidnew
-	+ git_reflog_entry_oidold
-	+ git_reflog_entrycount
-	+ git_reflog_free
-	+ git_reflog_read
-	+ git_reflog_write
-	+ git_refspec_src_match
-	+ git_refspec_transform
-	+ git_remote_connect
-	+ git_remote_fetchspec
-	+ git_remote_free
-	+ git_remote_get
-	+ git_remote_ls
-	+ git_remote_name
-	+ git_remote_url
-	+ git_repository_head_detached
-	+ git_repository_head_orphan
-	+ git_status_file
-	+ git_status_foreach
-	+ git_tag_create_lightweight
-	+ git_tag_list_match
-	+ git_transport_new
+-Peff
