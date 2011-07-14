@@ -1,88 +1,76 @@
-From: Chris Wilson <cwilson@vigilantsw.com>
-Subject: [PATCH] Fix config_file file leak.
-Date: Thu, 14 Jul 2011 14:19:48 -0400
-Message-ID: <20110714181948.GA23288@localhost>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Git commit generation numbers
+Date: Thu, 14 Jul 2011 11:24:27 -0700
+Message-ID: <CA+55aFxZq1e8u7kXu1rNDy2UPgP3uOyC5y2j7idKSZ_4eL=bWw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 14 20:20:01 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jul 14 20:25:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhQVz-0000Ja-A1
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 20:19:59 +0200
+	id 1QhQbK-0003Vg-Eg
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 20:25:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755480Ab1GNSTx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jul 2011 14:19:53 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:47294 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755400Ab1GNSTw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2011 14:19:52 -0400
-Received: by iwn6 with SMTP id 6so443875iwn.19
-        for <git@vger.kernel.org>; Thu, 14 Jul 2011 11:19:52 -0700 (PDT)
-Received: by 10.231.193.137 with SMTP id du9mr2347198ibb.136.1310667591856;
-        Thu, 14 Jul 2011 11:19:51 -0700 (PDT)
-Received: from localhost (c-67-180-177-185.hsd1.ca.comcast.net [67.180.177.185])
-        by mx.google.com with ESMTPS id y3sm296691ibc.20.2011.07.14.11.19.50
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 14 Jul 2011 11:19:51 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755525Ab1GNSZW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jul 2011 14:25:22 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:53721 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755509Ab1GNSZV (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Jul 2011 14:25:21 -0400
+Received: from mail-ww0-f44.google.com (mail-ww0-f44.google.com [74.125.82.44])
+	(authenticated bits=0)
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p6EIOmba026658
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Thu, 14 Jul 2011 11:24:49 -0700
+Received: by wwe5 with SMTP id 5so605140wwe.1
+        for <git@vger.kernel.org>; Thu, 14 Jul 2011 11:24:47 -0700 (PDT)
+Received: by 10.216.54.197 with SMTP id i47mr6608359wec.48.1310667887185; Thu,
+ 14 Jul 2011 11:24:47 -0700 (PDT)
+Received: by 10.216.158.65 with HTTP; Thu, 14 Jul 2011 11:24:27 -0700 (PDT)
+X-Spam-Status: No, hits=-102.895 required=5 tests=AWL,BAYES_00,USER_IN_WHITELIST
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177146>
 
-Hi,
+Ok, so I see that the old discussion about generation numbers has resurfaced.
 
-We are using Sentry (a C/C++ static analysis tool) to analyze
-git on a nightly basis. Sentry found that a file leak
-was recently introduced in the commit 924aaf3.
+And I have to say, with six years of git use, I think it's not a
+coincidence that the notion of generation numbers has come up several
+times over the years: I think the lack of them is literally the only
+real design mistake we have.
 
-I'm hoping the attached patch correctly fixes up this leak.
+And I absolutely *detest* the generation number cache thing I see on the list.
 
-Thanks,
-Chris
+Maybe I missed the discussion that actually added them to the commits
+(I don't read the git mailing list regularly any more) but I think
+it's a mistake to add an external cache to work around the fact that I
+didn't add the generation numbers originally.
 
--- 
-Chris Wilson
-http://vigilantsw.com/
-Vigilant Software, A C/C++ Static Analysis Company
+So I think we should just add the generation numbers now. We can make
+the rule be that if a commit doesn't have a generation number, we end
+up having to compute it (with no real need for caching). Yes, it's
+expensive. But it's going to be a *lot* less expensive over time as
+people start using a git version that adds the generation numbers to
+commits.
 
----
- config.c |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
+And we can easily mix this - there's no "flag-day" issues. Old
+versions of git will ignore the generation number and generate new
+commits that doesn't have it. New versions of git will generate them,
+and use them. And once the project starts having generation numbers in
+some commits, the "generating them" part will get cheaper over time.
 
-diff --git a/config.c b/config.c
-index 1fc063b..bf61f09 100644
---- a/config.c
-+++ b/config.c
-@@ -1434,7 +1434,7 @@ int git_config_rename_section(const char *old_name, const char *new
-        struct lock_file *lock = xcalloc(sizeof(struct lock_file), 1);
-        int out_fd;
-        char buf[1024];
--       FILE *config_file;
-+       FILE *config_file = 0;
+I'll send out a patch that admittedly does not have much testing as a
+reply to this one. It ends up being really simple. Of course, maybe
+it's simple because I did something incredibly stupid, but please take
+a look.
 
-        if (config_exclusive_filename)
-                config_filename = xstrdup(config_exclusive_filename);
-@@ -1498,12 +1498,13 @@ int git_config_rename_section(const char *old_name, const char *n
-                        goto out;
-                }
-        }
--       fclose(config_file);
-  unlock_and_out:
-        if (commit_lock_file(lock) < 0)
-                ret = error("could not commit config file %s", config_filename);
-  out: 
-        free(config_filename);
-+        if (config_file)
-+               fclose(config_file);
-        return ret;
- }
-
--- 
-1.7.0.4
+                                 Linus
