@@ -1,79 +1,65 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: How to force git to use authentication as author
-Date: Thu, 14 Jul 2011 14:45:52 -0500
-Message-ID: <20110714194552.GA14632@elie>
-References: <20110714160638.065b6542@shiva.selfip.org>
- <CACBZZX4X8qRBXqwi70kZ0eZ+mb7rdD6p36xD=GoX6soha0TZcg@mail.gmail.com>
- <20110714161838.1e30893a@shiva.selfip.org>
- <1310641202.18730.16.camel@bee.lab.cmartin.tk>
- <20110714164547.0b359e60@shiva.selfip.org>
- <CABPQNSY3qyQXO4hyM6xhHq2VYhK5369ihuqJ5PDAonN7+UpcGA@mail.gmail.com>
+From: Ted Ts'o <tytso@mit.edu>
+Subject: Re: Git commit generation numbers
+Date: Thu, 14 Jul 2011 15:46:38 -0400
+Message-ID: <20110714194638.GE8453@thunk.org>
+References: <CA+55aFxZq1e8u7kXu1rNDy2UPgP3uOyC5y2j7idKSZ_4eL=bWw@mail.gmail.com>
+ <20110714183710.GA26820@sigill.intra.peff.net>
+ <CA+55aFwuK+krTA4OcnYhLXtKM5HQ1yuPK+J_vC-5R7AthrHWbg@mail.gmail.com>
+ <CA+55aFzvib7QF-J3fBj2brcQifXGqoeK1t7vfx6pcJmJAEO0dw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "J. Bakshi" <joydeep@infoservices.in>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 14 21:46:12 2011
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jul 14 21:46:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhRrM-00009U-TU
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 21:46:09 +0200
+	id 1QhRs3-0000dm-Iv
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 21:46:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754234Ab1GNTqC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jul 2011 15:46:02 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:52082 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754115Ab1GNTqB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2011 15:46:01 -0400
-Received: by iyb12 with SMTP id 12so525877iyb.19
-        for <git@vger.kernel.org>; Thu, 14 Jul 2011 12:46:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=FKB8n6YQyQVupLHovRRVlJYeU8CN+x78+o7cli1N8Z0=;
-        b=DbxZ8nCewdkZzyD5r3DRRPwFldMixs1xpXGu4dh0QiWJZ3lUFK1d/hOdPALF7l3Hdp
-         EnCSKihVuJsdS++ad3p7TEoC04WFWPH1Wxm2BCUhJjwESgXnvXU5bDXHuXWd64KaVEGs
-         i1IrCDq93wigOmtX5TN71Msbj+2FYNl0/HGFY=
-Received: by 10.42.128.83 with SMTP id l19mr2846741ics.443.1310672760469;
-        Thu, 14 Jul 2011 12:46:00 -0700 (PDT)
-Received: from elie (adsl-69-209-70-6.dsl.chcgil.sbcglobal.net [69.209.70.6])
-        by mx.google.com with ESMTPS id v16sm327689ibf.25.2011.07.14.12.45.58
-        (version=SSLv3 cipher=OTHER);
-        Thu, 14 Jul 2011 12:45:59 -0700 (PDT)
+	id S1754262Ab1GNTqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jul 2011 15:46:47 -0400
+Received: from li9-11.members.linode.com ([67.18.176.11]:48520 "EHLO
+	test.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753969Ab1GNTqq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2011 15:46:46 -0400
+Received: from root (helo=tytso-glaptop)
+	by test.thunk.org with local-esmtp (Exim 4.69)
+	(envelope-from <tytso@thunk.org>)
+	id 1QhRrr-0000DQ-Bd; Thu, 14 Jul 2011 19:46:39 +0000
+Received: from tytso by tytso-glaptop with local (Exim 4.71)
+	(envelope-from <tytso@thunk.org>)
+	id 1QhRrq-0007Pc-Eh; Thu, 14 Jul 2011 15:46:38 -0400
 Content-Disposition: inline
-In-Reply-To: <CABPQNSY3qyQXO4hyM6xhHq2VYhK5369ihuqJ5PDAonN7+UpcGA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CA+55aFzvib7QF-J3fBj2brcQifXGqoeK1t7vfx6pcJmJAEO0dw@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on test.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177166>
 
-Hi,
+On Thu, Jul 14, 2011 at 11:55:39AM -0700, Linus Torvalds wrote:
+> On Thu, Jul 14, 2011 at 11:47 AM, Linus Torvalds
+> <torvalds@linux-foundation.org> wrote:
+> >
+> > Also, I suspect that the cache could easily be done as a *small* and
+> > *incomplete* cache, ie you don't need to cache all commits, it would
+> > be sufficient to cache a few hundred spread-out commits, and just know
+> > that "from any commit, the cached commit will be quickly reachable".
+> 
+> Put another way: we could do the cache not as a real dynamic entity,
+> but as something that gets generated at "git clone" time or when
+> re-packing.
 
-Erik Faye-Lund wrote:
+Would it be considered evil if we put the generation number in the
+pack, but not consider it part of the formal object (i.e., it would be
+just a cache, but one that wouldn't change once the pack was created)?
 
-> So let's step back a little bit. Why do you want the author to be
-> identical to the authenticated user in the first place? Is it to be
-> able to *prove* (i.e not trust the users that push) who wrote what
-> code? If so, let's me first tell you that giving someone push-access
-> while not trusting them is a bit crazy. But if you're happy with being
-> a bit crazy, you'd might want to somehow cryptographically sign the
-> commits instead. I'd go for PGP-signing the patch-id, and putting that
-> in a git-note.
-
-Let's suppose you want to be able to decide who was to blame for the
-latest breakage, not on a per-commit level but on a per-push level.
-Then that seems quite doable to me through simpler means, on the
-server side.  See
-
- http://sitaramc.github.com/gitolite/doc/3-faq-tips-etc.html#_better_logging
-
-Hope that helps.
-Jonathan
+       	      	      	   	    	   	- Ted
