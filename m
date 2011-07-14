@@ -1,66 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCHv2 1/6] decorate: allow storing values instead of
- pointers
-Date: Thu, 14 Jul 2011 13:34:54 -0400
-Message-ID: <20110714173454.GA21657@sigill.intra.peff.net>
-References: <20110713064709.GA18499@sigill.intra.peff.net>
- <20110713065700.GA18566@sigill.intra.peff.net>
- <20110713175250.GA1448@elie>
- <20110713200814.GD31965@sigill.intra.peff.net>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: git-archive and tar options
+Date: Thu, 14 Jul 2011 19:45:07 +0200
+Message-ID: <4E1F2B23.1020908@lsrfire.ath.cx>
+References: <ivla29$liu$1@dough.gmane.org> <20110714015656.GA20136@sigill.intra.peff.net> <4E1F2468.6080409@lsrfire.ath.cx> <20110714172718.GA21341@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>, Ted Ts'o <tytso@mit.edu>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Clemens Buchacher <drizzd@aon.at>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	David Barr <davidbarr@google.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 14 19:35:03 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jul 14 19:45:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhPoU-0000tv-6Q
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 19:35:02 +0200
+	id 1QhPya-0006Zq-SV
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 19:45:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932226Ab1GNRe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jul 2011 13:34:57 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42986
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932198Ab1GNRe4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2011 13:34:56 -0400
-Received: (qmail 8232 invoked by uid 107); 14 Jul 2011 17:35:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Jul 2011 13:35:21 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jul 2011 13:34:54 -0400
-Content-Disposition: inline
-In-Reply-To: <20110713200814.GD31965@sigill.intra.peff.net>
+	id S932239Ab1GNRpO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jul 2011 13:45:14 -0400
+Received: from india601.server4you.de ([85.25.151.105]:36685 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932200Ab1GNRpO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2011 13:45:14 -0400
+Received: from [192.168.2.106] (p4FFD9551.dip.t-dialin.net [79.253.149.81])
+	by india601.server4you.de (Postfix) with ESMTPSA id 380F32F802F;
+	Thu, 14 Jul 2011 19:45:12 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:5.0) Gecko/20110624 Thunderbird/5.0
+In-Reply-To: <20110714172718.GA21341@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177138>
 
-On Wed, Jul 13, 2011 at 04:08:14PM -0400, Jeff King wrote:
+Am 14.07.2011 19:27, schrieb Jeff King:
+> On Thu, Jul 14, 2011 at 07:16:24PM +0200, Ren=C3=A9 Scharfe wrote:
+>=20
+>>>> git archive --format=3Dtar -o my.tar --transform=20
+>>>> 's,^Web/Templates/,myPath/myWeb/Templates/,' HEAD WebPortal/Templa=
+tes/
+>>>> error: unknown option `transform'
+>>>
+>>> Yeah, that won't work, because there is no such option. We do have
+>>> "--prefix", but I suspect that's not flexible enough for what you w=
+ant.
+>>
+>> If you only need a single subdirectory with a custom prefix you coul=
+d do
+>> something like this (variables only used to keep the lines short):
+>>
+>> 	$ subdir=3DWebPortal/Templates
+>> 	$ prefix=3DmyPath/myWeb/Templates/
+>> 	$ (cd "$subdir" && git archive --prefix=3D"$prefix" HEAD) >my.tar
+>>
+>> The output file can be specified with -o as well, of course, but you=
+'d
+>> either need to use an absolute path or add "../" for each directory
+>> level you descend into (-o ../../my.tar in this case).
+>=20
+> Couldn't you also do:
+>=20
+>   git archive --prefix=3D$prefix HEAD:$subdir >my.tar
+>=20
+> ? I guess that loses the pax header with the commit sha1 in it, thoug=
+h,
+> because you are feeding a straight tree instead of a commit.
 
-> I have to say, though, between the alignment issues and the strict
-> aliasing, I am tempted to scrap this whole approach and just use macros
-> to define the few functions we need. It's not like these containers are
-> heterogenous, or that we have a ton of types. Right now we want to map
-> "void *" and "uint32_t". In the future, I'd like to map a 20-byte sha1.
+Yes, and yes.
 
-So here's what that would look like (at least the decorate part).
+> We didn't when git-archive was written, but these days we have
+> get_sha1_with_context to remember incidental things about an object w=
+e
+> look up. It should perhaps remember the commit (if any) we used to re=
+ach
+> a treeish, and then the above command line could still insert the pax
+> header.
 
-Doing macro meta-programming like this makes me feel a little dirty, but
-I actually think the result is more readable.
+That's a good idea to increase consistency, as there shouldn't really b=
+e
+a difference in output between the two subdirectory syntaxes.
 
-  [1/3]: implement generic key/value map
-  [2/3]: fast-export: use object to uint32 map instead of "decorate"
-  [3/3]: decorate: use "map" for the underlying implementation
+I always wondered, however, if the embedded commit ID has really been
+used to identify the corresponding version of an archive that somehow
+lost its filename (due to being piped?).
 
-What do you think?
-
--Peff
+Ren=C3=A9
