@@ -1,148 +1,77 @@
-From: Josh Triplett <josh@joshtriplett.org>
-Subject: [PATCH] ref namespaces: tests
-Date: Thu, 14 Jul 2011 13:50:57 -0700
-Message-ID: <20110714205055.GA26956@leaf>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCHv2 1/6] decorate: allow storing values instead of
+ pointers
+Date: Thu, 14 Jul 2011 14:06:28 -0700
+Message-ID: <7vipr4373f.fsf@alter.siamese.dyndns.org>
+References: <20110713064709.GA18499@sigill.intra.peff.net>
+ <20110713065700.GA18566@sigill.intra.peff.net> <20110713175250.GA1448@elie>
+ <20110713200814.GD31965@sigill.intra.peff.net>
+ <20110714173454.GA21657@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jamey Sharp <jamey@minilop.net>,
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>, Ted Ts'o <tytso@mit.edu>,
+	=?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason 
+	<avarab@gmail.com>, Clemens Buchacher <drizzd@aon.at>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
-	Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 14 22:51:20 2011
+	David Barr <davidbarr@google.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jul 14 23:06:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhSsP-0001YY-VO
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 22:51:18 +0200
+	id 1QhT7I-000108-5n
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 23:06:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932188Ab1GNUvJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jul 2011 16:51:09 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:39039 "EHLO
-	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753400Ab1GNUvJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2011 16:51:09 -0400
-X-Originating-IP: 217.70.178.134
-Received: from mfilter4-d.gandi.net (mfilter4-d.gandi.net [217.70.178.134])
-	by relay4-d.mail.gandi.net (Postfix) with ESMTP id C1021172076;
-	Thu, 14 Jul 2011 22:51:06 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter4-d.gandi.net
-Received: from relay4-d.mail.gandi.net ([217.70.183.196])
-	by mfilter4-d.gandi.net (mfilter4-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id f5r+UaYcGV0O; Thu, 14 Jul 2011 22:51:04 +0200 (CEST)
-X-Originating-IP: 50.43.15.19
-Received: from leaf (static-50-43-15-19.bvtn.or.frontiernet.net [50.43.15.19])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 465E2172055;
-	Thu, 14 Jul 2011 22:50:59 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932160Ab1GNVGf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jul 2011 17:06:35 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62482 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754455Ab1GNVGe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2011 17:06:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 953E84C32;
+	Thu, 14 Jul 2011 17:06:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=50KkAWCmTV3G0YDd2sEckVCcSj8=; b=FQiIJM
+	3RBKQid6TghfFJlpCM0sW8FyqLhgKYTaAQ/zDofFeqoWnGQQzRtTmudsTf+g05sC
+	L4nVXZbV0x1Ci0yXhSQVyCi62cZuSUsqMUa2C4NthYgbtVxnW9yunPdPjvKnvR0h
+	AgUYLSqg1JVg+YLID4GCeQ+iPqJRydiI1Fn5k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dHCPTemhxD78JlWhbqvAAH/BMJDh+xKx
+	YhdapVh7JRxOv7dUy6vR9mR4dSzf2r1uYRrtn2aKOM0xWNhPrsUCtGc5K7/zSPDx
+	FPML8VFTbL+9faY4QMU9XlDKAC0jDYOtqNe0tt7Zximmh5546/ZH7yD5Y1nUqDJo
+	nwSFNejQGqY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A5B14C31;
+	Thu, 14 Jul 2011 17:06:30 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 11E054C30; Thu, 14 Jul 2011
+ 17:06:30 -0400 (EDT)
+In-Reply-To: <20110714173454.GA21657@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 14 Jul 2011 13:34:54 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 253EEE6A-AE5D-11E0-827A-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177177>
 
-Test pushing, pulling, and mirroring of repositories with ref
-namespaces.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Josh Triplett <josh@joshtriplett.org>
-Signed-off-by: Jamey Sharp <jamey@minilop.net>
----
+> Doing macro meta-programming like this makes me feel a little dirty, but
+> I actually think the result is more readable.
+>
+>   [1/3]: implement generic key/value map
+>   [2/3]: fast-export: use object to uint32 map instead of "decorate"
+>   [3/3]: decorate: use "map" for the underlying implementation
+>
+> What do you think?
 
-The most recent "What's cooking" suggested that the ref namespaces
-patches needed tests.  This test works with PATCHv10, currently in pu.
-Please append this patch to the js/ref-namespaces branch.
-
- t/t5502-fetch-push-namespaces.sh |   77 ++++++++++++++++++++++++++++++++++++++
- 1 files changed, 77 insertions(+), 0 deletions(-)
- create mode 100755 t/t5502-fetch-push-namespaces.sh
-
-diff --git a/t/t5502-fetch-push-namespaces.sh b/t/t5502-fetch-push-namespaces.sh
-new file mode 100755
-index 0000000..85720b6
---- /dev/null
-+++ b/t/t5502-fetch-push-namespaces.sh
-@@ -0,0 +1,77 @@
-+#!/bin/sh
-+
-+test_description='fetch/push involving ref namespaces'
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	test_tick &&
-+	git init original &&
-+	(
-+		cd original &&
-+		i=0 &&
-+		while [ "$i" -lt 2 ]
-+		do
-+			echo "$i" > count &&
-+			git add count &&
-+			test_commit "$i" &&
-+			i=$(($i + 1))
-+		done &&
-+		git remote add pushee-namespaced "ext::git --namespace=namespace %s ../pushee" &&
-+		git remote add pushee-unnamespaced ../pushee
-+	) &&
-+	git init pushee &&
-+	git init puller
-+'
-+
-+test_expect_success 'pushing into a repository using a ref namespace' '
-+	(
-+		cd original &&
-+		git push pushee-namespaced master &&
-+		git ls-remote pushee-namespaced > actual &&
-+		printf "dc65a2e0f299dcc7efddbbe01641a28ee84329ba\trefs/heads/master\n" > expected &&
-+		test_cmp expected actual &&
-+		git push pushee-namespaced --tags &&
-+		git ls-remote pushee-namespaced > actual &&
-+		printf "fbdf4310c71b916568f04753f603fb24a0544227\trefs/tags/0\n" >> expected &&
-+		printf "dc65a2e0f299dcc7efddbbe01641a28ee84329ba\trefs/tags/1\n" >> expected &&
-+		test_cmp expected actual &&
-+		# Verify that the GIT_NAMESPACE environment variable works as well
-+		GIT_NAMESPACE=namespace git ls-remote "ext::git %s ../pushee" > actual &&
-+		test_cmp expected actual &&
-+		# Verify that --namespace overrides GIT_NAMESPACE
-+		GIT_NAMESPACE=garbage git ls-remote pushee-namespaced > actual &&
-+		test_cmp expected actual &&
-+		# Try a namespace with no content
-+		git ls-remote "ext::git --namespace=garbage %s ../pushee" > actual &&
-+		test_cmp /dev/null actual &&
-+		git ls-remote pushee-unnamespaced > actual &&
-+		sed -e "s|refs/|refs/namespaces/namespace/refs/|" expected > expected.unnamespaced &&
-+		test_cmp expected.unnamespaced actual
-+	)
-+'
-+
-+test_expect_success 'pulling from a repository using a ref namespace' '
-+	(
-+		cd puller &&
-+		git remote add -f pushee-namespaced "ext::git --namespace=namespace %s ../pushee" &&
-+		git for-each-ref refs/ > actual &&
-+		printf "dc65a2e0f299dcc7efddbbe01641a28ee84329ba commit\trefs/remotes/pushee-namespaced/master\n" > expected &&
-+		printf "fbdf4310c71b916568f04753f603fb24a0544227 commit\trefs/tags/0\n" >> expected &&
-+		printf "dc65a2e0f299dcc7efddbbe01641a28ee84329ba commit\trefs/tags/1\n" >> expected &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_expect_success 'mirroring a repository using a ref namespace' '
-+	git clone --mirror pushee mirror &&
-+	(
-+		cd mirror &&
-+		git for-each-ref refs/ > actual &&
-+		printf "dc65a2e0f299dcc7efddbbe01641a28ee84329ba commit\trefs/namespaces/namespace/refs/heads/master\n" > expected &&
-+		printf "fbdf4310c71b916568f04753f603fb24a0544227 commit\trefs/namespaces/namespace/refs/tags/0\n" >> expected &&
-+		printf "dc65a2e0f299dcc7efddbbe01641a28ee84329ba commit\trefs/namespaces/namespace/refs/tags/1\n" >> expected &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_done
--- 
-1.7.5.4
+Yeah, dirty but nice ;-)
