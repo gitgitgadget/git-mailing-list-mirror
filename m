@@ -1,77 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git commit generation numbers
-Date: Thu, 14 Jul 2011 14:30:30 -0700
-Message-ID: <7vaacg35zd.fsf@alter.siamese.dyndns.org>
-References: <CA+55aFxZq1e8u7kXu1rNDy2UPgP3uOyC5y2j7idKSZ_4eL=bWw@mail.gmail.com>
- <20110714183710.GA26820@sigill.intra.peff.net>
- <7vmxgg38xz.fsf@alter.siamese.dyndns.org>
- <20110714204122.GB28548@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git-archive and tar options
+Date: Thu, 14 Jul 2011 14:38:05 -0700 (PDT)
+Message-ID: <m3k4bka6jb.fsf@localhost.localdomain>
+References: <ivla29$liu$1@dough.gmane.org>
+	<20110714015656.GA20136@sigill.intra.peff.net>
+	<4E1F2468.6080409@lsrfire.ath.cx>
+	<20110714172718.GA21341@sigill.intra.peff.net>
+	<7vei1s36bl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jul 14 23:30:41 2011
+Cc: Jeff King <peff@peff.net>,
+	=?iso-8859-15?q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 14 23:38:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhTUW-0004j1-Nm
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 23:30:41 +0200
+	id 1QhTbr-0000cy-3l
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 23:38:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932439Ab1GNVaf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jul 2011 17:30:35 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40143 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932299Ab1GNVac (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2011 17:30:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0828A4FAB;
-	Thu, 14 Jul 2011 17:30:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8ZQYABBNkJfZ1t/q9QDZNu3In7A=; b=Z2oio1
-	gI+TuNk4zBZ0UzsszMA6B3XKX1QDI9GUrss9r0EYzeDA8lsiVlK7qEHQcyurzliA
-	G2gwW73hjQPFroXzpdyk4ooXxwBFHjGFVymeR1Ztxe5I1nIsml/tghxDSKsTBC2S
-	u4iB34aet4x6xNZb91XKmYN3ITLsyqmsDXduQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ziyg1bRwlP+8BEP6mSqClEANIoyPYIiy
-	u5s/ndvzJ41B4ZlDSbLwQLaGZD2KviKGLGQ7zWUQKiwitl9VfKmzBlseXB5eEd/5
-	S28B5NXWTjWaCXgHEDTmjuLUIUACwIe+hLakC5AOHeylzbLtjjzN/Qgv1l0hrItJ
-	AVt2mYt/hTE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0036B4FAA;
-	Thu, 14 Jul 2011 17:30:31 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7E93C4FA8; Thu, 14 Jul 2011
- 17:30:31 -0400 (EDT)
-In-Reply-To: <20110714204122.GB28548@sigill.intra.peff.net> (Jeff King's
- message of "Thu, 14 Jul 2011 16:41:22 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8064B8B2-AE60-11E0-B237-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932371Ab1GNViJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jul 2011 17:38:09 -0400
+Received: from mail-fx0-f52.google.com ([209.85.161.52]:39108 "EHLO
+	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932232Ab1GNViI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2011 17:38:08 -0400
+Received: by fxd18 with SMTP id 18so1638372fxd.11
+        for <git@vger.kernel.org>; Thu, 14 Jul 2011 14:38:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=IggmTfqzSvVCjAIZUy6jSgVRJ4UNf+c9/NJ2Iw4hDRg=;
+        b=vHjiufg4hlbzT/OX8f5dCZCc917fkmKoFuWEqLueUBqYMevK1Zc5CbpVta/JnEbwJ+
+         uJjsS0OSQ+tLuojCGgU0H9hgpTi5lHdPiKLLI2C3ORJYFUs5BXnCYE3BWA5wToDjcJ6D
+         iG5vi0ISoqCl3igs9Np7gFSKDxBFGXttbP9Sg=
+Received: by 10.223.144.140 with SMTP id z12mr4157444fau.147.1310679487225;
+        Thu, 14 Jul 2011 14:38:07 -0700 (PDT)
+Received: from localhost.localdomain (abva152.neoplus.adsl.tpnet.pl [83.8.198.152])
+        by mx.google.com with ESMTPS id a24sm363508fak.36.2011.07.14.14.37.59
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 14 Jul 2011 14:38:05 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p6ELbEOr006500;
+	Thu, 14 Jul 2011 23:37:24 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p6ELaeJR006482;
+	Thu, 14 Jul 2011 23:36:40 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7vei1s36bl.fsf@alter.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177181>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> It should actually work in that scenario, at least with replace refs,...
-> regenerate it. Another run ...
+> Jeff King <peff@peff.net> writes:
+> 
+> > Couldn't you also do:
+> >
+> >   git archive --prefix=$prefix HEAD:$subdir >my.tar
+> >
+> > ? I guess that loses the pax header with the commit sha1 in it, though,
+> > because you are feeding a straight tree instead of a commit.
+> >
+> > We didn't when git-archive was written, but these days we have
+> > get_sha1_with_context to remember incidental things about an object we
+> > look up. It should perhaps remember the commit (if any) we used to reach
+> > a treeish, and then the above command line could still insert the pax
+> > header.
+> 
+> Why?
+> 
+> The tree you are writing out that way look very different from what is
+> recorded in the commit object. What's the point of introducing confusion
+> by allowing many tarballs with different contents written from the same
+> commits with such tweaks all labelled with the same pax header?
+ 
+Perhaps pax header should contain <commit-id>:<subdir> then?
+Just a thought.
 
-I know; that is what I called "doubt it would really work". Having to
-regenerate twice does not count as working.
-
-> However, there are two issues:
->
->   1. I don't think grafts have a "respect grafts" flag in the same way;
->      I haven't looked at how the packing code decides not to respect
->      them, but the "stir graft info into the checksum" data should use
->      the same check.
-
-I do not think graft and object transfer meshes well at all, so I wouldn't
-worry about it.
+-- 
+Jakub Narebski
