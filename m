@@ -1,88 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: encrypted netrc for Git (was: [Wishlist] could git tell which
- password it is asking when asking a password.)
-Date: Thu, 14 Jul 2011 11:00:33 -0400
-Message-ID: <20110714150033.GA6797@sigill.intra.peff.net>
-References: <877h82nlua.dlv@debian.org>
- <87aacygcfx.fsf@lifelogs.com>
- <87bowxt0sh.fsf_-_@lifelogs.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 14 17:00:41 2011
+From: Seth Robertson <in-gitvger@baka.org>
+Subject: Re: Nesting a submodule inside of another...
+Date: Thu, 14 Jul 2011 10:33:37 -0400
+Message-ID: <201107141433.p6EEXbb9023826@no.baka.org>
+References: <CAEBDL5XQDehUyqKoazxy+YVHh_2iAyt9aE-77H1jZg4oujMJgw@mail.gmail.com> <4E1C9F21.6070300@web.de> <CAEBDL5U0F+QaqhW92i-s82-C9fj2knp6JPNtNvgdJY68kRYwWQ@mail.gmail.com> <4E1E0C27.60903@web.de>
+        <CAEBDL5VUPE9YCX1C4pqkjb+EODkAWo9h774B=Jv5eUNbocMuZQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Cc: Git mailing list <git@vger.kernel.org>
+To: John Szakmeister <john@szakmeister.net>
+X-From: git-owner@vger.kernel.org Thu Jul 14 17:07:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhNP7-0001jk-Dm
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 17:00:41 +0200
+	id 1QhNW4-0006I2-OO
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 17:07:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754543Ab1GNPAg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jul 2011 11:00:36 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34699
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754318Ab1GNPAf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2011 11:00:35 -0400
-Received: (qmail 6452 invoked by uid 107); 14 Jul 2011 15:00:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Jul 2011 11:00:59 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jul 2011 11:00:33 -0400
-Content-Disposition: inline
-In-Reply-To: <87bowxt0sh.fsf_-_@lifelogs.com>
+	id S1754808Ab1GNPHr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jul 2011 11:07:47 -0400
+Received: from tsutomu.baka.org ([66.114.72.182]:33767 "EHLO tsutomu.baka.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754591Ab1GNPHq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2011 11:07:46 -0400
+X-Greylist: delayed 2047 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Jul 2011 11:07:46 EDT
+Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
+	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id p6EEXbKG027282
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 14 Jul 2011 10:33:37 -0400
+Received: from no.baka.org (localhost [127.0.0.1])
+	by no.baka.org (8.14.4/8.14.0) with ESMTP id p6EEXbb9023826;
+	Thu, 14 Jul 2011 10:33:37 -0400
+In-reply-to: <CAEBDL5VUPE9YCX1C4pqkjb+EODkAWo9h774B=Jv5eUNbocMuZQ@mail.gmail.com>
+Comments: In reply to a message from "John Szakmeister <john@szakmeister.net>" dated "Thu, 14 Jul 2011 05:36:46 -0400."
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177132>
 
-On Thu, Jul 14, 2011 at 09:05:50AM -0500, Ted Zlatanov wrote:
 
-> On Fri, 01 Jul 2011 12:04:02 -0500 Ted Zlatanov <tzz@lifelogs.com> wr=
-ote:=20
->=20
-> TZ> On Fri, 01 Jul 2011 15:59:09 +0200 R=C3=A9mi Vanicat <vanicat@deb=
-ian.org> wrote:=20
->=20
-> RV> It would be interesting also to plug some sort of password-safe u=
-nto
-> RV> git, or some "git-agent".=20
->=20
-> TZ> This would also be really nice.  ~/.netrc is not a great place to=
- put
-> TZ> passwords for the HTTP transport.  In GNU Emacs we have ~/.authin=
-fo.gpg
-> TZ> with the same content as ~/.netrc but encrypted by GPG and thus m=
-ore
-> TZ> secure (the user is either prompted for the password, if the file=
- is
-> TZ> encrypted symmetrically, or the user simply loads their private k=
-ey into
-> TZ> the GPG agent).  I believe all this can be done with the GPGME li=
-brary.
-> TZ> There's also the Secrets API on newer Gnome and KDE installs, whi=
-ch has
-> TZ> a pretty nice D-Bus interface.
->=20
-> TZ> But is this a libcurl feature request?  Or can a Git plugin (an
-> TZ> alternate HTTPS transport maybe?) handle it?
->=20
-> Ping?  I'd like to work on this if it seems like a feasible feature.
+In message <CAEBDL5VUPE9YCX1C4pqkjb+EODkAWo9h774B=Jv5eUNbocMuZQ@mail.gmail.com>, John Szakmeister writes:
 
-Check out:
+    > I've got a project where we have several frameworks involved, and
+    > external modules we want to pull into the framework tree.  We'd like
+    > to make use of submodules and have something like this:
+    >      top-level/<-- .gitmodules lives here
+    >          src/
+    >          framework1/<-- a submodule
+    >              module/<-- another submodule
+    >          framework2/<-- a submodule
+    >              module2/<-- another submodule
 
-  https://github.com/peff/git/commits/jk/http-auth
+    Again, I don't see how the submodule needs to be aware of the
+    superproject.  In this case, it'd be the responsibility of the
+    superproject to setup whatever is necessary at 'git submodule
+    init/add'.  I don't see how the submodule *must* know about the
+    superproject for it to succeed.  I see the opposite, the superproject
+    needs to communicate some information down to the submodule, but I
+    don't see the reverse.
 
-which provides an interface for getting credentials from external
-helpers.
+    What I'm hearing is that while it may be possible, the idea of
+    violating the concept that the "subrepo is standalone" is
+    unacceptable.  Which means, unfortunately, git isn't a solution for us
+    in this case.
 
-I need to write docs for a few of the top commits before posting the
-patches to the list, but other than that, it should be fairly solid and
-usable. And I'd love to get feedback from somebody trying to write a ne=
-w
-helper for it (i.e., to tell if the interface to the helpers is good
-enough).
+You might find that gitslave (http://gitslave.sf.net) might be a
+better solution for you than git-submodules in this case.  It works
+better for many workflows (and worse for others) but is much simpler
+to understand since with gitslave you have JBOR (just a bunch of
+repositories) with a program which can be thought of as running the
+requested git command over each repository in turn.  Gitslave thus has
+a loose binding between the repositories, and you can only guarantee
+the relationship between repositories at tagged locations, though in
+practice this isn't a major concern.
 
--Peff
+gitslave supports nested repositories (and recursive gitslave
+repositories, but those are different).  With gitslave nested
+repositories it is also true that you would have to have a
+supplemental gitignore entry in framework1 (which gitslave will
+create).
+
+If you have any questions, please let me know.
+
+					-Seth Robertson
