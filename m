@@ -1,225 +1,132 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/3] decorate: use "map" for the underlying implementation
-Date: Thu, 14 Jul 2011 13:53:48 -0400
-Message-ID: <20110714175348.GC21771@sigill.intra.peff.net>
-References: <20110714173454.GA21657@sigill.intra.peff.net>
+Subject: Re: git-archive and tar options
+Date: Thu, 14 Jul 2011 14:18:58 -0400
+Message-ID: <20110714181858.GA25172@sigill.intra.peff.net>
+References: <ivla29$liu$1@dough.gmane.org>
+ <20110714015656.GA20136@sigill.intra.peff.net>
+ <4E1F2468.6080409@lsrfire.ath.cx>
+ <20110714172718.GA21341@sigill.intra.peff.net>
+ <4E1F2B23.1020908@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>, Ted Ts'o <tytso@mit.edu>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Clemens Buchacher <drizzd@aon.at>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	David Barr <davidbarr@google.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 14 19:53:56 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
+To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Thu Jul 14 20:19:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhQ6l-0002og-S6
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 19:53:56 +0200
+	id 1QhQVO-0008Me-CG
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 20:19:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932209Ab1GNRxv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jul 2011 13:53:51 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36425
+	id S1755464Ab1GNSTB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jul 2011 14:19:01 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55280
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932139Ab1GNRxu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2011 13:53:50 -0400
-Received: (qmail 8856 invoked by uid 107); 14 Jul 2011 17:54:15 -0000
+	id S1755400Ab1GNSTB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2011 14:19:01 -0400
+Received: (qmail 9063 invoked by uid 107); 14 Jul 2011 18:19:25 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Jul 2011 13:54:15 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jul 2011 13:53:48 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Jul 2011 14:19:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jul 2011 14:18:58 -0400
 Content-Disposition: inline
-In-Reply-To: <20110714173454.GA21657@sigill.intra.peff.net>
+In-Reply-To: <4E1F2B23.1020908@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177144>
 
-The decoration API maps objects to void pointers. This is a
-subset of what the map API is capable of, so let's get rid
-of the duplicate implementation.
+On Thu, Jul 14, 2011 at 07:45:07PM +0200, Ren=C3=A9 Scharfe wrote:
 
-We could just fix all callers of decorate to call the map
-API directly. However, the map API is very generic since it
-is meant to handle any type. In particular, it can't use
-sentinel values like "NULL" to indicate "entry not found"
-(since it doesn't know whether the type can represent such a
-sentinel value).
+> > We didn't when git-archive was written, but these days we have
+> > get_sha1_with_context to remember incidental things about an object=
+ we
+> > look up. It should perhaps remember the commit (if any) we used to =
+reach
+> > a treeish, and then the above command line could still insert the p=
+ax
+> > header.
+>=20
+> That's a good idea to increase consistency, as there shouldn't really=
+ be
+> a difference in output between the two subdirectory syntaxes.
 
-Instead, the decorate API just becomes a set of wrappers,
-and no callers need to be updated at all.
+The patch to do this is pretty tiny. See below.
+
+There are a few issues, though:
+
+  1. I think this is probably the right thing to do, and most people
+     will be happy about it. But I guess I can see an argument that the
+     commit-id should not be there, as the subtree does not represent
+     that commit.
+
+     IOW, if you assume the commit-id in the output means
+     "by the way, this came from commit X", this change is a good thing=
+=2E
+     If you assume it means "this is the tree from commit X", then it's
+     not.  I have no idea how people use it. I never have, but I always
+     assumed the use case was "I have this random tarball. Where did it
+     come from?".
+
+  2. The object_context already has the sha1 we want, but it is under
+     the name "tree", which is not an accurate name. It's actually
+     "whatever is on the left side of the :". Which should be a
+     tree-ish, but could be a commit or a tree.
+
+  3. It looks like we fill in object_context whenever we see something
+     like "tree-ish:path". But we should perhaps also do so when peelin=
+g
+     something like "tree-ish^{tree}".
+
+> I always wondered, however, if the embedded commit ID has really been
+> used to identify the corresponding version of an archive that somehow
+> lost its filename (due to being piped?).
+
+I dunno. I've never used it.
+
+-- >8 --
+Subject: [PATCH] archive: look harder for commit id
+
+When "git archive" is given a commit, the output will
+contain the commit sha1 (either as a pax header for tar
+format, or in a file comment for zip).
+
+When it's given a name that resolves to a tree, like:
+
+  git archive git-1.7.0:Documentation
+
+then the archive code never sees the commit, and no
+commit-id is output. We can use get_sha1_with_context to
+remember the commit that led us to that tree (if any).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-The result should perform identically to the existing decorate code with
-the exception of the extra "used" field, which makes each hash entry
-bigger (see the comments in patch 1/3).
+ archive.c |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
- decorate.c |  105 ++++++++++--------------------------------------------------
- decorate.h |   10 ++----
- map.c      |    1 +
- map.h      |    1 +
- 4 files changed, 22 insertions(+), 95 deletions(-)
- rewrite decorate.c (89%)
-
-diff --git a/decorate.c b/decorate.c
-dissimilarity index 89%
-index 2f8a63e..31e9656 100644
---- a/decorate.c
-+++ b/decorate.c
-@@ -1,88 +1,17 @@
--/*
-- * decorate.c - decorate a git object with some arbitrary
-- * data.
-- */
--#include "cache.h"
--#include "object.h"
--#include "decorate.h"
--
--static unsigned int hash_obj(const struct object *obj, unsigned int n)
--{
--	unsigned int hash;
--
--	memcpy(&hash, obj->sha1, sizeof(unsigned int));
--	return hash % n;
--}
--
--static void *insert_decoration(struct decoration *n, const struct object *base, void *decoration)
--{
--	int size = n->size;
--	struct object_decoration *hash = n->hash;
--	unsigned int j = hash_obj(base, size);
--
--	while (hash[j].base) {
--		if (hash[j].base == base) {
--			void *old = hash[j].decoration;
--			hash[j].decoration = decoration;
--			return old;
--		}
--		if (++j >= size)
--			j = 0;
--	}
--	hash[j].base = base;
--	hash[j].decoration = decoration;
--	n->nr++;
--	return NULL;
--}
--
--static void grow_decoration(struct decoration *n)
--{
--	int i;
--	int old_size = n->size;
--	struct object_decoration *old_hash = n->hash;
--
--	n->size = (old_size + 1000) * 3 / 2;
--	n->hash = xcalloc(n->size, sizeof(struct object_decoration));
--	n->nr = 0;
--
--	for (i = 0; i < old_size; i++) {
--		const struct object *base = old_hash[i].base;
--		void *decoration = old_hash[i].decoration;
--
--		if (!base)
--			continue;
--		insert_decoration(n, base, decoration);
--	}
--	free(old_hash);
--}
--
--/* Add a decoration pointer, return any old one */
--void *add_decoration(struct decoration *n, const struct object *obj,
--		void *decoration)
--{
--	int nr = n->nr + 1;
--
--	if (nr > n->size * 2 / 3)
--		grow_decoration(n);
--	return insert_decoration(n, obj, decoration);
--}
--
--/* Lookup a decoration pointer */
--void *lookup_decoration(struct decoration *n, const struct object *obj)
--{
--	unsigned int j;
--
--	/* nothing to lookup */
--	if (!n->size)
--		return NULL;
--	j = hash_obj(obj, n->size);
--	for (;;) {
--		struct object_decoration *ref = n->hash + j;
--		if (ref->base == obj)
--			return ref->decoration;
--		if (!ref->base)
--			return NULL;
--		if (++j == n->size)
--			j = 0;
--	}
--}
-+#include "cache.h"
-+#include "decorate.h"
-+
-+void *add_decoration(struct decoration *n, const struct object *obj,
-+		     void *decoration)
-+{
-+	void *ret = NULL;
-+	map_set_object_void(&n->map, obj, decoration, &ret);
-+	return ret;
-+}
-+
-+void *lookup_decoration(struct decoration *n, const struct object *obj)
-+{
-+	void *ret = NULL;
-+	map_get_object_void(&n->map, obj, &ret);
-+	return ret;
-+}
-diff --git a/decorate.h b/decorate.h
-index e732804..6a3adcd 100644
---- a/decorate.h
-+++ b/decorate.h
-@@ -1,15 +1,11 @@
- #ifndef DECORATE_H
- #define DECORATE_H
- 
--struct object_decoration {
--	const struct object *base;
--	void *decoration;
--};
-+#include "map.h"
- 
- struct decoration {
--	const char *name;
--	unsigned int size, nr;
--	struct object_decoration *hash;
-+	char *name;
-+	struct map_object_void map;
- };
- 
- extern void *add_decoration(struct decoration *n, const struct object *obj, void *decoration);
-diff --git a/map.c b/map.c
-index 28f885e..93e0364 100644
---- a/map.c
-+++ b/map.c
-@@ -86,3 +86,4 @@ int map_get_##name(struct map_##name *m, \
- }
- 
- MAP_IMPLEMENT(object_uint32, struct object *, uint32_t, cmp_obj, hash_obj)
-+MAP_IMPLEMENT(object_void, struct object *, void *, cmp_obj, hash_obj)
-diff --git a/map.h b/map.h
-index e80d85d..737054e 100644
---- a/map.h
-+++ b/map.h
-@@ -22,5 +22,6 @@ extern int map_set_##name(struct map_##name *, \
- 			  vtype *old); \
- 
- DECLARE_MAP(object_uint32, struct object *, uint32_t)
-+DECLARE_MAP(object_void, struct object *, void *)
- 
- #endif /* MAP_H */
--- 
+diff --git a/archive.c b/archive.c
+index 42f2d2f..d0ba7fb 100644
+--- a/archive.c
++++ b/archive.c
+@@ -256,11 +256,14 @@ static void parse_treeish_arg(const char **argv,
+ 	struct tree *tree;
+ 	const struct commit *commit;
+ 	unsigned char sha1[20];
++	struct object_context oc;
+=20
+-	if (get_sha1(name, sha1))
++	if (get_sha1_with_context(name, sha1, &oc))
+ 		die("Not a valid object name");
+=20
+ 	commit =3D lookup_commit_reference_gently(sha1, 1);
++	if (!commit)
++		commit =3D lookup_commit_reference_gently(oc.tree, 1);
+ 	if (commit) {
+ 		commit_sha1 =3D commit->object.sha1;
+ 		archive_time =3D commit->date;
+--=20
 1.7.6.38.ge5b33
