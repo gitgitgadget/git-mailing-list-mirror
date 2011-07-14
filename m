@@ -1,8 +1,7 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/3] fast-export: use object to uint32 map instead of
- "decorate"
-Date: Thu, 14 Jul 2011 13:52:11 -0400
-Message-ID: <20110714175211.GB21771@sigill.intra.peff.net>
+Subject: [PATCH 3/3] decorate: use "map" for the underlying implementation
+Date: Thu, 14 Jul 2011 13:53:48 -0400
+Message-ID: <20110714175348.GC21771@sigill.intra.peff.net>
 References: <20110714173454.GA21657@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -13,158 +12,214 @@ Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	David Barr <davidbarr@google.com>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 14 19:52:21 2011
+X-From: git-owner@vger.kernel.org Thu Jul 14 19:53:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhQ5D-0001xZ-6v
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 19:52:19 +0200
+	id 1QhQ6l-0002og-S6
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 19:53:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932278Ab1GNRwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jul 2011 13:52:14 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53273
+	id S932209Ab1GNRxv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jul 2011 13:53:51 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36425
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932168Ab1GNRwN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2011 13:52:13 -0400
-Received: (qmail 8808 invoked by uid 107); 14 Jul 2011 17:52:38 -0000
+	id S932139Ab1GNRxu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2011 13:53:50 -0400
+Received: (qmail 8856 invoked by uid 107); 14 Jul 2011 17:54:15 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Jul 2011 13:52:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jul 2011 13:52:11 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Jul 2011 13:54:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jul 2011 13:53:48 -0400
 Content-Disposition: inline
 In-Reply-To: <20110714173454.GA21657@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177143>
 
-Previously we encoded the "mark" mapping inside the "void *"
-field of a "struct decorate". It's a little more natural for
-us to do so using a data structure made for holding actual
-values.
+The decoration API maps objects to void pointers. This is a
+subset of what the map API is capable of, so let's get rid
+of the duplicate implementation.
+
+We could just fix all callers of decorate to call the map
+API directly. However, the map API is very generic since it
+is meant to handle any type. In particular, it can't use
+sentinel values like "NULL" to indicate "entry not found"
+(since it doesn't know whether the type can represent such a
+sentinel value).
+
+Instead, the decorate API just becomes a set of wrappers,
+and no callers need to be updated at all.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-And this is an example of use. It doesn't save all that much code, but I
-think it's a little more natural. It can also save some bytes of the hash
-value in each entry if your pointers are larger than 32-bit.
+The result should perform identically to the existing decorate code with
+the exception of the extra "used" field, which makes each hash entry
+bigger (see the comments in patch 1/3).
 
- builtin/fast-export.c |   36 +++++++++++-------------------------
- map.c                 |    2 ++
- map.h                 |    2 ++
- 3 files changed, 15 insertions(+), 25 deletions(-)
+ decorate.c |  105 ++++++++++--------------------------------------------------
+ decorate.h |   10 ++----
+ map.c      |    1 +
+ map.h      |    1 +
+ 4 files changed, 22 insertions(+), 95 deletions(-)
+ rewrite decorate.c (89%)
 
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index daf1945..fd50503 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -12,7 +12,7 @@
- #include "diffcore.h"
- #include "log-tree.h"
- #include "revision.h"
+diff --git a/decorate.c b/decorate.c
+dissimilarity index 89%
+index 2f8a63e..31e9656 100644
+--- a/decorate.c
++++ b/decorate.c
+@@ -1,88 +1,17 @@
+-/*
+- * decorate.c - decorate a git object with some arbitrary
+- * data.
+- */
+-#include "cache.h"
+-#include "object.h"
 -#include "decorate.h"
-+#include "map.h"
- #include "string-list.h"
- #include "utf8.h"
- #include "parse-options.h"
-@@ -59,7 +59,7 @@ static int parse_opt_tag_of_filtered_mode(const struct option *opt,
- 	return 0;
- }
- 
--static struct decoration idnums;
-+static struct map_object_uint32 idnums;
- static uint32_t last_idnum;
- 
- static int has_unshown_parent(struct commit *commit)
-@@ -73,20 +73,9 @@ static int has_unshown_parent(struct commit *commit)
- 	return 0;
- }
- 
--/* Since intptr_t is C99, we do not use it here */
--static inline uint32_t *mark_to_ptr(uint32_t mark)
+-
+-static unsigned int hash_obj(const struct object *obj, unsigned int n)
 -{
--	return ((uint32_t *)NULL) + mark;
+-	unsigned int hash;
+-
+-	memcpy(&hash, obj->sha1, sizeof(unsigned int));
+-	return hash % n;
 -}
 -
--static inline uint32_t ptr_to_mark(void * mark)
+-static void *insert_decoration(struct decoration *n, const struct object *base, void *decoration)
 -{
--	return (uint32_t *)mark - (uint32_t *)NULL;
+-	int size = n->size;
+-	struct object_decoration *hash = n->hash;
+-	unsigned int j = hash_obj(base, size);
+-
+-	while (hash[j].base) {
+-		if (hash[j].base == base) {
+-			void *old = hash[j].decoration;
+-			hash[j].decoration = decoration;
+-			return old;
+-		}
+-		if (++j >= size)
+-			j = 0;
+-	}
+-	hash[j].base = base;
+-	hash[j].decoration = decoration;
+-	n->nr++;
+-	return NULL;
 -}
 -
- static inline void mark_object(struct object *object, uint32_t mark)
- {
--	add_decoration(&idnums, object, mark_to_ptr(mark));
-+	map_set_object_uint32(&idnums, object, mark, NULL);
- }
- 
- static inline void mark_next_object(struct object *object)
-@@ -96,10 +85,9 @@ static inline void mark_next_object(struct object *object)
- 
- static int get_object_mark(struct object *object)
- {
--	void *decoration = lookup_decoration(&idnums, object);
--	if (!decoration)
--		return 0;
--	return ptr_to_mark(decoration);
-+	uint32_t ret = 0;
-+	map_get_object_uint32(&idnums, object, &ret);
+-static void grow_decoration(struct decoration *n)
+-{
+-	int i;
+-	int old_size = n->size;
+-	struct object_decoration *old_hash = n->hash;
+-
+-	n->size = (old_size + 1000) * 3 / 2;
+-	n->hash = xcalloc(n->size, sizeof(struct object_decoration));
+-	n->nr = 0;
+-
+-	for (i = 0; i < old_size; i++) {
+-		const struct object *base = old_hash[i].base;
+-		void *decoration = old_hash[i].decoration;
+-
+-		if (!base)
+-			continue;
+-		insert_decoration(n, base, decoration);
+-	}
+-	free(old_hash);
+-}
+-
+-/* Add a decoration pointer, return any old one */
+-void *add_decoration(struct decoration *n, const struct object *obj,
+-		void *decoration)
+-{
+-	int nr = n->nr + 1;
+-
+-	if (nr > n->size * 2 / 3)
+-		grow_decoration(n);
+-	return insert_decoration(n, obj, decoration);
+-}
+-
+-/* Lookup a decoration pointer */
+-void *lookup_decoration(struct decoration *n, const struct object *obj)
+-{
+-	unsigned int j;
+-
+-	/* nothing to lookup */
+-	if (!n->size)
+-		return NULL;
+-	j = hash_obj(obj, n->size);
+-	for (;;) {
+-		struct object_decoration *ref = n->hash + j;
+-		if (ref->base == obj)
+-			return ref->decoration;
+-		if (!ref->base)
+-			return NULL;
+-		if (++j == n->size)
+-			j = 0;
+-	}
+-}
++#include "cache.h"
++#include "decorate.h"
++
++void *add_decoration(struct decoration *n, const struct object *obj,
++		     void *decoration)
++{
++	void *ret = NULL;
++	map_set_object_void(&n->map, obj, decoration, &ret);
 +	return ret;
- }
++}
++
++void *lookup_decoration(struct decoration *n, const struct object *obj)
++{
++	void *ret = NULL;
++	map_get_object_void(&n->map, obj, &ret);
++	return ret;
++}
+diff --git a/decorate.h b/decorate.h
+index e732804..6a3adcd 100644
+--- a/decorate.h
++++ b/decorate.h
+@@ -1,15 +1,11 @@
+ #ifndef DECORATE_H
+ #define DECORATE_H
  
- static void show_progress(void)
-@@ -537,8 +525,7 @@ static void handle_tags_and_duplicates(struct string_list *extra_refs)
- static void export_marks(char *file)
- {
- 	unsigned int i;
--	uint32_t mark;
--	struct object_decoration *deco = idnums.hash;
-+	struct map_entry_object_uint32 *map = idnums.hash;
- 	FILE *f;
- 	int e = 0;
+-struct object_decoration {
+-	const struct object *base;
+-	void *decoration;
+-};
++#include "map.h"
  
-@@ -547,15 +534,14 @@ static void export_marks(char *file)
- 		die_errno("Unable to open marks file %s for writing.", file);
+ struct decoration {
+-	const char *name;
+-	unsigned int size, nr;
+-	struct object_decoration *hash;
++	char *name;
++	struct map_object_void map;
+ };
  
- 	for (i = 0; i < idnums.size; i++) {
--		if (deco->base && deco->base->type == 1) {
--			mark = ptr_to_mark(deco->decoration);
--			if (fprintf(f, ":%"PRIu32" %s\n", mark,
--				sha1_to_hex(deco->base->sha1)) < 0) {
-+		if (map->used && map->key->type == 1) {
-+			if (fprintf(f, ":%"PRIu32" %s\n", map->value,
-+				sha1_to_hex(map->key->sha1)) < 0) {
- 			    e = 1;
- 			    break;
- 			}
- 		}
--		deco++;
-+		map++;
- 	}
- 
- 	e |= ferror(f);
+ extern void *add_decoration(struct decoration *n, const struct object *obj, void *decoration);
 diff --git a/map.c b/map.c
-index 378cecb..28f885e 100644
+index 28f885e..93e0364 100644
 --- a/map.c
 +++ b/map.c
-@@ -84,3 +84,5 @@ int map_get_##name(struct map_##name *m, \
- 	} \
- 	return 0; \
+@@ -86,3 +86,4 @@ int map_get_##name(struct map_##name *m, \
  }
-+
-+MAP_IMPLEMENT(object_uint32, struct object *, uint32_t, cmp_obj, hash_obj)
+ 
+ MAP_IMPLEMENT(object_uint32, struct object *, uint32_t, cmp_obj, hash_obj)
++MAP_IMPLEMENT(object_void, struct object *, void *, cmp_obj, hash_obj)
 diff --git a/map.h b/map.h
-index 496c5d1..e80d85d 100644
+index e80d85d..737054e 100644
 --- a/map.h
 +++ b/map.h
-@@ -21,4 +21,6 @@ extern int map_set_##name(struct map_##name *, \
- 			  vtype value, \
+@@ -22,5 +22,6 @@ extern int map_set_##name(struct map_##name *, \
  			  vtype *old); \
  
-+DECLARE_MAP(object_uint32, struct object *, uint32_t)
-+
+ DECLARE_MAP(object_uint32, struct object *, uint32_t)
++DECLARE_MAP(object_void, struct object *, void *)
+ 
  #endif /* MAP_H */
 -- 
 1.7.6.38.ge5b33
