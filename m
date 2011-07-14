@@ -1,104 +1,92 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: Git commit generation numbers
-Date: Thu, 14 Jul 2011 16:31:41 -0400
-Message-ID: <20110714203141.GA28548@sigill.intra.peff.net>
+Date: Thu, 14 Jul 2011 16:41:22 -0400
+Message-ID: <20110714204122.GB28548@sigill.intra.peff.net>
 References: <CA+55aFxZq1e8u7kXu1rNDy2UPgP3uOyC5y2j7idKSZ_4eL=bWw@mail.gmail.com>
  <20110714183710.GA26820@sigill.intra.peff.net>
- <CA+55aFwuK+krTA4OcnYhLXtKM5HQ1yuPK+J_vC-5R7AthrHWbg@mail.gmail.com>
- <20110714190844.GA26918@sigill.intra.peff.net>
- <CA+55aFx=ACnVBGU8_9wa=9xTbxVoOWKnsqfmBvzq7qzOeMGSNA@mail.gmail.com>
- <20110714200144.GE26918@sigill.intra.peff.net>
- <69e0ad24-32b7-4e14-9492-6d0c3d653adf@email.android.com>
+ <7vmxgg38xz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jul 14 22:32:18 2011
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 14 22:41:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhSa1-00008V-Eb
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 22:32:17 +0200
+	id 1QhSiv-0004zh-Aj
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 22:41:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754064Ab1GNUbo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jul 2011 16:31:44 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58155
+	id S932160Ab1GNUlY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jul 2011 16:41:24 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38907
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753071Ab1GNUbn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2011 16:31:43 -0400
-Received: (qmail 11692 invoked by uid 107); 14 Jul 2011 20:32:08 -0000
+	id S932075Ab1GNUlY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2011 16:41:24 -0400
+Received: (qmail 11759 invoked by uid 107); 14 Jul 2011 20:41:49 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Jul 2011 16:32:08 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jul 2011 16:31:41 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Jul 2011 16:41:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jul 2011 16:41:22 -0400
 Content-Disposition: inline
-In-Reply-To: <69e0ad24-32b7-4e14-9492-6d0c3d653adf@email.android.com>
+In-Reply-To: <7vmxgg38xz.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177175>
 
-On Thu, Jul 14, 2011 at 01:19:51PM -0700, Linus Torvalds wrote:
+On Thu, Jul 14, 2011 at 01:26:32PM -0700, Junio C Hamano wrote:
 
-> >Out of curiosity, what don't you like about the generation cache?
+> Jeff King <peff@peff.net> writes:
 > 
-> The thing I hate about it is very fundamental: I think it's a hack
-> around a basic git design mistake. And it's a mistake we have known
-> about for a long time.
+> > There's also one other issue with generation numbers. How do you handle
+> > grafts and object-replacement refs?  If you graft history, your embedded
+> > generation numbers will all be junk, and you can't trust them.
 > 
-> Now, I don't think it's a *fatal* mistake, but I do find it very
-> broken to basically say "we made a mistake in the original commit
-> design, and instead of fixing it we create a separate workaround for
-> it".
-> 
-> THAT I find distasteful. My reaction is that if we're going to add
-> generation numbers, then were should just do it the way we should have
-> done them originally, rather than as some separate hack.
-> 
-> See? That's why I wouldn't have any problem with adding a separate
-> cache on top of it, if it's really required, but I would hope that it
-> isn't really needed.
-> 
-> So a cache in itself is not necessarily wrong. But leaving the
-> original design mistake in place IS.
+> By the way, I doubt your "invalidate and recompute generation cache when
+> replacement changes" would really work when we consider object transfer
+> (which is the whole point of deprecating graft with object replacement
+> mechanism). For the purpose of connectivity check during object transfer,
+> we deliberately _ignore_ the object replacements, so you would at least
+> want to have an ability to show the generation number according to the
+> "true" history recorded in commits (which can come from Linus's in-commit
+> generation number once everybody migrates) and the generation number that
+> takes grafts and replacements into account (for which we cannot depend on
+> in-commit record).
 
-Thanks, that makes some sense to me.
+It should actually work in that scenario, at least with replace refs,
+but the performance is suboptimal. The copy of git doing the object
+transfer will turn off read_replace_refs, our validity token will
+not match, we will see that our cache is no longer valid, and
+regenerate it. Another run with replace-refs turned on will do the same
+thing in reverse. Even two programs running simultaneously will still be
+correct, because the cache is replaced atomically.
 
-However, I'm not 100% convinced leaving generation numbers out was a
-mistake. The git philosophy seems always to have been to keep the
-minimal required information in the DAG. And I think that has served us
-well, because we're not saddled with cruft that seemed like a good idea
-early on, but isn't.
+However, there are two issues:
 
-Generation numbers are _completely_ redundant with the actual structure
-of history represented by the parent pointers. Having them in there is
-not about giving git more information that it doesn't have, but about
-being a cheap place to stuff a value that is a little expensive to
-calculate.
+  1. I don't think grafts have a "respect grafts" flag in the same way;
+     I haven't looked at how the packing code decides not to respect
+     them, but the "stir graft info into the checksum" data should use
+     the same check.
 
-And so that seems a bit hack-ish to me.
+  2. If you do a lot of object transfer, you will ping-pong back and
+     forth between cache versions, which is inefficient. It would
+     probably be better to store the cache that is valid under condition
+     $SHA1 as:
 
-I liken it somewhat to the "don't store renames" debate. We don't want
-to crystallize forever in the history whatever crappy rename-detection
-algorithm is done at the time of commit. We put the minimum amount of
-information in the DAG, and it's the runtime's responsibility to get the
-answer.
+       .git/cache/generations/$SHA1
 
-I think the decision is a little more gray with generation numbers,
-because it's not about "you got this information with a wrong and crappy
-algorithm" like it might be with rename detection, but rather "we're
-sticking this redundant number in the commit object, and we assume that
-it will always be useful enough to future algorithms to merit being
-here".
+     In most cases, you would have a single file (i.e., you are not
+     using replace refs at all). But if you did, then you keep two
+     separate caches, one for the view from replace-refs, and one for
+     the standard view.
 
-> And fixing it really ended up being a very tiny patch, no?
-
-Well, yes. But it also doesn't yield a 100-fold speedup in "git tag
---contains" for existing repositories. So it's not quite a full
-solution.
+If we ignore replace refs and grafts, as Linus suggested, and always
+store the true generation number, then we could generate it at pack time
+(and even put it in the pack index if we want to deal with a version
+bump there).
 
 -Peff
