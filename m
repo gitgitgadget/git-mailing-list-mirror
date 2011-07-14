@@ -1,7 +1,8 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/3] implement generic key/value map
-Date: Thu, 14 Jul 2011 13:51:05 -0400
-Message-ID: <20110714175105.GA21771@sigill.intra.peff.net>
+Subject: [PATCH 2/3] fast-export: use object to uint32 map instead of
+ "decorate"
+Date: Thu, 14 Jul 2011 13:52:11 -0400
+Message-ID: <20110714175211.GB21771@sigill.intra.peff.net>
 References: <20110714173454.GA21657@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -12,240 +13,158 @@ Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	David Barr <davidbarr@google.com>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 14 19:51:15 2011
+X-From: git-owner@vger.kernel.org Thu Jul 14 19:52:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhQ4B-0001Hx-5R
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 19:51:15 +0200
+	id 1QhQ5D-0001xZ-6v
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 19:52:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932288Ab1GNRvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jul 2011 13:51:08 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53262
+	id S932278Ab1GNRwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jul 2011 13:52:14 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53273
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932168Ab1GNRvH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2011 13:51:07 -0400
-Received: (qmail 8770 invoked by uid 107); 14 Jul 2011 17:51:32 -0000
+	id S932168Ab1GNRwN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2011 13:52:13 -0400
+Received: (qmail 8808 invoked by uid 107); 14 Jul 2011 17:52:38 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Jul 2011 13:51:32 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jul 2011 13:51:05 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Jul 2011 13:52:38 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jul 2011 13:52:11 -0400
 Content-Disposition: inline
 In-Reply-To: <20110714173454.GA21657@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177142>
 
-It is frequently useful to have a fast, generic data
-structure mapping keys to values. We already have something
-like this in the "decorate" API, but it has two downsides:
-
-  1. The key type must always be a "struct object *".
-
-  2. The value type is a void pointer, which means it is
-     inefficient and cumbersome for storing small values.
-     One must either encode their value inside the void
-     pointer, or allocate additional storage for the pointer
-     to point to.
-
-This patch introduces a generic map data structure, mapping
-keys of arbitrary type to values of arbitrary type.
-
-One possible strategy for implementation is to have a struct
-that points to a sequence of bytes for each of the key and
-the value, and to try to treat them as opaque in the code.
-However, this code gets complex, has a lot of casts, and
-runs afoul of violating alignment and strict aliasing rules.
-
-This patch takes a different approach. We parameterize the
-types in each map by putting the declarations and
-implementations inside macros, and expand the macros with
-the correct types. This lets the compiler see the actual
-code, with its real types, and figure out things like struct
-packing and alignment itself.
+Previously we encoded the "mark" mapping inside the "void *"
+field of a "struct decorate". It's a little more natural for
+us to do so using a data structure made for holding actual
+values.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-In addition to switching from using void pointers to macro expansion,
-this has one other difference from my previous patch: it handles
-arbitrary types for keys, not just object pointers. This was mentioned
-by Jakub, and would allow things like a fast bi-directional map for SVN
-revision numbers and commits.
+And this is an example of use. It doesn't save all that much code, but I
+think it's a little more natural. It can also save some bytes of the hash
+value in each entry if your pointers are larger than 32-bit.
 
-I tried to keep the implementation simple. Two things that could be changed:
+ builtin/fast-export.c |   36 +++++++++++-------------------------
+ map.c                 |    2 ++
+ map.h                 |    2 ++
+ 3 files changed, 15 insertions(+), 25 deletions(-)
 
-  1. We can't assume that the map key is a pointer. So the sentinel
-     "NULL" value isn't necessarily available to use, and we have to
-     keep a separate bit in each hash entry to say "is this valid".
-     This means when we _do_ store a pointer, we end up with an extra
-     32 bits or so in each hash entry for the "used" flag.
-
-     We could add a macro parameter for sentinel values, so that types
-     which _can_ handle this efficiently don't have to pay the price.
-     Or we could decide that mapping arbitrary keys isn't worth the
-     hassle. I wrote this way to be flexible for future use; I don't
-     personally have plans to add svn revision number mappings.
-
-  2. It assumes values are assignable. That means storing something like
-     "unsigned char sha1[20]" doesn't work. You can wrap it in a struct,
-     but do we assume that struct assignment works everywhere? I didn't
-     check, but I think it is in C89 but some antique compilers didn't
-     allow it. Switching it to use memcpy() would be easy enough (or
-     again, parameterizing so that assignable things don't have to pay
-     the price).
-
- Makefile |    2 +
- map.c    |   86 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- map.h    |   24 +++++++++++++++++
- 3 files changed, 112 insertions(+), 0 deletions(-)
- create mode 100644 map.c
- create mode 100644 map.h
-
-diff --git a/Makefile b/Makefile
-index 46793d1..6242321 100644
---- a/Makefile
-+++ b/Makefile
-@@ -530,6 +530,7 @@ LIB_H += list-objects.h
- LIB_H += ll-merge.h
- LIB_H += log-tree.h
- LIB_H += mailmap.h
-+LIB_H += map.h
- LIB_H += merge-file.h
- LIB_H += merge-recursive.h
- LIB_H += notes.h
-@@ -621,6 +622,7 @@ LIB_OBJS += ll-merge.o
- LIB_OBJS += lockfile.o
- LIB_OBJS += log-tree.o
- LIB_OBJS += mailmap.o
-+LIB_OBJS += map.o
- LIB_OBJS += match-trees.o
- LIB_OBJS += merge-file.o
- LIB_OBJS += merge-recursive.o
-diff --git a/map.c b/map.c
-new file mode 100644
-index 0000000..378cecb
---- /dev/null
-+++ b/map.c
-@@ -0,0 +1,86 @@
-+#include "cache.h"
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index daf1945..fd50503 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -12,7 +12,7 @@
+ #include "diffcore.h"
+ #include "log-tree.h"
+ #include "revision.h"
+-#include "decorate.h"
 +#include "map.h"
-+#include "object.h"
+ #include "string-list.h"
+ #include "utf8.h"
+ #include "parse-options.h"
+@@ -59,7 +59,7 @@ static int parse_opt_tag_of_filtered_mode(const struct option *opt,
+ 	return 0;
+ }
+ 
+-static struct decoration idnums;
++static struct map_object_uint32 idnums;
+ static uint32_t last_idnum;
+ 
+ static int has_unshown_parent(struct commit *commit)
+@@ -73,20 +73,9 @@ static int has_unshown_parent(struct commit *commit)
+ 	return 0;
+ }
+ 
+-/* Since intptr_t is C99, we do not use it here */
+-static inline uint32_t *mark_to_ptr(uint32_t mark)
+-{
+-	return ((uint32_t *)NULL) + mark;
+-}
+-
+-static inline uint32_t ptr_to_mark(void * mark)
+-{
+-	return (uint32_t *)mark - (uint32_t *)NULL;
+-}
+-
+ static inline void mark_object(struct object *object, uint32_t mark)
+ {
+-	add_decoration(&idnums, object, mark_to_ptr(mark));
++	map_set_object_uint32(&idnums, object, mark, NULL);
+ }
+ 
+ static inline void mark_next_object(struct object *object)
+@@ -96,10 +85,9 @@ static inline void mark_next_object(struct object *object)
+ 
+ static int get_object_mark(struct object *object)
+ {
+-	void *decoration = lookup_decoration(&idnums, object);
+-	if (!decoration)
+-		return 0;
+-	return ptr_to_mark(decoration);
++	uint32_t ret = 0;
++	map_get_object_uint32(&idnums, object, &ret);
++	return ret;
+ }
+ 
+ static void show_progress(void)
+@@ -537,8 +525,7 @@ static void handle_tags_and_duplicates(struct string_list *extra_refs)
+ static void export_marks(char *file)
+ {
+ 	unsigned int i;
+-	uint32_t mark;
+-	struct object_decoration *deco = idnums.hash;
++	struct map_entry_object_uint32 *map = idnums.hash;
+ 	FILE *f;
+ 	int e = 0;
+ 
+@@ -547,15 +534,14 @@ static void export_marks(char *file)
+ 		die_errno("Unable to open marks file %s for writing.", file);
+ 
+ 	for (i = 0; i < idnums.size; i++) {
+-		if (deco->base && deco->base->type == 1) {
+-			mark = ptr_to_mark(deco->decoration);
+-			if (fprintf(f, ":%"PRIu32" %s\n", mark,
+-				sha1_to_hex(deco->base->sha1)) < 0) {
++		if (map->used && map->key->type == 1) {
++			if (fprintf(f, ":%"PRIu32" %s\n", map->value,
++				sha1_to_hex(map->key->sha1)) < 0) {
+ 			    e = 1;
+ 			    break;
+ 			}
+ 		}
+-		deco++;
++		map++;
+ 	}
+ 
+ 	e |= ferror(f);
+diff --git a/map.c b/map.c
+index 378cecb..28f885e 100644
+--- a/map.c
++++ b/map.c
+@@ -84,3 +84,5 @@ int map_get_##name(struct map_##name *m, \
+ 	} \
+ 	return 0; \
+ }
 +
-+static unsigned int hash_obj(const struct object *obj, unsigned int n)
-+{
-+	unsigned int hash;
-+
-+	memcpy(&hash, obj->sha1, sizeof(unsigned int));
-+	return hash % n;
-+}
-+
-+static unsigned int cmp_obj(const struct object *a, const struct object *b)
-+{
-+	return b == a;
-+}
-+
-+#define MAP_IMPLEMENT(name, ktype, vtype, cmp_fun, hash_fun) \
-+static int map_insert_##name(struct map_##name *m, \
-+			     const ktype key, \
-+			     vtype value, \
-+			     vtype *old) \
-+{ \
-+	unsigned int j; \
-+ \
-+	for (j = hash_fun(key, m->size); m->hash[j].used; j = (j+1) % m->size) { \
-+		if (cmp_fun(m->hash[j].key, key)) { \
-+			if (old) \
-+				*old = m->hash[j].value; \
-+			m->hash[j].value = value; \
-+			return 1; \
-+		} \
-+	} \
-+ \
-+	m->hash[j].key = key; \
-+	m->hash[j].value = value; \
-+	m->hash[j].used = 1; \
-+	m->nr++; \
-+	return 0; \
-+} \
-+ \
-+static void map_grow_##name(struct map_##name *m) \
-+{ \
-+	struct map_entry_##name *old_hash = m->hash; \
-+	unsigned int old_size = m->size; \
-+	unsigned int i; \
-+ \
-+	m->size = (old_size + 1000) * 3 / 2; \
-+	m->hash = xcalloc(m->size, sizeof(*m->hash)); \
-+	m->nr = 0; \
-+ \
-+	for (i = 0; i < old_size; i++) { \
-+		if (!old_hash[i].used) \
-+			continue; \
-+		map_insert_##name(m, old_hash[i].key, old_hash[i].value, NULL); \
-+	} \
-+	free(old_hash); \
-+} \
-+ \
-+int map_set_##name(struct map_##name *m, \
-+		   const ktype key, \
-+		   vtype value, \
-+		   vtype *old) \
-+{ \
-+	if (m->nr >= m->size * 2 / 3) \
-+		map_grow_##name(m); \
-+	return map_insert_##name(m, key, value, old); \
-+} \
-+ \
-+int map_get_##name(struct map_##name *m, \
-+		   const ktype key, \
-+		   vtype *value) \
-+{ \
-+	unsigned int j; \
-+ \
-+	if (!m->size) \
-+		return 0; \
-+ \
-+	for (j = hash_fun(key, m->size); m->hash[j].used; j = (j+1) % m->size) { \
-+		if (cmp_fun(m->hash[j].key, key)) { \
-+			*value = m->hash[j].value; \
-+			return 1; \
-+		} \
-+	} \
-+	return 0; \
-+}
++MAP_IMPLEMENT(object_uint32, struct object *, uint32_t, cmp_obj, hash_obj)
 diff --git a/map.h b/map.h
-new file mode 100644
-index 0000000..496c5d1
---- /dev/null
+index 496c5d1..e80d85d 100644
+--- a/map.h
 +++ b/map.h
-@@ -0,0 +1,24 @@
-+#ifndef MAP_H
-+#define MAP_H
+@@ -21,4 +21,6 @@ extern int map_set_##name(struct map_##name *, \
+ 			  vtype value, \
+ 			  vtype *old); \
+ 
++DECLARE_MAP(object_uint32, struct object *, uint32_t)
 +
-+#define DECLARE_MAP(name, ktype, vtype) \
-+struct map_entry_##name { \
-+	const ktype key; \
-+	vtype value; \
-+	unsigned used:1; \
-+}; \
-+ \
-+struct map_##name { \
-+	unsigned int size, nr; \
-+	struct map_entry_##name *hash; \
-+}; \
-+ \
-+extern int map_get_##name(struct map_##name *, \
-+			  const ktype key, \
-+			  vtype *value); \
-+extern int map_set_##name(struct map_##name *, \
-+			  const ktype key, \
-+			  vtype value, \
-+			  vtype *old); \
-+
-+#endif /* MAP_H */
+ #endif /* MAP_H */
 -- 
 1.7.6.38.ge5b33
