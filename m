@@ -1,147 +1,130 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
+From: "J. Bakshi" <joydeep@infoservices.in>
 Subject: Re: How to force git to use authentication as author
-Date: Thu, 14 Jul 2011 14:00:06 +0200
-Message-ID: <CABPQNSbB3RufmY=Vo0-94ErsimsSPx4pCNWudbEGP9kcJHY_vg@mail.gmail.com>
-References: <20110714160638.065b6542@shiva.selfip.org> <CACBZZX4X8qRBXqwi70kZ0eZ+mb7rdD6p36xD=GoX6soha0TZcg@mail.gmail.com>
- <20110714161838.1e30893a@shiva.selfip.org> <1310641202.18730.16.camel@bee.lab.cmartin.tk>
- <20110714164547.0b359e60@shiva.selfip.org> <1310643482.6041.17.camel@centaur.lab.cmartin.tk>
-Reply-To: kusmabite@gmail.com
+Date: Thu, 14 Jul 2011 17:31:29 +0530
+Message-ID: <20110714173129.1116e4b2@shiva.selfip.org>
+References: <20110714160638.065b6542@shiva.selfip.org>
+	<CACBZZX4X8qRBXqwi70kZ0eZ+mb7rdD6p36xD=GoX6soha0TZcg@mail.gmail.com>
+	<20110714161838.1e30893a@shiva.selfip.org>
+	<1310641202.18730.16.camel@bee.lab.cmartin.tk>
+	<20110714164547.0b359e60@shiva.selfip.org>
+	<1310643482.6041.17.camel@centaur.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "J. Bakshi" <joydeep@infoservices.in>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
 	git@vger.kernel.org
-To: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Thu Jul 14 14:00:54 2011
+To: Carlos =?UTF-8?B?TWFydMOtbg==?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Thu Jul 14 14:01:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhKb6-0000tT-Me
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 14:00:53 +0200
+	id 1QhKbj-0001HS-9e
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Jul 2011 14:01:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754504Ab1GNMAs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jul 2011 08:00:48 -0400
-Received: from mail-fx0-f52.google.com ([209.85.161.52]:40569 "EHLO
-	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754046Ab1GNMAr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Jul 2011 08:00:47 -0400
-Received: by fxd18 with SMTP id 18so1061717fxd.11
-        for <git@vger.kernel.org>; Thu, 14 Jul 2011 05:00:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=dFFAeHcO7F0UxI1ZJ1/o34sBZRXnCZfQCxaAgKnTllI=;
-        b=Lzf438zKHdy/0aye7KIpK8CBt4MplIkKpQZAmFG2w99xxUSXL3ecioH3uyaYLfzHhc
-         QLC8oVHvLpj4IRy2ay2jvUtWO2QaOipLaRV5NY57ifj/RdAmpUt59lBIHPFoU/jkdT1l
-         wl2T9ecDX33ZIT/dUrjPPz7YQttycMz4fpcs8=
-Received: by 10.204.154.71 with SMTP id n7mr847523bkw.232.1310644846208; Thu,
- 14 Jul 2011 05:00:46 -0700 (PDT)
-Received: by 10.204.58.195 with HTTP; Thu, 14 Jul 2011 05:00:06 -0700 (PDT)
+	id S1754584Ab1GNMB1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jul 2011 08:01:27 -0400
+Received: from static.206.87.46.78.clients.your-server.de ([78.46.87.206]:36029
+	"EHLO Kolkata.infoservices.in" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754580Ab1GNMB0 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2011 08:01:26 -0400
+Received: from shiva.selfip.org (unknown [122.176.30.116])
+	by Kolkata.infoservices.in (Postfix) with ESMTPSA id 87BA22004001;
+	Thu, 14 Jul 2011 14:01:23 +0200 (CEST)
 In-Reply-To: <1310643482.6041.17.camel@centaur.lab.cmartin.tk>
+X-Mailer: Claws Mail 3.7.9 (GTK+ 2.24.4; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177122>
 
-On Thu, Jul 14, 2011 at 1:38 PM, Carlos Mart=EDn Nieto <cmn@elego.de> w=
-rote:
+On Thu, 14 Jul 2011 13:38:02 +0200
+Carlos Mart=C3=ADn Nieto <cmn@elego.de> wrote:
+
 > On Thu, 2011-07-14 at 16:45 +0530, J. Bakshi wrote:
->> On Thu, 14 Jul 2011 13:00:02 +0200
->> Carlos Mart=EDn Nieto <cmn@elego.de> wrote:
->>
->> > On Thu, 2011-07-14 at 16:18 +0530, J. Bakshi wrote:
->> > > On Thu, 14 Jul 2011 12:38:59 +0200
->> > > =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> wrote:
->> > >
->> > > > On Thu, Jul 14, 2011 at 12:36, J. Bakshi <joydeep@infoservices=
-=2Ein>
->> > > wrote:
->> > > >
->> > > > > How can I force git to use the username as define
->> > > at /home/git/PASSWD as the author name for git commit ?
->> > > >
->> > > > Edit the global bashrc to have:
->> > > >
->> > > > =A0 =A0 export GIT_AUTHOR_NAME=3D$(cat ~/PASSWD)
->> > > >
->> > > > ?
->> > >
->> > > Thanks.
->> > >
->> > > [1] will it work with file generated by htpasswd ? as that file =
-is
->> > > actually created by same (/home/git/PASSWD)
->> >
->> > Not directly, if it only has one line, then $(cat ~/PASSWD | cut -=
-d ':'
->> > -f 1) should work, but I haven't tested it.
->> >
->> > >
->> > > [2] And the commit is over http, So is it effective to set the v=
-alue
->> > > by .bashrc ?
->> >
->> > You are misunderstanding either how git works or the nomenclature.=
- The
->> > commits all happen locally and need no authentication whatsoever (=
-and
->> > usually you're expected to use a real name and email address). Whe=
-n you
->> > need to authenticate is when yuou push your changes somewhere (a c=
-entral
->> > repo, for example). This is where the ~/.netrc file comes into pla=
-y, as
->> > I mentioned in the reply to your other mail.
->> >
->> Exactly, when we need to push we are asked about authentication. I
->> like to configure the central git server in a way so that the
->> user-name as in authentication, be set as author name by the git
->> server itself. actually it is how I configured svn server over http.
->> So comparing to that I am trying to achieve the same. Say your
->> user-name is there at htpasswd file as Carlos, so when you
->> authenticate by Carlos to push , the author-name will automatically
->> become as Carlos. No way to customize that with specific username.
->> That's the idea.
->
+> > On Thu, 14 Jul 2011 13:00:02 +0200
+> > Carlos Mart=C3=ADn Nieto <cmn@elego.de> wrote:
+> >=20
+> > > On Thu, 2011-07-14 at 16:18 +0530, J. Bakshi wrote:
+> > > > On Thu, 14 Jul 2011 12:38:59 +0200
+> > > > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> wrote=
+:
+> > > >=20
+> > > > > On Thu, Jul 14, 2011 at 12:36, J. Bakshi <joydeep@infoservice=
+s.in>
+> > > > wrote:
+> > > > >=20
+> > > > > > How can I force git to use the username as define
+> > > > at /home/git/PASSWD as the author name for git commit ?
+> > > > >=20
+> > > > > Edit the global bashrc to have:
+> > > > >=20
+> > > > >     export GIT_AUTHOR_NAME=3D$(cat ~/PASSWD)
+> > > > >=20
+> > > > > ?
+> > > >=20
+> > > > Thanks.=20
+> > > >=20
+> > > > [1] will it work with file generated by htpasswd ? as that file=
+ is
+> > > > actually created by same (/home/git/PASSWD)
+> > >=20
+> > > Not directly, if it only has one line, then $(cat ~/PASSWD | cut =
+-d ':'
+> > > -f 1) should work, but I haven't tested it.
+> > >=20
+> > > >=20
+> > > > [2] And the commit is over http, So is it effective to set the =
+value
+> > > > by .bashrc ?
+> > >=20
+> > > You are misunderstanding either how git works or the nomenclature=
+=2E The
+> > > commits all happen locally and need no authentication whatsoever =
+(and
+> > > usually you're expected to use a real name and email address). Wh=
+en you
+> > > need to authenticate is when yuou push your changes somewhere (a =
+central
+> > > repo, for example). This is where the ~/.netrc file comes into pl=
+ay, as
+> > > I mentioned in the reply to your other mail.
+> > >=20
+> > Exactly, when we need to push we are asked about authentication. I
+> > like to configure the central git server in a way so that the
+> > user-name as in authentication, be set as author name by the git
+> > server itself. actually it is how I configured svn server over http=
+=2E
+> > So comparing to that I am trying to achieve the same. Say your
+> > user-name is there at htpasswd file as Carlos, so when you
+> > authenticate by Carlos to push , the author-name will automatically
+> > become as Carlos. No way to customize that with specific username.
+> > That's the idea.
+>=20
 > That's not how it works. It may even be possible to rewrite the commi=
 ts
 > in the post-receive hook in a way that most stuff doesn't break
 > horribly, this would be rewriting history behind the users' backs, an=
 d
 > that only brings problems.
-
-This will (as you point out) only lead to problems, because rewriting
-the history at commit-time will have the effect that a push leaves you
-in the situation where you end up with a different history on the
-workstation and the server. All branches off the pushed branch will
-become a hell, and a clusterfck of darkness and terror will take over.
-
+>=20
 > The way to set the author name and mail in a standard way, be it
 > user-wide or per-repo. You can write up some simple instructions on h=
 ow
 > to do it.
->
-> =A0 =A0git config user.name "Max Smith"
-> =A0 =A0git config user.mail max.smith@example.com
->
+>=20
+>     git config user.name "Max Smith"
+>     git config user.mail max.smith@example.com
+>=20
 > and if the config should be valid for every repo, use --global flag.
 > There is more information in the manual page.
->
+>=20
 > You could then add a check in the post-receive hook to reject pushes
 > with invalid author names, if you feel it's worth it.
->
-
-Denying a push is much more elegant than rewriting, but (as I pointed
-out in my other mail) also has a lot of problems with distributed
-work-flows. And let's face it when changing from SVN to Git, the
-distributed nature is about the last feature that you'd want to give
-up ;)
-
+>=20
 > Taking a step back, why is this even an issue, though? If you don't
 > trust your developers to set their name and email correctly, why do y=
 ou
@@ -151,5 +134,13 @@ ou
  a
 > social issue with a technological measure that works at a different
 > level.
+>=20
 
-Very well said, I completely agree!
+Certainly not an issue at all. As I have mentioned before it is how the=
+ svn repo is working here.=20
+So we are trying to follow the same with git too. Without effecting too=
+ much of the already running
+environment, so that the users need not bother too much with git. But a=
+s I have found it is not possible right now
+
+http://permalink.gmane.org/gmane.comp.version-control.git/171444
