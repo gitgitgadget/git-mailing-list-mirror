@@ -1,73 +1,86 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: "git apply" can't add new files to repo ?
-Date: Fri, 15 Jul 2011 22:21:12 +0200
-Message-ID: <1310761272.7308.26.camel@centaur.lab.cmartin.tk>
-References: <CAAnh3_-ayozWnHR-ViJ3zjXQvPQA1kd9spGV_TEU=-kFzBytvw@mail.gmail.com>
-	 <1310758497.7308.20.camel@centaur.lab.cmartin.tk>
-	 <7v4o2n1evs.fsf@alter.siamese.dyndns.org>
+From: Marlene Cote <Marlene_Cote@affirmednetworks.com>
+Subject: RE: [PATCH] git-submodule: Remove duplicate entries during merge
+ with conflict
+Date: Fri, 15 Jul 2011 20:32:59 +0000
+Message-ID: <1F026B57884A5841B330471696849DE9113122B5@MBX021-W4-CA-5.exch021.domain.local>
+References: <4D81C1AA.5010008@morey-chaisemartin.com>
+ <1310668419989-6584432.post@n2.nabble.com> <4E2094B4.3090009@web.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-avsPOe5Jvnkn6laTSyKO"
-Cc: Yang <teddyyyy123@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 15 22:21:28 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Jens.Lehmann@web.de" <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Fri Jul 15 22:33:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qhot5-0003Ob-4b
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jul 2011 22:21:27 +0200
+	id 1Qhp4d-0000q4-R0
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jul 2011 22:33:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752121Ab1GOUVS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jul 2011 16:21:18 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:41094 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751639Ab1GOUVR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2011 16:21:17 -0400
-Received: from [192.168.1.17] (brln-d9ba3451.pool.mediaWays.net [217.186.52.81])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 8258C461F5;
-	Fri, 15 Jul 2011 22:21:15 +0200 (CEST)
-In-Reply-To: <7v4o2n1evs.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 2.32.3 
+	id S1751718Ab1GOUdD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jul 2011 16:33:03 -0400
+Received: from hub021-ca-5.exch021.serverdata.net ([64.78.56.70]:17868 "EHLO
+	hub021-ca-5.exch021.serverdata.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751471Ab1GOUdC convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2011 16:33:02 -0400
+Received: from MBX021-W4-CA-5.exch021.domain.local ([10.254.4.87]) by
+ HUB021-CA-5.exch021.domain.local ([10.254.4.89]) with mapi id 14.01.0289.001;
+ Fri, 15 Jul 2011 13:33:00 -0700
+Thread-Topic: [PATCH] git-submodule: Remove duplicate entries during merge
+ with conflict
+Thread-Index: AQHMQlSPzLshfnNQwE6aX5mIfLD4o5TuOz4A//+cx/A=
+In-Reply-To: <4E2094B4.3090009@web.de>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [173.48.37.154]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177226>
+
+How would you find an appropriate commit?
+
+--------------------------
+Regards,
+Marlene Cote
+Affirmed Networks
+978-268-0821 
 
 
---=-avsPOe5Jvnkn6laTSyKO
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, 2011-07-15 at 13:13 -0700, Junio C Hamano wrote:
-> Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
->=20
-> > git-apply is just a wrapper around the patch(1) utility.
->=20
-> Huh?
-
-That was a thinko; I've always considered git-apply to be little more
-than patch(1), but it does look like it does much more. I should have
-re-looked at the man page earlier.
-
-Sorry for the noise,
-   cmn
-
---=-avsPOe5Jvnkn6laTSyKO
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAABAgAGBQJOIKE4AAoJEHKRP1jG7ZzTXRIH/j8T8pHQbic4OIiuvXzBqvb/
-Q63UxuUHGiz6JAIt4Dc3TETvC4ei3fBL/lMQVJkQEZhIvEfsGMEE/8GxVS5GLBRT
-Xu2hby+CVEfTBqY07XyjTDzERBken7FLMrLvuQIx1yH/ue1OuwAMAgArNYd3LPtt
-ixnjsVhFBtSr82tdcAPUwebN5dgyVtg3EBkS3z5sOFGnyqaRszui1RNIIeKktqgC
-XElNECrED0x8UQ44+sLAYBPettlLFnvy0dhlYYO9h1foXAHZX7ihV0uYBHwXMNRM
-azU0VaBCehJg5eBsiDSw76ONUri1AWPLgtFILKWlCQHeFHsF//NGl3x3hfLvC2g=
-=0+Ue
------END PGP SIGNATURE-----
-
---=-avsPOe5Jvnkn6laTSyKO--
+->-----Original Message-----
+->From: Jens.Lehmann@web.de [mailto:Jens.Lehmann@web.de]
+->Sent: Friday, July 15, 2011 3:28 PM
+->To: Marlene Cote
+->Cc: git@vger.kernel.org
+->Subject: Re: [PATCH] git-submodule: Remove duplicate entries during merge with conflict
+->
+->Am 14.07.2011 20:33, schrieb funeeldy:
+->> How can new users of git submodules learn about merge conflicts?  When and
+->> why they occur, and how to resolve them in a way that doesn't lose commits?
+->
+->That is pretty similar to merge conflicts in regular files: They happen
+->when you merge two branches where both sides changed the recorded submodule
+->commit to another one (and those are not the same). The resolution can be
+->done by finding a submodule commit that has both changes. In most cases that
+->will be based on a merge (maybe even a fast forward) with both commits in
+->its history.
+->
+->If git finds a fast forward from the merge base to commit1 and commit2
+->(let's say they both are on master and newer than the merge base), the
+->newer one is picked automatically. If git finds a single merge from which
+->both commits are reachable, it proposes that as conflict resolution and
+->tells you  how you can stage that. Only if it doesn't find any or more
+->than two merges, you are on your own and have to resolve the conflict
+->manually by finding an appropriate commit.
+->
+->> If I have to choose my version or their version, that isn't really a merge,
+->> or is it?
+->
+->It would be if the merge strategy is "ours" or "theirs". But in most normal
+->cases you would want to have both commits reachable from the merge result.
