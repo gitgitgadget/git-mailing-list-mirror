@@ -1,104 +1,167 @@
-From: Geert Bosch <bosch@adacore.com>
-Subject: Re: Git commit generation numbers
-Date: Thu, 14 Jul 2011 22:41:57 -0400
-Message-ID: <186BDF84-7AE3-4E0F-8F6D-AA89A60C972C@adacore.com>
-References: <CA+55aFxZq1e8u7kXu1rNDy2UPgP3uOyC5y2j7idKSZ_4eL=bWw@mail.gmail.com> <20110714183710.GA26820@sigill.intra.peff.net> <CA+55aFwuK+krTA4OcnYhLXtKM5HQ1yuPK+J_vC-5R7AthrHWbg@mail.gmail.com> <20110714190844.GA26918@sigill.intra.peff.net> <CA+55aFx=ACnVBGU8_9wa=9xTbxVoOWKnsqfmBvzq7qzOeMGSNA@mail.gmail.com> <20110714200144.GE26918@sigill.intra.peff.net> <69e0ad24-32b7-4e14-9492-6d0c3d653adf@email.android.com> <20110714203141.GA28548@sigill.intra.peff.net> <CA+55aFyDzr+SfgSzWMr9pQuQUXTw9mcjZ-00NZof74PKZzbGPA@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1084)
+From: Josh Triplett <josh@joshtriplett.org>
+Subject: Re: [PATCH] ref namespaces: tests
+Date: Thu, 14 Jul 2011 20:45:39 -0700
+Message-ID: <20110715034538.GD28343@leaf>
+References: <20110714205055.GA26956@leaf>
+ <7v1uxs3177.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Jul 15 04:51:31 2011
+Cc: Jamey Sharp <jamey@minilop.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
+	Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 15 05:46:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhYV0-0002yP-Aq
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jul 2011 04:51:30 +0200
+	id 1QhZLn-00053D-Ml
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jul 2011 05:46:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932639Ab1GOCvY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jul 2011 22:51:24 -0400
-Received: from rock.gnat.com ([205.232.38.15]:34996 "EHLO rock.gnat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932472Ab1GOCvY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2011 22:51:24 -0400
-X-Greylist: delayed 563 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Jul 2011 22:51:23 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by filtered-rock.gnat.com (Postfix) with ESMTP id 07A542BAED1;
-	Thu, 14 Jul 2011 22:42:00 -0400 (EDT)
-X-Virus-Scanned: Debian amavisd-new at gnat.com
-Received: from rock.gnat.com ([127.0.0.1])
-	by localhost (rock.gnat.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id FthQs1jf6vud; Thu, 14 Jul 2011 22:41:59 -0400 (EDT)
-Received: from [10.0.1.3] (sdsl-216-220-103-155.dsl.bway.net [216.220.103.155])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rock.gnat.com (Postfix) with ESMTPSA id 87EA02BAEA3;
-	Thu, 14 Jul 2011 22:41:59 -0400 (EDT)
-In-Reply-To: <CA+55aFyDzr+SfgSzWMr9pQuQUXTw9mcjZ-00NZof74PKZzbGPA@mail.gmail.com>
-X-Mailer: Apple Mail (2.1084)
+	id S932708Ab1GODp6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jul 2011 23:45:58 -0400
+Received: from relay4-d.mail.gandi.net ([217.70.183.196]:32925 "EHLO
+	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755047Ab1GODp5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2011 23:45:57 -0400
+X-Originating-IP: 217.70.178.134
+Received: from mfilter4-d.gandi.net (mfilter4-d.gandi.net [217.70.178.134])
+	by relay4-d.mail.gandi.net (Postfix) with ESMTP id 7D9C217206D;
+	Fri, 15 Jul 2011 05:45:55 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mfilter4-d.gandi.net
+Received: from relay4-d.mail.gandi.net ([217.70.183.196])
+	by mfilter4-d.gandi.net (mfilter4-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
+	with ESMTP id yxJnQo5elxbr; Fri, 15 Jul 2011 05:45:53 +0200 (CEST)
+X-Originating-IP: 50.43.15.19
+Received: from leaf (static-50-43-15-19.bvtn.or.frontiernet.net [50.43.15.19])
+	(Authenticated sender: josh@joshtriplett.org)
+	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 7E94E172074;
+	Fri, 15 Jul 2011 05:45:41 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7v1uxs3177.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177188>
 
+On Thu, Jul 14, 2011 at 04:13:48PM -0700, Junio C Hamano wrote:
+> Josh Triplett <josh@joshtriplett.org> writes:
+> >  create mode 100755 t/t5502-fetch-push-namespaces.sh
+> 
+> Isn't 5502 used already?
 
-On Jul 14, 2011, at 21:19, Linus Torvalds wrote:
-> But dammit, if you start using generation numbers, then they *are*
-> required information. The fact that you then hide them in some
-> unarchitected random file doesn't change anything! It just makes it
-> ugly and random, for chrissake!
+Argh.  Yes; I put it right after t5501-fetch-push-alternates.sh without
+noticing that 5502 already existed.  I'll fix it to use t5507.  Thanks
+for catching that.
 
-Generation numbers never will be required information, because we
-can always compute them. These numbers are really much more similar 
-to other pack index information than anything else.
+> > +test_expect_success setup '
+> > +	test_tick &&
+> > +	git init original &&
+> > +	(
+> > +		cd original &&
+> > +		i=0 &&
+> > +		while [ "$i" -lt 2 ]
+> > +		do
+> > +			echo "$i" > count &&
+> 
+> This is just style, but the test scripts prefer to spell these like this:
+> 
+> 	while test "$i" -lt 2
+> 	do
+>         	echo "$i" >count &&
+>                 ...
+> 
+> to favor "test" over "[ ... ]", and omit SP between ">" redirection (or
+> "<" for that matter) and the filename.
 
-<aside>
-Sometimes I wish we'd have general "depth" information for each
-SHA1, which would be the maximum number of steps in the DAG to reach
-a leaf. This way, if we want to do something like "git log
-drivers/net/slip.c", we don't have to bother reading the majority
-of trees that have a depth less than two. The depth can also be used
-as a limiter for "contains" operations, where we want to see if
-commit X contains commit Y: depth (X) has to be at least depth (Y).
+Will do.  I had done a quick grep-survey of the tests to check usage of
+test versus [, and saw enough of both to assume it didn't matter, but it
+hadn't occurred to me to check CodingGuidelines for shell scripts; I now
+see that it has a section specifically on shell scripting.  I'll fix
+this in the next version.
 
-However, any such notion, wether generation or depth or whatever
-else we'll think of tomorrow, is something particular to a certain
-implementation of git. It does not add anything to the information
-we stored.
-</aside>
+Actually, I plan to unroll this two-iteration loop in the next version,
+so that I can capture the two object hashes I need for use later in the
+script.
 
-I don't think my commit should have a different SHA1 from yours,
-because your tree has a more generation numbers than mine.
+Out of curiosity, what's the rationale for the use of test rather than
+'['?  Just uniformity, or does test have some particular advantage over
+'['?
 
-The beauty and genius of GIT is that it just takes the minimum
-amount of data needed to uniquely identify the information to be
-stored, and stores that in a UNIQUE format. By allowing generation
-numbers to either be present or absent, that's all broken.
+> > +		git remote add pushee-namespaced "ext::git --namespace=namespace %s ../pushee" &&
+> 
+> Nice ;-).
 
-It's like computing the SHA1 of compressed data: it doesn't depend
-on the data we store, just about the particular representation we
-choose. Fortunately we have done away with the first mistake.
+Thanks. :)
 
-So, if you're going to add generation numbers, there has to be a
-flag day, after which generation numbers are required everywhere. 
-Of course it would be possible to recognize "old style" commits 
-and convert them on the fly, but that is true for pretty much 
-any format change. However, adding redundant information seems 
-like a poor excuse for having a flag day.
+> > +test_expect_success 'pushing into a repository using a ref namespace' '
+> > +	(
+> > +		cd original &&
+> > +		git push pushee-namespaced master &&
+> > +		git ls-remote pushee-namespaced > actual &&
+> > +		printf "dc65a2e0f299dcc7efddbbe01641a28ee84329ba\trefs/heads/master\n" > expected &&
+> 
+> Could you avoid hardcoding the exact object names here?  Your script knows
+> what object should appear at refs/heads/master at "pushee-namespaced" (as
+> you have pushed from the repository "original" you are in), so it may be
+> something like:
+> 
+> 	printf "%s\trefs/heads/mater\n" $(git rev-parse master) >expect
+> 
+> Same comment applies for all the other hardcoded object names.
 
-Storing generation data in pack indices on the other hand makes
-perfect sense: when we generate these indices, we do complete
-traversals and have all required information trivially at hand.  We
-can never have that many loose objects, so lack of generation
-information there isn't a big deal. By storing generation information
-in the index, we can be sure it is consistent with the data contained
-in the pack, so there are no cache invalidation issues.
+I can do that; since the same two object hashes recur throughout the
+script, I'll record them in shell variables up at the top.
 
-I know I must have missed some stupid and obvious reason why
-this is all wrong, I just don't quite see it yet.
+> > +test_expect_success 'mirroring a repository using a ref namespace' '
+> > +	git clone --mirror pushee mirror &&
+> > +	(
+> > +		cd mirror &&
+> > +		git for-each-ref refs/ > actual &&
+> > +		printf "dc65a2e0f299dcc7efddbbe01641a28ee84329ba commit\trefs/namespaces/namespace/refs/heads/master\n" > expected &&
+> > +		printf "fbdf4310c71b916568f04753f603fb24a0544227 commit\trefs/namespaces/namespace/refs/tags/0\n" >> expected &&
+> > +		printf "dc65a2e0f299dcc7efddbbe01641a28ee84329ba commit\trefs/namespaces/namespace/refs/tags/1\n" >> expected &&
+> > +		test_cmp expected actual
+> > +	)
+> > +'
+> 
+> I am not sure what you are trying to test. "pushee" is pretending to be a
+> hosting site that uses the namespace feature to house refs pushed from
+> original in refs/namespaces/namespace/ so it is expected to have these
+> refs under there.  You didn't make any "git remote" configuration in
+> either mirror nor pushee, so it is natural with or without the namespace
+> feature that "git clone --mirror" would find them at the same place.
+> 
+> What hasn't been tested in the above is to see what actual refs pushee has
+> with (cd pushee && git for-each-ref), and you could argue that this test
+> is a proxy for that, but then you are assuming that "clone --mirror" is
+> not broken, which means it would make debugging harder when this test does
+> start failing---is it the basic namespace feature, or is it mirror cloning
+> that acquired a bug to break this test?
 
-  -Geert
+I wrote this test specifically to check for possible regressions in
+clone or the machinery underneath it.  I wanted to ensure that no future
+change caused clone to ignore refs in refs/namespaces/*.  In particular,
+I want to protect against a regression caused by any future change to
+the refs machinery that might cause it to ignore refs outside of
+refs/heads/* or refs/tags/*, which might otherwise go un-noticed (as
+they almost did during the development of this patchset, if not for an
+incidental side effect of t5501).
+
+If this test failed, I would expect that it would fail because clone
+--mirror produced a mirrored repository which didn't actually contain
+any refs, even though pushee contained the correctly namespaced refs;
+thus, for-each-ref doesn't seem like the right test.
+
+More generally, I also added this test because it tests a specific
+high-level feature I care about: the ability to mirror a repository
+containing namespaces using clone --mirror, and preserve those
+namespaces.  I plan to use that as a backup mechanism, and I want it to
+continue working. :)
+
+- Josh Triplett
