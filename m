@@ -1,68 +1,85 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] git-submodule: Remove duplicate entries during merge
- with conflict
-Date: Fri, 15 Jul 2011 21:27:48 +0200
-Message-ID: <4E2094B4.3090009@web.de>
-References: <4D81C1AA.5010008@morey-chaisemartin.com> <1310668419989-6584432.post@n2.nabble.com>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: "git apply" can't add new files to repo ?
+Date: Fri, 15 Jul 2011 21:34:57 +0200
+Message-ID: <1310758497.7308.20.camel@centaur.lab.cmartin.tk>
+References: <CAAnh3_-ayozWnHR-ViJ3zjXQvPQA1kd9spGV_TEU=-kFzBytvw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-sIEQmSIf5ZV2iapUEswn"
 Cc: git@vger.kernel.org
-To: funeeldy <Marlene_Cote@affirmednetworks.com>
-X-From: git-owner@vger.kernel.org Fri Jul 15 21:28:01 2011
+To: Yang <teddyyyy123@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 15 21:35:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qho3K-0001Hg-7y
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jul 2011 21:27:58 +0200
+	id 1QhoAC-00050N-2M
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jul 2011 21:35:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754216Ab1GOT1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jul 2011 15:27:53 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:38736 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753844Ab1GOT1x (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2011 15:27:53 -0400
-Received: from smtp04.web.de  ( [172.20.0.225])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 60101193C00DA;
-	Fri, 15 Jul 2011 21:27:51 +0200 (CEST)
-Received: from [93.240.112.253] (helo=[192.168.178.43])
-	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1Qho3D-0006JV-00; Fri, 15 Jul 2011 21:27:51 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:5.0) Gecko/20110624 Thunderbird/5.0
-In-Reply-To: <1310668419989-6584432.post@n2.nabble.com>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX190NCVeCKCJpldHNypfPNsYaxEmPkxUdi/qX8Ud
-	cLz0ZwWcZ2vqBF1MftVqghaSXpDdOo9bQlQBvv5Xs/JEylQga+
-	g+b8gG3NfLPUfV89NFuQ==
+	id S1754425Ab1GOTe7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jul 2011 15:34:59 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:35875 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752157Ab1GOTe6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2011 15:34:58 -0400
+Received: from [192.168.1.17] (brln-d9ba3451.pool.mediaWays.net [217.186.52.81])
+	by kimmy.cmartin.tk (Postfix) with ESMTPSA id F22B3461F5;
+	Fri, 15 Jul 2011 21:34:56 +0200 (CEST)
+In-Reply-To: <CAAnh3_-ayozWnHR-ViJ3zjXQvPQA1kd9spGV_TEU=-kFzBytvw@mail.gmail.com>
+X-Mailer: Evolution 2.32.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177216>
 
-Am 14.07.2011 20:33, schrieb funeeldy:
-> How can new users of git submodules learn about merge conflicts?  When and
-> why they occur, and how to resolve them in a way that doesn't lose commits?  
 
-That is pretty similar to merge conflicts in regular files: They happen
-when you merge two branches where both sides changed the recorded submodule
-commit to another one (and those are not the same). The resolution can be
-done by finding a submodule commit that has both changes. In most cases that
-will be based on a merge (maybe even a fast forward) with both commits in
-its history.
+--=-sIEQmSIf5ZV2iapUEswn
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-If git finds a fast forward from the merge base to commit1 and commit2
-(let's say they both are on master and newer than the merge base), the
-newer one is picked automatically. If git finds a single merge from which
-both commits are reachable, it proposes that as conflict resolution and
-tells you  how you can stage that. Only if it doesn't find any or more
-than two merges, you are on your own and have to resolve the conflict
-manually by finding an appropriate commit.
+On Fri, 2011-07-15 at 12:02 -0700, Yang wrote:
+> I created a patch by "git format-patch", and this patch includes some
+> newly-added files.
+>=20
+> when I got back to the original branch, and apply this patch, the new
+> files appear, but they are not
+> added to git repository, so I have to manually find all the new files
+> and do "git add" for each of them.
+>=20
+>=20
+> I guess there should have been a way to automatically do "git add" for
+> all the new files in the patch,
+> how could I do that?
 
-> If I have to choose my version or their version, that isn't really a merge,
-> or is it?
+git-apply is just a wrapper around the patch(1) utility. As you have
+created a patch for use in an email (as that's the point of using
+format-patch, so you have both the commit message and diff in one
+place), you should use git-am, which takes care of all the "magic". If
+you want to change what the patch does, you just need to use git commit
+--amend
 
-It would be if the merge strategy is "ours" or "theirs". But in most normal
-cases you would want to have both commits reachable from the merge result.
+Cheers,
+   cmn
+--=20
+Carlos Mart=C3=ADn Nieto        http://www.cmartin.tk
+
+"=C2=BFC=C3=B3mo voy a decir bobadas si soy mudo?" -- CACHAI
+
+--=-sIEQmSIf5ZV2iapUEswn
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAABAgAGBQJOIJZhAAoJEHKRP1jG7ZzTYxIIAKN5jAN2u8LchZyzKrgMk8/S
+QWkuyO6AB56/QDxC/7A9KGeY3UC+EmuXM3b9ho7B2a6eoYMIRMZ6luEFfsuMEQFg
+klakoRGZHfEM1UGhJX2FwxQDoPQ1R6d7xNvWXrUr0EK6+RS08WUe41hvwCjLpENY
+viyWH2Won8ggKftkJLreoskgawXjJhgu0NpqTfqTod4n9YClDoeGoK5yAqD5Kctz
+q7auXtQ1dE2G3NL3Np/wGorfKrm6yZJKZdag4ctpS1ayQaXyCVZA3PTauvqFtq4x
+VuOL+IL5DxwrWWeoRyYOQcklrvYZlBTIg/0lZbu+WeXVCEd2Pg0WeopZt5L/oGk=
+=v3gD
+-----END PGP SIGNATURE-----
+
+--=-sIEQmSIf5ZV2iapUEswn--
