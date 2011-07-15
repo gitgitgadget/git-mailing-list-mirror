@@ -1,21 +1,11 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git commit generation numbers
-Date: Fri, 15 Jul 2011 15:48:07 -0400
-Message-ID: <20110715194807.GA356@sigill.intra.peff.net>
-References: <20110714183710.GA26820@sigill.intra.peff.net>
- <CA+55aFwuK+krTA4OcnYhLXtKM5HQ1yuPK+J_vC-5R7AthrHWbg@mail.gmail.com>
- <20110714190844.GA26918@sigill.intra.peff.net>
- <CA+55aFx=ACnVBGU8_9wa=9xTbxVoOWKnsqfmBvzq7qzOeMGSNA@mail.gmail.com>
- <20110714200144.GE26918@sigill.intra.peff.net>
- <69e0ad24-32b7-4e14-9492-6d0c3d653adf@email.android.com>
- <20110714203141.GA28548@sigill.intra.peff.net>
- <CA+55aFyDzr+SfgSzWMr9pQuQUXTw9mcjZ-00NZof74PKZzbGPA@mail.gmail.com>
- <20110715074656.GA31301@sigill.intra.peff.net>
- <CA+55aFzS3KDNvKt-dXvYpuAQwFwD3+GCj8y8bRQCycPvrynT8Q@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add a 'generation' number to commits
+Date: Fri, 15 Jul 2011 12:49:17 -0700
+Message-ID: <7v8vrz1g02.fsf@alter.siamese.dyndns.org>
+References: <alpine.LFD.2.02.1107141126300.4159@i5.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
 To: Linus Torvalds <torvalds@linux-foundation.org>
 X-From: git-owner@vger.kernel.org Fri Jul 15 21:49:34 2011
 Return-path: <git-owner@vger.kernel.org>
@@ -23,123 +13,65 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhoOD-0004Kb-M6
+	id 1QhoOE-0004Kb-BY
 	for gcvg-git-2@lo.gmane.org; Fri, 15 Jul 2011 21:49:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755845Ab1GOTsO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jul 2011 15:48:14 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60961
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752157Ab1GOTsN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2011 15:48:13 -0400
-Received: (qmail 25786 invoked by uid 107); 15 Jul 2011 19:48:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 15 Jul 2011 15:48:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jul 2011 15:48:07 -0400
-Content-Disposition: inline
-In-Reply-To: <CA+55aFzS3KDNvKt-dXvYpuAQwFwD3+GCj8y8bRQCycPvrynT8Q@mail.gmail.com>
+	id S1755879Ab1GOTtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jul 2011 15:49:20 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59375 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752157Ab1GOTtT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2011 15:49:19 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E4DA49CC;
+	Fri, 15 Jul 2011 15:49:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EJqs8Qqbcv4cKGjH419cBKT+PEg=; b=xru07K
+	kzVfIjhTNXRpz3IP8KPUWHqw4k25kkQSgmFz5jUO0ZV4dU4M0iT64Fab4F0aIqfl
+	yZIKvP/uJFKNKrxaxBYKNkyBpTw4O2KR64Y3Qg4so277gEaIFpBxgEFsTxBxHMya
+	rhaDaqowrYDV+GsnB/szL2Qipt+8IUyf155Io=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZmQoHn0CI0tv2E6MwctzMFPx2GSJDgLx
+	NNAhLKQ1sKWeuJZkTYb26vIyRlvGprMmeRjRhbakSTJMS8wxJ9WFuM4Da+J6stws
+	Ob4DfI7Y+hJGFABMHuHuxvvdU5nY8BxO7Kbd14Mir2wmvMcny0jUHRnzZ8j6MzZ1
+	EaLqSf0pyXw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 027BD49CB;
+	Fri, 15 Jul 2011 15:49:19 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7341849CA; Fri, 15 Jul 2011
+ 15:49:18 -0400 (EDT)
+In-Reply-To: <alpine.LFD.2.02.1107141126300.4159@i5.linux-foundation.org>
+ (Linus Torvalds's message of "Thu, 14 Jul 2011 11:34:09 -0700 (PDT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 86FD21E4-AF1B-11E0-9274-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177220>
 
-On Fri, Jul 15, 2011 at 09:10:48AM -0700, Linus Torvalds wrote:
+> Comments? This is pretty simplistic, and yes, it's slow. On the kernel, it 
+> now takes a few seconds to generate a new commit when there are no 
+> generation numbers - and that's on a fast machine.
 
-> I think it's much worse to have the same information in two different
-> places where it can cause inconsistencies that are hard to see and may
-> not be repeatable. If git ever finds the wrong merge base (because,
-> say, the generation numbers are wrong), I want it to be a *repeatable*
-> thing. I want to be able to repeat on the git mailing list "hey, guys,
-> look at what happens when I try to merge commits ABC and XYZ". If you
-> go "yeah, it works for me", then that is bad.
+I agree this is the way to go if we _were_ to use generation number
+associated with commit objects in the longer term, and if the SLOP
+logic in still_interesting() in revision.c:
 
-Having the information in two different places is my concern, too. And I
-think the fundamental difference between putting it inside or outside
-the commit sha1 (where outside encompasses putting it in a cache, in the
-pack-index, or whatever), is that I see the commit sha1 as somehow more
-"definitive". That is, it is the sole data we pass from repo to repo
-during pushes and pulls, and it is the thing that is consistency-checked
-by hashes.
+ (1) can gracefully fall back to the date based heuristics for older
+     commits without the header; and
 
-So if there is an inconsistency between what the parent pointers
-represent, and what the generation number in "outside" storage says,
-then the outside storage is wrong, and the parent pointers are the right
-answer. It becomes a lot more fuzzy to me if there is an inconsistency
-between what the parent pointers represent, and what the generation
-number says.
+ (2) can take advantage of the generation numbers in more recent commit.
 
-How should that situation be handled? Should fsck check for it and
-complain? Should we just ignore it, even though it may cause our
-traversal algorithms to be inaccurate? Like clock skew, there's not much
-that can be done if the commits are published.
+If we cannot do (1), we could augment this with Peff's generation number
+cache. I suspect (1) is doable and in that case we do not have to have
+(and we may be better off without) the on-disk cache that could go stale,
+but nobody so far has shown that yet, so...
 
-Those are serious questions that I think should be considered if we are
-going to put a generation header into the commit object, and I haven't
-seen answers for them yet.
-
-> Partly for that reason, I do think that if the generation count was
-> embedded in the pack-file, that would not be an "ugly" decision. The
-> pack-files have definitely become "core git data structures", and are
-> more than just a local filesystem representation of the objects:
-> they're obviously also the data transport method, even if the rules
-> there are slightly different (no index, thank god, and incomplete
-> "thin" packs).
-> 
-> That said, I don't think a generation count necessarily "fits" in the
-> pack-file. They are designed to be incremental, so it's not very
-> natural there. But I do think it would be conceptually prettier to
-> have the "depth of commit" be part of the "filesystem" data than to
-> have it as a separate ad-hoc cache.
-
-Sure, I would be fine with that. When you say "packfile", do you mean
-the the general concept, as in it could go in the pack index as opposed
-to the packfile itself? Or specifically in the packfile? The latter
-seems a lot more problematic to me in terms of implementation.
-
-> > Those things rely on the idea that the git DAG is a data model that we
-> > present to the user, but that we're allowed to do things behind the
-> > scenes to make things faster.
-> 
-> .. and that is relevant to this discussion exactly *how*?
-
-Because keeping the generation information outside of the DAG keeps the
-model we present to the user simple (and not just the user; the
-information that we present to other programs), but lets git still use
-the information without calculating it from scratch each time. Just like
-we present the data as a DAG of loose objects via things like "git
-cat-file", even though the underlying storage inside a packfile may be
-very different. I just don't see those two ideas as fundamentally
-different.
-
-> It's not. It's totally irrelevant. I certainly would never walk away
-> from the DAG model. It's a fundamental git decision, and it's the
-> correct one.
-
-Of course not. I never suggested we should.
-
-> And that is what this discussion fundamentally boils down to for me.
-> 
-> If we should have fixed it in the original specification, we damn well
-> should fix it today. It's been "ignorable" because it's just not been
-> important enough. But if git now adds a fundamental cache for them,
-> then that information is clearly no longer "not important enough".
-
-OK, so let's say we add generation headers to each commit. What happens
-next? Are we going to convert algorithms that use timestamps to use
-commit generations? How are we going to handle performance issues when
-dealing with older parts of history that don't have generations?
-
-Again, those are serious questions that need answered. I respect that
-you think the lack of a generation header is a design decision that
-should be corrected. As I said before, I'm not 100% sure I agree, but
-nor do I completely disagree (and I think it largely boils down to a
-philosophical distinction, which I think you will agree should take a
-backseat to real, practical concerns). But it's not 2005, and we have a
-ton of history without generation numbers. So adding them now is only
-one piece of the puzzle.
-
-What's your solution for the rest of it?
-
--Peff
+As I mentioned in a review comment of the actual patch, I however am not
+convinced that generation number is a better substitute for the timestamp
+in the context of "tag --contains" optimization.
