@@ -1,76 +1,93 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Generation numbers and replacement objects
-Date: Fri, 15 Jul 2011 17:10:33 -0400
-Message-ID: <20110715211033.GA1943@sigill.intra.peff.net>
+Subject: Re: [RFC/PATCHv2 6/6] limit "contains" traversals based on commit
+ generation
+Date: Fri, 15 Jul 2011 17:14:41 -0400
+Message-ID: <20110715211441.GB1943@sigill.intra.peff.net>
 References: <20110713064709.GA18499@sigill.intra.peff.net>
- <m3aacf9s4k.fsf@localhost.localdomain>
+ <20110713070644.GF18566@sigill.intra.peff.net>
+ <7vpqlb1k1g.fsf@alter.siamese.dyndns.org>
+ <20110715204002.GC356@sigill.intra.peff.net>
+ <7vzkkfz261.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
 	Ted Ts'o <tytso@mit.edu>, Jonathan Nieder <jrnieder@gmail.com>,
 	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
 	Clemens Buchacher <drizzd@aon.at>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 15 23:10:42 2011
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 15 23:14:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qhpek-0002TG-9t
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jul 2011 23:10:42 +0200
+	id 1Qhpij-0004Bc-6t
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jul 2011 23:14:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752215Ab1GOVKh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jul 2011 17:10:37 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42929
+	id S1752701Ab1GOVOo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jul 2011 17:14:44 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:35288
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751374Ab1GOVKg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2011 17:10:36 -0400
-Received: (qmail 27063 invoked by uid 107); 15 Jul 2011 21:11:01 -0000
+	id S1751226Ab1GOVOo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2011 17:14:44 -0400
+Received: (qmail 27113 invoked by uid 107); 15 Jul 2011 21:15:09 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 15 Jul 2011 17:11:01 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jul 2011 17:10:33 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 15 Jul 2011 17:15:09 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jul 2011 17:14:41 -0400
 Content-Disposition: inline
-In-Reply-To: <m3aacf9s4k.fsf@localhost.localdomain>
+In-Reply-To: <7vzkkfz261.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177234>
 
-On Fri, Jul 15, 2011 at 02:01:36PM -0700, Jakub Narebski wrote:
+On Fri, Jul 15, 2011 at 02:04:06PM -0700, Junio C Hamano wrote:
 
-> Peff, as Junio said somewhere else either in this thread, or the one
-> started by Linus, we would want generation numbers both without taking
-> into account replacement objects (e.g. for object traversal during
-> push / fetch), and with taking it into account (e.g. when showing log
-> or blame for end user).
+> Jeff King <peff@peff.net> writes:
 > 
-> So we would need two generation number caches: one with and one
-> without replaces.
+> >>    So how about marking commits (using the metainfo-cache facility) that
+> >>    has an ancestor (not necessarily its direct parent) that records a
+> >>    younger timestamp (e.g. 1 is such a commit, as its ancestors include
+> >>    things like 2 and 4)? There should be relatively small number of them,
+> >>    and still_interesting() logic can be told to dig through such commits
+> >>    even if everybody is uninteresting in the active list.
+> > ...
+> >>  * As to "tag --contains", when timestamp based heuristics breaks down is
+> >>    when a tagged commit incorrectly records way young timestamp or the
+> >>    "want" commit records way old timetsamp. I haven't thought things
+> >>    through, but the same metainfo-cache may be useful to detect which
+> >>    commit to dig through ignoring the cutoff heuristics.
+> >
+> > It can also break down if intermediate commits are wrong, because we
+> > have to traverse backwards, and we may erroneously cutoff early.
+> >
+> > For example:
+> >
+> >    A--B--C
+> >
+> >    timestamp(A) = 2
+> >    timestamp(B) = 1 # skewed!
+> >    timestamp(C) = 3
+> >
+> > If tag=C and want=A, then we traverse backwards from C. We can't stop
+> > immediately because we know that 2 < 3. But we go back to B, and see
+> > that 2 > 1, and assume that A cannot possibly be an ancestor of B.
+> 
+> I envisioned that the metainfo-cache to help rev-list I mentioned earlier
+> would mark B having an ancestor A that has a timestamp younger than it, so
+> I think we can certainly notice that we have to "dig through" B.
 
-Right. And I already outlined a solution for that by indexing the caches
-by the validity token (I haven't written the patches yet, but it's a
-pretty trivial change).
+Right. I thought you were talking about the case where we did not have
+such a cache. But given your response, did you mean:
 
-> Nb. generation header stored in commit object can give only the one
-> without replaces, i.e. speed up object enumeration (what happened to
-> caching GSoC project code?) but not git-log.
+  If we have such a cache, then the only thing left to worry about is
+  when we specifically ask about a commit (either a tag or a "want"
+  commit) that is skewed.
 
-Yes. It is a weakness of putting the generation number in the header. I
-think Linus has already said he doesn't care about grafting. You are
-welcome to argue with him about that.
-
-> Also if replacement object has the same generation as the commit it
-> replaces, and I think also if it has lower generation number, current
-> generation numbers would still work (ne need to invalidate cache).
-
-Yes, that is why I said elsewhere "you could be more clever about seeing
-how the cache's validity constraints changed". But ultimately, it is not
-that expensive to regenerate the cache under the new conditions, grafts
-don't change very often, and the code to figure out exactly which parts
-of the cache could be saved would be complex.
+That I agree with.
 
 -Peff
