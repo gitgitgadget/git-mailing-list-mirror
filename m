@@ -1,77 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add a 'generation' number to commits
-Date: Fri, 15 Jul 2011 12:49:17 -0700
-Message-ID: <7v8vrz1g02.fsf@alter.siamese.dyndns.org>
-References: <alpine.LFD.2.02.1107141126300.4159@i5.linux-foundation.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/3] fast-export: use object to uint32 map instead of
+ "decorate"
+Date: Fri, 15 Jul 2011 16:00:44 -0400
+Message-ID: <20110715200044.GB356@sigill.intra.peff.net>
+References: <20110714173454.GA21657@sigill.intra.peff.net>
+ <20110714175211.GB21771@sigill.intra.peff.net>
+ <CAGdFq_guf8fa014t17KyNoEzpCAK-aG5BrpQ40tQ=1507OJ8bw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Jul 15 21:49:34 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>, Ted Ts'o <tytso@mit.edu>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Clemens Buchacher <drizzd@aon.at>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	David Barr <davidbarr@google.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 15 22:00:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhoOE-0004Kb-BY
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jul 2011 21:49:34 +0200
+	id 1QhoZA-0001sx-Qg
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jul 2011 22:00:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755879Ab1GOTtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jul 2011 15:49:20 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59375 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752157Ab1GOTtT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2011 15:49:19 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E4DA49CC;
-	Fri, 15 Jul 2011 15:49:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EJqs8Qqbcv4cKGjH419cBKT+PEg=; b=xru07K
-	kzVfIjhTNXRpz3IP8KPUWHqw4k25kkQSgmFz5jUO0ZV4dU4M0iT64Fab4F0aIqfl
-	yZIKvP/uJFKNKrxaxBYKNkyBpTw4O2KR64Y3Qg4so277gEaIFpBxgEFsTxBxHMya
-	rhaDaqowrYDV+GsnB/szL2Qipt+8IUyf155Io=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZmQoHn0CI0tv2E6MwctzMFPx2GSJDgLx
-	NNAhLKQ1sKWeuJZkTYb26vIyRlvGprMmeRjRhbakSTJMS8wxJ9WFuM4Da+J6stws
-	Ob4DfI7Y+hJGFABMHuHuxvvdU5nY8BxO7Kbd14Mir2wmvMcny0jUHRnzZ8j6MzZ1
-	EaLqSf0pyXw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 027BD49CB;
-	Fri, 15 Jul 2011 15:49:19 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7341849CA; Fri, 15 Jul 2011
- 15:49:18 -0400 (EDT)
-In-Reply-To: <alpine.LFD.2.02.1107141126300.4159@i5.linux-foundation.org>
- (Linus Torvalds's message of "Thu, 14 Jul 2011 11:34:09 -0700 (PDT)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 86FD21E4-AF1B-11E0-9274-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754544Ab1GOUAr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jul 2011 16:00:47 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55152
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754372Ab1GOUAr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2011 16:00:47 -0400
+Received: (qmail 25950 invoked by uid 107); 15 Jul 2011 20:01:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 15 Jul 2011 16:01:12 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jul 2011 16:00:44 -0400
+Content-Disposition: inline
+In-Reply-To: <CAGdFq_guf8fa014t17KyNoEzpCAK-aG5BrpQ40tQ=1507OJ8bw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177221>
 
-> Comments? This is pretty simplistic, and yes, it's slow. On the kernel, it 
-> now takes a few seconds to generate a new commit when there are no 
-> generation numbers - and that's on a fast machine.
+On Fri, Jul 15, 2011 at 11:40:02AM +0200, Sverre Rabbelier wrote:
 
-I agree this is the way to go if we _were_ to use generation number
-associated with commit objects in the longer term, and if the SLOP
-logic in still_interesting() in revision.c:
+> On Thu, Jul 14, 2011 at 19:52, Jeff King <peff@peff.net> wrote:
+> > Previously we encoded the "mark" mapping inside the "void *"
+> > field of a "struct decorate". It's a little more natural for
+> > us to do so using a data structure made for holding actual
+> > values.
+> >
+> > Signed-off-by: Jeff King <peff@peff.net>
+> > ---
+> > And this is an example of use. It doesn't save all that much code, but I
+> > think it's a little more natural. It can also save some bytes of the hash
+> > value in each entry if your pointers are larger than 32-bit.
+> 
+> Did you run any benchmarks on this?
 
- (1) can gracefully fall back to the date based heuristics for older
-     commits without the header; and
+No, I didn't. I expect it to be exactly the same on x86_64. We save
+32-bits of pointer space, but the generality I mentioned in patch 1
+wastes 32-bits of space for the "used" flag. So it evens out,
+space-wise.
 
- (2) can take advantage of the generation numbers in more recent commit.
+The time complexity should be exactly the same (the macro definitions
+are more or less the exact decorate code, but with the types
+parameterized, so the generated code should be the same).
 
-If we cannot do (1), we could augment this with Peff's generation number
-cache. I suspect (1) is doable and in that case we do not have to have
-(and we may be better off without) the on-disk cache that could go stale,
-but nobody so far has shown that yet, so...
+But I'm not sure this code is going to end up used, anyway. It looks
+like we might add a generation header after all.
 
-As I mentioned in a review comment of the actual patch, I however am not
-convinced that generation number is a better substitute for the timestamp
-in the context of "tag --contains" optimization.
+-Peff
