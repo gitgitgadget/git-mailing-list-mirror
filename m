@@ -1,66 +1,90 @@
-From: "Long, Martin" <martin@longhome.co.uk>
-Subject: Re: Git commit generation numbers
-Date: Fri, 15 Jul 2011 16:33:31 +0100
-Message-ID: <CANfMb_-cfAWBECGcUqQA3JCObRF+dSsx_Z2iCigYeKMdh7J7Zg@mail.gmail.com>
-References: <CA+55aFxZq1e8u7kXu1rNDy2UPgP3uOyC5y2j7idKSZ_4eL=bWw@mail.gmail.com>
-	<20110714183710.GA26820@sigill.intra.peff.net>
-	<CA+55aFwuK+krTA4OcnYhLXtKM5HQ1yuPK+J_vC-5R7AthrHWbg@mail.gmail.com>
-	<20110714190844.GA26918@sigill.intra.peff.net>
-	<CA+55aFx=ACnVBGU8_9wa=9xTbxVoOWKnsqfmBvzq7qzOeMGSNA@mail.gmail.com>
-	<20110714200144.GE26918@sigill.intra.peff.net>
-	<69e0ad24-32b7-4e14-9492-6d0c3d653adf@email.android.com>
-	<20110714203141.GA28548@sigill.intra.peff.net>
-	<CA+55aFyDzr+SfgSzWMr9pQuQUXTw9mcjZ-00NZof74PKZzbGPA@mail.gmail.com>
-	<m3fwm7aox1.fsf@localhost.localdomain>
-	<CANfMb_-ZxGGzpKDnhG46HK+DZ1UN+_kxccKuSrZtO41N0EFy6Q@mail.gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: branch tracking: inherit upstream
+Date: Fri, 15 Jul 2011 11:51:59 -0400
+Message-ID: <CAG+J_DyxMJtzf2N90vgJjQL1SikUw__KECBhrJWC=SgpYNdG0A@mail.gmail.com>
+References: <20110715110928.GA3425@arf.padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 15 17:33:40 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Fri Jul 15 17:52:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhkOZ-0006i4-3j
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jul 2011 17:33:39 +0200
+	id 1QhkgT-0000Ia-F3
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jul 2011 17:52:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752177Ab1GOPdd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jul 2011 11:33:33 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:54170 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750915Ab1GOPdd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2011 11:33:33 -0400
-Received: by vxh35 with SMTP id 35so426289vxh.19
-        for <git@vger.kernel.org>; Fri, 15 Jul 2011 08:33:32 -0700 (PDT)
-Received: by 10.52.21.42 with SMTP id s10mr1302435vde.223.1310744011898; Fri,
- 15 Jul 2011 08:33:31 -0700 (PDT)
-Received: by 10.220.185.204 with HTTP; Fri, 15 Jul 2011 08:33:31 -0700 (PDT)
-X-Originating-IP: [192.165.213.18]
-In-Reply-To: <CANfMb_-ZxGGzpKDnhG46HK+DZ1UN+_kxccKuSrZtO41N0EFy6Q@mail.gmail.com>
+	id S1752518Ab1GOPwD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Jul 2011 11:52:03 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:38514 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751910Ab1GOPwC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Jul 2011 11:52:02 -0400
+Received: by gyh3 with SMTP id 3so591440gyh.19
+        for <git@vger.kernel.org>; Fri, 15 Jul 2011 08:52:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=AMb7eHuAJO/SMV0JFmmRFxCSxfi+imrrLa/OlLZwwIw=;
+        b=bAHFc3CVNl4I451zH/jRMZ9Ijed5vX4b2qfVqsOjXVix95dYePsHCIbxreQ7oihpnA
+         kWfq9wGeNt+3/7uNmxMap0iQUQWtg36MDvEY4OC0uEH2md+YQXUbcoDvgBIG++Va0mfW
+         XC36c6qhoSwZPISOvxtoK3nbAb3urlxaBLubQ=
+Received: by 10.236.200.199 with SMTP id z47mr4393039yhn.407.1310745119889;
+ Fri, 15 Jul 2011 08:51:59 -0700 (PDT)
+Received: by 10.147.82.8 with HTTP; Fri, 15 Jul 2011 08:51:59 -0700 (PDT)
+In-Reply-To: <20110715110928.GA3425@arf.padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177199>
 
+On Fri, Jul 15, 2011 at 7:09 AM, Pete Wyckoff <pw@padd.com> wrote:
+> At work, our primary SCM is perforce (p4), but many of us use git
+> in front of that for day-to-day work. =C2=A0The build system requires
+> information about what part of the P4 repository it is building.
+> I've cobbled together changes to make this work with git, and
+> have been using "git merge-base HEAD @{upstream}" to find the
+> top-most git-p4 commit.
 >
-> Firstly, I presume the generation number would not form part of the
-> SHA1 calculation? No? Cool.
+> But @{upstream} is not automatically inherited by branches. =C2=A0It
+> is fine when a local branch is a normal tracking branch of
+> origin/master, like:
+>
+> =C2=A0 =C2=A0$ git checkout master
+> =C2=A0 =C2=A0$ git rev-parse --symbolic-full-name @{upstream}
+> =C2=A0 =C2=A0refs/remotes/origin/master
+>
+> But I'd also like this to work:
+>
+> =C2=A0 =C2=A0$ git branch feature
+> =C2=A0 =C2=A0$ git checkout feature
+> =C2=A0 =C2=A0$ git rev-parse --symbolic-full-name @{upstream}
+> =C2=A0 =C2=A0error: No upstream branch found for ''
+> =C2=A0 =C2=A0@{upstream}
+> =C2=A0 =C2=A0error: No upstream branch found for ''
+> =C2=A0 =C2=A0fatal: ambiguous argument '@{upstream}': unknown revisio=
+n or path not in the working tree.
+> =C2=A0 =C2=A0Use '--' to separate paths from revisions
+>
+> I know I can do:
+>
+> =C2=A0 =C2=A0$ git branch --set-upstream feature origin/master
+>
+> but that is a pain. =C2=A0And I know I can track the local master, bu=
+t
+> that is not what I want.
+>
+> I'm looking for something like "branch.autosetupupstream" that
+> would cause the upstream of new branches to be copied from the
+> old branch (when it exists). =C2=A0Does this make sense?
 
-I suspect this may be where my suggestion falls down. Though I suspect
-there is a case for object metadata which doesn't form part of the
-SHA. Would generation number tampering be a concern?
+Yeah, this is something I'd like to fix:
 
-Caching offers the ability to store that metadata, to provide the same
-performance gain, but maintain the integrity of the SHA chain.
-However, it does still leave the generation number liable to
-tampering, meaning a generic non-SHA metadata solution might be
-better.
+  http://thread.gmane.org/gmane.comp.version-control.git/168157
 
-TBH, there are few situations where historical generations are useful
-- finding gen numbers of tags is one of them. Most cases are going to
-be for new commits, and in that case, a few new commits at the tip of
-each branch will very quickly reduce the number of traversals. What
-use case would really create enough traversals that it should be a
-performance concern?
+j.
