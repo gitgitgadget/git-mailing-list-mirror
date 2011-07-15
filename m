@@ -1,86 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Strange O(N^3) behavior in "git filter-branch"
-Date: Fri, 15 Jul 2011 11:51:49 -0700
-Message-ID: <7vlivz1inu.fsf@alter.siamese.dyndns.org>
-References: <4E1E97C3.3030306@alum.mit.edu> <4E1EB5E9.1070902@alum.mit.edu>
- <4E200611.9010005@alum.mit.edu>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Git commit generation numbers
+Date: Fri, 15 Jul 2011 11:58:09 -0700
+Message-ID: <CA+55aFzeN9jdzU1RBVZ6UDGUT0YvNkzpycKG_mT-z+dt_3GnMw@mail.gmail.com>
+References: <CA+55aFxZq1e8u7kXu1rNDy2UPgP3uOyC5y2j7idKSZ_4eL=bWw@mail.gmail.com>
+ <20110714183710.GA26820@sigill.intra.peff.net> <CA+55aFwuK+krTA4OcnYhLXtKM5HQ1yuPK+J_vC-5R7AthrHWbg@mail.gmail.com>
+ <20110714190844.GA26918@sigill.intra.peff.net> <CA+55aFx=ACnVBGU8_9wa=9xTbxVoOWKnsqfmBvzq7qzOeMGSNA@mail.gmail.com>
+ <20110714200144.GE26918@sigill.intra.peff.net> <69e0ad24-32b7-4e14-9492-6d0c3d653adf@email.android.com>
+ <20110714203141.GA28548@sigill.intra.peff.net> <CA+55aFyDzr+SfgSzWMr9pQuQUXTw9mcjZ-00NZof74PKZzbGPA@mail.gmail.com>
+ <20110715074656.GA31301@sigill.intra.peff.net> <CA+55aFzS3KDNvKt-dXvYpuAQwFwD3+GCj8y8bRQCycPvrynT8Q@mail.gmail.com>
+ <CAJo=hJtuxNLhSjn_sDJxG7xu5k2wbJ_QLf_n+Z1E=o2AndAuJQ@mail.gmail.com>
+ <CA+55aFw_XjWm+4XwsN6CRJnsrcEu5YEChOHSHN51UUBN6PynWw@mail.gmail.com> <CA+8MBbJNZdkpOhA5Kke0VqUA9qCFdzfEP5cWPTMF3eUfDsGRiQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Jul 15 20:51:58 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Shawn Pearce <spearce@spearce.org>, Jeff King <peff@peff.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Tony Luck <tony.luck@intel.com>
+X-From: git-owner@vger.kernel.org Fri Jul 15 20:59:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhnUT-0007XH-KQ
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jul 2011 20:51:57 +0200
+	id 1QhnbV-000314-Fa
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jul 2011 20:59:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754382Ab1GOSvw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jul 2011 14:51:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35264 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754296Ab1GOSvv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2011 14:51:51 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 690433F05;
-	Fri, 15 Jul 2011 14:51:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9k5no29M7nEAR5YcG0sHS0326WA=; b=GEOmwl
-	SBCeOhP8g6ImS/GEThydaNr2pkssiEp4i1kO9jztrA0i0b952jVRReU1PTy6aJ8G
-	RZbrT3WwalekAhybCTbnzfcpzb8LB575XUKhzIWjxFDYIQXab3pGuH0nb0ao2eYu
-	cX6ddp9Z3gXR3keURcvJYHRQXOGiy41qv9iNk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xwuUfLcgSjGuCQqtScvCg2l06qIxoe/9
-	vyAzIpN3X3DTNy4FxhDQ1c8ZcQYEsBBOLfb90W71t/sGIsEzY5Qm5NQqMKX3c8zx
-	XPFPWSWd6sl6GczhSzV4skXhXIZfZlBBLL7bIJfRNlo7vupl5o0qDjGn9Xx+RvTY
-	5vn+NGl/W5U=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 609053F03;
-	Fri, 15 Jul 2011 14:51:51 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C6A4F3F02; Fri, 15 Jul 2011
- 14:51:50 -0400 (EDT)
-In-Reply-To: <4E200611.9010005@alum.mit.edu> (Michael Haggerty's message of
- "Fri, 15 Jul 2011 11:19:13 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 80063298-AF13-11E0-B6CE-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753913Ab1GOS7I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jul 2011 14:59:08 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:57305 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751658Ab1GOS7H (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Jul 2011 14:59:07 -0400
+Received: from mail-ww0-f44.google.com (mail-ww0-f44.google.com [74.125.82.44])
+	(authenticated bits=0)
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p6FIwVrY017436
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Fri, 15 Jul 2011 11:58:32 -0700
+Received: by wwe5 with SMTP id 5so1560934wwe.1
+        for <git@vger.kernel.org>; Fri, 15 Jul 2011 11:58:29 -0700 (PDT)
+Received: by 10.216.58.135 with SMTP id q7mr3350659wec.48.1310756309115; Fri,
+ 15 Jul 2011 11:58:29 -0700 (PDT)
+Received: by 10.216.158.65 with HTTP; Fri, 15 Jul 2011 11:58:09 -0700 (PDT)
+In-Reply-To: <CA+8MBbJNZdkpOhA5Kke0VqUA9qCFdzfEP5cWPTMF3eUfDsGRiQ@mail.gmail.com>
+X-Spam-Status: No, hits=-102.888 required=5 tests=AWL,BAYES_00,USER_IN_WHITELIST
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177211>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Fri, Jul 15, 2011 at 11:46 AM, Tony Luck <tony.luck@intel.com> wrote:
+>
+> What if my clock is wrong in the opposite direction - set to some time
+> out in 2025.
+> It would pass the check you propose and let the commit go in - but would
+> cause problems for everyone if that tree was pulled into upstream.
 
-> 1. Change git-filter-branch (and any other long-running commands?) to do
-> an initial check for the presence of replace references (packed or
-> loose), and if there are none, set GIT_NO_REPLACE_OBJECTS automatically.
->  This would of course fail if any of the user's scripts try to set up
-> replace references.  (Side note: perhaps the git-replace command should
-> complain if GIT_NO_REPLACE_OBJECTS is turned on?  It would almost always
-> indicate a mistake.)  It also wouldn't help in repositories that *have*
-> replace references.
+I think Shawn suggested that we just notice it at merge time.
 
-In the short term I think this makes sense, as the whole point of using
-filter-branch in a repository that has grafts and replacements is so that
-the resulting history won't have to look-aside into grafts and replace
-information.
+But yes, it's why (a) I'd suggest we have a "-f" to override and (b) I
+do think that generation counts are a better idea. You could still
+screw them up, but it would be due to an outright bug or malicious
+behavior, rather than simple incompetence on the part of a user.
 
-But I think the replace-object codepath should be optimized to realize
-there is no funky replacement (which _is_ a rare configuration) going on
-much early so that it does not incur that much overhead you observed. IOW,
-I tend to agree with your 3. below.
+Incompetent users (where "date on the machine set to the wrong
+century" is just _one_ sign of incompetence) are something git should
+pretty much take for granted. It may not be the common case, but it's
+certainly something we should design for and take into account.
 
-> 2. Add an option to git-filter-branch to have it pack references
-> occasionally.
+In contrast, if somebody *wants* to screw his repository up by
+re-writing objects with "git hash-object" etc, be my guest. We should
+just make sure fsck catches anything serious.
 
-Doesn't the code already do this via "git gc" though?
+So I would suggest checking the date regardless of any generation
+count issues, because it would possibly find badly configured machines
+that should be fixed. The same way we complain when we find no name.
 
-> 3. Optimize the specific case where there is no refs/replace
-> directory--if this directory is missing, then defer populating the loose
-> refs cache in the hope that it will never be needed.
+Whether it should then be a correctness issue or not is kind of separate.
+
+> You'd also want a check in pull(merge) that none of the commits being
+> added were in the future (as defined by the time on your machine).
+
+I don't think you need to care about "none of the commits", just
+making sure the tip is reasonable. That would not only be expensive,
+and not what we normally do (we show the diff against endpoints, not
+all changes, etc). It would also cause problems for "fixed"
+repositories (ie anything that has historical dates that are wrong,
+but are ok now).
+
+                  Linus
