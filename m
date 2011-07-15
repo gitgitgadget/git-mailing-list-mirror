@@ -1,176 +1,95 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCHv2 6/6] limit "contains" traversals based on commit
- generation
-Date: Fri, 15 Jul 2011 16:40:02 -0400
-Message-ID: <20110715204002.GC356@sigill.intra.peff.net>
-References: <20110713064709.GA18499@sigill.intra.peff.net>
- <20110713070644.GF18566@sigill.intra.peff.net>
- <7vpqlb1k1g.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: git-archive and tar options
+Date: Fri, 15 Jul 2011 22:59:46 +0200
+Message-ID: <4E20AA42.7000003@lsrfire.ath.cx>
+References: <ivla29$liu$1@dough.gmane.org> <20110714015656.GA20136@sigill.intra.peff.net> <4E1F2468.6080409@lsrfire.ath.cx> <20110714172718.GA21341@sigill.intra.peff.net> <7vei1s36bl.fsf@alter.siamese.dyndns.org> <20110714212502.GA29848@sigill.intra.peff.net> <7vwrfk1lv3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
-	Ted Ts'o <tytso@mit.edu>, Jonathan Nieder <jrnieder@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Clemens Buchacher <drizzd@aon.at>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Neal Kreitzinger <neal@rsss.com>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 15 22:40:26 2011
+X-From: git-owner@vger.kernel.org Fri Jul 15 23:00:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhpBP-00044P-Tn
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jul 2011 22:40:24 +0200
+	id 1QhpUQ-0005ac-FB
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jul 2011 23:00:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751197Ab1GOUkG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jul 2011 16:40:06 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51954
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751063Ab1GOUkF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2011 16:40:05 -0400
-Received: (qmail 26501 invoked by uid 107); 15 Jul 2011 20:40:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 15 Jul 2011 16:40:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jul 2011 16:40:02 -0400
-Content-Disposition: inline
-In-Reply-To: <7vpqlb1k1g.fsf@alter.siamese.dyndns.org>
+	id S1751471Ab1GOU74 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Jul 2011 16:59:56 -0400
+Received: from india601.server4you.de ([85.25.151.105]:34968 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751125Ab1GOU7z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2011 16:59:55 -0400
+Received: from [192.168.2.106] (p4FFD9307.dip.t-dialin.net [79.253.147.7])
+	by india601.server4you.de (Postfix) with ESMTPSA id CEFB62F802E;
+	Fri, 15 Jul 2011 22:59:53 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:5.0) Gecko/20110624 Thunderbird/5.0
+In-Reply-To: <7vwrfk1lv3.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177228>
 
-On Fri, Jul 15, 2011 at 11:22:03AM -0700, Junio C Hamano wrote:
+Am 15.07.2011 01:30, schrieb Junio C Hamano:
+> Jeff King <peff@peff.net> writes:
+>=20
+>>> Why?
+>>>
+>>> The tree you are writing out that way look very different from what=
+ is
+>>> recorded in the commit object. What's the point of introducing conf=
+usion
+>>> by allowing many tarballs with different contents written from the =
+same
+>>> commits with such tweaks all labelled with the same pax header?
+>>
+>> See my later message. I think it depends on how the embedded id is u=
+sed.
+>> Is it to say "this represents the tree of this git commit"? Or is it=
+ to
+>> help people who later have a tarball and have no clue which commit i=
+t
+>> might have come from?
+>=20
+> People, who have no clue which part of the subtree was extract and wh=
+at
+> leading path was added, would still have to wonder where the tree cam=
+e
+> from even with the embedded id. Without your patch, if the tarball ha=
+s an
+> embedded id, wouldn't they at least be able to assume it is the whole
+> thing of that commit? If you label a randomly mutated tree with the s=
+ame
+> label, you cannot tell the genuine one from manipulated ones.
+>=20
+> Not that I have strong opinions on this, either, but that is what I m=
+eant
+> by "_introducing_" confusion.
 
-> > +	/* stop searching if we go too far back in time */
-> > +	if (commit_generation(candidate) < cutoff)
-> > +		return 0;
-> > +
-> 
-> Here, the "generation number" was the commit timestamp of the commit in
-> your earlier round, but now it is not.
+When we started to write the ID into generated archives, there was only
+git-tar-tree and no <rev>:<path> syntax.  It would write the ID only if
+it was given a commit and not if it got a tree or if the user started i=
+t
+from a subdirectory.  The result was that only the full tree of a commi=
+t
+was branded with the commit ID.
 
-Yes.
+Now we have git archive, a more flexible command line syntax all around=
+,
+path limiting as well as attributes that can affect the contents of the
+files in the archive.  Back then the commmit ID was sufficient as a
+concise and canonical label of the archive contents, but now things are
+a bit more complicated.
 
-> [...]
-> What you are trying to say in this series is that "If a tag points at a
-> commit X (i.e. candidate), another commit Y (i.e. "want") that is much
-> younger than cannot possibly be included by it, because a tag was made on
-> commit X way before Y was created". You cut off by "age".
+Which use cases are we aiming for?  Do we want to include all of the
+command line arguments (with revs resolved to SHA1-IDs)?  Only those
+that modify archive contents?  And any applied attributes?  Or do we
+want to get stricter and only write the commit ID if a full unchanged
+tree of a commit is being archived?
 
-More or less. Given two ages, X and Y, you cannot know right off the bat
-whether one is an ancestor of the other. You can only know that the
-higher generation cannot possibly be an ancestor of the lower
-generation.
-
-So yes, in some cases we will see that the tag has generation 5, and the
-"want" commit has generation 10, and we will know there is no point in
-traversing backwards from 5.
-
-But we may also see a tag with generation 10, and a want commit with
-generation 5. In that case, we have to explore backwards, looking to
-either find the commit, or to pass a point where we hit a commit with
-generation less than 5, at which point we know the want commit cannot be
-an ancestor.
-
-So if you have a history like:
-
-    B
-   /
-  A--C--D--...--Z
-
-and you want to know if "B" is in "Z", you will have to traverse all the
-way from Z to A before realizing that B cannot be in it. That will have
-the same complexity as finding a merge base (because the merge-base
-would breadth-first traverse, looking at the highest age first, and
-would therefore touch the same sequence of commits).
-
-> The heuristics would work efficiently to check what tags point at a
-> relatively recent commit (e.g. when trying to see which releases are
-> affected and needing a fix by a recently discovered bug introduced by
-> commit Y) by discarding tags for ancient releases. In such a scenario, the
-> timestamp of a tagged and ancient commit X on a side branch that was never
-> merged in the mainline that leads to commit Y (i.e. "want"), in an ideal
-> world without clock skews, will be way older than the timestamp of commit
-> Y. In other words, if you use timestamp as "age", even though X and Y do
-> not relate to each other directly, except that they may share an ancient
-> common ancestor, their "age"s can be compared and you could apply your
-> heuristics to optimize.
-> 
-> But if you use the generation number as "age", even in an ideal world
-> without clock skew nor miscomputed generation number, you no longer can
-> compare "age" of X and Y.  The ancient side branch that led to X may have
-> tons more commits than the history leading to Y.
-
-Yes, there are cases where commit timestamps can save us some traversal
-work over generation numbers. But I think there are also cases where the
-reverse is true.
-
-Your example is of a long side branch with very old commits. But you
-could also have a short side branch with a very recent commit (think
-recent bugfix forked from an old version). Then with commit timestamps
-we need to go to the merge base to realize we are talking about
-something very old. With a generation number, you can easily see that
-the short branch's generation is very low.
-
-Using both as a cutoff (if we assumed we had both, and that they were
-both implicitly accurate) would let you optimize for either situation.
-In practice, timestamps are either good enough that we don't need
-generation numbers, or are considered to be strictly less accurate than
-generation numbers.
-
-So I think we will end up with one or the other. Of all of the
-complaints I have seen over the use of timestamps for cutoffs, I don't
-think performance of these corner cases has been an issue.
-
->    So how about marking commits (using the metainfo-cache facility) that
->    has an ancestor (not necessarily its direct parent) that records a
->    younger timestamp (e.g. 1 is such a commit, as its ancestors include
->    things like 2 and 4)? There should be relatively small number of them,
->    and still_interesting() logic can be told to dig through such commits
->    even if everybody is uninteresting in the active list.
-
-You don't even need metainfo-cache for this. The number of commits is
-very small, so the existing "notes-cache" is plenty fast. I even posted
-a patch for this already:
-
-  http://article.gmane.org/gmane.comp.version-control.git/176642
-
->  * As to "tag --contains", when timestamp based heuristics breaks down is
->    when a tagged commit incorrectly records way young timestamp or the
->    "want" commit records way old timetsamp. I haven't thought things
->    through, but the same metainfo-cache may be useful to detect which
->    commit to dig through ignoring the cutoff heuristics.
-
-It can also break down if intermediate commits are wrong, because we
-have to traverse backwards, and we may erroneously cutoff early.
-
-For example:
-
-   A--B--C
-
-   timestamp(A) = 2
-   timestamp(B) = 1 # skewed!
-   timestamp(C) = 3
-
-If tag=C and want=A, then we traverse backwards from C. We can't stop
-immediately because we know that 2 < 3. But we go back to B, and see
-that 2 > 1, and assume that A cannot possibly be an ancestor of B.
-
-You can push through another N commits of slop (where N=1 would be fine
-in this case). But you can always have a run of N+1 skewed commits (and
-the higher N, the more time you are wasting). From earlier measurements
-posted to the list, most repos have runs less than a dozen commits.
-Linux-2.6 is actually the second highest of those measured, with a run
-of 80. The mesa repo apparently has a run of 1520. See:
-
-  http://article.gmane.org/gmane.comp.version-control.git/160163
-
-and the surrounding thread (Jonathan did some measurements, too; he
-didn't include a "longest run", but he does include "total number of
-skewed commits", which obviously provides an upper bound on a run).
-
--Peff
+Ren=E9
