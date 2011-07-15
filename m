@@ -1,63 +1,72 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2011, #01; Wed, 6)
-Date: Sat, 16 Jul 2011 00:15:47 +0200
-Message-ID: <CAGdFq_jjm+nMFy3O0mtqzgAj=0TNrFf475-kbEfg1u2-+51n4A@mail.gmail.com>
-References: <7vpqlmhoi0.fsf@alter.siamese.dyndns.org> <7vd3hd6d9o.fsf@alter.siamese.dyndns.org>
- <20110713233919.GA18273@sigill.intra.peff.net>
+From: Yang <teddyyyy123@gmail.com>
+Subject: Re: "git apply" can't add new files to repo ?
+Date: Fri, 15 Jul 2011 16:00:07 -0700
+Message-ID: <CAAnh3__UeYTjk4U=s2PZkUoV7SvE440zq-qmwoLxoodisTrZ=A@mail.gmail.com>
+References: <CAAnh3_-ayozWnHR-ViJ3zjXQvPQA1kd9spGV_TEU=-kFzBytvw@mail.gmail.com>
+	<7vd3hb1ggd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jul 16 00:16:34 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 16 01:00:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhqgT-0006fe-6E
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Jul 2011 00:16:33 +0200
+	id 1QhrMl-0006q8-Qz
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Jul 2011 01:00:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752027Ab1GOWQ2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Jul 2011 18:16:28 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:50647 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751531Ab1GOWQ1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Jul 2011 18:16:27 -0400
-Received: by pvg12 with SMTP id 12so1408610pvg.19
-        for <git@vger.kernel.org>; Fri, 15 Jul 2011 15:16:27 -0700 (PDT)
+	id S1752717Ab1GOXAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jul 2011 19:00:09 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:38858 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751980Ab1GOXAI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2011 19:00:08 -0400
+Received: by gwaa18 with SMTP id a18so737762gwa.19
+        for <git@vger.kernel.org>; Fri, 15 Jul 2011 16:00:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=hS3FfBLaF49wVmVayaXKOJBGAogNOSzcbkRJZfIGdvw=;
-        b=ZarjL9Bzifs1ECy2dEanIpqNde9t4fk15Rrv2Q/YoA3uomcWw/1jWBho9whMk1GL8u
-         /iQ8GSPaSgE0XIoOu9xzO5/0oT2T5sSkf4a7Ps91MrDwPZvJ5yJFHYKewfxeAUrhfo2p
-         WJQo98mbmboSqxeWyM5ktV77vAAk7uw/BnOn4=
-Received: by 10.68.24.67 with SMTP id s3mr5116576pbf.250.1310768187161; Fri,
- 15 Jul 2011 15:16:27 -0700 (PDT)
-Received: by 10.68.49.39 with HTTP; Fri, 15 Jul 2011 15:15:47 -0700 (PDT)
-In-Reply-To: <20110713233919.GA18273@sigill.intra.peff.net>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=z1CQkNPkvuhyoZddOxoQ2Ij1kR+qTftq0B0+WMFDTY0=;
+        b=rhvPQcFNJcqxHC7XRXR58tHvXojlPK9k3HMh5bfKqdX8sfhIzCjg0Gh3Nl4gI49C8Y
+         0VGQZKNqE3/DjhAwKEObys055ht5h6Ok+Pr/FH85TCoS8GnkaZwWYhWJwRhQNFXih6fu
+         QoVe5nDAPOvMHbNoTVYq+sVj2yvxVwjehEgOc=
+Received: by 10.236.78.102 with SMTP id f66mr5514606yhe.7.1310770807833; Fri,
+ 15 Jul 2011 16:00:07 -0700 (PDT)
+Received: by 10.236.202.166 with HTTP; Fri, 15 Jul 2011 16:00:07 -0700 (PDT)
+In-Reply-To: <7vd3hb1ggd.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177240>
 
-Heya,
+thanks all for your replies.
 
-On Thu, Jul 14, 2011 at 01:39, Jeff King <peff@peff.net> wrote:
-> But then the latter series got picked up and merged into Sverre's
-> sr/transport-helper-fix branch. =C2=A0I'm not sure what the current s=
-tatus of
-> that series is.
+yang
 
-I've discovered a new bug while working on it (you can't push a new
-ref if the remote side already has the commit it points to). I've been
-unable to figure out what causes it, but I suppose I'll post a reroll
-for review, so that others can have a look.
-
---=20
-Cheers,
-
-Sverre Rabbelier
+On Fri, Jul 15, 2011 at 12:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Yang <teddyyyy123@gmail.com> writes:
+>
+>> I created a patch by "git format-patch", and this patch includes some
+>> newly-added files.
+>>
+>> when I got back to the original branch, and apply this patch, the new
+>> files appear, but they are not
+>> added to git repository, so I have to manually find all the new files
+>> and do "git add" for each of them.
+>
+> You are doing and thinking wrong.
+>
+> $ git apply patch
+> $ git commit
+>
+> would not add any new contents to existing paths either.
+>
+> $ git apply --index patch
+> $ git commit
+>
+> would be the way, but that is why we have "git am".
+>
