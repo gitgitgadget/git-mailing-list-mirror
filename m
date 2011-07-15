@@ -1,85 +1,83 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: "git apply" can't add new files to repo ?
-Date: Fri, 15 Jul 2011 21:34:57 +0200
-Message-ID: <1310758497.7308.20.camel@centaur.lab.cmartin.tk>
-References: <CAAnh3_-ayozWnHR-ViJ3zjXQvPQA1kd9spGV_TEU=-kFzBytvw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] ref namespaces: tests
+Date: Fri, 15 Jul 2011 12:37:42 -0700
+Message-ID: <7vhb6n1gjd.fsf@alter.siamese.dyndns.org>
+References: <20110714205055.GA26956@leaf>
+ <7v1uxs3177.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-sIEQmSIf5ZV2iapUEswn"
-Cc: git@vger.kernel.org
-To: Yang <teddyyyy123@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 15 21:35:06 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jamey Sharp <jamey@minilop.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
+	Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org
+To: Josh Triplett <josh@joshtriplett.org>
+X-From: git-owner@vger.kernel.org Fri Jul 15 21:37:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhoAC-00050N-2M
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jul 2011 21:35:04 +0200
+	id 1QhoCs-0006Mn-86
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jul 2011 21:37:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754425Ab1GOTe7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jul 2011 15:34:59 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:35875 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752157Ab1GOTe6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2011 15:34:58 -0400
-Received: from [192.168.1.17] (brln-d9ba3451.pool.mediaWays.net [217.186.52.81])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id F22B3461F5;
-	Fri, 15 Jul 2011 21:34:56 +0200 (CEST)
-In-Reply-To: <CAAnh3_-ayozWnHR-ViJ3zjXQvPQA1kd9spGV_TEU=-kFzBytvw@mail.gmail.com>
-X-Mailer: Evolution 2.32.3 
+	id S1755623Ab1GOThp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jul 2011 15:37:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53301 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752157Ab1GOThp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2011 15:37:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4AAD547E8;
+	Fri, 15 Jul 2011 15:37:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xs1yyvqqHn2qILOWov70rh7tsgQ=; b=ZM+3WG
+	kSWoaYoNFsmg5+Ntg8acG6IDJSSILYmy0OhRlw9HOK1ggCEkhB4snM2l8Vd71lYk
+	etinICPKcrFxubpRZNQOTjPoOeuzZB2DJjVSxw2Fii/ZMGhRY6KrrMud39raHd5w
+	mfaJRgoi1NVC4LAJMBRyVEPvf++GPVM2aHHBM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PqO3R8JG5BpDau3/VLoAADzJZYB+JdWd
+	x6CZSY7wfq/U8MHFPzEKBDfMlW7xOckU1XU3VJ+xT1FPypWAdfbYO4Lr9cT9bYem
+	ZOIxWX33ismHG01HBAkkG8zGP3KCDu75aU1bkZRdCkxc+1DfiIM1XHzx38Vc8GMo
+	0aMvolfx9po=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 400CF47DD;
+	Fri, 15 Jul 2011 15:37:44 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A00A147DB; Fri, 15 Jul 2011
+ 15:37:43 -0400 (EDT)
+In-Reply-To: <7v1uxs3177.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 14 Jul 2011 16:13:48 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E8DD305E-AF19-11E0-96EF-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177217>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
---=-sIEQmSIf5ZV2iapUEswn
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+>> +test_expect_success 'pushing into a repository using a ref namespace' '
+>> +	(
+>> +		cd original &&
+>> +		git push pushee-namespaced master &&
+>> +		git ls-remote pushee-namespaced > actual &&
+>> +		printf "dc65a2e0f299dcc7efddbbe01641a28ee84329ba\trefs/heads/master\n" > expected &&
+>
+> Could you avoid hardcoding the exact object names here?  Your script knows
+> what object should appear at refs/heads/master at "pushee-namespaced" (as
+> you have pushed from the repository "original" you are in), so it may be
+> something like:
+>
+> 	printf "%s\trefs/heads/mater\n" $(git rev-parse master) >expect
+>
+> Same comment applies for all the other hardcoded object names.
 
-On Fri, 2011-07-15 at 12:02 -0700, Yang wrote:
-> I created a patch by "git format-patch", and this patch includes some
-> newly-added files.
->=20
-> when I got back to the original branch, and apply this patch, the new
-> files appear, but they are not
-> added to git repository, so I have to manually find all the new files
-> and do "git add" for each of them.
->=20
->=20
-> I guess there should have been a way to automatically do "git add" for
-> all the new files in the patch,
-> how could I do that?
+Just FYI, I did a sample fix-up for earlier tests in this patch and pushed
+it out in 'pu'; hopefully it may save your time.
 
-git-apply is just a wrapper around the patch(1) utility. As you have
-created a patch for use in an email (as that's the point of using
-format-patch, so you have both the commit message and diff in one
-place), you should use git-am, which takes care of all the "magic". If
-you want to change what the patch does, you just need to use git commit
---amend
-
-Cheers,
-   cmn
---=20
-Carlos Mart=C3=ADn Nieto        http://www.cmartin.tk
-
-"=C2=BFC=C3=B3mo voy a decir bobadas si soy mudo?" -- CACHAI
-
---=-sIEQmSIf5ZV2iapUEswn
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAABAgAGBQJOIJZhAAoJEHKRP1jG7ZzTYxIIAKN5jAN2u8LchZyzKrgMk8/S
-QWkuyO6AB56/QDxC/7A9KGeY3UC+EmuXM3b9ho7B2a6eoYMIRMZ6luEFfsuMEQFg
-klakoRGZHfEM1UGhJX2FwxQDoPQ1R6d7xNvWXrUr0EK6+RS08WUe41hvwCjLpENY
-viyWH2Won8ggKftkJLreoskgawXjJhgu0NpqTfqTod4n9YClDoeGoK5yAqD5Kctz
-q7auXtQ1dE2G3NL3Np/wGorfKrm6yZJKZdag4ctpS1ayQaXyCVZA3PTauvqFtq4x
-VuOL+IL5DxwrWWeoRyYOQcklrvYZlBTIg/0lZbu+WeXVCEd2Pg0WeopZt5L/oGk=
-=v3gD
------END PGP SIGNATURE-----
-
---=-sIEQmSIf5ZV2iapUEswn--
+Thanks.
