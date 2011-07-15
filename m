@@ -1,70 +1,72 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 2/3] fast-export: use object to uint32 map instead of "decorate"
-Date: Fri, 15 Jul 2011 11:40:02 +0200
-Message-ID: <CAGdFq_guf8fa014t17KyNoEzpCAK-aG5BrpQ40tQ=1507OJ8bw@mail.gmail.com>
-References: <20110714173454.GA21657@sigill.intra.peff.net> <20110714175211.GB21771@sigill.intra.peff.net>
+From: Pete Wyckoff <pw@padd.com>
+Subject: branch tracking: inherit upstream
+Date: Fri, 15 Jul 2011 07:09:28 -0400
+Message-ID: <20110715110928.GA3425@arf.padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>, "Ted Ts'o" <tytso@mit.edu>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Clemens Buchacher <drizzd@aon.at>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	David Barr <davidbarr@google.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jul 15 11:40:53 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 15 13:09:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qhet9-0000IQ-H1
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jul 2011 11:40:51 +0200
+	id 1QhgH4-0007En-CD
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jul 2011 13:09:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965400Ab1GOJkn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jul 2011 05:40:43 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:61715 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965262Ab1GOJkm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2011 05:40:42 -0400
-Received: by pzk3 with SMTP id 3so1347409pzk.5
-        for <git@vger.kernel.org>; Fri, 15 Jul 2011 02:40:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Q8dMKeheHj+mmiDXeIMcwhjX9WLQEwgM3paX9mKFCIY=;
-        b=NOnYg3RxcaRfqhn1vOcvcZO4rkObnQ1pt3jZBv3DBtHs8Qj5BzpHnSU8c82DmA4kTB
-         xY2fTZHrO9xe8ELt9uwvseFZ969+h994gD1lngX/14H68vNfwm9vOgdqOIHGqdU+Ux+c
-         q++HSJs+fF+Ap5KLIJV604S1bxaNTMLnZ9UdI=
-Received: by 10.68.27.232 with SMTP id w8mr3713411pbg.49.1310722842194; Fri,
- 15 Jul 2011 02:40:42 -0700 (PDT)
-Received: by 10.68.49.39 with HTTP; Fri, 15 Jul 2011 02:40:02 -0700 (PDT)
-In-Reply-To: <20110714175211.GB21771@sigill.intra.peff.net>
+	id S1751357Ab1GOLJd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jul 2011 07:09:33 -0400
+Received: from honk.padd.com ([74.3.171.149]:55312 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750809Ab1GOLJc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2011 07:09:32 -0400
+Received: from arf.padd.com (unknown [50.52.168.230])
+	by honk.padd.com (Postfix) with ESMTPSA id 419491FA1;
+	Fri, 15 Jul 2011 04:09:32 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id E2D7B3148F; Fri, 15 Jul 2011 07:09:28 -0400 (EDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177197>
 
-Heya,
+At work, our primary SCM is perforce (p4), but many of us use git
+in front of that for day-to-day work.  The build system requires
+information about what part of the P4 repository it is building.
+I've cobbled together changes to make this work with git, and
+have been using "git merge-base HEAD @{upstream}" to find the
+top-most git-p4 commit.
 
-On Thu, Jul 14, 2011 at 19:52, Jeff King <peff@peff.net> wrote:
-> Previously we encoded the "mark" mapping inside the "void *"
-> field of a "struct decorate". It's a little more natural for
-> us to do so using a data structure made for holding actual
-> values.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> And this is an example of use. It doesn't save all that much code, but I
-> think it's a little more natural. It can also save some bytes of the hash
-> value in each entry if your pointers are larger than 32-bit.
+But @{upstream} is not automatically inherited by branches.  It
+is fine when a local branch is a normal tracking branch of
+origin/master, like:
 
-Did you run any benchmarks on this?
+    $ git checkout master
+    $ git rev-parse --symbolic-full-name @{upstream}
+    refs/remotes/origin/master
 
--- 
-Cheers,
+But I'd also like this to work:
 
-Sverre Rabbelier
+    $ git branch feature
+    $ git checkout feature
+    $ git rev-parse --symbolic-full-name @{upstream}
+    error: No upstream branch found for ''
+    @{upstream}
+    error: No upstream branch found for ''
+    fatal: ambiguous argument '@{upstream}': unknown revision or path not in the working tree.
+    Use '--' to separate paths from revisions
+
+I know I can do:
+
+    $ git branch --set-upstream feature origin/master
+
+but that is a pain.  And I know I can track the local master, but
+that is not what I want.
+
+I'm looking for something like "branch.autosetupupstream" that
+would cause the upstream of new branches to be copied from the
+old branch (when it exists).  Does this make sense?
+
+		-- Pete
