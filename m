@@ -1,160 +1,79 @@
-From: Josh Triplett <josh@joshtriplett.org>
-Subject: [PATCHv2] ref namespaces: tests
-Date: Fri, 15 Jul 2011 11:40:45 -0700
-Message-ID: <20110715184045.GA2232@leaf>
-References: <20110714205055.GA26956@leaf>
- <7v1uxs3177.fsf@alter.siamese.dyndns.org>
- <20110715034538.GD28343@leaf>
+From: Ted Ts'o <tytso@mit.edu>
+Subject: Re: Git commit generation numbers
+Date: Fri, 15 Jul 2011 14:42:11 -0400
+Message-ID: <20110715184211.GH8453@thunk.org>
+References: <20110714190844.GA26918@sigill.intra.peff.net>
+ <CA+55aFx=ACnVBGU8_9wa=9xTbxVoOWKnsqfmBvzq7qzOeMGSNA@mail.gmail.com>
+ <20110714200144.GE26918@sigill.intra.peff.net>
+ <69e0ad24-32b7-4e14-9492-6d0c3d653adf@email.android.com>
+ <20110714203141.GA28548@sigill.intra.peff.net>
+ <CA+55aFyDzr+SfgSzWMr9pQuQUXTw9mcjZ-00NZof74PKZzbGPA@mail.gmail.com>
+ <20110715074656.GA31301@sigill.intra.peff.net>
+ <CA+55aFzS3KDNvKt-dXvYpuAQwFwD3+GCj8y8bRQCycPvrynT8Q@mail.gmail.com>
+ <CAJo=hJtuxNLhSjn_sDJxG7xu5k2wbJ_QLf_n+Z1E=o2AndAuJQ@mail.gmail.com>
+ <CA+55aFw_XjWm+4XwsN6CRJnsrcEu5YEChOHSHN51UUBN6PynWw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jamey Sharp <jamey@minilop.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
-	Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 15 20:41:05 2011
+Cc: Shawn Pearce <spearce@spearce.org>, Jeff King <peff@peff.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Jul 15 20:42:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QhnJw-00025q-25
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Jul 2011 20:41:04 +0200
+	id 1QhnLC-0002q0-Kp
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Jul 2011 20:42:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753991Ab1GOSk6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jul 2011 14:40:58 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:56736 "EHLO
-	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753604Ab1GOSk5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2011 14:40:57 -0400
-X-Originating-IP: 217.70.178.137
-Received: from mfilter8-d.gandi.net (mfilter8-d.gandi.net [217.70.178.137])
-	by relay4-d.mail.gandi.net (Postfix) with ESMTP id 99D43172077;
-	Fri, 15 Jul 2011 20:40:55 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter8-d.gandi.net
-Received: from relay4-d.mail.gandi.net ([217.70.183.196])
-	by mfilter8-d.gandi.net (mfilter8-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id i1EDyKYhz1vt; Fri, 15 Jul 2011 20:40:53 +0200 (CEST)
-X-Originating-IP: 131.252.142.246
-Received: from leaf (unknown [131.252.142.246])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 5964F172071;
-	Fri, 15 Jul 2011 20:40:47 +0200 (CEST)
+	id S1754138Ab1GOSmS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jul 2011 14:42:18 -0400
+Received: from li9-11.members.linode.com ([67.18.176.11]:40466 "EHLO
+	test.thunk.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753604Ab1GOSmR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2011 14:42:17 -0400
+Received: from root (helo=tytso-glaptop)
+	by test.thunk.org with local-esmtp (Exim 4.69)
+	(envelope-from <tytso@thunk.org>)
+	id 1QhnL2-0003G7-QZ; Fri, 15 Jul 2011 18:42:12 +0000
+Received: from tytso by tytso-glaptop with local (Exim 4.71)
+	(envelope-from <tytso@thunk.org>)
+	id 1QhnL2-0007kh-1J; Fri, 15 Jul 2011 14:42:12 -0400
 Content-Disposition: inline
-In-Reply-To: <20110715034538.GD28343@leaf>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CA+55aFw_XjWm+4XwsN6CRJnsrcEu5YEChOHSHN51UUBN6PynWw@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on test.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177208>
 
-Test pushing, pulling, and mirroring of repositories with ref
-namespaces.
+On Fri, Jul 15, 2011 at 09:44:21AM -0700, Linus Torvalds wrote:
+> So I would like to repeat: I think our commit-date based hack has been
+> pretty successful. We've lived with it for years and years. Even the
+> "let's try to fix it by adding slop" code is from three years ago
+> (commit 7d004199d1), which means that for three years we never really
+> saw any serious problems. I forget what problem we actually did see -
+> I have this dim memory of it being Ted that had problems with a merge
+> because git picked a crap merge base, but that may just be my
+> Alzheimer's speaking.
 
-Signed-off-by: Josh Triplett <josh@joshtriplett.org>
-Signed-off-by: Jamey Sharp <jamey@minilop.net>
----
+My original main issue was simply that "git tag --contains" and "git
+branch --contains" was either (a) incorrect, or (b) slower than
+popping up gitk and pulling the information out of the GUI.  The
+reason for (b) is because of gitk.cache.
 
-v2: Incorporate feedback from Junio: change test number to 5507 to avoid
-conflicting with existing tests, make style consistent with other test
-scripts, avoid hardcoding commit hashes, add rationale for mirror test.
+Maybe the answer then is creating a command-line tool (it doesn't have to
+be in "core" of git) which just pulls the dammned information out of
+gitk.cache....
 
- t/t5507-fetch-push-namespaces.sh |   85 ++++++++++++++++++++++++++++++++++++++
- 1 files changed, 85 insertions(+), 0 deletions(-)
- create mode 100755 t/t5507-fetch-push-namespaces.sh
+(Yes, it's gross, but I'm not worrying about the long-term
+architecture of git or anything high-falutin' like that.  I'm just a
+poor dumb user who just wants git tag --contains and git branch
+--contains to be fast and accurate...)
 
-diff --git a/t/t5507-fetch-push-namespaces.sh b/t/t5507-fetch-push-namespaces.sh
-new file mode 100755
-index 0000000..cc0b31f
---- /dev/null
-+++ b/t/t5507-fetch-push-namespaces.sh
-@@ -0,0 +1,85 @@
-+#!/bin/sh
-+
-+test_description='fetch/push involving ref namespaces'
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	test_tick &&
-+	git init original &&
-+	(
-+		cd original &&
-+		echo 0 >count &&
-+		git add count &&
-+		test_commit 0 &&
-+		echo 1 >count &&
-+		git add count &&
-+		test_commit 1 &&
-+		git remote add pushee-namespaced "ext::git --namespace=namespace %s ../pushee" &&
-+		git remote add pushee-unnamespaced ../pushee
-+	) &&
-+	commit0=$(cd original && git rev-parse HEAD^) &&
-+	commit1=$(cd original && git rev-parse HEAD) &&
-+	git init pushee &&
-+	git init puller
-+'
-+
-+test_expect_success 'pushing into a repository using a ref namespace' '
-+	(
-+		cd original &&
-+		git push pushee-namespaced master &&
-+		git ls-remote pushee-namespaced >actual &&
-+		printf "$commit1\trefs/heads/master\n" >expected &&
-+		test_cmp expected actual &&
-+		git push pushee-namespaced --tags &&
-+		git ls-remote pushee-namespaced >actual &&
-+		printf "$commit0\trefs/tags/0\n" >>expected &&
-+		printf "$commit1\trefs/tags/1\n" >>expected &&
-+		test_cmp expected actual &&
-+		# Verify that the GIT_NAMESPACE environment variable works as well
-+		GIT_NAMESPACE=namespace git ls-remote "ext::git %s ../pushee" >actual &&
-+		test_cmp expected actual &&
-+		# Verify that --namespace overrides GIT_NAMESPACE
-+		GIT_NAMESPACE=garbage git ls-remote pushee-namespaced >actual &&
-+		test_cmp expected actual &&
-+		# Try a namespace with no content
-+		git ls-remote "ext::git --namespace=garbage %s ../pushee" >actual &&
-+		test_cmp /dev/null actual &&
-+		git ls-remote pushee-unnamespaced >actual &&
-+		sed -e "s|refs/|refs/namespaces/namespace/refs/|" expected >expected.unnamespaced &&
-+		test_cmp expected.unnamespaced actual
-+	)
-+'
-+
-+test_expect_success 'pulling from a repository using a ref namespace' '
-+	(
-+		cd puller &&
-+		git remote add -f pushee-namespaced "ext::git --namespace=namespace %s ../pushee" &&
-+		git for-each-ref refs/ >actual &&
-+		printf "$commit1 commit\trefs/remotes/pushee-namespaced/master\n" >expected &&
-+		printf "$commit0 commit\trefs/tags/0\n" >>expected &&
-+		printf "$commit1 commit\trefs/tags/1\n" >>expected &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+# This test with clone --mirror checks for possible regressions in clone
-+# or the machinery underneath it. It ensures that no future change
-+# causes clone to ignore refs in refs/namespaces/*. In particular, it
-+# protects against a regression caused by any future change to the refs
-+# machinery that might cause it to ignore refs outside of refs/heads/*
-+# or refs/tags/*. More generally, this test also checks the high-level
-+# functionality of using clone --mirror to back up a set of repos hosted
-+# in the namespaces of a single repo.
-+test_expect_success 'mirroring a repository using a ref namespace' '
-+	git clone --mirror pushee mirror &&
-+	(
-+		cd mirror &&
-+		git for-each-ref refs/ >actual &&
-+		printf "$commit1 commit\trefs/namespaces/namespace/refs/heads/master\n" >expected &&
-+		printf "$commit0 commit\trefs/namespaces/namespace/refs/tags/0\n" >>expected &&
-+		printf "$commit1 commit\trefs/namespaces/namespace/refs/tags/1\n" >>expected &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_done
--- 
-1.7.5.4
+						- Ted
