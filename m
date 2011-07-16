@@ -1,79 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add a 'generation' number to commits
-Date: Fri, 15 Jul 2011 17:36:24 -0700
-Message-ID: <7vvcv3ysc7.fsf@alter.siamese.dyndns.org>
-References: <alpine.LFD.2.02.1107141126300.4159@i5.linux-foundation.org>
- <7v8vrz1g02.fsf@alter.siamese.dyndns.org>
- <CA+55aFw2_n2NkYpm9c1JiKaX_H4W89Ridq4qzBqyamuxpODejA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git commit generation numbers
+Date: Fri, 15 Jul 2011 20:40:34 -0400
+Message-ID: <20110716004034.GA32230@sigill.intra.peff.net>
+References: <CA+55aFx=ACnVBGU8_9wa=9xTbxVoOWKnsqfmBvzq7qzOeMGSNA@mail.gmail.com>
+ <20110714200144.GE26918@sigill.intra.peff.net>
+ <69e0ad24-32b7-4e14-9492-6d0c3d653adf@email.android.com>
+ <20110714203141.GA28548@sigill.intra.peff.net>
+ <CA+55aFyDzr+SfgSzWMr9pQuQUXTw9mcjZ-00NZof74PKZzbGPA@mail.gmail.com>
+ <20110715074656.GA31301@sigill.intra.peff.net>
+ <CA+55aFzS3KDNvKt-dXvYpuAQwFwD3+GCj8y8bRQCycPvrynT8Q@mail.gmail.com>
+ <20110715194807.GA356@sigill.intra.peff.net>
+ <CA+55aFx0KyAZRsy7gZ3Z4woWC-uWcLu11gcUrR+9MJR5NOSkrA@mail.gmail.com>
+ <CA+55aFzE-okH9gaEyuSFdorK-7v3odpsk65ZTqCMHFz80n65ug@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Jul 16 02:36:36 2011
+X-From: git-owner@vger.kernel.org Sat Jul 16 02:40:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qhsrx-0000Xn-9i
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Jul 2011 02:36:33 +0200
+	id 1Qhsvy-00020D-6a
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Jul 2011 02:40:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751902Ab1GPAg2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jul 2011 20:36:28 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64227 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751883Ab1GPAg1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2011 20:36:27 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B46EE4922;
-	Fri, 15 Jul 2011 20:36:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cDre6d7yIEjX39ZtIuGGba60/9Y=; b=j3BhMU
-	wChGkbTsRt09y2OP3dgJ2I3VWeOD02Oc0/+SL9W7TWtGG0/qups7SIL+ABo9Sl0j
-	u9Ntriw2jgD0PPNLUlJMse9zS/riKrySSTY+FP7hva3z/1pAjvfj7ng1liFNhnCd
-	pAY1hc52n/WO5ulC5OI7JUwH8ELMzHFZX2c0o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hJw5F7CaNoFF3F1dqz+TYK+Gn9ONeooN
-	fwZ7/XKNoMeAITtbZEmzuM5z2ZCcv7pMJ7gNLwx3vmFd4vN7iL1UzfLFAzXma0Kq
-	4keXlCKFaQDbmzuc51NsG/q3FeCk9Zyk4P9M7a11rfMnLNuQL/m/75Bgy3x9kQEz
-	5C3mGfm1Y+g=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC9CF4921;
-	Fri, 15 Jul 2011 20:36:26 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3F09B4920; Fri, 15 Jul 2011
- 20:36:26 -0400 (EDT)
-In-Reply-To: <CA+55aFw2_n2NkYpm9c1JiKaX_H4W89Ridq4qzBqyamuxpODejA@mail.gmail.com> (Linus
- Torvalds's message of "Fri, 15 Jul 2011 16:58:36 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A38C9F74-AF43-11E0-898F-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751956Ab1GPAkh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jul 2011 20:40:37 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45569
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751560Ab1GPAkh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2011 20:40:37 -0400
+Received: (qmail 29838 invoked by uid 107); 16 Jul 2011 00:41:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 15 Jul 2011 20:41:02 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jul 2011 20:40:34 -0400
+Content-Disposition: inline
+In-Reply-To: <CA+55aFzE-okH9gaEyuSFdorK-7v3odpsk65ZTqCMHFz80n65ug@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177246>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Fri, Jul 15, 2011 at 04:10:23PM -0700, Linus Torvalds wrote:
 
-> On Fri, Jul 15, 2011 at 12:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> I agree this is the way to go if we _were_ to use generation number
->> associated with commit objects in the longer term,
->
-> I have to say, if the main issue was "git tag/branch --contains", and
-> if the time-based slop approach of the patch I sent out is acceptable,
-> I think that we can continue to ignore generation numbers.
+> On Fri, Jul 15, 2011 at 2:17 PM, Linus Torvalds
+> <torvalds@linux-foundation.org> wrote:
+> >
+> > For example, for the "git tag --contains" thing, what's the
+> > performance effect of just skipping tags that are much older than the
+> > commit we ask for?
+> 
+> Hmm.
+> 
+> Maybe there is something seriously wrong with this trivial patch, but
+> it gave the right results for the test-cases I threw at it, and passes
+> the tests.
+> 
+> Before:
+> 
+>    [torvalds@i5 linux]$ time git tag --contains v2.6.24 > correct
+> 
+>    real	0m7.548s
+>    user	0m7.344s
+>    sys	0m0.116s
+> 
+> After:
+> 
+>    [torvalds@i5 linux]$ time ~/git/git tag --contains v2.6.24 > date-cut-off
+> 
+>    real	0m0.161s
+>    user	0m0.140s
+>    sys	0m0.016s
+> 
+> and 'correct' and 'date-cut-off' both give the same answer.
 
-I think we are in agreement that "--contains" can be sped up without
-generation numbers.
+Without even looking carefully at your patches for any minor mistakes, I
+can tell you that the speedup you're seeing is approximately right.
+Because it's almost exactly the same optimization I made in my
+timestamp-based patches (links to which I sent you earlier today).
 
-As I mentioned elsewhere, rev-list SLOP and merge-base traversal have
-different performance characteristics and requirements from "--contains"
-(for one thing, they cannot say "the commit tagged with v2.6.13 is too old
-that there is no way this commit made three days ago is contained in it"
-to optimize the traversal). And I agree that if we had generation header
-in commit in May 2005, optimizing these traversals properly would have
-been much cleaner, and it may still be worth doing it.
+However, you can make it even faster. The "tag --contains" code will ask
+"is_descendant_of" repeatedly for the same set of "want" commits. So you
+end up traversing some parts of the graph over and over. My patches
+share the marks over a set of contains traversals, so you only ever
+touch each commit once. And that's what my patches do.
+
+With yours, on my box:
+
+  $ time git tag --contains HEAD~1000 >/dev/null
+  real    0m0.113s
+  user    0m0.104s
+  sys     0m0.008s
+
+and mine:
+
+  $ time git tag --contains HEAD~1000 >/dev/null
+  real    0m0.035s
+  user    0m0.020s
+  sys     0m0.012s
+
+I suspect you can make the difference even more prominent by having more
+tags, or by having multiple "want" commits.
+
+-Peff
