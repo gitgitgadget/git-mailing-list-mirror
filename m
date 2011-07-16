@@ -1,154 +1,163 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH v3 04/23] t5800: document some non-functional parts of remote helpers
-Date: Sat, 16 Jul 2011 15:03:24 +0200
-Message-ID: <1310821424-4750-5-git-send-email-srabbelier@gmail.com>
-References: <1310821424-4750-1-git-send-email-srabbelier@gmail.com>
-Cc: Sverre Rabbelier <srabbelier@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Ramkumar
-X-From: git-owner@vger.kernel.org Sat Jul 16 15:12:17 2011
+From: David Fries <david@fries.net>
+Subject: [PATCH 1/2] git-gui blame, add a Control-G goto line option
+Date: Sat, 16 Jul 2011 11:58:50 -0500
+Message-ID: <20110716165850.GA9694@spacedout.fries.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Paul Mackerras <paulus@samba.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 16 18:59:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qi4fG-0008SU-Vj
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Jul 2011 15:12:15 +0200
+	id 1Qi8D1-0005q8-T0
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Jul 2011 18:59:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755199Ab1GPNMK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Jul 2011 09:12:10 -0400
-Received: from mail-ey0-f171.google.com ([209.85.215.171]:50246 "EHLO
-	mail-ey0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755012Ab1GPNMI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jul 2011 09:12:08 -0400
-Received: by eye22 with SMTP id 22so585518eye.2
-        for <git@vger.kernel.org>; Sat, 16 Jul 2011 06:12:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=cfqDQN6ILnB8HfWZiRvir5s2MhMdqqCYYMW6C+V0vFs=;
-        b=oHwFQwrSSLDETeBS4YV0AHmrt+59B1P7h68N2VsDR0FfwZrQbOtw7ILIl7cZ2MU4/q
-         xghOPjewYiFHuJw0JZhCCTd6W3f1PDq7gJVM2DlR88jOm4M8swEoTqP2eEvCUbf/ayWR
-         2jyaOIkWbYFSkt9v0yOAyfqKcFDUCLJ9Iz6NA=
-Received: by 10.213.27.18 with SMTP id g18mr1623615ebc.50.1310821468786;
-        Sat, 16 Jul 2011 06:04:28 -0700 (PDT)
-Received: from localhost.localdomain ([188.142.63.148])
-        by mx.google.com with ESMTPS id q16sm1212533eef.7.2011.07.16.06.04.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 16 Jul 2011 06:04:27 -0700 (PDT)
-X-Mailer: git-send-email 1.7.5.1.292.g728120
-In-Reply-To: <1310821424-4750-1-git-send-email-srabbelier@gmail.com>
+	id S1755561Ab1GPQ7O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Jul 2011 12:59:14 -0400
+Received: from SpacedOut.fries.net ([67.64.210.234]:52491 "EHLO
+	SpacedOut.fries.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751398Ab1GPQ7O (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jul 2011 12:59:14 -0400
+Received: from SpacedOut.fries.net (david@localhost [127.0.0.1])
+	by SpacedOut.fries.net (8.14.3/8.14.3/Debian-9.4) with ESMTP id p6GGwosG009844
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sat, 16 Jul 2011 11:58:50 -0500
+Received: (from david@localhost)
+	by SpacedOut.fries.net (8.14.3/8.14.3/Submit) id p6GGwoHr009843;
+	Sat, 16 Jul 2011 11:58:50 -0500
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Greylist: Sender passed SPF test, not delayed by milter-greylist-4.3.7 (SpacedOut.fries.net [127.0.0.1]); Sat, 16 Jul 2011 11:58:51 -0500 (CDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177279>
 
-From: Jeff King <peff@peff.net>
+Add a goto input field to jump to the specified line similar to the
+current search field. 
 
-These are all things one might expect to work in a helper
-that is capable of handling multiple branches (which our
-testgit helper in theory should be able to do, as it is
-backed by git). All of these bugs are specific to the
-import/export codepaths, so they don't affect helpers like
-git-remote-curl that use fetch/push commands.
+Signed-off-by: David Fries <David@Fries.net>
 
-The first and fourth tests are about fetching and pushing
-new refs, and demonstrate bugs in the git_remote_helpers
-library (so they would be most likely to impact helpers for
-other VCSs which import/export git).
-
-The second test is about importing multiple refs; it
-demonstrates a bug in git-remote-testgit, which is mostly
-for exercising the test code. Therefore it probably doesn't
-affect anyone in practice.
-
-The third test demonstrates a bug in git's side of the
-helper code when the upstream has added refs that we do not
-have locally. This could impact git users who use remote
-helpers to access foreign VCSs.
-
-All of those bugs have fixes later in this series.
-
-The fifth test is the most complex, and does not have a fix
-in this series. It tests pushing a ref via the export
-mechanism to a new name on the remote side (i.e.,
-"git push $remote old:new").
-
-The problem is that we push all of the work of generating
-the export stream onto fast-export, but we have no way of
-communicating to fast-export that this name mapping is
-happening. So we tell fast-export to generate a stream with
-the commits for "old", but we can't tell it to label them
-all as "new".
-
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
 ---
+ git-gui/lib/blame.tcl |   11 ++++++++
+ git-gui/lib/line.tcl  |   62 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 73 insertions(+), 0 deletions(-)
+ create mode 100644 git-gui/lib/line.tcl
 
-  Unchanged
-
- t/t5800-remote-helpers.sh |   47 +++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 47 insertions(+), 0 deletions(-)
-
-diff --git a/t/t5800-remote-helpers.sh b/t/t5800-remote-helpers.sh
-index f6796e3..9db8ca8 100755
---- a/t/t5800-remote-helpers.sh
-+++ b/t/t5800-remote-helpers.sh
-@@ -85,4 +85,51 @@ test_expect_success 'pushing remote local repo' '
- 	compare_refs clone HEAD server HEAD
- '
+diff --git a/git-gui/lib/blame.tcl b/git-gui/lib/blame.tcl
+index 61e358f..062091b 100644
+--- a/git-gui/lib/blame.tcl
++++ b/git-gui/lib/blame.tcl
+@@ -22,6 +22,7 @@ field w_asim     ; # text column: annotations (simple computation)
+ field w_file     ; # text column: actual file data
+ field w_cviewer  ; # pane showing commit message
+ field finder     ; # find mini-dialog frame
++field gotoline   ; # line goto mini-dialog frame
+ field status     ; # status mega-widget instance
+ field old_height ; # last known height of $w.file_pane
  
-+test_expect_failure 'fetch new branch' '
-+	(cd public &&
-+	 git checkout -b new &&
-+	 echo content >>file &&
-+	 git commit -a -m five &&
-+	 git push origin new
-+	) &&
-+	(cd localclone &&
-+	 git fetch origin new
-+	) &&
-+	compare_refs public HEAD localclone FETCH_HEAD
-+'
+@@ -231,6 +232,11 @@ constructor new {i_commit i_path i_jump} {
+ 		-column [expr {[llength $w_columns] - 1}] \
+ 		]
+ 
++	set gotoline [::linebar::new \
++		$w.file_pane.out.lf $w_file \
++		-column [expr {[llength $w_columns] - 1}] \
++		]
 +
-+test_expect_failure 'fetch multiple branches' '
-+	(cd localclone &&
-+	 git fetch
-+	) &&
-+	compare_refs server master localclone refs/remotes/origin/master &&
-+	compare_refs server new localclone refs/remotes/origin/new
-+'
+ 	set w_cviewer $w.file_pane.cm.t
+ 	text $w_cviewer \
+ 		-background white \
+@@ -275,6 +281,10 @@ constructor new {i_commit i_path i_jump} {
+ 		-label [mc "Find Text..."] \
+ 		-accelerator F7 \
+ 		-command [list searchbar::show $finder]
++	$w.ctxm add command \
++		-label [mc "Goto Line..."] \
++		-accelerator Control-Key-g \
++		-command [list linebar::show $gotoline]
+ 	menu $w.ctxm.enc
+ 	build_encoding_menu $w.ctxm.enc [cb _setencoding]
+ 	$w.ctxm add cascade \
+@@ -345,6 +355,7 @@ constructor new {i_commit i_path i_jump} {
+ 	bind $top       <Escape>     [list searchbar::hide $finder]
+ 	bind $top       <F3>         [list searchbar::find_next $finder]
+ 	bind $top       <Shift-F3>   [list searchbar::find_prev $finder]
++	bind $top    <Control-Key-g> [list linebar::show $gotoline]
+ 	catch { bind $top <Shift-Key-XF86_Switch_VT_3> [list searchbar::find_prev $finder] }
+ 
+ 	grid configure $w.header -sticky ew
+diff --git a/git-gui/lib/line.tcl b/git-gui/lib/line.tcl
+new file mode 100644
+index 0000000..e8b1d33
+--- /dev/null
++++ b/git-gui/lib/line.tcl
+@@ -0,0 +1,62 @@
++# goto line number
++# based on code from gitk, Copyright (C) Paul Mackerras
 +
-+test_expect_failure 'push when remote has extra refs' '
-+	(cd clone &&
-+	 echo content >>file &&
-+	 git commit -a -m six &&
-+	 git push
-+	) &&
-+	compare_refs clone master server master
-+'
++class linebar {
 +
-+test_expect_failure 'push new branch by name' '
-+	(cd clone &&
-+	 git checkout -b new-name  &&
-+	 echo content >>file &&
-+	 git commit -a -m seven &&
-+	 git push origin new-name
-+	) &&
-+	compare_refs clone HEAD server refs/heads/new-name
-+'
++field w
++field ctext
 +
-+test_expect_failure 'push new branch with old:new refspec' '
-+	(cd clone &&
-+	 git push origin new-name:new-refspec
-+	) &&
-+	compare_refs clone HEAD server refs/heads/new-refspec
-+'
++field linenum   {}
 +
- test_done
++constructor new {i_w i_text args} {
++	global use_ttk NS
++	set w      $i_w
++	set ctext  $i_text
++
++	${NS}::frame  $w
++	${NS}::label  $w.l       -text [mc "Goto Line:"]
++	entry  $w.ent -textvariable ${__this}::linenum -background lightgreen
++	${NS}::button $w.bn      -text [mc Go] -command [cb _incrgoto]
++
++	pack   $w.l   -side left
++	pack   $w.bn  -side right
++	pack   $w.ent -side left -expand 1 -fill x
++
++	eval grid conf $w -sticky we $args
++	grid remove $w
++
++	bind $w.ent <Return> [cb _incrgoto]
++
++	bind $w <Destroy> [list delete_this $this]
++	return $this
++}
++
++method show {} {
++	if {![visible $this]} {
++		grid $w
++	}
++	focus -force $w.ent
++}
++
++method hide {} {
++	if {[visible $this]} {
++		focus $ctext
++		grid remove $w
++	}
++}
++
++method visible {} {
++	return [winfo ismapped $w]
++}
++
++method editor {} {
++	return $w.ent
++}
++
++method _incrgoto {} {
++	if {$linenum ne {}} {
++		$ctext see $linenum.0
++	}
++}
++
++}
 -- 
-1.7.5.1.292.g728120
+1.7.2.5
