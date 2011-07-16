@@ -1,104 +1,78 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [RFC/PATCH] t9159-*.sh: Don't use the svn '@<rev>' syntax
-Date: Sat, 16 Jul 2011 19:04:05 +0100
-Message-ID: <4E21D295.7020600@ramsay1.demon.co.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>, sam@vilian.net,
-	mhagger@alum.mit.edu
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 16 20:16:30 2011
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: [PATCH] remote-curl: Add a format check to parsing of info/refs
+Date: Sat, 16 Jul 2011 19:23:51 +0100
+Message-ID: <20110716182352.85371.18215.julian@quantumfyre.co.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 16 21:05:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qi9Ph-0005o0-QW
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Jul 2011 20:16:30 +0200
+	id 1QiAAy-0000yk-IT
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Jul 2011 21:05:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751869Ab1GPSMF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Jul 2011 14:12:05 -0400
-Received: from lon1-post-3.mail.demon.net ([195.173.77.150]:38385 "EHLO
-	lon1-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751605Ab1GPSMD (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Jul 2011 14:12:03 -0400
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by lon1-post-3.mail.demon.net with esmtp (Exim 4.69)
-	id 1Qi9L3-0006n2-eJ; Sat, 16 Jul 2011 18:12:00 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+	id S1754064Ab1GPTFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Jul 2011 15:05:13 -0400
+Received: from neutrino.quantumfyre.co.uk ([93.93.128.23]:41030 "EHLO
+	neutrino.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751794Ab1GPTFM (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Jul 2011 15:05:12 -0400
+X-Greylist: delayed 392 seconds by postgrey-1.27 at vger.kernel.org; Sat, 16 Jul 2011 15:05:12 EDT
+Received: from reaper.quantumfyre.co.uk (quantumfyre-1-pt.tunnel.tserv5.lon1.ipv6.he.net [IPv6:2001:470:1f08:1724::2])
+	by neutrino.quantumfyre.co.uk (Postfix) with ESMTP id 478B0C0612
+	for <git@vger.kernel.org>; Sat, 16 Jul 2011 19:58:39 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 277DF329B66
+	for <git@vger.kernel.org>; Sat, 16 Jul 2011 19:58:34 +0100 (BST)
+X-Virus-Scanned: amavisd-new at reaper
+Received: from reaper.quantumfyre.co.uk ([127.0.0.1])
+	by localhost (reaper.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id ZAEWVBVDNKcQ for <git@vger.kernel.org>;
+	Sat, 16 Jul 2011 19:58:33 +0100 (BST)
+Received: from rayne.quantumfyre.co.uk (rayne.quantumfyre.co.uk [IPv6:2001:470:96a1:2:e2f8:47ff:fe26:e1cc])
+	by reaper.quantumfyre.co.uk (Postfix) with ESMTP id 847ED228457
+	for <git@vger.kernel.org>; Sat, 16 Jul 2011 19:58:33 +0100 (BST)
+X-git-sha1: fdf3131a10854a41e34cad112d12136bf0ff1fa0 
+X-Mailer: git-mail-commits v0.5.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177282>
 
+When parsing info/refs, no checks were applied that the file was in
+the requried format.  Since the file is read from a remote webserver,
+this isn't guarenteed to be true.  Add a check that the file at least
+only contains lines that consist of 40 characters followed by a tab
+and then the ref name.
 
-Avoiding the use of the '@<rev>' syntax, in favour of an '-r <rev>'
-parameter, allows older versions of svn to execute the test.
-
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
 ---
 
-Hi Junio,
+If you happen to try, for example, git ls-remote http://example.com/foo, when
+http://example.com/foo/info/refs exists - but isn't part of a git repository you
+get a very strange response as remote-curl.c attempts to parse refs out of the
+file.  This may be an unlikely situtation, but that doesn't mean it can't be
+hanlded a little better.
 
-This test is failing for me on Linux and MinGW (I don't have svn
-installed on cygwin), again (i suspect) due to the older versions
-of svn I have. [v1.4.3 on Linux and v1.4.6 on MinGW]
+Julian
 
-This patch fixes the test for me. However, I noticed that there are
-two other uses of the syntax in t9104-git-svn-follow-parent.sh which
-look like this:
+ remote-curl.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-        (svn_cmd cp -m "resurrecting trunk as junk" \
-               "$svnrepo"/trunk@2 "$svnrepo"/junk ||
-         svn cp -m "resurrecting trunk as junk" \
-               -r2 "$svnrepo"/trunk "$svnrepo"/junk) &&
-
-which, unless I'm confused (possible), has been coded specifically
-to cater to just this problem!
-
-However, I think the above is a little too "belt & braces" for my
-liking. What do you think?
-
-Hmm, I've just found commit ffab62681 (git-svn: handle changed svn
-command-line syntax, 21-09-2007), which seems to imply that the
-above is necessary due to a change in behaviour. I'm afraid I don't
-know svn much at all; the only reason it is installed on Linux is
-to improve test coverage of git! :-P
-
-So, maybe this patch should do the same as above (which is the reason
-for the RFC); dunno ...
-
-Hopefully, someone who knows svn can pick this up and make a proper patch.
-
-ATB,
-Ramsay Jones
-
- t/t9159-git-svn-no-parent-mergeinfo.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/t/t9159-git-svn-no-parent-mergeinfo.sh b/t/t9159-git-svn-no-parent-mergeinfo.sh
-index 85120b7..4cf26e9 100755
---- a/t/t9159-git-svn-no-parent-mergeinfo.sh
-+++ b/t/t9159-git-svn-no-parent-mergeinfo.sh
-@@ -11,7 +11,7 @@ test_expect_success 'test handling of root commits in merge ranges' '
- 		cd tmp &&
- 		echo "r2" > trunk/file.txt &&
- 		svn_cmd commit -m "Modify file.txt on trunk" &&
--		svn_cmd cp trunk@1 branches/a &&
-+		svn_cmd cp -r1 trunk branches/a &&
- 		svn_cmd commit -m "Create branch a from trunk r1" &&
- 		svn_cmd propset svn:mergeinfo /trunk:1-2 branches/a &&
- 		svn_cmd commit -m "Fake merge of trunk r2 into branch a" &&
-@@ -21,7 +21,7 @@ test_expect_success 'test handling of root commits in merge ranges' '
- 		svn_cmd commit -m "Create branch b from thin air" &&
- 		echo "r6" > branches/b/file2.txt &&
- 		svn_cmd commit -m "Modify file2.txt on branch b" &&
--		svn_cmd cp branches/b@5 branches/c &&
-+		svn_cmd cp -r5 branches/b branches/c &&
- 		svn_cmd commit -m "Create branch c from branch b r5" &&
- 		svn_cmd propset svn:mergeinfo /branches/b:5-6 branches/c &&
- 		svn_cmd commit -m "Fake merge of branch b r6 into branch c"
+diff --git a/remote-curl.c b/remote-curl.c
+index b5be25c..8ac5028 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -227,6 +227,8 @@ static struct ref *parse_info_refs(struct discovery *heads)
+ 		if (data[i] == '\t')
+ 			mid = &data[i];
+ 		if (data[i] == '\n') {
++			if (mid - start != 40)
++				die("%sinfo/refs not valid: is this a git repository?", url);
+ 			data[i] = 0;
+ 			ref_name = mid + 1;
+ 			ref = xmalloc(sizeof(struct ref) +
 -- 
 1.7.6
