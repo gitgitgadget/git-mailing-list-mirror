@@ -1,64 +1,74 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: git push vs. slow connection times - local commit resolution is too late
-Date: Sat, 16 Jul 2011 14:52:06 +0200
-Message-ID: <m2oc0uz8uh.fsf@igel.home>
-References: <4E1EEDAA.1000204@redhat.com> <4E2115D5.4010002@cisco.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Blake <eblake@redhat.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Phil Hord <hordp@cisco.com>
-X-From: git-owner@vger.kernel.org Sat Jul 16 14:53:59 2011
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: [PATCH v3 01/23] transport-helper: fix minor leak in push_refs_with_export
+Date: Sat, 16 Jul 2011 15:03:21 +0200
+Message-ID: <1310821424-4750-2-git-send-email-srabbelier@gmail.com>
+References: <1310821424-4750-1-git-send-email-srabbelier@gmail.com>
+Cc: Sverre Rabbelier <srabbelier@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Ramkumar
+X-From: git-owner@vger.kernel.org Sat Jul 16 15:04:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qi4Nb-0000TH-F7
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Jul 2011 14:53:59 +0200
+	id 1Qi4Xt-00056J-Lq
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Jul 2011 15:04:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751520Ab1GPMwL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Jul 2011 08:52:11 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:44139 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751163Ab1GPMwJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jul 2011 08:52:09 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 200D01C01ABC;
-	Sat, 16 Jul 2011 14:52:06 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
-	by mail.m-online.net (Postfix) with ESMTP id EF18B1C000A3;
-	Sat, 16 Jul 2011 14:52:06 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
-	with ESMTP id GPBhhGxwM+wS; Sat, 16 Jul 2011 14:52:06 +0200 (CEST)
-Received: from igel.home (ppp-93-104-132-93.dynamic.mnet-online.de [93.104.132.93])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Sat, 16 Jul 2011 14:52:06 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 1BCC8CA293; Sat, 16 Jul 2011 14:52:06 +0200 (CEST)
-X-Yow: I can't think about that.  It doesn't go with HEDGES in the shape of
- LITTLE LULU -- or ROBOTS making BRICKS...
-In-Reply-To: <4E2115D5.4010002@cisco.com> (Phil Hord's message of "Sat, 16 Jul
-	2011 00:38:45 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+	id S1754700Ab1GPNEZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Jul 2011 09:04:25 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:57335 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754446Ab1GPNEY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jul 2011 09:04:24 -0400
+Received: by ewy4 with SMTP id 4so996062ewy.19
+        for <git@vger.kernel.org>; Sat, 16 Jul 2011 06:04:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=s6qB4yHcZ7K2r66RT+mUv0+wT6LNYxUSBdck1tl3Rnc=;
+        b=qfFrKF3CKPTpnQ+2bZLvD/nuYVvxs4adgwiYLFh4fgazOYL6F0kvZU/LXF6jfJXKmS
+         NsqB/7OTEuND71WHF8g1rLNiwNsK9hhYEsDkRx5d3czczhO2E6veJoSCAFTocIICfkfu
+         A04J76eNMgKd9Nui+xjf8lN9zWJvxh0UEycYg=
+Received: by 10.14.96.16 with SMTP id q16mr1651699eef.35.1310821462848;
+        Sat, 16 Jul 2011 06:04:22 -0700 (PDT)
+Received: from localhost.localdomain ([188.142.63.148])
+        by mx.google.com with ESMTPS id q16sm1212533eef.7.2011.07.16.06.04.20
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 16 Jul 2011 06:04:21 -0700 (PDT)
+X-Mailer: git-send-email 1.7.5.1.292.g728120
+In-Reply-To: <1310821424-4750-1-git-send-email-srabbelier@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177254>
 
-Phil Hord <hordp@cisco.com> writes:
+From: Jeff King <peff@peff.net>
 
-> I agree with your suggestion.  But as a quick fix, can you do this?
->   git push remote $(cat .git/HEAD):master
 
-You mean $(git rev-parse HEAD), don't you?
+Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
+---
 
-Andreas.
+  Unchanged
 
+ transport-helper.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/transport-helper.c b/transport-helper.c
+index 660147f..b560b64 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -728,6 +728,7 @@ static int push_refs_with_export(struct transport *transport,
+ 			strbuf_addf(&buf, "^%s", private);
+ 			string_list_append(&revlist_args, strbuf_detach(&buf, NULL));
+ 		}
++		free(private);
+ 
+ 		string_list_append(&revlist_args, ref->name);
+ 
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+1.7.5.1.292.g728120
