@@ -1,7 +1,7 @@
 From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH v3 05/23] git-remote-testgit: import non-HEAD refs
-Date: Sat, 16 Jul 2011 15:03:25 +0200
-Message-ID: <1310821424-4750-6-git-send-email-srabbelier@gmail.com>
+Subject: [PATCH v3 09/23] remote-curl: accept empty line as terminator
+Date: Sat, 16 Jul 2011 15:03:29 +0200
+Message-ID: <1310821424-4750-10-git-send-email-srabbelier@gmail.com>
 References: <1310821424-4750-1-git-send-email-srabbelier@gmail.com>
 Cc: Sverre Rabbelier <srabbelier@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>,
@@ -15,123 +15,80 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qi4dJ-0007Zj-Bv
+	id 1Qi4dI-0007Zj-Rw
 	for gcvg-git-2@lo.gmane.org; Sat, 16 Jul 2011 15:10:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755182Ab1GPNKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Jul 2011 09:10:06 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:56467 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755107Ab1GPNKE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jul 2011 09:10:04 -0400
-Received: by mail-ew0-f46.google.com with SMTP id 4so996949ewy.19
-        for <git@vger.kernel.org>; Sat, 16 Jul 2011 06:10:03 -0700 (PDT)
+	id S1755170Ab1GPNKA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Jul 2011 09:10:00 -0400
+Received: from mail-ey0-f171.google.com ([209.85.215.171]:33909 "EHLO
+	mail-ey0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755082Ab1GPNJ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jul 2011 09:09:57 -0400
+X-Greylist: delayed 327 seconds by postgrey-1.27 at vger.kernel.org; Sat, 16 Jul 2011 09:09:56 EDT
+Received: by eye22 with SMTP id 22so584959eye.2
+        for <git@vger.kernel.org>; Sat, 16 Jul 2011 06:09:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=xNuqEjePpWajamOlgKmPF7sUsAyxcC9VDTVGTr6nzoQ=;
-        b=J4yrexw50p/P9CWoG4amP/J4g4znKMhvn9ZSA/oTdY7SQKqB1Yn1kRTP4/ADi3xWZU
-         xFaGBCDOosqc0AJJcxzuNLgfjiBnukrKSUN+Le8WzGjhGzwbIRgbBfZ43xsNiWVboXqZ
-         wp61n5u3nUMimVoz3o1+LrRTPBH+1nRxJT2FI=
-Received: by 10.213.103.81 with SMTP id j17mr1756577ebo.96.1310821471402;
-        Sat, 16 Jul 2011 06:04:31 -0700 (PDT)
+        bh=IPWHX+pOSqldtQthkrV9KAoUAPlYt2giLM9hPRV6Nk0=;
+        b=GWqFPGJNappcnztpx5oZ8MzSG/8SYnQGZ+plVws+ExOIkEVRajNCIs53xg/N1XswG3
+         57mw2gUebm2/7NIHHOFC9Hv7+I8M5P3XusdplZhCZZf54YosDgaA2tSI1Wo4DEukkB9m
+         iuCTk67NVhW4k7OShnSuZ06fVjaTkE6b8Te2I=
+Received: by 10.213.8.135 with SMTP id h7mr593360ebh.108.1310821480686;
+        Sat, 16 Jul 2011 06:04:40 -0700 (PDT)
 Received: from localhost.localdomain ([188.142.63.148])
-        by mx.google.com with ESMTPS id q16sm1212533eef.7.2011.07.16.06.04.28
+        by mx.google.com with ESMTPS id q16sm1212533eef.7.2011.07.16.06.04.38
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 16 Jul 2011 06:04:30 -0700 (PDT)
+        Sat, 16 Jul 2011 06:04:39 -0700 (PDT)
 X-Mailer: git-send-email 1.7.5.1.292.g728120
 In-Reply-To: <1310821424-4750-1-git-send-email-srabbelier@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177273>
 
-From: Jeff King <peff@peff.net>
+This went unnoticed because the transport helper infrastructore did
+not check the return value of the helper, nor did the helper print
+anything before exiting.
 
-Upon receiving an "import" command, the testgit remote
-helper would ignore the ref asked for by git and generate a
-fast-export stream based on HEAD. Instead, we should
-actually give git the ref it asked for.
+While at it also make sure that the stream doesn't end unexpectedly.
 
-This requires adding a new parameter to the export_repo
-method in the remote-helpers python library, which may be
-used by code outside of git.git. We use a default parameter
-so that callers without the new parameter will get the same
-behavior as before.
-
-Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
 ---
 
-  Unchanged
+  Added the 'check fo unexpected EOF' chunk.
 
- git-remote-testgit.py              |    2 +-
- git_remote_helpers/git/exporter.py |    9 +++++++--
- t/t5800-remote-helpers.sh          |    2 +-
- 3 files changed, 9 insertions(+), 4 deletions(-)
+ remote-curl.c |   10 +++++++++-
+ 1 files changed, 9 insertions(+), 1 deletions(-)
 
-diff --git a/git-remote-testgit.py b/git-remote-testgit.py
-index df9d512..e4a99a3 100644
---- a/git-remote-testgit.py
-+++ b/git-remote-testgit.py
-@@ -122,7 +122,7 @@ def do_import(repo, args):
-         die("Need gitdir to import")
+diff --git a/remote-curl.c b/remote-curl.c
+index b5be25c..30554f4 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -857,7 +857,14 @@ int main(int argc, const char **argv)
+ 	http_init(remote);
  
-     repo = update_local_repo(repo)
--    repo.exporter.export_repo(repo.gitdir)
-+    repo.exporter.export_repo(repo.gitdir, args)
- 
- 
- def do_export(repo, args):
-diff --git a/git_remote_helpers/git/exporter.py b/git_remote_helpers/git/exporter.py
-index f40f9d6..bc39163 100644
---- a/git_remote_helpers/git/exporter.py
-+++ b/git_remote_helpers/git/exporter.py
-@@ -15,7 +15,7 @@ class GitExporter(object):
- 
-         self.repo = repo
- 
--    def export_repo(self, base):
-+    def export_repo(self, base, refs=None):
-         """Exports a fast-export stream for the given directory.
- 
-         Simply delegates to git fast-epxort and pipes it through sed
-@@ -23,8 +23,13 @@ class GitExporter(object):
-         default refs/heads. This is to demonstrate how the export
-         data can be stored under it's own ref (using the refspec
-         capability).
-+
-+        If None, refs defaults to ["HEAD"].
-         """
- 
-+        if not refs:
-+            refs = ["HEAD"]
-+
-         dirname = self.repo.get_base_path(base)
-         path = os.path.abspath(os.path.join(dirname, 'testgit.marks'))
- 
-@@ -42,7 +47,7 @@ class GitExporter(object):
-         if os.path.exists(path):
-             args.append("--import-marks=" + path)
- 
--        args.append("HEAD")
-+        args.extend(refs)
- 
-         p1 = subprocess.Popen(args, stdout=subprocess.PIPE)
- 
-diff --git a/t/t5800-remote-helpers.sh b/t/t5800-remote-helpers.sh
-index 9db8ca8..ca115cc 100755
---- a/t/t5800-remote-helpers.sh
-+++ b/t/t5800-remote-helpers.sh
-@@ -85,7 +85,7 @@ test_expect_success 'pushing remote local repo' '
- 	compare_refs clone HEAD server HEAD
- '
- 
--test_expect_failure 'fetch new branch' '
-+test_expect_success 'fetch new branch' '
- 	(cd public &&
- 	 git checkout -b new &&
- 	 echo content >>file &&
+ 	do {
+-		if (strbuf_getline(&buf, stdin, '\n') == EOF)
++		if (strbuf_getline(&buf, stdin, '\n') == EOF) {
++			if (ferror(stdin))
++				fprintf(stderr, "Error reading command stream\n");
++			else
++				fprintf(stderr, "Unexpected end of command stream\n");
++			return 1;
++		}
++		if (buf.len == 0)
+ 			break;
+ 		if (!prefixcmp(buf.buf, "fetch ")) {
+ 			if (nongit)
+@@ -897,6 +904,7 @@ int main(int argc, const char **argv)
+ 			printf("\n");
+ 			fflush(stdout);
+ 		} else {
++			fprintf(stderr, "Unknown command '%s'\n", buf.buf);
+ 			return 1;
+ 		}
+ 		strbuf_reset(&buf);
 -- 
 1.7.5.1.292.g728120
