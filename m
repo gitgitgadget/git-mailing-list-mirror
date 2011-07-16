@@ -1,7 +1,7 @@
 From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH v3 08/23] remote-helpers: export GIT_DIR variable to helpers
-Date: Sat, 16 Jul 2011 15:03:28 +0200
-Message-ID: <1310821424-4750-9-git-send-email-srabbelier@gmail.com>
+Subject: [PATCH v3 11/23] git-remote-testgit: fix error handling
+Date: Sat, 16 Jul 2011 15:03:31 +0200
+Message-ID: <1310821424-4750-12-git-send-email-srabbelier@gmail.com>
 References: <1310821424-4750-1-git-send-email-srabbelier@gmail.com>
 Cc: Sverre Rabbelier <srabbelier@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>,
@@ -15,158 +15,241 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qi4Y7-0005EN-RW
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Jul 2011 15:04:52 +0200
+	id 1Qi4Y9-0005EN-0G
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Jul 2011 15:04:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754733Ab1GPNEk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Jul 2011 09:04:40 -0400
+	id S1754768Ab1GPNEr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Jul 2011 09:04:47 -0400
 Received: from mail-ew0-f46.google.com ([209.85.215.46]:37348 "EHLO
 	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754567Ab1GPNEj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jul 2011 09:04:39 -0400
+	with ESMTP id S1754755Ab1GPNEp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jul 2011 09:04:45 -0400
 Received: by mail-ew0-f46.google.com with SMTP id 4so996059ewy.19
-        for <git@vger.kernel.org>; Sat, 16 Jul 2011 06:04:38 -0700 (PDT)
+        for <git@vger.kernel.org>; Sat, 16 Jul 2011 06:04:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=JVuageNkrOcUll+G4hliwQ49ZsW7hNnCaxsG2yNN8hU=;
-        b=IljeTY0C43Pld3L1Nn8+kxvVQeAAjOr15LT2zaheTVfbfQenYePmkVQ4CTxST3wR6P
-         YUkkTRuyc4qiffYihNEVAJKoP9pJ2kZ9fP4QmGGJm9SW/b7d56up6Z0FcqU4zsP5JXgy
-         QTyHeZ6D9btHa5sA59+PsYZZB45tB6VZZ24+U=
-Received: by 10.213.33.79 with SMTP id g15mr580363ebd.39.1310821478704;
-        Sat, 16 Jul 2011 06:04:38 -0700 (PDT)
+        bh=vqhz/6Jx70raXMhfDI+EiyxrCsB+WcuhLOqgPFnH1Z8=;
+        b=QBUcO8Ce9KZzhQedSclR8bCtKDO7a3OpEtTro0322aQZqsmncSDovmANaFq/eIVGQX
+         rZhaMQgsRyRaxDPnobtwsnUt8JOm1KP3uWIep/mjLG6JIFGFl+eUyYLEjbKEmNzLGaDR
+         +l+oVd49XTCOsQdFV+LnIQ5xMjeTqtsrwcTeI=
+Received: by 10.213.107.74 with SMTP id a10mr555746ebp.90.1310821484494;
+        Sat, 16 Jul 2011 06:04:44 -0700 (PDT)
 Received: from localhost.localdomain ([188.142.63.148])
-        by mx.google.com with ESMTPS id q16sm1212533eef.7.2011.07.16.06.04.36
+        by mx.google.com with ESMTPS id q16sm1212533eef.7.2011.07.16.06.04.42
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 16 Jul 2011 06:04:37 -0700 (PDT)
+        Sat, 16 Jul 2011 06:04:43 -0700 (PDT)
 X-Mailer: git-send-email 1.7.5.1.292.g728120
 In-Reply-To: <1310821424-4750-1-git-send-email-srabbelier@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177260>
 
-From: Dmitry Ivankov <divanorama@gmail.com>
+If fast-export did not complete successfully the error handling code
+itself would error out.
 
-The gitdir capability is recognized by git and can be used to tell
-the helper where the .git directory is. But it is not mentioned in
-the documentation and considered worse than if gitdir was passed
-via GIT_DIR environment variable.
+This was broken in commit 23b093ee0 (Brandon Casey, Wed Jun 9 2010,
+Remove python 2.5'isms). Revert that commit an introduce our own copy
+of check_call in util.py instead.
 
-Remove support for the gitdir capability and export GIT_DIR instead.
-Teach testgit to use env instead of the now-removed gitdir command.
+Tested by changing 'if retcode' to 'if not retcode' temporarily.
 
-[sr: fixed up documentation]
-
-Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
 Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
 ---
 
-  New in this series.
+  Included the definition of CalledProcessError if subprocess does
+  not already provide it to make sure everything still works on
+  python 2.4.
 
- Documentation/git-remote-helpers.txt |    3 +++
- git-remote-testgit.py                |   14 +-------------
- transport-helper.c                   |   15 ++++++++++-----
- 3 files changed, 14 insertions(+), 18 deletions(-)
+ git_remote_helpers/git/exporter.py  |    6 ++--
+ git_remote_helpers/git/importer.py  |    6 ++--
+ git_remote_helpers/git/non_local.py |   18 +++---------
+ git_remote_helpers/git/repo.py      |    7 +++--
+ git_remote_helpers/util.py          |   47 +++++++++++++++++++++++++++++++++++
+ 5 files changed, 62 insertions(+), 22 deletions(-)
 
-diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
-index 58f6ad4..18b8341 100644
---- a/Documentation/git-remote-helpers.txt
-+++ b/Documentation/git-remote-helpers.txt
-@@ -47,6 +47,9 @@ arguments. The first argument specifies a remote repository as in git;
- it is either the name of a configured remote or a URL. The second
- argument specifies a URL; it is usually of the form
- '<transport>://<address>', but any arbitrary string is possible.
-+The 'GIT_DIR' environment variable is set up for the remote helper
-+and can be used to determine where to store additional data or from
-+which directory to invoke auxiliary git commands.
+diff --git a/git_remote_helpers/git/exporter.py b/git_remote_helpers/git/exporter.py
+index bc39163..9ee5f96 100644
+--- a/git_remote_helpers/git/exporter.py
++++ b/git_remote_helpers/git/exporter.py
+@@ -2,6 +2,8 @@ import os
+ import subprocess
+ import sys
  
- When git encounters a URL of the form '<transport>://<address>', where
- '<transport>' is a protocol that it cannot handle natively, it
-diff --git a/git-remote-testgit.py b/git-remote-testgit.py
-index e4a99a3..b0c1e9b 100644
---- a/git-remote-testgit.py
-+++ b/git-remote-testgit.py
-@@ -35,7 +35,7 @@ def get_repo(alias, url):
-     prefix = 'refs/testgit/%s/' % alias
-     debug("prefix: '%s'", prefix)
- 
--    repo.gitdir = ""
-+    repo.gitdir = os.environ["GIT_DIR"]
-     repo.alias = alias
-     repo.prefix = prefix
- 
-@@ -70,7 +70,6 @@ def do_capabilities(repo, args):
- 
-     print "import"
-     print "export"
--    print "gitdir"
-     print "refspec refs/heads/*:%s*" % repo.prefix
- 
-     print # end capabilities
-@@ -150,22 +149,11 @@ def do_export(repo, args):
-     repo.non_local.push(repo.gitdir)
- 
- 
--def do_gitdir(repo, args):
--    """Stores the location of the gitdir.
--    """
--
--    if not args:
--        die("gitdir needs an argument")
--
--    repo.gitdir = ' '.join(args)
--
--
- COMMANDS = {
-     'capabilities': do_capabilities,
-     'list': do_list,
-     'import': do_import,
-     'export': do_export,
--    'gitdir': do_gitdir,
- }
- 
- 
-diff --git a/transport-helper.c b/transport-helper.c
-index 34d18aa..6cccb20 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -105,6 +105,12 @@ static struct child_process *get_helper(struct transport *transport)
- 	int refspec_alloc = 0;
- 	int duped;
- 	int code;
-+	char git_dir_buf[sizeof(GIT_DIR_ENVIRONMENT) + PATH_MAX + 1];
-+	const char *helper_env[] = {
-+		git_dir_buf,
-+		NULL
-+	};
++from git_remote_helpers.util import check_call
 +
  
- 	if (data->helper)
- 		return data->helper;
-@@ -120,6 +126,10 @@ static struct child_process *get_helper(struct transport *transport)
- 	helper->argv[2] = remove_ext_force(transport->url);
- 	helper->git_cmd = 0;
- 	helper->silent_exec_failure = 1;
+ class GitExporter(object):
+     """An exporter for testgit repositories.
+@@ -53,6 +55,4 @@ class GitExporter(object):
+ 
+         args = ["sed", "s_refs/heads/_" + self.repo.prefix + "_g"]
+ 
+-        child = subprocess.Popen(args, stdin=p1.stdout)
+-        if child.wait() != 0:
+-            raise CalledProcessError
++        check_call(args, stdin=p1.stdout)
+diff --git a/git_remote_helpers/git/importer.py b/git_remote_helpers/git/importer.py
+index 70a7127..02a719a 100644
+--- a/git_remote_helpers/git/importer.py
++++ b/git_remote_helpers/git/importer.py
+@@ -1,6 +1,8 @@
+ import os
+ import subprocess
+ 
++from git_remote_helpers.util import check_call
 +
-+	snprintf(git_dir_buf, sizeof(git_dir_buf), "%s=%s", GIT_DIR_ENVIRONMENT, get_git_dir());
-+	helper->env = helper_env;
+ 
+ class GitImporter(object):
+     """An importer for testgit repositories.
+@@ -35,6 +37,4 @@ class GitImporter(object):
+         if os.path.exists(path):
+             args.append("--import-marks=" + path)
+ 
+-        child = subprocess.Popen(args)
+-        if child.wait() != 0:
+-            raise CalledProcessError
++        check_call(args)
+diff --git a/git_remote_helpers/git/non_local.py b/git_remote_helpers/git/non_local.py
+index c53e074..e700250 100644
+--- a/git_remote_helpers/git/non_local.py
++++ b/git_remote_helpers/git/non_local.py
+@@ -1,7 +1,7 @@
+ import os
+ import subprocess
+ 
+-from git_remote_helpers.util import die, warn
++from git_remote_helpers.util import check_call, die, warn
+ 
+ 
+ class NonLocalGit(object):
+@@ -29,9 +29,7 @@ class NonLocalGit(object):
+         os.makedirs(path)
+         args = ["git", "clone", "--bare", "--quiet", self.repo.gitpath, path]
+ 
+-        child = subprocess.Popen(args)
+-        if child.wait() != 0:
+-            raise CalledProcessError
++        check_call(args)
+ 
+         return path
+ 
+@@ -45,14 +43,10 @@ class NonLocalGit(object):
+             die("could not find repo at %s", path)
+ 
+         args = ["git", "--git-dir=" + path, "fetch", "--quiet", self.repo.gitpath]
+-        child = subprocess.Popen(args)
+-        if child.wait() != 0:
+-            raise CalledProcessError
++        check_call(args)
+ 
+         args = ["git", "--git-dir=" + path, "update-ref", "refs/heads/master", "FETCH_HEAD"]
+-        child = subprocess.Popen(args)
+-        if child.wait() != 0:
+-            raise CalledProcessError
++        child = check_call(args)
+ 
+     def push(self, base):
+         """Pushes from the non-local repo to base.
+@@ -64,6 +58,4 @@ class NonLocalGit(object):
+             die("could not find repo at %s", path)
+ 
+         args = ["git", "--git-dir=" + path, "push", "--quiet", self.repo.gitpath, "--all"]
+-        child = subprocess.Popen(args)
+-        if child.wait() != 0:
+-            raise CalledProcessError
++        child = check_call(args)
+diff --git a/git_remote_helpers/git/repo.py b/git_remote_helpers/git/repo.py
+index 58e1cdb..acbf8d7 100644
+--- a/git_remote_helpers/git/repo.py
++++ b/git_remote_helpers/git/repo.py
+@@ -1,6 +1,9 @@
+ import os
+ import subprocess
+ 
++from git_remote_helpers.util import check_call
 +
- 	code = start_command(helper);
- 	if (code < 0 && errno == ENOENT)
- 		die("Unable to find remote helper for '%s'", data->name);
-@@ -174,11 +184,6 @@ static struct child_process *get_helper(struct transport *transport)
- 			refspecs[refspec_nr++] = strdup(buf.buf + strlen("refspec "));
- 		} else if (!strcmp(capname, "connect")) {
- 			data->connect = 1;
--		} else if (!strcmp(buf.buf, "gitdir")) {
--			struct strbuf gitdir = STRBUF_INIT;
--			strbuf_addf(&gitdir, "gitdir %s\n", get_git_dir());
--			sendline(data, &gitdir);
--			strbuf_release(&gitdir);
- 		} else if (mandatory) {
- 			die("Unknown mandatory capability %s. This remote "
- 			    "helper probably needs newer version of Git.\n",
++
+ def sanitize(rev, sep='\t'):
+     """Converts a for-each-ref line to a name/value pair.
+     """
+@@ -53,9 +56,7 @@ class GitRepo(object):
+         path = ".cached_revs"
+         ofile = open(path, "w")
+ 
+-        child = subprocess.Popen(args, stdout=ofile)
+-        if child.wait() != 0:
+-            raise CalledProcessError
++        check_call(args, stdout=ofile)
+         output = open(path).readlines()
+         self.revmap = dict(sanitize(i) for i in output)
+         if "HEAD" in self.revmap:
+diff --git a/git_remote_helpers/util.py b/git_remote_helpers/util.py
+index dce83e6..1652c65 100644
+--- a/git_remote_helpers/util.py
++++ b/git_remote_helpers/util.py
+@@ -11,6 +11,21 @@ import sys
+ import os
+ import subprocess
+ 
++try:
++    from subprocess import CalledProcessError
++except ImportError:
++    # from python2.7:subprocess.py
++    # Exception classes used by this module.
++    class CalledProcessError(Exception):
++        """This exception is raised when a process run by check_call() returns
++        a non-zero exit status.  The exit status will be stored in the
++        returncode attribute."""
++        def __init__(self, returncode, cmd):
++            self.returncode = returncode
++            self.cmd = cmd
++        def __str__(self):
++            return "Command '%s' returned non-zero exit status %d" % (self.cmd, self.returncode)
++
+ 
+ # Whether or not to show debug messages
+ DEBUG = False
+@@ -128,6 +143,38 @@ def run_command (args, cwd = None, shell = False, add_env = None,
+     return (exit_code, output, errors)
+ 
+ 
++# from python2.7:subprocess.py
++def call(*popenargs, **kwargs):
++    """Run command with arguments.  Wait for command to complete, then
++    return the returncode attribute.
++
++    The arguments are the same as for the Popen constructor.  Example:
++
++    retcode = call(["ls", "-l"])
++    """
++    return subprocess.Popen(*popenargs, **kwargs).wait()
++
++
++# from python2.7:subprocess.py
++def check_call(*popenargs, **kwargs):
++    """Run command with arguments.  Wait for command to complete.  If
++    the exit code was zero then return, otherwise raise
++    CalledProcessError.  The CalledProcessError object will have the
++    return code in the returncode attribute.
++
++    The arguments are the same as for the Popen constructor.  Example:
++
++    check_call(["ls", "-l"])
++    """
++    retcode = call(*popenargs, **kwargs)
++    if retcode:
++        cmd = kwargs.get("args")
++        if cmd is None:
++            cmd = popenargs[0]
++        raise CalledProcessError(retcode, cmd)
++    return 0
++
++
+ def file_reader_method (missing_ok = False):
+     """Decorator for simplifying reading of files.
+ 
 -- 
 1.7.5.1.292.g728120
