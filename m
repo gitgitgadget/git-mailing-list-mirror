@@ -1,83 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git commit generation numbers
-Date: Fri, 15 Jul 2011 20:42:32 -0400
-Message-ID: <20110716004232.GB32230@sigill.intra.peff.net>
-References: <69e0ad24-32b7-4e14-9492-6d0c3d653adf@email.android.com>
- <20110714203141.GA28548@sigill.intra.peff.net>
- <CA+55aFyDzr+SfgSzWMr9pQuQUXTw9mcjZ-00NZof74PKZzbGPA@mail.gmail.com>
- <20110715074656.GA31301@sigill.intra.peff.net>
- <CA+55aFzS3KDNvKt-dXvYpuAQwFwD3+GCj8y8bRQCycPvrynT8Q@mail.gmail.com>
- <20110715194807.GA356@sigill.intra.peff.net>
- <CA+55aFx0KyAZRsy7gZ3Z4woWC-uWcLu11gcUrR+9MJR5NOSkrA@mail.gmail.com>
- <CA+55aFzE-okH9gaEyuSFdorK-7v3odpsk65ZTqCMHFz80n65ug@mail.gmail.com>
- <CA+55aFwpVoqK7TaG0R3JJO07eOyWQ9pR1sHUGBQt0kmM0vk2bw@mail.gmail.com>
- <CA+55aFwSgYYaQ8gTQmCw6SNMyr-bz5rJPr0o9xoog-1aCqb5rA@mail.gmail.com>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: rerere affects handling of git-stash-pop merge conflicts
+Date: Fri, 15 Jul 2011 22:19:27 -0400 (EDT)
+Message-ID: <alpine.DEB.2.00.1107152208530.12060@debian>
+References: <4E1F22DF.7060209@cisco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Jul 16 02:42:39 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	David Aguilar <davvid@gmail.com>
+To: Phil Hord <hordp@cisco.com>
+X-From: git-owner@vger.kernel.org Sat Jul 16 04:19:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qhsxr-0002b4-49
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Jul 2011 02:42:39 +0200
+	id 1QhuTj-0000I8-E9
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Jul 2011 04:19:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752018Ab1GPAmf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jul 2011 20:42:35 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45575
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751739Ab1GPAme (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2011 20:42:34 -0400
-Received: (qmail 29873 invoked by uid 107); 16 Jul 2011 00:43:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 15 Jul 2011 20:43:00 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jul 2011 20:42:32 -0400
-Content-Disposition: inline
-In-Reply-To: <CA+55aFwSgYYaQ8gTQmCw6SNMyr-bz5rJPr0o9xoog-1aCqb5rA@mail.gmail.com>
+	id S1752538Ab1GPCTd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jul 2011 22:19:33 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:35683 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751179Ab1GPCTc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2011 22:19:32 -0400
+Received: by vxh35 with SMTP id 35so720483vxh.19
+        for <git@vger.kernel.org>; Fri, 15 Jul 2011 19:19:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version:content-type;
+        bh=J8n2FBUeMmK7NNh1XcNMxcok23R7JQJZUl3gv2uo0sA=;
+        b=B2CJFedddG1z80P+kTNDIeeKA+bOyDbtI0q4/3bYCJPs/VT2p9Eah1g1ZXj+lKUIJa
+         qgx6QH773rkhMO0x5qwwEJpxVy07HO3J+e1WPlP2kPubRdXVMroHCgirDBFpLhgyRC1a
+         9XRTwfsFFqJfO5FkYPfZDvGTLJcngsHQpy/ag=
+Received: by 10.52.73.137 with SMTP id l9mr4234548vdv.516.1310782771811;
+        Fri, 15 Jul 2011 19:19:31 -0700 (PDT)
+Received: from [192.168.1.101] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
+        by mx.google.com with ESMTPS id db1sm848114vdc.20.2011.07.15.19.19.30
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 15 Jul 2011 19:19:31 -0700 (PDT)
+X-X-Sender: martin@debian
+In-Reply-To: <4E1F22DF.7060209@cisco.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177248>
 
-On Fri, Jul 15, 2011 at 04:36:40PM -0700, Linus Torvalds wrote:
+On Thu, 14 Jul 2011, Phil Hord wrote:
 
-> On Fri, Jul 15, 2011 at 4:16 PM, Linus Torvalds
-> <torvalds@linux-foundation.org> wrote:
-> >
-> > I have fewer branches than tags, but I get something similar for "git
-> > branch --contains":
-> 
-> The time-based heuristic does seem to be important. If I just remove
-> it, I get increasingly long times for things that aren't contained in
-> my branches.
-> 
-> And in fact, I think that is why the code used the merge-base helper
-> functions - not because it wanted merge bases, but because the merge
-> base stuff will work from either end until it decides things aren't
-> relevant any more. Because *without* the time-based heuristics, the
-> trivial "is this a descendant" algorithm ends up working very badly
-> for the case where the target doesn't exist in the branches. Examples
-> of NOT having a date-based cut-off, but just doing the straightforward
-> (non-merge-base) ancestry walk:
-> 
->   time ~/git/git branch --contains v2.6.12
->   real	0m0.113s
-> 
->   [torvalds@i5 linux]$ time ~/git/git branch --contains v2.6.39
->   real	0m3.691s
+> Summary:
+> After a 'git stash pop' with conflicts, 'git mergetool' fails to notice
+> the conflicted files if 'rerere.enabled=true'.  git mergetool
+> erroneously reports 'no files need merging'.
 
-Yes, exactly. That is why my first patch (which goes to a recursive
-search), takes about the same amount of time as "git rev-list --all"
-(and I suspect your 3.691s above is similar). And then the second one
-drops that again to .03s.
-
-I think you are simply recreating the strategy and timings I have posted
-several times now.
-
--Peff
+It seems to be because git-stash uses git merge-recursive directly
+instead of calling git merge. I don't know why git merge-recursive is
+used directly. It has been like that ever since git-stash was
+introduced in f2c66ed (Add git-stash script, 2007-06-30).
