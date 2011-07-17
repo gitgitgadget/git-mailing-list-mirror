@@ -1,83 +1,84 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: DAG scalability (was: Git commit generation numbers)
-Date: Sun, 17 Jul 2011 15:25:33 -0700
-Message-ID: <CA+55aFxzY6YKAzYZFVzvsraSHnkXw47M9A4Kf1d8+d+YEZchzw@mail.gmail.com>
-References: <CAJo=hJvMrW4f-4Y1czR+Mx4kA=2Po+zQQXe2iOFnF7KJ=Ou3nA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 07/23] git_remote_helpers: push all refs during a
+ non-local export
+Date: Sun, 17 Jul 2011 16:36:17 -0700
+Message-ID: <7vzkkcxyxa.fsf@alter.siamese.dyndns.org>
+References: <1310821424-4750-1-git-send-email-srabbelier@gmail.com>
+ <1310821424-4750-8-git-send-email-srabbelier@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jul 18 00:26:04 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
+	Git List <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	"Dmitry Ivankov" <divanorama@gmail.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 18 01:36:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QiZml-0004eC-PL
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 00:26:04 +0200
+	id 1Qiast-0004EW-8d
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 01:36:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753789Ab1GQWZ6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Jul 2011 18:25:58 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:54130 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751741Ab1GQWZ6 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jul 2011 18:25:58 -0400
-Received: from mail-ww0-f44.google.com (mail-ww0-f44.google.com [74.125.82.44])
-	(authenticated bits=0)
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p6HMPuIM011353
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL)
-	for <git@vger.kernel.org>; Sun, 17 Jul 2011 15:25:57 -0700
-Received: by wwe5 with SMTP id 5so2661643wwe.1
-        for <git@vger.kernel.org>; Sun, 17 Jul 2011 15:25:53 -0700 (PDT)
-Received: by 10.216.81.5 with SMTP id l5mr2476068wee.102.1310941553106; Sun,
- 17 Jul 2011 15:25:53 -0700 (PDT)
-Received: by 10.216.158.65 with HTTP; Sun, 17 Jul 2011 15:25:33 -0700 (PDT)
-In-Reply-To: <CAJo=hJvMrW4f-4Y1czR+Mx4kA=2Po+zQQXe2iOFnF7KJ=Ou3nA@mail.gmail.com>
-X-Spam-Status: No, hits=-102.898 required=5 tests=AWL,BAYES_00,USER_IN_WHITELIST
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1756007Ab1GQXgV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jul 2011 19:36:21 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38311 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755943Ab1GQXgV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jul 2011 19:36:21 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E4B15433E;
+	Sun, 17 Jul 2011 19:36:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=Ueq90sh9ezPG18RFUSN7WND9FAk=; b=laesiVCq9Ufj2BBQqhSm
+	qKEj5PgSzbTASQ2+B8XAjvfuMDH+4uq4WFSQw1xd2PM30tWjryWjAQs6oic2u8Eu
+	Ply5v1t2rup/ZQ2jCgDetu2Ho8JMX4lzp77/DsfOqqcBF1tJ69qLrA+GBiodoF4B
+	cYfXzdUxgUNuoy2p+eb5NcM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=XIwb0OS6m9SzEq3ajzFGrzvGEECCV7CQZ3LlCZHixz5r/O
+	lLxP8ptG/Ckiq+RdvFspAZPWliWXhchrxquG9HXLfeq6d1TxVuIrFnVoSiUILddz
+	60mcvDxy7s3jloyAPlk/6ZoRfUZCCFrEdc19nP6aWWxEcN1glFZHHowbDYNWg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DAC8E433D;
+	Sun, 17 Jul 2011 19:36:19 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4C199433C; Sun, 17 Jul 2011
+ 19:36:19 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 927C0ACC-B0CD-11E0-9BFA-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177322>
 
-On Sun, Jul 17, 2011 at 3:18 PM, Shawn Pearce <spearce@spearce.org> wro=
-te:
+Sverre Rabbelier <srabbelier@gmail.com> writes:
+
+> From: Jeff King <peff@peff.net>
 >
-> What about `git clone`? =A0We're always recomputing the entire DAG
-> during it. For a public repository like yours that only contains
-> public objects, its a horrible abuse of the servers that are serving
-> the repository...
+> When a remote helper exports to a non-local git repo, the
+> steps are roughly:
 >
-> Just saying, not everything we do winds up being a partial or
-> incomplete traversal in the name of performance.
+>   1. fast-export into a local staging area; the set of
+>      interesting refs is defined by what is in the fast-export
+>      stream
+>
+>   2. git push from the staging area to the non-local repo
+>
+> In the second step, we should explicitly push all refs, not
+> just matching ones. This will let us push refs that do not
+> yet exist in the remote repo.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
+> ---
+>
+>   Unchanged
 
-I don't see your point.
-
-OF COURSE we sometimes traverse the whole tree - when we need all the
-data. And it's expensive in those cases, but generally those cases are
-also cases where the DAG traversal itself is just a tiny part of the
-big picture. The commits tend to be almost irrelevant to "git clone",
-for example: it tends to be tree and blob objects that are the biggest
-cost.
-
-But there's a lot of common operations that would be much too
-expensive unless we had the incomplete DAG traversal code. It's what
-makes us able to do sub-second merges, it's what makes "gitk @{6am}.."
-be fast, etc etc.
-
-My point really was that the git DAG structure is really simple.
-People learn about DAG's in CS courses the first year.
-
-But the kinds of things that git does, which is to try to partition
-the DAG without having to walk it entirely - that's rare. I tried to
-find papers about optimized DAG walking, and couldn't (but so many
-academic papers are behind a pay-wall that I still don't know if there
-might be some smart person who came up with a really good algorithm
-for what the git-merge-base stuff does, for example)
-
-                    Linus
+There used to be "This does not deal with forced (not-fast-forward) pushes."
+at the end of the message, no?
