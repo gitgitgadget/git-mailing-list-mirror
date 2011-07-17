@@ -1,84 +1,137 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 07/23] git_remote_helpers: push all refs during a
- non-local export
-Date: Sun, 17 Jul 2011 16:36:17 -0700
-Message-ID: <7vzkkcxyxa.fsf@alter.siamese.dyndns.org>
-References: <1310821424-4750-1-git-send-email-srabbelier@gmail.com>
- <1310821424-4750-8-git-send-email-srabbelier@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
-	Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	"Dmitry Ivankov" <divanorama@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 18 01:36:27 2011
+From: "George Spelvin" <linux@horizon.com>
+Subject: Re: Git commit generation numbers
+Date: 17 Jul 2011 19:39:59 -0400
+Message-ID: <20110717233959.3548.qmail@science.horizon.com>
+References: <CA+55aFwqFhzd_cmbFxkCyNXhF99igBqdr8p4J76hLz=m4=ZNWg@mail.gmail.com>
+Cc: git@vger.kernel.org
+To: linux@horizon.com, torvalds@linux-foundation.org
+X-From: git-owner@vger.kernel.org Mon Jul 18 01:40:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qiast-0004EW-8d
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 01:36:27 +0200
+	id 1QiawT-00051l-0r
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 01:40:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756007Ab1GQXgV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jul 2011 19:36:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38311 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755943Ab1GQXgV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jul 2011 19:36:21 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E4B15433E;
-	Sun, 17 Jul 2011 19:36:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=Ueq90sh9ezPG18RFUSN7WND9FAk=; b=laesiVCq9Ufj2BBQqhSm
-	qKEj5PgSzbTASQ2+B8XAjvfuMDH+4uq4WFSQw1xd2PM30tWjryWjAQs6oic2u8Eu
-	Ply5v1t2rup/ZQ2jCgDetu2Ho8JMX4lzp77/DsfOqqcBF1tJ69qLrA+GBiodoF4B
-	cYfXzdUxgUNuoy2p+eb5NcM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=XIwb0OS6m9SzEq3ajzFGrzvGEECCV7CQZ3LlCZHixz5r/O
-	lLxP8ptG/Ckiq+RdvFspAZPWliWXhchrxquG9HXLfeq6d1TxVuIrFnVoSiUILddz
-	60mcvDxy7s3jloyAPlk/6ZoRfUZCCFrEdc19nP6aWWxEcN1glFZHHowbDYNWg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DAC8E433D;
-	Sun, 17 Jul 2011 19:36:19 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4C199433C; Sun, 17 Jul 2011
- 19:36:19 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 927C0ACC-B0CD-11E0-9BFA-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756010Ab1GQXkC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jul 2011 19:40:02 -0400
+Received: from science.horizon.com ([71.41.210.146]:23616 "HELO
+	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1755943Ab1GQXkA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jul 2011 19:40:00 -0400
+Received: (qmail 3549 invoked by uid 1000); 17 Jul 2011 19:39:59 -0400
+In-Reply-To: <CA+55aFwqFhzd_cmbFxkCyNXhF99igBqdr8p4J76hLz=m4=ZNWg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177323>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+> So the generation number really is very very fundamnetal. It's
+> absolutely not some "additional information that can be computed",
+> because the whole AND ONLY point of having the number is to not
+> compute it.
+> 
+> We are never interested in the generation number for its own sake. We
+> are only interested in it in order to avoid having to look at the rest
+> of the DAG.
 
-> From: Jeff King <peff@peff.net>
->
-> When a remote helper exports to a non-local git repo, the
-> steps are roughly:
->
->   1. fast-export into a local staging area; the set of
->      interesting refs is defined by what is in the fast-export
->      stream
->
->   2. git push from the staging area to the non-local repo
->
-> In the second step, we should explicitly push all refs, not
-> just matching ones. This will let us push refs that do not
-> yet exist in the remote repo.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
-> ---
->
->   Unchanged
+You're making my point and somehow not seeing it.
 
-There used to be "This does not deal with forced (not-fast-forward) pushes."
-at the end of the message, no?
+What you're describing here is the archetpical cache.
+
+The only reason for having a memory cache is to avoid accessing memory!
+The only reason for having a TLB is to avoid walking the page tables!
+The only reason for having a page cache is to avoid hitting the disk!
+The only reason for having a dcache is to avoid traversing the file
+system directories!
+
+And yes, the only reason for having a generation number cache is to avoid
+traversing the DAG.  D'oh.  Do you think this is somehow news to anyone?
+
+The fundamental nature of a cache is that it lets you look something up
+quickly that you could compute but don't want to.
+
+I'm slapping my forehead like Homer Simpson here.  The fact that computing
+the generation number is expensive is why it's worth cacheing.  But the
+fact that it *can* be computed is a reason not to clutter the published
+commit object format with it.
+
+
+The generation number is NOT FUNDAMENTAL.  It contains no information
+that's not already in the DAG.  The danger of putting it into a commit
+is that you'll do it wrong, and thereby screw everything up.
+
+If we have broken code that generates a broken cache, we fix the code
+and the bugs magically go away.
+
+If we have broken code that generates a broken commit object, we have
+a huge problem.
+
+Just like we don't ship pack indexes around, but recompute them on arrival.
+The index is essential for performance, but it's absolutely non-essential
+for correctness.
+
+
+As a general design principle, the exported data structures, like the
+commits, should be as simple as possible.  Do not include extraneous
+or redundant data, because then you have to deal with the possibility
+of inconsistency.  This leads to bugs.  (Frequently buffer overflow bugs.)
+
+Maybe it would have been worth violating that principle during the initial
+git design.  I still see a good argument for not doing that even if we
+had a time machine.
+
+But now that the commit format is established and widely used, the argument
+has far more force.  Changing the commit format provides zero functionality
+gain, and the performance gain can be obtained a different way.
+
+Maybe a bit more code, but nothing extraordinary.
+
+To me, the KISS principle says "don't change the commit format!"
+
+Now, you complain about code complexity.  But this is a read-only cache.
+The generation number of a commit object never changes.  There's no update
+operation.  Like an I-cache, if there's ever any problem, throw it away.
+
+Arguing that "the patch to put it in the commit object is smaller" is
+stupidly short-sighted.  Now every version of git from now until forever
+has to support both kinds of commit objects.  (And browsing old git
+trees will forever be slow.)
+
+You only take on that sort of legacy support burden if you absolutely have to.
+
+> But "just because we could recompute it" is a bad bad reason.
+
+Bull puckey.  You're ugly and stupid and WRONG.
+
+It's an excellent reason.  I'm amazed that you're not seeing it.
+The principle is "don't include redundant data in a transport format."
+Because it can be recomputed, it's redundant.  Therefore, it shouldn't
+be included in the transport format.
+
+It's exactly the same principle as "don't store the indexes in the
+database dump" and "don't store filename hashes in file system
+archives".
+
+This is a principle, not an iron-clad rule.  It can be violated for
+good and sufficient reasons, notably performance.
+
+But in this case, we can get the performance without it.  Without,
+in fact, changing the git transport format at all.
+
+And "don't change a widely-used transport format" is ANOTHER important
+principle.  Backward-compatible is much better than incompatible, but
+far better to avoid changing it at all.
+
+Breaking two such principles without an absolutely iron-clad reason is
+ugly and stupid and wrong.
+
+(As you well know, the more general principle is "don't store redundant
+data AT ALL unless you need to for performance".  Redundant data is A
+Bad Thing.  It can get out of sync.  But if you have to, a private cache
+is much better than a exchange format.)
+
+
+Put another way, it IS stupid, it IS expendable, and therefore it SHOULD go.
