@@ -1,71 +1,80 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Documentation/Notes: Remove 'footnote:' warning
-Date: Sun, 17 Jul 2011 16:58:58 -0500
-Message-ID: <20110717215858.GA9906@elie>
-References: <1310855420-21183-1-git-send-email-pavan.sss1991@gmail.com>
- <1310908271.21563.17.camel@drew-northup.unet.maine.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: rerere affects handling of git-stash-pop merge conflicts
+Date: Sun, 17 Jul 2011 14:59:08 -0700
+Message-ID: <7voc0szhzn.fsf@alter.siamese.dyndns.org>
+References: <4E1F22DF.7060209@cisco.com>
+ <alpine.DEB.2.00.1107152208530.12060@debian>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>, git@vger.kernel.org
-To: Drew Northup <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Sun Jul 17 23:59:14 2011
+Cc: Phil Hord <hordp@cisco.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Aguilar <davvid@gmail.com>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 17 23:59:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QiZMo-0004RO-H1
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Jul 2011 23:59:14 +0200
+	id 1QiZMv-0004TS-Ek
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Jul 2011 23:59:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752899Ab1GQV7I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jul 2011 17:59:08 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:44237 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751741Ab1GQV7H (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jul 2011 17:59:07 -0400
-Received: by iwn6 with SMTP id 6so2597841iwn.19
-        for <git@vger.kernel.org>; Sun, 17 Jul 2011 14:59:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=grhwxaMGlO2bOG0Aa1Hj3K+VQvtS99HCU1Jj0wmZutc=;
-        b=d0wJThONMeXZgyFB4aTnXq5u/83/7mgR5gY9NBF8f5SdHTkNxjweGTWcXbjrqY78pI
-         gRhNXxmnXoqcYmOeX6B6sY4exPPXuEh8V24HXxYTcIyZb1XNxfjhz70Jm4dUEjSzs2+W
-         r4fW0ubEI1hUNnEe9bAY8MwReOY1eCbZA/nF8=
-Received: by 10.42.117.200 with SMTP id u8mr6602054icq.470.1310939946725;
-        Sun, 17 Jul 2011 14:59:06 -0700 (PDT)
-Received: from elie (adsl-69-209-70-6.dsl.chcgil.sbcglobal.net [69.209.70.6])
-        by mx.google.com with ESMTPS id s2sm4128424icw.17.2011.07.17.14.59.05
-        (version=SSLv3 cipher=OTHER);
-        Sun, 17 Jul 2011 14:59:06 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1310908271.21563.17.camel@drew-northup.unet.maine.edu>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S1753833Ab1GQV7O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jul 2011 17:59:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45270 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752970Ab1GQV7M (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jul 2011 17:59:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 82CA147CE;
+	Sun, 17 Jul 2011 17:59:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=peKr87wFx3ozsg0kWuiMtKaM2ZE=; b=f14vZM
+	E5HZhzj0Hsc2cfTUtlrMhHoA/Dca5KzKEZHrbHITeaUbSf6vQY9blBwhNGGEvdqi
+	u4DAgtExZzkfu0N+Y5sQtpBZKgOBb+SmvJOaZlqgj1GHvy9nyDVbZWFDMOIR3JaO
+	Ll/xclg5a598jdq1oIWN6VSJDoIdtERVbnjFc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iStwK/Lbe4ZUVtU/z0YRFw6Z7ADdKxwg
+	stZ4oqthojnZDFVqpuD1rbDbSFGwKBMBT782sAzNTU1ghP3uEX1zVoKuhR7TWNgr
+	XssWv9mP+AsryK2346Gq/cV/CMNfymXiwUpCtslIZZY3wtMa/EDmlpKPPTQjcnep
+	NZjTMmlcmc4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 79FCC47CD;
+	Sun, 17 Jul 2011 17:59:11 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0D83847CC; Sun, 17 Jul 2011
+ 17:59:10 -0400 (EDT)
+In-Reply-To: <alpine.DEB.2.00.1107152208530.12060@debian> (Martin von
+ Zweigbergk's message of "Fri, 15 Jul 2011 22:19:27 -0400 (EDT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 008E99D4-B0C0-11E0-A2C7-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177319>
 
-Hi,
+Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
 
-Drew Northup wrote:
-> On Sun, 2011-07-17 at 04:00 +0530, Pavan Kumar Sunkara wrote:
-
->> Remove 'footnote:' from git-notes.txt which is responsible
->> for the warnings surfacing during the generation of git
->> documentation.
+> On Thu, 14 Jul 2011, Phil Hord wrote:
 >
-> What version of asciidoc are you using? Perhaps that works just fine
-> with newer versions?
+>> Summary:
+>> After a 'git stash pop' with conflicts, 'git mergetool' fails to notice
+>> the conflicted files if 'rerere.enabled=true'.  git mergetool
+>> erroneously reports 'no files need merging'.
+>
+> It seems to be because git-stash uses git merge-recursive directly
+> instead of calling git merge. I don't know why git merge-recursive is
+> used directly. It has been like that ever since git-stash was
+> introduced in f2c66ed (Add git-stash script, 2007-06-30).
 
-Good call.  This was fixed by Docbook XSL 1.76.0:
+But "stash pop/apply" should never call "merge" directly, as it is not
+interested in creating (nor preparing to create, with "merge --no-commit")
+a new merge commit, nor doing the history level three-way merge.
 
-	Norman Walsh: block.xsl; endnotes.xsl
-
-		Fix bug where simpara in footnote didn't work.
-
-The symptoms are a warning and a little extra vertical space after the
-numberal "1." in the output.  I don't know if it is worth working
-around or not.
+Calling merge-recursive backend is used as a way to run a three-way tree
+merge with explicitly specified three trees.
