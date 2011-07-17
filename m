@@ -1,137 +1,62 @@
-From: "George Spelvin" <linux@horizon.com>
-Subject: Re: Git commit generation numbers
-Date: 17 Jul 2011 19:39:59 -0400
-Message-ID: <20110717233959.3548.qmail@science.horizon.com>
-References: <CA+55aFwqFhzd_cmbFxkCyNXhF99igBqdr8p4J76hLz=m4=ZNWg@mail.gmail.com>
-Cc: git@vger.kernel.org
-To: linux@horizon.com, torvalds@linux-foundation.org
-X-From: git-owner@vger.kernel.org Mon Jul 18 01:40:09 2011
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Getting a list of commits between 2 points without upstream changes
+Date: Mon, 18 Jul 2011 11:49:57 +1200
+Message-ID: <CAFOYHZC5hQ9JV8a5d20AaPR_eYFDViama+4148MPumvvJ-n6wQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 18 01:50:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QiawT-00051l-0r
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 01:40:09 +0200
+	id 1Qib63-00076g-HX
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 01:50:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756010Ab1GQXkC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jul 2011 19:40:02 -0400
-Received: from science.horizon.com ([71.41.210.146]:23616 "HELO
-	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1755943Ab1GQXkA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jul 2011 19:40:00 -0400
-Received: (qmail 3549 invoked by uid 1000); 17 Jul 2011 19:39:59 -0400
-In-Reply-To: <CA+55aFwqFhzd_cmbFxkCyNXhF99igBqdr8p4J76hLz=m4=ZNWg@mail.gmail.com>
+	id S1756044Ab1GQXt6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jul 2011 19:49:58 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:59869 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754092Ab1GQXt6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jul 2011 19:49:58 -0400
+Received: by vxh35 with SMTP id 35so1310028vxh.19
+        for <git@vger.kernel.org>; Sun, 17 Jul 2011 16:49:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=wg1d53Z7pqHHwRxaOlwc6G+WJzx3z0KUML/ELBJN6JY=;
+        b=wDlk7N8egxfjKVArYLdBTPt1wIQyCIWEC5oM8auUMCinifsX82KN7srmTsloHbsr3+
+         dogl1isclpeqTDIa5fRKTByUkzL66CCOwnRSf3UM7ah2j47hllIDrHVYV7PYadmxkkY4
+         wY7256zbTkmYCiwYPfDfgcrk+6U5G0sWvqKA4=
+Received: by 10.52.175.170 with SMTP id cb10mr5735379vdc.79.1310946597313;
+ Sun, 17 Jul 2011 16:49:57 -0700 (PDT)
+Received: by 10.220.191.202 with HTTP; Sun, 17 Jul 2011 16:49:57 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177324>
 
-> So the generation number really is very very fundamnetal. It's
-> absolutely not some "additional information that can be computed",
-> because the whole AND ONLY point of having the number is to not
-> compute it.
-> 
-> We are never interested in the generation number for its own sake. We
-> are only interested in it in order to avoid having to look at the rest
-> of the DAG.
+Hi List,
 
-You're making my point and somehow not seeing it.
+I'm trying to send round an incremental changelog for my project which
+contains just my changes without changes that have been made upstream.
+The history look something like this.
 
-What you're describing here is the archetpical cache.
+---o--o--o--o--o--o--o--o-- upstream
+    \          \        \
+     \-m--A--m--B--m--C--D-- topic
 
-The only reason for having a memory cache is to avoid accessing memory!
-The only reason for having a TLB is to avoid walking the page tables!
-The only reason for having a page cache is to avoid hitting the disk!
-The only reason for having a dcache is to avoid traversing the file
-system directories!
+What I want is a changelog with just B, C and D in it (i.e. no merge
+commits and no commits already in upstream). I know if I wanted A,B,C
+and D I could just do 'git log --no-merges upstream..topic'. If I do
+'git log --no-merges B..topic' I get the merged commits from upstream.
+In set-speak what I think want is the union of upstream..topic and
+B..topic.
 
-And yes, the only reason for having a generation number cache is to avoid
-traversing the DAG.  D'oh.  Do you think this is somehow news to anyone?
+Is there any existing way to achieve this? I'm happy to hack something
+up using git rev-list if necessary.
 
-The fundamental nature of a cache is that it lets you look something up
-quickly that you could compute but don't want to.
-
-I'm slapping my forehead like Homer Simpson here.  The fact that computing
-the generation number is expensive is why it's worth cacheing.  But the
-fact that it *can* be computed is a reason not to clutter the published
-commit object format with it.
-
-
-The generation number is NOT FUNDAMENTAL.  It contains no information
-that's not already in the DAG.  The danger of putting it into a commit
-is that you'll do it wrong, and thereby screw everything up.
-
-If we have broken code that generates a broken cache, we fix the code
-and the bugs magically go away.
-
-If we have broken code that generates a broken commit object, we have
-a huge problem.
-
-Just like we don't ship pack indexes around, but recompute them on arrival.
-The index is essential for performance, but it's absolutely non-essential
-for correctness.
-
-
-As a general design principle, the exported data structures, like the
-commits, should be as simple as possible.  Do not include extraneous
-or redundant data, because then you have to deal with the possibility
-of inconsistency.  This leads to bugs.  (Frequently buffer overflow bugs.)
-
-Maybe it would have been worth violating that principle during the initial
-git design.  I still see a good argument for not doing that even if we
-had a time machine.
-
-But now that the commit format is established and widely used, the argument
-has far more force.  Changing the commit format provides zero functionality
-gain, and the performance gain can be obtained a different way.
-
-Maybe a bit more code, but nothing extraordinary.
-
-To me, the KISS principle says "don't change the commit format!"
-
-Now, you complain about code complexity.  But this is a read-only cache.
-The generation number of a commit object never changes.  There's no update
-operation.  Like an I-cache, if there's ever any problem, throw it away.
-
-Arguing that "the patch to put it in the commit object is smaller" is
-stupidly short-sighted.  Now every version of git from now until forever
-has to support both kinds of commit objects.  (And browsing old git
-trees will forever be slow.)
-
-You only take on that sort of legacy support burden if you absolutely have to.
-
-> But "just because we could recompute it" is a bad bad reason.
-
-Bull puckey.  You're ugly and stupid and WRONG.
-
-It's an excellent reason.  I'm amazed that you're not seeing it.
-The principle is "don't include redundant data in a transport format."
-Because it can be recomputed, it's redundant.  Therefore, it shouldn't
-be included in the transport format.
-
-It's exactly the same principle as "don't store the indexes in the
-database dump" and "don't store filename hashes in file system
-archives".
-
-This is a principle, not an iron-clad rule.  It can be violated for
-good and sufficient reasons, notably performance.
-
-But in this case, we can get the performance without it.  Without,
-in fact, changing the git transport format at all.
-
-And "don't change a widely-used transport format" is ANOTHER important
-principle.  Backward-compatible is much better than incompatible, but
-far better to avoid changing it at all.
-
-Breaking two such principles without an absolutely iron-clad reason is
-ugly and stupid and wrong.
-
-(As you well know, the more general principle is "don't store redundant
-data AT ALL unless you need to for performance".  Redundant data is A
-Bad Thing.  It can get out of sync.  But if you have to, a private cache
-is much better than a exchange format.)
-
-
-Put another way, it IS stupid, it IS expendable, and therefore it SHOULD go.
+Thanks,
+Chris
