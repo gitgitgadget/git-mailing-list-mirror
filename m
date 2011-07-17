@@ -1,158 +1,159 @@
-From: Kunal Gangakhedkar <kunal.gangakhedkar@gmail.com>
-Subject: Re: [PATCH] merge: Preserve ORIG_HEAD if already up-to-date with remote.
-Date: Sun, 17 Jul 2011 22:01:24 +0530
-Message-ID: <201107172201.25242.kunal.gangakhedkar@gmail.com>
-References: <1307950525-8011-1-git-send-email-kunal.gangakhedkar@gmail.com> <1307950525-8011-2-git-send-email-kunal.gangakhedkar@gmail.com> <7vy614j99n.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 14/17] reset: Make hard reset remove the sequencer state
+Date: Sun, 17 Jul 2011 22:10:03 +0530
+Message-ID: <CALkWK0=XP=hwsN8vVmTc2Rs3mYuZnLZOpg4=OE7mrYbAYm6nCQ@mail.gmail.com>
+References: <1310396048-24925-1-git-send-email-artagnon@gmail.com>
+ <1310396048-24925-15-git-send-email-artagnon@gmail.com> <20110712201532.GE14909@elie>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 17 18:31:43 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 17 18:40:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QiUFp-0006xO-Lf
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Jul 2011 18:31:42 +0200
+	id 1QiUOL-0001dz-Gc
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Jul 2011 18:40:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756034Ab1GQQbg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jul 2011 12:31:36 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:35309 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754462Ab1GQQbf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jul 2011 12:31:35 -0400
-Received: by pzk3 with SMTP id 3so3307408pzk.5
-        for <git@vger.kernel.org>; Sun, 17 Jul 2011 09:31:35 -0700 (PDT)
+	id S1756051Ab1GQQkY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Jul 2011 12:40:24 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:43851 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754462Ab1GQQkY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Jul 2011 12:40:24 -0400
+Received: by wwe5 with SMTP id 5so2549795wwe.1
+        for <git@vger.kernel.org>; Sun, 17 Jul 2011 09:40:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding:message-id;
-        bh=vDwRBPyLZHkplRDQuh+i23GUCk4Nnydo8V7GLP1m+Mg=;
-        b=PZ8FIUTp/jY2Vgvl26AKtYZFKz3D6oRciFXNgeg6DPtRkbO4NZqpFcKMH5fH6s/tr8
-         6twwr/bJbt4G9e7K18EFyaTJozLVuB5GbybcIjDptsLZDoZFqQjQ1ZDs0jVmXdwWNWpD
-         CwIds75kH5yPZL5jLgxTdmrVZYUyC+tudVdMQ=
-Received: by 10.68.38.227 with SMTP id j3mr15825pbk.378.1310920295347;
-        Sun, 17 Jul 2011 09:31:35 -0700 (PDT)
-Received: from plutonium.localnet (triband-mum-120.60.37.62.mtnl.net.in [120.60.37.62])
-        by mx.google.com with ESMTPS id m7sm1976313pbk.38.2011.07.17.09.31.30
-        (version=SSLv3 cipher=OTHER);
-        Sun, 17 Jul 2011 09:31:32 -0700 (PDT)
-User-Agent: KMail/1.13.5 (Linux/2.6.36-2-generic; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <7vy614j99n.fsf@alter.siamese.dyndns.org>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=9nEZh0RkOyS0ct98BGHSdFysBZtcSitQsvwmW5vf1SE=;
+        b=EF8XRqjcMNPxHoVLC6nw8btL1DQGTg3PB+ahEwruQTk8GE+Pq42d+98LImDIc7SYDk
+         3PRdXNkjrIrVj60v6fJiNZG997tQLrZE93c/5OXt2hMmLIFDcCVmx8onVE757Hf0aiM5
+         4LGUxCJNVKSj58eD4mctgJSfPdPSB1uIo7T4w=
+Received: by 10.216.143.66 with SMTP id k44mr2292982wej.81.1310920823091; Sun,
+ 17 Jul 2011 09:40:23 -0700 (PDT)
+Received: by 10.216.234.143 with HTTP; Sun, 17 Jul 2011 09:40:03 -0700 (PDT)
+In-Reply-To: <20110712201532.GE14909@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177305>
 
-On Wednesday 15 Jun 2011 4:44:28 am Junio C Hamano wrote:
-> Kunal Gangakhedkar <kunal.gangakhedkar@gmail.com> writes:
-> > Do not update ORIG_HEAD ref to current HEAD if the repo is already
-> > in-sync with the remote.
-> > 
-> > Otherwise, it becomes difficult to keep track of last set of changes.
-> > 
-> > With this patch, it's possible to do a diffstat/log for last set of
-> > changes even after a pull/merge that returns 'Already up-to-date'.
-> 
-> I am not sure what you mean.  If you are behind remote A and remote B is
-> behind remote A, i.e.
-> 
-> 	You -- (fast forwards) --> B -- (fast forwards) --> A
-> 
-> then you should be able to expect these:
-> 	: point zero
-> 
-> 	$ git pull A
->         $ git diff/log ORIG_HEAD.. ;# shows how your tree and history
->         			    # are updated wrt point zero above
-> 
-> 	: point one
-> 
-> 	$ git pull B
->         $ git diff/log ORIG_HEAD.. ;# shows how your tree and history
->         			    # are updated wrt point one above
-> 
-> If your patch is to stop recording ORIG_HEAD for the second "git pull"
-> above, I fail to see how that could be a good change.
-> 
-> If you want to drive "pull" from a script (e.g. cron) and want to have
-> precise control of what happens depending on how HEAD is updated, your
-> script has enough freedom and flexibility to do so before running "pull",
-> I think.  E.g.
-> 
-> 	. $(git --exec-path)/git-sh-setup
-> 
-> 	CURRENT=$(git rev-parse HEAD^0) || die "Eh? No Head?"
->         git pull || die "pull fails"
->         UPDATED=$(git rev-parse HEAD^0)
->         if test "$CURRENT" = "$UPDATED"
->         then
-> 		exit 0; # nothing happened
-> 	fi
-> 	git shortlog --no-merges $CURRENT..$UPDATED
->         git diff --stat --summary $CURRENT..$UPDATED
+Hi again,
 
-Sorry, got caught up in butt-load of work..
+Jonathan Nieder writes:
+> Ramkumar Ramachandra wrote:
+>> Years of muscle memory have trained users to use "git reset --hard" =
+to
+>> remove away the branch state after any sort of operation. =C2=A0In
+>> retrospect, while this may not have been the best design decision, w=
+e
+>> are stuck with it for historical reasons.
+>
+> Wait, wait! =C2=A0If that was a bad design decision, we should try to=
+ find
+> a way to smoothly transition to a world without it, instead of
+> layering workarounds on top of it.
+>
+> But actually I think it is good UI. =C2=A0When you do "git merge", it=
+ works
+> like this:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git merge <foo>; # conflicts!
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0... hack hack hack ...
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# Oh, bother, let me go back to a state I =
+know well and am
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# comfortable with.
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git reset --hard <bar>
+>
+> And the same psychological effect applies in the cherry-pick case:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git cherry-pick <foo>; # conflicts!
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0... hack hack hack ...
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# Oh, bother, let me go back to a state I =
+know well and am
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# comfortable with.
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git reset --hard <bar>
+>
+> See, it's about the tool working with you. =C2=A0When I abandon a mer=
+ge,
+> I don't want to have to search through the owner's manual for the
+> button to get git to clear away this unpleasant and unfamiliar state.
 
-Well, that's not what I meant.
-The default diffstat at the end of merge/ff/pull already gives the required 
-info.
+=46air enough.  It's a large hammer to solve the problem, and it's used
+by many people; I use it a lot myself.
 
-The problem comes when the remote _does not_ have updates since last pull.
-With a 'git pull' next time around (i.e. with no updates in the remote), 
-ORIG_HEAD is moved to the current HEAD and the range of commits in the last 
-changeset are lost. That is, I can no longer figure out the contents of the 
-last changeset.
+> Now, by contrast, sometimes one wants something less aggressive.
+> For example, to abandon a partial merge conflict resolution but
+> keep unrelated changes in the worktree:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git reset --merge HEAD
+>
+> Or to get out of the "mergy" state but leave the worktree alone:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git reset
+>
+> There's no porcelain or plumbing to abandon a rebase without
+> additional side-effects, but "git status" suggests a command for
+> it if I remember correctly.
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0rm -fr .git/rebase-merge
 
-To give an example, let's track the following sequence:
+We're not making this mistake with the sequencer :)
 
-	$ git clone git://url/of/super-awesome/project.git  	(0)
-		.... hack hack hack in remote ....
-		.... remote is fast-forwarded ...
-	$ git pull									(1)
-		... you got the changes ....
-		.... hack hack hack in remote ....
-		.... remote is fast-forwarded ...
-	$ git pull									(2)
-		... you got the changes ....
-		... now, everybody is on vacation, so, no updates in remote ...
-	$ git pull									(3)
-		... you get 'Already up-to-date.' message ...
-		... everybody is still on vacation, so, no updates in remote  ...
-	$ git pull									(4) 
-		... you get 'Already up-to-date.' message ...
+>> Additionally, this patch ensures that some existing tests don't brea=
+k
+>> when features like "--reset" and "--continue" are introduced later i=
+n
+>> the series.
+>
+> That's not "Additionally" --- it's the same problem. =C2=A0One way to
+> phrase it would be "Noticed by running such-and-such test after
+> such-and-such change".
 
-In the current situation, at the end of (3) above, ORIG_HEAD is moved to the 
-then HEAD. So, after (3), if I try to do 
-	git diff/log ORIG_HEAD..
-I'd get an empty changeset - i.e. I've lost the *last updated* changeset 
-information.
+Right.  Minor tweaks made to the commit message.
 
-What my patch does is keep ORIG_HEAD at its current state in (3) - so that 
-changeset info is still available after (3) until there is an update in 
-tracked branch of remote. At which point, ORIG_HEAD will be forwarded again
-to the then HEAD and HEAD will point to the newly merged HEAD to reflect the 
-changes from remote.
+reset: Make reset remove the sequencer state
 
-This way, the *latest* changeset is always available for inspection whether 
-there's been an update in remote or not. I can safely do 
-	git diff/log ORIG_HEAD..
-after (4) as well and I'd still get the required information.
+Years of muscle memory have trained users to use "git reset --hard" to
+remove the branch state after any sort operation.  Make it also remove
+the sequencer state so that this sort of workflow is now possible:
 
-I've included config/cmdline options in the patch to force-update ORIG_HEAD so 
-that current behavior is retained.
+$ git cherry-pick foo..bar
+=2E.. conflict encountered ...
+$ git reset --hard # Oops, I didn't mean that
+$ git cherry-pick quux..bar
+=2E.. cherry-pick succeeded ...
 
-Please let me know if it makes sense.
+Also, guard against accidental removal of the sequencer state by
+moving ".git/sequencer" to ".git/sequencer-old" in the first "git
+reset --hard" call, and only remove it completely only after the
+second call.
 
-I've written a simple test script for the functionality, but I'm not sure how 
-to name it. Currently, in my working copy, it's called 
-	t5555-merge-preserve-orig-head.sh
-If that's fine, I'll send it in another patch for review. Otherwise, please 
-suggest a good name for it.
+This patch ensures that some existing tests don't break when features
+like "--reset" and "--continue" are introduced later in the series.
+Without this patch, we would expect the last cherry-pick call in the
+example to fail with the complaint that an existing cherry-pick
+operation is in progress.
 
-Thanks,
-Kunal
+>> +test_expect_success 'reset --hard cleans up sequencer state' '
+>
+> Hoorah! =C2=A0Thanks.
+>
+> Why isn't the .git/sequencer removal in remove_branch_state() like
+> MERGE_MSG and other similar examples are? =C2=A0(Not a rhetorical que=
+stion;
+> it would be interesting to know.)
+
+I thought we should only make a hard reset clear it, but all the reset
+codepaths reach remove_branch_state().  However, in view of
+consistency, I've put the removal code in remove_branch_state() now.
+
+-- Ram
