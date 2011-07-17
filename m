@@ -1,104 +1,69 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 04/17] revert: Rename no_replay to record_origin
-Date: Sun, 17 Jul 2011 14:36:57 -0500
-Message-ID: <20110717193657.GJ27787@elie>
-References: <1310396048-24925-1-git-send-email-artagnon@gmail.com>
- <1310396048-24925-5-git-send-email-artagnon@gmail.com>
- <20110712170256.GC13578@elie>
- <CALkWK0nm-gX9-3pGxT31VO-06mimd0cg1O8xhk-0QbsbdN7aLg@mail.gmail.com>
+From: Phil Hord <hordp@cisco.com>
+Subject: Re: git push vs. slow connection times - local commit resolution
+ is too late
+Date: Sun, 17 Jul 2011 15:46:28 -0400
+Message-ID: <4E233C14.6080309@cisco.com>
+References: <4E1EEDAA.1000204@redhat.com> <4E2115D5.4010002@cisco.com> <m2oc0uz8uh.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 17 21:37:14 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Eric Blake <eblake@redhat.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Sun Jul 17 21:46:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QiX9M-0005Sx-A7
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Jul 2011 21:37:12 +0200
+	id 1QiXIR-0008Gl-SU
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Jul 2011 21:46:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756261Ab1GQThF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jul 2011 15:37:05 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:48930 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756240Ab1GQThE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jul 2011 15:37:04 -0400
-Received: by iyb12 with SMTP id 12so2550260iyb.19
-        for <git@vger.kernel.org>; Sun, 17 Jul 2011 12:37:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=uu/lnO22PSxE98sfgSOu2Bz7m2cIiVGg7CNuDijeDlQ=;
-        b=NxYLRYPcgRBo13zbArKG27SZXhltpRiFWW+A5OprkqYigVLKAoCaxAjHyIcRBA6rfD
-         CW8JXXEGFB/MZ+93UvX24FjLIiJXW3V61rMlXsF7cZ0hhGhUWxhH46cOI3+X5ZT4+kGe
-         RvHtPj87iwEo9QSJpJMJA4ICgEIKg0bbZwdFk=
-Received: by 10.42.28.10 with SMTP id l10mr6871376icc.299.1310931423430;
-        Sun, 17 Jul 2011 12:37:03 -0700 (PDT)
-Received: from elie (adsl-69-209-70-6.dsl.chcgil.ameritech.net [69.209.70.6])
-        by mx.google.com with ESMTPS id k16sm4028046icc.10.2011.07.17.12.37.00
-        (version=SSLv3 cipher=OTHER);
-        Sun, 17 Jul 2011 12:37:02 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CALkWK0nm-gX9-3pGxT31VO-06mimd0cg1O8xhk-0QbsbdN7aLg@mail.gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S1756245Ab1GQTqa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jul 2011 15:46:30 -0400
+Received: from rcdn-iport-1.cisco.com ([173.37.86.72]:11850 "EHLO
+	rcdn-iport-1.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755110Ab1GQTq3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jul 2011 15:46:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=hordp@cisco.com; l=432; q=dns/txt;
+  s=iport; t=1310931989; x=1312141589;
+  h=message-id:date:from:mime-version:to:cc:subject:
+   references:in-reply-to:content-transfer-encoding;
+  bh=yL+qAGOZjkFd7haetPZc7kXokGLn+xmjlMAz8jCs7bM=;
+  b=lxFbf39D5mQy8Srni/L+LbATNTpdXw1FkBxn8y0+Gs+3xyFDndO7Mjy2
+   EagQ1chGbWlEEjpqJttS0PBcRz9Bs3BEakl/JZvXmNiarLxtRMROb/8jP
+   qVkbZOKrL5WOZ8WP537hGxFWArtOirJ0/yOZEFssvz3aZupvJV1ygkMP6
+   Q=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av0EACA7I06tJV2c/2dsb2JhbABRp3J3rSydEYY8BJJmhQGLcA
+X-IronPort-AV: E=Sophos;i="4.67,218,1309737600"; 
+   d="scan'208";a="3755849"
+Received: from rcdn-core-5.cisco.com ([173.37.93.156])
+  by rcdn-iport-1.cisco.com with ESMTP; 17 Jul 2011 19:46:29 +0000
+Received: from [10.82.241.167] (rtp-vpn2-423.cisco.com [10.82.241.167])
+	by rcdn-core-5.cisco.com (8.14.3/8.14.3) with ESMTP id p6HJkSZq014372;
+	Sun, 17 Jul 2011 19:46:28 GMT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110627 Thunderbird/5.0
+In-Reply-To: <m2oc0uz8uh.fsf@igel.home>
+X-TagToolbar-Keys: D20110717154628296
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177317>
 
-Ramkumar Ramachandra wrote:
+Andreas Schwab helpfully chimed in
+ > Phil Hord <hordp@cisco.com> writes:
+ >
+ > > I agree with your suggestion.  But as a quick fix, can you do this?
+ > >   git push remote $(cat .git/HEAD):master
+ >
+ > You mean $(git rev-parse HEAD), don't you?
 
-> Thanks for probing.  Found out the reason after some digging.
->
-> revert: Rename no_replay to record_origin
->
-> The "-x" command-line option is used to record the name of the
-> original commits being picked in the commit message.  The variable
-> corresponding to this option is named "no_replay" for historical
-> reasons.
+Yes, I do. :-) But I don't use it enough to remember it, and the man 
+pages are not cross-referenced well enough for me.  So I shrugged.
 
-Heh.  I guess "for crazy historical reasons no one remembers, and it's
-especially confusing because the term 'replay' is used to describe
-from time to time to describe what cherry-pick does (e.g., in the
-documentation for the --mainline option)" would be enough of a summary
-to justify the change.
+Thanks for helping me out.
 
-> This name was introduced in f810379 (Make builtin-revert.c
-> use parse_options, 2007-10-07) to replace "replay", the opposite of
-> "no_replay".  The name "replay" was introduced in 9509af6 (Make
-> git-revert & git-cherry-pick a builtin, 2007-03-01).
-
-It's actually older than that: it comes from the scripted version:
-
-	-x|--i-really-want-to-expose-my-private-commit-object-name)
-		replay=
-		;;
-
->From v1.4.3-rc2~12 (cherry-pick: make -r the default, 2006-10-05;
-it's of course older than that), we learn that this used to be the
-default, disabled by a --replay option that meant
-
-	Usually the command appends which commit was
-	cherry-picked after the original commit message when
-	making a commit.  This option, '--replay', causes it to
-	use the original commit message intact.  This is useful
-	when you are reordering the patches in your private tree
-	before publishing.
-
-or in other words, "simulate making the commit anew again, instead
-of explicitly recording that this is a new commit based on that
-old one".
-
-In other words, "replay" originally essentially meant what
-"cherry-pick" does now.
-
-Thanks, that was interesting.
-
-Cheers,
-Jonathan
+Phil
