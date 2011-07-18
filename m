@@ -1,697 +1,251 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 06/14] introduce credentials API
-Date: Mon, 18 Jul 2011 03:50:34 -0400
-Message-ID: <20110718075034.GF12341@sigill.intra.peff.net>
+Subject: [PATCH 07/14] http: use credential API to get passwords
+Date: Mon, 18 Jul 2011 03:50:53 -0400
+Message-ID: <20110718075053.GG12341@sigill.intra.peff.net>
 References: <20110718074642.GA11678@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 18 09:50:42 2011
+X-From: git-owner@vger.kernel.org Mon Jul 18 09:51:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QiibB-0004OZ-QB
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 09:50:42 +0200
+	id 1QiibU-0004Sy-Vs
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 09:51:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752989Ab1GRHuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jul 2011 03:50:37 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50623
+	id S1753227Ab1GRHu4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jul 2011 03:50:56 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50625
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752023Ab1GRHug (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jul 2011 03:50:36 -0400
-Received: (qmail 19829 invoked by uid 107); 18 Jul 2011 07:51:02 -0000
+	id S1752479Ab1GRHuz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jul 2011 03:50:55 -0400
+Received: (qmail 19857 invoked by uid 107); 18 Jul 2011 07:51:21 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 18 Jul 2011 03:51:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Jul 2011 03:50:34 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 18 Jul 2011 03:51:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Jul 2011 03:50:53 -0400
 Content-Disposition: inline
 In-Reply-To: <20110718074642.GA11678@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177350>
 
-There are a few places in git that need to get a username
-and password credential from the user; the most notable one
-is HTTP authentication for smart-http pushing.
+This patch converts the http code to use the new credential
+API, both for http authentication as well as for getting
+certificate passwords.
 
-Right now the only choices for providing credentials are to
-put them plaintext into your ~/.netrc, or to have git prompt
-you (either on the terminal or via an askpass program). The
-former is not very secure, and the latter is not very
-convenient.
+Most of the code change is simply variable naming (the
+passwords are now contained inside a struct). The biggest
+change is determining a "unique" context to pass to the
+credential API.  This patch uses "http:$host" for http
+authentication and "cert:$file" for opening certificate
+files.
 
-Unfortunately, there is no "always best" solution for
-password management. The details will depend on the tradeoff
-you want between security and convenience, as well as how
-git can integrate with other security systems (e.g., many
-operating systems provide a keychain or password wallet for
-single sign-on).
-
-This patch abstracts the notion of gathering user
-credentials into a few simple functions. These functions can
-be backed by our internal git_getpass implementation (which
-just prompts the user), or by external helpers which are
-free to consult system-specific password wallets, make
-custom policy decisions on password caching and storage, or
-prompt the user in a non-traditional manner.
-
-The helper protocol aims for simplicity of helper
-implementation; see the newly added documentation for
-details.
+We pass an empty list of methods to the credential API,
+which means that we will use the internal credential_getpass
+function. This should yield no behavior change, except that
+we now print "Password for 'certificate':" instead of
+"Certificate Password:" when asking for certificate
+passwords.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- .gitignore                                  |    1 +
- Documentation/technical/api-credentials.txt |  113 ++++++++++++++++
- Makefile                                    |    3 +
- credential.c                                |  190 +++++++++++++++++++++++++++
- credential.h                                |   19 +++
- t/t0300-credentials.sh                      |  175 ++++++++++++++++++++++++
- test-credential.c                           |   47 +++++++
- 7 files changed, 548 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/technical/api-credentials.txt
- create mode 100644 credential.c
- create mode 100644 credential.h
- create mode 100755 t/t0300-credentials.sh
- create mode 100644 test-credential.c
+ http.c                |   90 +++++++++++++++++++++++++++----------------------
+ t/t5550-http-fetch.sh |    2 +-
+ 2 files changed, 51 insertions(+), 41 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 8572c8c..7d2fefc 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -167,6 +167,7 @@
- /gitweb/static/gitweb.js
- /gitweb/static/gitweb.min.*
- /test-chmtime
-+/test-credential
- /test-ctype
- /test-date
- /test-delta
-diff --git a/Documentation/technical/api-credentials.txt b/Documentation/technical/api-credentials.txt
-new file mode 100644
-index 0000000..880db92
---- /dev/null
-+++ b/Documentation/technical/api-credentials.txt
-@@ -0,0 +1,113 @@
-+credentials API
-+===============
-+
-+The credentials API provides an abstracted way of gathering username and
-+password credentials from the user (even though credentials in the wider
-+world can take many forms, in this document the word "credential" always
-+refers to a username and password pair).
-+
-+Data Structures
-+---------------
-+
-+`struct credential`::
-+
-+	This struct represents a single username/password combination.
-+	The `username` and `password` fields should be heap-allocated
-+	strings (or NULL if they are not yet known). The `unique` field,
-+	if non-NULL, should be a heap-allocated string indicating a
-+	unique context for this credential (e.g., a protocol and server
-+	name for a remote credential). The `description` field, if
-+	non-NULL, should point to a string containing a human-readable
-+	description of this credential.
-+
-+`struct string_list methods`::
-+
-+	The credential functions take a `string_list` of methods for
-+	acquiring credentials. Each string specifies an external
-+	helper which will be run, in order, to acquire credentials,
-+	until both a username and password have been acquired. A NULL or
-+	empty methods list indicates that the internal
-+	`credential_getpass` function should be used.
-+
-+
-+Functions
-+---------
-+
-+`credential_fill_gently`::
-+
-+	Attempt to fill the username and password fields of the passed
-+	credential struct. If they cannot be filled after trying each
-+	available method, returns -1. Otherwise, returns 0.
-+
-+`credential_fill`::
-+
-+	Like `credential_fill_gently`, but `die()` if credentials cannot
-+	be gathered.
-+
-+`credential_reject`::
-+
-+	Inform the credential subsystem that the provided credentials
-+	have been rejected. This will clear the username and password
-+	fields in `struct credential`, as well as notify any helpers of
-+	the rejection (which may, for example, purge the invalid
-+	credentials from storage).
-+
-+`credential_getpass`::
-+
-+	Fetch credentials from the user either using an "askpass" helper
-+	(see the discussion of core.askpass and GIT_ASKPASS in
-+	linkgit:git-config[1] and linkgit:git[1], respectively) or by
-+	prompting the user via the terminal.
-+
-+
-+Credential Helpers
-+------------------
-+
-+Credential helpers are programs executed by git to fetch credentials
-+from storage or from the user. The default behavior when no helpers are
-+defined is to use the internal `credential_askpass` function.
-+
-+When a helper is executed, it may receive the following options on the
-+command line:
-+
-+`--reject`::
-+
-+	Specify that the provided credential has been rejected; the
-+	helper may take appropriate action to purge any credential
-+	storage or cache. If this option is not given, the helper should
-+	assume a credential is being requested.
-+
-+`--description=<X>`::
-+
-+	`<X>` will contain a human-readable description of the
-+	credential being requested. If this option is not given, no
-+	description is available.
-+
-+`--unique=<X>`::
-+
-+	`<X>` will contain a token to uniquely identify the context of
-+	the credential (e.g., a host name for network authentication).
-+	If this option is not given, no context is available.
-+
-+`--username=<X>`::
-+
-+	`<X>` will contain the username requested by the user. If this
-+	option is not given, no username is available, and the helper
-+	should provide both a username and password.
-+
-+The helper should produce a list of items on stdout, each followed by a
-+newline character. Each item should consist of a key-value pair, separated
-+by an `=` (equals) sign. The value may contain any bytes except a
-+newline. When reading the response, git understands the following keys:
-+
-+`username`::
-+
-+	The username part of the credential. If a username was given to
-+	the helper via `--username`, the new value will override it.
-+
-+`password`::
-+
-+	The password part of the credential.
-+
-+It is perfectly acceptable for a helper to provide only part of a
-+credential, or nothing at all.
-diff --git a/Makefile b/Makefile
-index 46793d1..16515bf 100644
---- a/Makefile
-+++ b/Makefile
-@@ -421,6 +421,7 @@ PROGRAM_OBJS += sh-i18n--envsubst.o
- PROGRAMS += $(patsubst %.o,git-%$X,$(PROGRAM_OBJS))
+diff --git a/http.c b/http.c
+index 89e3cf4..4c047be 100644
+--- a/http.c
++++ b/http.c
+@@ -3,6 +3,7 @@
+ #include "sideband.h"
+ #include "run-command.h"
+ #include "url.h"
++#include "credential.h"
  
- TEST_PROGRAMS_NEED_X += test-chmtime
-+TEST_PROGRAMS_NEED_X += test-credential
- TEST_PROGRAMS_NEED_X += test-ctype
- TEST_PROGRAMS_NEED_X += test-date
- TEST_PROGRAMS_NEED_X += test-delta
-@@ -511,6 +512,7 @@ LIB_H += compat/win32/pthread.h
- LIB_H += compat/win32/syslog.h
- LIB_H += compat/win32/sys/poll.h
- LIB_H += compat/win32/dirent.h
-+LIB_H += credential.h
- LIB_H += csum-file.h
- LIB_H += decorate.h
- LIB_H += delta.h
-@@ -590,6 +592,7 @@ LIB_OBJS += config.o
- LIB_OBJS += connect.o
- LIB_OBJS += convert.o
- LIB_OBJS += copy.o
-+LIB_OBJS += credential.o
- LIB_OBJS += csum-file.o
- LIB_OBJS += ctype.o
- LIB_OBJS += date.o
-diff --git a/credential.c b/credential.c
-new file mode 100644
-index 0000000..c403289
---- /dev/null
-+++ b/credential.c
-@@ -0,0 +1,190 @@
-+#include "cache.h"
-+#include "credential.h"
-+#include "quote.h"
-+#include "string-list.h"
-+#include "run-command.h"
-+
-+static char *credential_ask_one(const char *what, const char *desc)
-+{
-+	struct strbuf prompt = STRBUF_INIT;
-+	char *r;
-+
-+	if (desc)
-+		strbuf_addf(&prompt, "%s for '%s': ", what, desc);
-+	else
-+		strbuf_addf(&prompt, "%s: ", what);
-+
-+	/* FIXME: for usernames, we should do something less magical that
-+	 * actually echoes the characters. However, we need to read from
-+	 * /dev/tty and not stdio, which is not portable (but getpass will do
-+	 * it for us). http.c uses the same workaround. */
-+	r = git_getpass(prompt.buf);
-+
-+	strbuf_release(&prompt);
-+	return xstrdup(r);
-+}
-+
-+int credential_getpass(struct credential *c)
-+{
-+
-+	if (!c->username)
-+		c->username = credential_ask_one("Username", c->description);
-+	if (!c->password)
-+		c->password = credential_ask_one("Password", c->description);
-+	return 0;
-+}
-+
-+static int read_credential_response(struct credential *c, FILE *fp)
-+{
-+	struct strbuf response = STRBUF_INIT;
-+
-+	while (strbuf_getline(&response, fp, '\n') != EOF) {
-+		char *key = response.buf;
-+		char *value = strchr(key, '=');
-+
-+		if (!value) {
-+			warning("bad output from credential helper: %s", key);
-+			strbuf_release(&response);
-+			return -1;
-+		}
-+		*value++ = '\0';
-+
-+		if (!strcmp(key, "username")) {
-+			free(c->username);
-+			c->username = xstrdup(value);
-+		}
-+		else if (!strcmp(key, "password")) {
-+			free(c->password);
-+			c->password = xstrdup(value);
-+		}
-+		/* ignore other responses; we don't know what they mean */
+ int data_received;
+ int active_requests;
+@@ -42,7 +43,7 @@ static long curl_low_speed_time = -1;
+ static int curl_ftp_no_epsv;
+ static const char *curl_http_proxy;
+ static const char *curl_cookie_file;
+-static char *user_name, *user_pass;
++static struct credential http_auth;
+ static const char *user_agent;
+ 
+ #if LIBCURL_VERSION_NUM >= 0x071700
+@@ -53,7 +54,7 @@ static const char *user_agent;
+ #define CURLOPT_KEYPASSWD CURLOPT_SSLCERTPASSWD
+ #endif
+ 
+-static char *ssl_cert_password;
++static struct credential cert_auth;
+ static int ssl_cert_password_required;
+ 
+ static struct curl_slist *pragma_header;
+@@ -211,11 +212,11 @@ static int http_options(const char *var, const char *value, void *cb)
+ 
+ static void init_curl_http_auth(CURL *result)
+ {
+-	if (user_name) {
++	if (http_auth.username) {
+ 		struct strbuf up = STRBUF_INIT;
+-		if (!user_pass)
+-			user_pass = xstrdup(git_getpass("Password: "));
+-		strbuf_addf(&up, "%s:%s", user_name, user_pass);
++		credential_fill(&http_auth, NULL);
++		strbuf_addf(&up, "%s:%s",
++			    http_auth.username, http_auth.password);
+ 		curl_easy_setopt(result, CURLOPT_USERPWD,
+ 				 strbuf_detach(&up, NULL));
+ 	}
+@@ -223,18 +224,19 @@ static void init_curl_http_auth(CURL *result)
+ 
+ static int has_cert_password(void)
+ {
+-	if (ssl_cert_password != NULL)
+-		return 1;
+ 	if (ssl_cert == NULL || ssl_cert_password_required != 1)
+ 		return 0;
+-	/* Only prompt the user once. */
+-	ssl_cert_password_required = -1;
+-	ssl_cert_password = git_getpass("Certificate Password: ");
+-	if (ssl_cert_password != NULL) {
+-		ssl_cert_password = xstrdup(ssl_cert_password);
+-		return 1;
+-	} else
+-		return 0;
++	if (!cert_auth.description)
++		cert_auth.description = "certificate";
++	if (!cert_auth.unique) {
++		struct strbuf unique = STRBUF_INIT;
++		strbuf_addf(&unique, "cert:%s", ssl_cert);
++		cert_auth.unique = strbuf_detach(&unique, NULL);
 +	}
-+
-+	strbuf_release(&response);
-+	return 0;
-+}
-+
-+static int run_credential_helper(struct credential *c, const char *cmd)
-+{
-+	struct child_process helper;
-+	const char *argv[] = { NULL, NULL };
-+	FILE *fp;
-+	int r;
-+
-+	memset(&helper, 0, sizeof(helper));
-+	argv[0] = cmd;
-+	helper.argv = argv;
-+	helper.use_shell = 1;
-+	helper.no_stdin = 1;
-+	helper.out = -1;
-+
-+	if (start_command(&helper))
-+		return -1;
-+	fp = xfdopen(helper.out, "r");
-+
-+	r = read_credential_response(c, fp);
-+
-+	fclose(fp);
-+	if (finish_command(&helper))
-+		r = -1;
-+
-+	return r;
-+}
-+
-+static void add_item(struct strbuf *out, const char *key, const char *value)
-+{
-+	if (!value)
-+		return;
-+	strbuf_addf(out, " --%s=", key);
-+	sq_quote_buf(out, value);
-+}
-+
-+static int first_word_is_alnum(const char *s)
-+{
-+	for (; *s && *s != ' '; s++)
-+		if (!isalnum(*s))
-+			return 0;
++	if (!cert_auth.username)
++		cert_auth.username = xstrdup("");
++	credential_fill(&cert_auth, NULL);
 +	return 1;
-+}
+ }
+ 
+ static CURL *get_curl_handle(void)
+@@ -263,7 +265,7 @@ static CURL *get_curl_handle(void)
+ 	if (ssl_cert != NULL)
+ 		curl_easy_setopt(result, CURLOPT_SSLCERT, ssl_cert);
+ 	if (has_cert_password())
+-		curl_easy_setopt(result, CURLOPT_KEYPASSWD, ssl_cert_password);
++		curl_easy_setopt(result, CURLOPT_KEYPASSWD, cert_auth.password);
+ #if LIBCURL_VERSION_NUM >= 0x070903
+ 	if (ssl_key != NULL)
+ 		curl_easy_setopt(result, CURLOPT_SSLKEY, ssl_key);
+@@ -307,10 +309,12 @@ static CURL *get_curl_handle(void)
+ 
+ static void http_auth_init(const char *url)
+ {
+-	char *at, *colon, *cp, *slash;
++	const char *at, *colon, *cp, *slash, *host, *proto_end;
++	char *decoded;
++	struct strbuf unique = STRBUF_INIT;
+ 
+-	cp = strstr(url, "://");
+-	if (!cp)
++	proto_end = strstr(url, "://");
++	if (!proto_end)
+ 		return;
+ 
+ 	/*
+@@ -319,20 +323,31 @@ static void http_auth_init(const char *url)
+ 	 * "proto://<user>@<host>/...", or just
+ 	 * "proto://<host>/..."?
+ 	 */
+-	cp += 3;
++	cp = proto_end + 3;
+ 	at = strchr(cp, '@');
+ 	colon = strchr(cp, ':');
+ 	slash = strchrnul(cp, '/');
+-	if (!at || slash <= at)
+-		return; /* No credentials */
+-	if (!colon || at <= colon) {
 +
-+static int credential_do(struct credential *c, const char *method,
-+			 const char *extra)
-+{
-+	struct strbuf cmd = STRBUF_INIT;
-+	int r;
-+
-+	if (first_word_is_alnum(method))
-+		strbuf_addf(&cmd, "git credential-%s", method);
-+	else
-+		strbuf_addstr(&cmd, method);
-+
-+	if (extra)
-+		strbuf_addf(&cmd, " %s", extra);
-+
-+	add_item(&cmd, "description", c->description);
-+	add_item(&cmd, "unique", c->unique);
-+	add_item(&cmd, "username", c->username);
-+
-+	r = run_credential_helper(c, cmd.buf);
-+
-+	strbuf_release(&cmd);
-+	return r;
-+}
-+
-+void credential_fill(struct credential *c, const struct string_list *methods)
-+{
-+	struct strbuf err = STRBUF_INIT;
-+
-+	if (!credential_fill_gently(c, methods))
-+		return;
-+
-+	strbuf_addstr(&err, "unable to get credentials");
-+	if (c->description)
-+		strbuf_addf(&err, "for '%s'", c->description);
-+	if (methods && methods->nr == 1)
-+		strbuf_addf(&err, "; tried '%s'", methods->items[0].string);
-+	else if (methods) {
-+		int i;
-+		strbuf_addstr(&err, "; tried:");
-+		for (i = 0; i < methods->nr; i++)
-+			strbuf_addf(&err, "\n  %s", methods->items[i].string);
++	if (!at || slash <= at) {
++		/* No credentials, but we may have to ask for some later */
++		host = cp;
 +	}
-+	die(err.buf);
-+}
++	else if (!colon || at <= colon) {
+ 		/* Only username */
+-		user_name = url_decode_mem(cp, at - cp);
+-		user_pass = NULL;
++		http_auth.username = url_decode_mem(cp, at - cp);
++		host = at + 1;
+ 	} else {
+-		user_name = url_decode_mem(cp, colon - cp);
+-		user_pass = url_decode_mem(colon + 1, at - (colon + 1));
++		http_auth.username = url_decode_mem(cp, colon - cp);
++		http_auth.password = url_decode_mem(colon + 1, at - (colon + 1));
++		host = at + 1;
+ 	}
 +
-+int credential_fill_gently(struct credential *c,
-+			   const struct string_list *methods)
-+{
-+	int i;
-+
-+	if (c->username && c->password)
-+		return 0;
-+
-+	if (!methods || !methods->nr)
-+		return credential_getpass(c);
-+
-+	for (i = 0; i < methods->nr; i++) {
-+		if (!credential_do(c, methods->items[i].string, NULL) &&
-+		    c->username && c->password)
-+			return 0;
-+	}
-+
-+	return -1;
-+}
-+
-+void credential_reject(struct credential *c, const struct string_list *methods)
-+{
-+	int i;
-+
-+	if (methods && c->username) {
-+		for (i = 0; i < methods->nr; i++) {
-+			/* ignore errors, there's nothing we can do */
-+			credential_do(c, methods->items[i].string, "--reject");
-+		}
-+	}
-+
-+	free(c->username);
-+	c->username = NULL;
-+	free(c->password);
-+	c->password = NULL;
-+}
-diff --git a/credential.h b/credential.h
-new file mode 100644
-index 0000000..383b720
---- /dev/null
-+++ b/credential.h
-@@ -0,0 +1,19 @@
-+#ifndef CREDENTIAL_H
-+#define CREDENTIAL_H
-+
-+struct credential {
-+	char *description;
-+	char *username;
-+	char *password;
-+	char *unique;
-+};
-+
-+struct string_list;
-+
-+int credential_getpass(struct credential *);
-+
-+int credential_fill_gently(struct credential *, const struct string_list *methods);
-+void credential_fill(struct credential *, const struct string_list *methods);
-+void credential_reject(struct credential *, const struct string_list *methods);
-+
-+#endif /* CREDENTIAL_H */
-diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
-new file mode 100755
-index 0000000..447e983
---- /dev/null
-+++ b/t/t0300-credentials.sh
-@@ -0,0 +1,175 @@
-+#!/bin/sh
-+
-+test_description='basic credential helper tests'
-+. ./test-lib.sh
-+
-+# Try a set of credential helpers; the expected
-+# stdout and stderr should be provided on stdin,
-+# separated by "--".
-+check() {
-+	while read line; do
-+		case "$line" in
-+		--) break ;;
-+		*) echo "$line" ;;
-+		esac
-+	done >expect-stdout &&
-+	cat >expect-stderr &&
-+	test-credential "$@" >stdout 2>stderr &&
-+	test_cmp expect-stdout stdout &&
-+	test_cmp expect-stderr stderr
-+}
-+
-+test_expect_success 'setup helper scripts' '
-+	cat >dump <<-\EOF &&
-+	whoami=$1; shift
-+	if test $# = 0; then
-+		echo >&2 "$whoami: <empty>"
-+	else
-+		for i in "$@"; do
-+			echo >&2 "$whoami: $i"
-+		done
-+	fi
-+	EOF
-+	chmod +x dump &&
-+
-+	cat >git-credential-useless <<-\EOF &&
-+	#!/bin/sh
-+	dump useless "$@"
-+	exit 0
-+	EOF
-+	chmod +x git-credential-useless &&
-+
-+	cat >git-credential-verbatim <<-\EOF &&
-+	#!/bin/sh
-+	user=$1; shift
-+	pass=$1; shift
-+	dump verbatim "$@"
-+	test -z "$user" || echo username=$user
-+	test -z "$pass" || echo password=$pass
-+	EOF
-+	chmod +x git-credential-verbatim &&
-+
-+	cat >askpass <<-\EOF &&
-+	#!/bin/sh
-+	echo >&2 askpass: $*
-+	echo askpass-result
-+	EOF
-+	chmod +x askpass &&
-+	GIT_ASKPASS=askpass &&
-+	export GIT_ASKPASS &&
-+
-+	PATH="$PWD:$PATH"
-+'
-+
-+test_expect_success 'credential_fill invokes helper' '
-+	check "verbatim foo bar" <<-\EOF
-+	username=foo
-+	password=bar
-+	--
-+	verbatim: <empty>
-+	EOF
-+'
-+
-+test_expect_success 'credential_fill invokes multiple helpers' '
-+	check useless "verbatim foo bar" <<-\EOF
-+	username=foo
-+	password=bar
-+	--
-+	useless: <empty>
-+	verbatim: <empty>
-+	EOF
-+'
-+
-+test_expect_success 'credential_fill stops when we get a full response' '
-+	check "verbatim one two" "verbatim three four" <<-\EOF
-+	username=one
-+	password=two
-+	--
-+	verbatim: <empty>
-+	EOF
-+'
-+
-+test_expect_success 'credential_fill continues through partial response' '
-+	check "verbatim one \"\"" "verbatim two three" <<-\EOF
-+	username=two
-+	password=three
-+	--
-+	verbatim: <empty>
-+	verbatim: --username=one
-+	EOF
-+'
-+
-+test_expect_success 'credential_fill passes along metadata' '
-+	check --description=foo --unique=bar "verbatim one two" <<-\EOF
-+	username=one
-+	password=two
-+	--
-+	verbatim: --description=foo
-+	verbatim: --unique=bar
-+	EOF
-+'
-+
-+test_expect_success 'credential_reject calls all helpers' '
-+	check --reject --username=foo useless "verbatim one two" <<-\EOF
-+	--
-+	useless: --reject
-+	useless: --username=foo
-+	verbatim: --reject
-+	verbatim: --username=foo
-+	EOF
-+'
-+
-+test_expect_success 'do not bother rejecting empty credential' '
-+	check --reject useless <<-\EOF
-+	--
-+	EOF
-+'
-+
-+test_expect_success 'usernames can be preserved' '
-+	check --username=one "verbatim \"\" three" <<-\EOF
-+	username=one
-+	password=three
-+	--
-+	verbatim: --username=one
-+'
-+
-+test_expect_success 'usernames can be overridden' '
-+	check --username=one "verbatim two three" <<-\EOF
-+	username=two
-+	password=three
-+	--
-+	verbatim: --username=one
-+	EOF
-+'
-+
-+test_expect_success 'do not bother completing already-full credential' '
-+	check --username=one --password=two "verbatim three four" <<-\EOF
-+	username=one
-+	password=two
-+	--
-+	EOF
-+'
-+
-+# We can't test the basic terminal password prompt here because
-+# getpass() tries too hard to find the real terminal. But if our
-+# askpass helper is run, we know the internal getpass is working.
-+test_expect_success 'empty methods falls back to internal getpass' '
-+	check <<-\EOF
-+	username=askpass-result
-+	password=askpass-result
-+	--
-+	askpass: Username:
-+	askpass: Password:
-+	EOF
-+'
-+
-+test_expect_success 'internal getpass does not ask for known username' '
-+	check --username=foo <<-\EOF
-+	username=foo
-+	password=askpass-result
-+	--
-+	askpass: Password:
-+	EOF
-+'
-+
-+test_done
-diff --git a/test-credential.c b/test-credential.c
-new file mode 100644
-index 0000000..3929efd
---- /dev/null
-+++ b/test-credential.c
-@@ -0,0 +1,47 @@
-+#include "cache.h"
-+#include "credential.h"
-+#include "string-list.h"
-+#include "parse-options.h"
-+
-+int main(int argc, const char **argv)
-+{
-+	int reject = 0;
-+	struct credential c = { NULL };
-+	struct string_list methods = STRING_LIST_INIT_NODUP;
-+	const char *const usage[] = {
-+		"test-credential [options] [method...]",
-+		NULL
-+	};
-+	struct option options[] = {
-+		OPT_BOOLEAN(0, "reject", &reject, "reject"),
-+		OPT_STRING(0, "description", &c.description, "desc",
-+			   "description"),
-+		OPT_STRING(0, "unique", &c.unique, "token",
-+			   "unique"),
-+		OPT_STRING(0, "username", &c.username, "name", "username"),
-+		OPT_STRING(0, "password", &c.password, "pass", "password"),
-+		OPT_END()
-+	};
-+	int i;
-+
-+	argc = parse_options(argc, argv, NULL, options, usage, 0);
-+	for (i = 0; i < argc; i++)
-+		string_list_append(&methods, argv[i]);
-+	/* credential_reject will try to free() */
-+	if (c.username)
-+		c.username = xstrdup(c.username);
-+	if (c.password)
-+		c.password = xstrdup(c.password);
-+
-+	if (reject)
-+		credential_reject(&c, &methods);
-+	else
-+		credential_fill(&c, &methods);
-+
-+	if (c.username)
-+		printf("username=%s\n", c.username);
-+	if (c.password)
-+		printf("password=%s\n", c.password);
-+
-+	return 0;
-+}
++	strbuf_add(&unique, url, proto_end - url);
++	strbuf_addch(&unique, ':');
++	decoded = url_decode_mem(host, slash - host);
++	strbuf_addstr(&unique, decoded);
++	free(decoded);
++	http_auth.unique = strbuf_detach(&unique, NULL);
+ }
+ 
+ static void set_from_env(const char **var, const char *envname)
+@@ -456,10 +471,10 @@ void http_cleanup(void)
+ 		curl_http_proxy = NULL;
+ 	}
+ 
+-	if (ssl_cert_password != NULL) {
+-		memset(ssl_cert_password, 0, strlen(ssl_cert_password));
+-		free(ssl_cert_password);
+-		ssl_cert_password = NULL;
++	if (cert_auth.password) {
++		memset(cert_auth.password, 0, strlen(cert_auth.password));
++		free(cert_auth.password);
++		cert_auth.password = NULL;
+ 	}
+ 	ssl_cert_password_required = 0;
+ }
+@@ -819,16 +834,11 @@ static int http_request(const char *url, void *result, int target, int options)
+ 		else if (missing_target(&results))
+ 			ret = HTTP_MISSING_TARGET;
+ 		else if (results.http_code == 401) {
+-			if (user_name) {
++			if (http_auth.username) {
++				credential_reject(&http_auth, NULL);
+ 				ret = HTTP_NOAUTH;
+ 			} else {
+-				/*
+-				 * git_getpass is needed here because its very likely stdin/stdout are
+-				 * pipes to our parent process.  So we instead need to use /dev/tty,
+-				 * but that is non-portable.  Using git_getpass() can at least be stubbed
+-				 * on other platforms with a different implementation if/when necessary.
+-				 */
+-				user_name = xstrdup(git_getpass("Username: "));
++				credential_fill(&http_auth, NULL);
+ 				init_curl_http_auth(slot->curl);
+ 				ret = HTTP_REAUTH;
+ 			}
+diff --git a/t/t5550-http-fetch.sh b/t/t5550-http-fetch.sh
+index ed4db09..af3bc6b 100755
+--- a/t/t5550-http-fetch.sh
++++ b/t/t5550-http-fetch.sh
+@@ -66,7 +66,7 @@ test_expect_success 'cloning password-protected repository can fail' '
+ 
+ test_expect_success 'http auth can use user/pass in URL' '
+ 	>askpass-query &&
+-	echo wrong >askpass-reponse &&
++	echo wrong >askpass-response &&
+ 	git clone "$HTTPD_URL_USER_PASS/auth/repo.git" clone-auth-none &&
+ 	test_cmp askpass-expect-none askpass-query
+ '
 -- 
 1.7.6.rc1.12.g65e2
