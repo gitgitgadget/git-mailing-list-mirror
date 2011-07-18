@@ -1,69 +1,92 @@
-From: Mike Shal <marfey@gmail.com>
-Subject: Re: git show-branch --topics and merge commits
-Date: Sun, 17 Jul 2011 23:37:47 -0400
-Message-ID: <CA+6x0LXHKZgvW4_hWz8qrWQshqxB3pQ-=08itqnV5smA_NCrBA@mail.gmail.com>
-References: <CA+6x0LWXz-SpnZjdiV3UKJzUz3+0LiMOsbZHTn2gJ+v6bPGndA@mail.gmail.com>
-	<7v8vrwl46q.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git commit generation numbers
+Date: Sun, 17 Jul 2011 23:41:06 -0400
+Message-ID: <20110718034106.GB2468@sigill.intra.peff.net>
+References: <20110714200144.GE26918@sigill.intra.peff.net>
+ <69e0ad24-32b7-4e14-9492-6d0c3d653adf@email.android.com>
+ <20110714203141.GA28548@sigill.intra.peff.net>
+ <CA+55aFyDzr+SfgSzWMr9pQuQUXTw9mcjZ-00NZof74PKZzbGPA@mail.gmail.com>
+ <20110715074656.GA31301@sigill.intra.peff.net>
+ <CA+55aFzS3KDNvKt-dXvYpuAQwFwD3+GCj8y8bRQCycPvrynT8Q@mail.gmail.com>
+ <CAJo=hJtuxNLhSjn_sDJxG7xu5k2wbJ_QLf_n+Z1E=o2AndAuJQ@mail.gmail.com>
+ <CA+55aFw_XjWm+4XwsN6CRJnsrcEu5YEChOHSHN51UUBN6PynWw@mail.gmail.com>
+ <20110715184211.GH8453@thunk.org>
+ <CAP8UFD3p8rv9BoPkTYSr_qRztKhWmmHgjHi0pZ6gN9YzkSX0Jw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 18 05:37:54 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Ted Ts'o <tytso@mit.edu>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Shawn Pearce <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 18 05:41:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QieeX-0001QH-M2
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 05:37:54 +0200
+	id 1Qiehm-00023v-En
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 05:41:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756186Ab1GRDhs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jul 2011 23:37:48 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:60007 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756044Ab1GRDhs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jul 2011 23:37:48 -0400
-Received: by vxh35 with SMTP id 35so1371927vxh.19
-        for <git@vger.kernel.org>; Sun, 17 Jul 2011 20:37:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=sLorQcPnY63hptfYAdxJF7u5r1v8x0okjDCpr4IJMew=;
-        b=iYh0KRIq7vN7HaRWV6zqZgeU9oxFigV/g2JMaZsbe3sCcsf3Yp0Vb/+5lCXwceb/6M
-         9rD+sWppLASou2skXSDy6ddS0E9iYhfshqCVCVWnI3ZwgKqYdrWt+jdysF4gWHt//V8R
-         UaaqVUUGoxbOCsZa4BT/84Pjho/18TIT+aDSM=
-Received: by 10.52.180.8 with SMTP id dk8mr5687173vdc.377.1310960267221; Sun,
- 17 Jul 2011 20:37:47 -0700 (PDT)
-Received: by 10.52.188.102 with HTTP; Sun, 17 Jul 2011 20:37:47 -0700 (PDT)
-In-Reply-To: <7v8vrwl46q.fsf@alter.siamese.dyndns.org>
+	id S1756044Ab1GRDlK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jul 2011 23:41:10 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44514
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752272Ab1GRDlI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jul 2011 23:41:08 -0400
+Received: (qmail 17665 invoked by uid 107); 18 Jul 2011 03:41:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 17 Jul 2011 23:41:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 17 Jul 2011 23:41:06 -0400
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD3p8rv9BoPkTYSr_qRztKhWmmHgjHi0pZ6gN9YzkSX0Jw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177335>
 
-On Sun, Jul 17, 2011 at 10:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Mike Shal <marfey@gmail.com> writes:
->
->> So rev-list shows my merge commit and the 'new' commit, but
->> show-branch --topics doesn't show 'new'. Is this the expected
->> behavior?
->
-> Yes, show-branch was specifically written for people with strict sense of
-> project hygiene who do not merge into their topic from upstream (which
-> would turn the branch from "place to hold commits on this topic" into
-> "place to hold commits on this topic and unrelated random changes made in
-> upstream").
->
->
+On Sat, Jul 16, 2011 at 11:16:45AM +0200, Christian Couder wrote:
 
-Ok, makes sense. Is 'git rev-list' supposed to give the same list of
-commits then? In my example, rev-list shows the commit on the branch
-even after upstream has been merged in. My confusion comes from this
-line in the man page of git-show-branch:
+> If  "git tag --contains" and "git branch --contains" give incorrect
+> answers because the commiter date is wrong in some commits, then why
+> not use "git replace" to "change" the commiter date in the commits
+> that have a wrong date? Is it because you don't want to use "git
+> replace", or because there is no script to do it automatically, or is
+> there another reason?
 
-   When given "git show-branch --topics master topic1 topic2", this
-will show the revisions given by "git rev-list ^master topic1 topic2"
+That would work. There are a few tricky things, though:
 
-Thanks again,
--Mike
+  1. Most commits have less than 100 skewed commits. But some have many
+     (e.g., thousands in the mesa repo). How well does git cope with
+     large numbers of replace refs, performance-wise?
+
+  2. Declaring which commits are skewed is actually tricky. You can find
+     a commit whose timestamp is less than the timestamp of one of its
+     ancestors. But you don't know whether it is skewed, or the
+     ancestor.
+
+     If you are implementing a list of commits whose timestamps
+     shouldn't be used for traversal cutoff, it doesn't really matter
+     who is _right_; you just care about whether the timestamps are
+     strictly increasing from that point.
+
+     But once you start replacing commits, you need to put in a
+     reasonable value for the timestamp. So you may well be replacing a
+     perfectly valid commit with one that has bogus, skewed information
+     in the commit timestamp.
+
+  3. Any value you put in is actually going to be a lie during things
+     like "git log --pretty=raw". That may be OK. But it is letting an
+     optimization meant to make traversal fast and accurate bleed into
+     the actual data we show the user.
+
+  4. Sometimes we need to do traversals on the real objects (e.g.,
+     because we are doing upload-pack). To get the benefit, those
+     traversals would presumably need to look at both the original
+     object and the replacement, use the timestamp from the replacement
+     for traversal, but otherwise use the original object.
+
+-Peff
