@@ -1,136 +1,69 @@
-From: Michael <git-scm@webhippo.net>
-Subject: Bug Report: Creating a hardlink to any of the file in git repo
- cause the source file  to show up in git commit message editor under
- "Changes not staged for commit" section.
-Date: Sun, 17 Jul 2011 20:24:50 -0700
-Message-ID: <6f37875d70623e2b8966653b067a2149@mail.mxes.net>
-Reply-To: git-scm@webhippo.net
+From: Mike Shal <marfey@gmail.com>
+Subject: Re: git show-branch --topics and merge commits
+Date: Sun, 17 Jul 2011 23:37:47 -0400
+Message-ID: <CA+6x0LXHKZgvW4_hWz8qrWQshqxB3pQ-=08itqnV5smA_NCrBA@mail.gmail.com>
+References: <CA+6x0LWXz-SpnZjdiV3UKJzUz3+0LiMOsbZHTn2gJ+v6bPGndA@mail.gmail.com>
+	<7v8vrwl46q.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 18 05:32:26 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 18 05:37:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QieZE-0000Oh-4E
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 05:32:24 +0200
+	id 1QieeX-0001QH-M2
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 05:37:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755690Ab1GRDcT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jul 2011 23:32:19 -0400
-Received: from fallback-out2.mxes.net ([216.86.168.191]:46262 "EHLO
-	fallback-in2.mxes.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752899Ab1GRDcS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jul 2011 23:32:18 -0400
-X-Greylist: delayed 447 seconds by postgrey-1.27 at vger.kernel.org; Sun, 17 Jul 2011 23:32:18 EDT
-Received: from mxout-08.mxes.net (mxout-08.mxes.net [216.86.168.183])
-	by fallback-in1.mxes.net (Postfix) with ESMTP id 1E0B12FDBDE
-	for <git@vger.kernel.org>; Sun, 17 Jul 2011 23:24:53 -0400 (EDT)
-Received: from wm2.irbs.net (wm2.irbs.net [216.86.168.169])
-	by smtp.mxes.net (Postfix) with ESMTP id 1D09450A65
-	for <git@vger.kernel.org>; Sun, 17 Jul 2011 23:24:51 -0400 (EDT)
-Received: from wmbeta.mxes.net (wm2.irbs.net [216.86.168.169])
-	by wm2.irbs.net (Postfix) with ESMTPA id EA58E853C5
-	for <git@vger.kernel.org>; Sun, 17 Jul 2011 23:24:50 -0400 (EDT)
-X-Sender: git-scm@webhippo.net
-User-Agent: RoundCube Webmail/0.4.2
+	id S1756186Ab1GRDhs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jul 2011 23:37:48 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:60007 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756044Ab1GRDhs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jul 2011 23:37:48 -0400
+Received: by vxh35 with SMTP id 35so1371927vxh.19
+        for <git@vger.kernel.org>; Sun, 17 Jul 2011 20:37:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=sLorQcPnY63hptfYAdxJF7u5r1v8x0okjDCpr4IJMew=;
+        b=iYh0KRIq7vN7HaRWV6zqZgeU9oxFigV/g2JMaZsbe3sCcsf3Yp0Vb/+5lCXwceb/6M
+         9rD+sWppLASou2skXSDy6ddS0E9iYhfshqCVCVWnI3ZwgKqYdrWt+jdysF4gWHt//V8R
+         UaaqVUUGoxbOCsZa4BT/84Pjho/18TIT+aDSM=
+Received: by 10.52.180.8 with SMTP id dk8mr5687173vdc.377.1310960267221; Sun,
+ 17 Jul 2011 20:37:47 -0700 (PDT)
+Received: by 10.52.188.102 with HTTP; Sun, 17 Jul 2011 20:37:47 -0700 (PDT)
+In-Reply-To: <7v8vrwl46q.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177334>
 
- Creating a hardlink to any of the file in git repo cause the source 
- file
- to show up in git commit message editor under "Changes not staged for 
- commit"
- section.
+On Sun, Jul 17, 2011 at 10:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Mike Shal <marfey@gmail.com> writes:
+>
+>> So rev-list shows my merge commit and the 'new' commit, but
+>> show-branch --topics doesn't show 'new'. Is this the expected
+>> behavior?
+>
+> Yes, show-branch was specifically written for people with strict sense of
+> project hygiene who do not merge into their topic from upstream (which
+> would turn the branch from "place to hold commits on this topic" into
+> "place to hold commits on this topic and unrelated random changes made in
+> upstream").
+>
+>
 
- Reproduced on:
- Ubuntu 10.04, Gentoo, FreeBSD
- Git version: 1.7.6
+Ok, makes sense. Is 'git rev-list' supposed to give the same list of
+commits then? In my example, rev-list shows the commit on the branch
+even after upstream has been merged in. My confusion comes from this
+line in the man page of git-show-branch:
 
- Bug has been observed by atleast 3 people.
+   When given "git show-branch --topics master topic1 topic2", this
+will show the revisions given by "git rev-list ^master topic1 topic2"
 
- Follow these steps to reproduce:
-
- # create test repo
- cd /tmp
- mkdir -p test-repo/repo
- cd test-repo/repo
- git init
- git config user.name "Foo"
- git config user.email "foo@example.com"
-
- # put some files in the repo
- touch FILE1 FILE2 FILE3 FILE4 FILE5
- git add -A
- git commit -m "initial commit"
-
- # create git hook that hardlink FILE2 and FILE3 and remove the 
- hardlinks
- # right then and there
- echo "ln -vf FILE2 ../HARDLINK_TO_FILE2" >| .git/hooks/pre-commit
- echo "rm -vf ../HARDLINK_TO_FILE2" >> .git/hooks/pre-commit
- echo "ln -vf FILE3 ../HARDLINK_TO_FILE3" >> .git/hooks/pre-commit
- echo "rm -vf ../HARDLINK_TO_FILE3" >> .git/hooks/pre-commit
-
- # make pre-commit executable
- chmod u+x .git/hooks/pre-commit
-
- # modify FILE1
- echo "hello world" >> FILE1
-
- # run git status
- git status
- -------------------------------------------------------------------------------
- # On branch master
- # Changes not staged for commit:
- #   (use "git add <file>..." to update what will be committed)
- #   (use "git checkout -- <file>..." to discard changes in working 
- directory)
- #
- #       modified:   FILE1
- #
- no changes added to commit (use "git add" and/or "git commit -a")
- -------------------------------------------------------------------------------
-
- # try commit using nano as commit editor and without usin -a flag
- VISUAL=nano git commit FILE1
-
- # Despite the fact that they are modified FILE2 and FILE3 will show in 
- the
- # commit message, under "Changes not staged for commit" section
- # like so:
-
- --------------------------------------------------------------------------------
- # Please enter the commit message for your changes. Lines starting
- # with '#' will be ignored, and an empty message aborts the commit.
- # Explicit paths specified without -i nor -o; assuming --only paths...
- # On branch master
- # Changes to be committed:
- #   (use "git reset HEAD <file>..." to unstage)
- #
- #       modified:   FILE1
- #
- # Changes not staged for commit:
- #   (use "git add <file>..." to update what will be committed)
- #   (use "git checkout -- <file>..." to discard changes in working 
- directory)
- #
- #       modified:   FILE2
- #       modified:   FILE3
- #
- --------------------------------------------------------------------------------
-
-
- In case anyone interested, tor me this happens when I do a python EGG 
- build
- which hardlinks files in order to build.
-
-
- -- Michael
+Thanks again,
+-Mike
