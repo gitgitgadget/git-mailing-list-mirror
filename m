@@ -1,137 +1,120 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: git-archive and tar options
-Date: Mon, 18 Jul 2011 14:31:58 -0500
-Message-ID: <4E248A2E.3090902@gmail.com>
-References: <ivla29$liu$1@dough.gmane.org> <20110714015656.GA20136@sigill.intra.peff.net> <4E1F2468.6080409@lsrfire.ath.cx> <20110714172718.GA21341@sigill.intra.peff.net> <7vei1s36bl.fsf@alter.siamese.dyndns.org> <20110714212502.GA29848@sigill.intra.peff.net> <7vwrfk1lv3.fsf@alter.siamese.dyndns.org> <4E20AA42.7000003@lsrfire.ath.cx>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 11/17] revert: Save data for continuing after conflict resolution
+Date: Tue, 19 Jul 2011 01:01:55 +0530
+Message-ID: <CALkWK0kZ3nWnnGe1OHXWgiZ8ik9iNW803wi2d6kUiNDpiOWNDA@mail.gmail.com>
+References: <1310396048-24925-1-git-send-email-artagnon@gmail.com>
+ <1310396048-24925-12-git-send-email-artagnon@gmail.com> <20110712193716.GB14909@elie>
+ <CALkWK0nyu6W2Nd=qcrjZZwkAdFGqTqAe53FmecS_n2cK_4UWMg@mail.gmail.com> <20110717184057.GD27787@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
-To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Mon Jul 18 21:32:20 2011
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 18 21:32:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QitY7-0006Zz-CR
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 21:32:15 +0200
+	id 1QitYH-0006e8-Ba
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 21:32:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751481Ab1GRTcK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Jul 2011 15:32:10 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:59011 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750921Ab1GRTcJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jul 2011 15:32:09 -0400
-Received: by gyh3 with SMTP id 3so1463090gyh.19
-        for <git@vger.kernel.org>; Mon, 18 Jul 2011 12:32:08 -0700 (PDT)
+	id S1754788Ab1GRTcR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Jul 2011 15:32:17 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:37097 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751106Ab1GRTcQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Jul 2011 15:32:16 -0400
+Received: by wwe5 with SMTP id 5so3492045wwe.1
+        for <git@vger.kernel.org>; Mon, 18 Jul 2011 12:32:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=eco9YkeZ4NDn9rXY3e5vZ5Xj10tzLpGHYblmOhLK0z0=;
-        b=cWmj1PEYM/gHXukfSFlKEkU2FLlobZ410fSNSO75N8EKzaqLXRT36IiNYPiFJjmajA
-         UXMDsVX4s2YDDR61YmBDQNHDpDKa0e73Ux4NCyvtH572S5d5LIeQrxuOyunbTGWzlo0i
-         ovkROKphg6gSn7dxpQ0+c1y5QuQPHRq37vFl0=
-Received: by 10.236.37.233 with SMTP id y69mr6184481yha.59.1311017527890;
-        Mon, 18 Jul 2011 12:32:07 -0700 (PDT)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id z28sm3378034yhn.7.2011.07.18.12.32.03
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 18 Jul 2011 12:32:06 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.18) Gecko/20110616 Thunderbird/3.1.11
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <4E20AA42.7000003@lsrfire.ath.cx>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=RP+/IeELSnf2E1kWNsGi+cZrKRD2H426jucEfpnb78I=;
+        b=fYX91IAMlhoJ9efkAnytsMXOqeTp9ecDjWjsS3M8MKBmcvePXVnCPp0g1j6z/AmFkR
+         KGcwkaX5u0AeuZS+NjUDzyfJIp0SVZ3xgq+ncZ1V5/qub1hP959mX0KR3Up3KdLBsaEg
+         sWPWrJ1RgdwE3mW/P/gAKhiPnOYBnvQdCu8yw=
+Received: by 10.227.207.15 with SMTP id fw15mr6024525wbb.66.1311017535203;
+ Mon, 18 Jul 2011 12:32:15 -0700 (PDT)
+Received: by 10.216.234.143 with HTTP; Mon, 18 Jul 2011 12:31:55 -0700 (PDT)
+In-Reply-To: <20110717184057.GD27787@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177400>
 
-On 7/15/2011 3:59 PM, Ren=E9 Scharfe wrote:
-> Am 15.07.2011 01:30, schrieb Junio C Hamano:
->> Jeff King<peff@peff.net>  writes:
->>
->>>> Why?
->>>>
->>>> The tree you are writing out that way look very different from
->>>>  what is recorded in the commit object. What's the point of
->>>> introducing confusion by allowing many tarballs with different
->>>>  contents written from the same commits with such tweaks all
->>>> labelled with the same pax header?
->>>
->>> See my later message. I think it depends on how the embedded id
->>> is used. Is it to say "this represents the tree of this git
->>> commit"? Or is it to help people who later have a tarball and
->>> have no clue which commit it might have come from?
->>
->> People, who have no clue which part of the subtree was extract and
->>  what leading path was added, would still have to wonder where the
->>  tree came from even with the embedded id. Without your patch, if
->> the tarball has an embedded id, wouldn't they at least be able to
->> assume it is the whole thing of that commit? If you label a
->> randomly mutated tree with the same label, you cannot tell the
->> genuine one from manipulated ones.
->>
->> Not that I have strong opinions on this, either, but that is what I
->> meant by "_introducing_" confusion.
+Hi again,
+
+Jonathan Nieder writes:
+> Ramkumar Ramachandra wrote:
+>> fatal: Malformed instruction sheet: .git/sequencer/todo
+>> Technically speaking, this is correct. =C2=A0However, this may not b=
+e ideal
+>> from an end-user's perspective. =C2=A0Anyway, this is going to chang=
+e soon
+>> -- do you think this is worth correcting here and now?
 >
-> When we started to write the ID into generated archives, there was
-> only git-tar-tree and no<rev>:<path>  syntax.  It would write the ID
->  only if it was given a commit and not if it got a tree or if the
-> user started it from a subdirectory.  The result was that only the
-> full tree of a commit was branded with the commit ID.
->
-> Now we have git archive, a more flexible command line syntax all
-> around, path limiting as well as attributes that can affect the
-> contents of the files in the archive.  Back then the commmit ID was
-> sufficient as a concise and canonical label of the archive contents,
->  but now things are a bit more complicated.
->
-> Which use cases are we aiming for?  Do we want to include all of the
-> command line arguments (with revs resolved to SHA1-IDs)?  Only those
-> that modify archive contents?  And any applied attributes?  Or do we
-> want to get stricter and only write the commit ID if a full unchanged
-> tree of a commit is being archived?
->
-In regards to the use cases you enumerated, I think logging the command
-line syntax along with the appropriate ref context (HEAD value, etc)
-would document exactly what's in the archive.
+> Yes, thanks. =C2=A0(A bird in the hand and all that.)
 
-In regards to use cases in general, my impression is that git-archive i=
-s=20
-for producing archives useful for deployment.  The target deployed=20
-structure may vary so expecting the source git repo to reflect this is=20
-unfeasable.  It seems like utilizing the local tar installation would=20
-effect the necessary transformations. I'm not sure what the source and=20
-target tar version disparity problems might me.
+Okay, I thought about this for a while.  Either we can:
+1. Assume that there'll never be a stray "revert" somewhere in the
+middle of the instruction sheet when we invoke a "cherry-pick
+--continue" and viceversa (ie. the instruction sheet is not corrupt/
+hand-edited).  We can return a special exit status from the parser the
+moment we encounter a "revert" during a "cherry-pick" assuming that
+the entire sheet is filled with "revert" instructions, and die in
+process_subcommand (now changed to pick_revisions) with a beautiful
+message like "You're trying to resume a previous revert using
+cherry-pick --continue, and we don't currently support this".
+2. We can modify the API of the parser heavily to parse action +
+commit instead of just commits.  Then, we can iterate through the list
+and find/ report inconsistencies in process_subcommand.  In this case,
+we can say "You're trying to resume a cherry-pick, but your
+instruction sheet contains some revert instructions" or "You're trying
+to resume a previous revert using cherry-pick --continue, and we don't
+currently support this" as appropriate (after counting).  Although
+this has a very beautiful end-user effect, I don't like the idea of
+returning action + commit and counting.
+3. Instead of just saying "fatal: Malformed instruction sheet" like we
+do now, we can put in something a little more helpful like "error:
+Cannot cherry-pick during a revert" before this message.  So:
 
-A practical problem with the pax header is that its only useful if you
-still have the archive.  Archives usually get deleted after being
-extracted.  Therefore, an option to also generate (and add to the=20
-archive) an automatic "VERSION.TXT" file of some sort which specifies=20
-the context of the archive would be much more useful.  It would need it=
-s=20
-own --prefix option because oftentimes it would be dynamically generate=
-d=20
-based on the git-archive request.
+$ git cherry-pick moo
+=2E.. conflict ...
+# resolve conflict
+$ git revert --continue
+error: Cannot cherry-pick during a revert
+fatal: Malformed instruction sheet
 
-Another use case is that it seems like there should also be the option=20
-to only tar the objects changed between a specified range of commits.=20
-However, I'm not sure if tar can handle deletions (moves, deletions,=20
-renames) upon extraction in this context.
+This makes it clear to the user that the instruction sheet is to
+blame, and in what way.  This is simple, and makes no assumptions
+about whether or not the instruction sheet was hand-edited by the
+user, so I like this.
 
-I can see that my use cases are something that I can script myself, but=
-=20
-to do so it seems like I would be better off using a non-bare repo=20
-checkout as an intermediary.  If that is what I am expected to do then =
-I=20
-am not sure what the usefulness of git-archive is intended to be.  Mayb=
-e=20
-I don't understand what others use it for.
+Thoughts?
 
-v/r,
-neal
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 0df724f..fcbf2a1 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -667,8 +667,13 @@ static struct commit *parse_insn_line(char
+*start, struct replay_opts *opts)
+ 	 * Verify that the action matches up with the one in
+ 	 * opts; we don't support arbitrary instructions
+ 	 */
+-	if (action !=3D opts->action)
++	if (action !=3D opts->action) {
++		const char *action_str;
++		action_str =3D action =3D=3D REVERT ? "revert" : "cherry-pick";
++		error(_("Cannot %s during a %s"), action_str,
++			action_name(opts));
+ 		return NULL;
++	}
+
+ 	if ((get_sha1(sha1_abbrev, commit_sha1) < 0)
+ 		|| !(commit =3D lookup_commit_reference(commit_sha1)))
