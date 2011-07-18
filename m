@@ -1,89 +1,91 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: git-ftp: retry, sftp support
-Date: Mon, 18 Jul 2011 04:09:59 -0400
-Message-ID: <CACPiFCK4B96cTAz8JEBMOpktZG2R5HsYA2YgEdRuqO55XTOVcg@mail.gmail.com>
-References: <CACPiFCL22yr096_nNfjvfP_bkJRC7HA65GUF12wedzV=cz-_kg@mail.gmail.com>
- <m3vcv0yqb4.fsf@localhost.localdomain>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: How to push the very last modification only ?
+Date: Mon, 18 Jul 2011 20:58:51 +1200
+Message-ID: <4E23F5CB.3090009@gmail.com>
+References: <20110718131730.4898ddaf@shiva.selfip.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?Ren=E9_Moser?= <mail@renemoser.net>,
-	Timo Besenreuther <timo.besenreuther@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 18 10:10:30 2011
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "J. Bakshi" <joydeep@infoservices.in>
+X-From: git-owner@vger.kernel.org Mon Jul 18 10:58:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QiiuK-0002VU-JI
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 10:10:28 +0200
+	id 1QijfB-0002cx-Ao
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 10:58:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752968Ab1GRIKV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Jul 2011 04:10:21 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:52522 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750745Ab1GRIKT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Jul 2011 04:10:19 -0400
-Received: by vxh35 with SMTP id 35so1449309vxh.19
-        for <git@vger.kernel.org>; Mon, 18 Jul 2011 01:10:19 -0700 (PDT)
+	id S1753545Ab1GRI6r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jul 2011 04:58:47 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:64394 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753195Ab1GRI6r (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jul 2011 04:58:47 -0400
+Received: by pvg12 with SMTP id 12so2809757pvg.19
+        for <git@vger.kernel.org>; Mon, 18 Jul 2011 01:58:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Rim/La75aSieBytbuLPn0PbWOEO3o/I6Lt89/cV+Nio=;
-        b=jqxhDC4q0qRGbDgM7QKWsI1YnpQOWXrQS3vH9bbWrPb8vSZC0j5jU8atGXxVAZjm9L
-         QqyiTcx0TDxQGj/mUqOHy+rShX18NZWIHDot5oSYgZ5h0lBZKwssWL6BTpjKFNZJX5dP
-         ltzeXuq/kw6evLiOVhqY8/RnT5JT/ZWz328k0=
-Received: by 10.52.24.147 with SMTP id u19mr2475764vdf.525.1310976619180; Mon,
- 18 Jul 2011 01:10:19 -0700 (PDT)
-Received: by 10.220.200.132 with HTTP; Mon, 18 Jul 2011 01:09:59 -0700 (PDT)
-In-Reply-To: <m3vcv0yqb4.fsf@localhost.localdomain>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=aYxmY3S3uDrIiQOMUpknaMdN2oAdVl+rjRU2SGG17To=;
+        b=FMZzq0K8piN/15rhoJJQaa3IzNqarIa8MjcSE3Lq6w0HX+lg9Y6hVMXx6meq2KRUgr
+         iLtNzjKm+T4HaVIgtn1s38SjVmvKTnAQaTjwplVKwlkTKkb8d25YkdA+r5/tG6GmqU8q
+         cDPl7osLnmNoJ+/gXT8nljCuBKSep46yMTYwA=
+Received: by 10.142.140.3 with SMTP id n3mr71674wfd.101.1310979526661;
+        Mon, 18 Jul 2011 01:58:46 -0700 (PDT)
+Received: from laptop.site (115-188-15-163.jetstream.xtra.co.nz [115.188.15.163])
+        by mx.google.com with ESMTPS id d1sm2383839pbj.88.2011.07.18.01.58.44
+        (version=SSLv3 cipher=OTHER);
+        Mon, 18 Jul 2011 01:58:45 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.2.18) Gecko/20110616 SUSE/3.1.11 Thunderbird/3.1.11
+In-Reply-To: <20110718131730.4898ddaf@shiva.selfip.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177361>
 
-2011/7/18 Jakub Narebski <jnareb@gmail.com>:
-> Martin Langhoff <martin.langhoff@gmail.com> writes:
->
->> Ren=E9, Timo,
->>
->> Thanks for git-ftp -- it has saved me from going crazy with low cost
->> hosting setups that only support ftp.
->
-> Could you give us a link? =A0It isn't in git core, is it?
+Hi,
 
-git remote -v
-origin	git://github.com/BeezyT/git-ftp.git (fetch)
-origin	git://github.com/BeezyT/git-ftp.git (push)
+On 18/07/11 19:47, J. Bakshi wrote:
+> Hello list,
+> 
+> I have found that during push, all local commit goes into the git 
+> server.
 
-> How git-ftp differs from ftp / ftps remote helper (git-remote-ftp etc=
-=2E)?
+Yes that's the normal behaviour. When you think about what push is doing
+it's trying to make the remote branch the same as your local branch.
 
-AIUI, the ftp/ftps remote helpers are to keep a git _repo_ on a server
-that runs ftp.
+> Where I like to only push the very last modification with
+> a meaningful comment which will be available at the git server. How
+> can I then push only the last modified one ?
 
-This git-ftp is a "deploy the tip of my branch onto a production
-server" tool. The usage model is
+This is easily doable. What you need to do is prepare a branch that you
+do want to push. Something like this, assuming that your current branch
+is 'master' and you want to push to origin/master:
 
- - hack on your html/php website on your dev machine, in a git checkout
- - commit your code
- - use git-ftp to publish to the hosting server
+  # first create temporary a branch to use while you're delivering
+  git checkout -b delivery origin/master
 
-Maybe it should be called "git ftpdeploy".  It's a handy trick. I
-found it via http://stackoverflow.com/questions/2950107/git-push-into-p=
-roduction-ftp
+  # now cherry pick the commits you do want to push. I usually use
+  # gitk and cherry-pick from the right-click menu, but for simplicity
+  # I'll use git cherry-pick here.
+  git cherry-pick master
+  # you can provide a commit id instead of 'master'.
 
+  # at this point you could also use git commit --amend to add any
+  # final tweaks to the commit
 
+  # check that your delivery branch is good using git log/gitk. Build,
+  # test, etc
 
+  # now push it to your local delivery branch to the remote master
+  # branch
+  git push origin delivery:master
 
-m
---=20
-=A0martin.langhoff@gmail.com
-=A0martin@laptop.org -- Software Architect - OLPC
-=A0- ask interesting questions
-=A0- don't get distracted with shiny stuff=A0 - working code first
-=A0- http://wiki.laptop.org/go/User:Martinlanghoff
+  # now do some cleanup
+  git checkout master
+  git branch -d delivery
+  git rebase origin/master
