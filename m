@@ -1,61 +1,136 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 00/23] remote-helper improvements
-Date: Sun, 17 Jul 2011 23:28:29 -0400
-Message-ID: <20110718032829.GA2468@sigill.intra.peff.net>
-References: <1310821424-4750-1-git-send-email-srabbelier@gmail.com>
+From: Michael <git-scm@webhippo.net>
+Subject: Bug Report: Creating a hardlink to any of the file in git repo
+ cause the source file  to show up in git commit message editor under
+ "Changes not staged for commit" section.
+Date: Sun, 17 Jul 2011 20:24:50 -0700
+Message-ID: <6f37875d70623e2b8966653b067a2149@mail.mxes.net>
+Reply-To: git-scm@webhippo.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 18 05:28:38 2011
+Content-Type: text/plain;
+ charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 18 05:32:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QieVZ-0008D0-F1
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 05:28:37 +0200
+	id 1QieZE-0000Oh-4E
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 05:32:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755738Ab1GRD2c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jul 2011 23:28:32 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59831
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752899Ab1GRD2b (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jul 2011 23:28:31 -0400
-Received: (qmail 17559 invoked by uid 107); 18 Jul 2011 03:28:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 17 Jul 2011 23:28:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 17 Jul 2011 23:28:29 -0400
-Content-Disposition: inline
-In-Reply-To: <1310821424-4750-1-git-send-email-srabbelier@gmail.com>
+	id S1755690Ab1GRDcT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jul 2011 23:32:19 -0400
+Received: from fallback-out2.mxes.net ([216.86.168.191]:46262 "EHLO
+	fallback-in2.mxes.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752899Ab1GRDcS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jul 2011 23:32:18 -0400
+X-Greylist: delayed 447 seconds by postgrey-1.27 at vger.kernel.org; Sun, 17 Jul 2011 23:32:18 EDT
+Received: from mxout-08.mxes.net (mxout-08.mxes.net [216.86.168.183])
+	by fallback-in1.mxes.net (Postfix) with ESMTP id 1E0B12FDBDE
+	for <git@vger.kernel.org>; Sun, 17 Jul 2011 23:24:53 -0400 (EDT)
+Received: from wm2.irbs.net (wm2.irbs.net [216.86.168.169])
+	by smtp.mxes.net (Postfix) with ESMTP id 1D09450A65
+	for <git@vger.kernel.org>; Sun, 17 Jul 2011 23:24:51 -0400 (EDT)
+Received: from wmbeta.mxes.net (wm2.irbs.net [216.86.168.169])
+	by wm2.irbs.net (Postfix) with ESMTPA id EA58E853C5
+	for <git@vger.kernel.org>; Sun, 17 Jul 2011 23:24:50 -0400 (EDT)
+X-Sender: git-scm@webhippo.net
+User-Agent: RoundCube Webmail/0.4.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177333>
 
-On Sat, Jul 16, 2011 at 03:03:20PM +0200, Sverre Rabbelier wrote:
+ Creating a hardlink to any of the file in git repo cause the source 
+ file
+ to show up in git commit message editor under "Changes not staged for 
+ commit"
+ section.
 
-> Incorperated feedback from Junio, Johannes and Peff. I also included
-> Dmitry's patch that adds GITDIR, which I modified to just remove the
-> support for a gitdir command.
+ Reproduced on:
+ Ubuntu 10.04, Gentoo, FreeBSD
+ Git version: 1.7.6
 
-I read through these, and with the giant disclaimer that:
+ Bug has been observed by atleast 3 people.
 
-  1. The entirety of my remote helper knowledge is from working on the
-     patches in this series that are mine.
+ Follow these steps to reproduce:
 
-  2. I don't really know anything about writing good-looking python
-     code.
+ # create test repo
+ cd /tmp
+ mkdir -p test-repo/repo
+ cd test-repo/repo
+ git init
+ git config user.name "Foo"
+ git config user.email "foo@example.com"
 
-The patches up to 21 (i.e., not the RFD ones) all made sense to me. At
-least, the goals from the commit messages looked sane, and the patches
-seemed to implement the goals reasonably.
+ # put some files in the repo
+ touch FILE1 FILE2 FILE3 FILE4 FILE5
+ git add -A
+ git commit -m "initial commit"
 
--Peff
+ # create git hook that hardlink FILE2 and FILE3 and remove the 
+ hardlinks
+ # right then and there
+ echo "ln -vf FILE2 ../HARDLINK_TO_FILE2" >| .git/hooks/pre-commit
+ echo "rm -vf ../HARDLINK_TO_FILE2" >> .git/hooks/pre-commit
+ echo "ln -vf FILE3 ../HARDLINK_TO_FILE3" >> .git/hooks/pre-commit
+ echo "rm -vf ../HARDLINK_TO_FILE3" >> .git/hooks/pre-commit
+
+ # make pre-commit executable
+ chmod u+x .git/hooks/pre-commit
+
+ # modify FILE1
+ echo "hello world" >> FILE1
+
+ # run git status
+ git status
+ -------------------------------------------------------------------------------
+ # On branch master
+ # Changes not staged for commit:
+ #   (use "git add <file>..." to update what will be committed)
+ #   (use "git checkout -- <file>..." to discard changes in working 
+ directory)
+ #
+ #       modified:   FILE1
+ #
+ no changes added to commit (use "git add" and/or "git commit -a")
+ -------------------------------------------------------------------------------
+
+ # try commit using nano as commit editor and without usin -a flag
+ VISUAL=nano git commit FILE1
+
+ # Despite the fact that they are modified FILE2 and FILE3 will show in 
+ the
+ # commit message, under "Changes not staged for commit" section
+ # like so:
+
+ --------------------------------------------------------------------------------
+ # Please enter the commit message for your changes. Lines starting
+ # with '#' will be ignored, and an empty message aborts the commit.
+ # Explicit paths specified without -i nor -o; assuming --only paths...
+ # On branch master
+ # Changes to be committed:
+ #   (use "git reset HEAD <file>..." to unstage)
+ #
+ #       modified:   FILE1
+ #
+ # Changes not staged for commit:
+ #   (use "git add <file>..." to update what will be committed)
+ #   (use "git checkout -- <file>..." to discard changes in working 
+ directory)
+ #
+ #       modified:   FILE2
+ #       modified:   FILE3
+ #
+ --------------------------------------------------------------------------------
+
+
+ In case anyone interested, tor me this happens when I do a python EGG 
+ build
+ which hardlinks files in order to build.
+
+
+ -- Michael
