@@ -1,132 +1,112 @@
-From: Michael <git-scm@webhippo.net>
-Subject: Bug Report: Creating a hardlink to any of the file in git repo
- cause the source file  to show up in git commit message editor under
- "Changes not staged for commit" section.
-Date: Sun, 17 Jul 2011 20:42:52 -0700
-Message-ID: <02a20a168c52beb42e57258bcc5c0551@mail.mxes.net>
-Reply-To: git-scm@webhippo.net
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 18 05:42:58 2011
+From: "George Spelvin" <linux@horizon.com>
+Subject: Re: Git commit generation numbers
+Date: 18 Jul 2011 01:13:47 -0400
+Message-ID: <20110718051347.28952.qmail@science.horizon.com>
+References: <CA+55aFwt+RDRK_r=9CXbdzsLuGDqswvGTtJDKi9Q3DQwB_Ha5Q@mail.gmail.com>
+Cc: git@vger.kernel.org
+To: linux@horizon.com, torvalds@linux-foundation.org
+X-From: git-owner@vger.kernel.org Mon Jul 18 07:13:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QiejS-0002bw-6x
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 05:42:58 +0200
+	id 1Qig9X-0003pt-2x
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 07:13:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756051Ab1GRDmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jul 2011 23:42:53 -0400
-Received: from mxout-08.mxes.net ([216.86.168.183]:57986 "EHLO
-	mxout-08.mxes.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752272Ab1GRDmx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jul 2011 23:42:53 -0400
-Received: from wm2.irbs.net (wm2.irbs.net [216.86.168.169])
-	by smtp.mxes.net (Postfix) with ESMTP id 9549450A5D
-	for <git@vger.kernel.org>; Sun, 17 Jul 2011 23:42:52 -0400 (EDT)
-Received: from wmbeta.mxes.net (wm2.irbs.net [216.86.168.169])
-	by wm2.irbs.net (Postfix) with ESMTPA id 824B3853C6
-	for <git@vger.kernel.org>; Sun, 17 Jul 2011 23:42:52 -0400 (EDT)
-X-Sender: git-scm@webhippo.net
-User-Agent: RoundCube Webmail/0.4.2
+	id S1751046Ab1GRFNu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jul 2011 01:13:50 -0400
+Received: from science.horizon.com ([71.41.210.146]:53231 "HELO
+	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1751023Ab1GRFNt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jul 2011 01:13:49 -0400
+Received: (qmail 28953 invoked by uid 1000); 18 Jul 2011 01:13:47 -0400
+In-Reply-To: <CA+55aFwt+RDRK_r=9CXbdzsLuGDqswvGTtJDKi9Q3DQwB_Ha5Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177337>
 
- Creating a hardlink to any of the file in git repo cause the source 
- file
- to show up in git commit message editor under "Changes not staged for 
- commit"
- section.
+> Nobody has *ever* given a reason why the cache would be better than
+> just making it explicit.
 
- Reproduced on:
- Ubuntu 10.04, Gentoo, FreeBSD
- Git version: 1.7.6
+I thought I listed a few.  Let me be clearer.
 
- Bug has been observed by atleast 3 people.
+1) It involves changing the commit format.  Since the change is
+   backward-compatible, it's not too bad, but this is still fundamentally
+   A Bad Thing, to be avoided if possible.
 
- Follow these steps to reproduce:
+2) It can't be retrofitted to help historical browsing.
 
- # create test repo
- cd /tmp
- mkdir -p test-repo/repo
- cd test-repo/repo
- git init
- git config user.name "Foo"
- git config user.email "foo@example.com"
+3) You have to support commits without generation numbers forever.
+   This is a support burden.  If you can generate generation numbers for
+   an entire repository, including pre-existing commits, you can *throw
+   out* the commit date heuristic code entirely.
 
- # put some files in the repo
- touch FILE1 FILE2 FILE3 FILE4 FILE5
- git add -A
- git commit -m "initial commit"
+4) It can't be made to work with grafts or replace objects.
 
- # create git hook that hardlink FILE2 and FILE3 and remove the 
- hardlinks
- # right then and there
- echo "ln -vf FILE2 ../HARDLINK_TO_FILE2" >| .git/hooks/pre-commit
- echo "rm -vf ../HARDLINK_TO_FILE2" >> .git/hooks/pre-commit
- echo "ln -vf FILE3 ../HARDLINK_TO_FILE3" >> .git/hooks/pre-commit
- echo "rm -vf ../HARDLINK_TO_FILE3" >> .git/hooks/pre-commit
+5) It includes information which is redundant, but hard to verify,
+   in git objects.  Leading to potentially bizarre and version-dependent
+   behaviour if it's wrong.  (Checking that the numbers are consistent
+   is the same work as regenerating a cache.)
 
- # make pre-commit executable
- chmod u+x .git/hooks/pre-commit
+6) It makes git commits slightly larger.  (Okay, that's reaching.)
 
- # modify FILE1
- echo "hello world" >> FILE1
+> Why is that so hard for people to understand? The cache is just EXTRA WORK.
 
- # run git status
- git status
- -------------------------------------------------------------------------------
- # On branch master
- # Changes not staged for commit:
- #   (use "git add <file>..." to update what will be committed)
- #   (use "git checkout -- <file>..." to discard changes in working 
- directory)
- #
- #       modified:   FILE1
- #
- no changes added to commit (use "git add" and/or "git commit -a")
- -------------------------------------------------------------------------------
+That's why it *might* have been a good idea to include the number in
+the original design.  But now that the design is widely deployed, it's
+better to avoid changing the design if not necessary.
 
- # try commit using nano as commit editor and without usin -a flag
- VISUAL=nano git commit FILE1
+With a bit of extra work, it's not necessary.
 
- # Despite the fact that they are modified FILE2 and FILE3 will show in 
- the
- # commit message, under "Changes not staged for commit" section
- # like so:
+> To take your TLB example: it's like having a TLB for a page table that
+> would be as easy to just create in a way that it's *faster* to look up
+> in the actual data structure than it would be to look up in the cache.
 
- --------------------------------------------------------------------------------
- # Please enter the commit message for your changes. Lines starting
- # with '#' will be ignored, and an empty message aborts the commit.
- # Explicit paths specified without -i nor -o; assuming --only paths...
- # On branch master
- # Changes to be committed:
- #   (use "git reset HEAD <file>..." to unstage)
- #
- #       modified:   FILE1
- #
- # Changes not staged for commit:
- #   (use "git add <file>..." to update what will be committed)
- #   (use "git checkout -- <file>..." to discard changes in working 
- directory)
- #
- #       modified:   FILE2
- #       modified:   FILE3
- #
- --------------------------------------------------------------------------------
+You've subtly jumped points.  The original point was that it's worth
+precomputing and storing the generation numbers.  I was trying to
+say that this is fundamentally a caching operation.
+
+Now we're talking about *where* to store the cached generation numbers.
+
+Your point, which is a very valid one, is that they are to be stored
+on disk, exactly one per commit, can be computed when the commit is
+generated, and are accessed at the same time as the commit, so it makes
+all kinds of sense to store them *with* the commits.  As part of them,
+even.
+
+This has the huge benefit that it does away with the need for a *separate*
+data structure.  (Kinda sorts like the way AMD stores instruction
+boundaries in the L1 I-cache, avoiding the need for a separate data
+structure.)
+
+I'm arguing that, despite this annoying overhead, there are valid reasons
+to want to store it separately.  There are some practical ones, but the
+basic one is an esthetic/maintainability judgement of "less cruft in
+the commit objects is worth more cruft in the code".
+
+Git has done very well partly *because* of the minimality of its basic
+persistent object database format.  I think we should be very reluctant
+to add to that without a demonstrated need that *cannot* be met in
+another way.
 
 
- In case anyone interested, tor me this happens when I do a python EGG 
- build
- which hardlinks files in order to build.
+In this particular case, a TLB is not a transport format.  It's okay
+to add redundant cruft to make it faster, because it only lasts until
+the next reboot.  (A more apropos, software-oriented analogy might be
+"struct page".)
 
+A git commit object *is* a transport format, one specifically designed
+for transporting data a very long way forward in time, so it should be
+designed with considerable care, and cruft ruthlessly eradicated.
 
- -- Michael
+Whatever you add to it has to be supported by every git implementation,
+forever.  As does every implementation bug ever produced.
+
+A cache, on the other hand, is purely a local implementation detail.
+It can be changed between versions with much less effort.
+
+I agree it's more implementation work.  But the upside is a cleaner
+struct commit.  Which is a very good thing.
