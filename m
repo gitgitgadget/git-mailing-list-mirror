@@ -1,108 +1,88 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: git-archive and tar options
-Date: Mon, 18 Jul 2011 13:13:53 -0500
-Message-ID: <4E2477E1.5090406@gmail.com>
-References: <ivla29$liu$1@dough.gmane.org> <20110714015656.GA20136@sigill.intra.peff.net> <4E1F2468.6080409@lsrfire.ath.cx> <20110714172718.GA21341@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git show-branch --topics and merge commits
+Date: Mon, 18 Jul 2011 11:14:34 -0700
+Message-ID: <7v4o2jlalx.fsf@alter.siamese.dyndns.org>
+References: <CA+6x0LWXz-SpnZjdiV3UKJzUz3+0LiMOsbZHTn2gJ+v6bPGndA@mail.gmail.com>
+ <7v8vrwl46q.fsf@alter.siamese.dyndns.org>
+ <CA+6x0LXHKZgvW4_hWz8qrWQshqxB3pQ-=08itqnV5smA_NCrBA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>,
-	Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jul 18 20:14:06 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Mike Shal <marfey@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 18 20:14:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QisKU-0008P5-4u
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 20:14:06 +0200
+	id 1QisL4-0000DT-Sj
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 20:14:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752367Ab1GRSOA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Jul 2011 14:14:00 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:49019 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752446Ab1GRSN7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jul 2011 14:13:59 -0400
-Received: by gxk21 with SMTP id 21so1423531gxk.19
-        for <git@vger.kernel.org>; Mon, 18 Jul 2011 11:13:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=gee8SP7GIBebYihNbJySJlvLZGCRybQvQH2UMGdIo/w=;
-        b=U1VZncU/xf/eSy/5tc55YOKTBhA5b7mCvYSTZ6Dz/HTI/NIf9kNm3Lm0ivbg7W0FJ2
-         9D4R7Abhaove0OK26IVsJ8Qq7+wkZJg67xbq95VXBiVz0tIDXdlKRSe0aNUZqXbzUBnk
-         chvJZnoI7/xLO9agPkQm4DG7O/LHuDOVZN6ns=
-Received: by 10.236.144.232 with SMTP id n68mr2533581yhj.451.1311012839154;
-        Mon, 18 Jul 2011 11:13:59 -0700 (PDT)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id p50sm19533yhj.28.2011.07.18.11.13.56
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 18 Jul 2011 11:13:57 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.18) Gecko/20110616 Thunderbird/3.1.11
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <20110714172718.GA21341@sigill.intra.peff.net>
+	id S1754575Ab1GRSOi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jul 2011 14:14:38 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65469 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754535Ab1GRSOi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jul 2011 14:14:38 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0937C4D36;
+	Mon, 18 Jul 2011 14:14:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=38lqQrzXHFkyQPi4Q5/sanJ7SMo=; b=RniDh/
+	NszQw+R+iT53pluIONRuI04us69anCpIhHlfOzRUh6Wta3Zh532yK0Tq2rvl29/p
+	rHQSFn709D9UD7O7JSwM2HQFxdiqv3w0+haPX3uLyzgWtIS6N2z7wdw9/v9UWM4W
+	ip+Q2g8N5YTIgd0DmLM75gLcwV9dz0y0udhXQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Wc5jPLUKWol3i2yVaKAd4SHzGKJ7SfME
+	pm1wpzZyNpWXLoaUD8EuCG7CxxQ8Iu43F2THY7mZZx3XXjIpRVml4GW6dE5ZknBp
+	18e2v9ISe59JECWoE4Al0DKhcFID2wR4o9UMpfUF4PbSN+r+VwWM33/RyK7VVxkJ
+	3phTZn40clE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 008594D35;
+	Mon, 18 Jul 2011 14:14:37 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 883774D33; Mon, 18 Jul 2011
+ 14:14:36 -0400 (EDT)
+In-Reply-To: <CA+6x0LXHKZgvW4_hWz8qrWQshqxB3pQ-=08itqnV5smA_NCrBA@mail.gmail.com> (Mike
+ Shal's message of "Sun, 17 Jul 2011 23:37:47 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CB8AF71E-B169-11E0-8B0A-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177395>
 
-On 7/14/2011 12:27 PM, Jeff King wrote:
-> On Thu, Jul 14, 2011 at 07:16:24PM +0200, Ren=C3=A9 Scharfe wrote:
->
->>>> git archive --format=3Dtar -o my.tar --transform
->>>> 's,^Web/Templates/,myPath/myWeb/Templates/,' HEAD
->>>> WebPortal/Templates/ error: unknown option `transform'
->>>
->>> Yeah, that won't work, because there is no such option. We do
->>> have "--prefix", but I suspect that's not flexible enough for
->>> what you want.
->>
->> If you only need a single subdirectory with a custom prefix you
->> could do something like this (variables only used to keep the lines
->> short):
->>
->> $ subdir=3DWebPortal/Templates $ prefix=3DmyPath/myWeb/Templates/ $ =
-(cd
->> "$subdir"&&  git archive --prefix=3D"$prefix" HEAD)>my.tar
->>
->> The output file can be specified with -o as well, of course, but
->> you'd either need to use an absolute path or add "../" for each
->> directory level you descend into (-o ../../my.tar in this case).
->
-> Couldn't you also do:
->
-> git archive --prefix=3D$prefix HEAD:$subdir>my.tar
->
-> ? I guess that loses the pax header with the commit sha1 in it,
-> though, because you are feeding a straight tree instead of a commit.
->
-> We didn't when git-archive was written, but these days we have
-> get_sha1_with_context to remember incidental things about an object
-> we look up. It should perhaps remember the commit (if any) we used to
-> reach a treeish, and then the above command line could still insert
-> the pax header.
->
-HEAD:$subdir worked on my bare repo.  I ran it for each transformant=20
-pathspec and then combined the archives with tar --catenate:
+Mike Shal <marfey@gmail.com> writes:
 
-# git archive --format=3Dtar --prefix=3DmyWeb/myRoot/myAPP/Templates/
-HEAD:WebPortal/Templates/ >myAPP.myTag.tar
-# git archive --format=3Dtar --prefix=3Dopt/mySTUFF/v01/SCRIPTS/
-HEAD:SCRIPTS/ >SCRIPTS.tar
-# tar --file=3DmyAPP.myTag.tar -A SCRIPTS.tar
+> Ok, makes sense. Is 'git rev-list' supposed to give the same list of
+> commits then? In my example, rev-list shows the commit on the branch
+> even after upstream has been merged in.
 
-However, the permissions also need to change to 777 and tar --mode woul=
-d=20
-not effect this in combination with --catenation or -x.  Is there a way=
-=20
-I can change the permissions without having to untar->chmod->retar, and=
-=20
-without having to use a non-bare repo as an intermediary?
+"show-branch" was designed to stop after seeing a commit that are shared
+with all the branches it was given, so
 
-v/r,
-neal
+	git show-branch A B
+
+is more like
+
+	git rev-list --left-right --boundary A...B
+
+and not at all like
+
+	git rev-list A..B
+
+which is to show all commits not in A that appear in B.
+
+Note that show-branch was invented way before the log family of commands
+(which rev-list is a member of) learned --left-right/--boundary/--graph
+options, and I personally think its graphical output mode outlived its
+usefulness as a stopgap measure.  As its "merge-base" and "independent"
+modes have also been made redundant (see "git merge-base" for two options
+to mimic their behaviour), we may want to start thinking about deprecating
+the command, and the first step perhaps would be to replace its mention
+from the first part of the Everyday Git document with something more
+appropriate such as "git log".
