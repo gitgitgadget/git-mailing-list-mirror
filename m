@@ -1,69 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Getting a list of commits between 2 points without upstream
- changes
-Date: Sun, 17 Jul 2011 21:28:44 -0400
-Message-ID: <20110718012844.GA2112@sigill.intra.peff.net>
-References: <CAFOYHZC5hQ9JV8a5d20AaPR_eYFDViama+4148MPumvvJ-n6wQ@mail.gmail.com>
- <20110718001749.GA706@sigill.intra.peff.net>
- <CAFOYHZDUyQpVc5m4w9jcDsmed+UR8a_zxzR0mBAjPf7_A80MQg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git show-branch --topics and merge commits
+Date: Sun, 17 Jul 2011 19:21:01 -0700
+Message-ID: <7v8vrwl46q.fsf@alter.siamese.dyndns.org>
+References: <CA+6x0LWXz-SpnZjdiV3UKJzUz3+0LiMOsbZHTn2gJ+v6bPGndA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: GIT <git@vger.kernel.org>
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 18 03:28:53 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Mike Shal <marfey@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 18 04:22:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qicdg-0002Gu-GC
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 03:28:52 +0200
+	id 1QidTs-0003kA-Nj
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 04:22:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756463Ab1GRB2q convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Jul 2011 21:28:46 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48580
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756316Ab1GRB2q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jul 2011 21:28:46 -0400
-Received: (qmail 16495 invoked by uid 107); 18 Jul 2011 01:29:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 17 Jul 2011 21:29:12 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 17 Jul 2011 21:28:44 -0400
-Content-Disposition: inline
-In-Reply-To: <CAFOYHZDUyQpVc5m4w9jcDsmed+UR8a_zxzR0mBAjPf7_A80MQg@mail.gmail.com>
+	id S1756505Ab1GRCVG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jul 2011 22:21:06 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51737 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756378Ab1GRCVF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jul 2011 22:21:05 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A1714C0C;
+	Sun, 17 Jul 2011 22:21:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eZRzQSNC+X7WE3eiQsiF7/lZv4Q=; b=lHr9p6
+	IKMxWv8vxK1qVjN5NHMKAzC/6wokj+iTHb+tfQS0MLCKMleA+S/+3+ZbmhWrPKzv
+	ytmUZHUMWU8Q/fz6Xy5WBxPMq9Ktd2V1C03RTHqXPBKMp+UXYRk8ZuesjqAG/sB3
+	fCY9nCmXmuCIevsd4e3zoiit3/2knOSTMpCTw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dM5o0FNGdNUdI3hiJxXPgoxmrGAyagbl
+	oVaH6ieKa9DsLxhpw8LnVDyBnZfj0LtPdjHGWkjsu/Dj2aCpJu3ZUuRlB1CBDrjy
+	9ZFQMZ84B+bN3hKrOhsBjSf6Eufuu0dwAZpcHBPEor7NO9Qjkr2kX0DNDlrtxu4V
+	7aRoljQiT08=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0977C4C0B;
+	Sun, 17 Jul 2011 22:21:04 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 663534C09; Sun, 17 Jul 2011
+ 22:21:03 -0400 (EDT)
+In-Reply-To: <CA+6x0LWXz-SpnZjdiV3UKJzUz3+0LiMOsbZHTn2gJ+v6bPGndA@mail.gmail.com> (Mike
+ Shal's message of "Sun, 17 Jul 2011 19:56:26 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 95DADA42-B0E4-11E0-8456-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177330>
 
-On Mon, Jul 18, 2011 at 12:33:27PM +1200, Chris Packham wrote:
+Mike Shal <marfey@gmail.com> writes:
 
-> > I'm not clear on what makes "B" more special than "A" in the graph
-> > above. But assuming you know A, don't you just want:
->=20
-> What makes A special in this case is that commits up to and including
-> A have been reviewed, regression tested etc. My use-case is really
-> about telling people what has been worked on since the last time the
-> code was reviewed.
+> So rev-list shows my merge commit and the 'new' commit, but
+> show-branch --topics doesn't show 'new'. Is this the expected
+> behavior?
 
-OK, that makes sense.
-
-> > =C2=A0git log --no-merges topic ^upstream ^A
-> >
-> > ? That is, "everything in topic, but not in upstream, nor in the pa=
-rent
-> > of A". Or if you know A and not B, you can use "^B^!" (which means =
-"do
-> > not include commits that are in any parent of B").
->=20
-> Brilliant, that's exactly what I wanted. Thanks.
-
-Oops, I mis-stated it above. It would be "everything in topic, but not
-in upstream, nor in A". Which I think is what you actually want (I had
-originally written it as "^B^!", but forgot to change the text when I
-switched it to the more-readable "^A").
-
--Peff
+Yes, show-branch was specifically written for people with strict sense of
+project hygiene who do not merge into their topic from upstream (which
+would turn the branch from "place to hold commits on this topic" into
+"place to hold commits on this topic and unrelated random changes made in
+upstream").
