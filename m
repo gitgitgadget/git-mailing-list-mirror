@@ -1,112 +1,79 @@
-From: "George Spelvin" <linux@horizon.com>
-Subject: Re: Git commit generation numbers
-Date: 18 Jul 2011 01:13:47 -0400
-Message-ID: <20110718051347.28952.qmail@science.horizon.com>
-References: <CA+55aFwt+RDRK_r=9CXbdzsLuGDqswvGTtJDKi9Q3DQwB_Ha5Q@mail.gmail.com>
-Cc: git@vger.kernel.org
-To: linux@horizon.com, torvalds@linux-foundation.org
-X-From: git-owner@vger.kernel.org Mon Jul 18 07:13:59 2011
+From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Subject: Re: [PATCH] Documentation/Notes: Remove 'footnote:' warning
+Date: Mon, 18 Jul 2011 11:12:11 +0530
+Message-ID: <CAK9CXBVSq_j7naHzVLMj=bW8WMKq_WfkDQP4zspkK_QizC26=g@mail.gmail.com>
+References: <1310855420-21183-1-git-send-email-pavan.sss1991@gmail.com>
+ <1310908271.21563.17.camel@drew-northup.unet.maine.edu> <20110717215858.GA9906@elie>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Drew Northup <drew.northup@maine.edu>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 18 07:42:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qig9X-0003pt-2x
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 07:13:59 +0200
+	id 1QigbG-0001il-QV
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 07:42:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751046Ab1GRFNu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jul 2011 01:13:50 -0400
-Received: from science.horizon.com ([71.41.210.146]:53231 "HELO
-	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751023Ab1GRFNt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jul 2011 01:13:49 -0400
-Received: (qmail 28953 invoked by uid 1000); 18 Jul 2011 01:13:47 -0400
-In-Reply-To: <CA+55aFwt+RDRK_r=9CXbdzsLuGDqswvGTtJDKi9Q3DQwB_Ha5Q@mail.gmail.com>
+	id S1751979Ab1GRFmd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Jul 2011 01:42:33 -0400
+Received: from mail-ey0-f171.google.com ([209.85.215.171]:46594 "EHLO
+	mail-ey0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751046Ab1GRFmd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Jul 2011 01:42:33 -0400
+X-Greylist: delayed 57325 seconds by postgrey-1.27 at vger.kernel.org; Mon, 18 Jul 2011 01:42:32 EDT
+Received: by eye22 with SMTP id 22so1082658eye.2
+        for <git@vger.kernel.org>; Sun, 17 Jul 2011 22:42:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=fhS7w5OViT6eL+kkZ+xQNoVGoiFQ1VlnqCCs+OYjGjk=;
+        b=ACccVvMiD371BTGlEr2ZMi/tGrYxHOLhh++LVZn/9sLF9Npz3fxOjzaeTYT9J99MnD
+         rEZJlTTh9h1CiHUBktV8XVp5EtOSmwSoiDuaHl0m1jFH09ybR1wGv4fbPG27BAhpWeRk
+         /mNscI4MivPL20gOvNXLW2xK5JkKLBtr8cY7s=
+Received: by 10.14.9.30 with SMTP id 30mr2037301ees.135.1310967751744; Sun, 17
+ Jul 2011 22:42:31 -0700 (PDT)
+Received: by 10.14.53.70 with HTTP; Sun, 17 Jul 2011 22:42:11 -0700 (PDT)
+In-Reply-To: <20110717215858.GA9906@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177338>
 
-> Nobody has *ever* given a reason why the cache would be better than
-> just making it explicit.
+On Mon, Jul 18, 2011 at 3:28 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Hi,
+>
+> Drew Northup wrote:
+>> On Sun, 2011-07-17 at 04:00 +0530, Pavan Kumar Sunkara wrote:
+>
+>>> Remove 'footnote:' from git-notes.txt which is responsible
+>>> for the warnings surfacing during the generation of git
+>>> documentation.
+>>
+>> What version of asciidoc are you using? Perhaps that works just fine
+>> with newer versions?
+>
+> Good call. =A0This was fixed by Docbook XSL 1.76.0:
+>
+> =A0 =A0 =A0 =A0Norman Walsh: block.xsl; endnotes.xsl
+>
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0Fix bug where simpara in footnote didn=
+'t work.
+>
+> The symptoms are a warning and a little extra vertical space after th=
+e
+> numberal "1." in the output. =A0I don't know if it is worth working
+> around or not.
+>
 
-I thought I listed a few.  Let me be clearer.
-
-1) It involves changing the commit format.  Since the change is
-   backward-compatible, it's not too bad, but this is still fundamentally
-   A Bad Thing, to be avoided if possible.
-
-2) It can't be retrofitted to help historical browsing.
-
-3) You have to support commits without generation numbers forever.
-   This is a support burden.  If you can generate generation numbers for
-   an entire repository, including pre-existing commits, you can *throw
-   out* the commit date heuristic code entirely.
-
-4) It can't be made to work with grafts or replace objects.
-
-5) It includes information which is redundant, but hard to verify,
-   in git objects.  Leading to potentially bizarre and version-dependent
-   behaviour if it's wrong.  (Checking that the numbers are consistent
-   is the same work as regenerating a cache.)
-
-6) It makes git commits slightly larger.  (Okay, that's reaching.)
-
-> Why is that so hard for people to understand? The cache is just EXTRA WORK.
-
-That's why it *might* have been a good idea to include the number in
-the original design.  But now that the design is widely deployed, it's
-better to avoid changing the design if not necessary.
-
-With a bit of extra work, it's not necessary.
-
-> To take your TLB example: it's like having a TLB for a page table that
-> would be as easy to just create in a way that it's *faster* to look up
-> in the actual data structure than it would be to look up in the cache.
-
-You've subtly jumped points.  The original point was that it's worth
-precomputing and storing the generation numbers.  I was trying to
-say that this is fundamentally a caching operation.
-
-Now we're talking about *where* to store the cached generation numbers.
-
-Your point, which is a very valid one, is that they are to be stored
-on disk, exactly one per commit, can be computed when the commit is
-generated, and are accessed at the same time as the commit, so it makes
-all kinds of sense to store them *with* the commits.  As part of them,
-even.
-
-This has the huge benefit that it does away with the need for a *separate*
-data structure.  (Kinda sorts like the way AMD stores instruction
-boundaries in the L1 I-cache, avoiding the need for a separate data
-structure.)
-
-I'm arguing that, despite this annoying overhead, there are valid reasons
-to want to store it separately.  There are some practical ones, but the
-basic one is an esthetic/maintainability judgement of "less cruft in
-the commit objects is worth more cruft in the code".
-
-Git has done very well partly *because* of the minimality of its basic
-persistent object database format.  I think we should be very reluctant
-to add to that without a demonstrated need that *cannot* be met in
-another way.
+So, using newest version will not give us a warning?
 
 
-In this particular case, a TLB is not a transport format.  It's okay
-to add redundant cruft to make it faster, because it only lasts until
-the next reboot.  (A more apropos, software-oriented analogy might be
-"struct page".)
-
-A git commit object *is* a transport format, one specifically designed
-for transporting data a very long way forward in time, so it should be
-designed with considerable care, and cruft ruthlessly eradicated.
-
-Whatever you add to it has to be supported by every git implementation,
-forever.  As does every implementation bug ever produced.
-
-A cache, on the other hand, is purely a local implementation detail.
-It can be changed between versions with much less effort.
-
-I agree it's more implementation work.  But the upside is a cleaner
-struct commit.  Which is a very good thing.
+--=20
+- Pavan Kumar Sunkara
