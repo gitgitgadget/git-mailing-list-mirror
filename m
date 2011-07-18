@@ -1,65 +1,70 @@
-From: Patrick Doyle <wpdster@gmail.com>
-Subject: Re: What changed in merge commit?
-Date: Mon, 18 Jul 2011 13:25:30 -0400
-Message-ID: <CAF_dkJCvNHWYfjmF8bX5CT+wyQ9ftvN7aAr0FBeg5ZQ7BSuyUA@mail.gmail.com>
-References: <CAF_dkJC-ee2Bqyi2_Fx_j8mu3tCFsV8o=xMRLjx+s2di4=HfkQ@mail.gmail.com>
- <CABPQNSaOQxBqf34_799zc46EnHsc7L3BiSATyYq+Q6oGs0H6sw@mail.gmail.com> <1311009024.18226.121.camel@oxylap>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: kusmabite@gmail.com, git <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Christof_Kr=FCger?= <git@christof-krueger.de>
-X-From: git-owner@vger.kernel.org Mon Jul 18 19:25:58 2011
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: [PATCH v2 2/4] mingw: fix compilation of poll-emulation
+Date: Mon, 18 Jul 2011 20:08:34 +0200
+Message-ID: <1311012516-4836-3-git-send-email-kusmabite@gmail.com>
+References: <1311012516-4836-1-git-send-email-kusmabite@gmail.com>
+Cc: peff@peff.net, j6t@kdbg.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 18 20:09:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QirZt-0004xB-HF
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 19:25:57 +0200
+	id 1QisFZ-0006Ch-RY
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 20:09:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754437Ab1GRRZw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Jul 2011 13:25:52 -0400
-Received: from mail-fx0-f52.google.com ([209.85.161.52]:34789 "EHLO
+	id S1754163Ab1GRSIu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jul 2011 14:08:50 -0400
+Received: from mail-fx0-f52.google.com ([209.85.161.52]:35701 "EHLO
 	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754412Ab1GRRZv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Jul 2011 13:25:51 -0400
-Received: by fxd18 with SMTP id 18so6970473fxd.11
-        for <git@vger.kernel.org>; Mon, 18 Jul 2011 10:25:50 -0700 (PDT)
+	with ESMTP id S1754124Ab1GRSIt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jul 2011 14:08:49 -0400
+Received: by mail-fx0-f52.google.com with SMTP id 18so7013726fxd.11
+        for <git@vger.kernel.org>; Mon, 18 Jul 2011 11:08:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=QRof0tlBa2R6TlWpUGXqAvm3dUTiJv7XuWhuPSITUFc=;
-        b=wuH5wA1u0kj15Xf4M/tDEt4Cn0R4sMIp78gskgRl2+GOfveInH19a5eKZYte9/UOd/
-         n2DrlTlyihy2/rB3ygE/7Amq6S6SPG58BsWWQA0+pk3Yn2aSXYSt6bhGNw3ClQX7O0EM
-         IqA4C61U2uKg8AoUiQeX82OI5eAWXPjeyl2p4=
-Received: by 10.223.58.76 with SMTP id f12mr4794689fah.75.1311009950211; Mon,
- 18 Jul 2011 10:25:50 -0700 (PDT)
-Received: by 10.223.144.203 with HTTP; Mon, 18 Jul 2011 10:25:30 -0700 (PDT)
-In-Reply-To: <1311009024.18226.121.camel@oxylap>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=Jb7ZvA1CvVCI2J0vSB0woh29snljppt3Ni+mVthLLTM=;
+        b=S7OHJKgORQleJkq/ncQlRJz4bqez6RIAI33+ZD8nJR969IAeA0s7Nqvjv8pn0Ls5AY
+         VPiIis3K7Cmm7YBf57cJD5yvjYhOsau1jGNMn6G4mr8CvKC7H0EV+va3c2YFBo70jbhI
+         yH6x2S1fgvP7JxsPZEqBqXuBDzf8DqDrmtQuI=
+Received: by 10.223.67.194 with SMTP id s2mr10578311fai.124.1311012528550;
+        Mon, 18 Jul 2011 11:08:48 -0700 (PDT)
+Received: from localhost ([77.40.159.131])
+        by mx.google.com with ESMTPS id l12sm3089953fam.8.2011.07.18.11.08.46
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 18 Jul 2011 11:08:47 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.rc0.4055.gbf1a7
+In-Reply-To: <1311012516-4836-1-git-send-email-kusmabite@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177390>
 
-2011/7/18 Christof Kr=FCger <git@christof-krueger.de>:
-> You could also use "git log --name-status -m" which will show multipl=
-e
-> entries for each parent of the merge commit.
-> See "man git-diff-tree" and look for the description of the options -=
-m,
-> -c and --cc
+gnulib has changed the inclusion of poll.h from double quotes
+to single-quotes. But because compat/win32/sys/ isn't in our
+include-path, this breaks compilation. Change it back the way
+it was.
 
-Thanks...
+Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+---
+ compat/win32/sys/poll.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-$ git log --name-status -m --first-parent
-
-is what I was looking for.  I thought I recalled there being something
-like that, but could not recall nor find on the git-log man page the
-"-m" option.  Of course I can see it now :-)
-
-Thanks for pointing me in the right direction.
-
---wpd
+diff --git a/compat/win32/sys/poll.c b/compat/win32/sys/poll.c
+index 403eaa7..225ddce 100644
+--- a/compat/win32/sys/poll.c
++++ b/compat/win32/sys/poll.c
+@@ -29,7 +29,7 @@
+ #include <sys/types.h>
+ 
+ /* Specification.  */
+-#include <poll.h>
++#include "poll.h"
+ 
+ #include <errno.h>
+ #include <limits.h>
+-- 
+1.7.6.135.g378e9
