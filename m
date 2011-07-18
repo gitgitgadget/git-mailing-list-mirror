@@ -1,51 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH 0/14] less annoying http authentication
-Date: Mon, 18 Jul 2011 04:00:55 -0400
-Message-ID: <20110718080054.GA12692@sigill.intra.peff.net>
-References: <20110718074642.GA11678@sigill.intra.peff.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: git-ftp: retry, sftp support
+Date: Mon, 18 Jul 2011 04:09:59 -0400
+Message-ID: <CACPiFCK4B96cTAz8JEBMOpktZG2R5HsYA2YgEdRuqO55XTOVcg@mail.gmail.com>
+References: <CACPiFCL22yr096_nNfjvfP_bkJRC7HA65GUF12wedzV=cz-_kg@mail.gmail.com>
+ <m3vcv0yqb4.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 18 10:01:02 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?Ren=E9_Moser?= <mail@renemoser.net>,
+	Timo Besenreuther <timo.besenreuther@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 18 10:10:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QiilB-0007W9-Uf
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 10:01:02 +0200
+	id 1QiiuK-0002VU-JI
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 10:10:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751315Ab1GRIA5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jul 2011 04:00:57 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56251
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750745Ab1GRIA5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jul 2011 04:00:57 -0400
-Received: (qmail 20185 invoked by uid 107); 18 Jul 2011 08:01:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 18 Jul 2011 04:01:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Jul 2011 04:00:55 -0400
-Content-Disposition: inline
-In-Reply-To: <20110718074642.GA11678@sigill.intra.peff.net>
+	id S1752968Ab1GRIKV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Jul 2011 04:10:21 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:52522 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750745Ab1GRIKT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Jul 2011 04:10:19 -0400
+Received: by vxh35 with SMTP id 35so1449309vxh.19
+        for <git@vger.kernel.org>; Mon, 18 Jul 2011 01:10:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=Rim/La75aSieBytbuLPn0PbWOEO3o/I6Lt89/cV+Nio=;
+        b=jqxhDC4q0qRGbDgM7QKWsI1YnpQOWXrQS3vH9bbWrPb8vSZC0j5jU8atGXxVAZjm9L
+         QqyiTcx0TDxQGj/mUqOHy+rShX18NZWIHDot5oSYgZ5h0lBZKwssWL6BTpjKFNZJX5dP
+         ltzeXuq/kw6evLiOVhqY8/RnT5JT/ZWz328k0=
+Received: by 10.52.24.147 with SMTP id u19mr2475764vdf.525.1310976619180; Mon,
+ 18 Jul 2011 01:10:19 -0700 (PDT)
+Received: by 10.220.200.132 with HTTP; Mon, 18 Jul 2011 01:09:59 -0700 (PDT)
+In-Reply-To: <m3vcv0yqb4.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177360>
 
-On Mon, Jul 18, 2011 at 03:46:42AM -0400, Jeff King wrote:
+2011/7/18 Jakub Narebski <jnareb@gmail.com>:
+> Martin Langhoff <martin.langhoff@gmail.com> writes:
+>
+>> Ren=E9, Timo,
+>>
+>> Thanks for git-ftp -- it has saved me from going crazy with low cost
+>> hosting setups that only support ftp.
+>
+> Could you give us a link? =A0It isn't in git core, is it?
 
-> This is still in the RFC stage. I think the code is fine, and I've been
-> using it for a few weeks. I tried to keep the design of the credential
-> helper interface simple, but flexible enough to meet the needs of the
-> various keychain systems. Aside from the usual, what I'd most like
-> feedback on is whether the interface is sufficient to actually integrate
-> with those systems. And I suspect we won't really know until people try
-> to make helpers for their pet systems.
+git remote -v
+origin	git://github.com/BeezyT/git-ftp.git (fetch)
+origin	git://github.com/BeezyT/git-ftp.git (push)
 
-BTW, I'll be traveling and have spotty time and email availability for
-the next 3-5 days. So I hope to get lots of comments, but please don't
-be discouraged if I don't respond immediately. :)
+> How git-ftp differs from ftp / ftps remote helper (git-remote-ftp etc=
+=2E)?
 
--Peff
+AIUI, the ftp/ftps remote helpers are to keep a git _repo_ on a server
+that runs ftp.
+
+This git-ftp is a "deploy the tip of my branch onto a production
+server" tool. The usage model is
+
+ - hack on your html/php website on your dev machine, in a git checkout
+ - commit your code
+ - use git-ftp to publish to the hosting server
+
+Maybe it should be called "git ftpdeploy".  It's a handy trick. I
+found it via http://stackoverflow.com/questions/2950107/git-push-into-p=
+roduction-ftp
+
+
+
+
+m
+--=20
+=A0martin.langhoff@gmail.com
+=A0martin@laptop.org -- Software Architect - OLPC
+=A0- ask interesting questions
+=A0- don't get distracted with shiny stuff=A0 - working code first
+=A0- http://wiki.laptop.org/go/User:Martinlanghoff
