@@ -1,111 +1,185 @@
-From: Timo Besenreuther <timo.besenreuther@gmail.com>
-Subject: Re: git-ftp: retry, sftp support
-Date: Mon, 18 Jul 2011 10:58:24 +0200
-Message-ID: <138AFDD9-CE91-4019-BAF3-B6F301D4225E@gmail.com>
-References: <CACPiFCL22yr096_nNfjvfP_bkJRC7HA65GUF12wedzV=cz-_kg@mail.gmail.com> <m3vcv0yqb4.fsf@localhost.localdomain> <CACPiFCK4B96cTAz8JEBMOpktZG2R5HsYA2YgEdRuqO55XTOVcg@mail.gmail.com>
+From: Anthony Van de Gejuchte <anthonyvdgent@gmail.com>
+Subject: Re: Git commit generation numbers
+Date: Mon, 18 Jul 2011 12:28:16 +0200
+Message-ID: <A142F49B-FC91-410A-B3C8-15FC7E5C3C68@gmail.com>
+References: <20110718051347.28952.qmail@science.horizon.com>
 Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	=?iso-8859-1?Q?Ren=E9_Moser?= <mail@renemoser.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 18 11:05:01 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: torvalds@linux-foundation.org, git@vger.kernel.org
+To: George Spelvin <linux@horizon.com>
+X-From: git-owner@vger.kernel.org Mon Jul 18 12:28:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qijl3-0004ge-Ne
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 11:04:58 +0200
+	id 1Qil3q-000809-Jq
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 12:28:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754174Ab1GRJEw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Jul 2011 05:04:52 -0400
-Received: from mail-ey0-f171.google.com ([209.85.215.171]:43883 "EHLO
-	mail-ey0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754132Ab1GRJEv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Jul 2011 05:04:51 -0400
-X-Greylist: delayed 382 seconds by postgrey-1.27 at vger.kernel.org; Mon, 18 Jul 2011 05:04:50 EDT
-Received: by eye22 with SMTP id 22so1159356eye.2
-        for <git@vger.kernel.org>; Mon, 18 Jul 2011 02:04:49 -0700 (PDT)
+	id S1755829Ab1GRK2V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jul 2011 06:28:21 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:52717 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753310Ab1GRK2U convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Jul 2011 06:28:20 -0400
+Received: by wyg8 with SMTP id 8so1968745wyg.19
+        for <git@vger.kernel.org>; Mon, 18 Jul 2011 03:28:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=subject:mime-version:content-type:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to:x-mailer;
-        bh=BJN7HOxPiwm3pqOK5kNPIJ642UCIoUoJwkgrIeUH97Y=;
-        b=nTpIeezV3ijfBALq7/TUNlsL7MnD6MKyduamqHjMjN8Blp/HRvx19UPpkM5sLKCFlF
-         wUVlMdkTu06W1IA120DjtQyDrY51TqvZWtaFUc7K2HkyYC8AHlBVnenEn9i3J6UfZEa+
-         Uq6U5Q04ZOUZevqdOaV1RKwdz9A+ardmws0uA=
-Received: by 10.14.22.6 with SMTP id s6mr2016548ees.95.1310979507336;
-        Mon, 18 Jul 2011 01:58:27 -0700 (PDT)
-Received: from [192.168.178.25] (mnch-5d866eb7.pool.mediaWays.net [93.134.110.183])
-        by mx.google.com with ESMTPS id q22sm2008486eea.18.2011.07.18.01.58.25
+        bh=XNN17UPakBFmDS5Vck86+LE9LUwMJOyjSog8dQwRFic=;
+        b=ZujdAQkPj7QS0oMmTvXsIFzSZFB1PeHBuICMSqR/43vln4IsmQy6ceXlR/y1XOZmof
+         u1Q8ZzzLGSVNyzSIJvx1eEGJt/1DmsHwNE6rv9egwBXxaMVFbmy5f87arETX9g7l2I8E
+         0OGuEonBjh09XEUO5rdHct6Etpu+xNcSoK/00=
+Received: by 10.216.139.37 with SMTP id b37mr2867032wej.41.1310984899154;
+        Mon, 18 Jul 2011 03:28:19 -0700 (PDT)
+Received: from [192.168.1.106] (78-22-168-200.access.telenet.be [78.22.168.200])
+        by mx.google.com with ESMTPS id k9sm2243971weq.3.2011.07.18.03.28.17
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 18 Jul 2011 01:58:26 -0700 (PDT)
-In-Reply-To: <CACPiFCK4B96cTAz8JEBMOpktZG2R5HsYA2YgEdRuqO55XTOVcg@mail.gmail.com>
+        Mon, 18 Jul 2011 03:28:18 -0700 (PDT)
+In-Reply-To: <20110718051347.28952.qmail@science.horizon.com>
 X-Mailer: Apple Mail (2.1084)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177365>
 
-Hey guys,
+On 18-jul-2011, at 07:13, George Spelvin wrote:
 
-I think there's some confusion here.
+>> Nobody has *ever* given a reason why the cache would be better than
+>> just making it explicit.
+> 
+> I thought I listed a few.  Let me be clearer.
+> 
+> 1) It involves changing the commit format.  Since the change is
+>   backward-compatible, it's not too bad, but this is still fundamentally
+>   A Bad Thing, to be avoided if possible.
 
-git-ftp is a bash tool written by Rene Moser (github resmo) to sync a g=
-it repo with an FTP server.
-It is not in git core. I just added some minor improvements. My github =
-repo is just a fork.
+Git is designed to ignore data in this case afaik, so I do not see any
+reason why backwards-compatibility gets broken here.
 
-Regards,
-Timo
+> 
+> 2) It can't be retrofitted to help historical browsing.
 
+I like to see more (valid) arguments, as I do not see what you are
+trying to explain.
 
-On Jul 18, 2011, at 10:09 AM, Martin Langhoff wrote:
+> 
+> 3) You have to support commits without generation numbers forever.
+>   This is a support burden.  If you can generate generation numbers for
+>   an entire repository, including pre-existing commits, you can *throw
+>   out* the commit date heuristic code entirely.
 
-> 2011/7/18 Jakub Narebski <jnareb@gmail.com>:
->> Martin Langhoff <martin.langhoff@gmail.com> writes:
->>=20
->>> Ren=E9, Timo,
->>>=20
->>> Thanks for git-ftp -- it has saved me from going crazy with low cos=
-t
->>> hosting setups that only support ftp.
->>=20
->> Could you give us a link?  It isn't in git core, is it?
->=20
-> git remote -v
-> origin	git://github.com/BeezyT/git-ftp.git (fetch)
-> origin	git://github.com/BeezyT/git-ftp.git (push)
->=20
->> How git-ftp differs from ftp / ftps remote helper (git-remote-ftp et=
-c.)?
->=20
-> AIUI, the ftp/ftps remote helpers are to keep a git _repo_ on a serve=
-r
-> that runs ftp.
->=20
-> This git-ftp is a "deploy the tip of my branch onto a production
-> server" tool. The usage model is
->=20
-> - hack on your html/php website on your dev machine, in a git checkou=
-t
-> - commit your code
-> - use git-ftp to publish to the hosting server
->=20
-> Maybe it should be called "git ftpdeploy".  It's a handy trick. I
-> found it via http://stackoverflow.com/questions/2950107/git-push-into=
--production-ftp
->=20
->=20
->=20
->=20
-> m
-> --=20
->  martin.langhoff@gmail.com
->  martin@laptop.org -- Software Architect - OLPC
->  - ask interesting questions
->  - don't get distracted with shiny stuff  - working code first
->  - http://wiki.laptop.org/go/User:Martinlanghoff
+I'll give you a few months to rethink at this statement until this
+feature does get used widely. I think there was never a moment where
+we would ever think to rebuild older commits as this would break the
+hash of the commits where many people are potential looking for.
+
+> 
+> 4) It can't be made to work with grafts or replace objects.
+> 
+> 5) It includes information which is redundant, but hard to verify,
+>   in git objects.  Leading to potentially bizarre and version-dependent
+>   behaviour if it's wrong.  (Checking that the numbers are consistent
+>   is the same work as regenerating a cache.)
+
+The data is *consistent* as long as the hash doesn't change, storing the
+data in the commits *can* reduce resource and makes calculations cheaper.
+Therefore, I think there are enough reasons to add the generation number
+in the commit. Yes, many data can be calculated or can be an overhead,
+but as Torvalds already said, it can be used as consistency check.
+
+If the data does get wrong, then its probably caused by something stupid
+enough to break the rules. Yes, this is a problem but I think there are
+already enough reasons given, look back to the archives of this topic.
+
+Ok, there is one possible thing that *can* go wrong and that is when you
+are changing history with generation numbers with an older git client.
+
+(And thats a good reason to communicate with others as clear as possible
+about this feature, but its still not version-dependent as it doesn't
+require a client to use it)
+
+> 
+> 6) It makes git commits slightly larger.  (Okay, that's reaching.)
+> 
+>> Why is that so hard for people to understand? The cache is just EXTRA WORK.
+> 
+> That's why it *might* have been a good idea to include the number in
+> the original design.  But now that the design is widely deployed, it's
+> better to avoid changing the design if not necessary.
+> 
+> With a bit of extra work, it's not necessary.
+> 
+>> To take your TLB example: it's like having a TLB for a page table that
+>> would be as easy to just create in a way that it's *faster* to look up
+>> in the actual data structure than it would be to look up in the cache.
+> 
+> You've subtly jumped points.  The original point was that it's worth
+> precomputing and storing the generation numbers.  I was trying to
+> say that this is fundamentally a caching operation.
+> 
+> Now we're talking about *where* to store the cached generation numbers.
+> 
+> Your point, which is a very valid one, is that they are to be stored
+> on disk, exactly one per commit, can be computed when the commit is
+> generated, and are accessed at the same time as the commit, so it makes
+> all kinds of sense to store them *with* the commits.  As part of them,
+> even.
+> 
+> This has the huge benefit that it does away with the need for a *separate*
+> data structure.  (Kinda sorts like the way AMD stores instruction
+> boundaries in the L1 I-cache, avoiding the need for a separate data
+> structure.)
+> 
+> I'm arguing that, despite this annoying overhead, there are valid reasons
+> to want to store it separately.  There are some practical ones, but the
+> basic one is an esthetic/maintainability judgement of "less cruft in
+> the commit objects is worth more cruft in the code".
+> 
+> Git has done very well partly *because* of the minimality of its basic
+> persistent object database format.  I think we should be very reluctant
+> to add to that without a demonstrated need that *cannot* be met in
+> another way.
+> 
+> 
+> In this particular case, a TLB is not a transport format.  It's okay
+> to add redundant cruft to make it faster, because it only lasts until
+> the next reboot.  (A more apropos, software-oriented analogy might be
+> "struct page".)
+> 
+> A git commit object *is* a transport format, one specifically designed
+> for transporting data a very long way forward in time, so it should be
+> designed with considerable care, and cruft ruthlessly eradicated.
+> 
+> Whatever you add to it has to be supported by every git implementation,
+> forever.  As does every implementation bug ever produced.
+> 
+> A cache, on the other hand, is purely a local implementation detail.
+> It can be changed between versions with much less effort.
+> 
+> I agree it's more implementation work.  But the upside is a cleaner
+> struct commit.  Which is a very good thing.
+
+A cache would use more resources because they can become invalid at any
+point and *should* be recalculated by every client. We are processing
+data that *can* be reused by everybody with a git client which has this
+specific feature, but does not break anything with an older client.
+
+So please, calculate things only once as this may save a *lot* of time :-)
+
+I would see more advantage in a cache if the data could differs on
+every client, but that still doesn't mean that you should use one.
+
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+Maybe I shouldn't even have responded to this as I tend not to agree with
+the given opinions to use a cache, even when I think that Torvalds starts
+throwing arguments as well for certain reasons, but thats probably my wrong
+thinking at it.
