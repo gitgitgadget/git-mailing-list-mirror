@@ -1,78 +1,135 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 13/17] revert: Introduce a layer of indirection over pick_commits
-Date: Tue, 19 Jul 2011 02:54:23 +0530
-Message-ID: <CALkWK0nYMuDeoGuvGWtmcs6Odoo0g7B_CkY63MBo38UvOHyX8g@mail.gmail.com>
-References: <1310396048-24925-1-git-send-email-artagnon@gmail.com>
- <1310396048-24925-14-git-send-email-artagnon@gmail.com> <20110712200324.GD14909@elie>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+Subject: [RFC PATCH] config: Introduce functions to write non-standard file
+Date: Tue, 19 Jul 2011 03:07:12 +0530
+Message-ID: <1311025032-835-1-git-send-email-artagnon@gmail.com>
+References: <20110713190724.GA31965@sigill.intra.peff.net>
+Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Daniel Barkalow <barkalow@iabervon.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 18 23:24:50 2011
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 18 23:38:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QivJ4-000133-5W
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 23:24:50 +0200
+	id 1QivVu-0005mF-01
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Jul 2011 23:38:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751421Ab1GRVYp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jul 2011 17:24:45 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:33506 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751199Ab1GRVYo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jul 2011 17:24:44 -0400
-Received: by wwe5 with SMTP id 5so3568537wwe.1
-        for <git@vger.kernel.org>; Mon, 18 Jul 2011 14:24:43 -0700 (PDT)
+	id S1751297Ab1GRVhw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jul 2011 17:37:52 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:41552 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751103Ab1GRVhw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jul 2011 17:37:52 -0400
+Received: by pvg12 with SMTP id 12so3346327pvg.19
+        for <git@vger.kernel.org>; Mon, 18 Jul 2011 14:37:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=S+BLAgExSaEUtIxra130AsxkxmMMg9Ie0+eSLCm9V5Y=;
-        b=cQpOtugmbLxr/TjyF1FlGjLqVNjAPN5xu843lK73Qn8MlEdmNW0vK5/fL56ReiwZd7
-         EaO0aJpovW1xymAG9z89Z0w0X0EJLWvUEk7HDX/bNxltibpSlemyxTQKG5p4ElP5Zt4G
-         Z3rst8sMR0FIpdaVHaFGtOekiHooH9DdoYfRU=
-Received: by 10.216.155.134 with SMTP id j6mr6172030wek.81.1311024283166; Mon,
- 18 Jul 2011 14:24:43 -0700 (PDT)
-Received: by 10.216.234.143 with HTTP; Mon, 18 Jul 2011 14:24:23 -0700 (PDT)
-In-Reply-To: <20110712200324.GD14909@elie>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=C0mj7tSs7HwqU//gPaQaxmANteuanDFXWjM7b80JPfU=;
+        b=ZYsCYf507dJoG87iilSMGXgjb+Ymu4U3Xlvm29GWJwD4w6jsKZQMdmQ1YeE38RGoJn
+         23igQMQWAcyNOvEMW81bnGzebZhtTOFkfKDerVu3nUMA8wKt8SyTfdxvhuASnzOvXsxd
+         wC9dVBE6Ew80u558taWs49L2Q1xKgSusK9X4s=
+Received: by 10.142.4.24 with SMTP id 24mr2567731wfd.143.1311025071421;
+        Mon, 18 Jul 2011 14:37:51 -0700 (PDT)
+Received: from localhost.localdomain ([203.110.240.41])
+        by mx.google.com with ESMTPS id r12sm3824640wfe.13.2011.07.18.14.37.47
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 18 Jul 2011 14:37:50 -0700 (PDT)
+X-Mailer: git-send-email 1.7.4.rc1.7.g2cf08.dirty
+In-Reply-To: <20110713190724.GA31965@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177412>
 
-Hi,
+Introduce two new functions corresponding to "git_config_set" and
+"git_config_set_multivar" to write a non-standard configuration file.
+Expose thse new functions in cache.h for other git programs to use.
 
-New commit message.  The "--reset" part might jump out, but it's a
-result of the recent rebasing.
+Suggested-by: Jeff King <peff@peff.net>
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ Although this patch is ready for inclusion as far as I'm concerned,
+ I'm marking it an RFC because I will post it along with the latest
+ iteration of the Sequencer -- there's some usage examples in that
+ series that can justify the creation of two new functions.
 
-revert: Make pick_commits functionally act on a commit list
+ It may be classified as a workaround -- the more we encourage patches
+ like this, the more cruft config.c will accumulate, and the harder
+ it'll become to refactor completely.
 
-Apart from its central objective of calling into the picking
-mechanism, pick_commits creates a sequencer directory, prepares a todo
-list, and even acts upon the "--reset" subcommand.  This makes for a
-bad API since the central worry of callers is to figure out whether or
-not any conflicts were encountered during the cherry picking.  The
-current API is like:
+ cache.h  |    2 ++
+ config.c |   29 ++++++++++++++++++++++++++++-
+ 2 files changed, 30 insertions(+), 1 deletions(-)
 
-if (pick_commits(opts) < 0)
-   print "Something failed, we're not sure what"
-
-So, change pick_commits so that it's only responsible for picking
-commits in a loop and reporting any errors, leaving the rest to a new
-function called pick_revisions.  Consequently, the API of pick_commits
-becomes much clearer:
-
-act_on_subcommand(opts->subcommand);
-todo_list = prepare_todo_list();
-if (pick_commits(todo_list, opts) < 0)
-   print "Error encountered while picking commits"
-
-Now, callers can easily call-in to the cherry-picking machinery by
-constructing an arbitrary todo list along with some options.
-
--- Ram
+diff --git a/cache.h b/cache.h
+index bc9e5eb..833ee75 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1056,9 +1056,11 @@ extern int git_config_bool(const char *, const char *);
+ extern int git_config_maybe_bool(const char *, const char *);
+ extern int git_config_string(const char **, const char *, const char *);
+ extern int git_config_pathname(const char **, const char *, const char *);
++extern int git_config_set_in_file(const char *, const char *, const char *);
+ extern int git_config_set(const char *, const char *);
+ extern int git_config_parse_key(const char *, char **, int *);
+ extern int git_config_set_multivar(const char *, const char *, const char *, int);
++extern int git_config_set_multivar_in_file(const char *, const char *, const char *, int, const char *);
+ extern int git_config_rename_section(const char *, const char *);
+ extern const char *git_etc_gitconfig(void);
+ extern int check_repository_format_version(const char *var, const char *value, void *cb);
+diff --git a/config.c b/config.c
+index 1fc063b..3d9da6b 100644
+--- a/config.c
++++ b/config.c
+@@ -1092,9 +1092,22 @@ contline:
+ 	return offset;
+ }
+ 
++int git_config_set_in_file(const char *key, const char *value,
++			const char *filename)
++{
++	const char *saved;
++	int ret;
++
++	saved = config_exclusive_filename;
++	config_exclusive_filename = filename;
++	ret = git_config_set_multivar(key, value, NULL, 0);
++	config_exclusive_filename = saved;
++	return ret;
++}
++
+ int git_config_set(const char *key, const char *value)
+ {
+-	return git_config_set_multivar(key, value, NULL, 0);
++	return git_config_set_in_file(key, value, config_exclusive_filename);
+ }
+ 
+ /*
+@@ -1387,6 +1400,20 @@ write_err_out:
+ 
+ }
+ 
++int git_config_set_multivar_in_file(const char *key, const char *value,
++				const char *value_regex, int multi_replace,
++				const char *filename)
++{
++	const char *saved;
++	int ret;
++
++	saved = config_exclusive_filename;
++	config_exclusive_filename = filename;
++	ret = git_config_set_multivar(key, value, value_regex, multi_replace);
++	config_exclusive_filename = saved;
++	return ret;
++}
++
+ static int section_name_match (const char *buf, const char *name)
+ {
+ 	int i = 0, j = 0, dot = 0;
+-- 
+1.7.4.rc1.7.g2cf08.dirty
