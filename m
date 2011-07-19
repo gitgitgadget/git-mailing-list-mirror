@@ -1,120 +1,82 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <carlos@cmartin.tk>
-Subject: [GSoC 11] libgit2: midterm report
-Date: Tue, 19 Jul 2011 02:07:03 +0200
-Message-ID: <1311034023.4147.949.camel@centaur.lab.cmartin.tk>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: git-archive and tar options
+Date: Mon, 18 Jul 2011 19:12:45 -0500
+Message-ID: <4E24CBFD.9090909@gmail.com>
+References: <ivla29$liu$1@dough.gmane.org> <20110714015656.GA20136@sigill.intra.peff.net> <4E1F2468.6080409@lsrfire.ath.cx> <20110714172718.GA21341@sigill.intra.peff.net> <4E2477E1.5090406@gmail.com> <4E249C94.3040002@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-fBr3wzkABftBY6yt/z13"
-To: libgit2@librelist.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 19 02:07:22 2011
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Neal Kreitzinger <neal@rsss.com>,
+	git@vger.kernel.org
+To: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Tue Jul 19 02:12:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QixqL-0003bx-AM
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Jul 2011 02:07:21 +0200
+	id 1Qixvj-0005EF-4u
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Jul 2011 02:12:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751583Ab1GSAHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jul 2011 20:07:06 -0400
-Received: from kimmy.cmartin.tk ([91.121.65.165]:47815 "EHLO kimmy.cmartin.tk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750881Ab1GSAHF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jul 2011 20:07:05 -0400
-Received: from [192.168.1.23] (brln-4d0c3c8c.pool.mediaWays.net [77.12.60.140])
-	by kimmy.cmartin.tk (Postfix) with ESMTPSA id B5BDD461FF;
-	Tue, 19 Jul 2011 02:07:02 +0200 (CEST)
-X-Mailer: Evolution 2.32.3 
+	id S1751728Ab1GSAMu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Jul 2011 20:12:50 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:38509 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750877Ab1GSAMu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jul 2011 20:12:50 -0400
+Received: by gxk21 with SMTP id 21so1551886gxk.19
+        for <git@vger.kernel.org>; Mon, 18 Jul 2011 17:12:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=iOdQgbGKdhYT6X9LXAWnrL6iILm7VPz8BaUVqRaoEYM=;
+        b=N4JrGxT6YEMA1pe7lJezKlBV/kshr5yKC71uZcNLR3rVk5LLPq1jwA9JJaXY35dZ3S
+         d2WdWvi/n++4Z0nC2sOKpsmsUtgpQyJBAI60dRXMeq+47WuN8eqf6ytMkdxau4gNEC+b
+         YMoNVfUKhW+3RMJdK7eCorPRdEoLoHCjj1+VM=
+Received: by 10.150.169.21 with SMTP id r21mr6038921ybe.60.1311034369383;
+        Mon, 18 Jul 2011 17:12:49 -0700 (PDT)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id y9sm2087279ybf.3.2011.07.18.17.12.48
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 18 Jul 2011 17:12:48 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.18) Gecko/20110616 Thunderbird/3.1.11
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <4E249C94.3040002@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177432>
 
+On 7/18/2011 3:50 PM, Ren=C3=A9 Scharfe wrote:
+> Am 18.07.2011 20:13, schrieb Neal Kreitzinger:
+>> HEAD:$subdir worked on my bare repo.  I ran it for each transformant
+>> pathspec and then combined the archives with tar --catenate:
+>>
+>> # git archive --format=3Dtar --prefix=3DmyWeb/myRoot/myAPP/Templates=
+/
+>> HEAD:WebPortal/Templates/>myAPP.myTag.tar
+>> # git archive --format=3Dtar --prefix=3Dopt/mySTUFF/v01/SCRIPTS/
+>> HEAD:SCRIPTS/>SCRIPTS.tar
+>> # tar --file=3DmyAPP.myTag.tar -A SCRIPTS.tar
+>>
+>> However, the permissions also need to change to 777 and tar --mode w=
+ould
+>> not effect this in combination with --catenation or -x.  Is there a =
+way
+>> I can change the permissions without having to untar->chmod->retar, =
+and
+>> without having to use a non-bare repo as an intermediary?
+>
+> You can use the configuration setting tar.umask to affect the
+> permissions of the archive entries.  Set it to 0 to pass the permissi=
+on
+> bits from the repo unchanged.
+>
+The permissions in my repo are 775 and 664 and I want to change them to=
+ 777.
 
---=-fBr3wzkABftBY6yt/z13
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Hello everyone,
-
-As it's the GSoC midterm and I'm taking a rest from coding (my exams are
-in the next few days) I'm taking this opportunity to write up a more
-detailed report on what has been happening on the libgit2 network front.
-All the code is available from my 'fork' on github.
-
-The more useful working code has been merged into mainline, and you can
-get a list of references on the remote. If you want to filter which
-references you want to see, you can do that as well (with some manual
-work). I had hoped that fetching and/or pack indexing would be working
-by now, but sadly the university got in the way. At any rate, here's a
-list of what's working/implemented:
-
-   _Refspec_
-
-I believe all the important stuff has been implemented. You can get one
-from a remote and you can see if a string matches what it describes. You
-can also transform  a string/path from the source to the destination
-form (this probably has a different name in git.git). The transformation
-code assumes that a '*' in the destination implies that there is a '*'
-at the end of the source name as well. This might need to be 'hardened'.
-
-   _Remotes_
-
-You can parse its information from the configuration file (the push and
-fetch refspecs will be parsed as well) and an appropriate transport (see
-below) will be chosen based on the URL prefix. Right now there is a
-static list, but plug-ins could be supported without much effort if
-somebody can come up with an use-case. It is through these transports
-that everything is done through the network (or simulating the network,
-as in the local filesystem "network" transport).
-
-
-   _Transports_
-
-This is where most of the work actually happens. Each transport
-registers its callbacks in a structure and does its work transparently.
-The data structures are still in flux, as I haven't yet found the best
-way to avoid duplicating the information in several places, and the
-want/have/need code is really still in it infancy. The idea is that the
-object list you get when you connect can be used to mark which commits
-you want to receive or send. Right now only the local filesystem and
-git/tcp are implemented; and the only working operation is
-'git-ls-remote'.
-
-   _Sliding memory maps, packfile reading and the indexer_
-
-Or whatever you want to call them; I believe it's mmfile in git. This
-code and the packfile reading code live in the "pack ODB backend" so I'm
-making it somewhat more generic so I can use it without an ODB backend.
-Once that code is decoupled (which is a good change on its own), writing
-and indexer shouldn't be too hard.
-
------
-
-So this is where I am now. I'm a bit behind according to the original
-schedule but still on track to finish on time. It's been interesting and
-fun, sometimes a bit frustrating. Thanks to all the people who have
-helped me thus far.
-
-Cheers,
-   cmn
-
-
-
---=-fBr3wzkABftBY6yt/z13
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQEcBAABAgAGBQJOJMqdAAoJEHKRP1jG7ZzTFvgH+gN6YQMk/79hCBaV5L2RyC7r
-zIY1lCWiXRd5n531CRoZe/dh5+kOOpREBccYDNAUElORseUiSs+SAREmvM8xVDM1
-O7rHBXwznC2Bubsu7BpuFay+JMSLZJ21heLyFwiRiSK17IG7KTJ9SG9pdf/CDAbG
-SOGt6NLdlE50jNh7NsXGhlWCHoTC77QE7fBHqZb/fasu75C2TZ8gvkT7F5eGiaiy
-s5FzdDwaMBk0qj0q9OTJYWKMh+qlmyUQ7dElOo4cOJCbCDiRa3KKE1MhQeCkXQ+I
-bawHkdlG71d04WPMSwoZ9HPK+7wdcNG1U+5C0OId423AGF0idRZoJm86XFWGh9Q=
-=azO1
------END PGP SIGNATURE-----
-
---=-fBr3wzkABftBY6yt/z13--
+-neal
