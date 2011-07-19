@@ -1,95 +1,126 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: newbie - missing file from untracked list
-Date: Tue, 19 Jul 2011 10:56:53 +0800
-Message-ID: <4E24F275.3030906@gmail.com>
-References: <1311040156386-6597192.post@n2.nabble.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: Git commit generation numbers
+Date: Tue, 19 Jul 2011 06:14:38 +0200
+Message-ID: <201107190614.38431.chriscool@tuxfamily.org>
+References: <20110714200144.GE26918@sigill.intra.peff.net> <CAP8UFD3p8rv9BoPkTYSr_qRztKhWmmHgjHi0pZ6gN9YzkSX0Jw@mail.gmail.com> <20110718034106.GB2468@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: govinda <govinda.webdnatalk@gmail.com>,
-	Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 19 05:01:12 2011
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Christian Couder <christian.couder@gmail.com>,
+	"Ted Ts'o" <tytso@mit.edu>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Shawn Pearce <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 19 06:16:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qj0Ya-0004fv-Hc
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Jul 2011 05:01:12 +0200
+	id 1Qj1j6-0003xq-LI
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Jul 2011 06:16:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751551Ab1GSC5B convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Jul 2011 22:57:01 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:40992 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751096Ab1GSC5A (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jul 2011 22:57:00 -0400
-Received: by iyb12 with SMTP id 12so3671699iyb.19
-        for <git@vger.kernel.org>; Mon, 18 Jul 2011 19:57:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=Z4kY01+LeDmq0tuKIIyty5gppNj7JKCU1MgBUnL2EPI=;
-        b=IQawkGYAOOIIiu/yYTuQFz3xq5mJyz5IVfOORNxfjEJQGSGaxjnoYHd7aoo6fOVQMg
-         r6Z0nY5JLHDL2kz1NUfyCmXiDNG0XDViK29nGPliQ3l5YW/9rKhVh3yFnvj6EV5ymv83
-         M5co59ex4YZMYTZ+ao+TheVTf7CZj4eOR5YHQ=
-Received: by 10.42.154.69 with SMTP id p5mr7973746icw.246.1311044219948;
-        Mon, 18 Jul 2011 19:56:59 -0700 (PDT)
-Received: from [192.168.0.100] ([123.115.148.152])
-        by mx.google.com with ESMTPS id v16sm3296307ibf.42.2011.07.18.19.56.56
-        (version=SSLv3 cipher=OTHER);
-        Mon, 18 Jul 2011 19:56:59 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; zh-CN; rv:1.9.2.18) Gecko/20110616 Thunderbird/3.1.11
-In-Reply-To: <1311040156386-6597192.post@n2.nabble.com>
+	id S1751296Ab1GSEOx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jul 2011 00:14:53 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:52431 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750835Ab1GSEOw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2011 00:14:52 -0400
+Received: from style.localnet (unknown [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 305AEA6133;
+	Tue, 19 Jul 2011 06:14:39 +0200 (CEST)
+User-Agent: KMail/1.13.6 (Linux/2.6.38-8-generic; KDE/4.6.2; x86_64; ; )
+In-Reply-To: <20110718034106.GB2468@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177435>
 
-=E4=BA=8E 11-7-19 =E4=B8=8A=E5=8D=889:49, govinda =E5=86=99=E9=81=93:
-> [Govindas-iMac-2:SS_site_root] Govind% git add mainline_finishes.html
-> [Govindas-iMac-2:SS_site_root] Govind% git status
-> # On branch Gov_SS_2011-07-16
-> # Changes to be committed:
-> #   (use "git reset HEAD <file>..." to unstage)
-> #
-> #	new file:   VL_ShowMan.html
-> #
-> # Untracked files:
-> #   (use "git add <file>..." to include in what will be committed)
-> #
-> [snip]
-> #	Intranet_IE/CSI_Admin.html
-> #	Intranet_IE/DealerUpdate_Approve.html
-> [snip]
->=20
-> ^^^ *where* is 'mainline_finishes.html'?!
->=20
+On Monday 18 July 2011 05:41:06 Jeff King wrote:
+> On Sat, Jul 16, 2011 at 11:16:45AM +0200, Christian Couder wrote:
+> > If  "git tag --contains" and "git branch --contains" give incorrect
+> > answers because the commiter date is wrong in some commits, then why
+> > not use "git replace" to "change" the commiter date in the commits
+> > that have a wrong date? Is it because you don't want to use "git
+> > replace", or because there is no script to do it automatically, or is
+> > there another reason?
+> 
+> That would work. There are a few tricky things, though:
+> 
+>   1. Most commits have less than 100 skewed commits. But some have many
+>      (e.g., thousands in the mesa repo). How well does git cope with
+>      large numbers of replace refs, performance-wise?
 
-If the file 'mainline_finishes.html' is already in the repository,
-add it again without any modifications, the file will not show in
-git-status output.
+If it did not cope well, it should be possible to improve the performance.
 
-You can see files aready in HEAD:
+Anyway, another way to fix the problem with "git replace" could be to create 
+branches with commits that have a fixed commiter date and then to use "git 
+replace" only to connect these branches to the graph.
 
-    $ git ls-tree HEAD
+For example if you have this:
 
-or files in stage.
+A - B - X1 - X2 - X3 - C - D
 
-    $ git ls-files -s
+where X1, X2 and X3 are skewed, then you can create this:
 
+A - B - X1 - X2 - X3 - C - D
+         \ Y1 - Y2 - Y3
 
-> I would sort that untracked file listing for ease of reading.. but I =
-do not
-> know how (if it is even possible)... is there an option for 'git stat=
-us -?'
-> that causes the list to sort alphabetically?  At the moment is seems =
-to try
-> to sort ..but breaks the lists into a couple/few separate clumps of
-> otherwise alphabetized file names. (That makes no sense to me.)
+where Y1, Y2, Y3 are the same as X1, X2, X3 except they are not skewed.
+Then you only need to do "git replace X3 Y3" so you create only one replace 
+ref.
 
-$ git status -s | grep "^?" | sort
+> 
+>   2. Declaring which commits are skewed is actually tricky. You can find
+>      a commit whose timestamp is less than the timestamp of one of its
+>      ancestors. But you don't know whether it is skewed, or the
+>      ancestor.
+> 
+>      If you are implementing a list of commits whose timestamps
+>      shouldn't be used for traversal cutoff, it doesn't really matter
+>      who is _right_; you just care about whether the timestamps are
+>      strictly increasing from that point.
+> 
+>      But once you start replacing commits, you need to put in a
+>      reasonable value for the timestamp. So you may well be replacing a
+>      perfectly valid commit with one that has bogus, skewed information
+>      in the commit timestamp.
 
---=20
-Jiang Xin
+Perhaps but with "git replace" you can choose to create new replace refs and 
+deprecate the old replace refs to fix this where you got it wrong.
+
+It would be easier to do that if "git replace" supported sub directories like 
+"refs/replace/clock-skew/ted-july-2011/", so you could manage the replace refs 
+more easily.
+
+For example you could create new refs in "refs/replace/clock-skew/ted-
+july-2011-2/" if you found a better fix. And then use these new refs instead of 
+those in "refs/replace/clock-skew/ted-july-2011/".
+
+>   3. Any value you put in is actually going to be a lie during things
+>      like "git log --pretty=raw". That may be OK. But it is letting an
+>      optimization meant to make traversal fast and accurate bleed into
+>      the actual data we show the user.
+
+With replace refs, the user could choose the "lies" told to him/her by 
+selecting the replace refs or set of replace refs that are used.
+
+As commits are immutable, when they are created with bad data, the best we can 
+do is let the user choose if they want to see the original or another "fixed" 
+version. Because the original will always be "true" in a way.
+
+>   4. Sometimes we need to do traversals on the real objects (e.g.,
+>      because we are doing upload-pack). To get the benefit, those
+>      traversals would presumably need to look at both the original
+>      object and the replacement, use the timestamp from the replacement
+>      for traversal, but otherwise use the original object.
+
+Yeah, or maybe when we do traversals on real objects we could afford not to 
+rely on commiter date or some other "fragile" data.
+
+Thanks,
+Christian.
