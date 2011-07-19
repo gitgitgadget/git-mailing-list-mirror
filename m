@@ -1,123 +1,95 @@
-From: govinda <govinda.webdnatalk@gmail.com>
-Subject: newbie - missing file from untracked list
-Date: Mon, 18 Jul 2011 18:49:16 -0700 (PDT)
-Message-ID: <1311040156386-6597192.post@n2.nabble.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: newbie - missing file from untracked list
+Date: Tue, 19 Jul 2011 10:56:53 +0800
+Message-ID: <4E24F275.3030906@gmail.com>
+References: <1311040156386-6597192.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 19 03:49:23 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: govinda <govinda.webdnatalk@gmail.com>,
+	Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 19 05:01:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QizR5-0005BR-BC
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Jul 2011 03:49:23 +0200
+	id 1Qj0Ya-0004fv-Hc
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Jul 2011 05:01:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751096Ab1GSBtS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jul 2011 21:49:18 -0400
-Received: from sam.nabble.com ([216.139.236.26]:47919 "EHLO sam.nabble.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750977Ab1GSBtR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jul 2011 21:49:17 -0400
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.72)
-	(envelope-from <govinda.webdnatalk@gmail.com>)
-	id 1QizQy-0005HV-Ch
-	for git@vger.kernel.org; Mon, 18 Jul 2011 18:49:16 -0700
+	id S1751551Ab1GSC5B convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Jul 2011 22:57:01 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:40992 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751096Ab1GSC5A (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jul 2011 22:57:00 -0400
+Received: by iyb12 with SMTP id 12so3671699iyb.19
+        for <git@vger.kernel.org>; Mon, 18 Jul 2011 19:57:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=Z4kY01+LeDmq0tuKIIyty5gppNj7JKCU1MgBUnL2EPI=;
+        b=IQawkGYAOOIIiu/yYTuQFz3xq5mJyz5IVfOORNxfjEJQGSGaxjnoYHd7aoo6fOVQMg
+         r6Z0nY5JLHDL2kz1NUfyCmXiDNG0XDViK29nGPliQ3l5YW/9rKhVh3yFnvj6EV5ymv83
+         M5co59ex4YZMYTZ+ao+TheVTf7CZj4eOR5YHQ=
+Received: by 10.42.154.69 with SMTP id p5mr7973746icw.246.1311044219948;
+        Mon, 18 Jul 2011 19:56:59 -0700 (PDT)
+Received: from [192.168.0.100] ([123.115.148.152])
+        by mx.google.com with ESMTPS id v16sm3296307ibf.42.2011.07.18.19.56.56
+        (version=SSLv3 cipher=OTHER);
+        Mon, 18 Jul 2011 19:56:59 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; zh-CN; rv:1.9.2.18) Gecko/20110616 Thunderbird/3.1.11
+In-Reply-To: <1311040156386-6597192.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177434>
 
-Hi everyone.
+=E4=BA=8E 11-7-19 =E4=B8=8A=E5=8D=889:49, govinda =E5=86=99=E9=81=93:
+> [Govindas-iMac-2:SS_site_root] Govind% git add mainline_finishes.html
+> [Govindas-iMac-2:SS_site_root] Govind% git status
+> # On branch Gov_SS_2011-07-16
+> # Changes to be committed:
+> #   (use "git reset HEAD <file>..." to unstage)
+> #
+> #	new file:   VL_ShowMan.html
+> #
+> # Untracked files:
+> #   (use "git add <file>..." to include in what will be committed)
+> #
+> [snip]
+> #	Intranet_IE/CSI_Admin.html
+> #	Intranet_IE/DealerUpdate_Approve.html
+> [snip]
+>=20
+> ^^^ *where* is 'mainline_finishes.html'?!
+>=20
 
-I just started with git.. am new to VCS/SCM (been doing it
-painstakingly/manually for years), am new to the CL, am a decent old-school
-coder, but on occasion a little slow in unix topics, and other more
-modern/current coding circles.
+If the file 'mainline_finishes.html' is already in the repository,
+add it again without any modifications, the file will not show in
+git-status output.
 
-I am embarrassed to ask, because I am guessing it is going to be
-obvious/silly, once I see it.. but meanwhile:
+You can see files aready in HEAD:
 
-Isn't the list of untracked files that git shows me when I do, e.g.:
-Govind% git status
+    $ git ls-tree HEAD
 
-..supposed to include all actual files in the directory?  A couple times,
-like now.. I am wanting to add a file to the staging area.. and for some odd
-(odd to me now) reason, the file is as if not there.  When I do:
-Govind% ls
+or files in stage.
 
-..then I see the file *is* there.. as I also know it is from my Mac OS 10.6
-finder window.
+    $ git ls-files -s
 
-So why does git not mention it when I do 'status'?  
 
-Git seems happy for me to 'add' the file, but then refuses to show it to me
-in the 'status' listing.
-The file in question is in the pwd, and is named 'mainline_finishes.html'.
+> I would sort that untracked file listing for ease of reading.. but I =
+do not
+> know how (if it is even possible)... is there an option for 'git stat=
+us -?'
+> that causes the list to sort alphabetically?  At the moment is seems =
+to try
+> to sort ..but breaks the lists into a couple/few separate clumps of
+> otherwise alphabetized file names. (That makes no sense to me.)
 
-Here, please see my issue:
+$ git status -s | grep "^?" | sort
 
-[Govindas-iMac-2:SS_site_root] Govind% pwd
-/Users/Govind/Documents/webmastering/websites-devel./SS_site_root
-[Govindas-iMac-2:SS_site_root] Govind% ls
-[snip]
-VL_ShowMan.html-2011-05-10_late			mainline_finishes.html
-VL_ShowMan.html-2011-05-11			mainline_finishes.html-2011-04-29
-VL_ShowMan.html-2011-05-12			mainline_finishes.html-2011-06-08
-VL_ShowMan.html-2011-05-17			mainline_finishes.html-2011-06-17
-VL_ShowMan.html-2011-05-19			manu_autoupdate00.html
-VL_ShowMan.html-2011-06-02			news
-[snip]
-
-[Govindas-iMac-2:SS_site_root] Govind% git add mainline_finishes.html
-[Govindas-iMac-2:SS_site_root] Govind% git status
-# On branch Gov_SS_2011-07-16
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#	new file:   VL_ShowMan.html
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-[snip]
-#	Intranet_IE/CSI_Admin.html
-#	Intranet_IE/DealerUpdate_Approve.html
-[snip]
-#	LunchReport_CommentToolTip.js
-#	ManuUpdate/
-#	RepGroup_Update_Trigger.html
-[snip]
-#	joinus.html
-#	mainline_finishes.html-2011-04-29
-#	mainline_finishes.html-2011-06-08
-#	mainline_finishes.html-2011-06-17
-#	manu_autoupdate00.html
-#	myspecsimple/
-#	news/
-[snip]
- 
-
-^^^ *where* is 'mainline_finishes.html'?!
-
-I would sort that untracked file listing for ease of reading.. but I do not
-know how (if it is even possible)... is there an option for 'git status -?'
-that causes the list to sort alphabetically?  At the moment is seems to try
-to sort ..but breaks the lists into a couple/few separate clumps of
-otherwise alphabetized file names. (That makes no sense to me.)
-
-Thanks for any feedback.  
-
-Also please feel free to scold me or train me on any point where I need it..
-like list protocol, language used, CL tips, etc.  anything.  I mean to play
-nice.. and am only appreciative.
-
--Govinda
-
---
-View this message in context: http://git.661346.n2.nabble.com/newbie-missing-file-from-untracked-list-tp6597192p6597192.html
-Sent from the git mailing list archive at Nabble.com.
+--=20
+Jiang Xin
