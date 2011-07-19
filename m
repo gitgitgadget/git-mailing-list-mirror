@@ -1,63 +1,64 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] Make filter-branch work with many branches
-Date: Tue, 19 Jul 2011 20:06:02 +0200
-Message-ID: <4E25C78A.1090600@kdbg.org>
-References: <E186982C-71AE-4C08-B857-A67BDCD21E3D@apple.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Dave Zarzycki <zarzycki@apple.com>
-X-From: git-owner@vger.kernel.org Tue Jul 19 20:06:20 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/2] refactoring diff-index
+Date: Tue, 19 Jul 2011 11:13:04 -0700
+Message-ID: <1311099186-16482-1-git-send-email-gitster@pobox.com>
+References: <7vzkkh2yfu.fsf@alter.siamese.dyndns.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 19 20:13:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QjEgQ-0007Bo-Su
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Jul 2011 20:06:15 +0200
+	id 1QjEnF-0001Vj-Dn
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Jul 2011 20:13:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751289Ab1GSSGJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jul 2011 14:06:09 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:51584 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751072Ab1GSSGI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2011 14:06:08 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 5718ECDF85;
-	Tue, 19 Jul 2011 20:06:03 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 144E019F3B9;
-	Tue, 19 Jul 2011 20:06:03 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.18) Gecko/20110616 SUSE/3.1.11 Thunderbird/3.1.11
-In-Reply-To: <E186982C-71AE-4C08-B857-A67BDCD21E3D@apple.com>
+	id S1751421Ab1GSSNN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jul 2011 14:13:13 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51835 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751072Ab1GSSNL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2011 14:13:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2708135EC
+	for <git@vger.kernel.org>; Tue, 19 Jul 2011 14:13:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=WB1m
+	DscEe3l9WifcOlCH0FLke3Y=; b=uoahjEjwKlHnDQKqttN3naG6FoGvaC95p88h
+	up5sPSoHPjUXt5WYJl5u15J42xP0VHHDjfHzZTUgmXFujNyt+KYCAxB8/mi42rAG
+	DF1ilqpqSUEeYzm2rGml2O9vqa4LaS6B+Bi7muxGQePBQvVwAtpaHBFKszRYKFS1
+	COCtgwM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=yFGkCU
+	smPao9iTd62t5xmmLEGU9Gt4zdI4GniqOMAkjjzPUo8igj0O+xIUkbfYzQnLAhrv
+	tGxtklXMD1bQwR6hSc+otDjOs4/PcyHPlQG0p/JbjbM17vJguDwyWVjDANGKbdRj
+	0v2N4nwsdwRztY5z0DvdLv2bodIA5+UX97dJg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F59935EB
+	for <git@vger.kernel.org>; Tue, 19 Jul 2011 14:13:08 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9322135EA for
+ <git@vger.kernel.org>; Tue, 19 Jul 2011 14:13:07 -0400 (EDT)
+X-Mailer: git-send-email 1.7.6.178.g55272
+In-Reply-To: <7vzkkh2yfu.fsf@alter.siamese.dyndns.org>
+X-Pobox-Relay-ID: C0EF0DF8-B232-11E0-9599-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177488>
 
-Am 19.07.2011 18:29, schrieb Dave Zarzycki:
-> -rev_args=$(git rev-parse --revs-only "$@")
-> -
->  case "$filter_subdir" in
->  "")
->  	eval set -- "$(git rev-parse --sq --no-revs "$@")"
+While I was looking at a rather ancient bug in "git reset" reported by
+John Nowak recently, I noticed that we can reduce duplicated code in the
+diff_index() codepath.
 
-This line in the hunk context changes what "$@" will produce. Therefore,
-the "$@" that you removed above will not produce the same thing...
+Junio C Hamano (2):
+  diff-lib: simplify do_diff_cache()
+  diff-lib: refactor run_diff_index() and do_diff_cache()
 
-> @@ -286,8 +284,8 @@ case "$filter_subdir" in
->  	;;
->  esac
->  
-> -git rev-list --reverse --topo-order --default HEAD \
-> -	--parents --simplify-merges $rev_args "$@" > ../revs ||
-> +git rev-parse --revs-only "$@" | git rev-list --stdin --reverse --topo-order \
-> +	--default HEAD --parents --simplify-merges "$@" > ../revs ||
+ diff-lib.c |   71 ++++++++++++++++-------------------------------------------
+ 1 files changed, 19 insertions(+), 52 deletions(-)
 
-... that you insert here. How can the result ever have worked for you?
-
-Perhaps store the list of revs in a temporary file?
-
--- Hannes
+-- 
+1.7.6.178.g55272
