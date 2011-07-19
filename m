@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 10/18] revert: Don't create invalid replay_opts in parse_args
-Date: Tue, 19 Jul 2011 22:47:48 +0530
-Message-ID: <1311095876-3098-11-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 09/18] revert: Separate cmdline parsing from functional code
+Date: Tue, 19 Jul 2011 22:47:47 +0530
+Message-ID: <1311095876-3098-10-git-send-email-artagnon@gmail.com>
 References: <1311095876-3098-1-git-send-email-artagnon@gmail.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
@@ -15,124 +15,109 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QjDxL-0003Eb-K7
+	id 1QjDxL-0003Eb-1K
 	for gcvg-git-2@lo.gmane.org; Tue, 19 Jul 2011 19:19:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751705Ab1GSRTb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jul 2011 13:19:31 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:36451 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751622Ab1GSRTa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2011 13:19:30 -0400
-Received: by mail-pv0-f174.google.com with SMTP id 12so4030753pvg.19
-        for <git@vger.kernel.org>; Tue, 19 Jul 2011 10:19:30 -0700 (PDT)
+	id S1751603Ab1GSRTZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jul 2011 13:19:25 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:48493 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751073Ab1GSRTY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2011 13:19:24 -0400
+Received: by mail-pz0-f46.google.com with SMTP id 3so5220029pzk.5
+        for <git@vger.kernel.org>; Tue, 19 Jul 2011 10:19:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=bf21Xz2SIbgUxbyNLj7S3Z+6o3JiSfGOXC0CWy+3EDw=;
-        b=X4BgvA8HlZs5UC2kN2on/XY3Q9uWRYcQiFD6Ff7S/BihvDE5GBgoQkUmZAjrGM4Y1g
-         Y0fpAEy+kZ0MAC+o7uHWB3SGNNFR0+87X2PBubNb10wpdMu/5XRN2r6h35toRv1fmlJH
-         i1m0RiaiwwMH+C6aynBsmE5fc6oEKKg3cnj8w=
-Received: by 10.142.210.5 with SMTP id i5mr3777487wfg.8.1311095970023;
-        Tue, 19 Jul 2011 10:19:30 -0700 (PDT)
+        bh=/dRfI07eLWufcesam4DarLiYeeP9PlVTHW9JwOEonUs=;
+        b=I1iT4T9200eOk4yrfN6zCSmET5FKaYlAF3YDwTfSW/O7Ou2Ai3RsKS1T4rI/WLWACb
+         CVmtEwtM5Pt1098MJfmg6vLcRoU4EywVDg9yWHoWZJK7TSS2QO2tXZol2Z9+yq6AXIWi
+         TvNveVjZutyFBWVMAsFs4f1/CrwbDnarvileo=
+Received: by 10.142.157.12 with SMTP id f12mr3561642wfe.6.1311095964741;
+        Tue, 19 Jul 2011 10:19:24 -0700 (PDT)
 Received: from localhost.localdomain ([203.110.240.41])
-        by mx.google.com with ESMTPS id r12sm4276415wfe.1.2011.07.19.10.19.25
+        by mx.google.com with ESMTPS id r12sm4276415wfe.1.2011.07.19.10.19.19
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 19 Jul 2011 10:19:28 -0700 (PDT)
+        Tue, 19 Jul 2011 10:19:23 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4.rc1.7.g2cf08.dirty
 In-Reply-To: <1311095876-3098-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177475>
 
-The "--ff" command-line option cannot be used with some other
-command-line options.  However, parse_args still parses these
-incompatible options into a replay_opts structure for use by the rest
-of the program.  Although pick_commits, the current gatekeeper to the
-cherry-pick machinery, checks the validity of the replay_opts
-structure before before starting its operation, there will be multiple
-entry points to the cherry-pick machinery in future.  To futureproof
-the code and catch these errors in one place, make sure that an
-invalid replay_opts structure is not created by parse_args in the
-first place.  We still check the replay_opts structure for validity in
-pick_commits, but this is an assert() now to emphasize that it's the
-caller's responsibility to get it right.
+Currently, revert_or_cherry_pick sets up a default git config, parses
+command-line arguments, before preparing to pick commits.  This makes
+for a bad API as the central worry of callers is to assert whether or
+not a conflict occured while cherry picking.  The current API is like:
+
+if (revert_or_cherry_pick(argc, argv, opts) < 0)
+   print "Something failed, we're not sure what"
+
+Simplify and rename revert_or_cherry_pick to pick_commits so that it
+only has the responsibility of setting up the revision walker and
+picking commits in a loop.  Transfer the remaining work to its
+callers.  Now, the API is simplified as:
+
+if (parse_args(argc, argv, opts) < 0)
+   print "Can't parse arguments"
+if (pick_commits(opts) < 0)
+   print "Error encountered in picking machinery"
+
+Later in the series, pick_commits will also serve as the starting
+point for continuing a cherry-pick or revert.
 
 Inspired-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Jonathan Nieder <jrnieder@gmail.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- builtin/revert.c |   38 +++++++++++++++++++++++++++-----------
- 1 files changed, 27 insertions(+), 11 deletions(-)
+ builtin/revert.c |   14 +++++++-------
+ 1 files changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/builtin/revert.c b/builtin/revert.c
-index 047b0aa..bc86cc7 100644
+index c118fd3..047b0aa 100644
 --- a/builtin/revert.c
 +++ b/builtin/revert.c
-@@ -86,9 +86,26 @@ static int option_parse_x(const struct option *opt,
- 	return 0;
+@@ -558,16 +558,12 @@ static void read_and_refresh_cache(struct replay_opts *opts)
+ 	rollback_lock_file(&index_lock);
  }
  
-+static void verify_opt_compatible(const char *me, const char *base_opt, ...)
-+{
-+	const char *this_opt;
-+	va_list ap;
-+	int set;
-+
-+	va_start(ap, base_opt);
-+	while ((this_opt = va_arg(ap, const char *))) {
-+		set = va_arg(ap, int);
-+		if (set)
-+			die(_("%s: %s cannot be used with %s"),
-+				me, this_opt, base_opt);
-+	}
-+	va_end(ap);
-+}
-+
- static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+-static int revert_or_cherry_pick(int argc, const char **argv,
+-				struct replay_opts *opts)
++static int pick_commits(struct replay_opts *opts)
  {
- 	const char * const * usage_str = revert_or_cherry_pick_usage(opts);
-+	const char *me = action_name(opts);
- 	int noop;
- 	struct option options[] = {
- 		OPT_BOOLEAN('n', "no-commit", &opts->no_commit, "don't automatically commit"),
-@@ -122,6 +139,13 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 	if (opts->commit_argc < 2)
- 		usage_with_options(usage_str, options);
- 
-+	if (opts->allow_ff)
-+		verify_opt_compatible(me, "--ff",
-+				"--signoff", opts->signoff,
-+				"--no-commit", opts->no_commit,
-+				"-x", opts->record_origin,
-+				"--edit", opts->edit,
-+				NULL);
- 	opts->commit_argv = argv;
- }
- 
-@@ -564,17 +588,9 @@ static int pick_commits(struct replay_opts *opts)
+ 	struct rev_info revs;
  	struct commit *commit;
  
+-	git_config(git_default_config, NULL);
  	setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
--	if (opts->allow_ff) {
--		if (opts->signoff)
--			die(_("cherry-pick --ff cannot be used with --signoff"));
--		if (opts->no_commit)
--			die(_("cherry-pick --ff cannot be used with --no-commit"));
--		if (opts->record_origin)
--			die(_("cherry-pick --ff cannot be used with -x"));
--		if (opts->edit)
--			die(_("cherry-pick --ff cannot be used with --edit"));
--	}
+-	parse_args(argc, argv, opts);
 -
-+	if (opts->allow_ff)
-+		assert(!(opts->signoff || opts->no_commit ||
-+				opts->record_origin || opts->edit));
- 	read_and_refresh_cache(opts);
+ 	if (opts->allow_ff) {
+ 		if (opts->signoff)
+ 			die(_("cherry-pick --ff cannot be used with --signoff"));
+@@ -601,7 +597,9 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
+ 	if (isatty(0))
+ 		opts.edit = 1;
+ 	opts.action = REVERT;
+-	res = revert_or_cherry_pick(argc, argv, &opts);
++	git_config(git_default_config, NULL);
++	parse_args(argc, argv, &opts);
++	res = pick_commits(&opts);
+ 	if (res < 0)
+ 		die(_("revert failed"));
+ 	return res;
+@@ -614,7 +612,9 @@ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
  
- 	prepare_revs(&revs, opts);
+ 	memset(&opts, 0, sizeof(struct replay_opts));
+ 	opts.action = CHERRY_PICK;
+-	res = revert_or_cherry_pick(argc, argv, &opts);
++	git_config(git_default_config, NULL);
++	parse_args(argc, argv, &opts);
++	res = pick_commits(&opts);
+ 	if (res < 0)
+ 		die(_("cherry-pick failed"));
+ 	return res;
 -- 
 1.7.4.rc1.7.g2cf08.dirty
