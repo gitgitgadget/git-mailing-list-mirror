@@ -1,89 +1,81 @@
-From: Dave Zarzycki <zarzycki@apple.com>
-Subject: [PATCH] Make filter-branch work with many branches
-Date: Tue, 19 Jul 2011 09:29:44 -0700
-Message-ID: <E186982C-71AE-4C08-B857-A67BDCD21E3D@apple.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: t5403.1 and adding a file that belongs to a submodule
+Date: Tue, 19 Jul 2011 09:31:29 -0700
+Message-ID: <7vk4be9qqm.fsf@alter.siamese.dyndns.org>
+References: <CACsJy8AKMQa2u6Y5qQHGujbjqq0qnM5D1+aEvcfk7POxQBqsVg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 19 18:29:57 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 19 18:31:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QjDBE-00050k-5i
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Jul 2011 18:29:56 +0200
+	id 1QjDCr-0005yr-Vo
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Jul 2011 18:31:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751008Ab1GSQ3v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jul 2011 12:29:51 -0400
-Received: from mail-out.apple.com ([17.151.62.51]:35312 "EHLO
-	mail-out.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750803Ab1GSQ3u (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2011 12:29:50 -0400
-Received: from relay13.apple.com ([17.128.113.29])
- by mail-out.apple.com (Oracle Communications Messaging Exchange Server
- 7u4-20.01 64bit (built Nov 21 2010))
- with ESMTPS id <0LOL00E5Z9TDEUT0@mail-out.apple.com> for git@vger.kernel.org;
- Tue, 19 Jul 2011 09:29:44 -0700 (PDT)
-X-AuditID: 1180711d-b7c5fae000001427-40-4e25b0bcebeb
-Received: from jimbu (jimbu.apple.com [17.151.62.37])
-	(using TLS with cipher RC4-MD5 (RC4-MD5/128 bits))
-	(Client did not present a certificate)	by relay13.apple.com (Apple SCV relay)
- with SMTP id CA.0C.05159.CB0B52E4; Tue, 19 Jul 2011 09:28:44 -0700 (PDT)
-Received: from davez.apple.com (davez.apple.com [17.226.34.35])
- by cardamom.apple.com
- (Oracle Communications Messaging Exchange Server 7u4-20.01 64bit (built Nov 21
- 2010)) with ESMTPSA id <0LOL00AJO9TJ8480@cardamom.apple.com> for
- git@vger.kernel.org; Tue, 19 Jul 2011 09:29:43 -0700 (PDT)
-X-Mailer: Apple Mail (2.1244.3)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpgluLIzCtJLcpLzFFi42IRnG6nqrtng6qfweV7BhZdV7qZHBg9Pm+S
-	C2CM4rJJSc3JLEst0rdL4MrYcPA3W8FL9optH9axNTCuYeti5OSQEDCRWLz2AZQtJnHh3nog
-	m4tDSKCVSWJB73WwBK+AoMSPyfdYuhg5OJgF5CUOnpcFCTMLaEl8f9TKAlG/gkmie+92dpAE
-	m4CGxKdTd5lBbGEBa4muzR9ZQWwWAVWJS/snsELMtJFo72kHmy8iIC7x9vhMdogj5CUWt3xm
-	nMDIOwvJ6lkIq2chWb2AkXkVo2BRak5ipaGxXmJBQU6qXnJ+7iZGULg0FMruYNz/k/8QowAH
-	oxIPr+V6FT8h1sSy4srcQ4wSHMxKIrzbmlT9hHhTEiurUovy44tKc1KLDzFKc7AoifM2nwaq
-	FkhPLEnNTk0tSC2CyTJxcEo1MGpvfu/T/2yhDrNbxPzDuXEvF/3XunzJ/3SxZdDh2v0JvaIF
-	ie2uLbZ/6/Y+rmFuWPrmsoO0l4dMRoVWh8edeYt5HR8uOaSj3Bui0G0ncOyWvEuVod0yB1Ge
-	M7wbdpucsYyUCWScyxE09/CFlb/+pV7e3fToo9dSxm93ns+XTlhhvt5NkTdtgRJLcUaioRZz
-	UXEiAGXDLCcTAgAA
+	id S1751240Ab1GSQbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jul 2011 12:31:33 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47307 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751005Ab1GSQbc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2011 12:31:32 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 95C1E40E5;
+	Tue, 19 Jul 2011 12:31:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ovEaKpJaVmauiOGsa7Or1W1ooQg=; b=oe6Nkd
+	CRsChvkuzPcZ1IRSnKlPMVwu1uK04KprDgvqycwbCkWJx6jIKEdADPVkVzX9XnDd
+	Ot15E7LH9pU4w4LvEtLtsIKSV4+cHLuYxAOjvbGGn6zF1VoV2J/xZzs9pIJrRT07
+	6IHOR5puZXHNvJckZUSkrrCICFin55sYiPso4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CWHS6bRt5fAMdFbjrUZqQjBQ406fUSXD
+	qPFSWWzb53IT8jbajeejKj7jVdV4/gnwHo+Nn3/lSuz6cdKOnuyaRiiv7EuMjwI0
+	furGGZqUNOuGXpA7JAtgww55jIuiCiZkLzMAnSOp5KYwihfiBIAQDsnVMIf2a6XH
+	6ucXBJUHtj4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D16440E4;
+	Tue, 19 Jul 2011 12:31:31 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F025440E3; Tue, 19 Jul 2011
+ 12:31:30 -0400 (EDT)
+In-Reply-To: <CACsJy8AKMQa2u6Y5qQHGujbjqq0qnM5D1+aEvcfk7POxQBqsVg@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Tue, 19 Jul 2011 20:57:07 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8F10FBC4-B224-11E0-9137-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177460>
 
-When there are many branches, we can overflow the maximum number of
-arguments to exec*().
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-Signed-off-by: Dave Zarzycki <zarzycki@apple.com>
----
- git-filter-branch.sh |    6 ++----
- 1 files changed, 2 insertions(+), 4 deletions(-)
+> touch a b; git commit -am1
+> git clone ./. clone2
+> GIT_DIR=clone2/.git git add clone2/b
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 962a93b..0c03db0 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -274,8 +274,6 @@ else
- 	remap_to_ancestor=t
- fi
- 
--rev_args=$(git rev-parse --revs-only "$@")
--
- case "$filter_subdir" in
- "")
- 	eval set -- "$(git rev-parse --sq --no-revs "$@")"
-@@ -286,8 +284,8 @@ case "$filter_subdir" in
- 	;;
- esac
- 
--git rev-list --reverse --topo-order --default HEAD \
--	--parents --simplify-merges $rev_args "$@" > ../revs ||
-+git rev-parse --revs-only "$@" | git rev-list --stdin --reverse --topo-order \
-+	--default HEAD --parents --simplify-merges "$@" > ../revs ||
- 	die "Could not get the commits"
- commits=$(wc -l <../revs | tr -d " ")
- 
--- 
-1.7.6.135.g8cdba
+The last one has _always_ meant:
+
+    I am telling with GIT_DIR the directory that contains the repository
+    metadata, which is at clone2/.git directory.  I am not saying where
+    the working tree is (i.e. no GIT_WORK_TREE and no core.worktree in
+    clone2/.git/config) so take my $(pwd) as the root of the working tree,
+    and add the contents of clone2/b to the index at the same path,
+    i.e. "clone2/b".
+
+It should not add contents of the said file at "b", as there is _nothing_
+on the command line that tells us "clone2" is the root of the working
+tree.
+
+If the test means to do that, it should be more explicit and do something
+like:
+
+	( cd clone2 && git add b )
+
+instead.
