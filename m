@@ -1,90 +1,98 @@
-From: "J. Bakshi" <joydeep@infoservices.in>
-Subject: Re: how to add files/folder from work-tree
-Date: Tue, 19 Jul 2011 13:52:24 +0530
-Message-ID: <20110719135224.52c4301d@shiva.selfip.org>
-References: <20110719120048.3dd56eb6@shiva.selfip.org>
-	<4E2537F8.6000506@gmail.com>
-	<20110719133633.0797713d@shiva.selfip.org>
-	<4E253C94.7000709@gmail.com>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: How to limit bandwidth used by git over SSH ?
+Date: Tue, 19 Jul 2011 10:42:20 +0200
+Message-ID: <1311064940.3945.11.camel@bee.lab.cmartin.tk>
+References: <4E22B7F7.4020701@seichter.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 19 10:22:34 2011
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-4gtvd1HXXNLTzTVm79ZI"
+Cc: git@vger.kernel.org
+To: Ralph Seichter <git-ml@seichter.de>
+X-From: git-owner@vger.kernel.org Tue Jul 19 10:42:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qj5ZX-0003UK-8v
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Jul 2011 10:22:31 +0200
+	id 1Qj5t6-0002fu-B5
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Jul 2011 10:42:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752530Ab1GSIWV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jul 2011 04:22:21 -0400
-Received: from static.206.87.46.78.clients.your-server.de ([78.46.87.206]:34013
-	"EHLO Kolkata.infoservices.in" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752444Ab1GSIWT (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Jul 2011 04:22:19 -0400
-Received: from shiva.selfip.org (unknown [122.176.30.116])
-	by Kolkata.infoservices.in (Postfix) with ESMTPSA id 6F2623804001;
-	Tue, 19 Jul 2011 10:22:16 +0200 (CEST)
-In-Reply-To: <4E253C94.7000709@gmail.com>
-X-Mailer: Claws Mail 3.7.9 (GTK+ 2.24.4; x86_64-pc-linux-gnu)
+	id S1752543Ab1GSImj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jul 2011 04:42:39 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:50423 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752431Ab1GSImi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2011 04:42:38 -0400
+Received: from [10.10.10.234] (i59F7870A.versanet.de [89.247.135.10])
+	by kimmy.cmartin.tk (Postfix) with ESMTPSA id 1C3C0461FF;
+	Tue, 19 Jul 2011 10:42:35 +0200 (CEST)
+In-Reply-To: <4E22B7F7.4020701@seichter.de>
+X-Mailer: Evolution 2.32.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177443>
 
-On Tue, 19 Jul 2011 20:13:08 +1200
-Chris Packham <judge.packham@gmail.com> wrote:
 
-> Oops managed to drop the Cc for the mailing list from my initial response.
-> 
-> On 19/07/11 20:06, J. Bakshi wrote:
-> > On Tue, 19 Jul 2011 19:53:28 +1200
-> > Chris Packham <judge.packham@gmail.com> wrote:
-> > 
-> >> On 19/07/11 18:30, J. Bakshi wrote:
-> >>> Hello,
-> >>>
-> >>> I am using a git repo which has detached work tree. I like to add the files, folders located at the work tree ( it is a site under htdocs) at the git repo. Is it possible to do it within the work-tree or I need a separate working space from where I need to do all these operation ?
-> >>>
-> >>> Thanks
-> >>>  
-> >>> --
-> >>
-> >> I'm not sure I fully understand your question but what I _think_ you
-> >> want to do is specify the path to the repository with the GIT_DIR
-> >> environment variable. Like this
-> >>
-> >>  cd /place/where/files/are
-> >>  GIT_DIR=/place/were/repo/is/.git git add <file>
-> >>
-> > 
-> > 
-> > I have set a git repo with attached work-tree with hook as below
-> > 
-> > git -bare init  /home/git/test.git
-> > cd /home/git/test.git
-> > git config core.worktree /var/www/test
-> > 
-> > vim /home/git/test.git/hooks/post-receive
-> > 
-> > #!/bin/sh
-> > git checkout -f
-> > 
-> > Now the /var/www/test has already some files/folder. How can I add those to the repo within from its work-tree ?
-> > 
-> > Thanks
-> 
-> I think my initial response is correct. Try the following
-> 
->   cd /var/www/test
->   git --git-dir=/home/git/test.git add <files>
->   git --git-dir=/home/git/test.git commit -m "blah"
-> 
-> 
+--=-4gtvd1HXXNLTzTVm79ZI
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Great !! Thanks 
+On Sun, 2011-07-17 at 12:22 +0200, Ralph Seichter wrote:
+> Hello list,
+>=20
+> I'm not really sure if this is a git or SSH issue, but I haven't figured
+> out a solution yet. To transfer my data between two machines, I use
+>=20
+>   git-push ssh://machineB.tld/foo/proj.git master
+>=20
+> from machineA. Unfortunately, the machines are connected by a very low-
+> bandwidth connection, which is completely choked by git-push. From what
+> I've read so far, I guess this is the result of SSH setting TOS to
+> "minimize delay", which prevents almost all other traffic during the
+> push operation. Not good.
+
+A bit OT, but the situation where a link is chocked by a slow uplink
+getting filled is most likely due to buffer bloat on your modem/router
+which confuses TCP's congestion detection by buffering your packets too
+aggressively. But that's neither here nor there, I just wanted to point
+out it's not all ssh or git's fault.
+
+>=20
+> I haven't yet found a way of telling git (or SSH) to use no more than a
+> given maximum bandwidth, like I could do with "scp -l {limit}". Did I
+> miss something in the documentation?
+
+But coming back to SSH, scp knows it's going to do a file transfer, but
+git uses the ssh client to do a "normal" connection to a remote machine,
+to ssh, it's no different from a user typing really fast, which is
+probably why it's not supported out of the box.
+
+There is a tool called trickle which takes over the network functions
+and can be used to limit upload and download speeds, so using it like
+
+    trickle -u 20 git push ssh://machineB.tld/foo/proj.git master
+
+should do the trick.
+
+Cheers,
+   cmn
+
+
+--=-4gtvd1HXXNLTzTVm79ZI
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAABAgAGBQJOJUNnAAoJEHKRP1jG7ZzTZ5EH/1FNA15ImCFAzz60IW/OA+Sv
+qZQk+JE+ACQzV3MFUzn72gMy8J0BpebiTDtZsBqmagdYoiBuAXyupRgW5x2jH9s1
+MFTvNP1t495n9kTkYtOkHxha2ESjt3CEvjuiGR3wY0fPCeJGRKmEcAndIVqoVGu2
+cTcu+W+4IZvl+N5Wb5rdWzB2PAWSQoMawgwWkBq9D7btjFricpXbHMKfOEsxvmlD
+v7BivMq/KQzygexSbidpgmOeckA1iRn/gr8QGHR7sijQXhY2BS80dFPJX8VT18pU
++xbezJyXiqNoz2Ol7NADQpieBl8I9K3AHOQAQO5To98E38sgm9+20wLaBHiKmEQ=
+=Acjy
+-----END PGP SIGNATURE-----
+
+--=-4gtvd1HXXNLTzTVm79ZI--
