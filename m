@@ -1,154 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 02/18] config: Introduce functions to write non-standard
- file
-Date: Tue, 19 Jul 2011 15:55:04 -0400
-Message-ID: <20110719195504.GA3957@sigill.intra.peff.net>
-References: <1311095876-3098-1-git-send-email-artagnon@gmail.com>
- <1311095876-3098-3-git-send-email-artagnon@gmail.com>
+From: rupert THURNER <rupert.thurner@gmail.com>
+Subject: git svn push, git dcommit leads to commit duplication?
+Date: Tue, 19 Jul 2011 21:55:23 +0200
+Message-ID: <CAJs9aZ8T+LSOGs-kdncfSJeLANtZqudwc0r-epV7BQ1t4huX9Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 19 21:55:16 2011
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 19 21:55:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QjGNw-0004uE-8i
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Jul 2011 21:55:16 +0200
+	id 1QjGOT-00057M-Aw
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Jul 2011 21:55:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751382Ab1GSTzJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jul 2011 15:55:09 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49388
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751043Ab1GSTzI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2011 15:55:08 -0400
-Received: (qmail 1062 invoked by uid 107); 19 Jul 2011 19:55:35 -0000
-Received: from m-0-33.docsis.hbci.com (HELO sigill.intra.peff.net) (64.213.220.33)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 19 Jul 2011 15:55:35 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Jul 2011 15:55:04 -0400
-Content-Disposition: inline
-In-Reply-To: <1311095876-3098-3-git-send-email-artagnon@gmail.com>
+	id S1750966Ab1GSTzp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jul 2011 15:55:45 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:41792 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750885Ab1GSTzo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2011 15:55:44 -0400
+Received: by iwn6 with SMTP id 6so4379874iwn.19
+        for <git@vger.kernel.org>; Tue, 19 Jul 2011 12:55:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=mTT1Jmld2mJVGA+dgMjBmmP0jiAWyHsubSxnmrZmQl4=;
+        b=GQ7XrTGwvbx1s36sTXCe69FHyN3Ni+Wb0ebZ5epLAHhSZPnw7PDeHJ1K9WKnpwQUdV
+         Ubd8ReTLJEcMesivyHozkbTv0rfMtMpsbcB4og7b2FTTVit5WpfkPPpXDi5gCMIngzET
+         Zq8zEynFpVUYzI7lfY4ToNffubrwAVxU2kDr8=
+Received: by 10.42.147.66 with SMTP id m2mr3523566icv.321.1311105343186; Tue,
+ 19 Jul 2011 12:55:43 -0700 (PDT)
+Received: by 10.42.96.193 with HTTP; Tue, 19 Jul 2011 12:55:23 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177496>
 
-On Tue, Jul 19, 2011 at 10:47:40PM +0530, Ramkumar Ramachandra wrote:
+we keep a svn clone of
+https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg on
+https://github.com/opencsw/pkg-all . usually i synchronize it with
+"git svn rebase" and "git push" from a local clone created with "git
+svn clone https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg".
 
-> -int git_config_set_multivar(const char *key, const char *value,
-> -	const char *value_regex, int multi_replace)
-> +int git_config_set_multivar_in_file(const char *key, const char *value,
-> +				const char *value_regex, int multi_replace,
-> +				const char *filename)
->  {
->  	int fd = -1, in_fd;
->  	int ret;
->  	char *config_filename;
-> +	const char *saved_config_filename;
->  	struct lock_file *lock = NULL;
->  
-> +	saved_config_filename = config_exclusive_filename;
-> +	config_exclusive_filename = filename;
-> +
->  	if (config_exclusive_filename)
->  		config_filename = xstrdup(config_exclusive_filename);
->  	else
-> @@ -1379,6 +1390,7 @@ out_free:
->  	if (lock)
->  		rollback_lock_file(lock);
->  	free(config_filename);
-> +	config_exclusive_filename = saved_config_filename;
->  	return ret;
->  
->  write_err_out:
+last time i changed something in this local clone and pushed it to
+github, and commited it to sourceforge via git svn dcommit. now the
+commits are there two times, different. my guess was that dcommit
+would add the svn related stuff to the existing git commits. what is
+the correct usage to keep svn and git in sync?
 
-Is there a need for this "config_exclusive_filename" hackery at all?
+$ git log origin/master..master
+...
+commit 38ed3e4dec877b356fbf3799d1419a89ce6d107f
+Author: rthurner <rthurner@d3b55034-1cff-0310-a425-aefe953e1e90>
+Date:   Sun Jul 17 09:25:14 2011 +0000
 
-I was thinking the result would look more like:
+    libserf, obsolete devel, and not working 0-0 package
 
-diff --git a/config.c b/config.c
-index ee643eb..35be842 100644
---- a/config.c
-+++ b/config.c
-@@ -1193,19 +1193,14 @@ out_free_ret_1:
-  * - the config file is removed and the lock file rename()d to it.
-  *
-  */
--int git_config_set_multivar(const char *key, const char *value,
-+int git_config_set_multivar_in_file(const char *config_filename,
-+	const char *key, const char *value,
- 	const char *value_regex, int multi_replace)
- {
- 	int fd = -1, in_fd;
- 	int ret;
--	char *config_filename;
- 	struct lock_file *lock = NULL;
- 
--	if (config_exclusive_filename)
--		config_filename = xstrdup(config_exclusive_filename);
--	else
--		config_filename = git_pathdup("config");
--
- 	/* parse-key returns negative; flip the sign to feed exit(3) */
- 	ret = 0 - git_config_parse_key(key, &store.key, &store.baselen);
- 	if (ret)
-@@ -1382,7 +1377,6 @@ int git_config_set_multivar(const char *key, const char *value,
- out_free:
- 	if (lock)
- 		rollback_lock_file(lock);
--	free(config_filename);
- 	return ret;
- 
- write_err_out:
-@@ -1391,6 +1385,24 @@ write_err_out:
- 
- }
- 
-+int git_config_set_multivar(const char *key, const char *value,
-+			    const char *value_regex, int multi_replace)
-+{
-+	char *config_filename;
-+	int r;
-+
-+	if (config_exclusive_filename)
-+		config_filename = xstrdup(config_exclusive_filename);
-+	else
-+		config_filename = git_pathdup("config");
-+
-+	r = git_config_set_multivar_in_file(config_filename, key, value,
-+					    value_regex, multi_replace);
-+
-+	free(config_filename);
-+	return r;
-+}
-+
- static int section_name_match (const char *buf, const char *name)
- {
- 	int i = 0, j = 0, dot = 0;
+    git-svn-id:
+https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg@15081
+d3b55034-1cff-0310-a425-aefe953e1e90
 
-Which is a bit cleaner to read, IMHO.
+commit 22340c05f87b19bde70fd04016bee39e24bb6c8b
+Author: rthurner <rthurner@d3b55034-1cff-0310-a425-aefe953e1e90>
+Date:   Sun Jul 17 09:24:53 2011 +0000
 
-BTW, I'm unclear why we bother duplicating the filename in the first
-place. It seems like we could go even simpler with:
+    libserf, obsolete devel, and not working 0-0 package
 
-int git_config_set_multivar(const char *key, const char *value,
-                            const char *value_regex, int multi_replace)
-{
-	char *config_filename;
+    git-svn-id:
+https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg@15080
+d3b55034-1cff-0310-a425-aefe953e1e90
 
-	if (config_exclusive_filename)
-		config_filename = config_exclusive_filename;
-	else
-		config_filename = git_path("config");
 
-        return git_config_set_multivar_in_file(config_filename, key, value,
-                                               value_regex, multi_replace);
-}
+$ git log master..origin/master
+commit 25bf83cd73ad5ffb17a5bfb668ecdbde1b8971bd
+Author: THURNER rupert <rupert@opencsw.org>
+Date:   Sun Jul 17 11:23:15 2011 +0200
+
+    libserf, obsolete devel, and not working 0-0 package
+
+commit cd516e0f4a319ba2554ca29a911130b43b96f6ec
+Author: THURNER rupert <rupert@opencsw.org>
+Date:   Sun Jul 17 11:21:36 2011 +0200
+
+    libserf, obsolete devel, and not working 0-0 package
