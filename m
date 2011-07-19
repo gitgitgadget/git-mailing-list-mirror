@@ -1,93 +1,81 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 02/18] config: Introduce functions to write non-standard
- file
-Date: Tue, 19 Jul 2011 15:35:41 -0500
-Message-ID: <20110719203541.GB26557@elie.gateway.2wire.net>
-References: <1311095876-3098-1-git-send-email-artagnon@gmail.com>
- <1311095876-3098-3-git-send-email-artagnon@gmail.com>
- <20110719195504.GA3957@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation/Notes: Remove 'footnote:' warning
+Date: Tue, 19 Jul 2011 13:43:53 -0700
+Message-ID: <7vr55m80hi.fsf@alter.siamese.dyndns.org>
+References: <1310855420-21183-1-git-send-email-pavan.sss1991@gmail.com>
+ <1310908271.21563.17.camel@drew-northup.unet.maine.edu>
+ <20110717215858.GA9906@elie>
+ <CAK9CXBVSq_j7naHzVLMj=bW8WMKq_WfkDQP4zspkK_QizC26=g@mail.gmail.com>
+ <20110718055108.GA4254@elie.gateway.2wire.net>
+ <CAK9CXBV=OMRVzEjUmb6JP8nM9bQ4DqM0D7xCywxs0TUD5+scrw@mail.gmail.com>
+ <20110718071308.GA4745@elie.gateway.2wire.net>
+ <CAK9CXBUjTQVsJrERKwmYT=9mBLLDu9uG9+DrFvaOaDPBUpJjzg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 19 22:35:57 2011
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Drew Northup <drew.northup@maine.edu>, git@vger.kernel.org
+To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 19 22:44:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QjH1G-0005rn-Lj
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Jul 2011 22:35:55 +0200
+	id 1QjH97-00014n-8t
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Jul 2011 22:44:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751754Ab1GSUfs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jul 2011 16:35:48 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:44500 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751092Ab1GSUfs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2011 16:35:48 -0400
-Received: by ywe9 with SMTP id 9so1958986ywe.19
-        for <git@vger.kernel.org>; Tue, 19 Jul 2011 13:35:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=gePrbCdu0rxJDFAwYhGDn2wc+9jyOo4aH+7YB3UtY74=;
-        b=JMSvz87wwqrmHeERMWsf29Ucr9O4NCtsPBGeW/7zfLRCskhFjddxyOXITE5xLpGVcc
-         5evYz8IDR+3zcQn8q0FE1fZtIDi+M/h/U7nhuCxWf3gpyane2VzSesiblPllrMYoSIHu
-         7nQ3L8H5ewxSjbrIOOe3ZP1z3LR0mQx6N/eMY=
-Received: by 10.236.179.34 with SMTP id g22mr4368074yhm.327.1311107747316;
-        Tue, 19 Jul 2011 13:35:47 -0700 (PDT)
-Received: from elie.gateway.2wire.net (adsl-69-209-74-225.dsl.chcgil.ameritech.net [69.209.74.225])
-        by mx.google.com with ESMTPS id c69sm179583yhm.29.2011.07.19.13.35.43
-        (version=SSLv3 cipher=OTHER);
-        Tue, 19 Jul 2011 13:35:44 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20110719195504.GA3957@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S1751602Ab1GSUn4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jul 2011 16:43:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37962 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751092Ab1GSUn4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2011 16:43:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 090E8352C;
+	Tue, 19 Jul 2011 16:43:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Cun6UUx1hGs7T7Kr8HTb1WH+jgY=; b=XOiPqP
+	YPK7JtoFG/rOOOpstf2BB5Dbwu41L31sEK8dm/4pcr5ycNdda4vqrYdog5vTxNyn
+	W9K58f05ijD61KeVLpzhRP1rYOwt5uhwHohMGWeN3b2czRPm/THoyBphifF9uyOR
+	ftMWfAAaNhxeqPEGJ3sGvSYW/eXt7MU7kdgVo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YIHS766H2I9U+PG+stNdHJ6x9mzMXfz2
+	8jfnmebdL75BHh86oT4vhvHv8/nl7SE8CmT/moZoIJyLTCG2de+zJFk0stshGrQ0
+	MpA1JDu0I8ngzkgLQEpbNM1ZoXmKgTJMdoZJP0Rct3uRQWAP0AgdSH3JAXlejlLB
+	+8y6f+Mib48=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 003FD352B;
+	Tue, 19 Jul 2011 16:43:55 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8AE8A3529; Tue, 19 Jul 2011
+ 16:43:54 -0400 (EDT)
+In-Reply-To: <CAK9CXBUjTQVsJrERKwmYT=9mBLLDu9uG9+DrFvaOaDPBUpJjzg@mail.gmail.com> (Pavan
+ Kumar Sunkara's message of "Mon, 18 Jul 2011 14:31:20 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D1590F94-B247-11E0-A3F7-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177504>
 
-Jeff King wrote:
+Pavan Kumar Sunkara <pavan.sss1991@gmail.com> writes:
 
-> BTW, I'm unclear why we bother duplicating the filename in the first
-> place. It seems like we could go even simpler with:
+>> A patch with such a change and
+>> mentioning in the commit message the two bugs you're working around
+>> would seem sane to me.
+>>
+>> Thanks,
+>> Jonathan
+>>
 >
-> int git_config_set_multivar(const char *key, const char *value,
->                             const char *value_regex, int multi_replace)
-> {
-> 	char *config_filename;
+> I agree. So, if the patch is ok, I will rewrite the commit msg and
+> send it again.
 >
-> 	if (config_exclusive_filename)
-> 		config_filename = config_exclusive_filename;
-> 	else
-> 		config_filename = git_path("config");
->
->         return git_config_set_multivar_in_file(config_filename, key, value,
->                                                value_regex, multi_replace);
+> Thanks,
+> Pavan Kumar Sunkara
 
-FWIW, I suspect that would be a trap waiting to be triggered as soon
-as git_config_set_multivar_in_file() calls git_path() four times.
-I.e., it's not about the config_exclusive_filename but about the
-git_path.
-
-A little micro-optimization might be to do the following. :)
-
-	const char *config_filename;
-	char *filename_buf = NULL;
-	int result;
-
-	if (config_exclusive_filename)
-		config_filename = config_exclusive_filename;
-	else
-		config_filename = filename_buf = git_pathdup("config");
-
-	result = git_config_set_multivar_in_file(...);
-	free(filename_buf);
-	return result;
+Thanks.
