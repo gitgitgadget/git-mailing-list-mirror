@@ -1,82 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] config: Introduce functions to write non-standard
- file
-Date: Mon, 18 Jul 2011 16:54:20 -0700
-Message-ID: <7vr55n9mc3.fsf@alter.siamese.dyndns.org>
-References: <20110713190724.GA31965@sigill.intra.peff.net>
- <1311025032-835-1-git-send-email-artagnon@gmail.com>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <carlos@cmartin.tk>
+Subject: [GSoC 11] libgit2: midterm report
+Date: Tue, 19 Jul 2011 02:07:03 +0200
+Message-ID: <1311034023.4147.949.camel@centaur.lab.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 19 01:54:29 2011
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-fBr3wzkABftBY6yt/z13"
+To: libgit2@librelist.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 19 02:07:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qixds-0007pr-5d
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Jul 2011 01:54:28 +0200
+	id 1QixqL-0003bx-AM
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Jul 2011 02:07:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751036Ab1GRXyX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jul 2011 19:54:23 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44458 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750829Ab1GRXyX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jul 2011 19:54:23 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 71F0A441C;
-	Mon, 18 Jul 2011 19:54:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/zcDVTBIAUdgPvoJb0JLMSJnbsM=; b=ZkhhZi
-	M9P+Av2pIuXeSelAABF8SBu1QMTDnyjOuL5yi/gsi2rJmXbmMm4S+9kibRcq0lZB
-	LNUDt02/BU58S1t/M21xWEUuhZ1kfZH7KUBbeP/xcJ4BX+ksAYY21HnEudMG5VjN
-	a9GxjjxUTiEnfG8AhsxrKl/Bh62z602+9cvfs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lTE9DEKXOYwiS2VFl8iOB4zvYAz3GikT
-	oJRrjH7KutEWfgCAoulPwgiF7M+qJU3ywDXE2jAYGGyHN1fb4CIzACjTl2028xMu
-	qZRp2DQxjXiZiMl3PdzLTOPXOxa6bW8gdBElfjOT+ALZijHSkX9lOXSGYjdSOoDx
-	SBOCU8+Fw04=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 685F0441B;
-	Mon, 18 Jul 2011 19:54:22 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D2CF54419; Mon, 18 Jul 2011
- 19:54:21 -0400 (EDT)
-In-Reply-To: <1311025032-835-1-git-send-email-artagnon@gmail.com> (Ramkumar
- Ramachandra's message of "Tue, 19 Jul 2011 03:07:12 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 42268274-B199-11E0-9857-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751583Ab1GSAHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jul 2011 20:07:06 -0400
+Received: from kimmy.cmartin.tk ([91.121.65.165]:47815 "EHLO kimmy.cmartin.tk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750881Ab1GSAHF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jul 2011 20:07:05 -0400
+Received: from [192.168.1.23] (brln-4d0c3c8c.pool.mediaWays.net [77.12.60.140])
+	by kimmy.cmartin.tk (Postfix) with ESMTPSA id B5BDD461FF;
+	Tue, 19 Jul 2011 02:07:02 +0200 (CEST)
+X-Mailer: Evolution 2.32.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177431>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-> +int git_config_set_in_file(const char *key, const char *value,
-> +			const char *filename)
-> +{
-> +	const char *saved;
-> +	int ret;
-> +
-> +	saved = config_exclusive_filename;
-> +	config_exclusive_filename = filename;
-> +	ret = git_config_set_multivar(key, value, NULL, 0);
-> +	config_exclusive_filename = saved;
-> +	return ret;
-> +}
+--=-fBr3wzkABftBY6yt/z13
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Yuck, what an ugly hack when you are so close.  Why not restructure the
-code in such a way that the updated config-set-multivar and set-in-file
-share the code better?  If the former takes a hardcoded logic to decide
-which file to write to while the latter takes the filename to write to as
-its argument, wouldn't it be a lot more natural to make config-set-multivar
-call set-in-file after computing what filename parameter to pass?
+Hello everyone,
+
+As it's the GSoC midterm and I'm taking a rest from coding (my exams are
+in the next few days) I'm taking this opportunity to write up a more
+detailed report on what has been happening on the libgit2 network front.
+All the code is available from my 'fork' on github.
+
+The more useful working code has been merged into mainline, and you can
+get a list of references on the remote. If you want to filter which
+references you want to see, you can do that as well (with some manual
+work). I had hoped that fetching and/or pack indexing would be working
+by now, but sadly the university got in the way. At any rate, here's a
+list of what's working/implemented:
+
+   _Refspec_
+
+I believe all the important stuff has been implemented. You can get one
+from a remote and you can see if a string matches what it describes. You
+can also transform  a string/path from the source to the destination
+form (this probably has a different name in git.git). The transformation
+code assumes that a '*' in the destination implies that there is a '*'
+at the end of the source name as well. This might need to be 'hardened'.
+
+   _Remotes_
+
+You can parse its information from the configuration file (the push and
+fetch refspecs will be parsed as well) and an appropriate transport (see
+below) will be chosen based on the URL prefix. Right now there is a
+static list, but plug-ins could be supported without much effort if
+somebody can come up with an use-case. It is through these transports
+that everything is done through the network (or simulating the network,
+as in the local filesystem "network" transport).
+
+
+   _Transports_
+
+This is where most of the work actually happens. Each transport
+registers its callbacks in a structure and does its work transparently.
+The data structures are still in flux, as I haven't yet found the best
+way to avoid duplicating the information in several places, and the
+want/have/need code is really still in it infancy. The idea is that the
+object list you get when you connect can be used to mark which commits
+you want to receive or send. Right now only the local filesystem and
+git/tcp are implemented; and the only working operation is
+'git-ls-remote'.
+
+   _Sliding memory maps, packfile reading and the indexer_
+
+Or whatever you want to call them; I believe it's mmfile in git. This
+code and the packfile reading code live in the "pack ODB backend" so I'm
+making it somewhat more generic so I can use it without an ODB backend.
+Once that code is decoupled (which is a good change on its own), writing
+and indexer shouldn't be too hard.
+
+-----
+
+So this is where I am now. I'm a bit behind according to the original
+schedule but still on track to finish on time. It's been interesting and
+fun, sometimes a bit frustrating. Thanks to all the people who have
+helped me thus far.
+
+Cheers,
+   cmn
+
+
+
+--=-fBr3wzkABftBY6yt/z13
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQEcBAABAgAGBQJOJMqdAAoJEHKRP1jG7ZzTFvgH+gN6YQMk/79hCBaV5L2RyC7r
+zIY1lCWiXRd5n531CRoZe/dh5+kOOpREBccYDNAUElORseUiSs+SAREmvM8xVDM1
+O7rHBXwznC2Bubsu7BpuFay+JMSLZJ21heLyFwiRiSK17IG7KTJ9SG9pdf/CDAbG
+SOGt6NLdlE50jNh7NsXGhlWCHoTC77QE7fBHqZb/fasu75C2TZ8gvkT7F5eGiaiy
+s5FzdDwaMBk0qj0q9OTJYWKMh+qlmyUQ7dElOo4cOJCbCDiRa3KKE1MhQeCkXQ+I
+bawHkdlG71d04WPMSwoZ9HPK+7wdcNG1U+5C0OId423AGF0idRZoJm86XFWGh9Q=
+=azO1
+-----END PGP SIGNATURE-----
+
+--=-fBr3wzkABftBY6yt/z13--
