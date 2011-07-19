@@ -1,82 +1,123 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: git-archive and tar options
-Date: Mon, 18 Jul 2011 19:12:45 -0500
-Message-ID: <4E24CBFD.9090909@gmail.com>
-References: <ivla29$liu$1@dough.gmane.org> <20110714015656.GA20136@sigill.intra.peff.net> <4E1F2468.6080409@lsrfire.ath.cx> <20110714172718.GA21341@sigill.intra.peff.net> <4E2477E1.5090406@gmail.com> <4E249C94.3040002@lsrfire.ath.cx>
+From: govinda <govinda.webdnatalk@gmail.com>
+Subject: newbie - missing file from untracked list
+Date: Mon, 18 Jul 2011 18:49:16 -0700 (PDT)
+Message-ID: <1311040156386-6597192.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Neal Kreitzinger <neal@rsss.com>,
-	git@vger.kernel.org
-To: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Tue Jul 19 02:12:56 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 19 03:49:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qixvj-0005EF-4u
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Jul 2011 02:12:55 +0200
+	id 1QizR5-0005BR-BC
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Jul 2011 03:49:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751728Ab1GSAMu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Jul 2011 20:12:50 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:38509 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750877Ab1GSAMu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jul 2011 20:12:50 -0400
-Received: by gxk21 with SMTP id 21so1551886gxk.19
-        for <git@vger.kernel.org>; Mon, 18 Jul 2011 17:12:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=iOdQgbGKdhYT6X9LXAWnrL6iILm7VPz8BaUVqRaoEYM=;
-        b=N4JrGxT6YEMA1pe7lJezKlBV/kshr5yKC71uZcNLR3rVk5LLPq1jwA9JJaXY35dZ3S
-         d2WdWvi/n++4Z0nC2sOKpsmsUtgpQyJBAI60dRXMeq+47WuN8eqf6ytMkdxau4gNEC+b
-         YMoNVfUKhW+3RMJdK7eCorPRdEoLoHCjj1+VM=
-Received: by 10.150.169.21 with SMTP id r21mr6038921ybe.60.1311034369383;
-        Mon, 18 Jul 2011 17:12:49 -0700 (PDT)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id y9sm2087279ybf.3.2011.07.18.17.12.48
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 18 Jul 2011 17:12:48 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.18) Gecko/20110616 Thunderbird/3.1.11
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <4E249C94.3040002@lsrfire.ath.cx>
+	id S1751096Ab1GSBtS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jul 2011 21:49:18 -0400
+Received: from sam.nabble.com ([216.139.236.26]:47919 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750977Ab1GSBtR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jul 2011 21:49:17 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <govinda.webdnatalk@gmail.com>)
+	id 1QizQy-0005HV-Ch
+	for git@vger.kernel.org; Mon, 18 Jul 2011 18:49:16 -0700
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177433>
 
-On 7/18/2011 3:50 PM, Ren=C3=A9 Scharfe wrote:
-> Am 18.07.2011 20:13, schrieb Neal Kreitzinger:
->> HEAD:$subdir worked on my bare repo.  I ran it for each transformant
->> pathspec and then combined the archives with tar --catenate:
->>
->> # git archive --format=3Dtar --prefix=3DmyWeb/myRoot/myAPP/Templates=
-/
->> HEAD:WebPortal/Templates/>myAPP.myTag.tar
->> # git archive --format=3Dtar --prefix=3Dopt/mySTUFF/v01/SCRIPTS/
->> HEAD:SCRIPTS/>SCRIPTS.tar
->> # tar --file=3DmyAPP.myTag.tar -A SCRIPTS.tar
->>
->> However, the permissions also need to change to 777 and tar --mode w=
-ould
->> not effect this in combination with --catenation or -x.  Is there a =
-way
->> I can change the permissions without having to untar->chmod->retar, =
-and
->> without having to use a non-bare repo as an intermediary?
->
-> You can use the configuration setting tar.umask to affect the
-> permissions of the archive entries.  Set it to 0 to pass the permissi=
-on
-> bits from the repo unchanged.
->
-The permissions in my repo are 775 and 664 and I want to change them to=
- 777.
+Hi everyone.
 
--neal
+I just started with git.. am new to VCS/SCM (been doing it
+painstakingly/manually for years), am new to the CL, am a decent old-school
+coder, but on occasion a little slow in unix topics, and other more
+modern/current coding circles.
+
+I am embarrassed to ask, because I am guessing it is going to be
+obvious/silly, once I see it.. but meanwhile:
+
+Isn't the list of untracked files that git shows me when I do, e.g.:
+Govind% git status
+
+..supposed to include all actual files in the directory?  A couple times,
+like now.. I am wanting to add a file to the staging area.. and for some odd
+(odd to me now) reason, the file is as if not there.  When I do:
+Govind% ls
+
+..then I see the file *is* there.. as I also know it is from my Mac OS 10.6
+finder window.
+
+So why does git not mention it when I do 'status'?  
+
+Git seems happy for me to 'add' the file, but then refuses to show it to me
+in the 'status' listing.
+The file in question is in the pwd, and is named 'mainline_finishes.html'.
+
+Here, please see my issue:
+
+[Govindas-iMac-2:SS_site_root] Govind% pwd
+/Users/Govind/Documents/webmastering/websites-devel./SS_site_root
+[Govindas-iMac-2:SS_site_root] Govind% ls
+[snip]
+VL_ShowMan.html-2011-05-10_late			mainline_finishes.html
+VL_ShowMan.html-2011-05-11			mainline_finishes.html-2011-04-29
+VL_ShowMan.html-2011-05-12			mainline_finishes.html-2011-06-08
+VL_ShowMan.html-2011-05-17			mainline_finishes.html-2011-06-17
+VL_ShowMan.html-2011-05-19			manu_autoupdate00.html
+VL_ShowMan.html-2011-06-02			news
+[snip]
+
+[Govindas-iMac-2:SS_site_root] Govind% git add mainline_finishes.html
+[Govindas-iMac-2:SS_site_root] Govind% git status
+# On branch Gov_SS_2011-07-16
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	new file:   VL_ShowMan.html
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+[snip]
+#	Intranet_IE/CSI_Admin.html
+#	Intranet_IE/DealerUpdate_Approve.html
+[snip]
+#	LunchReport_CommentToolTip.js
+#	ManuUpdate/
+#	RepGroup_Update_Trigger.html
+[snip]
+#	joinus.html
+#	mainline_finishes.html-2011-04-29
+#	mainline_finishes.html-2011-06-08
+#	mainline_finishes.html-2011-06-17
+#	manu_autoupdate00.html
+#	myspecsimple/
+#	news/
+[snip]
+ 
+
+^^^ *where* is 'mainline_finishes.html'?!
+
+I would sort that untracked file listing for ease of reading.. but I do not
+know how (if it is even possible)... is there an option for 'git status -?'
+that causes the list to sort alphabetically?  At the moment is seems to try
+to sort ..but breaks the lists into a couple/few separate clumps of
+otherwise alphabetized file names. (That makes no sense to me.)
+
+Thanks for any feedback.  
+
+Also please feel free to scold me or train me on any point where I need it..
+like list protocol, language used, CL tips, etc.  anything.  I mean to play
+nice.. and am only appreciative.
+
+-Govinda
+
+--
+View this message in context: http://git.661346.n2.nabble.com/newbie-missing-file-from-untracked-list-tp6597192p6597192.html
+Sent from the git mailing list archive at Nabble.com.
