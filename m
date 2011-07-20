@@ -1,70 +1,80 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCHv2] Make filter-branch work with many branches
-Date: Wed, 20 Jul 2011 18:42:33 +0200
-Message-ID: <4E270579.7060309@kdbg.org>
-References: <CA809344-F7C2-4A41-B4F7-15B5EEB9B7E2@apple.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [RFC/PATCH] t9159-*.sh: Don't use the svn '@<rev>' syntax
+Date: Wed, 20 Jul 2011 17:59:55 +0100
+Message-ID: <4E27098B.906@vilain.net>
+References: <4E21D295.7020600@ramsay1.demon.co.uk> <7vvcuy82kn.fsf@alter.siamese.dyndns.org> <4E269AB6.8070207@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Dave Zarzycki <zarzycki@apple.com>
-X-From: git-owner@vger.kernel.org Wed Jul 20 18:42:44 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eric Wong <normalperson@yhbt.net>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	GIT Mailing-list <git@vger.kernel.org>, mhagger@alum.mit.edu
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Jul 20 19:08:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QjZr8-0008AX-Ad
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Jul 2011 18:42:42 +0200
+	id 1QjaFh-0004cy-Jp
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Jul 2011 19:08:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751616Ab1GTQmg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jul 2011 12:42:36 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:30191 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751302Ab1GTQmg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2011 12:42:36 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 9F486130065;
-	Wed, 20 Jul 2011 18:42:33 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 2613C19F3B9;
-	Wed, 20 Jul 2011 18:42:33 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.18) Gecko/20110616 SUSE/3.1.11 Thunderbird/3.1.11
-In-Reply-To: <CA809344-F7C2-4A41-B4F7-15B5EEB9B7E2@apple.com>
+	id S1751844Ab1GTRH6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jul 2011 13:07:58 -0400
+Received: from uk.vilain.net ([92.48.122.123]:37539 "EHLO uk.vilain.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751613Ab1GTRH6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jul 2011 13:07:58 -0400
+X-Greylist: delayed 480 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 Jul 2011 13:07:57 EDT
+Received: by uk.vilain.net (Postfix, from userid 1001)
+	id EEBE9824E; Wed, 20 Jul 2011 17:59:56 +0100 (BST)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on uk.vilain.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=unavailable version=3.3.1
+Received: from [IPv6:::1] (localhost [127.0.0.1])
+	by uk.vilain.net (Postfix) with ESMTP id 64B3A81C3;
+	Wed, 20 Jul 2011 17:59:55 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110617 Thunderbird/3.1.11
+In-Reply-To: <4E269AB6.8070207@drmicha.warpmail.net>
+X-Enigmail-Version: 1.1.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177543>
 
-Am 20.07.2011 15:42, schrieb Dave Zarzycki:
-> -rev_args=$(git rev-parse --revs-only "$@")
-> +rev_parse_args="$@"
+On 20/07/11 10:07, Michael J Gruber wrote:
+> path@REV are so-called peg revisions, introduced in svn 1.1, and denote
+> "I mean the file named path in REV" (as opposed to "the file named path
+> now and maybe differently back then"). It (now) defaults to BASE (for
+> worktree) resp. HEAD (for URLs). A bit like our rename detection.
+>
+> -r REV specifies the operative revision. After resolving the
+> name/location using the pegrev, the version at the resolved path at the
+> oprative version is operated on.
+>
+> svn 1.5.0 (June 2008) introduced peg revisions to "svn copy", so I
+> assume our people were following svn trunk and adjusting in 2007 already
+> (to r22964). There were some fixes to "svn copy" with peg later on.
+>
+> I do not understand the above commit message at all; and I did not find
+> anything about how "svn copy -r REV" acted in svn 1.4. I would assume
+> "operative revision", and the above commit message seems to imply that
+> peg defaulted to REV here (not HEAD) and that that changed in 1.5.0, but
+> that is a wild guess (svnbook 1.4 does not so anything).
 
-This won't do what you expect when "$@" should expand to more than one
-word.
+What happened is that I noticed that the code stopped working after svn
+1.5 was released.  Previously I wrote it to detect the merge properties
+as left by SVK and the experimental/contrib python script for merging. 
+I was testing at times using trunk SVN versions.  You could probably
+figure it out by running ffab6268^ with svn 1.4.x vs svn 1.5.x if you
+cared.  My comment tries to explain what you describe above, but without
+the correct terms.  I could see via experimentation what the difference
+was between "-r N" and '/path@N', and that the behaviour changed in svn
+1.5.  Apologies for not explaining this thoroughly enough in the
+submitted description!
 
-I meant something like the following. Warning: Completely untested.
-
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 962a93b..d0a933e 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -274,7 +274,7 @@ else
- 	remap_to_ancestor=t
- fi
- 
--rev_args=$(git rev-parse --revs-only "$@")
-+git rev-parse --revs-only "$@" >../revargs || exit
- 
- case "$filter_subdir" in
- "")
-@@ -287,7 +287,7 @@ case "$filter_subdir" in
- esac
- 
- git rev-list --reverse --topo-order --default HEAD \
--	--parents --simplify-merges $rev_args "$@" > ../revs ||
-+	--parents --simplify-merges --stdin "$@" <../revargs >../revs ||
- 	die "Could not get the commits"
- commits=$(wc -l <../revs | tr -d " ")
- 
+HTH,
+Sam
