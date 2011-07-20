@@ -1,98 +1,215 @@
-From: "J. Bakshi" <joydeep@infoservices.in>
-Subject: Re: how to add files/folder from work-tree
-Date: Wed, 20 Jul 2011 16:22:08 +0530
-Message-ID: <20110720162208.3fa89d8b@shiva.selfip.org>
-References: <20110719120048.3dd56eb6@shiva.selfip.org>
-	<4E2537F8.6000506@gmail.com>
-	<20110719133633.0797713d@shiva.selfip.org>
-	<4E253C94.7000709@gmail.com>
-	<20110720154644.67974a7f@shiva.selfip.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Chris Packham <judge.packham@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Wed Jul 20 12:52:15 2011
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: [RFC/PATCH] grep --no-index: allow to grep without git exclusions
+Date: Wed, 20 Jul 2011 14:50:53 +0200
+Message-ID: <82218b89c89f733dc0759d648b3a60bca6e20f3e.1311165328.git.bert.wesarg@googlemail.com>
+Cc: git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 20 14:51:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QjUNy-0000y8-Jp
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Jul 2011 12:52:14 +0200
+	id 1QjWF3-0002st-FO
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Jul 2011 14:51:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751273Ab1GTKwI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jul 2011 06:52:08 -0400
-Received: from static.206.87.46.78.clients.your-server.de ([78.46.87.206]:47926
-	"EHLO Kolkata.infoservices.in" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750979Ab1GTKwI (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Jul 2011 06:52:08 -0400
-Received: from shiva.selfip.org (unknown [122.176.30.116])
-	by Kolkata.infoservices.in (Postfix) with ESMTPSA id BD4371808001;
-	Wed, 20 Jul 2011 12:51:59 +0200 (CEST)
-In-Reply-To: <20110720154644.67974a7f@shiva.selfip.org>
-X-Mailer: Claws Mail 3.7.9 (GTK+ 2.24.4; x86_64-pc-linux-gnu)
+	id S1751437Ab1GTMvB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jul 2011 08:51:01 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:45083 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751400Ab1GTMu7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jul 2011 08:50:59 -0400
+Received: by ewy4 with SMTP id 4so498497ewy.19
+        for <git@vger.kernel.org>; Wed, 20 Jul 2011 05:50:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=f1Nmew38MkjAalgMevIufT7prNntv0pxuJatWRYcKtc=;
+        b=redggbFidkcA9wrThWXhnriG7WjJSNzN5spc9r2Px54UUYDWul9SKZH2GtzfoXlnbP
+         kLk3nA77w9EfoysEhhGxp/c9v7VbwVQXJxltBJHa+uIbVsW0GWoXDWN4tMWCbuz/BnSf
+         Mr1GSFk/sMgePQf8227nmDWqcYEBQ1Y/OdCtg=
+Received: by 10.213.31.208 with SMTP id z16mr3430491ebc.116.1311166257321;
+        Wed, 20 Jul 2011 05:50:57 -0700 (PDT)
+Received: from localhost (p4FC3BFFC.dip.t-dialin.net [79.195.191.252])
+        by mx.google.com with ESMTPS id a8sm527175een.47.2011.07.20.05.50.54
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 20 Jul 2011 05:50:55 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.588.g8d735
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177533>
 
-On Wed, 20 Jul 2011 15:46:44 +0530
-"J. Bakshi" <joydeep@infoservices.in> wrote:
+It is currently not possible to grep in arbitrary files with --no-index,
+because the standard git exclusions are active when using --no-index.
 
-> On Tue, 19 Jul 2011 20:13:08 +1200
-> Chris Packham <judge.packham@gmail.com> wrote:
-> 
-> > Oops managed to drop the Cc for the mailing list from my initial response.
-> > 
-> > On 19/07/11 20:06, J. Bakshi wrote:
-> > > On Tue, 19 Jul 2011 19:53:28 +1200
-> > > Chris Packham <judge.packham@gmail.com> wrote:
-> > > 
-> > >> On 19/07/11 18:30, J. Bakshi wrote:
-> > >>> Hello,
-> > >>>
-> > >>> I am using a git repo which has detached work tree. I like to add the files, folders located at the work tree ( it is a site under htdocs) at the git repo. Is it possible to do it within the work-tree or I need a separate working space from where I need to do all these operation ?
-> > >>>
-> > >>> Thanks
-> > >>>  
-> > >>> --
-> > >>
-> > >> I'm not sure I fully understand your question but what I _think_ you
-> > >> want to do is specify the path to the repository with the GIT_DIR
-> > >> environment variable. Like this
-> > >>
-> > >>  cd /place/where/files/are
-> > >>  GIT_DIR=/place/were/repo/is/.git git add <file>
-> > >>
-> > > 
-> > > 
-> > > I have set a git repo with attached work-tree with hook as below
-> > > 
-> > > git -bare init  /home/git/test.git
-> > > cd /home/git/test.git
-> > > git config core.worktree /var/www/test
-> > > 
-> > > vim /home/git/test.git/hooks/post-receive
-> > > 
-> > > #!/bin/sh
-> > > git checkout -f
-> > > 
-> > > Now the /var/www/test has already some files/folder. How can I add those to the repo within from its work-tree ?
-> > > 
-> > > Thanks
-> > 
-> > I think my initial response is correct. Try the following
-> > 
-> >   cd /var/www/test
-> >   git --git-dir=/home/git/test.git add <files>
-> 
-> But this response as
-> 
-> ````
-> fatal: This operation must be run in a work tree
-> `````````
+Suppress this when the new option --no-exclude-standard was provided.
 
-OK, need to append also --work-tree=/var/www/test
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+---
+
+The name comes from git-ls-files, and I think it is worthwhile to add the full
+range of exclusion flags to git-grep. Namely --exclude=<patter>,
+--exclude-from=<file>, and --exclude-per-directory=<file>. Which should 
+only be honored when using --no-index, obviously.
+
+ Documentation/git-grep.txt |    7 +++++
+ builtin/grep.c             |   17 ++++++++++---
+ t/t7810-grep.sh            |   55 ++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 75 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 07b3c6a..be9cf8b 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -24,6 +24,7 @@ SYNOPSIS
+ 	   [-f <file>] [-e] <pattern>
+ 	   [--and|--or|--not|(|)|-e <pattern>...]
+ 	   [--cached | --no-index | <tree>...]
++	   [--no-exclude-standard]
+ 	   [--] [<pathspec>...]
+ 
+ DESCRIPTION
+@@ -200,6 +201,12 @@ OPTIONS
+ 	Do not output matched lines; instead, exit with status 0 when
+ 	there is a match and with non-zero status when there isn't.
+ 
++--exclude-standard::
++--[no-]exclude-standard::
++	Use the standard git exclusions: .git/info/exclude, .gitignore
++	in each directory, and the user's global exclusion file when
++	searching in the work tree with `--no-index`.
++
+ <tree>...::
+ 	Instead of searching tracked files in the working tree, search
+ 	blobs in the given trees.
+diff --git a/builtin/grep.c b/builtin/grep.c
+index cccf8da..f2fce73 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -637,13 +637,15 @@ static int grep_objects(struct grep_opt *opt, const struct pathspec *pathspec,
+ 	return hit;
+ }
+ 
+-static int grep_directory(struct grep_opt *opt, const struct pathspec *pathspec)
++static int grep_directory(struct grep_opt *opt, const struct pathspec *pathspec,
++			  int exclude_standard)
+ {
+ 	struct dir_struct dir;
+ 	int i, hit = 0;
+ 
+ 	memset(&dir, 0, sizeof(dir));
+-	setup_standard_excludes(&dir);
++	if (exclude_standard)
++		setup_standard_excludes(&dir);
+ 
+ 	fill_directory(&dir, pathspec->raw);
+ 	for (i = 0; i < dir.nr; i++) {
+@@ -761,7 +763,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	struct string_list path_list = STRING_LIST_INIT_NODUP;
+ 	int i;
+ 	int dummy;
+-	int use_index = 1;
++	int use_index = 1, exclude_standard = 1;
+ 	enum {
+ 		pattern_type_unspecified = 0,
+ 		pattern_type_bre,
+@@ -839,6 +841,9 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOLEAN('p', "show-function", &opt.funcname,
+ 			"show a line with the function name before matches"),
+ 		OPT_GROUP(""),
++		OPT_BOOLEAN(0, "exclude-standard", &exclude_standard,
++			"don't use standard excludes, needs --no-index"),
++		OPT_GROUP(""),
+ 		OPT_CALLBACK('f', NULL, &opt, "file",
+ 			"read patterns from file", file_callback),
+ 		{ OPTION_CALLBACK, 'e', NULL, &opt, "pattern",
+@@ -936,6 +941,10 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 		break; /* nothing */
+ 	}
+ 
++	/* --no-exclude-standard needs --no-index */
++	if (use_index && !exclude_standard)
++		die(_("--no-exclude-standard does not make sense without --no-index."));
++
+ 	if (use_index && !startup_info->have_repository)
+ 		/* die the same way as if we did it at the beginning */
+ 		setup_git_directory();
+@@ -1050,7 +1059,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			die(_("--cached cannot be used with --no-index."));
+ 		if (list.nr)
+ 			die(_("--no-index cannot be used with revs."));
+-		hit = grep_directory(&opt, &pathspec);
++		hit = grep_directory(&opt, &pathspec, exclude_standard);
+ 	} else if (!list.nr) {
+ 		if (!cached)
+ 			setup_work_tree();
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index a29ae45..15eb52b 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -587,6 +587,61 @@ test_expect_success 'inside git repository but with --no-index' '
+ 	)
+ '
+ 
++test_expect_success 'outside of git repository and --no-exclude-standard' '
++	rm -fr non &&
++	mkdir -p non/git/sub &&
++	echo hello >non/git/file1 &&
++	echo world >non/git/sub/file2 &&
++	echo ".*o*" >non/git/.gitignore &&
++	echo "fi*" >>non/git/.gitignore &&
++	{
++		echo file1:hello &&
++		echo sub/file2:world
++	} >non/expect.full &&
++	: >non/expect.empty &&
++	echo file2:world >non/expect.sub &&
++	(
++		GIT_CEILING_DIRECTORIES="$(pwd)/non/git" &&
++		export GIT_CEILING_DIRECTORIES &&
++		cd non/git &&
++		test_must_fail git grep l &&
++		git grep --no-index --no-exclude-standard l >../actual.full &&
++		test_cmp ../expect.full ../actual.full
++		cd sub &&
++		test_must_fail git grep l &&
++		git grep --no-index l >../../actual.sub &&
++		test_cmp ../../expect.sub ../../actual.sub
++	)
++'
++
++test_expect_success 'inside git repository but with --no-index and --no-exclude-standard' '
++	rm -fr is &&
++	mkdir -p is/git/sub &&
++	echo hello >is/git/file1 &&
++	echo world >is/git/sub/file2 &&
++	echo ".*o*" >is/git/.gitignore &&
++	echo "fi*" >>is/git/.gitignore &&
++	{
++		echo file1:hello &&
++		echo sub/file2:world
++	} >is/expect.full &&
++	: >is/expect.empty &&
++	echo file2:world >is/expect.sub &&
++	(
++		cd is/git &&
++		git init &&
++		test_must_fail git grep l >../actual.empty1 &&
++		test_cmp ../expect.empty ../actual.empty1 &&
++		git grep --no-index --no-exclude-standard l >../actual.full &&
++		test_cmp ../expect.full ../actual.full &&
++		cd sub &&
++		test_must_fail git grep l >../../actual.sub &&
++		test_cmp ../../expect.empty ../../actual.sub &&
++		git grep --no-index --no-exclude-standard l >../../actual.sub &&
++		test_cmp ../../expect.sub ../../actual.sub
++	)
++'
++
+ test_expect_success 'setup double-dash tests' '
+ cat >double-dash <<EOF &&
+ --
+-- 
+1.7.6.588.g8d735
