@@ -1,80 +1,68 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [RFC/PATCH] t9159-*.sh: Don't use the svn '@<rev>' syntax
-Date: Wed, 20 Jul 2011 17:59:55 +0100
-Message-ID: <4E27098B.906@vilain.net>
-References: <4E21D295.7020600@ramsay1.demon.co.uk> <7vvcuy82kn.fsf@alter.siamese.dyndns.org> <4E269AB6.8070207@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: t5403.1 and adding a file that belongs to a submodule
+Date: Wed, 20 Jul 2011 10:50:34 -0700
+Message-ID: <7v1uxk96z9.fsf@alter.siamese.dyndns.org>
+References: <CACsJy8AKMQa2u6Y5qQHGujbjqq0qnM5D1+aEvcfk7POxQBqsVg@mail.gmail.com>
+ <7vk4be9qqm.fsf@alter.siamese.dyndns.org>
+ <CACsJy8AgboAj86PHi6jiSyRFsJJ7hn=mkbt+2UdBva6LmKk4ZQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	GIT Mailing-list <git@vger.kernel.org>, mhagger@alum.mit.edu
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Jul 20 19:08:08 2011
+	Git Mailing List <git@vger.kernel.org>,
+	Josh England <jjengla@sandia.gov>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 20 19:50:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QjaFh-0004cy-Jp
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Jul 2011 19:08:05 +0200
+	id 1Qjaux-0007P5-72
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Jul 2011 19:50:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751844Ab1GTRH6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jul 2011 13:07:58 -0400
-Received: from uk.vilain.net ([92.48.122.123]:37539 "EHLO uk.vilain.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751613Ab1GTRH6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2011 13:07:58 -0400
-X-Greylist: delayed 480 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 Jul 2011 13:07:57 EDT
-Received: by uk.vilain.net (Postfix, from userid 1001)
-	id EEBE9824E; Wed, 20 Jul 2011 17:59:56 +0100 (BST)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on uk.vilain.net
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=unavailable version=3.3.1
-Received: from [IPv6:::1] (localhost [127.0.0.1])
-	by uk.vilain.net (Postfix) with ESMTP id 64B3A81C3;
-	Wed, 20 Jul 2011 17:59:55 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110617 Thunderbird/3.1.11
-In-Reply-To: <4E269AB6.8070207@drmicha.warpmail.net>
-X-Enigmail-Version: 1.1.2
+	id S1752878Ab1GTRui (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jul 2011 13:50:38 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40133 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751997Ab1GTRuh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jul 2011 13:50:37 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 536F743EE;
+	Wed, 20 Jul 2011 13:50:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NTCq8ngzF4YQYUnJSCFALHYaTFo=; b=Lwp+t2
+	LgfQ/mqaRx3C0u543B8Ygk9g8SeZIkHRnQRdYJsOE88AM5bIRS8J0WLoCCUY7XN9
+	iPZikk024C6jbjv+Fr8QyZ0TIOItBEilseGMUUbrzG2hBJkKKIkkoPpYjpNXqGXm
+	dNTdElThsWerA3kDiZEvZulj290keHp96KCxg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DHWkwf5blYa4P2rkw3op3BNHivcLuhCF
+	98Ycu7mamKwtx7YUh9ESrvzMMPbvoHKMNxe41UBw+4tjPlQQJzRq+8Y+ScS7qUbw
+	vn6trp3YRAm6WzpdGlFAX/+RZRjzvs/q8VMkoaOvvVEb7Hcsa+G4k6rJbkW1owOE
+	0lp6CwXSHWk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F40043ED;
+	Wed, 20 Jul 2011 13:50:36 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BC26043EC; Wed, 20 Jul 2011
+ 13:50:35 -0400 (EDT)
+In-Reply-To: <CACsJy8AgboAj86PHi6jiSyRFsJJ7hn=mkbt+2UdBva6LmKk4ZQ@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Wed, 20 Jul 2011 07:17:09 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C597D940-B2F8-11E0-A29E-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177544>
 
-On 20/07/11 10:07, Michael J Gruber wrote:
-> path@REV are so-called peg revisions, introduced in svn 1.1, and denote
-> "I mean the file named path in REV" (as opposed to "the file named path
-> now and maybe differently back then"). It (now) defaults to BASE (for
-> worktree) resp. HEAD (for URLs). A bit like our rename detection.
->
-> -r REV specifies the operative revision. After resolving the
-> name/location using the pegrev, the version at the resolved path at the
-> oprative version is operated on.
->
-> svn 1.5.0 (June 2008) introduced peg revisions to "svn copy", so I
-> assume our people were following svn trunk and adjusting in 2007 already
-> (to r22964). There were some fixes to "svn copy" with peg later on.
->
-> I do not understand the above commit message at all; and I did not find
-> anything about how "svn copy -r REV" acted in svn 1.4. I would assume
-> "operative revision", and the above commit message seems to imply that
-> peg defaulted to REV here (not HEAD) and that that changed in 1.5.0, but
-> that is a wild guess (svnbook 1.4 does not so anything).
+> git init
+> mkdir foo
+> (cd foo; git init; touch abc; git add abc; git ci -m1)
+> git add foo/abc
+> Note that doing "touch abc; git add abc foo/abc" instead will only add "abc".
 
-What happened is that I noticed that the code stopped working after svn
-1.5 was released.  Previously I wrote it to detect the merge properties
-as left by SVK and the experimental/contrib python script for merging. 
-I was testing at times using trunk SVN versions.  You could probably
-figure it out by running ffab6268^ with svn 1.4.x vs svn 1.5.x if you
-cared.  My comment tries to explain what you describe above, but without
-the correct terms.  I could see via experimentation what the difference
-was between "-r N" and '/path@N', and that the behaviour changed in svn
-1.5.  Apologies for not explaining this thoroughly enough in the
-submitted description!
-
-HTH,
-Sam
+I think you mean s/ci/commit/, but it is an (perhaps lower priority) bug
+in "git add". Good that you spotted it.
