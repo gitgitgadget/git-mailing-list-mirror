@@ -1,103 +1,75 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: t5403.1 and adding a file that belongs to a submodule
-Date: Wed, 20 Jul 2011 07:17:09 +0700
-Message-ID: <CACsJy8AgboAj86PHi6jiSyRFsJJ7hn=mkbt+2UdBva6LmKk4ZQ@mail.gmail.com>
-References: <CACsJy8AKMQa2u6Y5qQHGujbjqq0qnM5D1+aEvcfk7POxQBqsVg@mail.gmail.com>
- <7vk4be9qqm.fsf@alter.siamese.dyndns.org>
+From: David Fries <david@fries.net>
+Subject: Re: [PATCH 2/2] git-gui blame add more common search hotkeys
+Date: Tue, 19 Jul 2011 21:56:01 -0500
+Message-ID: <20110720025601.GE26701@spacedout.fries.net>
+References: <20110716165945.GA9722@spacedout.fries.net>
+ <87sjq2cp8t.fsf@fox.patthoyts.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Josh England <jjengla@sandia.gov>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 20 02:17:47 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Wed Jul 20 04:56:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QjKTy-0001R6-M9
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Jul 2011 02:17:47 +0200
+	id 1QjMxN-0006XY-CN
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Jul 2011 04:56:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752550Ab1GTARl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Jul 2011 20:17:41 -0400
-Received: from mail-fx0-f52.google.com ([209.85.161.52]:51393 "EHLO
-	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752377Ab1GTARk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Jul 2011 20:17:40 -0400
-Received: by fxd18 with SMTP id 18so704573fxd.11
-        for <git@vger.kernel.org>; Tue, 19 Jul 2011 17:17:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=gQ/qxaJAdEt+Rq9kJ0bsRShuHvBTJUxNHO8o/m57PkI=;
-        b=xjpmuxq+aI+ncfvaSNSlyhzjF0ORUcBU2hnnd2ntTZrE4uBHtMFrzLuZbbuTeScDzo
-         zKY5A52Hgi6n1dJ+ZTM6Gst3vk0BTUiJ9eYf471OosEAyKQqH6jMokkzeiH7NYihVjD9
-         U6fUvqEc81gBvPhACOPlJFPZFoMrTnWOqdFV0=
-Received: by 10.204.49.6 with SMTP id t6mr990320bkf.135.1311121059177; Tue, 19
- Jul 2011 17:17:39 -0700 (PDT)
-Received: by 10.204.123.199 with HTTP; Tue, 19 Jul 2011 17:17:09 -0700 (PDT)
-In-Reply-To: <7vk4be9qqm.fsf@alter.siamese.dyndns.org>
+	id S1752703Ab1GTC4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jul 2011 22:56:11 -0400
+Received: from SpacedOut.fries.net ([67.64.210.234]:57922 "EHLO
+	SpacedOut.fries.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752549Ab1GTC4K (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2011 22:56:10 -0400
+Received: from SpacedOut.fries.net (david@localhost [127.0.0.1])
+	by SpacedOut.fries.net (8.14.3/8.14.3/Debian-9.4) with ESMTP id p6K2u29m021543
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 19 Jul 2011 21:56:02 -0500
+Received: (from david@localhost)
+	by SpacedOut.fries.net (8.14.3/8.14.3/Submit) id p6K2u1KJ021542;
+	Tue, 19 Jul 2011 21:56:01 -0500
+Content-Disposition: inline
+In-Reply-To: <87sjq2cp8t.fsf@fox.patthoyts.tk>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Greylist: Sender passed SPF test, not delayed by milter-greylist-4.3.7 (SpacedOut.fries.net [127.0.0.1]); Tue, 19 Jul 2011 21:56:02 -0500 (CDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177516>
 
-On Tue, Jul 19, 2011 at 11:31 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->
->> touch a b; git commit -am1
->> git clone ./. clone2
->> GIT_DIR=3Dclone2/.git git add clone2/b
->
-> The last one has _always_ meant:
->
-> =C2=A0 =C2=A0I am telling with GIT_DIR the directory that contains th=
-e repository
-> =C2=A0 =C2=A0metadata, which is at clone2/.git directory. =C2=A0I am =
-not saying where
-> =C2=A0 =C2=A0the working tree is (i.e. no GIT_WORK_TREE and no core.w=
-orktree in
-> =C2=A0 =C2=A0clone2/.git/config) so take my $(pwd) as the root of the=
- working tree,
-> =C2=A0 =C2=A0and add the contents of clone2/b to the index at the sam=
-e path,
-> =C2=A0 =C2=A0i.e. "clone2/b".
->
-> It should not add contents of the said file at "b", as there is _noth=
-ing_
-> on the command line that tells us "clone2" is the root of the working
-> tree.
+On Tue, Jul 19, 2011 at 03:35:30PM +0100, Pat Thoyts wrote:
+> David Fries <david@fries.net> writes:
+> 
+> That aside, the goto-line feature works fine for me. I don't think the
+> n, Shift-n binding is working though. When I have the focus in the blame
+> window and enter 'n' it tries to add an 'n' to the text in the search
+> box. The use of Enter and Shift-Enter makes sense and works as I
+> expect. So I will drop the 'n' and 'Shift-n' bindings I think.
 
-I see you're distracted by GIT_DIR. Let's take another example without =
-GIT_DIR
+I have some 6000 some line files that I was preparing change sets
+and was needing to jump to a specific line.  That's what prompted me
+to add the goto feature, I just went ahead and added the search
+hotkeys while I was in looking at it.  I apparently didn't do enough
+testing on the search, it's <Key-N> not the <Shift-Key-n> that I had
+in there.  The n and N only work when the search bar is dismissed with
+escape or something.  I'm more used to vi's searching where the search
+field is dismissed with return and there isn't a search field left to
+add to.  I'm fine with dropping the n/N bindings.
 
-git init
-mkdir foo
-(cd foo; git init; touch abc; git add abc; git ci -m1)
-git add foo/abc
-git ls-files --stage
-# 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       foo/abc
+> The -accelerator field on a menu specifies the text to show. Its more
+> usual to show "Ctrl-G" than "Control-Key-G" here so I'll adjust that as
+> well. The 'bind' command actually ties up the key binding to the menu
+> action.
+> 
+> With the above changes, I'll apply this to git-gui's master (which lives
+> at repo.or.cz/git-gui.git) and it will get merged into git on the next
+> merge.
 
-Because foo is a repository, should we not allow "git add foo/abc"
-("git add foo" is ok)? Otherwise "abc" may be managed in two
-repositories.
+Sounds good, thanks for merging it.
 
-Note that doing "touch abc; git add abc foo/abc" instead will only add =
-"abc".
-
-> If the test means to do that, it should be more explicit and do somet=
-hing
-> like:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0( cd clone2 && git add b )
->
-> instead.
-
-I suspect that's what it wants. CC the author, hopefully he still remem=
-bers.
---=20
-Duy
+-- 
+David Fries <david@fries.net>    PGP pub CB1EE8F0
+http://fries.net/~david/
