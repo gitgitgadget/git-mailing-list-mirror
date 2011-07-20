@@ -1,86 +1,130 @@
-From: "George Spelvin" <linux@horizon.com>
-Subject: Re: Git commit generation numbers
-Date: 20 Jul 2011 18:16:32 -0400
-Message-ID: <20110720221632.14223.qmail@science.horizon.com>
-References: <alpine.LFD.2.00.1107201538590.21187@xanadu.home>
-Cc: anthonyvdgent@gmail.com, git@vger.kernel.org,
-	torvalds@linux-foundation.org
-To: linux@horizon.com, nico@fluxnic.net
-X-From: git-owner@vger.kernel.org Thu Jul 21 00:16:44 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 06/14] introduce credentials API
+Date: Wed, 20 Jul 2011 15:17:02 -0700
+Message-ID: <7vy5zs4mxt.fsf@alter.siamese.dyndns.org>
+References: <20110718074642.GA11678@sigill.intra.peff.net>
+ <20110718075034.GF12341@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jul 21 00:17:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qjf4N-0005Ko-J6
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 00:16:43 +0200
+	id 1Qjf4q-0005Wq-8q
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 00:17:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752098Ab1GTWQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jul 2011 18:16:36 -0400
-Received: from science.horizon.com ([71.41.210.146]:10948 "HELO
-	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751691Ab1GTWQe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2011 18:16:34 -0400
-Received: (qmail 14224 invoked by uid 1000); 20 Jul 2011 18:16:32 -0400
-In-Reply-To: <alpine.LFD.2.00.1107201538590.21187@xanadu.home>
+	id S1752135Ab1GTWRH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jul 2011 18:17:07 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40445 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751691Ab1GTWRE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jul 2011 18:17:04 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E342585B;
+	Wed, 20 Jul 2011 18:17:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=3JxGqpXugVcmhLsx0aXP1thfjVQ=; b=yhjy7ATCslWy4po7CjeG
+	nB7Qs5umejNVEUMz4zzmBxXn8EeHgaWYBvenP5+9X/ZHtxDAEp4wJa64eE5G9Odq
+	NvKCid/8Z5BU4PMTsXyuS+0BucV8RUdQ6TPoW/QgfIeKiwJ/jZYSlpupfYpuY1EY
+	lLLMSb75s3Ci3E8MPP7B77Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=tuOeMAtFmWw36C9GJ+2Ga3Siv2ABGuHeRIUdbbGW+L3wt9
+	5EJxQHy2KTbSngl0Odg2yBBPzFlszeJOYMfxhg5kFhoLslbpjcGSwuPNnCQzK1rA
+	Ot8mE79bA7MORu2oc4Di0mgMN+jhPi2iwrGJBPgLF0/C8AtrU6iJ311tJQKKI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 66581585A;
+	Wed, 20 Jul 2011 18:17:04 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A55065859; Wed, 20 Jul 2011
+ 18:17:03 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FF20B220-B31D-11E0-B8FE-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177553>
 
-> The alternative of having to sometimes use the generation number, 
-> sometimes use the possibly broken commit date, makes for much more 
-> complicated code that has to be maintained forever.  Having a solution 
-> that starts working only after a certain point in history doesn't look 
-> eleguant to me at all.  It is not like having different pack formats 
-> where back and forth conversions can be made for the _entire_ history.
+Jeff King <peff@peff.net> writes:
 
-It seemed like a pretty strong argument to me, too.
+> +`struct credential`::
+> +
+> +	This struct represents a single username/password combination.
+> +	The `username` and `password` fields should be heap-allocated
+> +	strings (or NULL if they are not yet known). The `unique` field,
+> +	if non-NULL, should be a heap-allocated string indicating a
+> +	unique context for this credential (e.g., a protocol and server
+> +	name for a remote credential). The `description` field, if
+> +	non-NULL, should point to a string containing a human-readable
+> +	description of this credential.
 
-> And if you don't care about graft/replace then the cached data is 
-> immutable just like the in-commit version would, so there is no 
-> consistency issues.  If you do care about graft/replace (or who knows 
-> what other dag alteration scheme might be created in 5 years from now) 
-> then a separate cache will be required _anyway_, regardless of any 
-> in-commit gen number.
+Am I confused to say "unique" is for code/machine and "description" is for
+human to identify what remote resource is being accessed using the
+credential? Can two credentials have the same description but different
+unique, and if so what happens? A plausible answer may be "the user cannot
+tell what username/password pair to give, but it is expected that such a
+nondescriptive context is only for certificate and it also is expected
+that only one certificate is used at a time", perhaps?
 
-A possible workaround would be to keep track of the largest generation
-number skew introduced by any graft, and add that safety factor into
-the history-walking code, but that would be painful if you replace a
-single large commit with an equivalent long development history, such
-as adding a historical development tree behind a recently-cut-off one.
-or development history You can do a workaround at the expense of ine
+I think "unique" vs "description" are secondary aspects of these things,
+and the primary aspect that they share is that they are about "context",
+as [11/14] describes.  Perhaps "context-id" vs "context-description" may
+be better names to reduce confusion?  I dunno.
 
-> Neither did I think about the actual cache format (I don't think that
-> adding it to the pack index is a good idea if grafts are to be honored)
-> which certainly has bearing on that fundamental question too.
+> +`credential_fill`::
+> +
+> +	Like `credential_fill_gently`, but `die()` if credentials cannot
+> +	be gathered.
+> +
+> +`credential_reject`::
+> +
+> +	Inform the credential subsystem that the provided credentials
+> +	have been rejected. This will clear the username and password
+> +	fields in `struct credential`, as well as notify any helpers of
+> +	the rejection (which may, for example, purge the invalid
+> +	credentials from storage).
 
-I was thinking of something very close to the V2 pack format.
-http://book.git-scm.com/7_the_packfile.html
-A magic number, a 256-entry fanout table, a sorted list of 20-byte hashes,
-followed by a matching list of 4-byte generation numbers.
+What hints do helpers get when this is called? Do they get username,
+unique and description to allow them to selectively purge the bad ones
+while keeping good ones, or the username is already cleared by the time
+the helpers are notified and they have no clue?
 
-Ending with a 20-byte hash of the replaces and grafts state that this
-cache is valid for, and a hash of the cache itself.
+> +`credential_getpass`::
+> +
+> +	Fetch credentials from the user either using an "askpass" helper
+> +	(see the discussion of core.askpass and GIT_ASKPASS in
+> +	linkgit:git-config[1] and linkgit:git[1], respectively) or by
+> +	prompting the user via the terminal.
 
-A bit of code factoring should make it easy to share much of the code.
+It sounds like that users of the API should call fill_credential() and let
+the machinery fall back to this function as needed. Does this need to be
+part of the public API functions?
 
+> +static int read_credential_response(struct credential *c, FILE *fp)
+> +{
+> +	struct strbuf response = STRBUF_INIT;
+> +
+> +	while (strbuf_getline(&response, fp, '\n') != EOF) {
+> +		char *key = response.buf;
+> +		char *value = strchr(key, '=');
+> +
+> +		if (!value) {
+> +			warning("bad output from credential helper: %s", key);
+> +			strbuf_release(&response);
+> +			return -1;
+> +		}
+> +		*value++ = '\0';
+> +
+> +		if (!strcmp(key, "username")) {
+> +			free(c->username);
+> +			c->username = xstrdup(value);
 
-It would certainly be possible to share the SHA1 table in an existing
-pack index and store the generation numbers of the base (no replacement)
-case, but you'd have to store null values for all the non-commit objects.
-
-That takes 4 bytes per object, while a separate list of commits
-takes 24 bytes per commit.  A separate list is better if commits
-are less than 1/6 of all objects.
-
-Looking at git's own object database, we have:
- 66125 blobs   (45.50%)
- 49292 trees   (33.92%)
- 29554 commits (20.33%)
-   362 tags    ( 0.25%)
-145333 total
-
-So we're actually a bit over the 16.66% optimum. but it's not far enough
-to be a real efficiency problem.
+The document did not say anything about escaping/quoting of values, but it
+may not be a bad idea to make it more explicit over there.
