@@ -1,63 +1,71 @@
-From: "HUI" <mail.alqabas.com.kw@mail.alsa.co.cr>
-Subject: ARE YOU INTERESTED?
-Date: Tue, 7 Jun 2011 10:01:00 -0300
-Message-ID: <20110707083818.D9E272E0A755@mail.alsa.co.cr>
-Reply-To: <infohsb@mail.mn>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 02/17] revert: Inline add_message_to_msg function
+Date: Wed, 20 Jul 2011 11:02:30 +0530
+Message-ID: <CALkWK0=shto-FaRvtc0EXuD8kM6z=TzU=VEztznSNwJ6n2RhXA@mail.gmail.com>
+References: <1310396048-24925-1-git-send-email-artagnon@gmail.com>
+ <1310396048-24925-3-git-send-email-artagnon@gmail.com> <20110712165302.GA13578@elie>
+ <CALkWK0kHutr41aH7OrmW3REV+YBUeHSryA9n62yxyF0qRd1FEw@mail.gmail.com>
+ <20110713064240.GC31003@elie> <CALkWK0mmPeYawqF-Dd3Sv_0qYjfYA-36POengYupfjwNBRDj-g@mail.gmail.com>
+ <20110719193608.GA26557@elie.gateway.2wire.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="Windows-1251"
-Content-Transfer-Encoding: 7bit
-To: undisclosed-recipients:;
-X-From: git-owner@vger.kernel.org Wed Jul 20 07:30:52 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 20 07:32:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QjPMy-0000db-D0
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Jul 2011 07:30:52 +0200
+	id 1QjPOy-0001Dq-Dz
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Jul 2011 07:32:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751385Ab1GTFar (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jul 2011 01:30:47 -0400
-Received: from logistix.cr ([201.201.66.140]:6187 "EHLO mail.alsa.co.cr"
-	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750777Ab1GTFaq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2011 01:30:46 -0400
-Received: from mail.alsa.co.cr (localhost [127.0.0.1])
-	by localhost (Postfix) with ESMTP id E7DC02C638DC;
-	Tue, 12 Jul 2011 00:04:23 -0600 (CST)
-Received: from User (35.193.221.87.dynamic.jazztel.es [87.221.193.35])
-	by mail.alsa.co.cr (Postfix) with ESMTP id D9E272E0A755;
-	Thu,  7 Jul 2011 02:38:17 -0600 (CST)
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
-X-Antivirus: avast! (VPS 110706-1, 06/07/2011), Outbound message
-X-Antivirus-Status: Clean
-X-Antivirus: Scanned by F-Prot Antivirus (http://www.f-prot.com)
+	id S1751538Ab1GTFcw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Jul 2011 01:32:52 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:59964 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750936Ab1GTFcv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Jul 2011 01:32:51 -0400
+Received: by wwe5 with SMTP id 5so4845198wwe.1
+        for <git@vger.kernel.org>; Tue, 19 Jul 2011 22:32:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=F2zwW7bCL+VSWTsMbD4SWSCrNjYWEcnw50a59K3xNow=;
+        b=t2089/OWyA4KECqmzlYfTv1NO1aum6VA/PiqnTtU4C2/zsd3PUfcE4fwHIOuR3ZD88
+         INi0lj9fCw09PBvrlAlLaGi/YdDYxobL7COrhdG+Vx43Ge3K1y6lhoilxyB1GhNeJ+69
+         iLQWlJmg4ey6YchpqCr1ArVIYwgolVnxUefYY=
+Received: by 10.216.234.143 with SMTP id s15mr208276weq.66.1311139970075; Tue,
+ 19 Jul 2011 22:32:50 -0700 (PDT)
+Received: by 10.216.234.143 with HTTP; Tue, 19 Jul 2011 22:32:30 -0700 (PDT)
+In-Reply-To: <20110719193608.GA26557@elie.gateway.2wire.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 8.3 points;
- *  1.7 DATE_IN_PAST_96_XX Date: is 96 hours or more before Received: date
- *  2.1 SUBJ_ALL_CAPS Subject is all capitals
- *  0.6 US_DOLLARS_3 BODY: Mentions millions of $ ($NN,NNN,NNN.NN)
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.4089]
- *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
- *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177518>
 
-Please I would like you to keep this proposal as a top secret and delete it if you 
-are not interested and get back to me if you are interested for details as regards to
- the transfer of $24,500,000 to you. this money initially belongs to a client who died 
-and had no next of kin in his account-opening package. in other to achieve this, I shall 
-require your full name, and telephone number to reach you.Most importantly, a confirmation 
-of acceptance from you after which I shall furnish you with the full details of this transaction.
- Reply via this email only:wohuii@mail.mn
+Hi,
 
+Jonathan Nieder writes:
+> Ramkumar Ramachandra wrote:
+>> Since it's
+>> totally impossible to reproduce this bug, it's not really a bug --
+>
+> Huh?
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git cat-file commit HEAD | sed -e '/^$/ q'=
+ >newcommit &&
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0cmit=3D$(git hash-object -t commit -w newc=
+ommit) &&
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git cherry-pick $cmit
 
-regards,
-Mr, W.Hui.
+Oh.  I should've been clearer -- it's totally impossible to reproduce
+this bug, except by hand-crafting a commit object.
+Thanks for the interesting exercise.
+
+-- Ram
