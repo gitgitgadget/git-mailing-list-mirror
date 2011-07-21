@@ -1,104 +1,55 @@
-From: "George Spelvin" <linux@horizon.com>
-Subject: Re: Git commit generation numbers
-Date: 21 Jul 2011 13:36:33 -0400
-Message-ID: <20110721173633.21195.qmail@science.horizon.com>
-References: <1311263869.9745.72.camel@drew-northup.unet.maine.edu>
-Cc: anthonyvdgent@gmail.com, david@lang.hm, git@vger.kernel.org,
-	nico@fluxnic.net, torvalds@linux-foundation.org
-To: drew.northup@maine.edu, linux@horizon.com
-X-From: git-owner@vger.kernel.org Thu Jul 21 19:37:03 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+From: larsh-K3XMUd79hPisTnJN9+BGXg@public.gmane.org
+Subject: [ANNOUNCE] CGIT 0.9.0.2
+Date: Thu, 21 Jul 2011 14:33:11 +0000
+Message-ID: <20110721143311.GA19358@hjemli.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+To: cgit-K3XMUd79hPisTnJN9+BGXg@public.gmane.org
+X-From: cgit-bounces-K3XMUd79hPisTnJN9+BGXg@public.gmane.org Thu Jul 21 16:29:47 2011
+Return-path: <cgit-bounces-K3XMUd79hPisTnJN9+BGXg@public.gmane.org>
+Envelope-to: gcvc-cgit@m.gmane.org
+Received: from li195-143.members.linode.com ([178.79.139.143] helo=hjemli.net)
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QjxB6-0002Zg-Nq
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 19:36:53 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753394Ab1GURgg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jul 2011 13:36:36 -0400
-Received: from science.horizon.com ([71.41.210.146]:15777 "HELO
-	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752460Ab1GURge (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2011 13:36:34 -0400
-Received: (qmail 21196 invoked by uid 1000); 21 Jul 2011 13:36:33 -0400
-In-Reply-To: <1311263869.9745.72.camel@drew-northup.unet.maine.edu>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177592>
+	(envelope-from <cgit-bounces-K3XMUd79hPisTnJN9+BGXg@public.gmane.org>)
+	id 1QjuG2-0004O5-QC
+	for gcvc-cgit@m.gmane.org; Thu, 21 Jul 2011 16:29:46 +0200
+Received: from localhost ([127.0.0.1] helo=node.hjemli.net)
+	by hjemli.net with esmtp (Exim 4.74)
+	(envelope-from <cgit-bounces-K3XMUd79hPisTnJN9+BGXg@public.gmane.org>)
+	id 1QjuJN-00053E-4j; Thu, 21 Jul 2011 14:33:13 +0000
+Received: from larsh by hjemli.net with local (Exim 4.74)
+ (envelope-from <larsh-K3XMUd79hPisTnJN9+BGXg@public.gmane.org>)
+ id 1QjuJL-000538-Mk; Thu, 21 Jul 2011 14:33:11 +0000
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+X-BeenThere: cgit-K3XMUd79hPisTnJN9+BGXg@public.gmane.org
+X-Mailman-Version: 2.1.14
+Precedence: list
+List-Id: list for cgit developers and users <cgit.hjemli.net>
+List-Unsubscribe: <http://hjemli.net/mailman/options/cgit>,
+ <mailto:cgit-request-K3XMUd79hPisTnJN9+BGXg@public.gmane.org?subject=unsubscribe>
+List-Archive: <http://hjemli.net/pipermail/cgit>
+List-Post: <mailto:cgit-K3XMUd79hPisTnJN9+BGXg@public.gmane.org>
+List-Help: <mailto:cgit-request-K3XMUd79hPisTnJN9+BGXg@public.gmane.org?subject=help>
+List-Subscribe: <http://hjemli.net/mailman/listinfo/cgit>,
+ <mailto:cgit-request-K3XMUd79hPisTnJN9+BGXg@public.gmane.org?subject=subscribe>
+Errors-To: cgit-bounces-K3XMUd79hPisTnJN9+BGXg@public.gmane.org
 
-Drew Northup wrote:
-> On Thu, 2011-07-21 at 08:55 -0400, George Spelvin wrote:
->> I have not read yet one discussion about how generation numbers [baked
->> into a commit] deal with rebasing, for instance. Do we assign one more
->> than the revision prior to the base of the rebase operation or do we
->> start with the revision one after the highest of those original commits
->> included in the rebase? Depending on how that is done
->> _drastically_different_ numbers can come out of different repository
->> instances for the same _final_ DAG. This is one major reason why, as I
->> see it, local storage is good for generation numbers and putting them in
->> the commit is bad. 
-> 
-> Er, no.  Whenever a new commit object is generated (as the result
-> of a rebase or not), its commit number is computed based on its
-> parent commits.  It is NEVER copied.
+A bugfix release of cgit (a web interface to git repositories) is now
+available from http://hjemli.net/git/cgit
 
-> I don't see the word "copy" in my original. 
+$ git shortlog v0.9.0.1..v0.9.0.2
+Eric Wong (1):
+      html.c: avoid out-of-bounds access for url_escape_table
 
-Indeed, you didn't use it; it was my simplified mental model of your
-suggestion that the rebased commits would have generation numbers that
-somehow depended on the generation numbers before rebasing.
+Ferry Huberts (1):
+      tests: fix failures when CDPATH is set
 
-Althouugh you suggested something different, the mistake is the same:
-the rebased commits' generation numbers have simply no relationship to
-those of the original pre-rebase commits.  The generation numbers depend
-only on the commits explicitly listed as parents in the commit objects.
-
-That's why I went on to explain that the equivalence of the commits
-produced by a rebase operation is a higher-level concept; the core git
-object database just knows that they aren't identical, and therefore
-are different.
-
-Thus, they would retain the same relative order as before the rebase
-(unless you permuted them with rebase -i), but start with the generation
-number of the rebase target.
-
-> B-O1-O2-O3-O4-O5-O6
->  \
->   R1----R2-------R3
-
-> What's the correct generation number for R3? I would say gen(B)+3. My
-> reading of the posts made by some others was that they thought gen(O6)
-> was the correct answer. Still others seemed to indicate gen(O6)+1 was
-> the correct answer. I don't think everybody MEANT to be saying such
-> different things--that's just how they appeared on this end.
-
-According to the canonical algorithm, it's gen(B)+3 = gen(R2)+1.
-
-However, any non-decreasing series is equally permissible for
-optimizing history walking, so you could add jumps to (for example)
-make the numbers unique if that simplified anything.
-
-I don't think it does simplify anything, so the issue hasn't been
-discussed much.
-
-For the purpose of the optimization enabled by the generation
-numbers, however, it doesn't actually matter.
-
-What matters is that if I am listing commits down multiple branches,
-once I have walked back on each branch to commits of generation N or
-less, I know that I have found all possible descendants of all commits
-of generation N or more.
-
-This lets me display the recent part of the commit DAG (back to generation
-N) without exploring the entire commit treem or worrying that I'll have to
-"back up" to insert a commit in its proper order.  Without precomputed
-generation numbers, the only way to be sure of this is to explore back
-to generation 0 (parentless commits) or to use date-based heuristics.
-
-> Now, did you mean something different by "commit number?"
-
-No, just a bran fart I didn't catch before posting.
-I meant "generation number".
+Lars Hjemli (5):
+      README: update some stale information/add some new
+      cgitrc.5.txt: describe macro expansion of cgitrc options
+      cgitrc.5.txt: document repo.module-link
+      cgit.c: improve error message when git repo cannot be accessed
+      CGIT 0.9.0.2
