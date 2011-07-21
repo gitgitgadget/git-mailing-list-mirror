@@ -1,127 +1,80 @@
-From: Vitaliy Ivanov <vitalivanov@gmail.com>
-Subject: Re: [PATCH] gitignore: add top level patch ignore rule
-Date: Thu, 21 Jul 2011 16:22:51 +0300
-Message-ID: <CAGTPOqcd5G=NG83wgnH80nqNsS1FYwtRp4QjaB=oU5NkPts_Hg@mail.gmail.com>
-References: <1311113877.2643.2.camel@vitaliy-Vostro-1400>
-	<4E268D2F.50201@drmicha.warpmail.net>
-	<CAGTPOqeF6LneWCg_du5dDfzFp7QV_jGg1t4u23sziTN+uHQyXA@mail.gmail.com>
-	<4E282349.4040404@drmicha.warpmail.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: can I use multiple worktree in same git repo ?
+Date: Thu, 21 Jul 2011 11:17:57 -0700 (PDT)
+Message-ID: <m3sjpzsdll.fsf@localhost.localdomain>
+References: <20110720182438.3c40cf1d@shiva.selfip.org>
+	<CACsJy8CLRjLag65H6KQ1AUABLwiL09wNQw3VH8Y-JQnw7CqLUw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Jul 21 15:23:00 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: "J. Bakshi" <joydeep@infoservices.in>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 21 20:18:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QjtDP-0007Lp-8y
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 15:22:59 +0200
+	id 1QjxpG-0008Tx-Tv
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 20:18:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753045Ab1GUNWy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jul 2011 09:22:54 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:38657 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752987Ab1GUNWx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2011 09:22:53 -0400
-Received: by ewy4 with SMTP id 4so1153479ewy.19
-        for <git@vger.kernel.org>; Thu, 21 Jul 2011 06:22:52 -0700 (PDT)
+	id S1753502Ab1GUSSM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jul 2011 14:18:12 -0400
+Received: from mail-fx0-f52.google.com ([209.85.161.52]:47517 "EHLO
+	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753233Ab1GUSSA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2011 14:18:00 -0400
+Received: by fxd18 with SMTP id 18so3903329fxd.11
+        for <git@vger.kernel.org>; Thu, 21 Jul 2011 11:17:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=jgPbWJSUwdOYdYAIIeYRBqt4c8YPSJNZ+/hh1hkzbHY=;
-        b=pXCNoycrv0yTQpSAmDfa6GB6NuVYFMEVNTNl8K6M2kdaTmkliWGedkUKx7PP54WlJ2
-         sl4f1mxPZqe7/pZxuNUUvzvV1EY0at/qm+OYBkivToG8dPbei0J093G1VHv+idu42e20
-         C13qy6odiITD5vZMu6rZSBxoiUiwEqVNt7b9o=
-Received: by 10.213.105.202 with SMTP id u10mr176681ebo.29.1311254572145; Thu,
- 21 Jul 2011 06:22:52 -0700 (PDT)
-Received: by 10.213.17.15 with HTTP; Thu, 21 Jul 2011 06:22:51 -0700 (PDT)
-In-Reply-To: <4E282349.4040404@drmicha.warpmail.net>
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=XHJ+OmVO16Mh3xkKmoLjjSm/brRZTFcY21ILN+inSEo=;
+        b=NbMEM/ZhWkQUf5Gx4F9WiPbEiiFHFf5apl0H0WW2cLcHPUoq6X4CS7FYVR50gRuwhh
+         PzTfhs9qTgO8RKbWMJhVvbk7dk2/9UxOW/jZlXN0ZwNRcStlJv1+56YLRTgNTFjoKjBG
+         IegiDso2ZFeHqmCZxcI9Y61ZHaQDMD5ib3Jiw=
+Received: by 10.223.159.197 with SMTP id k5mr679572fax.50.1311272279014;
+        Thu, 21 Jul 2011 11:17:59 -0700 (PDT)
+Received: from localhost.localdomain (abwr62.neoplus.adsl.tpnet.pl [83.8.241.62])
+        by mx.google.com with ESMTPS id j19sm1547464faa.41.2011.07.21.11.17.56
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 21 Jul 2011 11:17:57 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p6LIHQfE004150;
+	Thu, 21 Jul 2011 20:17:37 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p6LIHAvl004145;
+	Thu, 21 Jul 2011 20:17:10 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <CACsJy8CLRjLag65H6KQ1AUABLwiL09wNQw3VH8Y-JQnw7CqLUw@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177605>
 
-On Thu, Jul 21, 2011 at 4:02 PM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Vitaliy Ivanov venit, vidit, dixit 21.07.2011 14:54:
->> Michael,
->>
->> On Wed, Jul 20, 2011 at 11:09 AM, Michael J Gruber
->> <git@drmicha.warpmail.net> wrote:
->>> Vitaliy Ivanov venit, vidit, dixit 20.07.2011 00:17:
->>>> Add top level ignore rule for patches created by format-patch command.
->>>
->>> Please don't.
->>>
->>> The tracked ignore file is for ignoring products and artefacts of our
->>> build process. format-patch is not part of this process, and the
->>> existence of *.patch files depends on your workflow. But what is much
->>> worse: In
->>>
->>> git status
->>> git format-patch rev-spec
->>> git send-email *.patch
->>>
->>> it is very easy to send out the wrong patches (along with the right
->>> ones), because your patch hides them from status. Also, I can't clean
->>> them up with "git clean -f" any more. I would have to use "git clean -f
->>> -x" which would clean the build products also (and force a rebuild).
->>>
->>> So, your patch makes a format-patch based workflow much worse. What
->>> problem does it try to solve?
->>
->> I will not insist. You may know it better but git as is a public
->> project where anyone can create and send patches. So it seems to me
->> basic workflow for sharing changes.
->
-> Well sure it is. We do that and discuss the merits of patches.
->
-> I do use format-patch/send-email, and as I explained, your patch would
-> make that more difficult. If there is something that it makes better
-> that may outweigh it. Can you explain what improvement this (ignoring
-> *.patch) introduces?
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-I'm not sure how listing all the patches that you have under "git
-status" will help you not to send a wrong one.
-Also we are talking about /*.patch rule and not *.patch as with such rule:
+> On Wed, Jul 20, 2011 at 7:54 PM, J. Bakshi <joydeep@infoservices.in> wrote:
+> > As a result whenever there is a commit , it updates the related folder in filesystem.
+> > Say a commit at svn->mysite-repo->dir1->trunk->src ==> modify ==> /var/www/demo/dir1
+> >
+> > Can I do the same in git with multiple worktree ? possible ?
+> 
+> Using multiple worktree with the same repo won't work in git because
+> the repo also have worktree-related information. [...]
+[...]
+> Also have a look at git-new-workdir in contrib directory of git
+> repository. I don't use it but you might find it useful.
 
-[vitaliy.ivanov@vivanov git]$ git ls-files -i --exclude-standard
-contrib/patches/docbook-xsl-manpages-charmap.patch
-t/t4100/t-apply-1.patch
-t/t4100/t-apply-2.patch
-t/t4100/t-apply-3.patch
-t/t4100/t-apply-4.patch
-t/t4100/t-apply-5.patch
-t/t4100/t-apply-6.patch
-t/t4100/t-apply-7.patch
-t/t4100/t-apply-8.patch
-t/t4100/t-apply-9.patch
-t/t4109/patch1.patch
-t/t4109/patch2.patch
-t/t4109/patch3.patch
-t/t4109/patch4.patch
-t/t4110/patch1.patch
-t/t4110/patch2.patch
-t/t4110/patch3.patch
-t/t4110/patch4.patch
-t/t4110/patch5.patch
+Actually with git-new-workdir you can have multiple working
+directories associated with single repository, by the way of symlinks.
 
->>>> On the way, reorganize ignore rules and add comments.
->>>
->>> How and why do you reorganize?
->>
->> Just to be able to find specific rule faster. Global rules are now all
->> together same is for top level root rules.
->
-> That may be a sensible cleanup, and it's good to describe that in the
-> commit message. Also, in general, we try to separate reorganisation
-> patches from those which introduce functional changes. (One may argue
-> whether adding *.patch falls into the latter category, though.)
+Note however that if you intend to *work* in those workdirs, they
+better correspond to different branches... or you can mess something
+heavy.
 
-Yeah, I should agree here. I can resend it w/o adding new rules but
-simple reorganization and, of course, description for this change.
-
-Vitaliy
+-- 
+Jakub Narebski
