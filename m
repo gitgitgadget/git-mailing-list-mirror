@@ -1,118 +1,104 @@
-From: Phil Hord <hordp@cisco.com>
-Subject: Re: Git commit generation numbers
-Date: Thu, 21 Jul 2011 12:24:01 -0400
-Message-ID: <4E2852A1.30800@cisco.com>
-References: <20110721125544.26006.qmail@science.horizon.com> <1311263869.9745.72.camel@drew-northup.unet.maine.edu>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] gitignore: add top level patch ignore rule
+Date: Thu, 21 Jul 2011 15:29:58 +0200
+Message-ID: <4E2829D6.9010409@drmicha.warpmail.net>
+References: <1311113877.2643.2.camel@vitaliy-Vostro-1400> <4E268D2F.50201@drmicha.warpmail.net> <CAGTPOqeF6LneWCg_du5dDfzFp7QV_jGg1t4u23sziTN+uHQyXA@mail.gmail.com> <4E282349.4040404@drmicha.warpmail.net> <CAGTPOqcd5G=NG83wgnH80nqNsS1FYwtRp4QjaB=oU5NkPts_Hg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: George Spelvin <linux@horizon.com>, david@lang.hm,
-	anthonyvdgent@gmail.com, git@vger.kernel.org, nico@fluxnic.net,
-	torvalds@linux-foundation.org
-To: Drew Northup <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Thu Jul 21 18:24:11 2011
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Vitaliy Ivanov <vitalivanov@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 21 15:30:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qjw2l-0005lG-7Z
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 18:24:11 +0200
+	id 1QjtKJ-0001ya-Fi
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 15:30:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753117Ab1GUQYG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jul 2011 12:24:06 -0400
-Received: from rcdn-iport-9.cisco.com ([173.37.86.80]:55428 "EHLO
-	rcdn-iport-9.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752758Ab1GUQYD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2011 12:24:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=hordp@cisco.com; l=3022; q=dns/txt;
-  s=iport; t=1311265443; x=1312475043;
-  h=message-id:date:from:mime-version:to:cc:subject:
-   references:in-reply-to:content-transfer-encoding;
-  bh=1F6cw14AlCRcT8ZpRFkQWWeq/yTuo2Dhl7KY4MUbZpA=;
-  b=MfBQscc6varHnwzpn+won2SOPKKcrQ3qUaRnCCWA2CNkrf/TlUFScKls
-   BvXIhol8hVU/i3gENzXK6UYj2iigyyMiwQqNsZfnkORUr0aqZd0OUZHsj
-   Hj5mn+Z07o53hDcWYmfAPd1kRbl1mMbUv74PVe3M3u7n21x+Hmu3BNyNu
-   0=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Av0EAEtRKE6tJXHB/2dsb2JhbABUEKcwd4h8nTeeKIY+BJJuhQeLH1M
-X-IronPort-AV: E=Sophos;i="4.67,242,1309737600"; 
-   d="scan'208";a="5167880"
-Received: from rcdn-core2-6.cisco.com ([173.37.113.193])
-  by rcdn-iport-9.cisco.com with ESMTP; 21 Jul 2011 16:24:02 +0000
-Received: from [64.100.104.94] (dhcp-64-100-104-94.cisco.com [64.100.104.94])
-	by rcdn-core2-6.cisco.com (8.14.3/8.14.3) with ESMTP id p6LGO1uM032271;
-	Thu, 21 Jul 2011 16:24:01 GMT
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110627 Thunderbird/5.0
-In-Reply-To: <1311263869.9745.72.camel@drew-northup.unet.maine.edu>
-X-TagToolbar-Keys: D20110721122401407
+	id S1750968Ab1GUNaC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jul 2011 09:30:02 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:55500 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750899Ab1GUNaB (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Jul 2011 09:30:01 -0400
+Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id AD89A20A83;
+	Thu, 21 Jul 2011 09:30:00 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute5.internal (MEProxy); Thu, 21 Jul 2011 09:30:00 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=27R2xzDK8jXhE12cYQjXXK
+	3yjIo=; b=OtGGlA0ALsy6zbyQSPT42Xggz022PEkJW/0PjPSEcIgkEj39EKsqdZ
+	5VRwRtayhgcpRAu5SNcSFWAIxkjZG4T6fgGMo2mk9uiJZyezEjOINJKtZIAjMLYu
+	GqlL14btOvi9C3QPXdIzqvDajvctL6FxtJnhtTx4fWAtwQ9NBmRYg=
+X-Sasl-enc: pynTvIT+1t3lqQm9fBmWMpU6QLo7vQ5P4/AALOZLZfhj 1311255000
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id EBB9340B980;
+	Thu, 21 Jul 2011 09:29:59 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110707 Thunderbird/5.0
+In-Reply-To: <CAGTPOqcd5G=NG83wgnH80nqNsS1FYwtRp4QjaB=oU5NkPts_Hg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/21/2011 11:57 AM, Drew Northup wrote:
-> On Thu, 2011-07-21 at 08:55 -0400, George Spelvin wrote:
->>> I have not read yet one discussion about how generation numbers [baked
->>> into a commit] deal with rebasing, for instance. Do we assign one more
->>> than the revision prior to the base of the rebase operation or do we
->>> start with the revision one after the highest of those original commits
->>> included in the rebase? Depending on how that is done
->>> _drastically_different_ numbers can come out of different repository
->>> instances for the same _final_ DAG. This is one major reason why, as I
->>> see it, local storage is good for generation numbers and putting them in
->>> the commit is bad.
->> Er, no.  Whenever a new commit object is generated (as the result
->> of a rebase or not), its commit number is computed based on its
->> parent commits.  It is NEVER copied.
-> I don't see the word "copy" in my original.
->
-> B-O1-O2-O3-O4-O5-O6
->   \
->    R1----R2-------R3
->
-> What's the correct generation number for R3? I would say gen(B)+3.
-And you would be correct if you follow the SoP algorithm.
+Vitaliy Ivanov venit, vidit, dixit 21.07.2011 15:22:
+> On Thu, Jul 21, 2011 at 4:02 PM, Michael J Gruber
+> <git@drmicha.warpmail.net> wrote:
+>> Vitaliy Ivanov venit, vidit, dixit 21.07.2011 14:54:
+>>> Michael,
+>>>
+>>> On Wed, Jul 20, 2011 at 11:09 AM, Michael J Gruber
+>>> <git@drmicha.warpmail.net> wrote:
+>>>> Vitaliy Ivanov venit, vidit, dixit 20.07.2011 00:17:
+>>>>> Add top level ignore rule for patches created by format-patch command.
+>>>>
+>>>> Please don't.
+>>>>
+>>>> The tracked ignore file is for ignoring products and artefacts of our
+>>>> build process. format-patch is not part of this process, and the
+>>>> existence of *.patch files depends on your workflow. But what is much
+>>>> worse: In
+>>>>
+>>>> git status
+>>>> git format-patch rev-spec
+>>>> git send-email *.patch
+>>>>
+>>>> it is very easy to send out the wrong patches (along with the right
+>>>> ones), because your patch hides them from status. Also, I can't clean
+>>>> them up with "git clean -f" any more. I would have to use "git clean -f
+>>>> -x" which would clean the build products also (and force a rebuild).
+>>>>
+>>>> So, your patch makes a format-patch based workflow much worse. What
+>>>> problem does it try to solve?
+>>>
+>>> I will not insist. You may know it better but git as is a public
+>>> project where anyone can create and send patches. So it seems to me
+>>> basic workflow for sharing changes.
+>>
+>> Well sure it is. We do that and discuss the merits of patches.
+>>
+>> I do use format-patch/send-email, and as I explained, your patch would
+>> make that more difficult. If there is something that it makes better
+>> that may outweigh it. Can you explain what improvement this (ignoring
+>> *.patch) introduces?
+> 
+> I'm not sure how listing all the patches that you have under "git
+> status" will help you not to send a wrong one.
 
-> My
-> reading of the posts made by some others was that they thought gen(O6)
-> was the correct answer. Still others seemed to indicate gen(O6)+1 was
-> the correct answer.
-Maybe the confusion comes from the different storage mechanisms being 
-discussed.  If the generation numbers are in a local cache and used by a 
-single client, the determinism of the specific numbers doesn't much 
-matter.  If they are part of the commit, it still doesn't need to be 
-completely deterministic. However, interoperability requires standards, 
-and standards favor determinism, so dogmatic determinism may triumph in 
-that case.
+Well, in order to get this patch in, you will have to explain what it is
+good for (not that I'd decide that, but that's my recommendation for
+you). I've asked twice and I'm still waiting for an explanation.
 
-1. gen(06) might make sense if you mean to implement --date-order using 
-gen-numbers, for example.  But I don't think it's practical in any case.
+OTOH, I've explained in detail why I consider this change bad. Please
+reread my first reply.
 
-2. gen(06)+1 might make sense if you mean to require that gen-numbers 
-are unique per repo.  But this is both unsupportable and unnecessary, so 
-it's a non-starter.
+> Also we are talking about /*.patch rule and not *.patch as with such rule:
 
-3. gen(B)+1 is what you'd get from the the algorithm I saw proposed.
+Sure.
 
-All three of these are provably correct by my definition of "correct": 
-"for each A in ancestors_of(B), gen(A) < gen(B)".
-
-However, [1] and [2] have some extra features of dubious value.  Simpler 
-is better for interoperability, so I like [3] for this purpose.
-
-Even [3] has an extra feature I think is unnecessary: determinism.  If 
-that "requirement" is dropped, I think all three of these algorithms are 
-(functionally) roughly equivalent.
-
-> I don't think everybody MEANT to be saying such
-> different things--that's just how they appeared on this end.
->
-> Now, did you mean something different by "commit number?"
-
-I remain unconvinced that there is value in gen-number distribution, so 
-to my mind, the specific algorithm and whether or not it is 
-deterministic are unimportant.
-
-Phil ~ who wasn't really being asked, but felt like answering
+Michael
