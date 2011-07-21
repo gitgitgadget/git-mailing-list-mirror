@@ -1,80 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git commit generation numbers
-Date: Fri, 22 Jul 2011 16:02:17 -0600
-Message-ID: <20110722220216.GA14118@sigill.intra.peff.net>
-References: <20110721202722.3765.qmail@science.horizon.com>
- <alpine.LFD.2.00.1107220907370.1762@xanadu.home>
- <alpine.DEB.2.02.1107221102180.6496@asgard.lang.hm>
- <201107222034.20510.jnareb@gmail.com>
- <CA+55aFzsZ6w_a_wPEuBjtDeSDYQviVfy9UmJMxPz4geu4CRthQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3] ref namespaces: tests
+Date: Thu, 21 Jul 2011 14:56:16 -0700
+Message-ID: <7v62mux9ae.fsf@alter.siamese.dyndns.org>
+References: <20110714205055.GA26956@leaf>
+ <7v1uxs3177.fsf@alter.siamese.dyndns.org> <20110715034538.GD28343@leaf>
+ <20110715184045.GA2232@leaf> <20110721201054.GA2530@leaf>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>, david@lang.hm,
-	Nicolas Pitre <nico@fluxnic.net>,
-	George Spelvin <linux@horizon.com>,
-	Anthony Van de Gejuchte <anthonyvdgent@gmail.com>,
-	git@vger.kernel.org, Phil Hord <hordp@cisco.com>,
-	Shawn Pearce <spearce@spearce.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Jul 23 00:02:47 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jamey Sharp <jamey@minilop.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
+	Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org
+To: Josh Triplett <josh@joshtriplett.org>
+X-From: git-owner@vger.kernel.org Sat Jul 23 00:03:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QkNnu-0003aG-5E
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Jul 2011 00:02:42 +0200
+	id 1QkNov-0003ye-4X
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Jul 2011 00:03:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932623Ab1GVWCb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Jul 2011 18:02:31 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50476
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932420Ab1GVWC3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2011 18:02:29 -0400
-Received: (qmail 23591 invoked by uid 107); 22 Jul 2011 22:02:58 -0000
-Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 22 Jul 2011 18:02:58 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Jul 2011 16:02:17 -0600
-Content-Disposition: inline
-In-Reply-To: <CA+55aFzsZ6w_a_wPEuBjtDeSDYQviVfy9UmJMxPz4geu4CRthQ@mail.gmail.com>
+	id S932611Ab1GVWDk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jul 2011 18:03:40 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48477 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932420Ab1GVWDj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2011 18:03:39 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 769815338;
+	Fri, 22 Jul 2011 18:03:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:references:message-id:mime-version:content-type;
+	 s=sasl; bh=c3xXNdEujmcKeNAiaLcUCzcCmI0=; b=nU+J99ZkF9gtVd/ULQ66
+	FLiRcsp2RilXhAg9vayjMGf9x32OU+6OYVttPx+G65r1d8EnGa93Fqlxsn9BQAxh
+	PJIkqqttcDEMplXF+Mzk9h/fE0F3/B2743wFvCeAeFT/i3M3fuArNXLL3OpT2Yn5
+	v+JO/wHuludny5ejSxWr+9U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:references:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=mCPTy8X3k9s90AqP9fyTScE7WqDjybTRhGaSmzzw9vEc+p
+	K+RFV2+8WtE0rt+DPN6WqnBtTlSkHEaPjBoo+5WKndY28ei2A7FaJkOV1NJHSMsX
+	Zkr386n+4jkgsVDh0cyI6mfx2Bo9R4WzOIDnf3WKVYG14F71z7mqXf+1kzBfY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C4A45337;
+	Fri, 22 Jul 2011 18:03:39 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EDF8A5336; Fri, 22 Jul 2011
+ 18:03:38 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 745458E4-B4AE-11E0-BFF1-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177672>
 
-On Fri, Jul 22, 2011 at 12:06:08PM -0700, Linus Torvalds wrote:
+Josh Triplett <josh@joshtriplett.org> writes:
 
-> On Fri, Jul 22, 2011 at 11:34 AM, Jakub Narebski <jnareb@gmail.com> w=
-rote:
-> >
-> > That is IF unknown headers are copied verbatim during rebase. =C2=A0=
-=46or
-> > "encoding" header this is a good thing, for "generation" it isn't.
->=20
-> Afaik, they aren't copied verbatim, and never have been. Afaik, the
-> only thing that has *ever* written commits is "commit_tree()"
-> (originally "main()" in commit-tree.c). Why is this red herring even
-> being discussed?
+> At this point I think we've incorporated all the outstanding feedback.
+> Does this test need any further changes to allow the ref-namespaces
+> branch to graduate to next?
 
-In git.git, that is the case. There are other programs that may write
-git commits, though. Try:
+No more nitpicks from me on this patch at least for now.
 
-  http://www.google.com/codesearch#search/&q=3Dhash-object.*commit&type=
-=3Dcs
+Are people who expressed concern during the review on the previous round
+of the series happy with the second round? I recall there was a strong
+sentiment that it is regrettable that the series specifically changes
+fetch and push and is not a more general mechanism. Personally I am OK
+with the approach taken by this series, as I do not offhand think of other
+ways to serve a modified namespace. You have to view the unaltered reality
+when interacting with your own refs to enumerate the objects you have,
+while giving the altered view to your clients that is limited to the
+"virtual" space.
 
-Many uses seem OK (they are generating a commit from scratch). This one
-at least (the sixth result from the search above) would actually
-generate buggy generation headers (it modifies parents but passes other
-headers through):
+> (Also, for future reference, do you prefer to see later versions of
+> patches as replies to the previous version, as I've made this mail a
+> reply to PATCHv2, or do you prefer to see them as new threads?)
 
-  http://www.google.com/codesearch#XUVcT9DKB_U/replace&ct=3Drc&cd=3D7&q=
-=3Dhash-object.*commit
-
-It may be worth saying that such code is stupid and ugly and wrong, or
-that it is not deployed widely enough to care about.  But it's not
-entirely a red herring.
-
--Peff
+Often it is very convenient to be able to go "up" in the thread to re-read
+the discussions in the previous round. On the other hand it sometimes gets
+inconvenient when viewing tons of threads to have a beginning of a new
+round buried deep in other threads. Referring to the messages in the
+previous round by their message-id (or thread.gmane.org/ URL) in the body
+of the patch message below "---" lines may solve both issues, but I can go
+either way.
