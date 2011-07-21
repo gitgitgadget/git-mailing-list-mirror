@@ -1,83 +1,86 @@
-From: Ori Avtalion <ori@avtalion.name>
-Subject: A few questions about git-reset's reflog messages
-Date: Thu, 21 Jul 2011 22:28:30 +0300
-Message-ID: <4E287DDE.8020108@avtalion.name>
+From: Kacper Kornet <kornet@camk.edu.pl>
+Subject: Re: git fetch --all --depth
+Date: Thu, 21 Jul 2011 22:04:55 +0200
+Message-ID: <20110721200455.GC11520@camk.edu.pl>
+References: <20110720223902.GA6675@camk.edu.pl>
+ <7v1uxj4ml4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 21 21:28:47 2011
+Content-Type: text/plain; charset=iso-8859-2
+Cc: Alex Neronskiy <zakmagnus@google.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 21 22:05:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QjyvL-0006Nd-Re
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 21:28:44 +0200
+	id 1QjzUb-0002iH-Qx
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 22:05:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752421Ab1GUT2g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jul 2011 15:28:36 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:46247 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751304Ab1GUT2f (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2011 15:28:35 -0400
-Received: by wwe5 with SMTP id 5so1546743wwe.1
-        for <git@vger.kernel.org>; Thu, 21 Jul 2011 12:28:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=L976fLugGvHWtALgjL2XiyJOWi4JIGeBOCMOEmusC4I=;
-        b=wUOx2EoSatGS4qsyE51nWwFBImEN8f5ADCC3Glh++7jozCgFiNTLN3X5PIb2fdAA4I
-         7ztJYFefD6a9L5hOLupsjJR5YxCM1RTSJRQMrBKuPLq+AmtbUq3zzWqqW/rTMY4qLaCZ
-         0JcoN8K3EVJ9+EdjIKqWMyLwTkgymr5o4yUoQ=
-Received: by 10.216.60.207 with SMTP id u57mr499597wec.89.1311276514655;
-        Thu, 21 Jul 2011 12:28:34 -0700 (PDT)
-Received: from [192.168.1.55] ([109.67.20.81])
-        by mx.google.com with ESMTPS id 53sm1068161wel.31.2011.07.21.12.28.33
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 21 Jul 2011 12:28:33 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110617 Thunderbird/3.1.11
+	id S1753180Ab1GUUFE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jul 2011 16:05:04 -0400
+Received: from moat.camk.edu.pl ([148.81.175.50]:40097 "EHLO moat.camk.edu.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753118Ab1GUUFD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2011 16:05:03 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by moat.camk.edu.pl (Postfix) with ESMTP id D428C5F0049;
+	Thu, 21 Jul 2011 22:05:00 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at camk.edu.pl
+Received: from moat.camk.edu.pl ([127.0.0.1])
+	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id qhRJAsnv27-3; Thu, 21 Jul 2011 22:04:56 +0200 (CEST)
+Received: from gatekeeper.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
+	by moat.camk.edu.pl (Postfix) with ESMTP id DF3525F0047;
+	Thu, 21 Jul 2011 22:04:55 +0200 (CEST)
+Received: by gatekeeper.camk.edu.pl (Postfix, from userid 1293)
+	id CF648809A9; Thu, 21 Jul 2011 22:04:55 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7v1uxj4ml4.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177617>
 
-Hi,
+On Thu, Jul 21, 2011 at 09:36:55AM -0700, Junio C Hamano wrote:
+> Kacper Kornet <kornet@camk.edu.pl> writes:
 
-I noticed an inconsistency with the reset command's reflog messages.
+> > I have just discovered that when I use:
 
-The command:
-    g reset <tree-ish>
+> > git fetch --all --depth=<n> 
 
-Prints this reflog message:
+> > the history is not deepened. Is the any specific reason for it or is it
+> > a bug?
 
-    <tree-ish>: updating HEAD
+> The above is not specific enough to judge if you found a bug or if it is a
+> user error.
 
-Usually, actual lines from "git reflog" are:
-640a027 HEAD@{0}: HEAD~1: updating HEAD
-0657539 HEAD@{1}: 0657539: updating HEAD
+To be more specific, the steps to reproduce:
 
-This feels redundant and not very informative.
+$ git clone --depth=1 git://git.kernel.org/pub/scm/git/git.git
+$ cd git
+$ git fetch --depth 2 --all
 
-Is there any reason to print the tree-ish in the command? The 'raw' sha1
-is already recorded in the reflog.
+and the last command does nothing, while
 
-Why does the message not mention 'reset' in the beginning like (most?)
-other commands?
+$ git fetch --depth 2 
 
-I dug into builtin/reset.c to try and improve it, and came across a few
-odd things, that I'd appreciate if someone would clarify:
+deepens the clone by 2 repos, as expected.
 
-* There is code to set a "updating ORIG_HEAD" reflog message, but I
-can't trigger it. What use-case causes it?
+> IIRC, --depth=<n> is not "deepen by <n>", but "make sure I have at least
+> <n> from the updated tip(s)".  The shallow-clone hack gives you quite
+> useless (even though it may be internally consistent) semantics if you
+> shallow-cloned way in the past and fetched with --depth after the other
+> side added many more commits than <n>, as you cannot guess what the right
+> value of <n> should be without actually fetching without --depth.
 
-* The part of the reflog message before the colon is composed by
-args_to_str() which prints all of the arguments after the opts. This
-seems redundant as the only form of 'reset' that updates the reflog is
-one with a single '<commit>' argument after the options. What is there
-for args_to_str to loop over?
+That is true. Also, from esthetic point of view, sometimes I miss the
+functionality to deepen the full repository. For example git fetch
+--depth 0 could do it. Now I have to do git fetch --depth
+<very_large_number>
 
-Thanks,
-Ori
+-- 
+  Kacper Kornet
