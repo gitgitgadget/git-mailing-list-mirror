@@ -1,54 +1,64 @@
-From: rupert THURNER <rupert.thurner@gmail.com>
-Subject: git svn v1 migration, avoid re-clone whole repo
-Date: Fri, 22 Jul 2011 00:47:27 +0200
-Message-ID: <CAJs9aZ-h8J_WYC1cXy9HojwArO8EqWSZnoZ1=LdrqHxeJxz_BQ@mail.gmail.com>
+From: Eric Blake <eblake@redhat.com>
+Subject: stupid git alias trick
+Date: Thu, 21 Jul 2011 17:06:29 -0600
+Organization: Red Hat
+Message-ID: <4E28B0F5.2090705@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 22 00:47:53 2011
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 22 01:06:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qk224-0003ju-Ov
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Jul 2011 00:47:53 +0200
+	id 1Qk2KA-0001Za-Ph
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Jul 2011 01:06:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751481Ab1GUWrs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jul 2011 18:47:48 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:60592 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751241Ab1GUWrs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2011 18:47:48 -0400
-Received: by iyb12 with SMTP id 12so1273259iyb.19
-        for <git@vger.kernel.org>; Thu, 21 Jul 2011 15:47:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=auj68TArLT1E4unJuiVoWHE6zHIhyM5sphMW6FSJ/YU=;
-        b=cXttWCbrVhHLjdHDfwntH65yFox6P7A+8sMuygFAkVWfz6H0Zw3w+ikBlGjBwQa6xZ
-         OfEOR8T9owNLAmjpUjglzQrx38VKRbrG2RUeu1VzqPPhzoxKOPzZNVEMgyc4pAroXaSS
-         6M8HA+ZkJu5Hdz9RTiQVdlfsSDdM0ctYxud9s=
-Received: by 10.231.114.104 with SMTP id d40mr629296ibq.114.1311288467126;
- Thu, 21 Jul 2011 15:47:47 -0700 (PDT)
-Received: by 10.42.96.193 with HTTP; Thu, 21 Jul 2011 15:47:27 -0700 (PDT)
+	id S1752100Ab1GUXGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jul 2011 19:06:31 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:58929 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752034Ab1GUXGa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2011 19:06:30 -0400
+Received: from int-mx12.intmail.prod.int.phx2.redhat.com (int-mx12.intmail.prod.int.phx2.redhat.com [10.5.11.25])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id p6LN6Upm025566
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK)
+	for <git@vger.kernel.org>; Thu, 21 Jul 2011 19:06:30 -0400
+Received: from [10.3.113.79] (ovpn-113-79.phx2.redhat.com [10.3.113.79])
+	by int-mx12.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id p6LN6TWD000675;
+	Thu, 21 Jul 2011 19:06:29 -0400
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110621 Fedora/3.1.11-1.fc14 Lightning/1.0b3pre Mnenhy/0.8.3 Thunderbird/3.1.11
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177630>
 
-hi,
+Thought I'd share this one, in case anyone else finds it useful.
 
-is there any other means of upgrading to the new svn layout but
-cloning the repository afresh again? the error message i get is:
+Every so often, I find myself typing "git ", then pausing while thinking 
+of which command I meant to run (commit, rebase, push?), then realizing 
+that I actually need to make more edits in my editor first.  On 
+completion of that task, I come back to terminal and type "git 
+blah<ENTER>" out of habit, not realizing that I'm not starting from an 
+empty prompt.  Of course, "git git blah" is not a valid command, but if 
+you have help.autocorrect configured, this ends up auto-correcting to 
+"git init blah" instead, and while that often ends up failing due to 
+unexpected arguments for 'git init', I've actually had scenarios where 
+it succeeds at doing something, but certainly not the "blah" I had in mind.
 
-$ git svn rebase
-Migrating from a git-svn v1 layout...
-Data from a previous version of git-svn exists, but
-        .git/svn
-        (required for this version (1.7.5.4) of git-svn) does not exist.
-Done migrating from a git-svn v1 layout
-Unable to determine upstream SVN information from working tree history
+But thanks to aliases, this is no longer a problem:
 
-rupert
+git config --global alias.git '!git'
+
+and now, typing "git git blah" results in the execution of the git 
+alias, which in turn runs "git blah" like I intended.  Yay for:
+
+git git git git git git git git git git status
+
+-- 
+Eric Blake   eblake@redhat.com    +1-801-349-2682
+Libvirt virtualization library http://libvirt.org
