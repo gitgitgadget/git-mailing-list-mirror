@@ -1,167 +1,104 @@
-From: Vitaliy Ivanov <vitalivanov@gmail.com>
-Subject: Re: [PATCH] gitignore: add top level patch ignore rule
-Date: Thu, 21 Jul 2011 15:54:49 +0300
-Message-ID: <CAGTPOqeF6LneWCg_du5dDfzFp7QV_jGg1t4u23sziTN+uHQyXA@mail.gmail.com>
-References: <1311113877.2643.2.camel@vitaliy-Vostro-1400>
-	<4E268D2F.50201@drmicha.warpmail.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Jul 21 14:55:00 2011
+From: "George Spelvin" <linux@horizon.com>
+Subject: Re: Git commit generation numbers
+Date: 21 Jul 2011 13:36:33 -0400
+Message-ID: <20110721173633.21195.qmail@science.horizon.com>
+References: <1311263869.9745.72.camel@drew-northup.unet.maine.edu>
+Cc: anthonyvdgent@gmail.com, david@lang.hm, git@vger.kernel.org,
+	nico@fluxnic.net, torvalds@linux-foundation.org
+To: drew.northup@maine.edu, linux@horizon.com
+X-From: git-owner@vger.kernel.org Thu Jul 21 19:37:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QjsmJ-0004fS-IW
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 14:54:59 +0200
+	id 1QjxB6-0002Zg-Nq
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 19:36:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753097Ab1GUMyx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Jul 2011 08:54:53 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:60790 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752861Ab1GUMyv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Jul 2011 08:54:51 -0400
-Received: by ewy4 with SMTP id 4so1136307ewy.19
-        for <git@vger.kernel.org>; Thu, 21 Jul 2011 05:54:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=UNcyznnbTRdlLiNnh72NW2sKRP5DQ+YWsMxFZgm9ssM=;
-        b=k4inG2itGEpTeB+UOUcw0uVEetxYMsFOCRflwCG+gDme9r7RExInZ7rb64qLSxonPn
-         Nf2NgMI4RmonleBBv+bBSP0RwZK3owgPoRaI8heOiitNlawfvSY9twLgKwxy6TkhYwqT
-         RYOWACl+aMLu8r6F7YLhmJnJeKVugsjMl+nBU=
-Received: by 10.213.16.148 with SMTP id o20mr231797eba.143.1311252889839; Thu,
- 21 Jul 2011 05:54:49 -0700 (PDT)
-Received: by 10.213.17.15 with HTTP; Thu, 21 Jul 2011 05:54:49 -0700 (PDT)
-In-Reply-To: <4E268D2F.50201@drmicha.warpmail.net>
+	id S1753394Ab1GURgg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jul 2011 13:36:36 -0400
+Received: from science.horizon.com ([71.41.210.146]:15777 "HELO
+	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1752460Ab1GURge (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2011 13:36:34 -0400
+Received: (qmail 21196 invoked by uid 1000); 21 Jul 2011 13:36:33 -0400
+In-Reply-To: <1311263869.9745.72.camel@drew-northup.unet.maine.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177592>
 
-Michael,
+Drew Northup wrote:
+> On Thu, 2011-07-21 at 08:55 -0400, George Spelvin wrote:
+>> I have not read yet one discussion about how generation numbers [baked
+>> into a commit] deal with rebasing, for instance. Do we assign one more
+>> than the revision prior to the base of the rebase operation or do we
+>> start with the revision one after the highest of those original commits
+>> included in the rebase? Depending on how that is done
+>> _drastically_different_ numbers can come out of different repository
+>> instances for the same _final_ DAG. This is one major reason why, as I
+>> see it, local storage is good for generation numbers and putting them in
+>> the commit is bad. 
+> 
+> Er, no.  Whenever a new commit object is generated (as the result
+> of a rebase or not), its commit number is computed based on its
+> parent commits.  It is NEVER copied.
 
-On Wed, Jul 20, 2011 at 11:09 AM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Vitaliy Ivanov venit, vidit, dixit 20.07.2011 00:17:
->> Add top level ignore rule for patches created by format-patch comman=
-d.
->
-> Please don't.
->
-> The tracked ignore file is for ignoring products and artefacts of our
-> build process. format-patch is not part of this process, and the
-> existence of *.patch files depends on your workflow. But what is much
-> worse: In
->
-> git status
-> git format-patch rev-spec
-> git send-email *.patch
->
-> it is very easy to send out the wrong patches (along with the right
-> ones), because your patch hides them from status. Also, I can't clean
-> them up with "git clean -f" any more. I would have to use "git clean =
--f
-> -x" which would clean the build products also (and force a rebuild).
->
-> So, your patch makes a format-patch based workflow much worse. What
-> problem does it try to solve?
+> I don't see the word "copy" in my original. 
 
-I will not insist. You may know it better but git as is a public
-project where anyone can create and send patches. So it seems to me
-basic workflow for sharing changes.
+Indeed, you didn't use it; it was my simplified mental model of your
+suggestion that the rebased commits would have generation numbers that
+somehow depended on the generation numbers before rebasing.
 
->
->> On the way, reorganize ignore rules and add comments.
->
-> How and why do you reorganize?
+Althouugh you suggested something different, the mistake is the same:
+the rebased commits' generation numbers have simply no relationship to
+those of the original pre-rebase commits.  The generation numbers depend
+only on the commits explicitly listed as parents in the commit objects.
 
-Just to be able to find specific rule faster. Global rules are now all
-together same is for top level root rules.
+That's why I went on to explain that the equivalence of the commits
+produced by a rebase operation is a higher-level concept; the core git
+object database just knows that they aren't identical, and therefore
+are different.
 
->
->>
->> Signed-off-by: Vitaliy Ivanov <vitalivanov@gmail.com>
->> ---
->> =A0.gitignore | =A0 43 ++++++++++++++++++++++++++++++-------------
->> =A01 files changed, 30 insertions(+), 13 deletions(-)
->>
->> diff --git a/.gitignore b/.gitignore
->> index 8572c8c..47afe77 100644
->> --- a/.gitignore
->> +++ b/.gitignore
->> @@ -1,3 +1,15 @@
->> +#
->> +# NOTE! Don't add files that are generated in specific
->> +# subdirectories here. Add them in the ".gitignore" file
->> +# in that subdirectory instead.
->> +#
->> +# NOTE! Please use 'git ls-files -i --exclude-standard'
->> +# command after changing this file, to see if there are
->> +# any tracked files which get ignored after the change.
->> +
->> +#
->> +# Top-level files
->> +#
->> =A0/GIT-BUILD-OPTIONS
->> =A0/GIT-CFLAGS
->> =A0/GIT-LDFLAGS
->> @@ -187,21 +199,10 @@
->> =A0/test-svn-fe
->> =A0/test-treap
->> =A0/common-cmds.h
->> -*.tar.gz
->> -*.dsc
->> -*.deb
->> =A0/git.spec
->> -*.exe
->> -*.[aos]
->> -*.py[co]
->> -.depend/
->> -*.gcda
->> -*.gcno
->> -*.gcov
->> =A0/coverage-untested-functions
->> =A0/cover_db/
->> =A0/cover_db_html/
->> -*+
->> =A0/config.mak
->> =A0/autom4te.cache
->> =A0/config.cache
->> @@ -213,6 +214,24 @@
->> =A0/tags
->> =A0/TAGS
->> =A0/cscope*
->> +/Debug/
->> +/Release/
->> +/*.patch
->> +
->> +#
->> +# Normal rules
->> +#
->> +*.tar.gz
->> +*.dsc
->> +*.deb
->> +*.exe
->> +*.[aos]
->> +*.py[co]
->> +.depend/
->> +*.gcda
->> +*.gcno
->> +*.gcov
->> +*+
->> =A0*.obj
->> =A0*.lib
->> =A0*.sln
->> @@ -222,5 +241,3 @@
->> =A0*.user
->> =A0*.idb
->> =A0*.pdb
->> -/Debug/
->> -/Release/
->
->
+Thus, they would retain the same relative order as before the rebase
+(unless you permuted them with rebase -i), but start with the generation
+number of the rebase target.
+
+> B-O1-O2-O3-O4-O5-O6
+>  \
+>   R1----R2-------R3
+
+> What's the correct generation number for R3? I would say gen(B)+3. My
+> reading of the posts made by some others was that they thought gen(O6)
+> was the correct answer. Still others seemed to indicate gen(O6)+1 was
+> the correct answer. I don't think everybody MEANT to be saying such
+> different things--that's just how they appeared on this end.
+
+According to the canonical algorithm, it's gen(B)+3 = gen(R2)+1.
+
+However, any non-decreasing series is equally permissible for
+optimizing history walking, so you could add jumps to (for example)
+make the numbers unique if that simplified anything.
+
+I don't think it does simplify anything, so the issue hasn't been
+discussed much.
+
+For the purpose of the optimization enabled by the generation
+numbers, however, it doesn't actually matter.
+
+What matters is that if I am listing commits down multiple branches,
+once I have walked back on each branch to commits of generation N or
+less, I know that I have found all possible descendants of all commits
+of generation N or more.
+
+This lets me display the recent part of the commit DAG (back to generation
+N) without exploring the entire commit treem or worrying that I'll have to
+"back up" to insert a commit in its proper order.  Without precomputed
+generation numbers, the only way to be sure of this is to explore back
+to generation 0 (parentless commits) or to use date-based heuristics.
+
+> Now, did you mean something different by "commit number?"
+
+No, just a bran fart I didn't catch before posting.
+I meant "generation number".
