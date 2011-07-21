@@ -1,152 +1,57 @@
-From: Nikolai Weibull <now@bitwi.se>
-Subject: Command-line options that lack documentation
-Date: Thu, 21 Jul 2011 14:07:05 +0200
-Message-ID: <CADdV=MsNyhOg7r9NV67e0V1_7FCvdBu4YA=7gAEjPLagP0r9yw@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: Command-line options that lack documentation
+Date: Thu, 21 Jul 2011 14:34:29 +0200
+Message-ID: <201107211434.29677.trast@student.ethz.ch>
+References: <CADdV=MsNyhOg7r9NV67e0V1_7FCvdBu4YA=7gAEjPLagP0r9yw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 21 14:07:16 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: Nikolai Weibull <now@bitwi.se>
+X-From: git-owner@vger.kernel.org Thu Jul 21 14:34:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qjs24-0000df-8m
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 14:07:12 +0200
+	id 1QjsSb-0004c4-90
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 14:34:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751876Ab1GUMHH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jul 2011 08:07:07 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:57773 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750834Ab1GUMHG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2011 08:07:06 -0400
-Received: by pvh21 with SMTP id 21so295612pvh.19
-        for <git@vger.kernel.org>; Thu, 21 Jul 2011 05:07:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type;
-        bh=eN7IFNyBytUpz4h7hL2ztAodcPelivNsobDSE/PQT0o=;
-        b=kMM33Ugmis5yXExae0EfpH9+zmWcF7QW/twrWp8l6XECOmfJt27lLxKsuNUu/SQPL+
-         JvCZV6Q73aEulvpRQSpWijJb8LV771XZOTzIJHRFdKFwUggcHlKbKcOA47c+/CIgogSc
-         XNE04XC7JHctmCelaL8kvfZb9sSoMCHg5Awbw=
-Received: by 10.68.31.1 with SMTP id w1mr201101pbh.421.1311250025888; Thu, 21
- Jul 2011 05:07:05 -0700 (PDT)
-Received: by 10.68.48.200 with HTTP; Thu, 21 Jul 2011 05:07:05 -0700 (PDT)
-X-Google-Sender-Auth: wUMG5IzOq2f7pLQbSxcR71KMfcw
+	id S1752503Ab1GUMec (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jul 2011 08:34:32 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:4535 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751495Ab1GUMec (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2011 08:34:32 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.289.1; Thu, 21 Jul
+ 2011 14:34:28 +0200
+Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
+ (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.289.1; Thu, 21 Jul
+ 2011 14:34:30 +0200
+User-Agent: KMail/1.13.7 (Linux/2.6.39.1-33-desktop; KDE/4.6.4; x86_64; ; )
+In-Reply-To: <CADdV=MsNyhOg7r9NV67e0V1_7FCvdBu4YA=7gAEjPLagP0r9yw@mail.gmail.com>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi!
+Nikolai Weibull wrote:
+> 
+> The following options lack (full) documentation in the manual pages:
+[...]
+> git-notes copy:
+>   --for-rewrite
 
-The following options lack (full) documentation in the manual pages:
+Intentional, cf. 6956f85 (notes: implement helpers needed for note
+copying during rewrite, 2010-03-12).
 
-git-am:
-  --patch-format
-  --rerere-autoupdate
+> Furthermore, the fact that most commands take -h and --help is
+> undocumented, but perhaps not of any real importance.
 
-git-bisect:
-  next subcommand
+It's actually in gitcli(7).
 
-git-commit:
-  --null
-  --interactive
-
-git-notes copy:
-  --for-rewrite
-
-git-submodule update:
-  --init
-
-git-config:
-  --local
-
-git-reflog expire:
-  -n, --dry-run
-
-git-reflog delete:
-  -n, --dry-run
-
-git-repack:
-  --quiet
-
-git-cherry:
-  --abbrev
-
-git-fsck:
-  -v
-
-git-rerere:
-  --rerere-autoupdate
-
-git-verify-tag:
-  -v, --verbose
-
-git-svn init | fetch | clone | rebase | dcommit:
-  --no-auth-cache
-  --config-dir
-
-git-svn fetch | clone | rebase | dcommit:
-  --noMetadata
-  --useSvmProps
-  --useSvnsyncProps
-  --log-window-size
-  --no-checkout
-
-git-svn fetch | rebase | dcommit:
-  --fetch-all, --all
-
-git-svn dcommit:
-  -C, --copy-similarity
-
-git-svn log:
-  --color
-  --pager
-  --non-recursive
-
-git-svn show-ignore | mkdirs:
-  -r, --revision
-
-git-svn commit-diff:
-  -m, --message
-  -F, --file
-  -r, --revision
-
-git-index-pack:
-  --pack_header
-
-git-merge-file:
-  --marker-size
-  --diff3
-
-git-pack-objects:
-  --reflog
-  --keep-unreachable
-  --unpack-unreachable
-
-git-ls-files:
-  --resolve-undo
-
-git-send-pack:
-  --mirror
-  --stateless-rpc
-  --helper-status
-
-git-receive-pack:
-  --advertise-refs
-  --stateless-rpc
-
-git-upload-pack:
-  --advertise-refs
-  --stateless-rpc
-
-git-mailinfo:
-  --no-inbody-headers
-
-Furthermore, the fact that most commands take -h and --help is
-undocumented, but perhaps not of any real importance.
-
-I would provide patches to the documentation, but most of these
-options are beyond my grasp of Git.
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
