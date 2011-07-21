@@ -1,104 +1,152 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] gitignore: add top level patch ignore rule
-Date: Thu, 21 Jul 2011 15:29:58 +0200
-Message-ID: <4E2829D6.9010409@drmicha.warpmail.net>
-References: <1311113877.2643.2.camel@vitaliy-Vostro-1400> <4E268D2F.50201@drmicha.warpmail.net> <CAGTPOqeF6LneWCg_du5dDfzFp7QV_jGg1t4u23sziTN+uHQyXA@mail.gmail.com> <4E282349.4040404@drmicha.warpmail.net> <CAGTPOqcd5G=NG83wgnH80nqNsS1FYwtRp4QjaB=oU5NkPts_Hg@mail.gmail.com>
+From: Nikolai Weibull <now@bitwi.se>
+Subject: Command-line options that lack documentation
+Date: Thu, 21 Jul 2011 14:07:05 +0200
+Message-ID: <CADdV=MsNyhOg7r9NV67e0V1_7FCvdBu4YA=7gAEjPLagP0r9yw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Vitaliy Ivanov <vitalivanov@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 21 15:30:07 2011
+Content-Type: text/plain; charset=UTF-8
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 21 14:07:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QjtKJ-0001ya-Fi
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 15:30:07 +0200
+	id 1Qjs24-0000df-8m
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 14:07:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750968Ab1GUNaC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jul 2011 09:30:02 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:55500 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750899Ab1GUNaB (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Jul 2011 09:30:01 -0400
-Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id AD89A20A83;
-	Thu, 21 Jul 2011 09:30:00 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute5.internal (MEProxy); Thu, 21 Jul 2011 09:30:00 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=27R2xzDK8jXhE12cYQjXXK
-	3yjIo=; b=OtGGlA0ALsy6zbyQSPT42Xggz022PEkJW/0PjPSEcIgkEj39EKsqdZ
-	5VRwRtayhgcpRAu5SNcSFWAIxkjZG4T6fgGMo2mk9uiJZyezEjOINJKtZIAjMLYu
-	GqlL14btOvi9C3QPXdIzqvDajvctL6FxtJnhtTx4fWAtwQ9NBmRYg=
-X-Sasl-enc: pynTvIT+1t3lqQm9fBmWMpU6QLo7vQ5P4/AALOZLZfhj 1311255000
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id EBB9340B980;
-	Thu, 21 Jul 2011 09:29:59 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110707 Thunderbird/5.0
-In-Reply-To: <CAGTPOqcd5G=NG83wgnH80nqNsS1FYwtRp4QjaB=oU5NkPts_Hg@mail.gmail.com>
+	id S1751876Ab1GUMHH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jul 2011 08:07:07 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:57773 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750834Ab1GUMHG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2011 08:07:06 -0400
+Received: by pvh21 with SMTP id 21so295612pvh.19
+        for <git@vger.kernel.org>; Thu, 21 Jul 2011 05:07:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        bh=eN7IFNyBytUpz4h7hL2ztAodcPelivNsobDSE/PQT0o=;
+        b=kMM33Ugmis5yXExae0EfpH9+zmWcF7QW/twrWp8l6XECOmfJt27lLxKsuNUu/SQPL+
+         JvCZV6Q73aEulvpRQSpWijJb8LV771XZOTzIJHRFdKFwUggcHlKbKcOA47c+/CIgogSc
+         XNE04XC7JHctmCelaL8kvfZb9sSoMCHg5Awbw=
+Received: by 10.68.31.1 with SMTP id w1mr201101pbh.421.1311250025888; Thu, 21
+ Jul 2011 05:07:05 -0700 (PDT)
+Received: by 10.68.48.200 with HTTP; Thu, 21 Jul 2011 05:07:05 -0700 (PDT)
+X-Google-Sender-Auth: wUMG5IzOq2f7pLQbSxcR71KMfcw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Vitaliy Ivanov venit, vidit, dixit 21.07.2011 15:22:
-> On Thu, Jul 21, 2011 at 4:02 PM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> Vitaliy Ivanov venit, vidit, dixit 21.07.2011 14:54:
->>> Michael,
->>>
->>> On Wed, Jul 20, 2011 at 11:09 AM, Michael J Gruber
->>> <git@drmicha.warpmail.net> wrote:
->>>> Vitaliy Ivanov venit, vidit, dixit 20.07.2011 00:17:
->>>>> Add top level ignore rule for patches created by format-patch command.
->>>>
->>>> Please don't.
->>>>
->>>> The tracked ignore file is for ignoring products and artefacts of our
->>>> build process. format-patch is not part of this process, and the
->>>> existence of *.patch files depends on your workflow. But what is much
->>>> worse: In
->>>>
->>>> git status
->>>> git format-patch rev-spec
->>>> git send-email *.patch
->>>>
->>>> it is very easy to send out the wrong patches (along with the right
->>>> ones), because your patch hides them from status. Also, I can't clean
->>>> them up with "git clean -f" any more. I would have to use "git clean -f
->>>> -x" which would clean the build products also (and force a rebuild).
->>>>
->>>> So, your patch makes a format-patch based workflow much worse. What
->>>> problem does it try to solve?
->>>
->>> I will not insist. You may know it better but git as is a public
->>> project where anyone can create and send patches. So it seems to me
->>> basic workflow for sharing changes.
->>
->> Well sure it is. We do that and discuss the merits of patches.
->>
->> I do use format-patch/send-email, and as I explained, your patch would
->> make that more difficult. If there is something that it makes better
->> that may outweigh it. Can you explain what improvement this (ignoring
->> *.patch) introduces?
-> 
-> I'm not sure how listing all the patches that you have under "git
-> status" will help you not to send a wrong one.
+Hi!
 
-Well, in order to get this patch in, you will have to explain what it is
-good for (not that I'd decide that, but that's my recommendation for
-you). I've asked twice and I'm still waiting for an explanation.
+The following options lack (full) documentation in the manual pages:
 
-OTOH, I've explained in detail why I consider this change bad. Please
-reread my first reply.
+git-am:
+  --patch-format
+  --rerere-autoupdate
 
-> Also we are talking about /*.patch rule and not *.patch as with such rule:
+git-bisect:
+  next subcommand
 
-Sure.
+git-commit:
+  --null
+  --interactive
 
-Michael
+git-notes copy:
+  --for-rewrite
+
+git-submodule update:
+  --init
+
+git-config:
+  --local
+
+git-reflog expire:
+  -n, --dry-run
+
+git-reflog delete:
+  -n, --dry-run
+
+git-repack:
+  --quiet
+
+git-cherry:
+  --abbrev
+
+git-fsck:
+  -v
+
+git-rerere:
+  --rerere-autoupdate
+
+git-verify-tag:
+  -v, --verbose
+
+git-svn init | fetch | clone | rebase | dcommit:
+  --no-auth-cache
+  --config-dir
+
+git-svn fetch | clone | rebase | dcommit:
+  --noMetadata
+  --useSvmProps
+  --useSvnsyncProps
+  --log-window-size
+  --no-checkout
+
+git-svn fetch | rebase | dcommit:
+  --fetch-all, --all
+
+git-svn dcommit:
+  -C, --copy-similarity
+
+git-svn log:
+  --color
+  --pager
+  --non-recursive
+
+git-svn show-ignore | mkdirs:
+  -r, --revision
+
+git-svn commit-diff:
+  -m, --message
+  -F, --file
+  -r, --revision
+
+git-index-pack:
+  --pack_header
+
+git-merge-file:
+  --marker-size
+  --diff3
+
+git-pack-objects:
+  --reflog
+  --keep-unreachable
+  --unpack-unreachable
+
+git-ls-files:
+  --resolve-undo
+
+git-send-pack:
+  --mirror
+  --stateless-rpc
+  --helper-status
+
+git-receive-pack:
+  --advertise-refs
+  --stateless-rpc
+
+git-upload-pack:
+  --advertise-refs
+  --stateless-rpc
+
+git-mailinfo:
+  --no-inbody-headers
+
+Furthermore, the fact that most commands take -h and --help is
+undocumented, but perhaps not of any real importance.
+
+I would provide patches to the documentation, but most of these
+options are beyond my grasp of Git.
