@@ -1,91 +1,87 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: can I use multiple worktree in same git repo ?
-Date: Thu, 21 Jul 2011 20:22:15 +0200
-Message-ID: <20110721182215.GA9505@kolya>
-References: <20110720182438.3c40cf1d@shiva.selfip.org>
- <CACsJy8CLRjLag65H6KQ1AUABLwiL09wNQw3VH8Y-JQnw7CqLUw@mail.gmail.com>
- <m3sjpzsdll.fsf@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation: git-filter-branch honors replacement refs
+Date: Thu, 21 Jul 2011 11:42:51 -0700
+Message-ID: <7vhb6f326s.fsf@alter.siamese.dyndns.org>
+References: <1311261052-16178-1-git-send-email-peter@pcc.me.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	"J. Bakshi" <joydeep@infoservices.in>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 21 20:22:12 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Peter Collingbourne <peter@pcc.me.uk>
+X-From: git-owner@vger.kernel.org Thu Jul 21 20:43:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qjxsw-0002Hz-AK
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 20:22:10 +0200
+	id 1QjyD7-0004ig-FL
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 20:43:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752428Ab1GUSWF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Jul 2011 14:22:05 -0400
-Received: from mail-ey0-f171.google.com ([209.85.215.171]:48583 "EHLO
-	mail-ey0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751431Ab1GUSWD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2011 14:22:03 -0400
-Received: by eye22 with SMTP id 22so1806829eye.2
-        for <git@vger.kernel.org>; Thu, 21 Jul 2011 11:22:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=73XXf0GzTRdKNGjQrk/YfpfzDqYiTToTPcGawDWkxKQ=;
-        b=rMVyP7Na7p+7rR/t1fkaMhW0N0A5KxkpKWlMfDPiYHyhVKgS65M9fvAX7mxnardRXn
-         7CPb+v5KrE3jmjqwt41lG+UVywTP3vFpkt+V87mFgMrMa5PnmafAeo1sBwDlcyZOzC1K
-         sfjm2NSukqWfSOU1nDvzw+TNaTiMh1XchmDA0=
-Received: by 10.14.100.201 with SMTP id z49mr274125eef.119.1311272521647;
-        Thu, 21 Jul 2011 11:22:01 -0700 (PDT)
-Received: from kolya (h-185-240.a189.priv.bahnhof.se [85.24.185.240])
-        by mx.google.com with ESMTPS id v20sm1269379eeh.46.2011.07.21.11.22.00
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 21 Jul 2011 11:22:00 -0700 (PDT)
-Received: from iveqy by kolya with local (Exim 4.72)
-	(envelope-from <iveqy@kolya>)
-	id 1Qjxt1-0002TV-Jf; Thu, 21 Jul 2011 20:22:15 +0200
-Content-Disposition: inline
-In-Reply-To: <m3sjpzsdll.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752881Ab1GUSm5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jul 2011 14:42:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44862 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752413Ab1GUSm4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2011 14:42:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 27E41302B;
+	Thu, 21 Jul 2011 14:42:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=avhKsVg5CQRV0vxA3nvXOlnlpSQ=; b=jV6rwG
+	t4fc5rgbBZEDXh8QvghagaFqj3hsG/RhQoAU8O3HT45jOpV7gdHvgQDVYwAGq5cz
+	5LRjiNuxq9QJKnUDA1meZgRBG/MJ+7VnF7qxHNwZX7aLF2gXpVSJ4Glosv6acYmL
+	LePxYKTuKZ8MsnIfrB/v6y31A4DCjvguSzM8Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YzBhJEhopxjoObFZ7qiNvufKIooeLhOb
+	qkP2k4UEG5d2xRNPa3uqOis02pplSBUvFM56jpJA95yaRT8LXptw1pBy7JutnKGz
+	GPbuWoVvIteiA+8kC2l6Jb0Ky/+TAzgMY6ONilN2YcL1eVqZxyJkdQRMe3WH+jEr
+	xm+uVyTp7qc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ED533302A;
+	Thu, 21 Jul 2011 14:42:54 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 532863027; Thu, 21 Jul 2011
+ 14:42:53 -0400 (EDT)
+In-Reply-To: <1311261052-16178-1-git-send-email-peter@pcc.me.uk> (Peter
+ Collingbourne's message of "Thu, 21 Jul 2011 16:10:52 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 3ECBD412-B3C9-11E0-B89D-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177608>
 
-On Thu, Jul 21, 2011 at 11:17:57AM -0700, Jakub Narebski wrote:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->=20
-> > On Wed, Jul 20, 2011 at 7:54 PM, J. Bakshi <joydeep@infoservices.in=
-> wrote:
-> > > As a result whenever there is a commit , it updates the related f=
-older in filesystem.
-> > > Say a commit at svn->mysite-repo->dir1->trunk->src =3D=3D> modify=
- =3D=3D> /var/www/demo/dir1
-> > >
-> > > Can I do the same in git with multiple worktree ? possible ?
-> >=20
-> > Using multiple worktree with the same repo won't work in git becaus=
-e
-> > the repo also have worktree-related information. [...]
-> [...]
-> > Also have a look at git-new-workdir in contrib directory of git
-> > repository. I don't use it but you might find it useful.
->=20
-> Actually with git-new-workdir you can have multiple working
-> directories associated with single repository, by the way of symlinks=
-=2E
->=20
-> Note however that if you intend to *work* in those workdirs, they
-> better correspond to different branches... or you can mess something
-> heavy.
+Peter Collingbourne <peter@pcc.me.uk> writes:
 
-It would be possible to use the .git-file feature here. Then symlinks a=
-re
-avoided and the solution is portable.
+> Make it clear that git-filter-branch will honor and make permanent
+> replacement refs as well as grafts.
+>
+> Signed-off-by: Peter Collingbourne <peter@pcc.me.uk>
+> ---
+>  Documentation/git-filter-branch.txt |    5 +++--
+>  1 files changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+> index 9dc1f2a..0f2f117 100644
+> --- a/Documentation/git-filter-branch.txt
+> +++ b/Documentation/git-filter-branch.txt
+> @@ -32,8 +32,9 @@ changes, which would normally have no effect.  Nevertheless, this may be
+>  useful in the future for compensating for some git bugs or such,
+>  therefore such a usage is permitted.
+>  
+> -*NOTE*: This command honors `.git/info/grafts`. If you have any grafts
+> -defined, running this command will make them permanent.
+> +*NOTE*: This command honors `.git/info/grafts` and `.git/refs/replace/`.
+> +If you have any grafts or replacement refs defined, running this command
+> +will make them permanent.
 
-Med v=E4nliga h=E4lsningar
-=46redrik
+Looks good. I think the second sentence can be further clarified,
+though. One of the reasons you may want to run this command is to make
+them permanent, so perhaps
+
+	Use this command to make your grafts and replacements permanent.
+
+or something like that.
