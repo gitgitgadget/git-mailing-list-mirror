@@ -1,98 +1,70 @@
-From: david@lang.hm
-Subject: Re: Git commit generation numbers
-Date: Wed, 20 Jul 2011 21:26:43 -0700 (PDT)
-Message-ID: <alpine.DEB.2.02.1107202119440.5355@asgard.lang.hm>
-References: <20110720221632.14223.qmail@science.horizon.com> <alpine.DEB.2.02.1107201624510.5222@asgard.lang.hm> <alpine.LFD.2.00.1107201931510.21187@xanadu.home> <4E276DF8.8030301@cisco.com> <alpine.DEB.2.02.1107201714140.6412@asgard.lang.hm>
- <CAJo=hJuS_iYSS8iVWoJ1BiUANsGtYJoYm-WRa863isVNsq=5vw@mail.gmail.com>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [RFC/PATCH] grep --no-index: allow to grep without git exclusions
+Date: Thu, 21 Jul 2011 19:23:25 +0200
+Message-ID: <CAKPyHN3dRyrpW_3emC1s8eDWTF_hSGEY9p+Ojio3NzvNP2hOsg@mail.gmail.com>
+References: <82218b89c89f733dc0759d648b3a60bca6e20f3e.1311165328.git.bert.wesarg@googlemail.com>
+	<7vzkk86577.fsf@alter.siamese.dyndns.org>
+	<CAKPyHN2TMu2yO4sZDAqCce9P-5==Z2jKQVoU=zUsmUQJhHoeQg@mail.gmail.com>
+	<7v62mv4n93.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Phil Hord <hordp@cisco.com>, Nicolas Pitre <nico@fluxnic.net>,
-	George Spelvin <linux@horizon.com>, anthonyvdgent@gmail.com,
-	git@vger.kernel.org, torvalds@linux-foundation.org
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Jul 21 06:27:03 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 21 19:23:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qjkqh-0007o3-WA
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 06:27:00 +0200
+	id 1QjwyB-0001gJ-R5
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 19:23:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751573Ab1GUE0y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jul 2011 00:26:54 -0400
-Received: from mail.lang.hm ([64.81.33.126]:51792 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750999Ab1GUE0y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2011 00:26:54 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id p6L4Qhu3007526;
-	Wed, 20 Jul 2011 21:26:43 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <CAJo=hJuS_iYSS8iVWoJ1BiUANsGtYJoYm-WRa863isVNsq=5vw@mail.gmail.com>
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
+	id S1752923Ab1GURX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jul 2011 13:23:27 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:60782 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752362Ab1GURX0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2011 13:23:26 -0400
+Received: by vxh35 with SMTP id 35so1049416vxh.19
+        for <git@vger.kernel.org>; Thu, 21 Jul 2011 10:23:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=VGNPA11Zx/eJv43YLrqThHEMlBxEtX2jTFXwFAptMVM=;
+        b=gsKy+93TIM9k/k2t+Z6er6nWNLn2yJuTD+RGZZffvbKrFojpVuB8l2NakZPUGtoc5H
+         k/hGy1ZHTi5zmGgu/hljZPAfszoO2o/CY/e1B7OSzXrJj/3w6foMMpGcjkwF6YL5seuV
+         RaGFGXp3LW5lNTtuEc1Ca0BjbanLOaXiwKBsM=
+Received: by 10.52.173.83 with SMTP id bi19mr541720vdc.463.1311269005879; Thu,
+ 21 Jul 2011 10:23:25 -0700 (PDT)
+Received: by 10.52.107.228 with HTTP; Thu, 21 Jul 2011 10:23:25 -0700 (PDT)
+In-Reply-To: <7v62mv4n93.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177588>
 
-On Wed, 20 Jul 2011, Shawn Pearce wrote:
-
-> On Wed, Jul 20, 2011 at 17:18,  <david@lang.hm> wrote:
->>
->> if it's just locally generated, then I could easily see generation numbers
->> being different on different people's ssstems, dependin on the order that
->> they see commits (either locally generated or pulled from others)
+2011/7/21 Junio C Hamano <gitster@pobox.com>:
+> Bert Wesarg <bert.wesarg@googlemail.com> writes:
 >
-> But this should only happen if the user fudges with their Git sources
-> and makes Git produce a different generation number.
+>> It should be. But I think that unveils one of the shortcomings of the
+>> (any) option parser: You wont get notified when an option was given,
+>> regardless of its value. To handle the above I would have to use
+>> OPTION_CALLBACK to set an addition flag exc_given (like it is done in
+>> git-ls-files) and test against this.
 >
-> If the algorithm is always "gen(A) = max(gen(P) for each parent_of(A))
-> + 1" then it doesn't matter who merged what commits, the same commit
-> appears at the same part of the graph relative to all of its
-> ancestors, and therefore always has the same generation number. This
-> is true whether or not the commit contains the generation number.
-
-I have to think about this more, but I'm wondering about cases where the 
-same result ia achieved via different methods, something along the lines 
-of one person developing something with _many_ commits (creating a large 
-generation number) that one person merges far sooner than another, causing 
-the commits that they do after the merge to have much larger generation 
-numbers than someone making the same changes, but doing the merge later
-
-something like
-
-   C9
-    \
-C2 - C10 - C11 - C12
-
-vs
-                 C9
-                   \
-C2 - C3 - C4 - C5 - C10
-
-where the C10-12 in the first set and C3-5 in the second set are 
-completely unrelated to what's done in C9 and C12 in the first set and C10 
-in the sedond set are identical trees.
-
-now I know that part of a commit is what it's parents are, so that is 
-different (and that may be enough to say that generations don't matter 
-and this entire issue is moot), but I haven't thought about it long enough 
-to convince myself what would (or should) happen in these cases.
-
-David Lang
-
->> If it's part of the commit, then as that commit gets propogated the
->> generation number gets propogated as well, and every repository will agree
->> on what the generation number is for any commit that's shared.
+> Prepare a three-value variable, initialized to -1, set it to 0 on --no-foo
+> and set it to 1 on --foo. Use the default if the variable is still -1.
 >
-> This isn't really as beneficial as you are making it out to be. We
-> already can agree on what the generation number should be for any
-> given commit, if you topo-sort the commit DAG, you get the same
-> result.
->
->> I agree that this consistancy guarantee seems to be valuable.
->
-> Its valuable, but its consistent either with a cache, or not.
->
->
+
+Thats the 'invent an invalid value'-case I described. Which does not
+necessarily exist.
+
+Having the proposed 'given' flag available I would need only one
+variable for all the options (these coming from ls-files) to check if
+any of them where given, and could decide if the given options would
+make sense.
+
+Bert
