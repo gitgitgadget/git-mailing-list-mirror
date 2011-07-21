@@ -1,85 +1,70 @@
-From: david@lang.hm
+From: Shawn Pearce <spearce@spearce.org>
 Subject: Re: Git commit generation numbers
-Date: Wed, 20 Jul 2011 17:18:28 -0700 (PDT)
-Message-ID: <alpine.DEB.2.02.1107201714140.6412@asgard.lang.hm>
-References: <20110720221632.14223.qmail@science.horizon.com> <alpine.DEB.2.02.1107201624510.5222@asgard.lang.hm> <alpine.LFD.2.00.1107201931510.21187@xanadu.home> <4E276DF8.8030301@cisco.com>
+Date: Wed, 20 Jul 2011 17:37:17 -0700
+Message-ID: <CAJo=hJuS_iYSS8iVWoJ1BiUANsGtYJoYm-WRa863isVNsq=5vw@mail.gmail.com>
+References: <20110720221632.14223.qmail@science.horizon.com>
+ <alpine.DEB.2.02.1107201624510.5222@asgard.lang.hm> <alpine.LFD.2.00.1107201931510.21187@xanadu.home>
+ <4E276DF8.8030301@cisco.com> <alpine.DEB.2.02.1107201714140.6412@asgard.lang.hm>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Nicolas Pitre <nico@fluxnic.net>,
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Phil Hord <hordp@cisco.com>, Nicolas Pitre <nico@fluxnic.net>,
 	George Spelvin <linux@horizon.com>, anthonyvdgent@gmail.com,
 	git@vger.kernel.org, torvalds@linux-foundation.org
-To: Phil Hord <hordp@cisco.com>
-X-From: git-owner@vger.kernel.org Thu Jul 21 02:18:41 2011
+To: david@lang.hm
+X-From: git-owner@vger.kernel.org Thu Jul 21 02:39:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QjgyP-00011t-5b
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 02:18:41 +0200
+	id 1QjhIX-0006NF-SJ
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 02:39:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751924Ab1GUASg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jul 2011 20:18:36 -0400
-Received: from mail.lang.hm ([64.81.33.126]:58931 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751701Ab1GUASf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2011 20:18:35 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id p6L0ISdn006582;
-	Wed, 20 Jul 2011 17:18:28 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <4E276DF8.8030301@cisco.com>
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
+	id S1751918Ab1GUAhj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jul 2011 20:37:39 -0400
+Received: from mail-fx0-f52.google.com ([209.85.161.52]:60933 "EHLO
+	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751638Ab1GUAhi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jul 2011 20:37:38 -0400
+Received: by fxd18 with SMTP id 18so2492438fxd.11
+        for <git@vger.kernel.org>; Wed, 20 Jul 2011 17:37:37 -0700 (PDT)
+Received: by 10.204.144.194 with SMTP id a2mr2578330bkv.93.1311208657444; Wed,
+ 20 Jul 2011 17:37:37 -0700 (PDT)
+Received: by 10.204.144.195 with HTTP; Wed, 20 Jul 2011 17:37:17 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.02.1107201714140.6412@asgard.lang.hm>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177566>
 
-On Wed, 20 Jul 2011, Phil Hord wrote:
-
-> On 07/20/2011 07:36 PM, Nicolas Pitre wrote:
->> On Wed, 20 Jul 2011, david@lang.hm wrote:
->> 
->>> If the generation number is part of the repository then it's going to
->>> be the same for everyone.
->> The actual generation number will be, and has to be, the same for
->> everyone with the same repository content, regardless of the cache used.
->> It is a well defined number with no room to interpretation.
+On Wed, Jul 20, 2011 at 17:18,  <david@lang.hm> wrote:
 >
-> Nonsense.
->
-> Even if the generation number is well-defined and shared by all clients, the 
-> only quasi-essential definition is "for each A in ancestors_of(B), gen(A) < 
-> gen(B)".
->
-> In practice, the actual generation number *will be the same* for everyone 
-> with the same repository content, unless and until someone develops a 
-> different calculation method.  But there is no reason to require that the 
-> number *has to be* the same for everyone unless you expect (or require) 
-> everyone to share their gen-caches.
+> if it's just locally generated, then I could easily see generation numbers
+> being different on different people's ssstems, dependin on the order that
+> they see commits (either locally generated or pulled from others)
 
-and I think this is why Linus is not happy with a cache. He is seeing this 
-as something that has significantly more value if it is going to be 
-consistant in a distributed manner than if it's just something calculated 
-locally that can be different from other systems.
+But this should only happen if the user fudges with their Git sources
+and makes Git produce a different generation number.
 
-if it's just locally generated, then I could easily see generation numbers 
-being different on different people's ssstems, dependin on the order that 
-they see commits (either locally generated or pulled from others)
+If the algorithm is always "gen(A) = max(gen(P) for each parent_of(A))
++ 1" then it doesn't matter who merged what commits, the same commit
+appears at the same part of the graph relative to all of its
+ancestors, and therefore always has the same generation number. This
+is true whether or not the commit contains the generation number.
 
-If it's part of the commit, then as that commit gets propogated the 
-generation number gets propogated as well, and every repository will agree 
-on what the generation number is for any commit that's shared.
+> If it's part of the commit, then as that commit gets propogated the
+> generation number gets propogated as well, and every repository will agree
+> on what the generation number is for any commit that's shared.
 
-I agree that this consistancy guarantee seems to be valuable.
+This isn't really as beneficial as you are making it out to be. We
+already can agree on what the generation number should be for any
+given commit, if you topo-sort the commit DAG, you get the same
+result.
 
-> Surely there will be a competent and efficient gen-cache API.  But most code 
-> can just ask if B --contains A or even just use rev-list and benefit from the 
-> increased speed of the answer.  Because most code doesn't really care about 
-> the gen numbers themselves, but only the speed of determining ancestry.
+> I agree that this consistancy guarantee seems to be valuable.
 
-in that case, why bother with generation numbers at all? the improved data 
-based heristic seems to solve that problem.
+Its valuable, but its consistent either with a cache, or not.
 
-David Lang
+-- 
+Shawn.
