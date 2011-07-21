@@ -1,73 +1,134 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: can I use multiple worktree in same git repo ?
-Date: Thu, 21 Jul 2011 20:50:19 +0200
-Message-ID: <201107212050.20108.jnareb@gmail.com>
-References: <20110720182438.3c40cf1d@shiva.selfip.org> <m3sjpzsdll.fsf@localhost.localdomain> <20110721182215.GA9505@kolya>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: git svn push, git dcommit leads to commit duplication?
+Date: Thu, 21 Jul 2011 12:25:42 +0200
+Message-ID: <201107211225.42860.trast@student.ethz.ch>
+References: <CAJs9aZ8T+LSOGs-kdncfSJeLANtZqudwc0r-epV7BQ1t4huX9Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	"J. Bakshi" <joydeep@infoservices.in>, git@vger.kernel.org
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Thu Jul 21 20:50:36 2011
+Cc: <git@vger.kernel.org>
+To: rupert THURNER <rupert.thurner@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 21 12:32:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QjyKQ-0007i2-Iv
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 20:50:34 +0200
+	id 1QjqY4-0003sF-LX
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 12:32:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753593Ab1GUSu3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jul 2011 14:50:29 -0400
-Received: from mail-fx0-f52.google.com ([209.85.161.52]:50311 "EHLO
-	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753544Ab1GUSu1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2011 14:50:27 -0400
-Received: by fxd18 with SMTP id 18so3931330fxd.11
-        for <git@vger.kernel.org>; Thu, 21 Jul 2011 11:50:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=1VhcOmhfTGCwQKXMEV16FP+0LhLznWWboOsla6hXFuA=;
-        b=d4RKHyDWZOSqsB105yQWpCaWBuCXeRaPjP/QsFscDxAEHdGIVCLeZdp05spsfKKijX
-         UN3WfXjDfQx0mrhwTJIVUa//O7pNHcfHJxnyVr6QtPyrkjvGWnAC7uv8DuljbQ2V0l/y
-         dXfEpFj/7jXxCFVOgCE28C7hGjAviAnS+YzP0=
-Received: by 10.223.1.68 with SMTP id 4mr38742fae.74.1311274226563;
-        Thu, 21 Jul 2011 11:50:26 -0700 (PDT)
-Received: from [192.168.1.13] (abwr62.neoplus.adsl.tpnet.pl [83.8.241.62])
-        by mx.google.com with ESMTPS id e10sm1568776fak.18.2011.07.21.11.50.24
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 21 Jul 2011 11:50:25 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20110721182215.GA9505@kolya>
-Content-Disposition: inline
+	id S1752048Ab1GUKcD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jul 2011 06:32:03 -0400
+Received: from edge20.ethz.ch ([82.130.99.26]:55009 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750834Ab1GUKb6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2011 06:31:58 -0400
+X-Greylist: delayed 372 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Jul 2011 06:31:57 EDT
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.289.1; Thu, 21 Jul
+ 2011 12:25:41 +0200
+Received: from thomas.inf.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
+ (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.289.1; Thu, 21 Jul
+ 2011 12:25:43 +0200
+User-Agent: KMail/1.13.7 (Linux/2.6.39.1-33-desktop; KDE/4.6.4; x86_64; ; )
+In-Reply-To: <CAJs9aZ8T+LSOGs-kdncfSJeLANtZqudwc0r-epV7BQ1t4huX9Q@mail.gmail.com>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177613>
 
-On Thu, 21 Jul 2011, Fredrik Gustafsson wrote:
-> On Thu, Jul 21, 2011 at 11:17:57AM -0700, Jakub Narebski wrote:
-
-> > Actually with git-new-workdir you can have multiple working
-> > directories associated with single repository, by the way of symlinks.
-> > 
-> > Note however that if you intend to *work* in those workdirs, they
-> > better correspond to different branches... or you can mess something
-> > heavy.
+rupert THURNER wrote:
+> we keep a svn clone of
+> https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg on
+> https://github.com/opencsw/pkg-all . usually i synchronize it with
+> "git svn rebase" and "git push" from a local clone created with "git
+> svn clone https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg".
 > 
-> It would be possible to use the .git-file feature here. Then symlinks are
-> avoided and the solution is portable.
+> last time i changed something in this local clone and pushed it to
+> github, and commited it to sourceforge via git svn dcommit. now the
+> commits are there two times, different. my guess was that dcommit
+> would add the svn related stuff to the existing git commits. what is
+> the correct usage to keep svn and git in sync?
 
-Actually it wouldn't.  Each new workdir has a separate HEAD and a
-separate index; it is contents of .git that is symlinked, not .git
-itself.
+Your guess is mostly correct.  To best understand what is going on,
+keep in mind that "you can never modify, you can only rewrite and
+forget"[1].
+
+Suppose you say 'git svn dcommit' on history that looks like
+
+  1---2---3--(4)--(5)    SVN
+
+  o---o---o    (svn/trunk)
+           \
+            a---b---c   (master)
+
+where 4 and 5 are commits not yet fetched from SVN (if any).
+
+
+1. git-svn will first fetch the new SVN history, let's call them N:
+
+     1---2---3---4---5    SVN
+
+     o---o---o---N---N    (svn/trunk)
+              \
+               a---b---c   (master)
+
+2. Then it will rebase your own work on top of the new SVN stuff:
+
+     1---2---3---4---5    SVN
+
+     o---o---o---N---N    (svn/trunk)
+              \
+               a---b---c   (master)
+
+
+3. Then it will rebase your own work on top of the new SVN stuff:
+
+     1---2---3---4---5    SVN
+
+     o---o---o---N---N    (svn/trunk)
+                      \
+                       a'--b'--c'   (master)
+
+4. Then it will commit all of that to SVN:
+
+     1---2---3---4---5---6---7---8    SVN
+
+     o---o---o---N---N    (svn/trunk)
+                      \
+                       a'--b'--c'   (master)
+
+5. Then it will annotate your commits o' with the info coming back
+   from SVN (such as author, etc.) and "replace" your master with it:
+
+     1---2---3---4---5---6---7---8    SVN
+
+     o---o---o---N---N---A---B---C    (svn/trunk, master)
+
+   From the point of view of 'master', this is also much like a
+   rebase, except that authors and timestamps change too and (unless
+   disabled) git-svn-id: lines appear in your commit messages.
+
+
+Does that clarify what happens?
+
+[For the sake of completeness, I should point out that this is a
+simplification.  Steps 3--5 are actually all done in one go *per
+commit*, and step 3 does not use 'git-rebase' but a variant on the
+theme that preserves merges of side branches.]
+
+
+As for
+
+> what is the correct usage to keep svn and git in sync?
+
+the only way I know of that avoids constantly rebasing branches is to
+never push anything before it has been dcommitted.
+
+
+[1] Quoting Tv; he said it much better than I can.
 
 -- 
-Jakub Narebski
-Poland
+Thomas Rast
+trast@{inf,student}.ethz.ch
