@@ -1,88 +1,75 @@
-From: Phil Hord <hordp@cisco.com>
-Subject: Re: [PATCH 01/18] advice: Introduce error_resolve_conflict
-Date: Thu, 21 Jul 2011 11:35:44 -0400
-Message-ID: <4E284750.4040104@cisco.com>
-References: <1311095876-3098-1-git-send-email-artagnon@gmail.com> <1311095876-3098-2-git-send-email-artagnon@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git fetch --all --depth
+Date: Thu, 21 Jul 2011 09:36:55 -0700
+Message-ID: <7v1uxj4ml4.fsf@alter.siamese.dyndns.org>
+References: <20110720223902.GA6675@camk.edu.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 21 17:35:55 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Alex Neronskiy <zakmagnus@google.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Kacper Kornet <kornet@camk.edu.pl>
+X-From: git-owner@vger.kernel.org Thu Jul 21 18:37:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QjvI0-00049w-Dp
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 17:35:52 +0200
+	id 1QjwFN-000502-BC
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 18:37:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752155Ab1GUPfr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jul 2011 11:35:47 -0400
-Received: from rcdn-iport-6.cisco.com ([173.37.86.77]:64418 "EHLO
-	rcdn-iport-6.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751678Ab1GUPfq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2011 11:35:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=hordp@cisco.com; l=1286; q=dns/txt;
-  s=iport; t=1311262546; x=1312472146;
-  h=message-id:date:from:mime-version:to:cc:subject:
-   references:in-reply-to:content-transfer-encoding;
-  bh=i/rs7bcb2clnp+LryEBsdpsqhQlJ2/sSyX2PjfdKYX0=;
-  b=ITbMK3d6IFuukzc3cZQI9mEqZMruJBkKmJWTQ+2BrMfFSDHIpuLmizn6
-   YMPni6Jyd+t3DoG3NmZkiarzq1xs/ntj3dYBjcvem3q+FTODKsfnVNIWp
-   n/H70Ses7EVUTwfjZpQYw1AfY1xtTV5PnbMII/ZfaYib070wkY9sNeK21
-   8=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Av0EAB1GKE6tJV2a/2dsb2JhbABUp0B3plueKYY+BJJuhQeDKYhJ
-X-IronPort-AV: E=Sophos;i="4.67,240,1309737600"; 
-   d="scan'208";a="5144689"
-Received: from rcdn-core-3.cisco.com ([173.37.93.154])
-  by rcdn-iport-6.cisco.com with ESMTP; 21 Jul 2011 15:35:45 +0000
-Received: from [64.100.104.94] (dhcp-64-100-104-94.cisco.com [64.100.104.94])
-	by rcdn-core-3.cisco.com (8.14.3/8.14.3) with ESMTP id p6LFZimn009712;
-	Thu, 21 Jul 2011 15:35:45 GMT
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110627 Thunderbird/5.0
-In-Reply-To: <1311095876-3098-2-git-send-email-artagnon@gmail.com>
-X-TagToolbar-Keys: D20110721113544821
+	id S1753288Ab1GUQhB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jul 2011 12:37:01 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34173 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752521Ab1GUQg7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2011 12:36:59 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 980E23703;
+	Thu, 21 Jul 2011 12:36:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/EOE3s7pHFEc9B5GxDirK9/BiyY=; b=o8+Ps9
+	gmTU/q9mUeu2mU7lyNhkCmynXsBxXDNSLUdf9/euaQribFamVy+zoyMpwVnY8wWG
+	8icLIZ/Bfvyg46wB7SP24WkmvT9ywoDp6xL+GZJlztNoUa9AFyaquK5X8t2dsHQh
+	9wh+t4UZSNEFXBeA9ARzjOHU6p1OiurZzMYEY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lM9qXHBEecfrJ4003pQSqh1Edf+bCADR
+	cHuh+8WipE4tC+9o3CDnot4pii25r6cqjrDkxCBqSZnGjwtEM0y8cbEBVdnrfd8U
+	8udKQ5F2M4RsUreZmf/cgIJyuaM2ZC/Itdqdm2bw9BeOaIMfQOGEYvDfgN9zTlC4
+	MxP0mbGoJb0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8F8303702;
+	Thu, 21 Jul 2011 12:36:57 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 008973701; Thu, 21 Jul 2011
+ 12:36:56 -0400 (EDT)
+In-Reply-To: <20110720223902.GA6675@camk.edu.pl> (Kacper Kornet's message of
+ "Thu, 21 Jul 2011 00:39:02 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A6371790-B3B7-11E0-B0C0-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177576>
 
-On 07/19/2011 01:17 PM, Ramkumar Ramachandra wrote:
-> Enable future callers to report a conflict and not die immediately by
-> introducing a new function called error_resolve_conflict.
-> Re-implement die_resolve_conflict as a call to error_resolve_conflict
-> followed by a call to die.  Consequently, the message printed by
-> die_resolve_conflict changes from
+Kacper Kornet <kornet@camk.edu.pl> writes:
+
+> I have just discovered that when I use:
 >
-> fatal: 'commit' is not possible because you have unmerged files.
->         Please, fix them up in the work tree ...
->         ...
+> git fetch --all --depth=<n> 
 >
-> to
->
-> error: 'commit' is not possible because you have unmerged files.
-> hint: Please, fix them up in the work tree ...
-> hint: ...
-> fatal: Exiting because of an unresolved conflict.
+> the history is not deepened. Is the any specific reason for it or is it
+> a bug?
 
-This is a tiny grammar nit, but "Please," sounds superfluous now that 
-it's preceded by "hint:".  "Hint" sounds like I'm doing you a favor by 
-telling you something to do.  "Please" sounds like you're doing me a 
-favor by doing something.  Together they just sound like a typo.
+The above is not specific enough to judge if you found a bug or if it is a
+user error.
 
-In either case, the comma after "Please" is wrong.  (There are other 
-messages in the git code which make this same mistake, but there are 
-more which use "Please <imperative-verb>..." correctly.)
-
-Note: I see this repeated in patch 06/18 in this series, and there are 
-probably others.
-
-Phil
+IIRC, --depth=<n> is not "deepen by <n>", but "make sure I have at least
+<n> from the updated tip(s)".  The shallow-clone hack gives you quite
+useless (even though it may be internally consistent) semantics if you
+shallow-cloned way in the past and fetched with --depth after the other
+side added many more commits than <n>, as you cannot guess what the right
+value of <n> should be without actually fetching without --depth.
