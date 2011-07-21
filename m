@@ -1,95 +1,177 @@
-From: "George Spelvin" <linux@horizon.com>
-Subject: Re: Git commit generation numbers
-Date: 21 Jul 2011 16:27:22 -0400
-Message-ID: <20110721202722.3765.qmail@science.horizon.com>
-References: <m3mxg7sasa.fsf@localhost.localdomain>
-Cc: anthonyvdgent@gmail.com, david@lang.hm, git@vger.kernel.org,
-	hordp@cisco.com, nico@fluxnic.net, spearce@spearce.org,
-	torvalds@linux-foundation.org
-To: jnareb@gmail.com, linux@horizon.com
-X-From: git-owner@vger.kernel.org Thu Jul 21 22:27:32 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH] Move git-dir for submodules
+Date: Thu, 21 Jul 2011 13:28:50 -0700
+Message-ID: <7vhb6f1ipp.fsf@alter.siamese.dyndns.org>
+References: <1311267139-14658-1-git-send-email-iveqy@iveqy.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, jens.lehmann@web.de, hvoigt@hvoigt.net
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Thu Jul 21 22:29:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QjzqE-0002wd-4o
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 22:27:30 +0200
+	id 1Qjzrf-0003Xe-PJ
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 22:29:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753240Ab1GUU1Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jul 2011 16:27:24 -0400
-Received: from science.horizon.com ([71.41.210.146]:32594 "HELO
-	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752991Ab1GUU1Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2011 16:27:24 -0400
-Received: (qmail 3766 invoked by uid 1000); 21 Jul 2011 16:27:22 -0400
-In-Reply-To: <m3mxg7sasa.fsf@localhost.localdomain>
+	id S1753314Ab1GUU2z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jul 2011 16:28:55 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59774 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752991Ab1GUU2y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2011 16:28:54 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4779544CF;
+	Thu, 21 Jul 2011 16:28:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JrWKM7F6Rb7pEtikhr0KepcTpT4=; b=k/erQz
+	Vd6yg+DCBfDZVRhrWTrEp+nf9jm8DAvlYSdL7DN0DgMvidLBMG1H3z7FJR9bsoZE
+	Wp1QetnmS7zrDQLuglyBaWh8zp1+JFJaPhbq13SbbRDeAvVhCq1O9FnPxHb3RFqk
+	wGiToGNIXqz9M2EL3zs/zKRaPTavgV89fplM8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BUYPPH4ombihewkC75kwXK57fxrWIS+j
+	uaxTPZyMT18R63D4OZ+EQ8EldFDCOb8mBr5JDPKEXMkNBpH+DxxObdSVfZiu9pwW
+	1g3fY2bwNy1jethHD++PIEwdp1vDGNxj20je+2IXT5XoXecNczi8p/gqHzRcKe0T
+	mB2JEz8X5Tw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F31444CE;
+	Thu, 21 Jul 2011 16:28:53 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7963344CB; Thu, 21 Jul 2011
+ 16:28:52 -0400 (EDT)
+In-Reply-To: <1311267139-14658-1-git-send-email-iveqy@iveqy.com> (Fredrik
+ Gustafsson's message of "Thu, 21 Jul 2011 18:52:19 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0C7F4C82-B3D8-11E0-B75D-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177621>
 
-> There is also another issue that I have mentioned, namely incomplete
-> clones - which currently means shallow clone, without access to full
-> history.
+Fredrik Gustafsson <iveqy@iveqy.com> writes:
 
-As far as history walking is concerned, you can just consider "missing
-parent" the same as "no parent" and start the generation numbers at 0.
-As long as you recompute
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 87c9452..3ad3012 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -122,14 +122,56 @@ module_clone()
+>  	path=$1
+>  	url=$2
+>  	reference="$3"
+> +	gitdir=
+> +	gitdir_base=
+> +	base_path=`echo $path | sed -e 's|[^/]*$||'`
 
-> Nb. grafts are so horrible hack that I would be not against turning
-> off generation numbers if they are used.
+We prefer $() over `` these days, no?  Without dq around $path, you would
+not be able to preserve $IFS inside $PATH. You are stripping a run of non
+slash at the trailing end --- is 'dirname "$path"' insufficient?
 
-Yeah, but it's not too miserable to add support (the logic is very similar
-to replace objects), and then you would be able to have the history walking
-code depend on the presence of generation numbers.  (The "load the cache"
-function would regenerate it if necessary.)
+I think you are using the path the submodule happens to be at in the
+current checkout to decide where in the .git/modules in the superproject
+to keep the submodule metadata directory. Shouldn't you be using
+module_name to convert the $path to the name of the submodule (this is
+important, as the same submodule that used to be at path P1 can be moved
+to a different path P2 in the history).
 
-Only do this if you already have support for "no generation numbers" in
-the history walking code for (say) loose objects.
+> +	if test -z "$GIT_DIR"
+>  	then
+> +		gitdir=$(git rev-parse --git-dir)
+> +		gitdir_base="$gitdir/modules/$base_path"
+> +		gitdir="$gitdir/modules/$path"
+>  	else
+> +		gitdir="$GIT_DIR/modules/$path"
+> +		gitdir_base="$GIT_DIR/modules/$base_path"
+> +	fi
 
-> In the case of replace objects you need both non-replaced and replaced
-> DAG generation numbers.
+Why do you need to switch on "test -z $GIT_DIR" yourself to have two
+paths?  Doesn't "git rev-parse --git-dir" already know to take $GIT_DIR
+into account?
 
-Yes, the cache validity/invalidation criteria are the tricky bit.
-Honestly, this is where the code gets ugly, not computing and storing
-the generation numbers.
+> +	case $gitdir in
+> +		/*)
 
+Indent case arm labels at the same level as "case/esac".
 
-One thought on an expanded generation number cache:
+> +	if test -d "$gitdir"
+> +	then
+> +		mkdir -p "$path"
+> +		echo "gitdir: $rel_gitdir" > "$path/.git"
 
-There are many git operations that use ONLY the commit DAG, and do not
-actually use any information from the commits other than their hashes
-and parent pointers.  The ones that come to mind are rev-parse, rev-list,
-describe, name-rev, and merge-base.
+Good: if it already exists, do not clone, but just reuse what .git/modules
+hierarchy of the superproject has. Is it really necessary to have an ugly
+loop to make things relative, though?
 
-These could be sped up if, instead of just generation numbers, we kept
-a complete cached copy of the commit DAG, so the commit objects didn't
-have to be uncompressed and parsed.
+Also please lose the extra SP after redirection, i.e.
 
-This could be provided by an extended form of generation number cache.
-In addition to listing the generation number of each commit, it
-would list all the ancestors (by file offset rather than hash, for
-compactness).  Then simple commit walking could load this cache and
-avoid unpacking commit objects from packs.
+	command >"$path/.git"
 
-A compact implementation would abuse the flexibility of generation numbers
-to make them serve double duty.  They would be used as offsets into a
-table of parent pointers.  By keeping the table topologically sorted,
-the offsets would satisfy the requirements for generation numbers, but
-would be unique, and there would be additional gaps when a commit had
-multiple parents.
+> +	else
+> +		if !(test -d "$gitdir_base")
 
-The parent pointers would themselves be 31-bit offsets into the table of
-SHA-1 hashes, with the msbit meaning "this commit has multiple parents,
-also look at the following table entry".  (If we use offset 0 to mean
-"no parents", it might be more convenient to have the offset point to
-the *end* of the run of parents rather than the beginning, so "following"
-would be earlier in the file, but that's an implementation detail.)
+Do you need subshell for this?
 
-I'm assuming that 2^31 commits having (in aggregate) 2^32 parents would
-be enough for the time being.  As a local cache, it can be extended
-with a software upgrade.  There's no need to ever have support for two
-formats in any given release; just notice that the cache format is wrong,
-blow it away, and regenerate it.
+> +		then
+> +			mkdir -p "$gitdir_base"
+> +		fi
+
+Doesn't unconditional "mkdir -p" do the right thing?
+
+> +		if test -n "$reference"
+> +		then
+> +			git-clone "$reference" -n "$url" "$path" --separate-git-dir "$gitdir"
+> +		else
+> +			git-clone -n "$url" "$path" --separate-git-dir "$gitdir"
+> +		fi ||
+> +		die "$(eval_gettext "Clone of '\$url' into submodule path '\$path' failed")"
+> +	fi
+>  }
+
+> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+> index b2b26b7..57f5306 100755
+> --- a/t/t7400-submodule-basic.sh
+> +++ b/t/t7400-submodule-basic.sh
+> @@ -358,10 +358,10 @@ test_expect_success 'update --init' '
+>  	git submodule update init > update.out &&
+>  	cat update.out &&
+>  	test_i18ngrep "not initialized" update.out &&
+> -	! test -d init/.git &&
+> +	! test -f init/.git &&
+>  	git submodule update --init init &&
+> -	test -d init/.git
+> +	test -n $(grep "/^gitdir: /" init/.git)
+
+I wonder if we want a new option to "git rev-parse" so that we can say
+
+	git rev-parse --is-well-formed-git-dir init/.git
+
+to perform these checks without exposing the implimentation detail.
+
+> diff --git a/t/t7403-submodule-sync.sh b/t/t7403-submodule-sync.sh
+> index d600583..b0517f0 100755
+> --- a/t/t7403-submodule-sync.sh
+> +++ b/t/t7403-submodule-sync.sh
+> @@ -55,7 +55,7 @@ test_expect_success '"git submodule sync" should update submodule URLs' '
+>  	 git pull --no-recurse-submodules &&
+>  	 git submodule sync
+>  	) &&
+> -	test -d "$(git config -f super-clone/submodule/.git/config \
+> +	test -d "$(git config -f super-clone/.git/modules/submodule/config \
+>  	                        remote.origin.url)" &&
+
+Is "submodule" initialized at this point?  If so, I would think it is
+vastly preferrable to say it like this:
+
+	test -d "$(
+        	cd super-clone/submodule &&
+                git config --local remote.origin.url
+	)"
+
+I won't comment on the rest, but I think you can follow the same line of
+thought to come up with a fix so that they do not have to know the
+implementation detail of where the subproject metainfo directory is.
