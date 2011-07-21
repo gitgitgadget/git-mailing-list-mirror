@@ -1,98 +1,67 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: can I use multiple worktree in same git repo ?
-Date: Thu, 21 Jul 2011 10:20:13 +0700
-Message-ID: <CACsJy8DswCJS8YfaG=e73g1ZDVRV1H3Z0St7zaAEuuwYxgxgBQ@mail.gmail.com>
-References: <20110720182438.3c40cf1d@shiva.selfip.org> <CACsJy8CLRjLag65H6KQ1AUABLwiL09wNQw3VH8Y-JQnw7CqLUw@mail.gmail.com>
- <201107201611.p6KGBvna012304@dcnode-02.unlimitedmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] grep --no-index: allow to grep without git
+ exclusions
+Date: Thu, 21 Jul 2011 09:22:32 -0700
+Message-ID: <7v62mv4n93.fsf@alter.siamese.dyndns.org>
+References: <82218b89c89f733dc0759d648b3a60bca6e20f3e.1311165328.git.bert.wesarg@googlemail.com> <7vzkk86577.fsf@alter.siamese.dyndns.org> <CAKPyHN2TMu2yO4sZDAqCce9P-5==Z2jKQVoU=zUsmUQJhHoeQg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "J. Bakshi" <j.bakshi@unlimitedmail.org>
-X-From: git-owner@vger.kernel.org Thu Jul 21 05:21:34 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 21 18:22:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QjjpO-0001t0-0M
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 05:21:34 +0200
+	id 1Qjw1J-0004yc-FP
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Jul 2011 18:22:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751834Ab1GUDUp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jul 2011 23:20:45 -0400
-Received: from mail-fx0-f52.google.com ([209.85.161.52]:39252 "EHLO
-	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751801Ab1GUDUo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2011 23:20:44 -0400
-Received: by fxd18 with SMTP id 18so2741076fxd.11
-        for <git@vger.kernel.org>; Wed, 20 Jul 2011 20:20:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=lYH7kROGwDjrEchzC8RGvO4M5bA6Hgjljs1gEXAy6cM=;
-        b=WPrgyseHL/RP8R988T6ZnLltgAO6zkEnxebzTG14X/fxUhyuW/iL8Jq9W1hINy5wFj
-         yl79FRmUn+VOnZgkvGyKNrCEMqpzOWfcEy0EgjdFSpiKrrWp2oUZTtm7FvHcok8rNH6I
-         rOZ4k63jDfRz/rKg594I26foXK42/AbdX9bro=
-Received: by 10.204.32.129 with SMTP id c1mr2730018bkd.291.1311218443609; Wed,
- 20 Jul 2011 20:20:43 -0700 (PDT)
-Received: by 10.204.123.199 with HTTP; Wed, 20 Jul 2011 20:20:13 -0700 (PDT)
-In-Reply-To: <201107201611.p6KGBvna012304@dcnode-02.unlimitedmail.net>
+	id S1753187Ab1GUQWg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jul 2011 12:22:36 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61758 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753054Ab1GUQWg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2011 12:22:36 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 25A503469;
+	Thu, 21 Jul 2011 12:22:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZpbZT3UbEXoj4t+ci9xe7oBUH1Q=; b=DuwxFl
+	SMYn5V0h4fTj7bj7IQ99VDKGVPOvsuh7qR2+jSB39QT2e5AHoSLQfUEub/gaRVnb
+	AtEoaWiksUJ1/EMg2k27j2xtaW6tO3kllgppR5P7RoBzwQrL4tTS8bKVZ5qR3xBz
+	vRlTbg06wkRglNKft9/KRingHxWShqxXyg7Hc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jpr/J358LFuEjsAAupJbJfsgJ2Y+N/w0
+	cLnRCwmJEKTgvTdKtGiGHXdVDsLeTY5H+XJNJesoKscNPsJ/0DiOaOuM7UR4huwt
+	3l5mKCprnfZr97b8kl8e05ECtYkV9YDefcAQHXVYe869qUWsK93l7xYfxAqk2FRt
+	5E8hc8hLrlU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CACE3468;
+	Thu, 21 Jul 2011 12:22:35 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A6B9D3467; Thu, 21 Jul 2011
+ 12:22:34 -0400 (EDT)
+In-Reply-To: <CAKPyHN2TMu2yO4sZDAqCce9P-5==Z2jKQVoU=zUsmUQJhHoeQg@mail.gmail.com> (Bert
+ Wesarg's message of "Thu, 21 Jul 2011 09:11:25 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: A43BB25E-B3B5-11E0-9096-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 20, 2011 at 11:12 PM, J. Bakshi <j.bakshi@unlimitedmail.org> wrote:
-> Thanks for your response. I am afraid that I can't understand the approach clearly but I must say that I am hopeful to see a direction.
-> Obviously there will be a central git repo which will have its worktree under htdocs at the same server.
+Bert Wesarg <bert.wesarg@googlemail.com> writes:
 
-No, the central repository does not need worktree attached (in other
-words "bare repository"). You modify in a clone from it and push
-to/pull from it.
+> It should be. But I think that unveils one of the shortcomings of the
+> (any) option parser: You wont get notified when an option was given,
+> regardless of its value. To handle the above I would have to use
+> OPTION_CALLBACK to set an addition flag exc_given (like it is done in
+> git-ls-files) and test against this.
 
-> That's why the post-receive
-> hook will update the website after each push. But the issue is mapping the structure at git which is different than the structure at
-> filesystem. And a push should reflect to its correct folder only.
->
-> [git]->[mysite]->dir1/trunk/src => physically map => htdocs/demo/dir1
-> [git]->[mysite]->dir2/trunk/src => physically map => htdocs/demo/dir2
->
->
-> Please tell me with little more clarification, how can I do this ?
-
-OK, let's create a central repository
-
-GIT_DIR=/somewhere/safe/repo.git git init --bare
-
-Then clone it where development happens
-
-git clone /somewhere/safe/repo.git ~/dev
-cd ~/dev
-
-Now we create "dir1" and "dir2" branches, correponding to what you
-have in the original tree
-
-git checkout -b dir1
-# put contents of dir1/trunk/src here, commit
-git checkout -b dir2 master
-# put contents of dir2/trunk/src here, commit
-
-Then we push everything back to central repo
-
-git push origin +dir1:dir1 +dir2:dir2
-
-Then we clone it to demo sites
-
-cd /var/www
-git clone /somewhere/safe/repo.git dir1
-git checkout dir1
-
-cd /var/www
-git clone /somewhere/safe/repo.git dir2
-git checkout dir2
-
-Now you can add a post commit hook to /somewhere/safe/repo.git to move
-to /var/www/dir[12] and do a "pull". When you push again from ~/dev,
-/var/www/dir[12] should get updated. Is that what you want?
--- 
-Duy
+Prepare a three-value variable, initialized to -1, set it to 0 on --no-foo
+and set it to 1 on --foo. Use the default if the variable is still -1.
