@@ -1,63 +1,60 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: Git commit generation numbers
-Date: Fri, 22 Jul 2011 15:40:14 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1107221530270.1762@xanadu.home>
-References: <20110721202722.3765.qmail@science.horizon.com>
- <alpine.LFD.2.00.1107220907370.1762@xanadu.home>
- <alpine.DEB.2.02.1107221102180.6496@asgard.lang.hm>
- <201107222034.20510.jnareb@gmail.com>
- <alpine.DEB.2.02.1107221206370.11697@asgard.lang.hm>
+From: Joerg Sonnenberger <joerg@britannica.bec.de>
+Subject: git fast-import --import-marks broken
+Date: Fri, 22 Jul 2011 22:07:30 +0200
+Message-ID: <20110722200730.GA3972@britannica.bec.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	George Spelvin <linux@horizon.com>,
-	Anthony Van de Gejuchte <anthonyvdgent@gmail.com>,
-	git@vger.kernel.org, Phil Hord <hordp@cisco.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Fri Jul 22 21:40:32 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 22 22:08:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QkLaJ-0005te-T3
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Jul 2011 21:40:32 +0200
+	id 1QkM1o-0000GL-Pa
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Jul 2011 22:08:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755282Ab1GVTkZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jul 2011 15:40:25 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:13208 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755104Ab1GVTkW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2011 15:40:22 -0400
-Received: from xanadu.home ([66.130.28.92]) by vl-mo-mrz23.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0LOR003H42LMHVQ1@vl-mo-mrz23.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 22 Jul 2011 15:39:22 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <alpine.DEB.2.02.1107221206370.11697@asgard.lang.hm>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1755321Ab1GVUIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jul 2011 16:08:51 -0400
+Received: from mo-p00-ob.rzone.de ([81.169.146.161]:45970 "EHLO
+	mo-p00-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755132Ab1GVUIv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2011 16:08:51 -0400
+X-RZG-AUTH: :JiIXek6mfvEEUpFQdo7Fj1/zg48CFjWjQv0cW+St/nW/afgnrylriWJEJ0cPGum2
+X-RZG-CLASS-ID: mo00
+Received: from britannica.bec.de
+	(ip-109-42-219-134.web.vodafone.de [109.42.219.134])
+	by smtp.strato.de (klopstock mo11) (RZmta 26.2)
+	with (DHE-RSA-AES128-SHA encrypted) ESMTPA id 0004e0n6MJX8bB
+	for <git@vger.kernel.org>; Fri, 22 Jul 2011 22:07:31 +0200 (MEST)
+Received: by britannica.bec.de (sSMTP sendmail emulation); Fri, 22 Jul 2011 22:07:30 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177662>
 
-On Fri, 22 Jul 2011, david@lang.hm wrote:
+Hi,
+I'm trying to incremental updates of larger repositories (> 100MB) into
+git to provide a mirror. First run uses
 
-> On Fri, 22 Jul 2011, Jakub Narebski wrote:
-> 
-> > That is IF unknown headers are copied verbatim during rebase.  For
-> > "encoding" header this is a good thing, for "generation" it isn't.
-> 
-> commit headers are _not_ copied during rebase
+git fast-import --export-marks=import-0
 
-Yes, this turns out to be true as I forgot that rebase is constructed on 
-top of format-patch+am, and format-patch doesn't preserve the ancillary 
-headers such as the existing "encoding" header, or the hypothetical 
-"generation" header.
+...and the second run
 
+git fast-import --import-marks=import-0 --export-marks=import-1
 
-Nicolas
+After a while, when it hits the actual commits in the input stream, I
+get
+
+error: unable to find d17263cb13b181e16217c7b18b0c47a6c30f02ae
+fatal: object not found: d17263cb13b181e16217c7b18b0c47a6c30f02ae
+fast-import: dumping crash report to .git/fast_import_crash_28817
+
+Crash report is attached. The interesting part is that the mark with
+this hash does exist in import-0, so why doesn't it find the object?
+I'm running git 1.7.6.
+
+Joerg
