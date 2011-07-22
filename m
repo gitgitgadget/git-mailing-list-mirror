@@ -1,108 +1,77 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Git commit generation numbers
-Date: Fri, 22 Jul 2011 20:34:19 +0200
-Message-ID: <201107222034.20510.jnareb@gmail.com>
-References: <20110721202722.3765.qmail@science.horizon.com> <alpine.LFD.2.00.1107220907370.1762@xanadu.home> <alpine.DEB.2.02.1107221102180.6496@asgard.lang.hm>
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: Re: [RFC PATCH] Move git-dir for submodules
+Date: Fri, 22 Jul 2011 21:02:23 +0200
+Message-ID: <20110722190223.GA27076@kolya>
+References: <1311267139-14658-1-git-send-email-iveqy@iveqy.com>
+ <7vhb6f1ipp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	George Spelvin <linux@horizon.com>,
-	Anthony Van de Gejuchte <anthonyvdgent@gmail.com>,
-	git@vger.kernel.org, Phil Hord <hordp@cisco.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Fri Jul 22 20:36:36 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org,
+	jens.lehmann@web.de, hvoigt@hvoigt.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 22 21:02:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QkKaQ-0001q6-Iv
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Jul 2011 20:36:34 +0200
+	id 1QkKzS-0005g3-Bg
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Jul 2011 21:02:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754869Ab1GVSg3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jul 2011 14:36:29 -0400
-Received: from mail-fx0-f52.google.com ([209.85.161.52]:40096 "EHLO
+	id S1754584Ab1GVTCM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Jul 2011 15:02:12 -0400
+Received: from mail-fx0-f52.google.com ([209.85.161.52]:52648 "EHLO
 	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754695Ab1GVSg3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2011 14:36:29 -0400
-Received: by fxd18 with SMTP id 18so5610648fxd.11
-        for <git@vger.kernel.org>; Fri, 22 Jul 2011 11:36:27 -0700 (PDT)
+	with ESMTP id S1753118Ab1GVTCL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2011 15:02:11 -0400
+Received: by fxd18 with SMTP id 18so5636598fxd.11
+        for <git@vger.kernel.org>; Fri, 22 Jul 2011 12:02:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=EzAWl0Z4Yvi+g1ONvYTlOIBnaq9u7bcsIftb4l8WMmg=;
-        b=pnrPFg5/bXzVd89Z4Y6gKhz8Utc9Wq24LD7W7C0++gjtPOaKIsTm2RnAtqY96AWk6A
-         1FEQMjckCkikNxjQGRSfr0xV/zk8/zVvVv2+gpfQwSRKLb/5RE31jIyOU9z5lFCAOOSj
-         3A4dFMD8QxRGVsMUVVLKB02sTySIEYA2nFCxw=
-Received: by 10.223.59.17 with SMTP id j17mr2455601fah.120.1311359656750;
-        Fri, 22 Jul 2011 11:34:16 -0700 (PDT)
-Received: from [192.168.1.13] (abvt94.neoplus.adsl.tpnet.pl [83.8.217.94])
-        by mx.google.com with ESMTPS id 12sm1698785fad.40.2011.07.22.11.34.14
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=5lfG/di1DNMYyrMAdhb0iaS9VpFAvVJzi/WmonMPSjs=;
+        b=gn6Kt8aYhbEBPTxQ5fSVRzBMlyk2JM7D6F/slzPbeJfHXIa27Q0H7MloCQ4WZEMm27
+         1TVGy3lGEyQiGjsqH/dBaG79iNUqaOaIv4hnUAV6x7VmZj9XlxX46tNvdhTEkd5S8H3w
+         ck12lpPV1bmKKT6kljPjy19md5z+kUZT+AyWU=
+Received: by 10.204.23.5 with SMTP id p5mr586681bkb.346.1311361330492;
+        Fri, 22 Jul 2011 12:02:10 -0700 (PDT)
+Received: from kolya (h-185-240.a189.priv.bahnhof.se [85.24.185.240])
+        by mx.google.com with ESMTPS id sz1sm589458bkb.58.2011.07.22.12.02.09
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 22 Jul 2011 11:34:15 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <alpine.DEB.2.02.1107221102180.6496@asgard.lang.hm>
+        Fri, 22 Jul 2011 12:02:09 -0700 (PDT)
+Received: from iveqy by kolya with local (Exim 4.72)
+	(envelope-from <iveqy@kolya>)
+	id 1QkKzP-00073H-Do; Fri, 22 Jul 2011 21:02:23 +0200
 Content-Disposition: inline
+In-Reply-To: <7vhb6f1ipp.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177655>
 
-On Fri, 22 Jul 2011, David Lang <david@lang.hm> wrote:
-> On Fri, 22 Jul 2011, Nicolas Pitre wrote:
-> > On Fri, 22 Jul 2011, Jakub Narebski wrote:
-> >
-> > > BTW. with storing generation number in commit header there is a problem
-> > > what would old version of git, one which does not understand said header,
-> > > do during rebase.  Would it strip unknown headers, or would it copy
-> > > generation number verbatim - which means that it can be incorrect?
-> >
-> > They would indeed be copied verbatim and become incorrect.
-> 
-> how would they become incorrect?
+Thanks for the review. I'll send an updated series soon.
 
-Let's assume that the following history was created with new git, one
-that correcly adds generation number header to commits:
+On Thu, Jul 21, 2011 at 01:28:50PM -0700, Junio C Hamano wrote:
+> Is it really necessary to have an ugly
+> loop to make things relative, though?
+The path must be relative to allow the superproject to be moved
+around.
 
+> I wonder if we want a new option to "git rev-parse" so that we can sa=
+y
+>=20
+> 	git rev-parse --is-well-formed-git-dir init/.git
+>=20
+> to perform these checks without exposing the implimentation detail.
 
-  A(1)---B(2)---C(3)---D(4)---E(5)       <-- master
-          \
-           \----x(3)---y(4)---z(5)       <-- foo
+How about using
+(cd <repo>; git rev-parse --verify HEAD" >/dev/null)
+instead?
 
-The numbers are generation numbers in commit object.
-
-Let's assume that this repository is fetched into repository instance
-that is managed by older git, one that doesn't understand generation
-header.
-
-Then, if we do
-
-  [old]$ git rebase master foo
-
-and if old git _copies_ generation number header _verbatim_, we would
-get:
-
-  A(1)---B(2)---C(3)---D(4)---E(5)                         <-- master
-                               \
-                                \---x'(3)--y'(4)--z'(5)    <-- foo
-
-Those generation numbers are *incorrect*; they should be:
-
-  A(1)---B(2)---C(3)---D(4)---E(5)                         <-- master
-                               \
-                                \---x'(6)--y'(7)--z'(8)    <-- foo
-
-
-That is IF unknown headers are copied verbatim during rebase.  For
-"encoding" header this is a good thing, for "generation" it isn't.
-
--- 
-Jakub Narebski
-Poland
+Med v=E4nliga h=E4lsningar
+=46redrik Gustafsson
