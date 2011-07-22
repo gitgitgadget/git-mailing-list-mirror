@@ -1,45 +1,85 @@
-From: neubyr <neubyr@gmail.com>
-Subject: tracking file locally without pushing it to remote
-Date: Fri, 22 Jul 2011 14:23:33 -0500
-Message-ID: <CALFxCvzqGBbq0fqtLJdwTideh9Un-cAEeQi8WpC496qoyCLg4w@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH v2 1/3] doc/fast-import: clarify notemodify command
+Date: Fri, 22 Jul 2011 21:32:58 +0200
+Message-ID: <201107222132.59145.johan@herland.net>
+References: <1310483428-29833-1-git-send-email-divanorama@gmail.com>
+ <1310577055-6347-1-git-send-email-divanorama@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 22 21:23:45 2011
+Content-Type: Text/Plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Dmitry Ivankov <divanorama@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 22 21:33:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QkLJz-0007eD-KC
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Jul 2011 21:23:39 +0200
+	id 1QkLTB-00033E-9r
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Jul 2011 21:33:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755104Ab1GVTXf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jul 2011 15:23:35 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:47673 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754924Ab1GVTXe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2011 15:23:34 -0400
-Received: by gyh3 with SMTP id 3so1464431gyh.19
-        for <git@vger.kernel.org>; Fri, 22 Jul 2011 12:23:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=sIBDYHSI85oZIDWcUAK+46fbBy7IUQM7Kmhrem1+w+w=;
-        b=aQULACpWhlVYICFdr2eieBhNCy/x2dMgSS5U011X+9BzdhdONLKCn4TPrdjzeoz1mQ
-         RXzniApepzrFzXTMgIOFEVjVWqryH1ECjxHZkbfeL46BoKJSJEv5yUM3TdAr4yTvk/33
-         AXUaT1P2sU+ryGguZ33VltDnWjUBz4nKNseIA=
-Received: by 10.236.46.74 with SMTP id q50mr2839117yhb.275.1311362613944; Fri,
- 22 Jul 2011 12:23:33 -0700 (PDT)
-Received: by 10.236.105.145 with HTTP; Fri, 22 Jul 2011 12:23:33 -0700 (PDT)
+	id S1755215Ab1GVTdD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jul 2011 15:33:03 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:40190 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755166Ab1GVTdC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2011 15:33:02 -0400
+Received: from get-mta-scan01.get.basefarm.net ([10.5.16.4])
+ by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LOR00NJG2B02Y40@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 22 Jul 2011 21:33:00 +0200 (MEST)
+Received: from get-mta-scan01.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 4863C17992EB_E29D06CB	for <git@vger.kernel.org>; Fri,
+ 22 Jul 2011 19:33:00 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan01.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 2AD881797DF7_E29D06CF	for <git@vger.kernel.org>; Fri,
+ 22 Jul 2011 19:33:00 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LOR00B872B0AQ10@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 22 Jul 2011 21:33:00 +0200 (MEST)
+User-Agent: KMail/1.13.7 (Linux/2.6.39-ARCH; KDE/4.6.3; x86_64; ; )
+In-reply-to: <1310577055-6347-1-git-send-email-divanorama@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177660>
 
-I have two configuration files in a project which I would like to
-track locally, however avoid pushing them to the remote repository. Is
-it possible do that? Any suggestions on how can it be done?
+On Wednesday 13 July 2011, Dmitry Ivankov wrote:
+> The "notemodify" fast-import command was introduced in commit a8dd2e7
+> (fast-import: Add support for importing commit notes, 2009-10-09)
+> The commit log has slightly different description than the added
+> documentation. The latter is somewhat confusing. "notemodify" is a
+> subcommand of "commit" command used to add a note for some commit.
+> Does this note annotate the commit produced by the "commit" command
+> or a commit given by it's committish parameter? Which notes tree
+> does it write notes to?
+> 
+> The exact meaning could be deduced with old description and some
+> notes machinery knowledge. But let's make it more obvious. This
+> command is used in a context like "commit refs/notes/test" to
+> add or rewrite an annotation for a committish parameter. So the
+> advised way to add notes in a fast-import stream is:
+> 1) import some commits (optional)
+> 2) prepare a "commit" to the notes tree:
+> 2.1) choose notes ref, committer, log message, etc.
+> 2.2) create annotations with "notemodify", where each can refer to
+> a commit being annotated via a branch name, import mark reference,
+> sha1 and other expressions specified in the Documentation.
+> 
+> Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
 
---neu.by.r
+Acked-by: Johan Herland <johan@herland.net>
+
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
