@@ -1,88 +1,98 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [REGRESSION, BISECTED] `git checkout <branch>` started to be
- memory hog
-Date: Fri, 22 Jul 2011 14:31:22 -0700
-Message-ID: <7vk4baxas5.fsf@alter.siamese.dyndns.org>
-References: <20110722130518.GA9873@tugrik.mns.mnsspb.ru>
- <20110722170001.GB20700@sigill.intra.peff.net>
- <7vipquz0d0.fsf@alter.siamese.dyndns.org>
- <20110722173601.GA9422@sigill.intra.peff.net>
- <7vaac6ysd2.fsf@alter.siamese.dyndns.org>
- <20110722203614.GA13232@sigill.intra.peff.net>
+Subject: Re: [PATCH 10/14] http: use hostname in credential description
+Date: Fri, 22 Jul 2011 15:01:53 -0700
+Message-ID: <7vbowmx9da.fsf@alter.siamese.dyndns.org>
+References: <20110718074642.GA11678@sigill.intra.peff.net>
+ <20110718075232.GJ12341@sigill.intra.peff.net>
+ <7vr55k4mxn.fsf@alter.siamese.dyndns.org>
+ <20110722204749.GC11922@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Kirill Smelkov <kirr@mns.spb.ru>, git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jul 22 23:31:35 2011
+X-From: git-owner@vger.kernel.org Sat Jul 23 00:02:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QkNJm-00074S-8m
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Jul 2011 23:31:34 +0200
+	id 1QkNnH-0003Fx-1y
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Jul 2011 00:02:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932283Ab1GVVb0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jul 2011 17:31:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35782 "EHLO
+	id S932606Ab1GVWB5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jul 2011 18:01:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47823 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932200Ab1GVVbZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2011 17:31:25 -0400
+	id S932420Ab1GVWB4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2011 18:01:56 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A402C4D46;
-	Fri, 22 Jul 2011 17:31:24 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9FB405301;
+	Fri, 22 Jul 2011 18:01:55 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=R4IEqx/IXK6Z4CYL7UmLQO5aiOM=; b=NRzGGH
-	jrGNnysJ5eV/1+ONfY+YIJx4rcZ6MvVNlFhE7e5L56EKiC80HNbDhJ3rhOJAebXP
-	7ww0bTQIPAPhpTZa+hMj5sh1fT1AE6QKA/Fih2PwJ2AXxzBEjZJt0Bvp+hlFYX6f
-	h0jIqFyL4uToLCEP5ZIgQ2AVhDhBD2g8M41eE=
+	:content-type; s=sasl; bh=lue20gdwjRk4aQgNfcTbYkyfbwg=; b=QGWGm1
+	rhIxShZ+M1Cjx9k4sxV6fsf/hUvH2eB5vgSzRt9ghQjnlU7HTeLQDRNuaEllETQY
+	zZZtVUeyuA7FEYOIwmEuYA1A+nHOAD6xGiwIIcykbKBHnGPM0SThT/HejcHtM1KJ
+	b493Rjj8ib2bxI1XS7lKcZyIEa+C7RZ8lqgTA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=q9/ebjAUzn8PlZuebk2dUx0Ju3euYJS1
-	Ct+ZnSYcL0SHkCta027G7xUyOBXeyt57kDll8SMba25hk3Qwm8iB21NoauuY6OuF
-	7kUXLoAiI1FlnNd/DG6G2ha7EGhiKpcrWX1xmhXm54pugq3plPuC5/av1BPz3quL
-	FVBlNl3pZKs=
+	:content-type; q=dns; s=sasl; b=w6saCNFunm+3m9Kr+9tOZPKbjkCOPhHI
+	jZ+FTYMdrBxhIEOWj0OTYt9AIq5HhmFr2CaILehODTYyfptWGGo9u5vl0/IlXFPg
+	kWsMpsoosx+uJPYAwVHVJva4N82+t7sSlZHUVYwiDSI/tBvYtl0vAFuWFgeYjU+V
+	soBxipIimjY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9AD254D45;
-	Fri, 22 Jul 2011 17:31:24 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9842C5300;
+	Fri, 22 Jul 2011 18:01:55 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 28B524D44; Fri, 22 Jul 2011
- 17:31:24 -0400 (EDT)
-In-Reply-To: <20110722203614.GA13232@sigill.intra.peff.net> (Jeff King's
- message of "Fri, 22 Jul 2011 14:36:14 -0600")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1A2C452FF; Fri, 22 Jul 2011
+ 18:01:55 -0400 (EDT)
+In-Reply-To: <20110722204749.GC11922@sigill.intra.peff.net> (Jeff King's
+ message of "Fri, 22 Jul 2011 14:47:50 -0600")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F3143226-B4A9-11E0-8142-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 36677BB0-B4AE-11E0-B96D-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177670>
 
 Jeff King <peff@peff.net> writes:
 
-> How about:
+> It means that you can get convenient credential handling (whether it's
+> because you've configured a username, or you're getting it from a
+> wallet, or caching, or whatever) with:
 >
-> -- >8 --
-> Subject: [PATCH] streaming: free git_istream upon closing
+>   git push https://github.com/peff/git.git &&
+>   git push https://github.com/peff/foo.git
 >
-> Kirill Smelkov noticed that post-1.7.6 "git checkout"
-> started leaking tons of memory. The streaming_write_entry
-> function properly calls close_istream(), but that function
-> did not actually free() the allocated git_istream struct.
+> which should hopefully just prompt you once (and a configured username
+> would have to be configured only once for the host).
 >
-> The git_istream struct is totally opaque to calling code,
-> and must be heap-allocated by open_istream. Therefore it's
-> not appropriate for callers to have to free it.
->
-> This patch makes close_istream() into "close and de-allocate
-> all associated resources". We could add a new "free_istream"
-> call, but there's not much point in letting callers inspect
-> the istream after close. And this patch's semantics make us
-> match fopen/fclose, which is well-known and understood.
->
-> Signed-off-by: Jeff King <peff@peff.net>
+> And it comes at the cost that there's not a good way to use two
+> different identities for the same host.
 
-Much nicer ;-)  Thanks.
+Yes, both "just prompt you once" and "would have to be configured only
+once" cut both ways, and that is mildly disturbing to my taste.
+
+If we annotate the remote in .git/config perhaps like this:
+
+	[remote "foo"]
+        	url = https://github.com/peff/foo.git
+                auth_context = "foo project at github"
+		...
+	[remote "bar"]
+        	url = https://github.com/peff/bar.git
+                auth_context = "bar project at github"
+
+and have "git push foo" pass the auth_context to the credential backend,
+which can notice the two projects are in different context and cache two
+identities under different contexts, would it be a good workaround for the
+issue?  Then, a remote that does not have auth_context configured would
+use "https:github.com" that is machine-generated (in http.c in your code),
+but that can easily be overridden if/as necessary.
+
+> I tried to optimize for the common case (many repos under one identity)
+> than the uncommon (many identities under one host).
+
+As I am not convinced if this statement is true.
