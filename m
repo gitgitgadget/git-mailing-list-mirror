@@ -1,59 +1,111 @@
-From: Ori Avtalion <ori@avtalion.name>
-Subject: reset: silent for some commands, verbose for others?
-Date: Fri, 22 Jul 2011 19:38:42 +0300
-Message-ID: <4E29A792.9020805@avtalion.name>
+From: Jeff King <peff@peff.net>
+Subject: Re: [REGRESSION, BISECTED] `git checkout <branch>` started to be
+ memory hog
+Date: Fri, 22 Jul 2011 11:00:03 -0600
+Message-ID: <20110722170001.GB20700@sigill.intra.peff.net>
+References: <20110722130518.GA9873@tugrik.mns.mnsspb.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 22 18:38:53 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Kirill Smelkov <kirr@mns.spb.ru>
+X-From: git-owner@vger.kernel.org Fri Jul 22 19:00:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QkIkW-0001Av-Dn
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Jul 2011 18:38:52 +0200
+	id 1QkJ5K-0001QJ-Ct
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Jul 2011 19:00:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751871Ab1GVQir (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jul 2011 12:38:47 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:57167 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751598Ab1GVQiq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2011 12:38:46 -0400
-Received: by wyg8 with SMTP id 8so1617198wyg.19
-        for <git@vger.kernel.org>; Fri, 22 Jul 2011 09:38:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=08HJHft5LbW/TxZwXZWJ/ZUZ8WC0mdOGisoQtock8ZE=;
-        b=A4J4ERd2kceI6yGaXlTpw1WNL8dKEniiFgq4s8A7BXBZRyGBdUKXBkv2TSJRXgeFIe
-         nBThMZzabui1HxMYE8O6ZaE6jGpfkMi+6he6/L7lvNjie6x42zQljVRSUBNJTd/4KzA6
-         RPy1/0SMr/GiDpxCWnxTRynefv0vAoSxCO4j8=
-Received: by 10.216.88.132 with SMTP id a4mr1433664wef.31.1311352725217;
-        Fri, 22 Jul 2011 09:38:45 -0700 (PDT)
-Received: from [192.168.1.55] (bzq-109-67-20-81.red.bezeqint.net [109.67.20.81])
-        by mx.google.com with ESMTPS id w8sm1656911wec.24.2011.07.22.09.38.43
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 22 Jul 2011 09:38:44 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110617 Thunderbird/3.1.11
+	id S1753362Ab1GVRAQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jul 2011 13:00:16 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:52814
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753336Ab1GVRAP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2011 13:00:15 -0400
+Received: (qmail 21349 invoked by uid 107); 22 Jul 2011 17:00:38 -0000
+Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 22 Jul 2011 13:00:38 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Jul 2011 11:00:03 -0600
+Content-Disposition: inline
+In-Reply-To: <20110722130518.GA9873@tugrik.mns.mnsspb.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177648>
 
-Looking at the reset's command third form:
+On Fri, Jul 22, 2011 at 05:05:18PM +0400, Kirill Smelkov wrote:
 
-  reset [--soft | --mixed | --hard | --merge | --keep] [-q] [<commit>]
+> It turned out that with Git v1.7.6 memory usage for git-checkout
+> linux-3.0.y as seen in top is
+> 
+>     VIRTmax     RESmax
+> 
+>     ~338M       ~247M
+> 
+> and for master
+> 
+>     VIRTmax     RESmax
+>     (both till not killed)
+>    ~2200M       ~1000M
+> 
+> 
+> i.e. it looks like when residential memory usage approaches the amount of
+> physical RAM, the OOM killer comes into play.
+> 
+> 
+> And I've bisected this to b6691092 ("Add streaming filter API"; Junio C
+> Hamano, May 20 2011; merged to next on Jun 30 2011):
 
-* --soft, --merge, --keep are silent.
-* --mixed prints "Unstaged changes after reset: ..."
-* --hard prints "HAED is now at..."
+Hmm, that series was supposed to _reduce_ memory usage. :)
 
-If all of those commands move HEAD, shouldn't all of them print "HEAD is
-now at..."?
+According to valgrind, we are leaking gigabytes of memory allocated in
+git_istream buffers:
 
-Why should only --mixed print the list of unstaged files? e.g. Isn't it
-useful for --soft to give a list of "Staged changes"?
+  $ cd linux-2.6
+  $ rm -vrf *
+  $ valgrind --leak-check=full git checkout -f
+  [...]
+  2,418,940,448 (1,163,660,832 direct, 1,255,279,616 indirect) bytes in 35,271
+        blocks are definitely lost in loss record 81 of 81
+     at 0x4C2780D: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+     by 0x517C62: xmalloc (wrapper.c:35)
+     by 0x503112: attach_stream_filter (streaming.c:255)
+     by 0x502D61: open_istream (streaming.c:152)
+     by 0x4B1B7A: streaming_write_entry (entry.c:130)
+     by 0x4B1E0B: write_entry (entry.c:193)
+     by 0x4B23F4: checkout_entry (entry.c:318)
+     by 0x511DA4: check_updates (unpack-trees.c:223)
+     by 0x513D72: unpack_trees (unpack-trees.c:1125)
+     by 0x41CCB4: reset_tree (checkout.c:333)
+     by 0x41CE32: merge_working_tree (checkout.c:378)
+     by 0x41DE6A: switch_branches (checkout.c:737)
+
+This malloc is for the actual git_istream struct. It seems that we never
+actually free it when calling close_istream(). And these structs are
+quite big; they contain 32K of filter buffers inside a union.
+
+>From my quick look, I came up with the fix below. It removes the leak
+and doesn't trigger any memory errors according to valgrind. So it
+_must_ be right. :)
+
+-Peff
+
+---
+diff --git a/streaming.c b/streaming.c
+index 565f000..f3acc5d 100644
+--- a/streaming.c
++++ b/streaming.c
+@@ -93,7 +93,9 @@ struct git_istream {
+ 
+ int close_istream(struct git_istream *st)
+ {
+-	return st->vtbl->close(st);
++	int r = st->vtbl->close(st);
++	free(st);
++	return r;
+ }
+ 
+ ssize_t read_istream(struct git_istream *st, char *buf, size_t sz)
