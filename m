@@ -1,77 +1,68 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: [RFC PATCH] Move git-dir for submodules
-Date: Fri, 22 Jul 2011 21:02:23 +0200
-Message-ID: <20110722190223.GA27076@kolya>
-References: <1311267139-14658-1-git-send-email-iveqy@iveqy.com>
- <7vhb6f1ipp.fsf@alter.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Git commit generation numbers
+Date: Fri, 22 Jul 2011 12:06:08 -0700
+Message-ID: <CA+55aFzsZ6w_a_wPEuBjtDeSDYQviVfy9UmJMxPz4geu4CRthQ@mail.gmail.com>
+References: <20110721202722.3765.qmail@science.horizon.com>
+ <alpine.LFD.2.00.1107220907370.1762@xanadu.home> <alpine.DEB.2.02.1107221102180.6496@asgard.lang.hm>
+ <201107222034.20510.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org,
-	jens.lehmann@web.de, hvoigt@hvoigt.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 22 21:02:28 2011
+Cc: david@lang.hm, Nicolas Pitre <nico@fluxnic.net>,
+	George Spelvin <linux@horizon.com>,
+	Anthony Van de Gejuchte <anthonyvdgent@gmail.com>,
+	git@vger.kernel.org, Phil Hord <hordp@cisco.com>,
+	Shawn Pearce <spearce@spearce.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 22 21:07:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QkKzS-0005g3-Bg
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Jul 2011 21:02:26 +0200
+	id 1QkL3w-0008BA-6E
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Jul 2011 21:07:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754584Ab1GVTCM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Jul 2011 15:02:12 -0400
-Received: from mail-fx0-f52.google.com ([209.85.161.52]:52648 "EHLO
-	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753118Ab1GVTCL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2011 15:02:11 -0400
-Received: by fxd18 with SMTP id 18so5636598fxd.11
-        for <git@vger.kernel.org>; Fri, 22 Jul 2011 12:02:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=5lfG/di1DNMYyrMAdhb0iaS9VpFAvVJzi/WmonMPSjs=;
-        b=gn6Kt8aYhbEBPTxQ5fSVRzBMlyk2JM7D6F/slzPbeJfHXIa27Q0H7MloCQ4WZEMm27
-         1TVGy3lGEyQiGjsqH/dBaG79iNUqaOaIv4hnUAV6x7VmZj9XlxX46tNvdhTEkd5S8H3w
-         ck12lpPV1bmKKT6kljPjy19md5z+kUZT+AyWU=
-Received: by 10.204.23.5 with SMTP id p5mr586681bkb.346.1311361330492;
-        Fri, 22 Jul 2011 12:02:10 -0700 (PDT)
-Received: from kolya (h-185-240.a189.priv.bahnhof.se [85.24.185.240])
-        by mx.google.com with ESMTPS id sz1sm589458bkb.58.2011.07.22.12.02.09
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 22 Jul 2011 12:02:09 -0700 (PDT)
-Received: from iveqy by kolya with local (Exim 4.72)
-	(envelope-from <iveqy@kolya>)
-	id 1QkKzP-00073H-Do; Fri, 22 Jul 2011 21:02:23 +0200
-Content-Disposition: inline
-In-Reply-To: <7vhb6f1ipp.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754613Ab1GVTG7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Jul 2011 15:06:59 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:56683 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753504Ab1GVTG6 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2011 15:06:58 -0400
+Received: from mail-ww0-f44.google.com (mail-ww0-f44.google.com [74.125.82.44])
+	(authenticated bits=0)
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p6MJ6SPA010761
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Fri, 22 Jul 2011 12:06:29 -0700
+Received: by wwe5 with SMTP id 5so2473044wwe.1
+        for <git@vger.kernel.org>; Fri, 22 Jul 2011 12:06:28 -0700 (PDT)
+Received: by 10.216.63.17 with SMTP id z17mr2047332wec.98.1311361588077; Fri,
+ 22 Jul 2011 12:06:28 -0700 (PDT)
+Received: by 10.216.155.204 with HTTP; Fri, 22 Jul 2011 12:06:08 -0700 (PDT)
+In-Reply-To: <201107222034.20510.jnareb@gmail.com>
+X-Spam-Status: No, hits=-102.981 required=5 tests=AWL,BAYES_00,USER_IN_WHITELIST
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177656>
 
-Thanks for the review. I'll send an updated series soon.
+On Fri, Jul 22, 2011 at 11:34 AM, Jakub Narebski <jnareb@gmail.com> wro=
+te:
+>
+> That is IF unknown headers are copied verbatim during rebase. =A0For
+> "encoding" header this is a good thing, for "generation" it isn't.
 
-On Thu, Jul 21, 2011 at 01:28:50PM -0700, Junio C Hamano wrote:
-> Is it really necessary to have an ugly
-> loop to make things relative, though?
-The path must be relative to allow the superproject to be moved
-around.
+Afaik, they aren't copied verbatim, and never have been. Afaik, the
+only thing that has *ever* written commits is "commit_tree()"
+(originally "main()" in commit-tree.c). Why is this red herring even
+being discussed?
 
-> I wonder if we want a new option to "git rev-parse" so that we can sa=
-y
->=20
-> 	git rev-parse --is-well-formed-git-dir init/.git
->=20
-> to perform these checks without exposing the implimentation detail.
+Of course you can always generate bogus commits by writing them by
+hand. But that's irrelevant.
 
-How about using
-(cd <repo>; git rev-parse --verify HEAD" >/dev/null)
-instead?
-
-Med v=E4nliga h=E4lsningar
-=46redrik Gustafsson
+                     Linus
