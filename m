@@ -1,87 +1,81 @@
-From: Thomas Ferris Nicolaisen <tfnico@gmail.com>
-Subject: Re: git svn v1 migration, avoid re-clone whole repo
-Date: Sat, 23 Jul 2011 19:03:51 +0200
-Message-ID: <CAEcj5uXUbJGj0Gjji-dRcsQuoQ3kP-LXcXGjtwFiZLFP5c-R6g@mail.gmail.com>
-References: <CAJs9aZ-h8J_WYC1cXy9HojwArO8EqWSZnoZ1=LdrqHxeJxz_BQ@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 1/2] Add a test to check that git ls-tree sets non-zero
+ exit code on error.
+Date: Sat, 23 Jul 2011 20:01:44 +0200
+Message-ID: <4E2B0C88.1030906@web.de>
+References: <1311424051-29644-1-git-send-email-jon.seymour@gmail.com> <1311424051-29644-2-git-send-email-jon.seymour@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: rupert THURNER <rupert.thurner@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 23 19:03:58 2011
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 23 20:01:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QkfcM-0008L9-3d
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Jul 2011 19:03:58 +0200
+	id 1QkgWS-00058O-Bl
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Jul 2011 20:01:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753151Ab1GWRDx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Jul 2011 13:03:53 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:47738 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753087Ab1GWRDv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Jul 2011 13:03:51 -0400
-Received: by iyb12 with SMTP id 12so2937109iyb.19
-        for <git@vger.kernel.org>; Sat, 23 Jul 2011 10:03:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Ug9zXEw7fc3Ro125MXSkrCi41KIvZaB9uaQpzEy01CM=;
-        b=OQbdbUGk94DydHGEf6Tw5YmTQxlKgibHlmpzaZlMFeEPhHCS1+qggnhUyUyjIKjpbs
-         GZqs9EVM7LtK5MTy5JfT53RvDCKhd5Fq0mGbRo70/6fPHnTqEZfWMtUnUKbW/xoZIM4p
-         tKiAUnrTO2Hkbm1U/sbEMMHexQS4RQllI/9J0=
-Received: by 10.231.112.98 with SMTP id v34mr2571478ibp.85.1311440631154; Sat,
- 23 Jul 2011 10:03:51 -0700 (PDT)
-Received: by 10.231.114.204 with HTTP; Sat, 23 Jul 2011 10:03:51 -0700 (PDT)
-In-Reply-To: <CAJs9aZ-h8J_WYC1cXy9HojwArO8EqWSZnoZ1=LdrqHxeJxz_BQ@mail.gmail.com>
+	id S1753252Ab1GWSBv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Jul 2011 14:01:51 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:47763 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753136Ab1GWSBu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jul 2011 14:01:50 -0400
+Received: from smtp08.web.de  ( [172.20.5.216])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 68E3119444882;
+	Sat, 23 Jul 2011 20:01:48 +0200 (CEST)
+Received: from [93.246.62.195] (helo=[192.168.178.43])
+	by smtp08.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1QkgWK-0001ct-00; Sat, 23 Jul 2011 20:01:48 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:5.0) Gecko/20110624 Thunderbird/5.0
+In-Reply-To: <1311424051-29644-2-git-send-email-jon.seymour@gmail.com>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1+KiiVvWG4LIRhiS5Mjjv7tQFc7yrda2gvPIjpA
+	B7r15RszVc1GEFx+LLolC6lTMZTHKO8Xx66EyRH08D+mzpgts0
+	4l/vrT1MtXAAkvxFAd9Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177698>
 
-Hi Rupert,
+Am 23.07.2011 14:27, schrieb Jon Seymour:
+> Fails at this commit, fixed by subsequent commit.
 
-> is there any other means of upgrading to the new svn layout but
-> cloning the repository afresh again? the error message i get is:
->
-> $ git svn rebase
-> Migrating from a git-svn v1 layout...
-> Data from a previous version of git-svn exists, but
-> =A0 =A0 =A0 =A0.git/svn
-> =A0 =A0 =A0 =A0(required for this version (1.7.5.4) of git-svn) does =
-not exist.
-> Done migrating from a git-svn v1 layout
-> Unable to determine upstream SVN information from working tree histor=
-y
->
+Maybe use "test_expect_failure" here and change that to "test_expect_success"
+in the next commit?
 
-Can you say in more concrete steps how you created the repository
-where this happens?
-
-I've seen this error message in repositories that are clones of
-git-svn repositories. They are "simple" git repositories with no link
-established to the SVN repository (no notion of svn in the
-=2Egit/config). If this is the case, read on:
-
-I usually fix this by initializing git svn in the repo:
-
-> git svn init [same params as the initial git svn clone] [svn url]
-
-And then you have to update the latest git-svn ref to point at the
-last git-svn commit. Usually this goes something like:
-
-> git update-ref refs/remotes/git-svn refs/remotes/origin/master
-
-=2E.. assuming that the git-svn repo you cloned from is a remote repo
-with the name "origin".
-
-Note that in a git svn clone with branches the above git-svn reference
-will be probably be branch name instead.
-
-Hope this helps,
-
--Thomas
+> Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+> ---
+>  t/t3103-ls-tree-missing-tree.sh |   19 +++++++++++++++++++
+>  1 files changed, 19 insertions(+), 0 deletions(-)
+>  create mode 100755 t/t3103-ls-tree-missing-tree.sh
+> 
+> diff --git a/t/t3103-ls-tree-missing-tree.sh b/t/t3103-ls-tree-missing-tree.sh
+> new file mode 100755
+> index 0000000..365ac07
+> --- /dev/null
+> +++ b/t/t3103-ls-tree-missing-tree.sh
+> @@ -0,0 +1,19 @@
+> +#!/bin/sh
+> +
+> +test_description='ls-tree exits with non-zero status if it also reports an error'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'setup' '
+> +	mkdir a &&
+> +	touch a/one &&
+> +	git add a/one &&
+> +	git commit -m test
+> +'
+> +
+> +test_expect_success 'ls-tree fails with non-zero exit code on broken tree' '
+> +	rm -f .git/objects/5f/cffbd6e4c5c5b8d81f5e9314b20e338e3ffff5 &&
+> +	test_must_fail git ls-tree -r HEAD
+> +'
+> +
+> +test_done
