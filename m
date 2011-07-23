@@ -1,149 +1,107 @@
 From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH] Documentation/submodule: add command references and update
- options
-Date: Sat, 23 Jul 2011 21:00:36 +0200
-Message-ID: <4E2B1A54.2000605@web.de>
+Subject: [RFC PATCH] tests: print failed test numbers at the end of the test
+ run
+Date: Sat, 23 Jul 2011 21:16:02 +0200
+Message-ID: <4E2B1DF2.4000003@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Nikolai Weibull <now@bitwi.se>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 23 21:00:44 2011
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jul 23 21:16:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QkhRL-0000Za-Q6
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Jul 2011 21:00:44 +0200
+	id 1QkhgS-0005mX-N5
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Jul 2011 21:16:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753328Ab1GWTAj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Jul 2011 15:00:39 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:58446 "EHLO
+	id S1753348Ab1GWTQH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Jul 2011 15:16:07 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:39484 "EHLO
 	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753323Ab1GWTAi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jul 2011 15:00:38 -0400
+	with ESMTP id S1753343Ab1GWTQF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jul 2011 15:16:05 -0400
 Received: from smtp01.web.de  ( [172.20.0.243])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 94A9B19444524;
-	Sat, 23 Jul 2011 21:00:36 +0200 (CEST)
+	by fmmailgate01.web.de (Postfix) with ESMTP id 38ADC19444E72;
+	Sat, 23 Jul 2011 21:16:03 +0200 (CEST)
 Received: from [93.246.62.195] (helo=[192.168.178.43])
 	by smtp01.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1QkhRE-0001o3-00; Sat, 23 Jul 2011 21:00:36 +0200
+	id 1QkhgB-000662-00; Sat, 23 Jul 2011 21:16:03 +0200
 User-Agent: Mozilla/5.0 (X11; Linux i686; rv:5.0) Gecko/20110624 Thunderbird/5.0
 X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX19g7oqZWCYexyuOwKQnkX7JlWNq/ZA0jYfOIgec
-	tZP+/50lnxzHGu0tzD8Pi83T/Rxl2OhI9CuTxhBPTtotXeywza
-	tVwDps5TJT64hQxZBjGw==
+X-Provags-ID: V01U2FsdGVkX1/5ul5NEntDekMn6O4X6ZzW8kOgzKcop5TLv9Hp
+	lRbEMKd8VkGJyHKHOBTcFS0q2VxZ4SA54MhaVEvPm3LVxG5Vp8
+	LD1XMhOrbrPqf1b2smaQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177702>
 
-Reference the "git diff" and "git status" commands where they learned
-functionality that in earlier git versions was only available through the
-'summary' and 'status' subcommands of "git submodule".
+On modern multi-core processors "make test" is often run in multiple jobs.
+If one of them fails the test run does stop, but the concurrently running
+tests finish their run. Finding out what test is broken involves a lot of
+scrolling. That gets even worse when the -i option is used.
 
-The short option '-n' for '--summary-limit' was missing from the synopsis
-and the --init option was missing from the "options" section, add those
-there. And while at it, quote all options so they are decorated properly
-in the output formats which support that.
+If one or more tests failed, print a list of them before the test summary:
+
+failed test(s): t1000 t6500
+
+fixed   0
+success 7638
+failed  3
+broken  49
+total   7723
+
+This makes it possible to just run the test suite with -i and collect all
+failed test scripts at the end for further examination.
 
 Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
 ---
 
-This patch addresses some issues with the current documentation which were
-brought up on the list.
+Maybe I'm missing something completely obvious, but I always have a hard
+time finding out which test scripts did fail in a test run with -j30.
 
- Documentation/git-submodule.txt |   30 ++++++++++++++++++++++--------
- 1 files changed, 22 insertions(+), 8 deletions(-)
+ t/aggregate-results.sh |   12 +++++++++++-
+ 1 files changed, 11 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 0ec8574..e749aa5 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -15,7 +15,8 @@ SYNOPSIS
- 'git submodule' [--quiet] init [--] [<path>...]
- 'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--rebase]
- 	      [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
--'git submodule' [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
-+'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-limit) <n>]
-+	      [commit] [--] [<path>...]
- 'git submodule' [--quiet] foreach [--recursive] <command>
- 'git submodule' [--quiet] sync [--] [<path>...]
+diff --git a/t/aggregate-results.sh b/t/aggregate-results.sh
+index d206b7c..b8e929a 100755
+--- a/t/aggregate-results.sh
++++ b/t/aggregate-results.sh
+@@ -1,5 +1,6 @@
+ #!/bin/sh
 
-@@ -110,6 +111,11 @@ status::
- +
- If '--recursive' is specified, this command will recurse into nested
- submodules, and show their status as well.
-++
-+If you are only interested in changes of the currently initialized
-+submodules with respect to the commit recorded in the index or the HEAD,
-+linkgit:git-status[1] and linkgit:git-diff[1] will provide that information
-+too (and can also report changes to a submodule's work tree).
++failed_tests=
+ fixed=0
+ success=0
+ failed=0
+@@ -18,7 +19,12 @@ do
+ 		success)
+ 			success=$(($success + $value)) ;;
+ 		failed)
+-			failed=$(($failed + $value)) ;;
++			failed=$(($failed + $value))
++			if test $value != 0; then
++				testnum=$(echo $file | cut -b 14-18)
++				failed_tests="$failed_tests $testnum"
++			fi
++			;;
+ 		broken)
+ 			broken=$(($broken + $value)) ;;
+ 		total)
+@@ -27,6 +33,10 @@ do
+ 	done <"$file"
+ done
 
- init::
- 	Initialize the submodules, i.e. register each submodule name
-@@ -131,7 +137,7 @@ update::
- +
- If the submodule is not yet initialized, and you just want to use the
- setting as stored in .gitmodules, you can automatically initialize the
--submodule with the --init option.
-+submodule with the '--init' option.
- +
- If '--recursive' is specified, this command will recurse into the
- registered submodules, and update any nested submodules within.
-@@ -140,11 +146,14 @@ summary::
- 	Show commit summary between the given commit (defaults to HEAD) and
- 	working tree/index. For a submodule in question, a series of commits
- 	in the submodule between the given super project commit and the
--	index or working tree (switched by --cached) are shown. If the option
--	--files is given, show the series of commits in the submodule between
-+	index or working tree (switched by '--cached') are shown. If the option
-+	'--files' is given, show the series of commits in the submodule between
- 	the index of the super project and the working tree of the submodule
--	(this option doesn't allow to use the --cached option or to provide an
-+	(this option doesn't allow to use the '--cached' option or to provide an
- 	explicit commit).
-++
-+Using the '--submodule=log' option with linkgit:git-diff[1] will provide the
-+same information.
-
- foreach::
- 	Evaluates an arbitrary shell command in each checked out submodule.
-@@ -155,9 +164,9 @@ foreach::
- 	superproject, $sha1 is the commit as recorded in the superproject,
- 	and $toplevel is the absolute path to the top-level of the superproject.
- 	Any submodules defined in the superproject but not checked out are
--	ignored by this command. Unless given --quiet, foreach prints the name
-+	ignored by this command. Unless given '--quiet', foreach prints the name
- 	of each submodule before evaluating the command.
--	If --recursive is given, submodules are traversed recursively (i.e.
-+	If '--recursive' is given, submodules are traversed recursively (i.e.
- 	the given shell command is evaluated in nested submodules as well).
- 	A non-zero return from the command in any submodule causes
- 	the processing to terminate. This can be overridden by adding '|| :'
-@@ -237,13 +246,18 @@ OPTIONS
- 	If the key `submodule.$name.update` is set to `rebase`, this option is
- 	implicit.
-
-+--init::
-+	This option is only valid for the update command.
-+	Initialize all submodules for which "git submodule init" has not been
-+	called so far before updating.
++if [ -n "$failed_tests" ]; then
++	printf "\nfailed test(s):$failed_tests\n\n"
++fi
 +
- --reference <repository>::
- 	This option is only valid for add and update commands.  These
- 	commands sometimes need to clone a remote repository. In this case,
- 	this option will be passed to the linkgit:git-clone[1] command.
- +
- *NOTE*: Do *not* use this option unless you have read the note
--for linkgit:git-clone[1]'s --reference and --shared options carefully.
-+for linkgit:git-clone[1]'s '--reference' and '--shared' options carefully.
-
- --recursive::
- 	This option is only valid for foreach, update and status commands.
+ printf "%-8s%d\n" fixed $fixed
+ printf "%-8s%d\n" success $success
+ printf "%-8s%d\n" failed $failed
 -- 
-1.7.6.356.g65c4e
+1.7.6.346.g750efc
