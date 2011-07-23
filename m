@@ -1,74 +1,62 @@
-From: John Szakmeister <john@szakmeister.net>
-Subject: [PATCH] Stop hiding the error message within 'git submodule add'
-Date: Sat, 23 Jul 2011 07:17:28 -0400
-Message-ID: <1311419848-79652-1-git-send-email-john@szakmeister.net>
-Cc: John Szakmeister <john@szakmeister.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 23 13:20:16 2011
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH v3 07/23] git_remote_helpers: push all refs during a
+ non-local export
+Date: Sat, 23 Jul 2011 13:27:44 +0200
+Message-ID: <CAGdFq_g7OQjsCka16=O6vA9CfyDjEtmxfzEs7S6f8Za0kVQ3nw@mail.gmail.com>
+References: <1310821424-4750-1-git-send-email-srabbelier@gmail.com>
+ <1310821424-4750-8-git-send-email-srabbelier@gmail.com> <7vzkkcxyxa.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
+	Git List <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 23 13:28:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QkaFj-0004K5-Ei
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Jul 2011 13:20:15 +0200
+	id 1QkaNh-0006L7-Fj
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Jul 2011 13:28:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751730Ab1GWLUA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Jul 2011 07:20:00 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:52567 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751151Ab1GWLT7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jul 2011 07:19:59 -0400
-Received: by vws1 with SMTP id 1so2145360vws.19
-        for <git@vger.kernel.org>; Sat, 23 Jul 2011 04:19:58 -0700 (PDT)
+	id S1752143Ab1GWL2Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Jul 2011 07:28:25 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:35070 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751712Ab1GWL2Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jul 2011 07:28:24 -0400
+Received: by pzk37 with SMTP id 37so5105924pzk.1
+        for <git@vger.kernel.org>; Sat, 23 Jul 2011 04:28:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer;
-        bh=X/uBSa8b0M59XWAnOkSVIZmc+GKPJwEjjrLwQgnfikE=;
-        b=lLLCsxEB93TytY7/KTiZJ50o5NzdGCaQWm2W4CTo/Zo0l7vu2UvQJt3zzYDFpqflp4
-         +mcJOoOG5XtCJfvoy2KUSIPzjy4mKcW+9YpHhGvAPCDgVvPKYvX7/GYnbh7AOcYuFuxK
-         G8pTgmRw17PbVq7ynz11mTocvImSyxf6JTgV0=
-Received: by 10.52.28.40 with SMTP id y8mr2468767vdg.136.1311419998154;
-        Sat, 23 Jul 2011 04:19:58 -0700 (PDT)
-Received: from localhost.localdomain (pool-74-103-61-146.bltmmd.fios.verizon.net [74.103.61.146])
-        by mx.google.com with ESMTPS id n21sm300605vcn.31.2011.07.23.04.19.57
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 23 Jul 2011 04:19:57 -0700 (PDT)
-X-Mailer: git-send-email 1.7.6.134.gcf13f6.dirty
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=i1mVRkesUrGZK5r8tSPpIdpnNBxtmagNRn4SLGMLZ3c=;
+        b=fYrbjH0Xdwtti97OYmmcy1o/yMil7Nx9f87YqtIaeX0rxT2WBr34CaTkXx8TAGJ5LG
+         Lrausw1hvjvFP4NuyDi9pP+g1RbycAUOzh1zN4a42MQoas6+GoaeKRgde2yku0hB4lhl
+         OxFnq2vhtDROOzzJPsDHH6o7VL9IjznUc3I2I=
+Received: by 10.68.10.202 with SMTP id k10mr3824058pbb.511.1311420504056; Sat,
+ 23 Jul 2011 04:28:24 -0700 (PDT)
+Received: by 10.68.71.162 with HTTP; Sat, 23 Jul 2011 04:27:44 -0700 (PDT)
+In-Reply-To: <7vzkkcxyxa.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177687>
 
-git-submodule.sh was incorrectly assuming that the only reason
-'git add --dry-run' would fail was due to ignored paths.  However,
-when trying add a submodule inside of another, the original error
-message was being lost, and leaves a user confused.  Simply
-re-run 'git add --dry-run' and allow the error message emitted.
+Heya,
 
-Signed-off-by: John Szakmeister <john@szakmeister.net>
----
- git-submodule.sh |    7 +------
- 1 files changed, 1 insertions(+), 6 deletions(-)
+On Mon, Jul 18, 2011 at 01:36, Junio C Hamano <gitster@pobox.com> wrote:
+> There used to be "This does not deal with forced (not-fast-forward) pushes."
+> at the end of the message, no?
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index bc1d3fa..056abd4 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -223,12 +223,7 @@ cmd_add()
- 
- 	if test -z "$force" && ! git add --dry-run --ignore-missing "$path" > /dev/null 2>&1
- 	then
--		(
--			eval_gettext "The following path is ignored by one of your .gitignore files:
--\$path
--Use -f if you really want to add it." &&
--			echo
--		) >&2
-+		git add --dry-run --ignore-missing "$path"
- 		exit 1
- 	fi
- 
+Yes it did, not sure what happened to that. FIxed.
+
 -- 
-1.7.6.134.gcf13f6.dirty
+Cheers,
+
+Sverre Rabbelier
