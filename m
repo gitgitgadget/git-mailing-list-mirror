@@ -1,48 +1,74 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: git ls-tree -r reports error but exits with zero?
-Date: Sat, 23 Jul 2011 20:06:46 +1000
-Message-ID: <CAH3Anro74AHu+_ziskT6Wmxjqmi4JrU3p8KThagEtevuhAHF=Q@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jul 23 12:06:52 2011
+From: John Szakmeister <john@szakmeister.net>
+Subject: [PATCH] Stop hiding the error message within 'git submodule add'
+Date: Sat, 23 Jul 2011 07:17:28 -0400
+Message-ID: <1311419848-79652-1-git-send-email-john@szakmeister.net>
+Cc: John Szakmeister <john@szakmeister.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 23 13:20:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QkZ6i-0003xG-FP
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Jul 2011 12:06:52 +0200
+	id 1QkaFj-0004K5-Ei
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Jul 2011 13:20:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752586Ab1GWKGs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Jul 2011 06:06:48 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:34857 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752449Ab1GWKGr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jul 2011 06:06:47 -0400
-Received: by vxh35 with SMTP id 35so2037915vxh.19
-        for <git@vger.kernel.org>; Sat, 23 Jul 2011 03:06:46 -0700 (PDT)
+	id S1751730Ab1GWLUA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Jul 2011 07:20:00 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:52567 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751151Ab1GWLT7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jul 2011 07:19:59 -0400
+Received: by vws1 with SMTP id 1so2145360vws.19
+        for <git@vger.kernel.org>; Sat, 23 Jul 2011 04:19:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=OF4ZAOEfUvzMfyEfYrbHLpEVMlDTQTcecfV2m9bCN78=;
-        b=vwbiNEBTPCNZep6qnPwDvXS0xbFNPfebxBgWsakQ84CRSpaUj+iCqPNsa+Ldpqbg/Y
-         wth+mGYpDmxIYFecX9QePw2Asb3EAEdSU61TEM5T2QnUdXjfz5flEZBLC96c0N7JPm+n
-         JiW/A+6Zzx+j3KRheBkSGbpa8gSi6OyU7LMPI=
-Received: by 10.52.21.194 with SMTP id x2mr2494430vde.39.1311415606701; Sat,
- 23 Jul 2011 03:06:46 -0700 (PDT)
-Received: by 10.52.183.41 with HTTP; Sat, 23 Jul 2011 03:06:46 -0700 (PDT)
+        h=sender:from:to:cc:subject:date:message-id:x-mailer;
+        bh=X/uBSa8b0M59XWAnOkSVIZmc+GKPJwEjjrLwQgnfikE=;
+        b=lLLCsxEB93TytY7/KTiZJ50o5NzdGCaQWm2W4CTo/Zo0l7vu2UvQJt3zzYDFpqflp4
+         +mcJOoOG5XtCJfvoy2KUSIPzjy4mKcW+9YpHhGvAPCDgVvPKYvX7/GYnbh7AOcYuFuxK
+         G8pTgmRw17PbVq7ynz11mTocvImSyxf6JTgV0=
+Received: by 10.52.28.40 with SMTP id y8mr2468767vdg.136.1311419998154;
+        Sat, 23 Jul 2011 04:19:58 -0700 (PDT)
+Received: from localhost.localdomain (pool-74-103-61-146.bltmmd.fios.verizon.net [74.103.61.146])
+        by mx.google.com with ESMTPS id n21sm300605vcn.31.2011.07.23.04.19.57
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 23 Jul 2011 04:19:57 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.134.gcf13f6.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177686>
 
-Is this expected?
+git-submodule.sh was incorrectly assuming that the only reason
+'git add --dry-run' would fail was due to ignored paths.  However,
+when trying add a submodule inside of another, the original error
+message was being lost, and leaves a user confused.  Simply
+re-run 'git add --dry-run' and allow the error message emitted.
 
-$ git ls-tree -r cbe968356e26e371ff64ccb3c619d00b9808f186 >/dev/null
-error: Could not read 8277223234f15b362a78203d04f4d3404682be73
-$ echo $?
-0
+Signed-off-by: John Szakmeister <john@szakmeister.net>
+---
+ git-submodule.sh |    7 +------
+ 1 files changed, 1 insertions(+), 6 deletions(-)
 
-jon.
+diff --git a/git-submodule.sh b/git-submodule.sh
+index bc1d3fa..056abd4 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -223,12 +223,7 @@ cmd_add()
+ 
+ 	if test -z "$force" && ! git add --dry-run --ignore-missing "$path" > /dev/null 2>&1
+ 	then
+-		(
+-			eval_gettext "The following path is ignored by one of your .gitignore files:
+-\$path
+-Use -f if you really want to add it." &&
+-			echo
+-		) >&2
++		git add --dry-run --ignore-missing "$path"
+ 		exit 1
+ 	fi
+ 
+-- 
+1.7.6.134.gcf13f6.dirty
