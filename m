@@ -1,82 +1,79 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: RFC: Should git gc/repack respect .git/refs/replace?
-Date: Sat, 23 Jul 2011 18:39:17 +1000
-Message-ID: <CAH3AnrqDbebODK-A90msoB9JXUwDHKKtQAQo5VdXZ=k8bxzkYQ@mail.gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: RFC: Should git gc/repack respect .git/refs/replace?
+Date: Sat, 23 Jul 2011 11:20:13 +0200
+Message-ID: <m2wrf9cq0i.fsf@igel.home>
+References: <CAH3AnrqDbebODK-A90msoB9JXUwDHKKtQAQo5VdXZ=k8bxzkYQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Christian Couder <chriscool@tuxfamily.org>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jul 23 10:39:24 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 23 11:20:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QkXk4-0001an-4B
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Jul 2011 10:39:24 +0200
+	id 1QkYNl-0002P7-Jb
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Jul 2011 11:20:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751991Ab1GWIjU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Jul 2011 04:39:20 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:36377 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751722Ab1GWIjS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jul 2011 04:39:18 -0400
-Received: by vws1 with SMTP id 1so2108573vws.19
-        for <git@vger.kernel.org>; Sat, 23 Jul 2011 01:39:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=EUhxsDn7UyAwhkcLLYngTCEBHAozYTvrULyW82ZFVQc=;
-        b=meAVcReKDZ9rfpBkPZutNS1YCDbyptKJPO3quYqzcwQRZXubNa84ZVhDB3f0fQ5VNj
-         YFSRWyXGdvLu4B5C1rDjvFFqoYBZtCbiRzC4cceL6LBAbjoVcOCJdswroiJe9ZJrLHpQ
-         283FPgb8FoGB6PWDb9NDuCzpXhrbvcLlKP5/0=
-Received: by 10.52.74.69 with SMTP id r5mr178645vdv.307.1311410358043; Sat, 23
- Jul 2011 01:39:18 -0700 (PDT)
-Received: by 10.52.183.41 with HTTP; Sat, 23 Jul 2011 01:39:17 -0700 (PDT)
+	id S1752150Ab1GWJUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Jul 2011 05:20:19 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:35681 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751972Ab1GWJUR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jul 2011 05:20:17 -0400
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 07596188B5BF;
+	Sat, 23 Jul 2011 11:20:15 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
+	by mail.m-online.net (Postfix) with ESMTP id 5CA8A1C00052;
+	Sat, 23 Jul 2011 11:20:15 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
+	with ESMTP id 2M7NcKgLvswJ; Sat, 23 Jul 2011 11:20:14 +0200 (CEST)
+Received: from igel.home (ppp-88-217-121-99.dynamic.mnet-online.de [88.217.121.99])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Sat, 23 Jul 2011 11:20:14 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id 1D0DDCA293; Sat, 23 Jul 2011 11:20:13 +0200 (CEST)
+X-Yow: ..I must be a VETERINARIAN..
+In-Reply-To: <CAH3AnrqDbebODK-A90msoB9JXUwDHKKtQAQo5VdXZ=k8bxzkYQ@mail.gmail.com>
+	(Jon Seymour's message of "Sat, 23 Jul 2011 18:39:17 +1000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177682>
 
-I recently damaged a USB drive containing an archive of a finished project.
+Jon Seymour <jon.seymour@gmail.com> writes:
 
-I am able to paper over a week of missing history by using the git
-replace mechanism, so that git rev-list now works as expected.
+> I recently damaged a USB drive containing an archive of a finished project.
+>
+> I am able to paper over a week of missing history by using the git
+> replace mechanism, so that git rev-list now works as expected.
+>
+> When I run git gc or git repack, I get the following:
+>
+>    error: Could not read 023a1d5d3977420ba041cb556c0eee17c326aeb6
+>    fatal: Failed to traverse parents of commit
+> 44d578ea81f7a90989e2ee3c676f50e3aff7071f
 
-When I run git gc or git repack, I get the following:
+git-replace(1):
 
-   error: Could not read 023a1d5d3977420ba041cb556c0eee17c326aeb6
-   fatal: Failed to traverse parents of commit
-44d578ea81f7a90989e2ee3c676f50e3aff7071f
+       Replacement references will be used by default by all git commands
+       except those doing reachability traversal (prune, pack transfer and
+       fsck).
 
-where 0bbded9a764d9f4c8dc27b778f70d044df65f65f is one of the missing
-commits I replaced with:
+This is required, since the replaced objects are not supposed to be
+recycled.  If you want to make the replacements permanent use git
+filter-branch.
 
-   git replace 023a1d5d3977420ba041cb556c0eee17c326aeb6
-238d237db9137b4eaf96f1d554bf2668729b9b93
+Andreas.
 
-Is this expected behaviour? I had assumed that git repack would
-respect the topology implied by git replace.
-
-Some other differences:
-
-    git cat-file commit 023a1d5d3977420ba041cb556c0eee17c326aeb6
-
-produces the expected output (that is the same as git cat-file commit
-238d237db9137b4eaf96f1d554bf2668729b9b93), but
-
-   git cat-file commit -t 023a1d5d3977420ba041cb556c0eee17c326aeb6
-
-fails with:
-
-   error: unable to find 023a1d5d3977420ba041cb556c0eee17c326aeb6
-   fatal: git cat-file 023a1d5d3977420ba041cb556c0eee17c326aeb6: bad file
-
-In my view, it seems reasonable that git repack should tolerate repos
-that have replace references in them otherwise you can never recover
-unused space.
-
-Thoughts?
-
-jon.
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
