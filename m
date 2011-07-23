@@ -1,64 +1,82 @@
-From: rupert THURNER <rupert.thurner@gmail.com>
-Subject: submodule add does not consider git svn
-Date: Sat, 23 Jul 2011 05:33:05 +0200
-Message-ID: <CAJs9aZ9cMZd5PfOW7Zfza3un5JqKRM5eQdDpKPCWvLn-vkzktA@mail.gmail.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: RFC: Should git gc/repack respect .git/refs/replace?
+Date: Sat, 23 Jul 2011 18:39:17 +1000
+Message-ID: <CAH3AnrqDbebODK-A90msoB9JXUwDHKKtQAQo5VdXZ=k8bxzkYQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 23 05:33:37 2011
+Cc: Christian Couder <chriscool@tuxfamily.org>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jul 23 10:39:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QkSy5-0003JK-7C
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Jul 2011 05:33:33 +0200
+	id 1QkXk4-0001an-4B
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Jul 2011 10:39:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751184Ab1GWDd1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jul 2011 23:33:27 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:37614 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751163Ab1GWDdZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2011 23:33:25 -0400
-Received: by iyb12 with SMTP id 12so2400308iyb.19
-        for <git@vger.kernel.org>; Fri, 22 Jul 2011 20:33:25 -0700 (PDT)
+	id S1751991Ab1GWIjU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Jul 2011 04:39:20 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:36377 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751722Ab1GWIjS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jul 2011 04:39:18 -0400
+Received: by vws1 with SMTP id 1so2108573vws.19
+        for <git@vger.kernel.org>; Sat, 23 Jul 2011 01:39:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=Lr/o8K2NS/kyOO0zm4aOtxsdYZclcjxWAAXhlTEK2fE=;
-        b=pwMezrVxdF+R6ryPBwIIGW+ggNBcNUejzDg9SjhGU4trofsN0Y0aiHCkYsHRUsSR1K
-         VxKZNmzbC/eGGE4XoOYTE1JfoaJbdlP/EvMkuZ7eeSPqLYlmdsqysBEf9ERJz0A6e5mt
-         fY23JN+6OBxJ+1sZW5bQI0FGwUTNlwyulEerU=
-Received: by 10.231.114.104 with SMTP id d40mr1924994ibq.114.1311392005070;
- Fri, 22 Jul 2011 20:33:25 -0700 (PDT)
-Received: by 10.42.96.193 with HTTP; Fri, 22 Jul 2011 20:33:05 -0700 (PDT)
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=EUhxsDn7UyAwhkcLLYngTCEBHAozYTvrULyW82ZFVQc=;
+        b=meAVcReKDZ9rfpBkPZutNS1YCDbyptKJPO3quYqzcwQRZXubNa84ZVhDB3f0fQ5VNj
+         YFSRWyXGdvLu4B5C1rDjvFFqoYBZtCbiRzC4cceL6LBAbjoVcOCJdswroiJe9ZJrLHpQ
+         283FPgb8FoGB6PWDb9NDuCzpXhrbvcLlKP5/0=
+Received: by 10.52.74.69 with SMTP id r5mr178645vdv.307.1311410358043; Sat, 23
+ Jul 2011 01:39:18 -0700 (PDT)
+Received: by 10.52.183.41 with HTTP; Sat, 23 Jul 2011 01:39:17 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177681>
 
-it seems that "git submodule add" looses information from "git svn
-clone". what am i missing here which would allow to "git svn rebase"
-the repository, even if it is newly added as submodule?
+I recently damaged a USB drive containing an archive of a finished project.
 
-the following example takes a little, as the repository has 15'000
-revisions, even 99% do not concern the checked out part.
+I am able to paper over a week of missing history by using the git
+replace mechanism, so that git rev-list now works as expected.
 
-rupert @ login : ~/tmp/subm-bug
- mkdir -p  ~/tmp/subm-bug
- cd ~/tmp/subm-bug
- git svn clone https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg/GeoIP/trunk
-GeoIP
- git init test
- cd test
- git submodule add ~/tmp/subm-bug/GeoIP
- cd GeoIP
- git svn rebase
+When I run git gc or git repack, I get the following:
 
-Migrating from a git-svn v1 layout...
-Data from a previous version of git-svn exists, but
-        .git/svn
-        (required for this version (1.7.5.4) of git-svn) does not exist.
-Done migrating from a git-svn v1 layout
-Unable to determine upstream SVN information from working tree history
+   error: Could not read 023a1d5d3977420ba041cb556c0eee17c326aeb6
+   fatal: Failed to traverse parents of commit
+44d578ea81f7a90989e2ee3c676f50e3aff7071f
+
+where 0bbded9a764d9f4c8dc27b778f70d044df65f65f is one of the missing
+commits I replaced with:
+
+   git replace 023a1d5d3977420ba041cb556c0eee17c326aeb6
+238d237db9137b4eaf96f1d554bf2668729b9b93
+
+Is this expected behaviour? I had assumed that git repack would
+respect the topology implied by git replace.
+
+Some other differences:
+
+    git cat-file commit 023a1d5d3977420ba041cb556c0eee17c326aeb6
+
+produces the expected output (that is the same as git cat-file commit
+238d237db9137b4eaf96f1d554bf2668729b9b93), but
+
+   git cat-file commit -t 023a1d5d3977420ba041cb556c0eee17c326aeb6
+
+fails with:
+
+   error: unable to find 023a1d5d3977420ba041cb556c0eee17c326aeb6
+   fatal: git cat-file 023a1d5d3977420ba041cb556c0eee17c326aeb6: bad file
+
+In my view, it seems reasonable that git repack should tolerate repos
+that have replace references in them otherwise you can never recover
+unused space.
+
+Thoughts?
+
+jon.
