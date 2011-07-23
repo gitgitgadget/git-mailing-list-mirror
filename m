@@ -1,52 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG] git-am and git-submodule rely on $PATH to find perl
-Date: Fri, 22 Jul 2011 16:40:18 -0600
-Message-ID: <20110722224017.GC19620@sigill.intra.peff.net>
-References: <87fwm0inqr.fsf@write-only.cryp.to>
+From: rupert THURNER <rupert.thurner@gmail.com>
+Subject: submodule add does not consider git svn
+Date: Sat, 23 Jul 2011 05:33:05 +0200
+Message-ID: <CAJs9aZ9cMZd5PfOW7Zfza3un5JqKRM5eQdDpKPCWvLn-vkzktA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Peter Simons <simons@cryp.to>
-X-From: git-owner@vger.kernel.org Sat Jul 23 00:40:38 2011
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 23 05:33:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QkOOb-0007i5-C8
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Jul 2011 00:40:37 +0200
+	id 1QkSy5-0003JK-7C
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Jul 2011 05:33:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752442Ab1GVWk3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jul 2011 18:40:29 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48153
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751183Ab1GVWk1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2011 18:40:27 -0400
-Received: (qmail 24116 invoked by uid 107); 22 Jul 2011 22:40:56 -0000
-Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 22 Jul 2011 18:40:56 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Jul 2011 16:40:18 -0600
-Content-Disposition: inline
-In-Reply-To: <87fwm0inqr.fsf@write-only.cryp.to>
+	id S1751184Ab1GWDd1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jul 2011 23:33:27 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:37614 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751163Ab1GWDdZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2011 23:33:25 -0400
+Received: by iyb12 with SMTP id 12so2400308iyb.19
+        for <git@vger.kernel.org>; Fri, 22 Jul 2011 20:33:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=Lr/o8K2NS/kyOO0zm4aOtxsdYZclcjxWAAXhlTEK2fE=;
+        b=pwMezrVxdF+R6ryPBwIIGW+ggNBcNUejzDg9SjhGU4trofsN0Y0aiHCkYsHRUsSR1K
+         VxKZNmzbC/eGGE4XoOYTE1JfoaJbdlP/EvMkuZ7eeSPqLYlmdsqysBEf9ERJz0A6e5mt
+         fY23JN+6OBxJ+1sZW5bQI0FGwUTNlwyulEerU=
+Received: by 10.231.114.104 with SMTP id d40mr1924994ibq.114.1311392005070;
+ Fri, 22 Jul 2011 20:33:25 -0700 (PDT)
+Received: by 10.42.96.193 with HTTP; Fri, 22 Jul 2011 20:33:05 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177680>
 
-On Thu, Jul 21, 2011 at 12:35:56AM +0200, Peter Simons wrote:
+it seems that "git submodule add" looses information from "git svn
+clone". what am i missing here which would allow to "git svn rebase"
+the repository, even if it is newly added as submodule?
 
-> Both scripts run perl without any path, i.e. they don't use the
-> $PERL_PATH that was passed at build time.
+the following example takes a little, as the repository has 15'000
+revisions, even 99% do not concern the checked out part.
 
-This isn't exactly a bug. The rule we usually follow in git is that you
-can use "perl" in the PATH when you are doing simple awk-like things
-that any version of perl should do. But you must use PERL_PATH for
-#!-lines (because we can't do PATH lookup there), or for any non-trivial
-script.
+rupert @ login : ~/tmp/subm-bug
+ mkdir -p  ~/tmp/subm-bug
+ cd ~/tmp/subm-bug
+ git svn clone https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg/GeoIP/trunk
+GeoIP
+ git init test
+ cd test
+ git submodule add ~/tmp/subm-bug/GeoIP
+ cd GeoIP
+ git svn rebase
 
-That being said, I don't see any downside to using PERL_PATH. The
-Makefile tweaks would be pretty minimal. Want to work up a patch?
-
--Peff
+Migrating from a git-svn v1 layout...
+Data from a previous version of git-svn exists, but
+        .git/svn
+        (required for this version (1.7.5.4) of git-svn) does not exist.
+Done migrating from a git-svn v1 layout
+Unable to determine upstream SVN information from working tree history
