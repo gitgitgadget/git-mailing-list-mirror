@@ -1,97 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Ensure git ls-tree exits with a non-zero exit code
- if read_tree_recursive fails.
-Date: Sun, 24 Jul 2011 00:45:35 -0700
-Message-ID: <7vei1gw28w.fsf@alter.siamese.dyndns.org>
-References: <1311469670-15392-1-git-send-email-jon.seymour@gmail.com>
- <1311469670-15392-3-git-send-email-jon.seymour@gmail.com>
+From: rupert THURNER <rupert.thurner@gmail.com>
+Subject: Re: submodule add does not consider git svn
+Date: Sun, 24 Jul 2011 10:00:29 +0200
+Message-ID: <CAJs9aZ8fAPzr6Lo1EUO+Lnr1pHm=dNr6P5oYgpXE1RqkmMX7hA@mail.gmail.com>
+References: <CAJs9aZ9cMZd5PfOW7Zfza3un5JqKRM5eQdDpKPCWvLn-vkzktA@mail.gmail.com>
+ <4E2B10B7.3010903@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jens.Lehmann@web.de
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 24 09:45:43 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Sun Jul 24 10:01:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QktNe-0002uG-NL
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Jul 2011 09:45:43 +0200
+	id 1Qktci-0005pp-OW
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Jul 2011 10:01:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751904Ab1GXHpi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jul 2011 03:45:38 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:32873 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751614Ab1GXHph (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jul 2011 03:45:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 151992C14;
-	Sun, 24 Jul 2011 03:45:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=x3HDA3y/p3PdSBiit3i28svZC8g=; b=svuyBc
-	e7Bos9CgoVBE4cETuvOJtnYUPdFUZtMdvemJ1ISDU8J5gfGHdIqblj0pn1pPmn53
-	La4OJ24fXV1KIVAHEKlUWNHbNKdMTPmhvGNQecTCIeYsMGvMD1SvUQfaqyxSa3X0
-	NG9Gr3inBArNDwge+jJUfG+qrPM1zXd2Z2MeY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xzkao5ku1zduczmbXaVCTFIYKRTVCr3I
-	H2z27ywpUf7VZRXr6W19LzBdznfBHKJBd1AdNEOCcdy4kmCaXmtBee9D5wm3cC8g
-	sZMU4CpKMlv6wypxvJXqPTPLd06k7w+iFxb3xhxKobgiJxpxhythDQv1SEmp89zH
-	0HzOsQbEcYo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0CF082C13;
-	Sun, 24 Jul 2011 03:45:37 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 93AC52C12; Sun, 24 Jul 2011
- 03:45:36 -0400 (EDT)
-In-Reply-To: <1311469670-15392-3-git-send-email-jon.seymour@gmail.com> (Jon
- Seymour's message of "Sun, 24 Jul 2011 11:07:50 +1000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EB41A3B0-B5C8-11E0-AAD6-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751914Ab1GXIAv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Jul 2011 04:00:51 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:64356 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751591Ab1GXIAt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Jul 2011 04:00:49 -0400
+Received: by iyb12 with SMTP id 12so3377817iyb.19
+        for <git@vger.kernel.org>; Sun, 24 Jul 2011 01:00:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=MFpGmrTx+d0Hby/Mfj5gFZU9TY7TRjT1VT6fb/VJZkg=;
+        b=wAuYGl0BIt2OUrP/Sf+YRmji6cvfdFzJv5GSFnn11G6HTOQbd/aRfSW2IDMa+4X2Oq
+         l6HT2g2dV58LbgbSlPVrNBuiw3ZLfa0HofamKLXty/TUoQYlRqGUNMvCv7b8l2gpxW0X
+         6AFYly/y6aoJUovTcWjkYIQmjgojrzvawatjQ=
+Received: by 10.231.5.144 with SMTP id 16mr3143879ibv.189.1311494449077; Sun,
+ 24 Jul 2011 01:00:49 -0700 (PDT)
+Received: by 10.42.96.193 with HTTP; Sun, 24 Jul 2011 01:00:29 -0700 (PDT)
+In-Reply-To: <4E2B10B7.3010903@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177731>
 
-Jon Seymour <jon.seymour@gmail.com> writes:
+On Sat, Jul 23, 2011 at 20:19, Jens Lehmann <Jens.Lehmann@web.de> wrote=
+:
+>
+> Am 23.07.2011 05:33, schrieb rupert THURNER:
+> > it seems that "git submodule add" looses information from "git svn
+> > clone". what am i missing here which would allow to "git svn rebase=
+"
+> > the repository, even if it is newly added as submodule?
+> >
+> > the following example takes a little, as the repository has 15'000
+> > revisions, even 99% do not concern the checked out part.
+> >
+> > rupert @ login : ~/tmp/subm-bug
+> > =C2=A0mkdir -p =C2=A0~/tmp/subm-bug
+> > =C2=A0cd ~/tmp/subm-bug
+> > =C2=A0git svn clone https://gar.svn.sourceforge.net/svnroot/gar/csw=
+/mgar/pkg/GeoIP/trunk
+> > GeoIP
+> > =C2=A0git init test
+> > =C2=A0cd test
+> > =C2=A0git submodule add ~/tmp/subm-bug/GeoIP
+> > =C2=A0cd GeoIP
+> > =C2=A0git svn rebase
+> >
+> > Migrating from a git-svn v1 layout...
+> > Data from a previous version of git-svn exists, but
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 .git/svn
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 (required for this version (1.7.5.4) of=
+ git-svn) does not exist.
+> > Done migrating from a git-svn v1 layout
+> > Unable to determine upstream SVN information from working tree hist=
+ory
+>
+> That is because in your example "git submodule add" clones that repo
+> *again* from where you put it using "git svn clone". I am not really
+> familiar with git svn, but I assume it is intended that when you clon=
+e
+> such a repo it "forgets" that it was connected with a svn repo. Try t=
+he
+> following instead:
+>
+> git init test
+> cd test
+> git svn clone https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pk=
+g/GeoIP/trunk GeoIP
+> git submodule add ./GeoIP =C2=A0 =C2=A0 =C2=A0# Add existing git svn =
+repo GeoIP in place
+> cd GeoIP
+> git svn rebase
+>
+> Of course when you push that submodule somewhere else using git I exp=
+ect
+> that "git svn rebase" won't work when you clone that somewhere else, =
+just
+> like it happened in your example.
 
-> In the case of a corrupt repository, git ls-tree may report an error but
-> presently it exits with a code of 0.
->
-> This change uses the return code of read_tree_recursive instead.
->
-> Improved-by: Jens Lehmann <Jens.Lehmann@web.de>
-> Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
-> ---
->  builtin/ls-tree.c               |    6 +++---
->  t/t3103-ls-tree-missing-tree.sh |    2 +-
->  2 files changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-> index f08c5b0..6d6c992 100644
-> --- a/builtin/ls-tree.c
-> +++ b/builtin/ls-tree.c
-> @@ -120,7 +120,7 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
->  {
->  	unsigned char sha1[20];
->  	struct tree *tree;
-> -	int i, full_tree = 0;
-> +	int i, full_tree = 0, err;
->  	const struct option ls_tree_options[] = {
->  		OPT_BIT('d', NULL, &ls_options, "only show trees",
->  			LS_TREE_ONLY),
-> @@ -173,7 +173,7 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
->  	tree = parse_tree_indirect(sha1);
->  	if (!tree)
->  		die("not a tree object");
-> -	read_tree_recursive(tree, "", 0, 0, &pathspec, show_tree, NULL);
-> +	err = read_tree_recursive(tree, "", 0, 0, &pathspec, show_tree, NULL);
->  
-> -	return 0;
-> +	return err;
->  }
+how would the standard git case work, to continue with the example abov=
+e:
+  git clone test test1
+  git clone test1 test2
 
-Makes sense.  Thanks.
+if then sombody changes test, and i want to get these changes into
+test2, without involving test1, and rebase what is there?
+
+rupert
