@@ -1,100 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/5] setup_revisions: remember whether a ref was positive
- or not
-Date: Sun, 24 Jul 2011 12:23:30 -0700
-Message-ID: <7vy5znscst.fsf@alter.siamese.dyndns.org>
-References: <1311517282-24831-1-git-send-email-srabbelier@gmail.com>
- <1311517282-24831-4-git-send-email-srabbelier@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: submodule add does not consider git svn
+Date: Sun, 24 Jul 2011 21:44:39 +0200
+Message-ID: <4E2C7627.8050104@web.de>
+References: <CAJs9aZ9cMZd5PfOW7Zfza3un5JqKRM5eQdDpKPCWvLn-vkzktA@mail.gmail.com> <4E2B10B7.3010903@web.de> <CAJs9aZ8fAPzr6Lo1EUO+Lnr1pHm=dNr6P5oYgpXE1RqkmMX7hA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
-	Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 24 21:23:38 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: rupert THURNER <rupert.thurner@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 24 21:45:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ql4H3-0004X8-Ow
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Jul 2011 21:23:38 +0200
+	id 1Ql4c6-0001jj-Dw
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Jul 2011 21:45:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751957Ab1GXTXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jul 2011 15:23:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48985 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751912Ab1GXTXc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jul 2011 15:23:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 03E2F4018;
-	Sun, 24 Jul 2011 15:23:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KoY9DtJ1kbwT4YkeEY5M3Pk3m/0=; b=riyPA3
-	82xZUciD4nxfgFvxPDLI/ulasO0bHFtCFrJW2/9P7BwP2h7W7I9L7bPNdNYte9D+
-	+mlGWgGcq/L9rRFIVyH22q1RalMN4L4tdr6OIQbg1rw2nfapQ28hKNSvneC9OyvS
-	iqiGbwEjBnk6eK7XvTN2wKArLhjqhc1AKsJPg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SrsgnjKam9Bt8jgTZ2SUavuvWXDLTv8p
-	f8b7mkzyRlcrzqZipk/7bJ6OkLUPcaR+CjqAbQCN8L3dHZhV2jQvyTtzCsEjWmEK
-	cmdwDvx3rHzlPfHEGSkPHP5BIfqG7zIIzKHxUNpcjuTulShojUZES9YFcJujZJbm
-	1m0TtrMfPvI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EF3AD4017;
-	Sun, 24 Jul 2011 15:23:31 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 81D234016; Sun, 24 Jul 2011
- 15:23:31 -0400 (EDT)
-In-Reply-To: <1311517282-24831-4-git-send-email-srabbelier@gmail.com> (Sverre
- Rabbelier's message of "Sun, 24 Jul 2011 16:21:20 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6AA8B984-B62A-11E0-A13A-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751968Ab1GXTon (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Jul 2011 15:44:43 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:35833 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751522Ab1GXTol (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jul 2011 15:44:41 -0400
+Received: from smtp02.web.de  ( [172.20.0.184])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 3E6C01944C204;
+	Sun, 24 Jul 2011 21:44:40 +0200 (CEST)
+Received: from [93.246.46.13] (helo=[192.168.178.43])
+	by smtp02.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1Ql4bQ-0001n3-00; Sun, 24 Jul 2011 21:44:40 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:5.0) Gecko/20110624 Thunderbird/5.0
+In-Reply-To: <CAJs9aZ8fAPzr6Lo1EUO+Lnr1pHm=dNr6P5oYgpXE1RqkmMX7hA@mail.gmail.com>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX18fppwYMFrRI006pO6O0kRcULlVf6Z2weSN/wuh
+	I1TEg0OEbl4GvGvUTDVcGTKNtxdIxXBY2XL9uJF35yMT82993B
+	ljG8+r3AXA272Caf0RfQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177775>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+Am 24.07.2011 10:00, schrieb rupert THURNER:
+> On Sat, Jul 23, 2011 at 20:19, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+>> Try the following instead:
+>>
+>> git init test
+>> cd test
+>> git svn clone https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg/GeoIP/trunk GeoIP
+>> git submodule add ./GeoIP      # Add existing git svn repo GeoIP in place
+>> cd GeoIP
+>> git svn rebase
+>>
+>> Of course when you push that submodule somewhere else using git I expect
+>> that "git svn rebase" won't work when you clone that somewhere else, just
+>> like it happened in your example.
+> 
+> how would the standard git case work, to continue with the example above:
+>   git clone test test1
+>   git clone test1 test2
 
->  void add_pending_object(struct rev_info *revs, struct object *obj, const char *name)
->  {
-> -	add_pending_object_with_mode(revs, obj, name, S_IFINVALID);
-> +	add_pending_object_with_mode(revs, obj, name, S_IFINVALID, 0);
->  }
+I don't think you should clone "test" directly, but rather push that to
+a bare repo or git server so others can clone from there. And as the
+GeoIP submodule is its own git repo, it has to have someplace to be
+pushed to too. That url must be configured in the .gitmodules file and
+you have to call "git submodule sync" before you commit and push the "test"
+superproject and push the GeoIP submodule so others can use "git submodule
+init" and "git submodule update" in their "test" clone to get the submodule
+too.
 
-This seems utterly broken.  For example, fmt-merge-msg.c adds "^HEAD" and
-of course the flags on the object is UNINTERESTING. Has all the callers of
-add_pending_object() been verified? Why is it passing an unconditional 0
-and not !!(obj->flags & UNINTERESTING) or something?
+The "test" repo you set up with "git svn clone" could be where you integrate
+changes coming from svn (git svn people please stop me if this is rubbish,
+I'm just making assumptions here!) which are then pushed to the shared git
+repo so your coworkers can fetch it from there.
 
-If the excuse is "this is only to help fast-export and other callers of
-add_pending_object() does not care", that is a sloppy attitude that breaks
-maintainability of the code (because it forgets to add "in the current
-code nobody looks at the new 'flags' field" to that excuse, and also does
-not have any comments around this code that says so); it is questionable
-if such a hack belongs to a patch that touches object.h.
+> if then sombody changes test, and i want to get these changes into
+> test2, without involving test1, and rebase what is there?
 
-> @@ -1073,7 +1074,8 @@ int handle_revision_arg(const char *arg, struct rev_info *revs,
->  			} else
->  				a->object.flags |= flags_exclude;
->  			b->object.flags |= flags;
-> -			add_pending_object(revs, &a->object, this);
-> +			add_pending_object_with_mode(revs, &a->object, this,
-> +						     S_IFINVALID, flags_exclude);
-> ...
-> @@ -1103,7 +1105,7 @@ int handle_revision_arg(const char *arg, struct rev_info *revs,
->  	if (!cant_be_filename)
->  		verify_non_filename(revs->prefix, arg);
->  	object = get_reference(revs, arg, sha1, flags ^ local_flags);
-> -	add_pending_object_with_mode(revs, object, arg, mode);
-> +	add_pending_object_with_mode(revs, object, arg, mode, local_flags);
->  	return 0;
->  }
-
-Questionable.  Did the user mean to say Z is positive when he said
-
-	$ git rev-list A B ^C ... --not G H ... ^Z
+I'm not sure I understand what you mean here. But you can control what to
+check out using different branches for different purposes.
