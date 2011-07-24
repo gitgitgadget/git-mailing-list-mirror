@@ -1,105 +1,180 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 03/11] svn-fe: add EXTLIBS needed for parse-options
-Date: Sun, 24 Jul 2011 15:14:39 +0200
-Message-ID: <20110724131439.GC2934@elie.dc0b.debconf.org>
+Subject: Re: [PATCH v2 04/11] svn-fe: add usage and unpositional arguments
+ versions
+Date: Sun, 24 Jul 2011 15:25:51 +0200
+Message-ID: <20110724132551.GD2934@elie.dc0b.debconf.org>
 References: <1310559673-5026-1-git-send-email-divanorama@gmail.com>
- <1310559673-5026-4-git-send-email-divanorama@gmail.com>
+ <1310559673-5026-5-git-send-email-divanorama@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, David Barr <davidbarr@google.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>
 To: Dmitry Ivankov <divanorama@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 24 15:14:50 2011
+X-From: git-owner@vger.kernel.org Sun Jul 24 15:29:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QkyW9-0004Oy-LD
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Jul 2011 15:14:49 +0200
+	id 1QkykF-0008LT-Fg
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Jul 2011 15:29:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752626Ab1GXNOp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jul 2011 09:14:45 -0400
-Received: from mail-fx0-f52.google.com ([209.85.161.52]:33354 "EHLO
+	id S1752665Ab1GXN0C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Jul 2011 09:26:02 -0400
+Received: from mail-fx0-f52.google.com ([209.85.161.52]:56091 "EHLO
 	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752526Ab1GXNOo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jul 2011 09:14:44 -0400
-Received: by fxd18 with SMTP id 18so7583788fxd.11
-        for <git@vger.kernel.org>; Sun, 24 Jul 2011 06:14:43 -0700 (PDT)
+	with ESMTP id S1752572Ab1GXN0A (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jul 2011 09:26:00 -0400
+Received: by fxd18 with SMTP id 18so7594159fxd.11
+        for <git@vger.kernel.org>; Sun, 24 Jul 2011 06:25:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=1cLTleMvjaWzaSVmNhPUqWmGFDPYy119OkVXffW+YQY=;
-        b=Rz5nGR9EWBI2erCNcvQWOPaGAEpfVLcv2mkvtl8K+EPSt7HakzW0uEVG0sM5Ao5kJZ
-         RPKCjND5OcK0o+2P0zThfjzeP/kfbVVgCrLEALKF7CkI1n3dJ9VZOgxn7jyqaNB8ClDf
-         aCM/DqgresYq3GBt7aQKv05aFkeHq0OJ/tL54=
-Received: by 10.223.157.206 with SMTP id c14mr2412683fax.126.1311513283188;
-        Sun, 24 Jul 2011 06:14:43 -0700 (PDT)
+        bh=enVfk7GIbDdQgAh/dpEVbW1CtN2k7LFKz1xBkIv2yC8=;
+        b=I7m8TiOORH6F0cvfNWnNheSuL172PtnmG0ZVLBYilUjSXJTEU2HKQFz1NkE0K193r4
+         OtbCCvkAZUA4FsLoxLsKtJKs0igmSe9P7KBI1YoIktz5PorIrijCBL12+Y8RmpG9Ejp0
+         oud1wsy8YRIMdEruk7zjr2Bb3HSv4LxodKeB8=
+Received: by 10.223.61.211 with SMTP id u19mr5095256fah.146.1311513959360;
+        Sun, 24 Jul 2011 06:25:59 -0700 (PDT)
 Received: from elie.dc0b.debconf.org ([78.28.140.4])
-        by mx.google.com with ESMTPS id l22sm3191258fam.33.2011.07.24.06.14.41
+        by mx.google.com with ESMTPS id n18sm2174591fam.7.2011.07.24.06.25.54
         (version=SSLv3 cipher=OTHER);
-        Sun, 24 Jul 2011 06:14:42 -0700 (PDT)
+        Sun, 24 Jul 2011 06:25:56 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1310559673-5026-4-git-send-email-divanorama@gmail.com>
+In-Reply-To: <1310559673-5026-5-git-send-email-divanorama@gmail.com>
 User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177746>
 
 Dmitry Ivankov wrote:
 
-> Currently parse-options.o pull quite a big bunch of dependencies
-> that are neither pulled in by svn-fe Makefile nor included in libgit.a.
->
-> Use a temporary hack: put hardcoded EXTLIBS
+> $ svn-fe --git-svn-id-url=url
+> does the same thing as
+> $ svn-fe url
+> i.e., url is used to generate git-svn-id: lines, if url is set.
 
-In other words, this is a workaround for the lack of
-http://thread.gmane.org/gmane.comp.version-control.git/176318/focus=176573
-(Reduce parse-options.o dependencies).
+Reasonable.  Let's see...
 
-> this may not work in all
-> setups because /Makefile logic is not repeated.
->
-> For example, one may need -lcrypto instead of -lssl or no crypto library
-> if BLK_SHA1 is set, also an additional -lz or -lpcre could be required.
+> --- a/contrib/svn-fe/Makefile
+> +++ b/contrib/svn-fe/Makefile
+> @@ -41,7 +41,7 @@ svn-fe$X: svn-fe.o $(VCSSVN_LIB) $(GIT_LIB)
+>  		$(ALL_LDFLAGS) $(LIBS)
+>  
+>  svn-fe.o: svn-fe.c ../../vcs-svn/svndump.h
+> -	$(QUIET_CC)$(CC) -I../../vcs-svn -o $*.o -c $(ALL_CFLAGS) $<
+> +	$(QUIET_CC)$(CC) -I../../vcs-svn -I../.. -o $*.o -c $(ALL_CFLAGS) $<
 
-Better to pull in too many libs and let the operator remove them from
-the Makefile than too few and make her guess.  Though of course
-neither should be needed. :)
+I'd prefer to see the -I flags as part of ALL_CFLAGS, though that's
+somewhat orthogonal to this patch.
 
-With the following applied on top locally, it works for me.
+[...]
+> --- a/contrib/svn-fe/svn-fe.c
+> +++ b/contrib/svn-fe/svn-fe.c
+> @@ -3,14 +3,38 @@
+[...]
+> +static struct option svn_fe_options[] = {
+> +	OPT_STRING(0, "git-svn-id-url", &url, "url",
+> +		"append git-svn metadata line to commit messages"),
 
--- >8 --
-Subject: squash! svn-fe: add EXTLIBS needed for parse-options
+Hmm.  How about this?
 
--lcrypto is needed for SHA-1 routines unless NO_OPENSSL or BLK_SHA1
-is set, -lpcre is for grep if USE_LIBPCRE is set, and -lz is needed
-throughout.
+	"add git-svn-id line to log messages, imitating git-svn"
 
-In the future, none of these should be needed, after a little
-rearranging to ensure that parse-options.o has no references to
-translation units that need to access the object db.
+[...]
+> +	argc = parse_options(argc, argv, NULL, svn_fe_options,
+> +						svn_fe_usage, 0);
+> +	if (argc == 1) {
+> +		if (url)
+> +			usage_msg_opt("git-svn-id-url is set twice: as a "
+> +					"--parameter and as a [parameter]",
+> +					svn_fe_usage, svn_fe_options);
+> +		url = argv[0];
+> +	} else if (argc)
+> +		usage_with_options(svn_fe_usage, svn_fe_options);
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+IMHO would be more readable with the simplest and exceptional case
+first:
+
+	if (argc > 1)
+		usage_with_options(...);
+
+This way, a person reading can be comforted with the knowledge that
+argc <= 1 from then on.
+
+	if (argc == 1) {
+		if (url)
+			...
+	}
+
+To sum up, the patch looks good, and the only improvements I can think
+of are tiny nits. :)
+
+With whatever changes mentioned above seem suitable,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks.
 ---
- contrib/svn-fe/Makefile |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ contrib/svn-fe/Makefile |    4 ++--
+ contrib/svn-fe/svn-fe.c |    8 +++++---
+ 2 files changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/contrib/svn-fe/Makefile b/contrib/svn-fe/Makefile
-index dc6dafef..14b07b5b 100644
+index 14b07b5b..62a5c628 100644
 --- a/contrib/svn-fe/Makefile
 +++ b/contrib/svn-fe/Makefile
-@@ -8,7 +8,7 @@ CFLAGS = -g -O2 -Wall
- LDFLAGS =
- ALL_CFLAGS = $(CFLAGS)
- ALL_LDFLAGS = $(LDFLAGS)
--EXTLIBS = -lssl -lpthread
-+EXTLIBS = -lssl -lcrypto -lpcre -lz -lpthread
+@@ -6,7 +6,7 @@ MV = mv
  
- GIT_LIB = ../../libgit.a
- VCSSVN_LIB = ../../vcs-svn/lib.a
+ CFLAGS = -g -O2 -Wall
+ LDFLAGS =
+-ALL_CFLAGS = $(CFLAGS)
++ALL_CFLAGS = -I../.. -I../../vcs-svn $(CFLAGS)
+ ALL_LDFLAGS = $(LDFLAGS)
+ EXTLIBS = -lssl -lcrypto -lpcre -lz -lpthread
+ 
+@@ -39,7 +39,7 @@ svn-fe$X: svn-fe.o $(VCSSVN_LIB) $(GIT_LIB)
+ 		$(ALL_LDFLAGS) $(LIBS)
+ 
+ svn-fe.o: svn-fe.c ../../vcs-svn/svndump.h
+-	$(QUIET_CC)$(CC) -I../../vcs-svn -I../.. -o $*.o -c $(ALL_CFLAGS) $<
++	$(QUIET_CC)$(CC) -o $@ -c $(ALL_CFLAGS) $<
+ 
+ svn-fe.html: svn-fe.txt
+ 	$(QUIET_SUBDIR0)../../Documentation $(QUIET_SUBDIR1) \
+diff --git a/contrib/svn-fe/svn-fe.c b/contrib/svn-fe/svn-fe.c
+index 7e829b91..a95e72f4 100644
+--- a/contrib/svn-fe/svn-fe.c
++++ b/contrib/svn-fe/svn-fe.c
+@@ -16,7 +16,7 @@ static const char *url;
+ 
+ static struct option svn_fe_options[] = {
+ 	OPT_STRING(0, "git-svn-id-url", &url, "url",
+-		"append git-svn metadata line to commit messages"),
++		"add git-svn-id line to log messages, imitating git-svn"),
+ 	OPT_END()
+ };
+ 
+@@ -24,14 +24,16 @@ int main(int argc, const char **argv)
+ {
+ 	argc = parse_options(argc, argv, NULL, svn_fe_options,
+ 						svn_fe_usage, 0);
++	if (argc > 1)
++		usage_with_options(svn_fe_usage, svn_fe_options);
++
+ 	if (argc == 1) {
+ 		if (url)
+ 			usage_msg_opt("git-svn-id-url is set twice: as a "
+ 					"--parameter and as a [parameter]",
+ 					svn_fe_usage, svn_fe_options);
+ 		url = argv[0];
+-	} else if (argc)
+-		usage_with_options(svn_fe_usage, svn_fe_options);
++	}
+ 	if (svndump_init(NULL))
+ 		return 1;
+ 	svndump_read(url);
 -- 
 1.7.6
