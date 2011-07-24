@@ -1,64 +1,62 @@
-From: Mathew Benson <mathew.benson@gmail.com>
-Subject: Re: Help using git I'm review process
-Date: Sun, 24 Jul 2011 07:42:55 -0500
-Message-ID: <A5291838-E8F4-47DA-A3E7-E6CBFE7664C9@gmail.com>
-References: <245B4B40-CA0A-43F6-A3F0-85E50D75CB93@gmail.com> <CA+39Oz5OT_RjyGeQdKaFycHjwN6hzy+N6P6DDBAtSv3vTYo_4A@mail.gmail.com>
-Mime-Version: 1.0 (iPad Mail 8J2)
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Thomas Adam <thomas@xteddy.org>
-X-From: git-owner@vger.kernel.org Sun Jul 24 14:43:41 2011
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 01/11] svn-fe: add man target to Makefile
+Date: Sun, 24 Jul 2011 14:52:00 +0200
+Message-ID: <20110724125200.GA2934@elie.dc0b.debconf.org>
+References: <1310559673-5026-1-git-send-email-divanorama@gmail.com>
+ <1310559673-5026-2-git-send-email-divanorama@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, David Barr <davidbarr@google.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Dmitry Ivankov <divanorama@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 24 14:52:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qky20-00043T-O9
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Jul 2011 14:43:41 +0200
+	id 1QkyAa-0006gM-VN
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Jul 2011 14:52:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752617Ab1GXMm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jul 2011 08:42:59 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:63653 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752601Ab1GXMm5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Jul 2011 08:42:57 -0400
-Received: by qwk3 with SMTP id 3so1704236qwk.19
-        for <git@vger.kernel.org>; Sun, 24 Jul 2011 05:42:57 -0700 (PDT)
+	id S1752691Ab1GXMwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Jul 2011 08:52:12 -0400
+Received: from mail-fx0-f52.google.com ([209.85.161.52]:50222 "EHLO
+	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752625Ab1GXMwL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jul 2011 08:52:11 -0400
+Received: by fxd18 with SMTP id 18so7564217fxd.11
+        for <git@vger.kernel.org>; Sun, 24 Jul 2011 05:52:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=references:in-reply-to:mime-version:content-transfer-encoding
-         :content-type:message-id:cc:x-mailer:from:subject:date:to;
-        bh=N61l8SeJKNU70kBsw1C36+wSx6C7EwkPxFejxJqZxDE=;
-        b=op3wPRZJX4K9Kz8QWwthPuNCJ6lQPqrautyKbZjlL8oojixd+7J3of7RqTnSjMi/BQ
-         eggd0s2hakOJ04LZ5i5wM4u13RNLC3+gu1Mp9MMFeyGJmVX5fIx9myTufpUk2beu5hLd
-         6BrsTebHHkog8TpjQ4An5qZRkAFMIkHvHjrkw=
-Received: by 10.224.216.138 with SMTP id hi10mr2622408qab.251.1311511376784;
-        Sun, 24 Jul 2011 05:42:56 -0700 (PDT)
-Received: from [192.168.1.102] (user-0cdvj2d.cable.mindspring.com [24.223.204.77])
-        by mx.google.com with ESMTPS id u12sm2868506qct.27.2011.07.24.05.42.55
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 24 Jul 2011 05:42:55 -0700 (PDT)
-In-Reply-To: <CA+39Oz5OT_RjyGeQdKaFycHjwN6hzy+N6P6DDBAtSv3vTYo_4A@mail.gmail.com>
-X-Mailer: iPad Mail (8J2)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=UCt/XSQhUOendS/pZ9iWi4YpiwyKJO+fGAya6ktEpnI=;
+        b=JElVh7/Dq4gxS9UfRYmmbjvY2BUOgoxq5uh2YDgs2OQroFgF2qpjDLyhvnnsRmtzpH
+         rIuHY7SAIZ/dULaOyJkeAdXlqd5rHSRm9eQ0zr4W3CyQ2uVZul4tC3V7X+Tnhf6PcUV2
+         U5LvQfCYnpaZLD0DLi9l78QdPraBEoH/IPHy0=
+Received: by 10.223.144.66 with SMTP id y2mr909308fau.0.1311511930036;
+        Sun, 24 Jul 2011 05:52:10 -0700 (PDT)
+Received: from elie.dc0b.debconf.org ([78.28.140.4])
+        by mx.google.com with ESMTPS id p17sm3186510fak.1.2011.07.24.05.52.06
+        (version=SSLv3 cipher=OTHER);
+        Sun, 24 Jul 2011 05:52:07 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1310559673-5026-2-git-send-email-divanorama@gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177742>
 
-I found that in my research but my IT "department" recommended a tool they're already using.  I'll push Gerrit again.  Is there an online demo?
+Hi Dmitry,
 
-Sent from my iPad
+Dmitry Ivankov wrote:
 
-On Jul 24, 2011, at 7:16 AM, Thomas Adam <thomas@xteddy.org> wrote:
+> There already is a svn-fe.1 target. But 'man' being a standard
+> target is easier to discover or type. It can also be reused if
+> more manpages arise here.
 
-> On 24 July 2011 13:12, Mathew Benson <mathew.benson@gmail.com> wrote:
->> I'm planning to use git for a work project, which requires tight control of the peer review process.  In previous jobs, the peer review was a tedious manual process of creating PDF files, writing comments in spreadsheets, and copying comments to the CM system.  I want to use technology to my best advantage.
->> 
->> Once a developer has completed all his changes in his development branch, what's the best way to get those files to the reviewers, without requiring the author to stop work?  First, I think I should create a tag in the developer branch.  Each developer has a local repository, and my review tool writes files directly in the work area.  Can they just fetch, checkout a tag (don't know how to do that), commit changes, and push it back to the central repository?  Is there a better workflow?--
-> 
-> This is what Gerrit is useful for.
-> 
-> -- Thomas Adam
+This will make life a little easier when wanting to test-build
+git-remote-svn.1 along with svn-fe.1 (once git-remote-svn exists).
+Thanks, queued.
