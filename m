@@ -1,176 +1,62 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH 5/5] setup_revisions: remember whether a ref was positive or not
-Date: Sun, 24 Jul 2011 16:21:22 +0200
-Message-ID: <1311517282-24831-6-git-send-email-srabbelier@gmail.com>
-References: <1311517282-24831-1-git-send-email-srabbelier@gmail.com>
-Cc: Sverre Rabbelier <srabbelier@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Ramkumar
-X-From: git-owner@vger.kernel.org Sun Jul 24 16:22:42 2011
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Help using git I'm review process
+Date: Sun, 24 Jul 2011 16:37:09 +0200
+Message-ID: <4E2C2E15.8010602@web.de>
+References: <245B4B40-CA0A-43F6-A3F0-85E50D75CB93@gmail.com> <CA+39Oz5OT_RjyGeQdKaFycHjwN6hzy+N6P6DDBAtSv3vTYo_4A@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Mathew Benson <mathew.benson@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Thomas Adam <thomas@xteddy.org>
+X-From: git-owner@vger.kernel.org Sun Jul 24 16:37:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QkzZp-0006Dd-83
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Jul 2011 16:22:41 +0200
+	id 1Qkzo8-00020V-Ei
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Jul 2011 16:37:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752893Ab1GXOWf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jul 2011 10:22:35 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:55718 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752869Ab1GXOW2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jul 2011 10:22:28 -0400
-Received: by mail-ww0-f44.google.com with SMTP id 5so3380781wwe.1
-        for <git@vger.kernel.org>; Sun, 24 Jul 2011 07:22:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=JRygBh84x+qgJ7IqJ/9ypWWkNeUiBj29GA6sLQ9qAoo=;
-        b=XEe1HsDg66dXsgg6tG966ZYoqIoek9e538mWc08zkfg6VPTAfcJqK3DhFI5MslR3R0
-         W1iPbQgyCWXWahgE48EZ8cvkdzmwyrU0nbRmchYj7dclCjL9Ig6NYDRPaCGdz8sR0DJT
-         M2n6yCZWb+4pX1nHFZ78rUV3YqaYdv/WI3T4s=
-Received: by 10.227.209.20 with SMTP id ge20mr596909wbb.108.1311517346934;
-        Sun, 24 Jul 2011 07:22:26 -0700 (PDT)
-Received: from localhost.localdomain ([188.142.63.148])
-        by mx.google.com with ESMTPS id fc2sm3526819wbb.35.2011.07.24.07.22.24
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 24 Jul 2011 07:22:25 -0700 (PDT)
-X-Mailer: git-send-email 1.7.6.385.g91185.dirty
-In-Reply-To: <1311517282-24831-1-git-send-email-srabbelier@gmail.com>
+	id S1752712Ab1GXOhN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Jul 2011 10:37:13 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:60389 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752626Ab1GXOhL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jul 2011 10:37:11 -0400
+Received: from smtp02.web.de  ( [172.20.0.184])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 2AD3E1A7137BC;
+	Sun, 24 Jul 2011 16:37:10 +0200 (CEST)
+Received: from [93.246.40.48] (helo=[192.168.178.43])
+	by smtp02.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1Qkznq-0007Sg-00; Sun, 24 Jul 2011 16:37:10 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:5.0) Gecko/20110624 Thunderbird/5.0
+In-Reply-To: <CA+39Oz5OT_RjyGeQdKaFycHjwN6hzy+N6P6DDBAtSv3vTYo_4A@mail.gmail.com>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1/RoZjsPjBRM0e01wau+zysPbiNHZf/G3FI4Mp0
+	EwzvOZ7wqoW2qZ+mAzelQNKJMrhhLo0oWPKNt+fv2C2FI0WBFT
+	KQ5eFipIhTowoBa5taBQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177760>
 
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Am 24.07.2011 14:16, schrieb Thomas Adam:
+> On 24 July 2011 13:12, Mathew Benson <mathew.benson@gmail.com> wrote:
+>> I'm planning to use git for a work project, which requires tight control of the peer review process.  In previous jobs, the peer review was a tedious manual process of creating PDF files, writing comments in spreadsheets, and copying comments to the CM system.  I want to use technology to my best advantage.
+>>
+>> Once a developer has completed all his changes in his development branch, what's the best way to get those files to the reviewers, without requiring the author to stop work?  First, I think I should create a tag in the developer branch.  Each developer has a local repository, and my review tool writes files directly in the work area.  Can they just fetch, checkout a tag (don't know how to do that), commit changes, and push it back to the central repository?  Is there a better workflow?--
+> 
+> This is what Gerrit is useful for.
 
-This will be required by fast-export, when no commits were
-exported, but the refs should be set, of course.
+Yes, Gerrit is a very sophisticated way to do that.
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
----
-
-  And then finally, the fix. Thanks for reading.
-
- builtin/fast-export.c  |   36 +++++++++++++++++++++++++++++++-----
- t/t9350-fast-export.sh |    2 +-
- 2 files changed, 32 insertions(+), 6 deletions(-)
-
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 628eab0..9c24f4e 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -17,6 +17,8 @@
- #include "utf8.h"
- #include "parse-options.h"
- 
-+#define REF_HANDLED (ALL_REV_FLAGS + 1)
-+
- static const char *fast_export_usage[] = {
- 	"git fast-export [rev-list-opts]",
- 	NULL
-@@ -456,6 +458,7 @@ static void handle_tag(const char *name, struct tag *tag)
- }
- 
- static void get_tags_and_duplicates(struct object_array *pending,
-+				    struct string_list *refs,
- 				    struct string_list *extra_refs)
- {
- 	struct tag *tag;
-@@ -507,8 +510,11 @@ static void get_tags_and_duplicates(struct object_array *pending,
- 		if (commit->util)
- 			/* more than one name for the same object */
- 			string_list_append(extra_refs, full_name)->util = commit;
--		else
-+		else {
- 			commit->util = full_name;
-+			/* we might need to set this ref explicitly */
-+			string_list_append(refs, full_name)->util = commit;
-+		}
- 	}
- }
- 
-@@ -524,10 +530,29 @@ static void handle_reset(const char *name, struct object *object)
- 		       sha1_to_hex(object->sha1));
- }
- 
--static void handle_tags_and_duplicates(struct string_list *extra_refs)
-+static void handle_tags_and_duplicates(struct string_list *refs, struct string_list *extra_refs)
- {
- 	int i;
- 
-+	/* even if no commits were exported, we need to export the ref */
-+	for (i = refs->nr - 1; i >= 0; i--) {
-+		const char *name = refs->items[i].string;
-+		struct object *object = refs->items[i].util;
-+
-+		if (!(object->flags & REF_HANDLED)) {
-+			if (object->type & OBJ_TAG)
-+				handle_tag(name, (struct tag *)object);
-+			else {
-+				if (!prefixcmp(name, "refs/tags/") &&
-+				    (tag_of_filtered_mode != REWRITE ||
-+				     !get_object_mark(object)))
-+					continue;
-+				handle_reset(name, object);
-+				object->flags |= REF_HANDLED;
-+			}
-+		}
-+	}
-+
- 	for (i = extra_refs->nr - 1; i >= 0; i--) {
- 		const char *name = extra_refs->items[i].string;
- 		struct object *object = extra_refs->items[i].util;
-@@ -617,7 +642,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- {
- 	struct rev_info revs;
- 	struct object_array commits = OBJECT_ARRAY_INIT;
--	struct string_list extra_refs = STRING_LIST_INIT_NODUP;
-+	struct string_list refs = STRING_LIST_INIT_NODUP, extra_refs = STRING_LIST_INIT_NODUP;
- 	struct commit *commit;
- 	char *export_filename = NULL, *import_filename = NULL;
- 	struct option options[] = {
-@@ -669,7 +694,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 	if (import_filename && revs.prune_data.nr)
- 		full_tree = 1;
- 
--	get_tags_and_duplicates(&revs.pending, &extra_refs);
-+	get_tags_and_duplicates(&revs.pending, &refs, &extra_refs);
- 
- 	if (prepare_revision_walk(&revs))
- 		die("revision walk setup failed");
-@@ -681,11 +706,12 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 		}
- 		else {
- 			handle_commit(commit, &revs);
-+			commit->object.flags |= REF_HANDLED;
- 			handle_tail(&commits, &revs);
- 		}
- 	}
- 
--	handle_tags_and_duplicates(&extra_refs);
-+	handle_tags_and_duplicates(&refs, &extra_refs);
- 
- 	if (export_filename)
- 		export_marks(export_filename);
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index ed0417a..d2d7ef8 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -420,7 +420,7 @@ from $(git rev-parse master)
- 
- EOF
- 
--test_expect_failure 'refs are updated even if no commits need to be exported' '
-+test_expect_success 'refs are updated even if no commits need to be exported' '
- 	git fast-export master..master > actual &&
- 	test_cmp expected actual
- '
--- 
-1.7.6.385.g91185.dirty
+But you can also achieve a review process by just using git and email
+too: Have each developer do each topic of his work on a separate feature
+branch and send merge requests (e.g. per email) to the reviewer when he
+is done. If the reviewer approves the changes, he merges that branch
+(and deletes the remote topic branch, as that topic is now finished and
+part of the history). If not, he requests improvements from the developer
+who updates that branch and sends another review request when he is done.
+We use this approach successfully at my dayjob.
