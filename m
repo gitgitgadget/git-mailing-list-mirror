@@ -1,83 +1,56 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH 9/9] bisect: add documentation for --ignore-checkout-failure option.
-Date: Sun, 24 Jul 2011 15:57:54 +1000
-Message-ID: <1311487074-25070-10-git-send-email-jon.seymour@gmail.com>
-References: <1311487074-25070-1-git-send-email-jon.seymour@gmail.com>
-Cc: Jon Seymour <jon.seymour@gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: git-show / tig: no indention for commit message
+Date: Sun, 24 Jul 2011 09:36:47 +0200
+Message-ID: <m2pql0m8og.fsf@linux-m68k.org>
+References: <20110511113655.GB24644@nibiru.local>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 24 07:58:59 2011
+X-From: git-owner@vger.kernel.org Sun Jul 24 09:36:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QkriK-0007w3-O8
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Jul 2011 07:58:57 +0200
+	id 1QktFB-00017w-6p
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Jul 2011 09:36:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752272Ab1GXF6f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jul 2011 01:58:35 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:56778 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751914Ab1GXF63 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jul 2011 01:58:29 -0400
-Received: by mail-pz0-f42.google.com with SMTP id 37so6276942pzk.1
-        for <git@vger.kernel.org>; Sat, 23 Jul 2011 22:58:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=iQl1fROQO766bvx6WIrSzkMJRIhCfV+K6O9ylpjNfF4=;
-        b=Xep1uuIXD0PT7yUJA7gBFKAsGz2licuEPgs2Kk9Vcutqt6FzJUCN+Dhgfu92pxv/M3
-         S2H1nnx03IAnMdH/fZAsV50Y+ibmROy7/a+1vO7K4kPNO8CmqnBC59V+d7U7gyK1kRBL
-         RqwJKkmNOnXArddXKNkJn1ocZqh+pbzIk33XA=
-Received: by 10.142.240.19 with SMTP id n19mr1961241wfh.34.1311487109098;
-        Sat, 23 Jul 2011 22:58:29 -0700 (PDT)
-Received: from localhost.localdomain ([124.169.157.32])
-        by mx.google.com with ESMTPS id b4sm3359124pba.43.2011.07.23.22.58.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 23 Jul 2011 22:58:28 -0700 (PDT)
-X-Mailer: git-send-email 1.7.6.347.g96e0b.dirty
-In-Reply-To: <1311487074-25070-1-git-send-email-jon.seymour@gmail.com>
+	id S1751519Ab1GXHgw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Jul 2011 03:36:52 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:46079 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751261Ab1GXHgv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jul 2011 03:36:51 -0400
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 4E76B188B5BB
+	for <git@vger.kernel.org>; Sun, 24 Jul 2011 09:36:49 +0200 (CEST)
+X-Auth-Info: 6Pg1VdF0c3vNKVKFdVaJnyeSIDC6aY4JcnKZPUTYibw=
+Received: from linux.local (ppp-88-217-105-242.dynamic.mnet-online.de [88.217.105.242])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 1B32B1C000A2
+	for <git@vger.kernel.org>; Sun, 24 Jul 2011 09:36:49 +0200 (CEST)
+Received: by linux.local (Postfix, from userid 501)
+	id 2DE131E52E5; Sun, 24 Jul 2011 09:36:47 +0200 (CEST)
+X-Yow: I have a very good DENTAL PLAN.  Thank you.
+In-Reply-To: <20110511113655.GB24644@nibiru.local> (Enrico Weigelt's message
+	of "Wed, 11 May 2011 13:36:55 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177727>
 
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
----
- Documentation/git-bisect.txt |   13 ++++++++++++-
- 1 files changed, 12 insertions(+), 1 deletions(-)
+Enrico Weigelt <weigelt@metux.de> writes:
 
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
-index ab60a18..f7412a1 100644
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -17,7 +17,7 @@ The command takes various subcommands, and different options depending
- on the subcommand:
- 
-  git bisect help
-- git bisect start [<bad> [<good>...]] [--] [<paths>...]
-+ git bisect start [--ignore-checkout-failure] [<bad> [<good>...]] [--] [<paths>...]
-  git bisect bad [<rev>]
-  git bisect good [<rev>...]
-  git bisect skip [(<rev>|<range>)...]
-@@ -263,6 +263,17 @@ rewind the tree to the pristine state.  Finally the script should exit
- with the status of the real test to let the "git bisect run" command loop
- determine the eventual outcome of the bisect session.
- 
-+OPTIONS
-+-------
-+--ignore-checkout-failure::
-++
-+This option, specified on the "git bisect start" subcommand, causes
-+bisect to ignore checkout failures during the bisection process. This allows
-+git bisect to be used on repositories that contain damaged trees. The
-+user should expect that, in cases where checkout fails, the detached
-+HEAD refers to the trial commit, but the working tree and index
-+may differ from that commit.
-+
- EXAMPLES
- --------
- 
+> I often have to copy+paste commit messages from tig (when putting
+> changes into TFS manually ;-o), and the 4-spaces indention is quite
+> unhandy here. Is there a way to switch it off ?
+
+You could use git cat-file instead.
+
+Andreas.
+
 -- 
-1.7.6.347.g96e0b.dirty
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
