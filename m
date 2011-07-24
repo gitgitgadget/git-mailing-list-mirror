@@ -1,70 +1,66 @@
-From: Enrico Weigelt <weigelt@metux.de>
-Subject: Re: RFC: a plugin architecture for git extensions?
-Date: Fri, 13 May 2011 21:32:34 +0200
-Message-ID: <20110513193233.GC24644@nibiru.local>
-References: <BANLkTinh3v1o7t4HRwzZtFW--zu-j4U3kw@mail.gmail.com> <BANLkTimqVs+Bg+zz7xu1Fb=a_dJ65WOvQQ@mail.gmail.com> <BANLkTim=ARYu=E-Lgu8dA+FpVQUY+q-yeA@mail.gmail.com>
-Reply-To: weigelt@metux.de
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: .gitignore for large files?
+Date: Sun, 24 Jul 2011 09:59:45 +0700
+Message-ID: <CACsJy8C=ks1_TdQdNi4Wq8OCSAON9rhJ88zAp1kDZy3fBg2pmQ@mail.gmail.com>
+References: <B27BF8C0758741A68E1631A7308E17C6@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jul 24 03:59:22 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Sun Jul 24 05:00:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QknyT-00018v-Vo
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Jul 2011 03:59:22 +0200
+	id 1Qkovc-00035b-Cc
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Jul 2011 05:00:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752068Ab1GXB7R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Jul 2011 21:59:17 -0400
-Received: from caprica.metux.de ([82.165.128.25]:55361 "EHLO
-	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751795Ab1GXB7Q (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Jul 2011 21:59:16 -0400
-Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
-	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id p6O0N3b2001122
-	for <git@vger.kernel.org>; Sun, 24 Jul 2011 02:26:49 +0200
-Received: (from uucp@localhost)
-	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id p6NNuqVt020756
-	for git@vger.kernel.org; Sun, 24 Jul 2011 01:56:53 +0200
-Received: (from weigelt@localhost)
-	by nibiru.metux.de (8.12.10/8.12.10) id p4DJWYYb017217
-	for git@vger.kernel.org; Fri, 13 May 2011 21:32:34 +0200
-Mail-Followup-To: Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <BANLkTim=ARYu=E-Lgu8dA+FpVQUY+q-yeA@mail.gmail.com>
-User-Agent: Mutt/1.4.1i
-X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
-X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
-X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
-X-Killer: 23, endloesung, Weltuntergang, 
-X-Doof: wer das liest ist doof
+	id S1751160Ab1GXDAS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Jul 2011 23:00:18 -0400
+Received: from mail-fx0-f52.google.com ([209.85.161.52]:46551 "EHLO
+	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750832Ab1GXDAQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jul 2011 23:00:16 -0400
+Received: by fxd18 with SMTP id 18so7141693fxd.11
+        for <git@vger.kernel.org>; Sat, 23 Jul 2011 20:00:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=0NBXXU1Nn88wdKjaQVu8XroBLMOQTaBWatbcGCa0zmI=;
+        b=NI7bskjG1Uvo4E7mVerfqAvLRVBpyMWftZLZ4PNmIBQ+EbLjVkwB4Kh/S1i/Q+qs6V
+         cLoVp46BYOTDZP2CTnBsLaiQ9BzdAO2D5nhOfuqsZV9dciRxGgHsriowJu7m/2Jped4c
+         ezXLH5M1b2QGELkpP/i8dP71J9WCiuHz+6jFI=
+Received: by 10.205.65.13 with SMTP id xk13mr882195bkb.400.1311476415172; Sat,
+ 23 Jul 2011 20:00:15 -0700 (PDT)
+Received: by 10.204.59.83 with HTTP; Sat, 23 Jul 2011 19:59:45 -0700 (PDT)
+In-Reply-To: <B27BF8C0758741A68E1631A7308E17C6@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177712>
 
-* Jon Seymour <jon.seymour@gmail.com> wrote:
+On Sun, Jul 24, 2011 at 3:00 AM, Philip Oakley <philipoakley@iee.org> wrote:
+> Has there been any discussion in the past on a method for ignoring large
+> files via the .gitignore process?
+>
+> It does appear to be a moderately common problem for folk to accidentally
+> commit a large file which bloats their repository and they want rid of it,
+> which causes history re-writes and such palaver.
 
-> No. As I explained in the posts
->  that you chose not to read, such concerns would be dealt with by real
-> package managers.
+Once they are in, they cannot be ignored. Perhaps commit hooks at
+server side is a better place?
 
-Okay, you're essentially aliasing git-pm to the distro's existing
-package manager. In the end, these git extensions still have to
-be packaged for your actual distro. So why not just using the
-distro's package manager directly ?
+> Perhaps a simple '>' and '<' option (the latter to cover null or minimal
+> files?) with a --warn postfix may be possible. Just an initial thought.
 
+Or you can make use of .gitattributes, more flexible syntax.
 
-cu
+> Where would the 'right place' be for me to look at the git code if it was
+> beneficial.
+
+In dir.c, add_exlude() does the parsing, excluded_from_list() handles the logic.
 -- 
-----------------------------------------------------------------------
- Enrico Weigelt, metux IT service -- http://www.metux.de/
-
- phone:  +49 36207 519931  email: weigelt@metux.de
- mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
-----------------------------------------------------------------------
- Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
-----------------------------------------------------------------------
+Duy
