@@ -1,67 +1,103 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v3 2/2] Ensure git ls-tree exits with a non-zero exit code
- if read_tree_recursive fails.
-Date: Mon, 25 Jul 2011 08:31:18 +0700
-Message-ID: <CACsJy8Aa_=BvZOt58sM4dknVzvihH9OtHAS1aRxqPwNLxh0fkg@mail.gmail.com>
-References: <1311519554-16587-1-git-send-email-jon.seymour@gmail.com> <1311519554-16587-3-git-send-email-jon.seymour@gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: .gitignore for large files?
+Date: Mon, 25 Jul 2011 07:53:44 +0100
+Organization: OPDS
+Message-ID: <179943CA8CCC4BEE811E31B2BCC634D1@PhilipOakley>
+References: <B27BF8C0758741A68E1631A7308E17C6@PhilipOakley> <CACsJy8C=ks1_TdQdNi4Wq8OCSAON9rhJ88zAp1kDZy3fBg2pmQ@mail.gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jens.Lehmann@web.de, gitster@pobox.com
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 25 03:31:55 2011
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Git List" <git@vger.kernel.org>
+To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 25 08:54:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QlA1S-0003SI-Nr
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Jul 2011 03:31:55 +0200
+	id 1QlF3G-0003IQ-5X
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Jul 2011 08:54:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752785Ab1GYBbv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Jul 2011 21:31:51 -0400
-Received: from mail-fx0-f52.google.com ([209.85.161.52]:60164 "EHLO
-	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752778Ab1GYBbt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Jul 2011 21:31:49 -0400
-Received: by fxd18 with SMTP id 18so8143806fxd.11
-        for <git@vger.kernel.org>; Sun, 24 Jul 2011 18:31:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=/ZtYqdwbHZo9PXnZ9qOhbYmw0cU6b/LbcewRDHZJ0Is=;
-        b=g6CX439aOHUyvC6lPksaxdyq2ceXOzjRAy34MO+7CZIV3ErIsAakQTJ8d9+TLBcWmM
-         7javRZn/fqJ4gvZ4jBQQ7G3JW/FMrFV1rJhsSTwQmyRB4Ihu5pa1YM5FcJxRYrag42eb
-         ngjsxhlzeUqiA+Piy3gljE7cCDn2otMnV664Q=
-Received: by 10.205.65.13 with SMTP id xk13mr1097842bkb.400.1311557508617;
- Sun, 24 Jul 2011 18:31:48 -0700 (PDT)
-Received: by 10.204.59.83 with HTTP; Sun, 24 Jul 2011 18:31:18 -0700 (PDT)
-In-Reply-To: <1311519554-16587-3-git-send-email-jon.seymour@gmail.com>
+	id S1750864Ab1GYGxs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jul 2011 02:53:48 -0400
+Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:41109 "EHLO
+	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750781Ab1GYGxq (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Jul 2011 02:53:46 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AvQAAB0SLU5Z8rUp/2dsb2JhbAArCQEBBAEIAQEfFRUNAQEjBQYBAQQFAwEDEQMBAQEBAgIFLQICFAEBBAwSBwgWCAcXDAIBAgMBhEGFTY1fj1N4iHwCr16QMoErhAUwXwScWQGGdw
+X-IronPort-AV: E=Sophos;i="4.67,259,1309734000"; 
+   d="scan'208";a="507256562"
+Received: from host-89-242-181-41.as13285.net (HELO PhilipOakley) ([89.242.181.41])
+  by out1.ip06ir2.opaltelecom.net with SMTP; 25 Jul 2011 07:53:44 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6109
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177782>
 
-On Sun, Jul 24, 2011 at 9:59 PM, Jon Seymour <jon.seymour@gmail.com> wr=
-ote:
-> @@ -173,7 +173,6 @@ int cmd_ls_tree(int argc, const char **argv, cons=
-t char *prefix)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0tree =3D parse_tree_indirect(sha1);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!tree)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0die("not a tre=
-e object");
-> - =C2=A0 =C2=A0 =C2=A0 read_tree_recursive(tree, "", 0, 0, &pathspec,=
- show_tree, NULL);
-> + =C2=A0 =C2=A0 =C2=A0 return read_tree_recursive(tree, "", 0, 0, &pa=
-thspec, show_tree, NULL);
+Duy,
+
+The .git attributes is a good call. I'm thinking that it would be a global 
+flag (i.e. is a max file limit in place at all on this repo), and then a set 
+of limits, initially one for 'text' and one for 'binary' (and possibly a 
+third for anything with an ext diff), and probably use a similar attribute 
+format as used for setting diff attributes and its filters to set a per file 
+type limit [if required]
+
+The relevant function names gives me a place to start....
+
+Philip
+----- Original Message ----- 
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+To: "Philip Oakley" <philipoakley@iee.org>
+Cc: "Git List" <git@vger.kernel.org>
+Sent: Sunday, July 24, 2011 3:59 AM
+Subject: Re: .gitignore for large files?
+
+
+> On Sun, Jul 24, 2011 at 3:00 AM, Philip Oakley <philipoakley@iee.org> 
+> wrote:
+>> Has there been any discussion in the past on a method for ignoring large
+>> files via the .gitignore process?
+>>
+>> It does appear to be a moderately common problem for folk to accidentally
+>> commit a large file which bloats their repository and they want rid of 
+>> it,
+>> which causes history re-writes and such palaver.
 >
-> - =C2=A0 =C2=A0 =C2=A0 return 0;
-
-Nit picking. Most programs return positive value (usually 1) for error
-cases here. read_tree_recursive may return -1 (which turns out to be
-255). Also removing the last blank line in this function would be
-nice.
---=20
-Duy
+> Once they are in, they cannot be ignored. Perhaps commit hooks at
+> server side is a better place?
+>
+>> Perhaps a simple '>' and '<' option (the latter to cover null or minimal
+>> files?) with a --warn postfix may be possible. Just an initial thought.
+>
+> Or you can make use of .gitattributes, more flexible syntax.
+>
+>> Where would the 'right place' be for me to look at the git code if it was
+>> beneficial.
+>
+> In dir.c, add_exlude() does the parsing, excluded_from_list() handles the 
+> logic.
+> -- 
+> Duy
+>
+> ______________________________________________________________________
+> This email has been scanned by the MessageLabs Email Security System.
+> For more information please visit http://www.messagelabs.com/email
+> ______________________________________________________________________
+>
+>
+> -----
+> No virus found in this message.
+> Checked by AVG - www.avg.com
+> Version: 10.0.1390 / Virus Database: 1518/3783 - Release Date: 07/23/11
+> 
