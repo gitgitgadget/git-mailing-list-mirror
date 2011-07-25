@@ -1,105 +1,66 @@
-From: =?UTF-8?B?UMOpdGVyIEFuZHLDoXMgRmVsdsOpZ2k=?= <petschy@gmail.com>
-Subject: Surprise at git stash pop
-Date: Mon, 25 Jul 2011 17:45:56 +0200
-Message-ID: <CAG3eYYRdvi-JdPfZmH_1EhEpjdweZFc6NS54btEz0nWy=O3+vA@mail.gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH v3 2/2] Ensure git ls-tree exits with a non-zero exit code if read_tree_recursive fails.
+Date: Mon, 25 Jul 2011 18:17:22 +0200
+Message-ID: <m239hugwrx.fsf@igel.home>
+References: <1311519554-16587-1-git-send-email-jon.seymour@gmail.com>
+	<1311519554-16587-3-git-send-email-jon.seymour@gmail.com>
+	<CACsJy8Aa_=BvZOt58sM4dknVzvihH9OtHAS1aRxqPwNLxh0fkg@mail.gmail.com>
+	<CAH3Anrrbj93briHKpxEjpoVTOnSikQYQyxa4R=C7QKt=punyVw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 25 17:46:05 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org,
+	Jens.Lehmann@web.de, gitster@pobox.com
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 25 18:17:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QlNM2-0004jT-NQ
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Jul 2011 17:46:03 +0200
+	id 1QlNqW-000161-S2
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Jul 2011 18:17:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751912Ab1GYPp6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jul 2011 11:45:58 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:42637 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751396Ab1GYPp5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2011 11:45:57 -0400
-Received: by gwaa18 with SMTP id a18so2669584gwa.19
-        for <git@vger.kernel.org>; Mon, 25 Jul 2011 08:45:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=WJDBf7NzUGKbAE3ut3EnaaoJyQSEBD7q88JI2jCIJ1I=;
-        b=DSFMAMUYsX8CACfZcBzSU1jT4O99WSp54ksyE4kq6NzRVNK7yPDW1ZKoGwant6hzJr
-         dgX71s9/iHoHQT3CdaZnrJC9ziPAQKA7UcQt0dlYDJTyTyCaR3lKFwbi4NrCiJAgbknD
-         bXbQfJ+vmiErffcMRNxk2cmHQWwPIV8SE/Pxg=
-Received: by 10.236.175.66 with SMTP id y42mr50492yhl.380.1311608757111; Mon,
- 25 Jul 2011 08:45:57 -0700 (PDT)
-Received: by 10.147.34.14 with HTTP; Mon, 25 Jul 2011 08:45:56 -0700 (PDT)
+	id S1751636Ab1GYQR2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jul 2011 12:17:28 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:39351 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751174Ab1GYQR1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2011 12:17:27 -0400
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 4D4F2186DEC5;
+	Mon, 25 Jul 2011 18:17:23 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
+	by mail.m-online.net (Postfix) with ESMTP id 82E2F1C00053;
+	Mon, 25 Jul 2011 18:17:23 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
+	with ESMTP id J5OkNkvw5Qfd; Mon, 25 Jul 2011 18:17:22 +0200 (CEST)
+Received: from igel.home (ppp-88-217-120-241.dynamic.mnet-online.de [88.217.120.241])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Mon, 25 Jul 2011 18:17:22 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id 3A5FBCA293; Mon, 25 Jul 2011 18:17:22 +0200 (CEST)
+X-Yow: Yow!  I want my nose in lights!
+In-Reply-To: <CAH3Anrrbj93briHKpxEjpoVTOnSikQYQyxa4R=C7QKt=punyVw@mail.gmail.com>
+	(Jon Seymour's message of "Mon, 25 Jul 2011 18:45:35 +1000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177798>
 
-Hello,
+Jon Seymour <jon.seymour@gmail.com> writes:
 
-'git stash pop' erased my local modifications, but not all of them.
-Here is the dump of my terminal window with comments:
+> +       return ret ? 1 : 0;
 
-1) 1 item in the stash:
+          return ret != 0;
+          return !!ret;
 
-petschy@stormbringer:~/...$ git stash list
-stash@{0}: WIP on 20110207-oracle: 089709b Merge branch
-'20110207-oracle' of ssh:.... into 20110207-oracle
+Andreas.
 
-2) the status of the working tree
-
-petschy@stormbringer:~/...$ git status
-# On branch 20110207-oracle
-# Your branch is ahead of 'origin/20110207-oracle' by 2 commits.
-#
-# Changes not staged for commit:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working directory)
-#
-#    modified:   SQLQueryCache.cpp
-#    modified:   SQLQueryCache.hpp
-#    modified:   ../../server/plugins-src/ads/AdsPlugin.cpp
-#    modified:   ../../server/plugins-src/ads/AdsPlugin.hpp
-
-3) querying the details of the stashed item
-
-petschy@stormbringer:~/...$ git stash show stash@{0}
- build-configs.def |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-4) popping it, naively
-
-petschy@stormbringer:~/...$ git stash pop
-Auto-merging build-configs.def
-CONFLICT (content): Merge conflict in build-configs.def
-
-5) surprise, surprise!
-
-petschy@stormbringer:~/...$ git status
-# On branch 20110207-oracle
-# Your branch is ahead of 'origin/20110207-oracle' by 2 commits.
-#
-# Unmerged paths:
-#   (use "git reset HEAD <file>..." to unstage)
-#   (use "git add/rm <file>..." as appropriate to mark resolution)
-#
-#    both modified:      ../../build-configs.def
-#
-# Changes not staged for commit:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working directory)
-#
-#    modified:  SQLQueryCache.cpp
-
-ALL of the local modifications to SQLQueryCache.hpp, AdsPlugin.cpp/hpp
-simply disappeared! Is this the expected behaviour? I don't think so.
-Since the stash contained only one file, which had nothing to do with
-the pending modifications, I thought it's safe to pop. And even if the
-local modifications and the stashed files overlap, I'd expect a
-warning, at least. Half day's work gone. And if this is business as
-usual, why not all my local modifications were wiped?
-
-Regards, Peter
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
