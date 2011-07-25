@@ -1,153 +1,167 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: feature request: git add--interactive --patch on regex-matched
- hunks only
-Date: Mon, 25 Jul 2011 15:55:55 -0600
-Message-ID: <20110725215553.GA23145@sigill.intra.peff.net>
-References: <CACsJy8B1B25DZ1yrzHq69vwgzQyM2ouTXCHb8oPRpb_cAX+JZQ@mail.gmail.com>
+From: Phil Hord <hordp@cisco.com>
+Subject: Re: [RFC] Questions for "Git User's Survey 2011"
+Date: Mon, 25 Jul 2011 17:58:32 -0400
+Message-ID: <4E2DE708.8050805@cisco.com>
+References: <201107252233.02088.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 25 23:56:10 2011
+Content-Type: text/plain; charset=ISO-8859-2
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 25 23:58:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QlT89-0003KZ-Tz
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Jul 2011 23:56:06 +0200
+	id 1QlTAf-00046R-HU
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Jul 2011 23:58:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751507Ab1GYV4A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jul 2011 17:56:00 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56969
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751290Ab1GYVz7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2011 17:55:59 -0400
-Received: (qmail 14116 invoked by uid 107); 25 Jul 2011 21:56:28 -0000
-Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 25 Jul 2011 17:56:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Jul 2011 15:55:55 -0600
-Content-Disposition: inline
-In-Reply-To: <CACsJy8B1B25DZ1yrzHq69vwgzQyM2ouTXCHb8oPRpb_cAX+JZQ@mail.gmail.com>
+	id S1751694Ab1GYV6h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jul 2011 17:58:37 -0400
+Received: from rcdn-iport-5.cisco.com ([173.37.86.76]:52092 "EHLO
+	rcdn-iport-5.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751290Ab1GYV6f (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2011 17:58:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=hordp@cisco.com; l=3360; q=dns/txt;
+  s=iport; t=1311631115; x=1312840715;
+  h=message-id:date:from:mime-version:to:cc:subject:
+   references:in-reply-to:content-transfer-encoding;
+  bh=j/sDNguGJGdbj5Hh0PQsE8yEE1EnC5y4SwJ6srK9IgU=;
+  b=d9SVak7zgjlj+cdYgDM5UUUPdETQ2C+IrvqEcm+eieP5Q4HCioQ1hlvx
+   53OFeSobZI1M1tVYCwwt1CwRcZzcgLgx9PiSUKfo4iIRQkMJh+ePJGezd
+   ZSwun4vv3pNxlFko97rFVonw3km7Mdg2YqiLXKyFR2q8qfvy6H/dhc8Ux
+   o=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av8EAK/mLU6tJV2c/2dsb2JhbAA0AQEBAQMUAQhnAREMDgoJIg8JAwIBAgECUQcOAQ4BAR+nNHerRp45hj8EknCFB4t1
+X-IronPort-AV: E=Sophos;i="4.67,265,1309737600"; 
+   d="scan'208";a="6276207"
+Received: from rcdn-core-5.cisco.com ([173.37.93.156])
+  by rcdn-iport-5.cisco.com with ESMTP; 25 Jul 2011 21:58:34 +0000
+Received: from [64.100.104.94] (dhcp-64-100-104-94.cisco.com [64.100.104.94])
+	by rcdn-core-5.cisco.com (8.14.3/8.14.3) with ESMTP id p6PLwXO3031812;
+	Mon, 25 Jul 2011 21:58:34 GMT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110627 Thunderbird/5.0
+In-Reply-To: <201107252233.02088.jnareb@gmail.com>
+X-TagToolbar-Keys: D20110725175832134
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177824>
 
-On Sun, Jul 24, 2011 at 12:11:29PM +0700, Nguyen Thai Ngoc Duy wrote:
+On 07/25/2011 04:33 PM, Jakub Narebski wrote:
+> NOTES:
+> ^^^^^^
+> How to detect if it is msysGit or Cygwin from within?  Perhaps we
+> should have just "MS Windows"...
 
-> Can we have "git add--interactive --patch --match=regex" where only
-> (splitted if possible) hunks that match regex are shown?
+I think it's useful to know which build they're using, cygwin or msys. 
+Hopefully it's not too confusing for them and they can answer correctly.
 
-The patch below does this, but there are a lot of unanswered questions.
-Such as:
+>
+>
+> === 11. What Git interfaces, implementations and frontends do you use? ===
+> (multiple choice, with other)
+>
+>  + JGit (Java implementation), e.g. via Eclipse plugin
+>  + NGit or Git# (C# implementation)
+>  + Dulwich (pure-Python implementation)
+>  + Git::PurePerl (Perl implementation)
+>  + git.js (JavaScript)
+>  + libgit2 bindings
+>
+>  + git (core) commandline
+>  + Cogito (DEPRECATED)
+>  + Easy Git
+>  + Pyrite
+>  + I don't know, I only use (graphical) tools
+>
+>  + pg aka Patchy Git (DEPRECATED)
+>  + StGIT
+>  + Guilt
+>  + TopGit
+>
+>  + Zit
+>
+>  + other (please specify)
 
-  1. What does it mean to be "shown"? My patch auto-marks non-matching
-     hunks as "do not stage". That means you can still switch back to
-     them in the hunk list and enable them if you want. Another option
-     would be to omit them entirely, and pretend that those hunks don't
-     exist.
+You can probably drop pg and Cogito now, yes?
 
-  2. What should we do with non-text changes, like mode changes are
-     full-file deletion?
+Looking at the 2010 results, I would add these GUIs to the main list:
+git-gui (core)
+gitk (core)
+gitX
+gitg
+git-cola
+TortoiseGit
+SmartGit
+Git Extensions
+Giggle
 
-  3. What should be shown for a file with no matching hunks? Probably
-     nothing (i.e., as if it had been limited away by pathname)? My
-     patch shows the header, but that is easy to fix.
+Is there room for Gerrit here, or maybe in one of the other questions?
+Also, cgit and other web interfaces, I suppose.
 
-I think those depend on the intended use case. For me, it seems useful
-to do something like:
 
-  $ hack hack hack
-  [oops, I need to refactor foo() and its callers first]
-  $ refactor refactor refactor
-  $ git add -p --match=foo
-  $ git commit -m 'refactor foo'
-  [resume initial hacking]
+> === 16. Which of the following Git features do you use? ===
+> (multiple choice, with other)
+>
+>  + localization of command-line messages (i18n)
+>  + git bundle (off-line transport)
+>
+>  + eol conversion (crlf or eol)
+>  + gitattributes (any)
+>  + custom diff/merge driver
+>  + word diff
+>  + merge strategy options (e.g. -Xrenormalize)
+>  + textconv
+>
+>  + submodules (subprojects)
+>  + subtree merge (optionally git-subtree)
+>
+>  + partial (sparse) checkout, or assume-unchanged bit
+>
+>  + separate worktree / core.worktree
+>  + multiple worktrees (e.g. git-new-worktree)
+>  + gitdir mechanism (.git file pointing to repository)
+>
+>  + alternates mechanism (sharing object database)
+>  + stash (optionally "git stash --keep-index")
+>  + shallow clone (e.g. "git clone --depth=<n>")
+>  + detaching HEAD (e.g. "git checkout --detach")
+>  + commit message templates
+>  + interactive commit / per-hunk comitting / partial commit
+>  + interactive rebase (small scale history editing)
+>  + git-filter-branch or equivalent (large history rewriting)
+>  + bisect (optionally "git bisect run <script>")
+>  + tracking code movement with git-blame ("git blame -M" etc.)
+>  + committing with dirty tree (keeping some changes uncommitted)
+>
+>  + non-default hooks (from contrib/hooks/ or other)
+>  + shell completion of commands
+>  + git-aware shell prompt
+>  + git aliases, shell aliases for git, or own git scripts
+>
+>  + one-way interaction with other SCMs (from SCM to git)
+>  + two-way interaction with other SCMs (from SCM to git, from git to SCM)
+>
+>  + git-cvsserver
+>  + git notes
+>
+>
+>  + Other, please specify
+>
+> NOTES:
+> ^^^^^^
+> The problem is come up not with exhaustive list of features: there are
+> too many of them to list.  The problem is coming up with list of
+> important and used enough often features.
+>
+> So: what features should be included in this list?  What features
+> should be removed from above list of answers?
 
-However, I'm not sure I would trust my regex to actually get all of the
-changes needed for the refactoring (e.g., there might be nearby hunks
-related to the refactoring that are not specifically in the same hunk as
-the word "foo"). So I tend to just "git add -p" and flip through the
-changes manually.
+bridges (git-svn, hg-git, git-p4, etc.)
+IDE integration (Eclipse, Netbeans, etc.)
 
-> I've been reviewing a .po file and adding translations that I approve,
-> leaving the rest to be determined later. The problem with .po files is
-> that a lot of comment lines are changes because some translations are
-> moved in source code. I don't care about those comment changes and
-> would like to completely ignore them (even destroy them with git
-> checkout -p).
-
-You can already skip around in the hunk list using "/regex". Might that
-be enough for you? I think you're stuck typing "/yoursearch" over and
-over, though. It would be nice if doing just "/" would search again for
-the previous regex.
-
-Anyway, here's the patch. It's just the perl bits. You'd need to write
-the scaffolding to add an option to "git add", "git checkout", etc.
-
----
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 2ee0908..07896d4 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -86,6 +86,7 @@ sub colored {
- # command line options
- my $patch_mode;
- my $patch_mode_revision;
-+my $patch_match;
- 
- sub apply_patch;
- sub apply_patch_for_checkout_commit;
-@@ -1277,6 +1278,17 @@ sub display_hunks {
- 	return $i;
- }
- 
-+sub want_hunk {
-+	my ($re, $hunk) = @_;
-+
-+	return 1 if $hunk->{TYPE} ne 'hunk';
-+
-+	foreach my $line (@{$hunk->{TEXT}}) {
-+		return 1 if $line =~ $re;
-+	}
-+	return 0;
-+}
-+
- sub patch_update_file {
- 	my $quit = 0;
- 	my ($ix, $num);
-@@ -1301,6 +1313,20 @@ sub patch_update_file {
- 	$num = scalar @hunk;
- 	$ix = 0;
- 
-+	if ($patch_match) {
-+		# mark non-matching text hunks as "do not want"
-+		foreach my $hunk (@hunk) {
-+			if (!want_hunk($patch_match, $hunk)) {
-+				$hunk->{USE} = 0;
-+			}
-+		}
-+		# and then advance us to the first undecided hunk
-+		while ($ix < $num) {
-+			last unless defined $hunk[$ix]{USE};
-+			$ix++;
-+		}
-+	}
-+
- 	while (1) {
- 		my ($prev, $next, $other, $undecided, $i);
- 		$other = '';
-@@ -1606,6 +1632,10 @@ sub process_args {
- 		} else {
- 			$patch_mode = 'stage';
- 			$arg = shift @ARGV or die "missing --";
-+			if ($arg =~ /--match=(.*)/) {
-+				$patch_match = qr/$1/;
-+				$arg = shift @ARGV or die "missing --";
-+			}
- 		}
- 		die "invalid argument $arg, expecting --"
- 		    unless $arg eq "--";
+Phil
