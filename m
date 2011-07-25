@@ -1,89 +1,119 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [RFC 0/9] bisect: allow git bisect to be used with repos
- containing damaged trees.
-Date: Tue, 26 Jul 2011 09:38:12 +1000
-Message-ID: <CAH3AnrrOdduUG_rS97fR_PRZAWb6y3uPa_oKDZenEX2gG-AvAQ@mail.gmail.com>
-References: <1311487074-25070-1-git-send-email-jon.seymour@gmail.com>
-	<7v1uxfwmq3.fsf@alter.siamese.dyndns.org>
-	<CAH3AnrrVwodvtwWfaJCJqjuHThtv75jaWeDjvwRgdFbgXA3ziA@mail.gmail.com>
-	<4E2DBA84.3090405@kdbg.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: feature request: git add--interactive --patch on regex-matched
+ hunks only
+Date: Mon, 25 Jul 2011 16:44:01 -0700
+Message-ID: <7vbowiq62m.fsf@alter.siamese.dyndns.org>
+References: <CACsJy8B1B25DZ1yrzHq69vwgzQyM2ouTXCHb8oPRpb_cAX+JZQ@mail.gmail.com>
+ <20110725215553.GA23145@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Jul 26 01:38:20 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 26 01:44:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QlUj4-0002qf-Ml
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 01:38:19 +0200
+	id 1QlUom-0004Le-Ci
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 01:44:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752635Ab1GYXiO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jul 2011 19:38:14 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:33959 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752001Ab1GYXiN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2011 19:38:13 -0400
-Received: by vxh35 with SMTP id 35so3249762vxh.19
-        for <git@vger.kernel.org>; Mon, 25 Jul 2011 16:38:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=1IukxCnGXsXw8c81Y9JTTReFCNHrbu7h23ToY67J124=;
-        b=mOmGZvNbC8+Jia67cN4o/bzR3EotfPgriz4WW+u8hMdFHDVrnXaomrQbcww8ttaFxh
-         +5aX/2kXCd1Mbp3N8WQxMvZVGXJuaXX+ptvnz3XzEoiKSrybpg6j4WGLj7xKVgVyVo3z
-         TWGEXqHXGOkTxXuO57tDCfVzX6vFRDDtv+zEQ=
-Received: by 10.52.21.194 with SMTP id x2mr5019691vde.39.1311637092227; Mon,
- 25 Jul 2011 16:38:12 -0700 (PDT)
-Received: by 10.52.183.41 with HTTP; Mon, 25 Jul 2011 16:38:12 -0700 (PDT)
-In-Reply-To: <4E2DBA84.3090405@kdbg.org>
+	id S1752404Ab1GYXoI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jul 2011 19:44:08 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61697 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751694Ab1GYXoF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2011 19:44:05 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 163A350A9;
+	Mon, 25 Jul 2011 19:44:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ePOrHRkKuoGdIjJsAo+2B0r2mZg=; b=wKS/sc
+	nK8Tly6KMfI4w6eLWQyzm4rDQQ0XjldA5VSfTrDsSCr6Z8KbV1j3vG7HAHKLyjZB
+	DivsAdWNpxazPHATwSZqGXGO/lFkUO7OfMIA+OA4j52hqyk8+De6/PWxFxyA3N25
+	omSdxmuGuN+zjrjJOoB72KV2h9AgWNBtPr3uI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XSeQocTy3XMq+NXDH6bFt+K0K+IYjwK2
+	6TvbxG/LcmuOkGHFW0PSNqE9/0+U7IIce0i4Ap4H1UNRnLG3eZV/WaKTmi1l8lht
+	KjHSe5w0NJRJz0Lk6JSv8qvzre2H8ozRFXeU6DZs4rbendbO9urB/JK8aq/7p61Z
+	UUl3JODHLpE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 00C2C50A8;
+	Mon, 25 Jul 2011 19:44:04 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 78FEB50A7; Mon, 25 Jul 2011
+ 19:44:03 -0400 (EDT)
+In-Reply-To: <20110725215553.GA23145@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 25 Jul 2011 15:55:55 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FA72C8C8-B717-11E0-A929-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177835>
 
-On Tue, Jul 26, 2011 at 4:48 AM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 25.07.2011 11:28, schrieb Jon Seymour:
->> On Mon, Jul 25, 2011 at 4:35 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Jon Seymour <jon.seymour@gmail.com> writes:
->
-> The fundamental preconditions of bisection are: that there is a single
-> event in the sequence, and that the effects of the event propagate to
-> the end of the sequence.
+Jeff King <peff@peff.net> writes:
 
-More correctly: the fundamental pre-condition of a single round of
-bisection finding an
-event of interest is as you say.
+> However, I'm not sure I would trust my regex to actually get all of the
+> changes needed for the refactoring (e.g., there might be nearby hunks
+> related to the refactoring that are not specifically in the same hunk as
+> the word "foo"). So I tend to just "git add -p" and flip through the
+> changes manually.
 
-There is nothing that prevents multiple rounds of bisection being
-used, if required.
+Yes, that is a valid concern.
 
-So, in my examples, may produce a limit commit such that the graph
-between the limit and the tip
-contains two regions of good commits and two regions of bad commits.
-So, you keep applying rounds
-of bisection until the bad regions identified have no good commits.
+> You can already skip around in the hunk list using "/regex". Might that
+> be enough for you? I think you're stuck typing "/yoursearch" over and
+> over, though. It would be nice if doing just "/" would search again for
+> the previous regex.
 
->
-> Junio explainded, that the second precondition is violated. Therefore,
-> you cannot apply git-bisect to find brokenness in a repository *in general*.
->
+Yes, I think that makes a lot more sense than the current "Ah, empty? ask
+from the terminal" behaviour.
 
-I never claimed that a single round of biseciton would be enough, in
-general. Only that it would be useful to be able
-to apply a bisection algorithm to broken repositories.
+ git-add--interactive.perl |   14 ++++++++------
+ 1 files changed, 8 insertions(+), 6 deletions(-)
 
-It seems clear to me that bisection is a very useful tool for probling
-the extent of corruption in a broken repo.
-It is certainly not the only tool, may not work in all cases (broken
-commits) and may not be all you need.
-
-Anyway, I agree that Junio's suggestion (e.g. --no-checkout) is a
-better and more generally applicable than my original
-(--ignore-checkout-failure) suggestion.
-
-jon.
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 8f0839d..0b6f8a6 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -1257,7 +1257,7 @@ sub display_hunks {
+ 
+ sub patch_update_file {
+ 	my $quit = 0;
+-	my ($ix, $num);
++	my ($ix, $num, $last_search_string);
+ 	my $path = shift;
+ 	my ($head, @hunk) = parse_diff($path);
+ 	($head, my $mode, my $deletion) = parse_diff_header($head);
+@@ -1395,11 +1395,12 @@ sub patch_update_file {
+ 			}
+ 			elsif ($line =~ m|^/(.*)|) {
+ 				my $regex = $1;
+-				if ($1 eq "") {
+-					print colored $prompt_color, "search for regex? ";
+-					$regex = <STDIN>;
+-					if (defined $regex) {
+-						chomp $regex;
++				if ($regex eq "") {
++					if ($last_search_string) {
++						$regex = $last_search_string;
++					} else {
++						error_msg "Need a regexp to search\n";
++						next;
+ 					}
+ 				}
+ 				my $search_string;
+@@ -1412,6 +1413,7 @@ sub patch_update_file {
+ 					error_msg "Malformed search regexp $exp: $err\n";
+ 					next;
+ 				}
++				$last_search_string = $regex;
+ 				my $iy = $ix;
+ 				while (1) {
+ 					my $text = join ("", @{$hunk[$iy]{TEXT}});
