@@ -1,74 +1,111 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git-pull doesn't update my refs for remotes/origin/master
-Date: Mon, 25 Jul 2011 10:35:42 +0200
-Message-ID: <4E2D2ADE.40407@drmicha.warpmail.net>
-References: <4E2D223E.8090505@gmail.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [PATCH v3 2/2] Ensure git ls-tree exits with a non-zero exit code
+ if read_tree_recursive fails.
+Date: Mon, 25 Jul 2011 18:45:35 +1000
+Message-ID: <CAH3Anrrbj93briHKpxEjpoVTOnSikQYQyxa4R=C7QKt=punyVw@mail.gmail.com>
+References: <1311519554-16587-1-git-send-email-jon.seymour@gmail.com>
+	<1311519554-16587-3-git-send-email-jon.seymour@gmail.com>
+	<CACsJy8Aa_=BvZOt58sM4dknVzvihH9OtHAS1aRxqPwNLxh0fkg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Graeme Geldenhuys <graemeg.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 25 10:35:58 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de, gitster@pobox.com
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 25 10:45:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QlGdk-0005S5-59
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Jul 2011 10:35:52 +0200
+	id 1QlGnF-0008Bp-Ok
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Jul 2011 10:45:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751373Ab1GYIfr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jul 2011 04:35:47 -0400
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:44472 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750864Ab1GYIfp (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Jul 2011 04:35:45 -0400
-Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 6C6F720C07;
-	Mon, 25 Jul 2011 04:35:45 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute6.internal (MEProxy); Mon, 25 Jul 2011 04:35:45 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=2H+Wg1dcWuvMru5gGEF+nT
-	phqxo=; b=XEWABhenxZMq1BNEej5sL+LhPdzd46unk3Sp9jC0qrIbbOPY2tzYJs
-	GTcFo0/9amLUTU0+mbigWJ/Qruohb1rxdAiAIcyjM+8P2dCFRW25m6ZUhq2MP7cb
-	im/PA8LLgHC8ElgZmNjD+mIWxJUThvsVu97/ucDSKunpqP6/DC6l0=
-X-Sasl-enc: 5t9gqiJfvJG01Zpr5Jz6+OVFxlY1ZuNA6h9op91d3u3q 1311582945
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id EDF1B454192;
-	Mon, 25 Jul 2011 04:35:44 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110707 Thunderbird/5.0
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <4E2D223E.8090505@gmail.com>
+	id S1751153Ab1GYIpi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Jul 2011 04:45:38 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:50185 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750830Ab1GYIpg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Jul 2011 04:45:36 -0400
+Received: by vws1 with SMTP id 1so2805019vws.19
+        for <git@vger.kernel.org>; Mon, 25 Jul 2011 01:45:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=qu252l+7oj14NytLPiUVpLWGOTR9EizD4bM4Fu+w3HA=;
+        b=uQrih5Dsb+sSOJXZVKOe5pc6afhhuz/WzEYzw7FkTQJXOcDEsllUwnUVSeH2j9E1mD
+         mqXpBp+qJSalqoAa71Uvy5nfkzeEdSa7e0QNwtoaEx+Xj6Zlp0hzevruaegq+2s7FS2D
+         4GLlEhENq6tM0q+q7GajazbnSF8/8AyxnxPE0=
+Received: by 10.52.21.194 with SMTP id x2mr4091311vde.39.1311583535906; Mon,
+ 25 Jul 2011 01:45:35 -0700 (PDT)
+Received: by 10.52.183.41 with HTTP; Mon, 25 Jul 2011 01:45:35 -0700 (PDT)
+In-Reply-To: <CACsJy8Aa_=BvZOt58sM4dknVzvihH9OtHAS1aRxqPwNLxh0fkg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177786>
 
-Graeme Geldenhuys venit, vidit, dixit 25.07.2011 09:58:
-> Hi,
-> 
-> Any idea why this happens? When I do a 'git pull origin master' while in
-> the master branch, it fetches all the latest commits, but doesn't update
-> the 'remotes/origin/master' reference. When I do a 'gitk', the
-> remotes/origin/master reference is still pointing to the old original
-> HEAD commit. Only when I do a 'git push origin master', does it update
-> the remotes/origin/master references?
-> 
-> I'm using git version 1.7.0.4 as is include with Ubuntu 10.04
-> 
-> Here is my .git/config file:
-...
+=46air point.
 
-Here's my quote from git-pull's man page:
+Everyone ok with this revision? If so, I will re-roll v4.
 
-A parameter <ref> without a colon is equivalent to <ref>: when
-pulling/fetching, so it merges <ref> into the current branch without
-               storing the remote branch anywhere locally
+Jens: I added the variable back because the return statement with a
+ternary operator needed a line break. Let me know
+if there is a better way to format it.
 
-I.e., just do "git pull origin".
+jon.
 
-Michael
+diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+index d96e9c4..990e1a3 100644
+--- a/builtin/ls-tree.c
++++ b/builtin/ls-tree.c
+@@ -120,7 +120,7 @@ int cmd_ls_tree(int argc, const char **argv, const
+char *prefix)
+ {
+        unsigned char sha1[20];
+        struct tree *tree;
+-       int i, full_tree =3D 0;
++       int i, full_tree =3D 0, ret;
+        const struct option ls_tree_options[] =3D {
+                OPT_BIT('d', NULL, &ls_options, "only show trees",
+                        LS_TREE_ONLY),
+@@ -173,6 +173,7 @@ int cmd_ls_tree(int argc, const char **argv, const
+char *prefix)
+        tree =3D parse_tree_indirect(sha1);
+        if (!tree)
+                die("not a tree object");
+-       return read_tree_recursive(tree, "", 0, 0, &pathspec, show_tree=
+, NULL);
++       ret =3D read_tree_recursive(tree, "", 0, 0, &pathspec, show_tre=
+e, NULL);
+
++       return ret ? 1 : 0;
+ }
+
+
+On Mon, Jul 25, 2011 at 11:31 AM, Nguyen Thai Ngoc Duy
+<pclouds@gmail.com> wrote:
+> On Sun, Jul 24, 2011 at 9:59 PM, Jon Seymour <jon.seymour@gmail.com> =
+wrote:
+>> @@ -173,7 +173,6 @@ int cmd_ls_tree(int argc, const char **argv, con=
+st char *prefix)
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0tree =3D parse_tree_indirect(sha1);
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!tree)
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0die("not a tr=
+ee object");
+>> - =C2=A0 =C2=A0 =C2=A0 read_tree_recursive(tree, "", 0, 0, &pathspec=
+, show_tree, NULL);
+>> + =C2=A0 =C2=A0 =C2=A0 return read_tree_recursive(tree, "", 0, 0, &p=
+athspec, show_tree, NULL);
+>>
+>> - =C2=A0 =C2=A0 =C2=A0 return 0;
+>
+> Nit picking. Most programs return positive value (usually 1) for erro=
+r
+> cases here. read_tree_recursive may return -1 (which turns out to be
+> 255). Also removing the last blank line in this function would be
+> nice.
+> --
+> Duy
+>
