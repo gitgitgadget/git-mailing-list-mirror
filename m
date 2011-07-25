@@ -1,81 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] commit: allow partial commits with relative paths
-Date: Mon, 25 Jul 2011 12:32:29 -0700
-Message-ID: <7v4o2arwaa.fsf@alter.siamese.dyndns.org>
-References: <CAOnWdohKfwEOMx=wr_PKiW+ucYBK2ZWykm_7dqr7hy4xGRM02A@mail.gmail.com>
- <19b908142567fcfafe4da3d0fd60b134d30c613a.1311579663.git.git@drmicha.warpmail.net> <7v8vrmrxok.fsf@alter.siamese.dyndns.org>
+From: Steffen Daode Nurpmeso <sdaoden@googlemail.com>
+Subject: Re: [PATCH/RFC] Pro-Git thanks, Control-flow bug report
+Date: Mon, 25 Jul 2011 21:39:41 +0200
+Message-ID: <20110725193941.GA95001@sherwood.local>
+References: <20110725125037.GA24198@sherwood.local>
+ <20110725162548.GA7071@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Reuben Thomas <rrt@sc3d.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Jul 25 21:32:40 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 25 21:39:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QlQtL-0000zg-Ol
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Jul 2011 21:32:40 +0200
+	id 1QlR0P-0003fW-4s
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Jul 2011 21:39:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752731Ab1GYTcf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jul 2011 15:32:35 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44908 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751666Ab1GYTce (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2011 15:32:34 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F4F64215;
-	Mon, 25 Jul 2011 15:32:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HcLElDVaSnUDzUwOHB7JyV5N4lI=; b=JcMPfn
-	IBeda8Ogbft4F/+yfmlf9WmqykTTsaupAa+f/hkjF7TQj1mAgs14/CiIOakMbjji
-	MqV7r+Rq4H4akjAm2SCo9cNWddYF9mm7m1ciEeeyjP8ITia2kWH+ZrIfljVuL8Ym
-	yzOdjHfzR0fGdakUZEPw7pdm2DTXD4kJjWoto=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=weck+jvxIaNDHZ7GloXJo0T93861qsSZ
-	yxSJzA/hVd5ZojAeHYvnbbfLG+03+63CiaawyE+4SBfRvX52Et0y/KklGjLgcT/1
-	HVTnTZz+N/tH4YzIbntJO1F+XqKcFk9fBUb2t39ISSZhVHEmCoREnohTU/k7p+a4
-	tmrT1+hkejY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 661AD4214;
-	Mon, 25 Jul 2011 15:32:31 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CD2954210; Mon, 25 Jul 2011
- 15:32:30 -0400 (EDT)
-In-Reply-To: <7v8vrmrxok.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 25 Jul 2011 12:02:19 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: D68648AE-B6F4-11E0-A100-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752748Ab1GYTjx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jul 2011 15:39:53 -0400
+Received: from mail-fx0-f52.google.com ([209.85.161.52]:48843 "EHLO
+	mail-fx0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752478Ab1GYTjv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2011 15:39:51 -0400
+Received: by fxd18 with SMTP id 18so9461864fxd.11
+        for <git@vger.kernel.org>; Mon, 25 Jul 2011 12:39:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=1NY8IbBrO6txZ421E3VTEhCzHrUU2WGOC6ysO3nkl/I=;
+        b=leHg1yCModOwcmb7wAbqoxSI6BtdC1liHlGi/xobrqP43y7elk3JVA+My9nv9DNTlj
+         MIqNiQvsPutdklusJDTUTqoOlv4ERTfPdLjULGQ3BrhpITcaT3GU70B6qkJgZE5xzsz9
+         UB6uIqxFTU40HqnUGuV+sGaix0nVaRiF/etPM=
+Received: by 10.223.94.78 with SMTP id y14mr7250161fam.24.1311622790380;
+        Mon, 25 Jul 2011 12:39:50 -0700 (PDT)
+Received: from sherwood.local ([89.204.137.190])
+        by mx.google.com with ESMTPS id n18sm2951071fam.31.2011.07.25.12.39.47
+        (version=SSLv3 cipher=OTHER);
+        Mon, 25 Jul 2011 12:39:49 -0700 (PDT)
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20110725162548.GA7071@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177810>
 
-Junio C Hamano <gitster@pobox.com> writes:
+@ Jeff King <peff@peff.net> wrote (2011-07-25 18:25+0200):
+> Hmm. What's old is new again, I guess. I posted a patch to fix this
+> almost exactly 3 years ago:
+> 
+>   http://article.gmane.org/gmane.comp.version-control.git/90427
 
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
->
->> RFC because lack of test, and also because I'm not sure we want this, and
->> what to do about git add which has the same problem, but would need a
->> different fix.
->
-> The reason you doubt we would want *this* is...?  Also what is the "same
-> problem"?
->
-> Perhaps it would become clearer if you supported *this* with a sample
-> workflow?
+Unfortunately your patch from then seems no longer be sufficient
+(i.e., from my point of view, say), since this is also coloured:
 
-Having said that, I think your change to avoid restricting the overlay to
-the current subdirectory makes sense, as long as we allow paths outside
-the current subdirectory to be given to the command. I suspect that this
-call was relied on an earlier behaviour to error out when paths outside
-the current directory were given to the command.
+  ?0%0[steffen@sherwood git.git]$ ./git -c color.ui=auto -c color.pager=false log
 
-Although I do not know offhand if there are other places in the codepath
-with the same issue (i.e. for whatever reason they do not expect to be fed
-a relative path, and were relying on the early abort), I think what
-your tries to do is taking us in the right direction.
+>..> It's an ordering problem. [.]
+>..> However, breaking the dependency chain would require some pretty
+>..> major surgery, I think. [.]
+>..> I think the "right" solution would be refactoring the color stuff
+>..> to make the decision closer to the point of use. [.]
+
+> A more elegant solution would be to push the query to color.c to
+> happen at the time of color use, instead of during the startup
+> sequence.
+
+Beginners luck.  In the end git(1) will get a visual.c output
+manager, and sideband.c rid of that TERM pollution.  :-)
+
+--Steffen
+Ciao, sdaoden(*)(gmail.com)
+ASCII ribbon campaign           ( ) More nuclear fission plants
+  against HTML e-mail            X    can serve more coloured
+    and proprietary attachments / \     and sounding animations
