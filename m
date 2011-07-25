@@ -1,87 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 39/48] merge-recursive: Fix rename/rename(1to2)
- resolution for virtual merge base
-Date: Mon, 25 Jul 2011 13:55:04 -0700
-Message-ID: <7vhb6aqdw7.fsf@alter.siamese.dyndns.org>
-References: <1307518278-23814-1-git-send-email-newren@gmail.com>
- <1307518278-23814-40-git-send-email-newren@gmail.com>
+From: =?UTF-8?Q?Micha=C5=82_Janke?= <jankeso@gmail.com>
+Subject: GitHosting wiki page outdated info
+Date: Mon, 25 Jul 2011 22:59:58 +0200
+Message-ID: <CA+zXQj59DmErCHALYCWK7EEdBCdJhJZLB3OZnkmuMDbk43H=AQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, jgfouca@sandia.gov
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 25 22:55:14 2011
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 25 23:00:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QlSBF-0006zk-T6
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Jul 2011 22:55:14 +0200
+	id 1QlSG0-0000TV-2N
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Jul 2011 23:00:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751647Ab1GYUzJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jul 2011 16:55:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39607 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751453Ab1GYUzH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2011 16:55:07 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 97CEB4250;
-	Mon, 25 Jul 2011 16:55:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ddzvYJJsFbFndzqMSt5BXJrkYuw=; b=ZLUr9f
-	2Gd7xg+ha/pQ//v5lN0VnRQ/lgNb7+omjYy4mhS41Pa4uJHmYzlEVv/iuiDZyGmS
-	YZAgroLwEQD99j2hGn6RB+zx7YsdDv1TWkeOYa9caKOrxwye8zrJYT/ysOGGO1lL
-	lFnM9KBH6VcEzRgaILA2DV8RdglDJfkBevZdw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=C2cLPnfkh29NCbdWAneC8LvbUl9UgQjl
-	S5pva+3IWpFeN6Besw2TsezShf7tXeuobEGa3vPnPBIZ7gG+tJvqKXGtbcc8RFfT
-	4owhGgTt2MKEox8Ds2tEpVgp8OC4tavI7lcnmsEpkj5YEWAUpQ0uCchVFEO7WyMP
-	o78YkIPnA6c=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8F1F6424F;
-	Mon, 25 Jul 2011 16:55:06 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 19C68424E; Mon, 25 Jul 2011
- 16:55:06 -0400 (EDT)
-In-Reply-To: <1307518278-23814-40-git-send-email-newren@gmail.com> (Elijah
- Newren's message of "Wed, 8 Jun 2011 01:31:09 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 6017B886-B700-11E0-8891-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752382Ab1GYVAD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jul 2011 17:00:03 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:48695 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751578Ab1GYVAB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2011 17:00:01 -0400
+Received: by gxk21 with SMTP id 21so2493164gxk.19
+        for <git@vger.kernel.org>; Mon, 25 Jul 2011 14:00:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=JD6oC0LbUzD9ziJxS+a0ot3OQuknTF9In0FAcHbyKNE=;
+        b=LtPtCCr7mrPghF+/T6Y7COCgvH0fGc1ovEtekBSyZ+cA2OqjQWyjK6p2+1jX5nMRr+
+         YHo/PSOaRnqup6iJ97MHyIyxLYtFEuy2LtX/oTg5b1YzwXH8uf3zZtGW7Q6aIFN66FH4
+         hsGHXSrukc/zn1PwMyC69ht3AgI1//41h7zv0=
+Received: by 10.142.50.4 with SMTP id x4mr2990473wfx.426.1311627599031; Mon,
+ 25 Jul 2011 13:59:59 -0700 (PDT)
+Received: by 10.142.242.13 with HTTP; Mon, 25 Jul 2011 13:59:58 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177817>
 
-Elijah Newren <newren@gmail.com> writes:
+Hi.
 
-> When renaming one file to two files, we really should be doing a content
-> merge.  Also, in the recursive case, undoing the renames and recording the
-> merged file in the index with the source of the rename (while deleting
-> both destinations) allows the renames to be re-detected in the
-> non-recursive merge and will result in fewer spurious conflicts.
+I've been looking up free git hosting opportunities and noticed that
+some information on https://git.wiki.kernel.org/index.php/GitHosting
+is outdated.
+Here's what I've found looking at  some of the websites:
+- GitFarm [ http://www.gitfarm.com ] is not/no longer free - it only
+offers a 1 month free trial.
+- Beanstalk [ http://beanstalkapp.com/pricing ] is what I'd call
+"barely free" - a free trial is limited to 100 MB storage, 1 user and
+1 repository.
+- Codaset, as can be read at http://codaset.com/pricing , offers no
+private hosting for free. (For me, information that "Codaset hosts
+free, private and semi-private Git based projects" looks misleading in
+that case.)
 
-In other words,...
+In general, I found this page very helpful - especially because it
+contains more information, than wikipedia. However, the comparison at
+the top might include more hosts from the "General software" list.
 
-> +		 * FIXME: For rename/add-source conflicts (if we could detect
-> +		 * such), this is wrong.  We should instead find a unique
-> +		 * pathname and then either rename the add-source file to that
-> +		 * unique path, or use that unique path instead of src here.
->  		 */
-> +		update_file(o, 0, mfi.sha, mfi.mode, src);
-> +		remove_file_from_cache(ren1_dst);
-> +		remove_file_from_cache(ren2_dst);
+Hope this input helps.
+Keep on the good work :)
 
-... the use of "src" here is taking a "middle ground" and punting on
-resolving the conflicting opinions of both branches for the outer merge to
-resolve. I think that is a sensible thing to do.
-
-The rename destinations of both branches are removed. What happens if
-ren1_dst (the path one branch wanted to rename src to) were added by the
-other branch (which wanted to rename src to ren2_dst), causing rename/add
-conflict between branches (i.e. not the one you worry about in the above
-FIXME which is about one branch renaming src to ren1_dst while adding an
-unrelated content to src)?
+jankeso
