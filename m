@@ -1,79 +1,95 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [RFC/PATCH] commit: allow partial commits with relative paths
-Date: Mon, 25 Jul 2011 09:42:10 +0200
-Message-ID: <19b908142567fcfafe4da3d0fd60b134d30c613a.1311579663.git.git@drmicha.warpmail.net>
-References: <CAOnWdohKfwEOMx=wr_PKiW+ucYBK2ZWykm_7dqr7hy4xGRM02A@mail.gmail.com>
-Cc: Reuben Thomas <rrt@sc3d.org>
+From: Graeme Geldenhuys <graemeg.lists@gmail.com>
+Subject: git-pull doesn't update my refs for remotes/origin/master
+Date: Mon, 25 Jul 2011 09:58:54 +0200
+Message-ID: <4E2D223E.8090505@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 25 09:42:20 2011
+X-From: git-owner@vger.kernel.org Mon Jul 25 09:59:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QlFnv-0007MI-VT
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Jul 2011 09:42:20 +0200
+	id 1QlG4B-0003Tp-Eo
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Jul 2011 09:59:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751380Ab1GYHmQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jul 2011 03:42:16 -0400
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:33211 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751112Ab1GYHmO (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Jul 2011 03:42:14 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 8A9AA20D02;
-	Mon, 25 Jul 2011 03:42:13 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute3.internal (MEProxy); Mon, 25 Jul 2011 03:42:13 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=from:to:cc:subject:date:message-id
-	:in-reply-to:references; s=smtpout; bh=P1JxJ/FNmdV7uv+SU+HoNE8Vx
-	Xs=; b=t6+xx6Ry6A+49fpEcXX4ZGMQIQjkqKOVDwn2uCuBF82qOddEiQiNFfmIL
-	CCAvJrnHTrtFsNEwnjcBTC3TLagP1YMdI9bthFx5b5oUrTSaZUvSMjTd5licxQ6D
-	FfwgqxkyVV7iNy9SD6QwFKp5+rpHESKnPssvMJXs6+oenvxGvA=
-X-Sasl-enc: RvLnGY5ees5g/Z219Quo+Wp3JaiVmYKJa06Ooqh3LGS4 1311579733
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 0FC95453F83;
-	Mon, 25 Jul 2011 03:42:12 -0400 (EDT)
-X-Mailer: git-send-email 1.7.6.336.gdf067
-In-Reply-To: <CAOnWdohKfwEOMx=wr_PKiW+ucYBK2ZWykm_7dqr7hy4xGRM02A@mail.gmail.com>
+	id S1751025Ab1GYH7C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jul 2011 03:59:02 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:52192 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750776Ab1GYH7B (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2011 03:59:01 -0400
+Received: by wyg8 with SMTP id 8so2560457wyg.19
+        for <git@vger.kernel.org>; Mon, 25 Jul 2011 00:58:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=9aMP7SbofsPE4ZmZdZIS/FtRVayTi/IoluvNi+rc93Q=;
+        b=VB05vUSZ+uLVioc18IdVogDX7vKI/j+zi0v7vfSelEIlPCb391IXYdXNQH7viDEzsX
+         Sd7N2vF8OiPFw8bVzbi8/CXnSutjIh4yDoU7MQzoFgQLvO+KFsgeRON/lNd7zSosIUxa
+         hftBeH0gowWoNIo81GeyNP33JHmryEPC+9CwA=
+Received: by 10.227.178.135 with SMTP id bm7mr3525997wbb.52.1311580739634;
+        Mon, 25 Jul 2011 00:58:59 -0700 (PDT)
+Received: from [192.168.0.53] (41-133-134-247.dsl.mweb.co.za [41.133.134.247])
+        by mx.google.com with ESMTPS id fc2sm4102213wbb.1.2011.07.25.00.58.56
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 25 Jul 2011 00:58:58 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110617 Thunderbird/3.1.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177784>
 
-In order to do partial commits, git-commit overlays a tree on the
-cache and checks pathspecs against the result. Currently, the overlaying
-is done using "prefix" which prevents relative pathspecs with ".." and
-absolute pathspec from matching when they refer to files not under
-"prefix" and absent from the index, but still in the tree (i.e. files
-staged for removal).
+Hi,
 
-Overlay the full tree instead.
+Any idea why this happens? When I do a 'git pull origin master' while in
+the master branch, it fetches all the latest commits, but doesn't update
+the 'remotes/origin/master' reference. When I do a 'gitk', the
+remotes/origin/master reference is still pointing to the old original
+HEAD commit. Only when I do a 'git push origin master', does it update
+the remotes/origin/master references?
 
-Reported-by: Reuben Thomas <rrt@sc3d.org>
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-RFC because lack of test, and also because I'm not sure we want this, and
-what to do about git add which has the same problem, but would need a
-different fix.
----
- builtin/commit.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+I'm using git version 1.7.0.4 as is include with Ubuntu 10.04
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index e1af9b1..431590c 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -257,7 +257,7 @@ static int list_paths(struct string_list *list, const char *with_tree,
- 	m = xcalloc(1, i);
- 
- 	if (with_tree)
--		overlay_tree_on_cache(with_tree, prefix);
-+		overlay_tree_on_cache(with_tree, NULL);
- 
- 	for (i = 0; i < active_nr; i++) {
- 		struct cache_entry *ce = active_cache[i];
+Here is my .git/config file:
+
+----8<-------------8<-------------8<-------------8<-------------8<----
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	safecrlf = true
+[remote "origin"]
+	url = ssh://graemeg@fpgui.git.sourceforge.net/gitroot/fpgui/fpgui
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[gui]
+	geometry = 1182x686+1573+97 387 428
+	wmstate = normal
+[push]
+	default = current
+[remote "usb"]
+	url = /media/flash16gig/git_repos/fpgui.git
+	fetch = +refs/heads/*:refs/remotes/usb/*
+[branch "v0.4_fixes"]
+	remote = origin
+	merge = refs/heads/v0.4_fixes
+[remote "github"]
+	url = git@github.com:graemeg/fpGUI.git
+	fetch = +refs/heads/*:refs/remotes/github/*
+----8<-------------8<-------------8<-------------8<-------------8<----
+
+
+Regards,
+  - Graeme -
+
 -- 
-1.7.6.336.gdf067
+fpGUI Toolkit - a cross-platform GUI toolkit using Free Pascal
+http://fpgui.sourceforge.net/
