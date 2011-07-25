@@ -1,79 +1,153 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 11/11] vcs-svn,svn-fe: add an option to write svnrev
- notes
-Date: Mon, 25 Jul 2011 23:39:23 +0200
-Message-ID: <20110725213923.GC8708@elie.dc0b.debconf.org>
-References: <1310559673-5026-1-git-send-email-divanorama@gmail.com>
- <1310559673-5026-12-git-send-email-divanorama@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: feature request: git add--interactive --patch on regex-matched
+ hunks only
+Date: Mon, 25 Jul 2011 15:55:55 -0600
+Message-ID: <20110725215553.GA23145@sigill.intra.peff.net>
+References: <CACsJy8B1B25DZ1yrzHq69vwgzQyM2ouTXCHb8oPRpb_cAX+JZQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Barr <davidbarr@google.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Dmitry Ivankov <divanorama@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 25 23:39:36 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 25 23:56:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QlSsB-00064r-21
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Jul 2011 23:39:35 +0200
+	id 1QlT89-0003KZ-Tz
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Jul 2011 23:56:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753024Ab1GYVjb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jul 2011 17:39:31 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:55615 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753010Ab1GYVja (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2011 17:39:30 -0400
-Received: by ewy4 with SMTP id 4so2718528ewy.19
-        for <git@vger.kernel.org>; Mon, 25 Jul 2011 14:39:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=H/g9zVifUCG1wN2JgsUr3dljGxEj0Ib+2RcZEG/zDMM=;
-        b=uaMoMWWOc2nQVvgr7fJJ78PZSFmqB0KzWhPAlBLw2mnysI9NOQ796BcbS3RLN0+/3U
-         27Rz6ksRIQtdLg4WcrO1iwofpI8z4glgNrIwAFLCHtwWbotERO6PUKU3AxeMDYdPrh0q
-         7jtJBAFJvbkQ52HSEPIJLLXwaK50VQtbpt+fY=
-Received: by 10.213.29.79 with SMTP id p15mr361125ebc.8.1311629968841;
-        Mon, 25 Jul 2011 14:39:28 -0700 (PDT)
-Received: from elie.dc0b.debconf.org ([78.28.140.4])
-        by mx.google.com with ESMTPS id e48sm3017879eeb.37.2011.07.25.14.39.25
-        (version=SSLv3 cipher=OTHER);
-        Mon, 25 Jul 2011 14:39:27 -0700 (PDT)
+	id S1751507Ab1GYV4A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jul 2011 17:56:00 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56969
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751290Ab1GYVz7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2011 17:55:59 -0400
+Received: (qmail 14116 invoked by uid 107); 25 Jul 2011 21:56:28 -0000
+Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 25 Jul 2011 17:56:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Jul 2011 15:55:55 -0600
 Content-Disposition: inline
-In-Reply-To: <1310559673-5026-12-git-send-email-divanorama@gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+In-Reply-To: <CACsJy8B1B25DZ1yrzHq69vwgzQyM2ouTXCHb8oPRpb_cAX+JZQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177823>
 
-Hi,
+On Sun, Jul 24, 2011 at 12:11:29PM +0700, Nguyen Thai Ngoc Duy wrote:
 
-Dmitry Ivankov wrote:
+> Can we have "git add--interactive --patch --match=regex" where only
+> (splitted if possible) hunks that match regex are shown?
 
-> There are already a few options to determine svn revision from which
-> a git commit imported with svn-fe came from. One is to make svn-fe
-> write a git-svn-id: line to commit messages. Another one is to calc
-> distance to the root commit. The former includes a "url" and is for
-> git-svn compatibility, the latter is obviously slow and a bit fragile.
->
-> $ svn-fe --notes_ref=notes_tree --ref=branch...
-> will write annotations for branch commits to the notes_tree, each
-> annotation is a simple "rN" string. Then these annotations can be
-> viewed manually or used in incremental import to detect the last
-> imported revision or to (re)create the import marks for further
-> imports.
+The patch below does this, but there are a lot of unanswered questions.
+Such as:
 
-Wouldn't another way be to look at the mark numbers?
+  1. What does it mean to be "shown"? My patch auto-marks non-matching
+     hunks as "do not stage". That means you can still switch back to
+     them in the hunk list and enable them if you want. Another option
+     would be to omit them entirely, and pretend that those hunks don't
+     exist.
 
-I am not sure I like this.  svn-fe is supposed to be a generally
-useful tool, and this patch hard-codes the particular note format rN.
-If it is needed, maybe it would be possible to do something like
+  2. What should we do with non-text changes, like mode changes are
+     full-file deletion?
 
-	--notes-ref=refs/notes/svn-rev --note='project foo, r%N'
+  3. What should be shown for a file with no matching hunks? Probably
+     nothing (i.e., as if it had been limited away by pathname)? My
+     patch shows the header, but that is easy to fix.
 
-As a bonus, that would allow including more information using
-different flag characters in the note in the future.
+I think those depend on the intended use case. For me, it seems useful
+to do something like:
+
+  $ hack hack hack
+  [oops, I need to refactor foo() and its callers first]
+  $ refactor refactor refactor
+  $ git add -p --match=foo
+  $ git commit -m 'refactor foo'
+  [resume initial hacking]
+
+However, I'm not sure I would trust my regex to actually get all of the
+changes needed for the refactoring (e.g., there might be nearby hunks
+related to the refactoring that are not specifically in the same hunk as
+the word "foo"). So I tend to just "git add -p" and flip through the
+changes manually.
+
+> I've been reviewing a .po file and adding translations that I approve,
+> leaving the rest to be determined later. The problem with .po files is
+> that a lot of comment lines are changes because some translations are
+> moved in source code. I don't care about those comment changes and
+> would like to completely ignore them (even destroy them with git
+> checkout -p).
+
+You can already skip around in the hunk list using "/regex". Might that
+be enough for you? I think you're stuck typing "/yoursearch" over and
+over, though. It would be nice if doing just "/" would search again for
+the previous regex.
+
+Anyway, here's the patch. It's just the perl bits. You'd need to write
+the scaffolding to add an option to "git add", "git checkout", etc.
+
+---
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 2ee0908..07896d4 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -86,6 +86,7 @@ sub colored {
+ # command line options
+ my $patch_mode;
+ my $patch_mode_revision;
++my $patch_match;
+ 
+ sub apply_patch;
+ sub apply_patch_for_checkout_commit;
+@@ -1277,6 +1278,17 @@ sub display_hunks {
+ 	return $i;
+ }
+ 
++sub want_hunk {
++	my ($re, $hunk) = @_;
++
++	return 1 if $hunk->{TYPE} ne 'hunk';
++
++	foreach my $line (@{$hunk->{TEXT}}) {
++		return 1 if $line =~ $re;
++	}
++	return 0;
++}
++
+ sub patch_update_file {
+ 	my $quit = 0;
+ 	my ($ix, $num);
+@@ -1301,6 +1313,20 @@ sub patch_update_file {
+ 	$num = scalar @hunk;
+ 	$ix = 0;
+ 
++	if ($patch_match) {
++		# mark non-matching text hunks as "do not want"
++		foreach my $hunk (@hunk) {
++			if (!want_hunk($patch_match, $hunk)) {
++				$hunk->{USE} = 0;
++			}
++		}
++		# and then advance us to the first undecided hunk
++		while ($ix < $num) {
++			last unless defined $hunk[$ix]{USE};
++			$ix++;
++		}
++	}
++
+ 	while (1) {
+ 		my ($prev, $next, $other, $undecided, $i);
+ 		$other = '';
+@@ -1606,6 +1632,10 @@ sub process_args {
+ 		} else {
+ 			$patch_mode = 'stage';
+ 			$arg = shift @ARGV or die "missing --";
++			if ($arg =~ /--match=(.*)/) {
++				$patch_match = qr/$1/;
++				$arg = shift @ARGV or die "missing --";
++			}
+ 		}
+ 		die "invalid argument $arg, expecting --"
+ 		    unless $arg eq "--";
