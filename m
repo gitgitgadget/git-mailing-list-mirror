@@ -1,100 +1,76 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] Documentation/submodule: add command references and update
- options
-Date: Tue, 26 Jul 2011 20:44:07 +0200
-Message-ID: <4E2F0AF7.2070306@web.de>
-References: <4E2B1A54.2000605@web.de> <7vmxg2qf0j.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: "git check-attr" lists macros as being "set" -- feature or bug?
+Date: Tue, 26 Jul 2011 12:47:56 -0600
+Message-ID: <20110726184756.GA520@sigill.intra.peff.net>
+References: <4E2EAEA3.8000307@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Nikolai Weibull <now@bitwi.se>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 26 20:44:17 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Jul 26 20:48:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qlmc4-00089n-Gw
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 20:44:16 +0200
+	id 1Qlmfl-0001NY-OG
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 20:48:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753078Ab1GZSoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jul 2011 14:44:12 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:42448 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751753Ab1GZSoJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2011 14:44:09 -0400
-Received: from smtp04.web.de  ( [172.20.0.225])
-	by fmmailgate03.web.de (Postfix) with ESMTP id C21D41961FF84;
-	Tue, 26 Jul 2011 20:44:07 +0200 (CEST)
-Received: from [93.246.50.77] (helo=[192.168.178.43])
-	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1Qlmbv-0007hc-00; Tue, 26 Jul 2011 20:44:07 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:5.0) Gecko/20110624 Thunderbird/5.0
-In-Reply-To: <7vmxg2qf0j.fsf@alter.siamese.dyndns.org>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX19NUjO5jIqOLGn6ias+PwibR/SOw2ssezlT4UgR
-	/yhO0NtYj/zwIYyx7C9YK4413J4ByATCaZpqWHBqvLO5qejgxk
-	BkuDIlS0NG+WNtHEAOUg==
+	id S1753016Ab1GZSsA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jul 2011 14:48:00 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34024
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752083Ab1GZSr7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2011 14:47:59 -0400
+Received: (qmail 21366 invoked by uid 107); 26 Jul 2011 18:48:29 -0000
+Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 26 Jul 2011 14:48:29 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Jul 2011 12:47:56 -0600
+Content-Disposition: inline
+In-Reply-To: <4E2EAEA3.8000307@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177895>
 
-Am 25.07.2011 22:30, schrieb Junio C Hamano:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
-> 
->> @@ -131,7 +137,7 @@ update::
->>  +
->>  If the submodule is not yet initialized, and you just want to use the
->>  setting as stored in .gitmodules, you can automatically initialize the
->> -submodule with the --init option.
->> +submodule with the '--init' option.
-> 
-> Don't we want to use
-> 
-> 	the `--init` option
-> 
-> instead for consistency? After all, that is what the users actually type.
-> 
-> 	$ git grep -e "\`--[a-z]" Documentation/ | wc -l
->         287
->         $ git grep -e "'--[a-z]" Documentation/ | wc -l
->         132
+On Tue, Jul 26, 2011 at 02:10:11PM +0200, Michael Haggerty wrote:
 
-Fine by me, I just followed the style I found there. Will change all
-option names (including those who are using '--init' right now) to
-`--init` in the next iteration.
-
->> @@ -140,11 +146,14 @@ summary::
->>  	Show commit summary between the given commit (defaults to HEAD) and
->>  	working tree/index. For a submodule in question, a series of commits
->>  	in the submodule between the given super project commit and the
->> -	index or working tree (switched by --cached) are shown. If the option
->> -	--files is given, show the series of commits in the submodule between
->> +	index or working tree (switched by '--cached') are shown. If the option
->> +	'--files' is given, show the series of commits in the submodule between
->>  	the index of the super project and the working tree of the submodule
->> -	(this option doesn't allow to use the --cached option or to provide an
->> +	(this option doesn't allow to use the '--cached' option or to provide an
->>  	explicit commit).
->> ++
->> +Using the '--submodule=log' option with linkgit:git-diff[1] will provide the
->> +same information.
+> I am doing some work on git-check-attr, and I noticed something funny:
+> If a macro is used to set or clear attributes on a file in
+> .gitattributes, then the name of the macro itself is listed as an
+> attribute on that file.  Example:
 > 
-> I am not a huge fan of these extra paragraphs, especially in reality it is
-> not "provide the same" but "the same and a lot of other".
->
-> I dunno.
+> $ git init
+> Initialized empty Git repository in /tmp/foo/.git/
+> $ echo '[attr]notest !test' > .gitattributes
+> $ echo 'no notest' >> .gitattributes
+> 
+> # This is expected:
+> $ git check-attr test -- no
+> no: test: unspecified
+> 
+> # This I found surprising:
+> $ git check-attr notest -- no
+> no: notest: set
+> 
+> I don't see the correct behavior documented anywhere.  If this is
+> considered a bug, then I offer to fix it.  If it is considered a
+> feature, then I offer to document it.
 
-I added them because in a discussion with Marc it became apparent that users
-can't learn about what diff and status can do for them by checking the submodule
-man-page. But you are right about "the same and a lot of other", I will update
-the wording of those paragraphs.
+I don't know the original rationale, but it seems like the only sane
+behavior to me. If you care about the attributes that the macro is
+setting, then you will test for those attributes, not caring whether
+they came from a macro or not. The only time you will ask about the
+macro itself is if you care whether the macro itself is set (though the
+point of macros is that you don't care about them, but only the
+well-known names of underlying attributes. So I think you would only
+want to see this if you were doing some maintenance on your
+gitattributes files themselves, rather than simply reading their
+values).
 
-Maybe someone else has a better idea how to inform users that git diff and
-status can tell you a lot (and sometimes even more than the submodule script)
-about the state submodules are in?
+But maybe I'm missing something.  Can you describe a use case where you
+would want "notest" to be listed as "unspecified" in your example?
+
+-Peff
