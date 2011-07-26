@@ -1,58 +1,92 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [RFC PATCH] tests: print failed test numbers at the end of the
- test run
-Date: Tue, 26 Jul 2011 11:25:21 +0700
-Message-ID: <CACsJy8CuqHSoG4PVMiT=5EUv2hn=42y5B+6Rhny2VkXW32WR8Q@mail.gmail.com>
-References: <4E2B1DF2.4000003@web.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: feature request: git add--interactive --patch on regex-matched
+ hunks only
+Date: Mon, 25 Jul 2011 23:03:04 -0600
+Message-ID: <20110726050304.GA25046@sigill.intra.peff.net>
+References: <CACsJy8B1B25DZ1yrzHq69vwgzQyM2ouTXCHb8oPRpb_cAX+JZQ@mail.gmail.com>
+ <20110725215553.GA23145@sigill.intra.peff.net>
+ <7vbowiq62m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Jul 26 06:26:10 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 26 07:03:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QlZDa-00057j-Ia
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 06:26:06 +0200
+	id 1QlZnd-0006yk-L5
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 07:03:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751086Ab1GZEZ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jul 2011 00:25:56 -0400
-Received: from mail-ey0-f171.google.com ([209.85.215.171]:50730 "EHLO
-	mail-ey0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750757Ab1GZEZw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2011 00:25:52 -0400
-Received: by eye22 with SMTP id 22so76613eye.2
-        for <git@vger.kernel.org>; Mon, 25 Jul 2011 21:25:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=cX77bDeauQkQw0cyULEk9cokRa46yDuHqLQtvvvQTzw=;
-        b=RbN3pVnmRj+KjgcnTcQetSzCatCAy4koGW4m0QJPcAx2DqGpMk8ayLSW8Yih11fWCC
-         0Gq2tD2hS8CaTo2koWyg+yLuZK8SbXFir1ZeKGOuAHVHmPY0RxVgP20c1tj70pwzLLHL
-         ytRpkR5NcUexOFLbXfwopMlP7ayCHXHzp9aFk=
-Received: by 10.204.131.213 with SMTP id y21mr872736bks.88.1311654351128; Mon,
- 25 Jul 2011 21:25:51 -0700 (PDT)
-Received: by 10.204.121.142 with HTTP; Mon, 25 Jul 2011 21:25:21 -0700 (PDT)
-In-Reply-To: <4E2B1DF2.4000003@web.de>
+	id S1750844Ab1GZFDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jul 2011 01:03:09 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51509
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750828Ab1GZFDH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2011 01:03:07 -0400
+Received: (qmail 16823 invoked by uid 107); 26 Jul 2011 05:03:36 -0000
+Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 26 Jul 2011 01:03:36 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Jul 2011 23:03:04 -0600
+Content-Disposition: inline
+In-Reply-To: <7vbowiq62m.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177840>
 
-On Sun, Jul 24, 2011 at 2:16 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
-> On modern multi-core processors "make test" is often run in multiple jobs.
-> If one of them fails the test run does stop, but the concurrently running
-> tests finish their run.
+On Mon, Jul 25, 2011 at 04:44:01PM -0700, Junio C Hamano wrote:
 
-Somewhat related (or not). I change something. I know it breaks things
-and want to know _all_ tests it breaks, but "make test" would stop
-early. Is there anyway to make it keep going through all tests even if
-some fails? "make -j<big number>" improves the situation but does not
-really solve it.
--- 
-Duy
+> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+> index 8f0839d..0b6f8a6 100755
+> --- a/git-add--interactive.perl
+> +++ b/git-add--interactive.perl
+> @@ -1257,7 +1257,7 @@ sub display_hunks {
+>  
+>  sub patch_update_file {
+>  	my $quit = 0;
+> -	my ($ix, $num);
+> +	my ($ix, $num, $last_search_string);
+>  	my $path = shift;
+>  	my ($head, @hunk) = parse_diff($path);
+>  	($head, my $mode, my $deletion) = parse_diff_header($head);
+> @@ -1395,11 +1395,12 @@ sub patch_update_file {
+>  			}
+>  			elsif ($line =~ m|^/(.*)|) {
+>  				my $regex = $1;
+> -				if ($1 eq "") {
+> -					print colored $prompt_color, "search for regex? ";
+> -					$regex = <STDIN>;
+> -					if (defined $regex) {
+> -						chomp $regex;
+> +				if ($regex eq "") {
+> +					if ($last_search_string) {
+> +						$regex = $last_search_string;
+> +					} else {
+> +						error_msg "Need a regexp to search\n";
+> +						next;
+
+How does this interact with single-key mode? I imagine we just get the
+"/" at that point and have to read the rest of the regex manually. Which
+is probably why this code was here in the first place.
+
+So I think we might have to do something like:
+
+  my $regex = $1;
+  if ($use_readkey) {
+    print colored $prompt_color, "search for regex?";
+    $regex = <STDIN>;
+    chomp $regex;
+  }
+  if ($regex eq "") {
+    ...
+  }
+
+And then that would give single-key people an opportunity to input a new
+regex, or to hit enter to just use the last one.
+
+-Peff
