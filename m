@@ -1,46 +1,55 @@
-From: "J. Bakshi" <joydeep@infoservices.in>
-Subject: Re: GUI client for git in linux ?
-Date: Tue, 26 Jul 2011 15:46:23 +0530
-Message-ID: <20110726154623.2b27b440@shiva.selfip.org>
-References: <20110726152010.190a0efa@shiva.selfip.org>
+From: =?ISO-8859-2?Q?Tajti_=C1kos?= <akos.tajti@intland.com>
+Subject: listing changesets on a branch
+Date: Tue, 26 Jul 2011 12:27:02 +0200
+Message-ID: <4E2E9676.5000307@intland.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Tue Jul 26 12:16:37 2011
+Content-Type: text/plain; charset=ISO-8859-2;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 26 12:27:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qlegm-0003vc-2U
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 12:16:36 +0200
+	id 1QlerA-0008Eg-7e
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 12:27:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752129Ab1GZKQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jul 2011 06:16:31 -0400
-Received: from static.206.87.46.78.clients.your-server.de ([78.46.87.206]:50491
-	"EHLO Kolkata.infoservices.in" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751087Ab1GZKQa (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Jul 2011 06:16:30 -0400
-Received: from shiva.selfip.org (unknown [122.176.30.116])
-	by Kolkata.infoservices.in (Postfix) with ESMTPSA id 6733E1808001
-	for <git@vger.kernel.org>; Tue, 26 Jul 2011 12:16:27 +0200 (CEST)
-In-Reply-To: <20110726152010.190a0efa@shiva.selfip.org>
-X-Mailer: Claws Mail 3.7.9 (GTK+ 2.24.4; x86_64-pc-linux-gnu)
+	id S1751499Ab1GZK1J convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jul 2011 06:27:09 -0400
+Received: from moutng.kundenserver.de ([212.227.126.187]:60955 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751287Ab1GZK1G (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2011 06:27:06 -0400
+Received: from [192.168.1.100] (77-234-81-149.pool.digikabel.hu [77.234.81.149])
+	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
+	id 0MSozd-1QtjRN0i2v-00SYxl; Tue, 26 Jul 2011 12:27:04 +0200
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; hu; rv:1.9.2.18) Gecko/20110616 Thunderbird/3.1.11
+X-Provags-ID: V02:K0:ri9EQp5F3utPsrOHj3wnJBgCdNpMqefTKMCeOCIoMs5
+ AZGp5snbc39ugH7A0wzLO4yXdv21t8dmQ2xUPiHi4+zGFNsPB9
+ /ewgzZ9oi4srQLyCpnXhrYhgbyiciGAuiYjPlmq5YDtO0x/LP6
+ q7cCBJgYGmjG98tEagO/sE5CIbLn9XMUhtF6psXJvFGDKMBO1S
+ jyEdqxUk5xIMOS9qllrUuQPoF8nuUoBYU0gcHYkW/0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177852>
 
-On Tue, 26 Jul 2011 15:20:10 +0530
-"J. Bakshi" <joydeep@infoservices.in> wrote:
+Dear List,
 
-> Hello, 
-> 
-> Could anyone suggest a nice and featured-full GUI client for linux. Something equivalent to tortoisegit...
-> 
-> Thanks
+I'd like to list the changesets between two commit ids, but only those,=
+=20
+that were committed on a specific branch. I tried to use the following=20
+command:
 
-find smartgit; java based ... nice tool :-)
+git log --branches=3D*/master rev1..rev2
+
+But the result is not what I expected: i see sommits that were made on=20
+an other branch and were not merged to master. Could you please tell me=
+=20
+what I am doing wrong?
+
+Thanks in advance,
+=C1kos Tajti
