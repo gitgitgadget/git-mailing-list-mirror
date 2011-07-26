@@ -1,60 +1,96 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: feature request: git add--interactive --patch on regex-matched
- hunks only
-Date: Tue, 26 Jul 2011 20:03:01 +0700
-Message-ID: <CACsJy8C822Fvwav4Wpw4e-12ZY20XM1s2v4KymZkaDYLxkMHvw@mail.gmail.com>
-References: <CACsJy8B1B25DZ1yrzHq69vwgzQyM2ouTXCHb8oPRpb_cAX+JZQ@mail.gmail.com>
- <20110725215553.GA23145@sigill.intra.peff.net> <CACsJy8Db_sYFsQ2GcbcumJJYrXZDkKmuuULSM0_Z=HWvbYh8Bg@mail.gmail.com>
- <20110726051411.GB25046@sigill.intra.peff.net> <CACsJy8Ay1wPXAx61_rGymHDJ=YGywAy=9epiXRfJ9e68np8x6g@mail.gmail.com>
- <20110726060903.GA29486@sigill.intra.peff.net> <CACsJy8Birqg2Ldp1Mt4NWOq1aT0oigTcFA8S=RWcK5y+zstwDA@mail.gmail.com>
+From: Alexey Shumkin <ashu@rarus.ru>
+Subject: Re: [PATCH] pretty: user format ignores i18n.logOutputEncoding
+ setting
+Date: Tue, 26 Jul 2011 17:18:44 +0400
+Message-ID: <20110726171844.68b6e8ff@ashu.dyn.rarus.ru>
+References: <1311589875-12569-1-git-send-email-zapped@mail.ru>
+	<1311589875-12569-2-git-send-email-zapped@mail.ru>
+	<7vwrf6qh49.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 26 15:04:45 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Alexey Shumkin <zapped@mail.ru>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 26 15:19:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QlhJU-0002Ku-04
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 15:04:44 +0200
+	id 1QlhXQ-0000Gq-AB
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 15:19:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751787Ab1GZNEj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jul 2011 09:04:39 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:33605 "EHLO
+	id S1752137Ab1GZNTC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jul 2011 09:19:02 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:61492 "EHLO
 	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751397Ab1GZNEh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2011 09:04:37 -0400
-Received: by ewy4 with SMTP id 4so394553ewy.19
-        for <git@vger.kernel.org>; Tue, 26 Jul 2011 06:04:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=G1FN4ZpHHpb5ufHzGp/hfBhL9hbHALbQ2arI4qkxp3w=;
-        b=bBTVj8D4JAXilqaRiuYsxX9uxAQjocPcM94Osd95w3YS8yYgyHJpnx/ofRv73Ryw64
-         VeGDxQRSAIjJS87K1N8BdFfCYd4osVmgvfqxizLYj8HE9fbkuFLG8PHgmyrZinZZpcdV
-         0/wIrIGcyk00hmKT6UTZNK+IoyjxLF8Ki8qys=
-Received: by 10.204.145.19 with SMTP id b19mr1146584bkv.192.1311685412181;
- Tue, 26 Jul 2011 06:03:32 -0700 (PDT)
-Received: by 10.204.121.142 with HTTP; Tue, 26 Jul 2011 06:03:01 -0700 (PDT)
-In-Reply-To: <CACsJy8Birqg2Ldp1Mt4NWOq1aT0oigTcFA8S=RWcK5y+zstwDA@mail.gmail.com>
+	with ESMTP id S1751659Ab1GZNSw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Jul 2011 09:18:52 -0400
+Received: by ewy4 with SMTP id 4so405712ewy.19
+        for <git@vger.kernel.org>; Tue, 26 Jul 2011 06:18:51 -0700 (PDT)
+Received: by 10.213.108.147 with SMTP id f19mr2351688ebp.34.1311686327480;
+        Tue, 26 Jul 2011 06:18:47 -0700 (PDT)
+Received: from ashu.dyn.rarus.ru (mail.rarus.ru [213.247.194.83])
+        by mx.google.com with ESMTPS id x3sm357376eem.66.2011.07.26.06.18.45
+        (version=SSLv3 cipher=OTHER);
+        Tue, 26 Jul 2011 06:18:46 -0700 (PDT)
+In-Reply-To: <7vwrf6qh49.fsf@alter.siamese.dyndns.org>
+X-Mailer: Claws Mail 3.7.9 (GTK+ 2.22.0; i386-redhat-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177866>
 
-It would be even more cool if --hunks (or whatever the name will be)
-could work without -p. I mean, if "git diff" supports it, then I can
-fine tune my regex to meet a selection of hunks I want, and verify it
-really is what I want. Then "git add --hunks=magic" and voila! (The
-"git add --hunks" without -p surely can be workaround by adding "-p",
-then accept all hunks).
+=D0=92 Mon, 25 Jul 2011 12:45:26 -0700
+Junio C Hamano <gitster@pobox.com> =D0=BF=D0=B8=D1=88=D0=B5=D1=82:
 
-And if diff machinery learns this, we would have "git log --hunks" too.
+> Alexey Shumkin <alex.crezoff@gmail.com> writes:
+>=20
+> > git log --graph --oneline
+> > and
+> > git log --graph --pretty=3Dformat:'%C(yellow)%h %Creset%s'
+> > give different outputs on Linux UTF-8 console
+> > when commit messages contain non-UTF-8 characters
+>=20
+> (content) "different" is not specific enough to describe a problem (i=
+n
+> some cases, difference in command line arguments is the way to obtain
+> different results), especially if you do not state that they "should"
+> be the same to begin with, and preferrably under what condition they
+> should be the same.
+Ok, I'll fix the description
 
-OK I'm asking too much..
--- 
-Duy
+> (content) Do you really need all of the above options to observe the
+> breakage, or can you drop --graph?  If so, drop it from the proposed
+> commit log message, as it is distracting without merit.
+You're right. I do not. I just observed the error with such parameters,
+so I wrote them, but they are not neccessary for the error appearance.
+
+> (content) Do you really mean SP before %Creset, not after?
+Realy do, but it does not matter here
+
+> (style) Somehow I find this hard to read. Perhaps make the two "sampl=
+e
+> commands" stand out more from the surrounding text?  E.g.
+>=20
+> -- >8 --
+> The following two ought to give the same output to a terminal:
+>=20
+> 	$ git log --oneline
+>         $ git log --pretty=3Dformat:'%C(yellow)%h %creset%s'
+>=20
+> However, the former pays attention to i18n.logOutputEncoding
+> configuration, while the latter does not when it format "%s". A log
+> messages written in an encoding i18n.commitEncoding that is not UTF-8
+> is shown corrupted with the latter even when i18n.logOutputEncoding
+> is set to convert to UTF-8.
+>=20
+> Signed-off-by: ...
+> -- 8< --
+I'm sorry. I'm newbie in a patch distribution and collaborative work on
+Enlgish (it is not my native language). So thanks for the correction.
+
+> (question) Does this change affect other commands, most notably
+> format-patch, and if so how?
+I'll discover this, thanks for pointing me a direction.
