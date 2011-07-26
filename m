@@ -1,98 +1,61 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 00/19] Add --all option to git-check-attr
-Date: Tue, 26 Jul 2011 16:12:43 +0200
-Message-ID: <1311689582-3116-1-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 03/19] Remove anachronism from comment
+Date: Tue, 26 Jul 2011 16:12:46 +0200
+Message-ID: <1311689582-3116-4-git-send-email-mhagger@alum.mit.edu>
+References: <1311689582-3116-1-git-send-email-mhagger@alum.mit.edu>
 Cc: gitster@pobox.com, Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 26 16:31:47 2011
+X-From: git-owner@vger.kernel.org Tue Jul 26 16:32:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qlifj-00057l-Cw
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 16:31:47 +0200
+	id 1Qlig6-0005I5-9g
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 16:32:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753352Ab1GZObo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jul 2011 10:31:44 -0400
-Received: from mail.berlin.jpk.com ([212.222.128.130]:40190 "EHLO
+	id S1753319Ab1GZOb4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jul 2011 10:31:56 -0400
+Received: from mail.berlin.jpk.com ([212.222.128.130]:40201 "EHLO
 	mail.berlin.jpk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753334Ab1GZObh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2011 10:31:37 -0400
+	with ESMTP id S1753290Ab1GZObx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2011 10:31:53 -0400
 Received: from michael.berlin.jpk.com ([192.168.100.152])
 	by mail.berlin.jpk.com with esmtp (Exim 4.50)
-	id 1QliLf-0004aQ-Oh; Tue, 26 Jul 2011 16:11:03 +0200
+	id 1QliM6-0004aQ-Hx; Tue, 26 Jul 2011 16:11:30 +0200
 X-Mailer: git-send-email 1.7.6.8.gd2879
+In-Reply-To: <1311689582-3116-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177873>
 
-Currently it is possible to inquire the values of particular
-attributes on particular files, using either the API function
-git_checkattr() or the command "git check-attr".  But it is not
-possible to ask for *all* attributes that are associated with a
-particular file.  This patch series adds that functionality:
+Setting attributes to arbitrary values ("attribute=value") is now
+supported, so it is no longer necessary for this comment to justify
+prohibiting '=' in an attribute name.
 
-* A new API call git_allattr()
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ attr.c |    6 ++----
+ 1 files changed, 2 insertions(+), 4 deletions(-)
 
-* A new option "git check-attr --all -- pathnames"
-
-Along the way, several small cleanups are made in the general
-neighborhood, including:
-
-* Disallow the empty string as an attribute name
-
-* Provide access to the name attribute of git_attr
-
-* Fail with an error message if no pathnames are provided on the
-  command line (and --stdin is not used)
-
-* If --stdin is used, interpret all command-line arguments as
-  attribute names
-
-* Rename struct git_attr_check to git_attr_value
-
-Most of the patches are hopefully self-explanatory; see the individual
-patch emails for discussion of changes that might potentially be
-controversial.
-
-Michael Haggerty (19):
-  doc: Add a link from gitattributes(5) to git-check-attr(1)
-  doc: Correct git_attr() calls in example code
-  Remove anachronism from comment
-  Disallow the empty string as an attribute name
-  git-check-attr: Add missing "&&"
-  git-check-attr: Add tests of command-line parsing
-  Provide access to the name attribute of git_attr
-  git-check-attr: Use git_attr_name()
-  Allow querying all attributes on a file
-  git-check-attr: Extract a function output_attr()
-  git-check-attr: Introduce a new variable
-  git-check-attr: Extract a function error_with_usage()
-  git-check-attr: Handle each error separately
-  git-check-attr: Process command-line args more systematically
-  git-check-attr: Error out if no pathnames are specified
-  git-check-attr: Add an --all option to show all attributes
-  git-check-attr: Drive two tests using the same raw data
-  git-check-attr: Fix command-line handling to match docs
-  Rename struct git_attr_check to git_attr_value
-
- Documentation/git-check-attr.txt              |   23 ++++-
- Documentation/gitattributes.txt               |    3 +
- Documentation/technical/api-gitattributes.txt |   66 +++++++++-----
- archive.c                                     |    4 +-
- attr.c                                        |   61 +++++++++++--
- attr.h                                        |   24 ++++-
- builtin/check-attr.c                          |  123 ++++++++++++++++--------
- builtin/pack-objects.c                        |    4 +-
- convert.c                                     |   10 +-
- ll-merge.c                                    |    6 +-
- t/t0003-attributes.sh                         |   61 +++++++++----
- userdiff.c                                    |    2 +-
- ws.c                                          |    4 +-
- 13 files changed, 278 insertions(+), 113 deletions(-)
-
+diff --git a/attr.c b/attr.c
+index f6b3f7e..4a1244f 100644
+--- a/attr.c
++++ b/attr.c
+@@ -50,10 +50,8 @@ static unsigned hash_name(const char *name, int namelen)
+ static int invalid_attr_name(const char *name, int namelen)
+ {
+ 	/*
+-	 * Attribute name cannot begin with '-' and from
+-	 * [-A-Za-z0-9_.].  We'd specifically exclude '=' for now,
+-	 * as we might later want to allow non-binary value for
+-	 * attributes, e.g. "*.svg	merge=special-merge-program-for-svg"
++	 * Attribute name cannot begin with '-' and must consist of
++	 * characters from [-A-Za-z0-9_.].
+ 	 */
+ 	if (*name == '-')
+ 		return -1;
 -- 
 1.7.6.8.gd2879
