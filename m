@@ -1,70 +1,74 @@
-From: Alexey Shumkin <zapped@mail.ru>
+From: =?UTF-8?B?VGFqdGkgw4Frb3M=?= <akos.tajti@intland.com>
 Subject: Re: ls-tree with non-english characters
-Date: Tue, 26 Jul 2011 11:33:00 +0000 (UTC)
-Message-ID: <loom.20110726T133202-838@post.gmane.org>
-References: <4E2E8B33.6070900@intland.com>
+Date: Tue, 26 Jul 2011 13:39:16 +0200
+Message-ID: <4E2EA764.60304@intland.com>
+References: <4E2E8B33.6070900@intland.com> <20110726151739.51be3f55@ashu.dyn.rarus.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 26 13:33:20 2011
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Alexey Shumkin <ashu@rarus.ru>
+X-From: git-owner@vger.kernel.org Tue Jul 26 13:39:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qlft0-0000dc-FH
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 13:33:18 +0200
+	id 1Qlfyw-0003KT-11
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 13:39:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753239Ab1GZLdO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jul 2011 07:33:14 -0400
-Received: from lo.gmane.org ([80.91.229.12]:36011 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752284Ab1GZLdN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2011 07:33:13 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Qlfsu-0000by-FN
-	for git@vger.kernel.org; Tue, 26 Jul 2011 13:33:12 +0200
-Received: from 212.34.37.3 ([212.34.37.3])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 26 Jul 2011 13:33:12 +0200
-Received: from zapped by 212.34.37.3 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 26 Jul 2011 13:33:12 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 212.34.37.3 (Mozilla/5.0 (X11; Linux i686) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.124 Safari/534.30)
+	id S1753379Ab1GZLjW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jul 2011 07:39:22 -0400
+Received: from moutng.kundenserver.de ([212.227.126.186]:53425 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752284Ab1GZLjV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2011 07:39:21 -0400
+Received: from [192.168.1.100] (77-234-81-149.pool.digikabel.hu [77.234.81.149])
+	by mrelayeu.kundenserver.de (node=mrbap4) with ESMTP (Nemesis)
+	id 0MRDEV-1Qqw5C351r-00UZof; Tue, 26 Jul 2011 13:39:18 +0200
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; hu; rv:1.9.2.18) Gecko/20110616 Thunderbird/3.1.11
+In-Reply-To: <20110726151739.51be3f55@ashu.dyn.rarus.ru>
+X-Provags-ID: V02:K0:5nMBNMzXXmOivNBGm7tL7Sr41NdrAak4UHK8pMNNPsa
+ Mlit9qC4khZSuyoB0SJQVG1xu1EC0AZR2u1DxE8JMw7jM6isp5
+ ySZOtXy0KxzOGLcnGpdQFgI7iTPHxsfAc9jrfd8G1K3vkacVSV
+ PMoLJq1ZF7hH20moMXH2Ozmc6Muao4IjCcLHfzV/bkzz1q22HT
+ FQwZIiwV6SxOvF02Jl/ffjEDkQEFNg7eUyWf+V9ASU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177858>
 
-Tajti =C3=81kos <akos.tajti <at> intland.com> writes:
+Dear Alaxey,
 
->=20
-> Dear List,
->=20
-> I tried to use git ls-tree but on blob names containing non-english
-> characters I get a strange output. For example:
->=20
-> =C3=A1kos=C5=B1 -> \303\241kos\305\261
->=20
-> There's no mention of this format in the manual of ls-tree. Could you=
- please
-> help me on resolving this cryptic string to the original form?
->=20
-> Thanks in advance,
-> =C3=81kos Tajti
->=20
+thanks, I didn't know about this configuration option.
 
-Russian Windows git users know this feature
+Regards,
+=C3=81kos Tajti
 
-git config [--global] core.quotepath false
-resolves it (without -z)
-
-and, yes, man git-config
+2011.07.26. 13:17 keltez=C3=A9ssel, Alexey Shumkin =C3=ADrta:
+> =D0=92 Tue, 26 Jul 2011 11:38:59 +0200
+> Tajti =C3=81kos<akos.tajti@intland.com>  =D0=BF=D0=B8=D1=88=D0=B5=D1=82=
+:
+>
+>> Dear List,
+>>
+>> I tried to use git ls-tree but on blob names containing non-english
+>> characters I get a strange output. For example:
+>>
+>> =C3=A1kos=C5=B1 ->  \303\241kos\305\261
+>>
+>> There's no mention of this format in the manual of ls-tree. Could yo=
+u
+>> please help me on resolving this cryptic string to the original form=
+?
+>>
+>> Thanks in advance,
+>> =C3=81kos Tajti
+> Russian Windows git users know this feature
+>
+> git config [--global] core.quotepath false
+> resolves it
+>
+> and, yes, man git-config
