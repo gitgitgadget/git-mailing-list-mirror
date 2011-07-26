@@ -1,79 +1,130 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/5] setup_revisions: remember whether a ref was positive
- or not
-Date: Tue, 26 Jul 2011 17:16:06 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1107261713040.1534@s15462909.onlinehome-server.info>
-References: <1311517282-24831-1-git-send-email-srabbelier@gmail.com> <1311517282-24831-4-git-send-email-srabbelier@gmail.com> <7vy5znscst.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: long fast-import errors out "failed to apply delta"
+Date: Tue, 26 Jul 2011 18:58:58 +0200
+Message-ID: <20110726165858.GA2334@elie.dc0b.debconf.org>
+References: <CA+gfSn8jjptyv10iVimmfXpf6QHrR_3UpkRdd+Dv1M=KgORtGQ@mail.gmail.com>
+ <CA+gfSn8C-nB2hSSRTqSu1N1Z-b8ctRsVmUGAjLXTW0du_W3EQw@mail.gmail.com>
+ <CA+gfSn8m=_vd91Xe5EnFXUvZnuJf-yUE6H7FU+ak8S8a+NtCjA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 26 17:16:18 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	David Barr <davidbarr@google.com>
+To: Dmitry Ivankov <divanorama@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 26 18:59:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QljMl-0007hL-KE
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 17:16:15 +0200
+	id 1QlkyQ-00005k-MF
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 18:59:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752848Ab1GZPQM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jul 2011 11:16:12 -0400
-Received: from mailout-de.gmx.net ([213.165.64.22]:59421 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752225Ab1GZPQK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2011 11:16:10 -0400
-Received: (qmail invoked by alias); 26 Jul 2011 15:16:07 -0000
-Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
-  by mail.gmx.net (mp062) with SMTP; 26 Jul 2011 17:16:07 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18/m5RfwtQ/Y5UsTNvYC4jxJDUWUw1sBWWrEDaJRV
-	RdImkf6vsqH6rF
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <7vy5znscst.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753706Ab1GZQ7K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jul 2011 12:59:10 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:40913 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752032Ab1GZQ7H (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2011 12:59:07 -0400
+Received: by ewy4 with SMTP id 4so581672ewy.19
+        for <git@vger.kernel.org>; Tue, 26 Jul 2011 09:59:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=M6S6RGS0zNDC+K339t+y53ppt2SaXhEOADNM5HW3Yew=;
+        b=jQVGGgZya+/vE+v+9k40Be5XYQVI5KY2eOOkrpOS4ioxKba+9QAyE7Vd8ARMayuCI1
+         NR8d4nJ2b/nscyp0eV5el1HPpmdn6mvqgUbdnGo2X7+nvs0hVl6fXJEdC6Dn82gPeBYC
+         gSGitv5UGHFGR4XA1gJf8wDh4ttwBTcXOZh2c=
+Received: by 10.14.37.137 with SMTP id y9mr2278526eea.202.1311699545806;
+        Tue, 26 Jul 2011 09:59:05 -0700 (PDT)
+Received: from elie.dc0b.debconf.org ([78.28.140.4])
+        by mx.google.com with ESMTPS id v20sm493282eeh.12.2011.07.26.09.59.03
+        (version=SSLv3 cipher=OTHER);
+        Tue, 26 Jul 2011 09:59:04 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CA+gfSn8m=_vd91Xe5EnFXUvZnuJf-yUE6H7FU+ak8S8a+NtCjA@mail.gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177892>
 
-Hi,
+Hi Dmitry,
 
-On Sun, 24 Jul 2011, Junio C Hamano wrote:
+Dmitry Ivankov wrote:
 
-> Sverre Rabbelier <srabbelier@gmail.com> writes:
-> 
-> >  void add_pending_object(struct rev_info *revs, struct object *obj, const char *name)
-> >  {
-> > -	add_pending_object_with_mode(revs, obj, name, S_IFINVALID);
-> > +	add_pending_object_with_mode(revs, obj, name, S_IFINVALID, 0);
-> >  }
-> 
-> This seems utterly broken.  For example, fmt-merge-msg.c adds "^HEAD" 
-> and of course the flags on the object is UNINTERESTING. Has all the 
-> callers of add_pending_object() been verified? Why is it passing an 
-> unconditional 0 and not !!(obj->flags & UNINTERESTING) or something?
-> 
-> If the excuse is "this is only to help fast-export and other callers of 
-> add_pending_object() does not care", that is a sloppy attitude that 
-> breaks maintainability of the code (because it forgets to add "in the 
-> current code nobody looks at the new 'flags' field" to that excuse, and 
-> also does not have any comments around this code that says so); it is 
-> questionable if such a hack belongs to a patch that touches object.h.
+> 3) Is this breakage specific to tags/v1.7.3-rc0~75^2 "Teach
+> fast-import to import subtrees named by tree id" 30 Jun 2010 (allowing
+> M 040000 <tree id> pathname)?
 
-I hope you appreciate our effort not to hack this into the 'mode' 
-variable. That variable is exactly in the spirit you mentioned, so I 
-figured we'd be fine with a similar approach.
+Probably. :)
 
-Now that you have made clear that it is not fine, would you please care to 
-enlighten me how you would prefer the change to look like that makes the 
-argument parsing in revision.c remember which _refs_ (as opposed to 
-_commits_) were marked uninteresting?
+> The harder fix is to try to keep e->versions[0].sha1 for trees correct.
 
-Thank you very much,
-Johannes
+Context for those who don't remember all the details:
+
+When first introduced, "struct tree_entry" was very simple: a mode, a
+filename, and:
+
+ - for regular objects and symlinks, a blob object name representing
+   its content;
+
+ - for subdirectories, a pointer to "struct tree_content" listing its
+   contents, along with an _optional_ cached tree object name.
+
+When modifying a tree entry, fast-import would walk through the path
+to it and invalidate the cached tree names at each step.  Shawn wrote:
+
+	Currently trees and commits aren't being deltafied when written to
+	the pack and branch reloading from the current pack doesn't work,
+	so at most 5 branches can be worked with at any one time.
+
+but the advantage was that it was very simple.  Later, delta
+compression arrived:
+
+	commit 4cabf858
+	Author: Shawn O. Pearce <spearce@spearce.org>
+	Date:   Mon Aug 28 12:22:50 2006 -0400
+
+	    Implemented tree delta compression in fast-import.
+
+	    We now store for every tree entry two modes and two sha1 values;
+	    the base (aka "version 0") and the current/new (aka "version 1").
+	    When we generate a tree object we also regenerate the prior version
+	    object and use that as our base object for a delta.  This strategy
+	    saves a significant amount of memory as we can continue to use the
+	    atom pool for file/directory names and only increases each tree
+	    entry by an additional 24 bytes of memory.
+
+In other words, this commit introduced a "prior" mode and tree or blob
+name to give the pack-writing machinery a hint about what to delta
+against.
+
+With that in mind, it seems very weird that the version 0 tree would
+ever be changed and need to have its object name invalidated.  Perhaps
+we are releasing some memory too early and it is getting clobbered?
+Unless I am missing something, the patch
+
+> --- a/fast-import.c
+> +++ b/fast-import.c
+> @@ -1514,6 +1514,9 @@ static int tree_content_set(
+>                                 if (e->tree)
+>                                         release_tree_content_recursive(e->tree);
+>                                 e->tree = subtree;
+> +                               if (S_ISDIR(mode)) {
+> +                                       hashclr(e->versions[0].sha1);
+> +                               }
+>                                 hashclr(root->versions[1].sha1);
+>                                 return 1;
+
+just disables deltas for trees that have been modified by a "M 040000"
+command, so it feels more like a workaround than a fundamental fix.
+
+Could you save the svn-fe output (e.g., by introducing "tee" in the
+middle of the "svn-fe | fast-import" pipeline) and put it up
+somewhere online?  This would also be a good starting point for coming
+up with a reduced testcase.
+
+Hope that helps,
+Jonathan
