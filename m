@@ -1,81 +1,107 @@
-From: Semyon Kirnosenko <semyon.kirnosenko@gmail.com>
-Subject: [BUG] diff and blame difference
-Date: Tue, 26 Jul 2011 18:10:05 +0400
-Message-ID: <4E2ECABD.7050601@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 07/19] Provide access to the name attribute of git_attr
+Date: Tue, 26 Jul 2011 16:12:50 +0200
+Message-ID: <1311689582-3116-8-git-send-email-mhagger@alum.mit.edu>
+References: <1311689582-3116-1-git-send-email-mhagger@alum.mit.edu>
+Cc: gitster@pobox.com, Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 26 16:10:03 2011
+X-From: git-owner@vger.kernel.org Tue Jul 26 16:30:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QliKh-0004CH-5l
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 16:10:03 +0200
+	id 1Qlieu-0004gd-Nc
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 16:30:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752135Ab1GZOJ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jul 2011 10:09:57 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:57476 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751342Ab1GZOJ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2011 10:09:56 -0400
-Received: by ewy4 with SMTP id 4so446645ewy.19
-        for <git@vger.kernel.org>; Tue, 26 Jul 2011 07:09:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=7tB99I3Et0ln2kbCl2sp1gIQsCQeHkB77LWWnxnY6ZY=;
-        b=Vjanbonnn9KPb8k41IuGXJGVzI+pR0VPwBQRhpwCbpTlJMja+isAYZcUj8mxf8Vaej
-         KZC/mVvRQMISDmuZcPz/JcH+TAEyMaRtlDnQSlN0rPSMnexKyqsusCR6ZZDc5bitc/hE
-         6RLZzb/yl3qPJ8FU152u5YjLdJd5bpbJfzuWk=
-Received: by 10.204.137.76 with SMTP id v12mr24717bkt.136.1311689395201;
-        Tue, 26 Jul 2011 07:09:55 -0700 (PDT)
-Received: from [188.233.9.111] ([188.233.9.111])
-        by mx.google.com with ESMTPS id p24sm42886bkw.41.2011.07.26.07.09.52
-        (version=SSLv3 cipher=OTHER);
-        Tue, 26 Jul 2011 07:09:53 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; ru; rv:1.9.2.4) Gecko/20100608 Thunderbird/3.1
+	id S1752432Ab1GZOaw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jul 2011 10:30:52 -0400
+Received: from mail.berlin.jpk.com ([212.222.128.130]:40163 "EHLO
+	mail.berlin.jpk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752032Ab1GZOav (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2011 10:30:51 -0400
+X-Greylist: delayed 1060 seconds by postgrey-1.27 at vger.kernel.org; Tue, 26 Jul 2011 10:30:51 EDT
+Received: from michael.berlin.jpk.com ([192.168.100.152])
+	by mail.berlin.jpk.com with esmtp (Exim 4.50)
+	id 1QliM6-0004aQ-O6; Tue, 26 Jul 2011 16:11:30 +0200
+X-Mailer: git-send-email 1.7.6.8.gd2879
+In-Reply-To: <1311689582-3116-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177869>
 
-Hi.
+It will be present in any likely future reimplementation, and its
+availability simplifies other code.
 
-Again, I have to post about diff and blame difference problem.
-The initial discussion ends here:
-http://permalink.gmane.org/gmane.comp.version-control.git/165012
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
 
-I have the same problem and now it's about non-whitespace lines. The 
-problem is some line is marked in diff as added, but in blame it is 
-marked as added in some older revision. And vice versa line is not 
-marked as added in diff but it is marked in blame. Here are several 
-examples from git repo:
+struct git_attr is an opaque structure containing, among other things,
+the name of the attribute that it represents.  This patch adds a
+function git_attr_name(struct git_attr *) that allows the name to be
+read from the structure.  This functionality will be convenient for
+later patches.
 
-Diff error in revision 198b0fb635ed8a007bac0c16eab112c5e2c7995c in file 
-date.c.
-Line 184: added in diff, but blame say otherwise.
-Line 215: added in diff, but blame say otherwise.
-Line 219: added in diff, but blame say otherwise.
-Line 259: added in diff, but blame say otherwise.
-Line 260: added in diff, but blame say otherwise.
-Line 193: not added in diff, but blame say otherwise.
-Line 212: not added in diff, but blame say otherwise.
-Line 222: not added in diff, but blame say otherwise.
-Line 300: not added in diff, but blame say otherwise.
-Line 315: not added in diff, but blame say otherwise.
+This seems harmless to me.  It is hardly conceivable that the
+implementation will change so dramatically that it becomes impossible
+to derive the attribute name from the git_attr.
 
-To get diff and blame i've used the following commands:
-git --git-dir=D:\src\git\.git diff-tree -p 
-198b0fb635ed8a007bac0c16eab112c5e2c7995c -- date.c > diff-tree
-git --git-dir=D:\src\git\.git blame -l -s 
-198b0fb635ed8a007bac0c16eab112c5e2c7995c -- date.c > blame
+Please check that the name that I chose for this function conforms to
+git conventions.
 
+ Documentation/technical/api-gitattributes.txt |    3 ++-
+ attr.c                                        |    4 ++++
+ attr.h                                        |    7 +++++++
+ 3 files changed, 13 insertions(+), 1 deletions(-)
 
-I have sent this before, but did not receive any response. I just need 
-some type of answer. Something like "we will fix it" or "we don't care 
-about it".
+diff --git a/Documentation/technical/api-gitattributes.txt b/Documentation/technical/api-gitattributes.txt
+index 916720f..ab3a84d 100644
+--- a/Documentation/technical/api-gitattributes.txt
++++ b/Documentation/technical/api-gitattributes.txt
+@@ -13,7 +13,8 @@ Data Structure
+ 	An attribute is an opaque object that is identified by its name.
+ 	Pass the name to `git_attr()` function to obtain the object of
+ 	this type.  The internal representation of this structure is
+-	of no interest to the calling programs.
++	of no interest to the calling programs.  The name of the
++	attribute can be retrieved by calling `git_attr_name()`.
+ 
+ `struct git_attr_check`::
+ 
+diff --git a/attr.c b/attr.c
+index b1d1d6d..a261550 100644
+--- a/attr.c
++++ b/attr.c
+@@ -36,6 +36,10 @@ static int attr_nr;
+ static struct git_attr_check *check_all_attr;
+ static struct git_attr *(git_attr_hash[HASHSIZE]);
+ 
++char *git_attr_name(struct git_attr *attr) {
++	return attr->name;
++}
++
+ static unsigned hash_name(const char *name, int namelen)
+ {
+ 	unsigned val = 0, c;
+diff --git a/attr.h b/attr.h
+index 8b3f19b..d4f875a 100644
+--- a/attr.h
++++ b/attr.h
+@@ -29,6 +29,13 @@ struct git_attr_check {
+ 	const char *value;
+ };
+ 
++/*
++ * Return the name of the attribute represented by the argument.  The
++ * return value is a pointer to a null-delimited string that is part
++ * of the internal data structure; it should not be modified or freed.
++ */
++char *git_attr_name(struct git_attr *);
++
+ int git_checkattr(const char *path, int, struct git_attr_check *);
+ 
+ enum git_attr_direction {
+-- 
+1.7.6.8.gd2879
