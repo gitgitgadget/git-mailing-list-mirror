@@ -1,119 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: feature request: git add--interactive --patch on regex-matched
- hunks only
-Date: Mon, 25 Jul 2011 16:44:01 -0700
-Message-ID: <7vbowiq62m.fsf@alter.siamese.dyndns.org>
-References: <CACsJy8B1B25DZ1yrzHq69vwgzQyM2ouTXCHb8oPRpb_cAX+JZQ@mail.gmail.com>
- <20110725215553.GA23145@sigill.intra.peff.net>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: Is there a quick way to identify commits that reference missing
+ trees or blobs?
+Date: Tue, 26 Jul 2011 11:39:55 +1000
+Message-ID: <CAH3AnrouGUPvnYk_O1W_a5qZCmePC41GgEX_qcS3HLpkEm9pHw@mail.gmail.com>
+References: <CAH3AnroyfeGOo_23nHKhLjxEnP_qEMi7as1UjXEFjjuVOckBjw@mail.gmail.com>
+	<20110725223449.GA25560@toss.lan>
+	<20110725224408.GA26057@toss.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 26 01:44:15 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Tue Jul 26 03:40:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QlUom-0004Le-Ci
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 01:44:12 +0200
+	id 1QlWcr-000547-I0
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 03:40:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752404Ab1GYXoI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jul 2011 19:44:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61697 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751694Ab1GYXoF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2011 19:44:05 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 163A350A9;
-	Mon, 25 Jul 2011 19:44:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ePOrHRkKuoGdIjJsAo+2B0r2mZg=; b=wKS/sc
-	nK8Tly6KMfI4w6eLWQyzm4rDQQ0XjldA5VSfTrDsSCr6Z8KbV1j3vG7HAHKLyjZB
-	DivsAdWNpxazPHATwSZqGXGO/lFkUO7OfMIA+OA4j52hqyk8+De6/PWxFxyA3N25
-	omSdxmuGuN+zjrjJOoB72KV2h9AgWNBtPr3uI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XSeQocTy3XMq+NXDH6bFt+K0K+IYjwK2
-	6TvbxG/LcmuOkGHFW0PSNqE9/0+U7IIce0i4Ap4H1UNRnLG3eZV/WaKTmi1l8lht
-	KjHSe5w0NJRJz0Lk6JSv8qvzre2H8ozRFXeU6DZs4rbendbO9urB/JK8aq/7p61Z
-	UUl3JODHLpE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 00C2C50A8;
-	Mon, 25 Jul 2011 19:44:04 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 78FEB50A7; Mon, 25 Jul 2011
- 19:44:03 -0400 (EDT)
-In-Reply-To: <20110725215553.GA23145@sigill.intra.peff.net> (Jeff King's
- message of "Mon, 25 Jul 2011 15:55:55 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FA72C8C8-B717-11E0-A929-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752564Ab1GZBj5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Jul 2011 21:39:57 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:48138 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752209Ab1GZBj4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Jul 2011 21:39:56 -0400
+Received: by vws1 with SMTP id 1so3393189vws.19
+        for <git@vger.kernel.org>; Mon, 25 Jul 2011 18:39:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=r9bmcIMKYdTesiEHB2GPA/hw0U01y7BhDpDbmS6ujh4=;
+        b=F4PZgQpZUotkBuahGbfw+pAzaTXYrxb4THm3Zc1qGomIZwlazJ29JSq/J/UcjEn8Ri
+         vfR1pCZJhDaRhSfuarjxLvkNjKt9yuK1q+Ws9vfxFT4xD6GQGBzugycZhaQw25Poy+od
+         yKGb4AtzWLNete3G9wr/8ks4+rHsBzv8jaQKw=
+Received: by 10.52.74.69 with SMTP id r5mr2572798vdv.307.1311644395574; Mon,
+ 25 Jul 2011 18:39:55 -0700 (PDT)
+Received: by 10.52.183.41 with HTTP; Mon, 25 Jul 2011 18:39:55 -0700 (PDT)
+In-Reply-To: <20110725224408.GA26057@toss.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177836>
 
-Jeff King <peff@peff.net> writes:
+On Tue, Jul 26, 2011 at 8:44 AM, Clemens Buchacher <drizzd@aon.at> wrot=
+e:
+> On Tue, Jul 26, 2011 at 12:34:50AM +0200, Clemens Buchacher wrote:
+>> On Sun, Jul 24, 2011 at 02:48:20AM +1000, Jon Seymour wrote:
+>> >
+>> > I was wondering if there is a quick way to identify commits that
+>> > reference missing trees or blobs as identified by git fsck?
+>>
+>> The following command has served me well for this purpose. I apply
+>> it to each ref in git-for-each-ref:
+>>
+>> $ git rev-list --objects $ref | git cat-file --batch-check
+>
+> Oh, and here is the output you get for different situations. Exit
+> status is always 0 unfortunately.
+>
+> =C2=A0- missing blob
+>
+> fatal: missing blob object '78981922613b2afb6025042ff6bd878ac1994e85'
+> d165426eba5cb4c125bd6e100d1b5de7298eb601 commit 168
+> 848740929e99bda0e1a9783e7daa314c5a9732d5 =C2=A0missing
+>
+> =C2=A0- missing tree
+>
+> error: Could not read 84bf061d017459b4be45a49b8d8dc945e7a7fdf5
+> fatal: bad tree object 84bf061d017459b4be45a49b8d8dc945e7a7fdf5
+> abce3ad54002628ab74d72b7e2baa687abcb77f9 commit 168
+>
+> =C2=A0- missing parent commit
+>
+> error: Could not read 3aa66f30aa9799ac38a53b551ac4faca9cbd400b
+> fatal: Failed to traverse parents of commit 3cfb98a3cbd3f42852e20bd01=
+1c7b835b8750df7
+>
+> Clemens
+>
 
-> However, I'm not sure I would trust my regex to actually get all of the
-> changes needed for the refactoring (e.g., there might be nearby hunks
-> related to the refactoring that are not specifically in the same hunk as
-> the word "foo"). So I tend to just "git add -p" and flip through the
-> changes manually.
+Thanks for that.
 
-Yes, that is a valid concern.
+Junio, also pointed out in another thread that git rev-list --objects
+is quite useful for this purpose. His variant used git pack-objects
+which apparently does exit with zero status code.  The zero exit code
+here looks like a bug, I think, so perhaps I will submit a patch for
+that too (I just did one for git ls-tree).
 
-> You can already skip around in the hunk list using "/regex". Might that
-> be enough for you? I think you're stuck typing "/yoursearch" over and
-> over, though. It would be nice if doing just "/" would search again for
-> the previous regex.
+While concise it isn't a particularly fast way to find commits
+affected by damaged trees - it is O(N^2*M), where N is the number of
+commits and M is the size of the tree. As indicated in another thread,
+I think bisection can potentially be O(K * log(N) * M + K*N), where K
+is the number of fully connected bad subgraphs. [ by that I mean a
+subgraph consisting only of commits with damaged trees).
 
-Yes, I think that makes a lot more sense than the current "Ah, empty? ask
-from the terminal" behaviour.
-
- git-add--interactive.perl |   14 ++++++++------
- 1 files changed, 8 insertions(+), 6 deletions(-)
-
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 8f0839d..0b6f8a6 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -1257,7 +1257,7 @@ sub display_hunks {
- 
- sub patch_update_file {
- 	my $quit = 0;
--	my ($ix, $num);
-+	my ($ix, $num, $last_search_string);
- 	my $path = shift;
- 	my ($head, @hunk) = parse_diff($path);
- 	($head, my $mode, my $deletion) = parse_diff_header($head);
-@@ -1395,11 +1395,12 @@ sub patch_update_file {
- 			}
- 			elsif ($line =~ m|^/(.*)|) {
- 				my $regex = $1;
--				if ($1 eq "") {
--					print colored $prompt_color, "search for regex? ";
--					$regex = <STDIN>;
--					if (defined $regex) {
--						chomp $regex;
-+				if ($regex eq "") {
-+					if ($last_search_string) {
-+						$regex = $last_search_string;
-+					} else {
-+						error_msg "Need a regexp to search\n";
-+						next;
- 					}
- 				}
- 				my $search_string;
-@@ -1412,6 +1413,7 @@ sub patch_update_file {
- 					error_msg "Malformed search regexp $exp: $err\n";
- 					next;
- 				}
-+				$last_search_string = $regex;
- 				my $iy = $ix;
- 				while (1) {
- 					my $text = join ("", @{$hunk[$iy]{TEXT}});
+jon.
