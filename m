@@ -1,111 +1,96 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: feature request: git add--interactive --patch on regex-matched
- hunks only
-Date: Tue, 26 Jul 2011 10:03:31 +0700
-Message-ID: <CACsJy8Db_sYFsQ2GcbcumJJYrXZDkKmuuULSM0_Z=HWvbYh8Bg@mail.gmail.com>
-References: <CACsJy8B1B25DZ1yrzHq69vwgzQyM2ouTXCHb8oPRpb_cAX+JZQ@mail.gmail.com>
- <20110725215553.GA23145@sigill.intra.peff.net>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: Is there a quick way to identify commits that reference missing
+ trees or blobs?
+Date: Tue, 26 Jul 2011 14:20:00 +1000
+Message-ID: <CAH3Anrp-pQg8x-UHKDMb+VXFT_m4LiWX=cezoZWstCoFsiJWMQ@mail.gmail.com>
+References: <CAH3AnroyfeGOo_23nHKhLjxEnP_qEMi7as1UjXEFjjuVOckBjw@mail.gmail.com>
+	<20110725223449.GA25560@toss.lan>
+	<20110725224408.GA26057@toss.lan>
+	<CAH3AnrouGUPvnYk_O1W_a5qZCmePC41GgEX_qcS3HLpkEm9pHw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 26 05:04:16 2011
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Tue Jul 26 06:20:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QlXwI-0005VJ-FY
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 05:04:10 +0200
+	id 1QlZ7p-0003x7-3U
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 06:20:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751968Ab1GZDEF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Jul 2011 23:04:05 -0400
-Received: from mail-ey0-f171.google.com ([209.85.215.171]:55073 "EHLO
-	mail-ey0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751376Ab1GZDED convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Jul 2011 23:04:03 -0400
-Received: by eye22 with SMTP id 22so22706eye.2
-        for <git@vger.kernel.org>; Mon, 25 Jul 2011 20:04:01 -0700 (PDT)
+	id S1750816Ab1GZEUE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jul 2011 00:20:04 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:58658 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750746Ab1GZEUC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Jul 2011 00:20:02 -0400
+Received: by vxh35 with SMTP id 35so58246vxh.19
+        for <git@vger.kernel.org>; Mon, 25 Jul 2011 21:20:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        bh=9zyilzz2lUvA0A3HKQmqkgSZhL/VqYbr9tmjXngEmIs=;
-        b=fqXOm6Xc/kYQ7pnGoE00WQSlwhuSx/XcrDMc4ChlNJfl//NvxjsbKgsU/T7oDVwUG1
-         7nDmgz5QJFYR/P8iutDrTDPhPhvYrN9j9UZDHtWnQPcV3NF07mJMGNI+EQYYvlQcXNt3
-         ulrqC/03OPS1H+oYDWd/+6+xqv4q7l5d3eQGY=
-Received: by 10.204.35.207 with SMTP id q15mr1615276bkd.244.1311649441262;
- Mon, 25 Jul 2011 20:04:01 -0700 (PDT)
-Received: by 10.204.121.142 with HTTP; Mon, 25 Jul 2011 20:03:31 -0700 (PDT)
-In-Reply-To: <20110725215553.GA23145@sigill.intra.peff.net>
+        bh=uQUueLvy29AcZOTRy2mcytZPpv8pIRhA63bnTTnLCd8=;
+        b=B2iWzWSECbl2Zo1lfLRH0fGUJt5c2XiALM/JTzrbQ6imlgZN5Oc5Y7q7RYJ33bp5Ci
+         CLQk6+lmAmm1DNM1eUI4fBETqkgKtf1FgH9cMhATk3uirG483Py7Kjx+tq6IRPRs8BK1
+         q/8Rx4Ftp/xNvf4CRb+n2z1LMaYzSY0eZh9f4=
+Received: by 10.52.98.198 with SMTP id ek6mr4769753vdb.240.1311654001746; Mon,
+ 25 Jul 2011 21:20:01 -0700 (PDT)
+Received: by 10.52.183.41 with HTTP; Mon, 25 Jul 2011 21:20:00 -0700 (PDT)
+In-Reply-To: <CAH3AnrouGUPvnYk_O1W_a5qZCmePC41GgEX_qcS3HLpkEm9pHw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177838>
 
-On Tue, Jul 26, 2011 at 4:55 AM, Jeff King <peff@peff.net> wrote:
-> On Sun, Jul 24, 2011 at 12:11:29PM +0700, Nguyen Thai Ngoc Duy wrote:
+On Tue, Jul 26, 2011 at 11:39 AM, Jon Seymour <jon.seymour@gmail.com> w=
+rote:
+> On Tue, Jul 26, 2011 at 8:44 AM, Clemens Buchacher <drizzd@aon.at> wr=
+ote:
+>> On Tue, Jul 26, 2011 at 12:34:50AM +0200, Clemens Buchacher wrote:
+>>> On Sun, Jul 24, 2011 at 02:48:20AM +1000, Jon Seymour wrote:
+>>> >
+>>> > I was wondering if there is a quick way to identify commits that
+>>> > reference missing trees or blobs as identified by git fsck?
+>>>
+>>> The following command has served me well for this purpose. I apply
+>>> it to each ref in git-for-each-ref:
+>>>
+>>> $ git rev-list --objects $ref | git cat-file --batch-check
+>>
+>> Oh, and here is the output you get for different situations. Exit
+>> status is always 0 unfortunately.
+>>
+>> =C2=A0- missing blob
+>>
+>> fatal: missing blob object '78981922613b2afb6025042ff6bd878ac1994e85=
+'
+>> d165426eba5cb4c125bd6e100d1b5de7298eb601 commit 168
+>> 848740929e99bda0e1a9783e7daa314c5a9732d5 =C2=A0missing
+>>
+>> =C2=A0- missing tree
+>>
+>> error: Could not read 84bf061d017459b4be45a49b8d8dc945e7a7fdf5
+>> fatal: bad tree object 84bf061d017459b4be45a49b8d8dc945e7a7fdf5
+>> abce3ad54002628ab74d72b7e2baa687abcb77f9 commit 168
+>>
+>> =C2=A0- missing parent commit
+>>
+>> error: Could not read 3aa66f30aa9799ac38a53b551ac4faca9cbd400b
+>> fatal: Failed to traverse parents of commit 3cfb98a3cbd3f42852e20bd0=
+11c7b835b8750df7
+>>
+>> Clemens
+>>
 >
->> Can we have "git add--interactive --patch --match=3Dregex" where onl=
-y
->> (splitted if possible) hunks that match regex are shown?
+> Thanks for that.
 >
-> The patch below does this,
+> Junio, also pointed out in another thread that git rev-list --objects
+> is quite useful for this purpose. His variant used git pack-objects
+> which apparently does exit with zero status code.
 
-Thanks!
-
-> but there are a lot of unanswered questions.
-> Such as:
->
-> =C2=A01. What does it mean to be "shown"? My patch auto-marks non-mat=
-ching
-> =C2=A0 =C2=A0 hunks as "do not stage". That means you can still switc=
-h back to
-> =C2=A0 =C2=A0 them in the hunk list and enable them if you want. Anot=
-her option
-> =C2=A0 =C2=A0 would be to omit them entirely, and pretend that those =
-hunks don't
-> =C2=A0 =C2=A0 exist.
-
-Either way is ok. Maybe the option in this case could be changed to
---nostage=3Dregex to reflect the behavior.
-
-> =C2=A02. What should we do with non-text changes, like mode changes a=
-re
-> =C2=A0 =C2=A0 full-file deletion?
-
-Probably invalid use case for --match.
-
-> =C2=A03. What should be shown for a file with no matching hunks? Prob=
-ably
-> =C2=A0 =C2=A0 nothing (i.e., as if it had been limited away by pathna=
-me)? My
-> =C2=A0 =C2=A0 patch shows the header, but that is easy to fix.
-
-Printing "Nothing to add" would be nice.
-
-> However, I'm not sure I would trust my regex to actually get all of t=
-he
-> changes needed for the refactoring (e.g., there might be nearby hunks
-> related to the refactoring that are not specifically in the same hunk=
- as
-> the word "foo"). So I tend to just "git add -p" and flip through the
-> changes manually.
-
-Well, I do "git diff --cached" and "git diff"  (the search in the
-diff) before committing just to make sure I don't miss any changes.
-
-> You can already skip around in the hunk list using "/regex". Might th=
-at
-> be enough for you? I think you're stuck typing "/yoursearch" over and
-> over, though. It would be nice if doing just "/" would search again f=
-or
-> the previous regex.
-
-Yes I'm stuck typing /mysearch. Yes, "/" alone would be nice, but in
-this case I really want mass ignore certain changes so I can focus on
-important strings first.
---=20
-Duy
+| _non-zero_ !
