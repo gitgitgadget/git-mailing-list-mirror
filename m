@@ -1,67 +1,61 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: ls-tree with non-english characters
-Date: Tue, 26 Jul 2011 12:39:27 +0200
-Message-ID: <20110726103927.GA31625@goldbirke>
-References: <4E2E8B33.6070900@intland.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Tajti =?iso-8859-1?Q?=C1kos?= <akos.tajti@intland.com>
-X-From: git-owner@vger.kernel.org Tue Jul 26 12:39:38 2011
+From: Daniel Holtmann-Rice <flyingtabmow@gmail.com>
+Subject: git submodule update --quiet is very loud
+Date: Tue, 26 Jul 2011 07:26:47 -0400
+Message-ID: <3A1F23B2-AC3F-416C-BFBD-97096724C400@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1244.3)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 26 13:27:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qlf31-0004WD-P4
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 12:39:36 +0200
+	id 1QlfnL-0006Ey-Ml
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 13:27:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752284Ab1GZKjb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jul 2011 06:39:31 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:62978 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751211Ab1GZKja (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2011 06:39:30 -0400
-Received: from localhost6.localdomain6 (p5B1315A4.dip0.t-ipconnect.de [91.19.21.164])
-	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
-	id 0LmeI7-1RKRpj1QXb-00ZThl; Tue, 26 Jul 2011 12:39:28 +0200
-Content-Disposition: inline
-In-Reply-To: <4E2E8B33.6070900@intland.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Provags-ID: V02:K0:t6jUYbAjCid4HCANsOlL/Bi2u4L1dcudTph2urHiO6B
- Pp1jFxv5ZMpoXeMNO8z4YUxoF1XAzQgZthwhAbAd7NOvnjuqZd
- qy1LDsFfQuVnRI3/Mm/bj93UC/bZnvtUAIWUk1n89zxYuqA8xl
- 7DP0yINCY+T0ArKTXCrbAnQ7tvWCRm7qqwzbZDWLrlx8fgDeGj
- BiA20PS5z1KKvMh/UJ2Ww==
+	id S1753412Ab1GZL0z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jul 2011 07:26:55 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:54926 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753344Ab1GZL0t convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Jul 2011 07:26:49 -0400
+Received: by qyk29 with SMTP id 29so1373810qyk.19
+        for <git@vger.kernel.org>; Tue, 26 Jul 2011 04:26:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:content-type:content-transfer-encoding:subject:date:message-id
+         :to:mime-version:x-mailer;
+        bh=pWY83Qk6RA3xb8K7R7VbO7u6DNcwo+lsIf8YGlntd6E=;
+        b=x6mePsrVj7jic11TIO3iWmeVE1dspHEE2u030suUZsIyXV5BQpVtRXjjPrjPNOzm5m
+         fzqaj6eEIdixjnjIINW4Wpmfx0bTmJoq3iBNd2IQ67DRzTpqS9mzSGPJXZsljICkRHZ1
+         3ZRN1+Na7Y7V/vqBhSHCImvofs07Uzr5SXMO8=
+Received: by 10.224.183.3 with SMTP id ce3mr2552551qab.100.1311679608554;
+        Tue, 26 Jul 2011 04:26:48 -0700 (PDT)
+Received: from [192.168.0.200] (c-71-235-85-18.hsd1.ct.comcast.net [71.235.85.18])
+        by mx.google.com with ESMTPS id k5sm220367qct.21.2011.07.26.04.26.47
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 26 Jul 2011 04:26:48 -0700 (PDT)
+X-Mailer: Apple Mail (2.1244.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177855>
 
-Szervusz =C3=81kos,
+Hi,
 
+I can't find a place to submit bug reports, so I'll post this here... the --quiet/-q flag seems to have no effect for 'git submodule update'.  For example (http://pastebin.com/0KWT4EeA):
 
-On Tue, Jul 26, 2011 at 11:38:59AM +0200, Tajti =C3=81kos wrote:
-> I tried to use git ls-tree but on blob names containing non-english
-> characters I get a strange output. For example:
->=20
-> =C3=A1kos=C5=B1 -> \303\241kos\305\261
->=20
-> There's no mention of this format in the manual of ls-tree. Could you=
- please
-> help me on resolving this cryptic string to the original form?
+#!/bin/bash
 
-Try with the -z option, it seems to do more than the documentation
-suggests:
+git clone -q git://github.com/dhr/evp-tools.git
+cd evp-tools
+git submodule -q init
+git submodule -q update
 
-  $ git ls-tree HEAD
-100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391	"\303\241rv\303\25=
-5zt\305\261r\305\221"
-  $ git ls-tree -z HEAD
-100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391	=C3=A1rv=C3=ADzt=C5=
-=B1r=C5=91
+This doesn't run quietly (the first three commands do, the last does not).  I've tried this through Git 1.7.6.
 
-
-G=C3=A1bor
+Cheers,
+Dan
