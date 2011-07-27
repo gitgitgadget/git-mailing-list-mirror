@@ -1,128 +1,113 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH] submodule: update and add must honor --quiet flag
-Date: Tue, 26 Jul 2011 23:39:03 +0200
-Message-ID: <4E2F33F7.20407@web.de>
-References: <3A1F23B2-AC3F-416C-BFBD-97096724C400@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Daniel Holtmann-Rice <flyingtabmow@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 26 23:39:13 2011
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH 00/18] GSoC update: Sequencer for inclusion v3
+Date: Wed, 27 Jul 2011 08:48:57 +0530
+Message-ID: <1311736755-24205-1-git-send-email-artagnon@gmail.com>
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 27 05:22:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QlpLM-0001AU-6h
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Jul 2011 23:39:12 +0200
+	id 1QluhX-0005s7-B1
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 05:22:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753865Ab1GZVjI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jul 2011 17:39:08 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:48059 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753608Ab1GZVjG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2011 17:39:06 -0400
-Received: from smtp08.web.de  ( [172.20.5.216])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 2309D1A72A91E;
-	Tue, 26 Jul 2011 23:39:04 +0200 (CEST)
-Received: from [93.246.54.42] (helo=[192.168.178.43])
-	by smtp08.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1QlpLE-00056B-00; Tue, 26 Jul 2011 23:39:04 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:5.0) Gecko/20110624 Thunderbird/5.0
-In-Reply-To: <3A1F23B2-AC3F-416C-BFBD-97096724C400@gmail.com>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX18+xPCGoJrk32zEJGjfR5V1qOFhY+V6axDdUD7k
-	dnrnLw795uppMpuJOVTMWKaT5DJ/ZG11yxdatooZ+piL8gB8ab
-	Q6YlHXTg+EghMsSj8ThA==
+	id S1753826Ab1G0DWT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jul 2011 23:22:19 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:35904 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753432Ab1G0DWS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2011 23:22:18 -0400
+Received: by pzk37 with SMTP id 37so1938359pzk.1
+        for <git@vger.kernel.org>; Tue, 26 Jul 2011 20:22:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=PRueXjqA++Arl7wMqpmesbWzSOJg9bCrK1w5IKogwxE=;
+        b=a8HRXw63ee1Jj7PgtrEacudM9UUTS2bnGOAgqBAhxkCEz+q5ah4MaFc56lt1AkuwL9
+         oRmJCgZz1fdnKn+YdMufRZ/coP/Hw1Kwhue9Q+WlB4I1eXeleGeJDH8Rn9DhYbKRnWdE
+         98CxjM6+GV1GNXfI/4cEu4/ZTnQ92lVku/v2k=
+Received: by 10.68.36.99 with SMTP id p3mr11570798pbj.275.1311736937704;
+        Tue, 26 Jul 2011 20:22:17 -0700 (PDT)
+Received: from localhost.localdomain ([203.110.240.41])
+        by mx.google.com with ESMTPS id p7sm1210706pbn.65.2011.07.26.20.22.12
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 26 Jul 2011 20:22:15 -0700 (PDT)
+X-Mailer: git-send-email 1.7.4.rc1.7.g2cf08.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177904>
 
-When using the --quiet flag "git submodule update" and "git submodule add"
-didn't behave as the documentation stated. They printed progress output
-from the clone, even though they should only print error messages.
+Hi,
 
-Fix that by passing the -q flag to git clone in module_clone() when the
-GIT_QUIET variable is set. Two tests in t7400 have been modified to test
-that behavior.
+Nothing new has been introduced; a couple of minor changes have been
+made since last time (rewrite "config: Introduce functions to write
+non-standard file" and remove "Please, " in hint: messages).  I will
+hencefourth refer to this series as "sequencer-stable" -- I've started
+building post midterm work* on top of this.  If something critical
+comes up, I can always fixup this series, rebase and quickly continue
+my work.
 
-Reported-by: Daniel Holtmann-Rice <flyingtabmow@gmail.com>
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
+While Junio and others are not entirely happy with "revert: Remove
+sequencer state when no commits are pending", and there is still some
+confusion about how '--abort' will work in the future, I think we have
+discussed these issues sufficiently.
 
-Am 26.07.2011 13:26, schrieb Daniel Holtmann-Rice:
-> I can't find a place to submit bug reports, so I'll post this here...
+* I haven't made anything public yet, because it's still in its
+  infancy stages; I'll hopefully have something to show by the end of
+  the week.
 
-This is the right place.
+Thanks for reading.
 
-> the --quiet/-q flag seems to have no effect for 'git submodule update'.  For example (http://pastebin.com/0KWT4EeA):
-> 
-> #!/bin/bash
-> 
-> git clone -q git://github.com/dhr/evp-tools.git
-> cd evp-tools
-> git submodule -q init
-> git submodule -q update
-> 
-> This doesn't run quietly (the first three commands do, the last does not).  I've tried this through Git 1.7.6.
+-- Ram
 
-Thanks for reporting this, this patch should fix it.
+Ramkumar Ramachandra (18):
+  advice: Introduce error_resolve_conflict
+  config: Introduce functions to write non-standard file
+  revert: Simplify and inline add_message_to_msg
+  revert: Don't check lone argument in get_encoding
+  revert: Rename no_replay to record_origin
+  revert: Propogate errors upwards from do_pick_commit
+  revert: Eliminate global "commit" variable
+  revert: Introduce struct to keep command-line options
+  revert: Separate cmdline parsing from functional code
+  revert: Don't create invalid replay_opts in parse_args
+  revert: Save data for continuing after conflict resolution
+  revert: Save command-line options for continuing operation
+  revert: Make pick_commits functionally act on a commit list
+  revert: Introduce --reset to remove sequencer state
+  reset: Make reset remove the sequencer state
+  revert: Remove sequencer state when no commits are pending
+  revert: Don't implictly stomp pending sequencer operation
+  revert: Introduce --continue to continue the operation
 
- git-submodule.sh           |    9 +++++++--
- t/t7400-submodule-basic.sh |    6 ++++--
- 2 files changed, 11 insertions(+), 4 deletions(-)
+ Documentation/git-cherry-pick.txt |    6 +
+ Documentation/git-revert.txt      |    6 +
+ Documentation/sequencer.txt       |    9 +
+ Makefile                          |    2 +
+ advice.c                          |   31 ++-
+ advice.h                          |    3 +-
+ branch.c                          |    2 +
+ builtin/revert.c                  |  743 +++++++++++++++++++++++++++++--------
+ cache.h                           |    2 +
+ config.c                          |   36 ++-
+ sequencer.c                       |   19 +
+ sequencer.h                       |   20 +
+ t/7106-reset-sequence.sh          |   43 +++
+ t/t3510-cherry-pick-sequence.sh   |  219 +++++++++++
+ 14 files changed, 969 insertions(+), 172 deletions(-)
+ create mode 100644 Documentation/sequencer.txt
+ create mode 100644 sequencer.c
+ create mode 100644 sequencer.h
+ create mode 100755 t/7106-reset-sequence.sh
+ create mode 100755 t/t3510-cherry-pick-sequence.sh
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index bc1d3fa..f46862f 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -122,12 +122,17 @@ module_clone()
- 	path=$1
- 	url=$2
- 	reference="$3"
-+	quiet=
-+	if test -n "$GIT_QUIET"
-+	then
-+		quiet=-q
-+	fi
-
- 	if test -n "$reference"
- 	then
--		git-clone "$reference" -n "$url" "$path"
-+		git-clone $quiet "$reference" -n "$url" "$path"
- 	else
--		git-clone -n "$url" "$path"
-+		git-clone $quiet -n "$url" "$path"
- 	fi ||
- 	die "$(eval_gettext "Clone of '\$url' into submodule path '\$path' failed")"
- }
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 5afe6cc..bc70d69 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -75,7 +75,8 @@ test_expect_success 'submodule add' '
-
- 	(
- 		cd addtest &&
--		git submodule add "$submodurl" submod &&
-+		git submodule add -q "$submodurl" submod >actual &&
-+		test ! -s actual &&
- 		git submodule init
- 	) &&
-
-@@ -273,7 +274,8 @@ test_expect_success 'update should work when path is an empty dir' '
- 	echo "$rev1" >expect &&
-
- 	mkdir init &&
--	git submodule update &&
-+	git submodule update -q >update.out &&
-+	test ! -s update.out &&
-
- 	inspect init &&
- 	test_cmp expect head-sha1
 -- 
-1.7.6.347.g4db0d.dirty
+1.7.4.rc1.7.g2cf08.dirty
