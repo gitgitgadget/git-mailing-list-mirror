@@ -1,109 +1,98 @@
-From: Phil Hord <hordp@cisco.com>
-Subject: Re: [PATCH] submodule add: improve message when resolving a relative
- url fails
-Date: Wed, 27 Jul 2011 15:00:53 -0400
-Message-ID: <4E306065.2010002@cisco.com>
-References: <1306792280-12768-1-git-send-email-marcnarc@xiplink.com> <4DE541EC.7010202@web.de> <4DE548C4.2010600@web.de> <4DE5561C.3010200@xiplink.com> <4DE565DF.7050207@cisco.com> <4DE660E2.9080500@xiplink.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH/RFC] notice error exit from pager
+Date: Wed, 27 Jul 2011 21:36:52 +0200
+Message-ID: <4E3068D4.4050006@kdbg.org>
+References: <20110726210401.GA25207@toss.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org,
+Cc: git@vger.kernel.org, torvalds@linux-foundation.org,
 	Junio C Hamano <gitster@pobox.com>
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Wed Jul 27 21:01:03 2011
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Wed Jul 27 21:37:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qm9Lo-0005C7-GM
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 21:01:00 +0200
+	id 1Qm9ui-0004By-Va
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 21:37:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753539Ab1G0TA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jul 2011 15:00:56 -0400
-Received: from rcdn-iport-5.cisco.com ([173.37.86.76]:36376 "EHLO
-	rcdn-iport-5.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753084Ab1G0TAy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jul 2011 15:00:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=hordp@cisco.com; l=2216; q=dns/txt;
-  s=iport; t=1311793254; x=1313002854;
-  h=message-id:date:from:mime-version:to:cc:subject:
-   references:in-reply-to:content-transfer-encoding;
-  bh=964b+Nyqv0VVHmuskKsmZbMKDs8FkhOccMPgEabaBMg=;
-  b=Ca4WIEfpmJUxJOEqjRYGEB6OO+ZiDTOhgwI2a39OeDJ2oIp/q87nhm3c
-   1Iwub8AuoQ3vQrAZpYZwAcQa2KbNXyKN42aMn36hr/BpJVw4q9Dky46y0
-   DTCT9I4I+ji2s+jYNO76VCW3t0Wz28bvJOT8xAM7ikPn8QFzoeZEAi2BK
-   k=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AgAFAJVfME6tJV2Z/2dsb2JhbAA1AQEBAQMUARRbAREMGAICBSILAgIJAwIBAgECUQcOAQ4BAR+EL6J1d6wpjSORSYErhAaBDwSSdYUHi3c
-X-IronPort-AV: E=Sophos;i="4.67,278,1309737600"; 
-   d="scan'208";a="7103915"
-Received: from rcdn-core-2.cisco.com ([173.37.93.153])
-  by rcdn-iport-5.cisco.com with ESMTP; 27 Jul 2011 19:00:54 +0000
-Received: from [64.100.104.94] (dhcp-64-100-104-94.cisco.com [64.100.104.94])
-	by rcdn-core-2.cisco.com (8.14.3/8.14.3) with ESMTP id p6RJ0rWJ030625;
-	Wed, 27 Jul 2011 19:00:53 GMT
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110627 Thunderbird/5.0
-In-Reply-To: <4DE660E2.9080500@xiplink.com>
-X-TagToolbar-Keys: D20110727150053553
+	id S1754896Ab1G0Tg7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jul 2011 15:36:59 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:47543 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754247Ab1G0Tg6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jul 2011 15:36:58 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 4B4AD130045;
+	Wed, 27 Jul 2011 21:36:53 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id CCE8A19F350;
+	Wed, 27 Jul 2011 21:36:52 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.18) Gecko/20110616 SUSE/3.1.11 Thunderbird/3.1.11
+In-Reply-To: <20110726210401.GA25207@toss.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177995>
 
-On 06/01/2011 11:55 AM, Marc Branchaud wrote:
-> On 11-05-31 06:04 PM, Phil Hord wrote:
->> On 05/31/2011 04:57 PM, Marc Branchaud wrote:
->>>  - The current code rewrites the URL so that any relative path is either
->>>    rejected or munged into an absolute remote URL.
->> I don't see the URL getting munged away from being relative.  Can you
->> point to an example?
-> I reached this conclusion because if I go into my clone of git.git and do
->
-> 	git submodule add ../MyThing
->
-> where ../MyThing is a regular git repo, I get
->
-> Cloning into MyThing...
-> fatal: The remote end hung up unexpectedly
-> Clone of 'git://git.kernel.org/pub/scm/git/MyThing' into submodule path
-> 'MyThing' failed
->
-> So it seemed the relative URL became an absolute URL.
->
-> Looking more closely at a working example, I can see that (as you show below)
-> the URL in the super-repo's .gitmodules file retains the relative path, but
-> the submodule's remote.origin.url is an absolute path.
->
-> In any case, "submodule add" isn't doing what I expected: make my local
-> MyThing repo a submodule of my git.git clone.
+Am 26.07.2011 23:04, schrieb Clemens Buchacher:
+> If the pager fails to run, git produces no output, e.g.:
+> 
+>  $ GIT_PAGER=not-a-command git log
+> 
+> The error reporting fails for two reasons:
+> 
+>  (1) start_command: There is a mechanism that detects errors during
+>      execvp introduced in 2b541bf8 (start_command: detect execvp
+>      failures early). ... This mechanism is
+>      incompatible with the workaround introduced in 35ce8622
+>      (pager: Work around window resizing bug in 'less')
 
-I thought I understood this workflow better than I actually did.  I
-think I understand more now, and I'm somewhat disappointed.  But I also
-failed to pick up the ball on this old discussion.
+You analysis is correct. I think the bug in less was fixed shortly after
+this workaround was introduced. I would like to remove this workaround
+for a different reason, but it seems there are people who are quite fond
+of it ;)
 
-If you do this, I think it will work like you were hoping:
+> diff --git a/run-command.c b/run-command.c
+> index 70e8a24..944a882 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -127,9 +127,6 @@ static int wait_or_whine(pid_t pid, const char *argv0, int silent_exec_failure)
+>  		if (code == 127) {
+>  			code = -1;
+>  			failed_errno = ENOENT;
+> -			if (!silent_exec_failure)
+> -				error("cannot run %s: %s", argv0,
+> -					strerror(ENOENT));
+>  		}
+>  	} else {
+>  		error("waitpid is confused (%s)", argv0);
+> @@ -287,10 +284,14 @@ fail_pipe:
+>  		 * Do not check for cmd->silent_exec_failure; the parent
+>  		 * process will check it when it sees this exit code.
+>  		 */
+> -		if (errno == ENOENT)
+> +		if (errno == ENOENT) {
+> +			if (!cmd->silent_exec_failure)
+> +				error("cannot run %s: %s", cmd->argv[0],
+> +					strerror(ENOENT));
 
-    :: ( mkdir MyThing && cd MyThing && git init )
-    Initialized empty Git repository in /opc/git/MyThing/.git/
-    :: git submodule add ../MyThing
-    Adding existing repo at 'MyThing' to the index
+This change is not good enough: There is no guarantee that this message
+goes to the right channel (stderr in the child can be redirected). Look
+carefully: We set a special die routine in the forked child that ensures
+that the die() messages are written to the right channel; we do not have
+a similar facility for error() messages (or do we?).
 
-I haven't examined the code, but I think this is how it works.  'git
-submodule add' takes a URL and a local path.  When you omit the local
-path, git infers one from the URL.  So these two commands are equivalent:
-    :: git submodule add ../MyThing
-    :: git submodule add ../MyThing MyThing
+>  			exit(127);
+> -		else
+> +		} else {
+>  			die_errno("cannot exec '%s'", cmd->argv[0]);
+> +		}
+>  	}
+>  	if (cmd->pid < 0)
+>  		error("cannot fork() for %s: %s", cmd->argv[0],
 
-
-If the path you provide (explicitly or implicitly) already contains a
-git repo, it is assumed to be "the" submodule repo and git uses it.  If
-it does not contain a git repo, git attempts to clone it from the
-(remote) URL.
-
-Furthermore, the relative path only works for URLs.  It does not work
-for local filesystems.
-
-Phil
+-- Hannes
