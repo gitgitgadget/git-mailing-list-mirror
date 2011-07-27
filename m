@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 11/18] revert: Save data for continuing after conflict resolution
-Date: Wed, 27 Jul 2011 08:49:08 +0530
-Message-ID: <1311736755-24205-12-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 14/18] revert: Introduce --reset to remove sequencer state
+Date: Wed, 27 Jul 2011 08:49:11 +0530
+Message-ID: <1311736755-24205-15-git-send-email-artagnon@gmail.com>
 References: <1311736755-24205-1-git-send-email-artagnon@gmail.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
@@ -9,404 +9,374 @@ Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Jeff King <peff@peff.net>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 27 05:23:31 2011
+X-From: git-owner@vger.kernel.org Wed Jul 27 05:23:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QluiX-00068x-Lk
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 05:23:30 +0200
+	id 1QluiZ-00068x-6f
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 05:23:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754105Ab1G0DXN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jul 2011 23:23:13 -0400
+	id S1754128Ab1G0DXZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jul 2011 23:23:25 -0400
 Received: from mail-pz0-f42.google.com ([209.85.210.42]:35904 "EHLO
 	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753524Ab1G0DXM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2011 23:23:12 -0400
+	with ESMTP id S1753524Ab1G0DXY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2011 23:23:24 -0400
 Received: by mail-pz0-f42.google.com with SMTP id 37so1938359pzk.1
-        for <git@vger.kernel.org>; Tue, 26 Jul 2011 20:23:11 -0700 (PDT)
+        for <git@vger.kernel.org>; Tue, 26 Jul 2011 20:23:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=lljSL4jAIqWBg+LWl0efnhHodUSDGSfks5CO17MGUT4=;
-        b=fWf7xjyGG1dtxbWrrYjDfVCjsSui5rA1A8Mh5c3oMqlYn1yPCXZBLaLCfHhYoNEbF0
-         j7cyw2GfuIX64YK+aizNTG2MVSNb1ijl/i8o1PRhMTzQKCm8O9iETD5KY1VLntNLjkqf
-         MZbtZP49kEAjDwhaxPol9GmSvhetj4C2Om828=
-Received: by 10.68.36.198 with SMTP id s6mr10797466pbj.51.1311736991747;
-        Tue, 26 Jul 2011 20:23:11 -0700 (PDT)
+        bh=w21CiuDJ1SU1Uv8XOZwUAgQa6cDsirRMIK8ZNvdCfxI=;
+        b=Xamy9BxQy/2WXjPFylCQ50r6G2Hp8mtERI4ZjluDGleILaPXDCXLgYAoA9zrL2gUrD
+         2J27fgUNV6YecQdnQc9pz2zkXfFKzYZmR7737yn5Y3loL1Qc43vYRiWV8um1T//aXTdt
+         67xdA2eDXvMD6tTNBizq7zJiLNLswNoTakpW8=
+Received: by 10.68.39.167 with SMTP id q7mr2846645pbk.415.1311737003820;
+        Tue, 26 Jul 2011 20:23:23 -0700 (PDT)
 Received: from localhost.localdomain ([203.110.240.41])
-        by mx.google.com with ESMTPS id p7sm1210706pbn.65.2011.07.26.20.23.07
+        by mx.google.com with ESMTPS id p7sm1210706pbn.65.2011.07.26.20.23.20
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 26 Jul 2011 20:23:10 -0700 (PDT)
+        Tue, 26 Jul 2011 20:23:22 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4.rc1.7.g2cf08.dirty
 In-Reply-To: <1311736755-24205-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177914>
 
-Ever since v1.7.2-rc1~4^2~7 (revert: allow cherry-picking more than
-one commit, 2010-06-02), a single invocation of "git cherry-pick" or
-"git revert" can perform picks of several individual commits.  To
-implement features like "--continue" to continue the whole operation,
-we will need to store some information about the state and the plan at
-the beginning.  Introduce a ".git/sequencer/head" file to store this
-state, and ".git/sequencer/todo" file to store the plan.  The head
-file contains the SHA-1 of the HEAD before the start of the operation,
-and the todo file contains an instruction sheet whose format is
-inspired by the format of the "rebase -i" instruction sheet.  As a
-result, a typical todo file looks like:
+To explicitly remove the sequencer state for a fresh cherry-pick or
+revert invocation, introduce a new subcommand called "--reset" to
+remove the sequencer state.
 
-pick 8537f0e submodule add: test failure when url is not configured
-pick 4d68932 submodule add: allow relative repository path
-pick f22a17e submodule add: clean up duplicated code
-pick 59a5775 make copy_ref globally available
+Take the opportunity to publicly expose the sequencer paths, and a
+generic function called "remove_sequencer_state" that various git
+programs can use to remove the sequencer state in a uniform manner;
+"git reset" uses it later in this series.  Introducing this public API
+is also in line with our long-term goal of eventually factoring out
+functions from revert.c into a generic commit sequencer.
 
-Since SHA-1 hex is abbreviated using an find_unique_abbrev(), it is
-unambiguous.  This does not guarantee that there will be no ambiguity
-when more objects are added to the repository.
-
-That these two files alone are not enough to implement a "--continue"
-that remembers the command-line options specified; later patches in
-the series save them too.
-
-These new files are unrelated to the existing .git/CHERRY_PICK_HEAD,
-which will still be useful while committing after a conflict
-resolution.
-
-Inspired-by: Christian Couder <chriscool@tuxfamily.org>
 Helped-by: Jonathan Nieder <jrnieder@gmail.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- builtin/revert.c                |  222 +++++++++++++++++++++++++++++++++++++-
- t/t3510-cherry-pick-sequence.sh |   48 +++++++++
- 2 files changed, 264 insertions(+), 6 deletions(-)
- create mode 100755 t/t3510-cherry-pick-sequence.sh
+ Documentation/git-cherry-pick.txt |    5 +++
+ Documentation/git-revert.txt      |    5 +++
+ Documentation/sequencer.txt       |    4 ++
+ Makefile                          |    2 +
+ builtin/revert.c                  |   65 +++++++++++++++++++++++++-----------
+ sequencer.c                       |   19 +++++++++++
+ sequencer.h                       |   20 +++++++++++
+ t/t3510-cherry-pick-sequence.sh   |   16 ++++++++-
+ 8 files changed, 114 insertions(+), 22 deletions(-)
+ create mode 100644 Documentation/sequencer.txt
+ create mode 100644 sequencer.c
+ create mode 100644 sequencer.h
 
+diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+index 9d8fe0d..138a292 100644
+--- a/Documentation/git-cherry-pick.txt
++++ b/Documentation/git-cherry-pick.txt
+@@ -8,6 +8,7 @@ git-cherry-pick - Apply the changes introduced by some existing commits
+ SYNOPSIS
+ --------
+ 'git cherry-pick' [--edit] [-n] [-m parent-number] [-s] [-x] [--ff] <commit>...
++'git cherry-pick' --reset
+ 
+ DESCRIPTION
+ -----------
+@@ -109,6 +110,10 @@ effect to your index in a row.
+ 	Pass the merge strategy-specific option through to the
+ 	merge strategy.  See linkgit:git-merge[1] for details.
+ 
++SEQUENCER SUBCOMMANDS
++---------------------
++include::sequencer.txt[]
++
+ EXAMPLES
+ --------
+ git cherry-pick master::
+diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
+index 6a21b37..b6789be 100644
+--- a/Documentation/git-revert.txt
++++ b/Documentation/git-revert.txt
+@@ -8,6 +8,7 @@ git-revert - Revert some existing commits
+ SYNOPSIS
+ --------
+ 'git revert' [--edit | --no-edit] [-n] [-m parent-number] [-s] <commit>...
++'git revert' --reset
+ 
+ DESCRIPTION
+ -----------
+@@ -90,6 +91,10 @@ effect to your index in a row.
+ 	Pass the merge strategy-specific option through to the
+ 	merge strategy.  See linkgit:git-merge[1] for details.
+ 
++SEQUENCER SUBCOMMANDS
++---------------------
++include::sequencer.txt[]
++
+ EXAMPLES
+ --------
+ git revert HEAD~3::
+diff --git a/Documentation/sequencer.txt b/Documentation/sequencer.txt
+new file mode 100644
+index 0000000..16ce88c
+--- /dev/null
++++ b/Documentation/sequencer.txt
+@@ -0,0 +1,4 @@
++--reset::
++	Forget about the current operation in progress.  Can be used
++	to clear the sequencer state after a failed cherry-pick or
++	revert.
+diff --git a/Makefile b/Makefile
+index 4ed7996..afd7673 100644
+--- a/Makefile
++++ b/Makefile
+@@ -554,6 +554,7 @@ LIB_H += rerere.h
+ LIB_H += resolve-undo.h
+ LIB_H += revision.h
+ LIB_H += run-command.h
++LIB_H += sequencer.h
+ LIB_H += sha1-array.h
+ LIB_H += sha1-lookup.h
+ LIB_H += sideband.h
+@@ -658,6 +659,7 @@ LIB_OBJS += revision.o
+ LIB_OBJS += run-command.o
+ LIB_OBJS += server-info.o
+ LIB_OBJS += setup.o
++LIB_OBJS += sequencer.o
+ LIB_OBJS += sha1-array.o
+ LIB_OBJS += sha1-lookup.o
+ LIB_OBJS += sha1_file.o
 diff --git a/builtin/revert.c b/builtin/revert.c
-index 5e26a43..b3b1bf8 100644
+index 46b1371..3c792fa 100644
 --- a/builtin/revert.c
 +++ b/builtin/revert.c
-@@ -13,6 +13,7 @@
- #include "rerere.h"
+@@ -14,6 +14,7 @@
  #include "merge-recursive.h"
  #include "refs.h"
-+#include "dir.h"
+ #include "dir.h"
++#include "sequencer.h"
  
  /*
   * This implements the builtins revert and cherry-pick.
-@@ -59,6 +60,11 @@ struct replay_opts {
+@@ -28,18 +29,22 @@
+ 
+ static const char * const revert_usage[] = {
+ 	"git revert [options] <commit-ish>",
++	"git revert <subcommand>",
+ 	NULL
  };
  
- #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
-+#define MAYBE_UNUSED __attribute__((__unused__))
-+
-+#define SEQ_DIR         "sequencer"
-+#define SEQ_HEAD_FILE   "sequencer/head"
-+#define SEQ_TODO_FILE   "sequencer/todo"
+ static const char * const cherry_pick_usage[] = {
+ 	"git cherry-pick [options] <commit-ish>",
++	"git cherry-pick <subcommand>",
+ 	NULL
+ };
  
+ enum replay_action { REVERT, CHERRY_PICK };
++enum replay_subcommand { REPLAY_NONE, REPLAY_RESET };
+ 
+ struct replay_opts {
+ 	enum replay_action action;
++	enum replay_subcommand subcommand;
+ 
+ 	/* Boolean options */
+ 	int edit;
+@@ -62,11 +67,6 @@ struct replay_opts {
+ #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+ #define MAYBE_UNUSED __attribute__((__unused__))
+ 
+-#define SEQ_DIR         "sequencer"
+-#define SEQ_HEAD_FILE   "sequencer/head"
+-#define SEQ_TODO_FILE   "sequencer/todo"
+-#define SEQ_OPTS_FILE   "sequencer/opts"
+-
  static const char *action_name(const struct replay_opts *opts)
  {
-@@ -269,7 +275,7 @@ static void write_message(struct strbuf *msgbuf, const char *filename)
- 		die_errno(_("Could not write to %s."), filename);
- 	strbuf_release(msgbuf);
- 	if (commit_lock_file(&msg_file) < 0)
--		die(_("Error wrapping up %s"), filename);
-+		die(_("Error wrapping up %s."), filename);
- }
- 
- static struct tree *empty_tree(void)
-@@ -582,10 +588,199 @@ static void read_and_refresh_cache(struct replay_opts *opts)
- 	rollback_lock_file(&index_lock);
- }
- 
--static int pick_commits(struct replay_opts *opts)
-+/*
-+ * Append a commit to the end of the commit_list.
-+ *
-+ * next starts by pointing to the variable that holds the head of an
-+ * empty commit_list, and is updated to point to the "next" field of
-+ * the last item on the list as new commits are appended.
-+ *
-+ * Usage example:
-+ *
-+ *     struct commit_list *list;
-+ *     struct commit_list **next = &list;
-+ *
-+ *     next = commit_list_append(c1, next);
-+ *     next = commit_list_append(c2, next);
-+ *     assert(commit_list_count(list) == 2);
-+ *     return list;
-+ */
-+struct commit_list **commit_list_append(struct commit *commit,
-+					struct commit_list **next)
-+{
-+	struct commit_list *new = xmalloc(sizeof(struct commit_list));
-+	new->item = commit;
-+	*next = new;
-+	new->next = NULL;
-+	return &new->next;
-+}
+ 	return opts->action == REVERT ? "revert" : "cherry-pick";
+@@ -114,7 +114,9 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+ 	const char * const * usage_str = revert_or_cherry_pick_usage(opts);
+ 	const char *me = action_name(opts);
+ 	int noop;
++	int reset = 0;
+ 	struct option options[] = {
++		OPT_BOOLEAN(0, "reset", &reset, "forget the current operation"),
+ 		OPT_BOOLEAN('n', "no-commit", &opts->no_commit, "don't automatically commit"),
+ 		OPT_BOOLEAN('e', "edit", &opts->edit, "edit the commit message"),
+ 		{ OPTION_BOOLEAN, 'r', NULL, &noop, NULL, "no-op (backward compatibility)",
+@@ -143,7 +145,27 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+ 	opts->commit_argc = parse_options(argc, argv, NULL, options, usage_str,
+ 					PARSE_OPT_KEEP_ARGV0 |
+ 					PARSE_OPT_KEEP_UNKNOWN);
+-	if (opts->commit_argc < 2)
 +
-+static int format_todo(struct strbuf *buf, struct commit_list *todo_list,
-+		struct replay_opts *opts)
-+{
-+	struct commit_list *cur = NULL;
-+	struct commit_message msg = { NULL, NULL, NULL, NULL, NULL };
-+	const char *sha1_abbrev = NULL;
-+	const char *action_str = opts->action == REVERT ? "revert" : "pick";
-+
-+	for (cur = todo_list; cur; cur = cur->next) {
-+		sha1_abbrev = find_unique_abbrev(cur->item->object.sha1, DEFAULT_ABBREV);
-+		if (get_message(cur->item, &msg))
-+			return error(_("Cannot get commit message for %s"), sha1_abbrev);
-+		strbuf_addf(buf, "%s %s %s\n", action_str, sha1_abbrev, msg.subject);
-+	}
-+	return 0;
-+}
-+
-+static struct commit *parse_insn_line(char *start, struct replay_opts *opts)
-+{
-+	unsigned char commit_sha1[20];
-+	char sha1_abbrev[40];
-+	struct commit *commit;
-+	enum replay_action action;
-+	int insn_len = 0;
-+	char *p, *q;
-+
-+	if (!prefixcmp(start, "pick ")) {
-+		action = CHERRY_PICK;
-+		insn_len = strlen("pick");
-+		p = start + insn_len + 1;
-+	}
-+	else if (!prefixcmp(start, "revert ")) {
-+		action = REVERT;
-+		insn_len = strlen("revert");
-+		p = start + insn_len + 1;
-+	}
++	/* Set the subcommand */
++	if (reset)
++		opts->subcommand = REPLAY_RESET;
 +	else
-+		return NULL;
++		opts->subcommand = REPLAY_NONE;
 +
-+	q = strchr(p, ' ');
-+	if (!q)
-+		return NULL;
-+	q++;
-+
-+	strlcpy(sha1_abbrev, p, q - p);
-+
-+	/*
-+	 * Verify that the action matches up with the one in
-+	 * opts; we don't support arbitrary instructions
-+	 */
-+	if (action != opts->action) {
-+		const char *action_str;
-+		action_str = action == REVERT ? "revert" : "cherry-pick";
-+		error(_("Cannot %s during a %s"), action_str, action_name(opts));
-+		return NULL;
++	/* Check for incompatible command line arguments */
++	if (opts->subcommand == REPLAY_RESET) {
++		verify_opt_compatible(me, "--reset",
++				"--no-commit", opts->no_commit,
++				"--signoff", opts->signoff,
++				"--mainline", opts->mainline,
++				"--strategy", opts->strategy ? 1 : 0,
++				"--strategy-option", opts->xopts ? 1 : 0,
++				"-x", opts->record_origin,
++				"--ff", opts->allow_ff,
++				NULL);
 +	}
 +
-+	if ((get_sha1(sha1_abbrev, commit_sha1) < 0)
-+		|| !(commit = lookup_commit_reference(commit_sha1)))
-+		return NULL;
-+
-+	return commit;
-+}
-+
-+static void MAYBE_UNUSED read_populate_todo(struct commit_list **todo_list,
-+					struct replay_opts *opts)
-+{
-+	const char *todo_file = git_path(SEQ_TODO_FILE);
-+	struct strbuf buf = STRBUF_INIT;
-+	struct commit_list **next;
-+	struct commit *commit;
-+	char *p;
-+	int fd;
-+
-+	fd = open(todo_file, O_RDONLY);
-+	if (fd < 0) {
-+		strbuf_release(&buf);
-+		die_errno(_("Could not open %s."), todo_file);
-+	}
-+	if (strbuf_read(&buf, fd, 0) < buf.len) {
-+		close(fd);
-+		strbuf_release(&buf);
-+		die(_("Could not read %s."), todo_file);
-+	}
-+	close(fd);
-+
-+	next = todo_list;
-+	for (p = buf.buf; *p; p = strchr(p, '\n') + 1) {
-+		if (!(commit = parse_insn_line(p, opts)))
-+			goto error;
-+		next = commit_list_append(commit, next);
-+	}
-+	if (!*todo_list)
-+		goto error;
-+	strbuf_release(&buf);
-+	return;
-+error:
-+	strbuf_release(&buf);
-+	die(_("Unusable instruction sheet: %s"), todo_file);
-+}
-+
-+static void walk_revs_populate_todo(struct commit_list **todo_list,
-+				struct replay_opts *opts)
- {
- 	struct rev_info revs;
- 	struct commit *commit;
-+	struct commit_list **next;
-+
-+	prepare_revs(&revs, opts);
-+
-+	next = todo_list;
-+	while ((commit = get_revision(&revs)))
-+		next = commit_list_append(commit, next);
-+}
-+
-+static void create_seq_dir(void)
-+{
-+	const char *seq_dir = git_path(SEQ_DIR);
-+
-+	if (!file_exists(seq_dir) && mkdir(seq_dir, 0777) < 0)
-+		die_errno(_("Could not create sequencer directory '%s'."), seq_dir);
-+}
-+
-+static void save_head(const char *head)
-+{
-+	const char *head_file = git_path(SEQ_HEAD_FILE);
-+	static struct lock_file head_lock;
-+	struct strbuf buf = STRBUF_INIT;
-+	int fd;
-+
-+	fd = hold_lock_file_for_update(&head_lock, head_file, LOCK_DIE_ON_ERROR);
-+	strbuf_addf(&buf, "%s\n", head);
-+	if (write_in_full(fd, buf.buf, buf.len) < 0)
-+		die_errno(_("Could not write to %s."), head_file);
-+	if (commit_lock_file(&head_lock) < 0)
-+		die(_("Error wrapping up %s."), head_file);
-+}
-+
-+static void save_todo(struct commit_list *todo_list, struct replay_opts *opts)
-+{
-+	const char *todo_file = git_path(SEQ_TODO_FILE);
-+	static struct lock_file todo_lock;
-+	struct strbuf buf = STRBUF_INIT;
-+	int fd;
-+
-+	fd = hold_lock_file_for_update(&todo_lock, todo_file, LOCK_DIE_ON_ERROR);
-+	if (format_todo(&buf, todo_list, opts) < 0)
-+		die(_("Could not format %s."), todo_file);
-+	if (write_in_full(fd, buf.buf, buf.len) < 0) {
-+		strbuf_release(&buf);
-+		die_errno(_("Could not write to %s."), todo_file);
-+	}
-+	if (commit_lock_file(&todo_lock) < 0) {
-+		strbuf_release(&buf);
-+		die(_("Error wrapping up %s."), todo_file);
-+	}
-+	strbuf_release(&buf);
-+}
-+
-+static int pick_commits(struct replay_opts *opts)
-+{
-+	struct commit_list *todo_list = NULL;
-+	struct strbuf buf = STRBUF_INIT;
-+	unsigned char sha1[20];
-+	struct commit_list *cur;
-+	int res;
++	else if (opts->commit_argc < 2)
+ 		usage_with_options(usage_str, options);
  
- 	setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
  	if (opts->allow_ff)
-@@ -593,14 +788,29 @@ static int pick_commits(struct replay_opts *opts)
- 				opts->record_origin || opts->edit));
- 	read_and_refresh_cache(opts);
+@@ -853,7 +875,6 @@ static void save_opts(struct replay_opts *opts)
  
--	prepare_revs(&revs, opts);
--
--	while ((commit = get_revision(&revs))) {
--		int res = do_pick_commit(commit, opts);
-+	walk_revs_populate_todo(&todo_list, opts);
-+	create_seq_dir();
-+	if (get_sha1("HEAD", sha1)) {
-+		if (opts->action == REVERT)
-+			return error(_("Can't revert as initial commit"));
-+		return error(_("Can't cherry-pick into empty head"));
-+	} else
-+		save_head(sha1_to_hex(sha1));
-+	save_todo(todo_list, opts);
-+
-+	for (cur = todo_list; cur; cur = cur->next) {
-+		save_todo(cur, opts);
-+		res = do_pick_commit(cur->item, opts);
- 		if (res)
- 			return res;
- 	}
+ static int pick_commits(struct commit_list *todo_list, struct replay_opts *opts)
+ {
+-	struct strbuf buf = STRBUF_INIT;
+ 	struct commit_list *cur;
+ 	int res;
  
-+	/*
-+	 * Sequence of picks finished successfully; cleanup by
-+	 * removing the .git/sequencer directory
-+	 */
-+	strbuf_addf(&buf, "%s", git_path(SEQ_DIR));
-+	remove_dir_recursively(&buf, 0);
+@@ -874,8 +895,7 @@ static int pick_commits(struct commit_list *todo_list, struct replay_opts *opts)
+ 	 * Sequence of picks finished successfully; cleanup by
+ 	 * removing the .git/sequencer directory
+ 	 */
+-	strbuf_addf(&buf, "%s", git_path(SEQ_DIR));
+-	remove_dir_recursively(&buf, 0);
++	remove_sequencer_state(1);
  	return 0;
  }
  
-diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-new file mode 100755
-index 0000000..64eaa20
+@@ -886,17 +906,22 @@ static int pick_revisions(struct replay_opts *opts)
+ 
+ 	read_and_refresh_cache(opts);
+ 
+-	walk_revs_populate_todo(&todo_list, opts);
+-	create_seq_dir();
+-	if (get_sha1("HEAD", sha1)) {
+-		if (opts->action == REVERT)
+-			return error(_("Can't revert as initial commit"));
+-		return error(_("Can't cherry-pick into empty head"));
+-	} else
+-		save_head(sha1_to_hex(sha1));
+-	save_opts(opts);
+-	save_todo(todo_list, opts);
+-
++	if (opts->subcommand == REPLAY_RESET) {
++		remove_sequencer_state(1);
++		return 0;
++	} else {
++		/* Start a new cherry-pick/ revert sequence */
++		walk_revs_populate_todo(&todo_list, opts);
++		create_seq_dir();
++		if (get_sha1("HEAD", sha1)) {
++			if (opts->action == REVERT)
++				return error(_("Can't revert as initial commit"));
++			return error(_("Can't cherry-pick into empty head"));
++		} else
++			save_head(sha1_to_hex(sha1));
++		save_opts(opts);
++		save_todo(todo_list, opts);
++	}
+ 	return pick_commits(todo_list, opts);
+ }
+ 
+diff --git a/sequencer.c b/sequencer.c
+new file mode 100644
+index 0000000..bc2c046
 --- /dev/null
-+++ b/t/t3510-cherry-pick-sequence.sh
-@@ -0,0 +1,48 @@
-+#!/bin/sh
++++ b/sequencer.c
+@@ -0,0 +1,19 @@
++#include "cache.h"
++#include "sequencer.h"
++#include "strbuf.h"
++#include "dir.h"
 +
-+test_description='Test cherry-pick continuation features
++void remove_sequencer_state(int aggressive)
++{
++	struct strbuf seq_dir = STRBUF_INIT;
++	struct strbuf seq_old_dir = STRBUF_INIT;
 +
-+  + anotherpick: rewrites foo to d
-+  + picked: rewrites foo to c
-+  + unrelatedpick: rewrites unrelated to reallyunrelated
-+  + base: rewrites foo to b
-+  + initial: writes foo as a, unrelated as unrelated
-+
-+'
-+
-+. ./test-lib.sh
-+
-+pristine_detach () {
-+	git checkout -f "$1^0" &&
-+	git read-tree -u --reset HEAD &&
-+	git clean -d -f -f -q -x
++	strbuf_addf(&seq_dir, "%s", git_path(SEQ_DIR));
++	strbuf_addf(&seq_old_dir, "%s", git_path(SEQ_OLD_DIR));
++	remove_dir_recursively(&seq_old_dir, 0);
++	rename(git_path(SEQ_DIR), git_path(SEQ_OLD_DIR));
++	if (aggressive)
++		remove_dir_recursively(&seq_old_dir, 0);
++	strbuf_release(&seq_dir);
++	strbuf_release(&seq_old_dir);
 +}
+diff --git a/sequencer.h b/sequencer.h
+new file mode 100644
+index 0000000..905d295
+--- /dev/null
++++ b/sequencer.h
+@@ -0,0 +1,20 @@
++#ifndef SEQUENCER_H
++#define SEQUENCER_H
 +
-+test_expect_success setup '
-+	echo unrelated >unrelated &&
-+	git add unrelated &&
-+	test_commit initial foo a &&
-+	test_commit base foo b &&
-+	test_commit unrelatedpick unrelated reallyunrelated &&
-+	test_commit picked foo c &&
-+	test_commit anotherpick foo d &&
-+	git config advice.detachedhead false
++#define SEQ_DIR		"sequencer"
++#define SEQ_OLD_DIR	"sequencer-old"
++#define SEQ_HEAD_FILE	"sequencer/head"
++#define SEQ_TODO_FILE	"sequencer/todo"
++#define SEQ_OPTS_FILE	"sequencer/opts"
 +
++/*
++ * Removes SEQ_OLD_DIR and renames SEQ_DIR to SEQ_OLD_DIR, ignoring
++ * any errors.  Intended to be used by 'git reset'.
++ *
++ * With the aggressive flag, it additionally removes SEQ_OLD_DIR,
++ * ignoring any errors.  Inteded to be used by the sequencer's
++ * '--reset' subcommand.
++ */
++void remove_sequencer_state(int aggressive);
++
++#endif
+diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
+index 79d868f..aea4f6c 100755
+--- a/t/t3510-cherry-pick-sequence.sh
++++ b/t/t3510-cherry-pick-sequence.sh
+@@ -37,7 +37,7 @@ test_expect_success 'cherry-pick persists data on failure' '
+ 	test_path_is_file .git/sequencer/head &&
+ 	test_path_is_file .git/sequencer/todo &&
+ 	test_path_is_file .git/sequencer/opts &&
+-	rm -rf .git/sequencer
++	git cherry-pick --reset
+ '
+ 
+ test_expect_success 'cherry-pick persists opts correctly' '
+@@ -62,7 +62,7 @@ test_expect_success 'cherry-pick persists opts correctly' '
+ 	EOF
+ 	git config --file=.git/sequencer/opts --get-all core.strategy-option >actual &&
+ 	test_cmp expect actual &&
+-	rm -rf .git/sequencer
++	git cherry-pick --reset
+ '
+ 
+ test_expect_success 'cherry-pick cleans up sequencer state upon success' '
+@@ -71,4 +71,16 @@ test_expect_success 'cherry-pick cleans up sequencer state upon success' '
+ 	test_path_is_missing .git/sequencer
+ '
+ 
++test_expect_success '--reset does not complain when no cherry-pick is in progress' '
++	pristine_detach initial &&
++	git cherry-pick --reset
 +'
 +
-+test_expect_success 'cherry-pick persists data on failure' '
++test_expect_success '--reset cleans up sequencer state' '
 +	pristine_detach initial &&
-+	test_must_fail git cherry-pick base..anotherpick &&
-+	test_path_is_dir .git/sequencer &&
-+	test_path_is_file .git/sequencer/head &&
-+	test_path_is_file .git/sequencer/todo &&
-+	rm -rf .git/sequencer
-+'
-+
-+test_expect_success 'cherry-pick cleans up sequencer state upon success' '
-+	pristine_detach initial &&
-+	git cherry-pick initial..picked &&
++	test_must_fail git cherry-pick base..picked &&
++	git cherry-pick --reset &&
 +	test_path_is_missing .git/sequencer
 +'
 +
-+test_done
+ test_done
 -- 
 1.7.4.rc1.7.g2cf08.dirty
