@@ -1,85 +1,120 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 11/18] revert: Save data for continuing after conflict resolution
-Date: Wed, 27 Jul 2011 23:33:30 +0530
-Message-ID: <CALkWK0nL2Lv8xSBQ0uBM-kuiK-aWDCqPmYUuyn5B7rPZMj5iAQ@mail.gmail.com>
-References: <1311736755-24205-1-git-send-email-artagnon@gmail.com>
- <1311736755-24205-12-git-send-email-artagnon@gmail.com> <20110727050220.GG18470@elie>
- <CALkWK0=uA1ZRsmiVwmx_3HXL-v+Bi-ONPEk5kMsh1RG0ZeVQJg@mail.gmail.com> <20110727155654.GB29924@elie>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 27 20:04:11 2011
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: [PATCH v2 1/3] test whether push checks for unpushed remotes in submodules
+Date: Wed, 27 Jul 2011 20:10:48 +0200
+Message-ID: <1311790250-32454-2-git-send-email-iveqy@iveqy.com>
+References: <1311790250-32454-1-git-send-email-iveqy@iveqy.com>
+Cc: gitster@pobox.com, iveqy@iveqy.com, jens.lehmann@web.de,
+	hvoigt@hvoigt.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 27 20:10:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qm8Sn-0005bI-TV
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 20:04:10 +0200
+	id 1Qm8ZL-0000Fh-M8
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 20:10:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754705Ab1G0SD4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Jul 2011 14:03:56 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:55086 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754696Ab1G0SDw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Jul 2011 14:03:52 -0400
-Received: by wyg8 with SMTP id 8so1180790wyg.19
-        for <git@vger.kernel.org>; Wed, 27 Jul 2011 11:03:51 -0700 (PDT)
+	id S1754696Ab1G0SKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jul 2011 14:10:46 -0400
+Received: from mail-ey0-f171.google.com ([209.85.215.171]:56289 "EHLO
+	mail-ey0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754265Ab1G0SKo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jul 2011 14:10:44 -0400
+Received: by eye22 with SMTP id 22so2218744eye.2
+        for <git@vger.kernel.org>; Wed, 27 Jul 2011 11:10:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=mnSNNEQGUsnUdNVTgYPD/AukvfdX0cfRu2ZxxDHkRH8=;
-        b=YQgt33PF313JjjChJpaiC/tqzuhZLIrhQNUjQU4Hff9x8Q5s3tSf3KPGhgGGHbO1G/
-         OFKf4S5aEiT/265DscGszuIpi+vKMGFDSbrMGxg2NtwlZ5BD9yeH2mYm1NDpcAgkWxmm
-         6JRXS9WXGD9JxU5s8lv5uCrDRUJyg7Vyjlayg=
-Received: by 10.216.9.134 with SMTP id 6mr62044wet.111.1311789830119; Wed, 27
- Jul 2011 11:03:50 -0700 (PDT)
-Received: by 10.216.70.16 with HTTP; Wed, 27 Jul 2011 11:03:30 -0700 (PDT)
-In-Reply-To: <20110727155654.GB29924@elie>
+        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        bh=0hOVzRQHknCJAHbUBdVw6hU3NDVobzpfWcvYXD4y0a0=;
+        b=R9X2/hBnyaLcYm5Xl7tDJpnXuUxywK2CzzmU+79ruoQNj290vlU7f8pI34NA3uT0F8
+         trZq2zxL8mkZ6TD45TeTcy3f3VNMvAwSFivBh7LPzxoMYfpY6BPg9OCD59LhVTQazCjg
+         tR5khGcmpYrODDOCO7c9dCaBaHnZqqaxCzxTg=
+Received: by 10.204.133.16 with SMTP id d16mr40617bkt.61.1311790242899;
+        Wed, 27 Jul 2011 11:10:42 -0700 (PDT)
+Received: from kolya (h-185-240.a189.priv.bahnhof.se [85.24.185.240])
+        by mx.google.com with ESMTPS id s2sm35374bkd.55.2011.07.27.11.10.41
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 27 Jul 2011 11:10:41 -0700 (PDT)
+Received: from iveqy by kolya with local (Exim 4.72)
+	(envelope-from <iveqy@kolya>)
+	id 1Qm8ZH-0008S2-DB; Wed, 27 Jul 2011 20:10:51 +0200
+X-Mailer: git-send-email 1.7.6.236.g7ad21
+In-Reply-To: <1311790250-32454-1-git-send-email-iveqy@iveqy.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177989>
 
-Hi Jonathan,
+From: Heiko Voigt <hvoigt@hvoigt.net>
 
-Jonathan Nieder writes:
-> Ramkumar Ramachandra wrote:
->> Junio complained about the warnings here [1], so I added MAYBE_UNUSE=
-D
->> to suppress them temporarily. =C2=A0Would you really like to see
->> read_populate_todo and read_populate_opts being introduced MUCH late=
-r
->> in the '--continue' patch?
->>
->> [1]: http://thread.gmane.org/gmane.comp.version-control.git/176899
->
-> Hmm. =C2=A0Yes, I suppose I would.
+These tests are used to extend push to check whether all recorded
+submodule commits have also been pushed.
 
-=46ixed.
+Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+---
+ t/t5531-deep-submodule-push.sh |   46 +++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 45 insertions(+), 1 deletions(-)
 
-> But as usual, what is relevant is not what I would like but what lead=
-s
-> to clear, functional, and maintainable code. =C2=A0It is from that po=
-int of
-> view that the MAYBE_UNUSED is most problematic --- it suppresses a
-> useful and true hint when compiling that the codebase implements some
-> functionality that has no user. =C2=A0For example, the warning would =
-be
-> triggered if the function gets renamed and added again and this old
-> version is forgotten.
-
-I actually think of it as a trade-off:
-On one hand, I want to introduce functions to read and write
-configuration files in the same patch.
-On the other hand, I want to introduce functions when they're actually =
-used.
-
--- Ram
+diff --git a/t/t5531-deep-submodule-push.sh b/t/t5531-deep-submodule-push.sh
+index faa2e96..0b55466 100755
+--- a/t/t5531-deep-submodule-push.sh
++++ b/t/t5531-deep-submodule-push.sh
+@@ -28,8 +28,52 @@ test_expect_success setup '
+ test_expect_success push '
+ 	(
+ 		cd work &&
+-		git push ../pub.git master
++		git push -f ../pub.git master
+ 	)
+ '
+ 
++test_expect_failure 'push fails if submodule has no remote' '
++	(
++		cd work/gar/bage &&
++		>junk2 &&
++		git add junk2 &&
++		git commit -m "Second junk"
++	) &&
++	(
++		cd work &&
++		git add gar/bage &&
++		git commit -m "Second commit for gar/bage" &&
++		test_must_fail git push ../pub.git master
++	)
++'
++
++test_expect_failure 'push fails if submodule commit not on remote' '
++	(
++		cd work/gar &&
++		git clone --bare bage ../../submodule.git &&
++		cd bage &&
++		git remote add origin ../../../submodule.git &&
++		git fetch &&
++		>junk3 &&
++		git add junk3 &&
++		git commit -m "Third junk"
++	) &&
++	(
++		cd work &&
++		git add gar/bage &&
++		git commit -m "Third commit for gar/bage" &&
++		test_must_fail git push ../pub.git master
++	)
++'
++
++test_expect_failure 'push succeeds after commit was pushed to remote' '
++	(
++		cd work/gar/bage &&
++		git push origin master
++	) &&
++	(
++		cd work &&
++		git push ../pub.git master
++	)
++'
+ test_done
+-- 
+1.7.6.236.g7ad21
