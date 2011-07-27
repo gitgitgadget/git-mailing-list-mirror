@@ -1,275 +1,109 @@
-From: henri GEIST <henri.geist@flying-robots.com>
-Subject: Re: tracking submodules out of main directory.
-Date: Wed, 27 Jul 2011 20:49:39 +0200
-Message-ID: <1311792580.2413.82.camel@Naugrim.eriador.com>
-References: <1309180056.2497.220.camel@Naugrim.eriador.com>
-	 <7vvcvrxlol.fsf@alter.siamese.dyndns.org>	<4E08C89E.5020109@web.de>
-	 <7vvcvrw0vn.fsf@alter.siamese.dyndns.org>
-	 <BANLkTimsfR4LqDAci0Vr+m9uUE_W-7OSAw@mail.gmail.com>
-	 <4E0A08AE.8090407@web.de>
+From: Phil Hord <hordp@cisco.com>
+Subject: Re: [PATCH] submodule add: improve message when resolving a relative
+ url fails
+Date: Wed, 27 Jul 2011 15:00:53 -0400
+Message-ID: <4E306065.2010002@cisco.com>
+References: <1306792280-12768-1-git-send-email-marcnarc@xiplink.com> <4DE541EC.7010202@web.de> <4DE548C4.2010600@web.de> <4DE5561C.3010200@xiplink.com> <4DE565DF.7050207@cisco.com> <4DE660E2.9080500@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Alexei Sholik <alcosholik@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed Jul 27 20:46:43 2011
+Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Wed Jul 27 21:01:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qm97y-0007TV-A4
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 20:46:42 +0200
+	id 1Qm9Lo-0005C7-GM
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 21:01:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753935Ab1G0Sqh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jul 2011 14:46:37 -0400
-Received: from mail7.surf-town.net ([212.97.132.47]:52895 "EHLO
-	mailgw18.surf-town.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753565Ab1G0Sqf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jul 2011 14:46:35 -0400
-Received: by mailgw18.surf-town.net (Postfix, from userid 65534)
-	id 4156E1A6F6; Wed, 27 Jul 2011 20:46:33 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by mailgw18.surf-town.net (Postfix) with ESMTP id 255F11A58C;
-	Wed, 27 Jul 2011 20:46:33 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mailgw18.surf-town.net
-X-Spam-Flag: NO
-X-Spam-Score: -1.44
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.44 tagged_above=-999 required=7
-	tests=[ALL_TRUSTED=-1.44] autolearn=disabled
-Received: from mailgw18.surf-town.net ([127.0.0.1])
-	by localhost (mailgw18.surf-town.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 8lA0p347f5KV; Wed, 27 Jul 2011 20:46:26 +0200 (CEST)
-Received: from [10.0.0.17] (AStrasbourg-753-1-48-110.w92-141.abo.wanadoo.fr [92.141.183.110])
-	by mailgw18.surf-town.net (Postfix) with ESMTPSA id D716A1A5FF;
-	Wed, 27 Jul 2011 20:46:22 +0200 (CEST)
-In-Reply-To: <4E0A08AE.8090407@web.de>
-X-Mailer: Evolution 2.30.3 
+	id S1753539Ab1G0TA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jul 2011 15:00:56 -0400
+Received: from rcdn-iport-5.cisco.com ([173.37.86.76]:36376 "EHLO
+	rcdn-iport-5.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753084Ab1G0TAy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jul 2011 15:00:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=hordp@cisco.com; l=2216; q=dns/txt;
+  s=iport; t=1311793254; x=1313002854;
+  h=message-id:date:from:mime-version:to:cc:subject:
+   references:in-reply-to:content-transfer-encoding;
+  bh=964b+Nyqv0VVHmuskKsmZbMKDs8FkhOccMPgEabaBMg=;
+  b=Ca4WIEfpmJUxJOEqjRYGEB6OO+ZiDTOhgwI2a39OeDJ2oIp/q87nhm3c
+   1Iwub8AuoQ3vQrAZpYZwAcQa2KbNXyKN42aMn36hr/BpJVw4q9Dky46y0
+   DTCT9I4I+ji2s+jYNO76VCW3t0Wz28bvJOT8xAM7ikPn8QFzoeZEAi2BK
+   k=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AgAFAJVfME6tJV2Z/2dsb2JhbAA1AQEBAQMUARRbAREMGAICBSILAgIJAwIBAgECUQcOAQ4BAR+EL6J1d6wpjSORSYErhAaBDwSSdYUHi3c
+X-IronPort-AV: E=Sophos;i="4.67,278,1309737600"; 
+   d="scan'208";a="7103915"
+Received: from rcdn-core-2.cisco.com ([173.37.93.153])
+  by rcdn-iport-5.cisco.com with ESMTP; 27 Jul 2011 19:00:54 +0000
+Received: from [64.100.104.94] (dhcp-64-100-104-94.cisco.com [64.100.104.94])
+	by rcdn-core-2.cisco.com (8.14.3/8.14.3) with ESMTP id p6RJ0rWJ030625;
+	Wed, 27 Jul 2011 19:00:53 GMT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110627 Thunderbird/5.0
+In-Reply-To: <4DE660E2.9080500@xiplink.com>
+X-TagToolbar-Keys: D20110727150053553
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177994>
 
-	Hello,
+On 06/01/2011 11:55 AM, Marc Branchaud wrote:
+> On 11-05-31 06:04 PM, Phil Hord wrote:
+>> On 05/31/2011 04:57 PM, Marc Branchaud wrote:
+>>>  - The current code rewrites the URL so that any relative path is either
+>>>    rejected or munged into an absolute remote URL.
+>> I don't see the URL getting munged away from being relative.  Can you
+>> point to an example?
+> I reached this conclusion because if I go into my clone of git.git and do
+>
+> 	git submodule add ../MyThing
+>
+> where ../MyThing is a regular git repo, I get
+>
+> Cloning into MyThing...
+> fatal: The remote end hung up unexpectedly
+> Clone of 'git://git.kernel.org/pub/scm/git/MyThing' into submodule path
+> 'MyThing' failed
+>
+> So it seemed the relative URL became an absolute URL.
+>
+> Looking more closely at a working example, I can see that (as you show below)
+> the URL in the super-repo's .gitmodules file retains the relative path, but
+> the submodule's remote.origin.url is an absolute path.
+>
+> In any case, "submodule add" isn't doing what I expected: make my local
+> MyThing repo a submodule of my git.git clone.
 
-sorry for the delay but here is a patch to include the feature.
-I work with it and it full fill my needs.
+I thought I understood this workflow better than I actually did.  I
+think I understand more now, and I'm somewhat disappointed.  But I also
+failed to pick up the ball on this old discussion.
 
-In hope that some one else will find it useful.
+If you do this, I think it will work like you were hoping:
 
-	Henri GEIST
+    :: ( mkdir MyThing && cd MyThing && git init )
+    Initialized empty Git repository in /opc/git/MyThing/.git/
+    :: git submodule add ../MyThing
+    Adding existing repo at 'MyThing' to the index
+
+I haven't examined the code, but I think this is how it works.  'git
+submodule add' takes a URL and a local path.  When you omit the local
+path, git infers one from the URL.  So these two commands are equivalent:
+    :: git submodule add ../MyThing
+    :: git submodule add ../MyThing MyThing
 
 
->From 09b7cda863c4443d11808f5b3f1a46ce05aa1e0d Mon Sep 17 00:00:00 2001
-From: Henri GEIST <henri@flying-robots.com>
-Date: Wed, 27 Jul 2011 20:16:13 +0200
-Subject: [PATCH] Enabeling (sub)modules linking out of repository.
+If the path you provide (explicitly or implicitly) already contains a
+git repo, it is assumed to be "the" submodule repo and git uses it.  If
+it does not contain a git repo, git attempts to clone it from the
+(remote) URL.
 
-Depending on there workflow somme people needs to link there repository
-to depend on external modules.
-Just like library could be shared by different programme and other
-libraries.
-It's a mean to track dependency between source code projects.
+Furthermore, the relative path only works for URLs.  It does not work
+for local filesystems.
 
-In the current code it was not possible to add a gitlink to a repository
-outside of the main repository.
-
-This pach :
-  - Enable adding an external git directory.
-  - Still forbid to add anything else.
-  - Take care of prohibitting git to overright any data outside of the
-    current directory.
-  - Incrase some tests to validate the new feature.
-
-This way you can have :
-  - Project depending of multiple subprojects themselves depending on
-    one third rank common suproject without clash at compilation
-    linking.
-  - Confidance that all suproject use the same version of the third rank
-    subroject (git status will tell you.)
-  - All subproject and subsubproject could be esealy worked on there one
-    and synchronized after in the big project.
-
-Signed-off-by: Henri GEIST <henri@flying-robots.com>
----
- builtin/clean.c       |    6 ++++--
- path.c                |   20 +++++++++++++++++---
- read-cache.c          |   14 ++++++++++++++
- setup.c               |   10 ++++++++--
- t/t0060-path-utils.sh |   16 ++++++++--------
- test-path-utils.c     |    6 ++++--
- 6 files changed, 55 insertions(+), 17 deletions(-)
-
-diff --git a/builtin/clean.c b/builtin/clean.c
-index 75697f7..e234e5d 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -149,8 +149,10 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 		if (S_ISDIR(st.st_mode)) {
- 			strbuf_addstr(&directory, ent->name);
- 			qname = quote_path_relative(directory.buf, directory.len, &buf, prefix);
--			if (show_only && (remove_directories ||
--			    (matches == MATCHED_EXACTLY))) {
-+			if (!strncmp ("../", qname, 3)) {
-+				die("'%s' is outside repository", qname);
-+			} else if (show_only && (remove_directories ||
-+				   (matches == MATCHED_EXACTLY))) {
- 				printf(_("Would remove %s\n"), qname);
- 			} else if (remove_directories ||
- 				   (matches == MATCHED_EXACTLY)) {
-diff --git a/path.c b/path.c
-index 4d73cc9..daf1573 100644
---- a/path.c
-+++ b/path.c
-@@ -444,7 +444,8 @@ const char *relative_path(const char *abs, const char *base)
-  * - Removes "." components.
-  * - Removes ".." components, and the components the precede them.
-  * Returns failure (non-zero) if a ".." component appears as first path
-- * component anytime during the normalization. Otherwise, returns success (0).
-+ * component but finish the normalization before.
-+ * Otherwise, returns success (0).
-  *
-  * Note that this function is purely textual.  It does not follow symlinks,
-  * verify the existence of the path, or make any system calls.
-@@ -519,13 +520,26 @@ int normalize_path_copy(char *dst, const char *src)
- 		 * go up one level.
- 		 */
- 		dst--;	/* go to trailing '/' */
--		if (dst <= dst0)
--			return -1;
-+		if (dst <= dst0
-+		    || (dst0 + 2 <= dst
-+			&& dst[-1] == '.' && dst[-2] == '.'
-+			&& (dst0 + 2 == dst || dst[-3] == '/'))) {
-+			dst++;
-+			*dst++ = '.';
-+			*dst++ = '.';
-+			*dst++ = '/';
-+			continue;
-+		}
- 		/* Windows: dst[-1] cannot be backslash anymore */
- 		while (dst0 < dst && dst[-1] != '/')
- 			dst--;
- 	}
- 	*dst = '\0';
-+	if (*dst0 == '/')
-+		dst0++;
-+	if (2 <= strlen (dst0)
-+	    && dst0[0] == '.' && dst0[1] == '.' && dst0[2] == '/')
-+		return -1;
- 	return 0;
- }
- 
-diff --git a/read-cache.c b/read-cache.c
-index 46a9e60..7fb695a 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -753,6 +753,20 @@ static int verify_dotfile(const char *rest)
- int verify_path(const char *path)
- {
- 	char c;
-+	struct stat buf;
-+
-+	lstat (path, &buf);
-+	if (buf.st_mode & S_IFDIR) {
-+		for (;;) {
-+			if (path[0] != '.')
-+				break;
-+			if (path[1] != '.')
-+				break;
-+			if (path[2] != '/')
-+				break;
-+			path += 3;
-+		}
-+	}
- 
- 	if (has_dos_drive_prefix(path))
- 		return 0;
-diff --git a/setup.c b/setup.c
-index 5ea5502..ce7993e 100644
---- a/setup.c
-+++ b/setup.c
-@@ -8,6 +8,8 @@ char *prefix_path(const char *prefix, int len, const char *path)
- {
- 	const char *orig = path;
- 	char *sanitized;
-+	struct stat buf;
-+
- 	if (is_absolute_path(orig)) {
- 		const char *temp = real_path(path);
- 		sanitized = xmalloc(len + strlen(temp) + 1);
-@@ -18,8 +20,12 @@ char *prefix_path(const char *prefix, int len, const char *path)
- 			memcpy(sanitized, prefix, len);
- 		strcpy(sanitized + len, path);
- 	}
--	if (normalize_path_copy(sanitized, sanitized))
--		goto error_out;
-+	if (normalize_path_copy(sanitized, sanitized)) {
-+		if (0 != lstat(sanitized, &buf))
-+			goto error_out;
-+		if (!(buf.st_mode & S_IFDIR))
-+			goto error_out;
-+	}
- 	if (is_absolute_path(orig)) {
- 		size_t root_len, len, total;
- 		const char *work_tree = get_git_work_tree();
-diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
-index 53cf1f8..b4b9b1f 100755
---- a/t/t0060-path-utils.sh
-+++ b/t/t0060-path-utils.sh
-@@ -48,12 +48,12 @@ norm_path "" ""
- norm_path . ""
- norm_path ./ ""
- norm_path ./. ""
--norm_path ./.. ++failed++
--norm_path ../. ++failed++
--norm_path ./../.// ++failed++
-+norm_path ./.. "../ ++failed++"
-+norm_path ../. "../ ++failed++"
-+norm_path ./../.// "../ ++failed++"
- norm_path dir/.. ""
- norm_path dir/sub/../.. ""
--norm_path dir/sub/../../.. ++failed++
-+norm_path dir/sub/../../.. "../ ++failed++"
- norm_path dir dir
- norm_path dir// dir/
- norm_path ./dir dir
-@@ -73,12 +73,12 @@ norm_path // / POSIX
- norm_path /// / POSIX
- norm_path /. / POSIX
- norm_path /./ / POSIX
--norm_path /./.. ++failed++ POSIX
--norm_path /../. ++failed++ POSIX
--norm_path /./../.// ++failed++ POSIX
-+norm_path /./.. "/../ ++failed++" POSIX
-+norm_path /../. "/../ ++failed++" POSIX
-+norm_path /./../.// "/../ ++failed++" POSIX
- norm_path /dir/.. / POSIX
- norm_path /dir/sub/../.. / POSIX
--norm_path /dir/sub/../../.. ++failed++ POSIX
-+norm_path /dir/sub/../../.. "/../ ++failed++" POSIX
- norm_path /dir /dir POSIX
- norm_path /dir// /dir/ POSIX
- norm_path /./dir /dir POSIX
-diff --git a/test-path-utils.c b/test-path-utils.c
-index e767159..ba6c8ac 100644
---- a/test-path-utils.c
-+++ b/test-path-utils.c
-@@ -5,8 +5,10 @@ int main(int argc, char **argv)
- 	if (argc == 3 && !strcmp(argv[1], "normalize_path_copy")) {
- 		char *buf = xmalloc(PATH_MAX + 1);
- 		int rv = normalize_path_copy(buf, argv[2]);
--		if (rv)
--			buf = "++failed++";
-+		if (rv) {
-+			fputs(buf, stdout);
-+			buf = " ++failed++";
-+		}
- 		puts(buf);
- 		return 0;
- 	}
--- 
-1.7.2.5
+Phil
