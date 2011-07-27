@@ -1,98 +1,65 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH/RFC] notice error exit from pager
-Date: Wed, 27 Jul 2011 21:36:52 +0200
-Message-ID: <4E3068D4.4050006@kdbg.org>
-References: <20110726210401.GA25207@toss.lan>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 04/19] Disallow the empty string as an attribute name
+Date: Wed, 27 Jul 2011 13:20:36 -0700
+Message-ID: <7vlivjo479.fsf@alter.siamese.dyndns.org>
+References: <1311689582-3116-1-git-send-email-mhagger@alum.mit.edu>
+ <1311689582-3116-5-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, torvalds@linux-foundation.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Wed Jul 27 21:37:06 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Jul 27 22:32:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qm9ui-0004By-Va
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 21:37:05 +0200
+	id 1QmAlw-0004H6-Pl
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 22:32:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754896Ab1G0Tg7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jul 2011 15:36:59 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:47543 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754247Ab1G0Tg6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jul 2011 15:36:58 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 4B4AD130045;
-	Wed, 27 Jul 2011 21:36:53 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id CCE8A19F350;
-	Wed, 27 Jul 2011 21:36:52 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.18) Gecko/20110616 SUSE/3.1.11 Thunderbird/3.1.11
-In-Reply-To: <20110726210401.GA25207@toss.lan>
+	id S1754796Ab1G0Ub7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jul 2011 16:31:59 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:32984 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753072Ab1G0Ub4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jul 2011 16:31:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C4E493B4B;
+	Wed, 27 Jul 2011 16:31:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:references:message-id:mime-version:content-type;
+	 s=sasl; bh=+ZlieFcz0JFT9rsHWA0waJMP6GQ=; b=R5cBMTDKCRIcIwkHAZKn
+	YW4QSjtUhgrNjVyS2HN+1zsFsLZ82umYTwm6vBbzmXqy5pTC6XRyJXk7JYTSYbMn
+	DxduqAWl4XXTkICnDYCOfhHwx8vRfv9SYKEZPdZZ+vCZVTGQVMT1JibzHVkci+FA
+	r4U/SU6AHZJSUmoUhZftQjU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:references:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=Plr537+Hk7kdbJUw/EjPAhHcahZjz0NihXTjLkvvkw40Ef
+	C7jLbv930t8FMfKWohfe0g114sSRFbYktLw8wJKjWeINuoxB4t2c7kDqTkmnaCIH
+	FZhPs/OtPQcwjNpzuEEhxRc6fnPdm1mPxJDmNviGPBbQuyuVI95TLFDZpULLs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BD49D3B4A;
+	Wed, 27 Jul 2011 16:31:55 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 57E733B49; Wed, 27 Jul 2011
+ 16:31:55 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 77F82D24-B88F-11E0-A9CF-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177996>
 
-Am 26.07.2011 23:04, schrieb Clemens Buchacher:
-> If the pager fails to run, git produces no output, e.g.:
-> 
->  $ GIT_PAGER=not-a-command git log
-> 
-> The error reporting fails for two reasons:
-> 
->  (1) start_command: There is a mechanism that detects errors during
->      execvp introduced in 2b541bf8 (start_command: detect execvp
->      failures early). ... This mechanism is
->      incompatible with the workaround introduced in 35ce8622
->      (pager: Work around window resizing bug in 'less')
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-You analysis is correct. I think the bug in less was fixed shortly after
-this workaround was introduced. I would like to remove this workaround
-for a different reason, but it seems there are people who are quite fond
-of it ;)
+> Previously, it was possible to have a line like "file.txt =foo" in a
+> .gitattribute file, after which an invocation like "git check-attr ''
+> -- file.txt" would succeed.  This patch disallows both constructs.
 
-> diff --git a/run-command.c b/run-command.c
-> index 70e8a24..944a882 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -127,9 +127,6 @@ static int wait_or_whine(pid_t pid, const char *argv0, int silent_exec_failure)
->  		if (code == 127) {
->  			code = -1;
->  			failed_errno = ENOENT;
-> -			if (!silent_exec_failure)
-> -				error("cannot run %s: %s", argv0,
-> -					strerror(ENOENT));
->  		}
->  	} else {
->  		error("waitpid is confused (%s)", argv0);
-> @@ -287,10 +284,14 @@ fail_pipe:
->  		 * Do not check for cmd->silent_exec_failure; the parent
->  		 * process will check it when it sees this exit code.
->  		 */
-> -		if (errno == ENOENT)
-> +		if (errno == ENOENT) {
-> +			if (!cmd->silent_exec_failure)
-> +				error("cannot run %s: %s", cmd->argv[0],
-> +					strerror(ENOENT));
+Good. Very much appreciated.
 
-This change is not good enough: There is no guarantee that this message
-goes to the right channel (stderr in the child can be redirected). Look
-carefully: We set a special die routine in the forked child that ensures
-that the die() messages are written to the right channel; we do not have
-a similar facility for error() messages (or do we?).
+> Currently it is possible to use the empty string as an attribute name.
 
->  			exit(127);
-> -		else
-> +		} else {
->  			die_errno("cannot exec '%s'", cmd->argv[0]);
-> +		}
->  	}
->  	if (cmd->pid < 0)
->  		error("cannot fork() for %s: %s", cmd->argv[0],
-
--- Hannes
+Yeah, even I wouldn't call it a regression to disallow this ;-).
