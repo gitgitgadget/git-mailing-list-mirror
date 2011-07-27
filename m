@@ -1,92 +1,83 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 17/18] revert: Don't implictly stomp pending sequencer operation
-Date: Wed, 27 Jul 2011 15:29:06 +0530
-Message-ID: <CALkWK0mhAc4TtSzN5DW8OX91QBvosbbKsYfB5QPFy563qg7KRQ@mail.gmail.com>
-References: <1311736755-24205-1-git-send-email-artagnon@gmail.com>
- <1311736755-24205-18-git-send-email-artagnon@gmail.com> <20110727051947.GL18470@elie>
+From: Reuben Thomas <rrt@sc3d.org>
+Subject: Re: [RFC/PATCH] commit: allow partial commits with relative paths
+Date: Wed, 27 Jul 2011 11:00:51 +0100
+Message-ID: <CAOnWdog-FqOJJ7nFFW-Sj9U5obVWgVdww5yFUy5uWJW8fw4svA@mail.gmail.com>
+References: <CAOnWdohKfwEOMx=wr_PKiW+ucYBK2ZWykm_7dqr7hy4xGRM02A@mail.gmail.com>
+	<19b908142567fcfafe4da3d0fd60b134d30c613a.1311579663.git.git@drmicha.warpmail.net>
+	<7v8vrmrxok.fsf@alter.siamese.dyndns.org>
+	<4E2FCAC4.7020408@drmicha.warpmail.net>
+	<CAOnWdojgxZNs4qyEG55URScqOGb6k5e6Mh_B3By6Lj6SpN9L9g@mail.gmail.com>
+	<4E2FE024.2030204@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 27 11:59:38 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Jul 27 12:00:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qm0ts-0000xI-Hq
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 11:59:37 +0200
+	id 1Qm0vD-0001KZ-6c
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 12:00:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754138Ab1G0J72 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Jul 2011 05:59:28 -0400
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:56140 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752252Ab1G0J71 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Jul 2011 05:59:27 -0400
-Received: by wwg11 with SMTP id 11so2905748wwg.1
-        for <git@vger.kernel.org>; Wed, 27 Jul 2011 02:59:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=D8ku4sEnApXsctD9WJw4Iz+7UiFMgQ908xF9MJudS4s=;
-        b=djgSHTtuePcbvyT52oSgpRcFsklt2MxTDVRsKGp49LaPjZflfAy9Nh/K8UoiJl9Ujm
-         FpqVnIoWYqMV2zFqkNOkSQ8M5ZeS2XWtZE7jdy98YlOSpmC7z3eihYYqCmf+Pc6KN0nw
-         iI8ozSusbBeV5iQft4uIkKQ8DqgAtf/kYZcZg=
-Received: by 10.216.9.134 with SMTP id 6mr2760998wet.111.1311760766170; Wed,
- 27 Jul 2011 02:59:26 -0700 (PDT)
-Received: by 10.216.70.16 with HTTP; Wed, 27 Jul 2011 02:59:06 -0700 (PDT)
-In-Reply-To: <20110727051947.GL18470@elie>
+	id S1754217Ab1G0KAy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Jul 2011 06:00:54 -0400
+Received: from exprod7og114.obsmtp.com ([64.18.2.215]:37825 "HELO
+	exprod7og114.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1752252Ab1G0KAx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Jul 2011 06:00:53 -0400
+Received: from mail-yi0-f45.google.com ([209.85.218.45]) (using TLSv1) by exprod7ob114.postini.com ([64.18.6.12]) with SMTP
+	ID DSNKTi/h1PJE4SXRSnVoJThVecDfSzHLekBL@postini.com; Wed, 27 Jul 2011 03:00:53 PDT
+Received: by yia25 with SMTP id 25so1095726yia.4
+        for <git@vger.kernel.org>; Wed, 27 Jul 2011 03:00:52 -0700 (PDT)
+Received: by 10.142.144.12 with SMTP id r12mr3486183wfd.74.1311760851843; Wed,
+ 27 Jul 2011 03:00:51 -0700 (PDT)
+Received: by 10.142.164.13 with HTTP; Wed, 27 Jul 2011 03:00:51 -0700 (PDT)
+In-Reply-To: <4E2FE024.2030204@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177959>
 
-Hi,
-
-Jonathan Nieder writes:
-> Ramkumar Ramachandra wrote:
-> [...]
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (create_seq_dir() < 0=
-) {
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 advise(_("A cherry-pick or revert is in progress."));
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 advise(_("Use --reset to forget about it"));
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 return -1;
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
+On 27 July 2011 10:53, Michael J Gruber <git@drmicha.warpmail.net> wrot=
+e:
+> Reuben Thomas venit, vidit, dixit 27.07.2011 11:45:
+>>
+>> $ cat ~/reportbug-git
+>> $ git rm -f ../INSTALL
+>> rm 'INSTALL'
+>> $ git ci -m "INSTALL is now provided by gnulib." ../INSTALL
+>> error: pathspec 'ALL' did not match any file(s) known to git.
+>> $ cd ..
+>> $ git ci -m "INSTALL is now provided by gnulib." INSTALL
+>> [master 0895314] INSTALL is now provided by gnulib.
+>> =A01 files changed, 0 insertions(+), 1 deletions(-)
+>> =A0delete mode 120000 INSTALL
+>>
+>> The thing I didn't understand is that I tried to check in ../INSTALL=
+,
+>> but git complained about pathspec 'ALL'.
 >
-> The usual formula is:
+> Well, you didn't say so, did you?
 >
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0error(... description of error ...)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (advice_foo_bar [i.e., if the user is n=
-ot tired of the advice already]) {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0advise(... how=
- to recover from error ...);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0advise(... mor=
-e lines ...);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+> Also, we don't know what subdir you were doing this in, but I bet it =
+has
+> a 7-character name...
 
-I think you're trying to say two things here:
-1. Put the error() call in the caller.  Why is this a good idea?  The
-error is very specific to the create_seq_dir functionality, and has
-nothing to do with the caller.  The advice on the other hand, can be
-quite caller-specific, which is why I put it in the caller in the
-first place.
-2. Guard the advice using a variable.  I have to invent a new
-configuration variable; can't that wait*?
+Its name was "src".
 
-Thanks.
+> I can't reproduce that name truncation with a current git, btw.
 
-* Ideally, I'd do these things immediately if I didn't fear picking a
-stupid variable name, and implementing it in a daft manner the first
-few times.  More delays will result in me doing less post midterm work
-(the more interesting bits).
+Thanks for testing that.
 
--- Ram
+> In any case, I still think git should allow partial commits with stag=
+ed
+> deletions from within a subdir, which is what my patch is about.
+
+Absolutely, this looks useful.
+
+--=20
+http://rrt.sc3d.org
