@@ -1,78 +1,99 @@
-From: Phil Hord <hordp@cisco.com>
-Subject: Re: Special branch for remote
-Date: Wed, 27 Jul 2011 10:35:21 -0400
-Message-ID: <4E302229.4030402@cisco.com>
-References: <j0ohjr$fcd$1@dough.gmane.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 14/18] revert: Introduce --reset to remove sequencer state
+Date: Wed, 27 Jul 2011 20:05:37 +0530
+Message-ID: <CALkWK0nKMMjT1jg8zENmwbxvFU+5A+BFLVkoDRAOtURNcZ4H7A@mail.gmail.com>
+References: <1311736755-24205-1-git-send-email-artagnon@gmail.com>
+ <1311736755-24205-15-git-send-email-artagnon@gmail.com> <20110727051115.GI18470@elie>
+ <CALkWK0k7SvjJ8duNscnwjn4JOjSDqfHN1qH9rnoz5w8TjHgKgA@mail.gmail.com> <20110727142815.GC24785@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Paulo J. Matos" <pocmatos@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 27 16:35:36 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 27 16:36:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qm5Ct-0001gY-MX
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 16:35:32 +0200
+	id 1Qm5DP-00021m-B2
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 16:36:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754145Ab1G0Of1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jul 2011 10:35:27 -0400
-Received: from rcdn-iport-9.cisco.com ([173.37.86.80]:64091 "EHLO
-	rcdn-iport-9.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753292Ab1G0OfZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jul 2011 10:35:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=hordp@cisco.com; l=901; q=dns/txt;
-  s=iport; t=1311777325; x=1312986925;
-  h=message-id:date:from:mime-version:to:cc:subject:
-   references:in-reply-to:content-transfer-encoding;
-  bh=35iCaurS+D/mItMqQVvMxpk2qoU6Oh1gAz1/PpGX1wo=;
-  b=IZ26DIiii54JcCBROtuVjQmrHFZ2OkGxvFXmE5fW0nyBq98zHN7rSCqP
-   58rw6k6rUD8Wxatfl0zP36E6Ta5l5STyEH0+T5SVWNJsc0TsDbCYQRfn9
-   y0NEz/2pIMnC9HsQ22M81ICM5JRNq5unv7K7JAVnwLrUcWNzoxLgXq9d3
-   E=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Av8EAAMiME6rRDoH/2dsb2JhbAA1AQEBAQMUAW8BEQwYCSIPCQMCAQIBAlEHDgEOAQEfpxl3iQCjTZ5uhkAEknWFB4t3
-X-IronPort-AV: E=Sophos;i="4.67,276,1309737600"; 
-   d="scan'208";a="6997444"
-Received: from mtv-core-2.cisco.com ([171.68.58.7])
-  by rcdn-iport-9.cisco.com with ESMTP; 27 Jul 2011 14:35:23 +0000
-Received: from [10.117.80.100] (rtp-hordp-8913.cisco.com [10.117.80.100])
-	by mtv-core-2.cisco.com (8.14.3/8.14.3) with ESMTP id p6REZMV4014512;
-	Wed, 27 Jul 2011 14:35:22 GMT
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110627 Thunderbird/5.0
-In-Reply-To: <j0ohjr$fcd$1@dough.gmane.org>
-X-TagToolbar-Keys: D20110727103521714
+	id S1754329Ab1G0Of7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Jul 2011 10:35:59 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:46773 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754023Ab1G0Of6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Jul 2011 10:35:58 -0400
+Received: by wwe5 with SMTP id 5so1476926wwe.1
+        for <git@vger.kernel.org>; Wed, 27 Jul 2011 07:35:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=ePrxEEKU3yHxAhPpKfGZDP32+6/sOO2eofI7lH15pHg=;
+        b=mWHBm4Y07+MKBkwhoIfvYVMeeLLeYeLBMJZmEMRNSu+fIGEGpEzV+OdEHsY4i2Tg0D
+         HzHQ+hIyRseifOtpQS+cL5pwetsIN745y4MeZzQXBBQtfevIOZcVObOpIlOO2nlJqW4V
+         KqrVBL90WXqljbjhmReyvCZps9OEH2izKM1CY=
+Received: by 10.216.155.134 with SMTP id j6mr100005wek.81.1311777357072; Wed,
+ 27 Jul 2011 07:35:57 -0700 (PDT)
+Received: by 10.216.70.16 with HTTP; Wed, 27 Jul 2011 07:35:37 -0700 (PDT)
+In-Reply-To: <20110727142815.GC24785@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177970>
 
-On 07/27/2011 04:18 AM, Paulo J. Matos wrote:
-> Hi all,
+Hi,
+
+Jonathan Nieder writes:
+> Ramkumar Ramachandra wrote:
+>> Jonathan Nieder writes:
+>>> Ramkumar Ramachandra wrote:
 >
-> I have a huge repository for a software I am developing. In it I have
-> source code, docs, experiments, tests, etc. However, I want to push
-> only the src/ to the github remote, nothing else. What's the best way
-> to achieve this. Do I need to simply create a new branch and then push
-> the new branch to github or there's anything else involved that I need
-> to know?
+>>>> + =C2=A0 =C2=A0 if (opts->subcommand =3D=3D REPLAY_RESET) {
+>>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 remove_sequencer_state=
+(1);
+>>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;
+>>>> + =C2=A0 =C2=A0 } else {
+>>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Start a new cherry-=
+pick/ revert sequence */
+>>>
+>>> Can un-indent by dropping the "else":
+>>
+>> Actually this was intentional; if we un-indent this now, there'll be=
+ a
+>> diff indenting it when '--reset' and '--continue' are introduced whi=
+ch
+>> turns out to be especially ugly :)
 >
+> Why couldn't it look like this at the end, for example? =C2=A0(As alw=
+ays,
+> this is just an example; I am not saying "please make it look like
+> this".)
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (opts->subcommand =3D=3D REPLAY_RESET) =
+{
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0remove_sequenc=
+er_state(1);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return 0;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (opts->subcommand =3D=3D REPLAY_CONTINU=
+E) {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0... prepare to=
+do list for continue ...
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0} else {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0... prepare to=
+do list for a new cherry-pick ...
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0pick the chosen commits
 
-Yes, you can do this with branches. See [1] for an example of a similar
-workflow.
+Mainly style.  It looks a little unnatural: when more subcommands come
+up, I'd like a nice switch-case to dispatch :)
 
-You can also manage this with submodules [2] or subtree-merge [3].
-
-I prefer submodules since it keeps the huge stuff (docs and bins) away
-from my source code and makes my source code repo much more responsive.
-
-[1] http://www.braintreepayments.com/devblog/our-git-workflow
-[2] http://progit.org/book/ch6-6.html
-[3] http://progit.org/book/ch6-7.html
-
-HTH,
-Phil
+-- Ram
