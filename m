@@ -1,113 +1,167 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 00/18] GSoC update: Sequencer for inclusion v3
-Date: Wed, 27 Jul 2011 08:48:57 +0530
-Message-ID: <1311736755-24205-1-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 01/18] advice: Introduce error_resolve_conflict
+Date: Wed, 27 Jul 2011 08:48:58 +0530
+Message-ID: <1311736755-24205-2-git-send-email-artagnon@gmail.com>
+References: <1311736755-24205-1-git-send-email-artagnon@gmail.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Jeff King <peff@peff.net>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 27 05:22:29 2011
+X-From: git-owner@vger.kernel.org Wed Jul 27 05:22:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QluhX-0005s7-B1
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 05:22:27 +0200
+	id 1QluhX-0005s7-RI
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 05:22:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753826Ab1G0DWT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jul 2011 23:22:19 -0400
+	id S1753943Ab1G0DWY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jul 2011 23:22:24 -0400
 Received: from mail-pz0-f42.google.com ([209.85.210.42]:35904 "EHLO
 	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753432Ab1G0DWS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2011 23:22:18 -0400
-Received: by pzk37 with SMTP id 37so1938359pzk.1
-        for <git@vger.kernel.org>; Tue, 26 Jul 2011 20:22:17 -0700 (PDT)
+	with ESMTP id S1753827Ab1G0DWX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2011 23:22:23 -0400
+Received: by mail-pz0-f42.google.com with SMTP id 37so1938359pzk.1
+        for <git@vger.kernel.org>; Tue, 26 Jul 2011 20:22:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=PRueXjqA++Arl7wMqpmesbWzSOJg9bCrK1w5IKogwxE=;
-        b=a8HRXw63ee1Jj7PgtrEacudM9UUTS2bnGOAgqBAhxkCEz+q5ah4MaFc56lt1AkuwL9
-         oRmJCgZz1fdnKn+YdMufRZ/coP/Hw1Kwhue9Q+WlB4I1eXeleGeJDH8Rn9DhYbKRnWdE
-         98CxjM6+GV1GNXfI/4cEu4/ZTnQ92lVku/v2k=
-Received: by 10.68.36.99 with SMTP id p3mr11570798pbj.275.1311736937704;
-        Tue, 26 Jul 2011 20:22:17 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=ppmZveV72ludj0XpcX/T/MNA0+ocbzrxVj+R6bhjFcw=;
+        b=R6+6Gb5RRqQNUA/x/cUy6KpUfOQRp18FWkN44hkpc9kfQP1/Ty89moOjw8TlvNre/x
+         K92qyyJG3RR9WjTuIeaeP45S49FHCT1dWoT+x8Wy8AqzomLVMkA+mlvfjCF3VbFJh5Vu
+         ITGgWVr0gtSiPERns4HLRDIJmnl4af1Ga1X+I=
+Received: by 10.68.30.134 with SMTP id s6mr11155909pbh.364.1311736942623;
+        Tue, 26 Jul 2011 20:22:22 -0700 (PDT)
 Received: from localhost.localdomain ([203.110.240.41])
-        by mx.google.com with ESMTPS id p7sm1210706pbn.65.2011.07.26.20.22.12
+        by mx.google.com with ESMTPS id p7sm1210706pbn.65.2011.07.26.20.22.17
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 26 Jul 2011 20:22:15 -0700 (PDT)
+        Tue, 26 Jul 2011 20:22:20 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4.rc1.7.g2cf08.dirty
+In-Reply-To: <1311736755-24205-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177905>
 
-Hi,
+Enable future callers to report a conflict and not die immediately by
+introducing a new function called error_resolve_conflict.
+Re-implement die_resolve_conflict as a call to error_resolve_conflict
+followed by a call to die.  Consequently, the message printed by
+die_resolve_conflict changes from
 
-Nothing new has been introduced; a couple of minor changes have been
-made since last time (rewrite "config: Introduce functions to write
-non-standard file" and remove "Please, " in hint: messages).  I will
-hencefourth refer to this series as "sequencer-stable" -- I've started
-building post midterm work* on top of this.  If something critical
-comes up, I can always fixup this series, rebase and quickly continue
-my work.
+fatal: 'commit' is not possible because you have unmerged files.
+       Please, fix them up in the work tree ...
+       ...
 
-While Junio and others are not entirely happy with "revert: Remove
-sequencer state when no commits are pending", and there is still some
-confusion about how '--abort' will work in the future, I think we have
-discussed these issues sufficiently.
+to
 
-* I haven't made anything public yet, because it's still in its
-  infancy stages; I'll hopefully have something to show by the end of
-  the week.
+error: 'commit' is not possible because you have unmerged files.
+hint: Please, fix them up in the work tree ...
+hint: ...
+fatal: Exiting because of an unresolved conflict.
 
-Thanks for reading.
+Hints are printed using the same advise function introduced in
+v1.7.3-rc0~26^2~3 (Introduce advise() to print hints, 2010-08-11).
 
--- Ram
+Inspired-by: Christian Couder <chistian.couder@gmail.com>
+Helped-by: Jonathan Nieder <jrnieder@gmail.com>
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ advice.c         |   31 ++++++++++++++++++++++++-------
+ advice.h         |    3 ++-
+ builtin/revert.c |    9 ---------
+ 3 files changed, 26 insertions(+), 17 deletions(-)
 
-Ramkumar Ramachandra (18):
-  advice: Introduce error_resolve_conflict
-  config: Introduce functions to write non-standard file
-  revert: Simplify and inline add_message_to_msg
-  revert: Don't check lone argument in get_encoding
-  revert: Rename no_replay to record_origin
-  revert: Propogate errors upwards from do_pick_commit
-  revert: Eliminate global "commit" variable
-  revert: Introduce struct to keep command-line options
-  revert: Separate cmdline parsing from functional code
-  revert: Don't create invalid replay_opts in parse_args
-  revert: Save data for continuing after conflict resolution
-  revert: Save command-line options for continuing operation
-  revert: Make pick_commits functionally act on a commit list
-  revert: Introduce --reset to remove sequencer state
-  reset: Make reset remove the sequencer state
-  revert: Remove sequencer state when no commits are pending
-  revert: Don't implictly stomp pending sequencer operation
-  revert: Introduce --continue to continue the operation
-
- Documentation/git-cherry-pick.txt |    6 +
- Documentation/git-revert.txt      |    6 +
- Documentation/sequencer.txt       |    9 +
- Makefile                          |    2 +
- advice.c                          |   31 ++-
- advice.h                          |    3 +-
- branch.c                          |    2 +
- builtin/revert.c                  |  743 +++++++++++++++++++++++++++++--------
- cache.h                           |    2 +
- config.c                          |   36 ++-
- sequencer.c                       |   19 +
- sequencer.h                       |   20 +
- t/7106-reset-sequence.sh          |   43 +++
- t/t3510-cherry-pick-sequence.sh   |  219 +++++++++++
- 14 files changed, 969 insertions(+), 172 deletions(-)
- create mode 100644 Documentation/sequencer.txt
- create mode 100644 sequencer.c
- create mode 100644 sequencer.h
- create mode 100755 t/7106-reset-sequence.sh
- create mode 100755 t/t3510-cherry-pick-sequence.sh
-
+diff --git a/advice.c b/advice.c
+index 0be4b5f..e02e632 100644
+--- a/advice.c
++++ b/advice.c
+@@ -19,6 +19,15 @@ static struct {
+ 	{ "detachedhead", &advice_detached_head },
+ };
+ 
++void advise(const char *advice, ...)
++{
++	va_list params;
++
++	va_start(params, advice);
++	vreportf("hint: ", advice, params);
++	va_end(params);
++}
++
+ int git_default_advice_config(const char *var, const char *value)
+ {
+ 	const char *k = skip_prefix(var, "advice.");
+@@ -34,16 +43,24 @@ int git_default_advice_config(const char *var, const char *value)
+ 	return 0;
+ }
+ 
+-void NORETURN die_resolve_conflict(const char *me)
++int error_resolve_conflict(const char *me)
+ {
+-	if (advice_resolve_conflict)
++	error("'%s' is not possible because you have unmerged files.", me);
++	if (advice_resolve_conflict) {
+ 		/*
+ 		 * Message used both when 'git commit' fails and when
+ 		 * other commands doing a merge do.
+ 		 */
+-		die("'%s' is not possible because you have unmerged files.\n"
+-		    "Please, fix them up in the work tree, and then use 'git add/rm <file>' as\n"
+-		    "appropriate to mark resolution and make a commit, or use 'git commit -a'.", me);
+-	else
+-		die("'%s' is not possible because you have unmerged files.", me);
++		advise("Fix them up in the work tree,");
++		advise("and then use 'git add/rm <file>' as");
++		advise("appropriate to mark resolution and make a commit,");
++		advise("or use 'git commit -a'.");
++	}
++	return -1;
++}
++
++void NORETURN die_resolve_conflict(const char *me)
++{
++	error_resolve_conflict(me);
++	die("Exiting because of an unresolved conflict.");
+ }
+diff --git a/advice.h b/advice.h
+index 3244ebb..e5d0af7 100644
+--- a/advice.h
++++ b/advice.h
+@@ -11,7 +11,8 @@ extern int advice_implicit_identity;
+ extern int advice_detached_head;
+ 
+ int git_default_advice_config(const char *var, const char *value);
+-
++void advise(const char *advice, ...);
++int error_resolve_conflict(const char *me);
+ extern void NORETURN die_resolve_conflict(const char *me);
+ 
+ #endif /* ADVICE_H */
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 1f27c63..2df3f3b 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -214,15 +214,6 @@ static void write_cherry_pick_head(void)
+ 	strbuf_release(&buf);
+ }
+ 
+-static void advise(const char *advice, ...)
+-{
+-	va_list params;
+-
+-	va_start(params, advice);
+-	vreportf("hint: ", advice, params);
+-	va_end(params);
+-}
+-
+ static void print_advice(void)
+ {
+ 	char *msg = getenv("GIT_CHERRY_PICK_HELP");
 -- 
 1.7.4.rc1.7.g2cf08.dirty
