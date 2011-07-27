@@ -1,70 +1,73 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 16/18] revert: Remove sequencer state when no commits are pending
-Date: Wed, 27 Jul 2011 15:12:23 +0530
-Message-ID: <CALkWK0noPtLgr_t=DC_XFdLrWUNCLhUd00Mw1HbmWRJjeT4jew@mail.gmail.com>
-References: <1311736755-24205-1-git-send-email-artagnon@gmail.com>
- <1311736755-24205-17-git-send-email-artagnon@gmail.com> <20110727051755.GK18470@elie>
+From: Reuben Thomas <rrt@sc3d.org>
+Subject: Re: [RFC/PATCH] commit: allow partial commits with relative paths
+Date: Wed, 27 Jul 2011 10:45:28 +0100
+Message-ID: <CAOnWdojgxZNs4qyEG55URScqOGb6k5e6Mh_B3By6Lj6SpN9L9g@mail.gmail.com>
+References: <CAOnWdohKfwEOMx=wr_PKiW+ucYBK2ZWykm_7dqr7hy4xGRM02A@mail.gmail.com>
+	<19b908142567fcfafe4da3d0fd60b134d30c613a.1311579663.git.git@drmicha.warpmail.net>
+	<7v8vrmrxok.fsf@alter.siamese.dyndns.org>
+	<4E2FCAC4.7020408@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 27 11:42:51 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Jul 27 11:45:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qm0de-0003UE-EO
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 11:42:50 +0200
+	id 1Qm0gM-0004KD-C9
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 11:45:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752766Ab1G0Jmq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Jul 2011 05:42:46 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:46415 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751615Ab1G0Jmp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Jul 2011 05:42:45 -0400
-Received: by wyg8 with SMTP id 8so847349wyg.19
-        for <git@vger.kernel.org>; Wed, 27 Jul 2011 02:42:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=toV9EN5g46rNx1qpyD9xAzufqvARHKC535EqCPKe7Hk=;
-        b=Mg2G2u8ebvKp/PI1HDBFksjJGwFZLNKrbDNK3JurRxF9oHmCYxa5id++7m7RAu2XwE
-         6KNBUFy/Kf9C2UYAxHV5UJGRSIZnTOSv/IzBSeUYlXntnOHrEC/JISVoz+6uS3X7hxl6
-         Grdg1phMxy6NNNsqwlhy5r37NOxFXbqa/o2FY=
-Received: by 10.216.155.134 with SMTP id j6mr6188365wek.81.1311759764063; Wed,
- 27 Jul 2011 02:42:44 -0700 (PDT)
-Received: by 10.216.70.16 with HTTP; Wed, 27 Jul 2011 02:42:23 -0700 (PDT)
-In-Reply-To: <20110727051755.GK18470@elie>
+	id S1753974Ab1G0Jpc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jul 2011 05:45:32 -0400
+Received: from exprod7og103.obsmtp.com ([64.18.2.159]:45701 "HELO
+	exprod7og103.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1753926Ab1G0Jpa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jul 2011 05:45:30 -0400
+Received: from mail-yx0-f178.google.com ([209.85.213.178]) (using TLSv1) by exprod7ob103.postini.com ([64.18.6.12]) with SMTP
+	ID DSNKTi/eOcILVfwC2GQGH3GT5ejvDD34yeta@postini.com; Wed, 27 Jul 2011 02:45:30 PDT
+Received: by yxm8 with SMTP id 8so687724yxm.37
+        for <git@vger.kernel.org>; Wed, 27 Jul 2011 02:45:29 -0700 (PDT)
+Received: by 10.143.32.11 with SMTP id k11mr4274918wfj.17.1311759928868; Wed,
+ 27 Jul 2011 02:45:28 -0700 (PDT)
+Received: by 10.142.164.13 with HTTP; Wed, 27 Jul 2011 02:45:28 -0700 (PDT)
+In-Reply-To: <4E2FCAC4.7020408@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177954>
 
-Hi again,
-
-Jonathan Nieder writes:
-> Ramkumar Ramachandra wrote:
->> Change this so that the sequencer state is cleared when a conflict i=
-s
->> encountered in the last commit.
+On 27 July 2011 09:22, Michael J Gruber <git@drmicha.warpmail.net> wrote:
+> Junio C Hamano venit, vidit, dixit 25.07.2011 21:02:
+>> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>>
+>> Also what is the "same
+>> problem"?
 >
-> This defeats the point of keeping a ".git/sequencer/head" file. =C2=A0=
-Why
-> not remove the cherry-pick state when it is known no longer to be nee=
-ded,
-> namely after the conflict resolution is commited?
+> The one reported by the OP for commit:
+>
+> git rm ../a
+> git commit -m "blurb" ../a
+> error: pathspec '../a' did not match any file(s) known to git.
 
-Sounds nice in theory, but how do we do it?  Remove the state at "git
-commit" time?  I've already thought about the problem and presented my
-arguments here [1].
+Actually, this is not what I reported. This explains why I couldn't
+quite understand the direction this thread took. Look again:
 
-[1]: http://article.gmane.org/gmane.comp.version-control.git/177465
+$ cat ~/reportbug-git
+$ git rm -f ../INSTALL
+rm 'INSTALL'
+$ git ci -m "INSTALL is now provided by gnulib." ../INSTALL
+error: pathspec 'ALL' did not match any file(s) known to git.
+$ cd ..
+$ git ci -m "INSTALL is now provided by gnulib." INSTALL
+[master 0895314] INSTALL is now provided by gnulib.
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+ delete mode 120000 INSTALL
 
--- Ram
+The thing I didn't understand is that I tried to check in ../INSTALL,
+but git complained about pathspec 'ALL'.
+
+-- 
+http://rrt.sc3d.org
