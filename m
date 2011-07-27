@@ -1,90 +1,275 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: [PATCH v2 0/3] check for unpushed remotes in submodules
-Date: Wed, 27 Jul 2011 20:10:47 +0200
-Message-ID: <1311790250-32454-1-git-send-email-iveqy@iveqy.com>
-Cc: gitster@pobox.com, iveqy@iveqy.com, jens.lehmann@web.de,
-	hvoigt@hvoigt.net
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 27 20:10:58 2011
+From: henri GEIST <henri.geist@flying-robots.com>
+Subject: Re: tracking submodules out of main directory.
+Date: Wed, 27 Jul 2011 20:49:39 +0200
+Message-ID: <1311792580.2413.82.camel@Naugrim.eriador.com>
+References: <1309180056.2497.220.camel@Naugrim.eriador.com>
+	 <7vvcvrxlol.fsf@alter.siamese.dyndns.org>	<4E08C89E.5020109@web.de>
+	 <7vvcvrw0vn.fsf@alter.siamese.dyndns.org>
+	 <BANLkTimsfR4LqDAci0Vr+m9uUE_W-7OSAw@mail.gmail.com>
+	 <4E0A08AE.8090407@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Alexei Sholik <alcosholik@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Jul 27 20:46:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qm8ZL-0000Fh-3Y
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 20:10:55 +0200
+	id 1Qm97y-0007TV-A4
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 20:46:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754681Ab1G0SKo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jul 2011 14:10:44 -0400
-Received: from mail-ey0-f171.google.com ([209.85.215.171]:36941 "EHLO
-	mail-ey0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752382Ab1G0SKn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jul 2011 14:10:43 -0400
-Received: by eye22 with SMTP id 22so2218727eye.2
-        for <git@vger.kernel.org>; Wed, 27 Jul 2011 11:10:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer;
-        bh=20KSvnnhuMmqFttIxrqiRseT3KQ1VlWw62CDh6eMHjs=;
-        b=id/yxJADdz1HPPCXnlU5dNpL7AYmsxmBEvbq3mYxJpD9/6dnUKRTRb3/1JEZ62VL4Y
-         8qyZ8bxylfzJPEcy86RlVjqQgZQf8m8tKnLKEf4T8E+RK/6fW4CmnG59Gmaf+oRHnFMk
-         EPFPF/a6ZDTfChk1wzf9xpRzYFgRqvdn7BGLc=
-Received: by 10.205.64.67 with SMTP id xh3mr29563bkb.282.1311790241932;
-        Wed, 27 Jul 2011 11:10:41 -0700 (PDT)
-Received: from kolya (h-185-240.a189.priv.bahnhof.se [85.24.185.240])
-        by mx.google.com with ESMTPS id d10sm35063bkt.60.2011.07.27.11.10.40
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 27 Jul 2011 11:10:41 -0700 (PDT)
-Received: from iveqy by kolya with local (Exim 4.72)
-	(envelope-from <iveqy@kolya>)
-	id 1Qm8ZH-0008S0-89; Wed, 27 Jul 2011 20:10:51 +0200
-X-Mailer: git-send-email 1.7.6.236.g7ad21
+	id S1753935Ab1G0Sqh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jul 2011 14:46:37 -0400
+Received: from mail7.surf-town.net ([212.97.132.47]:52895 "EHLO
+	mailgw18.surf-town.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753565Ab1G0Sqf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jul 2011 14:46:35 -0400
+Received: by mailgw18.surf-town.net (Postfix, from userid 65534)
+	id 4156E1A6F6; Wed, 27 Jul 2011 20:46:33 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mailgw18.surf-town.net (Postfix) with ESMTP id 255F11A58C;
+	Wed, 27 Jul 2011 20:46:33 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mailgw18.surf-town.net
+X-Spam-Flag: NO
+X-Spam-Score: -1.44
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.44 tagged_above=-999 required=7
+	tests=[ALL_TRUSTED=-1.44] autolearn=disabled
+Received: from mailgw18.surf-town.net ([127.0.0.1])
+	by localhost (mailgw18.surf-town.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 8lA0p347f5KV; Wed, 27 Jul 2011 20:46:26 +0200 (CEST)
+Received: from [10.0.0.17] (AStrasbourg-753-1-48-110.w92-141.abo.wanadoo.fr [92.141.183.110])
+	by mailgw18.surf-town.net (Postfix) with ESMTPSA id D716A1A5FF;
+	Wed, 27 Jul 2011 20:46:22 +0200 (CEST)
+In-Reply-To: <4E0A08AE.8090407@web.de>
+X-Mailer: Evolution 2.30.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177993>
 
-When working with submodules it is easy to end up in a state when submodule
-commits required by the superproject only is present locally. This is most
-often a human error (although technical errors such as connection failure
-can be a reason).
+	Hello,
 
-This patch-series tries to prevent pushing a superproject if not all (by
-the superproject used) submodules are pushed first. This will prevent the
-human error of forgetting to push submodules before pushing the
-superproject.
+sorry for the delay but here is a patch to include the feature.
+I work with it and it full fill my needs.
 
-The first iteration of this patch series can be found here:
-http://thread.gmane.org/gmane.comp.version-control.git/176328/focus=176327
+In hope that some one else will find it useful.
 
-The changes from the previous iteration are in patch 0003.
+	Henri GEIST
 
-Regarding the discussion of superprojects with submodules that have no
-remote tracking branches: A push will still be denied.  After some
-discussion we did not consider this a drawback since all submodules that
-are added/handled using the submodule script will have remote tracking
-branches. Even if the submodules are not pushable when the superproject
-records a commit that is reachable from a remote branch the push will not
-be denied.
 
-A new test is added in this iteration to show a bug that now is fixed.
+>From 09b7cda863c4443d11808f5b3f1a46ce05aa1e0d Mon Sep 17 00:00:00 2001
+From: Henri GEIST <henri@flying-robots.com>
+Date: Wed, 27 Jul 2011 20:16:13 +0200
+Subject: [PATCH] Enabeling (sub)modules linking out of repository.
 
-Fredrik Gustafsson (2):
-  push: Don't push a repository with unpushed submodules
-  push: Add the --no-recurse-submodules option
+Depending on there workflow somme people needs to link there repository
+to depend on external modules.
+Just like library could be shared by different programme and other
+libraries.
+It's a mean to track dependency between source code projects.
 
-Heiko Voigt (1):
-  test whether push checks for unpushed remotes in submodules
+In the current code it was not possible to add a gitlink to a repository
+outside of the main repository.
 
- Documentation/git-push.txt     |    6 ++
- builtin/push.c                 |    1 +
- submodule.c                    |  115 ++++++++++++++++++++++++++++++++++++++++
- submodule.h                    |    1 +
- t/t5531-deep-submodule-push.sh |   99 ++++++++++++++++++++++++++++++++++
- transport.c                    |   10 ++++
- transport.h                    |    1 +
- 7 files changed, 233 insertions(+), 0 deletions(-)
+This pach :
+  - Enable adding an external git directory.
+  - Still forbid to add anything else.
+  - Take care of prohibitting git to overright any data outside of the
+    current directory.
+  - Incrase some tests to validate the new feature.
 
+This way you can have :
+  - Project depending of multiple subprojects themselves depending on
+    one third rank common suproject without clash at compilation
+    linking.
+  - Confidance that all suproject use the same version of the third rank
+    subroject (git status will tell you.)
+  - All subproject and subsubproject could be esealy worked on there one
+    and synchronized after in the big project.
+
+Signed-off-by: Henri GEIST <henri@flying-robots.com>
+---
+ builtin/clean.c       |    6 ++++--
+ path.c                |   20 +++++++++++++++++---
+ read-cache.c          |   14 ++++++++++++++
+ setup.c               |   10 ++++++++--
+ t/t0060-path-utils.sh |   16 ++++++++--------
+ test-path-utils.c     |    6 ++++--
+ 6 files changed, 55 insertions(+), 17 deletions(-)
+
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 75697f7..e234e5d 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -149,8 +149,10 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 		if (S_ISDIR(st.st_mode)) {
+ 			strbuf_addstr(&directory, ent->name);
+ 			qname = quote_path_relative(directory.buf, directory.len, &buf, prefix);
+-			if (show_only && (remove_directories ||
+-			    (matches == MATCHED_EXACTLY))) {
++			if (!strncmp ("../", qname, 3)) {
++				die("'%s' is outside repository", qname);
++			} else if (show_only && (remove_directories ||
++				   (matches == MATCHED_EXACTLY))) {
+ 				printf(_("Would remove %s\n"), qname);
+ 			} else if (remove_directories ||
+ 				   (matches == MATCHED_EXACTLY)) {
+diff --git a/path.c b/path.c
+index 4d73cc9..daf1573 100644
+--- a/path.c
++++ b/path.c
+@@ -444,7 +444,8 @@ const char *relative_path(const char *abs, const char *base)
+  * - Removes "." components.
+  * - Removes ".." components, and the components the precede them.
+  * Returns failure (non-zero) if a ".." component appears as first path
+- * component anytime during the normalization. Otherwise, returns success (0).
++ * component but finish the normalization before.
++ * Otherwise, returns success (0).
+  *
+  * Note that this function is purely textual.  It does not follow symlinks,
+  * verify the existence of the path, or make any system calls.
+@@ -519,13 +520,26 @@ int normalize_path_copy(char *dst, const char *src)
+ 		 * go up one level.
+ 		 */
+ 		dst--;	/* go to trailing '/' */
+-		if (dst <= dst0)
+-			return -1;
++		if (dst <= dst0
++		    || (dst0 + 2 <= dst
++			&& dst[-1] == '.' && dst[-2] == '.'
++			&& (dst0 + 2 == dst || dst[-3] == '/'))) {
++			dst++;
++			*dst++ = '.';
++			*dst++ = '.';
++			*dst++ = '/';
++			continue;
++		}
+ 		/* Windows: dst[-1] cannot be backslash anymore */
+ 		while (dst0 < dst && dst[-1] != '/')
+ 			dst--;
+ 	}
+ 	*dst = '\0';
++	if (*dst0 == '/')
++		dst0++;
++	if (2 <= strlen (dst0)
++	    && dst0[0] == '.' && dst0[1] == '.' && dst0[2] == '/')
++		return -1;
+ 	return 0;
+ }
+ 
+diff --git a/read-cache.c b/read-cache.c
+index 46a9e60..7fb695a 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -753,6 +753,20 @@ static int verify_dotfile(const char *rest)
+ int verify_path(const char *path)
+ {
+ 	char c;
++	struct stat buf;
++
++	lstat (path, &buf);
++	if (buf.st_mode & S_IFDIR) {
++		for (;;) {
++			if (path[0] != '.')
++				break;
++			if (path[1] != '.')
++				break;
++			if (path[2] != '/')
++				break;
++			path += 3;
++		}
++	}
+ 
+ 	if (has_dos_drive_prefix(path))
+ 		return 0;
+diff --git a/setup.c b/setup.c
+index 5ea5502..ce7993e 100644
+--- a/setup.c
++++ b/setup.c
+@@ -8,6 +8,8 @@ char *prefix_path(const char *prefix, int len, const char *path)
+ {
+ 	const char *orig = path;
+ 	char *sanitized;
++	struct stat buf;
++
+ 	if (is_absolute_path(orig)) {
+ 		const char *temp = real_path(path);
+ 		sanitized = xmalloc(len + strlen(temp) + 1);
+@@ -18,8 +20,12 @@ char *prefix_path(const char *prefix, int len, const char *path)
+ 			memcpy(sanitized, prefix, len);
+ 		strcpy(sanitized + len, path);
+ 	}
+-	if (normalize_path_copy(sanitized, sanitized))
+-		goto error_out;
++	if (normalize_path_copy(sanitized, sanitized)) {
++		if (0 != lstat(sanitized, &buf))
++			goto error_out;
++		if (!(buf.st_mode & S_IFDIR))
++			goto error_out;
++	}
+ 	if (is_absolute_path(orig)) {
+ 		size_t root_len, len, total;
+ 		const char *work_tree = get_git_work_tree();
+diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+index 53cf1f8..b4b9b1f 100755
+--- a/t/t0060-path-utils.sh
++++ b/t/t0060-path-utils.sh
+@@ -48,12 +48,12 @@ norm_path "" ""
+ norm_path . ""
+ norm_path ./ ""
+ norm_path ./. ""
+-norm_path ./.. ++failed++
+-norm_path ../. ++failed++
+-norm_path ./../.// ++failed++
++norm_path ./.. "../ ++failed++"
++norm_path ../. "../ ++failed++"
++norm_path ./../.// "../ ++failed++"
+ norm_path dir/.. ""
+ norm_path dir/sub/../.. ""
+-norm_path dir/sub/../../.. ++failed++
++norm_path dir/sub/../../.. "../ ++failed++"
+ norm_path dir dir
+ norm_path dir// dir/
+ norm_path ./dir dir
+@@ -73,12 +73,12 @@ norm_path // / POSIX
+ norm_path /// / POSIX
+ norm_path /. / POSIX
+ norm_path /./ / POSIX
+-norm_path /./.. ++failed++ POSIX
+-norm_path /../. ++failed++ POSIX
+-norm_path /./../.// ++failed++ POSIX
++norm_path /./.. "/../ ++failed++" POSIX
++norm_path /../. "/../ ++failed++" POSIX
++norm_path /./../.// "/../ ++failed++" POSIX
+ norm_path /dir/.. / POSIX
+ norm_path /dir/sub/../.. / POSIX
+-norm_path /dir/sub/../../.. ++failed++ POSIX
++norm_path /dir/sub/../../.. "/../ ++failed++" POSIX
+ norm_path /dir /dir POSIX
+ norm_path /dir// /dir/ POSIX
+ norm_path /./dir /dir POSIX
+diff --git a/test-path-utils.c b/test-path-utils.c
+index e767159..ba6c8ac 100644
+--- a/test-path-utils.c
++++ b/test-path-utils.c
+@@ -5,8 +5,10 @@ int main(int argc, char **argv)
+ 	if (argc == 3 && !strcmp(argv[1], "normalize_path_copy")) {
+ 		char *buf = xmalloc(PATH_MAX + 1);
+ 		int rv = normalize_path_copy(buf, argv[2]);
+-		if (rv)
+-			buf = "++failed++";
++		if (rv) {
++			fputs(buf, stdout);
++			buf = " ++failed++";
++		}
+ 		puts(buf);
+ 		return 0;
+ 	}
 -- 
-1.7.6.236.g7ad21
+1.7.2.5
