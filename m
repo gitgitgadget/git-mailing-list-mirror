@@ -1,83 +1,105 @@
-From: Reuben Thomas <rrt@sc3d.org>
-Subject: Re: [RFC/PATCH] commit: allow partial commits with relative paths
-Date: Wed, 27 Jul 2011 11:00:51 +0100
-Message-ID: <CAOnWdog-FqOJJ7nFFW-Sj9U5obVWgVdww5yFUy5uWJW8fw4svA@mail.gmail.com>
-References: <CAOnWdohKfwEOMx=wr_PKiW+ucYBK2ZWykm_7dqr7hy4xGRM02A@mail.gmail.com>
-	<19b908142567fcfafe4da3d0fd60b134d30c613a.1311579663.git.git@drmicha.warpmail.net>
-	<7v8vrmrxok.fsf@alter.siamese.dyndns.org>
-	<4E2FCAC4.7020408@drmicha.warpmail.net>
-	<CAOnWdojgxZNs4qyEG55URScqOGb6k5e6Mh_B3By6Lj6SpN9L9g@mail.gmail.com>
-	<4E2FE024.2030204@drmicha.warpmail.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 14/18] revert: Introduce --reset to remove sequencer state
+Date: Wed, 27 Jul 2011 15:42:24 +0530
+Message-ID: <CALkWK0k7SvjJ8duNscnwjn4JOjSDqfHN1qH9rnoz5w8TjHgKgA@mail.gmail.com>
+References: <1311736755-24205-1-git-send-email-artagnon@gmail.com>
+ <1311736755-24205-15-git-send-email-artagnon@gmail.com> <20110727051115.GI18470@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Jul 27 12:00:59 2011
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 27 12:12:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qm0vD-0001KZ-6c
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 12:00:59 +0200
+	id 1Qm16g-0006Ng-Mq
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 12:12:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754217Ab1G0KAy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Jul 2011 06:00:54 -0400
-Received: from exprod7og114.obsmtp.com ([64.18.2.215]:37825 "HELO
-	exprod7og114.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752252Ab1G0KAx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Jul 2011 06:00:53 -0400
-Received: from mail-yi0-f45.google.com ([209.85.218.45]) (using TLSv1) by exprod7ob114.postini.com ([64.18.6.12]) with SMTP
-	ID DSNKTi/h1PJE4SXRSnVoJThVecDfSzHLekBL@postini.com; Wed, 27 Jul 2011 03:00:53 PDT
-Received: by yia25 with SMTP id 25so1095726yia.4
-        for <git@vger.kernel.org>; Wed, 27 Jul 2011 03:00:52 -0700 (PDT)
-Received: by 10.142.144.12 with SMTP id r12mr3486183wfd.74.1311760851843; Wed,
- 27 Jul 2011 03:00:51 -0700 (PDT)
-Received: by 10.142.164.13 with HTTP; Wed, 27 Jul 2011 03:00:51 -0700 (PDT)
-In-Reply-To: <4E2FE024.2030204@drmicha.warpmail.net>
+	id S1754108Ab1G0KMs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Jul 2011 06:12:48 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:53190 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754039Ab1G0KMq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Jul 2011 06:12:46 -0400
+Received: by wwe5 with SMTP id 5so1247378wwe.1
+        for <git@vger.kernel.org>; Wed, 27 Jul 2011 03:12:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=N01xQyT7oh20qlkLkZzcoHqYy9Dp2h4ZCgWpxrH87Xg=;
+        b=BueZ0WxysWK7ud+1JNaUafY4yaZpcbO/kO4O7iYi6sWrXLFQ4AJs6BMlg85/eypiOR
+         0CrDZy/VS/30u0eKkoLzZyaaeJ3tiz9j/Q65J9d+j+GdzQFKaF9t5O6vYnGXYWvvM+ix
+         et/ms8Mgic3/tZRERSxtTG1YGMnZa6LC4UHLs=
+Received: by 10.216.155.134 with SMTP id j6mr6217643wek.81.1311761565360; Wed,
+ 27 Jul 2011 03:12:45 -0700 (PDT)
+Received: by 10.216.70.16 with HTTP; Wed, 27 Jul 2011 03:12:24 -0700 (PDT)
+In-Reply-To: <20110727051115.GI18470@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177960>
 
-On 27 July 2011 10:53, Michael J Gruber <git@drmicha.warpmail.net> wrot=
-e:
-> Reuben Thomas venit, vidit, dixit 27.07.2011 11:45:
->>
->> $ cat ~/reportbug-git
->> $ git rm -f ../INSTALL
->> rm 'INSTALL'
->> $ git ci -m "INSTALL is now provided by gnulib." ../INSTALL
->> error: pathspec 'ALL' did not match any file(s) known to git.
->> $ cd ..
->> $ git ci -m "INSTALL is now provided by gnulib." INSTALL
->> [master 0895314] INSTALL is now provided by gnulib.
->> =A01 files changed, 0 insertions(+), 1 deletions(-)
->> =A0delete mode 120000 INSTALL
->>
->> The thing I didn't understand is that I tried to check in ../INSTALL=
-,
->> but git complained about pathspec 'ALL'.
+Hi,
+
+Jonathan Nieder writes:
+> Ramkumar Ramachandra wrote:
+>> --- /dev/null
+>> +++ b/Documentation/sequencer.txt
+>> @@ -0,0 +1,4 @@
+>> +--reset::
+>> + =C2=A0 =C2=A0 Forget about the current operation in progress. =C2=A0=
+Can be used
+>> + =C2=A0 =C2=A0 to clear the sequencer state after a failed cherry-p=
+ick or
+>> + =C2=A0 =C2=A0 revert.
 >
-> Well, you didn't say so, did you?
+> Probably worth mentioning that the index, HEAD, and worktree are left
+> alone.
+
+=46ixed, thanks.
+
+>> +++ b/builtin/revert.c
+> [...]
+>> @@ -886,17 +906,22 @@ static int pick_revisions(struct replay_opts *=
+opts)
+> [...]
+>> + =C2=A0 =C2=A0 if (opts->subcommand =3D=3D REPLAY_RESET) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 remove_sequencer_state(1=
+);
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;
+>> + =C2=A0 =C2=A0 } else {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Start a new cherry-pi=
+ck/ revert sequence */
 >
-> Also, we don't know what subdir you were doing this in, but I bet it =
-has
-> a 7-character name...
+> Can un-indent by dropping the "else":
 
-Its name was "src".
+Actually this was intentional; if we un-indent this now, there'll be a
+diff indenting it when '--reset' and '--continue' are introduced which
+turns out to be especially ugly :)
 
-> I can't reproduce that name truncation with a current git, btw.
+>> --- a/t/t3510-cherry-pick-sequence.sh
+>> +++ b/t/t3510-cherry-pick-sequence.sh
+>> @@ -37,7 +37,7 @@ test_expect_success 'cherry-pick persists data on =
+failure' '
+>> =C2=A0 =C2=A0 =C2=A0 test_path_is_file .git/sequencer/head &&
+>> =C2=A0 =C2=A0 =C2=A0 test_path_is_file .git/sequencer/todo &&
+>> =C2=A0 =C2=A0 =C2=A0 test_path_is_file .git/sequencer/opts &&
+>> - =C2=A0 =C2=A0 rm -rf .git/sequencer
+>> + =C2=A0 =C2=A0 git cherry-pick --reset
+>> =C2=A0'
+>
+> This is not about this patch, but ideally the cleanup would come at
+> the beginning of the next test, so if one test fails it does not take
+> down all the tests that come after it.
 
-Thanks for testing that.
+Good point.  Fixed all, thanks.
 
-> In any case, I still think git should allow partial commits with stag=
-ed
-> deletions from within a subdir, which is what my patch is about.
-
-Absolutely, this looks useful.
-
---=20
-http://rrt.sc3d.org
+-- Ram
