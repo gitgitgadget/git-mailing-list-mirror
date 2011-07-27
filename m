@@ -1,87 +1,79 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 5/5] add--interactive: add option to autosplit hunks
-Date: Wed, 27 Jul 2011 02:06:01 -0600
-Message-ID: <20110727080601.GE14002@sigill.intra.peff.net>
-References: <20110727080303.GA8105@sigill.intra.peff.net>
+Subject: Re: feature request: git add--interactive --patch on regex-matched
+ hunks only
+Date: Wed, 27 Jul 2011 02:10:34 -0600
+Message-ID: <20110727081034.GB8105@sigill.intra.peff.net>
+References: <CACsJy8B1B25DZ1yrzHq69vwgzQyM2ouTXCHb8oPRpb_cAX+JZQ@mail.gmail.com>
+ <20110725215553.GA23145@sigill.intra.peff.net>
+ <CACsJy8Db_sYFsQ2GcbcumJJYrXZDkKmuuULSM0_Z=HWvbYh8Bg@mail.gmail.com>
+ <20110726051411.GB25046@sigill.intra.peff.net>
+ <CACsJy8Ay1wPXAx61_rGymHDJ=YGywAy=9epiXRfJ9e68np8x6g@mail.gmail.com>
+ <20110726060903.GA29486@sigill.intra.peff.net>
+ <CACsJy8Birqg2Ldp1Mt4NWOq1aT0oigTcFA8S=RWcK5y+zstwDA@mail.gmail.com>
+ <CACsJy8C822Fvwav4Wpw4e-12ZY20XM1s2v4KymZkaDYLxkMHvw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 27 10:06:11 2011
+X-From: git-owner@vger.kernel.org Wed Jul 27 10:10:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qlz85-0005Ve-Mh
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 10:06:10 +0200
+	id 1QlzCV-0006o8-Qj
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 10:10:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753901Ab1G0IGF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jul 2011 04:06:05 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:42553
+	id S1752627Ab1G0IKi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jul 2011 04:10:38 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34616
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752159Ab1G0IGE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jul 2011 04:06:04 -0400
-Received: (qmail 28470 invoked by uid 107); 27 Jul 2011 08:06:34 -0000
+	id S1752159Ab1G0IKh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jul 2011 04:10:37 -0400
+Received: (qmail 28570 invoked by uid 107); 27 Jul 2011 08:11:07 -0000
 Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 27 Jul 2011 04:06:34 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Jul 2011 02:06:01 -0600
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 27 Jul 2011 04:11:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Jul 2011 02:10:34 -0600
 Content-Disposition: inline
-In-Reply-To: <20110727080303.GA8105@sigill.intra.peff.net>
+In-Reply-To: <CACsJy8C822Fvwav4Wpw4e-12ZY20XM1s2v4KymZkaDYLxkMHvw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177944>
 
-It is sometimes useful to see changes in their smallest
-possible form, rather than complete hunks with overlapping
-context. You can do this manually, of course, with the
-'s'plit hunk command. But when filtering hunks, you may want
-to pre-split to give your filtering a finer granularity.
+On Tue, Jul 26, 2011 at 08:03:01PM +0700, Nguyen Thai Ngoc Duy wrote:
 
-This patch adds only the perl infrastructure; to expose this
-to the user, the various callers of add--interactive need to
-pass the new option through to the perl script.
+> It would be even more cool if --hunks (or whatever the name will be)
+> could work without -p. I mean, if "git diff" supports it, then I can
+> fine tune my regex to meet a selection of hunks I want, and verify it
+> really is what I want. Then "git add --hunks=magic" and voila! (The
+> "git add --hunks" without -p surely can be workaround by adding "-p",
+> then accept all hunks).
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- git-add--interactive.perl |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
+Yeah, doing "yes | git add -p --hunks=foo" would probably do what you
+want. But you don't really have a good way of verifying what it will add
+(you could check after the fact what's left in "git diff", or what's now
+in "git diff --cached", of course).
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 917b2a9..41c7c6f 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -88,6 +88,7 @@ my $patch_mode;
- my $patch_mode_revision;
- my @patch_mode_hunk_filter;
- my $patch_mode_negate_filter;
-+my $patch_mode_autosplit;
- 
- sub apply_patch;
- sub apply_patch_for_checkout_commit;
-@@ -1291,6 +1292,10 @@ sub patch_update_file {
- 	my $path = shift;
- 	my ($head, @hunk) = parse_diff($path);
- 
-+	if ($patch_mode_autosplit) {
-+		@hunk = map { split_hunk($_->{TEXT}, $_->{DISPLAY}) } @hunk;
-+	}
-+
- 	if (@patch_mode_hunk_filter) {
- 		@hunk = grep { want_hunk($_) } @hunk;
- 		return unless @hunk;
-@@ -1594,6 +1599,9 @@ sub process_args {
- 		elsif ($ARGV[0] eq '--negate-hunk-filter') {
- 			$patch_mode_negate_filter = 1;
- 		}
-+		elsif ($ARGV[0] eq '--split-hunks') {
-+			$patch_mode_autosplit = 1;
-+		}
- 		else {
- 			last;
- 		}
--- 
-1.7.5.4.31.ge4d5e
+> And if diff machinery learns this, we would have "git log --hunks" too.
+> 
+> OK I'm asking too much..
+
+Probably. :)
+
+I'm not sure how useful "log --hunks" would be. The changes you commit
+don't tend to be that big (well, not if you're doing it right). It seems
+much more likely to have the case you brought up, which is that some
+file has a bunch of boring boilerplate that doesn't need to be
+changed, and you need to pick out the interesting changes from the
+boilerplate changes.
+
+I suppose if somebody committed all of the boilerplate changes (like .po
+comment changes), then you would want to be able to pick them apart. But
+that just seems like the wrong thing (i.e., if those comments really are
+uninteresting, they should not be committed). But I don't work with .po
+files at all, so maybe there is a good reason to commit them.
+
+-Peff
