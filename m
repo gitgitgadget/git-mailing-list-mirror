@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 09/18] revert: Separate cmdline parsing from functional code
-Date: Wed, 27 Jul 2011 08:49:06 +0530
-Message-ID: <1311736755-24205-10-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 13/18] revert: Make pick_commits functionally act on a commit list
+Date: Wed, 27 Jul 2011 08:49:10 +0530
+Message-ID: <1311736755-24205-14-git-send-email-artagnon@gmail.com>
 References: <1311736755-24205-1-git-send-email-artagnon@gmail.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
@@ -15,107 +15,151 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QluiW-00068x-LV
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 05:23:28 +0200
+	id 1QluiY-00068x-MX
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 05:23:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754084Ab1G0DXE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jul 2011 23:23:04 -0400
+	id S1754121Ab1G0DXV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jul 2011 23:23:21 -0400
 Received: from mail-pz0-f42.google.com ([209.85.210.42]:35904 "EHLO
 	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753954Ab1G0DXD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2011 23:23:03 -0400
+	with ESMTP id S1753524Ab1G0DXU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2011 23:23:20 -0400
 Received: by mail-pz0-f42.google.com with SMTP id 37so1938359pzk.1
-        for <git@vger.kernel.org>; Tue, 26 Jul 2011 20:23:03 -0700 (PDT)
+        for <git@vger.kernel.org>; Tue, 26 Jul 2011 20:23:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=+4wLW1tH2n6XL8Et1wAvGAVJroWCCVprIMafXEzC7sg=;
-        b=Q49fs2DP77o69ATo2DEk/s7MzQ5BmTBxsJfCgkp63kGtV9oHHXojdEuzw8WN5zZq/U
-         vrg6OkGM3JyTYqUKfeu0U3cURMrix3LLLIM0PRL2z0hFV8/PWEqrErjGlXe03e26AVVL
-         +rgAHSsGd1IGeenwe6EQZFw9WgqFbif4Mc72M=
-Received: by 10.68.36.225 with SMTP id t1mr11057919pbj.8.1311736983530;
-        Tue, 26 Jul 2011 20:23:03 -0700 (PDT)
+        bh=3rYW8Cr7kZxdLYDTSc0iJbcDOOqlvtZz5A9aMqzrRVI=;
+        b=meQYy3VsyTcp7b5KYD+3XKjvbYa6qHQFF9hrZ46CcqELVUOpra6Z9PohcwWVqaQKpf
+         2mZb/N21VOkrMgN7UwgOWBjaKE0LqTOk89njfFBLABKOWfAFVAct0UVjcS8DD5m19a3G
+         mB3oV6xZ25wGdboX16DF55S5jC8XPNi7m5FeU=
+Received: by 10.68.36.225 with SMTP id t1mr11058256pbj.8.1311736999900;
+        Tue, 26 Jul 2011 20:23:19 -0700 (PDT)
 Received: from localhost.localdomain ([203.110.240.41])
-        by mx.google.com with ESMTPS id p7sm1210706pbn.65.2011.07.26.20.22.59
+        by mx.google.com with ESMTPS id p7sm1210706pbn.65.2011.07.26.20.23.15
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 26 Jul 2011 20:23:02 -0700 (PDT)
+        Tue, 26 Jul 2011 20:23:18 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4.rc1.7.g2cf08.dirty
 In-Reply-To: <1311736755-24205-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177918>
 
-Currently, revert_or_cherry_pick sets up a default git config, parses
-command-line arguments, before preparing to pick commits.  This makes
-for a bad API as the central worry of callers is to assert whether or
-not a conflict occured while cherry picking.  The current API is like:
+Apart from its central objective of calling into the picking
+mechanism, pick_commits creates a sequencer directory, prepares a todo
+list, and even acts upon the "--reset" subcommand.  This makes for a
+bad API since the central worry of callers is to figure out whether or
+not any conflicts were encountered during the cherry picking.  The
+current API is like:
 
-if (revert_or_cherry_pick(argc, argv, opts) < 0)
+if (pick_commits(opts) < 0)
    print "Something failed, we're not sure what"
 
-Simplify and rename revert_or_cherry_pick to pick_commits so that it
-only has the responsibility of setting up the revision walker and
-picking commits in a loop.  Transfer the remaining work to its
-callers.  Now, the API is simplified as:
+So, change pick_commits so that it's only responsible for picking
+commits in a loop and reporting any errors, leaving the rest to a new
+function called pick_revisions.  Consequently, the API of pick_commits
+becomes much clearer:
 
-if (parse_args(argc, argv, opts) < 0)
-   print "Can't parse arguments"
-if (pick_commits(opts) < 0)
-   print "Error encountered in picking machinery"
+act_on_subcommand(opts->subcommand);
+todo_list = prepare_todo_list();
+if (pick_commits(todo_list, opts) < 0)
+   print "Error encountered while picking commits"
 
-Later in the series, pick_commits will also serve as the starting
-point for continuing a cherry-pick or revert.
+Now, callers can easily call-in to the cherry-picking machinery by
+constructing an arbitrary todo list along with some options.
 
-Inspired-by: Christian Couder <chriscool@tuxfamily.org>
-Helped-by: Jonathan Nieder <jrnieder@gmail.com>
+Helped-by: Jonathan Nieder <jrnider@gmail.com>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- builtin/revert.c |   14 +++++++-------
- 1 files changed, 7 insertions(+), 7 deletions(-)
+ builtin/revert.c |   46 ++++++++++++++++++++++++++++++----------------
+ 1 files changed, 30 insertions(+), 16 deletions(-)
 
 diff --git a/builtin/revert.c b/builtin/revert.c
-index 58e0dd5..ab7f0bb 100644
+index b02d3d2..46b1371 100644
 --- a/builtin/revert.c
 +++ b/builtin/revert.c
-@@ -558,16 +558,12 @@ static void read_and_refresh_cache(struct replay_opts *opts)
- 	rollback_lock_file(&index_lock);
+@@ -851,11 +851,9 @@ static void save_opts(struct replay_opts *opts)
+ 	strbuf_release(&buf);
  }
  
--static int revert_or_cherry_pick(int argc, const char **argv,
--				struct replay_opts *opts)
-+static int pick_commits(struct replay_opts *opts)
+-static int pick_commits(struct replay_opts *opts)
++static int pick_commits(struct commit_list *todo_list, struct replay_opts *opts)
  {
- 	struct rev_info revs;
- 	struct commit *commit;
+-	struct commit_list *todo_list = NULL;
+ 	struct strbuf buf = STRBUF_INIT;
+-	unsigned char sha1[20];
+ 	struct commit_list *cur;
+ 	int res;
  
--	git_config(git_default_config, NULL);
- 	setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
--	parse_args(argc, argv, opts);
+@@ -865,17 +863,6 @@ static int pick_commits(struct replay_opts *opts)
+ 				opts->record_origin || opts->edit));
+ 	read_and_refresh_cache(opts);
+ 
+-	walk_revs_populate_todo(&todo_list, opts);
+-	create_seq_dir();
+-	if (get_sha1("HEAD", sha1)) {
+-		if (opts->action == REVERT)
+-			return error(_("Can't revert as initial commit"));
+-		return error(_("Can't cherry-pick into empty head"));
+-	} else
+-		save_head(sha1_to_hex(sha1));
+-	save_opts(opts);
+-	save_todo(todo_list, opts);
 -
- 	if (opts->allow_ff) {
- 		if (opts->signoff)
- 			die(_("cherry-pick --ff cannot be used with --signoff"));
-@@ -601,7 +597,9 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
- 	if (isatty(0))
- 		opts.edit = 1;
+ 	for (cur = todo_list; cur; cur = cur->next) {
+ 		save_todo(cur, opts);
+ 		res = do_pick_commit(cur->item, opts);
+@@ -892,6 +879,27 @@ static int pick_commits(struct replay_opts *opts)
+ 	return 0;
+ }
+ 
++static int pick_revisions(struct replay_opts *opts)
++{
++	struct commit_list *todo_list = NULL;
++	unsigned char sha1[20];
++
++	read_and_refresh_cache(opts);
++
++	walk_revs_populate_todo(&todo_list, opts);
++	create_seq_dir();
++	if (get_sha1("HEAD", sha1)) {
++		if (opts->action == REVERT)
++			return error(_("Can't revert as initial commit"));
++		return error(_("Can't cherry-pick into empty head"));
++	} else
++		save_head(sha1_to_hex(sha1));
++	save_opts(opts);
++	save_todo(todo_list, opts);
++
++	return pick_commits(todo_list, opts);
++}
++
+ int cmd_revert(int argc, const char **argv, const char *prefix)
+ {
+ 	int res;
+@@ -903,7 +911,13 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
  	opts.action = REVERT;
--	res = revert_or_cherry_pick(argc, argv, &opts);
-+	git_config(git_default_config, NULL);
-+	parse_args(argc, argv, &opts);
-+	res = pick_commits(&opts);
+ 	git_config(git_default_config, NULL);
+ 	parse_args(argc, argv, &opts);
+-	res = pick_commits(&opts);
++
++	/*
++	 * Decide what to do depending on the arguments; a fresh
++	 * cherry-pick should be handled differently from an existing
++	 * one that is being continued
++	 */
++	res = pick_revisions(&opts);
  	if (res < 0)
  		die(_("revert failed"));
  	return res;
-@@ -614,7 +612,9 @@ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
- 
- 	memset(&opts, 0, sizeof(struct replay_opts));
+@@ -918,7 +932,7 @@ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
  	opts.action = CHERRY_PICK;
--	res = revert_or_cherry_pick(argc, argv, &opts);
-+	git_config(git_default_config, NULL);
-+	parse_args(argc, argv, &opts);
-+	res = pick_commits(&opts);
+ 	git_config(git_default_config, NULL);
+ 	parse_args(argc, argv, &opts);
+-	res = pick_commits(&opts);
++	res = pick_revisions(&opts);
  	if (res < 0)
  		die(_("cherry-pick failed"));
  	return res;
