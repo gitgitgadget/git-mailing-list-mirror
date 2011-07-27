@@ -1,97 +1,92 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 12/18] revert: Save command-line options for continuing operation
-Date: Wed, 27 Jul 2011 15:21:43 +0530
-Message-ID: <CALkWK0=5drVxLe4SAVLem3cpWCB=Eg3dTFQGhLKFD+Z77RHohA@mail.gmail.com>
-References: <1311736755-24205-1-git-send-email-artagnon@gmail.com>
- <1311736755-24205-13-git-send-email-artagnon@gmail.com> <20110727050515.GH18470@elie>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC/PATCH] commit: allow partial commits with relative paths
+Date: Wed, 27 Jul 2011 11:53:40 +0200
+Message-ID: <4E2FE024.2030204@drmicha.warpmail.net>
+References: <CAOnWdohKfwEOMx=wr_PKiW+ucYBK2ZWykm_7dqr7hy4xGRM02A@mail.gmail.com> <19b908142567fcfafe4da3d0fd60b134d30c613a.1311579663.git.git@drmicha.warpmail.net> <7v8vrmrxok.fsf@alter.siamese.dyndns.org> <4E2FCAC4.7020408@drmicha.warpmail.net> <CAOnWdojgxZNs4qyEG55URScqOGb6k5e6Mh_B3By6Lj6SpN9L9g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 27 11:52:18 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Reuben Thomas <rrt@sc3d.org>
+X-From: git-owner@vger.kernel.org Wed Jul 27 11:53:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qm0mm-0006Uu-5q
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 11:52:16 +0200
+	id 1Qm0oG-00079v-Ty
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 11:53:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753786Ab1G0JwG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Jul 2011 05:52:06 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:33122 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751231Ab1G0JwE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Jul 2011 05:52:04 -0400
-Received: by wwe5 with SMTP id 5so1229762wwe.1
-        for <git@vger.kernel.org>; Wed, 27 Jul 2011 02:52:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=nP0yxqCiCb4NAjlhiLodmd50FuIZKnz4rkY3T7lPHHY=;
-        b=eDJ1ar8ylEJSqgaJiWOrs0XkvwpxORuEpsK6kmfF5UzBd775XDsCAW6895QbWh2+pS
-         7rEptvUhNQEiESSBbKBMqEsj4aK33RaMPkVklUUMAHPJNH+6oVW641UtxuKpNbJN5sZK
-         RMOhp2/wiFdFA0EXK1wE4VmxguVlTv8z+kf24=
-Received: by 10.216.143.66 with SMTP id k44mr2712067wej.81.1311760323114; Wed,
- 27 Jul 2011 02:52:03 -0700 (PDT)
-Received: by 10.216.70.16 with HTTP; Wed, 27 Jul 2011 02:51:43 -0700 (PDT)
-In-Reply-To: <20110727050515.GH18470@elie>
+	id S1752337Ab1G0Jxp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jul 2011 05:53:45 -0400
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:54905 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750828Ab1G0Jxn (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Jul 2011 05:53:43 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 0F7F320A77;
+	Wed, 27 Jul 2011 05:53:43 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute3.internal (MEProxy); Wed, 27 Jul 2011 05:53:43 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=3Ky1LWvOhi82Z6pdpEnevg
+	h2M2s=; b=m68N3MAw4geVIe1/SAai9ok5UOQygAdHmCa0moYhF41a6cqMWfSUYX
+	pbXOj/cjtrY6+DWNR23KhuOuQnG9/p77j0GiiIKX4h2mvpMOtsctF3tUKdy7U1c6
+	tfce4RPw9Mqb2k1gKCA8L4JMBpt+1cEaTOChadrliVlyO8hDjQSQ4=
+X-Sasl-enc: wXWqozwmGmPtzFpFLP7n6u6PT2FwJj5dovLLtRbc8rmp 1311760422
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 5EB3B412476;
+	Wed, 27 Jul 2011 05:53:42 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110707 Thunderbird/5.0
+In-Reply-To: <CAOnWdojgxZNs4qyEG55URScqOGb6k5e6Mh_B3By6Lj6SpN9L9g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177957>
 
-Hi again,
-
-Jonathan Nieder writes:
-> Ramkumar Ramachandra wrote:
->> In the same spirit as ".git/sequencer/head" and ".git/sequencer/todo=
-",
->> introduce ".git/sequencer/opts" to persist the replay_opts structure
->> for continuing after a conflict resolution. =C2=A0Use the gitconfig =
-format
->> for this file so that it looks like:
+Reuben Thomas venit, vidit, dixit 27.07.2011 11:45:
+> On 27 July 2011 09:22, Michael J Gruber <git@drmicha.warpmail.net> wrote:
+>> Junio C Hamano venit, vidit, dixit 25.07.2011 21:02:
+>>> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>>>
+>>> Also what is the "same
+>>> problem"?
 >>
->> [core]
->> =C2=A0 =C2=A0 =C2=A0 signoff =3D true
->> =C2=A0 =C2=A0 =C2=A0 record-origin =3D true
->> =C2=A0 =C2=A0 =C2=A0 mainline =3D 1
->> =C2=A0 =C2=A0 =C2=A0 strategy =3D recursive
->> =C2=A0 =C2=A0 =C2=A0 strategy-option =3D patience
->> =C2=A0 =C2=A0 =C2=A0 strategy-option =3D ours
->
-> Maybe "[options]" instead of "[core]" would be more self-explanatory.
+>> The one reported by the OP for commit:
+>>
+>> git rm ../a
+>> git commit -m "blurb" ../a
+>> error: pathspec '../a' did not match any file(s) known to git.
+> 
+> Actually, this is not what I reported. This explains why I couldn't
+> quite understand the direction this thread took. Look again:
+> 
+> $ cat ~/reportbug-git
+> $ git rm -f ../INSTALL
+> rm 'INSTALL'
+> $ git ci -m "INSTALL is now provided by gnulib." ../INSTALL
+> error: pathspec 'ALL' did not match any file(s) known to git.
+> $ cd ..
+> $ git ci -m "INSTALL is now provided by gnulib." INSTALL
+> [master 0895314] INSTALL is now provided by gnulib.
+>  1 files changed, 0 insertions(+), 1 deletions(-)
+>  delete mode 120000 INSTALL
+> 
+> The thing I didn't understand is that I tried to check in ../INSTALL,
+> but git complained about pathspec 'ALL'.
 
-=46ixed, thanks.
+Well, you didn't say so, did you?
 
-> If this is meant to be closely analagous to the gitconfig file, then
-> variable names should not contain dashes.
+Also, we don't know what subdir you were doing this in, but I bet it has
+a 7-character name...
 
-Huh?  Quoting Documentation/config.txt:
+I can't reproduce that name truncation with a current git, btw. (So I
+won't bother bisecting where we removed a spurious offset by "prefix".)
 
-All the other lines (and the remainder of the line after the section
-header) are recognized as setting variables, in the form
-'name =3D value'.  If there is no equal sign on the line, the entire li=
-ne
-is taken as 'name' and the variable is recognized as boolean "true".
-The variable names are case-insensitive and only alphanumeric
-characters and `-` are allowed.  There can be more than one value
-for a given variable; we say then that variable is multivalued.
+In any case, I still think git should allow partial commits with staged
+deletions from within a subdir, which is what my patch is about.
 
-Btw, the multi-value thing is something I wasn't aware about earlier;
-that's what led to the " | " ugliness in my earlier patch.
-
-> It would be nice if some
-> day the config parser could learn to treat dashes as insignificant,
-> just like it already treats case distinctions as insignificant.
-
-Is the documentation out of date? I can't find any special handling
-for `-` in the code either.  What are you talking about?
-
--- Ram
+Michael
