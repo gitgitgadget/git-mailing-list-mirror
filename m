@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 15/18] reset: Make reset remove the sequencer state
-Date: Wed, 27 Jul 2011 08:49:12 +0530
-Message-ID: <1311736755-24205-16-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 09/18] revert: Separate cmdline parsing from functional code
+Date: Wed, 27 Jul 2011 08:49:06 +0530
+Message-ID: <1311736755-24205-10-git-send-email-artagnon@gmail.com>
 References: <1311736755-24205-1-git-send-email-artagnon@gmail.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
@@ -15,127 +15,109 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QluiZ-00068x-N1
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 05:23:32 +0200
+	id 1QluiW-00068x-LV
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Jul 2011 05:23:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754135Ab1G0DX3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jul 2011 23:23:29 -0400
+	id S1754084Ab1G0DXE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jul 2011 23:23:04 -0400
 Received: from mail-pz0-f42.google.com ([209.85.210.42]:35904 "EHLO
 	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753524Ab1G0DX2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2011 23:23:28 -0400
+	with ESMTP id S1753954Ab1G0DXD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2011 23:23:03 -0400
 Received: by mail-pz0-f42.google.com with SMTP id 37so1938359pzk.1
-        for <git@vger.kernel.org>; Tue, 26 Jul 2011 20:23:28 -0700 (PDT)
+        for <git@vger.kernel.org>; Tue, 26 Jul 2011 20:23:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=y/W+ZMzPsf0vgw5ToB83XArHKsPh3z7B/n6CKyLedb0=;
-        b=aPwKqksAvpFEcGhqEUGmoyx1swHoOsTlXvjoNhAbDhUtdZBsk2odUBjJ24jbGHVfzW
-         P5ASiareYPIggHBBDUtLNCKeAu+R5ABlaB/lpIUZsQoQuvNVEGk9XEwU6ppwunTYeHRA
-         E6W4O5KnUGo6r2KUkkYLlgtd4urhQNvXhsG1Y=
-Received: by 10.68.60.229 with SMTP id k5mr1242487pbr.365.1311737007717;
-        Tue, 26 Jul 2011 20:23:27 -0700 (PDT)
+        bh=+4wLW1tH2n6XL8Et1wAvGAVJroWCCVprIMafXEzC7sg=;
+        b=Q49fs2DP77o69ATo2DEk/s7MzQ5BmTBxsJfCgkp63kGtV9oHHXojdEuzw8WN5zZq/U
+         vrg6OkGM3JyTYqUKfeu0U3cURMrix3LLLIM0PRL2z0hFV8/PWEqrErjGlXe03e26AVVL
+         +rgAHSsGd1IGeenwe6EQZFw9WgqFbif4Mc72M=
+Received: by 10.68.36.225 with SMTP id t1mr11057919pbj.8.1311736983530;
+        Tue, 26 Jul 2011 20:23:03 -0700 (PDT)
 Received: from localhost.localdomain ([203.110.240.41])
-        by mx.google.com with ESMTPS id p7sm1210706pbn.65.2011.07.26.20.23.24
+        by mx.google.com with ESMTPS id p7sm1210706pbn.65.2011.07.26.20.22.59
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 26 Jul 2011 20:23:26 -0700 (PDT)
+        Tue, 26 Jul 2011 20:23:02 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4.rc1.7.g2cf08.dirty
 In-Reply-To: <1311736755-24205-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/177917>
 
-Years of muscle memory have trained users to use "git reset --hard" to
-remove the branch state after any sort operation.  Make it also remove
-the sequencer state to facilitate this established workflow:
+Currently, revert_or_cherry_pick sets up a default git config, parses
+command-line arguments, before preparing to pick commits.  This makes
+for a bad API as the central worry of callers is to assert whether or
+not a conflict occured while cherry picking.  The current API is like:
 
-$ git cherry-pick foo..bar
-... conflict encountered ...
-$ git reset --hard # Oops, I didn't mean that
-$ git cherry-pick quux..bar
-... cherry-pick succeeded ...
+if (revert_or_cherry_pick(argc, argv, opts) < 0)
+   print "Something failed, we're not sure what"
 
-Guard against accidental removal of the sequencer state by providing
-one level of "undo".  In the first "reset" invocation,
-".git/sequencer" is moved to ".git/sequencer-old"; it is completely
-removed only in the second invocation.
+Simplify and rename revert_or_cherry_pick to pick_commits so that it
+only has the responsibility of setting up the revision walker and
+picking commits in a loop.  Transfer the remaining work to its
+callers.  Now, the API is simplified as:
 
+if (parse_args(argc, argv, opts) < 0)
+   print "Can't parse arguments"
+if (pick_commits(opts) < 0)
+   print "Error encountered in picking machinery"
+
+Later in the series, pick_commits will also serve as the starting
+point for continuing a cherry-pick or revert.
+
+Inspired-by: Christian Couder <chriscool@tuxfamily.org>
 Helped-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- branch.c                 |    2 ++
- t/7106-reset-sequence.sh |   43 +++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 45 insertions(+), 0 deletions(-)
- create mode 100755 t/7106-reset-sequence.sh
+ builtin/revert.c |   14 +++++++-------
+ 1 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/branch.c b/branch.c
-index c0c865a..d06aec4 100644
---- a/branch.c
-+++ b/branch.c
-@@ -3,6 +3,7 @@
- #include "refs.h"
- #include "remote.h"
- #include "commit.h"
-+#include "sequencer.h"
- 
- struct tracking {
- 	struct refspec spec;
-@@ -228,4 +229,5 @@ void remove_branch_state(void)
- 	unlink(git_path("MERGE_MSG"));
- 	unlink(git_path("MERGE_MODE"));
- 	unlink(git_path("SQUASH_MSG"));
-+	remove_sequencer_state(0);
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 58e0dd5..ab7f0bb 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -558,16 +558,12 @@ static void read_and_refresh_cache(struct replay_opts *opts)
+ 	rollback_lock_file(&index_lock);
  }
-diff --git a/t/7106-reset-sequence.sh b/t/7106-reset-sequence.sh
-new file mode 100755
-index 0000000..c61c62d
---- /dev/null
-+++ b/t/7106-reset-sequence.sh
-@@ -0,0 +1,43 @@
-+#!/bin/sh
-+
-+test_description='Test interaction of reset --hard with sequencer
-+
-+  + anotherpick: rewrites foo to d
-+  + picked: rewrites foo to c
-+  + unrelatedpick: rewrites unrelated to reallyunrelated
-+  + base: rewrites foo to b
-+  + initial: writes foo as a, unrelated as unrelated
-+'
-+
-+. ./test-lib.sh
-+
-+pristine_detach () {
-+	git checkout -f "$1^0" &&
-+	git read-tree -u --reset HEAD &&
-+	git clean -d -f -f -q -x
-+}
-+
-+test_expect_success setup '
-+	echo unrelated >unrelated &&
-+	git add unrelated &&
-+	test_commit initial foo a &&
-+	test_commit base foo b &&
-+	test_commit unrelatedpick unrelated reallyunrelated &&
-+	test_commit picked foo c &&
-+	test_commit anotherpick foo d &&
-+	git config advice.detachedhead false
-+
-+'
-+
-+test_expect_success 'reset --hard cleans up sequencer state, providing one-level undo' '
-+	pristine_detach initial &&
-+	test_must_fail git cherry-pick base..anotherpick &&
-+	test_path_is_dir .git/sequencer &&
-+	git reset --hard &&
-+	test_path_is_missing .git/sequencer &&
-+	test_path_is_dir .git/sequencer-old &&
-+	git reset --hard &&
-+	test_path_is_missing .git/sequencer-old
-+'
-+
-+test_done
+ 
+-static int revert_or_cherry_pick(int argc, const char **argv,
+-				struct replay_opts *opts)
++static int pick_commits(struct replay_opts *opts)
+ {
+ 	struct rev_info revs;
+ 	struct commit *commit;
+ 
+-	git_config(git_default_config, NULL);
+ 	setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
+-	parse_args(argc, argv, opts);
+-
+ 	if (opts->allow_ff) {
+ 		if (opts->signoff)
+ 			die(_("cherry-pick --ff cannot be used with --signoff"));
+@@ -601,7 +597,9 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
+ 	if (isatty(0))
+ 		opts.edit = 1;
+ 	opts.action = REVERT;
+-	res = revert_or_cherry_pick(argc, argv, &opts);
++	git_config(git_default_config, NULL);
++	parse_args(argc, argv, &opts);
++	res = pick_commits(&opts);
+ 	if (res < 0)
+ 		die(_("revert failed"));
+ 	return res;
+@@ -614,7 +612,9 @@ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
+ 
+ 	memset(&opts, 0, sizeof(struct replay_opts));
+ 	opts.action = CHERRY_PICK;
+-	res = revert_or_cherry_pick(argc, argv, &opts);
++	git_config(git_default_config, NULL);
++	parse_args(argc, argv, &opts);
++	res = pick_commits(&opts);
+ 	if (res < 0)
+ 		die(_("cherry-pick failed"));
+ 	return res;
 -- 
 1.7.4.rc1.7.g2cf08.dirty
