@@ -1,101 +1,130 @@
-From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: Re: [PATCH v2 11/11] vcs-svn,svn-fe: add an option to write svnrev notes
-Date: Thu, 28 Jul 2011 12:03:42 +0600
-Message-ID: <CA+gfSn9MGiBJ-vhj25wMa5Jwu0hWo0Uyv2wiYst09+M6VX1SQA@mail.gmail.com>
-References: <1310559673-5026-1-git-send-email-divanorama@gmail.com>
-	<1310559673-5026-12-git-send-email-divanorama@gmail.com>
-	<20110725213923.GC8708@elie.dc0b.debconf.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH/WIP 6/7] fast-import: workaround data corruption
+Date: Thu, 28 Jul 2011 08:31:34 +0200
+Message-ID: <20110728063134.GA4179@elie>
+References: <1311828370-30477-1-git-send-email-divanorama@gmail.com>
+ <1311828370-30477-7-git-send-email-divanorama@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, David Barr <davidbarr@google.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 28 08:03:48 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	David Barr <davidbarr@google.com>
+To: Dmitry Ivankov <divanorama@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 28 08:31:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QmJhE-0002vM-ES
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 08:03:48 +0200
+	id 1QmK8S-0004XE-6u
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 08:31:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753814Ab1G1GDo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Jul 2011 02:03:44 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:34396 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751971Ab1G1GDn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Jul 2011 02:03:43 -0400
-Received: by qyk9 with SMTP id 9so1353343qyk.19
-        for <git@vger.kernel.org>; Wed, 27 Jul 2011 23:03:42 -0700 (PDT)
+	id S1754749Ab1G1Gbv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jul 2011 02:31:51 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:55690 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754026Ab1G1Gbu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2011 02:31:50 -0400
+Received: by fxh19 with SMTP id 19so950505fxh.19
+        for <git@vger.kernel.org>; Wed, 27 Jul 2011 23:31:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=8oJeq3/vU1mgVA+7nNlBBRKNQD9KMycZNUOwQXd4IIg=;
-        b=THrN1YTf7X8faSNuTxiG+a48ylnom5ko19W7A2lITGpg4NQSeHfJel1puvIn/llK/+
-         rtJnJee4jWmMMYu8sRmqs53IujHiEHL7Ts6AUaSvx7MELV4vlvXBPYxeTdkKub4S7PJq
-         yyw+hs67fbl1zteKMY+8J27/1hj9GA9O7e8UY=
-Received: by 10.229.213.208 with SMTP id gx16mr157878qcb.150.1311833022284;
- Wed, 27 Jul 2011 23:03:42 -0700 (PDT)
-Received: by 10.229.189.3 with HTTP; Wed, 27 Jul 2011 23:03:42 -0700 (PDT)
-In-Reply-To: <20110725213923.GC8708@elie.dc0b.debconf.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=aszxCn9voTq5112em9mUItIqQ1kZE02dPOfqoLebzc8=;
+        b=G/3o1e1UmElylKCurIuxE9pK+8r/4q2YXatZIm17zPMAk7yS5qsrHQqqjI2tvk2Bfb
+         356VIXzWDzUHnU9MzNZMevIg+IU32+WrZuceGqsITJJLizzpwLafVIjHML2U+AyJz19v
+         lg8ZOoZDkGTSzoLc7/ZwaV2QZ1K7h12QpqWXw=
+Received: by 10.223.160.65 with SMTP id m1mr866992fax.28.1311834709000;
+        Wed, 27 Jul 2011 23:31:49 -0700 (PDT)
+Received: from elie (adsl-165-140-99.teol.net [109.165.140.99])
+        by mx.google.com with ESMTPS id 9sm277579far.13.2011.07.27.23.31.46
+        (version=SSLv3 cipher=OTHER);
+        Wed, 27 Jul 2011 23:31:47 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1311828370-30477-7-git-send-email-divanorama@gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178042>
 
-Sorry for a way too slow response. This patch is probably the most
-unbaked one, so I'll start here.
+Hi!
 
-On Tue, Jul 26, 2011 at 3:39 AM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Hi,
->
-> Dmitry Ivankov wrote:
->
->> There are already a few options to determine svn revision from which
->> a git commit imported with svn-fe came from. One is to make svn-fe
->> write a git-svn-id: line to commit messages. Another one is to calc
->> distance to the root commit. The former includes a "url" and is for
->> git-svn compatibility, the latter is obviously slow and a bit fragil=
-e.
->>
->> $ svn-fe --notes_ref=3Dnotes_tree --ref=3Dbranch...
->> will write annotations for branch commits to the notes_tree, each
->> annotation is a simple "rN" string. Then these annotations can be
->> viewed manually or used in incremental import to detect the last
->> imported revision or to (re)create the import marks for further
->> imports.
->
-> Wouldn't another way be to look at the mark numbers?
-If marks file is absent (after clone for example), we'll need to look
-at notes anyway.
-If it is present and has a mark for latest revision we can hope it is
-valid and not
-regenerate it.
-If for some reason notes are lost and marks are present, it's possible
-to recreate
-notes from marks though, at least "rN" ones.
+Dmitry Ivankov wrote:
 
-> I am not sure I like this. =A0svn-fe is supposed to be a generally
-> useful tool, and this patch hard-codes the particular note format rN.
-> If it is needed, maybe it would be possible to do something like
->
-> =A0 =A0 =A0 =A0--notes-ref=3Drefs/notes/svn-rev --note=3D'project foo=
-, r%N'
->
-> As a bonus, that would allow including more information using
-> different flag characters in the note in the future.
-=46ormat string looks nice. While the whole notes thing may need
-more thinking.
-The main reason I wrote these in svn-fe is that it's more atomic
-to write note just after writing a commit. Also "checkpoint" will
-create notes for current status (and will write marks too, but weren't
-we going to consider notes as a primary data copy? it can be cloned
-for example).
+> fast-import keeps track of some delta-base for tree objects. When it is
+> time to compute the delta, base object is constructed from in-memory
+> tree representation using children's delta bases sha1. But these can be
+> unrelated due to several bugs, and it leads to object with wrong sha1
+> being delta-written to the packfile.
 
-One more consideration is that copy-from information most likely
-will be written by svn-fe (nothing else knows it anyway) to some
-notes, so we'll need some notes writing in svn-fe.
+This seems like as good a starting point as any.  Small language
+nitpicks:
+
+ - "some delta-base" is somewhat vague
+
+ - missing article (probably "the") before "base object" and
+   "children's"
+
+ - does "children's delta bases sha1" mean "the pre-computed object
+   names and modes in versions[0].{sha1,mode} for each tree entry" or
+   something else?
+
+ - when you say "unrelated": unrelated to what?
+
+> We have the base sha1 and what we think it's data is. Verify sha1 and if
+> it doesn't match, report it to stderr and don't use delta for this tree.
+
+At any rate, if I understand correctly, the idea is that when store_tree()
+is being called, root->versions[0].sha1 does not match the tree object
+implied by root->tree->entries[*]->{name,versions[0].{mode,sha1}}.  This
+patch adds a quick check to notice when that happens.
+
+Makes a lot of sense, especially as a demonstration of the problem.
+store_object() returns early in many cases so this probably does make
+the bug easier to find (good).
+
+I wonder if it would make more sense to perform this sanity check in
+store_object() so blobs could benefit, too.  How much does the check slow
+fast-import down (if at all)?
+
+> We could also die() here when bugs are fixed.
+
+If the check is fast, sure, why not? :)  The only reason I can think
+of is that computing a SHA-1 is an O(size of object) cost which it
+would be nice to avoid if profiling shows it is noticeable.
+
+> Or we can see if the data
+> we've got is from our pack file and so still try to use it as a base.
+
+Can you elaborate?  When would versions[0].sha1 not match the data
+but the data still be in the pack file?
+
+> --- a/fast-import.c
+> +++ b/fast-import.c
+[...]
+> @@ -1486,10 +1487,21 @@ static void store_tree(struct tree_entry *root)
+>  
+>  	le = find_object(root->versions[0].sha1);
+>  	if (S_ISDIR(root->versions[0].mode) && le && le->pack_id == pack_id) {
+> +		unsigned char sh[20];
+
+What does "sh" stand for?
+
+>  		mktree(t, 0, &old_tree);
+>  		lo.data = old_tree;
+>  		lo.offset = le->idx.offset;
+>  		lo.depth = t->delta_depth;
+> +
+> +		prepare_object_hash(OBJ_TREE, &old_tree, NULL, NULL, sh);
+> +		if (hashcmp(sh, root->versions[0].sha1)) {
+> +			fprintf(stderr, "internal sha1 delta base mismatch,"
+> +					" won't use delta for that tree\n");
+> +			lo.data = empty;
+
+To avoid a memory leak and introducing an unnecessary variable:
+
+			strbuf_reset(&lo.data);
+
+Thanks, that was interesting.
