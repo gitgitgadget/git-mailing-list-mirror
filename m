@@ -1,61 +1,71 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: the standard hotfix from production scenario not working for me in git...
-Date: Thu, 28 Jul 2011 21:31:13 +0200
-Message-ID: <m2fwlqi4n2.fsf@igel.home>
-References: <1311874508381-6630648.post@n2.nabble.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/3] check for unpushed remotes in submodules
+Date: Thu, 28 Jul 2011 12:58:27 -0700
+Message-ID: <7v39hqmb30.fsf@alter.siamese.dyndns.org>
+References: <1311790250-32454-1-git-send-email-iveqy@iveqy.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: deanhiller <dhiller@ghx.com>
-X-From: git-owner@vger.kernel.org Thu Jul 28 21:31:26 2011
+Cc: git@vger.kernel.org, jens.lehmann@web.de, hvoigt@hvoigt.net
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Thu Jul 28 21:58:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QmWIm-0002RD-5s
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 21:31:24 +0200
+	id 1QmWj7-0000iB-2k
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 21:58:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755536Ab1G1TbS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jul 2011 15:31:18 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:34992 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755515Ab1G1TbR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jul 2011 15:31:17 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 0720D186DEC3;
-	Thu, 28 Jul 2011 21:31:13 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
-	by mail.m-online.net (Postfix) with ESMTP id 08C3B1C000AC;
-	Thu, 28 Jul 2011 21:31:14 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
-	with ESMTP id n9RXajNoWqNh; Thu, 28 Jul 2011 21:31:13 +0200 (CEST)
-Received: from igel.home (ppp-88-217-118-247.dynamic.mnet-online.de [88.217.118.247])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Thu, 28 Jul 2011 21:31:13 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 0FB46CA293; Thu, 28 Jul 2011 21:31:13 +0200 (CEST)
-X-Yow: Where do your SOCKS go when you lose them in th' WASHER?
-In-Reply-To: <1311874508381-6630648.post@n2.nabble.com> (deanhiller's message
-	of "Thu, 28 Jul 2011 10:35:08 -0700 (PDT)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+	id S1755634Ab1G1T6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jul 2011 15:58:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58807 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755455Ab1G1T6a (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2011 15:58:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D1AB85397;
+	Thu, 28 Jul 2011 15:58:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5pWJN1wDId3/9Oi04q+1avNikRs=; b=pL5AHI
+	saILTGmctcmat2oq6XHh6F+railfSJt7BO1rd2v3UZYMIwIwNgFkCvP16zpvKpm8
+	U4h+FvPqvMxcJbsHUdwGY6ljwwWXhPJ5KYrGrRG6hq2EufWsG+Q4kq6xKdISq9jY
+	TT57zMlCeDAPvn3e2wwLWOLB3JWFCQo5WDa6o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OdzdMMI+6wxyCiNzHDCMHED6bkJIoIOy
+	kLrbsRSaebH3gMazs8DANYRLi8+KRX8tTzOm9f2XqTW3TXi1Bn0yaMZXex865CiO
+	M1/zh7lmjUthk+SMpuQpbhydzCmj1X1iTI/CgcTPel7kzsjCBJMweC4kv/FA6Y/K
+	oD2UPXgQpEg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C905F5396;
+	Thu, 28 Jul 2011 15:58:29 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5BF8E5395; Thu, 28 Jul 2011
+ 15:58:29 -0400 (EDT)
+In-Reply-To: <1311790250-32454-1-git-send-email-iveqy@iveqy.com> (Fredrik
+ Gustafsson's message of "Wed, 27 Jul 2011 20:10:47 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F6B94C28-B953-11E0-A91C-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178110>
 
-deanhiller <dhiller@ghx.com> writes:
+Fredrik Gustafsson <iveqy@iveqy.com> writes:
 
-> 5. git addANDrm * (is there a way to do this??????)
+> Regarding the discussion of superprojects with submodules that have no
+> remote tracking branches: A push will still be denied.
 
-$ git add -A .
+I have marked one part of the data synchronized across machines as
+"private" submodule (which contains my gpg keychains, encrypted password
+files, personaly memos, etc.) and push only the outer "shell" superproject
+(which has tools that I use everywhere to go to $HOME/bin among other
+things) to certain machines without the private parts, and the
+superproject is designed to work without a checkout (nor clone) of a
+submodule.
 
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+With this patch series, it sounds like I cannot use this repository
+structure anymore, which is sad.
