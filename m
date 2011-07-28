@@ -1,78 +1,106 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: tracking submodules out of main directory.
-Date: Thu, 28 Jul 2011 18:48:20 +0200
-Message-ID: <4E3192D4.5000504@web.de>
-References: <1309180056.2497.220.camel@Naugrim.eriador.com>  <7vvcvrxlol.fsf@alter.siamese.dyndns.org>	<4E08C89E.5020109@web.de>  <7vvcvrw0vn.fsf@alter.siamese.dyndns.org>  <BANLkTimsfR4LqDAci0Vr+m9uUE_W-7OSAw@mail.gmail.com>  <4E0A08AE.8090407@web.de>  <1311792580.2413.82.camel@Naugrim.eriador.com> <1311843465.3734.40.camel@Naugrim.eriador.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Alexei Sholik <alcosholik@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: henri GEIST <henri.geist@flying-robots.com>
-X-From: git-owner@vger.kernel.org Thu Jul 28 18:48:35 2011
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH 00/18] Sequencer for inclusion v4
+Date: Thu, 28 Jul 2011 22:22:13 +0530
+Message-ID: <1311871951-3497-1-git-send-email-artagnon@gmail.com>
+Cc: Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 28 18:55:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QmTlD-0007mz-Ai
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 18:48:35 +0200
+	id 1QmTs5-0003Kh-N5
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 18:55:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755603Ab1G1Qsb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jul 2011 12:48:31 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:37561 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754906Ab1G1Qsa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jul 2011 12:48:30 -0400
-Received: from smtp07.web.de  ( [172.20.5.215])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 057BA1A7402AF;
-	Thu, 28 Jul 2011 18:48:26 +0200 (CEST)
-Received: from [93.246.48.187] (helo=[192.168.178.43])
-	by smtp07.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1QmTl3-0001bw-00; Thu, 28 Jul 2011 18:48:25 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:5.0) Gecko/20110624 Thunderbird/5.0
-In-Reply-To: <1311843465.3734.40.camel@Naugrim.eriador.com>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX18uhy3Mjk/BJzal0hL9iEl4TyJe4vJeR5fw+hnE
-	rct7Z5xpF0CAltgNdF/+MzBlMCJv5kJ1WqMdzEf1GTcp5jINSp
-	3Nwb4W7EoawGX9vAq1EA==
+	id S1755693Ab1G1Qzi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jul 2011 12:55:38 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:47132 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755300Ab1G1Qzg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2011 12:55:36 -0400
+Received: by yia27 with SMTP id 27so1952324yia.19
+        for <git@vger.kernel.org>; Thu, 28 Jul 2011 09:55:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=1hCWzTuyYuxAOAV2qJ+q/htgLnZZHw7PJtXvKllDQS8=;
+        b=G34te+Tr51T98O3/SkwOyVtr5PzfT8SlJd7GEa0XBP0j/v3kMeIRK7Yp3b1S1z+H0q
+         T7j3wnr+w5Y5sT+tvoKWLUo2LXrx59BVDQDlNjjJvDVlWWLBFd1VpdCU2gPGoPsu2Ptb
+         MwVvrlnTLsIqaTcXMByamXyyHoqbH4tjWKygk=
+Received: by 10.42.144.193 with SMTP id c1mr138607icv.516.1311872136088;
+        Thu, 28 Jul 2011 09:55:36 -0700 (PDT)
+Received: from localhost.localdomain ([203.110.240.41])
+        by mx.google.com with ESMTPS id ue1sm1497759icb.8.2011.07.28.09.55.32
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 28 Jul 2011 09:55:34 -0700 (PDT)
+X-Mailer: git-send-email 1.7.4.rc1.7.g2cf08.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178081>
 
-Am 28.07.2011 10:57, schrieb henri GEIST:
-> In the current code it was not possible to add a gitlink to a repository
-> outside of the main repository.
+Hi,
 
-Me thinks this is a *feature* this patch removes (as I understand it it was
-a major design decision that everything /inside/ a directory is controlled
-by git).
+There were more style nits pointed out in v3: I learnt my lesson and
+ran checkpatch.pl this time.  Apart these minor stylistic changes, the
+other changes are:
+1. Minor improvements to commit messages.
+2. Tests now cleanup first, so one failing test doesn't take
+everything else down.
+3. A rebase that moves "revert: Propogate errors upwards from
+do_pick_commit" to the end of the series.  A big thanks to Jonathan
+for performing the rebase for me.
 
-> This pach :
-<snip>
->   - Still forbids to add anything else.
+Thanks for reading.
 
-Why? If you let submodules live outside the tree I don't see any reason why
-regular files shouldn't live there too (Disclaimer: I d not think that would
-be a good idea either ;-).
+-- Ram
 
-What you want looks like this:
+Ramkumar Ramachandra (18):
+  advice: Introduce error_resolve_conflict
+  config: Introduce functions to write non-standard file
+  revert: Simplify and inline add_message_to_msg
+  revert: Don't check lone argument in get_encoding
+  revert: Rename no_replay to record_origin
+  revert: Eliminate global "commit" variable
+  revert: Introduce struct to keep command-line options
+  revert: Separate cmdline parsing from functional code
+  revert: Don't create invalid replay_opts in parse_args
+  revert: Save data for continuing after conflict resolution
+  revert: Save command-line options for continuing operation
+  revert: Make pick_commits functionally act on a commit list
+  revert: Introduce --reset to remove sequencer state
+  reset: Make reset remove the sequencer state
+  revert: Remove sequencer state when no commits are pending
+  revert: Don't implictly stomp pending sequencer operation
+  revert: Introduce --continue to continue the operation
+  revert: Propogate errors upwards from do_pick_commit
 
--+- lib1    #registered as submodule of project1 *and* project2 but not here
- +- project1            # submodule of the superproject
- |  +- ../lib1
- +- project2            # submodule of the superproject
-    +- ../lib1
+ Documentation/git-cherry-pick.txt |    6 +
+ Documentation/git-revert.txt      |    6 +
+ Documentation/sequencer.txt       |    9 +
+ Makefile                          |    2 +
+ advice.c                          |   31 ++-
+ advice.h                          |    3 +-
+ branch.c                          |    2 +
+ builtin/revert.c                  |  736 +++++++++++++++++++++++++++++--------
+ cache.h                           |    2 +
+ config.c                          |   36 ++-
+ sequencer.c                       |   19 +
+ sequencer.h                       |   20 +
+ t/7106-reset-sequence.sh          |   43 +++
+ t/t3510-cherry-pick-sequence.sh   |  225 +++++++++++
+ 14 files changed, 969 insertions(+), 171 deletions(-)
+ create mode 100644 Documentation/sequencer.txt
+ create mode 100644 sequencer.c
+ create mode 100644 sequencer.h
+ create mode 100755 t/7106-reset-sequence.sh
+ create mode 100755 t/t3510-cherry-pick-sequence.sh
 
-You are opening a can of worms by having two different repos point to the same
-submodule living in a third repo (which also happens to be their superproject
-and must somehow ignore it). You'll have two SHA1s for a single submodule;
-"git submodule foreach --recursive" will have interesting results too; and so
-on. Not good.
-
-What about solving that with a "ln -s ../lib1" in "project1" and "project2"
-(you seem to need that for your build environment) and adding the submodule
-"lib1" to the superproject just like "project1" and "project2"?
+-- 
+1.7.4.rc1.7.g2cf08.dirty
