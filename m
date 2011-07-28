@@ -1,106 +1,68 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 18/19] git-check-attr: Fix command-line handling to match docs
-Date: Thu, 28 Jul 2011 06:46:57 +0200
-Message-ID: <1311828418-2676-19-git-send-email-mhagger@alum.mit.edu>
-References: <1311828418-2676-1-git-send-email-mhagger@alum.mit.edu>
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jul 28 06:55:45 2011
+From: Dmitry Ivankov <divanorama@gmail.com>
+Subject: [PATCH 0/5] fixes for committer/author parsing/check
+Date: Thu, 28 Jul 2011 11:43:59 +0600
+Message-ID: <1311831844-13123-1-git-send-email-divanorama@gmail.com>
+Cc: SASAKI Suguru <sss.sonik@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 28 07:41:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QmIdM-0007um-LI
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 06:55:45 +0200
+	id 1QmJLU-0004Gf-U7
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 07:41:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754650Ab1G1EzS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jul 2011 00:55:18 -0400
-Received: from mail.berlin.jpk.com ([212.222.128.130]:57351 "EHLO
-	mail.berlin.jpk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754611Ab1G1EzO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jul 2011 00:55:14 -0400
-Received: from michael.berlin.jpk.com ([192.168.100.152])
-	by mail.berlin.jpk.com with esmtp (Exim 4.50)
-	id 1QmITD-000889-MX; Thu, 28 Jul 2011 06:45:15 +0200
-X-Mailer: git-send-email 1.7.6.8.gd2879
-In-Reply-To: <1311828418-2676-1-git-send-email-mhagger@alum.mit.edu>
+	id S1754784Ab1G1FlQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jul 2011 01:41:16 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:56514 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754484Ab1G1FlO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2011 01:41:14 -0400
+Received: by fxh19 with SMTP id 19so916357fxh.19
+        for <git@vger.kernel.org>; Wed, 27 Jul 2011 22:41:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=3Loyj9HmcmbiKIoj5UWeRqrU1s/dnGJvAMj9sefZCDE=;
+        b=Q3kcsGo73ymV8KmufUs2/9ozWdQVbW0DrLpuV+FJa5qwYHN7ZFuyF4f4uQcL/4wZOh
+         0fjn2KTvRsZVyZ+6RW0YyPEl7RHSUpjpeBsKacUtX1g1JSBDxg3IUOoXbsdcV0K7dDzh
+         rgvS8zZKchaEJD/wqLF08sPTzAVfulecAiafs=
+Received: by 10.204.153.208 with SMTP id l16mr173064bkw.342.1311831673626;
+        Wed, 27 Jul 2011 22:41:13 -0700 (PDT)
+Received: from localhost.localdomain (117360277.convex.ru [79.172.62.237])
+        by mx.google.com with ESMTPS id g11sm154133bku.49.2011.07.27.22.41.11
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 27 Jul 2011 22:41:12 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178035>
 
-According to the git-check-attr synopsis, if the '--stdin' option is
-used then no pathnames are expected on the command line.  Change the
-behavior to match this description; namely, if '--stdin' is used but
-not '--', then treat all command-line arguments as attribute names.
+fast-import part is clear and should be safe to apply. The test
+script is a bit ugly as it uses fsck and prune on a shared (with
+nearby tests) repo. But it should work, any hints on simplifying
+it are welcome.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- Documentation/git-check-attr.txt |    7 +++++--
- builtin/check-attr.c             |   15 +++++++++------
- t/t0003-attributes.sh            |    1 -
- 3 files changed, 14 insertions(+), 9 deletions(-)
+fsck part fixes an uncaught bad committer, but also changes error
+messages for some of bad committer strings. The messages choice is
+a subject for discussion most likely.
 
-diff --git a/Documentation/git-check-attr.txt b/Documentation/git-check-attr.txt
-index 798e5d5..1f7312a 100644
---- a/Documentation/git-check-attr.txt
-+++ b/Documentation/git-check-attr.txt
-@@ -33,8 +33,11 @@ OPTIONS
- 
- \--::
- 	Interpret all preceding arguments as attributes and all following
--	arguments as path names. If not supplied, only the first argument will
--	be treated as an attribute.
-+	arguments as path names.
-+
-+If none of `--stdin`, `--all`, or `--` is used, the first argument
-+will be treated as an attribute and the rest of the arguments as
-+pathnames.
- 
- OUTPUT
- ------
-diff --git a/builtin/check-attr.c b/builtin/check-attr.c
-index 48834b4..9fe0b93 100644
---- a/builtin/check-attr.c
-+++ b/builtin/check-attr.c
-@@ -111,15 +111,18 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
- 	} else if (doubledash == 0) {
- 		error_with_usage("No attribute specified");
- 	} else if (doubledash < 0) {
--		/*
--		 * There is no double dash; treat the first
--		 * argument as an attribute.
--		 */
- 		if (!argc)
- 			error_with_usage("No attribute specified");
- 
--		cnt = 1;
--		filei = 1;
-+		if (stdin_paths) {
-+			/* Treat all arguments as attribute names. */
-+			cnt = argc;
-+			filei = argc;
-+		} else {
-+			/* Treat exactly one argument as an attribute name. */
-+			cnt = 1;
-+			filei = 1;
-+		}
- 	} else {
- 		cnt = doubledash;
- 		filei = doubledash + 1;
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index a49f8a9..5acb2d5 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -70,7 +70,6 @@ test_expect_success 'command line checks' '
- 	echo "f" | test_must_fail git check-attr --stdin &&
- 	echo "f" | test_must_fail git check-attr --stdin -- f &&
- 	echo "f" | test_must_fail git check-attr --stdin test -- f &&
--	echo "f" | test_must_fail git check-attr --stdin test f &&
- 	test_must_fail git check-attr "" -- f
- 
- '
+Dmitry Ivankov (5):
+  fast-import: add input format tests
+  fast-import: don't fail on omitted committer name
+  fast-import: check committer name more strictly
+  fsck: add a few committer name tests
+  fsck: improve committer/author check
+
+ fast-import.c          |   33 ++++++++++------
+ fsck.c                 |   10 +++--
+ t/t1450-fsck.sh        |   24 ++++++++++++
+ t/t9300-fast-import.sh |   99 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 150 insertions(+), 16 deletions(-)
+
 -- 
-1.7.6.8.gd2879
+1.7.3.4
