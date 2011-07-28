@@ -1,84 +1,59 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 07/19] Provide access to the name attribute of git_attr
-Date: Thu, 28 Jul 2011 06:27:24 +0200
-Message-ID: <4E30E52C.9060407@alum.mit.edu>
-References: <1311689582-3116-1-git-send-email-mhagger@alum.mit.edu> <1311689582-3116-8-git-send-email-mhagger@alum.mit.edu> <7vr55bo47e.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 16/19] git-check-attr: Add an --all option to show all
+ attributes
+Date: Thu, 28 Jul 2011 06:31:07 +0200
+Message-ID: <4E30E60B.1060604@alum.mit.edu>
+References: <1311689582-3116-1-git-send-email-mhagger@alum.mit.edu> <1311689582-3116-17-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 28 06:27:35 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Jul 28 06:31:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QmIC6-0000bB-Sg
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 06:27:35 +0200
+	id 1QmIFh-0001UA-Ol
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 06:31:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751824Ab1G1E1a convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Jul 2011 00:27:30 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:55304 "EHLO
+	id S1751676Ab1G1EbN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jul 2011 00:31:13 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:55311 "EHLO
 	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751007Ab1G1E13 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jul 2011 00:27:29 -0400
+	with ESMTP id S1751007Ab1G1EbM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2011 00:31:12 -0400
 X-Envelope-From: mhagger@alum.mit.edu
 Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
 	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p6S4RPLI005917
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p6S4V7K5006042
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 28 Jul 2011 06:27:26 +0200
+	Thu, 28 Jul 2011 06:31:07 +0200
 User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.18) Gecko/20110617 Lightning/1.0b2 Thunderbird/3.1.11
-In-Reply-To: <7vr55bo47e.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <1311689582-3116-17-git-send-email-mhagger@alum.mit.edu>
 X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178006>
 
-On 07/27/2011 10:02 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
->> diff --git a/attr.c b/attr.c
->> ...
->> +char *git_attr_name(struct git_attr *attr) {
->> +	return attr->name;
->> +}
->=20
-> (Style)
->=20
-> 	char *git_attr_name(struct git_attr *attr)
-> 	{
-> 		return attr->name;
-> 	}
+On 07/26/2011 04:12 PM, Michael Haggerty wrote:
+> Add new usage patterns
+> 
+>     git check-attr --all [--] pathname...
+>     git check-attr --stdin --all < <list-of-paths>
+> 
+> which display all attributes associated with the specified file(s).
 
-Thanks.  I will include this in the next version of the patch series.
-
->> diff --git a/attr.h b/attr.h
->> ...
->> +/*
->> + * Return the name of the attribute represented by the argument.  T=
-he
->> + * return value is a pointer to a null-delimited string that is par=
-t
->> + * of the internal data structure; it should not be modified or fre=
-ed.
->> + */
->=20
-> should not be modified NOR freed?
-
-No, usually "nor" is only used with "neither".  I'm confident that the
-wording that I used is correct [1].  Alternatively, one could write
-"should be neither modified nor freed".
+I realized that I also added the synonym "-a" but forgot to mention it
+in the docs or commit message.  I will fix this in the next version of
+the patch series.
 
 Michael
 
-[1] See, e.g., http://grammar.quickanddirtytips.com/when-to-use-nor.asp=
-x
-section "When to Use =93Or=94 Instead of =93Nor=94".
-
---=20
+-- 
 Michael Haggerty
 mhagger@alum.mit.edu
 http://softwareswirl.blogspot.com/
