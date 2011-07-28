@@ -1,71 +1,60 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 15/18] reset: Make reset remove the sequencer state
-Date: Thu, 28 Jul 2011 17:59:29 +0200
-Message-ID: <20110728155929.GD22950@elie.dc0b.debconf.org>
-References: <1311736755-24205-1-git-send-email-artagnon@gmail.com>
- <1311736755-24205-16-git-send-email-artagnon@gmail.com>
- <20110727051612.GJ18470@elie>
- <CALkWK0=eh2MRqc1tW3rcPYAF3YLQnXanTZd9kzGdWBpJVcB01w@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 4/4] upload-archive: use start_command instead of fork
+Date: Thu, 28 Jul 2011 10:08:45 -0600
+Message-ID: <20110728160845.GA14337@sigill.intra.peff.net>
+References: <1311012516-4836-1-git-send-email-kusmabite@gmail.com>
+ <1311012516-4836-5-git-send-email-kusmabite@gmail.com>
+ <7vmxga7zb9.fsf@alter.siamese.dyndns.org>
+ <CABPQNSYtpRpNQVW=QvyfFhmWge5-C+k85bs2EJeK8k0jdfHzrw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 28 17:59:48 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	j6t@kdbg.org
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 28 18:09:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QmSzw-0005E3-6Q
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 17:59:44 +0200
+	id 1QmT8v-0002Jk-CP
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 18:09:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755370Ab1G1P7g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jul 2011 11:59:36 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:37869 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754980Ab1G1P7f (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jul 2011 11:59:35 -0400
-Received: by fxh19 with SMTP id 19so1392142fxh.19
-        for <git@vger.kernel.org>; Thu, 28 Jul 2011 08:59:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=ZNWiWW/KmRe+bp/0EMlsKF0tTv7N4wRd2ugwslUp0x8=;
-        b=WggRWSl+ekWRiHms7zUH/aBc71z8VJ3KUj6Y6G1hKmD4mhBei2rY/MZ0J0mF75Lkrm
-         NDRsjmTFnfTnfjpidRBhkQ8sxBxv1Zng5PRaJn8ROdX7+lkZnN7WbQMXPusFlrNOj3vy
-         AGTS21qH50SqTblheefmdQIuSLhsD+qBwhfUo=
-Received: by 10.223.17.141 with SMTP id s13mr256909faa.7.1311868774233;
-        Thu, 28 Jul 2011 08:59:34 -0700 (PDT)
-Received: from elie.dc0b.debconf.org ([78.28.140.4])
-        by mx.google.com with ESMTPS id 28sm555361fax.3.2011.07.28.08.59.32
-        (version=SSLv3 cipher=OTHER);
-        Thu, 28 Jul 2011 08:59:33 -0700 (PDT)
+	id S1754563Ab1G1QIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jul 2011 12:08:51 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38032
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754308Ab1G1QIu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2011 12:08:50 -0400
+Received: (qmail 12293 invoked by uid 107); 28 Jul 2011 16:09:21 -0000
+Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 28 Jul 2011 12:09:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Jul 2011 10:08:45 -0600
 Content-Disposition: inline
-In-Reply-To: <CALkWK0=eh2MRqc1tW3rcPYAF3YLQnXanTZd9kzGdWBpJVcB01w@mail.gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+In-Reply-To: <CABPQNSYtpRpNQVW=QvyfFhmWge5-C+k85bs2EJeK8k0jdfHzrw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178074>
 
-Ramkumar Ramachandra wrote:
+On Thu, Jul 28, 2011 at 10:32:54AM +0200, Erik Faye-Lund wrote:
 
-> I'm curious: doesn't this also apply to "rebase -i" and other scripts
-> that attempt to remove the branch state through "reset"?
+> > Hmm, how well would this change work with recent archive-filter work by
+> > Peff, especially with the "when remote, disable some features" bits?
+> >
+> 
+> Thanks for the notice. And no, not at all :(
+> 
+> OK then. I'll probably have to rewrite this to use start_async +
+> dup-bonanza instead of start_command...
 
-It starts by detaching HEAD.  So, just like after a conflicted "git
-merge", I think typically it will write
+What's the issue? In my final version, I didn't think I changed
+run_upload_archive much at all. I would think there would be a trivial
+text conflict at the end of run_upload_archive, but the semantics should
+otherwise be the same.
 
-	error: you need to resolve your current index first
+Let me know if you need help untangling it.
 
-But that doesn't help when there are no unmerged index entries; good
-catch.
-
-Maybe merge_working_tree() should ask the sequencer API whether there
-is something untoward in progress so "git checkout" without "-f" can
-know to bail out.
+-Peff
