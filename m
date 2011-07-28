@@ -1,106 +1,152 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 00/18] Sequencer for inclusion v4
-Date: Thu, 28 Jul 2011 22:22:13 +0530
-Message-ID: <1311871951-3497-1-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 02/18] config: Introduce functions to write non-standard file
+Date: Thu, 28 Jul 2011 22:22:15 +0530
+Message-ID: <1311871951-3497-3-git-send-email-artagnon@gmail.com>
+References: <1311871951-3497-1-git-send-email-artagnon@gmail.com>
 Cc: Git List <git@vger.kernel.org>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 28 18:55:43 2011
+X-From: git-owner@vger.kernel.org Thu Jul 28 18:55:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QmTs5-0003Kh-N5
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 18:55:42 +0200
+	id 1QmTsF-0003TH-PS
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 18:55:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755693Ab1G1Qzi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jul 2011 12:55:38 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:47132 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755300Ab1G1Qzg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jul 2011 12:55:36 -0400
-Received: by yia27 with SMTP id 27so1952324yia.19
-        for <git@vger.kernel.org>; Thu, 28 Jul 2011 09:55:36 -0700 (PDT)
+	id S1755743Ab1G1Qzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jul 2011 12:55:48 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:59637 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755718Ab1G1Qzq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2011 12:55:46 -0400
+Received: by yxi11 with SMTP id 11so1647404yxi.19
+        for <git@vger.kernel.org>; Thu, 28 Jul 2011 09:55:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=1hCWzTuyYuxAOAV2qJ+q/htgLnZZHw7PJtXvKllDQS8=;
-        b=G34te+Tr51T98O3/SkwOyVtr5PzfT8SlJd7GEa0XBP0j/v3kMeIRK7Yp3b1S1z+H0q
-         T7j3wnr+w5Y5sT+tvoKWLUo2LXrx59BVDQDlNjjJvDVlWWLBFd1VpdCU2gPGoPsu2Ptb
-         MwVvrlnTLsIqaTcXMByamXyyHoqbH4tjWKygk=
-Received: by 10.42.144.193 with SMTP id c1mr138607icv.516.1311872136088;
-        Thu, 28 Jul 2011 09:55:36 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=XAnq35n8HLTCr+6q1QB/xBUN01vZs2Mp3w1MGw3tK5M=;
+        b=lTt2TclxHggRD1DnjL4xAOyFBa30jOisN9W83Z+B8c8KyyMNbGb8MBxkSERoNLYxiu
+         CHLTFFplly8wR7guayTjv7DMbJslAoisDgyZRAuiWJw7P4VV/R6ifXU/38mxATbNJ5ry
+         ctZrQ0mwfLQJXCEEKrN0Zlhti2Fj9uZ5pC9rk=
+Received: by 10.43.45.138 with SMTP id uk10mr112742icb.442.1311872145936;
+        Thu, 28 Jul 2011 09:55:45 -0700 (PDT)
 Received: from localhost.localdomain ([203.110.240.41])
-        by mx.google.com with ESMTPS id ue1sm1497759icb.8.2011.07.28.09.55.32
+        by mx.google.com with ESMTPS id ue1sm1497759icb.8.2011.07.28.09.55.40
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 28 Jul 2011 09:55:34 -0700 (PDT)
+        Thu, 28 Jul 2011 09:55:43 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4.rc1.7.g2cf08.dirty
+In-Reply-To: <1311871951-3497-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178082>
 
-Hi,
+Introduce two new functions corresponding to "git_config_set" and
+"git_config_set_multivar" to write a non-standard configuration file.
+Expose thse new functions in cache.h for other git programs to use.
 
-There were more style nits pointed out in v3: I learnt my lesson and
-ran checkpatch.pl this time.  Apart these minor stylistic changes, the
-other changes are:
-1. Minor improvements to commit messages.
-2. Tests now cleanup first, so one failing test doesn't take
-everything else down.
-3. A rebase that moves "revert: Propogate errors upwards from
-do_pick_commit" to the end of the series.  A big thanks to Jonathan
-for performing the rebase for me.
+Helped-by: Jeff King <peff@peff.net>
+Helped-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ cache.h  |    2 ++
+ config.c |   36 +++++++++++++++++++++++++++---------
+ 2 files changed, 29 insertions(+), 9 deletions(-)
 
-Thanks for reading.
-
--- Ram
-
-Ramkumar Ramachandra (18):
-  advice: Introduce error_resolve_conflict
-  config: Introduce functions to write non-standard file
-  revert: Simplify and inline add_message_to_msg
-  revert: Don't check lone argument in get_encoding
-  revert: Rename no_replay to record_origin
-  revert: Eliminate global "commit" variable
-  revert: Introduce struct to keep command-line options
-  revert: Separate cmdline parsing from functional code
-  revert: Don't create invalid replay_opts in parse_args
-  revert: Save data for continuing after conflict resolution
-  revert: Save command-line options for continuing operation
-  revert: Make pick_commits functionally act on a commit list
-  revert: Introduce --reset to remove sequencer state
-  reset: Make reset remove the sequencer state
-  revert: Remove sequencer state when no commits are pending
-  revert: Don't implictly stomp pending sequencer operation
-  revert: Introduce --continue to continue the operation
-  revert: Propogate errors upwards from do_pick_commit
-
- Documentation/git-cherry-pick.txt |    6 +
- Documentation/git-revert.txt      |    6 +
- Documentation/sequencer.txt       |    9 +
- Makefile                          |    2 +
- advice.c                          |   31 ++-
- advice.h                          |    3 +-
- branch.c                          |    2 +
- builtin/revert.c                  |  736 +++++++++++++++++++++++++++++--------
- cache.h                           |    2 +
- config.c                          |   36 ++-
- sequencer.c                       |   19 +
- sequencer.h                       |   20 +
- t/7106-reset-sequence.sh          |   43 +++
- t/t3510-cherry-pick-sequence.sh   |  225 +++++++++++
- 14 files changed, 969 insertions(+), 171 deletions(-)
- create mode 100644 Documentation/sequencer.txt
- create mode 100644 sequencer.c
- create mode 100644 sequencer.h
- create mode 100755 t/7106-reset-sequence.sh
- create mode 100755 t/t3510-cherry-pick-sequence.sh
-
+diff --git a/cache.h b/cache.h
+index 9e12d55..33d3428 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1069,9 +1069,11 @@ extern int git_config_bool(const char *, const char *);
+ extern int git_config_maybe_bool(const char *, const char *);
+ extern int git_config_string(const char **, const char *, const char *);
+ extern int git_config_pathname(const char **, const char *, const char *);
++extern int git_config_set_in_file(const char *, const char *, const char *);
+ extern int git_config_set(const char *, const char *);
+ extern int git_config_parse_key(const char *, char **, int *);
+ extern int git_config_set_multivar(const char *, const char *, const char *, int);
++extern int git_config_set_multivar_in_file(const char *, const char *, const char *, const char *, int);
+ extern int git_config_rename_section(const char *, const char *);
+ extern const char *git_etc_gitconfig(void);
+ extern int check_repository_format_version(const char *var, const char *value, void *cb);
+diff --git a/config.c b/config.c
+index e42c59b..9e8580b 100644
+--- a/config.c
++++ b/config.c
+@@ -1092,6 +1092,12 @@ contline:
+ 	return offset;
+ }
+ 
++int git_config_set_in_file(const char *config_filename,
++			const char *key, const char *value)
++{
++	return git_config_set_multivar_in_file(config_filename, key, value, NULL, 0);
++}
++
+ int git_config_set(const char *key, const char *value)
+ {
+ 	return git_config_set_multivar(key, value, NULL, 0);
+@@ -1189,19 +1195,14 @@ out_free_ret_1:
+  * - the config file is removed and the lock file rename()d to it.
+  *
+  */
+-int git_config_set_multivar(const char *key, const char *value,
+-	const char *value_regex, int multi_replace)
++int git_config_set_multivar_in_file(const char *config_filename,
++				const char *key, const char *value,
++				const char *value_regex, int multi_replace)
+ {
+ 	int fd = -1, in_fd;
+ 	int ret;
+-	char *config_filename;
+ 	struct lock_file *lock = NULL;
+ 
+-	if (config_exclusive_filename)
+-		config_filename = xstrdup(config_exclusive_filename);
+-	else
+-		config_filename = git_pathdup("config");
+-
+ 	/* parse-key returns negative; flip the sign to feed exit(3) */
+ 	ret = 0 - git_config_parse_key(key, &store.key, &store.baselen);
+ 	if (ret)
+@@ -1378,7 +1379,6 @@ int git_config_set_multivar(const char *key, const char *value,
+ out_free:
+ 	if (lock)
+ 		rollback_lock_file(lock);
+-	free(config_filename);
+ 	return ret;
+ 
+ write_err_out:
+@@ -1387,6 +1387,24 @@ write_err_out:
+ 
+ }
+ 
++int git_config_set_multivar(const char *key, const char *value,
++			const char *value_regex, int multi_replace)
++{
++	const char *config_filename;
++	char *buf = NULL;
++	int ret;
++
++	if (config_exclusive_filename)
++		config_filename = config_exclusive_filename;
++	else
++		config_filename = buf = git_pathdup("config");
++
++	ret = git_config_set_multivar_in_file(config_filename, key, value,
++					value_regex, multi_replace);
++	free(buf);
++	return ret;
++}
++
+ static int section_name_match (const char *buf, const char *name)
+ {
+ 	int i = 0, j = 0, dot = 0;
 -- 
 1.7.4.rc1.7.g2cf08.dirty
