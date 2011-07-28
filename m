@@ -1,112 +1,66 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCHv3] gitweb: Git config keys are case insensitive, make config search too
-Date: Thu, 28 Jul 2011 23:38:03 +0200
-Message-ID: <201107282338.04954.jnareb@gmail.com>
-References: <20110727205118.10439.58875.stgit@localhost.localdomain> <7vtya6kvrz.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH v2 0/3] check for unpushed remotes in submodules
+Date: Fri, 29 Jul 2011 00:14:50 +0200
+Message-ID: <4E31DF5A.4050307@web.de>
+References: <1311790250-32454-1-git-send-email-iveqy@iveqy.com> <7v39hqmb30.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org,
+	hvoigt@hvoigt.net
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 28 23:38:21 2011
+X-From: git-owner@vger.kernel.org Fri Jul 29 00:15:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QmYHa-0000cG-4V
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 23:38:18 +0200
+	id 1QmYr6-0003eN-R7
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jul 2011 00:15:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756063Ab1G1ViO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Jul 2011 17:38:14 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:54402 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755980Ab1G1ViM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jul 2011 17:38:12 -0400
-Received: by fxh19 with SMTP id 19so1636413fxh.19
-        for <git@vger.kernel.org>; Thu, 28 Jul 2011 14:38:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=lXAIkRnfuwXkwetCuFtXgu5Les/bTCOgc77/JTYpkHk=;
-        b=Wstdzy/4I2uN+reLjkvMAp14+C0ARblsxx2ARg/Tr/QdQDX0uzlQ0hZFGYgipCwbJk
-         KKKnuaYOxW1MBoIcS98sety2MMjurK8hsZy5OXzVXvA8d4nSgII2uqxdDX/x9UKvWWvb
-         IdtgW6tLxpoVVklcquJE5D5pokFTiVwnK1mTM=
-Received: by 10.223.91.75 with SMTP id l11mr645443fam.66.1311889091446;
-        Thu, 28 Jul 2011 14:38:11 -0700 (PDT)
-Received: from [192.168.1.13] (abwm72.neoplus.adsl.tpnet.pl [83.8.236.72])
-        by mx.google.com with ESMTPS id 28sm717295fax.3.2011.07.28.14.38.09
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 28 Jul 2011 14:38:10 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vtya6kvrz.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1754794Ab1G1WO5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jul 2011 18:14:57 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:44154 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753774Ab1G1WOz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2011 18:14:55 -0400
+Received: from smtp03.web.de  ( [172.20.0.65])
+	by fmmailgate03.web.de (Postfix) with ESMTP id E513419637707;
+	Fri, 29 Jul 2011 00:14:53 +0200 (CEST)
+Received: from [93.240.106.134] (helo=[192.168.178.43])
+	by smtp03.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1QmYqz-0001UR-00; Fri, 29 Jul 2011 00:14:53 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:5.0) Gecko/20110624 Thunderbird/5.0
+In-Reply-To: <7v39hqmb30.fsf@alter.siamese.dyndns.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX18SEx8xbo/J5KM6fF3ymHpMTv/7mJjbFm+mRxhh
+	FlkgwNHOtSZ97+bbGg5MZLDCKI8IBsuSJRFQeOTIzM5iT9oyC2
+	mYViSwkickqeFV2BT76Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178118>
 
-"git config -z -l" that gitweb uses in git_parse_project_config() to
-populate %config hash returns section and key names of config
-variables in lowercase (they are case insensitive).  When checking
-%config in git_get_project_config() we have to take it into account.
+Am 28.07.2011 21:58, schrieb Junio C Hamano:
+> Fredrik Gustafsson <iveqy@iveqy.com> writes:
+> 
+>> Regarding the discussion of superprojects with submodules that have no
+>> remote tracking branches: A push will still be denied.
+> 
+> I have marked one part of the data synchronized across machines as
+> "private" submodule (which contains my gpg keychains, encrypted password
+> files, personaly memos, etc.) and push only the outer "shell" superproject
+> (which has tools that I use everywhere to go to $HOME/bin among other
+> things) to certain machines without the private parts, and the
+> superproject is designed to work without a checkout (nor clone) of a
+> submodule.
+> 
+> With this patch series, it sounds like I cannot use this repository
+> structure anymore, which is sad.
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-On Thu, 28 Jul 2011, Junio C Hamano napisa=C5=82:
-> Jakub Narebski <jnareb@gmail.com> writes:
->=20
-> > "git config -z -l" that gitweb uses in git_parse_project_config() t=
-o
-> > populate %config hash returns section and key names of config
-> > variables in lowercase (they are case insensitive).  When checking
-> > %config in git_get_project_config() we have to take it into account=
-=2E
-> >
-> > Gitweb does not (yet?) use git config variables with subsection, so=
- we
-> > can simply lowercase $key in git_get_project_config (only subsectio=
-n
-> > names are case sensitive).
->=20
-> Why stop there, I have to wonder, instead of futureproofing with mini=
-mum
-> cost, even with something na=C3=AFve like:
->=20
-> 	if (my ($hi, $mi, $lo) =3D ($key =3D~ /^([^.]*)\.(.*)\.(.*)$)) {
-> 		$key =3D join(".", lc($hi), $mi, lc($lo);
-> 	} else {
->         	$key =3D lc($key);
-> 	}
-
-Well, I thought it would be more involved than this.
-
-Anyway, here it is:
-
- gitweb/gitweb.perl |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 1070805..f858d1b 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2526,6 +2526,13 @@ sub git_get_project_config {
-=20
- 	# key sanity check
- 	return unless ($key);
-+	# only subsection, if exists, is case sensitive,
-+	# and not lowercased by 'git config -z -l'
-+	if (my ($hi, $mi, $lo) =3D ($key =3D~ /^([^.]*)\.(.*)\.([^.]*)$/)) {
-+		$key =3D join(".", lc($hi), $mi, lc($lo));
-+	} else {
-+		$key =3D lc($key);
-+	}
- 	$key =3D~ s/^gitweb\.//;
- 	return if ($key =3D~ m/\W/);
-=20
---=20
-1.7.5
+Thanks for bringing this use case up. Now I understand why you asked if
+submodules without remote tracking branches should be checked too. We
+discussed that and couldn't think of a scenario where the user doesn't
+want to have remote tracking branches in a submodule, but we missed the
+use case you described here. Back to the drawing board ...
