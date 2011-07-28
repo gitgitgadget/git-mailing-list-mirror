@@ -1,81 +1,102 @@
-From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: [PATCH/WIP 4/7] fast-import: fix data corruption in store_tree
-Date: Thu, 28 Jul 2011 10:46:07 +0600
-Message-ID: <1311828370-30477-5-git-send-email-divanorama@gmail.com>
-References: <1311828370-30477-1-git-send-email-divanorama@gmail.com>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	David Barr <davidbarr@google.com>,
-	Dmitry Ivankov <divanorama@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 28 06:43:47 2011
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v2 00/19] Add --all option to git-check-attr
+Date: Thu, 28 Jul 2011 06:46:39 +0200
+Message-ID: <1311828418-2676-1-git-send-email-mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Jul 28 06:47:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QmIRm-0004W6-3w
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 06:43:46 +0200
+	id 1QmIVI-0005XC-NY
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 06:47:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754518Ab1G1Eni (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jul 2011 00:43:38 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:33373 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751954Ab1G1Enb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jul 2011 00:43:31 -0400
-Received: by mail-fx0-f46.google.com with SMTP id 19so881739fxh.19
-        for <git@vger.kernel.org>; Wed, 27 Jul 2011 21:43:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=Jcnz2eJa08Vx665C4AfHKBjGkIAp/3jhzEo+mEuJ7ig=;
-        b=eh5VnI0pfb++kzFSk6N2DY/mlrbUqUYm+ki8wtVNTTuWwXuffdzgE+MXkZQyc9kzXT
-         5P5Ackhn+1ARRRiEQP5UJap79UQXyEt/2FLGzJMGYwClelAJWGxE+uwqym91+ch0jlBV
-         dkTOSY37xuSekvsK0ns0l+3xNTHASh+ZjdXQc=
-Received: by 10.204.166.129 with SMTP id m1mr174824bky.350.1311828211263;
-        Wed, 27 Jul 2011 21:43:31 -0700 (PDT)
-Received: from localhost.localdomain (117360277.convex.ru [79.172.62.237])
-        by mx.google.com with ESMTPS id r24sm146189bkr.26.2011.07.27.21.43.29
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 27 Jul 2011 21:43:30 -0700 (PDT)
-X-Mailer: git-send-email 1.7.3.4
-In-Reply-To: <1311828370-30477-1-git-send-email-divanorama@gmail.com>
+	id S1752197Ab1G1ErU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jul 2011 00:47:20 -0400
+Received: from mail.berlin.jpk.com ([212.222.128.130]:57244 "EHLO
+	mail.berlin.jpk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751676Ab1G1ErT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2011 00:47:19 -0400
+Received: from michael.berlin.jpk.com ([192.168.100.152])
+	by mail.berlin.jpk.com with esmtp (Exim 4.50)
+	id 1QmIT5-000889-Vw; Thu, 28 Jul 2011 06:45:07 +0200
+X-Mailer: git-send-email 1.7.6.8.gd2879
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178015>
 
-store_tree didn't check for S_ISDIR(versions[1].mode), but it did check
-for tree != NULL.
+This version of the patch series fixes a formatting problem found by
+Junio and mentions in the documentation that "-a" means the same as
+"--all".
 
-It's possible that tree == NULL && S_ISDIR(versions[1].mode) in which
-case we need to load_tree and then to store_tree, and not to drop that
-entry. Calling load_tree requires S_ISDIR check to be present, that's
-why it is added..
+Currently it is possible to inquire the values of particular
+attributes on particular files, using either the API function
+git_checkattr() or the command "git check-attr".  But it is not
+possible to ask for *all* attributes that are associated with a
+particular file.  This patch series adds that functionality:
 
-Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
----
- fast-import.c |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
+* A new API call git_allattr()
 
-diff --git a/fast-import.c b/fast-import.c
-index d5915b8..d917ea6 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1474,8 +1474,11 @@ static void store_tree(struct tree_entry *root)
- 		return;
- 
- 	for (i = 0; i < t->entry_count; i++) {
--		if (t->entries[i]->tree)
--			store_tree(t->entries[i]);
-+		if (!S_ISDIR(t->entries[i]->versions[1].mode))
-+			continue;
-+		if (!t->entries[i]->tree)
-+			load_tree(t->entries[i]);
-+		store_tree(t->entries[i]);
- 	}
- 
- 	le = find_object(root->versions[0].sha1);
+* A new option "git check-attr --all -- pathnames"
+
+Along the way, several small cleanups are made in the general
+neighborhood, including:
+
+* Disallow the empty string as an attribute name
+
+* Provide access to the name attribute of git_attr
+
+* Fail with an error message if no pathnames are provided on the
+  command line (and --stdin is not used)
+
+* If --stdin is used, interpret all command-line arguments as
+  attribute names
+
+* Rename struct git_attr_check to git_attr_value
+
+Most of the patches are hopefully self-explanatory; see the individual
+patch emails for discussion of changes that might potentially be
+controversial.
+
+Michael Haggerty (19):
+  doc: Add a link from gitattributes(5) to git-check-attr(1)
+  doc: Correct git_attr() calls in example code
+  Remove anachronism from comment
+  Disallow the empty string as an attribute name
+  git-check-attr: Add missing "&&"
+  git-check-attr: Add tests of command-line parsing
+  Provide access to the name attribute of git_attr
+  git-check-attr: Use git_attr_name()
+  Allow querying all attributes on a file
+  git-check-attr: Extract a function output_attr()
+  git-check-attr: Introduce a new variable
+  git-check-attr: Extract a function error_with_usage()
+  git-check-attr: Handle each error separately
+  git-check-attr: Process command-line args more systematically
+  git-check-attr: Error out if no pathnames are specified
+  git-check-attr: Add an --all option to show all attributes
+  git-check-attr: Drive two tests using the same raw data
+  git-check-attr: Fix command-line handling to match docs
+  Rename struct git_attr_check to git_attr_value
+
+ Documentation/git-check-attr.txt              |   23 ++++-
+ Documentation/gitattributes.txt               |    3 +
+ Documentation/technical/api-gitattributes.txt |   66 +++++++++-----
+ archive.c                                     |    4 +-
+ attr.c                                        |   62 +++++++++++--
+ attr.h                                        |   24 ++++-
+ builtin/check-attr.c                          |  123 ++++++++++++++++--------
+ builtin/pack-objects.c                        |    4 +-
+ convert.c                                     |   10 +-
+ ll-merge.c                                    |    6 +-
+ t/t0003-attributes.sh                         |   61 +++++++++----
+ userdiff.c                                    |    2 +-
+ ws.c                                          |    4 +-
+ 13 files changed, 279 insertions(+), 113 deletions(-)
+
 -- 
-1.7.3.4
+1.7.6.8.gd2879
