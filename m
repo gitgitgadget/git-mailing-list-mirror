@@ -1,103 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2] gitweb: Git config keys are case insensitive, make
- config search too
-Date: Thu, 28 Jul 2011 13:14:24 -0700
-Message-ID: <7vtya6kvrz.fsf@alter.siamese.dyndns.org>
-References: <20110727205118.10439.58875.stgit@localhost.localdomain>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 02/18] config: Introduce functions to write non-standard file
+Date: Fri, 29 Jul 2011 01:45:14 +0530
+Message-ID: <CALkWK0ntddWFHpwoH61im0ZU9H4o-FDy7qzynGQNSqCM0-ga+A@mail.gmail.com>
+References: <1311871951-3497-1-git-send-email-artagnon@gmail.com>
+ <1311871951-3497-3-git-send-email-artagnon@gmail.com> <20110728173500.GA29866@elie.dc0b.debconf.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 28 22:14:33 2011
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 28 22:15:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QmWyW-0002Gj-QA
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 22:14:33 +0200
+	id 1QmWzc-0002zD-Rz
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 22:15:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755880Ab1G1UO2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Jul 2011 16:14:28 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33509 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755275Ab1G1UO1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Jul 2011 16:14:27 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 965795617;
-	Thu, 28 Jul 2011 16:14:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=eMPTHalYdb1L
-	LzJehNvALJ9f23Q=; b=R6Ib3dJlrNYDUxyVjU4mWSiHm5Ki7lS5CBPpFz3rGGnC
-	yJAZzvbGSujA1/9fYiA7YPM0YtQ85OQ/P/Iw4xMQKFK0oSKaNjnU7F2ZrTy9p4oH
-	JH2Pw3dZwG/UJwo+8RFv3NPWF2gJm0uUfjkLbc3nHaVPLgNXJU3DyGEndhbyfaU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=qARGJm
-	CgtMlIWevL0hQu4z9wYptfj9xDvcJqTM69R0snKFEGBErKte75vLIZllpK7PkmVq
-	9OWDfBy6V3uuYz2llI1CNOVC4tZpDZRl5zscUCpAhagRXfWJoB8idGgHnGh97ZGS
-	5bLEUclUxJhEVog3OpOdm//0dRjaIkeSgy55s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D8785616;
-	Thu, 28 Jul 2011 16:14:26 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 21B1C5615; Thu, 28 Jul 2011
- 16:14:26 -0400 (EDT)
-In-Reply-To: <20110727205118.10439.58875.stgit@localhost.localdomain> (Jakub
- Narebski's message of "Wed, 27 Jul 2011 22:53:33 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 30FF64B0-B956-11E0-8AB2-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755719Ab1G1UPg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Jul 2011 16:15:36 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:63375 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755249Ab1G1UPf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Jul 2011 16:15:35 -0400
+Received: by wwe5 with SMTP id 5so2868066wwe.1
+        for <git@vger.kernel.org>; Thu, 28 Jul 2011 13:15:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=OVYGaCu1yw31a0VBoXLSZzMmJlj41t5gzANjRdRhzE8=;
+        b=e9p2JilXjs5V/PcxRkOvKLDes3N8RhqtT0NGCGdFmgB25fUqKpzyuT0kKppfG9Kvxn
+         cl1Z95+PFqmAP80AYWttGDbuabMqHpa9N2LXueuf4yadHh1hiQT92pfEUzv6U9K21ZmQ
+         H8e5GkXTczY6CS/tDCu+8aNNsxzL9/sPc8eVM=
+Received: by 10.227.57.209 with SMTP id d17mr487541wbh.94.1311884134120; Thu,
+ 28 Jul 2011 13:15:34 -0700 (PDT)
+Received: by 10.216.137.134 with HTTP; Thu, 28 Jul 2011 13:15:14 -0700 (PDT)
+In-Reply-To: <20110728173500.GA29866@elie.dc0b.debconf.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178113>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Hi,
 
-> "git config -z -l" that gitweb uses in git_parse_project_config() to
-> populate %config hash returns section and key names of config
-> variables in lowercase (they are case insensitive).  When checking
-> %config in git_get_project_config() we have to take it into account.
->
-> Gitweb does not (yet?) use git config variables with subsection, so w=
-e
-> can simply lowercase $key in git_get_project_config (only subsection
-> names are case sensitive).
+Jonathan Nieder writes:
+> Other messages need a spell-check, too. =C2=A0Aside from that, patche=
+s 1-3
+> look good --- thanks for your perseverance.
 
-Why stop there, I have to wonder, instead of futureproofing with minimu=
-m
-cost, even with something na=C3=AFve like:
+=46ixed all.  Also hooked flyspell to git-commit-mode to avoid this in =
+future.
 
-	if (my ($hi, $mi, $lo) =3D ($key =3D~ /^([^.]*)\.(.*)\.(.*)$)) {
-		$key =3D join(".", lc($hi), $mi, lc($lo);
-	} else {
-        	$key =3D lc($key);
-	}
+Thanks.
 
-> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-> ---
-> I think it is a resend, but I haven't found first version.
->
-> The patch is unchanged, but commit message got improved.
-> It is not as much bugfix as hardening (against user e.g. adding
-> new overridable feature via gitweb config file).
->
->  gitweb/gitweb.perl |    1 +
->  1 files changed, 1 insertions(+), 0 deletions(-)
->
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 1070805..90b5a73 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -2526,6 +2526,7 @@ sub git_get_project_config {
-> =20
->  	# key sanity check
->  	return unless ($key);
-> +	$key =3D lc($key); # assuming there is no subsection
->  	$key =3D~ s/^gitweb\.//;
->  	return if ($key =3D~ m/\W/);
-> =20
+-- Ram
