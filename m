@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 07/19] Provide access to the name attribute of git_attr
-Date: Thu, 28 Jul 2011 06:46:46 +0200
-Message-ID: <1311828418-2676-8-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 09/19] Allow querying all attributes on a file
+Date: Thu, 28 Jul 2011 06:46:48 +0200
+Message-ID: <1311828418-2676-10-git-send-email-mhagger@alum.mit.edu>
 References: <1311828418-2676-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: gitster@pobox.com
@@ -11,83 +11,177 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QmIVc-0005eI-Cm
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 06:47:44 +0200
+	id 1QmIVb-0005eI-B4
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 06:47:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754606Ab1G1Erm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jul 2011 00:47:42 -0400
-Received: from mail.berlin.jpk.com ([212.222.128.130]:57268 "EHLO
+	id S1754581Ab1G1Eri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jul 2011 00:47:38 -0400
+Received: from mail.berlin.jpk.com ([212.222.128.130]:57270 "EHLO
 	mail.berlin.jpk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753111Ab1G1ErW (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1752793Ab1G1ErW (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 28 Jul 2011 00:47:22 -0400
 Received: from michael.berlin.jpk.com ([192.168.100.152])
 	by mail.berlin.jpk.com with esmtp (Exim 4.50)
-	id 1QmITD-000889-FG; Thu, 28 Jul 2011 06:45:15 +0200
+	id 1QmITD-000889-GT; Thu, 28 Jul 2011 06:45:15 +0200
 X-Mailer: git-send-email 1.7.6.8.gd2879
 In-Reply-To: <1311828418-2676-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178023>
 
-It will be present in any likely future reimplementation, and its
-availability simplifies other code.
+Add a function, git_allattrs(), that reports on all attributes that
+are set on a path.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- Documentation/technical/api-gitattributes.txt |    3 ++-
- attr.c                                        |    5 +++++
- attr.h                                        |    7 +++++++
- 3 files changed, 14 insertions(+), 1 deletions(-)
+ Documentation/technical/api-gitattributes.txt |   45 +++++++++++++++++-------
+ attr.c                                        |   43 +++++++++++++++++++++++
+ attr.h                                        |    9 +++++
+ 3 files changed, 84 insertions(+), 13 deletions(-)
 
 diff --git a/Documentation/technical/api-gitattributes.txt b/Documentation/technical/api-gitattributes.txt
-index 916720f..ab3a84d 100644
+index ab3a84d..640240e 100644
 --- a/Documentation/technical/api-gitattributes.txt
 +++ b/Documentation/technical/api-gitattributes.txt
-@@ -13,7 +13,8 @@ Data Structure
- 	An attribute is an opaque object that is identified by its name.
- 	Pass the name to `git_attr()` function to obtain the object of
- 	this type.  The internal representation of this structure is
--	of no interest to the calling programs.
-+	of no interest to the calling programs.  The name of the
-+	attribute can be retrieved by calling `git_attr_name()`.
+@@ -22,19 +22,6 @@ Data Structure
+ 	to `git_checkattr()` function, and receives the results.
  
- `struct git_attr_check`::
  
+-Calling Sequence
+-----------------
+-
+-* Prepare an array of `struct git_attr_check` to define the list of
+-  attributes you would want to check.  To populate this array, you would
+-  need to define necessary attributes by calling `git_attr()` function.
+-
+-* Call git_checkattr() to check the attributes for the path.
+-
+-* Inspect `git_attr_check` structure to see how each of the attribute in
+-  the array is defined for the path.
+-
+-
+ Attribute Values
+ ----------------
+ 
+@@ -58,6 +45,19 @@ If none of the above returns true, `.value` member points at a string
+ value of the attribute for the path.
+ 
+ 
++Querying Specific Attributes
++----------------------------
++
++* Prepare an array of `struct git_attr_check` to define the list of
++  attributes you would want to check.  To populate this array, you would
++  need to define necessary attributes by calling `git_attr()` function.
++
++* Call `git_checkattr()` to check the attributes for the path.
++
++* Inspect `git_attr_check` structure to see how each of the attribute in
++  the array is defined for the path.
++
++
+ Example
+ -------
+ 
+@@ -109,4 +109,23 @@ static void setup_check(void)
+ 	}
+ ------------
+ 
++
++Querying All Attributes
++-----------------------
++
++To get the values of all attributes associated with a file:
++
++* Call `git_allattrs()`, which returns an array of `git_attr_check`
++  structures.
++
++* Iterate over the `git_attr_check` array to examine the attribute
++  names and values.  The name of the attribute described by a
++  `git_attr_check` object can be retrieved via
++  `git_attr_name(check[i].attr)`.  (Please note that no items will be
++  returned for unset attributes, so `ATTR_UNSET()` will return false
++  for all returned `git_array_check` objects.)
++
++* Free the `git_array_check` array.
++
++
+ (JC)
 diff --git a/attr.c b/attr.c
-index b1d1d6d..bfa1f43 100644
+index bfa1f43..9c2fca8 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -36,6 +36,11 @@ static int attr_nr;
- static struct git_attr_check *check_all_attr;
- static struct git_attr *(git_attr_hash[HASHSIZE]);
+@@ -737,6 +737,49 @@ int git_checkattr(const char *path, int num, struct git_attr_check *check)
+ 	return 0;
+ }
  
-+char *git_attr_name(struct git_attr *attr)
++int git_allattrs(const char *path, int *num, struct git_attr_check **check)
 +{
-+	return attr->name;
++	struct attr_stack *stk;
++	const char *cp;
++	int dirlen, pathlen, i, rem, count, j;
++
++	bootstrap_attr_stack();
++	for (i = 0; i < attr_nr; i++)
++		check_all_attr[i].value = ATTR__UNKNOWN;
++
++	pathlen = strlen(path);
++	cp = strrchr(path, '/');
++	if (!cp)
++		dirlen = 0;
++	else
++		dirlen = cp - path;
++	prepare_attr_stack(path, dirlen);
++	rem = attr_nr;
++	for (stk = attr_stack; 0 < rem && stk; stk = stk->prev)
++		rem = fill(path, pathlen, stk, rem);
++
++	/* Count the number of attributes that are set. */
++	count = 0;
++	for (i = 0; i < attr_nr; i++) {
++		const char *value = check_all_attr[i].value;
++		if (value != ATTR__UNSET && value != ATTR__UNKNOWN)
++			++count;
++	}
++	*num = count;
++	*check = xmalloc(sizeof(*check_all_attr) * count);
++	j = 0;
++	for (i = 0; i < attr_nr; i++) {
++		const char *value = check_all_attr[i].value;
++		if (value != ATTR__UNSET && value != ATTR__UNKNOWN) {
++			(*check)[j].attr = check_all_attr[i].attr;
++			(*check)[j].value = value;
++			++j;
++		}
++	}
++
++	return 0;
 +}
 +
- static unsigned hash_name(const char *name, int namelen)
+ void git_attr_set_direction(enum git_attr_direction new, struct index_state *istate)
  {
- 	unsigned val = 0, c;
+ 	enum git_attr_direction old = direction;
 diff --git a/attr.h b/attr.h
-index 8b3f19b..d4f875a 100644
+index d4f875a..83202f0 100644
 --- a/attr.h
 +++ b/attr.h
-@@ -29,6 +29,13 @@ struct git_attr_check {
- 	const char *value;
- };
+@@ -38,6 +38,15 @@ char *git_attr_name(struct git_attr *);
  
-+/*
-+ * Return the name of the attribute represented by the argument.  The
-+ * return value is a pointer to a null-delimited string that is part
-+ * of the internal data structure; it should not be modified or freed.
-+ */
-+char *git_attr_name(struct git_attr *);
-+
  int git_checkattr(const char *path, int, struct git_attr_check *);
  
++/*
++ * Retrieve all attributes that apply to the specified path.  *num
++ * will be set the the number of attributes on the path; **check will
++ * be set to point at a newly-allocated array of git_attr_check
++ * objects describing the attributes and their values.  *check must be
++ * free()ed by the caller.
++ */
++int git_allattrs(const char *path, int *num, struct git_attr_check **check);
++
  enum git_attr_direction {
+ 	GIT_ATTR_CHECKIN,
+ 	GIT_ATTR_CHECKOUT,
 -- 
 1.7.6.8.gd2879
