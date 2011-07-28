@@ -1,96 +1,68 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 11/11] vcs-svn,svn-fe: add an option to write svnrev
- notes
-Date: Thu, 28 Jul 2011 12:27:29 +0200
-Message-ID: <20110728102729.GC6991@elie>
-References: <1310559673-5026-1-git-send-email-divanorama@gmail.com>
- <1310559673-5026-12-git-send-email-divanorama@gmail.com>
- <20110725213923.GC8708@elie.dc0b.debconf.org>
- <CA+gfSn9MGiBJ-vhj25wMa5Jwu0hWo0Uyv2wiYst09+M6VX1SQA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, David Barr <davidbarr@google.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Dmitry Ivankov <divanorama@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 28 12:27:51 2011
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [RFC 5/6] test-path-utils: Add subcommand "absolute_path"
+Date: Thu, 28 Jul 2011 12:37:04 +0200
+Message-ID: <1311849425-9057-6-git-send-email-mhagger@alum.mit.edu>
+References: <1311849425-9057-1-git-send-email-mhagger@alum.mit.edu>
+Cc: gitster@pobox.com, Michael Haggerty <mhagger@alum.mit.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 28 12:37:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QmNoh-0003Ph-RD
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 12:27:48 +0200
+	id 1QmNyI-0007Q2-RJ
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 12:37:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754631Ab1G1K1m convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Jul 2011 06:27:42 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:60466 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753057Ab1G1K1l convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Jul 2011 06:27:41 -0400
-Received: by fxh19 with SMTP id 19so1135701fxh.19
-        for <git@vger.kernel.org>; Thu, 28 Jul 2011 03:27:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=ZWo/tfzRsBCBjwH+K7eMnV7DKnwgwfY6p557kKbouq8=;
-        b=omV70pZyS0Roxo5mApxCaMqAzNqqvQc9cZb43oWiIdSiBPVDlpKSjZrNbxE9VKKVqN
-         MuGUITypzsKz6lPwaIztT7E308rOUVHFrHf1VwhqlRoRT7EtoDVwhtlGFoUA7vLHB0Q6
-         RohFElM//UCPLl0ChnO/czZ+cCwCD0XPdLpdc=
-Received: by 10.223.15.141 with SMTP id k13mr1146864faa.118.1311848860472;
-        Thu, 28 Jul 2011 03:27:40 -0700 (PDT)
-Received: from elie (adsl-165-140-99.teol.net [109.165.140.99])
-        by mx.google.com with ESMTPS id 28sm391424fax.27.2011.07.28.03.27.38
-        (version=SSLv3 cipher=OTHER);
-        Thu, 28 Jul 2011 03:27:39 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CA+gfSn9MGiBJ-vhj25wMa5Jwu0hWo0Uyv2wiYst09+M6VX1SQA@mail.gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S1755291Ab1G1KhU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jul 2011 06:37:20 -0400
+Received: from mail.berlin.jpk.com ([212.222.128.130]:32855 "EHLO
+	mail.berlin.jpk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754972Ab1G1KhR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2011 06:37:17 -0400
+Received: from michael.berlin.jpk.com ([192.168.100.152])
+	by mail.berlin.jpk.com with esmtp (Exim 4.50)
+	id 1QmNvm-0001Zr-E9; Thu, 28 Jul 2011 12:35:06 +0200
+X-Mailer: git-send-email 1.7.6.8.gd2879
+In-Reply-To: <1311849425-9057-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178055>
 
-Dmitry Ivankov wrote:
-> On Tue, Jul 26, 2011 at 3:39 AM, Jonathan Nieder <jrnieder@gmail.com>=
- wrote:
 
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0--notes-ref=3Drefs/notes/svn-rev --note=3D=
-'project foo, r%N'
->>
->> As a bonus, that would allow including more information using
->> different flag characters in the note in the future.
->
-> Format string looks nice.
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
 
-Yes, it sounds pleasant to work with to me.  Open questions:
+This patch and the following one are purely to allow testing of some
+path manipulation commands.  (Perhaps they will inspire somebody to
+write unit tests for absolute_path() and or prefix_path(), or document
+prefix_path().)  If it is not thought that they will be useful in the
+future, they can be discarded.
 
- - how fine-grained should the notes commits be?  E.g., should they
-   be written one at a time, in batches of 10, or something else?
+ test-path-utils.c |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
 
- - is there a way to make some commits get no note at all?  Is this
-   template-based approach the right way to go?  (I guess yes, it is.)
-
- - what if someone wants multiple notes refs (e.g., revision numbers
-   and revprops in separate notes refs)?  Will this support that?  If
-   not, is it extensible enough to sensibly support that in the
-   future?
-
-[...]
-> One more consideration is that copy-from information most likely
-> will be written by svn-fe (nothing else knows it anyway) to some
-> notes, so we'll need some notes writing in svn-fe.
-
-Yep, copyfrom info has to get downstream somehow.  Which means
-
-   a. in log messages
-   b. in notes
-   c. in comments or "progress" lines in the stream, or
-or d. in a second output stream, with file descriptor number specified
-      by the caller.
-
-I was leaning towards (a) or (c), but (b) certainly also seems
-sensible.
+diff --git a/test-path-utils.c b/test-path-utils.c
+index e767159..a410e30 100644
+--- a/test-path-utils.c
++++ b/test-path-utils.c
+@@ -20,6 +20,15 @@ int main(int argc, char **argv)
+ 		return 0;
+ 	}
+ 
++	if (argc >= 2 && !strcmp(argv[1], "absolute_path")) {
++		while (argc > 2) {
++			puts(absolute_path(argv[2]));
++			argc--;
++			argv++;
++		}
++		return 0;
++	}
++
+ 	if (argc == 4 && !strcmp(argv[1], "longest_ancestor_length")) {
+ 		int len = longest_ancestor_length(argv[2], argv[3]);
+ 		printf("%d\n", len);
+-- 
+1.7.6.8.gd2879
