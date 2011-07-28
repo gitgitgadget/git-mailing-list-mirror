@@ -1,64 +1,65 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH 00/18] GSoC update: Sequencer for inclusion v3
-Date: Thu, 28 Jul 2011 22:02:01 +0530
-Message-ID: <CALkWK0=d_JEy=24Sqg7Np12wsV754kbw_ejpFJsKttDc4t2g1Q@mail.gmail.com>
+Date: Thu, 28 Jul 2011 18:39:20 +0200
+Message-ID: <20110728163919.GA3155@elie.dc0b.debconf.org>
 References: <1311736755-24205-1-git-send-email-artagnon@gmail.com>
- <7vfwlrmisu.fsf@alter.siamese.dyndns.org> <CALkWK0kWtdHD2JF+sP8ox96jPncZagQpHzu3vvggyEFO3D2ryw@mail.gmail.com>
+ <7vfwlrmisu.fsf@alter.siamese.dyndns.org>
+ <CALkWK0kWtdHD2JF+sP8ox96jPncZagQpHzu3vvggyEFO3D2ryw@mail.gmail.com>
+ <CALkWK0=d_JEy=24Sqg7Np12wsV754kbw_ejpFJsKttDc4t2g1Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 28 18:32:28 2011
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 28 18:39:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QmTVc-0007Vf-BB
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 18:32:28 +0200
+	id 1QmTcU-0002cu-2M
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Jul 2011 18:39:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755546Ab1G1QcY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Jul 2011 12:32:24 -0400
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:59636 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755467Ab1G1QcW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Jul 2011 12:32:22 -0400
-Received: by wwg11 with SMTP id 11so4181655wwg.1
-        for <git@vger.kernel.org>; Thu, 28 Jul 2011 09:32:21 -0700 (PDT)
+	id S1755217Ab1G1Qja (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jul 2011 12:39:30 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:39491 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754906Ab1G1Qj2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2011 12:39:28 -0400
+Received: by fxh19 with SMTP id 19so1422002fxh.19
+        for <git@vger.kernel.org>; Thu, 28 Jul 2011 09:39:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ZuHWh3GBxvktrZ4L/fP8IOm2K/ihU0Pe8e719Ti/HoE=;
-        b=Iy0qczCk1JxYKGyKg2zjqsbYy/jd4ZKq7TlVDUy/fHpolaPbLF0bmJVtDl1NsJ4Cu6
-         Kslw5EZdy47FUC7OX41y+X/snsyGfV4KzIPfPOEfesaL0uzymbT+72hQfutwdErIsXTD
-         z9u8gNnR55K9eDCtue882BFLf9FQ6GpO9IiRQ=
-Received: by 10.227.57.209 with SMTP id d17mr221994wbh.94.1311870741160; Thu,
- 28 Jul 2011 09:32:21 -0700 (PDT)
-Received: by 10.216.137.134 with HTTP; Thu, 28 Jul 2011 09:32:01 -0700 (PDT)
-In-Reply-To: <CALkWK0kWtdHD2JF+sP8ox96jPncZagQpHzu3vvggyEFO3D2ryw@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=c1qrNtYj8ImIBipi+hxCF7FK2ckRmcqsUVq4oZQ7s8g=;
+        b=SK5BSPFKCR4f6cWO0xysLgmoP40YgZqw4TO8MMgzgnENyeB/NC2Opv2y46amzp0a89
+         uRz+hTuyMbPTpDItiUho6Q3RUQ6JCgnE0PON71OOvKIWj51yFXDvBBrsog/ePC8Iqa50
+         335JgBB6yRStT2ym4+xCVOBcxAwDmJGSqDHQA=
+Received: by 10.223.159.8 with SMTP id h8mr311934fax.3.1311871167684;
+        Thu, 28 Jul 2011 09:39:27 -0700 (PDT)
+Received: from elie.dc0b.debconf.org ([78.28.140.4])
+        by mx.google.com with ESMTPS id c28sm574645fam.16.2011.07.28.09.39.25
+        (version=SSLv3 cipher=OTHER);
+        Thu, 28 Jul 2011 09:39:26 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0=d_JEy=24Sqg7Np12wsV754kbw_ejpFJsKttDc4t2g1Q@mail.gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178078>
 
-Hi again,
+Ramkumar Ramachandra wrote:
 
-Ramkumar Ramachandra writes:
-> Do you think the series is alright otherwise? =C2=A0I'll post another
-> iteration of the sequencer momentarily.
+> Um, one more thing.  I've also decided to let Jonathan's commit
+> signoff-factoring patch [1] wait until the next series.
+>
+> [1]: https://github.com/artagnon/git/commit/0494a
 
-Um, one more thing.  I've also decided to let Jonathan's commit
-signoff-factoring patch [1] wait until the next series.
-
-[1]: https://github.com/artagnon/git/commit/0494a
-
-Thanks.
-
--- Ram
+Sure, I don't think it belongs in the series at all fwiw --- it can
+migrate to master independently.  It was mostly a way to deter a
+non-sequitor in the commit message. :)
