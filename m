@@ -1,98 +1,73 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: gitignore design
-Date: Fri, 29 Jul 2011 17:44:41 +0100
-Organization: OPDS
-Message-ID: <295478CF936A4310941CE2001892A2DA@PhilipOakley>
-References: <1311934832699-6632987.post@n2.nabble.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Jonathan del Strother <maillist@steelskies.com>
+Subject: Re: Can't build git on Lion?
+Date: Fri, 29 Jul 2011 19:51:05 +0100
+Message-ID: <CAF5DW8+9ketSNULU67YwY7QDqMSLrOGQAXXodD9Dr2p-ivWo6w@mail.gmail.com>
+References: <CAF5DW8+efO0jcynyhg3GCZc5JByHwQzudqtrJXF87YazYjF2mw@mail.gmail.com>
+ <loom.20110728T141556-724@post.gmane.org> <20110729063812.GA64045@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: "llucianf" <llucianf@gmail.com>, <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 29 18:44:48 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jack Nagel <Jack.Nagel.1@ndsu.edu>, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 29 20:51:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QmqB5-0003OY-K7
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jul 2011 18:44:47 +0200
+	id 1Qms9p-0006mp-7v
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jul 2011 20:51:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751480Ab1G2Qom (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jul 2011 12:44:42 -0400
-Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:59119 "EHLO
-	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751350Ab1G2Qom (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Jul 2011 12:44:42 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Au4AAK/iMk5cHKoL/2dsb2JhbAArCQEBBAEIAQE0FQUIAQEYEAYBAQQFAwEDEQMBAQEKMRQBAQQMEAIHCBYIBwEIDgwCAQIDAQ0EiX6NcI9XeIh8AgK/KoViXwSHK5U5AYZ5
-X-IronPort-AV: E=Sophos;i="4.67,288,1309734000"; 
-   d="scan'208";a="360716396"
-Received: from host-92-28-170-11.as13285.net (HELO PhilipOakley) ([92.28.170.11])
-  by out1.ip01ir2.opaltelecom.net with SMTP; 29 Jul 2011 17:44:39 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6109
+	id S1752677Ab1G2Sv3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Jul 2011 14:51:29 -0400
+Received: from juliet.asmallorange.com ([207.210.105.70]:56953 "EHLO
+	juliet.asmallorange.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751305Ab1G2Sv2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Jul 2011 14:51:28 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:55698)
+	by juliet.asmallorange.com with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.69)
+	(envelope-from <maillist@steelskies.com>)
+	id 1Qms9g-0007v3-W0
+	for git@vger.kernel.org; Fri, 29 Jul 2011 14:51:29 -0400
+Received: by iyb12 with SMTP id 12so4263608iyb.19
+        for <git@vger.kernel.org>; Fri, 29 Jul 2011 11:51:25 -0700 (PDT)
+Received: by 10.231.119.67 with SMTP id y3mr1050847ibq.155.1311965485092; Fri,
+ 29 Jul 2011 11:51:25 -0700 (PDT)
+Received: by 10.231.16.66 with HTTP; Fri, 29 Jul 2011 11:51:05 -0700 (PDT)
+In-Reply-To: <20110729063812.GA64045@gmail.com>
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - juliet.asmallorange.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - steelskies.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178158>
 
-The answer is that you can use
-   git add --force <filename>
-to force git to take a copy of the current version of that file and place it 
-in the staging area, despite it being in the ignore list.
-
- Being *in* the staging area means that that specific version will be copied 
-into each commit until you ask git to remove that copy (with git rm 
-<filename> from the staging area, or update that copy, or whatever.
-
-This depends on how (i.e. the options) you add files before a commit, or do 
-the commit itself, etc. For example the 'git add -A .' option will notice 
-all the changes, including any updates to your <filename> (which may not be 
-what you want).
-
-Git is flexible enough to do what you need. It can be hard to see the effect 
-of all the options especially if someone has shown you a 'magic' command, 
-but hasn't fully explained the consequences. Many things are only obvious in 
-retrospect.
-
-Philip Oakley
-Scotland
------ Original Message ----- 
-From: "llucianf" <llucianf@gmail.com>
-To: <git@vger.kernel.org>
-Sent: Friday, July 29, 2011 11:20 AM
-Subject: gitignore design
-
-
-> why gitignore doesnt simply work like in cvs where if you put something in
-> the ignore file, those stuff are simply ignored from that point without
-> having to remove them from repo?
+On 29 July 2011 07:38, David Aguilar <davvid@gmail.com> wrote:
+> On Thu, Jul 28, 2011 at 12:19:01PM +0000, Jack Nagel wrote:
+>> > There's no /System/Library/Perl/5.10.0 directory, but there is a 5=
+=2E10
+>> > directory. =C2=A0Symlinking that to 5.10.0 gives me :
+>>
+>> I've seen this issue pop up serveral times in the last few days in v=
+arious
+>> places; the solution is to install (or re-install) XCode as the inst=
+allation
+>> does not persist correctly across upgrades. Versions prior to 4.1 ar=
+e
+>> incompatible with Lion; also, after you download it from the App Sto=
+re, make
+>> sure that you run the "XCode Installer" app that is placed in your
+>> Applications folder.
 >
->
-> --
-> View this message in context: 
-> http://git.661346.n2.nabble.com/gitignore-design-tp6632987p6632987.html
-> Sent from the git mailing list archive at Nabble.com.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
-> ______________________________________________________________________
-> This email has been scanned by the MessageLabs Email Security System.
-> For more information please visit http://www.messagelabs.com/email
-> ______________________________________________________________________
->
->
-> -----
-> No virus found in this message.
-> Checked by AVG - www.avg.com
-> Version: 10.0.1390 / Virus Database: 1518/3793 - Release Date: 07/28/11
-> 
+> The last time I saw this error it was because the Perl version
+> changed. =C2=A0"make clean" fixed it for me. =C2=A0YMMV.
+
+Oh, good point.  Yes, 'make clean' fixed things, thanks for the tip.
