@@ -1,54 +1,104 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [GSoC 2011] What were the results of Midterm Evaluations of Git projects?
-Date: Sat, 30 Jul 2011 01:34:07 +0530
-Message-ID: <CALkWK0kBLaTOSJ=Y6R4rmhvvnC_cn5kkXwz_hv0xY2z-89eKSw@mail.gmail.com>
-References: <201107292102.13676.jnareb@gmail.com>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCH] submodule add: improve message when resolving a relative
+ url fails
+Date: Fri, 29 Jul 2011 16:10:04 -0400
+Message-ID: <4E33139C.5000209@xiplink.com>
+References: <1306792280-12768-1-git-send-email-marcnarc@xiplink.com> <4DE541EC.7010202@web.de> <4DE548C4.2010600@web.de> <4DE5561C.3010200@xiplink.com> <4DE565DF.7050207@cisco.com> <4DE660E2.9080500@xiplink.com> <4E306065.2010002@cisco.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Shawn Pearce <spearce@spearce.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 29 22:04:38 2011
+Content-Transfer-Encoding: 7bit
+Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Phil Hord <hordp@cisco.com>
+X-From: git-owner@vger.kernel.org Fri Jul 29 22:10:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QmtIP-0006nc-G2
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jul 2011 22:04:33 +0200
+	id 1QmtO4-0001jG-Ns
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jul 2011 22:10:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752765Ab1G2UE3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Jul 2011 16:04:29 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:64071 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752156Ab1G2UE2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Jul 2011 16:04:28 -0400
-Received: by wyg8 with SMTP id 8so420204wyg.19
-        for <git@vger.kernel.org>; Fri, 29 Jul 2011 13:04:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=PppDhfKCrf8OvOIopsWupjolpsc60G2mWnw2sclKjJE=;
-        b=t11hX+oEolBFRqw/Y8CKq6dkALmZ++DuT2Jh6Hl4m/zvc1VgLMm3M1wOleTwk8FGkF
-         43zCjVnijg7lzFG9MAkclsascC/h1rBK9nyYUzWEHSLRyULv7TISueO3NQXnzNRIdOo1
-         4ABmtsjsRLPIfziGuCp+Otz0WEQAKSyMrk+/k=
-Received: by 10.227.153.8 with SMTP id i8mr2237011wbw.64.1311969867114; Fri,
- 29 Jul 2011 13:04:27 -0700 (PDT)
-Received: by 10.216.137.134 with HTTP; Fri, 29 Jul 2011 13:04:07 -0700 (PDT)
-In-Reply-To: <201107292102.13676.jnareb@gmail.com>
+	id S1752791Ab1G2UKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jul 2011 16:10:08 -0400
+Received: from smtp202.iad.emailsrvr.com ([207.97.245.202]:58061 "EHLO
+	smtp202.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752763Ab1G2UKH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2011 16:10:07 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp50.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id 2ACE5370A11;
+	Fri, 29 Jul 2011 16:10:05 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp50.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id CE7123708F3;
+	Fri, 29 Jul 2011 16:10:04 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110617 Thunderbird/3.1.11
+In-Reply-To: <4E306065.2010002@cisco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178164>
 
-Hi Jakub,
+On 11-07-27 03:00 PM, Phil Hord wrote:
+> On 06/01/2011 11:55 AM, Marc Branchaud wrote:
+>> On 11-05-31 06:04 PM, Phil Hord wrote:
+>>> On 05/31/2011 04:57 PM, Marc Branchaud wrote:
+>>>>  - The current code rewrites the URL so that any relative path is either
+>>>>    rejected or munged into an absolute remote URL.
+>>> I don't see the URL getting munged away from being relative.  Can you
+>>> point to an example?
+>> I reached this conclusion because if I go into my clone of git.git and do
+>>
+>> 	git submodule add ../MyThing
+>>
+>> where ../MyThing is a regular git repo, I get
+>>
+>> Cloning into MyThing...
+>> fatal: The remote end hung up unexpectedly
+>> Clone of 'git://git.kernel.org/pub/scm/git/MyThing' into submodule path
+>> 'MyThing' failed
+>>
+>> So it seemed the relative URL became an absolute URL.
+>>
+>> Looking more closely at a working example, I can see that (as you show below)
+>> the URL in the super-repo's .gitmodules file retains the relative path, but
+>> the submodule's remote.origin.url is an absolute path.
+>>
+>> In any case, "submodule add" isn't doing what I expected: make my local
+>> MyThing repo a submodule of my git.git clone.
+> 
+> I thought I understood this workflow better than I actually did.  I
+> think I understand more now, and I'm somewhat disappointed.  But I also
+> failed to pick up the ball on this old discussion.
+> 
+> If you do this, I think it will work like you were hoping:
+> 
+>     :: ( mkdir MyThing && cd MyThing && git init )
+>     Initialized empty Git repository in /opc/git/MyThing/.git/
+>     :: git submodule add ../MyThing
+>     Adding existing repo at 'MyThing' to the index
 
-Jakub Narebski writes:
-> =C2=A0* Git Sequencer
+I see how that works, but I don't find that intuitive at all.  For one,
+../MyThing doesn't even exist, neither locally or on the origin repo.  It's
+really ./MyThing (with one dot).  The last idea that I'd come up with for
+adding ./MyThing as a submodule would be to use ../MyThing.
 
-Git Sequencer passed midterm evaluations.
+What git does in this case actually looks like a bug to me.  I'd expect "git
+submodule add ../MyThing" to fail if there's no local ../MyThing and no
+remote ../MyThing.
 
--- Ram
+> Furthermore, the relative path only works for URLs.  It does not work
+> for local filesystems.
+
+Well, sort of.  From the current man page: "If the superproject doesn't have
+an origin configured the superproject is its own authoritative upstream and
+the current working directory is used instead."
+
+I submitted two patches to clarify the documentation on that point:
+
+	http://article.gmane.org/gmane.comp.version-control.git/175163
+	http://article.gmane.org/gmane.comp.version-control.git/175162
+
+They seemed to have been lost in the shuffle, though.
+
+		M.
