@@ -1,66 +1,55 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: Can't build git on Lion?
-Date: Thu, 28 Jul 2011 23:38:13 -0700
-Message-ID: <20110729063812.GA64045@gmail.com>
-References: <CAF5DW8+efO0jcynyhg3GCZc5JByHwQzudqtrJXF87YazYjF2mw@mail.gmail.com>
- <loom.20110728T141556-724@post.gmane.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] git-send-email: Do not send editor backup files in a directory
+Date: Fri, 29 Jul 2011 12:17:10 +0530
+Message-ID: <CALkWK0nowSnmN7gj6+_VDX81njev-q6WUgpaFouRHMzJCva9Rw@mail.gmail.com>
+References: <865ddd502d9ba4a19c33c69039ecb70ea12c0692.1311319658.git.joe@perches.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Jack Nagel <Jack.Nagel.1@ndsu.edu>,
-	Jonathan del Strother <maillist@steelskies.com>
-X-From: git-owner@vger.kernel.org Fri Jul 29 08:36:55 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Joe Perches <joe@perches.com>
+X-From: git-owner@vger.kernel.org Fri Jul 29 08:47:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qmggp-00019v-Ek
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jul 2011 08:36:55 +0200
+	id 1QmgrA-0005Di-At
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jul 2011 08:47:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754417Ab1G2Ggt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jul 2011 02:36:49 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:60706 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753005Ab1G2Ggt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2011 02:36:49 -0400
-Received: by gwaa12 with SMTP id a12so297714gwa.19
-        for <git@vger.kernel.org>; Thu, 28 Jul 2011 23:36:48 -0700 (PDT)
+	id S1755040Ab1G2Grc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jul 2011 02:47:32 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:64535 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754949Ab1G2Grb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2011 02:47:31 -0400
+Received: by wyg8 with SMTP id 8so619668wyg.19
+        for <git@vger.kernel.org>; Thu, 28 Jul 2011 23:47:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=vknzT0GHAF/uahQ4it3rOoVheYYjpGFT/wttY+LCm5w=;
-        b=MiRUGM7LorcJpX+7h5CCFkPrhgiPQothe29IVA6M+J+r+BaYCqpZiIfWpdtw/pAhO6
-         1lvIOHunCKSbutNu/eWoWAVD0cLMWFWaUve5oQjEuBigcD0lGPkGK43gpA1CvwgOl9le
-         Xhc72weBAKFva/M6KQbx7wZzG3WS74NOjWtv8=
-Received: by 10.68.1.103 with SMTP id 7mr1750946pbl.81.1311921408041;
-        Thu, 28 Jul 2011 23:36:48 -0700 (PDT)
-Received: from gmail.com ([216.151.15.131])
-        by mx.google.com with ESMTPS id d3sm1823059pbh.21.2011.07.28.23.36.47
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 28 Jul 2011 23:36:47 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <loom.20110728T141556-724@post.gmane.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=JpqwOYFBfKUze4h1dcaWTnOEXAhh1jtkK5ZFwVbcQI4=;
+        b=QzbgDTOeuC5udNWQ9tRE86LGuaIl7mvex58KK95w1dSjXQIgzz4rY+kSb924n4ALH9
+         eRwBLqof5DVcG8M6wvvhleyZQJO7smpdUmZRQDCjkzFIcy/kdvxU8nA8WB5ilU0JhRNt
+         CG/ZEAneyG9C3rAFM7l9vnZ2FwKTZXXtPrf7Y=
+Received: by 10.227.55.66 with SMTP id t2mr1241023wbg.109.1311922050124; Thu,
+ 28 Jul 2011 23:47:30 -0700 (PDT)
+Received: by 10.216.137.134 with HTTP; Thu, 28 Jul 2011 23:47:10 -0700 (PDT)
+In-Reply-To: <865ddd502d9ba4a19c33c69039ecb70ea12c0692.1311319658.git.joe@perches.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178127>
 
-On Thu, Jul 28, 2011 at 12:19:01PM +0000, Jack Nagel wrote:
-> > There's no /System/Library/Perl/5.10.0 directory, but there is a 5.10
-> > directory.  Symlinking that to 5.10.0 gives me :
-> 
-> I've seen this issue pop up serveral times in the last few days in various 
-> places; the solution is to install (or re-install) XCode as the installation 
-> does not persist correctly across upgrades. Versions prior to 4.1 are 
-> incompatible with Lion; also, after you download it from the App Store, make 
-> sure that you run the "XCode Installer" app that is placed in your 
-> Applications folder.
+Hi Joe,
 
-The last time I saw this error it was because the Perl version
-changed.  "make clean" fixed it for me.  YMMV.
--- 
-					David
+Joe Perches writes
+> [Subject: git-send-email: Do not send editor backup files in a directory]
+
+I like this change.  I don't have to resort to my normal `git
+send-email outgoing/*.patch` anymore.
+
+Thanks.
+
+-- Ram
