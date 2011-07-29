@@ -1,52 +1,76 @@
-From: "John M. Dlugosz" <ngnr63q02@sneakemail.com>
-Subject: git-svn and comitter names
-Date: Fri, 29 Jul 2011 10:16:43 -0500
-Message-ID: <6517-1311952613-96947@sneakemail.com>
+From: Pete Wyckoff <pw@padd.com>
+Subject: refs/replace advice
+Date: Fri, 29 Jul 2011 08:31:22 -0700
+Message-ID: <20110729153122.GA4535@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 29 17:23:46 2011
+X-From: git-owner@vger.kernel.org Fri Jul 29 17:37:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QmouZ-0002xV-FK
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jul 2011 17:23:39 +0200
+	id 1Qmp86-0002ps-3Q
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jul 2011 17:37:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751678Ab1G2PXe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Jul 2011 11:23:34 -0400
-Received: from sneak2.sneakemail.com ([38.113.6.65]:35943 "HELO
-	sneak2.sneakemail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751153Ab1G2PXe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2011 11:23:34 -0400
-X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 Jul 2011 11:23:33 EDT
-Received: (qmail 9489 invoked from network); 29 Jul 2011 15:16:53 -0000
-Received: from unknown (HELO localhost.localdomain) (192.168.0.1)
-  by sneak2.sneakemail.com with SMTP; 29 Jul 2011 15:16:53 -0000
-Received: from 207.58.245.194 by mail.sneakemail.com with SMTP;
- 29 Jul 2011 15:16:53 -0000
-Received: (sneakemail censored 6517-1311952613-96947 #1); 29 Jul 2011
- 15:16:53 -0000
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US; rv:1.8.1.24)
- Gecko/20100228 Thunderbird/2.0.0.24 Mnenhy/0.7.5.666
-X-Mailer: Perl5 Mail::Internet v
+	id S1751693Ab1G2Phd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jul 2011 11:37:33 -0400
+Received: from honk.padd.com ([74.3.171.149]:34183 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751470Ab1G2Phc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2011 11:37:32 -0400
+X-Greylist: delayed 369 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 Jul 2011 11:37:32 EDT
+Received: by honk.padd.com (Postfix, from userid 7770)
+	id 200E1223A; Fri, 29 Jul 2011 08:31:23 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178155>
 
-I just grabbed a repository using git-svn, and the commiter name shows =
-a GUID for the=20
-domain name.  For example,
+I've got two near-identical git repos, both imported from
+gigantic upstream p4 repos.  They started at slightly different
+times so have different commit SHA1s, even though the tree
+contents are the same.  I can't filter-branch either of them; too
+many users already.
 
-     first.last <first.last@5ab5abacd-6ff9-f940-aeea-106a2a325327>
+I'm trying to use "git replace" to avoid cloning the entire set
+of duplicate commits across a slow inter-site link.  Like this:
 
-I set my git name and email address to show what I want in the end, the=
- real company email=20
-address.  Will this apparent mapping be a problem when I dcommit?
+    ...---A----B----C   site1/top
+                     \
+                      D---E---F  site1/proj
 
-=E2=80=94John
+    ...---A'---B'---C'  site2/top
+
+It is true that "git diff C C'" is empty:  they are identical.
+
+This set of commands, run from site2, clones most of the repo
+locally (up to C'), then grabs the few changes D..F from the
+faraway site1:
+
+    git clone /path/to/site2.git repo
+    cd repo
+    git remote add -f site1 /path/to/faraway/site1.git
+
+But it causes an entire fetch of all commits because C != C'.
+I'd prefer it just to fetch D, E and F.  So I try:
+
+    git refs replace A' A
+
+but it still fetches everything.  I toyed with grafting
+site1's A on top of the parent of our local A':
+
+    echo A A'^ > .git/info/grafts
+
+no luck.
+
+I thought maybe I could "git fetch --depth=N" where N would cover
+the range A'..site2/top, then replace.  But testing with "git
+fetch --depth=3" still wants to fetch 100k objects.
+
+Any ideas?
+
+                -- Pete
