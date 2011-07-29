@@ -1,64 +1,201 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: gitignore design
-Date: Fri, 29 Jul 2011 15:31:35 +0200
-Message-ID: <4E32B637.1030201@viscovery.net>
-References: <1311934832699-6632987.post@n2.nabble.com>	<4E329EDB.6040007@hupie.com>	<1311940877783-6633274.post@n2.nabble.com>	<m339hps2is.fsf@localhost.localdomain> <4E32AE7C.70004@viscovery.net> <m3pqktql6s.fsf@localhost.localdomain>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: [PATCH] commit: allow partial commits with relative paths
+Date: Fri, 29 Jul 2011 15:35:51 +0200
+Message-ID: <20110729133551.GA8707@toss.lan>
+References: <CAOnWdohKfwEOMx=wr_PKiW+ucYBK2ZWykm_7dqr7hy4xGRM02A@mail.gmail.com>
+ <19b908142567fcfafe4da3d0fd60b134d30c613a.1311579663.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-4
-Content-Transfer-Encoding: 7bit
-Cc: llucianf <llucianf@gmail.com>, git@vger.kernel.org,
-	Ferry Huberts <mailings@hupie.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 29 15:31:44 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Reuben Thomas <rrt@sc3d.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Jul 29 15:36:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QmnAG-00036K-6D
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jul 2011 15:31:44 +0200
+	id 1QmnEN-0005JY-Nl
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jul 2011 15:36:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753774Ab1G2Nbj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jul 2011 09:31:39 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:13225 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750901Ab1G2Nbi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2011 09:31:38 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1QmnA8-0004iq-CU; Fri, 29 Jul 2011 15:31:36 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 213F11660F;
-	Fri, 29 Jul 2011 15:31:36 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.18) Gecko/20110616 Thunderbird/3.1.11
-In-Reply-To: <m3pqktql6s.fsf@localhost.localdomain>
-X-Enigmail-Version: 1.1.1
-X-Spam-Score: -1.0 (-)
+	id S1754161Ab1G2Nfz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jul 2011 09:35:55 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:29945 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752960Ab1G2Nfy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2011 09:35:54 -0400
+Received: from localhost (unknown [80.123.242.182])
+	by bsmtp.bon.at (Postfix) with ESMTP id 06E67130055;
+	Fri, 29 Jul 2011 15:35:51 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <19b908142567fcfafe4da3d0fd60b134d30c613a.1311579663.git.git@drmicha.warpmail.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178151>
 
-Am 7/29/2011 15:19, schrieb Jakub Narebski:
-> Are you sure?  It seems to work as I thought it would.
-> [...]
-> Notice that change to 'bar' didn't get comitted.
+In order to do partial commits, git-commit overlays a tree on the
+cache and checks pathspecs against the result. Currently, the overlaying
+is done using "prefix" which prevents relative pathspecs with ".." and
+absolute pathspec from matching when they refer to files not under
+"prefix" and absent from the index, but still in the tree (i.e. files
+staged for removal).
 
-Of course, it didn't get committed, you promised not to change it, so why
-should git commit it?
+Instead, determine the maximal common prefix for all specified
+paths using the pathspec_prefix() routine from ls-files.c.  Any use
+of global variables is removed from pathspec_prefix() so that it
+can be called from commit.c.
 
-However, your example does not show the dangerous part. git-commit is not
-dangerous. But you might run into trouble when git has to merge content
-into the worktree or index; in this case, git may decide to just read the
-file instead of to unpack an object - assuming that the content on disk is
-identical to the unpacked object (it will do so because with
---assume-unchanged you promised not to change the file). If you broke your
-promise, you get to what you deserve ;)
+Reported-by: Reuben Thomas <rrt@sc3d.org>
+Analyzed-by: Michael J Gruber <git@drmicha.warpmail.net>
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
 
-No code reference, sorry, because I'm just parrotting what I've read
-elsewhere on the list, for example,
-http://thread.gmane.org/gmane.comp.version-control.git/146082/focus=146353
+On Mon, Jul 25, 2011 at 09:42:10AM +0200, Michael J Gruber wrote:
+> 
+> Overlay the full tree instead.
 
--- Hannes
+That is one option. On the other hand, ls-files already provides
+the function we need to do this properly.
+
+With your permission I am stealing your commit message.
+
+Clemens
+---
+ builtin/commit.c   |    6 ++++--
+ builtin/ls-files.c |   38 ++------------------------------------
+ cache.h            |    1 +
+ setup.c            |   32 ++++++++++++++++++++++++++++++++
+ 4 files changed, 39 insertions(+), 38 deletions(-)
+
+diff --git a/builtin/commit.c b/builtin/commit.c
+index a16d00b..c2db12a 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -256,8 +256,10 @@ static int list_paths(struct string_list *list, const char *with_tree,
+ 		;
+ 	m = xcalloc(1, i);
+ 
+-	if (with_tree)
+-		overlay_tree_on_cache(with_tree, prefix);
++	if (with_tree) {
++		const char *max_prefix = pathspec_prefix(prefix, pattern);
++		overlay_tree_on_cache(with_tree, max_prefix);
++	}
+ 
+ 	for (i = 0; i < active_nr; i++) {
+ 		struct cache_entry *ce = active_cache[i];
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 72b986f..fef5642 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -276,41 +276,6 @@ static void prune_cache(const char *prefix)
+ 	active_nr = last;
+ }
+ 
+-static const char *pathspec_prefix(const char *prefix)
+-{
+-	const char **p, *n, *prev;
+-	unsigned long max;
+-
+-	if (!pathspec) {
+-		max_prefix_len = prefix ? strlen(prefix) : 0;
+-		return prefix;
+-	}
+-
+-	prev = NULL;
+-	max = PATH_MAX;
+-	for (p = pathspec; (n = *p) != NULL; p++) {
+-		int i, len = 0;
+-		for (i = 0; i < max; i++) {
+-			char c = n[i];
+-			if (prev && prev[i] != c)
+-				break;
+-			if (!c || c == '*' || c == '?')
+-				break;
+-			if (c == '/')
+-				len = i+1;
+-		}
+-		prev = n;
+-		if (len < max) {
+-			max = len;
+-			if (!max)
+-				break;
+-		}
+-	}
+-
+-	max_prefix_len = max;
+-	return max ? xmemdupz(prev, max) : NULL;
+-}
+-
+ static void strip_trailing_slash_from_submodules(void)
+ {
+ 	const char **p;
+@@ -581,7 +546,8 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 		strip_trailing_slash_from_submodules();
+ 
+ 	/* Find common prefix for all pathspec's */
+-	max_prefix = pathspec_prefix(prefix);
++	max_prefix = pathspec_prefix(prefix, pathspec);
++	max_prefix_len = max_prefix ? strlen(max_prefix) : 0;
+ 
+ 	/* Treat unmatching pathspec elements as errors */
+ 	if (pathspec && error_unmatch) {
+diff --git a/cache.h b/cache.h
+index 86518fb..dd3edaa 100644
+--- a/cache.h
++++ b/cache.h
+@@ -441,6 +441,7 @@ extern void set_git_work_tree(const char *tree);
+ #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
+ 
+ extern const char **get_pathspec(const char *prefix, const char **pathspec);
++extern const char *pathspec_prefix(const char *prefix, const char **pathspec);
+ extern void setup_work_tree(void);
+ extern const char *setup_git_directory_gently(int *);
+ extern const char *setup_git_directory(void);
+diff --git a/setup.c b/setup.c
+index 5ea5502..2c51a9a 100644
+--- a/setup.c
++++ b/setup.c
+@@ -264,6 +264,38 @@ const char **get_pathspec(const char *prefix, const char **pathspec)
+ 	return pathspec;
+ }
+ 
++const char *pathspec_prefix(const char *prefix, const char **pathspec)
++{
++	const char **p, *n, *prev;
++	unsigned long max;
++
++	if (!pathspec)
++		return prefix ? xmemdupz(prefix, strlen(prefix)) : NULL;
++
++	prev = NULL;
++	max = PATH_MAX;
++	for (p = pathspec; (n = *p) != NULL; p++) {
++		int i, len = 0;
++		for (i = 0; i < max; i++) {
++			char c = n[i];
++			if (prev && prev[i] != c)
++				break;
++			if (!c || c == '*' || c == '?')
++				break;
++			if (c == '/')
++				len = i+1;
++		}
++		prev = n;
++		if (len < max) {
++			max = len;
++			if (!max)
++				break;
++		}
++	}
++
++	return max ? xmemdupz(prev, max) : NULL;
++}
++
+ /*
+  * Test if it looks like we're at a git directory.
+  * We want to see:
+-- 
+1.7.3.1.105.g84915
