@@ -1,85 +1,64 @@
-From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: [RFC] plumbing git-notes
-Date: Fri, 29 Jul 2011 19:24:38 +0600
-Message-ID: <CA+gfSn_ay555SCfW=BzcF=73GpG1fckQoiAzpGcR-J5AyoV-mw@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: gitignore design
+Date: Fri, 29 Jul 2011 15:31:35 +0200
+Message-ID: <4E32B637.1030201@viscovery.net>
+References: <1311934832699-6632987.post@n2.nabble.com>	<4E329EDB.6040007@hupie.com>	<1311940877783-6633274.post@n2.nabble.com>	<m339hps2is.fsf@localhost.localdomain> <4E32AE7C.70004@viscovery.net> <m3pqktql6s.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 29 15:24:47 2011
+Content-Type: text/plain; charset=ISO-8859-4
+Content-Transfer-Encoding: 7bit
+Cc: llucianf <llucianf@gmail.com>, git@vger.kernel.org,
+	Ferry Huberts <mailings@hupie.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 29 15:31:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qmn3W-00082W-In
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jul 2011 15:24:46 +0200
+	id 1QmnAG-00036K-6D
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jul 2011 15:31:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752532Ab1G2NYk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jul 2011 09:24:40 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:34982 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752145Ab1G2NYj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2011 09:24:39 -0400
-Received: by qwk3 with SMTP id 3so1822269qwk.19
-        for <git@vger.kernel.org>; Fri, 29 Jul 2011 06:24:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=poWnPNTEoh9Jdcepx5gnlPZkAWPXBhPPMfTbvYf65MM=;
-        b=bfujVzRQnyldWcDHkgvDsKejAa9hu/+8jAtu35+Om3KQYflhpuFI7FqKOyhlazvNfr
-         ivmwKMgonJEA/ug71pU92Dr28ugEukn9mlYs86e62NBJ9GBzp57TGUQJ3NnnSimdU2iF
-         r5cOVCA1IUmb9mGWgJ9Z0J42gkJ/5fNcIu6JY=
-Received: by 10.229.101.93 with SMTP id b29mr400563qco.112.1311945878423; Fri,
- 29 Jul 2011 06:24:38 -0700 (PDT)
-Received: by 10.229.189.3 with HTTP; Fri, 29 Jul 2011 06:24:38 -0700 (PDT)
+	id S1753774Ab1G2Nbj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jul 2011 09:31:39 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:13225 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750901Ab1G2Nbi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2011 09:31:38 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1QmnA8-0004iq-CU; Fri, 29 Jul 2011 15:31:36 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 213F11660F;
+	Fri, 29 Jul 2011 15:31:36 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.18) Gecko/20110616 Thunderbird/3.1.11
+In-Reply-To: <m3pqktql6s.fsf@localhost.localdomain>
+X-Enigmail-Version: 1.1.1
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178150>
 
-Hi,
+Am 7/29/2011 15:19, schrieb Jakub Narebski:
+> Are you sure?  It seems to work as I thought it would.
+> [...]
+> Notice that change to 'bar' didn't get comitted.
 
-Currently git accepts notes tree specification only as a ref under ref/notes/.
-We can't say
-GIT_NOTES_DISPLAY_REF=  GIT_NOTES_REF= \
-  git log --show-notes=refs/notes/commits^
-# this one is weird, we neither say "ref is invalid" nor show the notes
-or
-GIT_NOTES_DISPLAY_REF=  GIT_NOTES_REF= \
-  git log --show-notes=`git rev-parse refs/notes/commits`
+Of course, it didn't get committed, you promised not to change it, so why
+should git commit it?
 
-There is a problem if for some plumbing we'd want to read or write notes
-from some other place. From a temporary branch for example. A remote
-helper may want to utilize notes as a private map from objects to some
-data that is not a part of commit (say it can change for old objects, like
-revprops in svn). And also it may want to expose this map.
+However, your example does not show the dangerous part. git-commit is not
+dangerous. But you might run into trouble when git has to merge content
+into the worktree or index; in this case, git may decide to just read the
+file instead of to unpack an object - assuming that the content on disk is
+identical to the unpacked object (it will do so because with
+--assume-unchanged you promised not to change the file). If you broke your
+promise, you get to what you deserve ;)
 
-Another problem is working with a notes tree like with a regular tree.
-Merging, rebasing, etc can be done, but we can't map temporary
-notes revs to objects, unless they are kept as refs/notes/some_tmp_note.
+No code reference, sorry, because I'm just parrotting what I've read
+elsewhere on the list, for example,
+http://thread.gmane.org/gmane.comp.version-control.git/146082/focus=146353
 
-One more question is the notes for a remote repository. We don't clone
-refs/notes/ by default, but where do we keep them if we'd want them to
-be tracked?
-refs/remotes/origin/notes/
-refs/notes/remotes/origin/
-refs/notes/origin/
-refs/remote-notes/origin/
-refs/notes/user_decides_which
-
-We have remote refspec defaults:
-refs/heads/*:refs/remotes/origin*
-refs/tags/*:refs/tags/*.
-What will be the destination for:
-refs/notes/*?
-
-Btw, isn't it a bug:
-(git init a && cd a && touch a && git add a && git commit -m a && git tag 123)
-(git init b && cd b && touch b && git add b && git commit -m b && git tag 123)
-(cd a && git remote add b ../a && git remote update)
-Fetching b
-From ../a
- * [new branch]      master     -> b/master
-# we didn't store refs/tags/123 from b to anywhere and didn't say
-anything about it
+-- Hannes
