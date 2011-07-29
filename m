@@ -1,63 +1,73 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [GSoC 2011] What were the results of Midterm Evaluations of Git projects?
-Date: Fri, 29 Jul 2011 21:02:12 +0200
-Message-ID: <201107292102.13676.jnareb@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 16/18] revert: Remove sequencer state when no commits are
+ pending
+Date: Fri, 29 Jul 2011 21:16:55 +0200
+Message-ID: <20110729191654.GA2368@elie.dc0b.debconf.org>
+References: <1311736755-24205-1-git-send-email-artagnon@gmail.com>
+ <1311736755-24205-17-git-send-email-artagnon@gmail.com>
+ <20110727051755.GK18470@elie>
+ <CALkWK0noPtLgr_t=DC_XFdLrWUNCLhUd00Mw1HbmWRJjeT4jew@mail.gmail.com>
+ <20110727141006.GA24785@elie>
+ <CALkWK0k8Lra7LkGJXoXScnGUjrag-xgNptaB_JCiAsgemTq0eQ@mail.gmail.com>
+ <20110727154830.GA29924@elie>
+ <CALkWK0mUGiCRQoW6UM+mF5tsn4DxRuaiXn0TS2CcEsR0OeusKg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 29 21:02:27 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 29 21:17:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QmsKJ-0003Xp-Bw
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jul 2011 21:02:27 +0200
+	id 1QmsYZ-0002NB-AU
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jul 2011 21:17:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752668Ab1G2TCW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jul 2011 15:02:22 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:57136 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752616Ab1G2TCW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2011 15:02:22 -0400
-Received: by wwe5 with SMTP id 5so3864464wwe.1
-        for <git@vger.kernel.org>; Fri, 29 Jul 2011 12:02:21 -0700 (PDT)
+	id S1752193Ab1G2TRG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jul 2011 15:17:06 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:37545 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751350Ab1G2TRE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2011 15:17:04 -0400
+Received: by fxh19 with SMTP id 19so2546199fxh.19
+        for <git@vger.kernel.org>; Fri, 29 Jul 2011 12:17:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=m4Tw6yrU+dH+V+gjjL36y+R3cf0Nv5Dp3Q/C+aunhiM=;
-        b=N3FczslWbEAfxplvbcOTX1F3yB32VGUPUIa7G+QRMI4YF2eGBQ5O9Obbxhikbq0ZTW
-         lc5nuGJvkg3rUXPapf8OUvUc2YcEFfcb6eq3Yg15351liIkzc3cq0HkoSjJjkwb3Pb5M
-         aIZzhtjOtj3hRa9LejEiS2Q2LnZZIio2CGnWs=
-Received: by 10.227.11.141 with SMTP id t13mr2157574wbt.98.1311966141017;
-        Fri, 29 Jul 2011 12:02:21 -0700 (PDT)
-Received: from [192.168.1.13] (abwm72.neoplus.adsl.tpnet.pl [83.8.236.72])
-        by mx.google.com with ESMTPS id l68sm1634299weq.10.2011.07.29.12.02.18
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 29 Jul 2011 12:02:19 -0700 (PDT)
-User-Agent: KMail/1.9.3
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=1Cwy6MvvJGmRrDkLpzWHUKUqB2LkfKiJX9sJfbTmlMs=;
+        b=L7jMmMA0Q+pptzh4O7U8pAq7ScjamMkNYF9rkmNpEc0GzyuTCfUNa8ExDAELI3wEVs
+         K6yLwn7Ck10cSkkAtwKy2W47V8lY4Rp3Dti4gLRqnJPLNu6m6ZlEQg78Q1wFf1XwKXWI
+         fYssbVNWlMZJ41RDCUtifR9a9fFWU0L4gwxcM=
+Received: by 10.223.72.80 with SMTP id l16mr2278693faj.33.1311967023172;
+        Fri, 29 Jul 2011 12:17:03 -0700 (PDT)
+Received: from elie.dc0b.debconf.org ([78.28.140.4])
+        by mx.google.com with ESMTPS id 28sm1261401fax.27.2011.07.29.12.16.59
+        (version=SSLv3 cipher=OTHER);
+        Fri, 29 Jul 2011 12:17:01 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <CALkWK0mUGiCRQoW6UM+mF5tsn4DxRuaiXn0TS2CcEsR0OeusKg@mail.gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178160>
 
-I guess that all five of Git projects for Google Summer of Code 2011:
+Ramkumar Ramachandra wrote:
+> Jonathan Nieder writes:
 
- * Add the network stack to libgit2
- * Remote helper for Subversion and git-svn
- * Git submodule improvements
- * Git Sequencer
- * Port histogram diff from JGit
+>> If "tight coupling" means "builtin/commit.c calls a function declared
+>> in sequencer.h", then yes, I think it should be fine.
+>
+> My bad. I'll first have to figure out a way to expose the todo parsing
+> functions (and dependent functions) without touching much else.
 
-passed their midterm evaluations (July 11 -- July 15)... but I'd like to
-be sure before updating https://git.wiki.kernel.org/index.php/SoC2011Projects
-
--- 
-Jakub Narebski
-Poland
+That's the wrong way to go.  One right way would be to expose a single
+function, representing "here is what to do after successfully making a
+commit".  Think of it as an invisible built-in post-commit hook
+(see githooks(5)).
