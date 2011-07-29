@@ -1,123 +1,91 @@
 From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: gitignore design
-Date: Fri, 29 Jul 2011 05:19:51 -0700 (PDT)
-Message-ID: <m339hps2is.fsf@localhost.localdomain>
+Date: Fri, 29 Jul 2011 05:27:13 -0700 (PDT)
+Message-ID: <m3y5zhqnlv.fsf@localhost.localdomain>
 References: <1311934832699-6632987.post@n2.nabble.com>
 	<4E329EDB.6040007@hupie.com>
 	<1311940877783-6633274.post@n2.nabble.com>
+	<4E32A2D2.9060007@hupie.com>
+	<1311941774976-6633332.post@n2.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-4
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Ferry Huberts <mailings@hupie.com>
 To: llucianf <llucianf@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 29 14:20:00 2011
+X-From: git-owner@vger.kernel.org Fri Jul 29 14:27:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qmm2o-0001PA-Lp
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jul 2011 14:19:59 +0200
+	id 1Qmm9x-00050t-Ab
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jul 2011 14:27:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756061Ab1G2MTy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Jul 2011 08:19:54 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:61088 "EHLO
+	id S932068Ab1G2M1Q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Jul 2011 08:27:16 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:54555 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755804Ab1G2MTx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Jul 2011 08:19:53 -0400
-Received: by fxh19 with SMTP id 19so2245076fxh.19
-        for <git@vger.kernel.org>; Fri, 29 Jul 2011 05:19:52 -0700 (PDT)
+	with ESMTP id S1753681Ab1G2M1P convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Jul 2011 08:27:15 -0400
+Received: by fxh19 with SMTP id 19so2251382fxh.19
+        for <git@vger.kernel.org>; Fri, 29 Jul 2011 05:27:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=x-authentication-warning:to:cc:subject:references:from:date
          :in-reply-to:message-id:lines:user-agent:mime-version:content-type
          :content-transfer-encoding;
-        bh=JtAEfnA35gVDbz1iiqYAVn2kXk50t/JLAVFaGLnvn0A=;
-        b=im1PUsJIDE0kKLrOBzGQREkHf5Ec2bJfc7dZTQabnnofP7l2++gGZYZIMn8MpvoF58
-         lcj7Av7V9xMeyIV+NhICGBJQMTxN8wRqmAdaCkvAU16tTU3GKBnY5Wx3qgxD5M7Q9KQg
-         UECm2b8At0FnbMauphYdFnz3tC6sETtyFSZgk=
-Received: by 10.223.1.207 with SMTP id 15mr1752375fag.9.1311941992636;
-        Fri, 29 Jul 2011 05:19:52 -0700 (PDT)
+        bh=LW3QBpC32gGY2iyUIqEXetijEu202BCF07jG/Xmq2oU=;
+        b=ueLHU8mSd+VgCvzwgo2eIHb0z1FMKhTUXVuMWnTGEvsG3mkg+Tx4Z4/RfCNGu9VZl7
+         i6Wc6uB3dB9eEFp4G7XkarmZoyHu8rVZete8K+ojacExIO1BMUOaR0nJiLMm2EOgWrjE
+         3JFyjFuSQ6U8TSbOIha6tpcjDUiNehXiMf40g=
+Received: by 10.223.16.210 with SMTP id p18mr1727166faa.71.1311942434748;
+        Fri, 29 Jul 2011 05:27:14 -0700 (PDT)
 Received: from localhost.localdomain (abwm72.neoplus.adsl.tpnet.pl [83.8.236.72])
-        by mx.google.com with ESMTPS id e10sm1061610fak.18.2011.07.29.05.19.50
+        by mx.google.com with ESMTPS id h9sm1063705faa.39.2011.07.29.05.27.12
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 29 Jul 2011 05:19:51 -0700 (PDT)
+        Fri, 29 Jul 2011 05:27:13 -0700 (PDT)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p6TCJIv5010130;
-	Fri, 29 Jul 2011 14:19:29 +0200
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p6TCQkZG010241;
+	Fri, 29 Jul 2011 14:26:57 +0200
 Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p6TCJ8CY010126;
-	Fri, 29 Jul 2011 14:19:08 +0200
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p6TCQaYD010237;
+	Fri, 29 Jul 2011 14:26:36 +0200
 X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1311940877783-6633274.post@n2.nabble.com>
+In-Reply-To: <1311941774976-6633332.post@n2.nabble.com>
 User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178143>
 
 llucianf <llucianf@gmail.com> writes:
-> Ferry Huberts <mailings@hupie.com> writes:
-> > On 07/29/2011 12:20 PM, llucianf wrote:
 
-> > > why gitignore doesnt simply work like in cvs where if you put som=
-ething in
-> > > the ignore file, those stuff are simply ignored from that point w=
-ithout
-> > > having to remove them from repo?
+> is not a contradiction. i need project files into repo so whenever i =
+clone
+> the project on diff machine i need them there.
+> but during development i dont need them to be 'taken into account' by=
+ git.=20
 
-Are you sure that cvsignore file makes CVS to ignore changes in
-_tracked_ files (in repository)?  CVS manual says:
+The usual solution is to put _template_ under version control (for
+example <projfile>.sample), and have build system create initial
+custom version during first build.  Local project file is untracked
+and ignored, and project file template is tracked.
 
-  Ignoring files via cvsignore
-  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
+> the purpose of this topic is for me to understand why git dont use th=
+e
+> simple cvs approach on this matter.
 
-     There are certain file names that frequently occur inside your
-  working copy, but that you don't want to put under CVS control.
-  Examples are all the object files that you get while you compile your
-  sources.  Normally, when you run `cvs update', it prints a line for
-  each file it encounters that it doesn't know about.
+Are you sure that is how CVS does it?  Because from what I read in CVS
+manual, CVS and Git approach to ignore files are the same wrt. already
+tracked files.
 
-Tracked files (in repository) are by definition not unknown to version
-control system, be it CVS or Git.
-=20
-> > because when it's in the repo you obviously want to track it...
-> > tracking trumps ignoring
-> >=20
-> > if you now suddenly do not want to track it anymore you have to rem=
-ove
-> > it and ignore it.
->
-> sorry but this is not always the case.
+> why i cant just enumerate some files into .gitignore file and have gi=
+t
+> simply ignore them without removing them from repo?
 
-But it is _usually_ the case, and that is why gitignore works as it
-does, being only about _untracked_ files.
-
->                                        there are plenty of cases (pro=
-ject
-> files is most common example) in which i need files in repo but i do =
-not
-> need git to track them. so why i cant just simply enumerate those pro=
-ject
-> files into .gitignore and 'persuade'  git to simply forget about them=
-?
-
-=46or that you can use 'assume-unachanged' mechanism (note: it is local
-to repository).  The gitignore(7) manpage says:
-
-  NOTES
-     The purpose of gitignore files is to ensure that certain files not=
- tracked
-     by git remain untracked.
-
-     To ignore uncommitted changes in a file that is already tracked, u=
-se
-     `git update-index --assume-unchanged <file>`.
-
-
-Or just don't use 'git commit -a' and commit with dirty tree.
+There is assume-unchanged mechanism... which is _explicitely_
+mentioned in "Notes" section of gitignore(7) manpage.  RTFM, please.
 
 --=20
 Jakub Nar=EAbski
