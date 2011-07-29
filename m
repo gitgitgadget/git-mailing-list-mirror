@@ -1,72 +1,60 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH v2 3/3] push: Add the --no-recurse-submodules option
-Date: Fri, 29 Jul 2011 00:22:56 +0200
-Message-ID: <4E31E140.8020105@web.de>
-References: <1311790250-32454-1-git-send-email-iveqy@iveqy.com> <1311790250-32454-4-git-send-email-iveqy@iveqy.com> <7vy5zikw6e.fsf@alter.siamese.dyndns.org>
+From: Joe Perches <joe@perches.com>
+Subject: Re: [PATCH] git-send-email: Do not send editor backup files in a directory
+Date: Fri, 29 Jul 2011 00:41:56 +0000 (UTC)
+Message-ID: <loom.20110729T023925-64@post.gmane.org>
+References: <865ddd502d9ba4a19c33c69039ecb70ea12c0692.1311319658.git.joe@perches.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org,
-	hvoigt@hvoigt.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 29 00:23:11 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 29 02:45:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QmYyw-0007Kb-Hv
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Jul 2011 00:23:06 +0200
+	id 1QmbCX-0005k0-9v
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Jul 2011 02:45:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756097Ab1G1WXB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jul 2011 18:23:01 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:52397 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756079Ab1G1WXA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jul 2011 18:23:00 -0400
-Received: from smtp08.web.de  ( [172.20.5.216])
-	by fmmailgate03.web.de (Postfix) with ESMTP id C17271961AFF9;
-	Fri, 29 Jul 2011 00:22:56 +0200 (CEST)
-Received: from [93.240.106.134] (helo=[192.168.178.43])
-	by smtp08.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1QmYym-000157-00; Fri, 29 Jul 2011 00:22:56 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:5.0) Gecko/20110624 Thunderbird/5.0
-In-Reply-To: <7vy5zikw6e.fsf@alter.siamese.dyndns.org>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX18bvn1rdJFvOJaF1q7TjrJJ9hoJcaCqRwosoKIc
-	Cv+Dm2/cB/g0Ecr/GxHtf/m/Dl0cHslpCtFg40S/8OXLx3Rugr
-	dJrOz26qPl1iKab+lH9w==
+	id S1755153Ab1G2ApJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jul 2011 20:45:09 -0400
+Received: from lo.gmane.org ([80.91.229.12]:49582 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754766Ab1G2ApI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2011 20:45:08 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1QmbCM-0005gq-My
+	for git@vger.kernel.org; Fri, 29 Jul 2011 02:45:06 +0200
+Received: from static-173-55-12-11.lsanca.ftas.verizon.net ([173.55.12.11])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 29 Jul 2011 02:45:06 +0200
+Received: from joe by static-173-55-12-11.lsanca.ftas.verizon.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 29 Jul 2011 02:45:06 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 173.55.12.11 (Mozilla/5.0 (X11; Linux i686; rv:5.0) Gecko/20100101 Firefox/5.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178120>
 
-Am 28.07.2011 22:05, schrieb Junio C Hamano:
-> Fredrik Gustafsson <iveqy@iveqy.com> writes:
-> 
->> This adds the option --no-recurse-submodules to push. That is, git
-> 
-> I think this needs to be renamed at least for two reasons.
-> 
-> The name makes it sound as if "push --recurse-submodules" would
-> recursively visit the submodules and runs "push" there, but I do not think
-> that is what this flag does.
+Joe Perches <joe <at> perches.com> writes:
+> Sift out backup files that are commonly created by editors.
 
-That is because the patch that does this is still in the making ;-)
+Ping?
 
-The cover letter should have mentioned it, but we talked about making push
-pretty symmetric to fetch:
-
-- Use "--no-recurse-submodules" if you don't want submodules to be pushed
-  (we added that right now so users can disable the behavior the second
-  commit introduces)
-- Use "--recurse-submodules=on-demand" to push only those submodules where
-  new commits have been recorded in the superproject's refs to be pushed
-- Use "--recurse-submodules" to unconditionally push everything in the
-  submodules too
-- Make the default configurable by a "push.recurseSubmodules" option
-
-We'll need another round to discuss how to handle private submodules which
-were never intended to be pushed, but I think the general idea of having
-fetch and push use similar options makes sense, no?
+-------------- 
+diff --git a/git-send-email.perl b/git-send-email.perl
+[]
+@@ -521,7 +521,9 @@ while (defined(my $f = shift @ARGV)) {
+[]
+-		push @files, grep { -f $_ } map { catfile($f, $_) }
++		push @files, grep { !/#.+#$/ && !/~$/ &&
++					!/\.bak$/ && !/\.orig$/ &&
++					-f $_ } map { catfile($f, $_) }
