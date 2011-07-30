@@ -1,92 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] t7400: fix bogus test failure with symlinked trash
-Date: Fri, 29 Jul 2011 18:36:09 -0600
-Message-ID: <20110730003609.GA6089@sigill.intra.peff.net>
+From: Shigeya Suzuki <shigeya@wide.ad.jp>
+Subject: Re: Can't build git on Lion?
+Date: Sat, 30 Jul 2011 11:47:27 +0900
+Message-ID: <4E3370BF.6070504@wide.ad.jp>
+References: <CAF5DW8+efO0jcynyhg3GCZc5JByHwQzudqtrJXF87YazYjF2mw@mail.gmail.com> <loom.20110728T141556-724@post.gmane.org> <20110729063812.GA64045@gmail.com> <CAF5DW8+9ketSNULU67YwY7QDqMSLrOGQAXXodD9Dr2p-ivWo6w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 30 02:38:50 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: David Aguilar <davvid@gmail.com>,
+	Jack Nagel <Jack.Nagel.1@ndsu.edu>, git@vger.kernel.org
+To: Jonathan del Strother <maillist@steelskies.com>
+X-From: git-owner@vger.kernel.org Sat Jul 30 05:07:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QmxZq-00064s-BK
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Jul 2011 02:38:50 +0200
+	id 1Qmzth-0003RO-Ei
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Jul 2011 05:07:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753132Ab1G3AgQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jul 2011 20:36:16 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53036
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752960Ab1G3AgP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2011 20:36:15 -0400
-Received: (qmail 28489 invoked by uid 107); 30 Jul 2011 00:36:44 -0000
-Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 29 Jul 2011 20:36:44 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Jul 2011 18:36:09 -0600
-Content-Disposition: inline
+	id S1752618Ab1G3DHN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jul 2011 23:07:13 -0400
+Received: from sh.wide.ad.jp ([203.178.137.85]:55585 "EHLO sh.wide.ad.jp"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752588Ab1G3DHM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2011 23:07:12 -0400
+X-Greylist: delayed 1182 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 Jul 2011 23:07:12 EDT
+Received: from twinbee.jpk.shigeya.org (7c2947b5.i-revonet.jp [124.41.71.181]) (authenticated (0 bits)) by mail.wide.ad.jp (8.14.1+3.5Wbeta/8.14.1/smtpfeed 1.20) with ESMTP id p6U2lSuK017302 (using TLSv1/SSLv3 with cipher DHE-RSA-CAMELLIA256-SHA (256 bits) verified NO); Sat, 30 Jul 2011 11:47:28 +0900 (JST)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:5.0) Gecko/20110624 Thunderbird/5.0
+In-Reply-To: <CAF5DW8+9ketSNULU67YwY7QDqMSLrOGQAXXodD9Dr2p-ivWo6w@mail.gmail.com>
+X-Enigmail-Version: 1.2
+OpenPGP: id=580251E3
+X-TagToolbar-Keys: D20110730114727794
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178173>
 
-One of the tests in t7400 fails if the trash directory has a
-symlink anywhere in its path. E.g.:
+Just for info, I have successfully built v1.7.6 on both Xcode 4.1 and
+4.2, both on Lion.
 
-  $ mkdir /tmp/git-test
-  $ mkdir /tmp/git-test/real
-  $ ln -s real /tmp/git-test/link
+shigeya
 
-  $ ./t7400-submodule-basic --root=/tmp/git-test/real
-  ...
-  # passed all 44 test(s)
-
-  $ ./t7400-submodule-basic --root=/tmp/git-test/link
-  ...
-  not ok - 41 use superproject as upstream when path is relative and no url is set there
-
-The failing test does:
-
-  git submodule add ../repo relative &&
-  ...
-  git submodule sync relative &&
-  test "$(git config submodule.relative.url)" = "$submodurl/repo"
-
-where $submodurl comes from the $TRASH_DIRECTORY the user
-gave us. However, git will resolve symlinks when converting
-the relative path into an absolute one, leading them to be
-textually different (even though they point to the same
-directory).
-
-Fix this by asking git to canonicalize the name of the trash
-directory for us.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-This feels a little funny, because we are probably using the same
-"convert relative to absolute" code to generate our expected value, as
-well as in the test itself. So any bug in that code is likely to be
-masked. But this test isn't really about checking the absolute path
-code, but rather making sure that it is invoked properly.
-
- t/t7400-submodule-basic.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 5afe6cc..12200ca 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -48,7 +48,7 @@ test_expect_success 'setup - repository to add submodules to' '
- 
- # The 'submodule add' tests need some repository to add as a submodule.
- # The trash directory is a good one as any.
--submodurl=$TRASH_DIRECTORY
-+submodurl=`git rev-parse --show-toplevel`
- 
- listbranches() {
- 	git for-each-ref --format='%(refname)' 'refs/heads/*'
--- 
-1.7.5.4.31.ge4d5e
+On 2011/07/30 3:51, Jonathan del Strother wrote:
+> On 29 July 2011 07:38, David Aguilar <davvid@gmail.com> wrote:
+>> On Thu, Jul 28, 2011 at 12:19:01PM +0000, Jack Nagel wrote:
+>>>> There's no /System/Library/Perl/5.10.0 directory, but there is a 5.10
+>>>> directory.  Symlinking that to 5.10.0 gives me :
+>>>
+>>> I've seen this issue pop up serveral times in the last few days in various
+>>> places; the solution is to install (or re-install) XCode as the installation
+>>> does not persist correctly across upgrades. Versions prior to 4.1 are
+>>> incompatible with Lion; also, after you download it from the App Store, make
+>>> sure that you run the "XCode Installer" app that is placed in your
+>>> Applications folder.
+>>
+>> The last time I saw this error it was because the Perl version
+>> changed.  "make clean" fixed it for me.  YMMV.
+> 
+> Oh, good point.  Yes, 'make clean' fixed things, thanks for the tip.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
