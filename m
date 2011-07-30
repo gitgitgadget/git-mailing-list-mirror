@@ -1,128 +1,71 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] t7400: fix bogus test failure with symlinked trash
-Date: Sat, 30 Jul 2011 17:44:21 +0200
-Message-ID: <4E3426D5.4060105@web.de>
-References: <20110730003609.GA6089@sigill.intra.peff.net> <4E33DFD6.9050709@web.de> <20110730150554.GA5355@sigill.intra.peff.net>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: gitignore design
+Date: Sat, 30 Jul 2011 17:52:00 +0200
+Message-ID: <CAA01Csq4L6ceGcjDJEsz5xyNeS+3q+Cb5txto0nPDzjqT1+zXw@mail.gmail.com>
+References: <1311934832699-6632987.post@n2.nabble.com>
+	<m3pqktql6s.fsf@localhost.localdomain>
+	<4E32B637.1030201@viscovery.net>
+	<201107292339.51753.jnareb@gmail.com>
+	<CACsJy8CurvKd_=hdRQyjjzWLvKF0jbWOQhbLSsmk1BqB_dK3og@mail.gmail.com>
+	<CAA01Cspv4yShnKBKFFrf8K1tbARahyYf7KZPqbiDFrvFsX9hwg@mail.gmail.com>
+	<CACsJy8DcFJUK91cJm3EmHn8BMyA78gzu_pMtqJ0z9oO1RF+suw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jul 30 17:46:42 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	llucianf <llucianf@gmail.com>, Ferry Huberts <mailings@hupie.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 30 17:52:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QnBkQ-0003LH-16
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Jul 2011 17:46:42 +0200
+	id 1QnBpg-0005qZ-OH
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Jul 2011 17:52:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751729Ab1G3PoY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Jul 2011 11:44:24 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:57883 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751419Ab1G3PoX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jul 2011 11:44:23 -0400
-Received: from smtp04.web.de  ( [172.20.0.225])
-	by fmmailgate02.web.de (Postfix) with ESMTP id BBAC11A75632A;
-	Sat, 30 Jul 2011 17:44:21 +0200 (CEST)
-Received: from [93.246.57.12] (helo=[192.168.178.43])
-	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1QnBi9-0004tV-00; Sat, 30 Jul 2011 17:44:21 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:5.0) Gecko/20110624 Thunderbird/5.0
-In-Reply-To: <20110730150554.GA5355@sigill.intra.peff.net>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1+nuPk/4rjMzTC1NbOsGpxe4kL3wMvr9u+Qvrl/
-	jIZdKRxY117Puucbzw25490BGWV6mPMRGEaXOR4dDqp0hZvSt3
-	jCDZqyCxIfLJ0A/QuLxQ==
+	id S1751997Ab1G3PwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Jul 2011 11:52:05 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:43097 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751419Ab1G3PwC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jul 2011 11:52:02 -0400
+Received: by yia27 with SMTP id 27so2979798yia.19
+        for <git@vger.kernel.org>; Sat, 30 Jul 2011 08:52:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=CT3oNoGQ+iEydVF1c+3vmmP62k6Tja2GhUDTpqyaPiA=;
+        b=XfBbbYPTaSbja/6HvXv37ZMo2XL4+d1M1dJTxWbQE/HN3qmkG8UgOWKHCqgod9n8Zd
+         kilcIQ/ZP2h5vFPC3g7dFRKI7iqBhjIg6vQ9HOTo/2+8/DNJ8cmsW88KAnw1X/aoZ2VY
+         D2l0ji1D793K4TLOVSXc0dVvdjq2vASe8E7yM=
+Received: by 10.150.8.13 with SMTP id 13mr223899ybh.103.1312041120992; Sat, 30
+ Jul 2011 08:52:00 -0700 (PDT)
+Received: by 10.151.147.1 with HTTP; Sat, 30 Jul 2011 08:52:00 -0700 (PDT)
+In-Reply-To: <CACsJy8DcFJUK91cJm3EmHn8BMyA78gzu_pMtqJ0z9oO1RF+suw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178207>
 
-Am 30.07.2011 17:05, schrieb Jeff King:
-> On Sat, Jul 30, 2011 at 12:41:26PM +0200, Jens Lehmann wrote:
-> 
->> Am 30.07.2011 02:36, schrieb Jeff King:
->>> This feels a little funny, because we are probably using the same
->>> "convert relative to absolute" code to generate our expected value, as
->>> well as in the test itself. So any bug in that code is likely to be
->>> masked. But this test isn't really about checking the absolute path
->>> code, but rather making sure that it is invoked properly.
->>
->> While the patch itself is good (apart from using backticks, I think
->> a "$()" should be used there), I share your concerns about loosing
->> an opportunity to test git functionality against the real world.
->>
->> What about doing the following instead?
->>
->> submodurl=$(cd "$TRASH_DIRECTORY"; pwd -P)
->>
->> (That pattern is already used in t/t0000-basic.sh)
-> 
-> That's fine by me. I assumed we didn't have any portable external tool
-> we could rely on, but if we have been using "pwd -P" in t0000, it's
-> probably OK.
-> 
-> So how about:
+On Sat, Jul 30, 2011 at 3:22 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+> On Sat, Jul 30, 2011 at 1:45 PM, Piotr Krukowiecki
+> <piotr.krukowiecki@gmail.com> wrote:
+>> I was using assume-unchanged for some time but stopped after some
+>> weird problems during updates. I'm not sure if this was caused by this
+>> or by sparse-checkout (and I use git-svn too). Anyway, after stopping
+>> using assume-unchanged and sparse-checkout mysterious problems
+>> disappeared.
+>
+> I'm interested in the problems you had (even better if you found a way
+> to reproduce).
 
-Thanks! Unless there is a reason not to use "pwd -P" this is
-Acked-by: Jens Lehmann <Jens.Lehmann@web.de>
+Sorry, but that was some time ago and I don't remember details.
+I could try using it again (which one are you interested in, sparse-checkout or
+assume-unchanged?) and report back if I find any problems.
 
-> -- >8 --
-> Subject: [PATCH] t7400: fix bogus test failure with symlinked trash
-> 
-> One of the tests in t7400 fails if the trash directory has a
-> symlink anywhere in its path. E.g.:
-> 
->   $ mkdir /tmp/git-test
->   $ mkdir /tmp/git-test/real
->   $ ln -s real /tmp/git-test/link
-> 
->   $ ./t7400-submodule-basic --root=/tmp/git-test/real
->   ...
->   # passed all 44 test(s)
-> 
->   $ ./t7400-submodule-basic --root=/tmp/git-test/link
->   ...
->   not ok - 41 use superproject as upstream when path is relative and no url is set there
-> 
-> The failing test does:
-> 
->   git submodule add ../repo relative &&
->   ...
->   git submodule sync relative &&
->   test "$(git config submodule.relative.url)" = "$submodurl/repo"
-> 
-> where $submodurl comes from the $TRASH_DIRECTORY the user
-> gave us. However, git will resolve symlinks when converting
-> the relative path into an absolute one, leading them to be
-> textually different (even though they point to the same
-> directory).
-> 
-> Fix this by asking pwd to canonicalize the name of the trash
-> directory for us.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  t/t7400-submodule-basic.sh |    6 ++++--
->  1 files changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-> index 5afe6cc..14dc927 100755
-> --- a/t/t7400-submodule-basic.sh
-> +++ b/t/t7400-submodule-basic.sh
-> @@ -47,8 +47,10 @@ test_expect_success 'setup - repository to add submodules to' '
->  '
->  
->  # The 'submodule add' tests need some repository to add as a submodule.
-> -# The trash directory is a good one as any.
-> -submodurl=$TRASH_DIRECTORY
-> +# The trash directory is a good one as any. We need to canonicalize
-> +# the name, though, as some tests compare it to the absolute path git
-> +# generates, which will expand symbolic links.
-> +submodurl=$(pwd -P)
->  
->  listbranches() {
->  	git for-each-ref --format='%(refname)' 'refs/heads/*'
+
+-- 
+Piotr Krukowiecki
