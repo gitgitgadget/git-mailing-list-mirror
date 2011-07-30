@@ -1,122 +1,92 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: refs/replace advice
-Date: Fri, 29 Jul 2011 18:46:33 -0400
-Message-ID: <20110729224633.GA21355@arf.padd.com>
-References: <20110729153122.GA4535@padd.com>
- <4E32D6A1.8020304@viscovery.net>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] t7400: fix bogus test failure with symlinked trash
+Date: Fri, 29 Jul 2011 18:36:09 -0600
+Message-ID: <20110730003609.GA6089@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Sat Jul 30 00:46:43 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 30 02:38:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QmvpJ-0000bb-UJ
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Jul 2011 00:46:42 +0200
+	id 1QmxZq-00064s-BK
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Jul 2011 02:38:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753196Ab1G2Wqi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jul 2011 18:46:38 -0400
-Received: from honk.padd.com ([74.3.171.149]:40359 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753191Ab1G2Wqh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2011 18:46:37 -0400
-Received: from arf.padd.com (unknown [50.52.168.230])
-	by honk.padd.com (Postfix) with ESMTPSA id C850519D;
-	Fri, 29 Jul 2011 15:46:36 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 2667431493; Fri, 29 Jul 2011 18:46:33 -0400 (EDT)
+	id S1753132Ab1G3AgQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jul 2011 20:36:16 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53036
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752960Ab1G3AgP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2011 20:36:15 -0400
+Received: (qmail 28489 invoked by uid 107); 30 Jul 2011 00:36:44 -0000
+Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 29 Jul 2011 20:36:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Jul 2011 18:36:09 -0600
 Content-Disposition: inline
-In-Reply-To: <4E32D6A1.8020304@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178172>
 
-j.sixt@viscovery.net wrote on Fri, 29 Jul 2011 17:49 +0200:
-> Am 7/29/2011 17:31, schrieb Pete Wyckoff:
-> > I'm trying to use "git replace" to avoid cloning the entire set
-> > of duplicate commits across a slow inter-site link.  Like this:
-> > 
-> >     ...---A----B----C   site1/top
-> >                      \
-> >                       D---E---F  site1/proj
-> > 
-> >     ...---A'---B'---C'  site2/top
-> > 
-> > It is true that "git diff C C'" is empty:  they are identical.
-> ...
-> > I thought maybe I could "git fetch --depth=N" where N would cover
-> > the range A'..site2/top, then replace.  But testing with "git
-> > fetch --depth=3" still wants to fetch 100k objects.
-> 
-> On site2, don't you want to 'git fetch --depth=N site1' such that F down
-> to at least C (but not much more) is fetched, and then apply the graft or
-> replacement on site2?
+One of the tests in t7400 fails if the trash directory has a
+symlink anywhere in its path. E.g.:
 
-Yes, that makes sense, shallow clone needs to pull the entire tree.
+  $ mkdir /tmp/git-test
+  $ mkdir /tmp/git-test/real
+  $ ln -s real /tmp/git-test/link
 
-On site1 (bare .git repo):
+  $ ./t7400-submodule-basic --root=/tmp/git-test/real
+  ...
+  # passed all 44 test(s)
 
-    $ du -sm .
-    542     .
-    $ git merge-base site1/proj site1/top
-    ff016f956ccae7878a1b322ba950a0088c6e2ded  ;# this is A
-    $ git rev-list ff016f956ccae7878a1b322ba950a0088c6e2ded | wc
-	566     566   23206
+  $ ./t7400-submodule-basic --root=/tmp/git-test/link
+  ...
+  not ok - 41 use superproject as upstream when path is relative and no url is set there
 
-On site2:
+The failing test does:
 
-    $ du -sm .git
-    649     .git
-    $ git rev-parse :/1384557
-    0f95d91c37bc870d610b7bd45b316ab219750d31  ;# this is A'
-    $ git rev-list 0f95d91c37bc870d610b7bd45b316ab219750d31 | wc
-	566     566   23206
+  git submodule add ../repo relative &&
+  ...
+  git submodule sync relative &&
+  test "$(git config submodule.relative.url)" = "$submodurl/repo"
 
-Same number of commits all the way back to the beginning of time,
-but the timestamp in the root commit is different, so all the SHA1s
-are different.
+where $submodurl comes from the $TRASH_DIRECTORY the user
+gave us. However, git will resolve symlinks when converting
+the relative path into an absolute one, leading them to be
+textually different (even though they point to the same
+directory).
 
-On site2:
+Fix this by asking git to canonicalize the name of the trash
+directory for us.
 
-    $ time git fetch git://site1/repo
-    warning: no common commits
-    remote: Counting objects: 124166, done.
-    remote: Compressing objects: 100% (64472/64472), done.
-    remote: Total 124166 (delta 59815), reused 121350 (delta 57062)
-    Receiving objects: 100% (124166/124166), 462.31 MiB | 5.31 MiB/s, done.
-    Resolving deltas: 100% (59815/59815), done.
-    From git://site1/repo
-     * branch            HEAD       -> FETCH_HEAD
-    0m56.25s user 0m5.18s sys 2m29.45s elapsed 41.11 %CPU
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This feels a little funny, because we are probably using the same
+"convert relative to absolute" code to generate our expected value, as
+well as in the test itself. So any bug in that code is likely to be
+masked. But this test isn't really about checking the absolute path
+code, but rather making sure that it is invoked properly.
 
-A brand new repo on site2, cloning this time with a teensy depth:
+ t/t7400-submodule-basic.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-    $ time git fetch --depth=3 git://site1/repo
-    warning: no common commits
-    remote: Counting objects: 96440, done.
-    remote: Compressing objects: 100% (58844/58844), done.
-    remote: Total 96440 (delta 36454), reused 92650 (delta 35169)
-    Receiving objects: 100% (96440/96440), 415.87 MiB | 7.38 MiB/s, done.
-    Resolving deltas: 100% (36454/36454), done.
-    From git://site1/repo
-     * branch            HEAD       -> FETCH_HEAD
-    0m40.40s user 0m5.27s sys 1m50.29s elapsed 41.41 %CPU
-
-No savings in data transport.
-
-Was hoping it would be possible to get just the changes, but walking
-back to FETCH_HEAD~3 shows that it imports all the files.  That makes
-sense given the use case for shallow clone.  But I want to tell the
-fetch machinery that I already have one of the commits it is going to
-see.
-
-I'll just tell people to put up with the full copy, and try to fix
-things so that only one site creates the git repo from p4 in the future.
-Thanks for looking,
-
-		-- Pete
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index 5afe6cc..12200ca 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -48,7 +48,7 @@ test_expect_success 'setup - repository to add submodules to' '
+ 
+ # The 'submodule add' tests need some repository to add as a submodule.
+ # The trash directory is a good one as any.
+-submodurl=$TRASH_DIRECTORY
++submodurl=`git rev-parse --show-toplevel`
+ 
+ listbranches() {
+ 	git for-each-ref --format='%(refname)' 'refs/heads/*'
+-- 
+1.7.5.4.31.ge4d5e
