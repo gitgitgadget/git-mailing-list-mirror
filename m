@@ -1,73 +1,78 @@
-From: =?UTF-8?B?5a2Z55Cm?= <qsundw@gmail.com>
-Subject: git fatal: error in sideband demultiplexer
-Date: Sat, 30 Jul 2011 18:16:58 +0800
-Message-ID: <CALQf3zknO9ZxXCLWy3Bep2eMhrt-jfLkRWJBOf-f2ebku7YZHg@mail.gmail.com>
-References: <CALQf3znEm2ZqS1nvon0iB-6ddm-rJyTAPYgCENy2xF0AZb1U+g@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] t7400: fix bogus test failure with symlinked trash
+Date: Sat, 30 Jul 2011 12:41:26 +0200
+Message-ID: <4E33DFD6.9050709@web.de>
+References: <20110730003609.GA6089@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 30 12:22:08 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Jul 30 12:41:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qn6gJ-0003z5-Aw
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Jul 2011 12:22:07 +0200
+	id 1Qn6zP-0001bk-7E
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Jul 2011 12:41:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751160Ab1G3KRB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Jul 2011 06:17:01 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:55542 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751119Ab1G3KQ7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 30 Jul 2011 06:16:59 -0400
-Received: by fxh19 with SMTP id 19so2997589fxh.19
-        for <git@vger.kernel.org>; Sat, 30 Jul 2011 03:16:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=vr4gSyYdPCZhIagIGUzPsASAeWpAjFrgPukd6kTUwzc=;
-        b=XmaMnSL1SuOaU2Ai+ghYu5I690wgCkhea0dAb3OGp8FQ5GD2tli5F1PxaEry75qkSz
-         BZImh+NUtz9bJuEapQeLjrqa09S1Ot2aZJVlp8k83YjrZxmRQnN22WNxi7r7+iyhzSe2
-         HOEKS3tbqBRfhhYLfKyjoOsjctP4pHgJ3Nz74=
-Received: by 10.223.43.1 with SMTP id u1mr3309872fae.38.1312021018696; Sat, 30
- Jul 2011 03:16:58 -0700 (PDT)
-Received: by 10.223.87.67 with HTTP; Sat, 30 Jul 2011 03:16:58 -0700 (PDT)
-In-Reply-To: <CALQf3znEm2ZqS1nvon0iB-6ddm-rJyTAPYgCENy2xF0AZb1U+g@mail.gmail.com>
+	id S1751378Ab1G3Klb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Jul 2011 06:41:31 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:51847 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751002Ab1G3Kla (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jul 2011 06:41:30 -0400
+Received: from smtp01.web.de  ( [172.20.0.243])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 42474194771F0;
+	Sat, 30 Jul 2011 12:41:29 +0200 (CEST)
+Received: from [91.48.110.67] (helo=[192.168.178.43])
+	by smtp01.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1Qn6z3-0002Ss-00; Sat, 30 Jul 2011 12:41:29 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:5.0) Gecko/20110624 Thunderbird/5.0
+In-Reply-To: <20110730003609.GA6089@sigill.intra.peff.net>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1+L541DIL7+FEWZIFYpPMqN8zoeoXXrlxxNn3HD
+	EpBIGh3fjxg3xFRZ2cmyMsyiWh96/Aa3Q8CR40ZrI+HamV3x+F
+	yHpzvuU5Q4i5w1tkXksg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178188>
 
-Hi git experts,
+Am 30.07.2011 02:36, schrieb Jeff King:
+> This feels a little funny, because we are probably using the same
+> "convert relative to absolute" code to generate our expected value, as
+> well as in the test itself. So any bug in that code is likely to be
+> masked. But this test isn't really about checking the absolute path
+> code, but rather making sure that it is invoked properly.
 
-I ran into one=A0annoying=A0 issue when using git to clone=A0repository=
- on windows 7.
+While the patch itself is good (apart from using backticks, I think
+a "$()" should be used there), I share your concerns about loosing
+an opportunity to test git functionality against the real world.
 
-I tried to clone the repository in the intranet.
-git clone git://10.59.8.235/test/t10
-The returned information is as below:
+What about doing the following instead?
 
-Cloning into newdb...
-remote: Counting objects: 1231592, done.
-remote: Compressing objects: 100% (239755/239755), done.
-Receiving objects: 100% (1231592/1231592), 2.70 GiB | 4.93 MiB/s, done.
-fatal: read error: Invalid argument
-Resolving deltas: 100% (935560/935560), done.
-fatal: error in sideband demultiplexer
+submodurl=$(cd "$TRASH_DIRECTORY"; pwd -P)
 
-Everything looks good expect the two errors. And at last, nothing is
-copied in the local folder.
-The server is running by myself in another Windows 2008 Server with
-1.7.6.msysgit.0 installed. And I tested the clonging on another SUSE
-Linux, it works normally when cloning the same repository.
+(That pattern is already used in t/t0000-basic.sh)
 
-I googled and found no answer to the issue. I'm not sure where the
-cause is, due to the server side config, or the client side config?
-Can you expert guys give some=A0diagnosis=A0on the issue?
+But that is just nitpicking ...
 
-Thanks,
-Cheney
+>  t/t7400-submodule-basic.sh |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+> index 5afe6cc..12200ca 100755
+> --- a/t/t7400-submodule-basic.sh
+> +++ b/t/t7400-submodule-basic.sh
+> @@ -48,7 +48,7 @@ test_expect_success 'setup - repository to add submodules to' '
+>  
+>  # The 'submodule add' tests need some repository to add as a submodule.
+>  # The trash directory is a good one as any.
+> -submodurl=$TRASH_DIRECTORY
+> +submodurl=`git rev-parse --show-toplevel`
+>  
+>  listbranches() {
+>  	git for-each-ref --format='%(refname)' 'refs/heads/*'
