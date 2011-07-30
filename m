@@ -1,74 +1,127 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 16/18] revert: Remove sequencer state when no commits are
- pending
-Date: Sat, 30 Jul 2011 16:48:17 +0200
-Message-ID: <20110730144817.GC7043@elie>
-References: <20110727051755.GK18470@elie>
- <CALkWK0noPtLgr_t=DC_XFdLrWUNCLhUd00Mw1HbmWRJjeT4jew@mail.gmail.com>
- <20110727141006.GA24785@elie>
- <CALkWK0k8Lra7LkGJXoXScnGUjrag-xgNptaB_JCiAsgemTq0eQ@mail.gmail.com>
- <20110727154830.GA29924@elie>
- <CALkWK0mUGiCRQoW6UM+mF5tsn4DxRuaiXn0TS2CcEsR0OeusKg@mail.gmail.com>
- <20110729191654.GA2368@elie.dc0b.debconf.org>
- <CALkWK0=qXBteRjj5vXDEWGVausQ3ssOvy4hyHHz84ORFzDaHaQ@mail.gmail.com>
- <20110730131050.GA4848@elie>
- <CALkWK0=9kwgtZB-BA12tOQrQXS8XRbhTg6K=Ak00o2nurX16Fg@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH/RFC 7/6] gitweb: Use esc_html_match_hl in 'grep' search
+Date: Sat, 30 Jul 2011 16:57:47 +0200
+Message-ID: <201107301657.48678.jnareb@gmail.com>
+References: <1311940379-9608-1-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 30 16:48:32 2011
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: John 'Warthog9' Hawley <warthog9@kernel.org>, admin@repo.or.cz,
+	Petr Baudis <pasky@ucw.cz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 30 16:58:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QnAq8-0005NC-Ex
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Jul 2011 16:48:32 +0200
+	id 1QnAzP-0000w4-1q
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Jul 2011 16:58:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751519Ab1G3Os2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Jul 2011 10:48:28 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:35919 "EHLO
+	id S1751661Ab1G3O6A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Jul 2011 10:58:00 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:62104 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751090Ab1G3Os1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jul 2011 10:48:27 -0400
-Received: by fxh19 with SMTP id 19so3139212fxh.19
-        for <git@vger.kernel.org>; Sat, 30 Jul 2011 07:48:26 -0700 (PDT)
+	with ESMTP id S1751646Ab1G3O56 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jul 2011 10:57:58 -0400
+Received: by fxh19 with SMTP id 19so3144727fxh.19
+        for <git@vger.kernel.org>; Sat, 30 Jul 2011 07:57:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=pAvjG/r+uOV8sElY94AykvLWG1fUYG7N2hYtqEijfWc=;
-        b=LqEHAXFsNlufNtebhIMJVnaZbfm6ksRTq9mD4PWhnZ9Pdq9nCb4L5ttVm1cNCph7x/
-         oaRCnMNpupb/d6VJPqtQWbu2Irkdzh9XoIx7tOIATTlFurtRNy3DY5DzU/fj2sduqdQY
-         yUQWfJhiSwBX7+D8eU2/6eZa5o1iniNn7zWk0=
-Received: by 10.223.15.141 with SMTP id k13mr3469002faa.118.1312037305827;
-        Sat, 30 Jul 2011 07:48:25 -0700 (PDT)
-Received: from elie (adsl-165-161-90.teol.net [109.165.161.90])
-        by mx.google.com with ESMTPS id q5sm1726961fah.30.2011.07.30.07.48.24
-        (version=SSLv3 cipher=OTHER);
-        Sat, 30 Jul 2011 07:48:25 -0700 (PDT)
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=W0ARgBxd4lGl2ZaK6N0WM0ydXAt2gJ8iy50f+b4wO44=;
+        b=jDS2P6JwbE6zY9wcgnrMJ+Pe6ZtDNb1MAj/0lVvO7x2ii7jKNMj1LaAl6uovmnQXeg
+         Uw+iuwWm973YV1F1T1/srgw8gyEaxUsJpLL64zXVNBmwf7pFbLuk2syinBbk0dTb8zt6
+         EZR3k2DN1+KrGuqdS1mDOuaLM5Kno+L2vMzvs=
+Received: by 10.223.63.20 with SMTP id z20mr1763717fah.97.1312037877125;
+        Sat, 30 Jul 2011 07:57:57 -0700 (PDT)
+Received: from [192.168.1.13] (abvz37.neoplus.adsl.tpnet.pl [83.8.223.37])
+        by mx.google.com with ESMTPS id n27sm1731253faa.28.2011.07.30.07.57.54
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 30 Jul 2011 07:57:55 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1311940379-9608-1-git-send-email-jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <CALkWK0=9kwgtZB-BA12tOQrQXS8XRbhTg6K=Ak00o2nurX16Fg@mail.gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178204>
 
-Ramkumar Ramachandra wrote:
+Use newly introduced esc_html_match_hl() subroutine in
+git_search_files() ('grep' search), instead of handcrafted code using
+captures, which highlighted only first match in line.
 
-> Long story short: I'd like it if we could bear with this slight
-> annoyance (removal of sequencer state when one commit is pending) and
-> get the series merged, so that I can work on a series to improve the
-> experience based on this series.
+This required to enhance esc_html_match_hl() to be able to pass-thru
+options for esc_html like -nbsp=>1.
 
-Thanks for explaining.  It's not a regression, so fwiw
-Acked-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Note: because untabify() is run before match, some regexp might not
+show match; this is not regression, because earlier versions had the
+same behavior.
 
-If you are preparing a reroll, please do explain this a little in the
-log message.
+Code is shorter, and behavior is improved.
+
+ gitweb/gitweb.perl |   22 +++++++---------------
+ 1 files changed, 7 insertions(+), 15 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 6bc68c5..d489640 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1692,24 +1692,24 @@ sub chop_and_escape_str {
+ 
+ # highlight match (if any), and escape HTML
+ sub esc_html_match_hl {
+-	my ($str, $regexp) = @_;
+-	return esc_html($str) unless defined $regexp;
++	my ($str, $regexp, @opts) = @_;
++	return esc_html($str, @opts) unless defined $regexp;
+ 
+ 	my @matches;
+ 	while ($str =~ /$regexp/g) {
+ 		push @matches, [$-[0], $+[0]];
+ 	}
+-	return esc_html($str) unless @matches;
++	return esc_html($str, @opts) unless @matches;
+ 
+ 	my $out = '';
+ 	my $pos = 0;
+ 	for my $m (@matches) {
+-		$out .= esc_html(substr $str, $pos, $m->[0] - $pos);
++		$out .= esc_html(substr($str, $pos, $m->[0] - $pos), @opts);
+ 		$out .= $cgi->span({-class => 'match'},
+-		                   esc_html(substr $str, $m->[0], $m->[1] - 
+$m->[0]));
++		                   esc_html(substr($str, $m->[0], $m->[1] - $m->[0]), 
+@opts));
+ 		$pos = $m->[1];
+ 	}
+-	$out .= esc_html(substr $str, $pos);
++	$out .= esc_html(substr($str, $pos), @opts);
+ 
+ 	return $out;
+ }
+@@ -5796,15 +5796,7 @@ sub git_search_files {
+ 			print "<div class=\"binary\">Binary file</div>\n";
+ 		} else {
+ 			$ltext = untabify($ltext);
+-			if ($ltext =~ m/^(.*)($search_regexp)(.*)$/i) {
+-				$ltext = esc_html($1, -nbsp=>1);
+-				$ltext .= '<span class="match">';
+-				$ltext .= esc_html($2, -nbsp=>1);
+-				$ltext .= '</span>';
+-				$ltext .= esc_html($3, -nbsp=>1);
+-			} else {
+-				$ltext = esc_html($ltext, -nbsp=>1);
+-			}
++			esc_html_match_hl($ltext, $search_regexp, -nbsp => 1);
+ 			print "<div class=\"pre\">" .
+ 				$cgi->a({-href => href(action=>"blob", hash=>$co{'hash'},
+ 						       file_name=>"$file").'#l'.$lno,
+-- 
+1.7.5
