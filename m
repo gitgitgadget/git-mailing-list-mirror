@@ -1,53 +1,55 @@
 From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: git fatal: error in sideband demultiplexer
-Date: Sat, 30 Jul 2011 18:13:41 +0200
-Message-ID: <20110730161341.GB7545@toss.lan>
-References: <CALQf3znEm2ZqS1nvon0iB-6ddm-rJyTAPYgCENy2xF0AZb1U+g@mail.gmail.com>
- <CALQf3zknO9ZxXCLWy3Bep2eMhrt-jfLkRWJBOf-f2ebku7YZHg@mail.gmail.com>
+Subject: Re: [PATCH] Break down no-lstat() condition checks in
+ verify_uptodate()
+Date: Sat, 30 Jul 2011 18:22:59 +0200
+Message-ID: <20110730162258.GC7545@toss.lan>
+References: <1311998105-6267-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?5a2Z55Cm?= <qsundw@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 30 18:13:51 2011
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 30 18:23:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QnCAg-0005mw-Vv
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Jul 2011 18:13:51 +0200
+	id 1QnCJh-0000qm-1X
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Jul 2011 18:23:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752156Ab1G3QNp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Jul 2011 12:13:45 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:59381 "EHLO bsmtp.bon.at"
+	id S1752302Ab1G3QXF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Jul 2011 12:23:05 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:61534 "EHLO bsmtp.bon.at"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752143Ab1G3QNo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jul 2011 12:13:44 -0400
+	id S1752249Ab1G3QXC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jul 2011 12:23:02 -0400
 Received: from localhost (unknown [80.123.242.182])
-	by bsmtp.bon.at (Postfix) with ESMTP id 594BE130056;
-	Sat, 30 Jul 2011 18:13:42 +0200 (CEST)
+	by bsmtp.bon.at (Postfix) with ESMTP id 8360310018;
+	Sat, 30 Jul 2011 18:22:59 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <CALQf3zknO9ZxXCLWy3Bep2eMhrt-jfLkRWJBOf-f2ebku7YZHg@mail.gmail.com>
+In-Reply-To: <1311998105-6267-1-git-send-email-pclouds@gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178210>
 
-On Sat, Jul 30, 2011 at 06:16:58PM +0800, =E5=AD=99=E7=90=A6 wrote:
->=20
-> Cloning into newdb...
-> remote: Counting objects: 1231592, done.
-> remote: Compressing objects: 100% (239755/239755), done.
-> Receiving objects: 100% (1231592/1231592), 2.70 GiB | 4.93 MiB/s, don=
-e.
-> fatal: read error: Invalid argument
+On Sat, Jul 30, 2011 at 10:55:05AM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
+>
+> +	/*
+> +	 * CE_VALID and CE_SKIP_WORKTREE cheat, we better check again
+> +	 * if this entry is truely uptodate because this file may be
+> +	 * overwritten.
+> +	 */
 
-Could you please try that again with "GIT_TRACE=3D1 git clone ..."?
-Also, "strace git clone ..." (or whatever strace equivalent exists
-on windows, if any?).
+s/truely/truly
 
-> Resolving deltas: 100% (935560/935560), done.
-> fatal: error in sideband demultiplexer
+> +	if ((ce->ce_flags & CE_VALID) || ce_skip_worktree(ce))
+> +		; /* keep checking */
+> +	else if (o->reset || ce_uptodate(ce))
+>  		return 0;
+
+Nice! Acked-by: Clemens Buchacher <drizzd@aon.at>
