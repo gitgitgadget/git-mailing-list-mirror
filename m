@@ -1,60 +1,70 @@
-From: Ricky Egeland <rickyegeland@linea.gov.br>
-Subject: Re: Cleaning up history with git rebase
-Date: Sun, 31 Jul 2011 18:44:43 -0300
-Message-ID: <317AAE40-449B-4280-AEF1-10EE93FDB9FF@linea.gov.br>
-References: <0111E44E-B85F-4C90-8052-E52BA9CD3D17@linea.gov.br> <34ca77f818944acb9f5c6f19d91df73f-mfwitten@gmail.com> <CAMOZ1BvRDSkzJmASNFQvZ-SVBUXZHw6CyfLP4SJqK8CwaMMDUA@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1084)
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: File Systems and a Theory of Edits
+Date: Mon, 01 Aug 2011 00:20:49 +0200
+Message-ID: <m2sjpmt7lq.fsf@igel.home>
+References: <CADo4Y9hG=-Bye5g7OWROJNbbUOcnH0hj0f3csws5V+YzEUKAMg@mail.gmail.com>
+	<CACBZZX48aDN_Njm+qMvovfz1tjdhnmXe5-bbJe=0_Q3LbLWoPA@mail.gmail.com>
+	<4E350F15.9050009@lsrfire.ath.cx>
+	<CADo4Y9gU_Z73gCPCESvVZhLOJUJg+mTqHkeqpNv2L8xLJvKxEQ@mail.gmail.com>
+	<CADo4Y9gECLJ45g_r-uZBRnfEVXBRw2EoF2HkRu=0-eJ2YCuBLA@mail.gmail.com>
+	<CAMOZ1BtrgO1XhJfR2-1Mpd8Ytrz4pjVyhbPdbNxDP84hhiip+A@mail.gmail.com>
+	<CADo4Y9i=PYBv33Jnu2osQX_FL97ng9FZ8TFeMMuc5CDGUhu1Gg@mail.gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Patricia Bittencourt Egeland <pbegeland@linea.gov.br>,
-	git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 31 23:44:55 2011
+Cc: Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org
+To: mike@nahas.com
+X-From: git-owner@vger.kernel.org Mon Aug 01 00:21:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qndoa-0001Gr-VG
-	for gcvg-git-2@lo.gmane.org; Sun, 31 Jul 2011 23:44:53 +0200
+	id 1QneNZ-0004WL-SW
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 00:21:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752814Ab1GaVos (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Jul 2011 17:44:48 -0400
-Received: from mx1.linea.gov.br ([200.143.212.2]:43987 "EHLO mx1.linea.gov.br"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752656Ab1GaVor convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2011 17:44:47 -0400
-Received: (qmail 16521 invoked from network); 31 Jul 2011 21:44:44 -0000
-Received: from unknown (HELO [192.168.1.103]) (rickyegeland@[189.36.169.239])
-          (envelope-sender <rickyegeland@linea.gov.br>)
-          by mx1.linea.gov.br (qmail-ldap-1.03) with SMTP
-          for <mfwitten@gmail.com>; 31 Jul 2011 21:44:44 -0000
-In-Reply-To: <CAMOZ1BvRDSkzJmASNFQvZ-SVBUXZHw6CyfLP4SJqK8CwaMMDUA@mail.gmail.com>
-X-Mailer: Apple Mail (2.1084)
+	id S1752975Ab1GaWUz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Jul 2011 18:20:55 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:47326 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752931Ab1GaWUx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jul 2011 18:20:53 -0400
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id EDA44188A16E;
+	Mon,  1 Aug 2011 00:20:50 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
+	by mail.m-online.net (Postfix) with ESMTP id 026031C000A9;
+	Mon,  1 Aug 2011 00:20:51 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
+	with ESMTP id Q4g9gvptM0xP; Mon,  1 Aug 2011 00:20:50 +0200 (CEST)
+Received: from igel.home (ppp-88-217-126-95.dynamic.mnet-online.de [88.217.126.95])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Mon,  1 Aug 2011 00:20:50 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id 11AE4CA293; Mon,  1 Aug 2011 00:20:49 +0200 (CEST)
+X-Yow: Wait..  is this a FUN THING or the END of LIFE in Petticoat Junction??
+In-Reply-To: <CADo4Y9i=PYBv33Jnu2osQX_FL97ng9FZ8TFeMMuc5CDGUhu1Gg@mail.gmail.com>
+	(Michael Nahas's message of "Sun, 31 Jul 2011 17:13:11 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178283>
 
+Michael Nahas <mike.nahas@gmail.com> writes:
 
-On Jul 31, 2011, at 6:33 PM, Michael Witten wrote:
+> 3 working trees would be even better.  I've been wondering if I can
+> make another working trees by creating a .git/ directory and
+> symlinking to the .git/objects and ./git/refs of my current
+> repository.
 
-> On Sun, Jul 31, 2011 at 20:21, Michael Witten <mfwitten@gmail.com> wrote:
->> Why are there conflicts anyway?
-> 
-> Oh...
-> 
-> I guess there were conflicts when the merge commit was made in the
-> original repository, and these conflicts were resolved by the merge
-> commit itself. Hence, when rebase tries to split up a merge by dealing
-> with just the non-merge parents, you end up having to deal with the
-> conflict again.
+Have you looked at git-new-workdir?
 
-Yes, I thought it was something like this going on, too.  In the pre-rebase history, when there is a commit with "Conflict:" and listing file which is in the sub-repository history, this is a point where rebase stops with a conflict.
+Andreas.
 
-> Shouldn't rebase take this into account?
-
-Not sure.  Seems that it does not, it makes me resolve the conflict again.
-
--- Ricky
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
