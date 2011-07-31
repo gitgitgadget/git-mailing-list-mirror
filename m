@@ -1,64 +1,80 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCHv2 2/4] git-p4: add missing && in test
-Date: Sun, 31 Jul 2011 14:55:11 +0100
-Message-ID: <4E355EBF.2070400@diamand.org>
-References: <20110731003557.GA4867@arf.padd.com> <20110731134416.GB6564@arf.padd.com> <20110731134517.GD6564@arf.padd.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 13/18] revert: Introduce --reset to remove sequencer state
+Date: Sun, 31 Jul 2011 16:01:42 +0200
+Message-ID: <201107311601.43472.chriscool@tuxfamily.org>
+References: <1311871951-3497-1-git-send-email-artagnon@gmail.com> <1311871951-3497-14-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: Text/Plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Sun Jul 31 15:55:21 2011
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 31 16:02:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QnWUC-0000dA-DE
-	for gcvg-git-2@lo.gmane.org; Sun, 31 Jul 2011 15:55:20 +0200
+	id 1QnWad-00032i-O5
+	for gcvg-git-2@lo.gmane.org; Sun, 31 Jul 2011 16:02:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751631Ab1GaNzQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Jul 2011 09:55:16 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:60797 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751608Ab1GaNzP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jul 2011 09:55:15 -0400
-Received: by wyg8 with SMTP id 8so1055088wyg.19
-        for <git@vger.kernel.org>; Sun, 31 Jul 2011 06:55:14 -0700 (PDT)
-Received: by 10.227.183.137 with SMTP id cg9mr5161293wbb.2.1312120513879;
-        Sun, 31 Jul 2011 06:55:13 -0700 (PDT)
-Received: from [86.30.143.167] (cpc4-cmbg14-2-0-cust166.5-4.cable.virginmedia.com [86.30.143.167])
-        by mx.google.com with ESMTPS id g48sm2691968wee.13.2011.07.31.06.55.12
-        (version=SSLv3 cipher=OTHER);
-        Sun, 31 Jul 2011 06:55:13 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110402 Iceowl/1.0b2 Icedove/3.1.9
-In-Reply-To: <20110731134517.GD6564@arf.padd.com>
+	id S1751811Ab1GaOBz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Jul 2011 10:01:55 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:54697 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751797Ab1GaOBx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jul 2011 10:01:53 -0400
+Received: from style.localnet (unknown [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 1DBFBA6257;
+	Sun, 31 Jul 2011 16:01:44 +0200 (CEST)
+User-Agent: KMail/1.13.6 (Linux/2.6.38-8-generic; KDE/4.6.2; x86_64; ; )
+In-Reply-To: <1311871951-3497-14-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178259>
 
-Acked.
-
-
-
-On 31/07/11 14:45, Pete Wyckoff wrote:
-> Signed-off-by: Pete Wyckoff<pw@padd.com>
-> ---
->   t/t9800-git-p4.sh |    2 +-
->   1 files changed, 1 insertions(+), 1 deletions(-)
+On Thursday 28 July 2011 18:52:26 Ramkumar Ramachandra wrote:
 >
-> diff --git a/t/t9800-git-p4.sh b/t/t9800-git-p4.sh
-> index aec3ba1..b7eda82 100755
-> --- a/t/t9800-git-p4.sh
-> +++ b/t/t9800-git-p4.sh
-> @@ -202,7 +202,7 @@ test_expect_success 'preserve user where author is unknown to p4' '
->   	"$GITP4" clone --dest="$git" //depot&&
->   	test_when_finished cleanup_git&&
->   	cd "$git"&&
-> -	git config git-p4.skipSubmitEditCheck true
-> +	git config git-p4.skipSubmitEditCheck true&&
->   	echo "username-bob: a change by bob">>  file1&&
->   	git commit --author "Bob<bob@localhost>" -m "preserve: a change by bob" file1&&
->   	echo "username-unknown: a change by charlie">>  file1&&
+> @@ -765,17 +784,21 @@ static int pick_revisions(struct replay_opts *opts)
+> 
+>  	read_and_refresh_cache(opts);
+> 
+> -	walk_revs_populate_todo(&todo_list, opts);
+> -	create_seq_dir();
+> -	if (get_sha1("HEAD", sha1)) {
+> -		if (opts->action == REVERT)
+> -			die(_("Can't revert as initial commit"));
+> -		die(_("Can't cherry-pick into empty head"));
+> -	} else
+> +	if (opts->subcommand == REPLAY_RESET) {
+> +		remove_sequencer_state(1);
+> +		return 0;
+> +	} else {
+
+Maybe you could remove this "else" so that the indentation level is reduced. 
+
+> +		/* Start a new cherry-pick/ revert sequence */
+> +		walk_revs_populate_todo(&todo_list, opts);
+> +		create_seq_dir();
+> +		if (get_sha1("HEAD", sha1)) {
+> +			if (opts->action == REVERT)
+> +				die(_("Can't revert as initial commit"));
+> +			die(_("Can't cherry-pick into empty head"));
+> +		}
+>  		save_head(sha1_to_hex(sha1));
+> -	save_opts(opts);
+> -	save_todo(todo_list, opts);
+
+It looks like this save_todo() was not necessary in the first place because 
+pick_commits() does a save_todo() before processing each commit.
+
+> -
+> +		save_opts(opts);
+> +	}
+>  	return pick_commits(todo_list, opts);
+>  }
