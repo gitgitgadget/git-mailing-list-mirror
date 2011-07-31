@@ -1,94 +1,101 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 11/18] revert: Save command-line options for continuing operation
-Date: Sun, 31 Jul 2011 13:42:11 +0200
-Message-ID: <201107311342.12547.chriscool@tuxfamily.org>
-References: <1311871951-3497-1-git-send-email-artagnon@gmail.com> <1311871951-3497-12-git-send-email-artagnon@gmail.com>
-Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 31 13:42:50 2011
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH v8 0/7] bisect: Add support for --no-checkout and --update-ref=<ref> options.
+Date: Sun, 31 Jul 2011 21:55:14 +1000
+Message-ID: <1312113321-28760-1-git-send-email-jon.seymour@gmail.com>
+Cc: chriscool@tuxfamily.org, gitster@pobox.com, j6t@kdbg.org,
+	jnareb@gmail.com, Jon Seymour <jon.seymour@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 31 13:56:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QnUPw-0006Zy-U2
-	for gcvg-git-2@lo.gmane.org; Sun, 31 Jul 2011 13:42:49 +0200
+	id 1QnUd9-0002eN-Pc
+	for gcvg-git-2@lo.gmane.org; Sun, 31 Jul 2011 13:56:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753176Ab1GaLmY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Jul 2011 07:42:24 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:58351 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753131Ab1GaLmW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jul 2011 07:42:22 -0400
-Received: from style.localnet (unknown [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id BDED1A6203;
-	Sun, 31 Jul 2011 13:42:14 +0200 (CEST)
-User-Agent: KMail/1.13.6 (Linux/2.6.38-8-generic; KDE/4.6.2; x86_64; ; )
-In-Reply-To: <1311871951-3497-12-git-send-email-artagnon@gmail.com>
+	id S1753234Ab1GaLzv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Jul 2011 07:55:51 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:33709 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753181Ab1GaLzt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jul 2011 07:55:49 -0400
+Received: by pzk37 with SMTP id 37so9556049pzk.1
+        for <git@vger.kernel.org>; Sun, 31 Jul 2011 04:55:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=vE1gkrtoVn3VRHTMNFYFf8CXU63dTNpHthm5ia2zyVE=;
+        b=pwMbkXZjnhP6KowGxsO7wdPGwpkGtXnACREf2lX+FVGoVXriT3aJipzc8puUEc+VWL
+         8XFBYiZ+3QG5/RWbqnRDW7bj+mreY8CctTipJIna8hyqZ3YpxUNnQCMugdjTBmSehAE2
+         XM8BBORgW24Rw/nh3xVEGJ4lVdlhB8kUMJ1VA=
+Received: by 10.68.49.70 with SMTP id s6mr5663644pbn.233.1312113348820;
+        Sun, 31 Jul 2011 04:55:48 -0700 (PDT)
+Received: from localhost.localdomain ([120.16.239.154])
+        by mx.google.com with ESMTPS id g4sm4306620pbj.41.2011.07.31.04.55.39
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 31 Jul 2011 04:55:47 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.352.g62761
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178237>
 
-On Thursday 28 July 2011 18:52:24 Ramkumar Ramachandra wrote:
->
-> +static void save_opts(struct replay_opts *opts)
-> +{
-> +	const char *opts_file = git_path(SEQ_OPTS_FILE);
-> +	struct strbuf buf = STRBUF_INIT;
-> +	int i;
-> +
-> +	if (opts->no_commit)
-> +		git_config_set_in_file(opts_file, "options.no-commit", "true");
-> +	if (opts->edit)
-> +		git_config_set_in_file(opts_file, "options.edit", "true");
-> +	if (opts->signoff)
-> +		git_config_set_in_file(opts_file, "options.signoff", "true");
-> +	if (opts->record_origin)
-> +		git_config_set_in_file(opts_file, "options.record-origin", "true");
-> +	if (opts->allow_ff)
-> +		git_config_set_in_file(opts_file, "options.allow-ff", "true");
-> +	if (opts->mainline) {
-> +		strbuf_reset(&buf);
+For some bisection tasks, checking out the commit at each stage of the bisection process is unecessary or undesirable.
 
-It is not necessary to reset &buf here.
+This series adds support for --no-checkout and --update-ref=<ref> options to git-bisect.
 
-> +		strbuf_addf(&buf, "%d", opts->mainline);
-> +		git_config_set_in_file(opts_file, "options.mainline", buf.buf);
-> +	}
+If specified on a start command, --no-checkout causes 'git bisect' to update HEAD at each stage of the bisection process instead of checking out the commit at that point. An alternative reference to update may be specified with --update-ref=<ref>.
 
-And perhaps it would be clearer if it was:
+One application of the --no-checkout option is to find, within a partially damaged repository, a commit that has at least one parent whose graph is fully reachable in the sense of 'git pack-objects'.
 
-+       if (opts->mainline) {
-+               struct strbuf buf = STRBUF_INIT;
-+               strbuf_addf(&buf, "%d", opts->mainline);
-+               git_config_set_in_file(opts_file, "options.mainline", buf.buf);
-+               strbuf_release(&buf);
-+       }
+For example:
 
-> +	if (opts->strategy)
-> +		git_config_set_in_file(opts_file, "options.strategy", opts->strategy);
-> +	if (opts->xopts) {
+	git bisect run eval '
+		rc=1;
+		if git rev-list --objects HEAD >tmp.$$; then
+		   git pack-objects --stdout >/dev/null < tmp.$$ && rc=0;
+		fi;
+		rm tmp.$$;
+		test $rc -eq 0;'
 
-Other nit: maybe you could put "int i" here, instead of at the beginning of 
-the function.
+Assuming this git bisect run completes successfully, bisect/bad will refer to a commit which has at least one parent that is fully reachable in the sense of 'git pack-objects'.
 
-> +		for (i = 0; i < opts->xopts_nr; i++)
-> +			git_config_set_multivar_in_file(opts_file,
-> +							"options.strategy-option",
-> +							opts->xopts[i], "^$", 0);
-> +	}
-> +
-> +	strbuf_release(&buf);
-> +}
+PLEASE NOTE: the initial patch in this series "bisect: move argument parsing before state modification." changes existing behaviour in the case that an invalid revision argument is supplied to 'git bisect start'. In particular, in this case, bisection state is neither created or modified if argument validation fails. Previously, existing bisection state would be cleared even if the revision arguments were subsequently determined to be invalid.
 
-Thanks,
-Christian.
+v8:
+	Further feedback from Christian Couder. Support --update-ref <ref>.
+v6: 
+	This series includes numerous improvements suggested by Christian Couder.
+Reworks: 
+	"bisect: allow git bisect to be used with repos containing damaged trees." 
+	Replaced --ignore-checkout-failure with --no-checkout option suggested by Junio.
+
+Also pushed to github:
+	https://github.com/jonseymour/git/commits/no-checkout-v8
+	git://github.com/jonseymour/git.git refs/tags/no-checkout-v8:refs/tags/no-checkout-v8
+
+
+Jon Seymour (7):
+  bisect: move argument parsing before state modification.
+  bisect: add tests to document expected behaviour in presence of
+    broken trees.
+  bisect: introduce support for --update-ref=<ref> option.
+  bisect: introduce --no-checkout, --update-ref=<ref> support into
+    porcelain.
+  bisect: add tests for the --no-checkout and --update-ref options.
+  bisect: add documentation for --no-checkout and --update-ref=<ref>
+    options.
+  bisect: support --update-ref <ref>
+
+ Documentation/git-bisect.txt |   34 ++++++++-
+ bisect.c                     |   34 ++++++---
+ bisect.h                     |    2 +-
+ builtin/bisect--helper.c     |    7 +-
+ git-bisect.sh                |  109 +++++++++++++++++----------
+ t/t6030-bisect-porcelain.sh  |  168 +++++++++++++++++++++++++++++++++++++++++-
+ 6 files changed, 296 insertions(+), 58 deletions(-)
+
+-- 
+1.7.6.391.g168d0.dirty
