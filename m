@@ -1,117 +1,95 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCHv2 4/4] git-p4: commit time should be most recent p4 change
- time
-Date: Sun, 31 Jul 2011 09:45:55 -0400
-Message-ID: <20110731134555.GF6564@arf.padd.com>
-References: <20110731003557.GA4867@arf.padd.com>
- <20110731134416.GB6564@arf.padd.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Sun Jul 31 15:46:03 2011
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH v8a] bisect: fix 'git bisect run' so that it works with alternate --update-ref
+Date: Sun, 31 Jul 2011 23:46:43 +1000
+Message-ID: <1312120003-26321-1-git-send-email-jon.seymour@gmail.com>
+Cc: chriscool@tuxfamily.org, gitster@pobox.com, j6t@kdbg.org,
+	jnareb@gmail.com, Jon Seymour <jon.seymour@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 31 15:47:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QnWLD-0005qV-9B
-	for gcvg-git-2@lo.gmane.org; Sun, 31 Jul 2011 15:46:03 +0200
+	id 1QnWM7-0006BK-Tc
+	for gcvg-git-2@lo.gmane.org; Sun, 31 Jul 2011 15:47:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751515Ab1GaNp7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Jul 2011 09:45:59 -0400
-Received: from honk.padd.com ([74.3.171.149]:41022 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750746Ab1GaNp6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jul 2011 09:45:58 -0400
-Received: from arf.padd.com (unknown [50.52.168.230])
-	by honk.padd.com (Postfix) with ESMTPSA id 2F730330B;
-	Sun, 31 Jul 2011 06:45:58 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 160713149A; Sun, 31 Jul 2011 09:45:55 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20110731134416.GB6564@arf.padd.com>
+	id S1751535Ab1GaNq4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Jul 2011 09:46:56 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:62138 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750746Ab1GaNqz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jul 2011 09:46:55 -0400
+Received: by pzk37 with SMTP id 37so9684110pzk.1
+        for <git@vger.kernel.org>; Sun, 31 Jul 2011 06:46:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=UQ+HyEed42tvEJ8OD2qRcFlHazOmvRyPPRVFTMidf+k=;
+        b=BMccgejvpZpkhpSDiZBiKh8XBMH4ZExDJTk5XXsd+83RDHuc9gEmoLY0DDzbRQQvnv
+         Uyg3nfEEAUGEd7M6Rsp5zlI9EzpMrjBbd3pZg/yu9Cig6RNau1gvG/briLakpg/TwyTy
+         EQcVq5ta9zgXT7mMLac1sHYHif9g6SF2xDkng=
+Received: by 10.68.39.167 with SMTP id q7mr6167372pbk.415.1312120014924;
+        Sun, 31 Jul 2011 06:46:54 -0700 (PDT)
+Received: from localhost.localdomain (124-169-144-208.dyn.iinet.net.au [124.169.144.208])
+        by mx.google.com with ESMTPS id l7sm4398394pbh.10.2011.07.31.06.46.51
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 31 Jul 2011 06:46:54 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.389.gccb79d.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178256>
 
-When importing a repo, the time on the initial commit had been
-just "now".  But this causes problems when trying to share among
-git-p4 repos that were created identically, although at different
-times.  Instead, use the time in the top-most p4 change as the
-time for the git import commit.
+An additional patch for the v8 series that ensures that 'git bisect run'
+respects .git/BISECT_UPDATE_REF.
 
-Signed-off-by: Pete Wyckoff <pw@padd.com>
-Acked-by: Luke Diamand <luke@diamand.org>
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 ---
- contrib/fast-import/git-p4 |   15 ++++++++++++++-
- t/t9800-git-p4.sh          |   19 +++++++++++++++++++
- 2 files changed, 33 insertions(+), 1 deletions(-)
+ git-bisect.sh               |    5 +++--
+ t/t6030-bisect-porcelain.sh |   15 +++++++++++++++
+ 2 files changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index 98d2aee..6b9de9e 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -1649,7 +1649,8 @@ class P4Sync(Command, P4UserMap):
-     def importHeadRevision(self, revision):
-         print "Doing initial import of %s from revision %s into %s" % (' '.join(self.depotPaths), revision, self.branch)
+diff --git a/git-bisect.sh b/git-bisect.sh
+index ec70cd2..126d698 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -230,8 +230,9 @@ bisect_state() {
+ 	0,*)
+ 		die "$(gettext "Please call 'bisect_state' with at least one argument.")" ;;
+ 	1,bad|1,good|1,skip)
+-		rev=$(git rev-parse --verify HEAD) ||
+-			die "$(gettext "Bad rev input: HEAD")"
++		ref=${BISECT_UPDATE_REF:-HEAD}
++		rev=$(git rev-parse --verify "$ref") ||
++			die "$(gettext "Bad rev input: $ref")"
+ 		bisect_write "$state" "$rev"
+ 		check_expected_revs "$rev" ;;
+ 	2,bad|*,good|*,skip)
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index fa4366f..40f7a76 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -736,4 +736,19 @@ test \$rc -eq 0;' &&
+ 	git bisect reset
+ "
  
--        details = { "user" : "git perforce import user", "time" : int(time.time()) }
-+        details = {}
-+        details["user"] = "git perforce import user"
-         details["desc"] = ("Initial import of %s from the state at revision %s\n"
-                            % (' '.join(self.depotPaths), revision))
-         details["change"] = revision
-@@ -1689,6 +1690,18 @@ class P4Sync(Command, P4UserMap):
-             fileCnt = fileCnt + 1
- 
-         details["change"] = newestRevision
++test_expect_success 'bisect: demonstrate identification of damage boundary using alternate reference' "
++	git bisect reset &&
++	git checkout broken &&
++	git bisect start broken master --no-checkout --update-ref=CURSOR &&
++	git bisect run eval '
++rc=1;
++if git rev-list --objects CURSOR >tmp.$$; then
++   git pack-objects --stdout >/dev/null < tmp.$$ && rc=0;
++fi;
++rm tmp.$$;
++test \$rc -eq 0;' &&
++	check_same BROKEN_HASH6 bisect/bad &&
++	git bisect reset
++"
 +
-+        # Use time from top-most change so that all git-p4 clones of
-+        # the same p4 repo have the same commit SHA1s.
-+        res = p4CmdList("describe -s %d" % newestRevision)
-+        newestTime = None
-+        for r in res:
-+            if r.has_key('time'):
-+                newestTime = int(r['time'])
-+        if newestTime is None:
-+            die("\"describe -s\" on newest change %d did not give a time")
-+        details["time"] = newestTime
-+
-         self.updateOptionDict(details)
-         try:
-             self.commit(details, self.extractFilesFromCommit(details), self.branch, self.depotPaths)
-diff --git a/t/t9800-git-p4.sh b/t/t9800-git-p4.sh
-index b304707..97ec975 100755
---- a/t/t9800-git-p4.sh
-+++ b/t/t9800-git-p4.sh
-@@ -249,6 +249,25 @@ test_expect_success 'not preserving user with mixed authorship' '
- 	p4_check_commit_author usernamefile3 alice
- '
- 
-+marshal_dump() {
-+	what=$1
-+	python -c 'import marshal, sys; d = marshal.load(sys.stdin); print d["'$what'"]'
-+}
-+
-+# Sleep a bit so that the top-most p4 change did not happen "now".  Then
-+# import the repo and make sure that the initial import has the same time
-+# as the top-most change.
-+test_expect_success 'initial import time from top change time' '
-+	p4change=$(p4 -G changes -m 1 //depot/... | marshal_dump change) &&
-+	p4time=$(p4 -G changes -m 1 //depot/... | marshal_dump time) &&
-+	sleep 3 &&
-+	"$GITP4" clone --dest="$git" //depot &&
-+	test_when_finished cleanup_git &&
-+	cd "$git" &&
-+	gittime=$(git show -s --raw --pretty=format:%at HEAD) &&
-+	echo $p4time $gittime &&
-+	test $p4time = $gittime
-+'
- 
- test_expect_success 'shutdown' '
- 	pid=`pgrep -f p4d` &&
+ test_done
 -- 
-1.7.5.4
+1.7.6.389.gccb79d.dirty
