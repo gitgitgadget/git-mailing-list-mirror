@@ -1,7 +1,7 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v8 6/7] bisect: add documentation for --no-checkout and --update-ref=<ref> options.
-Date: Sun, 31 Jul 2011 21:55:20 +1000
-Message-ID: <1312113321-28760-7-git-send-email-jon.seymour@gmail.com>
+Subject: [PATCH v8 7/7] bisect: support --update-ref <ref>
+Date: Sun, 31 Jul 2011 21:55:21 +1000
+Message-ID: <1312113321-28760-8-git-send-email-jon.seymour@gmail.com>
 References: <1312113321-28760-1-git-send-email-jon.seymour@gmail.com>
 Cc: chriscool@tuxfamily.org, gitster@pobox.com, j6t@kdbg.org,
 	jnareb@gmail.com, Jon Seymour <jon.seymour@gmail.com>
@@ -12,101 +12,98 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QnUdq-0002z3-97
-	for gcvg-git-2@lo.gmane.org; Sun, 31 Jul 2011 13:57:10 +0200
+	id 1QnUdv-0002zC-6Q
+	for gcvg-git-2@lo.gmane.org; Sun, 31 Jul 2011 13:57:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753375Ab1GaL5G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Jul 2011 07:57:06 -0400
+	id S1753381Ab1GaL5J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Jul 2011 07:57:09 -0400
 Received: from mail-pz0-f42.google.com ([209.85.210.42]:33709 "EHLO
 	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753243Ab1GaL5D (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jul 2011 07:57:03 -0400
+	with ESMTP id S1753377Ab1GaL5H (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jul 2011 07:57:07 -0400
 Received: by mail-pz0-f42.google.com with SMTP id 37so9556049pzk.1
-        for <git@vger.kernel.org>; Sun, 31 Jul 2011 04:57:03 -0700 (PDT)
+        for <git@vger.kernel.org>; Sun, 31 Jul 2011 04:57:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=jTWrP3hDo/5NGMTQZ3OJJaZsKxax01WrsqnMfR8vzcE=;
-        b=KkmVlURptYI5W4uQFfg3SfneFbiBGAyjmTdnMkVAr4YCWQS354f7jdg6Gzw/EfqDo8
-         xgW67txKzB6yPHVBk1m5OBXUH/w4jIYcRcIomxsKFOSPFZq+z9qmby+cfifno7moMxMG
-         pSakoPzSf8/J2iOQnmHJhAwVAjTQLXOgUO/AU=
-Received: by 10.68.9.41 with SMTP id w9mr5796868pba.315.1312113422591;
-        Sun, 31 Jul 2011 04:57:02 -0700 (PDT)
+        bh=3kmNtoOrfOklb2WBt+F2Fdxa9l/bmtoFSo9/2clfhtQ=;
+        b=sHx7pMQlpditlvIRpxneP/zwBx0tihcefx/YJZUOPO4PNnCUqInMUilEgDbY8lm/6d
+         eP+uJ8fRqH61CjaV9DvAdrhje0lta09C81ciF04RzlWuHtV1r4EXZ1imRgsmTBpP3c9f
+         pB8bkBVatQXUHknfrb9uOW8vQBnZtdsehYjAI=
+Received: by 10.68.0.131 with SMTP id 3mr6032288pbe.147.1312113426975;
+        Sun, 31 Jul 2011 04:57:06 -0700 (PDT)
 Received: from localhost.localdomain ([120.16.239.154])
-        by mx.google.com with ESMTPS id g4sm4306620pbj.41.2011.07.31.04.56.47
+        by mx.google.com with ESMTPS id g4sm4306620pbj.41.2011.07.31.04.57.02
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 31 Jul 2011 04:57:01 -0700 (PDT)
+        Sun, 31 Jul 2011 04:57:06 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6.352.g62761
 In-Reply-To: <1312113321-28760-1-git-send-email-jon.seymour@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178244>
 
+Adds sugar to allow --update-ref=<ref> to be expressed as
+--update-ref <ref> instead.
+
+Suggested-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 ---
- Documentation/git-bisect.txt |   34 +++++++++++++++++++++++++++++++++-
- 1 files changed, 33 insertions(+), 1 deletions(-)
+ git-bisect.sh               |   13 +++++++++++--
+ t/t6030-bisect-porcelain.sh |   16 ++++++++++++++++
+ 2 files changed, 27 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
-index ab60a18..25a25b3 100644
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -17,7 +17,7 @@ The command takes various subcommands, and different options depending
- on the subcommand:
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 24ac859..ec70cd2 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -79,8 +79,17 @@ bisect_start() {
+ 		shift; break ;;
+ 	    --no-checkout)
+ 		BISECT_UPDATE_REF=HEAD; shift ;;
+-	    --update-ref=*)
+-		BISECT_UPDATE_REF=${arg#--update-ref=}; shift ;;
++	    --update-ref*)
++		case "$#,$arg" in
++		*,*=*)
++			BISECT_UPDATE_REF=`expr "z$1" : 'z-[^=]*=\(.*\)'`
++		;;
++		1,*)
++			usage ;;
++		*)
++			BISECT_UPDATE_REF="$2";	shift ;;
++		esac
++		shift ;;
+ 	    --*)
+ 		die "$(eval_gettext "unrecognised option: '\$arg'")" ;;
+ 	    *)
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 69d77fa..fa4366f 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -705,6 +705,22 @@ test_expect_success 'bisect: --no-checkout --update-ref=CURSOR - check HEAD is u
+ 	check_same broken $BROKEN
+ '
  
-  git bisect help
-- git bisect start [<bad> [<good>...]] [--] [<paths>...]
-+ git bisect start [--no-checkout|--update-ref=<ref>] [<bad> [<good>...]] [--] [<paths>...]
-  git bisect bad [<rev>]
-  git bisect good [<rev>...]
-  git bisect skip [(<rev>|<range>)...]
-@@ -263,6 +263,21 @@ rewind the tree to the pristine state.  Finally the script should exit
- with the status of the real test to let the "git bisect run" command loop
- determine the eventual outcome of the bisect session.
- 
-+OPTIONS
-+-------
-+--no-checkout::
-++
-+This option is a synonym for --update-ref=HEAD.
++test_expect_success 'bisect: --no-checkout --update-ref CURSOR' '
++	git bisect reset &&
++	git checkout broken &&
++	BROKEN=$(git rev-parse broken) &&
++	git bisect start broken BROKEN_HASH4 --no-checkout --update-ref CURSOR &&
++	check_same CURSOR BROKEN_HASH6 &&
++	test "refs/heads/broken" = "$(git rev-parse --symbolic-full-name HEAD)"
++'
 +
-+--update-ref=<ref>::
-++
-+This option is used to specify that 'git bisect' should not modify the working
-+tree or index on each iteration of the bisection process but should
-+update the reference specified by <ref> instead.
-++
-+This option is useful in circumstances in which checkout is either not
-+possible (because of a damaged respository) or is otherwise not required.
++test_expect_success 'bisect: --no-checkout --update-ref -> fails' '
++	git bisect reset &&
++	git checkout broken &&
++	BROKEN=$(git rev-parse broken) &&
++	test_must_fail git bisect start broken BROKEN_HASH4 --no-checkout --update-ref
++'
 +
- EXAMPLES
- --------
- 
-@@ -343,6 +358,23 @@ $ git bisect run sh -c "make || exit 125; ~/check_test_case.sh"
- This shows that you can do without a run script if you write the test
- on a single line.
- 
-+* Locate a good region of the object graph in a damaged repository
-++
-+------------
-+$ git bisect start HEAD <known-good-commit> [ <missing-or-damaged-commit> ... ] --no-checkout
-+$ git bisect run eval '
-+rc=1;
-+if git rev-list --objects HEAD >tmp.$$; then
-+   git pack-objects --stdout >/dev/null < tmp.$$ && rc=0;
-+fi;
-+rm tmp.$$;
-+test $rc -eq 0;'
-+
-+------------
-++
-+In this case, when 'git bisect run' finishes, bisect/bad will refer to a commit that
-+has at least one parent which is fully reachable in the sense of 'git pack-objects'.
-+
- SEE ALSO
- --------
- link:git-bisect-lk2009.html[Fighting regressions with git bisect],
+ test_expect_success 'bisect: demonstrate identification of damage boundary' "
+ 	git bisect reset &&
+ 	git checkout broken &&
 -- 
 1.7.6.391.g168d0.dirty
