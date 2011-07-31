@@ -1,93 +1,96 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH v8 4/7] bisect: introduce --no-checkout,
- --update-ref=<ref> support into porcelain.
-Date: Mon, 1 Aug 2011 07:11:35 +1000
-Message-ID: <CAH3AnrqdOZZ4p2kEFJq17_mK4wkbJE-yJBTg-G06Wdev90oMGw@mail.gmail.com>
-References: <1312113321-28760-1-git-send-email-jon.seymour@gmail.com>
-	<CAP8UFD2vCGnejSj=Nwkb+kGCpwUaggh5j2V6zBu0iWqNZwvS3Q@mail.gmail.com>
-	<CAH3AnrqasW=ZSix0YBgxHg8ca2X+YOvSWknbG2mjsy0NaqV+Mw@mail.gmail.com>
-	<201107312207.58818.chriscool@tuxfamily.org>
+From: Michael Nahas <mike.nahas@gmail.com>
+Subject: Re: File Systems and a Theory of Edits
+Date: Sun, 31 Jul 2011 17:13:11 -0400
+Message-ID: <CADo4Y9i=PYBv33Jnu2osQX_FL97ng9FZ8TFeMMuc5CDGUhu1Gg@mail.gmail.com>
+References: <CADo4Y9hG=-Bye5g7OWROJNbbUOcnH0hj0f3csws5V+YzEUKAMg@mail.gmail.com>
+	<CACBZZX48aDN_Njm+qMvovfz1tjdhnmXe5-bbJe=0_Q3LbLWoPA@mail.gmail.com>
+	<4E350F15.9050009@lsrfire.ath.cx>
+	<CADo4Y9gU_Z73gCPCESvVZhLOJUJg+mTqHkeqpNv2L8xLJvKxEQ@mail.gmail.com>
+	<CADo4Y9gECLJ45g_r-uZBRnfEVXBRw2EoF2HkRu=0-eJ2YCuBLA@mail.gmail.com>
+	<CAMOZ1BtrgO1XhJfR2-1Mpd8Ytrz4pjVyhbPdbNxDP84hhiip+A@mail.gmail.com>
+Reply-To: mike@nahas.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, j6t@kdbg.org, jnareb@gmail.com
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sun Jul 31 23:12:26 2011
+Cc: git@vger.kernel.org
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 31 23:13:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QndJC-0007E9-FK
-	for gcvg-git-2@lo.gmane.org; Sun, 31 Jul 2011 23:12:26 +0200
+	id 1QndK2-0007Vx-Bu
+	for gcvg-git-2@lo.gmane.org; Sun, 31 Jul 2011 23:13:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752760Ab1GaVLh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Jul 2011 17:11:37 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:46945 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752718Ab1GaVLg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2011 17:11:36 -0400
-Received: by vxh35 with SMTP id 35so3757698vxh.19
-        for <git@vger.kernel.org>; Sun, 31 Jul 2011 14:11:35 -0700 (PDT)
+	id S1752638Ab1GaVNN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Jul 2011 17:13:13 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:51961 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752490Ab1GaVNM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2011 17:13:12 -0400
+Received: by ewy4 with SMTP id 4so2581027ewy.19
+        for <git@vger.kernel.org>; Sun, 31 Jul 2011 14:13:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=/80VOW8sdR4jIWhIGdPn/tLNB1t6NsJChXR28Y2QRZQ=;
-        b=vTpAPFzPjAMoW1b+LNMcsOAav7gntTooIiG6qrcIYrKUbxE6+UFBzsQxocStSLselM
-         JE019wjAaseaWSzukhGF0P+AhzOGsLY+R3JrOgIqQZhI8zkgNXuv3fUG1alTQWwq96m3
-         ZuKfy03SCTXXVqHBZZkmO7JbMoxC8a/aE5cEY=
-Received: by 10.52.33.135 with SMTP id r7mr2288739vdi.441.1312146695468; Sun,
- 31 Jul 2011 14:11:35 -0700 (PDT)
-Received: by 10.52.183.41 with HTTP; Sun, 31 Jul 2011 14:11:35 -0700 (PDT)
-In-Reply-To: <201107312207.58818.chriscool@tuxfamily.org>
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        bh=SEbE38WOC8eSHdvRcsbsBUzutUXFMzgRxdnKdjkkj0E=;
+        b=ezC1nUALuxl51wSg5brz6SUgK340FmndYcul5M4UaZM6gQMhwLLlTboXFMImIy4ycN
+         SiPH1kaGId2wK4KK6zfkck6LiWMf4pXGKOoNhwejoBhnwAFRd32axOU4ooz6TNsVmqHF
+         oIxn+9QdlnAGiVFDfmS3yx7VNKYz5eQK5O85c=
+Received: by 10.14.16.231 with SMTP id h79mr1370955eeh.0.1312146791321; Sun,
+ 31 Jul 2011 14:13:11 -0700 (PDT)
+Received: by 10.14.53.3 with HTTP; Sun, 31 Jul 2011 14:13:11 -0700 (PDT)
+In-Reply-To: <CAMOZ1BtrgO1XhJfR2-1Mpd8Ytrz4pjVyhbPdbNxDP84hhiip+A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178278>
 
-On Mon, Aug 1, 2011 at 6:07 AM, Christian Couder
-<chriscool@tuxfamily.org> wrote:
-> On Sunday 31 July 2011 21:40:35 Jon Seymour wrote:
->> On Mon, Aug 1, 2011 at 5:21 AM, Christian Couder
->>
->> <christian.couder@gmail.com> wrote:
->> > On Sun, Jul 31, 2011 at 1:55 PM, Jon Seymour <jon.seymour@gmail.co=
-m>
-> wrote:
->> >> + =C2=A0 =C2=A0 =C2=A0 if test -n "$BISECT_UPDATE_REF"; then
->> >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 eval=3D"$eval echo '$BISECT_=
-UPDATE_REF' >
->> >> '$GIT_DIR/BISECT_UPDATE_REF';" + =C2=A0 =C2=A0 =C2=A0 fi
->> >
->> > I don't like this very much. In fact I realize that the eval thing=
- we
->> > use is buggy because the result of 'eval "eval"' will be the resul=
-t of
->> > the last command in "eval", so we won't detect if one of the first
->> > command in "eval" failed.
->>
->> How about I fix the eval stitching so that it uses && rather than ; =
-to
->> connect each statement with a final true at the end so there is no
->> dangling &&?
+Why not "git mount" indeed!
+
+At work, I have 3 very active branches and a slow build system.  Right
+now, when I switch to a new branch, I have to rebuild everything.
+Being able to "git mount" 3 snapshots in 3 directories with three
+different build outputs would make switching branches faster.
+
+3 working trees would be even better.  I've been wondering if I can
+make another working trees by creating a .git/ directory and
+symlinking to the .git/objects and ./git/refs of my current
+repository.  (I could use the environment variables GIT_INDEX_FILE and
+GIT_WORKING_TREE, but that would require setting and resetting them.
+Or using a different shell.)
+
+So a true "git mount" that allowed mounting editable branches would be
+very useful to me.  (Although, if it wasn't for that crappy build
+system, I prefer a single working tree.)
+
+Mike Nahas
+
+
+On Sun, Jul 31, 2011 at 1:21 PM, Michael Witten <mfwitten@gmail.com> wr=
+ote:
+> On Sun, Jul 31, 2011 at 14:15, Michael Nahas <mike.nahas@gmail.com> w=
+rote:
+>> I believe the solution for xargs may be John D.'s solution - to
+>> "mount" the snapshot as a file system.=A0 And the "mount" command in=
+ git
+>> is "git checkout".=A0 (Now, I almost want to rename "git checkout" t=
+o
+>> "git remount"!)
 >
-> Yeah, please fix it in a separate bug fix patch.
+> Why not just `git mount', though? We could have different mount point=
+s
+> too, so that it's easy to work with multiple `snapshots' at once (in
+> the spirit of bazaar and mercurial, as well).
 >
-
-Next roll-up will contain this as patch 2:
-
--               eval=3D"$eval bisect_write '$state' '$rev' 'nolog'; "
-+               eval=3D"$eval ${eval:+&&} bisect_write '$state' '$rev' =
-'nolog' "
-
-There is a no-checkout-v10 tag on github with the current iteration
-(https://github.com/jonseymour/git/commits/no-checkout-v10).
-This also contains the v8a patch.
-
-I'll repost on request or once others have had the chance to give feedb=
-ack.
-
-jon.
+> Perhaps `git umount' could be used to make the repository bare.
+>
+> In any case, I always find myself wishing that the standard interface=
+s
+> would make it easier to base an operation on a snapshot that is not
+> yet mounted as the working tree. It can be quite cumbersome to switch
+> the contents of the working tree.
+>
