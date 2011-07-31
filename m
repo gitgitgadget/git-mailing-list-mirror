@@ -1,58 +1,53 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH 0/4] git-p4 test cleanup, commit time change
-Date: Sun, 31 Jul 2011 17:01:12 +0100
-Message-ID: <4E357C48.5090409@diamand.org>
-References: <20110731003557.GA4867@arf.padd.com> <4E352535.4060804@diamand.org> <20110731134237.GA6564@arf.padd.com>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: File Systems and a Theory of Edits
+Date: Sun, 31 Jul 2011 18:16:35 +0200
+Message-ID: <4E357FE3.1040205@lsrfire.ath.cx>
+References: <CADo4Y9hG=-Bye5g7OWROJNbbUOcnH0hj0f3csws5V+YzEUKAMg@mail.gmail.com> <CACBZZX48aDN_Njm+qMvovfz1tjdhnmXe5-bbJe=0_Q3LbLWoPA@mail.gmail.com> <4E350F15.9050009@lsrfire.ath.cx> <CADo4Y9gU_Z73gCPCESvVZhLOJUJg+mTqHkeqpNv2L8xLJvKxEQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Sun Jul 31 18:01:22 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Nahas <mike.nahas@gmail.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6?= =?ISO-8859-1?Q?r=F0_Bjarmason?= 
+	<avarab@gmail.com>, git@vger.kernel.org
+To: mike@nahas.com
+X-From: git-owner@vger.kernel.org Sun Jul 31 18:17:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QnYS9-0003n9-K9
-	for gcvg-git-2@lo.gmane.org; Sun, 31 Jul 2011 18:01:21 +0200
+	id 1QnYhX-0000r8-CI
+	for gcvg-git-2@lo.gmane.org; Sun, 31 Jul 2011 18:17:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752148Ab1GaQBR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Jul 2011 12:01:17 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:43586 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752106Ab1GaQBQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jul 2011 12:01:16 -0400
-Received: by wwe5 with SMTP id 5so4900650wwe.1
-        for <git@vger.kernel.org>; Sun, 31 Jul 2011 09:01:15 -0700 (PDT)
-Received: by 10.227.178.6 with SMTP id bk6mr2552627wbb.12.1312128075239;
-        Sun, 31 Jul 2011 09:01:15 -0700 (PDT)
-Received: from [86.30.143.167] (cpc4-cmbg14-2-0-cust166.5-4.cable.virginmedia.com [86.30.143.167])
-        by mx.google.com with ESMTPS id fo2sm3442765wbb.14.2011.07.31.09.01.13
-        (version=SSLv3 cipher=OTHER);
-        Sun, 31 Jul 2011 09:01:14 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110402 Iceowl/1.0b2 Icedove/3.1.9
-In-Reply-To: <20110731134237.GA6564@arf.padd.com>
+	id S1752277Ab1GaQQ5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Jul 2011 12:16:57 -0400
+Received: from india601.server4you.de ([85.25.151.105]:56229 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752162Ab1GaQQ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jul 2011 12:16:56 -0400
+Received: from [192.168.2.104] (p579BEE49.dip.t-dialin.net [87.155.238.73])
+	by india601.server4you.de (Postfix) with ESMTPSA id 4BA992F803A;
+	Sun, 31 Jul 2011 18:16:54 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:5.0) Gecko/20110624 Thunderbird/5.0
+In-Reply-To: <CADo4Y9gU_Z73gCPCESvVZhLOJUJg+mTqHkeqpNv2L8xLJvKxEQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178264>
 
-On 31/07/11 14:42, Pete Wyckoff wrote:
-> luke@diamand.org wrote on Sun, 31 Jul 2011 10:49 +0100:
->> One thing though - are you sure the p4d demo license only allows 2
->> users? I've only ever used the demo p4d for testing and it seems to
->> work fine (just tried again with version
->> P4D/LINUX26X86_64/2010.2/322263).
->
-> You are so right.  I was using an older p4d (2009.1/222893) at
-> home, and didn't even think about checking for updates.
->
-> There was one line in patch 3 that should survive, just to add a
-> "&&".  I've added your acks for the rest and will repost to show
-> the current changes.
+Am 31.07.2011 16:13, schrieb Michael Nahas:
+> I don't doubt that there exists current commands in git that can perf=
+orm
+> operations like cat, ls, etc.  My point is that git can make it easie=
+r
+> for new users to learn commands and existing users to remember comman=
+ds
+> if git copies the name and sematics (as much as possible) of cat, ls,=
+ etc.
 
-All looks good to me!
+Possibly.  My point was that for this example a look-alike was easy to
+implement as an alias or shell script using an existing plumbing
+command.  You can probably get quite far to your goal that way.
 
-Luke
+Ren=E9
