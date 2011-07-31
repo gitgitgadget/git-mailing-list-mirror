@@ -1,57 +1,73 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: File Systems and a Theory of Edits
-Date: Sun, 31 Jul 2011 10:15:17 +0200
-Message-ID: <4E350F15.9050009@lsrfire.ath.cx>
-References: <CADo4Y9hG=-Bye5g7OWROJNbbUOcnH0hj0f3csws5V+YzEUKAMg@mail.gmail.com> <CACBZZX48aDN_Njm+qMvovfz1tjdhnmXe5-bbJe=0_Q3LbLWoPA@mail.gmail.com>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH 0/4] git-p4 test cleanup, commit time change
+Date: Sun, 31 Jul 2011 10:49:41 +0100
+Message-ID: <4E352535.4060804@diamand.org>
+References: <20110731003557.GA4867@arf.padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: mike@nahas.com, git@vger.kernel.org
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 31 10:15:50 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Sun Jul 31 11:54:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QnRBZ-0000Eo-Rk
-	for gcvg-git-2@lo.gmane.org; Sun, 31 Jul 2011 10:15:46 +0200
+	id 1QnSj9-0006Vf-SI
+	for gcvg-git-2@lo.gmane.org; Sun, 31 Jul 2011 11:54:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753239Ab1GaIPk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Jul 2011 04:15:40 -0400
-Received: from india601.server4you.de ([85.25.151.105]:44865 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753243Ab1GaIPi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jul 2011 04:15:38 -0400
-Received: from [192.168.2.104] (p579BEE49.dip.t-dialin.net [87.155.238.73])
-	by india601.server4you.de (Postfix) with ESMTPSA id 1C4492F8050;
-	Sun, 31 Jul 2011 10:15:37 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:5.0) Gecko/20110624 Thunderbird/5.0
-In-Reply-To: <CACBZZX48aDN_Njm+qMvovfz1tjdhnmXe5-bbJe=0_Q3LbLWoPA@mail.gmail.com>
+	id S1752156Ab1GaJtr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Jul 2011 05:49:47 -0400
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:57318 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751750Ab1GaJtq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jul 2011 05:49:46 -0400
+Received: by wwg11 with SMTP id 11so804613wwg.1
+        for <git@vger.kernel.org>; Sun, 31 Jul 2011 02:49:44 -0700 (PDT)
+Received: by 10.227.27.137 with SMTP id i9mr3883112wbc.28.1312105784690;
+        Sun, 31 Jul 2011 02:49:44 -0700 (PDT)
+Received: from [86.30.143.167] (cpc4-cmbg14-2-0-cust166.5-4.cable.virginmedia.com [86.30.143.167])
+        by mx.google.com with ESMTPS id k84sm2563578weq.46.2011.07.31.02.49.42
+        (version=SSLv3 cipher=OTHER);
+        Sun, 31 Jul 2011 02:49:43 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.15) Gecko/20110402 Iceowl/1.0b2 Icedove/3.1.9
+In-Reply-To: <20110731003557.GA4867@arf.padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178232>
 
-Am 30.07.2011 21:06, schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
-> On Sat, Jul 30, 2011 at 16:29, Michael Nahas <mike.nahas@gmail.com> w=
-rote:
->>     "git xargs <commit> ..."  (Is this possible?)
->=20
-> I don't have comments on the rest of your proposal, but I've often
-> wanted a git-find(1) similar to git-grep(1). Which would give you thi=
-s
-> functionality.
->=20
-> Then you could simply:
->=20
->     git find <commit> <path> -type f | xargs <whatever>
->=20
-> Or something like that.
+On 31/07/11 01:35, Pete Wyckoff wrote:
+> Here's a small patch series to clean up the git-p4 tests a bit,
+> make them work on a 2-user eval p4d, and to fix a problem with
+> the timestamp on the import commit.
+>
+> Luke, if you can take a look and ack these, I'd appreciate
+> the review since I had to adjust your --preserveUser tests.
+> And if you're looking at that one, might as well look at them
+> all.  :)
+>
+> I'd welcome review from anyone with interest, and will plan
+> to submit these to Junio in a week or so.
 
-How about this, which should match your example:
+Just looking at them now.
 
-	git ls-tree -r --name-only <commit> <path> | xargs <whatever>
+One thing though - are you sure the p4d demo license only allows 2 
+users? I've only ever used the demo p4d for testing and it seems to work 
+fine (just tried again with version P4D/LINUX26X86_64/2010.2/322263).
 
-Ren=C3=A9
+The web page says this:
+
+"The free Perforce Server supports two users and five client workspaces, 
+or unlimited users and up to 1,000 files. Request a 45-day evaluation 
+license to support any number of users and unlimited files."
+
+Which I assume means the test harness couldn't have more than 1000 files 
+and some unspecified number of client workspaces?
+
+I've just created 4 users by hand with no obvious problems. I'm pretty 
+sure I'm not accidentally using the corporate server!
+
+Confuzzled!
