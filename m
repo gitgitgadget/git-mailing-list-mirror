@@ -1,109 +1,72 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v8 7/7] bisect: support --update-ref <ref>
-Date: Sun, 31 Jul 2011 21:55:21 +1000
-Message-ID: <1312113321-28760-8-git-send-email-jon.seymour@gmail.com>
-References: <1312113321-28760-1-git-send-email-jon.seymour@gmail.com>
-Cc: chriscool@tuxfamily.org, gitster@pobox.com, j6t@kdbg.org,
-	jnareb@gmail.com, Jon Seymour <jon.seymour@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 31 13:57:15 2011
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 12/18] revert: Make pick_commits functionally act on a commit list
+Date: Sun, 31 Jul 2011 14:08:39 +0200
+Message-ID: <201107311408.40079.chriscool@tuxfamily.org>
+References: <1311871951-3497-1-git-send-email-artagnon@gmail.com> <1311871951-3497-13-git-send-email-artagnon@gmail.com>
+Mime-Version: 1.0
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 31 14:09:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QnUdv-0002zC-6Q
-	for gcvg-git-2@lo.gmane.org; Sun, 31 Jul 2011 13:57:15 +0200
+	id 1QnUpi-000781-1H
+	for gcvg-git-2@lo.gmane.org; Sun, 31 Jul 2011 14:09:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753381Ab1GaL5J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Jul 2011 07:57:09 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:33709 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753377Ab1GaL5H (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jul 2011 07:57:07 -0400
-Received: by mail-pz0-f42.google.com with SMTP id 37so9556049pzk.1
-        for <git@vger.kernel.org>; Sun, 31 Jul 2011 04:57:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=3kmNtoOrfOklb2WBt+F2Fdxa9l/bmtoFSo9/2clfhtQ=;
-        b=sHx7pMQlpditlvIRpxneP/zwBx0tihcefx/YJZUOPO4PNnCUqInMUilEgDbY8lm/6d
-         eP+uJ8fRqH61CjaV9DvAdrhje0lta09C81ciF04RzlWuHtV1r4EXZ1imRgsmTBpP3c9f
-         pB8bkBVatQXUHknfrb9uOW8vQBnZtdsehYjAI=
-Received: by 10.68.0.131 with SMTP id 3mr6032288pbe.147.1312113426975;
-        Sun, 31 Jul 2011 04:57:06 -0700 (PDT)
-Received: from localhost.localdomain ([120.16.239.154])
-        by mx.google.com with ESMTPS id g4sm4306620pbj.41.2011.07.31.04.57.02
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 31 Jul 2011 04:57:06 -0700 (PDT)
-X-Mailer: git-send-email 1.7.6.352.g62761
-In-Reply-To: <1312113321-28760-1-git-send-email-jon.seymour@gmail.com>
+	id S1753399Ab1GaMIu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Jul 2011 08:08:50 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:53255 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753377Ab1GaMIt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jul 2011 08:08:49 -0400
+Received: from style.localnet (unknown [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 67914A6225;
+	Sun, 31 Jul 2011 14:08:41 +0200 (CEST)
+User-Agent: KMail/1.13.6 (Linux/2.6.38-8-generic; KDE/4.6.2; x86_64; ; )
+In-Reply-To: <1311871951-3497-13-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178245>
 
-Adds sugar to allow --update-ref=<ref> to be expressed as
---update-ref <ref> instead.
+On Thursday 28 July 2011 18:52:25 Ramkumar Ramachandra wrote:
+>
+> @@ -780,7 +789,13 @@ int cmd_revert(int argc, const char **argv, const char
+> *prefix) opts.action = REVERT;
+>  	git_config(git_default_config, NULL);
+>  	parse_args(argc, argv, &opts);
+> -	return pick_commits(&opts);
+> +
+> +	/*
+> +	 * Decide what to do depending on the arguments; a fresh
+> +	 * cherry-pick should be handled differently from an existing
+> +	 * one that is being continued
+> +	 */
 
-Suggested-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
----
- git-bisect.sh               |   13 +++++++++++--
- t/t6030-bisect-porcelain.sh |   16 ++++++++++++++++
- 2 files changed, 27 insertions(+), 2 deletions(-)
+It is strange to me that you add this comment only here and not below in 
+cmd_cherry_pick(). So I'd suggest to put it before the definition of 
+pick_revisions() instead.
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 24ac859..ec70cd2 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -79,8 +79,17 @@ bisect_start() {
- 		shift; break ;;
- 	    --no-checkout)
- 		BISECT_UPDATE_REF=HEAD; shift ;;
--	    --update-ref=*)
--		BISECT_UPDATE_REF=${arg#--update-ref=}; shift ;;
-+	    --update-ref*)
-+		case "$#,$arg" in
-+		*,*=*)
-+			BISECT_UPDATE_REF=`expr "z$1" : 'z-[^=]*=\(.*\)'`
-+		;;
-+		1,*)
-+			usage ;;
-+		*)
-+			BISECT_UPDATE_REF="$2";	shift ;;
-+		esac
-+		shift ;;
- 	    --*)
- 		die "$(eval_gettext "unrecognised option: '\$arg'")" ;;
- 	    *)
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 69d77fa..fa4366f 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -705,6 +705,22 @@ test_expect_success 'bisect: --no-checkout --update-ref=CURSOR - check HEAD is u
- 	check_same broken $BROKEN
- '
- 
-+test_expect_success 'bisect: --no-checkout --update-ref CURSOR' '
-+	git bisect reset &&
-+	git checkout broken &&
-+	BROKEN=$(git rev-parse broken) &&
-+	git bisect start broken BROKEN_HASH4 --no-checkout --update-ref CURSOR &&
-+	check_same CURSOR BROKEN_HASH6 &&
-+	test "refs/heads/broken" = "$(git rev-parse --symbolic-full-name HEAD)"
-+'
-+
-+test_expect_success 'bisect: --no-checkout --update-ref -> fails' '
-+	git bisect reset &&
-+	git checkout broken &&
-+	BROKEN=$(git rev-parse broken) &&
-+	test_must_fail git bisect start broken BROKEN_HASH4 --no-checkout --update-ref
-+'
-+
- test_expect_success 'bisect: demonstrate identification of damage boundary' "
- 	git bisect reset &&
- 	git checkout broken &&
--- 
-1.7.6.391.g168d0.dirty
+> +	return pick_revisions(&opts);
+>  }
+> 
+>  int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
+> @@ -791,5 +806,5 @@ int cmd_cherry_pick(int argc, const char **argv, const
+> char *prefix) opts.action = CHERRY_PICK;
+>  	git_config(git_default_config, NULL);
+>  	parse_args(argc, argv, &opts);
+> -	return pick_commits(&opts);
+> +	return pick_revisions(&opts);
+>  }
+
+Thanks,
+Christian.
