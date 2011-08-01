@@ -1,232 +1,188 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Possibly solved invalid free() in git-remote-http from Git 1.7.2.1
-Date: Mon, 1 Aug 2011 17:22:47 +0200
-Message-ID: <CACBZZX7s+NeH2jLC9Ym65_rMQkgVmfbCAkqZbBFhTiY9U8uP2A@mail.gmail.com>
+From: martin f krafft <madduck@madduck.net>
+Subject: Branch dependencies
+Date: Mon, 1 Aug 2011 14:19:46 +0200
+Message-ID: <20110801121946.GA575@fishbowl.rw.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 01 17:22:55 2011
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="tThc/1wpZn/ma/RB"
+Cc: Petr Baudis <pasky@ucw.cz>
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Aug 01 17:32:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QnuKU-0000PU-HL
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 17:22:55 +0200
+	id 1QnuTq-000575-97
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 17:32:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752836Ab1HAPWu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Aug 2011 11:22:50 -0400
-Received: from mail-ey0-f171.google.com ([209.85.215.171]:39452 "EHLO
-	mail-ey0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752831Ab1HAPWt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2011 11:22:49 -0400
-Received: by eye22 with SMTP id 22so4635346eye.2
-        for <git@vger.kernel.org>; Mon, 01 Aug 2011 08:22:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=EkwAuW3jKgrfQArbgWoJTK5UMC0ooocWxRbC/7exbNo=;
-        b=kYjLEliUVtjiNgyH10WV3/tU2sveryXyzn5xvx9x8EHjIOC/U8b8WSKDkWFOBFAobk
-         ppSvtMxoP9/SG4dMA6wFg4YLdm7rQkyfvVQgwm8rWcfxfZo98NK4VJD2TAPTCJ9+1WJw
-         rm2JqBXqzAwcf+a2ctYTD9whZmIPj5u1asIow=
-Received: by 10.205.64.206 with SMTP id xj14mr1381293bkb.85.1312212167543;
- Mon, 01 Aug 2011 08:22:47 -0700 (PDT)
-Received: by 10.204.123.66 with HTTP; Mon, 1 Aug 2011 08:22:47 -0700 (PDT)
+	id S1752104Ab1HAPca (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Aug 2011 11:32:30 -0400
+Received: from seamus.madduck.net ([213.203.238.82]:36504 "EHLO
+	seamus.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751396Ab1HAPc2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2011 11:32:28 -0400
+X-Greylist: delayed 406 seconds by postgrey-1.27 at vger.kernel.org; Mon, 01 Aug 2011 11:32:28 EDT
+Received: from fishbowl.rw.madduck.net (sysyphus.madduck.net [77.109.139.92])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "fishbowl.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by seamus.madduck.net (postfix) with ESMTPS id D8B14407D25;
+	Mon,  1 Aug 2011 17:25:33 +0200 (CEST)
+Received: by fishbowl.rw.madduck.net (Postfix, from userid 1000)
+	id 3719021736; Mon,  1 Aug 2011 14:19:47 +0200 (CEST)
+Content-Disposition: inline
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux wheezy/sid kernel 3.0.0-1-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Virus-Scanned: clamav-milter 0.97.1 at seamus
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178349>
 
-In case anyone would like to look into this I had this undiagnosed
-free() error from git-remote-http in git version 1.7.2.1:
 
-    error: Couldn't create temporary file
-/tmp/clone/main.git/.git/objects/e3/2a06e85053d958f78a20f37c9604e40b8282ad.temp:
-No such file or directory
-    *** glibc detected *** git-remote-http: free(): invalid pointer:
-0x00000000006848c0 ***
-    ======= Backtrace: =========
-    /lib64/libc.so.6[0x3c9b6722ef]
-    /lib64/libc.so.6(cfree+0x4b)[0x3c9b67273b]
-    git-remote-http[0x406e2d]
-    git-remote-http[0x407671]
-    git-remote-http[0x407abe]
-    git-remote-http[0x429044]
-    git-remote-http[0x404a9a]
-    /lib64/libc.so.6(__libc_start_main+0xf4)[0x3c9b61d994]
-    git-remote-http(fwrite+0x129)[0x4034e9]
-    ======= Memory map: ========
-    00400000-00474000 r-xp 00000000 fd:00 12260242
-      /usr/libexec/git-core/git-remote-http
-    00674000-00676000 rw-p 00074000 fd:00 12260242
-      /usr/libexec/git-core/git-remote-http
-    00676000-00696000 rw-p 00676000 00:00 0
-    00875000-00877000 rw-p 00075000 fd:00 12260242
-      /usr/libexec/git-core/git-remote-http
-    021e9000-027a2000 rw-p 021e9000 00:00 0
-      [heap]
-    369c200000-369c215000 r-xp 00000000 fd:00 6193169
-      /lib64/libselinux.so.1
-    369c215000-369c415000 ---p 00015000 fd:00 6193169
-      /lib64/libselinux.so.1
-    369c415000-369c417000 rw-p 00015000 fd:00 6193169
-      /lib64/libselinux.so.1
-    369c417000-369c418000 rw-p 369c417000 00:00 0
-    369d200000-369d20d000 r-xp 00000000 fd:00 6193154
-      /lib64/libgcc_s-4.1.2-20080825.so.1
-    369d20d000-369d40d000 ---p 0000d000 fd:00 6193154
-      /lib64/libgcc_s-4.1.2-20080825.so.1
-    369d40d000-369d40e000 rw-p 0000d000 fd:00 6193154
-      /lib64/libgcc_s-4.1.2-20080825.so.1
-    369de00000-369de3b000 r-xp 00000000 fd:00 6193167
-      /lib64/libsepol.so.1
-    369de3b000-369e03b000 ---p 0003b000 fd:00 6193167
-      /lib64/libsepol.so.1
-    369e03b000-369e03c000 rw-p 0003b000 fd:00 6193167
-      /lib64/libsepol.so.1
-    369e03c000-369e046000 rw-p 369e03c000 00:00 0
-    369e200000-369e211000 r-xp 00000000 fd:00 6193165
-      /lib64/libresolv-2.5.so
-    369e211000-369e411000 ---p 00011000 fd:00 6193165
-      /lib64/libresolv-2.5.so
-    369e411000-369e412000 r--p 00011000 fd:00 6193165
-      /lib64/libresolv-2.5.so
-    369e412000-369e413000 rw-p 00012000 fd:00 6193165
-      /lib64/libresolv-2.5.so
-    369e413000-369e415000 rw-p 369e413000 00:00 0
-    3a17800000-3a1783b000 r-xp 00000000 fd:00 11842620
-      /usr/lib64/libcurl.so.3.0.0
-    3a1783b000-3a17a3b000 ---p 0003b000 fd:00 11842620
-      /usr/lib64/libcurl.so.3.0.0
-    3a17a3b000-3a17a3d000 rw-p 0003b000 fd:00 11842620
-      /usr/lib64/libcurl.so.3.0.0
-    3c46e00000-3c46e31000 r-xp 00000000 fd:00 11840244
-      /usr/lib64/libidn.so.11.5.19
-    3c46e31000-3c47030000 ---p 00031000 fd:00 11840244
-      /usr/lib64/libidn.so.11.5.19
-    3c47030000-3c47031000 rw-p 00030000 fd:00 11840244
-      /usr/lib64/libidn.so.11.5.19
-    3c9b200000-3c9b21c000 r-xp 00000000 fd:00 6193446
-      /lib64/ld-2.5.so
-    3c9b41b000-3c9b41c000 r--p 0001b000 fd:00 6193446
-      /lib64/ld-2.5.so
-    3c9b41c000-3c9b41d000 rw-p 0001c000 fd:00 6193446
-      /lib64/ld-2.5.so
-    3c9b600000-3c9b74d000 r-xp 00000000 fd:00 6193447
-      /lib64/libc-2.5.so
-    3c9b74d000-3c9b94d000 ---p 0014d000 fd:00 6193447
-      /lib64/libc-2.5.so
-    3c9b94d000-3c9b951000 r--p 0014d000 fd:00 6193447
-      /lib64/libc-2.5.so
-    3c9b951000-3c9b952000 rw-p 00151000 fd:00 6193447
-      /lib64/libc-2.5.so
-    3c9b952000-3c9b957000 rw-p 3c9b952000 00:00 0
-    3c9ba00000-3c9ba02000 r-xp 00000000 fd:00 6193448
-      /lib64/libdl-2.5.so
-    3c9ba02000-3c9bc02000 ---p 00002000 fd:00 6193448
-      /lib64/libdl-2.5.so
-    3c9bc02000-3c9bc03000 r--p 00002000 fd:00 6193448
-      /lib64/libdl-2.5.so
-    3c9bc03000-3c9bc04000 rw-p 00003000 fd:00 6193448
-      /lib64/libdl-2.5.so
-    3c9be00000-3c9be16000 r-xp 00000000 fd:00 6193452
-      /lib64/libpthread-2.5.so
-    3c9be16000-3c9c015000 ---p 00016000 fd:00 6193452
-      /lib64/libpthread-2.5.so
-    3c9c015000-3c9c016000 r--p 00015000 fd:00 6193452
-      /lib64/libpthread-2.5.so
-    3c9c016000-3c9c017000 rw-p 00016000 fd:00 6193452
-      /lib64/libpthread-2.5.so
-    3c9c017000-3c9c01b000 rw-p 3c9c017000 00:00 0
-    3c9ce00000-3c9ce14000 r-xp 00000000 fd:00 11835868
-      /usr/lib64/libz.so.1.2.3
-    3c9ce14000-3c9d013000 ---p 00014000 fd:00 11835868
-      /usr/lib64/libz.so.1.2.3
-    3c9d013000-3c9d014000 rw-p 00013000 fd:00 11835868
-      /usr/lib64/libz.so.1.2.3
-    3c9ea00000-3c9ea02000 r-xp 00000000 fd:00 6193461
-      /lib64/libcom_err.so.2.1
-    3c9ea02000-3c9ec01000 ---p 00002000 fd:00 6193461
-      /lib64/libcom_err.so.2.1
-    3c9ec01000-3c9ec02000 rw-p 00001000 fd:00 6193461
-      /lib64/libcom_err.so.2.1
-    3c9f600000-3c9f620000 r-xp 00000000 fd:00 6193466
-      /lib64/libexpat.so.0.5.0
-    3c9f620000-3c9f81f000 ---p 00020000 fd:00 6193466
-      /lib64/libexpat.so.0.5.0
-    3c9f81f000-3c9f822000 rw-p 0001f000 fd:00 6193466
-      /lib64/libexpat.so.0.5.0
-    3ec6e00000-3ec6e45000 r-xp 00000000 fd:00 6193218
-      /lib64/libssl.so.0.9.8e
-    3ec6e45000-3ec7044000 ---p 00045000 fd:00 6193218
-      /lib64/libssl.so.0.9.8e
-    3ec7044000-3ec704a000 rw-p 00044000 fd:00 6193218
-      /lib64/libssl.so.0.9.8e
-    3ec7200000-3ec7208000 r-xp 00000000 fd:00 11841734
-      /usr/lib64/libkrb5support.so.0.1
-    3ec7208000-3ec7407000 ---p 00008000 fd:00 11841734
-      /usr/lib64/libkrb5support.so.0.1
-    3ec7407000-3ec7408000 rw-p 00007000 fd:00 11841734
-      /usr/lib64/libkrb5support.so.0.1
-    3ec7600000-3ec7602000 r-xp 00000000 fd:00 6193214
-      /lib64/libkeyutils-1.2.so
-    3ec7602000-3ec7801000 ---p 00002000 fd:00 6193214
-      /lib64/libkeyutils-1.2.so
-    3ec7801000-3ec7802000 rw-p 00001000 fd:00 6193214
-      /lib64/libkeyutils-1.2.so
-    3ec8a00000-3ec8a91000 r-xp 00000000 fd:00 11842706
-      /usr/lib64/libkrb5.so.3.3
-    3ec8a91000-3ec8c91000 ---p 00091000 fd:00 11842706
-      /usr/lib64/libkrb5.so.3.3
-    3ec8c91000-3ec8c95000 rw-p 00091000 fd:00 11842706
-      /usr/lib64/libkrb5.so.3.3
-    3ec8e00000-3ec8e2c000 r-xp 00000000 fd:00 11843236
-      /usr/lib64/libgssapi_krb5.so.2.2
-    3ec8e2c000-3ec902c000 ---p 0002c000 fd:00 11843236
-      /usr/lib64/libgssapi_krb5.so.2.2
-    3ec902c000-3ec902e000 rw-p 0002c000 fd:00 11843236
-      /usr/lib64/libgssapi_krb5.so.2.2
-    3ec9200000-3ec9224000 r-xp 00000000 fd:00 11841735
-      /usr/lib64/libk5crypto.so.3.1
-    3ec9224000-3ec9423000 ---p 00024000 fd:00 11841735
-      /usr/lib64/libk5crypto.so.3.1
-    3ec9423000-3ec9425000 rw-p 00023000 fd:00 11841735
-      /usr/lib64/libk5crypto.so.3.1
-    3ec9a00000-3ec9b2d000 r-xp 00000000 fd:00 6193209
-      /lib64/libcrypto.so.0.9.8e
-    3ec9b2d000-3ec9d2c000 ---p 0012d000 fd:00 6193209
-      /lib64/libcrypto.so.0.9.8e
-    3ec9d2c000-3ec9d4d000 rw-p 0012c000 fd:00 6193209
-      /lib64/libcrypto.so.0.9.8e
-    3ec9d4d000-3ec9d51000 rw-p 3ec9d4d000 00:00 0
-    2afc5e15e000-2afc5e161000 rw-p 2afc5e15e000 00:00 0
-    2afc5e16a000-2afc5e172000 rw-p 2afc5e16a000 00:00 0
-    2afc5e17d000-2afc5e187000 r-xp 00000000 fd:00 6193177
-      /lib64/libnss_files-2.5.so
-    2afc5e187000-2afc5e386000 ---p 0000a000 fd:00 6193177
-      /lib64/libnss_files-2.5.so
-    2afc5e386000-2afc5e387000 r--p 00009000 fd:00 6193177
-      /lib64/libnss_files-2.5.so
-    2afc5e387000-2afc5e388000 rw-p 0000a000 fd:00 6193177
-      /lib64/libnss_files-2.5.so
-    2afc5e388000-2afc5e38c000 r-xp 00000000 fd:00 6193175
-      /lib64/libnss_dns-2.5.so
-    2afc5e38c000-2afc5e58b000 ---p 00004000 fd:00 6193175
-      /lib64/libnss_dns-2.5.so
-    2afc5e58b000-2afc5e58c000 r--p 00003000 fd:00 6193175
-      /lib64/libnss_dns-2.5.so
-    2afc5e58c000-2afc5e58d000 rw-p 00004000 fd:00 6193175
-      /lib64/libnss_dns-2.5.so
-    2afc5e58d000-2afc5e86b000 rw-p 2afc5e58d000 00:00 0
-    7fff9f4e1000-7fff9f4f6000 rw-p 7ffffffe9000 00:00 0
-      [stack]
-    ffffffffff600000-ffffffffffe00000 ---p 00000000 00:00 0
-      [vdso]
+--tThc/1wpZn/ma/RB
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It happened when I rm -rf'd the /tmp/clone directory that
-git-remote-http was working on. It's possibly fixed in later versions
-of git, I didn't check.
+Dear list,
 
-Just posting it here in case someone has time to write a test for this
-/ track it down. I don't at the moment.q
+We are trying to approach a functionality I call "branch
+dependencies". Essentially, the idea is rooted in distro
+development, but probably applies to normal development too.
+
+For instance, you might have a feature branch off upstream. Once
+upstream advances, you should merge upstream into your feature
+branch (or rebase your feature branch) to ensure that you are
+working on the right assumptions.
+
+Another case might be a feature you want to write, which depends on
+two (or more) feature branches of other people, e.g. say you need
+a new configuration option introduced in feature branch
+"conf-option", and you also base your work on the "speedup" branch,
+because otherwise the software is too slow for your new feature. If
+one or both feature branches advance, you should merge, as before.
+
+It would be useful if Git could help you keep track of what needs to
+be merged, especially as the number of feature branches and
+dependencies increases. TopGit was Petr's answer to this challenge,
+and it works fine, albeit it's a bit too complex and we find it
+scaring new contributors, rather than making their lives easier.
+
+Therefore I am investigating ways in which to simplify/improve
+TopGit. In doing so, I discovered that you guys made a lot of
+progress in Git since the last time I had time to really dive into
+your tool.
+
+If you would permit me, then please let me ask if you can think of
+Git functionality that could be useful in achieving what we're
+trying to do.
+
+For instance, there is git-branch --set-upstream, which could be
+useful, but it only seems to support one "dependency" (which is
+usually the remote ref being tracked by a branch).
+
+One challenge seems to be that a branching point has no information
+about which of the children continues as mainline =E2=80=94 this information
+is only available in a project's workflow policy. For instance:
+
+  o--o--o--=E2=97=8F    upstream
+      \
+       o--=E2=97=8F     feature
+
+But his is actually just the same as
+
+      ,o--=E2=97=8F     feature
+  o--o
+      `o--=E2=97=8F     upstream
+
+and Git has no way to find out whether it is now "feature" that
+needs a merge of "upstream" or vice versa.
+
+It is thus necessary somehow to store the (project-specific)
+dependency information, to be able to (automatically) determine that
+"feature" needs an update in the above.
+
+TopGit does this using a file in the worktree, but many of us find
+this suboptimal.
+
+I have had the following alternative ideas:
+
+  1. a separate DAG, like Git notes. The problem is that this
+     requires additional refspecs to be set up for merges and
+     fetches;
+
+  2. like (1.), but a ref in refs/heads/* (like pristine-tar). This
+     could be considered ugly as it exposes too much implementation
+     detail;
+
+  3. information stored in the Git commit messages. Again, too much
+     implementation detail exposed and ugly;
+
+  4. additional Git commit headers =E2=80=94 this is not supported at the
+     moment (cf. commit generation discussion);
+
+  5. orphan parent nodes to certain commits, in which these data can
+     be stored, e.g.
+
+       o--o--o--=E2=97=8F
+            /
+           o
+
+     To fetch these data, one would walk up the DAG until one finds
+     a multi-parent commit with a parent having a specific format
+     (somewhat brittle=E2=80=A6)
+
+     To me, this is the least offensive, but it does expose
+     implementation details in the commit history.
+
+How else could I store the dependency information, keeping in mind
+that I might have more than one dependency?
+
+And the original question remains: given such dependency
+information, which Git tools could I harness for the purpose, trying
+to reduce the amount of additional code needed?
+
+Thanks,
+
+--=20
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+it is better to have loft and lost
+than to never have loft at all.
+                                                       -- groucho marx
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--tThc/1wpZn/ma/RB
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/sig-policy/999bbcc4/current)
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQLvBAEBCgDZBQJONpnfwBEaaHR0cDovL21hcnRpbi1rcmFmZnQubmV0L2dwZy9z
+aWctcG9saWN5LzU1Yzk4ODJkOTk5YmJjYzQvMjAxMTAxMjQxMTI1P3NoYTUxMnN1
+bT0xY2FkOTZmZDI3ZDMyMzNmNTNlMjI4NDk1MzM2NDgxMDdlNWVlOGQ1YmU2NTUy
+NTFkNzRjOGYxYzVjM2JjNDJmMjMwNGZhNTE1MTUwZjdiZDRkZDA1ZTk4MTk5MjRm
+MDQ5NTEzZWU5OTYyY2E3MTcwOWY4MWQ5NDUxNTg1MmJkOAAKCRBVyYgtmZu8xAmx
+EACrxmRqHeXqbZ8qYJU4gCA0PX06kznLoHM1UQ5lCzONpXxAmM/C1+IJY6JpZj+O
+jccoCQ6vy5qOXEevnRZ8satRX94KfYzIFFfCuMEGEo2gCuTnWTOf4GZiTU31YBSX
+SY6woY/llchhYt2DFk9RnZpAzOl8ibJm0ab8RJb2jHYW3rigl68ae4ogMoYJY5us
+9T5BnGLr7fGnoSC/0pFJxl2SHH56dq7dkkm9NtOKqVGle0HtW2AfYD21bjq6r4wa
+XzCXCX1AZZqst41DKjgeGXPevWve6byiMW6el8OGhQQa8def9xtPyjJ3YUH4vAwB
+oS/whFbTqX/nwGdVVgOBu5TWWv9EXizP/jloUOixQ6gykG1OftEXTIuhwJdt81EI
+2ILIIpu05H6AMdT9H9mrvVaaDJGjJ9c786GIw3FnXTH24MQdaYXk75tE6Msg2yEP
+XDDhnvtG7kUB9ImD9w1waCbZtCTiFEC1LtQr6IZzFjnO2WXyBEN6DVHqdYxBAWRv
+c1OAAc3NjuVprK4F1lkinsoHMFSYNR6kX0RAJRn+nCbRRxIVdVGRVClOpC/D9oY0
+3wsFZK9OGQVui/5glQ/8/eI0NP5KyFwXRqGQxpMZf1UYU4ZUoqX3QXIAgsAZmUDU
+pZU8rIPaui5ttcnWcr/Yca8Q1VFNNdIyT5N5RCwbj0jeMQ==
+=urI/
+-----END PGP SIGNATURE-----
+
+--tThc/1wpZn/ma/RB--
