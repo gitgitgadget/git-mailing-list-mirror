@@ -1,63 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jon Forrest <nobozo@gmail.com>
 Subject: Re: [PATCH] Fixed pluralization in diff reports
-Date: Sun, 31 Jul 2011 21:09:54 -0700
-Message-ID: <7v8vrdkc19.fsf@alter.siamese.dyndns.org>
-References: <4E3624F9.7070406@gmail.com>
+Date: Sun, 31 Jul 2011 21:11:39 -0700
+Message-ID: <4E36277B.9020208@gmail.com>
+References: <4E3624F9.7070406@gmail.com> <7v8vrdkc19.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Jon Forrest <nobozo@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 01 06:10:06 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 01 06:12:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QnjpM-00009t-4m
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 06:10:04 +0200
+	id 1QnjrU-0000kf-69
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 06:12:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750997Ab1HAEJ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Aug 2011 00:09:58 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51285 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750699Ab1HAEJ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2011 00:09:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 84AA944E1;
-	Mon,  1 Aug 2011 00:09:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=I/7TNWWrw9J5F8XB0mlALPWUx4E=; b=dM1MPM
-	FcqclkknSozVCZ3lr7j6rZCgXDTvfXK1AF1g8dqyGm1R7EUSi2U3lZnbxeYLbf4R
-	1m8PrdY7bYa5u10G4Fql34AsXDVqQK4lttZ73K5+PCnqTRVvHzcbKMUYYO9wk+0v
-	3aB/NphSrgSlEuMqyGmOc3Yvks2CKwsrw2f8I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HfXrfz3TQKqCbjFFabQVOgHKnDzPHoCY
-	z80bXCo9kd5i5iSf4hW7XLPNOgyVkHMvaFqhKd+uMvOdVmOMpCkLASjZSNkbIX23
-	cLhMla3Qr763znxIVuAIwjxYuLruQLLZs6DDIgbvCRgo6vSbPJhoHSBBGTxIOtDE
-	YTi8B56KB4A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7B9DF44E0;
-	Mon,  1 Aug 2011 00:09:56 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 11B7F44DF; Mon,  1 Aug 2011
- 00:09:55 -0400 (EDT)
-In-Reply-To: <4E3624F9.7070406@gmail.com> (Jon Forrest's message of "Sun, 31
- Jul 2011 21:00:57 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1D673270-BBF4-11E0-BF28-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752287Ab1HAEMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Aug 2011 00:12:09 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:50235 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750699Ab1HAEMI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2011 00:12:08 -0400
+Received: by ywn13 with SMTP id 13so506747ywn.19
+        for <git@vger.kernel.org>; Sun, 31 Jul 2011 21:12:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=lY5m2AoNEgmpWuuXvYY3SFDtU4ij4Ol/8vkINSBzsmg=;
+        b=ZAkBo0zXFB7gSo8cStENHEzW7SQW0z4v0mY15HDfif98SSSZWGtY1NTD1gCcFn/aSb
+         sKGpxMLfd4/x2K061LscWuO6MqQvjhBCLj/bXhVeOHWNSsd9tEyEmAKyD5hgAh5CJVID
+         gJztEcPBVMRavpihDQy0RGhrVyQiZ6FNgMmfk=
+Received: by 10.142.221.17 with SMTP id t17mr243784wfg.275.1312171926904;
+        Sun, 31 Jul 2011 21:12:06 -0700 (PDT)
+Received: from [192.168.0.107] (c-98-248-228-150.hsd1.ca.comcast.net [98.248.228.150])
+        by mx.google.com with ESMTPS id l19sm2833943wfk.23.2011.07.31.21.12.05
+        (version=SSLv3 cipher=OTHER);
+        Sun, 31 Jul 2011 21:12:05 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:5.0) Gecko/20110624 Thunderbird/5.0
+In-Reply-To: <7v8vrdkc19.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178308>
 
-Jon Forrest <nobozo@gmail.com> writes:
-
-> I got irritated by the
+On 7/31/2011 9:09 PM, Junio C Hamano wrote:
+> Jon Forrest<nobozo@gmail.com>  writes:
 >
-> 	 1 files changed, 0 insertions(+), 1 deletions(-)
+>> I got irritated by the
+>>
+>> 	 1 files changed, 0 insertions(+), 1 deletions(-)
+>
+> This is how the other diff implementation has always showed this line, no?
 
-This is how the other diff implementation has always showed this line, no?
+Maybe, but it's not grammatical English no matter who does it.
+
+But, I'm in the process of asking you to disregard this change
+because I noticed that the diff of my change to diff.c was
+
+	1 file changed, 6 insertions(+), 4 deletion(-)
+
+The last part is clearly wrong, but I don't see why
+my change didn't work. It's such a simple change.
+
+Back to the drawing board.
+
+Sorry for the bother.
+
+Jon
