@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 03/18] revert: Simplify and inline add_message_to_msg
-Date: Mon,  1 Aug 2011 23:36:50 +0530
-Message-ID: <1312222025-28453-4-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 05/18] revert: Rename no_replay to record_origin
+Date: Mon,  1 Aug 2011 23:36:52 +0530
+Message-ID: <1312222025-28453-6-git-send-email-artagnon@gmail.com>
 References: <1312222025-28453-1-git-send-email-artagnon@gmail.com>
 Cc: Git List <git@vger.kernel.org>,
 	Jonathan Nieder <jrnieder@gmail.com>,
@@ -9,111 +9,98 @@ Cc: Git List <git@vger.kernel.org>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 01 20:11:21 2011
+X-From: git-owner@vger.kernel.org Mon Aug 01 20:11:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QnwxV-0003iO-1K
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 20:11:21 +0200
+	id 1Qnwxb-0003oq-GE
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 20:11:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751925Ab1HASLF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Aug 2011 14:11:05 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:41572 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751841Ab1HASLB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2011 14:11:01 -0400
-Received: by mail-yx0-f174.google.com with SMTP id 11so3305634yxi.19
-        for <git@vger.kernel.org>; Mon, 01 Aug 2011 11:11:01 -0700 (PDT)
+	id S1751953Ab1HASLV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Aug 2011 14:11:21 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:62360 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751841Ab1HASLT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2011 14:11:19 -0400
+Received: by mail-pz0-f42.google.com with SMTP id 37so11912645pzk.1
+        for <git@vger.kernel.org>; Mon, 01 Aug 2011 11:11:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=9ILyhf/yc7GhFdUAeWW4i6WFwdi+Mve2mi7F6ieq9bo=;
-        b=q9SNnO0sbc4a4RMnTrIX1yzu5iobrWxOVwkD0DcInfbS8hNdFkdrFFdCJaS217KYuc
-         b+arnPmEArrz2nF98rPTaVsDTLIBrWDHLsao6JtWTp8Thuj5XXxZa1q2iJNGYtTVG4N8
-         LaevvBGqxKUcKY7P+12sVIZCYu2LWj3rNZNaA=
-Received: by 10.68.0.101 with SMTP id 5mr5286883pbd.99.1312222261066;
-        Mon, 01 Aug 2011 11:11:01 -0700 (PDT)
+        bh=8d7N5tbDifodAwTxRafShOR5nftG9L+NeRW4K/TpFQ4=;
+        b=ic1rXUqXXBvG3KoYd3Dh8aYSxGn8s/Ojzww05GF3S8+KPdqqigVeW14nHPiClpgs8q
+         dktz+Xm49SRlau51FrFKFsNw1zWqunYZ/uX3mpDVtBqcpvK/3wxJd70byvDxfi1jg8FV
+         yn3/B6ghd5BtQseCyvC0HN5BkazNyKTSQuprU=
+Received: by 10.68.56.10 with SMTP id w10mr8543952pbp.329.1312222279598;
+        Mon, 01 Aug 2011 11:11:19 -0700 (PDT)
 Received: from localhost.localdomain ([203.110.240.41])
-        by mx.google.com with ESMTPS id d3sm5789958pbh.37.2011.08.01.11.10.52
+        by mx.google.com with ESMTPS id d3sm5789958pbh.37.2011.08.01.11.11.10
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 01 Aug 2011 11:10:59 -0700 (PDT)
+        Mon, 01 Aug 2011 11:11:18 -0700 (PDT)
 X-Mailer: git-send-email 1.7.4.rc1.7.g2cf08.dirty
 In-Reply-To: <1312222025-28453-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178377>
 
-The add_message_to_msg function has some dead code, an unclear API,
-only one callsite.  While it originally intended fill up an empty
-commit message with the commit object name while picking, it really
-doesn't do this -- a bug introduced in v1.5.1-rc1~65^2~2 (Make
-git-revert & git-cherry-pick a builtin, 2007-03-01).  Today, tests in
-t3505-cherry-pick-empty.sh indicate that not filling up an empty
-commit message is the desired behavior.  Re-implement and inline the
-function accordingly, with a beneficial side-effect: don't dereference
-a NULL pointer when the commit doesn't have a delimeter after the
-header.
+The "-x" command-line option is used to record the name of the
+original commits being picked in the commit message.  The variable
+corresponding to this option is named "no_replay" for historical
+reasons; the name is especially confusing because the term "replay" is
+used to describe what cherry-pick does (for example, in the
+documentation of the "--mainline" option).  So, give the variable
+corresponding to the "-x" command-line option a better name:
+"record_origin".
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
 Mentored-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- builtin/revert.c |   28 ++++++++++++++--------------
- 1 files changed, 14 insertions(+), 14 deletions(-)
+ builtin/revert.c |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/revert.c b/builtin/revert.c
-index 2df3f3b..7dfe295 100644
+index 30b39c0..794c050 100644
 --- a/builtin/revert.c
 +++ b/builtin/revert.c
-@@ -185,19 +185,6 @@ static char *get_encoding(const char *message)
- 	return NULL;
- }
+@@ -35,7 +35,7 @@ static const char * const cherry_pick_usage[] = {
+ 	NULL
+ };
  
--static void add_message_to_msg(struct strbuf *msgbuf, const char *message)
--{
--	const char *p = message;
--	while (*p && (*p != '\n' || p[1] != '\n'))
--		p++;
--
--	if (!*p)
--		strbuf_addstr(msgbuf, sha1_to_hex(commit->object.sha1));
--
--	p += 2;
--	strbuf_addstr(msgbuf, p);
--}
--
- static void write_cherry_pick_head(void)
- {
- 	int fd;
-@@ -462,11 +449,24 @@ static int do_pick_commit(void)
+-static int edit, no_replay, no_commit, mainline, signoff, allow_ff;
++static int edit, record_origin, no_commit, mainline, signoff, allow_ff;
+ static enum { REVERT, CHERRY_PICK } action;
+ static struct commit *commit;
+ static int commit_argc;
+@@ -91,7 +91,7 @@ static void parse_args(int argc, const char **argv)
+ 
+ 	if (action == CHERRY_PICK) {
+ 		struct option cp_extra[] = {
+-			OPT_BOOLEAN('x', NULL, &no_replay, "append commit name"),
++			OPT_BOOLEAN('x', NULL, &record_origin, "append commit name"),
+ 			OPT_BOOLEAN(0, "ff", &allow_ff, "allow fast-forward"),
+ 			OPT_END(),
+ 		};
+@@ -464,7 +464,7 @@ static int do_pick_commit(void)
+ 			strbuf_addstr(&msgbuf, p);
  		}
- 		strbuf_addstr(&msgbuf, ".\n");
- 	} else {
-+		const char *p;
-+
- 		base = parent;
- 		base_label = msg.parent_label;
- 		next = commit;
- 		next_label = msg.label;
--		add_message_to_msg(&msgbuf, msg.message);
-+
-+		/*
-+		 * Append the commit log message to msgbuf; it starts
-+		 * after the tree, parent, author, committer
-+		 * information followed by "\n\n".
-+		 */
-+		p = strstr(msg.message, "\n\n");
-+		if (p) {
-+			p += 2;
-+			strbuf_addstr(&msgbuf, p);
-+		}
-+
- 		if (no_replay) {
+ 
+-		if (no_replay) {
++		if (record_origin) {
  			strbuf_addstr(&msgbuf, "(cherry picked from commit ");
  			strbuf_addstr(&msgbuf, sha1_to_hex(commit->object.sha1));
+ 			strbuf_addstr(&msgbuf, ")\n");
+@@ -559,7 +559,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 			die(_("cherry-pick --ff cannot be used with --signoff"));
+ 		if (no_commit)
+ 			die(_("cherry-pick --ff cannot be used with --no-commit"));
+-		if (no_replay)
++		if (record_origin)
+ 			die(_("cherry-pick --ff cannot be used with -x"));
+ 		if (edit)
+ 			die(_("cherry-pick --ff cannot be used with --edit"));
 -- 
 1.7.4.rc1.7.g2cf08.dirty
