@@ -1,91 +1,117 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 11/18] revert: Save command-line options for continuing operation
-Date: Mon, 1 Aug 2011 23:25:37 +0530
-Message-ID: <CALkWK0nprofui1HyewJeCQiX+uRxABAOeFPMGNqQ+jUHtB13GA@mail.gmail.com>
-References: <1311871951-3497-1-git-send-email-artagnon@gmail.com>
- <1311871951-3497-12-git-send-email-artagnon@gmail.com> <201107311342.12547.chriscool@tuxfamily.org>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: [PATCH] notice error exit from pager
+Date: Mon, 1 Aug 2011 19:59:21 +0200
+Message-ID: <20110801175921.GA17092@toss>
+References: <20110726210401.GA25207@toss.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Aug 01 19:56:08 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 01 19:59:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qnwih-0005rj-Ai
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 19:56:03 +0200
+	id 1Qnwm4-0007OH-K8
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 19:59:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753571Ab1HARz7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Aug 2011 13:55:59 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:34265 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752876Ab1HARz6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Aug 2011 13:55:58 -0400
-Received: by wwe5 with SMTP id 5so5900577wwe.1
-        for <git@vger.kernel.org>; Mon, 01 Aug 2011 10:55:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Fu+UbdDXyvN7Kqh+0ApzNQDYgdePJUWuM7u2wlwNSeU=;
-        b=C7kEMH9TkDJdxFrYg7Y7V9LmMu3Rf6avqt0GEd5tTQLX+ZgrKiOjZ1Fr5fa1DeOEwg
-         CsFwI+cEXkH+kLMDo6Fk2hGWYs1foffTl5FWnjoIfBhrSBauZSeQjrNd5RSJEZApgDie
-         OZdXDl4UluLgtPk6HtlEZg5dU/LAk8n9vksPI=
-Received: by 10.216.255.18 with SMTP id i18mr920550wes.64.1312221357111; Mon,
- 01 Aug 2011 10:55:57 -0700 (PDT)
-Received: by 10.216.137.134 with HTTP; Mon, 1 Aug 2011 10:55:37 -0700 (PDT)
-In-Reply-To: <201107311342.12547.chriscool@tuxfamily.org>
+	id S1752258Ab1HAR72 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Aug 2011 13:59:28 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:49955 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751874Ab1HAR71 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2011 13:59:27 -0400
+Received: from localhost (p5B22CD28.dip.t-dialin.net [91.34.205.40])
+	by bsmtp.bon.at (Postfix) with ESMTP id AA577A7EB3;
+	Mon,  1 Aug 2011 19:59:22 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20110726210401.GA25207@toss.lan>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178367>
 
-Hi,
+If the pager fails to run, git produces no output, e.g.:
 
-Christian Couder writes:
-> On Thursday 28 July 2011 18:52:24 Ramkumar Ramachandra wrote:
->> + =C2=A0 =C2=A0 if (opts->mainline) {
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 strbuf_reset(&buf);
->
-> It is not necessary to reset &buf here.
->
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 strbuf_addf(&buf, "%d", =
-opts->mainline);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git_config_set_in_file(o=
-pts_file, "options.mainline", buf.buf);
->> + =C2=A0 =C2=A0 }
->
-> And perhaps it would be clearer if it was:
->
-> + =C2=A0 =C2=A0 =C2=A0 if (opts->mainline) {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 struct strbuf buf =
-=3D STRBUF_INIT;
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 strbuf_addf(&buf, =
-"%d", opts->mainline);
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git_config_set_in_=
-file(opts_file, "options.mainline", buf.buf);
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 strbuf_release(&bu=
-f);
-> + =C2=A0 =C2=A0 =C2=A0 }
+ $ GIT_PAGER=not-a-command git log
 
-Much clearer.  Fixed.
+The error reporting fails for two reasons:
 
->> + =C2=A0 =C2=A0 if (opts->strategy)
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git_config_set_in_file(o=
-pts_file, "options.strategy", opts->strategy);
->> + =C2=A0 =C2=A0 if (opts->xopts) {
->
-> Other nit: maybe you could put "int i" here, instead of at the beginn=
-ing of
-> the function.
+ (1) start_command: There is a mechanism that detects errors during
+     execvp introduced in 2b541bf8 (start_command: detect execvp
+     failures early). The child writes one byte to a pipe only if
+     execvp fails.  The parent waits for either EOF, when the
+     successful execvp automatically closes the pipe (see
+     FD_CLOEXEC in fcntl(1)), or it reads a single byte, in which
+     case it knows that the execvp failed. This mechanism is
+     incompatible with the workaround introduced in 35ce8622
+     (pager: Work around window resizing bug in 'less'), which
+     waits for input from the parent before the exec. Since both
+     the parent and the child are waiting for input from each
+     other, that would result in a deadlock. In order to avoid
+     that, the mechanism is disabled by closing the child_notifier
+     file descriptor.
 
-=46ixed.  Thanks.
+ (2) finish_command: The parent correctly detects the 127 exit
+     status from the child, but the error output goes nowhere,
+     since by that time it is already being redirected to the
+     child.
 
--- Ram
+No simple solution for (1) comes to mind.
+
+Number (2) can be solved by not sending error output to the pager.
+Not redirecting error output to the pager can result in the pager
+overwriting error output with standard output, however.
+
+Since there is no reliable way to handle error reporting in the
+parent, produce the output in the child instead.
+
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+---
+
+Nothing new compared to the RFC, just a slightly trimmed commit
+message.
+
+ run-command.c |   15 ++++++---------
+ 1 files changed, 6 insertions(+), 9 deletions(-)
+
+diff --git a/run-command.c b/run-command.c
+index 5c91f37..a2796c4 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -125,9 +125,6 @@ static int wait_or_whine(pid_t pid, const char *argv0, int silent_exec_failure)
+ 		if (code == 127) {
+ 			code = -1;
+ 			failed_errno = ENOENT;
+-			if (!silent_exec_failure)
+-				error("cannot run %s: %s", argv0,
+-					strerror(ENOENT));
+ 		}
+ 	} else {
+ 		error("waitpid is confused (%s)", argv0);
+@@ -282,14 +279,14 @@ fail_pipe:
+ 		} else {
+ 			execvp(cmd->argv[0], (char *const*) cmd->argv);
+ 		}
+-		/*
+-		 * Do not check for cmd->silent_exec_failure; the parent
+-		 * process will check it when it sees this exit code.
+-		 */
+-		if (errno == ENOENT)
++		if (errno == ENOENT) {
++			if (!cmd->silent_exec_failure)
++				error("cannot run %s: %s", cmd->argv[0],
++					strerror(ENOENT));
+ 			exit(127);
+-		else
++		} else {
+ 			die_errno("cannot exec '%s'", cmd->argv[0]);
++		}
+ 	}
+ 	if (cmd->pid < 0)
+ 		error("cannot fork() for %s: %s", cmd->argv[0],
+-- 
+1.7.3.1.105.g84915
