@@ -1,89 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: File Systems and a Theory of Edits
-Date: Sun, 31 Jul 2011 18:04:58 -0700
-Message-ID: <7vy5zej611.fsf@alter.siamese.dyndns.org>
-References: <CADo4Y9hG=-Bye5g7OWROJNbbUOcnH0hj0f3csws5V+YzEUKAMg@mail.gmail.com>
- <CACBZZX48aDN_Njm+qMvovfz1tjdhnmXe5-bbJe=0_Q3LbLWoPA@mail.gmail.com>
- <4E350F15.9050009@lsrfire.ath.cx>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	mike@nahas.com, git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Mon Aug 01 03:05:08 2011
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: Cleaning up history with git rebase
+Date: Mon, 01 Aug 2011 01:07:33 -0000
+Message-ID: <1b66c8efe0214915be2c52a5aacd22de-mfwitten@gmail.com>
+References: <0111E44E-B85F-4C90-8052-E52BA9CD3D17@linea.gov.br>
+            <34ca77f818944acb9f5c6f19d91df73f-mfwitten@gmail.com>
+            <CAMOZ1BvRDSkzJmASNFQvZ-SVBUXZHw6CyfLP4SJqK8CwaMMDUA@mail.gmail.com>
+            <317AAE40-449B-4280-AEF1-10EE93FDB9FF@linea.gov.br>
+            <7af8ef40e0034e81a63f1d4a53bf082e-mfwitten@gmail.com>
+Cc: Patricia Bittencourt Egeland <pbegeland@linea.gov.br>,
+	git@vger.kernel.org
+To: Ricky Egeland <rickyegeland@linea.gov.br>
+X-From: git-owner@vger.kernel.org Mon Aug 01 03:12:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QngwN-0000LC-J4
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 03:05:07 +0200
+	id 1Qnh3R-0002Rm-Sf
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 03:12:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753275Ab1HABFC convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Jul 2011 21:05:02 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60189 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753059Ab1HABFA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2011 21:05:00 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3038D46F6;
-	Sun, 31 Jul 2011 21:05:00 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=RfNHIb0NFDSC
-	3vg935miCSzmssY=; b=xN3PcGTjMwwPlV0N6xv8z4x38zPtgd18UhdopsiUXK3h
-	TqiYNzv4Z2nbi6oCyvPQZERB+Vg3Q+QdYPsAyBWhamJY9szY6exF9D4ILEGvICfP
-	Iqh5EXZEnqrV2fgSBrA9TH3RIpe4wuKFZloAeEL8k0ldaUf6XQsDbWvdAyzGGgA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=JM/WvN
-	yrFBIsqE7yEujW7eSOCFBa/ndYYeD4IjtwZS/c9uLh6j06t1n+DESLFneWV4waOq
-	6N49/6MFxXOTSy/raUZM5tU9aGUVtAxHKCHpWRzxh6iAAsIoH/LNUIGjcgXJmtDs
-	jW0m08pOzVbxZmtxQchb7/OuNhkZ49JPQdJ00=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2758946F5;
-	Sun, 31 Jul 2011 21:05:00 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AA1A746F4; Sun, 31 Jul 2011
- 21:04:59 -0400 (EDT)
-In-Reply-To: <4E350F15.9050009@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Sun, 31 Jul 2011 10:15:17 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4772A870-BBDA-11E0-9E3B-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753336Ab1HABMW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Jul 2011 21:12:22 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:39665 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753151Ab1HABMV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jul 2011 21:12:21 -0400
+Received: by pzk37 with SMTP id 37so10490598pzk.1
+        for <git@vger.kernel.org>; Sun, 31 Jul 2011 18:12:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=subject:date:from:to:cc:message-id:in-reply-to:references;
+        bh=kit438HivFKal5xgjHZqKesiyqLoLmOIUei9URflc0Q=;
+        b=M3qVAYJmYBOBJhTrnCCFwTyyQwhzt3G3jdurC7S3XS9JZ3lApos7wkiVLoXD1jECKV
+         wLfSbIMs2i7xtSkbekyT++lXNb1Up/97DGwCxpet1sVJXHTWoIOSEO9+n0SKQ5c4gvdI
+         /6gtiD//PQU+8R016cGPufnWdifPGz4y+k3Js=
+Received: by 10.68.49.67 with SMTP id s3mr7138126pbn.318.1312161140297;
+        Sun, 31 Jul 2011 18:12:20 -0700 (PDT)
+Received: from gmail.com (tor-exit-router37-readme.formlessnetworking.net [199.48.147.37])
+        by mx.google.com with ESMTPS id g4sm4909180pbj.89.2011.07.31.18.12.18
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 31 Jul 2011 18:12:19 -0700 (PDT)
+In-Reply-To: <7af8ef40e0034e81a63f1d4a53bf082e-mfwitten@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178291>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+Michael Witten wrote:
 
-> Am 30.07.2011 21:06, schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->> On Sat, Jul 30, 2011 at 16:29, Michael Nahas <mike.nahas@gmail.com> =
-wrote:
->>>     "git xargs <commit> ..."  (Is this possible?)
->>=20
->> I don't have comments on the rest of your proposal, but I've often
->> wanted a git-find(1) similar to git-grep(1). Which would give you th=
-is
->> functionality.
->>=20
->> Then you could simply:
->>=20
->>     git find <commit> <path> -type f | xargs <whatever>
->>=20
->> Or something like that.
+> On Sun, 31 Jul 2011 18:44:43 -0300, Ricky, Egeland wrote:
 >
-> How about this, which should match your example:
+>> On Jul 31, 2011, at 6:33 PM, Michael Witten wrote:
+>> 
+>>> On Sun, Jul 31, 2011 at 20:21, Michael Witten <mfwitten@gmail.com> wrote:
+>>>> Why are there conflicts anyway?
+>>>
+>>> Oh...
+>>>
+>>> I guess there were conflicts when the merge commit was made in
+>>> the original repository, and these conflicts were resolved by
+>>> the merge commit itself. Hence, when rebase tries to split up
+>>> a merge by dealing with just the non-merge parents, you end up
+>>> having to deal with the conflict again.
+>> 
+>> Yes, I thought it was something like this going on, too. In the
+>> pre-rebase history, when there is a commit with "Conflict:" and
+>> listing file which is in the sub-repository history, this is a
+>> point where rebase stops with a conflict.
+>> 
+>>> Shouldn't rebase take this into account?
+>> 
+>> Not sure.  Seems that it does not, it makes me resolve the conflict =
+>> again.
 >
-> 	git ls-tree -r --name-only <commit> <path> | xargs <whatever>
+> I think git rebase should take this into account is what I'm saying.
+>
+> The following implements what I think `git rebase' should be doing;
+> run it instead of `git rebase' in your repo:
+>
+>   git branch saved
+>   git rev-list HEAD --reverse --first-parent --parents |
+>   {
+>     read root
+>     git reset --hard $root
+>     rebase_head=$root
+>
+>     while read commit first_parent other_parents; do
+>
+>       if [ -z "$other_parents" ]; then
+>
+>         git cherry-pick $commit
+>         rebase_head=$commit
+>
+>       else
+>
+>         for parent in $other_parents; do
+>
+>           if ! git cherry-pick $parent; then
+>
+>             git reset --hard $rebase_head
+>             git merge $other_parents
+>             git rm -rf .
+>             git checkout -- $commit
+>             git commit -aC $commit 
+>             break
+>
+>           fi
+>
+>         done
+>
+>         rebase_head=$(git rev-parse HEAD)
+>
+>       fi
+>
+>     done
+>   }
 
-I don't get what this thread wants to achieve quite yet.
+Woops!
 
-The devil is in <whatever> part. What would it do, given only the seque=
-nce
-of pathnames and object names but not data?  Invoke low-level git comma=
-nds
-on them?
+This line:
+
+  git checkout -- $commit
+
+should be:
+
+  git checkout $commit -- .
