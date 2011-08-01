@@ -1,75 +1,81 @@
-From: Michael Nahas <mike.nahas@gmail.com>
-Subject: Re: File Systems and a Theory of Edits
-Date: Sun, 31 Jul 2011 18:39:37 -0400
-Message-ID: <CADo4Y9gYCfWD3hfc8h0_Q_VCof4+=G-oX4HZyK+LFy3kRVZk+A@mail.gmail.com>
-References: <CADo4Y9hG=-Bye5g7OWROJNbbUOcnH0hj0f3csws5V+YzEUKAMg@mail.gmail.com>
-	<CACBZZX48aDN_Njm+qMvovfz1tjdhnmXe5-bbJe=0_Q3LbLWoPA@mail.gmail.com>
-	<4E350F15.9050009@lsrfire.ath.cx>
-	<CADo4Y9gU_Z73gCPCESvVZhLOJUJg+mTqHkeqpNv2L8xLJvKxEQ@mail.gmail.com>
-	<CADo4Y9gECLJ45g_r-uZBRnfEVXBRw2EoF2HkRu=0-eJ2YCuBLA@mail.gmail.com>
-	<CAMOZ1BtrgO1XhJfR2-1Mpd8Ytrz4pjVyhbPdbNxDP84hhiip+A@mail.gmail.com>
-	<CADo4Y9i=PYBv33Jnu2osQX_FL97ng9FZ8TFeMMuc5CDGUhu1Gg@mail.gmail.com>
-	<m2sjpmt7lq.fsf@igel.home>
-Reply-To: mike@nahas.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] ls-files: fix pathspec display on error
+Date: Sun, 31 Jul 2011 17:01:22 -0700
+Message-ID: <7vipqiknjh.fsf@alter.siamese.dyndns.org>
+References: <CAEBDL5XJbYT9yczZiVPpeA3mpROuKQdw+-AOJjUmRp4W6M5uzg@mail.gmail.com>
+ <b535c21e1becdf8aeeb1d3f8ddaa7f5415830844.1311767679.git.git@drmicha.warpmail.net> <20110729130330.GA31941@toss.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Mon Aug 01 00:39:44 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>, rrt@sc3d.org,
+	john@szakmeister.net
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Mon Aug 01 02:01:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qneff-000224-Tp
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 00:39:44 +0200
+	id 1Qnfwp-0000TU-J4
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 02:01:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752430Ab1GaWjk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Jul 2011 18:39:40 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:63878 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752071Ab1GaWjj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2011 18:39:39 -0400
-Received: by ewy4 with SMTP id 4so2591045ewy.19
-        for <git@vger.kernel.org>; Sun, 31 Jul 2011 15:39:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        bh=5DJTyaq64b3cdQkPHNI2xu3oH7OCAFFbd6sx5qZWY5c=;
-        b=WclUgmL4D4oMxQBGdFF13aLw2vPHty5MvVaYnV9UWj8rgLQUuewB7grK6DfF8qk1iQ
-         A3ME0KX3hegAgOBLvguvFFv8WTQ/s8NaOLOulaCobbbeubVMqs5BOu9DVdMaRrWkbk3g
-         t19oaPkWsw6l4YKG/cSZVcLXQvXHKzUr1jtkk=
-Received: by 10.14.16.231 with SMTP id h79mr1386571eeh.0.1312151977892; Sun,
- 31 Jul 2011 15:39:37 -0700 (PDT)
-Received: by 10.14.53.3 with HTTP; Sun, 31 Jul 2011 15:39:37 -0700 (PDT)
-In-Reply-To: <m2sjpmt7lq.fsf@igel.home>
+	id S1753216Ab1HAAB1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Jul 2011 20:01:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38912 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752756Ab1HAABZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jul 2011 20:01:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 766AB5A25;
+	Sun, 31 Jul 2011 20:01:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NhQOOsW1V9tLJRuCX8H0vK0xEPU=; b=axRBBg
+	9yj4T7ZeYuKVSniHQ30/8efuzoo4JVCIaQxbkZ368T6B4nbBBhiDR42aj4fILc+U
+	Am/BiyGdiK7AmIl0ASajmmrY7NIoK40vDd8lRkq0e5leoaKqaDnpABAvr9VApFAi
+	+uzes8OIVkLKvTGSv5J1vgKoQLy/B8jhcBG3w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qBLHV4OPq15aQ3paNYD6wV7FfiADjifX
+	NqgyBYcCOnqAYv4WKv33f2MMBVxIxAg+9NmcgbNFyjur65HCX5fYrLGqDe/8xXoV
+	dqLfMI4FIquvr0Qd7dt0SyL1ytm3/gAsZ3yegHFW4wqZqJi2AKbN3UyhyM14Dryl
+	R1ucND2wV/o=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D0C25A24;
+	Sun, 31 Jul 2011 20:01:24 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D4DCC5A23; Sun, 31 Jul 2011
+ 20:01:23 -0400 (EDT)
+In-Reply-To: <20110729130330.GA31941@toss.lan> (Clemens Buchacher's message
+ of "Fri, 29 Jul 2011 15:03:30 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 650A54AE-BBD1-11E0-A185-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178285>
 
-I shall check it out.  Thanks!  -Mike
+Clemens Buchacher <drizzd@aon.at> writes:
 
-On Sun, Jul 31, 2011 at 6:20 PM, Andreas Schwab <schwab@linux-m68k.org>=
- wrote:
-> Michael Nahas <mike.nahas@gmail.com> writes:
+> The following sequence of commands reveals an issue with error
+> reporting of relative paths:
 >
->> 3 working trees would be even better. =A0I've been wondering if I ca=
-n
->> make another working trees by creating a .git/ directory and
->> symlinking to the .git/objects and ./git/refs of my current
->> repository.
+>  $ mkdir sub
+>  $ cd sub
+>  $ git ls-files --error-unmatch ../bbbbb
+>  error: pathspec 'b' did not match any file(s) known to git.
+>  $ git commit --error-unmatch ../bbbbb
+>  error: pathspec 'b' did not match any file(s) known to git.
 >
-> Have you looked at git-new-workdir?
+> This bug is visible only if the normalized path (i.e., the relative
+> path from the repository root) is longer than the prefix.
+> Otherwise, the code skips over the normalized path and reads from
+> an unused memory location which still contains a leftover of the
+> original command line argument.
 >
-> Andreas.
->
-> --
-> Andreas Schwab, schwab@linux-m68k.org
-> GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756 =A001D3 44D5 214B 82=
-76 4ED5
-> "And now for something completely different."
->
+> So instead, use the existing facilities to deal with relative paths
+> correctly.
+
+Sounds sane; tests?
