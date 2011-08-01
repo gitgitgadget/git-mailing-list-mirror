@@ -1,165 +1,124 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH v2] Documentation/submodule: add command references and update
- options
-Date: Mon, 01 Aug 2011 22:49:21 +0200
-Message-ID: <4E371151.4040407@web.de>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: Storing additional information in commit headers
+Date: Mon, 1 Aug 2011 22:51:43 +0200
+Message-ID: <20110801205143.GA15401@fishbowl.rw.madduck.net>
+References: <20110801182015.GA3100@fishbowl.rw.madduck.net>
+ <20110801182845.GA4303@fishbowl.rw.madduck.net>
+ <CACPiFCLPgsC+9cX7r33oCQ2AnuRXMTqOAE5RZLS7hXdHc6B-9Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Nikolai Weibull <now@bitwi.se>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 01 22:49:29 2011
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Dxnq1zWXvFF0Q93v"
+To: Martin Langhoff <martin.langhoff@gmail.com>,
+	git discussion list <git@vger.kernel.org>,
+	Petr Baudis <pasky@ucw.cz>, Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Mon Aug 01 22:52:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QnzQW-0007K1-Ea
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 22:49:29 +0200
+	id 1QnzT1-0008OC-S9
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 22:52:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753566Ab1HAUtZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Aug 2011 16:49:25 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:52843 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753412Ab1HAUtX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2011 16:49:23 -0400
-Received: from smtp03.web.de  ( [172.20.0.65])
-	by fmmailgate01.web.de (Postfix) with ESMTP id A8A911947CF20;
-	Mon,  1 Aug 2011 22:49:21 +0200 (CEST)
-Received: from [91.48.110.244] (helo=[192.168.178.43])
-	by smtp03.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1QnzQP-0002hN-00; Mon, 01 Aug 2011 22:49:21 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:5.0) Gecko/20110624 Thunderbird/5.0
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1/zqUrxg1Y4FS1kNTaT4jFyJ3ZlC/uUjn/UhmvS
-	+qaoF6UrwvBwMkpcBQhz4WyeVhDrptd81qWkz8tF1DE7xPeSQ2
-	4w/eUbz47TeMWcxkCfzw==
+	id S1753596Ab1HAUwA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Aug 2011 16:52:00 -0400
+Received: from seamus.madduck.net ([213.203.238.82]:52428 "EHLO
+	seamus.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753583Ab1HAUv6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2011 16:51:58 -0400
+Received: from fishbowl.rw.madduck.net (70-204.79-83.cust.bluewin.ch [83.79.204.70])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "fishbowl.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by seamus.madduck.net (postfix) with ESMTPS id D11FC407D24;
+	Mon,  1 Aug 2011 22:51:44 +0200 (CEST)
+Received: by fishbowl.rw.madduck.net (Postfix, from userid 1000)
+	id 90B341FFE2; Mon,  1 Aug 2011 22:51:43 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <CACPiFCLPgsC+9cX7r33oCQ2AnuRXMTqOAE5RZLS7hXdHc6B-9Q@mail.gmail.com>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux wheezy/sid kernel 3.0.0-1-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Virus-Scanned: clamav-milter 0.97.1 at seamus
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178411>
-
-Reference the "git diff" and "git status" commands where they learned
-functionality that in earlier git versions was only available through the
-'summary' and 'status' subcommands of "git submodule".
-
-The short option '-n' for '--summary-limit' was missing from the synopsis
-and the --init option was missing from the "options" section, add those
-there. And while at it, quote all options in backticks so they are
-decorated properly in the output formats which support that.
-
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
-
-In this version the options are quoted in backticks and the phrase "will
-provide the same information" has been changed to "provide that information
-too" to inform the user that it will provide "the same and a lot of other"
-information.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178412>
 
 
- Documentation/git-submodule.txt |   38 ++++++++++++++++++++++++++------------
- 1 files changed, 26 insertions(+), 12 deletions(-)
+--Dxnq1zWXvFF0Q93v
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 0ec8574..67cf5f0 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -15,7 +15,8 @@ SYNOPSIS
- 'git submodule' [--quiet] init [--] [<path>...]
- 'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--rebase]
- 	      [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
--'git submodule' [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
-+'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-limit) <n>]
-+	      [commit] [--] [<path>...]
- 'git submodule' [--quiet] foreach [--recursive] <command>
- 'git submodule' [--quiet] sync [--] [<path>...]
+also sprach Martin Langhoff <martin.langhoff@gmail.com> [2011.08.01.2133 +0=
+200]:
+> What data are you trying to include? Some time ago, I had similar
+> ideas to yours for a while... and it ended up being that all I needed
+> was to put the additional data /in a file/ and commit that file.
 
-@@ -108,8 +109,13 @@ status::
- 	repository and `U` if the submodule has merge conflicts.
- 	This command is the default command for 'git submodule'.
- +
--If '--recursive' is specified, this command will recurse into nested
-+If `--recursive` is specified, this command will recurse into nested
- submodules, and show their status as well.
-++
-+If you are only interested in changes of the currently initialized
-+submodules with respect to the commit recorded in the index or the HEAD,
-+linkgit:git-status[1] and linkgit:git-diff[1] will provide that information
-+too (and can also report changes to a submodule's work tree).
+Hi, thanks for taking the time to reply to me!
 
- init::
- 	Initialize the submodules, i.e. register each submodule name
-@@ -125,26 +131,29 @@ init::
- update::
- 	Update the registered submodules, i.e. clone missing submodules and
- 	checkout the commit specified in the index of the containing repository.
--	This will make the submodules HEAD be detached unless '--rebase' or
--	'--merge' is specified or the key `submodule.$name.update` is set to
-+	This will make the submodules HEAD be detached unless `--rebase` or
-+	`--merge` is specified or the key `submodule.$name.update` is set to
- 	`rebase` or `merge`.
- +
- If the submodule is not yet initialized, and you just want to use the
- setting as stored in .gitmodules, you can automatically initialize the
--submodule with the --init option.
-+submodule with the `--init` option.
- +
--If '--recursive' is specified, this command will recurse into the
-+If `--recursive` is specified, this command will recurse into the
- registered submodules, and update any nested submodules within.
+I am trying to store the top-base of a TopGit branch, which is the
+merge of all a branch's dependencies.
 
- summary::
- 	Show commit summary between the given commit (defaults to HEAD) and
- 	working tree/index. For a submodule in question, a series of commits
- 	in the submodule between the given super project commit and the
--	index or working tree (switched by --cached) are shown. If the option
--	--files is given, show the series of commits in the submodule between
-+	index or working tree (switched by `--cached`) are shown. If the option
-+	`--files` is given, show the series of commits in the submodule between
- 	the index of the super project and the working tree of the submodule
--	(this option doesn't allow to use the --cached option or to provide an
-+	(this option doesn't allow to use the `--cached` option or to provide an
- 	explicit commit).
-++
-+Using the `--submodule=log` option with linkgit:git-diff[1] will provide that
-+information too.
+TopGit uses refs for that, but a ref can only ever point at one such
+merge, and so it's hard-to-impossible to reconstruct a branch
+dependency in the past.
 
- foreach::
- 	Evaluates an arbitrary shell command in each checked out submodule.
-@@ -155,9 +164,9 @@ foreach::
- 	superproject, $sha1 is the commit as recorded in the superproject,
- 	and $toplevel is the absolute path to the top-level of the superproject.
- 	Any submodules defined in the superproject but not checked out are
--	ignored by this command. Unless given --quiet, foreach prints the name
-+	ignored by this command. Unless given `--quiet`, foreach prints the name
- 	of each submodule before evaluating the command.
--	If --recursive is given, submodules are traversed recursively (i.e.
-+	If `--recursive` is given, submodules are traversed recursively (i.e.
- 	the given shell command is evaluated in nested submodules as well).
- 	A non-zero return from the command in any submodule causes
- 	the processing to terminate. This can be overridden by adding '|| :'
-@@ -237,13 +246,18 @@ OPTIONS
- 	If the key `submodule.$name.update` is set to `rebase`, this option is
- 	implicit.
+TopGit does use files in the worktree too. I would love to get rid
+of this as well, since a file like .topmsg (which differs between
+all branches, even related ones), requires to always remember to use
+the 'ours' merge driver, which requires setup, which makes it harder
+to use.
 
-+--init::
-+	This option is only valid for the update command.
-+	Initialize all submodules for which "git submodule init" has not been
-+	called so far before updating.
-+
- --reference <repository>::
- 	This option is only valid for add and update commands.  These
- 	commands sometimes need to clone a remote repository. In this case,
- 	this option will be passed to the linkgit:git-clone[1] command.
- +
- *NOTE*: Do *not* use this option unless you have read the note
--for linkgit:git-clone[1]'s --reference and --shared options carefully.
-+for linkgit:git-clone[1]'s `--reference` and `--shared` options carefully.
+> If you are using a wrapper program,
 
- --recursive::
- 	This option is only valid for foreach, update and status commands.
--- 
-1.7.6.351.gb35ac
+I am trying to stay as close as possible to plain Git. All of this
+could easily be done by a wrapper, but a wrapper always makes too
+many assumptions to become a viable standard for Debian packaging.
+
+> it's valid/sane, in the preparations to commit, perhaps ensuring
+> that a pre-commit-hook script is in place and executable.
+
+Again, that requires setup, which increases the barrier of entry to
+passerby's and new contributors.
+
+--=20
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+"verbing weirds language."
+                                                           -- calvin
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--Dxnq1zWXvFF0Q93v
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/sig-policy/999bbcc4/current)
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQLvBAEBCgDZBQJONxHfwBEaaHR0cDovL21hcnRpbi1rcmFmZnQubmV0L2dwZy9z
+aWctcG9saWN5LzU1Yzk4ODJkOTk5YmJjYzQvMjAxMTAxMjQxMTI1P3NoYTUxMnN1
+bT0xY2FkOTZmZDI3ZDMyMzNmNTNlMjI4NDk1MzM2NDgxMDdlNWVlOGQ1YmU2NTUy
+NTFkNzRjOGYxYzVjM2JjNDJmMjMwNGZhNTE1MTUwZjdiZDRkZDA1ZTk4MTk5MjRm
+MDQ5NTEzZWU5OTYyY2E3MTcwOWY4MWQ5NDUxNTg1MmJkOAAKCRBVyYgtmZu8xL27
+D/42oIJ00GM93WbJj5XybhhfCJDJZBp/l7DIRwYHrIShUVu495y0O/3ZJ0z83XqY
+lTiedlcUfJvcmDUhCPZCMudmBzQqVQKDMcnYYlg/CtJUSYeP1H8CDU0LSVSu5cM7
+IBvmOwQEesD3MUnGweLYpHkJMJO+jJGMScR60kB98YLerEruGPTUhWLTxNId8Da3
+e8SPSXduHapN8PVdDwQtrC60ZfwRksu0n5CyVJz9dfK72HibLJEY+1J6ajWxwzhq
+SKIWA8c7J42z6RKltRuOAjWtG/wzB0OTbCoW3+ralb84bH8DVMOs0OUo5BSX5Q4L
+H7YUDsixeFut+Wx+qZgxKfUhwW5cVSMTR+gmqy4TufhJKfSjBZ4I+gDpLEhndJTi
+9kdZnMU3P3kr7PjIX00TZPdAK8zk0A10Vmeqp0bl2fbjLQREFzkR1v+KDUjWspLR
+RBepMB7rJgzlTvAS6NWmOnqu+1bU25zmom/nqPNOAN2W57k02oWAw0ZFqenLlwsr
+rkH261xXtRM7dGSuuazsTCxMFCNG1mpOwFzegiI3cQkjjbb9sRQFFor1kbF6OnlY
+gXt2613GWS6UDBjjGv5cqwxJL5/jlS1y3sOm3l9TcIGTNRq7W9ohu54x/KYDLfOd
+Fa6vOmgWNlQbMhPZPttqlJabSHktuZYz5oO98IAzxeyRgw==
+=sn5m
+-----END PGP SIGNATURE-----
+
+--Dxnq1zWXvFF0Q93v--
