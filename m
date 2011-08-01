@@ -1,99 +1,82 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 10/18] revert: Don't create invalid replay_opts in parse_args
-Date: Mon, 1 Aug 2011 23:07:22 +0530
-Message-ID: <CALkWK0n2j_jFzkwF_QrVUejchnh=zEbUkGxH1_EyhjjZLj3FPA@mail.gmail.com>
-References: <1311736755-24205-1-git-send-email-artagnon@gmail.com>
- <1311736755-24205-11-git-send-email-artagnon@gmail.com> <201107311431.26187.chriscool@tuxfamily.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: help: the question about relative path in the
+ objects/info/alternates
+Date: Mon, 01 Aug 2011 10:44:56 -0700
+Message-ID: <7vr555hvqf.fsf@alter.siamese.dyndns.org>
+References: <4E366F08.2060808@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Aug 01 19:37:54 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>
+To: Jason Wang <jason77.wang@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 01 19:45:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QnwR3-0005up-FB
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 19:37:49 +0200
+	id 1QnwY7-00013K-6Y
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 19:45:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753441Ab1HARho convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Aug 2011 13:37:44 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:54856 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753328Ab1HARhm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Aug 2011 13:37:42 -0400
-Received: by mail-ww0-f44.google.com with SMTP id 5so5885367wwe.1
-        for <git@vger.kernel.org>; Mon, 01 Aug 2011 10:37:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=+S4qGDzEX5QooQNg/Dko2MsLmA+SJL/oXULjlAz6oRw=;
-        b=MzzAdSFQKis2WqamtdVB027ZDxJKgKdcusW3noCjPIPX3fTjsfSyQuetM0e+bmmuU0
-         9xMLbKKXs6DgDSQH0vSNXsdIY+0TvROaxuzz6mwshvJPABzXAVx9Zn7cUuc80iKG+EkL
-         Ca6Qgp5NrfcWAUbr1Mqrh5Rrhs4N90ShAv9qA=
-Received: by 10.216.172.201 with SMTP id t51mr312782wel.79.1312220262164; Mon,
- 01 Aug 2011 10:37:42 -0700 (PDT)
-Received: by 10.216.137.134 with HTTP; Mon, 1 Aug 2011 10:37:22 -0700 (PDT)
-In-Reply-To: <201107311431.26187.chriscool@tuxfamily.org>
+	id S1753841Ab1HARpB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Aug 2011 13:45:01 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59239 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753598Ab1HARpA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2011 13:45:00 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E116345B5;
+	Mon,  1 Aug 2011 13:44:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=i9V1SthlEMskuwhuATOKZrId4KM=; b=Z1Bh8t
+	6rWywCg8YK5iVuIk489nORZIIbAbIngymqjDHHDPX4TQwU/yI4SFquGOJBjS3QNH
+	S1x6Rx9wovBM4xX9z777myp/MBeoP9ailp3AErel+O+NqCd+Hdg6dhLkkGhldeS0
+	sEATXP3TmSXZIApVNAwjhSmG5UYCmSncTZ7EQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tIUQG65Y5uKAQi+yJeAEqxi9zYKWKAgh
+	aZhDupLav+VHSwCxwHxLFokGKWiBAcH/Ptw9usQGClNlQ73vjv526vc6Jt+lX64h
+	iez//3gZEozwejgBwhQjD6O3oqcfuDTnEJIzXjlLX8uXJqbuRscTdP2OCpT74TIT
+	DVSvcDESccQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CAB5345B4;
+	Mon,  1 Aug 2011 13:44:59 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 329A545B0; Mon,  1 Aug 2011
+ 13:44:58 -0400 (EDT)
+In-Reply-To: <4E366F08.2060808@gmail.com> (Jason Wang's message of "Mon, 1
+ Aug 2011 17:16:56 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F958CCF0-BC65-11E0-926E-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178361>
 
-Hi Christian,
+Jason Wang <jason77.wang@gmail.com> writes:
 
-Christian Couder writes:
-> On Wednesday 27 July 2011 05:19:07 Ramkumar Ramachandra wrote:
->> +static void verify_opt_compatible(const char *me, const char *base_=
-opt,
->> ...) +{
->> + =C2=A0 =C2=A0 const char *this_opt;
->> + =C2=A0 =C2=A0 va_list ap;
->> + =C2=A0 =C2=A0 int set;
->> +
->> + =C2=A0 =C2=A0 va_start(ap, base_opt);
->> + =C2=A0 =C2=A0 while ((this_opt =3D va_arg(ap, const char *))) {
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 set =3D va_arg(ap, int);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (set)
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 die(_("%s: %s cannot be used with %s"),
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 me, this_opt, base_opt);
->> + =C2=A0 =C2=A0 }
->> + =C2=A0 =C2=A0 va_end(ap);
->> +}
->
-> Question: returning in the middle of va_start() - va_end() may not be=
- ok with
-> some compilers, but I don't know how safe it is to exit()?
+> From the objects/info/alternates part of this URL
+> http://www.kernel.org/pub/software/scm/git/docs/gitrepository-layout.html,
+> it says it will work if alternates has relative path in it.
 
-Interesting observation.  Even if it's not a problem, I suppose
-there's no harm in putting a va_end before the die() statement --
-Valgrind will probably be happier anyway.
+It does not just say "relative path", but "relative to the object
+database".  It expresses where the "objects" directory you are borrowing
+from is, relative to your own "objects" directory.
 
->> + =C2=A0 =C2=A0 /*
->> + =C2=A0 =C2=A0 =C2=A0* Sequence of picks finished successfully; cle=
-anup by
->> + =C2=A0 =C2=A0 =C2=A0* removing the .git/sequencer directory
->> + =C2=A0 =C2=A0 =C2=A0*/
->> + =C2=A0 =C2=A0 strbuf_reset(&buf);
->> + =C2=A0 =C2=A0 strbuf_addf(&buf, "%s", git_path(SEQ_DIR));
->> + =C2=A0 =C2=A0 remove_dir_recursively(&buf, 0);
->> =C2=A0 =C2=A0 =C2=A0 return 0;
->> =C2=A0}
->
-> The "strbuf_reset(&buf)" is not needed. But a "strbuf_release(&buf)" =
-could be
-> added before the return.
+For example, if you have /src/ib/{objects,refs,HEAD} as your repository
+that borrows from elsewhere, say /src/base/, then objects/info/alternates
+file in the borrowing repository should say either /src/base/objects/, or
+"../../base/objects".
 
-Right, thanks.  Fixed.
+An easy way to make sure you do not make typo is to go to your borrowing
+objects directory, and then let your shell completion to type your path,
+like this:
 
--- Ram
+    $ cd /home/jason/source/incremental-bare
+    $ cd objects
+    $ echo ../../base-bare/objects >info/alternates
+
+While formulating that "echo" command line, you would type ../../ <TAB>
+and pick base-bare, <TAB> and pick objects.
