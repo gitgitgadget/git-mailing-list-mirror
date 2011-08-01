@@ -1,379 +1,136 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] For Real - Fixed pluralization in diff reports
-Date: Mon, 1 Aug 2011 12:21:47 +0700
-Message-ID: <CACsJy8DZ8WW0g-3Cmobft8FtfciYrGYA+eqA4ogkX9BktukWZg@mail.gmail.com>
-References: <4E362F8E.1050105@gmail.com> <CACsJy8CdfRCssfrMVOjRn2a_=vZPLyG_uEd4fS2WxzQXKZGn3w@mail.gmail.com>
- <4E36321E.2040409@gmail.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [PATCH 0/5] bisect: Add support for a --no-checkout option.
+Date: Mon, 1 Aug 2011 15:27:48 +1000
+Message-ID: <CAH3AnroxjFiv25L3N1CQWW6S4vMS7C42b5AzXO09u9091S9asA@mail.gmail.com>
+References: <1312014511-7157-1-git-send-email-jon.seymour@gmail.com>
+	<201107301548.09815.chriscool@tuxfamily.org>
+	<CAH3Anrp8aT1UwfstJ99Ug4MD2CZKB9oE_oRLksbkGGE1xSELsg@mail.gmail.com>
+	<201107301619.51438.chriscool@tuxfamily.org>
+	<7v39hmkkth.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Jon Forrest <nobozo@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 01 07:22:30 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
+	j6t@kdbg.org, jnareb@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 01 07:27:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QnkxR-00038O-2R
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 07:22:29 +0200
+	id 1Qnl2g-0004cS-IO
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 07:27:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752369Ab1HAFWU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Aug 2011 01:22:20 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:55657 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752799Ab1HAFWS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2011 01:22:18 -0400
-Received: by fxh19 with SMTP id 19so4190084fxh.19
-        for <git@vger.kernel.org>; Sun, 31 Jul 2011 22:22:17 -0700 (PDT)
+	id S1752752Ab1HAF1u convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Aug 2011 01:27:50 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:48840 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752776Ab1HAF1s convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Aug 2011 01:27:48 -0400
+Received: by vxh35 with SMTP id 35so3905761vxh.19
+        for <git@vger.kernel.org>; Sun, 31 Jul 2011 22:27:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=YRuVvTQoMdVwp4Qhb+8BKORnTgR0ol1UnQomsDfUFfo=;
-        b=BxGzgRb17e0mpn6uriFdhMxmbaBjB//IE4/Neycmge5tcgXPXQg5Vg1nTNbuT4JBNr
-         OmYKr4L7LI0/Ki/4lRDk/U78/IsCPeZGrKdRPncJXoqYRYzt1onRkLnMEZTK2dm7a+d2
-         74ZQLQsEuD5JzYQ42vBhCxHwrrjgs87wVM1W0=
-Received: by 10.204.141.75 with SMTP id l11mr1087980bku.209.1312176137161;
- Sun, 31 Jul 2011 22:22:17 -0700 (PDT)
-Received: by 10.204.52.77 with HTTP; Sun, 31 Jul 2011 22:21:47 -0700 (PDT)
-In-Reply-To: <4E36321E.2040409@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=ut5U0gZU5MaVg0syz313yYYLDuH70lkISr+pHkH+iLo=;
+        b=gPWD3Ecl59Vh5jwQoaV65oMaCwM3wYIABjGz8mUU7C9Em2PMIvrKahvsvzklt2qC1H
+         x/XHm1cZksPFwWwpYtV8/13ynEbtIx8zxDUBXir6mqVbbXdlA6aNMkgiSpEapz6aMSBE
+         yUEBDkcTFwZjL7XPGbL3lyo8xVJaOKxzNKjVs=
+Received: by 10.52.21.194 with SMTP id x2mr3204890vde.39.1312176468232; Sun,
+ 31 Jul 2011 22:27:48 -0700 (PDT)
+Received: by 10.52.183.41 with HTTP; Sun, 31 Jul 2011 22:27:48 -0700 (PDT)
+In-Reply-To: <7v39hmkkth.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178322>
 
-On Mon, Aug 1, 2011 at 11:57 AM, Jon Forrest <nobozo@gmail.com> wrote:
-> On 7/31/2011 9:50 PM, Nguyen Thai Ngoc Duy wrote:
+On Mon, Aug 1, 2011 at 11:00 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Christian Couder <chriscool@tuxfamily.org> writes:
 >
->> Are you sure this does not break any tests? t3508.2 for example
->> hardcodes "1 insertions" and does textual compare. I have not run the
->> tests but I suspect it will fail.
+>> On Saturday 30 July 2011 15:58:16 Jon Seymour wrote:
+>>> On Sat, Jul 30, 2011 at 11:48 PM, Christian Couder wrote:
+>>> >
+>>> > Sorry but I didn't reply to your previous email when you asked ab=
+out a
+>>> > "--no- checkout[=3D<ref>]" compromise. I thought that Junio would=
+ reply
+>>> > and then I forgot about it.
+>>> >
+>>> > My opinion is that if you really want to be able to use another r=
+ef, then
+>>> > there should be a special "--update-ref=3D<ref>" or "--use-ref=3D=
+<ref>"
+>>> > option that is different from "--no-checkout".
+>>> >
+>>> > "--no-checkout" looks like a boolean argument. And
+>>> > "--no-checkout[=3D<ref>]" may make the user think that this optio=
+n will
+>>> > not checkout <ref>, and then it leads to the confusing question "=
+but why
+>>> > would it checkout this f&#@ing ref in the first place?".
+>>>
+>>> Good suggestions.
+>>>
+>>> So, to confirm that I understand:
+>>>
+>>> =C2=A0 =C2=A0 use --no-checkout to control (no-)checkout behaviour =
+and
+>>> --update-ref to specify a ref other than HEAD?
+>>
+>> Yeah, I think it would be less confusing like this.
 >
-> I ran the tests. The only result in red that I saw that
-> didn't appear to be caused "by breakage" was
+> When used without "--no-checkout" option, "bisect" need to check-out =
+the
+> candidate version. What good would it do if it does _not_ update HEAD=
+ when
+> it does so?
 >
-> not ok - 3 mktemp to unwritable directory prints filename
+> While you are correct to point out --[no-]checkout is a boolean optio=
+n,
+> this "we do not update HEAD but update this other thing" is not ortho=
+gonal
+> to the option. It does not make sense when we actually touch the work=
+ing
+> tree.
 >
-> Since I didn't do anything relating to mktemp I thought
-> this was probably bogus.
+> My preference is not to play games with "we can specify a ref other t=
+han
+> HEAD" until somebody can demonstrate why it is a feature "because we =
+need
+> to be able to do so in such and such times", not merely "because we c=
+an".
 >
-> I'm new to this so I don't know how to find the t3508.2.
-> If you can give me a hint I'd be glad to look at this in
-> more detail.
 
-Your patch is line-wrapped. Please see
-Documentation/SubmittingPatches, it may help.
+Conceptually, I do think HEAD and "state of current bisection" are
+different concepts and so it wouldn't hurt to be able to use  a
+different reference for this purpose.
 
-I manually applied your patch and run t3508 alone. t3508.2 is the
-second test in t3502, by the way. t/README gives more information on
-tests of git.
+The main argument I have is the one that you raised earlier regarding
+potential user confusion that would result from the somewhat
+"spurious" (from the point of view of the naive user) differences that
+might arise between the working tree, index and HEAD during the course
+of the bisection process.
 
-pclouds@do ~/w/git/t $ ./t3508-cherry-pick-many-commits.sh  -v
-Initialized empty Git repository in /home/pclouds/w/git/t/trash
-directory.t3508-cherry-pick-many-commits/.git/
-expecting success:
-	echo first > file1 &&
-	git add file1 &&
-	test_tick &&
-	git commit -m "first" &&
-	git tag first &&
+Of course, we can explain this in the documentation of the
+--no-checkout option, so this needn't be a huge concern.
 
-	git checkout -b other &&
-	for val in second third fourth
-	do
-		echo $val >> file1 &&
-		git add file1 &&
-		test_tick &&
-		git commit -m "$val" &&
-		git tag $val
-	done
+It might become more important if someone ever writes a tool that does
+a bisection on the user's behalf. In this case, aborting the tool
+might leave the HEAD in, what appears to the user, a confused state.
+It would probably simplify error handling and abort processing in this
+case if the tool never had to touch the HEAD reference at all.
 
-[master (root-commit) 0c72e4f] first
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+), 0 deletions(-)
- create mode 100644 file1
-[other 453a047] second
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+), 0 deletions(-)
-[other e85abe2] third
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+), 0 deletions(-)
-[other 94d3184] fourth
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+), 0 deletions(-)
-ok 1 - setup
+That said, such concerns are hypothetical for now and for my primary
+use-case for tree-less bisection (e.g. inspecting a damaged repo) I
+can live with using HEAD for this purpose.
 
-expecting success:
-	cat <<-\EOF >expected &&
-	[master OBJID] second
-	 Author: A U Thor <author@example.com>
-	 1 files changed, 1 insertions(+), 0 deletions(-)
-	[master OBJID] third
-	 Author: A U Thor <author@example.com>
-	 1 files changed, 1 insertions(+), 0 deletions(-)
-	[master OBJID] fourth
-	 Author: A U Thor <author@example.com>
-	 1 files changed, 1 insertions(+), 0 deletions(-)
-	EOF
+So, I will re-roll with references to --update-ref omitted.
 
-	git checkout -f master &&
-	git reset --hard first &&
-	test_tick &&
-	git cherry-pick first..fourth >actual &&
-	git diff --quiet other &&
-	git diff --quiet HEAD other &&
+Expect a v11 to the list, in the next half day or so.
 
-	sed -e "s/$_x05[0-9a-f][0-9a-f]/OBJID/" <actual >actual.fuzzy &&
-	test_cmp expected actual.fuzzy &&
-	check_head_differs_from fourth
-
-HEAD is now at 0c72e4f first
---- expected	2011-08-01 05:13:03.000000000 +0000
-+++ actual.fuzzy	2011-08-01 05:13:04.000000000 +0000
-@@ -1,9 +1,9 @@
- [master OBJID] second
-  Author: A U Thor <author@example.com>
-- 1 files changed, 1 insertions(+), 0 deletions(-)
-+ 1 file changed, 1 insertion(+), 0 deletions(-)
- [master OBJID] third
-  Author: A U Thor <author@example.com>
-- 1 files changed, 1 insertions(+), 0 deletions(-)
-+ 1 file changed, 1 insertion(+), 0 deletions(-)
- [master OBJID] fourth
-  Author: A U Thor <author@example.com>
-- 1 files changed, 1 insertions(+), 0 deletions(-)
-+ 1 file changed, 1 insertion(+), 0 deletions(-)
-not ok - 2 cherry-pick first..fourth works
-#	
-#		cat <<-\EOF >expected &&
-#		[master OBJID] second
-#		 Author: A U Thor <author@example.com>
-#		 1 files changed, 1 insertions(+), 0 deletions(-)
-#		[master OBJID] third
-#		 Author: A U Thor <author@example.com>
-#		 1 files changed, 1 insertions(+), 0 deletions(-)
-#		[master OBJID] fourth
-#		 Author: A U Thor <author@example.com>
-#		 1 files changed, 1 insertions(+), 0 deletions(-)
-#		EOF
-#	
-#		git checkout -f master &&
-#		git reset --hard first &&
-#		test_tick &&
-#		git cherry-pick first..fourth >actual &&
-#		git diff --quiet other &&
-#		git diff --quiet HEAD other &&
-#	
-#		sed -e "s/$_x05[0-9a-f][0-9a-f]/OBJID/" <actual >actual.fuzzy &&
-#		test_cmp expected actual.fuzzy &&
-#		check_head_differs_from fourth
-#	
-
-expecting success:
-	cat <<-\EOF >expected &&
-	Trying simple merge.
-	[master OBJID] second
-	 Author: A U Thor <author@example.com>
-	 1 files changed, 1 insertions(+), 0 deletions(-)
-	Trying simple merge.
-	[master OBJID] third
-	 Author: A U Thor <author@example.com>
-	 1 files changed, 1 insertions(+), 0 deletions(-)
-	Trying simple merge.
-	[master OBJID] fourth
-	 Author: A U Thor <author@example.com>
-	 1 files changed, 1 insertions(+), 0 deletions(-)
-	EOF
-
-	git checkout -f master &&
-	git reset --hard first &&
-	test_tick &&
-	git cherry-pick --strategy resolve first..fourth >actual &&
-	git diff --quiet other &&
-	git diff --quiet HEAD other &&
-	sed -e "s/$_x05[0-9a-f][0-9a-f]/OBJID/" <actual >actual.fuzzy &&
-	test_cmp expected actual.fuzzy &&
-	check_head_differs_from fourth
-
-HEAD is now at 0c72e4f first
---- expected	2011-08-01 05:13:04.000000000 +0000
-+++ actual.fuzzy	2011-08-01 05:13:04.000000000 +0000
-@@ -1,12 +1,12 @@
- Trying simple merge.
- [master OBJID] second
-  Author: A U Thor <author@example.com>
-- 1 files changed, 1 insertions(+), 0 deletions(-)
-+ 1 file changed, 1 insertion(+), 0 deletions(-)
- Trying simple merge.
- [master OBJID] third
-  Author: A U Thor <author@example.com>
-- 1 files changed, 1 insertions(+), 0 deletions(-)
-+ 1 file changed, 1 insertion(+), 0 deletions(-)
- Trying simple merge.
- [master OBJID] fourth
-  Author: A U Thor <author@example.com>
-- 1 files changed, 1 insertions(+), 0 deletions(-)
-+ 1 file changed, 1 insertion(+), 0 deletions(-)
-not ok - 3 cherry-pick --strategy resolve first..fourth works
-#	
-#		cat <<-\EOF >expected &&
-#		Trying simple merge.
-#		[master OBJID] second
-#		 Author: A U Thor <author@example.com>
-#		 1 files changed, 1 insertions(+), 0 deletions(-)
-#		Trying simple merge.
-#		[master OBJID] third
-#		 Author: A U Thor <author@example.com>
-#		 1 files changed, 1 insertions(+), 0 deletions(-)
-#		Trying simple merge.
-#		[master OBJID] fourth
-#		 Author: A U Thor <author@example.com>
-#		 1 files changed, 1 insertions(+), 0 deletions(-)
-#		EOF
-#	
-#		git checkout -f master &&
-#		git reset --hard first &&
-#		test_tick &&
-#		git cherry-pick --strategy resolve first..fourth >actual &&
-#		git diff --quiet other &&
-#		git diff --quiet HEAD other &&
-#		sed -e "s/$_x05[0-9a-f][0-9a-f]/OBJID/" <actual >actual.fuzzy &&
-#		test_cmp expected actual.fuzzy &&
-#		check_head_differs_from fourth
-#	
-
-expecting success:
-	git checkout -f master &&
-	git reset --hard first &&
-	test_tick &&
-	git cherry-pick --ff first..fourth &&
-	git diff --quiet other &&
-	git diff --quiet HEAD other &&
-	check_head_equals fourth
-
-HEAD is now at 0c72e4f first
-ok 4 - cherry-pick --ff first..fourth works
-
-expecting success:
-	git checkout -f master &&
-	git reset --hard first &&
-	test_tick &&
-	git cherry-pick -n first..fourth &&
-	git diff --quiet other &&
-	git diff --cached --quiet other &&
-	git diff --quiet HEAD first
-
-HEAD is now at 0c72e4f first
-ok 5 - cherry-pick -n first..fourth works
-
-expecting success:
-	git checkout -f master &&
-	git reset --hard fourth &&
-	test_tick &&
-	git revert first..fourth &&
-	git diff --quiet first &&
-	git diff --cached --quiet first &&
-	git diff --quiet HEAD first
-
-HEAD is now at 94d3184 fourth
-[master c20509a] Revert "fourth"
- Author: A U Thor <author@example.com>
- 1 file changed, 0 insertions(+), 1 deletion(-)
-[master 5c15a57] Revert "third"
- Author: A U Thor <author@example.com>
- 1 file changed, 0 insertions(+), 1 deletion(-)
-[master 76d1a2e] Revert "second"
- Author: A U Thor <author@example.com>
- 1 file changed, 0 insertions(+), 1 deletion(-)
-ok 6 - revert first..fourth works
-
-expecting success:
-	git checkout -f master &&
-	git reset --hard fourth &&
-	test_tick &&
-	git revert ^first fourth &&
-	git diff --quiet first &&
-	git diff --cached --quiet first &&
-	git diff --quiet HEAD first
-
-HEAD is now at 94d3184 fourth
-[master aa52aa6] Revert "fourth"
- Author: A U Thor <author@example.com>
- 1 file changed, 0 insertions(+), 1 deletion(-)
-[master 7128690] Revert "third"
- Author: A U Thor <author@example.com>
- 1 file changed, 0 insertions(+), 1 deletion(-)
-[master 2b0bc01] Revert "second"
- Author: A U Thor <author@example.com>
- 1 file changed, 0 insertions(+), 1 deletion(-)
-ok 7 - revert ^first fourth works
-
-expecting success:
-	git checkout -f master &&
-	git reset --hard fourth &&
-	test_tick &&
-	git revert fourth fourth~1 fourth~2 &&
-	git diff --quiet first &&
-	git diff --cached --quiet first &&
-	git diff --quiet HEAD first
-
-HEAD is now at 94d3184 fourth
-[master e7406a3] Revert "fourth"
- Author: A U Thor <author@example.com>
- 1 file changed, 0 insertions(+), 1 deletion(-)
-[master 0039f72] Revert "third"
- Author: A U Thor <author@example.com>
- 1 file changed, 0 insertions(+), 1 deletion(-)
-[master 6fceae4] Revert "second"
- Author: A U Thor <author@example.com>
- 1 file changed, 0 insertions(+), 1 deletion(-)
-ok 8 - revert fourth fourth~1 fourth~2 works
-
-expecting success:
-	git checkout -f master &&
-	git reset --hard first &&
-	test_tick &&
-	git cherry-pick -3 fourth &&
-	git diff --quiet other &&
-	git diff --quiet HEAD other &&
-	check_head_differs_from fourth
-
-HEAD is now at 0c72e4f first
-[master de54420] second
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+), 0 deletions(-)
-[master 5fbc3d8] third
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+), 0 deletions(-)
-[master 0f9850f] fourth
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+), 0 deletions(-)
-ok 9 - cherry-pick -3 fourth works
-
-expecting success:
-	git checkout -f master &&
-	git reset --hard first &&
-	test_tick &&
-	git rev-list --reverse first..fourth | git cherry-pick --stdin &&
-	git diff --quiet other &&
-	git diff --quiet HEAD other &&
-	check_head_differs_from fourth
-
-HEAD is now at 0c72e4f first
-[master 058f589] second
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+), 0 deletions(-)
-[master 013cb83] third
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+), 0 deletions(-)
-[master 79f9008] fourth
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+), 0 deletions(-)
-ok 10 - cherry-pick --stdin works
-
-# failed 2 among 10 test(s)
-1..10
-
--- 
-Duy
+jon.
