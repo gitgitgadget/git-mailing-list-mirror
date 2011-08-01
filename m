@@ -1,182 +1,214 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v11 1/7] bisect: move argument parsing before state modification.
-Date: Mon,  1 Aug 2011 21:56:11 +1000
-Message-ID: <1312199777-10144-2-git-send-email-jon.seymour@gmail.com>
+Subject: [PATCH v11 4/7] bisect: introduce support for --no-checkout option.
+Date: Mon,  1 Aug 2011 21:56:14 +1000
+Message-ID: <1312199777-10144-5-git-send-email-jon.seymour@gmail.com>
 References: <1312199777-10144-1-git-send-email-jon.seymour@gmail.com>
 Cc: chriscool@tuxfamily.org, gitster@pobox.com, j6t@kdbg.org,
 	jnareb@gmail.com, Jon Seymour <jon.seymour@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 01 13:57:20 2011
+X-From: git-owner@vger.kernel.org Mon Aug 01 13:57:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qnr7X-00062W-ET
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 13:57:19 +0200
+	id 1Qnr7Z-00062W-Ht
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 13:57:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752713Ab1HAL5B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Aug 2011 07:57:01 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:42860 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752690Ab1HAL44 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2011 07:56:56 -0400
-Received: by ywn13 with SMTP id 13so633522ywn.19
-        for <git@vger.kernel.org>; Mon, 01 Aug 2011 04:56:55 -0700 (PDT)
+	id S1752066Ab1HAL5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Aug 2011 07:57:14 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:60595 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752252Ab1HAL5M (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2011 07:57:12 -0400
+Received: by yxi11 with SMTP id 11so3066694yxi.19
+        for <git@vger.kernel.org>; Mon, 01 Aug 2011 04:57:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=zpV8mBlYSU+wtLhNQnYbAU+GMSCStG72x4dF5vAxZnA=;
-        b=E8TjgtBmWVr9LrLL7UYgXZQaqzBpw3yGzDwFsY+GHN8IjIIGJsShBqGgLkRfAik8xk
-         RhjEdMl9LDt/v2GUyL60HqKUiYIqnws5yx2Xx+M2MaQhdn8OfIVFvUSKr6ld490G6AJN
-         SfyVFCJLm8VkkAe2Xh4Dqrp16g8a8khqhyweQ=
-Received: by 10.142.144.15 with SMTP id r15mr2954140wfd.439.1312199814980;
-        Mon, 01 Aug 2011 04:56:54 -0700 (PDT)
+        bh=5TLLPIzzEcPxmly7d5Zclm4Br9gl5+oFzilMOFUPBMg=;
+        b=lvPUF4vrjS/Y0em/EumuxuBEXN4s6I8URwMGIHpKCT7bGAT4JpMu+pisDF7TSJKGED
+         PpuzMEcjKduyifHZEu7aa3LEV/FHACTLb+wcrmHGpdMNFvcoPBiC0pQF6JWL2giRY4Z1
+         sDsWpP4GC6tLOKzdG51WDMW/r0BPmy9UjGRdM=
+Received: by 10.142.110.12 with SMTP id i12mr2772521wfc.161.1312199830478;
+        Mon, 01 Aug 2011 04:57:10 -0700 (PDT)
 Received: from localhost.localdomain ([120.16.6.238])
-        by mx.google.com with ESMTPS id a4sm3060009wfm.4.2011.08.01.04.56.51
+        by mx.google.com with ESMTPS id a4sm3060009wfm.4.2011.08.01.04.57.05
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 01 Aug 2011 04:56:54 -0700 (PDT)
+        Mon, 01 Aug 2011 04:57:09 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6.352.g0c69b
 In-Reply-To: <1312199777-10144-1-git-send-email-jon.seymour@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178339>
 
-Currently 'git bisect start' modifies some state prior to checking
-that its arguments are valid.
+If --no-checkout is specified, then the bisection process uses:
 
-This change moves argument validation before state modification
-with the effect that state modification does not occur
-unless argument validations succeeds.
+	git update-ref --no-deref HEAD <trial>
 
-An existing test is changed to check that new bisect state
-is not created if arguments are invalid.
+at each trial instead of:
 
-A new test is added to check that existing bisect state
-is not modified if arguments are invalid.
+	git checkout <trial>
 
+Improved-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 ---
- git-bisect.sh               |   66 +++++++++++++++++++++---------------------
- t/t6030-bisect-porcelain.sh |   14 +++++++--
- 2 files changed, 44 insertions(+), 36 deletions(-)
+ bisect.c                 |   32 +++++++++++++++++++++-----------
+ bisect.h                 |    2 +-
+ builtin/bisect--helper.c |    7 +++++--
+ 3 files changed, 27 insertions(+), 14 deletions(-)
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index b2186a8..20f6dd5 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -60,6 +60,39 @@ bisect_autostart() {
+diff --git a/bisect.c b/bisect.c
+index dd7e8ed..534da2c 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -24,6 +24,7 @@ struct argv_array {
  
- bisect_start() {
- 	#
-+	# Check for one bad and then some good revisions.
-+	#
-+	has_double_dash=0
-+	for arg; do
-+	    case "$arg" in --) has_double_dash=1; break ;; esac
-+	done
-+	orig_args=$(git rev-parse --sq-quote "$@")
-+	bad_seen=0
-+	eval=''
-+	while [ $# -gt 0 ]; do
-+	    arg="$1"
-+	    case "$arg" in
-+	    --)
-+		shift
-+		break
-+		;;
-+	    *)
-+		rev=$(git rev-parse -q --verify "$arg^{commit}") || {
-+		    test $has_double_dash -eq 1 &&
-+			die "$(eval_gettext "'\$arg' does not appear to be a valid revision")"
-+		    break
-+		}
-+		case $bad_seen in
-+		0) state='bad' ; bad_seen=1 ;;
-+		*) state='good' ;;
-+		esac
-+		eval="$eval bisect_write '$state' '$rev' 'nolog'; "
-+		shift
-+		;;
-+	    esac
-+	done
-+
-+	#
- 	# Verify HEAD.
- 	#
- 	head=$(GIT_DIR="$GIT_DIR" git symbolic-ref -q HEAD) ||
-@@ -98,39 +131,6 @@ bisect_start() {
- 	bisect_clean_state || exit
+ static const char *argv_checkout[] = {"checkout", "-q", NULL, "--", NULL};
+ static const char *argv_show_branch[] = {"show-branch", NULL, NULL};
++static const char *argv_update_ref[] = {"update-ref", "--no-deref", "HEAD", NULL, NULL};
  
- 	#
--	# Check for one bad and then some good revisions.
--	#
--	has_double_dash=0
--	for arg; do
--	    case "$arg" in --) has_double_dash=1; break ;; esac
--	done
--	orig_args=$(git rev-parse --sq-quote "$@")
--	bad_seen=0
--	eval=''
--	while [ $# -gt 0 ]; do
--	    arg="$1"
--	    case "$arg" in
--	    --)
--		shift
--		break
--		;;
--	    *)
--		rev=$(git rev-parse -q --verify "$arg^{commit}") || {
--		    test $has_double_dash -eq 1 &&
--			die "$(eval_gettext "'\$arg' does not appear to be a valid revision")"
--		    break
--		}
--		case $bad_seen in
--		0) state='bad' ; bad_seen=1 ;;
--		*) state='good' ;;
--		esac
--		eval="$eval bisect_write '$state' '$rev' 'nolog'; "
--		shift
--		;;
--	    esac
--	done
--
--	#
- 	# Change state.
- 	# In case of mistaken revs or checkout error, or signals received,
- 	# "bisect_auto_next" below may exit or misbehave.
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index b5063b6..b3d1b14 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -138,15 +138,23 @@ test_expect_success 'bisect start: back in good branch' '
- 	grep "* other" branch.output > /dev/null
- '
+ /* bits #0-15 in revision.h */
  
--test_expect_success 'bisect start: no ".git/BISECT_START" if junk rev' '
--	git bisect start $HASH4 $HASH1 -- &&
--	git bisect good &&
-+test_expect_success 'bisect start: no ".git/BISECT_START" created if junk rev' '
-+	git bisect reset &&
- 	test_must_fail git bisect start $HASH4 foo -- &&
- 	git branch > branch.output &&
- 	grep "* other" branch.output > /dev/null &&
- 	test_must_fail test -e .git/BISECT_START
- '
+@@ -707,16 +708,22 @@ static void mark_expected_rev(char *bisect_rev_hex)
+ 		die("closing file %s: %s", filename, strerror(errno));
+ }
  
-+test_expect_success 'bisect start: existing ".git/BISECT_START" not modified if junk rev' '
-+	git bisect start $HASH4 $HASH1 -- &&
-+	git bisect good &&
-+	cp .git/BISECT_START saved &&
-+	test_must_fail git bisect start $HASH4 foo -- &&
-+	git branch > branch.output &&
-+	grep "* (no branch)" branch.output > /dev/null &&
-+	test_cmp saved .git/BISECT_START
-+'
- test_expect_success 'bisect start: no ".git/BISECT_START" if mistaken rev' '
- 	git bisect start $HASH4 $HASH1 -- &&
- 	git bisect good &&
+-static int bisect_checkout(char *bisect_rev_hex)
++static int bisect_checkout(char *bisect_rev_hex, int no_checkout)
+ {
+ 	int res;
+ 
+ 	mark_expected_rev(bisect_rev_hex);
+ 
+ 	argv_checkout[2] = bisect_rev_hex;
+-	res = run_command_v_opt(argv_checkout, RUN_GIT_CMD);
+-	if (res)
+-		exit(res);
++	if (no_checkout) {
++	  argv_update_ref[3] = bisect_rev_hex;
++	  if (run_command_v_opt(argv_update_ref, RUN_GIT_CMD))
++	    die("update-ref --no-deref HEAD failed on %s", bisect_rev_hex);
++	} else {
++	  res = run_command_v_opt(argv_checkout, RUN_GIT_CMD);
++	  if (res)
++	    exit(res);
++	}
+ 
+ 	argv_show_branch[1] = bisect_rev_hex;
+ 	return run_command_v_opt(argv_show_branch, RUN_GIT_CMD);
+@@ -788,7 +795,7 @@ static void handle_skipped_merge_base(const unsigned char *mb)
+  * - If one is "skipped", we can't know but we should warn.
+  * - If we don't know, we should check it out and ask the user to test.
+  */
+-static void check_merge_bases(void)
++static void check_merge_bases(int no_checkout)
+ {
+ 	struct commit_list *result;
+ 	int rev_nr;
+@@ -806,7 +813,7 @@ static void check_merge_bases(void)
+ 			handle_skipped_merge_base(mb);
+ 		} else {
+ 			printf("Bisecting: a merge base must be tested\n");
+-			exit(bisect_checkout(sha1_to_hex(mb)));
++			exit(bisect_checkout(sha1_to_hex(mb), no_checkout));
+ 		}
+ 	}
+ 
+@@ -849,7 +856,7 @@ static int check_ancestors(const char *prefix)
+  * If a merge base must be tested by the user, its source code will be
+  * checked out to be tested by the user and we will exit.
+  */
+-static void check_good_are_ancestors_of_bad(const char *prefix)
++static void check_good_are_ancestors_of_bad(const char *prefix, int no_checkout)
+ {
+ 	const char *filename = git_path("BISECT_ANCESTORS_OK");
+ 	struct stat st;
+@@ -868,7 +875,7 @@ static void check_good_are_ancestors_of_bad(const char *prefix)
+ 
+ 	/* Check if all good revs are ancestor of the bad rev. */
+ 	if (check_ancestors(prefix))
+-		check_merge_bases();
++		check_merge_bases(no_checkout);
+ 
+ 	/* Create file BISECT_ANCESTORS_OK. */
+ 	fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
+@@ -908,8 +915,11 @@ static void show_diff_tree(const char *prefix, struct commit *commit)
+  * We use the convention that exiting with an exit code 10 means that
+  * the bisection process finished successfully.
+  * In this case the calling shell script should exit 0.
++ *
++ * If no_checkout is non-zero, the bisection process does not
++ * checkout the trial commit but instead simply updates HEAD.
+  */
+-int bisect_next_all(const char *prefix)
++int bisect_next_all(const char *prefix, int no_checkout)
+ {
+ 	struct rev_info revs;
+ 	struct commit_list *tried;
+@@ -920,7 +930,7 @@ int bisect_next_all(const char *prefix)
+ 	if (read_bisect_refs())
+ 		die("reading bisect refs failed");
+ 
+-	check_good_are_ancestors_of_bad(prefix);
++	check_good_are_ancestors_of_bad(prefix, no_checkout);
+ 
+ 	bisect_rev_setup(&revs, prefix, "%s", "^%s", 1);
+ 	revs.limited = 1;
+@@ -966,6 +976,6 @@ int bisect_next_all(const char *prefix)
+ 	       "(roughly %d step%s)\n", nr, (nr == 1 ? "" : "s"),
+ 	       steps, (steps == 1 ? "" : "s"));
+ 
+-	return bisect_checkout(bisect_rev_hex);
++	return bisect_checkout(bisect_rev_hex, no_checkout);
+ }
+ 
+diff --git a/bisect.h b/bisect.h
+index 0862ce5..22f2e4d 100644
+--- a/bisect.h
++++ b/bisect.h
+@@ -27,7 +27,7 @@ struct rev_list_info {
+ 	const char *header_prefix;
+ };
+ 
+-extern int bisect_next_all(const char *prefix);
++extern int bisect_next_all(const char *prefix, int no_checkout);
+ 
+ extern int estimate_bisect_steps(int all);
+ 
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 5b22639..d96a193 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -4,16 +4,19 @@
+ #include "bisect.h"
+ 
+ static const char * const git_bisect_helper_usage[] = {
+-	"git bisect--helper --next-all",
++	"git bisect--helper --next-all [--no-checkout]",
+ 	NULL
+ };
+ 
+ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	int next_all = 0;
++	int no_checkout = 0;
+ 	struct option options[] = {
+ 		OPT_BOOLEAN(0, "next-all", &next_all,
+ 			    "perform 'git bisect next'"),
++		OPT_BOOLEAN(0, "no-checkout", &no_checkout,
++			    "update HEAD instead of checking out the current commit"),
+ 		OPT_END()
+ 	};
+ 
+@@ -24,5 +27,5 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(git_bisect_helper_usage, options);
+ 
+ 	/* next-all */
+-	return bisect_next_all(prefix);
++	return bisect_next_all(prefix, no_checkout);
+ }
 -- 
 1.7.6.352.g0c69b
