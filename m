@@ -1,90 +1,223 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: tracking submodules out of main directory.
-Date: Tue, 2 Aug 2011 00:12:04 +0200
-Message-ID: <20110801221203.GA31614@book.hvoigt.net>
-References: <1309180056.2497.220.camel@Naugrim.eriador.com> <7vvcvrxlol.fsf@alter.siamese.dyndns.org> <4E08C89E.5020109@web.de> <7vvcvrw0vn.fsf@alter.siamese.dyndns.org> <BANLkTimsfR4LqDAci0Vr+m9uUE_W-7OSAw@mail.gmail.com> <4E0A08AE.8090407@web.de> <1311792580.2413.82.camel@Naugrim.eriador.com> <1311843465.3734.40.camel@Naugrim.eriador.com> <4E3192D4.5000504@web.de> <1311932377.3734.182.camel@Naugrim.eriador.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Alexei Sholik <alcosholik@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: henri GEIST <henri.geist@flying-robots.com>
-X-From: git-owner@vger.kernel.org Tue Aug 02 00:12:13 2011
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH v11 4a/7] bisect: introduce support for --no-checkout option.
+Date: Tue,  2 Aug 2011 08:14:20 +1000
+Message-ID: <1312236860-21089-1-git-send-email-jon.seymour@gmail.com>
+References: <7vmxfthuf8.fsf@alter.siamese.dyndns.org>
+Cc: chriscool@tuxfamily.org, gitster@pobox.com, j6t@kdbg.org,
+	jnareb@gmail.com, Jon Seymour <jon.seymour@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 02 00:15:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qo0ia-00049u-IY
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 00:12:12 +0200
+	id 1Qo0lJ-00051k-4O
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 00:15:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753612Ab1HAWMH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Aug 2011 18:12:07 -0400
-Received: from darksea.de ([83.133.111.250]:36743 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752933Ab1HAWMG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2011 18:12:06 -0400
-Received: (qmail 23952 invoked from network); 2 Aug 2011 00:12:04 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 2 Aug 2011 00:12:04 +0200
-Content-Disposition: inline
-In-Reply-To: <1311932377.3734.182.camel@Naugrim.eriador.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1753650Ab1HAWO5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Aug 2011 18:14:57 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:47716 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753623Ab1HAWO4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2011 18:14:56 -0400
+Received: by pzk37 with SMTP id 37so12256829pzk.1
+        for <git@vger.kernel.org>; Mon, 01 Aug 2011 15:14:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=tp9bZzkxGJeyutl9Xkm3FFxnmdGh7shTFl2IxAAfbn8=;
+        b=Tq112niVxCqvG4NmtwdLoACZOGjQH4AUmuEDadXzFWOVvpv22yWj5lnyuig4lPKrhp
+         THJP3y9YXG4f8BdgGW8N9Cqdfj0IbmolnR0z1/ar+bcJV/56CiFRbuoSYbTCzRtopA+X
+         wVEOWrZQXSj2KLLutCAbUciF69AEMvQQtNkDA=
+Received: by 10.68.20.40 with SMTP id k8mr7964946pbe.457.1312236895510;
+        Mon, 01 Aug 2011 15:14:55 -0700 (PDT)
+Received: from localhost.localdomain ([120.16.6.238])
+        by mx.google.com with ESMTPS id d3sm5990901pbh.37.2011.08.01.15.14.50
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 01 Aug 2011 15:14:54 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.352.g3b113
+In-Reply-To: <7vmxfthuf8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178421>
 
-Hi,
+If --no-checkout is specified, then the bisection process uses:
 
-On Fri, Jul 29, 2011 at 11:39:37AM +0200, henri GEIST wrote:
-> Let say a concret exemple
-> 
-> 3 different teams work on libtiff, libpng, and libjpeg they are totally
-> unrelated.
-> 
-> One more team is working on the "gimp". And they need those 3 libs in
-> specific versions not necessarily there heads.
-> 
-> One other unrelated team is working on "gqview" and need the same libs
-> in other specifics versions (Why should they know what te gimp team
-> does)
-> 
-> Neither "gimp" and "gqview" project will contain directory with those
-> libs inside. They just depend on them.
-> 
-> And the last team work on the gnome project which need the "gimp" and
-> "gqview". It will be this team witch have to care about having both
-> "gimp" and "gqview" sharing the same libs version>
-> And has well the gnome project will not contain "gqview" and "gimp" in
-> its own tree.
-> It will also depend on them.
-> 
-> It is just the same with aptitude on debian.
-> Each package know there dependency by themselves, does not contain there
-> dependencies, and do not need a bigger superpackage to tell them what
-> are there own dependencies.
+	git update-ref --no-deref HEAD <trial>
 
-As Jens mentioned already in this example you have a
+at each trial instead of:
 
-        somemodule A needs a version of lib C higher than X
-	somemodule B needs a version of lib C higher than Y
+	git checkout <trial>
 
-relation. Which in the case of submodules is A points to X and B points
-to Y. Lets assume X is contained in Y. Since only the superproject knows
-about both A and B its the only instance that can resolve this conflict
-of dependence on C and can choose Y. In your example aptitude would be
-the superproject containing everything.
+Improved-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+---
+ bisect.c                 |   33 ++++++++++++++++++++++-----------
+ bisect.h                 |    2 +-
+ builtin/bisect--helper.c |    7 +++++--
+ 3 files changed, 28 insertions(+), 14 deletions(-)
 
-This is actually (simplified) the way submodule merge is implemented. So
-you see if you want both A and B to use the same version of C you need a
-superproject recording this knowledge.
+Junio wrote:
+> Please. No indentations with just a few SPs.
+ 
+Apologies - it appears my default emacs modes are unhelpful.
 
-Adding the ability to point to git repositories outside of the worktree
-does not solve anything but rather creates more problems. Resolving such
-dependencies can not be achieved if only A knows that it needs version X
-and only B knows that it needs version Y.
+This is a replacement for [PATCH v11 4/7] with whitespace fix ups. Let me 
+know if you want me to repost the whole series.
 
-Cheers Heiko
+diff --git a/bisect.c b/bisect.c
+index dd7e8ed..0427117 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -24,6 +24,7 @@ struct argv_array {
+ 
+ static const char *argv_checkout[] = {"checkout", "-q", NULL, "--", NULL};
+ static const char *argv_show_branch[] = {"show-branch", NULL, NULL};
++static const char *argv_update_ref[] = {"update-ref", "--no-deref", "HEAD", NULL, NULL};
+ 
+ /* bits #0-15 in revision.h */
+ 
+@@ -707,16 +708,23 @@ static void mark_expected_rev(char *bisect_rev_hex)
+ 		die("closing file %s: %s", filename, strerror(errno));
+ }
+ 
+-static int bisect_checkout(char *bisect_rev_hex)
++static int bisect_checkout(char *bisect_rev_hex, int no_checkout)
+ {
+ 	int res;
+ 
+ 	mark_expected_rev(bisect_rev_hex);
+ 
+ 	argv_checkout[2] = bisect_rev_hex;
+-	res = run_command_v_opt(argv_checkout, RUN_GIT_CMD);
+-	if (res)
+-		exit(res);
++	if (no_checkout) {
++		argv_update_ref[3] = bisect_rev_hex;
++		if (run_command_v_opt(argv_update_ref, RUN_GIT_CMD))
++			die("update-ref --no-deref HEAD failed on %s",
++			    bisect_rev_hex);
++	} else {
++		res = run_command_v_opt(argv_checkout, RUN_GIT_CMD);
++		if (res)
++			exit(res);
++	}
+ 
+ 	argv_show_branch[1] = bisect_rev_hex;
+ 	return run_command_v_opt(argv_show_branch, RUN_GIT_CMD);
+@@ -788,7 +796,7 @@ static void handle_skipped_merge_base(const unsigned char *mb)
+  * - If one is "skipped", we can't know but we should warn.
+  * - If we don't know, we should check it out and ask the user to test.
+  */
+-static void check_merge_bases(void)
++static void check_merge_bases(int no_checkout)
+ {
+ 	struct commit_list *result;
+ 	int rev_nr;
+@@ -806,7 +814,7 @@ static void check_merge_bases(void)
+ 			handle_skipped_merge_base(mb);
+ 		} else {
+ 			printf("Bisecting: a merge base must be tested\n");
+-			exit(bisect_checkout(sha1_to_hex(mb)));
++			exit(bisect_checkout(sha1_to_hex(mb), no_checkout));
+ 		}
+ 	}
+ 
+@@ -849,7 +857,7 @@ static int check_ancestors(const char *prefix)
+  * If a merge base must be tested by the user, its source code will be
+  * checked out to be tested by the user and we will exit.
+  */
+-static void check_good_are_ancestors_of_bad(const char *prefix)
++static void check_good_are_ancestors_of_bad(const char *prefix, int no_checkout)
+ {
+ 	const char *filename = git_path("BISECT_ANCESTORS_OK");
+ 	struct stat st;
+@@ -868,7 +876,7 @@ static void check_good_are_ancestors_of_bad(const char *prefix)
+ 
+ 	/* Check if all good revs are ancestor of the bad rev. */
+ 	if (check_ancestors(prefix))
+-		check_merge_bases();
++		check_merge_bases(no_checkout);
+ 
+ 	/* Create file BISECT_ANCESTORS_OK. */
+ 	fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
+@@ -908,8 +916,11 @@ static void show_diff_tree(const char *prefix, struct commit *commit)
+  * We use the convention that exiting with an exit code 10 means that
+  * the bisection process finished successfully.
+  * In this case the calling shell script should exit 0.
++ *
++ * If no_checkout is non-zero, the bisection process does not
++ * checkout the trial commit but instead simply updates HEAD.
+  */
+-int bisect_next_all(const char *prefix)
++int bisect_next_all(const char *prefix, int no_checkout)
+ {
+ 	struct rev_info revs;
+ 	struct commit_list *tried;
+@@ -920,7 +931,7 @@ int bisect_next_all(const char *prefix)
+ 	if (read_bisect_refs())
+ 		die("reading bisect refs failed");
+ 
+-	check_good_are_ancestors_of_bad(prefix);
++	check_good_are_ancestors_of_bad(prefix, no_checkout);
+ 
+ 	bisect_rev_setup(&revs, prefix, "%s", "^%s", 1);
+ 	revs.limited = 1;
+@@ -966,6 +977,6 @@ int bisect_next_all(const char *prefix)
+ 	       "(roughly %d step%s)\n", nr, (nr == 1 ? "" : "s"),
+ 	       steps, (steps == 1 ? "" : "s"));
+ 
+-	return bisect_checkout(bisect_rev_hex);
++	return bisect_checkout(bisect_rev_hex, no_checkout);
+ }
+ 
+diff --git a/bisect.h b/bisect.h
+index 0862ce5..22f2e4d 100644
+--- a/bisect.h
++++ b/bisect.h
+@@ -27,7 +27,7 @@ struct rev_list_info {
+ 	const char *header_prefix;
+ };
+ 
+-extern int bisect_next_all(const char *prefix);
++extern int bisect_next_all(const char *prefix, int no_checkout);
+ 
+ extern int estimate_bisect_steps(int all);
+ 
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 5b22639..d96a193 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -4,16 +4,19 @@
+ #include "bisect.h"
+ 
+ static const char * const git_bisect_helper_usage[] = {
+-	"git bisect--helper --next-all",
++	"git bisect--helper --next-all [--no-checkout]",
+ 	NULL
+ };
+ 
+ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	int next_all = 0;
++	int no_checkout = 0;
+ 	struct option options[] = {
+ 		OPT_BOOLEAN(0, "next-all", &next_all,
+ 			    "perform 'git bisect next'"),
++		OPT_BOOLEAN(0, "no-checkout", &no_checkout,
++			    "update HEAD instead of checking out the current commit"),
+ 		OPT_END()
+ 	};
+ 
+@@ -24,5 +27,5 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(git_bisect_helper_usage, options);
+ 
+ 	/* next-all */
+-	return bisect_next_all(prefix);
++	return bisect_next_all(prefix, no_checkout);
+ }
+-- 
+1.7.6.352.g3b113
