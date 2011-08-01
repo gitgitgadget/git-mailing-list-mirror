@@ -1,136 +1,66 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH 0/5] bisect: Add support for a --no-checkout option.
-Date: Mon, 1 Aug 2011 15:27:48 +1000
-Message-ID: <CAH3AnroxjFiv25L3N1CQWW6S4vMS7C42b5AzXO09u9091S9asA@mail.gmail.com>
-References: <1312014511-7157-1-git-send-email-jon.seymour@gmail.com>
-	<201107301548.09815.chriscool@tuxfamily.org>
-	<CAH3Anrp8aT1UwfstJ99Ug4MD2CZKB9oE_oRLksbkGGE1xSELsg@mail.gmail.com>
-	<201107301619.51438.chriscool@tuxfamily.org>
-	<7v39hmkkth.fsf@alter.siamese.dyndns.org>
+From: Jason Wang <jason77.wang@gmail.com>
+Subject: help: the question about relative path in the objects/info/alternates
+Date: Mon, 1 Aug 2011 17:16:56 +0800
+Message-ID: <4E366F08.2060808@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
-	j6t@kdbg.org, jnareb@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 01 07:27:57 2011
+Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Aug 01 11:17:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qnl2g-0004cS-IO
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 07:27:54 +0200
+	id 1QnocW-0000D6-Fw
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 11:17:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752752Ab1HAF1u convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Aug 2011 01:27:50 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:48840 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752776Ab1HAF1s convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Aug 2011 01:27:48 -0400
-Received: by vxh35 with SMTP id 35so3905761vxh.19
-        for <git@vger.kernel.org>; Sun, 31 Jul 2011 22:27:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ut5U0gZU5MaVg0syz313yYYLDuH70lkISr+pHkH+iLo=;
-        b=gPWD3Ecl59Vh5jwQoaV65oMaCwM3wYIABjGz8mUU7C9Em2PMIvrKahvsvzklt2qC1H
-         x/XHm1cZksPFwWwpYtV8/13ynEbtIx8zxDUBXir6mqVbbXdlA6aNMkgiSpEapz6aMSBE
-         yUEBDkcTFwZjL7XPGbL3lyo8xVJaOKxzNKjVs=
-Received: by 10.52.21.194 with SMTP id x2mr3204890vde.39.1312176468232; Sun,
- 31 Jul 2011 22:27:48 -0700 (PDT)
-Received: by 10.52.183.41 with HTTP; Sun, 31 Jul 2011 22:27:48 -0700 (PDT)
-In-Reply-To: <7v39hmkkth.fsf@alter.siamese.dyndns.org>
+	id S1751946Ab1HAJRD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Aug 2011 05:17:03 -0400
+Received: from mail.windriver.com ([147.11.1.11]:63121 "EHLO
+	mail.windriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751256Ab1HAJRA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2011 05:17:00 -0400
+Received: from ALA-HCA.corp.ad.wrs.com (ala-hca [147.11.189.40])
+	by mail.windriver.com (8.14.3/8.14.3) with ESMTP id p719H0Eo003634
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Mon, 1 Aug 2011 02:17:00 -0700 (PDT)
+Received: from [128.224.163.220] (128.224.163.220) by ALA-HCA.corp.ad.wrs.com
+ (147.11.189.50) with Microsoft SMTP Server (TLS) id 14.1.255.0; Mon, 1 Aug
+ 2011 02:16:59 -0700
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178323>
 
-On Mon, Aug 1, 2011 at 11:00 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Christian Couder <chriscool@tuxfamily.org> writes:
->
->> On Saturday 30 July 2011 15:58:16 Jon Seymour wrote:
->>> On Sat, Jul 30, 2011 at 11:48 PM, Christian Couder wrote:
->>> >
->>> > Sorry but I didn't reply to your previous email when you asked ab=
-out a
->>> > "--no- checkout[=3D<ref>]" compromise. I thought that Junio would=
- reply
->>> > and then I forgot about it.
->>> >
->>> > My opinion is that if you really want to be able to use another r=
-ef, then
->>> > there should be a special "--update-ref=3D<ref>" or "--use-ref=3D=
-<ref>"
->>> > option that is different from "--no-checkout".
->>> >
->>> > "--no-checkout" looks like a boolean argument. And
->>> > "--no-checkout[=3D<ref>]" may make the user think that this optio=
-n will
->>> > not checkout <ref>, and then it leads to the confusing question "=
-but why
->>> > would it checkout this f&#@ing ref in the first place?".
->>>
->>> Good suggestions.
->>>
->>> So, to confirm that I understand:
->>>
->>> =C2=A0 =C2=A0 use --no-checkout to control (no-)checkout behaviour =
-and
->>> --update-ref to specify a ref other than HEAD?
->>
->> Yeah, I think it would be less confusing like this.
->
-> When used without "--no-checkout" option, "bisect" need to check-out =
-the
-> candidate version. What good would it do if it does _not_ update HEAD=
- when
-> it does so?
->
-> While you are correct to point out --[no-]checkout is a boolean optio=
-n,
-> this "we do not update HEAD but update this other thing" is not ortho=
-gonal
-> to the option. It does not make sense when we actually touch the work=
-ing
-> tree.
->
-> My preference is not to play games with "we can specify a ref other t=
-han
-> HEAD" until somebody can demonstrate why it is a feature "because we =
-need
-> to be able to do so in such and such times", not merely "because we c=
-an".
->
+Hi git experts,
 
-Conceptually, I do think HEAD and "state of current bisection" are
-different concepts and so it wouldn't hurt to be able to use  a
-different reference for this purpose.
+ From the objects/info/alternates part of this URL 
+http://www.kernel.org/pub/software/scm/git/docs/gitrepository-layout.html, 
+it says it will work if alternates has relative path in it. But i found 
+it will always fail under below situation, i don't know whether the 
+failure is due to the git nature or it is a git potential bug.
 
-The main argument I have is the one that you raised earlier regarding
-potential user confusion that would result from the somewhat
-"spurious" (from the point of view of the naive user) differences that
-might arise between the working tree, index and HEAD during the course
-of the bisection process.
+The failure situation is like that:
+On my machine, i have a git bare base repository, e.g. 
+/home/jason/source/base-bare. On the same machine, i have a git bare 
+incremental (it need to refer to base repository) repository, e.g. 
+/home/jason/source/incremental-bare. In the 
+incremental-bare/objects/info/alternates, i set a relative path to point 
+to the objects of base-bare like this "../../base-bare/objects". Then i 
+want to clone a new repository from the incremental-bare on the same 
+machine, if i use this command "git clone 
+/home/jason/source/incremental-bare new-project", it will fail; but if i 
+use this command "git clone file:///home/jason/source/incremental-bare 
+new-project", it will work successfully, Why the first one can't work, 
+it is a bug for git?
 
-Of course, we can explain this in the documentation of the
---no-checkout option, so this needn't be a huge concern.
+In addtion, if i write an absolute path in the 
+incremental-bare/objects/info/alternates like this 
+"/home/jason/source/base-bare/objects", it will always work well no 
+matter i add or don't add "file://".
 
-It might become more important if someone ever writes a tool that does
-a bisection on the user's behalf. In this case, aborting the tool
-might leave the HEAD in, what appears to the user, a confused state.
-It would probably simplify error handling and abort processing in this
-case if the tool never had to touch the HEAD reference at all.
-
-That said, such concerns are hypothetical for now and for my primary
-use-case for tree-less bisection (e.g. inspecting a damaged repo) I
-can live with using HEAD for this purpose.
-
-So, I will re-roll with references to --update-ref omitted.
-
-Expect a v11 to the list, in the next half day or so.
-
-jon.
+Thanks
+Jason Wang.
