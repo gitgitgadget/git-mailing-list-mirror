@@ -1,169 +1,261 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: Storing additional information in commit headers
-Date: Mon, 1 Aug 2011 23:11:04 +0200
-Message-ID: <20110801211104.GC15401@fishbowl.rw.madduck.net>
-References: <20110801182015.GA3100@fishbowl.rw.madduck.net>
- <20110801201301.GA17111@sigill.intra.peff.net>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: [PATCH v2] ls-files: fix pathspec display on error
+Date: Mon, 1 Aug 2011 23:19:58 +0200
+Message-ID: <20110801211958.GA23238@toss>
+References: <CAEBDL5XJbYT9yczZiVPpeA3mpROuKQdw+-AOJjUmRp4W6M5uzg@mail.gmail.com>
+ <b535c21e1becdf8aeeb1d3f8ddaa7f5415830844.1311767679.git.git@drmicha.warpmail.net>
+ <20110729130330.GA31941@toss.lan>
+ <7vipqiknjh.fsf@alter.siamese.dyndns.org>
+ <20110801180320.GA17556@toss>
+ <7vhb60j3e1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="QRj9sO5tAVLaXnSD"
-To: Jeff King <peff@peff.net>,
-	git discussion list <git@vger.kernel.org>,
-	Petr Baudis <pasky@ucw.cz>, Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Mon Aug 01 23:11:26 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
+	rrt@sc3d.org, john@szakmeister.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 01 23:20:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qnzlk-00084K-Px
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 23:11:25 +0200
+	id 1QnzuO-0002qm-SK
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 23:20:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752856Ab1HAVLU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Aug 2011 17:11:20 -0400
-Received: from seamus.madduck.net ([213.203.238.82]:52890 "EHLO
-	seamus.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752473Ab1HAVLT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2011 17:11:19 -0400
-Received: from fishbowl.rw.madduck.net (70-204.79-83.cust.bluewin.ch [83.79.204.70])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "fishbowl.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by seamus.madduck.net (postfix) with ESMTPS id D7D3B407D24;
-	Mon,  1 Aug 2011 23:11:05 +0200 (CEST)
-Received: by fishbowl.rw.madduck.net (Postfix, from userid 1000)
-	id 8F5B01FFE2; Mon,  1 Aug 2011 23:11:04 +0200 (CEST)
+	id S1753175Ab1HAVUS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Aug 2011 17:20:18 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:47167 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752464Ab1HAVUF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2011 17:20:05 -0400
+Received: from localhost (p5B22CD28.dip.t-dialin.net [91.34.205.40])
+	by bsmtp.bon.at (Postfix) with ESMTP id BD433130044;
+	Mon,  1 Aug 2011 23:19:59 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20110801201301.GA17111@sigill.intra.peff.net>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux wheezy/sid kernel 3.0.0-1-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
+In-Reply-To: <7vhb60j3e1.fsf@alter.siamese.dyndns.org>
 User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Virus-Scanned: clamav-milter 0.97.1 at seamus
-X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178416>
 
+The following sequence of commands reveals an issue with error
+reporting of relative paths:
 
---QRj9sO5tAVLaXnSD
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+ $ mkdir sub
+ $ cd sub
+ $ git ls-files --error-unmatch ../bbbbb
+ error: pathspec 'b' did not match any file(s) known to git.
+ $ git commit --error-unmatch ../bbbbb
+ error: pathspec 'b' did not match any file(s) known to git.
 
-also sprach Jeff King <peff@peff.net> [2011.08.01.2213 +0200]:
-> This topic has come up several times in the past few years.
+This bug is visible only if the normalized path (i.e., the relative
+path from the repository root) is longer than the prefix.
+Otherwise, the code skips over the normalized path and reads from
+an unused memory location which still contains a leftover of the
+original command line argument.
 
-I am sorry that I am bothering the list again. I tried hard to find
-whatever I could, but after 2=E2=80=933 hours of web searching, I came here=
-=E2=80=A6
+So instead, use the existing facilities to deal with relative paths
+correctly.
 
-Thank you for taking the time to answer!
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+---
+On Mon, Aug 01, 2011 at 01:14:14PM -0700, Junio C Hamano wrote:
+> 
+> Thanks.  This should be a part of the primary patch, not a
+> standalone patch.
 
-> I think some
-> of the relevant questions to consider about your new data are:
->=20
->   1. Does git actually care about your data? E.g., would it want to use
->      it for reachability analysis in git-fsck?
->=20
->   2. Is it an immutable property of a commit, or can it be changed after
->      the fact?
+Guilty on all counts! No changes except to address your comments.
+Thanks for reviewing.
 
-Excellent points, and I have answers to both:
+Clemens
 
-  1. Ideally, I would like to point to another blob containing
-     information. Right now, in order to prevent gc from pruning
-     it, that would have to be a commit pointed to with a parent
-     pointer, which is just not right (it's not a parent) and causes
-     the commit to show up in the history (which it should not, as
-     it's an implementation detail).
+ builtin/checkout.c           |    2 +-
+ builtin/commit.c             |    2 +-
+ builtin/ls-files.c           |   11 +++++--
+ cache.h                      |    2 +-
+ quote.c                      |    8 +++-
+ t/t3005-ls-files-relative.sh |   70 ++++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 87 insertions(+), 8 deletions(-)
+ create mode 100755 t/t3005-ls-files-relative.sh
 
-     I'll return to this point further down=E2=80=A6
-
-  2. It is immutable. Ideally, I would like to store extra
-     information for a ref in ref/heads/*, but there seems to be no
-     way of doing this. Hence, I need to store it in commits and
-     backtrack for it. Or so I think, at least=E2=80=A6
-
-> Otherwise, if (1) is yes, then a commit header makes sense. But
-> then, it should also be something that git is taught about, and
-> your commit header should not be some topgit-specific thing, but
-> a header showing the generalized form.
-
-I agree entirely and would be all too excited to see this happening.
-I already had ideas too:
-
-  In addition to the standard tree and parent pointers, there could
-  be *-ref and x-*-ref headers, which take a single ref argument,
-  presumably to a blob containing more data.
-
-  While I cannot conceive a *-ref example, I think it's obvious that
-  x-*-ref should be introduced at the same time to keep the *-ref
-  namespace clear for future, "official" Git use.
-
-  In terms of gc and fsck and the like, all *-ref and x-*-ref
-  headers would contribute to reachability tests and hence prevent
-  pruning of those blobs.
-
-> Otherwise, the usual recommendation is to use a pseudo-header
-> within the body of the commit message (i.e., "Topgit-Base: ..." at
-> the end of the commit message). The upside is that it's easy to
-> create, manipulate, and examine using existing git tools. The
-> downside is that it is something that the user is more likely to
-> see in "git log" or when editing a rebased commit message.
-
-=E2=80=A6 to see *and to accidentally mess up*. And while that may even be
-unlikely, it does expose information that really ought to be hidden.
-
-> Just about every discussion on this topic ends with the
-> pseudo-header recommendation. The only exceptions AFAIK are
-> "encoding" (which git itself needs to care about), and
-> "generation" (which, as you noted, raises other questions).
-
-I can see how it's arguable too why one would want to give git
-commit objects the ability to reference arbitrary blobs containing
-additional information. I suppose the answer to this question is
-related to the answer to the question of whether Git is
-a contained/complete tool as-is, or also serves as
-a "framework"/"toolkit" for advanced/creative use.
-
-The availability of the porcelain commands seems to suggest that
-extensible/flexible additional features should be welcome! ;)
-
---=20
-martin;              (greetings from the heart of the sun.)
-  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
-=20
-http://www.transnationalrepublic.org/
-=20
-spamtraps: madduck.bogus@madduck.net
-
---QRj9sO5tAVLaXnSD
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/sig-policy/999bbcc4/current)
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQLvBAEBCgDZBQJONxZowBEaaHR0cDovL21hcnRpbi1rcmFmZnQubmV0L2dwZy9z
-aWctcG9saWN5LzU1Yzk4ODJkOTk5YmJjYzQvMjAxMTAxMjQxMTI1P3NoYTUxMnN1
-bT0xY2FkOTZmZDI3ZDMyMzNmNTNlMjI4NDk1MzM2NDgxMDdlNWVlOGQ1YmU2NTUy
-NTFkNzRjOGYxYzVjM2JjNDJmMjMwNGZhNTE1MTUwZjdiZDRkZDA1ZTk4MTk5MjRm
-MDQ5NTEzZWU5OTYyY2E3MTcwOWY4MWQ5NDUxNTg1MmJkOAAKCRBVyYgtmZu8xCEV
-D/9UFxE6XwyoyKVQybB6AWfswoc0uBf1o9F/NSXO58gPrPPWT0SVefptzrmOzauK
-fhqabs+mVOmAvKj88r4iacJCHvZqIDPjxvriA1mOUlYYqyIEV3fELkG4ORYxIoJW
-dWMcrayfboA8+k9cpEzijvEy+VY2ul3XqHhbDqPl2SA7Ow7o0AVxZTBG5PPdifGi
-xIHAOQLOBHIuQM+8/PshzH1eAp+7otkF7Rr3GJMtQP4Ab3QfDUM6r6USECaZlvIK
-KZ19miGN9fK79Hg2yTw10Fq8DR92iwx07wETEeaJEXahMr6T50agTqnN+oOzM7kJ
-/tnYzoZILq2vEG0hRz9FUj6Ckq0nALMKhnUl2SIAN7J3EmJsD03gjy0GZFyA/LKy
-idBJIvKdUUj1B+a2BMPLE+G1YklZ7PvN4YxCwafuhVn+yqF0sHETiVl71DlA77UY
-XINaNf/dICfFIaqDGVH+zfz8l/eIIhMs7TDFfDfWlj8T9yP1ktSJ5gYPEsXpSV4Q
-e4WGRq12IGIfBLC6QKDE3mo3CDPDx0zL7WRmY24WiHfnmTFbLYhr6LK8HmjzY5+9
-/VbXRAmtcmWdyXDlOuteiMvduzUL60Rk0p4I6zbjVyNZlvuPcZEggpP55dZX/4UG
-Lx7kr9yJNgYtH7aREK2QgmDLWrB5PlLT7vjbZW6MD8rgQA==
-=VYRI
------END PGP SIGNATURE-----
-
---QRj9sO5tAVLaXnSD--
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index d647a31..a3380d9 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -231,7 +231,7 @@ static int checkout_paths(struct tree *source_tree, const char **pathspec,
+ 		match_pathspec(pathspec, ce->name, ce_namelen(ce), 0, ps_matched);
+ 	}
+ 
+-	if (report_path_error(ps_matched, pathspec, 0))
++	if (report_path_error(ps_matched, pathspec, NULL, -1))
+ 		return 1;
+ 
+ 	/* "checkout -m path" to recreate conflicted state */
+diff --git a/builtin/commit.c b/builtin/commit.c
+index cb73857..c2db12a 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -274,7 +274,7 @@ static int list_paths(struct string_list *list, const char *with_tree,
+ 			item->util = item; /* better a valid pointer than a fake one */
+ 	}
+ 
+-	return report_path_error(m, pattern, prefix ? strlen(prefix) : 0);
++	return report_path_error(m, pattern, prefix, -1);
+ }
+ 
+ static void add_remove_files(struct string_list *list)
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 0e98bff..fef5642 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -353,11 +353,14 @@ void overlay_tree_on_cache(const char *tree_name, const char *prefix)
+ 	}
+ }
+ 
+-int report_path_error(const char *ps_matched, const char **pathspec, int prefix_len)
++int report_path_error(const char *ps_matched, const char **pathspec,
++		const char *prefix, int prefix_len)
+ {
+ 	/*
+ 	 * Make sure all pathspec matched; otherwise it is an error.
+ 	 */
++	struct strbuf sb = STRBUF_INIT;
++	const char *name;
+ 	int num, errors = 0;
+ 	for (num = 0; pathspec[num]; num++) {
+ 		int other, found_dup;
+@@ -382,10 +385,12 @@ int report_path_error(const char *ps_matched, const char **pathspec, int prefix_
+ 		if (found_dup)
+ 			continue;
+ 
++		name = quote_path_relative(pathspec[num], -1, &sb, prefix);
+ 		error("pathspec '%s' did not match any file(s) known to git.",
+-		      pathspec[num] + prefix_len);
++		      name);
+ 		errors++;
+ 	}
++	strbuf_release(&sb);
+ 	return errors;
+ }
+ 
+@@ -577,7 +582,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 
+ 	if (ps_matched) {
+ 		int bad;
+-		bad = report_path_error(ps_matched, pathspec, prefix_len);
++		bad = report_path_error(ps_matched, pathspec, prefix, prefix_len);
+ 		if (bad)
+ 			fprintf(stderr, "Did you forget to 'git add'?\n");
+ 
+diff --git a/cache.h b/cache.h
+index 1b5d861..dd3edaa 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1189,7 +1189,7 @@ extern int ws_blank_line(const char *line, int len, unsigned ws_rule);
+ #define ws_tab_width(rule)     ((rule) & WS_TAB_WIDTH_MASK)
+ 
+ /* ls-files */
+-int report_path_error(const char *ps_matched, const char **pathspec, int prefix_offset);
++int report_path_error(const char *ps_matched, const char **pathspec, const char *prefix, int prefix_len);
+ void overlay_tree_on_cache(const char *tree_name, const char *prefix);
+ 
+ char *alias_lookup(const char *alias);
+diff --git a/quote.c b/quote.c
+index 63d3b01..532fd3b 100644
+--- a/quote.c
++++ b/quote.c
+@@ -325,8 +325,12 @@ static const char *path_relative(const char *in, int len,
+ 
+ 	if (len < 0)
+ 		len = strlen(in);
+-	if (prefix && prefix_len < 0)
+-		prefix_len = strlen(prefix);
++	if (prefix_len < 0) {
++		if (prefix)
++			prefix_len = strlen(prefix);
++		else
++			prefix_len = 0;
++	}
+ 
+ 	off = 0;
+ 	i = 0;
+diff --git a/t/t3005-ls-files-relative.sh b/t/t3005-ls-files-relative.sh
+new file mode 100755
+index 0000000..3c3ff5e
+--- /dev/null
++++ b/t/t3005-ls-files-relative.sh
+@@ -0,0 +1,70 @@
++#!/bin/sh
++
++test_description='ls-files tests with relative paths
++
++This test runs git ls-files with various relative path arguments.
++'
++
++. ./test-lib.sh
++
++new_line='
++'
++sq=\'
++
++test_expect_success 'prepare' '
++	: >never-mind-me &&
++	git add never-mind-me &&
++	mkdir top &&
++	(
++		cd top &&
++		mkdir sub &&
++		x="x xa xbc xdef xghij xklmno" &&
++		y=$(echo "$x" | tr x y) &&
++		touch $x &&
++		touch $y &&
++		cd sub &&
++		git add ../x*
++	)
++'
++
++test_expect_success 'ls-files with mixed levels' '
++	(
++		cd top/sub &&
++		cat >expect <<-EOF &&
++		../../never-mind-me
++		../x
++		EOF
++		git ls-files $(cat expect) >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'ls-files -c' '
++	(
++		cd top/sub &&
++		for f in ../y*
++		do
++			echo "error: pathspec $sq$f$sq did not match any file(s) known to git."
++		done >expect &&
++		echo "Did you forget to ${sq}git add${sq}?" >>expect &&
++		ls ../x* >>expect &&
++		(git ls-files -c --error-unmatch ../[xy]* || true) >actual 2>&1 &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'ls-files -o' '
++	(
++		cd top/sub &&
++		for f in ../x*
++		do
++			echo "error: pathspec ${sq}${f}${sq} did not match any file(s) known to git."
++		done >expect &&
++		echo "Did you forget to ${sq}git add${sq}?" >>expect &&
++		ls ../y* >>expect &&
++		(git ls-files -o --error-unmatch ../[xy]* || true) >actual 2>&1 &&
++		test_cmp expect actual
++	)
++'
++
++test_done
+-- 
+1.7.3.1.105.g84915
