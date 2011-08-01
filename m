@@ -1,114 +1,113 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v11 0/7] bisect: Add support for --no-checkout option.
-Date: Mon,  1 Aug 2011 21:56:10 +1000
-Message-ID: <1312199777-10144-1-git-send-email-jon.seymour@gmail.com>
+Subject: [PATCH v11 3/7] bisect: add tests to document expected behaviour in presence of broken trees.
+Date: Mon,  1 Aug 2011 21:56:13 +1000
+Message-ID: <1312199777-10144-4-git-send-email-jon.seymour@gmail.com>
+References: <1312199777-10144-1-git-send-email-jon.seymour@gmail.com>
 Cc: chriscool@tuxfamily.org, gitster@pobox.com, j6t@kdbg.org,
 	jnareb@gmail.com, Jon Seymour <jon.seymour@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 01 13:57:20 2011
+X-From: git-owner@vger.kernel.org Mon Aug 01 13:57:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qnr7X-00062W-VF
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 13:57:20 +0200
+	id 1Qnr7Z-00062W-1C
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 13:57:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752732Ab1HAL5F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752764Ab1HAL5J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Aug 2011 07:57:09 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:32899 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752745Ab1HAL5F (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 1 Aug 2011 07:57:05 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:36433 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752582Ab1HAL4v (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2011 07:56:51 -0400
-Received: by yia27 with SMTP id 27so3374383yia.19
-        for <git@vger.kernel.org>; Mon, 01 Aug 2011 04:56:51 -0700 (PDT)
+Received: by gwaa12 with SMTP id a12so1327459gwa.19
+        for <git@vger.kernel.org>; Mon, 01 Aug 2011 04:57:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=PsIxC3M87VzWEREs5rOvubP61ROU7ZkIbwCGbv8Wqk4=;
-        b=Dk37wUfX8GmTMFbsiq28esj4m+Gx9wfGT3S1VcyxmbpGCZFxjNRVKU21k0a9+ww5Ow
-         VMhjN7yxNTg9/pyMs79bXVpSZouJOzhbcxRX6Fo4s0b3RjkdBoRN1WR9y6iGuWraZ7mD
-         Bmyp0WFpEOrwPnrz+1u06QdewmNVeYDm0I4mk=
-Received: by 10.142.7.3 with SMTP id 3mr3033284wfg.137.1312199810710;
-        Mon, 01 Aug 2011 04:56:50 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=NG82Bjch3mKxm6Stl9nNK84eLmC36EEx0cBjFUywdNE=;
+        b=Ps2VEwHpQIpbInyFGwOGAxyOkMpV2ewDRXMTLqalAMC9RY8kTX8wuCSRDKSo9iL0QP
+         VZGzm/i12nszlncZjbLio5c9AZpkaATupFpi5ZZ/yZDuYOJtfFNHP8P1ymKE9I2GB0Yu
+         wo0skdV7bZfLPWyuQSPkGBzDnT4vIVAkpeS+U=
+Received: by 10.142.61.3 with SMTP id j3mr3029084wfa.102.1312199824782;
+        Mon, 01 Aug 2011 04:57:04 -0700 (PDT)
 Received: from localhost.localdomain ([120.16.6.238])
-        by mx.google.com with ESMTPS id a4sm3060009wfm.4.2011.08.01.04.56.45
+        by mx.google.com with ESMTPS id a4sm3060009wfm.4.2011.08.01.04.57.00
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 01 Aug 2011 04:56:49 -0700 (PDT)
+        Mon, 01 Aug 2011 04:57:03 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6.352.g0c69b
+In-Reply-To: <1312199777-10144-1-git-send-email-jon.seymour@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178336>
 
-Motivation
-----------
-For some bisection tasks, checking out the commit at each stage of the bisection process is unecessary or undesirable.
+If the repo is broken, we expect bisect to fail.
 
-This series adds support for a --no-checkout option to git-bisect.
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+---
+ t/t6030-bisect-porcelain.sh |   48 +++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 48 insertions(+), 0 deletions(-)
 
-If specified on a start command, --no-checkout causes 'git bisect' to update HEAD at each stage of the bisection process instead of checking out the commit at that point. 
-
-One application of the --no-checkout option is to find, within a partially damaged repository, a commit that has at least one parent whose graph is fully reachable in the sense of 'git pack-objects'.
-
-For example:
-
-	git bisect start HEAD <some-known-good-commit> <boundary-commits> --no-checkout
-	git bisect run eval '
-		rc=1;
-		if git rev-list --objects HEAD >tmp.$$; then
-		   git pack-objects --stdout >/dev/null < tmp.$$ && rc=0;
-		fi;
-		rm tmp.$$;
-		test $rc -eq 0;'
-
-<some-known-good-commit> is a known good commit, for which the test passes.
-<boundary-commits> are commits chosen to prevent the bisection visiting missing or corrupt commit objects.
-
-Assuming this git bisect run completes successfully, bisect/bad will refer to a commit which has at least one parent that is fully reachable in the sense of 'git pack-objects'.
-
-Patch Synopsis
---------------
-Patch 1/7 - "bisect: move argument parsing before state modification." - changes existing behaviour in the case that an invalid revision argument is supplied to 'git bisect start'. In particular, in this case, bisection state is neither created or modified if argument validation fails. Previously, existing bisection state would be cleared even if the revision arguments were subsequently determined to be invalid.
-Patch 2/7 remediates a potential flaw that might hide a failure in a chain of pasted statements.
-Patch 3/7 adds a test which documents the existing behaviour of git bisect in the presence of tree damage.
-Patch 4/7 modifies the C code that supports bisection.
-Patch 5/7 modifies porcelain to enable option exposed by 4/7.
-Patch 6/7 adds some tests.
-Patch 7/7 adds some documentation.
-
-Revision History
-----------------
-v11:
-	Removed support for --update-ref=<ref>, per Junio's preference.
-v10:
-	Changed the way deferred statements are connected. Reverted some whitespace minimization.
-v8:
-	Further feedback from Christian Couder. Support --update-ref <ref>.
-v6: 
-	This series includes numerous improvements suggested by Christian Couder.
-Reworks: 
-	"bisect: allow git bisect to be used with repos containing damaged trees." 
-	Replaced --ignore-checkout-failure with --no-checkout option suggested by Junio.
-
-Jon Seymour (7):
-  bisect: move argument parsing before state modification.
-  bisect: use && to connect statements that are deferred with eval.
-  bisect: add tests to document expected behaviour in presence of
-    broken trees.
-  bisect: introduce support for --no-checkout option.
-  bisect: introduce --no-checkout support into porcelain.
-  bisect: add tests for the --no-checkout option.
-  bisect: add documentation for --no-checkout option.
-
- Documentation/git-bisect.txt |   32 ++++++++++-
- bisect.c                     |   32 +++++++----
- bisect.h                     |    2 +-
- builtin/bisect--helper.c     |    7 ++-
- git-bisect.sh                |  104 ++++++++++++++++++++-------------
- t/t6030-bisect-porcelain.sh  |  132 +++++++++++++++++++++++++++++++++++++++++-
- 6 files changed, 249 insertions(+), 60 deletions(-)
-
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index b3d1b14..9ae2de8 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -581,5 +581,53 @@ test_expect_success 'erroring out when using bad path parameters' '
+ '
+ 
+ #
++# This creates a broken branch which cannot be checked out because
++# the tree created has been deleted.
+ #
++# H1-H2-H3-H4-H5-H6-H7  <--other
++#            \
++#             S5-S6'-S7'-S8'-S9  <--broken
++#
++# Commits marked with ' have a missing tree.
++#
++test_expect_success 'broken branch creation' '
++	git bisect reset &&
++	git checkout -b broken $HASH4 &&
++	git tag BROKEN_HASH4 $HASH4 &&
++	add_line_into_file "5(broken): first line on a broken branch" hello2 &&
++	git tag BROKEN_HASH5 &&
++	mkdir missing &&
++	:> missing/MISSING &&
++	git add missing/MISSING &&
++	git commit -m "6(broken): Added file that will be deleted"
++	git tag BROKEN_HASH6 &&
++	add_line_into_file "7(broken): second line on a broken branch" hello2 &&
++	git tag BROKEN_HASH7 &&
++	add_line_into_file "8(broken): third line on a broken branch" hello2 &&
++	git tag BROKEN_HASH8 &&
++	git rm missing/MISSING &&
++	git commit -m "9(broken): Remove missing file"
++	git tag BROKEN_HASH9 &&
++	rm .git/objects/39/f7e61a724187ab767d2e08442d9b6b9dab587d
++'
++
++echo "" > expected.ok
++cat > expected.missing-tree.default <<EOF
++fatal: unable to read tree 39f7e61a724187ab767d2e08442d9b6b9dab587d
++EOF
++
++test_expect_success 'bisect fails if tree is broken on start commit' '
++	git bisect reset &&
++	test_must_fail git bisect start BROKEN_HASH7 BROKEN_HASH4 2>error.txt &&
++	test_cmp expected.missing-tree.default error.txt
++'
++
++test_expect_success 'bisect fails if tree is broken on trial commit' '
++	git bisect reset &&
++	test_must_fail git bisect start BROKEN_HASH9 BROKEN_HASH4 2>error.txt &&
++	git reset --hard broken &&
++	git checkout broken &&
++	test_cmp expected.missing-tree.default error.txt
++'
++
+ test_done
 -- 
 1.7.6.352.g0c69b
