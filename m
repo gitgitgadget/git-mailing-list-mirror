@@ -1,88 +1,169 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] Questions for "Git User's Survey 2011"
-Date: Mon, 1 Aug 2011 22:57:43 +0200
-Message-ID: <201108012257.44495.jnareb@gmail.com>
-References: <201107252233.02088.jnareb@gmail.com> <4E2EAFA6.90803@cisco.com> <CAMP44s3y0GX6ofa6Am-ioDyf9AEjKJofsHQLU0L9P4nnQ4C+4w@mail.gmail.com>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: Storing additional information in commit headers
+Date: Mon, 1 Aug 2011 23:11:04 +0200
+Message-ID: <20110801211104.GC15401@fishbowl.rw.madduck.net>
+References: <20110801182015.GA3100@fishbowl.rw.madduck.net>
+ <20110801201301.GA17111@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Phil Hord <hordp@cisco.com>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 01 22:57:36 2011
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="QRj9sO5tAVLaXnSD"
+To: Jeff King <peff@peff.net>,
+	git discussion list <git@vger.kernel.org>,
+	Petr Baudis <pasky@ucw.cz>, Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Mon Aug 01 23:11:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QnzYM-0001yZ-KY
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 22:57:35 +0200
+	id 1Qnzlk-00084K-Px
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 23:11:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753586Ab1HAU5b convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Aug 2011 16:57:31 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:48152 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753410Ab1HAU53 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2011 16:57:29 -0400
-Received: by fxh19 with SMTP id 19so4918706fxh.19
-        for <git@vger.kernel.org>; Mon, 01 Aug 2011 13:57:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=r6EHhgSCggcXnhgr6e29fBCzTILMU4v8F+W3jfv6hKM=;
-        b=F7/DGdLw4BzqpLhCR55ihiXg3v8mJxdl/FjshmSerTkfKkyo/jr0B49jifmSLnJ36U
-         oB+CTbRZfLOkFTViLoqEPaeN1htavH2cL4dfZOKh0mVtRBXw8ZBJ/2JRcFvrHRsVzrwy
-         zINoLD+CzrsLqHSIE9h2cJAYYTJ9KWPJTRta8=
-Received: by 10.223.7.66 with SMTP id c2mr7006918fac.35.1312232248306;
-        Mon, 01 Aug 2011 13:57:28 -0700 (PDT)
-Received: from [192.168.1.13] (abvz170.neoplus.adsl.tpnet.pl [83.8.223.170])
-        by mx.google.com with ESMTPS id f27sm930218fak.31.2011.08.01.13.57.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 01 Aug 2011 13:57:27 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <CAMP44s3y0GX6ofa6Am-ioDyf9AEjKJofsHQLU0L9P4nnQ4C+4w@mail.gmail.com>
+	id S1752856Ab1HAVLU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Aug 2011 17:11:20 -0400
+Received: from seamus.madduck.net ([213.203.238.82]:52890 "EHLO
+	seamus.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752473Ab1HAVLT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2011 17:11:19 -0400
+Received: from fishbowl.rw.madduck.net (70-204.79-83.cust.bluewin.ch [83.79.204.70])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "fishbowl.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by seamus.madduck.net (postfix) with ESMTPS id D7D3B407D24;
+	Mon,  1 Aug 2011 23:11:05 +0200 (CEST)
+Received: by fishbowl.rw.madduck.net (Postfix, from userid 1000)
+	id 8F5B01FFE2; Mon,  1 Aug 2011 23:11:04 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <20110801201301.GA17111@sigill.intra.peff.net>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux wheezy/sid kernel 3.0.0-1-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Virus-Scanned: clamav-milter 0.97.1 at seamus
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178415>
 
-On Sun, 31 Jul 2011, Felipe Contreras wrote:
-> 2011/7/26 Phil Hord <hordp@cisco.com>:
->> On 07/26/2011 06:37 AM, Jakub Narebski wrote:
->>> On Mon, 25 Jul 2011, Phil Hord wrote:
 
->>>> IDE integration (Eclipse, Netbeans, etc.)
->>>
->>> This isn't strictly _git_ feature, and is in "12. What kind of Git =
-tools
->>> do you use?" anyway.
->>>
->> Yes, it's not a git feature. =C2=A0But I'm curious how successful an=
-y IDE
->> integration is (as opposed to a GUI, for example). =C2=A0I haven't s=
-een any
->> that use enough of the power of git yet, so I have been disappointed=
-=2E =C2=A0I
->> suspect others have also, but I'm hopeful.
+--QRj9sO5tAVLaXnSD
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+also sprach Jeff King <peff@peff.net> [2011.08.01.2213 +0200]:
+> This topic has come up several times in the past few years.
+
+I am sorry that I am bothering the list again. I tried hard to find
+whatever I could, but after 2=E2=80=933 hours of web searching, I came here=
+=E2=80=A6
+
+Thank you for taking the time to answer!
+
+> I think some
+> of the relevant questions to consider about your new data are:
 >=20
-> I also think this is important, in my blog I've seen a bunch of peopl=
-e
-> mentioning that Git's integration with IDE's is not as good as
-> Mercurial. Putting this in the already existing list of tools would
-> not cover missing IDE's being integrated, I think this should go into
-> "20. In your opinion, which areas in Git need improvement?"
+>   1. Does git actually care about your data? E.g., would it want to use
+>      it for reachability analysis in git-fsck?
+>=20
+>   2. Is it an immutable property of a commit, or can it be changed after
+>      the fact?
 
-I think this is a good idea, though perhaps not in question about Git
-(it is "which areas in _Git_"), but in a separate question about Git
-tools.
+Excellent points, and I have answers to both:
 
- 21. In your opinion, what Git tools are needed, and which need improve=
-ments?
+  1. Ideally, I would like to point to another blob containing
+     information. Right now, in order to prevent gc from pruning
+     it, that would have to be a commit pointed to with a parent
+     pointer, which is just not right (it's not a parent) and causes
+     the commit to show up in the history (which it should not, as
+     it's an implementation detail).
 
-Or something like that.
+     I'll return to this point further down=E2=80=A6
+
+  2. It is immutable. Ideally, I would like to store extra
+     information for a ref in ref/heads/*, but there seems to be no
+     way of doing this. Hence, I need to store it in commits and
+     backtrack for it. Or so I think, at least=E2=80=A6
+
+> Otherwise, if (1) is yes, then a commit header makes sense. But
+> then, it should also be something that git is taught about, and
+> your commit header should not be some topgit-specific thing, but
+> a header showing the generalized form.
+
+I agree entirely and would be all too excited to see this happening.
+I already had ideas too:
+
+  In addition to the standard tree and parent pointers, there could
+  be *-ref and x-*-ref headers, which take a single ref argument,
+  presumably to a blob containing more data.
+
+  While I cannot conceive a *-ref example, I think it's obvious that
+  x-*-ref should be introduced at the same time to keep the *-ref
+  namespace clear for future, "official" Git use.
+
+  In terms of gc and fsck and the like, all *-ref and x-*-ref
+  headers would contribute to reachability tests and hence prevent
+  pruning of those blobs.
+
+> Otherwise, the usual recommendation is to use a pseudo-header
+> within the body of the commit message (i.e., "Topgit-Base: ..." at
+> the end of the commit message). The upside is that it's easy to
+> create, manipulate, and examine using existing git tools. The
+> downside is that it is something that the user is more likely to
+> see in "git log" or when editing a rebased commit message.
+
+=E2=80=A6 to see *and to accidentally mess up*. And while that may even be
+unlikely, it does expose information that really ought to be hidden.
+
+> Just about every discussion on this topic ends with the
+> pseudo-header recommendation. The only exceptions AFAIK are
+> "encoding" (which git itself needs to care about), and
+> "generation" (which, as you noted, raises other questions).
+
+I can see how it's arguable too why one would want to give git
+commit objects the ability to reference arbitrary blobs containing
+additional information. I suppose the answer to this question is
+related to the answer to the question of whether Git is
+a contained/complete tool as-is, or also serves as
+a "framework"/"toolkit" for advanced/creative use.
+
+The availability of the porcelain commands seems to suggest that
+extensible/flexible additional features should be welcome! ;)
+
 --=20
-Jakub Narebski
-Poland
+martin;              (greetings from the heart of the sun.)
+  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
+=20
+http://www.transnationalrepublic.org/
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--QRj9sO5tAVLaXnSD
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/sig-policy/999bbcc4/current)
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQLvBAEBCgDZBQJONxZowBEaaHR0cDovL21hcnRpbi1rcmFmZnQubmV0L2dwZy9z
+aWctcG9saWN5LzU1Yzk4ODJkOTk5YmJjYzQvMjAxMTAxMjQxMTI1P3NoYTUxMnN1
+bT0xY2FkOTZmZDI3ZDMyMzNmNTNlMjI4NDk1MzM2NDgxMDdlNWVlOGQ1YmU2NTUy
+NTFkNzRjOGYxYzVjM2JjNDJmMjMwNGZhNTE1MTUwZjdiZDRkZDA1ZTk4MTk5MjRm
+MDQ5NTEzZWU5OTYyY2E3MTcwOWY4MWQ5NDUxNTg1MmJkOAAKCRBVyYgtmZu8xCEV
+D/9UFxE6XwyoyKVQybB6AWfswoc0uBf1o9F/NSXO58gPrPPWT0SVefptzrmOzauK
+fhqabs+mVOmAvKj88r4iacJCHvZqIDPjxvriA1mOUlYYqyIEV3fELkG4ORYxIoJW
+dWMcrayfboA8+k9cpEzijvEy+VY2ul3XqHhbDqPl2SA7Ow7o0AVxZTBG5PPdifGi
+xIHAOQLOBHIuQM+8/PshzH1eAp+7otkF7Rr3GJMtQP4Ab3QfDUM6r6USECaZlvIK
+KZ19miGN9fK79Hg2yTw10Fq8DR92iwx07wETEeaJEXahMr6T50agTqnN+oOzM7kJ
+/tnYzoZILq2vEG0hRz9FUj6Ckq0nALMKhnUl2SIAN7J3EmJsD03gjy0GZFyA/LKy
+idBJIvKdUUj1B+a2BMPLE+G1YklZ7PvN4YxCwafuhVn+yqF0sHETiVl71DlA77UY
+XINaNf/dICfFIaqDGVH+zfz8l/eIIhMs7TDFfDfWlj8T9yP1ktSJ5gYPEsXpSV4Q
+e4WGRq12IGIfBLC6QKDE3mo3CDPDx0zL7WRmY24WiHfnmTFbLYhr6LK8HmjzY5+9
+/VbXRAmtcmWdyXDlOuteiMvduzUL60Rk0p4I6zbjVyNZlvuPcZEggpP55dZX/4UG
+Lx7kr9yJNgYtH7aREK2QgmDLWrB5PlLT7vjbZW6MD8rgQA==
+=VYRI
+-----END PGP SIGNATURE-----
+
+--QRj9sO5tAVLaXnSD--
