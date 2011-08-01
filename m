@@ -1,66 +1,70 @@
-From: Jason Wang <jason77.wang@gmail.com>
-Subject: help: the question about relative path in the objects/info/alternates
-Date: Mon, 1 Aug 2011 17:16:56 +0800
-Message-ID: <4E366F08.2060808@gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH] For Real - Fixed pluralization in diff reports
+Date: Mon, 1 Aug 2011 11:58:48 +0200
+Message-ID: <CAGdFq_iwEvD_-hD63KeF45WuRhWrK6JuWWqzDpjHcZ+0gHDaqg@mail.gmail.com>
+References: <4E362F8E.1050105@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 01 11:17:10 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Jon Forrest <nobozo@gmail.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 01 11:59:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QnocW-0000D6-Fw
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 11:17:08 +0200
+	id 1QnpHa-0000aH-VT
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 11:59:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751946Ab1HAJRD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Aug 2011 05:17:03 -0400
-Received: from mail.windriver.com ([147.11.1.11]:63121 "EHLO
-	mail.windriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751256Ab1HAJRA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2011 05:17:00 -0400
-Received: from ALA-HCA.corp.ad.wrs.com (ala-hca [147.11.189.40])
-	by mail.windriver.com (8.14.3/8.14.3) with ESMTP id p719H0Eo003634
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL)
-	for <git@vger.kernel.org>; Mon, 1 Aug 2011 02:17:00 -0700 (PDT)
-Received: from [128.224.163.220] (128.224.163.220) by ALA-HCA.corp.ad.wrs.com
- (147.11.189.50) with Microsoft SMTP Server (TLS) id 14.1.255.0; Mon, 1 Aug
- 2011 02:16:59 -0700
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
+	id S1753754Ab1HAJ7a convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Aug 2011 05:59:30 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:59090 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753088Ab1HAJ73 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Aug 2011 05:59:29 -0400
+Received: by vws1 with SMTP id 1so4298681vws.19
+        for <git@vger.kernel.org>; Mon, 01 Aug 2011 02:59:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=AjJjQIKc+vR1VxMLBH2RQ7RuIRtpwwZlBRt3HMMbWEM=;
+        b=nxnQ3/gML0n9SBdJ3J9+JEbmqg1MimwufHc7tRKfeFxbcakCH6lMfyG6Kw45vzgSGx
+         2dr26sia+kgGGzvSwFvjSy3oKM0tbIdXTBLhAH8ylPPapGZUja2P7xlnS8z7m/JqIY9A
+         pMxeNPbyNKsfdZNSQWwBbvW3kv3hxk7dj80HI=
+Received: by 10.52.68.164 with SMTP id x4mr4134942vdt.139.1312192768794; Mon,
+ 01 Aug 2011 02:59:28 -0700 (PDT)
+Received: by 10.68.71.162 with HTTP; Mon, 1 Aug 2011 02:58:48 -0700 (PDT)
+In-Reply-To: <4E362F8E.1050105@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178324>
 
-Hi git experts,
+Heya,
 
- From the objects/info/alternates part of this URL 
-http://www.kernel.org/pub/software/scm/git/docs/gitrepository-layout.html, 
-it says it will work if alternates has relative path in it. But i found 
-it will always fail under below situation, i don't know whether the 
-failure is due to the git nature or it is a git potential bug.
+On Mon, Aug 1, 2011 at 06:46, Jon Forrest <nobozo@gmail.com> wrote:
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0fprintf(options->file, "%s", line_prefix);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0fprintf(options->file,
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0" %d files changed,=
+ %d insertions(+), %d deletions(-)\n",
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0total_files, adds, =
+dels);
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0" %d file%s changed=
+, %d insertion%s(+), %d deletion%s(-)\n",
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0total_files, total_=
+files =3D=3D 1 ? "" : "s", adds, adds =3D=3D 1 ?
+> "" : "s", dels,
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 dels =3D=3D 1 ? ""=
+ : "s");
+> =C2=A0}
 
-The failure situation is like that:
-On my machine, i have a git bare base repository, e.g. 
-/home/jason/source/base-bare. On the same machine, i have a git bare 
-incremental (it need to refer to base repository) repository, e.g. 
-/home/jason/source/incremental-bare. In the 
-incremental-bare/objects/info/alternates, i set a relative path to point 
-to the objects of base-bare like this "../../base-bare/objects". Then i 
-want to clone a new repository from the incremental-bare on the same 
-machine, if i use this command "git clone 
-/home/jason/source/incremental-bare new-project", it will fail; but if i 
-use this command "git clone file:///home/jason/source/incremental-bare 
-new-project", it will work successfully, Why the first one can't work, 
-it is a bug for git?
+Also, this is rather detrimental to the i18n effort methinks?
 
-In addtion, if i write an absolute path in the 
-incremental-bare/objects/info/alternates like this 
-"/home/jason/source/base-bare/objects", it will always work well no 
-matter i add or don't add "file://".
+--=20
+Cheers,
 
-Thanks
-Jason Wang.
+Sverre Rabbelier
