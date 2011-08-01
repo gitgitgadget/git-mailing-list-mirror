@@ -1,110 +1,76 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v11 7/7] bisect: add documentation for --no-checkout option.
-Date: Mon,  1 Aug 2011 21:56:17 +1000
-Message-ID: <1312199777-10144-8-git-send-email-jon.seymour@gmail.com>
-References: <1312199777-10144-1-git-send-email-jon.seymour@gmail.com>
-Cc: chriscool@tuxfamily.org, gitster@pobox.com, j6t@kdbg.org,
-	jnareb@gmail.com, Jon Seymour <jon.seymour@gmail.com>
+From: James Gregory <j.gregory@epigenesys.co.uk>
+Subject: git-fast-export is returning streams with source code inside
+Date: Mon, 1 Aug 2011 12:57:58 +0100
+Message-ID: <CAFC9htxwRg=+RD68hnnRy0hfptq23x3bL+xxHieK1evfFCTPjw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 01 13:57:41 2011
+X-From: git-owner@vger.kernel.org Mon Aug 01 13:58:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qnr7s-0006Bk-BK
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 13:57:40 +0200
+	id 1Qnr8H-0006M2-T2
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 13:58:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752749Ab1HAL5b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Aug 2011 07:57:31 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:60595 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751935Ab1HAL52 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2011 07:57:28 -0400
-Received: by mail-yx0-f174.google.com with SMTP id 11so3066694yxi.19
-        for <git@vger.kernel.org>; Mon, 01 Aug 2011 04:57:28 -0700 (PDT)
+	id S1752686Ab1HAL6B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Aug 2011 07:58:01 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:51308 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751790Ab1HAL57 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2011 07:57:59 -0400
+Received: by gyh3 with SMTP id 3so3371531gyh.19
+        for <git@vger.kernel.org>; Mon, 01 Aug 2011 04:57:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=nCDiWirShm6M+SLXDtK/w/9WOZ4QJJwC7Y6bvoqDH7U=;
-        b=gC6fLHA1DufcVGrRmS61IoUxbkAIj9Ej6KzxSAzC52AXzsNriJoTbgK8BSmgW8Kt2N
-         EVsHgxysVQSIY9Sf0H527YJe1t7Rw4pPf+fgGZntOa0yrnYQ6a6u11pyw7q3o2Q/uAWS
-         F9/q/d3GJLAERLFZ3cb7ur6NtljQhOQQ8oop8=
-Received: by 10.142.144.15 with SMTP id r15mr2954474wfd.439.1312199848064;
-        Mon, 01 Aug 2011 04:57:28 -0700 (PDT)
-Received: from localhost.localdomain ([120.16.6.238])
-        by mx.google.com with ESMTPS id a4sm3060009wfm.4.2011.08.01.04.57.23
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 01 Aug 2011 04:57:27 -0700 (PDT)
-X-Mailer: git-send-email 1.7.6.352.g0c69b
-In-Reply-To: <1312199777-10144-1-git-send-email-jon.seymour@gmail.com>
+        d=epigenesys.co.uk; s=google;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=cnFj0fob001/1rxOWcS34OlT8Z15ZnLvfMFML2J8E30=;
+        b=ZN8yKK8Ohrwep6bFYNSfMCX3cv8eW5B7D20LgjMrpLGZdmSW0Di1neUCsplW+1aXmi
+         +il29cAkHnp4dOYpugfCnGubuSnYmYB/Sz91/TzwgUvgrPb0UnFcHbGPyPs/tb+QNzSk
+         OpCM3MdRf86VQVSuBrYXhbVP25O+3CSw8hCNM=
+Received: by 10.142.141.13 with SMTP id o13mr3030856wfd.155.1312199878306;
+ Mon, 01 Aug 2011 04:57:58 -0700 (PDT)
+Received: by 10.142.71.15 with HTTP; Mon, 1 Aug 2011 04:57:58 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178342>
 
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
----
- Documentation/git-bisect.txt |   32 +++++++++++++++++++++++++++++++-
- 1 files changed, 31 insertions(+), 1 deletions(-)
+Hello,
 
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
-index ab60a18..2014894 100644
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -17,7 +17,7 @@ The command takes various subcommands, and different options depending
- on the subcommand:
- 
-  git bisect help
-- git bisect start [<bad> [<good>...]] [--] [<paths>...]
-+ git bisect start [--no-checkout] [<bad> [<good>...]] [--] [<paths>...]
-  git bisect bad [<rev>]
-  git bisect good [<rev>...]
-  git bisect skip [(<rev>|<range>)...]
-@@ -263,6 +263,17 @@ rewind the tree to the pristine state.  Finally the script should exit
- with the status of the real test to let the "git bisect run" command loop
- determine the eventual outcome of the bisect session.
- 
-+OPTIONS
-+-------
-+--no-checkout::
-++
-+This option is used to specify that 'git bisect' should not modify the working
-+tree or index on each iteration of the bisection process but should
-+update HEAD instead.
-++
-+This option is useful in circumstances in which checkout is either not
-+possible (because of a damaged respository) or is otherwise not required.
-+
- EXAMPLES
- --------
- 
-@@ -343,6 +354,25 @@ $ git bisect run sh -c "make || exit 125; ~/check_test_case.sh"
- This shows that you can do without a run script if you write the test
- on a single line.
- 
-+* Locate a good region of the object graph in a damaged repository
-++
-+------------
-+$ git bisect start HEAD <known-good-commit> [ <boundary-commit> ... ] --no-checkout
-+$ git bisect run eval '
-+rc=1;
-+if git rev-list --objects HEAD >tmp.$$; then
-+   git pack-objects --stdout >/dev/null < tmp.$$ && rc=0;
-+fi;
-+rm tmp.$$;
-+test $rc -eq 0;'
-+
-+------------
-++
-+In this case, when 'git bisect run' finishes, bisect/bad will refer to a commit that
-+has at least one parent whose reachable graph is fully traversable in the sense
-+required by 'git pack objects'.
-+
-+
- SEE ALSO
- --------
- link:git-bisect-lk2009.html[Fighting regressions with git bisect],
+I'm not sure if this is the right place to post bug reports - if not,
+please can you let me know.
+
+I've found (what appears to be) a problem in git-fast-export. I've
+filed a bug in Launchpad, but I'm not sure if anyone from the Git
+community actively monitors it so I'm reporting it here to see if it
+can be fixed.
+
+The bug can be viewed online at:
+https://bugs.launchpad.net/ubuntu/+source/git/+bug/815828
+and I've done my best to describe the bug in some detail. If you need
+me to elaborate on the problem further, don't hesitate to let me know.
+
+Thanks,
+James
+
 -- 
-1.7.6.352.g0c69b
+
+James Gregory
+Senior Developer
+epiGenesys - a University of Sheffield company
+Enterprise Zone, Portobello, Sheffield, S1 4DP, UK
+T: +44 (0)114 22 21 884 ~ F: +44 (0)114 22 24 042
+www.epigenesys.co.uk ~ @epigenesys
+--
+This email and its attachments should be considered confidential and
+are intended solely for the individual to whom the email is addressed.
+If you are not the intended recipient you should take no action based
+upon them, nor should you copy or show them to anyone. Any views or
+opinions expressed are solely those of the author and might not
+represent those of Epi Genesys Limited.
+Epi Genesys Limited is registered in England and Wales with company
+number 06388971 and has its registered office at 40 Leavygreave Road,
+Sheffield, S3 7RD.
