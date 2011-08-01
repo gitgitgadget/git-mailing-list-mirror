@@ -1,116 +1,88 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: Storing additional information in commit headers
-Date: Mon, 1 Aug 2011 22:55:23 +0200
-Message-ID: <20110801205523.GB15401@fishbowl.rw.madduck.net>
-References: <20110801182015.GA3100@fishbowl.rw.madduck.net>
- <CAGdFq_h5gimMkwhyOv0PFqVwx4pExL7Zri8Tki_dT5HDtFcBFA@mail.gmail.com>
- <20110801183411.GA5182@fishbowl.rw.madduck.net>
- <20110801200149.GA20861@toss>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Questions for "Git User's Survey 2011"
+Date: Mon, 1 Aug 2011 22:57:43 +0200
+Message-ID: <201108012257.44495.jnareb@gmail.com>
+References: <201107252233.02088.jnareb@gmail.com> <4E2EAFA6.90803@cisco.com> <CAMP44s3y0GX6ofa6Am-ioDyf9AEjKJofsHQLU0L9P4nnQ4C+4w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Yylu36WmvOXNoKYn"
-To: Clemens Buchacher <drizzd@aon.at>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	git discussion list <git@vger.kernel.org>,
-	Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Mon Aug 01 22:55:59 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Phil Hord <hordp@cisco.com>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 01 22:57:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QnzWn-0001Bz-Or
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 22:55:58 +0200
+	id 1QnzYM-0001yZ-KY
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 22:57:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753524Ab1HAUzy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Aug 2011 16:55:54 -0400
-Received: from seamus.madduck.net ([213.203.238.82]:59730 "EHLO
-	seamus.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753410Ab1HAUzw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2011 16:55:52 -0400
-Received: from fishbowl.rw.madduck.net (70-204.79-83.cust.bluewin.ch [83.79.204.70])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "fishbowl.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by seamus.madduck.net (postfix) with ESMTPS id 099C7407D24;
-	Mon,  1 Aug 2011 22:55:24 +0200 (CEST)
-Received: by fishbowl.rw.madduck.net (Postfix, from userid 1000)
-	id A0E721FFE2; Mon,  1 Aug 2011 22:55:23 +0200 (CEST)
+	id S1753586Ab1HAU5b convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Aug 2011 16:57:31 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:48152 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753410Ab1HAU53 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2011 16:57:29 -0400
+Received: by fxh19 with SMTP id 19so4918706fxh.19
+        for <git@vger.kernel.org>; Mon, 01 Aug 2011 13:57:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=r6EHhgSCggcXnhgr6e29fBCzTILMU4v8F+W3jfv6hKM=;
+        b=F7/DGdLw4BzqpLhCR55ihiXg3v8mJxdl/FjshmSerTkfKkyo/jr0B49jifmSLnJ36U
+         oB+CTbRZfLOkFTViLoqEPaeN1htavH2cL4dfZOKh0mVtRBXw8ZBJ/2JRcFvrHRsVzrwy
+         zINoLD+CzrsLqHSIE9h2cJAYYTJ9KWPJTRta8=
+Received: by 10.223.7.66 with SMTP id c2mr7006918fac.35.1312232248306;
+        Mon, 01 Aug 2011 13:57:28 -0700 (PDT)
+Received: from [192.168.1.13] (abvz170.neoplus.adsl.tpnet.pl [83.8.223.170])
+        by mx.google.com with ESMTPS id f27sm930218fak.31.2011.08.01.13.57.26
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 01 Aug 2011 13:57:27 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <CAMP44s3y0GX6ofa6Am-ioDyf9AEjKJofsHQLU0L9P4nnQ4C+4w@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20110801200149.GA20861@toss>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux wheezy/sid kernel 3.0.0-1-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Virus-Scanned: clamav-milter 0.97.1 at seamus
-X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178414>
 
+On Sun, 31 Jul 2011, Felipe Contreras wrote:
+> 2011/7/26 Phil Hord <hordp@cisco.com>:
+>> On 07/26/2011 06:37 AM, Jakub Narebski wrote:
+>>> On Mon, 25 Jul 2011, Phil Hord wrote:
 
---Yylu36WmvOXNoKYn
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>>>> IDE integration (Eclipse, Netbeans, etc.)
+>>>
+>>> This isn't strictly _git_ feature, and is in "12. What kind of Git =
+tools
+>>> do you use?" anyway.
+>>>
+>> Yes, it's not a git feature. =C2=A0But I'm curious how successful an=
+y IDE
+>> integration is (as opposed to a GUI, for example). =C2=A0I haven't s=
+een any
+>> that use enough of the power of git yet, so I have been disappointed=
+=2E =C2=A0I
+>> suspect others have also, but I'm hopeful.
+>=20
+> I also think this is important, in my blog I've seen a bunch of peopl=
+e
+> mentioning that Git's integration with IDE's is not as good as
+> Mercurial. Putting this in the already existing list of tools would
+> not cover missing IDE's being integrated, I think this should go into
+> "20. In your opinion, which areas in Git need improvement?"
 
-also sprach Clemens Buchacher <drizzd@aon.at> [2011.08.01.2201 +0200]:
-> Notes are tracked using a 'branch' too. It's just a branch in the
-> refs/notes namespace, the notes ref. You could simply tag your
-> notes ref or point a ref from the refs/heads namespace to it each
-> time you create new notes.
+I think this is a good idea, though perhaps not in question about Git
+(it is "which areas in _Git_"), but in a separate question about Git
+tools.
 
-Hi Clemens, thanks for responding!
+ 21. In your opinion, what Git tools are needed, and which need improve=
+ments?
 
-You suggest integrating refs/notes/foo into refs/heads by means of
-a pointer=E2=80=A6 at which point we are polluting the branch history space
-again (think gitk), no?
-
-I appreciate the simplicity of this idea of yours, which I had not
-thought of. Indeed, maintaining a head at the top of
-refs/notes/topgit-metadata (or whatever) has charm. I do not mean to
-discard it at all right now, and will think about this more!
-
-git-notes was designed to be used for such cases, I was pleased to
-note the configurability. Maybe it is the ticket.
-
-Still: why not commit headers?
-
+Or something like that.
 --=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-=2E.. with a plastic cup filled with a liquid that was almost,
-but not quite, entirely unlike tea.
-            -- douglas adams, "the hitchhiker's guide to the galaxy"
-=20
-spamtraps: madduck.bogus@madduck.net
-
---Yylu36WmvOXNoKYn
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/sig-policy/999bbcc4/current)
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQLvBAEBCgDZBQJONxK7wBEaaHR0cDovL21hcnRpbi1rcmFmZnQubmV0L2dwZy9z
-aWctcG9saWN5LzU1Yzk4ODJkOTk5YmJjYzQvMjAxMTAxMjQxMTI1P3NoYTUxMnN1
-bT0xY2FkOTZmZDI3ZDMyMzNmNTNlMjI4NDk1MzM2NDgxMDdlNWVlOGQ1YmU2NTUy
-NTFkNzRjOGYxYzVjM2JjNDJmMjMwNGZhNTE1MTUwZjdiZDRkZDA1ZTk4MTk5MjRm
-MDQ5NTEzZWU5OTYyY2E3MTcwOWY4MWQ5NDUxNTg1MmJkOAAKCRBVyYgtmZu8xG7C
-D/0db7ChmIgDJelBXAbzybmCFV0CEiKhxNXxcJytsJ77sXLVoOJfkhLLk7yRBzGR
-4XwAWGyqxJ9xxDrfolZkZhOlLjIYq8REQdv+THchcipVsTZyr+fxKwhgPwLg6KEr
-0nAIOGyClWI6mPQsgeqiVgVXQ2O3Qqkj/B+8JFHuL5fQ4RPe0hgt+VutKl8xqcHj
-fSjQw4OLLU/2dO+WgP5DVTCMV3D2hbnEc1SDZ5S8VubN2jGgj+334QVnO/7SDSUO
-eCN4Dy4cQzqsCdFB80q/nmy19OrSpu/3Fq6Gb7e6zF4iK2GeLehVk3h6AVHlMP1E
-uzfYdHzDRF4N3h5SpKjDuo1RnVvBL7TBzqUJ5pCB13frZ5T9bjPF+hgWvCKCp1pp
-lQ4oFEZLU5oqzHz1qhMOOuJDWTtZyHOmkNgEd3qHV116gH0EAjf8TyDp5ORLozDL
-FWu2dfBd3TuSyyWhyoaTNfvKEJLZMogDc8wvNOv2fFLRi0Ds8qDuMXwE9+NhErtl
-6rxKi4teVyH/KQ1V9BrcWnZ69CthhajAdLDXo0SSOdMr41IjOq4K7Iu0mGtGbp1p
-4jv7SNAYpF6QkEZtrz9azjeuCPzGA5K1mq9fIkxhEMu/UShnJrGbr+ycLLnDskFm
-tG5i958A6D+YhVqdrlWj4XFdoPjQyNq0mH7teF+8RcUtTg==
-=W/S6
------END PGP SIGNATURE-----
-
---Yylu36WmvOXNoKYn--
+Jakub Narebski
+Poland
