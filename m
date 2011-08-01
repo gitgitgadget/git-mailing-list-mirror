@@ -1,72 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] bisect: Add support for a --no-checkout option.
-Date: Mon, 01 Aug 2011 10:33:41 -0700
-Message-ID: <7vvcuhhw96.fsf@alter.siamese.dyndns.org>
-References: <1312014511-7157-1-git-send-email-jon.seymour@gmail.com>
- <201107301548.09815.chriscool@tuxfamily.org>
- <CAH3Anrp8aT1UwfstJ99Ug4MD2CZKB9oE_oRLksbkGGE1xSELsg@mail.gmail.com>
- <201107301619.51438.chriscool@tuxfamily.org>
- <7v39hmkkth.fsf@alter.siamese.dyndns.org>
- <CAH3AnroxjFiv25L3N1CQWW6S4vMS7C42b5AzXO09u9091S9asA@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 10/18] revert: Don't create invalid replay_opts in parse_args
+Date: Mon, 1 Aug 2011 23:07:22 +0530
+Message-ID: <CALkWK0n2j_jFzkwF_QrVUejchnh=zEbUkGxH1_EyhjjZLj3FPA@mail.gmail.com>
+References: <1311736755-24205-1-git-send-email-artagnon@gmail.com>
+ <1311736755-24205-11-git-send-email-artagnon@gmail.com> <201107311431.26187.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
-	j6t@kdbg.org, jnareb@gmail.com
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 01 19:33:50 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Aug 01 19:37:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QnwNB-0004Bf-UV
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 19:33:50 +0200
+	id 1QnwR3-0005up-FB
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 19:37:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753879Ab1HARds (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Aug 2011 13:33:48 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53842 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753844Ab1HARdq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2011 13:33:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E4E342BC;
-	Mon,  1 Aug 2011 13:33:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hE+mEx5MmZbMTPyO+AuriFcZDbk=; b=kf7xJ6
-	r2q22AWGzzmKxyQkHYRhoJx4xS0/SBqKXjwvSFLdMaU9F4yHtYoWwGqABRqPwC2E
-	9JEwhEZuqz5qDScuXl5HR0n4WAXXEBDVnzHoYDiF/M22a0UnyT02q8jkvpgEdtLj
-	d1oVukYr9KfLFAoRoDEG9LrrpiwFQ4BXZeWMM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=M15ymhQgDpMzhiatnLiBAgxQD0XO6yJ1
-	P22dfraRgkAccaEdzRve3jFWDqPdchAfBQYqAyjS8hWiKCF4UxvDSS8uTQSfNZGF
-	nf/h6MFEc2PgJKRe6P2sAO50Cp4ToO04kNZa4YKghSTb3FtUsjY6F+0A+Z4YJQAj
-	1snFeL/WAPY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4503E42BA;
-	Mon,  1 Aug 2011 13:33:43 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CB82F42B9; Mon,  1 Aug 2011
- 13:33:42 -0400 (EDT)
-In-Reply-To: <CAH3AnroxjFiv25L3N1CQWW6S4vMS7C42b5AzXO09u9091S9asA@mail.gmail.com> (Jon
- Seymour's message of "Mon, 1 Aug 2011 15:27:48 +1000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 66CB2DCA-BC64-11E0-9C25-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753441Ab1HARho convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Aug 2011 13:37:44 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:54856 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753328Ab1HARhm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Aug 2011 13:37:42 -0400
+Received: by mail-ww0-f44.google.com with SMTP id 5so5885367wwe.1
+        for <git@vger.kernel.org>; Mon, 01 Aug 2011 10:37:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=+S4qGDzEX5QooQNg/Dko2MsLmA+SJL/oXULjlAz6oRw=;
+        b=MzzAdSFQKis2WqamtdVB027ZDxJKgKdcusW3noCjPIPX3fTjsfSyQuetM0e+bmmuU0
+         9xMLbKKXs6DgDSQH0vSNXsdIY+0TvROaxuzz6mwshvJPABzXAVx9Zn7cUuc80iKG+EkL
+         Ca6Qgp5NrfcWAUbr1Mqrh5Rrhs4N90ShAv9qA=
+Received: by 10.216.172.201 with SMTP id t51mr312782wel.79.1312220262164; Mon,
+ 01 Aug 2011 10:37:42 -0700 (PDT)
+Received: by 10.216.137.134 with HTTP; Mon, 1 Aug 2011 10:37:22 -0700 (PDT)
+In-Reply-To: <201107311431.26187.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178360>
 
-Jon Seymour <jon.seymour@gmail.com> writes:
+Hi Christian,
 
-> It might become more important if someone ever writes a tool that does
-> a bisection on the user's behalf. In this case, aborting the tool
-> might leave the HEAD in, what appears to the user, a confused state.
+Christian Couder writes:
+> On Wednesday 27 July 2011 05:19:07 Ramkumar Ramachandra wrote:
+>> +static void verify_opt_compatible(const char *me, const char *base_=
+opt,
+>> ...) +{
+>> + =C2=A0 =C2=A0 const char *this_opt;
+>> + =C2=A0 =C2=A0 va_list ap;
+>> + =C2=A0 =C2=A0 int set;
+>> +
+>> + =C2=A0 =C2=A0 va_start(ap, base_opt);
+>> + =C2=A0 =C2=A0 while ((this_opt =3D va_arg(ap, const char *))) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 set =3D va_arg(ap, int);
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (set)
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 die(_("%s: %s cannot be used with %s"),
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 me, this_opt, base_opt);
+>> + =C2=A0 =C2=A0 }
+>> + =C2=A0 =C2=A0 va_end(ap);
+>> +}
+>
+> Question: returning in the middle of va_start() - va_end() may not be=
+ ok with
+> some compilers, but I don't know how safe it is to exit()?
 
-Yes, I would prefer a series without --use-this-ref-for-bisect-status and
-then a follow-up series on top of it to add that as a separate feature.
+Interesting observation.  Even if it's not a problem, I suppose
+there's no harm in putting a va_end before the die() statement --
+Valgrind will probably be happier anyway.
 
-Thanks.
+>> + =C2=A0 =C2=A0 /*
+>> + =C2=A0 =C2=A0 =C2=A0* Sequence of picks finished successfully; cle=
+anup by
+>> + =C2=A0 =C2=A0 =C2=A0* removing the .git/sequencer directory
+>> + =C2=A0 =C2=A0 =C2=A0*/
+>> + =C2=A0 =C2=A0 strbuf_reset(&buf);
+>> + =C2=A0 =C2=A0 strbuf_addf(&buf, "%s", git_path(SEQ_DIR));
+>> + =C2=A0 =C2=A0 remove_dir_recursively(&buf, 0);
+>> =C2=A0 =C2=A0 =C2=A0 return 0;
+>> =C2=A0}
+>
+> The "strbuf_reset(&buf)" is not needed. But a "strbuf_release(&buf)" =
+could be
+> added before the return.
+
+Right, thanks.  Fixed.
+
+-- Ram
