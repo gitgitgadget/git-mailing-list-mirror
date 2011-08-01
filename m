@@ -1,64 +1,90 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH v2 4/4] upload-archive: use start_command instead of fork
-Date: Mon, 01 Aug 2011 23:52:43 +0200
-Message-ID: <4E37202B.80208@lsrfire.ath.cx>
-References: <1311012516-4836-1-git-send-email-kusmabite@gmail.com> <1311012516-4836-5-git-send-email-kusmabite@gmail.com> <7vmxga7zb9.fsf@alter.siamese.dyndns.org> <CABPQNSYtpRpNQVW=QvyfFhmWge5-C+k85bs2EJeK8k0jdfHzrw@mail.gmail.com> <20110728160845.GA14337@sigill.intra.peff.net> <20110728164758.GA15931@sigill.intra.peff.net> <20110728170222.GB15931@sigill.intra.peff.net> <CABPQNSaqyD+rhWPRbtVdnkweuXSycBahKEsasGZkEg3mi4SaxQ@mail.gmail.com> <20110801174603.GB10302@sigill.intra.peff.net> <CABPQNSbyp2hEgXvzo3bMHHxrbc9fQLqaABweqfjP7xQzBUdj6A@mail.gmail.com> <20110801182516.GC10302@sigill.intra.peff.net> <4E371109.7050500@lsrfire.ath.cx> <4E3718B4.6090803@kdbg.org>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: tracking submodules out of main directory.
+Date: Tue, 2 Aug 2011 00:12:04 +0200
+Message-ID: <20110801221203.GA31614@book.hvoigt.net>
+References: <1309180056.2497.220.camel@Naugrim.eriador.com> <7vvcvrxlol.fsf@alter.siamese.dyndns.org> <4E08C89E.5020109@web.de> <7vvcvrw0vn.fsf@alter.siamese.dyndns.org> <BANLkTimsfR4LqDAci0Vr+m9uUE_W-7OSAw@mail.gmail.com> <4E0A08AE.8090407@web.de> <1311792580.2413.82.camel@Naugrim.eriador.com> <1311843465.3734.40.camel@Naugrim.eriador.com> <4E3192D4.5000504@web.de> <1311932377.3734.182.camel@Naugrim.eriador.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Erik Faye-Lund <kusmabite@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Mon Aug 01 23:52:51 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Alexei Sholik <alcosholik@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: henri GEIST <henri.geist@flying-robots.com>
+X-From: git-owner@vger.kernel.org Tue Aug 02 00:12:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qo0Pq-00067z-K2
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Aug 2011 23:52:50 +0200
+	id 1Qo0ia-00049u-IY
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 00:12:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752982Ab1HAVwr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Aug 2011 17:52:47 -0400
-Received: from india601.server4you.de ([85.25.151.105]:38720 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751034Ab1HAVwp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2011 17:52:45 -0400
-Received: from [192.168.2.104] (p4FFD8EFC.dip.t-dialin.net [79.253.142.252])
-	by india601.server4you.de (Postfix) with ESMTPSA id 665612F8035;
-	Mon,  1 Aug 2011 23:52:44 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:5.0) Gecko/20110624 Thunderbird/5.0
-In-Reply-To: <4E3718B4.6090803@kdbg.org>
+	id S1753612Ab1HAWMH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Aug 2011 18:12:07 -0400
+Received: from darksea.de ([83.133.111.250]:36743 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752933Ab1HAWMG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2011 18:12:06 -0400
+Received: (qmail 23952 invoked from network); 2 Aug 2011 00:12:04 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 2 Aug 2011 00:12:04 +0200
+Content-Disposition: inline
+In-Reply-To: <1311932377.3734.182.camel@Naugrim.eriador.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178420>
 
-Am 01.08.2011 23:20, schrieb Johannes Sixt:
-> Am 01.08.2011 22:48, schrieb Ren=C3=A9 Scharfe:
->> So git archive gives the right results when writing to a pipe, but
->> always the same wrong result when writing directly to a file.
->=20
-> This could indeed be a CRLF issue. archive-tar.c runs gzip to let it
-> write to the original fd 1 (stdout). gzip is an MSYS program, and MSY=
-S
-> is "clever" and sets up the channel in text mode (CRLF conversion) if=
- it
-> is a regular file, but in binary mode if it is a pipe.
->=20
-> Without the gzip filter, git-archive writes to stdout itself. Since w=
-e
-> have set up all our channels in binary mode, we do not suffer from th=
-e
-> same problem for plain tar format.
->=20
-> So, I don't think we can do a lot about it, short of patching MSYS ag=
-ain...
+Hi,
 
-Or we could pipe the output through us, i.e. attach a builtin version o=
-f
-cat at the output end of the called command.  Only on Windows, of
-course.  Better ugly and limping then wrong, right?
+On Fri, Jul 29, 2011 at 11:39:37AM +0200, henri GEIST wrote:
+> Let say a concret exemple
+> 
+> 3 different teams work on libtiff, libpng, and libjpeg they are totally
+> unrelated.
+> 
+> One more team is working on the "gimp". And they need those 3 libs in
+> specific versions not necessarily there heads.
+> 
+> One other unrelated team is working on "gqview" and need the same libs
+> in other specifics versions (Why should they know what te gimp team
+> does)
+> 
+> Neither "gimp" and "gqview" project will contain directory with those
+> libs inside. They just depend on them.
+> 
+> And the last team work on the gnome project which need the "gimp" and
+> "gqview". It will be this team witch have to care about having both
+> "gimp" and "gqview" sharing the same libs version>
+> And has well the gnome project will not contain "gqview" and "gimp" in
+> its own tree.
+> It will also depend on them.
+> 
+> It is just the same with aptitude on debian.
+> Each package know there dependency by themselves, does not contain there
+> dependencies, and do not need a bigger superpackage to tell them what
+> are there own dependencies.
 
-Ren=C3=A9
+As Jens mentioned already in this example you have a
+
+        somemodule A needs a version of lib C higher than X
+	somemodule B needs a version of lib C higher than Y
+
+relation. Which in the case of submodules is A points to X and B points
+to Y. Lets assume X is contained in Y. Since only the superproject knows
+about both A and B its the only instance that can resolve this conflict
+of dependence on C and can choose Y. In your example aptitude would be
+the superproject containing everything.
+
+This is actually (simplified) the way submodule merge is implemented. So
+you see if you want both A and B to use the same version of C you need a
+superproject recording this knowledge.
+
+Adding the ability to point to git repositories outside of the worktree
+does not solve anything but rather creates more problems. Resolving such
+dependencies can not be achieved if only A knows that it needs version X
+and only B knows that it needs version Y.
+
+Cheers Heiko
