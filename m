@@ -1,116 +1,107 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH v2 4/4] upload-archive: use start_command instead of fork
-Date: Tue, 02 Aug 2011 18:46:20 +0200
-Message-ID: <4E3829DC.8070802@lsrfire.ath.cx>
-References: <20110728160845.GA14337@sigill.intra.peff.net> <20110728164758.GA15931@sigill.intra.peff.net> <20110728170222.GB15931@sigill.intra.peff.net> <CABPQNSaqyD+rhWPRbtVdnkweuXSycBahKEsasGZkEg3mi4SaxQ@mail.gmail.com> <20110801174603.GB10302@sigill.intra.peff.net> <CABPQNSbyp2hEgXvzo3bMHHxrbc9fQLqaABweqfjP7xQzBUdj6A@mail.gmail.com> <20110801182516.GC10302@sigill.intra.peff.net> <4E371109.7050500@lsrfire.ath.cx> <4E3718B4.6090803@kdbg.org> <4E37202B.80208@lsrfire.ath.cx> <20110802040004.GC17494@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/5] fast-import: don't fail on omitted committer name
+Date: Tue, 02 Aug 2011 09:53:44 -0700
+Message-ID: <7voc07g3fr.fsf@alter.siamese.dyndns.org>
+References: <1311831844-13123-1-git-send-email-divanorama@gmail.com>
+ <1311831844-13123-3-git-send-email-divanorama@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j6t@kdbg.org>, Erik Faye-Lund <kusmabite@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Aug 02 18:46:35 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, SASAKI Suguru <sss.sonik@gmail.com>
+To: Dmitry Ivankov <divanorama@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 02 18:53:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QoI6x-00087l-UN
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 18:46:32 +0200
+	id 1QoIE5-00038S-Bm
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 18:53:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754622Ab1HBQq1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Aug 2011 12:46:27 -0400
-Received: from india601.server4you.de ([85.25.151.105]:35197 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754554Ab1HBQqZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Aug 2011 12:46:25 -0400
-Received: from [192.168.2.104] (p4FFDA3FA.dip.t-dialin.net [79.253.163.250])
-	by india601.server4you.de (Postfix) with ESMTPSA id 7900C2F8035;
-	Tue,  2 Aug 2011 18:46:23 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:5.0) Gecko/20110624 Thunderbird/5.0
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <20110802040004.GC17494@sigill.intra.peff.net>
+	id S1754649Ab1HBQxt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Aug 2011 12:53:49 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48500 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754554Ab1HBQxr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2011 12:53:47 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CB78D4D8D;
+	Tue,  2 Aug 2011 12:53:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2tBzdDbN02xWv/I7wYB2KzN7BOw=; b=RLGl4a
+	sRgmMLPdYgZYh+Ga7SdI21X+xb1gVhnGuzJXiIh3pYt0+dJ+1QcRpNk509X4Dkpj
+	Uy1pW/0T85Zo+H8uvx45aWkg6nJ2bdCBRTH5tUhW8EHVbuQC6LcmNZsjjBL5Fwtx
+	ZyEXfiUjNVXXqPGHK1/q7Skf+j2YJrtpWCL7c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HaHddySWeJhIWeJ4J2GxzBg91nx9G58m
+	kD2f8oL1pRx6nqD50PeQrNFYUafP/uu0IfLJIjfEB+zhSFyDhpnw7XEntZl0CE61
+	7esVwQPuuaS2Hg0INfHrMUK/hY3vvNkr1XBo6ivJB4g3nmVuIXVYebGT+ZQmgWda
+	gAhORC/v6tY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C38AF4D8C;
+	Tue,  2 Aug 2011 12:53:46 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 49C834D8B; Tue,  2 Aug 2011
+ 12:53:46 -0400 (EDT)
+In-Reply-To: <1311831844-13123-3-git-send-email-divanorama@gmail.com> (Dmitry
+ Ivankov's message of "Thu, 28 Jul 2011 11:44:01 +0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FCC30604-BD27-11E0-9FFE-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178482>
 
-Am 02.08.2011 06:00, schrieb Jeff King:
-> On Mon, Aug 01, 2011 at 11:52:43PM +0200, Ren=C3=A9 Scharfe wrote:
->=20
->> Am 01.08.2011 23:20, schrieb Johannes Sixt:
->>> Am 01.08.2011 22:48, schrieb Ren=C3=A9 Scharfe:
->>>> So git archive gives the right results when writing to a pipe, but
->>>> always the same wrong result when writing directly to a file.
->>>
->>> This could indeed be a CRLF issue. archive-tar.c runs gzip to let i=
-t
->>> write to the original fd 1 (stdout). gzip is an MSYS program, and M=
-SYS
->>> is "clever" and sets up the channel in text mode (CRLF conversion) =
-if it
->>> is a regular file, but in binary mode if it is a pipe.
->>>
->>> Without the gzip filter, git-archive writes to stdout itself. Since=
- we
->>> have set up all our channels in binary mode, we do not suffer from =
-the
->>> same problem for plain tar format.
->>>
->>> So, I don't think we can do a lot about it, short of patching MSYS =
-again...
->>
->> Or we could pipe the output through us, i.e. attach a builtin versio=
-n of
->> cat at the output end of the called command.  Only on Windows, of
->> course.  Better ugly and limping then wrong, right?
->=20
-> Yeah, that would work. But I am confused. If what Johannes says is tr=
-ue,
-> isn't MSYS gzip totally broken for:
->=20
->   # works
->   echo foo | gzip -c | cat >foo.gz
->=20
->   # broken; introduces CR
->   echo foo | gzip -c >foo.gz
->=20
-> ? (The "works" and "broken" there are my guesses; I don't have a Wind=
-ows
-> box to test on). IOW, is it simply gzip that is broken, and any fix w=
-e
-> do is simply working around a bug in gzip? And therefore the right
-> solution is for MSYS people to fix gzip?
+Dmitry Ivankov <divanorama@gmail.com> writes:
 
-"foo" may be too short to trigger the issue as the small resulting gz
-file has a low probability of containing LFs.
+> fast-import format declares 'committer_name SP' to be optional. But SP
+> between empty or not name and a email is obligatory and checked by
 
-The output of gzip is not simply always mangled, though (taken from my
-earlier email, all three are working):
+Sorry, cannot parse this.
 
-	$ git archive v1.7.6 | gzip -cn | md5sum
-	a0ca1c873a533a5fcd41d248fb325a5b *-
-
-	$ git archive --format=3Dtar.gz v1.7.6 | md5sum
-	a0ca1c873a533a5fcd41d248fb325a5b *-
-
-	$ git archive v1.7.6 | gzip -cn >a.tgz && md5sum <a.tgz
-	a0ca1c873a533a5fcd41d248fb325a5b *-
-
-It's only broken if we call it from git archive:
-
-	$ git archive --format=3Dtar.gz v1.7.6 >a.tgz && md5sum <a.tgz
-	30886283af1aed05ae6a36fc5aeda077 *-
-
-	$ git archive -o a.tgz v1.7.6 && md5sum <a.tgz
-	30886283af1aed05ae6a36fc5aeda077 *-
-
-But not if we stuff the result into a pipe instead of a file:
-
-	$ git archive --format=3Dtar.gz v1.7.6 | cat >a.tgz && md5sum <a.tgz
-	a0ca1c873a533a5fcd41d248fb325a5b *-
-
-It _is_ confusing.
-
-Ren=C3=A9
+> git-fsck, so fast-import must prepend the SP if the name is omitted.
+> Currently it doesn't.
+>
+> Name cannot contain LT or GT and ident always comes after SP in
+> fast-import. So reuse that SP as if a valid 'SP <email>' ident was passed.
+>
+> This fixes a ident parsing bug for a well-formed fast-import input.
+> Though the parsing is still loose and can accept a ill-formed input.
+>
+> Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
+> ---
+>  fast-import.c          |    4 ++++
+>  t/t9300-fast-import.sh |    2 +-
+>  2 files changed, 5 insertions(+), 1 deletions(-)
+>
+> diff --git a/fast-import.c b/fast-import.c
+> index 9e8d186..3194f4e 100644
+> --- a/fast-import.c
+> +++ b/fast-import.c
+> @@ -1972,6 +1972,10 @@ static char *parse_ident(const char *buf)
+>  	size_t name_len;
+>  	char *ident;
+>  
+> +	/* ensure there is a space delimiter even if there is no name */
+> +	if (*buf == '<')
+> +		--buf;
+> +
+>  	gt = strrchr(buf, '>');
+>  	if (!gt)
+>  		die("Missing > in ident string: %s", buf);
+> diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+> index a659dd4..09ef6ba 100755
+> --- a/t/t9300-fast-import.sh
+> +++ b/t/t9300-fast-import.sh
+> @@ -352,7 +352,7 @@ data <<COMMIT
+>  empty commit
+>  COMMIT
+>  INPUT_END
+> -test_expect_failure 'B: accept and fixup committer with no name' '
+> +test_expect_success 'B: accept and fixup committer with no name' '
+>  	git fast-import <input &&
+>  	out=$(git fsck) &&
+>  	echo "$out" &&
