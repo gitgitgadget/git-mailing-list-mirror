@@ -1,72 +1,99 @@
-From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: Re: [PATCH 5/5] fsck: improve committer/author check
-Date: Wed, 3 Aug 2011 01:50:20 +0600
-Message-ID: <CA+gfSn8xp3yj0Odu-7DSQyPq4mxVOdOzpS98nSx9gUpfrx-5Jg@mail.gmail.com>
-References: <1311831844-13123-1-git-send-email-divanorama@gmail.com>
-	<1311831844-13123-6-git-send-email-divanorama@gmail.com>
-	<7vfwljg33p.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC/ PATCH] revert: Allow arbitrary sequencer instructions
+Date: Tue, 2 Aug 2011 22:53:53 +0200
+Message-ID: <20110802205353.GF2743@elie>
+References: <1312260884-5087-1-git-send-email-artagnon@gmail.com>
+ <1312260884-5087-2-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, SASAKI Suguru <sss.sonik@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 02 21:50:28 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 02 22:54:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QoKyw-00026O-LX
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 21:50:27 +0200
+	id 1QoLyd-00071y-Q8
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 22:54:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755091Ab1HBTuW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Aug 2011 15:50:22 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:38403 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754819Ab1HBTuV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Aug 2011 15:50:21 -0400
-Received: by qwk3 with SMTP id 3so91289qwk.19
-        for <git@vger.kernel.org>; Tue, 02 Aug 2011 12:50:20 -0700 (PDT)
+	id S1755320Ab1HBUyH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Aug 2011 16:54:07 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:54376 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755322Ab1HBUyF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2011 16:54:05 -0400
+Received: by wwe5 with SMTP id 5so159158wwe.1
+        for <git@vger.kernel.org>; Tue, 02 Aug 2011 13:54:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Co6phJW5TlhGKmY3jo58fp99Z4tKroyOKhQQQYToy0g=;
-        b=gUBYESm0TpGT8706j3Mjz13S1d1ff3cfpihwOgrjK9tmV2snd7wqcko8gn5BrDFI2M
-         gCaqL170URzixYy2P5H08TXJPgXNmLY82hBcEq0iJ1atRTJ/a228isQnShEKV4aQtfEw
-         aXw6vkTnp9IKAyeA1dDeV9Ol00+MiTzg49nXQ=
-Received: by 10.229.101.93 with SMTP id b29mr4007485qco.112.1312314620605;
- Tue, 02 Aug 2011 12:50:20 -0700 (PDT)
-Received: by 10.229.189.3 with HTTP; Tue, 2 Aug 2011 12:50:20 -0700 (PDT)
-In-Reply-To: <7vfwljg33p.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=XED0+7ru4Sm1B4TK/n2Rh8SmPdtES0tFKXq9rBF3gZQ=;
+        b=DnbsMHEOveXS7J3uMAxduleNOcKR+8Zx0XHrKg21O0p4uiMrRwahfk64WDAL+J9gL1
+         r0uYKehaikP8qBH0/KJh/rPcMalQ8HX513AjDCSXp8elYw3aT/IiM46+B35GAuXhvBfK
+         fxBCv9GMAwiLMNlyufuHDDZjl+6RwMEKwk8xA=
+Received: by 10.216.14.19 with SMTP id c19mr2118289wec.88.1312318443279;
+        Tue, 02 Aug 2011 13:54:03 -0700 (PDT)
+Received: from elie ([109.144.213.170])
+        by mx.google.com with ESMTPS id m46sm100093weq.5.2011.08.02.13.53.56
+        (version=SSLv3 cipher=OTHER);
+        Tue, 02 Aug 2011 13:54:02 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1312260884-5087-2-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178507>
 
-On Tue, Aug 2, 2011 at 11:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Dmitry Ivankov <divanorama@gmail.com> writes:
->
->> Neither name nor email should contain < or >, so split the string with
->> these and check they come in that order and < is preceeded with a space.
->>
->> If < is missing don't say a confusing "missing space", say "bad name" if
->>> isn't missing and "missing email" if both < and > are missing.
->>
->> Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
->> ---
->
-> Same comment as 3/5; before starting to talk about how you implemented
-> your validation, please state what rules you are enforcing.
-Thanks, will apply and reroll.
-But before this, is it ok to reject "Name> <email>" idents in fsck and
-fast-import?
-fsck already denies '<' and '>' inside email, and '<' in name. But
-accepts '>' in name.
-It just hit me that Documentation/fast-import.c doesn't deny '>' in
-name and it is
-consistent with fsck, so there may be a reason behind it.
+Ramkumar Ramachandra wrote:
 
->
-> Thanks.
->
+> Allow arbitrary sequencer instructions in the instruction sheet.
+
+"So now I can ..." wait, what does this allow me to do?  Your audience
+hasn't read the patch yet.
+
+> --- a/sequencer.h
+> +++ b/sequencer.h
+> @@ -32,6 +32,16 @@ struct replay_opts {
+>  	size_t xopts_nr, xopts_alloc;
+>  };
+>  
+> +struct replay_insn {
+> +	struct commit *commit;
+> +	enum replay_action action;
+> +};
+> +
+> +struct replay_insn_list {
+> +	struct replay_insn *item;
+> +	struct replay_insn_list *next;
+> +};
+
+Ah, so this allows sequences like
+
+	revert A
+	pick B
+	pick C
+	revert D
+
+Nit: why isn't the list-item struct something like
+
+	struct replay_insn item;
+	struct replay_insn_list *next;
+
+which would save a little memory management and memory access
+overhead (or even
+
+	enum replay_action action;
+	struct commit *operand;
+	struct replay_insn_list *next;
+
+since every "struct replay_insn" exists in the context of an
+insn list afaict)?
+
+Anyway, the general idea seems good.
