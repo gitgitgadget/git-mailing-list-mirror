@@ -1,215 +1,220 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: working prototype of orphan parent commits as datastores (was:
- Storing additional information in commit headers)
-Date: Tue, 2 Aug 2011 17:03:21 +0200
-Message-ID: <20110802150321.GA1390@fishbowl.rw.madduck.net>
-References: <20110801182015.GA3100@fishbowl.rw.madduck.net>
- <20110801201301.GA17111@sigill.intra.peff.net>
- <20110801211104.GC15401@fishbowl.rw.madduck.net>
- <20110802035056.GB17494@sigill.intra.peff.net>
- <20110802082810.GC29887@fishbowl.rw.madduck.net>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="BOKacYhQ+x31HxR3"
-To: Jeff King <peff@peff.net>,
-	git discussion list <git@vger.kernel.org>,
-	Petr Baudis <pasky@ucw.cz>, Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Tue Aug 02 17:03:44 2011
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH v13 4a/8] bisect: introduce support for --bisect-mode option in bisect--helper.
+Date: Wed,  3 Aug 2011 01:30:48 +1000
+Message-ID: <1312299048-1459-1-git-send-email-jon.seymour@gmail.com>
+References: <AP8UFD0kB+dS4cP=4MXKShhMw3-f_uKjtOmYKahNM0uQQkojsQ@mail.gmail.com>
+Cc: chriscool@tuxfamily.org, gitster@pobox.com, j6t@kdbg.org,
+	jnareb@gmail.com, Jon Seymour <jon.seymour@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 02 17:31:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QoGVS-0006Jc-Lg
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 17:03:43 +0200
+	id 1QoGwA-0003d4-BQ
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 17:31:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753987Ab1HBPDi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Aug 2011 11:03:38 -0400
-Received: from seamus.madduck.net ([213.203.238.82]:41322 "EHLO
-	seamus.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753803Ab1HBPDh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Aug 2011 11:03:37 -0400
-Received: from fishbowl.rw.madduck.net (28-193.78-83.cust.bluewin.ch [83.78.193.28])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "fishbowl.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by seamus.madduck.net (postfix) with ESMTPS id 0FE07407D3B;
-	Tue,  2 Aug 2011 17:03:22 +0200 (CEST)
-Received: by fishbowl.rw.madduck.net (Postfix, from userid 1000)
-	id E83122014A; Tue,  2 Aug 2011 17:03:21 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20110802082810.GC29887@fishbowl.rw.madduck.net>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux wheezy/sid kernel 3.0.0-1-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Virus-Scanned: clamav-milter 0.97.1 at seamus
-X-Virus-Status: Clean
+	id S1753394Ab1HBPbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Aug 2011 11:31:08 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:33226 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752956Ab1HBPbF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2011 11:31:05 -0400
+Received: by yia27 with SMTP id 27so4144725yia.19
+        for <git@vger.kernel.org>; Tue, 02 Aug 2011 08:31:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=5QbgZIiHPz6zFzwXZTVGerydWRbyhO1GrV0QcbaTvCg=;
+        b=MgMIvIh3mA597ArKu7Y1GgJ4V/D/4pvdISC8/ZuQAGFA1alJGLHzL/jXh5swu0LVWV
+         SC90Xx16KWp7KQXhAz2/I3LYlY5v3/AEjvhu+9NPxET3QHbC3LezYMxEIByLLEi0p5nZ
+         v3QQO1CKyl1Z/PWCVvsQ8zQQsamKy0+0oKzYs=
+Received: by 10.68.57.40 with SMTP id f8mr10742832pbq.204.1312299063882;
+        Tue, 02 Aug 2011 08:31:03 -0700 (PDT)
+Received: from localhost.localdomain ([120.16.93.94])
+        by mx.google.com with ESMTPS id d3sm6870904pbh.53.2011.08.02.08.30.59
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 02 Aug 2011 08:31:02 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.353.g794b
+In-Reply-To: <AP8UFD0kB+dS4cP=4MXKShhMw3-f_uKjtOmYKahNM0uQQkojsQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178475>
 
+If --bisect-mode=update-ref is specified, then the bisection process uses:
 
---BOKacYhQ+x31HxR3
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+	git update-ref --no-deref HEAD <trial>
 
-also sprach martin f krafft <madduck@madduck.net> [2011.08.02.1028 +0200]:
-> What do you think about using the idea of orphan parent commits
-> (OPC) for now? These are conceptually closest to the x-*-ref
-> pointers, do not require extra setup, pollute history only a little
-> bit (IMHO), and slot in with Git and fsck/gc alright.
->=20
-> Here's the idea again, graphically:
->=20
->   o--o--o--=E2=97=8F
->        /
->       #
->=20
-> while at HEAD, I would backtrack history until I found HEAD^, which
-> has a parent with a well-defined commit message and holding the data
-> I am looking for.
->=20
-> Later, when x-*-ref is mainline, instead of parent pointers, it can
-> be used in place.
->=20
-> When there is a merge and the TopGit data need updating, a new
-> OPC is slotted into place, on the merge commit. In
-> the following graph, the user then decided also at a later point to
-> update e.g. the TopGit patch description (.topmsg), which is also
-> stored in this OPC:
->=20
->        o--o-o
->       /      \      maint       master
->   o--o--o--o--+--o--O--o--o--o--=E2=97=8F
->        /     /           /
->       #     #           #
->=20
-> To keep things simple, every OPC copies the unchanged data from the
-> previous one as well (compression will reduce the overhead).
+at each trial instead of:
 
-I have published a working prototype of this kind of datastore, in
-case people are interested:
+	git checkout <trial>
 
-  http://git.madduck.net/v/code/topgit-ng.git
+Improved-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+---
+ bisect.c                 |   33 ++++++++++++++++++++++-----------
+ bisect.h                 |    2 +-
+ builtin/bisect--helper.c |    9 +++++++--
+ 3 files changed, 30 insertions(+), 14 deletions(-)
 
-Here's a bit of synopsis:
+A replacement for [PATCH v13 4/8].
 
-
-
-% ./tg-datastore list
-I: returns non-zero if no datastore found at given commit.
-I: prints contents of datastore otherwise.
-message: this is a proof-of-concept
-
-% ./tg-datastore find commitref
-I: prints the value of the parameter, or empty if parameter is not found.
-I: returns non-zero if no datastore was found.
-dc58ec49df849ec1aef6929cd40c759a6018e056
-
-% git commit --allow-empty -mone
-[master 78918bb] one
-
-% git commit --allow-empty -mtwo
-[master 7eca0cd] two
-
-% ./tg-datastore find message
-I: prints the value of the parameter, or empty if parameter is not found.
-I: returns non-zero if no datastore was found.
-this is a proof-of-concept
-
-% ./tg-datastore find commitref
-I: prints the value of the parameter, or empty if parameter is not found.
-I: returns non-zero if no datastore was found.
-dc58ec49df849ec1aef6929cd40c759a6018e056
-
-% ./tg-datastore add message=3D'this is a new message'
-I: returns non-zero if there is already a datastore on HEAD.
-I: adding the following data to the datastore of HEAD:
-I:   message: this is a new message
-
-% ./tg-datastore find commitref
-I: prints the value of the parameter, or empty if parameter is not found.
-I: returns non-zero if no datastore was found.
-8e6179050a1aca5485f3e1702780f1b555d8643b
-
-% ./tg-datastore find message
-I: prints the value of the parameter, or empty if parameter is not found.
-I: returns non-zero if no datastore was found.
-this is a new message
-
-  tig output now:
-    2011-08-02 16:52 martin f. krafft   M=E2=94=80=E2=94=90 [master] two
-    2011-08-02 16:54 TopGit             =E2=94=82 I TopGit data node
-    2011-08-02 16:52 martin f. krafft   I one
-    2011-08-02 16:50 martin f. krafft   M=E2=94=80=E2=94=90 [origin/master]=
- import first prototype
-    2011-08-02 16:50 TopGit             =E2=94=82 I TopGit data node
-    2011-08-02 16:48 martin f. krafft   I Initial (empty) root commit
-
-% ./tg-datastore remove
-I: always returns zero, even if there was nothing to remove.
-
-% ./tg-datastore find message
-I: prints the value of the parameter, or empty if parameter is not found.
-I: returns non-zero if no datastore was found.
-this is a proof-of-concept
-
-
-
-Note three things:
-
-  1. I am actually using a x-* header in the TopGit data node commit
-     object to help identify it as a commit. This could be done
-     differently (e.g. parse the commit message for some magic), but
-     I chose to do this on purpose to see how well it fares.
-
-  2. If Git grew x-*-ref headers (refs to objects in general),
-     I could use that instead and drop the parent pointer, which
-     would make the DAG cleaner.
-
-  3. Right now, you cannot add parent orphan commits to orphans
-     themselves, but it would be trivial to enable. I just couldn't
-     be bothered.
-
-Enjoy, and comments of course welcome.
-
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-windoze nt crashed.
-i am the blue screen of death.
-no one hears your screams.
-=20
-spamtraps: madduck.bogus@madduck.net
-
---BOKacYhQ+x31HxR3
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/sig-policy/999bbcc4/current)
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQLvBAEBCgDZBQJOOBG5wBEaaHR0cDovL21hcnRpbi1rcmFmZnQubmV0L2dwZy9z
-aWctcG9saWN5LzU1Yzk4ODJkOTk5YmJjYzQvMjAxMTAxMjQxMTI1P3NoYTUxMnN1
-bT0xY2FkOTZmZDI3ZDMyMzNmNTNlMjI4NDk1MzM2NDgxMDdlNWVlOGQ1YmU2NTUy
-NTFkNzRjOGYxYzVjM2JjNDJmMjMwNGZhNTE1MTUwZjdiZDRkZDA1ZTk4MTk5MjRm
-MDQ5NTEzZWU5OTYyY2E3MTcwOWY4MWQ5NDUxNTg1MmJkOAAKCRBVyYgtmZu8xHyx
-D/9W7GIPttJQqJ14h8Jd9qZrJzM/LrLbwI8rGtUOq6+4ff/8ajscpl9gjcMRFlSl
-emMSbPOVXm/UeCKU16PHLFqq2LNV+HZldRAOD/W0N0ekW7vUzTCGiQTMrinSbSkZ
-/nSK4tgNwco1O3k9gQLhEuwXD2vLrbNTC9JsJAiAQOUYP4P0t8Ba45GGWZxyPFPm
-H+ahZFIh+ww7TtPGDpStPT3CUe2dj6FTJMn2JQEAx4Wsm+tU1FcDLsYdsOL+8jV2
-+0a5hWr3qzC9sbw7i/IUA+x6PMmVklP7dUN084/dcWvIZgA/a1GuRTbzigmnpTuJ
-3Y1bF+0wCLnm93iZxQdh6fWFffnKTq1Qv1fo5PEUFxE770lC1UqHxo2bL+VVh0hj
-owlRlXl2+NK0vKYRC/xYqxXWM29FK8LzEvtC+eZJPcdhzzoF/GINOv9p/+eO6nF8
-R5cKd5zYpycpCCD5wK1YvXLm171MyO7XigTvVCmqYJ5NokbyY2W/WMXKXYxz59nN
-K1o0YMefZpzMD+O1EtG2V94RjcPZtlUCHItgtHWkYAgmAU+YyzqugUMkwElRjXf1
-vHmrpf4zNiXRrz/9IZDOrq15DEGJCOUdwS0Ybuog23N7HbYoenbjuaUE+BHNem+c
-6YdTGVz36FuPLVq2DGzt6Ph2ljzk41iHG5aA5+rBoMYTrw==
-=ZmrJ
------END PGP SIGNATURE-----
-
---BOKacYhQ+x31HxR3--
+diff --git a/bisect.c b/bisect.c
+index dd7e8ed..0427117 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -24,6 +24,7 @@ struct argv_array {
+ 
+ static const char *argv_checkout[] = {"checkout", "-q", NULL, "--", NULL};
+ static const char *argv_show_branch[] = {"show-branch", NULL, NULL};
++static const char *argv_update_ref[] = {"update-ref", "--no-deref", "HEAD", NULL, NULL};
+ 
+ /* bits #0-15 in revision.h */
+ 
+@@ -707,16 +708,23 @@ static void mark_expected_rev(char *bisect_rev_hex)
+ 		die("closing file %s: %s", filename, strerror(errno));
+ }
+ 
+-static int bisect_checkout(char *bisect_rev_hex)
++static int bisect_checkout(char *bisect_rev_hex, int no_checkout)
+ {
+ 	int res;
+ 
+ 	mark_expected_rev(bisect_rev_hex);
+ 
+ 	argv_checkout[2] = bisect_rev_hex;
+-	res = run_command_v_opt(argv_checkout, RUN_GIT_CMD);
+-	if (res)
+-		exit(res);
++	if (no_checkout) {
++		argv_update_ref[3] = bisect_rev_hex;
++		if (run_command_v_opt(argv_update_ref, RUN_GIT_CMD))
++			die("update-ref --no-deref HEAD failed on %s",
++			    bisect_rev_hex);
++	} else {
++		res = run_command_v_opt(argv_checkout, RUN_GIT_CMD);
++		if (res)
++			exit(res);
++	}
+ 
+ 	argv_show_branch[1] = bisect_rev_hex;
+ 	return run_command_v_opt(argv_show_branch, RUN_GIT_CMD);
+@@ -788,7 +796,7 @@ static void handle_skipped_merge_base(const unsigned char *mb)
+  * - If one is "skipped", we can't know but we should warn.
+  * - If we don't know, we should check it out and ask the user to test.
+  */
+-static void check_merge_bases(void)
++static void check_merge_bases(int no_checkout)
+ {
+ 	struct commit_list *result;
+ 	int rev_nr;
+@@ -806,7 +814,7 @@ static void check_merge_bases(void)
+ 			handle_skipped_merge_base(mb);
+ 		} else {
+ 			printf("Bisecting: a merge base must be tested\n");
+-			exit(bisect_checkout(sha1_to_hex(mb)));
++			exit(bisect_checkout(sha1_to_hex(mb), no_checkout));
+ 		}
+ 	}
+ 
+@@ -849,7 +857,7 @@ static int check_ancestors(const char *prefix)
+  * If a merge base must be tested by the user, its source code will be
+  * checked out to be tested by the user and we will exit.
+  */
+-static void check_good_are_ancestors_of_bad(const char *prefix)
++static void check_good_are_ancestors_of_bad(const char *prefix, int no_checkout)
+ {
+ 	const char *filename = git_path("BISECT_ANCESTORS_OK");
+ 	struct stat st;
+@@ -868,7 +876,7 @@ static void check_good_are_ancestors_of_bad(const char *prefix)
+ 
+ 	/* Check if all good revs are ancestor of the bad rev. */
+ 	if (check_ancestors(prefix))
+-		check_merge_bases();
++		check_merge_bases(no_checkout);
+ 
+ 	/* Create file BISECT_ANCESTORS_OK. */
+ 	fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
+@@ -908,8 +916,11 @@ static void show_diff_tree(const char *prefix, struct commit *commit)
+  * We use the convention that exiting with an exit code 10 means that
+  * the bisection process finished successfully.
+  * In this case the calling shell script should exit 0.
++ *
++ * If no_checkout is non-zero, the bisection process does not
++ * checkout the trial commit but instead simply updates HEAD.
+  */
+-int bisect_next_all(const char *prefix)
++int bisect_next_all(const char *prefix, int no_checkout)
+ {
+ 	struct rev_info revs;
+ 	struct commit_list *tried;
+@@ -920,7 +931,7 @@ int bisect_next_all(const char *prefix)
+ 	if (read_bisect_refs())
+ 		die("reading bisect refs failed");
+ 
+-	check_good_are_ancestors_of_bad(prefix);
++	check_good_are_ancestors_of_bad(prefix, no_checkout);
+ 
+ 	bisect_rev_setup(&revs, prefix, "%s", "^%s", 1);
+ 	revs.limited = 1;
+@@ -966,6 +977,6 @@ int bisect_next_all(const char *prefix)
+ 	       "(roughly %d step%s)\n", nr, (nr == 1 ? "" : "s"),
+ 	       steps, (steps == 1 ? "" : "s"));
+ 
+-	return bisect_checkout(bisect_rev_hex);
++	return bisect_checkout(bisect_rev_hex, no_checkout);
+ }
+ 
+diff --git a/bisect.h b/bisect.h
+index 0862ce5..22f2e4d 100644
+--- a/bisect.h
++++ b/bisect.h
+@@ -27,7 +27,7 @@ struct rev_list_info {
+ 	const char *header_prefix;
+ };
+ 
+-extern int bisect_next_all(const char *prefix);
++extern int bisect_next_all(const char *prefix, int no_checkout);
+ 
+ extern int estimate_bisect_steps(int all);
+ 
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 5b22639..1f072d4 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -4,16 +4,20 @@
+ #include "bisect.h"
+ 
+ static const char * const git_bisect_helper_usage[] = {
+-	"git bisect--helper --next-all",
++	"git bisect--helper --next-all [--bisect-mode=checkout|update-ref]",
+ 	NULL
+ };
+ 
+ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	int next_all = 0;
++	int no_checkout = 0;
++	char *bisect_mode=NULL;
+ 	struct option options[] = {
+ 		OPT_BOOLEAN(0, "next-all", &next_all,
+ 			    "perform 'git bisect next'"),
++		OPT_STRING(0, "bisect-mode", &bisect_mode, "mode",
++			    "bisection mode: 'checkout' (default) or 'update-ref'"),
+ 		OPT_END()
+ 	};
+ 
+@@ -23,6 +27,7 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 	if (!next_all)
+ 		usage_with_options(git_bisect_helper_usage, options);
+ 
++	no_checkout = bisect_mode && !strcmp(bisect_mode, "update-ref");
+ 	/* next-all */
+-	return bisect_next_all(prefix);
++	return bisect_next_all(prefix, no_checkout);
+ }
+-- 
+1.7.6.353.g794b
