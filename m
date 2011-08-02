@@ -1,43 +1,39 @@
 From: martin f krafft <madduck@madduck.net>
-Subject: Re: Storing additional information in commit headers
-Date: Tue, 2 Aug 2011 21:06:45 +0200
-Message-ID: <20110802190645.GB17322@fishbowl.rw.madduck.net>
-References: <20110801182015.GA3100@fishbowl.rw.madduck.net>
- <20110801201301.GA17111@sigill.intra.peff.net>
- <20110801211104.GC15401@fishbowl.rw.madduck.net>
- <20110802035056.GB17494@sigill.intra.peff.net>
- <20110802082810.GC29887@fishbowl.rw.madduck.net>
- <20110802185154.GA2499@sigill.intra.peff.net>
+Subject: Re: Branch dependencies
+Date: Tue, 2 Aug 2011 21:08:06 +0200
+Message-ID: <20110802190806.GA16674@fishbowl.rw.madduck.net>
+References: <20110801121946.GA575@fishbowl.rw.madduck.net>
+ <CAKPyHN0kAJ-MVsrXam5NjsOYkta4nsSrZUvKoMSi-FeRUSuLEw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="jho1yZJdad60DJr+"
-To: Jeff King <peff@peff.net>,
+	protocol="application/pgp-signature"; boundary="tThc/1wpZn/ma/RB"
+To: Bert Wesarg <bert.wesarg@googlemail.com>,
 	git discussion list <git@vger.kernel.org>,
-	Petr Baudis <pasky@ucw.cz>, Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Tue Aug 02 21:07:12 2011
+	Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Tue Aug 02 21:08:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QoKJ1-0006l2-Qm
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 21:07:08 +0200
+	id 1QoKKF-0007LY-S6
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 21:08:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755038Ab1HBTHD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Aug 2011 15:07:03 -0400
-Received: from seamus.madduck.net ([213.203.238.82]:43622 "EHLO
+	id S1755130Ab1HBTIT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Aug 2011 15:08:19 -0400
+Received: from seamus.madduck.net ([213.203.238.82]:43634 "EHLO
 	seamus.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755027Ab1HBTHB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Aug 2011 15:07:01 -0400
+	with ESMTP id S1755115Ab1HBTIS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2011 15:08:18 -0400
 Received: from fishbowl.rw.madduck.net (28-193.78-83.cust.bluewin.ch [83.78.193.28])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(Client CN "fishbowl.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by seamus.madduck.net (postfix) with ESMTPS id C90FF407D3B;
-	Tue,  2 Aug 2011 21:06:46 +0200 (CEST)
+	by seamus.madduck.net (postfix) with ESMTPS id 8D8F6407D3B;
+	Tue,  2 Aug 2011 21:08:07 +0200 (CEST)
 Received: by fishbowl.rw.madduck.net (Postfix, from userid 1000)
-	id 941701FE57; Tue,  2 Aug 2011 21:06:45 +0200 (CEST)
+	id 7E9C91FE57; Tue,  2 Aug 2011 21:08:06 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20110802185154.GA2499@sigill.intra.peff.net>
+In-Reply-To: <CAKPyHN0kAJ-MVsrXam5NjsOYkta4nsSrZUvKoMSi-FeRUSuLEw@mail.gmail.com>
 X-Motto: Keep the good times rollin'
 X-OS: Debian GNU/Linux wheezy/sid kernel 3.0.0-1-amd64 x86_64
 X-Spamtrap: madduck.bogus@madduck.net
@@ -49,102 +45,76 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178501>
 
 
---jho1yZJdad60DJr+
-Content-Type: text/plain; charset=utf-8
+--tThc/1wpZn/ma/RB
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-also sprach Jeff King <peff@peff.net> [2011.08.02.2051 +0200]:
-> I agree that is an annoyance, but it is one we can deal with. In the
-> near term, I wonder if a "tg clone" would be appropriate to add the
-> extra fetch refspecs when cloning (or even a "tg init" inside an
-> existing git repo -- I don't actually use topgit, so I'm not sure what
-> the usual initialization process, if any, is).
+also sprach Bert Wesarg <bert.wesarg@googlemail.com> [2011.08.02.1506 +0200=
+]:
+> while I appreciate, that you dig this topic up. I think you are trying
+> to solve the wrong problem first. My main problem with the TopGit
+> approach is, that you can't freely change the dependencies of a topic.
+> This may be not the most common case in distro development. But in my
+> eyes more problematic than maintaining the meta data.
 
-Hey Jeff, thanks for your response.
+Hello Bert, thank you for taking the time to respond!
 
-TopGit does come with these commands to do the setup for you, but
-that does not ensure that a new contributor without any idea about
-TopGit won't forget to run them.
+Could you please try to illuminate me a bit on a use-case of
+changing dependencies? I am aware that TopGit has had a problem with
+changing dependencies due to renamed branches, and I think I have
+a solution to that (encode the dependent ref, not the branch head),
+but I cannot come up with a use case for freely changing
+dependencies just like that.
 
-The argument against tg-clone is mainly that I really do not want to
-encapsulate/abstract functionality, but rather stay as close as
-possible to pure Git, and never to mandate anyone to use anything
-else.
+> For my first mentioned problem, I think a new 'system' needs to be
+> 'rebase' based, not merge based like TopGit.
 
-> In the longer term, it might be nice if git was better at sharing
-> third-party refs. The problem is that we don't know what the refs
-> mean, so we don't know which ones are appropriate for sharing.
-> Maybe we could do something like "refs/shared/topgit/*", and git
-> by default would push and pull items under refs/shared?
+The problem with rebasing is that you cannot publish the branches.
 
-This could be an interesting and viable approach.
+However, maybe I am simply not seeing the light here. Do you have
+some further ideas about what this would be like? Please keep in
+mind that what I seek is not just a way to bring feature branches
+up-to-date with upstream, but also to have those branches be shared
+among developers.
 
-> > Therefore I thought it would be sensible to store these data in
-> > commit. When the data change, there will always be a new commit to
-> > store these data, and we do *not* want to update the data in
-> > previous commits. Finding the data then becomes backtracking the
-> > branch history until a commit is found containing them.
->
-> That seems to me like you are sticking information in a commit that is
-> not actually about the commit, but about the ref that happens to point
-> to the commit. What if I have two refs that point to the same commit,
-> but with two different topgit bases?
-
-I don't think this can happen, but the point is valid.
-
-> What about years later, when that information isn't interesting
-> anymore? You're still carrying the cruft inside your commit
-> objects.
-[=E2=80=A6]
-> I'm still not 100% convinced you want per-commit storage, though,
-> and not per-ref storage.
-
-Yes, I do want per-ref storage. Your arguments against my orphan
-parent pointer approach (which could later be a x-*-ref approach)
-are valid.
-
-It just seems to me that per-ref storage is a lot further away than
-per-commit storage, and I'd really like to move forward with TopGit=E2=80=A6
-
-Thank you,
+Thanks,
 
 --=20
 martin | http://madduck.net/ | http://two.sentenc.es/
 =20
-"one should never trust a woman who tells her real age.
- if she tells that, she will tell anything."
-                                                        -- oscar wilde
+"gott ist tot! und wir haben ihn get=F6tet."
+                                                 - friedrich nietzsche
 =20
 spamtraps: madduck.bogus@madduck.net
 
---jho1yZJdad60DJr+
+--tThc/1wpZn/ma/RB
 Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
 Content-Description: Digital signature (see http://martin-krafft.net/gpg/sig-policy/999bbcc4/current)
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.11 (GNU/Linux)
 
-iQLvBAEBCgDZBQJOOErFwBEaaHR0cDovL21hcnRpbi1rcmFmZnQubmV0L2dwZy9z
+iQLvBAEBCgDZBQJOOEsWwBEaaHR0cDovL21hcnRpbi1rcmFmZnQubmV0L2dwZy9z
 aWctcG9saWN5LzU1Yzk4ODJkOTk5YmJjYzQvMjAxMTAxMjQxMTI1P3NoYTUxMnN1
 bT0xY2FkOTZmZDI3ZDMyMzNmNTNlMjI4NDk1MzM2NDgxMDdlNWVlOGQ1YmU2NTUy
 NTFkNzRjOGYxYzVjM2JjNDJmMjMwNGZhNTE1MTUwZjdiZDRkZDA1ZTk4MTk5MjRm
-MDQ5NTEzZWU5OTYyY2E3MTcwOWY4MWQ5NDUxNTg1MmJkOAAKCRBVyYgtmZu8xANE
-D/49V71zp3sTRB+u4F9KYju92tU7ui9xV/cbT3Muh5dggPvxUFXakCKoIQfNzrYc
-s4akcFkSfaH8l6WuCbEslLOsvBL34H0dnPwGjdzJHxl2mkpXTn2VIuPnJhxgWDOO
-gB4NhWjnO+g395CAIjxNHZ1UExPi69XmWgEWw6EpdVjASXsb+vRjHh23+kZKQwOT
-cXpIOuRs4uaWSD9FjvGLgbmLNE6MdbmnP0qIuIBA2ZB253aNM4rjGKeiMBOCM+Pj
-tLCztp7/Vzjy4p2PNSWJ1RVd95YM5H8lMGA8UXK3miEL5SWDFuCgdIoORD4s7VTd
-Dwwhb7/k1rvTyda/ewAteEajb39QxFltDaZv51kODwIOJVnTlbK3priclPCcT5Ds
-nQhEZikvgwJraQ9LTtfF+P7ucVWdDlptV+H9Py2Z0erbd/MSrn9vj+EujfselmzW
-WxjGpPSEFKQSRu2wCYsfMkKxijxpqhyLRsW/Amj8kzzIXE/ilfi7eR1Fwhpx8x6j
-kYHhSjs+1r6sQHsrOY0GkJvm8qpKl1vG9vkAar7xCOKHQA76mbnkh4W3xm35WuQD
-QCk+9xl8t3jiymOEsJO8bTuw86FgDcbndY0x1PY3ZyAAndvtbZxpNTuwu0YMRZ3A
-weROP2Zn/jEuPilrf++R4o8iSPQ0Hxf7AN+Oj7nLtQ7tvQ==
-=IbnH
+MDQ5NTEzZWU5OTYyY2E3MTcwOWY4MWQ5NDUxNTg1MmJkOAAKCRBVyYgtmZu8xEMh
+D/44yN8wzKpzXNDP5AQ9vTp8uLBrtxuhH6o7jFPnHI3O1//2gZcuafJqcg0WL/cA
+Q3Vayh9PnENB2p7x8L8rSHJLB7+UB66SRNeWNymijdIyt1t3wJPiGyuu93gyA/hZ
+Jpl+a2PoOp+gzu6U/R7rK8oWf0AxrBpSYYHkk1qjpEZ397avrZlR/9L/3DSStwHj
+jNZOzBQasF7Ms2lhJCEqtgCbVA6jeg2B8WbrTAAj2GVyXzs/JBAP0yyGSNS3jehL
+1SPAbiT9OB4+pTla0JbyWEoCCsis03v9V+ccPkgv6zCwcWRSdG4bTXPPYypSAhFQ
+85w4b1rJ6y7kmkgajzNJXNyj1IBlCi4oE6IF5xqKAo+UNX4zuIMzK0poQvUjaE/5
+3vhYMPP0XGH907e2Ik1Ex94+tz0J8cZJiQLYahHZWPAFztcWd/KNNSBnk6k+hOOq
+Idmy5CngDrgb7sZDiboPz9IS8Du2dVwvSgtqS+6jRYs6FkZLOBmVyUO2HxrJTo8B
+YwD+VHMkrWSspmpYhdtZpfeaX87tx5TnHjsAi2uscAqwAN0cF8oq9B6gMuHSjEE7
+9YytM9NaHPwEO/ch7RNividDQQHz4RTU69yq9kXfBeNPEaCCR5Q9JLLsb4RfVgOM
+djuBNYAtYzP++blewOFYCpcE/Sde9avO2L02EqfzrYXI/A==
+=Tl2j
 -----END PGP SIGNATURE-----
 
---jho1yZJdad60DJr+--
+--tThc/1wpZn/ma/RB--
