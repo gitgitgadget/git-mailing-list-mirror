@@ -1,80 +1,55 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 19/19] Rename struct git_attr_check to git_attr_value
-Date: Tue, 02 Aug 2011 08:46:16 -0700
-Message-ID: <7vsjpjg6k7.fsf@alter.siamese.dyndns.org>
-References: <1311828418-2676-1-git-send-email-mhagger@alum.mit.edu>
- <1311828418-2676-20-git-send-email-mhagger@alum.mit.edu>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: Why do some commits not appear in "git log"?
+Date: Tue, 2 Aug 2011 15:56:29 +0000
+Message-ID: <CAMOZ1Bt+Z4XDPNBQyUeVk30aEOuXFAuh8jhdhFke-CDZt2pEDg@mail.gmail.com>
+References: <CA++fsGGG7pLt4xoeJozGnYEwOrs6NuzStYPKF_L5k49uzFB-4A@mail.gmail.com>
+ <CA++fsGEht+UDp9EnFyfvn-uT1DYPcnhpwmPy_H4PTWvsvUceAQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Aug 02 17:46:28 2011
+To: Dov Grobgeld <dov.grobgeld@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 02 17:57:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QoHAn-0003GJ-Dh
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 17:46:25 +0200
+	id 1QoHL7-0000UL-HF
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 17:57:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754019Ab1HBPqV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Aug 2011 11:46:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56074 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753318Ab1HBPqT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Aug 2011 11:46:19 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 347DA401B;
-	Tue,  2 Aug 2011 11:46:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eI0Xapi86b6N9XThbdyCd6gjmMA=; b=gMOn26
-	K5stu0VzL9I/uPWKlXzLReIw4Xb1QVCTcJbvT95dkJhLzBNZocybN5ShamcVKRm7
-	yZvc05IFbI5AUY1URzNugL6vR3EI1cvPQTpp4JsiX64p+q/l+LyP3M9vmYIZsgAi
-	AFs3TfDDFtwZvtTr+wQAoCg6EsTrQgIYbJRCQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=g5W03jixborNridZd0RcckelBkweKiWQ
-	WlQKHmrp7SRnTXXLVbw4udlWyn5sYTAQeogT1QvClVYXuHAhoXBooI/COsRlKK7Y
-	yW47pZ7cdxMMvuxzd+znWlmA9EvK/Obie2OH5uOdmuQ9L+SW3uV4yR7YB1914mDm
-	ZL/DJP2B5/I=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C0034019;
-	Tue,  2 Aug 2011 11:46:19 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B1DDF4018; Tue,  2 Aug 2011
- 11:46:18 -0400 (EDT)
-In-Reply-To: <1311828418-2676-20-git-send-email-mhagger@alum.mit.edu>
- (Michael Haggerty's message of "Thu, 28 Jul 2011 06:46:58 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 9038473C-BD1E-11E0-8F01-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754216Ab1HBP5A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Aug 2011 11:57:00 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:41004 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754162Ab1HBP47 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2011 11:56:59 -0400
+Received: by iyb12 with SMTP id 12so8188597iyb.19
+        for <git@vger.kernel.org>; Tue, 02 Aug 2011 08:56:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=teLyS5KLpRtQtqzGrFFIPgaKxRLdvCzAiGIroB4H/Es=;
+        b=mS35Iqb/V+dhMoyqDMTae0WpAqIBIQI/dI8hUMDbP/UHMW0CisVD6PZ3GEYRiu2MH0
+         ucZaN4cyDJ/EMrZJzhBQ8sM2hfbdITQWMdarb9Rs4eXGMs9RiHaRU0SPMaBqfZfeWyNU
+         O0oIFNPvRkWWmvqYAJPARwdwbzVn+vQjIs8zE=
+Received: by 10.42.154.199 with SMTP id r7mr3830342icw.145.1312300619179; Tue,
+ 02 Aug 2011 08:56:59 -0700 (PDT)
+Received: by 10.42.167.137 with HTTP; Tue, 2 Aug 2011 08:56:29 -0700 (PDT)
+In-Reply-To: <CA++fsGEht+UDp9EnFyfvn-uT1DYPcnhpwmPy_H4PTWvsvUceAQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178479>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Tue, Aug 2, 2011 at 15:38, Dov Grobgeld <dov.grobgeld@gmail.com> wrote:
+> git log --pretty=oneline --abbrev-commit | head -20
 
-> This described its purpose better, especially when used with
-> git_allattrs().
+Try `--full-history' maybe? Also, rather than `head -20', you can
+limit the output directly with `-20':
 
-You probably meant s/described/describes/ but more importantly does it
-really? It is a structure used to probe into the attributes system for the
-state of various attributes on a path, and the set of possible states
-includes "there is no value" (aka unset), so it feels actively wrong to
-call it attr_value and that is why I didn't call it in the first place.
+  git log --pretty=oneline --abbrev-commit --full-history -20
 
-I also think git_all_attrs() (i.e. word-break underscore after "all") is
-more in line with the naming throughout the codebase, after looking at
-output from
-
-  $ git grep -e _all'[a-z]' --and --not -e alloc -e _all_ -- '*.c'
-
-Other than these, and the earlier comment about the copy&paste done from
-git_checkattr (which by the way should probably be "git_check_attr"), it
-seems that the series mostly consist of good clean-ups and an addition of
-a new and (probably) useful feature that is straightforward. Nice.
-
-Thanks.
+It's hard to know what's going on in your particular example; perhaps
+give us the output of `git log' when using the `--graph' option.
