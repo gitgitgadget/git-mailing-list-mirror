@@ -1,105 +1,179 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] describe: Refresh the index when run with --dirty
-Date: Tue, 02 Aug 2011 14:59:35 -0700
-Message-ID: <7v1ux3eapk.fsf@alter.siamese.dyndns.org>
-References: <20110731062055.GB14384@sigill.intra.peff.net>
- <1312163561-77072-1-git-send-email-allan.caffee@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] commit: write out cache-tree information
+Date: Wed, 3 Aug 2011 00:01:53 +0200
+Message-ID: <201108030001.53476.trast@student.ethz.ch>
+References: <9f5e031045b55c4738de8bc9aae290827e128cd3.1312302862.git.trast@student.ethz.ch> <7vmxfrel63.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Allan Caffee <allan.caffee@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 02 23:59:54 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>,
+	Carlos =?iso-8859-1?q?Mart=EDn_Nieto?= <cmn@elego.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 03 00:02:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QoN09-0004dQ-KM
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 23:59:50 +0200
+	id 1QoN2U-0005vl-3p
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 00:02:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755525Ab1HBV7l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Aug 2011 17:59:41 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44321 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755415Ab1HBV7j (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Aug 2011 17:59:39 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BD78A4E0E;
-	Tue,  2 Aug 2011 17:59:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=F3RaWF6VyKOubDMzjI4mcLuLims=; b=DBGLZg
-	JatVyaQ8IrsI5go/xwPwni01ztE8OmtZP06HNC36L/AJdgP9/t0tOTzWhrRERX+S
-	dub7ecmoFpEuOdy3l8de+tcgvqEEELY0EHDfTf5gV0jn+tCy3i4Dgahvn28s+nQX
-	KkRuEPEvu3HCgexp0m4HCAmXyQ/56t3Gv5vuc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tPnH3YNildOSv8Clf8H0jlh34A2Iq/wZ
-	H6ktygsuP09+jUIjnGlYEhPVpVfWsMYRnyuE78f1BTBSw9au8TAvF7kgQTHpOJlZ
-	PcNADmdlRZleltm96ysR5tKfC1fkwAtASXOOFGY5JJeOZPsFkGPDyMbUDWI/uJ5G
-	Zf75DmMcOI0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B39CD4E0D;
-	Tue,  2 Aug 2011 17:59:38 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 189324E0C; Tue,  2 Aug 2011
- 17:59:37 -0400 (EDT)
-In-Reply-To: <1312163561-77072-1-git-send-email-allan.caffee@gmail.com>
- (Allan Caffee's message of "Sun, 31 Jul 2011 21:52:41 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B749595E-BD52-11E0-8A78-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755384Ab1HBWB5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Aug 2011 18:01:57 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:16281 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755274Ab1HBWBz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2011 18:01:55 -0400
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.289.1; Wed, 3 Aug
+ 2011 00:01:50 +0200
+Received: from thomas.inf.ethz.ch (188.155.176.28) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.289.1; Wed, 3 Aug
+ 2011 00:01:53 +0200
+User-Agent: KMail/1.13.7 (Linux/3.0.0-39-desktop; KDE/4.6.5; x86_64; ; )
+In-Reply-To: <7vmxfrel63.fsf@alter.siamese.dyndns.org>
+X-Originating-IP: [188.155.176.28]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178515>
 
-Thanks.
+Junio C Hamano wrote:
+> <trast@student.ethz.ch> writes:
+>
+> > From: Thomas Rast <trast@student.ethz.ch>
+> >
+> > While write-tree has code to write out the cache-tree information
+> > (since we have to compute it anyway if the cache is stale), commit
+> > lost this capability when it became a builtin and moved away from
+> > using write-tree.
+>
+> Earlier the code read from the index, made sure that it is not unmerged by
+> running cache_tere_update(), before running prepare-commit-msg hook. The
+> hook used to see the index that was read in this codepath which is the
+> same as what pre-commit left us.
+>
+> Why run an extra I/O here? The index file could be quite large, and I do
+> not want people to writing it out without good reason.
 
-Here is a minor fix-up on top, that can be squashed in a re-roll (if you
-plan to do one).
+Ok, so let's run some numbers.  With the first test script below I'm
+seeing:
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 792af76..9f63067 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -24,7 +24,6 @@ static int longformat;
- static int abbrev = -1; /* unspecified */
- static int max_candidates = 10;
- static struct hash_table names;
--static struct lock_file index_lock; /* real index */
- static int have_util;
- static const char *pattern;
- static int always;
-@@ -400,7 +399,6 @@ static void describe(const char *arg, int last_one)
- int cmd_describe(int argc, const char **argv, const char *prefix)
- {
- 	int contains = 0;
--	int fd;
- 	struct option options[] = {
- 		OPT_BOOLEAN(0, "contains",   &contains, "find the tag that comes after the commit"),
- 		OPT_BOOLEAN(0, "debug",      &debug, "debug search strategy on stderr"),
-@@ -465,13 +463,18 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 
- 	if (argc == 0) {
- 		if (dirty) {
--			read_cache();
--			refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, NULL, NULL, NULL);
-+			static struct lock_file index_lock;
-+			int fd;
-+
-+			read_cache_preload(NULL);
-+			refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED,
-+				      NULL, NULL, NULL);
- 			fd = hold_locked_index(&index_lock, 0);
- 			if (0 <= fd)
- 				update_index_if_able(&the_index, &index_lock);
- 
--			if (!cmd_diff_index(ARRAY_SIZE(diff_index_args) - 1, diff_index_args, prefix))
-+			if (!cmd_diff_index(ARRAY_SIZE(diff_index_args) - 1,
-+					    diff_index_args, prefix))
- 				dirty = NULL;
- 		}
- 		describe("HEAD", 1);
+  before patch:
+    $ time ./commit-in-large-tree.sh
+    Initialized empty Git repository in /dev/shm/commit-in-large-tree.tmp/.git/
+    6.9M    .git/index
+
+    real    1m31.607s
+    user    0m57.604s
+    sys     0m29.976s
+
+  after patch: 14% speedup
+    $ time ./commit-in-large-tree.sh
+    Initialized empty Git repository in /dev/shm/commit-in-large-tree.tmp/.git/
+    7.0M    .git/index
+
+    real    1m18.521s
+    user    0m53.430s
+    sys     0m22.138s
+
+On the other hand if you touch every file as in the second script:
+
+  before patch:
+    $ time ./commit-in-large-tree-2.sh 
+    Initialized empty Git repository in /dev/shm/commit-in-large-tree.tmp/.git/
+    6.9M    .git/index
+
+    real    1m40.910s
+    user    0m58.731s
+    sys     0m38.011s
+
+  after patch: 5% slowdown
+    $ time ./commit-in-large-tree-2.sh 
+    Initialized empty Git repository in /dev/shm/commit-in-large-tree.tmp/.git/
+    7.0M    .git/index
+
+    real    1m45.465s
+    user    1m2.329s
+    sys     0m38.849s
+
+I also ran the latter test where it only touches one file in 100
+(instead of all 1000) subdirs, and there the patch is still a speedup.
+
+So I guess it depends whether we expect users to mostly modify a small
+part or the whole tree.
+
+Regarding your other email
+
+> When we are running a partial commit, the index file you are writing back
+> is a temporary index only to build a tree object to record in the commit,
+> which we already have done, and the temporary will be discarded.
+
+that's a valid point that I need to address.
+
+
+
+-- 8< --   commit-in-large-tree.sh
+#!/bin/sh
+
+set -e
+
+git init /dev/shm/commit-in-large-tree.tmp
+cd /dev/shm/commit-in-large-tree.tmp
+for i in $(seq 1 1000); do
+    mkdir $i
+    (
+	cd $i
+	for j in $(seq 1 100); do
+	    echo $j > $j
+	done
+    )
+    git add $i
+done
+git commit -q -m initial
+du -h .git/index
+
+for i in $(seq 1 100); do
+    echo "$i changed" > $i/$i
+    git add $i/$i
+    git commit -q -m $i
+done
+
+rm -rf /dev/shm/commit-in-large-tree.tmp
+-- >8 --
+
+-- 8< --  commit-in-large-tree-2.sh
+#!/bin/sh
+
+set -e
+
+git init /dev/shm/commit-in-large-tree.tmp
+cd /dev/shm/commit-in-large-tree.tmp
+for i in $(seq 1 1000); do
+    mkdir $i
+    (
+	cd $i
+	for j in $(seq 1 100); do
+	    echo $j > $j
+	done
+    )
+    git add $i
+done
+git commit -q -m initial
+du -h .git/index
+
+for i in $(seq 1 100); do
+    for j in $(seq 1 1000); do
+	echo "$i changed" > $j/$i
+    done
+    git add -u
+    git commit -q -m $i
+done
+
+rm -rf /dev/shm/commit-in-large-tree.tmp
+-- >3 --
+
+--
+Thomas Rast
+trast@{inf,student}.ethz.ch
