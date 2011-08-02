@@ -1,61 +1,61 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [RFC] Questions for "Git User's Survey 2011"
-Date: Tue, 02 Aug 2011 20:52:57 +0200
-Message-ID: <4E384789.1000909@web.de>
-References: <201107252233.02088.jnareb@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: working prototype of orphan parent commits as datastores (was:
+ Storing additional information in commit headers)
+Date: Tue, 2 Aug 2011 12:57:08 -0600
+Message-ID: <20110802185708.GB2499@sigill.intra.peff.net>
+References: <20110801182015.GA3100@fishbowl.rw.madduck.net>
+ <20110801201301.GA17111@sigill.intra.peff.net>
+ <20110801211104.GC15401@fishbowl.rw.madduck.net>
+ <20110802035056.GB17494@sigill.intra.peff.net>
+ <20110802082810.GC29887@fishbowl.rw.madduck.net>
+ <20110802150321.GA1390@fishbowl.rw.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 02 20:53:40 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git discussion list <git@vger.kernel.org>,
+	Petr Baudis <pasky@ucw.cz>, Clemens Buchacher <drizzd@aon.at>
+To: martin f krafft <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Tue Aug 02 20:57:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QoK5w-0000Xy-Ub
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 20:53:37 +0200
+	id 1QoK9U-0002Dl-QZ
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 20:57:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754933Ab1HBSxd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Aug 2011 14:53:33 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:33270 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754878Ab1HBSxc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Aug 2011 14:53:32 -0400
-Received: from smtp03.web.de  ( [172.20.0.65])
-	by fmmailgate03.web.de (Postfix) with ESMTP id CF16D1968AC4F;
-	Tue,  2 Aug 2011 20:52:57 +0200 (CEST)
-Received: from [91.48.116.56] (helo=[192.168.178.43])
-	by smtp03.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1QoK5J-00046n-00; Tue, 02 Aug 2011 20:52:57 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:5.0) Gecko/20110624 Thunderbird/5.0
-In-Reply-To: <201107252233.02088.jnareb@gmail.com>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1+om5lk1wDlwO1YNrf+9joOnBfTqPT96uDmD0Ql
-	XWagHhKInDXmJs4glcAiLvZVxmnqtl2tcKWZxX4G4IEbdY+jhN
-	LB+ndtiikYO9rJHiDxAw==
+	id S1754959Ab1HBS5M convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Aug 2011 14:57:12 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:51714
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754943Ab1HBS5L (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2011 14:57:11 -0400
+Received: (qmail 32137 invoked by uid 107); 2 Aug 2011 18:57:44 -0000
+Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 02 Aug 2011 14:57:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Aug 2011 12:57:08 -0600
+Content-Disposition: inline
+In-Reply-To: <20110802150321.GA1390@fishbowl.rw.madduck.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178499>
 
-Am 25.07.2011 22:33, schrieb Jakub Narebski:
-> I am planning doing annual Git User's Survey, and I'd like to ask for
-> feedback.
+On Tue, Aug 02, 2011 at 05:03:21PM +0200, martin f krafft wrote:
 
-I'd appreciate to get some user feedback on submodules. What about this:
+>   tig output now:
+>     2011-08-02 16:52 martin f. krafft   M=E2=94=80=E2=94=90 [master] =
+two
+>     2011-08-02 16:54 TopGit             =E2=94=82 I TopGit data node
+>     2011-08-02 16:52 martin f. krafft   I one
+>     2011-08-02 16:50 martin f. krafft   M=E2=94=80=E2=94=90 [origin/m=
+aster] import first prototype
+>     2011-08-02 16:50 TopGit             =E2=94=82 I TopGit data node
+>     2011-08-02 16:48 martin f. krafft   I Initial (empty) root commit
 
+Look at "git show origin/master" here. It ends up as a combined diff.
+Which is kind of ugly.
 
-=== xx. What do you use submodules for? ===
-(multiple choice, with other)
-
- + I don't use submodules at all
-
- + to import repositories maintained by others
- + for your own (or your organization's) code shared between different projects
- + to separate large and/or many files for performance reasons
- + to separate data which you don't want (or aren't allowed) to disclose
-
- + Other, please specify
+-Peff
