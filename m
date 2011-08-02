@@ -1,83 +1,66 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [RFC/ PATCH] revert: Allow arbitrary sequencer instructions
-Date: Tue, 2 Aug 2011 09:52:44 +0200
-Message-ID: <CAP8UFD367s-0gSbmX7N3Ddakc1cZxWb_eU-+Uy5Vr0gbY8m8SA@mail.gmail.com>
-References: <1312260884-5087-1-git-send-email-artagnon@gmail.com>
-	<1312260884-5087-2-git-send-email-artagnon@gmail.com>
+From: Ilya Basin <basinilya@gmail.com>
+Subject: filenames in repo are in CP1251; I have linux and UTF-8
+Date: Tue, 2 Aug 2011 11:54:14 +0400
+Message-ID: <1167098359.20110802115414@gmail.com>
+Reply-To: Ilya Basin <basinilya@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 02 09:52:50 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 02 09:54:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qo9mT-000384-TZ
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 09:52:50 +0200
+	id 1Qo9nz-0003ca-Ir
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 09:54:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752085Ab1HBHwq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Aug 2011 03:52:46 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:33573 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751946Ab1HBHwo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Aug 2011 03:52:44 -0400
-Received: by yia27 with SMTP id 27so3915046yia.19
-        for <git@vger.kernel.org>; Tue, 02 Aug 2011 00:52:44 -0700 (PDT)
+	id S1752174Ab1HBHyU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Aug 2011 03:54:20 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:57826 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751946Ab1HBHyS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2011 03:54:18 -0400
+Received: by fxh19 with SMTP id 19so5361689fxh.19
+        for <git@vger.kernel.org>; Tue, 02 Aug 2011 00:54:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=bAHu/Bhjzf/mL15rJ26ULsdpQhbBoqrXgyxJ5bBP/yE=;
-        b=D9wPOIO+pzYC+QkB890YHv/GseKNGyB/fIpxzIqCAt9sGCdZwDnns7ipWVr3tT4eQF
-         Apg21B1xn9UodziRlOVZmqLZTNSzhqw5ooGIy5SToI1bA55waqCdtRNA5qRai2Mx9qoF
-         4W71G/PBYVHpqoxfyajLN1wRq8lw8gljwfGUE=
-Received: by 10.146.186.34 with SMTP id j34mr3691400yaf.16.1312271564167; Tue,
- 02 Aug 2011 00:52:44 -0700 (PDT)
-Received: by 10.147.35.16 with HTTP; Tue, 2 Aug 2011 00:52:44 -0700 (PDT)
-In-Reply-To: <1312260884-5087-2-git-send-email-artagnon@gmail.com>
+        h=date:from:x-mailer:reply-to:x-priority:message-id:to:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=pEy4lkp7QeypiP17twq3UU5hPFrWqJH+ycnUMbaQ6Oo=;
+        b=uh4Ztk7VDK+zKXZNogiyhG38O5/022hOCerQzOhYwiozoKW5ppUApxPJYCHnyHWf5H
+         n5FVrTt1LD2rCv1dSUC0DU8LnqcJ/fKOQQnlT2CyBHzXR8dXu8qw8kKURUu9/3XglKWB
+         S8TuHtOWUemvyQ5mzDIAy4n4i801Lc3cCvLWE=
+Received: by 10.204.0.72 with SMTP id 8mr1563084bka.33.1312271657617;
+        Tue, 02 Aug 2011 00:54:17 -0700 (PDT)
+Received: from basin.reksoft.ru (gate.reksoft.ru [188.64.144.36])
+        by mx.google.com with ESMTPS id n11sm1524148bkd.14.2011.08.02.00.54.16
+        (version=SSLv3 cipher=OTHER);
+        Tue, 02 Aug 2011 00:54:16 -0700 (PDT)
+X-Mailer: Voyager (v3.99.4) Professional
+X-Priority: 3 (Normal)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178448>
 
-Hi Ram,
+Hi list! Most of our developers use msysgit which stores filenames in
+CP1251 encoding. Two of us use cygwin and linux.
 
-On Tue, Aug 2, 2011 at 6:54 AM, Ramkumar Ramachandra <artagnon@gmail.co=
-m> wrote:
->
-> =A0 =A0 =A0 =A0if (get_sha1(sha1_abbrev, commit_sha1) < 0)
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0return NULL;
->
-> - =A0 =A0 =A0 return lookup_commit_reference(commit_sha1);
-> + =A0 =A0 =A0 commit =3D lookup_commit_reference(commit_sha1);
-> + =A0 =A0 =A0 if (commit) {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 insn =3D xmalloc(sizeof(struct replay_i=
-nsn));
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 insn->commit =3D commit;
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 insn->action =3D action;
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 return insn;
-> + =A0 =A0 =A0 }
-> + =A0 =A0 =A0 return NULL;
-> =A0}
+When checkout on both linux and cygwin, Russian filenames are garbled.
 
-I'd suggest:
+On Cygwin it even worse, because the conversion of invalid UTF-8 chars
+to Unicode, made by Cygwin is irreversible, causing git to miss
+the files it've just checked out. Workaround for Cygwin is to change
+LANG from "C.UTF-8" to "ru_RU.CP1251". It fixes filenames, but brakes
+everything else: log (fixed by i18n.logOutputEncoding), status, show,
+diff
 
-       commit =3D lookup_commit_reference(commit_sha1);
-       if (!commit)
-               return NULL;
+Unlike on Cygwin, LANG has no effect for git filenames on Linux. Good
+thing, there's no conversion to unicode, so files aren't lost at
+checkout.
 
-       insn =3D xmalloc(sizeof(struct replay_insn));
-       insn->commit =3D commit;
-       insn->action =3D action;
-       return insn;
-
-Thanks,
-Christian.
+Question: is there a way to tell git on Linux to use UTF-8 filenames
+for the working tree, while storing them in CP1251?
