@@ -1,75 +1,70 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Storing additional information in commit headers
-Date: Tue, 02 Aug 2011 15:53:12 +0200
-Message-ID: <4E380148.7010701@alum.mit.edu>
-References: <20110801182015.GA3100@fishbowl.rw.madduck.net>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [PATCH v13 5/8] bisect: introduce --no-checkout support into porcelain.
+Date: Wed, 3 Aug 2011 00:41:13 +1000
+Message-ID: <CAH3AnrrkAeN3BgnnFBsbzh=37tC6f6aRACgk94wxW85qFQpfVw@mail.gmail.com>
+References: <1312284545-2426-1-git-send-email-jon.seymour@gmail.com>
+	<1312284545-2426-6-git-send-email-jon.seymour@gmail.com>
+	<CAP8UFD3XzUjxiz6QQzyTOYzfiWrF4ckiv0h+gvi7YuZkma6yiw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git discussion list <git@vger.kernel.org>,
-	Petr Baudis <pasky@ucw.cz>, Clemens Buchacher <drizzd@aon.at>
-To: martin f krafft <madduck@madduck.net>
-X-From: git-owner@vger.kernel.org Tue Aug 02 15:53:27 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, chriscool@tuxfamily.org, gitster@pobox.com,
+	j6t@kdbg.org, jnareb@gmail.com
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 02 16:41:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QoFPS-0004Sc-QA
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 15:53:27 +0200
+	id 1QoG9n-0002w5-MM
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 16:41:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754064Ab1HBNxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Aug 2011 09:53:23 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:59481 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752096Ab1HBNxV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Aug 2011 09:53:21 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p72DrChW032048
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 2 Aug 2011 15:53:12 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.18) Gecko/20110617 Lightning/1.0b2 Thunderbird/3.1.11
-In-Reply-To: <20110801182015.GA3100@fishbowl.rw.madduck.net>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1753190Ab1HBOlP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Aug 2011 10:41:15 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:42120 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752793Ab1HBOlO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Aug 2011 10:41:14 -0400
+Received: by vxh35 with SMTP id 35so5031980vxh.19
+        for <git@vger.kernel.org>; Tue, 02 Aug 2011 07:41:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=FOBigEuYNcW90VjB0eMBDH+aRCEMtFIL+U2JO2i4Rts=;
+        b=x3o/WpaipOUybO5BNUtVvEMGsF93oGMGbqyr2ow6UvWyurm8PiuR91dCPzpV09A95k
+         AY+1tJNakFle8dUjCKDUs8muGqUjKKqhEOOJNLbwu76l/LXRJkK8Kt8bJjYD4Y9Wk7e6
+         7HQysi1tLn4z29iVx9n8eZspsdBJWrM2jEDYQ=
+Received: by 10.52.93.113 with SMTP id ct17mr2488804vdb.231.1312296073268;
+ Tue, 02 Aug 2011 07:41:13 -0700 (PDT)
+Received: by 10.52.183.39 with HTTP; Tue, 2 Aug 2011 07:41:13 -0700 (PDT)
+In-Reply-To: <CAP8UFD3XzUjxiz6QQzyTOYzfiWrF4ckiv0h+gvi7YuZkma6yiw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178470>
 
-On 08/01/2011 08:20 PM, martin f krafft wrote:
-> Are there any strong reasons against my use of commit headers for
-> specific, well-defined purposes in contained use-cases? E.g. are
-> there tools known to only copy "known" headers, which could
-> potentially break my assumptions?
+On Tue, Aug 2, 2011 at 10:04 PM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> On Tue, Aug 2, 2011 at 1:29 PM, Jon Seymour <jon.seymour@gmail.com> w=
+rote:
+>> @@ -34,6 +34,8 @@ require_work_tree
+>> =C2=A0_x40=3D'[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
+>> =C2=A0_x40=3D"$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
+>>
+>> +BISECT_MODE=3D$(test -f "$GIT_DIR/BISECT_MODE" && cat "$GIT_DIR/BIS=
+ECT_MODE")
+>
+> Could you put this line just where it is needed, that is in
+> bisect_next() and bisect_reset()?
+>
 
-Before you store important information in a git-internal data structure,
-please consider:
+Ultimately, it is also needed in paths that call bisect_state(), such
+as bisect_run() and bisect_skip() so I am not keen to do this.
 
-* Some of your developers might prefer using another DVCS (e.g.,
-Mercurial via hg-git) and they will not be able to see the information
-at all
+If I was to do this, I'd prefer to change uses of $BISECT_MODE with a
+call to a function bisect_mode() that does the same thing.
 
-* Some day the main project might want to (god forbid!) switch to a
-successor to git, and your extra information might be difficult to migrate.
-
-* Somebody might want to work with your project from a tarball rather
-than having to install and use git.
-
-Therefore, I recommend a strong bias towards storing information in as
-transparent, non-system-specific a way as possible.  Metadata and
-scripts stored within the file tree part of the repository are typically
-a lot easier to work with and more transparent than git-specific hacks.
-
-That being said, I haven't understood your application well enough to
-know whether these biases might be trumped by convenience in your
-particular situation.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+jon.
