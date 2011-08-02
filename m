@@ -1,113 +1,165 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v13 3/8] bisect: add tests to document expected behaviour in presence of broken trees.
-Date: Tue,  2 Aug 2011 21:29:00 +1000
-Message-ID: <1312284545-2426-4-git-send-email-jon.seymour@gmail.com>
+Subject: [PATCH v13 5/8] bisect: introduce --no-checkout support into porcelain.
+Date: Tue,  2 Aug 2011 21:29:02 +1000
+Message-ID: <1312284545-2426-6-git-send-email-jon.seymour@gmail.com>
 References: <1312284545-2426-1-git-send-email-jon.seymour@gmail.com>
 Cc: chriscool@tuxfamily.org, gitster@pobox.com, j6t@kdbg.org,
 	jnareb@gmail.com, Jon Seymour <jon.seymour@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 02 13:30:31 2011
+X-From: git-owner@vger.kernel.org Tue Aug 02 13:30:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QoDB8-0004bt-8k
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 13:30:30 +0200
+	id 1QoDBA-0004bt-2g
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 13:30:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754004Ab1HBLaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Aug 2011 07:30:09 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:36827 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754002Ab1HBLaF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Aug 2011 07:30:05 -0400
-Received: by ywn13 with SMTP id 13so1252172ywn.19
-        for <git@vger.kernel.org>; Tue, 02 Aug 2011 04:30:05 -0700 (PDT)
+	id S1754010Ab1HBLaR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Aug 2011 07:30:17 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:34372 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754002Ab1HBLaP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2011 07:30:15 -0400
+Received: by yia27 with SMTP id 27so3993103yia.19
+        for <git@vger.kernel.org>; Tue, 02 Aug 2011 04:30:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=E7wZErmLdCQ51j72LDAd5isB60FsZ5Gdk0YycLgs8xM=;
-        b=qmo8+GYPWVK/76woUOJH/Nm+jOuSI+oBVIERLV4kFn+Pa6HKoG1cLE767uj/mSJ/Jt
-         MRJu7cQJmbnv6kBU9lahzDEefVha9+oE8YPJzoBkJDHGnBvd/URCxk+KV+ZuKL2PNYi1
-         HmsrXbaGTn7dLRYUhHUAUOWj87rmLhWwPfsM4=
-Received: by 10.142.213.17 with SMTP id l17mr3532523wfg.206.1312284604860;
-        Tue, 02 Aug 2011 04:30:04 -0700 (PDT)
+        bh=AyiYujq/c2bp3KMEaFHd46MIE+7TgsxG3KJl+FzuF7s=;
+        b=nn4XO4vtH4TRlXdCoxFrBY80ohXHctizgVBCIvM6VotubX8/irXJRWSgfd961sffYp
+         SDuUt4y0M5LnQ9W3I8EsOu3XShld8NBQXmW+/M0fwUjOpwDaqMF71wQ0xo9aVzS1rTHj
+         4hIpYmXr5VL+UXmlE2w4Hrf1qt6N3arnogqrs=
+Received: by 10.142.149.18 with SMTP id w18mr3833961wfd.162.1312284614084;
+        Tue, 02 Aug 2011 04:30:14 -0700 (PDT)
 Received: from localhost.localdomain ([120.16.93.94])
-        by mx.google.com with ESMTPS id t20sm3715018wfe.12.2011.08.02.04.30.00
+        by mx.google.com with ESMTPS id t20sm3715018wfe.12.2011.08.02.04.30.09
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 02 Aug 2011 04:30:04 -0700 (PDT)
+        Tue, 02 Aug 2011 04:30:13 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6.353.g3461
 In-Reply-To: <1312284545-2426-1-git-send-email-jon.seymour@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178455>
 
-If the repo is broken, we expect bisect to fail.
+git-bisect can now perform bisection of a history without performing
+a checkout at each stage of the bisection process. Instead, HEAD is updated.
 
+One use-case for this function is allow git bisect to be used with
+damaged repositories where git checkout would fail because the tree
+referenced by the commit is damaged.
+
+It can also be used in other cases where actual checkout of the tree
+is not required to progress the bisection.
+
+Improved-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 ---
- t/t6030-bisect-porcelain.sh |   48 +++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 48 insertions(+), 0 deletions(-)
+ git-bisect.sh |   32 +++++++++++++++++++++++++-------
+ 1 files changed, 25 insertions(+), 7 deletions(-)
 
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index b3d1b14..9ae2de8 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -581,5 +581,53 @@ test_expect_success 'erroring out when using bad path parameters' '
- '
+diff --git a/git-bisect.sh b/git-bisect.sh
+index a44ffe1..5f3c2c4 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -3,7 +3,7 @@
+ USAGE='[help|start|bad|good|skip|next|reset|visualize|replay|log|run]'
+ LONG_USAGE='git bisect help
+         print this long help message.
+-git bisect start [<bad> [<good>...]] [--] [<pathspec>...]
++git bisect start [--no-checkout] [<bad> [<good>...]] [--] [<pathspec>...]
+         reset bisect state and start bisection.
+ git bisect bad [<rev>]
+         mark <rev> a known-bad revision.
+@@ -34,6 +34,8 @@ require_work_tree
+ _x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
+ _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
  
- #
-+# This creates a broken branch which cannot be checked out because
-+# the tree created has been deleted.
- #
-+# H1-H2-H3-H4-H5-H6-H7  <--other
-+#            \
-+#             S5-S6'-S7'-S8'-S9  <--broken
-+#
-+# Commits marked with ' have a missing tree.
-+#
-+test_expect_success 'broken branch creation' '
-+	git bisect reset &&
-+	git checkout -b broken $HASH4 &&
-+	git tag BROKEN_HASH4 $HASH4 &&
-+	add_line_into_file "5(broken): first line on a broken branch" hello2 &&
-+	git tag BROKEN_HASH5 &&
-+	mkdir missing &&
-+	:> missing/MISSING &&
-+	git add missing/MISSING &&
-+	git commit -m "6(broken): Added file that will be deleted"
-+	git tag BROKEN_HASH6 &&
-+	add_line_into_file "7(broken): second line on a broken branch" hello2 &&
-+	git tag BROKEN_HASH7 &&
-+	add_line_into_file "8(broken): third line on a broken branch" hello2 &&
-+	git tag BROKEN_HASH8 &&
-+	git rm missing/MISSING &&
-+	git commit -m "9(broken): Remove missing file"
-+	git tag BROKEN_HASH9 &&
-+	rm .git/objects/39/f7e61a724187ab767d2e08442d9b6b9dab587d
-+'
++BISECT_MODE=$(test -f "$GIT_DIR/BISECT_MODE" && cat "$GIT_DIR/BISECT_MODE")
 +
-+echo "" > expected.ok
-+cat > expected.missing-tree.default <<EOF
-+fatal: unable to read tree 39f7e61a724187ab767d2e08442d9b6b9dab587d
-+EOF
-+
-+test_expect_success 'bisect fails if tree is broken on start commit' '
-+	git bisect reset &&
-+	test_must_fail git bisect start BROKEN_HASH7 BROKEN_HASH4 2>error.txt &&
-+	test_cmp expected.missing-tree.default error.txt
-+'
-+
-+test_expect_success 'bisect fails if tree is broken on trial commit' '
-+	git bisect reset &&
-+	test_must_fail git bisect start BROKEN_HASH9 BROKEN_HASH4 2>error.txt &&
-+	git reset --hard broken &&
-+	git checkout broken &&
-+	test_cmp expected.missing-tree.default error.txt
-+'
-+
- test_done
+ bisect_autostart() {
+ 	test -s "$GIT_DIR/BISECT_START" || {
+ 		(
+@@ -69,6 +71,7 @@ bisect_start() {
+ 	orig_args=$(git rev-parse --sq-quote "$@")
+ 	bad_seen=0
+ 	eval=''
++	BISECT_MODE=checkout
+ 	while [ $# -gt 0 ]; do
+ 	    arg="$1"
+ 	    case "$arg" in
+@@ -76,6 +79,11 @@ bisect_start() {
+ 		shift
+ 		break
+ 		;;
++	    --no-checkout)
++		BISECT_MODE=update-ref;
++		shift ;;
++	    --*)
++		die "$(eval_gettext "unrecognised option: '\$arg'")" ;;
+ 	    *)
+ 		rev=$(git rev-parse -q --verify "$arg^{commit}") || {
+ 		    test $has_double_dash -eq 1 &&
+@@ -107,7 +115,11 @@ bisect_start() {
+ 	then
+ 		# Reset to the rev from where we started.
+ 		start_head=$(cat "$GIT_DIR/BISECT_START")
+-		git checkout "$start_head" -- || exit
++		if test "$BISECT_MODE" = "update-ref"; then
++		    git update-ref --no-deref HEAD "$start_head"
++		else
++		    git checkout "$start_head" --
++		fi
+ 	else
+ 		# Get rev from where we start.
+ 		case "$head" in
+@@ -144,7 +156,8 @@ bisect_start() {
+ 	# Write new start state.
+ 	#
+ 	echo "$start_head" >"$GIT_DIR/BISECT_START" &&
+-	git rev-parse --sq-quote "$@" >"$GIT_DIR/BISECT_NAMES" &&
++	git rev-parse --sq-quote "$@" >"$GIT_DIR/BISECT_NAMES"
++	echo "$BISECT_MODE" > "$GIT_DIR/BISECT_MODE" &&
+ 	eval "$eval true" &&
+ 	echo "git bisect start$orig_args" >>"$GIT_DIR/BISECT_LOG" || exit
+ 	#
+@@ -291,7 +304,7 @@ bisect_next() {
+ 	bisect_next_check good
+ 
+ 	# Perform all bisection computation, display and checkout
+-	git bisect--helper --next-all
++	git bisect--helper --next-all ${BISECT_MODE:+--bisect-mode=}${BISECT_MODE}
+ 	res=$?
+ 
+         # Check if we should exit because bisection is finished
+@@ -340,11 +353,15 @@ bisect_reset() {
+ 	*)
+ 	    usage ;;
+ 	esac
+-	if git checkout "$branch" -- ; then
+-		bisect_clean_state
++	if test "$BISECT_MODE" = "update-ref"; then
++		git symbolic-ref HEAD $(git rev-parse --symbolic-full-name "${branch}")
+ 	else
+-		die "$(eval_gettext "Could not check out original HEAD '\$branch'.
++		if git checkout "$branch" --; then
++			bisect_clean_state
++		else
++			die "$(eval_gettext "Could not check out original HEAD '\$branch'.
+ Try 'git bisect reset <commit>'.")"
++		fi
+ 	fi
+ }
+ 
+@@ -360,6 +377,7 @@ bisect_clean_state() {
+ 	rm -f "$GIT_DIR/BISECT_LOG" &&
+ 	rm -f "$GIT_DIR/BISECT_NAMES" &&
+ 	rm -f "$GIT_DIR/BISECT_RUN" &&
++	rm -f "$GIT_DIR/BISECT_MODE" &&
+ 	# Cleanup head-name if it got left by an old version of git-bisect
+ 	rm -f "$GIT_DIR/head-name" &&
+ 
 -- 
 1.7.6.353.g3461
