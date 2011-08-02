@@ -1,113 +1,215 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v14 3/8] bisect: add tests to document expected behaviour in presence of broken trees.
-Date: Wed,  3 Aug 2011 08:15:57 +1000
-Message-ID: <1312323362-20096-4-git-send-email-jon.seymour@gmail.com>
+Subject: [PATCH v14 4/8] bisect: introduce support for --no-checkout option.
+Date: Wed,  3 Aug 2011 08:15:58 +1000
+Message-ID: <1312323362-20096-5-git-send-email-jon.seymour@gmail.com>
 References: <1312323362-20096-1-git-send-email-jon.seymour@gmail.com>
 Cc: chriscool@tuxfamily.org, gitster@pobox.com, j6t@kdbg.org,
 	jnareb@gmail.com, Jon Seymour <jon.seymour@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 03 00:16:57 2011
+X-From: git-owner@vger.kernel.org Wed Aug 03 00:16:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QoNGi-000433-T4
+	id 1QoNGj-000433-FZ
 	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 00:16:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755748Ab1HBWQf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Aug 2011 18:16:35 -0400
+	id S1755754Ab1HBWQk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Aug 2011 18:16:40 -0400
 Received: from mail-pz0-f42.google.com ([209.85.210.42]:47511 "EHLO
 	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755731Ab1HBWQa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Aug 2011 18:16:30 -0400
+	with ESMTP id S1755745Ab1HBWQf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2011 18:16:35 -0400
 Received: by mail-pz0-f42.google.com with SMTP id 37so375496pzk.1
-        for <git@vger.kernel.org>; Tue, 02 Aug 2011 15:16:30 -0700 (PDT)
+        for <git@vger.kernel.org>; Tue, 02 Aug 2011 15:16:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=ggcTVUT67e7V/BGXqaEgkvWdSJ7jT4l6eUmuA49Fm9Q=;
-        b=xqmuyfrYPisY9AMGWIpwaC/freOO5oXyFGXK7W27FE2pBQUGUFyOQBmRyoPT6swo5S
-         67GVxWVwthM1eVqYaFHA6R3WTO2jcg6a/tf/hwmv0ei5m5tQb1lr1leU6y/sryO9fWgu
-         dTdk9aQhsiASkWmEc/wi0D27iD/+SiwehytPA=
-Received: by 10.68.17.195 with SMTP id q3mr10215pbd.255.1312323390165;
-        Tue, 02 Aug 2011 15:16:30 -0700 (PDT)
+        bh=9tJAZTV/TOGS/Tv5qSK/9kYHcGLx52VkGsZeTh9MWPU=;
+        b=gyFci9uHvUNCV0CfIKKuhtsbuWNzFysChESMi5QYuTcg6Bs0UaFwAJHewVTWdV27Gr
+         e2keJq7K2Id4gP5bKjYMNdvM0mxxME0kz2eTZSbD40q+zPA16iaf8l54wnyv9VhyXyZW
+         sJke2AH3m1L8jiotCwF7tJu+EGVTWk2KwuAks=
+Received: by 10.68.30.2 with SMTP id o2mr515971pbh.414.1312323394423;
+        Tue, 02 Aug 2011 15:16:34 -0700 (PDT)
 Received: from localhost.localdomain ([120.16.93.94])
-        by mx.google.com with ESMTPS id d3sm269987pbg.44.2011.08.02.15.16.25
+        by mx.google.com with ESMTPS id d3sm269987pbg.44.2011.08.02.15.16.30
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 02 Aug 2011 15:16:29 -0700 (PDT)
+        Tue, 02 Aug 2011 15:16:33 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6.353.gb3ae7e
 In-Reply-To: <1312323362-20096-1-git-send-email-jon.seymour@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178521>
 
-If the repo is broken, we expect bisect to fail.
+If --no-checkout is specified, then the bisection process uses:
 
+	git update-ref --no-deref HEAD <trial>
+
+at each trial instead of:
+
+	git checkout <trial>
+
+Improved-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 ---
- t/t6030-bisect-porcelain.sh |   48 +++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 48 insertions(+), 0 deletions(-)
+ bisect.c                 |   33 ++++++++++++++++++++++-----------
+ bisect.h                 |    2 +-
+ builtin/bisect--helper.c |    7 +++++--
+ 3 files changed, 28 insertions(+), 14 deletions(-)
 
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index b3d1b14..9ae2de8 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -581,5 +581,53 @@ test_expect_success 'erroring out when using bad path parameters' '
- '
+diff --git a/bisect.c b/bisect.c
+index dd7e8ed..0427117 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -24,6 +24,7 @@ struct argv_array {
  
- #
-+# This creates a broken branch which cannot be checked out because
-+# the tree created has been deleted.
- #
-+# H1-H2-H3-H4-H5-H6-H7  <--other
-+#            \
-+#             S5-S6'-S7'-S8'-S9  <--broken
-+#
-+# Commits marked with ' have a missing tree.
-+#
-+test_expect_success 'broken branch creation' '
-+	git bisect reset &&
-+	git checkout -b broken $HASH4 &&
-+	git tag BROKEN_HASH4 $HASH4 &&
-+	add_line_into_file "5(broken): first line on a broken branch" hello2 &&
-+	git tag BROKEN_HASH5 &&
-+	mkdir missing &&
-+	:> missing/MISSING &&
-+	git add missing/MISSING &&
-+	git commit -m "6(broken): Added file that will be deleted"
-+	git tag BROKEN_HASH6 &&
-+	add_line_into_file "7(broken): second line on a broken branch" hello2 &&
-+	git tag BROKEN_HASH7 &&
-+	add_line_into_file "8(broken): third line on a broken branch" hello2 &&
-+	git tag BROKEN_HASH8 &&
-+	git rm missing/MISSING &&
-+	git commit -m "9(broken): Remove missing file"
-+	git tag BROKEN_HASH9 &&
-+	rm .git/objects/39/f7e61a724187ab767d2e08442d9b6b9dab587d
-+'
-+
-+echo "" > expected.ok
-+cat > expected.missing-tree.default <<EOF
-+fatal: unable to read tree 39f7e61a724187ab767d2e08442d9b6b9dab587d
-+EOF
-+
-+test_expect_success 'bisect fails if tree is broken on start commit' '
-+	git bisect reset &&
-+	test_must_fail git bisect start BROKEN_HASH7 BROKEN_HASH4 2>error.txt &&
-+	test_cmp expected.missing-tree.default error.txt
-+'
-+
-+test_expect_success 'bisect fails if tree is broken on trial commit' '
-+	git bisect reset &&
-+	test_must_fail git bisect start BROKEN_HASH9 BROKEN_HASH4 2>error.txt &&
-+	git reset --hard broken &&
-+	git checkout broken &&
-+	test_cmp expected.missing-tree.default error.txt
-+'
-+
- test_done
+ static const char *argv_checkout[] = {"checkout", "-q", NULL, "--", NULL};
+ static const char *argv_show_branch[] = {"show-branch", NULL, NULL};
++static const char *argv_update_ref[] = {"update-ref", "--no-deref", "HEAD", NULL, NULL};
+ 
+ /* bits #0-15 in revision.h */
+ 
+@@ -707,16 +708,23 @@ static void mark_expected_rev(char *bisect_rev_hex)
+ 		die("closing file %s: %s", filename, strerror(errno));
+ }
+ 
+-static int bisect_checkout(char *bisect_rev_hex)
++static int bisect_checkout(char *bisect_rev_hex, int no_checkout)
+ {
+ 	int res;
+ 
+ 	mark_expected_rev(bisect_rev_hex);
+ 
+ 	argv_checkout[2] = bisect_rev_hex;
+-	res = run_command_v_opt(argv_checkout, RUN_GIT_CMD);
+-	if (res)
+-		exit(res);
++	if (no_checkout) {
++		argv_update_ref[3] = bisect_rev_hex;
++		if (run_command_v_opt(argv_update_ref, RUN_GIT_CMD))
++			die("update-ref --no-deref HEAD failed on %s",
++			    bisect_rev_hex);
++	} else {
++		res = run_command_v_opt(argv_checkout, RUN_GIT_CMD);
++		if (res)
++			exit(res);
++	}
+ 
+ 	argv_show_branch[1] = bisect_rev_hex;
+ 	return run_command_v_opt(argv_show_branch, RUN_GIT_CMD);
+@@ -788,7 +796,7 @@ static void handle_skipped_merge_base(const unsigned char *mb)
+  * - If one is "skipped", we can't know but we should warn.
+  * - If we don't know, we should check it out and ask the user to test.
+  */
+-static void check_merge_bases(void)
++static void check_merge_bases(int no_checkout)
+ {
+ 	struct commit_list *result;
+ 	int rev_nr;
+@@ -806,7 +814,7 @@ static void check_merge_bases(void)
+ 			handle_skipped_merge_base(mb);
+ 		} else {
+ 			printf("Bisecting: a merge base must be tested\n");
+-			exit(bisect_checkout(sha1_to_hex(mb)));
++			exit(bisect_checkout(sha1_to_hex(mb), no_checkout));
+ 		}
+ 	}
+ 
+@@ -849,7 +857,7 @@ static int check_ancestors(const char *prefix)
+  * If a merge base must be tested by the user, its source code will be
+  * checked out to be tested by the user and we will exit.
+  */
+-static void check_good_are_ancestors_of_bad(const char *prefix)
++static void check_good_are_ancestors_of_bad(const char *prefix, int no_checkout)
+ {
+ 	const char *filename = git_path("BISECT_ANCESTORS_OK");
+ 	struct stat st;
+@@ -868,7 +876,7 @@ static void check_good_are_ancestors_of_bad(const char *prefix)
+ 
+ 	/* Check if all good revs are ancestor of the bad rev. */
+ 	if (check_ancestors(prefix))
+-		check_merge_bases();
++		check_merge_bases(no_checkout);
+ 
+ 	/* Create file BISECT_ANCESTORS_OK. */
+ 	fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
+@@ -908,8 +916,11 @@ static void show_diff_tree(const char *prefix, struct commit *commit)
+  * We use the convention that exiting with an exit code 10 means that
+  * the bisection process finished successfully.
+  * In this case the calling shell script should exit 0.
++ *
++ * If no_checkout is non-zero, the bisection process does not
++ * checkout the trial commit but instead simply updates HEAD.
+  */
+-int bisect_next_all(const char *prefix)
++int bisect_next_all(const char *prefix, int no_checkout)
+ {
+ 	struct rev_info revs;
+ 	struct commit_list *tried;
+@@ -920,7 +931,7 @@ int bisect_next_all(const char *prefix)
+ 	if (read_bisect_refs())
+ 		die("reading bisect refs failed");
+ 
+-	check_good_are_ancestors_of_bad(prefix);
++	check_good_are_ancestors_of_bad(prefix, no_checkout);
+ 
+ 	bisect_rev_setup(&revs, prefix, "%s", "^%s", 1);
+ 	revs.limited = 1;
+@@ -966,6 +977,6 @@ int bisect_next_all(const char *prefix)
+ 	       "(roughly %d step%s)\n", nr, (nr == 1 ? "" : "s"),
+ 	       steps, (steps == 1 ? "" : "s"));
+ 
+-	return bisect_checkout(bisect_rev_hex);
++	return bisect_checkout(bisect_rev_hex, no_checkout);
+ }
+ 
+diff --git a/bisect.h b/bisect.h
+index 0862ce5..22f2e4d 100644
+--- a/bisect.h
++++ b/bisect.h
+@@ -27,7 +27,7 @@ struct rev_list_info {
+ 	const char *header_prefix;
+ };
+ 
+-extern int bisect_next_all(const char *prefix);
++extern int bisect_next_all(const char *prefix, int no_checkout);
+ 
+ extern int estimate_bisect_steps(int all);
+ 
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 5b22639..d96a193 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -4,16 +4,19 @@
+ #include "bisect.h"
+ 
+ static const char * const git_bisect_helper_usage[] = {
+-	"git bisect--helper --next-all",
++	"git bisect--helper --next-all [--no-checkout]",
+ 	NULL
+ };
+ 
+ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	int next_all = 0;
++	int no_checkout = 0;
+ 	struct option options[] = {
+ 		OPT_BOOLEAN(0, "next-all", &next_all,
+ 			    "perform 'git bisect next'"),
++		OPT_BOOLEAN(0, "no-checkout", &no_checkout,
++			    "update HEAD instead of checking out the current commit"),
+ 		OPT_END()
+ 	};
+ 
+@@ -24,5 +27,5 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(git_bisect_helper_usage, options);
+ 
+ 	/* next-all */
+-	return bisect_next_all(prefix);
++	return bisect_next_all(prefix, no_checkout);
+ }
 -- 
 1.7.6.353.gb3ae7e
