@@ -1,157 +1,93 @@
-From: henri GEIST <henri.geist@flying-robots.com>
-Subject: Re: tracking submodules out of main directory.
-Date: Tue, 02 Aug 2011 14:58:34 +0200
-Message-ID: <1312289914.3261.836.camel@Naugrim.eriador.com>
-References: <1309180056.2497.220.camel@Naugrim.eriador.com>
-	 <7vvcvrxlol.fsf@alter.siamese.dyndns.org> <4E08C89E.5020109@web.de>
-	 <7vvcvrw0vn.fsf@alter.siamese.dyndns.org>
-	 <BANLkTimsfR4LqDAci0Vr+m9uUE_W-7OSAw@mail.gmail.com>
-	 <4E0A08AE.8090407@web.de> <1311792580.2413.82.camel@Naugrim.eriador.com>
-	 <1311843465.3734.40.camel@Naugrim.eriador.com> <4E3192D4.5000504@web.de>
-	 <1311932377.3734.182.camel@Naugrim.eriador.com>
-	 <20110801221203.GA31614@book.hvoigt.net>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: filenames in repo are in CP1251; I have linux and UTF-8
+Date: Tue, 2 Aug 2011 17:02:01 +0400
+Message-ID: <CAHkcoti0G9gfHG3oiTXT0Cd3t8nnb_be90Zw-YPrjPECsR+jqQ@mail.gmail.com>
+References: <1167098359.20110802115414@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Alexei Sholik <alcosholik@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Tue Aug 02 14:55:37 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Ilya Basin <basinilya@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 02 15:02:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QoEVT-0001A5-RB
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 14:55:36 +0200
+	id 1QoEbp-0004KH-Tt
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 15:02:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754485Ab1HBMza convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Aug 2011 08:55:30 -0400
-Received: from mail8.surf-town.net ([212.97.132.48]:56733 "EHLO
-	mailgw5.surf-town.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754345Ab1HBMz2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Aug 2011 08:55:28 -0400
-Received: by mailgw5.surf-town.net (Postfix, from userid 65534)
-	id 5F3FB2032C; Tue,  2 Aug 2011 14:55:26 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by mailgw5.surf-town.net (Postfix) with ESMTP id 49B891FEB4;
-	Tue,  2 Aug 2011 14:55:26 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mailgw5.surf-town.net
-X-Spam-Flag: NO
-X-Spam-Score: -1.44
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.44 tagged_above=-999 required=7
-	tests=[ALL_TRUSTED=-1.44] autolearn=disabled
-Received: from mailgw5.surf-town.net ([127.0.0.1])
-	by localhost (mailgw5.surf-town.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id X04RhgZxTvON; Tue,  2 Aug 2011 14:55:20 +0200 (CEST)
-Received: from [10.0.0.17] (AStrasbourg-753-1-37-125.w92-141.abo.wanadoo.fr [92.141.172.125])
-	by mailgw5.surf-town.net (Postfix) with ESMTPSA id A07C020298;
-	Tue,  2 Aug 2011 14:55:14 +0200 (CEST)
-In-Reply-To: <20110801221203.GA31614@book.hvoigt.net>
-X-Mailer: Evolution 2.30.3 
+	id S1754489Ab1HBNCF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Aug 2011 09:02:05 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:33127 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754433Ab1HBNCD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2011 09:02:03 -0400
+Received: by qwk3 with SMTP id 3so3301589qwk.19
+        for <git@vger.kernel.org>; Tue, 02 Aug 2011 06:02:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=PSSX5Mo3wQshKnLmVtgW0XZySXLMby0hCLk14sRf5Qc=;
+        b=iKSOdsBZp1XwhrQPAnXbNgMt6v5KZHNvejdV+QkZQYfNWyYofkNmWHOAnlB4IFsKxf
+         igxOFgGJd4c8l9Ei8LotpB2Pry8Lt1gU5VuoBLvyrHPu2DvAMyKVgqjSK7r05aVyBt44
+         CyY2m2hwdHX//DsdITgV4dU6x6RGIL6Jz1ANU=
+Received: by 10.229.17.196 with SMTP id t4mr3893289qca.276.1312290121783; Tue,
+ 02 Aug 2011 06:02:01 -0700 (PDT)
+Received: by 10.229.88.136 with HTTP; Tue, 2 Aug 2011 06:02:01 -0700 (PDT)
+In-Reply-To: <1167098359.20110802115414@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178466>
 
-Le mardi 02 ao=C3=BBt 2011 =C3=A0 00:12 +0200, Heiko Voigt a =C3=A9crit=
- :
-> Hi,
->=20
-> On Fri, Jul 29, 2011 at 11:39:37AM +0200, henri GEIST wrote:
-> > Let say a concret exemple
-> >=20
-> > 3 different teams work on libtiff, libpng, and libjpeg they are tot=
-ally
-> > unrelated.
-> >=20
-> > One more team is working on the "gimp". And they need those 3 libs =
-in
-> > specific versions not necessarily there heads.
-> >=20
-> > One other unrelated team is working on "gqview" and need the same l=
-ibs
-> > in other specifics versions (Why should they know what te gimp team
-> > does)
-> >=20
-> > Neither "gimp" and "gqview" project will contain directory with tho=
-se
-> > libs inside. They just depend on them.
-> >=20
-> > And the last team work on the gnome project which need the "gimp" a=
-nd
-> > "gqview". It will be this team witch have to care about having both
-> > "gimp" and "gqview" sharing the same libs version>
-> > And has well the gnome project will not contain "gqview" and "gimp"=
- in
-> > its own tree.
-> > It will also depend on them.
-> >=20
-> > It is just the same with aptitude on debian.
-> > Each package know there dependency by themselves, does not contain =
-there
-> > dependencies, and do not need a bigger superpackage to tell them wh=
-at
-> > are there own dependencies.
->=20
-> As Jens mentioned already in this example you have a
->=20
->         somemodule A needs a version of lib C higher than X
-> 	somemodule B needs a version of lib C higher than Y
->=20
-> relation. Which in the case of submodules is A points to X and B poin=
-ts
-> to Y. Lets assume X is contained in Y. Since only the superproject kn=
-ows
-> about both A and B its the only instance that can resolve this confli=
-ct
-> of dependence on C and can choose Y. In your example aptitude would b=
-e
-> the superproject containing everything.
->=20
+Hi!
 
-I do not want to have a superproject. just as with aptitude. Each
-package store its own dependencies itself.
-I do not want to need a super package who now every dependencies of
-every possible packages.
-=46irst because it is impractical to maintain an exhaustive list of all
-possible packages (including unofficial ones.)
-Secondly because I have no need for this and it will require somme more
-works.
-Third for different people witch use and share there own subset off
-unofficial package they needs to cook a specific super package for each
-unique case.
+On Tue, Aug 2, 2011 at 11:54 AM, Ilya Basin <basinilya@gmail.com> wrote:
+>
+> Unlike on Cygwin, LANG has no effect for git filenames on Linux. Good
+> thing, there's no conversion to unicode, so files aren't lost at
+> checkout.
 
-> This is actually (simplified) the way submodule merge is implemented.=
- So
-> you see if you want both A and B to use the same version of C you nee=
-d a
-> superproject recording this knowledge.
+LANG has no effect on open() or other system functions on Linux, so
+all filenames are created as they were stored in Git, in your case,
+it is CP1251.
 
-And tha is my problem.
+AFAIK, it should not be difficult to configure CP1251 on Linux. You
+generate the required locale and then start xterm with this locale
+and specifying some CP1251 font.
 
-> Adding the ability to point to git repositories outside of the worktr=
-ee
-> does not solve anything but rather creates more problems. Resolving s=
-uch
-> dependencies can not be achieved if only A knows that it needs versio=
-n X
-> and only B knows that it needs version Y.
->=20
+I have never done it before, but the following steps seem to work:
 
-Why not it work perfect for me and for debian as well.
-Yes I now for speed purpose they scans all the package header and store
-their dependency requirement in a database. but it is only for speed an=
-d
-it is automatic generated by the info "In the packages them selves". I
-do not think they ever edit it by hand to define the dependency in the
-DB.
+# generate CP1251
+sudo localedef -c -i ru_RU -f CP1251 ru_RU.CP1251
 
-In fact I suppose this by what I seen by using it I never looked in the
-apt source code.
+# make sure that it was generated
+# you should see ru_RU.cp1251 in the output
+locale -a | grep ru_RU
 
-	Henri GEIST
+# start xterm
+LANG=ru_RU.cp1251 xterm -fn '-monotype-courier
+new-semilight-r-normal--0-0-0-0-c-0-microsoft-cp1251' &
+
+You can try another font. See the output of xlsfonts:
+  xlsfonts | grep -i cp1251
+
+>
+> Question: is there a way to tell git on Linux to use UTF-8 filenames
+> for the working tree, while storing them in CP1251?
+
+The short answer is no. A more detail answer is that there was
+a series of patches that should allow filename conversation:
+
+http://article.gmane.org/gmane.comp.version-control.git/119224
+
+but a proper implementation turned out to be very invasive and
+no one seems to care about it very deeply, so it was dropped.
+See details here:
+
+http://article.gmane.org/gmane.comp.version-control.git/122860
+
+
+Dmitry
