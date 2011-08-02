@@ -1,76 +1,54 @@
-From: Thomas Ferris Nicolaisen <tfnico@gmail.com>
-Subject: Re: git-svn and comitter names
-Date: Tue, 2 Aug 2011 16:59:36 +0200
-Message-ID: <CAEcj5uWO+ydhQFScCirfQeXnOFPget6O7n6PHygCUm8ytwLFsA@mail.gmail.com>
-References: <6517-1311952613-96947@sneakemail.com>
+From: Michael Schubert <mschub@elegosoft.com>
+Subject: Re: use remote repository as webroot
+Date: Tue, 02 Aug 2011 17:00:36 +0200
+Message-ID: <4E381114.2070007@elegosoft.com>
+References: <1312283829487-6644436.post@n2.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "John M. Dlugosz" <ngnr63q02@sneakemail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 02 16:59:46 2011
+To: lunarnet76 <jeanbaptiste.verrey@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 02 17:01:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QoGRa-00049z-Lq
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 16:59:43 +0200
+	id 1QoGSs-0004rv-Ql
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 17:01:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753775Ab1HBO7i convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Aug 2011 10:59:38 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:42603 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753709Ab1HBO7h convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Aug 2011 10:59:37 -0400
-Received: by iyb12 with SMTP id 12so8143568iyb.19
-        for <git@vger.kernel.org>; Tue, 02 Aug 2011 07:59:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=En2ZiiXdtVX1KrTJV99Bpd5SyeeC3NyO0vbKoTZQ3FQ=;
-        b=BoGvlh7GmBVoIvtX4aejpLukti7kPFCJysWk42HlvQevSEVWHvCUggQIjCSMmAGKg8
-         oLx32eCcrDphkt0k9zE7YOqFzz64ir4gfmf9OY4+mkaTUaFia2g14Ob8Ky7EDHPEua6n
-         KbB9uDUep297VAQ+3h9n4eBLHU8pWLss5LVeY=
-Received: by 10.231.111.39 with SMTP id q39mr3814283ibp.106.1312297176624;
- Tue, 02 Aug 2011 07:59:36 -0700 (PDT)
-Received: by 10.231.160.68 with HTTP; Tue, 2 Aug 2011 07:59:36 -0700 (PDT)
-In-Reply-To: <6517-1311952613-96947@sneakemail.com>
+	id S1753883Ab1HBPA7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Aug 2011 11:00:59 -0400
+Received: from mx0.elegosoft.com ([78.47.87.163]:59744 "EHLO mx0.elegosoft.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753803Ab1HBPA5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2011 11:00:57 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id 10811DE7CE;
+	Tue,  2 Aug 2011 17:00:57 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id fmPp2EG2btwi; Tue,  2 Aug 2011 17:00:51 +0200 (CEST)
+Received: from [10.10.10.197] (i59F7870A.versanet.de [89.247.135.10])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id D06D8DE0D2;
+	Tue,  2 Aug 2011 17:00:51 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110628 Thunderbird/5.0
+In-Reply-To: <1312283829487-6644436.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178473>
 
-On Fri, Jul 29, 2011 at 5:16 PM, John M. Dlugosz
-<ngnr63q02@sneakemail.com> wrote:
-> I just grabbed a repository using git-svn, and the commiter name show=
-s a
-> GUID for the domain name. =A0For example,
->
-> =A0 =A0first.last <first.last@5ab5abacd-6ff9-f940-aeea-106a2a325327>
->
-> I set my git name and email address to show what I want in the end, t=
-he real
-> company email address. =A0Will this apparent mapping be a problem whe=
-n I
-> dcommit?
+On 08/02/2011 01:17 PM, lunarnet76 wrote:
+> I have a small issue (I hope), I have a git repository in an apache folder
+> accessed by http://ip/git, I can clone, pull push and stuff, but I don't get
+> how to get the remote repository (http://ip/git) to update the files to the
+> one I have just pushed!
 
-Hi John,
+This may help:
 
-No, it won't be a problem. This is the default "mapping" in git-svn.
+https://git.wiki.kernel.org/index.php/GitFaq#Why_won.27t_I_see_changes_in_the_remote_repo_after_.22git_push.22.3F
 
-The committer name is only visible in your git-svn clone. When you
-dcommit, it will use your normal SVN username, the same one which is
-used when you use SVN normally.
-
-Your configured git name and email will be used in your local commits,
-but as soon as you dcommit, those commits are rewritten to use this
-username@uuid style.
-
-If you think this is really annoying, or you are planning to make a
-permanent migration away from SVN, you can use an authors-file when
-doing the initial git-svn clone. See
-http://www.kernel.org/pub/software/scm/git/docs/git-svn.html for more
-info on the --authors-file option.
+http://toroid.org/ams/git-website-howto
