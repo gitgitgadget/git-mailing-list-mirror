@@ -1,83 +1,76 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH v2 1/2] grep: add option to show whole function as context
-Date: Tue, 02 Aug 2011 20:08:50 +0200
-Message-ID: <4E383D32.5090604@lsrfire.ath.cx>
-References: <4E357BE2.8030409@lsrfire.ath.cx> <CAGdFq_ikKu2E44tyadtKNS=GNRw_1qkfFN-UxEtz-Rsv__Z+jg@mail.gmail.com> <4E36C840.9000808@lsrfire.ath.cx> <CAGdFq_go0xYy9BZWRDxAFGV95G7V-P9-=7VhsodLd+z-ho09Qw@mail.gmail.com> <4E36E075.20603@lsrfire.ath.cx> <7vei14hgcd.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] commit: write out cache-tree information
+Date: Tue, 02 Aug 2011 11:13:40 -0700
+Message-ID: <7vmxfrel63.fsf@alter.siamese.dyndns.org>
+References: <9f5e031045b55c4738de8bc9aae290827e128cd3.1312302862.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 02 20:09:00 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+To: <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Aug 02 20:13:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QoJOl-0005f3-Iv
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 20:08:59 +0200
+	id 1QoJTQ-0007qw-Cf
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 20:13:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754833Ab1HBSIz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Aug 2011 14:08:55 -0400
-Received: from india601.server4you.de ([85.25.151.105]:47911 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753348Ab1HBSIx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Aug 2011 14:08:53 -0400
-Received: from [192.168.2.104] (p4FFDA3FA.dip.t-dialin.net [79.253.163.250])
-	by india601.server4you.de (Postfix) with ESMTPSA id 1282A2F8035;
-	Tue,  2 Aug 2011 20:08:52 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:5.0) Gecko/20110624 Thunderbird/5.0
-In-Reply-To: <7vei14hgcd.fsf@alter.siamese.dyndns.org>
+	id S1754803Ab1HBSNo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Aug 2011 14:13:44 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50251 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753348Ab1HBSNm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2011 14:13:42 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 258153D2D;
+	Tue,  2 Aug 2011 14:13:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8J+DBRCNA6hkg5tn0FgQoP9h3O4=; b=b6FGLQ
+	wPwb6arHE9ts4mAHo6FBzN65AY9a8aj5QqmQstjPzkDqbzOypkogCBg9bu121fr+
+	pF0eisFhHj+a7wKMcuIoxeEjc2v+BpZ42NlH00FO1elixSP+OkbCfR90GF/3CR1N
+	hrEW059qXDX4NKzxSbs99ppPNEY4BxpbVVNnI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kFl71gSCorGPGb22tzVfsO6zFAfojP4n
+	P2BFvjlhZgFjL61D4dq7+zvD3+V28DovNC8zQ8JgMww9EejKCgv0NGEBrXDBoqxi
+	WvnGArHIcoaQp3sVB356igrC2QyIGB79imyAp3npBFncDNiSrFUSnJ2KSNqbi2Yr
+	KaXUDoHrBjg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CB843D2C;
+	Tue,  2 Aug 2011 14:13:42 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A53053D2B; Tue,  2 Aug 2011
+ 14:13:41 -0400 (EDT)
+In-Reply-To: <9f5e031045b55c4738de8bc9aae290827e128cd3.1312302862.git.trast@student.ethz.ch> (trast@student.ethz.ch's message of "Tue, 2 Aug 2011 18:36:34 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 270748E8-BD33-11E0-BF3D-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178493>
 
-Am 02.08.2011 01:17, schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
->=20
->> Add a new option, -W, to show the whole surrounding function of a ma=
-tch.
->=20
-> Thanks, will queue both patches.
->=20
-> It feels somewhat dirty to take the range between the previous "funcn=
-ame"
-> and the next "funcname" and consider it the whole function, as if the=
-re is
-> nothing outside the function, though. I certainly understand that thi=
-s is
-> a natural and unfortunate consequence that "funcname" is a mechanism
-> designed to mark only the _beginning_, and we didn't have any need fo=
-r a
-> mechanism to mark the _end_.
->=20
-> I am not complaining; just making an observation.  I do not offhand h=
-ave a
-> suggestion for improving this, and I think the obvious "then let's co=
-me up
-> with another configuration to mark the end" is not an improvement but
-> making things worse, so...
+<trast@student.ethz.ch> writes:
 
-A certain amount of dirtyness is unavoidable unless we use a real
-parser.  Apropos, labels are function boundaries as well, so there we
-have another limitation (i.e. we won't get a function whole if it
-contains labels without leading whitespace).
+> From: Thomas Rast <trast@student.ethz.ch>
+>
+> While write-tree has code to write out the cache-tree information
+> (since we have to compute it anyway if the cache is stale), commit
+> lost this capability when it became a builtin and moved away from
+> using write-tree.
 
-Ideally I'd like to see the whole function text up to the closing brace
-but including any leading comments, if present.  Which is even more
-complicated, of course.
+Earlier the code read from the index, made sure that it is not unmerged by
+running cache_tere_update(), before running prepare-commit-msg hook. The
+hook used to see the index that was read in this codepath which is the
+same as what pre-commit left us.
 
-=46or C-style and Shell files, /^}/ would probably suffice as a regex t=
-o
-find function endings..
+Why run an extra I/O here? The index file could be quite large, and I do
+not want people to writing it out without good reason.
 
-=46irst I'm curious to see how useful the simple start-to-start heurist=
-ic
-is, though.  Even the -[ABC] options are kind of fuzzy -- how do you
-know the number is high enough before running grep?  Let's see how far
-this quick and dirty approach to present a smarter context can take us.
-
-Ren=C3=A9
+The tree object that is committed is taken from active_cache_tree->sha1 in
+cmd_commit() and not from the cache tree you are writing out to the index
+file.
