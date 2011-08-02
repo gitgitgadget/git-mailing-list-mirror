@@ -1,220 +1,112 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v13 4a/8] bisect: introduce support for --bisect-mode option in bisect--helper.
-Date: Wed,  3 Aug 2011 01:30:48 +1000
-Message-ID: <1312299048-1459-1-git-send-email-jon.seymour@gmail.com>
-References: <AP8UFD0kB+dS4cP=4MXKShhMw3-f_uKjtOmYKahNM0uQQkojsQ@mail.gmail.com>
-Cc: chriscool@tuxfamily.org, gitster@pobox.com, j6t@kdbg.org,
-	jnareb@gmail.com, Jon Seymour <jon.seymour@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 02 17:31:19 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 09/19] Allow querying all attributes on a file
+Date: Tue, 02 Aug 2011 08:34:26 -0700
+Message-ID: <7vwrevg73x.fsf@alter.siamese.dyndns.org>
+References: <1311828418-2676-1-git-send-email-mhagger@alum.mit.edu>
+ <1311828418-2676-10-git-send-email-mhagger@alum.mit.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Aug 02 17:34:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QoGwA-0003d4-BQ
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 17:31:18 +0200
+	id 1QoGzM-0005CF-FZ
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 17:34:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753394Ab1HBPbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Aug 2011 11:31:08 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:33226 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752956Ab1HBPbF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Aug 2011 11:31:05 -0400
-Received: by yia27 with SMTP id 27so4144725yia.19
-        for <git@vger.kernel.org>; Tue, 02 Aug 2011 08:31:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=5QbgZIiHPz6zFzwXZTVGerydWRbyhO1GrV0QcbaTvCg=;
-        b=MgMIvIh3mA597ArKu7Y1GgJ4V/D/4pvdISC8/ZuQAGFA1alJGLHzL/jXh5swu0LVWV
-         SC90Xx16KWp7KQXhAz2/I3LYlY5v3/AEjvhu+9NPxET3QHbC3LezYMxEIByLLEi0p5nZ
-         v3QQO1CKyl1Z/PWCVvsQ8zQQsamKy0+0oKzYs=
-Received: by 10.68.57.40 with SMTP id f8mr10742832pbq.204.1312299063882;
-        Tue, 02 Aug 2011 08:31:03 -0700 (PDT)
-Received: from localhost.localdomain ([120.16.93.94])
-        by mx.google.com with ESMTPS id d3sm6870904pbh.53.2011.08.02.08.30.59
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 02 Aug 2011 08:31:02 -0700 (PDT)
-X-Mailer: git-send-email 1.7.6.353.g794b
-In-Reply-To: <AP8UFD0kB+dS4cP=4MXKShhMw3-f_uKjtOmYKahNM0uQQkojsQ@mail.gmail.com>
+	id S1753721Ab1HBPec (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Aug 2011 11:34:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50095 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753318Ab1HBPea (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2011 11:34:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E0EC3D5D;
+	Tue,  2 Aug 2011 11:34:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fhU0UGTpcAWmmkHMVSjugllnQ/o=; b=lnYySo
+	VbeeRQhv0E+HGOwyms8xhAyWIAlzrVVqPp2Jc+EIG5TYV8UWcOVPEk1tmtxGPXn1
+	hmapg5Rj1dpqfTrzEl8ctNO3x5Lywijzn6Vx6G7Bk+qxwUiJI5hQER+a2i6Og4mT
+	RlAhljEoNff/7X0c6SQ7EsC7Nm2lnw1uUl03o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Kw3+AeO1pVHtM9ftDF/91KBJLSLsp5rG
+	XrcX2ufY3X8uBt4hB5FX0YvSvV3cgLnmUxrLBCQ/rRFka7wsz3UdCJLvbSr+bc/v
+	afi5mjfQenFltbypad7F88S+Et0F6KLm5xnnqUKL/9e97qOGQkUCawBZO/a6TpLn
+	pcoz/8Y4bKE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 34A043D5C;
+	Tue,  2 Aug 2011 11:34:29 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AAFA03D5B; Tue,  2 Aug 2011
+ 11:34:28 -0400 (EDT)
+In-Reply-To: <1311828418-2676-10-git-send-email-mhagger@alum.mit.edu>
+ (Michael Haggerty's message of "Thu, 28 Jul 2011 06:46:48 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E902844C-BD1C-11E0-9CD9-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178476>
 
-If --bisect-mode=update-ref is specified, then the bisection process uses:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-	git update-ref --no-deref HEAD <trial>
+> Add a function, git_allattrs(), that reports on all attributes that
+> are set on a path.
+>
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>  Documentation/technical/api-gitattributes.txt |   45 +++++++++++++++++-------
+>  attr.c                                        |   43 +++++++++++++++++++++++
+>  attr.h                                        |    9 +++++
+>  3 files changed, 84 insertions(+), 13 deletions(-)
+>
+> diff --git a/Documentation/technical/api-gitattributes.txt b/Documentation/technical/api-gitattributes.txt
+> index ab3a84d..640240e 100644
+> --- a/Documentation/technical/api-gitattributes.txt
+> +++ b/Documentation/technical/api-gitattributes.txt
+> @@ -22,19 +22,6 @@ Data Structure
+> ...
+>  (JC)
 
-at each trial instead of:
+The last line, I think, can now be dropped. This was a marker saying "we
+lack documentation for this API; bug this person for necessary information
+and write one".
 
-	git checkout <trial>
+> diff --git a/attr.c b/attr.c
+> index bfa1f43..9c2fca8 100644
+> --- a/attr.c
+> +++ b/attr.c
+> @@ -737,6 +737,49 @@ int git_checkattr(const char *path, int num, struct git_attr_check *check)
+>  	return 0;
+>  }
+>  
+> +int git_allattrs(const char *path, int *num, struct git_attr_check **check)
+> +{
+> +	struct attr_stack *stk;
+> +	const char *cp;
+> +	int dirlen, pathlen, i, rem, count, j;
+> +
+> +	bootstrap_attr_stack();
+> +	for (i = 0; i < attr_nr; i++)
+> +		check_all_attr[i].value = ATTR__UNKNOWN;
+> +
+> +	pathlen = strlen(path);
+> +	cp = strrchr(path, '/');
+> +	if (!cp)
+> +		dirlen = 0;
+> +	else
+> +		dirlen = cp - path;
+> +	prepare_attr_stack(path, dirlen);
+> +	rem = attr_nr;
+> +	for (stk = attr_stack; 0 < rem && stk; stk = stk->prev)
+> +		rem = fill(path, pathlen, stk, rem);
 
-Improved-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
----
- bisect.c                 |   33 ++++++++++++++++++++++-----------
- bisect.h                 |    2 +-
- builtin/bisect--helper.c |    9 +++++++--
- 3 files changed, 30 insertions(+), 14 deletions(-)
-
-A replacement for [PATCH v13 4/8].
-
-diff --git a/bisect.c b/bisect.c
-index dd7e8ed..0427117 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -24,6 +24,7 @@ struct argv_array {
- 
- static const char *argv_checkout[] = {"checkout", "-q", NULL, "--", NULL};
- static const char *argv_show_branch[] = {"show-branch", NULL, NULL};
-+static const char *argv_update_ref[] = {"update-ref", "--no-deref", "HEAD", NULL, NULL};
- 
- /* bits #0-15 in revision.h */
- 
-@@ -707,16 +708,23 @@ static void mark_expected_rev(char *bisect_rev_hex)
- 		die("closing file %s: %s", filename, strerror(errno));
- }
- 
--static int bisect_checkout(char *bisect_rev_hex)
-+static int bisect_checkout(char *bisect_rev_hex, int no_checkout)
- {
- 	int res;
- 
- 	mark_expected_rev(bisect_rev_hex);
- 
- 	argv_checkout[2] = bisect_rev_hex;
--	res = run_command_v_opt(argv_checkout, RUN_GIT_CMD);
--	if (res)
--		exit(res);
-+	if (no_checkout) {
-+		argv_update_ref[3] = bisect_rev_hex;
-+		if (run_command_v_opt(argv_update_ref, RUN_GIT_CMD))
-+			die("update-ref --no-deref HEAD failed on %s",
-+			    bisect_rev_hex);
-+	} else {
-+		res = run_command_v_opt(argv_checkout, RUN_GIT_CMD);
-+		if (res)
-+			exit(res);
-+	}
- 
- 	argv_show_branch[1] = bisect_rev_hex;
- 	return run_command_v_opt(argv_show_branch, RUN_GIT_CMD);
-@@ -788,7 +796,7 @@ static void handle_skipped_merge_base(const unsigned char *mb)
-  * - If one is "skipped", we can't know but we should warn.
-  * - If we don't know, we should check it out and ask the user to test.
-  */
--static void check_merge_bases(void)
-+static void check_merge_bases(int no_checkout)
- {
- 	struct commit_list *result;
- 	int rev_nr;
-@@ -806,7 +814,7 @@ static void check_merge_bases(void)
- 			handle_skipped_merge_base(mb);
- 		} else {
- 			printf("Bisecting: a merge base must be tested\n");
--			exit(bisect_checkout(sha1_to_hex(mb)));
-+			exit(bisect_checkout(sha1_to_hex(mb), no_checkout));
- 		}
- 	}
- 
-@@ -849,7 +857,7 @@ static int check_ancestors(const char *prefix)
-  * If a merge base must be tested by the user, its source code will be
-  * checked out to be tested by the user and we will exit.
-  */
--static void check_good_are_ancestors_of_bad(const char *prefix)
-+static void check_good_are_ancestors_of_bad(const char *prefix, int no_checkout)
- {
- 	const char *filename = git_path("BISECT_ANCESTORS_OK");
- 	struct stat st;
-@@ -868,7 +876,7 @@ static void check_good_are_ancestors_of_bad(const char *prefix)
- 
- 	/* Check if all good revs are ancestor of the bad rev. */
- 	if (check_ancestors(prefix))
--		check_merge_bases();
-+		check_merge_bases(no_checkout);
- 
- 	/* Create file BISECT_ANCESTORS_OK. */
- 	fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
-@@ -908,8 +916,11 @@ static void show_diff_tree(const char *prefix, struct commit *commit)
-  * We use the convention that exiting with an exit code 10 means that
-  * the bisection process finished successfully.
-  * In this case the calling shell script should exit 0.
-+ *
-+ * If no_checkout is non-zero, the bisection process does not
-+ * checkout the trial commit but instead simply updates HEAD.
-  */
--int bisect_next_all(const char *prefix)
-+int bisect_next_all(const char *prefix, int no_checkout)
- {
- 	struct rev_info revs;
- 	struct commit_list *tried;
-@@ -920,7 +931,7 @@ int bisect_next_all(const char *prefix)
- 	if (read_bisect_refs())
- 		die("reading bisect refs failed");
- 
--	check_good_are_ancestors_of_bad(prefix);
-+	check_good_are_ancestors_of_bad(prefix, no_checkout);
- 
- 	bisect_rev_setup(&revs, prefix, "%s", "^%s", 1);
- 	revs.limited = 1;
-@@ -966,6 +977,6 @@ int bisect_next_all(const char *prefix)
- 	       "(roughly %d step%s)\n", nr, (nr == 1 ? "" : "s"),
- 	       steps, (steps == 1 ? "" : "s"));
- 
--	return bisect_checkout(bisect_rev_hex);
-+	return bisect_checkout(bisect_rev_hex, no_checkout);
- }
- 
-diff --git a/bisect.h b/bisect.h
-index 0862ce5..22f2e4d 100644
---- a/bisect.h
-+++ b/bisect.h
-@@ -27,7 +27,7 @@ struct rev_list_info {
- 	const char *header_prefix;
- };
- 
--extern int bisect_next_all(const char *prefix);
-+extern int bisect_next_all(const char *prefix, int no_checkout);
- 
- extern int estimate_bisect_steps(int all);
- 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 5b22639..1f072d4 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -4,16 +4,20 @@
- #include "bisect.h"
- 
- static const char * const git_bisect_helper_usage[] = {
--	"git bisect--helper --next-all",
-+	"git bisect--helper --next-all [--bisect-mode=checkout|update-ref]",
- 	NULL
- };
- 
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
- 	int next_all = 0;
-+	int no_checkout = 0;
-+	char *bisect_mode=NULL;
- 	struct option options[] = {
- 		OPT_BOOLEAN(0, "next-all", &next_all,
- 			    "perform 'git bisect next'"),
-+		OPT_STRING(0, "bisect-mode", &bisect_mode, "mode",
-+			    "bisection mode: 'checkout' (default) or 'update-ref'"),
- 		OPT_END()
- 	};
- 
-@@ -23,6 +27,7 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 	if (!next_all)
- 		usage_with_options(git_bisect_helper_usage, options);
- 
-+	no_checkout = bisect_mode && !strcmp(bisect_mode, "update-ref");
- 	/* next-all */
--	return bisect_next_all(prefix);
-+	return bisect_next_all(prefix, no_checkout);
- }
--- 
-1.7.6.353.g794b
+Shouldn't the above part at least should be refactored instead of copied
+and pasted from git_checkattr()?
