@@ -1,116 +1,130 @@
-From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: Re: [PATCH 2/5] fast-import: don't fail on omitted committer name
-Date: Tue, 2 Aug 2011 23:07:25 +0600
-Message-ID: <CA+gfSn-15+z+PYhFH6=RQF7HKC7i_1p=fyJqtepv3xPdUnTVdQ@mail.gmail.com>
-References: <1311831844-13123-1-git-send-email-divanorama@gmail.com>
-	<1311831844-13123-3-git-send-email-divanorama@gmail.com>
-	<7voc07g3fr.fsf@alter.siamese.dyndns.org>
+From: Michael Schubert <mschub@elegosoft.com>
+Subject: [RFC] branch: list branches by single remote
+Date: Tue, 02 Aug 2011 19:17:38 +0200
+Message-ID: <4E383132.3040907@elegosoft.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, SASAKI Suguru <sss.sonik@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 02 19:07:48 2011
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 02 19:18:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QoIRR-0001sG-Vw
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 19:07:42 +0200
+	id 1QoIbY-0006fm-8V
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 19:18:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754154Ab1HBRHb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Aug 2011 13:07:31 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:60521 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753318Ab1HBRH1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Aug 2011 13:07:27 -0400
-Received: by qyk9 with SMTP id 9so4029083qyk.19
-        for <git@vger.kernel.org>; Tue, 02 Aug 2011 10:07:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=t6gpNWB7AOeOVF2XIUCM5RUnULwWD+MxJnkfNkao96k=;
-        b=FsiDB5OtV65EaX7VGqwIK7DbCq6sfHX5wjmkQ4JnEcrSLmo5YlywPIW5Ft0ZICe5xt
-         GXcYmpglE0DWy17vfwt2LpS19cafMebbsXt1uKCivBYPDXrM608V2WQuVLRYysrKqhv9
-         x6t2iS2emp49pK8X3UMDSLyfokA3BTGpUwTpg=
-Received: by 10.229.38.208 with SMTP id c16mr4033720qce.74.1312304845772; Tue,
- 02 Aug 2011 10:07:25 -0700 (PDT)
-Received: by 10.229.189.3 with HTTP; Tue, 2 Aug 2011 10:07:25 -0700 (PDT)
-In-Reply-To: <7voc07g3fr.fsf@alter.siamese.dyndns.org>
+	id S1754411Ab1HBRSA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Aug 2011 13:18:00 -0400
+Received: from mx0.elegosoft.com ([78.47.87.163]:41113 "EHLO mx0.elegosoft.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754594Ab1HBRR4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2011 13:17:56 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id 01CD0DE807
+	for <git@vger.kernel.org>; Tue,  2 Aug 2011 19:17:55 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id NpFZoUwoEad2 for <git@vger.kernel.org>;
+	Tue,  2 Aug 2011 19:17:50 +0200 (CEST)
+Received: from [10.10.10.197] (i59F7870A.versanet.de [89.247.135.10])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id 13C8FDE801
+	for <git@vger.kernel.org>; Tue,  2 Aug 2011 19:17:50 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110628 Thunderbird/5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178486>
 
-On Tue, Aug 2, 2011 at 10:53 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Dmitry Ivankov <divanorama@gmail.com> writes:
->
->> fast-import format declares 'committer_name SP' to be optional. But =
-SP
->> between empty or not name and a email is obligatory and checked by
->
-> Sorry, cannot parse this.
-Ok, the point is fast-import input format for identities is declared to=
- be
-'(name SP)? LT email GT' (followed by a datetime)
-where name and email are allowed to be empty (and should not have
-LF, LT, GT characters).
-While git-fsck checks identities to be in form
-'name SP LT email GT' (followed by a datetime)
-where name and email are allowed to be empty (and should not have
-LF, LT, GT characters).
-So fast-import must prepend a space if the name part is omitted. This
-patch makes it do so.
+I've always missed some option for "git branch" to limit the output to a single
+remote. What's the right place to filter the output? The code below doesn't
+look very smart..
 
->
->> git-fsck, so fast-import must prepend the SP if the name is omitted.
->> Currently it doesn't.
->>
->> Name cannot contain LT or GT and ident always comes after SP in
->> fast-import. So reuse that SP as if a valid 'SP <email>' ident was p=
-assed.
->>
->> This fixes a ident parsing bug for a well-formed fast-import input.
->> Though the parsing is still loose and can accept a ill-formed input.
->>
->> Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
->> ---
->> =A0fast-import.c =A0 =A0 =A0 =A0 =A0| =A0 =A04 ++++
->> =A0t/t9300-fast-import.sh | =A0 =A02 +-
->> =A02 files changed, 5 insertions(+), 1 deletions(-)
->>
->> diff --git a/fast-import.c b/fast-import.c
->> index 9e8d186..3194f4e 100644
->> --- a/fast-import.c
->> +++ b/fast-import.c
->> @@ -1972,6 +1972,10 @@ static char *parse_ident(const char *buf)
->> =A0 =A0 =A0 size_t name_len;
->> =A0 =A0 =A0 char *ident;
->>
->> + =A0 =A0 /* ensure there is a space delimiter even if there is no n=
-ame */
->> + =A0 =A0 if (*buf =3D=3D '<')
->> + =A0 =A0 =A0 =A0 =A0 =A0 --buf;
->> +
->> =A0 =A0 =A0 gt =3D strrchr(buf, '>');
->> =A0 =A0 =A0 if (!gt)
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 die("Missing > in ident string: %s", buf=
-);
->> diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
->> index a659dd4..09ef6ba 100755
->> --- a/t/t9300-fast-import.sh
->> +++ b/t/t9300-fast-import.sh
->> @@ -352,7 +352,7 @@ data <<COMMIT
->> =A0empty commit
->> =A0COMMIT
->> =A0INPUT_END
->> -test_expect_failure 'B: accept and fixup committer with no name' '
->> +test_expect_success 'B: accept and fixup committer with no name' '
->> =A0 =A0 =A0 git fast-import <input &&
->> =A0 =A0 =A0 out=3D$(git fsck) &&
->> =A0 =A0 =A0 echo "$out" &&
->
+---
+ builtin/branch.c |   16 +++++++++++++---
+ 1 files changed, 13 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 3142daa..22e6be2 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -17,7 +17,7 @@
+ #include "revision.h"
+ 
+ static const char * const builtin_branch_usage[] = {
+-	"git branch [options] [-r | -a] [--merged | --no-merged]",
++	"git branch [options] [-r | -a] [-R <remote>] [--merged | --no-merged]",
+ 	"git branch [options] [-l] [-f] <branchname> [<start-point>]",
+ 	"git branch [options] [-r] (-d | -D) <branchname>...",
+ 	"git branch [options] (-m | -M) [<oldbranch>] <newbranch>",
+@@ -260,6 +260,7 @@ static char *resolve_symref(const char *src, const char *prefix)
+ 
+ struct append_ref_cb {
+ 	struct ref_list *ref_list;
++	const char *remote;
+ 	int ret;
+ };
+ 
+@@ -297,6 +298,9 @@ static int append_ref(const char *refname, const unsigned char *sha1, int flags,
+ 	if ((kind & ref_list->kinds) == 0)
+ 		return 0;
+ 
++	if (cb->remote && strncmp(cb->remote, refname, strlen(cb->remote)))
++		return 0;
++
+ 	commit = NULL;
+ 	if (ref_list->verbose || ref_list->with_commit || merge_filter != NO_FILTER) {
+ 		commit = lookup_commit_reference_gently(sha1, 1);
+@@ -492,7 +496,7 @@ static void show_detached(struct ref_list *ref_list)
+ 	}
+ }
+ 
+-static int print_ref_list(int kinds, int detached, int verbose, int abbrev, struct commit_list *with_commit)
++static int print_ref_list(int kinds, int detached, int verbose, int abbrev, struct commit_list *with_commit, const char *only)
+ {
+ 	int i;
+ 	struct append_ref_cb cb;
+@@ -506,6 +510,7 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
+ 	if (merge_filter != NO_FILTER)
+ 		init_revisions(&ref_list.revs, NULL);
+ 	cb.ref_list = &ref_list;
++	cb.remote = only;
+ 	cb.ret = 0;
+ 	for_each_rawref(append_ref, &cb);
+ 	if (merge_filter != NO_FILTER) {
+@@ -618,6 +623,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 	enum branch_track track;
+ 	int kinds = REF_LOCAL_BRANCH;
+ 	struct commit_list *with_commit = NULL;
++	char *single_remote = NULL;
+ 
+ 	struct option options[] = {
+ 		OPT_GROUP("Generic options"),
+@@ -647,6 +653,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		OPT_GROUP("Specific git-branch actions:"),
+ 		OPT_SET_INT('a', NULL, &kinds, "list both remote-tracking and local branches",
+ 			REF_REMOTE_BRANCH | REF_LOCAL_BRANCH),
++		OPT_STRING('R', NULL, &single_remote, "remote", "list only branches by remote"),
+ 		OPT_BIT('d', NULL, &delete, "delete fully merged branch", 1),
+ 		OPT_BIT('D', NULL, &delete, "delete branch (even if not merged)", 2),
+ 		OPT_BIT('m', NULL, &rename, "move/rename a branch and its reflog", 1),
+@@ -696,10 +703,13 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 	if (!!delete + !!rename + !!force_create > 1)
+ 		usage_with_options(builtin_branch_usage, options);
+ 
++	if (single_remote)
++		kinds = REF_REMOTE_BRANCH;
++
+ 	if (delete)
+ 		return delete_branches(argc, argv, delete > 1, kinds);
+ 	else if (argc == 0)
+-		return print_ref_list(kinds, detached, verbose, abbrev, with_commit);
++		return print_ref_list(kinds, detached, verbose, abbrev, with_commit, single_remote);
+ 	else if (rename && (argc == 1))
+ 		rename_branch(head, argv[0], rename > 1);
+ 	else if (rename && (argc == 2))
+-- 
+1.7.6.396.ge0613.dirty
