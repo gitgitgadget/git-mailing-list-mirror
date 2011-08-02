@@ -1,163 +1,94 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Storing additional information in commit headers
-Date: Mon, 1 Aug 2011 21:50:56 -0600
-Message-ID: <20110802035056.GB17494@sigill.intra.peff.net>
-References: <20110801182015.GA3100@fishbowl.rw.madduck.net>
- <20110801201301.GA17111@sigill.intra.peff.net>
- <20110801211104.GC15401@fishbowl.rw.madduck.net>
+Subject: Re: [PATCH v2 4/4] upload-archive: use start_command instead of fork
+Date: Mon, 1 Aug 2011 22:00:04 -0600
+Message-ID: <20110802040004.GC17494@sigill.intra.peff.net>
+References: <20110728160845.GA14337@sigill.intra.peff.net>
+ <20110728164758.GA15931@sigill.intra.peff.net>
+ <20110728170222.GB15931@sigill.intra.peff.net>
+ <CABPQNSaqyD+rhWPRbtVdnkweuXSycBahKEsasGZkEg3mi4SaxQ@mail.gmail.com>
+ <20110801174603.GB10302@sigill.intra.peff.net>
+ <CABPQNSbyp2hEgXvzo3bMHHxrbc9fQLqaABweqfjP7xQzBUdj6A@mail.gmail.com>
+ <20110801182516.GC10302@sigill.intra.peff.net>
+ <4E371109.7050500@lsrfire.ath.cx>
+ <4E3718B4.6090803@kdbg.org>
+ <4E37202B.80208@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git discussion list <git@vger.kernel.org>,
-	Petr Baudis <pasky@ucw.cz>, Clemens Buchacher <drizzd@aon.at>
-To: martin f krafft <madduck@madduck.net>
-X-From: git-owner@vger.kernel.org Tue Aug 02 05:51:06 2011
+Cc: Johannes Sixt <j6t@kdbg.org>, Erik Faye-Lund <kusmabite@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Tue Aug 02 06:00:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qo60Y-0005xx-Am
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 05:51:06 +0200
+	id 1Qo69O-0007rW-1L
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 06:00:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753313Ab1HBDvB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Aug 2011 23:51:01 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44914
+	id S1750759Ab1HBEAJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Aug 2011 00:00:09 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:44643
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752675Ab1HBDvA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2011 23:51:00 -0400
-Received: (qmail 25740 invoked by uid 107); 2 Aug 2011 03:51:32 -0000
+	id S1750722Ab1HBEAH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2011 00:00:07 -0400
+Received: (qmail 25793 invoked by uid 107); 2 Aug 2011 04:00:40 -0000
 Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 01 Aug 2011 23:51:32 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Aug 2011 21:50:56 -0600
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 02 Aug 2011 00:00:40 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Aug 2011 22:00:04 -0600
 Content-Disposition: inline
-In-Reply-To: <20110801211104.GC15401@fishbowl.rw.madduck.net>
+In-Reply-To: <4E37202B.80208@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178438>
 
-On Mon, Aug 01, 2011 at 11:11:04PM +0200, martin f krafft wrote:
+On Mon, Aug 01, 2011 at 11:52:43PM +0200, Ren=C3=A9 Scharfe wrote:
 
-> >   1. Does git actually care about your data? E.g., would it want to=
- use
-> >      it for reachability analysis in git-fsck?
+> Am 01.08.2011 23:20, schrieb Johannes Sixt:
+> > Am 01.08.2011 22:48, schrieb Ren=C3=A9 Scharfe:
+> >> So git archive gives the right results when writing to a pipe, but
+> >> always the same wrong result when writing directly to a file.
 > >=20
-> >   2. Is it an immutable property of a commit, or can it be changed =
-after
-> >      the fact?
->=20
-> Excellent points, and I have answers to both:
->=20
->   1. Ideally, I would like to point to another blob containing
->      information. Right now, in order to prevent gc from pruning
->      it, that would have to be a commit pointed to with a parent
->      pointer, which is just not right (it's not a parent) and causes
->      the commit to show up in the history (which it should not, as
->      it's an implementation detail).
-
-In that case, notes sound like a nice solution, as that is exactly what
-they do. Yes, they are mutable, but that might not be that big a deal.
-
->   2. It is immutable. Ideally, I would like to store extra
->      information for a ref in ref/heads/*, but there seems to be no
->      way of doing this. Hence, I need to store it in commits and
->      backtrack for it. Or so I think, at least=E2=80=A6
-
-Wait, so you want metadata on a _ref_, not on a commit? That is a very
-different thing, I think. We usually accomplish that with data in
-=2Egit/config. Or if you need to push data between repos, or if it's to=
-o
-big to easily fit in the config, then put it in a blob and keep a
-parallel ref structure (e.g., refs/topgit/bases/refs/heads/master).
-
-Or maybe I'm just misunderstanding.
-
-> > Otherwise, if (1) is yes, then a commit header makes sense. But
-> > then, it should also be something that git is taught about, and
-> > your commit header should not be some topgit-specific thing, but
-> > a header showing the generalized form.
->=20
-> I agree entirely and would be all too excited to see this happening.
-> I already had ideas too:
->=20
->   In addition to the standard tree and parent pointers, there could
->   be *-ref and x-*-ref headers, which take a single ref argument,
->   presumably to a blob containing more data.
-
-I'm not sure how well-defined that is, though. What does the ref mean?
-What does it point to, and what is the meaning with respect to the
-original commit? Or are you suggesting that "*" would be "topgit-base"
-here, and that git core would understand only that any header matching
-the pattern "x-*-ref" should be followed with respect to
-reachability/pruning. Only the owner of the "*" part (topgit in this
-case) would be able to make sense of the meaning of the ref.
-
-If that is the case, that does make sense to me. It's basically an
-immutable version of a note.
-
-However, implementing such a thing would mean you have an awkward
-transition period where some versions of git think the referenced objec=
+> > This could indeed be a CRLF issue. archive-tar.c runs gzip to let i=
 t
-is relevant, and others do not. That's something we can overcome, but
-it's going to require code in git, and possibly a dormant introduction
-period.
-
-I suspect you would give git people more warm fuzzies about implementin=
-g
-this by showing a system that is built on git-notes and saying "this
-works really well, except that the external note storage is not a good
-reason because { it's mutable, it's not efficient, whatever other reaso=
-n
-you find}". And then we know that the system is proven to work, and tha=
-t
-migrating the note-like structure into the object is sensible.
-
-But I get the impression you're one step back from that now. So it make=
-s
-sense to me to at least prototype it via git-notes, which will give you
-the same semantic storage (a mapping of commits to some blobs, with
-reachability handled automatically).
-
-> > Otherwise, the usual recommendation is to use a pseudo-header
-> > within the body of the commit message (i.e., "Topgit-Base: ..." at
-> > the end of the commit message). The upside is that it's easy to
-> > create, manipulate, and examine using existing git tools. The
-> > downside is that it is something that the user is more likely to
-> > see in "git log" or when editing a rebased commit message.
+> > write to the original fd 1 (stdout). gzip is an MSYS program, and M=
+SYS
+> > is "clever" and sets up the channel in text mode (CRLF conversion) =
+if it
+> > is a regular file, but in binary mode if it is a pipe.
+> >=20
+> > Without the gzip filter, git-archive writes to stdout itself. Since=
+ we
+> > have set up all our channels in binary mode, we do not suffer from =
+the
+> > same problem for plain tar format.
+> >=20
+> > So, I don't think we can do a lot about it, short of patching MSYS =
+again...
 >=20
-> =E2=80=A6 to see *and to accidentally mess up*. And while that may ev=
-en be
-> unlikely, it does expose information that really ought to be hidden.
+> Or we could pipe the output through us, i.e. attach a builtin version=
+ of
+> cat at the output end of the called command.  Only on Windows, of
+> course.  Better ugly and limping then wrong, right?
 
-I'm not quite sure what the information is, so I can't really judge. Do
-you have a concrete example?
-
-I got the impression earlier you were wanting to store a human-readable
-text string.  That makes a pseudo-header a reasonable choice. But if yo=
-u
-are going to reference some blob (which it seems from what you wrote
-above), and you are interested in proper reachability analysis, then no=
+Yeah, that would work. But I am confused. If what Johannes says is true=
 ,
-it probably isn't a good idea.
+isn't MSYS gzip totally broken for:
 
-> I can see how it's arguable too why one would want to give git
-> commit objects the ability to reference arbitrary blobs containing
-> additional information. I suppose the answer to this question is
-> related to the answer to the question of whether Git is
-> a contained/complete tool as-is, or also serves as
-> a "framework"/"toolkit" for advanced/creative use.
->=20
-> The availability of the porcelain commands seems to suggest that
-> extensible/flexible additional features should be welcome! ;)
+  # works
+  echo foo | gzip -c | cat >foo.gz
 
-I think extensibility is welcome. It's just that most discussions so fa=
-r
-have ended up realizing that a new header would just be cruft. Maybe
-yours is different. I'm still not 100% sure I understand what you want
-to accomplish, but the idea of an x-*-ref header is a reasonable thing
-for git to have.
+  # broken; introduces CR
+  echo foo | gzip -c >foo.gz
+
+? (The "works" and "broken" there are my guesses; I don't have a Window=
+s
+box to test on). IOW, is it simply gzip that is broken, and any fix we
+do is simply working around a bug in gzip? And therefore the right
+solution is for MSYS people to fix gzip?
 
 -Peff
