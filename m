@@ -1,109 +1,85 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: working prototype of orphan parent commits as datastores (was:
- Storing additional information in commit headers)
-Date: Tue, 2 Aug 2011 21:09:23 +0200
-Message-ID: <20110802190923.GB16674@fishbowl.rw.madduck.net>
-References: <20110801182015.GA3100@fishbowl.rw.madduck.net>
- <20110801201301.GA17111@sigill.intra.peff.net>
- <20110801211104.GC15401@fishbowl.rw.madduck.net>
- <20110802035056.GB17494@sigill.intra.peff.net>
- <20110802082810.GC29887@fishbowl.rw.madduck.net>
- <20110802150321.GA1390@fishbowl.rw.madduck.net>
- <20110802185708.GB2499@sigill.intra.peff.net>
+From: Christian Jaeger <chrjae@gmail.com>
+Subject: [ANNOUNCE/RFC] cj-git-patchtool: a "rebase -i" with more interaction
+Date: Tue, 2 Aug 2011 15:22:26 -0400
+Message-ID: <CAEjYwfUY9tF_9frkaS7Aw26CPJA02Cr3HDN5Qpkup1rfHYacXw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="CUfgB8w4ZwR/yMy5"
-To: Jeff King <peff@peff.net>,
-	git discussion list <git@vger.kernel.org>,
-	Petr Baudis <pasky@ucw.cz>, Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Tue Aug 02 21:09:43 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 02 21:22:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QoKLX-0007yK-8u
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 21:09:43 +0200
+	id 1QoKYG-00060j-9W
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 21:22:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755068Ab1HBTJj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Aug 2011 15:09:39 -0400
-Received: from seamus.madduck.net ([213.203.238.82]:43646 "EHLO
-	seamus.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755042Ab1HBTJi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Aug 2011 15:09:38 -0400
-Received: from fishbowl.rw.madduck.net (28-193.78-83.cust.bluewin.ch [83.78.193.28])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "fishbowl.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by seamus.madduck.net (postfix) with ESMTPS id 14A87407D3B;
-	Tue,  2 Aug 2011 21:09:25 +0200 (CEST)
-Received: by fishbowl.rw.madduck.net (Postfix, from userid 1000)
-	id EF3B11FE57; Tue,  2 Aug 2011 21:09:23 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20110802185708.GB2499@sigill.intra.peff.net>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux wheezy/sid kernel 3.0.0-1-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Virus-Scanned: clamav-milter 0.97.1 at seamus
-X-Virus-Status: Clean
+	id S1754440Ab1HBTWs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Aug 2011 15:22:48 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:56670 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754223Ab1HBTWq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2011 15:22:46 -0400
+Received: by yia27 with SMTP id 27so65600yia.19
+        for <git@vger.kernel.org>; Tue, 02 Aug 2011 12:22:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=UsGC5F0lVmlss2NHLBUnbi6iVu6kNqx1U58aWCMJATE=;
+        b=YOHB9OYyW3Us2WJdNfmcBiR+zh48bzHS9gGpCWBB1qujx2febCYCxtp2ztWIh5UwZJ
+         lxoAd3eaMPQFc8t5nnfa+TNemIyYXPRpmmPNDW8BZgCIHrNsL6Hq2s0EO5g2oD34ry4B
+         /3sOB2fAGJ80UmrQVG9iWgZ4JwWsk/g0MOpbI=
+Received: by 10.150.135.14 with SMTP id i14mr2235888ybd.71.1312312966074; Tue,
+ 02 Aug 2011 12:22:46 -0700 (PDT)
+Received: by 10.150.137.6 with HTTP; Tue, 2 Aug 2011 12:22:26 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178503>
 
+Hi
 
---CUfgB8w4ZwR/yMy5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I've always been a frequent user of git rebase -i to clean up private
+branches before publication. I like committing without thinking while
+coding and then grouping the commits sensibly afterwards. But git
+rebase -i didn't scale for me for this purpose, cleaning up several
+days (or even weeks) of work would become a pain because frequently
+I'd make some error, like when dealing with conflicts, and then
+multiple rebase -i runs are needed, requiring to partially redo the
+work.
 
-also sprach Jeff King <peff@peff.net> [2011.08.02.2057 +0200]:
-> Look at "git show origin/master" here. It ends up as a combined diff.
-> Which is kind of ugly.
+So I've written a set of tools[1] that separates the acts of editing
+and applying history changes. It does this by turning the history in
+question into a set of git patch files and a file containing the list
+of the patches (and optionally new commit messages), and allows to
+edit both the list and the patch files themselves incrementally until
+they can be applied cleanly again in the new order. In other words, an
+(attempted) application (cj-git-patchtool's "app" command) will not
+remove these files, and if there's a problem the existing files can be
+further refined. There's also a command "wig" that uses "wiggle" (by
+Neil Brown) to try to apply a patch automatically when git or patch
+wouldn't accept it, and if successful, stores the result back into the
+patch file so that it will be reused on subsequent "app" runs. For
+convenience, these files, which are put inside a newly created
+directory, are automatically checked into their own git repository,
+too, so when doing something really complicated, the state of work can
+be committed and reverted easily when reaching a dead end.
 
-Yes, absolutely. However, this would no longer be the case if
-x-*-ref could be used. Right now, I am just using orphan parent
-commits to avoid garbage collection.
+For more information see the README on Github.[1]
 
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-"he gave me his card
- he said, 'call me if they die'
- i shook his hand and said goodbye
- ran out to the street
- when a bowling ball came down the road
- and knocked me off my feet"
-                                                        -- bob dylan
-=20
-spamtraps: madduck.bogus@madduck.net
+This works well for me, I'm now always using it whenever I need to do
+more than a couple trivial changes to a Git history.
 
---CUfgB8w4ZwR/yMy5
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/sig-policy/999bbcc4/current)
+I don't know whether there are other tools offering the same now.
+Also, I have written this "just for myself", and for this reason made
+use of a set of never-before released Perl libraries of mine. If
+there's general interest in this tool, I'll be glad to help get rid of
+the dependency on these libraries (or clean them up and publish them
+properly, too).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+I welcome your comments.
 
-iQLvBAEBCgDZBQJOOEtjwBEaaHR0cDovL21hcnRpbi1rcmFmZnQubmV0L2dwZy9z
-aWctcG9saWN5LzU1Yzk4ODJkOTk5YmJjYzQvMjAxMTAxMjQxMTI1P3NoYTUxMnN1
-bT0xY2FkOTZmZDI3ZDMyMzNmNTNlMjI4NDk1MzM2NDgxMDdlNWVlOGQ1YmU2NTUy
-NTFkNzRjOGYxYzVjM2JjNDJmMjMwNGZhNTE1MTUwZjdiZDRkZDA1ZTk4MTk5MjRm
-MDQ5NTEzZWU5OTYyY2E3MTcwOWY4MWQ5NDUxNTg1MmJkOAAKCRBVyYgtmZu8xADU
-D/9eRiCreEPGD+MhWPrCd93AF+/v4rywz1UzPZ5i/n8asEPkIIgaVNIa5q9ZGiQw
-ra+Mv3N/tgQo3riGBiRthQ13KBMD18309i1KRwQ49mVCKIMDeUbIbvvOFtN3iLYV
-HL3YUwS61BnlrHUHCdQ9SBuUWOKc7QFA/HOK4PYSvTmORKWz0WhgIT+TRU57Bkhb
-e7RJEIGj5nfz9HuuIUkMPJ7hwJHpUhouXuZ8rvgjtai6yyZ6wtI2mygZo5iZ2q+w
-v5NcutgkDehgMtV5QUGkyF+g02DZH6vUNfhJks69GAv5aWf6/tOmYPkzOmN++2P0
-f3nUFAErMo4NDieMxriusFy5DuyEmQHpTrNa6gj6qYN2SJXZDzgBZ2xm5H1NlIUB
-URXV7T2HnEcKG5DE8mYN81U0uxygaERe5D5pQT4t8pavo05gxCBKZ6xKRM5sWuhj
-gNprMkTSnpXJCp0x2VQn7CZxF/r0EFdyN2Km76nAjrXQ88+ajGsd6Pu2fePj36iI
-t1nF4kBdVYcdSKZaeXWJFtUXyWsLyjESgN0Nuq/53iSNZ+0+pvCpjoSTBC7542dg
-D1cB9/4EiyHVL2gsDXoWryf2xjaUxXDdKgmeAMBuSKZ1j0w+gKrVWvy5tOjioRzz
-U/sWjkgqDN56sWcSyrwV+VOAG22W6cH1dxY47lBPd0dOxw==
-=yVd4
------END PGP SIGNATURE-----
+Christian.
 
---CUfgB8w4ZwR/yMy5--
+[1] https://github.com/pflanze/cj-git-patchtool
