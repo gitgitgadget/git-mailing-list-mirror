@@ -1,81 +1,70 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: [RFC] Questions for "Git User's Survey 2011"
-Date: Tue, 2 Aug 2011 01:43:23 +0200
-Message-ID: <20110801234323.GB31614@book.hvoigt.net>
-References: <201107252233.02088.jnareb@gmail.com>
+From: Tait <git.git@t41t.com>
+Subject: Re: [PATCH v2 2/2] grep: long context options
+Date: Mon, 1 Aug 2011 18:01:43 -0700
+Message-ID: <20110802010143.GL13795@ece.pdx.edu>
+References: <4E357BE2.8030409@lsrfire.ath.cx>
+ <CAGdFq_ikKu2E44tyadtKNS=GNRw_1qkfFN-UxEtz-Rsv__Z+jg@mail.gmail.com>
+ <4E36C840.9000808@lsrfire.ath.cx>
+ <CAGdFq_go0xYy9BZWRDxAFGV95G7V-P9-=7VhsodLd+z-ho09Qw@mail.gmail.com>
+ <4E36E0EC.1000508@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 02 01:43:35 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Aug 02 03:12:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qo28z-0005yw-Uf
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 01:43:34 +0200
+	id 1Qo3XV-0004Ct-9w
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Aug 2011 03:12:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753262Ab1HAXn0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Aug 2011 19:43:26 -0400
-Received: from darksea.de ([83.133.111.250]:33284 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752966Ab1HAXn0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2011 19:43:26 -0400
-Received: (qmail 24113 invoked from network); 2 Aug 2011 01:43:23 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 2 Aug 2011 01:43:23 +0200
+	id S1752884Ab1HBBMx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Aug 2011 21:12:53 -0400
+Received: from rcpt.cat.pdx.edu ([131.252.208.107]:58510 "EHLO
+	rcpt.cat.pdx.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752466Ab1HBBMv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2011 21:12:51 -0400
+X-Greylist: delayed 659 seconds by postgrey-1.27 at vger.kernel.org; Mon, 01 Aug 2011 21:12:51 EDT
+Received: from nemo.ece.pdx.edu (root@nemo.ece.pdx.edu [131.252.209.162])
+	by rcpt.cat.pdx.edu (8.14.3/8.14.3/Debian-9.1ubuntu1) with ESMTP id p7211i5X031302
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 1 Aug 2011 18:01:44 -0700
+Received: from nemo.ece.pdx.edu (tait@localhost [127.0.0.1])
+	by nemo.ece.pdx.edu (8.13.6/8.13.1) with ESMTP id p7211ihc013739;
+	Mon, 1 Aug 2011 18:01:44 -0700 (PDT)
+Received: (from tait@localhost)
+	by nemo.ece.pdx.edu (8.13.6/8.12.6/Submit) id p7211hjL013738;
+	Mon, 1 Aug 2011 18:01:43 -0700 (PDT)
+X-Authentication-Warning: nemo.ece.pdx.edu: tait set sender to git.git@t41t.com using -f
 Content-Disposition: inline
-In-Reply-To: <201107252233.02088.jnareb@gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+In-Reply-To: <4E36E0EC.1000508@lsrfire.ath.cx>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.4 (rcpt.cat.pdx.edu [131.252.208.107]); Mon, 01 Aug 2011 18:01:44 -0700 (PDT)
+X-Spam-Status: No, score=0.0 required=6.0 tests=none autolearn=unavailable
+	version=3.3.1
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on rcpt.cat.pdx.edu
+X-Virus-Scanned: clamav-milter 0.96.5 at rcpt
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178429>
 
-Hi,
+Ren=E9 Scharfe <rene.scharfe_lsrfire.ath.cx> said (on 2011/08/01):
+> Take long option names for -A (--after-context), -B (--before-context=
+)
+> and -C (--context) from GNU grep and add a similar long option name
+> for -W (--function-context).
 
-On Mon, Jul 25, 2011 at 10:33:01PM +0200, Jakub Narebski wrote:
-> === 17. Which of the following features would you like to see implemented in git? ===
-> (multiple choice)
-> 
->  + better support for big files (large media)
->  + resumable clone/fetch (and other remote operations)
->  + GitTorrent Protocol, or git-mirror
->  + lazy clone / on-demand fetching of object
->  + support for tracking empty directories
->  + environmental variables in config, 
->    and expanding ~ and ~user in paths in config
->  + better undo/abort/continue, and for more commands
->  + '-n' like option for each command, which describes what would happen
->  + side-by-side diffs and/or color-words diff in gitweb
->  + admin and/or write features in gitweb
->  + graphical history view in gitweb
->  + GUI for rebase in git-gui
->  + GUI for creating repository in git-gui
->  + filename encoding (in repository vs in filesystem)
->  + git push --create
->  + wholesame directory rename detection
->  + graphical merge tool integrated with git-gui
->  + union checkouts (some files from one branch, some from other)
->  + advisory locking / "this file is being edited"
->  + "commands issued" (or "command equivalents") in git-gui / gitk
->  + warn before/when rewriting published history
->  + built-in gitjour/bananajour support
->  + syntax highlighting in git-gui
-> 
->  + other (describe below)
-> 
-> NOTES:
-> ^^^^^^
-> What features should be mentioned besides those above?  What criteria
-> should we have for including features in this list?
-
-How about adding:
-
- + improved submodule support
-
- ?
-
-Cheers Heiko
+Why not just add --context=3Dfunction? Then when I want --context=3Dind=
+ent
+to give context based on the indent-level, it is an intuitive extension
+of the existing options. (Of course, --context=3D<number> would still d=
+o
+exactly what it does now.)
