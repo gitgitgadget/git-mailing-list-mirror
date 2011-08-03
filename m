@@ -1,60 +1,69 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH] git-am: ignore leading whitespace before patch
-Date: Wed, 3 Aug 2011 21:31:46 +0800
-Message-ID: <CALUzUxrubhFpLd00BomM5WwPYNwPbxCx6q7U2TG4PssaQODkZQ@mail.gmail.com>
-References: <1312323646-93427-1-git-send-email-davidbarr@google.com>
-	<CALUzUxpn-vCWpTQyB7z9dsu8a+UBL9MPjEycOfTmyws5ndz5kA@mail.gmail.com>
-	<CAGdFq_it-QAA5uSme6S715dRzHs-s-Uj=MWKzBK2MOaaSdiXtg@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: Fwd: [PATCH 0/6] rebase: command "ref" and options --rewrite-{refs,heads,tags}
+Date: Wed, 3 Aug 2011 15:32:41 +0200
+Message-ID: <CAGdFq_jLv810a1H=+M14hEho9B_BS4OhdVUz1S-jjMBi6PP28g@mail.gmail.com>
+References: <cover.1309133817.git.greg@quora.com> <BANLkTinDFYsw7-N=_Ex8i42So_0LzVAWvA@mail.gmail.com>
+ <7vhb7bxgt9.fsf@alter.siamese.dyndns.org> <20110628104758.GS5771@dr-wily.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: David Barr <davidbarr@google.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 03 15:32:05 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Greg Price <price@mit.edu>
+X-From: git-owner@vger.kernel.org Wed Aug 03 15:33:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QobYI-0005Vx-A4
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 15:32:02 +0200
+	id 1QobZh-0006OY-8q
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 15:33:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753665Ab1HCNbw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Aug 2011 09:31:52 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:38525 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754495Ab1HCNbs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2011 09:31:48 -0400
-Received: by fxh19 with SMTP id 19so670025fxh.19
-        for <git@vger.kernel.org>; Wed, 03 Aug 2011 06:31:46 -0700 (PDT)
+	id S1755857Ab1HCNd0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Aug 2011 09:33:26 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:55219 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754452Ab1HCNdV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2011 09:33:21 -0400
+Received: by pzk37 with SMTP id 37so78612pzk.1
+        for <git@vger.kernel.org>; Wed, 03 Aug 2011 06:33:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=SfqRFrgf2jDbf/+LR0kgp+x7Xo/vnq8rweYgK/WVz0M=;
-        b=GoKvXrGyn+wLdB59o61RSrXXkY4FWhZxeSAuw0QhFJDqPmhsPO9zwsf4pGmjWZZHDo
-         m7G/NThTG03zRAVzoqhlrDi4oVye2NUXXgPurAy8HZ5NK+kjZRgJ8koYxRELixbt3SH1
-         fwVx9q9EgcczQUzWxO2x5KslCGCeVQ8cRmk0M=
-Received: by 10.223.9.217 with SMTP id m25mr2248577fam.122.1312378306728; Wed,
- 03 Aug 2011 06:31:46 -0700 (PDT)
-Received: by 10.223.87.66 with HTTP; Wed, 3 Aug 2011 06:31:46 -0700 (PDT)
-In-Reply-To: <CAGdFq_it-QAA5uSme6S715dRzHs-s-Uj=MWKzBK2MOaaSdiXtg@mail.gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=KKAmRYbObJHB7bvGL6llTwiIEMS2M1Malsnf875xQQA=;
+        b=VKe3PnFmsdUkQZCjJaac3q0WqjfD7SjF6q4XJpgLr4kzyXHJd2tKOQ4i4ZeKpkyz0+
+         ba3aj8RzEsTd3RaMECr3x9cpAbpk+79fhtdmKP5D2jUoOXqbBI0efnxC8Of2U+tIk7fa
+         JQQe8jbpkyuctOvb0wJtudYXhDIQspfwshNJM=
+Received: by 10.142.121.35 with SMTP id t35mr5015097wfc.7.1312378401161; Wed,
+ 03 Aug 2011 06:33:21 -0700 (PDT)
+Received: by 10.68.71.162 with HTTP; Wed, 3 Aug 2011 06:32:41 -0700 (PDT)
+In-Reply-To: <20110628104758.GS5771@dr-wily.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178571>
 
-On Wed, Aug 3, 2011 at 9:21 PM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> So how do you get the patches out of gmail? Do you just copy/paste the
-> output of the "Show original" page?
+Heya,
 
-I Ctrl-S from the "Show original" page. Using Chrome, that yields a
-mail.txt file.
+On Tue, Jun 28, 2011 at 12:47, Greg Price <price@mit.edu> wrote:
+> I would also like to support that use case. =C2=A0In my personal
+> experience, the case where the part$N are ancestors of the topic has
+> actually been the more common case; typically it's that part1 is some
+> topic, and then part2 is a further topic that depends on the changes
+> in part1, so naturally it goes directly on top of it. =C2=A0So I'd be
+> pleased to get the functionality of the present series in, even befor=
+e
+> supporting the more general case.
 
-Without this patch, I used to manually remove the first line (all
-empty whitespace).
+=46WIW, I'm having the exact same need while working on the remote-hg
+series (which depends on my remote-helper follow-up series, which
+depends on fast-export-fixes, which depends on my original
+remote-helper series, which depends on peffs initial patches; luckily
+the latter two have been merged to next :P). I'd really like having
+this available, especially the rebase -i support.
 
--- 
+--=20
 Cheers,
-Ray Chuan
+
+Sverre Rabbelier
