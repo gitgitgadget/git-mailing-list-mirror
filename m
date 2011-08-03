@@ -1,71 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Why do some commits not appear in "git log"?
-Date: Wed, 03 Aug 2011 11:57:35 -0700
-Message-ID: <7vipqeb9wg.fsf@alter.siamese.dyndns.org>
-References: <CA++fsGGG7pLt4xoeJozGnYEwOrs6NuzStYPKF_L5k49uzFB-4A@mail.gmail.com>
- <CA++fsGEht+UDp9EnFyfvn-uT1DYPcnhpwmPy_H4PTWvsvUceAQ@mail.gmail.com>
- <CAMOZ1Bt+Z4XDPNBQyUeVk30aEOuXFAuh8jhdhFke-CDZt2pEDg@mail.gmail.com>
- <CA++fsGGhzVkXTPLui+DfTFcjve7w80Kud4RxC0p=5AenOcBSDw@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: tracking submodules out of main directory.
+Date: Wed, 03 Aug 2011 21:07:14 +0200
+Message-ID: <4E399C62.30604@web.de>
+References: <4E0A08AE.8090407@web.de> <1311792580.2413.82.camel@Naugrim.eriador.com> <1311843465.3734.40.camel@Naugrim.eriador.com> <4E3192D4.5000504@web.de> <1311932377.3734.182.camel@Naugrim.eriador.com> <4E34122B.5020509@web.de> <1312062927.3261.334.camel@Naugrim.eriador.com> <4E370107.3050002@web.de> <1312287584.3261.798.camel@Naugrim.eriador.com> <4E384510.1070803@web.de> <20110803062536.GB33203@book.hvoigt.net> <1312374382.3261.913.camel@Naugrim.eriador.com> <7v8vractdw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org
-To: Dov Grobgeld <dov.grobgeld@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 03 20:57:48 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: henri GEIST <henri.geist@flying-robots.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Alexei Sholik <alcosholik@gmail.com>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 03 21:08:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QogdT-00033r-7z
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 20:57:43 +0200
+	id 1Qogo6-00011B-Vq
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 21:08:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755227Ab1HCS5j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Aug 2011 14:57:39 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46566 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755197Ab1HCS5i (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2011 14:57:38 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C8ABE4472;
-	Wed,  3 Aug 2011 14:57:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SRrDbF2N9W1UFea1faQLBauIj/w=; b=PKtloS
-	rFA04YGzSSdjL9RC8R3VYdcYQ5+ziZ/vBTBPvARMPlUSi4ido5iwngmG7RbSER5u
-	E93+UcQDO4LI+Qs+UPNTXk7hglUyBYcIsXtKguSzCJVF/GUlVBX+ifkt0jv9u0Ym
-	XE7My19jcpaRGUw5aC1riqvMnZWMlfMRPeaBs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=O7M4T8Y9dz6xYkoLokj1pjkyTacBREZt
-	quG2N5M/PMj7G/AE/I3Rl0zrqUaYWyyMP6e6ySr64gVdPaCZkXs6/dKZuZawS9Bo
-	cDRGHq+by3VqWvB96NCfs9hCgVndovZwAzbYWdtmYjXu/3U1r7wI3tIEGLChGsSM
-	Ud48c/fAuko=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C001B4471;
-	Wed,  3 Aug 2011 14:57:37 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3AFED4470; Wed,  3 Aug 2011
- 14:57:37 -0400 (EDT)
-In-Reply-To: <CA++fsGGhzVkXTPLui+DfTFcjve7w80Kud4RxC0p=5AenOcBSDw@mail.gmail.com> (Dov
- Grobgeld's message of "Wed, 3 Aug 2011 08:47:46 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 745C1EDC-BE02-11E0-9BD6-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755366Ab1HCTIi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Aug 2011 15:08:38 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:41538 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754568Ab1HCTIg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2011 15:08:36 -0400
+Received: from smtp02.web.de  ( [172.20.0.184])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 52230194EE49C;
+	Wed,  3 Aug 2011 21:07:19 +0200 (CEST)
+Received: from [79.247.252.57] (helo=[192.168.178.43])
+	by smtp02.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1Qogml-0006GN-00; Wed, 03 Aug 2011 21:07:19 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:5.0) Gecko/20110624 Thunderbird/5.0
+In-Reply-To: <7v8vractdw.fsf@alter.siamese.dyndns.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1+IwKOuG5Z3WC9wy+4pdP4W3EhKsB5rs+62HVAx
+	5oGqd4I/x6lJKppky3dsJCsGy7ca7uDfLKALiaHbAdiSnO4fPV
+	wkO3eEJ5mhfgG5G2Sjsw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178609>
 
-Dov Grobgeld <dov.grobgeld@gmail.com> writes:
+Am 03.08.2011 19:11, schrieb Junio C Hamano:
+> henri GEIST <henri.geist@flying-robots.com> writes:
+> 
+>> I plan to use a config file containing lines like
+>>
+>> "path_to_poited_repo   SHA1_of_intended_commit   URL_of_origin"
+>>
+>> the URL part will not be required.
+>>
+>> this file will be a list of pointer to other project.
+> 
+> I wasn't paying attention to this thread, but I have to ask "why" here.
+> 
+> The first two are what gitlink was designed to do in the superproject that
+> ties multiple submodules together, and the last one is also supplied by
+> the .gitmodules in that superproject. This seems to be adding the same
+> information in a redundant way by saying "this version A0 of submodule A
+> wants version B0 of submodule B and version C0 of submodule C" when the
+> supermodule can say "the consistent view I record is to have version A0,
+> B0 and C0 of submodules A, B and C, respectively".
 
-> --full-history indeed made the missing commits show up! So why was the
-> commit pruned? It contains some substantial source changes...
+During the discussion this evolved from a simple "I need that submodule
+with exactly this version" to something I believe is more generic and
+very useful for others. As I see it now a submodule should be able to say:
 
-I suspect that these "substantial changes" did not make any contribution
-to the end result. Read
+1) To use me, you need another submodule "foo"
 
-http://thread.gmane.org/gmane.comp.version-control.git/89400/focus=90659
+   This is very helpful when you want to add the Gimp submodule and it
+   can tell you you'll need the libpng submodule too in your superproject
+   (but I'd vote to use the submodule name here, not the path as that
+   should be the superproject's decision).
 
-These days, the --post-simplify option implemented in that discussion
-thread is called --simplify-merges or something, I think.
+In addition to that, it can (but mustn't) specify any of the following:
+
+a) Of this submodule "foo" I need at least that version because I won't
+   compile/work with older versions of that. (this can be tightened to
+   "exactly that version" to give henri the behavior he wants, but that
+   should be policy, not mandatory)
+
+   Gimp could say it needs at least libpng 012345 because in that version
+   the function foobar() was added it now depends on. Normally this won't
+   be updated very often, but if people like henri use that to say "I'll
+   only promise to work well with that exact version, as that went through
+   extensive QA" they might change that on virtually every commit.
+
+b) And if you don't know where to get it, use this url
+
+   That can give the superproject a hint where it can clone that
+   repository from. That could be helpful for distributions to sort out
+   the dependencies of the packages they pull in.
+
+That is all stuff the submodule knows better than the superproject. And
+that information can be used to *inform* the user about the submodule's
+needs, maybe using "git status --submodule-dependencies" will print:
+
+# submodule "Gimp" requests a libpng 567890 or newer
+# submodule "foo" has missing dependency "bar"
+
+But the user can choose to ignore that (because he knows he has the png
+support disabled and he doesn't need the fancy help files from bar).
+
+And maybe "git submodule add" learns an option to automatically add all
+the other submodules the new one depends on too (for that we would need
+the url).
+
+But the superproject is still the place to say: I know these versions of
+all submodules work together, so I commit their gitlinks here. But this
+scheme enables submodules to give hints to help the superproject's user.
+
+> I also suspect that allowing each submodule to know and demand specific
+> versions of other submodules will lead to inconsistencies. Which version
+> of submodule C would you demand to have when submodule A wants version C0
+> and submodule B wants version C1 of it?
+
+Right, in the discussion so far it seemed like henri seems to be the only
+user who is wanting an exact match, and he says he needs to see these
+inconsistencies. But I think he can modify the "version xxx or newer" to
+his needs without imposing these inconsistencies on users (like me) who
+don't want to see them.
