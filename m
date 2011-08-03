@@ -1,162 +1,111 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v16 6/7] bisect: add tests for the --no-checkout option.
-Date: Thu,  4 Aug 2011 07:57:05 +1000
-Message-ID: <1312408626-8600-7-git-send-email-jon.seymour@gmail.com>
+Subject: [PATCH v16 7/7] bisect: add documentation for --no-checkout option.
+Date: Thu,  4 Aug 2011 07:57:06 +1000
+Message-ID: <1312408626-8600-8-git-send-email-jon.seymour@gmail.com>
 References: <1312408626-8600-1-git-send-email-jon.seymour@gmail.com>
 Cc: chriscool@tuxfamily.org, gitster@pobox.com, j6t@kdbg.org,
 	jnareb@gmail.com, jrnieder@gmail.com,
 	Jon Seymour <jon.seymour@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 03 23:58:25 2011
+X-From: git-owner@vger.kernel.org Wed Aug 03 23:58:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QojSK-0007T3-1f
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 23:58:24 +0200
+	id 1QojSR-0007Xt-Tg
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 23:58:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755596Ab1HCV6V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Aug 2011 17:58:21 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:49435 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755402Ab1HCV6V (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2011 17:58:21 -0400
-Received: by mail-yx0-f174.google.com with SMTP id 19so495880yxj.19
-        for <git@vger.kernel.org>; Wed, 03 Aug 2011 14:58:20 -0700 (PDT)
+	id S1755614Ab1HCV61 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Aug 2011 17:58:27 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:44630 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755604Ab1HCV60 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2011 17:58:26 -0400
+Received: by gyh3 with SMTP id 3so742114gyh.19
+        for <git@vger.kernel.org>; Wed, 03 Aug 2011 14:58:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=0wG69igduyQoHH+N4Pb+Zhlf4+c+WN8grrIC9T3bZC8=;
-        b=XUylVMki9MScRtu5XRdWgielUV3aMxaM3JynlSVJuClF9nN00iaxeX7prPpnUZt2T0
-         vbcSKF9DeHlSnJeErlHvGNFK8qR9ujoMMIxDoyxRQzNI4K2wrFzesUC23h8fsqvEoX2g
-         Lb3d5j/4sQfwEQV71OyRp4Iccxay8lYoXS8Ys=
-Received: by 10.150.73.35 with SMTP id v35mr1167218yba.218.1312408700606;
-        Wed, 03 Aug 2011 14:58:20 -0700 (PDT)
+        bh=+1iSofseg0BsPVY+4fT7ZB5oHyEm1ylYqwVu+3iQA9Q=;
+        b=iJDjc5N1oOg4rp53bf2caukEeof2TZAykzTQTSAYpnIDd/FG56juL3ycuK6Iwn79Yq
+         JyhdQgLeh241D5Hrg+QEACD6BJqHir80zMyrt0K6ocCQ+G/3X197FlWLdUjkW3hv0pVO
+         +i5UR1BoYJg08ntOPdHDfnk1OyMWIsWz5ugyQ=
+Received: by 10.150.228.11 with SMTP id a11mr1182138ybh.257.1312408705530;
+        Wed, 03 Aug 2011 14:58:25 -0700 (PDT)
 Received: from localhost.localdomain ([120.16.210.46])
-        by mx.google.com with ESMTPS id e7sm625568ybg.18.2011.08.03.14.58.15
+        by mx.google.com with ESMTPS id e7sm625568ybg.18.2011.08.03.14.58.20
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 03 Aug 2011 14:58:19 -0700 (PDT)
+        Wed, 03 Aug 2011 14:58:24 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6.352.g172e
 In-Reply-To: <1312408626-8600-1-git-send-email-jon.seymour@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178635>
-
-These tests verify that git-bisect --no-checkout can successfully
-bisect commit histories that reference damaged trees.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178636>
 
 Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 ---
- t/t6030-bisect-porcelain.sh |   82 +++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 82 insertions(+), 0 deletions(-)
+ Documentation/git-bisect.txt |   32 +++++++++++++++++++++++++++++++-
+ 1 files changed, 31 insertions(+), 1 deletions(-)
 
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 9ae2de8..113e1c5 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -126,6 +126,18 @@ test_expect_success 'bisect reset removes packed refs' '
- 	test -z "$(git for-each-ref "refs/heads/bisect")"
- '
+diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
+index ab60a18..44b9845 100644
+--- a/Documentation/git-bisect.txt
++++ b/Documentation/git-bisect.txt
+@@ -17,7 +17,7 @@ The command takes various subcommands, and different options depending
+ on the subcommand:
  
-+test_expect_success 'bisect reset removes bisect state after --no-checkout' '
-+	git bisect reset &&
-+	git bisect start --no-checkout &&
-+	git bisect good $HASH1 &&
-+	git bisect bad $HASH3 &&
-+	git bisect next &&
-+	git bisect reset &&
-+	test -z "$(git for-each-ref "refs/bisect/*")" &&
-+	test -z "$(git for-each-ref "refs/heads/bisect")" &&
-+	test -z "$(git for-each-ref "BISECT_HEAD")"
-+'
-+
- test_expect_success 'bisect start: back in good branch' '
- 	git branch > branch.output &&
- 	grep "* other" branch.output > /dev/null &&
-@@ -616,6 +628,14 @@ cat > expected.missing-tree.default <<EOF
- fatal: unable to read tree 39f7e61a724187ab767d2e08442d9b6b9dab587d
- EOF
+  git bisect help
+- git bisect start [<bad> [<good>...]] [--] [<paths>...]
++ git bisect start [--no-checkout] [<bad> [<good>...]] [--] [<paths>...]
+  git bisect bad [<rev>]
+  git bisect good [<rev>...]
+  git bisect skip [(<rev>|<range>)...]
+@@ -263,6 +263,17 @@ rewind the tree to the pristine state.  Finally the script should exit
+ with the status of the real test to let the "git bisect run" command loop
+ determine the eventual outcome of the bisect session.
  
-+check_same()
-+{
-+    echo "Checking $1 is the same as $2" &&
-+    git rev-parse "$1" > expected.same &&
-+    git rev-parse "$2" > expected.actual &&
-+    test_cmp expected.same expected.actual
-+}
++OPTIONS
++-------
++--no-checkout::
+++
++Do not checkout the new working tree at each iteration of the bisection
++process. Instead just update a special reference named 'BISECT_HEAD' to make
++it point to the commit that should be tested.
+++
++This option may be useful when the test you would perform in each step
++does not require a checked out tree.
 +
- test_expect_success 'bisect fails if tree is broken on start commit' '
- 	git bisect reset &&
- 	test_must_fail git bisect start BROKEN_HASH7 BROKEN_HASH4 2>error.txt &&
-@@ -630,4 +650,66 @@ test_expect_success 'bisect fails if tree is broken on trial commit' '
- 	test_cmp expected.missing-tree.default error.txt
- '
+ EXAMPLES
+ --------
  
-+test_expect_success 'bisect: --no-checkout - start commit bad' '
-+	git bisect reset &&
-+	git bisect start BROKEN_HASH7 BROKEN_HASH4 --no-checkout &&
-+	check_same BROKEN_HASH6 BISECT_HEAD &&
-+	git bisect reset
-+'
+@@ -343,6 +354,25 @@ $ git bisect run sh -c "make || exit 125; ~/check_test_case.sh"
+ This shows that you can do without a run script if you write the test
+ on a single line.
+ 
++* Locate a good region of the object graph in a damaged repository
+++
++------------
++$ git bisect start HEAD <known-good-commit> [ <boundary-commit> ... ] --no-checkout
++$ git bisect run sh -c '
++	GOOD=$(git for-each-ref "--format=%(objectname)" refs/bisect/good-*") &&
++	git rev-list --objects BISECT_HEAD --not $GOOD >tmp.$$ &&
++	git pack-objects --stdout >/dev/null <tmp.$$
++	rc=$?
++	rm -f tmp.$$
++	test $rc = 0'
 +
-+test_expect_success 'bisect: --no-checkout - trial commit bad' '
-+	git bisect reset &&
-+	git bisect start broken BROKEN_HASH4 --no-checkout &&
-+	check_same BROKEN_HASH6 BISECT_HEAD &&
-+	git bisect reset
-+'
++------------
+++
++In this case, when 'git bisect run' finishes, bisect/bad will refer to a commit that
++has at least one parent whose reachable graph is fully traversable in the sense
++required by 'git pack objects'.
 +
-+test_expect_success 'bisect: --no-checkout - target before breakage' '
-+	git bisect reset &&
-+	git bisect start broken BROKEN_HASH4 --no-checkout &&
-+	check_same BROKEN_HASH6 BISECT_HEAD &&
-+	git bisect bad BISECT_HEAD &&
-+	check_same BROKEN_HASH5 BISECT_HEAD &&
-+	git bisect bad BISECT_HEAD &&
-+	check_same BROKEN_HASH5 bisect/bad &&
-+	git bisect reset
-+'
 +
-+test_expect_success 'bisect: --no-checkout - target in breakage' '
-+	git bisect reset &&
-+	git bisect start broken BROKEN_HASH4 --no-checkout &&
-+	check_same BROKEN_HASH6 BISECT_HEAD &&
-+	git bisect bad BISECT_HEAD &&
-+	check_same BROKEN_HASH5 BISECT_HEAD &&
-+	git bisect good BISECT_HEAD &&
-+	check_same BROKEN_HASH6 bisect/bad &&
-+	git bisect reset
-+'
-+
-+test_expect_success 'bisect: --no-checkout - target after breakage' '
-+	git bisect reset &&
-+	git bisect start broken BROKEN_HASH4 --no-checkout &&
-+	check_same BROKEN_HASH6 BISECT_HEAD &&
-+	git bisect good BISECT_HEAD &&
-+	check_same BROKEN_HASH8 BISECT_HEAD &&
-+	git bisect good BISECT_HEAD &&
-+	check_same BROKEN_HASH9 bisect/bad &&
-+	git bisect reset
-+'
-+
-+test_expect_success 'bisect: demonstrate identification of damage boundary' "
-+	git bisect reset &&
-+	git checkout broken &&
-+	git bisect start broken master --no-checkout &&
-+	git bisect run sh -c '
-+		GOOD=$(git for-each-ref "--format=%(objectname)" refs/bisect/good-*) &&
-+		git rev-list --objects BISECT_HEAD --not $GOOD >tmp.$$ &&
-+		git pack-objects --stdout >/dev/null < tmp.$$ &&
-+		rc=$?
-+		rm tmp.$$
-+		test \$rc = 0' &&
-+	check_same BROKEN_HASH6 bisect/bad &&
-+	git bisect reset
-+"
-+
- test_done
+ SEE ALSO
+ --------
+ link:git-bisect-lk2009.html[Fighting regressions with git bisect],
 -- 
 1.7.6.352.g172e
