@@ -1,55 +1,75 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [RFC] Questions for "Git User's Survey 2011"
-Date: Wed, 3 Aug 2011 18:40:13 +0200
-Message-ID: <CACBZZX5-KrzZ+WptqX__W9GBE8LxY24fSXSth3JpiJyDbrzN-Q@mail.gmail.com>
-References: <201107252233.02088.jnareb@gmail.com>
+From: Jon Forrest <nobozo@gmail.com>
+Subject: Re: [PATCH] For Real - Fixed pluralization in diff reports
+Date: Wed, 03 Aug 2011 09:52:57 -0700
+Message-ID: <4E397CE9.2070500@gmail.com>
+References: <4E362F8E.1050105@gmail.com> <CAGdFq_iwEvD_-hD63KeF45WuRhWrK6JuWWqzDpjHcZ+0gHDaqg@mail.gmail.com> <4E36B8E4.5080900@gmail.com> <m3livdqh9h.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-4; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 03 18:40:28 2011
+X-From: git-owner@vger.kernel.org Wed Aug 03 18:53:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QoeUb-0001Ox-Q6
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 18:40:26 +0200
+	id 1Qoegn-0000AQ-JD
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 18:53:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754584Ab1HCQkT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Aug 2011 12:40:19 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:59030 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754392Ab1HCQkP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2011 12:40:15 -0400
-Received: by fxh19 with SMTP id 19so815364fxh.19
-        for <git@vger.kernel.org>; Wed, 03 Aug 2011 09:40:14 -0700 (PDT)
+	id S1753327Ab1HCQw5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Aug 2011 12:52:57 -0400
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:39737 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752532Ab1HCQw4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2011 12:52:56 -0400
+Received: by iyb12 with SMTP id 12so1142813iyb.19
+        for <git@vger.kernel.org>; Wed, 03 Aug 2011 09:52:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=rfnD8fHzxIeXEz075gnDKrWYHla4UxgU5ajJdNJ05V4=;
-        b=PeHzJtRmtlrdJHpJNSm6o0xL2vvuOX7OyRZDxYO7HwopFXbvx7rnen99ZlxpJ4lvNt
-         5oB7tQskEKUT3EqJ/kTkMxAzbQNjjycOtpBOI2ntv4Knp72xhh+QT3BODhpvZqxwiDm+
-         Dc4lG8ptI6pi/jY4QK2+0iD8oaA2hybLoAclk=
-Received: by 10.223.36.89 with SMTP id s25mr10457569fad.19.1312389614060; Wed,
- 03 Aug 2011 09:40:14 -0700 (PDT)
-Received: by 10.223.48.81 with HTTP; Wed, 3 Aug 2011 09:40:13 -0700 (PDT)
-In-Reply-To: <201107252233.02088.jnareb@gmail.com>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=4ENPFJAWo5mMw4vYKQUDY3qckhL44kqksgbGNwfPsTc=;
+        b=qRIu839WYDH8xrPnlpA5sMDi3lzg84ErxTh5m8Na6pOG8sJYN6CR3tYOUjgm2ZK5lS
+         eS3gGLHmeLxGOPvqusE2bC2ib5rNtzEDqJCJ7MYrxPwZb1J9M6gz90YZBRmdlaeXCjls
+         8Crvv5+1q9szWoZbIOIrwnzV6rVltUzvzevZY=
+Received: by 10.42.163.71 with SMTP id b7mr4862218icy.167.1312390375730;
+        Wed, 03 Aug 2011 09:52:55 -0700 (PDT)
+Received: from [192.168.50.71] (206-80-5-2.static.twtelecom.net [206.80.5.2])
+        by mx.google.com with ESMTPS id q4sm664309ibb.15.2011.08.03.09.52.54
+        (version=SSLv3 cipher=OTHER);
+        Wed, 03 Aug 2011 09:52:54 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:5.0) Gecko/20110624 Thunderbird/5.0
+In-Reply-To: <m3livdqh9h.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178594>
 
-2011/7/25 Jakub Narebski <jnareb@gmail.com>:
+On 8/3/2011 6:38 AM, Jakub Narebski wrote:
+> Jon Forrest<nobozo@gmail.com>  writes:
 
-> =3D=3D=3D 16. Which of the following Git features do you use? =3D=3D=3D
-> (multiple choice, with other)
+> Besides, as it was already said, this is an API.
+
+I pretty much only looked at that one file and it
+didn't look at quick glance like an API was being
+used to internationalize git.
+
+>> If the goal if the i18n effort is also to produce grammatically
+>> correct output in all the supported languages then the
+>> tests that my patch would break would have to be rewritten
+>> anyway.
 >
-> =C2=A0+ localization of command-line messages (i18n)
+> That's not it.
 
-It's probably better to move this to some "would you like i18n"
-section. Nobody can use i18n at the moment, there's just a skeleton
-implementation of it.
+We can discuss the correct way to implement a change like this
+but the fact remains that whatever the implementation, the issue
+that Junio raised will remain. That is, what to do about all
+the places that presume the old incorrect output.
+
+This problem isn't specific to git. I can easily imagine
+other open source projects that face, or will face, this
+problem.
+
+Jon
