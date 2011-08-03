@@ -1,94 +1,78 @@
-From: Udo <u.offermann@gmail.com>
-Subject: git clone does not checkout active branch
-Date: Wed, 3 Aug 2011 16:56:43 +0000 (UTC)
-Message-ID: <loom.20110803T185528-8@post.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v14 5/8] bisect: introduce --no-checkout support into
+ porcelain.
+Date: Wed, 03 Aug 2011 10:01:56 -0700
+Message-ID: <7vd3gmcttn.fsf@alter.siamese.dyndns.org>
+References: <1312323362-20096-1-git-send-email-jon.seymour@gmail.com>
+ <1312323362-20096-6-git-send-email-jon.seymour@gmail.com>
+ <7voc07ct9z.fsf@alter.siamese.dyndns.org>
+ <7vk4avcsk9.fsf@alter.siamese.dyndns.org>
+ <CAH3AnrrtfhU1r1DWO8ski5Jd=cLXcj3Wq-MowB8QKv+r1-BT_A@mail.gmail.com>
+ <CAH3AnrpPaUY1fj9thMybPUgeM=mBEN3FjawjiR2vhw4S-v6qyg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 03 19:00:35 2011
+Cc: git@vger.kernel.org, chriscool@tuxfamily.org, j6t@kdbg.org,
+	jnareb@gmail.com
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 03 19:02:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qoeo0-0004Tz-KA
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 19:00:28 +0200
+	id 1QoepZ-0005YZ-RF
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 19:02:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754620Ab1HCRAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Aug 2011 13:00:13 -0400
-Received: from lo.gmane.org ([80.91.229.12]:40237 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754283Ab1HCRAL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2011 13:00:11 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Qoenf-0004EO-QY
-	for git@vger.kernel.org; Wed, 03 Aug 2011 19:00:07 +0200
-Received: from p5B121AD7.dip.t-dialin.net ([91.18.26.215])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 03 Aug 2011 19:00:07 +0200
-Received: from u.offermann by p5B121AD7.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 03 Aug 2011 19:00:07 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 91.18.26.215 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:5.0.1) Gecko/20100101 Firefox/5.0.1)
+	id S1754071Ab1HCRCB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Aug 2011 13:02:01 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:32911 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751934Ab1HCRCA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2011 13:02:00 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 57AA05071;
+	Wed,  3 Aug 2011 13:01:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=THXQZQgXu3HyAxjKQ9DJyVxTILc=; b=ZAh12g
+	MvEiK3kQ+2l+MipTfUuQAlAmFVRcHKsZjLteZhb+Rg6AP71gwvHJqD44bYPgCgs3
+	XbQ7ogYM296MbJ9ZgIkam0bfesSnR9hW3XBkFRAZJae+94ESGXJ3LJSyM+Rs1hgi
+	ZhbJaO4GU4o6zyIGdPlna9fw1xHTX320BLsyQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kX8BOW3TYQIMUS0GdQ9/CM8rPMOwwTfC
+	TyU2rLR5fNUn6LHkNqxIentZWvx3E1iYBfTMw2WEAaaoUuO3twY3dvYfcsdQ8/Ay
+	8MGs9CWoM7rDEAYurLtZf6ghuwFhSS+Pf5Eq486jxKoECDIjUQFoV4Go20w0YGmS
+	DqnXWMCWqXM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C9AC5070;
+	Wed,  3 Aug 2011 13:01:59 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8B9CF506F; Wed,  3 Aug 2011
+ 13:01:58 -0400 (EDT)
+In-Reply-To: <CAH3AnrpPaUY1fj9thMybPUgeM=mBEN3FjawjiR2vhw4S-v6qyg@mail.gmail.com> (Jon
+ Seymour's message of "Thu, 4 Aug 2011 01:24:12 +1000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4C97681C-BDF2-11E0-91DD-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178596>
 
-I have a remote bare repository with two branches 'master' and 'testing', where
-HEAD refers to 'testing'. When cloning this repository git checks out 'master',
-if 'master' and 'testing' are on the same revision (i.e. HEAD == testing ==
-master). Only if 'testing' is one (or more) commit(s) behind or ahead, git clone
-checks out the 'testing' branch on the local side. I tried this with git 1.7.5
-on Mac OS X (10.6.8).
+Jon Seymour <jon.seymour@gmail.com> writes:
 
-Addendum: I just tried the same with a non-bare repository:
+> I had a quick go at doing this, but haven't been able to test it
+> fully. At a minimum it will require that we relax the barriers in
+> git-bisect.sh and git.c that prevent git-bisect
+> and bisect--helper running without a working tree. Other paths in
+> these modules will need to  be checked to see that they don't have an
+> implicit assumption that a  working tree is available.
+>
+> I  won't have time to tackle this properly until the weekend.
 
-mkdir A
-cd A
-git init
-touch a
-git add a
-git commit -m "init repo A with a"
-git checkout -b testing
-
-now back in the root dir:
-
-cd ..
-git clone A B
-cd B
-git branch -v -a
-* master                 28f599b init A
-  remotes/origin/HEAD    -> origin/master
-  remotes/origin/master  28f599b init A
-  remotes/origin/testing 28f599b init A
-
-it's 'master'! Back to repo A (we are still in branch 'testing'):
-
-cd ../A
-touch b
-git add b
-git commit -m "add b in branch testing"
-
-now 'testing' is one commit ahead 'master'. Now let's clone A again:
-
-cd ..
-git clone A C
-cd C
-git branch -a -v
-* testing                23bca39 add b in branch testing
-  remotes/origin/HEAD    -> origin/testing
-  remotes/origin/master  28f599b init A
-  remotes/origin/testing 23bca39 add b in branch testing
-
-You can re-verify this weird behavior by going back to A, checkout 'master' and
-merge it with 'testing' (so that all branches have the same head). Now clone A
-into D and D will be checked out on master!
+That is Ok and thanks for looking. Making this available to bare
+repository is a totally separate follow-on topic that can and should be
+done as a separate series that depends on the current topic anyway, so
+let's focus on the current topic at hand first.
