@@ -1,110 +1,56 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH 1bis/2] Diff patterns for POSIX shells
-Date: Wed, 3 Aug 2011 12:12:41 +0200
-Message-ID: <CAOxFTcxEL38HW0mX++Wa7b0TEPo56xDZPZaqJ5wrpMcQGSfQoQ@mail.gmail.com>
-References: <7vzkjrem6b.fsf@alter.siamese.dyndns.org> <1312349176-20984-1-git-send-email-giuseppe.bilotta@gmail.com>
- <20110803093252.GA16351@sigill.intra.peff.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Skip archive --remote tests on Windows
+Date: Wed, 03 Aug 2011 12:40:04 +0200
+Message-ID: <4E392584.6060509@viscovery.net>
+References: <4E3904B8.7080208@viscovery.net> <m3hb5yrhfw.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Aug 03 12:13:09 2011
+Content-Type: text/plain; charset=ISO-8859-4
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 03 12:40:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QoYRo-0004dH-DB
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 12:13:08 +0200
+	id 1QoYs7-00011M-2z
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 12:40:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753482Ab1HCKNE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Aug 2011 06:13:04 -0400
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:55291 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752594Ab1HCKNC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2011 06:13:02 -0400
-Received: by iyb12 with SMTP id 12so820491iyb.19
-        for <git@vger.kernel.org>; Wed, 03 Aug 2011 03:13:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=3HX3yTnCcnXH1SW6hks/88qtuI0JtUGyTZ7Agz2UQa0=;
-        b=TKIqEcdqG8ToTzhw86r56OosO1Q/cytIdsZEJi8bsfDLwB6tdnTMo/6XsbNewHYshR
-         egwo/trr8ywHmf6AhOFFn+UIUlgET7EeMTQ9mmsNB8keZ0REdacsYD37ppDcrPml9/Uj
-         55XYKIMvFd/Uz68IUPIar7U1SGSsa0cXIj5ds=
-Received: by 10.231.193.137 with SMTP id du9mr4807982ibb.136.1312366381245;
- Wed, 03 Aug 2011 03:13:01 -0700 (PDT)
-Received: by 10.231.30.129 with HTTP; Wed, 3 Aug 2011 03:12:41 -0700 (PDT)
-In-Reply-To: <20110803093252.GA16351@sigill.intra.peff.net>
+	id S1754405Ab1HCKkO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Aug 2011 06:40:14 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:2024 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753687Ab1HCKkN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2011 06:40:13 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1QoYrt-0000Dp-9F; Wed, 03 Aug 2011 12:40:05 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 021571660F;
+	Wed,  3 Aug 2011 12:40:04 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.18) Gecko/20110616 Thunderbird/3.1.11
+In-Reply-To: <m3hb5yrhfw.fsf@localhost.localdomain>
+X-Enigmail-Version: 1.1.1
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178557>
 
-On Wed, Aug 3, 2011 at 11:32 AM, Jeff King <peff@peff.net> wrote:
-> On Wed, Aug 03, 2011 at 07:26:16AM +0200, Giuseppe Bilotta wrote:
->
->> All diffs following a function definition will have that function na=
-me
->> as chunck header, but this is the best we can do with the current
->> userdiff capabilities.
->
-> Curious as to how this would look in git.git, I tried "git log -p"
-> before and after your patches, and diffed the result. I noticed two
-> things:
->
-> =A01. Given a block of shell code like this:
->
-> =A0 =A0 =A0 =A0foo() {
-> =A0 =A0 =A0 =A0 =A0... do something ...
-> =A0 =A0 =A0 =A0}
->
-> =A0 =A0 =A0 =A0test_expect_success 'test foo' '
-> =A0 =A0 =A0 =A0 =A0... the actual test ...
-> =A0 =A0 =A0 =A0'
->
-> =A0 =A0 if we add new code after the test, the old regex would print:
->
-> =A0 =A0 =A0 =A0@@ -1,2 +3,4 @@ test_expect_success 'test foo' '
->
-> =A0 =A0 and now we say:
->
-> =A0 =A0 =A0 =A0@@ -1,2 +3,4 @@ foo
->
-> =A0 =A0 which seems more misleading. I know the function-matching cod=
-e has
-> =A0 =A0 no way to say "look for ^}, which signals end of function", s=
-o we
-> =A0 =A0 can't be entirely accurate. But I wonder if the new heuristic
-> =A0 =A0 (which seems to look for a name followed by parentheses) is
-> =A0 =A0 actually any better than the old.
+Am 8/3/2011 11:09, schrieb Jakub Narebski:
+> Johannes Sixt <j.sixt@viscovery.net> writes:
+>> -test_expect_success 'archive --list shows only enabled remote filters' '
+>> +test_expect_success NOT_MINGW 'archive --list shows only enabled remote filters' '
+> 
+> Shouldn't the prerequisite be called FORK rather than NON_MINGW?
 
-I'm not too satisfied with the solution either. I've been thinking
-about adding some important keywords such as for, while, if, until,
-case etc, but decided it would be too much overkill. And, it still
-woudln't work 'correctly' in a case such as this one you presented
-above.
+Yes, it should. But we already have one instance of NOT_MINGW in
+connection with archive --remote in this file before this patch, and with
+Erik's efforts, these particular prerequisites should go away anyway RSN.
 
-> =A02. What would have printed before:
->
-> =A0 =A0 =A0 @@ -1,2 +3,4 @@ foo() {
->
-> =A0 =A0 now prints
->
-> =A0 =A0 =A0 @@ -1,2 +3,4 @@ foo
->
-> =A0 =A0 without the parentheses or brace. It looks like the similar C=
- one
-> =A0 =A0 keeps the parentheses, at least. I find that a bit more reada=
-ble,
-> =A0 =A0 as it is more clear that the line indicates a function, and n=
-ot
-> =A0 =A0 simply some top-level command.
-
-Indeed. I'll change the regexp to include the parenthesis.
-
---=20
-Giuseppe "Oblomov" Bilotta
+-- Hannes
