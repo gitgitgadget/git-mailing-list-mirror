@@ -1,69 +1,73 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Fwd: [PATCH 0/6] rebase: command "ref" and options --rewrite-{refs,heads,tags}
-Date: Wed, 3 Aug 2011 15:32:41 +0200
-Message-ID: <CAGdFq_jLv810a1H=+M14hEho9B_BS4OhdVUz1S-jjMBi6PP28g@mail.gmail.com>
-References: <cover.1309133817.git.greg@quora.com> <BANLkTinDFYsw7-N=_Ex8i42So_0LzVAWvA@mail.gmail.com>
- <7vhb7bxgt9.fsf@alter.siamese.dyndns.org> <20110628104758.GS5771@dr-wily.mit.edu>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Strange O(N^3) behavior in "git filter-branch"
+Date: Wed, 03 Aug 2011 15:33:39 +0200
+Message-ID: <4E394E33.4060107@alum.mit.edu>
+References: <4E1E97C3.3030306@alum.mit.edu> <4E1EB5E9.1070902@alum.mit.edu> <4E200611.9010005@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Greg Price <price@mit.edu>
-X-From: git-owner@vger.kernel.org Wed Aug 03 15:33:30 2011
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Drew Northup <drew.northup@maine.edu>,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 03 15:34:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QobZh-0006OY-8q
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 15:33:29 +0200
+	id 1Qobab-0006yp-A3
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 15:34:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755857Ab1HCNd0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Aug 2011 09:33:26 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:55219 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754452Ab1HCNdV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2011 09:33:21 -0400
-Received: by pzk37 with SMTP id 37so78612pzk.1
-        for <git@vger.kernel.org>; Wed, 03 Aug 2011 06:33:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=KKAmRYbObJHB7bvGL6llTwiIEMS2M1Malsnf875xQQA=;
-        b=VKe3PnFmsdUkQZCjJaac3q0WqjfD7SjF6q4XJpgLr4kzyXHJd2tKOQ4i4ZeKpkyz0+
-         ba3aj8RzEsTd3RaMECr3x9cpAbpk+79fhtdmKP5D2jUoOXqbBI0efnxC8Of2U+tIk7fa
-         JQQe8jbpkyuctOvb0wJtudYXhDIQspfwshNJM=
-Received: by 10.142.121.35 with SMTP id t35mr5015097wfc.7.1312378401161; Wed,
- 03 Aug 2011 06:33:21 -0700 (PDT)
-Received: by 10.68.71.162 with HTTP; Wed, 3 Aug 2011 06:32:41 -0700 (PDT)
-In-Reply-To: <20110628104758.GS5771@dr-wily.mit.edu>
+	id S1754790Ab1HCNeV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Aug 2011 09:34:21 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:36718 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754625Ab1HCNeT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2011 09:34:19 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p73DXelK007571
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 3 Aug 2011 15:33:40 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.18) Gecko/20110617 Lightning/1.0b2 Thunderbird/3.1.11
+In-Reply-To: <4E200611.9010005@alum.mit.edu>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178572>
 
-Heya,
+On 07/15/2011 11:19 AM, Michael Haggerty wrote:
+> On 07/14/2011 11:24 AM, Michael Haggerty wrote:
+>> On 07/14/2011 09:16 AM, Michael Haggerty wrote:
+>>> I have noticed that "git filter-branch" gets pathologically slow when it
+>>> operates on a repository that has many references in a complicated
+>>> directory hierarchy.  The time seems to go like O(N^3), where N is the
+>>> number of references being rewritten.
+> [...]
+> A many possible improvements come to mind, in increasing order of
+> intrusiveness and generality:
+> [...]
+> 5. Organize the loose refs cache in memory as a tree, and only populate
+> the parts of it that are accessed.  This should also speed up iteration
+> through a subtree by avoiding a linear search through all loose references.
 
-On Tue, Jun 28, 2011 at 12:47, Greg Price <price@mit.edu> wrote:
-> I would also like to support that use case. =C2=A0In my personal
-> experience, the case where the part$N are ancestors of the topic has
-> actually been the more common case; typically it's that part1 is some
-> topic, and then part2 is a further topic that depends on the changes
-> in part1, so naturally it goes directly on top of it. =C2=A0So I'd be
-> pleased to get the functionality of the present series in, even befor=
-e
-> supporting the more general case.
+FYI: I am working on (5), namely storing a linked list of loose refs for
+each directory and only populating those directories that are accessed.
+ The directories themselves will be held in a tree/trie (AFAICT the
+distinction is primarily whether each node holds its whole key or only
+the part of the key relative to its parent, which is an implementation
+detail).  As a bonus, the caches for submodules will be handled
+correctly (they are currently never used).
 
-=46WIW, I'm having the exact same need while working on the remote-hg
-series (which depends on my remote-helper follow-up series, which
-depends on fast-export-fixes, which depends on my original
-remote-helper series, which depends on peffs initial patches; luckily
-the latter two have been merged to next :P). I'd really like having
-this available, especially the rebase -i support.
+It might be another week or so before I have patches ready.
 
---=20
-Cheers,
+Michael
 
-Sverre Rabbelier
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
