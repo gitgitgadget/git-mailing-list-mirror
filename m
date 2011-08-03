@@ -1,56 +1,89 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Skip archive --remote tests on Windows
-Date: Wed, 03 Aug 2011 12:40:04 +0200
-Message-ID: <4E392584.6060509@viscovery.net>
-References: <4E3904B8.7080208@viscovery.net> <m3hb5yrhfw.fsf@localhost.localdomain>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [ANNOUNCE/RFC] cj-git-patchtool: a "rebase -i" with more interaction
+Date: Wed, 03 Aug 2011 03:55:21 -0700 (PDT)
+Message-ID: <m3d3gmrchz.fsf@localhost.localdomain>
+References: <CAEjYwfUY9tF_9frkaS7Aw26CPJA02Cr3HDN5Qpkup1rfHYacXw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-4
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Erik Faye-Lund <kusmabite@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 03 12:40:19 2011
+Content-Type: text/plain; charset=iso-8859-4
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Christian Jaeger <chrjae@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 03 12:55:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QoYs7-00011M-2z
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 12:40:19 +0200
+	id 1QoZ6n-0008EP-6o
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 12:55:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754405Ab1HCKkO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Aug 2011 06:40:14 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:2024 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753687Ab1HCKkN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2011 06:40:13 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1QoYrt-0000Dp-9F; Wed, 03 Aug 2011 12:40:05 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 021571660F;
-	Wed,  3 Aug 2011 12:40:04 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.18) Gecko/20110616 Thunderbird/3.1.11
-In-Reply-To: <m3hb5yrhfw.fsf@localhost.localdomain>
-X-Enigmail-Version: 1.1.1
-X-Spam-Score: -1.4 (-)
+	id S1754103Ab1HCKzZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Aug 2011 06:55:25 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:34626 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753639Ab1HCKzX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2011 06:55:23 -0400
+Received: by fxh19 with SMTP id 19so541628fxh.19
+        for <git@vger.kernel.org>; Wed, 03 Aug 2011 03:55:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=7BvU+DKMjrQ24KqowGbDdlTjNP21xS4+i/CW2guTY4o=;
+        b=ueq3ZWZvs4rqptBToVak/33zI0UuUbDY0DrNv8Z21P2jkanfsgjEs9/5wcn5vMDgIe
+         a0LqNDWBmqQ7IZXF4Afw7aURZrq3VmH1r6tOmzOqOwBZG7+i8o/KUvFYKKLgNhcatEmT
+         xR2C2tw2IpbXYG98a5h8/eFPN3tSFh8v0xHaQ=
+Received: by 10.205.35.129 with SMTP id sw1mr2249027bkb.285.1312368922035;
+        Wed, 03 Aug 2011 03:55:22 -0700 (PDT)
+Received: from localhost.localdomain (abvd21.neoplus.adsl.tpnet.pl [83.8.201.21])
+        by mx.google.com with ESMTPS id x1sm2431667fah.2.2011.08.03.03.55.20
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 03 Aug 2011 03:55:21 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p73AsrB7027738;
+	Wed, 3 Aug 2011 12:55:04 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p73AsmGG027734;
+	Wed, 3 Aug 2011 12:54:48 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <CAEjYwfUY9tF_9frkaS7Aw26CPJA02Cr3HDN5Qpkup1rfHYacXw@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178558>
 
-Am 8/3/2011 11:09, schrieb Jakub Narebski:
-> Johannes Sixt <j.sixt@viscovery.net> writes:
->> -test_expect_success 'archive --list shows only enabled remote filters' '
->> +test_expect_success NOT_MINGW 'archive --list shows only enabled remote filters' '
-> 
-> Shouldn't the prerequisite be called FORK rather than NON_MINGW?
+Christian Jaeger <chrjae@gmail.com> writes:
 
-Yes, it should. But we already have one instance of NOT_MINGW in
-connection with archive --remote in this file before this patch, and with
-Erik's efforts, these particular prerequisites should go away anyway RSN.
+> So I've written a set of tools[1] that separates the acts of editing
+> and applying history changes.
+[...]
+>=20
+> For more information see the README on Github.[1]
+[...]
 
--- Hannes
+I have added cj-git-patchtool to "Patch-management Interface layers"
+section of "Interfaces, frontends and tools" page on Git Wiki:
+
+  https://git.wiki.kernel.org/index.php/Interfaces,_frontends,_and_tool=
+s#cj-git-patchtool
+
+Please check if it is correct, and improve project description if
+needed.
+
+> I don't know whether there are other tools offering the same now.
+> Also, I have written this "just for myself", and for this reason made
+> use of a set of never-before released Perl libraries of mine. If
+> there's general interest in this tool, I'll be glad to help get rid o=
+f
+> the dependency on these libraries (or clean them up and publish them
+> properly, too).
+
+I use one of patch management interfaces for that, namely StGit.  It
+operates on stack of patches, which you can apply and unapply, going
+back and forth and correcting them.
+
+--=20
+Jakub Nar=EAbski
