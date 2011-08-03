@@ -1,128 +1,93 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH v14 5/8] bisect: introduce --no-checkout support into porcelain.
-Date: Wed, 3 Aug 2011 23:16:15 +1000
-Message-ID: <CAH3AnrrtfhU1r1DWO8ski5Jd=cLXcj3Wq-MowB8QKv+r1-BT_A@mail.gmail.com>
-References: <1312323362-20096-1-git-send-email-jon.seymour@gmail.com>
-	<1312323362-20096-6-git-send-email-jon.seymour@gmail.com>
-	<7voc07ct9z.fsf@alter.siamese.dyndns.org>
-	<7vk4avcsk9.fsf@alter.siamese.dyndns.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: "git check-attr" lists macros as being "set" -- feature or bug?
+Date: Wed, 03 Aug 2011 15:19:39 +0200
+Message-ID: <4E394AEB.7020006@alum.mit.edu>
+References: <4E2EAEA3.8000307@alum.mit.edu> <20110726184756.GA520@sigill.intra.peff.net> <7vvcuoq13i.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, chriscool@tuxfamily.org, j6t@kdbg.org,
-	jnareb@gmail.com
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 03 15:16:22 2011
+X-From: git-owner@vger.kernel.org Wed Aug 03 15:19:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QobJ7-0004sJ-NB
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 15:16:22 +0200
+	id 1QobMZ-0006on-1b
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 15:19:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755731Ab1HCNQR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Aug 2011 09:16:17 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:33121 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755668Ab1HCNQQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2011 09:16:16 -0400
-Received: by vws1 with SMTP id 1so287667vws.19
-        for <git@vger.kernel.org>; Wed, 03 Aug 2011 06:16:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=MfmbS3YaePlw9atPHmYYTrVSdTyH6Vsvgd3edEakYOk=;
-        b=d4zD7CIDQP+N9flARDalpT9AoeYEwfJLupkAePHxNJNOBZg4lpp0TMqpIQXTcYxNYO
-         ylkyAkQp78Sir3OnGK+jUXM1QWUPf+UOq/W23qZFhJR1Fc2FfeevNZldYS5rDAWQUyYq
-         69qifijOMMqwhXjeC/2lcq8f5wVo48XtwNPZ8=
-Received: by 10.52.22.19 with SMTP id z19mr1071741vde.499.1312377375174; Wed,
- 03 Aug 2011 06:16:15 -0700 (PDT)
-Received: by 10.52.183.39 with HTTP; Wed, 3 Aug 2011 06:16:15 -0700 (PDT)
-In-Reply-To: <7vk4avcsk9.fsf@alter.siamese.dyndns.org>
+	id S1755769Ab1HCNTu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Aug 2011 09:19:50 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:36630 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755745Ab1HCNTt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2011 09:19:49 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p73DJeOO006491
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 3 Aug 2011 15:19:41 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.18) Gecko/20110617 Lightning/1.0b2 Thunderbird/3.1.11
+In-Reply-To: <7vvcuoq13i.fsf@alter.siamese.dyndns.org>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178567>
 
-On Wed, Aug 3, 2011 at 9:16 AM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Junio C Hamano <gitster@pobox.com> writes:
+On 07/26/2011 09:43 PM, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+>> I don't know the original rationale, but it seems like the only sane
+>> behavior to me.
+
+I agree that the behavior is sane (and also convenient).
+
+> When we say "check-attr tells you if the named attribute is set", do we
+> say "but macros cannot be examined this way" in the documentation?  If
+> not, I do not think we need any cluttering update.
+
+I was confused by the following things:
+
+* The word "macro" in other contexts (e.g., C macros) typically refers
+to something that is fully replaced by its substitution text, leaving no
+trace of the original macro or its name.
+
+* In gitattributes(5), the following misleading text:
+
+> ------------
+> *.jpg -text -diff
+> ------------
 >
->> Jon Seymour <jon.seymour@gmail.com> writes:
->> ...
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if test "$BISECT_MODE" =3D=
- "--no-checkout"; then
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0git update=
--ref --no-deref HEAD "$start_head"
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0else
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0git checko=
-ut "$start_head" --
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0fi
->>
->> Just a minor worry but I would not be surprised if somebody's "test"
->> implementation barfs upon:
->>
->> =C2=A0 =C2=A0 =C2=A0 test "--no-checkout" =3D "--no-checkout"
->>
->> mistaking the string with a dash at the beginning as an option unkno=
-wn to
->> it. That is why we often have "z$variable" in our comparison, like s=
-o:
->>
->> =C2=A0 =C2=A0 =C2=A0 if test "z$BISECT_MODE" =3D "z--no-checkout"
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 then
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git update-ref --no=
--deref BISECT_HEAD "$start_head"
->> =C2=A0 =C2=A0 =C2=A0 else
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git checkout "$star=
-t_head" --
->> =C2=A0 =C2=A0 =C2=A0 fi
->>
->>> - =C2=A0 =C2=A0git rev-parse --sq-quote "$@" >"$GIT_DIR/BISECT_NAME=
-S" &&
->>> + =C2=A0 =C2=A0git rev-parse --sq-quote "$@" >"$GIT_DIR/BISECT_NAME=
-S"
->>> + =C2=A0 =C2=A0echo "$BISECT_MODE" > "$GIT_DIR/BISECT_MODE" &&
->>
->> &&?
+> but that may become cumbersome, when you have many attributes.  Using
+> attribute macros, you can specify groups of attributes set or unset at
+> the same time.  The system knows a built-in attribute macro, `binary`:
 >
-> Having said that, other than these minor nits, I think this round is
-> almost ready. I didn't check how it behaves upon "bisect reset",
-> though. It shouldn't touch the index, HEAD nor the working tree (it
-> probably is just the matter of "update-ref -d BISECT_HEAD" and nothin=
-g
-> else, but I haven't thought things through thoroughly).
-
-That seems reasonable. In fact, none of these series properly cleaned
-up the reset state properly, so I'll fix that and a test for it.
-
+> ------------
+> *.jpg binary
+> ------------
 >
-> Further polishing we may want to do while it is still in pu/next I ca=
-n
-> think of off the top of my head are:
->
-> =C2=A0- In this mode, I can bisect the history even inside a bare rep=
-ository,
-> =C2=A0 as the whole point of --no-checkout is that the mode does not =
-require a
-> =C2=A0 working tree. I however suspect "git bisect" requires working =
-tree. Is
-> =C2=A0 this something we want to fix?
->
+> which is equivalent to the above.
 
-I agree, that would be useful. Haven't tried it yet but I'll see what
-happens.I may issue changes for this as separate commit that can be
-squashed later, if required,  once it has been reviewed.
+It is *not* equivalent to the above, rather it is equivalent to
 
-BTW: I'll squash v14 8/8 into the other commits, per Christian's sugges=
-tion.
+*.jpg binary -text -diff
 
-> =C2=A0- Further, perhaps should we default to this mode inside a bare
-> =C2=A0 repository?
+(neglecting, of course, the recursive expansion of "binary").
 
-Seems reasonable.
+I will soon send a documentation patch.
 
-jon.
+> It is a separate issue if macros should also be listed as the new feature
+> that lists all attributes given to a path. I tend to think the macro
+> attributes as well as the other attributes they set should all be shown.
+
+I agree.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
