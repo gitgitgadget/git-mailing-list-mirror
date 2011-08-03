@@ -1,77 +1,71 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v14 5/8] bisect: introduce --no-checkout support into
- porcelain.
-Date: Wed, 3 Aug 2011 20:57:19 +0200
-Message-ID: <20110803185719.GA4275@elie.Hillsp>
-References: <1312323362-20096-1-git-send-email-jon.seymour@gmail.com>
- <1312323362-20096-6-git-send-email-jon.seymour@gmail.com>
- <7voc07ct9z.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Why do some commits not appear in "git log"?
+Date: Wed, 03 Aug 2011 11:57:35 -0700
+Message-ID: <7vipqeb9wg.fsf@alter.siamese.dyndns.org>
+References: <CA++fsGGG7pLt4xoeJozGnYEwOrs6NuzStYPKF_L5k49uzFB-4A@mail.gmail.com>
+ <CA++fsGEht+UDp9EnFyfvn-uT1DYPcnhpwmPy_H4PTWvsvUceAQ@mail.gmail.com>
+ <CAMOZ1Bt+Z4XDPNBQyUeVk30aEOuXFAuh8jhdhFke-CDZt2pEDg@mail.gmail.com>
+ <CA++fsGGhzVkXTPLui+DfTFcjve7w80Kud4RxC0p=5AenOcBSDw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jon Seymour <jon.seymour@gmail.com>, git@vger.kernel.org,
-	chriscool@tuxfamily.org, j6t@kdbg.org, jnareb@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 03 20:57:35 2011
+Cc: Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org
+To: Dov Grobgeld <dov.grobgeld@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 03 20:57:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QogdH-0002yU-S4
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 20:57:32 +0200
+	id 1QogdT-00033r-7z
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 20:57:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755035Ab1HCS52 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Aug 2011 14:57:28 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:60848 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753872Ab1HCS51 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2011 14:57:27 -0400
-Received: by wwe5 with SMTP id 5so1139481wwe.1
-        for <git@vger.kernel.org>; Wed, 03 Aug 2011 11:57:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=E68ACP75ncY91EmrL7PUzksMoAk8WrxIYE50YfeuhcY=;
-        b=btlkW/9P0btFYZPpT2XAZk74PqFvXVBESTCu9s5ttEcjv0cXnd8Z5QAODAO8EaVPIt
-         qp/RP2+HtXRo0bm7wuWPIjtFqUwQtlDfNmK0wWgQ6uv5hjfCHmdu0qPOnQ8EN+6GarAu
-         Um/maYSQj6gN3Co+t21o3BBu6v94p4HDHLp4I=
-Received: by 10.227.160.78 with SMTP id m14mr8641695wbx.80.1312397845742;
-        Wed, 03 Aug 2011 11:57:25 -0700 (PDT)
-Received: from elie.Hillsp (94-194-201-239.zone8.bethere.co.uk [94.194.201.239])
-        by mx.google.com with ESMTPS id fc2sm901884wbb.18.2011.08.03.11.57.24
-        (version=SSLv3 cipher=OTHER);
-        Wed, 03 Aug 2011 11:57:25 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7voc07ct9z.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S1755227Ab1HCS5j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Aug 2011 14:57:39 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46566 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755197Ab1HCS5i (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2011 14:57:38 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C8ABE4472;
+	Wed,  3 Aug 2011 14:57:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SRrDbF2N9W1UFea1faQLBauIj/w=; b=PKtloS
+	rFA04YGzSSdjL9RC8R3VYdcYQ5+ziZ/vBTBPvARMPlUSi4ido5iwngmG7RbSER5u
+	E93+UcQDO4LI+Qs+UPNTXk7hglUyBYcIsXtKguSzCJVF/GUlVBX+ifkt0jv9u0Ym
+	XE7My19jcpaRGUw5aC1riqvMnZWMlfMRPeaBs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=O7M4T8Y9dz6xYkoLokj1pjkyTacBREZt
+	quG2N5M/PMj7G/AE/I3Rl0zrqUaYWyyMP6e6ySr64gVdPaCZkXs6/dKZuZawS9Bo
+	cDRGHq+by3VqWvB96NCfs9hCgVndovZwAzbYWdtmYjXu/3U1r7wI3tIEGLChGsSM
+	Ud48c/fAuko=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C001B4471;
+	Wed,  3 Aug 2011 14:57:37 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3AFED4470; Wed,  3 Aug 2011
+ 14:57:37 -0400 (EDT)
+In-Reply-To: <CA++fsGGhzVkXTPLui+DfTFcjve7w80Kud4RxC0p=5AenOcBSDw@mail.gmail.com> (Dov
+ Grobgeld's message of "Wed, 3 Aug 2011 08:47:46 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 745C1EDC-BE02-11E0-9BD6-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178608>
 
-Junio C Hamano wrote:
+Dov Grobgeld <dov.grobgeld@gmail.com> writes:
 
-> Just a minor worry but I would not be surprised if somebody's "test"
-> implementation barfs upon:
->
-> 	test "--no-checkout" = "--no-checkout"
->
-> mistaking the string with a dash at the beginning as an option unknown to
-> it. That is why we often have "z$variable" in our comparison, like so:
->
-> 	if test "z$BISECT_MODE" = "z--no-checkout"
+> --full-history indeed made the missing commits show up! So why was the
+> commit pruned? It contains some substantial source changes...
 
-Hmm.
+I suspect that these "substantial changes" did not make any contribution
+to the end result. Read
 
-	$ git grep -e 'test "\$' | wc -l
-	712
-	$ git grep -e 'test ".\$' | wc -l
-	183
+http://thread.gmane.org/gmane.comp.version-control.git/89400/focus=90659
 
-We are very inconsistent about such usage, generally, and of course
-POSIX is very clear about the 'z' not being needed in a three-argument
-"test" used for string comparison.  Is there any platform that is
-usable for git (e.g., that implements "$( ... )") and has that
-problem?
+These days, the --post-simplify option implemented in that discussion
+thread is called --simplify-merges or something, I think.
