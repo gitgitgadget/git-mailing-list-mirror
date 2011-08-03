@@ -1,73 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1bis/2] Diff patterns for POSIX shells
-Date: Wed, 03 Aug 2011 11:53:50 -0700
-Message-ID: <7vmxfqba2p.fsf@alter.siamese.dyndns.org>
-References: <7vzkjrem6b.fsf@alter.siamese.dyndns.org>
- <1312349176-20984-1-git-send-email-giuseppe.bilotta@gmail.com>
- <20110803093252.GA16351@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v14 5/8] bisect: introduce --no-checkout support into
+ porcelain.
+Date: Wed, 3 Aug 2011 20:57:19 +0200
+Message-ID: <20110803185719.GA4275@elie.Hillsp>
+References: <1312323362-20096-1-git-send-email-jon.seymour@gmail.com>
+ <1312323362-20096-6-git-send-email-jon.seymour@gmail.com>
+ <7voc07ct9z.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Aug 03 20:53:58 2011
+Cc: Jon Seymour <jon.seymour@gmail.com>, git@vger.kernel.org,
+	chriscool@tuxfamily.org, j6t@kdbg.org, jnareb@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 03 20:57:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QogZp-00016L-J8
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 20:53:57 +0200
+	id 1QogdH-0002yU-S4
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 20:57:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754534Ab1HCSxy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Aug 2011 14:53:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44974 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753872Ab1HCSxw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2011 14:53:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A43D440C;
-	Wed,  3 Aug 2011 14:53:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+qGBEUNW5O8vJ1qEJAS2Wdeel4M=; b=us0df0
-	6o4QYvh2bm4VdtmKcci9xyH7HirODStcV3TT0io7Hkeg6EN6XnJBkPBHztgdq5Q7
-	MNO/MvHo3UyW0JWxUI9xscTVWR8szN4cSnynXUDDcxpldf3hUoQPBqyrdT8wbzf1
-	OoixVvkAdnLaxivL60fZqTg+6yWfNopt1/HKk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EKdf7xFW72ElzEjssswazVb2Js6TM/JX
-	tsKUGjTVmpZuxAzdBkgnU89MjnPBq3qyaYEYkNoRk+U83wvv62BWpOG6xSEszVNX
-	pM1AZ6TtflQPhkhdgp/fSolNRoRoGU2ZH2H7zStyogrNi9+UMBlihCnHTJd10BXo
-	Qh+Nuc+kBZs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 71D9D440B;
-	Wed,  3 Aug 2011 14:53:52 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E414E440A; Wed,  3 Aug 2011
- 14:53:51 -0400 (EDT)
-In-Reply-To: <20110803093252.GA16351@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 3 Aug 2011 03:32:52 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: EE10E100-BE01-11E0-8C63-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755035Ab1HCS52 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Aug 2011 14:57:28 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:60848 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753872Ab1HCS51 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2011 14:57:27 -0400
+Received: by wwe5 with SMTP id 5so1139481wwe.1
+        for <git@vger.kernel.org>; Wed, 03 Aug 2011 11:57:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=E68ACP75ncY91EmrL7PUzksMoAk8WrxIYE50YfeuhcY=;
+        b=btlkW/9P0btFYZPpT2XAZk74PqFvXVBESTCu9s5ttEcjv0cXnd8Z5QAODAO8EaVPIt
+         qp/RP2+HtXRo0bm7wuWPIjtFqUwQtlDfNmK0wWgQ6uv5hjfCHmdu0qPOnQ8EN+6GarAu
+         Um/maYSQj6gN3Co+t21o3BBu6v94p4HDHLp4I=
+Received: by 10.227.160.78 with SMTP id m14mr8641695wbx.80.1312397845742;
+        Wed, 03 Aug 2011 11:57:25 -0700 (PDT)
+Received: from elie.Hillsp (94-194-201-239.zone8.bethere.co.uk [94.194.201.239])
+        by mx.google.com with ESMTPS id fc2sm901884wbb.18.2011.08.03.11.57.24
+        (version=SSLv3 cipher=OTHER);
+        Wed, 03 Aug 2011 11:57:25 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7voc07ct9z.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178607>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano wrote:
 
-> On Wed, Aug 03, 2011 at 07:26:16AM +0200, Giuseppe Bilotta wrote:
+> Just a minor worry but I would not be surprised if somebody's "test"
+> implementation barfs upon:
 >
->> All diffs following a function definition will have that function name
->> as chunck header, but this is the best we can do with the current
->> userdiff capabilities.
+> 	test "--no-checkout" = "--no-checkout"
 >
-> Curious as to how this would look in git.git, I tried "git log -p"
-> before and after your patches, and diffed the result. I noticed two
-> things:
+> mistaking the string with a dash at the beginning as an option unknown to
+> it. That is why we often have "z$variable" in our comparison, like so:
+>
+> 	if test "z$BISECT_MODE" = "z--no-checkout"
 
-Hmm, sounds like a regression without much upside to me.
-Thanks for looking.
+Hmm.
+
+	$ git grep -e 'test "\$' | wc -l
+	712
+	$ git grep -e 'test ".\$' | wc -l
+	183
+
+We are very inconsistent about such usage, generally, and of course
+POSIX is very clear about the 'z' not being needed in a three-argument
+"test" used for string comparison.  Is there any platform that is
+usable for git (e.g., that implements "$( ... )") and has that
+problem?
