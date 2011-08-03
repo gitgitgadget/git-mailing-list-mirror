@@ -1,86 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1bis/2] Diff patterns for POSIX shells
-Date: Wed, 3 Aug 2011 03:32:52 -0600
-Message-ID: <20110803093252.GA16351@sigill.intra.peff.net>
-References: <7vzkjrem6b.fsf@alter.siamese.dyndns.org>
- <1312349176-20984-1-git-send-email-giuseppe.bilotta@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 03 11:33:10 2011
+From: maximilian attems <max@stro.at>
+Subject: [PATCH] am: pass exclude down to apply
+Date: Wed,  3 Aug 2011 11:37:29 +0200
+Message-ID: <1312364249-1439-1-git-send-email-max@stro.at>
+Cc: Junio C Hamano <gitster@pobox.com>, maximilian attems <max@stro.at>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 03 11:36:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QoXp2-0001oi-FK
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 11:33:04 +0200
+	id 1QoXsn-0003kz-S7
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 11:36:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753546Ab1HCJc7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Aug 2011 05:32:59 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46710
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752917Ab1HCJc6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2011 05:32:58 -0400
-Received: (qmail 5758 invoked by uid 107); 3 Aug 2011 09:33:30 -0000
-Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 03 Aug 2011 05:33:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Aug 2011 03:32:52 -0600
-Content-Disposition: inline
-In-Reply-To: <1312349176-20984-1-git-send-email-giuseppe.bilotta@gmail.com>
+	id S1753665Ab1HCJgy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Aug 2011 05:36:54 -0400
+Received: from vostochny.stro.at ([78.47.22.85]:43634 "EHLO vostochny.stro.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753547Ab1HCJgw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2011 05:36:52 -0400
+Received: from stro.at (cp6.itp.tuwien.ac.at [128.131.48.206])
+	by vostochny.stro.at (Postfix) with ESMTPA id 8D9D3C14C;
+	Wed,  3 Aug 2011 09:36:51 +0000 (UTC)
+Received: by stro.at (Postfix, from userid 1000)
+	id CA1A1161A93; Wed,  3 Aug 2011 11:37:41 +0200 (CEST)
+X-Mailer: git-send-email 1.7.5.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178552>
 
-On Wed, Aug 03, 2011 at 07:26:16AM +0200, Giuseppe Bilotta wrote:
+This allows to pass patches around from repositories,
+where the other repository doesn't feature certain files.
 
-> All diffs following a function definition will have that function name
-> as chunck header, but this is the best we can do with the current
-> userdiff capabilities.
+In the special case this works for dash git sync to klibc dash:
+ git am --directory="usr/dash" --exclude="usr/dash/configure.ac" \
+        --exclude="usr/dash/ChangeLog" --exclude="usr/dash/dash.1" \
+	.. -i -s -k ../dash/000X-foo.patch
 
-Curious as to how this would look in git.git, I tried "git log -p"
-before and after your patches, and diffed the result. I noticed two
-things:
+Signed-off-by: maximilian attems <max@stro.at>
+---
+ git-am.sh |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-  1. Given a block of shell code like this:
+This is a resent, haven't a test for this usecase,
+but it is useful and simple enough, so reposted.
 
-        foo() {
-          ... do something ...
-        }
-
-        test_expect_success 'test foo' '
-          ... the actual test ...
-        '
-
-     if we add new code after the test, the old regex would print:
-
-        @@ -1,2 +3,4 @@ test_expect_success 'test foo' '
-
-     and now we say:
-
-        @@ -1,2 +3,4 @@ foo
-
-     which seems more misleading. I know the function-matching code has
-     no way to say "look for ^}, which signals end of function", so we
-     can't be entirely accurate. But I wonder if the new heuristic
-     (which seems to look for a name followed by parentheses) is
-     actually any better than the old.
-
-  2. What would have printed before:
-
-       @@ -1,2 +3,4 @@ foo() {
-
-     now prints
-
-       @@ -1,2 +3,4 @@ foo
-
-     without the parentheses or brace. It looks like the similar C one
-     keeps the parentheses, at least. I find that a bit more readable,
-     as it is more clear that the line indicates a function, and not
-     simply some top-level command.
-
--Peff
+diff --git a/git-am.sh b/git-am.sh
+index 463c741..8d185aa 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -22,6 +22,7 @@ whitespace=     pass it through git-apply
+ ignore-space-change pass it through git-apply
+ ignore-whitespace pass it through git-apply
+ directory=      pass it through git-apply
++exclude=        pass it through git-apply
+ C=              pass it through git-apply
+ p=              pass it through git-apply
+ patch-format=   format the patch(es) are in
+@@ -366,7 +367,7 @@ do
+ 		;;
+ 	--resolvemsg)
+ 		shift; resolvemsg=$1 ;;
+-	--whitespace|--directory)
++	--whitespace|--directory|--exclude)
+ 		git_apply_opt="$git_apply_opt $(sq "$1=$2")"; shift ;;
+ 	-C|-p)
+ 		git_apply_opt="$git_apply_opt $(sq "$1$2")"; shift ;;
+-- 
+1.7.5.4
