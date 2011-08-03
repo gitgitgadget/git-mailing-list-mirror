@@ -1,74 +1,70 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v14 5/8] bisect: introduce --no-checkout support into
- porcelain.
-Date: Wed, 3 Aug 2011 23:45:06 +0200
-Message-ID: <20110803214506.GA6740@elie.Hillsp>
-References: <1312323362-20096-1-git-send-email-jon.seymour@gmail.com>
- <1312323362-20096-6-git-send-email-jon.seymour@gmail.com>
- <7voc07ct9z.fsf@alter.siamese.dyndns.org>
- <20110803185719.GA4275@elie.Hillsp>
- <CAH3AnrrMUiWkRk0ocr4RY05qj7GU5hqSkaxy+zYJRx12o=hwNA@mail.gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: tracking submodules out of main directory.
+Date: Wed, 3 Aug 2011 23:45:58 +0200
+Message-ID: <20110803214530.GA34347@book.hvoigt.net>
+References: <1311932377.3734.182.camel@Naugrim.eriador.com> <4E34122B.5020509@web.de> <1312062927.3261.334.camel@Naugrim.eriador.com> <4E370107.3050002@web.de> <1312287584.3261.798.camel@Naugrim.eriador.com> <4E384510.1070803@web.de> <20110803062536.GB33203@book.hvoigt.net> <1312374382.3261.913.camel@Naugrim.eriador.com> <7v8vractdw.fsf@alter.siamese.dyndns.org> <4E399C62.30604@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	chriscool@tuxfamily.org, j6t@kdbg.org, jnareb@gmail.com
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 03 23:45:25 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	henri GEIST <henri.geist@flying-robots.com>,
+	Alexei Sholik <alcosholik@gmail.com>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Aug 03 23:46:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QojFi-0001HH-KH
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 23:45:22 +0200
+	id 1QojGW-0001iu-46
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 23:46:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755018Ab1HCVpS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Aug 2011 17:45:18 -0400
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:61753 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752952Ab1HCVpQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2011 17:45:16 -0400
-Received: by wwg11 with SMTP id 11so3853615wwg.1
-        for <git@vger.kernel.org>; Wed, 03 Aug 2011 14:45:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=tkXbWrrtpPQKvZU0qQNcAVN3herLXWPuu05+PCks3yE=;
-        b=hCmdeVt8lpR3iSw8GH6nCK+0Tsolw52I10r+Afpju0ntvogkqm/3yovPpk9VXqZB5W
-         TBf9MtcZr7GhxCZEw8y8vi7iLiZL0F2t8P1r3LSJrnt7WJxvKVlvRLW6D+Rh3QGYM2Yp
-         61FpC5qBWghtYz3r6cT92dINshx83eMTsfHx0=
-Received: by 10.216.21.134 with SMTP id r6mr52775wer.5.1312407915242;
-        Wed, 03 Aug 2011 14:45:15 -0700 (PDT)
-Received: from elie.Hillsp (94-194-201-239.zone8.bethere.co.uk [94.194.201.239])
-        by mx.google.com with ESMTPS id z83sm810155weq.20.2011.08.03.14.45.12
-        (version=SSLv3 cipher=OTHER);
-        Wed, 03 Aug 2011 14:45:14 -0700 (PDT)
+	id S1755173Ab1HCVqI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Aug 2011 17:46:08 -0400
+Received: from darksea.de ([83.133.111.250]:60686 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752952Ab1HCVqG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2011 17:46:06 -0400
+Received: (qmail 30526 invoked from network); 3 Aug 2011 23:45:58 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 3 Aug 2011 23:45:58 +0200
 Content-Disposition: inline
-In-Reply-To: <CAH3AnrrMUiWkRk0ocr4RY05qj7GU5hqSkaxy+zYJRx12o=hwNA@mail.gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+In-Reply-To: <4E399C62.30604@web.de>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178627>
 
-Jon Seymour wrote:
-> On Thu, Aug 4, 2011 at 4:57 AM, Jonathan Nieder <jrnieder@gmail.com> =
-wrote:
+Hi,
 
->> We are very inconsistent about such usage, generally, and of course
->> POSIX is very clear about the 'z' not being needed in a three-argume=
-nt
->> "test" used for string comparison. =C2=A0Is there any platform that =
-is
->> usable for git (e.g., that implements "$( ... )") and has that
->> problem?
->
-> Thanks. Applied.
+On Wed, Aug 03, 2011 at 09:07:14PM +0200, Jens Lehmann wrote:
+> Am 03.08.2011 19:11, schrieb Junio C Hamano:
+> But the superproject is still the place to say: I know these versions of
+> all submodules work together, so I commit their gitlinks here. But this
+> scheme enables submodules to give hints to help the superproject's user.
+> 
+> > I also suspect that allowing each submodule to know and demand specific
+> > versions of other submodules will lead to inconsistencies. Which version
+> > of submodule C would you demand to have when submodule A wants version C0
+> > and submodule B wants version C1 of it?
+> 
+> Right, in the discussion so far it seemed like henri seems to be the only
+> user who is wanting an exact match, and he says he needs to see these
+> inconsistencies. But I think he can modify the "version xxx or newer" to
+> his needs without imposing these inconsistencies on users (like me) who
+> don't want to see them.
 
-Hm --- I was just asking a question, not meant to be rhetorical.  I
-guess the question was applied, or that you inferred some patch from
-it. :)
+And I imagine if a submodule has such hints we could add a command say
+
+	git submodule resolve-dependencies
+
+which could resolve such "I need a version newer than" hints given by a
+submodule to help the user to update a submodule in the superproject.
+
+Disclaimer: I think we need to think about all the implications such a
+scheme introduces very carefully. The picture is still a bit blurry for
+me.
+
+Cheers Heiko
