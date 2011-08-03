@@ -1,58 +1,76 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH v2] commit: allow partial commits with relative paths
-Date: Wed, 3 Aug 2011 21:28:28 +0200
-Message-ID: <20110803192828.GA4228@toss>
-References: <CAOnWdohKfwEOMx=wr_PKiW+ucYBK2ZWykm_7dqr7hy4xGRM02A@mail.gmail.com>
- <19b908142567fcfafe4da3d0fd60b134d30c613a.1311579663.git.git@drmicha.warpmail.net>
- <20110729133551.GA8707@toss.lan>
- <4E343534.8000604@drmicha.warpmail.net>
- <20110730170045.GA9900@toss.lan>
- <4E34399C.2080109@drmicha.warpmail.net>
- <20110730171347.GA10432@toss.lan>
- <7vbow7ebzw.fsf@alter.siamese.dyndns.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v15 5/7] bisect: introduce --no-checkout support into porcelain.
+Date: Wed, 3 Aug 2011 21:33:19 +0200
+Message-ID: <201108032133.19854.chriscool@tuxfamily.org>
+References: <1312383811-7130-1-git-send-email-jon.seymour@gmail.com> <1312383811-7130-6-git-send-email-jon.seymour@gmail.com> <CAH3Anrrt-FPqWmDhv0ucQfGKmgVbGLFBE5Pf8ma1LWroydNWLQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
-	Reuben Thomas <rrt@sc3d.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 03 21:28:39 2011
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com, j6t@kdbg.org,
+	jnareb@gmail.com
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 03 21:33:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qoh7O-0003aw-NY
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 21:28:39 +0200
+	id 1QohCA-0006Gm-Bb
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 21:33:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752637Ab1HCT2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Aug 2011 15:28:34 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:62109 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750926Ab1HCT2d (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2011 15:28:33 -0400
-Received: from localhost (p5B22C504.dip.t-dialin.net [91.34.197.4])
-	by bsmtp.bon.at (Postfix) with ESMTP id E5F08130047;
-	Wed,  3 Aug 2011 21:28:29 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vbow7ebzw.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752315Ab1HCTda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Aug 2011 15:33:30 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:32880 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750926Ab1HCTd3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2011 15:33:29 -0400
+Received: from style.localnet (unknown [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 5A2ACA627A;
+	Wed,  3 Aug 2011 21:33:21 +0200 (CEST)
+User-Agent: KMail/1.13.6 (Linux/2.6.38-8-generic; KDE/4.6.2; x86_64; ; )
+In-Reply-To: <CAH3Anrrt-FPqWmDhv0ucQfGKmgVbGLFBE5Pf8ma1LWroydNWLQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178612>
 
-Hi Junio,
-
-On Tue, Aug 02, 2011 at 02:31:47PM -0700, Junio C Hamano wrote:
+On Wednesday 03 August 2011 17:32:09 Jon Seymour wrote:
+> On Thu, Aug 4, 2011 at 1:03 AM, Jon Seymour <jon.seymour@gmail.com> wrote:
+>         rm -f "$GIT_DIR/head-name" &&
 > 
-> Perhaps "common_prefix()"?
+> > -
+> > -       rm -f "$GIT_DIR/BISECT_START"
+> > +       rm -f "$GIT_DIR/BISECT_START" &&
+> > +       git update-ref -d BISECT_HEAD
+> >  }
+> 
+> I'll reverse the order of the last two statements and restore the blank
+> line...
 
-Yes, I was thinking the same thing actually.
+Great!
 
-> Don't you also want to consolidate dir.c:common_prefix() with this?
+It would be nice too if the "git update-ref" call that creates the ref in the 
+first place was after the creation of the $GIT_DIR/BISECT_START file.
+This way we start by creating the $GIT_DIR/BISECT_START file and we finish by 
+deleting it.
 
-I wasn't aware of it. I'm really swamped right now, but I'll take a
-look at it soon.
+That is change this:
 
-Clemens
+...
++       test "$mode" != "--no-checkout" ||
++       git update-ref --no-deref BISECT_HEAD "$start_head" &&
+        echo "$start_head" >"$GIT_DIR/BISECT_START" &&
+ 
+into something like this:
+
+        echo "$start_head" >"$GIT_DIR/BISECT_START" &&
++	{
++		test "$mode" != "--no-checkout" ||
++       	git update-ref --no-deref BISECT_HEAD "$start_head"
++	} &&
+...
+
+Thanks,
+Christian.
