@@ -1,223 +1,146 @@
-From: henri GEIST <henri.geist@flying-robots.com>
-Subject: Re: tracking submodules out of main directory.
-Date: Wed, 03 Aug 2011 23:49:35 +0200
-Message-ID: <1312408175.3261.998.camel@Naugrim.eriador.com>
-References: <4E0A08AE.8090407@web.de>
-	 <1311792580.2413.82.camel@Naugrim.eriador.com>
-	 <1311843465.3734.40.camel@Naugrim.eriador.com> <4E3192D4.5000504@web.de>
-	 <1311932377.3734.182.camel@Naugrim.eriador.com> <4E34122B.5020509@web.de>
-	 <1312062927.3261.334.camel@Naugrim.eriador.com> <4E370107.3050002@web.de>
-	 <1312287584.3261.798.camel@Naugrim.eriador.com> <4E384510.1070803@web.de>
-	 <20110803062536.GB33203@book.hvoigt.net>
-	 <1312374382.3261.913.camel@Naugrim.eriador.com>
-	 <7v8vractdw.fsf@alter.siamese.dyndns.org>  <4E399C62.30604@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Alexei Sholik <alcosholik@gmail.com>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed Aug 03 23:46:33 2011
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH v16 0/7] bisect: Add support for --no-checkout option
+Date: Thu,  4 Aug 2011 07:56:59 +1000
+Message-ID: <1312408626-8600-1-git-send-email-jon.seymour@gmail.com>
+Cc: chriscool@tuxfamily.org, gitster@pobox.com, j6t@kdbg.org,
+	jnareb@gmail.com, jrnieder@gmail.com,
+	Jon Seymour <jon.seymour@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 03 23:57:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QojGr-0001sV-6v
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 23:46:33 +0200
+	id 1QojRs-0007Dl-OA
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 23:57:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755282Ab1HCVq3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Aug 2011 17:46:29 -0400
-Received: from mail11.surf-town.net ([212.97.132.51]:58982 "EHLO
-	mailgw19.surf-town.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752952Ab1HCVq1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2011 17:46:27 -0400
-Received: by mailgw19.surf-town.net (Postfix, from userid 65534)
-	id 8DEA511185F; Wed,  3 Aug 2011 23:46:26 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by mailgw19.surf-town.net (Postfix) with ESMTP id 53AE81117CB;
-	Wed,  3 Aug 2011 23:46:26 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mailgw19.surf-town.net
-X-Spam-Flag: NO
-X-Spam-Score: -1.44
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.44 tagged_above=-999 required=7
-	tests=[ALL_TRUSTED=-1.44] autolearn=disabled
-Received: from mailgw19.surf-town.net ([127.0.0.1])
-	by localhost (mailgw19.surf-town.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 2kBTZw3jjHWZ; Wed,  3 Aug 2011 23:46:20 +0200 (CEST)
-Received: from [192.168.0.6] (se167-1-82-242-149-125.fbx.proxad.net [82.242.149.125])
-	by mailgw19.surf-town.net (Postfix) with ESMTPSA id 4989F111846;
-	Wed,  3 Aug 2011 23:46:15 +0200 (CEST)
-In-Reply-To: <4E399C62.30604@web.de>
-X-Mailer: Evolution 2.30.3 
+	id S1755434Ab1HCV5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Aug 2011 17:57:52 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:45607 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755380Ab1HCV5v (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2011 17:57:51 -0400
+Received: by yia27 with SMTP id 27so747475yia.19
+        for <git@vger.kernel.org>; Wed, 03 Aug 2011 14:57:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=aXPGZhKHodr7o2LbcFQwcIGY/GrsM2dv4zn0GNl+Qro=;
+        b=m/n7Ugl0QbdFvPflC5YjORRfrkelEP1AlSYDYM7iKWogrEOLENVKlhbamBcVUAxf3w
+         G4I6UhT2BnZRMlG0dtabenChIVCgpCtjtOHN0WRM294XG1p+9wE2JlfepxFzU/exLDcD
+         4jBU6FKTTxCIsGOjBkFkV3/7nyh3cQgag0Cx4=
+Received: by 10.151.101.1 with SMTP id d1mr1230254ybm.152.1312408670522;
+        Wed, 03 Aug 2011 14:57:50 -0700 (PDT)
+Received: from localhost.localdomain ([120.16.210.46])
+        by mx.google.com with ESMTPS id e7sm625568ybg.18.2011.08.03.14.57.45
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 03 Aug 2011 14:57:49 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.352.g172e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178629>
 
-Le mercredi 03 ao=C3=BBt 2011 =C3=A0 21:07 +0200, Jens Lehmann a =C3=A9=
-crit :
-> Am 03.08.2011 19:11, schrieb Junio C Hamano:
-> > henri GEIST <henri.geist@flying-robots.com> writes:
-> >=20
-> >> I plan to use a config file containing lines like
-> >>
-> >> "path_to_poited_repo   SHA1_of_intended_commit   URL_of_origin"
-> >>
-> >> the URL part will not be required.
-> >>
-> >> this file will be a list of pointer to other project.
-> >=20
-> > I wasn't paying attention to this thread, but I have to ask "why" h=
-ere.
-> >=20
-> > The first two are what gitlink was designed to do in the superproje=
-ct that
-> > ties multiple submodules together, and the last one is also supplie=
-d by
-> > the .gitmodules in that superproject. This seems to be adding the s=
-ame
-> > information in a redundant way by saying "this version A0 of submod=
-ule A
-> > wants version B0 of submodule B and version C0 of submodule C" when=
- the
-> > supermodule can say "the consistent view I record is to have versio=
-n A0,
-> > B0 and C0 of submodules A, B and C, respectively".
->=20
-> During the discussion this evolved from a simple "I need that submodu=
-le
-> with exactly this version" to something I believe is more generic and
-> very useful for others. As I see it now a submodule should be able to=
- say:
->=20
-> 1) To use me, you need another submodule "foo"
->=20
->    This is very helpful when you want to add the Gimp submodule and i=
-t
->    can tell you you'll need the libpng submodule too in your superpro=
-ject
->    (but I'd vote to use the submodule name here, not the path as that
->    should be the superproject's decision).
->=20
-> In addition to that, it can (but mustn't) specify any of the followin=
-g:
->=20
-> a) Of this submodule "foo" I need at least that version because I won=
-'t
->    compile/work with older versions of that. (this can be tightened t=
-o
->    "exactly that version" to give henri the behavior he wants, but th=
-at
->    should be policy, not mandatory)
->=20
+Motivation
+==========
+For some bisection tasks, checking out the commit at each stage of the bisection process is unecessary or undesirable.
 
-Of corse and git will not enforce this policy.
-Git status will only say the version is unrelated, match or is higher.
-And it is left to the human reading the status to decide if it is OK
-with his policy.
+This series adds support for a --no-checkout option to git-bisect.
 
->    Gimp could say it needs at least libpng 012345 because in that ver=
-sion
->    the function foobar() was added it now depends on. Normally this w=
-on't
->    be updated very often, but if people like henri use that to say "I=
-'ll
->    only promise to work well with that exact version, as that went th=
-rough
->    extensive QA" they might change that on virtually every commit.
->=20
+If specified on a start command, --no-checkout causes 'git bisect' to update BISECT_HEAD at each stage of the bisection process instead of checking out the commit at that point. 
 
-In fact I do so very rarely I do not update my project to track the las=
-t
-version of the library until the project need it. If the library get ne=
-w
-features and improvement that I do not need I keep the old version.
-I will not rewrite the tones of certification papers to certify the use
-of the new library version without needs. It will destroy all the
-forests.
+One application of the --no-checkout option is to find, within a partially damaged repository, a commit that has at least one parent whose graph is fully reachable in the sense of 'git pack-objects'.
 
-> b) And if you don't know where to get it, use this url
->=20
->    That can give the superproject a hint where it can clone that
->    repository from. That could be helpful for distributions to sort o=
-ut
->    the dependencies of the packages they pull in.
->=20
-> That is all stuff the submodule knows better than the superproject. A=
-nd
-> that information can be used to *inform* the user about the submodule=
-'s
-> needs, maybe using "git status --submodule-dependencies" will print:
->=20
-> # submodule "Gimp" requests a libpng 567890 or newer
-> # submodule "foo" has missing dependency "bar"
+For example:
 
-> But the user can choose to ignore that (because he knows he has the p=
-ng
-> support disabled and he doesn't need the fancy help files from bar).
->=20
-> And maybe "git submodule add" learns an option to automatically add a=
-ll
-> the other submodules the new one depends on too (for that we would ne=
-ed
-> the url).
->=20
+	git bisect start BISECT_HEAD <some-known-good-commit> <boundary-commits> --no-checkout
+	git bisect run sh -c '
+	       GOOD=$(git for-each-ref "--format=%(objectname)" refs/bisect/good-*) &&
+	       git rev-list --objects BISECT_HEAD --not $GOOD >tmp.$$ &&
+	       git pack-objects --stdout >/dev/null <tmp.$$
+	       rc=$?
+	       rm -f tmp.$$
+	       test $rc = 0'
 
-Provided that you use a superproject. But my goal is to eliminate it.
+<some-known-good-commit> is a known good commit, for which the test passes.
+<boundary-commits> are commits chosen to prevent the bisection visiting missing or corrupt commit objects.
 
-> But the superproject is still the place to say: I know these versions=
- of
-> all submodules work together, so I commit their gitlinks here. But th=
-is
-> scheme enables submodules to give hints to help the superproject's us=
-er.
->=20
+Assuming this git bisect run completes successfully, bisect/bad will refer to a commit which has at least one parent that is fully reachable in the sense of 'git pack-objects'.
 
-or they can do it by them selves has now they have all the needed infos=
-=2E
+Patch Synopsis
+==============
 
-> > I also suspect that allowing each submodule to know and demand spec=
-ific
-> > versions of other submodules will lead to inconsistencies. Which ve=
-rsion
-> > of submodule C would you demand to have when submodule A wants vers=
-ion C0
-> > and submodule B wants version C1 of it?
->=20
-> Right, in the discussion so far it seemed like henri seems to be the =
-only
-> user who is wanting an exact match, and he says he needs to see these
-> inconsistencies.
+Remediation
+-----------
+Patch 1/7 changes existing behaviour in the case that an invalid revision argument is supplied to 'git bisect start'. In particular, in this case, bisection state is neither created or modified if argument validation fails. Previously, existing bisection state would be cleared even if the revision arguments were subsequently determined to be invalid. 	
 
-I suspect I am just the only one you now about.
-Because that is just what actual submodules does, and nobody complain.
+Patch 2/7 remediates a potential flaw that might hide a failure in a chain of pasted statements.
 
-If you
-  - cd into one of your submodules
-  - make a commit
-  - go back into the main repository
-  - make git status
-It will tell you :
-"modified:   the_submodule_name/ (new commits)"
+Patch 3/7 adds a test which documents the existing behaviour of git bisect in the presence of tree damage.
 
-Note it actually will say "new commits" even if it is older or totally
-unrelated. It just signal a mismatch.
-Then what I need on this point is just what it actually do.
+New Function
+------------
+Patch 4/7 modifies the C code that supports bisection.
+Patch 5/7 modifies porcelain to enable option exposed by 4/7.
+Patch 6/7 adds some tests.
+Patch 7/7 adds some documentation.
 
-> But I think he can modify the "version xxx or newer" to
-> his needs without imposing these inconsistencies on users (like me) w=
-ho
-> don't want to see them.
->=20
+Revision History
+----------------
+v16:
+	Use --no-def with update-ref -d. 
+	Ensure update-ref BISECT_HEAD is created after BISECT_START and destroyed before BISECT_START. (Christian Couder)
+	dash compatability (Jonathan Nieder).
+	Documentation and test tweaks (Junio Hamano).
+v15:
+	Fixed reset behaviour in --no-checkout case. Added one test for same.
+	Simplified implementation so that no-checkout mode is inferred by presence of 
+	$GIT_DIR/BISECT_HEAD eliminating the need for a separate BISECT_MODE control file.
+	Patch 8/8 from v13/14 was redistributed and squashed into earlier commits.
+	Style and documentation edits based on feedback from Christian Coulder.
+v14:
+	Reverted --bisect-mode aspect of v13 change so C code matches v11.
+v13:
+	Following suggestions from Junio:
+	 * Replaced BISECT_NO_CHECKOUT control file with BISECT_MODE. 
+	 * Changed name of internal option on bisect--helper from --no-checkout to --bisect-mode=checkout|update-ref.
+	 * Changed --no-checkout bisections to update BISECT_HEAD instead of HEAD.	
+v11:
+	Removed support for --update-ref=<ref>, per Junio's preference.
+v10:
+	Changed the way deferred statements are connected. Reverted some whitespace minimization.
+v8:
+	Further feedback from Christian Couder. Support --update-ref <ref>.
+v6: 
+	This series includes numerous improvements suggested by Christian Couder.
+Reworks: 
+	"bisect: allow git bisect to be used with repos containing damaged trees." 
+	Replaced --ignore-checkout-failure with --no-checkout option suggested by Junio.
 
-Of corse git status has never imposed anything.
+Future series
+-------------
+* Implement full support for bisection in bare repositories.
 
-But I will enabling it to make the distinction between unmatched and
-newer version.
 
-	Henri
+Jon Seymour (7):
+  bisect: move argument parsing before state modification.
+  bisect: use && to connect statements that are deferred with eval.
+  bisect: add tests to document expected behaviour in presence of
+    broken trees.
+  bisect: introduce support for --no-checkout option.
+  bisect: introduce --no-checkout support into porcelain.
+  bisect: add tests for the --no-checkout option.
+  bisect: add documentation for --no-checkout option.
+
+ Documentation/git-bisect.txt |   32 +++++++++-
+ bisect.c                     |   33 +++++++---
+ bisect.h                     |    2 +-
+ builtin/bisect--helper.c     |    7 ++-
+ git-bisect.sh                |  112 +++++++++++++++++++-------------
+ t/t6030-bisect-porcelain.sh  |  144 +++++++++++++++++++++++++++++++++++++++++-
+ 6 files changed, 267 insertions(+), 63 deletions(-)
+
+-- 
+1.7.6.352.g172e
