@@ -1,83 +1,116 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git clone does not checkout active branch
-Date: Wed, 3 Aug 2011 14:04:38 -0600
-Message-ID: <20110803200438.GC23848@sigill.intra.peff.net>
-References: <loom.20110803T185528-8@post.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v15 7/7] bisect: add documentation for --no-checkout
+ option.
+Date: Wed, 03 Aug 2011 13:59:00 -0700
+Message-ID: <7v62meb4a3.fsf@alter.siamese.dyndns.org>
+References: <1312383811-7130-1-git-send-email-jon.seymour@gmail.com>
+ <1312383811-7130-8-git-send-email-jon.seymour@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Udo <u.offermann@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 03 22:04:48 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, chriscool@tuxfamily.org, gitster@pobox.com,
+	j6t@kdbg.org, jnareb@gmail.com
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 03 22:59:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QohgN-0006gu-CR
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 22:04:47 +0200
+	id 1QoiX0-0003zR-HY
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Aug 2011 22:59:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754757Ab1HCUEm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Aug 2011 16:04:42 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36571
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752831Ab1HCUEl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2011 16:04:41 -0400
-Received: (qmail 10023 invoked by uid 107); 3 Aug 2011 20:05:14 -0000
-Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 03 Aug 2011 16:05:14 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Aug 2011 14:04:38 -0600
-Content-Disposition: inline
-In-Reply-To: <loom.20110803T185528-8@post.gmane.org>
+	id S1754681Ab1HCU7F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Aug 2011 16:59:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39390 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754516Ab1HCU7D (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2011 16:59:03 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 67C2D5B59;
+	Wed,  3 Aug 2011 16:59:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vpPdtUrjhLFMcyDVhC/oTqE06eQ=; b=fD7LkC
+	8PJBM9OYA3UUwso0b7uqllMqEtrMYxDJxXF6XIrPEsLOHJBIWvYqoEFI07VBmTOA
+	BaqwdV98nlXycFV+D2mxzbAQtnrs9+u1k0g9szYYiJ3yFgKUI/ZBb+VwOKvQCK3h
+	Ha6jVzYTHfJcSLkv28WQH3ax/En5E4J4aOqAU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wmX/Mrsi7Fr/Ppm5SQCnNZoAIu0cBPcG
+	5uSn5A/nxPvFW0/zmZ7xpMObo4pM8cUKwkd+7Q/pgW0EWDgE40Hvfh+fTh92WYz7
+	FQp3FRMsTVMbivlUl+AuKUSq+LKgjWOAQKpobekAN0loh2WDQnjjPWoxrTZ+nAQp
+	iYzdIAUK9CI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 566BD5B58;
+	Wed,  3 Aug 2011 16:59:02 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A2A445B56; Wed,  3 Aug 2011
+ 16:59:01 -0400 (EDT)
+In-Reply-To: <1312383811-7130-8-git-send-email-jon.seymour@gmail.com> (Jon
+ Seymour's message of "Thu, 4 Aug 2011 01:03:31 +1000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 6A451B04-BE13-11E0-B489-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178618>
 
-On Wed, Aug 03, 2011 at 04:56:43PM +0000, Udo wrote:
+Jon Seymour <jon.seymour@gmail.com> writes:
 
-> I have a remote bare repository with two branches 'master' and 'testing', where
-> HEAD refers to 'testing'. When cloning this repository git checks out 'master',
-> if 'master' and 'testing' are on the same revision (i.e. HEAD == testing ==
-> master). Only if 'testing' is one (or more) commit(s) behind or ahead, git clone
-> checks out the 'testing' branch on the local side. I tried this with git 1.7.5
-> on Mac OS X (10.6.8).
+> +This option is useful in circumstances in which checkout is either not
+> +possible (because the repository is damaged) or is otherwise not required.
 
-Yes, this is a known issue.
+I do not think "because the repository is damaged" is a particularly good
+example to single out here. For one thing, you may not be able to bisect
+the history in a damaged repository due to unreadable commits. There are
+other valid and more plausible reasons that the users do not want to
+update the working tree while bisecting, e.g. they have local changes,
+they do not want to rebuild everything after bisection is done, etc.
 
-The git protocol just sends the list of refs and the objects they point
-to. So the local clone is forced to guess which ref HEAD is pointing to.
-E.g., with something like:
+Also the above description muddies what is prerequisite and what is user's
+wish.
 
-  28f599b... HEAD
-  1234abc... refs/heads/master
-  28f599b... refs/heads/testing
+ - "is otherwise not required" is the prerequisite: "if and only if the
+   test you would perform during bisection does not need a checkout of the
+   version being tested, you can use this option";
 
-it can see that HEAD is probably "testing". But if it sees:
+ - Even if the user wishes to use this option for various reasons (e.g. so
+   that the next "make" wouldn't have to rebuild everything unnecessarily;
+   or the repository has corrupt blobs and checkout of some versions may
+   fail), if the test _needs_ a checkout, it is not an option to use this
+   feature.
 
-  28f599b... HEAD
-  28f599b... refs/heads/master
-  28f599b... refs/heads/testing
+So I would suggest toning it down perhaps like this:
 
-then it has to pick one arbitrarily. Our current heuristic is to prefer
-"master" over others, and otherwise pick first alphabetically. So it's
-at least deterministic, but as you noticed, it's not always right.
+    This option may be useful when the test you would perform in each step
+    does not require a checked out tree.
 
-The real solution to this would be to extend the git protocol to convey
-symbolic ref information (and then wait for both client and server to be
-upgraded). Some patches have been floated in the past, but nothing came
-of it[1]. Maybe it's time to resurrect them.
+> +$ git bisect run eval '
+> +rc=1;
+> +if git rev-list --objects BISECT_HEAD >tmp.$$; then
+> +   git pack-objects --stdout >/dev/null < tmp.$$ && rc=0;
+> +fi;
+> +rm tmp.$$;
+> +test $rc -eq 0;'
 
-As a workaround, you can use "git clone -b testing ..." if you know
-ahead of time that "testing" is what you want.
+Hmm, "eval"?
 
--Peff
+More importantly, aren't these excessive and unnecessary semicolons
+unsightly?
 
-[1] See:
+	$ git bisect run sh -c '
+                git rev-list --objects BISECT_HEAD >tmp.$$ &&
+		git pack-objects --stdout >/dev/null <tmp.$$
+                rc=$?
+                rm -f tmp.$$
+                test $rc = 0'
 
-    http://thread.gmane.org/gmane.comp.version-control.git/102039
+> +In this case, when 'git bisect run' finishes, bisect/bad will refer to a commit that
+> +has at least one parent whose reachable graph is fully traversable in the sense
+> +required by 'git pack objects'.
 
-and also:
-
-    http://article.gmane.org/gmane.comp.version-control.git/113567
+Also "everything reachable from BISECT_HEAD" feels unnecessarily
+wasteful. By the time you invoke "bisect run", you already know one good
+commit, everything reachable from which are known to be good.
