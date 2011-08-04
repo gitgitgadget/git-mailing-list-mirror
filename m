@@ -1,60 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-archive's wrong documentation: really write pax rather than
- tar
-Date: Wed, 3 Aug 2011 20:00:54 -0600
-Message-ID: <20110804020054.GA1947@sigill.intra.peff.net>
-References: <1312409879.97173.YahooMailClassic@web29501.mail.ird.yahoo.com>
- <20110804014143.GA32579@sigill.intra.peff.net>
- <7v62me6ism.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Why isn't there a hook for all operations that update the
+ working tree?
+Date: Wed, 03 Aug 2011 19:06:26 -0700
+Message-ID: <7v1ux26icd.fsf@alter.siamese.dyndns.org>
+References: <CACBZZX7dJhGT0H8JZRbQ_t9mNnJocaktYAXgMSihfLBuFmL3nw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Hin-Tak Leung <htl10@users.sourceforge.net>, git@vger.kernel.org,
-	rene.scharfe@lsrfire.ath.cx
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 04 04:01:04 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 04 04:06:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QonF9-0003YB-Aj
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 04:01:03 +0200
+	id 1QonKU-0005GP-Cf
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 04:06:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756607Ab1HDCA6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Aug 2011 22:00:58 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:49669
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756580Ab1HDCA5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2011 22:00:57 -0400
-Received: (qmail 12923 invoked by uid 107); 4 Aug 2011 02:01:31 -0000
-Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 03 Aug 2011 22:01:31 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Aug 2011 20:00:54 -0600
-Content-Disposition: inline
-In-Reply-To: <7v62me6ism.fsf@alter.siamese.dyndns.org>
+	id S1756594Ab1HDCGa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Aug 2011 22:06:30 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63754 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756582Ab1HDCG3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2011 22:06:29 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BAA3D4D31;
+	Wed,  3 Aug 2011 22:06:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=Ksbgtbmw9rCr
+	XTN74O+TY9JCKKM=; b=fmSdNoLPGijvVt1E2USKy3FHZmQPFP/OyZEgRPM5b7yt
+	QsHZx+D2IAcrdlR1MwPF3wnca4y0/UWxh2CeX0ZpF5m8GW/hTYTwedzXeY4NDbc4
+	zt1rjs2RKuNPYCtPaNJjUhH7kvQ4+yKLonlWAUWUxFfxe0900mXcUePBfeTQyKw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=FQg2GQ
+	vXaJ2ERq0r5UCqvLrDlrcohG3ZVGTTWoKpJA33fIfWRWcV2iSKX0XD4cfH5ygUt+
+	oNtdAOo4vTsKb4DxfP5N9MF7xwyXfFkFqpKvrKM5nSi9OE5UltWbaqlPVyt2Lh0H
+	eQ9FEV0f5gp+LkCeRlfso8VVcte0iHRak1cyw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B0D7D4D30;
+	Wed,  3 Aug 2011 22:06:28 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3F1BE4D2E; Wed,  3 Aug 2011
+ 22:06:28 -0400 (EDT)
+In-Reply-To: <CACBZZX7dJhGT0H8JZRbQ_t9mNnJocaktYAXgMSihfLBuFmL3nw@mail.gmail.com>
+ (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 28 Jul
+ 2011 13:59:30 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5D3DA02C-BE3E-11E0-BE24-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178654>
 
-On Wed, Aug 03, 2011 at 06:56:41PM -0700, Junio C Hamano wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > It might be a bit more obvious to find if we actually had a
-> > --no-pax-header option, though.
-> 
-> Yeah, we would need to make sure that --no-pack-header causes a barf
-> for other backends, though. "struct archiver_args" right now seems to have
-> compression_level but I think it should just have "const char **" that is
-> interpreted by backends.
+> ... Is there any
+> reason beside omission that there isn't a post-reset hook?
+> Or hooks for any other thing ...
 
-Actually, it is relevant for zip, too. The option should really be
-called "--no-commit-id" or something similar. I don't think it's as big
-a deal with zip (because there is no compatibility issue), but you may
-want to omit the header for other reasons (e.g., because you know it
-doesn't point to a commit that is public).
+In principle, we historically tended to avoid hooks unless absolutely
+necessary. Even having to check to find out no hook needs to be run is
+considered wasted cycles.
 
--Peff
+  http://thread.gmane.org/gmane.comp.version-control.git/79314/focus=3D=
+79321
+
+I'd especially rather not to see a hook on something as low level as
+"reset". It would be too tempting to use "reset" itself inside a hook t=
+hat
+is run from the post-reset hook, and I do not want to complicate the co=
+de
+even further to give callers to ask disabling the hook.
