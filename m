@@ -1,64 +1,59 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: What's cooking in git.git (Aug 2011, #01; Wed, 3)
-Date: Thu, 04 Aug 2011 09:19:49 +0200
-Message-ID: <4E3A4815.5060309@viscovery.net>
-References: <7vzkjq6mpn.fsf@alter.siamese.dyndns.org>
+From: Roberto Tyley <roberto.tyley@gmail.com>
+Subject: Re: [PATCH] Tolerate zlib deflation with window size < 32Kb
+Date: Thu, 4 Aug 2011 08:40:56 +0100
+Message-ID: <CAFY1edZLAjVRs0LUx6CvD9i5aZu6kZ1ecJdUsvZgmtGkajOqow@mail.gmail.com>
+References: <1312410730-12261-1-git-send-email-roberto.tyley@gmail.com>
+	<7vsjpi82x7.fsf@alter.siamese.dyndns.org>
+	<CAFY1edZyO7oYDi+tV2mxbhBHY_cf2F0bD7+KF9rxmKYygSFAjA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 04 09:20:04 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 04 09:42:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QosDq-0000kq-8K
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 09:20:02 +0200
+	id 1QosZe-0002pY-Li
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 09:42:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751758Ab1HDHT6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Aug 2011 03:19:58 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:38731 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751395Ab1HDHT4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2011 03:19:56 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1QosDd-0003Bc-Qy; Thu, 04 Aug 2011 09:19:50 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 9069D1660F;
-	Thu,  4 Aug 2011 09:19:49 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.18) Gecko/20110616 Thunderbird/3.1.11
-In-Reply-To: <7vzkjq6mpn.fsf@alter.siamese.dyndns.org>
-X-Spam-Score: -1.4 (-)
+	id S1751830Ab1HDHk6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Aug 2011 03:40:58 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:56633 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751084Ab1HDHk5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Aug 2011 03:40:57 -0400
+Received: by qyk38 with SMTP id 38so642032qyk.19
+        for <git@vger.kernel.org>; Thu, 04 Aug 2011 00:40:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=gCL1X6nVGomlUSEwWjHWlJTbcGQl5l6kwDZMr+3Sgf0=;
+        b=WioT5QPWLN2kaP5rNElNVx0kJCavtt9dD5OUHv+TSeN4aMs7M1WjYENkjrWg5pVoym
+         hmxSqzJZufIEcEZvEZpH+/K0qE9iwcz08Ir7NLtqsWQjheSTuVzHE7m47kvWiudTGDeg
+         cgeY3JU1cFaF9sEOUi7T1xkl7jiLmLRKEWnqY=
+Received: by 10.224.185.79 with SMTP id cn15mr310422qab.214.1312443656611;
+ Thu, 04 Aug 2011 00:40:56 -0700 (PDT)
+Received: by 10.224.2.207 with HTTP; Thu, 4 Aug 2011 00:40:56 -0700 (PDT)
+In-Reply-To: <CAFY1edZyO7oYDi+tV2mxbhBHY_cf2F0bD7+KF9rxmKYygSFAjA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178705>
 
-Am 8/4/2011 2:32, schrieb Junio C Hamano:
-> * en/merge-recursive (2011-07-14) 50 commits
->  - fixup! Do not assume that qsort is stable
-...
->  - merge-recursive: Fix sorting order and directory change assumptions
-...
-> The tip one should be squashed somewhere.
+On 4 August 2011 00:56, Junio C Hamano <gitster@pobox.com> wrote:
+> roberto.tyley@gmail.com writes:
+> > - =A0 =A0 if (map[0] =3D=3D 0x78 && !(word % 31))
+> > + =A0 =A0 if ((map[0] & 0x88) =3D=3D 0x08 && !(word % 31))
+>
+> Are you sure about this 0x88? Isn't it 0x8F or something?
 
-I suggest this one.
+Ah- yes, you're right - the bitmask should be 0x8F, because the
+lower nibble of a deflated zlib stream is 8 (8=3Ddeflate) and we want
+to match all 4 bits.
 
-> I wanted to push this out in
-> 'next' today, but this seems to regress a rather trivial renaming merge,
-> so I had to rewind and rebuild 'next' before pushing it out.
-
-Also, make_room_for_path() walks the entire list of files to remove on
-each invocation and calls unlink() on each of them, which fails after the
-name was re-created as a directory. IIUC, this is O(N*M) behavior where N
-is the number of files to remove and M is the number of directories to
-create, and causes unnecessary system calls. (Well, this can be fixed when
-the series is in next because it is not as critical as the regression that
-you found.)
-
--- Hannes
+Thankfully the rest of the logic still applies - I'll submit an
+updated patch in a minute, once I've conquered my embarrassment :-)
