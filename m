@@ -1,65 +1,63 @@
-From: Christian Jaeger <chrjae@gmail.com>
-Subject: Re: [ANNOUNCE/RFC] cj-git-patchtool: a "rebase -i" with more interaction
-Date: Thu, 4 Aug 2011 02:02:10 -0400
-Message-ID: <CAEjYwfVfRyde=hzgPDrWgS2VMHWzk5kccDh3TYZTgQ=YXOyeYw@mail.gmail.com>
-References: <CAEjYwfUY9tF_9frkaS7Aw26CPJA02Cr3HDN5Qpkup1rfHYacXw@mail.gmail.com>
- <m3d3gmrchz.fsf@localhost.localdomain>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-fast-export is returning streams with source code inside
+Date: Thu, 4 Aug 2011 01:05:28 -0600
+Message-ID: <20110804070528.GA11805@sigill.intra.peff.net>
+References: <CAFC9htxwRg=+RD68hnnRy0hfptq23x3bL+xxHieK1evfFCTPjw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 04 08:02:40 2011
+To: James Gregory <j.gregory@epigenesys.co.uk>
+X-From: git-owner@vger.kernel.org Thu Aug 04 09:05:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qor0x-0002QC-SK
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 08:02:40 +0200
+	id 1Qos0D-0002pr-Vi
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 09:05:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751836Ab1HDGCc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Aug 2011 02:02:32 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:49700 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751801Ab1HDGCa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Aug 2011 02:02:30 -0400
-Received: by gxk21 with SMTP id 21so876501gxk.19
-        for <git@vger.kernel.org>; Wed, 03 Aug 2011 23:02:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=MBM7+2TKy3Wk7/wsRg7ijylbKpu9WKt9KZRUecQxr44=;
-        b=u3Wb5UEDSChJKqQ4Vg4BP4GzNzmbJeU7Cl3XkVPq1NFthsJG3ccjTE1u6XIlQGy9+Y
-         oULfXBWQ81A8qvqrbUyjkOP1bnBW30VjhwBKoyNX9bGrKUXvYM+me3fT141sR9pgmRFg
-         LeXVixFHugLBfJh4ggNJXcjhqG3LGj9pOt6wQ=
-Received: by 10.151.58.8 with SMTP id l8mr1651677ybk.242.1312437750148; Wed,
- 03 Aug 2011 23:02:30 -0700 (PDT)
-Received: by 10.150.137.6 with HTTP; Wed, 3 Aug 2011 23:02:10 -0700 (PDT)
-In-Reply-To: <m3d3gmrchz.fsf@localhost.localdomain>
+	id S1751226Ab1HDHFd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Aug 2011 03:05:33 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41514
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751084Ab1HDHFc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2011 03:05:32 -0400
+Received: (qmail 16590 invoked by uid 107); 4 Aug 2011 07:06:05 -0000
+Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 04 Aug 2011 03:06:05 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Aug 2011 01:05:28 -0600
+Content-Disposition: inline
+In-Reply-To: <CAFC9htxwRg=+RD68hnnRy0hfptq23x3bL+xxHieK1evfFCTPjw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178703>
 
-2011/8/3 Jakub Narebski <jnareb@gmail.com>:
-> I have added cj-git-patchtool to "Patch-management Interface layers"
-> section of "Interfaces, frontends and tools" page on Git Wiki:
+On Mon, Aug 01, 2011 at 12:57:58PM +0100, James Gregory wrote:
 
-Cool, thanks!
+> I'm not sure if this is the right place to post bug reports - if not,
+> please can you let me know.
 
-> I use one of patch management interfaces for that, namely StGit. =A0I=
-t
-> operates on stack of patches, which you can apply and unapply, going
-> back and forth and correcting them.
+This is the right place.
 
-I knew StGit existed, but I've never actually tried it. Now I also see
-that the description of Guilt actually sounds exactly what
-cj-git-patchtool does. (I was expecting that these tools would just
-let me easily create sets of patches, similar to Darcs, not that
-they'd actually allow to edit patches to fix conflicts.) I'll have to
-try them out as soon as I find some time. Thanks for the hint.
+> I've found (what appears to be) a problem in git-fast-export. I've
+> filed a bug in Launchpad, but I'm not sure if anyone from the Git
+> community actively monitors it so I'm reporting it here to see if it
+> can be fixed.
 
-Christian.
+I don't think anybody monitors Launchpad explicitly; thanks for the
+pointer.
+
+> The bug can be viewed online at:
+> https://bugs.launchpad.net/ubuntu/+source/git/+bug/815828
+> and I've done my best to describe the bug in some detail. If you need
+> me to elaborate on the problem further, don't hesitate to let me know.
+
+Definitely looks like a bug. Is it possible for you to make the
+offending repo available either publicly or to me in private? There's
+not enough information in your report for me to reproduce the problem
+here.
+
+-Peff
