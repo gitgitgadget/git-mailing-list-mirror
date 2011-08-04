@@ -1,77 +1,99 @@
-From: zzs <zzs213@126.com>
-Subject: [PATCH] fix gitweb syntax highlight utf-8 encode bug
-Date: Thu,  4 Aug 2011 23:52:55 +0800
-Message-ID: <1312473175-28195-1-git-send-email-zzs213@126.com>
-References: <CALkWK0kOTXyevPy0Ys+pWwGjr2NSo3+ifhWuPVU+=FL=LC=J7A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC 4/6] git-check-attr: Normalize paths
+Date: Thu, 04 Aug 2011 10:05:52 -0700
+Message-ID: <7vliv95cpb.fsf@alter.siamese.dyndns.org>
+References: <1311849425-9057-1-git-send-email-mhagger@alum.mit.edu>
+ <1311849425-9057-5-git-send-email-mhagger@alum.mit.edu>
+ <7v4o1zg20r.fsf@alter.siamese.dyndns.org> <4E3A12B9.1010800@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>,
-	=?UTF-8?q?=E5=BC=A0=E5=BF=A0=E5=B1=B1?= <zzs213@126.com>
-To: <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 04 18:22:39 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Aug 04 19:06:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qp0gw-0002lL-Pn
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 18:22:39 +0200
+	id 1Qp1Mw-0000rJ-Ag
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 19:06:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755098Ab1HDQWd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Aug 2011 12:22:33 -0400
-Received: from m15-112.126.com ([220.181.15.112]:53638 "EHLO m15-112.126.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754126Ab1HDQWc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2011 12:22:32 -0400
-X-Greylist: delayed 1876 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Aug 2011 12:22:31 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=Received:From:To:Cc:Subject:Date:Message-Id:
-	In-Reply-To:References:MIME-Version:Content-Type:
-	Content-Transfer-Encoding; bh=Fv6QyGJQMiEqTuxjdk77sNjtHRtdl12WDu
-	S3aywsNyo=; b=NOrxe788uiwuSJqcRT+dUkh0L0l3FSSQV4tqOJRKqSHzXOSGMk
-	b2X9WQndLyBlEfA5dUhKUimaxOTe6EiFDmHd45BDskUqTK8p2N/H0rslNZlj2na+
-	Q4/2aNp1x9/aqLM++/HK5W9eNDLNNr9sJRupGAtsWUokPDEBtfFzGSt6s=
-Received: from localhost.localdomain (unknown [119.6.72.17])
-	by smtp2 (Coremail) with SMTP id DMmowKCbn6PmvzpOxTtoAg--.48600S2;
-	Thu, 04 Aug 2011 23:51:03 +0800 (CST)
-X-Coremail-DSSMTP: 119.6.72.17
-X-Mailer: git-send-email 1.7.4.4
-In-Reply-To: <CALkWK0kOTXyevPy0Ys+pWwGjr2NSo3+ifhWuPVU+=FL=LC=J7A@mail.gmail.com>
-X-CM-TRANSID: DMmowKCbn6PmvzpOxTtoAg--.48600S2
-X-Coremail-Antispam: 1Uf129KBjvdXoW7JF4DAr47trW3KFW5ZrW8JFb_yoWxZrXEva
-	10vFnrKFWjvFy29r4jvF43Gw1fXayxurn5Ww1Yvrn3u34jqF1UJwn7Gw17AryaqrnrCFZx
-	Kw1DtFW3Cr4jyjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IUUmL95UUUUU==
-X-CM-SenderInfo: x22vjiat6rjloofrz/1tbiZhuRGUm+KiuV1QAAsD
+	id S1755311Ab1HDRF5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Aug 2011 13:05:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39682 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752378Ab1HDRF4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2011 13:05:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E236A4AA1;
+	Thu,  4 Aug 2011 13:05:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1a0w40Y9gEjwbmEeZJG3M5M6uJo=; b=UE6avh
+	K/skn7l62mwNbkXetIiOA0KVe+pfJgPU8JL31lg1OWtkQRRaywJoar90pJQNbrXK
+	V7FD0rMmzbqqyfr8N6rNERkEUYpr6+IeffHkWaowwq/eOooMNXweJhONfm5NKjky
+	aDOrV4f3VLZr2PjKC+qJmouPAymbAK7QFBJtk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bokS8podMqk9vpgUfoqVz5LRI2h1aJei
+	CzJsL5+bgLvnRCLDv6hI08Mds3UKkgWj4Wejej4UluZMYXqxHF4eT+PWWu+LFlJl
+	C4Fojid9j5FjCUpT3x6uTZKjsJc/N+1Z6z0vY4pgPgZwdRtmJbFdVlc8gXIl0rPr
+	SHG4nkAAlnU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D95A24AA0;
+	Thu,  4 Aug 2011 13:05:54 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 358D24A9F; Thu,  4 Aug 2011
+ 13:05:54 -0400 (EDT)
+In-Reply-To: <4E3A12B9.1010800@alum.mit.edu> (Michael Haggerty's message of
+ "Thu, 04 Aug 2011 05:32:09 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 0375E3A0-BEBC-11E0-ADF1-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178751>
 
-=46rom: =E5=BC=A0=E5=BF=A0=E5=B1=B1 <zzs213@126.com>
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Signed-off-by: =E5=BC=A0=E5=BF=A0=E5=B1=B1 <zzs213@126.com>
----
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+>> I think passing down "prefix" (i.e. where your $(cwd) was relative to the
+>> root level of the working tree) and the user-supplied "pathspec" (which
+>> typically is relative to that original $(cwd)) is the canonical approach.
+>> The very original git worked only at the root level of the working tree,
+>> with paths specified relative to the root level of the tree, so many code
+>> do:
+>> 
+>> 	- find out the root of the working tree;
+>>         - note where the $(cwd) was in "prefix";
+>>         - chdir to the root of the working tree;
+>> 	- prepend the "prefix" to user supplied pathspec;
+>>         - forget all the complexity and work on the whole tree.
+>> 
+>> Then the "prefix" gets stripped away from the beginning of the paths when
+>> reporting.
+>> 
+>> Your patch from a cursory look seems to follow that pattern, which is
+>> good.
+>
+> Thanks for the explanation.
+>
+> Yes, my code follows the pattern, except that in this case it is
+> unnecessary to chdir to the root of the working tree.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index dab89f2..48def38 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -6465,7 +6465,7 @@ sub git_blob {
- 			$nr++;
- 			$line =3D untabify($line);
- 			printf qq!<div class=3D"pre"><a id=3D"l%i" href=3D"%s#l%i" class=3D=
-"linenr">%4i</a> %s</div>\n!,
--			       $nr, esc_attr(href(-replay =3D> 1)), $nr, $nr, $syntax ? $li=
-ne : esc_html($line, -nbsp=3D>1);
-+			       $nr, esc_attr(href(-replay =3D> 1)), $nr, $nr, $syntax ? to_=
-utf8($line) : esc_html($line, -nbsp=3D>1);
- 		}
- 	}
- 	close $fd
---=20
-1.7.4.4
+Just to make sure there is no misunderstanding. The chdir() should not be
+in the core part of the system that you may want to libify.
+
+The above pattern was developed primarily so that older utility functions
+in the system that were written back when nobody ran git from anywhere
+other than the top level of the working tree can be easily adapted to main
+programs that can be launched from a subdirectory. The initial set-up part
+of the program is responsible for figuring out "prefix", turning relative
+paths given by the user into paths relative to the top of the working
+tree, and then chdir'ing to the top.
+
+After all that happens, the library-ish parts of the system only have to
+deal with full paths relative to the root of the working tree. "prefix"
+comes into play when reporting the results (i.e. showing paths relative to
+user's $(cwd) in the output or in the error messages).
