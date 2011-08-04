@@ -1,63 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-fast-export is returning streams with source code inside
-Date: Thu, 4 Aug 2011 01:05:28 -0600
-Message-ID: <20110804070528.GA11805@sigill.intra.peff.net>
-References: <CAFC9htxwRg=+RD68hnnRy0hfptq23x3bL+xxHieK1evfFCTPjw@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: What's cooking in git.git (Aug 2011, #01; Wed, 3)
+Date: Thu, 04 Aug 2011 09:19:49 +0200
+Message-ID: <4E3A4815.5060309@viscovery.net>
+References: <7vzkjq6mpn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: James Gregory <j.gregory@epigenesys.co.uk>
-X-From: git-owner@vger.kernel.org Thu Aug 04 09:05:58 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 04 09:20:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qos0D-0002pr-Vi
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 09:05:58 +0200
+	id 1QosDq-0000kq-8K
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 09:20:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751226Ab1HDHFd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Aug 2011 03:05:33 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41514
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751084Ab1HDHFc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2011 03:05:32 -0400
-Received: (qmail 16590 invoked by uid 107); 4 Aug 2011 07:06:05 -0000
-Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 04 Aug 2011 03:06:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Aug 2011 01:05:28 -0600
-Content-Disposition: inline
-In-Reply-To: <CAFC9htxwRg=+RD68hnnRy0hfptq23x3bL+xxHieK1evfFCTPjw@mail.gmail.com>
+	id S1751758Ab1HDHT6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Aug 2011 03:19:58 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:38731 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751395Ab1HDHT4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2011 03:19:56 -0400
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1QosDd-0003Bc-Qy; Thu, 04 Aug 2011 09:19:50 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 9069D1660F;
+	Thu,  4 Aug 2011 09:19:49 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.18) Gecko/20110616 Thunderbird/3.1.11
+In-Reply-To: <7vzkjq6mpn.fsf@alter.siamese.dyndns.org>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178704>
 
-On Mon, Aug 01, 2011 at 12:57:58PM +0100, James Gregory wrote:
+Am 8/4/2011 2:32, schrieb Junio C Hamano:
+> * en/merge-recursive (2011-07-14) 50 commits
+>  - fixup! Do not assume that qsort is stable
+...
+>  - merge-recursive: Fix sorting order and directory change assumptions
+...
+> The tip one should be squashed somewhere.
 
-> I'm not sure if this is the right place to post bug reports - if not,
-> please can you let me know.
+I suggest this one.
 
-This is the right place.
+> I wanted to push this out in
+> 'next' today, but this seems to regress a rather trivial renaming merge,
+> so I had to rewind and rebuild 'next' before pushing it out.
 
-> I've found (what appears to be) a problem in git-fast-export. I've
-> filed a bug in Launchpad, but I'm not sure if anyone from the Git
-> community actively monitors it so I'm reporting it here to see if it
-> can be fixed.
+Also, make_room_for_path() walks the entire list of files to remove on
+each invocation and calls unlink() on each of them, which fails after the
+name was re-created as a directory. IIUC, this is O(N*M) behavior where N
+is the number of files to remove and M is the number of directories to
+create, and causes unnecessary system calls. (Well, this can be fixed when
+the series is in next because it is not as critical as the regression that
+you found.)
 
-I don't think anybody monitors Launchpad explicitly; thanks for the
-pointer.
-
-> The bug can be viewed online at:
-> https://bugs.launchpad.net/ubuntu/+source/git/+bug/815828
-> and I've done my best to describe the bug in some detail. If you need
-> me to elaborate on the problem further, don't hesitate to let me know.
-
-Definitely looks like a bug. Is it possible for you to make the
-offending repo available either publicly or to me in private? There's
-not enough information in your report for me to reproduce the problem
-here.
-
--Peff
+-- Hannes
