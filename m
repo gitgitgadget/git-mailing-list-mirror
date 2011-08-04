@@ -1,80 +1,65 @@
-From: zzs <zzs213@126.com>
-Subject: gitweb highligh generate illegal char when the content had utf-8
- chars
-Date: Thu, 4 Aug 2011 13:31:23 +0800
-Message-ID: <20110804053123.GA13198@greatfirst.com>
+From: Christian Jaeger <chrjae@gmail.com>
+Subject: Re: [ANNOUNCE/RFC] cj-git-patchtool: a "rebase -i" with more interaction
+Date: Thu, 4 Aug 2011 02:02:10 -0400
+Message-ID: <CAEjYwfVfRyde=hzgPDrWgS2VMHWzk5kccDh3TYZTgQ=YXOyeYw@mail.gmail.com>
+References: <CAEjYwfUY9tF_9frkaS7Aw26CPJA02Cr3HDN5Qpkup1rfHYacXw@mail.gmail.com>
+ <m3d3gmrchz.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 04 08:00:38 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 04 08:02:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qoqyz-0001XB-I5
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 08:00:37 +0200
+	id 1Qor0x-0002QC-SK
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 08:02:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750815Ab1HDGAd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Aug 2011 02:00:33 -0400
-Received: from m15-111.126.com ([220.181.15.111]:36914 "EHLO m15-111.126.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750773Ab1HDGAb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2011 02:00:31 -0400
-X-Greylist: delayed 1866 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Aug 2011 02:00:31 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=Received:Date:From:To:Subject:Message-ID:
-	MIME-Version:Content-Type:Content-Disposition:User-Agent; bh=Emi
-	+IOPR/nKPe7A+h4wzANNvFEak8i1Dzqwdt5bUOHc=; b=Z1kdyq5u74xBU0IDdZb
-	5l6DjtGMfyuGdV7JSLFN21tFpP9P8eEUt5Y0J58LZ19Rreq7HNqi/QO4XNCvlWME
-	efiaDO7SReUKUsciKzLICRUh4JZ5SSXyd50gktCXW02HjxGDxGdywP8NOW2vx5fU
-	zrIRNXPmYlZ/wMrke0uXGD50=
-Received: from localhost (unknown [119.6.72.17])
-	by smtp1 (Coremail) with SMTP id C8mowKDbn00sLjpO73bXAg--.2197S2;
-	Thu, 04 Aug 2011 13:29:17 +0800 (CST)
-X-Coremail-DSSMTP: 119.6.72.17
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-CM-TRANSID: C8mowKDbn00sLjpO73bXAg--.2197S2
-X-Coremail-Antispam: 1Uf129KBjvdXoW7Jw1xCrWUCw47ZFWDtFWrZrb_yoW3CrbEqF
-	WjyF43GF4jvr1agr4jvFnxGr13JFWxZFn3Xw15XF45u342q3WUJw4DG3y7Xry7XrnrCFy3
-	Gw1qqF45Ar4jkjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IUngzVUUUUUU==
-X-CM-SenderInfo: x22vjiat6rjloofrz/1tbiZxKRGU3AIp76LwAAsZ
+	id S1751836Ab1HDGCc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Aug 2011 02:02:32 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:49700 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751801Ab1HDGCa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Aug 2011 02:02:30 -0400
+Received: by gxk21 with SMTP id 21so876501gxk.19
+        for <git@vger.kernel.org>; Wed, 03 Aug 2011 23:02:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=MBM7+2TKy3Wk7/wsRg7ijylbKpu9WKt9KZRUecQxr44=;
+        b=u3Wb5UEDSChJKqQ4Vg4BP4GzNzmbJeU7Cl3XkVPq1NFthsJG3ccjTE1u6XIlQGy9+Y
+         oULfXBWQ81A8qvqrbUyjkOP1bnBW30VjhwBKoyNX9bGrKUXvYM+me3fT141sR9pgmRFg
+         LeXVixFHugLBfJh4ggNJXcjhqG3LGj9pOt6wQ=
+Received: by 10.151.58.8 with SMTP id l8mr1651677ybk.242.1312437750148; Wed,
+ 03 Aug 2011 23:02:30 -0700 (PDT)
+Received: by 10.150.137.6 with HTTP; Wed, 3 Aug 2011 23:02:10 -0700 (PDT)
+In-Reply-To: <m3d3gmrchz.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178702>
 
-When my C file had some utf-8 comments, gitweb highlight generate
-illegal chars.
+2011/8/3 Jakub Narebski <jnareb@gmail.com>:
+> I have added cj-git-patchtool to "Patch-management Interface layers"
+> section of "Interfaces, frontends and tools" page on Git Wiki:
 
-So I hacked gitweb.cgi, like this:
+Cool, thanks!
 
----------------------------
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index dab89f2..48def38 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -6465,7 +6465,7 @@ sub git_blob {
-                        $nr++;
-                        $line = untabify($line);
-                        printf qq!<div class="pre"><a id="l%i" href="%s#l%i" class="linenr">%4i</a> %s</div>\n!,
--                              $nr, esc_attr(href(-replay => 1)), $nr, $nr, $syntax ? $line : esc_html($line, -nbsp=>1);
-+                              $nr, esc_attr(href(-replay => 1)), $nr, $nr, $syntax ? to_utf8($line) : esc_html($line, -nbsp=>1);
-                }
-        }
-        close $fd
----------------------------
+> I use one of patch management interfaces for that, namely StGit. =A0I=
+t
+> operates on stack of patches, which you can apply and unapply, going
+> back and forth and correcting them.
 
+I knew StGit existed, but I've never actually tried it. Now I also see
+that the description of Guilt actually sounds exactly what
+cj-git-patchtool does. (I was expecting that these tools would just
+let me easily create sets of patches, similar to Darcs, not that
+they'd actually allow to edit patches to fix conflicts.) I'll have to
+try them out as soon as I find some time. Thanks for the hint.
 
-And it works.
-
-But I wonder is this the rigtht solution.
-
-Anybody help me?
-
--- 
-Best Regards
-zzs
+Christian.
