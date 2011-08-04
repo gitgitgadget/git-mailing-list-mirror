@@ -1,99 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC 4/6] git-check-attr: Normalize paths
-Date: Thu, 04 Aug 2011 10:05:52 -0700
-Message-ID: <7vliv95cpb.fsf@alter.siamese.dyndns.org>
-References: <1311849425-9057-1-git-send-email-mhagger@alum.mit.edu>
- <1311849425-9057-5-git-send-email-mhagger@alum.mit.edu>
- <7v4o1zg20r.fsf@alter.siamese.dyndns.org> <4E3A12B9.1010800@alum.mit.edu>
+Subject: Re: [PATCH] Tolerate zlib deflation with window size < 32Kb
+Date: Thu, 04 Aug 2011 10:11:03 -0700
+Message-ID: <7vhb5x5cgo.fsf@alter.siamese.dyndns.org>
+References: <1312410730-12261-1-git-send-email-roberto.tyley@gmail.com>
+ <7vsjpi82x7.fsf@alter.siamese.dyndns.org>
+ <CAFY1edZyO7oYDi+tV2mxbhBHY_cf2F0bD7+KF9rxmKYygSFAjA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Aug 04 19:06:02 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Roberto Tyley <roberto.tyley@guardian.co.uk>
+To: Roberto Tyley <roberto.tyley@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 04 19:11:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qp1Mw-0000rJ-Ag
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 19:06:02 +0200
+	id 1Qp1Rx-0003dx-59
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 19:11:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755311Ab1HDRF5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Aug 2011 13:05:57 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39682 "EHLO
+	id S1752501Ab1HDRLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Aug 2011 13:11:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42006 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752378Ab1HDRF4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2011 13:05:56 -0400
+	id S1751631Ab1HDRLF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2011 13:11:05 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E236A4AA1;
-	Thu,  4 Aug 2011 13:05:54 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 29C774B6B;
+	Thu,  4 Aug 2011 13:11:05 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1a0w40Y9gEjwbmEeZJG3M5M6uJo=; b=UE6avh
-	K/skn7l62mwNbkXetIiOA0KVe+pfJgPU8JL31lg1OWtkQRRaywJoar90pJQNbrXK
-	V7FD0rMmzbqqyfr8N6rNERkEUYpr6+IeffHkWaowwq/eOooMNXweJhONfm5NKjky
-	aDOrV4f3VLZr2PjKC+qJmouPAymbAK7QFBJtk=
+	:content-type; s=sasl; bh=u7piFeZiemhtgFI5LXqoPLQHsgY=; b=v5Ej08
+	RSiW6CGW2LNGaGGS1pQBeHZFOo5/be/YP/57dFNmWK5j/Rn+5RRMMvOzoPH+/gjs
+	4Nu7c4v1s8YDJ2mMZDJ2S7W1UtehvtpLgqGYUxiIZaL8x+KCG3gJQAVLmrpT3SLL
+	OvoaRNNWMsdpJdeRIJIipw5/YQM+h6VpYyhyw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bokS8podMqk9vpgUfoqVz5LRI2h1aJei
-	CzJsL5+bgLvnRCLDv6hI08Mds3UKkgWj4Wejej4UluZMYXqxHF4eT+PWWu+LFlJl
-	C4Fojid9j5FjCUpT3x6uTZKjsJc/N+1Z6z0vY4pgPgZwdRtmJbFdVlc8gXIl0rPr
-	SHG4nkAAlnU=
+	:content-type; q=dns; s=sasl; b=qOG22wP9NUq3M7X25nWjGB2Z5GKa8Nc2
+	Ha5yca7WRlylM1zm5ko3Gh3DH2LFSARM6pMOi2tR0G0h70P1zab7YisM5A4oaQ+D
+	gPNL9A3O0qY6Wp9sJPq6p63Trv1hrPZ8/mLzhQ6VWUieGrVkBoVRgBMmS2a2Dsuu
+	gxU9SQGu0DM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D95A24AA0;
-	Thu,  4 Aug 2011 13:05:54 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21DF44B6A;
+	Thu,  4 Aug 2011 13:11:05 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 358D24A9F; Thu,  4 Aug 2011
- 13:05:54 -0400 (EDT)
-In-Reply-To: <4E3A12B9.1010800@alum.mit.edu> (Michael Haggerty's message of
- "Thu, 04 Aug 2011 05:32:09 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8D6444B69; Thu,  4 Aug 2011
+ 13:11:04 -0400 (EDT)
+In-Reply-To: <CAFY1edZyO7oYDi+tV2mxbhBHY_cf2F0bD7+KF9rxmKYygSFAjA@mail.gmail.com> (Roberto
+ Tyley's message of "Thu, 4 Aug 2011 08:35:51 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0375E3A0-BEBC-11E0-ADF1-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: BC730F9A-BEBC-11E0-8276-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178752>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Roberto Tyley <roberto.tyley@gmail.com> writes:
 
->> I think passing down "prefix" (i.e. where your $(cwd) was relative to the
->> root level of the working tree) and the user-supplied "pathspec" (which
->> typically is relative to that original $(cwd)) is the canonical approach.
->> The very original git worked only at the root level of the working tree,
->> with paths specified relative to the root level of the tree, so many code
->> do:
->> 
->> 	- find out the root of the working tree;
->>         - note where the $(cwd) was in "prefix";
->>         - chdir to the root of the working tree;
->> 	- prepend the "prefix" to user supplied pathspec;
->>         - forget all the complexity and work on the whole tree.
->> 
->> Then the "prefix" gets stripped away from the beginning of the paths when
->> reporting.
->> 
->> Your patch from a cursory look seems to follow that pattern, which is
->> good.
+> On 4 August 2011 00:56, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Thanks for the explanation.
+>> roberto.tyley@gmail.com writes:
+>> > -     if (map[0] == 0x78 && !(word % 31))
+>> > +     if ((map[0] & 0x88) == 0x08 && !(word % 31))
+>>
+>> Are you sure about this 0x88? Isn't it 0x8F or something?
 >
-> Yes, my code follows the pattern, except that in this case it is
-> unnecessary to chdir to the root of the working tree.
+>
+> Ah- yes, you're right - the bitmask should be 0x8F, because the
+> lower nibble of a deflated zlib stream is 8 (8=deflate) and we want
+> to match all 4 bits.
+>
+> Thankfully the rest of the logic still applies - I'll submit an
+> updated patch in a minute, once I've conquered my embarrassment :-)
 
-Just to make sure there is no misunderstanding. The chdir() should not be
-in the core part of the system that you may want to libify.
-
-The above pattern was developed primarily so that older utility functions
-in the system that were written back when nobody ran git from anywhere
-other than the top level of the working tree can be easily adapted to main
-programs that can be launched from a subdirectory. The initial set-up part
-of the program is responsible for figuring out "prefix", turning relative
-paths given by the user into paths relative to the top of the working
-tree, and then chdir'ing to the top.
-
-After all that happens, the library-ish parts of the system only have to
-deal with full paths relative to the root of the working tree. "prefix"
-comes into play when reporting the results (i.e. showing paths relative to
-user's $(cwd) in the output or in the error messages).
+Heh, don't get embarrassed. It was your well-written in-code comment that
+helped me to follow the new logic well enough to spot it.
