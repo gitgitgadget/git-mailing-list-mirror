@@ -1,175 +1,253 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/5] fast-export: use object to uint32 map instead of
- "decorate"
-Date: Thu, 4 Aug 2011 16:46:00 -0600
-Message-ID: <20110804224600.GB27912@sigill.intra.peff.net>
+Subject: [PATCH 3/5] decorate: use "map" for the underlying implementation
+Date: Thu, 4 Aug 2011 16:46:08 -0600
+Message-ID: <20110804224608.GC27912@sigill.intra.peff.net>
 References: <20110804224354.GA27476@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 05 00:46:12 2011
+X-From: git-owner@vger.kernel.org Fri Aug 05 00:46:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qp6g6-0006uE-Jl
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Aug 2011 00:46:10 +0200
+	id 1Qp6gE-0006xl-6A
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Aug 2011 00:46:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756049Ab1HDWqG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Aug 2011 18:46:06 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:32916
+	id S1756065Ab1HDWqN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Aug 2011 18:46:13 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:32919
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754816Ab1HDWqE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2011 18:46:04 -0400
-Received: (qmail 23366 invoked by uid 107); 4 Aug 2011 22:46:37 -0000
+	id S1756057Ab1HDWqL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2011 18:46:11 -0400
+Received: (qmail 23395 invoked by uid 107); 4 Aug 2011 22:46:45 -0000
 Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 04 Aug 2011 18:46:37 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Aug 2011 16:46:00 -0600
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 04 Aug 2011 18:46:45 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Aug 2011 16:46:08 -0600
 Content-Disposition: inline
 In-Reply-To: <20110804224354.GA27476@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178770>
 
-Previously we encoded the "mark" mapping inside the "void *"
-field of a "struct decorate". It's a little more natural for
-us to do so using a data structure made for holding actual
-values.
+The decoration API maps objects to void pointers. This is a
+subset of what the map API is capable of, so let's get rid
+of the duplicate implementation.
+
+We could just fix all callers of decorate to call the map
+API directly. However, the map API is very generic since it
+is meant to handle any type. In particular, it can't use
+sentinel values like "NULL" to indicate "entry not found"
+(since it doesn't know whether the type can represent such a
+sentinel value), which makes the interface slightly more
+complicated.
+
+Instead, let's keep the existing decorate API as a wrapper
+on top of map. No callers need to be updated at all.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- Documentation/technical/api-map.txt |    2 +-
- builtin/fast-export.c               |   36 ++++++++++------------------------
- map.c                               |    2 +
- map.h                               |    2 +
- 4 files changed, 16 insertions(+), 26 deletions(-)
+ Documentation/technical/api-decorate.txt |   38 +++++++++++++-
+ decorate.c                               |   85 +++---------------------------
+ decorate.h                               |   10 +---
+ map.c                                    |    1 +
+ map.h                                    |    1 +
+ 5 files changed, 48 insertions(+), 87 deletions(-)
 
-diff --git a/Documentation/technical/api-map.txt b/Documentation/technical/api-map.txt
-index 4153ef1..97e5a32 100644
---- a/Documentation/technical/api-map.txt
-+++ b/Documentation/technical/api-map.txt
-@@ -149,7 +149,7 @@ void dump_foos(void)
- 	printf("there are %u foos:\n", foos.nr);
+diff --git a/Documentation/technical/api-decorate.txt b/Documentation/technical/api-decorate.txt
+index 1d52a6c..3c1197a 100644
+--- a/Documentation/technical/api-decorate.txt
++++ b/Documentation/technical/api-decorate.txt
+@@ -1,6 +1,40 @@
+ decorate API
+ ============
  
- 	for (i = 0; i < foos.size; i++) {
--		struct map_entry_object_int *e = foos.hash[i];
-+		struct map_entry_object_int *e = foos.hash + i;
+-Talk about <decorate.h>
++The decorate API is a system for efficiently mapping objects to values
++in memory. It is slightly slower than an actual member of an object
++struct (because it incurs a hash lookup), but it uses less memory when
++the mapping is not in use, or when the number of decorated objects is
++small compared to the total number of objects.
  
- 		if (!e->used)
- 			continue;
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index becef85..9247871 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -12,7 +12,7 @@
- #include "diffcore.h"
- #include "log-tree.h"
- #include "revision.h"
--#include "decorate.h"
-+#include "map.h"
- #include "string-list.h"
- #include "utf8.h"
- #include "parse-options.h"
-@@ -60,7 +60,7 @@ static int parse_opt_tag_of_filtered_mode(const struct option *opt,
- 	return 0;
- }
+-(Linus)
++The decorate API is a special form of the `map` link:api-map.html[map
++API]. It has slightly simpler calling conventions, but only use objects
++as keys, and can only store void pointers as values.
++
++
++Data Structures
++---------------
++
++`struct decoration`::
++
++	This structure represents a single mapping of objects to values.
++	The `name` field is not used by the decorate API itself, but may
++	be used by calling code. The `map` field represents the actual
++	mapping of objects to void pointers (see the
++	link:api-map.html[map API] for details).
++
++
++Functions
++---------
++
++`add_decoration`::
++
++	Add a mapping from an object to a void pointer. If there was a
++	previous value for this object, the function returns this value;
++	otherwise, the function returns NULL.
++
++`lookup_decoration`::
++
++	Retrieve the stored value pointer for an object from the
++	mapping. The return value is the value pointer, or `NULL` if
++	there is no value for this object.
+diff --git a/decorate.c b/decorate.c
+index 2f8a63e..31e9656 100644
+--- a/decorate.c
++++ b/decorate.c
+@@ -1,88 +1,17 @@
+-/*
+- * decorate.c - decorate a git object with some arbitrary
+- * data.
+- */
+ #include "cache.h"
+-#include "object.h"
+ #include "decorate.h"
  
--static struct decoration idnums;
-+static struct map_object_uint32 idnums;
- static uint32_t last_idnum;
- 
- static int has_unshown_parent(struct commit *commit)
-@@ -74,20 +74,9 @@ static int has_unshown_parent(struct commit *commit)
- 	return 0;
- }
- 
--/* Since intptr_t is C99, we do not use it here */
--static inline uint32_t *mark_to_ptr(uint32_t mark)
+-static unsigned int hash_obj(const struct object *obj, unsigned int n)
 -{
--	return ((uint32_t *)NULL) + mark;
+-	unsigned int hash;
+-
+-	memcpy(&hash, obj->sha1, sizeof(unsigned int));
+-	return hash % n;
 -}
 -
--static inline uint32_t ptr_to_mark(void * mark)
+-static void *insert_decoration(struct decoration *n, const struct object *base, void *decoration)
 -{
--	return (uint32_t *)mark - (uint32_t *)NULL;
+-	int size = n->size;
+-	struct object_decoration *hash = n->hash;
+-	unsigned int j = hash_obj(base, size);
+-
+-	while (hash[j].base) {
+-		if (hash[j].base == base) {
+-			void *old = hash[j].decoration;
+-			hash[j].decoration = decoration;
+-			return old;
+-		}
+-		if (++j >= size)
+-			j = 0;
+-	}
+-	hash[j].base = base;
+-	hash[j].decoration = decoration;
+-	n->nr++;
+-	return NULL;
 -}
 -
- static inline void mark_object(struct object *object, uint32_t mark)
+-static void grow_decoration(struct decoration *n)
+-{
+-	int i;
+-	int old_size = n->size;
+-	struct object_decoration *old_hash = n->hash;
+-
+-	n->size = (old_size + 1000) * 3 / 2;
+-	n->hash = xcalloc(n->size, sizeof(struct object_decoration));
+-	n->nr = 0;
+-
+-	for (i = 0; i < old_size; i++) {
+-		const struct object *base = old_hash[i].base;
+-		void *decoration = old_hash[i].decoration;
+-
+-		if (!base)
+-			continue;
+-		insert_decoration(n, base, decoration);
+-	}
+-	free(old_hash);
+-}
+-
+-/* Add a decoration pointer, return any old one */
+ void *add_decoration(struct decoration *n, const struct object *obj,
+-		void *decoration)
++		     void *decoration)
  {
--	add_decoration(&idnums, object, mark_to_ptr(mark));
-+	map_set_object_uint32(&idnums, object, mark, NULL);
- }
- 
- static inline void mark_next_object(struct object *object)
-@@ -97,10 +86,9 @@ static inline void mark_next_object(struct object *object)
- 
- static int get_object_mark(struct object *object)
- {
--	void *decoration = lookup_decoration(&idnums, object);
--	if (!decoration)
--		return 0;
--	return ptr_to_mark(decoration);
-+	uint32_t ret = 0;
-+	map_get_object_uint32(&idnums, object, &ret);
+-	int nr = n->nr + 1;
+-
+-	if (nr > n->size * 2 / 3)
+-		grow_decoration(n);
+-	return insert_decoration(n, obj, decoration);
++	void *ret = NULL;
++	map_set_object_void(&n->map, obj, decoration, &ret);
 +	return ret;
  }
  
- static void show_progress(void)
-@@ -538,8 +526,6 @@ static void handle_tags_and_duplicates(struct string_list *extra_refs)
- static void export_marks(char *file)
+-/* Lookup a decoration pointer */
+ void *lookup_decoration(struct decoration *n, const struct object *obj)
  {
- 	unsigned int i;
--	uint32_t mark;
--	struct object_decoration *deco = idnums.hash;
- 	FILE *f;
- 	int e = 0;
+-	unsigned int j;
+-
+-	/* nothing to lookup */
+-	if (!n->size)
+-		return NULL;
+-	j = hash_obj(obj, n->size);
+-	for (;;) {
+-		struct object_decoration *ref = n->hash + j;
+-		if (ref->base == obj)
+-			return ref->decoration;
+-		if (!ref->base)
+-			return NULL;
+-		if (++j == n->size)
+-			j = 0;
+-	}
++	void *ret = NULL;
++	map_get_object_void(&n->map, obj, &ret);
++	return ret;
+ }
+diff --git a/decorate.h b/decorate.h
+index e732804..6a3adcd 100644
+--- a/decorate.h
++++ b/decorate.h
+@@ -1,15 +1,11 @@
+ #ifndef DECORATE_H
+ #define DECORATE_H
  
-@@ -548,15 +534,15 @@ static void export_marks(char *file)
- 		die_errno("Unable to open marks file %s for writing.", file);
+-struct object_decoration {
+-	const struct object *base;
+-	void *decoration;
+-};
++#include "map.h"
  
- 	for (i = 0; i < idnums.size; i++) {
--		if (deco->base && deco->base->type == 1) {
--			mark = ptr_to_mark(deco->decoration);
--			if (fprintf(f, ":%"PRIu32" %s\n", mark,
--				sha1_to_hex(deco->base->sha1)) < 0) {
-+		const struct map_entry_object_uint32 *m = idnums.hash + i;
-+
-+		if (m->used && m->key->type == 1) {
-+			if (fprintf(f, ":%"PRIu32" %s\n", m->value,
-+				sha1_to_hex(m->key->sha1)) < 0) {
- 			    e = 1;
- 			    break;
- 			}
- 		}
--		deco++;
- 	}
+ struct decoration {
+-	const char *name;
+-	unsigned int size, nr;
+-	struct object_decoration *hash;
++	char *name;
++	struct map_object_void map;
+ };
  
- 	e |= ferror(f);
+ extern void *add_decoration(struct decoration *n, const struct object *obj, void *decoration);
 diff --git a/map.c b/map.c
-index 35f300e..1fdd1aa 100644
+index 1fdd1aa..73f45e0 100644
 --- a/map.c
 +++ b/map.c
-@@ -84,3 +84,5 @@ int map_get_##name(struct map_##name *m, \
- 	} \
- 	return 0; \
+@@ -86,3 +86,4 @@ int map_get_##name(struct map_##name *m, \
  }
-+
-+IMPLEMENT_MAP(object_uint32, obj_equal, hash_obj)
+ 
+ IMPLEMENT_MAP(object_uint32, obj_equal, hash_obj)
++IMPLEMENT_MAP(object_void, obj_equal, hash_obj)
 diff --git a/map.h b/map.h
-index cb2d4e2..7449593 100644
+index 7449593..cb9aea6 100644
 --- a/map.h
 +++ b/map.h
-@@ -23,4 +23,6 @@ extern int map_set_##name(struct map_##name *, \
- 			  map_vtype_##name value, \
+@@ -24,5 +24,6 @@ extern int map_set_##name(struct map_##name *, \
  			  map_vtype_##name *old);
  
-+DECLARE_MAP(object_uint32, const struct object *, uint32_t)
-+
+ DECLARE_MAP(object_uint32, const struct object *, uint32_t)
++DECLARE_MAP(object_void, const struct object *, void *)
+ 
  #endif /* MAP_H */
 -- 
 1.7.6.34.g86521e
