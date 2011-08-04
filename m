@@ -1,86 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v16 6/7] bisect: add tests for the --no-checkout option.
-Date: Wed, 03 Aug 2011 17:43:45 -0700
-Message-ID: <7voc066m66.fsf@alter.siamese.dyndns.org>
-References: <1312408626-8600-1-git-send-email-jon.seymour@gmail.com>
- <1312408626-8600-7-git-send-email-jon.seymour@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-archive's wrong documentation: really write pax rather than
+ tar
+Date: Wed, 3 Aug 2011 19:41:43 -0600
+Message-ID: <20110804014143.GA32579@sigill.intra.peff.net>
+References: <1312409879.97173.YahooMailClassic@web29501.mail.ird.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, chriscool@tuxfamily.org, j6t@kdbg.org,
-	jnareb@gmail.com, jrnieder@gmail.com
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 04 02:43:53 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, rene.scharfe@lsrfire.ath.cx
+To: Hin-Tak Leung <htl10@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Thu Aug 04 03:42:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qom2S-0000Tn-QV
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 02:43:53 +0200
+	id 1Qomwj-0004YR-AV
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 03:42:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756221Ab1HDAnt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Aug 2011 20:43:49 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35019 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756140Ab1HDAnr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2011 20:43:47 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4EF1640B9;
-	Wed,  3 Aug 2011 20:43:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=uP2xH8E9U/dyl6GoDZq24a+K1qg=; b=urAzJBrFBWd6rx7rBO+4
-	bNzJman8HyQ5SFqvDTLsE58Fh5TypnKttC2cT49L7m2g1m50des5AgALaw6vWLxc
-	9Gm1O8eO2/C/dCrZGISDH+FoW43WsVuN/Av4wbQEvvYOpjbDaOpNgc5Nfd9vNiXN
-	Msk1v9Q8lJHgqsLSKZkIZYE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=kMxxC4wAQxiPqxGJydw+d83j2M1AOpAmOoPw7F30CMnAZL
-	BpSixfbGbXFmN6WwlvJ20TAHUY74poj5H4oU1GtNq5I1huyLEOZcbzhvRezzCfco
-	x3ciRz91tUoq4x4IKeW8fby3Zj/o2uCQCOk29ixlHa9OkGW2KDzUD1PIQmfFY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 45B8740B8;
-	Wed,  3 Aug 2011 20:43:47 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AF90040B6; Wed,  3 Aug 2011
- 20:43:46 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: CFF2CEA0-BE32-11E0-877F-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S932089Ab1HDBlr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Aug 2011 21:41:47 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58688
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932071Ab1HDBlq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2011 21:41:46 -0400
+Received: (qmail 12683 invoked by uid 107); 4 Aug 2011 01:42:19 -0000
+Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 03 Aug 2011 21:42:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Aug 2011 19:41:43 -0600
+Content-Disposition: inline
+In-Reply-To: <1312409879.97173.YahooMailClassic@web29501.mail.ird.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178649>
 
-Jon Seymour <jon.seymour@gmail.com> writes:
+On Wed, Aug 03, 2011 at 11:17:59PM +0100, Hin-Tak Leung wrote:
 
-> @@ -616,6 +628,14 @@ cat > expected.missing-tree.default <<EOF
->  fatal: unable to read tree 39f7e61a724187ab767d2e08442d9b6b9dab587d
->  EOF
->  
-> +check_same()
-> +{
-> +    echo "Checking $1 is the same as $2" &&
-> +    git rev-parse "$1" > expected.same &&
-> +    git rev-parse "$2" > expected.actual &&
-> +    test_cmp expected.same expected.actual
+> The summary of the problem is that, git-archive's "--format=tar"
+> option really write the pax format most of the time, and some
+> cross-platform archive extraction library (rather than the
+> all-powerful GNU tar) really does not think that's the tar format and
+> bail out.
 
-Please indent with tabs; I know some existing lines in this file needs
-fixing in a separate patch, but we do not have to make it worse.
+Out of curiosity, what is the library? Putting pax headers into ustar
+format has been standardized in POSIX since 2001.
 
-> +test_expect_success 'bisect: demonstrate identification of damage boundary' "
-> +	git bisect reset &&
-> +	git checkout broken &&
-> +	git bisect start broken master --no-checkout &&
-> +	git bisect run sh -c '
-> +		GOOD=$(git for-each-ref "--format=%(objectname)" refs/bisect/good-*) &&
+> Is it possible to (1) add a warning in the man-page, or (2) actually
+> fix the problem in git-archive ( archive-tar.c ) to generate more
+> conformant archive packages?
 
-I have a suspicion that the dq around the format=%(...) here does not do
-what you seem to think; doesn't it just step outside of the dq context of
-the second parameter of the outermost test_expect_success?  Wouldn't your
-shell see
+That header contains useful information (the commit id from which the
+archive was generated). And there is a way to turn it off: give a tree
+id instead of a commit id. There is an example in the git-archive
+manpage that does exactly this already. Look for the example mentioning
+"pax header" here:
 
-	git for-each-ref --format=%(objectname)
+  http://www.kernel.org/pub/software/scm/git/docs/git-archive.html
 
-without dq and barf on () as a consequence?
+It might be a bit more obvious to find if we actually had a
+--no-pax-header option, though.
+
+-Peff
