@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 14/18] reset: Make reset remove the sequencer state
-Date: Thu,  4 Aug 2011 16:09:12 +0530
-Message-ID: <1312454356-3070-15-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 15/18] revert: Remove sequencer state when no commits are pending
+Date: Thu,  4 Aug 2011 16:09:13 +0530
+Message-ID: <1312454356-3070-16-git-send-email-artagnon@gmail.com>
 References: <1312454356-3070-1-git-send-email-artagnon@gmail.com>
 Cc: Git List <git@vger.kernel.org>,
 	Jonathan Nieder <jrnieder@gmail.com>,
@@ -9,134 +9,133 @@ Cc: Git List <git@vger.kernel.org>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 04 12:43:40 2011
+X-From: git-owner@vger.kernel.org Thu Aug 04 12:43:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QovOt-0007Nc-AJ
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 12:43:39 +0200
+	id 1QovOz-0007PF-Ot
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 12:43:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754126Ab1HDKnf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Aug 2011 06:43:35 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:34039 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753971Ab1HDKnd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2011 06:43:33 -0400
-Received: by gwaa12 with SMTP id a12so958360gwa.19
-        for <git@vger.kernel.org>; Thu, 04 Aug 2011 03:43:32 -0700 (PDT)
+	id S1754141Ab1HDKni (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Aug 2011 06:43:38 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:63604 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753971Ab1HDKnh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2011 06:43:37 -0400
+Received: by mail-pz0-f42.google.com with SMTP id 37so1836868pzk.1
+        for <git@vger.kernel.org>; Thu, 04 Aug 2011 03:43:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=6Fhos3ZA58ZWJceCmtsiTG2ovvS7tg0F5dMwXnEJCiQ=;
-        b=R5q9ub8ZlCD/tNsyff94oQgXNqSj7ZRREXrYvfFEhzlNFc6scSrf8Fi+o/TcroA4Pd
-         j5AoJvPp0KV3Ri29/3AkAiMpfTYjDxrF1rB+JSmSI5p7ELLNufsURBuEQbWauzeJy6/y
-         GQ9Xk6VcBAnzAPnlzx58m/LEsDjXxZfwCby9w=
-Received: by 10.142.136.18 with SMTP id j18mr667927wfd.284.1312454612286;
-        Thu, 04 Aug 2011 03:43:32 -0700 (PDT)
+        bh=uvmbipyPJ9lWL5+qe0NHtiDWzIAtK9KT9HG6TQc/nkM=;
+        b=TDv5F+WQ7gci9cZBBu1miOes4ETUmxg82z8eNrdg/GPW1myNXd49i2eFmgCe8wYRK3
+         XKUbLWNil+N2iszGnPQtEM6PmyzjRJmKKUsedYZIyrDZT8OENaJcP208iHQw3XqHtE2g
+         MJh5ieEnwo8BDQR+l6kZEdH8vNDvzqu0TJyaU=
+Received: by 10.142.120.9 with SMTP id s9mr586615wfc.431.1312454617156;
+        Thu, 04 Aug 2011 03:43:37 -0700 (PDT)
 Received: from localhost.localdomain ([203.110.240.41])
-        by mx.google.com with ESMTPS id m7sm2090440pbk.6.2011.08.04.03.43.26
+        by mx.google.com with ESMTPS id m7sm2090440pbk.6.2011.08.04.03.43.32
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 04 Aug 2011 03:43:31 -0700 (PDT)
+        Thu, 04 Aug 2011 03:43:36 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6.351.gb35ac.dirty
 In-Reply-To: <1312454356-3070-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178731>
 
-Years of muscle memory have trained users to use "git reset --hard" to
-remove the branch state after any sort operation.  Make it also remove
-the sequencer state to facilitate this established workflow:
+When cherry-pick or revert is called on a list of commits, and a
+conflict encountered somewhere in the middle, the data in
+".git/sequencer" is required to continue the operation.  However, when
+a conflict is encountered in the very last commit, the user will have
+to "continue" after resolving the conflict and committing just so that
+the sequencer state is removed.  This is how the current "rebase -i"
+script works as well.
 
   $ git cherry-pick foo..bar
-  ... conflict encountered ...
-  $ git reset --hard # Oops, I didn't mean that
-  $ git cherry-pick quux..bar
-  ... cherry-pick succeeded ...
+  ... conflict encountered while picking "bar" ...
+  $ echo "resolved" >problematicfile
+  $ git add problematicfile
+  $ git commit
+  $ git cherry-pick --continue # This would be a no-op
 
-Guard against accidental removal of the sequencer state by providing
-one level of "undo".  In the first "reset" invocation,
-".git/sequencer" is moved to ".git/sequencer-old"; it is completely
-removed only in the second invocation.
+Change this so that the sequencer state is cleared when a conflict is
+encountered in the last commit.  Incidentally, this patch makes sure
+that some existing tests don't break when features like "--reset" and
+"--continue" are implemented later in the series.
+
+A better way to implement this feature is to get the last "git commit"
+to remove the sequencer state.  However, that requires tighter
+coupling between "git commit" and the sequencer, a goal that can be
+pursued once the sequencer is made more general.
 
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+Acked-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- branch.c                 |    2 ++
- t/7106-reset-sequence.sh |   44 ++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 46 insertions(+), 0 deletions(-)
- create mode 100755 t/7106-reset-sequence.sh
+ builtin/revert.c                |   12 +++++++++++-
+ t/t3510-cherry-pick-sequence.sh |   24 ++++++++++++++++++++++++
+ 2 files changed, 35 insertions(+), 1 deletions(-)
 
-diff --git a/branch.c b/branch.c
-index c0c865a..d06aec4 100644
---- a/branch.c
-+++ b/branch.c
-@@ -3,6 +3,7 @@
- #include "refs.h"
- #include "remote.h"
- #include "commit.h"
-+#include "sequencer.h"
+diff --git a/builtin/revert.c b/builtin/revert.c
+index a8accd6..000806c 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -763,8 +763,18 @@ static int pick_commits(struct commit_list *todo_list, struct replay_opts *opts)
+ 	for (cur = todo_list; cur; cur = cur->next) {
+ 		save_todo(cur, opts);
+ 		res = do_pick_commit(cur->item, opts);
+-		if (res)
++		if (res) {
++			if (!cur->next)
++				/*
++				 * An error was encountered while
++				 * picking the last commit; the
++				 * sequencer state is useless now --
++				 * the user simply needs to resolve
++				 * the conflict and commit
++				 */
++				remove_sequencer_state(0);
+ 			return res;
++		}
+ 	}
  
- struct tracking {
- 	struct refspec spec;
-@@ -228,4 +229,5 @@ void remove_branch_state(void)
- 	unlink(git_path("MERGE_MSG"));
- 	unlink(git_path("MERGE_MODE"));
- 	unlink(git_path("SQUASH_MSG"));
-+	remove_sequencer_state(0);
- }
-diff --git a/t/7106-reset-sequence.sh b/t/7106-reset-sequence.sh
-new file mode 100755
-index 0000000..4956caa
---- /dev/null
-+++ b/t/7106-reset-sequence.sh
-@@ -0,0 +1,44 @@
-+#!/bin/sh
-+
-+test_description='Test interaction of reset --hard with sequencer
-+
-+  + anotherpick: rewrites foo to d
-+  + picked: rewrites foo to c
-+  + unrelatedpick: rewrites unrelated to reallyunrelated
-+  + base: rewrites foo to b
-+  + initial: writes foo as a, unrelated as unrelated
-+'
-+
-+. ./test-lib.sh
-+
-+pristine_detach () {
-+	git cherry-pick --reset &&
-+	git checkout -f "$1^0" &&
-+	git read-tree -u --reset HEAD &&
-+	git clean -d -f -f -q -x
-+}
-+
-+test_expect_success setup '
-+	echo unrelated >unrelated &&
-+	git add unrelated &&
-+	test_commit initial foo a &&
-+	test_commit base foo b &&
-+	test_commit unrelatedpick unrelated reallyunrelated &&
-+	test_commit picked foo c &&
-+	test_commit anotherpick foo d &&
-+	git config advice.detachedhead false
-+
-+'
-+
-+test_expect_success 'reset --hard cleans up sequencer state, providing one-level undo' '
+ 	/*
+diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
+index fd69865..a414086 100755
+--- a/t/t3510-cherry-pick-sequence.sh
++++ b/t/t3510-cherry-pick-sequence.sh
+@@ -82,4 +82,28 @@ test_expect_success '--reset cleans up sequencer state' '
+ 	test_path_is_missing .git/sequencer
+ '
+ 
++test_expect_success 'cherry-pick cleans up sequencer state when one commit is left' '
 +	pristine_detach initial &&
-+	test_must_fail git cherry-pick base..anotherpick &&
-+	test_path_is_dir .git/sequencer &&
-+	git reset --hard &&
++	test_must_fail git cherry-pick base..picked &&
 +	test_path_is_missing .git/sequencer &&
-+	test_path_is_dir .git/sequencer-old &&
-+	git reset --hard &&
-+	test_path_is_missing .git/sequencer-old
++	echo "resolved" >foo &&
++	git add foo &&
++	git commit &&
++	{
++		git rev-list HEAD |
++		git diff-tree --root --stdin |
++		sed "s/$_x40/OBJID/g"
++	} >actual &&
++	cat >expect <<-\EOF &&
++	OBJID
++	:100644 100644 OBJID OBJID M	foo
++	OBJID
++	:100644 100644 OBJID OBJID M	unrelated
++	OBJID
++	:000000 100644 OBJID OBJID A	foo
++	:000000 100644 OBJID OBJID A	unrelated
++	EOF
++	test_cmp expect actual
 +'
 +
-+test_done
+ test_done
 -- 
 1.7.6.351.gb35ac.dirty
