@@ -1,89 +1,97 @@
-From: Jon Jensen <jon@endpoint.com>
-Subject: [PATCH] Add option hooks.diffopts to customize change summary in
- post-receive-email
-Date: Wed, 3 Aug 2011 21:36:08 -0600 (MDT)
-Message-ID: <alpine.DEB.2.02.1108032117240.12142@ybpnyubfg6.ybpnyqbznva6>
-References: <alpine.DEB.2.02.1108022132230.3386@ybpnyubfg6.ybpnyqbznva6> <7vr552ba4e.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Storing additional information in commit headers
+Date: Wed, 3 Aug 2011 21:39:56 -0600
+Message-ID: <20110804033955.GA4534@sigill.intra.peff.net>
+References: <20110801182015.GA3100@fishbowl.rw.madduck.net>
+ <20110801201301.GA17111@sigill.intra.peff.net>
+ <20110801211104.GC15401@fishbowl.rw.madduck.net>
+ <20110802035056.GB17494@sigill.intra.peff.net>
+ <20110802082810.GC29887@fishbowl.rw.madduck.net>
+ <20110802185154.GA2499@sigill.intra.peff.net>
+ <20110802190645.GB17322@fishbowl.rw.madduck.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 04 05:36:22 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git discussion list <git@vger.kernel.org>,
+	Petr Baudis <pasky@ucw.cz>, Clemens Buchacher <drizzd@aon.at>
+To: martin f krafft <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Thu Aug 04 05:40:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QoojK-0001Ks-B0
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 05:36:18 +0200
+	id 1Qoomz-0002a1-3m
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 05:40:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755975Ab1HDDgL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Aug 2011 23:36:11 -0400
-Received: from mail.endcrypt.com ([74.205.105.202]:43301 "EHLO
-	mail.endcrypt.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755574Ab1HDDgK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2011 23:36:10 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail.endcrypt.com (Postfix) with ESMTP id 3346930E27;
-	Thu,  4 Aug 2011 03:36:09 +0000 (UTC)
-In-Reply-To: <7vr552ba4e.fsf@alter.siamese.dyndns.org>
+	id S1755615Ab1HDDkA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Aug 2011 23:40:00 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:60276
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753028Ab1HDDj6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2011 23:39:58 -0400
+Received: (qmail 13850 invoked by uid 107); 4 Aug 2011 03:40:32 -0000
+Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 03 Aug 2011 23:40:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Aug 2011 21:39:56 -0600
+Content-Disposition: inline
+In-Reply-To: <20110802190645.GB17322@fishbowl.rw.madduck.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178665>
 
-This makes it easy to customize the git diff-tree options, for example
-to include -p to include inline diffs.
+On Tue, Aug 02, 2011 at 09:06:45PM +0200, martin f krafft wrote:
 
-It defaults to the current options "--stat --summary --find-copies-harder"
-and thus is backward-compatible.
+> It just seems to me that per-ref storage is a lot further away than
+> per-commit storage, and I'd really like to move forward with TopGit=E2=
+=80=A6
 
-Signed-off-by: Jon Jensen <jon@endpoint.com>
-Improved-by: Junio C Hamano <gitster@pobox.com>
----
+I don't think it's that hard. For example:
 
-Thanks for the suggestion, Junio. It makes a lot of sense.
+  # our mapping for all refs, and the history of that mapping, will be
+  # stored under this ref
+  MAP=3Drefs/topgit/metadata
 
-Jon
+  refmap_set() {
+    (
+      # start with a pristine index based on the current map
+      GIT_INDEX_FILE=3D"$(git rev-parse --git-dir)/tg-meta-index"
+      export GIT_INDEX_FILE
+      if git rev-parse -q --verify $MAP >/dev/null; then
+        git read-tree $MAP
+      fi
 
+      # and then put our new ref and metadata in
+      blob=3D`git hash-object --stdin -w`
+      git update-index --add --cacheinfo 100644 $blob $1
+      tree=3D`git write-tree`
+      parent=3D$(git rev-parse -q --verify $MAP)
+      commit=3D`echo 'updated map' | git commit-tree $tree ${parent:+-p=
+ $parent}`
+      git update-ref $MAP $commit $old
+    )
+  }
 
- contrib/hooks/post-receive-email |    9 ++++++++-
- 1 files changed, 8 insertions(+), 1 deletions(-)
+  refmap_get() {
+    git cat-file blob $MAP:$1
+  }
 
-diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
-index 9c678e6..cd5664d 100755
---- a/contrib/hooks/post-receive-email
-+++ b/contrib/hooks/post-receive-email
-@@ -60,6 +60,11 @@
- #   email body. If not specified, there is no limit.
- #   Lines beyond the limit are suppressed and counted, and a final
- #   line is added indicating the number of suppressed lines.
-+# hooks.diffopts
-+#   Alternate options for the git diff-tree invocation that shows changes.
-+#   Default is "--stat --summary --find-copies-harder". Add -p to those
-+#   options to include a unified diff of changes in addition to the usual
-+#   summary output.
- #
- # Notes
- # -----
-@@ -447,7 +452,7 @@ generate_update_branch_email()
- 	# non-fast-forward updates.
- 	echo ""
- 	echo "Summary of changes:"
--	git diff-tree --stat --summary --find-copies-harder $oldrev..$newrev
-+	git diff-tree $diffopts $oldrev..$newrev
- }
- 
- #
-@@ -724,6 +729,8 @@ envelopesender=$(git config hooks.envelopesender)
- emailprefix=$(git config hooks.emailprefix || echo '[SCM] ')
- custom_showrev=$(git config hooks.showrev)
- maxlines=$(git config hooks.emailmaxlines)
-+diffopts=$(git config hooks.diffopts)
-+: ${diffopts:="--stat --summary --find-copies-harder"}
- 
- # --- Main loop
- # Allow dual mode: run from the command line just like the update hook, or
--- 
-1.7.6.233.gd79bc
+  # and some examples of use
+  echo some metadata | refmap_set refs/heads/foo
+  refmap_get refs/heads/foo |
+    sed 's/meta/changed &/' |
+    refmap_set refs/heads/foo
+
+It's a little more clunky than notes, of course, but it's not too bad t=
+o
+put into a script. The tricky part is how to handle fetching and mergin=
+g
+the metadata ref from other people. But that's not really different fro=
+m
+notes. In either case, you're probably going to want to make a custom
+merge program for combining the meta-information.
+
+-Peff
