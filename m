@@ -1,54 +1,89 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [RFC 0/6] git-check-attr should work for relative paths
-Date: Thu, 04 Aug 2011 05:35:16 +0200
-Message-ID: <4E3A1374.2050000@alum.mit.edu>
-References: <1311849425-9057-1-git-send-email-mhagger@alum.mit.edu> <7vwrevcw12.fsf@alter.siamese.dyndns.org>
+From: Jon Jensen <jon@endpoint.com>
+Subject: [PATCH] Add option hooks.diffopts to customize change summary in
+ post-receive-email
+Date: Wed, 3 Aug 2011 21:36:08 -0600 (MDT)
+Message-ID: <alpine.DEB.2.02.1108032117240.12142@ybpnyubfg6.ybpnyqbznva6>
+References: <alpine.DEB.2.02.1108022132230.3386@ybpnyubfg6.ybpnyqbznva6> <7vr552ba4e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 04 05:35:36 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 04 05:36:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qooie-000164-03
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 05:35:36 +0200
+	id 1QoojK-0001Ks-B0
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 05:36:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755937Ab1HDDfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Aug 2011 23:35:21 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:39455 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755066Ab1HDDfU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2011 23:35:20 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.69.133] (p54BEB339.dip.t-dialin.net [84.190.179.57])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p743ZHZ9026909
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 4 Aug 2011 05:35:17 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.18) Gecko/20110617 Lightning/1.0b2 Thunderbird/3.1.11
-In-Reply-To: <7vwrevcw12.fsf@alter.siamese.dyndns.org>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1755975Ab1HDDgL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Aug 2011 23:36:11 -0400
+Received: from mail.endcrypt.com ([74.205.105.202]:43301 "EHLO
+	mail.endcrypt.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755574Ab1HDDgK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2011 23:36:10 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail.endcrypt.com (Postfix) with ESMTP id 3346930E27;
+	Thu,  4 Aug 2011 03:36:09 +0000 (UTC)
+In-Reply-To: <7vr552ba4e.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178664>
 
-On 08/03/2011 12:02 AM, Junio C Hamano wrote:
-> A minor compilation fix-up on top, to be squashed when the series is
-> re-rolled. [...]
+This makes it easy to customize the git diff-tree options, for example
+to include -p to include inline diffs.
 
-Thanks for catching this.  I will include it in the re-roll.  (The patch
-series needs to be re-rolled anyway, since it depends on
-mh/check-attr-listing, which is being improved based on your feedback.)
+It defaults to the current options "--stat --summary --find-copies-harder"
+and thus is backward-compatible.
 
-Michael
+Signed-off-by: Jon Jensen <jon@endpoint.com>
+Improved-by: Junio C Hamano <gitster@pobox.com>
+---
 
+Thanks for the suggestion, Junio. It makes a lot of sense.
+
+Jon
+
+
+ contrib/hooks/post-receive-email |    9 ++++++++-
+ 1 files changed, 8 insertions(+), 1 deletions(-)
+
+diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
+index 9c678e6..cd5664d 100755
+--- a/contrib/hooks/post-receive-email
++++ b/contrib/hooks/post-receive-email
+@@ -60,6 +60,11 @@
+ #   email body. If not specified, there is no limit.
+ #   Lines beyond the limit are suppressed and counted, and a final
+ #   line is added indicating the number of suppressed lines.
++# hooks.diffopts
++#   Alternate options for the git diff-tree invocation that shows changes.
++#   Default is "--stat --summary --find-copies-harder". Add -p to those
++#   options to include a unified diff of changes in addition to the usual
++#   summary output.
+ #
+ # Notes
+ # -----
+@@ -447,7 +452,7 @@ generate_update_branch_email()
+ 	# non-fast-forward updates.
+ 	echo ""
+ 	echo "Summary of changes:"
+-	git diff-tree --stat --summary --find-copies-harder $oldrev..$newrev
++	git diff-tree $diffopts $oldrev..$newrev
+ }
+ 
+ #
+@@ -724,6 +729,8 @@ envelopesender=$(git config hooks.envelopesender)
+ emailprefix=$(git config hooks.emailprefix || echo '[SCM] ')
+ custom_showrev=$(git config hooks.showrev)
+ maxlines=$(git config hooks.emailmaxlines)
++diffopts=$(git config hooks.diffopts)
++: ${diffopts:="--stat --summary --find-copies-harder"}
+ 
+ # --- Main loop
+ # Allow dual mode: run from the command line just like the update hook, or
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+1.7.6.233.gd79bc
