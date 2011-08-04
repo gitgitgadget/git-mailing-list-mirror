@@ -1,67 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-archive's wrong documentation: really write pax rather than
- tar
-Date: Thu, 04 Aug 2011 15:51:09 -0700
-Message-ID: <7vei104wpu.fsf@alter.siamese.dyndns.org>
-References: <1312409879.97173.YahooMailClassic@web29501.mail.ird.yahoo.com>
- <20110804014143.GA32579@sigill.intra.peff.net>
- <20110804021329.GB32579@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] cache patch ids on disk
+Date: Thu, 4 Aug 2011 16:52:27 -0600
+Message-ID: <20110804225227.GA28241@sigill.intra.peff.net>
+References: <20110804224848.GA27545@sigill.intra.peff.net>
+ <20110804224947.GB28215@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Hin-Tak Leung <htl10@users.sourceforge.net>, git@vger.kernel.org,
-	rene.scharfe@lsrfire.ath.cx
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 05 00:51:17 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 05 00:52:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qp6l2-00018L-IU
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Aug 2011 00:51:16 +0200
+	id 1Qp6mK-0001iw-Bj
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Aug 2011 00:52:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753089Ab1HDWvN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Aug 2011 18:51:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57572 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751644Ab1HDWvM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2011 18:51:12 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 236FC4E79;
-	Thu,  4 Aug 2011 18:51:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+xVJiDe8ClSxp/wou9762kqdhvI=; b=LxM3Xb
-	P0OS48U/7viFEZlK4Rg7vNY705RsZ+fB+x+z8A8CuDyREoYjtWSgfMIUUK1mPDg3
-	BSFbi3XojOLHv0f8o5eCIWPRvAKzywNjZcOJYOT/vgO/ekhhL+fh4WrWHioUZRem
-	e1oyGrsxm2wMZHoH2kOc4Fbjoi0iIuYh0aBag=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wLF4b40LByOQc/z6u2bCRxB792n/L6Sq
-	S8ueizCqPAsKuP+yys1s20W5RSfb/3CVeaTAx0W72rqzQKftWUMz6ZcMDeu5NNWX
-	/pAhdCXGMkrzUVHPu3Jr5SnB0iJ1Kfzhrq35tRS3qghenJevj/KDW6QffUYd7mZ3
-	WOQZvy9Il0o=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A20B4E78;
-	Thu,  4 Aug 2011 18:51:11 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A5C554E77; Thu,  4 Aug 2011
- 18:51:10 -0400 (EDT)
-In-Reply-To: <20110804021329.GB32579@sigill.intra.peff.net> (Jeff King's
- message of "Wed, 3 Aug 2011 20:13:29 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3F6EDCCE-BEEC-11E0-8911-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753526Ab1HDWwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Aug 2011 18:52:32 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:48166
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753288Ab1HDWwa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2011 18:52:30 -0400
+Received: (qmail 23703 invoked by uid 107); 4 Aug 2011 22:53:04 -0000
+Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 04 Aug 2011 18:53:04 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Aug 2011 16:52:27 -0600
+Content-Disposition: inline
+In-Reply-To: <20110804224947.GB28215@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178777>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Aug 04, 2011 at 04:49:47PM -0600, Jeff King wrote:
 
-> As a bonus, this also fixes an example in the git-push manpage, in which
-> "git push origin :::" was accidentally considered a newly-indented list,
-> and not a list item with "git push origin :" in it.
+> +struct sha1 {
+> +	unsigned char v[20];
+> +};
+> +
+> [...]
+> +DECLARE_MAP(object_sha1, const struct object *, struct sha1)
 
-Thanks. That "happens to have colon at the end" one is nasty.
+I'm not altogether happy with this. But the generated code wants to
+treat the value type as something that can be instantiated as "vtype
+foo", so we need to wrap a struct around an array to make the compiler
+happy.
+
+We could do something a little fancier to avoid this, like separating
+"this is what it looks like to declare a value" from "this is what a
+passed value looks like". And then use "unsigned char v[20]" for the
+former and "unsigned char *" for the latter.
+
+-Peff
