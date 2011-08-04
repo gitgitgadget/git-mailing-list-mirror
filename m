@@ -1,65 +1,93 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-archive's wrong documentation: really write pax rather than
- tar
-Date: Wed, 3 Aug 2011 19:41:43 -0600
-Message-ID: <20110804014143.GA32579@sigill.intra.peff.net>
-References: <1312409879.97173.YahooMailClassic@web29501.mail.ird.yahoo.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/48] Handling more corner cases in merge-recursive.c
+Date: Wed, 03 Aug 2011 18:48:23 -0700
+Message-ID: <7vaabq6j6g.fsf@alter.siamese.dyndns.org>
+References: <1307518278-23814-1-git-send-email-newren@gmail.com>
+ <7v4o1y81sv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, rene.scharfe@lsrfire.ath.cx
-To: Hin-Tak Leung <htl10@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Thu Aug 04 03:42:06 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, jgfouca@sandia.gov
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 04 03:49:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qomwj-0004YR-AV
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 03:42:01 +0200
+	id 1Qon3h-000772-AX
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 03:49:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932089Ab1HDBlr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Aug 2011 21:41:47 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58688
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932071Ab1HDBlq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2011 21:41:46 -0400
-Received: (qmail 12683 invoked by uid 107); 4 Aug 2011 01:42:19 -0000
-Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 03 Aug 2011 21:42:19 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Aug 2011 19:41:43 -0600
-Content-Disposition: inline
-In-Reply-To: <1312409879.97173.YahooMailClassic@web29501.mail.ird.yahoo.com>
+	id S1756033Ab1HDBs1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Aug 2011 21:48:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57679 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755944Ab1HDBs0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2011 21:48:26 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B5F814A6E;
+	Wed,  3 Aug 2011 21:48:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KkUtQgJKGrYShfBocl8ZtS2dlTc=; b=Jr8+vo
+	vE2G4BHtu+SXHByEAridkwyR1bKpztmfD9LnW0QCRGIDPTBrw6dtY9K/Wx5jvlnG
+	/lAydlmDFI6vHKqWBWm0Uiat7gTv4LO0Ols/VVT2ZBuKDpM9aUez/ZDnGdDzu5sA
+	G+fU9xNCaORXYcCaGr14c91i6j3/b8w5ZwBNQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=r+W/I3j+OUZV8lCXd/Yvh9FlcKe/8EyB
+	jZP0cd23Gtui4thtiSsmrZUB42ObWGpxU9N4XO0N3rYAMRVpvp69pGVKHIazPbI0
+	dBmqGSPFR1R8SURrVraLUcyTjODiVAmbZTRfn61YgPC3+5/IsWCe1V0Ki9fMPvhA
+	t67XfjFtyAc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADC4E4A6D;
+	Wed,  3 Aug 2011 21:48:25 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3D0C04A6C; Wed,  3 Aug 2011
+ 21:48:25 -0400 (EDT)
+In-Reply-To: <7v4o1y81sv.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 03 Aug 2011 17:20:48 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D7B7C8F8-BE3B-11E0-B828-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178650>
 
-On Wed, Aug 03, 2011 at 11:17:59PM +0100, Hin-Tak Leung wrote:
+A very simple reproduction recipe.
 
-> The summary of the problem is that, git-archive's "--format=tar"
-> option really write the pax format most of the time, and some
-> cross-platform archive extraction library (rather than the
-> all-powerful GNU tar) really does not think that's the tar format and
-> bail out.
+-- >8 --
+#!/bin/sh
 
-Out of curiosity, what is the library? Putting pax headers into ustar
-format has been standardized in POSIX since 2001.
+mkdir en && cd en || exit
 
-> Is it possible to (1) add a warning in the man-page, or (2) actually
-> fix the problem in git-archive ( archive-tar.c ) to generate more
-> conformant archive packages?
+git init
 
-That header contains useful information (the commit id from which the
-archive was generated). And there is a way to turn it off: give a tree
-id instead of a commit id. There is an example in the git-archive
-manpage that does exactly this already. Look for the example mentioning
-"pax header" here:
+echo 1 >one
+git add one
+git commit -m 'origin'
 
-  http://www.kernel.org/pub/software/scm/git/docs/git-archive.html
+git checkout -b side
+git mv one two
+git commit -m 'side renames one to two'
 
-It might be a bit more obvious to find if we actually had a
---no-pax-header option, though.
+git checkout master
+echo 2 >one
+git add one
+git commit -m 'master updates one'
 
--Peff
+git checkout HEAD^0
+git merge side
+-- 8< --
+
+Tonight's "pu" fails like this:
+
+$ git merge side
+error: addinfo_cache failed for path 'two'
+Merge made by the 'recursive' strategy.
+ one |    1 -
+ two |    1 +
+ 2 files changed, 1 insertions(+), 1 deletions(-)
+ delete mode 100644 one
+ create mode 100644 two
