@@ -1,442 +1,321 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 4/5] map: implement persistent maps
-Date: Thu, 4 Aug 2011 16:46:27 -0600
-Message-ID: <20110804224627.GD27912@sigill.intra.peff.net>
+Subject: [PATCH 5/5] implement metadata cache subsystem
+Date: Thu, 4 Aug 2011 16:46:48 -0600
+Message-ID: <20110804224647.GE27912@sigill.intra.peff.net>
 References: <20110804224354.GA27476@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 05 00:46:37 2011
+X-From: git-owner@vger.kernel.org Fri Aug 05 00:46:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qp6gV-00076j-Ti
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Aug 2011 00:46:36 +0200
+	id 1Qp6gq-0007GQ-4l
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Aug 2011 00:46:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756066Ab1HDWqb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Aug 2011 18:46:31 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:32922
+	id S1756069Ab1HDWqw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Aug 2011 18:46:52 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:32925
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754816Ab1HDWqa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2011 18:46:30 -0400
-Received: (qmail 23424 invoked by uid 107); 4 Aug 2011 22:47:04 -0000
+	id S1754816Ab1HDWqv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2011 18:46:51 -0400
+Received: (qmail 23453 invoked by uid 107); 4 Aug 2011 22:47:25 -0000
 Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 04 Aug 2011 18:47:04 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Aug 2011 16:46:27 -0600
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 04 Aug 2011 18:47:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Aug 2011 16:46:48 -0600
 Content-Disposition: inline
 In-Reply-To: <20110804224354.GA27476@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178772>
 
-It's sometimes useful to keep a mapping across program
-invocations (e.g., because a space/time tradeoff makes it
-worth keeping a cache of calculated metadata for some
-objects).
+There are some calculations that git makes repeatedly, even
+though the results are invariant for a certain input (e.g.,
+the patch-id of a certain commit). We can make a space/time
+tradeoff by caching these on disk between runs.
 
-This adds a persistent version of the map API which can be
-backed by a flat memory store (like an mmap'd file). By
-itself, it's not very pleasant to use, as the caller is
-responsible for actually opening and mapping files. But it
-provides the building blocks for disk caches, which will
-come in the next patch.
+Even though these may be immutable for a certain commit, we
+don't want to directly store the results in the commit
+objects themselves, for a few reasons:
+
+  1. They are not necessarily used by all algorithms, so
+     bloating the commit object might slow down other
+     algorithms.
+
+  2. Because they can be calculated from the existing
+     commits, they are redundant with the existing
+     information. Thus they are an implementation detail of
+     our current algorithms, and should not be cast in stone
+     by including them in the commit sha1.
+
+  3. They may only be immutable under a certain set of
+     conditions (e.g., which grafts or replace refs we are
+     using). Keeping the storage external means we can
+     invalidate and regenerate the cache whenever those
+     conditions change.
+
+The persistent map API already provides the storage we need.
+This new API takes care of the details of opening and
+closing the cache files automatically. Callers need only get
+and set values as they see fit.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- Documentation/technical/api-map.txt |  132 +++++++++++++++++++++++++++++
- map.c                               |  157 +++++++++++++++++++++++++++++++++++
- map.h                               |   17 ++++
- 3 files changed, 306 insertions(+), 0 deletions(-)
+ Documentation/technical/api-metadata-cache.txt |   67 +++++++++++++
+ Makefile                                       |    2 +
+ metadata-cache.c                               |  126 ++++++++++++++++++++++++
+ metadata-cache.h                               |   10 ++
+ 4 files changed, 205 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/technical/api-metadata-cache.txt
+ create mode 100644 metadata-cache.c
+ create mode 100644 metadata-cache.h
 
-diff --git a/Documentation/technical/api-map.txt b/Documentation/technical/api-map.txt
-index 97e5a32..8ac0cc0 100644
---- a/Documentation/technical/api-map.txt
-+++ b/Documentation/technical/api-map.txt
-@@ -25,6 +25,21 @@ The decorate API provides a similar interface to map, but is restricted to
- using "struct object" as the key, and a void pointer as the value.
- 
- 
-+Persistent Maps
-+---------------
+diff --git a/Documentation/technical/api-metadata-cache.txt b/Documentation/technical/api-metadata-cache.txt
+new file mode 100644
+index 0000000..5f4422d
+--- /dev/null
++++ b/Documentation/technical/api-metadata-cache.txt
+@@ -0,0 +1,67 @@
++metadata cache API
++==================
 +
-+Maps come in two flavors: persistent and in-core. In-core maps are
-+represented by a hash table, and can contain any C type. Persistent maps
-+are backed by flat storage, such as an mmap'd file, and store values
-+between program runs. Key and value types must be serializable to
-+fixed-width byte values.
++The metadata cache API provides simple-to-use, persistent key/value
++storage. It is built on the link:api-map.html[map API], so keys and
++values can have any serializable type.
 +
-+The flat storage is a sorted array of key/value pairs, with no
-+delimiters between pairs or between elements of a pair.  Persistent maps
-+uses an in-core map for newly-added values, and then merge the new
-+values into the flat storage on request.
++Caches are statically allocated, and no explicit initialization is
++required.  Callers can simply call the "get" and "set" functions for a
++given cache.  At program exit, any new entries in the cache are flushed
++to disk.
 +
 +
- Defining New Map Types
- ----------------------
- 
-@@ -50,6 +65,32 @@ define a new type, you must use the `DECLARE_MAP` macro in `map.h`, and the
- 	should specify a function that will convert an object of type `ktype`
- 	into an integer hash value.
- 
-+To define a persistent map, use these macros instead:
++Defining a New Cache
++--------------------
 +
-+`DECLARE_MAP_PERSIST`::
++You need to provide three pieces of information to define a new cache:
 +
-+	Declare a new persistent map. The `name` parameter must match a
-+	map declared already with `DECLARE_MAP`.
++name::
++	This name will be used both as part of the C identifier and as
++	part of the filename under which the cache is stored. Restrict
++	the characters used to alphanumerics and underscore.
 +
-+`IMPLEMENT_MAP_PERSIST`::
++map::
++	The type of map (declared by `DECLARE_MAP`) that this cache will
++	store.
 +
-+	Create function definitions for a persistent map. The `name`
-+	parameter must match one given to `DECLARE_MAP_PERSIST`.  The
-+	`ksize` and `vsize` parameters indicate the size, in bytes, of
-+	serialized keys and values.
-++
-+	The `k_to_disk` and `v_to_disk` parameters specify functions to
-+	convert keys and values to their serialized formats; they take a
-+	key (or value), and a pointer to memory of at least `ksize` (or
-+	`vsize`) bytes to write into. The `disk_to_v` parameter
-+	specifies a function to convert a pointer to `vsize` bytes of
-+	serialized value into a `vtype`.
-++
-+	The `disk_lookup_fun` parameter should specify a function for
-+	performing a search of the sorted flat disk array (it is given
-+	the array, the number of elements, the size of the key and
-+	value, and the key to lookup).
++validity::
++	A function that will generate a 20-byte "validity token"
++	representing the conditions under which the cache is valid.
++	For example, a cache that depended on the structure of the
++	history graph would be valid only under a given set of grafts
++	and replace refs. That set could be stirred into a sha1 and used
++	as a validity token.
 +
- Several convenience functions are provided to fill in macro parameters:
- 
- `hash_obj`::
-@@ -60,6 +101,26 @@ Several convenience functions are provided to fill in macro parameters:
- 
- 	Suitable for `equal_fun` when the key type is `struct object *`.
- 
-+`obj_to_disk`::
++You must declare the cache in metadata-cache.h using
++`DECLARE_METADATA_CACHE`, and then implement it in metadata-cache.c
++using `IMPLEMENT_METADATA_CACHE`.
 +
-+	Suitable for `k_to_disk` when the key type is `struct object *`.
 +
-+`uint32_to_disk`::
++Using a Cache
++-------------
 +
-+	Suitable for `k_to_disk` or `v_to_disk` when the type is
-+	`uint32_t`. Integers are serialized in network byte order for
-+	portability.
++Interaction with a cache consists entirely of getting and setting
++values. No initialization or cleanup is required. The get and set
++functions mirror their "map" counterparts; see the
++link:api-map.html[map API] for details.
 +
-+`disk_to_uint32`::
 +
-+	Suitable for `disk_to_v` when the value type is `uint32_t`.
-+	Integers are converted back to host byte order.
++File Format
++-----------
 +
-+`disk_lookup_sha1`::
++Cache files are stored in the $GIT_DIR/cache directory. Each cache gets
++its own directory, named after the `name` parameter in the cache
++definition. Within each directory is a set of files, one cache per file,
++named after their validity tokens. Caches for multiple sets of
++conditions can simultaneously exist, and git will use whichever is
++appropriate.
 +
-+	Suitable for disk_lookup_fun when the serialized keys are sha1
-+	hashes.
++The files themselves consist of an 8-byte header. The first four bytes
++are the magic sequence "MTAC" (for "MeTA Cache"), followed by a 4-byte
++version number, in network byte order. This document describes version
++1.
 +
- 
- Data Structures
- ---------------
-@@ -83,6 +144,14 @@ Each defined map type will have its own structure (e.g., `map_object_uint32`).
- 	single mapped pair.  You should never need to use this type directly,
- 	unless you are enumerating all elements of a map.
- 
-+`struct map_persist_NAME`::
++The rest of the file consists of the persistent map data. This is a
++compact, sorted list of keys and values; see the link:api-map.html[map
++API] for details.
+diff --git a/Makefile b/Makefile
+index acda5b8..3b39538 100644
+--- a/Makefile
++++ b/Makefile
+@@ -536,6 +536,7 @@ LIB_H += mailmap.h
+ LIB_H += map.h
+ LIB_H += merge-file.h
+ LIB_H += merge-recursive.h
++LIB_H += metadata-cache.h
+ LIB_H += notes.h
+ LIB_H += notes-cache.h
+ LIB_H += notes-merge.h
+@@ -629,6 +630,7 @@ LIB_OBJS += map.o
+ LIB_OBJS += match-trees.o
+ LIB_OBJS += merge-file.o
+ LIB_OBJS += merge-recursive.o
++LIB_OBJS += metadata-cache.o
+ LIB_OBJS += name-hash.o
+ LIB_OBJS += notes.o
+ LIB_OBJS += notes-cache.o
+diff --git a/metadata-cache.c b/metadata-cache.c
+new file mode 100644
+index 0000000..e217db1
+--- /dev/null
++++ b/metadata-cache.c
+@@ -0,0 +1,126 @@
++#include "cache.h"
++#include "metadata-cache.h"
++#include "map.h"
 +
-+	A persistent map. This struct should be initialized to
-+	all-zeroes. The `map` field contains a complete in-core map. The
-+	`disk_entries` and `disk_nr` fields specify the flat storage.
-+	These should not be set directly, but rather through the
-+	`attach` function.
-+
- 
- Functions
- ---------
-@@ -102,6 +171,27 @@ Each defined map type will have its own set of access function (e.g.,
- 	existed, the previous value is copied into `old` (if it is non-NULL)
- 	and the function returns 1. Otherwise, the function returns 0.
- 
-+`map_persist_get_NAME(struct map_persist_NAME *, const ktype key, vtype *value)`::
-+
-+	Same as `map_get_NAME`, but for a persistent map.
-+
-+`map_persist_set_NAME(struct map_persist_NAME *, const ktype key, vtype value)`::
-+
-+	Same as `map_set_name`, but for a persistent map. It also does
-+	not provide the "old" value for the key.
-+
-+`map_persist_attach_NAME`::
-+
-+	Attach storage from `buf` of size `len` bytes as the flat
-+	backing store for the map. The map does not copy the storage;
-+	the caller is responsible for making sure it stays around as
-+	long as the map does.
-+
-+`map_persist_flush_NAME`::
-+
-+	Merge in-core entries with those found in the backing store, and
-+	write the result to `fd`. Returns 0 for success, -1 for failure.
-+
- 
- Examples
- --------
-@@ -158,3 +248,45 @@ void dump_foos(void)
- 	}
- }
- -------------------------------------------------------------------
-+
-+Open and close a disk-backed persistent map of objects to 32-bit
-+integers:
-+
-+-------------------------------------------------------------------
-+static int fd;
-+static const unsigned char *buf;
-+static unsigned len;
-+static struct map_persist_object_uint32 map;
-+
-+void open_map(const char *path)
++static const char *metadata_cache_path(const char *name,
++				       void (*validity)(unsigned char [20]))
 +{
-+	struct stat sb;
-+	const unsigned char *p;
++	unsigned char token[20];
 +
-+	fd = open(path, O_RDONLY);
-+	/* it's ok not to attach any backing store at all */
-+	if (fd < 0)
-+		return;
-+
-+	fstat(fd, &sb);
-+	len = sb.st_size;
-+	buf = xmmap(NULL, len, PROT_READ, MAP_PRIVATE, fd, 0);
-+
-+	map_persist_attach_object_uint32(&map, buf, len);
++	if (validity)
++		validity(token);
++	else
++		hashcpy(token, null_sha1);
++	return git_path("cache/%s/%s", name, sha1_to_hex(token));
 +}
 +
-+/* other functions call "get" and "set" */
-+
-+void close_map(const char *path, const char *tmp)
-+{
-+	int tmpfd;
-+
-+	tmpfd = open(tmp, O_RDONLY);
-+	if (map_persist_flush_object_uint32(&map, tmpfd) < 0)
-+		die_errno("unable to write new map");
-+	close(tmpfd);
-+	rename(tmp, path);
-+
-+	munmap(buf, len);
-+	close(fd);
-+}
-diff --git a/map.c b/map.c
-index 73f45e0..bb0d60a 100644
---- a/map.c
-+++ b/map.c
-@@ -1,6 +1,7 @@
- #include "cache.h"
- #include "map.h"
- #include "object.h"
-+#include "sha1-lookup.h"
- 
- static unsigned int hash_obj(const struct object *obj, unsigned int n)
- {
-@@ -15,6 +16,74 @@ static int obj_equal(const struct object *a, const struct object *b)
- 	return a == b;
- }
- 
-+static void obj_to_disk(const struct object *obj, unsigned char *out)
-+{
-+	hashcpy(out, obj->sha1);
-+}
-+
-+static void uint32_to_disk(uint32_t v, unsigned char *out)
-+{
-+	v = htonl(v);
-+	memcpy(out, &v, 4);
-+}
-+
-+static void disk_to_uint32(const unsigned char *disk, uint32_t *out)
-+{
-+	memcpy(out, disk, 4);
-+	*out = ntohl(*out);
-+}
-+
-+static const unsigned char *disk_lookup_sha1(const unsigned char *buf,
-+					     unsigned nr,
-+					     unsigned ksize, unsigned vsize,
-+					     const unsigned char *key)
-+{
-+	int pos;
-+
-+	pos = sha1_entry_pos(buf, ksize + vsize, 0, 0, nr, nr, key);
-+	if (pos < 0)
-+		return NULL;
-+	return buf + (pos * (ksize + vsize)) + ksize;
-+}
-+
-+static int merge_entries(int fd, int ksize, int vsize,
-+			 const unsigned char *left, unsigned nr_left,
-+			 const unsigned char *right, unsigned nr_right)
-+{
-+#define ADVANCE(name) \
-+	do { \
-+		name += ksize + vsize; \
-+		nr_##name--; \
-+	} while (0)
-+#define WRITE_ENTRY(name) \
-+	do { \
-+		if (write_in_full(fd, name, ksize + vsize) < 0) \
-+			return -1; \
-+		ADVANCE(name); \
-+	} while (0)
-+
-+	while (nr_left && nr_right) {
-+		int cmp = memcmp(left, right, ksize);
-+
-+		/* skip duplicates, preferring left to right */
-+		if (cmp == 0)
-+			ADVANCE(right);
-+		else if (cmp < 0)
-+			WRITE_ENTRY(left);
-+		else
-+			WRITE_ENTRY(right);
-+	}
-+	while (nr_left)
-+		WRITE_ENTRY(left);
-+	while (nr_right)
-+		WRITE_ENTRY(right);
-+
-+#undef WRITE_ENTRY
-+#undef ADVANCE
-+
-+	return 0;
-+}
-+
- #define IMPLEMENT_MAP(name, equal_fun, hash_fun) \
- static int map_insert_##name(struct map_##name *m, \
- 			     const map_ktype_##name key, \
-@@ -85,5 +154,93 @@ int map_get_##name(struct map_##name *m, \
- 	return 0; \
- }
- 
-+#define IMPLEMENT_MAP_PERSIST(name, \
-+			      ksize, k_to_disk, \
-+			      vsize, v_to_disk, disk_to_v, \
-+			      disk_lookup_fun) \
-+int map_persist_get_##name(struct map_persist_##name *m, \
-+			   const map_ktype_##name key, \
-+			   map_vtype_##name *value) \
++#define IMPLEMENT_METADATA_CACHE(name, map, validity) \
++static struct map_persist_##map name##_map; \
++static int name##_fd; \
++static unsigned char *name##_buf; \
++static unsigned long name##_len; \
++\
++static void write_##name##_cache(void) \
 +{ \
-+	unsigned char disk_key[ksize]; \
-+	const unsigned char *disk_value; \
++	const char *path; \
++	struct strbuf tempfile = STRBUF_INIT; \
++	int fd = -1; \
 +\
-+	if (map_get_##name(&m->mem, key, value)) \
-+		return 1; \
++	if (!name##_map.mem.nr) \
++		return; \
 +\
-+	if (!m->disk_entries) \
-+		return 0; \
++	path = metadata_cache_path(#name, validity); \
++	strbuf_addf(&tempfile, "%s.XXXXXX", path); \
 +\
-+	k_to_disk(key, disk_key); \
-+	disk_value = disk_lookup_fun(m->disk_entries, m->disk_nr, \
-+				     ksize, vsize, disk_key); \
-+	if (disk_value) { \
-+		disk_to_v(disk_value, value); \
-+		return 1; \
++	if (safe_create_leading_directories(tempfile.buf) < 0) \
++		goto fail; \
++	fd = git_mkstemp_mode(tempfile.buf, 0444); \
++	if (fd < 0) \
++		goto fail; \
++\
++	if (write_in_full(fd, "MTAC\x00\x00\x00\x01", 8) < 0) \
++		goto fail; \
++	if (map_persist_flush_##map(&name##_map, fd) < 0) \
++		goto fail; \
++	if (close(fd) < 0) \
++		goto fail; \
++	if (rename(tempfile.buf, path) < 0) \
++		goto fail; \
++\
++	strbuf_release(&tempfile); \
++	return; \
++\
++fail: \
++	close(fd); \
++	unlink(tempfile.buf); \
++	strbuf_release(&tempfile); \
++} \
++\
++static void init_##name##_cache(void) \
++{ \
++	static int initialized; \
++	const char *path; \
++	struct stat sb; \
++	const unsigned char *p; \
++	uint32_t version; \
++\
++	if (initialized) \
++		return; \
++\
++	atexit(write_##name##_cache); \
++	initialized = 1; \
++\
++	path = metadata_cache_path(#name, validity); \
++	name##_fd = open(path, O_RDONLY); \
++	if (name##_fd < 0) \
++		return; \
++\
++	if (fstat(name##_fd, &sb) < 0) \
++		goto fail; \
++	name##_len = sb.st_size; \
++	name##_buf = xmmap(NULL, sb.st_size, PROT_READ, MAP_PRIVATE, \
++				 name##_fd, 0); \
++\
++	if (name##_len < 8) { \
++		warning("cache '%s' is missing header", path); \
++		goto fail; \
++	} \
++	p = name##_buf; \
++	if (memcmp(p, "MTAC", 4)) { \
++		warning("cache '%s' has invalid magic: %c%c%c%c", \
++			path, p[0], p[1], p[2], p[3]); \
++		goto fail; \
++	} \
++	p += 4; \
++	memcpy(&version, p, 4); \
++	version = ntohl(version); \
++	if (version != 1) { \
++		warning("cache '%s' has unknown version: %"PRIu32, \
++			path, version); \
++		goto fail; \
 +	} \
 +\
-+	return 0; \
++	map_persist_attach_##map(&name##_map, \
++				     name##_buf + 8, \
++				     name##_len - 8); \
++	return; \
++\
++fail: \
++	close(name##_fd); \
++	name##_fd = -1; \
++	if (name##_buf) \
++		munmap(name##_buf, name##_len); \
++	name##_buf = NULL; \
++	name##_len = 0; \
 +} \
 +\
-+int map_persist_set_##name(struct map_persist_##name *m, \
-+			   const map_ktype_##name key, \
-+			   map_vtype_##name value) \
++int name##_cache_get(map_ktype_##map key, map_vtype_##map *value) \
 +{ \
-+	return map_set_##name(&m->mem, key, value, NULL); \
++	init_##name##_cache(); \
++	return map_persist_get_##map(&name##_map, key, value); \
 +} \
-+\
-+static unsigned char *flatten_mem_entries_##name(struct map_persist_##name *m) \
++int name##_cache_set(map_ktype_##map key, map_vtype_##map value) \
 +{ \
-+	unsigned char *ret, *out; \
-+	int i, nr; \
-+\
-+	out = ret = xmalloc(m->mem.nr * (ksize + vsize)); \
-+	nr = 0; \
-+	for (i = 0; i < m->mem.size; i++) { \
-+		struct map_entry_##name *e = m->mem.hash + i; \
-+\
-+		if (!e->used) \
-+			continue; \
-+\
-+		if (nr == m->mem.nr) \
-+			die("BUG: map hash contained extra values"); \
-+\
-+		k_to_disk(e->key, out); \
-+		out += ksize; \
-+		v_to_disk(e->value, out); \
-+		out += vsize; \
-+	} \
-+\
-+	return ret; \
-+} \
-+\
-+void map_persist_attach_##name(struct map_persist_##name *m, \
-+			       const unsigned char *buf, \
-+			       unsigned int len) \
-+{ \
-+	m->disk_entries = buf; \
-+	m->disk_nr = len / (ksize + vsize); \
-+} \
-+\
-+static int keycmp_##name(const void *a, const void *b) \
-+{ \
-+	return memcmp(a, b, ksize); \
-+} \
-+\
-+int map_persist_flush_##name(struct map_persist_##name *m, int fd) \
-+{ \
-+	unsigned char *mem_entries; \
-+	int r; \
-+\
-+	mem_entries = flatten_mem_entries_##name(m); \
-+	qsort(mem_entries, m->mem.nr, ksize + vsize, keycmp_##name); \
-+\
-+	r = merge_entries(fd, ksize, vsize, \
-+			  mem_entries, m->mem.nr, \
-+			  m->disk_entries, m->disk_nr); \
-+	free(mem_entries); \
-+	return r; \
++	init_##name##_cache(); \
++	return map_persist_set_##map(&name##_map, key, value); \
 +}
+diff --git a/metadata-cache.h b/metadata-cache.h
+new file mode 100644
+index 0000000..851a4eb
+--- /dev/null
++++ b/metadata-cache.h
+@@ -0,0 +1,10 @@
++#ifndef METADATA_CACHE_H
++#define METADATA_CACHE_H
 +
- IMPLEMENT_MAP(object_uint32, obj_equal, hash_obj)
- IMPLEMENT_MAP(object_void, obj_equal, hash_obj)
-diff --git a/map.h b/map.h
-index cb9aea6..ceddc14 100644
---- a/map.h
-+++ b/map.h
-@@ -23,6 +23,23 @@ extern int map_set_##name(struct map_##name *, \
- 			  map_vtype_##name value, \
- 			  map_vtype_##name *old);
- 
-+#define DECLARE_MAP_PERSIST(name) \
-+struct map_persist_##name { \
-+	struct map_##name mem; \
-+	const unsigned char *disk_entries; \
-+	unsigned int disk_nr; \
-+}; \
-+extern int map_persist_get_##name(struct map_persist_##name *, \
-+			  const map_ktype_##name key, \
-+			  map_vtype_##name *value); \
-+extern int map_persist_set_##name(struct map_persist_##name *, \
-+			  const map_ktype_##name key, \
-+			  map_vtype_##name value); \
-+extern void map_persist_attach_##name(struct map_persist_##name *, \
-+				      const unsigned char *buf, \
-+				      unsigned int len); \
-+extern int map_persist_flush_##name(struct map_persist_##name *, int fd);
++#include "map.h"
 +
- DECLARE_MAP(object_uint32, const struct object *, uint32_t)
- DECLARE_MAP(object_void, const struct object *, void *)
- 
++#define DECLARE_METADATA_CACHE(name, map) \
++extern int name##_cache_get(map_ktype_##map key, map_vtype_##map *value); \
++extern int name##_cache_set(map_ktype_##map key, map_vtype_##map value);
++
++#endif /* METADATA_CACHE_H */
 -- 
 1.7.6.34.g86521e
