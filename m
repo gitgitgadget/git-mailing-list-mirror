@@ -1,79 +1,100 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] branch: list branches by single remote
-Date: Wed, 3 Aug 2011 22:06:46 -0600
-Message-ID: <20110804040646.GA5104@sigill.intra.peff.net>
-References: <4E383132.3040907@elegosoft.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Michael Schubert <mschub@elegosoft.com>
-X-From: git-owner@vger.kernel.org Thu Aug 04 06:06:58 2011
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v3 00/23] Add --all option to git-check-attr
+Date: Thu,  4 Aug 2011 06:36:10 +0200
+Message-ID: <1312432593-9841-1-git-send-email-mhagger@alum.mit.edu>
+Cc: gitster@pobox.com, Michael Haggerty <mhagger@alum.mit.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 04 06:36:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QopCx-0003Fb-0b
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 06:06:55 +0200
+	id 1Qopfx-0005B2-96
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 06:36:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750863Ab1HDEGt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Aug 2011 00:06:49 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:33221
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750801Ab1HDEGt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2011 00:06:49 -0400
-Received: (qmail 14107 invoked by uid 107); 4 Aug 2011 04:07:23 -0000
-Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 04 Aug 2011 00:07:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Aug 2011 22:06:46 -0600
-Content-Disposition: inline
-In-Reply-To: <4E383132.3040907@elegosoft.com>
+	id S1750837Ab1HDEgt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Aug 2011 00:36:49 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:39612 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750807Ab1HDEgs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2011 00:36:48 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from michael.fritz.box (p54BEB339.dip.t-dialin.net [84.190.179.57])
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p744agHe029203;
+	Thu, 4 Aug 2011 06:36:42 +0200
+X-Mailer: git-send-email 1.7.6.8.gd2879
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178669>
 
-On Tue, Aug 02, 2011 at 07:17:38PM +0200, Michael Schubert wrote:
+This re-roll differs in the following ways from v2:
 
-> @@ -297,6 +298,9 @@ static int append_ref(const char *refname, const unsigned char *sha1, int flags,
->  	if ((kind & ref_list->kinds) == 0)
->  		return 0;
->  
-> +	if (cb->remote && strncmp(cb->remote, refname, strlen(cb->remote)))
-> +		return 0;
-> +
+* The following series of refactoring patches were inserted:
 
-This isn't right. You are assuming that a remote called "foo" will have
-all of its branches in refs/remotes/foo. That's true under the default
-configuration, but technically speaking, the remote tracking branches of
-"foo" are defined by the right-hand side of foo's fetch refspecs.
+      Teach prepare_attr_stack() to figure out dirlen itself
+      Extract a function collect_all_attrs()
+      Remove redundant call to bootstrap_attr_stack()
+      Remove redundant check
 
-So I think you want something more like this:
+  This change, in turn, simplifies patch
 
-  int i;
-  struct remote *remote = remote_get("foo");
+      Allow querying all attributes on a file
 
-  for (i = 0; i < remote->fetch_refspec_nr; i++) {
-          struct refspec *rs = remote->fetch + i;
+* The new API function is named git_all_attrs() instead of
+  git_allattrs().
 
-          /* if it's not a wildcard, then take the rhs verbatim */
-          if (!rs->pattern)
-                  append_ref(rs->dst);
-          else {
-                  /* it's a wildcard like refs/remotes/foo/*; glob in
-                   * the ref list appropriately. Or we can cheat, noting
-                   * that git's only allowed wildcard is "/*" at the
-                   * end, and do this: */
-                  char *prefix = xstrndup(rs->dst, strlen(rs->dst) - 1);
-                  for_each_ref_in(prefix, append_ref, NULL);
-          }
-  }
+* Additionally, git_checkattr() is renamed to git_check_attr() at the
+  suggestion of Junio.
 
-instead of the call to "for_each_rawref(append_ref, ...)" that would
-normally be used. You could even pretty easily allow selecting branches
-from multiple remotes, too, though I don't know if that is actually
-useful.
+* The renaming of struct git_attr_check to git_attr_value is no longer
+  part of the patch series.
 
--Peff
+Thanks to Junio for the great feedback.  I believe that I have
+addressed all of your comments.
+
+Michael Haggerty (23):
+  doc: Add a link from gitattributes(5) to git-check-attr(1)
+  doc: Correct git_attr() calls in example code
+  Remove anachronism from comment
+  Disallow the empty string as an attribute name
+  git-check-attr: Add missing "&&"
+  git-check-attr: Add tests of command-line parsing
+  Provide access to the name attribute of git_attr
+  git-check-attr: Use git_attr_name()
+  Teach prepare_attr_stack() to figure out dirlen itself
+  Extract a function collect_all_attrs()
+  Remove redundant call to bootstrap_attr_stack()
+  Remove redundant check
+  Allow querying all attributes on a file
+  git-check-attr: Extract a function output_attr()
+  git-check-attr: Introduce a new variable
+  git-check-attr: Extract a function error_with_usage()
+  git-check-attr: Handle each error separately
+  git-check-attr: Process command-line args more systematically
+  git-check-attr: Error out if no pathnames are specified
+  git-check-attr: Add an --all option to show all attributes
+  git-check-attr: Drive two tests using the same raw data
+  git-check-attr: Fix command-line handling to match docs
+  Rename git_checkattr() to git_check_attr()
+
+ Documentation/git-check-attr.txt              |   23 ++++-
+ Documentation/gitattributes.txt               |    3 +
+ Documentation/technical/api-gitattributes.txt |   63 +++++++++-----
+ archive.c                                     |    2 +-
+ attr.c                                        |   79 ++++++++++++----
+ attr.h                                        |   20 ++++-
+ builtin/check-attr.c                          |  121 +++++++++++++++++--------
+ builtin/pack-objects.c                        |    2 +-
+ convert.c                                     |    2 +-
+ ll-merge.c                                    |    4 +-
+ t/t0003-attributes.sh                         |   61 +++++++++----
+ userdiff.c                                    |    2 +-
+ ws.c                                          |    2 +-
+ 13 files changed, 272 insertions(+), 112 deletions(-)
+
+-- 
+1.7.6.8.gd2879
