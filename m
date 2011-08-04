@@ -1,89 +1,138 @@
-From: Hin-Tak Leung <htl10@users.sourceforge.net>
-Subject: Re: git-archive's wrong documentation: really write pax rather than tar
-Date: Thu, 4 Aug 2011 19:33:22 +0100 (BST)
-Message-ID: <1312482802.68635.YahooMailClassic@web29518.mail.ird.yahoo.com>
-References: <4E3ADCCB.6080206@lsrfire.ath.cx>
-Reply-To: htl10@users.sourceforge.net
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] diff -c/--cc: do not mistake "resolved as deletion" as "use
+ working tree"
+Date: Thu, 04 Aug 2011 11:58:45 -0700
+Message-ID: <7vwret3swq.fsf_-_@alter.siamese.dyndns.org>
+References: <201108011935.11373.johan@herland.net>
+ <7vsjph6g4j.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: =?iso-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Thu Aug 04 20:33:36 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Johan Herland <johan@herland.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 04 20:58:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qp2jb-0005dI-9r
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 20:33:31 +0200
+	id 1Qp38A-0002is-4y
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 20:58:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754698Ab1HDSd0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Aug 2011 14:33:26 -0400
-Received: from nm2-vm0.bullet.mail.ird.yahoo.com ([77.238.189.199]:40562 "HELO
-	nm2-vm0.bullet.mail.ird.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752640Ab1HDSdZ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 4 Aug 2011 14:33:25 -0400
-Received: from [77.238.189.52] by nm2.bullet.mail.ird.yahoo.com with NNFMP; 04 Aug 2011 18:33:23 -0000
-Received: from [212.82.108.247] by tm5.bullet.mail.ird.yahoo.com with NNFMP; 04 Aug 2011 18:33:23 -0000
-Received: from [127.0.0.1] by omp1012.mail.ird.yahoo.com with NNFMP; 04 Aug 2011 18:33:23 -0000
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 487760.99519.bm@omp1012.mail.ird.yahoo.com
-Received: (qmail 78236 invoked by uid 60001); 4 Aug 2011 18:33:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1312482803; bh=SVD/PVTzjhI4pDBzN3uU7lLRWVH63bMREMxYOnmmijA=; h=X-YMail-OSG:Received:X-RocketYMMF:X-Mailer:Message-ID:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=LjFQ8wo9ZDhYoGQCwVZAshzud8SeHly9s8F8sfJSuIxIrSWnpHoYHJowMskkOuqOzaSJ4pyJGuPtBBtoLTV/T57YT+qGu5O/VygPjVZisYq5A1SuztqWKPVIhVguDLmlGobcAFVf7oVmYbTnKCi3D8NxMf3ORc2xrXce0peVtzs=
-X-YMail-OSG: w_mM1xEVM1nEH1jh87EoNOp4_u4oLl1C.FFMcIwNWKQ72k0
- q0AiN9EmF
-Received: from [81.101.129.153] by web29518.mail.ird.yahoo.com via HTTP; Thu, 04 Aug 2011 19:33:22 BST
-X-RocketYMMF: hintak_leung
-X-Mailer: YahooMailClassic/14.0.3 YahooMailWebService/0.8.113.313619
-In-Reply-To: <4E3ADCCB.6080206@lsrfire.ath.cx>
+	id S1755468Ab1HDS6t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Aug 2011 14:58:49 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53559 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754604Ab1HDS6s (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2011 14:58:48 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 369804192;
+	Thu,  4 Aug 2011 14:58:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jrL/dXcxbstjXrUt60KirrKLYD4=; b=oNY8yO
+	gbIL6Oa68FKHMkZVQN+DQHInAKnoL1o0lioX/oymm1FAvCAFnfcnFyBxd5jfXaEr
+	1HjgvP0OJny507bmT6njQphxkRcCIpoDg/3gaVX9TjvuQ2m2+3nnU8723F31pEpg
+	OrfM6p20TykWwhRu50CU3VuUR0LoPSRituZww=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LHyFREnOA62Haf5HdoD71IY3kkvjh3J8
+	MBf+IuIWqdODrIuz7P80wxhzS+ZOYQsj5nLhf+JmStKOb/PcUZkj0Zemqa+zpI7u
+	GKPanVoc/sNUbiv6XC8zQa9nH7x/UwQ5QEDzbrj7siHa0IKZ7knu43gVYPW4nFxV
+	FbWlUAg+qvo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2EB004191;
+	Thu,  4 Aug 2011 14:58:47 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9F0C6418F; Thu,  4 Aug 2011
+ 14:58:46 -0400 (EDT)
+In-Reply-To: <7vsjph6g4j.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 03 Aug 2011 19:54:20 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C824F560-BECB-11E0-9599-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178762>
 
---- On Thu, 4/8/11, Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx> wrote:
+The combined diff machinery can be used to compare:
 
-> From: Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx>
-<snipped>
-> Ah, here it is:
->=20
-> =A0 https://svn.r-project.org/R/trunk/src/library/utils/R/tar.R
->=20
-> It's the ctype handling in function untar2 that rejects
-> unknown entry types.
->=20
-> For reference, the documentation of the pax format
-> including a
-> suggestion to treat unknown types like regular files can be
-> found here
-> (search for "typename"):
->=20
-> =A0 http://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.htm=
-l
->=20
-> > I think I tried the tree example and the R code also
-> didn't like it
-> > much... may be I'll give it another try.
->=20
-> Did you try adding a ":" to the tree argument, e.g. this:
->=20
-> =A0=A0=A0 $ git archive HEAD:
->=20
-> instead of this?
->=20
-> =A0=A0=A0 $ git archive HEAD
->=20
-> Ren=E9
+ - a merge commit with its parent commits;
+ - a working-tree file with multiple stages in an unmerged index; or
+ - a working-tree file with the HEAD and the index.
 
-That's better! With a HEAD: , that code does a lot of:=20
+The internal function combine-diff.c:show_patch_diff() checked if it needs
+to read the "result" from the working tree by looking at the object name
+of the result --- if it is null_sha1, it read from the working tree.
 
-Warning in untar2(tarfile, files, list, exdir) :
-  checksum error for entry 'file...'
+This mistook a merge that records a deletion as the conflict resolution
+as if it is a cue to read from the working tree. Pass this information
+explicitly from the caller instead.
 
-for each file it tries to extract, but at least it is extracting the fi=
-les. I wasn't entirely sure about the notation used in the man page - i=
-s
-"v1.4.0^{tree}" same as "v1.4.0:" ? "HEAD:" is clearer, as most people =
-has a HEAD...=20
+Noticed and reported by Johan Herland.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ * The patch is based on a bit older maintenance branch but will be queued
+   in 'pu'.
+
+ combine-diff.c |   14 ++++++++++----
+ 1 files changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/combine-diff.c b/combine-diff.c
+index 655fa89..360b816 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -682,7 +682,8 @@ static void dump_quoted_path(const char *head,
+ }
+ 
+ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+-			    int dense, struct rev_info *rev)
++			    int dense, int working_tree_file,
++			    struct rev_info *rev)
+ {
+ 	struct diff_options *opt = &rev->diffopt;
+ 	unsigned long result_size, cnt, lno;
+@@ -691,7 +692,6 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+ 	struct sline *sline; /* survived lines */
+ 	int mode_differs = 0;
+ 	int i, show_hunks;
+-	int working_tree_file = is_null_sha1(elem->sha1);
+ 	int abbrev = DIFF_OPT_TST(opt, FULL_INDEX) ? 40 : DEFAULT_ABBREV;
+ 	const char *a_prefix, *b_prefix;
+ 	mmfile_t result_file;
+@@ -954,6 +954,12 @@ static void show_raw_diff(struct combine_diff_path *p, int num_parent, struct re
+ 	write_name_quoted(p->path, stdout, line_termination);
+ }
+ 
++/*
++ * The result (p->elem) is from the working tree and their
++ * parents are typically from multiple stages during a merge
++ * (i.e. diff-files) or the state in HEAD and in the index
++ * (i.e. diff-index).
++ */
+ void show_combined_diff(struct combine_diff_path *p,
+ 		       int num_parent,
+ 		       int dense,
+@@ -967,7 +973,7 @@ void show_combined_diff(struct combine_diff_path *p,
+ 				  DIFF_FORMAT_NAME_STATUS))
+ 		show_raw_diff(p, num_parent, rev);
+ 	else if (opt->output_format & DIFF_FORMAT_PATCH)
+-		show_patch_diff(p, num_parent, dense, rev);
++		show_patch_diff(p, num_parent, dense, 1, rev);
+ }
+ 
+ void diff_tree_combined(const unsigned char *sha1,
+@@ -1035,7 +1041,7 @@ void diff_tree_combined(const unsigned char *sha1,
+ 			for (p = paths; p; p = p->next) {
+ 				if (p->len)
+ 					show_patch_diff(p, num_parent, dense,
+-							rev);
++							0, rev);
+ 			}
+ 		}
+ 	}
+-- 
+1.7.6.401.g6a319
