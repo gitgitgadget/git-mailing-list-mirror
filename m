@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 17/23] git-check-attr: Handle each error separately
-Date: Thu,  4 Aug 2011 06:36:27 +0200
-Message-ID: <1312432593-9841-18-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v3 18/23] git-check-attr: Process command-line args more systematically
+Date: Thu,  4 Aug 2011 06:36:28 +0200
+Message-ID: <1312432593-9841-19-git-send-email-mhagger@alum.mit.edu>
 References: <1312432593-9841-1-git-send-email-mhagger@alum.mit.edu>
 Cc: gitster@pobox.com, Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org
@@ -11,18 +11,18 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qopgp-0005WA-QA
+	id 1Qopgq-0005WA-C1
 	for gcvg-git-2@lo.gmane.org; Thu, 04 Aug 2011 06:37:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751801Ab1HDEhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Aug 2011 00:37:31 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:39673 "EHLO
+	id S1751812Ab1HDEhe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Aug 2011 00:37:34 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:39679 "EHLO
 	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751351Ab1HDEhF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2011 00:37:05 -0400
+	with ESMTP id S1751395Ab1HDEhG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2011 00:37:06 -0400
 X-Envelope-From: mhagger@alum.mit.edu
 Received: from michael.fritz.box (p54BEB339.dip.t-dialin.net [84.190.179.57])
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p744agHv029203;
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p744agHw029203;
 	Thu, 4 Aug 2011 06:37:02 +0200
 X-Mailer: git-send-email 1.7.6.8.gd2879
 In-Reply-To: <1312432593-9841-1-git-send-email-mhagger@alum.mit.edu>
@@ -31,43 +31,57 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178683>
 
-This will make the code easier to refactor.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- builtin/check-attr.c |   11 ++++-------
- 1 files changed, 4 insertions(+), 7 deletions(-)
+ builtin/check-attr.c |   19 ++++++++++++-------
+ 1 files changed, 12 insertions(+), 7 deletions(-)
 
 diff --git a/builtin/check-attr.c b/builtin/check-attr.c
-index d004222..de3fef7 100644
+index de3fef7..e9b827f 100644
 --- a/builtin/check-attr.c
 +++ b/builtin/check-attr.c
-@@ -78,7 +78,6 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
- {
- 	struct git_attr_check *check;
- 	int cnt, i, doubledash, filei;
--	const char *errstr = NULL;
+@@ -81,8 +81,6 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
  
  	argc = parse_options(argc, argv, prefix, check_attr_options,
  			     check_attr_usage, PARSE_OPT_KEEP_DASHDASH);
-@@ -105,12 +104,10 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
+-	if (!argc)
+-		usage_with_options(check_attr_usage, check_attr_options);
+ 
+ 	if (read_cache() < 0) {
+ 		die("invalid cache");
+@@ -94,8 +92,17 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
+ 			doubledash = i;
  	}
  
- 	if (cnt <= 0)
--		errstr = "No attribute specified";
--	else if (stdin_paths && filei < argc)
--		errstr = "Can't specify files with --stdin";
--	if (errstr) {
--		error_with_usage(errstr);
--	}
+-	/* If there is no double dash, we handle only one attribute */
+-	if (doubledash < 0) {
++	/* Check attribute argument(s): */
++	if (doubledash == 0) {
 +		error_with_usage("No attribute specified");
++	} else if (doubledash < 0) {
++		/*
++		 * There is no double dash; treat the first
++		 * argument as an attribute.
++		 */
++		if (!argc)
++			error_with_usage("No attribute specified");
 +
-+	if (stdin_paths && filei < argc)
-+		error_with_usage("Can't specify files with --stdin");
+ 		cnt = 1;
+ 		filei = 1;
+ 	} else {
+@@ -103,9 +110,7 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
+ 		filei = doubledash + 1;
+ 	}
  
- 	check = xcalloc(cnt, sizeof(*check));
- 	for (i = 0; i < cnt; i++) {
+-	if (cnt <= 0)
+-		error_with_usage("No attribute specified");
+-
++	/* Check file argument(s): */
+ 	if (stdin_paths && filei < argc)
+ 		error_with_usage("Can't specify files with --stdin");
+ 
 -- 
 1.7.6.8.gd2879
