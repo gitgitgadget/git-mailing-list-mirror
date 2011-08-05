@@ -1,98 +1,137 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [RFC 4/6] git-check-attr: Normalize paths
-Date: Fri, 05 Aug 2011 08:24:42 +0200
-Message-ID: <4E3B8CAA.4030002@alum.mit.edu>
-References: <1311849425-9057-1-git-send-email-mhagger@alum.mit.edu> <1311849425-9057-5-git-send-email-mhagger@alum.mit.edu> <7v4o1zg20r.fsf@alter.siamese.dyndns.org> <4E3A12B9.1010800@alum.mit.edu> <7vliv95cpb.fsf@alter.siamese.dyndns.org>
+From: James Gregory <j.gregory@epigenesys.co.uk>
+Subject: Re: git-fast-export is returning streams with source code inside
+Date: Fri, 5 Aug 2011 10:24:07 +0100
+Message-ID: <CAFC9htyFKm7NCNFvrUkxXpmj1jwatWkxrnRSEdztY4Syo+EQ-g@mail.gmail.com>
+References: <CAFC9htxwRg=+RD68hnnRy0hfptq23x3bL+xxHieK1evfFCTPjw@mail.gmail.com>
+	<20110804070528.GA11805@sigill.intra.peff.net>
+	<CAFC9htxRD0z3O_k_OLp08KZFUOL_T3AryCXD+OqqXx9ZYeRutg@mail.gmail.com>
+	<20110804183218.GA15943@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary=00504502bebec8e61a04a9bea839
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 05 08:24:54 2011
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 05 11:24:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QpDq1-0003lG-Mz
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Aug 2011 08:24:54 +0200
+	id 1QpGdb-00049G-Et
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Aug 2011 11:24:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756221Ab1HEGYs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Aug 2011 02:24:48 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:44931 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756141Ab1HEGYs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2011 02:24:48 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.69.134] (p54BEC602.dip.t-dialin.net [84.190.198.2])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p756Ogkk022058
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 5 Aug 2011 08:24:43 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.18) Gecko/20110617 Lightning/1.0b2 Thunderbird/3.1.11
-In-Reply-To: <7vliv95cpb.fsf@alter.siamese.dyndns.org>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1756519Ab1HEJYK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Aug 2011 05:24:10 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:56760 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755265Ab1HEJYI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Aug 2011 05:24:08 -0400
+Received: by pzk37 with SMTP id 37so3600568pzk.1
+        for <git@vger.kernel.org>; Fri, 05 Aug 2011 02:24:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=epigenesys.co.uk; s=google;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=BPr61Kiivs+IUcY1/Wi3zmYopz2UCP613o2OBEqs8ac=;
+        b=G/KQ5Zulp612+ZstZUgGU/QWwdsPXRhg79Qda66Ci4a8quH8yDlZ/JoYOwHPbB7E+v
+         YC94ge9Z9heClKOGKLtO9M6hGPSQZltuD6FYnSGbin5C4JV/q2p6SBzp00WmwmhMLie2
+         4XNm/2Bpwz4M1jsnkE6SjNtv89wDzfYZlLpK4=
+Received: by 10.142.8.26 with SMTP id 26mr1821857wfh.269.1312536247461; Fri,
+ 05 Aug 2011 02:24:07 -0700 (PDT)
+Received: by 10.142.71.15 with HTTP; Fri, 5 Aug 2011 02:24:07 -0700 (PDT)
+In-Reply-To: <20110804183218.GA15943@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178782>
 
-On 08/04/2011 07:05 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->>> I think passing down "prefix" (i.e. where your $(cwd) was relative to the
->>> root level of the working tree) and the user-supplied "pathspec" (which
->>> typically is relative to that original $(cwd)) is the canonical approach.
->>> The very original git worked only at the root level of the working tree,
->>> with paths specified relative to the root level of the tree, so many code
->>> do:
->>>
->>> 	- find out the root of the working tree;
->>>         - note where the $(cwd) was in "prefix";
->>>         - chdir to the root of the working tree;
->>> 	- prepend the "prefix" to user supplied pathspec;
->>>         - forget all the complexity and work on the whole tree.
->>>
->>> Then the "prefix" gets stripped away from the beginning of the paths when
->>> reporting.
->>>
->>> Your patch from a cursory look seems to follow that pattern, which is
->>> good.
->>
->> Thanks for the explanation.
->>
->> Yes, my code follows the pattern, except that in this case it is
->> unnecessary to chdir to the root of the working tree.
-> 
-> Just to make sure there is no misunderstanding. The chdir() should not be
-> in the core part of the system that you may want to libify.
-> 
-> The above pattern was developed primarily so that older utility functions
-> in the system that were written back when nobody ran git from anywhere
-> other than the top level of the working tree can be easily adapted to main
-> programs that can be launched from a subdirectory. The initial set-up part
-> of the program is responsible for figuring out "prefix", turning relative
-> paths given by the user into paths relative to the top of the working
-> tree, and then chdir'ing to the top.
-> 
-> After all that happens, the library-ish parts of the system only have to
-> deal with full paths relative to the root of the working tree. "prefix"
-> comes into play when reporting the results (i.e. showing paths relative to
-> user's $(cwd) in the output or in the error messages).
+--00504502bebec8e61a04a9bea839
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-If I understand you correctly, the use of some API routines requires a
-chdir by the caller (i.e., the surrounding application) *before* calling
-into the routine.  This is certainly a bit cleaner than the library
-chdiring itself, but it is still unusable in a multithreaded context.
-Regardless of whether the library chdirs itself or whether it obligates
-callers to chdir before calling into the library, the bottom line is
-that it requires a change to global state to function correctly, and
-that change can confuse other threads.
+Hi Peff,
 
-Michael
+I've attached the valgrind.out file. If I'm reading the output
+properly, it does look like it is suffering from a memory leak.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+James
+
+On 4 August 2011 19:32, Jeff King <peff@peff.net> wrote:
+> On Thu, Aug 04, 2011 at 10:08:43AM +0100, James Gregory wrote:
+>
+>> Thanks for your reply. I'm afraid I won't be able to allow you access
+>> to repo as it is for a business project and covered by NDAs, etc. If I
+>> can do anything to help with diagnosing the problem (debug logs, more
+>> excerpts from the stream, etc.) then that shouldn't be a problem.
+>
+> Since it seems like blob data is making it into the stream in an odd
+> place, my first guess would be a memory problem. Can you try installing
+> valgrind (since you are on Ubuntu, there should be a package), and then
+> running:
+>
+> =A0valgrind git fast-export --all >/dev/null 2>valgrind.out
+>
+> and then sharing the results of valgrind.out?
+>
+> -Peff
+>
+
+
+
+--=20
+
+James Gregory
+Senior Developer
+epiGenesys - a University of Sheffield company
+Enterprise Zone, Portobello, Sheffield, S1 4DP, UK
+T: +44 (0)114 22 21884 ~ F: +44 (0)114 22 24042
+www.epigenesys.co.uk ~ @epigenesys
+--
+This email and its attachments should be considered confidential and
+are intended solely for the individual to whom the email is addressed.
+If you are not the intended recipient you should take no action based
+upon them, nor should you copy or show them to anyone. Any views or
+opinions expressed are solely those of the author and might not
+represent those of Epi Genesys Limited.
+Epi Genesys Limited is registered in England and Wales with company
+number 06388971 and has its registered office at 40 Leavygreave Road,
+Sheffield, S3 7RD.
+
+--00504502bebec8e61a04a9bea839
+Content-Type: application/octet-stream; name="valgrind.out"
+Content-Disposition: attachment; filename="valgrind.out"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_gqyy5tjc0
+
+PT0zMjY3PT0gTWVtY2hlY2ssIGEgbWVtb3J5IGVycm9yIGRldGVjdG9yCj09MzI2Nz09IENvcHly
+aWdodCAoQykgMjAwMi0yMDEwLCBhbmQgR05VIEdQTCdkLCBieSBKdWxpYW4gU2V3YXJkIGV0IGFs
+Lgo9PTMyNjc9PSBVc2luZyBWYWxncmluZC0zLjYuMSBhbmQgTGliVkVYOyByZXJ1biB3aXRoIC1o
+IGZvciBjb3B5cmlnaHQgaW5mbwo9PTMyNjc9PSBDb21tYW5kOiBnaXQgZmFzdC1leHBvcnQgLS1h
+bGwKPT0zMjY3PT0gCj09MzI2Nz09IENvbmRpdGlvbmFsIGp1bXAgb3IgbW92ZSBkZXBlbmRzIG9u
+IHVuaW5pdGlhbGlzZWQgdmFsdWUocykKPT0zMjY3PT0gICAgYXQgMHg0RTM5NTEwOiBpbmZsYXRl
+UmVzZXQyIChpbiAvbGliL3g4Nl82NC1saW51eC1nbnUvbGliei5zby4xLjIuMy40KQo9PTMyNjc9
+PSAgICBieSAweDRFMzk2MDU6IGluZmxhdGVJbml0Ml8gKGluIC9saWIveDg2XzY0LWxpbnV4LWdu
+dS9saWJ6LnNvLjEuMi4zLjQpCj09MzI2Nz09ICAgIGJ5IDB4NEQ1QjAyOiA/Pz8gKGluIC91c3Iv
+YmluL2dpdCkKPT0zMjY3PT0gICAgYnkgMHg0QkIwNTk6ID8/PyAoaW4gL3Vzci9iaW4vZ2l0KQo9
+PTMyNjc9PSAgICBieSAweDRCQzQ2NDogPz8/IChpbiAvdXNyL2Jpbi9naXQpCj09MzI2Nz09ICAg
+IGJ5IDB4NEJDQTI5OiA/Pz8gKGluIC91c3IvYmluL2dpdCkKPT0zMjY3PT0gICAgYnkgMHg0QkNB
+RkQ6ID8/PyAoaW4gL3Vzci9iaW4vZ2l0KQo9PTMyNjc9PSAgICBieSAweDRCRDE2MTogPz8/IChp
+biAvdXNyL2Jpbi9naXQpCj09MzI2Nz09ICAgIGJ5IDB4NDlBRUFDOiA/Pz8gKGluIC91c3IvYmlu
+L2dpdCkKPT0zMjY3PT0gICAgYnkgMHg0QjM4QUE6ID8/PyAoaW4gL3Vzci9iaW4vZ2l0KQo9PTMy
+Njc9PSAgICBieSAweDRCNDIyQTogPz8/IChpbiAvdXNyL2Jpbi9naXQpCj09MzI2Nz09ICAgIGJ5
+IDB4NEE5Q0QyOiA/Pz8gKGluIC91c3IvYmluL2dpdCkKPT0zMjY3PT0gCj09MzI2Nz09IAo9PTMy
+Njc9PSBIRUFQIFNVTU1BUlk6Cj09MzI2Nz09ICAgICBpbiB1c2UgYXQgZXhpdDogMiw4MjEsMzc2
+IGJ5dGVzIGluIDYsMjI2IGJsb2Nrcwo9PTMyNjc9PSAgIHRvdGFsIGhlYXAgdXNhZ2U6IDM1Niwx
+MjMgYWxsb2NzLCAzNDksODk3IGZyZWVzLCAxLDUxNyw2MDYsOTQzIGJ5dGVzIGFsbG9jYXRlZAo9
+PTMyNjc9PSAKPT0zMjY3PT0gTEVBSyBTVU1NQVJZOgo9PTMyNjc9PSAgICBkZWZpbml0ZWx5IGxv
+c3Q6IDQ4LDAxNiBieXRlcyBpbiAzIGJsb2Nrcwo9PTMyNjc9PSAgICBpbmRpcmVjdGx5IGxvc3Q6
+IDMwLDIyNiBieXRlcyBpbiAxLDg4OSBibG9ja3MKPT0zMjY3PT0gICAgICBwb3NzaWJseSBsb3N0
+OiAwIGJ5dGVzIGluIDAgYmxvY2tzCj09MzI2Nz09ICAgIHN0aWxsIHJlYWNoYWJsZTogMiw3NDMs
+MTM0IGJ5dGVzIGluIDQsMzM0IGJsb2Nrcwo9PTMyNjc9PSAgICAgICAgIHN1cHByZXNzZWQ6IDAg
+Ynl0ZXMgaW4gMCBibG9ja3MKPT0zMjY3PT0gUmVydW4gd2l0aCAtLWxlYWstY2hlY2s9ZnVsbCB0
+byBzZWUgZGV0YWlscyBvZiBsZWFrZWQgbWVtb3J5Cj09MzI2Nz09IAo9PTMyNjc9PSBGb3IgY291
+bnRzIG9mIGRldGVjdGVkIGFuZCBzdXBwcmVzc2VkIGVycm9ycywgcmVydW4gd2l0aDogLXYKPT0z
+MjY3PT0gVXNlIC0tdHJhY2stb3JpZ2lucz15ZXMgdG8gc2VlIHdoZXJlIHVuaW5pdGlhbGlzZWQg
+dmFsdWVzIGNvbWUgZnJvbQo9PTMyNjc9PSBFUlJPUiBTVU1NQVJZOiA4NjI5NCBlcnJvcnMgZnJv
+bSAxIGNvbnRleHRzIChzdXBwcmVzc2VkOiA0IGZyb20gNCkK
+--00504502bebec8e61a04a9bea839--
