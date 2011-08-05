@@ -1,204 +1,206 @@
-From: pbegeland <pbegeland@linea.gov.br>
-Subject: Re: Cleaning up history with git rebase
-Date: Fri, 05 Aug 2011 18:26:27 -0300
-Message-ID: <ad9fe99851b7a4650e739e2e13b6a7c9@linea.gov.br>
-References: <0111E44E-B85F-4C90-8052-E52BA9CD3D17@linea.gov.br>
- <34ca77f818944acb9f5c6f19d91df73f-mfwitten@gmail.com>
- <CAMOZ1BvRDSkzJmASNFQvZ-SVBUXZHw6CyfLP4SJqK8CwaMMDUA@mail.gmail.com>
- <317AAE40-449B-4280-AEF1-10EE93FDB9FF@linea.gov.br>
- <7af8ef40e0034e81a63f1d4a53bf082e-mfwitten@gmail.com>
- <1b66c8efe0214915be2c52a5aacd22de-mfwitten@gmail.com>
- <80e62eb56a83a138a79e112e382da4ae@linea.gov.br>
- <b3e1c29767984546a61e2d10fb180188-mfwitten@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] fast-export: quote paths in output
+Date: Fri, 5 Aug 2011 16:36:22 -0600
+Message-ID: <20110805223622.GA5808@sigill.intra.peff.net>
+References: <20110805105526.GA22480@sigill.intra.peff.net>
+ <4E3BD006.6010005@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Ricky Egeland <rickyegeland@linea.gov.br>, <git@vger.kernel.org>
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 05 23:26:39 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	James Gregory <j.gregory@epigenesys.co.uk>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Sat Aug 06 00:36:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QpRug-0004Og-GP
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Aug 2011 23:26:38 +0200
+	id 1QpT0K-00015p-4x
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Aug 2011 00:36:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756655Ab1HEV0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Aug 2011 17:26:32 -0400
-Received: from mx1.linea.gov.br ([200.143.212.2]:34813 "EHLO mx1.linea.gov.br"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754194Ab1HEV0c (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2011 17:26:32 -0400
-Received: (qmail 17200 invoked from network); 5 Aug 2011 21:26:27 -0000
-Received: from unknown (HELO roundcube) (pbegeland@[10.1.1.3])
-          (envelope-sender <pbegeland@linea.gov.br>)
-          by mx1.linea.gov.br (qmail-ldap-1.03) with SMTP
-          for <mfwitten@gmail.com>; 5 Aug 2011 21:26:27 -0000
-In-Reply-To: <b3e1c29767984546a61e2d10fb180188-mfwitten@gmail.com>
-X-Sender: pbegeland@linea.gov.br
-User-Agent: RoundCube Webmail/0.4.2
+	id S1756822Ab1HEWg1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Aug 2011 18:36:27 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34925
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752230Ab1HEWg0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Aug 2011 18:36:26 -0400
+Received: (qmail 32216 invoked by uid 107); 5 Aug 2011 22:37:00 -0000
+Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 05 Aug 2011 18:37:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Aug 2011 16:36:22 -0600
+Content-Disposition: inline
+In-Reply-To: <4E3BD006.6010005@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178816>
 
- On Thu, 04 Aug 2011 14:35:19 -0000, Michael Witten <mfwitten@gmail.com> 
- wrote:
-> [Put your reply text below the quoted text.]
->
-> On Wed, 03 Aug 2011 17:58:26 -0300, Patricia Egeland wrote:
->
->> On Mon, 01 Aug 2011 01:07:33 -0000, Michael Witten wrote:
->>
->>> Michael Witten wrote:
->>>
->>>> On Sun, 31 Jul 2011 18:44:43 -0300, Ricky, Egeland wrote:
->>>>
->>>>> On Jul 31, 2011, at 6:33 PM, Michael Witten wrote:
->>>>>
->>>>>> On Sun, Jul 31, 2011 at 20:21, Michael Witten 
->>>>>> <mfwitten@gmail.com>
->>>>>> wrote:
->>>>>>> Why are there conflicts anyway?
->>>>>>
->>>>>> Oh...
->>>>>>
->>>>>> I guess there were conflicts when the merge commit was made in
->>>>>> the original repository, and these conflicts were resolved by
->>>>>> the merge commit itself. Hence, when rebase tries to split up
->>>>>> a merge by dealing with just the non-merge parents, you end up
->>>>>> having to deal with the conflict again.
->>>>>
->>>>> Yes, I thought it was something like this going on, too. In the
->>>>> pre-rebase history, when there is a commit with "Conflict:" and
->>>>> listing file which is in the sub-repository history, this is a
->>>>> point where rebase stops with a conflict.
->>>>>
->>>>>> Shouldn't rebase take this into account?
->>>>>
->>>>> Not sure.  Seems that it does not, it makes me resolve the 
->>>>> conflict
->>>>> =
->>>>> again.
->>>>
->>>> I think git rebase should take this into account is what I'm 
->>>> saying.
->>>>
->>>> The following implements what I think `git rebase' should be 
->>>> doing;
->>>> run it instead of `git rebase' in your repo:
->>>>
->>>>   git branch saved
->>>>   git rev-list HEAD --reverse --first-parent --parents |
->>>>   {
->>>>     read root
->>>>     git reset --hard $root
->>>>     rebase_head=$root
->>>>
->>>>     while read commit first_parent other_parents; do
->>>>
->>>>       if [ -z "$other_parents" ]; then
->>>>
->>>>         git cherry-pick $commit
->>>>         rebase_head=$commit
->>>>
->>>>       else
->>>>
->>>>         for parent in $other_parents; do
->>>>
->>>>           if ! git cherry-pick $parent; then
->>>>
->>>>             git reset --hard $rebase_head
->>>>             git merge $other_parents
->>>>             git rm -rf .
->>>>             git checkout -- $commit
->>>>             git commit -aC $commit
->>>>             break
->>>>
->>>>           fi
->>>>
->>>>         done
->>>>
->>>>         rebase_head=$(git rev-parse HEAD)
->>>>
->>>>       fi
->>>>
->>>>     done
->>>>   }
->>>
->>> Woops!
->>>
->>> This line:
->>>
->>>   git checkout -- $commit
->>>
->>> should be:
->>>
->>>   git checkout $commit -- .
->>
->>      I tried to run the script in my repo. However, seems like the 
->> 'git
->> merge $other_parents' process fails. In the script output I see some
->> lines saying that files were not able to be merged, ie:
->>
->> warning: Cannot merge binary files:
->> scienceportal/images/tabs/tabs-gray.png (HEAD vs.
->> 84f6fc283861aa7c5798f58769789dd0b91a5e9d)
->> warning: Cannot merge binary files: scienceportal/images/waiting.gif
->> (HEAD vs. e033cbbf1e9d24b66cb55a04701c059dc945c1c3)
->>
->>      Do you have some suggestion?
->
-> That's probably as expected; the script is coming across the 
-> conflict, but
-> it should be taking care of the conflict automatically.
->
-> Unfortunately, though, the results probably end up being almost 
-> completely
-> similar to the original un-rebased branch because the original script
-> actually has ANOTHER mistake (sorry!). See the updated version here 
-> (or
-> in your inbox):
->
->   http://marc.info/?l=git&m=131246773005168&w=2
->   Message-ID: <d62225a3cc5740cda7cb163a94d55892-mfwitten@gmail.com>
+On Fri, Aug 05, 2011 at 01:12:06PM +0200, Johannes Sixt wrote:
 
+> Am 8/5/2011 12:55, schrieb Jeff King:
+> > +test_expect_success 'fast-export quotes pathnames' '
+> > +	git init crazy-paths &&
+> > +	(cd crazy-paths &&
+> > +	 >"$(printf "path with\\nnewline")" &&
+> > +	 >"path with \"quote\"" &&
+> > +	 >"path with \\backslash" &&
+> > +	 >"path with space" &&
+> 
+> Please construct the tree object using git-update-index's --cacheinfo or
+> --index-info rather than using actual files and git add so that the test
+> can pass on filesystems that do not allow newlines, quotes, or
+> backslashes(!) in filenames.
 
- Thanks for taking a look at it again.
- I tried to run the script with that update, but in the end I got more 
- merge messages than I had originally. (71 additional merges. From those 
- 71, I got 53 "Merge commit" messages. While in the saved repo I have 1 
- "Merge commit".). Do you see what may be causing that?
+Sorry, I should have thought of that myself. Here's an updated version.
 
- Another thing I noticed is that the auto-merging is still failing:
+-- >8 --
+Subject: [PATCH] fast-export: quote paths in output
 
- fatal: Commit b0596fce207735081b8aa9afdd9686b7d412f5d8 is a merge but 
- no -m option was given.
- HEAD is now at ac5eaa2 *Continue Last Commit*
- Auto-merging scienceportal/css/myprofile.css
- CONFLICT (content): Merge conflict in scienceportal/css/myprofile.css
- Auto-merging scienceportal/css/qc.css
- Automatic merge failed; fix conflicts and then commit the result.
- scienceportal/css/myprofile.css: needs merge
- rm 'scienceportal/css/des.css'
+Many pathnames in a fast-import stream need to be quoted. In
+particular:
 
- Looking at this thread: 
- http://www.mail-archive.com/git-users@googlegroups.com/msg01046.html
- I thought that the attempt of removing the files was the step first 
- facing the conflicts as the one shown above. So that, I tried to iterate 
- through the files and in case the removal of any file failed, I added 
- the steps as suggested in the thread:
- git checkout --theirs $file
- git add $file
- git commit -m 'Fixing conflict during rebase'
+  1. Pathnames at the end of an "M" or "D" line need quoting
+     if they contain a LF or start with double-quote.
 
- But that didn't work either.
+  2. Pathnames on a "C" or "R" line need quoting as above,
+     but also if they contain spaces.
 
- I'd be greatly appreciated if you are still willing to help.
+For (1), we weren't quoting at all. For (2), we put
+double-quotes around the paths to handle spaces, but ignored
+the possibility that they would need further quoting.
 
- Thanks,
- Patricia
+This patch checks whether each pathname needs c-style
+quoting, and uses it. This is slightly overkill for (1),
+which doesn't actually need to quote many characters that
+vanilla c-style quoting does. However, it shouldn't hurt, as
+any implementation needs to be ready to handle quoted
+strings anyway.
+
+In addition to adding a test, we have to tweak a test which
+blindly assumed that case (2) would always use
+double-quotes, whether it needed to or not.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/fast-export.c  |   31 ++++++++++++++++++++++++-------
+ t/t9350-fast-export.sh |   28 +++++++++++++++++++++++++++-
+ 2 files changed, 51 insertions(+), 8 deletions(-)
+
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index becef85..9836e6b 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -16,6 +16,7 @@
+ #include "string-list.h"
+ #include "utf8.h"
+ #include "parse-options.h"
++#include "quote.h"
+ 
+ static const char *fast_export_usage[] = {
+ 	"git fast-export [rev-list-opts]",
+@@ -179,6 +180,15 @@ static int depth_first(const void *a_, const void *b_)
+ 	return (a->status == 'R') - (b->status == 'R');
+ }
+ 
++static void print_path(const char *path)
++{
++	int need_quote = quote_c_style(path, NULL, NULL, 0);
++	if (need_quote)
++		quote_c_style(path, NULL, stdout, 0);
++	else
++		printf("%s", path);
++}
++
+ static void show_filemodify(struct diff_queue_struct *q,
+ 			    struct diff_options *options, void *data)
+ {
+@@ -196,13 +206,18 @@ static void show_filemodify(struct diff_queue_struct *q,
+ 
+ 		switch (q->queue[i]->status) {
+ 		case DIFF_STATUS_DELETED:
+-			printf("D %s\n", spec->path);
++			printf("D ");
++			print_path(spec->path);
++			putchar('\n');
+ 			break;
+ 
+ 		case DIFF_STATUS_COPIED:
+ 		case DIFF_STATUS_RENAMED:
+-			printf("%c \"%s\" \"%s\"\n", q->queue[i]->status,
+-			       ospec->path, spec->path);
++			printf("%c ", q->queue[i]->status);
++			print_path(ospec->path);
++			putchar(' ');
++			print_path(spec->path);
++			putchar('\n');
+ 
+ 			if (!hashcmp(ospec->sha1, spec->sha1) &&
+ 			    ospec->mode == spec->mode)
+@@ -217,13 +232,15 @@ static void show_filemodify(struct diff_queue_struct *q,
+ 			 * output the SHA-1 verbatim.
+ 			 */
+ 			if (no_data || S_ISGITLINK(spec->mode))
+-				printf("M %06o %s %s\n", spec->mode,
+-				       sha1_to_hex(spec->sha1), spec->path);
++				printf("M %06o %s ", spec->mode,
++				       sha1_to_hex(spec->sha1));
+ 			else {
+ 				struct object *object = lookup_object(spec->sha1);
+-				printf("M %06o :%d %s\n", spec->mode,
+-				       get_object_mark(object), spec->path);
++				printf("M %06o :%d ", spec->mode,
++				       get_object_mark(object));
+ 			}
++			print_path(spec->path);
++			putchar('\n');
+ 			break;
+ 
+ 		default:
+diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
+index f823c05..950d0ff 100755
+--- a/t/t9350-fast-export.sh
++++ b/t/t9350-fast-export.sh
+@@ -228,7 +228,7 @@ test_expect_success 'fast-export -C -C | fast-import' '
+ 	mkdir new &&
+ 	git --git-dir=new/.git init &&
+ 	git fast-export -C -C --signed-tags=strip --all > output &&
+-	grep "^C \"file6\" \"file7\"\$" output &&
++	grep "^C file6 file7\$" output &&
+ 	cat output |
+ 	(cd new &&
+ 	 git fast-import &&
+@@ -414,4 +414,30 @@ test_expect_success SYMLINKS 'directory becomes symlink'        '
+ 	(cd result && git show master:foo)
+ '
+ 
++test_expect_success 'fast-export quotes pathnames' '
++	git init crazy-paths &&
++	(cd crazy-paths &&
++	 blob=`echo foo | git hash-object -w --stdin` &&
++	 git update-index --add \
++		--cacheinfo 100644 $blob "$(printf "path with\\nnewline")" \
++		--cacheinfo 100644 $blob "path with \"quote\"" \
++		--cacheinfo 100644 $blob "path with \\backslash" \
++		--cacheinfo 100644 $blob "path with space" &&
++	 git commit -m addition &&
++	 git ls-files -z -s | perl -0pe "s{\\t}{$&subdir/}" >index &&
++	 git read-tree --empty &&
++	 git update-index -z --index-info <index &&
++	 git commit -m rename &&
++	 git read-tree --empty &&
++	 git commit -m deletion &&
++	 git fast-export HEAD >export.out &&
++	 git rev-list HEAD >expect &&
++	 git init result &&
++	 cd result &&
++	 git fast-import <../export.out &&
++	 git rev-list HEAD >actual &&
++	 test_cmp ../expect actual
++	)
++'
++
+ test_done
+-- 
+1.7.6.rc0.36.gd385b.dirty
