@@ -1,93 +1,61 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
+From: Pascal Obry <pascal@obry.net>
 Subject: Re: [PATCH 2/2] On Cygwin support both UNIX and DOS style path-names
-Date: Fri, 5 Aug 2011 19:58:18 +0200
-Message-ID: <CABPQNSb96xdiL=POyrM-vR1f_KN6s+0UwnZ4E3pZ8NoTfSixzw@mail.gmail.com>
-References: <1312560614-20772-1-git-send-email-pascal@obry.net>
- <1312560614-20772-3-git-send-email-pascal@obry.net> <7vipqb3g1w.fsf@alter.siamese.dyndns.org>
-Reply-To: kusmabite@gmail.com
+Date: Fri, 05 Aug 2011 20:39:55 +0200
+Organization: Home - http://www.obry.net
+Message-ID: <4E3C38FB.4030002@obry.net>
+References: <1312560614-20772-1-git-send-email-pascal@obry.net> <1312560614-20772-3-git-send-email-pascal@obry.net> <CABPQNSYSzsY-CQdi6iJQftsY1ufMpxkax=eQLgopVxMC6LoxfA@mail.gmail.com> <4E3C29D9.5060305@obry.net> <CABPQNSYQ9D7NO5cx_o3csAe4bQ40kOd1f5gATUXDb7r4n3GhdA@mail.gmail.com>
+Reply-To: pascal@obry.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pascal Obry <pascal@obry.net>, git@vger.kernel.org,
-	Theo Niessink <theo@taletn.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 05 19:59:08 2011
+Cc: git@vger.kernel.org
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Fri Aug 05 20:40:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QpOfo-0003mZ-76
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Aug 2011 19:59:04 +0200
+	id 1QpPJh-0008Og-EQ
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Aug 2011 20:40:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753876Ab1HER7A convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Aug 2011 13:59:00 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:33170 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753637Ab1HER66 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Aug 2011 13:58:58 -0400
-Received: by pzk37 with SMTP id 37so4249264pzk.1
-        for <git@vger.kernel.org>; Fri, 05 Aug 2011 10:58:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=deZ/t2uYiMD/vdzvyHCdYzkcNyUjB5hra+2lHreFjQE=;
-        b=po+m+i9RGRWa46mjAO6SRvF+LpIkSZQd/bWQz8kBZx4NQXhhp5i+ibMTkb9PUTYmHa
-         HArzXP2a5kvqOhfehf1c1x8tOiCAyp8F3EDZU2vN3muN0szRGcgaPxjoz3Wnm/sNLC5l
-         5TnePFEDZgJe2Zmu9Z6DbPl17QUmGOSGEMqAE=
-Received: by 10.142.60.16 with SMTP id i16mr2256223wfa.343.1312567138180; Fri,
- 05 Aug 2011 10:58:58 -0700 (PDT)
-Received: by 10.68.56.65 with HTTP; Fri, 5 Aug 2011 10:58:18 -0700 (PDT)
-In-Reply-To: <7vipqb3g1w.fsf@alter.siamese.dyndns.org>
+	id S1753928Ab1HESj7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Aug 2011 14:39:59 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:45698 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752935Ab1HESj7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Aug 2011 14:39:59 -0400
+Received: by wwe5 with SMTP id 5so3197956wwe.1
+        for <git@vger.kernel.org>; Fri, 05 Aug 2011 11:39:58 -0700 (PDT)
+Received: by 10.216.65.79 with SMTP id e57mr827095wed.77.1312569597968;
+        Fri, 05 Aug 2011 11:39:57 -0700 (PDT)
+Received: from [192.168.0.100] (AVelizy-154-1-101-151.w90-2.abo.wanadoo.fr [90.2.59.151])
+        by mx.google.com with ESMTPS id gd1sm2491292wbb.44.2011.08.05.11.39.56
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 05 Aug 2011 11:39:56 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.22) Gecko/20090605 Thunderbird/2.0.0.22 Mnenhy/0.7.5.0
+In-Reply-To: <CABPQNSYQ9D7NO5cx_o3csAe4bQ40kOd1f5gATUXDb7r4n3GhdA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178812>
 
-On Fri, Aug 5, 2011 at 7:48 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Pascal Obry <pascal@obry.net> writes:
->
->> In fact Cygwin supports both, so make Git agree with this.
->> The failing case is when a file is committed in a sub-dir of the
->> repository using a log message from a file specified with a DOS
->> style path-name. To reproduce:
->>
->> =A0 =A0$ cd src
->> =A0 =A0$ git commit -F c:\tmp\log.txt file.c
->> =A0 =A0fatal: could not read log file 'src/c:\tmp\log.txt': No such =
-file \
->> =A0 =A0or directory.
->>
->> Signed-off-by: Pascal Obry <pascal@obry.net>
->> ---
->> =A0compat/cygwin.h | =A0 =A03 +++
->> =A01 files changed, 3 insertions(+), 0 deletions(-)
->>
->> diff --git a/compat/cygwin.h b/compat/cygwin.h
->> index a3229f5..de9737c 100644
->> --- a/compat/cygwin.h
->> +++ b/compat/cygwin.h
->> @@ -7,3 +7,6 @@ extern stat_fn_t cygwin_lstat_fn;
->>
->> =A0#define stat(path, buf) (*cygwin_stat_fn)(path, buf)
->> =A0#define lstat(path, buf) (*cygwin_lstat_fn)(path, buf)
->> +
->> +#define has_dos_drive_prefix(path) (isalpha(*(path)) && (path)[1] =3D=
-=3D ':')
->> +#define is_dir_sep(c) ((c) =3D=3D '/' || (c) =3D=3D '\\')
->
-> I wonder if these two that are the same as mingw should further be
-> consolidated into one implementation, something like below.
->
-> Note that I am just wondering, not suggesting, without knowing which =
-is
-> better.
+Le 05/08/2011 19:39, Erik Faye-Lund a =E9crit :
+> Are you saying that the built-in Cygwin tools (like ls etc) support
+> Windows-style paths (C:\path\to\file)? If that is the case, I
+> completely understand the desire to accept Windows-paths.
 
-IMO this becomes a bit hard to read as you have to ping-pong between
-sources to understand exactly what that flag does. We have
-compat/win32.h, perhaps we should move the macros there and include it
-from both compat/mingw.h and compat/cygwin.h instead (given that we're
-going to do this, of course)?
+Exactly.
+
+--=20
+
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|    http://www.obry.net  -  http://v2p.fr.eu.org
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
