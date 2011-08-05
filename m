@@ -1,69 +1,95 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: [PATCH 2/2] On Cygwin support both UNIX and DOS style path-names
-Date: Fri,  5 Aug 2011 18:10:14 +0200
-Message-ID: <1312560614-20772-3-git-send-email-pascal@obry.net>
-References: <1312560614-20772-1-git-send-email-pascal@obry.net>
-Cc: Pascal Obry <pascal@obry.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 05 18:11:04 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rebase -i: fix has_action
+Date: Fri, 05 Aug 2011 09:59:30 -0700
+Message-ID: <7v62mb4wwd.fsf@alter.siamese.dyndns.org>
+References: <1312450780-5021-1-git-send-email-nrubinstein@proformatique.com>
+ <7vliv93r9g.fsf@alter.siamese.dyndns.org>
+ <CAGdFq_j2wRw-gB109VypZkG1u=fm7yynkn2-Gu8AzNpVOrun8w@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Noe Rubinstein <nrubinstein@proformatique.com>, git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 05 18:59:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QpMzG-0003iL-N3
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Aug 2011 18:11:03 +0200
+	id 1QpNkG-0005Ly-Vz
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Aug 2011 18:59:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756776Ab1HEQK6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Aug 2011 12:10:58 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:62604 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756753Ab1HEQK5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2011 12:10:57 -0400
-Received: by wwe5 with SMTP id 5so3077393wwe.1
-        for <git@vger.kernel.org>; Fri, 05 Aug 2011 09:10:56 -0700 (PDT)
-Received: by 10.227.6.207 with SMTP id a15mr2061678wba.25.1312560656076;
-        Fri, 05 Aug 2011 09:10:56 -0700 (PDT)
-Received: from pascal.homeobry.net (AVelizy-154-1-101-151.w90-2.abo.wanadoo.fr [90.2.59.151])
-        by mx.google.com with ESMTPS id gg16sm2406741wbb.17.2011.08.05.09.10.52
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 05 Aug 2011 09:10:53 -0700 (PDT)
-Received: from obry by pascal.homeobry.net with local (Exim 4.76)
-	(envelope-from <obry@pascal.homeobry.net>)
-	id 1QpMz5-0005Q2-Qf; Fri, 05 Aug 2011 18:10:51 +0200
-X-Mailer: git-send-email 1.7.6.404.g5d2fc
-In-Reply-To: <1312560614-20772-1-git-send-email-pascal@obry.net>
+	id S1755311Ab1HEQ7e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Aug 2011 12:59:34 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58290 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752956Ab1HEQ7d (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Aug 2011 12:59:33 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 033894BCD;
+	Fri,  5 Aug 2011 12:59:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=p8JAgAmom8RKm9HACohM1nvxmRI=; b=fAQB1/
+	ObGkzUZYZOf1Pwy0UVgqUZIwACIoCrcIdoDzls5j2TNvAgchpoMCmde/sNzHHK/j
+	hLTAsXWu5rjai5v5L9DMwYlQJ0dGRYlrEs5q47CAQV9EXbJCNxJSSSkL90gQwbZ5
+	14lH2csmDt5FzwCUIoxS3fRZ7EN9TK3sImDwE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yCgFaCZkk01DFdaVnSq13O9Lx2QLzEKs
+	oXwFpIYognNLC7/Jc7CLrRWv8ART7Ek2FHmGBJ+9iWqPiuvgi7FfegCGoaIRKAi+
+	y1fVdKDG1yUJ989SMIx2LMWqMWXMCQVH+mBbNk3/xHUTXBI35MoUTETAtak0caHc
+	8COXZdcVlOo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EED824BCC;
+	Fri,  5 Aug 2011 12:59:31 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 823D84BCB; Fri,  5 Aug 2011
+ 12:59:31 -0400 (EDT)
+In-Reply-To: <CAGdFq_j2wRw-gB109VypZkG1u=fm7yynkn2-Gu8AzNpVOrun8w@mail.gmail.com> (Sverre
+ Rabbelier's message of "Fri, 5 Aug 2011 14:36:00 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 49C6723E-BF84-11E0-8714-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178802>
 
-In fact Cygwin supports both, so make Git agree with this.
-The failing case is when a file is committed in a sub-dir of the
-repository using a log message from a file specified with a DOS
-style path-name. To reproduce:
+Sverre Rabbelier <srabbelier@gmail.com> writes:
 
-   $ cd src
-   $ git commit -F c:\tmp\log.txt file.c
-   fatal: could not read log file 'src/c:\tmp\log.txt': No such file \
-   or directory.
+> Heya,
+>
+> On Thu, Aug 4, 2011 at 21:34, Junio C Hamano <gitster@pobox.com> wrote:
+>>        has_action () {
+>>          test -s "$1"
+>>        }
+>
+>>        has_action () {
+>>          sane_grep -v -e '^#' -e '^[   ]*$' "$1" >/dev/null
+>>        }
+>
+> I think the former more correctly checks what the function name
+> implies, is there any downside to that which makes you suggest this
+> second approach?
 
-Signed-off-by: Pascal Obry <pascal@obry.net>
----
- compat/cygwin.h |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+I vaguely recall the original reason we didn't do the most straightforward
+thing was something like what J6t said already.
 
-diff --git a/compat/cygwin.h b/compat/cygwin.h
-index a3229f5..de9737c 100644
---- a/compat/cygwin.h
-+++ b/compat/cygwin.h
-@@ -7,3 +7,6 @@ extern stat_fn_t cygwin_lstat_fn;
- 
- #define stat(path, buf) (*cygwin_stat_fn)(path, buf)
- #define lstat(path, buf) (*cygwin_lstat_fn)(path, buf)
-+
-+#define has_dos_drive_prefix(path) (isalpha(*(path)) && (path)[1] == ':')
-+#define is_dir_sep(c) ((c) == '/' || (c) == '\\')
--- 
-1.7.6.404.g5d2fc
+As we are not interested in _adding_ new feature, I would say that,
+strictly speaking, this *should* become a two-patch series whose first one
+uses
+
+	sane_grep -v -e '^#' -e '^$' "$1" >/dev/null
+
+that is, "do we have anything aside from comments and blanks?", which is
+the original semantics, with Noe's "safety" change as the second patch in
+the series that uses
+
+	sane_grep -v -e '^#' -e '^[	 ]*$' "$1" >/dev/null
+
+to say "let's count a line that solely consists of whitespaces also as a
+blank".
+
+But of course in practice it can and should be just a single patch that 
+squashes these two "conceptually separate" steps.
