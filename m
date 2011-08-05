@@ -1,60 +1,70 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] fast-export: quote paths in output
-Date: Fri, 05 Aug 2011 13:12:06 +0200
-Message-ID: <4E3BD006.6010005@viscovery.net>
-References: <20110805105526.GA22480@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	James Gregory <j.gregory@epigenesys.co.uk>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 05 13:12:28 2011
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH 0/2] bisect: cleanup formatting of git-bisect.sh
+Date: Fri,  5 Aug 2011 21:31:29 +1000
+Message-ID: <1312543891-11079-1-git-send-email-jon.seymour@gmail.com>
+Cc: gitster@pobox.com, Jon Seymour <jon.seymour@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 05 13:31:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QpIKD-0002AQ-Kp
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Aug 2011 13:12:22 +0200
+	id 1QpId5-0004Nj-Ik
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Aug 2011 13:31:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754025Ab1HELMQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Aug 2011 07:12:16 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:22356 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751612Ab1HELMP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2011 07:12:15 -0400
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1QpIJz-0004wI-Bn; Fri, 05 Aug 2011 13:12:07 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 1956E1660F;
-	Fri,  5 Aug 2011 13:12:06 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.18) Gecko/20110616 Thunderbird/3.1.11
-In-Reply-To: <20110805105526.GA22480@sigill.intra.peff.net>
-X-Spam-Score: -1.4 (-)
+	id S1753374Ab1HELbq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Aug 2011 07:31:46 -0400
+Received: from mail-iy0-f170.google.com ([209.85.210.170]:37760 "EHLO
+	mail-iy0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753914Ab1HELbq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Aug 2011 07:31:46 -0400
+Received: by iye16 with SMTP id 16so3511413iye.1
+        for <git@vger.kernel.org>; Fri, 05 Aug 2011 04:31:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=WrGLnqFJONbN0XVGJzyhvzpNZONxofc+WOIlh7oqkjc=;
+        b=T+kkglpsqAP8HZuHDEwJioq7iqd9DSjE3Mjor750fa6pPS0EftpMRqyeHHeWW65pq9
+         mgKg9EYgTw94IKoJ2RW7U174EuoP3Sq5Bsq0veml9nOVQON2CWDtAVTNRCgaYGMrLont
+         1CaprhFqHmwC+EVQjpnd1lHAYhQwR1na9HXj8=
+Received: by 10.231.112.193 with SMTP id x1mr1640018ibp.59.1312543905127;
+        Fri, 05 Aug 2011 04:31:45 -0700 (PDT)
+Received: from localhost.localdomain (124-169-144-208.dyn.iinet.net.au [124.169.144.208])
+        by mx.google.com with ESMTPS id es17sm757930ibb.54.2011.08.05.04.31.41
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 05 Aug 2011 04:31:43 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.360.geebb0f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178789>
 
-Am 8/5/2011 12:55, schrieb Jeff King:
-> +test_expect_success 'fast-export quotes pathnames' '
-> +	git init crazy-paths &&
-> +	(cd crazy-paths &&
-> +	 >"$(printf "path with\\nnewline")" &&
-> +	 >"path with \"quote\"" &&
-> +	 >"path with \\backslash" &&
-> +	 >"path with space" &&
+This series is intended to be applied on top js/bisect-no-checkout.
 
-Please construct the tree object using git-update-index's --cacheinfo or
---index-info rather than using actual files and git add so that the test
-can pass on filesystems that do not allow newlines, quotes, or
-backslashes(!) in filenames.
+The first patch ensures all leading whitespace is encoded with tabs, where possible.
 
--- Hannes
+The second patch replaces constructs of the form:
+
+	if cond-statement; then
+		then-statement
+	fi
+
+with:
+
+	if cond-statement
+	then
+		then-statement
+	fi	
+	
+
+Jon Seymour (2):
+  bisect: cleanup whitespace errors in git-bisect.sh.
+  bisect: replace "; then" with "\n<tab>*then"
+
+ git-bisect.sh |  283 +++++++++++++++++++++++++++++----------------------------
+ 1 files changed, 146 insertions(+), 137 deletions(-)
+
 -- 
-"Atomic objects are neither active nor radioactive." --
-Programming Languages -- C++, Final Committee Draft (Doc.N3092)
+1.7.6.354.g7f57d
