@@ -1,89 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] misc-sh: fix up whitespace in some other .sh files.
-Date: Fri, 05 Aug 2011 10:26:32 -0700
-Message-ID: <7vmxfn3h2v.fsf@alter.siamese.dyndns.org>
-References: <1312551089-3753-1-git-send-email-jon.seymour@gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH 2/2] On Cygwin support both UNIX and DOS style path-names
+Date: Fri, 5 Aug 2011 19:29:01 +0200
+Message-ID: <CABPQNSYSzsY-CQdi6iJQftsY1ufMpxkax=eQLgopVxMC6LoxfA@mail.gmail.com>
+References: <1312560614-20772-1-git-send-email-pascal@obry.net> <1312560614-20772-3-git-send-email-pascal@obry.net>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 05 19:26:41 2011
+To: Pascal Obry <pascal@obry.net>
+X-From: git-owner@vger.kernel.org Fri Aug 05 19:29:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QpOAS-0003fb-Pj
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Aug 2011 19:26:41 +0200
+	id 1QpODS-00059V-Uh
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Aug 2011 19:29:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752966Ab1HER0f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Aug 2011 13:26:35 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34940 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751405Ab1HER0e (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2011 13:26:34 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EA2AB305C;
-	Fri,  5 Aug 2011 13:26:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8AOpVg4keJCGu5y3CcI7O0qQC8k=; b=AB2N7k
-	xoO6FR0x+lRhJgT4+Zu4RZAdS45OmFkjiZMOlz92Z4QYB9h5rh8ZNo0pEucAycpY
-	C8zo+as4pmotDrnZAJdWxa0u5mXQDfrjllb/8a4kV+nrNcRDxEeUufCRkrAtA1Sl
-	QlyKXx7rn5e6ahasAkmppV3l9VKMP+ul197Yk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vJoZRLM09NUd8XOnbToD5wP7AssdZvUU
-	uWb5kB4h7+9DEsnS8/vg1OZykJ8PybNAvR11ueLDeAeZzyiBki7jnL1RYi4B/i/1
-	e0ufQ98Wnfz2hWcZs1XnwSBnv45ZFnV+DhvYyAnI8vXTn/FfTyjOiaZpMH8MSVkg
-	jUasMPTXYFc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E0DE9305B;
-	Fri,  5 Aug 2011 13:26:33 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 735FA305A; Fri,  5 Aug 2011
- 13:26:33 -0400 (EDT)
-In-Reply-To: <1312551089-3753-1-git-send-email-jon.seymour@gmail.com> (Jon
- Seymour's message of "Fri, 5 Aug 2011 23:31:29 +1000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 108695C2-BF88-11E0-99DE-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755440Ab1HER3m convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Aug 2011 13:29:42 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:41039 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753377Ab1HER3l convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Aug 2011 13:29:41 -0400
+Received: by pzk37 with SMTP id 37so4212495pzk.1
+        for <git@vger.kernel.org>; Fri, 05 Aug 2011 10:29:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=Qev24zZwRR+XSd/gzu015lnblJJAO70vxtnrjAeq70Y=;
+        b=Ll7hxCOgBzUG9Q5W6DB2U7n+3b6zkKxx4YZNyiFPzclKMXAKBHAF2dcIZ/1CdlWtb4
+         hoU+MD3FBe8EM649Nk8AqupAQfcuLzH4HWmSrou8/M7Vr/K5OH4NO3h0iAkTAuQqH3Mp
+         3q5+IlyoJv+XsD8a9+79sfnM6SavTlsi6UYVE=
+Received: by 10.142.48.20 with SMTP id v20mr2314736wfv.115.1312565381062; Fri,
+ 05 Aug 2011 10:29:41 -0700 (PDT)
+Received: by 10.68.56.65 with HTTP; Fri, 5 Aug 2011 10:29:01 -0700 (PDT)
+In-Reply-To: <1312560614-20772-3-git-send-email-pascal@obry.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178806>
 
-Jon Seymour <jon.seymour@gmail.com> writes:
+On Fri, Aug 5, 2011 at 6:10 PM, Pascal Obry <pascal@obry.net> wrote:
+> In fact Cygwin supports both, so make Git agree with this.
+> The failing case is when a file is committed in a sub-dir of the
+> repository using a log message from a file specified with a DOS
+> style path-name. To reproduce:
+>
+> =A0 $ cd src
+> =A0 $ git commit -F c:\tmp\log.txt file.c
+> =A0 fatal: could not read log file 'src/c:\tmp\log.txt': No such file=
+ \
+> =A0 or directory.
 
-> diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-> index 962a93b..0d399aa 100755
-> --- a/git-filter-branch.sh
-> +++ b/git-filter-branch.sh
-> @@ -98,11 +98,11 @@ set_ident () {
->  }
->  
->  USAGE="[--env-filter <command>] [--tree-filter <command>]
-> -            [--index-filter <command>] [--parent-filter <command>]
-> -            [--msg-filter <command>] [--commit-filter <command>]
-> -            [--tag-name-filter <command>] [--subdirectory-filter <directory>]
-> -            [--original <namespace>] [-d <directory>] [-f | --force]
-> -            [<rev-list options>...]"
-> +	    [--index-filter <command>] [--parent-filter <command>]
-> +	    [--msg-filter <command>] [--commit-filter <command>]
-> +	    [--tag-name-filter <command>] [--subdirectory-filter <directory>]
-> +	    [--original <namespace>] [-d <directory>] [-f | --force]
-> +	    [<rev-list options>...]"
->  
->  OPTIONS_SPEC=
->  . git-sh-setup
+Cygwin is a unix-layer on top of Windows, designed to play by the
+POSIX-rules. So why would you want to support Windows-style paths on
+Cygwin?
 
-Everything other than this hunk is unquestionably fine. I think this one
-also is Ok but I wonder where the "Indented by 12 columns" comes
-from. "Usage: git filter-branch " that is prefixed to the first line is 25
-columns long, so the "[--index-filter ..." on the second line would not
-align with "[--env-filter ..." on the first line to begin with.
-
-And I do not think they need to align --- the point is if the second and
-subsequent lines do not aim to align with anything on the first line, it
-is just fine to indent them with a single HT, I think.
+If you want a Git that handles Windows paths, use Git for Windows...
