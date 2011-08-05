@@ -1,83 +1,70 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: git-fast-export is returning streams with source code inside
-Date: Fri, 5 Aug 2011 04:30:16 -0600
-Message-ID: <20110805103016.GA19648@sigill.intra.peff.net>
-References: <CAFC9htxwRg=+RD68hnnRy0hfptq23x3bL+xxHieK1evfFCTPjw@mail.gmail.com>
- <20110804070528.GA11805@sigill.intra.peff.net>
- <CAFC9htxRD0z3O_k_OLp08KZFUOL_T3AryCXD+OqqXx9ZYeRutg@mail.gmail.com>
- <20110804183218.GA15943@sigill.intra.peff.net>
- <CAFC9htyFKm7NCNFvrUkxXpmj1jwatWkxrnRSEdztY4Syo+EQ-g@mail.gmail.com>
- <20110805093618.GA19062@sigill.intra.peff.net>
- <CAFC9htzzPQWFLGCpAP2WHhDQajfknwz1KUu6K0gvyhCVX5gyaQ@mail.gmail.com>
+Subject: [PATCH] fast-export: quote paths in output
+Date: Fri, 5 Aug 2011 04:55:27 -0600
+Message-ID: <20110805105526.GA22480@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: James Gregory <j.gregory@epigenesys.co.uk>
-X-From: git-owner@vger.kernel.org Fri Aug 05 12:30:35 2011
+Cc: git@vger.kernel.org, James Gregory <j.gregory@epigenesys.co.uk>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 05 12:55:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QpHfn-0005HL-6C
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Aug 2011 12:30:35 +0200
+	id 1QpI4C-0001uS-3D
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Aug 2011 12:55:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755468Ab1HEKaW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Aug 2011 06:30:22 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:36235
+	id S1755468Ab1HEKzk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Aug 2011 06:55:40 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:32777
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754062Ab1HEKaV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2011 06:30:21 -0400
-Received: (qmail 28323 invoked by uid 107); 5 Aug 2011 10:30:54 -0000
+	id S1752637Ab1HEKza (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Aug 2011 06:55:30 -0400
+Received: (qmail 28615 invoked by uid 107); 5 Aug 2011 10:56:04 -0000
 Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 05 Aug 2011 06:30:54 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Aug 2011 04:30:16 -0600
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 05 Aug 2011 06:56:04 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Aug 2011 04:55:27 -0600
 Content-Disposition: inline
-In-Reply-To: <CAFC9htzzPQWFLGCpAP2WHhDQajfknwz1KUu6K0gvyhCVX5gyaQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178786>
 
-On Fri, Aug 05, 2011 at 10:54:29AM +0100, James Gregory wrote:
+Many pathnames in a fast-import stream need to be quoted. In
+particular:
 
-> Thanks for the feedback. I've just looked at the commit on gitweb, and
-> this could be the problem!
-> 
-> ---
-> fixed dodgy filename
-> spec/blueprints/sjt_blueprint.rb	[moved from
-> spec/blueprints/sjt_blueprint.rb\n lead_in\n scenario\n answers {
-> Sham.answers_object }\n justification_selected\n
-> justification_unselected\n mark_scheme {
-> Sham.single_mark_scheme_object }\nend\nmcq_blueprint.rb with 100%
-> similarity]
-> ---
-> 
-> I'm guessing that is where the problem lies... somehow the git
-> transaction has got corrupt(?)
+  1. Pathnames at the end of an "M" or "D" line need quoting
+     if they contain a LF or start with double-quote.
 
-Ah, OK. That makes sense. I can replicate your problem easily with:
+  2. Pathnames on a "C" or "R" line need quoting as above,
+     but also if they contain spaces.
 
-  $ touch 'file with
-    newline'
-  $ git init
-  $ git add .
-  $ git commit -m foo
-  $ git fast-export HEAD | git fast-import
-  fatal: Unsupported command: newline
+For (1), we weren't quoting at all. For (2), we put
+double-quotes around the paths to handle spaces, but ignored
+the possibility that they would need further quoting.
 
-According to the fast-import manpage, fast-export should be quoting the
-embedded line-feed. It looks like it isn't doing any quoting at all of
-pathnames right now, which is just wrong.
+This patch checks whether each pathname needs c-style
+quoting, and uses it. This is slightly overkill for (1),
+which doesn't actually need to quote many characters that
+vanilla c-style quoting does. However, it shouldn't hurt, as
+any implementation needs to be ready to handle quoted
+strings anyway.
 
-Does the patch below fix your issue?
+In addition to adding a test, we have to tweak a test which
+blindly assumed that case (2) would always use
+double-quotes, whether it needed to or not.
 
+Signed-off-by: Jeff King <peff@peff.net>
 ---
+ builtin/fast-export.c  |   31 ++++++++++++++++++++++++-------
+ t/t9350-fast-export.sh |   26 +++++++++++++++++++++++++-
+ 2 files changed, 49 insertions(+), 8 deletions(-)
+
 diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 9247871..bd27f08 100644
+index becef85..9836e6b 100644
 --- a/builtin/fast-export.c
 +++ b/builtin/fast-export.c
 @@ -16,6 +16,7 @@
@@ -88,7 +75,7 @@ index 9247871..bd27f08 100644
  
  static const char *fast_export_usage[] = {
  	"git fast-export [rev-list-opts]",
-@@ -167,6 +168,15 @@ static int depth_first(const void *a_, const void *b_)
+@@ -179,6 +180,15 @@ static int depth_first(const void *a_, const void *b_)
  	return (a->status == 'R') - (b->status == 'R');
  }
  
@@ -104,7 +91,7 @@ index 9247871..bd27f08 100644
  static void show_filemodify(struct diff_queue_struct *q,
  			    struct diff_options *options, void *data)
  {
-@@ -184,13 +194,18 @@ static void show_filemodify(struct diff_queue_struct *q,
+@@ -196,13 +206,18 @@ static void show_filemodify(struct diff_queue_struct *q,
  
  		switch (q->queue[i]->status) {
  		case DIFF_STATUS_DELETED:
@@ -126,7 +113,7 @@ index 9247871..bd27f08 100644
  
  			if (!hashcmp(ospec->sha1, spec->sha1) &&
  			    ospec->mode == spec->mode)
-@@ -205,13 +220,15 @@ static void show_filemodify(struct diff_queue_struct *q,
+@@ -217,13 +232,15 @@ static void show_filemodify(struct diff_queue_struct *q,
  			 * output the SHA-1 verbatim.
  			 */
  			if (no_data || S_ISGITLINK(spec->mode))
@@ -146,3 +133,47 @@ index 9247871..bd27f08 100644
  			break;
  
  		default:
+diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
+index f823c05..4673ac0 100755
+--- a/t/t9350-fast-export.sh
++++ b/t/t9350-fast-export.sh
+@@ -228,7 +228,7 @@ test_expect_success 'fast-export -C -C | fast-import' '
+ 	mkdir new &&
+ 	git --git-dir=new/.git init &&
+ 	git fast-export -C -C --signed-tags=strip --all > output &&
+-	grep "^C \"file6\" \"file7\"\$" output &&
++	grep "^C file6 file7\$" output &&
+ 	cat output |
+ 	(cd new &&
+ 	 git fast-import &&
+@@ -414,4 +414,28 @@ test_expect_success SYMLINKS 'directory becomes symlink'        '
+ 	(cd result && git show master:foo)
+ '
+ 
++test_expect_success 'fast-export quotes pathnames' '
++	git init crazy-paths &&
++	(cd crazy-paths &&
++	 >"$(printf "path with\\nnewline")" &&
++	 >"path with \"quote\"" &&
++	 >"path with \\backslash" &&
++	 >"path with space" &&
++	 git add . &&
++	 git commit -m addition &&
++	 mkdir subdir &&
++	 git mv path* subdir &&
++	 git commit -m rename &&
++	 git rm -r subdir &&
++	 git commit -m deletion &&
++	 git fast-export HEAD >export.out &&
++	 git rev-list HEAD >expect &&
++	 git init result &&
++	 cd result &&
++	 git fast-import <../export.out &&
++	 git rev-list HEAD >actual &&
++	 test_cmp ../expect actual
++	)
++'
++
+ test_done
+-- 
+1.7.6.rc0.36.gd385b.dirty
