@@ -1,85 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/48] Handling more corner cases in merge-recursive.c
-Date: Fri, 05 Aug 2011 22:22:12 -0700
-Message-ID: <7vr54z15dn.fsf@alter.siamese.dyndns.org>
-References: <1307518278-23814-1-git-send-email-newren@gmail.com>
- <7v4o1y81sv.fsf@alter.siamese.dyndns.org>
- <CABPp-BE=9r+upGUD45J7fPshqQE97UMZzaA+cu_WJ1A2p_Bigg@mail.gmail.com>
- <7vpqkl3sok.fsf@alter.siamese.dyndns.org>
- <CABPp-BFx38gLQDn0sccp74Z=RtEVzaxWiVqopxkWwXTSGuYxxw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH 0/5] macro-based key/value maps
+Date: Sat, 6 Aug 2011 00:30:53 -0600
+Message-ID: <20110806063052.GA3583@sigill.intra.peff.net>
+References: <20110713064709.GA18499@sigill.intra.peff.net>
+ <20110713065700.GA18566@sigill.intra.peff.net>
+ <20110713175250.GA1448@elie>
+ <20110713200814.GD31965@sigill.intra.peff.net>
+ <20110714173454.GA21657@sigill.intra.peff.net>
+ <7vipr4373f.fsf@alter.siamese.dyndns.org>
+ <20110804224354.GA27476@sigill.intra.peff.net>
+ <20110805110302.GA23619@sigill.intra.peff.net>
+ <4E3C0CD9.4020902@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, jgfouca@sandia.gov
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 06 07:22:27 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sat Aug 06 08:31:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QpZL8-00076N-Lh
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Aug 2011 07:22:27 +0200
+	id 1QpaQ4-0004jg-0D
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Aug 2011 08:31:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751059Ab1HFFWQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Aug 2011 01:22:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40534 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751010Ab1HFFWP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Aug 2011 01:22:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8BFB25F30;
-	Sat,  6 Aug 2011 01:22:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3Uba/OTeYIFAhb6hdT7kd/gAwiI=; b=MrPPxx
-	XA7ju54RGb+u8bXzGBeuYRxyh3nueyNU1yq1e4faqc1hVXD9drsXkTqE6LAMIS20
-	RMbef7xH5uCOqXIQ5ciRmjmXQQK63Dw/+3kDut8M0ejSowq9CtCymv1yXyqA8BgO
-	Wc3UZkleG4GMWVOo/tOs/uqCp/Zf1lWKY7IzU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=phRq9nM1fXSr0Cdq5mFwceg4v5Vut9Jz
-	xrHXe6T8BYYOxASAiOrQDeAsNU+dmC3+hipH9aAM5OobYIpBAys/A9+em08Y2Rwz
-	Tnk4RIHG4ILa5HVGsNZEZff9jOJvfQgOtzMjLaFIScV2EpRKpZ3EWB6Ffa27KMGh
-	gF+o689e81g=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F9D35F2F;
-	Sat,  6 Aug 2011 01:22:14 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 12AEE5F2B; Sat,  6 Aug 2011
- 01:22:13 -0400 (EDT)
-In-Reply-To: <CABPp-BFx38gLQDn0sccp74Z=RtEVzaxWiVqopxkWwXTSGuYxxw@mail.gmail.com> (Elijah
- Newren's message of "Thu, 4 Aug 2011 13:16:35 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 0B1EF4D0-BFEC-11E0-B376-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751475Ab1HFGa5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Aug 2011 02:30:57 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43421
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751365Ab1HFGa4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Aug 2011 02:30:56 -0400
+Received: (qmail 2701 invoked by uid 107); 6 Aug 2011 06:31:30 -0000
+Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 06 Aug 2011 02:31:30 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 06 Aug 2011 00:30:53 -0600
+Content-Disposition: inline
+In-Reply-To: <4E3C0CD9.4020902@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178829>
 
-Elijah Newren <newren@gmail.com> writes:
+On Fri, Aug 05, 2011 at 05:31:37PM +0200, Ren=C3=A9 Scharfe wrote:
 
-> On Thu, Aug 4, 2011 at 1:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Elijah Newren <newren@gmail.com> writes:
->>
->>> ... It
->>> would be nice to make use of the original index we had before
->>> unpacking, but that is overwritten at the end of unpack_trees.
->>
->> I somehow thought that we can give separate src and dst index
->> to the unpack_tree() machinery these days. Aren't you using it?
->
-> Ah, yes, it appears to be possible.
+> Am 05.08.2011 13:03, schrieb Jeff King:
+> >   Commits 1, 4, and 5 introduce infrastructure in the form of stati=
+c
+> >   functions and macros that contain functions that call the statics=
+=2E But
+> >   they don't actually instantiate the macro functions themselves, s=
+o
+> >   they won't compile with -Werror (due to the "unused static" warni=
+ng)
+> >   until there is some calling code.
+> >=20
+> >   That hurts bisectability a little if you compile with -Werror (yo=
+u
+> >   need to add -Wno-error=3Dunused-function). I don't know how much =
+we
+> >   care.
+>=20
+> I don't know either, but you could avoid the issue by adding a test-m=
+aps
+> command in the first patch and exercising the new functionality a bit=
+=2E
 
-But why do you care about the original index (i.e. the starting state of
-our side) in the first place? If your algorithm depends on the original
-index, wouldn't that mean you would screw up the same merge if the user
-merged branches in the opposite direction?
+Yes, but then the final git executable carries around dead code for the
+test map and cache types. There are ways to split the macros versus
+their instantiation so that the test instantiations only live in the
+test-map program, but then that would bring back the "static is not
+used" error.
 
-I think the fact you have a path "two" at stage 0, combined with the two
-diffs you ran for rename detection between the common ancestor and two
-branches, should be enough to decide if one branch added the path or moved
-it from elsewhere (in which case the common ancestor would not have that
-path), or it kept the path at the original place (with or without content
-change), no?
+Maybe carrying the dead code isn't that big a deal. It's not that much
+extra code.
+
+-Peff
