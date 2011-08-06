@@ -1,80 +1,60 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH 0/5] macro-based key/value maps
-Date: Sat, 6 Aug 2011 00:30:53 -0600
-Message-ID: <20110806063052.GA3583@sigill.intra.peff.net>
-References: <20110713064709.GA18499@sigill.intra.peff.net>
- <20110713065700.GA18566@sigill.intra.peff.net>
- <20110713175250.GA1448@elie>
- <20110713200814.GD31965@sigill.intra.peff.net>
- <20110714173454.GA21657@sigill.intra.peff.net>
- <7vipr4373f.fsf@alter.siamese.dyndns.org>
- <20110804224354.GA27476@sigill.intra.peff.net>
- <20110805110302.GA23619@sigill.intra.peff.net>
- <4E3C0CD9.4020902@lsrfire.ath.cx>
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: [PATCH 2/2] On Cygwin support both UNIX and DOS style path-names
+Date: Sat, 06 Aug 2011 09:01:45 +0200
+Organization: Home - http://www.obry.net
+Message-ID: <4E3CE6D9.4050600@obry.net>
+References: <1312560614-20772-1-git-send-email-pascal@obry.net> <1312560614-20772-3-git-send-email-pascal@obry.net> <7vipqb3g1w.fsf@alter.siamese.dyndns.org>
+Reply-To: pascal@obry.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sat Aug 06 08:31:36 2011
+Cc: git@vger.kernel.org, Theo Niessink <theo@taletn.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 06 09:01:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QpaQ4-0004jg-0D
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Aug 2011 08:31:36 +0200
+	id 1QpatN-0007Tq-IC
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Aug 2011 09:01:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751475Ab1HFGa5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Aug 2011 02:30:57 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:43421
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751365Ab1HFGa4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Aug 2011 02:30:56 -0400
-Received: (qmail 2701 invoked by uid 107); 6 Aug 2011 06:31:30 -0000
-Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 06 Aug 2011 02:31:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 06 Aug 2011 00:30:53 -0600
-Content-Disposition: inline
-In-Reply-To: <4E3C0CD9.4020902@lsrfire.ath.cx>
+	id S1752111Ab1HFHBs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Aug 2011 03:01:48 -0400
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:33618 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750971Ab1HFHBs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Aug 2011 03:01:48 -0400
+Received: by wwe5 with SMTP id 5so44955wwe.1
+        for <git@vger.kernel.org>; Sat, 06 Aug 2011 00:01:46 -0700 (PDT)
+Received: by 10.227.27.216 with SMTP id j24mr2568976wbc.97.1312614106610;
+        Sat, 06 Aug 2011 00:01:46 -0700 (PDT)
+Received: from [192.168.0.100] (AVelizy-154-1-101-151.w90-2.abo.wanadoo.fr [90.2.59.151])
+        by mx.google.com with ESMTPS id em16sm2835454wbb.33.2011.08.06.00.01.44
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 06 Aug 2011 00:01:45 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.22) Gecko/20090605 Thunderbird/2.0.0.22 Mnenhy/0.7.5.0
+In-Reply-To: <7vipqb3g1w.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178830>
 
-On Fri, Aug 05, 2011 at 05:31:37PM +0200, Ren=C3=A9 Scharfe wrote:
+Le 05/08/2011 19:48, Junio C Hamano a =E9crit :
+> I wonder if these two that are the same as mingw should further be
+> consolidated into one implementation, something like below.
 
-> Am 05.08.2011 13:03, schrieb Jeff King:
-> >   Commits 1, 4, and 5 introduce infrastructure in the form of stati=
-c
-> >   functions and macros that contain functions that call the statics=
-=2E But
-> >   they don't actually instantiate the macro functions themselves, s=
-o
-> >   they won't compile with -Werror (due to the "unused static" warni=
-ng)
-> >   until there is some calling code.
-> >=20
-> >   That hurts bisectability a little if you compile with -Werror (yo=
-u
-> >   need to add -Wno-error=3Dunused-function). I don't know how much =
-we
-> >   care.
->=20
-> I don't know either, but you could avoid the issue by adding a test-m=
-aps
-> command in the first patch and exercising the new functionality a bit=
-=2E
+=46ine with me.
 
-Yes, but then the final git executable carries around dead code for the
-test map and cache types. There are ways to split the macros versus
-their instantiation so that the test instantiations only live in the
-test-map program, but then that would bring back the "static is not
-used" error.
+--=20
 
-Maybe carrying the dead code isn't that big a deal. It's not that much
-extra code.
-
--Peff
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|    http://www.obry.net  -  http://v2p.fr.eu.org
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
