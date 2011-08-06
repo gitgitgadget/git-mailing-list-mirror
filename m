@@ -1,97 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-am: ignore leading whitespace before patch
-Date: Fri, 05 Aug 2011 22:00:16 -0700
-Message-ID: <7vvcub16e7.fsf@alter.siamese.dyndns.org>
-References: <1312323646-93427-1-git-send-email-davidbarr@google.com>
- <CALUzUxpn-vCWpTQyB7z9dsu8a+UBL9MPjEycOfTmyws5ndz5kA@mail.gmail.com>
- <CAFfmPPMY5FP8NbZ5Q15pW-NC_qs=i6FY7v6Pi8jkMAhkURFTmQ@mail.gmail.com>
+From: Joe Perches <joe@perches.com>
+Subject: Re: [PATCH] git-send-email: Add AUTH LOGIN support
+Date: Fri, 05 Aug 2011 22:21:54 -0700
+Message-ID: <1312608114.6419.18.camel@Joe-Laptop>
+References: <c1be0c3bd05779897fdc92907fe65d84c88ac72b.1312591104.git.joe@perches.com>
+	 <7vzkjn16n6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Tay Ray Chuan <rctay89@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: David Barr <davidbarr@google.com>
-X-From: git-owner@vger.kernel.org Sat Aug 06 07:00:40 2011
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Graham Barr <gbarr@pobox.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 06 07:22:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QpZ02-0000MV-IA
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Aug 2011 07:00:38 +0200
+	id 1QpZKw-00073F-TA
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Aug 2011 07:22:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750925Ab1HFFAe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Aug 2011 01:00:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33979 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750835Ab1HFFAd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Aug 2011 01:00:33 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 11D7E5C8D;
-	Sat,  6 Aug 2011 01:00:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+t+U2qUUCi8Qz+yx97oIuteMq1o=; b=Kmskgn
-	CgKUty+tSyghZTwankIik2ZZ7MmL1+tbwreORcm3h9HBQKRzmztsG/q2HIGhJhkV
-	4r0kDoiYVq4GyxE82d1znaxrMdU2YVGBZ+INc/4Kw7KKSE6+v2U4PSvj8XWVZobk
-	M2+b9bIVuw/sdWil0I7GJy8QqE55eRLApf5A0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CxjgxAJIoGMGwYL3QSoFC5tVwLcq7mzz
-	vZE5a+XxHr+wVI+iP/2hK/DKLYJpVQmie7vQ4P99oVlCRKrskSHpMZgMq258tpLy
-	ir6ndRbS/R+WhWtvuUfXAou1WJgTyniWidlptZzCDx4uen5YLGn7ZkgTzFIE2uln
-	nW3Z1z1LaWU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 019835C8A;
-	Sat,  6 Aug 2011 01:00:31 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A9D9D5C7E; Sat,  6 Aug 2011
- 01:00:17 -0400 (EDT)
-In-Reply-To: <CAFfmPPMY5FP8NbZ5Q15pW-NC_qs=i6FY7v6Pi8jkMAhkURFTmQ@mail.gmail.com> (David
- Barr's message of "Sat, 6 Aug 2011 11:56:53 +1000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: FA8118B8-BFE8-11E0-BCE8-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1750917Ab1HFFWD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Aug 2011 01:22:03 -0400
+Received: from wondertoys-mx.wondertoys.net ([206.117.179.246]:49665 "EHLO
+	labridge.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750754Ab1HFFWB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Aug 2011 01:22:01 -0400
+Received: from [75.79.151.38] (account joe@perches.com HELO [192.168.1.8])
+  by labridge.com (CommuniGate Pro SMTP 5.0.14)
+  with ESMTPA id 17979277; Fri, 05 Aug 2011 22:21:59 -0700
+In-Reply-To: <7vzkjn16n6.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 2.32.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178827>
 
-David Barr <davidbarr@google.com> writes:
+On Fri, 2011-08-05 at 21:54 -0700, Junio C Hamano wrote:
+> Joe Perches <joe@perches.com> writes:
+> > The current perl Net::SMTP support will not use AUTH LOGIN
+> > when other authentication options are available.
+> Even after reading this excuse,...
+> > +			if (defined $smtp_auth && $smtp_auth =~ /^login$/i) {
+> > +
+> > +			    $smtp->datasend("AUTH LOGIN\n");
+> > +			    $smtp->response();
+> > +			    $smtp->datasend(encode_base64("$smtp_authuser"));
+> > +			    $smtp->response();
+> > +			    $smtp->datasend(encode_base64("$smtp_authpass"));
+> > +			    $smtp->response();
+> > +
+> > +			} else {
+> > +
+> > +			    $auth ||= $smtp->auth( $smtp_authuser, $smtp_authpass ) or die $smtp->message;
+> > +			}
+> ... this makes me feel dirty X-(. Not the desire to force "AUTH LOGIN",
+> but the implementation to hand-roll the protocol exchange.
+> I'd rather want to know _why_ Net::SMTP does not support it in the first
+> place, and what it does for "other authentication options" that are
+> available. Does it try them in turn until it finds the one that works? Why
+> doesn't it fall back on "AUTH LOGIN" then?
+> Specifically, if there is a reason to avoid this plaintext authentication
+> method when other options are _available_ (which presumably would be the
+> reason why Net::SMTP chooses not to support it), and if there is a reason
+> on the user's side to _force_ this method even when people who wrote
+> Net::SMTP does not recommend it be used, wouldn't it be natural to expect
+> that there should be a way to configure the connection to use it, without
+> resorting to coding the protocol exchange by hand line this?
 
-> Hi Jonathan,
-> ...
->>> diff --git a/git-am.sh b/git-am.sh
->>> index 463c741..19b2f0f 100755
->>> --- a/git-am.sh
->>> +++ b/git-am.sh
->>> @@ -199,7 +199,11 @@ check_patch_format () {
->>>        # otherwise, check the first few lines of the first patch to try
->>>        # to detect its format
->>>        {
->>> -               read l1
->>> +               # Start from first line containing non-whitespace
->>> +               until [ -n "$l1" ]
->>> +               do
->>> +                       read l1
->>> +               done
-> ...
-> Do you see any subtle issues in this tiny patch?
-> I failed to include a test, I'll add at least one to the next version.
-> I did check that it doesn't break any of the existing git-am tests.
+I needed something now.
 
-It no longer checks "the first few lines" but can read a lot more, so the
-comment that precedes this block is now invalid.
+You are right but I believe it would take too long
+to get updates to Net::SMTP in place. Doing this
+admitted ugliness in git-send-email works for me and
+seems to me to be appropriate for now.
 
-Also we are rather old fashioned and we never say "until [ ... ]" anywhere
-in our shell scripts.
+I looked, there isn't a method to force a particular
+AUTH type documented.  I also didn't care to rewrite
+Net::SMTP right now.  This "works for me"...
 
-	$ git grep -e until -- '*.sh'
+> It probably is not as simple as installing Authen::SASL::*::LOGIN, but
+> still...
 
-Personally to me this is a borderline "Meh", in the sense that I wouldn't
-bother to waste too much effort rejecting it, as I do not see downsides
-other than these minor points.
-
-Thanks.
+cheers, Joe
