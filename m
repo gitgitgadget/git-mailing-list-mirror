@@ -1,151 +1,293 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH 00/40] test whitespace - perform trivial whitespace clean ups of test scripts.
-Date: Sat,  6 Aug 2011 18:41:59 +1000
-Message-ID: <1312620119-18369-1-git-send-email-jon.seymour@gmail.com>
+Subject: [PATCH 01/40] test-cleaner: automate whitespace cleaning of test scripts
+Date: Sat,  6 Aug 2011 18:44:15 +1000
+Message-ID: <1312620294-18616-1-git-send-email-jon.seymour@gmail.com>
+References: <1312620119-18369-1-git-send-email-jon.seymour@gmail.com>
 Cc: Jon Seymour <jon.seymour@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 06 10:43:44 2011
+X-From: git-owner@vger.kernel.org Sat Aug 06 10:45:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QpcTu-0004CD-9T
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Aug 2011 10:43:42 +0200
+	id 1QpcVW-0004qa-DW
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Aug 2011 10:45:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752576Ab1HFImL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Aug 2011 04:42:11 -0400
-Received: from mail-iy0-f170.google.com ([209.85.210.170]:35570 "EHLO
+	id S1752653Ab1HFIpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Aug 2011 04:45:08 -0400
+Received: from mail-iy0-f170.google.com ([209.85.210.170]:39722 "EHLO
 	mail-iy0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752127Ab1HFImK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Aug 2011 04:42:10 -0400
-Received: by iye16 with SMTP id 16so5179377iye.1
-        for <git@vger.kernel.org>; Sat, 06 Aug 2011 01:42:09 -0700 (PDT)
+	with ESMTP id S1750888Ab1HFIpG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Aug 2011 04:45:06 -0400
+Received: by iye16 with SMTP id 16so5182410iye.1
+        for <git@vger.kernel.org>; Sat, 06 Aug 2011 01:45:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=6v/YNZ7/q4/Eb8SKwruDpR9aZ2VoPJ5Am9HoRHqo9+g=;
-        b=vUmozdIGLj4tVrtsJJIrsOgwXhV3xuRc8xt7OuZtPA9cB/xZcgi2bP4QuU8wn3iC+V
-         fRQDb41CfojFVd/39iQ1W+4jq1wUEyZM9A173n/Xu/yDCEDlJD/h1aC6BmgQfg9bsu/8
-         Rqsl9YW3katj+Sa7UuSzQyGIeVe68EVL5I0qU=
-Received: by 10.42.140.200 with SMTP id l8mr3020861icu.371.1312620129659;
-        Sat, 06 Aug 2011 01:42:09 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=f+Yrxnxek4qhho6iDcPJm2lrBdjbOAWw4AB/hHGOplU=;
+        b=cNtMHc6uXO4hTvEEoQ25wZHZmQKn7pbQspxdmDw2dvlzA+d7YtUbooMUsg3EQWElsS
+         r5E1OaTD/En1pu0EqqeidBg3RfFRlBJwgIu3yX2mQ2MBpVJO1sKq21xqG5n4J8lOv7Ak
+         Qxcgp0EF0msyeq9PYgDA5kD3a63GRyNGQMlb0=
+Received: by 10.231.117.35 with SMTP id o35mr936164ibq.23.1312620306237;
+        Sat, 06 Aug 2011 01:45:06 -0700 (PDT)
 Received: from localhost.localdomain (124-169-144-208.dyn.iinet.net.au [124.169.144.208])
-        by mx.google.com with ESMTPS id fr11sm2665626ibb.12.2011.08.06.01.42.06
+        by mx.google.com with ESMTPS id a10sm2667049iba.7.2011.08.06.01.45.04
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 06 Aug 2011 01:42:08 -0700 (PDT)
+        Sat, 06 Aug 2011 01:45:05 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6.362.gf0e6
+In-Reply-To: <1312620119-18369-1-git-send-email-jon.seymour@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178832>
 
-The series applies cleanly to both master and pu.
+This script allows the automated cleaning of test scripts.
 
-The first patch contains a script, t/test-cleaner.sh, that can automate whitespace cleanup of tests.
-The remaining patches are the result of running the example.
+Any whitespace fixups of a test script that do not effect the
+exit status or output of the test are assumed to be safe
+and are automatically committed.
 
-For example:
-	cd t
+To check the tests for whitespace issues, change into git's
+test directory and run:
+
+	test-cleaner.sh check-whitespace t*.sh
+
+This will:
+
+* write one line of the form:
+
+	AUTO<tab><filename>
+
+for each file that can be fixed automatically.
+
+* write one line of the form:
+
+	MANUAL<tab><filename>
+
+for each file that will require manual intervention to fix.
+
+To fix all the automatically correctable errors, run:
+
 	./test-cleaner.sh fix-whitespace-auto t[0-9]*.sh
 
-will:
-	* identify test scripts with trivial white space errors
-	* edit the test to remove the trivial white space errors
-	* verify that edited test produces same outputs, errors and exit code
-	* creates a single commit for the edited test
+To generate commits for all the errors that require manual correction, run:
 
-fix-whitespace-manual will do the same for tests that are broken by the edit. 
+	./test-cleaner.sh fix-whitespace-manual t[0-9]*.sh
 
-In this case, the commit message is prefixed with FAILED:
+To clean a file without running tests or generating commits, run:
 
-These scripts rely on the existence of expand and unexpand on the PATH.
+	./test-cleaner.sh clean-whitespace foobar.sh
 
-Jon Seymour (40):
-  test-cleaner: automate whitespace cleaning of test scripts
-  whitespace: remediate t1001-read-tree-m-2way.sh
-  whitespace: remediate t1006-cat-file.sh
-  whitespace: remediate t1300-repo-config.sh
-  whitespace: remediate t1503-rev-parse-verify.sh
-  whitespace: remediate t3040-subprojects-basic.sh
-  whitespace: remediate t3200-branch.sh
-  whitespace: remediate t3406-rebase-message.sh
-  whitespace: remediate t4002-diff-basic.sh
-  whitespace: remediate t4010-diff-pathspec.sh
-  whitespace: remediate t5300-pack-object.sh
-  whitespace: remediate t5301-sliding-window.sh
-  whitespace: remediate t5302-pack-index.sh
-  whitespace: remediate t5303-pack-corruption-resilience.sh
-  whitespace: remediate t5400-send-pack.sh
-  whitespace: remediate t5402-post-merge-hook.sh
-  whitespace: remediate t5403-post-checkout-hook.sh
-  whitespace: remediate t5510-fetch.sh
-  whitespace: remediate t6002-rev-list-bisect.sh
-  whitespace: remediate t6005-rev-list-count.sh
-  whitespace: remediate t6030-bisect-porcelain.sh
-  whitespace: remediate t7003-filter-branch.sh
-  whitespace: remediate t7004-tag.sh
-  whitespace: remediate t7403-submodule-sync.sh
-  whitespace: remediate t7500-commit.sh
-  whitespace: remediate t7810-grep.sh
-  whitespace: remediate t9100-git-svn-basic.sh
-  whitespace: remediate t9104-git-svn-follow-parent.sh
-  whitespace: remediate t9107-git-svn-migrate.sh
-  whitespace: remediate t9108-git-svn-glob.sh
-  whitespace: remediate t9109-git-svn-multi-glob.sh
-  whitespace: remediate t9110-git-svn-use-svm-props.sh
-  whitespace: remediate t9118-git-svn-funky-branch-names.sh
-  whitespace: remediate t9125-git-svn-multi-glob-branch-names.sh
-  whitespace: remediate t9400-git-cvsserver-server.sh
-  whitespace: remediate t9401-git-cvsserver-crlf.sh
-  whitespace: remediate t9500-gitweb-standalone-no-errors.sh
-  whitespace: remediate t9603-cvsimport-patchsets.sh
-  whitespace: remediate t1000-read-tree-m-3way.sh
-  whitespace: remediate t6120-describe.sh
+clean-whitespace can be used with files that are not tests.
 
- t/t1000-read-tree-m-3way.sh                |   12 +-
- t/t1001-read-tree-m-2way.sh                |   10 +-
- t/t1006-cat-file.sh                        |   26 ++--
- t/t1300-repo-config.sh                     |    2 +-
- t/t1503-rev-parse-verify.sh                |   10 +-
- t/t3040-subprojects-basic.sh               |    2 +-
- t/t3200-branch.sh                          |   30 +++---
- t/t3406-rebase-message.sh                  |   16 ++--
- t/t4002-diff-basic.sh                      |    4 +-
- t/t4010-diff-pathspec.sh                   |    4 +-
- t/t5300-pack-object.sh                     |    6 +-
- t/t5301-sliding-window.sh                  |    6 +-
- t/t5302-pack-index.sh                      |   34 +++---
- t/t5303-pack-corruption-resilience.sh      |    4 +-
- t/t5400-send-pack.sh                       |    8 +-
- t/t5402-post-merge-hook.sh                 |   12 +-
- t/t5403-post-checkout-hook.sh              |   46 ++++----
- t/t5510-fetch.sh                           |   16 ++--
- t/t6002-rev-list-bisect.sh                 |    2 +-
- t/t6005-rev-list-count.sh                  |    6 +-
- t/t6030-bisect-porcelain.sh                |   14 +-
- t/t6120-describe.sh                        |    8 +-
- t/t7003-filter-branch.sh                   |    2 +-
- t/t7004-tag.sh                             |    4 +-
- t/t7403-submodule-sync.sh                  |    2 +-
- t/t7500-commit.sh                          |    2 +-
- t/t7810-grep.sh                            |    2 +-
- t/t9100-git-svn-basic.sh                   |   26 ++--
- t/t9104-git-svn-follow-parent.sh           |   88 +++++++-------
- t/t9107-git-svn-migrate.sh                 |   14 +-
- t/t9108-git-svn-glob.sh                    |   16 ++--
- t/t9109-git-svn-multi-glob.sh              |   20 ++--
- t/t9110-git-svn-use-svm-props.sh           |    4 +-
- t/t9118-git-svn-funky-branch-names.sh      |    6 +-
- t/t9125-git-svn-multi-glob-branch-names.sh |    6 +-
- t/t9400-git-cvsserver-server.sh            |    6 +-
- t/t9401-git-cvsserver-crlf.sh              |   12 +-
- t/t9500-gitweb-standalone-no-errors.sh     |    4 +-
- t/t9603-cvsimport-patchsets.sh             |    6 +-
- t/test-cleaner.sh                          |  185 ++++++++++++++++++++++++++++
- 40 files changed, 434 insertions(+), 249 deletions(-)
+If no arguments are supplied, file arguments are read from stdin.
+
+The filter itself can be run with:
+
+	./test-cleaner.sh whitespace-filter < file > some-other-file
+
+The resulting series of commits should rebased on both the git master
+and pu branches. Commits that cause merge conflicts should be purged
+from the series.
+
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+---
+ t/test-cleaner.sh |  185 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 185 insertions(+), 0 deletions(-)
  create mode 100755 t/test-cleaner.sh
 
+diff --git a/t/test-cleaner.sh b/t/test-cleaner.sh
+new file mode 100755
+index 0000000..9eb260b
+--- /dev/null
++++ b/t/test-cleaner.sh
+@@ -0,0 +1,185 @@
++#!/bin/sh
++
++USAGE="test-cleaner.sh
++	check-whitespace [<test-file> ...] - report on test files that need cleaning
++	fix_whitespace [<test-file> ...] - generate commits for files that need white space cleaning
++	fix-whitespace-auto [<test-file> ...] - generate commits for files that can be automatically cleaned
++	fix-whitespace-manual [<test-file> ...] - generate commits for files that need manual cleaning
++	clean-whitespace [<file> ...] - applying the cleaner to the specified file without running tests or generating commits
++"
++SUBDIRECTORY_OK=t
++. "$(git --exec-path)/git-sh-setup"
++require_clean_work_tree
++
++cleaner()
++{
++	expand -i | unexpand --first-only | sed "s/ *\$//"
++}
++
++clean_whitespace()
++{
++	rc=0
++	list_files "$@" | while read file
++	do
++		cleaner <"$file" >$$.tmp &&
++		cat $$.tmp >"$file" || rc=1
++		rm -f $$.tmp
++		test $rc = 0
++	done || exit $?
++}
++
++list_files()
++{
++	if test $# -gt 0
++	then
++		for arg in "$@"; do
++		    echo $arg
++		done
++	else
++		cat
++	fi
++}
++
++fix_whitespace_auto()
++{
++	check_whitespace "$@" 2>/dev/null | grep "^AUTO" | fix_whitespace
++}
++
++fix_whitespace_auto()
++{
++	check_whitespace "$@" 2>/dev/null | grep "^MANUAL" | fix_whitespace
++}
++
++fix_whitespace()
++{
++	rc=0
++	check_whitespace "$@" 2>/dev/null | while read status file
++	do
++		case "$status" in
++		AUTO)
++			if  clean_whitespace "$file" &&
++				git diff --exit-code -w -- "$file" >/dev/null
++				git add "$file" &&
++				git diff --exit-code -w HEAD -- "$file" >/dev/null
++			then
++				git commit -F - 1>&2 <<EOF
++whitespace: remediate $file
++
++This file was edited by applying:
++
++	 expand -i | unexpand --first-only | sed "s/ *\$//"
++
++to the file.
++
++No change to test outputs or status code was observed.
++
++Signed-off-by: $(git config user.name) <$(git config user.email)>
++EOF
++				echo "$status	$file"
++			else
++				rc=1
++			fi
++			rm -f $$.tmp
++			;;
++		MANUAL)
++			CLEANER_PREFIX=fixer.
++			check_whitespace "$file" >/dev/null 2>$$.err
++			if  clean_whitespace "$file" &&
++				git diff --exit-code -w -- "$file" >/dev/null
++				git add "$file" &&
++				git diff --exit-code -w HEAD -- "$file" >/dev/null
++			then
++				git commit -F - 1>&2 <<EOF
++FAILED: whitespace: remediate $file
++
++This file was edited by applying:
++
++	 expand -i | unexpand --first-only | sed "s/ *\$//"
++
++to the file.
++
++The following errors were observed:
++
++$(cat $$.err | sed "s/^/   /")
++
++These errors should be fixed before submitting this patch upstream.
++
++Signed-off-by: $(git config user.name) <$(git config user.email)>
++EOF
++				echo "$status	$file"
++			else
++				rc=1
++			fi
++			rm -f $$.tmp $$.err
++			;;
++		*)
++			die "fix-whitespace failed on $file with unexpected output"
++			;;
++		esac
++		test "$rc" = 0
++	done || rc=$?
++	test "$rc" = 0
++}
++
++check_whitespace()
++{
++	list_files "$@" | while read file
++	do
++		cleaner <"$file" >$$.${CLEANER_PREFIX}edited &&
++		cmp "$file" $$.${CLEANER_PREFIX}edited 1>/dev/null
++		rc=$?
++		if test $rc != 0
++		then
++			sh $file >$$.${CLEANER_PREFIX}before.output 2>$$.${CLEANER_PREFIX}before.error </dev/null
++			echo $? > $$.${CLEANER_PREFIX}before.exit
++			sh ./$$.${CLEANER_PREFIX}edited >$$.${CLEANER_PREFIX}after.output 2>$$.${CLEANER_PREFIX}after.error </dev/null
++			echo $? > $$.${CLEANER_PREFIX}after.exit
++
++			if cmp $$.${CLEANER_PREFIX}before.output $$.${CLEANER_PREFIX}after.output 1>/dev/null &&
++				cmp $$.${CLEANER_PREFIX}before.error $$.${CLEANER_PREFIX}after.error 1>/dev/null &&
++				cmp $$.${CLEANER_PREFIX}before.exit $$.${CLEANER_PREFIX}after.exit 1>/dev/null
++			then
++				echo "AUTO	$file"
++			else
++				echo "MANUAL	$file"
++				diff -u $$.${CLEANER_PREFIX}before.output $$.${CLEANER_PREFIX}after.output 1>&2
++				diff -u $$.${CLEANER_PREFIX}before.error $$.${CLEANER_PREFIX}after.error 1>&2
++				diff -u $$.${CLEANER_PREFIX}before.exit $$.${CLEANER_PREFIX}after.exit 1>&2
++			fi
++			looprc=1
++		fi
++		rm -f $$.${CLEANER_PREFIX}edited $$.${CLEANER_PREFIX}after.* $$.${CLEANER_PREFIX}before.*
++		test "$looprc" = 0
++	done
++}
++
++case $# in
++0)
++	usage ;;
++*)
++	cmd=$1
++	shift
++	case "$cmd" in
++	check-whitespace)
++		check_whitespace "$@"
++		;;
++	fix-whitespace)
++		fix_whitespace "$@"
++		;;
++	fix-whitespace-auto)
++		fix_whitespace_auto "$@"
++		;;
++	fix-whitespace-manual)
++		fix_whitespace_manual "$@"
++		;;
++	clean-whitespace)
++		clean_whitespace "$@"
++		;;
++	whitespace-filter)
++		cleaner
++		;;
++	*)
++		usage
++		;;
++	esac
++esac
 -- 
 1.7.6.362.gf0e6
