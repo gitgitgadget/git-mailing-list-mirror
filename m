@@ -1,95 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-send-email: Add AUTH LOGIN support
-Date: Fri, 05 Aug 2011 21:54:53 -0700
-Message-ID: <7vzkjn16n6.fsf@alter.siamese.dyndns.org>
-References: <c1be0c3bd05779897fdc92907fe65d84c88ac72b.1312591104.git.joe@perches.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [RFC] gettext: add gettextln, eval_gettextln to encode common idiom
+Date: Sat, 6 Aug 2011 14:58:40 +1000
+Message-ID: <CAH3AnroSJcJeFmFq-NKfCfGG3PQ2yOzmZ8_RedHbVEvkY_JaRA@mail.gmail.com>
+References: <1312604164-19980-1-git-send-email-jon.seymour@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Joe Perches <joe@perches.com>
-X-From: git-owner@vger.kernel.org Sat Aug 06 06:58:40 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: avarab@gmail.com, Jon Seymour <jon.seymour@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 06 06:58:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QpYy6-0008BV-Ip
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Aug 2011 06:58:38 +0200
+	id 1QpYyL-0008Gy-FI
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Aug 2011 06:58:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751010Ab1HFEy5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Aug 2011 00:54:57 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65359 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750835Ab1HFEy4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Aug 2011 00:54:56 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DAC8C5BAB;
-	Sat,  6 Aug 2011 00:54:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QAOSam4DY2WR4I+TgtKc7cU/gjA=; b=eQGY/j
-	QYAgN62PYjeb/gsGKDAgfE6iFzrMnOEm2WZA3/ALL9C7UBYpHO0vZl/lTeVPd5GL
-	7ELoP70uYDB9Yi2Fo/gPgK4IsVplu+IjvXAUsfj/5oMG1pXl7PfC/poB87IZcw76
-	cI1ztekp/Bh+310SXQAa56XysXR2dajDZfgyY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TdAyyGUrUnb28K6bDt4EAu/XdUSANlhd
-	7wRrcyZofY31DoUQ2R7T5LINr1KiW2WP5D8xyRVR/eF/WRmw7obKjKE93tSHiypz
-	3qb4UdLLYygs/ZdNdpYHyLGVSadeDfnldlQV5hWAd2qKpCB/XaMBnWeo4cxsWrdb
-	AZa0YHEtyNE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D25765BAA;
-	Sat,  6 Aug 2011 00:54:55 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 643DC5BA9; Sat,  6 Aug 2011
- 00:54:55 -0400 (EDT)
-In-Reply-To: <c1be0c3bd05779897fdc92907fe65d84c88ac72b.1312591104.git.joe@perches.com>
- (Joe Perches's message of "Fri, 5 Aug 2011 17:40:10 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 3A662DB6-BFE8-11E0-A9EE-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751265Ab1HFE6l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Aug 2011 00:58:41 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:59218 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751073Ab1HFE6l (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Aug 2011 00:58:41 -0400
+Received: by vws1 with SMTP id 1so2353762vws.19
+        for <git@vger.kernel.org>; Fri, 05 Aug 2011 21:58:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=O85sRdfFx6qimU+2McvUITdYyGSvfnf0FzWP9hlLfmY=;
+        b=ZuinOK6FPrDPyCYCdpUDoPRUHmzzv0fXKEF58iJGsWFAsdpjjEFgFJ191BbucKtWeO
+         d7uPdJw+8lv3kOk2WSPYB+Yt+J66RlKG+zw9wPJaxjH8H3eNtCMrtPheq4al0R4RYK/k
+         5UJLqEjOBE8XxFWC6c5e3qoNXg1nzdMjm9E/4=
+Received: by 10.52.27.171 with SMTP id u11mr3236174vdg.131.1312606720214; Fri,
+ 05 Aug 2011 21:58:40 -0700 (PDT)
+Received: by 10.52.183.134 with HTTP; Fri, 5 Aug 2011 21:58:40 -0700 (PDT)
+In-Reply-To: <1312604164-19980-1-git-send-email-jon.seymour@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178825>
 
-Joe Perches <joe@perches.com> writes:
+On Sat, Aug 6, 2011 at 2:16 PM, Jon Seymour <jon.seymour@gmail.com> wrote:
+>
+> An example of its use in git-bisect.sh is given.
+>
 
-> The current perl Net::SMTP support will not use AUTH LOGIN
-> when other authentication options are available.
+Other scripts which could benefit from such a function are:
 
-Even after reading this excuse,...
+git-am.sh
+git-pull.sh
+git-quiltimport.sh
+git-stash.sh
+git-submodule.sh
 
-> +			if (defined $smtp_auth && $smtp_auth =~ /^login$/i) {
-> +
-> +			    $smtp->datasend("AUTH LOGIN\n");
-> +			    $smtp->response();
-> +			    $smtp->datasend(encode_base64("$smtp_authuser"));
-> +			    $smtp->response();
-> +			    $smtp->datasend(encode_base64("$smtp_authpass"));
-> +			    $smtp->response();
-> +
-> +			} else {
-> +
-> +			    $auth ||= $smtp->auth( $smtp_authuser, $smtp_authpass ) or die $smtp->message;
-> +			}
-
-... this makes me feel dirty X-(. Not the desire to force "AUTH LOGIN",
-but the implementation to hand-roll the protocol exchange.
-
-I'd rather want to know _why_ Net::SMTP does not support it in the first
-place, and what it does for "other authentication options" that are
-available. Does it try them in turn until it finds the one that works? Why
-doesn't it fall back on "AUTH LOGIN" then?
-
-Specifically, if there is a reason to avoid this plaintext authentication
-method when other options are _available_ (which presumably would be the
-reason why Net::SMTP chooses not to support it), and if there is a reason
-on the user's side to _force_ this method even when people who wrote
-Net::SMTP does not recommend it be used, wouldn't it be natural to expect
-that there should be a way to configure the connection to use it, without
-resorting to coding the protocol exchange by hand line this?
-
-It probably is not as simple as installing Authen::SASL::*::LOGIN, but
-still...
+jon.
