@@ -1,95 +1,138 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH 00/40] test whitespace - perform trivial whitespace clean
- ups of test scripts.
-Date: Sat, 6 Aug 2011 19:36:50 +1000
-Message-ID: <CAH3AnrpOyFojqDWSxES3NNkn5zY=JOLM4oga3Mk6f5sQ8j-bVg@mail.gmail.com>
-References: <1312620119-18369-1-git-send-email-jon.seymour@gmail.com>
-	<20110806092029.GA7645@sigill.intra.peff.net>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH v2 4/4] upload-archive: use start_command instead of fork
+Date: Sat, 06 Aug 2011 11:40:45 +0200
+Message-ID: <4E3D0C1D.9000807@lsrfire.ath.cx>
+References: <20110728170222.GB15931@sigill.intra.peff.net> <CABPQNSaqyD+rhWPRbtVdnkweuXSycBahKEsasGZkEg3mi4SaxQ@mail.gmail.com> <20110801174603.GB10302@sigill.intra.peff.net> <CABPQNSbyp2hEgXvzo3bMHHxrbc9fQLqaABweqfjP7xQzBUdj6A@mail.gmail.com> <20110801182516.GC10302@sigill.intra.peff.net> <4E371109.7050500@lsrfire.ath.cx> <4E3718B4.6090803@kdbg.org> <4E37202B.80208@lsrfire.ath.cx> <20110802040004.GC17494@sigill.intra.peff.net> <4E3829DC.8070802@lsrfire.ath.cx> <20110802181357.GA1861@sigill.intra.peff.net> <4E388A55.6080606@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Aug 06 11:37:08 2011
+Cc: Jeff King <peff@peff.net>, Erik Faye-Lund <kusmabite@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sat Aug 06 11:41:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QpdJZ-0000CC-IM
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Aug 2011 11:37:05 +0200
+	id 1QpdNW-0001wc-8v
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Aug 2011 11:41:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755365Ab1HFJgy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Aug 2011 05:36:54 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:35798 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754026Ab1HFJgv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Aug 2011 05:36:51 -0400
-Received: by vxi9 with SMTP id 9so1494405vxi.19
-        for <git@vger.kernel.org>; Sat, 06 Aug 2011 02:36:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=NNRGZ/2jvw6XHj5WP9Ac6fa/X/isLCMR7fZk9nN9EIc=;
-        b=OxtmFbc8kIH0r7FPmI45EvG5IqrlTTLaTjL7O2b6qxVGcFqw/Z7RDKnMRtkPxO2d51
-         PgKx3bd8ACiNmtHD4n59YmdFtrRaxD2J6sRZzI8kWdj1F+eIn/LTSHX1qmVM1hB4tPl3
-         Um1du5qVSZhNeWQruWDpE6mbHqmSNhehQURWg=
-Received: by 10.52.67.235 with SMTP id q11mr2718518vdt.332.1312623410660; Sat,
- 06 Aug 2011 02:36:50 -0700 (PDT)
-Received: by 10.52.183.134 with HTTP; Sat, 6 Aug 2011 02:36:50 -0700 (PDT)
-In-Reply-To: <20110806092029.GA7645@sigill.intra.peff.net>
+	id S1752127Ab1HFJlG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Aug 2011 05:41:06 -0400
+Received: from india601.server4you.de ([85.25.151.105]:56806 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753874Ab1HFJlD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Aug 2011 05:41:03 -0400
+Received: from [192.168.2.105] (p4FFDA034.dip.t-dialin.net [79.253.160.52])
+	by india601.server4you.de (Postfix) with ESMTPSA id 92B312F8035;
+	Sat,  6 Aug 2011 11:41:00 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:5.0) Gecko/20110624 Thunderbird/5.0
+In-Reply-To: <4E388A55.6080606@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178878>
 
-On Sat, Aug 6, 2011 at 7:20 PM, Jeff King <peff@peff.net> wrote:
-> On Sat, Aug 06, 2011 at 06:41:59PM +1000, Jon Seymour wrote:
->
->> The series applies cleanly to both master and pu.
->>
->> The first patch contains a script, t/test-cleaner.sh, that can
->> automate whitespace cleanup of tests.
->
-> Hmm. Can't we do something similar using git itself, and clean up all
-> sorts of whitespace errors?
->
-
-Right. That's probably a better way to implement the test and cleanup,
-since it ensures the desired heuristic is used.
-
-I will revise accordingly.
-
-I guess the additional advantage of test-cleaner.sh is that it
-automates the testing and creation of patches, at least for tests.
-
-As mentioned in another note, it would probably be useful to
-generalize this to files other than tests but one would have to use a
-more complicated discovery procedure in that case (in order to make it
-efficient - one doesn't want to have to run the full test suite to
-test every single edit).
-
-> I tried:
->
-> =C2=A0rm t/t1006-cat-file.sh
-> =C2=A0git diff -R | git apply --whitespace=3Dfix
->
-> and ended up with the same blob as your script.
->
-> In theory you could do the whole tree:
->
-> =C2=A0git ls-files -z | xargs -0 rm
-> =C2=A0git diff -R --binary | git apply --whitespace=3Dfix
->
-> though it reports 604 whitespace errors, but only 489 lines fixed. An=
+Am 03.08.2011 01:37, schrieb Johannes Sixt:
+> Am 02.08.2011 20:13, schrieb Jeff King:
+>> Hmm. So it's not _just_ the pipe vs file thing. What's different abo=
+ut
+>> calling it from the shell, versus the way we call it from git-archiv=
+e?
+>=20
+> When the parent process of an MSYS process is itself an MSYS process,
+> such as bash, then the child does not do its own
+> binary-mode-vs.-text-mode detection, but just uses whatever it is tol=
 d
-> t1006 is not among the modified files. So I wonder if this is a bug i=
-n
-> git-apply, or am I missing something.
->
+> by the parent. This is achieved by MSYS's fork emulation.
+>=20
+> But if the parent is a regular Windows program, such as git(-archive)=
+,
+> then the autodection happens and file descriptors pointing to files a=
+re
+> put into text mode.
 
-Not sure - I'll dig into it.
+So here's an ugly patch to implement an internal passthrough filter to
+avoid newline conversions.  It makes the tar filter command (gzip etc.)
+write to a pipe instead of directly to a file.
 
-jon.
+The patch does this unconditionally, which is a waste on all unaffected
+systems, of course.  We could #ifdef it out, but is there perhaps a nic=
+e
+way to integrate this functionality into run_command/finish_command?
+
+Ren=C3=A9
+
+---
+ archive-tar.c |   31 +++++++++++++++++++++++++++++++
+ 1 files changed, 31 insertions(+), 0 deletions(-)
+
+diff --git a/archive-tar.c b/archive-tar.c
+index 20af005..22d52c5 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -314,6 +314,25 @@ static int write_tar_archive(const struct archiver=
+ *ar,
+ 	return err;
+ }
+=20
++static int cat_fn(int in, int out, void *data)
++{
++	for (;;) {
++		char buf[16 * 1024];
++		ssize_t got =3D xread(in, buf, sizeof(buf));
++		if (got =3D=3D 0)
++			break;
++		if (got < 0) {
++			if (errno =3D=3D EPIPE)
++				break;
++			die_errno("read errror");
++		}
++		write_or_die(out, buf, got);
++	}
++	close(in);
++	close(out);
++	return 0;
++}
++
+ static int write_tar_filter_archive(const struct archiver *ar,
+ 				    struct archiver_args *args)
+ {
+@@ -321,6 +340,14 @@ static int write_tar_filter_archive(const struct a=
+rchiver *ar,
+ 	struct child_process filter;
+ 	const char *argv[2];
+ 	int r;
++	struct async cat;
++
++	memset(&cat, 0, sizeof(cat));
++	cat.proc =3D cat_fn;
++	cat.in =3D -1;
++	cat.out =3D dup(1);
++	if (start_async(&cat))
++		die("unable to start passthrough filter");
+=20
+ 	if (!ar->data)
+ 		die("BUG: tar-filter archiver called with no filter defined");
+@@ -335,6 +362,7 @@ static int write_tar_filter_archive(const struct ar=
+chiver *ar,
+ 	filter.argv =3D argv;
+ 	filter.use_shell =3D 1;
+ 	filter.in =3D -1;
++	filter.out =3D cat.in;
+=20
+ 	if (start_command(&filter) < 0)
+ 		die_errno("unable to start '%s' filter", argv[0]);
+@@ -349,6 +377,9 @@ static int write_tar_filter_archive(const struct ar=
+chiver *ar,
+ 	if (finish_command(&filter) !=3D 0)
+ 		die("'%s' filter reported error", argv[0]);
+=20
++	if (finish_async(&cat))
++		die("passthrough filter reported error");
++
+ 	strbuf_release(&cmd);
+ 	return r;
+ }
