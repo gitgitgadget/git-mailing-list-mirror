@@ -1,67 +1,111 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH 3/3] bisect: document that --no-checkout is the default for bare repositories
-Date: Sun,  7 Aug 2011 20:50:40 +1000
-Message-ID: <1312714240-23647-4-git-send-email-jon.seymour@gmail.com>
-References: <1312714240-23647-1-git-send-email-jon.seymour@gmail.com>
-Cc: gitster@pobox.com, chriscool@tuxfamily.org, j6t@kdbg.org,
-	jnareb@gmail.com, jrnieder@gmail.com,
+Subject: [PATCH v2 0/5] gettext: add gettextln, eval_gettextln to encode common idiom
+Date: Sun,  7 Aug 2011 21:58:12 +1000
+Message-ID: <1312718297-10999-1-git-send-email-jon.seymour@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: avarab@gmail.com, Jens.Lehmann@web.de, gitster@pobox.com,
 	Jon Seymour <jon.seymour@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 07 12:51:18 2011
+X-From: git-owner@vger.kernel.org Sun Aug 07 13:58:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qq0wv-0006pu-Is
-	for gcvg-git-2@lo.gmane.org; Sun, 07 Aug 2011 12:51:17 +0200
+	id 1Qq204-0007rB-9P
+	for gcvg-git-2@lo.gmane.org; Sun, 07 Aug 2011 13:58:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752343Ab1HGKvG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Aug 2011 06:51:06 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:50269 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752114Ab1HGKvD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Aug 2011 06:51:03 -0400
-Received: by mail-pz0-f42.google.com with SMTP id 37so6576739pzk.1
-        for <git@vger.kernel.org>; Sun, 07 Aug 2011 03:51:03 -0700 (PDT)
+	id S1752140Ab1HGL6a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Aug 2011 07:58:30 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:33717 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751918Ab1HGL6a (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Aug 2011 07:58:30 -0400
+Received: by gwaa12 with SMTP id a12so207187gwa.19
+        for <git@vger.kernel.org>; Sun, 07 Aug 2011 04:58:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=OaF8gE7upFJuMlE1/mE9AsK7DogZePijhb9IEAMmpAI=;
-        b=cDJmje+HiJBn2yzeHKprBHXUayJAdnklavsaetcU57hMrbgfk1QYi/c7IJwf9YBJAC
-         g8tWecE8BLb4vuH1KOt0LVxi3UPyBDroFwJOwgiTuZrU3k+B5jinp8miibgodWMloAHS
-         B5V0LhF6rd8btdp+e5s2gfQjJ16s9ZejDk5qg=
-Received: by 10.142.170.15 with SMTP id s15mr4616272wfe.168.1312714262989;
-        Sun, 07 Aug 2011 03:51:02 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=4W1vRTMJAnFs/Xa5/oke3rbzwNSjda5VP+AWqih+zzg=;
+        b=nnLS/gT6jw2IRF2F4bsVsNgHqZuRcWN80F65AE8d1deacTnGYE4UyhNfpgeoiADaN2
+         MbGDGGMRDNZHYnwmvXcMFxqXDdlm1ZOq9jo3tUKEMSpdFAPLLACg11JFk4TS1wOotMS5
+         ab8dFQlOtEY02cbY4JvutYREdXhmlhWXyrHEM=
+Received: by 10.143.66.17 with SMTP id t17mr4390224wfk.434.1312718308935;
+        Sun, 07 Aug 2011 04:58:28 -0700 (PDT)
 Received: from localhost.localdomain (124-169-144-208.dyn.iinet.net.au [124.169.144.208])
-        by mx.google.com with ESMTPS id m3sm2740179pbm.28.2011.08.07.03.50.59
+        by mx.google.com with ESMTPS id s7sm2183465pbj.5.2011.08.07.04.58.26
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 07 Aug 2011 03:51:02 -0700 (PDT)
+        Sun, 07 Aug 2011 04:58:28 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6.363.g9b380.dirty
-In-Reply-To: <1312714240-23647-1-git-send-email-jon.seymour@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178902>
 
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
----
- Documentation/git-bisect.txt |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+Currently, if you want to use gettext or eval_gettext to format a message
+you may have to add a separate echo statement and a surrounding subshell
+in order to interpolate the required trailing new line.
 
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
-index 41e6ca8..e4f46bc 100644
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -273,6 +273,8 @@ it point to the commit that should be tested.
- +
- This option may be useful when the test you would perform in each step
- does not require a checked out tree.
-++
-+If the repository is bare, `--no-checkout` is assumed.
- 
- EXAMPLES
- --------
+This patch introduces two new helper functions, gettextln and eval_gettextln
+which append a trailing newline to the gettext output.
+
+This allows constructions of the form:
+
+	if test -s "$GIT_DIR/BISECT_START"
+	then
+		(
+			gettext "You need to give me at least one good and one bad revisions.
+(You can use \"git bisect bad\" and \"git bisect good\" for that.)" &&
+			echo
+		) >&2
+	else
+	...
+
+to be expressed more concisely as:
+
+	if test -s "$GIT_DIR/BISECT_START"
+	then
+		gettextln "You need to give me at least one good and one bad revisions.
+(You can use \"git bisect bad\" and \"git bisect good\" for that.)" >&2
+	else
+	...
+
+Applies cleanly to master and pu.
+
+Revisions
+=========
+v2: 
+	Split modifications to git-sh-i18n.sh into separate commit.
+	Extended application to:
+		 git-am.sh
+		 git-pull.sh
+		 git-stash.sh
+		 git-submodule.sh
+	Removed application to git-bisect.sh, pending stabilisation of this series and js/bisect-no-checkout in next or master.
+	
+v1: Initial RFC. Included example of application to git-bisect.sh.
+
+Future
+======
+	Apply to git-bisect.sh
+
+Jon Seymour (5):
+  gettext: add gettextln, eval_gettextln to encode common idiom
+  git-am: take advantage of gettextln and eval_gettextln.
+  pull: take advantage of eval_gettextln
+  stash: take advantage of eval_gettextln
+  submodule: take advantage of gettextln and eval_gettextln.
+
+ git-am.sh        |   31 ++++++++++++++-----------------
+ git-pull.sh      |    7 ++-----
+ git-sh-i18n.sh   |   19 +++++++++++++++++++
+ git-stash.sh     |    9 +++------
+ git-submodule.sh |   18 ++++++------------
+ 5 files changed, 44 insertions(+), 40 deletions(-)
+
 -- 
 1.7.6.363.g9b380.dirty
