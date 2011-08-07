@@ -1,97 +1,52 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 4/4] upload-archive: use start_command instead of fork
-Date: Sun, 7 Aug 2011 15:06:33 -0600
-Message-ID: <20110807210633.GA2336@sigill.intra.peff.net>
-References: <20110801182516.GC10302@sigill.intra.peff.net>
- <4E371109.7050500@lsrfire.ath.cx>
- <4E3718B4.6090803@kdbg.org>
- <4E37202B.80208@lsrfire.ath.cx>
- <20110802040004.GC17494@sigill.intra.peff.net>
- <4E3829DC.8070802@lsrfire.ath.cx>
- <20110802181357.GA1861@sigill.intra.peff.net>
- <4E388A55.6080606@kdbg.org>
- <4E3D0C1D.9000807@lsrfire.ath.cx>
- <4E3EEF3B.80908@kdbg.org>
+From: Rusty Dog Ink <chris@rustydogink.com>
+Subject: A little help with error?
+Date: Sun, 7 Aug 2011 14:16:57 -0700
+Message-ID: <752985D1B23046F994920F9018B53DF8@rustydogink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sun Aug 07 23:06:47 2011
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 07 23:17:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QqAYY-0006Pu-Tl
-	for gcvg-git-2@lo.gmane.org; Sun, 07 Aug 2011 23:06:47 +0200
+	id 1QqAiY-0000pS-L2
+	for gcvg-git-2@lo.gmane.org; Sun, 07 Aug 2011 23:17:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755268Ab1HGVGl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Aug 2011 17:06:41 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46623
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755117Ab1HGVGk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Aug 2011 17:06:40 -0400
-Received: (qmail 16731 invoked by uid 107); 7 Aug 2011 21:07:14 -0000
-Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 07 Aug 2011 17:07:14 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 07 Aug 2011 15:06:33 -0600
+	id S1755302Ab1HGVRB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Aug 2011 17:17:01 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:53174 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755262Ab1HGVRA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Aug 2011 17:17:00 -0400
+Received: by pzk37 with SMTP id 37so7171017pzk.1
+        for <git@vger.kernel.org>; Sun, 07 Aug 2011 14:16:59 -0700 (PDT)
+Received: by 10.142.178.21 with SMTP id a21mr3672391wff.445.1312751819810;
+        Sun, 07 Aug 2011 14:16:59 -0700 (PDT)
+Received: from Betty.local (24-113-151-157.wavecable.com [24.113.151.157])
+        by mx.google.com with ESMTPS id b4sm5583425pba.59.2011.08.07.14.16.58
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 07 Aug 2011 14:16:59 -0700 (PDT)
+X-Mailer: sparrow 1.2.1 (build 767.23)
 Content-Disposition: inline
-In-Reply-To: <4E3EEF3B.80908@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178928>
 
-On Sun, Aug 07, 2011 at 10:02:03PM +0200, Johannes Sixt wrote:
+This command. 
+git add --force /Users/chris/Sites/mattSchubert/public/css/browserfix.css => "Crappy Error"
+Yields this error.
+fatal: '/Users/chris/Sites/mattSchubert/public/css/browserfix.css' is outside repository 
+This command does gives the same error. 
+git add --force /public/css/browserfix.css => "Same error"
+But this command, works. Why?
+git add --force public/css/browserfix.css => "Works yeah"
+This is an issue since Gitbox my graphical client uses full paths for it's commands. This began happening after I use the "bundle install" command after adding 'dm-postgres-adapter' to my gem file. Ideas on fixing this?
 
-> Am 06.08.2011 11:40, schrieb Ren=C3=A9 Scharfe:
-> > So here's an ugly patch to implement an internal passthrough filter=
- to
-> > avoid newline conversions.  It makes the tar filter command (gzip e=
-tc.)
-> > write to a pipe instead of directly to a file.
->=20
-> *If* we are working around the CRLF conversion issue in git itself,
-> wouldn't it be much simpler to just:
->=20
-> diff --git a/archive-tar.c b/archive-tar.c
-> index 20af005..da3d98a 100644
-> --- a/archive-tar.c
-> +++ b/archive-tar.c
-> @@ -364,9 +364,9 @@ void init_tar_archiver(void)
->  	int i;
->  	register_archiver(&tar_archiver);
->=20
-> -	tar_filter_config("tar.tgz.command", "gzip -cn", NULL);
-> +	tar_filter_config("tar.tgz.command", "gzip -cn | cat", NULL);
->  	tar_filter_config("tar.tgz.remote", "true", NULL);
-> -	tar_filter_config("tar.tar.gz.command", "gzip -cn", NULL);
-> +	tar_filter_config("tar.tar.gz.command", "gzip -cn | cat", NULL);
->  	tar_filter_config("tar.tar.gz.remote", "true", NULL);
->  	git_config(git_tar_config, NULL);
->  	for (i =3D 0; i < nr_tar_filters; i++) {
->=20
-> (provided that 'cat' magically does not suffer from the same problem,
-> and I do think that it does not.)
-
-I like that much better, but assumed cat was broken. It might be better
-still to have a GZIP_FILTER variable in the Makefile. That would let
-msysgit do this, but would also let people with a funny path to gzip
-define it at build time (they could also just reconfigure it, of course=
-,
-but it is nice to work out of the box on odd platforms).
-
-> Anyway, I think it would be better to address the problem on the msys=
-git
-> side. Perhaps by providing a gzip of a different vintage (e.g. a
-> self-compiled one) that does not suffer from the CRLF conversion issu=
-e.
-
-Yeah, that would make me happy, too. :)
-
--Peff
+-- 
+Chris
+Sent with Sparrow (http://www.sparrowmailapp.com)
