@@ -1,74 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Tolerate zlib deflation with window size < 32Kb
-Date: Mon, 08 Aug 2011 13:07:43 -0700
-Message-ID: <7vk4anwttc.fsf@alter.siamese.dyndns.org>
-References: <7vhb5x5cgo.fsf@alter.siamese.dyndns.org>
- <1312742773-26373-1-git-send-email-roberto.tyley@gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH v2 2/2] Move git-dir for submodules
+Date: Mon, 8 Aug 2011 22:44:40 +0200
+Message-ID: <20110808204439.GA41500@book.hvoigt.net>
+References: <1312831022-12868-1-git-send-email-iveqy@iveqy.com> <1312831022-12868-3-git-send-email-iveqy@iveqy.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Roberto Tyley <roberto.tyley@guardian.co.uk>
-To: roberto.tyley@gmail.com
-X-From: git-owner@vger.kernel.org Mon Aug 08 22:07:53 2011
+Cc: git@vger.kernel.org, jens.lehmann@web.de, gitster@pobox.com
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Mon Aug 08 22:44:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QqW76-000885-Ej
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Aug 2011 22:07:52 +0200
+	id 1QqWgq-0007RS-8E
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Aug 2011 22:44:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753205Ab1HHUHr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Aug 2011 16:07:47 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45897 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751917Ab1HHUHq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2011 16:07:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 728994477;
-	Mon,  8 Aug 2011 16:07:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ION19bWyzOOwpfvvoAIceNTkpuM=; b=w/5POM
-	A1XT83aBMGNnQi7F5iLNmzoQspzXUeuMNcTGh6a3aR8Uswju5wOpIK8XMMTxnjLY
-	xKju+Y4cuV4SxBqjS5TFNaO26Zc8eEQaYSH7vaiLw2kcIrShqY3+H4+nA2hDwU1L
-	A5+MB2MhTx2iLPxLR+Ni8aHu01ExLYunNIJ3M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mp+knI7ahE3y5sNYMe3UxRJD89YB6El6
-	ktAPtNlm+A19SaeOGmWuUMYhx/9LD+GbgZIiz+P/bZSweyof3g/YhwjomoGMsD00
-	A6XiFVW+an1/hEKLCZsH0AM3hBKqwiYPhNxSbKjD7VTt2rdsKPbTAwxVbQdLnrXJ
-	/9gsYP5D7uM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A8274476;
-	Mon,  8 Aug 2011 16:07:45 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D38784473; Mon,  8 Aug 2011
- 16:07:44 -0400 (EDT)
-In-Reply-To: <1312742773-26373-1-git-send-email-roberto.tyley@gmail.com>
- (roberto tyley's message of "Sun, 7 Aug 2011 19:46:13 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 145D7C1E-C1FA-11E0-A59E-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753704Ab1HHUon (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Aug 2011 16:44:43 -0400
+Received: from darksea.de ([83.133.111.250]:37124 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752196Ab1HHUom (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2011 16:44:42 -0400
+Received: (qmail 13979 invoked from network); 8 Aug 2011 22:44:40 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 8 Aug 2011 22:44:40 +0200
+Content-Disposition: inline
+In-Reply-To: <1312831022-12868-3-git-send-email-iveqy@iveqy.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178979>
 
-roberto.tyley@gmail.com writes:
+Hi,
 
-> +test_expect_success setup '
-> +	cp -R ../t1013/objects .git/
-> +	git --version
-> +'
+On Mon, Aug 08, 2011 at 09:17:02PM +0200, Fredrik Gustafsson wrote:
+> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+> index c679f36..1ae6b4e 100755
+> --- a/t/t7406-submodule-update.sh
+> +++ b/t/t7406-submodule-update.sh
+> @@ -408,6 +408,7 @@ test_expect_success 'submodule update exit immediately in case of merge conflict
+>  	 test_cmp expect actual
+>  	)
+>  '
+> +
 
-This "my parent directory" reference ../t1013 does not work when you use a
-separate test directory (e.g. to use ramdisks) with --root=/some/where/
+There is a whitespace error here which we seem to have overlooked. Junio
+could you remove that?
 
-I've squashed
+>  test_expect_success 'submodule update exit immediately after recursive rebase error' '
+>  	(cd super &&
+>  	 git checkout master &&
 
-	cp -R "$TEST_DIRECTORY/t1013/objects" .git/
-
-as a fix while queuing.
-
-Thanks.
+Cheers Heiko
