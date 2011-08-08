@@ -1,122 +1,120 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 3/5] setup_revisions: remember whether a ref was positive
- or not
-Date: Mon, 8 Aug 2011 23:27:34 +0200
-Message-ID: <CAGdFq_hLy6_AW-Yh_9fi318Z6jdkFWw5+cYrwMtOitDkGQorFA@mail.gmail.com>
-References: <1311517282-24831-1-git-send-email-srabbelier@gmail.com>
- <1311517282-24831-4-git-send-email-srabbelier@gmail.com> <7vy5znscst.fsf@alter.siamese.dyndns.org>
- <7vr55fs1z0.fsf@alter.siamese.dyndns.org> <CAGdFq_ghxFdpjxCgTNbqXWGpt0rpJaGZ1_h+ZC71PzaPzbQ-0A@mail.gmail.com>
- <7vy5zabbz7.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.1108081748060.7748@s15462909.onlinehome-server.info>
- <7vfwlbztfg.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Support specific color for a specific remote branches
+Date: Mon, 08 Aug 2011 14:31:39 -0700
+Message-ID: <7v62m7wpxg.fsf@alter.siamese.dyndns.org>
+References: <1312818553-25042-1-git-send-email-avivey@gmail.com>
+ <7v8vr3zsh1.fsf@alter.siamese.dyndns.org>
+ <20110808205214.GG18294@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 08 23:28:22 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Aviv Eyal <avivey@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Aug 08 23:31:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QqXMy-00017M-Jf
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Aug 2011 23:28:20 +0200
+	id 1QqXQK-0002Vh-Vp
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Aug 2011 23:31:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751328Ab1HHV2P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Aug 2011 17:28:15 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:50553 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750868Ab1HHV2O (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2011 17:28:14 -0400
-Received: by pzk37 with SMTP id 37so8916684pzk.1
-        for <git@vger.kernel.org>; Mon, 08 Aug 2011 14:28:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=HjNN/dlHwcnCQZ1Zla7+CfIh3ty7E+dgn7cBU+8qDVk=;
-        b=sY9e4NzZ5ngLTHycTjJ62YfL/TUjUIwsFrH3jI6Rf69Op3MzDvDwTEHcppuXPCybto
-         uxDKOeRHEFNny34r8/arKSggBOHbY1yLpL2CO1KWrLVJH7d56gCcMTOAQdfAvRCA04mm
-         5JYPirNoOWqnK+pR0rZ2uP1JsiCyibO8pIYF0=
-Received: by 10.143.13.10 with SMTP id q10mr6462686wfi.64.1312838894085; Mon,
- 08 Aug 2011 14:28:14 -0700 (PDT)
-Received: by 10.68.63.102 with HTTP; Mon, 8 Aug 2011 14:27:34 -0700 (PDT)
-In-Reply-To: <7vfwlbztfg.fsf@alter.siamese.dyndns.org>
+	id S1753153Ab1HHVbn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Aug 2011 17:31:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42526 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753122Ab1HHVbn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2011 17:31:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 11AC553E6;
+	Mon,  8 Aug 2011 17:31:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3I1FzZ6Je+ZHZ41A5rLGKWf/dlw=; b=rtCGYz
+	cvpAM5eT90qWzBMbExxYD9rEMKr8KL0wwcd0v2u83XSKPreouTX76O3yUvxiA2bM
+	MaWa34OP4AeLrvxopYtWtkSwU6TuecaBLUzw4BOOhIOuHTR+FZTuQny/+kFq+/Vq
+	d5i4vZTj5+Mvg3vA1PcT2oZg9P8f3TYRx8NBI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=a4DUdYb9homuxobbdcMRz/AiX1yv+He0
+	wDgu+DrY3TjJYH9TkBOgXutM/1zTOVYrRxPRaA8L0i7P8fOVnE+nSfY1otD9STpb
+	i63I/f2bPGFw10MwWm3vhbxH4ypo676V1WQM/MbGUaVxnTOH9vfs1WKKwFk/3DON
+	ULVCulb/XJA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0928453E5;
+	Mon,  8 Aug 2011 17:31:42 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5CD7353E4; Mon,  8 Aug 2011
+ 17:31:41 -0400 (EDT)
+In-Reply-To: <20110808205214.GG18294@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 8 Aug 2011 14:52:14 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CE5C9A68-C205-11E0-B239-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178990>
 
-Heya,
+Jeff King <peff@peff.net> writes:
 
-On Mon, Aug 8, 2011 at 19:47, Junio C Hamano <gitster@pobox.com> wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> If you do that, you're back to start. Since obj has not the faintest clue
->> whether the pending object was added from a negative or a positive ref.
+> On Mon, Aug 08, 2011 at 11:08:26AM -0700, Junio C Hamano wrote:
 >
-> But the point is that this codepath does not have a faintest clue whether
-> the "obj" parameter is something the end user actively asked for (which
-> might have been marked as uninteresting for other reasons, namely, because
-> it is reachable from other negative refs). So passing unconditional 0 is
-> just as bad.
-
-Doesn't passing 0 indicate that we _did not_ receive any explicit user
-input on this ref, which is exactly what we want to record? If the
-user passed us any explicit input on the ref, we record it at the
-other call-sites, here, the user told us nothing, so we record exactly
-that, nothing.
-
->> Is this not a little bit of a big, huge, tremendous overkill?
+> This seems related to the recent thread about showing branches only for
+> a specific remote:
 >
-> As long as you can show your "flags" can (be extended to) express the same
-> richness to solve sample problems I mentioned in my response, as well as
-> your immediate issue, I wouldn't insist implementing a parsed struct/union
-> that may be a more (and unnecessarily) verbose way to say the same thing.
+>   http://article.gmane.org/gmane.comp.version-control.git/178668
 
-I cannot recall you ever asking somebody to implement some feature
-_nobody needs right now_ while trying to fix a _bug_, why now? I do
-not know this code well enough to implement it, and Dscho doesn't have
-the time to do it.
+Yeah, that one I do recall.
 
->> Or in other words: I'd rather stay with a simple, elegant, minimal patch
->> that solves the problem at hand while not preventing future enhancements.
->
-> We are on the same page, but what I read from the patch didn't show a
-> clear way forward to extend the "flags" to allow the stuff I mentioned
+> Right now, "git branch -r" means "show everything under refs/remotes
+> instead of refs/heads". This would be easy to implement if it instead
+> meant "show all refs created by the RHS of a fetch refspec in a
+> configured remote". The two are equivalent in the default config, but
+> the latter may make more sense in a complex case.
 
-Nobody needs the stuff you mentioned right now. We do need this to fix
-this bug. If someone else does want it at a later date, replacing it
-will be exactly as much work with or without this patch.
+I actually am a bit ambivalent about this. I do not necessarily consider
+the contrived "remote.frotz.fetch = refs/heads/*:refs/remotes/nitfol/*"
+example something that we _must_ solve. It is unlikely people would do
+that, and if we give them an unexpected result, they deserve it ;-).
 
-> I would be reluctant to accept a myopic hack that is only good for one
-> caller and that needs to be ripped out and re-done, especially when we
-> already know other issues that can be solved cleanly if you go a little
-> further in the initial round.
+But in real-life, it is entirely plausible that people with multiple
+integration branches are taking advantage of the simplicity of the old
+layout, i.e.
 
-While I understand this reluctance, remember that this "one caller" is
-required to fix a bug in the current code. If you had a similar
-complaint about the remote-hg.py patches that I haven't sent yet, I
-would be more than willing to invest the extra time in addressing
-those concerns, since I'm adding new functionality anyway, this is
-different.
+    [remote "origin"]
+    	fetch = refs/heads/master:refs/heads/origin
+        fetch = refs/heads/next:refs/heads/next
+        fetch = refs/heads/maint:refs/heads/maint
+        fetch = +refs/heads/pu:refs/heads/pu
 
-> As I said, I am not married to the verbose struct/union representation
-> (the only reason I showed that verbosity was because it allowed me to do
-> away without having to enumerate all the syntax sugars we already
-> support); if your "flags" can express the same thing (it may needs to
-> become a bitfield with enough width, but I highly suspect that you would
-> also need at least a component that says "this is the string the user gave
-> us --- the user said 'master', not 'master^0', for example) and is a lot
-> more compact, that is definitely we want to go with.
+I have many repositories of this style, and it is very convenient to be
+able to say:
 
-Don't we already store that in the name field?
+    $ git checkout master && git pull --ff-only
+    $ for b in master next maint pu
+      do
+          git checkout $b && make install || break
+      done
 
--- 
-Cheers,
+I do not think I want to ever switch them to new layout, and I suspect
+that many others do feel the same.
 
-Sverre Rabbelier
+Now, for these repositories, is "next" a local branch or a remote one? I
+have a feeling that it might be easier to understand if we label anything
+that you can update with "checkout && commit" a local one for the purpose
+of "branch -r" listing; IOW, the current "git branch -r" classification
+would match this use pattern better, even though refs/heads/next _is_ an
+RHS of a rule to follow others.
+
+In that sense, I would be entirely happy if the configuration variable
+used in this series were branch.<namepattern>.color and let you specify
+
+	[branch "refs/heads"] color = yellow
+        [branch "refs/remotes/origin"] color = purple
+        [branch "refs/remotes/nitfol"] color = cyan
+
+It becomes complicated (and for no good reason, in my opinion; see the
+"next" example above) if you try to tie this with remote.<name> hierarchy,
+as it obviously becomes illogical not to use the "RHS of a fetch refspec"
+logic when we are talking about remote.<name>.
