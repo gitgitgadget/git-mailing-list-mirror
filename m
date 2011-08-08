@@ -1,76 +1,66 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [RFC] helping smart-http/stateless-rpc fetch race
-Date: Mon, 8 Aug 2011 23:05:27 +0200
-Message-ID: <CAGdFq_i=8p4jvKo1C=UFpmQyPtUd9JOtr9VW8vn7viC0dQkQmg@mail.gmail.com>
-References: <7vbow337gx.fsf@alter.siamese.dyndns.org> <CAJo=hJvdMCyU-5wzy0p1r+QJxXU=DJTE+Mu5G6pk9iAwAD51mA@mail.gmail.com>
- <7vbow01ols.fsf@alter.siamese.dyndns.org> <7vsjpbzv07.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Suppressing auto-cc for specific addresses
+Date: Mon, 8 Aug 2011 23:07:14 +0200
+Message-ID: <20110808210714.GA16512@elie.gateway.2wire.net>
+References: <4E3EF38A.9010307@gmail.com>
+ <20110807234634.GA3236@kroah.com>
+ <CACTFLAOhApGVNZ7JsWhoHBEaQ_87stXjxkXvadmauNfhSuPD1g@mail.gmail.com>
+ <D95ADFD4-2504-4BE6-BCD4-7B916F6F2FEB@gmail.com>
+ <CACTFLAN0gM-xvEU32KHEsaApH4apvGUwGkiDHx06PngHUvH0Ew@mail.gmail.com>
+ <20110808204448.GF18294@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 08 23:06:17 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Mack <zonque@gmail.com>, David Aguilar <davvid@gmail.com>,
+	Greg KH <greg@kroah.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Aug 08 23:07:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QqX1c-0000KG-De
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Aug 2011 23:06:16 +0200
+	id 1QqX2s-0000q0-5C
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Aug 2011 23:07:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751392Ab1HHVGL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Aug 2011 17:06:11 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:37602 "EHLO
+	id S1751544Ab1HHVH3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Aug 2011 17:07:29 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:42762 "EHLO
 	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751425Ab1HHVGK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Aug 2011 17:06:10 -0400
-Received: by gwaa12 with SMTP id a12so879837gwa.19
-        for <git@vger.kernel.org>; Mon, 08 Aug 2011 14:06:09 -0700 (PDT)
+	with ESMTP id S1751161Ab1HHVH3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2011 17:07:29 -0400
+Received: by gwaa12 with SMTP id a12so880527gwa.19
+        for <git@vger.kernel.org>; Mon, 08 Aug 2011 14:07:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=eDr5Bm7VX8khRDuhtrJt/ZfmJtv9IPQkLAuQFzR7ggU=;
-        b=hXJy6aPJ0KJuq0I2NN5m9xRyVq/vrVuFgkfJtKZCITNKqI23RQvAyOCgCFkvLA3Mmx
-         ENqdjmKYbYRGIH7cNrsNiNF6DUFoAqt9Zsq2eDgVPFI9qAmYlyF7HInVMAe7WRklAUVW
-         YoJBJZ6gcId1VI6tDod6Gd1ecP94rlrwf5kZk=
-Received: by 10.142.165.18 with SMTP id n18mr3696792wfe.235.1312837568932;
- Mon, 08 Aug 2011 14:06:08 -0700 (PDT)
-Received: by 10.68.63.102 with HTTP; Mon, 8 Aug 2011 14:05:27 -0700 (PDT)
-In-Reply-To: <7vsjpbzv07.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=aPd2O4hZ5ghm+KvUuIqOdrGrkvaRkGTW/I7C0P9Dy5U=;
+        b=mDbIKAFXiWCpNC9s3o0SSlLz059qJTneMvg2QVeLAPpL4cSFCocvjuNG9/RSi0JEWa
+         c3lB6Wcsiv6bnCWHoyBeW6KMuPhuzpmoxWji+Qqam+zu7c4Kfzs0FHLPMDlWPpFCQPtS
+         01rw+TUSD3QYQftdAgJwuQ2rsmHGOq8GmNWo0=
+Received: by 10.150.69.3 with SMTP id r3mr1634029yba.223.1312837648258;
+        Mon, 08 Aug 2011 14:07:28 -0700 (PDT)
+Received: from elie.gateway.2wire.net (adsl-69-209-49-224.dsl.chcgil.ameritech.net [69.209.49.224])
+        by mx.google.com with ESMTPS id f48sm1981259yhh.0.2011.08.08.14.07.27
+        (version=SSLv3 cipher=OTHER);
+        Mon, 08 Aug 2011 14:07:27 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20110808204448.GF18294@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178985>
 
-Heya,
+Jeff King wrote:
 
-On Mon, Aug 8, 2011 at 19:13, Junio C Hamano <gitster@pobox.com> wrote:
->> =C2=A0(1) It might make sense to give admins who run upload-pack not=
- behind
->> =C2=A0 =C2=A0 =C2=A0smart-http an option to allow fetching from a no=
-n-tip; and
+> I'm kind of confused why you would mark an address as "cc", but not cc
+> it. Wouldn't it make sense to call the header something else?
 
-You said earlier it isn't needed since the server process caches the
-refs for git and ssh, that leaves dumb-http right? If that is indeed
-the case I think we can just argue that since smart-http is our
-solution to the http problems, if admins want to make life easier for
-http fetches on busy repositories they should be using smart-http.
+Maybe the patch is a draft and he is seeking early feedback.  The
+final version will be cc-ed to the indicated person later (and that's
+part of what it is time to get feedback on).
 
->> =C2=A0(2) It also might make sense to let admins who do run upload-p=
-ack behind
->> =C2=A0 =C2=A0 =C2=A0smart-http force re-fetching when the race is en=
-countered.
-
-This would mean that if you're running smart-http without this option
-enabled (because, say, you don't know it exists), your users have to
-re-fetch (a lot). The only upside would be that if the server _knows_
-what the user is asking for is outdated, that the user will know this
-right away. That doesn't fly though, since we allow exactly that for
-git and ssh transfer.
-
---=20
-Cheers,
-
-Sverre Rabbelier
+Or maybe the Cc: line is from the original patch and he is using git
+send-email to forward it without mangling.
