@@ -1,72 +1,77 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 10/48] t6036: tests for criss-cross merges with various
- directory/file conflicts
-Date: Mon, 8 Aug 2011 13:07:42 -0600
-Message-ID: <CABPp-BGbwhDJF2=9gPWP08auk16qckho3db8eOes9JjTN0QdCw@mail.gmail.com>
-References: <1307518278-23814-1-git-send-email-newren@gmail.com>
-	<1307518278-23814-11-git-send-email-newren@gmail.com>
-	<7v39i3b1jg.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, jgfouca@sandia.gov
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 08 21:07:49 2011
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: [PATCH v2 0/2] submodule: move gitdir into superproject
+Date: Mon,  8 Aug 2011 21:17:00 +0200
+Message-ID: <1312831022-12868-1-git-send-email-iveqy@iveqy.com>
+Cc: iveqy@iveqy.com, jens.lehmann@web.de, hvoigt@hvoigt.net,
+	gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 08 21:17:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QqVAz-0006pe-Cy
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Aug 2011 21:07:49 +0200
+	id 1QqVJt-0002R5-Jf
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Aug 2011 21:17:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751140Ab1HHTHo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Aug 2011 15:07:44 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:50438 "EHLO
+	id S1751748Ab1HHTQ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Aug 2011 15:16:57 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:33875 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750774Ab1HHTHn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Aug 2011 15:07:43 -0400
-Received: by fxh19 with SMTP id 19so5659626fxh.19
-        for <git@vger.kernel.org>; Mon, 08 Aug 2011 12:07:42 -0700 (PDT)
+	with ESMTP id S1750843Ab1HHTQz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2011 15:16:55 -0400
+Received: by fxh19 with SMTP id 19so5667069fxh.19
+        for <git@vger.kernel.org>; Mon, 08 Aug 2011 12:16:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=fDwRjrj+OnMUEayJrIs74ttsDf0cNXqtYE0O4swmEH8=;
-        b=lB7wY2ngcrD8DwEOb7soG8LMB8wBxqB+ib8TXXA8B4oGXZa+pxfnJSSQntr8cfAhte
-         yDPhr2RpzWRaqLH3XUecrKA0unG3N/yn9B8BzgN3IrVOJhYZIfNGlW3iN542/qE1rjAU
-         e8ewjlBOgh4fYKVECx+RuMLJmpMXZ+XCMWdoQ=
-Received: by 10.223.52.66 with SMTP id h2mr7991279fag.92.1312830462097; Mon,
- 08 Aug 2011 12:07:42 -0700 (PDT)
-Received: by 10.223.123.13 with HTTP; Mon, 8 Aug 2011 12:07:42 -0700 (PDT)
-In-Reply-To: <7v39i3b1jg.fsf@alter.siamese.dyndns.org>
+        h=sender:from:to:cc:subject:date:message-id:x-mailer;
+        bh=kawnnBWPXnsBYltoJW8MOLxEzRC/ihMS4IyXN2Xr9DM=;
+        b=XIMWYqXt1Of61hIdAl8iClL0RS4oUIKhKjIFF68gfjQEvx9RWuldlzFgLm0fiB1dKj
+         985d8Su31zimaVEUUCf5rlpEnGfwF97F0CD58NQr5Yo84vNyHMUl2YUjoMAdZJ5fl88J
+         LyVYpbRggII/CfjEtqnpAwyb149LdgThsM/SA=
+Received: by 10.204.131.214 with SMTP id y22mr1630395bks.202.1312831012753;
+        Mon, 08 Aug 2011 12:16:52 -0700 (PDT)
+Received: from kolya (h-185-240.a189.priv.bahnhof.se [85.24.185.240])
+        by mx.google.com with ESMTPS id f13sm1726643bku.51.2011.08.08.12.16.50
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 08 Aug 2011 12:16:51 -0700 (PDT)
+Received: from iveqy by kolya with local (Exim 4.72)
+	(envelope-from <iveqy@kolya>)
+	id 1QqVJw-0003M9-23; Mon, 08 Aug 2011 21:17:04 +0200
+X-Mailer: git-send-email 1.7.6.398.g47bcd.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178970>
 
-On Mon, Jul 18, 2011 at 5:40 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
->> +test_expect_failure 'git detects conflict and handles merge of D & =
-E1 correctly' '
->> + =C2=A0 =C2=A0 git reset --hard &&
->> + =C2=A0 =C2=A0 git reset --hard &&
->> + =C2=A0 =C2=A0 git clean -fdqx &&
->> + =C2=A0 =C2=A0 git checkout D^0 &&
->
-> Why do you need to reset twice? =C2=A0Superstition (you have a commen=
-ted one
-> introduced later in the series --- perhaps this shows a bug in reset)=
-?
+Move git-dir for submodules into $GIT_DIR/modules/[name_of_submodule] of
+the superproject. This is a step towards being able to delete submodule
+directories without loosing the information from their .git directory
+as that is now stored outside the submodules work tree.
 
-I could have sworn that when I first created these tests last
-September that the double reset was needed to get back to a clean
-state.  I can't seem to duplicate the issue now, though I do see some
-"error" messages printed on the first reset despite the reset working
-successfully.  I'll drop the extra one.  *shrug*
+This is done relying on the already existent .git-file functionality.
+Tests that rely on .git being a directory have been fixed.
+
+This is the second iteration of this patchseries. The first can be found here:
+http://thread.gmane.org/gmane.comp.version-control.git/177582
 
 
-[I'm not ignoring the many other good comments you made on this patch;
-they just got incorporated into code and comment changes for the next
-version of the series I send out.]
+Fredrik Gustafsson (2):
+  rev-parse: add option --is-well-formed-git-dir [path]
+  Move git-dir for submodules
+
+ Documentation/git-rev-parse.txt |    4 ++
+ builtin/rev-parse.c             |    8 +++
+ cache.h                         |    1 +
+ git-submodule.sh                |   49 ++++++++++++++++--
+ setup.c                         |    7 +++
+ t/t7400-submodule-basic.sh      |    4 +-
+ t/t7403-submodule-sync.sh       |    5 +-
+ t/t7406-submodule-update.sh     |  107 +++++++++++++++++++++++++++++++++++++++
+ t/t7407-submodule-foreach.sh    |  103 +++++++++++++++++++------------------
+ t/t7408-submodule-reference.sh  |    4 +-
+ 10 files changed, 231 insertions(+), 61 deletions(-)
+
+-- 
+1.7.6.398.g47bcd.dirty
