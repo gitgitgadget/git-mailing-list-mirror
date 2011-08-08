@@ -1,94 +1,73 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 3/5] setup_revisions: remember whether a ref was positive
- or not
-Date: Tue, 9 Aug 2011 01:25:24 +0200
-Message-ID: <CAGdFq_hO-MYC_kXZZhoqXhTRvVhCDfTT4EHPoYDyHjGtRiSB9g@mail.gmail.com>
-References: <1311517282-24831-1-git-send-email-srabbelier@gmail.com>
- <1311517282-24831-4-git-send-email-srabbelier@gmail.com> <7vy5znscst.fsf@alter.siamese.dyndns.org>
- <7vr55fs1z0.fsf@alter.siamese.dyndns.org> <CAGdFq_ghxFdpjxCgTNbqXWGpt0rpJaGZ1_h+ZC71PzaPzbQ-0A@mail.gmail.com>
- <7vy5zabbz7.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.1108081748060.7748@s15462909.onlinehome-server.info>
- <7vfwlbztfg.fsf@alter.siamese.dyndns.org> <CAGdFq_hLy6_AW-Yh_9fi318Z6jdkFWw5+cYrwMtOitDkGQorFA@mail.gmail.com>
- <7vty9rv9p2.fsf@alter.siamese.dyndns.org> <CAGdFq_joHskwhp=934OjirmXiRMR3NbGd4s-hSjJc-gCFT_Jew@mail.gmail.com>
- <7vliv3v8cx.fsf@alter.siamese.dyndns.org> <CAGdFq_iHBE7eESpsX_doyfJu6EAkPOJpBgqkw1psMhqATf2oCw@mail.gmail.com>
- <7vhb5rv7x0.fsf@alter.siamese.dyndns.org> <CAGdFq_ioxeZUCnn-fFKuiT-6eVzVoph8eQE2j0hEbAxtDZzGnQ@mail.gmail.com>
- <7vy5z3trwu.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] helping smart-http/stateless-rpc fetch race
+Date: Mon, 08 Aug 2011 16:26:19 -0700
+Message-ID: <7vpqkftrhg.fsf@alter.siamese.dyndns.org>
+References: <7vbow337gx.fsf@alter.siamese.dyndns.org>
+ <CAJo=hJvdMCyU-5wzy0p1r+QJxXU=DJTE+Mu5G6pk9iAwAD51mA@mail.gmail.com>
+ <7vbow01ols.fsf@alter.siamese.dyndns.org>
+ <7vsjpbzv07.fsf@alter.siamese.dyndns.org>
+ <CAGdFq_i=8p4jvKo1C=UFpmQyPtUd9JOtr9VW8vn7viC0dQkQmg@mail.gmail.com>
+ <20110808230812.GA16974@LK-Perkele-VI.localdomain>
+ <7vty9rtrk4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 09 01:26:15 2011
+X-From: git-owner@vger.kernel.org Tue Aug 09 01:26:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QqZCz-0002Po-Rg
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Aug 2011 01:26:10 +0200
+	id 1QqZDG-0002X4-UD
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Aug 2011 01:26:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753240Ab1HHX0G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Aug 2011 19:26:06 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:35925 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752376Ab1HHX0E (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2011 19:26:04 -0400
-Received: by pzk37 with SMTP id 37so9065567pzk.1
-        for <git@vger.kernel.org>; Mon, 08 Aug 2011 16:26:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=HtK0o5neIfQYYhiln2aKMptDe2oP+1F/4blsiKmf5Go=;
-        b=RYGf9z+CyPnJZ9BjrnA9o10t55FtObeUoNlmCZ2oVewTU0XbXyyiBVZGbzVwknq7XO
-         1zgugaz6we3VbfhFU5APD6rawkJVG9/wd0DYDrUADzWxDxzP0WWgDP6Hp+nzQVpNxGSz
-         mKRjazdbE4F4cYdRs12Ej86xRimEJ11brMmJY=
-Received: by 10.142.165.18 with SMTP id n18mr3813615wfe.235.1312845964110;
- Mon, 08 Aug 2011 16:26:04 -0700 (PDT)
-Received: by 10.68.63.102 with HTTP; Mon, 8 Aug 2011 16:25:24 -0700 (PDT)
-In-Reply-To: <7vy5z3trwu.fsf@alter.siamese.dyndns.org>
+	id S1753080Ab1HHX0W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Aug 2011 19:26:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49052 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752376Ab1HHX0V (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2011 19:26:21 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8DA1446B5;
+	Mon,  8 Aug 2011 19:26:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=juOX+YdTw/AsV8fruZlQ3aTXpgk=; b=vlgwzQ
+	xTgF9YiouWKIY1rUaQR2Vgy9G4zpA1otmc/o/A0JJPHM6IeOX/RGGfHd0dvg5K87
+	vvzHwsNUbfK70wL43bpnwozgW5/i2Vs7d6macR1+nVEGHelwKcB1go4DLx7wBA9s
+	PFr8KkVEUe6K+mITQHPSiDa2sceL7QKHkqTZY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZNlXaDcBjtPs+0YoqFuOvG2KlqBULwQu
+	5CGnvL/SyqdYwRbrGso5UE9QOBHRAVUaMqxs/bi2+h47LSwxzYwVvdyIt33Oh9/E
+	S8ObyKTex7CWaQ2dRvHloWZmFNE1JHZhVsIyigQi0VYkoKakK+iu/4zwkGEMuF/D
+	UqakxgLJVI4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85CA246B3;
+	Mon,  8 Aug 2011 19:26:21 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1C2FF46B1; Mon,  8 Aug 2011
+ 19:26:21 -0400 (EDT)
+In-Reply-To: <7vty9rtrk4.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 08 Aug 2011 16:24:43 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D300E294-C215-11E0-80F4-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179009>
 
-Heya,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Tue, Aug 9, 2011 at 01:17, Junio C Hamano <gitster@pobox.com> wrote:
-> Yes, I am that user who have been disturbed by the command line revision
-> parser limitation for a loooooooong time and have been wanting to see it
-> properly fixed for quite a while (by myself or by somebody else).
+> A separate option would allow admins to let their clients ask to fetch
+> 4bc5fbf (that is v0.99~2) even if that commit is not at the tip of any ref
+> if they choose to. That is what (1) is about, and people who do not want
+> a separate option needs to argue that it is an unnecessary "feature".
 
-Aaaah, well that does explain a thing or two :).
-
-> Seeing a single-bit "hack" not
-> from a complete newbie but from two known-to-be-competent long timers of
-> Git is another.
-
-Perhaps known-to-be-competent, but time-constrained nonetheless.
-Sometimes one is forced to chose between fixing something you care
-about and doing something in a non-hacky way... There's only so much
-time in a day to work on side-projects such as this after all :).
-
-> There are numerous hacks that try to work around the same revision parser
-> limitation (lossage of information), and I have been hoping that a series
-> that touch the parser to leave more information during parsing to be
-> cleanly enhancible to get rid of them (e.g. "git checkout $commit" vs "git
-> checkout $branch" looks at the command line itself, but it should be able
-> to call into the revision parser and inspect what the parser gives it
-> back).
-
-Ok, knowing that, I am somewhat more inclined to have a look at this.
-I'm still not sure that I know how to implement the design you
-described though. I mean, I understand the general concept, but I have
-no idea in what places it would need to hook in to make it work (ditto
-on how to fix the diff bug).
-
--- 
-Cheers,
-
-Sverre Rabbelier
+By the way, I personally do not think it is necessary, but as long timers
+on the list may recall, this has come up on the list for a few times.
