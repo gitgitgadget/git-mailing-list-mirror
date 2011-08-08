@@ -1,159 +1,122 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Suppressing auto-cc for specific addresses
-Date: Mon, 8 Aug 2011 23:17:26 +0200
-Message-ID: <20110808211726.GA18619@elie.gateway.2wire.net>
-References: <4E3EF38A.9010307@gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 3/5] setup_revisions: remember whether a ref was positive
+ or not
+Date: Mon, 8 Aug 2011 23:27:34 +0200
+Message-ID: <CAGdFq_hLy6_AW-Yh_9fi318Z6jdkFWw5+cYrwMtOitDkGQorFA@mail.gmail.com>
+References: <1311517282-24831-1-git-send-email-srabbelier@gmail.com>
+ <1311517282-24831-4-git-send-email-srabbelier@gmail.com> <7vy5znscst.fsf@alter.siamese.dyndns.org>
+ <7vr55fs1z0.fsf@alter.siamese.dyndns.org> <CAGdFq_ghxFdpjxCgTNbqXWGpt0rpJaGZ1_h+ZC71PzaPzbQ-0A@mail.gmail.com>
+ <7vy5zabbz7.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.1108081748060.7748@s15462909.onlinehome-server.info>
+ <7vfwlbztfg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Greg Kroah-Hartman <greg@kroah.com>,
-	Joe Perches <joe@perches.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	"J. Bruce Fields" <bfields@fieldses.org>, Jeff King <peff@peff.net>
-To: Daniel Mack <zonque@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 08 23:17:46 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Dmitry Ivankov <divanorama@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 08 23:28:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QqXCj-0005D8-0K
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Aug 2011 23:17:45 +0200
+	id 1QqXMy-00017M-Jf
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Aug 2011 23:28:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751257Ab1HHVRk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Aug 2011 17:17:40 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:64198 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750843Ab1HHVRj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Aug 2011 17:17:39 -0400
-Received: by ywf7 with SMTP id 7so508841ywf.19
-        for <git@vger.kernel.org>; Mon, 08 Aug 2011 14:17:38 -0700 (PDT)
+	id S1751328Ab1HHV2P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Aug 2011 17:28:15 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:50553 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750868Ab1HHV2O (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2011 17:28:14 -0400
+Received: by pzk37 with SMTP id 37so8916684pzk.1
+        for <git@vger.kernel.org>; Mon, 08 Aug 2011 14:28:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=He9X1oG1qnnkVhCCyIs8UjvYtfSV8vbeiH2lI0Mz/vw=;
-        b=lYyxIuQnQ26p9cYx/70DwxEokrWM40LTXVpFudYjqC1n/0x5VmUGbElzNmBwrJzK8r
-         egExnvzIta8TVJ8dgYwf/g2zbsEXmvrxCK6MljfnJ7F7eGFhlhOy+pKCRXcOnngZQ3NU
-         UovWQd09PWEIFLhFcgxR7dh2SDtZ6ziVOW05w=
-Received: by 10.150.225.17 with SMTP id x17mr3331979ybg.257.1312838258537;
-        Mon, 08 Aug 2011 14:17:38 -0700 (PDT)
-Received: from elie.gateway.2wire.net (adsl-69-209-49-224.dsl.chcgil.ameritech.net [69.209.49.224])
-        by mx.google.com with ESMTPS id j3sm5076982yhl.38.2011.08.08.14.17.37
-        (version=SSLv3 cipher=OTHER);
-        Mon, 08 Aug 2011 14:17:37 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4E3EF38A.9010307@gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=HjNN/dlHwcnCQZ1Zla7+CfIh3ty7E+dgn7cBU+8qDVk=;
+        b=sY9e4NzZ5ngLTHycTjJ62YfL/TUjUIwsFrH3jI6Rf69Op3MzDvDwTEHcppuXPCybto
+         uxDKOeRHEFNny34r8/arKSggBOHbY1yLpL2CO1KWrLVJH7d56gCcMTOAQdfAvRCA04mm
+         5JYPirNoOWqnK+pR0rZ2uP1JsiCyibO8pIYF0=
+Received: by 10.143.13.10 with SMTP id q10mr6462686wfi.64.1312838894085; Mon,
+ 08 Aug 2011 14:28:14 -0700 (PDT)
+Received: by 10.68.63.102 with HTTP; Mon, 8 Aug 2011 14:27:34 -0700 (PDT)
+In-Reply-To: <7vfwlbztfg.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178989>
 
-(+cc: some send-email people)
-Hi,
+Heya,
 
-Daniel Mack wrote:
+On Mon, Aug 8, 2011 at 19:47, Junio C Hamano <gitster@pobox.com> wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> If you do that, you're back to start. Since obj has not the faintest clue
+>> whether the pending object was added from a negative or a positive ref.
+>
+> But the point is that this codepath does not have a faintest clue whether
+> the "obj" parameter is something the end user actively asked for (which
+> might have been marked as uninteresting for other reasons, namely, because
+> it is reachable from other negative refs). So passing unconditional 0 is
+> just as bad.
 
-> I'm looking for a way to suppress certain Cc: fields that are normall=
-y
-> automatically added for addresses mentioned in Cc: lines found in pat=
-ches.
+Doesn't passing 0 indicate that we _did not_ receive any explicit user
+input on this ref, which is exactly what we want to record? If the
+user passed us any explicit input on the ref, we record it at the
+other call-sites, here, the user told us nothing, so we record exactly
+that, nothing.
 
-Makes sense.  Could you please add a quick commit message, following
-the guidelines in Documentation/SubmittingPatches (i.e., explaining
-the problem this intends to solve and justifying how it is solved)?
+>> Is this not a little bit of a big, huge, tremendous overkill?
+>
+> As long as you can show your "flags" can (be extended to) express the same
+> richness to solve sample problems I mentioned in my response, as well as
+> your immediate issue, I wouldn't insist implementing a parsed struct/union
+> that may be a more (and unnecessarily) verbose way to say the same thing.
 
-Patch left untrimmed for Joe and =C3=86var's convenience.  Thanks and h=
-ope
-that helps.
+I cannot recall you ever asking somebody to implement some feature
+_nobody needs right now_ while trying to fix a _bug_, why now? I do
+not know this code well enough to implement it, and Dscho doesn't have
+the time to do it.
 
-> From: Daniel Mack <zonque@gmail.com>
-> Date: Sun, 7 Aug 2011 22:16:00 +0200
-> Subject: [PATCH] send-email: Allow email addresses and domains as
->  --suppress-cc options
->=20
-> Signed-off-by: Daniel Mack <zonque@gmail.com>
-> ---
->  Documentation/git-send-email.txt |   10 +++++++---
->  git-send-email.perl              |   12 +++++++++++-
->  2 files changed, 18 insertions(+), 4 deletions(-)
->=20
-> diff --git a/Documentation/git-send-email.txt b/Documentation/git-sen=
-d-email.txt
-> index 327233c..5966abb 100644
-> --- a/Documentation/git-send-email.txt
-> +++ b/Documentation/git-send-email.txt
-> @@ -233,9 +233,9 @@ Automating
->  	cc list. Default is the value of 'sendemail.signedoffbycc' configur=
-ation
->  	value; if that is unspecified, default to --signed-off-by-cc.
-> =20
-> ---suppress-cc=3D<category>::
-> -	Specify an additional category of recipients to suppress the
-> -	auto-cc of:
-> +--suppress-cc=3D<category|address|domain>::
-> +	Specify an additional category, email address or domain of recipien=
-ts
-> +	to suppress the auto-cc for. Possible categories are:
->  +
->  --
->  - 'author' will avoid including the patch author
-> @@ -251,6 +251,10 @@ Automating
->  - 'all' will suppress all auto cc values.
->  --
->  +
-> +If a full email address is given, auto-cc will be suppressed for thi=
-s particular
-> +address. This also works for entire domains if the parameter starts =
-with the '@'
-> +sign. All email addresses in that domain will hence be ignored by au=
-to-cc.
-> ++
->  Default is the value of 'sendemail.suppresscc' configuration value; =
-if
->  that is unspecified, default to 'self' if --suppress-from is
->  specified, as well as 'body' if --no-signed-off-cc is specified.
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index 98ab33a..22813e5 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -374,7 +374,7 @@ my(%suppress_cc);
->  if (@suppress_cc) {
->  	foreach my $entry (@suppress_cc) {
->  		die "Unknown --suppress-cc field: '$entry'\n"
-> -			unless $entry =3D~ /^(?:all|cccmd|cc|author|self|sob|body|bodycc)=
-$/;
-> +			unless $entry =3D~ /^(?:all|cccmd|cc|author|self|sob|body|bodycc|=
-=2E*@.*)$/;
->  		$suppress_cc{$entry} =3D 1;
->  	}
->  }
-> @@ -1213,6 +1213,11 @@ foreach my $t (@files) {
->  					} else {
->  						next if ($suppress_cc{'cc'});
->  					}
-> +					next if ($suppress_cc{$addr});
-> +					if ($addr =3D~ /^(.+)(@.+)$/) {
-> +						my $domain =3D $2;
-> +						next if $suppress_cc{$domain};
-> +					}
->  					printf("(mbox) Adding cc: %s from line '%s'\n",
->  						$addr, $_) unless $quiet;
->  					push @cc, $addr;
-> @@ -1261,6 +1266,11 @@ foreach my $t (@files) {
->  				next if $suppress_cc{'sob'} and $what =3D~ /Signed-off-by/i;
->  				next if $suppress_cc{'bodycc'} and $what =3D~ /Cc/i;
->  			}
-> +			next if ($suppress_cc{$c});
-> +			if ($c =3D~ /^(.+)(@.+)$/) {
-> +				my $domain =3D $2;
-> +				next if $suppress_cc{$domain};
-> +			}
->  			push @cc, $c;
->  			printf("(body) Adding cc: %s from line '%s'\n",
->  				$c, $_) unless $quiet;
-> --=20
-> 1.7.6
+>> Or in other words: I'd rather stay with a simple, elegant, minimal patch
+>> that solves the problem at hand while not preventing future enhancements.
+>
+> We are on the same page, but what I read from the patch didn't show a
+> clear way forward to extend the "flags" to allow the stuff I mentioned
+
+Nobody needs the stuff you mentioned right now. We do need this to fix
+this bug. If someone else does want it at a later date, replacing it
+will be exactly as much work with or without this patch.
+
+> I would be reluctant to accept a myopic hack that is only good for one
+> caller and that needs to be ripped out and re-done, especially when we
+> already know other issues that can be solved cleanly if you go a little
+> further in the initial round.
+
+While I understand this reluctance, remember that this "one caller" is
+required to fix a bug in the current code. If you had a similar
+complaint about the remote-hg.py patches that I haven't sent yet, I
+would be more than willing to invest the extra time in addressing
+those concerns, since I'm adding new functionality anyway, this is
+different.
+
+> As I said, I am not married to the verbose struct/union representation
+> (the only reason I showed that verbosity was because it allowed me to do
+> away without having to enumerate all the syntax sugars we already
+> support); if your "flags" can express the same thing (it may needs to
+> become a bitfield with enough width, but I highly suspect that you would
+> also need at least a component that says "this is the string the user gave
+> us --- the user said 'master', not 'master^0', for example) and is a lot
+> more compact, that is definitely we want to go with.
+
+Don't we already store that in the name field?
+
+-- 
+Cheers,
+
+Sverre Rabbelier
