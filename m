@@ -1,158 +1,102 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/5] setup_revisions: remember whether a ref was positive
- or not
-Date: Mon, 8 Aug 2011 18:22:48 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1108081748060.7748@s15462909.onlinehome-server.info>
-References: <1311517282-24831-1-git-send-email-srabbelier@gmail.com> <1311517282-24831-4-git-send-email-srabbelier@gmail.com> <7vy5znscst.fsf@alter.siamese.dyndns.org> <7vr55fs1z0.fsf@alter.siamese.dyndns.org> <CAGdFq_ghxFdpjxCgTNbqXWGpt0rpJaGZ1_h+ZC71PzaPzbQ-0A@mail.gmail.com>
- <7vy5zabbz7.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH v2 4/4] upload-archive: use start_command instead of fork
+Date: Mon, 08 Aug 2011 19:10:01 +0200
+Message-ID: <4E401869.8060702@lsrfire.ath.cx>
+References: <20110728170222.GB15931@sigill.intra.peff.net> <CABPQNSaqyD+rhWPRbtVdnkweuXSycBahKEsasGZkEg3mi4SaxQ@mail.gmail.com> <20110801174603.GB10302@sigill.intra.peff.net> <CABPQNSbyp2hEgXvzo3bMHHxrbc9fQLqaABweqfjP7xQzBUdj6A@mail.gmail.com> <20110801182516.GC10302@sigill.intra.peff.net> <4E371109.7050500@lsrfire.ath.cx> <4E3718B4.6090803@kdbg.org> <4E37202B.80208@lsrfire.ath.cx> <20110802040004.GC17494@sigill.intra.peff.net> <4E3829DC.8070802@lsrfire.ath.cx> <20110802181357.GA1861@sigill.intra.peff.net> <4E388A55.6080606@kdbg.org> <4E3D0C1D.9000807@lsrfire.ath.cx> <4E3EEF3B.80908@kdbg.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 08 18:22:59 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Erik Faye-Lund <kusmabite@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon Aug 08 19:10:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QqSbS-0000FZ-1d
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Aug 2011 18:22:58 +0200
+	id 1QqTLO-0004y0-8W
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Aug 2011 19:10:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752957Ab1HHQWw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Aug 2011 12:22:52 -0400
-Received: from mailout-de.gmx.net ([213.165.64.23]:46248 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752347Ab1HHQWv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2011 12:22:51 -0400
-Received: (qmail invoked by alias); 08 Aug 2011 16:22:49 -0000
-Received: from s15462909.onlinehome-server.info (EHLO s15462909.onlinehome-server.info) [87.106.4.80]
-  by mail.gmx.net (mp013) with SMTP; 08 Aug 2011 18:22:49 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+P7MESzPOPCLBoOapxrcSQOoe01pgBWNvL4KatH3
-	l23uF4rR4bFDA6
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <7vy5zabbz7.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751498Ab1HHRKU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Aug 2011 13:10:20 -0400
+Received: from india601.server4you.de ([85.25.151.105]:50454 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751217Ab1HHRKU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2011 13:10:20 -0400
+Received: from [192.168.2.105] (p579BE327.dip.t-dialin.net [87.155.227.39])
+	by india601.server4you.de (Postfix) with ESMTPSA id 590982F8061;
+	Mon,  8 Aug 2011 19:10:17 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:5.0) Gecko/20110624 Thunderbird/5.0
+In-Reply-To: <4E3EEF3B.80908@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178962>
 
-Hi Junio,
+Am 07.08.2011 22:02, schrieb Johannes Sixt:
+> Am 06.08.2011 11:40, schrieb Ren=C3=A9 Scharfe:
+>> So here's an ugly patch to implement an internal passthrough filter =
+to
+>> avoid newline conversions.  It makes the tar filter command (gzip et=
+c.)
+>> write to a pipe instead of directly to a file.
+>=20
+> *If* we are working around the CRLF conversion issue in git itself,
+> wouldn't it be much simpler to just:
+>=20
+> diff --git a/archive-tar.c b/archive-tar.c
+> index 20af005..da3d98a 100644
+> --- a/archive-tar.c
+> +++ b/archive-tar.c
+> @@ -364,9 +364,9 @@ void init_tar_archiver(void)
+>  	int i;
+>  	register_archiver(&tar_archiver);
+>=20
+> -	tar_filter_config("tar.tgz.command", "gzip -cn", NULL);
+> +	tar_filter_config("tar.tgz.command", "gzip -cn | cat", NULL);
+>  	tar_filter_config("tar.tgz.remote", "true", NULL);
+> -	tar_filter_config("tar.tar.gz.command", "gzip -cn", NULL);
+> +	tar_filter_config("tar.tar.gz.command", "gzip -cn | cat", NULL);
+>  	tar_filter_config("tar.tar.gz.remote", "true", NULL);
+>  	git_config(git_tar_config, NULL);
+>  	for (i =3D 0; i < nr_tar_filters; i++) {
+>=20
+> (provided that 'cat' magically does not suffer from the same problem,
+> and I do think that it does not.)
 
-On Wed, 3 Aug 2011, Junio C Hamano wrote:
+The external cat can indeed be used.  We'd need to do that for user
+supplied commands as well, though, like this (ugh):
 
-> Sverre Rabbelier <srabbelier@gmail.com> writes:
-> 
-> > On Sun, Jul 24, 2011 at 21:23, Junio C Hamano <gitster@pobox.com> wrote:
-> >> Sverre Rabbelier <srabbelier@gmail.com> writes:
-> >>
-> >>>  void add_pending_object(struct rev_info *revs, struct object *obj, const char *name)
-> >>>  {
-> >>> -     add_pending_object_with_mode(revs, obj, name, S_IFINVALID);
-> >>> +     add_pending_object_with_mode(revs, obj, name, S_IFINVALID, 0);
-> >>>  }
-> >>
-> >> This seems utterly broken.  For example, fmt-merge-msg.c adds "^HEAD" 
-> >> and of course the flags on the object is UNINTERESTING. Has all the 
-> >> callers of add_pending_object() been verified? Why is it passing an 
-> >> unconditional 0 and not !!(obj->flags & UNINTERESTING) or something?
+diff --git a/archive-tar.c b/archive-tar.c
+index 20af005..eaa9a1c 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -326,6 +326,9 @@ static int write_tar_filter_archive(const struct ar=
+chiver *ar,
+ 		die("BUG: tar-filter archiver called with no filter defined");
+=20
+ 	strbuf_addstr(&cmd, ar->data);
++#ifdef WIN32
++	strbuf_addstr(&cmd, " | cat");
++#endif
+ 	if (args->compression_level >=3D 0)
+ 		strbuf_addf(&cmd, " -%d", args->compression_level);
+=20
 
-If you do that, you're back to start. Since obj has not the faintest clue 
-whether the pending object was added from a negative or a positive ref.
+> Anyway, I think it would be better to address the problem on the msys=
+git
+> side. Perhaps by providing a gzip of a different vintage (e.g. a
+> self-compiled one) that does not suffer from the CRLF conversion issu=
+e.
 
-And yes, all the callers have been verified: I don't want them to change. 
-I only need to catch the callers inside the revision machinery's argument 
-parsing, since that is what I need anyway, to traverse the objects later 
-on. And rather than reimplementing the wheel^Wargument parsing, I'd like 
-to reuse what is already there and just forgets the single bit of 
-information I need.
+Users would probably also need sanitized versions of bzip2 and xz, and
+perhaps more.
 
-The other users of the argument parsing can change their callers if 
-necessary, when they also need the information about whether a ref was 
-positive/negative.
+If MSYS could be asked to refrain from switching file descriptors to te=
+xt
+mode, e.g. by setting an environment variable, we could solve the issue
+in a generic way instead.
 
-> > If I understand correctly (and it's not unlikely that I don't), the 
-> > 'flags' field is used to store the actual flags (not just a boolean). 
-> > Would the following be appropriate?
-> >
-> > +     add_pending_object_with_mode(revs, obj, name, S_IFINVALID, obj->flags);
-> 
-> I would think that the information you are trying to convey is more in
-> line with the spirit of "name" field, not "mode".
-
-No, it is a flag. The parsed argument is a negative ref. It has a name 
-(not including the "^") and it has a flag ("negative").
-
-The mode is indeed only relevant for non-commitishs: If you look where a 
-pending object is added _with_ a mode other than S_IFINVALID, it is only 
-when calling get_sha1_with_mode(). That function indirectly calls 
-get_sha1_with_context_1() which sets the mode to ce_mode. In other words, 
-the mode is the file mode when specifying a blob/tree as <ref>:<path>. All 
-commits (and tags) have a mode set to S_IFINVALID.
-
-> [...]
->
-> Wouldn't it be wonderful if the revision machinery left richer clue in
-> each element of the pending object array while parsing, so that the caller
-> does not have to guess?
-
-That is what we are trying to solve, and rather than to reuse the "mode" I 
-thought that it'd be wiser to add new "flags".
-
-Many of the richer clues you refer to could be expressed as such flags, 
-including the problem I need to address.
-
-For the only itch I have is to get remote-hg working nicely for me, and 
-Sverre said I can only have that if fast-export is running correctly, i.e. 
-updating all the refs, even if some other ref already points at the same 
-commit.
-
-> In addition to a single "mode" integer, which says if it is supposed to 
-> be a tree or a blob, we could allocate a single structure that records 
-> something like this:
-> 
-> 	struct parsed_rev {
->                 enum {
-> 			SHA1, REF, RANGE, SYMMETRIC_RANGE, REFLOG_ENT, ...
->                         // there are others like OBJ^!, OBJ@!, ...
->                 } kind;
->                 const char *string;
->                 union {
-> 			struct {
-> 				const char *real_ref;
-> 			} ref;
-> 			struct {
-> 				struct parsed_rev *bottom;
-> 				struct parsed_rev *top;
->                         } range;
-> 			...
->                 } u;
-> 	};
-
-Is this not a little bit of a big, huge, tremendous overkill? All I need 
-right now is a simple flag. Let's not cross bridges at which we haven't 
-arrived for another 50 miles yet.
-
-Or in other words: I'd rather stay with a simple, elegant, minimal patch 
-that solves the problem at hand while not preventing future enhancements.
-
-Also remember that the pending objects array is used for the complete 
-object traversal. If you make that bigger you might end up with a 
-substantial increase in memory consumption (which made me think of 
-reusing the "mode", but then I thought about the possible side effects in 
-the future and rejected that idea).
-
-The only way to convince me to do that complicated stuff is by 
-blackmailing me, stating that I cannot have a working remote-hg without 
-doing all this nested/union/self-referential struct work I don't need.
-
-Ciao,
-Johannes
+Ren=C3=A9
