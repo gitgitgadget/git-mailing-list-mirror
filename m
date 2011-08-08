@@ -1,159 +1,203 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/5] setup_revisions: remember whether a ref was positive
- or not
-Date: Mon, 08 Aug 2011 10:47:47 -0700
-Message-ID: <7vfwlbztfg.fsf@alter.siamese.dyndns.org>
-References: <1311517282-24831-1-git-send-email-srabbelier@gmail.com>
- <1311517282-24831-4-git-send-email-srabbelier@gmail.com>
- <7vy5znscst.fsf@alter.siamese.dyndns.org>
- <7vr55fs1z0.fsf@alter.siamese.dyndns.org>
- <CAGdFq_ghxFdpjxCgTNbqXWGpt0rpJaGZ1_h+ZC71PzaPzbQ-0A@mail.gmail.com>
- <7vy5zabbz7.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.1.00.1108081748060.7748@s15462909.onlinehome-server.info>
+From: Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 07/48] t6039: Ensure rename/rename conflicts leave index
+ and workdir in sane state
+Date: Mon, 8 Aug 2011 11:59:19 -0600
+Message-ID: <CABPp-BEKTnOdib=KdKWMkEhEBrUUth2prn_r2N=bEbu0ZoD+6A@mail.gmail.com>
+References: <1307518278-23814-1-git-send-email-newren@gmail.com>
+	<1307518278-23814-8-git-send-email-newren@gmail.com>
+	<7vaacbb1jn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Dmitry Ivankov <divanorama@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Aug 08 19:47:59 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, jgfouca@sandia.gov
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 08 19:59:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QqTvh-0005Zg-6X
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Aug 2011 19:47:57 +0200
+	id 1QqU6q-0002KL-CF
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Aug 2011 19:59:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753267Ab1HHRry (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Aug 2011 13:47:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63943 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751259Ab1HHRrx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2011 13:47:53 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F1A184778;
-	Mon,  8 Aug 2011 13:47:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aAlqicyDmtPtlfQvKv1dyKfXFnk=; b=bOl9bd
-	5qSf2zkgmVrJfcpLN6NqfhdogPqSrSL19vj9AYp0ZErVjab+t+fpGkWA9f9G0W/a
-	KWVbnvQB65NN6dWq0IG9DjoEM10gD4VlyQUbW71d0OwCP4iFuVUinIhJdPa9yUgV
-	5xDlGKpCUTdY2BlXMDWTg/HqGsIXzldTtyiPA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rLJfrmvOpM85G2r6D0m7eZywruMJG5+S
-	Ip1U/U541Y5AMIUnXQjTzfgPKmC2xpYpH4+fETi69kGOlBx6oUK40ShXNMLENV4/
-	jSTfkKu3PgSYB1Wh987dVNilDyxtg5OqfHV9E0XqmO93JqHWFRs6hU38JKf/ogkQ
-	P0qZBcDelhI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E8B1E4777;
-	Mon,  8 Aug 2011 13:47:49 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4E2874776; Mon,  8 Aug 2011
- 13:47:49 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.1108081748060.7748@s15462909.onlinehome-server.info>
- (Johannes Schindelin's message of "Mon, 8 Aug 2011 18:22:48 +0200 (CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 883B1B96-C1E6-11E0-82AF-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751355Ab1HHR7W convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Aug 2011 13:59:22 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:61769 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750877Ab1HHR7V convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Aug 2011 13:59:21 -0400
+Received: by fxh19 with SMTP id 19so5605167fxh.19
+        for <git@vger.kernel.org>; Mon, 08 Aug 2011 10:59:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=a1G0iXse7ZuWXrJM8uyYE23i6UwuUroPvYIhe2IIBvM=;
+        b=kijPfPdRYn0JkXurqDzgZvQN+UaNQMpDXiMoZlXTZw9ryQTto5BAMsoz+7u/0Bq7Rm
+         XDULVpHhFQMUQ6y+KSBjZzNCL++GjtsQdeXqA0NCzYupPDOdcB9h4N66BLdglEMv7wuJ
+         VMHJ1E28lcyjEHSULBo6S1WH4S83KJQ3tF2G4=
+Received: by 10.204.140.134 with SMTP id i6mr1552523bku.189.1312826359549;
+ Mon, 08 Aug 2011 10:59:19 -0700 (PDT)
+Received: by 10.204.50.143 with HTTP; Mon, 8 Aug 2011 10:59:19 -0700 (PDT)
+In-Reply-To: <7vaacbb1jn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178966>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> Hi Junio,
+On Mon, Jul 18, 2011 at 5:40 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+>> +# Test for all kinds of things that can go wrong with rename/rename=
+ (2to1):
+>> +# =C2=A0 Commit A: new files: a & b
+>> +# =C2=A0 Commit B: rename a->c, modify b
+>> +# =C2=A0 Commit C: rename b->c, modify a
+>> +#
+>> +# Merging of B & C should NOT be clean. =C2=A0Questions:
+>> +# =C2=A0 * Both a & b should be removed by the merge; are they?
+>> +# =C2=A0 * The two c's should contain modifications to a & b; do th=
+ey?
+>> +# =C2=A0 * The index should contain two files, both for c; does it?
+>> +# =C2=A0 * The working copy should have two files, both of form c~<=
+unique>; does it?
+>> +# =C2=A0 * Nothing else should be present. =C2=A0Is anything?
 >
-> On Wed, 3 Aug 2011, Junio C Hamano wrote:
+> What is the most useful thing to leave in the index and in the workin=
+g
+> tree for the person who needs to resolve such a merge using the worki=
+ng
+> tree, starting from B and merging C? The above "Questions" lists what=
+ the
+> current code might try to do but I am not sure if it is really useful=
+=2E For
+> example, in the index, you would have to stuff two stage #1 entries (=
+"a"
+> from A and "b" from A) for path "c", with stage #2 ("c" from B) and s=
+tage
+> #3 ("c" from C) entries, and represent what B tried to do to "a" (in =
+the
+> above you said "rename a->c" but it does not have to be a rename with=
+out
+> content change) and what C tried to do to "b" in the half-conflicted
+> result that is in a single file "c". Because the result are totally
+> unrelated files (one side wants a variant of original "a" there, the =
+other
+> side wants a variant of "b"), such a half-merge result is totally use=
+less
+> to help the person to come up with anything.
 >
->> Sverre Rabbelier <srabbelier@gmail.com> writes:
->> 
->> > On Sun, Jul 24, 2011 at 21:23, Junio C Hamano <gitster@pobox.com> wrote:
->> >> Sverre Rabbelier <srabbelier@gmail.com> writes:
->> >>
->> >>>  void add_pending_object(struct rev_info *revs, struct object *obj, const char *name)
->> >>>  {
->> >>> -     add_pending_object_with_mode(revs, obj, name, S_IFINVALID);
->> >>> +     add_pending_object_with_mode(revs, obj, name, S_IFINVALID, 0);
->> >>>  }
-> ...
-> If you do that, you're back to start. Since obj has not the faintest clue 
-> whether the pending object was added from a negative or a positive ref.
-
-But the point is that this codepath does not have a faintest clue whether
-the "obj" parameter is something the end user actively asked for (which
-might have been marked as uninteresting for other reasons, namely, because
-it is reachable from other negative refs). So passing unconditional 0 is
-just as bad.
-
->> Wouldn't it be wonderful if the revision machinery left richer clue in
->> each element of the pending object array while parsing, so that the caller
->> does not have to guess?
+> Also renaming "c" to "c~<unique>", if they do not have corresponding
+> entries in the index to let you check with "git diff", would make the
+> result _harder_ to use, not easier. So if you are going to rename "c"=
+ to
+> "c-B" and "c-C", at least it would make much more sense to have in th=
+e
+> index:
 >
-> That is what we are trying to solve, and rather than to reuse the "mode" I 
-> thought that it'd be wiser to add new "flags".
-
-I never thought about nor suggested touching "mode" ;-) It does not have
-enough width for the necessary information.
-
-> Many of the richer clues you refer to could be expressed as such flags, 
-> including the problem I need to address.
+> =C2=A0- "c-B", with stage #1 ("a" from A), stage #2 ("c" from B) and =
+stage #3
+> =C2=A0 ("a" from C);
+> =C2=A0- "c-C", with stage #1 ("b" from A), stage #2 ("b" from B) and =
+stage #3
+> =C2=A0 ("c" from C); and
+> =C2=A0- No "a" nor "b" in the index nor in the working tree.
 >
->> In addition to a single "mode" integer, which says if it is supposed to 
->> be a tree or a blob, we could allocate a single structure that records... 
+> no?
 >
-> Is this not a little bit of a big, huge, tremendous overkill?
+> That way, you could run "git diff" to get what happened to the two
+> variants of "a" and "b" at the content level, and decide to clean thi=
+ngs
+> up with:
+>
+> =C2=A0 =C2=A0$ git diff ;# view content level merge
+> =C2=A0 =C2=A0$ edit c-B c-C; git add c-B c-C
+> =C2=A0 =C2=A0$ git mv c-B c-some-saner-name
+> =C2=A0 =C2=A0$ git mv c-C c-another-saner-name
+> =C2=A0 =C2=A0$ edit other files that refer to c like Makefile
+> =C2=A0 =C2=A0$ git commit
 
-As long as you can show your "flags" can (be extended to) express the same
-richness to solve sample problems I mentioned in my response, as well as
-your immediate issue, I wouldn't insist implementing a parsed struct/union
-that may be a more (and unnecessarily) verbose way to say the same thing.
+That sounds very interesting.  My first thought is that you'd have to
+do the same thing in the case of a D/F conflict, but I notice that
+later in the patch series you asked for exactly that.  The idea
+certainly has potential, though I might need to think it through a
+little more.
 
-> Or in other words: I'd rather stay with a simple, elegant, minimal patch 
-> that solves the problem at hand while not preventing future enhancements.
+> To take it one step further to the extreme, it might give us a more
+> reasonable and useful conflicted state if we deliberately dropped som=
+e
+> information instead in a case like this, e.g.:
+>
+> =C2=A0- We may want to have "a" at stage #1 (from A) in the index;
+> =C2=A0- No "a" remains in the working tree;
+> =C2=A0- "b" at stage #1 (from A), stage #2 (from B) and stage #3 ("c"=
+ from C);
+> =C2=A0- "b" in the working tree a conflicted-merge of the above three=
+;
+> =C2=A0- "c" at stage #1 ("a" from A), stage #2 (from B), and stage #3=
+ ("a" from
+> =C2=A0 C); and
+> =C2=A0- "c" in the working tree a conflicted-merge of the above three=
+=2E
+>
+> Note that unlike the current merge-recursive that tries to come up wi=
+th a
+> temporary pathname to store both versions of C, this would ignore "mv=
+ b c"
+> on the A->C branch, and make the conflicted tentative merge asymmetri=
+c
+> (merging B into C and merging C into B would give different conflicts=
+),
+> but I suspect that the asymmetry may not hurt us.
+>
+> Whether the merger wants to keep "c" that was derived from "a" (in li=
+ne
+> with the HEAD) or "c" that was derived from "b" (in line with MERGE_H=
+EAD),
+> if the result were to keep both files in some shape, the content leve=
+l
+> edit, renaming of at least one side, and adjusting other files that r=
+efer
+> to it, are all required anyway, e.g.
+>
+> =C2=A0 =C2=A0$ git diff ;# view content level merge
+> =C2=A0 =C2=A0$ edit b c; git add b c
+> =C2=A0 =C2=A0$ edit other files that refer to c line Makefile (the co=
+ntent C's
+> =C2=A0 =C2=A0 =C2=A0change wants is now in "b").
+> =C2=A0 =C2=A0$ git commit
+>
+> would be a way to pick "c" as "c-some-saner-name" and "b" as
+> "c-another-saner-name" in the previous workflow, but needs much less
+> typing. The complexity of the workflow would be the same if the final
+> resolution is to take what one side did and dropping the other's work=
+,
+> I think.
 
-We are on the same page, but what I read from the patch didn't show a
-clear way forward to extend the "flags" to allow the stuff I mentioned
-(and the stuff I didn't but obviously fall into the same category of "we
-wish revision parsing machinery left us richer information").
+I think the asymmetry is slightly confusing and could become
+problematic.  If we decide to turn on break detection, then we would
+hit problems in a scenario such as:
 
-> Also remember that the pending objects array is used for the complete 
-> object traversal.
+Commit A: files a, b are present
+Commit B: rename a->c, add an unrelated a
+Commit C: rename b->c, add an unrelated b
 
-My reading and rememberance of the code around add_parents_to_list() must
-be quite different from yours. It is not 2006 anymore.
+In that case, "undoing" the rename as you suggest gives us a conflict
+with other content that was added at the path.
 
-We didn't even have a separate pending object list type until 1f1e895 (Add
-"named object array" concept, 2006-06-19) and used the same object_list,
-whose element size _did_ matter as you mention. But that commit allowed us
-to give elements on the pending list that came directly from the end user
-richer semantics than those of the object_list that we discover during the
-traversal, and that is why back at e5709a4 (add add_object_array_with_mode,
-2007-04-22) we gave more information to it without having to fatten
-object_list elements.
 
-> The only way to convince me to do that complicated stuff is by 
-> blackmailing me, stating that I cannot have a working remote-hg without 
-> doing all this nested/union/self-referential struct work I don't need.
+Also, as mentioned above, D/F conflicts hit similar cases where we
+need to rename the path in the working copy.  If we try to handle them
+similarly to how you are suggesting for the rename/rename(2to1) case,
+we can do so in some cases but hit problems in others.  For example,
+take a rename/delete conflict with D/F conflicts:
 
-I would be reluctant to accept a myopic hack that is only good for one
-caller and that needs to be ripped out and re-done, especially when we
-already know other issues that can be solved cleanly if you go a little
-further in the initial round.
+Commit A: file a is present
+Commit B: rename a -> df, possibly also modifying it
+Commit C: delete a, add files a/foo and df/bar
 
-As I said, I am not married to the verbose struct/union representation
-(the only reason I showed that verbosity was because it allowed me to do
-away without having to enumerate all the syntax sugars we already
-support); if your "flags" can express the same thing (it may needs to
-become a bitfield with enough width, but I highly suspect that you would
-also need at least a component that says "this is the string the user gave
-us --- the user said 'master', not 'master^0', for example) and is a lot
-more compact, that is definitely we want to go with.
-
-Thanks.
+We can't use either the path 'df' or 'a' for recording the content.  I
+think the rules become too confusing for "selectively undoing renames"
+and it'd be easier to just use <bad-dest-path>~<unique> in all cases.
+However, I think your suggestion to move index stage information to
+these uniquely renamed paths could probably work and may be useful.
