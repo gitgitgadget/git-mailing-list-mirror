@@ -1,80 +1,123 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 22/48] merge-recursive: Fix sorting order and directory
- change assumptions
-Date: Mon, 8 Aug 2011 13:21:08 -0600
-Message-ID: <CABPp-BEBFa9vKcKBehq9gV+S1WW+0L+8XZ2+jHdiXsqBp4k+uA@mail.gmail.com>
-References: <1307518278-23814-1-git-send-email-newren@gmail.com>
-	<1307518278-23814-23-git-send-email-newren@gmail.com>
-	<7vhb6jcg68.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Tolerate zlib deflation with window size < 32Kb
+Date: Mon, 08 Aug 2011 12:23:00 -0700
+Message-ID: <7v62m7yagb.fsf@alter.siamese.dyndns.org>
+References: <7vhb5x5cgo.fsf@alter.siamese.dyndns.org>
+ <1312742773-26373-1-git-send-email-roberto.tyley@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, jgfouca@sandia.gov
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 08 21:21:17 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Roberto Tyley <roberto.tyley@guardian.co.uk>
+To: roberto.tyley@gmail.com
+X-From: git-owner@vger.kernel.org Mon Aug 08 21:23:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QqVO0-00040m-ET
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Aug 2011 21:21:16 +0200
+	id 1QqVPr-0004mK-GK
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Aug 2011 21:23:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751917Ab1HHTVL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Aug 2011 15:21:11 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:59187 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750843Ab1HHTVK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Aug 2011 15:21:10 -0400
-Received: by fxh19 with SMTP id 19so5670492fxh.19
-        for <git@vger.kernel.org>; Mon, 08 Aug 2011 12:21:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=4lQ2bth7UtdrT7FcRMskbjU8PzhAEgZJxdKSwTOoq0w=;
-        b=p4LwA71A4aHeKNxuIqC3yYiYK6sMyya0+3fY2mH3zKzteWl8kY7vVGYhVOhSDorpBT
-         6uNim2nqNCrYoOrZP2vQILSwcrpPZZg07RJUNhzMu6vBhHa5/jzlv5CXHobKzHvt8EMq
-         9eEgr5vSD5pYF7ClL8qTz+33fG0IpuaHQf6VI=
-Received: by 10.223.160.131 with SMTP id n3mr7886335fax.111.1312831268644;
- Mon, 08 Aug 2011 12:21:08 -0700 (PDT)
-Received: by 10.223.123.13 with HTTP; Mon, 8 Aug 2011 12:21:08 -0700 (PDT)
-In-Reply-To: <7vhb6jcg68.fsf@alter.siamese.dyndns.org>
+	id S1752823Ab1HHTXF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Aug 2011 15:23:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63309 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752066Ab1HHTXE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2011 15:23:04 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5CDF43A9B;
+	Mon,  8 Aug 2011 15:23:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=AqH3HaKtr3yj9YhCuEjiS86XR6o=; b=BBMJc00aeLcC5ytQkbv+
+	i4sLxWFruOPiF8RPvxWK0DRbti5834MXpnsHxQdqwZU0JTwUaflX/sYETfKypvli
+	yfDIN28LqGfgfP9JwLbYEfphFFutHTqmwM2zXAJgBThxUr7gN+lxOdkd9KDEDRZa
+	y2fUjxw5F2QeIvy/bhslvik=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=oSVxxL3CsHJe7FdEQLv+j7uWD2+Xxy1uK5SKtn1dGq2mO/
+	BY60Tj/nr3souk0dL0d45Z2hQ4y5hX67VkPIeN17WE+140R/8eJajP9ovlWB+nnR
+	Vtbf/pMOzFzyVeWJRQWay3xPUMqYeEddTKM4U1b4KaUh/8z8eeU55mq726jjo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 541543A9A;
+	Mon,  8 Aug 2011 15:23:02 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CC1CC3A99; Mon,  8 Aug 2011
+ 15:23:01 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: D527A3B8-C1F3-11E0-906C-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178974>
 
-On Mon, Jul 18, 2011 at 5:39 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
->> +static int string_list_df_name_compare(const void *a, const void *b=
-)
->> +{
->> + =C2=A0 =C2=A0 const struct string_list_item *one =3D a;
->> + =C2=A0 =C2=A0 const struct string_list_item *two =3D b;
->> + =C2=A0 =C2=A0 /*
->> + =C2=A0 =C2=A0 =C2=A0* Here we only care that entries for D/F confl=
-icts are
->> + =C2=A0 =C2=A0 =C2=A0* adjacent, in particular with the file of the=
- D/F conflict
->> + =C2=A0 =C2=A0 =C2=A0* appearing before files below the correspondi=
-ng directory.
->> + =C2=A0 =C2=A0 =C2=A0* The order of the rest of the list is irrelev=
-ant for us.
->> + =C2=A0 =C2=A0 =C2=A0*
->> + =C2=A0 =C2=A0 =C2=A0* To achieve this, we sort with df_name_compar=
-e and provide
->> + =C2=A0 =C2=A0 =C2=A0* the mode S_IFDIR so that D/F conflicts will =
-sort correctly.
->> + =C2=A0 =C2=A0 =C2=A0* We use the mode S_IFDIR for everything else =
-for simplicity,
->> + =C2=A0 =C2=A0 =C2=A0* since in other cases any changes in their or=
-der due to
->> + =C2=A0 =C2=A0 =C2=A0* sorting cause no problems for us.
->> + =C2=A0 =C2=A0 =C2=A0*/
->
-> I recall there was an issue of this sorting reported earlier...
+roberto.tyley@gmail.com writes:
 
-Yes, in git-fast-export, though.  It was 060df62 (fast-export: Fix
-output order of D/F changes 2010-07-09), if you're curious.
+> +. ./test-lib.sh
+> +
+> +assert_blob_equals() {
+> +	echo -n $2 > expected &&
+> +	git cat-file -p $1 > actual &&
+
+Needs proper quoting with dq.
+
+> +	test_cmp expected actual
+> +}
+> +
+> +test_expect_success setup '
+> +	cp -R ../t1013/objects .git/
+> +	git --version
+> +'
+> +
+> +test_expect_success 'read standard-format loose objects' '
+> +	git cat-file tag 8d4e360d6c70fbd72411991c02a09c442cf7a9fa &&
+> +	git cat-file commit 6baee0540ea990d9761a3eb9ab183003a71c3696 &&
+> +	git ls-tree 7a37b887a73791d12d26c0d3e39568a8fb0fa6e8 &&
+> +	assert_blob_equals "257cc5642cb1a054f08cc83f2d943e56fd3ebe99" "foo\n"
+
+Isn't it unportable to expect "\n" to be kept or expanded by "echo"?
+
+Will squash the following in (and I have another patch on top to
+consolidate the definition of $LF in this and other test scripts).
+
+Thanks.
+
+-- >8 --
+Subject: [PATCH] fixup! Tolerate zlib deflation with window
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t1013-loose-object-format.sh |    8 +++++---
+ 1 files changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/t/t1013-loose-object-format.sh b/t/t1013-loose-object-format.sh
+index b5ac46d..36b4027 100755
+--- a/t/t1013-loose-object-format.sh
++++ b/t/t1013-loose-object-format.sh
+@@ -26,10 +26,12 @@ standard format, deflated with 4KB window size: Agit/JGit on Android
+ '
+ 
+ . ./test-lib.sh
++LF='
++'
+ 
+ assert_blob_equals() {
+-	echo -n $2 > expected &&
+-	git cat-file -p $1 > actual &&
++	printf "%s" "$2" >expected &&
++	git cat-file -p "$1" >actual &&
+ 	test_cmp expected actual
+ }
+ 
+@@ -42,7 +44,7 @@ test_expect_success 'read standard-format loose objects' '
+ 	git cat-file tag 8d4e360d6c70fbd72411991c02a09c442cf7a9fa &&
+ 	git cat-file commit 6baee0540ea990d9761a3eb9ab183003a71c3696 &&
+ 	git ls-tree 7a37b887a73791d12d26c0d3e39568a8fb0fa6e8 &&
+-	assert_blob_equals "257cc5642cb1a054f08cc83f2d943e56fd3ebe99" "foo\n"
++	assert_blob_equals "257cc5642cb1a054f08cc83f2d943e56fd3ebe99" "foo$LF"
+ '
+ 
+ test_expect_success 'read experimental-format loose objects' '
+-- 
+1.7.6.409.ge7a85
