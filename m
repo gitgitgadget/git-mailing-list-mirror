@@ -1,56 +1,68 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: I suggest that git commit support -A option, just like hg does.thanks.
-Date: Mon, 8 Aug 2011 14:04:46 +0000
-Message-ID: <CAMOZ1BtVy5m0i2co-YEjxGxzMVHpq01vSn0P7UkURHu=AQ=gsA@mail.gmail.com>
-References: <20110806150246.GA20650@jpl.local> <35a2b515.12f42.1319f82c79d.Coremail.sinojelly@163.com>
- <4d88745.134ea.1319fe29f01.Coremail.sinojelly@163.com> <1312659297-sup-2956@nixos>
- <buoy5z4ed3w.fsf@dhlpc061.dev.necel.com> <7vfwlc1ox1.fsf@alter.siamese.dyndns.org>
+From: Ted Zlatanov <tzz@lifelogs.com>
+Subject: Re: [PATCH 10/14] http: use hostname in credential description
+Date: Mon, 08 Aug 2011 09:37:51 -0500
+Organization: =?utf-8?B?0KLQtdC+0LTQvtGAINCX0LvQsNGC0LDQvdC+0LI=?= @
+ Cienfuegos
+Message-ID: <878vr46kao.fsf@lifelogs.com>
+References: <20110718074642.GA11678@sigill.intra.peff.net>
+	<20110718075232.GJ12341@sigill.intra.peff.net>
+	<7vr55k4mxn.fsf@alter.siamese.dyndns.org>
+	<20110722204749.GC11922@sigill.intra.peff.net>
+	<7vbowmx9da.fsf@alter.siamese.dyndns.org>
+	<20110722221337.GA15753@sigill.intra.peff.net>
+Reply-To: git@vger.kernel.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Miles Bader <miles@gnu.org>, Marc Weber <marco-oweber@gmx.de>,
-	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 08 16:05:26 2011
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 08 16:38:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QqQSK-00021W-7h
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Aug 2011 16:05:24 +0200
+	id 1QqQy7-0000MT-A6
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Aug 2011 16:38:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754087Ab1HHOFS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Aug 2011 10:05:18 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:40379 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751924Ab1HHOFR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2011 10:05:17 -0400
-Received: by yxj19 with SMTP id 19so2494733yxj.19
-        for <git@vger.kernel.org>; Mon, 08 Aug 2011 07:05:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=NyIFEaN7yuG8Q5KJhsi4NKco3r1oWmn5fI99+wE8Flc=;
-        b=ii+UVmrrD2/bNYKQfgpqlH/6wQNJfgddzD1R4MX3B9t/B4/PydmQhb+BY4kZidXrbI
-         NYaGQXc9K7qwm8l8/2wZheAXsCwSQl4wImoHPUn+q/fD5935dnNn2VcECSRFLIVeIF8Z
-         nKE/jSdUFFqIByJfNv4s6GKpTf9SHTxA76GU8=
-Received: by 10.42.139.131 with SMTP id g3mr5621675icu.346.1312812316132; Mon,
- 08 Aug 2011 07:05:16 -0700 (PDT)
-Received: by 10.42.170.132 with HTTP; Mon, 8 Aug 2011 07:04:46 -0700 (PDT)
-In-Reply-To: <7vfwlc1ox1.fsf@alter.siamese.dyndns.org>
+	id S1753517Ab1HHOiI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Aug 2011 10:38:08 -0400
+Received: from lo.gmane.org ([80.91.229.12]:57887 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751626Ab1HHOiH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2011 10:38:07 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1QqQxx-0000Gu-Ey
+	for git@vger.kernel.org; Mon, 08 Aug 2011 16:38:05 +0200
+Received: from 38.98.147.133 ([38.98.147.133])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 08 Aug 2011 16:38:05 +0200
+Received: from tzz by 38.98.147.133 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 08 Aug 2011 16:38:05 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+Mail-Followup-To: git@vger.kernel.org
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 38.98.147.133
+X-Face: bd.DQ~'29fIs`T_%O%C\g%6jW)yi[zuz6;d4V0`@y-~$#3P_Ng{@m+e4o<4P'#(_GJQ%TT= D}[Ep*b!\e,fBZ'j_+#"Ps?s2!4H2-Y"sx"
+Mail-Copies-To: never
+User-Agent: Gnus/5.110018 (No Gnus v0.18) Emacs/24.0.50 (gnu/linux)
+Cancel-Lock: sha1:ExQskF2EJHRFKKRXyCTXjHuFd0g=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/178958>
 
-On Mon, Aug 8, 2011 at 04:56, Junio C Hamano <gitster@pobox.com> wrote:
-> So far, nobody stepped up to do it, though. I have been taking it as a
-> sign that "commit -A" is not one of the commonly desired features but is
-> probably closer to your "odd/unusual". It's up to the user/developer
-> community to change that ;-)
+On Fri, 22 Jul 2011 16:13:38 -0600 Jeff King <peff@peff.net> wrote: 
 
-With regard to anything that can be changed for the better, the vast
-majority of people shrug their shoulders, groan, and use what's
-already available to them.
+JK> I admit I don't have any data beyond my own experiences. GitHub tends
+JK> towards the concept of a single identity, and it has some group
+JK> management. I don't know about other sites, though. Do you have any
+JK> specific examples in mind?
+
+I have not yet needed multiple user names on a single Git server, so I
+think it's OK to make that case less convenient to favor the more common
+single user name case.
+
+Ted
