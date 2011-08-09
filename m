@@ -1,59 +1,64 @@
-From: Aviv Eyal <avivey@gmail.com>
-Subject: Re: [PATCH] Support specific color for a specific remote branches
-Date: Tue, 9 Aug 2011 21:59:47 +0300
-Message-ID: <CAGHT48LHOi=TL6eSJKiFoao55quPn+nsK+etCmWPQsZB7ydLmQ@mail.gmail.com>
-References: <1312818553-25042-1-git-send-email-avivey@gmail.com>
-	<7v8vr3zsh1.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 2/2] On Cygwin support both UNIX and DOS style path-names
+Date: Tue, 09 Aug 2011 21:47:15 +0200
+Message-ID: <4E418EC3.4070904@kdbg.org>
+References: <1312560614-20772-1-git-send-email-pascal@obry.net> <1312560614-20772-3-git-send-email-pascal@obry.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 09 20:59:55 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Pascal Obry <pascal@obry.net>
+X-From: git-owner@vger.kernel.org Tue Aug 09 21:47:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QqrWs-0008Aq-4X
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Aug 2011 20:59:54 +0200
+	id 1QqsGr-0004i9-OG
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Aug 2011 21:47:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752245Ab1HIS7t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Aug 2011 14:59:49 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:51339 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751484Ab1HIS7s (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2011 14:59:48 -0400
-Received: by ewy4 with SMTP id 4so190004ewy.19
-        for <git@vger.kernel.org>; Tue, 09 Aug 2011 11:59:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Bo+/uiopK2GFoYTij4cXM/D8uExdnCM9BX5SuyukPus=;
-        b=hJ09dbmjCAtZHkWzQ9tvIW/tv1re4hK4oZcb4qrVt84pE8uZR7PZ6vj2fznlWMDGRg
-         PzA5mKM8rKwoBlCrN746Hh2NgB/IIJZBXLR8m8wV67//N0FRNBKMQQJzbbKqGW0N0GDz
-         GNZUWFOEFeIwW8hoFPRCP07i/wG34FWGL5Pns=
-Received: by 10.204.129.73 with SMTP id n9mr2029076bks.223.1312916387332; Tue,
- 09 Aug 2011 11:59:47 -0700 (PDT)
-Received: by 10.204.30.207 with HTTP; Tue, 9 Aug 2011 11:59:47 -0700 (PDT)
-In-Reply-To: <7v8vr3zsh1.fsf@alter.siamese.dyndns.org>
+	id S1752520Ab1HITrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Aug 2011 15:47:20 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:53355 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752384Ab1HITrS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Aug 2011 15:47:18 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 114C3A7EB0;
+	Tue,  9 Aug 2011 21:47:15 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 2C31619F3ED;
+	Tue,  9 Aug 2011 21:47:15 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.18) Gecko/20110616 SUSE/3.1.11 Thunderbird/3.1.11
+In-Reply-To: <1312560614-20772-3-git-send-email-pascal@obry.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179044>
 
-On 8 August 2011 21:08, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Who said a remote name is terminated with (and cannot contain) a slash?
-...
->
-> Shouldn't this code be consulting the configuration file to learn the
-...
-> so that remote branches from "frotz" remote, that happen to be stored
-> under refs/remotes/nitfol/ hierarchy, are painted in the correct color?
->
+Am 05.08.2011 18:10, schrieb Pascal Obry:
+> In fact Cygwin supports both, so make Git agree with this.
+> The failing case is when a file is committed in a sub-dir of the
+> repository using a log message from a file specified with a DOS
+> style path-name. To reproduce:
+> 
+>    $ cd src
+>    $ git commit -F c:\tmp\log.txt file.c
+>    fatal: could not read log file 'src/c:\tmp\log.txt': No such file \
+>    or directory.
 
-Sorry, that's too dip & complex for me... Consider this patch 'withdrawn' then.
+Do you also want to support this:
 
--- Aviv
+     $ git add src\file.c
+
+i.e., backslash in pathspec? Then you need more than this:
+
+> +#define has_dos_drive_prefix(path) (isalpha(*(path)) && (path)[1] == ':')
+> +#define is_dir_sep(c) ((c) == '/' || (c) == '\\')
+
+In particular, you have to enable backslash processing in
+setup.c:prefix_filename(), but then you lose the ability to escape
+special characters with the backslash.
+
+-- Hannes
