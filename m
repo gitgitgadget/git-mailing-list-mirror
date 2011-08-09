@@ -1,66 +1,74 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: [PATCH v2 2/2] Move git-dir for submodules
-Date: Tue, 9 Aug 2011 20:23:33 +0200
-Message-ID: <20110809182332.GD42153@book.hvoigt.net>
-References: <1312831022-12868-1-git-send-email-iveqy@iveqy.com> <1312831022-12868-3-git-send-email-iveqy@iveqy.com> <20110808204439.GA41500@book.hvoigt.net> <7v1uwvwpsk.fsf@alter.siamese.dyndns.org>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH 2/2] On Cygwin support both UNIX and DOS style path-names
+Date: Tue, 09 Aug 2011 18:24:26 +0100
+Message-ID: <4E416D4A.40602@ramsay1.demon.co.uk>
+References: <1312560614-20772-1-git-send-email-pascal@obry.net> <1312560614-20772-3-git-send-email-pascal@obry.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org,
-	jens.lehmann@web.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 09 20:23:47 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Pascal Obry <pascal@obry.net>
+X-From: git-owner@vger.kernel.org Tue Aug 09 20:31:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qqqxs-0007m1-O8
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Aug 2011 20:23:45 +0200
+	id 1Qqr5a-00036K-F9
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Aug 2011 20:31:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752297Ab1HISXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Aug 2011 14:23:39 -0400
-Received: from darksea.de ([83.133.111.250]:59378 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750942Ab1HISXi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2011 14:23:38 -0400
-Received: (qmail 16823 invoked from network); 9 Aug 2011 20:23:33 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 9 Aug 2011 20:23:33 +0200
-Content-Disposition: inline
-In-Reply-To: <7v1uwvwpsk.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1752282Ab1HISbg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Aug 2011 14:31:36 -0400
+Received: from lon1-post-2.mail.demon.net ([195.173.77.149]:63011 "EHLO
+	lon1-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751484Ab1HISbg (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Aug 2011 14:31:36 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by lon1-post-2.mail.demon.net with esmtp (Exim 4.69)
+	id 1Qqr5S-0002La-ab; Tue, 09 Aug 2011 18:31:35 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+In-Reply-To: <1312560614-20772-3-git-send-email-pascal@obry.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179039>
 
-Hi,
-
-On Mon, Aug 08, 2011 at 02:34:35PM -0700, Junio C Hamano wrote:
-> Heiko Voigt <hvoigt@hvoigt.net> writes:
+Pascal Obry wrote:
+> In fact Cygwin supports both, so make Git agree with this.
+> The failing case is when a file is committed in a sub-dir of the
+> repository using a log message from a file specified with a DOS
+> style path-name. To reproduce:
 > 
-> > Hi,
-> >
-> > On Mon, Aug 08, 2011 at 09:17:02PM +0200, Fredrik Gustafsson wrote:
-> >> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-> >> index c679f36..1ae6b4e 100755
-> >> --- a/t/t7406-submodule-update.sh
-> >> +++ b/t/t7406-submodule-update.sh
-> >> @@ -408,6 +408,7 @@ test_expect_success 'submodule update exit immediately in case of merge conflict
-> >>  	 test_cmp expect actual
-> >>  	)
-> >>  '
-> >> +
-> >
-> > There is a whitespace error here which we seem to have overlooked. Junio
-> > could you remove that?
-> 
-> Hmm, confused.
-> 
-> A blank between test would be the perfectly normal thing to see, no?
+>    $ cd src
+>    $ git commit -F c:\tmp\log.txt file.c
+>    fatal: could not read log file 'src/c:\tmp\log.txt': No such file \
+>    or directory.
 
-Yes indeed you are right I did just see the lonely new line here. I
-missed that a blank line was missing previously here.
+Hmm, are you using bash or cmd.exe? Using bash I get the following:
 
-Cheers Heiko
+    $ cd src
+    $ git commut -F c:\tmp\log.txt file.c
+    fatal: could not read file 'src/c:tmplog.txt': No such file or directory
+    $ 
+
+Which is what I would expect of (any) posix shell, viz:
+
+    $ ls c:\
+    > ^C
+    $ ls c:\\
+    AUTOEXEC.BAT*            NTDETECT.COM*               WATCOM/       msysgit/
+    CMPNENTS/                Program Files/              WINDOWS/      msysgit-old/
+    CONFIG.SYS*              RECYCLER/                   boot.ini*     ntldr*
+    Documents and Settings/  SUPPORT/                    cygwin/       pagefile.sys
+    I386/                    SWSTAMP.TXT*                cygwintemp/   ssl/
+    IO.SYS*                  System Volume Information/  dm/           uname/
+    MSDOS.SYS*               TOOLSCD/                    dm840/        zlib/
+    MSOCache/                VALUEADD/                   hiberfil.sys
+    $ 
+
+If you want to use cmd.exe as your shell, I suspect msysGit (Git For Windows)
+may be a better fit.
+
+ATB,
+Ramsay Jones
