@@ -1,120 +1,93 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 4/4] upload-archive: use start_command instead of fork
-Date: Mon, 8 Aug 2011 23:02:11 -0600
-Message-ID: <20110809050211.GA3588@sigill.intra.peff.net>
-References: <4E371109.7050500@lsrfire.ath.cx>
- <4E3718B4.6090803@kdbg.org>
- <4E37202B.80208@lsrfire.ath.cx>
- <20110802040004.GC17494@sigill.intra.peff.net>
- <4E3829DC.8070802@lsrfire.ath.cx>
- <20110802181357.GA1861@sigill.intra.peff.net>
- <4E388A55.6080606@kdbg.org>
- <4E3D0C1D.9000807@lsrfire.ath.cx>
- <4E3EEF3B.80908@kdbg.org>
- <4E401869.8060702@lsrfire.ath.cx>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 17/18] revert: Introduce --continue to continue the operation
+Date: Tue, 9 Aug 2011 10:56:07 +0530
+Message-ID: <CALkWK0my7_Ocd9eFfGVcJreOJVkC_OyaUo1Q_U7o0mW04ab-YQ@mail.gmail.com>
+References: <1312454356-3070-1-git-send-email-artagnon@gmail.com>
+ <1312454356-3070-18-git-send-email-artagnon@gmail.com> <CAP8UFD0izFOW0xHQB8ZT3+bbTjGtSm-ZWHs6AWdJoEneRX32mw@mail.gmail.com>
+ <CALkWK0mKTXUxW=PT_wHEVAzUSgPdZ1s18-9ndZKJqSf6NwVH7w@mail.gmail.com> <7vobzzwvug.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j6t@kdbg.org>, Erik Faye-Lund <kusmabite@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Tue Aug 09 07:02:33 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 09 07:27:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QqeSW-0007bI-Jx
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Aug 2011 07:02:32 +0200
+	id 1Qqeqa-0005sl-9l
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Aug 2011 07:27:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750966Ab1HIFCT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Aug 2011 01:02:19 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:55837
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750779Ab1HIFCS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2011 01:02:18 -0400
-Received: (qmail 2560 invoked by uid 107); 9 Aug 2011 05:02:53 -0000
-Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 09 Aug 2011 01:02:53 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Aug 2011 23:02:11 -0600
-Content-Disposition: inline
-In-Reply-To: <4E401869.8060702@lsrfire.ath.cx>
+	id S1751799Ab1HIF1T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Aug 2011 01:27:19 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:46688 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750866Ab1HIF1T (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Aug 2011 01:27:19 -0400
+Received: by wwf5 with SMTP id 5so2274081wwf.1
+        for <git@vger.kernel.org>; Mon, 08 Aug 2011 22:27:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=3fgKJhbXVYXrd2zW+FKGI99vjOM35sPIaRzk3IvGAM0=;
+        b=lCFdXrkPgWrDSnnyW3mw+NwMfcTRZuHjww5RUtb1YR98jQHknEkkzsAVaIGwkV6r44
+         Z9iffquCO8lujP65jyRe7CcOIBheYlbywSjq9flHNOTusc86CGQ8Q+kis436wgM4NIw2
+         Ath7Z3XcNM8qvPdp9ZWAvIyPAYhCVPRaKJdx4=
+Received: by 10.216.185.9 with SMTP id t9mr3700214wem.94.1312867587204; Mon,
+ 08 Aug 2011 22:26:27 -0700 (PDT)
+Received: by 10.216.137.134 with HTTP; Mon, 8 Aug 2011 22:26:07 -0700 (PDT)
+In-Reply-To: <7vobzzwvug.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179020>
 
-On Mon, Aug 08, 2011 at 07:10:01PM +0200, Ren=C3=A9 Scharfe wrote:
+Hi Junio,
 
-> > -	tar_filter_config("tar.tgz.command", "gzip -cn", NULL);
-> > +	tar_filter_config("tar.tgz.command", "gzip -cn | cat", NULL);
-> >  	tar_filter_config("tar.tgz.remote", "true", NULL);
-> > -	tar_filter_config("tar.tar.gz.command", "gzip -cn", NULL);
-> > +	tar_filter_config("tar.tar.gz.command", "gzip -cn | cat", NULL);
-> >  	tar_filter_config("tar.tar.gz.remote", "true", NULL);
-> >  	git_config(git_tar_config, NULL);
-> >  	for (i =3D 0; i < nr_tar_filters; i++) {
-> >=20
-> > (provided that 'cat' magically does not suffer from the same proble=
-m,
-> > and I do think that it does not.)
->=20
-> The external cat can indeed be used.  We'd need to do that for user
-> supplied commands as well, though, like this (ugh):
->=20
-> diff --git a/archive-tar.c b/archive-tar.c
-> index 20af005..eaa9a1c 100644
-> --- a/archive-tar.c
-> +++ b/archive-tar.c
-> @@ -326,6 +326,9 @@ static int write_tar_filter_archive(const struct =
-archiver *ar,
->  		die("BUG: tar-filter archiver called with no filter defined");
-> =20
->  	strbuf_addstr(&cmd, ar->data);
-> +#ifdef WIN32
-> +	strbuf_addstr(&cmd, " | cat");
-> +#endif
->  	if (args->compression_level >=3D 0)
->  		strbuf_addf(&cmd, " -%d", args->compression_level);
+Junio C Hamano writes:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>
+>> Junio: Here's another small fixup patch for your convenience.
+>
+> Not very convenient I am afraid ;-)
 
-Do we need to? It seems to me that defaulting to "gzip -cn | cat" is no=
-t
-"we are on Windows, a platform that needs a special workaround in git",
-but rather "this gzip is horribly broken, but at build-time you can
-set a gzip that works".
+Hm, I actually thought about this a bit.  Due to the volume of patches
+you have to pick up and apply from emails everyday, I figured that you
+must have optimized your email-patch application pipeline to such a
+ridiculous extent that it's probably faster for you to apply patches
+than even typing out a word.  A quick interactive rebase with
+autosquash will then fix rr/revert-cherry-pick-continue, no?
 
-So if the user wants to specify some broken filter, it is up to them to
-add "| cat" if their filter merits it.
+>> --8<--
+>
+> This seems to be too short for "am -c"; have you tried applying it
+> yourself first before sending it out?
 
-But that is somewhat a matter of perception, and it won't make a user o=
-n
-Windows who does "git config archive.bz2 bzip2 -c" any happier when the=
-y
-are told it is their responsibility to deal with it.
+No, I haven't tried this.  Will try it and patch "am -c" if necessary,
+because I like this minimal scissor (picked it up from Jonathan I
+think).
 
-BTW, as nice as this "gzip -cn | cat" idea is, I think it needs to be
-wrapped in a shell script. With the code above, we will generate "gzip
--cn | cat -9". So we really need:
+>> -test_expect_success '--signoff is not automatically propogated to
+>> resolved conflict' '
+>> +test_expect_success '--signoff is not automatically propagated to
+>> resolved conflict' '
+>
+> Linewrapped.
 
-  $ cat `which gzip`
-  #!/bin/sh
-  gzip.real -cn "$@" | cat
+Ugh.  Classic GMail web interface mistake.  I sometimes risk sending
+small patches without git-send-email, and this is what happens.
+Nothing helps: mutt's single-threaded'ness is starting to get on my
+nerves now.
 
-and then no hacks need to go into git at all. The fix is about providin=
-g
-a sane gzip, not fixing git.
+> I'll squash this manually, so no need to resend. Thanks.
 
-BTW, from what Johannes said, the issue is about a non-msys program
-calling an msys one. Does that mean that having git run:
+Thanks.
 
-  sh -c 'gzip -cn'
-
-would work? If so, then could the solution be as simple as turning off
-the "don't bother with the shell" optimization that run-command uses?
-Something like "gzip -cn" gets split by git and run via spawn now
-(because it has no metacharacters). But we could easily make it always
-run through the shell.
-
--Peff
+-- Ram
