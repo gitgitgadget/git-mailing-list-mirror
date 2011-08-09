@@ -1,62 +1,74 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: What's cooking in git.git (Aug 2011, #02; Mon, 8)
-Date: Tue, 9 Aug 2011 11:06:20 +0530
-Message-ID: <CALkWK0m7UCuPbdB5k4KS9MfmGvYOjPDkSP_aFFp0A3QETg9k7A@mail.gmail.com>
-References: <7v8vr3v7az.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Suppressing auto-cc for specific addresses
+Date: Tue, 9 Aug 2011 01:01:41 -0600
+Message-ID: <20110809070141.GA13623@sigill.intra.peff.net>
+References: <4E3EF38A.9010307@gmail.com>
+ <20110807234634.GA3236@kroah.com>
+ <CACTFLAOhApGVNZ7JsWhoHBEaQ_87stXjxkXvadmauNfhSuPD1g@mail.gmail.com>
+ <D95ADFD4-2504-4BE6-BCD4-7B916F6F2FEB@gmail.com>
+ <CACTFLAN0gM-xvEU32KHEsaApH4apvGUwGkiDHx06PngHUvH0Ew@mail.gmail.com>
+ <20110808204448.GF18294@sigill.intra.peff.net>
+ <20110808210714.GA16512@elie.gateway.2wire.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 09 07:38:39 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Daniel Mack <zonque@gmail.com>, David Aguilar <davvid@gmail.com>,
+	Greg KH <greg@kroah.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 09 09:01:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qqf1R-0000kz-Dk
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Aug 2011 07:38:37 +0200
+	id 1QqgK2-0002vi-Lm
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Aug 2011 09:01:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752165Ab1HIFgo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Aug 2011 01:36:44 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:35128 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751642Ab1HIFgn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2011 01:36:43 -0400
-Received: by wwf5 with SMTP id 5so2279080wwf.1
-        for <git@vger.kernel.org>; Mon, 08 Aug 2011 22:36:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Xuuy8ZVhGhDYa0sSpXQ35tLrAmspd22wuAc7uQF57eg=;
-        b=VyjRN4LAF0WozuhBKiv1NRAQ1ssA9dzSJGK0ScuaOrRf1tPP1WaUxzxqtir2Et6rv/
-         ZjtUbNM24HtBTFpePbduUuiSQ3ZbU0x19UKqswi0dDy8T5s1B7LyKoJzxKOwC4gTYxGj
-         Ziq1Gc+sipO1zL/fnJETEsBWuww15DjfvdXOU=
-Received: by 10.216.168.198 with SMTP id k48mr1619124wel.109.1312868202603;
- Mon, 08 Aug 2011 22:36:42 -0700 (PDT)
-Received: by 10.216.137.134 with HTTP; Mon, 8 Aug 2011 22:36:20 -0700 (PDT)
-In-Reply-To: <7v8vr3v7az.fsf@alter.siamese.dyndns.org>
+	id S1752332Ab1HIHBp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Aug 2011 03:01:45 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:37166
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751423Ab1HIHBo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Aug 2011 03:01:44 -0400
+Received: (qmail 3269 invoked by uid 107); 9 Aug 2011 07:02:20 -0000
+Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 09 Aug 2011 03:02:20 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Aug 2011 01:01:41 -0600
+Content-Disposition: inline
+In-Reply-To: <20110808210714.GA16512@elie.gateway.2wire.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179022>
 
-Hi Junio,
+On Mon, Aug 08, 2011 at 11:07:14PM +0200, Jonathan Nieder wrote:
 
-Junio C Hamano writes:
-> * rr/revert-cherry-pick-continue (2011-08-08) 18 commits
-> [...]
-> Getting into a reasonable shape. Is another round of re-roll coming?
+> > I'm kind of confused why you would mark an address as "cc", but not cc
+> > it. Wouldn't it make sense to call the header something else?
+> 
+> Maybe the patch is a draft and he is seeking early feedback.  The
+> final version will be cc-ed to the indicated person later (and that's
+> part of what it is time to get feedback on).
 
-I certainly have no plans of re-rolling.  Although there are times I
-wish I'd done a few things slightly differently while developing the
-new series (on top of rr/revert-cherry-pick-continue), I'll refrain
-from making any changes to this series.  That little ugliness is the
-price we have to pay for my lack of experience :)  All the recent
-reviews have mainly pointed out nits, and I really don't think there
-are any other urgent issues with this series.
+I suspect in that workflow, you would use --suppress-cc=all, and then
+just address it to whomever you are getting feedback from.
 
-Thanks.
+> Or maybe the Cc: line is from the original patch and he is using git
+> send-email to forward it without mangling.
 
--- Ram
+In that case, shouldn't the cc either be respected (since the original
+patch author wanted it so), or stripped (if the patch no longer has
+anything to do with that cc).
+
+
+Still, we are only guessing at possible workflows here. I don't have a
+problem with the idea of per-address suppression; it makes git more
+flexible and doesn't hurt people who don't need the flexibility.
+
+I was more objecting to it as a solution to a workflow that is "we want
+a unique tag in the commit, so we called it 'cc', but don't want people
+to actually 'cc' it". That's just wrong and silly. But it turns out that
+isn't happening here, anyway.
+
+-Peff
