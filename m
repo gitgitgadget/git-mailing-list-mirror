@@ -1,109 +1,106 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 4/4] upload-archive: use start_command instead of fork
-Date: Tue, 9 Aug 2011 14:05:04 -0600
-Message-ID: <20110809200504.GA31944@sigill.intra.peff.net>
-References: <4E37202B.80208@lsrfire.ath.cx>
- <20110802040004.GC17494@sigill.intra.peff.net>
- <4E3829DC.8070802@lsrfire.ath.cx>
- <20110802181357.GA1861@sigill.intra.peff.net>
- <4E388A55.6080606@kdbg.org>
- <4E3D0C1D.9000807@lsrfire.ath.cx>
- <4E3EEF3B.80908@kdbg.org>
- <4E401869.8060702@lsrfire.ath.cx>
- <20110809050211.GA3588@sigill.intra.peff.net>
- <4E410B26.1080407@lsrfire.ath.cx>
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: [PATCH 2/2] On Cygwin support both UNIX and DOS style path-names
+Date: Tue, 09 Aug 2011 22:38:11 +0200
+Organization: Home - http://www.obry.net
+Message-ID: <4E419AB3.7090405@obry.net>
+References: <1312560614-20772-1-git-send-email-pascal@obry.net> <1312560614-20772-3-git-send-email-pascal@obry.net> <4E416D4A.40602@ramsay1.demon.co.uk>
+Reply-To: pascal@obry.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j6t@kdbg.org>, Erik Faye-Lund <kusmabite@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Tue Aug 09 22:05:24 2011
+Cc: git@vger.kernel.org
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Tue Aug 09 22:44:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QqsYB-0004uk-QT
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Aug 2011 22:05:20 +0200
+	id 1QqtAL-00057a-Rq
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Aug 2011 22:44:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752836Ab1HIUFM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Aug 2011 16:05:12 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59911
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752582Ab1HIUFK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2011 16:05:10 -0400
-Received: (qmail 8855 invoked by uid 107); 9 Aug 2011 20:05:46 -0000
-Received: from S010690840de80b38.ss.shawcable.net (HELO sigill.intra.peff.net) (70.64.172.81)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 09 Aug 2011 16:05:46 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Aug 2011 14:05:04 -0600
-Content-Disposition: inline
-In-Reply-To: <4E410B26.1080407@lsrfire.ath.cx>
+	id S1752412Ab1HIUok convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Aug 2011 16:44:40 -0400
+Received: from mail-ww0-f47.google.com ([74.125.82.47]:39544 "EHLO
+	mail-ww0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751212Ab1HIUoj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Aug 2011 16:44:39 -0400
+X-Greylist: delayed 369 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Aug 2011 16:44:39 EDT
+Received: by wwf4 with SMTP id 4so385133wwf.4
+        for <git@vger.kernel.org>; Tue, 09 Aug 2011 13:44:38 -0700 (PDT)
+Received: by 10.216.0.66 with SMTP id 44mr5882786wea.63.1312922309198;
+        Tue, 09 Aug 2011 13:38:29 -0700 (PDT)
+Received: from [192.168.0.100] (AVelizy-154-1-8-151.w82-124.abo.wanadoo.fr [82.124.70.151])
+        by mx.google.com with ESMTPS id n6sm185402wed.16.2011.08.09.13.38.12
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 09 Aug 2011 13:38:13 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.22) Gecko/20090605 Thunderbird/2.0.0.22 Mnenhy/0.7.5.0
+In-Reply-To: <4E416D4A.40602@ramsay1.demon.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179047>
 
-On Tue, Aug 09, 2011 at 12:25:42PM +0200, Ren=C3=A9 Scharfe wrote:
+Le 09/08/2011 19:24, Ramsay Jones a =E9crit :
+> Pascal Obry wrote:
+>> In fact Cygwin supports both, so make Git agree with this.
+>> The failing case is when a file is committed in a sub-dir of the
+>> repository using a log message from a file specified with a DOS
+>> style path-name. To reproduce:
+>>
+>>     $ cd src
+>>     $ git commit -F c:\tmp\log.txt file.c
+>>     fatal: could not read log file 'src/c:\tmp\log.txt': No such fil=
+e \
+>>     or directory.
+>
+> Hmm, are you using bash or cmd.exe? Using bash I get the following:
 
-> > BTW, as nice as this "gzip -cn | cat" idea is, I think it needs to =
-be
-> > wrapped in a shell script. With the code above, we will generate "g=
-zip
-> > -cn | cat -9".
->=20
-> Yes, the three added lines in the patch above would have to be moved
-> down two lines, after the compression level is added.  D'oh!
+bash.
 
-Also, is adding "| cat" also sufficient for arbitrary shell code (i.e.,
-whatever the user hands us via the config)? I couldn't think of an
-example that wouldn't work.
-
-> OK, that's one way to do it; another would be let gzip (and bzip2 etc=
-=2E)
-> do whatever cat does to avoid end of line conversions.  And yet anoth=
-er
-> is to take them from http://unxutils.sourceforge.net/.
-
-Yeah, I like all of those solutions better than hacking an extra pipe
-into git. I don't know enough to say how painful they are in practice,
-though.
-
-> > BTW, from what Johannes said, the issue is about a non-msys program
-> > calling an msys one. Does that mean that having git run:
-> >=20
-> >   sh -c 'gzip -cn'
-> >=20
-> > would work? If so, then could the solution be as simple as turning =
-off
-> > the "don't bother with the shell" optimization that run-command use=
-s?
-> > Something like "gzip -cn" gets split by git and run via spawn now
-> > (because it has no metacharacters). But we could easily make it alw=
-ays
-> > run through the shell.
->=20
-> Just checked -- it doesn't work.  I assume that's because the shell i=
+>
+>      $ cd src
+>      $ git commut -F c:\tmp\log.txt file.c
+>      fatal: could not read file 'src/c:tmplog.txt': No such file or d=
+irectory
+>      $
+>
+> Which is what I would expect of (any) posix shell, viz:
+>
+>      $ ls c:\
+>      >  ^C
+>      $ ls c:\\
+>      AUTOEXEC.BAT*            NTDETECT.COM*               WATCOM/    =
+   msysgit/
+>      CMPNENTS/                Program Files/              WINDOWS/   =
+   msysgit-old/
+>      CONFIG.SYS*              RECYCLER/                   boot.ini*  =
+   ntldr*
+>      Documents and Settings/  SUPPORT/                    cygwin/    =
+   pagefile.sys
+>      I386/                    SWSTAMP.TXT*                cygwintemp/=
+   ssl/
+>      IO.SYS*                  System Volume Information/  dm/        =
+   uname/
+>      MSDOS.SYS*               TOOLSCD/                    dm840/     =
+   zlib/
+>      MSOCache/                VALUEADD/                   hiberfil.sy=
 s
-> also an MSYS program.
 
-Too bad. I guess the first msys program to be run sets the mode of the
-output descriptor, and then everybody else inherits that. If there were
-a helper or shell builtin to switch to binary mode, we could put it at
-the start of the shell pipeline.
+Exactly, \\ this is what I have used and this is the bug. Cygwin=20
+supports ls c:\\ so should Cygwin/Git. My quoted example was missing th=
+e=20
+escape \.
 
-If you write a C program that does:
+--=20
 
-  setmode(1, O_BINARY);
-
-and call it like:
-
-  ./setmode-helper; gzip -cn
-
-does that work? I suspect not, as from my brief reading of the msys gzi=
-p
-source, it actually calls setmode() itself.
-
--Peff
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|    http://www.obry.net  -  http://v2p.fr.eu.org
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
