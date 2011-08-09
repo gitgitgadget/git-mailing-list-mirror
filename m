@@ -1,67 +1,159 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 0/2] bisect: add support for bisecting bare
- repositories
-Date: Tue, 9 Aug 2011 03:54:37 +0200
-Message-ID: <20110809015437.GA29121@elie.gateway.2wire.net>
-References: <1312852900-29457-1-git-send-email-jon.seymour@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com, chriscool@tuxfamily.org,
-	j6t@kdbg.org, jnareb@gmail.com
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 09 03:54:57 2011
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH v3 1/1] bisect: add support for bisecting bare repositories
+Date: Tue,  9 Aug 2011 12:11:54 +1000
+Message-ID: <1312855914-610-1-git-send-email-jon.seymour@gmail.com>
+Cc: gitster@pobox.com, chriscool@tuxfamily.org, j6t@kdbg.org,
+	jnareb@gmail.com, jrnieder@gmail.com,
+	Jon Seymour <jon.seymour@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 09 04:12:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QqbWy-0006sV-TQ
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Aug 2011 03:54:57 +0200
+	id 1Qqbng-0003Ns-Ac
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Aug 2011 04:12:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751177Ab1HIByq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Aug 2011 21:54:46 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:46087 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750929Ab1HIByp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2011 21:54:45 -0400
-Received: by yie30 with SMTP id 30so1282119yie.19
-        for <git@vger.kernel.org>; Mon, 08 Aug 2011 18:54:44 -0700 (PDT)
+	id S1751629Ab1HICMH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Aug 2011 22:12:07 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:34569 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751518Ab1HICMG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2011 22:12:06 -0400
+Received: by pzk37 with SMTP id 37so9271602pzk.1
+        for <git@vger.kernel.org>; Mon, 08 Aug 2011 19:12:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=M6HcJZu0MDZDlF/+tKu7tZ37MHfqnZiMoLjlNyRe0Q4=;
-        b=GfeRnHwhxj8zOc9dOmPnk5x+Ox3RM9wwLD1WQ+yFQgUw7tCTSTadihrkiFgqlsbUA8
-         JMblI6JxXbqGsANu4XEtanXmUxKKBhPDgfxXH3EYsBYXDf05I7xaCgUqtNrnglFbrDM9
-         90Klab5fUtzWJbO6KzTzLS9kJxbSuhz4wOYbY=
-Received: by 10.236.125.230 with SMTP id z66mr425306yhh.110.1312854884559;
-        Mon, 08 Aug 2011 18:54:44 -0700 (PDT)
-Received: from elie.gateway.2wire.net (adsl-69-209-69-68.dsl.chcgil.sbcglobal.net [69.209.69.68])
-        by mx.google.com with ESMTPS id c63sm2806505yhe.32.2011.08.08.18.54.42
-        (version=SSLv3 cipher=OTHER);
-        Mon, 08 Aug 2011 18:54:43 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1312852900-29457-1-git-send-email-jon.seymour@gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=zFHbfqUBNNiHSNzcIcA5gDqRZ4ujWiMtnE3vtOyb13s=;
+        b=fV/H4YqZYZMCJy+3yEEM68mhYwnRp8Lfpr85yDrGhF/K9zg07a5SJwuZ3lXwASXXH7
+         A81u33axBbonQP5oN5UtC5BE/Jp5EvN0QiF7whXuMmo9WcwIcH+wz3QhEzDs/9ideZrB
+         biEsc50BRHErYRGNQuHar9PCWr+wPQtEyUWC0=
+Received: by 10.142.240.9 with SMTP id n9mr5591012wfh.104.1312855924934;
+        Mon, 08 Aug 2011 19:12:04 -0700 (PDT)
+Received: from localhost.localdomain (bh02i525f01.au.ibm.com [202.81.18.30])
+        by mx.google.com with ESMTPS id 14sm2794990wfl.5.2011.08.08.19.12.01
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 08 Aug 2011 19:12:04 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.523.g2ad34
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179018>
 
-Jon Seymour wrote:
+This extension to js/bisect-no-checkout adds support for bisecting bare repositories.
 
-> This extension to js/bisect-no-checkout (currently in pu) adds
-> support for bisecting bare repositories.
->
-> It does this by relaxing the requirement that git bisect is invoked
-> in a repository with a working tree and by defaulting to
-> --no-checkout in the case of a bare repository.
->
-> Two tests are included to demonstrate this behaviour.
+It does this by relaxing the requirement that git bisect is invoked in a repository with a working tree and by defaulting to --no-checkout in the case of a bare repository.
 
-Thanks!  I think the two patches should be squashed, with the above
-as commit message.
+Two tests are included to demonstrate this behaviour.
 
-With or without that change, for what it's worth,
+Suggested-by: Junio C Hamano <gitster@pobox.com>
 Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+---
+ Documentation/git-bisect.txt |    2 ++
+ git-bisect.sh                |    8 ++++++--
+ git.c                        |    2 +-
+ t/t6030-bisect-porcelain.sh  |   31 +++++++++++++++++++++++++++++++
+ 4 files changed, 40 insertions(+), 3 deletions(-)
+
+v3: squashed entire series.
+
+diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
+index 41e6ca8..e4f46bc 100644
+--- a/Documentation/git-bisect.txt
++++ b/Documentation/git-bisect.txt
+@@ -273,6 +273,8 @@ it point to the commit that should be tested.
+ +
+ This option may be useful when the test you would perform in each step
+ does not require a checked out tree.
+++
++If the repository is bare, `--no-checkout` is assumed.
+ 
+ EXAMPLES
+ --------
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 22c4da5..e0ca3fb 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -29,7 +29,6 @@ Please use "git help bisect" to get the full man page.'
+ OPTIONS_SPEC=
+ . git-sh-setup
+ . git-sh-i18n
+-require_work_tree
+ 
+ _x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
+ _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
+@@ -79,7 +78,12 @@ bisect_start() {
+ 	orig_args=$(git rev-parse --sq-quote "$@")
+ 	bad_seen=0
+ 	eval=''
+-	mode=''
++	if test "z$(git rev-parse --is-bare-repository)" != zfalse
++	then
++		mode=--no-checkout
++	else
++		mode=''
++	fi
+ 	while [ $# -gt 0 ]; do
+ 		arg="$1"
+ 		case "$arg" in
+diff --git a/git.c b/git.c
+index 8828c18..7fdcab2 100644
+--- a/git.c
++++ b/git.c
+@@ -320,7 +320,7 @@ static void handle_internal_command(int argc, const char **argv)
+ 		{ "annotate", cmd_annotate, RUN_SETUP },
+ 		{ "apply", cmd_apply, RUN_SETUP_GENTLY },
+ 		{ "archive", cmd_archive },
+-		{ "bisect--helper", cmd_bisect__helper, RUN_SETUP | NEED_WORK_TREE },
++		{ "bisect--helper", cmd_bisect__helper, RUN_SETUP },
+ 		{ "blame", cmd_blame, RUN_SETUP },
+ 		{ "branch", cmd_branch, RUN_SETUP },
+ 		{ "bundle", cmd_bundle, RUN_SETUP_GENTLY },
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 4fb7d11..62125ec 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -592,6 +592,37 @@ test_expect_success 'erroring out when using bad path parameters' '
+ 	grep "bad path parameters" error.txt
+ '
+ 
++test_expect_success 'test bisection on bare repo - --no-checkout specified' '
++	git clone --bare . bare.nocheckout &&
++	(
++		cd bare.nocheckout &&
++		git bisect start --no-checkout &&
++		git bisect good $HASH1 &&
++		git bisect bad $HASH4 &&
++		git bisect run eval \
++			"test \$(git rev-list BISECT_HEAD ^$HASH2 --max-count=1 | wc -l) = 0" \
++			>../nocheckout.log &&
++		git bisect reset
++	) &&
++	grep "$HASH3 is the first bad commit" nocheckout.log
++'
++
++
++test_expect_success 'test bisection on bare repo - --no-checkout defaulted' '
++	git clone --bare . bare.defaulted &&
++	(
++		cd bare.defaulted &&
++		git bisect start &&
++		git bisect good $HASH1 &&
++		git bisect bad $HASH4 &&
++		git bisect run eval \
++			"test \$(git rev-list BISECT_HEAD ^$HASH2 --max-count=1 | wc -l) = 0" \
++			>../defaulted.log &&
++		git bisect reset
++	) &&
++	grep "$HASH3 is the first bad commit" defaulted.log
++'
++
+ #
+ # This creates a broken branch which cannot be checked out because
+ # the tree created has been deleted.
+-- 
+1.7.6.523.g2ad34
