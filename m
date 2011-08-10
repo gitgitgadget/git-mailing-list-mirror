@@ -1,105 +1,107 @@
-From: Luiz Ramos <luizzramos@yahoo.com.br>
-Subject: About git-diff
-Date: Tue, 9 Aug 2011 18:52:57 -0700 (PDT)
-Message-ID: <1312941177.17928.YahooMailClassic@web121810.mail.ne1.yahoo.com>
+From: Vijay Lakshminarayanan <laksvij@gmail.com>
+Subject: Re: [PATCH 2/2] On Cygwin support both UNIX and DOS style path-names
+Date: Wed, 10 Aug 2011 08:14:51 +0530
+Message-ID: <871uwunfx8.fsf@gmail.com>
+References: <1312560614-20772-1-git-send-email-pascal@obry.net>
+	<1312560614-20772-3-git-send-email-pascal@obry.net>
+	<4E416D4A.40602@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 10 03:59:29 2011
+Content-Type: text/plain
+Cc: Pascal Obry <pascal@obry.net>, git@vger.kernel.org
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Wed Aug 10 04:45:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qqy4u-0006u4-RK
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Aug 2011 03:59:29 +0200
+	id 1QqynH-0002w7-7a
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Aug 2011 04:45:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752034Ab1HJB7R convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Aug 2011 21:59:17 -0400
-Received: from nm24-vm0.bullet.mail.ne1.yahoo.com ([98.138.90.34]:37689 "HELO
-	nm24-vm0.bullet.mail.ne1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1750894Ab1HJB7Q convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 9 Aug 2011 21:59:16 -0400
-X-Greylist: delayed 378 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Aug 2011 21:59:16 EDT
-Received: from [98.138.90.53] by nm24.bullet.mail.ne1.yahoo.com with NNFMP; 10 Aug 2011 01:52:58 -0000
-Received: from [98.138.89.174] by tm6.bullet.mail.ne1.yahoo.com with NNFMP; 10 Aug 2011 01:52:58 -0000
-Received: from [127.0.0.1] by omp1030.mail.ne1.yahoo.com with NNFMP; 10 Aug 2011 01:52:58 -0000
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 116511.60083.bm@omp1030.mail.ne1.yahoo.com
-Received: (qmail 34097 invoked by uid 60001); 10 Aug 2011 01:52:58 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com.br; s=s1024; t=1312941178; bh=4ibN7n44mQGgV8OBYfATgJWVynIxaXd9/06mNV1ix1E=; h=X-YMail-OSG:Received:X-Mailer:Message-ID:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=S3GnO7sT5YuOACankYGEMj9hcAahtEQtewxYTzq0F06zMR+U4ppkDTJZzga9lZg5dD6+0yCxoE6S9r4PNpbEqKuXKqLPAyc6uP7CgGHBHToQ2h6V0p/L053Vu3ldGOgSScmJmEGGGz2UM6PtEb7LVYusfnxTQw+4lsk7ux4vwpA=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com.br;
-  h=X-YMail-OSG:Received:X-Mailer:Message-ID:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=F7wc8hXz1kHEK1WhHfyp1CMNPRVW6fQeZQOji2I7V7Po85MXUkSn5jz8B0bHHq7Cn0j+O7DbkSdzWehnukpKJkVx5HZ3T3pmaw2QI64t8xP/adTO1kKDhovRp/qzBlMHM6kP95itYekPbLwDnA5JdgWkxL3T4p9VZog+DGbPNhY=;
-X-YMail-OSG: v6Wx3CAVM1n8XQDDux6wZKK0iA6VToKNCFGtFKt5EZsYqhS
- cyoVSN.Pf6Ek.mGWuclG2d8I5dtc4UnQPz7uQwGDWUBtz7z3lbhIq5G6qKn8
- QvmtQYaEFqOhj._dbz9SyncIJSfLfJXlsjno1o1jb0y4Tk1WIohrUnFuwzzd
- mfODTxhpLuhE25qwlkHsu05dXPwScsIIm_8wv1waVTAI27n_lOvbFWNtxH7B
- IC7Wx.wULF7MMyKo0bNSi88Kz8_fgt.eZEdzZUCz1dcm1sOgafHmRJEuQ3kU
- GlAO_Duh6bH0iqDu3rjKgi84EJ3GUBVfHKRV6Eyc4U2ExDVGlrsDC_tZoJ29
- hYaf84ILGUWDaxednW0Qv913w4.z_2vLDfJgVE0cWfymb6V4r
-Received: from [189.121.246.226] by web121810.mail.ne1.yahoo.com via HTTP; Tue, 09 Aug 2011 18:52:57 PDT
-X-Mailer: YahooMailClassic/14.0.4 YahooMailWebService/0.8.113.313619
+	id S1751568Ab1HJCpA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Aug 2011 22:45:00 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:37838 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750802Ab1HJCo7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Aug 2011 22:44:59 -0400
+Received: by yie30 with SMTP id 30so422256yie.19
+        for <git@vger.kernel.org>; Tue, 09 Aug 2011 19:44:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=1xk3XkmIQFT6K+MV0XI8TlxHoEpsmMutQ0wcwPC6iXQ=;
+        b=SFnHyvpXyhP5rf+KAnFZhd9TSxXSAE6SU3rqcSXMbsqcqnyV6D2jZOq7V9TKWPCxC6
+         QYo0XBQQaoFEXPuI54Lkf6SKMuGTrqnXs29az+tMcJoZ4wgM6NycWtJh4eemfM+qej7W
+         +PN5omV6m1PwW8e7F3xD6/MkkTjsEhr3JfBGU=
+Received: by 10.142.50.11 with SMTP id x11mr3983779wfx.147.1312944298650;
+        Tue, 09 Aug 2011 19:44:58 -0700 (PDT)
+Received: from BALROG ([59.92.59.141])
+        by mx.google.com with ESMTPS id f8sm470028pbk.6.2011.08.09.19.44.54
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 09 Aug 2011 19:44:57 -0700 (PDT)
+In-Reply-To: <4E416D4A.40602@ramsay1.demon.co.uk> (Ramsay Jones's message of
+	"Tue, 09 Aug 2011 18:24:26 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (windows-nt)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179054>
 
-Hello,
+Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
 
-just a doubt, but it can also be a bug.
+> Pascal Obry wrote:
+>> In fact Cygwin supports both, so make Git agree with this.
+>> The failing case is when a file is committed in a sub-dir of the
+>> repository using a log message from a file specified with a DOS
+>> style path-name. To reproduce:
+>> 
+>>    $ cd src
+>>    $ git commit -F c:\tmp\log.txt file.c
+>>    fatal: could not read log file 'src/c:\tmp\log.txt': No such file \
+>>    or directory.
+>
+> Hmm, are you using bash or cmd.exe? Using bash I get the following:
+>
+>     $ cd src
+>     $ git commut -F c:\tmp\log.txt file.c
+>     fatal: could not read file 'src/c:tmplog.txt': No such file or directory
+>     $ 
+>
+> Which is what I would expect of (any) posix shell, viz:
+>
+>     $ ls c:\
+>     > ^C
+>     $ ls c:\\
+>     AUTOEXEC.BAT*            NTDETECT.COM*               WATCOM/       msysgit/
+>     CMPNENTS/                Program Files/              WINDOWS/      msysgit-old/
+>     CONFIG.SYS*              RECYCLER/                   boot.ini*     ntldr*
+>     Documents and Settings/  SUPPORT/                    cygwin/       pagefile.sys
+>     I386/                    SWSTAMP.TXT*                cygwintemp/   ssl/
+>     IO.SYS*                  System Volume Information/  dm/           uname/
+>     MSDOS.SYS*               TOOLSCD/                    dm840/        zlib/
+>     MSOCache/                VALUEADD/                   hiberfil.sys
+>     $ 
 
-Suppose there is a project stored in git, and it has two branches. In t=
-he branch b1, there is a single file, file_1. In the branch b2, there i=
-s a single file file_2.
+FWIW, I use git on Cygwin and it works quite well.  Cygwin supports
+Windows paths when quoted.  So
 
-Suppose also I am using branch b1 above (that is, "git checkout b1" was=
- previously run), but the file file_2 was left in the working directory=
- along with file_1.
+$ ls 'C:\Users\vijay\Desktop'
 
-If I run:
+works as expected.  This is very useful when you're copying paths from,
+say, Windows Explorer, to Cygwin.
 
-$ git diff --cached b2 ./
+> ATB,
+> Ramsay Jones
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-The results will point that the file file_1 is added, as it is in the i=
-ndex and not in the tree b2. It will also point that file file_2 is rem=
-oved, as it is listed in the tree b2, but not in the index. No doubts h=
-ere.
+-- 
+Cheers
+~vijay
 
-If I run:
-
-$ git diff b2 ./
-
-that is, the "non-cached" version, it will show the same results. This =
-is confusing IMHO, because the git-diff manual suggests that invocation=
- should render the difference between the named tree contents and the w=
-orking directory. In the working directory, only to recall, file_1 and =
-file_2 are both present and with good versions. In my understanding, th=
-e command should report that file_1 is in excess in the working directo=
-ry, relative to b2, and report nothing about file_2, as it is in the sa=
-me version as the sample in the tree b2.
-
-This doesn't seem to be the same thing git-diff-index manual states, ho=
-wever. The manual gets more deep into the details, and it's not so easy=
- to understand it unless one knows a lot of the inner commands, which d=
-oes not apply to me. In my basic reading, it seems that behind the scen=
-es, git-diff-index is what is run in this case, and the fact that file_=
-2 is not in the tree associated to b1 is a relevant thing in this case.=
- So, the index seem to matter, and if I try to do it, a previous "git u=
-pdate-index" should be done.
-
-I may be wrong, but as a user, I'd like to have the non-cached command =
-version comparing tree and working directory, as the manual of git-diff=
- suggests, eventually helped by the index, but not limited to it. Becau=
-se if I'd like to compare with index, I would try it using --cached ins=
-tead.
-
-Please accept my apologies if there is some newbie mistake here.
-
-Thanks,
-
-Luiz Ramos
-S=E3o Paulo - Brazil
+Gnus should be more complicated.
