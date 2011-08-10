@@ -1,84 +1,90 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 4/5] sequencer: Expose code that handles files in
- .git/sequencer
-Date: Wed, 10 Aug 2011 10:53:32 -0500
-Message-ID: <20110810155332.GB4076@elie.gateway.2wire.net>
-References: <1312970151-18906-1-git-send-email-artagnon@gmail.com>
- <1312970151-18906-5-git-send-email-artagnon@gmail.com>
- <20110810152126.GE31315@elie.gateway.2wire.net>
- <CALkWK0nJUTtNgCHF6CE2-w+3ZwdBrscBRw0e0L8wX86Za0G=DA@mail.gmail.com>
+Subject: Re: git-mergetool: wrap tools with 3 files only to use the BASE file
+ instead of MERGED
+Date: Wed, 10 Aug 2011 11:12:11 -0500
+Message-ID: <20110810161211.GC4076@elie.gateway.2wire.net>
+References: <20110810160356.GA32126@ortolo.eu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 10 17:53:44 2011
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Charles Bailey <charles@hashpling.org>
+To: Tanguy Ortolo <tanguy+debian@ortolo.eu>
+X-From: git-owner@vger.kernel.org Wed Aug 10 18:12:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QrB6E-0003CS-Mq
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Aug 2011 17:53:43 +0200
+	id 1QrBOJ-0005Yh-Js
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Aug 2011 18:12:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751851Ab1HJPxi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Aug 2011 11:53:38 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:61977 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750922Ab1HJPxh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2011 11:53:37 -0400
-Received: by gxk21 with SMTP id 21so746077gxk.19
-        for <git@vger.kernel.org>; Wed, 10 Aug 2011 08:53:37 -0700 (PDT)
+	id S1752589Ab1HJQMR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Aug 2011 12:12:17 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:54075 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751709Ab1HJQMQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2011 12:12:16 -0400
+Received: by gya6 with SMTP id 6so755921gya.19
+        for <git@vger.kernel.org>; Wed, 10 Aug 2011 09:12:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=xeBcwz7xCSMSco2rAA4MR8LIz4mha13LU21PHfornig=;
-        b=I8omFD5JIxmIXvVGs0WTqMe5FTkiz1V69Pryzq7R85wFzdGcnHcLKiKLs5OAHVVRa3
-         Y3At35yR3pkI8a1TxQW9jswQ+162ePss1TedlsUZ5frG5JGTRYdIQXURkTcG/LBLQ2cr
-         v/xabMjObEWfrqfqanKDHfIKq2oInrL4N1viw=
-Received: by 10.236.178.101 with SMTP id e65mr7589165yhm.107.1312991616847;
-        Wed, 10 Aug 2011 08:53:36 -0700 (PDT)
-Received: from elie.gateway.2wire.net (adsl-69-209-69-68.dsl.chcgil.sbcglobal.net [69.209.69.68])
-        by mx.google.com with ESMTPS id c6sm1174458yhm.30.2011.08.10.08.53.35
+        bh=r+Hq6kImLPyyUDsPMI1yYkELWVeCpTr7uJbfTd+jjd0=;
+        b=xaDvO6HKeRDlyT8i93u4fM6aYkb41JOTVBudKdgTo1+254Pj97fTqcEo8daXwqj1NU
+         sqQSjK7petAxibrovnDGjdbemgWq7PqIh2AcFNWk9Yo+JPzyJ2wi2WvhCeAYGkmAYNQi
+         0qztX6S9fBjd+uwzfPdDXtPlgNpv3RRwJV+Ok=
+Received: by 10.101.154.17 with SMTP id g17mr7452063ano.32.1312992736174;
+        Wed, 10 Aug 2011 09:12:16 -0700 (PDT)
+Received: from elie.gateway.2wire.net (adsl-69-209-69-68.dsl.chcgil.ameritech.net [69.209.69.68])
+        by mx.google.com with ESMTPS id l14sm897076anl.34.2011.08.10.09.12.14
         (version=SSLv3 cipher=OTHER);
-        Wed, 10 Aug 2011 08:53:36 -0700 (PDT)
+        Wed, 10 Aug 2011 09:12:14 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <CALkWK0nJUTtNgCHF6CE2-w+3ZwdBrscBRw0e0L8wX86Za0G=DA@mail.gmail.com>
+In-Reply-To: <20110810160356.GA32126@ortolo.eu>
 User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179072>
 
-Ramkumar Ramachandra wrote:
+(+cc: some relevant people)
+Hi,
 
-> So, we're
-> really faced with two choices:
-> 1. Make this patch enormous by moving as well as refactoring
-> everything into a beautiful public API.  I suspect this won't be easy
-> to review at all.
-> 2. Keep this patch as it is, and introduce a future patch to clean up
-> the API.  This is the approach I was going for.
+Tanguy Ortolo wrote[1]:
 
-Well, "beautiful public API" means "just what cmd_cherry_pick and
-cmd_revert needs", right?  So I'd suggest:
+> git-mergetool ideally uses tools that work with 4 files: BASE, LOCAL,
+> REMOTE, which are the usual original and two new version of the file,
+> and MERGED, which is where the tool is supposed to write the result of
+> the merge.
+>
+> The problem is that most tools, at least graphical ones, specifically
+> meld, can only work with three files, as they save the result to the
+> original file.
+>
+> git-mergetool currently handles this situation by passing MERGED LOCAL
+> REMOTE to the tool. This could be fine, but unfortunately MERGE contains
+> the conflicts, formatted for manual resolution, so it is not really
+> appropriate as an original file.
+>
+> I think it would be better to wrap such merge tools by:
+> 1. passing them BASE LOCAL REMOTE;
+> 2. checking whether or not BASE hase been modified:
+>    * if it has, then copying it to MERGED,
+>    * if it has not, exiting with return code 1 (merge failed).
+> This check can be by either saving and comparing the mdate, or perhaps
+> the SHA-1 hash of the BASE file.
+>
+> If this sounds good enough, I can dive into git-mergetoo--lib and
+> implement it. In the meantime, here is an example of a custom merge tool
+> that wraps meld for that purpose.
 
- 1. Figuring out what functions they need, and doing the minimal
-    refactoring needed to make them separate functions.
+I think you forgot to include the example.  Anyway, at first glance it
+sounds like a sensible idea.  David et al: thoughts?
 
- 2. As patch #2, moving everything to sequencer.c and exposing those
-    functions in sequencer.h.
-
- 3. In later patches, making changes needed for what "git commit"
-    needs.
-
-Luckily step (1) is already done.  The functions are parse_args()
-and pick_revisions() (though they could presumably use less generic
-names).
-
-Hmm?
+Regards,
 Jonathan
+
+[1] http://bugs.debian.org/637355
