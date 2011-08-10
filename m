@@ -1,90 +1,120 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: About git-diff
-Date: Wed, 10 Aug 2011 19:01:49 +0200
-Message-ID: <m2hb5pb3pe.fsf@igel.home>
-References: <1312941177.17928.YahooMailClassic@web121810.mail.ne1.yahoo.com>
+From: Tanguy Ortolo <tanguy+debian@ortolo.eu>
+Subject: Re: git-mergetool: wrap tools with 3 files only to use the BASE
+ file instead of MERGED
+Date: Wed, 10 Aug 2011 19:24:59 +0200
+Message-ID: <20110810172458.GA18167@ortolo.eu>
+References: <20110810160356.GA32126@ortolo.eu>
+ <20110810161211.GC4076@elie.gateway.2wire.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Luiz Ramos <luizzramos@yahoo.com.br>
-X-From: git-owner@vger.kernel.org Wed Aug 10 19:02:01 2011
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="+g7M9IMkV8truYOl"
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Charles Bailey <charles@hashpling.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 10 19:34:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QrCAJ-0006px-Po
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Aug 2011 19:02:00 +0200
+	id 1QrCfS-0006R6-J9
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Aug 2011 19:34:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754177Ab1HJRBx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Aug 2011 13:01:53 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:55403 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754139Ab1HJRBw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2011 13:01:52 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id DAED81C01CE2;
-	Wed, 10 Aug 2011 19:01:50 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
-	by mail.m-online.net (Postfix) with ESMTP id 9F5DF1C0004E;
-	Wed, 10 Aug 2011 19:01:50 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
-	with ESMTP id hVCP-3TgMTOF; Wed, 10 Aug 2011 19:01:50 +0200 (CEST)
-Received: from igel.home (ppp-88-217-105-8.dynamic.mnet-online.de [88.217.105.8])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Wed, 10 Aug 2011 19:01:50 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id B407DCA293; Wed, 10 Aug 2011 19:01:49 +0200 (CEST)
-X-Yow: Someone is DROOLING on my collar!!
-In-Reply-To: <1312941177.17928.YahooMailClassic@web121810.mail.ne1.yahoo.com>
-	(Luiz Ramos's message of "Tue, 9 Aug 2011 18:52:57 -0700 (PDT)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+	id S1753060Ab1HJReE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Aug 2011 13:34:04 -0400
+Received: from dick.ortolo.eu ([78.232.240.21]:35533 "EHLO dick.ortolo.eu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752361Ab1HJReD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2011 13:34:03 -0400
+X-Greylist: delayed 540 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Aug 2011 13:34:03 EDT
+Received: by dick.ortolo.eu (Postfix, from userid 1000)
+	id 649FE27E45; Wed, 10 Aug 2011 19:24:59 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=ortolo.eu; s=default;
+	t=1312997099; bh=Z4v7Yvp3PVaL3VVVfd40wNFGA0jrKoD5/Do/+mr47Ds=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:In-Reply-To;
+	b=qcqvyjVk5fK/yFKNRqw89QghybBNyx4LyWnZLkF3RtXE0FSRhoGhq7jRoR4/cBXbG
+	 9ugcqhXP59QpUjeft+j/4mKS336lZoDCq116sqyWc6cbr3+2FaxWKWVKYNgpOyVIVT
+	 iDMoNoZzcHwD4dT+jU1Hbo6/Y3VL48MrozhW+02o=
+Content-Disposition: inline
+In-Reply-To: <20110810161211.GC4076@elie.gateway.2wire.net>
+X-Number-Alpha: Douuuze
+X-Number-Arabic: 12
+X-Number-Roman: XII
+X-Demagogie-Level: Pas trop =?utf-8?B?ZMOpY2V2YW50?=
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179074>
 
-Luiz Ramos <luizzramos@yahoo.com.br> writes:
 
-> If I run:
->
-> $ git diff b2 ./
->
-> that is, the "non-cached" version, it will show the same results. This is
-> confusing IMHO, because the git-diff manual suggests that invocation
-> should render the difference between the named tree contents and the
-> working directory. In the working directory, only to recall, file_1 and
-> file_2 are both present and with good versions. In my understanding, the
-> command should report that file_1 is in excess in the working directory,
-> relative to b2, and report nothing about file_2, as it is in the same
-> version as the sample in the tree b2.
+--+g7M9IMkV8truYOl
+Content-Type: multipart/mixed; boundary="pf9I7BMVVzbSWLtt"
+Content-Disposition: inline
 
-Since file_2 is not tracked in the current branch, its existence in the
-directory is ignored.
 
-> This doesn't seem to be the same thing git-diff-index manual states,
-> however. The manual gets more deep into the details, and it's not so easy
-> to understand it unless one knows a lot of the inner commands, which does
-> not apply to me. In my basic reading, it seems that behind the scenes,
-> git-diff-index is what is run in this case, and the fact that file_2 is
-> not in the tree associated to b1 is a relevant thing in this case. So, the
-> index seem to matter, and if I try to do it, a previous "git update-index"
-> should be done.
+--pf9I7BMVVzbSWLtt
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-It's not the index, but the current tree that matters:
+Jonathan Nieder, 2011-08-10 11:12 UTC-0500:
+> I think you forgot to include the example.
 
-           show me the differences between HEAD and the currently checked out
-           tree - index contents _and_ files that aren't up-to-date
-
-Note that it talks about "files that aren't up-to-date".  Thus untracked
-files are not considered.
-
-Andreas.
+Yes, sorry. Here it is.
 
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Tanguy Ortolo
+
+--pf9I7BMVVzbSWLtt
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: attachment; filename=meld-mergetool
+
+#! /bin/sh
+
+BASE="$1"
+LOCAL="$2"
+REMOTE="$3"
+MERGED="$4"
+
+MTIME_BEFORE="$(stat --format='%Y' "$BASE")"
+meld "$LOCAL" "$BASE" "$REMOTE"
+MTIME_AFTER="$(stat --format="%Y" "$BASE")"
+
+if [ "$MTIME_BEFORE" != "$MTIME_AFTER" ]
+then
+    # The base file was modified, which means the user saved it
+    cp "$BASE" "$MERGED"
+else
+    # The user did not save the file: merge failed
+    exit 1
+fi
+
+--pf9I7BMVVzbSWLtt--
+
+--+g7M9IMkV8truYOl
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQIcBAEBCgAGBQJOQr7oAAoJEOryzVHFAGgZjtEP/2/4IPPKzCwdsIhG4H1x9cty
+WOUgCRiuNMGT7hZIcDuw1scJehc14j7RuVwbTAAMPyFtbp3fAcJBsx3XMv8XF929
+kpAYjrFp5jisvTxLvXwv8ytegfwXjI2m3cYw0xJ2+yDKv/EjwRNzk6GJ/bQHEiSH
+WoFrYUsaPXtAzYxnoRbdopZ4IlXkms0/1dS3b90y5XqvmHWWT6FlX03KWpck0YEB
+MTFUfpjcbBz9gE3db3ssi+1cgKqBWubJVblvawsfGMQdVc++EiBCEgvrfbZYcT6A
+Bbzjyw1tUioYZbAwlYikWbzcv7s12u0bXVql+NnAmPHGIxQlQ1mCiJwoDzZW3Idm
+HdixNcObnVJUrR1QDZ22ZqrWo0J+QaKPDPMG2lhjmkwSSv0c4+I4ShsAKD3i95vB
+1NFAeXWKXONcTZCcfriT7WZmxySC90l6gbLOtwoylkqBJUHKXFWlbPdrRrIvNWuE
+ILH+sjdsC2Pbm1g23hH6SwztunnkYwp2dM0FATTPWlF5UBlsoxaeklpBkBQ2hXDH
+K/pp0Ue/zmsS0iRcH6wprLdeFZXWMzhFW/cZld0tv+HpwosDgWOAKC3aS0Sc/hyi
+uG3sB8LwRt27t6LNTFIGg35zRtQ2xmV3t1T8emKpEsq2qZo6CkF4LXR8COF8qro1
+im70WYdeAGJLu5FRi86I
+=KEzW
+-----END PGP SIGNATURE-----
+
+--+g7M9IMkV8truYOl--
