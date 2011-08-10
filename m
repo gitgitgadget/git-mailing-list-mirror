@@ -1,90 +1,82 @@
-From: Hin-Tak Leung <htl10@users.sourceforge.net>
-Subject: Re: git-archive's wrong documentation: really write pax rather than tar
-Date: Wed, 10 Aug 2011 04:08:34 +0100 (BST)
-Message-ID: <1312945714.193.YahooMailClassic@web29510.mail.ird.yahoo.com>
-References: <4E3D8EA9.3000609@lsrfire.ath.cx>
-Reply-To: htl10@users.sourceforge.net
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: =?iso-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Wed Aug 10 05:08:43 2011
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [RFC PATCH 0/5] Some preliminary work based on sequencer-stable
+Date: Wed, 10 Aug 2011 15:25:46 +0530
+Message-ID: <1312970151-18906-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Aug 10 11:58:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qqz9t-00018g-Tk
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Aug 2011 05:08:42 +0200
+	id 1Qr5Yw-0001g7-2p
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Aug 2011 11:58:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752934Ab1HJDIh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Aug 2011 23:08:37 -0400
-Received: from nm6.bullet.mail.ird.yahoo.com ([77.238.189.63]:24703 "HELO
-	nm6.bullet.mail.ird.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752288Ab1HJDIg convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 9 Aug 2011 23:08:36 -0400
-Received: from [77.238.189.232] by nm6.bullet.mail.ird.yahoo.com with NNFMP; 10 Aug 2011 03:08:35 -0000
-Received: from [212.82.108.237] by tm13.bullet.mail.ird.yahoo.com with NNFMP; 10 Aug 2011 03:08:35 -0000
-Received: from [127.0.0.1] by omp1002.mail.ird.yahoo.com with NNFMP; 10 Aug 2011 03:08:35 -0000
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 97106.81051.bm@omp1002.mail.ird.yahoo.com
-Received: (qmail 14946 invoked by uid 60001); 10 Aug 2011 03:08:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1312945715; bh=Sx0uENkpvA7l/MQEDIO79kUe3lQLxz+KEJhpT3rIR9g=; h=X-YMail-OSG:Received:X-RocketYMMF:X-Mailer:Message-ID:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=wjwr0SK54GMslyxXnPdei9rviw2l2vv690Wbv1rYXO+e9FLql5nW6LK8iMVDXNs+cxdmCJ9IQf30+9iyeQb/jgYSWO8O6/ejgvLA0AVI6Go3qCXawF09339uS8TfVkWgqWGt7jAqyG9k4TblGYWlSnd6EyV56Yb5MH8iiPVossw=
-X-YMail-OSG: HMm2rJkVM1kZM2c57k.6VtgafpwuOZeqC4pOWFMqSZ.WkPH
- 7MPi6SPYZAmBenAOOcun.LbeOxSXD9mugNKaptUi4scZXTHrEHaoEtQAggEi
- MiaYcuaHT.nSJ4Itf3ItesaVwMm3q6CL_Geqwt2LU1lyC0yX2yxk60BPTEh7
- SvFz6tJB9IfHoHFK5wXhORktG4pPcSKWz.Q.MVA0ZrtOaAa4lFvY9gziEU0Q
- 51LlPzjDexbHMJtfoe67tGdN1T05Y_1J7sODITd6FdsmYjPxgnpZMtkyBv4u
- NXdz_SRRELzBmBjbBmLOveDM5JolR8xMgdUcnsX6sxaQt1CvvIYu5r9dAOgP
- mllqbxSGuhL.9cXx6gfJgVS2I87oDND4FWgZi7bg9an1dBEQKye55_R0jDTP
- IhRkUJo5s1J_paC26RqvT7xf6Nt3UbQOADRFL_KDrecDKQAE5vr7uDwKhnnG
- iUE1mPYgB21CbAqxD2uVWplc4kAsUC7_PdSVLMyvQtMZDMxyjTfeU3BMYflo
- npBx2c5eRTnU6MPQM
-Received: from [81.101.129.153] by web29510.mail.ird.yahoo.com via HTTP; Wed, 10 Aug 2011 04:08:34 BST
-X-RocketYMMF: hintak_leung
-X-Mailer: YahooMailClassic/14.0.4 YahooMailWebService/0.8.113.313619
-In-Reply-To: <4E3D8EA9.3000609@lsrfire.ath.cx>
+	id S1753554Ab1HJJ6w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Aug 2011 05:58:52 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:61802 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753235Ab1HJJ6w (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2011 05:58:52 -0400
+Received: by pzk37 with SMTP id 37so1583833pzk.1
+        for <git@vger.kernel.org>; Wed, 10 Aug 2011 02:58:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=mQ6AThfSCh3ko0nVaypyvNtr9jZfhwkOaeLfZ0UYV9Y=;
+        b=escZjmcWDaDaUaneVlMmh/nxBOkVjI0FFXDvjxvPFuEqAkvG/hU65fDzSENgJs/NwA
+         RVZpLPYZ0ukfAGCqIbHIyClIABBhzhQD4cPXZJHNnAe4f+RxR0mCGkwyvvT49cSzikoV
+         F+hfL1e+dtpqp7300InTD3+MnJ1hgjqMr5lak=
+Received: by 10.142.9.2 with SMTP id 2mr92986wfi.305.1312970331583;
+        Wed, 10 Aug 2011 02:58:51 -0700 (PDT)
+Received: from localhost.localdomain ([203.110.240.41])
+        by mx.google.com with ESMTPS id s7sm725394pbj.69.2011.08.10.02.58.45
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 10 Aug 2011 02:58:49 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.351.gb35ac.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179057>
 
---- On Sat, 6/8/11, Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx> wrote:
+Hi,
 
-> That doesn't sound good.  Looking at the R source,
-> however, I can see
-> that they use a two different algorithms to compute the
-> checksum than
-> the one specified by POSIX (even though I don't fully
-> understand what it
-> actually is their doing, since I don't know R).  So
-> worry too much about
-> the warning; as long e.g. "tar tf <file>" doesn't
-> complain your archive
-> should be intact.
+The series is quite unpolished at the moment, but I'm sending it to
+the list because I want early feedback before I make mypoic decisions
+and waste work.  Tests and rough commit messages included :)
 
-I filed the bug,
-https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=3D14654
-and they have fixed it bug has a few comments to make:
+The first patch is something I should've done earlier -- it makes
+debugging much easier.  Should it go into maint? The last patch is the
+most important, and everything else is just building towards it.  With
+this series, we should now be able to abort at the last-but-one
+commit, since 'git commit' actually cleans up the sequencer state now.
 
----------------
-=46ixed in R-devel and patched (your checksum field has more than 6 dig=
-its which
-is highly unusual [since it can't be larger than 6 digits] but technica=
-lly
-allowable).
+Note: All the SHA-1 references in the commit messages will change
+after sequencer-stable is merged.  I hope it's clear for the moment.
 
-I should add that the original tar format mandated that checksums are
-terminated by NUL SPACE, so in that sense your tar file is invalid (the=
-re can't
-be more than 6 digits since the checksum field consists of 8 bytes). un=
-tar2
-will now be more forgiving, but whatever program created that tar file =
-should
-be fixed.
------------------
+Thanks for reading.
 
-Please feel free to respond directly at the R bug tracking system, or I=
- can cut-and-paste bits of e-mails also...
+-- Ram
+
+Ramkumar Ramachandra (5):
+  revert: Don't remove the sequencer state on error
+  sequencer.h: Move data structures
+  revert: Allow mixed pick and revert instructions
+  sequencer: Expose code that handles files in .git/sequencer
+  sequencer: Remove sequencer state after final commit
+
+ builtin/commit.c                |    5 +
+ builtin/revert.c                |  417 +++------------------------------------
+ sequencer.c                     |  323 ++++++++++++++++++++++++++++++
+ sequencer.h                     |   53 +++++
+ t/t3510-cherry-pick-sequence.sh |   62 ++++++-
+ 5 files changed, 471 insertions(+), 389 deletions(-)
+
+-- 
+1.7.6.351.gb35ac.dirty
