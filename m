@@ -1,88 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: About git-diff
-Date: Wed, 10 Aug 2011 21:49:57 -0700
-Message-ID: <7vr54sr1qi.fsf@alter.siamese.dyndns.org>
-References: <m2hb5pb3pe.fsf@igel.home>
- <1313024025.97405.YahooMailClassic@web121818.mail.ne1.yahoo.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 4/5] sequencer: Expose code that handles files in .git/sequencer
+Date: Thu, 11 Aug 2011 11:46:58 +0530
+Message-ID: <CALkWK0kxtyPABBUOrXtKDxPCBKt3CynoP4Fm8f_+C1ymkLTo-w@mail.gmail.com>
+References: <1312970151-18906-1-git-send-email-artagnon@gmail.com>
+ <1312970151-18906-5-git-send-email-artagnon@gmail.com> <20110810152126.GE31315@elie.gateway.2wire.net>
+ <CALkWK0nJUTtNgCHF6CE2-w+3ZwdBrscBRw0e0L8wX86Za0G=DA@mail.gmail.com> <20110810155332.GB4076@elie.gateway.2wire.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
-To: Luiz Ramos <luizzramos@yahoo.com.br>
-X-From: git-owner@vger.kernel.org Thu Aug 11 06:50:09 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 11 08:17:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QrNDd-0008QS-6R
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Aug 2011 06:50:09 +0200
+	id 1QrOa5-0002Xi-Go
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Aug 2011 08:17:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751677Ab1HKEuD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Aug 2011 00:50:03 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48199 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751026Ab1HKEuC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2011 00:50:02 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A03D127D;
-	Thu, 11 Aug 2011 00:49:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dScuJIAnU5TZKXYbNt8EMPgI+oU=; b=JTI4Zv
-	nwtebSbN9ezLh5u4rYwI0xj3C1ekZcn+vMxwmYPEYhfD7k0Z29cL98O356VMcxF0
-	GfqF5lzAQItdaGHU+BlaqLS4LhSxdGTyY2fbCVDxZULwZAU/Hkn9MJWqxuQ/9VzK
-	Cz/QBPWnmK7N/yryMfrqSNiFCZ2Es1q3yczJc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IW25BtBR83skkxPSuRT7ZHQmQFOBAKeE
-	4Jk001LPzxFWffV8fveHB5GEr+i6IlnJMLhFj1D2sR8DvDcvnTsxZOhsjnBf4/T5
-	vrb2ckT2+Jk4pGAK8pcXyUMajyqawI8tCgahxqhkOnMvvzieaODRkY+3bF/yFgR4
-	BMXbTQAhwMA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21EE8127C;
-	Thu, 11 Aug 2011 00:49:59 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A68BF1274; Thu, 11 Aug 2011
- 00:49:58 -0400 (EDT)
-In-Reply-To: <1313024025.97405.YahooMailClassic@web121818.mail.ne1.yahoo.com>
- (Luiz Ramos's message of "Wed, 10 Aug 2011 17:53:45 -0700 (PDT)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5D99F0EC-C3D5-11E0-BC1B-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752626Ab1HKGRU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Aug 2011 02:17:20 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:43023 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752465Ab1HKGRT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Aug 2011 02:17:19 -0400
+Received: by wyg24 with SMTP id 24so1188327wyg.19
+        for <git@vger.kernel.org>; Wed, 10 Aug 2011 23:17:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=cJAiI6Yxgbe4uYl+vdxxDU3EAsnnIF6hcUeF7gAEwMY=;
+        b=jDCKBVI9b4roxu1w68OcK/HLdccmPuB0kH9pFHW6LVNBYoBy/aIlfxuVSVgbvjG1Qs
+         16AH893qoUfWxha3uHmQfsDLskYurE8KX3PY1J1+ZlwvAcN9FfhFgOFMLJPlay8GyziD
+         CXvos1yxpsDmljikiDXbtqXpl9le/dl736l7E=
+Received: by 10.216.46.208 with SMTP id r58mr1374534web.78.1313043438053; Wed,
+ 10 Aug 2011 23:17:18 -0700 (PDT)
+Received: by 10.216.139.31 with HTTP; Wed, 10 Aug 2011 23:16:58 -0700 (PDT)
+In-Reply-To: <20110810155332.GB4076@elie.gateway.2wire.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179082>
 
-Luiz Ramos <luizzramos@yahoo.com.br> writes:
+Hi Jonathan,
 
-> Given this, I'd suggest to change the inline documentation of git-diff (git help diff). In the version of my machine (1.7.4.4), it's like that:
->
-> (snip)
-> ...
->        git diff [--options] <commit> [--] [<path>...]
->            This form is to view the changes you have in your working tree
->            relative to the named <commit>. You can use HEAD to compare it with
->            the latest commit, or a branch name to compare with the tip of a
->            different branch.
-> ...
+Jonathan Nieder writes:
+> Well, "beautiful public API" means "just what cmd_cherry_pick and
+> cmd_revert needs", right? =C2=A0So I'd suggest:
 
-Strictly speaking, "the changes you have in your working tree" may be what
-is confusing. Your working tree does _not_ have "changes"; it only has
-"contents". Changes are perceived only if you compare it with something
-else, as their _difference_.
+Yes, but I don't want to put stuff that's too specific to cherry-pick/
+revert in the sequencer.
 
-This operation compares "the contents of tracked files in your working
-tree" with "the contents recorded in the named <commit>"---the result of
-this comparison comparison matches what humans perceive as "changes".
+> [...]
+> Luckily step (1) is already done. =C2=A0The functions are parse_args(=
+)
+> and pick_revisions() (though they could presumably use less generic
+> names).
 
-So perhaps updating the first sentence with:
+Are you certain about pick_revisions?  I've copied over the function
+here for your reference.  My issue is that it's too specific
+cherry-pick/ revert:
+1. See what walk_revs_populate_todo does: It takes all the operands
+and fills up "pick" as the operator.  Why would any other caller want
+to do this?
+2. You mentioned multiple entry points earlier, and that's something
+I've been meaning to do: In the long run, I don't want callers to fill
+up an opts structure to specify the subcommand! That'd be butt-ugly.
 
-	Compare the contents of tracked files in your working tree with
-	what is recorded in the named <commit>.
+-- 8< --
+static int pick_revisions(struct replay_opts *opts)
+{
+	struct replay_insn_list *todo_list =3D NULL;
+	unsigned char sha1[20];
 
-would be all that is necessary. I didn't bother to look but I suspect we
-have a simlar description for "git diff [--options] [--] [<path>...]"
-form, and it should be updated in a similar way (the only difference is
-that it compares "with what is recorded in the index").
+	read_and_refresh_cache(opts);
+
+	/*
+	 * Decide what to do depending on the arguments; a fresh
+	 * cherry-pick should be handled differently from an existing
+	 * one that is being continued
+	 */
+	if (opts->subcommand =3D=3D REPLAY_RESET) {
+		remove_sequencer_state(1);
+		return 0;
+	} else if (opts->subcommand =3D=3D REPLAY_CONTINUE) {
+		if (!file_exists(git_path(SEQ_TODO_FILE)))
+			goto error;
+		sequencer_read_opts(&opts);
+		sequencer_read_todo(&todo_list);
+
+		/* Verify that the conflict has been resolved */
+		if (!index_differs_from("HEAD", 0))
+			todo_list =3D todo_list->next;
+	} else {
+		/*
+		 * Start a new cherry-pick/ revert sequence; but
+		 * first, make sure that an existing one isn't in
+		 * progress
+		 */
+
+		walk_revs_populate_todo(&todo_list, opts);
+		if (sequencer_create_dir() < 0) {
+			error(_("A cherry-pick or revert is in progress."));
+			advise(_("Use --continue to continue the operation"));
+			advise(_("or --reset to forget about it"));
+			return -1;
+		}
+		if (get_sha1("HEAD", sha1)) {
+			if (opts->action =3D=3D REPLAY_REVERT)
+				return error(_("Can't revert as initial commit"));
+			return error(_("Can't cherry-pick into empty head"));
+		}
+		sequencer_save_head(sha1_to_hex(sha1));
+		sequencer_save_opts(opts);
+	}
+	return pick_commits(todo_list, opts);
+error:
+	return error(_("No %s in progress"), action_name(opts));
+}
