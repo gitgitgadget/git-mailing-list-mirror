@@ -1,67 +1,89 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2] t3900: do not reference numbered arguments from the
- test script
-Date: Thu, 11 Aug 2011 02:11:55 -0500
-Message-ID: <20110811071155.GA28213@elie.gateway.2wire.net>
-References: <20110321105628.GC16334@sigill.intra.peff.net>
- <cover.1300872923.git.git@drmicha.warpmail.net>
- <20110324082108.GA30196@elie>
- <20110808011341.GA19551@elie.gateway.2wire.net>
- <20110808011709.GC19551@elie.gateway.2wire.net>
- <4E40F3EA.8020406@viscovery.net>
- <20110809153638.GA15687@sigill.intra.peff.net>
- <4E437F4C.4020305@viscovery.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2011, #02; Mon, 8)
+Date: Thu, 11 Aug 2011 09:30:56 +0200
+Message-ID: <201108110930.57316.jnareb@gmail.com>
+References: <7v8vr3v7az.fsf@alter.siamese.dyndns.org> <m3ty9p1oaa.fsf@localhost.localdomain> <7vk4alrmjd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Aug 11 09:12:13 2011
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 11 09:31:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QrPR6-0005V6-JC
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Aug 2011 09:12:12 +0200
+	id 1QrPjY-0004dm-A5
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Aug 2011 09:31:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752904Ab1HKHMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Aug 2011 03:12:08 -0400
-Received: from mail-iy0-f170.google.com ([209.85.210.170]:45358 "EHLO
-	mail-iy0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754589Ab1HKHME (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2011 03:12:04 -0400
-Received: by iye16 with SMTP id 16so746151iye.1
-        for <git@vger.kernel.org>; Thu, 11 Aug 2011 00:12:04 -0700 (PDT)
+	id S1751260Ab1HKHbM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Aug 2011 03:31:12 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:43730 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751196Ab1HKHbJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2011 03:31:09 -0400
+Received: by fxh19 with SMTP id 19so1485800fxh.19
+        for <git@vger.kernel.org>; Thu, 11 Aug 2011 00:31:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=kumMBeOQm3qi/imgpR9skKzZ1AkZtCShOGrSkdTJtUQ=;
-        b=ZbAFtF31lf5TQxjwtt4r18uK1egnbpV5Qrn2ODUYcka6/5452DkgMnpklT+XuPzTyF
-         K7yAksN9ZWuCEGQWvvWprxXotflFz1qCn8W/Ml/zasxq7DhUQ+RX26yUS1IGNsYKT4PW
-         zZPBQuPXUGFOsrQ1L+p+UZkzRgPvlYFYaz3P4=
-Received: by 10.43.131.201 with SMTP id hr9mr9184338icc.376.1313046724273;
-        Thu, 11 Aug 2011 00:12:04 -0700 (PDT)
-Received: from elie.gateway.2wire.net (adsl-69-209-69-68.dsl.chcgil.sbcglobal.net [69.209.69.68])
-        by mx.google.com with ESMTPS id o8sm2690657icc.5.2011.08.11.00.12.03
-        (version=SSLv3 cipher=OTHER);
-        Thu, 11 Aug 2011 00:12:03 -0700 (PDT)
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=ccutiYl+Bf0k3+LIWETaz75IeNHeqYYo/37+AJ/H4RY=;
+        b=Tv0qnjmiF5vxBLULUmq9EJCONth5eAM+E6vBGTlB5bEXRjuE803/Wp4bFLMbk2LDdV
+         GaS/yDsg3GgygOpJK3swoApHmr52i4iICn5x8RGphHIOo1JxFVvNkEFQ/ML1lxJKsO8I
+         SC4CM0PuRXvrmHzPwByUzzxfyrvgHGgGdQ2G0=
+Received: by 10.223.21.220 with SMTP id k28mr12527409fab.63.1313047868252;
+        Thu, 11 Aug 2011 00:31:08 -0700 (PDT)
+Received: from [192.168.1.13] (abvy163.neoplus.adsl.tpnet.pl [83.8.222.163])
+        by mx.google.com with ESMTPS id g16sm626532faa.3.2011.08.11.00.31.05
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 11 Aug 2011 00:31:06 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vk4alrmjd.fsf@alter.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <4E437F4C.4020305@viscovery.net>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179089>
 
-Johannes Sixt wrote:
+On Wed, 10 Aug 2011, Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> --------------------------------------------------
+>>> [Graduated to "master"]
+>>
+>>> * jn/gitweb-config-list-case (2011-07-31) 1 commit
+>>>   (merged to 'next' on 2011-08-01 at 9268738)
+>>>  + gitweb: Git config keys are case insensitive, make config search too
+>>> 
+>>> * jn/gitweb-system-config (2011-07-24) 1 commit
+>>>   (merged to 'next' on 2011-08-01 at 4941e45)
+>>>  + gitweb: Introduce common system-wide settings for convenience
+>>
+>> What happened with "[PATCH/RFC 0/6] gitweb: Improve project search"
+>> series from 29.07.2011?
+> 
+> I dunno--you tell me ;-)
+> 
+> You solicited for comments, presumably you collected them and have been
+> preparing a re-roll based on the comments? Or perhaps nobody was
+> interested in these changes and you dropped it?
 
-> Remove it because -m is optional and the test case
-> does not check for it. There are tests in t7500 that check combinations of
-> --squash and -m.
+I did not get any responses, unfortunately.
 
-That's a comfort.  Looks obviously good to me, fwiw.
+The interest in gitweb patches waxes and wanes, and it looks like it is
+time for waning interest.  It is a bit frustrating that there is no
+response even from people who use gitweb for web interface to hosting
+git repositories... but perhaps it is bad time of year.
+
+Anyway, I plan on re-rolling search improvement series, checking if
+search is covered by testsuite (IIRC it is).
+
+-- 
+Jakub Narebski
+Poland
