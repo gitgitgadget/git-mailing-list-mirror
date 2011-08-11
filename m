@@ -1,102 +1,152 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 3/5] revert: Allow mixed pick and revert instructions
-Date: Thu, 11 Aug 2011 12:22:10 +0530
-Message-ID: <CALkWK0kxi+-UEG9g_=BC8vK9DGA85+OKJSrXWH=3XsxpLg-E8g@mail.gmail.com>
-References: <1312970151-18906-1-git-send-email-artagnon@gmail.com>
- <1312970151-18906-4-git-send-email-artagnon@gmail.com> <20110810151527.GC31315@elie.gateway.2wire.net>
+Subject: Documenting the 'rebase -i' workflow
+Date: Thu, 11 Aug 2011 12:30:07 +0530
+Message-ID: <CALkWK0kAX3U9AJvD4Gw9Cwndk9412jB4O_P+OGZKFk4kMhpnsg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 11 08:52:36 2011
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 11 09:00:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QrP88-0006VY-9Y
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Aug 2011 08:52:36 +0200
+	id 1QrPFp-0000oR-F3
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Aug 2011 09:00:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754363Ab1HKGwb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Aug 2011 02:52:31 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:63171 "EHLO
+	id S1754450Ab1HKHA3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Aug 2011 03:00:29 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:62256 "EHLO
 	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753376Ab1HKGwb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2011 02:52:31 -0400
-Received: by wyg24 with SMTP id 24so1202120wyg.19
-        for <git@vger.kernel.org>; Wed, 10 Aug 2011 23:52:30 -0700 (PDT)
+	with ESMTP id S1752904Ab1HKHA2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2011 03:00:28 -0400
+Received: by wyg24 with SMTP id 24so1205304wyg.19
+        for <git@vger.kernel.org>; Thu, 11 Aug 2011 00:00:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=vjEj1jky0qTvtjiAYKk5Oh9FrtLlkCSPv7Ws/lalW/w=;
-        b=r6Mw/gr2wx7vGHgvtfYyGC8GieJ/C6LROgtsyT+L0XCl4qOiOI0R1BfQZaySAs/gXy
-         d2iWUu2//PdCvqKQNOAhhp8QfUXsxYqSiplg21KOC/Cm+MbLlRKva7UhTZ3/x2hPSJX+
-         rAsriZwCUFEIHYRfpdCbqxfq5kAWVpzd9cD5U=
-Received: by 10.216.0.66 with SMTP id 44mr7472395wea.63.1313045550088; Wed, 10
- Aug 2011 23:52:30 -0700 (PDT)
-Received: by 10.216.139.31 with HTTP; Wed, 10 Aug 2011 23:52:10 -0700 (PDT)
-In-Reply-To: <20110810151527.GC31315@elie.gateway.2wire.net>
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=eMi1l02xSUhV2RWEULQyYooeFK77s+eFcPsK85KYYbs=;
+        b=mg7OaSVESTIOn3WLjWDxU7zewqtwvJ28pkPPMA+5HhQZRLhNE5mprEj4tqZ0xjPR5J
+         y2ymXq1QQ7DUUfYoZ3VPY1ITRfyYH5YkW4YXhxec4RbCxAtaztbICajqjdgmp+JJxAql
+         RjmDCJN7n6W4Gf7U+I30+USUeDpUge4tGEDn4=
+Received: by 10.216.0.66 with SMTP id 44mr7477968wea.63.1313046027117; Thu, 11
+ Aug 2011 00:00:27 -0700 (PDT)
+Received: by 10.216.139.31 with HTTP; Thu, 11 Aug 2011 00:00:07 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179086>
 
 Hi,
 
-On a note unrelated to Jonathan's review, I noticed some weird
-behavior while playing with my new series: when picking a commit
-that's already picked, all the code until run_git_commit runs just
-fine.  Then 'git commit' fails because it's an empty commit.
-Unfortunately, run_git_commit returns a positive return status from
-do_pick_commit which is against the convention, leading the
-cherry-picking machinery to think that a conflict was encountered.
-This is highly confusing from the end-user's perspective.  The
-operation has suddenly stopped without an error, and '--continue'
-seems to continue the operation.  What is going on, right?
+I used to find it hard to resolve conflicts during complex interactive
+rebases, and I asked Jonathan for help off-list.  I found the response
+very useful.  I thought I should reproduce the original email here so
+that everyone on the list can benefit from it.  Please feel free to
+add to it.
 
-I was hesitant to send out the patch to make run_git_commit return an
-error, because it breaks some tests in t3505-cherry-pick-empty.sh.
-However, the problem is getting on my nerves now, and I believe that
-the patch does the Right Thing (TM), even if it means that we have to
-change the tests in t3505-cherry-pick-empty.sh.  Thoughts?
+Also, we should document this somewhere.
 
 -- 8< --
-Subject: [PATCH] revert: Classify failure to run 'git commit' as an error
+Ramkumar Ramachandra wrote:
+> How did you manage to make the rebase look so effortless?  I tried it
+> too, but I always end up messing up the conflict resolution, and
+> aborting many times before I get it right.  Even after that, I run
+> tests on all the patches and correct the pending mistakes by hand.
 
-Since a93d2a (revert: Propagate errors upwards from do_pick_commit,
-2011-05-20), do_pick_commit differentiates between conflicts and
-errors using the signed-ness of its return status.  Unfortunately, it
-returns the return status from 'git commit' when it fails to run it,
-breaking this convention.  Change this so that any non-zero return
-status from run_git_commit is classified as an error.
+True, this workflow is underdocumented.  The most important details
+are
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- builtin/revert.c |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+       [merge] conflictstyle = diff3
+       [rerere] enabled
 
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 8b452e8..fcd4f3a 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -603,7 +603,9 @@ static int do_pick_commit(struct commit *commit,
-struct replay_opts *opts)
-                rerere(opts->allow_rerere_auto);
-        } else {
-                if (!opts->no_commit)
--                       res = run_git_commit(defmsg, opts);
-+                       if (run_git_commit(defmsg, opts))
-+                               return error(_("Failed to run 'git
-commit': %s"),
-+                                       sha1_to_hex(commit->object.sha1));
-        }
+in ~/.gitconfig.  I used to use "git checkout --conflict=diff3"
+explicitly instead, which also works.
 
-        free_message(&msg);
--- 
-1.7.6.351.gb35ac.dirty
+If you are lucky, a conflict hunk will look something like this:
+
+       <<<<<<< ours
+       A
+       B
+       C
+       ||||||| parent of theirs
+       B
+       =======
+       B
+       C
+       D
+       >>>>>>> theirs
+
+It can be merged blindly by following the rule "whenever a feature
+is the same between the ancestor and one of the competing versions,
+delete it from them".  For example, both the ancestor and "theirs"
+have 'B', so:
+
+       <<<<<<< ours
+       A
+       B
+       C
+       ||||||| parent of theirs
+       =======
+       C
+       D
+       >>>>>>> theirs
+
+Our side and their side both added C independently and from the
+context we know that a second 'C' would be redundant.  So we are ready
+to resolve the conflict after thinking a little.
+
+       A
+       B
+       C
+       D
+
+Unfortunately sometimes the diff3 conflict style makes conflicts huge
+and unmanageable.  That's no good.  I dream of a conflict style that
+would show "our" version and the patch hunk to apply.  Since that
+doesn't exist yet, often a good strategy is to fake it by looking at
+the patch directly.  For example, patches to ChangeLog files rarely
+merge cleanly and the conflicts don't tend to be very useful.
+
+       git checkout HEAD ChangeLog
+       vim ChangeLog
+       :split .git/rebase-merge/patch
+
+"git add" is used to mark good changes and "git diff" to see what's
+left to do.  When ready, I build, run some simple tests, "git diff
+--cached", "git rebase -i --continue", flinch at how git 1.7.6 broke
+my muscle memory, and "git rebase --continue".
+
+Usually I try to only make a single change in an interactive rebase
+and let it ripple through, then rinse and repeat.  If something goes
+wrong, I can "git rebase --abort" and previous unrelated changes are
+not lost.
+
+After a rebase, I use "git diff" to compare to the previous version,
+to make sure the changes accumulated are good and nothing was lost.
+
+Summary:
+
+ - conflictstyle=diff3 makes 3-way merging require way less thought
+  and history mining.  I don't know how I coped with
+  conflictstyle=merge.
+
+ - For thorny cases, "git checkout --ours file" unapplies the patch.
+  Then one can
+
+   (a) apply the patch by hand, if it is short.
+   (b) fix up the patch by hand and apply it with "git apply", if
+       it is long.
+
+  The patch is in .git/rebase-merge/patch.
+
+ - "git rerere forget" is a lifesaver.
+
+ - Check for sanity at each step (by running manual or automatic
+  tests) before continuing.
+
+ - Inspect with "git log -p" and by diffing against a merge of the
+  pre-rebase state with the new upstream when done.
