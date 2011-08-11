@@ -1,178 +1,88 @@
-From: Luiz Ramos <luizzramos@yahoo.com.br>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: About git-diff
-Date: Wed, 10 Aug 2011 17:53:45 -0700 (PDT)
-Message-ID: <1313024025.97405.YahooMailClassic@web121818.mail.ne1.yahoo.com>
+Date: Wed, 10 Aug 2011 21:49:57 -0700
+Message-ID: <7vr54sr1qi.fsf@alter.siamese.dyndns.org>
 References: <m2hb5pb3pe.fsf@igel.home>
+ <1313024025.97405.YahooMailClassic@web121818.mail.ne1.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Thu Aug 11 02:54:25 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
+To: Luiz Ramos <luizzramos@yahoo.com.br>
+X-From: git-owner@vger.kernel.org Thu Aug 11 06:50:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QrJXT-0004jR-FN
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Aug 2011 02:54:23 +0200
+	id 1QrNDd-0008QS-6R
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Aug 2011 06:50:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754607Ab1HKAxr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Aug 2011 20:53:47 -0400
-Received: from nm9-vm2.bullet.mail.ne1.yahoo.com ([98.138.90.157]:28137 "HELO
-	nm9-vm2.bullet.mail.ne1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1753542Ab1HKAxq convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2011 20:53:46 -0400
-Received: from [98.138.90.52] by nm9.bullet.mail.ne1.yahoo.com with NNFMP; 11 Aug 2011 00:53:45 -0000
-Received: from [98.138.89.248] by tm5.bullet.mail.ne1.yahoo.com with NNFMP; 11 Aug 2011 00:53:45 -0000
-Received: from [127.0.0.1] by omp1040.mail.ne1.yahoo.com with NNFMP; 11 Aug 2011 00:53:45 -0000
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 719275.29368.bm@omp1040.mail.ne1.yahoo.com
-Received: (qmail 15003 invoked by uid 60001); 11 Aug 2011 00:53:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com.br; s=s1024; t=1313024025; bh=W4exxjsjaYFzp5lkwx+9gyz6jG/Fp0T1TaJ48kZvA0s=; h=X-YMail-OSG:Received:X-Mailer:Message-ID:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=Ej/MbPxPmR36tbMANplLU62reBnywjZQgPzdpr1Qp8VwqfrfjcaYCYrX6f9VVWIKh6VnTlU56QZlIT1tkzR5QJcBQ3eOI7mZ8pQGapvb4R6IA/MN7WtpiWqEU0mFh1r1d2ggRPpSguc3jaRWjRjCkuzELNOwJTULn/TaswCTkvs=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com.br;
-  h=X-YMail-OSG:Received:X-Mailer:Message-ID:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=SqOeOWSG5M/NvqG/r35ed6cNiIbpx55oRQ4QZ1ChlwuiY/UsoOZ4dJmT7f+F8Engr2eT/SJEI3IdvY6jq6iNg9d9ryQM3M5b0pjfNi3M3Uq/+k1612kqIc8fMpT3p2W2XrtS2vbi+63/gdTydOCIDTYOZY5GO0I/Q2SSHgps2dQ=;
-X-YMail-OSG: eZ23S6YVM1nrbHYu7ImXDX9.lmrLSI_LeVQp4qYxRFieNal
- lP3QAyl7z5XPbRYnmJP5Qfsa6SZL0VZ8QqID_VxWiBQuYrYrgSkcuVkdhxGJ
- Nps5pBOuX.JTkpyfaD6UvRdC2.ZAA17azGapeqg2jWZhQO8EUxNDtJKeePV6
- nH4bwEyPwQDTcQIpcQY48ssypf2HVeWKTM5ugnGW6csSG6BUMDsIBHScQJBb
- qcmB8qnJ6fNpho30b8E3Cz9YlUZ1Fa6mosC557S0ywZFhkXxQD1H1.9zV6CJ
- UFUsDDT.4bYL1kcy1MpolZE_xsQrKt.ij7PsQc9b3hCMuaV4jzFWe_dO3itb
- BO7xz.RiqlG42iPvyc5deaf5YTPqtE8w_kVGN3Q57yldvjnpe9e796SZtEPA
- YN7E_PB8z
-Received: from [189.121.246.226] by web121818.mail.ne1.yahoo.com via HTTP; Wed, 10 Aug 2011 17:53:45 PDT
-X-Mailer: YahooMailClassic/14.0.4 YahooMailWebService/0.8.113.313619
-In-Reply-To: <m2hb5pb3pe.fsf@igel.home>
+	id S1751677Ab1HKEuD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Aug 2011 00:50:03 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48199 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751026Ab1HKEuC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2011 00:50:02 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A03D127D;
+	Thu, 11 Aug 2011 00:49:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dScuJIAnU5TZKXYbNt8EMPgI+oU=; b=JTI4Zv
+	nwtebSbN9ezLh5u4rYwI0xj3C1ekZcn+vMxwmYPEYhfD7k0Z29cL98O356VMcxF0
+	GfqF5lzAQItdaGHU+BlaqLS4LhSxdGTyY2fbCVDxZULwZAU/Hkn9MJWqxuQ/9VzK
+	Cz/QBPWnmK7N/yryMfrqSNiFCZ2Es1q3yczJc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IW25BtBR83skkxPSuRT7ZHQmQFOBAKeE
+	4Jk001LPzxFWffV8fveHB5GEr+i6IlnJMLhFj1D2sR8DvDcvnTsxZOhsjnBf4/T5
+	vrb2ckT2+Jk4pGAK8pcXyUMajyqawI8tCgahxqhkOnMvvzieaODRkY+3bF/yFgR4
+	BMXbTQAhwMA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21EE8127C;
+	Thu, 11 Aug 2011 00:49:59 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A68BF1274; Thu, 11 Aug 2011
+ 00:49:58 -0400 (EDT)
+In-Reply-To: <1313024025.97405.YahooMailClassic@web121818.mail.ne1.yahoo.com>
+ (Luiz Ramos's message of "Wed, 10 Aug 2011 17:53:45 -0700 (PDT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 5D99F0EC-C3D5-11E0-BC1B-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179081>
 
+Luiz Ramos <luizzramos@yahoo.com.br> writes:
 
---- Em qua, 10/8/11, Andreas Schwab <schwab@linux-m68k.org> escreveu:
+> Given this, I'd suggest to change the inline documentation of git-diff (git help diff). In the version of my machine (1.7.4.4), it's like that:
+>
+> (snip)
+> ...
+>        git diff [--options] <commit> [--] [<path>...]
+>            This form is to view the changes you have in your working tree
+>            relative to the named <commit>. You can use HEAD to compare it with
+>            the latest commit, or a branch name to compare with the tip of a
+>            different branch.
+> ...
 
-> De: Andreas Schwab <schwab@linux-m68k.org>
-> Assunto: Re: About git-diff
-> Para: "Luiz Ramos" <luizzramos@yahoo.com.br>
-> Cc: git@vger.kernel.org
-> Data: Quarta-feira, 10 de Agosto de 2011, 14:01
-> Luiz Ramos <luizzramos@yahoo.com.br>
-> writes:
->=20
-> > If I run:
-> >
-> > $ git diff b2 ./
-> >
-> > that is, the "non-cached" version, it will show the
-> same results. This is
-> > confusing IMHO, because the git-diff manual suggests
-> that invocation
-> > should render the difference between the named tree
-> contents and the
-> > working directory. In the working directory, only to
-> recall, file_1 and
-> > file_2 are both present and with good versions. In my
-> understanding, the
-> > command should report that file_1 is in excess in the
-> working directory,
-> > relative to b2, and report nothing about file_2, as it
-> is in the same
-> > version as the sample in the tree b2.
->=20
-> Since file_2 is not tracked in the current branch, its
-> existence in the
-> directory is ignored.
->=20
-> > This doesn't seem to be the same thing git-diff-index
-> manual states,
-> > however. The manual gets more deep into the details,
-> and it's not so easy
-> > to understand it unless one knows a lot of the inner
-> commands, which does
-> > not apply to me. In my basic reading, it seems that
-> behind the scenes,
-> > git-diff-index is what is run in this case, and the
-> fact that file_2 is
-> > not in the tree associated to b1 is a relevant thing
-> in this case. So, the
-> > index seem to matter, and if I try to do it, a
-> previous "git update-index"
-> > should be done.
->=20
-> It's not the index, but the current tree that matters:
->=20
-> =A0 =A0 =A0 =A0 =A0=A0=A0show me the
-> differences between HEAD and the currently checked out
-> =A0 =A0 =A0 =A0 =A0=A0=A0tree - index
-> contents _and_ files that aren't up-to-date
->=20
-> Note that it talks about "files that aren't
-> up-to-date".=A0 Thus untracked
-> files are not considered.
->=20
+Strictly speaking, "the changes you have in your working tree" may be what
+is confusing. Your working tree does _not_ have "changes"; it only has
+"contents". Changes are perceived only if you compare it with something
+else, as their _difference_.
 
-Ok, understood.
+This operation compares "the contents of tracked files in your working
+tree" with "the contents recorded in the named <commit>"---the result of
+this comparison comparison matches what humans perceive as "changes".
 
-Given this, I'd suggest to change the inline documentation of git-diff =
-(git help diff). In the version of my machine (1.7.4.4), it's like that=
-:
+So perhaps updating the first sentence with:
 
-(snip)
-=2E..
-       git diff [--options] <commit> [--] [<path>...]
-           This form is to view the changes you have in your working tr=
-ee
-           relative to the named <commit>. You can use HEAD to compare =
-it with
-           the latest commit, or a branch name to compare with the tip =
-of a
-           different branch.
-=2E..
-(snip)
+	Compare the contents of tracked files in your working tree with
+	what is recorded in the named <commit>.
 
-A unadvised reader could understand that the comparison is between <com=
-mit> and the working directory, as if <commit> was the current branch, =
-plainly stated. In fact, there is no mention to the current branch, or =
-to the files being tracked or not, except for the option of mentioning =
-HEAD as the <commit> to be taken into account.
-
-If you'd accept a small contribution of yours truly, here's amy suggest=
-ion for this text:
-
-=2E..
-       git diff [--options] <commit> [--] [<path>...]
-           This form is to view the changes you have in your working tr=
-ee
-           relative to the named <commit>. You can use HEAD to compare =
-it with
-           the latest commit, or a branch name to compare with the tip =
-of a
-           different branch. Note, however, that files untracked in the=
-=20
-           current branch are handled as if they are missing in the wor=
-king
-           directory. Check out git-diff-index documentation for furthe=
-r
-           information.
-=2E..
-
-It's not in the patch format, but if you'd like the suggestion, there i=
-s no problem in re-sending it as a formatted patch.
-
-Thanks,
-
-Luiz
-
-
-> Andreas.
->=20
-> --=20
-> Andreas Schwab, schwab@linux-m68k.org
-> GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756=A0 01D3
-> 44D5 214B 8276 4ED5
-> "And now for something completely different."
->=20
+would be all that is necessary. I didn't bother to look but I suspect we
+have a simlar description for "git diff [--options] [--] [<path>...]"
+form, and it should be updated in a similar way (the only difference is
+that it compares "with what is recorded in the index").
