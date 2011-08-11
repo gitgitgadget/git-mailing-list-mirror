@@ -1,125 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 09/11] object: try 4-way cuckoo
-Date: Thu, 11 Aug 2011 10:53:14 -0700
-Message-ID: <1313085196-13249-10-git-send-email-gitster@pobox.com>
-References: <1313085196-13249-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 11 19:54:23 2011
+Subject: Re: [PATCH 0/2] Add an update=none option for 'loose' submodules
+Date: Thu, 11 Aug 2011 11:28:31 -0700
+Message-ID: <7v8vqzreeo.fsf@alter.siamese.dyndns.org>
+References: <cover.1312923673.git.hvoigt@hvoigt.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Thu Aug 11 20:28:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QrZSW-0000IQ-Kx
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Aug 2011 19:54:20 +0200
+	id 1QrZzk-00046E-3T
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Aug 2011 20:28:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753096Ab1HKRxy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Aug 2011 13:53:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44681 "EHLO
+	id S1752040Ab1HKS2f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Aug 2011 14:28:35 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59808 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752989Ab1HKRxj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2011 13:53:39 -0400
+	id S1751339Ab1HKS2e (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2011 14:28:34 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 896FE41A8
-	for <git@vger.kernel.org>; Thu, 11 Aug 2011 13:53:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=xXjL
-	0aJjGv3EoJpFjUDwJX+vlkg=; b=lGd0rzSpKe+cC3cj7Uond5MeWniqTilJ0GEh
-	0Hx9qCJOO7DG39WnTGhFu+faObfo0cY2vk1wjINll2HA5C6jyhEsN8vSuWvbfcDo
-	dqYemBdugNAddUPZvSi+xzQTbkZHSXy/+S0bb5ogpvJij2bjLRi8LnhKbCog41wi
-	rzlEg7U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=GbpQtf
-	qVrRg8plycTRoeIqKrqHkSZhWdQxrZ4hx7C1FaHmTe86nFTUS8CFmWvqcUEW4HA/
-	YjC4vWbJWccaoHAwCMDA3bW4faBcECWEKjJwYLHIyfCNZtORI8BZJWDaRsPpZUTh
-	XA6ZVequdCHOmneVgsJ2Gt1taeaFkTQB34FLY=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2AF3548FE;
+	Thu, 11 Aug 2011 14:28:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mJAq8ElqZbVdKNWvd6w6ocYvscE=; b=xcsiC2
+	NsgMCQfTN9Iykc+XELsu/w5Ky6m1K1sySkOYEVoF0CKo0ksqY0kfwqnQ65eUmV/A
+	URtqlOjQ1THA5bUDKERdyKoVSQsJr7zq7qc5rjCnRgHVRo+NyWJkeDFWCYayc3UB
+	iylGdX55ZlfTtiKZZUqqeF5CIJgElJ/jSMjFE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OJF1brdeL+d3sjvXthbX4KSCNXPP/St1
+	4HHavPZ7TeOk40M+L2saFCgRRH8fmmlSu5tfZNe+FEju1UcOIU1CSyiszhEoAyL+
+	MDuOL1R2H497njj+GG8O3tS98N8xWySIOZyLfA8CZAfRa+eZNE3S3H2Gec1jmacv
+	psq8Uvt+W5k=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 818E341A7
-	for <git@vger.kernel.org>; Thu, 11 Aug 2011 13:53:38 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 228B948FD;
+	Thu, 11 Aug 2011 14:28:33 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E048441A6 for
- <git@vger.kernel.org>; Thu, 11 Aug 2011 13:53:37 -0400 (EDT)
-X-Mailer: git-send-email 1.7.6.433.g1421f
-In-Reply-To: <1313085196-13249-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: D73FCF6C-C442-11E0-9D68-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A89F248FC; Thu, 11 Aug 2011
+ 14:28:32 -0400 (EDT)
+In-Reply-To: <cover.1312923673.git.hvoigt@hvoigt.net> (Heiko Voigt's message
+ of "Thu, 11 Aug 2011 19:51:44 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B7D4E6DA-C447-11E0-9F4D-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179127>
 
-The more we probe alternative slots, the more expensive average
-look-up gets, while it helps reduce the load factor of the hash
-table.
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-../+v/6bb99816f5676ed5ddb6922363b7470a7e8c61f7/git-pack-objects
-Counting objects: 2139209, done.
-31.09user 2.05system 0:33.25elapsed 99%CPU (0avgtext+0avgdata 3135840maxresident)k
-0inputs+0outputs (0major+290849minor)pagefaults 0swaps
-Counting objects: 2139209, done.
-31.12user 2.14system 0:33.37elapsed 99%CPU (0avgtext+0avgdata 3136128maxresident)k
-0inputs+0outputs (0major+290866minor)pagefaults 0swaps
-Counting objects: 2139209, done.
-31.17user 2.01system 0:33.29elapsed 99%CPU (0avgtext+0avgdata 3136512maxresident)k
-0inputs+0outputs (0major+290890minor)pagefaults 0swaps
----
- object.c |   15 ++++-----------
- 1 files changed, 4 insertions(+), 11 deletions(-)
+> If a submodule is used to seperate some bigger parts of a project into
+> an optional directory it is helpful to not clone/update them by default.
 
-diff --git a/object.c b/object.c
-index c777520..caced56 100644
---- a/object.c
-+++ b/object.c
-@@ -49,12 +49,12 @@ struct object *get_indexed_object(unsigned int idx)
- struct object *lookup_object(const unsigned char *sha1)
- {
- 	struct object *obj;
--	unsigned int hashval[5];
-+	unsigned int hashval[4];
- 
- 	if (!obj_hash)
- 		return NULL;
- 
--	memcpy(hashval, sha1, 20);
-+	memcpy(hashval, sha1, 16);
- 	if ((obj = obj_hash[H(hashval, 0)]) && !hashcmp(sha1, obj->sha1))
- 		return obj;
- 	if ((obj = obj_hash[H(hashval, 1)]) && !hashcmp(sha1, obj->sha1))
-@@ -63,8 +63,6 @@ struct object *lookup_object(const unsigned char *sha1)
- 		return obj;
- 	if ((obj = obj_hash[H(hashval, 3)]) && !hashcmp(sha1, obj->sha1))
- 		return obj;
--	if ((obj = obj_hash[H(hashval, 4)]) && !hashcmp(sha1, obj->sha1))
--		return obj;
- 	return NULL;
- }
- 
-@@ -84,9 +82,9 @@ static struct object *insert_obj_hash(struct object *obj)
- 	for (loop = obj_hash_size / 2; 0 <= loop; loop--) {
- 		struct object *tmp_obj;
- 		unsigned int ix;
--		unsigned int hashval[5];
-+		unsigned int hashval[4];
- 
--		memcpy(hashval, obj->sha1, 20);
-+		memcpy(hashval, obj->sha1, 16);
- 		ix = H(hashval, 0);
- 		if (!obj_hash[ix]) {
- 			obj_hash[ix] = obj;
-@@ -103,11 +101,6 @@ static struct object *insert_obj_hash(struct object *obj)
- 			return NULL;
- 		}
- 		ix = H(hashval, 3);
--		if (!obj_hash[ix]) {
--			obj_hash[ix] = obj;
--			return NULL;
--		}
--		ix = H(hashval, 4);
- 		tmp_obj = obj_hash[ix];
- 		obj_hash[ix] = obj;
- 		if (!tmp_obj)
--- 
-1.7.6.433.g1421f
+Sorry if I am slow, but I do not get this.
+
+I thought unless you say "submodule init" once, a submodule you are not
+interested in should not be cloned nor updated at all. If that is not the
+case, isn't it a bug to be fixed without a new configuration variable that
+fixes it only when it is set?
+
+> We have been talking about loose submodules for some time:
+
+Also before introducing a new terminology "loose submodule", please define
+it somewhere. It feels confusing to me that a normal submodule, which
+shouldn't be auto-cloned nor auto-updated without "submodule init", needs
+to be called by a name other than simply a "submodule" but with an
+adjuctive "loose submodule".
