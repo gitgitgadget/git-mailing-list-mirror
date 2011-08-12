@@ -1,56 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Suggestions to make git easier to understand
-Date: Fri, 12 Aug 2011 16:26:27 -0600
-Message-ID: <20110812222626.GA7079@sigill.intra.peff.net>
-References: <CAGK7Mr5T4-DBK7rXeH-1=SNu5HBOEkLBW=CAh5Lhf7oHKjFAiw@mail.gmail.com>
- <20110811221627.GA32005@elie.gateway.2wire.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Philippe Vaucher <philippe.vaucher@gmail.com>, git@vger.kernel.org,
-	Rafael Magana <raf.magana@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 13 00:26:38 2011
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 1/6] Extract a function clear_cached_refs()
+Date: Sat, 13 Aug 2011 00:36:24 +0200
+Message-ID: <1313188589-2330-2-git-send-email-mhagger@alum.mit.edu>
+References: <1313188589-2330-1-git-send-email-mhagger@alum.mit.edu>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Drew Northup <drew.northup@maine.edu>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 13 00:37:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qs0BZ-0000ug-Uw
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Aug 2011 00:26:38 +0200
+	id 1Qs0Lz-0005Kf-Mz
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Aug 2011 00:37:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752441Ab1HLW0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Aug 2011 18:26:32 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38144
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751317Ab1HLW0c (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2011 18:26:32 -0400
-Received: (qmail 10083 invoked by uid 107); 12 Aug 2011 22:27:07 -0000
-Received: from cpe-76-167-230-207.socal.res.rr.com (HELO sigill.intra.peff.net) (76.167.230.207)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 12 Aug 2011 18:27:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 Aug 2011 16:26:27 -0600
-Content-Disposition: inline
-In-Reply-To: <20110811221627.GA32005@elie.gateway.2wire.net>
+	id S1752589Ab1HLWhV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Aug 2011 18:37:21 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:41143 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752606Ab1HLWhQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2011 18:37:16 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from michael.homenet.telecomitalia.it (p54BEAA34.dip.t-dialin.net [84.190.170.52])
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p7CMaXJO010513;
+	Sat, 13 Aug 2011 00:36:56 +0200
+X-Mailer: git-send-email 1.7.6.8.gd2879
+In-Reply-To: <1313188589-2330-1-git-send-email-mhagger@alum.mit.edu>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179259>
 
-On Thu, Aug 11, 2011 at 05:16:27PM -0500, Jonathan Nieder wrote:
 
-> > http://raflabs.com/blogs/silence-is-foo/2011/04/07/staging-area-index-cache-git/
-> >
-> > I thought it made some good points about git being kinda confusing,
-> > for example sentences like "Changed but not updated" in git status
-> > could use a better sentence like "Changed but not in the index".
-> 
-> Sounds reasonable (well, with some more precise wording to reflect
-> that this means "changed but not all changes are reflected in the
-> index").
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ refs.c |    9 ++++++---
+ 1 files changed, 6 insertions(+), 3 deletions(-)
 
-Didn't we fix this already in 8009d83 (Better "Changed but not updated"
-message in git-status, 2010-11-02)? Since v1.7.4, "git status" has
-"Changes not staged for commit".
-
--Peff
+diff --git a/refs.c b/refs.c
+index 6f313a9..b0c8308 100644
+--- a/refs.c
++++ b/refs.c
+@@ -171,10 +171,8 @@ static void free_ref_list(struct ref_list *list)
+ 	}
+ }
+ 
+-static void invalidate_cached_refs(void)
++static void clear_cached_refs(struct cached_refs *ca)
+ {
+-	struct cached_refs *ca = &cached_refs;
+-
+ 	if (ca->did_loose && ca->loose)
+ 		free_ref_list(ca->loose);
+ 	if (ca->did_packed && ca->packed)
+@@ -183,6 +181,11 @@ static void invalidate_cached_refs(void)
+ 	ca->did_loose = ca->did_packed = 0;
+ }
+ 
++static void invalidate_cached_refs(void)
++{
++	clear_cached_refs(&cached_refs);
++}
++
+ static void read_packed_refs(FILE *f, struct cached_refs *cached_refs)
+ {
+ 	struct ref_list *list = NULL;
+-- 
+1.7.6.8.gd2879
