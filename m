@@ -1,76 +1,70 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: open files limit
-Date: Fri, 12 Aug 2011 10:26:00 -0700
-Message-ID: <20110812172600.GA15896@padd.com>
-References: <20110812151548.GA14385@padd.com>
- <CAJo=hJsj8_VjD5wN9Gge_Me-eXKK-P7nLAxERiiLp0+ayiEBbg@mail.gmail.com>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: [BUG] Git won't commit
+Date: Fri, 12 Aug 2011 17:30:21 +0000
+Message-ID: <CAMOZ1BtxNSnncEJ6frEY0STgfS478krkpxXStP401WLPovb2Gw@mail.gmail.com>
+References: <1313169225059-6681082.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Aug 12 19:26:08 2011
+To: Fabricio Nascimento <fabriciosn@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 12 19:30:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QrvUk-0006Gf-U8
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Aug 2011 19:26:07 +0200
+	id 1QrvZQ-0000Mc-Kl
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Aug 2011 19:30:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752514Ab1HLR0D convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Aug 2011 13:26:03 -0400
-Received: from honk.padd.com ([74.3.171.149]:44458 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751793Ab1HLR0A (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2011 13:26:00 -0400
-Received: by honk.padd.com (Postfix, from userid 7770)
-	id 0D6875B31; Fri, 12 Aug 2011 10:26:00 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAJo=hJsj8_VjD5wN9Gge_Me-eXKK-P7nLAxERiiLp0+ayiEBbg@mail.gmail.com>
+	id S1752773Ab1HLRaw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Aug 2011 13:30:52 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:50456 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751939Ab1HLRav (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2011 13:30:51 -0400
+Received: by ywf7 with SMTP id 7so2089252ywf.19
+        for <git@vger.kernel.org>; Fri, 12 Aug 2011 10:30:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=AjAnIVVV+ZSODYAkdtQoM6YDxL9aUqNBhZu+EHkHnfE=;
+        b=fV4dmR8dThhA4KbUUVdW+0erly3B+/b6yzw9RKE8k+qgRw+3hsSVXaYJmj/cbQ2rgc
+         r9bWdPFY2Rq9osDwI2wi73s0ArBlq3oyxIytInuVCtrVWP3wz5IYgjmUpCdx2UaZT0Fb
+         mAQZUhP4ry5pgw95MxOBJdAmHiToMZWpMJqE0=
+Received: by 10.42.156.3 with SMTP id x3mr1112612icw.212.1313170251172; Fri,
+ 12 Aug 2011 10:30:51 -0700 (PDT)
+Received: by 10.42.171.6 with HTTP; Fri, 12 Aug 2011 10:30:21 -0700 (PDT)
+In-Reply-To: <1313169225059-6681082.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179239>
 
-spearce@spearce.org wrote on Fri, 12 Aug 2011 09:09 -0700:
-> On Fri, Aug 12, 2011 at 08:15, Pete Wyckoff <pw@padd.com> wrote:
-> > Somebody at $work found this problem:
-> >
-> > =A0 =A0$ git ls-files -s | wc
-> > =A0 =A0error: packfile .git/objects/pack/pack-1627e77da82bbb3611876=
-2649c8aa88c05664b1e.pack cannot be accessed
-> > =A0 =A0[..lots more similar errors..]
-> >
-> > Turns out his shell's open file descriptor limit was 500. =A0And
-> > there are 1600 pack files in the repo.
-> >
-> > Increasing the descriptor limit to 1024 fixed it. =A0I could
-> > probably get him to repack, which may also fix it.
-> >
-> > Does it seem feasible to look for EMFILE errors and close
-> > some packs? =A0Or at least spit out a more intuitive error?
->=20
-> What version of Git? I remember fixing this already.... :-)
+On Fri, Aug 12, 2011 at 17:13, Fabricio Nascimento <fabriciosn@gmail.com> wrote:
+> Hello Everybody,
+>
+> Hope this is the right place to send this bug report.
+>
+> It just appeared today, last time I've made a successful commit was 3 days
+> ago. Now every commit, in no matter which repository I have (I've tried old
+> ones, cloned today, github ones etc) fails with the following message.
+>
+> [master 09-mapas] git commit
+> fatal: could not read 'template': No such file or directory
+>
+> It happens both with the stock git binary that came with Xcode 4.1 on OSX
+> Lion (1.7.4.4) [/usr/local/bin/git], and the homebrew version (1.7.6)
+> [/usr/bin/git].
+>
+> I haven't changed much of my system during those days besides installing
+> macports and tinycdb (with ports). Don't see any close relation, both
+> tinycdb and macports were removed.
+>
+> Curiously, it works well with the git binary that comes with Github.app for
+> mac, whose version is 1.7.4.
 
-Initially 1.7.5.4.  Same problem on 1.7.6 and master. =20
+What does the following output for you?
 
-I have your "Limit file descriptors used by packs" (c793430, 28
-feb 2011).
-
-It fails here:
-
-	if (!is_pack_valid(p)) {
-		error("packfile %s cannot be accessed", p->pack_name);
-		goto next;
-	}
-
-because p->pack_fd is -1, because an earlier git_open_noatime()
-got EMFILE.  The function unuse_one_window() is never able to
-find anything to close.
-
-I'll do some more debugging this weekend.  Thanks for pointing
-out that it _should_ be fixed.
-
-		-- Pete
+  git config --get commit.template
