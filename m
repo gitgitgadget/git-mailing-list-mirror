@@ -1,229 +1,173 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCHv2 36/56] merge-recursive: Provide more info in conflict markers with file renames
-Date: Thu, 11 Aug 2011 23:20:09 -0600
-Message-ID: <1313126429-17368-37-git-send-email-newren@gmail.com>
+Subject: [PATCHv2 39/56] merge-recursive: Introduce a merge_file convenience function
+Date: Thu, 11 Aug 2011 23:20:12 -0600
+Message-ID: <1313126429-17368-40-git-send-email-newren@gmail.com>
 References: <1313126429-17368-1-git-send-email-newren@gmail.com>
 Cc: git@vger.kernel.org, Jim Foucar <jgfouca@sandia.gov>,
 	Elijah Newren <newren@gmail.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Aug 12 07:22:25 2011
+X-From: git-owner@vger.kernel.org Fri Aug 12 07:22:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QrkCK-0005Kt-Lw
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Aug 2011 07:22:21 +0200
+	id 1QrkCN-0005Kt-GI
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Aug 2011 07:22:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754172Ab1HLFV5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Aug 2011 01:21:57 -0400
-Received: from mail-iy0-f170.google.com ([209.85.210.170]:39648 "EHLO
+	id S1754321Ab1HLFWL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Aug 2011 01:22:11 -0400
+Received: from mail-iy0-f170.google.com ([209.85.210.170]:62901 "EHLO
 	mail-iy0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754116Ab1HLFV4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2011 01:21:56 -0400
-Received: by mail-iy0-f170.google.com with SMTP id 16so835125iye.1
-        for <git@vger.kernel.org>; Thu, 11 Aug 2011 22:21:56 -0700 (PDT)
+	with ESMTP id S1754182Ab1HLFWD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2011 01:22:03 -0400
+Received: by mail-iy0-f170.google.com with SMTP id 16so834922iye.1
+        for <git@vger.kernel.org>; Thu, 11 Aug 2011 22:22:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=j8T8DaAXFEelY8WrxK0lzbyiqfJWfCZPA8SOPWYmZx4=;
-        b=xEJu3K0awAHmmLqvfFrZbTW9jMmzKdEGXIZZdD4/NSvUiVsleFjmt6fv6tPzDdjSZ0
-         NSlv2ByvWjqMqXFTzKKDVIqf0WK1oVLHBCoGTlRIhc74f7ZnhGGD1TFwXMzvzDp7SdyG
-         loXfr0RYpUFMZF91WULroAFWzpVWcUvpGymCE=
-Received: by 10.42.157.5 with SMTP id b5mr494187icx.442.1313126516286;
-        Thu, 11 Aug 2011 22:21:56 -0700 (PDT)
+        bh=ziL8SP8cXVKGmC+oUFss5Jfljywls9bwe4S/bUNZrAs=;
+        b=ApnZSugTfFBLQpv/PrvhnKHbLuihu2wqGmB9urJVuddfNBsr6S09WNbnNbOuJ75Ohm
+         8DLxhvvhJuHyBvif6/MT1JY3uDvf+rsg/dtIrRFDnHbZPC22y6qzWN0pqANXFWXDwL7r
+         VR0j/W3b2S9jsk0ZUxh42tV8+EP+8zSMqcn0k=
+Received: by 10.42.132.10 with SMTP id b10mr567625ict.76.1313126522436;
+        Thu, 11 Aug 2011 22:22:02 -0700 (PDT)
 Received: from Miney.hsd1.nm.comcast.net. (c-107-4-21-12.hsd1.nm.comcast.net [107.4.21.12])
-        by mx.google.com with ESMTPS id n18sm2032317ibg.52.2011.08.11.22.21.44
+        by mx.google.com with ESMTPS id n18sm2032317ibg.52.2011.08.11.22.22.00
         (version=SSLv3 cipher=OTHER);
-        Thu, 11 Aug 2011 22:21:45 -0700 (PDT)
+        Thu, 11 Aug 2011 22:22:01 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6.99.ga8ca0
 In-Reply-To: <1313126429-17368-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179192>
 
-Whenever there are merge conflicts in file contents, we would mark the
-different sides of the conflict with the two branches being merged.
-However, when there is a rename involved as well, the branchname is not
-sufficient to specify where the conflicting content came from.  In such
-cases, mark the two sides of the conflict with branchname:filename rather
-than just branchname.
+merge_file previously required diff_filespec arguments, but all callers
+only had sha1s and modes.  Rename merge_file to merge_file_1 and introduce
+a new merge_file convenience function which takes the sha1s and modes and
+creates the temporary diff_filespec variables needed to call merge_file_1.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-Changes since v1: Fix bug where I could get filenames from two
-  branches reversed depending on the direction of the merge.
+No changes since v1.
 
- merge-recursive.c                    |   28 +++++++++++-
- t/t6022-merge-rename.sh              |   75 ++++++++++++++++++++++++++++++++--
- t/t6042-merge-rename-corner-cases.sh |    2 +-
- 3 files changed, 97 insertions(+), 8 deletions(-)
+ merge-recursive.c |   72 +++++++++++++++++++++++++++-------------------------
+ 1 files changed, 37 insertions(+), 35 deletions(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 0635e1b..bc99f1a 100644
+index a0dc0bf..76a451c 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -1355,6 +1355,7 @@ static int merge_content(struct merge_options *o,
- 			 struct rename_conflict_info *rename_conflict_info)
+@@ -846,12 +846,12 @@ static int merge_3way(struct merge_options *o,
+ 	return merge_status;
+ }
+ 
+-static struct merge_file_info merge_file(struct merge_options *o,
+-					 const struct diff_filespec *one,
+-					 const struct diff_filespec *a,
+-					 const struct diff_filespec *b,
+-					 const char *branch1,
+-					 const char *branch2)
++static struct merge_file_info merge_file_1(struct merge_options *o,
++					   const struct diff_filespec *one,
++					   const struct diff_filespec *a,
++					   const struct diff_filespec *b,
++					   const char *branch1,
++					   const char *branch2)
  {
- 	const char *reason = "content";
-+	char *side1 = NULL, *side2 = NULL;
- 	struct merge_file_info mfi;
- 	struct diff_filespec one, a, b;
- 	unsigned df_conflict_remains = 0;
-@@ -1371,10 +1372,31 @@ static int merge_content(struct merge_options *o,
- 	hashcpy(b.sha1, b_sha);
- 	b.mode = b_mode;
+ 	struct merge_file_info result;
+ 	result.merge = 0;
+@@ -920,6 +920,26 @@ static struct merge_file_info merge_file(struct merge_options *o,
+ 	return result;
+ }
  
--	mfi = merge_file(o, &one, &a, &b, o->branch1, o->branch2);
--	if (rename_conflict_info && dir_in_way(path, !o->call_depth)) {
--		df_conflict_remains = 1;
-+	if (rename_conflict_info) {
-+		const char *path1, *path2;
-+		struct diff_filepair *pair1 = rename_conflict_info->pair1;
++static struct merge_file_info merge_file(struct merge_options *o,
++					 const char *path,
++					 const unsigned char *o_sha, int o_mode,
++					 const unsigned char *a_sha, int a_mode,
++					 const unsigned char *b_sha, int b_mode,
++					 const char *branch1,
++					 const char *branch2)
++{
++	struct diff_filespec one, a, b;
 +
-+		path1 = (o->branch1 == rename_conflict_info->branch1) ?
-+			pair1->two->path : pair1->one->path;
-+		/* If rename_conflict_info->pair2 != NULL, we are in
-+		 * RENAME_ONE_FILE_TO_ONE case.  Otherwise, we have a
-+		 * normal rename.
-+		 */
-+		path2 = (rename_conflict_info->pair2 ||
-+			 o->branch2 == rename_conflict_info->branch1) ?
-+			pair1->two->path : pair1->one->path;
-+		side1 = xmalloc(strlen(o->branch1) + strlen(path1) + 2);
-+		side2 = xmalloc(strlen(o->branch2) + strlen(path2) + 2);
-+		sprintf(side1, "%s:%s", o->branch1, path1);
-+		sprintf(side2, "%s:%s", o->branch2, path2);
++	one.path = a.path = b.path = (char *)path;
++	hashcpy(one.sha1, o_sha);
++	one.mode = o_mode;
++	hashcpy(a.sha1, a_sha);
++	a.mode = a_mode;
++	hashcpy(b.sha1, b_sha);
++	b.mode = b_mode;
++	return merge_file_1(o, &one, &a, &b, branch1, branch2);
++}
 +
-+		if (dir_in_way(path, !o->call_depth))
-+			df_conflict_remains = 1;
+ static void conflict_rename_delete(struct merge_options *o,
+ 				   struct diff_filepair *pair,
+ 				   const char *rename_branch,
+@@ -1017,16 +1037,10 @@ static void conflict_rename_rename_2to1(struct merge_options *o,
+ 	/* Two files were renamed to the same thing. */
+ 	if (o->call_depth) {
+ 		struct merge_file_info mfi;
+-		struct diff_filespec one, a, b;
+-
+-		one.path = a.path = b.path = path;
+-		hashcpy(one.sha1, null_sha1);
+-		one.mode = 0;
+-		hashcpy(a.sha1, ren1->pair->two->sha1);
+-		a.mode = ren1->pair->two->mode;
+-		hashcpy(b.sha1, ren2->pair->two->sha1);
+-		b.mode = ren2->pair->two->mode;
+-		mfi = merge_file(o, &one, &a, &b, branch1, branch2);
++		mfi = merge_file(o, path, null_sha1, 0,
++				 ren1->pair->two->sha1, ren1->pair->two->mode,
++				 ren2->pair->two->sha1, ren2->pair->two->mode,
++				 branch1, branch2);
+ 		output(o, 1, "Adding merged %s", path);
+ 		update_file(o, 0, mfi.sha, mfi.mode, path);
+ 	} else {
+@@ -1213,24 +1227,12 @@ static int process_renames(struct merge_options *o,
+ 				       ren1_dst, branch2);
+ 				if (o->call_depth) {
+ 					struct merge_file_info mfi;
+-					struct diff_filespec one, a, b;
+-
+-					one.path = a.path = b.path =
+-						(char *)ren1_dst;
+-					hashcpy(one.sha1, null_sha1);
+-					one.mode = 0;
+-					hashcpy(a.sha1, ren1->pair->two->sha1);
+-					a.mode = ren1->pair->two->mode;
+-					hashcpy(b.sha1, dst_other.sha1);
+-					b.mode = dst_other.mode;
+-					mfi = merge_file(o, &one, &a, &b,
+-							 branch1,
+-							 branch2);
++					mfi = merge_file(o, ren1_dst, null_sha1, 0,
++							 ren1->pair->two->sha1, ren1->pair->two->mode,
++							 dst_other.sha1, dst_other.mode,
++							 branch1, branch2);
+ 					output(o, 1, "Adding merged %s", ren1_dst);
+-					update_file(o, 0,
+-						    mfi.sha,
+-						    mfi.mode,
+-						    ren1_dst);
++					update_file(o, 0, mfi.sha, mfi.mode, ren1_dst);
+ 					try_merge = 0;
+ 				} else {
+ 					char *new_path = unique_path(o, ren1_dst, branch2);
+@@ -1408,8 +1410,8 @@ static int merge_content(struct merge_options *o,
+ 		if (dir_in_way(path, !o->call_depth))
+ 			df_conflict_remains = 1;
  	}
-+	mfi = merge_file(o, &one, &a, &b,
-+			 side1 ? side1 : o->branch1, side2 ? side2 : o->branch2);
-+	free(side1);
-+	free(side2);
+-	mfi = merge_file(o, &one, &a, &b,
+-			 side1 ? side1 : o->branch1, side2 ? side2 : o->branch2);
++	mfi = merge_file_1(o, &one, &a, &b,
++			   side1 ? side1 : o->branch1, side2 ? side2 : o->branch2);
+ 	free(side1);
+ 	free(side2);
  
- 	if (mfi.clean && !df_conflict_remains &&
- 	    sha_eq(mfi.sha, a_sha) && mfi.mode == a.mode)
-diff --git a/t/t6022-merge-rename.sh b/t/t6022-merge-rename.sh
-index fcc1d4c..4695cbc 100755
---- a/t/t6022-merge-rename.sh
-+++ b/t/t6022-merge-rename.sh
-@@ -351,11 +351,11 @@ cat >expected <<\EOF &&
- 8
- 9
- 10
--<<<<<<< HEAD
-+<<<<<<< HEAD:dir
- 12
- =======
- 11
-->>>>>>> dir-not-in-way
-+>>>>>>> dir-not-in-way:sub/file
- EOF
- 
- test_expect_success 'Rename+D/F conflict; renamed file cannot merge, dir not in way' '
-@@ -405,11 +405,11 @@ cat >expected <<\EOF &&
- 8
- 9
- 10
--<<<<<<< HEAD
-+<<<<<<< HEAD:sub/file
- 11
- =======
- 12
-->>>>>>> renamed-file-has-conflicts
-+>>>>>>> renamed-file-has-conflicts:dir
- EOF
- 
- test_expect_success 'Same as previous, but merged other way' '
-@@ -700,4 +700,71 @@ test_expect_success 'merge rename + small change' '
- 	test $(git rev-parse HEAD:renamed_file) = $(git rev-parse HEAD~1:file)
- '
- 
-+test_expect_success 'setup for use of extended merge markers' '
-+	git rm -rf . &&
-+	git clean -fdqx &&
-+	rm -rf .git &&
-+	git init &&
-+
-+	printf "1\n2\n3\n4\n5\n6\n7\n8\n" >original_file &&
-+	git add original_file &&
-+	git commit -mA &&
-+
-+	git checkout -b rename &&
-+	echo 9 >>original_file &&
-+	git add original_file &&
-+	git mv original_file renamed_file &&
-+	git commit -mB &&
-+
-+	git checkout master &&
-+	echo 8.5 >>original_file &&
-+	git add original_file &&
-+	git commit -mC
-+'
-+
-+cat >expected <<\EOF &&
-+1
-+2
-+3
-+4
-+5
-+6
-+7
-+8
-+<<<<<<< HEAD:renamed_file
-+9
-+=======
-+8.5
-+>>>>>>> master^0:original_file
-+EOF
-+
-+test_expect_success 'merge master into rename has correct extended markers' '
-+	git checkout rename^0 &&
-+	test_must_fail git merge -s recursive master^0 &&
-+	test_cmp expected renamed_file
-+'
-+
-+cat >expected <<\EOF &&
-+1
-+2
-+3
-+4
-+5
-+6
-+7
-+8
-+<<<<<<< HEAD:original_file
-+8.5
-+=======
-+9
-+>>>>>>> rename^0:renamed_file
-+EOF
-+
-+test_expect_success 'merge rename into master has correct extended markers' '
-+	git reset --hard &&
-+	git checkout master^0 &&
-+	test_must_fail git merge -s recursive rename^0 &&
-+	test_cmp expected renamed_file
-+'
-+
- test_done
-diff --git a/t/t6042-merge-rename-corner-cases.sh b/t/t6042-merge-rename-corner-cases.sh
-index 968055d..bfc3179 100755
---- a/t/t6042-merge-rename-corner-cases.sh
-+++ b/t/t6042-merge-rename-corner-cases.sh
-@@ -258,7 +258,7 @@ test_expect_success 'rename/directory conflict + clean content merge' '
- 	test -f newfile~HEAD
- '
- 
--test_expect_failure 'rename/directory conflict + content merge conflict' '
-+test_expect_success 'rename/directory conflict + content merge conflict' '
- 	git reset --hard &&
- 	git reset --hard &&
- 	git clean -fdqx &&
 -- 
 1.7.6.100.gac5c1
