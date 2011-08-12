@@ -1,313 +1,133 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: [PATCH v3 1/2] rev-parse: add option --is-well-formed-git-dir [path]
-Date: Fri, 12 Aug 2011 21:55:12 +0200
-Message-ID: <1313178913-25617-2-git-send-email-iveqy@iveqy.com>
-References: <1313178913-25617-1-git-send-email-iveqy@iveqy.com>
-Cc: iveqy@iveqy.com, jens.lehmann@web.de, hvoigt@hvoigt.net,
-	gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 12 21:55:27 2011
+From: Richard Purdie <rpurdie@rpsys.net>
+Subject: Re: Overriding ~/.gitconfig using GIT_CONFIG
+Date: Fri, 12 Aug 2011 21:44:13 +0100
+Message-ID: <1313181853.14274.535.camel@rex>
+References: <1313163498.14274.505.camel@rex>
+	 <7vr54qmodf.fsf@alter.siamese.dyndns.org>
+	 <7vmxfemnc4.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	=?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
+	<pclouds@gmail.com>, GIT Mailing-list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 12 22:45:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QrxpE-0007zM-N8
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Aug 2011 21:55:25 +0200
+	id 1QrybX-0006qR-53
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Aug 2011 22:45:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754144Ab1HLTzJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Aug 2011 15:55:09 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:38946 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751786Ab1HLTzG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2011 15:55:06 -0400
-Received: by fxh19 with SMTP id 19so2518436fxh.19
-        for <git@vger.kernel.org>; Fri, 12 Aug 2011 12:55:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        bh=+2oJJnE+kVQpOnzt52IVHjvP9kKu/KSjjMT3w/PtwwA=;
-        b=SiSHS2KYz/p5Bqjqona26f6J/3nqZDgAdFWdQZ1lYYN0aOPVtVhWXsDGmGfTplun/q
-         t1wQezENMlrGuauzHqB8PXr7SM0XHEaudgKQ0AaKm31pVAvvhaPNqdgDCPVuD4+8JelV
-         uAUDlAhgqGZv5BvOsbjL1QgQ2aZOkn0rIRN7I=
-Received: by 10.223.15.81 with SMTP id j17mr1791299faa.20.1313178904573;
-        Fri, 12 Aug 2011 12:55:04 -0700 (PDT)
-Received: from kolya (h-185-240.a189.priv.bahnhof.se [85.24.185.240])
-        by mx.google.com with ESMTPS id q3sm2242209faa.39.2011.08.12.12.55.03
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 12 Aug 2011 12:55:03 -0700 (PDT)
-Received: from iveqy by kolya with local (Exim 4.72)
-	(envelope-from <iveqy@kolya>)
-	id 1Qrxp6-0006fo-Ew; Fri, 12 Aug 2011 21:55:16 +0200
-X-Mailer: git-send-email 1.7.6.403.g1fd2f.dirty
-In-Reply-To: <1313178913-25617-1-git-send-email-iveqy@iveqy.com>
+	id S1751718Ab1HLUpN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Aug 2011 16:45:13 -0400
+Received: from 93-97-173-237.zone5.bethere.co.uk ([93.97.173.237]:57995 "EHLO
+	tim.rpsys.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751319Ab1HLUpM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2011 16:45:12 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by tim.rpsys.net (8.13.6/8.13.8) with ESMTP id p7CKj3S2015372;
+	Fri, 12 Aug 2011 21:45:03 +0100
+Received: from tim.rpsys.net ([127.0.0.1])
+ by localhost (tim.rpsys.net [127.0.0.1]) (amavisd-new, port 10024) with LMTP
+ id 13776-08; Fri, 12 Aug 2011 21:44:58 +0100 (BST)
+Received: from [192.168.3.10] ([192.168.3.10])
+	(authenticated bits=0)
+	by tim.rpsys.net (8.13.6/8.13.8) with ESMTP id p7CKitvV015359
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 12 Aug 2011 21:44:56 +0100
+In-Reply-To: <7vmxfemnc4.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 2.32.2 
+X-Virus-Scanned: amavisd-new at rpsys.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179246>
 
-Check if [path] is a valid git-dir or a valid git-file that points
-to a valid git-dir.
+On Fri, 2011-08-12 at 12:39 -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Richard Purdie <rpurdie@rpsys.net> writes:
+> >
+> >> Looking through the manuals/code, it suggests I should be able to do:
+> >>
+> >> GIT_CONFIG=/dev/null git XXX
+> >>
+> >> and all should work happily. It doesn't though. As an example, with a
+> >> ~/.gitconfig, "GIT_CONFIG=/dev/null git fetch --all" is clearly
+> >> accessing the file in ~ and then acting upon it.
+> >
+> > If the manual says the above is expected for any value of XXX, then that
+> > is a bug in the manual since mid 2008, I think.
+> >
+> > See dc87183 (Only use GIT_CONFIG in "git config", not other programs,
+> > 2008-06-30).
+> >
+> > I _think_ these days a workaround to force a known config is to set HOME
+> > to a value that has a known .gitconfig (or no such file), and decline
+> > usage of /etc/git.config by exporting GIT_CONFIG_NOSYSTEM.
+> 
+> Side note. Here is what dc87183 says:
+> 
+> commit dc87183189b54441e315d35d48983d80ab085299
+> Author: Daniel Barkalow <barkalow@iabervon.org>
+> Date:   Mon Jun 30 03:37:47 2008 -0400
+> 
+>     Only use GIT_CONFIG in "git config", not other programs
+>     
+>     For everything other than using "git config" to read or write a
+>     git-style config file that isn't the current repo's config file,
+>     GIT_CONFIG was actively detrimental. Rather than argue over which
+>     programs are important enough to have work anyway, just fix all of
+>     them at the root.
+>     
+>     Also removes GIT_LOCAL_CONFIG, which would only be useful for programs
+>     that do want to use global git-specific config, but not the repo's own
+>     git-specific config, and want to use some other, presumably
+>     git-specific config. Despite being documented, I can't find any sign that
+>     it was ever used.
+>     
+>     Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+>     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> 
+> It clearly explains the reason why LOCAL_CONFIG was removed (the reader
+> does not have to agree with "I can't find any sign that it was ever used",
+> though), but I cannot read from the first paragraph the reason why it was
+> felt necessary not to honor GIT_CONFIG in other programs, i.e. "was
+> actively detrimental" is not backed by any example in the paragraph. I can
+> sort of sense from "Rather than argue over..." that there may have been a
+> discussion on the list, and reading the archive from that timeframe may
+> reveal why many felt it was not a good idea.
+> 
+> Daniel, do you recall the context?
 
-We want tests to be independent from the fact that a git-dir may
-be a git-file. Thus we changed tests to use this feature.
+I went digging and this looks like as good a summary as any of the posts
+around that time:
 
-Signed-off-by: Fredrik Gustafsson <iveqy@iveqy.com>
-Mentored-by: Jens Lehmann <Jens.Lehmann@web.de>
-Mentored-by: Heiko Voigt <hvoigt@hvoigt.net>
----
- Documentation/git-rev-parse.txt |    4 ++
- builtin/rev-parse.c             |    8 +++
- cache.h                         |    1 +
- setup.c                         |    7 +++
- t/t7400-submodule-basic.sh      |    4 +-
- t/t7403-submodule-sync.sh       |    5 +-
- t/t7407-submodule-foreach.sh    |   97 ++++++++++++++++++++-------------------
- 7 files changed, 75 insertions(+), 51 deletions(-)
+http://marc.info/?l=git&m=121476432303314&w=2
 
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index 42c9676..3ce81c0 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -180,6 +180,10 @@ print a message to stderr and exit with nonzero status.
- <args>...::
- 	Flags and parameters to be parsed.
- 
-+--is-well-formed-git-dir [path]::
-+	Check if [path] is a valid git-dir or a git-file pointing to a valid
-+	git-dir. If [path] is a valid git-dir the resolved path to git-dir will
-+	be printed.
- 
- include::revisions.txt[]
- 
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index 4c19f84..21ac43f 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -468,6 +468,14 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 		return 0;
- 	}
- 
-+	if (argc > 2 && !strcmp(argv[1], "--is-well-formed-git-dir")) {
-+		const char *gitdir = resolve_gitdir(argv[2]);
-+		if (!gitdir)
-+			die("not a gitdir '%s'", argv[2]);
-+		puts(gitdir);
-+		return 0;
-+	}
-+
- 	if (argc > 1 && !strcmp("-h", argv[1]))
- 		usage(builtin_rev_parse_usage);
- 
-diff --git a/cache.h b/cache.h
-index 9e12d55..550f632 100644
---- a/cache.h
-+++ b/cache.h
-@@ -436,6 +436,7 @@ extern char *get_graft_file(void);
- extern int set_git_dir(const char *path);
- extern const char *get_git_work_tree(void);
- extern const char *read_gitfile_gently(const char *path);
-+extern const char *resolve_gitdir(const char *suspect);
- extern void set_git_work_tree(const char *tree);
- 
- #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
-diff --git a/setup.c b/setup.c
-index 5ea5502..efad002 100644
---- a/setup.c
-+++ b/setup.c
-@@ -808,3 +808,10 @@ const char *setup_git_directory(void)
- {
- 	return setup_git_directory_gently(NULL);
- }
-+
-+const char *resolve_gitdir(const char *suspect)
-+{
-+	if (is_git_directory(suspect))
-+		return suspect;
-+	return read_gitfile_gently(suspect);
-+}
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 14dc927..4df53e5 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -360,10 +360,10 @@ test_expect_success 'update --init' '
- 	git submodule update init > update.out &&
- 	cat update.out &&
- 	test_i18ngrep "not initialized" update.out &&
--	! test -d init/.git &&
-+	test_must_fail git rev-parse --is-well-formed-git-dir init/.git &&
- 
- 	git submodule update --init init &&
--	test -d init/.git
-+	git rev-parse --is-well-formed-git-dir init/.git
- '
- 
- test_expect_success 'do not add files from a submodule' '
-diff --git a/t/t7403-submodule-sync.sh b/t/t7403-submodule-sync.sh
-index 95ffe34..3620215 100755
---- a/t/t7403-submodule-sync.sh
-+++ b/t/t7403-submodule-sync.sh
-@@ -56,8 +56,9 @@ test_expect_success '"git submodule sync" should update submodule URLs' '
- 	 git pull --no-recurse-submodules &&
- 	 git submodule sync
- 	) &&
--	test -d "$(git config -f super-clone/submodule/.git/config \
--	                        remote.origin.url)" &&
-+	test -d "$(cd super-clone/submodule &&
-+	 git config remote.origin.url
-+	)" &&
- 	(cd super-clone/submodule &&
- 	 git checkout master &&
- 	 git pull
-diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.sh
-index be745fb..1a974e2 100755
---- a/t/t7407-submodule-foreach.sh
-+++ b/t/t7407-submodule-foreach.sh
-@@ -118,19 +118,19 @@ test_expect_success 'use "submodule foreach" to checkout 2nd level submodule' '
- 	git clone super clone2 &&
- 	(
- 		cd clone2 &&
--		test ! -d sub1/.git &&
--		test ! -d sub2/.git &&
--		test ! -d sub3/.git &&
--		test ! -d nested1/.git &&
-+		test_must_fail git rev-parse --is-well-formed-git-dir sub1/.git &&
-+		test_must_fail git rev-parse --is-well-formed-git-dir sub2/.git &&
-+		test_must_fail git rev-parse --is-well-formed-git-dir sub3/.git &&
-+		test_must_fail git rev-parse --is-well-formed-git-dir nested1/.git &&
- 		git submodule update --init &&
--		test -d sub1/.git &&
--		test -d sub2/.git &&
--		test -d sub3/.git &&
--		test -d nested1/.git &&
--		test ! -d nested1/nested2/.git &&
-+		git rev-parse --is-well-formed-git-dir sub1/.git &&
-+		git rev-parse --is-well-formed-git-dir sub2/.git &&
-+		git rev-parse --is-well-formed-git-dir sub3/.git &&
-+		git rev-parse --is-well-formed-git-dir nested1/.git &&
-+		test_must_fail git rev-parse --is-well-formed-git-dir nested1/nested2/.git &&
- 		git submodule foreach "git submodule update --init" &&
--		test -d nested1/nested2/.git &&
--		test ! -d nested1/nested2/nested3/.git
-+		git rev-parse --is-well-formed-git-dir nested1/nested1/nested2/.git
-+		test_must_fail git rev-parse --is-well-formed-git-dir nested1/nested2/nested3/.git
- 	)
- '
- 
-@@ -138,8 +138,8 @@ test_expect_success 'use "foreach --recursive" to checkout all submodules' '
- 	(
- 		cd clone2 &&
- 		git submodule foreach --recursive "git submodule update --init" &&
--		test -d nested1/nested2/nested3/.git &&
--		test -d nested1/nested2/nested3/submodule/.git
-+		git rev-parse --is-well-formed-git-dir nested1/nested2/nested3/.git &&
-+		git rev-parse --is-well-formed-git-dir nested1/nested2/nested3/submodule/.git
- 	)
- '
- 
-@@ -183,18 +183,18 @@ test_expect_success 'use "update --recursive" to checkout all submodules' '
- 	git clone super clone3 &&
- 	(
- 		cd clone3 &&
--		test ! -d sub1/.git &&
--		test ! -d sub2/.git &&
--		test ! -d sub3/.git &&
--		test ! -d nested1/.git &&
-+		test_must_fail git rev-parse --is-well-formed-git-dir sub1/.git &&
-+		test_must_fail git rev-parse --is-well-formed-git-dir sub2/.git &&
-+		test_must_fail git rev-parse --is-well-formed-git-dir sub3/.git &&
-+		test_must_fail git rev-parse --is-well-formed-git-dir nested1/.git &&
- 		git submodule update --init --recursive &&
--		test -d sub1/.git &&
--		test -d sub2/.git &&
--		test -d sub3/.git &&
--		test -d nested1/.git &&
--		test -d nested1/nested2/.git &&
--		test -d nested1/nested2/nested3/.git &&
--		test -d nested1/nested2/nested3/submodule/.git
-+		git rev-parse --is-well-formed-git-dir sub1/.git &&
-+		git rev-parse --is-well-formed-git-dir sub2/.git &&
-+		git rev-parse --is-well-formed-git-dir sub3/.git &&
-+		git rev-parse --is-well-formed-git-dir nested1/.git &&
-+		git rev-parse --is-well-formed-git-dir nested1/nested2/.git &&
-+		git rev-parse --is-well-formed-git-dir nested1/nested2/nested3/.git &&
-+		git rev-parse --is-well-formed-git-dir nested1/nested2/nested3/submodule/.git
- 	)
- '
- 
-@@ -247,14 +247,17 @@ test_expect_success 'ensure "status --cached --recursive" preserves the --cached
- 
- test_expect_success 'use "git clone --recursive" to checkout all submodules' '
- 	git clone --recursive super clone4 &&
--	test -d clone4/.git &&
--	test -d clone4/sub1/.git &&
--	test -d clone4/sub2/.git &&
--	test -d clone4/sub3/.git &&
--	test -d clone4/nested1/.git &&
--	test -d clone4/nested1/nested2/.git &&
--	test -d clone4/nested1/nested2/nested3/.git &&
--	test -d clone4/nested1/nested2/nested3/submodule/.git
-+	(
-+		cd clone4 &&
-+		git rev-parse --is-well-formed-git-dir .git &&
-+		git rev-parse --is-well-formed-git-dir sub1/.git &&
-+		git rev-parse --is-well-formed-git-dir sub2/.git &&
-+		git rev-parse --is-well-formed-git-dir sub3/.git &&
-+		git rev-parse --is-well-formed-git-dir nested1/.git &&
-+		git rev-parse --is-well-formed-git-dir nested1/nested2/.git &&
-+		git rev-parse --is-well-formed-git-dir nested1/nested2/nested3/.git &&
-+		git rev-parse --is-well-formed-git-dir nested1/nested2/nested3/submodule/.git
-+	)
- '
- 
- test_expect_success 'test "update --recursive" with a flag with spaces' '
-@@ -262,11 +265,11 @@ test_expect_success 'test "update --recursive" with a flag with spaces' '
- 	git clone super clone5 &&
- 	(
- 		cd clone5 &&
--		test ! -d nested1/.git &&
-+		test_must_fail git rev-parse --is-well-formed-git-dir d nested1/.git &&
- 		git submodule update --init --recursive --reference="$(dirname "$PWD")/common objects" &&
--		test -d nested1/.git &&
--		test -d nested1/nested2/.git &&
--		test -d nested1/nested2/nested3/.git &&
-+		git rev-parse --is-well-formed-git-dir nested1/.git &&
-+		git rev-parse --is-well-formed-git-dir nested1/nested2/.git &&
-+		git rev-parse --is-well-formed-git-dir nested1/nested2/nested3/.git &&
- 		test -f nested1/.git/objects/info/alternates &&
- 		test -f nested1/nested2/.git/objects/info/alternates &&
- 		test -f nested1/nested2/nested3/.git/objects/info/alternates
-@@ -277,18 +280,18 @@ test_expect_success 'use "update --recursive nested1" to checkout all submodules
- 	git clone super clone6 &&
- 	(
- 		cd clone6 &&
--		test ! -d sub1/.git &&
--		test ! -d sub2/.git &&
--		test ! -d sub3/.git &&
--		test ! -d nested1/.git &&
-+		test_must_fail git rev-parse --is-well-formed-git-dir sub1/.git &&
-+		test_must_fail git rev-parse --is-well-formed-git-dir sub2/.git &&
-+		test_must_fail git rev-parse --is-well-formed-git-dir sub3/.git &&
-+		test_must_fail git rev-parse --is-well-formed-git-dir nested1/.git &&
- 		git submodule update --init --recursive -- nested1 &&
--		test ! -d sub1/.git &&
--		test ! -d sub2/.git &&
--		test ! -d sub3/.git &&
--		test -d nested1/.git &&
--		test -d nested1/nested2/.git &&
--		test -d nested1/nested2/nested3/.git &&
--		test -d nested1/nested2/nested3/submodule/.git
-+		test_must_fail git rev-parse --is-well-formed-git-dir sub1/.git &&
-+		test_must_fail git rev-parse --is-well-formed-git-dir sub2/.git &&
-+		test_must_fail git rev-parse --is-well-formed-git-dir sub3/.git &&
-+		git rev-parse --is-well-formed-git-dir nested1/.git &&
-+		git rev-parse --is-well-formed-git-dir nested1/nested2/.git &&
-+		git rev-parse --is-well-formed-git-dir nested1/nested2/nested3/.git &&
-+		git rev-parse --is-well-formed-git-dir nested1/nested2/nested3/submodule/.git
- 	)
- '
- 
+It sounds like if you specified GIT_CONFIG when making a clone it would
+end up writing the config file specified rather than .git/config.
+
+My problem isn't that I want to specify a specific .gitconfig file, I
+just need it to ignore the one in $HOME. I'm happy for the .git/config
+file to be used, in fact I need it to be.
+
+I noticed 8f323c00dd3c9b396b01a1aeea74f7dfd061bb7f was committed which
+removed GIT_CONFIG_NOGLOBAL support which is the other way to address
+the problem. Could we add that back?
+
+I appreciate I can set $HOME to something but that means creating an
+empty directory to point at and feels rather like a work around rather
+than a solution.
+
+Cheers,
+
+Richard
+
 -- 
-1.7.6.403.g1fd2f.dirty
+Linux Foundation
+http://www.yoctoproject.org/
