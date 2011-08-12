@@ -1,90 +1,58 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: git_checkattr() is inefficient when repeated [Re: [PATCH 00/11] Micro-optimizing lookup_object()]
-Date: Fri, 12 Aug 2011 17:59:24 +0200
-Message-ID: <201108121759.24884.trast@student.ethz.ch>
-References: <1313085196-13249-1-git-send-email-gitster@pobox.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: open files limit
+Date: Fri, 12 Aug 2011 09:09:53 -0700
+Message-ID: <CAJo=hJsj8_VjD5wN9Gge_Me-eXKK-P7nLAxERiiLp0+ayiEBbg@mail.gmail.com>
+References: <20110812151548.GA14385@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 12 17:59:40 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Fri Aug 12 18:10:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qru95-0008HN-6P
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Aug 2011 17:59:39 +0200
+	id 1QruJR-0006qk-4I
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Aug 2011 18:10:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753355Ab1HLP7e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Aug 2011 11:59:34 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:36888 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751688Ab1HLP7b (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2011 11:59:31 -0400
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.289.1; Fri, 12 Aug
- 2011 17:59:26 +0200
-Received: from thomas.inf.ethz.ch (80.187.110.12) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.289.1; Fri, 12 Aug
- 2011 17:59:27 +0200
-User-Agent: KMail/1.13.7 (Linux/3.0.0-39-desktop; KDE/4.6.5; x86_64; ; )
-In-Reply-To: <1313085196-13249-1-git-send-email-gitster@pobox.com>
-X-Originating-IP: [80.187.110.12]
+	id S1751281Ab1HLQKQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Aug 2011 12:10:16 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:53300 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750912Ab1HLQKP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Aug 2011 12:10:15 -0400
+Received: by bke11 with SMTP id 11so1752288bke.19
+        for <git@vger.kernel.org>; Fri, 12 Aug 2011 09:10:13 -0700 (PDT)
+Received: by 10.204.130.209 with SMTP id u17mr453492bks.62.1313165413607; Fri,
+ 12 Aug 2011 09:10:13 -0700 (PDT)
+Received: by 10.204.124.18 with HTTP; Fri, 12 Aug 2011 09:09:53 -0700 (PDT)
+In-Reply-To: <20110812151548.GA14385@padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179234>
 
-Junio C Hamano wrote:
-> 4-way cuckoo
+On Fri, Aug 12, 2011 at 08:15, Pete Wyckoff <pw@padd.com> wrote:
+> Somebody at $work found this problem:
+>
+> =A0 =A0$ git ls-files -s | wc
+> =A0 =A0error: packfile .git/objects/pack/pack-1627e77da82bbb361187626=
+49c8aa88c05664b1e.pack cannot be accessed
+> =A0 =A0[..lots more similar errors..]
+>
+> Turns out his shell's open file descriptor limit was 500. =A0And
+> there are 1600 pack files in the repo.
+>
+> Increasing the descriptor limit to 1024 fixed it. =A0I could
+> probably get him to repack, which may also fix it.
+>
+> Does it seem feasible to look for EMFILE errors and close
+> some packs? =A0Or at least spit out a more intuitive error?
 
-Cool stuff!
+What version of Git? I remember fixing this already.... :-)
 
-While looking at the performance of it, I noticed something odd about
-packing: stracing the command you gave for your timings
-
-  strace -o pack.trace \
-    ./git-pack-objects --count-only --keep-true-parents --honor-pack-keep \
-    --non-empty --all --reflog --no-reuse-delta --delta-base-offset \
-    --stdout  </dev/null >/dev/null
-
-yields the fairly crazy
-
-  $ grep -c 'open.*attrib' pack.trace 
-  4398
-
-including runs such as (with a line of context for clarity)
-
-  munmap(0x7f9cd39f7000, 4096)            = 0
-  open("compat/.gitattributes", O_RDONLY) = -1 ENOENT (No such file or directory)
-  open("compat/.gitattributes", O_RDONLY) = -1 ENOENT (No such file or directory)
-  open("compat/.gitattributes", O_RDONLY) = -1 ENOENT (No such file or directory)
-  open("compat/.gitattributes", O_RDONLY) = -1 ENOENT (No such file or directory)
-  open("compat/.gitattributes", O_RDONLY) = -1 ENOENT (No such file or directory)
-  open("compat/.gitattributes", O_RDONLY) = -1 ENOENT (No such file or directory)
-  open("compat/.gitattributes", O_RDONLY) = -1 ENOENT (No such file or directory)
-  open("compat/.gitattributes", O_RDONLY) = -1 ENOENT (No such file or directory)
-  open("t/.gitattributes", O_RDONLY)      = 3
-  fstat(3, {st_mode=S_IFREG|0644, st_size=36, ...}) = 0
-
-So calling git_checkattr in a loop is quite inefficient.  Indeed
-there's a good optimization opportunity: compiled for 4-way hashing I
-have (best of 3)
-
-  6.76user 0.23system 0:07.02elapsed 99%CPU (0avgtext+0avgdata 479792maxresident)
-
-but making no_try_delta() in pack-objects.c a dummy 'return 0' gives
-
-  6.45user 0.13system 0:06.61elapsed 99%CPU (0avgtext+0avgdata 478256maxresident)
-
-Which would be a 4.5% speedup.  Obviously that won't quite be
-attainable since we want the attributes mechanism to work, but we
-still shouldn't have to open 4398 .gitattributes files when there are
-only 8 .gitattributes plus one .git/info/attributes.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+--=20
+Shawn.
