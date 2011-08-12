@@ -1,112 +1,75 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] update-index: add --swap to swap index and worktree content
-Date: Fri, 12 Aug 2011 21:07:38 +0700
-Message-ID: <1313158058-7684-1-git-send-email-pclouds@gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: git ls-files --error-unmatch weirdness
+Date: Fri, 12 Aug 2011 21:17:33 +0700
+Message-ID: <CACsJy8D0-SqSY0q2hJ0+w_NeT_s0Uza=Bi8-y37EKWE2VZhYeQ@mail.gmail.com>
+References: <20110812132436.GA12147@goldbirke>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 12 16:07:53 2011
+Cc: git@vger.kernel.org
+To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Fri Aug 12 16:18:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QrsOu-0002tq-7C
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Aug 2011 16:07:52 +0200
+	id 1QrsYt-0000tT-Pa
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Aug 2011 16:18:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751688Ab1HLOHr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Aug 2011 10:07:47 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:65287 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751196Ab1HLOHq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2011 10:07:46 -0400
-Received: by pzk37 with SMTP id 37so1212454pzk.1
-        for <git@vger.kernel.org>; Fri, 12 Aug 2011 07:07:46 -0700 (PDT)
+	id S1751816Ab1HLOSH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Aug 2011 10:18:07 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:39989 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751591Ab1HLOSF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Aug 2011 10:18:05 -0400
+Received: by bke11 with SMTP id 11so1679915bke.19
+        for <git@vger.kernel.org>; Fri, 12 Aug 2011 07:18:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=s9XVaS50xvPXyg822mGo7FPueJQttP8HwpXFSydMc+E=;
-        b=soVvDsenz3MVQJlPKJd5P2p2FBEWzUEtGr04a/SnhK4aE2Fr7Qlj7r7EPcjGP5IeGa
-         YX4UDXXud1tdMsGui9xdlwykNjF9XOA4PgrF4AnRPsCc+1G3BUDQO5+KQ+xqo0U9Ssup
-         TWrIv6IWROh7j5KZsuQE48k7sDwgE+HVwlmvw=
-Received: by 10.143.158.9 with SMTP id k9mr544962wfo.73.1313158066133;
-        Fri, 12 Aug 2011 07:07:46 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.73.208.228])
-        by mx.google.com with ESMTPS id s9sm2583984pbk.34.2011.08.12.07.07.42
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 12 Aug 2011 07:07:44 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 12 Aug 2011 21:07:39 +0700
-X-Mailer: git-send-email 1.7.4.74.g639db
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=cVe2tTsbr3KPSABGlSAyO7lfKhFtokm8ne4F/m8isZ0=;
+        b=OThXSODiYSI0dBKDHMEiomckh53bAKNwSPZgIBY8NAbYaL4ZNTjOeE1Nzn+DnSjn9x
+         VdZuaqcA2XxvsyffRljireiRM9oYyz/Y+6CUqCjOCpT2VcU22LH+TV7YgL70u7CRcvAF
+         jQDJQ7CE1f8DTmzljNMbV2r0/jai6lybeGShY=
+Received: by 10.204.143.24 with SMTP id s24mr21025bku.105.1313158683272; Fri,
+ 12 Aug 2011 07:18:03 -0700 (PDT)
+Received: by 10.204.156.19 with HTTP; Fri, 12 Aug 2011 07:17:33 -0700 (PDT)
+In-Reply-To: <20110812132436.GA12147@goldbirke>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179230>
 
-Sometimes "git add -p" with "e" to edit the patch does not satisfy me.
-What I want is a quick way to modify index content without changing
-worktree, then I can continue adding more hunks to the index.
+2011/8/12 SZEDER G=C3=A1bor <szeder@ira.uka.de>:
+> So, the same 'git ls-files' command is OK when run at the top of the
+> worktree, but errors out in a subdirectory. =C2=A0What's going on? =C2=
+=A0Is this
+> a bug? =C2=A0If not, why not?
 
-With this option, I can swap index out for a quick edit, then swap it i=
-n
-again.
+report_path_error() in ls-files.c is meant to check pathspecs given by
+user. However when in a subdir, get_pathspec() automatically adds a
+pathspec (that is prefix). This new pathspec confuses
+report_path_error(). The following patch may help (possibly corrupted
+because I paste in gmail, but you get the idea)
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Not sure if anybody has the same needs, enough to polish it and make
- it to master.
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 0e98bff..e0611ac 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -545,7 +545,8 @@ int cmd_ls_files(int argc, const char **argv,
+const char *cmd_prefix)
+ 	max_prefix_len =3D max_prefix ? strlen(max_prefix) : 0;
 
- builtin/update-index.c |   16 ++++++++++++++++
- 1 files changed, 16 insertions(+), 0 deletions(-)
+ 	/* Treat unmatching pathspec elements as errors */
+-	if (pathspec && error_unmatch) {
++	if (pathspec && error_unmatch &&
++	    (!prefix || pathspec[1])) {
+ 		int num;
+ 		for (num =3D 0; pathspec[num]; num++)
+ 			;
 
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index a6a23fa..b96065a 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -22,6 +22,7 @@
- static int allow_add;
- static int allow_remove;
- static int allow_replace;
-+static int swap_entry;
- static int info_only;
- static int force_remove;
- static int verbose;
-@@ -104,6 +105,19 @@ static int add_one_path(struct cache_entry *old, c=
-onst char *path, int len, stru
- 		free(ce);
- 		return -1;
- 	}
-+	if (swap_entry) {
-+		struct checkout state;
-+		if (allow_add || allow_remove)
-+			die("--add, --replace and --swap do not play together");
-+		memset(&state, 0, sizeof(state));
-+		state.force =3D 1;
-+		state.not_new =3D 1;
-+		if (add_cache_entry(ce, 0))
-+			return error("%s: cannot add to the index", path);
-+		if (checkout_entry(old, &state, NULL))
-+			return error("%s: cannot swap", path);
-+		return 0;
-+	}
- 	option =3D allow_add ? ADD_CACHE_OK_TO_ADD : 0;
- 	option |=3D allow_replace ? ADD_CACHE_OK_TO_REPLACE : 0;
- 	if (add_cache_entry(ce, option))
-@@ -727,6 +741,8 @@ int cmd_update_index(int argc, const char **argv, c=
-onst char *prefix)
- 			"let files replace directories and vice-versa", 1),
- 		OPT_SET_INT(0, "remove", &allow_remove,
- 			"notice files missing from worktree", 1),
-+		OPT_SET_INT(0, "swap", &swap_entry,
-+			"swap the content of index and worktree", 1),
- 		OPT_BIT(0, "unmerged", &refresh_args.flags,
- 			"refresh even if index contains unmerged entries",
- 			REFRESH_UNMERGED),
 --=20
-1.7.4.74.g639db
+Duy
