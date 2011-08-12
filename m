@@ -1,7 +1,7 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCHv2 52/56] merge-recursive: Fix spurious 'refusing to lose untracked file...' messages
-Date: Thu, 11 Aug 2011 23:20:25 -0600
-Message-ID: <1313126429-17368-53-git-send-email-newren@gmail.com>
+Subject: [PATCHv2 42/56] merge-recursive: Defer rename/rename(2to1) handling until process_entry
+Date: Thu, 11 Aug 2011 23:20:15 -0600
+Message-ID: <1313126429-17368-43-git-send-email-newren@gmail.com>
 References: <1313126429-17368-1-git-send-email-newren@gmail.com>
 Cc: git@vger.kernel.org, Jim Foucar <jgfouca@sandia.gov>,
 	Elijah Newren <newren@gmail.com>
@@ -12,145 +12,235 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QrkD5-0005ix-TK
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Aug 2011 07:23:08 +0200
+	id 1QrkD9-0005ix-E0
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Aug 2011 07:23:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754475Ab1HLFWb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Aug 2011 01:22:31 -0400
-Received: from mail-iy0-f170.google.com ([209.85.210.170]:39648 "EHLO
+	id S1754481Ab1HLFWx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Aug 2011 01:22:53 -0400
+Received: from mail-iy0-f170.google.com ([209.85.210.170]:62901 "EHLO
 	mail-iy0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754409Ab1HLFW1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2011 01:22:27 -0400
-Received: by mail-iy0-f170.google.com with SMTP id 16so835125iye.1
-        for <git@vger.kernel.org>; Thu, 11 Aug 2011 22:22:27 -0700 (PDT)
+	with ESMTP id S1754204Ab1HLFWI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2011 01:22:08 -0400
+Received: by mail-iy0-f170.google.com with SMTP id 16so834922iye.1
+        for <git@vger.kernel.org>; Thu, 11 Aug 2011 22:22:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=LGz+N8ybxnA/lFUPzv4YqF8wsPejwIkX5FbJKR/4HpE=;
-        b=g0nCNm8FK/2dkCqTwZD4oKmtf368pW3AXD9QwX4inXQ/Jv0mMHm862xqJEr5W70RVj
-         Rh/5eUi6YQ1UCHGaepnMC8dSN3I8VvXmwIPJwJ8PU2l6avkfFjqbLw7i2rvRurgTUXAy
-         Z8wpjI8lGzUXrUD6iUUSgJcCIEt5L11+rtuQ4=
-Received: by 10.231.115.36 with SMTP id g36mr1171687ibq.3.1313126547190;
-        Thu, 11 Aug 2011 22:22:27 -0700 (PDT)
+        bh=SAWlQkwRSXuvqiOwF+QAPXiMe4IjxDwielhN03N/JrM=;
+        b=arXTjJr8zO1Zv9u+Duo+zST4AijI4K2dyKALk64+ivUwEvP8lK9QfMFyGEQpoI/2G1
+         qIr/bQZOwEEhkrVeBYHvEQmF3IcgxosNgXqnfwswffJYqmpTPpcCaHihrGY+G7lVKShX
+         cmiYd5OEvjuo5lrA8sim0SfoagYtjkKLWaU9s=
+Received: by 10.231.119.161 with SMTP id z33mr1091700ibq.91.1313126527972;
+        Thu, 11 Aug 2011 22:22:07 -0700 (PDT)
 Received: from Miney.hsd1.nm.comcast.net. (c-107-4-21-12.hsd1.nm.comcast.net [107.4.21.12])
-        by mx.google.com with ESMTPS id n18sm2032317ibg.52.2011.08.11.22.22.25
+        by mx.google.com with ESMTPS id n18sm2032317ibg.52.2011.08.11.22.22.06
         (version=SSLv3 cipher=OTHER);
-        Thu, 11 Aug 2011 22:22:26 -0700 (PDT)
+        Thu, 11 Aug 2011 22:22:07 -0700 (PDT)
 X-Mailer: git-send-email 1.7.6.99.ga8ca0
 In-Reply-To: <1313126429-17368-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179211>
 
-Calling update_stages() before update_file() can sometimes result in git
-thinking the file being updated is untracked (whenever update_stages
-moves it to stage 3).  Reverse the call order, and add a big comment to
-update_stages to hopefully prevent others from making the same mistake.
+This puts the code for the different types of double rename conflicts
+closer together (fewer lines of other code separating the two paths) and
+increases similarity between how they are handled.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-Completely new patch (about a problem that existed previous to v1, but which
-I hadn't noticed).
+No changes since v1.
 
- merge-recursive.c       |   34 ++++++++++++++++++++--------------
- t/t6022-merge-rename.sh |    2 +-
- 2 files changed, 21 insertions(+), 15 deletions(-)
+ merge-recursive.c |  104 +++++++++++++++++++++++++++++++---------------------
+ 1 files changed, 62 insertions(+), 42 deletions(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 05c8aa0..b2deb53 100644
+index 8b65051..77c2c41 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -528,6 +528,15 @@ static int update_stages(const char *path, const struct diff_filespec *o,
- 			 const struct diff_filespec *a,
- 			 const struct diff_filespec *b)
- {
-+
-+	/*
-+	 * NOTE: It is usually a bad idea to call update_stages on a path
-+	 * before calling update_file on that same path, since it can
-+	 * sometimes lead to spurious "refusing to lose untracked file..."
-+	 * messages from update_file (via make_room_for path via
-+	 * would_lose_untracked).  Instead, reverse the order of the calls
-+	 * (executing update_file first and then update_stages).
-+	 */
- 	int clear = 1;
- 	int options = ADD_CACHE_OK_TO_ADD | ADD_CACHE_SKIP_DFCHECK;
- 	if (clear)
-@@ -1041,7 +1050,6 @@ static void conflict_rename_delete(struct merge_options *o,
- {
- 	const struct diff_filespec *orig = pair->one;
- 	const struct diff_filespec *dest = pair->two;
--	const char *path;
- 	const unsigned char *a_sha = NULL;
- 	const unsigned char *b_sha = NULL;
- 	int a_mode = 0;
-@@ -1055,22 +1063,21 @@ static void conflict_rename_delete(struct merge_options *o,
- 		b_mode = dest->mode;
- 	}
+@@ -67,7 +67,8 @@ enum rename_type {
+ 	RENAME_NORMAL = 0,
+ 	RENAME_DELETE,
+ 	RENAME_ONE_FILE_TO_ONE,
+-	RENAME_ONE_FILE_TO_TWO
++	RENAME_ONE_FILE_TO_TWO,
++	RENAME_TWO_FILES_TO_ONE
+ };
  
-+	handle_change_delete(o,
-+			     o->call_depth ? orig->path : dest->path,
-+			     orig->sha1, orig->mode,
-+			     a_sha, a_mode,
-+			     b_sha, b_mode,
-+			     "rename", "renamed");
-+
- 	if (o->call_depth) {
- 		remove_file_from_cache(dest->path);
--		path = orig->path;
- 	} else {
--		path = dest->path;
- 		update_stages(dest->path, NULL,
- 			      rename_branch == o->branch1 ? dest : NULL,
- 			      rename_branch == o->branch1 ? NULL : dest);
- 	}
- 
--	handle_change_delete(o,
--			     path,
--			     orig->sha1, orig->mode,
--			     a_sha, a_mode,
--			     b_sha, b_mode,
--			     "rename", "renamed");
+ struct rename_conflict_info {
+@@ -1021,32 +1022,40 @@ static void conflict_rename_rename_1to2(struct merge_options *o,
  }
  
- static struct diff_filespec *filespec_from_entry(struct diff_filespec *target,
-@@ -1108,11 +1115,6 @@ static void handle_file(struct merge_options *o,
+ static void conflict_rename_rename_2to1(struct merge_options *o,
+-					struct rename *ren1,
+-					const char *branch1,
+-					struct rename *ren2,
+-					const char *branch2)
++					struct rename_conflict_info *ci)
+ {
+-	char *path = ren1->pair->two->path; /* same as ren2->pair->two->path */
+-	/* Two files were renamed to the same thing. */
++	/* Two files, a & b, were renamed to the same thing, c. */
++	struct diff_filespec *a = ci->pair1->one;
++	struct diff_filespec *b = ci->pair2->one;
++	struct diff_filespec *c1 = ci->pair1->two;
++	struct diff_filespec *c2 = ci->pair2->two;
++	char *path = c1->path; /* == c2->path */
++
++	output(o, 1, "CONFLICT (rename/rename): "
++	       "Rename %s->%s in %s. "
++	       "Rename %s->%s in %s",
++	       a->path, c1->path, ci->branch1,
++	       b->path, c2->path, ci->branch2);
++
++	remove_file(o, 1, a->path, would_lose_untracked(a->path));
++	remove_file(o, 1, b->path, would_lose_untracked(b->path));
++
+ 	if (o->call_depth) {
+ 		struct merge_file_info mfi;
+ 		mfi = merge_file(o, path, null_sha1, 0,
+-				 ren1->pair->two->sha1, ren1->pair->two->mode,
+-				 ren2->pair->two->sha1, ren2->pair->two->mode,
+-				 branch1, branch2);
++				 c1->sha1, c1->mode,
++				 c2->sha1, c2->mode,
++				 ci->branch1, ci->branch2);
+ 		output(o, 1, "Adding merged %s", path);
+ 		update_file(o, 0, mfi.sha, mfi.mode, path);
+ 	} else {
+-		char *new_path1 = unique_path(o, path, branch1);
+-		char *new_path2 = unique_path(o, path, branch2);
++		char *new_path1 = unique_path(o, path, ci->branch1);
++		char *new_path2 = unique_path(o, path, ci->branch2);
+ 		output(o, 1, "Renaming %s to %s and %s to %s instead",
+-		       ren1->pair->one->path, new_path1,
+-		       ren2->pair->one->path, new_path2);
++		       a->path, new_path1, b->path, new_path2);
+ 		remove_file(o, 0, path, 0);
+-		update_file(o, 0, ren1->pair->two->sha1, ren1->pair->two->mode,
+-			    new_path1);
+-		update_file(o, 0, ren2->pair->two->sha1, ren2->pair->two->mode,
+-			    new_path2);
++		update_file(o, 0, c1->sha1, c1->mode, new_path1);
++		update_file(o, 0, c2->sha1, c2->mode, new_path2);
+ 		free(new_path2);
+ 		free(new_path1);
  	}
+@@ -1077,6 +1086,7 @@ static int process_renames(struct merge_options *o,
+ 		struct rename *ren1 = NULL, *ren2 = NULL;
+ 		const char *branch1, *branch2;
+ 		const char *ren1_src, *ren1_dst;
++		struct string_list_item *lookup;
  
- 	add = filespec_from_entry(&other, dst_entry, stage ^ 1);
--	if (stage == 2)
--		update_stages(rename->path, NULL, rename, add);
--	else
--		update_stages(rename->path, NULL, add, rename);
--
- 	if (add) {
- 		char *add_name = unique_path(o, rename->path, other_branch);
- 		update_file(o, 0, add->sha1, add->mode, add_name);
-@@ -1127,6 +1129,10 @@ static void handle_file(struct merge_options *o,
+ 		if (i >= a_renames->nr) {
+ 			ren2 = b_renames->items[j++].util;
+@@ -1108,30 +1118,30 @@ static int process_renames(struct merge_options *o,
+ 			ren1 = tmp;
  		}
- 	}
- 	update_file(o, 0, rename->sha1, rename->mode, dst_name);
-+	if (stage == 2)
-+		update_stages(rename->path, NULL, rename, add);
-+	else
-+		update_stages(rename->path, NULL, add, rename);
  
- 	if (dst_name != rename->path)
- 		free(dst_name);
-diff --git a/t/t6022-merge-rename.sh b/t/t6022-merge-rename.sh
-index 0fd2b0a..8f75762 100755
---- a/t/t6022-merge-rename.sh
-+++ b/t/t6022-merge-rename.sh
-@@ -787,7 +787,7 @@ test_expect_success 'setup spurious "refusing to lose untracked" message' '
- 	git commit -mC
- '
++		if (ren1->processed)
++			continue;
++		ren1->processed = 1;
+ 		ren1->dst_entry->processed = 1;
+ 		/* BUG: We should only mark src_entry as processed if we
+ 		 * are not dealing with a rename + add-source case.
+ 		 */
+ 		ren1->src_entry->processed = 1;
  
--test_expect_failure 'no spurious "refusing to lose untracked" message' '
-+test_expect_success 'no spurious "refusing to lose untracked" message' '
- 	git checkout master^0 &&
- 	test_must_fail git merge rename^0 2>errors.txt &&
- 	! grep "refusing to lose untracked file" errors.txt
+-		if (ren1->processed)
+-			continue;
+-		ren1->processed = 1;
+-
+ 		ren1_src = ren1->pair->one->path;
+ 		ren1_dst = ren1->pair->two->path;
+ 
+ 		if (ren2) {
++			/* One file renamed on both sides */
+ 			const char *ren2_src = ren2->pair->one->path;
+ 			const char *ren2_dst = ren2->pair->two->path;
+ 			enum rename_type rename_type;
+-			/* Renamed in 1 and renamed in 2 */
+ 			if (strcmp(ren1_src, ren2_src) != 0)
+-				die("ren1.src != ren2.src");
++				die("ren1_src != ren2_src");
+ 			ren2->dst_entry->processed = 1;
+ 			ren2->processed = 1;
+ 			if (strcmp(ren1_dst, ren2_dst) != 0) {
+ 				rename_type = RENAME_ONE_FILE_TO_TWO;
++				clean_merge = 0;
+ 			} else {
+ 				rename_type = RENAME_ONE_FILE_TO_ONE;
+ 				/* BUG: We should only remove ren1_src in
+@@ -1151,9 +1161,32 @@ static int process_renames(struct merge_options *o,
+ 						   branch2,
+ 						   ren1->dst_entry,
+ 						   ren2->dst_entry);
++		} else if ((lookup = string_list_lookup(renames2Dst, ren1_dst))) {
++			/* Two different files renamed to the same thing */
++			char *ren2_dst;
++			ren2 = lookup->util;
++			ren2_dst = ren2->pair->two->path;
++			if (strcmp(ren1_dst, ren2_dst) != 0)
++				die("ren1_dst != ren2_dst");
++
++			clean_merge = 0;
++			ren2->processed = 1;
++			/*
++			 * BUG: We should only mark src_entry as processed
++			 * if we are not dealing with a rename + add-source
++			 * case.
++			 */
++			ren2->src_entry->processed = 1;
++
++			setup_rename_conflict_info(RENAME_TWO_FILES_TO_ONE,
++						   ren1->pair,
++						   ren2->pair,
++						   branch1,
++						   branch2,
++						   ren1->dst_entry,
++						   ren2->dst_entry);
+ 		} else {
+ 			/* Renamed in 1, maybe changed in 2 */
+-			struct string_list_item *item;
+ 			/* we only use sha1 and mode of these */
+ 			struct diff_filespec src_other, dst_other;
+ 			int try_merge;
+@@ -1188,23 +1221,6 @@ static int process_renames(struct merge_options *o,
+ 							   branch2,
+ 							   ren1->dst_entry,
+ 							   NULL);
+-			} else if ((item = string_list_lookup(renames2Dst, ren1_dst))) {
+-				char *ren2_src, *ren2_dst;
+-				ren2 = item->util;
+-				ren2_src = ren2->pair->one->path;
+-				ren2_dst = ren2->pair->two->path;
+-
+-				clean_merge = 0;
+-				ren2->processed = 1;
+-				remove_file(o, 1, ren2_src,
+-					    renamed_stage == 3 || would_lose_untracked(ren1_src));
+-
+-				output(o, 1, "CONFLICT (rename/rename): "
+-				       "Rename %s->%s in %s. "
+-				       "Rename %s->%s in %s",
+-				       ren1_src, ren1_dst, branch1,
+-				       ren2_src, ren2_dst, branch2);
+-				conflict_rename_rename_2to1(o, ren1, branch1, ren2, branch2);
+ 			} else if ((dst_other.mode == ren1->pair->two->mode) &&
+ 				   sha_eq(dst_other.sha1, ren1->pair->two->sha1)) {
+ 				/* Added file on the other side
+@@ -1504,6 +1520,10 @@ static int process_entry(struct merge_options *o,
+ 			clean_merge = 0;
+ 			conflict_rename_rename_1to2(o, conflict_info);
+ 			break;
++		case RENAME_TWO_FILES_TO_ONE:
++			clean_merge = 0;
++			conflict_rename_rename_2to1(o, conflict_info);
++			break;
+ 		default:
+ 			entry->processed = 0;
+ 			break;
 -- 
 1.7.6.100.gac5c1
