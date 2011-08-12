@@ -1,65 +1,73 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 6/6] sequencer: Remove sequencer state after final commit
-Date: Fri, 12 Aug 2011 07:49:35 +0530
-Message-ID: <CALkWK0m68_N3nJD91q=WRvBmGefGYX6vs-exgxkhXajDfzvKxA@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 0/6] Towards a generalized sequencer
+Date: Thu, 11 Aug 2011 21:33:23 -0500
+Message-ID: <20110812023323.GA672@elie.gateway.2wire.net>
 References: <1313088705-32222-1-git-send-email-artagnon@gmail.com>
- <1313088705-32222-7-git-send-email-artagnon@gmail.com> <20110811201755.GJ2277@elie.gateway.2wire.net>
+ <20110811190312.GD2277@elie.gateway.2wire.net>
+ <CALkWK0nXAU+jFwyzmYC6XuPGy8Cdmbpis0Nvb-M+tQSNk_PXiQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 12 04:20:03 2011
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 12 04:33:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QrhLt-00014H-Vy
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Aug 2011 04:20:02 +0200
+	id 1QrhZ4-0006YO-Su
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Aug 2011 04:33:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752805Ab1HLCT5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Aug 2011 22:19:57 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:51484 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752433Ab1HLCT4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Aug 2011 22:19:56 -0400
-Received: by wwf5 with SMTP id 5so2605756wwf.1
-        for <git@vger.kernel.org>; Thu, 11 Aug 2011 19:19:55 -0700 (PDT)
+	id S1753685Ab1HLCde (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Aug 2011 22:33:34 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:48046 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753537Ab1HLCdd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2011 22:33:33 -0400
+Received: by mail-yx0-f174.google.com with SMTP id 19so1714406yxj.19
+        for <git@vger.kernel.org>; Thu, 11 Aug 2011 19:33:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=wXhHeV0aQxtemejq3g2NhNlz3y/pPZI9Qut9T9uWKWc=;
-        b=CxlBo/x4XqQOTvk+WJ6c1KZQDzZmS2ywuLHZaIlj3gzXd1h3diRUDt1Np4yqEojE+V
-         gTEH47HI1bJjOWzBYrewFrMzk0GcHDz8qu8WidpkoGreVNV8+hCptip+kGBHm5s6AQXk
-         4mN4VxZvyQCpYLlH715rSRpDDkvfGhgbPScrQ=
-Received: by 10.216.160.9 with SMTP id t9mr1992290wek.108.1313115595124; Thu,
- 11 Aug 2011 19:19:55 -0700 (PDT)
-Received: by 10.216.139.31 with HTTP; Thu, 11 Aug 2011 19:19:35 -0700 (PDT)
-In-Reply-To: <20110811201755.GJ2277@elie.gateway.2wire.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=bad+/p9VyzK+Rju/0hdS02kNiCmj3FGDvGJtsm7qeKw=;
+        b=hehbn04EMmSxngblevsUnQQa5l3uYhNUTo5u6KAw6HYuUnz4/hJS551Ftd5OiTo6Ql
+         n2KBNMHz4ZDz++eDF3/SBpvIpxynCsFomKIVkue5U/muQQ+5p15E8sqwqLWC20oti3k2
+         AGa4it8BeXCQoZDojUXlgH2THiLeZ2h0FJ7OA=
+Received: by 10.42.133.134 with SMTP id h6mr371208ict.364.1313116413225;
+        Thu, 11 Aug 2011 19:33:33 -0700 (PDT)
+Received: from elie.gateway.2wire.net (adsl-68-255-106-30.dsl.chcgil.ameritech.net [68.255.106.30])
+        by mx.google.com with ESMTPS id ib5sm3727300icc.12.2011.08.11.19.33.31
+        (version=SSLv3 cipher=OTHER);
+        Thu, 11 Aug 2011 19:33:32 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0nXAU+jFwyzmYC6XuPGy8Cdmbpis0Nvb-M+tQSNk_PXiQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179161>
 
-Hi again,
+Ramkumar Ramachandra wrote:
 
-Jonathan Nieder writes:
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0Dear sequencer, I'm commiting!
+> 2. Should I move it to sequencer.c and and modify it accordingly?
+> It'll read Copyright (C) 2011 <Me>, based on builtin/revert.c which is
+> Copyright Dscho, which in turn is based on git-revert.sh
+[...]
 
-Interesting.  I was worried that sequencer_count_todo() might be a bit
-of an overkill.  I can't find any other usecase for counting the
-number of commits in the instruction sheet right now, and it's
-unlikely that I'll find any callers for it in the future either.  I
-suppose we can save time by just counting until we figure out that
-more than one commit exists -- there's no need to find the exact
-number.
+Isn't it still the same built-in cherry-pick code, originally by Dscho
+and improved over time by others?  The filename is irrelevant.
 
-Thanks.
+If you want to add your and Christian's names to reflect
+multiple-cherry-pick and the restructuring, I guess that would be ok.
+Better yet, if you want to remove Dscho's name to encourage people to
+look at the commit log and get a richer story, just ask Dscho.
 
--- Ram
+Asking would (1) show that you value his contribution and respect his
+wishes and (2) allow him to say, "no, I really prefer to keep my name
+there for such-and-such copyright-related reason".  Of course these
+are only my own thoughts.  Maybe I'm too picky.
