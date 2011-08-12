@@ -1,91 +1,110 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 0/6] Towards a generalized sequencer
-Date: Fri, 12 Aug 2011 08:47:20 +0530
-Message-ID: <CALkWK0=z20TMJAMnkkjrYrDVmpf9gvXxhBgeOTDY7yNNU39Buw@mail.gmail.com>
-References: <1313088705-32222-1-git-send-email-artagnon@gmail.com>
- <20110811190312.GD2277@elie.gateway.2wire.net> <CALkWK0nXAU+jFwyzmYC6XuPGy8Cdmbpis0Nvb-M+tQSNk_PXiQ@mail.gmail.com>
- <20110812023323.GA672@elie.gateway.2wire.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 12 05:17:49 2011
+From: Elijah Newren <newren@gmail.com>
+Subject: [PATCHv2 02/56] t6042: Add failing testcase for rename/modify/add-source conflict
+Date: Thu, 11 Aug 2011 23:19:35 -0600
+Message-ID: <1313126429-17368-3-git-send-email-newren@gmail.com>
+References: <1313126429-17368-1-git-send-email-newren@gmail.com>
+Cc: git@vger.kernel.org, Jim Foucar <jgfouca@sandia.gov>,
+	Elijah Newren <newren@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Aug 12 07:20:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QriFo-0006ke-Ib
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Aug 2011 05:17:48 +0200
+	id 1QrkAl-0004Sk-QE
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Aug 2011 07:20:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752511Ab1HLDRn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Aug 2011 23:17:43 -0400
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:53656 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751463Ab1HLDRm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Aug 2011 23:17:42 -0400
-Received: by wwe5 with SMTP id 5so4633480wwe.1
-        for <git@vger.kernel.org>; Thu, 11 Aug 2011 20:17:41 -0700 (PDT)
+	id S1751963Ab1HLFUi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Aug 2011 01:20:38 -0400
+Received: from mail-iy0-f170.google.com ([209.85.210.170]:62901 "EHLO
+	mail-iy0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751929Ab1HLFUh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2011 01:20:37 -0400
+Received: by mail-iy0-f170.google.com with SMTP id 16so834922iye.1
+        for <git@vger.kernel.org>; Thu, 11 Aug 2011 22:20:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=rJoIkS9xoDNvNFAGQIe//lvH4K0iZQT3m5Pse6nkV8c=;
-        b=JrztlKE//JYuqTsoHjLXnSerrz+Du+Zm6TFHs5Z74+emLM5FrWy8wn2fxdO7kJdGdN
-         mQZLKSEDT4CImSg5OYIUXcZo7Fql7L7CNYpO6A54O0ukO+0XfFETD7WX+hWKwGxdRyUh
-         tF4tSgDmM+DtEooEyU6U9OnKsvWP+74WkzZw4=
-Received: by 10.216.162.5 with SMTP id x5mr283118wek.78.1313119061122; Thu, 11
- Aug 2011 20:17:41 -0700 (PDT)
-Received: by 10.216.139.31 with HTTP; Thu, 11 Aug 2011 20:17:20 -0700 (PDT)
-In-Reply-To: <20110812023323.GA672@elie.gateway.2wire.net>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=neiJu373UzHnYKnWVfpX7nm+043lhlK884hUkoTBmBg=;
+        b=yFsqv/HL9bpLp94ygVPPSYx7rF6Jlv70Ubr7XILoYLOw4NrbZ63XrQIQhG5FT/WJSj
+         kcFBsPc/5LXpRhcPX4HjPqUCbqVbgtvMoKsoYZoLldvCnCMtDnRXsEd9+iTPMFNDd9Qs
+         QbH4MncDMHu2SpvRugBupkoRsE5P9YT3r67Zo=
+Received: by 10.231.56.75 with SMTP id x11mr1014957ibg.98.1313126436904;
+        Thu, 11 Aug 2011 22:20:36 -0700 (PDT)
+Received: from Miney.hsd1.nm.comcast.net. (c-107-4-21-12.hsd1.nm.comcast.net [107.4.21.12])
+        by mx.google.com with ESMTPS id n18sm2032317ibg.52.2011.08.11.22.20.35
+        (version=SSLv3 cipher=OTHER);
+        Thu, 11 Aug 2011 22:20:36 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.99.ga8ca0
+In-Reply-To: <1313126429-17368-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179163>
 
-Hi,
+If there is a cleanly resolvable rename/modify conflict AND there is a new
+file introduced on the renamed side of the merge whose name happens to
+match that of the source of the rename (but is otherwise unrelated to the
+rename), then git fails to cleanly resolve the merge despite the fact that
+the new file should not cause any problems.
 
-[+CC: Johannes Schindelin]
+Signed-off-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+No changes since v1.
 
-Jonathan Nieder writes:
-> Isn't it still the same built-in cherry-pick code, originally by Dsch=
-o
-> and improved over time by others? =C2=A0The filename is irrelevant.
+ t/t6042-merge-rename-corner-cases.sh |   39 ++++++++++++++++++++++++++++++++++
+ 1 files changed, 39 insertions(+), 0 deletions(-)
 
-True, but we can't have "This implements the builtins revert and
-cherry-pick." in sequencer.c, no?
-
-> If you want to add your and Christian's names to reflect
-> multiple-cherry-pick and the restructuring, I guess that would be ok.
-> Better yet, if you want to remove Dscho's name to encourage people to
-> look at the commit log and get a richer story, just ask Dscho.
-
-I thought about this a bit.  I'm completely against the former option
--- I merely meant it as a "I'm confused; help!" rather than a
-suggestion; adding contributors' names to the list is a bad idea.  I
-looked at some copyright notices in other files and re-evaluated: it's
-a cute historical note to have. Unless Johannes wants to remove it
-now, I'd like to put the following in sequencer.c:
-
-/*
- * Used to implement the builtins revert and cherry-pick.
- *
- * Copyright (c) 2007 Johannes E. Schindelin
- *
- * Based on git-revert.sh, which is
- *
- * Copyright (c) 2005 Linus Torvalds
- * Copyright (c) 2005 Junio C Hamano
- */
-
-Sorry about the confusion. Feel free to suggest a better "title line".
-
-Thanks.
-
--- Ram
+diff --git a/t/t6042-merge-rename-corner-cases.sh b/t/t6042-merge-rename-corner-cases.sh
+index 5054459..276d7dd 100755
+--- a/t/t6042-merge-rename-corner-cases.sh
++++ b/t/t6042-merge-rename-corner-cases.sh
+@@ -33,4 +33,43 @@ test_expect_failure "Does git preserve Gollum's precious artifact?" '
+ 	test -f ring
+ '
+ 
++# Testcase setup for rename/modify/add-source:
++#   Commit A: new file: a
++#   Commit B: modify a slightly
++#   Commit C: rename a->b, add completely different a
++#
++# We should be able to merge B & C cleanly
++
++test_expect_success 'setup rename/modify/add-source conflict' '
++	git rm -rf . &&
++	git clean -fdqx &&
++	rm -rf .git &&
++	git init &&
++
++	printf "1\n2\n3\n4\n5\n6\n7\n" >a &&
++	git add a &&
++	git commit -m A &&
++	git tag A &&
++
++	git checkout -b B A &&
++	echo 8 >>a &&
++	git add a &&
++	git commit -m B &&
++
++	git checkout -b C A &&
++	git mv a b &&
++	echo something completely different >a &&
++	git add a &&
++	git commit -m C
++'
++
++test_expect_failure 'rename/modify/add-source conflict resolvable' '
++	git checkout B^0 &&
++
++	git merge -s recursive C^0 &&
++
++	test $(git rev-parse B:a) = $(git rev-parse b) &&
++	test $(git rev-parse C:a) = $(git rev-parse a)
++'
++
+ test_done
+-- 
+1.7.6.100.gac5c1
