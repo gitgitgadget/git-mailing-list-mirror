@@ -1,59 +1,73 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCHv2 00/57] Re-roll of en/merge-recursive from pu
-Date: Fri, 12 Aug 2011 15:59:30 -0600
-Message-ID: <CABPp-BE_cqtOBC_0tsy1nSOfH1XPGM0vdv9fHWp38Q0GBr7OhQ@mail.gmail.com>
+Subject: Re: [PATCHv2 27/56] string-list: Add API to remove an item from an
+ unsorted list
+Date: Fri, 12 Aug 2011 16:14:34 -0600
+Message-ID: <CABPp-BFsqDhVnxDa9u3tV0yZky_az0MTCT_N5y+Oqm84+fOyvQ@mail.gmail.com>
 References: <1313126429-17368-1-git-send-email-newren@gmail.com>
-	<7vei0rnprt.fsf@alter.siamese.dyndns.org>
+	<1313126429-17368-28-git-send-email-newren@gmail.com>
+	<4E44CF9D.8030501@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Jim Foucar <jgfouca@sandia.gov>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 12 23:59:42 2011
+Cc: gitster@pobox.com, git@vger.kernel.org,
+	Jim Foucar <jgfouca@sandia.gov>, Johannes Sixt <j6t@kdbg.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Sat Aug 13 00:14:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QrzlV-0006jH-Je
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Aug 2011 23:59:41 +0200
+	id 1Qs00E-0004Yz-CY
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Aug 2011 00:14:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752589Ab1HLV7e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Aug 2011 17:59:34 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:45307 "EHLO
+	id S1752625Ab1HLWOh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Aug 2011 18:14:37 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:43349 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752503Ab1HLV7c (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2011 17:59:32 -0400
-Received: by fxh19 with SMTP id 19so2569314fxh.19
-        for <git@vger.kernel.org>; Fri, 12 Aug 2011 14:59:30 -0700 (PDT)
+	with ESMTP id S1752419Ab1HLWOf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2011 18:14:35 -0400
+Received: by fxh19 with SMTP id 19so2574725fxh.19
+        for <git@vger.kernel.org>; Fri, 12 Aug 2011 15:14:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=T0MK3+R5ksAkfQ+c7Bas12megUCpgpp0QhO1D3uSu+E=;
-        b=enpurZ94aAHaJMxO7oThN8TeCJAVdqFr+P3Qm2BUd++sYhPI5loAK9Y/UPs/lvEIEh
-         aiQtRf5j2WmoeciqL+Xg+dujyY9qSb4W4XAg3lzESkcU1ceQ49MwgUI9q1C19RmT4CMl
-         iXZPxQAYf5AzWJ6KyHBIKeo4f2FG+r22I2xvg=
-Received: by 10.223.85.145 with SMTP id o17mr1923667fal.16.1313186370693; Fri,
- 12 Aug 2011 14:59:30 -0700 (PDT)
-Received: by 10.223.134.84 with HTTP; Fri, 12 Aug 2011 14:59:30 -0700 (PDT)
-In-Reply-To: <7vei0rnprt.fsf@alter.siamese.dyndns.org>
+        bh=bIm02oXuHQ/nDc2Xp86waeDLUiqcug4WN17BTD44Abs=;
+        b=gAviBc7gZ6LZdrmugVBR67rnjz39Kq6tTBAPfn+lToXYmu+hqaE6MMSdc9s1sOghvE
+         kkOhFPQ4+6qHUM23mOHg48bitz8LVaCNG27Ys+dmXmRRMbt4aINDYd6PCEkue4lb5zf7
+         6/kRHtEywWB6BPQNlX6KeCjrHHXPQp4j9acIw=
+Received: by 10.223.38.151 with SMTP id b23mr1908010fae.35.1313187274447; Fri,
+ 12 Aug 2011 15:14:34 -0700 (PDT)
+Received: by 10.223.134.84 with HTTP; Fri, 12 Aug 2011 15:14:34 -0700 (PDT)
+In-Reply-To: <4E44CF9D.8030501@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179257>
 
-Hi,
+On Fri, Aug 12, 2011 at 1:00 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> Am 8/12/2011 7:20, schrieb Elijah Newren:
+>> Here's an attempt for a delete_item API (note: only compile-tested).
+>
+> Seriously? You haven't even tested this patch, and still don't mark it
+> with RFC?
+>
+>> Bike-shed painters welcome: delete_item, remove_item, free_item?
+>
+> You should know that a sentence like this shouldn't appear in the commit
+> message.
+>
+> Yeah, I know, you just copy-pasted my email text. But that was not a
+> commit message. Perhaps like this:
 
-On Thu, Aug 11, 2011 at 11:48 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Avoiding silent mismerges is of course one of the most important criteria,
-> but we also need to make sure that a conflicted state left in the index
-> and the working tree files must not be harder to reconcile than what we
-> have been giving our users---otherwise the change will be seen as a
-> regression by them.
+You are right.  I apologize; I messed up here.
 
-Yeah, good point.  I tried re-running my previous re-merge all merges
-in git.git testcase, modified so that when both versions of git
-reported a conflict I would compare the output of 'git ls-files  -s'.
-That uncovered a regression.  I think I know the fix but I need to
-retest and do some more checks.
+However, I am unclear what you mean by not even testing the patch,
+though.  I couldn't find any unit-test harness or any other kind of
+testsuite for the string_list API.  I did review the code to make sure
+it looked right to me, added a use of your new function, and ran the
+standard testsuite in addition to my "re-merge all merges from
+git.git" testcase.  I even single stepped through the code in a
+debugger for good measure.  What testing did you want to see in
+particular?
