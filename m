@@ -1,61 +1,49 @@
 From: Fabricio Nascimento <fabriciosn@gmail.com>
-Subject: [BUG] Git won't commit
-Date: Fri, 12 Aug 2011 10:13:45 -0700 (PDT)
-Message-ID: <1313169225059-6681082.post@n2.nabble.com>
+Subject: Re: [BUG] Git won't commit
+Date: Fri, 12 Aug 2011 10:20:48 -0700 (PDT)
+Message-ID: <1313169648463-6681098.post@n2.nabble.com>
+References: <1313169225059-6681082.post@n2.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 12 19:13:51 2011
+X-From: git-owner@vger.kernel.org Fri Aug 12 19:20:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QrvIt-0008HL-6k
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Aug 2011 19:13:51 +0200
+	id 1QrvPi-0003YK-P8
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Aug 2011 19:20:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751963Ab1HLRNq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Aug 2011 13:13:46 -0400
-Received: from sam.nabble.com ([216.139.236.26]:48804 "EHLO sam.nabble.com"
+	id S1753294Ab1HLRUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Aug 2011 13:20:50 -0400
+Received: from sam.nabble.com ([216.139.236.26]:49909 "EHLO sam.nabble.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751793Ab1HLRNp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2011 13:13:45 -0400
+	id S1753273Ab1HLRUs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2011 13:20:48 -0400
 Received: from jim.nabble.com ([192.168.236.80])
 	by sam.nabble.com with esmtp (Exim 4.72)
 	(envelope-from <fabriciosn@gmail.com>)
-	id 1QrvIn-0001yu-27
-	for git@vger.kernel.org; Fri, 12 Aug 2011 10:13:45 -0700
+	id 1QrvPc-0002Vv-FO
+	for git@vger.kernel.org; Fri, 12 Aug 2011 10:20:48 -0700
+In-Reply-To: <1313169225059-6681082.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179237>
 
-Hello Everybody,
+I have installed an stock version of git 1.7.6 from here, and I've got the
+same problem.
 
-Hope this is the right place to send this bug report.
+http://code.google.com/p/git-osx-installer/downloads/detail?name=git-1.7.6-x86_64-snow-leopard.dmg&can=3&q=
 
-It just appeared today, last time I've made a successful commit was 3 days
-ago. Now every commit, in no matter which repository I have (I've tried old
-ones, cloned today, github ones etc) fails with the following message.
-
-[master 09-mapas] git commit
-fatal: could not read 'template': No such file or directory
-
-It happens both with the stock git binary that came with Xcode 4.1 on OSX
-Lion (1.7.4.4) [/usr/local/bin/git], and the homebrew version (1.7.6)
-[/usr/bin/git].
-
-I haven't changed much of my system during those days besides installing
-macports and tinycdb (with ports). Don't see any close relation, both
-tinycdb and macports were removed.
-
-Curiously, it works well with the git binary that comes with Github.app for
-mac, whose version is 1.7.4.
-
-
+I've forgot to mention but I've updated all homebrew formulas during this
+past days too, so it might be that previously I had a homebrew version of
+git whose version where below or equal 1.4, and that something changed
+causing this error now. 
 
 --
-View this message in context: http://git.661346.n2.nabble.com/BUG-Git-won-t-commit-tp6681082p6681082.html
+View this message in context: http://git.661346.n2.nabble.com/BUG-Git-won-t-commit-tp6681082p6681098.html
 Sent from the git mailing list archive at Nabble.com.
