@@ -1,122 +1,81 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 6/6] Retain caches of submodule refs
-Date: Sat, 13 Aug 2011 00:36:29 +0200
-Message-ID: <1313188589-2330-7-git-send-email-mhagger@alum.mit.edu>
-References: <1313188589-2330-1-git-send-email-mhagger@alum.mit.edu>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Drew Northup <drew.northup@maine.edu>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 13 00:38:10 2011
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Linux Kernel + GIT SCM
+Date: Fri, 12 Aug 2011 17:01:21 -0700 (PDT)
+Message-ID: <m3pqka18ow.fsf@localhost.localdomain>
+References: <CACivvv1-UcZdOx+ThLuUkqwL=oy7aETckV+18Fpj_zoXkcXJWQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-4
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Vecu BOSSEUR <vecu.bosseur@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 13 02:05:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qs0Mj-0005fJ-Bf
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Aug 2011 00:38:09 +0200
+	id 1Qs1jI-0004On-0v
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Aug 2011 02:05:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752703Ab1HLWiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Aug 2011 18:38:06 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:41171 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752702Ab1HLWiC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2011 18:38:02 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from michael.homenet.telecomitalia.it (p54BEAA34.dip.t-dialin.net [84.190.170.52])
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p7CMaXJT010513;
-	Sat, 13 Aug 2011 00:37:41 +0200
-X-Mailer: git-send-email 1.7.6.8.gd2879
-In-Reply-To: <1313188589-2330-1-git-send-email-mhagger@alum.mit.edu>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1751817Ab1HMABY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Aug 2011 20:01:24 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:51060 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751331Ab1HMABY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Aug 2011 20:01:24 -0400
+Received: by fxh19 with SMTP id 19so2606257fxh.19
+        for <git@vger.kernel.org>; Fri, 12 Aug 2011 17:01:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=v2LRmU/k4AY1m54RA7X762pg9Rmp2V9IcRZz2uF2z1E=;
+        b=pToZtdNFzjoV5MOGr4615ZGDPIVyWFN/qObXdxY4jHKPcRmMmUA9ofiJM0gXkZN4Pg
+         9uC1wLyBzXv5o6Qo5cJw10e1q6Q5mfI34gTO/QDXGkyU8lwq8jcOqTHBZ7wmhveM94Pn
+         iznkaQLWpLJV1a0ww8b5+WUEX8DS6BpcZ07PI=
+Received: by 10.223.15.13 with SMTP id i13mr2018351faa.51.1313193682761;
+        Fri, 12 Aug 2011 17:01:22 -0700 (PDT)
+Received: from localhost.localdomain (abvk82.neoplus.adsl.tpnet.pl [83.8.208.82])
+        by mx.google.com with ESMTPS id j19sm2828988faa.17.2011.08.12.17.01.21
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 12 Aug 2011 17:01:21 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p7D01EEc020308;
+	Sat, 13 Aug 2011 02:01:25 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p7D01491020305;
+	Sat, 13 Aug 2011 02:01:04 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <CACivvv1-UcZdOx+ThLuUkqwL=oy7aETckV+18Fpj_zoXkcXJWQ@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179266>
 
-Instead of keeping track of one cache for refs in the main repo and
-another single cache shared among submodules, keep a linked list of
-cached_refs objects, one for each module/submodule. Change
-invalidate_cached_refs() to invalidate all caches. (Previously, it
-only invalidated the cache of the main repo because the submodule
-caches were not reused anyway.)
+Vecu BOSSEUR <vecu.bosseur@gmail.com> writes:
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- refs.c |   34 +++++++++++++++++++++-------------
- 1 files changed, 21 insertions(+), 13 deletions(-)
+> Hello,
+>=20
+> I need GIT SCM to allow me to suspend an operation and to resume it
+> later : initial cloning, synchronizing repositories, ...
+>=20
+> I believed this was the purpose of the "GIT Sequencer" feature
+> developped at 2011 Google Summmer Of Code ; please, tell me if I
+> missed something.
+>=20
+> And I would like to know whether "kernel.org" servers will support
+> this feature soon or not.
 
-diff --git a/refs.c b/refs.c
-index 8d1055d..f02cf94 100644
---- a/refs.c
-+++ b/refs.c
-@@ -153,13 +153,15 @@ static struct ref_list *sort_ref_list(struct ref_list *list)
-  * when doing a full libification.
-  */
- static struct cached_refs {
-+	struct cached_refs *next;
- 	char did_loose;
- 	char did_packed;
- 	struct ref_list *loose;
- 	struct ref_list *packed;
- 	/* The submodule name, or "" for the main repo. */
- 	char name[FLEX_ARRAY];
--} *cached_refs, *submodule_refs;
-+} *cached_refs;
-+
- static struct ref_list *current_ref;
- 
- static struct ref_list *extra_refs;
-@@ -191,6 +193,7 @@ struct cached_refs *create_cached_refs(const char *submodule)
- 		submodule = "";
- 	len = strlen(submodule) + 1;
- 	refs = xmalloc(sizeof(struct cached_refs) + len);
-+	refs->next = NULL;
- 	refs->did_loose = refs->did_packed = 0;
- 	refs->loose = refs->packed = NULL;
- 	memcpy(refs->name, submodule, len);
-@@ -205,23 +208,28 @@ struct cached_refs *create_cached_refs(const char *submodule)
-  */
- static struct cached_refs *get_cached_refs(const char *submodule)
- {
--	if (! submodule) {
--		if (!cached_refs)
--			cached_refs = create_cached_refs(submodule);
--		return cached_refs;
--	} else {
--		if (!submodule_refs)
--			submodule_refs = create_cached_refs(submodule);
--		else
--			/* For now, don't reuse the refs cache for submodules. */
--			clear_cached_refs(submodule_refs);
--		return submodule_refs;
-+	struct cached_refs *refs = cached_refs;
-+	if (! submodule)
-+		submodule = "";
-+	while (refs) {
-+		if (!strcmp(submodule, refs->name))
-+			return refs;
-+		refs = refs->next;
- 	}
-+
-+	refs = create_cached_refs(submodule);
-+	refs->next = cached_refs;
-+	cached_refs = refs;
-+	return refs;
- }
- 
- static void invalidate_cached_refs(void)
- {
--	clear_cached_refs(get_cached_refs(NULL));
-+	struct cached_refs *refs = cached_refs;
-+	while (refs) {
-+		clear_cached_refs(refs);
-+		refs = refs->next;
-+	}
- }
- 
- static struct ref_list *read_packed_refs(FILE *f)
--- 
-1.7.6.8.gd2879
+No, "Git sequencer" has nothing to do with resumable (and suspendable)
+clone, fetch or push.  Resumable transport is not implemented, and it
+looks like ti would be difficult to add.
+
+The sequencer project is about engine that it is to be used by rebase,
+multiple cherry-pick, multiple revert, and git-am.  Among others it is
+meant to increase consistency between those commands.
+=20
+--=20
+Jakub Nar=EAbski
