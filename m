@@ -1,168 +1,261 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: t5800-*.sh: Intermittent test failures
-Date: Sat, 13 Aug 2011 21:51:16 +0100
-Message-ID: <4E46E3C4.7020608@ramsay1.demon.co.uk>
-References: <4E417CB4.50007@ramsay1.demon.co.uk> <CAGdFq_jv_T-x7VGqm_j-fDfeW6TsBG95=1TWn91Yk9B3TGZdsQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 13 23:56:06 2011
+From: Conrad Irwin <conrad.irwin@gmail.com>
+Subject: [RFC] grep should detect binary files like diff
+Date: Sat, 13 Aug 2011 16:51:32 -0700
+Message-ID: <1313279492-7241-1-git-send-email-conrad.irwin@gmail.com>
+Cc: conrad.irwin@gmail.com, gitster@pobox.com,
+	rene.scharfe@lsrfire.ath.cx
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 14 01:52:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QsMBW-0006ko-0k
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Aug 2011 23:56:02 +0200
+	id 1QsO08-0000ET-Iy
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Aug 2011 01:52:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752482Ab1HMVwP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Aug 2011 17:52:15 -0400
-Received: from anchor-post-2.mail.demon.net ([195.173.77.133]:34384 "EHLO
-	anchor-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752333Ab1HMVwO (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 13 Aug 2011 17:52:14 -0400
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-2.mail.demon.net with esmtp (Exim 4.69)
-	id 1QsM7o-0006Jg-ku; Sat, 13 Aug 2011 21:52:13 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <CAGdFq_jv_T-x7VGqm_j-fDfeW6TsBG95=1TWn91Yk9B3TGZdsQ@mail.gmail.com>
+	id S1752661Ab1HMXwH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Aug 2011 19:52:07 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:60800 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752333Ab1HMXwF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Aug 2011 19:52:05 -0400
+Received: by yxj19 with SMTP id 19so2659418yxj.19
+        for <git@vger.kernel.org>; Sat, 13 Aug 2011 16:52:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=AaePw1FXiJjGTXhB0zDq2wmshokcyLd7PdjX8AVlA+Y=;
+        b=kDS155jipXM9Qd+FOgoYFrgBPphllfAHMU5owqag0da1TsVYO6zRgXnxAo7nzExcwS
+         UfzwQL6jBWogKTc+oX3Zooi/fYUHZZO5IpP9dE8XC6mckoj1A5kuah6XJrKm2/XokjRR
+         Qx3kH3aAZ1wuYmGOq1pylDfDvAYcY5scNyKXc=
+Received: by 10.236.157.137 with SMTP id o9mr8469691yhk.32.1313279524145;
+        Sat, 13 Aug 2011 16:52:04 -0700 (PDT)
+Received: from localhost.localdomain (75-149-63-189-SFBA.hfc.comcastbusiness.net [75.149.63.189])
+        by mx.google.com with ESMTPS id j45sm2046337yhe.64.2011.08.13.16.52.02
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 13 Aug 2011 16:52:03 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.409.ge7a85
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179299>
 
-Sverre Rabbelier wrote:
->> I haven't looked to see how the git(fast-export)/git-fast-import processes are
->> plumbed together, but there seems to be a synchronization problem somewhere ...
-> 
-> This seems odd, before the fast-export process is even started it's
-> stdout are wired to the stdin of the helper (and thus the fast-import
-> process). What indication do you have that fast-import hasn't started
-> and that fast-export has finished?
+Hi all,
 
-I indulged in a spot of "printf debugging". ;-)  see more below.
+The problem I have is a large number of fixture files, in text-based
+formats, that pollute the output of various git commands. I can mitigate
+this in git-diff using gitattributes mechanism, but there's no similar
+configuration for git-grep.
 
-> Also, you say git remote-test everywhere, but it should be git
-> remote-testgit, typo?
+There are two issues with the naive approach to implementing this that
+I've attached below. Firstly the configuration variable is namespaced
+under "diff", and secondly the attributes mechanism is not thread-safe.
 
-Yep. [It was actually caused by a cut/paste/edit of pstree output (pstree
-truncates long fields); not that you could guess that! ;-P ]
+I'm inclined to think that the namespacing issue is not too significant;
+it would just require some documentation. If it is an issue then maybe a
+new "grep" attribute could be created. Are there any places where you
+might want git-grep and git-diff to treat different sets of files as
+binary?
 
-So ...
+The thread-safety of the attributes mechanism is a much bigger problem,
+and is the only reason I made the behaviour depend on a configuration
+option below. You can either have a multi-threaded grep, or a grep that
+detects binary files properly :(. I'm not sure how to even start
+resolving an issue like that, though I'm happy to accept pointers. Does
+anyone, Junio?, know what it would take to fix?
 
-I added some additional debug code to transport-helper.c (see below) in
-addition to creating debug output files from the git-fast-import/export
-commands. (I won't show the code for this debug output; it wouldn't be
-hard to imagine! :-)
+Conrad
 
-In addition to the uninteresting "printf debugging" info, I used
-gettimeofday() to show the start and end times for the git(fast-export)
-process and the start time for git-fast-import. The last hunk below,
-for instance, shows the code to output the git(fast-export) end time ...
+---
+ Documentation/config.txt        |    5 ++++
+ Documentation/git-grep.txt      |    5 ++++
+ Documentation/gitattributes.txt |    3 ++
+ builtin/grep.c                  |    5 ++++
+ grep.c                          |   48 +++++++++++++++++++++-----------------
+ grep.h                          |    1 +
+ t/t7008-grep-binary.sh          |   18 ++++++++++++++
+ 7 files changed, 63 insertions(+), 22 deletions(-)
 
---- >8 ----
-diff --git a/transport-helper.c b/transport-helper.c
-index 74c3122..7c9d881 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -132,6 +132,8 @@ static struct child_process *get_helper(struct transport *transport)
- 	snprintf(git_dir_buf, sizeof(git_dir_buf), "%s=%s", GIT_DIR_ENVIRONMENT, get_git_dir());
- 	helper->env = helper_env;
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 0658ffb..b7d65b3 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1070,6 +1070,11 @@ grep.lineNumber::
+ grep.extendedRegexp::
+ 	If set to true, enable '--extended-regexp' option by default.
  
-+	if (debug)
-+		fprintf(stderr, "Debug: start remote helper: <%s>\n", helper->argv[0]);
- 	code = start_command(helper);
- 	if (code < 0 && errno == ENOENT)
- 		die("Unable to find remote helper for '%s'", data->name);
-@@ -376,6 +378,8 @@ static int get_importer(struct transport *transport, struct child_process *fasti
- 	fastimport->argv[1] = "--quiet";
++grep.binaryFiles::
++	If set to true, linkgit:git-grep[1] will treat files as binary under
++	the same circumstances as linkgit:git-diff[1]. See the
++	"Marking files as binary" section of linkgit:gitattributes[5].
++
+ gui.commitmsgwidth::
+ 	Defines how wide the commit message window is in the
+ 	linkgit:git-gui[1]. "75" is the default.
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index e44a498..fd9ebc4 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -41,6 +41,11 @@ grep.lineNumber::
+ grep.extendedRegexp::
+ 	If set to true, enable '--extended-regexp' option by default.
  
- 	fastimport->git_cmd = 1;
-+	if (debug)
-+		fprintf(stderr, "Debug: get_importer, start fast-import\n");
- 	return start_command(fastimport);
- }
++grep.binaryFiles::
++	If set to true, linkgit:git-grep[1] will treat files as binary under
++	the same circumstances as linkgit:git-diff[1]. See the
++	"Marking files as binary" section of linkgit:gitattributes[5].
++
  
-@@ -403,6 +407,8 @@ static int get_exporter(struct transport *transport,
- 		fastexport->argv[argc++] = revlist_args->items[i].string;
+ OPTIONS
+ -------
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 2bbe76b..180aa2f 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -644,6 +644,9 @@ attribute in the `.gitattributes` file:
  
- 	fastexport->git_cmd = 1;
-+	if (debug)
-+		fprintf(stderr, "Debug: get_exporter, start fast-export\n");
- 	return start_command(fastexport);
- }
+ This will cause git to generate `Binary files differ` (or a binary
+ patch, if binary patches are enabled) instead of a regular diff.
++If the grep.binaryFiles configuration variable is set, linkgit:git-grep[1]
++will also treat such files as binary, by default printing
++`Binary file matches` instead of the matching line.
  
-@@ -756,6 +762,11 @@ static int push_refs_with_export(struct transport *transport,
+ However, one may also want to specify other diff driver attributes. For
+ example, you might want to use `textconv` to convert postscript files to
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 1851797..e9d9003 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -324,6 +324,11 @@ static int grep_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
  
- 	if (finish_command(&exporter))
- 		die("Error while running fast-export");
-+	if (debug) {
-+		struct timeval tv;
-+		gettimeofday(&tv, NULL);
-+		fprintf(stderr, "fast-export finished @ %lds %ldus\n", tv.tv_sec, tv.tv_usec);
++	if (!strcmp(var, "grep.binaryfiles")) {
++		opt->userdiff_binary = git_config_bool(var, value);
++		return 0;
 +	}
- 	push_update_refs_status(data, remote_refs);
- 	return 0;
- }
---- >8 ----
-
-The debug output from "./t5800-remote-helpers.sh -v" ends like this:
-
-... [snipped]
-Debug: Capabilities complete.
-Debug: Remote helper: Waiting...
-Got command 'list' with args ''
-? refs/heads/new
-? refs/heads/master
-@refs/heads/master HEAD
-Debug: Remote helper: <- ? refs/heads/new
-Debug: Remote helper: Waiting...
-Debug: Remote helper: <- ? refs/heads/master
-Debug: Remote helper: Waiting...
-Debug: Remote helper: <- @refs/heads/master HEAD
-Debug: Remote helper: Waiting...
-Debug: Remote helper: <- 
-Debug: Read ref listing.
-Debug: Remote helper: -> export
-Debug: get_exporter, start fast-export
-fast-export finished @ 1313178956s 366398us
-Debug: Remote helper: Waiting...
-Got command 'export' with args ''
-
-The fast-export debug file looks like:
-
---- >8 ----
-fast-export: pid = 11096 (ppid 11090)
-started @ 1313178956s 364790us
-arg: <fast-export>
-arg: <--use-done-feature>
-arg: <--export-marks=.git/info/fast-import/a08486a77c5cf1b4aa17fa9e64673e352ebe1a96/testgit.marks>
-arg: <--import-marks=.git/info/fast-import/a08486a77c5cf1b4aa17fa9e64673e352ebe1a96/testgit.marks>
-arg: <^refs/testgit/origin/master>
-arg: <refs/heads/master>
-----end args----: <>
-handle object: <ab28ce7f215103f3f4bf70fd439541590dccc91b>
-handle commit: <refs/heads/master>
-main: <done!>
---- >8 ----
-
-The fast-import debug file looks like:
-
---- >8 ----
-fast-import: pid = 11104 (ppid = 11103)
-started @ 1313178956s 382392us
-main: <start-up>
-main: <start-up #1>
-main: <before loop>
---- >8 ----
-
-Note that git(fast-export) executes in 1608 micro-seconds and finishes
-15994 micro-seconds before git-fast-import starts.
-
-ATB,
-Ramsay Jones
++
+ 	if (!strcmp(var, "color.grep"))
+ 		opt->color = git_config_colorbool(var, value, -1);
+ 	else if (!strcmp(var, "color.grep.context"))
+diff --git a/grep.c b/grep.c
+index 26e8d8e..84063eb 100644
+--- a/grep.c
++++ b/grep.c
+@@ -924,8 +924,8 @@ int grep_threads_ok(const struct grep_opt *opt)
+ 	 * machinery in grep_buffer_1. The attribute code is not
+ 	 * thread safe, so we disable the use of threads.
+ 	 */
+-	if (opt->funcname && !opt->unmatch_name_only && !opt->status_only &&
+-	    !opt->name_only)
++	if ((opt->funcname && !opt->unmatch_name_only && !opt->status_only &&
++	    !opt->name_only) || opt->userdiff_binary)
+ 		return 0;
+ 
+ 	return 1;
+@@ -947,6 +947,7 @@ static int grep_buffer_1(struct grep_opt *opt, const char *name,
+ 	unsigned count = 0;
+ 	int try_lookahead = 0;
+ 	int show_function = 0;
++	int load_userdiff_func;
+ 	enum grep_context ctx = GREP_CONTEXT_HEAD;
+ 	xdemitconf_t xecfg;
+ 
+@@ -968,31 +969,34 @@ static int grep_buffer_1(struct grep_opt *opt, const char *name,
+ 	}
+ 	opt->last_shown = 0;
+ 
+-	switch (opt->binary) {
+-	case GREP_BINARY_DEFAULT:
+-		if (buffer_is_binary(buf, size))
+-			binary_match_only = 1;
+-		break;
+-	case GREP_BINARY_NOMATCH:
+-		if (buffer_is_binary(buf, size))
+-			return 0; /* Assume unmatch */
+-		break;
+-	case GREP_BINARY_TEXT:
+-		break;
+-	default:
+-		die("bug: unknown binary handling mode");
+-	}
++	load_userdiff_func = opt->funcname && !opt->unmatch_name_only && !opt->status_only &&
++	    !opt->name_only && !collect_hits;
+ 
+ 	memset(&xecfg, 0, sizeof(xecfg));
+-	if (opt->funcname && !opt->unmatch_name_only && !opt->status_only &&
+-	    !opt->name_only && !binary_match_only && !collect_hits) {
++	if (opt->userdiff_binary || load_userdiff_func) {
++		/* we have to be careful not to call this if we're using threads */
+ 		struct userdiff_driver *drv = userdiff_find_by_path(name);
+-		if (drv && drv->funcname.pattern) {
+-			const struct userdiff_funcname *pe = &drv->funcname;
+-			xdiff_set_find_func(&xecfg, pe->pattern, pe->cflags);
+-			opt->priv = &xecfg;
++
++		if (opt->userdiff_binary && drv && drv->binary != -1)
++			binary_match_only = drv->binary;
++		else if (opt->binary != GREP_BINARY_TEXT)
++			binary_match_only = buffer_is_binary(buf, size);
++
++		if (load_userdiff_func && !binary_match_only) {
++			if (drv && drv->funcname.pattern) {
++				const struct userdiff_funcname *pe = &drv->funcname;
++				xdiff_set_find_func(&xecfg, pe->pattern, pe->cflags);
++				opt->priv = &xecfg;
++			}
+ 		}
++	} else if (opt->binary != GREP_BINARY_TEXT) {
++		binary_match_only = buffer_is_binary(buf, size);
++	}
++
++	if (binary_match_only && opt->binary == GREP_BINARY_NOMATCH) {
++		return 0;
+ 	}
++
+ 	try_lookahead = should_lookahead(opt);
+ 
+ 	while (left) {
+diff --git a/grep.h b/grep.h
+index ae50c45..303cb78 100644
+--- a/grep.h
++++ b/grep.h
+@@ -90,6 +90,7 @@ struct grep_opt {
+ #define GREP_BINARY_NOMATCH	1
+ #define GREP_BINARY_TEXT	2
+ 	int binary;
++	int userdiff_binary;
+ 	int extended;
+ 	int pcre;
+ 	int relative;
+diff --git a/t/t7008-grep-binary.sh b/t/t7008-grep-binary.sh
+index e058d18..a88503b 100755
+--- a/t/t7008-grep-binary.sh
++++ b/t/t7008-grep-binary.sh
+@@ -99,4 +99,22 @@ test_expect_failure 'git grep y<NUL>x a' "
+ 	test_must_fail git grep -f f a
+ "
+ 
++test_expect_success 'git -c grep.binaryFiles=1 grep ina a' "
++	echo 'a diff' > .gitattributes &&
++	printf 'binaryQfile' | q_to_nul >a &&
++	echo 'a:binaryQfile' | q_to_nul >expect &&
++	git -c grep.binaryFiles=1 grep ina a > actual &&
++	rm .gitattributes &&
++	test_cmp expect actual
++"
++test_expect_success 'git -c grep.binaryFiles=1 grep tex t' "
++	echo 'text' > t &&
++	git add t &&
++	echo 't -diff' > .gitattributes &&
++	echo Binary file t matches >expect &&
++	git -c grep.binaryFiles=1 grep tex t >actual &&
++	rm .gitattributes &&
++	test_cmp expect actual
++"
++
+ test_done
+-- 
+1.7.6.409.ge7a85
