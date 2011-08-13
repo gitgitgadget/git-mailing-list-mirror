@@ -1,100 +1,168 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [BUG] Git won't commit
-Date: Sat, 13 Aug 2011 16:18:52 -0500
-Message-ID: <20110813211852.GA17228@elie.gateway.2wire.net>
-References: <1313169225059-6681082.post@n2.nabble.com>
- <CAMOZ1BtxNSnncEJ6frEY0STgfS478krkpxXStP401WLPovb2Gw@mail.gmail.com>
- <CAAC=0R66j43CqpaxXskAwHsitvRFwy7DsjguNPm+sPa4YmTWqw@mail.gmail.com>
- <CAMOZ1Bu3AoQb330hkL+8hDTCvKX+amRfPE3PBxDHUZR17N344Q@mail.gmail.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: t5800-*.sh: Intermittent test failures
+Date: Sat, 13 Aug 2011 21:51:16 +0100
+Message-ID: <4E46E3C4.7020608@ramsay1.demon.co.uk>
+References: <4E417CB4.50007@ramsay1.demon.co.uk> <CAGdFq_jv_T-x7VGqm_j-fDfeW6TsBG95=1TWn91Yk9B3TGZdsQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?RmFicsOtY2lv?= Nascimento <fabricio@tailorbirds.com.br>,
-	git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 13 23:22:32 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 13 23:56:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QsLf5-0007TQ-Je
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Aug 2011 23:22:31 +0200
+	id 1QsMBW-0006ko-0k
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Aug 2011 23:56:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752309Ab1HMVTE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Aug 2011 17:19:04 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:44091 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751066Ab1HMVTD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Aug 2011 17:19:03 -0400
-Received: by ywf7 with SMTP id 7so2633247ywf.19
-        for <git@vger.kernel.org>; Sat, 13 Aug 2011 14:19:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=L3AA9bby2J71GKjjydHnTS85kUo9cKqw3bSufi/vZ5Q=;
-        b=bf9fFdBRfYdn7CuzazRwWGpCONo8kUKKpSz6kRaXIW2gZFLmhpB+Pa7aDAkHct+e7x
-         RM82tb9xRQuPx8zcYj11QoT0G95ykX29U1QLM42H6ik6CbM57uWOuwkHtGmLInwCitjC
-         BfzPIPJ4+HBvFO5Vl2ZmwBfqIrNKacE+H2Jbs=
-Received: by 10.146.190.7 with SMTP id n7mr2434172yaf.28.1313270341697;
-        Sat, 13 Aug 2011 14:19:01 -0700 (PDT)
-Received: from elie.gateway.2wire.net ([68.255.106.30])
-        by mx.google.com with ESMTPS id g69sm2893393yhk.16.2011.08.13.14.19.00
-        (version=SSLv3 cipher=OTHER);
-        Sat, 13 Aug 2011 14:19:01 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAMOZ1Bu3AoQb330hkL+8hDTCvKX+amRfPE3PBxDHUZR17N344Q@mail.gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S1752482Ab1HMVwP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Aug 2011 17:52:15 -0400
+Received: from anchor-post-2.mail.demon.net ([195.173.77.133]:34384 "EHLO
+	anchor-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752333Ab1HMVwO (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Aug 2011 17:52:14 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by anchor-post-2.mail.demon.net with esmtp (Exim 4.69)
+	id 1QsM7o-0006Jg-ku; Sat, 13 Aug 2011 21:52:13 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+In-Reply-To: <CAGdFq_jv_T-x7VGqm_j-fDfeW6TsBG95=1TWn91Yk9B3TGZdsQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179298>
 
-Hi,
+Sverre Rabbelier wrote:
+>> I haven't looked to see how the git(fast-export)/git-fast-import processes are
+>> plumbed together, but there seems to be a synchronization problem somewhere ...
+> 
+> This seems odd, before the fast-export process is even started it's
+> stdout are wired to the stdin of the helper (and thus the fast-import
+> process). What indication do you have that fast-import hasn't started
+> and that fast-export has finished?
 
-Michael Witten wrote:
+I indulged in a spot of "printf debugging". ;-)  see more below.
 
-> As for why one version works but the other does not, I'm not sure.
+> Also, you say git remote-test everywhere, but it should be git
+> remote-testgit, typo?
 
-It's my fault, I'm afraid:
+Yep. [It was actually caused by a cut/paste/edit of pstree output (pstree
+truncates long fields); not that you could guess that! ;-P ]
 
- $ git log v1.7.4..v1.7.4.4 --grep=template --no-merges
- commit 2140b140
- Author: Jonathan Nieder <jrnieder@gmail.com>
- Date:   Fri Feb 25 03:07:57 2011 -0600
+So ...
 
-     commit: error out for missing commit message template
+I added some additional debug code to transport-helper.c (see below) in
+addition to creating debug output files from the git-fast-import/export
+commands. (I won't show the code for this debug output; it wouldn't be
+hard to imagine! :-)
 
-     When "git commit" was rewritten in C (v1.5.4-rc0~78^2~30,
-     2007-11-08), a subtle bug in --template was introduced.  If the
-     file named by a --template parameter is missing, previously git
-     would error out with a message:
+In addition to the uninteresting "printf debugging" info, I used
+gettimeofday() to show the start and end times for the git(fast-export)
+process and the start time for git-fast-import. The last hunk below,
+for instance, shows the code to output the git(fast-export) end time ...
 
-         Commit template file does not exist.
+--- >8 ----
+diff --git a/transport-helper.c b/transport-helper.c
+index 74c3122..7c9d881 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -132,6 +132,8 @@ static struct child_process *get_helper(struct transport *transport)
+ 	snprintf(git_dir_buf, sizeof(git_dir_buf), "%s=%s", GIT_DIR_ENVIRONMENT, get_git_dir());
+ 	helper->env = helper_env;
+ 
++	if (debug)
++		fprintf(stderr, "Debug: start remote helper: <%s>\n", helper->argv[0]);
+ 	code = start_command(helper);
+ 	if (code < 0 && errno == ENOENT)
+ 		die("Unable to find remote helper for '%s'", data->name);
+@@ -376,6 +378,8 @@ static int get_importer(struct transport *transport, struct child_process *fasti
+ 	fastimport->argv[1] = "--quiet";
+ 
+ 	fastimport->git_cmd = 1;
++	if (debug)
++		fprintf(stderr, "Debug: get_importer, start fast-import\n");
+ 	return start_command(fastimport);
+ }
+ 
+@@ -403,6 +407,8 @@ static int get_exporter(struct transport *transport,
+ 		fastexport->argv[argc++] = revlist_args->items[i].string;
+ 
+ 	fastexport->git_cmd = 1;
++	if (debug)
++		fprintf(stderr, "Debug: get_exporter, start fast-export\n");
+ 	return start_command(fastexport);
+ }
+ 
+@@ -756,6 +762,11 @@ static int push_refs_with_export(struct transport *transport,
+ 
+ 	if (finish_command(&exporter))
+ 		die("Error while running fast-export");
++	if (debug) {
++		struct timeval tv;
++		gettimeofday(&tv, NULL);
++		fprintf(stderr, "fast-export finished @ %lds %ldus\n", tv.tv_sec, tv.tv_usec);
++	}
+ 	push_update_refs_status(data, remote_refs);
+ 	return 0;
+ }
+--- >8 ----
 
-     but in the C version the --template parameter gets ignored and
-     the default template is used.
+The debug output from "./t5800-remote-helpers.sh -v" ends like this:
 
-     t7500 has two tests for this case which would have caught it, except
-     that with the default $EDITOR, the commit message template is left
-     unmodified, causing 'git commit' to error out and the test to
-     succeed.
+... [snipped]
+Debug: Capabilities complete.
+Debug: Remote helper: Waiting...
+Got command 'list' with args ''
+? refs/heads/new
+? refs/heads/master
+@refs/heads/master HEAD
+Debug: Remote helper: <- ? refs/heads/new
+Debug: Remote helper: Waiting...
+Debug: Remote helper: <- ? refs/heads/master
+Debug: Remote helper: Waiting...
+Debug: Remote helper: <- @refs/heads/master HEAD
+Debug: Remote helper: Waiting...
+Debug: Remote helper: <- 
+Debug: Read ref listing.
+Debug: Remote helper: -> export
+Debug: get_exporter, start fast-export
+fast-export finished @ 1313178956s 366398us
+Debug: Remote helper: Waiting...
+Got command 'export' with args ''
 
-     Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+The fast-export debug file looks like:
 
-Fabricio, do you remember what you were trying to do when the
-"[commit] template" configuration got set?  Currently the error
-message says
+--- >8 ----
+fast-export: pid = 11096 (ppid 11090)
+started @ 1313178956s 364790us
+arg: <fast-export>
+arg: <--use-done-feature>
+arg: <--export-marks=.git/info/fast-import/a08486a77c5cf1b4aa17fa9e64673e352ebe1a96/testgit.marks>
+arg: <--import-marks=.git/info/fast-import/a08486a77c5cf1b4aa17fa9e64673e352ebe1a96/testgit.marks>
+arg: <^refs/testgit/origin/master>
+arg: <refs/heads/master>
+----end args----: <>
+handle object: <ab28ce7f215103f3f4bf70fd439541590dccc91b>
+handle commit: <refs/heads/master>
+main: <done!>
+--- >8 ----
 
-	fatal: could not read '<path>'
+The fast-import debug file looks like:
 
-where <path> is the configured template filename; probably this
-should be changed to mention (1) that the file we were expecting to
-find is a commit message template and (2) whether we got it from the
-commandline or configuration.
+--- >8 ----
+fast-import: pid = 11104 (ppid = 11103)
+started @ 1313178956s 382392us
+main: <start-up>
+main: <start-up #1>
+main: <before loop>
+--- >8 ----
 
-What I'm trying to figure out is whether other people were relying on
-the accidental "optional template" behavior or if there is some case
-where it is more useful.  If so, it should be brought back.
+Note that git(fast-export) executes in 1608 micro-seconds and finishes
+15994 micro-seconds before git-fast-import starts.
+
+ATB,
+Ramsay Jones
