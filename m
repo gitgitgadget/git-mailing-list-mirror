@@ -1,107 +1,67 @@
-From: Conrad Irwin <conrad.irwin@gmail.com>
-Subject: [PATCH] rev-parse: Allow @{U} as a synonym for @{u}
-Date: Sat, 13 Aug 2011 18:57:51 -0700
-Message-ID: <1313287071-7851-1-git-send-email-conrad.irwin@gmail.com>
-References: <CAMK1S_hZkdXiQb_UTB=snLAXPmo5yrCnFaQFHZqYq5AXqOgWng@mail.gmail.com>
-Cc: Sitaram Chamarty <sitaramc@gmail.com>,
-	Conrad Irwin <conrad.irwin@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 14 03:58:21 2011
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: git am ~/Documents/mail-[1-9]-11.txt Patch format detection
+ failed.
+Date: Sat, 13 Aug 2011 19:14:16 -0700
+Message-ID: <20110814021414.GA8724@gmail.com>
+References: <CAJfuBxx9Ayo8cHga+vK+Ynx5P7dhST7f=p87-qyjEzofSdZ=RQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Jim Cromie <jim.cromie@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 14 04:14:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QsPxy-0002jH-LK
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Aug 2011 03:58:18 +0200
+	id 1QsQDf-0000y0-PT
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Aug 2011 04:14:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752365Ab1HNB6M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Aug 2011 21:58:12 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:53995 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751876Ab1HNB6K (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Aug 2011 21:58:10 -0400
-Received: by yie30 with SMTP id 30so2705095yie.19
-        for <git@vger.kernel.org>; Sat, 13 Aug 2011 18:58:10 -0700 (PDT)
+	id S1752563Ab1HNCOZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Aug 2011 22:14:25 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:41905 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752272Ab1HNCOY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Aug 2011 22:14:24 -0400
+Received: by gwaa12 with SMTP id a12so2704117gwa.19
+        for <git@vger.kernel.org>; Sat, 13 Aug 2011 19:14:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=zZisnRo1OrPA040vqTXOueSM3FnBZ6N/FGug1sIStsI=;
-        b=KFEqw77QYB5lO02c8WTtFNfTwoby7aZd5+oRi1i6fw09CMAuvszuCW9r6oi4/Truk2
-         jE5SlF9FwzkrkHXJrTx95ePz43TOlKBQqrCowi0/8MvAZ02OcomxJpTQYagIvIYBsZJK
-         zELB5fnYGy7D+LDCAM3jLNgSQQLBluzwgxkSQ=
-Received: by 10.236.125.231 with SMTP id z67mr8443420yhh.109.1313287090269;
-        Sat, 13 Aug 2011 18:58:10 -0700 (PDT)
-Received: from localhost.localdomain (c-69-181-44-79.hsd1.ca.comcast.net [69.181.44.79])
-        by mx.google.com with ESMTPS id s62sm1985288yhn.61.2011.08.13.18.58.08
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=xEigXzUBMX6FdlzaLmEFQ0LdGlHNN7W4kYTZ0N+wIzs=;
+        b=J18DOmvEjdvQWCLx7FfmMLH4bgNTyP2XdhilGXxeisVbWSo0C+j8nHCLsjSEEm4mlz
+         ynmIIUkqpEmDdaQhRY/ibZbW0EnR2Fvk4BCYPnOF04/4GXNl0wXMwxIEKRsud0HxkOYM
+         3CpijIszg9IgOJ2YJ11wBM/voMkrajJQD1vGQ=
+Received: by 10.91.195.19 with SMTP id x19mr2625523agp.6.1313288063748;
+        Sat, 13 Aug 2011 19:14:23 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id c15sm2428942anm.46.2011.08.13.19.14.21
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 13 Aug 2011 18:58:09 -0700 (PDT)
-X-Mailer: git-send-email 1.7.6.448.gc83e3.dirty
-In-Reply-To: <CAMK1S_hZkdXiQb_UTB=snLAXPmo5yrCnFaQFHZqYq5AXqOgWng@mail.gmail.com>
+        Sat, 13 Aug 2011 19:14:22 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAJfuBxx9Ayo8cHga+vK+Ynx5P7dhST7f=p87-qyjEzofSdZ=RQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179301>
 
-This facilitates specifying the upstream of a branch if you have
-difficulty synchronising your shift-key and other characters, if you
-just want to SHOUT at git, or if you're expecting consistency with
-@{1DAY}.
+On Sat, Aug 13, 2011 at 01:49:35PM -0600, Jim Cromie wrote:
+> git am is giving me trouble.
+> 
+> Im a gmail user, and have saved a patch series by doing
+> show-original, save w rename for each patch
+> [snip]
 
-Signed-off-by: Conrad Irwin <conrad.irwin@gmail.com>
----
- Documentation/revisions.txt   |    4 ++--
- sha1_name.c                   |    2 +-
- t/t1507-rev-parse-upstream.sh |    8 ++++++++
- 3 files changed, 11 insertions(+), 3 deletions(-)
+My experience with gmail + patches is that you need to use an
+email client to download patches, not the web interface.
 
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index b290b61..c89d74d 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -87,8 +87,8 @@ the '$GIT_DIR/refs' directory or from the '$GIT_DIR/packed-refs' file.
-   before the current one.
- 
- '<refname>@\{upstream\}', e.g. 'master@\{upstream\}', '@\{u\}'::
--  The suffix '@\{upstream\}' to a ref (short form '<refname>@\{u\}') refers to
--  the branch the ref is set to build on top of.  A missing ref defaults
-+  The suffix '@\{upstream\}' to a ref (short form '<refname>@\{u\}', or '@\{U\}')
-+  refers to the branch the ref is set to build on top of.  A missing ref defaults
-   to the current branch.
- 
- '<rev>{caret}', e.g. 'HEAD{caret}, v1.5.1{caret}0'::
-diff --git a/sha1_name.c b/sha1_name.c
-index ff5992a..ef4b77f 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -334,7 +334,7 @@ static inline int upstream_mark(const char *string, int len)
- 	for (i = 0; i < ARRAY_SIZE(suffix); i++) {
- 		int suffix_len = strlen(suffix[i]);
- 		if (suffix_len <= len
--		    && !memcmp(string, suffix[i], suffix_len))
-+		    && !strncasecmp(string, suffix[i], suffix_len))
- 			return suffix_len;
- 	}
- 	return 0;
-diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstream.sh
-index a455551..5be605f 100755
---- a/t/t1507-rev-parse-upstream.sh
-+++ b/t/t1507-rev-parse-upstream.sh
-@@ -37,6 +37,14 @@ test_expect_success '@{u} resolves to correct full name' '
- 	test refs/remotes/origin/master = "$(full_name @{u})"
- '
- 
-+test_expect_success '@{U} resolves to correct full name' '
-+	test refs/remotes/origin/master = "$(full_name @{U})"
-+'
-+
-+test_expect_success '@{Upstream} resolves to correct full name' '
-+	test refs/remotes/origin/master = "$(full_name @{Upstream})"
-+'
-+
- test_expect_success 'my-side@{upstream} resolves to correct full name' '
- 	test refs/remotes/origin/side = "$(full_name my-side@{u})"
- '
+mutt works well for me.  Any client that can talk to gmail
+over imaps:// should do the trick.
+
+I couldn't find what was wrong with the patch you
+attached to your original message, though.
 -- 
-1.7.6.448.gc83e3.dirty
+					David
