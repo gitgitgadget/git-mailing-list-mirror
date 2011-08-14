@@ -1,83 +1,72 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 7/7] sequencer: Remove sequencer state after final commit
-Date: Sun, 14 Aug 2011 16:32:00 -0500
-Message-ID: <20110814213200.GA6555@elie.gateway.2wire.net>
-References: <1313310789-10216-1-git-send-email-artagnon@gmail.com>
- <1313310789-10216-8-git-send-email-artagnon@gmail.com>
- <20110814160440.GK18466@elie.gateway.2wire.net>
- <7vei0nn1cn.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/2] rev-parse: add option --is-well-formed-git-dir
+ [path]
+Date: Sun, 14 Aug 2011 14:42:05 -0700
+Message-ID: <7v7h6fn00i.fsf@alter.siamese.dyndns.org>
+References: <1313178913-25617-1-git-send-email-iveqy@iveqy.com>
+ <1313178913-25617-2-git-send-email-iveqy@iveqy.com>
+ <CACsJy8D7W54w3ji6foXySCuvNLLBu=FY70z8+kB5hmJT_-3yCg@mail.gmail.com>
+ <20110813061342.GA459@book.hvoigt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 14 23:32:16 2011
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org,
+	jens.lehmann@web.de
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Sun Aug 14 23:42:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QsiI3-0002k0-DI
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Aug 2011 23:32:15 +0200
+	id 1QsiRm-0007R6-Al
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Aug 2011 23:42:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754362Ab1HNVcK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Aug 2011 17:32:10 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:52416 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753989Ab1HNVcJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Aug 2011 17:32:09 -0400
-Received: by gya6 with SMTP id 6so2886489gya.19
-        for <git@vger.kernel.org>; Sun, 14 Aug 2011 14:32:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=EMcQjr0gH7Wp2P02LJn6QCIWvUQ2Nf7DxpiN9VXS+Y4=;
-        b=xwf6NLJO5eynsZHEv/wPLNe6LjCMRoryuc47dOv6OSCODtXjtrgJX32VATymFv5M6l
-         mIWb382YONZU+IgSlQcWl7s1bcpuvCvTLb0RxdDjhgCI1wLNKjSuprD2pR02NQcQuBbE
-         U8Vthq8bT9rafzc584+DRghLo4PYEd5HRYPGk=
-Received: by 10.150.244.18 with SMTP id r18mr4225490ybh.78.1313357527826;
-        Sun, 14 Aug 2011 14:32:07 -0700 (PDT)
-Received: from elie.gateway.2wire.net (adsl-76-206-233-80.dsl.chcgil.sbcglobal.net [76.206.233.80])
-        by mx.google.com with ESMTPS id g16sm3274954ybi.8.2011.08.14.14.32.06
-        (version=SSLv3 cipher=OTHER);
-        Sun, 14 Aug 2011 14:32:07 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vei0nn1cn.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S1754848Ab1HNVmL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Aug 2011 17:42:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41341 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754838Ab1HNVmH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Aug 2011 17:42:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E422F4D48;
+	Sun, 14 Aug 2011 17:42:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/w+xGJFyy4vVMDkS+eO4MDDF9wA=; b=Wd0G4E
+	pyfRzLA4iHA+dN5vu1oXTGrV1ScDVRpAuBZr99/ocRaA/Pu3iB+TzRvmsBrT5sOS
+	mv1q5l8jGZzuaAuCDd9d25J/JAITqpFw+IOswdDTSZaoUp7LyqkE8VlRYA+3ffw8
+	sZAwWVfGLmqNxWQaMF5jyudwQrcMWGg1tw6po=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HNUzMhWdo7cOJDm8u9w9BtalyQMoTu6F
+	Dx3TmR+Yf7g9NT6wqJfNgTF5mYdAa/Xxqjl8njDi+4p8y+9JUwzEFdi6T6hjOl05
+	7rzLZcGjj83bfU7OAo94DDfRs8gyP2EnW50t8s+GFbvup2V6AzKApkw+UaKoC5oR
+	chaXGkoDoEk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D989B4D47;
+	Sun, 14 Aug 2011 17:42:06 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6B6934D46; Sun, 14 Aug 2011
+ 17:42:06 -0400 (EDT)
+In-Reply-To: <20110813061342.GA459@book.hvoigt.net> (Heiko Voigt's message of
+ "Sat, 13 Aug 2011 08:13:43 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 4167C1BA-C6BE-11E0-86ED-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179349>
 
-Hi Junio,
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
-Junio C Hamano wrote:
+> While we are talking about names how about:
+>
+> 	--resolve-git-dir
+>
+> ? Since we had this information already the option prints out the found
+> resolved git directory and could be used for that.
 
-> It still is unclear why "removing the sequencer state when no more insns
-> are pending" is so necessary that the codebase needs to bend backwards to
-> support that in the first place. What problem is d3f4628e really trying to
-> solve?
-
-I believe it is meant to support command sequences such as these:
-
-1.
-	git cherry-pick foo; # has conflicts
-	... resolve conflicts and "git add" the resolved files ...
-	git commit
-	git cherry-pick bar
-
-2.
-	git cherry-pick foo bar; # has conflicts applying "bar"
-	... resolve ...
-	git commit
-	git cherry-pick baz
-
-Those were intuitive things to do before the sequencer existed, and if
-I understand correctly, d3f4628e was intended to support people and
-scripts (such as the test suite) that have these commands wired into
-their fingers.
+I think we have a winner in the bikeshedding contest.
