@@ -1,86 +1,77 @@
-From: Jim Cromie <jim.cromie@gmail.com>
-Subject: Re: git am ~/Documents/mail-[1-9]-11.txt Patch format detection failed.
-Date: Sun, 14 Aug 2011 02:20:47 -0600
-Message-ID: <CAJfuBxx9Vh2rWsUA--qVrwa7Gfzboo-=D8auxXquZ8NaxqsQTg@mail.gmail.com>
-References: <CAJfuBxx9Ayo8cHga+vK+Ynx5P7dhST7f=p87-qyjEzofSdZ=RQ@mail.gmail.com>
- <CALkWK0kmZLiSzSwZ9YqjZMpx3SzZ5gDC4Y6CFtSu3x2EcvE-rQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
-	David Barr <davidbarr@google.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 14 10:23:14 2011
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH v2 0/7] Generalized sequencer foundations
+Date: Sun, 14 Aug 2011 14:03:02 +0530
+Message-ID: <1313310789-10216-1-git-send-email-artagnon@gmail.com>
+Cc: Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 14 10:36:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QsVyT-0002VP-L3
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Aug 2011 10:23:13 +0200
+	id 1QsWB4-0000BZ-3f
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Aug 2011 10:36:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751271Ab1HNIVT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Aug 2011 04:21:19 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:50576 "EHLO
+	id S1751393Ab1HNIgH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Aug 2011 04:36:07 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:63576 "EHLO
 	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750852Ab1HNIVR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Aug 2011 04:21:17 -0400
-Received: by pzk37 with SMTP id 37so1537753pzk.1
-        for <git@vger.kernel.org>; Sun, 14 Aug 2011 01:21:17 -0700 (PDT)
+	with ESMTP id S1751306Ab1HNIgF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Aug 2011 04:36:05 -0400
+Received: by pzk37 with SMTP id 37so1545680pzk.1
+        for <git@vger.kernel.org>; Sun, 14 Aug 2011 01:36:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=nIvcBWCAEzHmxyMsK7oVcC7VoeAHe6RuZgyIyz7cVn4=;
-        b=coewkyJGJB67JsYGfhcryrKv68i6EnJvrE56q00jj/iCoynjLNb1tZtwhtMymhF3p3
-         YFHXgQytMos+RGJIQOOs+RFVS0GNi8JbtoCiLv8H3e2GQ/JsjHN9HgUvYQA2OpuAgjOL
-         G4LxyN0ODEoN/Ex5G4Wl4981Km4KIN893mGLE=
-Received: by 10.142.237.18 with SMTP id k18mr1204208wfh.311.1313310077109;
- Sun, 14 Aug 2011 01:21:17 -0700 (PDT)
-Received: by 10.143.98.2 with HTTP; Sun, 14 Aug 2011 01:20:47 -0700 (PDT)
-In-Reply-To: <CALkWK0kmZLiSzSwZ9YqjZMpx3SzZ5gDC4Y6CFtSu3x2EcvE-rQ@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=+WVNsKwYGd2h21hpKJ2H5qcEoSluFdIN1Yr/scnqhU4=;
+        b=UsLWbF5v4EDz6ijkqu2fhdZndmGAUGUUxVjz7HFooocREIQTUZsXhsOJUBZDmwjJAm
+         9LX9lNkSkRiVV13QXJLkTPfvlEpx3oPePOSF2M9wTI+9/fbYx31EBtZQeB7d2UX/+mYo
+         Y+VNzQDBcyY5JN4QjQiMes8OJhG2XfpAtAxec=
+Received: by 10.142.179.6 with SMTP id b6mr1105951wff.188.1313310964772;
+        Sun, 14 Aug 2011 01:36:04 -0700 (PDT)
+Received: from localhost.localdomain ([203.110.240.41])
+        by mx.google.com with ESMTPS id 14sm2642752wfl.5.2011.08.14.01.35.56
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 14 Aug 2011 01:36:03 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.351.gb35ac.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179304>
 
-On Sat, Aug 13, 2011 at 9:06 PM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> Hi Jim,
->
-> [+CC: David Barr]
->
-> Jim Cromie writes:
->> git am is giving me trouble.
->>
->> Im a gmail user, and have saved a patch series by doing
->> show-original, save w rename for each patch
->> [...]
->> Ive attached mail-1-11, which applies cleanly to v3.0, but wont am.
->
-> It works quite well for me after David's recent patch: 0e8341f2 (am:
-> ignore leading whitespace before patch, 2011-08-08). =A0The patch has
-> already made it to 'next', but hasn't hit 'master' yet. =A0Could you
-> please try it and tell us if there are any issues?
->
-> Thanks.
->
-> -- Ram
->
+Hi,
 
-thanks Ram,
+This is the second iternation prepared mainly in response to
+Jonathan's reviews.  It's ready for inclusion (or very nearly so) now.
+I'll start working on more features as soon as I'm confident that this
+series doesn't need to be rewritten.
 
-I just pulled and built next branch, it worked for me.
+Thanks.
 
-[jimc@groucho linux-2.6]$ ../../git/git am ~/Documents/mail-[1-9]-11.tx=
-t
-Applying: dynamic_debug: Add __dynamic_dev_dbg
-Applying: dynamic_debug: Consolidate prefix output to single routine
-Applying: dynamic_debug: Remove uses of KERN_CONT in dynamic_emit_prefi=
-x
-Applying: dynamic_debug: Convert printks to pr_<level>
-Applying: dynamic_debug: remove unused control variables
-=2E..
+-- Ram
 
-thanks
+Ramkumar Ramachandra (7):
+  revert: Free memory after get_message call
+  revert: Fix buffer overflow in insn sheet parser
+  revert: Make commit descriptions in insn sheet optional
+  revert: Allow mixed pick and revert instructions
+  revert: Make the argument parser responsible for setup_revisions
+  sequencer: Expose API to cherry-picking machinery
+  sequencer: Remove sequencer state after final commit
+
+ builtin/commit.c                   |    8 +
+ builtin/revert.c                   |  858 +-----------------------------------
+ sequencer.c                        |  806 +++++++++++++++++++++++++++++++++-
+ sequencer.h                        |   36 ++
+ t/t3032-merge-recursive-options.sh |    2 +
+ t/t3510-cherry-pick-sequence.sh    |   87 ++++-
+ 6 files changed, 956 insertions(+), 841 deletions(-)
+
+-- 
+1.7.6.351.gb35ac.dirty
