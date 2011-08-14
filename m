@@ -1,11 +1,9 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 6/7] sequencer: Expose API to cherry-picking machinery
-Date: Sun, 14 Aug 2011 10:22:04 -0500
-Message-ID: <20110814152204.GJ18466@elie.gateway.2wire.net>
+Subject: Re: [PATCH 7/7] sequencer: Remove sequencer state after final commit
+Date: Sun, 14 Aug 2011 11:04:40 -0500
+Message-ID: <20110814160440.GK18466@elie.gateway.2wire.net>
 References: <1313310789-10216-1-git-send-email-artagnon@gmail.com>
- <1313310789-10216-7-git-send-email-artagnon@gmail.com>
- <20110814131303.GF18466@elie.gateway.2wire.net>
- <CALkWK0=zqyvL8zo9wvBGUXyf3RWSZB7dY=WaC9TN6YXnThag0Q@mail.gmail.com>
+ <1313310789-10216-8-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -14,175 +12,185 @@ Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Jeff King <peff@peff.net>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 14 17:27:45 2011
+X-From: git-owner@vger.kernel.org Sun Aug 14 18:04:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QscbI-0006EA-T4
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Aug 2011 17:27:45 +0200
+	id 1QsdBD-0000XT-C1
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Aug 2011 18:04:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752821Ab1HNPWK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Aug 2011 11:22:10 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:61787 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752671Ab1HNPWI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Aug 2011 11:22:08 -0400
-Received: by ywf7 with SMTP id 7so2810115ywf.19
-        for <git@vger.kernel.org>; Sun, 14 Aug 2011 08:22:07 -0700 (PDT)
+	id S1753521Ab1HNQEq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Aug 2011 12:04:46 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:48696 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753465Ab1HNQEp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Aug 2011 12:04:45 -0400
+Received: by yxj19 with SMTP id 19so2812955yxj.19
+        for <git@vger.kernel.org>; Sun, 14 Aug 2011 09:04:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        bh=+2oymtvbYOepAeAzxgeBoC6acrbKiA40GjgDCEsjjqQ=;
-        b=E9IS3YSrRp0L93VZk2f2jmjkw338tOFP5eA+ymeXMZaiAL/MqAIlGZczidf6Rt3pne
-         b7g+/WbUswQTg6g/bNb3LYsgjXj7Ps20UeD0ms7n7YQ9bj/kRie0u6kbt+mF11RZsUXU
-         EHwtjY/IT6Cbt0iUP4OZUHciH2KG1JOdV0W7Q=
-Received: by 10.150.244.4 with SMTP id r4mr3918988ybh.435.1313335327830;
-        Sun, 14 Aug 2011 08:22:07 -0700 (PDT)
+        bh=ZQPGCJa6opP9GwAaSei0YyOKsjzW5rTKPUSwhvcSR1c=;
+        b=sBqdssKm1Wtn/Xa0tjiUo+pTxhnM3HJsqZWyMZgJqlYeyQkNR439aUzWN5yZpXOf8A
+         oZEOS3t5sQCJHhN1ORpVPNGrcEYENFRYWrtEUtqG887yGOSWOTJ4ZBNmvpBChOhjE8Me
+         EJYIu8NuBM5XqFtG7ynvHW6BhvdxI3tYznSig=
+Received: by 10.150.215.18 with SMTP id n18mr3904965ybg.424.1313337884695;
+        Sun, 14 Aug 2011 09:04:44 -0700 (PDT)
 Received: from elie.gateway.2wire.net (adsl-68-255-108-227.dsl.chcgil.sbcglobal.net [68.255.108.227])
-        by mx.google.com with ESMTPS id r2sm1190159ybh.10.2011.08.14.08.22.06
+        by mx.google.com with ESMTPS id v17sm3137551ybj.17.2011.08.14.09.04.42
         (version=SSLv3 cipher=OTHER);
-        Sun, 14 Aug 2011 08:22:07 -0700 (PDT)
+        Sun, 14 Aug 2011 09:04:43 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <CALkWK0=zqyvL8zo9wvBGUXyf3RWSZB7dY=WaC9TN6YXnThag0Q@mail.gmail.com>
+In-Reply-To: <1313310789-10216-8-git-send-email-artagnon@gmail.com>
 User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179331>
 
 Ramkumar Ramachandra wrote:
-> Jonathan Nieder writes:
 
->> git_path() calls vsnprintf which clobbers errno, so depending on the
->> platform this can print messages like
->>
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0fatal: Could not open '.git/CHERRY_PICK_H=
-EAD' for writing: Success
-[...]
-> Ugh, yet another "bugfix patch" to queue near the beginning of the
-> series.  Thanks for catching this.
+> Since d3f4628e (revert: Remove sequencer state when no commits are
+> pending, 2011-07-06), the sequencer removes the sequencer state befor=
+e
+> the final commit is actually completed.  This design is inherently
+> flawed, as it will not allow the user to abort the sequencer operatio=
+n
+> at that stage.  Instead, make 'git commit' notify the sequencer after
+> every successful commit; the sequencer then removes the state if no
+> more instructions are pending.
 
-It's not a bug you introduced, and ideally it would be a separate
-patch on its own, against the js/cherry-pick-usability branch.
+Sorry, I'm getting lost in all the words.  I suspect you are saying
+=E2=80=9Cd3f4628e was trying to solve such-and-such problem, but its fi=
+x was
+problematic because it removes the data that a hypothetical "git
+cherry-pick --abort" command would need to work.  Back out that
+change and adopt the following instead.=E2=80=9D
 
->> Ramkumar Ramachandra wrote:
+In particular, the above does not make it clear to me:
 
->>> +static struct tree *empty_tree(void)
->>> [...]
->>
->> This tree is leaked (for example if you cherry-pick a sequence of
->> root commits).
->
-> This is not something I introduced -- it can wait until later, no?
+ - as a user, what effect will I notice after this change?
+ - what problem does it solve?
+ - does it have any downsides?
 
-Yep, it's Christian's fault (for introducing multiple-cherry-pick).
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -26,6 +26,7 @@
+>  #include "unpack-trees.h"
+>  #include "quote.h"
+>  #include "submodule.h"
+> +#include "sequencer.h"
+> =20
+>  static const char * const builtin_commit_usage[] =3D {
+>  	"git commit [options] [--] <filepattern>...",
+> @@ -1521,6 +1522,13 @@ int cmd_commit(int argc, const char **argv, co=
+nst char *prefix)
+>  	unlink(git_path("MERGE_MODE"));
+>  	unlink(git_path("SQUASH_MSG"));
+> =20
+> +	/*
+> +	 * Notify the sequencer that we're committing.  The routine
+> +	 * removes the sequencer state if our commit just completed
+> +	 * the last instruction.
+> +	 */
+> +	sequencer_notify_commit();
+> +
+>  	if (commit_index_files())
+>  		die (_("Repository has been updated, but unable to write\n"
+>  		     "new_index file. Check that disk is not full or quota is\n"
 
-Patch below.  The things I do... :)
+The function name (..._notify_commit()) does not seem very intuitive.
+Based on the name, I expect it to use the sequencer to print a message
+to the user about the commit in progress.
 
-[...]
-> It is a simple code movement.  Is there something I can do to help?
+What happens if writing to .git/index fails?  I can think of reasons
+to remove the sequencer file before or afterward:
 
-Part of the review was about examples where it was not simple code
-movement.  Maybe if there is another round the thing to do would be to
-send a patch generated with -B -M to allow others to more easily check
-it.
+ - before, because once .git/index has been removed, the index is not
+   locked any more and further commands could take place in parallel.
 
-Thanks.
+ - afterward, because when writing the index fails, I (the user)
+   might want to react by running "git cherry-pick --abort".
 
--- >8 --
-Subject: revert: plug memory leak in "cherry-pick root commit" codepath
+The latter seems slightly more compelling to me --- after all, any
+further command wanting to touch the sequencer directory is going
+to check whether it exists --- but more importantly, the former
+reminds me that we haven't thought carefully about what concurrent
+operations using the sequencer are and aren't allowed.  Though I
+doubt that it would come up much in practice. :)
 
-The empty tree passed as common ancestor to merge_trees() when
-cherry-picking a parentless commit is allocated on the heap and never
-freed.  Leaking such a small one-time allocation is not a very big
-problem, but now that "git cherry-pick" can cherry-pick multiple
-commits it can start to add up.
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -580,6 +580,17 @@ static void read_populate_todo(struct replay_ins=
+n_list **todo_list)
+>  		die(_("Unusable instruction sheet: %s"), todo_file);
+>  }
+> =20
+> +void sequencer_notify_commit(void)
+> +{
+> +	struct replay_insn_list *todo_list =3D NULL;
+> +
+> +	if (!file_exists(git_path(SEQ_TODO_FILE)))
+> +		return;
+> +	read_populate_todo(&todo_list);
+> +	if (!todo_list->next)
+> +		remove_sequencer_state(1);
+> +}
 
-Avoid the leak by storing the fake tree exactly once in the BSS
-section (i.e., use a static).  While at it, let's add a test to make
-sure cherry-picking multiple parentless commits continues to work.
+Not about this patch: I keep on forgetting what the argument to
+remove_sequencer_state means.  Would it be possible to make it
+a flag, which would both make the meaning more obvious and mean
+it is easy to support additional flags in the future?
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Patch is against cc/cherry-pick-series (86c7bb47).
+> --- a/t/t3032-merge-recursive-options.sh
+> +++ b/t/t3032-merge-recursive-options.sh
+> @@ -114,8 +114,10 @@ test_expect_success 'naive cherry-pick fails' '
+>  	git read-tree --reset -u HEAD &&
+>  	test_must_fail git cherry-pick --no-commit remote &&
+>  	git read-tree --reset -u HEAD &&
+> +	git cherry-pick --reset &&
+>  	test_must_fail git cherry-pick remote &&
+>  	test_must_fail git update-index --refresh &&
+> +	git cherry-pick --reset &&
+>  	grep "<<<<<<" text.txt
+>  '
 
- builtin/revert.c            |   10 +++++-----
- t/t3503-cherry-pick-root.sh |   27 ++++++++++++++++++++++++++-
- 2 files changed, 31 insertions(+), 6 deletions(-)
+What is this about?  Maybe it would be clearer to change the "git
+read-tree ..." to "git reset --hard", so the test assertion would not
+rely on new cherry-pick features (and to mention the change in the
+commit message!).
 
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 853e9e40..c1b0fb3d 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -273,12 +273,12 @@ static void write_message(struct strbuf *msgbuf, =
-const char *filename)
-=20
- static struct tree *empty_tree(void)
- {
--	struct tree *tree =3D xcalloc(1, sizeof(struct tree));
-+	static struct tree tree;
-=20
--	tree->object.parsed =3D 1;
--	tree->object.type =3D OBJ_TREE;
--	pretend_sha1_file(NULL, 0, OBJ_TREE, tree->object.sha1);
--	return tree;
-+	tree.object.parsed =3D 1;
-+	tree.object.type =3D OBJ_TREE;
-+	pretend_sha1_file(NULL, 0, OBJ_TREE, tree.object.sha1);
-+	return &tree;
- }
-=20
- static NORETURN void die_dirty_index(const char *me)
-diff --git a/t/t3503-cherry-pick-root.sh b/t/t3503-cherry-pick-root.sh
-index b0faa299..472e5b80 100755
---- a/t/t3503-cherry-pick-root.sh
-+++ b/t/t3503-cherry-pick-root.sh
-@@ -16,15 +16,40 @@ test_expect_success setup '
- 	echo second > file2 &&
- 	git add file2 &&
- 	test_tick &&
--	git commit -m "second"
-+	git commit -m "second" &&
-+
-+	git symbolic-ref HEAD refs/heads/third &&
-+	rm .git/index file2 &&
-+	echo third > file3 &&
-+	git add file3 &&
-+	test_tick &&
-+	git commit -m "third"
-=20
- '
-=20
- test_expect_success 'cherry-pick a root commit' '
-=20
-+	git checkout second^0 &&
- 	git cherry-pick master &&
- 	test first =3D $(cat file1)
-=20
- '
-=20
-+test_expect_success 'cherry-pick two root commits' '
-+
-+	echo first >expect.file1 &&
-+	echo second >expect.file2 &&
-+	echo third >expect.file3 &&
-+
-+	git checkout second^0 &&
-+	git cherry-pick master third &&
-+
-+	test_cmp expect.file1 file1 &&
-+	test_cmp expect.file2 file2 &&
-+	test_cmp expect.file3 file3 &&
-+	git rev-parse --verify HEAD^^ &&
-+	test_must_fail git rev-parse --verify HEAD^^^
-+
-+'
-+
- test_done
---=20
-1.7.6
+Doesn't this point to a risk in the patch?  Do you think there might
+be scripts out there relying on being able to use "git read-tree
+--reset -u HEAD" to clear away a failed cherry-pick before trying
+again, and if so, can we do something about it?
+
+> --- a/t/t3510-cherry-pick-sequence.sh
+> +++ b/t/t3510-cherry-pick-sequence.sh
+> @@ -82,13 +82,13 @@ test_expect_success '--reset cleans up sequencer =
+state' '
+>  	test_path_is_missing .git/sequencer
+>  '
+> =20
+> -test_expect_success 'cherry-pick cleans up sequencer state when one =
+commit is left' '
+> +test_expect_success 'final commit cleans up sequencer state' '
+>  	pristine_detach initial &&
+>  	test_must_fail git cherry-pick base..picked &&
+> -	test_path_is_missing .git/sequencer &&
+>  	echo "resolved" >foo &&
+>  	git add foo &&
+>  	git commit &&
+> +	test_path_is_missing .git/sequencer &&
+>  	{
+
+It would also be nice to check "test_path_is_dir" before the final
+commit, so people working on this code in the future know both aspects
+of the patch are intentional.
+
+Thanks, I'm glad to see this patch.
