@@ -1,194 +1,194 @@
-From: Dan Charney <git@drmoose.net>
-Subject: [PATCH] shell: add base path and ~ expansion support.
-Date: Sun, 14 Aug 2011 15:25:19 -0400
-Message-ID: <96C1D6CB-254C-4E54-9CAE-4FE3A354FEEE@drmoose.net>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 14 21:25:44 2011
+From: Fredrik Kuivinen <frekui@gmail.com>
+Subject: Re: [PATCH resend] Makefile: Use computed header dependencies if the
+ compiler supports it
+Date: Sun, 14 Aug 2011 21:53:24 +0200
+Message-ID: <CALx8hKRBjXr44gM1JA+d=RU80pmruPV56s-G3JvViz87eJ=ajQ@mail.gmail.com>
+References: <1313347512-7815-1-git-send-email-frekui@gmail.com>
+	<20110814190050.GA16819@elie.gateway.2wire.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 14 21:53:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QsgJb-0006XO-UD
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Aug 2011 21:25:44 +0200
+	id 1QsgkW-00042M-AQ
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Aug 2011 21:53:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754855Ab1HNTZi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Aug 2011 15:25:38 -0400
-Received: from hapkido.dreamhost.com ([66.33.216.122]:49042 "EHLO
-	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754653Ab1HNTZh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Aug 2011 15:25:37 -0400
-Received: from homiemail-a78.g.dreamhost.com (caibbdcaaaaf.dreamhost.com [208.113.200.5])
-	by hapkido.dreamhost.com (Postfix) with ESMTP id 4D3CC17C7E2
-	for <git@vger.kernel.org>; Sun, 14 Aug 2011 12:25:36 -0700 (PDT)
-Received: from homiemail-a78.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a78.g.dreamhost.com (Postfix) with ESMTP id 75A9015C065
-	for <git@vger.kernel.org>; Sun, 14 Aug 2011 12:25:35 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=drmoose.net; h=from:content-type
-	:content-transfer-encoding:subject:date:message-id:to:
-	mime-version; q=dns; s=drmoose.net; b=Rl8UedqDZBZ57j4Dl3RzB5EgEk
-	WqLXL7D7VkK51SF8yFmaCIVbwjCCfsDDMAOIaJD6iFu87/7FrsyXL8tU5SN3WTKq
-	FVMoBCqxqGEQ6ZyVDURNl75IopSGT9bJPqQEu9xjUX5EriBSG0UgWjV1xeEjZR1P
-	wVmKGkLPVxiLNWXqo=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=drmoose.net; h=from
-	:content-type:content-transfer-encoding:subject:date:message-id
-	:to:mime-version; s=drmoose.net; bh=Bj6z7YfW4SoYUiCeZggwZJ15MLo=
-	; b=oPhUpwqwibsFc9wHGwAscvwN3Aefjk5lgPGGEapjY5WAQa1qT1IPAgtviQlA
-	LeFrAcx36xMmqmc3+OXVSFCdRSkPHlD2gvnrqDSxykvoFarta+AOQGVjXzS+rHss
-	nj/nxYFEt7qy8ucx2Gq034Ab1M9glpdZs8rabztZaINAZcU=
-Received: from post.drmoose.net (99-29-49-185.uvs.cntmoh.sbcglobal.net [99.29.49.185])
-	(using SSLv3 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: copier@drmoose.net)
-	by homiemail-a78.g.dreamhost.com (Postfix) with ESMTPSA id 5364915C062
-	for <git@vger.kernel.org>; Sun, 14 Aug 2011 12:25:35 -0700 (PDT)
-Received: by post.drmoose.net (Postfix, from userid 998)
-	id C9289230AB; Sun, 14 Aug 2011 15:25:33 -0400 (EDT)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on post.drmoose.net
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED
-	autolearn=unavailable version=3.3.1
-Received: from [10.1.1.46] (kevyn [10.1.1.46])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: drmoose)
-	by post.drmoose.net (Postfix) with ESMTPSA id D0A2422674
-	for <git@vger.kernel.org>; Sun, 14 Aug 2011 15:25:19 -0400 (EDT)
-X-Mailer: Apple Mail (2.1084)
+	id S1755099Ab1HNTx0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Aug 2011 15:53:26 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:38168 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754907Ab1HNTx0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Aug 2011 15:53:26 -0400
+Received: by fxh19 with SMTP id 19so3238336fxh.19
+        for <git@vger.kernel.org>; Sun, 14 Aug 2011 12:53:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=67o+yX4YBDTUXuhDTKETYT9Ai9QDVfrVS2TSdD5EIQA=;
+        b=d4SOm0f4xp4+l/7p0sQHIpJDpLb8Ij2+ySW3zXVtWXcEP74DLykS3u2qsMVtbKmHYC
+         Kgzv9vQgx7wmF/CFbfwJzIyvz2VY8qEYjJh2xywskFPqXF9lGgunkklgO4g7KRExa7bX
+         ECLUAe73FfvFRACGA0eXCfCggQyjWr32lrTxM=
+Received: by 10.223.68.136 with SMTP id v8mr4326157fai.54.1313351604925; Sun,
+ 14 Aug 2011 12:53:24 -0700 (PDT)
+Received: by 10.223.124.199 with HTTP; Sun, 14 Aug 2011 12:53:24 -0700 (PDT)
+In-Reply-To: <20110814190050.GA16819@elie.gateway.2wire.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179345>
 
-By default, paths that are forwarded to git-shell when users try to
-pull from an ssh:// URI are relative to the server's root folder (/).
-Add support for an environment variable, GIT_SHELL_BASE_PATH, to
-allow sysadmins to make these paths relative to somewhere else
-(e.g. /srv/git). Expand a leading "~/" to the value of $HOME.
-Allow an additional leading slash to specify a path relative to the
-root folder (/).
+Hi Jonathan,
 
-This change does not improve security in the slightest, just makes
-ssh:// URIs prettier.
+Thanks for your comments.
 
-Signed-off-by: Dan Charney <git@drmoose.net>
----
+On Sun, Aug 14, 2011 at 21:00, Jonathan Nieder <jrnieder@gmail.com> wro=
+te:
+>> --- a/Makefile
+>> +++ b/Makefile
+> [...]
+>> @@ -1236,6 +1232,15 @@ endif
+>> =A0ifdef CHECK_HEADER_DEPENDENCIES
+>> =A0COMPUTE_HEADER_DEPENDENCIES =3D
+>> =A0USE_COMPUTED_HEADER_DEPENDENCIES =3D
+>> +else
+>> +dep_check =3D $(shell sh -c \
+>> + =A0 =A0 ': > ++empty.c; \
+>> + =A0 =A0 $(CC) -c -MF /dev/null -MMD -MP ++empty.c -o /dev/null 2>&=
+1; \
+>> + =A0 =A0 echo $$?; \
+>> + =A0 =A0 $(RM) ++empty.c')
+>> +ifeq ($(dep_check),0)
+>> +COMPUTE_HEADER_DEPENDENCIES=3DYesPlease
+>> +endif
+>
+> This causes "make foo" to run gcc and create a temporary file
+> unconditionally, regardless of what foo is. =A0In an ideal world:
+>
+> =A0- the autodetection would only happen when building targets that
+> =A0 care about it
 
-I should point out that I've not tested the the behavior with the "cvs emulator" mode, in large part because CVS remains thoroughly baffling to me. Despite many attempts to learn how to use it, I never did move beyond the "copy and paste somebody else's pre-written commands" phase.
+In an ideal world, yes. But I don't see a simple and maintainable
+way to do it for only those targets.
 
-This is my first attempt at contributing to a project this big, and this is the first time this year I've written any C. Free to tear me a new one if I've done something stupid :-)
+> =A0- the detection would happen once (creating some file to store the
+> =A0 result) and not be repeated with each invocation of "make"
+>
+> =A0- (maybe) there would be a way to override the detection with
+> =A0 either a "yes" or "no" result, for those who really care to
+> =A0 save a little time.
 
-Documentation/git-shell.txt |   25 ++++++++++++++++++++++++-
-shell.c                     |   37 ++++++++++++++++++++++++++++++++++++-
-2 files changed, 60 insertions(+), 2 deletions(-)
+I have done some benchmarking (see below) and considering the
+results I got, I think implementing any of these two is not worth it.
 
-diff --git a/Documentation/git-shell.txt b/Documentation/git-shell.txt
-index 9b92506..280282e 100644
---- a/Documentation/git-shell.txt
-+++ b/Documentation/git-shell.txt
-@@ -22,13 +22,36 @@ is started in interactive mode when no arguments are given; in this
-case, COMMAND_DIR must exist, and any of the executables in it can be
-invoked.
+> I was about to say that the GIT_VERSION variable has some of these
+> properties, but now that I check, from the point of view of the
+> Makefile it doesn't. =A0./GIT-VERSION-GEN is just very fast. :)
+>
+> I wonder if we can make do with a faster check, like
+>
+> =A0 =A0 =A0 =A0$(CC) -c -MF /dev/null -MMD -MP git.c --help >/dev/nul=
+l 2>&1
+>
+> What do you think?
+>
 
--'cvs server' is a special command which executes git-cvsserver.
-+'cvs server' is a special command which executes git-cvsserver. If 
-+"$GIT_SHELL_BASE_PATH" is set, it will be passed to git-cvsserver as
-+the --base-path parameter.
+Here are some benchmarks done with 'perf stat'. Before each invocation
+of perf stat I ran a plain 'make' to make sure that everything was comp=
+iled.
+Note that a fully compiled source tree is the worst case when it comes =
+to
+the overhead of the auto-detection.
 
-COMMAND_DIR is the path "$HOME/git-shell-commands". The user must have
-read and execute permissions to the directory in order to execute the
-programs in it. The programs are executed with a cwd of $HOME, and
-<argument> is parsed as a command-line string.
+Without patch (with COMPUTE_HEADER_DEPENDENCIES=3DYes):
+ Performance counter stats for 'make' (10 runs):
 
-+PATH MAPPING
-+------------
-+
-+If the environment variable "$GIT_SHELL_BASE_PATH" is set and the shell
-+is not in interactive mode, $GIT_SHELL_BASE_PATH will be prepended to
-+the front the <argument> passed to <command>. This is analogous to
-+the --base-path switch from link:git-daemon[1] - if your environment
-+variables include GIT_SHELL_BASE_PATH=/srv/git on example.com, and later
-+someone pulls ssh://example.com/my.git, it will be interpreted as 
-+/srv/git/my.git. This feature does not restrict clients to subfolders
-+of the base path; path elements such as .. are allowed.
-+
-+If the environment variable "$HOME" is set, git-shell will replace a leading
-+"~/" in the <argument> with the value of "$HOME". 
-+
-+Example::
-+	If GIT_SHELL_BASE_PATH=/srv/git and HOME=/home/joeuser, then::
-+		ssh://example.com/some.git	will map to /srv/git/some.git
-+		ssh://example.com/~/my.git	will map to /home/joeuser/my.git
-+		ssh://example.com//var/git/x.git	will map to /var/git/x.git
-+
-GIT
----
-Part of the linkgit:git[1] suite
-diff --git a/shell.c b/shell.c
-index abb8622..e250b2a 100644
---- a/shell.c
-+++ b/shell.c
-@@ -6,6 +6,37 @@
+         1,566,393 cache-misses             #      1.557 M/sec   ( +-  =
+ 0.264% )
+         6,428,212 cache-references         #      6.391 M/sec   ( +-  =
+ 0.168% )
+        21,245,775 branch-misses            #      4.626 %       ( +-  =
+ 0.015% )
+       459,268,954 branches                 #    456.585 M/sec   ( +-  =
+ 0.031% )
+     2,594,717,999 instructions             #      1.177 IPC     ( +-  =
+ 0.022% )
+     2,205,246,745 cycles                   #   2192.359 M/sec   ( +-  =
+ 0.136% )
+            43,532 page-faults              #      0.043 M/sec   ( +-  =
+ 0.034% )
+               215 CPU-migrations           #      0.000 M/sec   ( +-  =
+ 0.891% )
+               457 context-switches         #      0.000 M/sec   ( +-  =
+ 0.654% )
+       1005.878305 task-clock-msecs         #      1.022 CPUs    ( +-  =
+ 0.544% )
 
-#define COMMAND_DIR "git-shell-commands"
-#define HELP_COMMAND COMMAND_DIR "/help"
-+#define BASE_PATH_VARIABLE "GIT_SHELL_BASE_PATH"
-+#define DEFAULT_PATH "/"
-+
-+static const char *adjust_argument_path(const char *arg) 
-+{
-+	struct strbuf path = STRBUF_INIT;
-+	const char *env;
-+	const char *prefix_variable = NULL;
-+
-+	if (arg == NULL || arg[0] != '/')
-+		prefix_variable = BASE_PATH_VARIABLE;
-+	else if (arg[1] == '/')
-+		++arg;
-+	else if (arg[1] == '~' && arg[2] == '/') {
-+		prefix_variable = "HOME";
-+		arg += 2;
-+	} else 
-+		prefix_variable = BASE_PATH_VARIABLE;
-+
-+	if (NULL != prefix_variable) {
-+		env = getenv(prefix_variable);
-+		if (NULL != env) 
-+			strbuf_addstr(&path, env);
-+	}
-+
-+	if (NULL != arg)
-+		strbuf_addstr(&path, arg);
-+	if (NULL == path.buf || path.buf[0] == '\0')
-+		return DEFAULT_PATH;
-+	return path.buf;
-+}
+        0.984526665  seconds time elapsed   ( +-   0.591% )
 
-static int do_generic_cmd(const char *me, char *arg)
-{
-@@ -18,7 +49,7 @@ static int do_generic_cmd(const char *me, char *arg)
-		die("bad command");
+With patch:
+ Performance counter stats for 'make' (10 runs):
 
-	my_argv[0] = me + 4;
--	my_argv[1] = arg;
-+	my_argv[1] = adjust_argument_path(arg);
-	my_argv[2] = NULL;
+         1,796,342 cache-misses             #      1.732 M/sec   ( +-  =
+ 0.702% )
+         6,929,739 cache-references         #      6.682 M/sec   ( +-  =
+ 0.186% )
+        21,582,772 branch-misses            #      4.575 %       ( +-  =
+ 0.032% )
+       471,783,920 branches                 #    454.934 M/sec   ( +-  =
+ 0.024% )
+     2,662,671,428 instructions             #      1.166 IPC     ( +-  =
+ 0.017% )
+     2,282,907,087 cycles                   #   2201.372 M/sec   ( +-  =
+ 0.162% )
+            49,244 page-faults              #      0.047 M/sec   ( +-  =
+ 0.031% )
+               233 CPU-migrations           #      0.000 M/sec   ( +-  =
+ 0.823% )
+               489 context-switches         #      0.000 M/sec   ( +-  =
+ 0.460% )
+       1037.038252 task-clock-msecs         #      1.022 CPUs    ( +-  =
+ 0.579% )
 
-	return execv_git_cmd(my_argv);
-@@ -30,6 +61,10 @@ static int do_cvs_cmd(const char *me, char *arg)
-		"cvsserver", "server", NULL
-	};
+        1.014409177  seconds time elapsed   ( +-   0.476% )
 
-+	const char *base_path;
-+	base_path = adjust_argument_path(NULL);
-+	setenv("GIT_CVSSERVER_BASE_PATH", base_path, 1);
-+
-	if (!arg || strcmp(arg, "server"))
-		die("git-cvsserver only handles server: %s", arg);
+With patch, but changed to use git.c instead of ++empty.c:
+ Performance counter stats for 'make' (10 runs):
 
--- 
-1.7.4
+         2,125,147 cache-misses             #      1.737 M/sec   ( +-  =
+ 0.287% )
+         9,080,043 cache-references         #      7.423 M/sec   ( +-  =
+ 0.185% )
+        24,573,023 branch-misses            #      4.222 %       ( +-  =
+ 0.032% )
+       582,018,515 branches                 #    475.809 M/sec   ( +-  =
+ 0.012% )
+     3,185,328,930 instructions             #      1.165 IPC     ( +-  =
+ 0.009% )
+     2,734,176,502 cycles                   #   2235.229 M/sec   ( +-  =
+ 0.122% )
+            51,032 page-faults              #      0.042 M/sec   ( +-  =
+ 0.034% )
+               227 CPU-migrations           #      0.000 M/sec   ( +-  =
+ 0.943% )
+               515 context-switches         #      0.000 M/sec   ( +-  =
+ 0.351% )
+       1223.219930 task-clock-msecs         #      1.019 CPUs    ( +-  =
+ 0.579% )
+
+        1.200869268  seconds time elapsed   ( +-   0.555% )
+
+
+So, on my machine the auto-detection logic adds a slight overhead
+(0.03s, 3% in a fully compiled tree). Using git.c is slower than using
+++empty.c. IMHO adding any extra complexity to lower the 0.03s
+is not worth it.
+
+- Fredrik
