@@ -1,59 +1,74 @@
-From: Zemacsh <ruini.xue@gmail.com>
-Subject: "git apply --check" successes but git am says "does not match index"
-Date: Sun, 14 Aug 2011 09:36:30 +0000 (UTC)
-Message-ID: <loom.20110814T113311-277@post.gmane.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/7] revert: Fix buffer overflow in insn sheet parser
+Date: Sun, 14 Aug 2011 06:58:21 -0500
+Message-ID: <20110814115821.GC18466@elie.gateway.2wire.net>
+References: <1313310789-10216-1-git-send-email-artagnon@gmail.com>
+ <1313310789-10216-3-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 14 11:40:26 2011
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 14 13:59:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QsXB9-00076X-WD
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Aug 2011 11:40:24 +0200
+	id 1QsZLf-0006Ww-Gt
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Aug 2011 13:59:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752670Ab1HNJkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Aug 2011 05:40:07 -0400
-Received: from lo.gmane.org ([80.91.229.12]:36983 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752585Ab1HNJkG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Aug 2011 05:40:06 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1QsXAr-0006wt-2i
-	for git@vger.kernel.org; Sun, 14 Aug 2011 11:40:05 +0200
-Received: from 219.131.223.238 ([219.131.223.238])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 14 Aug 2011 11:40:05 +0200
-Received: from ruini.xue by 219.131.223.238 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 14 Aug 2011 11:40:05 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 219.131.223.238 (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30)
+	id S1753239Ab1HNL6a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Aug 2011 07:58:30 -0400
+Received: from mail-iy0-f170.google.com ([209.85.210.170]:65253 "EHLO
+	mail-iy0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753130Ab1HNL63 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Aug 2011 07:58:29 -0400
+Received: by iye16 with SMTP id 16so5385471iye.1
+        for <git@vger.kernel.org>; Sun, 14 Aug 2011 04:58:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=en4KmxBBbXnSaOLdfBR7NOQYkY/903Fg/dJ6RuD7JPg=;
+        b=rB5Xob3AU6xC+7BesrVmIYsHql1UpmlCAydiXNv7p2Ij/IKaBcKS/Zm8452Ft5yV4i
+         tlBo9+JPnHpcJDR0Be5/4K1kdaiz37uQKcaljYQzZd/qC7zK+NMC46SuBwBDlxe0rl4G
+         UnCEo6sDPsFmKGeVXyof/dHgoVBFzEu50r5uA=
+Received: by 10.231.20.136 with SMTP id f8mr2894819ibb.32.1313323108735;
+        Sun, 14 Aug 2011 04:58:28 -0700 (PDT)
+Received: from elie.gateway.2wire.net (adsl-68-255-106-30.dsl.chcgil.ameritech.net [68.255.106.30])
+        by mx.google.com with ESMTPS id n14sm3208126ibi.56.2011.08.14.04.58.27
+        (version=SSLv3 cipher=OTHER);
+        Sun, 14 Aug 2011 04:58:27 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1313310789-10216-3-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179320>
 
-Hi, all, 
+Hi,
 
-I met a problem with git am.
+Ramkumar Ramachandra wrote:
 
-Before applying a mbox patch, "git apply --check" reports OK. Then, I run 'git 
-am', however, it complains "does not match index". Actually, both working tree 
-and index are clean. what might be the problem?
+> --- a/t/t3510-cherry-pick-sequence.sh
+> +++ b/t/t3510-cherry-pick-sequence.sh
+> @@ -211,4 +211,15 @@ test_expect_success 'malformed instruction sheet 2' '
+>  	test_must_fail git cherry-pick --continue
+>  '
+>  
+> +test_expect_success 'malformed instruction sheet 3' '
+> +	pristine_detach initial &&
+> +	test_must_fail git cherry-pick base..anotherpick &&
+> +	echo "resolved" >foo &&
+> +	git add foo &&
+> +	git commit &&
+> +	sed "s/pick \([0-9a-f]\+\)\(.*\)/pick \1\1\1\1\1\1\1\1\2/" .git/sequencer/todo >new_sheet &&
 
-If I run "git am --abort" now, and re-turn "git am". To my surprise, everything 
-goes well.
-
-Best
-
--- zemacsh
+This construct (\+ in sed regexes) is not portable.  See the note on
+grep in Documentation/CodingGuidelines (maybe it should be tweaked to
+say "grep and sed").
