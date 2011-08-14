@@ -1,92 +1,70 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 2/7] revert: Fix buffer overflow in insn sheet parser
-Date: Sun, 14 Aug 2011 19:37:20 +0530
-Message-ID: <CALkWK0k46KPCZEeOrSHS22Ay-mGt+QPqiZetrc9V1YnhecDPUQ@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 4/7] revert: Allow mixed pick and revert instructions
+Date: Sun, 14 Aug 2011 09:28:46 -0500
+Message-ID: <20110814142846.GI18466@elie.gateway.2wire.net>
 References: <1313310789-10216-1-git-send-email-artagnon@gmail.com>
- <1313310789-10216-3-git-send-email-artagnon@gmail.com> <20110814115821.GC18466@elie.gateway.2wire.net>
+ <1313310789-10216-5-git-send-email-artagnon@gmail.com>
+ <20110814121244.GD18466@elie.gateway.2wire.net>
+ <CALkWK0=sggexB0HDN-6LsoLz2RO-ftABTnAYp7q-jVO0oCJu2A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 14 16:07:46 2011
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 14 16:34:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QsbLt-0004ai-Po
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Aug 2011 16:07:46 +0200
+	id 1Qsbly-00029b-Lk
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Aug 2011 16:34:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753402Ab1HNOHm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Aug 2011 10:07:42 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:47249 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753130Ab1HNOHl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Aug 2011 10:07:41 -0400
-Received: by wyg24 with SMTP id 24so3028267wyg.19
-        for <git@vger.kernel.org>; Sun, 14 Aug 2011 07:07:40 -0700 (PDT)
+	id S1753230Ab1HNO2v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Aug 2011 10:28:51 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:56243 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753176Ab1HNO2u (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Aug 2011 10:28:50 -0400
+Received: by gwaa12 with SMTP id a12so2815636gwa.19
+        for <git@vger.kernel.org>; Sun, 14 Aug 2011 07:28:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=HF9ma+f8N8sxIV7q2SsnopYip7b09aZxYWb9453zYPA=;
-        b=Of3qcaVw7UXdPk/M+FPjkzarZstdF8vSA2cecQ96p4TqHqLjd492L4HIh2LmclUWOb
-         V8hd/VgM9whfT1Gu24DPzcz+cQgQ36PnLdXJGABsmpFrmBuBcrpYdxYNHlm68j9bR301
-         mMqmT+FA32XTM6EvDcJHVGtssd/9PYLY5Khyw=
-Received: by 10.216.131.134 with SMTP id m6mr2006183wei.78.1313330860176; Sun,
- 14 Aug 2011 07:07:40 -0700 (PDT)
-Received: by 10.216.172.132 with HTTP; Sun, 14 Aug 2011 07:07:20 -0700 (PDT)
-In-Reply-To: <20110814115821.GC18466@elie.gateway.2wire.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=UYJ3TTlBVsoiOPjKU5KHwScjU781K+Pyjww6NRDAhWs=;
+        b=s9T3Gwq2kcPI40s/0TpbE7UAhONggJXZKiU2XJUFbn5n7QtRYIZOCOhoJBnIzYh6js
+         ckRXyWZv7texeB9U89Oqr2586vpLCtQJxhlE3FCbZ+ELXQnrF6297ldoP5IdlsyTNhwE
+         KOrLmbLXTcPREaqMvemY5/QCbkuSpdZMGuiyI=
+Received: by 10.236.22.129 with SMTP id t1mr9539521yht.184.1313332129915;
+        Sun, 14 Aug 2011 07:28:49 -0700 (PDT)
+Received: from elie.gateway.2wire.net (adsl-68-255-108-227.dsl.chcgil.sbcglobal.net [68.255.108.227])
+        by mx.google.com with ESMTPS id a29sm537117yhj.17.2011.08.14.07.28.48
+        (version=SSLv3 cipher=OTHER);
+        Sun, 14 Aug 2011 07:28:49 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CALkWK0=sggexB0HDN-6LsoLz2RO-ftABTnAYp7q-jVO0oCJu2A@mail.gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179328>
 
-Hi Jonathan,
+Ramkumar Ramachandra wrote:
 
-Jonathan Nieder writes:
-> Ramkumar Ramachandra wrote:
->> --- a/t/t3510-cherry-pick-sequence.sh
->> +++ b/t/t3510-cherry-pick-sequence.sh
->> @@ -211,4 +211,15 @@ test_expect_success 'malformed instruction shee=
-t 2' '
->> [...]
->> + =C2=A0 =C2=A0 sed "s/pick \([0-9a-f]\+\)\(.*\)/pick \1\1\1\1\1\1\1=
-\1\2/" .git/sequencer/todo >new_sheet &&
->
-> This construct (\+ in sed regexes) is not portable. =C2=A0See the not=
-e on
-> grep in Documentation/CodingGuidelines
+> int len = strchrnul(p, '\n') - p;
+> if (len > 255 || len - strchrnul(p, '\n') + p != 0)
+>     len = 255;
 
-I see.  Could you show me how to do it right?  My regex-foo is pretty
-weak, and I don't know what else to do.
+Yuck.  Why not just use a size_t?
 
-> (maybe it should be tweaked to
-> say "grep and sed").
+> Shouldn't it be part of error() atleast in the long term?
 
-Okay.  Do you like this?
-
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
--- 8< --
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuide=
-lines
-index fe1c1e5..0a843ea 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -69,8 +69,8 @@ For shell scripts specifically (not exhaustive):
-  - We do not write the noiseword "function" in front of shell
-    functions.
-
-- - As to use of grep, stick to a subset of BRE (namely, no \{m,n\},
--   [::], [=3D=3D], nor [..]) for portability.
-+ - As to use of grep and sed, stick to a subset of BRE (namely, no
-+   \{m,n\}, [::], [=3D=3D], nor [..]) for portability.
-
-    - We do not use \{m,n\};
-
--- Ram
+The default implementation of error() is (practically speaking) a thin
+wrapper around fprintf.  What are the new semantics you are proposing
+--- truncating %s arguments to one short line?  I don't think that
+would be a good idea, since for example, some current callers might be
+passing "\n" explicitly as a %s argument.
