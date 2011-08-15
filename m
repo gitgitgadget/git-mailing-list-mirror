@@ -1,126 +1,328 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] commit: check return value of lookup_commit()
-Date: Mon, 15 Aug 2011 22:38:36 +0700
-Message-ID: <1313422716-26432-1-git-send-email-pclouds@gmail.com>
+From: Marko Vukovic <amasniko@yahoo.com>
+Subject: Re: Core dump on commit
+Date: Mon, 15 Aug 2011 15:48:46 +0000 (UTC)
+Message-ID: <loom.20110815T172423-956@post.gmane.org>
+References: <loom.20110815T162144-798@post.gmane.org> <CACsJy8AL5D938HA-sQkFkn_d9xuT2Vw8BKfD-h+V=iEkNrS1eA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 15 17:38:53 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 15 17:49:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QszFc-0006aT-2Z
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Aug 2011 17:38:52 +0200
+	id 1QszPc-0005Pu-QZ
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Aug 2011 17:49:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754392Ab1HOPiq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Aug 2011 11:38:46 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:55228 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753560Ab1HOPip (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2011 11:38:45 -0400
-Received: by yie30 with SMTP id 30so3218603yie.19
-        for <git@vger.kernel.org>; Mon, 15 Aug 2011 08:38:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=mJ7sCGL98m8+LOvOq3S3xHFyeUew5PD5t5SuO7AFQ4c=;
-        b=hD8qjGA/Je3xaorRINdBmzaKypcw3GTdzZMQsQhSdt94m07J76Llf4DweZhWKx8bem
-         smmoi3IG9hj6AyqeAUmyQuNqFk2onoVLAgiYjJaBoyAhGcxTe7p+tpS8q3F6jr3l7CCE
-         V0PlqavNqJ1KtAFWXEZF20oogpj18g+RomDEo=
-Received: by 10.42.159.69 with SMTP id k5mr4355893icx.389.1313422724769;
-        Mon, 15 Aug 2011 08:38:44 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.73.208.228])
-        by mx.google.com with ESMTPS id o8sm7586994icc.5.2011.08.15.08.38.41
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 15 Aug 2011 08:38:44 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 15 Aug 2011 22:38:37 +0700
-X-Mailer: git-send-email 1.7.4.74.g639db
+	id S1754531Ab1HOPtG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Aug 2011 11:49:06 -0400
+Received: from lo.gmane.org ([80.91.229.12]:34458 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753568Ab1HOPtB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2011 11:49:01 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1QszPO-0005H0-Gf
+	for git@vger.kernel.org; Mon, 15 Aug 2011 17:48:58 +0200
+Received: from CPE30469afe6059-CM001ceab6184c.cpe.net.cable.rogers.com ([174.112.73.117])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 15 Aug 2011 17:48:58 +0200
+Received: from amasniko by CPE30469afe6059-CM001ceab6184c.cpe.net.cable.rogers.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 15 Aug 2011 17:48:58 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 174.112.73.117 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110621 Fedora/3.6.18-1.fc14 Firefox/3.6.18)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179376>
 
-If lookup_commit() returns NULL, there's usually serious error and the
-command aborts anyway. However it's still nicer to have a message
-telling us where it aborts, rather than segmentation fault.
+Nguyen Thai Ngoc Duy <pclouds <at> gmail.com> writes:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- I suppose die() also cleans up $GIT_DIR/index.lock while sigsegv does =
-not.
+> Can you get the stack trace? Does HEAD point to
 
- builtin/commit.c |   17 +++++++++++++----
- 1 files changed, 13 insertions(+), 4 deletions(-)
+Please find the stack trace at the end of the message (I did not want to insert
+it in the middle)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 2088b6b..bfb7a5a 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1387,6 +1387,7 @@ int cmd_commit(int argc, const char **argv, const=
- char *prefix)
- 	unsigned char commit_sha1[20];
- 	struct ref_lock *ref_lock;
- 	struct commit_list *parents =3D NULL, **pptr =3D &parents;
-+	struct commit *commit;
- 	struct stat statbuf;
- 	int allow_fast_forward =3D 1;
- 	struct wt_status s;
-@@ -1423,7 +1424,6 @@ int cmd_commit(int argc, const char **argv, const=
- char *prefix)
- 			reflog_msg =3D "commit (initial)";
- 	} else if (amend) {
- 		struct commit_list *c;
--		struct commit *commit;
-=20
- 		if (!reflog_msg)
- 			reflog_msg =3D "commit (amend)";
-@@ -1439,7 +1439,10 @@ int cmd_commit(int argc, const char **argv, cons=
-t char *prefix)
-=20
- 		if (!reflog_msg)
- 			reflog_msg =3D "commit (merge)";
--		pptr =3D &commit_list_insert(lookup_commit(head_sha1), pptr)->next;
-+		commit =3D lookup_commit(head_sha1);
-+		if (!commit)
-+			die(_("could not parse HEAD commit"));
-+		pptr =3D &commit_list_insert(commit, pptr)->next;
- 		fp =3D fopen(git_path("MERGE_HEAD"), "r");
- 		if (fp =3D=3D NULL)
- 			die_errno(_("could not open '%s' for reading"),
-@@ -1448,7 +1451,10 @@ int cmd_commit(int argc, const char **argv, cons=
-t char *prefix)
- 			unsigned char sha1[20];
- 			if (get_sha1_hex(m.buf, sha1) < 0)
- 				die(_("Corrupt MERGE_HEAD file (%s)"), m.buf);
--			pptr =3D &commit_list_insert(lookup_commit(sha1), pptr)->next;
-+			commit =3D lookup_commit(sha1);
-+			if (!commit)
-+				die(_("could not parse commit %s"), sha1_to_hex(sha1));
-+			pptr =3D &commit_list_insert(commit, pptr)->next;
- 		}
- 		fclose(fp);
- 		strbuf_release(&m);
-@@ -1465,7 +1471,10 @@ int cmd_commit(int argc, const char **argv, cons=
-t char *prefix)
- 			reflog_msg =3D (whence =3D=3D FROM_CHERRY_PICK)
- 					? "commit (cherry-pick)"
- 					: "commit";
--		pptr =3D &commit_list_insert(lookup_commit(head_sha1), pptr)->next;
-+		commit =3D lookup_commit(head_sha1);
-+		if (!commit)
-+			die(_("could not parse HEAD commit"));
-+		pptr =3D &commit_list_insert(commit, pptr)->next;
- 	}
-=20
- 	/* Finally, get the commit message */
---=20
-1.7.4.74.g639db
+> 42504431bac2e2054483c1bbc35f1b535f8d11bb (iow what does "git rev-parse
+> HEAD" say).
+> 
+> If HEAD does point to 42504431, I think you can do "git reset
+> 1b9a976133" to reset the HEAD back to a commit object (as oppose to a
+> tag)
+> 
+It does print the same hash.
+
+Pardon my ignorance, but what does "git reset" do? I have got some uncommitted
+changes in the staging area. What will happen to them?
+
+The stack trace:
+
+[New Thread 10518]
+[Thread debugging using libthread_db enabled]
+Core was generated by `git commit'.
+Program terminated with signal 11, Segmentation fault.
+#0  sha1_to_hex (sha1=0x4 <Address 0x4 out of bounds>) at hex.c:60
+60      hex.c: No such file or directory.
+        in hex.c
+
+Thread 1 (Thread 0x7f290c8e3720 (LWP 10518)):
+#0  sha1_to_hex (sha1=0x4 <Address 0x4 out of bounds>) at hex.c:60
+        val = <value optimized out>
+        bufno = 3
+        hexbuffer = {'\000' <repeats 49 times>,
+"42504431bac2e2054483c1bbc35f1b535f8d11bb\000\000\000\000\000\000\000\000\000",
+"583438f1bd3bf58f3defb0cb6adbf32b26a2ce43\000\000\000\000\000\000\000\000\000",
+'\000' <repeats 49 times>}
+        hex = "0123456789abcdef"
+        buffer = 0x75f936 ""
+#1  0x0000000000471fe3 in commit_tree (msg=0x9d5920 "Weekend and holiday
+fees\n", tree=<value optimized out>, parents=0x9d5900, ret=0x7fff55c683f0
+"\022", author=0x989f10 "Marko Vukovic <marko@bib.(none)> 1313422327 -0400") at
+commit.c:855
+        next = 0x0
+        result = <value optimized out>
+        encoding_is_utf8 = 1
+        buffer = {alloc = 8193, len = 46, buf = 0x9d8950 "tree
+583438f1bd3bf58f3defb0cb6adbf32b26a2ce43\n"}
+#2  0x000000000041c223 in cmd_commit (argc=<value optimized out>, argv=<value
+optimized out>, prefix=0x0) at builtin/commit.c:1394
+        sb = {alloc = 12313, len = 25, buf = 0x9d5920 "Weekend and holiday fees\
+
+n"}
+        author_ident = {alloc = 50, len = 49, buf = 0x989f10 "Marko Vukovic
+<marko@bib.(none)> 1313422327 -0400"}
+        index_file = 0x7fff55c67330 ""
+        reflog_msg = 0x4e6e0f "commit"
+        nl = <value optimized out>
+        p = <value optimized out>
+        commit_sha1 =
+"\022\000\000\000\000\000\000\000\022\000\000\000\000\000\000\000[\000\000"
+        ref_lock = <value optimized out>
+        parents = 0x9d5900
+        pptr = <value optimized out>
+        statbuf = {st_dev = 0, st_ino = 2, st_nlink = 0, st_mode = 0, st_uid =
+0, st_gid = 1439068784, __pad0 = 32767, st_rdev = 64, st_size = 0, st_blksize =
+0, st_blocks = 0, st_atim = {tv_sec = 206158430210, tv_nsec = 472446402651},
+st_mtim = {tv_sec = 532575944823, tv_nsec = 140734632456832}, st_ctim = {tv_sec
+= 140734632456815, tv_nsec = 140734632457008}, __unused = {4096, 5116818,
+233337090496}}
+        s = {is_initial = 0, branch = 0x9754c0 "refs/heads/release-1", reference
+
+= 0x4e3c11 "HEAD", pathspec = 0x0, verbose = 0, amend = 0, in_merge = 0, nowarn
+= 1, use_color = 0, relative_paths = 1, submodule_summary = 0,
+show_ignored_files = 0, show_untracked_files = SHOW_NORMAL_UNTRACKED_FILES,
+ignore_submodule_arg = 0x0, color_palette = {'\000' <repeats 39 times>,
+"\033[32m", '\000' <repeats 34 times>, "\033[31m", '\000' <repeats 34 times>,
+"\033[31m", '\000' <repeats 34 times>, "\033[31m", '\000' <repeats 34 times>,
+"\033[31m", '\000' <repeats 34 times>, "\033[32m", '\000' <repeats 34 times>,
+"\033[31m", '\000' <repeats 34 times>, "NIL", '\000' <repeats 36 times>},
+commitable = 1, workdir_dirty = 1, index_file = 0x975480 ".git/index", fp =
+0x988630, prefix = 0x0, change = {items = 0x98ae60, nr = 10, alloc = 32,
+strdup_strings = 1}, untracked = {items = 0x9cd490, nr = 14, alloc = 32,
+strdup_strings = 1}, ignored = {items = 0x0, nr = 0, alloc = 0, strdup_strings =
+ 1}}
+#3  0x000000000040462c in run_builtin (argc=1, argv=0x7fff55c686a0) at git.c:290
+
+        status = <value optimized out>
+        help = <value optimized out>
+        st = {st_dev = 7094065766045672051, st_ino = 7308620263551823465,
+st_nlink = 7074996046893509935, st_mode = 28265, st_uid = 0, st_gid = 9916512,
+__pad0 = 0, st_rdev = 233333546946, st_size = 140734632462224, st_blksize = 1,
+st_blocks = 4294967296, st_atim = {tv_sec = 150, tv_nsec = 9916512}, st_mtim =
+{tv_sec = 140734632461552, tv_nsec = 140734632471472}, st_ctim = {tv_sec =
+4210352, tv_nsec = 140734632461648}, __unused = {0, 0, 4992233}}
+        prefix = <value optimized out>
+#4  handle_internal_command (argc=1, argv=0x7fff55c686a0) at git.c:448
+        p = <value optimized out>
+        cmd = <value optimized out>
+        commands = {{cmd = 0x4f481b "add", fn = 0x4051d0 <cmd_add>, option = 9},
+
+{cmd = 0x4e1145 "stage", fn = 0x4051d0 <cmd_add>, option = 9}, {cmd = 0x4e114b
+"annotate", fn = 0x405bf0 <cmd_annotate>, option = 1}, {cmd = 0x4e1949 "apply",
+fn = 0x40c9e0 <cmd_apply>, option = 2}, {cmd = 0x4e3426 "archive", fn = 0x40d6d0
+
+<cmd_archive>, option = 0}, {cmd = 0x4e1154 "bisect--helper", fn = 0x40d940
+<cmd_bisect__helper>, option = 9}, {cmd = 0x4e1163 "blame", fn = 0x410210
+<cmd_blame>, option = 1}, {cmd = 0x4f49e0 "branch", fn = 0x412a00 <cmd_branch>,
+option = 1}, {cmd = 0x4e6363 "bundle", fn = 0x413b30 <cmd_bundle>, option = 2},
+{cmd = 0x4e1169 "cat-file", fn = 0x413e30 <cmd_cat_file>, option = 1}, {cmd =
+0x4e649d "checkout", fn = 0x4168e0 <cmd_checkout>, option = 9}, {cmd = 0x4e1172
+"checkout-index", fn = 0x4150c0 <cmd_checkout_index>, option = 9}, {cmd =
+0x4e1181 "check-ref-format", fn = 0x414b20 <cmd_check_ref_format>, option = 0},
+{cmd = 0x4e1192 "check-attr", fn = 0x4147b0 <cmd_check_attr>, option = 1}, {cmd
+= 0x4e119d "cherry", fn = 0x4360c0 <cmd_cherry>, option = 1}, {cmd = 0x50432a
+"cherry-pick", fn = 0x45a1a0 <cmd_cherry_pick>, option = 9}, {cmd = 0x4e11a4
+"clone", fn = 0x418d30 <cmd_clone>, option = 0}, {cmd = 0x4e11aa "clean", fn =
+0x417fa0 <cmd_clean>, option = 9}, {cmd = 0x4e6e0f "commit", fn = 0x41b2b0
+<cmd_commit>, option = 9}, {cmd = 0x4e11b0 "commit-tree", fn = 0x419f80
+<cmd_commit_tree>, option = 1}, {cmd = 0x4e1392 "config", fn = 0x41e010
+<cmd_config>, option = 2}, {cmd = 0x4e11bc "count-objects", fn = 0x41e740
+<cmd_count_objects>, option = 1}, {cmd = 0x4e11ca "describe", fn = 0x41f8f0
+<cmd_describe>, option = 1}, {cmd = 0x4fd07d "diff", fn = 0x420910 <cmd_diff>,
+option = 0}, {cmd = 0x4e11d3 "diff-files", fn = 0x41fe80 <cmd_diff_files>,
+option = 9}, {cmd = 0x4e11de "diff-index", fn = 0x4200d0 <cmd_diff_index>,
+option = 1}, {cmd = 0x4e11e9 "diff-tree", fn = 0x420270 <cmd_diff_tree>, option
+= 1}, {cmd = 0x506d5a "fast-export", fn = 0x421d20 <cmd_fast_export>, option =
+1}, {cmd = 0x4e63e3 "fetch", fn = 0x426a70 <cmd_fetch>, option = 1}, {cmd =
+0x4e11f3 "fetch-pack", fn = 0x4245e0 <cmd_fetch_pack>, option = 1}, {cmd =
+0x4e11fe "fmt-merge-msg", fn = 0x427a20 <cmd_fmt_merge_msg>, option = 1}, {cmd =
+
+0x4e120c "for-each-ref", fn = 0x4296b0 <cmd_for_each_ref>, option = 1}, {cmd =
+0x4e1219 "format-patch", fn = 0x434930 <cmd_format_patch>, option = 1}, {cmd =
+0x4fe34e "fsck", fn = 0x42a910 <cmd_fsck>, option = 1}, {cmd = 0x4e1226
+"fsck-objects", fn = 0x42a910 <cmd_fsck>, option = 1}, {cmd = 0x4ebe68 "gc", fn
+= 0x42b490 <cmd_gc>, option = 1}, {cmd = 0x4e1233 "get-tar-commit-id", fn =
+0x460a10 <cmd_get_tar_commit_id>, option = 0}, {cmd = 0x4ec25b "grep", fn =
+0x42cbe0 <cmd_grep>, option = 2}, {cmd = 0x4e1245 "hash-object", fn = 0x42e540
+<cmd_hash_object>, option = 0}, {cmd = 0x4e0f80 "help", fn = 0x42f210
+<cmd_help>, option = 0}, {cmd = 0x4e1251 "index-pack", fn = 0x4307c0
+<cmd_index_pack>, option = 2}, {cmd = 0x4e6527 "init", fn = 0x432920
+<cmd_init_db>, option = 0}, {cmd = 0x4e125c "init-db", fn = 0x432920
+<cmd_init_db>, option = 0}, {cmd = 0x503888 "log", fn = 0x434850 <cmd_log>,
+option = 1}, {cmd = 0x4e1264 "ls-files", fn = 0x436bc0 <cmd_ls_files>, option =
+1}, {cmd = 0x4e126d "ls-tree", fn = 0x438560 <cmd_ls_tree>, option = 1}, {cmd =
+0x4e1275 "ls-remote", fn = 0x437e20 <cmd_ls_remote>, option = 2}, {cmd =
+0x4e127f "mailinfo", fn = 0x439fb0 <cmd_mailinfo>, option = 0}, {cmd = 0x4e1288
+"mailsplit", fn = 0x43b4d0 <cmd_mailsplit>, option = 0}, {cmd = 0x4f01d7
+"merge", fn = 0x43d170 <cmd_merge>, option = 9}, {cmd = 0x4e1292 "merge-base",
+fn = 0x43ece0 <cmd_merge_base>, option = 1}, {cmd = 0x4e129d "merge-file", fn =
+0x43f060 <cmd_merge_file>, option = 2}, {cmd = 0x4e12a8 "merge-index", fn =
+0x43f820 <cmd_merge_index>, option = 1}, {cmd = 0x4e12b4 "merge-ours", fn =
+0x43fa50 <cmd_merge_ours>, option = 1}, {cmd = 0x4e12bf "merge-recursive", fn =
+0x43fb20 <cmd_merge_recursive>, option = 9}, {cmd = 0x4e12cf
+"merge-recursive-ours", fn = 0x43fb20 <cmd_merge_recursive>, option = 9}, {cmd =
+
+0x4e12e4 "merge-recursive-theirs", fn = 0x43fb20 <cmd_merge_recursive>, option =
+
+9}, {cmd = 0x4e12fb "merge-subtree", fn = 0x43fb20 <cmd_merge_recursive>, option
+
+= 9}, {cmd = 0x4e1309 "merge-tree", fn = 0x440340 <cmd_merge_tree>, option = 1},
+
+{cmd = 0x4e1314 "mktag", fn = 0x440710 <cmd_mktag>, option = 1}, {cmd = 0x4e131a
+
+"mktree", fn = 0x440c70 <cmd_mktree>, option = 1}, {cmd = 0x4e1321 "mv", fn =
+0x441450 <cmd_mv>, option = 9}, {cmd = 0x4e1324 "name-rev", fn = 0x4421c0
+<cmd_name_rev>, option = 1}, {cmd = 0x4f108c "notes", fn = 0x443880 <cmd_notes>,
+
+option = 1}, {cmd = 0x4fad16 "pack-objects", fn = 0x448240 <cmd_pack_objects>,
+option = 1}, {cmd = 0x4e132d "pack-redundant", fn = 0x449b70
+<cmd_pack_redundant>, option = 1}, {cmd = 0x4e133c "patch-id", fn = 0x44b100
+<cmd_patch_id>, option = 0}, {cmd = 0x4e1345 "peek-remote", fn = 0x437e20
+<cmd_ls_remote>, option = 2}, {cmd = 0x4e1351 "pickaxe", fn = 0x410210
+<cmd_blame>, option = 1}, {cmd = 0x4f4757 "prune", fn = 0x44b750 <cmd_prune>,
+option = 1}, {cmd = 0x4e1359 "prune-packed", fn = 0x44b520 <cmd_prune_packed>,
+option = 1}, {cmd = 0x506773 "push", fn = 0x44bdd0 <cmd_push>, option = 1}, {cmd
+= 0x4e1366 "read-tree", fn = 0x44c8d0 <cmd_read_tree>, option = 1}, {cmd =
+0x4f6fcf "receive-pack", fn = 0x44da50 <cmd_receive_pack>, option = 0}, {cmd =
+0x4e4514 "reflog", fn = 0x4503f0 <cmd_reflog>, option = 1}, {cmd = 0x4f4614
+"remote", fn = 0x4519a0 <cmd_remote>, option = 1}, {cmd = 0x4e1370 "remote-ext",
+
+fn = 0x454c20 <cmd_remote_ext>, option = 0}, {cmd = 0x4e137b "remote-fd", fn =
+0x454dd0 <cmd_remote_fd>, option = 0}, {cmd = 0x4e1385 "replace", fn = 0x4551f0
+<cmd_replace>, option = 1}, {cmd = 0x4e138d "repo-config", fn = 0x41e010
+<cmd_config>, option = 2}, {cmd = 0x4e1399 "rerere", fn = 0x455540 <cmd_rerere>,
+
+option = 1}, {cmd = 0x4e5743 "reset", fn = 0x455ff0 <cmd_reset>, option = 1},
+{cmd = 0x4eaa47 "rev-list", fn = 0x456f30 <cmd_rev_list>, option = 1}, {cmd =
+0x4e13a0 "rev-parse", fn = 0x457930 <cmd_rev_parse>, option = 0}, {cmd =
+0x4e13aa "revert", fn = 0x45a150 <cmd_revert>, option = 9}, {cmd = 0x4e13b1
+"rm", fn = 0x45a1b0 <cmd_rm>, option = 1}, {cmd = 0x4e13b4 "send-pack", fn =
+0x45b3d0 <cmd_send_pack>, option = 1}, {cmd = 0x4e13be "shortlog", fn = 0x45c640
+
+<cmd_shortlog>, option = 6}, {cmd = 0x4e13c7 "show-branch", fn = 0x45d2f0
+<cmd_show_branch>, option = 1}, {cmd = 0x4e13d3 "show", fn = 0x434390
+<cmd_show>, option = 1}, {cmd = 0x4f6f44 "status", fn = 0x41b000 <cmd_status>,
+option = 9}, {cmd = 0x4e13d8 "stripspace", fn = 0x45f170 <cmd_stripspace>,
+option = 0}, {cmd = 0x4e13e3 "symbolic-ref", fn = 0x45f260 <cmd_symbolic_ref>,
+option = 1}, {cmd = 0x50640d "tag", fn = 0x45f9a0 <cmd_tag>, option = 1}, {cmd =
+
+0x4e13f0 "tar-tree", fn = 0x460880 <cmd_tar_tree>, option = 0}, {cmd = 0x4e13f9
+"unpack-file", fn = 0x460af0 <cmd_unpack_file>, option = 1}, {cmd = 0x4e1405
+"unpack-objects", fn = 0x461510 <cmd_unpack_objects>, option = 1}, {cmd =
+0x4e1414 "update-index", fn = 0x463550 <cmd_update_index>, option = 1}, {cmd =
+0x4e1421 "update-ref", fn = 0x464150 <cmd_update_ref>, option = 1}, {cmd =
+0x4e142c "update-server-info", fn = 0x4643e0 <cmd_update_server_info>, option =
+1}, {cmd = 0x4e341f "upload-archive", fn = 0x4647e0 <cmd_upload_archive>, option
+
+= 0}, {cmd = 0x4e143f "var", fn = 0x464ac0 <cmd_var>, option = 2}, {cmd =
+0x4e1443 "verify-tag", fn = 0x4653b0 <cmd_verify_tag>, option = 1}, {cmd =
+0x50005d "version", fn = 0x48ebd0 <cmd_version>, option = 0}, {cmd = 0x4e144e
+"whatchanged", fn = 0x434280 <cmd_whatchanged>, option = 1}, {cmd = 0x4f9c35
+"write-tree", fn = 0x4655c0 <cmd_write_tree>, option = 1}, {cmd = 0x4e145a
+"verify-pack", fn = 0x465090 <cmd_verify_pack>, option = 0}, {cmd = 0x4e1466
+"show-ref", fn = 0x45ed70 <cmd_show_ref>, option = 1}, {cmd = 0x4e146f
+"pack-refs", fn = 0x44ac80 <cmd_pack_refs>, option = 1}}
+        i = <value optimized out>
+#5  0x0000000000404848 in run_argv (argc=1, argv=0x7fff55c686a0) at git.c:492
+        done_alias = 0
+#6  main (argc=1, argv=0x7fff55c686a0) at git.c:565
+        done_help = 0
+        was_alias = 0
+        cmd = 0x7fff55c6a2dc "commit"
+From                To                  Syms Read   Shared Object Library
+0x0000003cb5c01e70  0x0000003cb5c0e678  Yes         /lib64/libz.so.1
+0x0000003654805630  0x00000036548108b8  Yes (*)     /lib64/libpthread.so.0
+0x0000003653c1eba0  0x0000003653d45f5c  Yes (*)     /lib64/libc.so.6
+0x0000003653800b20  0x0000003653818c46  Yes (*)     /lib64/ld-linux-x86-64.so.2
+0x00007f290c6d9120  0x00007f290c6e0448  Yes (*)     /lib64/libnss_files.so.2
+(*): Shared library is missing debugging information.
+$1 = 0x0
+No symbol "__glib_assert_msg" in current context.
+rax            0x75f936 7731510
+rbx            0x9d5900 10311936
+rcx            0x4fb256 5222998
+rdx            0x0      0
+rsi            0x2e     46
+rdi            0x4      4
+rbp            0x0      0x0
+rsp            0x7fff55c66e88   0x7fff55c66e88
+r8             0x1      1
+r9             0x28     40
+r10            0x3261363262323366       3630242364661052262
+r11            0x2001   8193
+r12            0x9d5920 10311968
+r13            0x7fff55c683f0   140734632461296
+r14            0x7fff55c66ea0   140734632455840
+r15            0x989f10 10002192
+rip            0x48ec78 0x48ec78 <sha1_to_hex+40>
+eflags         0x10206  [ PF IF RF ]
+cs             0x33     51
+ss             0x2b     43
+ds             0x0      0
+es             0x0      0
+fs             0x0      0
+gs             0x0      0
+Dump of assembler code for function sha1_to_hex:
+   0x000000000048ec50 <+0>:     mov    0x2d0d12(%rip),%eax        # 0x75f968
+   0x000000000048ec56 <+6>:     xor    %edx,%edx
+   0x000000000048ec58 <+8>:     add    $0x1,%eax
+   0x000000000048ec5b <+11>:    mov    %eax,0x2d0d07(%rip)        # 0x75f968
+   0x000000000048ec61 <+17>:    and    $0x3,%eax
+   0x000000000048ec64 <+20>:    lea    (%rax,%rax,4),%rax
+   0x000000000048ec68 <+24>:    lea    (%rax,%rax,4),%rax
+   0x000000000048ec6c <+28>:    lea    0x75f8a0(%rax,%rax,1),%rax
+   0x000000000048ec74 <+36>:    nopl   0x0(%rax)
+=> 0x000000000048ec78 <+40>:    movzbl (%rdi),%ecx
+   0x000000000048ec7b <+43>:    add    $0x1,%rdi
+   0x000000000048ec7f <+47>:    mov    %ecx,%esi
+   0x000000000048ec81 <+49>:    and    $0xf,%ecx
+   0x000000000048ec84 <+52>:    shr    $0x4,%esi
+   0x000000000048ec87 <+55>:    movzbl 0x4fec80(%rcx),%ecx
+   0x000000000048ec8e <+62>:    mov    %esi,%esi
+   0x000000000048ec90 <+64>:    movzbl 0x4fec80(%rsi),%esi
+   0x000000000048ec97 <+71>:    mov    %cl,0x1(%rax,%rdx,1)
+   0x000000000048ec9b <+75>:    mov    %sil,(%rax,%rdx,1)
+   0x000000000048ec9f <+79>:    add    $0x2,%rdx
+   0x000000000048eca3 <+83>:    cmp    $0x28,%rdx
+   0x000000000048eca7 <+87>:    jne    0x48ec78 <sha1_to_hex+40>
+   0x000000000048eca9 <+89>:    movb   $0x0,0x28(%rax)
+   0x000000000048ecad <+93>:    retq
+End of assembler dump.
