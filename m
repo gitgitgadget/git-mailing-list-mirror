@@ -1,52 +1,67 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH v3 2/2] Move git-dir for submodules
-Date: Mon, 15 Aug 2011 10:30:19 -0400
-Message-ID: <4E492D7B.50508@xiplink.com>
-References: <1313178913-25617-1-git-send-email-iveqy@iveqy.com> <1313178913-25617-3-git-send-email-iveqy@iveqy.com>
+From: Marko Vukovic <amasniko@yahoo.com>
+Subject: Core dump on commit
+Date: Mon, 15 Aug 2011 14:30:55 +0000 (UTC)
+Message-ID: <loom.20110815T162144-798@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, jens.lehmann@web.de, hvoigt@hvoigt.net,
-	gitster@pobox.com
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Mon Aug 15 16:30:47 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 15 16:35:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QsyBi-0003GV-2n
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Aug 2011 16:30:46 +0200
+	id 1QsyG1-000694-Vz
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Aug 2011 16:35:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753963Ab1HOOaj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Aug 2011 10:30:39 -0400
-Received: from smtp152.iad.emailsrvr.com ([207.97.245.152]:38500 "EHLO
-	smtp152.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753562Ab1HOOaj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2011 10:30:39 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp55.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id 29A9B2E0351;
-	Mon, 15 Aug 2011 10:30:37 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp55.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id D6E8B2E036C;
-	Mon, 15 Aug 2011 10:30:36 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110617 Thunderbird/3.1.11
-In-Reply-To: <1313178913-25617-3-git-send-email-iveqy@iveqy.com>
+	id S1754030Ab1HOOfJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Aug 2011 10:35:09 -0400
+Received: from lo.gmane.org ([80.91.229.12]:42486 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753761Ab1HOOfI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2011 10:35:08 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1QsyFu-00063O-0t
+	for git@vger.kernel.org; Mon, 15 Aug 2011 16:35:06 +0200
+Received: from CPE30469afe6059-CM001ceab6184c.cpe.net.cable.rogers.com ([174.112.73.117])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 15 Aug 2011 16:35:06 +0200
+Received: from amasniko by CPE30469afe6059-CM001ceab6184c.cpe.net.cable.rogers.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 15 Aug 2011 16:35:06 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 174.112.73.117 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110621 Fedora/3.6.18-1.fc14 Firefox/3.6.18)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179367>
 
-On 11-08-12 03:55 PM, Fredrik Gustafsson wrote:
-> 
-> This patch will not affect already cloned submodules at all.
+I get this error after running "git commit"
 
-My question is perhaps a bit beyond the scope of this series...
+error: Object 42504431bac2e2054483c1bbc35f1b535f8d11bb is a tag, not a commit
+Segmentation fault (core dumped)
 
-Is there going to be a way to migrate submodules to the new layout?  If the
-eventual goal is to be able to delete & restore submodule working
-directories, it would be nice if that could work with submodules cloned by an
-older git.
+"git cat-file -p 42504431bac2e2054483c1bbc35f1b535f8d11bb" gives this:
 
-		M.
+object 1b9a97613307b5c7bbc189a0e41506cb1534740a
+type commit
+tag v1.0
+tagger marko <marko@bib> Sun Aug 14 20:42:12 2011 -0400
+
+The first release
+
+
+I had created a tag yesterday which I deleted since with "git tag -d" command.
+
+Curiously, I could not find file
+".git/objects/42/504431bac2e2054483c1bbc35f1b535f8d11bb" which I expected based
+on my very limited understanding of the Git internals. So, where does "git
+cat-file" pick up that information from? But more importantly, how do I fix this
+problem?
