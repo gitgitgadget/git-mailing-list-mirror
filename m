@@ -1,76 +1,90 @@
-From: Alexander Pepper <pepper@inf.fu-berlin.de>
-Subject: Re: Bug report: git log --[num|short]stat sometimes counts lines wrong
-Date: Mon, 15 Aug 2011 10:24:55 +0200
-Message-ID: <91324E9A-3134-455D-B7CA-ABBDA88FC7B7@inf.fu-berlin.de>
-References: <45CC44BC-03FF-4C5F-97B7-7ED03CB68BC2@inf.fu-berlin.de>
-Mime-Version: 1.0 (Apple Message framework v1084)
+From: Martin Mares <mj@ucw.cz>
+Subject: diff --stat when chmoding binary files
+Date: Mon, 15 Aug 2011 10:50:49 +0200
+Message-ID: <mj+md-20110815.084527.10358.albireo@ucw.cz>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
+Cc: =?iso-8859-2?Q?Tom=E1=B9_Male=E8ek?= <malecektomas@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 15 10:25:05 2011
+X-From: git-owner@vger.kernel.org Mon Aug 15 10:56:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QssTn-0007d6-T5
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Aug 2011 10:25:04 +0200
+	id 1Qssy7-0007Su-7O
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Aug 2011 10:56:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752601Ab1HOIY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Aug 2011 04:24:57 -0400
-Received: from outpost1.zedat.fu-berlin.de ([130.133.4.66]:52489 "EHLO
-	outpost1.zedat.fu-berlin.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751303Ab1HOIY4 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2011 04:24:56 -0400
-Received: from inpost2.zedat.fu-berlin.de ([130.133.4.69])
-          by outpost1.zedat.fu-berlin.de (Exim 4.69)
-          for git@vger.kernel.org with esmtp
-          (envelope-from <pepper@inf.fu-berlin.de>)
-          id <1QssTf-0002Hv-J5>; Mon, 15 Aug 2011 10:24:55 +0200
-Received: from 91-66-162-110-dynip.superkabel.de ([91.66.162.110] helo=apepper.infopark)
-          by inpost2.zedat.fu-berlin.de (Exim 4.69)
-          for git@vger.kernel.org with esmtpsa
-          (envelope-from <pepper@inf.fu-berlin.de>)
-          id <1QssTf-0000vl-EA>; Mon, 15 Aug 2011 10:24:55 +0200
-In-Reply-To: <45CC44BC-03FF-4C5F-97B7-7ED03CB68BC2@inf.fu-berlin.de>
-X-Mailer: Apple Mail (2.1084)
-X-Originating-IP: 91.66.162.110
+	id S1752861Ab1HOI4O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Aug 2011 04:56:14 -0400
+Received: from jabberwock.ucw.cz ([89.250.246.4]:59107 "EHLO jabberwock.ucw.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752796Ab1HOI4N (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2011 04:56:13 -0400
+X-Greylist: delayed 321 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Aug 2011 04:56:13 EDT
+Received: from albireo.ucw.cz (albireo.ucw.cz [89.239.2.32])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "albireo.ucw.cz", Issuer "ucw.cz" (verified OK))
+	by jabberwock.ucw.cz (Postfix) with ESMTPS id 633ED33BCC
+	for <git@vger.kernel.org>; Mon, 15 Aug 2011 10:50:51 +0200 (CEST)
+Received: by albireo.ucw.cz (Postfix, from userid 1000)
+	id DF9C311017F; Mon, 15 Aug 2011 10:50:49 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179361>
 
-Am 12.08.2011 um 17:21 schrieb Alexander Pepper:
-> Hi there.
-> This is my first contribution to git (if you count a bug report as a contribution) and I'm not really familiar where to report bugs. In the irc channel #git at freenode somebody pointed me to this mailing list.
-> 
-> First of: I'm running git version 1.7.6 on OS X 10.6.8.
-> 
-> Let me describe what I observed.
-> repository: https://github.com/voldemort/voldemort.git
-> The command "git log --numstat c21ad764ea1bae7f7bd83b5e2cb015dcbc44d586" shows for the commit c21ad764 and file '.../readonly/mr/HadoopStoreBuilderReducer.java' 25 lines added and 22 lines removed. But the patch of HadoopStoreBuilderReducer.java that I get with "git show c21ad764ea1bae7f7bd83b5e2cb015dcbc44d586 -- contrib/hadoop-store-builder/src/java/voldemort/store/readonly/mr/HadoopStoreBuilderReducer.java" adds 30 lines and removes 27.
-> 
-> Why does "git log --numstat" drops 5 added lines and 5 removed lines? This also holds true for "git log --stat" and "git log --shortstat".
-> 
-> Is this a bug or am I missing an option to git log or git show?
-> 
-> More commits where I observed this problem on the same repository:
-> 7e00fb6d2cf131dfed59c180f2171952808cc336 src/java/voldemort/client/rebalance/MigratePartitions.java
-> 78ad6f2a6ea327dbae2110f4530a5bd07e5deaac src/java/voldemort/client/rebalance/MigratePartitions.java (same commit on another branch)
-> 7871933f0f0f056e2eeac03a01db1e9cf81f8bda src/java/voldemort/client/protocol/admin/AdminClient.java
-> 2d6f68b09c3bdc23dcf3ae1f91c9285fbd668820 src/java/voldemort/store/readonly/ExternalSorter.java
-> 6fcacee866307ec34eb32b268e2c2b885a949319 build.xml
-> 
-> Greetings from Berlin
-> Alex
+Hello, world!\n
 
-Hello again.
+I have discovered somewhat surprising behavior of `git diff --stat'
+on files, which are not modified except for their executable bits.
+When the file is binary, it is listed in the diffstat, otherwise
+it is not.
 
-I also observed this behavior with git version 1.7.4.1 on Gentoo.
+For example:
 
-Any ideas how to fix this?
+| mj@albireo:/tmp$ mkdir gt
+| mj@albireo:/tmp$ cd gt
+| mj@albireo:/tmp/gt$ git init
+| Initialized empty Git repository in /tmp/gt/.git/
+| mj@albireo:/tmp/gt$ echo abcdef >a
+| mj@albireo:/tmp/gt$ dd if=/dev/zero of=b bs=1024 count=1
+| 1+0 records in
+| 1+0 records out
+| 1024 bytes (1.0 kB) copied, 7.3243e-05 s, 14.0 MB/s
+| mj@albireo:/tmp/gt$ git add *
+| mj@albireo:/tmp/gt$ git commit -m 'adding'
+| [master (root-commit) 295d5f9] adding
+|  2 files changed, 1 insertions(+), 0 deletions(-)
+|  create mode 100644 a
+|  create mode 100644 b
+| mj@albireo:/tmp/gt$ chmod 755 *
+| mj@albireo:/tmp/gt$ git add *
+| mj@albireo:/tmp/gt$ git commit -m 'chmoding'
+| [master 61c251b] chmoding
+|  1 files changed, 0 insertions(+), 0 deletions(-)
+|  mode change 100644 => 100755 a
+|  mode change 100644 => 100755 b
+| mj@albireo:/tmp/gt$ git diff HEAD^
+| diff --git a/a b/a
+| old mode 100644
+| new mode 100755
+| diff --git a/b b/b
+| old mode 100644
+| new mode 100755
+| mj@albireo:/tmp/gt$ git diff --stat HEAD^
+|  b |  Bin 1024 -> 1024 bytes
+|  1 files changed, 0 insertions(+), 0 deletions(-)
 
-Greetings from Berlin
-Alex
+This happens in git-1.7.6 and in several older versions as well.
+
+Am I missing something or is it a bug?
+
+				Have a nice fortnight
+-- 
+Martin `MJ' Mares                          <mj@ucw.cz>   http://mj.ucw.cz/
+Faculty of Math and Physics, Charles University, Prague, Czech Rep., Earth
+Q: Who invented the first airplane that did not fly?  A: The Wrong Brothers.
