@@ -1,77 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git_checkattr() is inefficient when repeated [Re: [PATCH 00/11]
- Micro-optimizing lookup_object()]
-Date: Mon, 15 Aug 2011 16:19:00 -0700
-Message-ID: <7vliuujmaj.fsf@alter.siamese.dyndns.org>
-References: <1313085196-13249-1-git-send-email-gitster@pobox.com>
- <201108121759.24884.trast@student.ethz.ch>
+From: Jeff King <peff@peff.net>
+Subject: Re: "git apply --check" successes but git am says "does not match
+ index"
+Date: Mon, 15 Aug 2011 16:23:18 -0700
+Message-ID: <20110815232318.GA4699@sigill.intra.peff.net>
+References: <loom.20110814T113311-277@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Aug 16 01:19:12 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Zemacsh <ruini.xue@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 16 01:23:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qt6R4-0001n4-68
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 01:19:10 +0200
+	id 1Qt6VD-0004AV-8r
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 01:23:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752075Ab1HOXTF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Aug 2011 19:19:05 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38451 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751492Ab1HOXTD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2011 19:19:03 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9EA7446B4;
-	Mon, 15 Aug 2011 19:19:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZHDE0/SQjKzy9beiVePlnLfLFqw=; b=gjSKDu
-	9PPzFKa6mDLce1Hf86q1AD7GNwzvGFmtxZANuSW1PNR129a93zHkdaIlRVzVVK0I
-	Z4NusnhSc4FAwPiCp/Moe19asW0ZkLfd8M7VyxiXNORomaEzd+eaIfvVXOH2CcvL
-	YCm7VUaqK9pKHp8obpjimAvm+hQseCz5n9J+c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dS79Fl1az9rUQxF+5+qkwJH6l0yKSufR
-	aotTQydbY7itb31GQbVywFsGMYp14ascYhJuHOrYuG/bE3o+LukM6ReqmFc8BcZi
-	08q4P0vaj/7gX+OX4NVw8SHwl+zLzTGI818mqV2/g6SzDFB44tudIxvoLKcVYbaQ
-	IBM9Rv5aEkY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9308446B3;
-	Mon, 15 Aug 2011 19:19:02 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0A08746B2; Mon, 15 Aug 2011
- 19:19:01 -0400 (EDT)
-In-Reply-To: <201108121759.24884.trast@student.ethz.ch> (Thomas Rast's
- message of "Fri, 12 Aug 2011 17:59:24 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F62FABD6-C794-11E0-B049-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752841Ab1HOXXW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Aug 2011 19:23:22 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:33191
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752205Ab1HOXXV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2011 19:23:21 -0400
+Received: (qmail 30252 invoked by uid 107); 15 Aug 2011 23:24:00 -0000
+Received: from 173-164-171-125-SFBA.hfc.comcastbusiness.net (HELO sigill.intra.peff.net) (173.164.171.125)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 15 Aug 2011 19:24:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Aug 2011 16:23:18 -0700
+Content-Disposition: inline
+In-Reply-To: <loom.20110814T113311-277@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179395>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+On Sun, Aug 14, 2011 at 09:36:30AM +0000, Zemacsh wrote:
 
-> Which would be a 4.5% speedup.  Obviously that won't quite be
-> attainable since we want the attributes mechanism to work, but we
-> still shouldn't have to open 4398 .gitattributes files when there are
-> only 8 .gitattributes plus one .git/info/attributes.
+> Before applying a mbox patch, "git apply --check" reports OK. Then, I run 'git 
+> am', however, it complains "does not match index". Actually, both working tree 
+> and index are clean. what might be the problem?
+> 
+> If I run "git am --abort" now, and re-turn "git am". To my surprise, everything 
+> goes well.
 
-True. At runtime, the attribute mechanism wants a stack of per-directory
-attributes it can walk up to find the applicable ones maintained for the
-directory it currently is looking at, and the elements near the leaf are
-popped from the stack to be discarded when the caller goes on to inspect
-paths in a different directory (IOW the machinery is optimized for callers
-that walk the paths in order, without randomly jumping around).
+Hmm. I don't think this has anything to do with the "apply --check". But
+rather the problem is that "git am" doesn't ever refresh the index. For
+example:
 
-But at least within a process like pack-objects that are known to be long
-lived, we should be able to instead _keep_ the elements that are popped
-when we leave directories at deeper levels, and bring them back to the
-stack when the caller asks for a path in that directory later, without
-going back to the filesystem.
+  git init repo &&
+  cd repo &&
+  echo one >file && git add . && git commit -m one &&
+  echo two >file && git add . && git commit -m two &&
+  git format-patch -1 --stdout >patch &&
+  git reset --hard HEAD^ &&
+  sleep 1 &&
+  touch file &&
+  git am patch
+
+This fails with:
+
+  Applying: two
+  error: file: does not match index
+  Patch failed at 0001 two
+
+Running "git am --abort" resets the index, which freshens it, and then a
+further "git am" works:
+
+  $ git am --abort
+  $ git am patch
+  Applying: two
+
+We should perhaps call "update-index --refresh" at the start to avoid
+these sorts of false positives. Probably it should happen whenever we
+"git am --continue", as well. But for efficiency reasons, not between
+each patch.
+
+I dunno. Do people want to call "git am" in a tight loop, where the
+index refresh would be a problem? I would think they should instead feed
+a whole mbox in one go.
+
+-Peff
