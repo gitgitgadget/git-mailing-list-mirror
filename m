@@ -1,90 +1,53 @@
-From: Martin Mares <mj@ucw.cz>
-Subject: diff --stat when chmoding binary files
-Date: Mon, 15 Aug 2011 10:50:49 +0200
-Message-ID: <mj+md-20110815.084527.10358.albireo@ucw.cz>
+From: Philippe Vaucher <philippe.vaucher@gmail.com>
+Subject: Re: Suggestions to make git easier to understand
+Date: Mon, 15 Aug 2011 12:15:45 +0200
+Message-ID: <CAGK7Mr4ZbnHPc7Yzim4D=ABeXOCYrP-4Mc6Z-4mH+u9ZKSEBLQ@mail.gmail.com>
+References: <CAGK7Mr5T4-DBK7rXeH-1=SNu5HBOEkLBW=CAh5Lhf7oHKjFAiw@mail.gmail.com>
+ <20110811221627.GA32005@elie.gateway.2wire.net> <20110812222626.GA7079@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?iso-8859-2?Q?Tom=E1=B9_Male=E8ek?= <malecektomas@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 15 10:56:24 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Rafael Magana <raf.magana@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Aug 15 12:16:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qssy7-0007Su-7O
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Aug 2011 10:56:23 +0200
+	id 1QsuDV-00030E-Ho
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Aug 2011 12:16:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752861Ab1HOI4O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Aug 2011 04:56:14 -0400
-Received: from jabberwock.ucw.cz ([89.250.246.4]:59107 "EHLO jabberwock.ucw.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752796Ab1HOI4N (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2011 04:56:13 -0400
-X-Greylist: delayed 321 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Aug 2011 04:56:13 EDT
-Received: from albireo.ucw.cz (albireo.ucw.cz [89.239.2.32])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "albireo.ucw.cz", Issuer "ucw.cz" (verified OK))
-	by jabberwock.ucw.cz (Postfix) with ESMTPS id 633ED33BCC
-	for <git@vger.kernel.org>; Mon, 15 Aug 2011 10:50:51 +0200 (CEST)
-Received: by albireo.ucw.cz (Postfix, from userid 1000)
-	id DF9C311017F; Mon, 15 Aug 2011 10:50:49 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751351Ab1HOKQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Aug 2011 06:16:16 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:53064 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751184Ab1HOKQP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2011 06:16:15 -0400
+Received: by qwk3 with SMTP id 3so2381753qwk.19
+        for <git@vger.kernel.org>; Mon, 15 Aug 2011 03:16:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=03XY0AxNQW7CS4adkswM8I1W++LLmPCo0xUsNaRDI5Q=;
+        b=G1vCF2+YUb8D7nPGY/JDwbXU595WzEnQnyMZ78Uoyj4ALxXfsr0RLxk3ciHkgksd07
+         wuwsyTOGISy7q64q5IItIFTdaqnwNiyx7+CZ+1IyaEBobnN58dBS7NrsPfioUMCfBWJK
+         3Zb1isUbZS/MTDpDGVzXhTYL+4PNSn1G9AhjM=
+Received: by 10.224.196.1 with SMTP id ee1mr2445598qab.109.1313403375087; Mon,
+ 15 Aug 2011 03:16:15 -0700 (PDT)
+Received: by 10.229.43.224 with HTTP; Mon, 15 Aug 2011 03:15:45 -0700 (PDT)
+In-Reply-To: <20110812222626.GA7079@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179362>
 
-Hello, world!\n
+> Didn't we fix this already in 8009d83 (Better "Changed but not updated"
+> message in git-status, 2010-11-02)? Since v1.7.4, "git status" has
+> "Changes not staged for commit".
 
-I have discovered somewhat surprising behavior of `git diff --stat'
-on files, which are not modified except for their executable bits.
-When the file is binary, it is listed in the diffstat, otherwise
-it is not.
+Yes, and the new text is fine for me.
 
-For example:
-
-| mj@albireo:/tmp$ mkdir gt
-| mj@albireo:/tmp$ cd gt
-| mj@albireo:/tmp/gt$ git init
-| Initialized empty Git repository in /tmp/gt/.git/
-| mj@albireo:/tmp/gt$ echo abcdef >a
-| mj@albireo:/tmp/gt$ dd if=/dev/zero of=b bs=1024 count=1
-| 1+0 records in
-| 1+0 records out
-| 1024 bytes (1.0 kB) copied, 7.3243e-05 s, 14.0 MB/s
-| mj@albireo:/tmp/gt$ git add *
-| mj@albireo:/tmp/gt$ git commit -m 'adding'
-| [master (root-commit) 295d5f9] adding
-|  2 files changed, 1 insertions(+), 0 deletions(-)
-|  create mode 100644 a
-|  create mode 100644 b
-| mj@albireo:/tmp/gt$ chmod 755 *
-| mj@albireo:/tmp/gt$ git add *
-| mj@albireo:/tmp/gt$ git commit -m 'chmoding'
-| [master 61c251b] chmoding
-|  1 files changed, 0 insertions(+), 0 deletions(-)
-|  mode change 100644 => 100755 a
-|  mode change 100644 => 100755 b
-| mj@albireo:/tmp/gt$ git diff HEAD^
-| diff --git a/a b/a
-| old mode 100644
-| new mode 100755
-| diff --git a/b b/b
-| old mode 100644
-| new mode 100755
-| mj@albireo:/tmp/gt$ git diff --stat HEAD^
-|  b |  Bin 1024 -> 1024 bytes
-|  1 files changed, 0 insertions(+), 0 deletions(-)
-
-This happens in git-1.7.6 and in several older versions as well.
-
-Am I missing something or is it a bug?
-
-				Have a nice fortnight
--- 
-Martin `MJ' Mares                          <mj@ucw.cz>   http://mj.ucw.cz/
-Faculty of Math and Physics, Charles University, Prague, Czech Rep., Earth
-Q: Who invented the first airplane that did not fly?  A: The Wrong Brothers.
+Philippe
