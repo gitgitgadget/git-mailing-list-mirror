@@ -1,94 +1,113 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: shallow clone not very shallow due to tags
-Date: Tue, 16 Aug 2011 00:00:09 +0100
-Organization: OPDS
-Message-ID: <4EEB129543344D0AA1C3AD3696F8F5D5@PhilipOakley>
-References: <CAJo=hJuyZMj+qwFr_=stbQtGh2SCCpjfsBxm+2wbfJK=i_VTdw@mail.gmail.com> <CACsJy8DF49PJtv41vZEOX0fLg4U1+m6JEW28+iYD6jJxGctEzg@mail.gmail.com> <CAJo=hJv_NnZyGnedTQBL_mj3baS8O5Z2wiEbZCvv8305No4ehA@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Eric Blake <eblake-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org>
+Subject: rejecting patches that have an offset
+Date: Mon, 15 Aug 2011 17:16:58 -0600
+Organization: Red Hat
+Message-ID: <4E49A8EA.5020507@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "git" <git@vger.kernel.org>
-To: "Shawn Pearce" <spearce@spearce.org>,
-	"Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 16 01:00:05 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+To: bug-patch-mXXj517/zsQ@public.gmane.org, Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
+X-From: bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org Tue Aug 16 01:17:05 2011
+Return-path: <bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org>
+Envelope-to: gcgpb-bug-patch@m.gmane.org
+Received: from lists.gnu.org ([140.186.70.17])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qt68a-00089V-2X
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 01:00:04 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752075Ab1HOW76 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Aug 2011 18:59:58 -0400
-Received: from out1.ip09ir2.opaltelecom.net ([62.24.128.245]:55270 "EHLO
-	out1.ip09ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751807Ab1HOW76 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Aug 2011 18:59:58 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AtMAAOyjSU5Z8rUb/2dsb2JhbABBihWOM49NeIE7AQQBAQUIAQEuHgEBIQsCAwUCAQMOCgklFAEECBIGBxcGARIIAgECAwGHWQi7IIVoXwSHMJVYhwA
-X-IronPort-AV: E=Sophos;i="4.67,376,1309734000"; 
-   d="scan'208";a="487466901"
-Received: from host-89-242-181-27.as13285.net (HELO PhilipOakley) ([89.242.181.27])
-  by out1.ip09ir2.opaltelecom.net with SMTP; 15 Aug 2011 23:59:56 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6109
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179392>
+	(envelope-from <bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org>)
+	id 1Qt6P3-0000fp-KM
+	for gcgpb-bug-patch@m.gmane.org; Tue, 16 Aug 2011 01:17:05 +0200
+Received: from localhost ([::1]:43964 helo=lists.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org>)
+	id 1Qt6P2-0001rZ-Np
+	for gcgpb-bug-patch@m.gmane.org; Mon, 15 Aug 2011 19:17:04 -0400
+Received: from eggs.gnu.org ([140.186.70.92]:36688)
+	by lists.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <eblake-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org>) id 1Qt6Oz-0001rE-Ej
+	for bug-patch-mXXj517/zsQ@public.gmane.org; Mon, 15 Aug 2011 19:17:03 -0400
+Received: from Debian-exim by eggs.gnu.org with spam-scanned (Exim 4.71)
+	(envelope-from <eblake-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org>) id 1Qt6Oy-0002gX-6R
+	for bug-patch-mXXj517/zsQ@public.gmane.org; Mon, 15 Aug 2011 19:17:01 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:27618)
+	by eggs.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <eblake-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org>) id 1Qt6Ox-0002gS-Rm
+	for bug-patch-mXXj517/zsQ@public.gmane.org; Mon, 15 Aug 2011 19:17:00 -0400
+Received: from int-mx01.intmail.prod.int.phx2.redhat.com
+	(int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id p7FNGxsv008621
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Mon, 15 Aug 2011 19:16:59 -0400
+Received: from [10.3.113.118] (ovpn-113-118.phx2.redhat.com [10.3.113.118])
+	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP
+	id p7FNGwut003417; Mon, 15 Aug 2011 19:16:58 -0400
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US;
+	rv:1.9.2.18) Gecko/20110621 Fedora/3.1.11-1.fc14
+	Lightning/1.0b3pre Mnenhy/0.8.3 Thunderbird/3.1.11
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
+X-detected-operating-system: by eggs.gnu.org: Genre and OS details not
+	recognized.
+X-Received-From: 209.132.183.28
+X-BeenThere: bug-patch-mXXj517/zsQ@public.gmane.org
+X-Mailman-Version: 2.1.14
+Precedence: list
+List-Id: "Bug reports, suggestions,
+	general discussion for GNU patch." <bug-patch.gnu.org>
+List-Unsubscribe: <https://lists.gnu.org/mailman/options/bug-patch>,
+	<mailto:bug-patch-request-mXXj517/zsQ@public.gmane.org?subject=unsubscribe>
+List-Archive: </archive/html/bug-patch>
+List-Post: <mailto:bug-patch-mXXj517/zsQ@public.gmane.org>
+List-Help: <mailto:bug-patch-request-mXXj517/zsQ@public.gmane.org?subject=help>
+List-Subscribe: <https://lists.gnu.org/mailman/listinfo/bug-patch>,
+	<mailto:bug-patch-request-mXXj517/zsQ@public.gmane.org?subject=subscribe>
+Errors-To: bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org
+Sender: bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179393>
 
-Monday, August 15, 2011 6:16 PM "Shawn Pearce" <spearce@spearce.org>
-> On Mon, Aug 15, 2011 at 07:03, Nguyen Thai Ngoc Duy <pclouds@gmail.com> 
-> wrote:
->> On Mon, Aug 15, 2011 at 6:58 AM, Shawn Pearce <spearce@spearce.org> 
->> wrote:
->>> Uhm. That is not a very shallow clone. The clone copied 20234 objects
->>> at 9.15 MiB... so its ~20 MiB lighter than a full clone. But nearly
->>> all of the tags exist, because the clone client is declaring want
->>> lines for them, making the server generate up to 1 commit back from
->>> the wanted tag. I know shallow support is the feature nobody wants to
->>> think about, but this just seems broken to me. Clients performing a
->>> shallow clone shouldn't be asking for tags... but they should be using
->>> the include-tag protocol option so that if they do happen to receive a
->>> tagged commit, the tag object will also be sent.
->>
->> The same would apply if the repo in question has many branches. Should
->> we fetch only master (or a user-specified set of refs) in shallow
->> clone?
->
-> Yes, I think a user who is making a shallow clone should only get the
-> HEAD branch to the depth specified, nothing else. If they want
-> additional branches, they should either pass them on the command line
-> to a new flag for clone, or modify their fetch configuration
-> after-the-fact and fetch those separately.
->
-> From what I can gather from some users I have talked to, the primary
-> usage of shallow clone is to try and (sort of) quickly grab a branch,
-> make a change, and post that change to the maintainers for review and
-> acceptance. E.g. correcting a spelling typo. Relatively simple changes
-> that can be built on a specific branch, and don't really require all
-> of the history.
->
-> And if a repository does have more than one branch, but is shallow
-> cloned at say depth of 1, the user probably doesn't get the merge
-> bases between them, so the value of the other branches is greatly
-> reduced. You can't make a merge between these, and a new developer
-> getting involved in the project cannot see how the branches relate to
-> each other. So there isn't a lot of value in sucking down those
-> additional branches during clone.
->
-The shallow clone problem came up a few times recently on StackOverflow. One 
-usage is to create an orphan branch, but the manual doesn't point the user 
-to that option. When I first read the man page I expected that any clone 
-would be from a fixed point in history, rather than a point that may move 
-(as extra commits are made to the remote). It maybe that what is needed is 
-an option that will clone from a fixed commit point, so that there is no 
-confusion as to the 'current depth'. 
+I ran into a case that cost me several hours today, while building an 
+rpm file for libvirt.  I have a context patch that only adds lines (no 
+deletions), and which had multiple places in the destination file where 
+the patch would match context and still apply, although only one of 
+those places will compile as correct.  However, the patch file was 
+inadvertently generated by git against the wrong version of the 
+destination, so the line numbers in the patch did not match the version 
+of the file that I was trying to apply it to, and 'patch -p1 --fuzz=0 
+-s' ended up triggering patch's sliding algorithm where it applied the 
+patch with an offset of 11 lines.  Meanwhile, running the same patch 
+through git applied the patch in a different offset: git found the 
+offset that matched the function name in the @@ line, which was more 
+than 11 lines away, but actually matched the intent of the patch better.
+
+The problem is that the difference in choice between patch and git 
+resulted in a patch series that works or fails according to which tool 
+you pass it through.  But the whole point of an rpm file is that if the 
+patches were generated correctly, none of them should ever have any 
+offset - an rpm should be tool-independent.
+
+It would have saved me a lot of time if both 'patch' and 'git apply' 
+could be taught a mode of operation where they explicitly reject a patch 
+that cannot be applied without relying on an offset.  That is, 'patch 
+--fuzz=0' is too weak, and the fact that 'patch -s' squelched the error 
+message meant that I had nothing to alert me to the fact that an offset 
+even took place.  And no, I don't want to filterdiff from patchutils to 
+convert the patch from context-diff over to ed-script-diff just to 
+benefit from the fact that patch does not do offset detection on 
+ed-script-patches.
+
+If it were possible to optionally reject patches with offsets, then 
+building rpm files could use this mode to insist that all patches apply 
+offset-free, making for a more robust patch chain (of course, the 
+default should remain that the offset algorithm is still applied, and 
+only suppressed by explicit request, as the use of offsets is normally a 
+very useful feature - my point is that rpm patch chains are an exception 
+for the rule where offsets normally make life easier).
+
+It might also be nice if patch could learn the algorithm that appears to 
+match the git behavior, where when there are multiple points with 
+identical context (viewing just the context in isolation), but where 
+those locations differ in function location (as learned by the @@ header 
+line in the patch file), then the preferred offset is the one in the 
+named function, even if that is not the closes context match to the line 
+number given in the patch file.
+
+-- 
+Eric Blake   eblake-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org    +1-801-349-2682
+Libvirt virtualization library http://libvirt.org
