@@ -1,103 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Utilize config variable pager.stash in stash list command
-Date: Mon, 15 Aug 2011 16:47:14 -0700
-Message-ID: <20110815234714.GB4699@sigill.intra.peff.net>
-References: <4e47dcf9.55313988.bm000@wupperonline.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: "git apply --check" successes but git am says "does not match
+ index"
+Date: Mon, 15 Aug 2011 16:52:55 -0700
+Message-ID: <7vhb5ijkq0.fsf@alter.siamese.dyndns.org>
+References: <loom.20110814T113311-277@post.gmane.org>
+ <20110815232318.GA4699@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Ingo =?utf-8?Q?Br=C3=BCckl?= <ib@wupperonline.de>
-X-From: git-owner@vger.kernel.org Tue Aug 16 01:47:24 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Zemacsh <ruini.xue@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Aug 16 01:53:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qt6sN-0000Ue-My
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 01:47:24 +0200
+	id 1Qt6xu-0003qd-Ix
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 01:53:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752636Ab1HOXrS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Aug 2011 19:47:18 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:38123
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752551Ab1HOXrS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2011 19:47:18 -0400
-Received: (qmail 30438 invoked by uid 107); 15 Aug 2011 23:47:56 -0000
-Received: from 173-164-171-125-SFBA.hfc.comcastbusiness.net (HELO sigill.intra.peff.net) (173.164.171.125)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 15 Aug 2011 19:47:56 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Aug 2011 16:47:14 -0700
-Content-Disposition: inline
-In-Reply-To: <4e47dcf9.55313988.bm000@wupperonline.de>
+	id S1752684Ab1HOXw6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Aug 2011 19:52:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48963 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752551Ab1HOXw6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2011 19:52:58 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 322074A53;
+	Mon, 15 Aug 2011 19:52:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3o2gLm3kKKKCi7zR4bDdh0iQQsw=; b=JvtE5W
+	QACRcPqapLkhk/8j/AehCzcPBXsJ/9o1qBHyB9RP4Drjqx1ZfD4pszsTKXS0OPFS
+	NJM9vpdW6jutQ2ss40+Mn4V8RfJJcu/HU6K++MvjKLu2ERAL4UB/ICcLz9ihRGzP
+	LlMif0C/ta14z7EXuDgsyLU7Gif0n/3GsERV0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=G7I4T7bJNZl0mDXdwyQfYa80uE3+iYaN
+	csfWULUaJbi6aZBUWYqOGVPR7+7mfpnNJ/OAJR6QmuFYuwhalheif8L0JSWMGiwy
+	1NNeJ+n1m+ERmDWD0UUyzOdk3Fzl8KJmI3AYEED9oF1F9ENiynje5E/jYrqOg4Oe
+	HAAi4zPND3E=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 299FA4A52;
+	Mon, 15 Aug 2011 19:52:57 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B383B4A51; Mon, 15 Aug 2011
+ 19:52:56 -0400 (EDT)
+In-Reply-To: <20110815232318.GA4699@sigill.intra.peff.net> (Jeff King's
+ message of "Mon, 15 Aug 2011 16:23:18 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B2F54538-C799-11E0-88B3-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179397>
 
-On Sun, Aug 14, 2011 at 04:31:49PM +0200, Ingo Br=C3=BCckl wrote:
+Jeff King <peff@peff.net> writes:
 
-> Signed-off-by: Ingo Br=C3=BCckl <ib@wupperonline.de>
-> ---
->  By now stash list ignores it.
->=20
->  git-stash.sh |    3 ++-
->  1 files changed, 2 insertions(+), 1 deletions(-)
->=20
-> diff --git a/git-stash.sh b/git-stash.sh
-> index f4e6f05..7bb0856 100755
-> --- a/git-stash.sh
-> +++ b/git-stash.sh
-> @@ -264,7 +264,8 @@ have_stash () {
->=20
->  list_stash () {
->  	have_stash || return 0
-> -	git log --format=3D"%gd: %gs" -g "$@" $ref_stash --
-> +	test "$(git config --get pager.stash)" =3D "false" && no_pager=3D--=
-no-pager
-> +	git $no_pager log --format=3D"%gd: %gs" -g "$@" $ref_stash --
->  }
+> We should perhaps call "update-index --refresh" at the start to avoid
+> these sorts of false positives. Probably it should happen whenever we
+> "git am --continue", as well. But for efficiency reasons, not between
+> each patch.
+>
+> I dunno. Do people want to call "git am" in a tight loop, where the
+> index refresh would be a problem? I would think they should instead feed
+> a whole mbox in one go.
 
-It's not quite as simple as this these days. The pager.* variables can
-also point to a program to run as a pager for this specific command.
+I am kind of surprised that we have not done the 'refresh once upfront'
+already and nobody ever run into this for the past 5 years. It seems that
+I inherited that behaviour from git-applymbox ;-)
 
-This stuff is supposed to be handled by the "git" wrapper itself, which
-will either run the pager (if the config is boolean true, or a specific
-command), or will set an environment variable to avoid running one for
-any subcommand (if it's boolean false).
-
-However, we don't respect pager.* config for external commands there at
-all. I think this was due to some initialization-order bugs that made i=
-t
-hard for us to look at config before exec'ing external commands. But
-perhaps they are gone, as the patch below[1] seems to work OK for me.
-
----
- git.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/git.c b/git.c
-index 8828c18..47a6d3d 100644
---- a/git.c
-+++ b/git.c
-@@ -459,6 +459,8 @@ static void execv_dashed_external(const char **argv=
-)
- 	const char *tmp;
- 	int status;
-=20
-+	if (use_pager =3D=3D -1)
-+		use_pager =3D check_pager_config(argv[0]);
- 	commit_pager_choice();
-=20
- 	strbuf_addf(&cmd, "git-%s", argv[0]);
-
--Peff
-
-[1] I posted this in a similar discussion several months ago:
-
-    http://thread.gmane.org/gmane.comp.version-control.git/161756/focus=
-=3D161771
-
-I think what it really needs is more testing to see if looking at the
-config then has any unintended side effects.
+It is sensible to refresh once at the beginning and also when restarting
+with "am --resolved".
