@@ -1,113 +1,77 @@
-From: Eric Blake <eblake-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org>
-Subject: rejecting patches that have an offset
-Date: Mon, 15 Aug 2011 17:16:58 -0600
-Organization: Red Hat
-Message-ID: <4E49A8EA.5020507@redhat.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git_checkattr() is inefficient when repeated [Re: [PATCH 00/11]
+ Micro-optimizing lookup_object()]
+Date: Mon, 15 Aug 2011 16:19:00 -0700
+Message-ID: <7vliuujmaj.fsf@alter.siamese.dyndns.org>
+References: <1313085196-13249-1-git-send-email-gitster@pobox.com>
+ <201108121759.24884.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: bug-patch-mXXj517/zsQ@public.gmane.org, Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
-X-From: bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org Tue Aug 16 01:17:05 2011
-Return-path: <bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org>
-Envelope-to: gcgpb-bug-patch@m.gmane.org
-Received: from lists.gnu.org ([140.186.70.17])
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Aug 16 01:19:12 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org>)
-	id 1Qt6P3-0000fp-KM
-	for gcgpb-bug-patch@m.gmane.org; Tue, 16 Aug 2011 01:17:05 +0200
-Received: from localhost ([::1]:43964 helo=lists.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org>)
-	id 1Qt6P2-0001rZ-Np
-	for gcgpb-bug-patch@m.gmane.org; Mon, 15 Aug 2011 19:17:04 -0400
-Received: from eggs.gnu.org ([140.186.70.92]:36688)
-	by lists.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <eblake-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org>) id 1Qt6Oz-0001rE-Ej
-	for bug-patch-mXXj517/zsQ@public.gmane.org; Mon, 15 Aug 2011 19:17:03 -0400
-Received: from Debian-exim by eggs.gnu.org with spam-scanned (Exim 4.71)
-	(envelope-from <eblake-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org>) id 1Qt6Oy-0002gX-6R
-	for bug-patch-mXXj517/zsQ@public.gmane.org; Mon, 15 Aug 2011 19:17:01 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:27618)
-	by eggs.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <eblake-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org>) id 1Qt6Ox-0002gS-Rm
-	for bug-patch-mXXj517/zsQ@public.gmane.org; Mon, 15 Aug 2011 19:17:00 -0400
-Received: from int-mx01.intmail.prod.int.phx2.redhat.com
-	(int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id p7FNGxsv008621
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Mon, 15 Aug 2011 19:16:59 -0400
-Received: from [10.3.113.118] (ovpn-113-118.phx2.redhat.com [10.3.113.118])
-	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP
-	id p7FNGwut003417; Mon, 15 Aug 2011 19:16:58 -0400
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US;
-	rv:1.9.2.18) Gecko/20110621 Fedora/3.1.11-1.fc14
-	Lightning/1.0b3pre Mnenhy/0.8.3 Thunderbird/3.1.11
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
-X-detected-operating-system: by eggs.gnu.org: Genre and OS details not
-	recognized.
-X-Received-From: 209.132.183.28
-X-BeenThere: bug-patch-mXXj517/zsQ@public.gmane.org
-X-Mailman-Version: 2.1.14
-Precedence: list
-List-Id: "Bug reports, suggestions,
-	general discussion for GNU patch." <bug-patch.gnu.org>
-List-Unsubscribe: <https://lists.gnu.org/mailman/options/bug-patch>,
-	<mailto:bug-patch-request-mXXj517/zsQ@public.gmane.org?subject=unsubscribe>
-List-Archive: </archive/html/bug-patch>
-List-Post: <mailto:bug-patch-mXXj517/zsQ@public.gmane.org>
-List-Help: <mailto:bug-patch-request-mXXj517/zsQ@public.gmane.org?subject=help>
-List-Subscribe: <https://lists.gnu.org/mailman/listinfo/bug-patch>,
-	<mailto:bug-patch-request-mXXj517/zsQ@public.gmane.org?subject=subscribe>
-Errors-To: bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org
-Sender: bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179393>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Qt6R4-0001n4-68
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 01:19:10 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752075Ab1HOXTF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Aug 2011 19:19:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38451 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751492Ab1HOXTD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2011 19:19:03 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9EA7446B4;
+	Mon, 15 Aug 2011 19:19:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZHDE0/SQjKzy9beiVePlnLfLFqw=; b=gjSKDu
+	9PPzFKa6mDLce1Hf86q1AD7GNwzvGFmtxZANuSW1PNR129a93zHkdaIlRVzVVK0I
+	Z4NusnhSc4FAwPiCp/Moe19asW0ZkLfd8M7VyxiXNORomaEzd+eaIfvVXOH2CcvL
+	YCm7VUaqK9pKHp8obpjimAvm+hQseCz5n9J+c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dS79Fl1az9rUQxF+5+qkwJH6l0yKSufR
+	aotTQydbY7itb31GQbVywFsGMYp14ascYhJuHOrYuG/bE3o+LukM6ReqmFc8BcZi
+	08q4P0vaj/7gX+OX4NVw8SHwl+zLzTGI818mqV2/g6SzDFB44tudIxvoLKcVYbaQ
+	IBM9Rv5aEkY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9308446B3;
+	Mon, 15 Aug 2011 19:19:02 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0A08746B2; Mon, 15 Aug 2011
+ 19:19:01 -0400 (EDT)
+In-Reply-To: <201108121759.24884.trast@student.ethz.ch> (Thomas Rast's
+ message of "Fri, 12 Aug 2011 17:59:24 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F62FABD6-C794-11E0-B049-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179394>
 
-I ran into a case that cost me several hours today, while building an 
-rpm file for libvirt.  I have a context patch that only adds lines (no 
-deletions), and which had multiple places in the destination file where 
-the patch would match context and still apply, although only one of 
-those places will compile as correct.  However, the patch file was 
-inadvertently generated by git against the wrong version of the 
-destination, so the line numbers in the patch did not match the version 
-of the file that I was trying to apply it to, and 'patch -p1 --fuzz=0 
--s' ended up triggering patch's sliding algorithm where it applied the 
-patch with an offset of 11 lines.  Meanwhile, running the same patch 
-through git applied the patch in a different offset: git found the 
-offset that matched the function name in the @@ line, which was more 
-than 11 lines away, but actually matched the intent of the patch better.
+Thomas Rast <trast@student.ethz.ch> writes:
 
-The problem is that the difference in choice between patch and git 
-resulted in a patch series that works or fails according to which tool 
-you pass it through.  But the whole point of an rpm file is that if the 
-patches were generated correctly, none of them should ever have any 
-offset - an rpm should be tool-independent.
+> Which would be a 4.5% speedup.  Obviously that won't quite be
+> attainable since we want the attributes mechanism to work, but we
+> still shouldn't have to open 4398 .gitattributes files when there are
+> only 8 .gitattributes plus one .git/info/attributes.
 
-It would have saved me a lot of time if both 'patch' and 'git apply' 
-could be taught a mode of operation where they explicitly reject a patch 
-that cannot be applied without relying on an offset.  That is, 'patch 
---fuzz=0' is too weak, and the fact that 'patch -s' squelched the error 
-message meant that I had nothing to alert me to the fact that an offset 
-even took place.  And no, I don't want to filterdiff from patchutils to 
-convert the patch from context-diff over to ed-script-diff just to 
-benefit from the fact that patch does not do offset detection on 
-ed-script-patches.
+True. At runtime, the attribute mechanism wants a stack of per-directory
+attributes it can walk up to find the applicable ones maintained for the
+directory it currently is looking at, and the elements near the leaf are
+popped from the stack to be discarded when the caller goes on to inspect
+paths in a different directory (IOW the machinery is optimized for callers
+that walk the paths in order, without randomly jumping around).
 
-If it were possible to optionally reject patches with offsets, then 
-building rpm files could use this mode to insist that all patches apply 
-offset-free, making for a more robust patch chain (of course, the 
-default should remain that the offset algorithm is still applied, and 
-only suppressed by explicit request, as the use of offsets is normally a 
-very useful feature - my point is that rpm patch chains are an exception 
-for the rule where offsets normally make life easier).
-
-It might also be nice if patch could learn the algorithm that appears to 
-match the git behavior, where when there are multiple points with 
-identical context (viewing just the context in isolation), but where 
-those locations differ in function location (as learned by the @@ header 
-line in the patch file), then the preferred offset is the one in the 
-named function, even if that is not the closes context match to the line 
-number given in the patch file.
-
--- 
-Eric Blake   eblake-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org    +1-801-349-2682
-Libvirt virtualization library http://libvirt.org
+But at least within a process like pack-objects that are known to be long
+lived, we should be able to instead _keep_ the elements that are popped
+when we leave directories at deeper levels, and bring them back to the
+stack when the caller asks for a path in that directory later, without
+going back to the filesystem.
