@@ -1,62 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/6] Retain caches of submodule refs
-Date: Tue, 16 Aug 2011 15:45:02 -0700
-Message-ID: <7v4o1hgemp.fsf@alter.siamese.dyndns.org>
-References: <1313188589-2330-1-git-send-email-mhagger@alum.mit.edu>
- <1313188589-2330-7-git-send-email-mhagger@alum.mit.edu>
+From: Andreas Gruenbacher <andreas.gruenbacher-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Subject: Re: rejecting patches that have an offset
+Date: Wed, 17 Aug 2011 00:48:07 +0200
+Message-ID: <1313534889.5598.21.camel@schurl.linbit>
+References: <4E49A8EA.5020507@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Drew Northup <drew.northup@maine.edu>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Aug 17 00:45:55 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: bug-patch-mXXj517/zsQ@public.gmane.org, Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
+To: Eric Blake <eblake-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org>
+X-From: bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org Wed Aug 17 00:48:18 2011
+Return-path: <bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org>
+Envelope-to: gcgpb-bug-patch@m.gmane.org
+Received: from lists.gnu.org ([140.186.70.17])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtSOQ-0004QT-8M
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Aug 2011 00:45:54 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751878Ab1HPWpT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Aug 2011 18:45:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33864 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751779Ab1HPWpS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2011 18:45:18 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 287E156B3;
-	Tue, 16 Aug 2011 18:45:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rqr4Bb98Yodv4PGvzzFpBdv0CIE=; b=TopA16
-	kY3ewWkqoVsXnzpkAOtebQlPFBBMze0npO3LWA4RA02H67yBfR8AeAUh1O9qsvUX
-	le0eBDFR2mFsIR6mnmGdVvvX+eVQxBAF98ZsTR1W8LVXpwZmpMBMQ8LEA1+edfMs
-	IGGJgmssKWUdMGLoKJqIroNe2rd8QxXOBSJYY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IFGa3rJooBKwHA2awBwn8BYANcyedneL
-	jDX+VYsd3A46kAwz1NLuiCkXxirvIpmF42XKcMKDVdYnj3TcSkQc/H4KVQBSWev1
-	ZdLvoVFI5HK4gtfyOmsGHKO8U+gTdRX1DYXIJUji0iL/lSQYuuyaXXGAk6jwHKJE
-	fnctd96+bTA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1282C56B0;
-	Tue, 16 Aug 2011 18:45:14 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1C37456AC; Tue, 16 Aug 2011
- 18:45:04 -0400 (EDT)
-In-Reply-To: <1313188589-2330-7-git-send-email-mhagger@alum.mit.edu> (Michael
- Haggerty's message of "Sat, 13 Aug 2011 00:36:29 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 61E6C818-C859-11E0-BCED-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179481>
+	(envelope-from <bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org>)
+	id 1QtSQi-0005kY-N6
+	for gcgpb-bug-patch@m.gmane.org; Wed, 17 Aug 2011 00:48:16 +0200
+Received: from localhost ([::1]:33793 helo=lists.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org>)
+	id 1QtSQi-0000lg-B6
+	for gcgpb-bug-patch@m.gmane.org; Tue, 16 Aug 2011 18:48:16 -0400
+Received: from eggs.gnu.org ([140.186.70.92]:52494)
+	by lists.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <andreas.gruenbacher-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>) id 1QtSQf-0000la-T9
+	for bug-patch-mXXj517/zsQ@public.gmane.org; Tue, 16 Aug 2011 18:48:14 -0400
+Received: from Debian-exim by eggs.gnu.org with spam-scanned (Exim 4.71)
+	(envelope-from <andreas.gruenbacher-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>) id 1QtSQe-0006O6-RS
+	for bug-patch-mXXj517/zsQ@public.gmane.org; Tue, 16 Aug 2011 18:48:13 -0400
+Received: from mail-fx0-f41.google.com ([209.85.161.41]:49897)
+	by eggs.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <andreas.gruenbacher-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>) id 1QtSQe-0006O1-IA
+	for bug-patch-mXXj517/zsQ@public.gmane.org; Tue, 16 Aug 2011 18:48:12 -0400
+Received: by fxg9 with SMTP id 9so375628fxg.0
+	for <bug-patch-mXXj517/zsQ@public.gmane.org>; Tue, 16 Aug 2011 15:48:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma;
+	h=subject:from:to:cc:date:in-reply-to:references:content-type
+	:x-mailer:content-transfer-encoding:message-id:mime-version;
+	bh=7/bnWVCcOMvyLEwIL7yB9kd3D9xpWR6nCXr6rZhnoho=;
+	b=aJG0MyJttEWkZvPo700rG5hZJerAC/VZFVz/gV0L75xG2nujqVnCNiDnkc7TGS/WNp
+	Lk5R9j/2cywBYf1nPrLEDSERtF4gMBhzOPb8ad0gL4y/7JEXha1Rm7BfRTktIA292H9D
+	pGo5F04ODNJ6GnsfQhXmLyaCrcPN/1NrgZlFA=
+Received: by 10.223.105.134 with SMTP id t6mr351711fao.81.1313534890991;
+	Tue, 16 Aug 2011 15:48:10 -0700 (PDT)
+Received: from [192.168.91.241] (chello084114015216.14.vie.surfer.at
+	[84.114.15.216])
+	by mx.google.com with ESMTPS id s14sm402323fah.29.2011.08.16.15.48.07
+	(version=SSLv3 cipher=OTHER); Tue, 16 Aug 2011 15:48:09 -0700 (PDT)
+In-Reply-To: <4E49A8EA.5020507-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org>
+X-Mailer: Evolution 3.0.2 (3.0.2-3.fc15) 
+X-detected-operating-system: by eggs.gnu.org: GNU/Linux 2.6 (newer, 2)
+X-Received-From: 209.85.161.41
+X-BeenThere: bug-patch-mXXj517/zsQ@public.gmane.org
+X-Mailman-Version: 2.1.14
+Precedence: list
+List-Id: "Bug reports, suggestions,
+	general discussion for GNU patch." <bug-patch.gnu.org>
+List-Unsubscribe: <https://lists.gnu.org/mailman/options/bug-patch>,
+	<mailto:bug-patch-request-mXXj517/zsQ@public.gmane.org?subject=unsubscribe>
+List-Archive: </archive/html/bug-patch>
+List-Post: <mailto:bug-patch-mXXj517/zsQ@public.gmane.org>
+List-Help: <mailto:bug-patch-request-mXXj517/zsQ@public.gmane.org?subject=help>
+List-Subscribe: <https://lists.gnu.org/mailman/listinfo/bug-patch>,
+	<mailto:bug-patch-request-mXXj517/zsQ@public.gmane.org?subject=subscribe>
+Errors-To: bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org
+Sender: bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179482>
 
-All the changes except for this one made sense to me, but I am not sure
-about this one. How often do we look into different submodule refs in the
-same process over and over again?
+Eric,
+
+On Mon, 2011-08-15 at 17:16 -0600, Eric Blake wrote:
+> It would have saved me a lot of time if both 'patch' and 'git apply' 
+> could be taught a mode of operation where they explicitly reject a patch 
+> that cannot be applied without relying on an offset.
+
+that sounds reasonable.  Can you send a patch or at least add a bug on
+Savannah?
+
+> It might also be nice if patch could learn the algorithm that appears to 
+> match the git behavior, where when there are multiple points with 
+> identical context (viewing just the context in isolation), but where 
+> those locations differ in function location (as learned by the @@ header 
+> line in the patch file), then the preferred offset is the one in the 
+> named function, even if that is not the closes context match to the line 
+> number given in the patch file.
+
+Sounds interesting; a patch for that would be great as well.
+
+Thanks,
+Andreas
