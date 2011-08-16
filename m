@@ -1,7 +1,7 @@
 From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: [PATCH v3 02/10] svn-fe: add EXTLIBS needed for parse-options
-Date: Tue, 16 Aug 2011 15:54:47 +0600
-Message-ID: <1313488495-2203-3-git-send-email-divanorama@gmail.com>
+Subject: [PATCH v3 05/10] vcs-svn: move commit parameters logic to svndump.c
+Date: Tue, 16 Aug 2011 15:54:50 +0600
+Message-ID: <1313488495-2203-6-git-send-email-divanorama@gmail.com>
 References: <1313488495-2203-1-git-send-email-divanorama@gmail.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	David Barr <davidbarr@google.com>,
@@ -14,91 +14,256 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtGLf-00089W-K1
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 11:54:16 +0200
+	id 1QtGLh-00089W-2t
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 11:54:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752025Ab1HPJyB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Aug 2011 05:54:01 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:61184 "EHLO
+	id S1752090Ab1HPJyJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Aug 2011 05:54:09 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:33656 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751998Ab1HPJx6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2011 05:53:58 -0400
-Received: by mail-bw0-f46.google.com with SMTP id 11so3585259bke.19
-        for <git@vger.kernel.org>; Tue, 16 Aug 2011 02:53:57 -0700 (PDT)
+	with ESMTP id S1751987Ab1HPJyE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2011 05:54:04 -0400
+Received: by bke11 with SMTP id 11so3585375bke.19
+        for <git@vger.kernel.org>; Tue, 16 Aug 2011 02:54:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=JxcTjB45j8gy/rx6lUG405nqIk2AWNIORfTwngjSGyY=;
-        b=BWMZ6xWo/DpjJc082f/HnN2AIneCLn7Ou8zv4URsOHhdu3HvraTxs7RoU/D1KU9B/T
-         fG/+vgV+ZKGJHkZvQyJNyd9KdDyQj+xhgUGJkAil7uM2HpX2K+VhtkvSx1/i7r3wbAdX
-         x3SebZINYLwuLCbFnoLvGfb9oC3OEJhxEsIEY=
-Received: by 10.205.64.81 with SMTP id xh17mr909563bkb.343.1313488437724;
-        Tue, 16 Aug 2011 02:53:57 -0700 (PDT)
+        bh=a3GRV13BzgNu/f20mfkTXafIJKBs/N8VLzJr/xz/ZCE=;
+        b=RqUeaJHasJgpmSQ7bpTaR/ZWTu5rqAnppRCDUmWpZzCxKS0/F1/n9HCTIZb2YSVWdo
+         +1WpCVB5Kvybh3J6PBMuq0ooLHpnc/L9dBtWrgbp52OdbGkxZRMchVcoCzjIZzLKATAb
+         MbZCGuPh3oPIzBmiwg8WSG6hb0zLiuyfiFY2w=
+Received: by 10.205.64.79 with SMTP id xh15mr567121bkb.240.1313488443449;
+        Tue, 16 Aug 2011 02:54:03 -0700 (PDT)
 Received: from localhost.localdomain (117360277.convex.ru [79.172.62.237])
-        by mx.google.com with ESMTPS id zx9sm1841723bkb.61.2011.08.16.02.53.55
+        by mx.google.com with ESMTPS id zx9sm1841723bkb.61.2011.08.16.02.54.01
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 16 Aug 2011 02:53:57 -0700 (PDT)
+        Tue, 16 Aug 2011 02:54:02 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.4
 In-Reply-To: <1313488495-2203-1-git-send-email-divanorama@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179416>
 
-Currently parse-options.o pull quite a big bunch of dependencies
-that are neither pulled in by svn-fe Makefile nor included in libgit.a.
+fast_export.c had logic to set up commit ref, author name, email,
+parent commit, import mark and git-svn-id: line based on both it's
+own state (current import batch history) and the arguments passed.
 
-Use a temporary hack: put hardcoded EXTLIBS, this may not work in all
-setups because /Makefile logic is not repeated. The list of extlibs
-is likely to be exhaustive, but one may need to adjust it.
+Do separate the layers: make fast_export focus on producing the
+fast-import stream, applying the deltas but not on svn-fe specific
+logic. svndump now is responsible for choosing commit parents, marks,
+ref name. Making it possible to generate incremental streams, produce
+stream for several branches at a time, customize progress lines generation
+and adding new logic becomes easier.
 
--lcrypto is needed for SHA-1 routines unless NO_OPENSSL or BLK_SHA1
-is set, -lpcre is for grep if USE_LIBPCRE is set, and -lz is needed
-throughout.
+fast_export API changes:
+- make fast_export_begin_commit to be more intuitive by using a set of
+  parameters closer to what gets written to fast-import.
 
-In the future, none of these should be needed, after a little
-rearranging to ensure that parse-options.o has no references to
-translation units that need to access the object db.
+- rename fast_export_end_commit to fast_export_progress as it does only
+  a progress line generation. fast_export_end_commit can be reintroduced
+  once the need will arise.
+
+- git-svn-id line is now a caller concern. If it is needed, it should be
+  simply appended to the log message.
+
+- author_name and author_email are now generated by the caller.
+
+- ref name to be updated with the commit is now a parameter rather than
+  a fixed "refs/heads/master".
+
+The caller now may have to setup temporary buffers for author identity,
+ref names, etc. This is a small additional per-commit cost to arrange
+and/or copy them. Though, it's only per-commit rather that per-path
+and might be worth the gain in readablity.
 
 Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- contrib/svn-fe/Makefile |   12 +++++-------
- 1 files changed, 5 insertions(+), 7 deletions(-)
+ vcs-svn/fast_export.c |   47 +++++++++++++----------------------------------
+ vcs-svn/fast_export.h |    8 ++++----
+ vcs-svn/svndump.c     |   44 +++++++++++++++++++++++++++++++++++++++-----
+ 3 files changed, 56 insertions(+), 43 deletions(-)
 
-diff --git a/contrib/svn-fe/Makefile b/contrib/svn-fe/Makefile
-index bc03a3e..8b12df1 100644
---- a/contrib/svn-fe/Makefile
-+++ b/contrib/svn-fe/Makefile
-@@ -8,11 +8,12 @@ CFLAGS = -g -O2 -Wall
- LDFLAGS =
- ALL_CFLAGS = $(CFLAGS)
- ALL_LDFLAGS = $(LDFLAGS)
--EXTLIBS =
-+EXTLIBS = -lssl -lcrypto -lpcre -lz -lpthread
+diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
+index 19d7c34..3dfccd2 100644
+--- a/vcs-svn/fast_export.c
++++ b/vcs-svn/fast_export.c
+@@ -13,9 +13,6 @@
+ #include "sliding_window.h"
+ #include "line_buffer.h"
  
- GIT_LIB = ../../libgit.a
- VCSSVN_LIB = ../../vcs-svn/lib.a
--LIBS = $(VCSSVN_LIB) $(GIT_LIB) $(EXTLIBS)
-+XDIFF_LIB = ../../xdiff/lib.a
-+LIBS = $(VCSSVN_LIB) $(GIT_LIB) $(XDIFF_LIB) $(EXTLIBS)
- 
- QUIET_SUBDIR0 = +$(MAKE) -C # space to separate -C and subdir
- QUIET_SUBDIR1 =
-@@ -53,11 +54,8 @@ svn-fe.1: svn-fe.txt
- 		../contrib/svn-fe/$@
- 	$(MV) ../../Documentation/svn-fe.1 .
- 
--../../vcs-svn/lib.a: FORCE
--	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) vcs-svn/lib.a
+-#define MAX_GITSVN_LINE_LEN 4096
 -
--../../libgit.a: FORCE
--	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) libgit.a
-+$(VCSSVN_LIB) $(GIT_LIB) $(XDIFF_LIB): ../../%.a: FORCE
-+	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) $*.a
+-static uint32_t first_commit_done;
+ static struct line_buffer postimage = LINE_BUFFER_INIT;
+ static struct line_buffer report_buffer = LINE_BUFFER_INIT;
  
- clean:
- 	$(RM) svn-fe$X svn-fe.o svn-fe.html svn-fe.xml svn-fe.1
+@@ -31,7 +28,6 @@ static int init_postimage(void)
+ 
+ void fast_export_init(int fd)
+ {
+-	first_commit_done = 0;
+ 	if (buffer_fdinit(&report_buffer, fd))
+ 		die_errno("cannot read from file descriptor %d", fd);
+ }
+@@ -73,40 +69,23 @@ void fast_export_modify(const char *path, uint32_t mode, const char *dataref)
+ 	putchar('\n');
+ }
+ 
+-static char gitsvnline[MAX_GITSVN_LINE_LEN];
+-void fast_export_begin_commit(uint32_t revision, const char *author,
+-			const struct strbuf *log,
+-			const char *uuid, const char *url,
+-			unsigned long timestamp)
++void fast_export_begin_commit(const char *ref, uint32_t mark, const char *from,
++			const char *author_name, const char *author_email,
++			const struct strbuf *log, unsigned long timestamp)
+ {
+-	static const struct strbuf empty = STRBUF_INIT;
+-	if (!log)
+-		log = &empty;
+-	if (*uuid && *url) {
+-		snprintf(gitsvnline, MAX_GITSVN_LINE_LEN,
+-				"\n\ngit-svn-id: %s@%"PRIu32" %s\n",
+-				 url, revision, uuid);
+-	} else {
+-		*gitsvnline = '\0';
+-	}
+-	printf("commit refs/heads/master\n");
+-	printf("mark :%"PRIu32"\n", revision);
+-	printf("committer %s <%s@%s> %ld +0000\n",
+-		   *author ? author : "nobody",
+-		   *author ? author : "nobody",
+-		   *uuid ? uuid : "local", timestamp);
+-	printf("data %"PRIuMAX"\n",
+-		(uintmax_t) (log->len + strlen(gitsvnline)));
++	printf("commit %s\n", ref);
++	if (mark)
++		printf("mark :%"PRIu32"\n", mark);
++	printf("committer %s <%s> %ld +0000\n",
++		author_name, author_email, timestamp);
++	printf("data %"PRIuMAX"\n", (uintmax_t) log->len);
+ 	fwrite(log->buf, log->len, 1, stdout);
+-	printf("%s\n", gitsvnline);
+-	if (!first_commit_done) {
+-		if (revision > 1)
+-			printf("from :%"PRIu32"\n", revision - 1);
+-		first_commit_done = 1;
+-	}
++	putchar('\n');
++	if (from && *from)
++		printf("from %s\n", from);
+ }
+ 
+-void fast_export_end_commit(uint32_t revision)
++void fast_export_progress(uint32_t revision)
+ {
+ 	printf("progress Imported commit %"PRIu32".\n\n", revision);
+ }
+diff --git a/vcs-svn/fast_export.h b/vcs-svn/fast_export.h
+index 43d05b6..bf58880 100644
+--- a/vcs-svn/fast_export.h
++++ b/vcs-svn/fast_export.h
+@@ -10,10 +10,10 @@ void fast_export_reset(void);
+ 
+ void fast_export_delete(const char *path);
+ void fast_export_modify(const char *path, uint32_t mode, const char *dataref);
+-void fast_export_begin_commit(uint32_t revision, const char *author,
+-			const struct strbuf *log, const char *uuid,
+-			const char *url, unsigned long timestamp);
+-void fast_export_end_commit(uint32_t revision);
++void fast_export_begin_commit(const char *ref, uint32_t mark, const char *from,
++			const char *author_name, const char *author_email,
++			const struct strbuf *log, unsigned long timestamp);
++void fast_export_progress(uint32_t revision);
+ void fast_export_data(uint32_t mode, uint32_t len, struct line_buffer *input);
+ void fast_export_blob_delta(uint32_t mode,
+ 			uint32_t old_mode, const char *old_data,
+diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
+index 5cdf6b8..28d84c9 100644
+--- a/vcs-svn/svndump.c
++++ b/vcs-svn/svndump.c
+@@ -37,6 +37,8 @@
+ #define LENGTH_UNKNOWN (~0)
+ #define DATE_RFC2822_LEN 31
+ 
++#define MAX_GITSVN_LINE_LEN 4096
++
+ static struct line_buffer input = LINE_BUFFER_INIT;
+ 
+ static struct {
+@@ -54,6 +56,7 @@ static struct {
+ static struct {
+ 	uint32_t version;
+ 	struct strbuf uuid, url;
++	int first_commit_done;
+ } dump_ctx;
+ 
+ static void reset_node_ctx(char *fname)
+@@ -86,6 +89,7 @@ static void reset_dump_ctx(const char *url)
+ 		strbuf_addstr(&dump_ctx.url, url);
+ 	dump_ctx.version = 1;
+ 	strbuf_reset(&dump_ctx.uuid);
++	dump_ctx.first_commit_done = 0;
+ }
+ 
+ static void handle_property(const struct strbuf *key_buf,
+@@ -299,19 +303,49 @@ static void handle_node(void)
+ 				node_ctx.textLength, &input);
+ }
+ 
++static void add_metadata_trailer(struct strbuf *buf)
++{
++	if (*dump_ctx.uuid.buf && *dump_ctx.url.buf)
++		strbuf_addf(buf, "\n\ngit-svn-id: %s@%"PRIu32" %s\n",
++			 dump_ctx.url.buf, rev_ctx.revision, dump_ctx.uuid.buf);
++}
++
+ static void begin_revision(void)
+ {
++	static struct strbuf email;
++	const char *author;
++	uint32_t prev;
++	char buf[32];
++
+ 	if (!rev_ctx.revision)	/* revision 0 gets no git commit. */
+ 		return;
+-	fast_export_begin_commit(rev_ctx.revision, rev_ctx.author.buf,
+-		&rev_ctx.log, dump_ctx.uuid.buf, dump_ctx.url.buf,
+-		rev_ctx.timestamp);
++	prev = dump_ctx.first_commit_done ? rev_ctx.revision - 1 : 0;
++	if (prev)
++		snprintf(buf, 32, ":%"PRIu32, prev);
++	else
++		*buf = 0;
++	author = *rev_ctx.author.buf ? rev_ctx.author.buf : "nobody";
++
++	strbuf_reset(&email);
++	strbuf_addstr(&email, author);
++	strbuf_addch(&email, '@');
++	if (*dump_ctx.uuid.buf)
++		strbuf_addstr(&email, dump_ctx.uuid.buf);
++	else
++		strbuf_addstr(&email, "local");
++
++	add_metadata_trailer(&rev_ctx.log);
++
++	fast_export_begin_commit("refs/heads/master", rev_ctx.revision, buf,
++		author, email.buf, &rev_ctx.log, rev_ctx.timestamp);
+ }
+ 
+ static void end_revision(void)
+ {
+-	if (rev_ctx.revision)
+-		fast_export_end_commit(rev_ctx.revision);
++	if (rev_ctx.revision) {
++		fast_export_progress(rev_ctx.revision);
++		dump_ctx.first_commit_done = 1;
++	}
+ }
+ 
+ void svndump_read(void)
 -- 
 1.7.3.4
