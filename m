@@ -1,72 +1,61 @@
-From: Christian Thaeter <ct-dtRWZPArUE0dnm+yROfE0A@public.gmane.org>
-Subject: Git-Labs at FrOSCon, August 20th/21st 2011,
-	St. Augustin/Germany
-Date: Tue, 16 Aug 2011 03:03:13 +0200
-Message-ID: <20110816030313.3d29cb29@starbase>
-Reply-To: General Discussion about Lumiera <lumiera-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: git diff is slow (--patience is fast)
+Date: Tue, 16 Aug 2011 11:01:26 +0800
+Message-ID: <CALUzUxopva0p28+OtVwy1gpfuzc9xVet7fGP4gne42n4W_8kcA@mail.gmail.com>
+References: <loom.20110809T093124-847@post.gmane.org>
+	<CALUzUxpOR-YZh-GKzivyKVpff9ue-t3qEoNK4wGsZZjX_a1=-A@mail.gmail.com>
+	<loom.20110809T133735-979@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: lumiera-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org
-To: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
-X-From: lumiera-bounces-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org Tue Aug 16 02:58:24 2011
-Return-path: <lumiera-bounces-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org>
-Envelope-to: gcvlg-lumiera@m.gmane.org
-Received: from mail.lumiera.org ([88.198.15.173])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Marat Radchenko <marat@slonopotamus.org>
+X-From: git-owner@vger.kernel.org Tue Aug 16 05:01:36 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <lumiera-bounces-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org>)
-	id 1Qt7z4-0001C2-Jk
-	for gcvlg-lumiera@m.gmane.org; Tue, 16 Aug 2011 02:58:22 +0200
-Received: from [127.0.0.1] (mail.lumiera.org [88.198.15.173])
-	by mail.lumiera.org (Postfix) with ESMTP id 182651BF07A;
-	Tue, 16 Aug 2011 02:58:22 +0200 (CEST)
-X-Original-To: lumiera-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org
-Delivered-To: lumiera-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org
-Received: from mail.pipapo.org (pipapo.org [213.240.181.249])
-	by mail.lumiera.org (Postfix) with ESMTP id B1A9F1D883
-	for <lumiera-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org>; Tue, 16 Aug 2011 02:58:20 +0200 (CEST)
-Received: from starbase (starbase.pipapo.org [10.20.20.10])
-	by mail.pipapo.org (Postfix) with ESMTP id 356981D8356;
-	Tue, 16 Aug 2011 03:02:07 +0200 (CEST)
-X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; x86_64-pc-linux-gnu)
-X-BeenThere: lumiera-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org
-X-Mailman-Version: 2.1.11
-Precedence: list
-List-Id: General Discussion about Lumiera <lumiera.lists.lumiera.org>
-List-Unsubscribe: <http://lists.lumiera.org/cgi-bin/mailman/options/lumiera>, 
-	<mailto:lumiera-request-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org?subject=unsubscribe>
-List-Archive: <http://lists.lumiera.org/pipermail/lumiera>
-List-Post: <mailto:lumiera-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org>
-List-Help: <mailto:lumiera-request-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org?subject=help>
-List-Subscribe: <http://lists.lumiera.org/cgi-bin/mailman/listinfo/lumiera>,
-	<mailto:lumiera-request-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org?subject=subscribe>
-Sender: lumiera-bounces-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org
-Errors-To: lumiera-bounces-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179399>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Qt9uH-0006yS-RB
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 05:01:34 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753423Ab1HPDB2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Aug 2011 23:01:28 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:48927 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752028Ab1HPDB2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2011 23:01:28 -0400
+Received: by fxh19 with SMTP id 19so3946704fxh.19
+        for <git@vger.kernel.org>; Mon, 15 Aug 2011 20:01:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=cocZRpuaP2zq8PIXK1gDmliP20wvw6NkdBPLuWKWIlU=;
+        b=B1Mu9J+vQRW7LWh8cpWwtlU4VgctnomOt+S1ePh1rCm/njdgv2keDA1zKrALcCbI+Z
+         uvOp+1nRorZ65fZ34H7ybA8lixtsx2EnOaa8NngduV8yHUI0NaoTWHsaM7J3XzzsXEXx
+         JGnAOXm0wR5bIKbkPdw1/64cD/xK3uuM8THFs=
+Received: by 10.223.1.135 with SMTP id 7mr6450551faf.46.1313463686999; Mon, 15
+ Aug 2011 20:01:26 -0700 (PDT)
+Received: by 10.223.95.198 with HTTP; Mon, 15 Aug 2011 20:01:26 -0700 (PDT)
+In-Reply-To: <loom.20110809T133735-979@post.gmane.org>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179400>
 
-We, the Lumiera.org developers will host an open Git-Workshop at
-FrOSCon (http://froscon.org/) this year.
+On Tue, Aug 9, 2011 at 7:39 PM, Marat Radchenko <marat@slonopotamus.org> wrote:
+> Good idea.
+>
+> New steps to reproduce:
+> ~ $ git clone git://slonopotamus.org/git-diff
+> Cloning into git-diff...
 
-Lumiera using git since its very beginning as core of its open
-infrastructure with the goal to lower the entry barrier to the
-project. Our Workshop aims to give beginners a introduction
-to Git 'in practice' as well as discuss and discover tricks and
-workflows with advanced users and to exchange experiences.
+Thanks.
 
-The whole workshop is open, interested people can just step by to ask
-and watch. In particular we will meet just after (Saturday 16:20) Scotts
-"Wrangling Git" Talk (15:15 HS1/2) in our workshop room to try out what
-we've just learned.
+I traced this to a O(n*m) spot in
+xdiff/xprepare.c::xdl_classify_record(). Patch coming up.
 
-In case anyone developed interesting new ways to use Git we'd like to
-invite him to show these. Also any professional is welcome to join us
-in helping at our workshop showing Git to others.
-
-	See you,
-		Christian
-
-_______________________________________________
-Lumiera mailing list
-Lumiera-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org
-http://lists.lumiera.org/cgi-bin/mailman/listinfo/lumiera
-http://lumiera.org/donations.html
+-- 
+Cheers,
+Ray Chuan
