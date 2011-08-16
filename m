@@ -1,91 +1,86 @@
-From: Andreas Gruenbacher <andreas.gruenbacher-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-Subject: Re: rejecting patches that have an offset
-Date: Wed, 17 Aug 2011 00:48:07 +0200
-Message-ID: <1313534889.5598.21.camel@schurl.linbit>
-References: <4E49A8EA.5020507@redhat.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Utilize config variable pager.stash in stash list command
+Date: Tue, 16 Aug 2011 15:56:40 -0700
+Message-ID: <20110816225639.GA20050@sigill.intra.peff.net>
+References: <20110815234714.GB4699@sigill.intra.peff.net>
+ <4e4a4743.4e230d8a.bm000@wupperonline.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: bug-patch-mXXj517/zsQ@public.gmane.org, Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
-To: Eric Blake <eblake-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org>
-X-From: bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org Wed Aug 17 00:48:18 2011
-Return-path: <bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org>
-Envelope-to: gcgpb-bug-patch@m.gmane.org
-Received: from lists.gnu.org ([140.186.70.17])
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Ingo =?utf-8?Q?Br=C3=BCckl?= <ib@wupperonline.de>
+X-From: git-owner@vger.kernel.org Wed Aug 17 00:56:50 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org>)
-	id 1QtSQi-0005kY-N6
-	for gcgpb-bug-patch@m.gmane.org; Wed, 17 Aug 2011 00:48:16 +0200
-Received: from localhost ([::1]:33793 helo=lists.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org>)
-	id 1QtSQi-0000lg-B6
-	for gcgpb-bug-patch@m.gmane.org; Tue, 16 Aug 2011 18:48:16 -0400
-Received: from eggs.gnu.org ([140.186.70.92]:52494)
-	by lists.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <andreas.gruenbacher-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>) id 1QtSQf-0000la-T9
-	for bug-patch-mXXj517/zsQ@public.gmane.org; Tue, 16 Aug 2011 18:48:14 -0400
-Received: from Debian-exim by eggs.gnu.org with spam-scanned (Exim 4.71)
-	(envelope-from <andreas.gruenbacher-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>) id 1QtSQe-0006O6-RS
-	for bug-patch-mXXj517/zsQ@public.gmane.org; Tue, 16 Aug 2011 18:48:13 -0400
-Received: from mail-fx0-f41.google.com ([209.85.161.41]:49897)
-	by eggs.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <andreas.gruenbacher-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>) id 1QtSQe-0006O1-IA
-	for bug-patch-mXXj517/zsQ@public.gmane.org; Tue, 16 Aug 2011 18:48:12 -0400
-Received: by fxg9 with SMTP id 9so375628fxg.0
-	for <bug-patch-mXXj517/zsQ@public.gmane.org>; Tue, 16 Aug 2011 15:48:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma;
-	h=subject:from:to:cc:date:in-reply-to:references:content-type
-	:x-mailer:content-transfer-encoding:message-id:mime-version;
-	bh=7/bnWVCcOMvyLEwIL7yB9kd3D9xpWR6nCXr6rZhnoho=;
-	b=aJG0MyJttEWkZvPo700rG5hZJerAC/VZFVz/gV0L75xG2nujqVnCNiDnkc7TGS/WNp
-	Lk5R9j/2cywBYf1nPrLEDSERtF4gMBhzOPb8ad0gL4y/7JEXha1Rm7BfRTktIA292H9D
-	pGo5F04ODNJ6GnsfQhXmLyaCrcPN/1NrgZlFA=
-Received: by 10.223.105.134 with SMTP id t6mr351711fao.81.1313534890991;
-	Tue, 16 Aug 2011 15:48:10 -0700 (PDT)
-Received: from [192.168.91.241] (chello084114015216.14.vie.surfer.at
-	[84.114.15.216])
-	by mx.google.com with ESMTPS id s14sm402323fah.29.2011.08.16.15.48.07
-	(version=SSLv3 cipher=OTHER); Tue, 16 Aug 2011 15:48:09 -0700 (PDT)
-In-Reply-To: <4E49A8EA.5020507-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org>
-X-Mailer: Evolution 3.0.2 (3.0.2-3.fc15) 
-X-detected-operating-system: by eggs.gnu.org: GNU/Linux 2.6 (newer, 2)
-X-Received-From: 209.85.161.41
-X-BeenThere: bug-patch-mXXj517/zsQ@public.gmane.org
-X-Mailman-Version: 2.1.14
-Precedence: list
-List-Id: "Bug reports, suggestions,
-	general discussion for GNU patch." <bug-patch.gnu.org>
-List-Unsubscribe: <https://lists.gnu.org/mailman/options/bug-patch>,
-	<mailto:bug-patch-request-mXXj517/zsQ@public.gmane.org?subject=unsubscribe>
-List-Archive: </archive/html/bug-patch>
-List-Post: <mailto:bug-patch-mXXj517/zsQ@public.gmane.org>
-List-Help: <mailto:bug-patch-request-mXXj517/zsQ@public.gmane.org?subject=help>
-List-Subscribe: <https://lists.gnu.org/mailman/listinfo/bug-patch>,
-	<mailto:bug-patch-request-mXXj517/zsQ@public.gmane.org?subject=subscribe>
-Errors-To: bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org
-Sender: bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179482>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1QtSYz-00020f-GV
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Aug 2011 00:56:49 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751539Ab1HPW4o convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Aug 2011 18:56:44 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:54920
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751335Ab1HPW4n (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2011 18:56:43 -0400
+Received: (qmail 6963 invoked by uid 107); 16 Aug 2011 22:57:22 -0000
+Received: from 173-164-171-125-SFBA.hfc.comcastbusiness.net (HELO sigill.intra.peff.net) (173.164.171.125)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 16 Aug 2011 18:57:22 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Aug 2011 15:56:40 -0700
+Content-Disposition: inline
+In-Reply-To: <4e4a4743.4e230d8a.bm000@wupperonline.de>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179483>
 
-Eric,
+On Tue, Aug 16, 2011 at 12:10:45PM +0200, Ingo Br=C3=BCckl wrote:
 
-On Mon, 2011-08-15 at 17:16 -0600, Eric Blake wrote:
-> It would have saved me a lot of time if both 'patch' and 'git apply' 
-> could be taught a mode of operation where they explicitly reject a patch 
-> that cannot be applied without relying on an offset.
+> > http://thread.gmane.org/gmane.comp.version-control.git/161756/focus=
+=3D161771
+>=20
+> Actually, I only wanted to change the stash list behavior (but better=
+ should
+> have used $(git config --get pager.stash.list) for that). Unfortunate=
+ly, it
+> is impossible then to force the pager with --paginate again.
+>=20
+> > I think what it really needs is more testing to see if looking at t=
+he
+> > config then has any unintended side effects.
+>=20
+> Yours surely is a far better approach, although it only can handle th=
+e main
+> command (stash), not the sub-command (list), but this is totally in
+> accordance with everything else in git.
 
-that sounds reasonable.  Can you send a patch or at least add a bug on
-Savannah?
+Yeah, that is a general problem with git's pager handling. We only have
+one context: a single git command. But some commands may have multiple
+subcommands, and a pager only makes sense for some of them.
 
-> It might also be nice if patch could learn the algorithm that appears to 
-> match the git behavior, where when there are multiple points with 
-> identical context (viewing just the context in isolation), but where 
-> those locations differ in function location (as learned by the @@ header 
-> line in the patch file), then the preferred offset is the one in the 
-> named function, even if that is not the closes context match to the line 
-> number given in the patch file.
+You've run into it for "stash show", but it is no different than
+something like "git branch". You might want the list of branches to go
+through a pager, but almost certainly not branch creation or deletion
+operations.
 
-Sounds interesting; a patch for that would be great as well.
+I think something like pager.stash.list is the right way forward. But
+your patch by itself isn't enough. It only handles the negative case.
+Setting "pager.stash.list" to "true" would do nothing.
 
-Thanks,
-Andreas
+> With "pager.stash false" (which would then require --paginate for a l=
+ot of
+> stash commands), I found that a paginated output of 'git -p stash sho=
+w -p'
+> loses the diff colors, but that seems unrelated to your patch. It sti=
+ll is
+> strange though.
+
+We auto-detect whether to use colors based on whether we are outputting
+to a terminal or not. If we start the pager ourselves, we will also
+output colors (unless color.pager is false). I suspect the "pager in
+use" flag is not making it to the external command.
+
+-Peff
