@@ -1,118 +1,161 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] commit: check return value of lookup_commit()
-Date: Tue, 16 Aug 2011 11:02:23 -0700
-Message-ID: <7vy5ytgrps.fsf@alter.siamese.dyndns.org>
-References: <1313422716-26432-1-git-send-email-pclouds@gmail.com>
- <7vei0mlg8d.fsf@alter.siamese.dyndns.org>
- <CACsJy8AusStKNWuw3j740r4Nc0FhzR+jJZJNaesxn68pr7dTqA@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v2] revert: plug memory leak in "cherry-pick root commit"
+ codepath
+Date: Tue, 16 Aug 2011 13:16:33 -0500
+Message-ID: <20110816181633.GB10336@elie.gateway.2wire.net>
+References: <1313310789-10216-1-git-send-email-artagnon@gmail.com>
+ <1313310789-10216-7-git-send-email-artagnon@gmail.com>
+ <20110814131303.GF18466@elie.gateway.2wire.net>
+ <CALkWK0=zqyvL8zo9wvBGUXyf3RWSZB7dY=WaC9TN6YXnThag0Q@mail.gmail.com>
+ <20110814152204.GJ18466@elie.gateway.2wire.net>
+ <7v39h1i6rr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 16 20:02:34 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 16 20:16:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtNyC-0006V4-9V
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 20:02:32 +0200
+	id 1QtOBw-0006HR-5E
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 20:16:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752685Ab1HPSC1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Aug 2011 14:02:27 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61466 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752296Ab1HPSC0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2011 14:02:26 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E180E4AAD;
-	Tue, 16 Aug 2011 14:02:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=oaoYFcI/C/gR
-	i7ivsU8+nJTQw1Q=; b=SjbGoZaG3BbNBE//Ktqjb/KY4oR2VfIjDMwCNuW1l0wD
-	XaFl4VzF+6GKCLdCKVYWx72PDSpJy9ObIutcttsmSk4oFUFaC2m/16wZbAaV/dyL
-	ZtDN4oFPVXuNtO/Gu3DBRDH9YZmWqpTO1poU9O0Mj7iWzeeRSm0iZiGi7gX/gCE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=NZ+DRN
-	QAbaqVEa+jIpJDVbP8B/mUyBUhTiu1ARtD40NaACaL6Wedn4jFr5H9V1C9DJ25Ee
-	2P4s490qV+Vl16XV3RY2YzD7ZGsnfpvg3dHHVR/F4j/Ig2/GZJ3sc6sgEUD2rcFX
-	bA8i67+ilUSnJgbrKwCEg/vrKimspLgtoWxuo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D96684AAC;
-	Tue, 16 Aug 2011 14:02:25 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6B8284AAB; Tue, 16 Aug 2011
- 14:02:25 -0400 (EDT)
-In-Reply-To: <CACsJy8AusStKNWuw3j740r4Nc0FhzR+jJZJNaesxn68pr7dTqA@mail.gmail.com> (Nguyen
- Thai Ngoc Duy's message of "Tue, 16 Aug 2011 20:22:27 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: E5BE274E-C831-11E0-8A6C-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752155Ab1HPSQj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Aug 2011 14:16:39 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:47099 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751952Ab1HPSQj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2011 14:16:39 -0400
+Received: by gxk21 with SMTP id 21so142586gxk.19
+        for <git@vger.kernel.org>; Tue, 16 Aug 2011 11:16:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=hbJN1BgC37qOYuITmtye9monh5suBYi9iFgayiz1GNA=;
+        b=KiG5gVyp1bGb7HQJZLGXcDGBqj8Fk0n6F+IIKEdtqMxbHiCemM6dp9gtbg211aA2fM
+         mVSRtoeXiSCWTw+U9yaH0ZDyHI0jXei3I4c7ciSHfCuIgC6hQ03lDcZ9hxgtsb+6/zV9
+         zVAd1uhciNh5VMcGAIkRFMzoRD5uNnANAHjLg=
+Received: by 10.90.40.6 with SMTP id n6mr11798agn.140.1313518598266;
+        Tue, 16 Aug 2011 11:16:38 -0700 (PDT)
+Received: from elie.gateway.2wire.net (adsl-69-209-67-175.dsl.chcgil.ameritech.net [69.209.67.175])
+        by mx.google.com with ESMTPS id l13sm219515anj.42.2011.08.16.11.16.35
+        (version=SSLv3 cipher=OTHER);
+        Tue, 16 Aug 2011 11:16:37 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v39h1i6rr.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179465>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+Junio C Hamano wrote:
 
-> 2011/8/16 Junio C Hamano <gitster@pobox.com>:
->> The change itself looks good to me but a point and a half to think a=
-bout:
->>
->> =C2=A0- In this if/elseif/.../else cascade, everybody except for the
->> =C2=A0 "initial_commit" case needs to make sure that head_sha1 point=
-s at a
->> =C2=A0 valid commit and get an commit object. Hoisting the scope of =
-the
->> =C2=A0 variable "commit" one level in your patch is good, but it wou=
-ld make it
->> =C2=A0 easier to read and the future code modification much less err=
-or prone
->> =C2=A0 if (1) you called lookup_commit() and checked for errors befo=
-re
->> =C2=A0 entering this if/elseif/... cascade, and (2) you renamed this=
- variable
->> =C2=A0 to "head_commit".
+> Thanks for noticing, but shouldn't we be just using
 >
-> But then I would need to avoid die()ing in "initial_commit" case.
-
-That's exactly what I said.
-
-	if (!initial)
-	        /* we need to know the head_commit */
-                head_commit =3D lookup_and_check(HEAD);
-
-	/* depending on what kind of commit, we need different stuff */
-        if (initial)
-        	... going to create a parentless commit
-	else if (amending)
-		... use the head_commit to learn parent, reuse the message
-                ... from there
-	else if ...
-
-These two are independent if/else cascades in the sense that the first =
-is
-about learning the details of head_commit, and the latter is about
-learning how the commit is done, and in a subset of the latter head_com=
-mit
-is used.
-
->> =C2=A0- Whether we like it or not, many people have a broken reimple=
-mentations
->> =C2=A0 of git that can put a non-commit in HEAD, and they won't be f=
-ixed
->> =C2=A0 overnight. Instead of erroring out, would it be nicer of us i=
-f we just
->> =C2=A0 warned, unwrapped the tag and used the tagged commit instead?
+> 	lookup_tree((const unsigned char *)EMPTY_TREE_SHA1_BIN)
 >
-> How about replacing those lookup_commit() with this? It would tolerat=
-e
-> tag-in-branch case, but also warn users that something's gone wrong.
+> or something, instead of hand-crafting a fake tree object?
 
-Yes, that is exactly what I meant.
+Yes.  Ever since v1.5.5-rc0~180^2~1 (hard-code the empty tree object,
+2008-02-13), there is no need to call pretend_sha1_file() again to
+get a fake empty tree object, so this lookup_tree() should work
+fine.
 
-Thakns.
+-- >8 --
+Subject: revert: plug memory leak in "cherry-pick root commit" codepath
+
+For each parentless commit it is asked to reuse, "git cherry-pick" and
+"git revert" hand-craft a fake parent tree object on the heap to pass
+to merge_trees().  Leaking such a small one-time allocation would not
+be a big deal, but now that cherry-pick/revert can take multiple
+commit arguments, it can start to add up.
+
+The fix is simple: don't create a new fake empty tree at all, but rely
+on the built-in one that has existed since 346245a1 (hard-code the
+empty tree object, 2008-02-13).
+
+While at it, add a test to make sure cherry-picking multiple
+parentless commits continues to work.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Improved-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/revert.c            |    7 +------
+ t/t3503-cherry-pick-root.sh |   27 ++++++++++++++++++++++++++-
+ 2 files changed, 27 insertions(+), 7 deletions(-)
+
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 853e9e40..a26a7c93 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -273,12 +273,7 @@ static void write_message(struct strbuf *msgbuf, const char *filename)
+ 
+ static struct tree *empty_tree(void)
+ {
+-	struct tree *tree = xcalloc(1, sizeof(struct tree));
+-
+-	tree->object.parsed = 1;
+-	tree->object.type = OBJ_TREE;
+-	pretend_sha1_file(NULL, 0, OBJ_TREE, tree->object.sha1);
+-	return tree;
++	return lookup_tree((const unsigned char *)EMPTY_TREE_SHA1_BIN);
+ }
+ 
+ static NORETURN void die_dirty_index(const char *me)
+diff --git a/t/t3503-cherry-pick-root.sh b/t/t3503-cherry-pick-root.sh
+index b0faa299..472e5b80 100755
+--- a/t/t3503-cherry-pick-root.sh
++++ b/t/t3503-cherry-pick-root.sh
+@@ -16,15 +16,40 @@ test_expect_success setup '
+ 	echo second > file2 &&
+ 	git add file2 &&
+ 	test_tick &&
+-	git commit -m "second"
++	git commit -m "second" &&
++
++	git symbolic-ref HEAD refs/heads/third &&
++	rm .git/index file2 &&
++	echo third > file3 &&
++	git add file3 &&
++	test_tick &&
++	git commit -m "third"
+ 
+ '
+ 
+ test_expect_success 'cherry-pick a root commit' '
+ 
++	git checkout second^0 &&
+ 	git cherry-pick master &&
+ 	test first = $(cat file1)
+ 
+ '
+ 
++test_expect_success 'cherry-pick two root commits' '
++
++	echo first >expect.file1 &&
++	echo second >expect.file2 &&
++	echo third >expect.file3 &&
++
++	git checkout second^0 &&
++	git cherry-pick master third &&
++
++	test_cmp expect.file1 file1 &&
++	test_cmp expect.file2 file2 &&
++	test_cmp expect.file3 file3 &&
++	git rev-parse --verify HEAD^^ &&
++	test_must_fail git rev-parse --verify HEAD^^^
++
++'
++
+ test_done
+-- 
+1.7.6
