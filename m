@@ -1,117 +1,112 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] update-index: add --swap to swap index and worktree
- content
-Date: Tue, 16 Aug 2011 14:01:08 -0700
-Message-ID: <20110816210108.GA13710@sigill.intra.peff.net>
-References: <1313158058-7684-1-git-send-email-pclouds@gmail.com>
- <7vippxgm6y.fsf@alter.siamese.dyndns.org>
+From: "Christopher M. Fuhrman" <cfuhrman@panix.com>
+Subject: Re: [PATCH/RFC] gitweb: highlight: strip non-printable characters
+ via col(1)
+Date: Tue, 16 Aug 2011 14:32:12 -0700 (PDT)
+Message-ID: <alpine.NEB.2.01.1108161414030.7527@vc75.vc.panix.com>
+References: <1313518605-26460-1-git-send-email-cfuhrman@panix.com> <4E4AD35E.8060907@eaglescrag.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 16 23:01:19 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, jnareb@gmail.com, cwilson@cdwilson.us,
+	sylvain@abstraction.fr
+To: "J.H." <warthog9@eaglescrag.net>
+X-From: git-owner@vger.kernel.org Tue Aug 16 23:32:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtQlC-0003Es-CY
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 23:01:18 +0200
+	id 1QtRFC-00044o-Mq
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 23:32:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752794Ab1HPVBN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Aug 2011 17:01:13 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:40025
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752399Ab1HPVBM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2011 17:01:12 -0400
-Received: (qmail 6309 invoked by uid 107); 16 Aug 2011 21:01:51 -0000
-Received: from 206.111.142.135.ptr.us.xo.net (HELO sigill.intra.peff.net) (206.111.142.135)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 16 Aug 2011 17:01:51 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Aug 2011 14:01:08 -0700
-Content-Disposition: inline
-In-Reply-To: <7vippxgm6y.fsf@alter.siamese.dyndns.org>
+	id S1752610Ab1HPVcN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Aug 2011 17:32:13 -0400
+Received: from mailbackend.panix.com ([166.84.1.89]:35235 "EHLO
+	mailbackend.panix.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751844Ab1HPVcN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2011 17:32:13 -0400
+Received: from vc75.vc.panix.com (vc75.vc.panix.com [166.84.7.75])
+	by mailbackend.panix.com (Postfix) with ESMTP id 6433C34B07;
+	Tue, 16 Aug 2011 17:32:12 -0400 (EDT)
+X-X-Sender: cfuhrman@vc75.vc.panix.com
+In-Reply-To: <4E4AD35E.8060907@eaglescrag.net>
+User-Agent: Alpine 2.01 (NEB 1266 2009-07-14)
+X-OpenPGP-Key-ID: F37818CF
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179478>
 
-On Tue, Aug 16, 2011 at 01:01:41PM -0700, Junio C Hamano wrote:
+On Tue, 16 Aug 2011 at 1:30pm, J.H. wrote:
 
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->=20
-> > What I want is a quick way to modify index content without changing
-> > worktree, then I can continue adding more hunks to the index.
->=20
-> Why would you even want to do that?
->=20
-> Suppose you want to update hello.c in the index but not in the workin=
-g
-> tree for whatever reason I do not understand.  Presumably you would w=
-ith
-> this patch do this:
->=20
-> 	edit hello.c
->         git update-index --swap hello.c
->=20
-> assuming that the state of hello.c _before_ the edit was pristine.  B=
-ut
-> then after that what would you do?  Probably you would commit that
-> untested change, and rebase-i to clean them up later, which is fine.
+> On 08/16/2011 11:16 AM, Christopher M. Fuhrman wrote:
+> > From: "Christopher M. Fuhrman" <cfuhrman@panix.com>
+> >
+> > The current code, as is, passes control characters, such as form-feed
+> > (^L) to highlight which then passes it through to the browser.  This
+> > will cause the browser to display one of the following warnings:
+> >
 
-I suspect (or at least, this is how I would use it) it is more about
-having some changes in the index and some changes in the working tree,
-but realizing that what's in the index needs tweaked. Something like:
+<snip>
 
-  # add some content with an error
-  echo 'printf("hello word!\n")' >hello.c
-  git add hello.c
+> > Strip non-printable control-characters by piping the output produced
+> > by git-cat-file(1) to col(1) as follows:
+> >
+> >   git cat-file blob deadbeef314159 | col -bx | highlight <args>
+>
+> So my only real concern here is that `col` itself is going to munge
+> whitespace.  Quoting from the col man page:
+>
+> 	[...] and replaces white-space characters with tabs where
+> 	    possible. [...]
 
-  # work on it more, realizing the error
-  echo 'printf("goodbye world!\n") >hello.c
+I figured that would be a concern which is why I added the -x option.
+From the col(1) man page:
 
-  # now what? you want to stage the s/word/world/ fixup,
-  # but you want to keep the hello/goodbye thing as a separate change.
-  # Using anything line-based is going to conflate the two.
-  # The change is simple, though, so you can just as easily edit the
-  # index file, if only you could get to it. So you do:
-  git update-index --swap hello.c
-  sed -i s/word/world/ hello.c
-  git update-index --swap hello.c
+  -x        Output multiple spaces instead of tabs.
 
-So the swap really functions as a toggle of "I would like to work on
-the index version for a minute", and then you toggle back when you're
-done.
+I also took a diff between two XHTML files.  One that used col -bx and one
+that didn't.  Here's the results:
 
-I can think of two ways to do the same thing that are a little less
-confusing or error-prone, though:
+--- withoutcol.xhtml	2011-08-16 14:11:39.000000000 -0700
++++ withcol.xhtml	2011-08-16 14:11:26.000000000 -0700
+@@ -52,7 +52,7 @@
+ <span class="hl dir"># define DBG_CFG(args)</span>
+ <span class="hl dir">#endif</span>
 
-  1. A command to dump the index version to a tempfile, run $EDITOR on
-     it, and then read it back in. Technically this restricts you to
-     using $EDITOR to make the changes, but in practice that is probabl=
-y
-     fine.
+-
++
+ <span class="hl com">/*</span>
+ <span class="hl com"> * Routines to access TIG registers.</span>
+ <span class="hl com"> */</span>
+@@ -76,7 +76,7 @@
+         <span class="hl sym">*</span>tig_addr <span class="hl sym">= (</span><span class="hl kwb">unsigned long</span><span class="hl sym">)</span>value<span class="hl sym">;</span>
+ <span class="hl sym">}</span>
 
-  2. You can dump the file to a pipe yourself, but getting it back into
-     the index is a little bit awkward. You have to do something like:
+-
++
+ <span class="hl com">/*</span>
+ <span class="hl com"> * Given a bus, device, and function number, compute resulting</span>
+ <span class="hl com"> * configuration space address</span>
+@@ -197,7 +197,7 @@
+         <span class="hl sym">.</span>write <span class="hl sym">=</span>        titan_write_config<span class="hl sym">,</span>
+ <span class="hl sym">};</span>
 
-       blob=3D`git cat-file blob :hello.c |
-             sed 's/word/world/ |
-             git hash-object --stdin -w`
-       mode=3D`git ls-files -s hello.c | cut -d' ' -f1`
-       git update-index --cacheinfo $mode $blob hello.c
+(remainder stripped)
 
-     it would be much nicer if this was:
+>
+> Have you actually run into a situation where something like ^L was
+> present in a blob that was being passed to highlight?
+>
 
-       git cat-file blob :hello.c |
-       sed 's/word/world/ |
-       git add --stdin-contents hello.c
+I've seen ^L is the Linux kernel source tree as well as the NetBSD src
+tree.  I've not encountered it elsewhere although I would think it would
+be present depending on personal/corporate coding preferences.
 
-     However, I expect this sort of piping is the minority case, and
-     most people would be happy with (1).
+> - John
 
--Peff
+Cheers!
+
+-- 
+Chris Fuhrman
+cfuhrman@panix.com
