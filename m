@@ -1,134 +1,92 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] update-index: add --swap to swap index and worktree content
-Date: Tue, 16 Aug 2011 15:01:55 +0200
-Message-ID: <4E4A6A43.7040706@drmicha.warpmail.net>
-References: <1313158058-7684-1-git-send-email-pclouds@gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] commit: check return value of lookup_commit()
+Date: Tue, 16 Aug 2011 20:22:27 +0700
+Message-ID: <CACsJy8AusStKNWuw3j740r4Nc0FhzR+jJZJNaesxn68pr7dTqA@mail.gmail.com>
+References: <1313422716-26432-1-git-send-email-pclouds@gmail.com> <7vei0mlg8d.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 16 15:02:05 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 16 15:23:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtJHR-00088a-3W
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 15:02:05 +0200
+	id 1QtJbl-0003uB-TI
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 15:23:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751622Ab1HPNB7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Aug 2011 09:01:59 -0400
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:54912 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751377Ab1HPNB6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2011 09:01:58 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 61D8E20CAA;
-	Tue, 16 Aug 2011 09:01:57 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Tue, 16 Aug 2011 09:01:57 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=4UmiaZ6LDTbqQzjLMpacMd
-	JqkC4=; b=dND3DnT5CCfTCIfhTpF3f10wmubmA2NhuYPy+FdzEqUtGM2z4uENcY
-	zKvQtwkfzqSSEH8o7OBVRCUrrHzCezy3fGk8K5sGpf1P7u9pv83oH23SgZD4lpF4
-	etxCL4d2Xd5ESvjJsTu1KMPSgvofveODpdrGnYM+/DehURzizWGfQ=
-X-Sasl-enc: 6xAl7RCkvvA437jNKk3XfL5iOGc0MxS+oL8hhoaulkwE 1313499717
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id BDE6F41E39E;
-	Tue, 16 Aug 2011 09:01:56 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110707 Thunderbird/5.0
-In-Reply-To: <1313158058-7684-1-git-send-email-pclouds@gmail.com>
+	id S1752391Ab1HPNW7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Aug 2011 09:22:59 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:46596 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751821Ab1HPNW6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2011 09:22:58 -0400
+Received: by bke11 with SMTP id 11so3711695bke.19
+        for <git@vger.kernel.org>; Tue, 16 Aug 2011 06:22:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=DNSiGuspB7j3JhfUcypnMVERhexitlQQWfhSSD12xkA=;
+        b=nIjyOKNzWLPoNTli9LHPrHWNQpptiT6r1+XBZpwAIBJ05QWEOwjbAwNAhAv5rkWHD2
+         sMfHQeyaliz1sgSjuWbCNp027HtOUNj2XaB/PCoDhvXWJwQ0PKWwOOl4MKWmlGO9RiVV
+         6ilrSR/rqi2dVF7HmoD5BL2g7qPPQ6DSKDRoA=
+Received: by 10.204.174.130 with SMTP id t2mr956481bkz.383.1313500977393; Tue,
+ 16 Aug 2011 06:22:57 -0700 (PDT)
+Received: by 10.204.156.19 with HTTP; Tue, 16 Aug 2011 06:22:27 -0700 (PDT)
+In-Reply-To: <7vei0mlg8d.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179445>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy venit, vidit, dixit 12.08.201=
-1 16:07:
-> Sometimes "git add -p" with "e" to edit the patch does not satisfy me=
-=2E
-> What I want is a quick way to modify index content without changing
-> worktree, then I can continue adding more hunks to the index.
->=20
-> With this option, I can swap index out for a quick edit, then swap it=
- in
-> again.
+2011/8/16 Junio C Hamano <gitster@pobox.com>:
+> The change itself looks good to me but a point and a half to think ab=
+out:
+>
+> =C2=A0- In this if/elseif/.../else cascade, everybody except for the
+> =C2=A0 "initial_commit" case needs to make sure that head_sha1 points=
+ at a
+> =C2=A0 valid commit and get an commit object. Hoisting the scope of t=
+he
+> =C2=A0 variable "commit" one level in your patch is good, but it woul=
+d make it
+> =C2=A0 easier to read and the future code modification much less erro=
+r prone
+> =C2=A0 if (1) you called lookup_commit() and checked for errors befor=
+e
+> =C2=A0 entering this if/elseif/... cascade, and (2) you renamed this =
+variable
+> =C2=A0 to "head_commit".
 
-I had to think about that explanation for a while (partly because "git
-add" does not alter the wt either). So, your patch would support the
-following workflow:
+But then I would need to avoid die()ing in "initial_commit" case. So
+it becomes two related condition blocks (head_commit check and the
+if/elseif...), more error prone to me.
 
-git add foo # have index =3D=3D wt
-hack foo # change foo in wt
-git update-index --swap foo # add foo and reset to previous state
+> =C2=A0- Whether we like it or not, many people have a broken reimplem=
+entations
+> =C2=A0 of git that can put a non-commit in HEAD, and they won't be fi=
+xed
+> =C2=A0 overnight. Instead of erroring out, would it be nicer of us if=
+ we just
+> =C2=A0 warned, unwrapped the tag and used the tagged commit instead?
 
-Am I understanding you right? The option could trickle down to "add".
+How about replacing those lookup_commit() with this? It would tolerate
+tag-in-branch case, but also warn users that something's gone wrong.
 
-I share the pov that "add -p with e" sometimes doesn't cut it. But
-similarly, the fact that "add -p" can't be used to undo a previous "add
--p" is suboptimal. Both issues could be solved with a 3way stage tool. =
-I
-have this on my todo/wish list, and I seem to recall that Jeff or Junio
-came up with a few lines of (scripting) code for that. That would depen=
-d
-on the availability of proper tools, though (e.g. vim in diff mode).
-
---swap might be useful nevertheless.
-
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  Not sure if anybody has the same needs, enough to polish it and make
->  it to master.
->=20
->  builtin/update-index.c |   16 ++++++++++++++++
->  1 files changed, 16 insertions(+), 0 deletions(-)
->=20
-> diff --git a/builtin/update-index.c b/builtin/update-index.c
-> index a6a23fa..b96065a 100644
-> --- a/builtin/update-index.c
-> +++ b/builtin/update-index.c
-> @@ -22,6 +22,7 @@
->  static int allow_add;
->  static int allow_remove;
->  static int allow_replace;
-> +static int swap_entry;
->  static int info_only;
->  static int force_remove;
->  static int verbose;
-> @@ -104,6 +105,19 @@ static int add_one_path(struct cache_entry *old,=
- const char *path, int len, stru
->  		free(ce);
->  		return -1;
->  	}
-> +	if (swap_entry) {
-> +		struct checkout state;
-> +		if (allow_add || allow_remove)
-> +			die("--add, --replace and --swap do not play together");
-> +		memset(&state, 0, sizeof(state));
-> +		state.force =3D 1;
-> +		state.not_new =3D 1;
-> +		if (add_cache_entry(ce, 0))
-> +			return error("%s: cannot add to the index", path);
-> +		if (checkout_entry(old, &state, NULL))
-> +			return error("%s: cannot swap", path);
-> +		return 0;
-> +	}
->  	option =3D allow_add ? ADD_CACHE_OK_TO_ADD : 0;
->  	option |=3D allow_replace ? ADD_CACHE_OK_TO_REPLACE : 0;
->  	if (add_cache_entry(ce, option))
-> @@ -727,6 +741,8 @@ int cmd_update_index(int argc, const char **argv,=
- const char *prefix)
->  			"let files replace directories and vice-versa", 1),
->  		OPT_SET_INT(0, "remove", &allow_remove,
->  			"notice files missing from worktree", 1),
-> +		OPT_SET_INT(0, "swap", &swap_entry,
-> +			"swap the content of index and worktree", 1),
->  		OPT_BIT(0, "unmerged", &refresh_args.flags,
->  			"refresh even if index contains unmerged entries",
->  			REFRESH_UNMERGED),
+struct commit *lookup_expect_commit(const unsigned char *sha1,
+				    const char *ref_name)
+{
+	struct commit *c =3D lookup_commit_reference(sha1);
+	if (!c)
+		die(_("could not parse %s"), ref_name);
+	if (hashcmp(sha1, c->object.sha1))
+		warning(_("%s %s is not a commit!"),
+			ref_name, sha1_to_hex(sha1));
+	return c;
+}
+--=20
+Duy
