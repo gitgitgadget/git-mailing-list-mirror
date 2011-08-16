@@ -1,62 +1,56 @@
-From: =?ISO-8859-1?Q?Ingo_Br=FCckl?= <ib@wupperonline.de>
-Subject: [PATCH] stash: Utilize config variable pager.stash.list in stash list command
-Date: Tue, 16 Aug 2011 13:47:09 +0200
-Message-ID: <4e4a58c2.48d6f6ce.bm001@wupperonline.de>
+From: Arabov Gennady <arabov@t-online.de>
+Subject: =?windows-1251?b?x+Dj8ODtIOTi5fDoIO3lIOLl8Pwg7/Du4uXw/CDt5fIg9uXt7fsg7Q==?=
+ =?windows-1251?b?6OblIPfl7CDzIO3g8SA0LTktNSA3NDAtOTAtNDQ=?=
+Date: Tue, 16 Aug 2011 15:18:44 +0200
+Organization: vmtemvg
+Message-ID: <432234176.201108161518@t-online.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=windows-1251
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 16 13:50:06 2011
+To: git@vger.kernel.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 16 14:18:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtI9k-0007gk-Pg
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 13:50:05 +0200
+	id 1QtIbJ-0006xB-7V
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 14:18:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751930Ab1HPLt5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Aug 2011 07:49:57 -0400
-Received: from smtp-a.tal.de ([81.92.1.9]:44163 "EHLO smtp-a.tal.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751416Ab1HPLt4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2011 07:49:56 -0400
-Received: from point.localnet (mue-88-130-93-036.dsl.tropolys.de [88.130.93.36])
-	(Authenticated sender: ib@wtal.de)
-	by smtp-a.tal.de (Postfix) with ESMTP id 8D97B11E3664
-	for <git@vger.kernel.org>; Tue, 16 Aug 2011 13:49:53 +0200 (CEST)
-Received: from ib by point.localnet with local (masqmail 0.2.21) id
- 1QtI9Y-6Cp-00 for <git@vger.kernel.org>; Tue, 16 Aug 2011 13:49:52 +0200
-X-Mailer: blueMail/Linux 1.5
+	id S1751828Ab1HPMS3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Aug 2011 08:18:29 -0400
+Received: from 109.251.3.159.freenet.com.ua ([109.251.3.159]:2785 "ehlo
+	109.251.3.159.freenet.com.ua" rhost-flags-OK-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751363Ab1HPMS2 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2011 08:18:28 -0400
+X-Greylist: delayed 3224 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Aug 2011 08:18:27 EDT
+X-Mailer: The Bat! (v3.99.3) UNREG
+X-Priority: 3 (Normal)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179439>
+X-Spam-Report: 11.6 points;
+ *  4.0 RCVD_NUMERIC_HELO Received: contains an IP address used for HELO
+ * -1.1 BAYES_05 BODY: Bayesian spam probability is 1 to 5%
+ *      [score: 0.0389]
+ *  2.0 URIBL_BLACK Contains an URL listed in the URIBL blacklist
+ *      [URIs: clck.ru]
+ *  2.0 URIBL_SC_SWINOG URI's listed in uribl.swinog.ch.
+ *      [URIs: clck.ru]
+ *  1.8 URIBL_PH_SURBL Contains an URL listed in the PH SURBL blocklist
+ *      [URIs: clck.ru]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: clck.ru]
+ *  1.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: clck.ru]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179440>
 
-Usually it is annoying that the pager is used for stash list output,
-so the config variable pager.stash.list will be utilized now and is
-a way to control stash list's behavior.
+=C4=EB=FF =EF=EE=EC=E5=F9=E5=ED=E8=E9 =E4=E2=E5=F0=E8
+=F3 =ED=E0=F1 =ED=E0 5o =E4=E5=F8=E5=E2=EB=E5
 
-Signed-off-by: Ingo Br=FCckl <ib@wupperonline.de>
----
- git-stash.sh |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
 
-diff --git a/git-stash.sh b/git-stash.sh
-index f4e6f05..29702ab 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -264,7 +264,8 @@ have_stash () {
+495 740-90-22
 
- list_stash () {
- 	have_stash || return 0
--	git log --format=3D"%gd: %gs" -g "$@" $ref_stash --
-+	test "$(git config --get pager.stash.list)" =3D "false" && no_pager=3D=
---no-pager
-+	git $no_pager log --format=3D"%gd: %gs" -g "$@" $ref_stash --
- }
-
- show_stash () {
---
-1.7.6
+http://clck.ru/ImPi
