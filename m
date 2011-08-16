@@ -1,56 +1,55 @@
-From: Aleksashin <gennady@auhcc.com>
-Subject: =?windows-1251?b?xOLl8Ogg6/7h++Ug8fPv5fAg7eUg5O7w7uPuICA0IDk1IDc0LTA5MA==?=
- =?windows-1251?b?MjI=?=
-Date: Tue, 16 Aug 2011 08:41:29 +00
-Message-ID: <110816084129A5.00716.gennady@auhcc.com>
+From: Arabov Gennady <gennady@stericsson.com>
+Subject: =?windows-1251?b?x+Dj8ODtIOTi5fDoIO3lIOLl8Pwg7/Du4uXw/CDk5e3l4yDt5SDt4A==?=
+ =?windows-1251?b?5O4g7+738uggNzQwLTkwLTQ0IOIgNDk1?=
+Date: Tue, 16 Aug 2011 18:17:29 +0800
+Message-ID: <1108161817299W.00776.gennady@stericsson.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="windows-1251"
 Content-Transfer-Encoding: base64
 To: git@vger.kernel.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 16 10:42:04 2011
+X-From: git-owner@vger.kernel.org Tue Aug 16 11:26:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtFDn-00017h-Vh
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 10:42:04 +0200
+	id 1QtFur-0000iZ-7h
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 11:26:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751535Ab1HPIl4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Aug 2011 04:41:56 -0400
-Received: from 41-66-240-22-dedicated.4u.com.gh ([41.66.240.22]:33178 "ehlo
-	41-66-240-22-dedicated.4u.com.gh" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751236Ab1HPIl4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2011 04:41:56 -0400
-X-Greylist: delayed 2354 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Aug 2011 04:41:52 EDT
+	id S1751345Ab1HPJVo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Aug 2011 05:21:44 -0400
+Received: from [92.126.4.248] ([92.126.4.248]:1240 "ehlo c6fb1c7b5b1b49f"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751158Ab1HPJVo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2011 05:21:44 -0400
+X-Greylist: delayed 7955 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Aug 2011 05:21:43 EDT
 User-Agent: KMail/1.9.7
 Content-Disposition: inline
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: None
-X-CTCH-PVer: 0000001
-X-CTCH-Spam: Unknown
-X-CTCH-VOD: Unknown
-X-CTCH-Flags: 0
-X-CTCH-RefID: str=0001.0A0B020D.4E4A2D52.0063,ss=1,pt=DBB_65837,fgs=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 12.2 points;
- *  1.2 INVALID_DATE Invalid Date: header (not RFC 2822)
- * -0.2 BAYES_40 BODY: Bayesian spam probability is 20 to 40%
- *      [score: 0.3721]
+X-Spam-Report: 14.6 points;
  *  1.5 BASE64_LENGTH_79_INF BODY: BASE64_LENGTH_79_INF
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?41.66.240.22>]
+ * -1.1 BAYES_05 BODY: Bayesian spam probability is 1 to 5%
+ *      [score: 0.0207]
+ *  1.5 RAZOR2_CF_RANGE_E8_51_100 Razor2 gives engine 8 confidence level
+ *      above 50%
+ *      [cf: 100]
+ *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
+ *  3.0 RAZOR2_CF_RANGE_51_100 Razor2 gives confidence level above 50%
+ *      [cf: 100]
  *  2.0 URIBL_SC_SWINOG URI's listed in uribl.swinog.ch.
- *      [URIs: u.to]
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: u.to]
- *  0.6 RCVD_IN_SORBS_WEB RBL: SORBS: sender is a abuseable web server
- *      [URIs: u.to]
- [41.66.240.22 listed in dnsbl.sorbs.net]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179409>
+ *      [URIs: b23.ru]
+ *  2.0 URIBL_BLACK Contains an URL listed in the URIBL blacklist
+ *      [URIs: b23.ru]
+ *  1.8 URIBL_PH_SURBL Contains an URL listed in the PH SURBL blocklist
+ *      [URIs: b23.ru]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: b23.ru]
+ *  1.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
+ *      [URIs: b23.ru]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179411>
 
-xOLl8Ogg4vXu5O375SDk6/8g6/7h+/Ug7+7s5fnl7ejpDQru9+Xt/CDt5SDk7vDu4+4g5O4gNTAg8ero5OrgDQoNCg0KOTI2IPLl6yAwMTEtMzItNDQNCg0KaHR0cDovL3UudG8vWm40Z0FRDQo=
+z+7s5fnl7ej/IOTi5fDoIOL17uQNCu/u9/LoIOHl8e/r4PLt7g0KDQoNCjQgOTUgNzQtMDkwMjINCg0KaHR0cDovL2IyMy5ydS9ub3M2DQo=
