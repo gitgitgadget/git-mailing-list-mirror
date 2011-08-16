@@ -1,99 +1,80 @@
-From: "Christopher M. Fuhrman" <cfuhrman@panix.com>
-Subject: [PATCH/RFC] gitweb: highlight: strip non-printable characters via col(1)
-Date: Tue, 16 Aug 2011 11:16:44 -0700
-Message-ID: <1313518605-26460-1-git-send-email-cfuhrman@panix.com>
-Cc: jnareb@gmail.com, cwilson@cdwilson.us, sylvain@abstraction.fr,
-	"Christopher M. Fuhrman" <cfuhrman@panix.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 16 20:33:17 2011
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2] revert: plug memory leak in "cherry-pick root commit"
+ codepath
+Date: Tue, 16 Aug 2011 13:56:16 -0500
+Message-ID: <20110816185616.GE10336@elie.gateway.2wire.net>
+References: <1313310789-10216-1-git-send-email-artagnon@gmail.com>
+ <1313310789-10216-7-git-send-email-artagnon@gmail.com>
+ <20110814131303.GF18466@elie.gateway.2wire.net>
+ <CALkWK0=zqyvL8zo9wvBGUXyf3RWSZB7dY=WaC9TN6YXnThag0Q@mail.gmail.com>
+ <20110814152204.GJ18466@elie.gateway.2wire.net>
+ <7v39h1i6rr.fsf@alter.siamese.dyndns.org>
+ <20110816181633.GB10336@elie.gateway.2wire.net>
+ <20110816183147.GA10117@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Aug 16 20:56:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtORw-0007DX-Tu
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 20:33:17 +0200
+	id 1QtOoP-0004DE-58
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 20:56:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752588Ab1HPSdM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Aug 2011 14:33:12 -0400
-Received: from l2mail1.panix.com ([166.84.1.75]:49921 "EHLO l2mail1.panix.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752078Ab1HPSdM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2011 14:33:12 -0400
-X-Greylist: delayed 960 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Aug 2011 14:33:11 EDT
-Received: from mailbackend.panix.com (mailbackend.panix.com [166.84.1.89])
-	by l2mail1.panix.com (Postfix) with ESMTP id 46955FA
-	for <git@vger.kernel.org>; Tue, 16 Aug 2011 14:17:13 -0400 (EDT)
-Received: from vc75.vc.panix.com (vc75.vc.panix.com [166.84.7.75])
-	by mailbackend.panix.com (Postfix) with ESMTP id A4A25347E1;
-	Tue, 16 Aug 2011 14:17:10 -0400 (EDT)
-X-Mailer: git-send-email 1.7.5.4
+	id S1751592Ab1HPS4Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Aug 2011 14:56:24 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:38114 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751295Ab1HPS4X (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2011 14:56:23 -0400
+Received: by bke11 with SMTP id 11so154066bke.19
+        for <git@vger.kernel.org>; Tue, 16 Aug 2011 11:56:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=LtgtyKvW24bdGvOwVh/x3svLmGeKEGwQNDchoL4GEHc=;
+        b=Nq+ZiFfgBMrasknaVMZj4YiR7/dnEvTwqACoorpSIbJz2cGMw/x9lxTrJtSLrPItKZ
+         VoyEPesoYh1DJoa/Bp6PQw6YQU8Vbg/aiamjOXcA4GRg6HmZuV1qDFf0LXSMozccIFMm
+         OhlfhIZtrDjeLR0vQepPUoiPpshcXa2mMfAfQ=
+Received: by 10.204.171.66 with SMTP id g2mr34425bkz.8.1313520982389;
+        Tue, 16 Aug 2011 11:56:22 -0700 (PDT)
+Received: from elie.gateway.2wire.net (adsl-69-209-67-175.dsl.chcgil.ameritech.net [69.209.67.175])
+        by mx.google.com with ESMTPS id x19sm116932bkt.9.2011.08.16.11.56.19
+        (version=SSLv3 cipher=OTHER);
+        Tue, 16 Aug 2011 11:56:21 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20110816183147.GA10117@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179469>
 
-From: "Christopher M. Fuhrman" <cfuhrman@panix.com>
+Jeff King wrote:
+> On Tue, Aug 16, 2011 at 01:16:33PM -0500, Jonathan Nieder wrote:
 
-The current code, as is, passes control characters, such as form-feed
-(^L) to highlight which then passes it through to the browser.  This
-will cause the browser to display one of the following warnings:
+>>  static struct tree *empty_tree(void)
+>>  {
+>> -	struct tree *tree = xcalloc(1, sizeof(struct tree));
+>> -
+>> -	tree->object.parsed = 1;
+>> -	tree->object.type = OBJ_TREE;
+>> -	pretend_sha1_file(NULL, 0, OBJ_TREE, tree->object.sha1);
+>> -	return tree;
+>> +	return lookup_tree((const unsigned char *)EMPTY_TREE_SHA1_BIN);
+>>  }
+>
+> Much nicer. But doesn't your dab0d41 (correct type of
+> EMPTY_TREE_SHA1_BIN, 2011-02-07) make the cast unnecessary?
 
-Safari v5.1 (6534.50) & Google Chrome v13.0.782.112:
-
-  This page contains the following errors:
-
-  error on line 657 at column 38: PCDATA invalid Char value 12
-  Below is a rendering of the page up to the first error.
-
-Mozilla Firefox 3.6.19 & Mozilla Firefox 5.0:
-
-   XML Parsing Error: not well-formed
-   Location:
-   http://path/to/git/repo/blah/blah
-
-Both errors were generated by gitweb.perl v1.7.3.4 w/ highlight 2.7
-using arch/ia64/kernel/unwind.c from the Linux kernel.
-
-Strip non-printable control-characters by piping the output produced
-by git-cat-file(1) to col(1) as follows:
-
-  git cat-file blob deadbeef314159 | col -bx | highlight <args>
-
-Tested under OpenSuSE 11.4 & NetBSD 5.1 using perl 5.12.3 and perl
-5.12.2 respectively using Safari, Firefox, and Google Chrome.
-
-Signed-off-by: Christopher M. Fuhrman <cfuhrman@panix.com>
----
-
-For an example of this bug in action, see:
-
- *
-   http://git.fuhrbear.com/~cfuhrman/?p=linux/.git;a=blob;f=arch/alpha/kernel/core_titan.c;h=219bf271c0ba2e5f2d668af707df57fbbd00ccfd;hb=HEAD
- *
-   http://git.fuhrbear.com/~cfuhrman/?p=linux/.git;a=blob;f=arch/ia64/kernel/unwind.c;h=fed6afa2e8a9014e65229e51e64fa4b1c13cc284;hb=HEAD
-
-WRT the col(1) command, I've verified that the binary is installed in
-/usr/bin on OpenSuSE, NetBSD, OpenBSD, Solaris 10, and AIX.  This
-patch assumes that /usr/bin is in $PATH.
-
-Cheers!
-
- gitweb/gitweb.perl |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 81dacf2..38d5d4e 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3656,6 +3656,7 @@ sub run_highlighter {
- 
- 	close $fd;
- 	open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | ".
-+	          "col -bx | ".
- 	          quote_command($highlight_bin).
- 	          " --replace-tabs=8 --fragment --syntax $syntax |"
- 		or die_error(500, "Couldn't open file or run syntax highlighter");
--- 
-1.7.5.4
+Yes, I was working against an older codebase (for no particular
+reason).
