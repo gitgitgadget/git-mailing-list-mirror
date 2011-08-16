@@ -1,58 +1,116 @@
-From: Aleksashin <aleksashin@mnogo.ru>
-Subject: =?windows-1251?b?zfPm7eAg4vXu5O3g/yDk4uXw/CDx6ujk6uAgNTAgNCA5IDUgNzQwLQ==?=
- =?windows-1251?b?OTA0NA==?=
-Date: Tue, 16 Aug 2011 16:54:18 +0200
-Organization: auemcor
-Message-ID: <745507072.201108161654@mnogo.ru>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: RFC: repository of handy git aliases?
+Date: Tue, 16 Aug 2011 15:55:51 +0200
+Message-ID: <4E4A76E7.2090100@drmicha.warpmail.net>
+References: <CAH3AnrpSeWytri-bHEi_9qkAKG1fjL0pVuYFOrrmZumJ6dv_wg@mail.gmail.com> <CANQwDwfwvaYQt+ck8ky0obyeAa--Wwtdme3UC4vNMFkSiBMq9g@mail.gmail.com> <CAH3AnrqEfu1jeCo55bJxLDK8845PsLoZtoT0iWkMUtt1+K9X-w@mail.gmail.com> <CAH3AnrrNPBNNNr7Lm2-vnqOisxWorF4FS32H+LBaybWF3KdnGg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1251
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 16 15:54:28 2011
+Cc: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 16 15:56:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtK65-0005fp-8v
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 15:54:25 +0200
+	id 1QtK7c-0006ap-Sb
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 15:56:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752673Ab1HPNyW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Aug 2011 09:54:22 -0400
-Received: from [91.214.83.2] ([91.214.83.2]:3297 "ehlo uhdyaf.com"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752554Ab1HPNyS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2011 09:54:18 -0400
-X-Greylist: delayed 5470 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Aug 2011 09:54:18 EDT
-X-Mailer: The Bat! (v3.99.3) UNREG
-X-Priority: 3 (Normal)
+	id S1752826Ab1HPNz4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Aug 2011 09:55:56 -0400
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:34387 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751996Ab1HPNzx (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2011 09:55:53 -0400
+Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 87D032235A;
+	Tue, 16 Aug 2011 09:55:53 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute6.internal (MEProxy); Tue, 16 Aug 2011 09:55:53 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=QKviQjT3lDYMiQxTHiRrUt
+	JA6D0=; b=txRMCJjdNpxzN+9f8xlK1ohyijfP77rArZwVnOKONVK7IT47PWUozI
+	Fc7JcFnC5dmxXrxQgiNCpNPd2zOYKXLonM5eNsAN3+fuqawgi5sDjdJmIPIK7AG+
+	I8XZYuI0hWtLhM2pallrqxW8rRez0wcGRcaU8DTb/aeByCSavhjxY=
+X-Sasl-enc: hZK6oKcNKxRtmsr5b5rGJe1kCdcG8iX5+BRvclIOnwu6 1313502953
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id E4C8745F920;
+	Tue, 16 Aug 2011 09:55:52 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110707 Thunderbird/5.0
+In-Reply-To: <CAH3AnrrNPBNNNr7Lm2-vnqOisxWorF4FS32H+LBaybWF3KdnGg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 9.8 points;
- * -2.6 BAYES_00 BODY: Bayesian spam probability is 0 to 1%
- *      [score: 0.0001]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?91.214.83.2>]
- *  0.6 RCVD_IN_SORBS_WEB RBL: SORBS: sender is a abuseable web server
- *      [91.214.83.2 listed in dnsbl.sorbs.net]
- *  2.0 URIBL_BLACK Contains an URL listed in the URIBL blacklist
- *      [URIs: clck.ru]
- *  2.0 URIBL_SC_SWINOG URI's listed in uribl.swinog.ch.
- *      [URIs: clck.ru]
- *  1.8 URIBL_PH_SURBL Contains an URL listed in the PH SURBL blocklist
- *      [URIs: clck.ru]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: clck.ru]
- *  1.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: clck.ru]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179449>
 
-=D1=F3=EF=E5=F0 =ED=E5 =E4=EE=F0=EE=E3=E8=E5 =E4=E2=E5=F0=E8
-50 =F1=EA=E8=E4=EA=E0 =F1=E5=E9=F7=E0=F1 =E6=E5
+Jon Seymour venit, vidit, dixit 08.08.2011 12:43:
+> On Mon, Aug 8, 2011 at 8:22 PM, Jon Seymour <jon.seymour@gmail.com> w=
+rote:
+>> On Mon, Aug 8, 2011 at 7:45 PM, Jakub Nar=C4=99bski <jnareb@gmail.co=
+m> wrote:
+>>> On 8/8/11, Jon Seymour <jon.seymour@gmail.com> wrote:
+>=20
+> I've also added this...
+>=20
+> Listing the tips of branches in pu that are not in master
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> Suppose you have two aliases defined like so:
+>=20
+> [alias]
+>         oneline =3D !/usr/bin/xargs -L1 git log --decorate --max-coun=
+t=3D1 --oneline
 
+How about
 
-495 7409022
+oneline =3D git log --no-walk --decorate --oneline
 
-http://clck.ru/ImPi
+>         tips =3D "!_() { t=3D$(git rev-list --no-merges --max-count=3D=
+1
+> \"$@\"); if test -n \"$t\"; then echo $t; _ \"$@\" ^$t; fi; }; _"
+>=20
+
+That one is way over my head, but if
+
+> Then:
+>=20
+> git tips origin/pu ^origin/next | git oneline
+
+is your typical use case you may like
+
+git branch --merged origin/pu --contains origin/next
+
+(or with --no-merged, but put it first.)
+
+> might show something like this:
+>=20
+> 9dcca58 filter-branch.sh: de-dent usage string
+> 704c335 On Cygwin support both UNIX and DOS style path-names
+> 1c460f9 t3030: fix accidental success in symlink rename
+> 9e81372 test-path-utils: Add subcommand "prefix_path"
+> ad733bd revert: Propagate errors upwards from do_pick_commit
+> 76cf946 fixup! xdiff/xhistogram: rework handling of recursed results
+> df6a9c7 fixup! describe: Refresh the index when run with --dirty
+> c9f57a0 squash! ls-files: fix pathspec display on error
+> a1288bc add--interactive: add option to autosplit hunks
+> 365b78a t5800: point out that deleting branches does not work
+> c997182 limit "contains" traversals based on commit generation
+> 914b6fb doc/fast-import: document feature import-marks-if-exists
+> b792c06 branch -v: honor core.abbrev
+> b166408 mergetool: Don't assume paths are unmerged
+> b29d76f merge: mark the final "Merge made by..." message for l10n
+> 942cf39 receive-pack: Allow server to refuse pushes with too many obj=
+ects
+>=20
+> which is a list of the tips of branches that are in pu, but not in ne=
+xt.
+
+That's not quite the standard --decorate, is it? ;)
+
+Michael
