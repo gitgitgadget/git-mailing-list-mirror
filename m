@@ -1,98 +1,56 @@
-From: David Barr <davidbarr@google.com>
-Subject: Re: GitTogether 2011
-Date: Tue, 16 Aug 2011 18:25:40 +1000
-Message-ID: <CAFfmPPOjzxx8ea0PpT1btyg_tTD4vgRTKGC4srNnPjCEsot9NQ@mail.gmail.com>
-References: <3A92A63EBFD41F4196707AF266E1CDA517A46A4941@ESESSCMS0361.eemea.ericsson.se>
-	<CAGdFq_i_fBh76bqmLaX_SpDwfov4Cr8FxrV+Me1owGawg5bZNQ@mail.gmail.com>
-	<CAP2yMaK_bd05v_jWdh2Xbat96OB8OuPQKOwEh8JD9TrsqmAMmA@mail.gmail.com>
+From: Aleksashin <gennady@auhcc.com>
+Subject: =?windows-1251?b?xOLl8Ogg6/7h++Ug8fPv5fAg7eUg5O7w7uPuICA0IDk1IDc0LTA5MA==?=
+ =?windows-1251?b?MjI=?=
+Date: Tue, 16 Aug 2011 08:41:29 +00
+Message-ID: <110816084129A5.00716.gennady@auhcc.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	David Bainbridge <david.bainbridge@ericsson.com>,
-	Scott Chacon <schacon@gmail.com>,
-	Dave Borowitz <dborowitz@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 16 10:25:53 2011
+Content-Type: text/plain;
+  charset="windows-1251"
+Content-Transfer-Encoding: base64
+To: git@vger.kernel.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 16 10:42:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtEy8-0008V9-54
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 10:25:52 +0200
+	id 1QtFDn-00017h-Vh
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 10:42:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751166Ab1HPIZr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Aug 2011 04:25:47 -0400
-Received: from smtp-out.google.com ([216.239.44.51]:43562 "EHLO
-	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751020Ab1HPIZo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2011 04:25:44 -0400
-Received: from hpaq14.eem.corp.google.com (hpaq14.eem.corp.google.com [172.25.149.14])
-	by smtp-out.google.com with ESMTP id p7G8PhmQ019025
-	for <git@vger.kernel.org>; Tue, 16 Aug 2011 01:25:43 -0700
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
-	t=1313483144; bh=xllnCiJPG1lMcejqHt61x+qFxIw=;
-	h=MIME-Version:In-Reply-To:References:Date:Message-ID:Subject:From:
-	 To:Cc:Content-Type:Content-Transfer-Encoding;
-	b=hr6Sf0pmasitQmsFkmWw7Yj03KNK45Dq8XNhv00lTTQQ0IpJwxledVhrggFui23S9
-	 NZDEIX8fhRAEwA/1A4yYA==
-DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=dkim-signature:mime-version:in-reply-to:references:date:
-	message-id:subject:from:to:cc:content-type:
-	content-transfer-encoding:x-system-of-record;
-	b=dEf/9b9GdMFFCotQg2KVs5EmrQai+K6469Z7ZCQymlbY3A2+zXv33fwZFKTKv+tAb
-	3O9joqYQzukHdY6jtfFLA==
-Received: from gwb20 (gwb20.prod.google.com [10.200.2.20])
-	by hpaq14.eem.corp.google.com with ESMTP id p7G8PfIU032660
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Tue, 16 Aug 2011 01:25:42 -0700
-Received: by gwb20 with SMTP id 20so5088170gwb.17
-        for <git@vger.kernel.org>; Tue, 16 Aug 2011 01:25:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=beta;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=rhcG4rwE78m6mXlRVRbYThme9pxD7DN7pAJ0W6ehAso=;
-        b=tZrUNAeZTgt3ZXgqSREMocGapaPGTDsx0PP0yn0QbBrvk6jC/wP0V98r53tn68p/5P
-         EIADjaDf2+zePTxfY6PQ==
-Received: by 10.101.47.1 with SMTP id z1mr4731158anj.135.1313483141281;
-        Tue, 16 Aug 2011 01:25:41 -0700 (PDT)
-Received: by 10.101.47.1 with SMTP id z1mr4731145anj.135.1313483141129; Tue,
- 16 Aug 2011 01:25:41 -0700 (PDT)
-Received: by 10.100.144.6 with HTTP; Tue, 16 Aug 2011 01:25:40 -0700 (PDT)
-In-Reply-To: <CAP2yMaK_bd05v_jWdh2Xbat96OB8OuPQKOwEh8JD9TrsqmAMmA@mail.gmail.com>
-X-System-Of-Record: true
+	id S1751535Ab1HPIl4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Aug 2011 04:41:56 -0400
+Received: from 41-66-240-22-dedicated.4u.com.gh ([41.66.240.22]:33178 "ehlo
+	41-66-240-22-dedicated.4u.com.gh" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751236Ab1HPIl4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2011 04:41:56 -0400
+X-Greylist: delayed 2354 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Aug 2011 04:41:52 EDT
+User-Agent: KMail/1.9.7
+Content-Disposition: inline
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: None
+X-CTCH-PVer: 0000001
+X-CTCH-Spam: Unknown
+X-CTCH-VOD: Unknown
+X-CTCH-Flags: 0
+X-CTCH-RefID: str=0001.0A0B020D.4E4A2D52.0063,ss=1,pt=DBB_65837,fgs=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179408>
+X-Spam-Report: 12.2 points;
+ *  1.2 INVALID_DATE Invalid Date: header (not RFC 2822)
+ * -0.2 BAYES_40 BODY: Bayesian spam probability is 20 to 40%
+ *      [score: 0.3721]
+ *  1.5 BASE64_LENGTH_79_INF BODY: BASE64_LENGTH_79_INF
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?41.66.240.22>]
+ *  2.0 URIBL_SC_SWINOG URI's listed in uribl.swinog.ch.
+ *      [URIs: u.to]
+ *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
+ *      [URIs: u.to]
+ *  0.6 RCVD_IN_SORBS_WEB RBL: SORBS: sender is a abuseable web server
+ *      [URIs: u.to]
+ [41.66.240.22 listed in dnsbl.sorbs.net]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179409>
 
-On Fri, Jul 29, 2011 at 3:14 AM, Scott Chacon <schacon@gmail.com> wrote=
-:
-> Hey,
->
-> On Thu, Jul 28, 2011 at 10:02 AM, Sverre Rabbelier <srabbelier@gmail.=
-com> wrote:
->>> We have been watching eagerly for an announcement relating to GitTo=
-gether 2011 but we have seen nothing so far.
->>>
->>> Does anyone know what is happening?
->>
->> In previous years Shawn has organized it, but I don't know if he has
->> time this year. If not, perhaps that Junio or Dave are interested.
->
-> Generally Shawn has coordinated it through Google right around the
-> GSoC stuff. =A0Junio works there now too, so I assume one of them wou=
-ld
-> want to but if they're swamped or something, I would be happy to set
-> it up at a nearby place. =A0The mentor summit is 22 & 23 October, so
-> right after is the time we would normally do it (24/25).
-
-Any news on the GitTogether front?
-
---
-David Barr
+xOLl8Ogg4vXu5O375SDk6/8g6/7h+/Ug7+7s5fnl7ejpDQru9+Xt/CDt5SDk7vDu4+4g5O4gNTAg8ero5OrgDQoNCg0KOTI2IPLl6yAwMTEtMzItNDQNCg0KaHR0cDovL3UudG8vWm40Z0FRDQo=
