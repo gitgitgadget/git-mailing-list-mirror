@@ -1,48 +1,61 @@
 From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH] xdiff/xprepare: improve O(n*m) performance in xdl_cleanup_records()
-Date: Tue, 16 Aug 2011 11:11:52 +0800
-Message-ID: <1313464312-5132-1-git-send-email-rctay89@gmail.com>
+Subject: Re: [PATCH] xdiff/xprepare: improve O(n*m) performance in
+ xdl_cleanup_records()
+Date: Tue, 16 Aug 2011 11:37:10 +0800
+Message-ID: <20110816113710.000025a7@unknown>
 References: <loom.20110809T093124-847@post.gmane.org>
-Cc: "Junio C Hamano" <gitster@pobox.com>,
+	<1313464312-5132-1-git-send-email-rctay89@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8BIT
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>,
 	Marat Radchenko <marat@slonopotamus.org>
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 16 05:14:14 2011
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 16 05:37:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtA6Y-0004Ha-01
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 05:14:14 +0200
+	id 1QtAT8-0006EM-Ih
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 05:37:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753297Ab1HPDMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Aug 2011 23:12:09 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:49400 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751910Ab1HPDMI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2011 23:12:08 -0400
-Received: by gxk21 with SMTP id 21so3563770gxk.19
-        for <git@vger.kernel.org>; Mon, 15 Aug 2011 20:12:06 -0700 (PDT)
+	id S1751373Ab1HPDh2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Aug 2011 23:37:28 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:59203 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751253Ab1HPDh1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Aug 2011 23:37:27 -0400
+Received: by yxj19 with SMTP id 19so3526961yxj.19
+        for <git@vger.kernel.org>; Mon, 15 Aug 2011 20:37:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=DkepZPDT2oDkjbAQDlsVY88Ah3+xpEPC+XWtDDsWuzU=;
-        b=BoiYOSmOiyckzY8fnVBffdrzAFsrkx6GStgtSBjHHMK/Ui5MaoohLDv9FNFPiG1FAs
-         O1dFJkOwWVl5jPP2VGg8jz4LRVhHZgn71F3E532PYm92VJuvd2Hxc7irueVqZFlpvBvo
-         tryG6aCZQIhLcsv2zfM+NjXUEV0K8aS8124/M=
-Received: by 10.150.61.12 with SMTP id j12mr5455825yba.22.1313464326350;
-        Mon, 15 Aug 2011 20:12:06 -0700 (PDT)
-Received: from localhost (nusnet-18-4.dynip.nus.edu.sg [137.132.18.4])
-        by mx.google.com with ESMTPS id v11sm2236420ybv.0.2011.08.15.20.12.00
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        bh=dd8eRK9vG0GSWndoVQOLRFmv8dDTXCQrxAGuGpptXNg=;
+        b=KG/Mkd68ikdQ//ivXDYpyr8+WYF4ZGTvV4Mxy6nadw2WBBvSeJZUHJYDZPtTOfDHw8
+         U/uziLM4lmIWek5yzUIzJ3O+bkeQdvp1o4YJWg8Pc5DJQekZbBXRdWjqztuFKQLSvMDq
+         XZiFMgTC7G04wN/D4MwvXWdNWf49l5YpLlprM=
+Received: by 10.150.194.10 with SMTP id r10mr5487300ybf.318.1313465846986;
+        Mon, 15 Aug 2011 20:37:26 -0700 (PDT)
+Received: from unknown (nusnet-18-4.dynip.nus.edu.sg [137.132.18.4])
+        by mx.google.com with ESMTPS id f5sm2245534ybf.16.2011.08.15.20.37.21
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 15 Aug 2011 20:12:05 -0700 (PDT)
-X-Mailer: git-send-email 1.7.4.msysgit.0
-In-Reply-To: <loom.20110809T093124-847@post.gmane.org>
+        Mon, 15 Aug 2011 20:37:25 -0700 (PDT)
+In-Reply-To: <1313464312-5132-1-git-send-email-rctay89@gmail.com>
+X-Mailer: Claws Mail 3.7.8cvs47 (GTK+ 2.16.6; i586-pc-mingw32msvc)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179402>
+
+>From 0da9ec94604978f877e7f7c00d307b5cdbb22b29 Mon Sep 17 00:00:00 2001
+From: Tay Ray Chuan <rctay89@gmail.com>
+Date: Tue, 16 Aug 2011 11:35:28 +0800
+Subject: [PATCH] xdiff/xprepare: improve O(n*m) performance in
+ xdl_cleanup_records()
 
 In xdl_cleanup_records(), we see O(n*m) performance, where n is the
 number of records from xdf->dstart to xdf->dend, and m is the size of a
@@ -55,31 +68,16 @@ Reported-by: Marat Radchenko <marat@slonopotamus.org>
 Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
 ---
 
-On my msysgit machine:
-  
-  rctay@TEST-123 /tmp/slono
-  $ time git show >/dev/null
-  
-  real    0m8.538s
-  user    0m0.000s
-  sys     0m0.031s
-  
-  rctay@TEST-123 /tmp/slono
-  $ time /git/git show >/dev/null
-  
-  real    0m0.672s
-  user    0m0.031s
-  sys     0m0.031s
+Junio, this one is rebased on v1.7.6, instead of rc/histogram-diff.
 
-
- xdiff/xprepare.c |   87 +++++++++++++++++++++++++++++++-----------------------
- 1 files changed, 50 insertions(+), 37 deletions(-)
+ xdiff/xprepare.c |   85 +++++++++++++++++++++++++++++++-----------------------
+ 1 files changed, 49 insertions(+), 36 deletions(-)
 
 diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-index 620fc9a..1043fb7 100644
+index 1689085..ebbec19 100644
 --- a/xdiff/xprepare.c
 +++ b/xdiff/xprepare.c
-@@ -36,6 +36,7 @@ typedef struct s_xdlclass {
+@@ -34,6 +34,7 @@ typedef struct s_xdlclass {
  	char const *line;
  	long size;
  	long idx;
@@ -87,7 +85,7 @@ index 620fc9a..1043fb7 100644
  } xdlclass_t;
  
  typedef struct s_xdlclassifier {
-@@ -43,6 +44,8 @@ typedef struct s_xdlclassifier {
+@@ -41,6 +42,8 @@ typedef struct s_xdlclassifier {
  	long hsize;
  	xdlclass_t **rchash;
  	chastore_t ncha;
@@ -96,7 +94,7 @@ index 620fc9a..1043fb7 100644
  	long count;
  	long flags;
  } xdlclassifier_t;
-@@ -52,15 +55,15 @@ typedef struct s_xdlclassifier {
+@@ -50,15 +53,15 @@ typedef struct s_xdlclassifier {
  
  static int xdl_init_classifier(xdlclassifier_t *cf, long size, long flags);
  static void xdl_free_classifier(xdlclassifier_t *cf);
@@ -117,9 +115,9 @@ index 620fc9a..1043fb7 100644
  
  
  
-@@ -82,6 +85,14 @@ static int xdl_init_classifier(xdlclassifier_t *cf, long size, long flags) {
- 	}
- 	memset(cf->rchash, 0, cf->hsize * sizeof(xdlclass_t *));
+@@ -83,6 +86,14 @@ static int xdl_init_classifier(xdlclassifier_t *cf, long size, long flags) {
+ 	for (i = 0; i < cf->hsize; i++)
+ 		cf->rchash[i] = NULL;
  
 +	cf->alloc = size;
 +	if (!(cf->rcrecs = (xdlclass_t **) xdl_malloc(cf->alloc * sizeof(xdlclass_t *)))) {
@@ -132,7 +130,7 @@ index 620fc9a..1043fb7 100644
  	cf->count = 0;
  
  	return 0;
-@@ -95,11 +106,12 @@ static void xdl_free_classifier(xdlclassifier_t *cf) {
+@@ -96,11 +107,12 @@ static void xdl_free_classifier(xdlclassifier_t *cf) {
  }
  
  
@@ -147,7 +145,7 @@ index 620fc9a..1043fb7 100644
  
  	line = rec->ptr;
  	hi = (long) XDL_HASHLONG(rec->ha, cf->hbits);
-@@ -115,13 +127,25 @@ static int xdl_classify_record(xdlclassifier_t *cf, xrecord_t **rhash, unsigned
+@@ -116,13 +128,25 @@ static int xdl_classify_record(xdlclassifier_t *cf, xrecord_t **rhash, unsigned
  			return -1;
  		}
  		rcrec->idx = cf->count++;
@@ -173,7 +171,7 @@ index 620fc9a..1043fb7 100644
  	rec->ha = (unsigned long) rcrec->idx;
  
  	hi = (long) XDL_HASHLONG(rec->ha, hbits);
-@@ -132,7 +156,7 @@ static int xdl_classify_record(xdlclassifier_t *cf, xrecord_t **rhash, unsigned
+@@ -133,7 +157,7 @@ static int xdl_classify_record(xdlclassifier_t *cf, xrecord_t **rhash, unsigned
  }
  
  
@@ -181,17 +179,17 @@ index 620fc9a..1043fb7 100644
 +static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_t const *xpp,
  			   xdlclassifier_t *cf, xdfile_t *xdf) {
  	unsigned int hbits;
- 	long nrec, hsize, bsize;
-@@ -185,7 +209,7 @@ static int xdl_prepare_ctx(mmfile_t *mf, long narec, xpparam_t const *xpp,
+ 	long i, nrec, hsize, bsize;
+@@ -200,7 +224,7 @@ static int xdl_prepare_ctx(mmfile_t *mf, long narec, xpparam_t const *xpp,
+ 			crec->ha = hav;
  			recs[nrec++] = crec;
  
- 			if (!(xpp->flags & XDF_HISTOGRAM_DIFF) &&
--				xdl_classify_record(cf, rhash, hbits, crec) < 0)
-+				xdl_classify_record(pass, cf, rhash, hbits, crec) < 0)
- 				goto abort;
- 		}
- 	}
-@@ -257,30 +281,30 @@ int xdl_prepare_env(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
+-			if (xdl_classify_record(cf, rhash, hbits, crec) < 0) {
++			if (xdl_classify_record(pass, cf, rhash, hbits, crec) < 0) {
+ 
+ 				xdl_free(rhash);
+ 				xdl_free(recs);
+@@ -276,28 +300,28 @@ int xdl_prepare_env(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
  		return -1;
  	}
  
@@ -209,11 +207,9 @@ index 620fc9a..1043fb7 100644
  		return -1;
  	}
  
--	if (!(xpp->flags & XDF_HISTOGRAM_DIFF))
--		xdl_free_classifier(&cf);
+-	xdl_free_classifier(&cf);
 -
  	if (!(xpp->flags & XDF_PATIENCE_DIFF) &&
- 			!(xpp->flags & XDF_HISTOGRAM_DIFF) &&
 -			xdl_optimize_ctxs(&xe->xdf1, &xe->xdf2) < 0) {
 +			xdl_optimize_ctxs(&cf, &xe->xdf1, &xe->xdf2) < 0) {
  
@@ -222,13 +218,12 @@ index 620fc9a..1043fb7 100644
  		return -1;
  	}
  
-+	if (!(xpp->flags & XDF_HISTOGRAM_DIFF))
-+		xdl_free_classifier(&cf);
++	xdl_free_classifier(&cf);
 +
  	return 0;
  }
  
-@@ -355,11 +379,10 @@ static int xdl_clean_mmatch(char const *dis, long i, long s, long e) {
+@@ -372,11 +396,10 @@ static int xdl_clean_mmatch(char const *dis, long i, long s, long e) {
   * matches on the other file. Also, lines that have multiple matches
   * might be potentially discarded if they happear in a run of discardable.
   */
@@ -243,7 +238,7 @@ index 620fc9a..1043fb7 100644
  	char *dis, *dis1, *dis2;
  
  	if (!(dis = (char *) xdl_malloc(xdf1->nrec + xdf2->nrec + 2))) {
-@@ -370,26 +393,16 @@ static int xdl_cleanup_records(xdfile_t *xdf1, xdfile_t *xdf2) {
+@@ -387,26 +410,16 @@ static int xdl_cleanup_records(xdfile_t *xdf1, xdfile_t *xdf2) {
  	dis1 = dis;
  	dis2 = dis1 + xdf1->nrec + 1;
  
@@ -276,7 +271,7 @@ index 620fc9a..1043fb7 100644
  	}
  
  	for (nreff = 0, i = xdf1->dstart, recs = &xdf1->recs[xdf1->dstart];
-@@ -451,10 +464,10 @@ static int xdl_trim_ends(xdfile_t *xdf1, xdfile_t *xdf2) {
+@@ -468,10 +481,10 @@ static int xdl_trim_ends(xdfile_t *xdf1, xdfile_t *xdf2) {
  }
  
  
