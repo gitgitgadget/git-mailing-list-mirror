@@ -1,77 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Aug 2011, #03; Thu, 11)
-Date: Tue, 16 Aug 2011 09:45:13 -0700
-Message-ID: <7vwredi9uu.fsf@alter.siamese.dyndns.org>
-References: <7vr54rpogf.fsf@alter.siamese.dyndns.org>
- <CALkWK0mxHT8by86-P=Msopgib1ToeHcfwsSXBYBgvN_dm75GnA@mail.gmail.com>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: GIT commit strategy
+Date: Tue, 16 Aug 2011 16:46:46 +0000
+Message-ID: <CAMOZ1Bvy2+8UdBuxRM03=Ynh6NpD-o_TVNoFG1M3+t993BikyA@mail.gmail.com>
+References: <C0B80A98F4E14FA287D3BAFA8366BEAC@procyon>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 16 18:45:24 2011
+To: "Vadim K." <klug@hot.ee>
+X-From: git-owner@vger.kernel.org Tue Aug 16 18:47:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtMlX-0000tV-Sq
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 18:45:24 +0200
+	id 1QtMnR-0002A4-KL
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 18:47:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752669Ab1HPQpR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Aug 2011 12:45:17 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34528 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752580Ab1HPQpQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2011 12:45:16 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C6524DEE;
-	Tue, 16 Aug 2011 12:45:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XzQVC9CGF4hJq0j3nJI0SwFeIbo=; b=vhhm+H
-	+XZSiC2M/U68dbMpV1vtSRqMyfUNn4JK/ux84Qx0QkzBvknKMN92Hu6T0l9RQ/7u
-	vy53ddqXS5jTIaNLldKD6XXyD/pMcQar4Gh9Z2HopRPrvFwUA6N3MdGzWxZS/niI
-	DBQkceWv/jgdoctwBkPUlQ7nyQN1jBtJzIJtM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=s13op5iDii/UAnfEpXOMzJvD3A2b8QAp
-	niqrO/yuztnu2lpXhmP83rSgPZeGTx1xrBe/7Zi1OCWkm84bCEZfbejt3CtMGYLz
-	eShHRO/wykhub9OCAsgbRBRhBsjT55J1FrrUx3MfH6jYhzcyh6NGtHJuz34L+SJY
-	qlwT9BMtK4k=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 73FFC4DED;
-	Tue, 16 Aug 2011 12:45:16 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 06A694DEC; Tue, 16 Aug 2011
- 12:45:15 -0400 (EDT)
-In-Reply-To: <CALkWK0mxHT8by86-P=Msopgib1ToeHcfwsSXBYBgvN_dm75GnA@mail.gmail.com>
- (Ramkumar Ramachandra's message of "Sun, 14 Aug 2011 14:14:52 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 1E65AD7A-C827-11E0-B49A-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752684Ab1HPQrR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Aug 2011 12:47:17 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:48457 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752580Ab1HPQrQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2011 12:47:16 -0400
+Received: by ywf7 with SMTP id 7so74159ywf.19
+        for <git@vger.kernel.org>; Tue, 16 Aug 2011 09:47:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=atz3j/gxEwSd6FXZTPzLIC9k5zGtNGLIegZCjrNr+UU=;
+        b=Kbwwe/k6LxrrPFoBJW8N/I6NFglaoW6E03s2KJaOdwd2//09OiHgonZnWKMLEHkdut
+         4QHOf/qbPTDg7lQrIE68qkyS+ADaeYM3SvXMc9MhPiO1mZpZoSm8hZopnQzlxVrAHcBV
+         uRsbKrqpBUT2HofbROMU7ytqyvROk5SwB8f2Y=
+Received: by 10.43.52.1 with SMTP id vk1mr5579802icb.129.1313513236050; Tue,
+ 16 Aug 2011 09:47:16 -0700 (PDT)
+Received: by 10.42.174.66 with HTTP; Tue, 16 Aug 2011 09:46:46 -0700 (PDT)
+In-Reply-To: <C0B80A98F4E14FA287D3BAFA8366BEAC@procyon>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179459>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
-
->> * rr/revert-cherry-pick-continue (2011-08-08) 18 commits
->> [...]
->> Will merge to "next".
+2011/8/16 Vadim K. <klug@hot.ee>:
+> Hello all,
 >
-> If this won't graduate to 'next' before the 24th, I have plenty of
-> time to re-roll fixing all the issues that I've addressed in the
-> beginning of the new series.
+> =C2=A0 Imagine developer A has changed files f1 and f2, then made com=
+mit and push
+> to the server
+> =C2=A0 Developer B has changed files f2 and f3 and made local commit.
+>
+> =C2=A0 Next B wants to publish changes to the server and make pull to=
+ resolve
+> conflicts at f2. =C2=A0After pulling from the server it has all 3 fil=
+es - f1, f2
+> and f3 to commit before push. But B did not changed f1 and actually c=
+an
+> "ban" this change if he commits only f2 and f3 - files that were chan=
+ged by
+> him. In latter case after pushing to the server GIT will restore prev=
+ious
+> version of the f1, even if it has more recent one !! It does not seem=
+ to be
+> very logical.
+>
+> =C2=A0 Question: is it possible to show to the developer only files, =
+that he
+> changes? Like in SVN - after updating from the server developer must =
+resolve
+> conflicts (if any) and only commits changes that he has made. By the =
+way -
+> in a case of non-conflicting files (let me say A changes f1, B change=
+s f2)
+> GIT makes commit automatically and does not show to the B, that f1 wa=
+s
+> changed and need to be re-commited. B only need to push the change ba=
+ck.
 
-I take it that you mean by "the new series" the 6-patch "Towards a
-generalized sequencer" topic?
+It is difficult to understand exactly what you have written here, but
+I feel that git already does what you want, so I don't understand why
+you are confused.
 
-It is ultimately up-to-you. If you feel the fix-up is against glaring
-errors in the earlier round that you would prefer not to see in the
-history cast-in-stone, I am perfectly Ok to wait for a re-roll. On the
-other hand, if they are mostly cosmetic fixes without major semantic
-changes, it may be easier for everybody to see them fixed in-tree.
-
-Your call.
+Please provide a concrete example (with git commands, expected
+results, actual results, etc.) so that we can understand each other.
