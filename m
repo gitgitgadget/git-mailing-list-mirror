@@ -1,77 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] update-index: add --swap to swap index and worktree
- content
-Date: Tue, 16 Aug 2011 16:06:54 -0700
-Message-ID: <20110816230654.GA21793@sigill.intra.peff.net>
-References: <1313158058-7684-1-git-send-email-pclouds@gmail.com>
- <7vippxgm6y.fsf@alter.siamese.dyndns.org>
- <20110816210108.GA13710@sigill.intra.peff.net>
- <7vbovpggva.fsf@alter.siamese.dyndns.org>
- <20110816222212.GA19471@sigill.intra.peff.net>
- <7vzkj9eza2.fsf@alter.siamese.dyndns.org>
+From: Eric Blake <eblake@redhat.com>
+Subject: Re: [bug-patch] rejecting patches that have an offset
+Date: Tue, 16 Aug 2011 17:10:44 -0600
+Organization: Red Hat
+Message-ID: <4E4AF8F4.60709@redhat.com>
+References: <4E49A8EA.5020507@redhat.com> <1313534889.5598.21.camel@schurl.linbit>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 17 01:07:45 2011
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: bug-patch@gnu.org, Git Mailing List <git@vger.kernel.org>
+To: Andreas Gruenbacher <andreas.gruenbacher@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 17 01:10:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtSjY-0007k2-ND
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Aug 2011 01:07:45 +0200
+	id 1QtSmb-00017M-Lk
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Aug 2011 01:10:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751661Ab1HPXG6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Aug 2011 19:06:58 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56944
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751543Ab1HPXG5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2011 19:06:57 -0400
-Received: (qmail 7233 invoked by uid 107); 16 Aug 2011 23:07:37 -0000
-Received: from 173-164-171-125-SFBA.hfc.comcastbusiness.net (HELO sigill.intra.peff.net) (173.164.171.125)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 16 Aug 2011 19:07:37 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Aug 2011 16:06:54 -0700
-Content-Disposition: inline
-In-Reply-To: <7vzkj9eza2.fsf@alter.siamese.dyndns.org>
+	id S1751803Ab1HPXKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Aug 2011 19:10:48 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:57420 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751554Ab1HPXKs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2011 19:10:48 -0400
+Received: from int-mx09.intmail.prod.int.phx2.redhat.com (int-mx09.intmail.prod.int.phx2.redhat.com [10.5.11.22])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id p7GNAjl0015036
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Tue, 16 Aug 2011 19:10:45 -0400
+Received: from [10.3.113.118] (ovpn-113-118.phx2.redhat.com [10.3.113.118])
+	by int-mx09.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id p7GNAimS030880;
+	Tue, 16 Aug 2011 19:10:45 -0400
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110621 Fedora/3.1.11-1.fc14 Lightning/1.0b3pre Mnenhy/0.8.3 Thunderbird/3.1.11
+In-Reply-To: <1313534889.5598.21.camel@schurl.linbit>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179486>
 
-On Tue, Aug 16, 2011 at 04:01:57PM -0700, Junio C Hamano wrote:
+On 08/16/2011 04:48 PM, Andreas Gruenbacher wrote:
+> Eric,
+>
+> On Mon, 2011-08-15 at 17:16 -0600, Eric Blake wrote:
+>> It would have saved me a lot of time if both 'patch' and 'git apply'
+>> could be taught a mode of operation where they explicitly reject a patch
+>> that cannot be applied without relying on an offset.
+>
+> that sounds reasonable.  Can you send a patch or at least add a bug on
+> Savannah?
 
-> > No. The point is that I _already_ did it in the working tree version
-> 
-> But that does not change that you have to do that twice. You may already
-> have done so in the working tree, and then redo it in the old indexed
-> version again.
+Bug opened: https://savannah.gnu.org/bugs/index.php?34031
 
-Right. The point is that the changes are tangled, to the point that it
-is simpler to recreate them on one side than it is to instruct a tool
-about how to untangle them. If they weren't tangled, then I would simply
-make the change in the working tree, and then "add -p" it into the
-index.
+>
+>> It might also be nice if patch could learn the algorithm that appears to
+>> match the git behavior, where when there are multiple points with
+>> identical context (viewing just the context in isolation), but where
+>> those locations differ in function location (as learned by the @@ header
+>> line in the patch file), then the preferred offset is the one in the
+>> named function, even if that is not the closes context match to the line
+>> number given in the patch file.
+>
+> Sounds interesting; a patch for that would be great as well.
 
-It's certainly not the dominant case. I'd say I run into it no more
-frequently than once every week or so. I usually end up using "add -e"
-to do what I want, but it's very error prone and annoying.
+Bug opened: https://savannah.gnu.org/bugs/index.php?34032
 
-> > while doing my s/hello/goodbye/ change (let's call this the "new
-> > change"). And ideally I would just use "git add -p" to stage only the
-> > s/word/world/ change (let's call this the "fixup"). But they're tangled
-> > in a single hunk, and I need some way of splitting them.
-> 
-> As a way to punt from making "add -e" usable, I'd think it would be a
-> workable q&d workaround, even though it feels wrong, and I would imagine
-> that normal people would probably prefer the "check out to a temporary
-> file to be edited" solution you wrote in your previous message.
-
-Yeah, I think that is the sanest of the options brought up in this
-thread. I'm curious if Duy had another use case, though, that made him
-think of --swap.
-
--Peff
+-- 
+Eric Blake   eblake@redhat.com    +1-801-349-2682
+Libvirt virtualization library http://libvirt.org
