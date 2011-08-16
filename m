@@ -1,80 +1,89 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2] revert: plug memory leak in "cherry-pick root commit"
- codepath
-Date: Tue, 16 Aug 2011 13:56:16 -0500
-Message-ID: <20110816185616.GE10336@elie.gateway.2wire.net>
-References: <1313310789-10216-1-git-send-email-artagnon@gmail.com>
- <1313310789-10216-7-git-send-email-artagnon@gmail.com>
- <20110814131303.GF18466@elie.gateway.2wire.net>
- <CALkWK0=zqyvL8zo9wvBGUXyf3RWSZB7dY=WaC9TN6YXnThag0Q@mail.gmail.com>
- <20110814152204.GJ18466@elie.gateway.2wire.net>
- <7v39h1i6rr.fsf@alter.siamese.dyndns.org>
- <20110816181633.GB10336@elie.gateway.2wire.net>
- <20110816183147.GA10117@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Aug 16 20:56:30 2011
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: [PATCH v5 0/2] submodule: move gitdir into superproject
+Date: Tue, 16 Aug 2011 21:32:17 +0200
+Message-ID: <1313523139-23244-1-git-send-email-iveqy@iveqy.com>
+Cc: jens.lehmann@web.de, iveqy@iveqy.com, hvoigt@hvoigt.net,
+	gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 16 21:32:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtOoP-0004DE-58
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 20:56:29 +0200
+	id 1QtPNA-0008LV-0n
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 21:32:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751592Ab1HPS4Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Aug 2011 14:56:24 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:38114 "EHLO
+	id S1751843Ab1HPTcR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Aug 2011 15:32:17 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:44112 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751295Ab1HPS4X (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2011 14:56:23 -0400
-Received: by bke11 with SMTP id 11so154066bke.19
-        for <git@vger.kernel.org>; Tue, 16 Aug 2011 11:56:22 -0700 (PDT)
+	with ESMTP id S1751485Ab1HPTcQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2011 15:32:16 -0400
+Received: by bke11 with SMTP id 11so178010bke.19
+        for <git@vger.kernel.org>; Tue, 16 Aug 2011 12:32:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=LtgtyKvW24bdGvOwVh/x3svLmGeKEGwQNDchoL4GEHc=;
-        b=Nq+ZiFfgBMrasknaVMZj4YiR7/dnEvTwqACoorpSIbJz2cGMw/x9lxTrJtSLrPItKZ
-         VoyEPesoYh1DJoa/Bp6PQw6YQU8Vbg/aiamjOXcA4GRg6HmZuV1qDFf0LXSMozccIFMm
-         OhlfhIZtrDjeLR0vQepPUoiPpshcXa2mMfAfQ=
-Received: by 10.204.171.66 with SMTP id g2mr34425bkz.8.1313520982389;
-        Tue, 16 Aug 2011 11:56:22 -0700 (PDT)
-Received: from elie.gateway.2wire.net (adsl-69-209-67-175.dsl.chcgil.ameritech.net [69.209.67.175])
-        by mx.google.com with ESMTPS id x19sm116932bkt.9.2011.08.16.11.56.19
-        (version=SSLv3 cipher=OTHER);
-        Tue, 16 Aug 2011 11:56:21 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20110816183147.GA10117@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+        h=sender:from:to:cc:subject:date:message-id:x-mailer;
+        bh=BCjTDn7ctUdmwlzMGma++4/XUo5R8IEKMw4QPktAR9w=;
+        b=sLWIAQVkfd0esDaqHtD1xvRMa3p09Pm9aGXa4IjN5L3XTDZ2eOFHaOX5nF/dgo/J2h
+         ViwLtXUEy1vh1HXve2ta3Vz5/BWtccxOPu4kTGgNy6GWX3wWmACHt9DkCpXdH/0KfTkh
+         vtU0wvvn6Ph2trFsWqWHbKXb6UvKFal7rG7QA=
+Received: by 10.204.173.2 with SMTP id n2mr47323bkz.13.1313523134918;
+        Tue, 16 Aug 2011 12:32:14 -0700 (PDT)
+Received: from kolya (h-185-240.a189.priv.bahnhof.se [85.24.185.240])
+        by mx.google.com with ESMTPS id y8sm127460bks.21.2011.08.16.12.32.09
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 16 Aug 2011 12:32:11 -0700 (PDT)
+Received: from iveqy by kolya with local (Exim 4.72)
+	(envelope-from <iveqy@kolya>)
+	id 1QtPN6-000643-Cl; Tue, 16 Aug 2011 21:32:20 +0200
+X-Mailer: git-send-email 1.7.6.398.g43b167
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179470>
 
-Jeff King wrote:
-> On Tue, Aug 16, 2011 at 01:16:33PM -0500, Jonathan Nieder wrote:
+Move git-dir for submodules into $GIT_DIR/modules/[name_of_submodule] of
+the superproject. This is a step towards being able to delete submodule
+directories without loosing the information from their .git directory
+as that is now stored outside the submodules work tree.
 
->>  static struct tree *empty_tree(void)
->>  {
->> -	struct tree *tree = xcalloc(1, sizeof(struct tree));
->> -
->> -	tree->object.parsed = 1;
->> -	tree->object.type = OBJ_TREE;
->> -	pretend_sha1_file(NULL, 0, OBJ_TREE, tree->object.sha1);
->> -	return tree;
->> +	return lookup_tree((const unsigned char *)EMPTY_TREE_SHA1_BIN);
->>  }
->
-> Much nicer. But doesn't your dab0d41 (correct type of
-> EMPTY_TREE_SHA1_BIN, 2011-02-07) make the cast unnecessary?
+This is done relying on the already existent .git-file functionality.
+Tests that rely on .git being a directory have been fixed.
 
-Yes, I was working against an older codebase (for no particular
-reason).
+This is the forth iteration of this patchseries. The only change since last
+iteration is the removal of a test of the return value of module_name in
+git-submodule.sh, as suggested by Junio.
+
+The first can be found here:
+http://thread.gmane.org/gmane.comp.version-control.git/177582
+
+The second can be found here:
+http://thread.gmane.org/gmane.comp.version-control.git/178970/focus=179153
+
+The third can be found here:
+http://thread.gmane.org/gmane.comp.version-control.git/179243/focus=179244
+
+The fourth can be found here:
+http://thread.gmane.org/gmane.comp.version-control.git/179388/focus=179390
+
+Fredrik Gustafsson (2):
+  rev-parse: add option --resolve-git-dir <path>
+  Move git-dir for submodules
+
+ Documentation/git-rev-parse.txt |    4 ++
+ builtin/rev-parse.c             |    8 +++
+ cache.h                         |    1 +
+ git-submodule.sh                |   45 ++++++++++++++--
+ setup.c                         |    7 +++
+ t/t7400-submodule-basic.sh      |    4 +-
+ t/t7403-submodule-sync.sh       |    5 +-
+ t/t7406-submodule-update.sh     |  107 +++++++++++++++++++++++++++++++++++++++
+ t/t7407-submodule-foreach.sh    |  103 +++++++++++++++++++------------------
+ t/t7408-submodule-reference.sh  |    4 +-
+ 10 files changed, 227 insertions(+), 61 deletions(-)
+
+-- 
+1.7.6.398.g43b167
