@@ -1,79 +1,68 @@
-From: "Vadim K." <klug@hot.ee>
-Subject: GIT commit strategy
-Date: Tue, 16 Aug 2011 19:17:31 +0300
-Message-ID: <C0B80A98F4E14FA287D3BAFA8366BEAC@procyon>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Aug 2011, #03; Thu, 11) : Guidance
+ for new contributors?
+Date: Tue, 16 Aug 2011 09:40:00 -0700
+Message-ID: <7v1uwljonz.fsf@alter.siamese.dyndns.org>
+References: <7vr54rpogf.fsf@alter.siamese.dyndns.org>
+ <AFD36BA266B14DAAA919E1AC1BDF0857@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="koi8-r";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 16 18:26:15 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>
+To: "Philip Oakley" <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Tue Aug 16 18:40:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtMSy-0006Ew-Oh
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 18:26:13 +0200
+	id 1QtMgd-0006Kz-5G
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 18:40:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751552Ab1HPQ0E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Aug 2011 12:26:04 -0400
-Received: from bounce-out.neti.ee ([194.126.101.104]:49659 "EHLO
-	bounce-out.neti.ee" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751088Ab1HPQ0D (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2011 12:26:03 -0400
-X-Greylist: delayed 500 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Aug 2011 12:26:03 EDT
-Received: from smtp-out.neti.ee (vm-relay2.estpak.ee [88.196.174.133])
-	by Bounce1.estpak.ee (Postfix) with ESMTP id BA327500A43
-	for <git@vger.kernel.org>; Tue, 16 Aug 2011 19:17:41 +0300 (EEST)
-Received: from localhost (localhost [127.0.0.1])
-	by vm-relay2.estpak.ee (Postfix) with ESMTP id 6233F155
-	for <git@vger.kernel.org>; Tue, 16 Aug 2011 19:17:37 +0300 (EEST)
-X-Virus-Scanned: Debian amavisd-new at vm-relay2.estpak.ee
-Received: from smtp-out.neti.ee ([127.0.0.1])
-	by localhost (vm-relay2.estpak.ee [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id K-qYUNFwnK96 for <git@vger.kernel.org>;
-	Tue, 16 Aug 2011 19:17:34 +0300 (EEST)
-Received: from HOT-Relayhost3.estpak.ee (hot-relayhost3.estpak.ee [88.196.174.147])
-	by vm-relay2.estpak.ee (Postfix) with ESMTP id A286316F
-	for <git@vger.kernel.org>; Tue, 16 Aug 2011 19:17:34 +0300 (EEST)
-X-SMTP-Auth-NETI-Businessmail: no
-Received: from procyon (11.235.196.88.dyn.estpak.ee [88.196.235.11])
-	by HOT-Relayhost3.estpak.ee (Postfix) with SMTP id A3B90635
-	for <git@vger.kernel.org>; Tue, 16 Aug 2011 19:17:34 +0300 (EEST)
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6109
+	id S1752627Ab1HPQkM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Aug 2011 12:40:12 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65131 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751552Ab1HPQkL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2011 12:40:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 72EEE4CF5;
+	Tue, 16 Aug 2011 12:40:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+DWEWARfEJ6MmNWf2lDZO5CtiaA=; b=TL8gDu
+	7wK6NMn4SM0o/opmwNDzmXaZVSnLGC/SshfAg0hu/pWfykWmEzmaNZ/WaRFIpb4N
+	DxWtGEfoR9pDRFt7p7qfyhHlnqklYVl12d1ku7BxkbzylK2jEGvcAXQqDcE3v1es
+	Z79cnZrKqOU3n2TwyJ4VQYcjpZ0B6x8XEjPNg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DRkdDn+H2caMdBCxh7dFf698O7Aq1X4O
+	TVJPHs94SCCzllA7F0jy5/3NHZoWn7U5p99NFFhqWZ5KArXC0AzMBxqlrLidYEoZ
+	hnY4098izLbcYC5vIf1nEH+R5PWN7hb0mgjaI6S/fACIp4xykA97RIVNKvuU5TdT
+	bS0q75RJzN0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 51E644CF4;
+	Tue, 16 Aug 2011 12:40:10 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DF24C4CEA; Tue, 16 Aug 2011
+ 12:40:01 -0400 (EDT)
+In-Reply-To: <AFD36BA266B14DAAA919E1AC1BDF0857@PhilipOakley> (Philip Oakley's
+ message of "Sat, 13 Aug 2011 19:40:08 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 632BF6AE-C826-11E0-B799-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179457>
 
-Hello all,
+"Philip Oakley" <philipoakley@iee.org> writes:
 
-    Imagine developer A has changed files f1 and f2, then made commit and 
-push to the server
-    Developer B has changed files f2 and f3 and made local commit.
+> Would it it be possible to include a regular link to an explanation
+> for new contributors?
 
-    Next B wants to publish changes to the server and make pull to resolve 
-conflicts at f2.  After pulling from the server it has all 3 files - f1, f2 
-and f3 to commit before push. But B did not changed f1 and actually can 
-"ban" this change if he commits only f2 and f3 - files that were changed by 
-him. In latter case after pushing to the server GIT will restore previous 
-version of the f1, even if it has more recent one !! It does not seem to be 
-very logical.
+After each release from the 'master' branch I try to send out a copy of
 
-    Question: is it possible to show to the developer only files, that he 
-changes? Like in SVN - after updating from the server developer must resolve 
-conflicts (if any) and only commits changes that he has made. By the way - 
-in a case of non-conflicting files (let me say A changes f1, B changes f2) 
-GIT makes commit automatically and does not show to the B, that f1 was 
-changed and need to be re-commited. B only need to push the change back.
+  http://git-blame.blogspot.com/p/note-from-maintainer.html
 
-Thank you,
-
-Vadim. 
+to the list, which is meant to be that piece of information.
