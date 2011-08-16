@@ -1,54 +1,74 @@
-From: Arabov Gennady <gennady@bowthorpe.de>
-Subject: =?windows-1251?b?wvXu5O375SDk4uXw6CDu9+Xt/CDt5SDk7vDu4+4g5O4gNTAg8ero5A==?=
- =?windows-1251?b?6uAgNC05LTUgNzQwLTkwLTQ0?=
-Date: Tue, 16 Aug 2011 10:30:51 -0300
-Organization: lowzjmu
-Message-ID: <640766752.201108161030@bowthorpe.de>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC] branch: list branches by single remote
+Date: Tue, 16 Aug 2011 15:37:33 +0200
+Message-ID: <4E4A729D.9030906@drmicha.warpmail.net>
+References: <4E383132.3040907@elegosoft.com> <20110804040646.GA5104@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1251
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 16 15:31:28 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Michael Schubert <mschub@elegosoft.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Aug 16 15:37:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtJjp-0000Ok-ST
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 15:31:26 +0200
+	id 1QtJpt-0004HL-Gl
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 15:37:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752416Ab1HPNbW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Aug 2011 09:31:22 -0400
-Received: from bacd3351.virtua.com.br ([186.205.51.81]:3695 "ehlo
-	serginho-7d1b1c" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751622Ab1HPNbT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2011 09:31:19 -0400
-X-Greylist: delayed 1158 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Aug 2011 09:31:19 EDT
-X-Mailer: The Bat! (v3.99.3) UNREG
-X-Priority: 3 (Normal)
+	id S1752549Ab1HPNhg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Aug 2011 09:37:36 -0400
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:33948 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752343Ab1HPNhf (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2011 09:37:35 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 6138F21698;
+	Tue, 16 Aug 2011 09:37:35 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute3.internal (MEProxy); Tue, 16 Aug 2011 09:37:35 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=UDVPGIbyO4R2ogVTqKkVBy
+	B5V7U=; b=EcGlDCQlWeEVU2rOyyN3Z35mSPUWKerBXrHYEUo9y8smAQmHB7b8+V
+	xnJ6LiA9dTOnUj/FJs61tOrviN2kq75ZLf4a7voF94Cmwauy3SlBF7vsGr6kTNwR
+	NJmItd6oWLPh9eHmjzWaHfOeU1hhhmYeRWUdM7tzhjmZMKV3RdtWM=
+X-Sasl-enc: bI3AqpZ+tny9ahvOcnFDG+JWaxjnwQyU+Z1V8RcdWANH 1313501855
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id BD59741E391;
+	Tue, 16 Aug 2011 09:37:34 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110707 Thunderbird/5.0
+In-Reply-To: <20110804040646.GA5104@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 7.6 points;
- *  2.0 URIBL_BLACK Contains an URL listed in the URIBL blacklist
- *      [URIs: clck.ru]
- *  2.0 URIBL_SC_SWINOG URI's listed in uribl.swinog.ch.
- *      [URIs: clck.ru]
- *  1.8 URIBL_PH_SURBL Contains an URL listed in the PH SURBL blocklist
- *      [URIs: clck.ru]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: clck.ru]
- *  1.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: clck.ru]
- * -1.1 BAYES_05 BODY: Bayesian spam probability is 1 to 5%
- *      [score: 0.0260]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179447>
 
-=C2=F1=E5 =E4=E2=E5=F0=E8
-=EE=F2=EB=E8=F7=ED=E0=FF =F1=EA=E8=E4=EA=E0 50 =F1=E5=E3=EE=E4=ED=FF
+Jeff King venit, vidit, dixit 04.08.2011 06:06:
+> On Tue, Aug 02, 2011 at 07:17:38PM +0200, Michael Schubert wrote:
+> 
+>> @@ -297,6 +298,9 @@ static int append_ref(const char *refname, const unsigned char *sha1, int flags,
+>>  	if ((kind & ref_list->kinds) == 0)
+>>  		return 0;
+>>  
+>> +	if (cb->remote && strncmp(cb->remote, refname, strlen(cb->remote)))
+>> +		return 0;
+>> +
+> 
+> This isn't right. You are assuming that a remote called "foo" will have
+> all of its branches in refs/remotes/foo. That's true under the default
+> configuration, but technically speaking, the remote tracking branches of
+> "foo" are defined by the right-hand side of foo's fetch refspecs.
 
+You are 100% right here, but...
 
-495 =ED=EE=EC=E5=F0 740-90-22
+> So I think you want something more like this:
 
-http://clck.ru/ImPi
+...the op still might want to filter simply by the remote name.
+
+Reminds me that I have to resurrect my patterns-with-branches series....
+
+Michael
