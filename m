@@ -1,98 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: "git apply --check" successes but git am says "does not match
- index"
-Date: Mon, 15 Aug 2011 17:13:07 -0700
-Message-ID: <20110816001306.GA23695@sigill.intra.peff.net>
-References: <loom.20110814T113311-277@post.gmane.org>
- <20110815232318.GA4699@sigill.intra.peff.net>
- <7vhb5ijkq0.fsf@alter.siamese.dyndns.org>
+From: Christian Thaeter <ct-dtRWZPArUE0dnm+yROfE0A@public.gmane.org>
+Subject: Git-Labs at FrOSCon, August 20th/21st 2011,
+	St. Augustin/Germany
+Date: Tue, 16 Aug 2011 03:03:13 +0200
+Message-ID: <20110816030313.3d29cb29@starbase>
+Reply-To: General Discussion about Lumiera <lumiera-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Zemacsh <ruini.xue@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 16 02:13:17 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: lumiera-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org
+To: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+X-From: lumiera-bounces-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org Tue Aug 16 02:58:24 2011
+Return-path: <lumiera-bounces-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org>
+Envelope-to: gcvlg-lumiera@m.gmane.org
+Received: from mail.lumiera.org ([88.198.15.173])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qt7HQ-00059q-Li
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 02:13:17 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751900Ab1HPANL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Aug 2011 20:13:11 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:59264
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751351Ab1HPANL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2011 20:13:11 -0400
-Received: (qmail 30717 invoked by uid 107); 16 Aug 2011 00:13:49 -0000
-Received: from 173-164-171-125-SFBA.hfc.comcastbusiness.net (HELO sigill.intra.peff.net) (173.164.171.125)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 15 Aug 2011 20:13:49 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Aug 2011 17:13:07 -0700
-Content-Disposition: inline
-In-Reply-To: <7vhb5ijkq0.fsf@alter.siamese.dyndns.org>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179398>
+	(envelope-from <lumiera-bounces-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org>)
+	id 1Qt7z4-0001C2-Jk
+	for gcvlg-lumiera@m.gmane.org; Tue, 16 Aug 2011 02:58:22 +0200
+Received: from [127.0.0.1] (mail.lumiera.org [88.198.15.173])
+	by mail.lumiera.org (Postfix) with ESMTP id 182651BF07A;
+	Tue, 16 Aug 2011 02:58:22 +0200 (CEST)
+X-Original-To: lumiera-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org
+Delivered-To: lumiera-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org
+Received: from mail.pipapo.org (pipapo.org [213.240.181.249])
+	by mail.lumiera.org (Postfix) with ESMTP id B1A9F1D883
+	for <lumiera-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org>; Tue, 16 Aug 2011 02:58:20 +0200 (CEST)
+Received: from starbase (starbase.pipapo.org [10.20.20.10])
+	by mail.pipapo.org (Postfix) with ESMTP id 356981D8356;
+	Tue, 16 Aug 2011 03:02:07 +0200 (CEST)
+X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; x86_64-pc-linux-gnu)
+X-BeenThere: lumiera-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org
+X-Mailman-Version: 2.1.11
+Precedence: list
+List-Id: General Discussion about Lumiera <lumiera.lists.lumiera.org>
+List-Unsubscribe: <http://lists.lumiera.org/cgi-bin/mailman/options/lumiera>, 
+	<mailto:lumiera-request-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org?subject=unsubscribe>
+List-Archive: <http://lists.lumiera.org/pipermail/lumiera>
+List-Post: <mailto:lumiera-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org>
+List-Help: <mailto:lumiera-request-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org?subject=help>
+List-Subscribe: <http://lists.lumiera.org/cgi-bin/mailman/listinfo/lumiera>,
+	<mailto:lumiera-request-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org?subject=subscribe>
+Sender: lumiera-bounces-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org
+Errors-To: lumiera-bounces-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179399>
 
-On Mon, Aug 15, 2011 at 04:52:55PM -0700, Junio C Hamano wrote:
+We, the Lumiera.org developers will host an open Git-Workshop at
+FrOSCon (http://froscon.org/) this year.
 
-> I am kind of surprised that we have not done the 'refresh once upfront'
-> already and nobody ever run into this for the past 5 years. It seems that
-> I inherited that behaviour from git-applymbox ;-)
+Lumiera using git since its very beginning as core of its open
+infrastructure with the goal to lower the entry barrier to the
+project. Our Workshop aims to give beginners a introduction
+to Git 'in practice' as well as discuss and discover tricks and
+workflows with advanced users and to exchange experiences.
 
-It's a pretty rare set of circumstances:
+The whole workshop is open, interested people can just step by to ask
+and watch. In particular we will meet just after (Saturday 16:20) Scotts
+"Wrangling Git" Talk (15:15 HS1/2) in our workshop room to try out what
+we've just learned.
 
-  1. You make a file stat-dirty, but don't actually change its contents.
+In case anyone developed interesting new ways to use Git we'd like to
+invite him to show these. Also any professional is welcome to join us
+in helping at our workshop showing Git to others.
 
-  2. You don't run any index-refreshing porcelains.
+	See you,
+		Christian
 
-  3. You apply a patch that touches that file.
-
-> It is sensible to refresh once at the beginning and also when restarting
-> with "am --resolved".
-
-The patch below does this. I think this makes the "update-index" call in
-git-rebase.sh:522 redundant when the "am" backend is used. But it is
-still needed for the other backends. I wonder if "git rebase" actually
-suffers from the same problem, since it seems to refresh only on
---continue, but not at the beginning.
-
--- >8 --
-Subject: [PATCH] am: refresh the index at start and --resolved
-
-If a file is unchanged but stat-dirty, we may erroneously
-fail to apply patches, thinking that they conflict with a
-dirty working tree.
-
-This patch adds a call to "update-index --refresh". It comes
-as late as possible, so that we don't bother with it for
-thinks like "git rebase --abort", or when mbox-splitting
-fails. However, it does come before we actually start
-applying patches, meaning we will only call it once when we
-start applying patches (or any time we return to "am" after
-having resolved conflicts), and not once per patch.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- git-am.sh |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/git-am.sh b/git-am.sh
-index 463c741..6592424 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -511,6 +511,8 @@ else
- 	fi
- fi
- 
-+git update-index -q --refresh
-+
- case "$resolved" in
- '')
- 	case "$HAS_HEAD" in
--- 
-1.7.6.10.g62f04
+_______________________________________________
+Lumiera mailing list
+Lumiera-aLEFhgZF4x639dL7tAm8iNi2O/JbrIOy@public.gmane.org
+http://lists.lumiera.org/cgi-bin/mailman/listinfo/lumiera
+http://lumiera.org/donations.html
