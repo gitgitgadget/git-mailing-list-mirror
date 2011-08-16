@@ -1,69 +1,93 @@
-From: Michael Schubert <mschub@elegosoft.com>
-Subject: Re: [RFC] branch: list branches by single remote
-Date: Tue, 16 Aug 2011 16:19:16 +0200
-Message-ID: <4E4A7C64.2090607@elegosoft.com>
-References: <4E383132.3040907@elegosoft.com> <20110804040646.GA5104@sigill.intra.peff.net> <4E4A729D.9030906@drmicha.warpmail.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] update-index: add --swap to swap index and worktree content
+Date: Tue, 16 Aug 2011 21:45:25 +0700
+Message-ID: <CACsJy8DMwqM4rPfAeaXnvDEg1Pv4Y8q7+eJJBeO+ZyaN-m0oZw@mail.gmail.com>
+References: <1313158058-7684-1-git-send-email-pclouds@gmail.com> <4E4A6A43.7040706@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Aug 16 16:19:42 2011
+X-From: git-owner@vger.kernel.org Tue Aug 16 16:46:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtKUY-0003uJ-6l
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 16:19:42 +0200
+	id 1QtKu3-0003GV-B4
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 16:46:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752629Ab1HPOTh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Aug 2011 10:19:37 -0400
-Received: from mx0.elegosoft.com ([78.47.87.163]:34866 "EHLO mx0.elegosoft.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752155Ab1HPOTh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2011 10:19:37 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mx0.elegosoft.com (Postfix) with ESMTP id 41C48DE80B;
-	Tue, 16 Aug 2011 16:19:36 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
-Received: from mx0.elegosoft.com ([127.0.0.1])
-	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TupLuTk2qgyf; Tue, 16 Aug 2011 16:19:30 +0200 (CEST)
-Received: from [10.10.10.197] (i59F7870A.versanet.de [89.247.135.10])
-	by mx0.elegosoft.com (Postfix) with ESMTPSA id AF7C0DE809;
-	Tue, 16 Aug 2011 16:19:30 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110628 Thunderbird/5.0
-In-Reply-To: <4E4A729D.9030906@drmicha.warpmail.net>
+	id S1753147Ab1HPOp6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Aug 2011 10:45:58 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:58815 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752444Ab1HPOp5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2011 10:45:57 -0400
+Received: by bke11 with SMTP id 11so3778673bke.19
+        for <git@vger.kernel.org>; Tue, 16 Aug 2011 07:45:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=bFBki1zHBAmla+BTIJ9IslYACmHfUmBM7nMeSjfoKBM=;
+        b=mSbMYlwk4mYWGPOjmSXWqkEys4rt48006uoXCZYAMNM5PmHLJ90X5vsGNLzYbFi4JW
+         IgDY5deMDnY+IAHjuKQo7emOSMqsCYVPqud1ZUdzF0doQ/mMEUdyVBoJEoU0IDmqXxHC
+         8FnbovRG1ZFNowb1FxpKn5vlCdSWh6/kGPBuM=
+Received: by 10.204.166.2 with SMTP id k2mr1492424bky.123.1313505956163; Tue,
+ 16 Aug 2011 07:45:56 -0700 (PDT)
+Received: by 10.204.156.19 with HTTP; Tue, 16 Aug 2011 07:45:25 -0700 (PDT)
+In-Reply-To: <4E4A6A43.7040706@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179453>
 
-On 08/16/2011 03:37 PM, Michael J Gruber wrote:
-> Jeff King venit, vidit, dixit 04.08.2011 06:06:
->> On Tue, Aug 02, 2011 at 07:17:38PM +0200, Michael Schubert wrote:
->>
->>> @@ -297,6 +298,9 @@ static int append_ref(const char *refname, const unsigned char *sha1, int flags,
->>>  	if ((kind & ref_list->kinds) == 0)
->>>  		return 0;
->>>  
->>> +	if (cb->remote && strncmp(cb->remote, refname, strlen(cb->remote)))
->>> +		return 0;
->>> +
->>
->> This isn't right. You are assuming that a remote called "foo" will have
->> all of its branches in refs/remotes/foo. That's true under the default
->> configuration, but technically speaking, the remote tracking branches of
->> "foo" are defined by the right-hand side of foo's fetch refspecs.
-> 
-> You are 100% right here, but...
-> 
->> So I think you want something more like this:
-> 
-> ...the op still might want to filter simply by the remote name.
+2011/8/16 Michael J Gruber <git@drmicha.warpmail.net>:
+> I had to think about that explanation for a while (partly because "git
+> add" does not alter the wt either). So, your patch would support the
+> following workflow:
+>
+> git add foo # have index == wt
+> hack foo # change foo in wt
+> git update-index --swap foo # add foo and reset to previous state
+>
+> Am I understanding you right? The option could trickle down to "add".
 
-There's an interesting discussion related to the subject:
+Well, the point is I want to skip the first phase of normal edit path
+(wt -> index -> commit) and edit index directly (even in parts that
+are not touched by wt, which means "git add -e" is useless), leaving
+my wt "unchanged". Sometimes wt is just too dirty I don't want to make
+any more changes to it while I focus on "index -> commit" phase.
 
-http://thread.gmane.org/gmane.comp.version-control.git/178960
+I could add an option to fire up editor with a temporary file
+containing current index content and automatically update index after
+editor is closed. But I'd lose the ability to diff my changes. So I do
+need to wt to change index without losing my current wt. I have to
+stash my wt somewhere, and index seems a safe place for that.
+
+After swapping, it'd look like index -> wt -> commit, I can do "diff
+HEAD" to check index vs head. Once I'm done (and create index'), I can
+swap it back to wt -> index' -> commit.
+
+Thinking a bit more, this may have another use case (for lazy guys
+like me, anyway). Assume I have separate changes in wt and I'm ready
+to make many commit. I should make good commits, which means tests (or
+at least a compile to see I don't miss any changes). So I add related
+changes to index, then swap wt/index so index becomes wt (and old wt
+hidden in index). Test what is to be committed. Good? Swap back,
+commit. Repeat with the rest of changes in wt.
+
+My current workflow is picking changes I believe should go together,
+commit, then "rebase -i", stopping at each commit to test. It takes
+longer (especially when I mis-pick changes).
+
+> I share the pov that "add -p with e" sometimes doesn't cut it. But
+> similarly, the fact that "add -p" can't be used to undo a previous "add
+> -p" is suboptimal. Both issues could be solved with a 3way stage tool. I
+> have this on my todo/wish list, and I seem to recall that Jeff or Junio
+> came up with a few lines of (scripting) code for that. That would depend
+> on the availability of proper tools, though (e.g. vim in diff mode).
+
+That'd be great.
+-- 
+Duy
