@@ -1,279 +1,218 @@
 From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: [PATCH v3 06/10] vcs-svn,svn-fe: allow to specify dump destination ref
-Date: Tue, 16 Aug 2011 15:54:51 +0600
-Message-ID: <1313488495-2203-7-git-send-email-divanorama@gmail.com>
+Subject: [PATCH v3 04/10] vcs-svn: make svndump_init parameters a struct
+Date: Tue, 16 Aug 2011 15:54:49 +0600
+Message-ID: <1313488495-2203-5-git-send-email-divanorama@gmail.com>
 References: <1313488495-2203-1-git-send-email-divanorama@gmail.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	David Barr <davidbarr@google.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Dmitry Ivankov <divanorama@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 16 11:54:18 2011
+X-From: git-owner@vger.kernel.org Tue Aug 16 11:54:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtGLh-00089W-JI
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 11:54:17 +0200
+	id 1QtGLi-00089W-3l
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 11:54:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752122Ab1HPJyK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Aug 2011 05:54:10 -0400
+	id S1752081Ab1HPJyG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Aug 2011 05:54:06 -0400
 Received: from mail-bw0-f46.google.com ([209.85.214.46]:61184 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752073Ab1HPJyG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2011 05:54:06 -0400
+	with ESMTP id S1751998Ab1HPJyC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2011 05:54:02 -0400
 Received: by mail-bw0-f46.google.com with SMTP id 11so3585259bke.19
-        for <git@vger.kernel.org>; Tue, 16 Aug 2011 02:54:05 -0700 (PDT)
+        for <git@vger.kernel.org>; Tue, 16 Aug 2011 02:54:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=p2gBjvYT9BEnnonvL/Bihm7vDMY0in1dYd6spSDw3e0=;
-        b=yAIYXoxd32S6gktbHGnlAxipFatChlXNkVQoF5VrTN6Ms3Mlp+H7E1ctyERPIwFoy/
-         3ZoIKF+SljZqKQTROaXnj43NDQ5ylD35VYSdPXxjcg9x5ZM0wVzosA9bAhn8le48X/qc
-         GRH1YA8rt7qhsNNO/2tNwHSCa5Wu0B/GjGZV4=
-Received: by 10.205.64.68 with SMTP id xh4mr1249773bkb.164.1313488445366;
-        Tue, 16 Aug 2011 02:54:05 -0700 (PDT)
+        bh=mrnMw0TS8M7qkXXjo7TGsT4ugVS1yglCrxbCgm2PnP0=;
+        b=cbNSGGw5eUEtIMXvysp8sDoh/SohiJDyWQAZ+2LO3+21KGibi/X86h5fngEMI86taI
+         q1GfENiRbr+50CHo/TlrOEkWX2BQ/8cNdZ/QPJREt5MjK18grjWB/FAaa8r1cs3hZwz5
+         H4ji4AxKmfoZ4diDdxGno2J1wi4aYFQ/AJKA4=
+Received: by 10.205.65.133 with SMTP id xm5mr844304bkb.395.1313488441512;
+        Tue, 16 Aug 2011 02:54:01 -0700 (PDT)
 Received: from localhost.localdomain (117360277.convex.ru [79.172.62.237])
-        by mx.google.com with ESMTPS id zx9sm1841723bkb.61.2011.08.16.02.54.03
+        by mx.google.com with ESMTPS id zx9sm1841723bkb.61.2011.08.16.02.53.59
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 16 Aug 2011 02:54:04 -0700 (PDT)
+        Tue, 16 Aug 2011 02:54:00 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.4
 In-Reply-To: <1313488495-2203-1-git-send-email-divanorama@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179418>
 
-svn-fe produces fast-import stream for a fixed refs/heads/master ref.
-It is usually desired to write to a different ref. In a remote helper
-it would be a ref in private namespace. If svn-fe is used by someone
-directly it'll be more safe to remind where the commits can go. And
-in both cases it may be needed to import from two repos and hence to
-different refs.
+svndump_init takes a dumpfile parameter and svndump_read takes url
+parameter. Internally url is stored in dump_ctx that is in fact
+reset in svndump_init, but then is reset once more in svndump_read.
+It'd be better to make url a svndump_init parameter and avoid this
+double reset.
 
-Add a destination ref parameter to vcs-svn/, a corresponding parameter
-to svn-fe and a simple test for it.
+A bunch of new svndump parameters are going to be introduced. So wrap
+them all to a svndump_options struct to make adding new ones smooth
+and easy.
 
-$ svn-fe --ref=refs/heads/master ...
-is an explicit way to stay with the default destination.
+The usage changes like following.
+Before:
+	if (svndump_init(dumpfile))
+		die("svndump_init failed");
+	svndump_read(url);
+After:
+	struct svndump_args opts;
+	memset(&opts, 0, sizeof(opts));
+	opts.url = url;
+	opts.filename = dumpfile;
+	if (svndump_init(&opts))
+		die("svndump_init failed");
+	svndump_read();
 
 Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- contrib/svn-fe/svn-fe.c   |    2 ++
- contrib/svn-fe/svn-fe.txt |    4 ++++
- t/t9010-svn-fe.sh         |   42 ++++++++++++++++++++++++++----------------
- test-svn-fe.c             |    4 +++-
- vcs-svn/svndump.c         |   16 +++++++++++-----
- vcs-svn/svndump.h         |    1 +
- 6 files changed, 47 insertions(+), 22 deletions(-)
+ contrib/svn-fe/svn-fe.c |   12 ++++++------
+ test-svn-fe.c           |    7 +++++--
+ vcs-svn/svndump.c       |   12 ++++++------
+ vcs-svn/svndump.h       |   11 +++++++++--
+ 4 files changed, 26 insertions(+), 16 deletions(-)
 
 diff --git a/contrib/svn-fe/svn-fe.c b/contrib/svn-fe/svn-fe.c
-index 0165c3f..9dd8336 100644
+index a95e72f..0165c3f 100644
 --- a/contrib/svn-fe/svn-fe.c
 +++ b/contrib/svn-fe/svn-fe.c
-@@ -17,6 +17,8 @@ static struct svndump_options options;
- static struct option svn_fe_options[] = {
- 	OPT_STRING(0, "git-svn-id-url", &options.git_svn_url, "url",
- 		"add git-svn-id line to log messages, imitating git-svn"),
-+	OPT_STRING(0, "ref", &options.ref, "refname",
-+		"write to <refname> instead of refs/heads/master"),
- 	OPT_END()
- };
- 
-diff --git a/contrib/svn-fe/svn-fe.txt b/contrib/svn-fe/svn-fe.txt
-index 8c6d347..0d19475 100644
---- a/contrib/svn-fe/svn-fe.txt
-+++ b/contrib/svn-fe/svn-fe.txt
-@@ -33,6 +33,10 @@ OPTIONS
- 	metadata lines format. See NOTES for more detailed
- 	description.
- 
-+--ref=<refname>::
-+	Ref to be written by the generated stream.
-+	Default is refs/heads/master.
-+
- INPUT FORMAT
- ------------
- Subversion's repository dump format is documented in full in
-diff --git a/t/t9010-svn-fe.sh b/t/t9010-svn-fe.sh
-index b7eed24..b45527e 100755
---- a/t/t9010-svn-fe.sh
-+++ b/t/t9010-svn-fe.sh
-@@ -20,9 +20,10 @@ try_dump () {
- 	input=$1 &&
- 	maybe_fail_svnfe=${2:+test_$2} &&
- 	maybe_fail_fi=${3:+test_$3} &&
-+	args=${4:-} &&
- 
- 	{
--		$maybe_fail_svnfe test-svn-fe "$input" >stream 3<backflow &
-+		$maybe_fail_svnfe test-svn-fe $args "$input" >stream 3<backflow &
- 	} &&
- 	$maybe_fail_fi git fast-import --cat-blob-fd=3 <stream 3>backflow &&
- 	wait $!
-@@ -54,6 +55,22 @@ text_no_props () {
- 
- >empty
- 
-+cat >emptyprop.dump <<\EOF
-+SVN-fs-dump-format-version: 3
-+
-+Revision-number: 1
-+Prop-content-length: 10
-+Content-length: 10
-+
-+PROPS-END
-+
-+Revision-number: 2
-+Prop-content-length: 10
-+Content-length: 10
-+
-+PROPS-END
-+EOF
-+
- test_expect_success 'setup: have pipes?' '
- 	rm -f frob &&
- 	if mkfifo frob
-@@ -97,26 +114,19 @@ test_expect_failure PIPE 'empty revision' '
- test_expect_success PIPE 'empty properties' '
- 	reinit_git &&
- 	printf "rev <nobody, nobody@local>: %s\n" "" "" >expect &&
--	cat >emptyprop.dump <<-\EOF &&
--	SVN-fs-dump-format-version: 3
--
--	Revision-number: 1
--	Prop-content-length: 10
--	Content-length: 10
--
--	PROPS-END
--
--	Revision-number: 2
--	Prop-content-length: 10
--	Content-length: 10
--
--	PROPS-END
--	EOF
- 	try_dump emptyprop.dump &&
- 	git log -p --format="rev <%an, %ae>: %s" HEAD >actual &&
- 	test_cmp expect actual
- '
- 
-+test_expect_success PIPE 'import to notmaster ref' '
-+	reinit_git &&
-+	try_dump emptyprop.dump "" "" "--ref=refs/heads/notmaster" &&
-+
-+	git rev-parse --verify notmaster &&
-+	test_must_fail git rev-parse --verify master
-+'
-+
- test_expect_success PIPE 'author name and commit message' '
- 	reinit_git &&
- 	echo "<author@example.com, author@example.com@local>" >expect.author &&
-diff --git a/test-svn-fe.c b/test-svn-fe.c
-index 0dd0657..fddd3e8 100644
---- a/test-svn-fe.c
-+++ b/test-svn-fe.c
-@@ -10,7 +10,7 @@
- #include "vcs-svn/line_buffer.h"
- 
- static const char * const test_svnfe_usage[] = {
--	"test-svn-fe <dumpfile>",
-+	"test-svn-fe [options] <dumpfile>",
- 	"test-svn-fe -d <preimage> <delta> <len>",
+@@ -12,10 +12,10 @@ static const char * const svn_fe_usage[] = {
  	NULL
  };
-@@ -21,6 +21,8 @@ static int delta_test;
  
- static struct option test_svnfe_options[] = {
- 	OPT_SET_INT('d', "apply-delta", &delta_test, "test apply_delta", 1),
-+	OPT_STRING(0, "ref", &options.ref, "refname",
-+		"write to <refname> instead of refs/heads/master"),
+-static const char *url;
++static struct svndump_options options;
+ 
+ static struct option svn_fe_options[] = {
+-	OPT_STRING(0, "git-svn-id-url", &url, "url",
++	OPT_STRING(0, "git-svn-id-url", &options.git_svn_url, "url",
+ 		"add git-svn-id line to log messages, imitating git-svn"),
  	OPT_END()
  };
+@@ -28,15 +28,15 @@ int main(int argc, const char **argv)
+ 		usage_with_options(svn_fe_usage, svn_fe_options);
  
+ 	if (argc == 1) {
+-		if (url)
++		if (options.git_svn_url)
+ 			usage_msg_opt("git-svn-id-url is set twice: as a "
+ 					"--parameter and as a [parameter]",
+ 					svn_fe_usage, svn_fe_options);
+-		url = argv[0];
++		options.git_svn_url = argv[0];
+ 	}
+-	if (svndump_init(NULL))
++	if (svndump_init(&options))
+ 		return 1;
+-	svndump_read(url);
++	svndump_read();
+ 	svndump_deinit();
+ 	svndump_reset();
+ 	return 0;
+diff --git a/test-svn-fe.c b/test-svn-fe.c
+index c10d3ca..0dd0657 100644
+--- a/test-svn-fe.c
++++ b/test-svn-fe.c
+@@ -15,6 +15,8 @@ static const char * const test_svnfe_usage[] = {
+ 	NULL
+ };
+ 
++static struct svndump_options options;
++
+ static int delta_test;
+ 
+ static struct option test_svnfe_options[] = {
+@@ -57,9 +59,10 @@ int main(int argc, const char *argv[])
+ 		return apply_delta(argc, argv);
+ 
+ 	if (argc == 1) {
+-		if (svndump_init(argv[0]))
++		options.dumpfile = argv[0];
++		if (svndump_init(&options))
+ 			return 1;
+-		svndump_read(NULL);
++		svndump_read();
+ 		svndump_deinit();
+ 		svndump_reset();
+ 		return 0;
 diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
-index 28d84c9..3a64708 100644
+index b1f4161..5cdf6b8 100644
 --- a/vcs-svn/svndump.c
 +++ b/vcs-svn/svndump.c
-@@ -57,6 +57,7 @@ static struct {
- 	uint32_t version;
- 	struct strbuf uuid, url;
- 	int first_commit_done;
-+	struct strbuf ref_name;
- } dump_ctx;
+@@ -12,6 +12,7 @@
+ #include "fast_export.h"
+ #include "line_buffer.h"
+ #include "strbuf.h"
++#include "svndump.h"
  
- static void reset_node_ctx(char *fname)
-@@ -82,7 +83,7 @@ static void reset_rev_ctx(uint32_t revision)
- 	strbuf_reset(&rev_ctx.author);
+ /*
+  * Compare start of string to literal of equal length;
+@@ -313,14 +314,13 @@ static void end_revision(void)
+ 		fast_export_end_commit(rev_ctx.revision);
  }
  
--static void reset_dump_ctx(const char *url)
-+static void reset_dump_ctx(const char *url, const char *dst_ref)
+-void svndump_read(const char *url)
++void svndump_read(void)
  {
- 	strbuf_reset(&dump_ctx.url);
- 	if (url)
-@@ -90,6 +91,8 @@ static void reset_dump_ctx(const char *url)
- 	dump_ctx.version = 1;
- 	strbuf_reset(&dump_ctx.uuid);
- 	dump_ctx.first_commit_done = 0;
-+	strbuf_reset(&dump_ctx.ref_name);
-+	strbuf_addstr(&dump_ctx.ref_name, dst_ref);
+ 	char *val;
+ 	char *t;
+ 	uint32_t active_ctx = DUMP_CTX;
+ 	uint32_t len;
+ 
+-	reset_dump_ctx(url);
+ 	while ((t = buffer_read_line(&input))) {
+ 		val = strchr(t, ':');
+ 		if (!val)
+@@ -455,10 +455,10 @@ void svndump_read(const char *url)
+ 		end_revision();
  }
  
- static void handle_property(const struct strbuf *key_buf,
-@@ -336,8 +339,8 @@ static void begin_revision(void)
- 
- 	add_metadata_trailer(&rev_ctx.log);
- 
--	fast_export_begin_commit("refs/heads/master", rev_ctx.revision, buf,
--		author, email.buf, &rev_ctx.log, rev_ctx.timestamp);
-+	fast_export_begin_commit(dump_ctx.ref_name.buf, rev_ctx.revision, buf,
-+				author, email.buf, &rev_ctx.log, rev_ctx.timestamp);
- }
- 
- static void end_revision(void)
-@@ -491,6 +494,9 @@ void svndump_read(void)
- 
- int svndump_init(const struct svndump_options *o)
+-int svndump_init(const char *filename)
++int svndump_init(const struct svndump_options *o)
  {
-+	const char *ref = o->ref;
-+	if (!ref)
-+		ref = "refs/heads/master";
- 	if (buffer_init(&input, o->dumpfile))
- 		return error("cannot open %s: %s", o->dumpfile, strerror(errno));
+-	if (buffer_init(&input, filename))
+-		return error("cannot open %s: %s", filename, strerror(errno));
++	if (buffer_init(&input, o->dumpfile))
++		return error("cannot open %s: %s", o->dumpfile, strerror(errno));
  	fast_export_init(REPORT_FILENO);
-@@ -500,7 +506,7 @@ int svndump_init(const struct svndump_options *o)
+ 	strbuf_init(&dump_ctx.uuid, 4096);
+ 	strbuf_init(&dump_ctx.url, 4096);
+@@ -466,7 +466,7 @@ int svndump_init(const char *filename)
  	strbuf_init(&rev_ctx.author, 4096);
  	strbuf_init(&node_ctx.src, 4096);
  	strbuf_init(&node_ctx.dst, 4096);
--	reset_dump_ctx(o->git_svn_url);
-+	reset_dump_ctx(o->git_svn_url, ref);
+-	reset_dump_ctx(NULL);
++	reset_dump_ctx(o->git_svn_url);
  	reset_rev_ctx(0);
  	reset_node_ctx(NULL);
  	return 0;
-@@ -509,7 +515,7 @@ int svndump_init(const struct svndump_options *o)
- void svndump_deinit(void)
- {
- 	fast_export_deinit();
--	reset_dump_ctx(NULL);
-+	reset_dump_ctx(NULL, "");
- 	reset_rev_ctx(0);
- 	reset_node_ctx(NULL);
- 	strbuf_release(&rev_ctx.log);
 diff --git a/vcs-svn/svndump.h b/vcs-svn/svndump.h
-index db39dfe..0b01ccd 100644
+index df9ceb0..db39dfe 100644
 --- a/vcs-svn/svndump.h
 +++ b/vcs-svn/svndump.h
-@@ -6,6 +6,7 @@ struct svndump_options {
- 	 * dumpfile is opened in svndump_init and is read in svndump_read.
- 	 */
- 	const char *dumpfile, *git_svn_url;
-+	const char *ref;
- };
+@@ -1,8 +1,15 @@
+ #ifndef SVNDUMP_H_
+ #define SVNDUMP_H_
  
- int svndump_init(const struct svndump_options *o);
+-int svndump_init(const char *filename);
+-void svndump_read(const char *url);
++struct svndump_options {
++	/*
++	 * dumpfile is opened in svndump_init and is read in svndump_read.
++	 */
++	const char *dumpfile, *git_svn_url;
++};
++
++int svndump_init(const struct svndump_options *o);
++void svndump_read(void);
+ void svndump_deinit(void);
+ void svndump_reset(void);
+ 
 -- 
 1.7.3.4
