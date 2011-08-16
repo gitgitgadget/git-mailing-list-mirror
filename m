@@ -1,86 +1,82 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: GIT commit strategy
-Date: Tue, 16 Aug 2011 16:46:46 +0000
-Message-ID: <CAMOZ1Bvy2+8UdBuxRM03=Ynh6NpD-o_TVNoFG1M3+t993BikyA@mail.gmail.com>
-References: <C0B80A98F4E14FA287D3BAFA8366BEAC@procyon>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/2] Move git-dir for submodules
+Date: Tue, 16 Aug 2011 10:34:03 -0700
+Message-ID: <7vhb5hi7lg.fsf@alter.siamese.dyndns.org>
+References: <1313178913-25617-1-git-send-email-iveqy@iveqy.com>
+ <1313178913-25617-3-git-send-email-iveqy@iveqy.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Vadim K." <klug@hot.ee>
-X-From: git-owner@vger.kernel.org Tue Aug 16 18:47:26 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, jens.lehmann@web.de, hvoigt@hvoigt.net
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Tue Aug 16 19:34:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtMnR-0002A4-KL
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 18:47:22 +0200
+	id 1QtNWo-00069R-PK
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Aug 2011 19:34:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752684Ab1HPQrR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Aug 2011 12:47:17 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:48457 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752580Ab1HPQrQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2011 12:47:16 -0400
-Received: by ywf7 with SMTP id 7so74159ywf.19
-        for <git@vger.kernel.org>; Tue, 16 Aug 2011 09:47:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=atz3j/gxEwSd6FXZTPzLIC9k5zGtNGLIegZCjrNr+UU=;
-        b=Kbwwe/k6LxrrPFoBJW8N/I6NFglaoW6E03s2KJaOdwd2//09OiHgonZnWKMLEHkdut
-         4QHOf/qbPTDg7lQrIE68qkyS+ADaeYM3SvXMc9MhPiO1mZpZoSm8hZopnQzlxVrAHcBV
-         uRsbKrqpBUT2HofbROMU7ytqyvROk5SwB8f2Y=
-Received: by 10.43.52.1 with SMTP id vk1mr5579802icb.129.1313513236050; Tue,
- 16 Aug 2011 09:47:16 -0700 (PDT)
-Received: by 10.42.174.66 with HTTP; Tue, 16 Aug 2011 09:46:46 -0700 (PDT)
-In-Reply-To: <C0B80A98F4E14FA287D3BAFA8366BEAC@procyon>
+	id S1751960Ab1HPReI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Aug 2011 13:34:08 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52207 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751858Ab1HPReG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2011 13:34:06 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 47C6646B5;
+	Tue, 16 Aug 2011 13:34:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iYCXku2ahCnTX0xV4xhPQlEu0D0=; b=S5yT0l
+	1sXkzJku83TffmhC/vbIgANwOljge+ps2PXQfDxueyTaYwWIUT/Rf4i3YQNqqx2L
+	U8C8a49CoPw+uxRZXS/Rh1CbhmHKlrfSdkLZNgikIuVjFcEiJnmMHVsp4mukxkLc
+	SN8SjYq+aEVJMZdVcAQuBzcJ63yz7RJ8TaKdA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GcfSyVk2dcjtOiOlsuFlxI5/S1uWgCAz
+	pJ8Pq1ASADENTT3y7xeOS4XmfkUahw3xa69uxKcqJpjtoka14cydXUfp4uSuH6eU
+	KpzI8As2v1b8+Ms55YiCJ5QTjAcJfUeP9TGQt6zhiNGJfGdAitxDkKVMeH3nDJJi
+	TyqvWT2yVcc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3DC1A46B4;
+	Tue, 16 Aug 2011 13:34:05 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C359E46B3; Tue, 16 Aug 2011
+ 13:34:04 -0400 (EDT)
+In-Reply-To: <1313178913-25617-3-git-send-email-iveqy@iveqy.com> (Fredrik
+ Gustafsson's message of "Fri, 12 Aug 2011 21:55:13 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: F0150AAE-C82D-11E0-86D9-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179460>
 
-2011/8/16 Vadim K. <klug@hot.ee>:
-> Hello all,
->
-> =C2=A0 Imagine developer A has changed files f1 and f2, then made com=
-mit and push
-> to the server
-> =C2=A0 Developer B has changed files f2 and f3 and made local commit.
->
-> =C2=A0 Next B wants to publish changes to the server and make pull to=
- resolve
-> conflicts at f2. =C2=A0After pulling from the server it has all 3 fil=
-es - f1, f2
-> and f3 to commit before push. But B did not changed f1 and actually c=
-an
-> "ban" this change if he commits only f2 and f3 - files that were chan=
-ged by
-> him. In latter case after pushing to the server GIT will restore prev=
-ious
-> version of the f1, even if it has more recent one !! It does not seem=
- to be
-> very logical.
->
-> =C2=A0 Question: is it possible to show to the developer only files, =
-that he
-> changes? Like in SVN - after updating from the server developer must =
-resolve
-> conflicts (if any) and only commits changes that he has made. By the =
-way -
-> in a case of non-conflicting files (let me say A changes f1, B change=
-s f2)
-> GIT makes commit automatically and does not show to the B, that f1 wa=
-s
-> changed and need to be re-commited. B only need to push the change ba=
-ck.
+Fredrik Gustafsson <iveqy@iveqy.com> writes:
 
-It is difficult to understand exactly what you have written here, but
-I feel that git already does what you want, so I don't understand why
-you are confused.
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index bc1d3fa..ace6c1d 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -122,14 +122,53 @@ module_clone()
+>  	path=$1
+>  	url=$2
+>  	reference="$3"
+> +	gitdir=
+> +	gitdir_base=
+> +	name=$(module_name "$path")
+> +	if test -z "$name"
+> +	then
+> +		name="$path"
+> +	fi
 
-Please provide a concrete example (with git commands, expected
-results, actual results, etc.) so that we can understand each other.
+This conditional is not needed; module_name dies when it cannot find the
+name for the path, as it should.
+
+If the defaulting to the path itself were a good idea (which I do not
+think it is), that should be done in module_name so that other callers
+that tried to find the name for a given path that does not have a named
+module would get a consistent result.
