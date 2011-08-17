@@ -1,164 +1,140 @@
-From: Dmitry Ivankov <divanorama@gmail.com>
-Subject: [PATCH v3] doc/fast-import: document feature import-marks-if-exists
-Date: Wed, 17 Aug 2011 16:42:58 +0600
-Message-ID: <1313577778-14716-1-git-send-email-divanorama@gmail.com>
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Johan Herland <johan@herland.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Dmitry Ivankov <divanorama@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 17 12:41:53 2011
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [BUG] git-svn: error importing git repository in svn when first
+ git commit was empty
+Date: Wed, 17 Aug 2011 13:17:19 +0200
+Message-ID: <4E4BA33F.8060103@drmicha.warpmail.net>
+References: <CAAzBVjAjqr8hDFdMc2s6d=ZXttswSnLiig-aFKsZG5EJjAyAig@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: s b <sberder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 17 13:17:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtdZI-0003Rf-6e
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Aug 2011 12:41:52 +0200
+	id 1Qte7m-0002Ia-33
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Aug 2011 13:17:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752430Ab1HQKls (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Aug 2011 06:41:48 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:46933 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752025Ab1HQKlr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2011 06:41:47 -0400
-Received: by bke11 with SMTP id 11so584365bke.19
-        for <git@vger.kernel.org>; Wed, 17 Aug 2011 03:41:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        bh=xOVvJq9aH9SfRCkGUQ1uPM6WDC6Y7Nche/hZmmkooy0=;
-        b=kWV1sC68GqecThlgNJNdJG6+ZKaTWItEHe9yj7U28XuRMU+SPw5wWAjES+ljx/HV4l
-         +x74HgT/6EcAxQR+YmVTbqaBabggFqNAcBsTTpPo373w/C2OXKFyqK8d4bEA7qQy4WEa
-         q62iMRYmDDBPz5n6eIwiILZ3HikCmAXnaR8BM=
-Received: by 10.204.241.14 with SMTP id lc14mr367291bkb.322.1313577705881;
-        Wed, 17 Aug 2011 03:41:45 -0700 (PDT)
-Received: from localhost.localdomain (117360277.convex.ru [79.172.62.237])
-        by mx.google.com with ESMTPS id f9sm346568bkt.3.2011.08.17.03.41.43
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 17 Aug 2011 03:41:44 -0700 (PDT)
-X-Mailer: git-send-email 1.7.3.4
+	id S1753189Ab1HQLRW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Aug 2011 07:17:22 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:43851 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753158Ab1HQLRW (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Aug 2011 07:17:22 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 7B82720EF2;
+	Wed, 17 Aug 2011 07:17:21 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Wed, 17 Aug 2011 07:17:21 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=MDmwDY906ePOffKnT5GoPx
+	IGljs=; b=L1GKb0T9sgvNgtsZNySgtmlnmUIeJsgfzPY9gQl52FumOnpV1J8qSe
+	ceabFpSHMdekqOjv/fwN7JaCZAuUn4LDiF41SUVyoTlfP2cYy/gYH8/kGT2u2THu
+	nKEZz9aiogMyFqIO0KLzB54kj5wN1bEUtD+Jf62oM5HayPti7xR2o=
+X-Sasl-enc: kXX0+VS1FrDviQrhRPcT1o4fvPrSpl1ACMHh6Gb307ME 1313579841
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id E74B141F03C;
+	Wed, 17 Aug 2011 07:17:20 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110707 Thunderbird/5.0
+In-Reply-To: <CAAzBVjAjqr8hDFdMc2s6d=ZXttswSnLiig-aFKsZG5EJjAyAig@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179509>
 
-fast-import command-line option --import-marks-if-exists was introduced
-in commit dded4f1 (fast-import: Introduce --import-marks-if-exists, 2011-01-15)
+s b venit, vidit, dixit 11.08.2011 11:13:
+> Couldn't find any bugtracker for git so I supposed it would be ok to
+> post the bug here.
+> 
+> # Situation:
+> I usually start my projects with git as it's quick and simple to track
+> modifications. If the code grows and is of any interest for my work I
+> push it to the corporate svn. I usually use this tutorial
+> (http://eikke.com/importing-a-git-tree-into-a-subversion-repository/)
+> which makes it a simple thing to do.
+> Some time ago I started having a first empty commit in my git
+> repository using 'git commit --allow-empty' as I read (can't remember
+> where) it could help for some cases. I don't have need for those edge
+> cases yet but remember thinking I could need them in the future.
+> 
+> # Problem:
+> When your first git commit is empty, git-svn fails with the following message :
+> $ git svn dcommit
+> Committing to https://svn/repo/trunk ...
+> No changes
+> 71fb4051d840e27a43b87b071ccc7ea70bd0c5e8~1 ==
+> 71fb4051d840e27a43b87b071ccc7ea70bd0c5e8
+> No changes between current HEAD and refs/remotes/trunk
+> Resetting to the latest refs/remotes/trunk
+> Unable to extract revision information  from commit
+> 867ee195730507fb769e794eb4abe09d0e2e7c8f~1
+> 
 
---import-marks option can be set via a "feature" command in a fast-import
-stream and --import-marks-if-exists had support for such specification
-from the very beginning too due to some shared codebase. Though the
-documentation for this feature wasn't written in dded4f1.
+Shot in the dark (gray): Try
 
-Add the documentation for "feature import-marks-if-exists=<file>". Also add
-a minimalistic test for it.
+git svn dcommit --no-rebase
 
-Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
----
-This is a new round for 2/3 from [1]. 1/3 and 3/3 are already in master.
-The only change from v2 is more tests, now there are:
-
-- feature import-marks-if-exists=nonexisting.marks
-- feature import-marks-if-exists=existing.marks
-- --import-marks=existing.marks & feature=nonexisting.marks
-- --import-marks-if-exists=nonexisting.marks & feature=existing.marks
-
-These seem to cover most cases: feature works and is overriden by command line arguments.
-Having more than one feature specified isn't tested to fail, imo it'd be better to support
-specifying multiple marks files via features anyway. It's not yet done because unlike other
-simple options are easy to override on the fly (we first parse the stream for features and
-then parse argv. So argv overrides things), while import marks are more tricky:
-- overriding rule is more complex, any command line option should discard all feature ones.
-- reading them could be expensive (we do lookup objects they refer to).
-- if the lookup fails or file is otherwise corrupt/bad, we die. So we shouldn't read marks
-files given by features if they are to be overriden by command line options.
-
- Documentation/git-fast-import.txt |   10 +++++--
- t/t9300-fast-import.sh            |   47 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 54 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-index 2969388..db0d75f 100644
---- a/Documentation/git-fast-import.txt
-+++ b/Documentation/git-fast-import.txt
-@@ -1012,10 +1012,14 @@ force::
- 	(see OPTIONS, above).
- 
- import-marks::
-+import-marks-if-exists::
- 	Like --import-marks except in two respects: first, only one
--	"feature import-marks" command is allowed per stream;
--	second, an --import-marks= command-line option overrides
--	any "feature import-marks" command in the stream.
-+	"feature import-marks" or "feature import-marks-if-exists"
-+	command is allowed per stream; second, an --import-marks=
-+	or --import-marks-if-exists command-line option overrides
-+	any of these "feature" commands in the stream; third,
-+	"feature import-marks-if-exists" like a corresponding
-+	command-line option silently skips a nonexistent file.
- 
- cat-blob::
- ls::
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index f256475..2cb4494 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -1882,6 +1882,53 @@ test_expect_success 'R: --import-marks-if-exists' '
- 	test_cmp expect io.marks
- '
- 
-+test_expect_success 'R: feature import-marks-if-exists' '
-+	rm -f io.marks &&
-+	>expect &&
-+
-+	git fast-import --export-marks=io.marks <<-\EOF &&
-+	feature import-marks-if-exists=not_io.marks
-+	EOF
-+	test_cmp expect io.marks &&
-+
-+	blob=$(echo hi | git hash-object --stdin) &&
-+
-+	echo ":1 $blob" >io.marks &&
-+	echo ":1 $blob" >expect &&
-+	echo ":2 $blob" >>expect &&
-+
-+	git fast-import --export-marks=io.marks <<-\EOF &&
-+	feature import-marks-if-exists=io.marks
-+	blob
-+	mark :2
-+	data 3
-+	hi
-+
-+	EOF
-+	test_cmp expect io.marks &&
-+
-+	echo ":3 $blob" >>expect &&
-+
-+	git fast-import --import-marks=io.marks \
-+			--export-marks=io.marks <<-\EOF &&
-+	feature import-marks-if-exists=not_io.marks
-+	blob
-+	mark :3
-+	data 3
-+	hi
-+
-+	EOF
-+	test_cmp expect io.marks &&
-+
-+	>expect &&
-+
-+	git fast-import --import-marks-if-exists=not_io.marks \
-+			--export-marks=io.marks <<-\EOF
-+	feature import-marks-if-exists=io.marks
-+	EOF
-+	test_cmp expect io.marks
-+'
-+
- cat >input << EOF
- feature import-marks=marks.out
- feature export-marks=marks.new
--- 
-1.7.3.4
+> At the same time, it also completely breaks the logs.
+> 
+> # How to reproduce: (the svn repository just has one commit for usual
+> trunk/branches/tags folders)
+> $ mkdir foobar
+> $ cd foobar/
+> $ git init
+> Initialized empty Git repository in /home/hr/tmp/foobar/.git/
+> $ git commit --allow-empty -m "Project init"
+> [master (root-commit) 0f1e71a] Project init
+> $ echo "foo" > test.txt; git add test.txt; git commit -m "Initial version"
+> [master 119fc0a] Initial version
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+>  create mode 100644 test.txt
+> $ echo "bar" > test.txt; git commit test.txt -m "Second version"
+> [master 77b2681] Second version
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+> $ git svn init -s https://code/svn/foobar/
+> $ git svn fetch
+> r1 = 8bc83d5d63b4191509d29aa90e35e24edba393c1 (refs/remotes/trunk)
+> $ git log --pretty=oneline master
+> 77b268140a03cbe98215ea160704ba14ce79e096 Second version
+> 119fc0a55d1eb851fcedfe0bdc6de3c1ab047601 Initial version
+> 0f1e71a283d7b4b27d23debaac091b654d495124 Project init
+> $ git show-ref trunk
+> 8bc83d5d63b4191509d29aa90e35e24edba393c1 refs/remotes/trunk
+> $ echo "0f1e71a283d7b4b27d23debaac091b654d495124
+> 8bc83d5d63b4191509d29aa90e35e24edba393c1" >> .git/info/grafts
+> $ git log --pretty=oneline
+> 77b268140a03cbe98215ea160704ba14ce79e096 Second version
+> 119fc0a55d1eb851fcedfe0bdc6de3c1ab047601 Initial version
+> 0f1e71a283d7b4b27d23debaac091b654d495124 Project init
+> 8bc83d5d63b4191509d29aa90e35e24edba393c1 * Init project, mkdir trunk branches ta
+> $ git svn dcommit
+> Committing to https://code/svn/foobar/trunk ...
+> No changes
+> 0f1e71a283d7b4b27d23debaac091b654d495124~1 ==
+> 0f1e71a283d7b4b27d23debaac091b654d495124
+> No changes between current HEAD and refs/remotes/trunk
+> Resetting to the latest refs/remotes/trunk
+> Unable to extract revision information  from commit
+> 119fc0a55d1eb851fcedfe0bdc6de3c1ab047601~1
+> $ git log
+> commit 8bc83d5d63b4191509d29aa90e35e24edba393c1
+> Author: root <root@e969a563-e91d-45ef-9946-abb13e32418c>
+> Date:   Thu Jul 7 06:40:59 2011 +0000
+> 
+>     * Init project, mkdir trunk branches tags.
+> 
+>     git-svn-id: https://code/svn/foobar/trunk@1 e969a563-e91d-45ef-9946-abb13e32
+> 
+> # Solution:
+> Not really a solution but instead of using the first commit for the
+> grafts, I use the second one (that is non empty).
+> 
+> Hope this can help getting a better git-svn!!
+> 
+> Stefan
