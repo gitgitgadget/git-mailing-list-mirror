@@ -1,100 +1,62 @@
-From: Michal Sojka <sojka@os.inf.tu-dresden.de>
-Subject: [PATCH RFC] gitk: Allow commit editing
-Date: Wed, 17 Aug 2011 21:56:11 +0200
-Message-ID: <1313610971-1741-1-git-send-email-sojka@os.inf.tu-dresden.de>
-Cc: paulus@samba.org, Michal Sojka <sojka@os.inf.tu-dresden.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 17 22:03:52 2011
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 7/7] sequencer: Remove sequencer state after final commit
+Date: Thu, 18 Aug 2011 01:53:07 +0530
+Message-ID: <CALkWK0nKiVdeGe2Q9pHA1JO1jyXMomjMpO8f5FqmmgXOEvOwmQ@mail.gmail.com>
+References: <1313310789-10216-1-git-send-email-artagnon@gmail.com>
+ <1313310789-10216-8-git-send-email-artagnon@gmail.com> <20110814160440.GK18466@elie.gateway.2wire.net>
+ <7vei0nn1cn.fsf@alter.siamese.dyndns.org> <20110814213200.GA6555@elie.gateway.2wire.net>
+ <7vippzlj7a.fsf@alter.siamese.dyndns.org> <7v7h6eld2c.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 17 22:23:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtmL9-0000qv-Mt
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Aug 2011 22:03:52 +0200
+	id 1QtmeE-0001wc-Mk
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Aug 2011 22:23:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753556Ab1HQUDq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Aug 2011 16:03:46 -0400
-Received: from max.feld.cvut.cz ([147.32.192.36]:40989 "EHLO max.feld.cvut.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752446Ab1HQUDq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2011 16:03:46 -0400
-X-Greylist: delayed 437 seconds by postgrey-1.27 at vger.kernel.org; Wed, 17 Aug 2011 16:03:46 EDT
-Received: from localhost (unknown [192.168.200.4])
-	by max.feld.cvut.cz (Postfix) with ESMTP id B7E3B19F3336;
-	Wed, 17 Aug 2011 21:56:26 +0200 (CEST)
-X-Virus-Scanned: IMAP AMAVIS
-Received: from max.feld.cvut.cz ([192.168.200.1])
-	by localhost (styx.feld.cvut.cz [192.168.200.4]) (amavisd-new, port 10044)
-	with ESMTP id 9MUij9tI6fSf; Wed, 17 Aug 2011 21:56:25 +0200 (CEST)
-Received: from imap.feld.cvut.cz (imap.feld.cvut.cz [147.32.192.34])
-	by max.feld.cvut.cz (Postfix) with ESMTP id 6848819F32DB;
-	Wed, 17 Aug 2011 21:56:25 +0200 (CEST)
-Received: from steelpick.2x.cz (unknown [141.76.49.12])
-	(Authenticated sender: sojkam1)
-	by imap.feld.cvut.cz (Postfix) with ESMTPSA id 21B5CFA003;
-	Wed, 17 Aug 2011 21:56:24 +0200 (CEST)
-Received: from wsh by steelpick.2x.cz with local (Exim 4.76)
-	(envelope-from <sojkam1@fel.cvut.cz>)
-	id 1QtmDw-0000Sc-Gm; Wed, 17 Aug 2011 21:56:24 +0200
-X-Mailer: git-send-email 1.7.5.4
+	id S1753801Ab1HQUX3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Aug 2011 16:23:29 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:62453 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751727Ab1HQUX2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2011 16:23:28 -0400
+Received: by wwf5 with SMTP id 5so1375337wwf.1
+        for <git@vger.kernel.org>; Wed, 17 Aug 2011 13:23:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=BO9CbG8RTqREoUyaVMPsUEG5SHNMQHg8wKzlTJBwEYQ=;
+        b=LcGOFajSornPvKLMLqWGb5g+EahaAnMd8HuIqZ5r4+fDCYFq6GZPwX4cncWtHNvD6p
+         9PnuVlX4qtDaMRyBXxCrlY7Stsvhm+MuaZbCMWf4qJkorH/dz6LvQDTqNVVubnsyv0DJ
+         ea0HNB7sWbert14MxW3/07jP3GChUc91ZkZlM=
+Received: by 10.216.131.134 with SMTP id m6mr1176593wei.78.1313612607140; Wed,
+ 17 Aug 2011 13:23:27 -0700 (PDT)
+Received: by 10.216.172.132 with HTTP; Wed, 17 Aug 2011 13:23:07 -0700 (PDT)
+In-Reply-To: <7v7h6eld2c.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179534>
 
-Hi, this is a proof of concept patch that allows editing of commits
-from gitk. I often review patches before pushing in gitk and if I
-would like to have an easy way of fixing typos in commit messages etc.
+Hi Junio,
 
-So the patch adds "Edit this commit" item to gitk's context menu and
-the actual editing is done by non-interactively invoking interactive
-rebase :-) and git gui.
+Junio C Hamano writes:
+> After sleeping on this, here are my random thoughts on this topic.
 
-There is almost no error checking etc., but before learning TCL and
-coding this properly, I'd like to get some feedback.
+They're a bit much for me to absorb so quickly.  I'll think about this
+again before posting a more elaborate reply.
 
--Michal
+Thanks for your patience.
 
-Signed-off-by: Michal Sojka <sojka@os.inf.tu-dresden.de>
----
- gitk-git/gitk |   16 ++++++++++++++++
- 1 files changed, 16 insertions(+), 0 deletions(-)
-
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 4cde0c4..121b926 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -2497,6 +2497,7 @@ proc makewindow {} {
- 	{mc "Return to mark" command gotomark}
- 	{mc "Find descendant of this and mark" command find_common_desc}
- 	{mc "Compare with marked commit" command compare_commits}
-+	{mc "Edit this commit" command edit_commit}
-     }
-     $rowctxmenu configure -tearoff 0
- 
-@@ -9102,6 +9103,21 @@ proc cherrypick {} {
-     notbusy cherrypick
- }
- 
-+proc edit_commit {} {
-+    global rowmenuid
-+
-+    nowbusy edit [mc "Editing commit"]
-+    if {[catch {exec sh -c "(GIT_EDITOR='sed -ie 1s/^pick/edit/' git rebase -i $rowmenuid^ && git gui citool --amend && git rebase --continue) 2>&1"} err]} {
-+	notbusy edit
-+	error_popup $err
-+	exec git rebase --abort
-+	return
-+    }
-+    notbusy edit
-+    run updatecommits
-+}
-+
-+
- proc resethead {} {
-     global mainhead rowmenuid confirm_ok resettype NS
- 
--- 
-1.7.5.4
+-- Ram
