@@ -1,163 +1,124 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/3] revision.c: add show_object_with_name() helper function
-Date: Wed, 17 Aug 2011 14:30:34 -0700
-Message-ID: <1313616635-25331-3-git-send-email-gitster@pobox.com>
-References: <1313616635-25331-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 17 23:31:02 2011
+Subject: Re: Malformed branch name in fast-export when specifying
+ non-HEAD/branch revision
+Date: Wed, 17 Aug 2011 15:30:14 -0700
+Message-ID: <7vliurd62x.fsf@alter.siamese.dyndns.org>
+References: <CAORuUR1viqG27+dYOFS_5SLxFOE2wHJqAQ3i3RByg_fbWACh-Q@mail.gmail.com>
+ <CAORuUR154Dhg5vDojga-01bDxxf+=R2X-oJK-0417CgmqxCwvA@mail.gmail.com>
+ <CABPp-BFRZMZjhWuUUeD7Oa1HbWQMnZot7dRm3zKOpCoj_QwZeg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Owen Stephens <git@owenstephens.co.uk>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 18 00:32:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtnhP-00080u-N5
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Aug 2011 23:30:56 +0200
+	id 1Qtoeh-0001Gy-0T
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Aug 2011 00:32:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754525Ab1HQVap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Aug 2011 17:30:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55730 "EHLO
+	id S1752610Ab1HQWaV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Aug 2011 18:30:21 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46305 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754143Ab1HQVal (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2011 17:30:41 -0400
+	id S1751324Ab1HQWaU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2011 18:30:20 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 67C363B15
-	for <git@vger.kernel.org>; Wed, 17 Aug 2011 17:30:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=pd/x
-	eLTQfrqKHBdkra7h/epE3Zw=; b=t46tuMUSUzcTuVdnnQSGO9eA01/FZ8HftQmx
-	R4wGrBA1gWBiqnp3e0CIaBXR9faG8ZLD6ehAGu3xJYoMN3LC1ZumwzJGI6f8wkIr
-	jb1I+KXI20i/OaxPWdEFB6cee7b+1QnSBiJS0S5VivNVyz6fuZ/FHF86GXM2zE2N
-	0TCbjt4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=qx7JxH
-	V68BCwHp/t2faz+4IF4QxRR+QdfpQ4L1bf3fpO50pTeNGYDI4XdztiM9OuwJzxEr
-	WFL4luDHNtbJYB/b0IfJQ++jIEF6Wt73O4Lpds8VdZ+Ot+cocqTINw1x34ilcI/2
-	DyC59iX3yoR+qHTwcfomasTqfoNim5CChN9Pc=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 64E2F45BE;
+	Wed, 17 Aug 2011 18:30:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jCRtJJnyGgVPhCICC2lTR66K6KY=; b=XJtfMh
+	BfpTLGLaS8J1/1dtN8pqMfdak3xd/Gxee8ywU541vaukofrgiPEm+YKNAWRTEb07
+	R6rw0HQaCk6cgxXE0du4rlI3y7qmf4U+0YLHcEVBYcrcuEnDtOh9EezLC+v1UDYL
+	6TvfeQq4PPeq86FkS+3ZknTeZEucjc7NNM3Z0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eyiIrpt/SV1bK3CvllPEiTu7HOJJ6lmX
+	U6+/maVpfO6OdgfNx3vnXK8Es7UwjpA6P/Zq3gKZJplkXs1f2Za6cmyJXqhBtuJ6
+	sWrD1BMieJryJeB0DOSSN2wryLEbklOj74x4nZoYxF9x5UIoLYCO8QjM07TZ9Soy
+	nJibPOPLZ4M=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5FB8E3B14
-	for <git@vger.kernel.org>; Wed, 17 Aug 2011 17:30:41 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5BDD545BD;
+	Wed, 17 Aug 2011 18:30:17 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C8A903B13 for
- <git@vger.kernel.org>; Wed, 17 Aug 2011 17:30:40 -0400 (EDT)
-X-Mailer: git-send-email 1.7.6.472.g4bfe7c
-In-Reply-To: <1313616635-25331-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 27FBAFE6-C918-11E0-A6DA-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3A28F45BC; Wed, 17 Aug 2011
+ 18:30:16 -0400 (EDT)
+In-Reply-To: <CABPp-BFRZMZjhWuUUeD7Oa1HbWQMnZot7dRm3zKOpCoj_QwZeg@mail.gmail.com> (Elijah
+ Newren's message of "Wed, 17 Aug 2011 13:36:32 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 7B191BE8-C920-11E0-969C-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179542>
 
-There are two copies of traverse_commit_list callback that show the object
-name followed by pathname the object was found, to produce output similar
-to "rev-list --objects".
+Elijah Newren <newren@gmail.com> writes:
 
-Unify them.
+>> $ # uses HEAD~1 instead of refs/heads/master
+>> $ git fast-export HEAD~1
+>>
+>> blob
+>> mark :1
+>> data 0
+>>
+>> reset HEAD~1
+>> commit HEAD~1
+>
+> Thanks for the report.  It turns out this bug has been reported and is
+> in the testsuite as t9350.19 -- currently marked as expected to fail.
+> I looked at the problem a couple years ago for a little bit but never
+> finished that particular patch and never got back around to it.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/rev-list.c |   15 +--------------
- revision.c         |   19 +++++++++++++++++++
- revision.h         |    2 ++
- upload-pack.c      |   15 +--------------
- 4 files changed, 23 insertions(+), 28 deletions(-)
+What _should_ be the right behaviour to begin with, I have to wonder.
 
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index d789279..f5ce487 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -176,21 +176,8 @@ static void finish_object(struct object *obj, const struct name_path *path, cons
- 
- static void show_object(struct object *obj, const struct name_path *path, const char *component)
- {
--	char *name = path_name(path, component);
--	/* An object with name "foo\n0000000..." can be used to
--	 * confuse downstream "git pack-objects" very badly.
--	 */
--	const char *ep = strchr(name, '\n');
--
- 	finish_object(obj, path, component);
--	if (ep) {
--		printf("%s %.*s\n", sha1_to_hex(obj->sha1),
--		       (int) (ep - name),
--		       name);
--	}
--	else
--		printf("%s %s\n", sha1_to_hex(obj->sha1), name);
--	free(name);
-+	show_object_with_name(stdout, obj, path, component);
- }
- 
- static void show_edge(struct commit *commit)
-diff --git a/revision.c b/revision.c
-index c46cfaa..c5b38cc 100644
---- a/revision.c
-+++ b/revision.c
-@@ -40,6 +40,25 @@ char *path_name(const struct name_path *path, const char *name)
- 	return n;
- }
- 
-+void show_object_with_name(FILE *out, struct object *obj, const struct name_path *path, const char *component)
-+{
-+	char *name = path_name(path, component);
-+	const char *ep = strchr(name, '\n');
-+
-+	/*
-+	 * An object with name "foo\n0000000..." can be used to
-+	 * confuse downstream "git pack-objects" very badly.
-+	 */
-+	if (ep) {
-+		fprintf(out, "%s %.*s\n", sha1_to_hex(obj->sha1),
-+			(int) (ep - name),
-+			name);
-+	}
-+	else
-+		fprintf(out, "%s %s\n", sha1_to_hex(obj->sha1), name);
-+	free(name);
-+}
-+
- void add_object(struct object *obj,
- 		struct object_array *p,
- 		struct name_path *path,
-diff --git a/revision.h b/revision.h
-index 3d64ada..da00a58 100644
---- a/revision.h
-+++ b/revision.h
-@@ -185,6 +185,8 @@ struct name_path {
- 
- char *path_name(const struct name_path *path, const char *name);
- 
-+extern void show_object_with_name(FILE *, struct object *, const struct name_path *, const char *);
-+
- extern void add_object(struct object *obj,
- 		       struct object_array *p,
- 		       struct name_path *path,
-diff --git a/upload-pack.c b/upload-pack.c
-index ce5cbbe..970a1eb 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -85,20 +85,7 @@ static void show_commit(struct commit *commit, void *data)
- 
- static void show_object(struct object *obj, const struct name_path *path, const char *component)
- {
--	/* An object with name "foo\n0000000..." can be used to
--	 * confuse downstream git-pack-objects very badly.
--	 */
--	const char *name = path_name(path, component);
--	const char *ep = strchr(name, '\n');
--	if (ep) {
--		fprintf(pack_pipe, "%s %.*s\n", sha1_to_hex(obj->sha1),
--		       (int) (ep - name),
--		       name);
--	}
--	else
--		fprintf(pack_pipe, "%s %s\n",
--				sha1_to_hex(obj->sha1), name);
--	free((char *)name);
-+	show_object_with_name(pack_pipe, obj, path, component);
- }
- 
- static void show_edge(struct commit *commit)
--- 
-1.7.6.472.g4bfe7c
+Even though it is very clear that the set of objects that are exported are
+defined by the "rev-list arguments" given to the command, I do not think
+fast-export's semantics is not clearly defined as to what "refs" are to be
+updated.
+
+The easiest fix for this issue would be to forbid "git fast-export HEAD~1"
+(or any range whose positive endpoints are _not_ refs), and I think that
+would be in line with the original motivation of the command to export the
+whole repository in a format fast-import would understand.  The original
+f2dc849 (Add 'git fast-export', the sister of 'git fast-import',
+2007-12-02) says "This program dumps (parts of) a git repository...",
+implying that partial export is within the scope of the command, but I do
+not think it was designed carefully enough to deal with ranges more
+complex than just "a set of branches".
+
+I however have a feeling that people would want to say:
+
+ - I want to export up to that commit, and have that commit on this branch
+   on the importing side; or even better
+
+ - I want to export up to that commit, but what refs points at the commits
+   contained in the output stream will be decided when the output is
+   imported.
+
+I do not think the latter meshes well with how "fast-import" works,
+though.  But fast-export should be fixable to allow the former without
+breaking the semantics of fast-import.
+
+You can think of "fast-export" an off-line "push" command [*1*]; instead
+of giving a random commit object, e.g. "git fast-export HEAD~1", that can
+not be used as a ref, you can use the refspec notation to tell where the
+result should go, e.g. "git fast-export HEAD~1:refs/heads/a-bit-older",
+from the command line of fast-export.
+
+I suspect that also may clarify what Sverre was trying to do in his recent
+series. The root cause of both this and the issue Sverre wanted to fix is
+the design mistake of fast-export that tries to reuse the notation of
+object range specification for a different purpose of telling which "ref"
+to update, I think.
+
+[Footnote]
+
+*1* In a similar sense, unpacking "git bundle" output is an off-line
+"fetch"; the bundle creator gave anchor points for tip objects, and allows
+the unpacker to map them into its own namespace.
