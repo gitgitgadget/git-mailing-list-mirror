@@ -1,145 +1,453 @@
-From: Eric Blake <eblake-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org>
-Subject: Re: rejecting patches that have an offset
-Date: Tue, 16 Aug 2011 17:41:30 -0600
-Organization: Red Hat
-Message-ID: <4E4B002A.8020207@redhat.com>
-References: <4E49A8EA.5020507@redhat.com>
-	<7vobzpeybh.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's cooking in git.git (Aug 2011, #04; Tue, 16)
+Date: Tue, 16 Aug 2011 17:07:31 -0700
+Message-ID: <7vhb5ggat8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: bug-patch-mXXj517/zsQ@public.gmane.org, Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
-To: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
-X-From: bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org Wed Aug 17 01:41:42 2011
-Return-path: <bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org>
-Envelope-to: gcgpb-bug-patch@m.gmane.org
-Received: from lists.gnu.org ([140.186.70.17])
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 17 02:07:43 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org>)
-	id 1QtTGQ-0007zs-6W
-	for gcgpb-bug-patch@m.gmane.org; Wed, 17 Aug 2011 01:41:42 +0200
-Received: from localhost ([::1]:37931 helo=lists.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org>)
-	id 1QtTGP-0000N3-DO
-	for gcgpb-bug-patch@m.gmane.org; Tue, 16 Aug 2011 19:41:41 -0400
-Received: from eggs.gnu.org ([140.186.70.92]:33270)
-	by lists.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <eblake-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org>) id 1QtTGN-0000Mv-JI
-	for bug-patch-mXXj517/zsQ@public.gmane.org; Tue, 16 Aug 2011 19:41:40 -0400
-Received: from Debian-exim by eggs.gnu.org with spam-scanned (Exim 4.71)
-	(envelope-from <eblake-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org>) id 1QtTGM-0006tX-5P
-	for bug-patch-mXXj517/zsQ@public.gmane.org; Tue, 16 Aug 2011 19:41:39 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:11315)
-	by eggs.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <eblake-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org>) id 1QtTGL-0006tK-Ru
-	for bug-patch-mXXj517/zsQ@public.gmane.org; Tue, 16 Aug 2011 19:41:38 -0400
-Received: from int-mx01.intmail.prod.int.phx2.redhat.com
-	(int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id p7GNfafA018480
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Tue, 16 Aug 2011 19:41:36 -0400
-Received: from [10.3.113.118] (ovpn-113-118.phx2.redhat.com [10.3.113.118])
-	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP
-	id p7GNfZHw019345; Tue, 16 Aug 2011 19:41:36 -0400
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US;
-	rv:1.9.2.18) Gecko/20110621 Fedora/3.1.11-1.fc14
-	Lightning/1.0b3pre Mnenhy/0.8.3 Thunderbird/3.1.11
-In-Reply-To: <7vobzpeybh.fsf-s2KvWo2KEQL18tm6hw+yZpy9Z0UEorGK@public.gmane.org>
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
-X-detected-operating-system: by eggs.gnu.org: Genre and OS details not
-	recognized.
-X-Received-From: 209.132.183.28
-X-BeenThere: bug-patch-mXXj517/zsQ@public.gmane.org
-X-Mailman-Version: 2.1.14
-Precedence: list
-List-Id: "Bug reports, suggestions,
-	general discussion for GNU patch." <bug-patch.gnu.org>
-List-Unsubscribe: <https://lists.gnu.org/mailman/options/bug-patch>,
-	<mailto:bug-patch-request-mXXj517/zsQ@public.gmane.org?subject=unsubscribe>
-List-Archive: </archive/html/bug-patch>
-List-Post: <mailto:bug-patch-mXXj517/zsQ@public.gmane.org>
-List-Help: <mailto:bug-patch-request-mXXj517/zsQ@public.gmane.org?subject=help>
-List-Subscribe: <https://lists.gnu.org/mailman/listinfo/bug-patch>,
-	<mailto:bug-patch-request-mXXj517/zsQ@public.gmane.org?subject=subscribe>
-Errors-To: bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org
-Sender: bug-patch-bounces+gcgpb-bug-patch=m.gmane.org-mXXj517/zsQ@public.gmane.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179488>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1QtTfZ-0002g7-Ih
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Aug 2011 02:07:42 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752912Ab1HQAHg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Aug 2011 20:07:36 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36986 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752874Ab1HQAHe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2011 20:07:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CCCF04092;
+	Tue, 16 Aug 2011 20:07:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=C
+	UCg8UdRXDpY2g3vmh8pYHDuj/M=; b=Lw8odeH7g22UYOsKjmBhYa9R0SasB4vhq
+	oFs6K39qeGKMb0l1o4yVquShaEJ+hFyRyFuhdMQDCMeiQzwzXx+E+DV+JeDi9Tb1
+	O+JYLsuwxpZL5EUneWHO+ll90FFfLHBdabS6hMFqmDOq6cEpBey4XXmpBHZOEHJt
+	3f6lM0Hqtw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=q4A
+	tq5Z3Ni40ZBl1O4MVHRs/dHgsmyLuvEsp2lylSqQiL/6vyJh7o6nN+Zfn3g9Di0o
+	JdINs9VyRvsXNXCAQm6R/gSuE1xuLlIXRKe9/l6dUi7v6ot+S/l+6MkwuGiJH5X6
+	NEJpkAVBORxlt0kAVLC10Sh5IPefkT4PUENtM+mM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C2E414091;
+	Tue, 16 Aug 2011 20:07:33 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B27E9408C; Tue, 16 Aug 2011
+ 20:07:32 -0400 (EDT)
+X-master-at: 4bfe7cb6668c43c1136304bbb17eea1b3ddf0237
+X-next-at: 0e3f8f0b05033eaaaa60133977cc86dd9a5db4bf
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: E781454C-C864-11E0-8986-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179489>
 
-On 08/16/2011 05:22 PM, Junio C Hamano wrote:
-> Eric Blake<eblake-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org>  writes:
->
->> It would have saved me a lot of time if both 'patch' and 'git apply'
->> could be taught a mode of operation where they explicitly reject a
->> patch that cannot be applied without relying on an offset.
->
-> I am not sure about this. I somehow doubt you would want to make sure that
-> the preimage your patch is to be applied must be bit-for-bit identical to
-> what you prepared your patch for, IOW, you are using a patchfile merely as
-> a mean to "compress" the replacement file. You would want your RPM change
-> to tolerate some changes in the upstream and keep your patch applicable to
-> the next version of the upstream, no?
+Here are the topics that have been cooking.  Commits prefixed with '-' are
+only in 'pu' while commits prefixed with '+' are in 'next'.
 
-When the RPM file is generated by git->patchfile list conversion, and I 
-am trying to recreate a git repository from patchfile list->git, then 
-yes, I _do_ want that patchfile list to apply bit-for-bit identical to 
-anyone else starting from the same point, whether they use git or patch, 
-so that anyone else can regenerate the end sources that were compiled 
-into the rpm release.
+The kernel.org machine seems to be very busy for the past 48 hours and it
+might take a while for tonight's pushout to propagate to its public
+mirrors. It may be faster to fetch from repo.or.gz, github, sourceforge,
+or code.google.com mirrors, e.g.
 
-Remember, the rpm file format includes both the starting point (it 
-documents the upstream tarball) and the changes to that starting point 
-(a patch stream) that were used to create a given released binary, in a 
-format that is independent of git.  The idea is that managing an rpm 
-patch series in git is much nicer for day-to-day work (and daily work 
-within that git repository greatly benefits from the default of being 
-able to assume patch offsets, such as rebasing a patch series to apply 
-on top of newer upstream versions), but once converting from git out to 
-rpm, the conversion from rpm back to git should give a bit-for-bit 
-replay.  If heuristics for how to apply patch offsets change, and an rpm 
-file includes an ambiguous patch that requires an offset, then you risk 
-the rpm file being broken the moment you upgrade to a newer tool chain 
-with a slightly different heuristic for where to resolve offsets; but if 
-all patches in the series are 0-offset, then you have isolated the rpm 
-from any implicit dependency on the version of the tool used to 
-reconstruct the final software from the patch series.  So the question 
-is now how to identify whether a patch series meets that 0-offset rule, 
-and that's where a new option would be handy.
+    git://repo.or.cz/alt-git.git/
+    git://github.com/gitster/git
+    https://code.google.com/p/git-core/
 
-Hence, I'm requesting an option to reject patches with non-zero offsets, 
-but not making it default, as there are only a few limited places (such 
-as rebuilding a git repo starting from an rpm patch list) where 
-bit-for-bit rebuild is more desirable than accounting for offsets due to 
-changes in the starting point.
+There are a few 'fixup!' commits queued in topics still in 'pu', so that
+authors have a choice to just say "that fix looks good, squash it in!"
+instead of going through an extra round.
 
->
-> Given a patch that is not precise and can apply to multiple places,
-> "patch" and/or "git apply" can apply it to a place you may not have
-> intended. It may feel like a bug if that happens to a preimage that is
-> bit-for-bit identical to the version you prepared your patch is against,
-> but I would rather think, instead of blaming "patch" and/or "git apply",
-> it would be more productive to prepare a patch with larger context when
-> you know that the preimage file you are patching has many similar looking
-> lines, to make it _impossible_ for it to apply to places different from
-> what you intended.
+--------------------------------------------------
+[New Topics]
 
-Yes, I know that as well - the particular patch that sparked this thread 
-was ambiguous with three lines of context, but unambiguous with 6 lines, 
-even when an offset still had to be applied.
+* di/fast-import-deltified-tree (2011-08-14) 2 commits
+ - fast-import: prevent producing bad delta
+ - fast-import: add a test for tree delta base corruption
 
-So maybe you raise yet another feature proposal: What would it take for 
-git to generate unambiguous patches - that is, when generating a patch 
-with context, to then ensure that given the file it is being applied to, 
-then context is auto-widened until there are no other offsets where the 
-patch can possibly be applied?  In other words, if I say 'git diff HEAD^ 
---auto-context', then the resulting patch would have automatically have 
-6 context lines for my problematic hunk, while sticking to the default 3 
-context lines for other hunks that were already unambiguous.  Of course, 
-this only protects you if starting from the same version of the file 
-(since any other patch can introduce an ambiguity not present at the 
-time you computed the minimal context needed for non-ambiguity in your 
-version of the pre-patch file).
+* di/parse-options-split (2011-08-11) 2 commits
+ - Reduce parse-options.o dependencies
+ - parse-options: export opterr, optbug
 
--- 
-Eric Blake   eblake-H+wXaHxf7aLQT0dZR+AlfA@public.gmane.org    +1-801-349-2682
-Libvirt virtualization library http://libvirt.org
+* mh/attr (2011-08-14) 7 commits
+ - Unroll the loop over passes
+ - Change while loop into for loop
+ - Determine the start of the states outside of the pass loop
+ - Change parse_attr() to take a pointer to struct attr_state
+ - Increment num_attr in parse_attr_line(), not parse_attr()
+ - Document struct match_attr
+ - Add a file comment
+
+All looked reasonable.
+
+* mh/iterate-refs (2011-08-14) 6 commits
+ - Retain caches of submodule refs
+ - Store the submodule name in struct cached_refs
+ - Allocate cached_refs objects dynamically
+ - Change the signature of read_packed_refs()
+ - Access reference caches only through new function get_cached_refs()
+ - Extract a function clear_cached_refs()
+
+* jn/plug-empty-tree-leak (2011-08-16) 2 commits
+ - merge-recursive: take advantage of hardcoded empty tree
+ - revert: plug memory leak in "cherry-pick root commit" codepath
+
+Both looked reasonable.
+
+--------------------------------------------------
+[Stalled]
+
+* jc/merge-reword (2011-05-25) 2 commits
+ - merge: mark the final "Merge made by..." message for l10n
+ - merge: reword the final message
+
+Probably the topmost commit should be dropped.
+
+* nk/branch-v-abbrev (2011-07-01) 1 commit
+ - branch -v: honor core.abbrev
+
+Perhaps needs an updated commit log message?
+
+* di/fast-import-doc (2011-07-13) 2 commits
+ - doc/fast-import: document feature import-marks-if-exists
+ - doc/fast-import: clarify notemodify command
+
+Comments from fast-import folks?
+
+* jh/receive-count-limit (2011-05-23) 10 commits
+ - receive-pack: Allow server to refuse pushes with too many objects
+ - pack-objects: Estimate pack size; abort early if pack size limit is exceeded
+ - send-pack/receive-pack: Allow server to refuse pushing too large packs
+ - pack-objects: Allow --max-pack-size to be used together with --stdout
+ - send-pack/receive-pack: Allow server to refuse pushes with too many commits
+ - pack-objects: Teach new option --max-commit-count, limiting #commits in pack
+ - receive-pack: Prepare for addition of the new 'limit-*' family of capabilities
+ - Tighten rules for matching server capabilities in server_supports()
+ - send-pack: Attempt to retrieve remote status even if pack-objects fails
+ - Update technical docs to reflect side-band-64k capability in receive-pack
+
+Would need another round to separate per-pack and per-session limits.
+
+* jm/mergetool-pathspec (2011-06-22) 2 commits
+ - mergetool: Don't assume paths are unmerged
+ - mergetool: Add tests for filename with whitespace
+
+I think this is a good idea, but it probably needs a re-roll.
+Cf. $gmane/176254, 176255, 166256
+
+* jk/generation-numbers (2011-07-14) 7 commits
+ - limit "contains" traversals based on commit generation
+ - check commit generation cache validity against grafts
+ - pretty: support %G to show the generation number of a commit
+ - commit: add commit_generation function
+ - add metadata-cache infrastructure
+ - decorate: allow storing values instead of pointers
+ - Merge branch 'jk/tag-contains-ab' (early part) into HEAD
+
+The initial "tag --contains" de-pessimization without need for generation
+numbers is already in; backburnered.
+
+* sr/transport-helper-fix-rfc (2011-07-19) 2 commits
+ - t5800: point out that deleting branches does not work
+ - t5800: document inability to push new branch with old content
+
+* po/cygwin-backslash (2011-08-05) 2 commits
+ - On Cygwin support both UNIX and DOS style path-names
+ - git-compat-util: add generic find_last_dir_sep that respects is_dir_sep
+
+I think a further refactoring (no, not my suggestion) was offered?
+
+--------------------------------------------------
+[Cooking]
+
+* ac/describe-dirty-refresh (2011-08-11) 1 commit
+ - describe: Refresh the index when run with --dirty
+
+Will merge to "next", but needs Sign-off.
+
+* en/merge-recursive-2 (2011-08-14) 57 commits
+ - merge-recursive: Don't re-sort a list whose order we depend upon
+ - merge-recursive: Fix virtual merge base for rename/rename(1to2)/add-dest
+ - t6036: criss-cross + rename/rename(1to2)/add-dest + simple modify
+ - merge-recursive: Avoid unnecessary file rewrites
+ - t6022: Additional tests checking for unnecessary updates of files
+ - merge-recursive: Fix spurious 'refusing to lose untracked file...' messages
+ - t6022: Add testcase for spurious "refusing to lose untracked" messages
+ - t3030: fix accidental success in symlink rename
+ - merge-recursive: Fix working copy handling for rename/rename/add/add
+ - merge-recursive: add handling for rename/rename/add-dest/add-dest
+ - merge-recursive: Have conflict_rename_delete reuse modify/delete code
+ - merge-recursive: Make modify/delete handling code reusable
+ - merge-recursive: Consider modifications in rename/rename(2to1) conflicts
+ - merge-recursive: Create function for merging with branchname:file markers
+ - merge-recursive: Record more data needed for merging with dual renames
+ - merge-recursive: Defer rename/rename(2to1) handling until process_entry
+ - merge-recursive: Small cleanups for conflict_rename_rename_1to2
+ - merge-recursive: Fix rename/rename(1to2) resolution for virtual merge base
+ - merge-recursive: Introduce a merge_file convenience function
+ - merge-recursive: Fix modify/delete resolution in the recursive case
+ - merge-recursive: When we detect we can skip an update, actually skip it
+ - merge-recursive: Provide more info in conflict markers with file renames
+ - merge-recursive: Cleanup and consolidation of rename_conflict_info
+ - merge-recursive: Consolidate process_entry() and process_df_entry()
+ - merge-recursive: Improve handling of rename target vs. directory addition
+ - merge-recursive: Add comments about handling rename/add-source cases
+ - merge-recursive: Make dead code for rename/rename(2to1) conflicts undead
+ - merge-recursive: Fix deletion of untracked file in rename/delete conflicts
+ - merge-recursive: Split update_stages_and_entry; only update stages at end
+ - merge-recursive: Allow make_room_for_path() to remove D/F entries
+ - string-list: Add API to remove an item from an unsorted list
+ - merge-recursive: Split was_tracked() out of would_lose_untracked()
+ - merge-recursive: Save D/F conflict filenames instead of unlinking them
+ - merge-recursive: Fix code checking for D/F conflicts still being present
+ - merge-recursive: Fix sorting order and directory change assumptions
+ - merge-recursive: Fix recursive case with D/F conflict via add/add conflict
+ - merge-recursive: Avoid working directory changes during recursive case
+ - merge-recursive: Remember to free generated unique path names
+ - merge-recursive: Consolidate different update_stages functions
+ - merge-recursive: Mark some diff_filespec struct arguments const
+ - merge-recursive: Correct a comment
+ - merge-recursive: Make BUG message more legible by adding a newline
+ - t6022: Add testcase for merging a renamed file with a simple change
+ - t6022: New tests checking for unnecessary updates of files
+ - t6022: Remove unnecessary untracked files to make test cleaner
+ - t6036: criss-cross + rename/rename(1to2)/add-source + modify/modify
+ - t6036: criss-cross w/ rename/rename(1to2)/modify+rename/rename(2to1)/modify
+ - t6036: tests for criss-cross merges with various directory/file conflicts
+ - t6036: criss-cross with weird content can fool git into clean merge
+ - t6036: Add differently resolved modify/delete conflict in criss-cross test
+ - t6042: Add failing testcases for rename/rename/add-{source,dest} conflicts
+ - t6042: Ensure rename/rename conflicts leave index and workdir in sane state
+ - t6042: Add tests for content issues with modify/rename/directory conflicts
+ - t6042: Add a testcase where undetected rename causes silent file deletion
+ - t6042: Add a pair of cases where undetected renames cause issues
+ - t6042: Add failing testcase for rename/modify/add-source conflict
+ - t6042: Add a testcase where git deletes an untracked file
+
+Rerolled.
+
+* di/fast-import-ident (2011-08-11) 5 commits
+ - fsck: improve committer/author check
+ - fsck: add a few committer name tests
+ - fast-import: check committer name more strictly
+ - fast-import: don't fail on omitted committer name
+ - fast-import: add input format tests
+
+* fg/submodule-ff-check-before-push (2011-08-09) 1 commit
+ - push: Don't push a repository with unpushed submodules
+
+* hv/submodule-update-none (2011-08-11) 2 commits
+ - add update 'none' flag to disable update of submodule by default
+ - submodule: move update configuration variable further up
+
+* jc/lookup-object-hash (2011-08-11) 6 commits
+ - object hash: replace linear probing with 4-way cuckoo hashing
+ - object hash: we know the table size is a power of two
+ - object hash: next_size() helper for readability
+ - pack-objects --count-only
+ - object.c: remove duplicated code for object hashing
+ - object.c: code movement for readability
+
+* js/i18n-scripts (2011-08-08) 5 commits
+ - submodule: take advantage of gettextln and eval_gettextln.
+ - stash: take advantage of eval_gettextln
+ - pull: take advantage of eval_gettextln
+ - git-am: take advantage of gettextln and eval_gettextln.
+ - gettext: add gettextln, eval_gettextln to encode common idiom
+
+* cb/maint-ls-files-error-report (2011-08-11) 1 commit
+  (merged to 'next' on 2011-08-15 at 69f41cf)
+ + ls-files: fix pathspec display on error
+
+* jc/maint-combined-diff-work-tree (2011-08-04) 1 commit
+  (merged to 'next' on 2011-08-05 at 976a4d4)
+ + diff -c/--cc: do not mistake "resolved as deletion" as "use working tree"
+
+Will merge to "master" after cooking for a bit more.
+
+* js/sh-style (2011-08-05) 2 commits
+  (merged to 'next' on 2011-08-11 at 4a4c22c)
+ + filter-branch.sh: de-dent usage string
+ + misc-sh: fix up whitespace in some other .sh files.
+
+* ma/am-exclude (2011-08-09) 2 commits
+  (merged to 'next' on 2011-08-11 at cf0ba4d)
+ + am: Document new --exclude=<path> option
+  (merged to 'next' on 2011-08-05 at 658e57c)
+ + am: pass exclude down to apply
+
+Will merge to "master" after cooking for a bit more.
+
+* db/am-skip-blank-at-the-beginning (2011-08-11) 1 commit
+  (merged to 'next' on 2011-08-11 at 3637843)
+ + am: ignore leading whitespace before patch
+
+Will merge to "master" after cooking for a bit more.
+
+* jc/maint-smart-http-race-upload-pack (2011-08-08) 1 commit
+  (merged to 'next' on 2011-08-11 at 3f24b64)
+ + helping smart-http/stateless-rpc fetch race
+
+* jn/maint-test-return (2011-08-11) 3 commits
+  (merged to 'next' on 2011-08-15 at 5a42301)
+ + t3900: do not reference numbered arguments from the test script
+ + test: cope better with use of return for errors
+ + test: simplify return value of test_run_
+
+* rt/zlib-smaller-window (2011-08-11) 2 commits
+  (merged to 'next' on 2011-08-15 at e05b26b)
+ + test: consolidate definition of $LF
+ + Tolerate zlib deflation with window size < 32Kb
+
+* fg/submodule-git-file-git-dir (2011-08-16) 3 commits
+ - fixup! Move git-dir for submodules
+ - Move git-dir for submodules
+ - rev-parse: add option --resolve-git-dir <path>
+
+* js/bisect-no-checkout (2011-08-09) 11 commits
+  (merged to 'next' on 2011-08-11 at 6c94a45)
+ + bisect: add support for bisecting bare repositories
+ + bisect: further style nitpicks
+ + bisect: replace "; then" with "\n<tab>*then"
+ + bisect: cleanup whitespace errors in git-bisect.sh.
+ + bisect: add documentation for --no-checkout option.
+ + bisect: add tests for the --no-checkout option.
+ + bisect: introduce --no-checkout support into porcelain.
+ + bisect: introduce support for --no-checkout option.
+ + bisect: add tests to document expected behaviour in presence of broken trees.
+ + bisect: use && to connect statements that are deferred with eval.
+ + bisect: move argument parsing before state modification.
+
+* cb/maint-exec-error-report (2011-08-01) 2 commits
+  (merged to 'next' on 2011-08-05 at 2764424)
+ + notice error exit from pager
+ + error_routine: use parent's stderr if exec fails
+
+Will merge to "master" after cooking for a bit more.
+
+* cb/maint-quiet-push (2011-08-08) 2 commits
+  (merged to 'next' on 2011-08-08 at 917d73b)
+ + receive-pack: do not overstep command line argument array
+  (merged to 'next' on 2011-08-01 at 87df938)
+ + propagate --quiet to send-pack/receive-pack
+
+Will merge to "master" after cooking for a bit more.
+
+* jk/add-i-hunk-filter (2011-07-27) 5 commits
+  (merged to 'next' on 2011-08-11 at 8ff9a56)
+ + add--interactive: add option to autosplit hunks
+ + add--interactive: allow negatation of hunk filters
+ + add--interactive: allow hunk filtering on command line
+ + add--interactive: factor out regex error handling
+ + add--interactive: refactor patch mode argument processing
+
+* mh/check-attr-listing (2011-08-04) 23 commits
+  (merged to 'next' on 2011-08-11 at f73ad50)
+ + Rename git_checkattr() to git_check_attr()
+ + git-check-attr: Fix command-line handling to match docs
+ + git-check-attr: Drive two tests using the same raw data
+ + git-check-attr: Add an --all option to show all attributes
+ + git-check-attr: Error out if no pathnames are specified
+ + git-check-attr: Process command-line args more systematically
+ + git-check-attr: Handle each error separately
+ + git-check-attr: Extract a function error_with_usage()
+ + git-check-attr: Introduce a new variable
+ + git-check-attr: Extract a function output_attr()
+ + Allow querying all attributes on a file
+ + Remove redundant check
+ + Remove redundant call to bootstrap_attr_stack()
+ + Extract a function collect_all_attrs()
+ + Teach prepare_attr_stack() to figure out dirlen itself
+ + git-check-attr: Use git_attr_name()
+ + Provide access to the name attribute of git_attr
+ + git-check-attr: Add tests of command-line parsing
+ + git-check-attr: Add missing "&&"
+ + Disallow the empty string as an attribute name
+ + Remove anachronism from comment
+ + doc: Correct git_attr() calls in example code
+ + doc: Add a link from gitattributes(5) to git-check-attr(1)
+ (this branch is used by mh/check-attr-relative.)
+
+* mh/check-attr-relative (2011-08-04) 6 commits
+  (merged to 'next' on 2011-08-11 at f94550c)
+ + test-path-utils: Add subcommand "prefix_path"
+ + test-path-utils: Add subcommand "absolute_path"
+ + git-check-attr: Normalize paths
+ + git-check-attr: Demonstrate problems with relative paths
+ + git-check-attr: Demonstrate problems with unnormalized paths
+ + git-check-attr: test that no output is written to stderr
+ (this branch uses mh/check-attr-listing.)
+
+* jk/http-auth-keyring (2011-08-03) 13 commits
+  (merged to 'next' on 2011-08-03 at b06e80e)
+ + credentials: add "getpass" helper
+ + credentials: add "store" helper
+ + credentials: add "cache" helper
+ + docs: end-user documentation for the credential subsystem
+ + http: use hostname in credential description
+ + allow the user to configure credential helpers
+ + look for credentials in config before prompting
+ + http: use credential API to get passwords
+ + introduce credentials API
+ + http: retry authentication failures for all http requests
+ + remote-curl: don't retry auth failures with dumb protocol
+ + improve httpd auth tests
+ + url: decode buffers that are not NUL-terminated
+
+Looked mostly reasonable except for the limitation that it is not clear
+how to deal with a site at which a user needs to use different passwords 
+for different repositories.
+
+* js/ref-namespaces (2011-07-21) 5 commits
+  (merged to 'next' on 2011-07-25 at 5b7dcfe)
+ + ref namespaces: tests
+ + ref namespaces: documentation
+ + ref namespaces: Support remote repositories via upload-pack and receive-pack
+ + ref namespaces: infrastructure
+ + Fix prefix handling in ref iteration functions
+
+* rc/histogram-diff (2011-08-08) 12 commits
+  (merged to 'next' on 2011-08-11 at 684dfd1)
+ + xdiff/xhistogram: drop need for additional variable
+ + xdiff/xhistogram: rely on xdl_trim_ends()
+ + xdiff/xhistogram: rework handling of recursed results
+ + xdiff: do away with xdl_mmfile_next()
+  (merged to 'next' on 2011-08-03 at f9e2328)
+ + Make test number unique
+  (merged to 'next' on 2011-07-25 at 3351028)
+ + xdiff/xprepare: use a smaller sample size for histogram diff
+ + xdiff/xprepare: skip classification
+ + teach --histogram to diff
+ + t4033-diff-patience: factor out tests
+ + xdiff/xpatience: factor out fall-back-diff function
+ + xdiff/xprepare: refactor abort cleanups
+ + xdiff/xprepare: use memset()
+
+* rr/revert-cherry-pick-continue (2011-08-08) 18 commits
+ - revert: Propagate errors upwards from do_pick_commit
+ - revert: Introduce --continue to continue the operation
+ - revert: Don't implicitly stomp pending sequencer operation
+ - revert: Remove sequencer state when no commits are pending
+ - reset: Make reset remove the sequencer state
+ - revert: Introduce --reset to remove sequencer state
+ - revert: Make pick_commits functionally act on a commit list
+ - revert: Save command-line options for continuing operation
+ - revert: Save data for continuing after conflict resolution
+ - revert: Don't create invalid replay_opts in parse_args
+ - revert: Separate cmdline parsing from functional code
+ - revert: Introduce struct to keep command-line options
+ - revert: Eliminate global "commit" variable
+ - revert: Rename no_replay to record_origin
+ - revert: Don't check lone argument in get_encoding
+ - revert: Simplify and inline add_message_to_msg
+ - config: Introduce functions to write non-standard file
+ - advice: Introduce error_resolve_conflict
