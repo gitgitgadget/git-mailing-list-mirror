@@ -1,81 +1,85 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: Re: Malformed branch name in fast-export when specifying
- non-HEAD/branch revision
-Date: Wed, 17 Aug 2011 13:36:32 -0600
-Message-ID: <CABPp-BFRZMZjhWuUUeD7Oa1HbWQMnZot7dRm3zKOpCoj_QwZeg@mail.gmail.com>
-References: <CAORuUR1viqG27+dYOFS_5SLxFOE2wHJqAQ3i3RByg_fbWACh-Q@mail.gmail.com>
-	<CAORuUR154Dhg5vDojga-01bDxxf+=R2X-oJK-0417CgmqxCwvA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] update-index: add --swap to swap index and worktree
+ content
+Date: Wed, 17 Aug 2011 12:46:22 -0700
+Message-ID: <20110817194621.GA352@sigill.intra.peff.net>
+References: <1313158058-7684-1-git-send-email-pclouds@gmail.com>
+ <7vippxgm6y.fsf@alter.siamese.dyndns.org>
+ <20110816210108.GA13710@sigill.intra.peff.net>
+ <7vbovpggva.fsf@alter.siamese.dyndns.org>
+ <20110816222212.GA19471@sigill.intra.peff.net>
+ <7vzkj9eza2.fsf@alter.siamese.dyndns.org>
+ <20110816230654.GA21793@sigill.intra.peff.net>
+ <CACsJy8Ad4xPz79jT3O64c3XsCeM8XETJ9bnjK0aisagrYN0CMA@mail.gmail.com>
+ <20110817021727.GA29585@sigill.intra.peff.net>
+ <CAOeW2eFx-ETS+1a5b2bUXeT8JJ0WGudKGyF6mxuqyK2OM35qQA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Owen Stephens <git@owenstephens.co.uk>
-X-From: git-owner@vger.kernel.org Wed Aug 17 21:36:40 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 17 21:46:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qtlup-00042P-3Q
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Aug 2011 21:36:39 +0200
+	id 1Qtm4P-0000Gj-PA
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Aug 2011 21:46:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752814Ab1HQTge (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Aug 2011 15:36:34 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:51212 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751727Ab1HQTge (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2011 15:36:34 -0400
-Received: by fxh19 with SMTP id 19so854473fxh.19
-        for <git@vger.kernel.org>; Wed, 17 Aug 2011 12:36:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=8No2z8jzNhnDQCJasoIUrPx1qJz2IPTFiQHNGFYtV7E=;
-        b=t3HZthjW8tQFXOkFxJCp0XrifIxDsdqL9R/qFeDDq+EbWQa6imEH9mrM5aDsy3YO2b
-         rq4rTq4CInYmz0mEIeH3LR5bsJ/YBwVQnI9/F94SrUtHG+D+Yzc65Aq0hxuA4PiJ35gW
-         AuVhIwsq33WcB40AJknIgqEBRtlHRphS1lllM=
-Received: by 10.223.76.15 with SMTP id a15mr1188556fak.35.1313609792941; Wed,
- 17 Aug 2011 12:36:32 -0700 (PDT)
-Received: by 10.223.134.84 with HTTP; Wed, 17 Aug 2011 12:36:32 -0700 (PDT)
-In-Reply-To: <CAORuUR154Dhg5vDojga-01bDxxf+=R2X-oJK-0417CgmqxCwvA@mail.gmail.com>
+	id S1752890Ab1HQTq2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Aug 2011 15:46:28 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:58126
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752588Ab1HQTq2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2011 15:46:28 -0400
+Received: (qmail 14387 invoked by uid 107); 17 Aug 2011 19:47:07 -0000
+Received: from 206.111.142.135.ptr.us.xo.net (HELO sigill.intra.peff.net) (206.111.142.135)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 17 Aug 2011 15:47:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Aug 2011 12:46:22 -0700
+Content-Disposition: inline
+In-Reply-To: <CAOeW2eFx-ETS+1a5b2bUXeT8JJ0WGudKGyF6mxuqyK2OM35qQA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179531>
 
-Hi,
+On Wed, Aug 17, 2011 at 10:13:08AM -0400, Martin von Zweigbergk wrote:
 
-On Wed, Aug 17, 2011 at 10:21 AM, Owen Stephens <git@owenstephens.co.uk> wrote:
-> fast-export gives an invalid branch name for commits, if the revision specified
-> is not HEAD or a branch name.
->
-> $ git --version
-> git version 1.7.6
->
-> $ # Create
-> $ git init export_test && cd export_test
-> $ touch a && git add a && git commit -m 'Add a'
-> $ touch b && git add b && git commit -m 'Add b'
-> $ git branch branch1
->
-> $ # ok
-> $ git fast-export HEAD
->
-> $ # also ok
-> $ git fast-export branch1
->
-> $ # uses HEAD~1 instead of refs/heads/master
-> $ git fast-export HEAD~1
->
-> blob
-> mark :1
-> data 0
->
-> reset HEAD~1
-> commit HEAD~1
+> >> Two reasons. I already mentioned the ability to quickly checkout index
+> >> for a quick test (though there could be more problems down that road).
+> >
+> > That's a good thought. However, in practice, I find I also need other
+> > files from the index to do a successful test. So I end up just
+> > committing what I think is right, and then afterwards do:
+> 
+> Maybe a stupid question, but "update-index --swap" would swap all
+> files, right? So what "other files from the index" would there be?
 
-Thanks for the report.  It turns out this bug has been reported and is
-in the testsuite as t9350.19 -- currently marked as expected to fail.
-I looked at the problem a couple years ago for a little bit but never
-finished that particular patch and never got back around to it.
+Hmm. I hadn't really considered swapping everything. I suppose that
+would work, though I do worry about getting into a confused state when
+you have swapped one or more files individually, and then want to swap
+the rest out for testing.
+
+That is, there is no flag to say "this file was swapped", so there is no
+way to say "swap all of the index files out, except those I have already
+swapped". But if you were disciplined to only do:
+
+  git update-index --swap
+  $EDITOR foo.c
+  make test
+  git update-index --swap
+
+and never:
+
+  git update-index --swap foo.c
+  $EDITOR foo.c
+  git update-index --swap ;# oops, we put the WT foo.c back
+  make test
+  git update-index --swap
+
+then it would work.
+
+-Peff
