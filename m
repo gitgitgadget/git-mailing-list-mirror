@@ -1,134 +1,95 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] commit: accept tag objects in HEAD/MERGE_HEAD
-Date: Wed, 17 Aug 2011 10:59:15 -0700
-Message-ID: <7vy5yrex70.fsf@alter.siamese.dyndns.org>
-References: <1313422716-26432-1-git-send-email-pclouds@gmail.com>
- <1313545369-7096-1-git-send-email-pclouds@gmail.com>
+Subject: Re: [PATCH] update-index: add --swap to swap index and worktree
+ content
+Date: Wed, 17 Aug 2011 11:26:26 -0700
+Message-ID: <7vr54jevxp.fsf@alter.siamese.dyndns.org>
+References: <1313158058-7684-1-git-send-email-pclouds@gmail.com>
+ <7vippxgm6y.fsf@alter.siamese.dyndns.org>
+ <20110816210108.GA13710@sigill.intra.peff.net>
+ <7vbovpggva.fsf@alter.siamese.dyndns.org>
+ <20110816222212.GA19471@sigill.intra.peff.net>
+ <7vzkj9eza2.fsf@alter.siamese.dyndns.org>
+ <20110816230654.GA21793@sigill.intra.peff.net>
+ <CACsJy8Ad4xPz79jT3O64c3XsCeM8XETJ9bnjK0aisagrYN0CMA@mail.gmail.com>
+ <20110817021727.GA29585@sigill.intra.peff.net>
+ <CAOeW2eFx-ETS+1a5b2bUXeT8JJ0WGudKGyF6mxuqyK2OM35qQA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 17 19:59:26 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 17 20:26:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtkOj-00075J-2t
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Aug 2011 19:59:25 +0200
+	id 1Qtkp0-0003rM-6q
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Aug 2011 20:26:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751534Ab1HQR7U convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Aug 2011 13:59:20 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34982 "EHLO
+	id S1752120Ab1HQS03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Aug 2011 14:26:29 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47224 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751458Ab1HQR7S convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Aug 2011 13:59:18 -0400
+	id S1751798Ab1HQS03 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2011 14:26:29 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C67632BE;
-	Wed, 17 Aug 2011 13:59:18 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 083A73813;
+	Wed, 17 Aug 2011 14:26:28 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=KLziW3aDVqf3
-	oHTW9MqQOMPYL9s=; b=frGUiwgiEHClPnbjrNkWxWLWH1DJVqErJ3YOwT26I7Vj
-	MoHcir/jHf8neSURgLO6lkg/3YjLGMphauRGRYOnZTf0/jYSD5QAmeLtenRBjGjc
-	po79VaxrnGWY0bkOnpfPHOwr+uwywG/FAXvPFnON0p49HbMBoH2n8Ppnk9dPmi0=
+	:content-type; s=sasl; bh=YTD0gPDOugcBTlno2KuGkER3G+E=; b=wRaURQ
+	dOfN6I15szdaUAdH5C2lpbutZB8YQRjV23aEP5yeDwyIXb3UEcY7K+8CXnPlQvUs
+	TcExI1YAbN8IVEvlnQaahQKm6kLwZrngYXIehYY4vA2fyPSgwxGkQNUZQhgyrwzO
+	TpYV9cnsn7MNZFKeq6u8EQ1ihCIdJhWXbJsRE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=QbocTJ
-	djQlbA9BL3sAuufnPDZbwuqAd0byX7Hl74fKe9i55sg7GvoJ1HJMp5aGYltkYz/U
-	P+PwwLm0RpvGfwX8y9fmQqM+1PeNwDsBFEFrdN0lYUw9FwYbr06wYYI9oWAXhOwN
-	dRvPGzsXYxbCz39xmACltWZNLzyCJAsWS1M9k=
+	:content-type; q=dns; s=sasl; b=FW/QPTrBE62L11rQ1opkTIYzU/WWVbr1
+	bgM/98UCux6IwwGSk73BOa9mzcdBFHqUZUbwKmDXGc+PVR7yUt/JoKh82dN8Vido
+	czMd81QAZtMomO9fKSLgPBFeH3cer4U5ES0zJpflIynCJkuykyDQze8LqVs/q1O5
+	vvZ3qDwjb40=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3411032BD;
-	Wed, 17 Aug 2011 13:59:18 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F2BBF380A;
+	Wed, 17 Aug 2011 14:26:27 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8008832BC; Wed, 17 Aug 2011
- 13:59:17 -0400 (EDT)
-In-Reply-To: <1313545369-7096-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 17 Aug
- 2011 08:42:49 +0700")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 78F053807; Wed, 17 Aug 2011
+ 14:26:27 -0400 (EDT)
+In-Reply-To: <CAOeW2eFx-ETS+1a5b2bUXeT8JJ0WGudKGyF6mxuqyK2OM35qQA@mail.gmail.com> (Martin
+ von Zweigbergk's message of "Wed, 17 Aug 2011 10:13:08 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A0261F6A-C8FA-11E0-A75B-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6BB01B1A-C8FE-11E0-8231-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179522>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
 
-> HEAD, MERGE_HEAD (or any other branches) should only have SHA-1 of a
-> commit object. However broken tools can put a tag object there. While
-> it's wrong, it'd be better to tolerate the situation and move on
+> Maybe the above shows that I'm missing something. Still, would it be
+> possible to achieve the use case with something like the following?
+>
+> git stash --keep-index
 
-The best part in your patch is that you made it _warn_ when it happens;=
- I
-would suggest rewording this with s/situation/&, warn/.
+While I sense a vague aversion to committing in general in this
+discussion, which I am not particularly fond of, the whole point of
+"stash" is to avoid the mental burden of going over the "hump" of
+committing something not ready and to replace it with a "save it as a
+temporary state" that technically has the same overhead of committing but
+has a lot less mental overhead. Perhaps "swapping the state of all and/or
+selected paths" fits better in "stash", not "update-index"?
 
-> ("commit" is an often used operation, unable to commit could be bad).
+I dunno, but in general, a new feature to cater to _common_ end user needs
+should fit in the Porcelain layer. We would be doing something wrong if we
+need to teach an obscure option of lower plumbing to end users.
 
-Neither "often used" nor "unable to commit" is a good reason for this
-added leniency. The real reason is that such a condition left by broken
-tools is cumbersome to fix by an end user with:
-
-	$ git update-ref HEAD $(git rev-parse HEAD^{commit})
-
-which may look like a magic to a new person.
-
-By the way, what happens when you try to merge when HEAD points at a ta=
-g
-that points at a commit? Would we end up creating a commit that points =
-at
-a bogus parent?
-
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 2088b6b..f327595 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -1387,6 +1387,7 @@ int cmd_commit(int argc, const char **argv, con=
-st char *prefix)
->  	unsigned char commit_sha1[20];
->  	struct ref_lock *ref_lock;
->  	struct commit_list *parents =3D NULL, **pptr =3D &parents;
-> +	struct commit *commit;
->  	struct stat statbuf;
->  	int allow_fast_forward =3D 1;
->  	struct wt_status s;
-
-Here, you are being inconsistent with your own argument you made in you=
-r
-previous message "later somebody may forget to update the former while
-updating the latter" when I suggested to separate the two logically
-separate operations (grab the head_commit object when necessary, and
-decide how the commit is made). By hoisting of the scope of "commit", y=
-ou
-made the variable undefined when dealing with the initial_commit, expos=
-ing
-the code to the same risk that somebody may try to use "commit" variabl=
-e
-after the if/elseif/... cascade, where it may or may not be defined.
-
-Not that I buy your previous argument in this case---it's not like we h=
-ave
-deeply nested callchain that sometimes sets a variable and sometimes
-doesn't. It's all there for the updater to see in a single function.
-
-> @@ -1423,12 +1424,11 @@ int cmd_commit(int argc, const char **argv, c=
-onst char *prefix)
->  			reflog_msg =3D "commit (initial)";
->  	} else if (amend) {
->  		struct commit_list *c;
-> -		struct commit *commit;
-> =20
->  		if (!reflog_msg)
->  			reflog_msg =3D "commit (amend)";
-> -		commit =3D lookup_commit(head_sha1);
-> -		if (!commit || parse_commit(commit))
-> +		commit =3D lookup_expect_commit(head_sha1, "HEAD");
-> +		if (parse_commit(commit))
->  			die(_("could not parse HEAD commit"));
-
-Is this still necessary? I think your lookup_expect_commit() already
-checks this condition and barfs.
+I personally used to feel that "ls-files -u" during a conflicted merge to
+be the single sore-thumb that stuck out from this point of view, but these
+days "status -s" gives the same information in a more useful way to the
+end users, and I am reasonably happy with that. It may be that the end
+user operation (perhaps "stash --swap", but I am not married to that) that
+fits well in common workflows ends up using "update-index --swap" as an
+underlying implementation detail, but I'd prefer to see how the final end
+user experience using Porcelain would look like first.
