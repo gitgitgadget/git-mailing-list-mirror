@@ -1,70 +1,81 @@
-From: vireshk <viresh.kumar@st.com>
-Subject: Re: Issue: Mails sent twice if patch is mentioned twice while sending
- mail.
-Date: Wed, 17 Aug 2011 14:46:33 +0530
-Message-ID: <4E4B86F1.2010802@st.com>
-References: <4E4B5B9D.1070901@st.com> <CALkWK0nv=NrCzxfePL50GiJya+DbqdOmSMjPVEa-Sf1Qm5oAvg@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Issue: Mails sent twice if patch is mentioned twice while sending mail.
+Date: Wed, 17 Aug 2011 11:58:49 +0200
+Message-ID: <vpq62lwjr52.fsf@bauges.imag.fr>
+References: <4E4B5B9D.1070901@st.com>
+	<CALkWK0nv=NrCzxfePL50GiJya+DbqdOmSMjPVEa-Sf1Qm5oAvg@mail.gmail.com>
+	<4E4B86F1.2010802@st.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+Content-Type: text/plain
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
 	Shiraz HASHIM <shiraz.hashim@st.com>,
 	Vipin KUMAR <vipin.kumar@st.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 17 11:16:59 2011
+To: vireshk <viresh.kumar@st.com>
+X-From: git-owner@vger.kernel.org Wed Aug 17 12:21:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtcF8-0002EC-Qp
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Aug 2011 11:16:59 +0200
+	id 1QtdFd-0003cC-8G
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Aug 2011 12:21:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751618Ab1HQJQx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Aug 2011 05:16:53 -0400
-Received: from eu1sys200aog115.obsmtp.com ([207.126.144.139]:46315 "EHLO
-	eu1sys200aog115.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751419Ab1HQJQw (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Aug 2011 05:16:52 -0400
-Received: from beta.dmz-ap.st.com ([138.198.100.35]) (using TLSv1) by eu1sys200aob115.postini.com ([207.126.147.11]) with SMTP
-	ID DSNKTkuHAVSUbvf8r+FCMroM+jozAsDwVg/0@postini.com; Wed, 17 Aug 2011 09:16:52 UTC
-Received: from zeta.dmz-ap.st.com (ns6.st.com [138.198.234.13])
-	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id B332E153;
-	Wed, 17 Aug 2011 09:16:35 +0000 (GMT)
-Received: from Webmail-ap.st.com (eapex1hubcas3.st.com [10.80.176.67])
-	by zeta.dmz-ap.st.com (STMicroelectronics) with ESMTP id A1D48427;
-	Wed, 17 Aug 2011 09:16:35 +0000 (GMT)
-Received: from [10.199.82.50] (10.199.82.50) by Webmail-ap.st.com
- (10.80.176.7) with Microsoft SMTP Server (TLS) id 8.2.234.1; Wed, 17 Aug 2011
- 17:16:35 +0800
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:6.0) Gecko/20110812 Thunderbird/6.0
-In-Reply-To: <CALkWK0nv=NrCzxfePL50GiJya+DbqdOmSMjPVEa-Sf1Qm5oAvg@mail.gmail.com>
+	id S1752246Ab1HQKV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Aug 2011 06:21:27 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:50723 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751771Ab1HQKV0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2011 06:21:26 -0400
+X-Greylist: delayed 1347 seconds by postgrey-1.27 at vger.kernel.org; Wed, 17 Aug 2011 06:21:25 EDT
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p7H9wnp8003048
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 17 Aug 2011 11:58:49 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Qtcte-0003ck-89; Wed, 17 Aug 2011 11:58:50 +0200
+In-Reply-To: <4E4B86F1.2010802@st.com> (vireshk's message of "Wed, 17 Aug 2011
+	14:46:33 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 17 Aug 2011 11:58:49 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p7H9wnp8003048
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1314179931.59607@kiAygSC+64R1pPfsHMIseg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179507>
 
-On 8/17/2011 2:22 PM, Ramkumar Ramachandra wrote:
-> Viresh kumar writes:
->> git send-email --to=abc@xyz.com 0001-xyz.patch 0001-xyz.patch
->>
->> What should be the desired behavior of this command, Should we get
->> mail only once or twice?
-> 
-> I'd expect it to send out two emails.  Why should 'git send-email'
-> check the supplied command-line arguments for duplicates?  I can't
-> think of a usecase for it. It's a simple Perl script that mails out
-> the mbox files specified on the command-line.  Could you tell us your
-> usecase?  If it's a shell script that calls 'git send-email' with
-> duplicate arguments, I think you should fix the shell script, not 'git
-> send-email'.
-> 
+vireshk <viresh.kumar@st.com> writes:
 
-Hi Ram,
+> Hi Ram,
+>
+> Actually i did this by mistake once and thought git send-email should
+> have taken care of this. I may be wrong, but it was just an thought.
 
-Actually i did this by mistake once and thought git send-email should
-have taken care of this. I may be wrong, but it was just an thought.
+git send-email could probably issue a warning if the same patch is
+mentionned twice, but I don't think it's sane to try to silently
+autocorrect user's mistake.
 
---
-viresh
+If users get used to "git send-email 1.patch 1.patch" sending the email
+only once, then what should be the expected behavior of
+
+  git send-email 1.patch ./1.patch
+
+  git send-email 1.patch symlink-to-1.patch
+
+?
+
+The nice thing with a warning is that you can't really blame the tool
+for not issuing a warning, while it can be harmfull to have an
+autocorrection fail in a real user-senario.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
