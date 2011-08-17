@@ -1,81 +1,164 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Issue: Mails sent twice if patch is mentioned twice while sending mail.
-Date: Wed, 17 Aug 2011 11:58:49 +0200
-Message-ID: <vpq62lwjr52.fsf@bauges.imag.fr>
-References: <4E4B5B9D.1070901@st.com>
-	<CALkWK0nv=NrCzxfePL50GiJya+DbqdOmSMjPVEa-Sf1Qm5oAvg@mail.gmail.com>
-	<4E4B86F1.2010802@st.com>
-Mime-Version: 1.0
-Content-Type: text/plain
+From: Dmitry Ivankov <divanorama@gmail.com>
+Subject: [PATCH v3] doc/fast-import: document feature import-marks-if-exists
+Date: Wed, 17 Aug 2011 16:42:58 +0600
+Message-ID: <1313577778-14716-1-git-send-email-divanorama@gmail.com>
 Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Shiraz HASHIM <shiraz.hashim@st.com>,
-	Vipin KUMAR <vipin.kumar@st.com>
-To: vireshk <viresh.kumar@st.com>
-X-From: git-owner@vger.kernel.org Wed Aug 17 12:21:35 2011
+	Johan Herland <johan@herland.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Dmitry Ivankov <divanorama@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 17 12:41:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtdFd-0003cC-8G
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Aug 2011 12:21:34 +0200
+	id 1QtdZI-0003Rf-6e
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Aug 2011 12:41:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752246Ab1HQKV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Aug 2011 06:21:27 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:50723 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751771Ab1HQKV0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2011 06:21:26 -0400
-X-Greylist: delayed 1347 seconds by postgrey-1.27 at vger.kernel.org; Wed, 17 Aug 2011 06:21:25 EDT
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p7H9wnp8003048
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 17 Aug 2011 11:58:49 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Qtcte-0003ck-89; Wed, 17 Aug 2011 11:58:50 +0200
-In-Reply-To: <4E4B86F1.2010802@st.com> (vireshk's message of "Wed, 17 Aug 2011
-	14:46:33 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 17 Aug 2011 11:58:49 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p7H9wnp8003048
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1314179931.59607@kiAygSC+64R1pPfsHMIseg
+	id S1752430Ab1HQKls (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Aug 2011 06:41:48 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:46933 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752025Ab1HQKlr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2011 06:41:47 -0400
+Received: by bke11 with SMTP id 11so584365bke.19
+        for <git@vger.kernel.org>; Wed, 17 Aug 2011 03:41:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=xOVvJq9aH9SfRCkGUQ1uPM6WDC6Y7Nche/hZmmkooy0=;
+        b=kWV1sC68GqecThlgNJNdJG6+ZKaTWItEHe9yj7U28XuRMU+SPw5wWAjES+ljx/HV4l
+         +x74HgT/6EcAxQR+YmVTbqaBabggFqNAcBsTTpPo373w/C2OXKFyqK8d4bEA7qQy4WEa
+         q62iMRYmDDBPz5n6eIwiILZ3HikCmAXnaR8BM=
+Received: by 10.204.241.14 with SMTP id lc14mr367291bkb.322.1313577705881;
+        Wed, 17 Aug 2011 03:41:45 -0700 (PDT)
+Received: from localhost.localdomain (117360277.convex.ru [79.172.62.237])
+        by mx.google.com with ESMTPS id f9sm346568bkt.3.2011.08.17.03.41.43
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 17 Aug 2011 03:41:44 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179508>
 
-vireshk <viresh.kumar@st.com> writes:
+fast-import command-line option --import-marks-if-exists was introduced
+in commit dded4f1 (fast-import: Introduce --import-marks-if-exists, 2011-01-15)
 
-> Hi Ram,
->
-> Actually i did this by mistake once and thought git send-email should
-> have taken care of this. I may be wrong, but it was just an thought.
+--import-marks option can be set via a "feature" command in a fast-import
+stream and --import-marks-if-exists had support for such specification
+from the very beginning too due to some shared codebase. Though the
+documentation for this feature wasn't written in dded4f1.
 
-git send-email could probably issue a warning if the same patch is
-mentionned twice, but I don't think it's sane to try to silently
-autocorrect user's mistake.
+Add the documentation for "feature import-marks-if-exists=<file>". Also add
+a minimalistic test for it.
 
-If users get used to "git send-email 1.patch 1.patch" sending the email
-only once, then what should be the expected behavior of
+Signed-off-by: Dmitry Ivankov <divanorama@gmail.com>
+---
+This is a new round for 2/3 from [1]. 1/3 and 3/3 are already in master.
+The only change from v2 is more tests, now there are:
 
-  git send-email 1.patch ./1.patch
+- feature import-marks-if-exists=nonexisting.marks
+- feature import-marks-if-exists=existing.marks
+- --import-marks=existing.marks & feature=nonexisting.marks
+- --import-marks-if-exists=nonexisting.marks & feature=existing.marks
 
-  git send-email 1.patch symlink-to-1.patch
+These seem to cover most cases: feature works and is overriden by command line arguments.
+Having more than one feature specified isn't tested to fail, imo it'd be better to support
+specifying multiple marks files via features anyway. It's not yet done because unlike other
+simple options are easy to override on the fly (we first parse the stream for features and
+then parse argv. So argv overrides things), while import marks are more tricky:
+- overriding rule is more complex, any command line option should discard all feature ones.
+- reading them could be expensive (we do lookup objects they refer to).
+- if the lookup fails or file is otherwise corrupt/bad, we die. So we shouldn't read marks
+files given by features if they are to be overriden by command line options.
 
-?
+ Documentation/git-fast-import.txt |   10 +++++--
+ t/t9300-fast-import.sh            |   47 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 54 insertions(+), 3 deletions(-)
 
-The nice thing with a warning is that you can't really blame the tool
-for not issuing a warning, while it can be harmfull to have an
-autocorrection fail in a real user-senario.
-
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index 2969388..db0d75f 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -1012,10 +1012,14 @@ force::
+ 	(see OPTIONS, above).
+ 
+ import-marks::
++import-marks-if-exists::
+ 	Like --import-marks except in two respects: first, only one
+-	"feature import-marks" command is allowed per stream;
+-	second, an --import-marks= command-line option overrides
+-	any "feature import-marks" command in the stream.
++	"feature import-marks" or "feature import-marks-if-exists"
++	command is allowed per stream; second, an --import-marks=
++	or --import-marks-if-exists command-line option overrides
++	any of these "feature" commands in the stream; third,
++	"feature import-marks-if-exists" like a corresponding
++	command-line option silently skips a nonexistent file.
+ 
+ cat-blob::
+ ls::
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index f256475..2cb4494 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -1882,6 +1882,53 @@ test_expect_success 'R: --import-marks-if-exists' '
+ 	test_cmp expect io.marks
+ '
+ 
++test_expect_success 'R: feature import-marks-if-exists' '
++	rm -f io.marks &&
++	>expect &&
++
++	git fast-import --export-marks=io.marks <<-\EOF &&
++	feature import-marks-if-exists=not_io.marks
++	EOF
++	test_cmp expect io.marks &&
++
++	blob=$(echo hi | git hash-object --stdin) &&
++
++	echo ":1 $blob" >io.marks &&
++	echo ":1 $blob" >expect &&
++	echo ":2 $blob" >>expect &&
++
++	git fast-import --export-marks=io.marks <<-\EOF &&
++	feature import-marks-if-exists=io.marks
++	blob
++	mark :2
++	data 3
++	hi
++
++	EOF
++	test_cmp expect io.marks &&
++
++	echo ":3 $blob" >>expect &&
++
++	git fast-import --import-marks=io.marks \
++			--export-marks=io.marks <<-\EOF &&
++	feature import-marks-if-exists=not_io.marks
++	blob
++	mark :3
++	data 3
++	hi
++
++	EOF
++	test_cmp expect io.marks &&
++
++	>expect &&
++
++	git fast-import --import-marks-if-exists=not_io.marks \
++			--export-marks=io.marks <<-\EOF
++	feature import-marks-if-exists=io.marks
++	EOF
++	test_cmp expect io.marks
++'
++
+ cat >input << EOF
+ feature import-marks=marks.out
+ feature export-marks=marks.new
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.7.3.4
