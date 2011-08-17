@@ -1,62 +1,97 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 7/7] sequencer: Remove sequencer state after final commit
-Date: Thu, 18 Aug 2011 01:53:07 +0530
-Message-ID: <CALkWK0nKiVdeGe2Q9pHA1JO1jyXMomjMpO8f5FqmmgXOEvOwmQ@mail.gmail.com>
-References: <1313310789-10216-1-git-send-email-artagnon@gmail.com>
- <1313310789-10216-8-git-send-email-artagnon@gmail.com> <20110814160440.GK18466@elie.gateway.2wire.net>
- <7vei0nn1cn.fsf@alter.siamese.dyndns.org> <20110814213200.GA6555@elie.gateway.2wire.net>
- <7vippzlj7a.fsf@alter.siamese.dyndns.org> <7v7h6eld2c.fsf@alter.siamese.dyndns.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH v2] git svn : hook before 'git svn dcommit'
+Date: Wed, 17 Aug 2011 13:37:01 -0700
+Message-ID: <20110817203701.GB24581@dcvr.yhbt.net>
+References: <1313438699-9926-1-git-send-email-frederic.heitzmann@gmail.com>
+ <7vty9ijs1i.fsf@alter.siamese.dyndns.org>
+ <20110817003023.GA30153@dcvr.yhbt.net>
+ <CALeToSWJNK=q4iPwxNvgGin0T61oLKJd=b9F3cSSo0vVebrhhQ@mail.gmail.com>
+ <CALeToSUidWgiJ+PxuphnBZOQGNStNOO9==EswfLDpFr2GYy=nA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 17 22:23:35 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?RnLDqWTDqXJpYw==?= Heitzmann 
+	<frederic.heitzmann@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 17 22:37:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtmeE-0001wc-Mk
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Aug 2011 22:23:35 +0200
+	id 1QtmrT-0008Qm-Lu
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Aug 2011 22:37:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753801Ab1HQUX3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Aug 2011 16:23:29 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:62453 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751727Ab1HQUX2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2011 16:23:28 -0400
-Received: by wwf5 with SMTP id 5so1375337wwf.1
-        for <git@vger.kernel.org>; Wed, 17 Aug 2011 13:23:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=BO9CbG8RTqREoUyaVMPsUEG5SHNMQHg8wKzlTJBwEYQ=;
-        b=LcGOFajSornPvKLMLqWGb5g+EahaAnMd8HuIqZ5r4+fDCYFq6GZPwX4cncWtHNvD6p
-         9PnuVlX4qtDaMRyBXxCrlY7Stsvhm+MuaZbCMWf4qJkorH/dz6LvQDTqNVVubnsyv0DJ
-         ea0HNB7sWbert14MxW3/07jP3GChUc91ZkZlM=
-Received: by 10.216.131.134 with SMTP id m6mr1176593wei.78.1313612607140; Wed,
- 17 Aug 2011 13:23:27 -0700 (PDT)
-Received: by 10.216.172.132 with HTTP; Wed, 17 Aug 2011 13:23:07 -0700 (PDT)
-In-Reply-To: <7v7h6eld2c.fsf@alter.siamese.dyndns.org>
+	id S1754114Ab1HQUhE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Aug 2011 16:37:04 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:40432 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753924Ab1HQUhC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2011 16:37:02 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 937F421091;
+	Wed, 17 Aug 2011 20:37:01 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <CALeToSUidWgiJ+PxuphnBZOQGNStNOO9==EswfLDpFr2GYy=nA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179535>
 
-Hi Junio,
+=46r=C3=A9d=C3=A9ric Heitzmann <frederic.heitzmann@gmail.com> wrote:
+> 4) Before merging back to master and commitng to SVN, it is necessary
+> to remove commits with reference data (git rebase -i --onto master
+> master topic ...)
+> 5) merge topic branch with master and git svn dcommit
+>=20
+> -- end --
+>=20
+> It is very easy to forget step 4, and svn commit lots of useless data=
+=2E
 
-Junio C Hamano writes:
-> After sleeping on this, here are my random thoughts on this topic.
+I agree.
 
-They're a bit much for me to absorb so quickly.  I'll think about this
-again before posting a more elaborate reply.
+> Proposal 1)
+> * commit reference data with some specific mark in the commit message
+> (e.g. "NO_SVN")
+> * use pre-svn-dcommit hook to detect such commits
 
-Thanks for your patience.
+The problem with this is hook standardization across committers and eve=
+n
+across different machines/directories a committer may use.
 
--- Ram
+> Proposal 2) (not fully feasable for what I know)
+> * git svn clone to a bare repo
+> * clone a working repo from the the bare repo.
+> * steps 2, 3, maybe 3bis, ... then 4
+> * push commits to the bare repo, while using pre-receive or update
+> hook to look for wrong commits, and abort if so.
+> * use post-receive hook to trigger git svn dcommit
+>=20
+> Main drawback for proposal 2 (appart from needing 2 repo instead of
+> one) is that each time you want to update your working=C2=A0 repo, yo=
+u have
+> to git svn rebase the bare repo, then git pull.
+
+Proposal 2 is way too complicated, I hate it.
+
+> All things begin equal, proposal 1 seems to be the easier path, but i=
+t
+> is highly debatable.
+
+I had Proposal 3 in my original response:
+
+> 2011/8/17 Eric Wong <normalperson@yhbt.net> wrote:
+> > Perhaps an interactive option for dcommit would be just as useful?
+
+1 and 3 can both implemented, but I think 3 would be easier to
+use/setup/standardize.  I suspect it's also easier to train oneself to
+always use "dcommit -i".  Perhaps even default to interactive mode
+like git-send-email does nowadays.
+
+Unfortunately interactive dcommit requires more effort to implement.
+
+--=20
+Eric Wong
