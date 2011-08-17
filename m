@@ -1,65 +1,67 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Issue: Mails sent twice if patch is mentioned twice while sending mail.
-Date: Wed, 17 Aug 2011 14:22:09 +0530
-Message-ID: <CALkWK0nv=NrCzxfePL50GiJya+DbqdOmSMjPVEa-Sf1Qm5oAvg@mail.gmail.com>
-References: <4E4B5B9D.1070901@st.com>
+From: =?ISO-8859-1?Q?Ingo=20Br=FCckl?= <ib@wupperonline.de>
+Subject: Re: [PATCH] stash: Utilize config variable pager.stash.list in stash list command
+Date: Wed, 17 Aug 2011 11:04:23 +0200
+Message-ID: <4e4b8418.068889fb.bm001@wupperonline.de>
+References: <4e4a58c2.48d6f6ce.bm001@wupperonline.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Shiraz HASHIM <shiraz.hashim@st.com>,
-	Vipin KUMAR <vipin.kumar@st.com>
-To: viresh kumar <viresh.kumar@st.com>
-X-From: git-owner@vger.kernel.org Wed Aug 17 10:52:38 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 17 11:06:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtbrY-0000kd-Ot
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Aug 2011 10:52:37 +0200
+	id 1Qtc4r-0006pR-Di
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Aug 2011 11:06:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751771Ab1HQIwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Aug 2011 04:52:32 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:50054 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751509Ab1HQIwb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2011 04:52:31 -0400
-Received: by wyg24 with SMTP id 24so515908wyg.19
-        for <git@vger.kernel.org>; Wed, 17 Aug 2011 01:52:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=wyTDwoQcbADYcNcJi/B3GP5k4siw1ug4vFssAkypkAM=;
-        b=JO2engzDYxXQCDFX8us2n4SavHePBoe3AiXbjKjDn7sFwb9dah0p6ibyVURWUuU3Tx
-         hrB4nRHfR5dts3WLn3sMuC3070Mgk7GWf9e8WKdNc6rkLjDAXnMvxmmW/ctulfhCW5wX
-         7H1m3QnjgT4hkhljbvpVT7kxtzktOcaLgWwz0=
-Received: by 10.216.37.16 with SMTP id x16mr560186wea.93.1313571150107; Wed,
- 17 Aug 2011 01:52:30 -0700 (PDT)
-Received: by 10.216.172.132 with HTTP; Wed, 17 Aug 2011 01:52:09 -0700 (PDT)
-In-Reply-To: <4E4B5B9D.1070901@st.com>
+	id S1751543Ab1HQJGQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Aug 2011 05:06:16 -0400
+Received: from smtp-a.tal.de ([81.92.1.9]:46667 "EHLO smtp-a.tal.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751187Ab1HQJGP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2011 05:06:15 -0400
+Received: from point.localnet (mue-88-130-126-093.dsl.tropolys.de [88.130.126.93])
+	(Authenticated sender: ib@wtal.de)
+	by smtp-a.tal.de (Postfix) with ESMTP id 36AED11E3756
+	for <git@vger.kernel.org>; Wed, 17 Aug 2011 11:06:09 +0200 (CEST)
+Received: from ib by point.localnet with local (masqmail 0.2.21) id
+ 1Qtc4f-0wd-00 for <git@vger.kernel.org>; Wed, 17 Aug 2011 11:06:09 +0200
+In-Reply-To: <4e4a58c2.48d6f6ce.bm001@wupperonline.de>
+X-Mailer: blueMail/Linux 1.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179505>
 
-Hi Viresh,
+Usually it is annoying that the pager is used for stash list output,
+so the config variable pager.stash.list will be utilized now and is
+a way to control stash list's behavior.
 
-Viresh kumar writes:
-> git send-email --to=abc@xyz.com 0001-xyz.patch 0001-xyz.patch
->
-> What should be the desired behavior of this command, Should we get
-> mail only once or twice?
+Signed-off-by: Ingo Br=FCckl <ib@wupperonline.de>
+---
+ This is the 2nd attempt, now checking for true and false.
 
-I'd expect it to send out two emails.  Why should 'git send-email'
-check the supplied command-line arguments for duplicates?  I can't
-think of a usecase for it. It's a simple Perl script that mails out
-the mbox files specified on the command-line.  Could you tell us your
-usecase?  If it's a shell script that calls 'git send-email' with
-duplicate arguments, I think you should fix the shell script, not 'git
-send-email'.
+ git-stash.sh |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
-Thanks.
+diff --git a/git-stash.sh b/git-stash.sh
+index f4e6f05..3712a17 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -264,7 +264,10 @@ have_stash () {
 
--- Ram
+ list_stash () {
+ 	have_stash || return 0
+-	git log --format=3D"%gd: %gs" -g "$@" $ref_stash --
++	l_config=3D$(git config --get pager.stash.list)
++	test "$l_config" =3D "true" && p_option=3D--paginate
++	test "$l_config" =3D "false" && p_option=3D--no-pager
++	git $p_option log --format=3D"%gd: %gs" -g "$@" $ref_stash --
+ }
+
+ show_stash () {
+--
+1.7.6
