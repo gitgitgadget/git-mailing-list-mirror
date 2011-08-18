@@ -1,71 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] stash: Utilize config variable pager.stash.list in stash
- list command
-Date: Wed, 17 Aug 2011 21:26:37 -0700
-Message-ID: <20110818042620.GA19045@sigill.intra.peff.net>
-References: <4e4a58c2.48d6f6ce.bm001@wupperonline.de>
- <4e4b8418.068889fb.bm001@wupperonline.de>
- <7vd3g3ev3j.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Branches & directories
+Date: Wed, 17 Aug 2011 23:45:55 -0500
+Message-ID: <20110818044555.GA20752@elie.gateway.2wire.net>
+References: <CAE1pOi3Eg88i+1s+CcW3+W0WNZ-NYUQb1EV55oh+g1Od78AByQ@mail.gmail.com>
+ <CABNdCrCbSqup1=D2eEbGDhw3JzZGYHWLVqZFsB6GDO4Vk7HRxg@mail.gmail.com>
+ <7vvctvdf5r.fsf@alter.siamese.dyndns.org>
+ <CAE1pOi3rqqcz_6QxB8=g2jWOF-4SRZee7t8NXN1md2C4DL7wug@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ingo =?utf-8?Q?Br=C3=BCckl?= <ib@wupperonline.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 18 06:27:03 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Evan Shelhamer <shelhamer@imaginarynumber.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 18 06:46:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtuC3-0004DT-Bk
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Aug 2011 06:26:59 +0200
+	id 1QtuUs-0001Zd-P5
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Aug 2011 06:46:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751206Ab1HRE0n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Aug 2011 00:26:43 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:53163
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750950Ab1HRE0n (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Aug 2011 00:26:43 -0400
-Received: (qmail 17861 invoked by uid 107); 18 Aug 2011 04:27:22 -0000
-Received: from me42036d0.tmodns.net (HELO sigill.intra.peff.net) (208.54.32.228)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 18 Aug 2011 00:27:22 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Aug 2011 21:26:37 -0700
+	id S1751344Ab1HREqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Aug 2011 00:46:22 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:36968 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750950Ab1HREqV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2011 00:46:21 -0400
+Received: by yie30 with SMTP id 30so1249550yie.19
+        for <git@vger.kernel.org>; Wed, 17 Aug 2011 21:46:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=SR8X8VTXZBVEFuzS+Gdedw2wtMeKFBDMoQmw0LwftuI=;
+        b=J9G/cmrIIl+DGnqs+PjCOF+p3h8qV1c44A7M1deDgA5Tc7qzq4dwBlImyYQtqZDrrw
+         ezZjTMimzml/U5aL5cpXiGGk2eI1UclhdXQ1gvkSGZJNJyi0MQ2orhA0I4R4TUINNuZu
+         0c5SYradS4fm5uAJGIEM1a/YYJTtUHLyewlm4=
+Received: by 10.150.133.11 with SMTP id g11mr260991ybd.370.1313642780691;
+        Wed, 17 Aug 2011 21:46:20 -0700 (PDT)
+Received: from elie.gateway.2wire.net ([68.255.105.3])
+        by mx.google.com with ESMTPS id o2sm1782260yhl.29.2011.08.17.21.46.18
+        (version=SSLv3 cipher=OTHER);
+        Wed, 17 Aug 2011 21:46:19 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <7vd3g3ev3j.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <CAE1pOi3rqqcz_6QxB8=g2jWOF-4SRZee7t8NXN1md2C4DL7wug@mail.gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179556>
 
-On Wed, Aug 17, 2011 at 11:44:32AM -0700, Junio C Hamano wrote:
+Hi Hilco,
 
-> At least "pager.stash.list" should be spelled as "pager.stashList" or
-> something. It is not like there are multitude of arbigrary choices that
-> may match "pager.*.list" pattern.
+Hilco Wijbenga wrote:
 
-The pager code would then assume that was for a command "stashlist". It
-probably doesn't matter in practice, but I think it's a little nicer to
-keep the namespace properly separated unless there is a good reason not
-to.
+> It would be really nice, though, if Git could somehow
+> "stash" such files when checking out a different branch. In general, I
+> would prefer if uncommitted changes and untracked and/or ignored files
+> stuck to the branch where they were created.
 
-There are other places where something like this might be handy, too.
-For example, auto-pagination of "git branch" or "git tag -l" (but you
-wouldn't want to paginate "git branch foo").
+This is just a random guess, but: wouldn't it be convenient in this
+workflow to have a separate worktree for each branch you are working
+on?  That way, switching branches would not carry over unwanted state
+or throw away valuable state, clobber timestamps that "make" pays
+attention to, etc.
 
-> Also a variable can be set to false by setting it to 0, no, etc., so
-> you need to inspect it with "git config --bool" to get the canonical
-> version of its value.
-> 
-> What's so difficult to say "git stash list | less" or even "git -p
-> stash list"?
-
-Couldn't one make the same argument about git's entire use of the pager?
-
-Anyway, I think his problem is not "I want a pager but I am too lazy to
-type it", but rather that "git stash list" will auto-paginate by
-default, because it is chaining to "log", which auto-paginates. You can
-turn it off with "--no-pager", but pager.stash seems to have no effect.
-
--Peff
+If I am understanding correctly, then the git-new-workdir script
+from contrib/workdir might help.  (Note, though, that it comes with
+some caveats.  A quick mailing list search should find them.)
