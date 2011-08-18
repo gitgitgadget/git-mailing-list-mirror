@@ -1,72 +1,80 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] rev-parse: Allow @{U} as a synonym for @{u}
-Date: Thu, 18 Aug 2011 08:53:29 +0700
-Message-ID: <CACsJy8CX7X3u4i_kXChVHkFK=Q--pRBrxmdvjxrF7wr5_SyakA@mail.gmail.com>
-References: <CAMK1S_hZkdXiQb_UTB=snLAXPmo5yrCnFaQFHZqYq5AXqOgWng@mail.gmail.com>
- <1313287071-7851-1-git-send-email-conrad.irwin@gmail.com> <7vhb5fd4zy.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] log: decorate grafted commits with "grafted"
+Date: Thu, 18 Aug 2011 09:02:50 +0700
+Message-ID: <CACsJy8DvbN6w_ZBpjPdjpdsyYPa=O2G8gpcu2Oxx-mbvz_+4=A@mail.gmail.com>
+References: <1313593326-12077-1-git-send-email-pclouds@gmail.com> <7v8vqreuwk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Conrad Irwin <conrad.irwin@gmail.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 18 03:54:14 2011
+X-From: git-owner@vger.kernel.org Thu Aug 18 04:04:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtroB-0001Dt-Nn
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Aug 2011 03:54:12 +0200
+	id 1Qtry3-0004TK-Rh
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Aug 2011 04:04:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754669Ab1HRByD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Aug 2011 21:54:03 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:44888 "EHLO
+	id S1754744Ab1HRCDX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Aug 2011 22:03:23 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:56145 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754155Ab1HRByA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2011 21:54:00 -0400
-Received: by bke11 with SMTP id 11so1114338bke.19
-        for <git@vger.kernel.org>; Wed, 17 Aug 2011 18:53:59 -0700 (PDT)
+	with ESMTP id S1754543Ab1HRCDW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Aug 2011 22:03:22 -0400
+Received: by bke11 with SMTP id 11so1118409bke.19
+        for <git@vger.kernel.org>; Wed, 17 Aug 2011 19:03:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=xXA3CdjCfMtuMhzaH5wvPqTHdVuF2nMzv9Owkki6qz8=;
-        b=JsI4g9odFH9I3qcFNIGW/0rCfnqXrzo/Yrl2Ci0ApMsrI3Qurg1bNI42M1RbOBe3rq
-         WFfht6RuYlMgPKLuR1231b3td6K2FvCzJ0Z/KWyMfxoLBcBAlM9M+8Um24N+goOuRDxC
-         GOeWHmZ/pu4DPSD3ejsc/Xr+HRV8S2cRchSyY=
-Received: by 10.204.166.2 with SMTP id k2mr53168bky.123.1313632439284; Wed, 17
- Aug 2011 18:53:59 -0700 (PDT)
-Received: by 10.204.156.19 with HTTP; Wed, 17 Aug 2011 18:53:29 -0700 (PDT)
-In-Reply-To: <7vhb5fd4zy.fsf@alter.siamese.dyndns.org>
+         :cc:content-type:content-transfer-encoding;
+        bh=czdjkXTL2yqctfO4GgXDQ+iWkjd+F+bBk3buh4NFGlk=;
+        b=WnP7utu2aQAgUb4oZi3aQWf3U8gIH3+AiJahiV5MVFBAYJ41FDkyLN/eiREllbr6xy
+         HWC7PFXrter3HGTY3HhxR10dJqWaf1tghMshepdYVIYJOazC+oda+YMlByUhLKaVAXYX
+         gKdZlbNbm1i8geIzBcp/meuGalWOK5zGI8ktM=
+Received: by 10.204.233.76 with SMTP id jx12mr56647bkb.71.1313633000254; Wed,
+ 17 Aug 2011 19:03:20 -0700 (PDT)
+Received: by 10.204.156.19 with HTTP; Wed, 17 Aug 2011 19:02:50 -0700 (PDT)
+In-Reply-To: <7v8vqreuwk.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179552>
 
-On Thu, Aug 18, 2011 at 5:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Letting u/upstream spelled case-insensitively does improve consistency
-> among the above, but at the same time if we ever wanted to enhance @{...}
-> notation even further in the future, we are restricted to a payload that
-> is case insensitive to retain the consistency.
+2011/8/18 Junio C Hamano <gitster@pobox.com>:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> w=
+rites:
 >
-> The only remotely semi-plausible enhancement I could think of is perhaps
-> to allow @{/regexp} to find a reflog entry that matches the given pattern,
-> and in such a use case we would certainly want to take the pattern in a
-> case sensitive way. This change closes the door to that, and that is the
-> only downside I can think of right now.
+>> @@ -638,6 +640,9 @@ int log_tree_commit(struct rev_info *opt, struct=
+ commit *commit)
+>> =C2=A0 =C2=A0 =C2=A0 log.parent =3D NULL;
+>> =C2=A0 =C2=A0 =C2=A0 opt->loginfo =3D &log;
+>>
+>> + =C2=A0 =C2=A0 if (!commit->parents && lookup_commit_graft(commit->=
+object.sha1))
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 add_name_decoration(DECO=
+RATION_GRAFTED, "grafted",
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &commit->object);
 >
-> I hate to declare that we will never support such a feature with this
-> change, but at the same time, I do not think I would need such a feature
-> that often. But for that matter, I do not think I would miss @{UpStREAM},
-> either, and that takes me back to "Meh" for this change.
+> I am not very enthused about this change.
 >
-> What do people think?
+> We have already looked up the commit when we parsed it, and then we a=
+gain
+> have to call lookup_commit_graft() which would yield false for most o=
+f the
+> commits?
 
-The itch is probably because people have to release shift, then press
-shift again to type "@{u}". How about allow case insensitive match if
-there's only _one_ letter inside @{}?
+which is why there's "!commit->parents" check. I made this patch with
+shallow clone in mind. You probably have seen that if grafts are used
+to extend history instead of cutting it, it won't show.
 
-That would solve the shift problem while leaving door for @{...} extension.
--- 
+> Does this work with replacements and shallows, by the way?
+
+Shallows, yes (that was my aim). Replacements, no. A better way would
+be go over commit_graft[] and replace_object[] arrays, decorate all
+grafted/replaced commits, instead of checking in log_tree_commit().
+--=20
 Duy
