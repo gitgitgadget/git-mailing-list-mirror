@@ -1,243 +1,169 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: [PATCH v2] git svn : hook before 'git svn dcommit'
-Date: Thu, 18 Aug 2011 11:12:28 +0200
-Message-ID: <20110818091228.GB16549@m62s10.vlinux.de>
-References: <1313438699-9926-1-git-send-email-frederic.heitzmann@gmail.com>
- <7vty9ijs1i.fsf@alter.siamese.dyndns.org>
- <20110817003023.GA30153@dcvr.yhbt.net>
- <CALeToSWJNK=q4iPwxNvgGin0T61oLKJd=b9F3cSSo0vVebrhhQ@mail.gmail.com>
- <CALeToSUidWgiJ+PxuphnBZOQGNStNOO9==EswfLDpFr2GYy=nA@mail.gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH 4/4] mergetools/meld: Use '--output' when available
+Date: Thu, 18 Aug 2011 02:24:06 -0700
+Message-ID: <20110818092403.GB15416@gmail.com>
+References: <1313652227-48545-1-git-send-email-davvid@gmail.com>
+ <1313652227-48545-5-git-send-email-davvid@gmail.com>
+ <20110818081309.GP31888@elie.gateway.2wire.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: =?iso-8859-1?Q?Fr=E9d=E9ric?= Heitzmann 
-	<frederic.heitzmann@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 18 11:12:39 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Tanguy Ortolo <tanguy+debian@ortolo.eu>,
+	Charles Bailey <charles@hashpling.org>,
+	Sebastian Schuberth <sschuberth@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 18 11:24:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtyeU-0008T4-KJ
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Aug 2011 11:12:39 +0200
+	id 1Qtypm-0004ux-5N
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Aug 2011 11:24:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755300Ab1HRJMd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Aug 2011 05:12:33 -0400
-Received: from mailout-de.gmx.net ([213.165.64.23]:53498 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1755199Ab1HRJMc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Aug 2011 05:12:32 -0400
-Received: (qmail invoked by alias); 18 Aug 2011 09:12:29 -0000
-Received: from m62s10.vlinux.de (EHLO m62s10.vlinux.de) [83.151.21.204]
-  by mail.gmx.net (mp053) with SMTP; 18 Aug 2011 11:12:29 +0200
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX1+hbegAQE+hKUvYMnm17rDieADoU2ZL1a+wud2IBQ
-	yEDRERr3cA51Ww
-Received: by m62s10.vlinux.de (Postfix, from userid 1000)
-	id 76445D4003; Thu, 18 Aug 2011 11:12:28 +0200 (CEST)
+	id S1755379Ab1HRJYN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Aug 2011 05:24:13 -0400
+Received: from mail-iy0-f170.google.com ([209.85.210.170]:63373 "EHLO
+	mail-iy0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755199Ab1HRJYM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2011 05:24:12 -0400
+Received: by iye16 with SMTP id 16so3615939iye.1
+        for <git@vger.kernel.org>; Thu, 18 Aug 2011 02:24:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Rvsb3r5lWdHsNH5TvJvFCY7vpk91qUYRGu6m6El0cEk=;
+        b=KwgfyDetgU6VpiWZxWy12uH44YV/fwfomAaIZ9TuUd2D1XdiEv3OX6+E+uS0VNvZUF
+         LLc6AgmQg9CwDYrj8+95nn1wZer+pakEGR+CCsypjBeiM7JvFZzOQSTOKf23jGbxv6Gj
+         y+QlZ2/qpQVRf5gli99BpYUW3qjkYdJS/m9M0=
+Received: by 10.231.24.195 with SMTP id w3mr1101258ibb.94.1313659451716;
+        Thu, 18 Aug 2011 02:24:11 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id g21sm867865ibl.58.2011.08.18.02.24.09
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 18 Aug 2011 02:24:11 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <CALeToSUidWgiJ+PxuphnBZOQGNStNOO9==EswfLDpFr2GYy=nA@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
+In-Reply-To: <20110818081309.GP31888@elie.gateway.2wire.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179585>
 
-On Wed, Aug 17, 2011 at 04:35:03PM +0200, Fr=E9d=E9ric Heitzmann wrote:
-> Hi all.
->=20
-> Maybe I should give some more context to explain why a hook could be =
-a
-> potential improvement.
->=20
-> Let's consider the following workflow :
-> 1) git svn clone from the SVN server, then git checkout -b topic
-> 2) git commit some "reference data", before starting some optimizatio=
-n
-> or code refactoring.
-> ** These reference data are not supposed to find their way to the SVN=
- server **
-> Committing such "reference data" is just a convenience because git
-> does a great job to show how these data may or may not change during
-> the development process.
-> 3) hack, test, commit ...
-> 3 bis) it may happen that reference data change for some very good
-> reason (for instance some protocol change)
-> New reference data are then commited.
->=20
-> back to 3 ...
->=20
-> 4) Before merging back to master and commitng to SVN, it is necessary
-> to remove commits with reference data (git rebase -i --onto master
-> master topic ...)
-> 5) merge topic branch with master and git svn dcommit
->=20
-> -- end --
->=20
-> It is very easy to forget step 4, and svn commit lots of useless data=
-=2E
->=20
-> Proposal 1)
-> * commit reference data with some specific mark in the commit message
-> (e.g. "NO_SVN")
-> * use pre-svn-dcommit hook to detect such commits
->=20
-> Proposal 2) (not fully feasable for what I know)
-> * git svn clone to a bare repo
-> * clone a working repo from the the bare repo.
-> * steps 2, 3, maybe 3bis, ... then 4
-> * push commits to the bare repo, while using pre-receive or update
-> hook to look for wrong commits, and abort if so.
-> * use post-receive hook to trigger git svn dcommit
->=20
-> Main drawback for proposal 2 (appart from needing 2 repo instead of
-> one) is that each time you want to update your working=A0 repo, you h=
-ave
-> to git svn rebase the bare repo, then git pull.
->=20
-> Proposal 2bis)
-> * add a pre-send hook on the bare repo, and trigger some git svn
-> rebase with this hook.
-> I am not sure to see all the potential consequences of such a hook th=
-ough.
->=20
-> All things begin equal, proposal 1 seems to be the easier path, but i=
-t
-> is highly debatable.
->=20
+On Thu, Aug 18, 2011 at 03:13:10AM -0500, Jonathan Nieder wrote:
+> David Aguilar wrote:
+> 
+> > use the '--output' option when available.
+> 
+> Yay. :)
+> 
+> > --- a/mergetools/meld
+> > +++ b/mergetools/meld
+> > @@ -4,6 +4,37 @@ diff_cmd () {
+> >  
+> >  merge_cmd () {
+> >  	touch "$BACKUP"
+> > -	"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
+> > +	if test "$meld_has_output_option" = true
+> > +	then
+> > +		"$merge_tool_path" --output "$MERGED" \
+> > +			"$BASE" "$LOCAL" "$REMOTE"
+> 
+> Shouldn't this be "$LOCAL" "$BASE" "$REMOTE"?
 
-I have written a local script for exactly the problem you described aft=
-er looking
-for a git svn dcommit hook I could use (as you did).
-I attached it, so feel free to use it. Simply add it to your bin and ru=
-n it
-with   git dcommit    instead of  git svn dcommit
+Yup, thanks.
 
-Pls read the comment for further explanation how this script is used.
+> 
+> > +	else
+> > +		"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
+> > +	fi
+> >  	check_unchanged
+> 
+> I wonder if the version test could be made a little simpler (perhaps
+> to cope better if future versions use a different numbering system):
+> 
+> 	if "$merge_tool_path" --output /dev/null --help >/dev/null 2>&1
+> 	then
+> 		"$merge_tool_path" --output ...
+> 	else
+> 		"$merge_tool_path" "$LOCAL" ...
+> 	fi
+> 
+> Forgive my ignorance: is this function likely to be called in a loop?
+> If so, it makes sense to precompute or cache the result of detection,
+> like you already do.
+
+Yes, it is called in a loop...
 
 
-#!/bin/bash
-# Copyright =A9 Peter Baumann, 2011
-#
-# Wrapper script around git svn dcommit, which adds some useful functio=
-nality
-#
-# This script will prevent accidentally commiting some commits not yet =
-ready
-# into SVN. Commits starting with (case insensitive) debug, wip, fixup =
-are
-# considered not appropriate for putting them into SVN. The main reason=
- for
-# this functionality is the specific workflow I use. I always have some=
-=20
-# internal debug commits (e.g. enhanced debug logging) or simply work i=
-n progress
-# commits which should never be put into SVN.=20
-#
-# To avoid putting those into SVN, I rebase all commits so that my WIP/=
-DEBUG commits=20
-# are on top of the commits ment for SVN.
-# Calling this script via "git dcommit" after the rebase makes sure onl=
-y commits
-# beneath the WIP commits are considered for SVN.=20
-# Furthermore, a shortlog of commits ment for SVN is shown and the user=
- has
-# to confirm before actually putting them into SVN.
-#
-# If this script is called via a specific commit (e.g. via its SHA1) as=
- parameter,
-# then only commits beneath and including the commit itself are committ=
-et to SVN.
+> 	check_meld_for_output_option () {
+> 		if ...
+> 		then
+> 			meld_has_output_option=true
+> 		else
+> 			meld_has_output_option=false
+> 		fi
+> 	}
+> 
+> 	merge_cmd () {
+> 		if test -z "${meld_has_output_option:+set}"
+> 		then
+> 			check_meld_for_output_option
+> 		fi
+> 
+> 		if test "$meld_has_output_option" = true
+> 		then
+> 			...
+> 
+> 
+> [...]
+> > +	# Filter meld --version to contain numbers and dots only
+> > +	meld="$(meld --version 2>/dev/null | sed -e 's/[^0-9.]\+//g')"
+> 
+> \+ is not a BRE.  If parsing version numbers seems like the right
+> thing to do, maybe "tr -cd 0-9."?
+> 
+> > +	meld="${meld:-0.0.0}"
+> > +
+> > +	meld_major="$(expr "$meld" : '\([0-9]\{1,\}\)' || echo 0)"
+> > +	meld_minor="$(expr "$meld" : '[0-9]\{1,\}\.\([0-9]\{1,\}\)' || echo 0)"
+> 
+> I think git avoids \{m,n\} ranges where possible (for portability).
+> This could be:
+> 
+> 	meld_major=${meld%%.*}
+> 	meld_nonmajor=${meld#${meld_major}.}
+> 	meld_minor=${meld_nonmajor%%.*}
+> 
+> or:
+> 
+> 	case $meld in
+> 	[2-9].* | [1-9][0-9]* | 1.[5-9]* | 1.[1-9][0-9]*)	# >= 1.5.0
+> 		meld_has_output_option=true ;;
+> 	*)
+> 		meld_has_output_option=false ;;
+> 	esac
+> 
+> It's nice how self-contained this can be now that it's in its own
+> file.  Thanks.
 
+Right, I was using \{1,\} since that's what CodingStyle said to
+use instead of \+ (which I forgot to fixup above as you saw).
 
-SUBDIRECTORY_OK=3DYes
+The case statement is nice and simple enough to understand.
+By doing meld --output /dev/null --help we're relying on
+older versions blowing up with --output and --help returning
+exit status 0.  That seems pretty reasonable.
+The case statement does seem sufficient but just trying
+--output and seeing what happens is even simpler.
+Your example also uses $merge_tool_path, which I forgot to do,
+so I'll be sure to include that too.
 
-=2E git-sh-setup
-require_work_tree
-cd_to_toplevel || die "foo"
+I'll wait until tomorrow to see if there are any more comments
+and reroll.
 
-# Upstream ref
-upstream=3Dremotes/trunk
-
-# Stop at this commit
-last=3D
-if [ ! -z $1 ]; then
-	$(git rev-parse $1^{commit})
-	echo $last
-fi
-
-# The latest git commit we want to commit SVN
-commit=3D
-
-# Remembers the original head
-orig_head=3D
-if branch=3D$(git symbolic-ref -q HEAD)
-then
-	orig_head=3D${branch#refs/heads/}
-else
-	orig_head=3D'(detached head)'
-fi
-
-
-function run()
-{
-	#echo "DEBUG: $@"
-	$@
-}=09
-
-IFS=3D'
-'
-for c in $(git log --reverse --pretty=3D"%H %s" HEAD --not "${upstream}=
-"); do
-	# Split the log output into its fields
-	sha1=3D"${c:0:40}"
-	msg=3D"${c:41}"
-
-	# Check if the commit subject matches (case insenstive) to one of the
-	# following patterns. Leading whitespace is fine
-	# 	debug
-	#	wip
-	#	fixup!
-	if echo "$msg"|egrep -i -q '^\s*(debug|wip|fixup)'; then
-		break
-	fi
-	commit=3D${sha1}
-
-	if [ "x${commit}" =3D "x${last}" ]; then
-		break
-	fi
-done
-
-
-if [ "x${commit}" =3D=3D "x" ]; then
-	die "Nothing to commit - Perhaps you have only stuff not ready for SVN=
-?"
-fi
-
-echo ">>>> Committing the folling GIT commits to SVN <<<<"
-git --no-pager log --pretty=3Doneline ${commit} --not "${upstream}"
-echo
-
-# Show the latest commit we are going to submit to SVN
-#git show ${commit}
-
-echo
-echo "Commiting to SVN (y/N)?"
-read yesno || die "Aborting"
-
-if [ "x${yesno}" =3D=3D "xy" ] || [ "x$yesno" =3D=3D "xY" ]; then
-	run git checkout -q "${commit}" || die "Checkout failed"
-	run git svn dcommit || "Aborting - git svn dcommit failed!"
-
-	if [ "${orig_head}" !=3D "(detached head)" ]; then
-		echo "DO THIS:"
-		run git checkout "${orig_head}" && run git rebase "${upstream}"
-	else
-		echo "You have started this script being on a detached HEAD."
-		echo "Please rebase manually!"
-	fi
-fi
+Thanks,
+-- 
+					David
