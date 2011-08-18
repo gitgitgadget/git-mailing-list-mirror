@@ -1,56 +1,142 @@
-From: =?ISO-8859-1?Q?Ingo=20Br=FCckl?= <ib@wupperonline.de>
-Subject: Re: [PATCH] stash: Utilize config variable pager.stash.list in stash list command
-Date: Thu, 18 Aug 2011 09:55:37 +0200
-Message-ID: <4e4cc57e.51253792.bm000@wupperonline.de>
-References: <20110818042620.GA19045@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 4/4] mergetools/meld: Use '--output' when available
+Date: Thu, 18 Aug 2011 03:13:10 -0500
+Message-ID: <20110818081309.GP31888@elie.gateway.2wire.net>
+References: <1313652227-48545-1-git-send-email-davvid@gmail.com>
+ <1313652227-48545-5-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 18 09:59:41 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Tanguy Ortolo <tanguy+debian@ortolo.eu>,
+	Charles Bailey <charles@hashpling.org>,
+	Sebastian Schuberth <sschuberth@gmail.com>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 18 10:13:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtxVt-0002xV-CH
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Aug 2011 09:59:41 +0200
+	id 1Qtxj6-0000Kr-KU
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Aug 2011 10:13:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755332Ab1HRH7g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Aug 2011 03:59:36 -0400
-Received: from smtp-a.tal.de ([81.92.1.9]:51547 "EHLO smtp-a.tal.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755278Ab1HRH7f (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Aug 2011 03:59:35 -0400
-Received: from point.localnet (mue-88-130-76-166.dsl.tropolys.de [88.130.76.166])
-	(Authenticated sender: ib@wtal.de)
-	by smtp-a.tal.de (Postfix) with ESMTP id F2B9811E37A5
-	for <git@vger.kernel.org>; Thu, 18 Aug 2011 09:59:33 +0200 (CEST)
-Received: from ib by point.localnet with local (masqmail 0.2.21) id
- 1QtxVl-17m-00 for <git@vger.kernel.org>; Thu, 18 Aug 2011 09:59:33 +0200
-In-Reply-To: <20110818042620.GA19045@sigill.intra.peff.net>
-X-Mailer: blueMail/Linux 1.5
+	id S1755288Ab1HRINP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Aug 2011 04:13:15 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:49001 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755166Ab1HRINO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2011 04:13:14 -0400
+Received: by yxj19 with SMTP id 19so1307992yxj.19
+        for <git@vger.kernel.org>; Thu, 18 Aug 2011 01:13:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=EWOrlxZJd0G/+MraQFqSMGJO/Em0oLFZEK+2D+bY77Q=;
+        b=fjOnPPNflYykMDMzBrTb6iySDgfrEwKHX8SRGyY2edIBXrk073UkOrY3y+3hJ7J/WH
+         NkeUQ9XByUn64YK52eTbPYS3M6rxyEK2pT+gkEye+f8sbRpIe9QFtSIGRZmW4/yRrIHZ
+         gnfS4zam0Cv1cOqsNiPLIbWtbgEzQIDyBFhFU=
+Received: by 10.42.202.73 with SMTP id fd9mr500509icb.22.1313655193165;
+        Thu, 18 Aug 2011 01:13:13 -0700 (PDT)
+Received: from elie.gateway.2wire.net (adsl-68-255-105-3.dsl.chcgil.ameritech.net [68.255.105.3])
+        by mx.google.com with ESMTPS id v16sm841500ibe.17.2011.08.18.01.13.11
+        (version=SSLv3 cipher=OTHER);
+        Thu, 18 Aug 2011 01:13:12 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1313652227-48545-5-git-send-email-davvid@gmail.com>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179581>
 
-Jeff King wrote on Wed, 17 Aug 2011 21:26:37 -0700:
+David Aguilar wrote:
 
-> On Wed, Aug 17, 2011 at 11:44:32AM -0700, Junio C Hamano wrote:
+> use the '--output' option when available.
 
->> What's so difficult to say "git stash list | less" or even "git -p
->> stash list"?
+Yay. :)
 
-> Anyway, I think his problem is not "I want a pager but I am too lazy to
-> type it", but rather that "git stash list" will auto-paginate by
-> default, because it is chaining to "log", which auto-paginates. You can
-> turn it off with "--no-pager", but pager.stash seems to have no effect.
+> --- a/mergetools/meld
+> +++ b/mergetools/meld
+> @@ -4,6 +4,37 @@ diff_cmd () {
+>  
+>  merge_cmd () {
+>  	touch "$BACKUP"
+> -	"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
+> +	if test "$meld_has_output_option" = true
+> +	then
+> +		"$merge_tool_path" --output "$MERGED" \
+> +			"$BASE" "$LOCAL" "$REMOTE"
 
-I'd like to mention that in this particular case it is ok that stash
-auto-paginates, it only is annoying that "stash list" does. And, Junio,
-it is totally ok to say "git -p stash list" then, because this is exactely
-what I'd do.
+Shouldn't this be "$LOCAL" "$BASE" "$REMOTE"?
 
-Ingo
+> +	else
+> +		"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
+> +	fi
+>  	check_unchanged
+
+I wonder if the version test could be made a little simpler (perhaps
+to cope better if future versions use a different numbering system):
+
+	if "$merge_tool_path" --output /dev/null --help >/dev/null 2>&1
+	then
+		"$merge_tool_path" --output ...
+	else
+		"$merge_tool_path" "$LOCAL" ...
+	fi
+
+Forgive my ignorance: is this function likely to be called in a loop?
+If so, it makes sense to precompute or cache the result of detection,
+like you already do.
+
+	check_meld_for_output_option () {
+		if ...
+		then
+			meld_has_output_option=true
+		else
+			meld_has_output_option=false
+		fi
+	}
+
+	merge_cmd () {
+		if test -z "${meld_has_output_option:+set}"
+		then
+			check_meld_for_output_option
+		fi
+
+		if test "$meld_has_output_option" = true
+		then
+			...
+
+
+[...]
+> +	# Filter meld --version to contain numbers and dots only
+> +	meld="$(meld --version 2>/dev/null | sed -e 's/[^0-9.]\+//g')"
+
+\+ is not a BRE.  If parsing version numbers seems like the right
+thing to do, maybe "tr -cd 0-9."?
+
+> +	meld="${meld:-0.0.0}"
+> +
+> +	meld_major="$(expr "$meld" : '\([0-9]\{1,\}\)' || echo 0)"
+> +	meld_minor="$(expr "$meld" : '[0-9]\{1,\}\.\([0-9]\{1,\}\)' || echo 0)"
+
+I think git avoids \{m,n\} ranges where possible (for portability).
+This could be:
+
+	meld_major=${meld%%.*}
+	meld_nonmajor=${meld#${meld_major}.}
+	meld_minor=${meld_nonmajor%%.*}
+
+or:
+
+	case $meld in
+	[2-9].* | [1-9][0-9]* | 1.[5-9]* | 1.[1-9][0-9]*)	# >= 1.5.0
+		meld_has_output_option=true ;;
+	*)
+		meld_has_output_option=false ;;
+	esac
+
+It's nice how self-contained this can be now that it's in its own
+file.  Thanks.
