@@ -1,137 +1,77 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: RFC: repository of handy git aliases?
-Date: Thu, 18 Aug 2011 17:40:49 +0200
-Message-ID: <4E4D3281.2050600@drmicha.warpmail.net>
-References: <CAH3AnrpSeWytri-bHEi_9qkAKG1fjL0pVuYFOrrmZumJ6dv_wg@mail.gmail.com> <CANQwDwfwvaYQt+ck8ky0obyeAa--Wwtdme3UC4vNMFkSiBMq9g@mail.gmail.com> <CAH3AnrqEfu1jeCo55bJxLDK8845PsLoZtoT0iWkMUtt1+K9X-w@mail.gmail.com> <CAH3AnrrNPBNNNr7Lm2-vnqOisxWorF4FS32H+LBaybWF3KdnGg@mail.gmail.com> <4E4A76E7.2090100@drmicha.warpmail.net> <CAH3AnrpahkHtnu5QTRns-vVcCoj3Q8JM-mzytYF2ZC_EXjU7Xw@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2011, #03; Thu, 11)
+Date: Thu, 18 Aug 2011 23:00:45 +0530
+Message-ID: <CALkWK0mN_SUK4pkZZccmvTTrAJK0ZPjY77d7iaKT8RWtEJzFCg@mail.gmail.com>
+References: <7vr54rpogf.fsf@alter.siamese.dyndns.org> <CALkWK0mxHT8by86-P=Msopgib1ToeHcfwsSXBYBgvN_dm75GnA@mail.gmail.com>
+ <7vwredi9uu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 18 17:41:00 2011
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 18 19:31:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qu4iJ-0000Jj-M1
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Aug 2011 17:41:00 +0200
+	id 1Qu6R0-0007B8-4T
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Aug 2011 19:31:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755920Ab1HRPkx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Aug 2011 11:40:53 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:36370 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755057Ab1HRPkw (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Aug 2011 11:40:52 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 9F295228C7;
-	Thu, 18 Aug 2011 11:40:51 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 18 Aug 2011 11:40:51 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=5sLwivQlNCoOHMYuvaJcA8
-	IOxdw=; b=MAm7f2ZPAu2nu51jWddg6GslLTSx8bBidBSX03vUliItkE3/AsiFMP
-	zTnUssbEk1W+EM4mr9fccddfe7j+nYUMH+Thjo+Vlm4dVXeooH7CLW/SDvHxN7Hf
-	41qK9nQ5K2atFl70bN7bgUT5j+mcnC2ZCiy5/yJC1KaTI8XD5KtgU=
-X-Sasl-enc: L915oa412gfNzavCT2JcoHYQqT3dHZWV2lGUNX+90A5p 1313682051
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 05FB57A004F;
-	Thu, 18 Aug 2011 11:40:50 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
-In-Reply-To: <CAH3AnrpahkHtnu5QTRns-vVcCoj3Q8JM-mzytYF2ZC_EXjU7Xw@mail.gmail.com>
+	id S1751160Ab1HRRbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Aug 2011 13:31:08 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:45496 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750896Ab1HRRbH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2011 13:31:07 -0400
+Received: by wwf5 with SMTP id 5so2327223wwf.1
+        for <git@vger.kernel.org>; Thu, 18 Aug 2011 10:31:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=tVbN5H4THK5Hcj5kVSLxvNWNWsV/JfIYOpeIj4CrCsw=;
+        b=sTD1Bcsqfnw6IEpnxif9fpY+n5UQ5MfkrywcYBk2SjiMzT4hGfoquBg7uoqOfrxkAW
+         /cuXFf4+W9RUvc8SJg2Dvn/g6EihgATjMjCialc2snmIU3nS7kOT+HpBIxu0NweNwt0S
+         z4xSwW1qLKbqr21Q6xoK9ecQFDIuwMH0HcJX0=
+Received: by 10.216.175.130 with SMTP id z2mr842870wel.63.1313688666118; Thu,
+ 18 Aug 2011 10:31:06 -0700 (PDT)
+Received: by 10.216.172.132 with HTTP; Thu, 18 Aug 2011 10:30:45 -0700 (PDT)
+In-Reply-To: <7vwredi9uu.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179607>
 
-Jon Seymour venit, vidit, dixit 18.08.2011 16:52:
-> On Tue, Aug 16, 2011 at 11:55 PM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> Jon Seymour venit, vidit, dixit 08.08.2011 12:43:
->>> On Mon, Aug 8, 2011 at 8:22 PM, Jon Seymour <jon.seymour@gmail.com>=
- wrote:
->>>> On Mon, Aug 8, 2011 at 7:45 PM, Jakub Nar=C4=99bski <jnareb@gmail.=
-com> wrote:
->>>>> On 8/8/11, Jon Seymour <jon.seymour@gmail.com> wrote:
->>>
->>> I've also added this...
->>>
->>> Listing the tips of branches in pu that are not in master
->>> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->>>
->>> Suppose you have two aliases defined like so:
->>>
->>> [alias]
->>>         oneline =3D !/usr/bin/xargs -L1 git log --decorate --max-co=
-unt=3D1 --oneline
+Hi Junio,
+
+Junio C Hamano writes:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+>>> * rr/revert-cherry-pick-continue (2011-08-08) 18 commits
+>>> [...]
+>>> Will merge to "next".
 >>
->> How about
->>
->> oneline =3D git log --no-walk --decorate --oneline
->=20
-> I still need to !/usr/bin/xargs -L1m, don't I? The point is to
-> transform a list of SHA1s into a decorated list. But point taken abou=
-t
-> --no-walk being an alternative to --max-count=3D1.
+>> If this won't graduate to 'next' before the 24th, I have plenty of
+>> time to re-roll fixing all the issues that I've addressed in the
+>> beginning of the new series.
+>
+> I take it that you mean by "the new series" the 6-patch "Towards a
+> generalized sequencer" topic?
 
-Is this a typo or do you have an xargs which understands "1m"? My point
-was that you can feed all tips to "log" at once, as long as you don't
-exceed the argument list limits, of course.
+Yes.
 
->> git branch --merged origin/pu --contains origin/next
->>
->> (or with --no-merged, but put it first.)
->>
->=20
-> So, the idea with tips is that it will show you the tips of
-> independent lines of development that have diverged from origin/next
-> (or before) that have been merged back into origin/pu. This works,
-> even if you don't have branches assigned to these tips.
+> It is ultimately up-to-you. If you feel the fix-up is against glaring
+> errors in the earlier round that you would prefer not to see in the
+> history cast-in-stone, I am perfectly Ok to wait for a re-roll. On the
+> other hand, if they are mostly cosmetic fixes without major semantic
+> changes, it may be easier for everybody to see them fixed in-tree.
 
-OK, that is different then.
+Hm, I didn't think they were glaring errors.  After reading your
+latest review about my '--continue' patch in the generalized
+sequencer, I've decided not to re-roll.  Please merge
+'rr/revert-cherry-pick-continue' into 'next' as usual.  It'll take me
+some more time to think about my "generalized sequencer" series.
 
-[snipped discription]
->=20
->=20
+Thanks.
 
-[readding relevant part:]
->>> b166408 mergetool: Don't assume paths are unmerged
->>> b29d76f merge: mark the final "Merge made by..." message for l10n
->>>942cf39 receive-pack: Allow server to refuse pushes with too many ob=
-jects
-
->>>
->>> which is a list of the tips of branches that are in pu, but not in =
-next.
->>
->> That's not quite the standard --decorate, is it? ;)
->>
->=20
-> Not sure what you mean by not being standard? The main idea about
-> using --decorate here is to get a dump of any refs that might describ=
-e
-> the identified tips.
-
-Just compare your output with this:
-
-git log --decorate --no-walk --oneline origin/{master,next,pu}
-a46e511 (origin/pu) Merge branch 'fg/submodule-git-file-git-dir' into p=
-u
-
-0e3f8f0 (origin/next) Merge branch 'master' into next
-
-4bfe7cb (origin/master, origin/HEAD) Sync with "maint"
-
-That is, I get the branch decorations there; you use the same format bu=
-t
-don't get any. But I may be misunderstanding completely what you are
-trying to achieve. I guess I have to reread your extended use case
-description...
-
-Cheers,
-Michael
+-- Ram
