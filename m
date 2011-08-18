@@ -1,152 +1,77 @@
-From: Fredrik Kuivinen <frekui@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH resend] Makefile: Use computed header dependencies if the
  compiler supports it
-Date: Thu, 18 Aug 2011 20:34:39 +0200
-Message-ID: <20110818183439.GA21560@fredrik-Q430-Q530>
+Date: Thu, 18 Aug 2011 13:41:42 -0500
+Message-ID: <20110818184142.GF30436@elie.gateway.2wire.net>
 References: <1313347512-7815-1-git-send-email-frekui@gmail.com>
  <20110814190050.GA16819@elie.gateway.2wire.net>
  <CALx8hKRBjXr44gM1JA+d=RU80pmruPV56s-G3JvViz87eJ=ajQ@mail.gmail.com>
  <20110814200255.GC16819@elie.gateway.2wire.net>
+ <20110818183439.GA21560@fredrik-Q430-Q530>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 18 20:34:51 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Fredrik Kuivinen <frekui@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 18 20:41:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qu7QX-0004D2-Le
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Aug 2011 20:34:50 +0200
+	id 1Qu7XM-0007kw-72
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Aug 2011 20:41:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751234Ab1HRSeo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Aug 2011 14:34:44 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:56774 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751136Ab1HRSeo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Aug 2011 14:34:44 -0400
-Received: by bke11 with SMTP id 11so1667159bke.19
-        for <git@vger.kernel.org>; Thu, 18 Aug 2011 11:34:42 -0700 (PDT)
+	id S1751410Ab1HRSlr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Aug 2011 14:41:47 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:39961 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751185Ab1HRSlr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2011 14:41:47 -0400
+Received: by yxj19 with SMTP id 19so1697245yxj.19
+        for <git@vger.kernel.org>; Thu, 18 Aug 2011 11:41:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=7HmY3TGT/1W9bSjwSADhjUue5QDVS9p65nK2DZYNMnU=;
-        b=uM4UNGw/EIf8uJwpa/v8r3/1zT7tXyGc6G3Q+BOYDPqs6/c1dRf7WwxcuiHsUB2+Sz
-         1t4T+vowwE/vYsI7SgKmWEhyca+B1CL7N8Yawmg92NWWeVogb1n+KlwFrqlAbXH3nQ5P
-         bYdEiAieuCXG+2TO3fG6w/DxRgwsd8dmFPy+s=
-Received: by 10.204.185.65 with SMTP id cn1mr515204bkb.109.1313692482829;
-        Thu, 18 Aug 2011 11:34:42 -0700 (PDT)
-Received: from fredrik-Q430-Q530 (c83-250-151-53.bredband.comhem.se [83.250.151.53])
-        by mx.google.com with ESMTPS id u14sm803061bkt.62.2011.08.18.11.34.41
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 18 Aug 2011 11:34:41 -0700 (PDT)
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=VO+qo9Wb/WUrr2sHG4aF9mAbrSxGQloAmQragA65uOs=;
+        b=tYFYS3c7m8Im/tiF/znP/QEit1ii/DoEQ7iFFkyH4zbudp0vcVEcm3xALcaxFvqMSL
+         BIy8vpJ8y6yoNdwdaTLGFZzHr6ex9yNtBu7y25PFyHO9Mjqz1E93MeOEkTorAAM7236w
+         Ba8mY4P+WHyF9KkrqXr78mQuB7yy/hLihAy70=
+Received: by 10.42.153.73 with SMTP id l9mr1089545icw.123.1313692906488;
+        Thu, 18 Aug 2011 11:41:46 -0700 (PDT)
+Received: from elie.gateway.2wire.net (adsl-68-255-105-3.dsl.chcgil.sbcglobal.net [68.255.105.3])
+        by mx.google.com with ESMTPS id m21sm1072987ibf.25.2011.08.18.11.41.45
+        (version=SSLv3 cipher=OTHER);
+        Thu, 18 Aug 2011 11:41:45 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20110814200255.GC16819@elie.gateway.2wire.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20110818183439.GA21560@fredrik-Q430-Q530>
+User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179611>
 
-On Sun, Aug 14, 2011 at 03:02:55PM -0500, Jonathan Nieder wrote:
-> Fredrik Kuivinen wrote:
-> > On Sun, Aug 14, 2011 at 21:00, Jonathan Nieder <jrnieder@gmail.com>=
- wrote:
->=20
-> >> I wonder if we can make do with a faster check, like
-> >>
-> >> =A0 =A0 =A0 =A0$(CC) -c -MF /dev/null -MMD -MP git.c --help >/dev/=
-null 2>&1
-> >>
-> >> What do you think?
-> [...]
-> > Without patch (with COMPUTE_HEADER_DEPENDENCIES=3DYes):
->=20
-> The case to compare against is when COMPUTE_HEADER_DEPENDENCIES is no=
-t
-> set, I'd think, since that is the status quo.  And I was talking abou=
-t
-> commands like "make clean" that do not care about that feature, not
-> "make all".
+Fredrik Kuivinen wrote:
 
-There is no measurable difference between setting and unsetting
-COMPUTE_HEADER_DEPENDENCIES for me (not surprising as nothing is
-actually built). "make clean" (in a clean tree) takes more time than
-"make" (in a fully built tree), so the relative overhead in the make
-clean case is even smaller. The absolute overhead is, of course, the
-same.
+> Oh, I missed "--help". But for me gcc always exits with status code 0
+> when I give it "--help", regardless of what other flags I
+> provide. Therefore, I don't see how "--help" can be used to test for
+> support of -MMD.
 
-> [...]
-> > With patch, but changed to use git.c instead of ++empty.c:
->=20
-> Did you try with "--help"?
+Ah, my mistake.  Good catch.
 
-Oh, I missed "--help". But for me gcc always exits with status code 0
-when I give it "--help", regardless of what other flags I
-provide. Therefore, I don't see how "--help" can be used to test for
-support of -MMD.
+> Here is an updated patch. It avoids the ++empty.c file by giving "-x
+> c" to the compiler.
 
-Here is an updated patch. It avoids the ++empty.c file by giving "-x
-c" to the compiler. It also avoids the auto-detection when
-COMPUTE_HEADER_DEPENDENCIES is set, so if you want to avoid the
-overhead you can set that in you config.mak.
+Much nicer, thanks!
 
+> It also avoids the auto-detection when
+> COMPUTE_HEADER_DEPENDENCIES is set
 
--- 8< --
+Unfortunately "ifdef" in Makefiles means "if nonempty", so the
+overhead of detection is still there if I want to explicitly disable
+COMPUTE_HEADER_DEPENDENCIES.  That's okay, since that overhead is
+small.  So for what it's worth,
 
-Subject: [PATCH] Makefile: Use computed header dependencies if the comp=
-iler supports it
-
-Previously you had to manually define COMPUTE_HEADER_DEPENDENCIES to
-enable this feature. It seemed a bit sad that such a useful feature
-had to be enabled manually.
-
-To avoid the small overhead we don't do the auto-detection if
-COMPUTE_HEADER_DEPENDENCIES is already set.
-
-Signed-off-by: Fredrik Kuivinen <frekui@gmail.com>
----
- Makefile |   13 +++++++++----
- 1 files changed, 9 insertions(+), 4 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 89cc624..c131439 100644
---- a/Makefile
-+++ b/Makefile
-@@ -250,10 +250,6 @@ all::
- #   DEFAULT_EDITOR=3D'$GIT_FALLBACK_EDITOR',
- #   DEFAULT_EDITOR=3D'"C:\Program Files\Vim\gvim.exe" --nofork'
- #
--# Define COMPUTE_HEADER_DEPENDENCIES if your compiler supports the -MM=
-D option
--# and you want to avoid rebuilding objects when an unrelated header fi=
-le
--# changes.
--#
- # Define CHECK_HEADER_DEPENDENCIES to check for problems in the hard-c=
-oded
- # dependency rules.
- #
-@@ -1236,6 +1232,15 @@ endif
- ifdef CHECK_HEADER_DEPENDENCIES
- COMPUTE_HEADER_DEPENDENCIES =3D
- USE_COMPUTED_HEADER_DEPENDENCIES =3D
-+else
-+ifndef COMPUTE_HEADER_DEPENDENCIES
-+dep_check =3D $(shell sh -c \
-+	'$(CC) -c -MF /dev/null -MMD -MP -x c /dev/null -o /dev/null 2>&1; \
-+	echo $$?')
-+ifeq ($(dep_check),0)
-+COMPUTE_HEADER_DEPENDENCIES=3DYesPlease
-+endif
-+endif
- endif
-=20
- ifdef COMPUTE_HEADER_DEPENDENCIES
---=20
-1.7.5.3.368.g8b1b7.dirty
+Acked-by: Jonathan Nieder <jrnieder@gmail.com>
