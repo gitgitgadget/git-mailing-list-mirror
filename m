@@ -1,134 +1,152 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: Branches & directories
-Date: Thu, 18 Aug 2011 17:49:35 +0000
-Message-ID: <CAMOZ1Btmk86vmp1gRuCfG7yRuc6fD3_oYBvtq2VKK9Ywu8ay0A@mail.gmail.com>
-References: <CAE1pOi3Eg88i+1s+CcW3+W0WNZ-NYUQb1EV55oh+g1Od78AByQ@mail.gmail.com>
- <CABNdCrCbSqup1=D2eEbGDhw3JzZGYHWLVqZFsB6GDO4Vk7HRxg@mail.gmail.com>
- <7vvctvdf5r.fsf@alter.siamese.dyndns.org> <CAE1pOi3rqqcz_6QxB8=g2jWOF-4SRZee7t8NXN1md2C4DL7wug@mail.gmail.com>
- <CAMOZ1BsZvXsnnWAPXR7UGKdqOMwuGB-ffaAPk55U_1dcjZUcDw@mail.gmail.com> <4E4CEFDA.9000703@drmicha.warpmail.net>
+From: Fredrik Kuivinen <frekui@gmail.com>
+Subject: Re: [PATCH resend] Makefile: Use computed header dependencies if the
+ compiler supports it
+Date: Thu, 18 Aug 2011 20:34:39 +0200
+Message-ID: <20110818183439.GA21560@fredrik-Q430-Q530>
+References: <1313347512-7815-1-git-send-email-frekui@gmail.com>
+ <20110814190050.GA16819@elie.gateway.2wire.net>
+ <CALx8hKRBjXr44gM1JA+d=RU80pmruPV56s-G3JvViz87eJ=ajQ@mail.gmail.com>
+ <20110814200255.GC16819@elie.gateway.2wire.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Evan Shelhamer <shelhamer@imaginarynumber.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Aug 18 19:50:26 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 18 20:34:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qu6jZ-0007oy-77
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Aug 2011 19:50:25 +0200
+	id 1Qu7QX-0004D2-Le
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Aug 2011 20:34:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751550Ab1HRRuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Aug 2011 13:50:07 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:59221 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751234Ab1HRRuG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Aug 2011 13:50:06 -0400
-Received: by yxj19 with SMTP id 19so1658766yxj.19
-        for <git@vger.kernel.org>; Thu, 18 Aug 2011 10:50:05 -0700 (PDT)
+	id S1751234Ab1HRSeo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Aug 2011 14:34:44 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:56774 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751136Ab1HRSeo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2011 14:34:44 -0400
+Received: by bke11 with SMTP id 11so1667159bke.19
+        for <git@vger.kernel.org>; Thu, 18 Aug 2011 11:34:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=gM7sg8vu+bD8mOyaHYOwKLvxn2bUjt+h2r6fUwJzjKw=;
-        b=Mt/j1igUweeeG8beG2RxA0R2lnkuBiwKTzcVBjtqwcYuV5A60TetvkHWde8nicLuYC
-         F3xKPZg84hRuF4pnCstiohVuig9iIrfPy0pvoo+x83qLSsyaso/Ep6MPthRBLo37QBGU
-         AurMrFOfwxY6VovvlPBecGenBx1qy6Ih8ZzO0=
-Received: by 10.43.44.195 with SMTP id uh3mr1061574icb.196.1313689805063; Thu,
- 18 Aug 2011 10:50:05 -0700 (PDT)
-Received: by 10.42.174.129 with HTTP; Thu, 18 Aug 2011 10:49:35 -0700 (PDT)
-In-Reply-To: <4E4CEFDA.9000703@drmicha.warpmail.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=7HmY3TGT/1W9bSjwSADhjUue5QDVS9p65nK2DZYNMnU=;
+        b=uM4UNGw/EIf8uJwpa/v8r3/1zT7tXyGc6G3Q+BOYDPqs6/c1dRf7WwxcuiHsUB2+Sz
+         1t4T+vowwE/vYsI7SgKmWEhyca+B1CL7N8Yawmg92NWWeVogb1n+KlwFrqlAbXH3nQ5P
+         bYdEiAieuCXG+2TO3fG6w/DxRgwsd8dmFPy+s=
+Received: by 10.204.185.65 with SMTP id cn1mr515204bkb.109.1313692482829;
+        Thu, 18 Aug 2011 11:34:42 -0700 (PDT)
+Received: from fredrik-Q430-Q530 (c83-250-151-53.bredband.comhem.se [83.250.151.53])
+        by mx.google.com with ESMTPS id u14sm803061bkt.62.2011.08.18.11.34.41
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 18 Aug 2011 11:34:41 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20110814200255.GC16819@elie.gateway.2wire.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179610>
 
-On Thu, Aug 18, 2011 at 10:56, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Michael Witten venit, vidit, dixit 18.08.2011 07:52:
->> On Wed, Aug 17, 2011 at 21:23, Hilco Wijbenga <hilco.wijbenga@gmail.com> wrote:
->>> It would be really nice, though, if Git could somehow
->>> "stash" such files when checking out a different branch. In general, I
->>> would prefer if uncommitted changes and untracked and/or ignored files
->>> stuck to the branch where they were created.
->>
->> As an aside, the problem here is likely a manifestation of the fact
->> that nobody understands what a branch is; the word 'branch' is
->
-> I would reject "nobody"...
+On Sun, Aug 14, 2011 at 03:02:55PM -0500, Jonathan Nieder wrote:
+> Fredrik Kuivinen wrote:
+> > On Sun, Aug 14, 2011 at 21:00, Jonathan Nieder <jrnieder@gmail.com>=
+ wrote:
+>=20
+> >> I wonder if we can make do with a faster check, like
+> >>
+> >> =A0 =A0 =A0 =A0$(CC) -c -MF /dev/null -MMD -MP git.c --help >/dev/=
+null 2>&1
+> >>
+> >> What do you think?
+> [...]
+> > Without patch (with COMPUTE_HEADER_DEPENDENCIES=3DYes):
+>=20
+> The case to compare against is when COMPUTE_HEADER_DEPENDENCIES is no=
+t
+> set, I'd think, since that is the status quo.  And I was talking abou=
+t
+> commands like "make clean" that do not care about that feature, not
+> "make all".
 
-Is it really necessary to attack something that is obviously
-hyperbolic rhetoric? The point is that a lot of people struggle with
-git's concepts, and I think that the reason is largely two fold:
+There is no measurable difference between setting and unsetting
+COMPUTE_HEADER_DEPENDENCIES for me (not surprising as nothing is
+actually built). "make clean" (in a clean tree) takes more time than
+"make" (in a fully built tree), so the relative overhead in the make
+clean case is even smaller. The absolute overhead is, of course, the
+same.
 
-  * Terminology that is inaccurate by virtue of terminological baggage.
-  * Terminology that is imprecisely used across the documentation.
+> [...]
+> > With patch, but changed to use git.c instead of ++empty.c:
+>=20
+> Did you try with "--help"?
 
->> TERRIBLE, as everyone has a different idea for what that should mean.
->
-> ... and insist that this statement is true either trivially true for all
-> words, or for none, depending on your understanding of "everyone has a
-> different".
+Oh, I missed "--help". But for me gcc always exits with status code 0
+when I give it "--help", regardless of what other flags I
+provide. Therefore, I don't see how "--help" can be used to test for
+support of -MMD.
 
-So, precision is impossible?
+Here is an updated patch. It avoids the ++empty.c file by giving "-x
+c" to the compiler. It also avoids the auto-detection when
+COMPUTE_HEADER_DEPENDENCIES is set, so if you want to avoid the
+overhead you can set that in you config.mak.
 
-The word 'branch' is clearly a sticking point, and you know it. You
-can't deny that people have a hard time with what a branch really is
-in git.
 
->> In my opinion, `git branch' should become `git ref' or the like.
->
-> "branch" and "tag" are boths refs. Their only essential difference is
-> that one "moves" and the other doesn't.
+-- 8< --
 
-Indeed, and it seems like there's room for abstraction; a tool like
-`git ref' or `git pointer' or `git ptr' could probably handle both
-quite well.
+Subject: [PATCH] Makefile: Use computed header dependencies if the comp=
+iler supports it
 
-Terminology for references is a problem that was solved by the
-Ancients, so it's a wonder we didn't use their work (pointers,
-constant pointers, dereferencing, etc.).
+Previously you had to manually define COMPUTE_HEADER_DEPENDENCIES to
+enable this feature. It seemed a bit sad that such a useful feature
+had to be enabled manually.
 
->> One of git's worst faults is that a complicated and imprecise
->> interface has been draped over a very simple and precise underlying
->> structure.
->
-> A name is a name and just that. The use of any existing word may clash
-> with someone's expectations.
+To avoid the small overhead we don't do the auto-detection if
+COMPUTE_HEADER_DEPENDENCIES is already set.
 
-Yeah? So why wasn't the term 'foobar' used instead of 'branch'? Most
-terms are chosen for their associations (and only really novel
-concepts receive an entirely new label), and I proffer that 'branch'
-has too many associations to be considered accurate enough.
+Signed-off-by: Fredrik Kuivinen <frekui@gmail.com>
+---
+ Makefile |   13 +++++++++----
+ 1 files changed, 9 insertions(+), 4 deletions(-)
 
-The idea was that one line of development can 'branch' off from
-another, so it was called a 'branch'. But what is a line of
-development? (merges certainly make the concept fuzzy; tree branches
-usually don't join with the tree trunk again). The thing is, though,
-when you're working with what git calls a 'branch', you're really just
-working with a pointer to a commit object; the term 'pointer' would
-have been much more accurate.
-
-Now, I'm not saying we should be using 'pointer', but what I am saying
-is that it's necessary to choose words carefully, preferably in a way
-that carries just enough associations to aid the user in remembering
-what a term describes.
-
-> I find the concepts "file created on a branch", "commit created on a
-> branch" silly, it's part of what drove me from hg to git early on.
-
-There's no shortage of that kind of thinking in the git community,
-which is my point. The reason is a failure of both accurate
-terminology and precise usage.
-
-> git's branches do exactly what I (and many others) expect branches
-> to do and what I need daily, even coming from a svn and hg background.
-
-Yes, well, many figure it out EVENTUALLY; it just requires them to
-ignore most of the associations of 'branch', thereby tacitly
-translating the word 'branch' into 'pointer'.
+diff --git a/Makefile b/Makefile
+index 89cc624..c131439 100644
+--- a/Makefile
++++ b/Makefile
+@@ -250,10 +250,6 @@ all::
+ #   DEFAULT_EDITOR=3D'$GIT_FALLBACK_EDITOR',
+ #   DEFAULT_EDITOR=3D'"C:\Program Files\Vim\gvim.exe" --nofork'
+ #
+-# Define COMPUTE_HEADER_DEPENDENCIES if your compiler supports the -MM=
+D option
+-# and you want to avoid rebuilding objects when an unrelated header fi=
+le
+-# changes.
+-#
+ # Define CHECK_HEADER_DEPENDENCIES to check for problems in the hard-c=
+oded
+ # dependency rules.
+ #
+@@ -1236,6 +1232,15 @@ endif
+ ifdef CHECK_HEADER_DEPENDENCIES
+ COMPUTE_HEADER_DEPENDENCIES =3D
+ USE_COMPUTED_HEADER_DEPENDENCIES =3D
++else
++ifndef COMPUTE_HEADER_DEPENDENCIES
++dep_check =3D $(shell sh -c \
++	'$(CC) -c -MF /dev/null -MMD -MP -x c /dev/null -o /dev/null 2>&1; \
++	echo $$?')
++ifeq ($(dep_check),0)
++COMPUTE_HEADER_DEPENDENCIES=3DYesPlease
++endif
++endif
+ endif
+=20
+ ifdef COMPUTE_HEADER_DEPENDENCIES
+--=20
+1.7.5.3.368.g8b1b7.dirty
