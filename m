@@ -1,124 +1,93 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 7/7] sequencer: Remove sequencer state after final commit
-Date: Fri, 19 Aug 2011 01:20:47 +0530
-Message-ID: <CALkWK0=jRAq6s1zQ5gwB4feBgC1eo=VYLWx8bsjs+exqmz0f1A@mail.gmail.com>
-References: <1313310789-10216-1-git-send-email-artagnon@gmail.com>
- <1313310789-10216-8-git-send-email-artagnon@gmail.com> <20110814160440.GK18466@elie.gateway.2wire.net>
- <7vei0nn1cn.fsf@alter.siamese.dyndns.org> <20110814213200.GA6555@elie.gateway.2wire.net>
- <7vippzlj7a.fsf@alter.siamese.dyndns.org> <7v7h6eld2c.fsf@alter.siamese.dyndns.org>
- <CALkWK0noHBnW-7zZLw=jJdDVFxXmsm2vHHYnUJc9miLLuDRnAg@mail.gmail.com> <20110818191812.GG30436@elie.gateway.2wire.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/5] log: decorate "replaced" on to replaced commits
+Date: Thu, 18 Aug 2011 11:16:55 -0700
+Message-ID: <7vippua433.fsf@alter.siamese.dyndns.org>
+References: <1313593326-12077-1-git-send-email-pclouds@gmail.com>
+ <1313670578-2939-1-git-send-email-pclouds@gmail.com>
+ <1313670578-2939-6-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 18 21:54:04 2011
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 18 21:54:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qu8fB-00025K-CK
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Aug 2011 21:54:01 +0200
+	id 1Qu8fF-00025K-EW
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Aug 2011 21:54:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751830Ab1HRTvK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Aug 2011 15:51:10 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:47993 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750750Ab1HRTvJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Aug 2011 15:51:09 -0400
-Received: by wwf5 with SMTP id 5so2437850wwf.1
-        for <git@vger.kernel.org>; Thu, 18 Aug 2011 12:51:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=+M5aPQ0EKd93wRwZ4Q5UHxD0pTDdi8U24DtSe0hIvu4=;
-        b=Q4APpgXbhs0JlwMy0VVZFUALB8S1KoypQsyUgnp2LAZB+dDT3c/hx49Siy6a3TKKee
-         rLnYj1OKi53TMUr8ijKPHGo14JtcoyckpmDbcQi27j2Jjlr0+XzrKrR3O+pjVo9uxhr7
-         bscea7BW4Q1eVjnIFWSY89WSaXx1AEv1VFrSc=
-Received: by 10.216.175.130 with SMTP id z2mr947364wel.63.1313697068159; Thu,
- 18 Aug 2011 12:51:08 -0700 (PDT)
-Received: by 10.216.172.132 with HTTP; Thu, 18 Aug 2011 12:50:47 -0700 (PDT)
-In-Reply-To: <20110818191812.GG30436@elie.gateway.2wire.net>
+	id S1752597Ab1HRTx6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Aug 2011 15:53:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43839 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751777Ab1HRTxy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Aug 2011 15:53:54 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F062B4B64;
+	Thu, 18 Aug 2011 15:53:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:references:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=w5sxDIuF5Za6khuFIK8h0+n21
+	kM=; b=rccAtlI3LG/PqW3CYyXoD3hu9LUTsEWrViQ3aWWDRz9/EHC9X4oBex0ON
+	LNQw5tqdfq62+r3M8KvsXWRYJFcd2jJmIwlP0szibG5jEQ4ccOZdsqj/cxoMRkWX
+	R740pWWbHtzAMW0umzQfSMZzNxaaR5Oet0YhOwyseNAAYA/PzU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:references:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=j69N7Z7sRTBtHfMYUOl
+	fhoomOZiKAaYxuDytQVjjoWNY5ehzvaoJB0gqv7m1KD/mH5a2ec8QV67mB+hK5LJ
+	62V9uGgJDN5/82yp0R5lzxddrHUl2EzNXO5wgf8hORF/ogcvikYKxcB70ktm1ZZH
+	Fr33Vmhq5+NUQ09nVCNfhKa0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E7F964B62;
+	Thu, 18 Aug 2011 15:53:53 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7AF524B61; Thu, 18 Aug 2011
+ 15:53:53 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: CCF6E5E0-C9D3-11E0-BF47-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179617>
 
-Hi Jonathan,
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-Jonathan Nieder writes:
-> Could be briefer. :)
+> Old code also decorates "new" commits with "refs/replace/SHA1". This
+> is now gone, but I guess no one will miss it.
 
-Sorry about the braindump :P
+Makes sense but...
 
->> 1. Introduce a 'merge --continue' to invoke 'git commit'. =C2=A0MERG=
-E_HEAD
->> helps 'git commit' finish. =C2=A0Modify tests to use '--continue' in=
-stead
->> of the earlier commit-to-finish workflow, and advertise this feature
->> everywhere.
->
-> Why modify tests? =C2=A0I think "git merge --continue" is a nice idea=
-,
-> and I don't see how it's inconsistent in any way with continuing to
-> allow old practice.
+> +	if (!prefixcmp(refname, "refs/replace/")) {
+> +		unsigned char original_sha1[20];
+> +		if (get_sha1_hex(refname + 13, original_sha1)) {
+> +			warning("invalid replace ref %s", refname);
+> +			return 0;
+> +		}
+> +		obj =3D parse_object(original_sha1);
+> +		if (obj && (obj->type =3D=3D OBJ_COMMIT || obj->type =3D=3D OBJ_TA=
+G))
 
-In the future, we might want a 'merge' instruction in the sequencer --
-I want to make it clear that we're going for a significant UI change
-so that everyone (including tests, scripts) become comfortable with
-the new UI.
+=2E.. is it necessary to check and limit the types like this here?
 
->> 2. Make 'cherry-pick --continue' invoke 'git commit' as well.
->> CHERRY_PICK_HEAD helps 'git commit' finish. =C2=A0If the commit fini=
-shes
->> successfully: (if there is one commit left, remove the sequencer
->> state; otherwise, drop the first insn on top of the list and execute
->> the next insn).
->
-> Sounds like a sensible thing to do. =C2=A0I assume the "one" in the
-> parenthesis is supposed to be "zero", making the "if" not even part o=
-f
-> the user-visible description of what it does --- it's just the
-> termination condition of a loop.
+If the argument is "we know only commits and tags are listed and blobs =
+and
+trees are not shown with --decorate option" and "excluding the decorati=
+on
+that we know will never be used will avoid bloating the decorate hashta=
+ble
+with unused cruft", then add_name_decoration() should be doing the chec=
+k
+for all of its callers, not just this one, no?
 
-Right, sorry about the convoluted thought.
-
-> As Junio hinted, it could make a lot of sense for "git cherry-pick
-> <single commit>" to not create sequencer state in the first place.
-> "git cherry-pick --continue" does not need it --- it is enough to
-> commit with the conflict resolved. =C2=A0"git cherry-pick --abort" do=
-es not
-> need it, either --- it is enough to "git reset --merge HEAD".
-
-Okay, here's my problem with the idea: it'll essentially require the
-sequencer to differentiate between one-commit operations and
-many-commit operations.  In the case of one-commit operations, *every*
-new command that calls into the sequencer will will need to persist
-information in its own way using hacks like CHERRY_PICK_HEAD and
-MERGE_HEAD.  And we have to make "git commit" unlink yet another file
-:)  I'm not talking about some hypothetical case: I'm already planning
-to make 'git am' call into the sequencer, so we'll need an AM_HEAD.
-
-One final resort: Move some code back into cherry-pick, and call into
-a later-function in the sequencer only if it's a many-commit
-operation.  The new commands can enjoy the comfort of calling into an
-earlier-function in the sequencer that'll do all the revision walk
-setup and call the later-function.  I think this is reasonable.
-
-> One part I'm handwaving is what to do about commands like "git
-> cherry-pick foo^..foo" which use a commit range that only happens to
-> contain one commit. =C2=A0Either behavior seems fine for such command=
-s.
-
-I don't think I follow.  This will be determined as a single-commit
-operation after setting up the revisions.  I don't think it should be
-treated as a multi-commit operation because the literal tree'ish
-contains "..".
-
--- Ram
+> +			add_name_decoration(DECORATION_GRAFTED, "replaced", obj);
+> +		return 0;
+> +	}
+> +
+> +	obj =3D parse_object(sha1);
+>  	if (!obj)
+>  		return 0;
