@@ -1,104 +1,171 @@
-From: Steffen Daode Nurpmeso <sdaoden@googlemail.com>
-Subject: Re: [PATCH 0/10] color and pager improvements
-Date: Thu, 18 Aug 2011 23:59:53 +0200
-Message-ID: <20110818215953.GA68667@sherwood.local>
-References: <20110818045821.GA17377@sigill.intra.peff.net>
+From: Greg Troxel <gdt@ir.bbn.com>
+Subject: update-index --index-info producing spurious submodule commits
+Date: Thu, 18 Aug 2011 17:53:15 -0400
+Message-ID: <rmivctuv12s.fsf@fnord.ir.bbn.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
+Content-Type: multipart/signed; boundary="==-=-=";
+	micalg=pgp-sha1; protocol="application/pgp-signature"
+Cc: Richard Hansen <rhansen@bbn.com>
+To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Fri Aug 19 00:00:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuAdG-0002Bv-A5
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 00:00:10 +0200
+	id 1QuAdG-0002Bv-QR
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 00:00:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754817Ab1HRWAD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Aug 2011 18:00:03 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:47306 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754797Ab1HRWAB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Aug 2011 18:00:01 -0400
-Received: by fxh19 with SMTP id 19so1567742fxh.19
-        for <git@vger.kernel.org>; Thu, 18 Aug 2011 15:00:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=uJfXi4pG9w6+bY8H2RgarIim55s3KauuEpTwuQkEnnw=;
-        b=HInp1vvjqPyTwwH9Jjka109jXGwAOM6IEvuABvHewWZXg8LqFn2qJWFNJURN+kwz42
-         TMkX2pocMn+E/7ymbDn+NxBgzAZfsG0swcnAtOI8QM4TDVW0kIwV7O74ho8tvfkxCVwq
-         IhxhqgKcxw5g1IzxT1tM2K7N1UPpvaRwmEkp8=
-Received: by 10.223.52.132 with SMTP id i4mr1733477fag.107.1313704800694;
-        Thu, 18 Aug 2011 15:00:00 -0700 (PDT)
-Received: from sherwood.local ([82.113.99.138])
-        by mx.google.com with ESMTPS id b13sm199967fak.16.2011.08.18.14.59.58
-        (version=SSLv3 cipher=OTHER);
-        Thu, 18 Aug 2011 14:59:59 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20110818045821.GA17377@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754830Ab1HRWAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Aug 2011 18:00:07 -0400
+Received: from fnord.ir.bbn.com ([192.1.100.210]:52413 "EHLO fnord.ir.bbn.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754823Ab1HRWAG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2011 18:00:06 -0400
+X-Greylist: delayed 408 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Aug 2011 18:00:05 EDT
+Received: by fnord.ir.bbn.com (Postfix, from userid 10853)
+	id 044C65414; Thu, 18 Aug 2011 17:53:16 -0400 (EDT)
+OpenPGP: id=32611E25
+User-Agent: Gnus/5.110018 (No Gnus v0.18) Emacs/23.3 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179634>
 
-@ Jeff King <peff@peff.net> wrote (2011-08-18 06:58+0200):
-> These three fix the problem Steffen mentioned here:
+--==-=-=
+Content-Type: multipart/mixed; boundary="=-=-="
 
-Uuuh, such a shame - you know that it was first noted by
-Benjamin Kudria (2008-07-23,
-http://marc.info/?l=git&m=121677902502581&w=2).
-And it was you who tried to resurrect the same issue last year.
-(The thing is: i did not search the archive first because it was
-clearly a bug.  I did once you referred to your older patch.)
-But great that you actually found the time to fix it!
+--=-=-=
+Content-Type: text/plain
 
-(I must admit though that i'm currently addicted to the coloured
-output, because simply switching between my terms gives a clear
-indication of where i'm currently git(1)ing.  :->  And that in
-turn is something which gives more and more fun the longer i use
-it!  It is *really* fantastic once you get used to it.  And do
-gc --aggressive and all your temporary fooling is cleaned up.)
 
-Now it's pretty unfortunate that i cannot offer fixes for
-anything.
+For reasons too complicated to go into, I have a repository B which has
+essentially been cloned from A, and there has been vast amounts of work
+on B (thousands of commits, many branches).   These changes have not
+been merged back to A.  I want to merge them back, but there's a
+directory foo that has changes in B that I can't release.
 
-I have a dumb patch of 'rebase -i' which includes the TODO entry
-line ($rest) as a comment in the commit message, which is pretty
-useful because i think about the rebase task and can store
-comments in that very line.  But it introduces commit
---cleanup=strip and patches commit.c to add a --message-prefix
-option.  This is no good yet.
+So, I ran filter-branch with an index filter
 
-Michael J Gruber's today's shocking exercise on the german
-keyboard layout - maybe i should really resurrect parts of that
-NBSP series?
+  found the merge base with A
+  removed foo
+  did ls-tree on foo from merge base
+    and updated the index
 
-And referring to one sentence of yours from the past: no, refspec
-stuff *is* that hard: they are not a tree which is created via
-'refs_build_tree(); refs_merge_command_line();' upon program
-start, with pointers to maybe instantiated .. whatever.
-/*
- * Note. This is used only by "push"; refspec matching rules for
- * push and fetch are subtly different, so do not try to reuse it
- * without thinking.
- */
-I gave up once i found that (in remote.c).  (AFAIR it seems
-refspecs are first build L->R, then pushed, then build again but
-in R->L direction.  Which is why without a fetch= the remotes/
-ref is not updated after a push.  AFAIK - i gave up ...)
+The theory is to make each commit in B look like no changes to anything
+under foo, and otherwise the same.
 
-But i'm looking forward and really hope to be able to contribute
-some useful and good stuff to great projects in the future.
-OpenBSD, for example.  :-)
+After doing this, Richard noticed that the root tree of commits had a
+foo object, but that it was labeled a commit instead of a tree (but in
+fact it is a tree).  He noticed because diffs looked like submodules.
 
---Steffen
-Ciao, sdaoden(*)(gmail.com)
-ASCII ribbon campaign           ( ) More nuclear fission plants
-  against HTML e-mail            X    can serve more coloured
-    and proprietary attachments / \     and sounding animations
+I was able to produce a minimal test case, output below, script
+attached.  The below output is with 1.7.5.4 on NetBSD/i386 (and /amd64).
+1.7.6 (ubuntu/amd64) has the same problem.
+
+So:
+
+  Am I using "git update-index --index-info" wrong?
+
+  Or is there a bug?
+
+Thanks,
+Greg
+
+Notice that "cat-file -p HEAD:" shows a tree before, and a commit
+afterwards:
+
+
++ git init
+Initialized empty Git repository in /usr/home/gdt/GIT_TEST/.git/
++ mkdir foo
++ touch foo/bar
++ git add foo
++ git commit -minitial content
+[master (root-commit) 6755919] initial content
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 foo/bar
++ git cat-file -p HEAD
+tree 72d67e6de0599f72f1265c925316f91f78395787
+author Greg Troxel <gdt@ir.bbn.com> 1313703545 -0400
+committer Greg Troxel <gdt@ir.bbn.com> 1313703545 -0400
+
+initial content
++ git cat-file -p HEAD:
+040000 tree d87cbcba0e2ede0752bdafc5938da35546803ba5	foo
++ git rm -r foo
+rm 'foo/bar'
++ git ls-tree HEAD foo
+040000 tree d87cbcba0e2ede0752bdafc5938da35546803ba5	foo
++ git ls-tree HEAD foo
++ git update-index --index-info
++ git diff --staged
+diff --git a/foo b/foo
+new file mode 160000
+index 0000000..d87cbcb
+--- /dev/null
++++ b/foo
+@@ -0,0 +1 @@
++Subproject commit d87cbcba0e2ede0752bdafc5938da35546803ba5
+diff --git a/foo/bar b/foo/bar
+deleted file mode 100644
+index e69de29..0000000
++ git commit -mmunged foo
+[master 3348447] munged foo
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 160000 foo
+ delete mode 100644 foo/bar
++ git cat-file -p HEAD
+tree 04fbd499dbd01afb3241d7f0af8171fde008bfe3
+parent 6755919e289665ec46d270672d29b594f992fa03
+author Greg Troxel <gdt@ir.bbn.com> 1313703545 -0400
+committer Greg Troxel <gdt@ir.bbn.com> 1313703545 -0400
+
+munged foo
++ git cat-file -p HEAD:
+160000 commit d87cbcba0e2ede0752bdafc5938da35546803ba5	foo
+
+
+
+--=-=-=
+Content-Type: text/plain
+Content-Disposition: attachment; filename=git-example
+
+#!/bin/sh
+
+if [ -d .git ]; then
+   echo "existing .git"
+   exit 1
+fi
+
+set -x
+
+git init
+mkdir foo
+touch foo/bar
+git add foo
+git commit -m'initial content'
+git cat-file -p HEAD
+git cat-file -p HEAD:
+git rm -r foo
+git ls-tree HEAD foo
+git ls-tree HEAD foo | git update-index --index-info
+git diff --staged
+git commit -m'munged foo'
+git cat-file -p HEAD
+git cat-file -p HEAD:
+
+--=-=-=--
+
+--==-=-=
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (NetBSD)
+
+iEYEARECAAYFAk5NicsACgkQ+vesoDJhHiVZCwCeJkm528jcdsVrttlvZdruDhf/
+StkAnicEjD0GflbIJ1LnxAr+BMzBiHM+
+=f1nw
+-----END PGP SIGNATURE-----
+--==-=-=--
