@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 05/10] diff: refactor COLOR_DIFF from a flag into an int
-Date: Wed, 17 Aug 2011 22:03:12 -0700
-Message-ID: <20110818050310.GE2889@sigill.intra.peff.net>
+Subject: [PATCH 06/10] git_config_colorbool: refactor stdout_is_tty handling
+Date: Wed, 17 Aug 2011 22:03:48 -0700
+Message-ID: <20110818050346.GF2889@sigill.intra.peff.net>
 References: <20110818045821.GA17377@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -9,301 +9,254 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Steffen Daode Nurpmeso <sdaoden@googlemail.com>,
 	Ingo =?utf-8?Q?Br=C3=BCckl?= <ib@wupperonline.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 18 07:03:25 2011
+X-From: git-owner@vger.kernel.org Thu Aug 18 07:04:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtulI-0007Lt-MZ
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Aug 2011 07:03:25 +0200
+	id 1Qtulr-0007Zg-AT
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Aug 2011 07:03:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752071Ab1HRFDU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Aug 2011 01:03:20 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45186
+	id S1752123Ab1HRFDz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Aug 2011 01:03:55 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:45192
 	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751665Ab1HRFDT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Aug 2011 01:03:19 -0400
-Received: (qmail 18327 invoked by uid 107); 18 Aug 2011 05:03:59 -0000
+	id S1751665Ab1HRFDy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2011 01:03:54 -0400
+Received: (qmail 18358 invoked by uid 107); 18 Aug 2011 05:04:34 -0000
 Received: from me42036d0.tmodns.net (HELO sigill.intra.peff.net) (208.54.32.228)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 18 Aug 2011 01:03:59 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Aug 2011 22:03:12 -0700
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 18 Aug 2011 01:04:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Aug 2011 22:03:48 -0700
 Content-Disposition: inline
 In-Reply-To: <20110818045821.GA17377@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179563>
 
-This lets us store more than just a bit flag for whether we
-want color; we can also store whether we want automatic
-colors. This can be useful for making the automatic-color
-decision closer to the point of use.
+Usually this function figures out for itself whether stdout
+is a tty. However, it has an extra parameter just to allow
+git-config to override the auto-detection for its
+--get-colorbool option.
 
-This mostly just involves replacing DIFF_OPT_* calls with
-manipulations of the flag. The biggest exception is that
-calls to DIFF_OPT_TST must check for "o->use_color > 0",
-which lets an "unknown" value (i.e., the default) stay at
-"no color". In the previous code, a value of "-1" was not
-propagated at all.
+Instead of an extra parameter, let's just use a global
+variable. This makes calling easier in the common case, and
+will make refactoring the colorbool code much simpler.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/merge.c |    2 --
- combine-diff.c  |    7 +++----
- diff.c          |   41 +++++++++++++++++++----------------------
- diff.h          |    5 +++--
- graph.c         |    2 +-
- log-tree.c      |    4 ++--
- wt-status.c     |    2 +-
- 7 files changed, 29 insertions(+), 34 deletions(-)
+ builtin/branch.c      |    2 +-
+ builtin/commit.c      |    2 +-
+ builtin/config.c      |   23 +++++++----------------
+ builtin/grep.c        |    2 +-
+ builtin/show-branch.c |    2 +-
+ color.c               |   11 ++++++-----
+ color.h               |    8 +++++++-
+ diff.c                |    4 ++--
+ parse-options.c       |    2 +-
+ 9 files changed, 27 insertions(+), 29 deletions(-)
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 325891e..7209edf 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -390,8 +390,6 @@ static void finish(const unsigned char *new_head, const char *msg)
- 		opts.output_format |=
- 			DIFF_FORMAT_SUMMARY | DIFF_FORMAT_DIFFSTAT;
- 		opts.detect_rename = DIFF_DETECT_RENAME;
--		if (diff_use_color_default > 0)
--			DIFF_OPT_SET(&opts, COLOR_DIFF);
- 		if (diff_setup_done(&opts) < 0)
- 			die(_("diff_setup_done failed"));
- 		diff_tree_sha1(head, new_head, "", &opts);
-diff --git a/combine-diff.c b/combine-diff.c
-index be67cfc..c588c79 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -702,9 +702,8 @@ static void show_combined_header(struct combine_diff_path *elem,
- 	int abbrev = DIFF_OPT_TST(opt, FULL_INDEX) ? 40 : DEFAULT_ABBREV;
- 	const char *a_prefix = opt->a_prefix ? opt->a_prefix : "a/";
- 	const char *b_prefix = opt->b_prefix ? opt->b_prefix : "b/";
--	int use_color = DIFF_OPT_TST(opt, COLOR_DIFF);
--	const char *c_meta = diff_get_color(use_color, DIFF_METAINFO);
--	const char *c_reset = diff_get_color(use_color, DIFF_RESET);
-+	const char *c_meta = diff_get_color_opt(opt, DIFF_METAINFO);
-+	const char *c_reset = diff_get_color_opt(opt, DIFF_RESET);
- 	const char *abb;
- 	int added = 0;
- 	int deleted = 0;
-@@ -964,7 +963,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 		show_combined_header(elem, num_parent, dense, rev,
- 				     mode_differs, 1);
- 		dump_sline(sline, cnt, num_parent,
--			   DIFF_OPT_TST(opt, COLOR_DIFF), result_deleted);
-+			   opt->use_color, result_deleted);
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 3142daa..b15fee5 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -71,7 +71,7 @@ static int parse_branch_color_slot(const char *var, int ofs)
+ static int git_branch_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp(var, "color.branch")) {
+-		branch_use_color = git_config_colorbool(var, value, -1);
++		branch_use_color = git_config_colorbool(var, value);
+ 		return 0;
  	}
- 	free(result);
+ 	if (!prefixcmp(var, "color.branch.")) {
+diff --git a/builtin/commit.c b/builtin/commit.c
+index e1af9b1..295803a 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1144,7 +1144,7 @@ static int git_status_config(const char *k, const char *v, void *cb)
+ 		return 0;
+ 	}
+ 	if (!strcmp(k, "status.color") || !strcmp(k, "color.status")) {
+-		s->use_color = git_config_colorbool(k, v, -1);
++		s->use_color = git_config_colorbool(k, v);
+ 		return 0;
+ 	}
+ 	if (!prefixcmp(k, "status.color.") || !prefixcmp(k, "color.status.")) {
+diff --git a/builtin/config.c b/builtin/config.c
+index 211e118..5505ced 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -303,24 +303,17 @@ static void get_color(const char *def_color)
+ 	fputs(parsed_color, stdout);
+ }
  
+-static int stdout_is_tty;
+ static int get_colorbool_found;
+ static int get_diff_color_found;
+ static int git_get_colorbool_config(const char *var, const char *value,
+ 		void *cb)
+ {
+-	if (!strcmp(var, get_colorbool_slot)) {
+-		get_colorbool_found =
+-			git_config_colorbool(var, value, stdout_is_tty);
+-	}
+-	if (!strcmp(var, "diff.color")) {
+-		get_diff_color_found =
+-			git_config_colorbool(var, value, stdout_is_tty);
+-	}
+-	if (!strcmp(var, "color.ui")) {
+-		git_use_color_default = git_config_colorbool(var, value, stdout_is_tty);
+-		return 0;
+-	}
++	if (!strcmp(var, get_colorbool_slot))
++		get_colorbool_found = git_config_colorbool(var, value);
++	else if (!strcmp(var, "diff.color"))
++		get_diff_color_found = git_config_colorbool(var, value);
++	else if (!strcmp(var, "color.ui"))
++		git_use_color_default = git_config_colorbool(var, value);
+ 	return 0;
+ }
+ 
+@@ -510,9 +503,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 	}
+ 	else if (actions == ACTION_GET_COLORBOOL) {
+ 		if (argc == 1)
+-			stdout_is_tty = git_config_bool("command line", argv[0]);
+-		else if (argc == 0)
+-			stdout_is_tty = isatty(1);
++			color_stdout_is_tty = git_config_bool("command line", argv[0]);
+ 		return get_colorbool(argc != 0);
+ 	}
+ 
+diff --git a/builtin/grep.c b/builtin/grep.c
+index cccf8da..d80db22 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -325,7 +325,7 @@ static int grep_config(const char *var, const char *value, void *cb)
+ 	}
+ 
+ 	if (!strcmp(var, "color.grep"))
+-		opt->color = git_config_colorbool(var, value, -1);
++		opt->color = git_config_colorbool(var, value);
+ 	else if (!strcmp(var, "color.grep.context"))
+ 		color = opt->color_context;
+ 	else if (!strcmp(var, "color.grep.filename"))
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index facc63a..e6650b4 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -573,7 +573,7 @@ static int git_show_branch_config(const char *var, const char *value, void *cb)
+ 	}
+ 
+ 	if (!strcmp(var, "color.showbranch")) {
+-		showbranch_use_color = git_config_colorbool(var, value, -1);
++		showbranch_use_color = git_config_colorbool(var, value);
+ 		return 0;
+ 	}
+ 
+diff --git a/color.c b/color.c
+index 3db214c..67affa4 100644
+--- a/color.c
++++ b/color.c
+@@ -2,6 +2,7 @@
+ #include "color.h"
+ 
+ int git_use_color_default = 0;
++int color_stdout_is_tty = -1;
+ 
+ /*
+  * The list of available column colors.
+@@ -157,7 +158,7 @@ bad:
+ 	die("bad color value '%.*s' for variable '%s'", value_len, value, var);
+ }
+ 
+-int git_config_colorbool(const char *var, const char *value, int stdout_is_tty)
++int git_config_colorbool(const char *var, const char *value)
+ {
+ 	if (value) {
+ 		if (!strcasecmp(value, "never"))
+@@ -177,9 +178,9 @@ int git_config_colorbool(const char *var, const char *value, int stdout_is_tty)
+ 
+ 	/* any normal truth value defaults to 'auto' */
+  auto_color:
+-	if (stdout_is_tty < 0)
+-		stdout_is_tty = isatty(1);
+-	if (stdout_is_tty || (pager_in_use() && pager_use_color)) {
++	if (color_stdout_is_tty < 0)
++		color_stdout_is_tty = isatty(1);
++	if (color_stdout_is_tty || (pager_in_use() && pager_use_color)) {
+ 		char *term = getenv("TERM");
+ 		if (term && strcmp(term, "dumb"))
+ 			return 1;
+@@ -190,7 +191,7 @@ int git_config_colorbool(const char *var, const char *value, int stdout_is_tty)
+ int git_color_default_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp(var, "color.ui")) {
+-		git_use_color_default = git_config_colorbool(var, value, -1);
++		git_use_color_default = git_config_colorbool(var, value);
+ 		return 0;
+ 	}
+ 
+diff --git a/color.h b/color.h
+index 68a926a..a190a25 100644
+--- a/color.h
++++ b/color.h
+@@ -58,11 +58,17 @@ extern const char *column_colors_ansi[];
+ extern const int column_colors_ansi_max;
+ 
+ /*
++ * Generally the color code will lazily figure this out itself, but
++ * this provides a mechanism for callers to override autodetection.
++ */
++extern int color_stdout_is_tty;
++
++/*
+  * Use this instead of git_default_config if you need the value of color.ui.
+  */
+ int git_color_default_config(const char *var, const char *value, void *cb);
+ 
+-int git_config_colorbool(const char *var, const char *value, int stdout_is_tty);
++int git_config_colorbool(const char *var, const char *value);
+ void color_parse(const char *value, const char *var, char *dst);
+ void color_parse_mem(const char *value, int len, const char *var, char *dst);
+ __attribute__((format (printf, 3, 4)))
 diff --git a/diff.c b/diff.c
-index 93ef9a2..2d86abe 100644
+index 2d86abe..2dfc359 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -583,11 +583,10 @@ static void emit_rewrite_diff(const char *name_a,
- 			      struct diff_options *o)
+@@ -137,7 +137,7 @@ static int git_config_rename(const char *var, const char *value)
+ int git_diff_ui_config(const char *var, const char *value, void *cb)
  {
- 	int lc_a, lc_b;
--	int color_diff = DIFF_OPT_TST(o, COLOR_DIFF);
- 	const char *name_a_tab, *name_b_tab;
--	const char *metainfo = diff_get_color(color_diff, DIFF_METAINFO);
--	const char *fraginfo = diff_get_color(color_diff, DIFF_FRAGINFO);
--	const char *reset = diff_get_color(color_diff, DIFF_RESET);
-+	const char *metainfo = diff_get_color(o->use_color, DIFF_METAINFO);
-+	const char *fraginfo = diff_get_color(o->use_color, DIFF_FRAGINFO);
-+	const char *reset = diff_get_color(o->use_color, DIFF_RESET);
- 	static struct strbuf a_name = STRBUF_INIT, b_name = STRBUF_INIT;
- 	const char *a_prefix, *b_prefix;
- 	char *data_one, *data_two;
-@@ -623,7 +622,7 @@ static void emit_rewrite_diff(const char *name_a,
- 	size_two = fill_textconv(textconv_two, two, &data_two);
- 
- 	memset(&ecbdata, 0, sizeof(ecbdata));
--	ecbdata.color_diff = color_diff;
-+	ecbdata.color_diff = o->use_color > 0;
- 	ecbdata.found_changesp = &o->found_changes;
- 	ecbdata.ws_rule = whitespace_rule(name_b ? name_b : name_a);
- 	ecbdata.opt = o;
-@@ -1004,7 +1003,7 @@ static void free_diff_words_data(struct emit_callback *ecbdata)
- 
- const char *diff_get_color(int diff_use_color, enum color_diff ix)
- {
--	if (diff_use_color)
-+	if (diff_use_color > 0)
- 		return diff_colors[ix];
- 	return "";
- }
-@@ -1808,11 +1807,10 @@ static int is_conflict_marker(const char *line, int marker_size, unsigned long l
- static void checkdiff_consume(void *priv, char *line, unsigned long len)
- {
- 	struct checkdiff_t *data = priv;
--	int color_diff = DIFF_OPT_TST(data->o, COLOR_DIFF);
- 	int marker_size = data->conflict_marker_size;
--	const char *ws = diff_get_color(color_diff, DIFF_WHITESPACE);
--	const char *reset = diff_get_color(color_diff, DIFF_RESET);
--	const char *set = diff_get_color(color_diff, DIFF_FILE_NEW);
-+	const char *ws = diff_get_color(data->o->use_color, DIFF_WHITESPACE);
-+	const char *reset = diff_get_color(data->o->use_color, DIFF_RESET);
-+	const char *set = diff_get_color(data->o->use_color, DIFF_FILE_NEW);
- 	char *err;
- 	char *line_prefix = "";
- 	struct strbuf *msgbuf;
-@@ -2157,7 +2155,7 @@ static void builtin_diff(const char *name_a,
- 		memset(&xecfg, 0, sizeof(xecfg));
- 		memset(&ecbdata, 0, sizeof(ecbdata));
- 		ecbdata.label_path = lbl;
--		ecbdata.color_diff = DIFF_OPT_TST(o, COLOR_DIFF);
-+		ecbdata.color_diff = o->use_color > 0;
- 		ecbdata.found_changesp = &o->found_changes;
- 		ecbdata.ws_rule = whitespace_rule(name_b ? name_b : name_a);
- 		if (ecbdata.ws_rule & WS_BLANK_AT_EOF)
-@@ -2205,7 +2203,7 @@ static void builtin_diff(const char *name_a,
- 					break;
- 				}
- 			}
--			if (DIFF_OPT_TST(o, COLOR_DIFF)) {
-+			if (o->use_color > 0) {
- 				struct diff_words_style *st = ecbdata.diff_words->style;
- 				st->old.color = diff_get_color_opt(o, DIFF_FILE_OLD);
- 				st->new.color = diff_get_color_opt(o, DIFF_FILE_NEW);
-@@ -2855,7 +2853,7 @@ static void run_diff_cmd(const char *pgm,
- 		 */
- 		fill_metainfo(msg, name, other, one, two, o, p,
- 			      &must_show_header,
--			      DIFF_OPT_TST(o, COLOR_DIFF) && !pgm);
-+			      o->use_color > 0 && !pgm);
- 		xfrm_msg = msg->len ? msg->buf : NULL;
+ 	if (!strcmp(var, "diff.color") || !strcmp(var, "color.diff")) {
+-		diff_use_color_default = git_config_colorbool(var, value, -1);
++		diff_use_color_default = git_config_colorbool(var, value);
+ 		return 0;
  	}
- 
-@@ -3021,8 +3019,7 @@ void diff_setup(struct diff_options *options)
- 
- 	options->change = diff_change;
- 	options->add_remove = diff_addremove;
--	if (diff_use_color_default > 0)
--		DIFF_OPT_SET(options, COLOR_DIFF);
-+	options->use_color = diff_use_color_default;
- 	options->detect_rename = diff_detect_rename_default;
- 
- 	if (diff_no_prefix) {
-@@ -3410,24 +3407,24 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 	else if (!strcmp(arg, "--follow"))
- 		DIFF_OPT_SET(options, FOLLOW_RENAMES);
+ 	if (!strcmp(var, "diff.renames")) {
+@@ -3409,7 +3409,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
  	else if (!strcmp(arg, "--color"))
--		DIFF_OPT_SET(options, COLOR_DIFF);
-+		options->use_color = 1;
+ 		options->use_color = 1;
  	else if (!prefixcmp(arg, "--color=")) {
- 		int value = git_config_colorbool(NULL, arg+8, -1);
+-		int value = git_config_colorbool(NULL, arg+8, -1);
++		int value = git_config_colorbool(NULL, arg+8);
  		if (value == 0)
--			DIFF_OPT_CLR(options, COLOR_DIFF);
-+			options->use_color = 0;
+ 			options->use_color = 0;
  		else if (value > 0)
--			DIFF_OPT_SET(options, COLOR_DIFF);
-+			options->use_color = 1;
- 		else
- 			return error("option `color' expects \"always\", \"auto\", or \"never\"");
- 	}
- 	else if (!strcmp(arg, "--no-color"))
--		DIFF_OPT_CLR(options, COLOR_DIFF);
-+		options->use_color = 0;
- 	else if (!strcmp(arg, "--color-words")) {
--		DIFF_OPT_SET(options, COLOR_DIFF);
-+		options->use_color = 1;
- 		options->word_diff = DIFF_WORDS_COLOR;
- 	}
- 	else if (!prefixcmp(arg, "--color-words=")) {
--		DIFF_OPT_SET(options, COLOR_DIFF);
-+		options->use_color = 1;
- 		options->word_diff = DIFF_WORDS_COLOR;
- 		options->word_regex = arg + 14;
- 	}
-@@ -3440,7 +3437,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		if (!strcmp(type, "plain"))
- 			options->word_diff = DIFF_WORDS_PLAIN;
- 		else if (!strcmp(type, "color")) {
--			DIFF_OPT_SET(options, COLOR_DIFF);
-+			options->use_color = 1;
- 			options->word_diff = DIFF_WORDS_COLOR;
- 		}
- 		else if (!strcmp(type, "porcelain"))
-diff --git a/diff.h b/diff.h
-index b920a20..8c66b59 100644
---- a/diff.h
-+++ b/diff.h
-@@ -58,7 +58,7 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
- #define DIFF_OPT_SILENT_ON_REMOVE    (1 <<  5)
- #define DIFF_OPT_FIND_COPIES_HARDER  (1 <<  6)
- #define DIFF_OPT_FOLLOW_RENAMES      (1 <<  7)
--#define DIFF_OPT_COLOR_DIFF          (1 <<  8)
-+/* (1 <<  8) unused */
- /* (1 <<  9) unused */
- #define DIFF_OPT_HAS_CHANGES         (1 << 10)
- #define DIFF_OPT_QUICK               (1 << 11)
-@@ -101,6 +101,7 @@ struct diff_options {
- 	const char *single_follow;
- 	const char *a_prefix, *b_prefix;
- 	unsigned flags;
-+	int use_color;
- 	int context;
- 	int interhunkcontext;
- 	int break_opt;
-@@ -160,7 +161,7 @@ enum color_diff {
- };
- const char *diff_get_color(int diff_use_color, enum color_diff ix);
- #define diff_get_color_opt(o, ix) \
--	diff_get_color(DIFF_OPT_TST((o), COLOR_DIFF), ix)
-+	diff_get_color((o)->use_color, ix)
+diff --git a/parse-options.c b/parse-options.c
+index 879ea82..be4383e 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -621,7 +621,7 @@ int parse_opt_color_flag_cb(const struct option *opt, const char *arg,
  
- 
- extern const char mime_boundary_leader[];
-diff --git a/graph.c b/graph.c
-index 2f6893d..556834a 100644
---- a/graph.c
-+++ b/graph.c
-@@ -347,7 +347,7 @@ static struct commit_list *first_interesting_parent(struct git_graph *graph)
- 
- static unsigned short graph_get_current_column_color(const struct git_graph *graph)
- {
--	if (!DIFF_OPT_TST(&graph->revs->diffopt, COLOR_DIFF))
-+	if (graph->revs->diffopt.use_color <= 0)
- 		return column_colors_max;
- 	return graph->default_column_color;
- }
-diff --git a/log-tree.c b/log-tree.c
-index e945701..9ba8fb2 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -31,7 +31,7 @@ static char decoration_colors[][COLOR_MAXLEN] = {
- 
- static const char *decorate_get_color(int decorate_use_color, enum decoration_type ix)
- {
--	if (decorate_use_color)
-+	if (decorate_use_color > 0)
- 		return decoration_colors[ix];
- 	return "";
- }
-@@ -77,7 +77,7 @@ int parse_decorate_color_config(const char *var, const int ofs, const char *valu
-  * for showing the commit sha1, use the same check for --decorate
-  */
- #define decorate_get_color_opt(o, ix) \
--	decorate_get_color(DIFF_OPT_TST((o), COLOR_DIFF), ix)
-+	decorate_get_color((o)->use_color, ix)
- 
- static void add_name_decoration(enum decoration_type type, const char *name, struct object *obj)
- {
-diff --git a/wt-status.c b/wt-status.c
-index 0237772..ee03431 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -681,7 +681,7 @@ static void wt_status_print_verbose(struct wt_status *s)
- 	 * will have checked isatty on stdout).
- 	 */
- 	if (s->fp != stdout)
--		DIFF_OPT_CLR(&rev.diffopt, COLOR_DIFF);
-+		rev.diffopt.use_color = 0;
- 	run_diff_index(&rev, 1);
- }
- 
+ 	if (!arg)
+ 		arg = unset ? "never" : (const char *)opt->defval;
+-	value = git_config_colorbool(NULL, arg, -1);
++	value = git_config_colorbool(NULL, arg);
+ 	if (value < 0)
+ 		return opterror(opt,
+ 			"expects \"always\", \"auto\", or \"never\"", 0);
 -- 
 1.7.6.10.g62f04
