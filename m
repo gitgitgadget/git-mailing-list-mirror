@@ -1,135 +1,68 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: [PATCH v2 4/4] git-p4: Add test case for copy detection.
-Date: Thu, 18 Aug 2011 23:20:54 +0100
-Message-ID: <1313706054-11740-5-git-send-email-vitor.hda@gmail.com>
-References: <1313706054-11740-1-git-send-email-vitor.hda@gmail.com>
-Cc: Pete Wyckoff <pw@padd.com>, Tor Arvid Lund <torarvid@gmail.com>,
-	Vitor Antunes <vitor.hda@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 19 00:22:01 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 01/10] t7006: modernize calls to unset
+Date: Thu, 18 Aug 2011 14:05:41 -0700
+Message-ID: <7v7h6a8ikn.fsf@alter.siamese.dyndns.org>
+References: <20110818045821.GA17377@sigill.intra.peff.net>
+ <20110818050044.GA2889@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Steffen Daode Nurpmeso <sdaoden@googlemail.com>,
+	Ingo =?utf-8?Q?Br=C3=BCckl?= <ib@wupperonline.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 19 00:24:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuAyO-0002XX-J5
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 00:22:00 +0200
+	id 1QuB0N-0003Go-M3
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 00:24:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754941Ab1HRWVo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Aug 2011 18:21:44 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:34913 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754911Ab1HRWVl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Aug 2011 18:21:41 -0400
-Received: by mail-wy0-f174.google.com with SMTP id 24so1729052wyg.19
-        for <git@vger.kernel.org>; Thu, 18 Aug 2011 15:21:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=MewksGdImzxhFkh0Q+Cv/hRZsNAC4C1wANSLU4dNjiU=;
-        b=gaZrhZB/m+fUpMkbIp2NKt/vpi4h0dhV9zhqYmHU+PyLcfqseSSzVZZNuRlhVe7k43
-         uQMGlMdTl++UNPaDp33XbvrjPHopEGmXXCsBxstcsbpAdnFFjurG3KQF6BILjvQkzie0
-         wRFkFgjG5qN9P0abg3hQTv+Az0m33GaAwMewU=
-Received: by 10.227.32.129 with SMTP id c1mr2381738wbd.32.1313706100461;
-        Thu, 18 Aug 2011 15:21:40 -0700 (PDT)
-Received: from localhost.localdomain (111.216.54.77.rev.vodafone.pt [77.54.216.111])
-        by mx.google.com with ESMTPS id fy12sm2103590wbb.32.2011.08.18.15.21.38
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 18 Aug 2011 15:21:39 -0700 (PDT)
-X-Mailer: git-send-email 1.7.5.4
-In-Reply-To: <1313706054-11740-1-git-send-email-vitor.hda@gmail.com>
+	id S1754959Ab1HRWX7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Aug 2011 18:23:59 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41985 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754740Ab1HRWX5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2011 18:23:57 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D51564354;
+	Thu, 18 Aug 2011 18:23:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:references:message-id:mime-version:content-type;
+	 s=sasl; bh=9j9NWdMT145umw1sRAJ3Z1QyZpc=; b=NHTMK2vMcTpL5xVbs1ME
+	gw5VxkDEmNgg1OOFfB515yhRhs6Ja99TsQ+HgEWR8//YRudlks9FywFNnGBV4b1a
+	nY6toVWQp6Dla8bUhxtC1S6Pjwo+zcXbWcDQE1y0nyubXH5DOGzWS9UX9dftnST2
+	bkVPTmGTmk0Ab4lNGc7LOvk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:references:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=Uo1p7l4Chs6xVOxJMDg76iJqsi7T7eFS7gkA4GIGlFcGW8
+	BFHyPlrM7uB4sXgEDUFUJZ3w0z3n2u/FU7Odc3AishdztzLSTE19awMS3rMaiBjU
+	ncMqeonnhgxClMfN1yYDdPs9y/cgMYmsDfZDcxkAopvEEuAd/TGbt7Or73/zI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C3CCC4353;
+	Thu, 18 Aug 2011 18:23:54 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 51EF74352; Thu, 18 Aug 2011
+ 18:23:54 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: C1E10FEA-C9E8-11E0-B7D8-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179641>
 
-Signed-off-by: Vitor Antunes <vitor.hda@gmail.com>
----
- t/t9800-git-p4.sh |   71 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 71 insertions(+), 0 deletions(-)
+Jeff King <peff@peff.net> writes:
 
-diff --git a/t/t9800-git-p4.sh b/t/t9800-git-p4.sh
-index d01a1cb..a4f3d66 100755
---- a/t/t9800-git-p4.sh
-+++ b/t/t9800-git-p4.sh
-@@ -319,6 +319,77 @@ test_expect_success 'detect renames' '
- 	rm -rf "$git" && mkdir "$git"
- '
- 
-+# Copy a file and confirm that copy is not detected in P4.
-+# Copy a file with detectCopies option enabled and confirm that copy is not
-+# detected in P4.
-+# Modify and copy a file with detectCopies option enabled and confirm that copy
-+# is detected in P4.
-+# Copy a file with detectCopies and detectCopiesHarder options enabled and
-+# confirm that copy is detected in P4.
-+# Modify and copy a file, configure a big threshold in detectCopies and confirm
-+# that copy is not detected in P4.
-+# Modify and copy a file, configure a small threshold in detectCopies and
-+# confirm that copy is detected in P4.
-+test_expect_success 'detect copies' '
-+	git init "$git" &&
-+	cd "$git" &&
-+	cd "$TRASH_DIRECTORY" &&
-+	"$GITP4" clone --dest="$git" //depot@all &&
-+	cd "$git" &&
-+	cp file2 file8 &&
-+	git add file8 &&
-+	git commit -a -m "Copy file2 to file8" &&
-+	git diff-tree -r -C HEAD
-+	git config git-p4.skipSubmitEditCheck true &&
-+	"$GITP4" submit &&
-+	p4 filelog //depot/file8 &&
-+	! p4 filelog //depot/file8 | grep -q "branch from //depot/file" &&
-+	cp file2 file9 &&
-+	git add file9 &&
-+	git commit -a -m "Copy file2 to file9" &&
-+	git diff-tree -r -C HEAD
-+	git config git-p4.detectCopies true &&
-+	"$GITP4" submit &&
-+	p4 filelog //depot/file9 &&
-+	! p4 filelog //depot/file9 | grep -q "branch from //depot/file" &&
-+	echo file2 >> file2 &&
-+	cp file2 file10 &&
-+	git add file2 file10 &&
-+	git commit -a -m "Modify and copy file2 to file10" &&
-+	git diff-tree -r -C HEAD
-+	"$GITP4" submit &&
-+	p4 filelog //depot/file10 &&
-+	p4 filelog //depot/file10 | grep -q "branch from //depot/file" &&
-+	cp file2 file11 &&
-+	git add file11 &&
-+	git commit -a -m "Copy file2 to file11" &&
-+	git diff-tree -r -C --find-copies-harder HEAD
-+	git config git-p4.detectCopiesHarder true &&
-+	"$GITP4" submit &&
-+	p4 filelog //depot/file11 &&
-+	p4 filelog //depot/file11 | grep -q "branch from //depot/file" &&
-+	cp file2 file12 &&
-+	echo >> file12 &&
-+	git add file12 &&
-+	git commit -a -m "Copy file2 to file12 with changes" &&
-+	git diff-tree -r -C --find-copies-harder HEAD
-+	git config git-p4.detectCopies 98 &&
-+	"$GITP4" submit &&
-+	p4 filelog //depot/file12 &&
-+	! p4 filelog //depot/file12 | grep -q "branch from //depot/file" &&
-+	cp file2 file13 &&
-+	echo >> file13 &&
-+	git add file13 &&
-+	git commit -a -m "Copy file2 to file13 with changes" &&
-+	git diff-tree -r -C --find-copies-harder HEAD
-+	git config git-p4.detectCopies 80 &&
-+	"$GITP4" submit &&
-+	p4 filelog //depot/file13 &&
-+	p4 filelog //depot/file13 | grep -q "branch from //depot/file" &&
-+	cd "$TRASH_DIRECTORY" &&
-+	rm -rf "$git" && mkdir "$git"
-+'
-+
- test_expect_success 'shutdown' '
- 	pid=`pgrep -f p4d` &&
- 	test -n "$pid" &&
--- 
-1.7.5.4
+> These tests break &&-chaining to deal with broken "unset"
+> implementations. Instead, they should just use sane_unset.
+
+Thanks. I checked with POSIX again, wondering if I should tone the
+"broken" down a bit, but it says:
+
+  Unsetting a variable or function that was not previously set shall not
+  be considered an error...
+
+so they deserve "broken" label.
