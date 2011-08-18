@@ -1,141 +1,137 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] rev-parse: Allow @{U} as a synonym for @{u}
-Date: Thu, 18 Aug 2011 09:15:53 +0200
-Message-ID: <4E4CBC29.7080703@drmicha.warpmail.net>
-References: <CAMK1S_hZkdXiQb_UTB=snLAXPmo5yrCnFaQFHZqYq5AXqOgWng@mail.gmail.com> <1313287071-7851-1-git-send-email-conrad.irwin@gmail.com> <7vhb5fd4zy.fsf@alter.siamese.dyndns.org> <CACsJy8CX7X3u4i_kXChVHkFK=Q--pRBrxmdvjxrF7wr5_SyakA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Conrad Irwin <conrad.irwin@gmail.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 18 09:16:03 2011
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH 0/4] Refactor git-mergetool--lib.sh
+Date: Thu, 18 Aug 2011 00:23:43 -0700
+Message-ID: <1313652227-48545-1-git-send-email-davvid@gmail.com>
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Tanguy Ortolo <tanguy+debian@ortolo.eu>,
+	Charles Bailey <charles@hashpling.org>,
+	Sebastian Schuberth <sschuberth@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 18 09:24:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qtwpe-0002OX-DB
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Aug 2011 09:16:02 +0200
+	id 1Qtwxa-0005MS-QS
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Aug 2011 09:24:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755135Ab1HRHP5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Aug 2011 03:15:57 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:48838 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754920Ab1HRHP5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Aug 2011 03:15:57 -0400
-Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 00021205CA;
-	Thu, 18 Aug 2011 03:15:55 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute5.internal (MEProxy); Thu, 18 Aug 2011 03:15:56 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=or1awWQ5Fj3DQEXGzfSRj3
-	WRVG0=; b=g6uJ//DAKHf2MxPhSWWM6PQZOZlZFL8RYpJ8XFIGd4HPBfYH6hqdsm
-	E56fR35kKWWXBRCBNsVzzITDj0j53ol3S6bQc6ipHmPkZGrd0lBY4Ns3TrCYsoLQ
-	GpyXZybKOIv8gJOOD5OUVd7+U5Ac3POEdWsfvHw9JSev7J3r1R5/Q=
-X-Sasl-enc: 6//Fviat28p+F/C40z7Doz/P0+CO858bggbXfSvDEqtV 1313651755
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 2414541F823;
-	Thu, 18 Aug 2011 03:15:55 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
-In-Reply-To: <CACsJy8CX7X3u4i_kXChVHkFK=Q--pRBrxmdvjxrF7wr5_SyakA@mail.gmail.com>
+	id S1755086Ab1HRHYG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Aug 2011 03:24:06 -0400
+Received: from mail-iy0-f170.google.com ([209.85.210.170]:33028 "EHLO
+	mail-iy0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752479Ab1HRHYE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2011 03:24:04 -0400
+Received: by iye16 with SMTP id 16so3440638iye.1
+        for <git@vger.kernel.org>; Thu, 18 Aug 2011 00:24:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        bh=BbiT8AXVj6KYAJkvXu18lPUhnm+qqSmobHSGS9lOnlQ=;
+        b=PIbaNllGu35oT2aV4R298ue6xpja8lyCYGjw2JuuSHL6AytW4NOEyMufBKd97wKYJc
+         uDNsx2LOyHQ/KhBBMDYFLws866f/+TuSN+T6xKzOjuAdEe4zUV08OHss22JlnUR4MCqI
+         ZYgInkqDwTgvRxX0Ik+8oMXcLWuHdzbEtxUUA=
+Received: by 10.42.29.196 with SMTP id s4mr456811icc.12.1313652242810;
+        Thu, 18 Aug 2011 00:24:02 -0700 (PDT)
+Received: from localhost.localdomain (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id hq1sm1677692icc.14.2011.08.18.00.24.00
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 18 Aug 2011 00:24:02 -0700 (PDT)
+X-Mailer: git-send-email 1.7.6.476.g57292
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179572>
 
-Nguyen Thai Ngoc Duy venit, vidit, dixit 18.08.2011 03:53:
-> On Thu, Aug 18, 2011 at 5:53 AM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->> Letting u/upstream spelled case-insensitively does improve consisten=
-cy
->> among the above, but at the same time if we ever wanted to enhance @=
-{...}
->> notation even further in the future, we are restricted to a payload =
-that
->> is case insensitive to retain the consistency.
->>
->> The only remotely semi-plausible enhancement I could think of is per=
-haps
->> to allow @{/regexp} to find a reflog entry that matches the given pa=
-ttern,
->> and in such a use case we would certainly want to take the pattern i=
-n a
->> case sensitive way. This change closes the door to that, and that is=
- the
->> only downside I can think of right now.
->>
->> I hate to declare that we will never support such a feature with thi=
-s
->> change, but at the same time, I do not think I would need such a fea=
-ture
->> that often. But for that matter, I do not think I would miss @{UpStR=
-EAM},
->> either, and that takes me back to "Meh" for this change.
->>
->> What do people think?
->=20
-> The itch is probably because people have to release shift, then press
-> shift again to type "@{u}". How about allow case insensitive match if
-> there's only _one_ letter inside @{}?
->=20
-> That would solve the shift problem while leaving door for @{...} exte=
-nsion.
+This series splits the git-mergetool--lib.sh file into separate
+tool scriptlets that define the commands for diff and merge.
 
-Well, this patch is actually specific to a particular keyboard layout!
-It improves things only for a layout where you get @ and { using a shif=
-t
-key.
+David Aguilar (4):
+  difftool--helper: Make style consistent with git
+  mergetool--lib: Make style consistent with git
+  mergetool--lib: Refactor tools into separate files
+  mergetools/meld: Use '--output' when available
 
-=46or a german keyboard layout, you get @{u} from
+ Makefile                 |   11 ++
+ git-difftool--helper.sh  |   18 ++-
+ git-mergetool--lib.sh    |  394 ++++++++++------------------------------------
+ mergetools/araxis        |   21 +++
+ mergetools/bc3           |   20 +++
+ mergetools/defaults      |   46 ++++++
+ mergetools/diffuse       |   17 ++
+ mergetools/ecmerge       |   16 ++
+ mergetools/emerge        |   23 +++
+ mergetools/kdiff3        |   24 +++
+ mergetools/kompare       |    7 +
+ mergetools/meld          |   40 +++++
+ mergetools/opendiff      |   16 ++
+ mergetools/p4merge       |   10 ++
+ mergetools/tkdiff        |   12 ++
+ mergetools/tortoisemerge |   17 ++
+ mergetools/vim           |   44 +++++
+ mergetools/xxdiff        |   25 +++
+ 18 files changed, 441 insertions(+), 320 deletions(-)
+ create mode 100644 mergetools/araxis
+ create mode 100644 mergetools/bc3
+ create mode 100644 mergetools/defaults
+ create mode 100644 mergetools/diffuse
+ create mode 100644 mergetools/ecmerge
+ create mode 100644 mergetools/emerge
+ create mode 100644 mergetools/kdiff3
+ create mode 100644 mergetools/kompare
+ create mode 100644 mergetools/meld
+ create mode 100644 mergetools/opendiff
+ create mode 100644 mergetools/p4merge
+ create mode 100644 mergetools/tkdiff
+ create mode 100644 mergetools/tortoisemerge
+ create mode 100644 mergetools/vim
+ create mode 100644 mergetools/xxdiff
 
-hold AltGr (Meta)
-press q
-press 7
-release AltGr
-press u
-hold AltGr
-press 0
+$ git describe --dirty
+v1.7.6-476-g572925c
+$ git version
+git version 1.7.6.476.g57292
+$ ./t7610-mergetool.sh 
+ok 1 - setup
+ok 2 - custom mergetool
+ok 3 - mergetool crlf
+ok 4 - mergetool in subdir
+ok 5 - mergetool on file in parent dir
+ok 6 - mergetool skips autoresolved
+ok 7 - mergetool merges all from subdir
+ok 8 - mergetool skips resolved paths when rerere is active
+ok 9 - deleted vs modified submodule
+ok 10 - file vs modified submodule
+ok 11 - submodule in subdirectory
+ok 12 - directory vs modified submodule
+# passed all 12 test(s)
+1..12
+$ ./t7800-difftool.sh 
+ok 1 - setup
+ok 2 - custom commands
+ok 3 - difftool ignores bad --tool values
+ok 4 - difftool honors --gui
+ok 5 - difftool --gui works without configured diff.guitool
+ok 6 - GIT_DIFF_TOOL variable
+ok 7 - GIT_DIFF_TOOL overrides
+ok 8 - GIT_DIFFTOOL_NO_PROMPT variable
+ok 9 - GIT_DIFFTOOL_PROMPT variable
+ok 10 - difftool.prompt config variable is false
+ok 11 - difftool merge.prompt = false
+ok 12 - difftool.prompt can overridden with -y
+ok 13 - difftool.prompt can overridden with --prompt
+ok 14 - difftool last flag wins
+ok 15 - difftool + mergetool config variables
+ok 16 - difftool.<tool>.path
+ok 17 - difftool --extcmd=cat
+ok 18 - difftool --extcmd cat
+ok 19 - difftool -x cat
+ok 20 - difftool --extcmd echo arg1
+ok 21 - difftool --extcmd cat arg1
+ok 22 - difftool --extcmd cat arg2
+# passed all 22 test(s)
+1..22
 
-=46or me, an improvement would be to have the alias
-
-@{=E2=86=93}
-
-for @{u} so that I can hold AltGr throughout and press q7u0. Which woul=
-d
-be very nice, pictorially :)
-
-In general git could benefit from a rev alias mechanism. This idea has
-come up several times, but in order to be really useful, we would need
-that to be more general than textual replacements and allow for macro
-like replacements such as
-
-git config revalias.new "\1@{1}..\1"
-
-to be used as, say
-
-git log @{new(origin/next)}
-
-after a fetch. (No, I'm not suggesting that specific syntax here.)
-
-As a simpler case, a user could tailor to her keyboard layout with
-
-git config revalias.=E2=86=93 u
-
-but for obvious reasons
-
-git config revalias.U u
-
-won't work.
-
-So, maybe we could make the key part of a special revspec case
-insensitive (just like config variable names) but still have a possible
-payload (parameter) be case sensitive (just like config variable values=
-)?
-
-Michael
+-- 
+1.7.6.476.g57292
