@@ -1,85 +1,47 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 07/10] color: delay auto-color decision until point of use
-Date: Thu, 18 Aug 2011 15:28:18 -0700
-Message-ID: <20110818222817.GA8668@sigill.intra.peff.net>
-References: <20110818045821.GA17377@sigill.intra.peff.net>
- <20110818050421.GG2889@sigill.intra.peff.net>
- <7vvctu7402.fsf@alter.siamese.dyndns.org>
+From: Ori Avtalion <ori@avtalion.name>
+Subject: Missing item in 1.7.7 release notes
+Date: Fri, 19 Aug 2011 01:32:26 +0300
+Message-ID: <CALgdb5K5iWbqudT_4Euw8yxCmxOz6JVVhFUG=kywjDSTGbx4XA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org,
-	Steffen Daode Nurpmeso <sdaoden@googlemail.com>,
-	Ingo =?utf-8?Q?Br=C3=BCckl?= <ib@wupperonline.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 19 00:28:27 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 19 00:32:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuB4d-0004x9-0m
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 00:28:27 +0200
+	id 1QuB8a-0006dX-RF
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 00:32:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755141Ab1HRW2W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Aug 2011 18:28:22 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:34769
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754351Ab1HRW2V (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Aug 2011 18:28:21 -0400
-Received: (qmail 26203 invoked by uid 107); 18 Aug 2011 22:29:01 -0000
-Received: from 173-164-171-125-SFBA.hfc.comcastbusiness.net (HELO sigill.intra.peff.net) (173.164.171.125)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 18 Aug 2011 18:29:01 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Aug 2011 15:28:18 -0700
-Content-Disposition: inline
-In-Reply-To: <7vvctu7402.fsf@alter.siamese.dyndns.org>
+	id S1754975Ab1HRWc2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Aug 2011 18:32:28 -0400
+Received: from mail-iy0-f170.google.com ([209.85.210.170]:57604 "EHLO
+	mail-iy0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754435Ab1HRWc1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2011 18:32:27 -0400
+Received: by iye16 with SMTP id 16so4743298iye.1
+        for <git@vger.kernel.org>; Thu, 18 Aug 2011 15:32:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        bh=cQrXDzsq9MBxelj7Ocdewvisu7+xQXfHaZw/4ulkn+o=;
+        b=YJLjkuvPGmzf5i0YpDgaNQ3aZPjazaXo4ITgfKm5/hCgcUVBVSvGx9YghJovMZ5PPL
+         IkfN42/8y8honw6CzoHfK3ZLvGr+Yeuts1rq/e95kTIBR4gFW7XZN+vZ2C2rjHKRs1iB
+         eGhUQua3U3kqFGcT99eL1+SsrjLWwz6kxKLC8=
+Received: by 10.231.2.67 with SMTP id 3mr2752751ibi.8.1313706746713; Thu, 18
+ Aug 2011 15:32:26 -0700 (PDT)
+Received: by 10.231.166.193 with HTTP; Thu, 18 Aug 2011 15:32:26 -0700 (PDT)
+X-Google-Sender-Auth: 1ev7ec2GBTV8k2Xji17QgVqSlvE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179646>
 
-On Thu, Aug 18, 2011 at 02:59:37PM -0700, Junio C Hamano wrote:
+The patch
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > diff --git a/color.h b/color.h
-> > index a190a25..d715fd5 100644
-> > --- a/color.h
-> > +++ b/color.h
-> > @@ -49,6 +49,16 @@ struct strbuf;
-> >  #define GIT_COLOR_NIL "NIL"
-> >  
-> >  /*
-> > + * The first three are chosen to match common usage in the code, and what is
-> > + * returned from git_config_colorbool. The "auto" value can be returned from
-> > + * config_colorbool, and will be converted by want_color() into either 0 or 1.
-> > + */
-> > +#define GIT_COLOR_UNKNOWN -1
-> > +#define GIT_COLOR_ALWAYS 0
-> > +#define GIT_COLOR_NEVER  1
-> > +#define GIT_COLOR_AUTO   2
-> 
-> The ALWAYS/NEVER somehow go against my intuition. Let me trace one
-> codepath starting from git_branch_config().
-> 
->     branch_use_color is set from git_config_colorbool("color.branch");
->     -> given "never", git_config_colorbool() returns 0;
->     branch_get_color() asks want_color(branch_use_color);
->     -> want_color() returns if the given value is positive.
-> 
-> Because git_config_colorbool() does not use the above symbolic constants,
-> everything goes well, but aren't these two swapped?
+   d04520e reset: give better reflog messages
 
-Oooops. Yes, they are completely swapped and I'm an idiot. But as you
-noticed, we don't actually _use_ them anywhere. I started on replacing
-every "0" with NEVER, every "1" with ALWAYS, and every "-1" with
-UNKNOWN. But it really bloated the patch, and didn't actually make the
-code any more readable.
-
-The only symbolic constant that is really necessary is the AUTO one. I
-just felt odd randomly defining "2" as GIT_COLOR_AUTO, but not defining
-the other possible values of the enumeration. So definitely they should
-be swapped. I'm also fine with just dropping all of them except AUTO.
-
--Peff
+is merge into master, but isn't in the release notes.
