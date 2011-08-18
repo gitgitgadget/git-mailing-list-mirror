@@ -1,92 +1,80 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] rev-parse: Allow @{U} as a synonym for @{u}
-Date: Thu, 18 Aug 2011 15:54:05 +0700
-Message-ID: <CACsJy8Dr5q=h-9MhNV0gKtVEn13+DxWwcNn2Prem6-+DyrDmHA@mail.gmail.com>
-References: <CAMK1S_hZkdXiQb_UTB=snLAXPmo5yrCnFaQFHZqYq5AXqOgWng@mail.gmail.com>
- <1313287071-7851-1-git-send-email-conrad.irwin@gmail.com> <7vhb5fd4zy.fsf@alter.siamese.dyndns.org>
- <CACsJy8CX7X3u4i_kXChVHkFK=Q--pRBrxmdvjxrF7wr5_SyakA@mail.gmail.com> <4E4CBC29.7080703@drmicha.warpmail.net>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH 1/4] difftool--helper: Make style consistent with git
+Date: Thu, 18 Aug 2011 02:08:12 -0700
+Message-ID: <20110818090810.GA15416@gmail.com>
+References: <1313652227-48545-1-git-send-email-davvid@gmail.com>
+ <1313652227-48545-2-git-send-email-davvid@gmail.com>
+ <CAHGBnuPRsh0WDVSFr0X1Y+nb=94pJVv8=evFQCjdcd_y9ux97A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Conrad Irwin <conrad.irwin@gmail.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Aug 18 10:54:46 2011
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Tanguy Ortolo <tanguy+debian@ortolo.eu>,
+	Charles Bailey <charles@hashpling.org>
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 18 11:08:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QtyNB-0000Zr-QP
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Aug 2011 10:54:46 +0200
+	id 1QtyaQ-0006TN-Ei
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Aug 2011 11:08:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755329Ab1HRIyh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Aug 2011 04:54:37 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:62474 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755139Ab1HRIyg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Aug 2011 04:54:36 -0400
-Received: by bke11 with SMTP id 11so1294983bke.19
-        for <git@vger.kernel.org>; Thu, 18 Aug 2011 01:54:35 -0700 (PDT)
+	id S1755329Ab1HRJIW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Aug 2011 05:08:22 -0400
+Received: from mail-iy0-f170.google.com ([209.85.210.170]:34772 "EHLO
+	mail-iy0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755261Ab1HRJIV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2011 05:08:21 -0400
+Received: by iye16 with SMTP id 16so3594933iye.1
+        for <git@vger.kernel.org>; Thu, 18 Aug 2011 02:08:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=oDLjilVMBoDYhE+R85h9IJIisQ7BZHJcYCS2bofQjzE=;
-        b=WZ1HNHDsLkC37ykBHBGEs2SBK2jgaGQhY6l4vljfPkuLCVWDA5kuLCHOYc0UhvzZSs
-         /2IiFFxFOuHZ+nuZfqu9+Ee1wjRHZUhgfTdFZEpFI/jhaUJE/hNY4DRQBPr8TPyz0wQW
-         qZiKDiwFuyMpFT0kpUFzE45FjnDtYUoJlBXsk=
-Received: by 10.204.231.143 with SMTP id jq15mr211125bkb.227.1313657675215;
- Thu, 18 Aug 2011 01:54:35 -0700 (PDT)
-Received: by 10.204.156.19 with HTTP; Thu, 18 Aug 2011 01:54:05 -0700 (PDT)
-In-Reply-To: <4E4CBC29.7080703@drmicha.warpmail.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=mTE+nS0MzQZGnrtCzmGhWiBBwzu9d5XVU8y4YfMAMuQ=;
+        b=Pg7Q5IzdidkYMLu5mEtzZKr/HHG2avdzolBq+rDcT8k5m7Z+UAshXSic3nCzcg1Riz
+         2gbZ6Y9YYKVBZn7uT3cC8GSBvr9r1hLIGB9z+hOIhai6R5Xn6f9ITTRZGCB+wKFMUDzK
+         RCte2oBDTNFqXCc/2MQ913IXdl3YFCIhY0NEQ=
+Received: by 10.231.49.78 with SMTP id u14mr1100149ibf.75.1313658500648;
+        Thu, 18 Aug 2011 02:08:20 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id v16sm863197ibe.34.2011.08.18.02.08.17
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 18 Aug 2011 02:08:19 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAHGBnuPRsh0WDVSFr0X1Y+nb=94pJVv8=evFQCjdcd_y9ux97A@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179583>
 
-On Thu, Aug 18, 2011 at 2:15 PM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> For a german keyboard layout, you get @{u} from
->
-> hold AltGr (Meta)
-> press q
-> press 7
-> release AltGr
-> press u
-> hold AltGr
-> press 0
->
-> For me, an improvement would be to have the alias
->
-> @{=E2=86=93}
+On Thu, Aug 18, 2011 at 09:49:33AM +0200, Sebastian Schuberth wrote:
+> On Thu, Aug 18, 2011 at 09:23, David Aguilar <davvid@gmail.com> wrote:
+> 
+> > Use the predominant conditional style where "then" appears
+> > alone on the line after the test expression.
+> 
+> I support your effort to unify the style, but for my personal taste it
+> has gone the wrong way :-) Even if "then" on its own line was the
+> predominant style in the merge scripts, I would have voted for putting
+> all "then" in the same line as "if" as I find this easier to read and
+> comprehend. But then again it's obvious that such a change would
+> polarize ;-)
+> 
+> -- 
+> Sebastian Schuberth
 
-While it's convenient to type, the output now looks strange. If you do
-a screencast, or someone is watching you, they may not understand what
-that syntax is.
+I am fine reworking it either way.
+There's not a specific note about it in
+Documentation/CodingStyle.
 
-Also..
+If someone wants to make the final call I can patch the docs
+and rework these patches as needed.
 
-> As a simpler case, a user could tailor to her keyboard layout with
->
-> git config revalias.=E2=86=93 u
-
-We may also have encoding issue here. What if config file is in utf-8,
-but the console is not?
-
-So I don't we should go this way. There may be a better way to deal
-with different keyboard layouts.
-
-> Well, this patch is actually specific to a particular keyboard layout=
-!
-> It improves things only for a layout where you get @ and { using a sh=
-ift
-> key.
-
-=46ully agreed. While it does not help non en-US keyboards, it does not
-cause any harm (jealousy is not classified as harm to me, rather
-motivation ;).
---=20
-Duy
+Thanks,
+-- 
+					David
