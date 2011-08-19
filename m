@@ -1,7 +1,7 @@
 From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: [PATCH v4 2/2] push: teach --recurse-submodules the on-demand option
-Date: Sat, 20 Aug 2011 00:08:48 +0200
-Message-ID: <1313791728-11328-3-git-send-email-iveqy@iveqy.com>
+Subject: [PATCH v4 1/2] push: Don't push a repository with unpushed submodules
+Date: Sat, 20 Aug 2011 00:08:47 +0200
+Message-ID: <1313791728-11328-2-git-send-email-iveqy@iveqy.com>
 References: <1313791728-11328-1-git-send-email-iveqy@iveqy.com>
 Cc: iveqy@iveqy.com, hvoigt@hvoigt.net, jens.lehmann@web.de,
 	gitster@pobox.com
@@ -12,176 +12,168 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuXFH-0002Ow-6c
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Aug 2011 00:08:55 +0200
+	id 1QuXFI-0002Ow-4R
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Aug 2011 00:08:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756114Ab1HSWIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Aug 2011 18:08:51 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:62155 "EHLO
+	id S1756169Ab1HSWIx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Aug 2011 18:08:53 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:54893 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755496Ab1HSWIs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Aug 2011 18:08:48 -0400
-Received: by fxh19 with SMTP id 19so2201003fxh.19
+	with ESMTP id S1755854Ab1HSWIt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Aug 2011 18:08:49 -0400
+Received: by fxh19 with SMTP id 19so2201006fxh.19
         for <git@vger.kernel.org>; Fri, 19 Aug 2011 15:08:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        bh=f5Rxy4kpO44xTLCG8vaTcbvNLr7nTy/A6kS38NMeZHU=;
-        b=eeBozPdF39bfAIUUkeDsUv4jsBvgFqpmrt3+wy9ZwpC4ZHFs3QNrGMQ6DImo5X5nJ5
-         gdm3t45kM3GIjEFLMtopjuCqJmJZLWVi8wg/a3KSYR5+9I4qx1HJyxWUXwKe8VA5cFW8
-         CjZ56BbI0K0i+TZMiNPdhbbj3NhuDk1fMkZFg=
-Received: by 10.223.44.198 with SMTP id b6mr266831faf.141.1313791727046;
+        bh=Gp/ugHRJD4dA8R4dmzQ7h9nFl2Bha0HXG57oqsjW+rk=;
+        b=TrnKijmdpZF89kJh0E3yeBcFj3OX5AXurEkyYpHmtKeI6oRe5RdxcYLl8/ghupa0l0
+         rdVnkcXtI0Ku1jvvFBq66O1G5FDnjlgkPGFVpDk4ypv96mFi8X6pHW7Cme3ZM70gzCnA
+         yTRWMG4QRANCqRupHzZUTO08k+dp3fMSlsg9o=
+Received: by 10.223.22.150 with SMTP id n22mr283963fab.110.1313791727651;
         Fri, 19 Aug 2011 15:08:47 -0700 (PDT)
 Received: from kolya (h-185-240.a189.priv.bahnhof.se [85.24.185.240])
-        by mx.google.com with ESMTPS id u8sm68036fah.5.2011.08.19.15.08.45
+        by mx.google.com with ESMTPS id c5sm617455fai.20.2011.08.19.15.08.45
         (version=TLSv1/SSLv3 cipher=OTHER);
         Fri, 19 Aug 2011 15:08:45 -0700 (PDT)
 Received: from iveqy by kolya with local (Exim 4.72)
 	(envelope-from <iveqy@kolya>)
-	id 1QuXFG-0002xT-Hj; Sat, 20 Aug 2011 00:08:54 +0200
+	id 1QuXFG-0002xQ-CU; Sat, 20 Aug 2011 00:08:54 +0200
 X-Mailer: git-send-email 1.7.6.551.gfb18e
 In-Reply-To: <1313791728-11328-1-git-send-email-iveqy@iveqy.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179733>
 
-When using this option git will search for all submodules that
-have changed in the revisions to be send. It will then try to
-push the currently checked out branch of each submodule.
+When working with submodules it is easy to forget to push a
+submodule to the server but pushing a super-project that
+contains a commit for that submodule. The result is that the
+superproject points at a submodule commit that is not available
+on the server.
 
-This helps when a user has finished working on a change which
-involves submodules and just wants to push everything in one go.
+This adds the option --recurse-submodules=check to push. When
+using this option git will check that all submodule commits that
+are about to be pushed are present on a remote of the submodule.
+
+To be able to use a combined diff, disabling a diff callback has
+been removed from combined-diff.c.
 
 Signed-off-by: Fredrik Gustafsson <iveqy@iveqy.com>
 Mentored-by: Jens Lehmann <Jens.Lehmann@web.de>
 Mentored-by: Heiko Voigt <hvoigt@hvoigt.net>
 ---
- Documentation/git-push.txt     |   13 ++++--
- builtin/push.c                 |    7 +++
- submodule.c                    |   89 ++++++++++++++++++++++++++++++++--------
+ Documentation/git-push.txt     |    6 ++
+ builtin/push.c                 |   19 +++++++
+ combine-diff.c                 |    2 +-
+ submodule.c                    |  108 ++++++++++++++++++++++++++++++++++++++++
  submodule.h                    |    1 +
- t/t5531-deep-submodule-push.sh |   24 +++++++++++
- transport.c                    |   10 ++++-
+ t/t5531-deep-submodule-push.sh |   87 ++++++++++++++++++++++++++++++++
+ transport.c                    |    9 +++
  transport.h                    |    1 +
- 7 files changed, 121 insertions(+), 24 deletions(-)
+ 8 files changed, 232 insertions(+), 1 deletions(-)
 
 diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index aede488..fe60d28 100644
+index 49c6e9f..aede488 100644
 --- a/Documentation/git-push.txt
 +++ b/Documentation/git-push.txt
-@@ -162,11 +162,14 @@ useful if you write an alias or script around 'git push'.
+@@ -162,6 +162,12 @@ useful if you write an alias or script around 'git push'.
  	is specified. This flag forces progress status even if the
  	standard error stream is not directed to a terminal.
  
----recurse-submodules=check::
--	Check whether all submodule commits used by the revisions to be
--	pushed are available on a remote tracking branch. Otherwise the
--	push will be aborted and the command will exit with non-zero status.
--
-+--recurse-submodules=<check|on-demand>::
-+	Check whether all submodule commits used by the revisions to be pushed
-+	are available on a remote tracking branch. If check is used the push
-+	will be aborted and the command will exit with non-zero status.
-+	If on-demand is used all submodules that changed in the
-+	to be pushed will be pushed. If on-demand was not able
-+	to push all necessary revisions it will also be aborted and exit
-+	with non-zero status.
- 
++--recurse-submodules=check::
++	Check whether all submodule commits used by the revisions to be
++	pushed are available on a remote tracking branch. Otherwise the
++	push will be aborted and the command will exit with non-zero status.
++
++
  include::urls-remotes.txt[]
  
+ OUTPUT
 diff --git a/builtin/push.c b/builtin/push.c
-index 35cce53..f2ef8dd 100644
+index 9cebf9e..35cce53 100644
 --- a/builtin/push.c
 +++ b/builtin/push.c
-@@ -224,9 +224,16 @@ static int option_parse_recurse_submodules(const struct option *opt,
- 				   const char *arg, int unset)
+@@ -8,6 +8,7 @@
+ #include "remote.h"
+ #include "transport.h"
+ #include "parse-options.h"
++#include "submodule.h"
+ 
+ static const char * const push_usage[] = {
+ 	"git push [<options>] [<repository> [<refspec>...]]",
+@@ -219,6 +220,21 @@ static int do_push(const char *repo, int flags)
+ 	return !!errs;
+ }
+ 
++static int option_parse_recurse_submodules(const struct option *opt,
++				   const char *arg, int unset)
++{
++	int *flags = opt->value;
++	if (arg) {
++		if (!strcmp(arg, "check"))
++			*flags |= TRANSPORT_RECURSE_SUBMODULES_CHECK;
++		else
++			die("bad %s argument: %s", opt->long_name, arg);
++	} else
++		die("option %s needs an argument (check)", opt->long_name);
++
++	return 0;
++}
++
+ int cmd_push(int argc, const char **argv, const char *prefix)
  {
- 	int *flags = opt->value;
-+
-+	if (*flags & (TRANSPORT_RECURSE_SUBMODULES_CHECK |
-+		      TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND))
-+		die("%s can only be used once.", opt->long_name);
-+
- 	if (arg) {
- 		if (!strcmp(arg, "check"))
- 			*flags |= TRANSPORT_RECURSE_SUBMODULES_CHECK;
-+		else if (!strcmp(arg, "on-demand"))
-+			*flags |= TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND;
+ 	int flags = 0;
+@@ -236,6 +252,9 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		OPT_BIT('n' , "dry-run", &flags, "dry run", TRANSPORT_PUSH_DRY_RUN),
+ 		OPT_BIT( 0,  "porcelain", &flags, "machine-readable output", TRANSPORT_PUSH_PORCELAIN),
+ 		OPT_BIT('f', "force", &flags, "force updates", TRANSPORT_PUSH_FORCE),
++		{ OPTION_CALLBACK, 0, "recurse-submodules", &flags, "check",
++			"controls recursive pushing of submodules",
++			PARSE_OPT_OPTARG, option_parse_recurse_submodules },
+ 		OPT_BOOLEAN( 0 , "thin", &thin, "use thin pack"),
+ 		OPT_STRING( 0 , "receive-pack", &receivepack, "receive-pack", "receive pack program"),
+ 		OPT_STRING( 0 , "exec", &receivepack, "receive-pack", "receive pack program"),
+diff --git a/combine-diff.c b/combine-diff.c
+index b11eb71..f7a8978 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -1074,7 +1074,7 @@ void diff_tree_combined(const unsigned char *sha1,
+ 		 * when doing combined diff.
+ 		 */
+ 		int stat_opt = (opt->output_format &
+-				(DIFF_FORMAT_NUMSTAT|DIFF_FORMAT_DIFFSTAT));
++				(DIFF_FORMAT_NUMSTAT|DIFF_FORMAT_DIFFSTAT|DIFF_FORMAT_CALLBACK));
+ 		if (i == 0 && stat_opt)
+ 			diffopts.output_format = stat_opt;
  		else
- 			die("bad %s argument: %s", opt->long_name, arg);
- 	} else
 diff --git a/submodule.c b/submodule.c
-index 45f508c..dc95498 100644
+index 1ba9646..45f508c 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -8,7 +8,10 @@
- #include "diffcore.h"
- #include "refs.h"
- #include "string-list.h"
-+#include "transport.h"
- 
-+typedef int (*needs_push_func_t)(const char *path, const unsigned char sha1[20],
-+		void *data);
- static struct string_list config_name_for_path;
- static struct string_list config_fetch_recurse_submodules_for_name;
- static struct string_list config_ignore_for_name;
-@@ -308,21 +311,24 @@ void set_config_fetch_recurse_submodules(int value)
+@@ -308,6 +308,114 @@ void set_config_fetch_recurse_submodules(int value)
  	config_fetch_recurse_submodules = value;
  }
  
-+typedef int (*module_func_t)(const char *path, const unsigned char sha1[20], void *data);
-+
- static int has_remote(const char *refname, const unsigned char *sha1, int flags, void *cb_data)
- {
- 	return 1;
- }
- 
--static int submodule_needs_pushing(const char *path, const unsigned char sha1[20])
-+int submodule_needs_pushing(const char *path, const unsigned char sha1[20], void *data)
- {
-+	int *needs_pushing = data;
-+
- 	if (add_submodule_odb(path) || !lookup_commit_reference(sha1))
--		return 0;
-+		return 1;
- 
- 	if (for_each_remote_ref_submodule(path, has_remote, NULL) > 0) {
- 		struct child_process cp;
- 		const char *argv[] = {"rev-list", NULL, "--not", "--remotes", "-n", "1" , NULL};
- 		struct strbuf buf = STRBUF_INIT;
--		int needs_pushing = 0;
- 
- 		argv[1] = sha1_to_hex(sha1);
- 		memset(&cp, 0, sizeof(cp));
-@@ -336,41 +342,74 @@ static int submodule_needs_pushing(const char *path, const unsigned char sha1[20
- 			die("Could not run 'git rev-list %s --not --remotes -n 1' command in submodule %s",
- 				sha1_to_hex(sha1), path);
- 		if (strbuf_read(&buf, cp.out, 41))
--			needs_pushing = 1;
-+			*needs_pushing = 1;
- 		finish_command(&cp);
- 		close(cp.out);
- 		strbuf_release(&buf);
--		return needs_pushing;
-+		return !*needs_pushing;
- 	}
- 
--	return 0;
++static int has_remote(const char *refname, const unsigned char *sha1, int flags, void *cb_data)
++{
 +	return 1;
 +}
 +
-+int push_submodule(const char *path, const unsigned char sha1[20], void *data)
++static int submodule_needs_pushing(const char *path, const unsigned char sha1[20])
 +{
 +	if (add_submodule_odb(path) || !lookup_commit_reference(sha1))
-+		return 1;
++		return 0;
 +
 +	if (for_each_remote_ref_submodule(path, has_remote, NULL) > 0) {
 +		struct child_process cp;
-+		const char *argv[] = {"push", NULL};
++		const char *argv[] = {"rev-list", NULL, "--not", "--remotes", "-n", "1" , NULL};
++		struct strbuf buf = STRBUF_INIT;
++		int needs_pushing = 0;
 +
++		argv[1] = sha1_to_hex(sha1);
 +		memset(&cp, 0, sizeof(cp));
 +		cp.argv = argv;
 +		cp.env = local_repo_env;
@@ -189,187 +181,236 @@ index 45f508c..dc95498 100644
 +		cp.no_stdin = 1;
 +		cp.out = -1;
 +		cp.dir = path;
-+		if (run_command(&cp))
-+			die("Could not run 'git push' command in submodule %s", path);
++		if (start_command(&cp))
++			die("Could not run 'git rev-list %s --not --remotes -n 1' command in submodule %s",
++				sha1_to_hex(sha1), path);
++		if (strbuf_read(&buf, cp.out, 41))
++			needs_pushing = 1;
++		finish_command(&cp);
 +		close(cp.out);
++		strbuf_release(&buf);
++		return needs_pushing;
 +	}
 +
-+	return 1;
- }
- 
-+struct collect_submodules_data {
-+	module_func_t func;
-+	void *data;
-+	int ret;
-+};
++	return 0;
++}
 +
- static void collect_submodules_from_diff(struct diff_queue_struct *q,
- 					 struct diff_options *options,
- 					 void *data)
- {
- 	int i;
--	int *needs_pushing = data;
-+	struct collect_submodules_data *me = data;
- 
- 	for (i = 0; i < q->nr; i++) {
- 		struct diff_filepair *p = q->queue[i];
- 		if (!S_ISGITLINK(p->two->mode))
- 			continue;
--		if (submodule_needs_pushing(p->two->path, p->two->sha1)) {
--			*needs_pushing = 1;
-+		if (!(me->ret = me->func(p->two->path, p->two->sha1, me->data)))
- 			break;
--		}
- 	}
- }
- 
--
--static void commit_need_pushing(struct commit *commit, struct commit_list *parent, int *needs_pushing)
-+static int commit_need_pushing(struct commit *commit, struct commit_list *parent,
-+	module_func_t func, void *data)
- {
- 	const unsigned char (*parents)[20];
- 	unsigned int i, n;
- 	struct rev_info rev;
- 
-+	struct collect_submodules_data cb;
-+	cb.func = func;
-+	cb.data = data;
-+	cb.ret = 1;
++static void collect_submodules_from_diff(struct diff_queue_struct *q,
++					 struct diff_options *options,
++					 void *data)
++{
++	int i;
++	int *needs_pushing = data;
 +
- 	n = commit_list_count(parent);
- 	parents = xmalloc(n * sizeof(*parents));
- 
-@@ -382,21 +421,23 @@ static void commit_need_pushing(struct commit *commit, struct commit_list *paren
- 	init_revisions(&rev, NULL);
- 	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
- 	rev.diffopt.format_callback = collect_submodules_from_diff;
--	rev.diffopt.format_callback_data = needs_pushing;
-+	rev.diffopt.format_callback_data = &cb;
- 	diff_tree_combined(commit->object.sha1, parents, n, 1, &rev);
- 
- 	free(parents);
-+	return cb.ret;
- }
- 
--int check_submodule_needs_pushing(unsigned char new_sha1[20], const char *remotes_name)
-+static int inspect_superproject_commits(unsigned char new_sha1[20], const char *remotes_name,
-+	module_func_t func, void *data)
- {
- 	struct rev_info rev;
- 	struct commit *commit;
- 	const char *argv[] = {NULL, NULL, "--not", "NULL", NULL};
- 	int argc = ARRAY_SIZE(argv) - 1;
- 	char *sha1_copy;
--	int needs_pushing = 0;
- 	struct strbuf remotes_arg = STRBUF_INIT;
-+	int do_continue = 1;
- 
- 	strbuf_addf(&remotes_arg, "--remotes=%s", remotes_name);
- 	init_revisions(&rev, NULL);
-@@ -407,13 +448,25 @@ int check_submodule_needs_pushing(unsigned char new_sha1[20], const char *remote
- 	if (prepare_revision_walk(&rev))
- 		die("revision walk setup failed");
- 
--	while ((commit = get_revision(&rev)) && !needs_pushing)
--		commit_need_pushing(commit, commit->parents, &needs_pushing);
-+	while ((commit = get_revision(&rev)) && do_continue)
-+		do_continue = commit_need_pushing(commit, commit->parents, func, data);
- 
- 	free(sha1_copy);
- 	strbuf_release(&remotes_arg);
- 
--	return needs_pushing;
-+	return do_continue;
++	for (i = 0; i < q->nr; i++) {
++		struct diff_filepair *p = q->queue[i];
++		if (!S_ISGITLINK(p->two->mode))
++			continue;
++		if (submodule_needs_pushing(p->two->path, p->two->sha1)) {
++			*needs_pushing = 1;
++			break;
++		}
++	}
++}
++
++
++static void commit_need_pushing(struct commit *commit, struct commit_list *parent, int *needs_pushing)
++{
++	const unsigned char (*parents)[20];
++	unsigned int i, n;
++	struct rev_info rev;
++
++	n = commit_list_count(parent);
++	parents = xmalloc(n * sizeof(*parents));
++
++	for (i = 0; i < n; i++) {
++		hashcpy((unsigned char *)(parents + i), parent->item->object.sha1);
++		parent = parent->next;
++	}
++
++	init_revisions(&rev, NULL);
++	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
++	rev.diffopt.format_callback = collect_submodules_from_diff;
++	rev.diffopt.format_callback_data = needs_pushing;
++	diff_tree_combined(commit->object.sha1, parents, n, 1, &rev);
++
++	free(parents);
 +}
 +
 +int check_submodule_needs_pushing(unsigned char new_sha1[20], const char *remotes_name)
 +{
-+	int needs_push = 0;
-+	inspect_superproject_commits(new_sha1, remotes_name, submodule_needs_pushing, &needs_push);
-+	return needs_push;
++	struct rev_info rev;
++	struct commit *commit;
++	const char *argv[] = {NULL, NULL, "--not", "NULL", NULL};
++	int argc = ARRAY_SIZE(argv) - 1;
++	char *sha1_copy;
++	int needs_pushing = 0;
++	struct strbuf remotes_arg = STRBUF_INIT;
++
++	strbuf_addf(&remotes_arg, "--remotes=%s", remotes_name);
++	init_revisions(&rev, NULL);
++	sha1_copy = xstrdup(sha1_to_hex(new_sha1));
++	argv[1] = sha1_copy;
++	argv[3] = remotes_arg.buf;
++	setup_revisions(argc, argv, &rev, NULL);
++	if (prepare_revision_walk(&rev))
++		die("revision walk setup failed");
++
++	while ((commit = get_revision(&rev)) && !needs_pushing)
++		commit_need_pushing(commit, commit->parents, &needs_pushing);
++
++	free(sha1_copy);
++	strbuf_release(&remotes_arg);
++
++	return needs_pushing;
 +}
 +
-+void push_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_name)
-+{
-+	inspect_superproject_commits(new_sha1, remotes_name, push_submodule, NULL);
- }
- 
  static int is_submodule_commit_present(const char *path, unsigned char sha1[20])
+ {
+ 	int is_present = 0;
 diff --git a/submodule.h b/submodule.h
-index 799c22d..a0074aa 100644
+index 5350b0d..799c22d 100644
 --- a/submodule.h
 +++ b/submodule.h
-@@ -30,5 +30,6 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked);
+@@ -29,5 +29,6 @@ int fetch_populated_submodules(int num_options, const char **options,
+ unsigned is_submodule_modified(const char *path, int ignore_untracked);
  int merge_submodule(unsigned char result[20], const char *path, const unsigned char base[20],
  		    const unsigned char a[20], const unsigned char b[20]);
- int check_submodule_needs_pushing(unsigned char new_sha1[20], const char *remotes_name);
-+void push_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_name);
++int check_submodule_needs_pushing(unsigned char new_sha1[20], const char *remotes_name);
  
  #endif
 diff --git a/t/t5531-deep-submodule-push.sh b/t/t5531-deep-submodule-push.sh
-index 30bec4b..35820ec 100755
+index faa2e96..30bec4b 100755
 --- a/t/t5531-deep-submodule-push.sh
 +++ b/t/t5531-deep-submodule-push.sh
-@@ -119,4 +119,28 @@ test_expect_success 'push succeeds if submodule has no remote and is on the firs
+@@ -32,4 +32,91 @@ test_expect_success push '
  	)
  '
  
-+test_expect_success 'push unpushed submodules' '
++test_expect_success 'push if submodule has no remote' '
++	(
++		cd work/gar/bage &&
++		>junk2 &&
++		git add junk2 &&
++		git commit -m "Second junk"
++	) &&
 +	(
 +		cd work &&
-+		git checkout master &&
-+		git push --recurse-submodules=on-demand ../pub.git master
++		git add gar/bage &&
++		git commit -m "Second commit for gar/bage" &&
++		git push --recurse-submodules=check ../pub.git master
 +	)
 +'
 +
-+test_expect_success 'push unpushed submodules when not needed' '
++test_expect_success 'push fails if submodule commit not on remote' '
++	(
++		cd work/gar &&
++		git clone --bare bage ../../submodule.git &&
++		cd bage &&
++		git remote add origin ../../../submodule.git &&
++		git fetch &&
++		>junk3 &&
++		git add junk3 &&
++		git commit -m "Third junk"
++	) &&
 +	(
 +		cd work &&
++		git add gar/bage &&
++		git commit -m "Third commit for gar/bage" &&
++		test_must_fail git push --recurse-submodules=check ../pub.git master
++	)
++'
++
++test_expect_success 'push succeeds after commit was pushed to remote' '
++	(
++		cd work/gar/bage &&
++		git push origin master
++	) &&
++	(
++		cd work &&
++		git push --recurse-submodules=check ../pub.git master
++	)
++'
++
++test_expect_success 'push fails when commit on multiple branches if one branch has no remote' '
++	(
++		cd work/gar/bage &&
++		>junk4 &&
++		git add junk4 &&
++		git commit -m "Fourth junk"
++	) &&
++	(
++		cd work &&
++		git branch branch2 &&
++		git add gar/bage &&
++		git commit -m "Fourth commit for gar/bage" &&
++		git checkout branch2 &&
 +		(
 +			cd gar/bage &&
-+			>junk4 &&
-+			git add junk4 &&
-+			git commit -m "junk4" &&
-+			git push
++			git checkout HEAD~1
 +		) &&
-+		git add gar/bage &&
-+		git commit -m "updated submodule" &&
-+		git push --recurse-submodules=on-demand ../pub.git master
++		>junk1 &&
++		git add junk1 &&
++		git commit -m "First junk" &&
++		test_must_fail git push --recurse-submodules=check ../pub.git
++	)
++'
++
++test_expect_success 'push succeeds if submodule has no remote and is on the first superproject commit' '
++	git init --bare a
++	git clone a a1 &&
++	(
++		cd a1 &&
++		git init b
++		(
++			cd b &&
++			>junk &&
++			git add junk &&
++			git commit -m "initial"
++		) &&
++		git add b &&
++		git commit -m "added submodule" &&
++		git push --recurse-submodule=check origin master
 +	)
 +'
 +
  test_done
 diff --git a/transport.c b/transport.c
-index d2725e5..59c90c7 100644
+index 98c5778..d2725e5 100644
 --- a/transport.c
 +++ b/transport.c
-@@ -1046,7 +1046,15 @@ int transport_push(struct transport *transport,
+@@ -10,6 +10,7 @@
+ #include "refs.h"
+ #include "branch.h"
+ #include "url.h"
++#include "submodule.h"
+ 
+ /* rsync support */
+ 
+@@ -1045,6 +1046,14 @@ int transport_push(struct transport *transport,
  			flags & TRANSPORT_PUSH_MIRROR,
  			flags & TRANSPORT_PUSH_FORCE);
  
--		if ((flags & TRANSPORT_RECURSE_SUBMODULES_CHECK) && !is_bare_repository()) {
-+		if ((flags & TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND) && !is_bare_repository()) {
++		if ((flags & TRANSPORT_RECURSE_SUBMODULES_CHECK) && !is_bare_repository()) {
 +			struct ref *ref = remote_refs;
 +			for (; ref; ref = ref->next)
-+				if (!is_null_sha1(ref->new_sha1))
-+				    push_unpushed_submodules(ref->new_sha1,transport->remote->name);
++				if (!is_null_sha1(ref->new_sha1) &&
++				    check_submodule_needs_pushing(ref->new_sha1,transport->remote->name))
++					die("There are unpushed submodules, aborting.");
 +		}
 +
-+		if ((flags & (TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND |
-+			      TRANSPORT_RECURSE_SUBMODULES_CHECK)) && !is_bare_repository()) {
- 			struct ref *ref = remote_refs;
- 			for (; ref; ref = ref->next)
- 				if (!is_null_sha1(ref->new_sha1) &&
+ 		push_ret = transport->push_refs(transport, remote_refs, flags);
+ 		err = push_had_errors(remote_refs);
+ 		ret = push_ret | err;
 diff --git a/transport.h b/transport.h
-index 059b330..9d19c78 100644
+index 161d724..059b330 100644
 --- a/transport.h
 +++ b/transport.h
-@@ -102,6 +102,7 @@ struct transport {
+@@ -101,6 +101,7 @@ struct transport {
+ #define TRANSPORT_PUSH_MIRROR 8
  #define TRANSPORT_PUSH_PORCELAIN 16
  #define TRANSPORT_PUSH_SET_UPSTREAM 32
- #define TRANSPORT_RECURSE_SUBMODULES_CHECK 64
-+#define TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND 128
++#define TRANSPORT_RECURSE_SUBMODULES_CHECK 64
  
  #define TRANSPORT_SUMMARY_WIDTH (2 * DEFAULT_ABBREV + 3)
  
