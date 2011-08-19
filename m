@@ -1,63 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 11/10] support pager.* for aliases
-Date: Thu, 18 Aug 2011 20:37:34 -0700
-Message-ID: <20110819033733.GB2993@sigill.intra.peff.net>
-References: <20110818215820.GA7767@sigill.intra.peff.net>
- <20110818215909.GA7799@sigill.intra.peff.net>
- <7v8vqq72kp.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: update-index --index-info producing spurious submodule commits
+Date: Thu, 18 Aug 2011 21:16:51 -0700
+Message-ID: <7vpqk2593g.fsf@alter.siamese.dyndns.org>
+References: <rmivctuv12s.fsf@fnord.ir.bbn.com>
+ <7vd3g272tk.fsf@alter.siamese.dyndns.org> <rmiliuq2qlg.fsf@fnord.ir.bbn.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org,
-	Steffen Daode Nurpmeso <sdaoden@googlemail.com>,
-	Ingo =?utf-8?Q?Br=C3=BCckl?= <ib@wupperonline.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 19 05:37:59 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Richard Hansen <rhansen@bbn.com>
+To: Greg Troxel <gdt@ir.bbn.com>
+X-From: git-owner@vger.kernel.org Fri Aug 19 06:17:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuFuA-00086y-TC
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 05:37:59 +0200
+	id 1QuGW2-0001jo-S1
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 06:17:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751806Ab1HSDhi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Aug 2011 23:37:38 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:57616
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751685Ab1HSDhh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Aug 2011 23:37:37 -0400
-Received: (qmail 28067 invoked by uid 107); 19 Aug 2011 03:38:17 -0000
-Received: from 99-189-169-83.lightspeed.snjsca.sbcglobal.net (HELO sigill.intra.peff.net) (99.189.169.83)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 18 Aug 2011 23:38:17 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Aug 2011 20:37:34 -0700
-Content-Disposition: inline
-In-Reply-To: <7v8vqq72kp.fsf@alter.siamese.dyndns.org>
+	id S1751445Ab1HSEQ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Aug 2011 00:16:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40921 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751332Ab1HSEQx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Aug 2011 00:16:53 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 09D59428D;
+	Fri, 19 Aug 2011 00:16:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=cv6lEwOLI7u8AZEFdQr7zWi7498=; b=gENjXT
+	e3TLvOoFyJObURzmKIsPRFkkh/QNJxAAL6DGKraeEyvpp8b05YahWwOorTFNMLNR
+	iao/js03Q4l5H6NAjz+Kn4FfnSavUvDW2tV4TMGRe3RyVSKYQJVpCVgvylH0nXWZ
+	angFugRqVnhN9zl9bw4GipGZfqIc1qZMG500M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pae5NAN8aLnDrFQLtRkGVhiLatz0k3YD
+	qMpsHG7xEgMcLfYACaitj4aJenkPwrF1t4G9FNYkYGJzPVallVmpd025p01nyFry
+	g9+hk/6TW1FCG9/Jix1x0mG4Ly/up/LkIuDg6k++3Tgx1SOY3+dzDviKjoU1DGlH
+	pbZg5mCYAzk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F047B428C;
+	Fri, 19 Aug 2011 00:16:52 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 88488428B; Fri, 19 Aug 2011
+ 00:16:52 -0400 (EDT)
+In-Reply-To: <rmiliuq2qlg.fsf@fnord.ir.bbn.com> (Greg Troxel's message of
+ "Thu, 18 Aug 2011 20:27:07 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 111566B6-CA1A-11E0-BCC6-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179670>
 
-On Thu, Aug 18, 2011 at 03:54:46PM -0700, Junio C Hamano wrote:
+Greg Troxel <gdt@ir.bbn.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Until this patch, doing something like:
-> >
-> >   git config alias.foo log
-> >   git config pager.foo /some/specific/pager
-> >
-> > would not respect pager.foo at all.
-> 
-> Is it a good thing? Looks too confusing and I am having a hard time to
-> decide if this is "just because we could" or "because we need to be able
-> to do this for such and such reasons".
+> If what I'm doing is an abuse of update-index, do you or anyone else
+> have a suggestion to make a directory in the index match a tree object?
 
-I don't have a particular use for it myself. However, I don't see what's
-confusing about it. Would would you expect the above commands to do with
-respect to paging? I think the behavior after my patch does what users
-will expect, whether they have configured pager.foo, pager.log, or
-nothing.
-
--Peff
+"ls-tree -r HEAD foo" is probably what you meant to say.
