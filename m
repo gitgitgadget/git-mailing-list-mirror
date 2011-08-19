@@ -1,206 +1,128 @@
-From: Elias Pipping <pipping@lavabit.com>
-Subject: git diff --word-diff=plain
-Date: Fri, 19 Aug 2011 21:16:52 +0200 (CEST)
-Message-ID: <20110819.211652.1683659708096792687.pipping@lavabit.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 4/4] Accept tags in HEAD or MERGE_HEAD
+Date: Fri, 19 Aug 2011 13:17:00 -0700
+Message-ID: <7vaab52m2r.fsf@alter.siamese.dyndns.org>
+References: <1313674994-22902-1-git-send-email-pclouds@gmail.com>
+ <1313765407-29925-1-git-send-email-pclouds@gmail.com>
+ <1313765407-29925-4-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: Multipart/Mixed;
- boundary="--Next_Part(Fri_Aug_19_21_16_52_2011_774)--"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 19 21:49:00 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 19 22:17:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuV3r-0002hf-Sl
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 21:49:00 +0200
+	id 1QuVV7-000563-QN
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 22:17:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756153Ab1HSTsx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Aug 2011 15:48:53 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:36483 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755928Ab1HSTsw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Aug 2011 15:48:52 -0400
-X-Greylist: delayed 1688 seconds by postgrey-1.27 at vger.kernel.org; Fri, 19 Aug 2011 15:48:52 EDT
-Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
-	by karen.lavabit.com (Postfix) with ESMTP id 637D315754F
-	for <git@vger.kernel.org>; Fri, 19 Aug 2011 14:20:44 -0500 (CDT)
-Received: from localhost (91-65-137-66-dynip.superkabel.de [91.65.137.66])
-	by lavabit.com with ESMTP id 4EEFQ5JKRMXC
-	for <git@vger.kernel.org>; Fri, 19 Aug 2011 14:20:44 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=lEirCjdrwHpfdWgaAtu6RGGPF88P5oB4c2AOfZEkCo/A268d7Oray/LAoc+i9KupTlKXFXBAA3KmtipeES/owChxqp+CsEUWHPYgieyy8UeQXa36jp15Qig4j6AOvvx24FdvYmcMNEQRvGSJmcM+ytv0560YBXXJ8USyRQku81U=;
-  h=Date:Message-Id:To:Subject:From:X-Mailer:Mime-Version:Content-Type:Content-Transfer-Encoding;
-X-Mailer: Mew version 6.3.51 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
+	id S1755253Ab1HSURF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Aug 2011 16:17:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55920 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753930Ab1HSURD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Aug 2011 16:17:03 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 86E5C4405;
+	Fri, 19 Aug 2011 16:17:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=5rWMg/KX1Hnt
+	ektUg3Ylp+zqQwA=; b=VuKtpnocBKTjisLRCpKBL08urZf3jiWJ5mA/zatoqEsp
+	IeJuoeOq3UfPQeUfluhX4+KP6n2nWVLscqCZBiknJJDTUZ0B+MusgaNUOoPZ8nsM
+	5h/AlcOGwbnrkZHmB5JldjPn+/yosnugaTbC40cRFOeZP3VZf0je5kukYmYMZEo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=IKUyE8
+	t80f5ifcaTIYSjVxqOcwqI2vWmWYfoIvvjNOuhkj67gsoj0h5ykg0HFShI69Zbmu
+	yqFEi3G3eZ8DRz/DjDcsMichmSKSaactZFPplhf+eO0U++VRc45Cz80n9CZp8cbB
+	sYmIak2JWhIdIv10KKqmR3QIallKaxuTqkUHM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D7C34404;
+	Fri, 19 Aug 2011 16:17:02 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 03C554403; Fri, 19 Aug 2011
+ 16:17:01 -0400 (EDT)
+In-Reply-To: <1313765407-29925-4-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Fri, 19 Aug
+ 2011 21:50:07 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 32FEE55A-CAA0-11E0-92BF-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179721>
 
-----Next_Part(Fri_Aug_19_21_16_52_2011_774)--
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-Hello,
+>  Junio's point, that if HEAD holds a tag, then head_sha1 and head->ob=
+ject.sha1
+>  in statement [1] are different, is entirely correct. However, favori=
+ng
+>  head->object.sha1 over head_sha1 is not enough. The variable head_sh=
+a1 is
+>  still there. Somewhere, some time, people may misuse it.
 
-I mean to use `git --no-pager diff --word-diff=plain --no-index` as a
-`wdiff`-replacement. I'm not sure if I should call it a bug but I've
-come across a situation in which the output of GNU wdiff is by far
-more helpful than that of the aforementioned git command.
+That is why I suggested _removing_ head_sha1[] altogether, so that ther=
+e
+is only one source of information. is_initial becomes !current_head and=
+=20
+head_sha1 becomes (current_head ? current_head->object.sha1 : null_sha1=
+).
 
-I've attached the two files less and BSD-2. Here are the differences
-that wdiff reveals:
+> diff --git a/commit.c b/commit.c
+> index ac337c7..9e7f7ef 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -39,6 +39,25 @@ struct commit *lookup_commit_reference(const unsig=
+ned char *sha1)
+>  	return lookup_commit_reference_gently(sha1, 0);
+>  }
+> =20
+> +/*
+> + * Look sha1 up for a commit, defer if needed. If deference occurs,
+> + * update "sha1" for consistency with retval->object.sha1. Also warn
+> + * users this case because it is expected that sha1 points directly =
+to
+> + * a commit.
+> + */
 
-% wdiff less BSD-2
-                          [-Less License-]
-[-                          -------------]
-[--]
-[-Less-]Copyright [-(C) 1984-2005  Mark Nudelman-] {+(c) <YEAR>, <OWNER>+}
-{+All rights reserved.+}
+That's de-reference, not deference ;-). You may want to be more explici=
+t
+about what kind of de-reference you are talking about.
 
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
+/*
+ * Get a commit object for the given sha1, unwrapping a tag object that
+ * point at a commit while at it. ref_name is only used when the result=
+=20
+ * is not a commit in the error message to report where we got the sha1
+ * from.
+ */
 
-1. Redistributions of source code must retain the above copyright notice,
-   this list of conditions and the following disclaimer.
-2. Redistributions in binary form must reproduce the above copyright
-   [-notice-]
-   {+notice, this list of conditions and the following disclaimer+} in the
-   documentation and/or other materials provided with the distribution.
+I actually was hoping that you would have this comment in commit.h to h=
+elp
+people who want to add callers of this function, not next to the
+implementation.
 
-THIS SOFTWARE IS PROVIDED BY THE [-AUTHOR ``AS IS''-] {+COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"+}
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-ARE DISCLAIMED. IN NO EVENT SHALL THE [-AUTHOR-] {+COPYRIGHT OWNER OR CONTRIBUTORS+} BE
-LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-POSSIBILITY OF SUCH DAMAGE.
-%
+As I said earlier, I do not think updating sha1[] here is necessary. Th=
+e
+caller should be updated to use c->object.sha1 instead.
 
-That's hardly any difference. Note that the file BSD-2 has an empty
-line just before the first bullet point. This will cause git to treat
-anything after that line as different for some reason. The resulting
-diff is thus hardly useful:
-
-% git --no-pager diff --word-diff=plain --no-index less BSD-2
-diff --git a/licences/less b/licences/BSD-2
-index 7e4887b..a995d54 100644
---- a/licences/less
-+++ b/licences/BSD-2
-@@ -1,27 +1,23 @@
-[-Less License-]
-[-                          -------------]
-
-[-Less-]Copyright [-(C) 1984-2005  Mark Nudelman-]{+(c) <YEAR>, <OWNER>+}
-{+All rights reserved.+}
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:[-1. Redistributions of source code must retain the above copyright-]
-[-   notice, this list of conditions and the following disclaimer.-]
-[-2. Redistributions in binary form must reproduce the above copyright-]
-[-   notice in the documentation and/or other materials provided with -]
-[-   the distribution.-]
-
-[-THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY-]
-[-EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE-]
-[-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR -]
-[-PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR BE LIABLE-]
-[-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR -]
-[-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT -]
-[-OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR -]
-[-BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, -]
-[-WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE -]
-[-OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN -]
-[-IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-]{+1. Redistributions of source code must retain the above copyright notice,+}
-{+   this list of conditions and the following disclaimer.+}
-{+2. Redistributions in binary form must reproduce the above copyright+}
-{+   notice, this list of conditions and the following disclaimer in the+}
-{+   documentation and/or other materials provided with the distribution.+}
-
-{+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"+}
-{+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE+}
-{+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE+}
-{+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE+}
-{+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR+}
-{+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF+}
-{+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS+}
-{+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN+}
-{+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)+}
-{+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE+}
-{+POSSIBILITY OF SUCH DAMAGE.+}
-%
-
-
-Best regards,
-
-Elias Pipping
-
-----Next_Part(Fri_Aug_19_21_16_52_2011_774)--
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline; filename=BSD-2
-
-Copyright (c) <YEAR>, <OWNER>
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-1. Redistributions of source code must retain the above copyright notice,
-   this list of conditions and the following disclaimer.
-2. Redistributions in binary form must reproduce the above copyright
-   notice, this list of conditions and the following disclaimer in the
-   documentation and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-POSSIBILITY OF SUCH DAMAGE.
-
-----Next_Part(Fri_Aug_19_21_16_52_2011_774)--
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline; filename=less
-
-                          Less License
-                          ------------
-
-Less
-Copyright (C) 1984-2005  Mark Nudelman
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions
-are met:
-1. Redistributions of source code must retain the above copyright
-   notice, this list of conditions and the following disclaimer.
-2. Redistributions in binary form must reproduce the above copyright
-   notice in the documentation and/or other materials provided with 
-   the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY
-EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR 
-PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT 
-OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR 
-BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
-WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
-OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN 
-IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-
-----Next_Part(Fri_Aug_19_21_16_52_2011_774)----
+> +struct commit *lookup_commit_or_die(unsigned char *sha1, const char =
+*ref_name)
+> +{
+> +	struct commit *c =3D lookup_commit_reference(sha1);
+> +	if (!c)
+> +		die(_("could not parse %s"), ref_name);
+> +	if (hashcmp(sha1, c->object.sha1)) {
+> +		warning(_("%s %s is not a commit!"),
+> +			ref_name, sha1_to_hex(sha1));
+> +		hashcpy(sha1, c->object.sha1);
+> +	}
+> +	return c;
+> +}
