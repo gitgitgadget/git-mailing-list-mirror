@@ -1,76 +1,91 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Branches & directories
-Date: Thu, 18 Aug 2011 19:13:01 -0500
-Message-ID: <20110819001301.GA32743@elie.gateway.2wire.net>
-References: <CAE1pOi3Eg88i+1s+CcW3+W0WNZ-NYUQb1EV55oh+g1Od78AByQ@mail.gmail.com>
- <CABNdCrCbSqup1=D2eEbGDhw3JzZGYHWLVqZFsB6GDO4Vk7HRxg@mail.gmail.com>
- <7vvctvdf5r.fsf@alter.siamese.dyndns.org>
- <CAE1pOi3rqqcz_6QxB8=g2jWOF-4SRZee7t8NXN1md2C4DL7wug@mail.gmail.com>
- <CAMOZ1BsZvXsnnWAPXR7UGKdqOMwuGB-ffaAPk55U_1dcjZUcDw@mail.gmail.com>
+From: Greg Troxel <gdt@ir.bbn.com>
+Subject: Re: update-index --index-info producing spurious submodule commits
+Date: Thu, 18 Aug 2011 20:27:07 -0400
+Message-ID: <rmiliuq2qlg.fsf@fnord.ir.bbn.com>
+References: <rmivctuv12s.fsf@fnord.ir.bbn.com>
+	<7vd3g272tk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Evan Shelhamer <shelhamer@imaginarynumber.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 19 02:13:20 2011
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha1; protocol="application/pgp-signature"
+Cc: git@vger.kernel.org, Richard Hansen <rhansen@bbn.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 19 02:31:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuCi4-0007m4-BS
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 02:13:16 +0200
+	id 1QuD05-00051g-OU
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 02:31:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752193Ab1HSANL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Aug 2011 20:13:11 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:59124 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751685Ab1HSANJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Aug 2011 20:13:09 -0400
-Received: by gya6 with SMTP id 6so1881489gya.19
-        for <git@vger.kernel.org>; Thu, 18 Aug 2011 17:13:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=MmP+ft8XcIsvjwMbw9/WsUSSbnx0Gx19Bqrm5AJD2Cg=;
-        b=CzyxSGqcYReBoslspN3vT1EvvpCaom8uhGd4xEOEVF70vpl077hcoFB8WB9Z/hSlAQ
-         skYOiuJcR4qCTfei9PsEaib/sHbLID13qShmQjMh1rcevMTBnGDVyOFcl3bDzRKsRmP9
-         KTZyGwTastZJ4+jY3GCgzrINDWKqMuUFxTL/k=
-Received: by 10.236.76.228 with SMTP id b64mr2390999yhe.18.1313712789030;
-        Thu, 18 Aug 2011 17:13:09 -0700 (PDT)
-Received: from elie.gateway.2wire.net (adsl-69-209-48-207.dsl.chcgil.ameritech.net [69.209.48.207])
-        by mx.google.com with ESMTPS id j45sm1870770yhe.22.2011.08.18.17.13.06
-        (version=SSLv3 cipher=OTHER);
-        Thu, 18 Aug 2011 17:13:07 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAMOZ1BsZvXsnnWAPXR7UGKdqOMwuGB-ffaAPk55U_1dcjZUcDw@mail.gmail.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S1752507Ab1HSA1L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Aug 2011 20:27:11 -0400
+Received: from fnord.ir.bbn.com ([192.1.100.210]:51943 "EHLO fnord.ir.bbn.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752016Ab1HSA1J (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2011 20:27:09 -0400
+Received: by fnord.ir.bbn.com (Postfix, from userid 10853)
+	id 8A25F53AA; Thu, 18 Aug 2011 20:27:07 -0400 (EDT)
+OpenPGP: id=32611E25
+X-Hashcash: 1:20:110819:gitster@pobox.com::lOHZPVyV2U1wG99d:000000000000000000000000000000000000000000001yIg
+X-Hashcash: 1:20:110819:rhansen@bbn.com::o0AltrtzKhrOooqf:0038AA
+X-Hashcash: 1:20:110819:git@vger.kernel.org::o0AltrtzKhrOooqf:0000000000000000000000000000000000000000004x9i
+In-Reply-To: <7vd3g272tk.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 18 Aug 2011 15:49:27 -0700")
+User-Agent: Gnus/5.110018 (No Gnus v0.18) Emacs/23.3 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179667>
 
-Hi Michael,
+--=-=-=
+Content-Type: text/plain
 
-Michael Witten wrote:
 
-> As an aside, the problem here is likely a manifestation of the fact
-> that nobody understands what a branch is
+Junio C Hamano <gitster@pobox.com> writes:
 
-I agree with Michael J Gruber that this is not the useful kind of
-hyperbole.
+> Greg Troxel <gdt@ir.bbn.com> writes:
+>
+>> git ls-tree HEAD foo
+>> git ls-tree HEAD foo | git update-index --index-info
+>
+> This --index-info definitely looks wrong, if "foo" is a directory, as the
+> entries in the index are supposed to be either blobs or commits.
 
-In olden times, there was more talk of the refs in the refs/heads/
-hierarchy as being branch heads which point to the tip of a particular
-branch of history.  That is still exactly what they are.  By abuse of
-language, people sometimes use the term "branch" as a synonym when
-there is little risk of confusion.
+In the man page for update-index in the --index-info section, what I'm
+doing seems to be covered by point 2, which specifically talks about
+output of ls-tree.
 
-If you have found tutorial documentation that is confusing on this
-point, by all means, fix it.  You are talking as though a
-documentation bug is a fundamental design flaw that cannot be fixed by
-the likes of you and me.
+I realize the index is a data structure that has pairs of paths to
+blobs.  But I also think of it as a representation of a tree object that
+would be referenced were one to commit (even if it isn't in that form
+yet).  So I would argue that update-index with a tree should walk that
+tree and insert all the paths resulting from expansion into the index?
+
+> The command could just instead barf, saying the input is wrong, but the
+> option was so low-level that it was deliberately written to accept and
+> store anything you throw at it --- even when it is nonsensical for the
+> version of plumbing, later updates to the data structure might have made
+> it making sense, which was the way to ease development of the system.
+
+If what I'm doing is an abuse of update-index, do you or anyone else
+have a suggestion to make a directory in the index match a tree object?
+(I'm trying to use an index filter; it takes 11 hours to run
+filter-branch (5500 commits, 400K files in index, 800MB .git, ~2+GB
+working directory, tmpdir on NetBSD tmpfs (all in ram)).)
+
+Thanks,
+Greg
+
+--=-=-=
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (NetBSD)
+
+iEYEARECAAYFAk5NrdsACgkQ+vesoDJhHiUmzgCfWnw/q+S8T+dk48OyWyJJ8knD
+slYAmwVHC2A4/SwPkYS28Xu9CbGQQ51j
+=0Qcb
+-----END PGP SIGNATURE-----
+--=-=-=--
