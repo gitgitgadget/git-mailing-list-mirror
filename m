@@ -1,259 +1,170 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v4 1/4] commit: remove global variable head_sha1[]
-Date: Fri, 19 Aug 2011 21:50:04 +0700
-Message-ID: <1313765407-29925-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v4 2/4] merge: keep stash[] a local variable
+Date: Fri, 19 Aug 2011 21:50:05 +0700
+Message-ID: <1313765407-29925-2-git-send-email-pclouds@gmail.com>
 References: <1313674994-22902-1-git-send-email-pclouds@gmail.com>
+ <1313765407-29925-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 19 16:50:28 2011
+X-From: git-owner@vger.kernel.org Fri Aug 19 16:50:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuQOu-0005gd-Ad
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 16:50:24 +0200
+	id 1QuQP0-0005jV-Nx
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 16:50:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754415Ab1HSOuS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Aug 2011 10:50:18 -0400
+	id S1754641Ab1HSOuY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Aug 2011 10:50:24 -0400
 Received: from mail-pz0-f42.google.com ([209.85.210.42]:62750 "EHLO
 	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753144Ab1HSOuQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Aug 2011 10:50:16 -0400
-Received: by pzk37 with SMTP id 37so4952089pzk.1
-        for <git@vger.kernel.org>; Fri, 19 Aug 2011 07:50:16 -0700 (PDT)
+	with ESMTP id S1754515Ab1HSOuX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Aug 2011 10:50:23 -0400
+Received: by mail-pz0-f42.google.com with SMTP id 37so4952089pzk.1
+        for <git@vger.kernel.org>; Fri, 19 Aug 2011 07:50:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=ST1lE9GpLs8tkiJ6T6TAKESzFtgvCRPkyIBCA2i8LPc=;
-        b=BWpktmQ3S9GljToPNVl+kxvY1obqXRHXPYJL//SHSp7KBsGg6uPxQDLWy3s4aqsKt6
-         /hAKseFjAYek//58qpAMJ/7Mek5TW151ulYkcINcd9ln84hOdSL+TcJWokXG4wmsf7Ip
-         guq17N+Zl4KseRXg+CG6NgzQGLO54DqHBN5H0=
-Received: by 10.142.134.8 with SMTP id h8mr462157wfd.421.1313765416361;
-        Fri, 19 Aug 2011 07:50:16 -0700 (PDT)
+        bh=j5pfQRsQBH2Pml8TId6Q6+b30fLPzhReFwDQcXM3AVM=;
+        b=wNcF9akX7ReqqVBK5g/k9+tbYDS0uzYa1UsRVDyBCRHYxiets77yWggpHyLwzE5j6U
+         0fTBfb7ZRSWS6sOjeMO+f7uFosgEGGvhBooxgKoqIjQHYyVXf/BVPql7QO+o64G4kikV
+         Owg4A+OQJTyWlaAqRq4+y+cHehOXOxArhfEhA=
+Received: by 10.142.152.6 with SMTP id z6mr1130487wfd.32.1313765422872;
+        Fri, 19 Aug 2011 07:50:22 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.73.228.117])
-        by mx.google.com with ESMTPS id l15sm1530965wfe.12.2011.08.19.07.50.12
+        by mx.google.com with ESMTPS id c8sm2388718pbi.43.2011.08.19.07.50.19
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 19 Aug 2011 07:50:15 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 19 Aug 2011 21:50:08 +0700
+        Fri, 19 Aug 2011 07:50:21 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 19 Aug 2011 21:50:15 +0700
 X-Mailer: git-send-email 1.7.4.74.g639db
-In-Reply-To: <1313674994-22902-1-git-send-email-pclouds@gmail.com>
+In-Reply-To: <1313765407-29925-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179705>
 
+A stash is created by save_state() and used by restore_state(). Pass
+SHA-1 explicitly for clarity and keep stash[] to cmd_merge().
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/commit.c |   52 ++++++++++++++++++++++++++--------------------=
-------
- 1 files changed, 26 insertions(+), 26 deletions(-)
+ builtin/merge.c |   33 ++++++++++++++++-----------------
+ 1 files changed, 16 insertions(+), 17 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index cb73857..c9c4ea5 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -62,8 +62,6 @@ N_("The previous cherry-pick is now empty, possibly d=
-ue to conflict resolution.\
- "\n"
- "Otherwise, please use 'git reset'\n");
-=20
--static unsigned char head_sha1[20];
--
- static const char *use_message_buffer;
- static const char commit_editmsg[] =3D "COMMIT_EDITMSG";
- static struct lock_file index_lock; /* real index */
-@@ -296,7 +294,7 @@ static void add_remove_files(struct string_list *li=
-st)
- 	}
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 325891e..a068660 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -50,7 +50,7 @@ static int fast_forward_only;
+ static int allow_trivial =3D 1, have_message;
+ static struct strbuf merge_msg;
+ static struct commit_list *remoteheads;
+-static unsigned char head[20], stash[20];
++static unsigned char head[20];
+ static struct strategy **use_strategies;
+ static size_t use_strategies_nr, use_strategies_alloc;
+ static const char **xopts;
+@@ -217,7 +217,7 @@ static void drop_save(void)
+ 	unlink(git_path("MERGE_MODE"));
  }
 =20
--static void create_base_index(void)
-+static void create_base_index(const unsigned char *head_sha1)
+-static void save_state(void)
++static int save_state(unsigned char *stash)
  {
- 	struct tree *tree;
- 	struct unpack_trees_options opts;
-@@ -334,7 +332,8 @@ static void refresh_cache_or_die(int refresh_flags)
- 		die_resolve_conflict("commit");
+ 	int len;
+ 	struct child_process cp;
+@@ -236,11 +236,12 @@ static void save_state(void)
+=20
+ 	if (finish_command(&cp) || len < 0)
+ 		die(_("stash failed"));
+-	else if (!len)
+-		return;
++	else if (!len)		/* no changes */
++		return -1;
+ 	strbuf_setlen(&buffer, buffer.len-1);
+ 	if (get_sha1(buffer.buf, stash))
+ 		die(_("not a valid object: %s"), buffer.buf);
++	return 0;
  }
 =20
--static char *prepare_index(int argc, const char **argv, const char *pr=
-efix, int is_status)
-+static char *prepare_index(int argc, const char **argv, const char *pr=
-efix,
-+			   const unsigned char *head_sha1, int is_status)
+ static void read_empty(unsigned const char *sha1, int verbose)
+@@ -278,7 +279,7 @@ static void reset_hard(unsigned const char *sha1, i=
+nt verbose)
+ 		die(_("read-tree failed"));
+ }
+=20
+-static void restore_state(void)
++static void restore_state(const unsigned char *stash)
  {
- 	int fd;
- 	struct string_list partial;
-@@ -469,7 +468,7 @@ static char *prepare_index(int argc, const char **a=
-rgv, const char *prefix, int
- 						(uintmax_t) getpid()),
- 				       LOCK_DIE_ON_ERROR);
-=20
--	create_base_index();
-+	create_base_index(head_sha1);
- 	add_remove_files(&partial);
- 	refresh_cache(REFRESH_QUIET);
-=20
-@@ -518,11 +517,8 @@ static int run_status(FILE *fp, const char *index_=
-file, const char *prefix, int
- 	return s->commitable;
- }
-=20
--static int is_a_merge(const unsigned char *sha1)
-+static int is_a_merge(struct commit *commit)
+ 	struct strbuf sb =3D STRBUF_INIT;
+ 	const char *args[] =3D { "stash", "apply", NULL, NULL };
+@@ -1010,6 +1011,7 @@ static int setup_with_upstream(const char ***argv=
+)
+ int cmd_merge(int argc, const char **argv, const char *prefix)
  {
--	struct commit *commit =3D lookup_commit(sha1);
--	if (!commit || parse_commit(commit))
--		die(_("could not parse HEAD commit"));
- 	return !!(commit->parents && commit->parents->next);
- }
-=20
-@@ -627,7 +623,7 @@ static char *cut_ident_timestamp_part(char *string)
- }
-=20
- static int prepare_to_commit(const char *index_file, const char *prefi=
-x,
--			     struct wt_status *s,
-+			     struct commit *head_commit, struct wt_status *s,
- 			     struct strbuf *author_ident)
- {
- 	struct stat statbuf;
-@@ -848,7 +844,7 @@ static int prepare_to_commit(const char *index_file=
-, const char *prefix,
- 	 * empty due to conflict resolution, which the user should okay.
- 	 */
- 	if (!commitable && whence !=3D FROM_MERGE && !allow_empty &&
--	    !(amend && is_a_merge(head_sha1))) {
-+	    !(amend && is_a_merge(head_commit))) {
- 		run_status(stdout, index_file, prefix, 0, s);
- 		if (amend)
- 			fputs(_(empty_amend_advice), stderr);
-@@ -1026,9 +1022,6 @@ static int parse_and_validate_options(int argc, c=
-onst char *argv[],
- 	if (!use_editor)
- 		setenv("GIT_EDITOR", ":", 1);
-=20
--	if (get_sha1("HEAD", head_sha1))
--		initial_commit =3D 1;
--
- 	/* Sanity check options */
- 	if (amend && initial_commit)
- 		die(_("You have nothing to amend."));
-@@ -1102,12 +1095,12 @@ static int parse_and_validate_options(int argc,=
- const char *argv[],
- }
-=20
- static int dry_run_commit(int argc, const char **argv, const char *pre=
-fix,
--			  struct wt_status *s)
-+			  const unsigned char *head_sha1, struct wt_status *s)
- {
- 	int commitable;
- 	const char *index_file;
-=20
--	index_file =3D prepare_index(argc, argv, prefix, 1);
-+	index_file =3D prepare_index(argc, argv, prefix, head_sha1, 1);
- 	commitable =3D run_status(stdout, index_file, prefix, 0, s);
- 	rollback_index_files();
-=20
-@@ -1383,11 +1376,13 @@ int cmd_commit(int argc, const char **argv, con=
-st char *prefix)
- 	const char *index_file, *reflog_msg;
- 	char *nl, *p;
- 	unsigned char commit_sha1[20];
-+	unsigned char head_sha1[20];
- 	struct ref_lock *ref_lock;
- 	struct commit_list *parents =3D NULL, **pptr =3D &parents;
- 	struct stat statbuf;
- 	int allow_fast_forward =3D 1;
- 	struct wt_status s;
-+	struct commit *head_commit;
-=20
- 	if (argc =3D=3D 2 && !strcmp(argv[1], "-h"))
- 		usage_with_options(builtin_commit_usage, builtin_commit_options);
-@@ -1396,6 +1391,14 @@ int cmd_commit(int argc, const char **argv, cons=
+ 	unsigned char result_tree[20];
++	unsigned char stash[20];
+ 	struct strbuf buf =3D STRBUF_INIT;
+ 	const char *head_arg;
+ 	int flag, head_invalid =3D 0, i;
+@@ -1320,21 +1322,18 @@ int cmd_merge(int argc, const char **argv, cons=
 t char *prefix)
- 	git_config(git_commit_config, &s);
- 	determine_whence(&s);
+ 	 * sync with the head commit.  The strategies are responsible
+ 	 * to ensure this.
+ 	 */
+-	if (use_strategies_nr !=3D 1) {
+-		/*
+-		 * Stash away the local changes so that we can try more
+-		 * than one.
+-		 */
+-		save_state();
+-	} else {
+-		memcpy(stash, null_sha1, 20);
+-	}
++	if (use_strategies_nr =3D=3D 1 ||
++	    /*
++	     * Stash away the local changes so that we can try more than one.
++	     */
++	    save_state(stash))
++		hashcpy(stash, null_sha1);
 =20
-+	if (get_sha1("HEAD", head_sha1))
-+		initial_commit =3D 1;
-+	else {
-+		head_commit =3D lookup_commit(head_sha1);
-+		if (!head_commit || parse_commit(head_commit))
-+			die(_("could not parse HEAD commit"));
-+	}
-+
- 	if (s.use_color =3D=3D -1)
- 		s.use_color =3D git_use_color_default;
- 	argc =3D parse_and_validate_options(argc, argv, builtin_commit_usage,
-@@ -1403,13 +1406,14 @@ int cmd_commit(int argc, const char **argv, con=
-st char *prefix)
- 	if (dry_run) {
- 		if (diff_use_color_default =3D=3D -1)
- 			diff_use_color_default =3D git_use_color_default;
--		return dry_run_commit(argc, argv, prefix, &s);
-+		return dry_run_commit(argc, argv, prefix, head_sha1, &s);
- 	}
--	index_file =3D prepare_index(argc, argv, prefix, 0);
-+	index_file =3D prepare_index(argc, argv, prefix, head_sha1, 0);
-=20
- 	/* Set up everything for writing the commit object.  This includes
- 	   running hooks, writing the trees, and interacting with the user.  =
-*/
--	if (!prepare_to_commit(index_file, prefix, &s, &author_ident)) {
-+	if (!prepare_to_commit(index_file, prefix, head_commit,
-+			       &s, &author_ident)) {
- 		rollback_index_files();
- 		return 1;
- 	}
-@@ -1421,15 +1425,11 @@ int cmd_commit(int argc, const char **argv, con=
-st char *prefix)
- 			reflog_msg =3D "commit (initial)";
- 	} else if (amend) {
- 		struct commit_list *c;
--		struct commit *commit;
-=20
- 		if (!reflog_msg)
- 			reflog_msg =3D "commit (amend)";
--		commit =3D lookup_commit(head_sha1);
--		if (!commit || parse_commit(commit))
--			die(_("could not parse HEAD commit"));
-=20
--		for (c =3D commit->parents; c; c =3D c->next)
-+		for (c =3D head_commit->parents; c; c =3D c->next)
- 			pptr =3D &commit_list_insert(c->item, pptr)->next;
- 	} else if (whence =3D=3D FROM_MERGE) {
- 		struct strbuf m =3D STRBUF_INIT;
-@@ -1437,7 +1437,7 @@ int cmd_commit(int argc, const char **argv, const=
- char *prefix)
-=20
- 		if (!reflog_msg)
- 			reflog_msg =3D "commit (merge)";
--		pptr =3D &commit_list_insert(lookup_commit(head_sha1), pptr)->next;
-+		pptr =3D &commit_list_insert(head_commit, pptr)->next;
- 		fp =3D fopen(git_path("MERGE_HEAD"), "r");
- 		if (fp =3D=3D NULL)
- 			die_errno(_("could not open '%s' for reading"),
-@@ -1463,7 +1463,7 @@ int cmd_commit(int argc, const char **argv, const=
- char *prefix)
- 			reflog_msg =3D (whence =3D=3D FROM_CHERRY_PICK)
- 					? "commit (cherry-pick)"
- 					: "commit";
--		pptr =3D &commit_list_insert(lookup_commit(head_sha1), pptr)->next;
-+		pptr =3D &commit_list_insert(head_commit, pptr)->next;
- 	}
-=20
- 	/* Finally, get the commit message */
+ 	for (i =3D 0; i < use_strategies_nr; i++) {
+ 		int ret;
+ 		if (i) {
+ 			printf(_("Rewinding the tree to pristine...\n"));
+-			restore_state();
++			restore_state(stash);
+ 		}
+ 		if (use_strategies_nr !=3D 1)
+ 			printf(_("Trying merge strategy %s...\n"),
+@@ -1395,7 +1394,7 @@ int cmd_merge(int argc, const char **argv, const =
+char *prefix)
+ 	 * it up.
+ 	 */
+ 	if (!best_strategy) {
+-		restore_state();
++		restore_state(stash);
+ 		if (use_strategies_nr > 1)
+ 			fprintf(stderr,
+ 				_("No merge strategy handled the merge.\n"));
+@@ -1407,7 +1406,7 @@ int cmd_merge(int argc, const char **argv, const =
+char *prefix)
+ 		; /* We already have its result in the working tree. */
+ 	else {
+ 		printf(_("Rewinding the tree to pristine...\n"));
+-		restore_state();
++		restore_state(stash);
+ 		printf(_("Using the %s to prepare resolving by hand.\n"),
+ 			best_strategy);
+ 		try_merge_strategy(best_strategy, common, head_arg);
 --=20
 1.7.4.74.g639db
