@@ -1,159 +1,65 @@
-From: Michal Sojka <sojka@os.inf.tu-dresden.de>
-Subject: Re: [PATCH RFC] gitk: Allow commit editing
-Date: Fri, 19 Aug 2011 15:34:06 +0200
-Message-ID: <87sjoxv835.fsf@steelpick.2x.cz>
-References: <1313610971-1741-1-git-send-email-sojka@os.inf.tu-dresden.de> <20110818223346.GA8481@sigill.intra.peff.net> <4E4E4C84.4030804@gmail.com>
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: Re: [PATCH v2 1/4] git-p4: Allow setting rename/copy detection threshold.
+Date: Fri, 19 Aug 2011 14:51:06 +0100
+Message-ID: <CAOpHH-WJWxeTSO5Dy6UR9pJh3w9hQSBuE7O1mY2KDAEsS9OAPw@mail.gmail.com>
+References: <1313706054-11740-1-git-send-email-vitor.hda@gmail.com>
+ <1313706054-11740-2-git-send-email-vitor.hda@gmail.com> <7vy5yq5nkb.fsf@alter.siamese.dyndns.org>
+ <CAOpHH-VsoOSOH6ym2exCH=W4NmuKRw+f53HrwB47YD3u-iDe2w@mail.gmail.com> <20110819114719.GB15639@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, paulus@samba.org
-To: Chris Packham <judge.packham@gmail.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 19 15:34:24 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Tor Arvid Lund <torarvid@gmail.com>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Fri Aug 19 15:51:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuPDJ-0000kS-Eb
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 15:34:21 +0200
+	id 1QuPUA-0001RP-4P
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 15:51:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755490Ab1HSNeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Aug 2011 09:34:11 -0400
-Received: from max.feld.cvut.cz ([147.32.192.36]:47290 "EHLO max.feld.cvut.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755461Ab1HSNeJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Aug 2011 09:34:09 -0400
-Received: from localhost (unknown [192.168.200.4])
-	by max.feld.cvut.cz (Postfix) with ESMTP id A4C273CFE77;
-	Fri, 19 Aug 2011 15:34:07 +0200 (CEST)
-X-Virus-Scanned: IMAP AMAVIS
-Received: from max.feld.cvut.cz ([192.168.200.1])
-	by localhost (styx.feld.cvut.cz [192.168.200.4]) (amavisd-new, port 10044)
-	with ESMTP id nWnYriIEPTkl; Fri, 19 Aug 2011 15:34:06 +0200 (CEST)
-Received: from imap.feld.cvut.cz (imap.feld.cvut.cz [147.32.192.34])
-	by max.feld.cvut.cz (Postfix) with ESMTP id 854903CFE71;
-	Fri, 19 Aug 2011 15:34:06 +0200 (CEST)
-Received: from steelpick.2x.cz (unknown [141.76.49.12])
-	(Authenticated sender: sojkam1)
-	by imap.feld.cvut.cz (Postfix) with ESMTPSA id 4FEAEFA003;
-	Fri, 19 Aug 2011 15:34:06 +0200 (CEST)
-Received: from wsh by steelpick.2x.cz with local (Exim 4.76)
-	(envelope-from <sojka@os.inf.tu-dresden.de>)
-	id 1QuPD4-0000Hu-3T; Fri, 19 Aug 2011 15:34:06 +0200
-In-Reply-To: <4E4E4C84.4030804@gmail.com>
-User-Agent: Notmuch/0.6.1-91-g55c2c34 (http://notmuchmail.org) Emacs/23.3.1 (x86_64-pc-linux-gnu)
+	id S1753795Ab1HSNvh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Aug 2011 09:51:37 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:44069 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753714Ab1HSNvh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Aug 2011 09:51:37 -0400
+Received: by ywf7 with SMTP id 7so2190789ywf.19
+        for <git@vger.kernel.org>; Fri, 19 Aug 2011 06:51:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=A0RjCrJPguhnK2OAKPiR0FvRw7sIEHNUDrtfR5ysLMs=;
+        b=wCerSlZbgDGIIIIbyLCYiHYU+p4o+3v2Q4j07Ps64tsSzWLOW95M0YZ1v/w/C4KAK5
+         LGueRMNVxPU+ht0vvElBfSLYrQ72FOXvo96S/L4bPFC2xlNfrreeM5OttYGYlgoqvJEU
+         5HnI21xRNgir73oXV5lxrJoA919jD/nbQ3UG8=
+Received: by 10.236.136.196 with SMTP id w44mr7649775yhi.56.1313761896384;
+ Fri, 19 Aug 2011 06:51:36 -0700 (PDT)
+Received: by 10.231.19.8 with HTTP; Fri, 19 Aug 2011 06:51:06 -0700 (PDT)
+In-Reply-To: <20110819114719.GB15639@padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179701>
 
-On Fri, 19 Aug 2011, Chris Packham wrote:
-> One thing I've thought about (but don't know enough TCL to begin to
-> implement) is a graphical rebase front end. I often use git gui to make
-> tweaks to the last commit (message and content) so why not extend that
-> to a rebase operation. I think that might address some of Peffs concerns
-> because the user would be invoking something specifically intended for
-> rebasing and accepts all the caveats that go along with that.
+On Fri, Aug 19, 2011 at 12:47 PM, Pete Wyckoff <pw@padd.com> wrote:
+> I think you have to decide that 1 means 1 in this case.
+> Everything else can mean true. =A0That may suggest that using
+> --bool or --bool-or-int isn't possible in this case.
 
-Hi Chris,
+But doing that kind of post-processing would require me to call
+git-config (at least) twice: first to check if it is a number with a
+possible "." in the middle or "%" at the end and a second time with
+the --bool option. I have no problem in doing this, but I think it
+increases the complexity without bringing major advantages.
 
-the version of the patch below supports not only editing of commit
-message but also of the commit itself. There is an easy way to split
-commits and to remove lines/hunks form the commits. Additionally, with
-the help of editor and "Rescan" button in git gui, you can add things to
-the commits.
+I will use --bool for detectCopiesHarder and will send you the new set
+of patches tonight, unless we decide to also start using it for
+detectCopies and detectRenames.
 
-I think that in the similar way as in this patch, it would be easy to
-allow gitk doing fixup and squash operations offered by rebase.
-
--Michal
-
---8<---------------cut here---------------start------------->8---
-From 1d0f0a778afbaeb928cdecb3f18065757b3aa2fa Mon Sep 17 00:00:00 2001
-From: Michal Sojka <sojka@os.inf.tu-dresden.de>
-Date: Fri, 19 Aug 2011 15:21:47 +0200
-Subject: [PATCH] gitk: Allow commit editing
-
-I often use gitk to review patches before pushing them and would like
-to have an easy way of fixing typos in commit messages. The current
-approach with copying the commitid, switching to terminal, invoking
-git rebase -i, editing the commit and switching back to gitk is a way
-too complicated just for changing a single letter in commit message or
-remove a debug printf().
-
-This patch adds "Edit this commit" item to gitk's context menu which
-invokes interactive rebase in a non-interactive way :-). git gui is
-used to actually edit the commit.
-
-Splitting of commits (as described in git-rebase(1)) is also supported.
-
-The user is warned if the commit that is going to be edited is
-contained in a remote branch.
-
-Signed-off-by: Michal Sojka <sojka@os.inf.tu-dresden.de>
----
- gitk-git/gitk |   40 ++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 40 insertions(+), 0 deletions(-)
-
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 4cde0c4..432ca9b 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -2487,6 +2487,7 @@ proc makewindow {} {
-     makemenu $rowctxmenu {
- 	{mc "Diff this -> selected" command {diffvssel 0}}
- 	{mc "Diff selected -> this" command {diffvssel 1}}
-+	{mc "Edit this commit" command edit_commit}
- 	{mc "Make patch" command mkpatch}
- 	{mc "Create tag" command mktag}
- 	{mc "Write commit to file" command writecommit}
-@@ -9102,6 +9103,45 @@ proc cherrypick {} {
-     notbusy cherrypick
- }
- 
-+proc edit_commit {} {
-+    global rowmenuid selectedline
-+
-+    if {[exec git branch -r --contains=$rowmenuid] ne {}} {
-+	if {![confirm_popup [mc "The commit you are going to edit is contained in at least\
-+				 one remote branch. It is a bad idea to change a branch that is\
-+				 possibly used by other people. See git-rebase(1) for details.\n\n\
-+				 Do you want to continue?"]]} return }
-+
-+    nowbusy edit [mc "Editing commit"]
-+    if {[catch {exec sh -c "(GIT_EDITOR='sed -ie 1s/^pick/edit/' git rebase -p -i $rowmenuid^ && git gui citool --amend) 2>&1"} err]} {
-+	notbusy edit
-+	error_popup $err
-+	exec git rebase --abort
-+	return
-+    }
-+    set newcommit [exec git rev-parse HEAD]
-+    while {[catch {exec sh -c "git diff-index --quiet --cached HEAD && git diff-files --quiet"} err]} {
-+	if {[confirm_popup [mc "There are uncommited changes in the working tree or in the index.\
-+				Do you want to create a new commit (OK) or throw them away (Cancel)?"]]} {
-+	    catch {exec git gui citool} err;
-+	    # In case of error (i.e. the user did not commit anything), we just ask him again
-+	} else {
-+	    exec git reset --hard
-+	}
-+    }
-+    if {[catch {exec sh -c "git rebase --continue 2>&1"} err]} {
-+	notbusy edit
-+	error_popup $err
-+	exec git rebase --abort
-+	return
-+    }
-+    updatecommits
-+    # XXX How to select the edited commit? This doesn't work.
-+    selbyid $newcommit
-+    notbusy edit
-+}
-+
-+
- proc resethead {} {
-     global mainhead rowmenuid confirm_ok resettype NS
- 
--- 
-1.7.5.4
-
---8<---------------cut here---------------end--------------->8---
+--=20
+Vitor Antunes
