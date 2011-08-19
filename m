@@ -1,91 +1,86 @@
-From: Greg Troxel <gdt@ir.bbn.com>
-Subject: Re: update-index --index-info producing spurious submodule commits
-Date: Thu, 18 Aug 2011 20:27:07 -0400
-Message-ID: <rmiliuq2qlg.fsf@fnord.ir.bbn.com>
-References: <rmivctuv12s.fsf@fnord.ir.bbn.com>
-	<7vd3g272tk.fsf@alter.siamese.dyndns.org>
+From: Joe Perches <joe@perches.com>
+Subject: Re: [PATCH] git-send-email: Add AUTH LOGIN support
+Date: Thu, 18 Aug 2011 18:16:25 -0700
+Message-ID: <1313716585.11178.2.camel@Joe-Laptop>
+References: <c1be0c3bd05779897fdc92907fe65d84c88ac72b.1312591104.git.joe@perches.com>
+	 <7vzkjn16n6.fsf@alter.siamese.dyndns.org>
+	 <1312608114.6419.18.camel@Joe-Laptop>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-Cc: git@vger.kernel.org, Richard Hansen <rhansen@bbn.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Graham Barr <gbarr@pobox.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 19 02:31:58 2011
+X-From: git-owner@vger.kernel.org Fri Aug 19 03:16:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuD05-00051g-OU
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 02:31:54 +0200
+	id 1QuDhJ-0002Bw-7v
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 03:16:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752507Ab1HSA1L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Aug 2011 20:27:11 -0400
-Received: from fnord.ir.bbn.com ([192.1.100.210]:51943 "EHLO fnord.ir.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752016Ab1HSA1J (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Aug 2011 20:27:09 -0400
-Received: by fnord.ir.bbn.com (Postfix, from userid 10853)
-	id 8A25F53AA; Thu, 18 Aug 2011 20:27:07 -0400 (EDT)
-OpenPGP: id=32611E25
-X-Hashcash: 1:20:110819:gitster@pobox.com::lOHZPVyV2U1wG99d:000000000000000000000000000000000000000000001yIg
-X-Hashcash: 1:20:110819:rhansen@bbn.com::o0AltrtzKhrOooqf:0038AA
-X-Hashcash: 1:20:110819:git@vger.kernel.org::o0AltrtzKhrOooqf:0000000000000000000000000000000000000000004x9i
-In-Reply-To: <7vd3g272tk.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 18 Aug 2011 15:49:27 -0700")
-User-Agent: Gnus/5.110018 (No Gnus v0.18) Emacs/23.3 (berkeley-unix)
+	id S1752995Ab1HSBQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Aug 2011 21:16:27 -0400
+Received: from wondertoys-mx.wondertoys.net ([206.117.179.246]:51413 "EHLO
+	labridge.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752830Ab1HSBQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2011 21:16:27 -0400
+Received: from [173.60.85.8] (account joe@perches.com HELO [192.168.1.156])
+  by labridge.com (CommuniGate Pro SMTP 5.0.14)
+  with ESMTPA id 18035055; Thu, 18 Aug 2011 18:16:26 -0700
+In-Reply-To: <1312608114.6419.18.camel@Joe-Laptop>
+X-Mailer: Evolution 2.32.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179668>
 
---=-=-=
-Content-Type: text/plain
+On Fri, 2011-08-05 at 22:21 -0700, Joe Perches wrote:
+> On Fri, 2011-08-05 at 21:54 -0700, Junio C Hamano wrote:
+> > Joe Perches <joe@perches.com> writes:
+> > > The current perl Net::SMTP support will not use AUTH LOGIN
+> > > when other authentication options are available.
+> > Even after reading this excuse,...
+> > > +			if (defined $smtp_auth && $smtp_auth =~ /^login$/i) {
+> > > +
+> > > +			    $smtp->datasend("AUTH LOGIN\n");
+> > > +			    $smtp->response();
+> > > +			    $smtp->datasend(encode_base64("$smtp_authuser"));
+> > > +			    $smtp->response();
+> > > +			    $smtp->datasend(encode_base64("$smtp_authpass"));
+> > > +			    $smtp->response();
+> > > +
+> > > +			} else {
+> > > +
+> > > +			    $auth ||= $smtp->auth( $smtp_authuser, $smtp_authpass ) or die $smtp->message;
+> > > +			}
+> > ... this makes me feel dirty X-(. Not the desire to force "AUTH LOGIN",
+> > but the implementation to hand-roll the protocol exchange.
+> > I'd rather want to know _why_ Net::SMTP does not support it in the first
+> > place, and what it does for "other authentication options" that are
+> > available. Does it try them in turn until it finds the one that works? Why
+> > doesn't it fall back on "AUTH LOGIN" then?
+> > Specifically, if there is a reason to avoid this plaintext authentication
+> > method when other options are _available_ (which presumably would be the
+> > reason why Net::SMTP chooses not to support it), and if there is a reason
+> > on the user's side to _force_ this method even when people who wrote
+> > Net::SMTP does not recommend it be used, wouldn't it be natural to expect
+> > that there should be a way to configure the connection to use it, without
+> > resorting to coding the protocol exchange by hand line this?
+> 
+> I needed something now.
+> 
+> You are right but I believe it would take too long
+> to get updates to Net::SMTP in place. Doing this
+> admitted ugliness in git-send-email works for me and
+> seems to me to be appropriate for now.
+> 
+> I looked, there isn't a method to force a particular
+> AUTH type documented.  I also didn't care to rewrite
+> Net::SMTP right now.  This "works for me"...
+> 
+> > It probably is not as simple as installing Authen::SASL::*::LOGIN, but
+> > still...
 
-
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Greg Troxel <gdt@ir.bbn.com> writes:
->
->> git ls-tree HEAD foo
->> git ls-tree HEAD foo | git update-index --index-info
->
-> This --index-info definitely looks wrong, if "foo" is a directory, as the
-> entries in the index are supposed to be either blobs or commits.
-
-In the man page for update-index in the --index-info section, what I'm
-doing seems to be covered by point 2, which specifically talks about
-output of ls-tree.
-
-I realize the index is a data structure that has pairs of paths to
-blobs.  But I also think of it as a representation of a tree object that
-would be referenced were one to commit (even if it isn't in that form
-yet).  So I would argue that update-index with a tree should walk that
-tree and insert all the paths resulting from expansion into the index?
-
-> The command could just instead barf, saying the input is wrong, but the
-> option was so low-level that it was deliberately written to accept and
-> store anything you throw at it --- even when it is nonsensical for the
-> version of plumbing, later updates to the data structure might have made
-> it making sense, which was the way to ease development of the system.
-
-If what I'm doing is an abuse of update-index, do you or anyone else
-have a suggestion to make a directory in the index match a tree object?
-(I'm trying to use an index filter; it takes 11 hours to run
-filter-branch (5500 commits, 400K files in index, 800MB .git, ~2+GB
-working directory, tmpdir on NetBSD tmpfs (all in ram)).)
-
-Thanks,
-Greg
-
---=-=-=
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (NetBSD)
-
-iEYEARECAAYFAk5NrdsACgkQ+vesoDJhHiUmzgCfWnw/q+S8T+dk48OyWyJJ8knD
-slYAmwVHC2A4/SwPkYS28Xu9CbGQQ51j
-=0Qcb
------END PGP SIGNATURE-----
---=-=-=--
+I think my patch should be applied until Net::SMTP is updated.
