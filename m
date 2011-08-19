@@ -1,161 +1,106 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 7/7] sequencer: Remove sequencer state after final commit
-Date: Fri, 19 Aug 2011 14:38:30 +0530
-Message-ID: <CALkWK0mb_9DzV_Yb6ZGzFErrMLH6NAvXWE_MuEohp=oOMjaq4g@mail.gmail.com>
-References: <1313310789-10216-1-git-send-email-artagnon@gmail.com>
- <1313310789-10216-8-git-send-email-artagnon@gmail.com> <20110814160440.GK18466@elie.gateway.2wire.net>
- <7vei0nn1cn.fsf@alter.siamese.dyndns.org> <20110814213200.GA6555@elie.gateway.2wire.net>
- <7vippzlj7a.fsf@alter.siamese.dyndns.org> <7v7h6eld2c.fsf@alter.siamese.dyndns.org>
- <CALkWK0noHBnW-7zZLw=jJdDVFxXmsm2vHHYnUJc9miLLuDRnAg@mail.gmail.com>
- <20110818191812.GG30436@elie.gateway.2wire.net> <7vvctu8naf.fsf@alter.siamese.dyndns.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH v2 4/4] mergetools/meld: Use '--output' when available
+Date: Fri, 19 Aug 2011 02:14:45 -0700
+Message-ID: <20110819091444.GB18054@gmail.com>
+References: <1313652227-48545-1-git-send-email-davvid@gmail.com>
+ <1313652227-48545-5-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Tanguy Ortolo <tanguy+debian@ortolo.eu>,
+	Charles Bailey <charles@hashpling.org>,
+	Sebastian Schuberth <sschuberth@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 19 11:09:07 2011
+X-From: git-owner@vger.kernel.org Fri Aug 19 11:14:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuL4c-0005V6-TN
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 11:09:07 +0200
+	id 1QuLAH-0008CA-3z
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 11:14:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752600Ab1HSJI4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Aug 2011 05:08:56 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:37800 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752488Ab1HSJIv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Aug 2011 05:08:51 -0400
-Received: by wwf5 with SMTP id 5so2952824wwf.1
-        for <git@vger.kernel.org>; Fri, 19 Aug 2011 02:08:50 -0700 (PDT)
+	id S1752414Ab1HSJOw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Aug 2011 05:14:52 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:61000 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751884Ab1HSJOv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Aug 2011 05:14:51 -0400
+Received: by yie30 with SMTP id 30so2067854yie.19
+        for <git@vger.kernel.org>; Fri, 19 Aug 2011 02:14:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=2L+T7NFlQVVb4cfczFi7bt27Bf4AzUt3n2G1f7eJSaA=;
-        b=KVq4AM9q2dnrBVVllA3ZqCF4L0UBnzAH+ZHRQWrLNwHWT71IMKXyJ7C8Ls2yM/NXjo
-         G0ul3OUXXn9RLsWUrbln2NvZxTFUV6mikk6M4KDMEqwdmyyB354KpSHVZtXfBRabdKA7
-         Tonwl78nvZbt2lmz12KtD//Cy4sb4qmUAmvEU=
-Received: by 10.216.131.134 with SMTP id m6mr1421651wei.78.1313744930117; Fri,
- 19 Aug 2011 02:08:50 -0700 (PDT)
-Received: by 10.216.172.132 with HTTP; Fri, 19 Aug 2011 02:08:30 -0700 (PDT)
-In-Reply-To: <7vvctu8naf.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=IeFvDXTuRe/+zChkzA5M6CBEQEG8/eEwuXm617XRe5Q=;
+        b=AMFsUMOsciz3goSoh5GW9zm0X0OVvDHC9KTGkglrYwliNi2n6KsD30iLfBtBXGnarE
+         SEZXNXv6OcvVzInXcFb6n+qft0Sk+1OpGYLa1sP4H6WZST3hSy637F1O62uMwSNaW8WK
+         xPRo4z2EIfAQFEhOIGzAaQ0e4ipcCmZa+z5Zs=
+Received: by 10.236.182.4 with SMTP id n4mr5575815yhm.90.1313745291347;
+        Fri, 19 Aug 2011 02:14:51 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id b4sm634022iba.15.2011.08.19.02.14.49
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 19 Aug 2011 02:14:50 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1313652227-48545-5-git-send-email-davvid@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179686>
 
-Hi Jonathan and Junio,
+meld 1.5.0 and newer allow the output file to be specified
+when merging multiple files.  Check whether the meld command
+supports '--output' and use it when available.
 
-Jonathan Nieder writes:
-> Why can't it become the sequencer's responsibility, FWIW? =C2=A0That'=
-s an
-> implementation detail.
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+ mergetools/meld |   25 ++++++++++++++++++++++++-
+ 1 files changed, 24 insertions(+), 1 deletions(-)
 
-It can be the sequencer's responsibility if we want that!  I'm just
-dabbling with the different implementation strategies and trying to
-see the advantages/ disadvantages of each one.  The "right" thing to
-do wasn't obvious to me immediately.
+Changes since v1 with help from Jonathan Nieder:
 
-Junio C Hamano writes:
-> Ramkumar Ramachandra <artagnon@gmail.com> writes:
->>> Why modify tests? =C2=A0I think "git merge --continue" is a nice id=
-ea,
->>> and I don't see how it's inconsistent in any way with continuing to
->>> allow old practice.
->
-> I agree. Updating the test will hide a regression if Ram's update bre=
-aks
-> the existing workflow to conclude a conflicted merge with "git commit=
-".
-> If we are to add "git merge --continue" sugarcoat to make it easier t=
-o
-> teach new people saying that "To any Git operation that stops and ask=
-s you
-> to help, you can tell it that you are done helping by re-running the =
-same
-> command with --continue flag", then _new_ tests should be added to ma=
-ke
-> sure that "git merge --continue" does act just like "git commit" in s=
-uch a
-> case.
+Use $LOCAL $BASE REMOTE when calling meld.
+Avoid shell portability issues by using the return status.
+of --output instead of parsing --version.
 
-Right.  We have to keep the old tests around -- my bad.
-
->>> As Junio hinted, it could make a lot of sense for "git cherry-pick
->>> <single commit>" to not create sequencer state in the first place.
->>> "git cherry-pick --continue" does not need it --- it is enough to
->>> commit with the conflict resolved. =C2=A0"git cherry-pick --abort" =
-does not
->>> need it, either --- it is enough to "git reset --merge HEAD".
->>
->> Okay, here's my problem with the idea: it'll essentially require the
->> sequencer to differentiate between one-commit operations and
->> many-commit operations.
->
-> I think you are looking at it in a wrong way. It is just about giving
-> backward compatibility to historical hacks. cherry-pick and revert ma=
-y be
-> the only ones needed, and a new command Foo that implements its workf=
-low
-> in terms of the sequencer can choose to (and should choose to unless =
-there
-> is a compelling reason not to, because of the exact reason you stated
-> here) do a single-command insn sheet with "git Foo --continue" to con=
-clude
-> if that one and only step needed help from the end user.
-
-No, no.  I don't _want_ to create an AM_HEAD or FOO_HEAD for every new
-command that we write -- I was merely pointing out what would happen
-if the sequencer were only built to handle multi-commit-operations,
-and every new command would have to handle single-commit-operations on
-their own.  I was emphasizing that the sequencer will need to handle
-single-commit-operations as well; Jonathan has suggested that we have
-special hacks to handle cherry-pick and merge commands in the
-sequencer.
-
-To conclude, let me list out the various implementation strategies
-we've thought about, and the one we seem to have settled on:
-0. Remove the sequencer state from "git commit".  This is wrong, as
-Junio pointed out in the first email.
-1. Let commands handle single-commit-operations themselves, and call
-into the sequencer only for multi-commit-operations.  If they don't
-call into the sequencer at all, there's no state to persist or
-cleanup.  This approach is clearly wrong because each new command
-would have to come up with AM_HEAD and FOO_HEAD to persist the
-single-commit-operation state.
-2. Expose two functions from the sequencer: "earlier-function" and
-"later-function".  Let cherry-pick and merge handle their own
-CHERRY_PICK_HEAD and MERGE_HEAD hacks first (by setting up the
-revision walker, counting commits etc), and call into later-function
-in the sequencer to do less work from the sequencer's end.  All new
-commands can directly call into earlier-function directly.  I know
-it's a little hand-wavy, but I hope it's atleast parse'able this time.
- As I pointed out in another email, this is also broken because
-cherry-pick/ merge would have to implement their own versions of every
-subcommand like "--continue".
-3. Let all commands call into the sequencer for everything.  Let's
-teach the sequencer about the CHERRY_PICK_HEAD and MERGE_HEAD hacks so
-that it can deal with them when a "pick", "revert" or "merge"
-operation is encountered.  We'll handle it by treating
-CHERRY_PICK_HEAD and MERGE_HEAD as part of the "sequencer state" (so
-that subcommands work just fine on them).  For all future sequencer
-commands, all data will be persisted inside '.git/sequencer'.  This
-seems most reasonable now.
-
-In a nutshell, instead of side-stepping historical hacks, we want to
-teach the sequencer about them as specific cases to handle carefully.
-We want to this without affecting the operation of the sequencer in
-the general case.  Sounds great!  An uncompromising UI at the cost of
-little ugliness in the sequencer.
-
-Thanks.
-
--- Ram
+diff --git a/mergetools/meld b/mergetools/meld
+index 73d70ae..eaa115c 100644
+--- a/mergetools/meld
++++ b/mergetools/meld
+@@ -3,7 +3,30 @@ diff_cmd () {
+ }
+ 
+ merge_cmd () {
++	if test -z "${meld_has_output_option:+set}"
++	then
++		check_meld_for_output_version
++	fi
+ 	touch "$BACKUP"
+-	"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
++	if test "$meld_has_output_option" = true
++	then
++		"$merge_tool_path" --output "$MERGED" \
++			"$LOCAL" "$BASE" "$REMOTE"
++	else
++		"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
++	fi
+ 	check_unchanged
+ }
++
++# Check whether 'meld --output <file>' is supported
++check_meld_for_output_version () {
++	meld_path="$(git config mergetool.meld.path)"
++	meld_path="${meld_path:-meld}"
++
++	if "$meld_path" --output /dev/null --help >/dev/null 2>&1
++	then
++		meld_has_output_option=true
++	else
++		meld_has_output_option=false
++	fi
++}
+-- 
+1.7.6.553.g1899
