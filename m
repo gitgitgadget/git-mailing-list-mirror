@@ -1,90 +1,111 @@
-From: Michal Sojka <sojka@os.inf.tu-dresden.de>
-Subject: Re: [PATCH RFC] gitk: Allow commit editing
-Date: Fri, 19 Aug 2011 14:23:39 +0200
-Message-ID: <87obzlwpx0.fsf@steelpick.2x.cz>
-References: <1313610971-1741-1-git-send-email-sojka@os.inf.tu-dresden.de> <20110818223346.GA8481@sigill.intra.peff.net>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] log: decorate "replaced" on to replaced commits
+Date: Fri, 19 Aug 2011 19:43:50 +0700
+Message-ID: <1313757830-30640-1-git-send-email-pclouds@gmail.com>
+References: <7vippua433.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, paulus@samba.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 19 14:33:51 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 19 14:44:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuOGl-00077q-5O
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 14:33:51 +0200
+	id 1QuOQg-00030Y-Ah
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 14:44:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751810Ab1HSMdq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Aug 2011 08:33:46 -0400
-Received: from max.feld.cvut.cz ([147.32.192.36]:56760 "EHLO max.feld.cvut.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751153Ab1HSMdq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Aug 2011 08:33:46 -0400
-X-Greylist: delayed 602 seconds by postgrey-1.27 at vger.kernel.org; Fri, 19 Aug 2011 08:33:45 EDT
-Received: from localhost (unknown [192.168.200.4])
-	by max.feld.cvut.cz (Postfix) with ESMTP id 1AE9519F32DB;
-	Fri, 19 Aug 2011 14:23:43 +0200 (CEST)
-X-Virus-Scanned: IMAP AMAVIS
-Received: from max.feld.cvut.cz ([192.168.200.1])
-	by localhost (styx.feld.cvut.cz [192.168.200.4]) (amavisd-new, port 10044)
-	with ESMTP id il-FbEG+auCK; Fri, 19 Aug 2011 14:23:42 +0200 (CEST)
-Received: from imap.feld.cvut.cz (imap.feld.cvut.cz [147.32.192.34])
-	by max.feld.cvut.cz (Postfix) with ESMTP id AC4A719F30E0;
-	Fri, 19 Aug 2011 14:23:41 +0200 (CEST)
-Received: from steelpick.2x.cz (unknown [141.76.49.12])
-	(Authenticated sender: sojkam1)
-	by imap.feld.cvut.cz (Postfix) with ESMTPSA id 3D244FA003;
-	Fri, 19 Aug 2011 14:23:40 +0200 (CEST)
-Received: from wsh by steelpick.2x.cz with local (Exim 4.76)
-	(envelope-from <sojka@os.inf.tu-dresden.de>)
-	id 1QuO6u-0006rE-0B; Fri, 19 Aug 2011 14:23:40 +0200
-In-Reply-To: <20110818223346.GA8481@sigill.intra.peff.net>
-User-Agent: Notmuch/0.6.1-91-g55c2c34 (http://notmuchmail.org) Emacs/23.3.1 (x86_64-pc-linux-gnu)
+	id S1751378Ab1HSMoA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Aug 2011 08:44:00 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:37504 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751090Ab1HSMn7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Aug 2011 08:43:59 -0400
+Received: by pzk37 with SMTP id 37so4791816pzk.1
+        for <git@vger.kernel.org>; Fri, 19 Aug 2011 05:43:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=68pm5SyWzeNR5ga8EWTVu2hxGTiNQzVcybUYi7baSIY=;
+        b=ZjRkIhXOu1+6r7SeSAedBiZxgs/zwlR3vO0iYUB1cGmCVoS/Z9akURHEG9pkb7ii1w
+         9PaepF0kGpoBsU4RW/kIegkRAFfeVqbcCDj4RVsZsinMQIbEEQQYjaFQ2n85xhTiymo6
+         H7A30j10eoqU2Zc/CWaHaNIIpE86oT89+vwv0=
+Received: by 10.142.143.11 with SMTP id q11mr1046939wfd.329.1313757839360;
+        Fri, 19 Aug 2011 05:43:59 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.73.228.117])
+        by mx.google.com with ESMTPS id z8sm983386wff.7.2011.08.19.05.43.55
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 19 Aug 2011 05:43:57 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 19 Aug 2011 19:43:51 +0700
+X-Mailer: git-send-email 1.7.4.74.g639db
+In-Reply-To: <7vippua433.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179698>
 
-On Thu, 18 Aug 2011, Jeff King wrote:
-> On Wed, Aug 17, 2011 at 09:56:11PM +0200, Michal Sojka wrote:
-> 
-> > Hi, this is a proof of concept patch that allows editing of commits
-> > from gitk. I often review patches before pushing in gitk and if I
-> > would like to have an easy way of fixing typos in commit messages etc.
-> > 
-> > So the patch adds "Edit this commit" item to gitk's context menu and
-> > the actual editing is done by non-interactively invoking interactive
-> > rebase :-) and git gui.
-> 
-> Invoking rebase behind the scenes makes me very nervous. In particular:
-> 
->   1. There is nothing to indicate to the user that they are rewriting a
->      string of commits, which is going to wreak havoc if any of the
->      commits have been published elsewhere (either pushed somewhere, or
->      even present in another local branch). I.e., rebasing generally
->      needs to be a conscious decision of the user.
+Old code also decorates "new" commits with "refs/replace/SHA1". This
+is now gone, but I guess no one will miss it.
 
-I added a warning if the edited commit is contained in a remote branch.
-Would you consider this sufficient?
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ 2011/8/19 Junio C Hamano <gitster@pobox.com>:
+ > If the argument is "we know only commits and tags are listed and blo=
+bs and
+ > trees are not shown with --decorate option" and "excluding the decor=
+ation
+ > that we know will never be used will avoid bloating the decorate has=
+htable
+ > with unused cruft", then add_name_decoration() should be doing the c=
+heck
+ > for all of its callers, not just this one, no?
 
->   2. Even if you accept the hazard of rewriting commits, you don't pass
->      "-p" to rebase. So it will linearize your history. I don't know how
->      robust "-p" is these days, and if it's up to the challenge of
->      people using it to rebase potentially large segments of complex
->      history.
+ Makes sense. Moreover replacing blobs and trees are generally not safe=
+=2E
+ If people do that, they may have more issues to worry about than this.
+ Let's keep it simple. We can fix add_name_decoration() later if it bec=
+omes
+ a real problem.
 
-I added "-p" to rebase. I do not know about the robustness of "-p" as
-well, but is anything goes wrong during the rebase, git rebase --abort
-hopefully reverts everything.
+ log-tree.c |   16 +++++++++++++++-
+ 1 files changed, 15 insertions(+), 1 deletions(-)
 
-> So I think your idea is sane, and if you use it appropriately (by
-> editing commits in recent-ish linear stretches of history) your patch
-> works fine. But I really worry that it is going to be a problem for less
-> clueful users to stumble across in the menu.
-
-See the next version of the patch in a follow-up mail.
-
--Michal
+diff --git a/log-tree.c b/log-tree.c
+index e945701..d73e69c 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -92,8 +92,22 @@ static void add_name_decoration(enum decoration_type=
+ type, const char *name, str
+=20
+ static int add_ref_decoration(const char *refname, const unsigned char=
+ *sha1, int flags, void *cb_data)
+ {
+-	struct object *obj =3D parse_object(sha1);
++	struct object *obj;
+ 	enum decoration_type type =3D DECORATION_NONE;
++
++	if (!prefixcmp(refname, "refs/replace/")) {
++		unsigned char original_sha1[20];
++		if (get_sha1_hex(refname + 13, original_sha1)) {
++			warning("invalid replace ref %s", refname);
++			return 0;
++		}
++		obj =3D parse_object(original_sha1);
++		if (obj)
++			add_name_decoration(DECORATION_GRAFTED, "replaced", obj);
++		return 0;
++	}
++
++	obj =3D parse_object(sha1);
+ 	if (!obj)
+ 		return 0;
+=20
+--=20
+1.7.4.74.g639db
