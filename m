@@ -1,89 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Disallow creating ambiguous branch names by default
-Date: Fri, 19 Aug 2011 13:49:23 -0700
-Message-ID: <7v1uwh2kks.fsf@alter.siamese.dyndns.org>
-References: <1313569298-3879-1-git-send-email-conrad.irwin@gmail.com>
- <7vhb5fev8a.fsf@alter.siamese.dyndns.org>
- <CAOTq_ptU2QmPMMZYQLd2MFQ_=_RnADdBnoN5+v4rXh_nmpOcjw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Conrad Irwin <conrad.irwin@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 19 22:49:32 2011
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: Unable to build git on Lion - missing config.h from Perl header files
+Date: Fri, 19 Aug 2011 13:58:55 -0700
+Message-ID: <9B588F2F-ACDF-4DA7-BE30-E075CA729731@gmail.com>
+References: <611AB1F99D784B92B1F7278139D6EED5@gmail.com> <CAGDPfJr01SPXvqDkYwingJ0Vu9DZx7GXO4G2uhFFfOWPvm1Rgw@mail.gmail.com>
+Mime-Version: 1.0 (iPhone Mail 8C148a)
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Sorin Sbarnea <sorin.sbarnea@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 19 22:59:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuW0R-0008Ta-Cn
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 22:49:31 +0200
+	id 1QuW9n-0003li-VX
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 22:59:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756114Ab1HSUt0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Aug 2011 16:49:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36656 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754710Ab1HSUt0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Aug 2011 16:49:26 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 33A90493F;
-	Fri, 19 Aug 2011 16:49:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ObfKm5M/7+LsvhlYML+xI/hrCts=; b=vn/N9y
-	QdW6Q2S8fAcPGFQatC0Z4gy2QV9oe8EUhGh6OWqoE/w+HCNmReSffhjir4FB3NXU
-	j1WIEeHwuo0LuAFG2whq+8oYC5SkxFvQbjJzJ2MuGQK2UIDhOl1Ja3wiIZJP4vBr
-	CLynGG/SDonTl/rcmv27CLOHuV8druCgOlxb4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Fxl2Y9sd+F6v2eG26KPCkdNY3nuQ/ryN
-	nT97nr83X+SAdiXLvCFD8dfYqwZLplaYiIEvbkB3F7kYwU2Ob/O4xv/xlHYbDkZG
-	VMO3h4IpvAJdHpaoBIgjJEgXUR9un4TdzPNBwlz+LlsJG7tL/jS4LYkTY6qBYrlK
-	bBXxUWF3cd8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2AEA9493E;
-	Fri, 19 Aug 2011 16:49:25 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B2AD6493D; Fri, 19 Aug 2011
- 16:49:24 -0400 (EDT)
-In-Reply-To: <CAOTq_ptU2QmPMMZYQLd2MFQ_=_RnADdBnoN5+v4rXh_nmpOcjw@mail.gmail.com> (Conrad
- Irwin's message of "Fri, 19 Aug 2011 11:14:11 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B8F1F522-CAA4-11E0-859D-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752532Ab1HSU7I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Aug 2011 16:59:08 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:63095 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751297Ab1HSU7F convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Aug 2011 16:59:05 -0400
+Received: by pzk37 with SMTP id 37so5434147pzk.1
+        for <git@vger.kernel.org>; Fri, 19 Aug 2011 13:59:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=references:in-reply-to:mime-version:content-transfer-encoding
+         :content-type:message-id:cc:x-mailer:from:subject:date:to;
+        bh=QaM4G7PsKzhhYkVVRmHKZlunYoPgO3M6wcT5SmCuvws=;
+        b=afgZKNm6Ly6uTPn4XXTJOOeMiKHMRGJO4YpW8JPqGn/tFHhdbS5a0QeDr6IoWZeuQF
+         M/vJFeu+Yn/gFuIQ0v8eD27uCWbmntFQAuZlYUyxDG1n3lQN+I6vjGzIeYo1MfN63+Be
+         b7TBD8edcL92LMYVR2Vzo8Yksy9/UzrCR6ufw=
+Received: by 10.142.213.14 with SMTP id l14mr108973wfg.16.1313787544362;
+        Fri, 19 Aug 2011 13:59:04 -0700 (PDT)
+Received: from [10.26.228.101] ([166.205.141.12])
+        by mx.google.com with ESMTPS id p7sm2608363pbn.65.2011.08.19.13.59.01
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 19 Aug 2011 13:59:03 -0700 (PDT)
+In-Reply-To: <CAGDPfJr01SPXvqDkYwingJ0Vu9DZx7GXO4G2uhFFfOWPvm1Rgw@mail.gmail.com>
+X-Mailer: iPhone Mail (8C148a)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179725>
 
-Conrad Irwin <conrad.irwin@gmail.com> writes:
+On Aug 19, 2011, at 9:31 AM, Sorin Sbarnea <sorin.sbarnea@gmail.com> wrote:
 
-> In the process of changing things around to do this, I noticed that
->
-> git checkout -M <foo> <current-branch>
->
-> surprisingly works,...
+> Hi,
+> 
+> I came across the following problem while trying to build git (1.7.6) on Lion
+> https://github.com/mxcl/homebrew/issues/7091
+> 
+> The only files existing in
+> /System/Library/Perl/5.12/darwin-thread-multi-2level/CORE/ are
+> libperl.dylib andperl.h.
+> 
+> make[2]: *** No rule to make target
+> `/System/Library/Perl/5.12/darwin-thread-multi-2level/CORE/config.h',
+> needed by `perl.mak'.  Stop.
+> make[1]: *** [instlibdir] Error 2
+> 
+> If possible it would be a good idea to continue the discussion on
+> homebrew bug tracker
+> 
+> Thanks,
+> -- 
+> Sorin Sbarnea
 
-What is "-M" supposed to do???
+Did you upgrade to lion from a system where you were building previously? Did you try "make clean"?
 
-If you meant "-B", that should work. When I want to rewrite a topic in a
-non-trivial way, I would often do:
-
-	$ git checkout HEAD^^^
-        work to redo what the few commits at the tip should have done,
-        creating commits.
-        $ git diff @{-1} HEAD
-        $ git checkout -B @{-1}
-
-which often happens to be simpler and more flexible than the canned
-rewriting options "rebase -i" can offer me.
-
-> ... in that you will get a:
->
-> $ git rev-parse HEAD@{1}
-> warning: Log .git/logs/HEAD has gap after Fri, 19 Aug 2011 02:00:09 -0700
-
-If that is the case, then the codepath to update the reflog is
-broken. That is not a reason to forbid -B, though.
-
-But because I do not know what you meant by "checkout -M", ...
+-- 
+                                        David
