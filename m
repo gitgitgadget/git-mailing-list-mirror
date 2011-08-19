@@ -1,170 +1,259 @@
-From: Michal Sojka <sojka@os.inf.tu-dresden.de>
-Subject: Re: [PATCH RFC] gitk: Allow commit editing
-Date: Fri, 19 Aug 2011 16:40:31 +0200
-Message-ID: <87pqk1v50g.fsf@steelpick.2x.cz>
-References: <1313610971-1741-1-git-send-email-sojka@os.inf.tu-dresden.de> <20110818223346.GA8481@sigill.intra.peff.net> <4E4E4C84.4030804@gmail.com> <87sjoxv835.fsf@steelpick.2x.cz>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v4 1/4] commit: remove global variable head_sha1[]
+Date: Fri, 19 Aug 2011 21:50:04 +0700
+Message-ID: <1313765407-29925-1-git-send-email-pclouds@gmail.com>
+References: <1313674994-22902-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, paulus@samba.org
-To: Chris Packham <judge.packham@gmail.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 19 16:40:40 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 19 16:50:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuQFT-0000kA-Vo
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 16:40:40 +0200
+	id 1QuQOu-0005gd-Ad
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 16:50:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754876Ab1HSOkf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Aug 2011 10:40:35 -0400
-Received: from max.feld.cvut.cz ([147.32.192.36]:46788 "EHLO max.feld.cvut.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754161Ab1HSOke (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Aug 2011 10:40:34 -0400
-Received: from localhost (unknown [192.168.200.4])
-	by max.feld.cvut.cz (Postfix) with ESMTP id 183A13CFE75;
-	Fri, 19 Aug 2011 16:40:33 +0200 (CEST)
-X-Virus-Scanned: IMAP AMAVIS
-Received: from max.feld.cvut.cz ([192.168.200.1])
-	by localhost (styx.feld.cvut.cz [192.168.200.4]) (amavisd-new, port 10044)
-	with ESMTP id 6bn8VvS2xTPu; Fri, 19 Aug 2011 16:40:32 +0200 (CEST)
-Received: from imap.feld.cvut.cz (imap.feld.cvut.cz [147.32.192.34])
-	by max.feld.cvut.cz (Postfix) with ESMTP id 0802019F2F36;
-	Fri, 19 Aug 2011 16:40:32 +0200 (CEST)
-Received: from steelpick.2x.cz (unknown [141.76.49.12])
-	(Authenticated sender: sojkam1)
-	by imap.feld.cvut.cz (Postfix) with ESMTPSA id 03F4EFA003;
-	Fri, 19 Aug 2011 16:40:31 +0200 (CEST)
-Received: from wsh by steelpick.2x.cz with local (Exim 4.76)
-	(envelope-from <sojka@os.inf.tu-dresden.de>)
-	id 1QuQFL-0002RI-P6; Fri, 19 Aug 2011 16:40:31 +0200
-In-Reply-To: <87sjoxv835.fsf@steelpick.2x.cz>
-User-Agent: Notmuch/0.6.1-91-g55c2c34 (http://notmuchmail.org) Emacs/23.3.1 (x86_64-pc-linux-gnu)
+	id S1754415Ab1HSOuS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Aug 2011 10:50:18 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:62750 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753144Ab1HSOuQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Aug 2011 10:50:16 -0400
+Received: by pzk37 with SMTP id 37so4952089pzk.1
+        for <git@vger.kernel.org>; Fri, 19 Aug 2011 07:50:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=ST1lE9GpLs8tkiJ6T6TAKESzFtgvCRPkyIBCA2i8LPc=;
+        b=BWpktmQ3S9GljToPNVl+kxvY1obqXRHXPYJL//SHSp7KBsGg6uPxQDLWy3s4aqsKt6
+         /hAKseFjAYek//58qpAMJ/7Mek5TW151ulYkcINcd9ln84hOdSL+TcJWokXG4wmsf7Ip
+         guq17N+Zl4KseRXg+CG6NgzQGLO54DqHBN5H0=
+Received: by 10.142.134.8 with SMTP id h8mr462157wfd.421.1313765416361;
+        Fri, 19 Aug 2011 07:50:16 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.73.228.117])
+        by mx.google.com with ESMTPS id l15sm1530965wfe.12.2011.08.19.07.50.12
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 19 Aug 2011 07:50:15 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 19 Aug 2011 21:50:08 +0700
+X-Mailer: git-send-email 1.7.4.74.g639db
+In-Reply-To: <1313674994-22902-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179703>
-
-On Fri, 19 Aug 2011, Michal Sojka wrote:
-> On Fri, 19 Aug 2011, Chris Packham wrote:
-> > One thing I've thought about (but don't know enough TCL to begin to
-> > implement) is a graphical rebase front end. I often use git gui to make
-> > tweaks to the last commit (message and content) so why not extend that
-> > to a rebase operation. I think that might address some of Peffs concerns
-> > because the user would be invoking something specifically intended for
-> > rebasing and accepts all the caveats that go along with that.
-> 
-> Hi Chris,
-> 
-> the version of the patch below supports not only editing of commit
-> message but also of the commit itself. There is an easy way to split
-> commits and to remove lines/hunks form the commits. Additionally, with
-> the help of editor and "Rescan" button in git gui, you can add things to
-> the commits.
-> 
-> I think that in the similar way as in this patch, it would be easy to
-> allow gitk doing fixup and squash operations offered by rebase.
-
-Here is another proof of concept, that gitk can also fold commits
-together. It applies on top of the previously sent patch.
-
-This operation is probably even more dangerous then simple edit because
-it reorders commits. Does anybody have an idea which checks should be
-employed in order to warn users about unexpected results?
-
--Michal
-
---8<---------------cut here---------------start------------->8---
-From 5943dfcd9738f8da9d159f912302cfbb2b4d35b5 Mon Sep 17 00:00:00 2001
-From: Michal Sojka <sojka@os.inf.tu-dresden.de>
-Date: Fri, 19 Aug 2011 16:33:55 +0200
-Subject: [PATCH 2/2] gitk: Learn how to fixup commits
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179704>
 
 
-Signed-off-by: Michal Sojka <sojka@os.inf.tu-dresden.de>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 ---
- gitk-git/gitk |   41 ++++++++++++++++++++++++++++++++++++-----
- 1 files changed, 36 insertions(+), 5 deletions(-)
+ builtin/commit.c |   52 ++++++++++++++++++++++++++--------------------=
+------
+ 1 files changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 432ca9b..53fa51d 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -2488,6 +2488,7 @@ proc makewindow {} {
- 	{mc "Diff this -> selected" command {diffvssel 0}}
- 	{mc "Diff selected -> this" command {diffvssel 1}}
- 	{mc "Edit this commit" command edit_commit}
-+	{mc "Fold this into selected (fixup)" command fixup_commit}
- 	{mc "Make patch" command mkpatch}
- 	{mc "Create tag" command mktag}
- 	{mc "Write commit to file" command writecommit}
-@@ -8448,6 +8449,7 @@ proc rowmenu {x y id} {
-     $menu entryconfigure [mca "Diff this -> selected"] -state $state
-     $menu entryconfigure [mca "Diff selected -> this"] -state $state
-     $menu entryconfigure [mca "Make patch"] -state $state
-+    $menu entryconfigure [mca "Fold this into selected (fixup)"] -state $state
-     tk_popup $menu $x $y
+diff --git a/builtin/commit.c b/builtin/commit.c
+index cb73857..c9c4ea5 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -62,8 +62,6 @@ N_("The previous cherry-pick is now empty, possibly d=
+ue to conflict resolution.\
+ "\n"
+ "Otherwise, please use 'git reset'\n");
+=20
+-static unsigned char head_sha1[20];
+-
+ static const char *use_message_buffer;
+ static const char commit_editmsg[] =3D "COMMIT_EDITMSG";
+ static struct lock_file index_lock; /* real index */
+@@ -296,7 +294,7 @@ static void add_remove_files(struct string_list *li=
+st)
+ 	}
  }
- 
-@@ -9103,14 +9105,24 @@ proc cherrypick {} {
-     notbusy cherrypick
+=20
+-static void create_base_index(void)
++static void create_base_index(const unsigned char *head_sha1)
+ {
+ 	struct tree *tree;
+ 	struct unpack_trees_options opts;
+@@ -334,7 +332,8 @@ static void refresh_cache_or_die(int refresh_flags)
+ 		die_resolve_conflict("commit");
  }
- 
-+proc rebase_ok {id} {
-+    if {[exec git branch -r --contains=$id] ne {}} {
-+	if { [confirm_popup [mc "The commit you are going to edit is contained in at least\
-+				 one remote branch. It is a bad idea to change a branch that is\
-+				 possibly used by other people. See git-rebase(1) for details.\n\n\
-+				 Do you want to continue?"]]} {
-+	    return 1
-+	} else {
-+	    return 0
+=20
+-static char *prepare_index(int argc, const char **argv, const char *pr=
+efix, int is_status)
++static char *prepare_index(int argc, const char **argv, const char *pr=
+efix,
++			   const unsigned char *head_sha1, int is_status)
+ {
+ 	int fd;
+ 	struct string_list partial;
+@@ -469,7 +468,7 @@ static char *prepare_index(int argc, const char **a=
+rgv, const char *prefix, int
+ 						(uintmax_t) getpid()),
+ 				       LOCK_DIE_ON_ERROR);
+=20
+-	create_base_index();
++	create_base_index(head_sha1);
+ 	add_remove_files(&partial);
+ 	refresh_cache(REFRESH_QUIET);
+=20
+@@ -518,11 +517,8 @@ static int run_status(FILE *fp, const char *index_=
+file, const char *prefix, int
+ 	return s->commitable;
+ }
+=20
+-static int is_a_merge(const unsigned char *sha1)
++static int is_a_merge(struct commit *commit)
+ {
+-	struct commit *commit =3D lookup_commit(sha1);
+-	if (!commit || parse_commit(commit))
+-		die(_("could not parse HEAD commit"));
+ 	return !!(commit->parents && commit->parents->next);
+ }
+=20
+@@ -627,7 +623,7 @@ static char *cut_ident_timestamp_part(char *string)
+ }
+=20
+ static int prepare_to_commit(const char *index_file, const char *prefi=
+x,
+-			     struct wt_status *s,
++			     struct commit *head_commit, struct wt_status *s,
+ 			     struct strbuf *author_ident)
+ {
+ 	struct stat statbuf;
+@@ -848,7 +844,7 @@ static int prepare_to_commit(const char *index_file=
+, const char *prefix,
+ 	 * empty due to conflict resolution, which the user should okay.
+ 	 */
+ 	if (!commitable && whence !=3D FROM_MERGE && !allow_empty &&
+-	    !(amend && is_a_merge(head_sha1))) {
++	    !(amend && is_a_merge(head_commit))) {
+ 		run_status(stdout, index_file, prefix, 0, s);
+ 		if (amend)
+ 			fputs(_(empty_amend_advice), stderr);
+@@ -1026,9 +1022,6 @@ static int parse_and_validate_options(int argc, c=
+onst char *argv[],
+ 	if (!use_editor)
+ 		setenv("GIT_EDITOR", ":", 1);
+=20
+-	if (get_sha1("HEAD", head_sha1))
+-		initial_commit =3D 1;
+-
+ 	/* Sanity check options */
+ 	if (amend && initial_commit)
+ 		die(_("You have nothing to amend."));
+@@ -1102,12 +1095,12 @@ static int parse_and_validate_options(int argc,=
+ const char *argv[],
+ }
+=20
+ static int dry_run_commit(int argc, const char **argv, const char *pre=
+fix,
+-			  struct wt_status *s)
++			  const unsigned char *head_sha1, struct wt_status *s)
+ {
+ 	int commitable;
+ 	const char *index_file;
+=20
+-	index_file =3D prepare_index(argc, argv, prefix, 1);
++	index_file =3D prepare_index(argc, argv, prefix, head_sha1, 1);
+ 	commitable =3D run_status(stdout, index_file, prefix, 0, s);
+ 	rollback_index_files();
+=20
+@@ -1383,11 +1376,13 @@ int cmd_commit(int argc, const char **argv, con=
+st char *prefix)
+ 	const char *index_file, *reflog_msg;
+ 	char *nl, *p;
+ 	unsigned char commit_sha1[20];
++	unsigned char head_sha1[20];
+ 	struct ref_lock *ref_lock;
+ 	struct commit_list *parents =3D NULL, **pptr =3D &parents;
+ 	struct stat statbuf;
+ 	int allow_fast_forward =3D 1;
+ 	struct wt_status s;
++	struct commit *head_commit;
+=20
+ 	if (argc =3D=3D 2 && !strcmp(argv[1], "-h"))
+ 		usage_with_options(builtin_commit_usage, builtin_commit_options);
+@@ -1396,6 +1391,14 @@ int cmd_commit(int argc, const char **argv, cons=
+t char *prefix)
+ 	git_config(git_commit_config, &s);
+ 	determine_whence(&s);
+=20
++	if (get_sha1("HEAD", head_sha1))
++		initial_commit =3D 1;
++	else {
++		head_commit =3D lookup_commit(head_sha1);
++		if (!head_commit || parse_commit(head_commit))
++			die(_("could not parse HEAD commit"));
 +	}
-+    }
-+    return 1
-+}
 +
- proc edit_commit {} {
-     global rowmenuid selectedline
- 
--    if {[exec git branch -r --contains=$rowmenuid] ne {}} {
--	if {![confirm_popup [mc "The commit you are going to edit is contained in at least\
--				 one remote branch. It is a bad idea to change a branch that is\
--				 possibly used by other people. See git-rebase(1) for details.\n\n\
--				 Do you want to continue?"]]} return }
-+    if {![rebase_ok $rowmenuid]} return
- 
-     nowbusy edit [mc "Editing commit"]
-     if {[catch {exec sh -c "(GIT_EDITOR='sed -ie 1s/^pick/edit/' git rebase -p -i $rowmenuid^ && git gui citool --amend) 2>&1"} err]} {
-@@ -9141,6 +9153,25 @@ proc edit_commit {} {
-     notbusy edit
- }
- 
-+proc fixup_commit {} {
-+    global rowmenuid selectedline
-+    set selectedid [commitonrow $selectedline]
-+    set baseid [exec git merge-base $selectedid $rowmenuid]
-+
-+    if {![rebase_ok $baseid]} return
-+
-+    set this [string range $rowmenuid 0 6]
-+    set selected [string range $selectedid  0 6]
-+    nowbusy fixup
-+    if {[catch {exec sh -c "GIT_EDITOR=\"sed -i -e '/^pick $selected/a fixup $this' -e '/^pick $this/d'\" git rebase -p -i $baseid^ 2>&1"} err]} {
-+	notbusy fixup
-+	error_popup $err
-+	exec git rebase --abort
-+	return
-+    }
-+    updatecommits
-+    notbusy fixup
-+}
- 
- proc resethead {} {
-     global mainhead rowmenuid confirm_ok resettype NS
--- 
-1.7.5.4
-
---8<---------------cut here---------------end--------------->8---
+ 	if (s.use_color =3D=3D -1)
+ 		s.use_color =3D git_use_color_default;
+ 	argc =3D parse_and_validate_options(argc, argv, builtin_commit_usage,
+@@ -1403,13 +1406,14 @@ int cmd_commit(int argc, const char **argv, con=
+st char *prefix)
+ 	if (dry_run) {
+ 		if (diff_use_color_default =3D=3D -1)
+ 			diff_use_color_default =3D git_use_color_default;
+-		return dry_run_commit(argc, argv, prefix, &s);
++		return dry_run_commit(argc, argv, prefix, head_sha1, &s);
+ 	}
+-	index_file =3D prepare_index(argc, argv, prefix, 0);
++	index_file =3D prepare_index(argc, argv, prefix, head_sha1, 0);
+=20
+ 	/* Set up everything for writing the commit object.  This includes
+ 	   running hooks, writing the trees, and interacting with the user.  =
+*/
+-	if (!prepare_to_commit(index_file, prefix, &s, &author_ident)) {
++	if (!prepare_to_commit(index_file, prefix, head_commit,
++			       &s, &author_ident)) {
+ 		rollback_index_files();
+ 		return 1;
+ 	}
+@@ -1421,15 +1425,11 @@ int cmd_commit(int argc, const char **argv, con=
+st char *prefix)
+ 			reflog_msg =3D "commit (initial)";
+ 	} else if (amend) {
+ 		struct commit_list *c;
+-		struct commit *commit;
+=20
+ 		if (!reflog_msg)
+ 			reflog_msg =3D "commit (amend)";
+-		commit =3D lookup_commit(head_sha1);
+-		if (!commit || parse_commit(commit))
+-			die(_("could not parse HEAD commit"));
+=20
+-		for (c =3D commit->parents; c; c =3D c->next)
++		for (c =3D head_commit->parents; c; c =3D c->next)
+ 			pptr =3D &commit_list_insert(c->item, pptr)->next;
+ 	} else if (whence =3D=3D FROM_MERGE) {
+ 		struct strbuf m =3D STRBUF_INIT;
+@@ -1437,7 +1437,7 @@ int cmd_commit(int argc, const char **argv, const=
+ char *prefix)
+=20
+ 		if (!reflog_msg)
+ 			reflog_msg =3D "commit (merge)";
+-		pptr =3D &commit_list_insert(lookup_commit(head_sha1), pptr)->next;
++		pptr =3D &commit_list_insert(head_commit, pptr)->next;
+ 		fp =3D fopen(git_path("MERGE_HEAD"), "r");
+ 		if (fp =3D=3D NULL)
+ 			die_errno(_("could not open '%s' for reading"),
+@@ -1463,7 +1463,7 @@ int cmd_commit(int argc, const char **argv, const=
+ char *prefix)
+ 			reflog_msg =3D (whence =3D=3D FROM_CHERRY_PICK)
+ 					? "commit (cherry-pick)"
+ 					: "commit";
+-		pptr =3D &commit_list_insert(lookup_commit(head_sha1), pptr)->next;
++		pptr =3D &commit_list_insert(head_commit, pptr)->next;
+ 	}
+=20
+ 	/* Finally, get the commit message */
+--=20
+1.7.4.74.g639db
