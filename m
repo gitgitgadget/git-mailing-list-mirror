@@ -1,59 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fetch-pack: check for valid commit from server
-Date: Fri, 19 Aug 2011 13:18:13 -0700
-Message-ID: <7v62lt2m0q.fsf@alter.siamese.dyndns.org>
-References: <1313674563-12755-1-git-send-email-pclouds@gmail.com>
- <1313766693-20798-1-git-send-email-pclouds@gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH v4 2/2] push: Don't push a repository with unpushed
+	submodules
+Date: Fri, 19 Aug 2011 22:44:33 +0200
+Message-ID: <20110819204433.GD27639@book.hvoigt.net>
+References: <1313312613-2647-1-git-send-email-iveqy@iveqy.com> <20110818192157.GA10598@book.hvoigt.net> <7v4o1ea2at.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 19 22:18:21 2011
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org,
+	jens.lehmann@web.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 19 22:44:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuVWH-0005Uq-DJ
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 22:18:21 +0200
+	id 1QuVvl-0006pz-AB
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 22:44:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756114Ab1HSUSQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Aug 2011 16:18:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56387 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755553Ab1HSUSQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Aug 2011 16:18:16 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A5D124436;
-	Fri, 19 Aug 2011 16:18:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vaaC4vtYb1ttNPZyQF3GOJjW59A=; b=ocPB8H
-	WWE1Kp2FmQAquu07gaUIWcdIk0+eoY/weJymhXujPD+agyYXzoJlERdnx0IepRod
-	izqMJT2QQRuGJ09YTTOkPnLqTAabFkLTWilSSaHW8FED/WaVw2qqhEXSkohj+jl2
-	l1ZRt/UtNo18hvH6YYd3cRmc3rA0v+gHQkiTY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZPzAsaPVwEL/MHtJuQafiM+8er8DpdcP
-	DUgJo3eM2bTMLZNoRTzeGxeVZtA6oWJsGNufxYO7jg7XB6gfy3qeqp4Gse/wZspW
-	qYC3FCPl8TVAYUgfFtGCiIYb23bN7VHOIzAvNkyqSpeZVWSAo/1f0CcZXEo6A8/5
-	8sJTm1FrZ/o=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D58D4435;
-	Fri, 19 Aug 2011 16:18:15 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 348B84434; Fri, 19 Aug 2011
- 16:18:15 -0400 (EDT)
-In-Reply-To: <1313766693-20798-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Fri, 19 Aug
- 2011 22:11:33 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 5EA05090-CAA0-11E0-B6F3-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756649Ab1HSUog (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Aug 2011 16:44:36 -0400
+Received: from darksea.de ([83.133.111.250]:39760 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754710Ab1HSUof (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Aug 2011 16:44:35 -0400
+Received: (qmail 22853 invoked from network); 19 Aug 2011 22:44:33 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 19 Aug 2011 22:44:33 +0200
+Content-Disposition: inline
+In-Reply-To: <7v4o1ea2at.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179723>
 
-Thanks, but already queued the one from yesterday in 'maint' ;-).
+Hi,
+
+On Thu, Aug 18, 2011 at 01:32:26PM -0700, Junio C Hamano wrote:
+> Heiko Voigt <hvoigt@hvoigt.net> writes:
+> > Since I do not see thisi in pu maybe you missed this? There was a series
+> > containing the same patch send before which Jens asked to ignore but
+> > this was the one which was meant to be included.
+> 
+> Hmm, this is how the messages look like in my threaded MUA:
+> 
+>   [  34: Fredrik Gustafsson     ] [PATCH v4 0/2] push limitations
+>    [ 377: Fredrik Gustafsson     ] [PATCH v4 2/2] push: Don't push a reposi...
+>    [  35: Jens Lehmann           ] Re: [PATCH v4 0/2] push limitations
+>   [ 377: Fredrik Gustafsson     ] [PATCH v4 2/2] push: Don't push a reposit...
+>    [  14: Heiko Voigt            ] 
+> 
+> where Jens says "Please ignore this series, it slipped by accident" in the
+> third one. And the second [PATCH v4 2/2] message that you are reminding me
+> of (thanks!) has the identical proposed commit log message and patch text
+> as the other [PATCH v4 2/2] message.
+> 
+> So I am not sure what is going on here.
+
+Sorry for confusing you.
+
+There was a patch series which included a patch which was the same as
+the patch I replied to. This was sent by accident since it also included
+an old patch which was originally part of the 'fg/submodule-git-file-git-dir'
+series.
+
+Afterwards Fredrik also sent the same patch on its own again but forgot
+to edit the subject. That was the patch to be included. But we already
+discovered a small bug in the option parsing and will probably add
+another patch implementing the on-demand option. So its probably simpler
+if you just wait for our next iteration.
+
+> Also I vaguely recall that I said something about the command line parser
+> for this new option during the review of the previous round. Has that been
+> resolved/corrected?
+
+We plan to make the --recurse-submodules option symmetric to the one
+already implemented in fetch. AFAIK, having a mixed boolean and other
+values option is only possible by using a callback. To make extending it
+simpler we decided to put the necessary infrastructure already in place.
+
+Cheers Heiko
