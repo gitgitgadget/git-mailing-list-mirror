@@ -1,90 +1,56 @@
-From: Sorin Sbarnea <sorin.sbarnea@gmail.com>
-Subject: Re: Unable to build git on Lion - missing config.h from Perl header files
-Date: Fri, 19 Aug 2011 22:43:35 +0100
-Message-ID: <CAGDPfJoG_ksfL5vqzGWe5jqW646CKB=Qxm9_G5d=ZHMWfixweA@mail.gmail.com>
-References: <611AB1F99D784B92B1F7278139D6EED5@gmail.com> <CAGDPfJr01SPXvqDkYwingJ0Vu9DZx7GXO4G2uhFFfOWPvm1Rgw@mail.gmail.com>
- <9B588F2F-ACDF-4DA7-BE30-E075CA729731@gmail.com>
+From: Richard Hansen <rhansen@bbn.com>
+Subject: Why isn't the index a tree?
+Date: Fri, 19 Aug 2011 17:24:44 -0400
+Message-ID: <4E4ED49C.6050405@bbn.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 19 23:44:02 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 19 23:50:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuWrB-0002xG-Bo
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 23:44:01 +0200
+	id 1QuWx0-0004iq-2q
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 23:50:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754575Ab1HSVn4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Aug 2011 17:43:56 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:53950 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753439Ab1HSVn4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Aug 2011 17:43:56 -0400
-Received: by vxi9 with SMTP id 9so2934180vxi.19
-        for <git@vger.kernel.org>; Fri, 19 Aug 2011 14:43:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=vRz01yY2phPYIJQkwpNF/cfB7/cw709HJ04wiLhYCt8=;
-        b=tmzWmPD4NxBrCqOyHd1nPRuwKrCOBFF5476vJJwEoBWYTc2wP96juiKxQdpwvxr0O9
-         iD5UzYxTLJMQc5ivgyyAkORk+9Dxh4VIDwsBWOF4Op562sinIYTAUllAXH7LfrQjFvmH
-         HBO71A5JkC9XdlgcQmgTZv5r+Yl2iRa9QptG4=
-Received: by 10.52.97.227 with SMTP id ed3mr229746vdb.442.1313790235103; Fri,
- 19 Aug 2011 14:43:55 -0700 (PDT)
-Received: by 10.52.116.97 with HTTP; Fri, 19 Aug 2011 14:43:35 -0700 (PDT)
-In-Reply-To: <9B588F2F-ACDF-4DA7-BE30-E075CA729731@gmail.com>
+	id S1752685Ab1HSVt4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Aug 2011 17:49:56 -0400
+Received: from smtp.bbn.com ([128.33.1.81]:59288 "EHLO smtp.bbn.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750707Ab1HSVtz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Aug 2011 17:49:55 -0400
+X-Greylist: delayed 1509 seconds by postgrey-1.27 at vger.kernel.org; Fri, 19 Aug 2011 17:49:55 EDT
+Received: from socket.bbn.com ([192.1.120.102]:35843)
+	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.74 (FreeBSD))
+	(envelope-from <rhansen@bbn.com>)
+	id 1QuWYX-0003yK-9m
+	for git@vger.kernel.org; Fri, 19 Aug 2011 17:24:45 -0400
+X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 94FCA4076D
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110812 Thunderbird/6.0
+X-Enigmail-Version: 1.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179729>
 
-This was a clean-new Lion install, not an upgrade. I just installed
-Xcode on alternate location /Developer41 instead of /Developer
+I expected the index to be implemented something like a ref to a tree 
+object (per stage) plus some stat()/assume-unchanged/etc. metadata. 
+Instead, it appears to be a (sorted?) flat list of full paths with their 
+associated SHA1s and metadata.
 
-Yes, I did a `make clean` but it has no effect.
+Is there a reason why each stage in the index isn't implemented as a tree?
 
-The problem is that on Lion there is no config.h in the perl
-directory, only a perl.h file.
---=20
-Sorin Sbarnea
+If the index was a tree, I believe it would make several tasks easier:
+   * you could easily get the diff between stage 1 and some arbitrary 
+revision (e.g., git diff HEAD^^ :1:)
+   * you could commit and checkout empty directories
+   * you could use update-index --cacheinfo to directly insert/replace 
+an entire subdirectory
+   * etc.
 
-On Fri, Aug 19, 2011 at 21:58, David Aguilar <davvid@gmail.com> wrote:
-> On Aug 19, 2011, at 9:31 AM, Sorin Sbarnea <sorin.sbarnea@gmail.com> =
-wrote:
->
->> Hi,
->>
->> I came across the following problem while trying to build git (1.7.6=
-) on Lion
->> https://github.com/mxcl/homebrew/issues/7091
->>
->> The only files existing in
->> /System/Library/Perl/5.12/darwin-thread-multi-2level/CORE/ are
->> libperl.dylib andperl.h.
->>
->> make[2]: *** No rule to make target
->> `/System/Library/Perl/5.12/darwin-thread-multi-2level/CORE/config.h'=
-,
->> needed by `perl.mak'. =C2=A0Stop.
->> make[1]: *** [instlibdir] Error 2
->>
->> If possible it would be a good idea to continue the discussion on
->> homebrew bug tracker
->>
->> Thanks,
->> --
->> Sorin Sbarnea
->
-> Did you upgrade to lion from a system where you were building previou=
-sly? Did you try "make clean"?
->
-> --
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0D=
-avid
+Thanks,
+Richard
