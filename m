@@ -1,111 +1,97 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [PATCH RFC] gitk: Allow commit editing
-Date: Fri, 19 Aug 2011 23:44:04 +1200
-Message-ID: <4E4E4C84.4030804@gmail.com>
-References: <1313610971-1741-1-git-send-email-sojka@os.inf.tu-dresden.de> <20110818223346.GA8481@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Michal Sojka <sojka@os.inf.tu-dresden.de>, git@vger.kernel.org,
-	paulus@samba.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 19 13:44:06 2011
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] branch.c: use the parsed branch name
+Date: Fri, 19 Aug 2011 13:45:43 +0200
+Message-ID: <8258e2fc0a61642053e285c4f498e7cf1d2dc7df.1313754086.git.git@drmicha.warpmail.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 19 13:45:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuNUb-0003ic-NG
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 13:44:06 +0200
+	id 1QuNWJ-0004NI-8G
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 13:45:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752659Ab1HSLn7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Aug 2011 07:43:59 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:50313 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751685Ab1HSLn6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Aug 2011 07:43:58 -0400
-Received: by pzk37 with SMTP id 37so4718109pzk.1
-        for <git@vger.kernel.org>; Fri, 19 Aug 2011 04:43:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=oFjCQR0HXWXhX+r2eUva0SxbY+9u0ivdxazL1LTVsII=;
-        b=og4fVFL5xxmWiNiw5IzPp+mRXf7QN6quzt4bVxLLIzwV6OnbQUFcS+pQ6jPi71FQxs
-         CUCCT/zbZ17twHBla3YTi39oNKuGPx+aK9pFvbLQtQKAAce62j7xNnh7XJswOcRSwGo6
-         QBNwU82OXu5/O1NpO2RAfolNLE4FknLKrTlCk=
-Received: by 10.142.231.20 with SMTP id d20mr1014152wfh.125.1313754238167;
-        Fri, 19 Aug 2011 04:43:58 -0700 (PDT)
-Received: from laptop.site (115-188-15-163.jetstream.xtra.co.nz [115.188.15.163])
-        by mx.google.com with ESMTPS id l10sm2279868pbl.14.2011.08.19.04.43.54
-        (version=SSLv3 cipher=OTHER);
-        Fri, 19 Aug 2011 04:43:56 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.2.18) Gecko/20110616 SUSE/3.1.11 Thunderbird/3.1.11
-In-Reply-To: <20110818223346.GA8481@sigill.intra.peff.net>
+	id S1752642Ab1HSLpr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Aug 2011 07:45:47 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:56862 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751378Ab1HSLpq (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Aug 2011 07:45:46 -0400
+Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id D95A121445
+	for <git@vger.kernel.org>; Fri, 19 Aug 2011 07:45:45 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute4.internal (MEProxy); Fri, 19 Aug 2011 07:45:45 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=from:to:subject:date:message-id; s=
+	smtpout; bh=NuILfgqAJZxM6Rpsx1AxuYwAuIY=; b=eiPrLAGBm0ezvd9W5Mu5
+	2Shy8rn7YAK3RX+9pXUKEE7WoO3tNXOAgYYIeeZcFdUEKl5EIRmf8seZOy8Ntayy
+	0lgbS66xBP0dVR0FJMYaMI0e09CFj9HWoCqDcxjxKXZr5VD+bluu2JIzZ3+h/M2A
+	NKwvflJ1ySYXPFK5zr4lU94=
+X-Sasl-enc: gqoE+CQRic9ZUTyB8uA402NJKBjze1uNDIO/9eN2sYC1 1313754345
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 5897C8C0029;
+	Fri, 19 Aug 2011 07:45:45 -0400 (EDT)
+X-Mailer: git-send-email 1.7.6.678.gaaad0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179692>
 
-Hi,
+When setting up tracking info, branch.c uses the given branch specifier
+("name"). Use the parsed name ("ref.buf") instead so that
 
-On 19/08/11 10:33, Jeff King wrote:
-> On Wed, Aug 17, 2011 at 09:56:11PM +0200, Michal Sojka wrote:
-> 
->> Hi, this is a proof of concept patch that allows editing of commits
->> from gitk. I often review patches before pushing in gitk and if I
->> would like to have an easy way of fixing typos in commit messages etc.
+git branch --set-upstream @{-1} foo
 
-I've often _thought_ that I wanted something like this. As you say
-firing up gitk to review the patch you're about to send (or commit
-you're about to push) is probably a fairly common workflow.
+sets up tracking info for the previous branch rather than for a branch
+named "@{-1}".
 
->>
->> So the patch adds "Edit this commit" item to gitk's context menu and
->> the actual editing is done by non-interactively invoking interactive
->> rebase :-) and git gui.
-> 
-> Invoking rebase behind the scenes makes me very nervous. In particular:
-> 
->   1. There is nothing to indicate to the user that they are rewriting a
->      string of commits, which is going to wreak havoc if any of the
->      commits have been published elsewhere (either pushed somewhere, or
->      even present in another local branch). I.e., rebasing generally
->      needs to be a conscious decision of the user.
-> 
->      Yes, a veteran user who thinks about it will realize there is no
->      way to edit an old commit without rebasing, but I suspect relying
->      on that is not enough. There should probably be a prominent
->      warning at least the first time somebody uses this feature.
-> 
->   2. Even if you accept the hazard of rewriting commits, you don't pass
->      "-p" to rebase. So it will linearize your history. I don't know how
->      robust "-p" is these days, and if it's up to the challenge of
->      people using it to rebase potentially large segments of complex
->      history.
-> 
-> So I think your idea is sane, and if you use it appropriately (by
-> editing commits in recent-ish linear stretches of history) your patch
-> works fine. But I really worry that it is going to be a problem for less
-> clueful users to stumble across in the menu.
-> 
-> -Peff
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+That's actually 1 of n in my branch pattern series, but independent,
+and ready to go now.
 
-And as Peff points out there are some major caveats about how far back
-you would want to let people edit. I suspect you could come up with some
-sane rules (e.g. only allow editing the last commit, the last N commits,
-only commits that are not present in remote X). Whatever rules you come
-up with to protect people I think you'll end up frustrating them as well
-(why can I edit this commit but not that one).
+ branch.c                 |    2 +-
+ t/t6040-tracking-info.sh |   14 ++++++++++++++
+ 2 files changed, 15 insertions(+), 1 deletions(-)
 
-One thing I've thought about (but don't know enough TCL to begin to
-implement) is a graphical rebase front end. I often use git gui to make
-tweaks to the last commit (message and content) so why not extend that
-to a rebase operation. I think that might address some of Peffs concerns
-because the user would be invoking something specifically intended for
-rebasing and accepts all the caveats that go along with that.
-
-Anyway that's my 2c
---
-Chris
+diff --git a/branch.c b/branch.c
+index c0c865a..d62cc01 100644
+--- a/branch.c
++++ b/branch.c
+@@ -210,7 +210,7 @@ void create_branch(const char *head,
+ 			 start_name);
+ 
+ 	if (real_ref && track)
+-		setup_tracking(name, real_ref, track);
++		setup_tracking(ref.buf+11, real_ref, track);
+ 
+ 	if (!dont_change_ref)
+ 		if (write_ref_sha1(lock, sha1, msg) < 0)
+diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
+index a9b0ac1..19de5b1 100755
+--- a/t/t6040-tracking-info.sh
++++ b/t/t6040-tracking-info.sh
+@@ -110,4 +110,18 @@ test_expect_success '--set-upstream does not change branch' '
+ 	grep -q "^refs/heads/master$" actual &&
+ 	cmp expect2 actual2
+ '
++
++test_expect_success '--set-upstream @{-1}' '
++	git checkout from-master &&
++	git checkout from-master2 &&
++	git config branch.from-master2.merge > expect2 &&
++	git branch --set-upstream @{-1} follower &&
++	git config branch.from-master.merge > actual &&
++	git config branch.from-master2.merge > actual2 &&
++	git branch --set-upstream from-master follower &&
++	git config branch.from-master.merge > expect &&
++	test_cmp expect2 actual2 &&
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+1.7.6.678.gaaad0
