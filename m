@@ -1,106 +1,55 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v2 4/4] mergetools/meld: Use '--output' when available
-Date: Fri, 19 Aug 2011 02:14:45 -0700
-Message-ID: <20110819091444.GB18054@gmail.com>
-References: <1313652227-48545-1-git-send-email-davvid@gmail.com>
- <1313652227-48545-5-git-send-email-davvid@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git-svn repo in weird state
+Date: Fri, 19 Aug 2011 11:54:57 +0200
+Message-ID: <4E4E32F1.9040808@drmicha.warpmail.net>
+References: <85C67F68-AEF7-4E98-9388-C16BD04A68F8@apple.com> <2F128636-95A4-4216-894A-F0295A2D23EB@apple.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	Tanguy Ortolo <tanguy+debian@ortolo.eu>,
-	Charles Bailey <charles@hashpling.org>,
-	Sebastian Schuberth <sschuberth@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 19 11:14:57 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Dave Zarzycki <zarzycki@apple.com>
+X-From: git-owner@vger.kernel.org Fri Aug 19 11:55:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuLAH-0008CA-3z
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 11:14:57 +0200
+	id 1QuLnS-0006Xl-J5
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Aug 2011 11:55:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752414Ab1HSJOw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Aug 2011 05:14:52 -0400
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:61000 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751884Ab1HSJOv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Aug 2011 05:14:51 -0400
-Received: by yie30 with SMTP id 30so2067854yie.19
-        for <git@vger.kernel.org>; Fri, 19 Aug 2011 02:14:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=IeFvDXTuRe/+zChkzA5M6CBEQEG8/eEwuXm617XRe5Q=;
-        b=AMFsUMOsciz3goSoh5GW9zm0X0OVvDHC9KTGkglrYwliNi2n6KsD30iLfBtBXGnarE
-         SEZXNXv6OcvVzInXcFb6n+qft0Sk+1OpGYLa1sP4H6WZST3hSy637F1O62uMwSNaW8WK
-         xPRo4z2EIfAQFEhOIGzAaQ0e4ipcCmZa+z5Zs=
-Received: by 10.236.182.4 with SMTP id n4mr5575815yhm.90.1313745291347;
-        Fri, 19 Aug 2011 02:14:51 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id b4sm634022iba.15.2011.08.19.02.14.49
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 19 Aug 2011 02:14:50 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1313652227-48545-5-git-send-email-davvid@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753250Ab1HSJzE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Aug 2011 05:55:04 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:51798 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752570Ab1HSJzB (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Aug 2011 05:55:01 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 220A520F93;
+	Fri, 19 Aug 2011 05:55:00 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute3.internal (MEProxy); Fri, 19 Aug 2011 05:55:00 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=Vaj25aBF4PFEUkTrIafsZz
+	cBmsY=; b=iXY9uDoQzMu3djbLRyJYuNh2oiOVgMeSeJf0snBmceANsa9jZVWgcr
+	nbBAj30c2tOpq0PdzzsqFxjMGOuqZEgrYKN9ZYaLogEFiOCxxTUiilqtMZFOGOVg
+	MkiOcobAI53Sa65rUZ4/ElDyBTAvASZGdfpGuwHxa5cOdXqUgol28=
+X-Sasl-enc: bsrTxLYL7rinGSXt9gu3FxL+k5hN9VNhvF7rIZT/3LRd 1313747699
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 83E1245B063;
+	Fri, 19 Aug 2011 05:54:59 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
+In-Reply-To: <2F128636-95A4-4216-894A-F0295A2D23EB@apple.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179687>
 
-meld 1.5.0 and newer allow the output file to be specified
-when merging multiple files.  Check whether the meld command
-supports '--output' and use it when available.
+Dave Zarzycki venit, vidit, dixit 18.08.2011 16:22:
+> After introspecting the .git directory, it seems like a stale .git/master was created somehow. Why does git-show-ref not show .git/master as a ref?
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
- mergetools/meld |   25 ++++++++++++++++++++++++-
- 1 files changed, 24 insertions(+), 1 deletions(-)
+Because it's not in .git/refs/?
 
-Changes since v1 with help from Jonathan Nieder:
-
-Use $LOCAL $BASE REMOTE when calling meld.
-Avoid shell portability issues by using the return status.
-of --output instead of parsing --version.
-
-diff --git a/mergetools/meld b/mergetools/meld
-index 73d70ae..eaa115c 100644
---- a/mergetools/meld
-+++ b/mergetools/meld
-@@ -3,7 +3,30 @@ diff_cmd () {
- }
- 
- merge_cmd () {
-+	if test -z "${meld_has_output_option:+set}"
-+	then
-+		check_meld_for_output_version
-+	fi
- 	touch "$BACKUP"
--	"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
-+	if test "$meld_has_output_option" = true
-+	then
-+		"$merge_tool_path" --output "$MERGED" \
-+			"$LOCAL" "$BASE" "$REMOTE"
-+	else
-+		"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
-+	fi
- 	check_unchanged
- }
-+
-+# Check whether 'meld --output <file>' is supported
-+check_meld_for_output_version () {
-+	meld_path="$(git config mergetool.meld.path)"
-+	meld_path="${meld_path:-meld}"
-+
-+	if "$meld_path" --output /dev/null --help >/dev/null 2>&1
-+	then
-+		meld_has_output_option=true
-+	else
-+		meld_has_output_option=false
-+	fi
-+}
--- 
-1.7.6.553.g1899
+Michael
