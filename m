@@ -1,63 +1,113 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH v3] fast-import: do not write bad delta for replaced subtrees
-Date: Sat, 20 Aug 2011 11:08:30 +0200
-Message-ID: <m262lspi0h.fsf@linux-m68k.org>
-References: <1313145170-24471-1-git-send-email-divanorama@gmail.com>
-	<1313346744-30340-3-git-send-email-divanorama@gmail.com>
-	<20110820010901.GA2512@elie.sbx02827.chicail.wayport.net>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: How to use .gitattributes to tell git that .ini is text file?
+Date: Sat, 20 Aug 2011 21:59:26 +1200
+Message-ID: <4E4F857E.9030907@gmail.com>
+References: <bfe44ee.e467.131e4f0b471.Coremail.sinojelly@163.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dmitry Ivankov <divanorama@gmail.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	David Barr <davidbarr@google.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 20 11:10:13 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: =?UTF-8?B?IkdpdOiuqOiuuue7hCjml6DpobvorqLpmIUpIg==?= 
+	<git@vger.kernel.org>
+To: jelly <sinojelly@163.com>
+X-From: git-owner@vger.kernel.org Sat Aug 20 12:05:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuhZE-0002Rg-8O
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Aug 2011 11:10:12 +0200
+	id 1QuiQl-00014Z-Kq
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Aug 2011 12:05:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752173Ab1HTJIk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Aug 2011 05:08:40 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:58840 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751715Ab1HTJIj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Aug 2011 05:08:39 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 7D9B7188B5AD;
-	Sat, 20 Aug 2011 11:08:36 +0200 (CEST)
-X-Auth-Info: u0q1Zksh7IORP1oP4kWLnlJP6y/cG81GCzaC0X++mSE=
-Received: from linux.local (ppp-88-217-114-218.dynamic.mnet-online.de [88.217.114.218])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 81C8A1C00057;
-	Sat, 20 Aug 2011 11:08:36 +0200 (CEST)
-Received: by linux.local (Postfix, from userid 501)
-	id 330A11E5329; Sat, 20 Aug 2011 11:08:32 +0200 (CEST)
-X-Yow: We place two copies of PEOPLE magazine in a DARK, HUMID mobile home.
- 45 minutes later CYNDI LAUPER emerges wearing a BIRD CAGE on her head!
-In-Reply-To: <20110820010901.GA2512@elie.sbx02827.chicail.wayport.net>
-	(Jonathan Nieder's message of "Fri, 19 Aug 2011 20:09:02 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+	id S1752566Ab1HTJ7V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Aug 2011 05:59:21 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:51792 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751761Ab1HTJ7U (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Aug 2011 05:59:20 -0400
+Received: by pzk37 with SMTP id 37so6145009pzk.1
+        for <git@vger.kernel.org>; Sat, 20 Aug 2011 02:59:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=1bGxdFgbdPH+hf8c1VzBNBjwmQGWoQ4FlqT0vwdsH3A=;
+        b=WxqtI1zcxtVSaEeHwDH0TG6zMYT+Rw8e3SYjqPf7Y5uAMhGyRJsjJ0zV+VyxWiepay
+         5a6WxRc0b96aqq9m0O5K2H//AMczs6I1D3HezStHI3gSuXTuzxWmefiJvhN9Vc6yJyo8
+         QXpjfZI7dOKThdUZXloL97EYJeX/X4EiisXW0=
+Received: by 10.142.139.3 with SMTP id m3mr270218wfd.140.1313834359640;
+        Sat, 20 Aug 2011 02:59:19 -0700 (PDT)
+Received: from laptop.site (115-188-15-163.jetstream.xtra.co.nz [115.188.15.163])
+        by mx.google.com with ESMTPS id l15sm1890131wfe.12.2011.08.20.02.59.17
+        (version=SSLv3 cipher=OTHER);
+        Sat, 20 Aug 2011 02:59:18 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.2.18) Gecko/20110616 SUSE/3.1.11 Thunderbird/3.1.11
+In-Reply-To: <bfe44ee.e467.131e4f0b471.Coremail.sinojelly@163.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179757>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On 20/08/11 14:06, jelly wrote:
+> When I use like this, it takes no effect.
+> C:\Users\jelly\Documents\My Knowledge\Plugins>cat .gitattributes*.ini     text
+> C:\Users\jelly\Documents\My Knowledge\Plugins>git diffdiff --git a/Misc/plugin.ini b/Misc/plugin.iniindex 078c8a9..f73153c 100755Binary files a/Misc/plugin.ini and b/Misc/plugin.ini differ
 
-> Thanks again for this.  Abusing (S_ISDIR | S_ISUID) still leaves a bad
-> taste in my mouth, but after your description I'm convinced that
-> behavior-wise it's the right thing to do.
+I think you might be running into some problems with the end of line
+detection. What git version are you running? I think what you want in
+.gitattributes is '*.ini diff' (see below)
 
-$ git grep S_ISUID
-compat/mingw.h:#define S_ISUID 0
+I did some quick tests with 1.7.5 and I seem to get sane behaviour
+without needing .gitattributes
 
-Andreas.
+  printf '\r\nfoo\r\n' > foo.ini
+  git commit -m"" foo.ini
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+  # change content
+  printf '\r\nbar\r\n' > foo.ini
+  git diff
+  diff --git a/foo.ini b/foo.ini
+  index 35c61a9..b2b98e6 100644
+  --- a/foo.ini
+  +++ b/foo.ini
+  @@ -1,2 +1,2 @@
+
+  -foo
+  +bar
+
+  # insert non-printable character
+  printf '\nbar\0\n' > foo.ini
+  git diff
+  diff --git a/foo.ini b/foo.ini
+  index 35c61a9..aff5caf 100644
+  Binary files a/foo.ini and b/foo.ini differ
+
+Even with the binary content I can tell git diff to treat the files as
+text (not that you can see it in the email but with less as my pager I
+actually get an indication that there is a funny character there)
+
+  git diff -a
+  diff --git a/foo.ini b/foo.ini
+  index 35c61a9..aff5caf 100644
+  --- a/foo.ini
+  +++ b/foo.ini
+  @@ -1,2 +1,2 @@
+  -
+  -foo
+  +
+  +bar
+
+If you want to tell git diff to always use the -a option for .ini files
+try this
+
+  echo '*.ini diff' > .gitattributes
+  git diff
+  diff --git a/foo.ini b/foo.ini
+  index 35c61a9..aff5caf 100644
+  --- a/foo.ini
+  +++ b/foo.ini
+  @@ -1,2 +1,2 @@
+  -
+  -foo
+  +
+  +bar
