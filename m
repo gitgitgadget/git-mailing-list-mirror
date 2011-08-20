@@ -1,60 +1,66 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v4 1/4] commit: remove global variable head_sha1[]
-Date: Sat, 20 Aug 2011 19:03:32 +0700
-Message-ID: <CACsJy8DpZoQ1zbArePi_vpLqmQP=vq2ZvGYTX-56_jHwtsJwvg@mail.gmail.com>
-References: <1313674994-22902-1-git-send-email-pclouds@gmail.com>
- <1313765407-29925-1-git-send-email-pclouds@gmail.com> <7vfwkx2pqw.fsf@alter.siamese.dyndns.org>
+Subject: Re: What's cooking in git.git (Aug 2011, #05; Fri, 19)
+Date: Sat, 20 Aug 2011 19:11:14 +0700
+Message-ID: <CACsJy8Ch2b-8trK44JaeegVyYAHq-ocez+_TAUChNb3EX3F3MA@mail.gmail.com>
+References: <7vsjox11tr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 20 14:04:17 2011
+X-From: git-owner@vger.kernel.org Sat Aug 20 14:11:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QukHd-0008Ny-S5
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Aug 2011 14:04:14 +0200
+	id 1QukP0-0002MI-6h
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Aug 2011 14:11:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753781Ab1HTMEG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Aug 2011 08:04:06 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:36637 "EHLO
+	id S1753615Ab1HTMLq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Aug 2011 08:11:46 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:50334 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753748Ab1HTMEE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 20 Aug 2011 08:04:04 -0400
-Received: by bke11 with SMTP id 11so2756592bke.19
-        for <git@vger.kernel.org>; Sat, 20 Aug 2011 05:04:02 -0700 (PDT)
+	with ESMTP id S1752966Ab1HTMLp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 20 Aug 2011 08:11:45 -0400
+Received: by bke11 with SMTP id 11so2759038bke.19
+        for <git@vger.kernel.org>; Sat, 20 Aug 2011 05:11:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        bh=pxEFjopOK3VfDKXx87Jha7yjbB5e4LFZRy85pa8QjUw=;
-        b=uJYQ1uMD3vsJ1w4UG4vcWTa5oIEtFoajYJ48sydnpLwESXipBpqtPdVdH14lE5rRYw
-         rpEqfHDd5dGDCWG5lRnLJ2MhSD8oI2tdFVMiOoQAQL9DMyH00w7uQzeN28+N4SZVMxlH
-         SVdYdEr7xsAl4yMi1wHhtnMG8TjLKguRORQnM=
-Received: by 10.204.155.81 with SMTP id r17mr158112bkw.19.1313841842678; Sat,
- 20 Aug 2011 05:04:02 -0700 (PDT)
-Received: by 10.204.156.19 with HTTP; Sat, 20 Aug 2011 05:03:32 -0700 (PDT)
-In-Reply-To: <7vfwkx2pqw.fsf@alter.siamese.dyndns.org>
+        bh=UBQwhePuJnIFdYA8RgemTKQECmZZ6XpkSGrv3Qq53uM=;
+        b=DDTUwMSdl9X9Gcp2CWB/91iBXDtkquC8REJ9Xzo3j8c1ID00lu8flb0eFOtAitdPjz
+         0OQPAt9VwOJSiEsHQXxD1pnmbwAwcFwJF5dJ8xzTyvk38AYdv7VQ5mMxOMWPSbIfvGVL
+         RVU7d0QHh22hRM4P7FmC1kXQdjxiLGOGbamag=
+Received: by 10.204.150.193 with SMTP id z1mr161046bkv.123.1313842304137; Sat,
+ 20 Aug 2011 05:11:44 -0700 (PDT)
+Received: by 10.204.156.19 with HTTP; Sat, 20 Aug 2011 05:11:14 -0700 (PDT)
+In-Reply-To: <7vsjox11tr.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179759>
 
-2011/8/20 Junio C Hamano <gitster@pobox.com>:
-> Also wouldn't these three be equivalents?
+On Sat, Aug 20, 2011 at 5:19 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> * jk/add-i-hunk-filter (2011-07-27) 5 commits
+> =C2=A0(merged to 'next' on 2011-08-11 at 8ff9a56)
+> =C2=A0+ add--interactive: add option to autosplit hunks
+> =C2=A0+ add--interactive: allow negatation of hunk filters
+> =C2=A0+ add--interactive: allow hunk filtering on command line
+> =C2=A0+ add--interactive: factor out regex error handling
+> =C2=A0+ add--interactive: refactor patch mode argument processing
 >
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0head_commit =3D=3D NULL
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0is_null_sha1(head_sha1)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0initial_commit
+> Needs documentation updates.
 
-Right.
+And tests, and its user "git add". Yeah, I'm getting to that.
 
-> Perhaps like this instead?
-
-Yup. Looks good.
+Sorry it takes long time because I wanted to bring this feature to
+diff machinery so that I could filter hunks with "git diff
+--pickaxe-hunks -Gregex" and reuse option names for "git add -p". It
+turns out very intrusive changes to split/merge hunks, so I dropped it
+and will go back to simple "git add -p" changes.
 --=20
 Duy
