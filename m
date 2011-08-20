@@ -1,90 +1,84 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v4 4/4] Accept tags in HEAD or MERGE_HEAD
-Date: Sat, 20 Aug 2011 23:37:11 +0700
-Message-ID: <CACsJy8CLb-PrMdt05HEV-sHWwWbsu9MaC7-khAoT43O8vfkSDg@mail.gmail.com>
-References: <1313674994-22902-1-git-send-email-pclouds@gmail.com>
- <1313765407-29925-1-git-send-email-pclouds@gmail.com> <1313765407-29925-4-git-send-email-pclouds@gmail.com>
- <7vaab52m2r.fsf@alter.siamese.dyndns.org>
+From: Hin-Tak Leung <htl10@users.sourceforge.net>
+Subject: git svn --stdlayout 's little quirk.
+Date: Sat, 20 Aug 2011 18:06:28 +0100 (BST)
+Message-ID: <1313859988.60143.YahooMailClassic@web29518.mail.ird.yahoo.com>
+Reply-To: htl10@users.sourceforge.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 20 18:37:52 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+To: madduck@madduck.net, normalperson@yhbt.net, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 20 19:06:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuoYR-0004U0-EA
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Aug 2011 18:37:51 +0200
+	id 1Qup0G-0005ZJ-BC
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Aug 2011 19:06:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753533Ab1HTQhn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Aug 2011 12:37:43 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:61965 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753368Ab1HTQhn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 20 Aug 2011 12:37:43 -0400
-Received: by bke11 with SMTP id 11so2842788bke.19
-        for <git@vger.kernel.org>; Sat, 20 Aug 2011 09:37:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Pxbj7yys47PP/fojDnZ5Td0shGiYXr72C1RA6e/ckOw=;
-        b=Cx3fzEWWyFGXVoV9VwJurRBprc2ibl9K0rBlSNdTo0z/OVjmSMKZ3PipfwjdiUWyHI
-         ZeN/GdT6J+8pt0YU+oopORmaBPV61Z1Lwt4cLAOydxQO5FLpp5uni3I9VJmCAsRU6W1O
-         Cm3NOTry2IbmA3FVEsz5+BTGnatyNufLrPiQQ=
-Received: by 10.204.150.193 with SMTP id z1mr230067bkv.123.1313858261288; Sat,
- 20 Aug 2011 09:37:41 -0700 (PDT)
-Received: by 10.204.156.19 with HTTP; Sat, 20 Aug 2011 09:37:11 -0700 (PDT)
-In-Reply-To: <7vaab52m2r.fsf@alter.siamese.dyndns.org>
+	id S1754135Ab1HTRGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Aug 2011 13:06:30 -0400
+Received: from nm19-vm0.bullet.mail.ird.yahoo.com ([77.238.189.92]:30701 "HELO
+	nm19-vm0.bullet.mail.ird.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1753394Ab1HTRGa convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Aug 2011 13:06:30 -0400
+Received: from [77.238.189.55] by nm19.bullet.mail.ird.yahoo.com with NNFMP; 20 Aug 2011 17:06:28 -0000
+Received: from [212.82.108.238] by tm8.bullet.mail.ird.yahoo.com with NNFMP; 20 Aug 2011 17:06:28 -0000
+Received: from [127.0.0.1] by omp1003.mail.ird.yahoo.com with NNFMP; 20 Aug 2011 17:06:28 -0000
+X-Yahoo-Newman-Property: ymail-3
+X-Yahoo-Newman-Id: 751960.44190.bm@omp1003.mail.ird.yahoo.com
+Received: (qmail 60499 invoked by uid 60001); 20 Aug 2011 17:06:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1313859988; bh=3be6gz//4CM4hsHNU6cjbz3s+8FHjHvpZQDIl8x11WA=; h=X-YMail-OSG:Received:X-RocketYMMF:X-Mailer:Message-ID:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=Avo0OGS5kRX5NclpP+hAYK8dntjX7EL13s9MnqqYl2Cc0U/K/bm9sS5tJRcEG6zuu6P8ABiEvHkTa4wWFMnl9ByY8aNGAMZjZs+2850BNSoxeebyB6udOQvwdM1erm/QU2w4mqsPEavohsIrJEVdLOWfhvBSP6xBeRQ+JCfSlC4=
+X-YMail-OSG: 6xsczH4VM1kdF7ZSVnmwVoBmyf5oS1GA1bH9oMU6khCjAUC
+ NQsZi9MfZOk1naQaFJJMEdE3iH83DZiMMDIARYJUqDrvaYidiJ90XxvssRv6
+ kKEzxNHhCznI4jtAlDKMcpoadBj.LhVwcaEo_kBa1FKRiOg4xlaTscIqw83M
+ PeEqd7YN5SXfGMlFilUU0GZLig34oLdUrbwcDUxZagvUUF37iXqg_W_KYNmV
+ p6fvpjZPfuXoz3K7v8DiSOuoYxiFBDrY.rShCRPE1gr.YIjh.1r1BLKWwc.L
+ T13poqltPBN18jux1qkDeTW3muH4sgdCdU3T.dXjyBmHeh8qqwsLe6L.evbu
+ rj_xO6CG0U8JGCBTp.uPyIyVFRUsPTFejqUOlfAw4VahPCns_dA9GtTt8g_8
+ W1g0U1OD1T1RSE_aBotGl_OwT5hbbbhfQ8X6mod7wt2apdF1sqOW.Ec3jg3z
+ syEJyY4vzCse7UbhWDK52NeIvUppUqLt3n5Neu_w51HRA1soRxx5XJMTo
+Received: from [81.101.129.153] by web29518.mail.ird.yahoo.com via HTTP; Sat, 20 Aug 2011 18:06:28 BST
+X-RocketYMMF: hintak_leung
+X-Mailer: YahooMailClassic/14.0.4 YahooMailWebService/0.8.113.315625
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179764>
 
-2011/8/20 Junio C Hamano <gitster@pobox.com>:
-> That's de-reference, not deference ;-). You may want to be more expli=
-cit
-> about what kind of de-reference you are talking about.
->
-> /*
-> =C2=A0* Get a commit object for the given sha1, unwrapping a tag obje=
-ct that
-> =C2=A0* point at a commit while at it. ref_name is only used when the=
- result
-> =C2=A0* is not a commit in the error message to report where we got t=
-he sha1
-> =C2=A0* from.
-> =C2=A0*/
->
-> I actually was hoping that you would have this comment in commit.h to=
- help
-> people who want to add callers of this function, not next to the
-> implementation.
+first of all, thanks for a great tool - use it daily!
 
-OK. It's because I tend to go straight to implementation instead of
-the declaration when I want to know how to use it.
+I think I found a small bug in git 1.7.6. Having "trunk" at the end of the url in combination of --stdlayout is wrong, but it looks like that git-svn tries to cope, but doesn't go try far enough:
 
-> As I said earlier, I do not think updating sha1[] here is necessary. =
-The
-> caller should be updated to use c->object.sha1 instead.
+Doing this:
+----------------
+git svn clone --stdlayout http://quick-settings.googlecode.com/svn/trunk/ android-quick-settings
+----------------
 
-The usual pattern is
+Gives this message and stops:
+----------------
+Initialized empty Git repository in /home/Hin-Tak/tmp-git/svn-imports/android-quick-settings/.git/
+Using higher level of URL: http://quick-settings.googlecode.com/svn/trunk => http://quick-settings.googlecode.com/svn
+----------------
 
-get_sha1(ref, sha1);
-commit =3D lookup_commit_or_die(sha1, ref);
+When I saw the message I thought it is striping the ending 'trunk' for my convenience, but when I look at .git/config:
 
-=46rom a quick look, it's very easy to assume "sha1" is safe to use
-afterwards while it may be different from commit->object.sha1. I'm
-tempted to make lookup_commit_or_die() resolve ref to sha1 internally,
-no temporary sha1 variable will be hanging around, the pattern becomes
+--------------------
+$ more .git/config 
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[svn-remote "svn"]
+	url = http://quick-settings.googlecode.com/svn
+	fetch = trunk/trunk:refs/remotes/trunk
+	branches = trunk/branches/*:refs/remotes/*
+	tags = trunk/tags/*:refs/remotes/tags/*
+------------------
 
-commit =3D lookup_commit_or_die(ref);
+It is doing 'trunk/trunk', etc, which is why it stopped.
 
-The only problem is MERGE_HEAD is not usual ref and cannot be treated t=
-his way.
---=20
-Duy
+Can it either clone correctly despite the wrong instruction, or fail with a better message than 'Using higher level...' which suggests it tried?
