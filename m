@@ -1,44 +1,44 @@
 From: Fredrik Kuivinen <frekui@gmail.com>
-Subject: [PATCH v2 3/5] Adapt the kwset code to Git
-Date: Sun, 21 Aug 2011 00:41:41 +0200
-Message-ID: <20110820224141.GD2199@fredrik-Q430-Q530>
+Subject: [PATCH v2 4/5] Use kwset in pickaxe
+Date: Sun, 21 Aug 2011 00:41:57 +0200
+Message-ID: <20110820224157.GE2199@fredrik-Q430-Q530>
 References: <20110820223032.12380.72469.stgit@localhost6.localdomain6>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: bonzini@gnu.org, dpotapov@gmail.com,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 21 00:41:50 2011
+X-From: git-owner@vger.kernel.org Sun Aug 21 00:42:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuuEf-0008CI-M8
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Aug 2011 00:41:50 +0200
+	id 1QuuEw-0008FS-Ul
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Aug 2011 00:42:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754575Ab1HTWlp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Aug 2011 18:41:45 -0400
+	id S1754903Ab1HTWmB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Aug 2011 18:42:01 -0400
 Received: from mail-bw0-f46.google.com ([209.85.214.46]:35673 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754145Ab1HTWlo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Aug 2011 18:41:44 -0400
+	with ESMTP id S1754697Ab1HTWmA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Aug 2011 18:42:00 -0400
 Received: by mail-bw0-f46.google.com with SMTP id 11so2936995bke.19
-        for <git@vger.kernel.org>; Sat, 20 Aug 2011 15:41:44 -0700 (PDT)
+        for <git@vger.kernel.org>; Sat, 20 Aug 2011 15:41:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=XKAASeo1mRsMntyb1DBG3a2BY6l6RVeT4uDy3jD723w=;
-        b=hacacZzHm3XPRjMbENCYAathND612jQt7IQEHipJOQxYPFZe1P8iCe1Z1D0w6J0v0x
-         IpiIXVcFaR22chMmKUbb0agYHbfTyvf04Ps/CUPlAolDGeoOyRhKH1K5yKMST8uT/OrF
-         SdpPE4hPZzsaN0pkZbZ5J/HQf4fZSL+jmZN0Q=
-Received: by 10.204.132.80 with SMTP id a16mr315608bkt.128.1313880104050;
-        Sat, 20 Aug 2011 15:41:44 -0700 (PDT)
+        bh=ngBfRpACA+c19CBniatzL109Cd5SwegxXkHAfRdYGWs=;
+        b=RlaEmxUQj3chAsP2FCavOTO1GqpN8sYYs5NFqtAZqOW8piWRmZR2HVLv5u+wukpunR
+         tzwC7FHvxi5osyx45LzrJsGlulCAjM+2AkYXcx9h9hifyNZcPc0U6KUZ/6ujCUlCb3cB
+         wbajDZWLowZ53kkD4xaaauW16mov2J9BXm39c=
+Received: by 10.204.152.152 with SMTP id g24mr318946bkw.345.1313880119802;
+        Sat, 20 Aug 2011 15:41:59 -0700 (PDT)
 Received: from fredrik-Q430-Q530 (c83-250-151-53.bredband.comhem.se [83.250.151.53])
-        by mx.google.com with ESMTPS id x19sm1443963bkt.9.2011.08.20.15.41.43
+        by mx.google.com with ESMTPS id a22sm1442308bke.20.2011.08.20.15.41.58
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 20 Aug 2011 15:41:43 -0700 (PDT)
+        Sat, 20 Aug 2011 15:41:59 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20110820223032.12380.72469.stgit@localhost6.localdomain6>
 User-Agent: StGit/0.15
@@ -46,152 +46,178 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179790>
 
+Benchmarks in the hot cache case:
 
+before:
+$ perf stat --repeat=5 git log -Sqwerty
+
+Performance counter stats for 'git log -Sqwerty' (5 runs):
+
+       47,092,744 cache-misses             #      2.825 M/sec   ( +-   1.607% )
+      123,368,389 cache-references         #      7.400 M/sec   ( +-   0.812% )
+      330,040,998 branch-misses            #      3.134 %       ( +-   0.257% )
+   10,530,896,750 branches                 #    631.663 M/sec   ( +-   0.121% )
+   62,037,201,030 instructions             #      1.399 IPC     ( +-   0.142% )
+   44,331,294,321 cycles                   #   2659.073 M/sec   ( +-   0.326% )
+           96,794 page-faults              #      0.006 M/sec   ( +-  11.952% )
+               25 CPU-migrations           #      0.000 M/sec   ( +-  25.266% )
+            1,424 context-switches         #      0.000 M/sec   ( +-   0.540% )
+     16671.708650 task-clock-msecs         #      0.997 CPUs    ( +-   0.343% )
+
+      16.728692052  seconds time elapsed   ( +-   0.344% )
+
+after:
+$ perf stat --repeat=5 git log -Sqwerty
+
+Performance counter stats for 'git log -Sqwerty' (5 runs):
+
+       51,385,522 cache-misses             #      4.619 M/sec   ( +-   0.565% )
+      129,177,880 cache-references         #     11.611 M/sec   ( +-   0.219% )
+      319,222,775 branch-misses            #      6.946 %       ( +-   0.134% )
+    4,595,913,233 branches                 #    413.086 M/sec   ( +-   0.112% )
+   31,395,042,533 instructions             #      1.062 IPC     ( +-   0.129% )
+   29,558,348,598 cycles                   #   2656.740 M/sec   ( +-   0.204% )
+           93,224 page-faults              #      0.008 M/sec   ( +-   4.487% )
+               19 CPU-migrations           #      0.000 M/sec   ( +-  10.425% )
+              950 context-switches         #      0.000 M/sec   ( +-   0.360% )
+     11125.796039 task-clock-msecs         #      0.997 CPUs    ( +-   0.239% )
+
+      11.164216599  seconds time elapsed   ( +-   0.240% )
+
+So the kwset code is about 33% faster.
 
 Signed-off-by: Fredrik Kuivinen <frekui@gmail.com>
 ---
- kwset.c |   31 ++++++++++++-------------------
- kwset.h |   18 ++++++++++++------
- 2 files changed, 24 insertions(+), 25 deletions(-)
+ Makefile           |    2 ++
+ diffcore-pickaxe.c |   34 +++++++++++++++++++++++-----------
+ 2 files changed, 25 insertions(+), 11 deletions(-)
 
-diff --git a/kwset.c b/kwset.c
-index e66193b..06a66e7 100644
---- a/kwset.c
-+++ b/kwset.c
-@@ -1,3 +1,8 @@
-+/* This file has been copied from commit e7ac713d^ in the GNU grep git
-+ * repository. A few small changes have been made to adapt the code to
-+ * Git.
-+ */
-+
- /* kwset.c - search for any of a set of keywords.
-    Copyright 1989, 1998, 2000, 2005 Free Software Foundation, Inc.
+diff --git a/Makefile b/Makefile
+index 4cd061f..45ef51f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -533,6 +533,7 @@ LIB_H += graph.h
+ LIB_H += grep.h
+ LIB_H += hash.h
+ LIB_H += help.h
++LIB_H += kwset.h
+ LIB_H += levenshtein.h
+ LIB_H += list-objects.h
+ LIB_H += ll-merge.h
+@@ -624,6 +625,7 @@ LIB_OBJS += hash.o
+ LIB_OBJS += help.o
+ LIB_OBJS += hex.o
+ LIB_OBJS += ident.o
++LIB_OBJS += kwset.o
+ LIB_OBJS += levenshtein.o
+ LIB_OBJS += list-objects.o
+ LIB_OBJS += ll-merge.o
+diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
+index ea03b91..c3760cf 100644
+--- a/diffcore-pickaxe.c
++++ b/diffcore-pickaxe.c
+@@ -6,6 +6,7 @@
+ #include "diff.h"
+ #include "diffcore.h"
+ #include "xdiff-interface.h"
++#include "kwset.h"
  
-@@ -28,22 +33,14 @@
-    String Matching:  An Aid to Bibliographic Search," CACM June 1975,
-    Vol. 18, No. 6, which describes the failure function used below. */
+ struct diffgrep_cb {
+ 	regex_t *regexp;
+@@ -146,7 +147,7 @@ static void diffcore_pickaxe_grep(struct diff_options *o)
  
--#ifdef HAVE_CONFIG_H
--# include <config.h>
--#endif
-+#include "cache.h"
-+
- #include <sys/types.h>
--#include "system.h"
- #include "kwset.h"
- #include "obstack.h"
- 
--#ifdef GREP
--extern char *xmalloc();
--# undef malloc
--# define malloc xmalloc
--#endif
--
- #define NCHAR (UCHAR_MAX + 1)
--#define obstack_chunk_alloc malloc
-+#define obstack_chunk_alloc xmalloc
- #define obstack_chunk_free free
- 
- #define U(c) ((unsigned char) (c))
-@@ -93,9 +90,7 @@ kwsalloc (char const *trans)
+ static unsigned int contains(struct diff_filespec *one,
+ 			     const char *needle, unsigned long len,
+-			     regex_t *regexp)
++			     regex_t *regexp, kwset_t kws)
  {
-   struct kwset *kwset;
+ 	unsigned int cnt;
+ 	unsigned long sz;
+@@ -175,9 +176,12 @@ static unsigned int contains(struct diff_filespec *one,
  
--  kwset = (struct kwset *) malloc(sizeof (struct kwset));
--  if (!kwset)
--    return NULL;
-+  kwset = (struct kwset *) xmalloc(sizeof (struct kwset));
+ 	} else { /* Classic exact string match */
+ 		while (sz) {
+-			const char *found = memmem(data, sz, needle, len);
+-			if (!found)
++			size_t offset = kwsexec(kws, data, sz, NULL);
++			const char *found;
++			if (offset == -1)
+ 				break;
++			else
++				found = data + offset;
+ 			sz -= found - data + len;
+ 			data = found + len;
+ 			cnt++;
+@@ -195,6 +199,7 @@ static void diffcore_pickaxe_count(struct diff_options *o)
+ 	unsigned long len = strlen(needle);
+ 	int i, has_changes;
+ 	regex_t regex, *regexp = NULL;
++	kwset_t kws = NULL;
+ 	struct diff_queue_struct outq;
+ 	DIFF_QUEUE_CLEAR(&outq);
  
-   obstack_init(&kwset->obstack);
-   kwset->words = 0;
-@@ -174,7 +169,7 @@ kwsincr (kwset_t kws, char const *text, size_t len)
- 	  link = (struct tree *) obstack_alloc(&kwset->obstack,
- 					       sizeof (struct tree));
- 	  if (!link)
--	    return _("memory exhausted");
-+	    return "memory exhausted";
- 	  link->llink = NULL;
- 	  link->rlink = NULL;
- 	  link->trie = (struct trie *) obstack_alloc(&kwset->obstack,
-@@ -182,7 +177,7 @@ kwsincr (kwset_t kws, char const *text, size_t len)
- 	  if (!link->trie)
- 	    {
- 	      obstack_free(&kwset->obstack, link);
--	      return _("memory exhausted");
-+	      return "memory exhausted";
- 	    }
- 	  link->trie->accepting = 0;
- 	  link->trie->links = NULL;
-@@ -405,7 +400,7 @@ kwsprep (kwset_t kws)
-       /* Looking for just one string.  Extract it from the trie. */
-       kwset->target = obstack_alloc(&kwset->obstack, kwset->mind);
-       if (!kwset->target)
--	return _("memory exhausted");
-+	return "memory exhausted";
-       for (i = kwset->mind - 1, curr = kwset->trie; i >= 0; --i)
- 	{
- 	  kwset->target[i] = curr->links->label;
-@@ -597,9 +592,7 @@ cwexec (kwset_t kws, char const *text, size_t len, struct kwsmatch *kwsmatch)
-   register struct tree const *tree;
-   register char const *trans;
+@@ -209,6 +214,10 @@ static void diffcore_pickaxe_count(struct diff_options *o)
+ 			die("invalid pickaxe regex: %s", errbuf);
+ 		}
+ 		regexp = &regex;
++	} else {
++		kws = kwsalloc(NULL);
++		kwsincr(kws, needle, len);
++		kwsprep(kws);
+ 	}
  
--#ifdef lint
-   accept = NULL;
--#endif
+ 	if (opts & DIFF_PICKAXE_ALL) {
+@@ -219,16 +228,16 @@ static void diffcore_pickaxe_count(struct diff_options *o)
+ 				if (!DIFF_FILE_VALID(p->two))
+ 					continue; /* ignore unmerged */
+ 				/* created */
+-				if (contains(p->two, needle, len, regexp))
++				if (contains(p->two, needle, len, regexp, kws))
+ 					has_changes++;
+ 			}
+ 			else if (!DIFF_FILE_VALID(p->two)) {
+-				if (contains(p->one, needle, len, regexp))
++				if (contains(p->one, needle, len, regexp, kws))
+ 					has_changes++;
+ 			}
+ 			else if (!diff_unmodified_pair(p) &&
+-				 contains(p->one, needle, len, regexp) !=
+-				 contains(p->two, needle, len, regexp))
++				 contains(p->one, needle, len, regexp, kws) !=
++				 contains(p->two, needle, len, regexp, kws))
+ 				has_changes++;
+ 		}
+ 		if (has_changes)
+@@ -251,16 +260,17 @@ static void diffcore_pickaxe_count(struct diff_options *o)
+ 				if (!DIFF_FILE_VALID(p->two))
+ 					; /* ignore unmerged */
+ 				/* created */
+-				else if (contains(p->two, needle, len, regexp))
++				else if (contains(p->two, needle, len, regexp,
++						  kws))
+ 					has_changes = 1;
+ 			}
+ 			else if (!DIFF_FILE_VALID(p->two)) {
+-				if (contains(p->one, needle, len, regexp))
++				if (contains(p->one, needle, len, regexp, kws))
+ 					has_changes = 1;
+ 			}
+ 			else if (!diff_unmodified_pair(p) &&
+-				 contains(p->one, needle, len, regexp) !=
+-				 contains(p->two, needle, len, regexp))
++				 contains(p->one, needle, len, regexp, kws) !=
++				 contains(p->two, needle, len, regexp, kws))
+ 				has_changes = 1;
  
-   /* Initialize register copies and look for easy ways out. */
-   kwset = (struct kwset *) kws;
-diff --git a/kwset.h b/kwset.h
-index 10836be..a21b2ea 100644
---- a/kwset.h
-+++ b/kwset.h
-@@ -1,3 +1,8 @@
-+/* This file has been copied from commit e7ac713d^ in the GNU grep git
-+ * repository. A few small changes have been made to adapt the code to
-+ * Git.
-+ */
-+
- /* kwset.h - header declaring the keyword set library.
-    Copyright (C) 1989, 1998, 2005 Free Software Foundation, Inc.
+ 			if (has_changes)
+@@ -271,6 +281,8 @@ static void diffcore_pickaxe_count(struct diff_options *o)
  
-@@ -27,22 +32,23 @@ struct kwsmatch
-   size_t size[1];		/* Length of each submatch. */
- };
+ 	if (opts & DIFF_PICKAXE_REGEX)
+ 		regfree(&regex);
++	else
++		kwsfree(kws);
  
--typedef ptr_t kwset_t;
-+struct kwset_t;
-+typedef struct kwset_t* kwset_t;
- 
- /* Return an opaque pointer to a newly allocated keyword set, or NULL
-    if enough memory cannot be obtained.  The argument if non-NULL
-    specifies a table of character translations to be applied to all
-    pattern and search text. */
--extern kwset_t kwsalloc PARAMS((char const *));
-+extern kwset_t kwsalloc(char const *);
- 
- /* Incrementally extend the keyword set to include the given string.
-    Return NULL for success, or an error message.  Remember an index
-    number for each keyword included in the set. */
--extern const char *kwsincr PARAMS((kwset_t, char const *, size_t));
-+extern const char *kwsincr(kwset_t, char const *, size_t);
- 
- /* When the keyword set has been completely built, prepare it for
-    use.  Return NULL for success, or an error message. */
--extern const char *kwsprep PARAMS((kwset_t));
-+extern const char *kwsprep(kwset_t);
- 
- /* Search through the given buffer for a member of the keyword set.
-    Return a pointer to the leftmost longest match found, or NULL if
-@@ -50,8 +56,8 @@ extern const char *kwsprep PARAMS((kwset_t));
-    the matching substring in the integer it points to.  Similarly,
-    if foundindex is non-NULL, store the index of the particular
-    keyword found therein. */
--extern size_t kwsexec PARAMS((kwset_t, char const *, size_t, struct kwsmatch *));
-+extern size_t kwsexec(kwset_t, char const *, size_t, struct kwsmatch *);
- 
- /* Deallocate the given keyword set and all its associated storage. */
--extern void kwsfree PARAMS((kwset_t));
-+extern void kwsfree(kwset_t);
- 
+ 	free(q->queue);
+ 	*q = outq;
