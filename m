@@ -1,92 +1,53 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: update-index --index-info producing spurious submodule commits
-Date: Fri, 19 Aug 2011 21:15:15 -0500
-Message-ID: <20110820021430.GA14281@elie.sbx02827.chicail.wayport.net>
-References: <rmivctuv12s.fsf@fnord.ir.bbn.com>
- <7vd3g272tk.fsf@alter.siamese.dyndns.org>
- <rmiliuq2qlg.fsf@fnord.ir.bbn.com>
- <7vpqk2593g.fsf@alter.siamese.dyndns.org>
- <rmi39gxacp1.fsf@fnord.ir.bbn.com>
+From: jelly <sinojelly@163.com>
+Subject: How to use .gitattributes to tell git that .ini is text file?
+Date: Sat, 20 Aug 2011 10:06:45 +0800 (CST)
+Message-ID: <bfe44ee.e467.131e4f0b471.Coremail.sinojelly@163.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Richard Hansen <rhansen@bbn.com>
-To: Greg Troxel <gdt@ir.bbn.com>
-X-From: git-owner@vger.kernel.org Sat Aug 20 04:18:47 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: =?UTF-8?B?R2l06K6o6K6657uEKOaXoOmhu+iuoumYhSk=?= 
+	<git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 20 04:22:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qub94-0003RC-B1
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Aug 2011 04:18:46 +0200
+	id 1QubCG-00046o-HH
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Aug 2011 04:22:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752624Ab1HTCPZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Aug 2011 22:15:25 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:59275 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751462Ab1HTCPY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Aug 2011 22:15:24 -0400
-Received: by pzk37 with SMTP id 37so5790609pzk.1
-        for <git@vger.kernel.org>; Fri, 19 Aug 2011 19:15:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=htipSLfAgxC4u3Cw61g89hkuvAyPq62u07OdmbyDWnM=;
-        b=TnUIUzX3ul5elZCSDp0wLR2zsLL1G6ZvJwDdaghb86JrfkWXmkdp6DRzjEJD/PMOJI
-         ETyrbcl3Fph7kRUmNbV0QirSuflNUT0DEABHUJZQsqTlnoklISJrHul3lYVXPRmMkv0J
-         91OCdVfXOphNZDDgLU7XBV01niXDkaVhiTlOw=
-Received: by 10.142.195.14 with SMTP id s14mr48027wff.1.1313806524347;
-        Fri, 19 Aug 2011 19:15:24 -0700 (PDT)
-Received: from elie.sbx02827.chicail.wayport.net ([64.134.196.199])
-        by mx.google.com with ESMTPS id g4sm2801624pbj.89.2011.08.19.19.15.22
-        (version=SSLv3 cipher=OTHER);
-        Fri, 19 Aug 2011 19:15:23 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <rmi39gxacp1.fsf@fnord.ir.bbn.com>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+	id S1754035Ab1HTCWA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Aug 2011 22:22:00 -0400
+Received: from m13-124.163.com ([220.181.13.124]:34685 "EHLO m13-124.163.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752590Ab1HTCV7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Aug 2011 22:21:59 -0400
+X-Greylist: delayed 911 seconds by postgrey-1.27 at vger.kernel.org; Fri, 19 Aug 2011 22:21:58 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Received:Date:From:To:Message-ID:Subject:
+	MIME-Version:Content-Type:Content-Transfer-Encoding; bh=GqT6v50W
+	yqfS8sWgZsLRsa0gz3vF70zYjdUIyfgtcGc=; b=FQgBLE2+mLoyfXQBtegKyOAG
+	szlA7b3m04fc7BxeCowuQ3mLYPMrd8leXvq3/4p6C9lac1Diqu6/cE/XHChMWoZ3
+	zLd6F0WZWdvGS3L+NZhBlf5PXDRPYr7Jui3lnMyNqPDmqYb6C9JPZjK9BM26d7aK
+	3qvT9VJVDCksOTMdVKw=
+Received: from sinojelly ( [58.247.242.137] ) by ajax-webmail-wmsvr124
+ (Coremail) ; Sat, 20 Aug 2011 10:06:45 +0800 (CST)
+X-Originating-IP: [58.247.242.137]
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
+ 110713(13936.3901.3890) Copyright (c) 2002-2011 www.mailtech.cn 163com
+X-CM-TRANSID: fMGowJD7X8i1Fk9OjEEKAA--.3570W
+X-CM-SenderInfo: pvlq0yphoo5qqrwthudrp/1tbiSg+hyU4dPSpO5AAAsD
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179750>
 
-Greg Troxel wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-
->> "ls-tree -r HEAD foo" is probably what you meant to say.
->
-> Thanks very much for the clue - that works.  The update-index
-> documentation should probably say that only blobs (or perhaps commits
-> intended to be submodules??) are acceptable, and perhaps say "ls-tree
-> -r" instead of ls-tree.
-
-Makes sense.  Please make it so.
-
-By the way, for this particular application I wonder if something like
-
-	git ls-files -z <dir> | git update-index -z --force-remove --stdin
-	git read-tree --prefix=<dir>/ <tree>
-
-would be easier.  Or a commit-filter. :)
-
-	tree=$1
-	shift
-	tree=$(
-		git ls-tree -z "$tree" |
-		perl -0ne '
-			chop;
-			my ($info, $name) = split(/\t/, $_, 2);
-			if ($name eq "<dir>") {
-				printf("040000 tree <good tree>\t<dir>\0");
-			} else {
-				printf("%s\0", $_);
-			}
-		' |
-		git mktree -z
-	)
-	git commit-tree "$tree" "$@"
-
-Thanks,
-Jonathan
+When I use like this, it takes no effect.
+C:\Users\jelly\Documents\My Knowledge\Plugins>cat .gitattributes*.ini =C2=
+=A0 =C2=A0 text
+C:\Users\jelly\Documents\My Knowledge\Plugins>git diffdiff --git a/Misc=
+/plugin.ini b/Misc/plugin.iniindex 078c8a9..f73153c 100755Binary files =
+a/Misc/plugin.ini and b/Misc/plugin.ini differ
