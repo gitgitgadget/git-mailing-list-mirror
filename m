@@ -1,113 +1,60 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: How to use .gitattributes to tell git that .ini is text file?
-Date: Sat, 20 Aug 2011 21:59:26 +1200
-Message-ID: <4E4F857E.9030907@gmail.com>
-References: <bfe44ee.e467.131e4f0b471.Coremail.sinojelly@163.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v4 1/4] commit: remove global variable head_sha1[]
+Date: Sat, 20 Aug 2011 19:03:32 +0700
+Message-ID: <CACsJy8DpZoQ1zbArePi_vpLqmQP=vq2ZvGYTX-56_jHwtsJwvg@mail.gmail.com>
+References: <1313674994-22902-1-git-send-email-pclouds@gmail.com>
+ <1313765407-29925-1-git-send-email-pclouds@gmail.com> <7vfwkx2pqw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?B?IkdpdOiuqOiuuue7hCjml6DpobvorqLpmIUpIg==?= 
-	<git@vger.kernel.org>
-To: jelly <sinojelly@163.com>
-X-From: git-owner@vger.kernel.org Sat Aug 20 12:05:32 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 20 14:04:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuiQl-00014Z-Kq
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Aug 2011 12:05:31 +0200
+	id 1QukHd-0008Ny-S5
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Aug 2011 14:04:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752566Ab1HTJ7V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Aug 2011 05:59:21 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:51792 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751761Ab1HTJ7U (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Aug 2011 05:59:20 -0400
-Received: by pzk37 with SMTP id 37so6145009pzk.1
-        for <git@vger.kernel.org>; Sat, 20 Aug 2011 02:59:19 -0700 (PDT)
+	id S1753781Ab1HTMEG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Aug 2011 08:04:06 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:36637 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753748Ab1HTMEE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 20 Aug 2011 08:04:04 -0400
+Received: by bke11 with SMTP id 11so2756592bke.19
+        for <git@vger.kernel.org>; Sat, 20 Aug 2011 05:04:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=1bGxdFgbdPH+hf8c1VzBNBjwmQGWoQ4FlqT0vwdsH3A=;
-        b=WxqtI1zcxtVSaEeHwDH0TG6zMYT+Rw8e3SYjqPf7Y5uAMhGyRJsjJ0zV+VyxWiepay
-         5a6WxRc0b96aqq9m0O5K2H//AMczs6I1D3HezStHI3gSuXTuzxWmefiJvhN9Vc6yJyo8
-         QXpjfZI7dOKThdUZXloL97EYJeX/X4EiisXW0=
-Received: by 10.142.139.3 with SMTP id m3mr270218wfd.140.1313834359640;
-        Sat, 20 Aug 2011 02:59:19 -0700 (PDT)
-Received: from laptop.site (115-188-15-163.jetstream.xtra.co.nz [115.188.15.163])
-        by mx.google.com with ESMTPS id l15sm1890131wfe.12.2011.08.20.02.59.17
-        (version=SSLv3 cipher=OTHER);
-        Sat, 20 Aug 2011 02:59:18 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.2.18) Gecko/20110616 SUSE/3.1.11 Thunderbird/3.1.11
-In-Reply-To: <bfe44ee.e467.131e4f0b471.Coremail.sinojelly@163.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=pxEFjopOK3VfDKXx87Jha7yjbB5e4LFZRy85pa8QjUw=;
+        b=uJYQ1uMD3vsJ1w4UG4vcWTa5oIEtFoajYJ48sydnpLwESXipBpqtPdVdH14lE5rRYw
+         rpEqfHDd5dGDCWG5lRnLJ2MhSD8oI2tdFVMiOoQAQL9DMyH00w7uQzeN28+N4SZVMxlH
+         SVdYdEr7xsAl4yMi1wHhtnMG8TjLKguRORQnM=
+Received: by 10.204.155.81 with SMTP id r17mr158112bkw.19.1313841842678; Sat,
+ 20 Aug 2011 05:04:02 -0700 (PDT)
+Received: by 10.204.156.19 with HTTP; Sat, 20 Aug 2011 05:03:32 -0700 (PDT)
+In-Reply-To: <7vfwkx2pqw.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179758>
 
-On 20/08/11 14:06, jelly wrote:
-> When I use like this, it takes no effect.
-> C:\Users\jelly\Documents\My Knowledge\Plugins>cat .gitattributes*.ini     text
-> C:\Users\jelly\Documents\My Knowledge\Plugins>git diffdiff --git a/Misc/plugin.ini b/Misc/plugin.iniindex 078c8a9..f73153c 100755Binary files a/Misc/plugin.ini and b/Misc/plugin.ini differ
+2011/8/20 Junio C Hamano <gitster@pobox.com>:
+> Also wouldn't these three be equivalents?
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0head_commit =3D=3D NULL
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0is_null_sha1(head_sha1)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0initial_commit
 
-I think you might be running into some problems with the end of line
-detection. What git version are you running? I think what you want in
-.gitattributes is '*.ini diff' (see below)
+Right.
 
-I did some quick tests with 1.7.5 and I seem to get sane behaviour
-without needing .gitattributes
+> Perhaps like this instead?
 
-  printf '\r\nfoo\r\n' > foo.ini
-  git commit -m"" foo.ini
-
-  # change content
-  printf '\r\nbar\r\n' > foo.ini
-  git diff
-  diff --git a/foo.ini b/foo.ini
-  index 35c61a9..b2b98e6 100644
-  --- a/foo.ini
-  +++ b/foo.ini
-  @@ -1,2 +1,2 @@
-
-  -foo
-  +bar
-
-  # insert non-printable character
-  printf '\nbar\0\n' > foo.ini
-  git diff
-  diff --git a/foo.ini b/foo.ini
-  index 35c61a9..aff5caf 100644
-  Binary files a/foo.ini and b/foo.ini differ
-
-Even with the binary content I can tell git diff to treat the files as
-text (not that you can see it in the email but with less as my pager I
-actually get an indication that there is a funny character there)
-
-  git diff -a
-  diff --git a/foo.ini b/foo.ini
-  index 35c61a9..aff5caf 100644
-  --- a/foo.ini
-  +++ b/foo.ini
-  @@ -1,2 +1,2 @@
-  -
-  -foo
-  +
-  +bar
-
-If you want to tell git diff to always use the -a option for .ini files
-try this
-
-  echo '*.ini diff' > .gitattributes
-  git diff
-  diff --git a/foo.ini b/foo.ini
-  index 35c61a9..aff5caf 100644
-  --- a/foo.ini
-  +++ b/foo.ini
-  @@ -1,2 +1,2 @@
-  -
-  -foo
-  +
-  +bar
+Yup. Looks good.
+--=20
+Duy
