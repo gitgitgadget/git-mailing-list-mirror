@@ -1,44 +1,44 @@
 From: Fredrik Kuivinen <frekui@gmail.com>
-Subject: [PATCH v2 4/5] Use kwset in pickaxe
-Date: Sun, 21 Aug 2011 00:41:57 +0200
-Message-ID: <20110820224157.GE2199@fredrik-Q430-Q530>
+Subject: [PATCH v2 5/5] Use kwset in grep
+Date: Sun, 21 Aug 2011 00:42:18 +0200
+Message-ID: <20110820224218.GF2199@fredrik-Q430-Q530>
 References: <20110820223032.12380.72469.stgit@localhost6.localdomain6>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: bonzini@gnu.org, dpotapov@gmail.com,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 21 00:42:08 2011
+X-From: git-owner@vger.kernel.org Sun Aug 21 00:42:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuuEw-0008FS-Ul
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Aug 2011 00:42:07 +0200
+	id 1QuuFG-0008Lc-PK
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Aug 2011 00:42:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754903Ab1HTWmB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Aug 2011 18:42:01 -0400
+	id S1755176Ab1HTWmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Aug 2011 18:42:22 -0400
 Received: from mail-bw0-f46.google.com ([209.85.214.46]:35673 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754697Ab1HTWmA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Aug 2011 18:42:00 -0400
+	with ESMTP id S1751634Ab1HTWmV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Aug 2011 18:42:21 -0400
 Received: by mail-bw0-f46.google.com with SMTP id 11so2936995bke.19
-        for <git@vger.kernel.org>; Sat, 20 Aug 2011 15:41:59 -0700 (PDT)
+        for <git@vger.kernel.org>; Sat, 20 Aug 2011 15:42:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=ngBfRpACA+c19CBniatzL109Cd5SwegxXkHAfRdYGWs=;
-        b=RlaEmxUQj3chAsP2FCavOTO1GqpN8sYYs5NFqtAZqOW8piWRmZR2HVLv5u+wukpunR
-         tzwC7FHvxi5osyx45LzrJsGlulCAjM+2AkYXcx9h9hifyNZcPc0U6KUZ/6ujCUlCb3cB
-         wbajDZWLowZ53kkD4xaaauW16mov2J9BXm39c=
-Received: by 10.204.152.152 with SMTP id g24mr318946bkw.345.1313880119802;
-        Sat, 20 Aug 2011 15:41:59 -0700 (PDT)
+        bh=wTuQJRCL+eaRsfc2QtrQdHL7JJ1JarmBEsQFDPrzlsc=;
+        b=KWsXWn+7rsO1BvwTDlPJ6S2k2oPmp2Xj6A3BX1cOe741BvmpxPEO2yM+z9M8UIEGxy
+         x/1UTgpLQXZmS7HARvW/J7ZJG3uYWGRzniLtfCBJGHn8e1dYm3rFAAysgNfkwNT4gtsZ
+         38RYdGJ5d7dyLlzm3AG6qtGPVpk9ddlR054ps=
+Received: by 10.204.153.27 with SMTP id i27mr309353bkw.323.1313880141128;
+        Sat, 20 Aug 2011 15:42:21 -0700 (PDT)
 Received: from fredrik-Q430-Q530 (c83-250-151-53.bredband.comhem.se [83.250.151.53])
-        by mx.google.com with ESMTPS id a22sm1442308bke.20.2011.08.20.15.41.58
+        by mx.google.com with ESMTPS id z7sm1060536bkj.5.2011.08.20.15.42.20
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 20 Aug 2011 15:41:59 -0700 (PDT)
+        Sat, 20 Aug 2011 15:42:20 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20110820223032.12380.72469.stgit@localhost6.localdomain6>
 User-Agent: StGit/0.15
@@ -46,178 +46,202 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179791>
 
-Benchmarks in the hot cache case:
+Benchmarks for the hot cache case:
 
 before:
-$ perf stat --repeat=5 git log -Sqwerty
+$ perf stat --repeat=5 git grep qwerty > /dev/null
 
-Performance counter stats for 'git log -Sqwerty' (5 runs):
+Performance counter stats for 'git grep qwerty' (5 runs):
 
-       47,092,744 cache-misses             #      2.825 M/sec   ( +-   1.607% )
-      123,368,389 cache-references         #      7.400 M/sec   ( +-   0.812% )
-      330,040,998 branch-misses            #      3.134 %       ( +-   0.257% )
-   10,530,896,750 branches                 #    631.663 M/sec   ( +-   0.121% )
-   62,037,201,030 instructions             #      1.399 IPC     ( +-   0.142% )
-   44,331,294,321 cycles                   #   2659.073 M/sec   ( +-   0.326% )
-           96,794 page-faults              #      0.006 M/sec   ( +-  11.952% )
-               25 CPU-migrations           #      0.000 M/sec   ( +-  25.266% )
-            1,424 context-switches         #      0.000 M/sec   ( +-   0.540% )
-     16671.708650 task-clock-msecs         #      0.997 CPUs    ( +-   0.343% )
+        3,478,085 cache-misses             #      2.322 M/sec   ( +-   2.690% )
+       11,356,177 cache-references         #      7.582 M/sec   ( +-   2.598% )
+        3,872,184 branch-misses            #      0.363 %       ( +-   0.258% )
+    1,067,367,848 branches                 #    712.673 M/sec   ( +-   2.622% )
+    3,828,370,782 instructions             #      0.947 IPC     ( +-   0.033% )
+    4,043,832,831 cycles                   #   2700.037 M/sec   ( +-   0.167% )
+            8,518 page-faults              #      0.006 M/sec   ( +-   3.648% )
+              847 CPU-migrations           #      0.001 M/sec   ( +-   3.262% )
+            6,546 context-switches         #      0.004 M/sec   ( +-   2.292% )
+      1497.695495 task-clock-msecs         #      3.303 CPUs    ( +-   2.550% )
 
-      16.728692052  seconds time elapsed   ( +-   0.344% )
+       0.453394396  seconds time elapsed   ( +-   0.912% )
 
 after:
-$ perf stat --repeat=5 git log -Sqwerty
+$ perf stat --repeat=5 git grep qwerty > /dev/null
 
-Performance counter stats for 'git log -Sqwerty' (5 runs):
+Performance counter stats for 'git grep qwerty' (5 runs):
 
-       51,385,522 cache-misses             #      4.619 M/sec   ( +-   0.565% )
-      129,177,880 cache-references         #     11.611 M/sec   ( +-   0.219% )
-      319,222,775 branch-misses            #      6.946 %       ( +-   0.134% )
-    4,595,913,233 branches                 #    413.086 M/sec   ( +-   0.112% )
-   31,395,042,533 instructions             #      1.062 IPC     ( +-   0.129% )
-   29,558,348,598 cycles                   #   2656.740 M/sec   ( +-   0.204% )
-           93,224 page-faults              #      0.008 M/sec   ( +-   4.487% )
-               19 CPU-migrations           #      0.000 M/sec   ( +-  10.425% )
-              950 context-switches         #      0.000 M/sec   ( +-   0.360% )
-     11125.796039 task-clock-msecs         #      0.997 CPUs    ( +-   0.239% )
+        2,989,918 cache-misses             #      3.166 M/sec   ( +-   5.013% )
+       10,986,041 cache-references         #     11.633 M/sec   ( +-   4.899% )  (scaled from 95.06%)
+        3,511,993 branch-misses            #      1.422 %       ( +-   0.785% )
+      246,893,561 branches                 #    261.433 M/sec   ( +-   3.967% )
+    1,392,727,757 instructions             #      0.564 IPC     ( +-   0.040% )
+    2,468,142,397 cycles                   #   2613.494 M/sec   ( +-   0.110% )
+            7,747 page-faults              #      0.008 M/sec   ( +-   3.995% )
+              897 CPU-migrations           #      0.001 M/sec   ( +-   2.383% )
+            6,535 context-switches         #      0.007 M/sec   ( +-   1.993% )
+       944.384228 task-clock-msecs         #      3.177 CPUs    ( +-   0.268% )
 
-      11.164216599  seconds time elapsed   ( +-   0.240% )
+       0.297257643  seconds time elapsed   ( +-   0.450% )
 
-So the kwset code is about 33% faster.
+
+So we gain about 35% by using the kwset code.
+
+As a side effect of using kwset two grep tests are fixed by this
+patch. The first is fixed because kwset can deal with case-insensitive
+search containing NULs, something strcasestr cannot do. The second one
+is fixed because we consider patterns containing NULs as fixed strings
+(regcomp cannot accept patterns with NULs).
 
 Signed-off-by: Fredrik Kuivinen <frekui@gmail.com>
 ---
- Makefile           |    2 ++
- diffcore-pickaxe.c |   34 +++++++++++++++++++++++-----------
- 2 files changed, 25 insertions(+), 11 deletions(-)
+ grep.c                 |   66 +++++++++++++++++++++++++++++++++---------------
+ grep.h                 |    2 +
+ t/t7008-grep-binary.sh |    4 +--
+ 3 files changed, 49 insertions(+), 23 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 4cd061f..45ef51f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -533,6 +533,7 @@ LIB_H += graph.h
- LIB_H += grep.h
- LIB_H += hash.h
- LIB_H += help.h
-+LIB_H += kwset.h
- LIB_H += levenshtein.h
- LIB_H += list-objects.h
- LIB_H += ll-merge.h
-@@ -624,6 +625,7 @@ LIB_OBJS += hash.o
- LIB_OBJS += help.o
- LIB_OBJS += hex.o
- LIB_OBJS += ident.o
-+LIB_OBJS += kwset.o
- LIB_OBJS += levenshtein.o
- LIB_OBJS += list-objects.o
- LIB_OBJS += ll-merge.o
-diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-index ea03b91..c3760cf 100644
---- a/diffcore-pickaxe.c
-+++ b/diffcore-pickaxe.c
-@@ -6,6 +6,7 @@
- #include "diff.h"
- #include "diffcore.h"
- #include "xdiff-interface.h"
+diff --git a/grep.c b/grep.c
+index 26e8d8e..6618cd8 100644
+--- a/grep.c
++++ b/grep.c
+@@ -137,16 +137,50 @@ static void free_pcre_regexp(struct grep_pat *p)
+ }
+ #endif /* !USE_LIBPCRE */
+ 
++static int is_fixed(const char *s, size_t len)
++{
++	size_t i;
++
++	/* regcomp cannot accept patterns with NULs so we
++	 * consider any pattern containing a NUL fixed.
++	 */
++	if (memchr(s, 0, len))
++		return 1;
++
++	for (i = 0; i < len; i++) {
++		if (is_regex_special(s[i]))
++			return 0;
++	}
++
++	return 1;
++}
++
+ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
+ {
+ 	int err;
+ 
+ 	p->word_regexp = opt->word_regexp;
+ 	p->ignore_case = opt->ignore_case;
+-	p->fixed = opt->fixed;
+ 
+-	if (p->fixed)
++	if (opt->fixed || is_fixed(p->pattern, p->patternlen))
++		p->fixed = 1;
++	else
++		p->fixed = 0;
++
++	if (p->fixed) {
++		if (opt->regflags & REG_ICASE || p->ignore_case) {
++			static char trans[256];
++			int i;
++			for (i = 0; i < 256; i++)
++				trans[i] = tolower(i);
++			p->kws = kwsalloc(trans);
++		} else {
++			p->kws = kwsalloc(NULL);
++		}
++		kwsincr(p->kws, p->pattern, p->patternlen);
++		kwsprep(p->kws);
+ 		return;
++	}
+ 
+ 	if (opt->pcre) {
+ 		compile_pcre_regexp(p, opt);
+@@ -395,7 +429,9 @@ void free_grep_patterns(struct grep_opt *opt)
+ 		case GREP_PATTERN: /* atom */
+ 		case GREP_PATTERN_HEAD:
+ 		case GREP_PATTERN_BODY:
+-			if (p->pcre_regexp)
++			if (p->kws)
++				kwsfree(p->kws);
++			else if (p->pcre_regexp)
+ 				free_pcre_regexp(p);
+ 			else
+ 				regfree(&p->regexp);
+@@ -455,26 +491,14 @@ static void show_name(struct grep_opt *opt, const char *name)
+ static int fixmatch(struct grep_pat *p, char *line, char *eol,
+ 		    regmatch_t *match)
+ {
+-	char *hit;
+-
+-	if (p->ignore_case) {
+-		char *s = line;
+-		do {
+-			hit = strcasestr(s, p->pattern);
+-			if (hit)
+-				break;
+-			s += strlen(s) + 1;
+-		} while (s < eol);
+-	} else
+-		hit = memmem(line, eol - line, p->pattern, p->patternlen);
+-
+-	if (!hit) {
++	struct kwsmatch kwsm;
++	size_t offset = kwsexec(p->kws, line, eol - line, &kwsm);
++	if (offset == -1) {
+ 		match->rm_so = match->rm_eo = -1;
+ 		return REG_NOMATCH;
+-	}
+-	else {
+-		match->rm_so = hit - line;
+-		match->rm_eo = match->rm_so + p->patternlen;
++	} else {
++		match->rm_so = offset;
++		match->rm_eo = match->rm_so + kwsm.size[0];
+ 		return 0;
+ 	}
+ }
+diff --git a/grep.h b/grep.h
+index ae50c45..a652800 100644
+--- a/grep.h
++++ b/grep.h
+@@ -7,6 +7,7 @@
+ typedef int pcre;
+ typedef int pcre_extra;
+ #endif
 +#include "kwset.h"
  
- struct diffgrep_cb {
- 	regex_t *regexp;
-@@ -146,7 +147,7 @@ static void diffcore_pickaxe_grep(struct diff_options *o)
+ enum grep_pat_token {
+ 	GREP_PATTERN,
+@@ -41,6 +42,7 @@ struct grep_pat {
+ 	regex_t regexp;
+ 	pcre *pcre_regexp;
+ 	pcre_extra *pcre_extra_info;
++	kwset_t kws;
+ 	unsigned fixed:1;
+ 	unsigned ignore_case:1;
+ 	unsigned word_regexp:1;
+diff --git a/t/t7008-grep-binary.sh b/t/t7008-grep-binary.sh
+index e058d18..917a264 100755
+--- a/t/t7008-grep-binary.sh
++++ b/t/t7008-grep-binary.sh
+@@ -84,7 +84,7 @@ test_expect_success 'git grep -Fi Y<NUL>f a' "
+ 	git grep -f f -Fi a
+ "
  
- static unsigned int contains(struct diff_filespec *one,
- 			     const char *needle, unsigned long len,
--			     regex_t *regexp)
-+			     regex_t *regexp, kwset_t kws)
- {
- 	unsigned int cnt;
- 	unsigned long sz;
-@@ -175,9 +176,12 @@ static unsigned int contains(struct diff_filespec *one,
+-test_expect_failure 'git grep -Fi Y<NUL>x a' "
++test_expect_success 'git grep -Fi Y<NUL>x a' "
+ 	printf 'YQx' | q_to_nul >f &&
+ 	test_must_fail git grep -f f -Fi a
+ "
+@@ -94,7 +94,7 @@ test_expect_success 'git grep y<NUL>f a' "
+ 	git grep -f f a
+ "
  
- 	} else { /* Classic exact string match */
- 		while (sz) {
--			const char *found = memmem(data, sz, needle, len);
--			if (!found)
-+			size_t offset = kwsexec(kws, data, sz, NULL);
-+			const char *found;
-+			if (offset == -1)
- 				break;
-+			else
-+				found = data + offset;
- 			sz -= found - data + len;
- 			data = found + len;
- 			cnt++;
-@@ -195,6 +199,7 @@ static void diffcore_pickaxe_count(struct diff_options *o)
- 	unsigned long len = strlen(needle);
- 	int i, has_changes;
- 	regex_t regex, *regexp = NULL;
-+	kwset_t kws = NULL;
- 	struct diff_queue_struct outq;
- 	DIFF_QUEUE_CLEAR(&outq);
- 
-@@ -209,6 +214,10 @@ static void diffcore_pickaxe_count(struct diff_options *o)
- 			die("invalid pickaxe regex: %s", errbuf);
- 		}
- 		regexp = &regex;
-+	} else {
-+		kws = kwsalloc(NULL);
-+		kwsincr(kws, needle, len);
-+		kwsprep(kws);
- 	}
- 
- 	if (opts & DIFF_PICKAXE_ALL) {
-@@ -219,16 +228,16 @@ static void diffcore_pickaxe_count(struct diff_options *o)
- 				if (!DIFF_FILE_VALID(p->two))
- 					continue; /* ignore unmerged */
- 				/* created */
--				if (contains(p->two, needle, len, regexp))
-+				if (contains(p->two, needle, len, regexp, kws))
- 					has_changes++;
- 			}
- 			else if (!DIFF_FILE_VALID(p->two)) {
--				if (contains(p->one, needle, len, regexp))
-+				if (contains(p->one, needle, len, regexp, kws))
- 					has_changes++;
- 			}
- 			else if (!diff_unmodified_pair(p) &&
--				 contains(p->one, needle, len, regexp) !=
--				 contains(p->two, needle, len, regexp))
-+				 contains(p->one, needle, len, regexp, kws) !=
-+				 contains(p->two, needle, len, regexp, kws))
- 				has_changes++;
- 		}
- 		if (has_changes)
-@@ -251,16 +260,17 @@ static void diffcore_pickaxe_count(struct diff_options *o)
- 				if (!DIFF_FILE_VALID(p->two))
- 					; /* ignore unmerged */
- 				/* created */
--				else if (contains(p->two, needle, len, regexp))
-+				else if (contains(p->two, needle, len, regexp,
-+						  kws))
- 					has_changes = 1;
- 			}
- 			else if (!DIFF_FILE_VALID(p->two)) {
--				if (contains(p->one, needle, len, regexp))
-+				if (contains(p->one, needle, len, regexp, kws))
- 					has_changes = 1;
- 			}
- 			else if (!diff_unmodified_pair(p) &&
--				 contains(p->one, needle, len, regexp) !=
--				 contains(p->two, needle, len, regexp))
-+				 contains(p->one, needle, len, regexp, kws) !=
-+				 contains(p->two, needle, len, regexp, kws))
- 				has_changes = 1;
- 
- 			if (has_changes)
-@@ -271,6 +281,8 @@ static void diffcore_pickaxe_count(struct diff_options *o)
- 
- 	if (opts & DIFF_PICKAXE_REGEX)
- 		regfree(&regex);
-+	else
-+		kwsfree(kws);
- 
- 	free(q->queue);
- 	*q = outq;
+-test_expect_failure 'git grep y<NUL>x a' "
++test_expect_success 'git grep y<NUL>x a' "
+ 	printf 'yQx' | q_to_nul >f &&
+ 	test_must_fail git grep -f f a
+ "
