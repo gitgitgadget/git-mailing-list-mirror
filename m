@@ -1,69 +1,62 @@
-From: "Richard Tibbitt" <gitlist@lazyprune.com>
-Subject: Failure cloning from a separate-git-dir repository
-Date: Sat, 20 Aug 2011 18:47:57 +0100
-Message-ID: <6csv47te4qv41ni53q0kf1fne0a4e1grnm@4ax.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Failure cloning from a separate-git-dir repository
+Date: Sun, 21 Aug 2011 01:25:36 +0700
+Message-ID: <CACsJy8AavETJb-Lm0Qd6Sz54zYbgvDUWmf+uXYTxO3+iYNHvoA@mail.gmail.com>
+References: <6csv47te4qv41ni53q0kf1fne0a4e1grnm@4ax.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 20 20:03:33 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Richard Tibbitt <gitlist@lazyprune.com>
+X-From: git-owner@vger.kernel.org Sat Aug 20 20:26:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuptN-0006ol-9M
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Aug 2011 20:03:33 +0200
+	id 1QuqFQ-0005Ml-Vs
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Aug 2011 20:26:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752438Ab1HTSDU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Aug 2011 14:03:20 -0400
-Received: from mail.workflow24.co.uk ([78.136.40.51]:1126 "EHLO
-	mail.workflow24.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752173Ab1HTSDU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 20 Aug 2011 14:03:20 -0400
-X-Greylist: delayed 903 seconds by postgrey-1.27 at vger.kernel.org; Sat, 20 Aug 2011 14:03:19 EDT
-Received: from 82.152.159.100 [82.152.159.100] by mail.workflow24.co.uk with SMTP;
-   Sat, 20 Aug 2011 18:48:07 +0100
-X-Mailer: Forte Agent 4.2/32.1118
+	id S1754704Ab1HTS0J convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Aug 2011 14:26:09 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:40084 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754388Ab1HTS0I convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 20 Aug 2011 14:26:08 -0400
+Received: by bke11 with SMTP id 11so2874240bke.19
+        for <git@vger.kernel.org>; Sat, 20 Aug 2011 11:26:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=n5e3fK3o8F3CslVRyTrcTRNK+CfeIAYpahXjgaRrMaw=;
+        b=DSjeMOQAa8zy0CncrgzHxClIeMMiSyfg1PMGkzL2oDSa99i+/0ZS6R1ciOOy1DdPv9
+         XZ2Cw0aTsrDFZvL09wPB2zxGnrxOOBY+sPCrn92peKPtXUEJOOwScm1QTfEaGUy9TCx9
+         35aUfcctHQA1NK9eUyKCiZAv6V6/+LAxqfHM4=
+Received: by 10.204.151.70 with SMTP id b6mr250453bkw.71.1313864766442; Sat,
+ 20 Aug 2011 11:26:06 -0700 (PDT)
+Received: by 10.204.156.19 with HTTP; Sat, 20 Aug 2011 11:25:36 -0700 (PDT)
+In-Reply-To: <6csv47te4qv41ni53q0kf1fne0a4e1grnm@4ax.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179768>
 
-Hi
+On Sun, Aug 21, 2011 at 12:47 AM, Richard Tibbitt <gitlist@lazyprune.co=
+m> wrote:
+> =C2=A0F:\>call git clone repo2 clone2
+> =C2=A0Cloning into clone2...
+> =C2=A0fatal: failed to open 'F:/repo2/objects': No such file or direc=
+tory
 
-I've been struggling to find an answer to this for days.
+This should be "git clone repo2/.git clone2", but with that command I g=
+ot
 
-Can anyone confirm whether I've got the syntax right for 'Git clone'
-when attempting to clone FROM a repository that was initialized using
---separate-git-dir ?
+Cloning into clone2..
+error: '/tmp/repo2/.git' does not look like a v2 bundle file
+fatal: Could not read bundle '/tmp/repo2/.git'.
 
-If so, does this work on Linux systems ?
-
-With Git on windows (git version 1.7.6.msysgit.0 installed from
-GitExtensions224SetupComplete.msi) I get an error as below, that looks
-as though 'Git clone' is expecting the repo to have a 'normal'
-integral .git dir 
-
-
-  F:\>mkdir repo2
-  F:\>mkdir repo2git
-  F:\>cd repo2
-  F:\repo2>call git init --separate-git-dir="..\repo2git\.git"
-  Initialized empty Git repository in F:/repo2git/.git/
-  F:\repo2>echo abc >file1.txt
-  F:\repo2>call git add . -A
-  F:\repo2>call git commit -m "first"
-  [master (root-commit) c7e4766] first
-   1 files changed, 1 insertions(+), 0 deletions(-)
-   create mode 100644 file1.txt
-  F:\repo2>cd ..
-  F:\>call git clone repo2 clone2
-  Cloning into clone2...
-  fatal: failed to open 'F:/repo2/objects': No such file or directory
-
-
-Many thanks in advance for any insight into this.
-
-Richard
+You just do "git clone repo2git/.git clone2" for now.
+--=20
+Duy
