@@ -1,56 +1,80 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Failure cloning from a separate-git-dir repository
-Date: Sun, 21 Aug 2011 10:27:44 +0700
-Message-ID: <CACsJy8A4kvjn5Bgo6FtS+x4z=CRz8ctoDHh7D8XV3frOjDVfbw@mail.gmail.com>
-References: <6csv47te4qv41ni53q0kf1fne0a4e1grnm@4ax.com> <CACsJy8AavETJb-Lm0Qd6Sz54zYbgvDUWmf+uXYTxO3+iYNHvoA@mail.gmail.com>
- <p800579qgdoocnq388veh5gpjbu7r9ph52@4ax.com>
+From: "Stewart A. Brown" <sabrown256@sbcglobal.net>
+Subject: Site dependent repositories
+Date: Sat, 20 Aug 2011 20:31:17 -0700
+Message-ID: <4E507C05.2090700@sbcglobal.net>
+Reply-To: sabrown256@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Richard Tibbitt <gitlist@lazyprune.com>
-X-From: git-owner@vger.kernel.org Sun Aug 21 05:28:38 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 21 05:31:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QuyiC-0005YT-Sw
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Aug 2011 05:28:37 +0200
+	id 1Quyku-00066e-Hq
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Aug 2011 05:31:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755372Ab1HUD2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Aug 2011 23:28:17 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:57925 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755468Ab1HUD2Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Aug 2011 23:28:16 -0400
-Received: by bke11 with SMTP id 11so2999344bke.19
-        for <git@vger.kernel.org>; Sat, 20 Aug 2011 20:28:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=GFWRotMAluCveriFz6eVvM+53KvCbCs8Deeog+9XiNs=;
-        b=bMwgt1bllGF/kw3dHlPr0DkJQVmxDZR59plpyhRDSeHO2iWQEqwDqytoTkZxMe/+Zb
-         +2aXbgC8chouemAHO2w/jDm71X7NNzE0WbmSPQ7egCvUNR696xoiP0/v1k4rxx3qU3uu
-         DAZbWjPsnHMNsKN2m327AbAmi2EsPtawgyiUk=
-Received: by 10.204.132.23 with SMTP id z23mr368654bks.383.1313897294288; Sat,
- 20 Aug 2011 20:28:14 -0700 (PDT)
-Received: by 10.204.156.19 with HTTP; Sat, 20 Aug 2011 20:27:44 -0700 (PDT)
-In-Reply-To: <p800579qgdoocnq388veh5gpjbu7r9ph52@4ax.com>
+	id S1753862Ab1HUDbU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Aug 2011 23:31:20 -0400
+Received: from nm3-vm0.access.bullet.mail.mud.yahoo.com ([66.94.237.136]:43904
+	"HELO nm3-vm0.access.bullet.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751302Ab1HUDbT (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 20 Aug 2011 23:31:19 -0400
+Received: from [66.94.237.199] by nm3.access.bullet.mail.mud.yahoo.com with NNFMP; 21 Aug 2011 03:31:18 -0000
+Received: from [66.94.237.113] by tm10.access.bullet.mail.mud.yahoo.com with NNFMP; 21 Aug 2011 03:31:18 -0000
+Received: from [127.0.0.1] by omp1018.access.mail.mud.yahoo.com with NNFMP; 21 Aug 2011 03:31:18 -0000
+X-Yahoo-Newman-Id: 902691.31539.bm@omp1018.access.mail.mud.yahoo.com
+Received: (qmail 62689 invoked from network); 21 Aug 2011 03:31:18 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=sbcglobal.net;
+  h=DKIM-Signature:X-Yahoo-Newman-Property:X-YMail-OSG:X-Yahoo-SMTP:Received:Message-ID:Date:From:Reply-To:User-Agent:MIME-Version:To:Subject:Content-Type:Content-Transfer-Encoding;
+  b=NzGZFXBgwI4XjUdO67eh+Cv1Yqk+2G2xqUzM1KdHU5qDS32jAu8tVkHGbh2kRmuNP8xL4y0nabv63RknnBMwTKPIE25IVQHlvRK6yDpn8JAv2fN/DckYCp4mEAHtGC3heW/1DWgbp4Io6AC6iO+lOAnLtcgCWVbMb9o/DZZkn20=  ;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sbcglobal.net; s=s1024; t=1313897478; bh=mm4sYh54JIH0ymQR2AmtvmBrBcGxG0+T57yQGCMDPs8=; h=X-Yahoo-Newman-Property:X-YMail-OSG:X-Yahoo-SMTP:Received:Message-ID:Date:From:Reply-To:User-Agent:MIME-Version:To:Subject:Content-Type:Content-Transfer-Encoding; b=AlSKBhMw7qC1RioIAjpSkk0M6rbNnsjXvJrAoM6kmjA9ZT75DkCW+sZ4b4uc1ST9Hy4BPnDUBa24v+/2hxSyhIwSpyhQ0Jr3cBobOtEghAit0h9Ya4z6rib3nPYz5LoUuaZ1Gnq6YQtQYryDcx5Zyn6D1qNAXsogi4dUx82nesA=
+X-Yahoo-Newman-Property: ymail-3
+X-YMail-OSG: 4kZJEJMVM1lhO24zlFSK8fhBubWwTQiGknKmsgTrVz7_CUE
+ nZXbHslSuLgTto4qQ5b2JFf6G8vYoXht8uKfJB6e8HI2KKkR9sxUU3lPbAWU
+ AEE4P9sp6zTC9EBUaK3sgtkQii7P4rNB4_ZTlws8G.e.OwIje8YRukxy4.yc
+ Mr6rL1iF.pMiH5oXU0Qoyjd9fH3bS_E9.7SN7jgBkBiq6xn6RbDXTdLghkMN
+ RHdDZQIZQHMfChoWqNSsVsiGqj2z5k_n.kO_Mcl36xSrom0xkU08NYlMEzfL
+ G28ktOCSYdnkIy3cU_7LBg3SR4Xi9s0CJ8.UAFDd8iBa_PBqI4V5eaFYLrgf
+ pjhZfYBVMGDVCQEwAl1WpEhslZzcrUpmUd2T8_QSWct3gQPkwNE82NZemfnj
+ N.ODhjmfFsXlxaD5b8nDoFk.ZCSIZW_.E
+X-Yahoo-SMTP: tJEFbYKswBCk5AZKYHIyqgjH3Ih34Oxl7dbvZAiTZ_h53gdmCA--
+Received: from [192.168.200.10] (sabrown256@75.18.183.43 with plain)
+        by smtp109.sbc.mail.mud.yahoo.com with SMTP; 20 Aug 2011 20:31:18 -0700 PDT
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110617 Thunderbird/3.1.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179793>
 
-On Sun, Aug 21, 2011 at 1:56 AM, Richard Tibbitt <gitlist@lazyprune.com> wrote:
-> call git clone repo2git\.git clone2
-> fatal: repository 'repo2git\.git' does not exist
->
-> I guess this must be a peculiarity of msysgit on windows.
 
-Yes. Try "call git clone repo2git/.git clone2" (forward slash). The
-forward slash is hard coded some places in git-clone. I just want to
-make sure you dont hit another problem.
--- 
-Duy
+I am wondering whether or not git has the functionality to handle
+my situation.
+
+I have git repositories at multiple sites.  At each site the git repository
+has site dependent sources.  Each repository is organised something
+like:
+
+top/a/local
+       b
+       c/d/extensions
+       e
+
+The directories top, a, b, c, d, and e have sources that need to be
+pushed or pulled between the repositories at all sites.  The directories
+'local' and 'extensions' have sources that must be managed within sites
+but never pushed or pulled between sites.
+
+The ignore mechanism will not suffice because the files in 'local' and
+'extensions' must be source managed.  I have looked a bit into
+submodules, filters, and hooks.  None of these jumps out as obvious, but
+they are rich mechanisms with plenty of subtleties.
+
+Does git have a way of letting me do this?
+
+Stewart Brown
+sabrown256@gmail.com
