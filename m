@@ -1,77 +1,63 @@
 From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: Branches & directories
-Date: Sun, 21 Aug 2011 20:53:42 +0000
-Message-ID: <CAMOZ1BvpnP_729YOHrrPW3B8wa5c4cLyD_qAQ5rTuy0JqNiiXg@mail.gmail.com>
-References: <CAE1pOi3Eg88i+1s+CcW3+W0WNZ-NYUQb1EV55oh+g1Od78AByQ@mail.gmail.com>
- <CABNdCrCbSqup1=D2eEbGDhw3JzZGYHWLVqZFsB6GDO4Vk7HRxg@mail.gmail.com>
- <7vvctvdf5r.fsf@alter.siamese.dyndns.org> <CAE1pOi3rqqcz_6QxB8=g2jWOF-4SRZee7t8NXN1md2C4DL7wug@mail.gmail.com>
- <CAMOZ1BsZvXsnnWAPXR7UGKdqOMwuGB-ffaAPk55U_1dcjZUcDw@mail.gmail.com> <CAE1pOi2r9DT3Y-GxivTZRaNVi=qLOy5=QpQ-_YysOkgqy3iGRQ@mail.gmail.com>
+Subject: Re: Merging one file only
+Date: Sun, 21 Aug 2011 21:32:49 +0000
+Message-ID: <CAMOZ1BvY13ynmtCkhFNU9Dc8PqwVQUrp8ham5zHrdq2vbMY5JQ@mail.gmail.com>
+References: <1313958819073-6709333.post@n2.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Evan Shelhamer <shelhamer@imaginarynumber.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 21 22:56:16 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?Q?Ma=C3=AFeul?= <maieul@maieul.net>
+X-From: git-owner@vger.kernel.org Sun Aug 21 23:34:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvF43-0003eJ-K5
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Aug 2011 22:56:15 +0200
+	id 1QvFek-0005NV-1p
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Aug 2011 23:34:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752689Ab1HUUyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Aug 2011 16:54:15 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:56454 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752336Ab1HUUyO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Aug 2011 16:54:14 -0400
-Received: by gwaa12 with SMTP id a12so2620455gwa.19
-        for <git@vger.kernel.org>; Sun, 21 Aug 2011 13:54:13 -0700 (PDT)
+	id S1752693Ab1HUVdV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Aug 2011 17:33:21 -0400
+Received: from mail-iy0-f170.google.com ([209.85.210.170]:40306 "EHLO
+	mail-iy0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752527Ab1HUVdU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 Aug 2011 17:33:20 -0400
+Received: by iye16 with SMTP id 16so9179096iye.1
+        for <git@vger.kernel.org>; Sun, 21 Aug 2011 14:33:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=OsgYwCYGBqVqvMnpiglUFHZv/N1puNQVyj5oyAFDYs0=;
-        b=L66ZD35lOIel8o41fs4WkvYisHLIJWTFKNdwAbzy6WClffsB4gq7FOHcTEmQeEEQ6L
-         HivU6AnAYrnxMrlbx6ZWgukp8UOT8wZ8/B36rGfF8WjosYXDWlPj5p1IaD20c0n/OB8m
-         WgtzGJEjYBn4WlpLRmXP8h/PnB/Wl74En1vRk=
-Received: by 10.43.44.195 with SMTP id uh3mr1903834icb.196.1313960053175; Sun,
- 21 Aug 2011 13:54:13 -0700 (PDT)
-Received: by 10.42.174.129 with HTTP; Sun, 21 Aug 2011 13:53:42 -0700 (PDT)
-In-Reply-To: <CAE1pOi2r9DT3Y-GxivTZRaNVi=qLOy5=QpQ-_YysOkgqy3iGRQ@mail.gmail.com>
+         :cc:content-type:content-transfer-encoding;
+        bh=5F4nlMF1nm+D/ebcrN+QA24NXuWCIQhh2wOwL5qaRkE=;
+        b=kejH1jt7C2FupHa02+9Wl9npxd2DrgROstEYstujSIp/BCg2UrUDF3Z2HhnLoDwexY
+         9x/w0GW7HmRGmbarU0Zz/Rdqk2Z1rCroK5+cp/bSYd9d/ai+6Pk/BXtItNbAuABJKAFy
+         PDI5qw6O2X1soOCObeXwhBwPrBCHd+G+SzZDQ=
+Received: by 10.42.75.194 with SMTP id b2mr1890911ick.62.1313962400105; Sun,
+ 21 Aug 2011 14:33:20 -0700 (PDT)
+Received: by 10.42.174.129 with HTTP; Sun, 21 Aug 2011 14:32:49 -0700 (PDT)
+In-Reply-To: <1313958819073-6709333.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179815>
 
-On Sun, Aug 21, 2011 at 13:42 -0700, Hilco Wijbenga
-<hilco.wijbenga@gmail.com> wrote:
-> Isn't a branch simply a way to track changes separately?
+On Sun, Aug 21, 2011 at 20:33, Ma=C3=AFeul <maieul@maieul.net> wrote:
+> Hello,
+>
+> my problem is :
+> - I have 2 branches : "master" and "sty"
+> - In the branch sty, I have commit that i don't want to merge on the =
+branch
+> master. The only file that I want merge are the *dtx files.
+>
+> My question is : how can i do to merge *dtx files from "sty" to "mast=
+er",
+> and have log of commit on the *dtx ? Is it possible ?
 
-Well, what does that mean, really? You can certainly use branches to
-help you achieve that goal.
+There are a number of ways to do this, some more general than others.
 
-In git usage, a `branch' is just a human-readable name for any given
-commit object; it points to a commit object, and you can change to
-which commit it points. Furthermore, to help you work with commit
-lineages, some of the git machinery updates these branches (or
-`pointers', if you like) automatically (for instance, when you make a
-new commit object with `git commit', then the `current branch' is
-updated to point to the newly created commit object).
-
-Of course, 2 different branches may be used to point to the same commit object.
-
-You should really think of your repository as a giant web of commit
-objects (or, more technically, as a directed acyclic graph where each
-node is a commit object); a commit object can point 'backwards'
-towards its parent commit objects. A branch (like `master') just
-points to one of these commit objects at any given time (that is, a
-branch just gives a nice human-readable label by which to reference
-one of these commit objects at any given time).
-
-See here too:
-
-  http://slashdot.org/comments.pl?sid=2350536&cid=36903136
+Do you know all of the names of the files for which you don't want
+associated commits? Do the files that you don't want get changed in
+some of the commits that you do want?
