@@ -1,109 +1,94 @@
-From: Chris Li <git@chrisli.org>
-Subject: Re: [PATCH] git-p4: don't convert utf16 files.
-Date: Sun, 21 Aug 2011 12:09:15 -0700
-Message-ID: <CANeU7QkwekmnCQKG3DqyhW54hk7boL+FQSOOviJ3gn5K7++cjg@mail.gmail.com>
-References: <CANeU7QmGJTr4V-tWzuPnP2P=9eQbGDgQxv2phAVbGXjU5tqYPQ@mail.gmail.com>
-	<20110821152156.GA30299@arf.padd.com>
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: Re: Branches & directories
+Date: Sun, 21 Aug 2011 12:48:32 -0700
+Message-ID: <CAE1pOi3F8SxJLhg5bzWNoH_3Bg4vHh7BEoJWW6Em9GvPaoxTVw@mail.gmail.com>
+References: <CAE1pOi3Eg88i+1s+CcW3+W0WNZ-NYUQb1EV55oh+g1Od78AByQ@mail.gmail.com>
+	<CABNdCrCbSqup1=D2eEbGDhw3JzZGYHWLVqZFsB6GDO4Vk7HRxg@mail.gmail.com>
+	<7vvctvdf5r.fsf@alter.siamese.dyndns.org>
+	<CAE1pOi3rqqcz_6QxB8=g2jWOF-4SRZee7t8NXN1md2C4DL7wug@mail.gmail.com>
+	<20110818044555.GA20752@elie.gateway.2wire.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Eberhard Beilharz <eb1@sil.org>,
-	Jordan Zimmerman <jzimmerman@netflix.com>,
-	Mike Crowe <mac@mcrowe.com>
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Sun Aug 21 21:09:23 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Evan Shelhamer <shelhamer@imaginarynumber.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 21 21:54:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvDOc-00079a-KQ
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Aug 2011 21:09:22 +0200
+	id 1QvE5p-0003Mt-35
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Aug 2011 21:54:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755555Ab1HUTJR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Aug 2011 15:09:17 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:55426 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754307Ab1HUTJQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 Aug 2011 15:09:16 -0400
-Received: by qyk38 with SMTP id 38so1010536qyk.19
-        for <git@vger.kernel.org>; Sun, 21 Aug 2011 12:09:15 -0700 (PDT)
+	id S1755453Ab1HUTse convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Aug 2011 15:48:34 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:45841 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751630Ab1HUTsd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 Aug 2011 15:48:33 -0400
+Received: by gya6 with SMTP id 6so3176051gya.19
+        for <git@vger.kernel.org>; Sun, 21 Aug 2011 12:48:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Zk8EFfVuJIGQDRaglB5Sfmml3Iky0RTJfgJzZ4P9l7A=;
-        b=cH/F1m1HiK2/PKoPYBlNGcm7hdUnPEfO8RUX9/3ri9Xi1JuLUZkoe8d2vCzpTr8MdF
-         uFK6G1O0yIHyTmcHLRs9qbq4rtQgGPI/uAJCSmzQ4Rn1xwNiIzpWb9v1uJ7AycYf2xpL
-         BfEeXasw73DIDu9IYenP4j6edJjb3V1yZuDrs=
-Received: by 10.229.149.8 with SMTP id r8mr810808qcv.293.1313953755819; Sun,
- 21 Aug 2011 12:09:15 -0700 (PDT)
-Received: by 10.229.149.15 with HTTP; Sun, 21 Aug 2011 12:09:15 -0700 (PDT)
-In-Reply-To: <20110821152156.GA30299@arf.padd.com>
-X-Google-Sender-Auth: mVFkSGx3y-ER7gzqyW0PcYoWgG8
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=fYn1U1HC0QkHJgWGoWzHmEeRqkZQ4vpYH0PFQiQttY0=;
+        b=FcZjwSkCwBSmrFrTem1ZO41vLR+mI4/DCi3o8LUJ1tbPidf4O+naGZ/EznvaoFZaHZ
+         t6O3GSGRL7FYFfSnWvSlGrUcofnS8O+HyKr707J5fJxRqUdiQHYHpFnkDW8c5BKXzl20
+         ytJwntkIFPJjQBWf31Gz2JNhIh9G5FyOLr1AU=
+Received: by 10.236.181.135 with SMTP id l7mr9485188yhm.85.1313956112738; Sun,
+ 21 Aug 2011 12:48:32 -0700 (PDT)
+Received: by 10.236.207.67 with HTTP; Sun, 21 Aug 2011 12:48:32 -0700 (PDT)
+In-Reply-To: <20110818044555.GA20752@elie.gateway.2wire.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179809>
 
-On Sun, Aug 21, 2011 at 8:21 AM, Pete Wyckoff <pw@padd.com> wrote:
+Hi Jonathan,
 
->> Using the "p4 print -o tmpfile depotfile" can avoid this
->> convertion (and possible failure) all together.
+On 17 August 2011 21:45, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Hi Hilco,
 >
-> This isn't contrib/fast-import/git-p4. =A0Searching around, I
-> discovered a 2009 fork of git-p4 that is fairly active. =A0CC-ing
-> some of the names I found on github.
-
-Oops. I forget I am trying some other git-p4 and this patch is
-not for git-core. The git-p4 in git-core repository has the same
-problem. I was original using the git-core one, hit the bug. Then
-I try some other branch and found the same problem, I just forget
-which git repository I am at. Silly me.
-
-Let me redo a patch for git.
-
+> Hilco Wijbenga wrote:
 >
-> Here's one such repo:
+>> It would be really nice, though, if Git could somehow
+>> "stash" such files when checking out a different branch. In general,=
+ I
+>> would prefer if uncommitted changes and untracked and/or ignored fil=
+es
+>> stuck to the branch where they were created.
 >
-> =A0 =A0http://github.com/ermshiperete/git-p4
+> This is just a random guess, but: wouldn't it be convenient in this
+> workflow to have a separate worktree for each branch you are working
+> on? =C2=A0That way, switching branches would not carry over unwanted =
+state
+> or throw away valuable state, clobber timestamps that "make" pays
+> attention to, etc.
 >
-> Git's git-p4 doesn't try to do anything special with utf-16. =A0It
-> does \r\n mangling, but not $Keyword$ removal, then just streams
-> it to disk however p4 sends it. =A0That's close to what you're
-> trying to do here.
+> If I am understanding correctly, then the git-new-workdir script
+> from contrib/workdir might help. =C2=A0(Note, though, that it comes w=
+ith
+> some caveats. =C2=A0A quick mailing list search should find them.)
 
-No, it is not the same. Here is what I find out. If you ask use
-"p4 print" to fetch a perforce utf16 file, perforce convert that file i=
-nto
-utf8 before it send out to stdout. I guess the perforce guys assume
-p4 print is used for terminal console. If the git-p4 just stream to dis=
-k,
-then you  those file are effective checkout as utf8, which is about
-half the size of the original utf16 file.
+Yes, both a separate clone and git-new-workdir (which I've just
+started using) would work.
 
-I never like those utf16 files, I think those file should be check in
-as binary. But some one did check in the utf16 in the repository I
-use at work, Now I have to deal with it. I guess the reason perforce
-want to know about utf16 is to do the \r\n conversion properly on
-those utf16 files. The file in question is the windows .mc file.
-It contain different language translation of the error message.
+I'm not entirely happy with this solution, though. It means having to
+create an Eclipse workspace per branch, this is a *lot* of work. (This
+is mostly Eclipse's fault but still.) One of the exceedingly
+attractive features of Git is the easy branching and merging.
+Branching is now no longer easy. :-(
 
-So git-p4 in git-core effectively converted the perforce utf16 file to
-utf8 during import.
+I assume it would be possible for Git to move untracked/ignored files
+out of the way when checking out a different branch? (And moving them
+back in when going back to that branch.) Are there any objections to
+doing this? I.e. would it be a bad idea for some reason?
 
-However, if I do "p4 print -o filename". Perforce will write the file i=
-n
-the original utf16 format. I don't need to do the utf8 to utf16 convers=
-ion,
-which can failed and it does in my case.
-
-The git-p4 in git-core need the same treatment. I will work out a patch
-and resubmit that later.
-
-Thanks
-
-Chris
+So, in essence, would it be possible (and desirable) to associate
+untracked/ignored files with a particular branch? And only show them
+when that branch is checked out?
