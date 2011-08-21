@@ -1,74 +1,104 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 2/2] Do not accept NUL in the path in .git file
-Date: Sun, 21 Aug 2011 18:58:10 +0700
-Message-ID: <1313927890-21227-2-git-send-email-pclouds@gmail.com>
-References: <1313927890-21227-1-git-send-email-pclouds@gmail.com>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCH] git-p4: don't convert utf16 files.
+Date: Sun, 21 Aug 2011 11:21:56 -0400
+Message-ID: <20110821152156.GA30299@arf.padd.com>
+References: <CANeU7QmGJTr4V-tWzuPnP2P=9eQbGDgQxv2phAVbGXjU5tqYPQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 21 13:59:09 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Eberhard Beilharz <eb1@sil.org>,
+	Jordan Zimmerman <jzimmerman@netflix.com>,
+	Mike Crowe <mac@mcrowe.com>
+To: Chris Li <christ.li@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 21 17:22:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qv6gG-0004rD-BU
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Aug 2011 13:59:08 +0200
+	id 1Qv9qk-0007Ce-C1
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Aug 2011 17:22:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754360Ab1HUL7E convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Aug 2011 07:59:04 -0400
-Received: from mail-pz0-f42.google.com ([209.85.210.42]:39564 "EHLO
-	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751964Ab1HUL7C (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Aug 2011 07:59:02 -0400
-Received: by pzk37 with SMTP id 37so7255566pzk.1
-        for <git@vger.kernel.org>; Sun, 21 Aug 2011 04:59:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=sQppTBV/XYd+dTDmW6H0I0eUeM8lyK0GQykjnSiKK7o=;
-        b=ASsA/x+WF78nkrp7HwTJhzwFzgSd5B9EhDhlehsmiyl90AmJM/Bf1tMNcUFbBHyP3H
-         dGRGRXDnMxUG0My5SBiRduttDLJdrKdofPGGtZg8wdDh/MrPqTxKKvv1tCxOXeeBYBmv
-         bcYTxAGlq5oGI51hL7mkun85UOb8NHRx4cuAo=
-Received: by 10.142.224.1 with SMTP id w1mr969318wfg.326.1313927942530;
-        Sun, 21 Aug 2011 04:59:02 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.73.228.117])
-        by mx.google.com with ESMTPS id v2sm3636958pbi.19.2011.08.21.04.58.59
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 21 Aug 2011 04:59:01 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 21 Aug 2011 18:58:56 +0700
-X-Mailer: git-send-email 1.7.4.74.g639db
-In-Reply-To: <1313927890-21227-1-git-send-email-pclouds@gmail.com>
+	id S1752092Ab1HUPWD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Aug 2011 11:22:03 -0400
+Received: from honk.padd.com ([74.3.171.149]:36258 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751430Ab1HUPWA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Aug 2011 11:22:00 -0400
+Received: from arf.padd.com (unknown [50.52.168.230])
+	by honk.padd.com (Postfix) with ESMTPSA id 55B6C4C1A;
+	Sun, 21 Aug 2011 08:21:59 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 9F93A31448; Sun, 21 Aug 2011 11:21:56 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <CANeU7QmGJTr4V-tWzuPnP2P=9eQbGDgQxv2phAVbGXjU5tqYPQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179804>
 
+christ.li@gmail.com wrote on Fri, 19 Aug 2011 15:50 -0700:
+> Some repository has some utf16 files git-p4 don't know
+> how to convert. For those files, git-p4 just write the utf8
+> files. That is wrong, because git get different file than
+> perforce does, causing some windows resource file fail
+> to compile.
+> 
+> Using the "p4 print -o tmpfile depotfile" can avoid this
+> convertion (and possible failure) all together.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- setup.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+This isn't contrib/fast-import/git-p4.  Searching around, I
+discovered a 2009 fork of git-p4 that is fairly active.  CC-ing
+some of the names I found on github.
 
-diff --git a/setup.c b/setup.c
-index 2c51a9a..c1995b7 100644
---- a/setup.c
-+++ b/setup.c
-@@ -436,6 +436,8 @@ const char *read_gitfile_gently(const char *path)
- 	if (len < 9)
- 		die("No path in gitfile: %s", path);
- 	buf[len] =3D '\0';
-+	if (strlen(buf) < len)
-+		die("invalid gitfile format: %s", path);
- 	dir =3D buf + 8;
-=20
- 	if (!is_absolute_path(dir) && (slash =3D strrchr(path, '/'))) {
---=20
-1.7.4.74.g639db
+Here's one such repo:
+
+    http://github.com/ermshiperete/git-p4
+
+Git's git-p4 doesn't try to do anything special with utf-16.  It
+does \r\n mangling, but not $Keyword$ removal, then just streams
+it to disk however p4 sends it.  That's close to what you're
+trying to do here.
+
+		-- Pete
+
+> Signed-off-by: Chris Li <git@chrisli.org>
+> 
+> ---
+>  git-p4 |   11 +++++------
+>  1 files changed, 5 insertions(+), 6 deletions(-)
+> 
+> diff --git a/git-p4 b/git-p4
+> index 672b0c2..0c6a5cc 100755
+> --- a/git-p4
+> +++ b/git-p4
+> @@ -755,12 +755,11 @@ class P4FileReader:
+>                      break
+> 
+>              if header['type'].startswith('utf16'):
+> -                try:
+> -                    text = textBuffer.getvalue().encode('utf_16')
+> -                except UnicodeDecodeError:
+> -                    # File checked in to Perforce has an error. Try
+> without encoding
+> -                    print "Corrupt UTF-16 file in Perforce: %s" %
+> header['depotFile']
+> -                    text = textBuffer.getvalue()
+> +                # Don't even try to convert utf16. Ask p4 to write
+> the file directly.
+> +                tmpFile = tempfile.NamedTemporaryFile()
+> +                P4Helper().p4_system("print -o %s %s"%(tmpFile.name,
+> header['depotFile']))
+> +                text = open(tmpFile.name).read()
+> +      	        tmpFile.close()
+>              else:
+>                  text = textBuffer.getvalue()
+>              textBuffer.close()
+> -- 
+> 1.7.6
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
