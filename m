@@ -1,61 +1,82 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: [PATCH 2/2] demonstrate format-callback used in combined diff
-Date: Sun, 21 Aug 2011 23:55:57 +0200
-Message-ID: <20110821215556.GA2370@kolya>
-References: <1313791728-11328-1-git-send-email-iveqy@iveqy.com>
- <1313791728-11328-2-git-send-email-iveqy@iveqy.com>
- <7vwre9yodc.fsf@alter.siamese.dyndns.org>
- <7vd3g0zj3l.fsf_-_@alter.siamese.dyndns.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: Malformed branch name in fast-export when specifying
+ non-HEAD/branch revision
+Date: Sun, 21 Aug 2011 15:29:38 -0700
+Message-ID: <CAGdFq_iiTt8F+kPXwZZT3fAKwZLCpPr7BOYtistxvv6s52Q5nQ@mail.gmail.com>
+References: <CAORuUR1viqG27+dYOFS_5SLxFOE2wHJqAQ3i3RByg_fbWACh-Q@mail.gmail.com>
+ <CAORuUR154Dhg5vDojga-01bDxxf+=R2X-oJK-0417CgmqxCwvA@mail.gmail.com>
+ <CABPp-BFRZMZjhWuUUeD7Oa1HbWQMnZot7dRm3zKOpCoj_QwZeg@mail.gmail.com>
+ <7vliurd62x.fsf@alter.siamese.dyndns.org> <20110817231922.GA28966@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org,
-	hvoigt@hvoigt.net, jens.lehmann@web.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 21 23:55:56 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>,
+	Owen Stephens <git@owenstephens.co.uk>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Aug 22 00:30:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvFzn-0002vA-TT
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Aug 2011 23:55:56 +0200
+	id 1QvGXA-000331-E9
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 00:30:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755775Ab1HUVzv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Aug 2011 17:55:51 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:53454 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752693Ab1HUVzu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Aug 2011 17:55:50 -0400
-Received: by bke11 with SMTP id 11so3269678bke.19
-        for <git@vger.kernel.org>; Sun, 21 Aug 2011 14:55:49 -0700 (PDT)
+	id S1755885Ab1HUWaT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Aug 2011 18:30:19 -0400
+Received: from mail-pz0-f42.google.com ([209.85.210.42]:34917 "EHLO
+	mail-pz0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752719Ab1HUWaS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Aug 2011 18:30:18 -0400
+Received: by pzk37 with SMTP id 37so7746720pzk.1
+        for <git@vger.kernel.org>; Sun, 21 Aug 2011 15:30:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=VX5ygyI9sGve3N/o42na8C95ALWZLCKgPnQSQkXFh34=;
-        b=Cole0qoJQtKq8RnfNCKyExxGhbGDTxRMFhbD06R5JC9aeqEoWTcNo+yDfqKj3KxBm7
-         wKj6Fl5Hhx4tvxNYTKJn5OOKm+HeuovnbQ4aPwtUBQgfqb/0VHAS1Gy89GBp7ARhYarN
-         nc1VlTlFs7APvJHZCQhG9Ll+0ULuWRNP/5CLs=
-Received: by 10.204.141.12 with SMTP id k12mr651708bku.22.1313963748922;
-        Sun, 21 Aug 2011 14:55:48 -0700 (PDT)
-Received: from kolya (h-185-240.a189.priv.bahnhof.se [85.24.185.240])
-        by mx.google.com with ESMTPS id e21sm1708390bkw.56.2011.08.21.14.55.47
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 21 Aug 2011 14:55:47 -0700 (PDT)
-Received: from iveqy by kolya with local (Exim 4.72)
-	(envelope-from <iveqy@kolya>)
-	id 1QvFzp-0000ej-6a; Sun, 21 Aug 2011 23:55:57 +0200
-Content-Disposition: inline
-In-Reply-To: <7vd3g0zj3l.fsf_-_@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=axkGmS5PUz8X5r9mddXw4UdH+YcwSjCsKm3rjnmArsM=;
+        b=wZFB+0OvUveHO1ivkd7acB/8jVKHmx/2+dfHpI5QsCtw4kz8/FmBGohxjf+z2mEn4v
+         PsJfSj6xTWUSKlF9nXy+BAnsN/L29PR5Fz7FIKHMQxdOYBW0Y1AK9rbIgsbyy4RaSHOd
+         FltNNzqC8AKwMhldSO/3LRRdOP5xdLgbryPCU=
+Received: by 10.142.52.4 with SMTP id z4mr1164767wfz.437.1313965818301; Sun,
+ 21 Aug 2011 15:30:18 -0700 (PDT)
+Received: by 10.68.55.170 with HTTP; Sun, 21 Aug 2011 15:29:38 -0700 (PDT)
+In-Reply-To: <20110817231922.GA28966@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179821>
 
-Thank you. GSoC is now finished and I have examans next week that needs
-my attention. I will continue finish what I started but won't be able to
-do so until the end of the weak. Just so you know...
+Heya,
 
-/Fredrik Gustafsson
+On Wed, Aug 17, 2011 at 16:19, Jeff King <peff@peff.net> wrote:
+> On Wed, Aug 17, 2011 at 03:30:14PM -0700, Junio C Hamano wrote:
+>
+>> You can think of "fast-export" an off-line "push" command [*1*]; instead
+>> of giving a random commit object, e.g. "git fast-export HEAD~1", that can
+>> not be used as a ref, you can use the refspec notation to tell where the
+>> result should go, e.g. "git fast-export HEAD~1:refs/heads/a-bit-older",
+>> from the command line of fast-export.
+>>
+>> I suspect that also may clarify what Sverre was trying to do in his recent
+>> series. The root cause of both this and the issue Sverre wanted to fix is
+>> the design mistake of fast-export that tries to reuse the notation of
+>> object range specification for a different purpose of telling which "ref"
+>> to update, I think.
+>
+> Yes, this was the conclusion I came to when I looked at this a month or
+> so ago. You really need to give fast-export a mapping of objects to
+> refnames, and it should output ref names _only_ for the mapping. That
+> would handle this "not a ref" case, but would also let you push
+> "refs/heads/foo" when it is equivalent to "refs/heads/master", without
+> fast-export mentioning "refs/heads/master" at all.
+
+Does this bring any new insights into how the problem I was pointing
+out (trying to push next if master points at the same commit does
+nothing) could/should be solved?
+
+-- 
+Cheers,
+
+Sverre Rabbelier
