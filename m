@@ -1,90 +1,62 @@
-From: Andrew Keller <andrew@kellerfarm.com>
+From: Evan Shelhamer <shelhamer@imaginarynumber.net>
 Subject: Re: Site dependent repositories
-Date: Sun, 21 Aug 2011 00:21:16 -0400
-Message-ID: <AA0C484C-FD80-4C76-9E45-4BAE51B87ED7@kellerfarm.com>
+Date: Sun, 21 Aug 2011 05:46:29 +0000 (UTC)
+Message-ID: <loom.20110821T074112-429@post.gmane.org>
 References: <4E507C05.2090700@sbcglobal.net>
-Mime-Version: 1.0 (Apple Message framework v1084)
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Aug 21 07:11:09 2011
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 21 07:50:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qv0JR-0007Nx-6B
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Aug 2011 07:11:09 +0200
+	id 1Qv0vU-0005wq-CT
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Aug 2011 07:50:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750901Ab1HUFLC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Aug 2011 01:11:02 -0400
-Received: from sanjose.tchmachines.com ([208.76.86.38]:45879 "EHLO
-	leia.tchmachines.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750808Ab1HUFLB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 Aug 2011 01:11:01 -0400
-X-Greylist: delayed 2979 seconds by postgrey-1.27 at vger.kernel.org; Sun, 21 Aug 2011 01:11:01 EDT
-Received: from c-208-53-113-112.customer.broadstripe.net ([208.53.113.112] helo=[192.168.0.198])
-	by leia.tchmachines.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.69)
-	(envelope-from <andrew@kellerfarm.com>)
-	id 1QuzX8-0002tl-0R
-	for git@vger.kernel.org; Sun, 21 Aug 2011 00:21:14 -0400
-In-Reply-To: <4E507C05.2090700@sbcglobal.net>
-X-Mailer: Apple Mail (2.1084)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - leia.tchmachines.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - kellerfarm.com
+	id S1751129Ab1HUFuJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Aug 2011 01:50:09 -0400
+Received: from lo.gmane.org ([80.91.229.12]:36823 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750819Ab1HUFuI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Aug 2011 01:50:08 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Qv0v8-0005sd-T4
+	for git@vger.kernel.org; Sun, 21 Aug 2011 07:50:07 +0200
+Received: from c-24-62-205-17.hsd1.ma.comcast.net ([24.62.205.17])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 21 Aug 2011 07:50:06 +0200
+Received: from shelhamer by c-24-62-205-17.hsd1.ma.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 21 Aug 2011 07:50:06 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 24.62.205.17 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_1) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.112 Safari/535.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179795>
 
-On Aug 20, 2011, at 11:31 PM, Stewart A. Brown wrote:
+Have you considered ignoring 'local' and 'extensions' and making each their
+own repositories?
 
-> I have git repositories at multiple sites.  At each site the git repository
-> has site dependent sources.  Each repository is organised something
-> like:
-> 
-> top/a/local
->      b
->      c/d/extensions
->      e
-> 
-> The directories top, a, b, c, d, and e have sources that need to be
-> pushed or pulled between the repositories at all sites.  The directories
-> 'local' and 'extensions' have sources that must be managed within sites
-> but never pushed or pulled between sites.
-> 
-> The ignore mechanism will not suffice because the files in 'local' and
-> 'extensions' must be source managed.  I have looked a bit into
-> submodules, filters, and hooks.  None of these jumps out as obvious, but
-> they are rich mechanisms with plenty of subtleties.
-> 
-> Does git have a way of letting me do this?
+A 'site' repository would contain the dir structure you described, and would
+have a .gitignore to ignore 'local' and 'extensions'. As these are now ignored
+by git, you are free to create a git repo in each dir that will be independent
+of the 'site' repo.
 
-No.
+This way you would be able to push/pull 'site' repos without 'local' and
+'extensions' being tracked or changed. However, you can still go into the
+'local' and 'extensions' dirs and work with the git repos established for
+these directories.
 
-Have you considered using a sort of configuration switch?  Include all local and extension files for every site in the repository, and devise some sort of a switch that detects which site you're in, and creates a link to the correct subfolder.
-
-So, for example, when you first clone the repository, top/a/local would contain:
-
-site1/
-site2/
-site3/
-
-And so on.  Then, upon running a script of some sort (perhaps a make script), the site is detected (or inputted), and a symbolic link could be created to the correct folder.  At this point, top/a/local would contain:
-
-active -> site2
-site1/
-site2/
-site3/
-
-where 'active' is a symbolic link pointing to the correct folder.  This symbolic link would be a candidate for a .gitignore file.
-
-This way, any change you make in one of the site-specific folders is still tracked in the repository.  Of course, this has the disadvantage that each site has access to the files of every site.  Depending on your situation, that might be a show stopper.
-
-HTH
-~ Andrew Keller
+This brings up the problem of keeping a given 'site' repo and its inner
+'local' and 'extensions' repos in sync, but you could do this by coordinating
+pushs, pulls, and checkouts by a deploy script or something of that nature.
