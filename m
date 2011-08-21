@@ -1,104 +1,87 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH] git-p4: don't convert utf16 files.
-Date: Sun, 21 Aug 2011 11:21:56 -0400
-Message-ID: <20110821152156.GA30299@arf.padd.com>
-References: <CANeU7QmGJTr4V-tWzuPnP2P=9eQbGDgQxv2phAVbGXjU5tqYPQ@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Site dependent repositories
+Date: Sun, 21 Aug 2011 18:14:30 +0200
+Message-ID: <4E512EE6.60900@web.de>
+References: <4E507C05.2090700@sbcglobal.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Eberhard Beilharz <eb1@sil.org>,
-	Jordan Zimmerman <jzimmerman@netflix.com>,
-	Mike Crowe <mac@mcrowe.com>
-To: Chris Li <christ.li@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 21 17:22:11 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Stewart A. Brown" <sabrown256@sbcglobal.net>, git@vger.kernel.org
+To: sabrown256@gmail.com
+X-From: git-owner@vger.kernel.org Sun Aug 21 18:14:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qv9qk-0007Ce-C1
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Aug 2011 17:22:10 +0200
+	id 1QvAfY-0006s7-Sy
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Aug 2011 18:14:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752092Ab1HUPWD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Aug 2011 11:22:03 -0400
-Received: from honk.padd.com ([74.3.171.149]:36258 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751430Ab1HUPWA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Aug 2011 11:22:00 -0400
-Received: from arf.padd.com (unknown [50.52.168.230])
-	by honk.padd.com (Postfix) with ESMTPSA id 55B6C4C1A;
-	Sun, 21 Aug 2011 08:21:59 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 9F93A31448; Sun, 21 Aug 2011 11:21:56 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <CANeU7QmGJTr4V-tWzuPnP2P=9eQbGDgQxv2phAVbGXjU5tqYPQ@mail.gmail.com>
+	id S1753714Ab1HUQOg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Aug 2011 12:14:36 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:37218 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752638Ab1HUQOf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Aug 2011 12:14:35 -0400
+Received: from smtp05.web.de  ( [172.20.4.166])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 2C85A1A8ED34F;
+	Sun, 21 Aug 2011 18:14:34 +0200 (CEST)
+Received: from [79.247.242.104] (helo=[192.168.178.43])
+	by smtp05.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1QvAfR-00088V-00; Sun, 21 Aug 2011 18:14:33 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20110812 Thunderbird/6.0
+In-Reply-To: <4E507C05.2090700@sbcglobal.net>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1+QahLiXG+r0IWSc/MrMu31pn2kHAxuovRz4keX
+	icXDo+5GzOFd1Z+COeajickwCGW/Gj0p68Km7m64l4rhozn5Wy
+	yWTXC/LWWDnEbhPUO3uw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179805>
 
-christ.li@gmail.com wrote on Fri, 19 Aug 2011 15:50 -0700:
-> Some repository has some utf16 files git-p4 don't know
-> how to convert. For those files, git-p4 just write the utf8
-> files. That is wrong, because git get different file than
-> perforce does, causing some windows resource file fail
-> to compile.
+Am 21.08.2011 05:31, schrieb Stewart A. Brown:
+> I am wondering whether or not git has the functionality to handle
+> my situation.
 > 
-> Using the "p4 print -o tmpfile depotfile" can avoid this
-> convertion (and possible failure) all together.
-
-This isn't contrib/fast-import/git-p4.  Searching around, I
-discovered a 2009 fork of git-p4 that is fairly active.  CC-ing
-some of the names I found on github.
-
-Here's one such repo:
-
-    http://github.com/ermshiperete/git-p4
-
-Git's git-p4 doesn't try to do anything special with utf-16.  It
-does \r\n mangling, but not $Keyword$ removal, then just streams
-it to disk however p4 sends it.  That's close to what you're
-trying to do here.
-
-		-- Pete
-
-> Signed-off-by: Chris Li <git@chrisli.org>
+> I have git repositories at multiple sites.  At each site the git repository
+> has site dependent sources.  Each repository is organised something
+> like:
 > 
-> ---
->  git-p4 |   11 +++++------
->  1 files changed, 5 insertions(+), 6 deletions(-)
+> top/a/local
+>       b
+>       c/d/extensions
+>       e
 > 
-> diff --git a/git-p4 b/git-p4
-> index 672b0c2..0c6a5cc 100755
-> --- a/git-p4
-> +++ b/git-p4
-> @@ -755,12 +755,11 @@ class P4FileReader:
->                      break
+> The directories top, a, b, c, d, and e have sources that need to be
+> pushed or pulled between the repositories at all sites.  The directories
+> 'local' and 'extensions' have sources that must be managed within sites
+> but never pushed or pulled between sites.
 > 
->              if header['type'].startswith('utf16'):
-> -                try:
-> -                    text = textBuffer.getvalue().encode('utf_16')
-> -                except UnicodeDecodeError:
-> -                    # File checked in to Perforce has an error. Try
-> without encoding
-> -                    print "Corrupt UTF-16 file in Perforce: %s" %
-> header['depotFile']
-> -                    text = textBuffer.getvalue()
-> +                # Don't even try to convert utf16. Ask p4 to write
-> the file directly.
-> +                tmpFile = tempfile.NamedTemporaryFile()
-> +                P4Helper().p4_system("print -o %s %s"%(tmpFile.name,
-> header['depotFile']))
-> +                text = open(tmpFile.name).read()
-> +      	        tmpFile.close()
->              else:
->                  text = textBuffer.getvalue()
->              textBuffer.close()
-> -- 
-> 1.7.6
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> The ignore mechanism will not suffice because the files in 'local' and
+> 'extensions' must be source managed.  I have looked a bit into
+> submodules, filters, and hooks.  None of these jumps out as obvious, but
+> they are rich mechanisms with plenty of subtleties.
 > 
+> Does git have a way of letting me do this?
+
+It would work if you could set it up like this:
+
+top/shared
+    non-shared-stuff
+
+where "top" is your git repository, "shared" is a submodule you put all the
+non-site specific stuff in and have that version controlled together with
+your local stuff. If you can't rearrange your directory tree you might be
+able to use symlinks to achieve that layout:
+
+top/a/local -> ../local
+      b
+      c/d/extensions -> ../../extensions
+      e
+top/extension
+top/local
+
+where "a" is your shared submodule that lives together with "extensions" and
+"local" in the top level repo.
