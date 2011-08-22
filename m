@@ -1,53 +1,147 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: Re: [PATCH v3 1/5] git-p4: Allow setting rename/copy detection threshold
-Date: Mon, 22 Aug 2011 13:44:54 +0100
-Message-ID: <CAOpHH-X7D4SCCTuqu_DxY4F6N3kY0x7pb_qS+5D6+1bwGK_60w@mail.gmail.com>
-References: <1314001989-29017-1-git-send-email-vitor.hda@gmail.com>
- <1314001989-29017-2-git-send-email-vitor.hda@gmail.com> <20110822121837.GA3761@arf.padd.com>
+From: Kyle Moffett <kyle@moffetthome.net>
+Subject: Re: Branches & directories
+Date: Mon, 22 Aug 2011 08:46:48 -0400
+Message-ID: <CAGZ=bqLZoLoyMcvnppg6SyFtJU8phSquQeBZ7uhwP=+ZL3DADw@mail.gmail.com>
+References: <CAE1pOi3Eg88i+1s+CcW3+W0WNZ-NYUQb1EV55oh+g1Od78AByQ@mail.gmail.com>
+ <CABNdCrCbSqup1=D2eEbGDhw3JzZGYHWLVqZFsB6GDO4Vk7HRxg@mail.gmail.com>
+ <7vvctvdf5r.fsf@alter.siamese.dyndns.org> <CAE1pOi3rqqcz_6QxB8=g2jWOF-4SRZee7t8NXN1md2C4DL7wug@mail.gmail.com>
+ <CAMOZ1BsZvXsnnWAPXR7UGKdqOMwuGB-ffaAPk55U_1dcjZUcDw@mail.gmail.com>
+ <CAE1pOi2r9DT3Y-GxivTZRaNVi=qLOy5=QpQ-_YysOkgqy3iGRQ@mail.gmail.com>
+ <CAMOZ1BvpnP_729YOHrrPW3B8wa5c4cLyD_qAQ5rTuy0JqNiiXg@mail.gmail.com>
+ <CAE1pOi3OEFg7-OeQM0fvD69gf-5oPQ239CGy9nN0Waas8EM3Bg@mail.gmail.com>
+ <CAMOZ1BvHKTPPmfB7Jx+y4OeRv-uwjmQkscXaRr-vEEy30G_Kdw@mail.gmail.com>
+ <CAE1pOi0b2w8t53U7PSvVwVxZF9O0HTyfCR4vy+-baBjqCDeNJA@mail.gmail.com>
+ <CAMOZ1BtOkwVbC3RyJVQb7K1DRMnJf3_omn7zrkzoE48Ayu7HBg@mail.gmail.com>
+ <CAE1pOi0jZT_HCEV8UDzEOQeuCcDeqxoKGUEk3bJm=O2eJSHfkg@mail.gmail.com>
+ <CAMOZ1Bu5pPeviyZD-e6aHbv-+tSaBDyyKb5vHA132K_3=1gD-g@mail.gmail.com>
+ <CAE1pOi0dL2qNMksuY_=gyGSRsfr6e9AmzgJUNB=jEz85sjuiUw@mail.gmail.com>
+ <CAGZ=bqK7H3zc8LK7EP8+uV8DpWW+czK2POfceGtcBF8Vmkhkow@mail.gmail.com> <CAE1pOi1J5DKtnyUQzu1K7G1+HLsWWCN7thCf6W8MwSzt4_vtOw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Tor Arvid Lund <torarvid@gmail.com>
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Mon Aug 22 14:45:34 2011
+Cc: Michael Witten <mfwitten@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Evan Shelhamer <shelhamer@imaginarynumber.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 22 14:47:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvTsg-0006ZU-Nv
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 14:45:31 +0200
+	id 1QvTuN-0007Kt-5W
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 14:47:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752262Ab1HVMp0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Aug 2011 08:45:26 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:43839 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752091Ab1HVMpY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Aug 2011 08:45:24 -0400
-Received: by gxk21 with SMTP id 21so3523201gxk.19
-        for <git@vger.kernel.org>; Mon, 22 Aug 2011 05:45:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=utdaJNKyjtePPAE5WbEbxNLcZoLIW2K1zsybB4qpXvo=;
-        b=m9YGtcUmaJtqo1ZnqD5/32yt+Hwu5wroQ/tc8W2pLq7W51lQENEIzQkOy/+t0LFXzU
-         W/ePO1/Eb99188twA2wMZ7h4RibNz9UdNLLfqcl7wXJo+R8Dhwpk56uw6vglxwDEp/B6
-         l2fiQ+GlCvaLr7DiJvfNA/h/NQidESSYBijSA=
-Received: by 10.42.150.66 with SMTP id z2mr2457138icv.383.1314017124232; Mon,
- 22 Aug 2011 05:45:24 -0700 (PDT)
-Received: by 10.231.30.205 with HTTP; Mon, 22 Aug 2011 05:44:54 -0700 (PDT)
-In-Reply-To: <20110822121837.GA3761@arf.padd.com>
+	id S1752040Ab1HVMrL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Aug 2011 08:47:11 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:44294 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751674Ab1HVMrJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Aug 2011 08:47:09 -0400
+Received: by wwf5 with SMTP id 5so5171733wwf.1
+        for <git@vger.kernel.org>; Mon, 22 Aug 2011 05:47:08 -0700 (PDT)
+Received: by 10.216.177.4 with SMTP id c4mr1098480wem.99.1314017228241; Mon,
+ 22 Aug 2011 05:47:08 -0700 (PDT)
+Received: by 10.216.87.138 with HTTP; Mon, 22 Aug 2011 05:46:48 -0700 (PDT)
+In-Reply-To: <CAE1pOi1J5DKtnyUQzu1K7G1+HLsWWCN7thCf6W8MwSzt4_vtOw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179862>
 
-On Mon, Aug 22, 2011 at 1:18 PM, Pete Wyckoff <pw@padd.com> wrote:
-> This series looks great. =A0Thanks for fixing the --bool issue and
-> the tests.
+On Mon, Aug 22, 2011 at 01:36, Hilco Wijbenga <hilco.wijbenga@gmail.com=
+> wrote:
+> On 21 August 2011 20:01, Kyle Moffett <kyle@moffetthome.net> wrote:
+>> On Sun, Aug 21, 2011 at 22:13, Hilco Wijbenga <hilco.wijbenga@gmail.=
+com> wrote:
+>>> Thanks for sticking it out. :-) That all makes sense. I think it's =
+all
+>>> pretty clear now.
+>>
+>> It's worth mentioning that in most cases you DON'T want to delete un=
+tracked and
+>> ignored files when switching branches.
+>
+> For the record, I don't want them deleted but replaced with the
+> artifacts in the other branch. A bit wasteful but it saves a lot of
+> build time.
+>
+>> For example, when I'm doing kernel development, I will frequently do=
+ this:
+>>
+>> $ git checkout -b my-new-feature origin/master
+>> [...hack hack hack...]
+>> $ make -j16 && make install && reboot
+>> [...find unrelated bug...]
+>> $ git checkout -b my-new-bugfix origin/master
+>> [...fix the bug...]
+>> $ make -j16 && make install && reboot
+>> $ git commit -m 'I fixed this bug'
+>> $ git checkout my-new-feature
+>> $ git rebase my-new-bugfix
+>> $ make -j16 && make install && reboot
+>>
+>> To avoid wasting time I don't want to completely rebuild the kernel =
+each
+>> and every time I switch branches, I just want to rebuild the files t=
+hat
+>> changed when I switched. =C2=A0The way GIT works lets me do that qui=
+te
+>> easily, and the kernel Makefiles detect the changed files and rebuil=
+d
+>> the minimum amount necessary.
+>>
+>> GIT's behavior when you switch between branches is effectively the
+>> same as applying a patch generated by diffing between the two
+>> branches. =C2=A0Any files which would not be changed are left alone,=
+ their
+>> timestamps completely unchanged.
+>
+> For small changes that makes perfect sense. I'm at a stage where APIs
+> are still evolving and changing an API means rebuilding lots of code.
+> I'd like to avoid that.
+>
+>> It sounds like Eclipse is simply not detecting changes to your worki=
+ng
+>> tree by outside programs, and as a result it's not rebuilding files =
+and
+>> indexes the way that it should.
+>
+> While Eclipse isn't great at detecting such changes, this isn't reall=
+y
+> an Eclipse problem. It's just that lots of things are still changing
+> and that leads to lots of building.
+>
+>> Obviously the easiest way to work around that issue is "git clean",
+>> which has options to select all untracked files or just ignored ones=
+=2E
+>
+> As I mentioned above, I don't want to *delete* untracked/ignored
+> files, I just want them to stick to the branch I was working on. So i=
+f
+> I change to a different branch I get the appropriate build artifacts.
+>
+> Something like: git stash --everything "All artifacts for
+> this-branch." && git checkout other-branch && git stash apply
+> stash-for-other-branch.
 
-Thank *you* for the help and suggestions.
---=20
-Vitor Antunes
+When I am in those sorts of situations I generally just use separate
+working directories or separate checkouts entirely; if you really prefe=
+r
+to have everything in one directory you would be better served by
+integrating "ccache" into your workflow.
+
+In particular, even "git stash" intentionally does not preserve file ti=
+mes,
+so you would end up rebuilding everything anyways because all of your
+source files would be as new as your object files.
+
+If you use "ccache" then it does not matter what branches you are
+on; identical source files and compiler options will be looked up in th=
+e
+cache and the result (if found) copied to the output file.
+
+Cheers,
+Kyle Moffett
