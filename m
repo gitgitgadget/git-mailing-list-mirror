@@ -1,52 +1,91 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: (very minor) should git-gui 'unset TERM' before spawning 'git push'
-Date: Mon, 22 Aug 2011 08:00:12 +0530
-Message-ID: <CAMK1S_irGNUVKda4bNHVJi_5ye-51Vkj4CqrNF44sW4sV6xYyw@mail.gmail.com>
+From: Kyle Moffett <kyle@moffetthome.net>
+Subject: Re: Branches & directories
+Date: Sun, 21 Aug 2011 23:01:21 -0400
+Message-ID: <CAGZ=bqK7H3zc8LK7EP8+uV8DpWW+czK2POfceGtcBF8Vmkhkow@mail.gmail.com>
+References: <CAE1pOi3Eg88i+1s+CcW3+W0WNZ-NYUQb1EV55oh+g1Od78AByQ@mail.gmail.com>
+ <CABNdCrCbSqup1=D2eEbGDhw3JzZGYHWLVqZFsB6GDO4Vk7HRxg@mail.gmail.com>
+ <7vvctvdf5r.fsf@alter.siamese.dyndns.org> <CAE1pOi3rqqcz_6QxB8=g2jWOF-4SRZee7t8NXN1md2C4DL7wug@mail.gmail.com>
+ <CAMOZ1BsZvXsnnWAPXR7UGKdqOMwuGB-ffaAPk55U_1dcjZUcDw@mail.gmail.com>
+ <CAE1pOi2r9DT3Y-GxivTZRaNVi=qLOy5=QpQ-_YysOkgqy3iGRQ@mail.gmail.com>
+ <CAMOZ1BvpnP_729YOHrrPW3B8wa5c4cLyD_qAQ5rTuy0JqNiiXg@mail.gmail.com>
+ <CAE1pOi3OEFg7-OeQM0fvD69gf-5oPQ239CGy9nN0Waas8EM3Bg@mail.gmail.com>
+ <CAMOZ1BvHKTPPmfB7Jx+y4OeRv-uwjmQkscXaRr-vEEy30G_Kdw@mail.gmail.com>
+ <CAE1pOi0b2w8t53U7PSvVwVxZF9O0HTyfCR4vy+-baBjqCDeNJA@mail.gmail.com>
+ <CAMOZ1BtOkwVbC3RyJVQb7K1DRMnJf3_omn7zrkzoE48Ayu7HBg@mail.gmail.com>
+ <CAE1pOi0jZT_HCEV8UDzEOQeuCcDeqxoKGUEk3bJm=O2eJSHfkg@mail.gmail.com>
+ <CAMOZ1Bu5pPeviyZD-e6aHbv-+tSaBDyyKb5vHA132K_3=1gD-g@mail.gmail.com> <CAE1pOi0dL2qNMksuY_=gyGSRsfr6e9AmzgJUNB=jEz85sjuiUw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 22 04:30:23 2011
+Cc: Michael Witten <mfwitten@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Evan Shelhamer <shelhamer@imaginarynumber.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 22 05:02:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvKHO-0004L5-FV
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 04:30:22 +0200
+	id 1QvKms-0002fb-1f
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 05:02:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752963Ab1HVCaO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Aug 2011 22:30:14 -0400
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:60323 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751887Ab1HVCaN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Aug 2011 22:30:13 -0400
-Received: by vxi9 with SMTP id 9so3828387vxi.19
-        for <git@vger.kernel.org>; Sun, 21 Aug 2011 19:30:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=2Trv7afiMDtP6Ttoz7QuYd4JOLwKM4YsvZXYE8c356s=;
-        b=hUjCfWBUrxk9zRKJwBh8ujjYctRzs89jZXoQg8YZIELtjDItYh+4CvZIVqb5PfxJTy
-         L3q6wxrlNjufsyfwndXKJ98gM9GpYphcQNrWzeG7oFlSh13oAiHexIdOY0LgaZGzOndD
-         BT1ymyIZlWYl8r5YkPIX1/3pW29jIHzb+eCFg=
-Received: by 10.52.27.43 with SMTP id q11mr1830823vdg.204.1313980212871; Sun,
- 21 Aug 2011 19:30:12 -0700 (PDT)
-Received: by 10.52.6.131 with HTTP; Sun, 21 Aug 2011 19:30:12 -0700 (PDT)
+	id S1752029Ab1HVDBo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Aug 2011 23:01:44 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:59322 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751547Ab1HVDBn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Aug 2011 23:01:43 -0400
+Received: by wyg24 with SMTP id 24so3200326wyg.19
+        for <git@vger.kernel.org>; Sun, 21 Aug 2011 20:01:42 -0700 (PDT)
+Received: by 10.216.165.18 with SMTP id d18mr1468272wel.99.1313982102159; Sun,
+ 21 Aug 2011 20:01:42 -0700 (PDT)
+Received: by 10.216.87.138 with HTTP; Sun, 21 Aug 2011 20:01:21 -0700 (PDT)
+In-Reply-To: <CAE1pOi0dL2qNMksuY_=gyGSRsfr6e9AmzgJUNB=jEz85sjuiUw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179837>
 
-I'm seeing ugly ^[[K (Escape - left bracket - K; ANSI codes for erase
-to end of line?) in the graphical output box on a push.
+On Sun, Aug 21, 2011 at 22:13, Hilco Wijbenga <hilco.wijbenga@gmail.com> wrote:
+> Thanks for sticking it out. :-) That all makes sense. I think it's all
+> pretty clear now.
 
-I tried to trace the code and could only find it under mingw.  My C-fu
-must be much worse than I thought...
+It's worth mentioning that in most cases you DON'T want to delete untracked and
+ignored files when switching branches.
 
-Anyway it happens on a purely Fedora 15 setup with the simplest
-possible file:// URL for the remote.  And it goes away if I 'unset
-TERM' first, too.
+For example, when I'm doing kernel development, I will frequently do this:
 
--- 
-Sitaram
+$ git checkout -b my-new-feature origin/master
+[...hack hack hack...]
+$ make -j16 && make install && reboot
+[...find unrelated bug...]
+$ git checkout -b my-new-bugfix origin/master
+[...fix the bug...]
+$ make -j16 && make install && reboot
+$ git commit -m 'I fixed this bug'
+$ git checkout my-new-feature
+$ git rebase my-new-bugfix
+$ make -j16 && make install && reboot
+
+To avoid wasting time I don't want to completely rebuild the kernel each
+and every time I switch branches, I just want to rebuild the files that
+changed when I switched.  The way GIT works lets me do that quite
+easily, and the kernel Makefiles detect the changed files and rebuild
+the minimum amount necessary.
+
+GIT's behavior when you switch between branches is effectively the
+same as applying a patch generated by diffing between the two
+branches.  Any files which would not be changed are left alone, their
+timestamps completely unchanged.
+
+It sounds like Eclipse is simply not detecting changes to your working
+tree by outside programs, and as a result it's not rebuilding files and
+indexes the way that it should.
+
+Obviously the easiest way to work around that issue is "git clean",
+which has options to select all untracked files or just ignored ones.
+
+Cheers,
+Kyle Moffett
