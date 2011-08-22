@@ -1,146 +1,104 @@
-From: Jason Gross <jgross@MIT.EDU>
-Subject: [PATCH] git-svn: Destroy the cache when we fail to read it
-Date: Sun, 21 Aug 2011 22:17:02 -0400
-Message-ID: <1313979422-21286-1-git-send-email-jgross@mit.edu>
-Cc: Jason Gross <jgross@mit.edu>, Jonathan Nieder <jrnieder@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 22 04:17:18 2011
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: Merge after directory rename ?
+Date: Mon, 22 Aug 2011 02:19:05 +0000
+Message-ID: <CAMOZ1Bsb7UxYOFpRWh47+130upfD9_E=CMQtZd1NyUWPwWiW4A@mail.gmail.com>
+References: <j2ru2h$cd$1@dough.gmane.org> <CAMOZ1BukGPZt8gJh0J4EHRrPHv5teAdnkNT+gZJa9mX=2ohFOw@mail.gmail.com>
+ <CAMOZ1Bt8cP146xiDXfSA-naSOaS3AC8pUZgW12=3TMg2JGCD=w@mail.gmail.com> <j2s83l$eqg$1@dough.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?Q?Marcin_Wi=C5=9Bnicki?= <mwisnicki@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 22 04:19:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvK4j-0001pG-9L
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 04:17:17 +0200
+	id 1QvK73-0002KL-Fq
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 04:19:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756639Ab1HVCRM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Aug 2011 22:17:12 -0400
-Received: from DMZ-MAILSEC-SCANNER-2.MIT.EDU ([18.9.25.13]:48330 "EHLO
-	dmz-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751887Ab1HVCRL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 Aug 2011 22:17:11 -0400
-X-AuditID: 1209190d-b7be0ae000000a16-39-4e51bb6d9f47
-Received: from mailhub-auth-4.mit.edu ( [18.7.62.39])
-	by dmz-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id A8.FC.02582.D6BB15E4; Sun, 21 Aug 2011 22:14:05 -0400 (EDT)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-4.mit.edu (8.13.8/8.9.2) with ESMTP id p7M2HACp002629;
-	Sun, 21 Aug 2011 22:17:10 -0400
-Received: from localhost (DR-WILY.MIT.EDU [18.181.0.233])
-	(authenticated bits=0)
-        (User authenticated as jgross@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id p7M2H9xR021665;
-	Sun, 21 Aug 2011 22:17:09 -0400 (EDT)
-X-Mailer: git-send-email 1.7.2.3
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrBIsWRmVeSWpSXmKPExsUixG6nrpu7O9DP4PgTY4uuK91MFn92tLBZ
-	vL25hNGB2WPnrLvsHp83yQUwRXHZpKTmZJalFunbJXBlnJr3i7mgR6rixeqv7A2Ms0S7GDk5
-	JARMJO58amSCsMUkLtxbz9bFyMUhJLCPUeLOyp/sIAkhgQ2MEj0LBCESXxklFk9qYgFJsAko
-	SdzeuIgRxBYREJd4e3wmWAOzgJvEnB2rwKYKCzhLNN/bAGazCKhK7DnyCayGV8BO4u33Z2wQ
-	mxUkXt1Yyz6BkWcBI8MqRtmU3Crd3MTMnOLUZN3i5MS8vNQiXSO93MwSvdSU0k2MoEDglOTd
-	wfjuoNIhRgEORiUe3g6jQD8h1sSy4srcQ4ySHExKorztO4FCfEn5KZUZicUZ8UWlOanFhxgl
-	OJiVRHh7VgLleFMSK6tSi/JhUtIcLErivIU7HPyEBNITS1KzU1MLUotgsjIcHEoSvNnAgBcS
-	LEpNT61Iy8wpQUgzcXCCDOcBGt4NUsNbXJCYW5yZDpE/xajLMfndiWOMQix5+XmpUuK8pSBF
-	AiBFGaV5cHNgEfyKURzoLWHeHJAqHmD0w016BbSECWjJhJUBIEtKEhFSUg2MShH+SQ2lqy3Z
-	W3ZnrTPVUH5+7UVVoCGP2JMmyWs/75jmMf36e/eGyblPd7g3n4mwNUlecVqysvAca2BEneoF
-	X4N1+n3npszrT3bYI5Zi4Xz2XEhI3eq3axlnLAzSdpuh+fXN1qcHeafEeHF/XvZ8m4LHE8e3
-	ntUKse7feyaYLXHY3PFRXVRRiaU4I9FQi7moOBEAyCklErsCAAA=
+	id S1756586Ab1HVCTh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Aug 2011 22:19:37 -0400
+Received: from mail-iy0-f170.google.com ([209.85.210.170]:58401 "EHLO
+	mail-iy0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751887Ab1HVCTg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 Aug 2011 22:19:36 -0400
+Received: by iye16 with SMTP id 16so9486256iye.1
+        for <git@vger.kernel.org>; Sun, 21 Aug 2011 19:19:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=0PMB/0d4ZqpSeTvMLwVprpnI1qhg298Ukr4fUPOvhmE=;
+        b=BVC2s2Nn0lPQaxqnAxf4GucHcvLOzgaL32yqJjQ3AFrHowHDr0GQl9aPSVyrEwzBrR
+         Z2NukKj+zQIhixpDtze3Ir+kKlCh7+fL8nbc81gZDA8/+bhj/3wW4e39bzdba+nSCDnH
+         qZBgmin1pTKzEcEUwqiLGVzaH0j3bcjR9QeTI=
+Received: by 10.42.75.194 with SMTP id b2mr2084398ick.62.1313979575087; Sun,
+ 21 Aug 2011 19:19:35 -0700 (PDT)
+Received: by 10.42.174.129 with HTTP; Sun, 21 Aug 2011 19:19:05 -0700 (PDT)
+In-Reply-To: <j2s83l$eqg$1@dough.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179835>
 
-Previously, we would fail fatally when trying to fetch changes with
-mergeinfo on a 32 bit machine, when the repository previously had
-fetched changes with mergeinfo on a 64 bit machine.
+2011/8/22 Marcin Wi=C5=9Bnicki <mwisnicki@gmail.com>:
+> On Sun, 21 Aug 2011 23:53:34 +0000, Michael Witten wrote:
+>> Importantly, note that I used only file names in my example,
+>> specifically:
+>>
+>> =C2=A0 5. [master] =C2=A0rename dir1/file3 to dir3/file3
+>>
+>> rather than mirroring your example by writing:
+>>
+>> =C2=A0 5. [master] =C2=A0rename dir1 to dir3
+>>
+>> This is because git fundamentally tracks content, and paths are just=
+ one
+>> kind of content associated with another blob of content. Consequentl=
+y,
+>
+> I know it tracks content, yet it puts effort to detect file renames.
+> I want it to also detect directory renames, detecting it should be qu=
+ite
+> easy.
+>
+>> git really knows next to nothing about directories, so it's not too
+>> surprising that git doesn't bother finding such a DIRECTORY rename
+>> anyway (at most, git would detect a FILE rename, and your FILE
+>> `dir1/file2' has nothing to do with, say, the FILE `dir1/file1' bein=
+g
+>> renamed `dir2/file1').
+>>
+>> Still, some command line switches could be useful to help the user
+>> express to git what should be going on in a case such as yours.
+>
+> I would prefer it to be fully automatic :)
 
-This fixes bug 618875 (which is also 587650, 635097).  Much of the code
-was written by Jonathan Nieder <jrnieder@gmail.com> with suggestions
-from Steffen Mueller <smueller@cpan.org> (see
-http://lists.debian.org/debian-perl/2011/05/msg00023.html and
-http://lists.debian.org/debian-perl/2011/05/msg00026.html).
+I assume the smiley is tongue-in-cheek; however, in case it is not: It
+can't be automatic in general; did my examples mean nothing?
 
-Signed-off-by: Jason Gross <jgross@mit.edu>
-Cc: Jonathan Nieder <jrnieder@gmail.com>
----
- git-svn.perl |   59 +++++++++++++++++++++++++++++++++++----------------------
- 1 files changed, 36 insertions(+), 23 deletions(-)
+> Or at least detect/warn about tree conflict.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 89f83fd..78ccdc8 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -1680,7 +1680,7 @@ use vars qw/$default_repo_id $default_ref_id $_no_metadata $_follow_parent
-             $_use_svnsync_props $no_reuse_existing $_minimize_url
- 	    $_use_log_author $_add_author_from $_localtime/;
- use Carp qw/croak/;
--use File::Path qw/mkpath/;
-+use File::Path qw/mkpath rmtree/;
- use File::Copy qw/copy/;
- use IPC::Open3;
- use Memoize;  # core since 5.8.0, Jul 2002
-@@ -3198,28 +3198,41 @@ sub has_no_changes {
- 		$memoized = 1;
- 
- 		my $cache_path = "$ENV{GIT_DIR}/svn/.caches/";
--		mkpath([$cache_path]) unless -d $cache_path;
--
--		tie my %lookup_svn_merge_cache => 'Memoize::Storable',
--		    "$cache_path/lookup_svn_merge.db", 'nstore';
--		memoize 'lookup_svn_merge',
--			SCALAR_CACHE => 'FAULT',
--			LIST_CACHE => ['HASH' => \%lookup_svn_merge_cache],
--		;
--
--		tie my %check_cherry_pick_cache => 'Memoize::Storable',
--		    "$cache_path/check_cherry_pick.db", 'nstore';
--		memoize 'check_cherry_pick',
--			SCALAR_CACHE => 'FAULT',
--			LIST_CACHE => ['HASH' => \%check_cherry_pick_cache],
--		;
--
--		tie my %has_no_changes_cache => 'Memoize::Storable',
--		    "$cache_path/has_no_changes.db", 'nstore';
--		memoize 'has_no_changes',
--			SCALAR_CACHE => ['HASH' => \%has_no_changes_cache],
--			LIST_CACHE => 'FAULT',
--		;
-+		my $do_memoization = sub {
-+			mkpath([$cache_path]) unless -d $cache_path;
-+
-+			tie my %lookup_svn_merge_cache => 'Memoize::Storable',
-+			    "$cache_path/lookup_svn_merge.db", 'nstore';
-+			memoize 'lookup_svn_merge',
-+				SCALAR_CACHE => 'FAULT',
-+				LIST_CACHE => ['HASH' => \%lookup_svn_merge_cache],
-+			;
-+
-+			tie my %check_cherry_pick_cache => 'Memoize::Storable',
-+			    "$cache_path/check_cherry_pick.db", 'nstore';
-+			memoize 'check_cherry_pick',
-+				SCALAR_CACHE => 'FAULT',
-+				LIST_CACHE => ['HASH' => \%check_cherry_pick_cache],
-+			;
-+
-+			tie my %has_no_changes_cache => 'Memoize::Storable',
-+			    "$cache_path/has_no_changes.db", 'nstore';
-+			memoize 'has_no_changes',
-+				SCALAR_CACHE => ['HASH' => \%has_no_changes_cache],
-+				LIST_CACHE => 'FAULT',
-+			;
-+		};
-+
-+		if (not eval {
-+			$do_memoization->();
-+			1;
-+		}) {
-+			my $err = $@ || "Zombie error"; # "Zombie error" to catch clobbered $@ in buggy destructors
-+			die $err unless -d $cache_path;
-+			print STDERR "Discarding cache and trying again ($@)\n";
-+			rmtree([$cache_path]);
-+			$do_memoization->();
-+		}
- 	}
- 
- 	sub unmemoize_svn_mergeinfo_functions {
--- 
-1.7.2.3
+Did my examples mean nothing?
+
+> Directory renames can happen quite frequently when working with Java/=
+C#
+> and it is unreasonable to expect that lazy user will have to keep tra=
+ck of
+> it manually (with huge number of files it's impossible).
+
+Git doesn't know anything about Java/C#; that's the point.
+
+In general, the user could make use of switches (as suggested). In
+particular, perhaps there are merge hooks or merge drivers that could
+be used or implemented for allowing a more environment-specific
+handling of merges, a la GNU's ChangeLog merge driver:
+
+  http://git.savannah.gnu.org/gitweb/?p=3Dgnulib.git;a=3Dblob;f=3Dlib/g=
+it-merge-changelog.c
+
+Also, see the configuration section of `git help merge'. Also look at
+the tool `git mergetool'.
