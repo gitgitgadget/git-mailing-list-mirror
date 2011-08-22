@@ -1,131 +1,100 @@
 From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Subject: Re: Branches & directories
-Date: Sun, 21 Aug 2011 22:36:18 -0700
-Message-ID: <CAE1pOi1J5DKtnyUQzu1K7G1+HLsWWCN7thCf6W8MwSzt4_vtOw@mail.gmail.com>
-References: <CAE1pOi3Eg88i+1s+CcW3+W0WNZ-NYUQb1EV55oh+g1Od78AByQ@mail.gmail.com>
-	<CABNdCrCbSqup1=D2eEbGDhw3JzZGYHWLVqZFsB6GDO4Vk7HRxg@mail.gmail.com>
-	<7vvctvdf5r.fsf@alter.siamese.dyndns.org>
-	<CAE1pOi3rqqcz_6QxB8=g2jWOF-4SRZee7t8NXN1md2C4DL7wug@mail.gmail.com>
-	<CAMOZ1BsZvXsnnWAPXR7UGKdqOMwuGB-ffaAPk55U_1dcjZUcDw@mail.gmail.com>
-	<CAE1pOi2r9DT3Y-GxivTZRaNVi=qLOy5=QpQ-_YysOkgqy3iGRQ@mail.gmail.com>
-	<CAMOZ1BvpnP_729YOHrrPW3B8wa5c4cLyD_qAQ5rTuy0JqNiiXg@mail.gmail.com>
-	<CAE1pOi3OEFg7-OeQM0fvD69gf-5oPQ239CGy9nN0Waas8EM3Bg@mail.gmail.com>
-	<CAMOZ1BvHKTPPmfB7Jx+y4OeRv-uwjmQkscXaRr-vEEy30G_Kdw@mail.gmail.com>
-	<CAE1pOi0b2w8t53U7PSvVwVxZF9O0HTyfCR4vy+-baBjqCDeNJA@mail.gmail.com>
-	<CAMOZ1BtOkwVbC3RyJVQb7K1DRMnJf3_omn7zrkzoE48Ayu7HBg@mail.gmail.com>
-	<CAE1pOi0jZT_HCEV8UDzEOQeuCcDeqxoKGUEk3bJm=O2eJSHfkg@mail.gmail.com>
-	<CAMOZ1Bu5pPeviyZD-e6aHbv-+tSaBDyyKb5vHA132K_3=1gD-g@mail.gmail.com>
-	<CAE1pOi0dL2qNMksuY_=gyGSRsfr6e9AmzgJUNB=jEz85sjuiUw@mail.gmail.com>
-	<CAGZ=bqK7H3zc8LK7EP8+uV8DpWW+czK2POfceGtcBF8Vmkhkow@mail.gmail.com>
+Subject: [Git 1.7.6.557.gcee4] git stash
+Date: Sun, 21 Aug 2011 23:01:24 -0700
+Message-ID: <CAE1pOi1D+J5_fmsdhho1FRAipyO3Ri7GS_wy4fTNtCGbatDaDg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Witten <mfwitten@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Evan Shelhamer <shelhamer@imaginarynumber.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Kyle Moffett <kyle@moffetthome.net>
-X-From: git-owner@vger.kernel.org Mon Aug 22 07:41:53 2011
+Cc: Git Users <git@vger.kernel.org>
+To: David Caldwell <david@porkrind.org>
+X-From: git-owner@vger.kernel.org Mon Aug 22 08:03:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvNGi-0002j1-0G
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 07:41:52 +0200
+	id 1QvNbg-0007j4-De
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 08:03:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751871Ab1HVFgU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Aug 2011 01:36:20 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:56419 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751553Ab1HVFgU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Aug 2011 01:36:20 -0400
-Received: by gwaa12 with SMTP id a12so2777122gwa.19
-        for <git@vger.kernel.org>; Sun, 21 Aug 2011 22:36:19 -0700 (PDT)
+	id S1752260Ab1HVGBZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Aug 2011 02:01:25 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:50020 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751486Ab1HVGBZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Aug 2011 02:01:25 -0400
+Received: by ywf7 with SMTP id 7so3293567ywf.19
+        for <git@vger.kernel.org>; Sun, 21 Aug 2011 23:01:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=exHHQqVaQnvUOJuT5MrvoYoBPXB3wAuS/hHeZO/fvnA=;
-        b=pwKrZlPIA3X2Xl5ewKHoZKbU9VoYEu//Cv3/qM1Cr7OC4fJ3U3tmBHW75RAnoYRZ8H
-         DKrSB5L9aDH7Ln/EFgrXx5XlKYlQgsECu/vwLhYQiTehG2hAUdpPwf6oZy4sd1EPm8hl
-         LjhcvZWHNVr92+lM6MRZ0YF3UMeP5OUB/Pv6k=
-Received: by 10.236.145.1 with SMTP id o1mr11806677yhj.119.1313991379442; Sun,
- 21 Aug 2011 22:36:19 -0700 (PDT)
-Received: by 10.236.207.67 with HTTP; Sun, 21 Aug 2011 22:36:18 -0700 (PDT)
-In-Reply-To: <CAGZ=bqK7H3zc8LK7EP8+uV8DpWW+czK2POfceGtcBF8Vmkhkow@mail.gmail.com>
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=/jeezLZyMs2khbgMtZYktG3RJT+FNylZ4KpTl8xCa5Q=;
+        b=ZXcUIEKBAGFtqiFZi4ibznzTTeRF4c7/hROk3Jx4Wx71jn38Nl48CDBnjHFLfHB4mc
+         bO6NKF4nJm5GBlgYRXpRcyKeIxOFZqu7SKPZlkbo3zVY/F63p4KFJQuSFHivxSOWOmNb
+         sCMORLLu7av8cn9sNEBy2mfm2gA46k+uMkeZw=
+Received: by 10.236.136.167 with SMTP id w27mr11590885yhi.102.1313992884510;
+ Sun, 21 Aug 2011 23:01:24 -0700 (PDT)
+Received: by 10.236.207.67 with HTTP; Sun, 21 Aug 2011 23:01:24 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179842>
 
-On 21 August 2011 20:01, Kyle Moffett <kyle@moffetthome.net> wrote:
-> On Sun, Aug 21, 2011 at 22:13, Hilco Wijbenga <hilco.wijbenga@gmail.c=
-om> wrote:
->> Thanks for sticking it out. :-) That all makes sense. I think it's a=
-ll
->> pretty clear now.
->
-> It's worth mentioning that in most cases you DON'T want to delete unt=
-racked and
-> ignored files when switching branches.
+Hi David,
 
-=46or the record, I don't want them deleted but replaced with the
-artifacts in the other branch. A bit wasteful but it saves a lot of
-build time.
+I noticed your very timely change to git stash in the current master
+branch. I tried it but it doesn't behave as I was expecting/hoping.
 
-> For example, when I'm doing kernel development, I will frequently do =
-this:
->
-> $ git checkout -b my-new-feature origin/master
-> [...hack hack hack...]
-> $ make -j16 && make install && reboot
-> [...find unrelated bug...]
-> $ git checkout -b my-new-bugfix origin/master
-> [...fix the bug...]
-> $ make -j16 && make install && reboot
-> $ git commit -m 'I fixed this bug'
-> $ git checkout my-new-feature
-> $ git rebase my-new-bugfix
-> $ make -j16 && make install && reboot
->
-> To avoid wasting time I don't want to completely rebuild the kernel e=
-ach
-> and every time I switch branches, I just want to rebuild the files th=
-at
-> changed when I switched. =C2=A0The way GIT works lets me do that quit=
-e
-> easily, and the kernel Makefiles detect the changed files and rebuild
-> the minimum amount necessary.
->
-> GIT's behavior when you switch between branches is effectively the
-> same as applying a patch generated by diffing between the two
-> branches. =C2=A0Any files which would not be changed are left alone, =
-their
-> timestamps completely unchanged.
+hilco@centaur ~/tmp/repo repo$ git --version
+git version 1.7.6.557.gcee4
+hilco@centaur ~/tmp/repo repo$ git init
+Initialized empty Git repository in /home/hilco/tmp/repo/.git/
+hilco@centaur ~/tmp/repo repo (master #)$ cat >>.gitignore <<- EOF
+>         *.ignore
+>         ignore-dir/
+> EOF
+hilco@centaur ~/tmp/repo repo (master #%)$ mkdir src
+hilco@centaur ~/tmp/repo repo (master #%)$ touch file.txt src/code.txt
+hilco@centaur ~/tmp/repo repo (master #%)$ git add -A .
+hilco@centaur ~/tmp/repo repo (master #)$ git commit -m '1'
+[master (root-commit) 0fb4106] 1
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+ create mode 100644 .gitignore
+ create mode 100644 file.txt
+ create mode 100644 src/code.txt
+hilco@centaur ~/tmp/repo repo (master)$ touch file-a.ignore src/file-b.ignore
+hilco@centaur ~/tmp/repo repo (master %)$ echo "hello">src/code.txt
+hilco@centaur ~/tmp/repo repo (master *%)$ mkdir ignore-dir
+hilco@centaur ~/tmp/repo repo (master *%)$ touch
+ignore-dir/{file.ignore,file.txt}
+hilco@centaur ~/tmp/repo repo (master *%)$ git status
+# On branch master
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#       modified:   src/code.txt
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#       file-a.ignore
+#       ignore-dir/
+#       src/file-b.ignore
+no changes added to commit (use "git add" and/or "git commit -a")
+hilco@centaur ~/tmp/repo repo (master *%)$ git stash --no-keep-index --all
+Saved working directory and index state WIP on master: 0fb4106 1
+HEAD is now at 0fb4106 1
+Not removing ignore-dir/
+hilco@centaur ~/tmp/repo repo (master $%)$ git status
+# On branch master
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#       ignore-dir/
+nothing added to commit but untracked files present (use "git add" to track)
 
-=46or small changes that makes perfect sense. I'm at a stage where APIs
-are still evolving and changing an API means rebuilding lots of code.
-I'd like to avoid that.
+So it quite explicitly states "Not removing ignore-dir/". How do I
+make sure it also stashes the ignore-dir directory?
 
-> It sounds like Eclipse is simply not detecting changes to your workin=
-g
-> tree by outside programs, and as a result it's not rebuilding files a=
-nd
-> indexes the way that it should.
-
-While Eclipse isn't great at detecting such changes, this isn't really
-an Eclipse problem. It's just that lots of things are still changing
-and that leads to lots of building.
-
-> Obviously the easiest way to work around that issue is "git clean",
-> which has options to select all untracked files or just ignored ones.
-
-As I mentioned above, I don't want to *delete* untracked/ignored
-files, I just want them to stick to the branch I was working on. So if
-I change to a different branch I get the appropriate build artifacts.
-
-Something like: git stash --everything "All artifacts for
-this-branch." && git checkout other-branch && git stash apply
-stash-for-other-branch.
+Cheers,
+Hilco
