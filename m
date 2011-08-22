@@ -1,241 +1,146 @@
-From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Subject: Re: Branches & directories
-Date: Sun, 21 Aug 2011 19:13:26 -0700
-Message-ID: <CAE1pOi0dL2qNMksuY_=gyGSRsfr6e9AmzgJUNB=jEz85sjuiUw@mail.gmail.com>
-References: <CAE1pOi3Eg88i+1s+CcW3+W0WNZ-NYUQb1EV55oh+g1Od78AByQ@mail.gmail.com>
-	<CABNdCrCbSqup1=D2eEbGDhw3JzZGYHWLVqZFsB6GDO4Vk7HRxg@mail.gmail.com>
-	<7vvctvdf5r.fsf@alter.siamese.dyndns.org>
-	<CAE1pOi3rqqcz_6QxB8=g2jWOF-4SRZee7t8NXN1md2C4DL7wug@mail.gmail.com>
-	<CAMOZ1BsZvXsnnWAPXR7UGKdqOMwuGB-ffaAPk55U_1dcjZUcDw@mail.gmail.com>
-	<CAE1pOi2r9DT3Y-GxivTZRaNVi=qLOy5=QpQ-_YysOkgqy3iGRQ@mail.gmail.com>
-	<CAMOZ1BvpnP_729YOHrrPW3B8wa5c4cLyD_qAQ5rTuy0JqNiiXg@mail.gmail.com>
-	<CAE1pOi3OEFg7-OeQM0fvD69gf-5oPQ239CGy9nN0Waas8EM3Bg@mail.gmail.com>
-	<CAMOZ1BvHKTPPmfB7Jx+y4OeRv-uwjmQkscXaRr-vEEy30G_Kdw@mail.gmail.com>
-	<CAE1pOi0b2w8t53U7PSvVwVxZF9O0HTyfCR4vy+-baBjqCDeNJA@mail.gmail.com>
-	<CAMOZ1BtOkwVbC3RyJVQb7K1DRMnJf3_omn7zrkzoE48Ayu7HBg@mail.gmail.com>
-	<CAE1pOi0jZT_HCEV8UDzEOQeuCcDeqxoKGUEk3bJm=O2eJSHfkg@mail.gmail.com>
-	<CAMOZ1Bu5pPeviyZD-e6aHbv-+tSaBDyyKb5vHA132K_3=1gD-g@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Evan Shelhamer <shelhamer@imaginarynumber.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 22 04:15:31 2011
+From: Jason Gross <jgross@MIT.EDU>
+Subject: [PATCH] git-svn: Destroy the cache when we fail to read it
+Date: Sun, 21 Aug 2011 22:17:02 -0400
+Message-ID: <1313979422-21286-1-git-send-email-jgross@mit.edu>
+Cc: Jason Gross <jgross@mit.edu>, Jonathan Nieder <jrnieder@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 22 04:17:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvK31-0001Oz-85
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 04:15:31 +0200
+	id 1QvK4j-0001pG-9L
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 04:17:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756620Ab1HVCN1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Aug 2011 22:13:27 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:63005 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756550Ab1HVCN1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 Aug 2011 22:13:27 -0400
-Received: by yxj19 with SMTP id 19so3226643yxj.19
-        for <git@vger.kernel.org>; Sun, 21 Aug 2011 19:13:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Nz4tBKbUP8m40Ek5KTN3OhrAuCocX5NiZDVC9iZJcXo=;
-        b=uQ1Y4wsA+1FQY5z2M14jWZPzo+MN882xaVqohNa179U/dnpxv5sUJJZbqjYqCGzitU
-         WCTnR+Aljn77/CVBiCdkDDqXvMRU5d4FsKhFo5lGEO8ThVHtkOTXGSjlx6+k8SN7Ul2o
-         CuU6XWhEpYEA5nmC7wbqpSHImci4Qjys/idHg=
-Received: by 10.236.145.130 with SMTP id p2mr10377250yhj.125.1313979206405;
- Sun, 21 Aug 2011 19:13:26 -0700 (PDT)
-Received: by 10.236.207.67 with HTTP; Sun, 21 Aug 2011 19:13:26 -0700 (PDT)
-In-Reply-To: <CAMOZ1Bu5pPeviyZD-e6aHbv-+tSaBDyyKb5vHA132K_3=1gD-g@mail.gmail.com>
+	id S1756639Ab1HVCRM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Aug 2011 22:17:12 -0400
+Received: from DMZ-MAILSEC-SCANNER-2.MIT.EDU ([18.9.25.13]:48330 "EHLO
+	dmz-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751887Ab1HVCRL (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 Aug 2011 22:17:11 -0400
+X-AuditID: 1209190d-b7be0ae000000a16-39-4e51bb6d9f47
+Received: from mailhub-auth-4.mit.edu ( [18.7.62.39])
+	by dmz-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id A8.FC.02582.D6BB15E4; Sun, 21 Aug 2011 22:14:05 -0400 (EDT)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by mailhub-auth-4.mit.edu (8.13.8/8.9.2) with ESMTP id p7M2HACp002629;
+	Sun, 21 Aug 2011 22:17:10 -0400
+Received: from localhost (DR-WILY.MIT.EDU [18.181.0.233])
+	(authenticated bits=0)
+        (User authenticated as jgross@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id p7M2H9xR021665;
+	Sun, 21 Aug 2011 22:17:09 -0400 (EDT)
+X-Mailer: git-send-email 1.7.2.3
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrBIsWRmVeSWpSXmKPExsUixG6nrpu7O9DP4PgTY4uuK91MFn92tLBZ
+	vL25hNGB2WPnrLvsHp83yQUwRXHZpKTmZJalFunbJXBlnJr3i7mgR6rixeqv7A2Ms0S7GDk5
+	JARMJO58amSCsMUkLtxbz9bFyMUhJLCPUeLOyp/sIAkhgQ2MEj0LBCESXxklFk9qYgFJsAko
+	SdzeuIgRxBYREJd4e3wmWAOzgJvEnB2rwKYKCzhLNN/bAGazCKhK7DnyCayGV8BO4u33Z2wQ
+	mxUkXt1Yyz6BkWcBI8MqRtmU3Crd3MTMnOLUZN3i5MS8vNQiXSO93MwSvdSU0k2MoEDglOTd
+	wfjuoNIhRgEORiUe3g6jQD8h1sSy4srcQ4ySHExKorztO4FCfEn5KZUZicUZ8UWlOanFhxgl
+	OJiVRHh7VgLleFMSK6tSi/JhUtIcLErivIU7HPyEBNITS1KzU1MLUotgsjIcHEoSvNnAgBcS
+	LEpNT61Iy8wpQUgzcXCCDOcBGt4NUsNbXJCYW5yZDpE/xajLMfndiWOMQix5+XmpUuK8pSBF
+	AiBFGaV5cHNgEfyKURzoLWHeHJAqHmD0w016BbSECWjJhJUBIEtKEhFSUg2MShH+SQ2lqy3Z
+	W3ZnrTPVUH5+7UVVoCGP2JMmyWs/75jmMf36e/eGyblPd7g3n4mwNUlecVqysvAca2BEneoF
+	X4N1+n3npszrT3bYI5Zi4Xz2XEhI3eq3axlnLAzSdpuh+fXN1qcHeafEeHF/XvZ8m4LHE8e3
+	ntUKse7feyaYLXHY3PFRXVRRiaU4I9FQi7moOBEAyCklErsCAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179834>
 
-On 21 August 2011 19:05, Michael Witten <mfwitten@gmail.com> wrote:
-> On Mon, Aug 22, 2011 at 00:47, Hilco Wijbenga <hilco.wijbenga@gmail.c=
-om> wrote:
->> On 21 August 2011 17:07, Michael Witten <mfwitten@gmail.com> wrote:
->>> On Sun, Aug 21, 2011 at 23:35, Hilco Wijbenga <hilco.wijbenga@gmail=
-=2Ecom> wrote:
->>>> On 21 August 2011 16:06, Michael Witten <mfwitten@gmail.com> wrote=
-:
->>>>> On Sun, Aug 21, 2011 at 21:37, Hilco Wijbenga <hilco.wijbenga@gma=
-il.com> wrote:
->>>>>> On 21 August 2011 13:53, Michael Witten <mfwitten@gmail.com> wro=
-te:
->>>>>>> On Sun, Aug 21, 2011 at 13:42 -0700, Hilco Wijbenga
->>>>>>> <hilco.wijbenga@gmail.com> wrote:
->>>>>>>> Isn't a branch simply a way to track changes separately?
->>>>>>>
->>>>>>> Well, what does that mean, really? You can certainly use branch=
-es to
->>>>>>> help you achieve that goal.
->>>>>>
->>>>>> It means my commits are chained together separate from, say, mas=
-ter.
->>>>>
->>>>> Well, that's not what a git branch provides in general.
->>>>
->>>> Er, so what *does* a Git branch provide then?
->>>
->>> I think my other replies (including the link) repeat myself quite e=
-nough.
->>>
->>> A branch is just a pointer. That's it.
->>>
->>> Quit saying `branch' to yourself. Start saying `pointer' or
->>> `reference' or `commit label' or even `special tag'.
->>
->> :-) Again, we are going in circles. I *know* a branch is just a
->> pointer. So what? To me, that's just the implementation. Why is that
->> relevant? What am I missing?
->
-> You're missing (or, rather, ignoring) the fact that what is called a
-> `branch' in git is exactly what is intended to be called a `branch' i=
-n
-> git; it is not merely an incomplete or weak implementation of
-> something.
->
-> You're probably also missing the fact that I'm simply arguing the
-> point that the term `branch' was a TERRIBLE choice, and your remarks
-> and confusion have confirmed that. Other than that, most of what I'm
-> saying has very little relevance to what you're trying to do; I was
-> following a philosophical tangent inspired by this thread.
->
->>>>>> I feel like we're talking in circles. I get (and even agree with=
-) what
->>>>>> you're saying but I don't see how it changes the concept of a br=
-anch.
->>>>>>
->>>>>> In any case, what I'm more interested in is knowing whether we c=
-an
->>>>>> (optionally) add state (i.e. untracked/ignored files and unstage=
-d
->>>>>> changes) to a branch.
->>>>>
->>>>> No, because a branch doesn't IN ANY WAY provide the structure for=
- that
->>>>> kind of thing.
->>>>
->>>> Obviously, we'd need to expand that structure.
->>>>
->>>> I tried (ab)using git stash to get what I want but it ignores
->>>> untracked/ignored files (not a big surprise, of course). It seems =
-the
->>>> functionality is almost there. If I could just combine git checkou=
-t
->>>> with git stash (and have it work with untracked/ignored files) in =
-a
->>>> script or alias, I'd be a happy camper. I'll have to give it some =
-more
->>>> thought.
->>>
->>> This cobbling together of git's components for this purpose is
->>> actually a fairly frequent story on this list. Either git does inde=
-ed
->>> need something more substantial as a `branch', or people (meaning y=
-ou)
->>> need to change the way they think (and I'm not sure which solution
->>> would be best, honestly).
->>
->> I don't think that changing the way I think would be very effective.=
- I
->> still have to get my work done. And I don't want build artifacts fro=
-m
->> one "pointer" ;-) leak into the working directory of another "pointe=
-r"
->> just because I changed "pointers". (I'm sorry, "pointer" just doesn'=
-t
->> work for me.)
->
-> It doesn't make any sense to say `artifacts from one "pointer"'. You
-> are now, unfortunately, just using the term `pointer' like the term
-> `branch'; you are refusing to let go of the concept that the word
-> `branch' alone has seared into your brain.
->
-> As has been my entire point: You have been corrupted by the wrong
-> choice of words.
->
->> How is this normally resolved? What do the Linux kernel developers d=
-o
->> when changing or creating a branch? Do they do some sort of "clean"
->> first?
->
-> Perhaps `git clean' would be of use to you.
->
->> And I'm getting quite close with "git ls-files -io --exclude-standar=
-d
->> --directory". :-) The cobbling-together-of-components approach looks
->> promising. ;-)
->
-> Hence what I said earlier:
->
-> =C2=A0Of course, you could use what git calls a 'branch' in order
-> =C2=A0to implement what you imply is a 'branch', but git's concept
-> =C2=A0of a branch and your concept of a branch are not at all the
-> =C2=A0same concept (which is why the term 'branch' is so
-> =C2=A0unfortunate).
->
-> However, please note that your solution is not completing the
-> implementation of branches in git, but rather using git's branches to
-> implement something entirely different (and which you think should be
-> called `branches'). The terminology is the key point in the confusion=
-=2E
-> I dare say, had git's branches been instead called `pointers' or the
-> like, then you would have just gone about the business of implementin=
-g
-> your `branches' on top of them without thinking twice.
->
->>> If there is a change, then what is currently called a `branch' shou=
-ld
->>> be renamed explicitly to `pointer' or a `reference' or something li=
-ke
->>> that.
->>
->> Quite possibly but it seems to me that this is too low level. I thin=
-k
->> there are already too many places where Git's implementation leaks
->> into its API. E.g., anything explicitly related to the index.
->
-> Git's power is its simple conceptual basis, and what you are calling
-> low-level is in fact just the ability to deal within the language of
-> those simple concepts.
->
-> Git's weakness is that the most public interface shoehorns that simpl=
-e
-> conceptual basis into not just a more automated system, but into a
-> weaker model that works well most of the time, yet fails and even
-> corrupts the mind of the user when it comes to more interesting
-> scenarios.
->
-> What you call a leaky abstraction is not the `low-level' conceptual
-> basis peeking through innappropriately. Rather, it is the falling
-> apart of the shoddy `higher-level' facade.
->
->>>>> Of course, you could use what git calls a 'branch' in
->>>>> order to implement what you imply is a 'branch', but git's concep=
-t of
->>>>> a branch and your concept of a branch are not at all the same con=
-cept
->>>>> (which is why the term 'branch' is so unfortunate).
->>>>
->>>> You've completely lost me. You may very well be right but all I se=
-e is
->>>> that you're pointing out how branches are implemented in Git.
->>>
->>> That last sentence and your earlier sentence:
->>>
->>>> Obviously, we'd need to expand that structure.
->>>
->>> vindicate everything I've said about the choice of nomenclature. Th=
-e
->>> term `branch' is a TERRIBLE choice.
+Previously, we would fail fatally when trying to fetch changes with
+mergeinfo on a 32 bit machine, when the repository previously had
+fetched changes with mergeinfo on a 64 bit machine.
 
-Thanks for sticking it out. :-) That all makes sense. I think it's all
-pretty clear now.
+This fixes bug 618875 (which is also 587650, 635097).  Much of the code
+was written by Jonathan Nieder <jrnieder@gmail.com> with suggestions
+from Steffen Mueller <smueller@cpan.org> (see
+http://lists.debian.org/debian-perl/2011/05/msg00023.html and
+http://lists.debian.org/debian-perl/2011/05/msg00026.html).
+
+Signed-off-by: Jason Gross <jgross@mit.edu>
+Cc: Jonathan Nieder <jrnieder@gmail.com>
+---
+ git-svn.perl |   59 +++++++++++++++++++++++++++++++++++----------------------
+ 1 files changed, 36 insertions(+), 23 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 89f83fd..78ccdc8 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1680,7 +1680,7 @@ use vars qw/$default_repo_id $default_ref_id $_no_metadata $_follow_parent
+             $_use_svnsync_props $no_reuse_existing $_minimize_url
+ 	    $_use_log_author $_add_author_from $_localtime/;
+ use Carp qw/croak/;
+-use File::Path qw/mkpath/;
++use File::Path qw/mkpath rmtree/;
+ use File::Copy qw/copy/;
+ use IPC::Open3;
+ use Memoize;  # core since 5.8.0, Jul 2002
+@@ -3198,28 +3198,41 @@ sub has_no_changes {
+ 		$memoized = 1;
+ 
+ 		my $cache_path = "$ENV{GIT_DIR}/svn/.caches/";
+-		mkpath([$cache_path]) unless -d $cache_path;
+-
+-		tie my %lookup_svn_merge_cache => 'Memoize::Storable',
+-		    "$cache_path/lookup_svn_merge.db", 'nstore';
+-		memoize 'lookup_svn_merge',
+-			SCALAR_CACHE => 'FAULT',
+-			LIST_CACHE => ['HASH' => \%lookup_svn_merge_cache],
+-		;
+-
+-		tie my %check_cherry_pick_cache => 'Memoize::Storable',
+-		    "$cache_path/check_cherry_pick.db", 'nstore';
+-		memoize 'check_cherry_pick',
+-			SCALAR_CACHE => 'FAULT',
+-			LIST_CACHE => ['HASH' => \%check_cherry_pick_cache],
+-		;
+-
+-		tie my %has_no_changes_cache => 'Memoize::Storable',
+-		    "$cache_path/has_no_changes.db", 'nstore';
+-		memoize 'has_no_changes',
+-			SCALAR_CACHE => ['HASH' => \%has_no_changes_cache],
+-			LIST_CACHE => 'FAULT',
+-		;
++		my $do_memoization = sub {
++			mkpath([$cache_path]) unless -d $cache_path;
++
++			tie my %lookup_svn_merge_cache => 'Memoize::Storable',
++			    "$cache_path/lookup_svn_merge.db", 'nstore';
++			memoize 'lookup_svn_merge',
++				SCALAR_CACHE => 'FAULT',
++				LIST_CACHE => ['HASH' => \%lookup_svn_merge_cache],
++			;
++
++			tie my %check_cherry_pick_cache => 'Memoize::Storable',
++			    "$cache_path/check_cherry_pick.db", 'nstore';
++			memoize 'check_cherry_pick',
++				SCALAR_CACHE => 'FAULT',
++				LIST_CACHE => ['HASH' => \%check_cherry_pick_cache],
++			;
++
++			tie my %has_no_changes_cache => 'Memoize::Storable',
++			    "$cache_path/has_no_changes.db", 'nstore';
++			memoize 'has_no_changes',
++				SCALAR_CACHE => ['HASH' => \%has_no_changes_cache],
++				LIST_CACHE => 'FAULT',
++			;
++		};
++
++		if (not eval {
++			$do_memoization->();
++			1;
++		}) {
++			my $err = $@ || "Zombie error"; # "Zombie error" to catch clobbered $@ in buggy destructors
++			die $err unless -d $cache_path;
++			print STDERR "Discarding cache and trying again ($@)\n";
++			rmtree([$cache_path]);
++			$do_memoization->();
++		}
+ 	}
+ 
+ 	sub unmemoize_svn_mergeinfo_functions {
+-- 
+1.7.2.3
