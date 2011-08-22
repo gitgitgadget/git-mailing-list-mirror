@@ -1,167 +1,110 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: [Git 1.7.6.557.gcee4] git stash
-Date: Mon, 22 Aug 2011 12:15:29 -0500
-Message-ID: <euT1_KmfLWaxwFqOd8u_Zv-flc6Wr9rvg1tf_39P-YMaH8T-tpKl94WG8yCIAmW0AMLjdqnjA3I2uGRQf9YpY513-Io-lue5aNPuVDv8Qp8@cipher.nrlssc.navy.mil>
-References: <CAE1pOi1D+J5_fmsdhho1FRAipyO3Ri7GS_wy4fTNtCGbatDaDg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Malformed branch name in fast-export when specifying
+ non-HEAD/branch revision
+Date: Mon, 22 Aug 2011 13:57:05 -0400
+Message-ID: <20110822175705.GB1945@sigill.intra.peff.net>
+References: <CAORuUR1viqG27+dYOFS_5SLxFOE2wHJqAQ3i3RByg_fbWACh-Q@mail.gmail.com>
+ <CAORuUR154Dhg5vDojga-01bDxxf+=R2X-oJK-0417CgmqxCwvA@mail.gmail.com>
+ <CABPp-BFRZMZjhWuUUeD7Oa1HbWQMnZot7dRm3zKOpCoj_QwZeg@mail.gmail.com>
+ <7vliurd62x.fsf@alter.siamese.dyndns.org>
+ <20110817231922.GA28966@sigill.intra.peff.net>
+ <CAGdFq_iiTt8F+kPXwZZT3fAKwZLCpPr7BOYtistxvv6s52Q5nQ@mail.gmail.com>
+ <20110822161932.GA1945@sigill.intra.peff.net>
+ <CAGdFq_gx+NutDCU7egr_fYUvVG=g1t76LiV1SV-W=0KWBTjHyQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: David Caldwell <david@porkrind.org>,
-	Git Users <git@vger.kernel.org>
-To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 22 19:16:27 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>,
+	Owen Stephens <git@owenstephens.co.uk>, git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 22 19:57:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvY6s-0002OF-Iy
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 19:16:26 +0200
+	id 1QvYkQ-0002LQ-Ub
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 19:57:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751432Ab1HVRQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Aug 2011 13:16:20 -0400
-Received: from mail3.nrlssc.navy.mil ([128.160.11.249]:56408 "EHLO
-	mail3.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751275Ab1HVRQT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Aug 2011 13:16:19 -0400
-Received: by mail3.nrlssc.navy.mil id p7MHFWjx031517; Mon, 22 Aug 2011 12:15:32 -0500
-In-Reply-To: <CAE1pOi1D+J5_fmsdhho1FRAipyO3Ri7GS_wy4fTNtCGbatDaDg@mail.gmail.com>
-X-OriginalArrivalTime: 22 Aug 2011 17:15:30.0153 (UTC) FILETIME=[17E97D90:01CC60EF]
-X-Virus-Scanned: clamav-milter 0.97.2 at mail3
-X-Virus-Status: Clean
+	id S1752134Ab1HVR5J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Aug 2011 13:57:09 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:50383
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751174Ab1HVR5I (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Aug 2011 13:57:08 -0400
+Received: (qmail 18590 invoked by uid 107); 22 Aug 2011 17:57:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 22 Aug 2011 13:57:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Aug 2011 13:57:05 -0400
+Content-Disposition: inline
+In-Reply-To: <CAGdFq_gx+NutDCU7egr_fYUvVG=g1t76LiV1SV-W=0KWBTjHyQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179874>
 
-On 08/22/2011 01:01 AM, Hilco Wijbenga wrote:
-> Hi David,
+On Mon, Aug 22, 2011 at 09:54:47AM -0700, Sverre Rabbelier wrote:
+
+> Do you agree that this is expected behavior?
 > 
-> I noticed your very timely change to git stash in the current master
-> branch. I tried it but it doesn't behave as I was expecting/hoping.
+> $ git init test
+> Initialized empty Git repository in /home/sverre/code/test/.git/
+> $ cd test/
+> $ echo content >> foo
+> sverre@laptop-sverre:~/code/test
+> $ git add foo
+> $ git commit -m first
+> [master (root-commit) 821176f] first
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+>  create mode 100644 foo
+> $ echo content >> foo
+> $ git commit -am second
+> [master 1934282] second
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+> $ git branch other
+> $ git fast-export ^master other
+> reset refs/heads/other
+> from 1934282469e3a83a5ef827fd31e074cfb4f3eadf
 
-It looks like it is actually creating the stash correctly, but it's
-just not deleting the ignored directory.
+Yeah, that seems reasonable to me.
 
-But, there is a small problem with your command sequence...
+> Because in current git.git, this doesn't work (the above is generated
+> using a git that has the patch series Dscho and I sent out). Current
+> git will instead do the following:
+> 
+> $ git fast-export ^master other
+> reset refs/heads/other
+> from :0
+> 
+> The 'from :0' here is obviously a bug (which is fixed by our patch series).
 
-> hilco@centaur ~/tmp/repo repo$ git --version
-> git version 1.7.6.557.gcee4
-> hilco@centaur ~/tmp/repo repo$ git init
-> Initialized empty Git repository in /home/hilco/tmp/repo/.git/
-> hilco@centaur ~/tmp/repo repo (master #)$ cat >>.gitignore <<- EOF
->>         *.ignore
->>         ignore-dir/
->> EOF
-> hilco@centaur ~/tmp/repo repo (master #%)$ mkdir src
-> hilco@centaur ~/tmp/repo repo (master #%)$ touch file.txt src/code.txt
-> hilco@centaur ~/tmp/repo repo (master #%)$ git add -A .
-> hilco@centaur ~/tmp/repo repo (master #)$ git commit -m '1'
-> [master (root-commit) 0fb4106] 1
->  1 files changed, 2 insertions(+), 0 deletions(-)
->  create mode 100644 .gitignore
->  create mode 100644 file.txt
->  create mode 100644 src/code.txt
-> hilco@centaur ~/tmp/repo repo (master)$ touch file-a.ignore src/file-b.ignore
-> hilco@centaur ~/tmp/repo repo (master %)$ echo "hello">src/code.txt
-> hilco@centaur ~/tmp/repo repo (master *%)$ mkdir ignore-dir
-> hilco@centaur ~/tmp/repo repo (master *%)$ touch
-> ignore-dir/{file.ignore,file.txt}
-> hilco@centaur ~/tmp/repo repo (master *%)$ git status
-> # On branch master
-> # Changes not staged for commit:
-> #   (use "git add <file>..." to update what will be committed)
-> #   (use "git checkout -- <file>..." to discard changes in working directory)
-> #
-> #       modified:   src/code.txt
-> #
-> # Untracked files:
-> #   (use "git add <file>..." to include in what will be committed)
-> #
-> #       file-a.ignore
-> #       ignore-dir/
-> #       src/file-b.ignore
-          ^^^^^^^^^^^^^^^^^
-Why are these entries here?
+Yep, the current behavior is definitely wrong. But I thought your
+question was about accidentally mentioning refs/heads/master, which this
+doesn't do (nor should it).
 
-> no changes added to commit (use "git add" and/or "git commit -a")
+I just read through the remote-helper threads from early June, and the
+only mention of triggering that is when you actually have a rename
+(i.e., your "refs/heads/foo" becomes remote's "refs/heads/bar", but we
+mention "refs/heads/foo" in the export stream). I was thinking there was
+another case, but I couldn't find mention of it.
 
-if your .gitignore file looks like this:
+> You might wonder, 'why would anyone do that', well, for example, they
+> might be using marks:
+> 
+> $ git fast-export --export-marks=marksfile  master > /dev/null
+> $ git fast-export --import-marks=marksfile  other
+> reset refs/heads/other
+> from :4
+> 
+> Again, the above is generated with my patched git, current git.git
+> simply outputs nothing.
+> 
+> $ git fast-export --import-marks=marksfile other
 
-   $ cat .gitignore
-   *.ignore
-   ignore-dir/
+Yeah, the behavior of your patch looks fine to me. I thought the point
+in contention was that having export understand refspecs would fix a lot
+of _other_ cases, too.
 
-then why are those items showing up under "Untracked files:" in the call
-to git status above?  /methinks something is wrong with your .gitignore
-file.  It doesn't matter in this case, since --all will cause stash to
-stash the untracked files regardless of whether they are ignored.
-
-> hilco@centaur ~/tmp/repo repo (master *%)$ git stash --no-keep-index --all
-> Saved working directory and index state WIP on master: 0fb4106 1
-> HEAD is now at 0fb4106 1
-> Not removing ignore-dir/
-> hilco@centaur ~/tmp/repo repo (master $%)$ git status
-> # On branch master
-> # Untracked files:
-> #   (use "git add <file>..." to include in what will be committed)
-> #
-> #       ignore-dir/
-> nothing added to commit but untracked files present (use "git add" to track)
-
-Also, in the future it would be nicer if you provided your list of
-commands separately, at the beginning, linked together with &&.
-This makes it easier to copy/paste into my terminal, rather than
-having to extract the commands out from within the body.
-Like this (slightly simplified):
-
-   git --version &&
-   git init &&
-   cat <<-\EOF >.gitignore &&
-	*.ignore
-	ignore-dir/
-	EOF
-   mkdir src &&
-   touch file.txt src/code.txt &&
-   git add . &&
-   git commit -m 'initial commit' &&
-   touch file-a.ignore src/file-b.ignore &&
-   echo "hello" >src/code.txt &&
-   mkdir ignore-dir &&
-   touch ignore-dir/{file.ignore,file.txt} &&
-   git status &&
-   git stash --all &&
-   git status || echo 'FAILURE'
-
-> So it quite explicitly states "Not removing ignore-dir/".
-
-That message is from git-clean, and it is the real problem.
-
-> How do I
-> make sure it also stashes the ignore-dir directory?
-
-It actually did stash the ignore-dir, it just didn't remove it from
-the working directory at the end.  Try deleting the ignore-dir by
-hand and then applying the stash, ignore-dir and its content should
-be recreated.
-
-Something like this is probably the appropriate fix:
-
-diff --git a/git-stash.sh b/git-stash.sh
-index f4e6f05..a2d4b4d 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -240,7 +240,7 @@ save_stash () {
-                test "$untracked" = "all" && CLEAN_X_OPTION=-x || CLEAN_X_OPTION
-                if test -n "$untracked"
-                then
--                       git clean --force --quiet $CLEAN_X_OPTION
-+                       git clean --force --quiet -d $CLEAN_X_OPTION
-                fi
- 
-                if test "$keep_index" = "t" && test -n $i_tree
-
-Needs tests.
-
--Brandon
+-Peff
