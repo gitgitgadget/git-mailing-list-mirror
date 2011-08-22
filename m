@@ -1,118 +1,81 @@
-From: Andrew Berry <andrewberry@sentex.net>
-Subject: Behaviour of git apply --directory
-Date: Mon, 22 Aug 2011 11:21:55 -0400
-Message-ID: <E21BC0F8-2DF0-44AB-B18A-013451CDB670@sentex.net>
-Mime-Version: 1.0 (Apple Message framework v1244.3)
-Content-Type: multipart/signed; boundary="Apple-Mail=_9CD5AE60-2C7A-49E5-A0B0-4F9F9B80E66C"; protocol="application/pkcs7-signature"; micalg=sha1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 22 17:31:54 2011
+From: Hin-Tak Leung <htl10@users.sourceforge.net>
+Subject: Re: git svn --stdlayout 's little quirk.
+Date: Mon, 22 Aug 2011 16:57:27 +0100 (BST)
+Message-ID: <1314028647.33750.YahooMailClassic@web29502.mail.ird.yahoo.com>
+References: <4E52759E.3020005@drmicha.warpmail.net>
+Reply-To: htl10@users.sourceforge.net
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+Cc: Eric Wong <normalperson@yhbt.net>, madduck@madduck.net,
+	git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Aug 22 17:57:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvWTf-0003AX-VY
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 17:31:52 +0200
+	id 1QvWsa-0006Ub-2L
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 17:57:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752086Ab1HVPbr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Aug 2011 11:31:47 -0400
-Received: from esa-jnhn.mail.uoguelph.ca ([131.104.91.44]:42571 "EHLO
-	esa-jnhn.mail.uoguelph.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751053Ab1HVPbq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Aug 2011 11:31:46 -0400
-X-Greylist: delayed 586 seconds by postgrey-1.27 at vger.kernel.org; Mon, 22 Aug 2011 11:31:46 EDT
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvgGAFlzUk6DaFvH/2dsb2JhbABBmHWPFneDDxQ7nUqfXYVpXwSTFJET
-X-IronPort-AV: E=Sophos;i="4.68,263,1312171200"; 
-   d="p7s'?scan'208";a="135152579"
-Received: from danube.cs.uoguelph.ca ([131.104.91.199])
-  by esa-jnhn-pri.mail.uoguelph.ca with ESMTP; 22 Aug 2011 11:21:59 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by danube.cs.uoguelph.ca (Postfix) with ESMTP id 5E4821078050
-	for <git@vger.kernel.org>; Mon, 22 Aug 2011 11:21:58 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at danube.cs.uoguelph.ca
-Received: from danube.cs.uoguelph.ca ([127.0.0.1])
-	by localhost (danube.cs.uoguelph.ca [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id B9dpd5SXb4DU for <git@vger.kernel.org>;
-	Mon, 22 Aug 2011 11:21:57 -0400 (EDT)
-Received: from blizzard.lan (64-7-151-206.border7-dynamic.dsl.sentex.ca [64.7.151.206])
-	by danube.cs.uoguelph.ca (Postfix) with ESMTPSA id 15115107821B
-	for <git@vger.kernel.org>; Mon, 22 Aug 2011 11:21:57 -0400 (EDT)
-X-Mailer: Apple Mail (2.1244.3)
+	id S1752325Ab1HVP5b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Aug 2011 11:57:31 -0400
+Received: from nm8-vm1.bullet.mail.ird.yahoo.com ([77.238.189.198]:42149 "HELO
+	nm8-vm1.bullet.mail.ird.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751254Ab1HVP5a convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Aug 2011 11:57:30 -0400
+Received: from [77.238.189.52] by nm8.bullet.mail.ird.yahoo.com with NNFMP; 22 Aug 2011 15:57:28 -0000
+Received: from [212.82.108.243] by tm5.bullet.mail.ird.yahoo.com with NNFMP; 22 Aug 2011 15:57:28 -0000
+Received: from [127.0.0.1] by omp1008.mail.ird.yahoo.com with NNFMP; 22 Aug 2011 15:57:28 -0000
+X-Yahoo-Newman-Property: ymail-5
+X-Yahoo-Newman-Id: 656422.19704.bm@omp1008.mail.ird.yahoo.com
+Received: (qmail 33932 invoked by uid 60001); 22 Aug 2011 15:57:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1314028648; bh=y0AuxInHlEWYjuX8DRwM1NT9fxEO9kiSYTJbBODQ40g=; h=X-YMail-OSG:Received:X-RocketYMMF:X-Mailer:Message-ID:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=BTajG7A8DlpzK4poBXYg1PpNvFQGEhc7OM7IZLNPpAUvdaLfsxXAvSv/h1FWhodwq4lunwXpfJGcTdUG/ISfnVUA5L94fBQdYseue/zTZ821Ya63z+IghPRKrS+vDlRXAIm0+36diuRUOBuj7HOSyBdQ8PU0gbYS8ShaBFM/CEA=
+X-YMail-OSG: GlYevJQVM1my5nlVcWtw8e0FjVdU1iVWPCwC.WX13JX2rvD
+ ZIV8U4GfawjPbqbpQ35pD4fekcEBNGbfGUxsU4_9005JYy5q3wk1nuf0cVGY
+ SxBf81wQ6iWRXqav8fsS.x2KTST_t7M3gSFI.oF8jJWI7C9t5LpreTziWlJ_
+ nmVa8xf_fCAx3LuyLoBC003Taaln1eiBGYsbNldrfCjyxDrBXVH271.FWq4l
+ elDYIZvoiMw21Y79Jd9U9g7Eq4JhbukG4KIaHHpMfd8Y710xoHCnUkAPlKdb
+ rciRx1mpV0s9VwtDvFdw34.mpb4RFp3HlJ0dm9SxrIfTWWehRD0FHDWO87Kz
+ oA0Z612C9xpxX7bIlgz1i0Skkdbtnvb2rLY.bv4ONmNu84qnAuFilgvzueU0
+ IHIO3aCBu4yp.B2rVxM8j2Jb0Z7RG
+Received: from [81.101.129.153] by web29502.mail.ird.yahoo.com via HTTP; Mon, 22 Aug 2011 16:57:27 BST
+X-RocketYMMF: hintak_leung
+X-Mailer: YahooMailClassic/14.0.4 YahooMailWebService/0.8.113.315625
+In-Reply-To: <4E52759E.3020005@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179869>
 
+--- On Mon, 22/8/11, Michael J Gruber <git@drmicha.warpmail.net> wrote:
 
---Apple-Mail=_9CD5AE60-2C7A-49E5-A0B0-4F9F9B80E66C
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+> >> It is not trying to do that at all. git-svn is
+> trying to
+> >> figure out what
+> >> the "base path" is in an svn repo which possibly
+> hosts
+> >> multiple repos,
+> >> and that is what the message reports.
+> > 
+> > Okay... thanks for clarifying that. Maybe it could try
+> to be clever? Afterall, --stdlayout isn't compatible with a
+> URL ending in "trunk" (or having 'trunk' as part of the
+> URL). Just a suggestion.
+> 
+> You *could* have this layout:
+> 
+> foo/trunk/trunk
+> foo/trunk/tags/v1
+> foo/trunk/tags/v2
+> 
+> That's a perfectly valid layout. The fact that it is
+> stupidly named
+> should not activate git-svn magic.
 
-Hi,
+Fair enough. Perhaps --stdlayout in combination with URL having "trunk" in the name can emit a warning? e.g. "are you sure? That looks a bit stupidly named". I wrote because I think git-svn could either try a bit harder at guessing, or be a bit clearer about the repository not conforming to a standard layout (if the URL is wrong).
 
-The behaviour of git apply --directory seems a little confusing. It =
-looks to be dependent on the current directory, but I can't use relative =
-paths to apply a patch in one directory to a sibling directory. Absolute =
-paths don't work either. I'd expected the parameter to either be =
-relative to the git repository root, or to expand relative directories.
-
-Any thoughts?
-
---Andrew=
-
---Apple-Mail=_9CD5AE60-2C7A-49E5-A0B0-4F9F9B80E66C
-Content-Disposition: attachment;
-	filename=smime.p7s
-Content-Type: application/pkcs7-signature;
-	name=smime.p7s
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIFfjCCBXow
-ggRioAMCAQICEBT0qYr1VI/FTG7wqf3ZkxkwDQYJKoZIhvcNAQEFBQAwga4xCzAJBgNVBAYTAlVT
-MQswCQYDVQQIEwJVVDEXMBUGA1UEBxMOU2FsdCBMYWtlIENpdHkxHjAcBgNVBAoTFVRoZSBVU0VS
-VFJVU1QgTmV0d29yazEhMB8GA1UECxMYaHR0cDovL3d3dy51c2VydHJ1c3QuY29tMTYwNAYDVQQD
-Ey1VVE4tVVNFUkZpcnN0LUNsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgRW1haWwwHhcNMTAxMTI4
-MDAwMDAwWhcNMTExMTI4MjM1OTU5WjAnMSUwIwYJKoZIhvcNAQkBFhZhbmRyZXdiZXJyeUBzZW50
-ZXgubmV0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA9j1PuPvpSbXhrKhKkA/R1hZf
-V40ModE0yJZPR8P39DkEJrG3dogns4If+8GxhC0Vi5SZUGdwQbGr8RnOSZjV5858rxDZis0DQQY6
-aKmqraNUXqQN0A8Xs1UThCwi9zEuQBnVfnDVuSyU1lxTZXB/TX7RfJGhNXDa4FcUDVAnf5v5UNWS
-d3Q6NSR1mWpT7cDIH7lOG1C5XSNEZqZid3Pc5o3jFn3JyC/5VBwI8iAAdyelMHIuxbz2n42+HE/w
-UIAt8CRe7dm/31cj/LwjhpPZrVan0NcJ90BS9uqxb4ZWYdV8FIRgP1HBhUATNxiT34fdwimsrson
-vJzODftwzIXYTwIDAQABo4ICGDCCAhQwHwYDVR0jBBgwFoAUiYJnfcSdJnAAS7RQSHzePa4Ebn0w
-HQYDVR0OBBYEFJ5deq0XiUTzA6eyF+08K9YTwuLhMA4GA1UdDwEB/wQEAwIFoDAMBgNVHRMBAf8E
-AjAAMCAGA1UdJQQZMBcGCCsGAQUFBwMEBgsrBgEEAbIxAQMFAjARBglghkgBhvhCAQEEBAMCBSAw
-RgYDVR0gBD8wPTA7BgwrBgEEAbIxAQIBAQEwKzApBggrBgEFBQcCARYdaHR0cHM6Ly9zZWN1cmUu
-Y29tb2RvLm5ldC9DUFMwgaUGA1UdHwSBnTCBmjBMoEqgSIZGaHR0cDovL2NybC5jb21vZG9jYS5j
-b20vVVROLVVTRVJGaXJzdC1DbGllbnRBdXRoZW50aWNhdGlvbmFuZEVtYWlsLmNybDBKoEigRoZE
-aHR0cDovL2NybC5jb21vZG8ubmV0L1VUTi1VU0VSRmlyc3QtQ2xpZW50QXV0aGVudGljYXRpb25h
-bmRFbWFpbC5jcmwwbAYIKwYBBQUHAQEEYDBeMDYGCCsGAQUFBzAChipodHRwOi8vY3J0LmNvbW9k
-b2NhLmNvbS9VVE5BQUFDbGllbnRDQS5jcnQwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmNvbW9k
-b2NhLmNvbTAhBgNVHREEGjAYgRZhbmRyZXdiZXJyeUBzZW50ZXgubmV0MA0GCSqGSIb3DQEBBQUA
-A4IBAQCqANyU48ZFPRkQ5HAh+gWHKFfTJvlKee7ogC4rGfqFKZjY1eo6btYSBiXFdunvq+ENSPH9
-d6x9CqT99qoQkLT/xIbYwwE4LngUhmrIYfPESDyWTaaEdbi8H0sSAZGyx7rFHHhHAPlLCkBz/iUi
-zRnuHPP2XohJV6SaS30Ofx8xurtVcMmXrFRy/lJZ7X6sMDd8VFZwRknDUCSRREZur/i8fSWuNHUu
-YUgY6DGXdd/RlBqIlAXVA5DNMmJDIxsHghY8l1JeFAeTgr37fFWcBbOvfqxa7zjtDcj+CXho4CKV
-tMCoAm1A0Hu6/Qg+fDPuRMlNI6qJDnwfhEwCb4h7uICKMYID/DCCA/gCAQEwgcMwga4xCzAJBgNV
-BAYTAlVTMQswCQYDVQQIEwJVVDEXMBUGA1UEBxMOU2FsdCBMYWtlIENpdHkxHjAcBgNVBAoTFVRo
-ZSBVU0VSVFJVU1QgTmV0d29yazEhMB8GA1UECxMYaHR0cDovL3d3dy51c2VydHJ1c3QuY29tMTYw
-NAYDVQQDEy1VVE4tVVNFUkZpcnN0LUNsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgRW1haWwCEBT0
-qYr1VI/FTG7wqf3ZkxkwCQYFKw4DAhoFAKCCAg0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAc
-BgkqhkiG9w0BCQUxDxcNMTEwODIyMTUyMTU2WjAjBgkqhkiG9w0BCQQxFgQUYX37FuicQTXqTPpc
-FszHUqDjK6IwgdQGCSsGAQQBgjcQBDGBxjCBwzCBrjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAlVU
-MRcwFQYDVQQHEw5TYWx0IExha2UgQ2l0eTEeMBwGA1UEChMVVGhlIFVTRVJUUlVTVCBOZXR3b3Jr
-MSEwHwYDVQQLExhodHRwOi8vd3d3LnVzZXJ0cnVzdC5jb20xNjA0BgNVBAMTLVVUTi1VU0VSRmly
-c3QtQ2xpZW50IEF1dGhlbnRpY2F0aW9uIGFuZCBFbWFpbAIQFPSpivVUj8VMbvCp/dmTGTCB1gYL
-KoZIhvcNAQkQAgsxgcaggcMwga4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJVVDEXMBUGA1UEBxMO
-U2FsdCBMYWtlIENpdHkxHjAcBgNVBAoTFVRoZSBVU0VSVFJVU1QgTmV0d29yazEhMB8GA1UECxMY
-aHR0cDovL3d3dy51c2VydHJ1c3QuY29tMTYwNAYDVQQDEy1VVE4tVVNFUkZpcnN0LUNsaWVudCBB
-dXRoZW50aWNhdGlvbiBhbmQgRW1haWwCEBT0qYr1VI/FTG7wqf3ZkxkwDQYJKoZIhvcNAQEBBQAE
-ggEAB6e1wrelTx7fPcd66EIkL8yW7ew9BVmGoXWFXNyJrl8Oi2TS2spB9z5v6U+vQYUl10sN2b36
-Fn2uGePuE/Z8TjeDKmVmwJSIcMxZcvWRgt23x85H+uD1dbPVxO9fBSittvqW2fsCy3SkUEjKuQRn
-w/tptwe40/R38HHob7KDmKXvNeMEj/fdI8Botf7+uShF43K+bKL/0EEM4xmTxzDxNnL/ChTr7iGK
-3H2NLUwxwyTYN3Cb/gKamcd88JSs6sZ4pZqcBTKGROs4DB7yX2xqFFZmHwJsZBUhvfrZi3n9J1DN
-ODfa/qeA6oWKdoYqo75/GXdbxExSkPAJ0pNBxxZqbgAAAAAAAA==
-
---Apple-Mail=_9CD5AE60-2C7A-49E5-A0B0-4F9F9B80E66C--
+Hin-Tak
