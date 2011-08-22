@@ -1,105 +1,110 @@
-From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Subject: Re: Restoring timestamps (Re: Branches & directories)
-Date: Mon, 22 Aug 2011 15:33:03 -0700
-Message-ID: <CAE1pOi1+nnpnHAuhYsXcfFNUroW0JcDQKLu6D7YNrUwJg0tXPw@mail.gmail.com>
-References: <CAMOZ1BtOkwVbC3RyJVQb7K1DRMnJf3_omn7zrkzoE48Ayu7HBg@mail.gmail.com>
-	<CAE1pOi0jZT_HCEV8UDzEOQeuCcDeqxoKGUEk3bJm=O2eJSHfkg@mail.gmail.com>
-	<CAMOZ1Bu5pPeviyZD-e6aHbv-+tSaBDyyKb5vHA132K_3=1gD-g@mail.gmail.com>
-	<CAE1pOi0dL2qNMksuY_=gyGSRsfr6e9AmzgJUNB=jEz85sjuiUw@mail.gmail.com>
-	<CAGZ=bqK7H3zc8LK7EP8+uV8DpWW+czK2POfceGtcBF8Vmkhkow@mail.gmail.com>
-	<CAE1pOi1J5DKtnyUQzu1K7G1+HLsWWCN7thCf6W8MwSzt4_vtOw@mail.gmail.com>
-	<CAGZ=bqLZoLoyMcvnppg6SyFtJU8phSquQeBZ7uhwP=+ZL3DADw@mail.gmail.com>
-	<CAE1pOi0Er1ZgftpNeCr85Zu27xR2127V_KdAtvKc1NOKmDUvzQ@mail.gmail.com>
-	<CAGZ=bqLyS9tcpqztwGWFOXtDJRhugu+JYvz7wTnc0PTmECWX2g@mail.gmail.com>
-	<CAE1pOi1axNmGaPVXqBH02x0N=Z6tgO9R00RTokuJm50eY-OoNg@mail.gmail.com>
-	<20110822210141.GA3880@elie.gateway.2wire.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] Add an update=none option for 'loose' submodules
+Date: Mon, 22 Aug 2011 15:42:55 -0700
+Message-ID: <7v62lpuky8.fsf@alter.siamese.dyndns.org>
+References: <cover.1312923673.git.hvoigt@hvoigt.net>
+ <7v8vqzreeo.fsf@alter.siamese.dyndns.org>
+ <20110811195955.GA21185@book.hvoigt.net>
+ <7vy5yujtr2.fsf@alter.siamese.dyndns.org> <20110822200052.GC11745@sandbox-rc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Kyle Moffett <kyle@moffetthome.net>,
-	Michael Witten <mfwitten@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Evan Shelhamer <shelhamer@imaginarynumber.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 23 00:33:12 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Tue Aug 23 00:43:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qvd3P-00087g-Fz
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 00:33:11 +0200
+	id 1QvdCy-0002rg-9V
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 00:43:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754100Ab1HVWdG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Aug 2011 18:33:06 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:59423 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754007Ab1HVWdE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Aug 2011 18:33:04 -0400
-Received: by gya6 with SMTP id 6so3924963gya.19
-        for <git@vger.kernel.org>; Mon, 22 Aug 2011 15:33:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=1jxRla5lQVOw9A4unYFzaR+OdBS6UTzHSURRs4M/ga0=;
-        b=DuDmtDNcQuROBm3BCOUPN0YUnzVvApfKTK1FIUtUNiDYnoHs+bDH1MtIJEKPwEvdIH
-         5k8d7gtg9eJMuDqMZ4ml0tqBN7YxDVdS8aH7jxxK3+MSt6gzc/jdpzftBvIMR06SND2B
-         NpRDyMk/WytGI+9+NUzqxqO0M45tNgjH4H9jM=
-Received: by 10.236.145.1 with SMTP id o1mr18754911yhj.119.1314052383569; Mon,
- 22 Aug 2011 15:33:03 -0700 (PDT)
-Received: by 10.236.207.67 with HTTP; Mon, 22 Aug 2011 15:33:03 -0700 (PDT)
-In-Reply-To: <20110822210141.GA3880@elie.gateway.2wire.net>
+	id S1754152Ab1HVWnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Aug 2011 18:43:00 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48915 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753957Ab1HVWm6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Aug 2011 18:42:58 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F1F1E4060;
+	Mon, 22 Aug 2011 18:42:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jFbXRrgAVI5d6MH1h2kap2AG0UE=; b=Bf93zL
+	T/z+g7KiT8iBJHqFeYhtpi7uOAV178Fy38D1IP5hGHiEgtxYiRo47/Tq/mRoWr0Q
+	i9l6JbYk8mDjH48nafiapMapEUiS6HEmbgF8wtvnmq8I/rky7HGQ4LbInJeN0dgo
+	UbAn9as0YqH6Ycqqz4c3ZtWWbIbDjMJ0qohQw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MbjRAGiaMZXKozyU0ubTKvJQLw0BkJQp
+	cuWgKya3AUhhRJGv7cEn7Gzb+N6VVmb1+nKxCF2tlYESTgVMSYy+bA9D0yI3VMZ8
+	2fg4OzJ8faNt0imG349gyjnoMnTgR9APy3Vvl/ev1oYXxlATCBWyZ51c6GmBC/Rt
+	Sqjp5nkGZUU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E8DD0405F;
+	Mon, 22 Aug 2011 18:42:57 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 77010405E; Mon, 22 Aug 2011
+ 18:42:57 -0400 (EDT)
+In-Reply-To: <20110822200052.GC11745@sandbox-rc> (Heiko Voigt's message of
+ "Mon, 22 Aug 2011 22:00:52 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 14E73A28-CD10-11E0-9706-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179899>
 
-On 22 August 2011 14:01, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Hilco Wijbenga wrote:
->> On 22 August 2011 12:31, Kyle Moffett <kyle@moffetthome.net> wrote:
->
->>> (1) The GIT data-structures simply have no place for file timestamp=
-s, and
->>> "git stash" is simply a special way of dumping files into a tempora=
-ry commit.
+Heiko Voigt <hvoigt@hvoigt.net> writes:
+
+> On Mon, Aug 15, 2011 at 01:37:53PM -0700, Junio C Hamano wrote:
+>> Heiko Voigt <hvoigt@hvoigt.net> writes:
+>> 
+>> > On Thu, Aug 11, 2011 at 11:28:31AM -0700, Junio C Hamano wrote:
+>> >> Heiko Voigt <hvoigt@hvoigt.net> writes:
+>> >> > We have been talking about loose submodules for some time:
+>> >> 
+>> >> Also before introducing a new terminology "loose submodule", please define
+>> ... 
+>> That sounds like a good thing to do.
+> 
+> I discovered that I only talked in the cover letter about the term
+> 'loose'. Since that will not go into any commit I guess we can keep the
+> series this way?
+
+Yes, except that I do not have a clear answer to my other half of the
+question in the same message you omitted from your quote.
+
+>> What I usually do is say "submodule init" without any extra option once.
+>> That will register all submodules from .gitmodules in the config. Now
+>> when I say "submodule update" all submodules would be cloned. In the
+>> case of recursive submodules actually
 >>
->> That's what I thought. The "intentionally" threw me off. It's not
->> intentional, it's just a side effect.
+>> 	git submodule update --init --recursive
+>>
+>> is the only command which can get you really everything in one go.
+>>
+>> Do you think the "submodule init" behavior is wrong? If so I think its a
+>> bit late to change this since people using submodules (me included)
+>> already have got used to it.
+>>
+>> With this config variable all submodules will still be registered to
+>> .git/config on "submodule init" but "submodule update" will skip those
+>> submodules.
 >
-> For what it's worth: no, it's intentional. =C2=A0See, for example:
+> Ok, that sort-of makes sense, but we have been using "do we have the
+> submodule registered in the .git/config of the superproject?" to decide
+> "does the user interested in having a checkout of the submodule?" (I think
+> in the ancient days it was "do we have .git in that submodule directory?"
+> that decided it, but we dropped that because it won't work when switching
+> branches that has and does not have the submodule in superproject).
 >
-> =C2=A0http://thread.gmane.org/gmane.comp.version-control.git/1564/foc=
-us=3D1680
-> =C2=A0https://git.wiki.kernel.org/index.php/GitFaq#Why_isn.27t_Git_pr=
-eserving_modification_time_on_files.3F
-
-After I had sent the above I realized it was worded a bit too strong.
-
-> That said, something being intentional does not necessarily mean it i=
-s
-> always _right_. =C2=A0So, for example, patches to allow a commit to s=
-tore
-> some timestamps, with documentation explaining when this is
-> appropriate, would probably be welcome. =C2=A0Maybe a good place to s=
-tore
-> such information would be a dotfile alongside the file (so old,
-> unaware git versions could extract the same information without fuss)=
-=2E
-
-You mean an extra dotfile per file in the commit?
-
-> Even if this feature were implemented just for "git stash", personall=
-y
-> I would turn it off so "make" could continue to behave as I expect it
-> to. =C2=A0But in principle, I don't mind the idea of it existing. :)
-
-Given that apparently the majority of Git users don't want/need this,
-it should probably be off by default. So you would not even need to
-turn it off. :-)
-
-In fact, I would not want it on by default either. It's really only
-useful when switching branches when I want to keep the exact state of
-the branch.
+> It is somewhat worrying that some parts of the system may still be using
+> that old criteria "do we have it in .git/config of the superproject?" to
+> decide if the user is interested in the submodule. If so they need to be
+> updated to take this new semantics "do we have it in .git/config without
+> its submodule.$name.update set to none" into account. We would probably
+> need to have a paragraph in the release notes to warn about the semantics
+> change (which I tend to agree with you that it is a good one).
