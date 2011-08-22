@@ -1,205 +1,129 @@
 From: Jason Gross <jgross@MIT.EDU>
-Subject: Re: [PATCH] git-svn: Destroy the cache when we fail to read it
-Date: Mon, 22 Aug 2011 00:04:09 -0400
-Message-ID: <CAKObCao5KwTptvJG_2F8SkM2hA=GrhC2HC0hFrDSDw3_PVb-PA@mail.gmail.com>
+Subject: [PATCH] Add tests for handling corrupted caches
+Date: Mon, 22 Aug 2011 00:10:10 -0400
+Message-ID: <1313986210-6536-1-git-send-email-jgross@mit.edu>
 References: <1313979422-21286-1-git-send-email-jgross@mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jason Gross <jgross@mit.edu>, Jonathan Nieder <jrnieder@gmail.com>
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Jason Gross <jgross@mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 22 06:04:48 2011
+X-From: git-owner@vger.kernel.org Mon Aug 22 06:11:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvLkl-0005gL-7G
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 06:04:47 +0200
+	id 1QvLql-0006vs-9y
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 06:10:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750806Ab1HVEEm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Aug 2011 00:04:42 -0400
-Received: from DMZ-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.36]:50293 "EHLO
-	dmz-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750733Ab1HVEEl convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Aug 2011 00:04:41 -0400
-X-AuditID: 12074424-b7bcaae000000a05-94-4e51d584921f
-Received: from mailhub-auth-1.mit.edu ( [18.9.21.35])
-	by dmz-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id B9.08.02565.485D15E4; Mon, 22 Aug 2011 00:05:24 -0400 (EDT)
+	id S1750863Ab1HVEKz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Aug 2011 00:10:55 -0400
+Received: from DMZ-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.35]:44565 "EHLO
+	dmz-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750806Ab1HVEKy (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Aug 2011 00:10:54 -0400
+X-AuditID: 12074423-b7b31ae000000a3c-65-4e51d6ceb3d3
+Received: from mailhub-auth-2.mit.edu ( [18.7.62.36])
+	by dmz-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 3F.67.02620.EC6D15E4; Mon, 22 Aug 2011 00:10:54 -0400 (EDT)
 Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-1.mit.edu (8.13.8/8.9.2) with ESMTP id p7M44eHY022730
-	for <git@vger.kernel.org>; Mon, 22 Aug 2011 00:04:40 -0400
-Received: from mail-iy0-f170.google.com (mail-iy0-f170.google.com [209.85.210.170])
+	by mailhub-auth-2.mit.edu (8.13.8/8.9.2) with ESMTP id p7M4Arap022842;
+	Mon, 22 Aug 2011 00:10:53 -0400
+Received: from localhost (DR-WILY.MIT.EDU [18.181.0.233])
 	(authenticated bits=0)
         (User authenticated as jgross@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id p7M44dw5002437
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Mon, 22 Aug 2011 00:04:40 -0400 (EDT)
-Received: by iye16 with SMTP id 16so9606261iye.1
-        for <git@vger.kernel.org>; Sun, 21 Aug 2011 21:04:39 -0700 (PDT)
-Received: by 10.43.133.201 with SMTP id hz9mr2219215icc.58.1313985879101; Sun,
- 21 Aug 2011 21:04:39 -0700 (PDT)
-Received: by 10.42.73.135 with HTTP; Sun, 21 Aug 2011 21:04:09 -0700 (PDT)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id p7M4AqWd003084;
+	Mon, 22 Aug 2011 00:10:52 -0400 (EDT)
+X-Mailer: git-send-email 1.7.6.558.g4b2f
 In-Reply-To: <1313979422-21286-1-git-send-email-jgross@mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprLKsWRmVeSWpSXmKPExsUixCmqrNtyNdDPoO2UoEXXlW4mB0aPz5vk
-	AhijuGxSUnMyy1KL9O0SuDJeXFUvOKFf8XDmEcYGxo+qXYycHBICJhJts84yQthiEhfurWfr
-	YuTiEBLYxygxt+UaE4RzilGib+d2VgjnCZPE1e8XWUFahASqJH7/XMkCYRdKPGvezgZi8woI
-	Spyc+QQq7iXR3X4XzOYUsJc48OIPI0TcTmL60U9MIDabgJLE7Y2LwOIsAqoSjS/bGCHmBEjc
-	vr2OGcQWFnCXmNuwHmyOiIC4xNvjM9lBbGYBN4k5O1YxQdg6Eu/6HjBD2NoSyxa+Zp7AKDwL
-	yUmzkJTNQlK2gJF5FaNsSm6Vbm5iZk5xarJucXJiXl5qka65Xm5miV5qSukmRlBos7uo7GBs
-	PqR0iFGAg1GJh/eBSaCfEGtiWXFl7iFGSQ4mJVHey5eBQnxJ+SmVGYnFGfFFpTmpxYcYJTiY
-	lUR4e1YC5XhTEiurUovyYVLSHCxK4rw2Ox38hATSE0tSs1NTC1KLYLIyHBxKErxdV4AaBYtS
-	01Mr0jJzShDSTBycIMN5gIZ/BFnMW1yQmFucmQ6RP8VoyXHs1YljjByT34HIZetPH2MUYsnL
-	z0uVEufNBRkqANKQUZoHNxOWql4xigO9KMzrCVLFA0xzcFNfAS1kAlo4YWUAyMKSRISUVANj
-	jMrZmJAr5VeVEk/E3KncrHpAWcX85qtZRfni60u8zj9/0Oimu7HhPuufsm2Wr7fGrN3ba6fw
-	6qlS8YzL+RrX7/8UYnyw9eVanmvhHtyprBxX9zXmrClt4d577Yhl2MKHR/Kv7dze 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrCIsWRmVeSWpSXmKPExsUixG6nonvuWqCfwZz5WhZdV7qZLP7saGGz
+	eHtzCaMDs8fOWXfZPT5vkgtgiuKySUnNySxLLdK3S+DKmPn5AmPBUf6KM1snMzYwbuTpYuTk
+	kBAwkdgw+QIThC0mceHeerYuRi4OIYF9jBLX266BJYQENjBK3NplCpH4yigxY/dKNpAEm4CS
+	xO2NixhBbBEBcYm3x2eyg9jMAm4Srz40gcWFBSwkzt3cwwxiswioSlxpbwKr4RWwlfi0fQI7
+	xGYNiYlz57CA2JwC9hIHXvxhhFhsJzH96CemCYx8CxgZVjHKpuRW6eYmZuYUpybrFicn5uWl
+	Fuma6eVmluilppRuYgQHjovyDsY/B5UOMQpwMCrx8D4wCfQTYk0sK67MPcQoycGkJMq7+SpQ
+	iC8pP6UyI7E4I76oNCe1+BCjBAezkghvz0qgHG9KYmVValE+TEqag0VJnFdmp4OfkEB6Yklq
+	dmpqQWoRTFaGg0NJgvcDyFDBotT01Iq0zJwShDQTByfIcB6g4TIgNbzFBYm5xZnpEPlTjIpS
+	4rz/QBICIImM0jy4Xlhkv2IUB3pFmPc1SBUPMCnAdb8CGswENHjCygCQwSWJCCmpBsYGru6t
+	XD91+hSrfjwTMngRav5LYOPdKzbCa7co14Y0nDj+ffnSll+8KXIXJn/8HHfCW0gw7KnUwmvH
+	H+95ppLv8E5s7f8YTp4JJdXPcte9uf7hwCzP00va52XLzDsctao890PXkbpTKjtnVb7g3rdS
+	qfjFtf+fL3xwYo5c+j7Xh1v3+67Fa7eaKrEUZyQaajEXFScCAMLB3+LHAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179840>
 
-Oops, the bug numbers I gave were debian=A0bug ids, not git bug ids.
-The "This fixes bug ..." sentence should either be removed from the
-commit message before this commit is merged, or the numbers should be
-replaced with the appropriate git bug numbers.
+There might be a more straightforward way to generate an svn repository
+with mergeinfo, but I'm not very familiar with svn.
 
--Jason
+Signed-off-by: Jason Gross <jgross@mit.edu>
+---
+ t/t9160-git-svn-caches.sh |   59 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 59 insertions(+), 0 deletions(-)
+ create mode 100755 t/t9160-git-svn-caches.sh
 
-On Sun, Aug 21, 2011 at 10:17 PM, Jason Gross <jgross@mit.edu> wrote:
->
-> Previously, we would fail fatally when trying to fetch changes with
-> mergeinfo on a 32 bit machine, when the repository previously had
-> fetched changes with mergeinfo on a 64 bit machine.
->
-> This fixes bug 618875 (which is also 587650, 635097). =A0Much of the =
-code
-> was written by Jonathan Nieder <jrnieder@gmail.com> with suggestions
-> from Steffen Mueller <smueller@cpan.org> (see
-> http://lists.debian.org/debian-perl/2011/05/msg00023.html and
-> http://lists.debian.org/debian-perl/2011/05/msg00026.html).
->
-> Signed-off-by: Jason Gross <jgross@mit.edu>
-> Cc: Jonathan Nieder <jrnieder@gmail.com>
-> ---
-> =A0git-svn.perl | =A0 59 +++++++++++++++++++++++++++++++++++---------=
--------------
-> =A01 files changed, 36 insertions(+), 23 deletions(-)
->
-> diff --git a/git-svn.perl b/git-svn.perl
-> index 89f83fd..78ccdc8 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -1680,7 +1680,7 @@ use vars qw/$default_repo_id $default_ref_id $_=
-no_metadata $_follow_parent
-> =A0 =A0 =A0 =A0 =A0 =A0 $_use_svnsync_props $no_reuse_existing $_mini=
-mize_url
-> =A0 =A0 =A0 =A0 =A0 =A0$_use_log_author $_add_author_from $_localtime=
-/;
-> =A0use Carp qw/croak/;
-> -use File::Path qw/mkpath/;
-> +use File::Path qw/mkpath rmtree/;
-> =A0use File::Copy qw/copy/;
-> =A0use IPC::Open3;
-> =A0use Memoize; =A0# core since 5.8.0, Jul 2002
-> @@ -3198,28 +3198,41 @@ sub has_no_changes {
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0$memoized =3D 1;
->
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0my $cache_path =3D "$ENV{GIT_DIR}/svn/=
-=2Ecaches/";
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 mkpath([$cache_path]) unless -d $cache_=
-path;
-> -
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 tie my %lookup_svn_merge_cache =3D> 'Me=
-moize::Storable',
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "$cache_path/lookup_svn_merge.d=
-b", 'nstore';
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 memoize 'lookup_svn_merge',
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 SCALAR_CACHE =3D> 'FAUL=
-T',
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 LIST_CACHE =3D> ['HASH'=
- =3D> \%lookup_svn_merge_cache],
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 ;
-> -
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 tie my %check_cherry_pick_cache =3D> 'M=
-emoize::Storable',
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "$cache_path/check_cherry_pick.=
-db", 'nstore';
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 memoize 'check_cherry_pick',
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 SCALAR_CACHE =3D> 'FAUL=
-T',
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 LIST_CACHE =3D> ['HASH'=
- =3D> \%check_cherry_pick_cache],
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 ;
-> -
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 tie my %has_no_changes_cache =3D> 'Memo=
-ize::Storable',
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "$cache_path/has_no_changes.db"=
-, 'nstore';
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 memoize 'has_no_changes',
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 SCALAR_CACHE =3D> ['HAS=
-H' =3D> \%has_no_changes_cache],
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 LIST_CACHE =3D> 'FAULT'=
-,
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 ;
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 my $do_memoization =3D sub {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 mkpath([$cache_path]) u=
-nless -d $cache_path;
-> +
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 tie my %lookup_svn_merg=
-e_cache =3D> 'Memoize::Storable',
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "$cache_path/lo=
-okup_svn_merge.db", 'nstore';
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 memoize 'lookup_svn_mer=
-ge',
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 SCALAR_=
-CACHE =3D> 'FAULT',
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 LIST_CA=
-CHE =3D> ['HASH' =3D> \%lookup_svn_merge_cache],
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ;
-> +
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 tie my %check_cherry_pi=
-ck_cache =3D> 'Memoize::Storable',
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "$cache_path/ch=
-eck_cherry_pick.db", 'nstore';
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 memoize 'check_cherry_p=
-ick',
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 SCALAR_=
-CACHE =3D> 'FAULT',
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 LIST_CA=
-CHE =3D> ['HASH' =3D> \%check_cherry_pick_cache],
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ;
-> +
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 tie my %has_no_changes_=
-cache =3D> 'Memoize::Storable',
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "$cache_path/ha=
-s_no_changes.db", 'nstore';
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 memoize 'has_no_changes=
-',
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 SCALAR_=
-CACHE =3D> ['HASH' =3D> \%has_no_changes_cache],
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 LIST_CA=
-CHE =3D> 'FAULT',
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ;
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 };
-> +
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (not eval {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 $do_memoization->();
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 1;
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 }) {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 my $err =3D $@ || "Zomb=
-ie error"; # "Zombie error" to catch clobbered $@ in buggy destructors
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 die $err unless -d $cac=
-he_path;
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 print STDERR "Discardin=
-g cache and trying again ($@)\n";
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 rmtree([$cache_path]);
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 $do_memoization->();
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
-> =A0 =A0 =A0 =A0}
->
-> =A0 =A0 =A0 =A0sub unmemoize_svn_mergeinfo_functions {
-> --
-> 1.7.2.3
->
+diff --git a/t/t9160-git-svn-caches.sh b/t/t9160-git-svn-caches.sh
+new file mode 100755
+index 0000000..bba437a
+--- /dev/null
++++ b/t/t9160-git-svn-caches.sh
+@@ -0,0 +1,59 @@
++#!/bin/sh
++
++test_description='git svn handling of .git/svn/.caches'
++
++. ./lib-git-svn.sh
++
++say 'define NO_SVN_TESTS to skip git svn tests'
++
++test_expect_success 'initialize source svn repo' '
++	svn_cmd mkdir -m x "$svnrepo"/trunk "$svnrepo"/branches &&
++	svn_cmd co "$svnrepo" "$SVN_TREE"
++'
++
++test_expect_success 'make a change that gives mergeinfo' '
++	(
++		cd "$SVN_TREE" &&
++		touch trunk/foo &&
++		svn_cmd add trunk/foo &&
++		svn_cmd commit -m "foo" &&
++		svn_cmd up &&
++		svn_cmd cp trunk branches/1
++		svn_cmd commit -m "make branch" &&
++		svn_cmd up &&
++		touch branches/1/bar &&
++		svn_cmd add branches/1/bar &&
++		svn_cmd commit -m bar &&
++		svn_cmd up &&
++		cd trunk &&
++		svn_cmd merge ../branches/1 &&
++		svn_cmd commit -m merge &&
++		svn_cmd up
++	)
++'
++
++test_expect_success 'clone svn repo and corrupt .caches' '
++	git svn init "$svnrepo" -T trunk -b branches &&
++	git svn fetch &&
++	echo corrupted > .git/svn/.caches/lookup_svn_merge.db
++'
++
++test_expect_success 'make another change that generates mergeinfo' '
++	(
++		cd "$SVN_TREE" &&
++		touch branches/1/baz &&
++		svn_cmd commit -m baz &&
++		svn_cmd up &&
++		cd trunk &&
++		svn_cmd merge ../branches/1 &&
++		svn_cmd commit -m merge2 &&
++		svn_cmd up
++	) &&
++	rm -rf "$SVN_TREE"
++'
++
++test_expect_success 'fetch change with mergeinfo with a corrupted cache' '
++	git svn fetch
++'
++
++test_done
+-- 
+1.7.6.558.g4b2f
