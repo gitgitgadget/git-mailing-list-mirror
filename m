@@ -1,168 +1,115 @@
 From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Subject: Re: Branches & directories
-Date: Mon, 22 Aug 2011 13:10:18 -0700
-Message-ID: <CAE1pOi1axNmGaPVXqBH02x0N=Z6tgO9R00RTokuJm50eY-OoNg@mail.gmail.com>
-References: <CAE1pOi3Eg88i+1s+CcW3+W0WNZ-NYUQb1EV55oh+g1Od78AByQ@mail.gmail.com>
-	<CABNdCrCbSqup1=D2eEbGDhw3JzZGYHWLVqZFsB6GDO4Vk7HRxg@mail.gmail.com>
-	<7vvctvdf5r.fsf@alter.siamese.dyndns.org>
-	<CAE1pOi3rqqcz_6QxB8=g2jWOF-4SRZee7t8NXN1md2C4DL7wug@mail.gmail.com>
-	<CAMOZ1BsZvXsnnWAPXR7UGKdqOMwuGB-ffaAPk55U_1dcjZUcDw@mail.gmail.com>
-	<CAE1pOi2r9DT3Y-GxivTZRaNVi=qLOy5=QpQ-_YysOkgqy3iGRQ@mail.gmail.com>
-	<CAMOZ1BvpnP_729YOHrrPW3B8wa5c4cLyD_qAQ5rTuy0JqNiiXg@mail.gmail.com>
-	<CAE1pOi3OEFg7-OeQM0fvD69gf-5oPQ239CGy9nN0Waas8EM3Bg@mail.gmail.com>
-	<CAMOZ1BvHKTPPmfB7Jx+y4OeRv-uwjmQkscXaRr-vEEy30G_Kdw@mail.gmail.com>
-	<CAE1pOi0b2w8t53U7PSvVwVxZF9O0HTyfCR4vy+-baBjqCDeNJA@mail.gmail.com>
-	<CAMOZ1BtOkwVbC3RyJVQb7K1DRMnJf3_omn7zrkzoE48Ayu7HBg@mail.gmail.com>
-	<CAE1pOi0jZT_HCEV8UDzEOQeuCcDeqxoKGUEk3bJm=O2eJSHfkg@mail.gmail.com>
-	<CAMOZ1Bu5pPeviyZD-e6aHbv-+tSaBDyyKb5vHA132K_3=1gD-g@mail.gmail.com>
-	<CAE1pOi0dL2qNMksuY_=gyGSRsfr6e9AmzgJUNB=jEz85sjuiUw@mail.gmail.com>
-	<CAGZ=bqK7H3zc8LK7EP8+uV8DpWW+czK2POfceGtcBF8Vmkhkow@mail.gmail.com>
-	<CAE1pOi1J5DKtnyUQzu1K7G1+HLsWWCN7thCf6W8MwSzt4_vtOw@mail.gmail.com>
-	<CAGZ=bqLZoLoyMcvnppg6SyFtJU8phSquQeBZ7uhwP=+ZL3DADw@mail.gmail.com>
-	<CAE1pOi0Er1ZgftpNeCr85Zu27xR2127V_KdAtvKc1NOKmDUvzQ@mail.gmail.com>
-	<CAGZ=bqLyS9tcpqztwGWFOXtDJRhugu+JYvz7wTnc0PTmECWX2g@mail.gmail.com>
+Subject: Re: [Git 1.7.6.557.gcee4] git stash
+Date: Mon, 22 Aug 2011 13:15:33 -0700
+Message-ID: <CAE1pOi1Et9e1g8cKUPZBykV-Y2-4UMRuxHvcDjRjEg7WxF=i1A@mail.gmail.com>
+References: <CAE1pOi1D+J5_fmsdhho1FRAipyO3Ri7GS_wy4fTNtCGbatDaDg@mail.gmail.com>
+	<AkGXRtqs8Fopo0L4Aw4Wa2DwgVP6ZLr_un-c4jhUixdk1LTUHK2twg@cipher.nrlssc.navy.mil>
+	<CAE1pOi2OnHpu+kBj8Z47nb7C-MHFpUMAc8ArG3haWpncEDQ-jA@mail.gmail.com>
+	<fbFntd6r8tmN4NcET9Ya3OWDfsrxz1tfPv7GaddGfwwdirG8AgjrG8ARoR2-ZhadzpRI2DU2ZtTGdWAUGJeUZuBXmxWX5eSmT16u5cBjtec@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Witten <mfwitten@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Evan Shelhamer <shelhamer@imaginarynumber.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Kyle Moffett <kyle@moffetthome.net>
-X-From: git-owner@vger.kernel.org Mon Aug 22 22:10:48 2011
+Cc: David Caldwell <david@porkrind.org>,
+	Git Users <git@vger.kernel.org>
+To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Mon Aug 22 22:15:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qvapa-0005do-B0
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 22:10:46 +0200
+	id 1QvauJ-0007r5-VA
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 22:15:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753490Ab1HVUKl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Aug 2011 16:10:41 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:52689 "EHLO
+	id S1753730Ab1HVUPf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Aug 2011 16:15:35 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:42828 "EHLO
 	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752588Ab1HVUKk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Aug 2011 16:10:40 -0400
-Received: by ywf7 with SMTP id 7so3781481ywf.19
-        for <git@vger.kernel.org>; Mon, 22 Aug 2011 13:10:40 -0700 (PDT)
+	with ESMTP id S1753568Ab1HVUPe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Aug 2011 16:15:34 -0400
+Received: by ywf7 with SMTP id 7so3784529ywf.19
+        for <git@vger.kernel.org>; Mon, 22 Aug 2011 13:15:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        bh=kN+73cmtOGiZQF2d5GFZRkHQmROe+CW/FCJST6DIUVQ=;
-        b=kxgXOnqbh2pNi/CI0jcWN/TBN4Bieu+bifcKNKCl29Jth0dCzwAVtXUzsvXlEy0PQM
-         1lwfu+GVHdezqqe4uzdO0604oRJ2Wsy4NWSlh/lvMps7ASJLq/J5OkMKLLpB3h0btKwx
-         XJXtmBgd7Tsikkm1mXGygYm5gNh1QrENq80TY=
-Received: by 10.236.181.135 with SMTP id l7mr17540976yhm.85.1314043818646;
- Mon, 22 Aug 2011 13:10:18 -0700 (PDT)
-Received: by 10.236.207.67 with HTTP; Mon, 22 Aug 2011 13:10:18 -0700 (PDT)
-In-Reply-To: <CAGZ=bqLyS9tcpqztwGWFOXtDJRhugu+JYvz7wTnc0PTmECWX2g@mail.gmail.com>
+        bh=AGOKiPxexa9R/RmX7Q49TMBnaTrwudTW8vQzbEAhQrs=;
+        b=vDH4V815wbZmNqWs8TVLV60z6BGPg73gBiFBSEfnsvLeME+oLoxKI6PyaAqcPv8e5v
+         wMsBf3Ow4MhQwB8hPpUoMmlcUcrX1pFCugUqBj6pEiGgxPwygZkHXEWtutuwxX/LWXCr
+         LJADH/evziVmkOeLJVjWqmFSkX3g6uxXMDokI=
+Received: by 10.236.136.167 with SMTP id w27mr17372340yhi.102.1314044133566;
+ Mon, 22 Aug 2011 13:15:33 -0700 (PDT)
+Received: by 10.236.207.67 with HTTP; Mon, 22 Aug 2011 13:15:33 -0700 (PDT)
+In-Reply-To: <fbFntd6r8tmN4NcET9Ya3OWDfsrxz1tfPv7GaddGfwwdirG8AgjrG8ARoR2-ZhadzpRI2DU2ZtTGdWAUGJeUZuBXmxWX5eSmT16u5cBjtec@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179887>
 
-On 22 August 2011 12:31, Kyle Moffett <kyle@moffetthome.net> wrote:
-> On Mon, Aug 22, 2011 at 14:49, Hilco Wijbenga <hilco.wijbenga@gmail.c=
-om> wrote:
->> On 22 August 2011 05:46, Kyle Moffett <kyle@moffetthome.net> wrote:
->>> On Mon, Aug 22, 2011 at 01:36, Hilco Wijbenga <hilco.wijbenga@gmail=
-=2Ecom> wrote:
->>>> On 21 August 2011 20:01, Kyle Moffett <kyle@moffetthome.net> wrote=
-:
->>>>> Obviously the easiest way to work around that issue is "git clean=
-",
->>>>> which has options to select all untracked files or just ignored o=
-nes.
+On 22 August 2011 12:58, Brandon Casey
+<brandon.casey.ctr@nrlssc.navy.mil> wrote:
+> On 08/22/2011 01:43 PM, Hilco Wijbenga wrote:
+>> On 22 August 2011 10:15, Brandon Casey
+>> <brandon.casey.ctr@nrlssc.navy.mil> wrote:
+>>> On 08/22/2011 01:01 AM, Hilco Wijbenga wrote:
+>>>> Hi David,
 >>>>
->>>> As I mentioned above, I don't want to *delete* untracked/ignored
->>>> files, I just want them to stick to the branch I was working on. S=
-o if
->>>> I change to a different branch I get the appropriate build artifac=
-ts.
->>>>
->>>> Something like: git stash --everything "All artifacts for
->>>> this-branch." && git checkout other-branch && git stash apply
->>>> stash-for-other-branch.
+>>>> I noticed your very timely change to git stash in the current mast=
+er
+>>>> branch. I tried it but it doesn't behave as I was expecting/hoping=
+=2E
 >>>
->>> When I am in those sorts of situations I generally just use separat=
-e
->>> working directories or separate checkouts entirely; if you really p=
-refer
->>> to have everything in one directory you would be better served by
->>> integrating "ccache" into your workflow.
+>>> It looks like it is actually creating the stash correctly, but it's
+>>> just not deleting the ignored directory.
+>
+>>> Something like this is probably the appropriate fix:
+>>>
+>>> diff --git a/git-stash.sh b/git-stash.sh
+>>> index f4e6f05..a2d4b4d 100755
+>>> --- a/git-stash.sh
+>>> +++ b/git-stash.sh
+>>> @@ -240,7 +240,7 @@ save_stash () {
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0test "$untra=
+cked" =3D "all" && CLEAN_X_OPTION=3D-x || CLEAN_X_OPTION
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if test -n "=
+$untracked"
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0then
+>>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 git clean --force --quiet $CLEAN_X_OPTION
+>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 git clean --force --quiet -d $CLEAN_X_OPTION
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0fi
+>>>
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if test "$ke=
+ep_index" =3D "t" && test -n $i_tree
+>>>
+>>> Needs tests.
 >>
->> Unfortunately, that seems for C/C++ code only. I use Java. Besides,
->> it's not the Java compilation that takes most of the time.
+>> I just tried it with the extra -d and it all seems to work
+>> beautifully. Should your patch be sent anywhere?
 >
-> Hm, that sounds like a very serious Eclipse limitation with almost al=
-l forms
-> of source control. =C2=A0What is done with other VCSes (IE: Subversio=
-n, etc)?
-
-It has nothing to do with Eclipse. There is just a lot going on in the =
-build.
-
-> From this I believe the best option is to just make use of multiple s=
-eparate
-> checkouts or worktrees.
-
-Sounds like it.
-
->>> In particular, even "git stash" intentionally does not preserve fil=
-e times,
->>> so you would end up rebuilding everything anyways because all of yo=
-ur
->>> source files would be as new as your object files.
->>
->> Yes, I just noticed that. Why do you say "intentionally"? Is extra
->> work being done to make it so? If yes, then shouldn't that be
->> configurable?
+> It needs a couple of tests added to t/t3905-stash-include-untracked.s=
+h
+> to demonstrate that this functionality works correctly and to ensure
+> that it doesn't break in the future.
 >
-> Well, there's 2 reasons:
+> Need tests at least for:
 >
-> (1) The GIT data-structures simply have no place for file timestamps,=
- and
-> "git stash" is simply a special way of dumping files into a temporary=
- commit.
-
-That's what I thought. The "intentionally" threw me off. It's not
-intentional, it's just a side effect.
-
-> This is exactly the same as the
-
-There seems to be some text missing here?
-
-> (2) You almost always *don't* want to preserve timestamps. =C2=A0For =
-example:
+> =C2=A0 --all stashes untracked / ignored in subdirectory
+> =C2=A0 --include-untracked stashes untracked in subdirectory, leaves =
+ignored alone
 >
-> $ git checkout -b my-feature origin/master
-> $ vim some-file.c
-> $ make
-> $ git add some-file.c && git commit -m "A new feature"
-> $ git checkout -b my-bugfix origin/master
-> $ vim other-file.c
-> $ make
+> Do we currently test that stash leaves untracked / ignored alone when
+> --all or --include-untracked are not supplied?
 >
-> If GIT preserved timestamps, the second "make" would fail to rebuild =
-the
-> product "some-file.o" because "some-file.c" is still older than it, e=
-ven
-> though "some-file.c" has changed since the last build!!!
->
-> Really, GIT is only intended for storing source code. =C2=A0If you wa=
-nt to store
-> other kinds of things (like timestamps, permissions, etc), then you n=
-eed to
-> turn them into source code (IE: a text file and a "make install" targ=
-et) and
-> then store them that way.
+> And it needs a commit message following the guidelines in
+> Documentation/SubmittingPatches. =C2=A0Then it can be submitted to th=
+is list
+> using format-patch and send-email. =C2=A0Interested??? :) =C2=A0other=
+wise I'll try
+> to get to it later tonight.
 
-Yep, that all makes sense. I just wish there was at least an option to
-keep the timestamp (and possibly other such things). Even Subversion
-can do that... ;-) After all, not everybody uses C & make.
-
-Cheers,
-Hilco
+Interested? Sure. Do I have the time? Unfortunately not. I'm
+overworked as it is. :-( Well, maybe in the weekend. But this would be
+a major operation for me because it's all new.
