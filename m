@@ -1,112 +1,83 @@
-From: =?UTF-8?Q?Marcin_Wi=C5=9Bnicki?= <mwisnicki@gmail.com>
-Subject: Re: Merge after directory rename ?
-Date: Mon, 22 Aug 2011 10:49:18 +0200
-Message-ID: <CAC9GOO8w_zZ8wuRambnGoaS+rKskdjuSZVpF+b4mzdhzK48bjg@mail.gmail.com>
-References: <j2ru2h$cd$1@dough.gmane.org>
-	<CAMOZ1BukGPZt8gJh0J4EHRrPHv5teAdnkNT+gZJa9mX=2ohFOw@mail.gmail.com>
-	<CAMOZ1Bt8cP146xiDXfSA-naSOaS3AC8pUZgW12=3TMg2JGCD=w@mail.gmail.com>
-	<j2s83l$eqg$1@dough.gmane.org>
-	<CAMOZ1Bsb7UxYOFpRWh47+130upfD9_E=CMQtZd1NyUWPwWiW4A@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git svn --stdlayout 's little quirk.
+Date: Mon, 22 Aug 2011 11:01:07 +0200
+Message-ID: <4E521AD3.4040204@drmicha.warpmail.net>
+References: <20110820183504.GA32179@dcvr.yhbt.net> <1313919482.36626.YahooMailClassic@web29501.mail.ird.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 22 10:49:35 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Eric Wong <normalperson@yhbt.net>, madduck@madduck.net,
+	git@vger.kernel.org
+To: htl10@users.sourceforge.net
+X-From: git-owner@vger.kernel.org Mon Aug 22 11:01:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvQCM-00068U-Ui
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 10:49:35 +0200
+	id 1QvQNk-0002cV-Af
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 11:01:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753717Ab1HVItV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Aug 2011 04:49:21 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:61334 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752722Ab1HVItU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Aug 2011 04:49:20 -0400
-Received: by qwk3 with SMTP id 3so2854076qwk.19
-        for <git@vger.kernel.org>; Mon, 22 Aug 2011 01:49:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=KL41RmVrmdcmjBcKoRy1q+NDB2A4yv7nN1/WdG6G+44=;
-        b=dE6hgm/F/CfhhaQONPb3vUxuZ7M5F4OgAqqoeOGMDFQonfRCPgcqtHawQ73dODhYEr
-         XoepMLWbdmIYpRXmYTGjo3cMnjmSLE/mtU3IVThLnDpqi1s9Vqxe1/zo8MzsZBdytheW
-         41HtZb511AM/rA/PCcPxYB2P+mkwLb2LZ4ggw=
-Received: by 10.229.61.104 with SMTP id s40mr1125107qch.299.1314002959246;
- Mon, 22 Aug 2011 01:49:19 -0700 (PDT)
-Received: by 10.229.246.202 with HTTP; Mon, 22 Aug 2011 01:49:18 -0700 (PDT)
-In-Reply-To: <CAMOZ1Bsb7UxYOFpRWh47+130upfD9_E=CMQtZd1NyUWPwWiW4A@mail.gmail.com>
+	id S1754643Ab1HVJBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Aug 2011 05:01:12 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:50155 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752941Ab1HVJBK (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Aug 2011 05:01:10 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 7C35C209C5;
+	Mon, 22 Aug 2011 05:01:09 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Mon, 22 Aug 2011 05:01:09 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=zc+pMlTu9psLgONeUw+Qce
+	DRojk=; b=hPI85+H5gjTcRh7gYYSq+tl3T7reaq60Djh+td0bOdN48tD6XG6RdG
+	jdZfa0ThXh8g2Lj+dEbQtcXx29Ad5+fL8TT8FsJ4gLTOGdX+vKZ5Io9MfjnErbMO
+	nauU/Xl2S/URdmPci01JjrhX6JqvX0Q4ZLdasJLnBg4c2qwkuOdIg=
+X-Sasl-enc: uvb2Dv2XVRLmWMbfB9sL8V6fINVOlQSdUu/sUavUxClj 1314003669
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id AE2649E0335;
+	Mon, 22 Aug 2011 05:01:08 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
+In-Reply-To: <1313919482.36626.YahooMailClassic@web29501.mail.ird.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179851>
 
-2011/8/22 Michael Witten <mfwitten@gmail.com>:
-> I assume the smiley is tongue-in-cheek; however, in case it is not: It
-> can't be automatic in general; did my examples mean nothing?
->
->> Or at least detect/warn about tree conflict.
->
-> Did my examples mean nothing?
+Hin-Tak Leung venit, vidit, dixit 21.08.2011 11:38:
+> --- On Sat, 20/8/11, Eric Wong <normalperson@yhbt.net> wrote:
+> 
+>>> I think I found a small bug in git 1.7.6. Having
+>> "trunk" at the end of
+>>> the url in combination of --stdlayout is wrong, but it
+>> looks like that
+>>> git-svn tries to cope, but doesn't go try far enough:
+>>>
+>>> Doing this:
+>>> ----------------
+>>> git svn clone --stdlayout http://quick-settings.googlecode.com/svn/trunk/
+>> android-quick-settings
+>>
+>> --stdlayout expects the "root" path of the code you're
+>> interested
+>> in (not necessarily the SVN repository root, but in this
+>> case they
+>> could be the same).
+>>
+>> Try the following instead:
+>>
+>> git svn clone --stdlayout \
+>>   http://quick-settings.googlecode.com/svn
+>> android-quick-settings
+> 
+> I know this is the correct way - what I meant was that, having "trunk" at the end is wrong but git-svn appears to try to correct it automatically, but haven't quite succceeded.
 
-Well kind of. Your example was different because you have created dir1
-independently on branch1 and master in which case automatic rename
-wouldn't be expected. If you would've created dir1 before branching
-and renamed dir1 to dir3 (renamed all files under dir1) then I would
-expect a rename while merging.
+It is not trying to do that at all. git-svn is trying to figure out what
+the "base path" is in an svn repo which possibly hosts multiple repos,
+and that is what the message reports.
 
-The exact behaviour of merging branch1 to master I want is:
-
-let base = $(git merge-base master branch1)
-for each {modified,added,deleted} file in $base..branch1:
-  let dir = $(dirname $file)
-  if $dir exists in master:
-    if $dir existed in $base: [1]
-      proceed
-    else: # both branches independently introduced same directory
-      tree conflict
-  else: # no $dir in master
-    if $dir existed in $base:
-      if all $dir/* files in $base..master were renamed to $newdir/*:
-        rename $file [s/$dir/$newdir/]
-      else: # $dir was removed
-        tree conflict
-    else:
-       proceed # simple addition
-
-Where "$dir exists" means that a file with path of matching prefix exists.
-By default tree conflict should be ignored (proceed with merge as
-today) but user should be able to make it fatal.
-
-[1] It would be better if instead of comparing two trees it would
-analyze each commit independently to detect shadowed renames:
-(dir1=>dir2 then new dir1) => still rename.
-
->
->> Directory renames can happen quite frequently when working with Java/C#
->> and it is unreasonable to expect that lazy user will have to keep track of
->> it manually (with huge number of files it's impossible).
->
-> Git doesn't know anything about Java/C#; that's the point.
-
-And it shouldn't. Renames can happen with anything, I'm just pointing
-out that they are quite frequent in Java/C#.
-You might as well have a C project and rename directory "src" to
-"sources" and, when merging branch created from before that, expect to
-get automatic s/src/sources/.
-
-> In general, the user could make use of switches (as suggested). In
-> particular, perhaps there are merge hooks or merge drivers that could
-> be used or implemented for allowing a more environment-specific
-> handling of merges, a la GNU's ChangeLog merge driver:
-> Also, see the configuration section of `git help merge'. Also look at
-> the tool `git mergetool'.
->
-
-Merge drivers are file type specific, mergetool is used to resolve
-conflicts after merge and I don't see a pre-merge hook :(
+Michael
