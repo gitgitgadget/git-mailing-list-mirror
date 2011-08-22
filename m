@@ -1,136 +1,202 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Behaviour of git apply --directory
-Date: Mon, 22 Aug 2011 11:28:08 -0700
-Message-ID: <7vfwktwbbb.fsf@alter.siamese.dyndns.org>
-References: <E21BC0F8-2DF0-44AB-B18A-013451CDB670@sentex.net>
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: Re: [Git 1.7.6.557.gcee4] git stash
+Date: Mon, 22 Aug 2011 11:43:25 -0700
+Message-ID: <CAE1pOi2OnHpu+kBj8Z47nb7C-MHFpUMAc8ArG3haWpncEDQ-jA@mail.gmail.com>
+References: <CAE1pOi1D+J5_fmsdhho1FRAipyO3Ri7GS_wy4fTNtCGbatDaDg@mail.gmail.com>
+	<euT1_KmfLWaxwFqOd8u_Zv-flc6Wr9rvg1tf_39P-YMaH8T-tpKl94WG8yCIAmW0AMLjdqnjA3I2uGRQf9YpY513-Io-lue5aNPuVDv8Qp8@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andrew Berry <andrewberry@sentex.net>
-X-From: git-owner@vger.kernel.org Mon Aug 22 20:28:17 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Caldwell <david@porkrind.org>,
+	Git Users <git@vger.kernel.org>
+To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Mon Aug 22 20:43:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvZEO-0005rJ-Oz
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 20:28:17 +0200
+	id 1QvZTA-00042l-B0
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 20:43:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752463Ab1HVS2M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Aug 2011 14:28:12 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46696 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752118Ab1HVS2K (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Aug 2011 14:28:10 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 57D71405E;
-	Mon, 22 Aug 2011 14:28:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=twERX9Yl9wIfz7XtMynAytepi+g=; b=iNlcOR
-	1lrRFdeMFDP1VpfNIPwyGSG643wbXf0WyEr33JTQUpJBc9O2NuOM9V/0rqZm0EeO
-	1hWHaVkRF2Q8EQpaaJHaiWoa9WL2n0jszMTdtKxGrbDIgmtjNhrmLoU94jjzixVI
-	DLhGWsh53MzBWFGxT0k+YO/mVvGvzotkmpoaI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yHZNTtUmi+iHTTjCVeD/TP2EDayByUhk
-	xK1ZZWrQYLTa9N+zUSQJpPo4xP4tOvwcSUX5sMLD2bu/ptvKfnLGM19OmMtlBfjx
-	wwdRbBTYrAdz8ViJdacmqd63x/oF8z3v1G9uXYVHnSmODghyYMciOxeP27C8ZV/y
-	+mR2z7ZBhdE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E58B405D;
-	Mon, 22 Aug 2011 14:28:10 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B92AA405C; Mon, 22 Aug 2011
- 14:28:09 -0400 (EDT)
-In-Reply-To: <E21BC0F8-2DF0-44AB-B18A-013451CDB670@sentex.net> (Andrew
- Berry's message of "Mon, 22 Aug 2011 11:21:55 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7CB4CD42-CCEC-11E0-B63D-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752899Ab1HVSn1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Aug 2011 14:43:27 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:61042 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752655Ab1HVSn0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Aug 2011 14:43:26 -0400
+Received: by gya6 with SMTP id 6so3783604gya.19
+        for <git@vger.kernel.org>; Mon, 22 Aug 2011 11:43:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=MZ+w5KJOfZJ+BHn4bt9W8sTROANnXmep54Yf3EdaMMM=;
+        b=AcWgpA/ppTaP4JiwkYL08+NxWCQhX88JxtIMBJhOMhZ1XpyBIvQ9vpkhV2Tx7HarIM
+         oDY5hQCdbw2ra8DnIUtmUGeUki6mrdh9D9pA37hLFaVW+4s0cJCrIU41GJ20QaS2F3QS
+         LOx/853nE2MbOrTLZlLPhT669PQUWo5noz4TU=
+Received: by 10.236.9.36 with SMTP id 24mr17009253yhs.17.1314038605062; Mon,
+ 22 Aug 2011 11:43:25 -0700 (PDT)
+Received: by 10.236.207.67 with HTTP; Mon, 22 Aug 2011 11:43:25 -0700 (PDT)
+In-Reply-To: <euT1_KmfLWaxwFqOd8u_Zv-flc6Wr9rvg1tf_39P-YMaH8T-tpKl94WG8yCIAmW0AMLjdqnjA3I2uGRQf9YpY513-Io-lue5aNPuVDv8Qp8@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179878>
 
-Andrew Berry <andrewberry@sentex.net> writes:
+On 22 August 2011 10:15, Brandon Casey
+<brandon.casey.ctr@nrlssc.navy.mil> wrote:
+> On 08/22/2011 01:01 AM, Hilco Wijbenga wrote:
+>> Hi David,
+>>
+>> I noticed your very timely change to git stash in the current master
+>> branch. I tried it but it doesn't behave as I was expecting/hoping.
+>
+> It looks like it is actually creating the stash correctly, but it's
+> just not deleting the ignored directory.
+>
+> But, there is a small problem with your command sequence...
+>
+>> hilco@centaur ~/tmp/repo repo$ git --version
+>> git version 1.7.6.557.gcee4
+>> hilco@centaur ~/tmp/repo repo$ git init
+>> Initialized empty Git repository in /home/hilco/tmp/repo/.git/
+>> hilco@centaur ~/tmp/repo repo (master #)$ cat >>.gitignore <<- EOF
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 *.ignore
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 ignore-dir/
+>>> EOF
+>> hilco@centaur ~/tmp/repo repo (master #%)$ mkdir src
+>> hilco@centaur ~/tmp/repo repo (master #%)$ touch file.txt src/code.t=
+xt
+>> hilco@centaur ~/tmp/repo repo (master #%)$ git add -A .
+>> hilco@centaur ~/tmp/repo repo (master #)$ git commit -m '1'
+>> [master (root-commit) 0fb4106] 1
+>> =C2=A01 files changed, 2 insertions(+), 0 deletions(-)
+>> =C2=A0create mode 100644 .gitignore
+>> =C2=A0create mode 100644 file.txt
+>> =C2=A0create mode 100644 src/code.txt
+>> hilco@centaur ~/tmp/repo repo (master)$ touch file-a.ignore src/file=
+-b.ignore
+>> hilco@centaur ~/tmp/repo repo (master %)$ echo "hello">src/code.txt
+>> hilco@centaur ~/tmp/repo repo (master *%)$ mkdir ignore-dir
+>> hilco@centaur ~/tmp/repo repo (master *%)$ touch
+>> ignore-dir/{file.ignore,file.txt}
+>> hilco@centaur ~/tmp/repo repo (master *%)$ git status
+>> # On branch master
+>> # Changes not staged for commit:
+>> # =C2=A0 (use "git add <file>..." to update what will be committed)
+>> # =C2=A0 (use "git checkout -- <file>..." to discard changes in work=
+ing directory)
+>> #
+>> # =C2=A0 =C2=A0 =C2=A0 modified: =C2=A0 src/code.txt
+>> #
+>> # Untracked files:
+>> # =C2=A0 (use "git add <file>..." to include in what will be committ=
+ed)
+>> #
+>> # =C2=A0 =C2=A0 =C2=A0 file-a.ignore
+>> # =C2=A0 =C2=A0 =C2=A0 ignore-dir/
+>> # =C2=A0 =C2=A0 =C2=A0 src/file-b.ignore
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^^^^^^^^^^^^^^^^^
+> Why are these entries here?
 
-> The behaviour of git apply --directory seems a little confusing. It
-> looks to be dependent on the current directory, but I can't use relative
-> paths to apply a patch in one directory to a sibling directory. Absolute
-> paths don't work either. I'd expected the parameter to either be
-> relative to the git repository root, or to expand relative directories.
+My bad. I had a script that ran the commands but I decided to try run
+them on the CL so I copy-pasted them. That changed the tabs to spaces
+and ruined .gitignore.
 
-I do not think that parameter does not have anything to do with your
-cwd. As the documentation says:
+>> no changes added to commit (use "git add" and/or "git commit -a")
+>
+> if your .gitignore file looks like this:
+>
+> =C2=A0 $ cat .gitignore
+> =C2=A0 *.ignore
+> =C2=A0 ignore-dir/
+>
+> then why are those items showing up under "Untracked files:" in the c=
+all
+> to git status above? =C2=A0/methinks something is wrong with your .gi=
+tignore
+> file. =C2=A0It doesn't matter in this case, since --all will cause st=
+ash to
+> stash the untracked files regardless of whether they are ignored.
+>
+>> hilco@centaur ~/tmp/repo repo (master *%)$ git stash --no-keep-index=
+ --all
+>> Saved working directory and index state WIP on master: 0fb4106 1
+>> HEAD is now at 0fb4106 1
+>> Not removing ignore-dir/
+>> hilco@centaur ~/tmp/repo repo (master $%)$ git status
+>> # On branch master
+>> # Untracked files:
+>> # =C2=A0 (use "git add <file>..." to include in what will be committ=
+ed)
+>> #
+>> # =C2=A0 =C2=A0 =C2=A0 ignore-dir/
+>> nothing added to commit but untracked files present (use "git add" t=
+o track)
+>
+> Also, in the future it would be nicer if you provided your list of
+> commands separately, at the beginning, linked together with &&.
+> This makes it easier to copy/paste into my terminal, rather than
+> having to extract the commands out from within the body.
+> Like this (slightly simplified):
+>
+> =C2=A0 git --version &&
+> =C2=A0 git init &&
+> =C2=A0 cat <<-\EOF >.gitignore &&
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0*.ignore
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0ignore-dir/
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0EOF
+> =C2=A0 mkdir src &&
+> =C2=A0 touch file.txt src/code.txt &&
+> =C2=A0 git add . &&
+> =C2=A0 git commit -m 'initial commit' &&
+> =C2=A0 touch file-a.ignore src/file-b.ignore &&
+> =C2=A0 echo "hello" >src/code.txt &&
+> =C2=A0 mkdir ignore-dir &&
+> =C2=A0 touch ignore-dir/{file.ignore,file.txt} &&
+> =C2=A0 git status &&
+> =C2=A0 git stash --all &&
+> =C2=A0 git status || echo 'FAILURE'
 
-  --directory=<root>::
-          Prepend <root> to all filenames.  If a "-p" argument was also passed,
-          it is applied before prepending the new root.
+Noted. Will do.
 
-  For example, a patch that talks about updating `a/git-gui.sh` to `b/git-gui.sh`
-  can be applied to the file in the working tree `modules/git-gui/git-gui.sh` by
-  running `git apply --directory=modules/git-gui`.
+>> So it quite explicitly states "Not removing ignore-dir/".
+>
+> That message is from git-clean, and it is the real problem.
+>
+>> How do I
+>> make sure it also stashes the ignore-dir directory?
+>
+> It actually did stash the ignore-dir, it just didn't remove it from
+> the working directory at the end. =C2=A0Try deleting the ignore-dir b=
+y
+> hand and then applying the stash, ignore-dir and its content should
+> be recreated.
+>
+> Something like this is probably the appropriate fix:
+>
+> diff --git a/git-stash.sh b/git-stash.sh
+> index f4e6f05..a2d4b4d 100755
+> --- a/git-stash.sh
+> +++ b/git-stash.sh
+> @@ -240,7 +240,7 @@ save_stash () {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0test "$untrack=
+ed" =3D "all" && CLEAN_X_OPTION=3D-x || CLEAN_X_OPTION
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if test -n "$u=
+ntracked"
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0then
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 git clean --force --quiet $CLEAN_X_OPTION
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 git clean --force --quiet -d $CLEAN_X_OPTION
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0fi
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if test "$keep=
+_index" =3D "t" && test -n $i_tree
+>
+> Needs tests.
 
-the parameter is just a fixed string that is used to modify the path that
-appears in the patch before it gets applied, and has nothing to do with
-your current (or previous for that matter) working directory.
-
-Suppose you have a patch that tries to update "COPYING". Such a patch
-generated by Git would look like this:
-
-    diff --git a/COPYING b/COPYING
-    index 536e555..ee559b1 100644
-    --- a/COPYING
-    +++ b/COPYING
-    @@ -1,3 +1,4 @@
-    +GPL GPL GPL
-
-      Note that the only valid version of the GPL as far as this project
-      is concerned is _this_ particular version of the license (ie v2, not
-
-
-Further suppose that you have already rearranged your project so that that
-file appears in licenses/gpl directory, and your $(cwd) is licenses/
-subdirectory of your working tree.
-
-You would give --directory=licenses/gpl/ without passing any custom -p
-parameter. This internally turns the patch being applied into something
-like:
-
-    diff --git a/licenses/gpl/COPYING b/licenses/gpl/COPYING
-    index 536e555..ee559b1 100644
-    --- a/licenses/gpl/COPYING
-    +++ b/licenses/gpl/COPYING
-    @@ -1,3 +1,4 @@
-    +GPL GPL GPL
-
-      Note that the only valid version of the GPL as far as this project
-      is concerned is _this_ particular version of the license (ie v2, not
-
-Because the patch application in git is always relative to the top level
-of your working tree no matter where you are, this applies to the path you
-intended it to.
-
-Here is a sample transcript to try it yourself.
-
-    $ (echo GPL GPL GPL; cat COPYING) >x && cat x >COPYING
-    $ git diff >P.diff
-    $ git checkout COPYING
-    $ mkdir -p licenses/gpl
-    $ git mv COPYING licenses/gpl
-    $ cd licenses
-    $ git apply -v --directory=licenses/gpl ../P.diff
-    Checking patch licenses/gpl/COPYING...
-    Applied patch licenses/gpl/COPYING cleanly.
-    $ git diff
-    diff --git a/licenses/gpl/COPYING b/licenses/gpl/COPYING
-    index 536e555..ee559b1 100644
-    --- a/licenses/gpl/COPYING
-    +++ b/licenses/gpl/COPYING
-    @@ -1,3 +1,4 @@
-    +GPL GPL GPL
-
-      Note that the only valid version of the GPL as far as this project
-      is concerned is _this_ particular version of the license (ie v2, not
+I just tried it with the extra -d and it all seems to work
+beautifully. Should your patch be sent anywhere?
