@@ -1,88 +1,65 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: [Git 1.7.6.557.gcee4] git stash
-Date: Mon, 22 Aug 2011 14:58:20 -0500
-Message-ID: <fbFntd6r8tmN4NcET9Ya3OWDfsrxz1tfPv7GaddGfwwdirG8AgjrG8ARoR2-ZhadzpRI2DU2ZtTGdWAUGJeUZuBXmxWX5eSmT16u5cBjtec@cipher.nrlssc.navy.mil>
-References: <CAE1pOi1D+J5_fmsdhho1FRAipyO3Ri7GS_wy4fTNtCGbatDaDg@mail.gmail.com> <AkGXRtqs8Fopo0L4Aw4Wa2DwgVP6ZLr_un-c4jhUixdk1LTUHK2twg@cipher.nrlssc.navy.mil> <CAE1pOi2OnHpu+kBj8Z47nb7C-MHFpUMAc8ArG3haWpncEDQ-jA@mail.gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: [PATCH 0/2] Add an update=none option for 'loose' submodules
+Date: Mon, 22 Aug 2011 22:00:52 +0200
+Message-ID: <20110822200052.GC11745@sandbox-rc>
+References: <cover.1312923673.git.hvoigt@hvoigt.net>
+ <7v8vqzreeo.fsf@alter.siamese.dyndns.org>
+ <20110811195955.GA21185@book.hvoigt.net>
+ <7vy5yujtr2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: David Caldwell <david@porkrind.org>,
-	Git Users <git@vger.kernel.org>
-To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 22 21:59:25 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 22 22:01:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvaeY-0000lI-01
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 21:59:22 +0200
+	id 1Qvag6-0001Oo-UN
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 22:00:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753455Ab1HVT7R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Aug 2011 15:59:17 -0400
-Received: from mail3.nrlssc.navy.mil ([128.160.11.249]:51112 "EHLO
-	mail3.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753582Ab1HVT7Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Aug 2011 15:59:16 -0400
-Received: by mail3.nrlssc.navy.mil id p7MJwMXm002143; Mon, 22 Aug 2011 14:58:51 -0500
-In-Reply-To: <CAE1pOi2OnHpu+kBj8Z47nb7C-MHFpUMAc8ArG3haWpncEDQ-jA@mail.gmail.com>
-X-OriginalArrivalTime: 22 Aug 2011 19:58:20.0716 (UTC) FILETIME=[D79F16C0:01CC6105]
-X-Virus-Scanned: clamav-milter 0.97.2 at mail3
-X-Virus-Status: Clean
+	id S1753363Ab1HVUAz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Aug 2011 16:00:55 -0400
+Received: from darksea.de ([83.133.111.250]:40607 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752588Ab1HVUAx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Aug 2011 16:00:53 -0400
+Received: (qmail 31583 invoked from network); 22 Aug 2011 22:00:52 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 22 Aug 2011 22:00:52 +0200
+Content-Disposition: inline
+In-Reply-To: <7vy5yujtr2.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179885>
 
-On 08/22/2011 01:43 PM, Hilco Wijbenga wrote:
-> On 22 August 2011 10:15, Brandon Casey
-> <brandon.casey.ctr@nrlssc.navy.mil> wrote:
->> On 08/22/2011 01:01 AM, Hilco Wijbenga wrote:
->>> Hi David,
->>>
->>> I noticed your very timely change to git stash in the current master
->>> branch. I tried it but it doesn't behave as I was expecting/hoping.
->>
->> It looks like it is actually creating the stash correctly, but it's
->> just not deleting the ignored directory.
+Hi,
 
->> Something like this is probably the appropriate fix:
->>
->> diff --git a/git-stash.sh b/git-stash.sh
->> index f4e6f05..a2d4b4d 100755
->> --- a/git-stash.sh
->> +++ b/git-stash.sh
->> @@ -240,7 +240,7 @@ save_stash () {
->>                test "$untracked" = "all" && CLEAN_X_OPTION=-x || CLEAN_X_OPTION
->>                if test -n "$untracked"
->>                then
->> -                       git clean --force --quiet $CLEAN_X_OPTION
->> +                       git clean --force --quiet -d $CLEAN_X_OPTION
->>                fi
->>
->>                if test "$keep_index" = "t" && test -n $i_tree
->>
->> Needs tests.
+On Mon, Aug 15, 2011 at 01:37:53PM -0700, Junio C Hamano wrote:
+> Heiko Voigt <hvoigt@hvoigt.net> writes:
 > 
-> I just tried it with the extra -d and it all seems to work
-> beautifully. Should your patch be sent anywhere?
+> > On Thu, Aug 11, 2011 at 11:28:31AM -0700, Junio C Hamano wrote:
+> >> Heiko Voigt <hvoigt@hvoigt.net> writes:
+> >> > We have been talking about loose submodules for some time:
+> >> 
+> >> Also before introducing a new terminology "loose submodule", please define
+> >> it somewhere. It feels confusing to me that a normal submodule, which
+> >> shouldn't be auto-cloned nor auto-updated without "submodule init", needs
+> >> to be called by a name other than simply a "submodule" but with an
+> >> adjuctive "loose submodule".
+> >
+> > Thats why I avoided talking about it in the docs. For the commit message
+> > I thought it would be kind of intuitive but I can update the commit
+> > message so that it becomes more clear.
+> 
+> That sounds like a good thing to do.
 
-It needs a couple of tests added to t/t3905-stash-include-untracked.sh
-to demonstrate that this functionality works correctly and to ensure
-that it doesn't break in the future.
+I discovered that I only talked in the cover letter about the term
+'loose'. Since that will not go into any commit I guess we can keep the
+series this way?
 
-Need tests at least for:
-
-   --all stashes untracked / ignored in subdirectory
-   --include-untracked stashes untracked in subdirectory, leaves ignored alone
-
-Do we currently test that stash leaves untracked / ignored alone when
---all or --include-untracked are not supplied?
-
-And it needs a commit message following the guidelines in
-Documentation/SubmittingPatches.  Then it can be submitted to this list
-using format-patch and send-email.  Interested??? :)  otherwise I'll try
-to get to it later tonight.
-
--Brandon
+Cheers Heiko
