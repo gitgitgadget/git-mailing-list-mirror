@@ -1,202 +1,164 @@
 From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Subject: Re: [Git 1.7.6.557.gcee4] git stash
-Date: Mon, 22 Aug 2011 11:43:25 -0700
-Message-ID: <CAE1pOi2OnHpu+kBj8Z47nb7C-MHFpUMAc8ArG3haWpncEDQ-jA@mail.gmail.com>
-References: <CAE1pOi1D+J5_fmsdhho1FRAipyO3Ri7GS_wy4fTNtCGbatDaDg@mail.gmail.com>
-	<euT1_KmfLWaxwFqOd8u_Zv-flc6Wr9rvg1tf_39P-YMaH8T-tpKl94WG8yCIAmW0AMLjdqnjA3I2uGRQf9YpY513-Io-lue5aNPuVDv8Qp8@cipher.nrlssc.navy.mil>
+Subject: Re: Branches & directories
+Date: Mon, 22 Aug 2011 11:49:07 -0700
+Message-ID: <CAE1pOi0Er1ZgftpNeCr85Zu27xR2127V_KdAtvKc1NOKmDUvzQ@mail.gmail.com>
+References: <CAE1pOi3Eg88i+1s+CcW3+W0WNZ-NYUQb1EV55oh+g1Od78AByQ@mail.gmail.com>
+	<CABNdCrCbSqup1=D2eEbGDhw3JzZGYHWLVqZFsB6GDO4Vk7HRxg@mail.gmail.com>
+	<7vvctvdf5r.fsf@alter.siamese.dyndns.org>
+	<CAE1pOi3rqqcz_6QxB8=g2jWOF-4SRZee7t8NXN1md2C4DL7wug@mail.gmail.com>
+	<CAMOZ1BsZvXsnnWAPXR7UGKdqOMwuGB-ffaAPk55U_1dcjZUcDw@mail.gmail.com>
+	<CAE1pOi2r9DT3Y-GxivTZRaNVi=qLOy5=QpQ-_YysOkgqy3iGRQ@mail.gmail.com>
+	<CAMOZ1BvpnP_729YOHrrPW3B8wa5c4cLyD_qAQ5rTuy0JqNiiXg@mail.gmail.com>
+	<CAE1pOi3OEFg7-OeQM0fvD69gf-5oPQ239CGy9nN0Waas8EM3Bg@mail.gmail.com>
+	<CAMOZ1BvHKTPPmfB7Jx+y4OeRv-uwjmQkscXaRr-vEEy30G_Kdw@mail.gmail.com>
+	<CAE1pOi0b2w8t53U7PSvVwVxZF9O0HTyfCR4vy+-baBjqCDeNJA@mail.gmail.com>
+	<CAMOZ1BtOkwVbC3RyJVQb7K1DRMnJf3_omn7zrkzoE48Ayu7HBg@mail.gmail.com>
+	<CAE1pOi0jZT_HCEV8UDzEOQeuCcDeqxoKGUEk3bJm=O2eJSHfkg@mail.gmail.com>
+	<CAMOZ1Bu5pPeviyZD-e6aHbv-+tSaBDyyKb5vHA132K_3=1gD-g@mail.gmail.com>
+	<CAE1pOi0dL2qNMksuY_=gyGSRsfr6e9AmzgJUNB=jEz85sjuiUw@mail.gmail.com>
+	<CAGZ=bqK7H3zc8LK7EP8+uV8DpWW+czK2POfceGtcBF8Vmkhkow@mail.gmail.com>
+	<CAE1pOi1J5DKtnyUQzu1K7G1+HLsWWCN7thCf6W8MwSzt4_vtOw@mail.gmail.com>
+	<CAGZ=bqLZoLoyMcvnppg6SyFtJU8phSquQeBZ7uhwP=+ZL3DADw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Caldwell <david@porkrind.org>,
-	Git Users <git@vger.kernel.org>
-To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Mon Aug 22 20:43:32 2011
+Cc: Michael Witten <mfwitten@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Evan Shelhamer <shelhamer@imaginarynumber.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Kyle Moffett <kyle@moffetthome.net>
+X-From: git-owner@vger.kernel.org Mon Aug 22 20:49:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvZTA-00042l-B0
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 20:43:32 +0200
+	id 1QvZYp-0006dS-Po
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 20:49:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752899Ab1HVSn1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Aug 2011 14:43:27 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:61042 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752655Ab1HVSn0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Aug 2011 14:43:26 -0400
-Received: by gya6 with SMTP id 6so3783604gya.19
-        for <git@vger.kernel.org>; Mon, 22 Aug 2011 11:43:25 -0700 (PDT)
+	id S1753288Ab1HVStM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Aug 2011 14:49:12 -0400
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:62102 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752840Ab1HVStI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Aug 2011 14:49:08 -0400
+Received: by yie30 with SMTP id 30so3792879yie.19
+        for <git@vger.kernel.org>; Mon, 22 Aug 2011 11:49:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        bh=MZ+w5KJOfZJ+BHn4bt9W8sTROANnXmep54Yf3EdaMMM=;
-        b=AcWgpA/ppTaP4JiwkYL08+NxWCQhX88JxtIMBJhOMhZ1XpyBIvQ9vpkhV2Tx7HarIM
-         oDY5hQCdbw2ra8DnIUtmUGeUki6mrdh9D9pA37hLFaVW+4s0cJCrIU41GJ20QaS2F3QS
-         LOx/853nE2MbOrTLZlLPhT669PQUWo5noz4TU=
-Received: by 10.236.9.36 with SMTP id 24mr17009253yhs.17.1314038605062; Mon,
- 22 Aug 2011 11:43:25 -0700 (PDT)
-Received: by 10.236.207.67 with HTTP; Mon, 22 Aug 2011 11:43:25 -0700 (PDT)
-In-Reply-To: <euT1_KmfLWaxwFqOd8u_Zv-flc6Wr9rvg1tf_39P-YMaH8T-tpKl94WG8yCIAmW0AMLjdqnjA3I2uGRQf9YpY513-Io-lue5aNPuVDv8Qp8@cipher.nrlssc.navy.mil>
+        bh=TA7LPRUrNf8GuAS1Bw7COpEktdMKmf1o1Go+KPo+qfw=;
+        b=IlpqsfE8eNkASCaNtmCm6pJckCITVVk4QWFzZYVeO1W+S66VL/mXiaqWLCeaWQdIja
+         h36Dzpm5YzqdpnYe/E9Fb/nqgTc7LcIPMXfZELJC4rQvLyL1+4Umf6rQzW5pRnieMF8m
+         x6QjZbi9uNQEAyYWRcA6oxAHn871L+IdVYqoA=
+Received: by 10.236.136.135 with SMTP id w7mr17258967yhi.51.1314038947985;
+ Mon, 22 Aug 2011 11:49:07 -0700 (PDT)
+Received: by 10.236.207.67 with HTTP; Mon, 22 Aug 2011 11:49:07 -0700 (PDT)
+In-Reply-To: <CAGZ=bqLZoLoyMcvnppg6SyFtJU8phSquQeBZ7uhwP=+ZL3DADw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179879>
 
-On 22 August 2011 10:15, Brandon Casey
-<brandon.casey.ctr@nrlssc.navy.mil> wrote:
-> On 08/22/2011 01:01 AM, Hilco Wijbenga wrote:
->> Hi David,
+On 22 August 2011 05:46, Kyle Moffett <kyle@moffetthome.net> wrote:
+> On Mon, Aug 22, 2011 at 01:36, Hilco Wijbenga <hilco.wijbenga@gmail.c=
+om> wrote:
+>> On 21 August 2011 20:01, Kyle Moffett <kyle@moffetthome.net> wrote:
+>>> On Sun, Aug 21, 2011 at 22:13, Hilco Wijbenga <hilco.wijbenga@gmail=
+=2Ecom> wrote:
+>>>> Thanks for sticking it out. :-) That all makes sense. I think it's=
+ all
+>>>> pretty clear now.
+>>>
+>>> It's worth mentioning that in most cases you DON'T want to delete u=
+ntracked and
+>>> ignored files when switching branches.
 >>
->> I noticed your very timely change to git stash in the current master
->> branch. I tried it but it doesn't behave as I was expecting/hoping.
+>> For the record, I don't want them deleted but replaced with the
+>> artifacts in the other branch. A bit wasteful but it saves a lot of
+>> build time.
+>>
+>>> For example, when I'm doing kernel development, I will frequently d=
+o this:
+>>>
+>>> $ git checkout -b my-new-feature origin/master
+>>> [...hack hack hack...]
+>>> $ make -j16 && make install && reboot
+>>> [...find unrelated bug...]
+>>> $ git checkout -b my-new-bugfix origin/master
+>>> [...fix the bug...]
+>>> $ make -j16 && make install && reboot
+>>> $ git commit -m 'I fixed this bug'
+>>> $ git checkout my-new-feature
+>>> $ git rebase my-new-bugfix
+>>> $ make -j16 && make install && reboot
+>>>
+>>> To avoid wasting time I don't want to completely rebuild the kernel=
+ each
+>>> and every time I switch branches, I just want to rebuild the files =
+that
+>>> changed when I switched. =C2=A0The way GIT works lets me do that qu=
+ite
+>>> easily, and the kernel Makefiles detect the changed files and rebui=
+ld
+>>> the minimum amount necessary.
+>>>
+>>> GIT's behavior when you switch between branches is effectively the
+>>> same as applying a patch generated by diffing between the two
+>>> branches. =C2=A0Any files which would not be changed are left alone=
+, their
+>>> timestamps completely unchanged.
+>>
+>> For small changes that makes perfect sense. I'm at a stage where API=
+s
+>> are still evolving and changing an API means rebuilding lots of code=
+=2E
+>> I'd like to avoid that.
+>>
+>>> It sounds like Eclipse is simply not detecting changes to your work=
+ing
+>>> tree by outside programs, and as a result it's not rebuilding files=
+ and
+>>> indexes the way that it should.
+>>
+>> While Eclipse isn't great at detecting such changes, this isn't real=
+ly
+>> an Eclipse problem. It's just that lots of things are still changing
+>> and that leads to lots of building.
+>>
+>>> Obviously the easiest way to work around that issue is "git clean",
+>>> which has options to select all untracked files or just ignored one=
+s.
+>>
+>> As I mentioned above, I don't want to *delete* untracked/ignored
+>> files, I just want them to stick to the branch I was working on. So =
+if
+>> I change to a different branch I get the appropriate build artifacts=
+=2E
+>>
+>> Something like: git stash --everything "All artifacts for
+>> this-branch." && git checkout other-branch && git stash apply
+>> stash-for-other-branch.
 >
-> It looks like it is actually creating the stash correctly, but it's
-> just not deleting the ignored directory.
->
-> But, there is a small problem with your command sequence...
->
->> hilco@centaur ~/tmp/repo repo$ git --version
->> git version 1.7.6.557.gcee4
->> hilco@centaur ~/tmp/repo repo$ git init
->> Initialized empty Git repository in /home/hilco/tmp/repo/.git/
->> hilco@centaur ~/tmp/repo repo (master #)$ cat >>.gitignore <<- EOF
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 *.ignore
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 ignore-dir/
->>> EOF
->> hilco@centaur ~/tmp/repo repo (master #%)$ mkdir src
->> hilco@centaur ~/tmp/repo repo (master #%)$ touch file.txt src/code.t=
-xt
->> hilco@centaur ~/tmp/repo repo (master #%)$ git add -A .
->> hilco@centaur ~/tmp/repo repo (master #)$ git commit -m '1'
->> [master (root-commit) 0fb4106] 1
->> =C2=A01 files changed, 2 insertions(+), 0 deletions(-)
->> =C2=A0create mode 100644 .gitignore
->> =C2=A0create mode 100644 file.txt
->> =C2=A0create mode 100644 src/code.txt
->> hilco@centaur ~/tmp/repo repo (master)$ touch file-a.ignore src/file=
--b.ignore
->> hilco@centaur ~/tmp/repo repo (master %)$ echo "hello">src/code.txt
->> hilco@centaur ~/tmp/repo repo (master *%)$ mkdir ignore-dir
->> hilco@centaur ~/tmp/repo repo (master *%)$ touch
->> ignore-dir/{file.ignore,file.txt}
->> hilco@centaur ~/tmp/repo repo (master *%)$ git status
->> # On branch master
->> # Changes not staged for commit:
->> # =C2=A0 (use "git add <file>..." to update what will be committed)
->> # =C2=A0 (use "git checkout -- <file>..." to discard changes in work=
-ing directory)
->> #
->> # =C2=A0 =C2=A0 =C2=A0 modified: =C2=A0 src/code.txt
->> #
->> # Untracked files:
->> # =C2=A0 (use "git add <file>..." to include in what will be committ=
-ed)
->> #
->> # =C2=A0 =C2=A0 =C2=A0 file-a.ignore
->> # =C2=A0 =C2=A0 =C2=A0 ignore-dir/
->> # =C2=A0 =C2=A0 =C2=A0 src/file-b.ignore
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^^^^^^^^^^^^^^^^^
-> Why are these entries here?
+> When I am in those sorts of situations I generally just use separate
+> working directories or separate checkouts entirely; if you really pre=
+fer
+> to have everything in one directory you would be better served by
+> integrating "ccache" into your workflow.
 
-My bad. I had a script that ran the commands but I decided to try run
-them on the CL so I copy-pasted them. That changed the tabs to spaces
-and ruined .gitignore.
+Unfortunately, that seems for C/C++ code only. I use Java. Besides,
+it's not the Java compilation that takes most of the time.
 
->> no changes added to commit (use "git add" and/or "git commit -a")
->
-> if your .gitignore file looks like this:
->
-> =C2=A0 $ cat .gitignore
-> =C2=A0 *.ignore
-> =C2=A0 ignore-dir/
->
-> then why are those items showing up under "Untracked files:" in the c=
-all
-> to git status above? =C2=A0/methinks something is wrong with your .gi=
-tignore
-> file. =C2=A0It doesn't matter in this case, since --all will cause st=
-ash to
-> stash the untracked files regardless of whether they are ignored.
->
->> hilco@centaur ~/tmp/repo repo (master *%)$ git stash --no-keep-index=
- --all
->> Saved working directory and index state WIP on master: 0fb4106 1
->> HEAD is now at 0fb4106 1
->> Not removing ignore-dir/
->> hilco@centaur ~/tmp/repo repo (master $%)$ git status
->> # On branch master
->> # Untracked files:
->> # =C2=A0 (use "git add <file>..." to include in what will be committ=
-ed)
->> #
->> # =C2=A0 =C2=A0 =C2=A0 ignore-dir/
->> nothing added to commit but untracked files present (use "git add" t=
-o track)
->
-> Also, in the future it would be nicer if you provided your list of
-> commands separately, at the beginning, linked together with &&.
-> This makes it easier to copy/paste into my terminal, rather than
-> having to extract the commands out from within the body.
-> Like this (slightly simplified):
->
-> =C2=A0 git --version &&
-> =C2=A0 git init &&
-> =C2=A0 cat <<-\EOF >.gitignore &&
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0*.ignore
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0ignore-dir/
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0EOF
-> =C2=A0 mkdir src &&
-> =C2=A0 touch file.txt src/code.txt &&
-> =C2=A0 git add . &&
-> =C2=A0 git commit -m 'initial commit' &&
-> =C2=A0 touch file-a.ignore src/file-b.ignore &&
-> =C2=A0 echo "hello" >src/code.txt &&
-> =C2=A0 mkdir ignore-dir &&
-> =C2=A0 touch ignore-dir/{file.ignore,file.txt} &&
-> =C2=A0 git status &&
-> =C2=A0 git stash --all &&
-> =C2=A0 git status || echo 'FAILURE'
+> In particular, even "git stash" intentionally does not preserve file =
+times,
+> so you would end up rebuilding everything anyways because all of your
+> source files would be as new as your object files.
 
-Noted. Will do.
+Yes, I just noticed that. Why do you say "intentionally"? Is extra
+work being done to make it so? If yes, then shouldn't that be
+configurable?
 
->> So it quite explicitly states "Not removing ignore-dir/".
->
-> That message is from git-clean, and it is the real problem.
->
->> How do I
->> make sure it also stashes the ignore-dir directory?
->
-> It actually did stash the ignore-dir, it just didn't remove it from
-> the working directory at the end. =C2=A0Try deleting the ignore-dir b=
-y
-> hand and then applying the stash, ignore-dir and its content should
-> be recreated.
->
-> Something like this is probably the appropriate fix:
->
-> diff --git a/git-stash.sh b/git-stash.sh
-> index f4e6f05..a2d4b4d 100755
-> --- a/git-stash.sh
-> +++ b/git-stash.sh
-> @@ -240,7 +240,7 @@ save_stash () {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0test "$untrack=
-ed" =3D "all" && CLEAN_X_OPTION=3D-x || CLEAN_X_OPTION
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if test -n "$u=
-ntracked"
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0then
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 git clean --force --quiet $CLEAN_X_OPTION
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 git clean --force --quiet -d $CLEAN_X_OPTION
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0fi
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if test "$keep=
-_index" =3D "t" && test -n $i_tree
->
-> Needs tests.
-
-I just tried it with the extra -d and it all seems to work
-beautifully. Should your patch be sent anywhere?
+Cheers,
+Hilco
