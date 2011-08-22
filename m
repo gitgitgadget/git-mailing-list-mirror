@@ -1,83 +1,70 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git svn --stdlayout 's little quirk.
-Date: Mon, 22 Aug 2011 11:01:07 +0200
-Message-ID: <4E521AD3.4040204@drmicha.warpmail.net>
-References: <20110820183504.GA32179@dcvr.yhbt.net> <1313919482.36626.YahooMailClassic@web29501.mail.ird.yahoo.com>
+From: Hui Wang <jason77.wang@gmail.com>
+Subject: [PATCH v2 0/1] git-clone: fix relative path problem in the alternates
+Date: Mon, 22 Aug 2011 17:05:56 +0800
+Message-ID: <1314003957-9455-1-git-send-email-jason77.wang@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Eric Wong <normalperson@yhbt.net>, madduck@madduck.net,
-	git@vger.kernel.org
-To: htl10@users.sourceforge.net
-X-From: git-owner@vger.kernel.org Mon Aug 22 11:01:20 2011
+Content-Type: text/plain
+To: <gitster@pobox.com>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Aug 22 11:06:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvQNk-0002cV-Af
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 11:01:20 +0200
+	id 1QvQSN-0004ND-Rz
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 11:06:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754643Ab1HVJBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Aug 2011 05:01:12 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:50155 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752941Ab1HVJBK (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Aug 2011 05:01:10 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 7C35C209C5;
-	Mon, 22 Aug 2011 05:01:09 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Mon, 22 Aug 2011 05:01:09 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=zc+pMlTu9psLgONeUw+Qce
-	DRojk=; b=hPI85+H5gjTcRh7gYYSq+tl3T7reaq60Djh+td0bOdN48tD6XG6RdG
-	jdZfa0ThXh8g2Lj+dEbQtcXx29Ad5+fL8TT8FsJ4gLTOGdX+vKZ5Io9MfjnErbMO
-	nauU/Xl2S/URdmPci01JjrhX6JqvX0Q4ZLdasJLnBg4c2qwkuOdIg=
-X-Sasl-enc: uvb2Dv2XVRLmWMbfB9sL8V6fINVOlQSdUu/sUavUxClj 1314003669
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id AE2649E0335;
-	Mon, 22 Aug 2011 05:01:08 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
-In-Reply-To: <1313919482.36626.YahooMailClassic@web29501.mail.ird.yahoo.com>
+	id S1755027Ab1HVJGD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Aug 2011 05:06:03 -0400
+Received: from mail.windriver.com ([147.11.1.11]:59603 "EHLO
+	mail.windriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753025Ab1HVJF7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Aug 2011 05:05:59 -0400
+Received: from ALA-HCA.corp.ad.wrs.com (ala-hca [147.11.189.40])
+	by mail.windriver.com (8.14.3/8.14.3) with ESMTP id p7M95tVb001142
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
+	Mon, 22 Aug 2011 02:05:55 -0700 (PDT)
+Received: from localhost.localdomain (128.224.163.220) by
+ ALA-HCA.corp.ad.wrs.com (147.11.189.50) with Microsoft SMTP Server id
+ 14.1.255.0; Mon, 22 Aug 2011 02:05:55 -0700
+X-Mailer: git-send-email 1.5.6.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179852>
 
-Hin-Tak Leung venit, vidit, dixit 21.08.2011 11:38:
-> --- On Sat, 20/8/11, Eric Wong <normalperson@yhbt.net> wrote:
-> 
->>> I think I found a small bug in git 1.7.6. Having
->> "trunk" at the end of
->>> the url in combination of --stdlayout is wrong, but it
->> looks like that
->>> git-svn tries to cope, but doesn't go try far enough:
->>>
->>> Doing this:
->>> ----------------
->>> git svn clone --stdlayout http://quick-settings.googlecode.com/svn/trunk/
->> android-quick-settings
->>
->> --stdlayout expects the "root" path of the code you're
->> interested
->> in (not necessarily the SVN repository root, but in this
->> case they
->> could be the same).
->>
->> Try the following instead:
->>
->> git svn clone --stdlayout \
->>   http://quick-settings.googlecode.com/svn
->> android-quick-settings
-> 
-> I know this is the correct way - what I meant was that, having "trunk" at the end is wrong but git-svn appears to try to correct it automatically, but haven't quite succceeded.
 
-It is not trying to do that at all. git-svn is trying to figure out what
-the "base path" is in an svn repo which possibly hosts multiple repos,
-and that is what the message reports.
+Hi Junio,
 
-Michael
+In the V2 version, i use strbuf_xxxx() to help to parse alternates file
+and change relative paths to absolute paths according to your suggestion,
+now the strbuf operations are safer.
+
+When updating new content to the lockfile, i choose to write whole content at
+one time instead of update it line by line. The reason is:
+
+1. we will conditionally update the lockfile, if original alternates doesn't
+include relative path, we don't need to update the lockfile. This logic can't
+easily be handled line by line.
+2. current git system only provides add_to_alternates_file()in the sha1_file.c
+to update lockfile, this function can add a line to lockfile but can't empty
+and write lockfile, we need to add a similar function to empty and write to
+lockfile, and we must guarantee the first line update will call this function,
+then remaining update line call add_to_alternates_file(), this logic is a
+little complicated comparing to update whole content at one time.
+3. current existing add_to_alternates_file() will unconditionally append
+"/objects" at each new added line, that need us to parse and  remove
+"/objects" from each line read out from source alternates, this is a little
+bit complicated.
+
+If we choose update lockfile at one time, we can add a new function to
+implement this requirement and overcome all above complexity.
+
+
+Hui Wang (1):
+      clone: replace relative paths in the alternates
+
+ builtin/clone.c |   47 ++++++++++++++++++++++++++++++++++++++++++++++-
+ cache.h         |    1 +
+ sha1_file.c     |   11 +++++++++++
