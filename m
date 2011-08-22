@@ -1,100 +1,75 @@
-From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Subject: [Git 1.7.6.557.gcee4] git stash
-Date: Sun, 21 Aug 2011 23:01:24 -0700
-Message-ID: <CAE1pOi1D+J5_fmsdhho1FRAipyO3Ri7GS_wy4fTNtCGbatDaDg@mail.gmail.com>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH v2 5/5] Use kwset in grep
+Date: Mon, 22 Aug 2011 08:39:20 +0200
+Message-ID: <4E51F998.50801@gnu.org>
+References: <20110820223032.12380.72469.stgit@localhost6.localdomain6> <20110820224218.GF2199@fredrik-Q430-Q530>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Users <git@vger.kernel.org>
-To: David Caldwell <david@porkrind.org>
-X-From: git-owner@vger.kernel.org Mon Aug 22 08:03:34 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, dpotapov@gmail.com,
+	Junio C Hamano <gitster@pobox.com>
+To: Fredrik Kuivinen <frekui@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 22 08:39:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvNbg-0007j4-De
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 08:03:32 +0200
+	id 1QvOAU-0007y8-1e
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Aug 2011 08:39:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752260Ab1HVGBZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Aug 2011 02:01:25 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:50020 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751486Ab1HVGBZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Aug 2011 02:01:25 -0400
-Received: by ywf7 with SMTP id 7so3293567ywf.19
-        for <git@vger.kernel.org>; Sun, 21 Aug 2011 23:01:24 -0700 (PDT)
+	id S1753834Ab1HVGjZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Aug 2011 02:39:25 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:61160 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756868Ab1HVGjY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Aug 2011 02:39:24 -0400
+Received: by wwf5 with SMTP id 5so4884778wwf.1
+        for <git@vger.kernel.org>; Sun, 21 Aug 2011 23:39:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=/jeezLZyMs2khbgMtZYktG3RJT+FNylZ4KpTl8xCa5Q=;
-        b=ZXcUIEKBAGFtqiFZi4ibznzTTeRF4c7/hROk3Jx4Wx71jn38Nl48CDBnjHFLfHB4mc
-         bO6NKF4nJm5GBlgYRXpRcyKeIxOFZqu7SKPZlkbo3zVY/F63p4KFJQuSFHivxSOWOmNb
-         sCMORLLu7av8cn9sNEBy2mfm2gA46k+uMkeZw=
-Received: by 10.236.136.167 with SMTP id w27mr11590885yhi.102.1313992884510;
- Sun, 21 Aug 2011 23:01:24 -0700 (PDT)
-Received: by 10.236.207.67 with HTTP; Sun, 21 Aug 2011 23:01:24 -0700 (PDT)
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=rgFlKNMtb4SJu0OAQgKHDp8K8BERStpJ/UNJSSiSPlo=;
+        b=D8BHKWYX1O1+NL9FADdNhh8uOnEBSUjvVS08fj/QsMCI/pcwA/9XiQDZJE3XgicsY8
+         x+NM2p8psp1QdhxxAHCG5YBUk++I4KuI/5IJPdciZC9XNcYtreXTGsVeN7RL1AiHz1IR
+         gixurtMf34WMms0s6PGrqZQSj/cLFUCiqdrh4=
+Received: by 10.216.69.77 with SMTP id m55mr1641052wed.11.1313995162729;
+        Sun, 21 Aug 2011 23:39:22 -0700 (PDT)
+Received: from yakj.usersys.redhat.com (93-34-199-31.ip51.fastwebnet.it [93.34.199.31])
+        by mx.google.com with ESMTPS id y61sm3716177wec.30.2011.08.21.23.39.20
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 21 Aug 2011 23:39:21 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110707 Thunderbird/5.0
+In-Reply-To: <20110820224218.GF2199@fredrik-Q430-Q530>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179843>
 
-Hi David,
+On 08/21/2011 12:42 AM, Fredrik Kuivinen wrote:
+> +		if (opt->regflags&  REG_ICASE || p->ignore_case) {
+> +			static char trans[256];
+> +			int i;
+> +			for (i = 0; i<  256; i++)
+> +				trans[i] = tolower(i);
+> +			p->kws = kwsalloc(trans);
+> +		} else {
+> +			p->kws = kwsalloc(NULL);
+> +		}
 
-I noticed your very timely change to git stash in the current master
-branch. I tried it but it doesn't behave as I was expecting/hoping.
+Of course, this makes absolutely no sense for MB_CUR_MAX > 1.  It's 
+worth mentioning that grep instead uses a loop with 
+mbrtowc/towlower/wcrtomb.  This in turn will remove the need for the 
+complex kwset code. :)
 
-hilco@centaur ~/tmp/repo repo$ git --version
-git version 1.7.6.557.gcee4
-hilco@centaur ~/tmp/repo repo$ git init
-Initialized empty Git repository in /home/hilco/tmp/repo/.git/
-hilco@centaur ~/tmp/repo repo (master #)$ cat >>.gitignore <<- EOF
->         *.ignore
->         ignore-dir/
-> EOF
-hilco@centaur ~/tmp/repo repo (master #%)$ mkdir src
-hilco@centaur ~/tmp/repo repo (master #%)$ touch file.txt src/code.txt
-hilco@centaur ~/tmp/repo repo (master #%)$ git add -A .
-hilco@centaur ~/tmp/repo repo (master #)$ git commit -m '1'
-[master (root-commit) 0fb4106] 1
- 1 files changed, 2 insertions(+), 0 deletions(-)
- create mode 100644 .gitignore
- create mode 100644 file.txt
- create mode 100644 src/code.txt
-hilco@centaur ~/tmp/repo repo (master)$ touch file-a.ignore src/file-b.ignore
-hilco@centaur ~/tmp/repo repo (master %)$ echo "hello">src/code.txt
-hilco@centaur ~/tmp/repo repo (master *%)$ mkdir ignore-dir
-hilco@centaur ~/tmp/repo repo (master *%)$ touch
-ignore-dir/{file.ignore,file.txt}
-hilco@centaur ~/tmp/repo repo (master *%)$ git status
-# On branch master
-# Changes not staged for commit:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working directory)
-#
-#       modified:   src/code.txt
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#       file-a.ignore
-#       ignore-dir/
-#       src/file-b.ignore
-no changes added to commit (use "git add" and/or "git commit -a")
-hilco@centaur ~/tmp/repo repo (master *%)$ git stash --no-keep-index --all
-Saved working directory and index state WIP on master: 0fb4106 1
-HEAD is now at 0fb4106 1
-Not removing ignore-dir/
-hilco@centaur ~/tmp/repo repo (master $%)$ git status
-# On branch master
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#       ignore-dir/
-nothing added to commit but untracked files present (use "git add" to track)
+The "mbtolower" code" dates to after the license change, but I wrote it 
+and I give permission to use it under GPLv2.  See commits 70e23616 and 
+30af8050 in the GNU grep repository.
 
-So it quite explicitly states "Not removing ignore-dir/". How do I
-make sure it also stashes the ignore-dir directory?
+Should still be good enough for most uses, so I'll give my
 
-Cheers,
-Hilco
+Acked-by: Paolo Bonzini <bonzini@gnu.org>
+
+Paolo
