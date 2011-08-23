@@ -1,94 +1,73 @@
-From: Hui Wang <jason77.wang@gmail.com>
-Subject: Re: [PATCH 0/2] clone-local fixup
-Date: Tue, 23 Aug 2011 11:43:05 +0800
-Message-ID: <4E5321C9.4080301@gmail.com>
-References: <7vliulun2a.fsf@alter.siamese.dyndns.org> <1314061516-24964-1-git-send-email-gitster@pobox.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Re* [PATCH 1/2] clone: allow to clone from .git file
+Date: Mon, 22 Aug 2011 20:53:01 -0700
+Message-ID: <7v8vqku6le.fsf@alter.siamese.dyndns.org>
+References: <1313927890-21227-1-git-send-email-pclouds@gmail.com>
+ <7v7h66y4s5.fsf@alter.siamese.dyndns.org>
+ <CACsJy8BaCwT+fd-KORsqXqQEtWZUpTDwgoSGU9+pMfNdero5=Q@mail.gmail.com>
+ <7vbovhw9pb.fsf@alter.siamese.dyndns.org>
+ <7vty99upn9.fsf_-_@alter.siamese.dyndns.org>
+ <CACsJy8ABBB69V3pFjGohJwAQbZ_MwGqv=p27tUHF8HAGRMLpQw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, Hui Wang <jason77.wang@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 23 05:43:18 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 23 05:53:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvhtV-0000fS-M0
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 05:43:18 +0200
+	id 1Qvi37-0003AY-C6
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 05:53:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753972Ab1HWDnK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Aug 2011 23:43:10 -0400
-Received: from mail.windriver.com ([147.11.1.11]:53782 "EHLO
-	mail.windriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750863Ab1HWDnJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Aug 2011 23:43:09 -0400
-Received: from ALA-HCA.corp.ad.wrs.com (ala-hca [147.11.189.40])
-	by mail.windriver.com (8.14.3/8.14.3) with ESMTP id p7N3h5mr011547
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
-	Mon, 22 Aug 2011 20:43:05 -0700 (PDT)
-Received: from [128.224.163.220] (128.224.163.220) by ALA-HCA.corp.ad.wrs.com
- (147.11.189.50) with Microsoft SMTP Server (TLS) id 14.1.255.0; Mon, 22 Aug
- 2011 20:43:04 -0700
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
-In-Reply-To: <1314061516-24964-1-git-send-email-gitster@pobox.com>
+	id S1754130Ab1HWDxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Aug 2011 23:53:08 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48922 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752888Ab1HWDxF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Aug 2011 23:53:05 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC06C55AE;
+	Mon, 22 Aug 2011 23:53:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PcawfHVMxIAhwf/NdVn/GhfMaO0=; b=Kg5DU2
+	pV5840kDwSxpz811TcvXpCtkeuUYOnLg3T/JSvv81hbn36fMunr5ann6GsT/8WFi
+	z4N1RvDYhb50DT2nfaqwrnxHUOtCZ8WhQz+rcJ2rh5EskwXHU8Nr6GGrVnGUEi98
+	JIRdA171txeghxyxZT0mCfw2krD2hQy28n0Sc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VJPqesubJ6uAfg5De+T64wjypR9K5R6Q
+	KIvuWVWHLSh10gtlMDPzoYnGyFP7mFloiFkxp1LChXfLmogjF9OdY+Ix1dTtVeoX
+	eKA4rzbppdoeo+oQpox0JxG3OGQr9UKKnS1V10UNeXOKSv74megkcrD7LiyA6pYJ
+	wjEvHVf0iF4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D4DD155AD;
+	Mon, 22 Aug 2011 23:53:04 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6AB6C55AB; Mon, 22 Aug 2011
+ 23:53:04 -0400 (EDT)
+In-Reply-To: <CACsJy8ABBB69V3pFjGohJwAQbZ_MwGqv=p27tUHF8HAGRMLpQw@mail.gmail.com> (Nguyen
+ Thai Ngoc Duy's message of "Tue, 23 Aug 2011 08:11:29 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 67825E86-CD3B-11E0-9200-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179918>
 
-This patch series solved the problem from the root cause. :-)
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-But there is a little problem in the second patch, i provide an 
-incremental patch basing on your second patch, if it is fine to you, it 
-is OK to squash this patch to your second patch.
+> Set *status here too? I assume we need valid *status whenever NULL is returned.
 
+You are absolutely correct.
 
-commit 47e890818fdac5f6493cd0bbaf9da350785a2bca
-Author: Hui Wang <jason77.wang@gmail.com>
-Date:   Tue Aug 23 11:32:26 2011 +0800
+But I ended up deciding not to add "gently" variant for now, as nobody
+needs it, and if we were to have "gently", we should also rethink the
+earlier checks in the function if they should give diagnosis. Please check
+what is queued near the tip of tonight's 'pu'.
 
-    clone: don't change absolute path in the copy_alternates
-   
-    The source alternates may include empty lines, comment lines, relative
-    paths and absolute paths. Absolute paths don't need to be changed
-    before added to the destination alternates.
-   
-    Signed-off-by: Hui Wang <jason77.wang@gmail.com>
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 2842707..284e325 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -258,6 +258,10 @@ static void copy_alternates(struct strbuf *src, 
-struct strbuf *dst,
-                char *abs_path, abs_buf[PATH_MAX];
-                if (!line.len || line.buf[0] == '#')
-                        continue;
-+               if (is_absolute_path(line.buf)) {
-+                       add_to_alternates_file(line.buf);
-+                       continue;
-+               }
-                abs_path = mkpath("%s/objects/%s", src_repo, line.buf);
-                normalize_path_copy(abs_buf, abs_path);
-                add_to_alternates_file(abs_buf);
-
-
-Regards,
-Hui.
-
-Junio C Hamano wrote:
-> So I ended up tackling this myself. I didn't bother moving the
-> add_to_alternates_file(), though.
->
-> Junio C Hamano (2):
->   clone: allow more than one --reference
->   clone: clone from a repository with relative alternates
->
->  builtin/clone.c  |   82 +++++++++++++++++++++++++++++++++++++++++------------
->  sha1_file.c      |    2 +-
->  t/t5601-clone.sh |   23 +++++++++++++++
->  3 files changed, 87 insertions(+), 20 deletions(-)
->
->   
+Thanks.
