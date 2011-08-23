@@ -1,61 +1,66 @@
-From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: [PATCH] Mark http-fetch without -a as deprecated
-Date: Mon, 22 Aug 2011 20:51:43 -0400
-Message-ID: <1314060703-24265-1-git-send-email-bwalton@artsci.utoronto.ca>
-Cc: Ben Walton <bwalton@artsci.utoronto.ca>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Aug 23 02:51:53 2011
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/2] clone-local fixup
+Date: Mon, 22 Aug 2011 18:05:14 -0700
+Message-ID: <1314061516-24964-1-git-send-email-gitster@pobox.com>
+References: <7vliulun2a.fsf@alter.siamese.dyndns.org>
+Cc: Hui Wang <jason77.wang@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 23 03:05:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvfDc-0003Ea-5m
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 02:51:52 +0200
+	id 1QvfQi-0006TX-IJ
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 03:05:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754632Ab1HWAvs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Aug 2011 20:51:48 -0400
-Received: from jerry.cquest.utoronto.ca ([192.82.128.5]:38960 "EHLO
-	jerry.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754489Ab1HWAvr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Aug 2011 20:51:47 -0400
-Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:58105 ident=93)
-	by jerry.cquest.utoronto.ca with esmtp (Exim 4.63)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1QvfDW-0005eq-Re; Mon, 22 Aug 2011 20:51:46 -0400
-Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1QvfDW-0006Js-Qq; Mon, 22 Aug 2011 20:51:46 -0400
-X-Mailer: git-send-email 1.7.4.1
+	id S1754612Ab1HWBFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Aug 2011 21:05:20 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50512 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751719Ab1HWBFT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Aug 2011 21:05:19 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7E8DA4AAC;
+	Mon, 22 Aug 2011 21:05:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=uiVQ
+	Xak9VS8eOuQT+J8ZH98G6/o=; b=B4XDDPXeR9Ia11FdIgPoa3mZfDp97cj6ddvJ
+	s1f5RHv8n1wqmoSZx41alhwBz+dOUMwG7dt1sx4jIIqR4UcdV5AwTcfuXZ/WPwd5
+	JF85o+SOLEENS8cJdOLOD696qipqbjABtY5tWkQLWPrysdwxcUax9cCL3jU73hBU
+	I4aiLJI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
+	ckNihnz+7JqhB7ebxki45LtDQEjgG6eae5HS7+4VrelNNqZUzMGVAnFsOhXYmN/k
+	EDd99lnKFhFAlr8Ga1GGE8xUbIYx2D/K1JHMopv7pCvxSUkcSrZU+EMTIyAXrJNG
+	FOhp+GwEK13ItxTunIUyyQWaoadoArcJKPpNxy5vsck=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 744984AAB;
+	Mon, 22 Aug 2011 21:05:18 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E003B4AAA; Mon, 22 Aug 2011
+ 21:05:17 -0400 (EDT)
+X-Mailer: git-send-email 1.7.6.557.gcee42
+In-Reply-To: <7vliulun2a.fsf@alter.siamese.dyndns.org>
+X-Pobox-Relay-ID: F765609C-CD23-11E0-9EEE-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179908>
 
-As the use of http-fetch without -a can create an object store that is
-invalid to the point where it cannot even be fsck'd, mark it as
-deprecated.  A future release should change the default and then
-remove the option entirely.
+So I ended up tackling this myself. I didn't bother moving the
+add_to_alternates_file(), though.
 
-Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
----
- http-fetch.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+Junio C Hamano (2):
+  clone: allow more than one --reference
+  clone: clone from a repository with relative alternates
 
-diff --git a/http-fetch.c b/http-fetch.c
-index 3af4c71..003ddb7 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -56,6 +56,9 @@ int main(int argc, const char **argv)
- 		commits = 1;
- 	}
- 
-+	if (get_all == 0)
-+	  warning("http-fetch: use without -a is deprecated; -a will become the default in a future release");
-+
- 	if (argv[arg])
- 		str_end_url_with_slash(argv[arg], &url);
- 
+ builtin/clone.c  |   82 +++++++++++++++++++++++++++++++++++++++++------------
+ sha1_file.c      |    2 +-
+ t/t5601-clone.sh |   23 +++++++++++++++
+ 3 files changed, 87 insertions(+), 20 deletions(-)
+
 -- 
-1.7.4.1
+1.7.6.557.gcee42
