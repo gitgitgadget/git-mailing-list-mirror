@@ -1,81 +1,81 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: What's the difference between `git show branch:file | diff -u
- - file` vs `git diff branch file`?
-Date: Tue, 23 Aug 2011 22:07:43 +0200
-Message-ID: <4E54088F.7050700@drmicha.warpmail.net>
-References: <loom.20110823T091132-107@post.gmane.org> <4E537AF0.9070604@drmicha.warpmail.net> <1314096731.15017.2.camel@n900.home.ru> <4E53C89A.9000604@drmicha.warpmail.net> <7vk4a4rqvb.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 0/2] Add an update=none option for 'loose' submodules
+Date: Tue, 23 Aug 2011 22:18:11 +0200
+Message-ID: <4E540B03.2030909@web.de>
+References: <cover.1312923673.git.hvoigt@hvoigt.net> <7v8vqzreeo.fsf@alter.siamese.dyndns.org> <20110811195955.GA21185@book.hvoigt.net> <7vy5yujtr2.fsf@alter.siamese.dyndns.org> <20110822200052.GC11745@sandbox-rc> <7v62lpuky8.fsf@alter.siamese.dyndns.org> <20110823194350.GA57187@book.hvoigt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 23 22:07:51 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Tue Aug 23 22:18:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvxGJ-00051v-5d
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 22:07:51 +0200
+	id 1QvxQj-0001BC-Tm
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 22:18:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755681Ab1HWUHr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Aug 2011 16:07:47 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:37131 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755102Ab1HWUHp (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Aug 2011 16:07:45 -0400
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 56CB1209C6;
-	Tue, 23 Aug 2011 16:07:45 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute4.internal (MEProxy); Tue, 23 Aug 2011 16:07:45 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=xiCKmP12AKO9Ri1tvUGs4h
-	O7n0U=; b=kTb+Vmc5YjNfL+b/kGebsUO1JYlitEUN3LbEFao+IGI1DkLIuzKXxd
-	+MaLrxlCFAE/ZTjwZpgOq3hwc4A2Av3iv8/5fuhvtxIU+ctC7uDPltjkA3tyDzXB
-	dNzhy4/Fz6vn894DETzMZrTIkRjbT8o3OFrc7vwfJE0K/NEEFOs3A=
-X-Sasl-enc: CB+vclU6JUt6xmYU3JLO9d6X2BSjv9pV6PO4tFtRQLcL 1314130065
-Received: from localhost.localdomain (p54858E80.dip0.t-ipconnect.de [84.133.142.128])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 9B267720197;
-	Tue, 23 Aug 2011 16:07:44 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
-In-Reply-To: <7vk4a4rqvb.fsf@alter.siamese.dyndns.org>
+	id S1756010Ab1HWUSa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Aug 2011 16:18:30 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:53633 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755813Ab1HWUS0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Aug 2011 16:18:26 -0400
+Received: from smtp01.web.de  ( [172.20.0.243])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 226071A9093B5;
+	Tue, 23 Aug 2011 22:18:14 +0200 (CEST)
+Received: from [79.247.254.73] (helo=[192.168.178.43])
+	by smtp01.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1QvxQM-0003bl-00; Tue, 23 Aug 2011 22:18:14 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20110812 Thunderbird/6.0
+In-Reply-To: <20110823194350.GA57187@book.hvoigt.net>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX18GtVdUrsB1bkf+M9np+aLol4pVwXCaL93t0+J/
+	ePJvLmnA8i42ou9MmVYSzKk3JH+vw95y4E2/LuFngovKIthfMU
+	CaUa17qdht343fZTnmNg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179967>
 
-Junio C Hamano venit, vidit, dixit 23.08.2011 19:15:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
+Am 23.08.2011 21:43, schrieb Heiko Voigt:
+> On Mon, Aug 22, 2011 at 03:42:55PM -0700, Junio C Hamano wrote:
+>>> It is somewhat worrying that some parts of the system may still be using
+>>> that old criteria "do we have it in .git/config of the superproject?" to
+>>> decide if the user is interested in the submodule. If so they need to be
+>>> updated to take this new semantics "do we have it in .git/config without
+>>> its submodule.$name.update set to none" into account. We would probably
+>>> need to have a paragraph in the release notes to warn about the semantics
+>>> change (which I tend to agree with you that it is a good one).
 > 
->> Marat Radchenko venit, vidit, dixit 23.08.2011 12:52:
->>>> Is that a very large tree or a very slow file system?
->>> Tree is large (500k files), file system is irrelevant since all time is spend on CPU.
->>>
->>>> Do we enumerate all
->>>> differing files and only then limit diff output by path??
->>>
->>> Dunno, that's why I am asking why it is so slow.
->>
->> Well, we have to read the full tree before diffing.
-> 
-> Not necessarily, especially when pathspec is given like the original post,
-> i.e. "git diff $tree_ish -- $path". We would need to open tree objects
-> that lead to the leaf of the $path and a blob, but other objects won't be
-> needed.
+> Sorry that I forgot to answer to this. I am not sure what you mean by
+> "the semantics change". This patch does not change any existing
+> behavior. I rather see this as an extra way to specify the default
+> behavior of what happens on submodule update. If people do not use it
+> there will be no expectations broken.
 
-I meant: The way "git diff" is now, it does that.
+It might surprise people. E.g. when their old scripts don't work anymore as
+they did before because a submodule won't be populated or updated in the work
+tree even though it is present in .git/config. So I agree that this should be
+documented in the release notes so people can check if their expectations are
+still met.
 
-> 
-> The default diff backend tries to come up with minimal changes by spending
-> extra cycles, so it is not so surprising if the file compared is large-ish
-> and/or has very many similar lines in itself (in which case there are many
-> potential matching line pairs between the preimage and the postimage to be
-> examined to produce a minimal diff).
+> Another change I am thinking of (which would definitely need an entry in
+> the release notes) is to change submodule foreach to iterate over all
+> gitmodule entries in the index/HEAD/worktree (not sure yet) instead of
+> "just entries that are in .git/config".
 
-But the file in this case is not that large, and "git diff" spends 30s!
+When changing the default I think we'll surprise a lot of users (imagine
+someone running a "git submodule foreach pwd" when some submodules aren't
+populated). But adding an option to "git submodule foreach" (and maybe others)
+to get the list of submodules from the index or HEAD might make sense (while
+I'm not sure parsing the work tree does, as you'll basically have to pick up
+any .git you find. AFAICS a submodule is defined either by an entry in the
+.gitmodules file, in .git/config or through a gitlink entry in a commit or the
+index. So maybe the third alternative to index and HEAD is to use those found
+in .gitmodules?).
 
-Michael
+Could you describe a use case for that?
