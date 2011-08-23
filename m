@@ -1,114 +1,96 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: What's the difference between `git show branch:file | diff -u
- - file` vs `git diff branch file`?
-Date: Tue, 23 Aug 2011 17:34:50 +0200
-Message-ID: <4E53C89A.9000604@drmicha.warpmail.net>
-References: <loom.20110823T091132-107@post.gmane.org>   <4E537AF0.9070604@drmicha.warpmail.net> <1314096731.15017.2.camel@n900.home.ru>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: How to check out the repository at a particular point in time
+Date: Tue, 23 Aug 2011 15:54:57 +0000
+Message-ID: <CAMOZ1Bti3ZtAEOtLiUYSkWE+rO_VQd09NAn58Cn4hZBu8f-aFQ@mail.gmail.com>
+References: <201108221525.32982.trast@student.ethz.ch> <1314026326.37332.YahooMailClassic@web25408.mail.ukl.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Marat Radchenko <marat@slonopotamus.org>
-X-From: git-owner@vger.kernel.org Tue Aug 23 17:35:15 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Rast <trast@student.ethz.ch>, in-git-vger@baka.org,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Hilco Wijbenga <hilco.wijbenga@gmail.com>, git@vger.kernel.org
+To: rdiezmail-temp2@yahoo.de
+X-From: git-owner@vger.kernel.org Tue Aug 23 17:55:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qvt0V-0004Pm-7E
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 17:35:15 +0200
+	id 1QvtKE-0005OZ-3R
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 17:55:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755243Ab1HWPfA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Aug 2011 11:35:00 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:53620 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751959Ab1HWPex (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Aug 2011 11:34:53 -0400
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 3C65320AD7;
-	Tue, 23 Aug 2011 11:34:52 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute4.internal (MEProxy); Tue, 23 Aug 2011 11:34:52 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=PeaNkzlz3nvEtE33zv9XIW
-	/hTZs=; b=m6bjY9jCdsdmsPRFF04kMtNXt3HxgfoCUpC+36b5uMDC+5OCiLhrMk
-	FlfjXcEDrvEe2pLBa8vWwRAj9XiIuYfQa1p+ukSi0zgtQSc3HfR7SX89bQyCHbhs
-	cJ2vInfkIszeJLydJyxqBYvM5WFnRb2zA0EJfyxQyKw7PNQ21ImUI=
-X-Sasl-enc: +kYVLSzdRqL88ymNVG2N3xR6Vmg8HNVbAMWq5AT/vZK4 1314113691
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id B724E90152A;
-	Tue, 23 Aug 2011 11:34:51 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
-In-Reply-To: <1314096731.15017.2.camel@n900.home.ru>
+	id S1752435Ab1HWPza convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Aug 2011 11:55:30 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:43015 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754221Ab1HWPz2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Aug 2011 11:55:28 -0400
+Received: by gxk21 with SMTP id 21so192552gxk.19
+        for <git@vger.kernel.org>; Tue, 23 Aug 2011 08:55:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=9Ma9N/9QJ8mh4ERa2252dt1SzUfR2JmFbvwx78E+Wjs=;
+        b=MDXlBV5rW3XeJVOGzSjjToM993su/x0m/ihHcN3JD4A/ZACDP/nEOI+BCQXjk7wweY
+         Zx6L8u+oXOM6OyeSUKUf7WvRE1lzX84CR2R14N0CitfgizBVwGd47uJ1ZuS0NQjOW/gq
+         alw0YYC3iNHY63NIZtaXQpWSHLk1kMXUgAnGQ=
+Received: by 10.43.52.1 with SMTP id vk1mr3738100icb.129.1314114927108; Tue,
+ 23 Aug 2011 08:55:27 -0700 (PDT)
+Received: by 10.42.138.66 with HTTP; Tue, 23 Aug 2011 08:54:57 -0700 (PDT)
+In-Reply-To: <1314026326.37332.YahooMailClassic@web25408.mail.ukl.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179942>
 
-Marat Radchenko venit, vidit, dixit 23.08.2011 12:52:
->> Is that a very large tree or a very slow file system?
-> Tree is large (500k files), file system is irrelevant since all time is spend on CPU.
-> 
->> Do we enumerate all
->> differing files and only then limit diff output by path??
-> 
-> Dunno, that's why I am asking why it is so slow.
+On Mon, Aug 22, 2011 at 15:18, R. Diez <rdiezmail-temp2@yahoo.de> wrote=
+:
+>> The main problem is that your request is not very
+>> well-defined: in
+>> nonlinear history there will in general be more than one
+>> commit at the
+>> time requested.
+>>
+>> =C2=A0 =C2=A0 ---a----b----c----M----=C2=A0=C2=A0(M is a merge)
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 \=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ /
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0=C2=A0d-----e----f
+>>
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 ^----April 1st
+>>
+>> Suppose you ask git for "the newest commit as of April 1st"
+>> in this history.=C2=A0 Is it supposed to give you b or d?
+>
+> I still don't quite understand how git works, but let me
+> risk a naive statement here. If "a-b-c-M" were 'master',
+> and "d-e-f" were 'new-feature', then on April 1st the
+> current version on 'master' is 'b', because I merged the
+> 'new-feature' branch at a later point in time. Does that
+> make sense?
 
-Well, we have to read the full tree before diffing. But I can't
-reproduce the extreme difference which you observed (0.003s vs. 30s),
-only a factor of ten or so for a repo with 100k files:
+O! for the love all that is Holy!
 
-git init
-seq 0 100000|while read n ; do echo a > a$n;done
-git add .
-git commit -m m
-echo b > a0
+You see, guys? The term `branch' was a TERRIBLE choice.
 
-On a ramdisk, I get:
+What git calls `branch master' in your example is just a pointer to
+the commit object `M'; it has nothing to do with particular lineages
+like `a-b-c-M'.
 
-time git diff  > /dev/null
+Please see my discussion with Hilco, starting here:
 
-real    0m0.160s
-user    0m0.064s
-sys     0m0.190s
+  http://marc.info/?l=3Dgit&m=3D131364675708355&w=3D2
+  Message-ID: CAMOZ1BsZvXsnnWAPXR7UGKdqOMwuGB-ffaAPk55U_1dcjZUcDw@mail.=
+gmail.com
 
-time git diff -- a0 > /dev/null
+and this email in particular:
 
-real    0m0.070s
-user    0m0.051s
-sys     0m0.021s
+  http://marc.info/?l=3Dgit&m=3D131396006222173&w=3D2
+  Message-ID: CAMOZ1BvpnP_729YOHrrPW3B8wa5c4cLyD_qAQ5rTuy0JqNiiXg@mail.=
+gmail.com
 
-time git diff HEAD > /dev/null
+which also includes the following very germane link:
 
-real    0m0.266s
-user    0m0.145s
-sys     0m0.212s
-
-time git diff HEAD -- a0 > /dev/null
-
-real    0m0.171s
-user    0m0.136s
-sys     0m0.033s
-
-time git show HEAD:a0  > /dev/null
-
-real    0m0.018s
-user    0m0.009s
-sys     0m0.007s
-
-time git show HEAD:a0 | diff -u - a0 > /dev/null
-
-real    0m0.019s
-user    0m0.010s
-sys     0m0.008s
-
-Stumped.
-
-In your case, do you have a lot of differing files besides the one you
-are limitting to? Anyway, that does not seem to make a huge difference
-in my timings. (Just tried.) Still Stumped.
-
-Michael
+  http://slashdot.org/comments.pl?sid=3D2350536&cid=3D36903136
