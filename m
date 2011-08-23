@@ -1,68 +1,103 @@
-From: Lawrence Brett <lcbrett@gmail.com>
-Subject: git for game development?
-Date: Tue, 23 Aug 2011 16:06:47 -0700
-Message-ID: <416D1A48-9916-4E44-A200-3A13C39C4D70@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1084)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 24 01:06:59 2011
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCH/RFC 2/2] git-p4: Add complex test case for branch import
+Date: Tue, 23 Aug 2011 19:10:34 -0400
+Message-ID: <20110823231034.GA11918@arf.padd.com>
+References: <1313712590-26876-1-git-send-email-vitor.hda@gmail.com>
+ <1313712590-26876-3-git-send-email-vitor.hda@gmail.com>
+ <20110820191203.GC7135@arf.padd.com>
+ <20110822011319.0a013117@fenix.utopia.dhis.org>
+ <20110823022713.GA6005@arf.padd.com>
+ <CAOpHH-V92CcWm1tCwvb=pJux5PKbYQoG=E8M_Pc2JGu00wnR8Q@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Tor Arvid Lund <torarvid@gmail.com>
+To: Vitor Antunes <vitor.hda@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 24 01:10:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qw03b-0005Dt-Kj
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 01:06:56 +0200
+	id 1Qw07J-0006Uh-At
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 01:10:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755303Ab1HWXGv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Aug 2011 19:06:51 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:51864 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752730Ab1HWXGu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Aug 2011 19:06:50 -0400
-Received: by ywf7 with SMTP id 7so476827ywf.19
-        for <git@vger.kernel.org>; Tue, 23 Aug 2011 16:06:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=from:content-type:content-transfer-encoding:subject:date:message-id
-         :to:mime-version:x-mailer;
-        bh=wkeccO1SlsC69J7ex84sbpgvE61lRcA/sCApAh1KGA0=;
-        b=x9AuCt7ECnwgTPjeR+xgB0yOyt6FCudeaWpSEzXIIqMWWxhvv4OtpFTmhI4UgZvI3U
-         5KqXNYCe3Yz7GYhhs09frpZW/s3fQHgC+EMl4ybuIQzaHvTJiAzajNVk5zV+4goTRFjF
-         WX7/t/fcdLCSDg7jcGNo0352SeD89gF27dHxo=
-Received: by 10.150.159.16 with SMTP id h16mr4705781ybe.196.1314140809635;
-        Tue, 23 Aug 2011 16:06:49 -0700 (PDT)
-Received: from [192.168.1.107] (c-67-171-14-54.hsd1.wa.comcast.net [67.171.14.54])
-        by mx.google.com with ESMTPS id r2sm313920ybh.10.2011.08.23.16.06.48
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 23 Aug 2011 16:06:49 -0700 (PDT)
-X-Mailer: Apple Mail (2.1084)
+	id S1755301Ab1HWXKl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Aug 2011 19:10:41 -0400
+Received: from honk.padd.com ([74.3.171.149]:48915 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754432Ab1HWXKk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Aug 2011 19:10:40 -0400
+Received: from arf.padd.com (unknown [50.52.168.230])
+	by honk.padd.com (Postfix) with ESMTPSA id 491D85B51;
+	Tue, 23 Aug 2011 16:10:39 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 3E29E31448; Tue, 23 Aug 2011 19:10:34 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <CAOpHH-V92CcWm1tCwvb=pJux5PKbYQoG=E8M_Pc2JGu00wnR8Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179979>
 
-Hello,
+vitor.hda@gmail.com wrote on Tue, 23 Aug 2011 23:02 +0100:
+> On Tue, Aug 23, 2011 at 3:27 AM, Pete Wyckoff <pw@padd.com> wrote:
+> > I think I understand the problem now, and have a small test case
+> > to see what's going wrong. =A0Your solution is definitely
+> > sub-optimal. =A0:) =A0Is there anything that can be done with
+> > --import-marks and --export-marks?
+>=20
+> Don't know if you agree, but I think it would be better to keep git-p=
+4
+> from storing extra files in the filesystem. And, as far as I understo=
+od,
+> these two options require extra files.
+> But I don't think marks would help us that much. We already have
+> something similar: the changelist number in the commit log. The big
+> problem is that P4 does not store a pointer to the previous changelis=
+t.
 
-I am very interested in using git for game development.  I will be working
-with a lot of binaries (textures, 3d assets, etc.) in addition to source
-files.  I'd like to be able to version these files, but I understand that
-big binaries aren't git's forte.  I've found several possible workarounds
-(git submodules, git-media, git-annex), but the one that seems most
-promising is bup.  I started a thread on the bup mailing list to ask about
-the best way to use bup with git for my purposes.  One of the respondents
-suggested forking git itself to include bup functionality, thereby extending
-git to handle binaries efficiently.
+Agreed.
 
-My question for this group is:  would there be interest in incorporating
-this sort of functionality into git core?  I would certainly find it
-compelling as a user, but have no idea how it would fit into the bigger
-picture.
+> > Could you guess at the branch point using p4? =A0I.e. for each file
+> > in the new branch, grab the change that caused its most recent
+> > revision (the #xx part). =A0Pick the max of those changes. =A0In gi=
+t,
+> > find the commit whith "change =3D ..." that you just discovered.
+> > That's the parent.
+>=20
+> Yes, I think this would work. Nevertheless, I would prefer not to do =
+so
+> much pooling on the P4 server because when we're in a remote location=
+ in
+> regards to the P4 proxy server this kind of command becomes rather sl=
+ow.
+> And if the branch has many files this may become cumbersome.
+>=20
+> > Even this won't be perfect, and I'm not even sure if it's less
+> > icky than diff-tree.
+>=20
+> From what I can see, the two possible solutions would be:
+>=20
+> a) Running a "filelog" on all files. This may become slower when the
+>    branch has lots of files. There's also the problem in needing to
+>    contact the P4 proxy server every time.
+>=20
+> b) Using diff-tree. This will be slower if the original changelist is
+>    very far from the latest one, but has the advantage of being run
+>    locally. It has the disadvantage of not having an apparent
+>    compatibility with fast-import.
+>=20
+> In my personal point of view, diff-tree solution still looks better, =
+if
+> it weren't for the fast-import issue. Now if we could just figure out
+> how to overcome this issue...
 
-Thanks in advance!
+Nice analysis.  P4 can indeed be the bottleneck, even on near
+servers if there are lots of files.  Diff-tree seems like the
+better choice to find the branch point.  I don't understand fully
+why the way we are using fast-import causes these problems.  Will
+look at that next.
 
-Cliff
-
-P.S.  I also heartily welcome any advice/insight on my use case.  :-)
+		-- Pete
