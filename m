@@ -1,61 +1,62 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: What's cooking in git.git (Aug 2011, #03; Thu, 11)
-Date: Sat, 20 Aug 2011 22:11:30 +0100
-Message-ID: <4E502302.4000300@ramsay1.demon.co.uk>
-References: <7vr54rpogf.fsf@alter.siamese.dyndns.org> <4E4D7DD3.2000701@obry.net> <7vhb5e73hy.fsf@alter.siamese.dyndns.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [RFH] lifetime rule for url parameter to transport_get()?
+Date: Tue, 23 Aug 2011 13:04:09 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.1108231252520.2056@iabervon.org>
+References: <7vipppt175.fsf@alter.siamese.dyndns.org> <7vsjosrs0w.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: pascal@obry.net, git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 23 19:16:15 2011
+X-From: git-owner@vger.kernel.org Tue Aug 23 19:17:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvuaB-0007Oq-MZ
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 19:16:12 +0200
+	id 1Qvuay-0007mN-0O
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 19:17:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755405Ab1HWRQF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Aug 2011 13:16:05 -0400
-Received: from lon1-post-2.mail.demon.net ([195.173.77.149]:33928 "EHLO
-	lon1-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754156Ab1HWRQD (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Aug 2011 13:16:03 -0400
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by lon1-post-2.mail.demon.net with esmtp (Exim 4.69)
-	id 1Qvua1-0007PF-ZV; Tue, 23 Aug 2011 17:16:01 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <7vhb5e73hy.fsf@alter.siamese.dyndns.org>
+	id S1755422Ab1HWRQz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Aug 2011 13:16:55 -0400
+Received: from iabervon.org ([66.92.72.58]:53457 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751959Ab1HWRQx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Aug 2011 13:16:53 -0400
+Received: (qmail 26189 invoked by uid 1000); 23 Aug 2011 17:04:09 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 23 Aug 2011 17:04:09 -0000
+In-Reply-To: <7vsjosrs0w.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179953>
 
-Junio C Hamano wrote:
-> Pascal Obry <pascal@obry.net> writes:
+On Tue, 23 Aug 2011, Junio C Hamano wrote:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
->> Junio,
->>
->>> * po/cygwin-backslash (2011-08-05) 2 commits
->>>   - On Cygwin support both UNIX and DOS style path-names
->>>   - git-compat-util: add generic find_last_dir_sep that respects is_dir_sep
->>>
->>> I think a further refactoring (no, not my suggestion) was offered?
->> I think the current patchset is fine. It is always possible to improve
->> things but the current patch goes in the right direction. So to me it
->> is ready as-is.
+> > Does anybody remember why we use a copied string of "ref_git_copy" in
+> > builtin/clone.c::setup_reference()?
+> >
+> > 	ref_git = real_path(option_reference);
+> > 	...
+> > 	ref_git_copy = xstrdup(ref_git);
 > 
-> Not very assuring to hear that only from the original submitter, no?
+> It didn't have anything to do with transport/remote layer.
+> 
+> This codepath uses real_path() and optionally mkpath(), both of which
+> returns a short-lived static buffer to return its findings, and long-term
+> users are expected to copy it away.
 
-Commit 704c335 (On Cygwin support both UNIX and DOS style path-names,
-05-08-2011) in pu needs an update to fix the commit message.
+Yeah, that fits with my expectation, given the lack of a comment and the 
+fact that you were asking about clone and not also fetch.
 
-Also, I didn't see any response to Johannes Sixt's query concerning
-backslash in pathspec. (I personally don't want to go down that
-route, but ...)
+At least originally, the remote and transport data was expected to live 
+until the process exits, since it's a small, bounded number of small 
+objects. If I'd included functions to free the structures, I'd have had 
+them free the strings they were passed.
 
-ATB,
-Ramsay Jones
+	-Daniel
+*This .sig left intentionally blank*
