@@ -1,57 +1,62 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 4/4] Add documentation for ref namespaces
-Date: Tue, 23 Aug 2011 12:38:04 +0200
-Message-ID: <CACBZZX4bow8vwrwSL5uRJQtAgeg10_K+5ss8u-HvCHOn3+0Tuw@mail.gmail.com>
-References: <7vsjrna2x2.fsf@alter.siamese.dyndns.org>
-	<1307470885-4018-1-git-send-email-jamey@minilop.net>
-	<1307470885-4018-5-git-send-email-jamey@minilop.net>
-Mime-Version: 1.0
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: Re: [PATCH] Mark http-fetch without -a as deprecated
+Date: Tue, 23 Aug 2011 09:05:55 -0400
+Message-ID: <1314104698-sup-1594@pinkfloyd.chass.utoronto.ca>
+References: <1314060703-24265-1-git-send-email-bwalton@artsci.utoronto.ca> <vpqvcto391x.fsf@bauges.imag.fr>
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org, Josh Triplett <josh@joshtriplett.org>
-To: Jamey Sharp <jamey@minilop.net>
-X-From: git-owner@vger.kernel.org Tue Aug 23 12:38:18 2011
+Content-Transfer-Encoding: 8bit
+Cc: git <git@vger.kernel.org>, gitster <gitster@pobox.com>
+To: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Aug 23 15:06:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvoN7-0004BE-UO
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 12:38:18 +0200
+	id 1Qvqgh-0004qN-6U
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 15:06:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751427Ab1HWKiI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Aug 2011 06:38:08 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:62282 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751022Ab1HWKiG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Aug 2011 06:38:06 -0400
-Received: by fxh19 with SMTP id 19so144768fxh.19
-        for <git@vger.kernel.org>; Tue, 23 Aug 2011 03:38:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Rtlq+2XOJIvgJ3SJIfENVp0j9///ojj/xXpE+kKiNdM=;
-        b=Lf6SyxpmqdgpzFjTFvrsqC+FHjq5B5CRQiD3TZxjJRPApX3jgQP5ru3+uk8xyOd64Q
-         N7Kt9kMz5X5p8Brrf0JVHIx1iMhbRS1jBvh5KrR3lYE2WZajfAWeij9lBcO136LCgfHB
-         T9uUQVYIYWD6nHZYIL9Pt52ncZMHwYrpPlVzE=
-Received: by 10.223.100.145 with SMTP id y17mr104738fan.32.1314095884467; Tue,
- 23 Aug 2011 03:38:04 -0700 (PDT)
-Received: by 10.223.78.203 with HTTP; Tue, 23 Aug 2011 03:38:04 -0700 (PDT)
-In-Reply-To: <1307470885-4018-5-git-send-email-jamey@minilop.net>
+	id S1755402Ab1HWNG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Aug 2011 09:06:29 -0400
+Received: from jerry.cquest.utoronto.ca ([192.82.128.5]:57230 "EHLO
+	jerry.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754996Ab1HWNGD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Aug 2011 09:06:03 -0400
+Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:51171 ident=93)
+	by jerry.cquest.utoronto.ca with esmtp (Exim 4.63)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1Qvqfz-0002tU-6Y; Tue, 23 Aug 2011 09:05:55 -0400
+Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1Qvqfz-000266-5l; Tue, 23 Aug 2011 09:05:55 -0400
+In-reply-to: <vpqvcto391x.fsf@bauges.imag.fr>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179936>
 
-On Tue, Jun 7, 2011 at 20:21, Jamey Sharp <jamey@minilop.net> wrote:
+Excerpts from Matthieu Moy's message of Tue Aug 23 03:02:02 -0400 2011:
 
-> Document the namespace mechanism in a new gitnamespaces(7) page.
-> Reference it from receive-pack and upload-pack.
+Hi Matthieu,
 
-This breaks the build on older asciidoc versions, the fix is to do
-what I did in f5008f56d5aba06598e1c6272f4f55b4ee4bb016.
+> Bad indentation. Git indents with tabs, not spaces. Also, you can break
+> the line to make both the error message and the source code fit on 80
+> characters.
+
+Yes, sorry.  Too much dependence on emacs 'doing the right thing' I
+guess.  I'll fix both of these issues and resubmit.
+
+> No opinion on whether the deprecation is sensible, though. If it is,
+> add something in the documentation, not just in the code.
+
+Yes, good point.  I'll include this documentation change as well.
+
+Thanks
+-Ben
+--
+Ben Walton
+Systems Programmer - CHASS
+University of Toronto
+C:416.407.5610 | W:416.978.4302
