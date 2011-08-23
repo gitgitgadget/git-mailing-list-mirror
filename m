@@ -1,69 +1,73 @@
-From: Marat Radchenko <marat@slonopotamus.org>
-Subject: Re: What's the difference between `git show branch:file | diff -u
-	- file` vs `git diff branch file`?
-Date: Tue, 23 Aug 2011 20:45:02 +0400
-Message-ID: <1314117902.17151.2.camel@n900.home.ru>
-References: <loom.20110823T091132-107@post.gmane.org>
-	 <4E537AF0.9070604@drmicha.warpmail.net>
-	 <1314096731.15017.2.camel@n900.home.ru>
-	  <4E53C89A.9000604@drmicha.warpmail.net>
-Reply-To: Marat Radchenko <marat@slonopotamus.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFH] lifetime rule for url parameter to transport_get()?
+Date: Tue, 23 Aug 2011 09:50:39 -0700
+Message-ID: <7vsjosrs0w.fsf@alter.siamese.dyndns.org>
+References: <7vipppt175.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Aug 23 18:45:25 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 23 18:51:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qvu6N-0002re-4S
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 18:45:23 +0200
+	id 1QvuBo-0005Bl-TF
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 18:51:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755011Ab1HWQpS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Aug 2011 12:45:18 -0400
-Received: from static.231.38.47.78.clients.your-server.de ([78.47.38.231]:55160
-	"EHLO slonopotamus.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754245Ab1HWQpR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Aug 2011 12:45:17 -0400
-Received: from [85.26.155.88] (helo=[172.18.44.183])
-	by slonopotamus.org with esmtpsa (SSLv3:CAMELLIA256-SHA:256)
-	(Exim 4.76)
-	(envelope-from <marat@slonopotamus.org>)
-	id 1Qvu2Y-0006tH-Qm; Tue, 23 Aug 2011 20:41:29 +0400
-X-Mailer: Modest 3.90.7
-In-Reply-To: <4E53C89A.9000604@drmicha.warpmail.net>
-Content-ID: <1314117901.17151.1.camel@n900.home.ru>
+	id S1755450Ab1HWQut (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Aug 2011 12:50:49 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44616 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755366Ab1HWQum (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Aug 2011 12:50:42 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C14F34FBB;
+	Tue, 23 Aug 2011 12:50:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EjD52OnUID3b197a26Zy6AvE2nE=; b=jtEgRn
+	xrhhJcqS+OD4D0DzmTPXthAnAnv7+HvsBWl9EtFLE8eBnUK4Sre2g3VTzSSDXoZU
+	pLSQ39JEB5LxMmrmhAXuOXpPwF1VFroTDHDXUA3nSeR8fP3rmonlgu0swoapwwLE
+	mBiBOKnaS/IXLkZ5TXiIHHUHDxohWCYQPxumc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cKn+ABir7ilLJYKkGXBdVzN8pkzPj0Up
+	GLLJBpZpJEMdfH3l/+KQte7BpA4a+iFkTXl0etN8k5zMH9XzCpTRcOXlB4n2a7jD
+	dsYUqTc7/GOrIn6M6iQLnUrYtOcHbF2fBeCkrJGqo+amVdWI7AsIJ7neE3/1nax/
+	M/5MIi4fxYc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B23AE4FBA;
+	Tue, 23 Aug 2011 12:50:41 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 03B0E4FB7; Tue, 23 Aug 2011
+ 12:50:40 -0400 (EDT)
+In-Reply-To: <7vipppt175.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 22 Aug 2011 17:34:54 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 08FF35C4-CDA8-11E0-815C-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179948>
 
-On =D0=B2=D1=82 23 =D0=B0=D0=B2=D0=B3 2011 19:34:50 MSD, Michael J Grub=
-er <git@drmicha.warpmail.net> wrote:=20
-> Well, we have to read the full tree before diffing.
-I don't see why you need that.
+Junio C Hamano <gitster@pobox.com> writes:
 
-> But I can't
-> reproduce the extreme difference which you observed (0.003s vs. 30s)
-Well, I have an extreme repo (sadly, private) that has already shown se=
-veral scalability issues in various parts of git code. Hope this thread=
- will help to improve it.
+> Does anybody remember why we use a copied string of "ref_git_copy" in
+> builtin/clone.c::setup_reference()?
+>
+> 	ref_git = real_path(option_reference);
+> 	...
+> 	ref_git_copy = xstrdup(ref_git);
 
-> In your case, do you have a lot of differing files besides the one yo=
-u
-> are limitting to?
-1. I'm diffing a single (and rather small, <50kb) text file
-2. Diff is done between two branches (master and bugfix for a particula=
-r release) one of which (master) already has several thousands of commi=
-ts after fork, so yes, whole tree diffs a lot.
+It didn't have anything to do with transport/remote layer.
 
-P.S. Fix for [1] might somewhat improve the situation but it still isn'=
-t clear to me why whole tree needs to be processed when specific path i=
-s given. Btw, it is 30s even with --no-renames.
+This codepath uses real_path() and optionally mkpath(), both of which
+returns a short-lived static buffer to return its findings, and long-term
+users are expected to copy it away.
 
-[1] http://git.661346.n2.nabble.com/git-diff-is-slow-patience-is-fast-t=
-d6667216.html
+I'll add a comment to that effect in the code.
