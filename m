@@ -1,96 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] clone-local fixup
-Date: Tue, 23 Aug 2011 09:26:28 -0700
-Message-ID: <7vzkj0rt57.fsf@alter.siamese.dyndns.org>
-References: <7vliulun2a.fsf@alter.siamese.dyndns.org>
- <1314061516-24964-1-git-send-email-gitster@pobox.com>
- <4E5321C9.4080301@gmail.com>
+From: Marat Radchenko <marat@slonopotamus.org>
+Subject: Re: What's the difference between `git show branch:file | diff -u
+	- file` vs `git diff branch file`?
+Date: Tue, 23 Aug 2011 20:45:02 +0400
+Message-ID: <1314117902.17151.2.camel@n900.home.ru>
+References: <loom.20110823T091132-107@post.gmane.org>
+	 <4E537AF0.9070604@drmicha.warpmail.net>
+	 <1314096731.15017.2.camel@n900.home.ru>
+	  <4E53C89A.9000604@drmicha.warpmail.net>
+Reply-To: Marat Radchenko <marat@slonopotamus.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: Hui Wang <jason77.wang@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 23 18:26:42 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Aug 23 18:45:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvtoC-00030y-EH
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 18:26:36 +0200
+	id 1Qvu6N-0002re-4S
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 18:45:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753135Ab1HWQ0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Aug 2011 12:26:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33950 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751407Ab1HWQ0b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Aug 2011 12:26:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 60D444883;
-	Tue, 23 Aug 2011 12:26:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RWX2K0nXDpuNsRpzEKg6U4i90uY=; b=a7nhoA
-	zsc84VfRsXnEOGEZoDDvlkwYaVB/oj8q3c8tAfYCoGRgJCW59q9ARbGDUNPKa/np
-	W+Agvu2vdTYf5iPzE8ilLOD5ZWxYyqt6nZ6A54L3gDWWV+doyxGokg+ArqwKMYcO
-	CMb6dDVD1pOHwoXaT3AXZmJ8fOLrqMegN7GXE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PKZ/LdX0kEjIcIoABX1/raRiYeJbLX6w
-	/9VscfvVjB+J5r+8Z6OSxUjWl+cZuHlStsY/6x2NsQPwmxwl2HEQCYmQgaq4wNvo
-	b3kuxsW+CCxZrZcRWJzh9tagz3jLIciNyW0YeFuRp7cf6AVkeKPoZpPyLtam52Y3
-	I4Ix/KmqJhs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 57BF04882;
-	Tue, 23 Aug 2011 12:26:30 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AFE20487F; Tue, 23 Aug 2011
- 12:26:29 -0400 (EDT)
-In-Reply-To: <4E5321C9.4080301@gmail.com> (Hui Wang's message of "Tue, 23 Aug
- 2011 11:43:05 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A7F518BE-CDA4-11E0-9AD5-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755011Ab1HWQpS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Aug 2011 12:45:18 -0400
+Received: from static.231.38.47.78.clients.your-server.de ([78.47.38.231]:55160
+	"EHLO slonopotamus.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754245Ab1HWQpR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Aug 2011 12:45:17 -0400
+Received: from [85.26.155.88] (helo=[172.18.44.183])
+	by slonopotamus.org with esmtpsa (SSLv3:CAMELLIA256-SHA:256)
+	(Exim 4.76)
+	(envelope-from <marat@slonopotamus.org>)
+	id 1Qvu2Y-0006tH-Qm; Tue, 23 Aug 2011 20:41:29 +0400
+X-Mailer: Modest 3.90.7
+In-Reply-To: <4E53C89A.9000604@drmicha.warpmail.net>
+Content-ID: <1314117901.17151.1.camel@n900.home.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179947>
 
-Hui Wang <jason77.wang@gmail.com> writes:
+On =D0=B2=D1=82 23 =D0=B0=D0=B2=D0=B3 2011 19:34:50 MSD, Michael J Grub=
+er <git@drmicha.warpmail.net> wrote:=20
+> Well, we have to read the full tree before diffing.
+I don't see why you need that.
 
-> This patch series solved the problem from the root cause. :-)
->
-> But there is a little problem in the second patch, i provide an
-> incremental patch basing on your second patch, if it is fine to you,
-> it is OK to squash this patch to your second patch.
+> But I can't
+> reproduce the extreme difference which you observed (0.003s vs. 30s)
+Well, I have an extreme repo (sadly, private) that has already shown se=
+veral scalability issues in various parts of git code. Hope this thread=
+ will help to improve it.
 
-Thanks. We also need the following fix-up, as I changed the semantics of
-add_to_alternates_file() to take the path to the "objects" directory.
+> In your case, do you have a lot of differing files besides the one yo=
+u
+> are limitting to?
+1. I'm diffing a single (and rather small, <50kb) text file
+2. Diff is done between two branches (master and bugfix for a particula=
+r release) one of which (master) already has several thousands of commi=
+ts after fork, so yes, whole tree diffs a lot.
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 284e325..63c34d0 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -336,14 +336,17 @@ static const struct ref *clone_local(const char *src_repo,
- 				     const char *dest_repo)
- {
- 	const struct ref *ret;
--	struct strbuf src = STRBUF_INIT;
--	struct strbuf dest = STRBUF_INIT;
- 	struct remote *remote;
- 	struct transport *transport;
- 
--	if (option_shared)
--		add_to_alternates_file(src_repo);
--	else {
-+	if (option_shared) {
-+		struct strbuf alt = STRBUF_INIT;
-+		strbuf_addf(&alt, "%s/objects", src_repo);
-+		add_to_alternates_file(alt.buf);
-+		strbuf_release(&alt);
-+	} else {
-+		struct strbuf src = STRBUF_INIT;
-+		struct strbuf dest = STRBUF_INIT;
- 		strbuf_addf(&src, "%s/objects", src_repo);
- 		strbuf_addf(&dest, "%s/objects", dest_repo);
- 		copy_or_link_directory(&src, &dest, src_repo, src.len);
+P.S. Fix for [1] might somewhat improve the situation but it still isn'=
+t clear to me why whole tree needs to be processed when specific path i=
+s given. Btw, it is 30s even with --no-renames.
+
+[1] http://git.661346.n2.nabble.com/git-diff-is-slow-patience-is-fast-t=
+d6667216.html
