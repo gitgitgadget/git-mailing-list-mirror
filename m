@@ -1,84 +1,52 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Prevent force-updating of the current branch
-Date: Tue, 23 Aug 2011 11:20:59 -0700
-Message-ID: <7v39gsrnuc.fsf@alter.siamese.dyndns.org>
-References: <1313876989-16328-1-git-send-email-conrad.irwin@gmail.com>
- <1313876989-16328-2-git-send-email-conrad.irwin@gmail.com>
+From: Marat Radchenko <marat@slonopotamus.org>
+Subject: Re: What's the difference between =?utf-8?b?YGdpdA==?= show branch:file =?utf-8?b?fA==?= diff -u - =?utf-8?b?ZmlsZWA=?= vs =?utf-8?b?YGdpdA==?= diff branch =?utf-8?b?ZmlsZWA/?=
+Date: Tue, 23 Aug 2011 18:21:48 +0000 (UTC)
+Message-ID: <loom.20110823T201645-980@post.gmane.org>
+References: <loom.20110823T091132-107@post.gmane.org> <4E537AF0.9070604@drmicha.warpmail.net> <1314096731.15017.2.camel@n900.home.ru> <4E53C89A.9000604@drmicha.warpmail.net> <7vk4a4rqvb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Conrad Irwin <conrad.irwin@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 23 20:21:20 2011
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 23 20:22:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qvvb7-0002J0-3l
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 20:21:13 +0200
+	id 1Qvvbz-0002kO-RL
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 20:22:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755226Ab1HWSVG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Aug 2011 14:21:06 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53888 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753128Ab1HWSVD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Aug 2011 14:21:03 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 339F24B79;
-	Tue, 23 Aug 2011 14:21:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=PNTZzKogWcGPgogCqwy1IL5VaQw=; b=s93NSan2E3XL7VpPHBS4
-	QODtw5NiGsUXLbUywVbFY4/TULFQ45WAger+Wh5k3CS7y04o77xFxf8s2rfYQn5f
-	+w9qXdP0Q1RUBvM6rTp+ChviEEmUrcFT+v6BIfh8z+bfERBAcXdQkHBWTyRAMy4w
-	PulqTf1q3KcbThvCL5e15nI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=bAQX7yizsblV3Hct1Cqacv3ltBxx69YN7WyTsBts8UjUa6
-	A99r4K4nbI8hyQiguv4FwYXbxUASouEcKw7DMuvKBk14+AYZSGeOY3pEtQcaMhPp
-	2qluzJP7Voqc1q/NFzhxOWCFHwFZMwfvhyikIt4fV/A/aIaXsSsIh2HrVBOYs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AEEA34B77;
-	Tue, 23 Aug 2011 14:21:01 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 177894B71; Tue, 23 Aug 2011
- 14:21:00 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: A79E05AA-CDB4-11E0-9F0D-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753460Ab1HWSWD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Aug 2011 14:22:03 -0400
+Received: from lo.gmane.org ([80.91.229.12]:60546 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751997Ab1HWSWB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Aug 2011 14:22:01 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Qvvbr-0002h2-DJ
+	for git@vger.kernel.org; Tue, 23 Aug 2011 20:21:59 +0200
+Received: from core-gate-01-v50-x3.possvyaz.ru ([core-gate-01-v50-x3.possvyaz.ru])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 23 Aug 2011 20:21:59 +0200
+Received: from marat by core-gate-01-v50-x3.possvyaz.ru with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 23 Aug 2011 20:21:59 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 176.57.72.68 (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.107 Safari/535.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179957>
 
-Conrad Irwin <conrad.irwin@gmail.com> writes:
-
-> git branch -M <foo> <current-branch> could be used to change the branch
-> to which HEAD points, without the necessary house-keeping that git reset
-> normally does to make this operation sensible. It would leave the reflog
-> in a confusing state (you would be warned when trying to read it) and
-> had an apparently side-effect of staging the diff between <current branch>
-> and <foo>.
-
-The last two lines are redundant (it is "without the house-keeping of
-reset"); I'll remove "and had an apparently...".
-
-> git checkout -B <current branch> <foo> was also partly vulnerable to
-> this bug; due to inconsistent pre-flight checks it would perform half of
-> its task and then abort just before rewriting the branch. Again this
-> manifested itself as the index file getting out-of-sync with HEAD.
->
-> git checkout -f already guarded against this problem, and aborted with
-> a fatal error.
-
-I assume you mean "branch -f". I'll rewrite it so, and in the present
-tense.
-
-> git branch -M, git checkout -B and git branch -f now use the same checks
-> before allowing a branch to be created. These prevent you from updating
-> the current branch.
-
-Looks good ;-). Also the patch looks good, too.
-
-Thanks.
+Junio C Hamano <gitster <at> pobox.com> writes:
+> Not necessarily, especially when pathspec is given like the original post,
+> i.e. "git diff $tree_ish -- $path". We would need to open tree objects
+> that lead to the leaf of the $path and a blob, but other objects won't be
+> needed.
+And git show branch:path already has that code.
