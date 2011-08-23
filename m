@@ -1,74 +1,124 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] git-svn: Destroy the cache when we fail to read it
-Date: Mon, 22 Aug 2011 21:36:37 -0500
-Message-ID: <20110823023637.GB4623@elie.gateway.2wire.net>
-References: <1313979422-21286-1-git-send-email-jgross@mit.edu>
- <20110823022717.GA4623@elie.gateway.2wire.net>
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: Re: Restoring timestamps (Re: Branches & directories)
+Date: Mon, 22 Aug 2011 20:06:46 -0700
+Message-ID: <CAE1pOi1J=TWUmJKZorotBsDoz3wozXsioN7fVO=7JBxdMD7Zqg@mail.gmail.com>
+References: <CAMOZ1BtOkwVbC3RyJVQb7K1DRMnJf3_omn7zrkzoE48Ayu7HBg@mail.gmail.com>
+	<CAE1pOi0jZT_HCEV8UDzEOQeuCcDeqxoKGUEk3bJm=O2eJSHfkg@mail.gmail.com>
+	<CAMOZ1Bu5pPeviyZD-e6aHbv-+tSaBDyyKb5vHA132K_3=1gD-g@mail.gmail.com>
+	<CAE1pOi0dL2qNMksuY_=gyGSRsfr6e9AmzgJUNB=jEz85sjuiUw@mail.gmail.com>
+	<CAGZ=bqK7H3zc8LK7EP8+uV8DpWW+czK2POfceGtcBF8Vmkhkow@mail.gmail.com>
+	<CAE1pOi1J5DKtnyUQzu1K7G1+HLsWWCN7thCf6W8MwSzt4_vtOw@mail.gmail.com>
+	<CAGZ=bqLZoLoyMcvnppg6SyFtJU8phSquQeBZ7uhwP=+ZL3DADw@mail.gmail.com>
+	<CAE1pOi0Er1ZgftpNeCr85Zu27xR2127V_KdAtvKc1NOKmDUvzQ@mail.gmail.com>
+	<CAGZ=bqLyS9tcpqztwGWFOXtDJRhugu+JYvz7wTnc0PTmECWX2g@mail.gmail.com>
+	<CAE1pOi1axNmGaPVXqBH02x0N=Z6tgO9R00RTokuJm50eY-OoNg@mail.gmail.com>
+	<20110822210141.GA3880@elie.gateway.2wire.net>
+	<CAE1pOi1+nnpnHAuhYsXcfFNUroW0JcDQKLu6D7YNrUwJg0tXPw@mail.gmail.com>
+	<CAFzf2Xw6=BFsKauYTG-4cw0D_LzLSNb_wqz8dQJ83wJHNQXbdg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-To: Jason Gross <jgross@MIT.EDU>
-X-From: git-owner@vger.kernel.org Tue Aug 23 04:36:48 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Kyle Moffett <kyle@moffetthome.net>,
+	Michael Witten <mfwitten@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Evan Shelhamer <shelhamer@imaginarynumber.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 23 05:06:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qvgr8-0002Fh-HN
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 04:36:46 +0200
+	id 1QvhKG-0000cg-Qr
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 05:06:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754565Ab1HWCgm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Aug 2011 22:36:42 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:64248 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751491Ab1HWCgl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Aug 2011 22:36:41 -0400
-Received: by qwk3 with SMTP id 3so3319450qwk.19
-        for <git@vger.kernel.org>; Mon, 22 Aug 2011 19:36:41 -0700 (PDT)
+	id S1754962Ab1HWDGt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Aug 2011 23:06:49 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:59025 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754931Ab1HWDGr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Aug 2011 23:06:47 -0400
+Received: by gxk21 with SMTP id 21so4044536gxk.19
+        for <git@vger.kernel.org>; Mon, 22 Aug 2011 20:06:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=LofbLur+PD1wLMKfj8GK52cQBFc0EUTfrFSOoJOuSJs=;
-        b=DcRDjGMG4CQN7Yc+rrx4sS1Icc6J3rh9HQZAdKuiMasurWE23WGET5Mja2lb5PB43t
-         T+76hbAbDdFSnddFwoMOb3K8eU7/gckHQ3YA16jQyx/TpaKC5sxtUwdClnjstApBnvtE
-         ARYOBSxi/O2FIUrDWhzTXNt9ytnrRYMlyvp3o=
-Received: by 10.224.188.135 with SMTP id da7mr1807703qab.131.1314067000783;
-        Mon, 22 Aug 2011 19:36:40 -0700 (PDT)
-Received: from elie.gateway.2wire.net (adsl-68-255-106-27.dsl.chcgil.ameritech.net [68.255.106.27])
-        by mx.google.com with ESMTPS id h16sm1299676qct.20.2011.08.22.19.36.39
-        (version=SSLv3 cipher=OTHER);
-        Mon, 22 Aug 2011 19:36:40 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20110823022717.GA4623@elie.gateway.2wire.net>
-User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=KF2lNBI/ghL+g5VX0EK+puaT+ga6l72f8WE8lgVfvdA=;
+        b=JSWTqbvcIWGnqFxm2h2jnt0JVw/gpZ/g2TV+g1jGoxx8nEIY16H4GyxTIQaUxcgvDa
+         rHvHHa8+OZVJ8iWcMmYvqMthE+VbefGMxD0/uvfsJN+G7CS6ClmBBaupoXPa84FDj3u3
+         H4IRnTqBkloYGsj593Y3S3JkUOck8zFrABpWE=
+Received: by 10.236.136.167 with SMTP id w27mr19598195yhi.102.1314068806796;
+ Mon, 22 Aug 2011 20:06:46 -0700 (PDT)
+Received: by 10.236.207.67 with HTTP; Mon, 22 Aug 2011 20:06:46 -0700 (PDT)
+In-Reply-To: <CAFzf2Xw6=BFsKauYTG-4cw0D_LzLSNb_wqz8dQJ83wJHNQXbdg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179915>
 
-Jonathan Nieder wrote:
+On 22 August 2011 16:21, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Hilco Wijbenga wrote:
+>
+>> You mean an extra dotfile per file in the commit?
+>
+> Let me step back a moment.
+>
+> When you mentioned mtime, a switch went off and reminded me of the
+> problem of metadata in general, especially owner and permissions. That
+> problem is important for people keeping track of /etc or $HOME in
+> version control (always a little dangerous because of the effect of a
+> stray "git reset --hard", but never mind). And the last time it came
+> up, I convinced myself that a hook script setting up entries in
+> .gitattributes, .gitmetadata, or .etckeepr with information like "all
+> files are owned by root:root unless otherwise specified" could be a
+> good and not too invasive way to deal with that.
+>
+> Now that you remind me that the mtime of every file is likely to
+> differ from every other file, it is harder to imagine what situation
+> would make this meaningful information that should be stored in the
+> repository and shared with other people. It seems more like something
+> associated to the worktree, which fits more closely with what you are
+> trying to do, anyway.
 
-> [This patch teaches "git svn" to invalidate caches when they
->  fail to load, for example because the endianness or size of
->  some type changed, which is common in the perl 5.6 -> 5.8
->  upgrade.]
+Yes, indeed.
 
-Erm, actually it showed up in the perl 5.10 -> 5.12 upgrade in Debian,
-due to use of -Duse64bitint when compiling the latter and not the
-former[1].
+> Regarding the problem "eclipse metadata is not carried over from one
+> worktree to another", isn't that going to be a problem regardless? In
+> your proposed setup, each time you stash everything and start work on
+> a different branch, the eclipse metadata before would be stashed along
+> with everything else, which doesn't make anything any easier (unless
+> disk space is very scarce or metadata stores the absolute path to the
+> cwd).
 
-To summarize:
+Eclipse is a wonderful IDE except for how it makes sharing workspaces
+practically impossible (where "share" means "put in SCM", not "used my
+several developers at the same time"). It's mostly (AFAICT) binary
+data with lots of absolute paths. So it's a pain but it doesn't make
+my scenario all that much more complicated.
 
- - "$Storable::interwork_56_64bit = 1;" can be used to work around
-   that particular brand of breakage;
+The hard part is creating a new branch. Somehow I would need to
+duplicate the state in the parent branch in the child branch. It needs
+to be duplicated because I need to be able to do git stash in the
+child branch *and* the parent branch. Is it possible to do git stash
+pop without losing the stash? Or to "copy" a stash? Otherwise, it's
+probably easier to simply write a separate script to do it. That
+should not be very hard. I would not use git stash at all.
 
- - The interwork_* option does not take care of similar cases in which
-   a git-svn repository is generated on one machine and read by
-   another[2], though.
+For a new branch, the script would
+1. in "parent", move workspace (i.e. the root working dir, where .git
+is)  into .git/branches/parent/
+2. create and jump to "child"
+3. in "child", copy .git/branches/parent into workspace (so creating a
+new branch is no longer a cheap operation)
 
-Hence my happiness at the arrival of Jason's patch.
+For an existing branch, the script would
+1. in "current-branch", move workspace into .git/branches/current-branch
+2. jump to "other-branch"
+3. in "other-branch", move .git/branches/other-branch into workspace
 
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=32;bug=618875
-[2] http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=20;bug=587650
+The moves (assuming everything is on the same partition) should make
+switching branches relatively cheap. Not very elegant (quite brute
+force in fact) but it's simple and I think it would work. Or did I
+overlook something? Better/other ideas are certainly welcome. :-)
