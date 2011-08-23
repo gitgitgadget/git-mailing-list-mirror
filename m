@@ -1,63 +1,62 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] Mark http-fetch without -a as deprecated
-Date: Tue, 23 Aug 2011 09:02:02 +0200
-Message-ID: <vpqvcto391x.fsf@bauges.imag.fr>
-References: <1314060703-24265-1-git-send-email-bwalton@artsci.utoronto.ca>
+From: Marat Radchenko <marat@slonopotamus.org>
+Subject: What's the difference between =?utf-8?b?YGdpdA==?= show branch:file =?utf-8?b?fA==?= diff -u - =?utf-8?b?ZmlsZWA=?= vs =?utf-8?b?YGdpdA==?= diff branch =?utf-8?b?ZmlsZWA/?=
+Date: Tue, 23 Aug 2011 07:25:17 +0000 (UTC)
+Message-ID: <loom.20110823T091132-107@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Ben Walton <bwalton@artsci.utoronto.ca>
-X-From: git-owner@vger.kernel.org Tue Aug 23 09:03:02 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 23 09:25:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qvl0m-0001jF-VW
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 09:03:01 +0200
+	id 1QvlMi-0000cf-1H
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 09:25:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751589Ab1HWHC4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Aug 2011 03:02:56 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:48225 "EHLO rominette.imag.fr"
+	id S1751624Ab1HWHZg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Aug 2011 03:25:36 -0400
+Received: from lo.gmane.org ([80.91.229.12]:48266 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750725Ab1HWHCz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Aug 2011 03:02:55 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p7N71mi7024842
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 23 Aug 2011 09:01:48 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Qvkzq-0007TA-9p; Tue, 23 Aug 2011 09:02:02 +0200
-In-Reply-To: <1314060703-24265-1-git-send-email-bwalton@artsci.utoronto.ca>
-	(Ben Walton's message of "Mon, 22 Aug 2011 20:51:43 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 23 Aug 2011 09:01:53 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p7N71mi7024842
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1314687715.69982@7MqIC/Mn74M5LPwu8Iu6FA
+	id S1751254Ab1HWHZf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Aug 2011 03:25:35 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1QvlMb-0000b0-52
+	for git@vger.kernel.org; Tue, 23 Aug 2011 09:25:33 +0200
+Received: from 195.218.191.171 ([195.218.191.171])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 23 Aug 2011 09:25:33 +0200
+Received: from marat by 195.218.191.171 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 23 Aug 2011 09:25:33 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 195.218.191.171 (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179926>
 
-Ben Walton <bwalton@artsci.utoronto.ca> writes:
+$ time git show branch:file | diff -u - file > /dev/null 
 
-> +	if (get_all == 0)
-> +	  warning("http-fetch: use without -a is deprecated; -a will become the default in a future release");
+real    0m0.003s
+user    0m0.000s
+sys     0m0.000s
 
-Bad indentation. Git indents with tabs, not spaces. Also, you can break
-the line to make both the error message and the source code fit on 80
-characters.
+$ time git diff branch -- file > /dev/null 
 
-No opinion on whether the deprecation is sensible, though. If it is, add
-something in the documentation, not just in the code.
+real    0m31.442s
+user    0m31.040s
+sys     0m0.380s
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+What does git diff do so it takes that much time? And is there any flag to git 
+diff so that it will work as fast as show + diff? I thought these two are 
+equivalent but from run time it is obvious that they aren't.
+
+gprof output: http://slonopotamus.org/git-diff/git-diff-branch.gprof.txt
