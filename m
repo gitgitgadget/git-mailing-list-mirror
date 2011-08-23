@@ -1,122 +1,74 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH] git-svn: Destroy the cache when we fail to read it
-Date: Mon, 22 Aug 2011 21:27:17 -0500
-Message-ID: <20110823022717.GA4623@elie.gateway.2wire.net>
+Date: Mon, 22 Aug 2011 21:36:37 -0500
+Message-ID: <20110823023637.GB4623@elie.gateway.2wire.net>
 References: <1313979422-21286-1-git-send-email-jgross@mit.edu>
+ <20110823022717.GA4623@elie.gateway.2wire.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
 To: Jason Gross <jgross@MIT.EDU>
-X-From: git-owner@vger.kernel.org Tue Aug 23 04:27:38 2011
+X-From: git-owner@vger.kernel.org Tue Aug 23 04:36:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvgiH-0000BU-Kq
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 04:27:37 +0200
+	id 1Qvgr8-0002Fh-HN
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 04:36:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754908Ab1HWC10 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Aug 2011 22:27:26 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:48102 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754894Ab1HWC1Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Aug 2011 22:27:25 -0400
-Received: by qyk34 with SMTP id 34so2574812qyk.19
-        for <git@vger.kernel.org>; Mon, 22 Aug 2011 19:27:25 -0700 (PDT)
+	id S1754565Ab1HWCgm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Aug 2011 22:36:42 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:64248 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751491Ab1HWCgl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Aug 2011 22:36:41 -0400
+Received: by qwk3 with SMTP id 3so3319450qwk.19
+        for <git@vger.kernel.org>; Mon, 22 Aug 2011 19:36:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=6rM9UuucOuvDMC6HoxDtekF0hNYRjAe1Dfwaf6mJWIc=;
-        b=w05KEGN7lWmFISZjjRnw9DCopQQndZZTfHzq3+YoJQZWiVl/jdpu1+S90u/p87iJR1
-         1L4JXbU+vrqT69JAYS3Z3jmt8wukRShrGnn9SiLvZlc+Ed3/kxuFFdKiqoYu9rHzvZtg
-         Nd1QrA1nKy3fJCmYQA8/kpjSboRcsgOmGQO/4=
-Received: by 10.224.113.9 with SMTP id y9mr2128533qap.226.1314066444902;
-        Mon, 22 Aug 2011 19:27:24 -0700 (PDT)
-Received: from elie.gateway.2wire.net (adsl-68-255-106-27.dsl.chcgil.sbcglobal.net [68.255.106.27])
-        by mx.google.com with ESMTPS id gl6sm10389995qab.6.2011.08.22.19.27.22
+        bh=LofbLur+PD1wLMKfj8GK52cQBFc0EUTfrFSOoJOuSJs=;
+        b=DcRDjGMG4CQN7Yc+rrx4sS1Icc6J3rh9HQZAdKuiMasurWE23WGET5Mja2lb5PB43t
+         T+76hbAbDdFSnddFwoMOb3K8eU7/gckHQ3YA16jQyx/TpaKC5sxtUwdClnjstApBnvtE
+         ARYOBSxi/O2FIUrDWhzTXNt9ytnrRYMlyvp3o=
+Received: by 10.224.188.135 with SMTP id da7mr1807703qab.131.1314067000783;
+        Mon, 22 Aug 2011 19:36:40 -0700 (PDT)
+Received: from elie.gateway.2wire.net (adsl-68-255-106-27.dsl.chcgil.ameritech.net [68.255.106.27])
+        by mx.google.com with ESMTPS id h16sm1299676qct.20.2011.08.22.19.36.39
         (version=SSLv3 cipher=OTHER);
-        Mon, 22 Aug 2011 19:27:23 -0700 (PDT)
+        Mon, 22 Aug 2011 19:36:40 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1313979422-21286-1-git-send-email-jgross@mit.edu>
+In-Reply-To: <20110823022717.GA4623@elie.gateway.2wire.net>
 User-Agent: Mutt/1.5.21+46 (b01d63af6fea) (2011-07-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179914>
 
-(+cc: Eric Wong)
-Hi Jason,
+Jonathan Nieder wrote:
 
-Jason Gross wrote:
+> [This patch teaches "git svn" to invalidate caches when they
+>  fail to load, for example because the endianness or size of
+>  some type changed, which is common in the perl 5.6 -> 5.8
+>  upgrade.]
 
-[This patch teaches "git svn" to invalidate caches when they
- fail to load, for example because the endianness or size of
- some type changed, which is common in the perl 5.6 -> 5.8
- upgrade.]
+Erm, actually it showed up in the perl 5.10 -> 5.12 upgrade in Debian,
+due to use of -Duse64bitint when compiling the latter and not the
+former[1].
 
-> http://lists.debian.org/debian-perl/2011/05/msg00023.html and
-> http://lists.debian.org/debian-perl/2011/05/msg00026.html).
-[...]
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -1680,7 +1680,7 @@ use vars qw/$default_repo_id $default_ref_id $_no_metadata $_follow_parent
->              $_use_svnsync_props $no_reuse_existing $_minimize_url
->  	    $_use_log_author $_add_author_from $_localtime/;
->  use Carp qw/croak/;
-> -use File::Path qw/mkpath/;
-> +use File::Path qw/mkpath rmtree/;
->  use File::Copy qw/copy/;
->  use IPC::Open3;
->  use Memoize;  # core since 5.8.0, Jul 2002
-> @@ -3198,28 +3198,41 @@ sub has_no_changes {
->  		$memoized = 1;
->  
->  		my $cache_path = "$ENV{GIT_DIR}/svn/.caches/";
-> -		mkpath([$cache_path]) unless -d $cache_path;
-> -
-> -		tie my %lookup_svn_merge_cache => 'Memoize::Storable',
-[...]
-> -		;
-> +		my $do_memoization = sub {
-> +			mkpath([$cache_path]) unless -d $cache_path;
-[...]
-> +			;
-> +		};
-> +
-> +		if (not eval {
-> +			$do_memoization->();
-> +			1;
-> +		}) {
-> +			my $err = $@ || "Zombie error"; # "Zombie error" to catch clobbered $@ in buggy destructors
-> +			die $err unless -d $cache_path;
-> +			print STDERR "Discarding cache and trying again ($@)\n";
-> +			rmtree([$cache_path]);
-> +			$do_memoization->();
-> +		}
+To summarize:
 
-Thank you thank you thank you.
+ - "$Storable::interwork_56_64bit = 1;" can be used to work around
+   that particular brand of breakage;
 
-Okay, time for nitpicks:
+ - The interwork_* option does not take care of similar cases in which
+   a git-svn repository is generated on one machine and read by
+   another[2], though.
 
- 1) Would it be possible to lift this do_memoization() to a toplevel sub?
-    I suspect that could make the code a little easier to read.
+Hence my happiness at the arrival of Jason's patch.
 
- 2) Is it important to discard the cache for _all_ errors, instead
-    of just corruption and "is not compatible" errors?  Rebuilding the
-    cache is not cheap, and I am afraid of effects like repeatedly
-    discarding the cache only to rebuild it again due to a typo in
-    git-svn.perl or an out-of-memory condition.
-
- 3) The line with "Zombie error" is very long --- I guess putting the
-    comment on the line before would help.
-
- 4) The series would be clearer imho as a single patch that includes
-    both the fix and tests.
-
-Eric, what do you think?
-
-Thanks again, :)
-Jonathan
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=32;bug=618875
+[2] http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=20;bug=587650
