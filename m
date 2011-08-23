@@ -1,79 +1,75 @@
-From: Conrad Irwin <conrad.irwin@gmail.com>
-Subject: Re: [PATCH 1/2] Prevent force-updating of the current branch
-Date: Tue, 23 Aug 2011 12:20:23 -0700
-Message-ID: <CAOTq_ptTsO01XvjMcBcWNaOQHvwm7cHP2AzSRpbSzox-NNj7Rg@mail.gmail.com>
-References: <1313876989-16328-1-git-send-email-conrad.irwin@gmail.com>
- <1313876989-16328-2-git-send-email-conrad.irwin@gmail.com> <7v39gsrnuc.fsf@alter.siamese.dyndns.org>
+From: "Nathan W. Panike" <nathan.panike@gmail.com>
+Subject: Looking for a way to turn off/modify ref disambiguation
+Date: Tue, 23 Aug 2011 14:26:48 -0500
+Message-ID: <CAPRoxBXjL3Y3KRd8R2guX9Ar374sw-pBhz1bCzNZxn1vC6XNPw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 23 21:20:53 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 23 21:26:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvwWm-0001pN-Ui
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 21:20:49 +0200
+	id 1Qvwcg-0004Is-Iu
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 21:26:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755287Ab1HWTUp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Aug 2011 15:20:45 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:62722 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752070Ab1HWTUo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Aug 2011 15:20:44 -0400
-Received: by gya6 with SMTP id 6so337436gya.19
-        for <git@vger.kernel.org>; Tue, 23 Aug 2011 12:20:43 -0700 (PDT)
+	id S1755665Ab1HWT0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Aug 2011 15:26:49 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:37698 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755304Ab1HWT0t (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Aug 2011 15:26:49 -0400
+Received: by ywf7 with SMTP id 7so339073ywf.19
+        for <git@vger.kernel.org>; Tue, 23 Aug 2011 12:26:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=bB/PXW+lzp3hZwtykxFfC/WcEb5SLruXstKVM/fPiYQ=;
-        b=Q06wqzIfNGKjBYG8Du3lIRAzvcuNszXeyWJPdCP1LuNF/SPkjySTBUdnYQSChEr8vd
-         BdYITBvzOXIMWswWBa+um1NrowZ2eK138nnazmuQQ0MOFxCAPlG4PDucZsGpBJ3xOv04
-         JZh4O4U/OOBgbQcjrSgwxJtb1RoLAd2GT1ghg=
-Received: by 10.236.157.104 with SMTP id n68mr2009175yhk.74.1314127243148;
- Tue, 23 Aug 2011 12:20:43 -0700 (PDT)
-Received: by 10.236.95.131 with HTTP; Tue, 23 Aug 2011 12:20:23 -0700 (PDT)
-In-Reply-To: <7v39gsrnuc.fsf@alter.siamese.dyndns.org>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=jsOXxAVud4rR6xYpKyzDqc8wzfNO0xRs9AqWD0rZw/0=;
+        b=vFgSdpIxyhPilwYkto+ISQZNrGwvfb4K7jbZm00ihRocUNgDERiFuWALo6YmM+VB30
+         b5ARWUJLd+r/xcgZ1jvdWDTeqv94cxN17c+ZA1037eqrV5naPbCoC8gBmiSvKx51DNQy
+         7wMHajx3NmjK55R+TytEV0a7BoxE/L77szd1o=
+Received: by 10.142.214.12 with SMTP id m12mr2347041wfg.73.1314127608221; Tue,
+ 23 Aug 2011 12:26:48 -0700 (PDT)
+Received: by 10.142.72.16 with HTTP; Tue, 23 Aug 2011 12:26:48 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179962>
 
-On Tue, Aug 23, 2011 at 11:20 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Conrad Irwin <conrad.irwin@gmail.com> writes:
->
->> git branch -M <foo> <current-branch> could be used to change the branch
->> to which HEAD points, without the necessary house-keeping that git reset
->> normally does to make this operation sensible. It would leave the reflog
->> in a confusing state (you would be warned when trying to read it) and
->> had an apparently side-effect of staging the diff between <current branch>
->> and <foo>.
->
-> The last two lines are redundant (it is "without the house-keeping of
-> reset"); I'll remove "and had an apparently...".
+A colleague at $dayjob recently caused corruption in our git
+repository by accidentally running the command
 
-That's fine by me.
+git rebase origin stable
 
->> git checkout -f already guarded against this problem, and aborted with
->> a fatal error.
->
-> I assume you mean "branch -f". I'll rewrite it so, and in the present
-> tense.
+where they meant to run
 
-Yes. Thank you.
+git rebase origin/stable
 
->
->> git branch -M, git checkout -B and git branch -f now use the same checks
->> before allowing a branch to be created. These prevent you from updating
->> the current branch.
->
-> Looks good ;-). Also the patch looks good, too.
->
+The git-rev-parse(1) man page says:
 
-Glad to hear :).
+...
+<refname>, e.g. master, heads/master, refs/heads/master
 
-Conrad
+    A symbolic ref name. E.g. master typically means the commit object
+referenced by refs/heads/master. If you happen to have both
+heads/master and tags/master, you can explicitly say heads/master to
+tell git which one you mean. When ambiguous, a <name> is disambiguated
+by taking the first match in the following rules:
+
+       1.          If $GIT_DIR/<name> exists, that is what you mean
+(this is usually useful only for HEAD, FETCH_HEAD, ORIG_HEAD,
+MERGE_HEAD and CHERRY_PICK_HEAD);
+       2.          otherwise, refs/<name> if it exists;
+       3.          otherwise, refs/tags/<refname> if it exists;
+       4.          otherwise, refs/heads/<name> if it exists;
+       5.          otherwise, refs/remotes/<name> if it exists;
+       6.          otherwise, refs/remotes/<name>/HEAD if it exists.
+...
+
+Is there any way to change this behavior, e.g., so that rule 6 becomes
+an error? Say, by setting a config option?
+
+==========
+Nathan Panike
