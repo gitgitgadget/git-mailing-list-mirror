@@ -1,93 +1,152 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [RFH] lifetime rule for url parameter to transport_get()?
-Date: Mon, 22 Aug 2011 17:34:54 -0700
-Message-ID: <7vipppt175.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Aug 23 02:35:05 2011
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: Re: [PATCH] Grammar and wording fixes in gitrepository-layout
+Date: Mon, 22 Aug 2011 20:43:13 -0400
+Message-ID: <1314057078-sup-8464@pinkfloyd.chass.utoronto.ca>
+References: <1313808187-1666-1-git-send-email-bwalton@artsci.utoronto.ca> <7vk4a5wc67.fsf@alter.siamese.dyndns.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 23 02:43:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QvexN-0007U7-03
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 02:35:05 +0200
+	id 1Qvf5T-00015H-P7
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Aug 2011 02:43:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754176Ab1HWAfA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Aug 2011 20:35:00 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34067 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752629Ab1HWAe6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Aug 2011 20:34:58 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A548D421E;
-	Mon, 22 Aug 2011 20:34:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=f
-	ThVfFe90l/aDDv9XUtQqCH+qz8=; b=uXAWkFho7wfubTfydoPghrXfftbJVVPrr
-	8iwRIGhpD73Th4JPc7IPx9zC/HY7iIO+8ifSUZX6+MQQ6J33w1tGSOKefoHjJrrw
-	874Iv0PQfLnJAJubkz6gaHywdMBhxxE7h9K201d6vqwIMA0dhnxJTtdLIl8gTnIE
-	g33SxBP128=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; q=dns; s=
-	sasl; b=bMFzbNs4bqczc0IB0JU3nKU5J4As8VKOWBT0USkTLiR5H+HFbTmrZxB9
-	bzjLDcGbEepWAjo/cBbufFNXICvvycfDEY8OBAtzVGsa8LmFRv1FPAxX1F1XEGEx
-	1XGvkzS1+LoV3Ev0LKAiBDfZ5pyLfGT07xZxjfwjEOOXTCSpFB0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CF78421D;
-	Mon, 22 Aug 2011 20:34:56 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 244A5421A; Mon, 22 Aug 2011
- 20:34:56 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: B98997EC-CD1F-11E0-9F25-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754558Ab1HWAnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Aug 2011 20:43:23 -0400
+Received: from jerry.cquest.utoronto.ca ([192.82.128.5]:36126 "EHLO
+	jerry.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753957Ab1HWAnW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Aug 2011 20:43:22 -0400
+Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:51677 ident=93)
+	by jerry.cquest.utoronto.ca with esmtp (Exim 4.63)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1Qvf5F-0005a6-Ce; Mon, 22 Aug 2011 20:43:13 -0400
+Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1Qvf5F-0006F9-Bo; Mon, 22 Aug 2011 20:43:13 -0400
+In-reply-to: <7vk4a5wc67.fsf@alter.siamese.dyndns.org>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179905>
 
-Does anybody remember why we use a copied string of "ref_git_copy" in
-builtin/clone.c::setup_reference()?
+Excerpts from Junio C Hamano's message of Mon Aug 22 14:09:36 -0400 2011:
 
-	ref_git = real_path(option_reference);
-	...
-	ref_git_copy = xstrdup(ref_git);
-	add_to_alternates_file(ref_git_copy);
-	remote = remote_get(ref_git_copy);
-	transport = transport_get(remote, ref_git_copy);
-	for (extra = transport_get_remote_refs(transport); extra;
-	     extra = extra->next)
-		add_extra_ref(extra->name, extra->old_sha1, 0);
-	transport_disconnect(transport);
-	free(ref_git_copy);
+Hi Junio,
 
-The three functions add_to_alternates_file(), remote_get(), and
-transport_get() all get "const char *" so I do not think the copy was done
-to avoid "option_reference" from getting clobbered by these functions. The
-only thing I can think of is that transport_get() does this:
+> Perhaps we should deprecate http-fetch without -a and drop this item
+> from the list?
 
-    struct transport *transport_get(struct remote *remote, const char *url)
-    {
-            const char *helper;
-            struct transport *ret = xcalloc(1, sizeof(*ret));
+I don't know much about http-fetch as I've never touched it directly.
+It doesn't sound like a good idea to allow creating a broken object
+store though.  I'll send a patch shortly that adds the deprecation
+warning if -a isn't given.
 
-            ...
-            if (!url && remote->url)
-                    url = remote->url[0];
-            ret->url = url;
-	    ...
-	    return ret;
-    }
+> > +. You could be using the `objects/info/alternates` or
+> > +`$GIT_ALTERNATE_OBJECT_DIRECTORIES` mechanisms to 'borrow'
+> >  objects from other object stores.  A repository with this kind
+> >  of incomplete object store is not suitable to be published for
+> > -use with dumb transports but otherwise is OK as long as
+> > -`objects/info/alternates` points at the right object stores
+> > -it borrows from.
+> > +use with dumb transports but is otherwise OK as long as
+> > +`objects/info/alternates` points at the right object stores.
+> 
+> The last three words in the original are meant to clarify and define
+> what "the right object stores" are. Was there a compelling reason to
+> drop them?
 
-holding onto "url" without making a copy for its own use. But then freeing
-that copy by the caller after calling transport_disconnect() does not make
-much sense to me---we could have just gave it the original option_reference,
-have transport use it while it runs ls-remote equivalent, and then called
-transport_disconnect(), without using any extra copy.
+The only reason I dropped them is that I didn't feel they were helping
+to clarify the meaning.  The wording was a bit awkward and I thought
+'it borrows from' was part the problem.  I see what you're saying
+though and think that the following wording is better:
 
-What I am missing?
+use with dumb transports but is otherwise OK as long as
+`objects/info/alternates` points to object stores containing the
+missing objects.
+
+> >  objects/[0-9a-f][0-9a-f]::
+> >      Traditionally, each object is stored in its own file.
+> 
+> I would suggest further rewording this to something like:
+> 
+>     A newly created object is stored in its own file.
+
+Agreed.  This is much better.
+
+> > @@ -120,15 +118,15 @@ HEAD::
+> >  HEAD can also record a specific commit directly, instead of
+> >  being a symref to point at the current branch.  Such a state
+> >  is often called 'detached HEAD', and almost all commands work
+> > -identically as normal.  See linkgit:git-checkout[1] for
+> > +as they normally would.  See linkgit:git-checkout[1] for
+> >  details.
+> 
+> We may want to reword the sentence that begins with "almost all commands"
+> further. In the early days after detached HEAD support was introduced, we
+> may have left cases where the result was _undefined_ for commands that
+> would not make sense unless you are on a branch, but by now what we have
+> should behave sensibly by either erroring out when the operation does not
+> make sense unless you are on a real branch, or doing something
+> useful.
+
+Ok, how about a full stop after 'detached HEAD' and then the link to
+git-checkout?
+
+> >  branches::
+> >      A slightly deprecated way to store shorthands to be used
+> > -    to specify URL to 'git fetch', 'git pull' and 'git push'
+> > -    commands is to store a file in `branches/<name>` and
+> > -    give 'name' to these commands in place of 'repository'
+> > -    argument.
+> > +    to specify a URL to 'git fetch', 'git pull' and 'git push'.
+> > +    A file can be stored as `branches/<name>` and then
+> > +    'name' can be givent to these commands in place of
+> 
+> s/givent to/given to/
+> 
+> > +    'repository' argument.
+> 
+> We would at least need "See linkgit:..." to say what is expected in this
+> file and how it is used (the information is in urls-remotes.txt but that
+> is not a top-level file, so it needs to refer to git-fetch and git-push
+> instead).
+
+Noted.  The updated patch will address this.
+
+> > @@ -173,9 +171,9 @@ info/exclude::
+> >      at it.  See also: linkgit:gitignore[5].
+> >  
+> >  remotes::
+> > -    Stores shorthands to be used to give URL and default
+> > -    refnames to interact with remote repository to
+> > -    'git fetch', 'git pull' and 'git push' commands.
+> > +    Stores shorthands for URL and default refnames for use
+> > +    when interacting with remote repositories via 'git fetch',
+> > +    'git pull' and 'git push' commands.
+> 
+> Likewise.
+> 
+> Also I would personally consider "branches" and "remotes" both "slightly
+> deprecated". "git init", "git clone", and "git remote" stopped populating
+> these long time ago.
+
+Ok, I've added the note about this being legacy to both of the
+sections in question.
+
+Updated patch to follow shortly.
+
+Thanks
+-Ben
+--
+Ben Walton
+Systems Programmer - CHASS
+University of Toronto
+C:416.407.5610 | W:416.978.4302
