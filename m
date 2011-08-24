@@ -1,115 +1,99 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [WIP PATCH] revision-walking: allow iterating revisions multiple
- times
-Date: Wed, 24 Aug 2011 14:44:38 -0700
-Message-ID: <7vhb56o56h.fsf@alter.siamese.dyndns.org>
-References: <1313791728-11328-1-git-send-email-iveqy@iveqy.com>
- <1313791728-11328-2-git-send-email-iveqy@iveqy.com>
- <7vwre9yodc.fsf@alter.siamese.dyndns.org>
- <7vippszj70.fsf@alter.siamese.dyndns.org>
- <7vmxf3xnsf.fsf@alter.siamese.dyndns.org> <20110822194728.GA11745@sandbox-rc>
- <7vd3fxulw8.fsf@alter.siamese.dyndns.org>
- <20110824211431.GH45292@book.hvoigt.net>
+Subject: Re: Buggy handling of non-canonical ref names
+Date: Wed, 24 Aug 2011 15:27:58 -0700
+Message-ID: <7vaaayo369.fsf@alter.siamese.dyndns.org>
+References: <4E551D70.9080509@alum.mit.edu>
+ <7vaaayps9z.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org,
-	jens.lehmann@web.de
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Wed Aug 24 23:44:50 2011
+Cc: git discussion list <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Aug 25 00:28:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwLFh-0004uL-KM
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 23:44:49 +0200
+	id 1QwLvd-0006RH-MY
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 00:28:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751740Ab1HXVoo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Aug 2011 17:44:44 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34568 "EHLO
+	id S1751376Ab1HXW2D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Aug 2011 18:28:03 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49193 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751443Ab1HXVon (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Aug 2011 17:44:43 -0400
+	id S1751054Ab1HXW2C (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Aug 2011 18:28:02 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A03C4E2E;
-	Wed, 24 Aug 2011 17:44:41 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 27B1C54B4;
+	Wed, 24 Aug 2011 18:28:01 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3TqIcqq2xBWkyXzdrRlDPJWUodc=; b=YKlTdO
-	ZGufDSNUHzNYOiUPSxLdCe8vCON7UD2RyA8QG2GoF+Yo6lfi9Nuiic5RG+dc9ZoY
-	eQi/YREpAzoWeWI3fwu4CnU9wraT9dwm9IckdYEwCEWcVRra3CGEArjzU+y+R8yP
-	nxqQ6rTJcFnIwSUbb6MLFG51s+JvQ3duzdx/s=
+	:content-type; s=sasl; bh=HAOzn7KyufRwZtg+HUNLq477rMg=; b=fEyLCS
+	MRbTofQS5ZKPNDOGP3oGBbFdMRAMq0NRmRVxFmiwMSaKlcR7XOaMHhmADwoxH9Qn
+	ZwTuaFr6PaHECLpLIjWUfK4Q2cvDIBspS7H2bmteQfrl0w+gYDDD9+5c80NZpnFv
+	k7bM5MP3vXY6fzo+Se2/fO+jWxzS4oVkuyfN4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=via8w9NZrF1NRyjHeLdJWLBDIVxqITmv
-	/NRbdiJPZ3UK39xA27yrTss0v8rBFm9Co1/2hoUHMgAFoehGXXhEL+tsC8fsH+qE
-	PLii950m3Xywopk21dg7Lhpchmbz8jOc4ksFPii/lvc5Bs6zy1YuaZmTDwWivWMd
-	SK0ePj0Zgwo=
+	:content-type; q=dns; s=sasl; b=KboMUJAB04PsNIW0REwH3A/T4s2LrQcC
+	/yA/vXMcf39aZuBlruGs5yB9CHMyUHdjqp10i9jCUOlChO+K/FzswEtms+9P1st9
+	D9JMG6ppr8PmXwCgZc6lJ/ZZBo2H8QxhuX+b/4QHYyyMQIejIWhszZHSxxBhg/pD
+	TfX9r/FvLFY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 410FB4E2C;
-	Wed, 24 Aug 2011 17:44:41 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 207CA54B3;
+	Wed, 24 Aug 2011 18:28:01 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 97C764E29; Wed, 24 Aug 2011
- 17:44:40 -0400 (EDT)
-In-Reply-To: <20110824211431.GH45292@book.hvoigt.net> (Heiko Voigt's message
- of "Wed, 24 Aug 2011 23:14:31 +0200")
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 78B9F54B2; Wed, 24 Aug 2011
+ 18:28:00 -0400 (EDT)
+In-Reply-To: <7vaaayps9z.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 24 Aug 2011 11:40:24 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 456F5DAC-CE9A-11E0-8B13-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 531B522A-CEA0-11E0-B0A9-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180047>
 
-Heiko Voigt <hvoigt@hvoigt.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> +void reset_revision_walk(struct rev_info *revs)
-> +{
-> +	int nr = revs->walked.nr;
-> +	struct object_array_entry *e = revs->walked.objects;
-> +
-> +	/* reset the seen flags set by prepare_revision_walk */
-> +	while (--nr >= 0) {
-> +		struct object *o = e->item;
-> +		o->flags &= ~(ALL_REV_FLAGS);
-> +		e++;
-> +	}
-> +	free(revs->walked.objects);
-> +	revs->walked.nr = 0;
-> +	revs->walked.alloc = 0;
-> +	revs->walked.objects = NULL;
-> +}
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>
+>> What is the policy about reference names and their canonicalization?
+>
+> The overall policy has been that we care about well-formed input, and
+> everything else is "undefined", even though as you found out some of them
+> try to work sensibly.
+>
+>>     $ git check-ref-format /foo/bar ; echo $?
+>>     0
+>>
+>>     $ git check-ref-format --print /foo/bar
+>>     /foo/bar
+>
+> I think these are bogus. Patches welcome.
 
-I am afraid that this is not good enough for general purpose.  The object
-you walk in the middle of doing something may have been marked for reasons
-other than your extra walking before you started your walk. Imagine
+I actually think the former is correct and the latter should strip the
+leading slash. Essentially what "check-ref-format" (and the underlying
+check_ref_format() function) validates is if the given user string can be
+used under $GIT_DIR/refs/ to name a ref, and $GIT_DIR/refs//foo/bar is
+(because we "tolerate duplicated slashes" cf. comment in the function) the
+same as $GIT_DIR/refs/foo/bar and is allowed.
 
- * The command takes arguments like rev-list does;
+I do not know what the original motivation behind --print was, but it
+seems to want to show it canonicalized, so it should strip the leading
+slash as well.
 
- * It calls setup_revisions(), which marks commits given from the command
-   line with marks like UNINTERESTING, and then prepare_revision_walk();
+I think what is missing is a unified way to canonicalize the refnames
+(which led to the inconsistencies you observed), and I strongly suspect
+that check_ref_format() should learn to return the canonicalized format
+(if asked by the caller) and the caller should use the canonicalized
+version after feeding end-user input to it.
 
- * It walks the commit graph and does interesting things on commits that
-   it discovers, by repeatedly calling get_revision(), e.g.:
+Then the plumbing "check-ref-format --print" can use it just like any
+other caller that should be (or already are) using check_ref_format()
+to validate the end-user input.
 
-   	while ((commit = get_revision()) != NULL) {
-		do_something_interesting(commit);
-        }
-
-Now, you add a new caller that walks the commit graph for a different
-reason from the primary revision walking done by the command somewhere
-down in the callchain of do_something_interesting()---obviously you cannot
-use the above reset_revision_walk() to clean things up, as it will break
-the outer revision walk.
-
-If on the other hand you will _never_ have more than one revision walk
-going on, it may amount to the same thing to iterate over the object array
-and clear all the flags.
-
-Traditionally the way to do nested revision walk that can potentially be
-done more than once (but never having such a sub-walk in parallel) was to
-remember the start points of the subwalk, use private marks that are not
-used in the outer walk during the subwalk, and call clear_commit_marks()
-on these start points when a subwalk is done to clear only the marks the
-subwalk used.
+Yes, such a change will update the overall policy I stated earlier and
+narrow the scope of "undefined" down a bit, by uniformly codifying that
+leading and duplicate slashes are removed to be nice to the user.
