@@ -1,85 +1,102 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFC] branch: list branches by single remote
-Date: Wed, 24 Aug 2011 17:37:52 +0200
-Message-ID: <4E551AD0.7050702@drmicha.warpmail.net>
-References: <4E383132.3040907@elegosoft.com> <20110804040646.GA5104@sigill.intra.peff.net> <4E4A729D.9030906@drmicha.warpmail.net> <20110816151448.GA5152@sigill.intra.peff.net> <4E551548.9090807@elegosoft.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: How to check out the repository at a particular point in time
+Date: Wed, 24 Aug 2011 17:41:55 +0200
+Message-ID: <4E551BC3.8080701@op5.se>
+References: <201108221525.32982.trast@student.ethz.ch> <1314026326.37332.YahooMailClassic@web25408.mail.ukl.yahoo.com> <CAMOZ1Bti3ZtAEOtLiUYSkWE+rO_VQd09NAn58Cn4hZBu8f-aFQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Michael Schubert <mschub@elegosoft.com>
-X-From: git-owner@vger.kernel.org Wed Aug 24 17:38:00 2011
+Cc: rdiezmail-temp2@yahoo.de, Thomas Rast <trast@student.ethz.ch>,
+	in-git-vger@baka.org, Michael J Gruber <git@drmicha.warpmail.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Hilco Wijbenga <hilco.wijbenga@gmail.com>, git@vger.kernel.org
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 24 17:42:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwFWi-0007he-Ed
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 17:38:00 +0200
+	id 1QwFah-0001b7-Pq
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 17:42:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751578Ab1HXPh4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Aug 2011 11:37:56 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:52113 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750917Ab1HXPhz (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Aug 2011 11:37:55 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 5B110206EC;
-	Wed, 24 Aug 2011 11:37:54 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute3.internal (MEProxy); Wed, 24 Aug 2011 11:37:54 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=V+2pL00eRdHMFgRBy/TWvL
-	yKRlw=; b=Ig7EqaoKpEuE02jwozF5YphrtWHm2lZqXBQVAP5THZ+PQbSwUy72GZ
-	jDo5zRXdXC+8RQXErWnBTwiQUvRCWh7BR/errDO/ITv9XLmherS/h/OcUjNClZya
-	nlxcBA+vN7vrtSH7vZkPf5HqboCsGuncTpksO/95X8WsjOzFPz/RU=
-X-Sasl-enc: ShiAf7dPbl8N71h/Gy36lTgNegGxw+QcCt73YHJWmnKB 1314200274
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id B83E8920037;
-	Wed, 24 Aug 2011 11:37:53 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
-In-Reply-To: <4E551548.9090807@elegosoft.com>
+	id S1752288Ab1HXPmB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Aug 2011 11:42:01 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:60231 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752215Ab1HXPl7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Aug 2011 11:41:59 -0400
+Received: by bke11 with SMTP id 11so994618bke.19
+        for <git@vger.kernel.org>; Wed, 24 Aug 2011 08:41:58 -0700 (PDT)
+Received: by 10.204.128.80 with SMTP id j16mr2400140bks.9.1314200517994;
+        Wed, 24 Aug 2011 08:41:57 -0700 (PDT)
+Received: from vix.int.op5.se (sth-vpn1.op5.com [193.201.96.49])
+        by mx.google.com with ESMTPS id f9sm331755bkt.3.2011.08.24.08.41.56
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 24 Aug 2011 08:41:56 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.18) Gecko/20110621 Fedora/3.1.11-1.fc14 Thunderbird/3.1.11 ThunderGit/0.1a
+In-Reply-To: <CAMOZ1Bti3ZtAEOtLiUYSkWE+rO_VQd09NAn58Cn4hZBu8f-aFQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180011>
 
-Michael Schubert venit, vidit, dixit 24.08.2011 17:14:
-> On 08/16/2011 05:14 PM, Jeff King wrote:
->> On Tue, Aug 16, 2011 at 03:37:33PM +0200, Michael J Gruber wrote:
+On 08/23/2011 05:54 PM, Michael Witten wrote:
+> On Mon, Aug 22, 2011 at 15:18, R. Diez<rdiezmail-temp2@yahoo.de>  wrote:
+>>> The main problem is that your request is not very
+>>> well-defined: in
+>>> nonlinear history there will in general be more than one
+>>> commit at the
+>>> time requested.
+>>>
+>>>      ---a----b----c----M----  (M is a merge)
+>>>          \            /
+>>>           d-----e----f
+>>>
+>>>               ^----April 1st
+>>>
+>>> Suppose you ask git for "the newest commit as of April 1st"
+>>> in this history.  Is it supposed to give you b or d?
 >>
->>>> This isn't right. You are assuming that a remote called "foo" will have
->>>> all of its branches in refs/remotes/foo. That's true under the default
->>>> configuration, but technically speaking, the remote tracking branches of
->>>> "foo" are defined by the right-hand side of foo's fetch refspecs.
->>>
->>> You are 100% right here, but...
->>>
->>>> So I think you want something more like this:
->>>
->>> ...the op still might want to filter simply by the remote name.
->>
->> That is a perfectly reasonable approach. It just should be called
->> "--glob" or something, and not "remote".  git-tag allows patterns to an
->> explicit "tag -l", but "-l" is already taken for git-branch.
+>> I still don't quite understand how git works, but let me
+>> risk a naive statement here. If "a-b-c-M" were 'master',
+>> and "d-e-f" were 'new-feature', then on April 1st the
+>> current version on 'master' is 'b', because I merged the
+>> 'new-feature' branch at a later point in time. Does that
+>> make sense?
 > 
-> As suggested, I've just called it "--glob" for now.
+> O! for the love all that is Holy!
+> 
+> You see, guys? The term `branch' was a TERRIBLE choice.
+> 
+> What git calls `branch master' in your example is just a pointer to
+> the commit object `M'; it has nothing to do with particular lineages
+> like `a-b-c-M'.
+> 
 
-Well, again, what's the point in replicating
+Back in 2005 when git was young and fresh, there was a discussion about
+what to call things. If memory serves (which it might not), I think
+the consensus was that "branch" works just fine, and when someone who
+doesn't like it comes along we can just tell them that it's short for
+"tip-of-branch pointer", which is far more accurate. A "ref" is always
+local though, which is why the reflog (which is used for such date
+resolving problems) is never even considered to work on remote refs.
+They *can* work on remotes' refs though, which is a slightly different
+thing.
 
-http://permalink.gmane.org/gmane.comp.version-control.git/172228
+Whatever, really. The fact that pretty much everyone seems to know
+what a branch is and how it works in git after a (very) brief intro
+to it means it's either right on target or that people are so used to
+the fact that branch means something different in every scm that they
+don't even bother loading the word with some preconceived notion that
+used to be right in cvs.
 
-and how is it different?
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-As I've mentioned, I've been in the middle of polishing that up. You can
-follow it if you like:
-
-http://repo.or.cz/w/git/mjg.git/shortlog/refs/heads/branch-list-pattern
-
-Also, again: git branch is much more like git tag than it is like git
-log, so I think the pattern matching options should be, too.
-
-Michael
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
