@@ -1,71 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git clean --exclude broken?
-Date: Wed, 24 Aug 2011 14:23:23 -0700
-Message-ID: <7vliuio65w.fsf@alter.siamese.dyndns.org>
-References: <A04A4D84-16CC-438C-8828-0D11BE9DE2DA@cpanel.net>
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: Re: [PATCH/RFC 2/2] git-p4: Add complex test case for branch import
+Date: Wed, 24 Aug 2011 22:23:17 +0100
+Message-ID: <CAOpHH-Uv=zK9JoL+ooA9eEHg2XyX=k92hL1QZ_WNZwgvpnNj0g@mail.gmail.com>
+References: <1313712590-26876-1-git-send-email-vitor.hda@gmail.com>
+ <1313712590-26876-3-git-send-email-vitor.hda@gmail.com> <20110820191203.GC7135@arf.padd.com>
+ <20110822011319.0a013117@fenix.utopia.dhis.org> <20110823022713.GA6005@arf.padd.com>
+ <CAOpHH-V92CcWm1tCwvb=pJux5PKbYQoG=E8M_Pc2JGu00wnR8Q@mail.gmail.com>
+ <20110823231034.GA11918@arf.padd.com> <CAOpHH-V9nm2NRD47gdUj6sLJSTypjABjE-JGCkADE=fxh2nSWg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Todd Rinaldo <toddr@cpanel.net>
-X-From: git-owner@vger.kernel.org Wed Aug 24 23:23:33 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Tor Arvid Lund <torarvid@gmail.com>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Wed Aug 24 23:23:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwKv7-0002rK-1y
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 23:23:33 +0200
+	id 1QwKvQ-0002zJ-TV
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 23:23:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753843Ab1HXVX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Aug 2011 17:23:27 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59664 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753830Ab1HXVX0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Aug 2011 17:23:26 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B4FCC4A19;
-	Wed, 24 Aug 2011 17:23:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FJ/gX8Y5BtokebL5I8oF7ccB+mE=; b=eOfJ3Q
-	B3zPs0J1EJM3lrxm31TgC/KZ0nbeJwnLWK7Z1eG2o8ss+B1pomUlYcW6ES3YXdmR
-	jXDBVMi1PJ3Nt8ZmsdZx3BufFoikhdvjrVSntRqrPFfttjPLmO8GhNK//BVKGwDF
-	yjp4PEhQQV8MFAuP8xsS1tzfzth7zs0rwIPhQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cQVt4YxXaBSOhimnuGAqnw+D1wkN4+b/
-	/bLUmQjRFHy96rV2FZmxDk7Dpe/SHoLensZ1D755eEUf2Oz6zjKRrO3Geag5SQHI
-	Cb7e1pWRG5YRg8o5yOZVbBrhNH/8GAn/uWyMie12uUlwHcAZHf7X/db//vYr95yS
-	3W0z2iYyRrg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A45474A18;
-	Wed, 24 Aug 2011 17:23:25 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3AE4D4A17; Wed, 24 Aug 2011
- 17:23:25 -0400 (EDT)
-In-Reply-To: <A04A4D84-16CC-438C-8828-0D11BE9DE2DA@cpanel.net> (Todd
- Rinaldo's message of "Wed, 24 Aug 2011 14:15:29 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4D3FCD9E-CE97-11E0-946B-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753758Ab1HXVXs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Aug 2011 17:23:48 -0400
+Received: from mail-iy0-f170.google.com ([209.85.210.170]:49630 "EHLO
+	mail-iy0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753560Ab1HXVXr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Aug 2011 17:23:47 -0400
+Received: by iye16 with SMTP id 16so2763645iye.1
+        for <git@vger.kernel.org>; Wed, 24 Aug 2011 14:23:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=aErHpLRAO/LSroLjaK1j9UXGjqPHVdQyj3x193nl7dM=;
+        b=JqdtSU5Yedu4TsRWBlJXuRXYClS3Wnymbfb6jt9vP+8ZIeGd9nEX1I+9GsJmbr1OrY
+         uvJ0wQURUKK/Vzd2LLEoXwwUWER60lKgrDlMMvZZWEwgSThLTq0hrq4lyhS7uoESAJE9
+         muxykGpzrHnvz1Ibvrq+zVliv81fgwz+xnk94=
+Received: by 10.231.57.103 with SMTP id b39mr10990132ibh.41.1314221027105;
+ Wed, 24 Aug 2011 14:23:47 -0700 (PDT)
+Received: by 10.231.31.140 with HTTP; Wed, 24 Aug 2011 14:23:17 -0700 (PDT)
+In-Reply-To: <CAOpHH-V9nm2NRD47gdUj6sLJSTypjABjE-JGCkADE=fxh2nSWg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180043>
 
-Todd Rinaldo <toddr@cpanel.net> writes:
+On Wed, Aug 24, 2011 at 11:46 AM, Vitor Antunes <vitor.hda@gmail.com> w=
+rote:
+> 1. When doing a "checkpoint" it would make sense to have some kind of
+> =A0 feedback loop to know when fast-import completes it. In fact, I'v=
+e
+> =A0 just looked at fast-import man page and the "progress" command se=
+ems
+> =A0 to do exactly that! Myabe we should crease a specific function fo=
+r
+> =A0 "checkpoint" that would call also "progress" instead of calling
+> =A0 os.sleep().
 
-> I think I have found a new bug in 1.7.5:
+    # Force a checkpoint in fast-import and wait for it to finish
+    def checkpoint(self):
+        self.gitStream.write("checkpoint\n\n")
+        self.gitStream.write("progress checkpoint\n\n")
+        out =3D self.gitOutput.readline()
+        if self.verbose:
+            print "checkpoint finished: " + out
 
-My quick check indicates 1.7.3 behaves the same way, and 1.7.2.5 didn't
-have --exclude option, so this does not seem to be anything particularly
-new in the 1.7.5 release.
+This seems to work! :)
 
-> # The problem (Why is foo/ removed?)
-> $>git clean -dXf --exclude=/foo
-> Removing bar/
-> Removing foo/
+> 2. In order to avoid needing to use "--force" it would be nice to hav=
+e
+> =A0 some form of "drop" command in fast-import that would allows us t=
+o
+> =A0 actively drop an older commit after calling "reset" (this could e=
+ven
+> =A0 be an option of "reset"). This way fast-import would not find
+> =A0 dangling commits in the end of the import. =A0Maybe there's alrea=
+dy
+> =A0 some sort of command to achieve this in fast-import...? We could
+> =A0 probably ask to one of its maintainers.
 
-Why is this command line giving -X that tells us not to use the ignore
-rules, and --exclude option at the same time?
+Just missing point 2 now.
+
+--=20
+Vitor Antunes
