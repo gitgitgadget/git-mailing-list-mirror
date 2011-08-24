@@ -1,78 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] submodule: Demonstrate known breakage during recursive
- merge
-Date: Wed, 24 Aug 2011 12:24:22 -0700
-Message-ID: <7vty96obo9.fsf@alter.siamese.dyndns.org>
-References: <680d2679c3275c01152500760311b5f96a93ea62.1314193375.git.brad.king@kitware.com> <20110824191438.GA45292@book.hvoigt.net>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH 0/2] Add an update=none option for 'loose' submodules
+Date: Wed, 24 Aug 2011 21:30:08 +0200
+Message-ID: <20110824193007.GC45292@book.hvoigt.net>
+References: <cover.1312923673.git.hvoigt@hvoigt.net> <7v8vqzreeo.fsf@alter.siamese.dyndns.org> <20110811195955.GA21185@book.hvoigt.net> <7vy5yujtr2.fsf@alter.siamese.dyndns.org> <20110822200052.GC11745@sandbox-rc> <7v62lpuky8.fsf@alter.siamese.dyndns.org> <20110823194350.GA57187@book.hvoigt.net> <4E540B03.2030909@web.de> <7vpqjvrebk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Brad King <brad.king@kitware.com>, git@vger.kernel.org
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Wed Aug 24 21:24:45 2011
+Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 24 21:30:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwJ48-0001rK-8r
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 21:24:44 +0200
+	id 1QwJ9U-0004cS-Lg
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 21:30:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751160Ab1HXTY0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Aug 2011 15:24:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49579 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750767Ab1HXTYZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Aug 2011 15:24:25 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E55454434;
-	Wed, 24 Aug 2011 15:24:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=f26ghLoh4RvxUaOC3N0OH3EtTGY=; b=nIgiQK
-	BJSf/wqOSk66PlaFLd3SO1Sez+5698F2ZEj+cawl1xvdL1SuCqaZ+5H11P0YIcUz
-	nrhyO75oX9ppHElwowuHYo0q2To2Eqtf/DQbWYoDayjMwoSh70JeEfHdanipHPwW
-	WXWk1/3Q9xQb06CEdFr3GfI8ZOKr1/66o6iS0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BkXXb3EXVBEIes76R9AylnGn93eGok5B
-	0xW9U0MlLi7Y4AcxEeTkZDoM+dk++19L03GVbJIwLkLlKPQx47/gM7SX5xRwh9sY
-	rOFfSAdW4XW+lei115OYU0vvyk9ouj/adSAt5sI6+65np1sE76n+9eQQoiMBD7Cl
-	JA1Vc2bN2tw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DCAC44433;
-	Wed, 24 Aug 2011 15:24:23 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7279E4432; Wed, 24 Aug 2011
- 15:24:23 -0400 (EDT)
-In-Reply-To: <20110824191438.GA45292@book.hvoigt.net> (Heiko Voigt's message
- of "Wed, 24 Aug 2011 21:14:38 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: AC6BC7F2-CE86-11E0-B056-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751580Ab1HXTaL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Aug 2011 15:30:11 -0400
+Received: from darksea.de ([83.133.111.250]:60681 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751172Ab1HXTaK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Aug 2011 15:30:10 -0400
+Received: (qmail 5335 invoked from network); 24 Aug 2011 21:30:07 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 24 Aug 2011 21:30:07 +0200
+Content-Disposition: inline
+In-Reply-To: <7vpqjvrebk.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180029>
 
-Heiko Voigt <hvoigt@hvoigt.net> writes:
+Hi,
 
-> ... Its a
-> little bit workaroundish so if anymore has an idea how to fix this in
-> nicer way, please tell me.
->
-> [1]--8<----
-> From: Heiko Voigt <hvoigt@hvoigt.net>
-> Subject: [PATCH] protect submodule merge search against multiple calls for
->  the same path
->
-> When multiple merge-bases are found for two commits to be merged the
-> merge machinery will ask twice for a merge resolution. Currently its not
-> possible to use the revision-walking api for walking the same commits
-> multiple times.
+On Tue, Aug 23, 2011 at 02:46:39PM -0700, Junio C Hamano wrote:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+> 
+> > It might surprise people. E.g. when their old scripts don't work anymore as
+> > they did before because a submodule won't be populated or updated in the work
+> > tree even though it is present in .git/config. So I agree that this should be
+> > documented in the release notes so people can check if their expectations are
+> > still met.
+> 
+> Worse yet, their custom old scripts that they use to update submodules in
+> their repository, if properly written, assume that anything registered in
+> the .git/config file as [submodule "foo"] _must_ be populated, but they
+> can no longer assume that and now has to look at submodule.foo.update and
+> if it notices the variable is set to "none" leave the submodule repository
+> alone. Having "submodule.foo" registered in the .git/config file alone
+> used to mean the user is interested in "foo" submodule and wants to have a
+> checkout for it, now it does not necessarily mean that.
+> 
+> That is definitely a huge semantics change.
 
-I have been suspecting that most of this should be done in a separate
-helper program that is run via run_command() interface, without
-contaminating the object pool the main merge process has with data from
-the submodule object store to begin with (i.e. add_submodule_odb() and
-everything below should go). Wouldn't it be a lot cleaner solution?
+Ok seeing it that way. You are right. How about this?
+
+-8<---
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [PATCH] mention the new submodule.$name.update=none flag in the
+ ReleaseNotes
+
+---
+ Documentation/RelNotes/1.7.7.txt |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/RelNotes/1.7.7.txt b/Documentation/RelNotes/1.7.7.txt
+index 8de880f..b8edcf1 100644
+--- a/Documentation/RelNotes/1.7.7.txt
++++ b/Documentation/RelNotes/1.7.7.txt
+@@ -71,6 +71,10 @@ Updates since v1.7.6
+    submodule; it now goes on to update other submodules that can be
+    updated, and reports the ones with errors at the end.
+ 
++ * "git submodule update" does not clone/update a submodule when
++   submodule.$name.update is set to 'none'. This option is copied from
++   .gitmodules when a submodule is initialized.
++
+  * "git upload-pack" and "git receive-pack" learned to pretend only a
+    subset of the refs exist in a repository. This may help a site to
+    put many tiny repositories into one repository (this would not be
+-- 
+1.7.6.551.g4266ca
