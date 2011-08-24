@@ -1,117 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase -i: clean error message for --continue after
- failed exec
-Date: Wed, 24 Aug 2011 11:54:50 -0700
-Message-ID: <7vy5yiod1h.fsf@alter.siamese.dyndns.org>
-References: <vpqk4a3rkwb.fsf@bauges.imag.fr>
- <1314194508-12067-1-git-send-email-Matthieu.Moy@imag.fr>
- <7v62lmps6k.fsf@alter.siamese.dyndns.org>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH] submodule: Demonstrate known breakage during recursive
+	merge
+Date: Wed, 24 Aug 2011 21:14:38 +0200
+Message-ID: <20110824191438.GA45292@book.hvoigt.net>
+References: <680d2679c3275c01152500760311b5f96a93ea62.1314193375.git.brad.king@kitware.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Wed Aug 24 20:54:59 2011
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Brad King <brad.king@kitware.com>
+X-From: git-owner@vger.kernel.org Wed Aug 24 21:14:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwIbK-0002gh-Tq
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 20:54:59 +0200
+	id 1QwIuU-0005DS-MO
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 21:14:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753757Ab1HXSyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Aug 2011 14:54:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38415 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753492Ab1HXSyw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Aug 2011 14:54:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 47A114E0E;
-	Wed, 24 Aug 2011 14:54:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DJeLk4q/BSwATLfDBjTo08r1AaY=; b=HA3leT
-	usD+meCzjBwjDDC3OHeoj9gRRmqHpsyveK4JcjPWL71jgDlCumTaRHMUcAnJEeRx
-	qY11qFD012YFNCfdEaN4HmvYJtWxikk3QALhMYjYPx+D0B+WLz5GZDPBwXY52vU5
-	VK9Q0coUnOjjc4amxiwPzP227JFjQNN8wH2C0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=etZc05+JUMAjEiDfpxV7yxz8LzvI5LJ+
-	h82DXqrwOO4v+yMfaFmqk1uHIR+0ieCipFZFhsBWdu3SNvs1WkwjCKzMgugtES2s
-	9KFOkqfwOfOyXrkN0FrasoVZg+QHw4ciID7O5ynRb439cXq75RNxH3UM1sDMm0JI
-	moMNjz291gI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4062B4E0D;
-	Wed, 24 Aug 2011 14:54:52 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C28AC4E0C; Wed, 24 Aug 2011
- 14:54:51 -0400 (EDT)
-In-Reply-To: <7v62lmps6k.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 24 Aug 2011 11:42:27 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 8C6BF3EA-CE82-11E0-A700-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753809Ab1HXTOm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Aug 2011 15:14:42 -0400
+Received: from darksea.de ([83.133.111.250]:52840 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753796Ab1HXTOk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Aug 2011 15:14:40 -0400
+Received: (qmail 5286 invoked from network); 24 Aug 2011 21:14:38 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 24 Aug 2011 21:14:38 +0200
+Content-Disposition: inline
+In-Reply-To: <680d2679c3275c01152500760311b5f96a93ea62.1314193375.git.brad.king@kitware.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180027>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
->
->> If after a failed "exec" instruction there are staged changes,...
->
-> I have to wonder why whatever "exec" runs is mucking with the index in the
-> first place. Shouldn't we forbid it?
+thanks for finding this subtle bug!
 
-I suspect your patch amounts to the same thing of forbidding, but
-detecting the lack of $author_script feels like it is covering up the
-symptom and not directly going for the cause of the symptom.
+On Wed, Aug 24, 2011 at 09:59:50AM -0400, Brad King wrote:
+> Since commit 68d03e4a (Implement automatic fast-forward merge for
+> submodules, 2010-07-07) we try to suggest submodule commits that resolve
+> a conflict.  Consider a true recursive merge case
+> 
+>     b---bc
+>    / \ /
+>   o   X
+>    \ / \
+>     c---cb
 
-I wonder if doing something like this would be more direct approach to
-achieve the same thing.
+And here is a patch[1] that you can apply on top of yours which should fix
+this. An extra pair of merge machinery knowing eyes appreciated. Its a
+little bit workaroundish so if anymore has an idea how to fix this in
+nicer way, please tell me.
 
- git-rebase--interactive.sh |   13 ++++++++++---
- 1 files changed, 10 insertions(+), 3 deletions(-)
+[1]--8<----
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [PATCH] protect submodule merge search against multiple calls for
+ the same path
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index c6ba7c1..31026dc 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -472,24 +472,31 @@ do_next () {
- 		git rev-parse --verify HEAD > "$state_dir"/stopped-sha
- 		${SHELL:-@SHELL_PATH@} -c "$rest" # Actual execution
- 		status=$?
-+		# Run in subshell because require_clean_work_tree can die.
-+		dirty=f
-+		(require_clean_work_tree "rebase") || dirty=t
- 		if test "$status" -ne 0
- 		then
- 			warn "Execution failed: $rest"
-+			test "$dirty" = f ||
-+			warn "and made changes to the index and/or the working tree"
+When multiple merge-bases are found for two commits to be merged the
+merge machinery will ask twice for a merge resolution. Currently its not
+possible to use the revision-walking api for walking the same commits
+multiple times. Since the result will not change we can simply fail
+here if we are asked for a resolution of the same path again.
+
+Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+---
+ submodule.c                |    9 +++++++++
+ t/t7405-submodule-merge.sh |    2 +-
+ 2 files changed, 10 insertions(+), 1 deletions(-)
+
+diff --git a/submodule.c b/submodule.c
+index 1ba9646..a4af08e 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -646,6 +646,7 @@ int merge_submodule(unsigned char result[20], const char *path,
+ 		    const unsigned char base[20], const unsigned char a[20],
+ 		    const unsigned char b[20])
+ {
++	static char last_path[PATH_MAX] = {'\0'};
+ 	struct commit *commit_base, *commit_a, *commit_b;
+ 	int parent_count;
+ 	struct object_array merges;
+@@ -699,6 +700,13 @@ int merge_submodule(unsigned char result[20], const char *path,
+ 	 * user needs to confirm the resolution.
+ 	 */
+ 
++	/* in case of multiple merge-bases the merge algorithm will ask
++	 * again for a resolution. We should not search twice for the
++	 * same path.
++	 */
++	if (!strcmp(path, last_path))
++		return 0;
 +
- 			warn "You can fix the problem, and then run"
- 			warn
- 			warn "	git rebase --continue"
- 			warn
- 			exit "$status"
- 		fi
--		# Run in subshell because require_clean_work_tree can die.
--		if ! (require_clean_work_tree "rebase")
--		then
-+		if test "$dirty" = t
-+			warn "Execution succeeded: $rest"
-+			warn "but left changes to the index and/or the working tree"
- 			warn "Commit or stash your changes, and then run"
- 			warn
- 			warn "	git rebase --continue"
- 			warn
- 			exit 1
- 		fi
-+
- 		;;
- 	*)
- 		warn "Unknown command: $command $sha1 $rest"
+ 	/* find commit which merges them */
+ 	parent_count = find_first_merges(&merges, path, commit_a, commit_b);
+ 	switch (parent_count) {
+@@ -726,6 +734,7 @@ int merge_submodule(unsigned char result[20], const char *path,
+ 			print_commit((struct commit *) merges.objects[i].item);
+ 	}
+ 
++	memcpy(last_path, path, strlen(path) + 1);
+ 	free(merges.objects);
+ 	return 0;
+ }
+diff --git a/t/t7405-submodule-merge.sh b/t/t7405-submodule-merge.sh
+index 8f6f2d6..603fb72 100755
+--- a/t/t7405-submodule-merge.sh
++++ b/t/t7405-submodule-merge.sh
+@@ -269,7 +269,7 @@ test_expect_success 'setup for recursive merge with submodule' '
+ '
+ 
+ # merge should leave submodule unmerged in index
+-test_expect_failure 'recursive merge with submodule' '
++test_expect_success 'recursive merge with submodule' '
+ 	(cd merge-recursive &&
+ 	 test_must_fail git merge top-bc &&
+ 	 echo "160000 $(git rev-parse top-cb:sub) 2	sub" > expect2 &&
+-- 
+1.7.6.551.g4266ca
