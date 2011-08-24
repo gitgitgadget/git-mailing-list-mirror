@@ -1,95 +1,85 @@
-From: =?UTF-8?B?QWRhbSBLxYJvYnVrb3dza2k=?= <adamklobukowski@gmail.com>
-Subject: Re: Problem with S_IFGITLINK
-Date: Wed, 24 Aug 2011 17:30:12 +0200
-Message-ID: <4E551904.303@gmail.com>
-References: <4E54F364.7000503@gmail.com> <4E550E03.3080104@drmicha.warpmail.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC] branch: list branches by single remote
+Date: Wed, 24 Aug 2011 17:37:52 +0200
+Message-ID: <4E551AD0.7050702@drmicha.warpmail.net>
+References: <4E383132.3040907@elegosoft.com> <20110804040646.GA5104@sigill.intra.peff.net> <4E4A729D.9030906@drmicha.warpmail.net> <20110816151448.GA5152@sigill.intra.peff.net> <4E551548.9090807@elegosoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Aug 24 17:30:23 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Michael Schubert <mschub@elegosoft.com>
+X-From: git-owner@vger.kernel.org Wed Aug 24 17:38:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwFPK-00036G-Dj
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 17:30:22 +0200
+	id 1QwFWi-0007he-Ed
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 17:38:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752103Ab1HXPaR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Aug 2011 11:30:17 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:59887 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752097Ab1HXPaQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Aug 2011 11:30:16 -0400
-Received: by fxh19 with SMTP id 19so1055459fxh.19
-        for <git@vger.kernel.org>; Wed, 24 Aug 2011 08:30:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=GLgyb4BNOoxKO1bK2CfUMmd6v3ZnPkHz5oD9+JAX0Us=;
-        b=YkSPi7kONXrafc4/uXoipwJbHtdbSOF0G8F1yyKXlY7vCy03zJyZ60rz9oewDOGOmN
-         rNrApInk5gbNc3+pgfKej6yYOHYePZ/LIsnCTenC2Quoi+CqcZrdBjG9brd122aDSRG9
-         OMXq2YTBZryKbTWSjabV6saXB936/xku9m5tE=
-Received: by 10.223.52.66 with SMTP id h2mr7478118fag.92.1314199815073;
-        Wed, 24 Aug 2011 08:30:15 -0700 (PDT)
-Received: from [192.168.0.102] (89-72-179-1.dynamic.chello.pl [89.72.179.1])
-        by mx.google.com with ESMTPS id 14sm924243faf.8.2011.08.24.08.30.13
-        (version=SSLv3 cipher=OTHER);
-        Wed, 24 Aug 2011 08:30:14 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110617 Thunderbird/3.1.11
-In-Reply-To: <4E550E03.3080104@drmicha.warpmail.net>
+	id S1751578Ab1HXPh4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Aug 2011 11:37:56 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:52113 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750917Ab1HXPhz (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Aug 2011 11:37:55 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 5B110206EC;
+	Wed, 24 Aug 2011 11:37:54 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute3.internal (MEProxy); Wed, 24 Aug 2011 11:37:54 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=V+2pL00eRdHMFgRBy/TWvL
+	yKRlw=; b=Ig7EqaoKpEuE02jwozF5YphrtWHm2lZqXBQVAP5THZ+PQbSwUy72GZ
+	jDo5zRXdXC+8RQXErWnBTwiQUvRCWh7BR/errDO/ITv9XLmherS/h/OcUjNClZya
+	nlxcBA+vN7vrtSH7vZkPf5HqboCsGuncTpksO/95X8WsjOzFPz/RU=
+X-Sasl-enc: ShiAf7dPbl8N71h/Gy36lTgNegGxw+QcCt73YHJWmnKB 1314200274
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id B83E8920037;
+	Wed, 24 Aug 2011 11:37:53 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
+In-Reply-To: <4E551548.9090807@elegosoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180010>
 
-W dniu 24.08.2011 16:43, Michael J Gruber pisze:
-> Adam K=C5=82obukowski venit, vidit, dixit 24.08.2011 14:49:
->> Hello
+Michael Schubert venit, vidit, dixit 24.08.2011 17:14:
+> On 08/16/2011 05:14 PM, Jeff King wrote:
+>> On Tue, Aug 16, 2011 at 03:37:33PM +0200, Michael J Gruber wrote:
 >>
->> I'm trying to compile git on some very exotic u*ix flavor (FreeMiNT
->> anyone? :)) and I encountered problem with S_IFGITLINK.
+>>>> This isn't right. You are assuming that a remote called "foo" will have
+>>>> all of its branches in refs/remotes/foo. That's true under the default
+>>>> configuration, but technically speaking, the remote tracking branches of
+>>>> "foo" are defined by the right-hand side of foo's fetch refspecs.
+>>>
+>>> You are 100% right here, but...
+>>>
+>>>> So I think you want something more like this:
+>>>
+>>> ...the op still might want to filter simply by the remote name.
 >>
->> Unfortunately, on my system S_IFGITLINK =3D S_IFLNK, and it breaks b=
-uild
->> in entry.c write_entry.
->>
->> Should I report a bug? (where?, I could not find any reference to
->> bugtracker on git pages)
->
-> Yes. Here.
->
-> A short log of the build break would be nice.
->
->> Can I fix it somehow? Can I change value of S_IFGITLINK to something=
- else?
->
->  From git's cache.h:
->
-> /*
->   * A "directory link" is a link to another git directory.
->   *
->   * The value 0160000 is not normally a valid mode, and
->   * also just happens to be S_IFDIR + S_IFLNK
->   *
->   * NOTE! We *really* shouldn't depend on the S_IFxxx macros
->   * always having the same values everywhere. We should use
->   * our internal git values for these things, and then we can
->   * translate that to the OS-specific value. It just so
->   * happens that everybody shares the same bit representation
->   * in the UNIX world (and apparently wider too..)
->   */
->
-> Time to implement that translation :|
+>> That is a perfectly reasonable approach. It just should be called
+>> "--glob" or something, and not "remote".  git-tag allows patterns to an
+>> explicit "tag -l", but "-l" is already taken for git-branch.
+> 
+> As suggested, I've just called it "--glob" for now.
 
-I may try to implement it, but I my knowledge of Git internals is equal=
-=20
-to zero. If someone can point me what has to be done - I'll be grateful=
-l.
+Well, again, what's the point in replicating
 
-AdamK
+http://permalink.gmane.org/gmane.comp.version-control.git/172228
+
+and how is it different?
+
+As I've mentioned, I've been in the middle of polishing that up. You can
+follow it if you like:
+
+http://repo.or.cz/w/git/mjg.git/shortlog/refs/heads/branch-list-pattern
+
+Also, again: git branch is much more like git tag than it is like git
+log, so I think the pattern matching options should be, too.
+
+Michael
