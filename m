@@ -1,58 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] rebase -i: clean error message for --continue after
- failed exec
-Date: Wed, 24 Aug 2011 16:22:33 -0400
-Message-ID: <20110824202233.GB28900@sigill.intra.peff.net>
-References: <vpqk4a3rkwb.fsf@bauges.imag.fr>
- <1314194508-12067-1-git-send-email-Matthieu.Moy@imag.fr>
- <7v62lmps6k.fsf@alter.siamese.dyndns.org>
- <20110824202027.GA28900@sigill.intra.peff.net>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH] submodule: Demonstrate known breakage during recursive
+	merge
+Date: Wed, 24 Aug 2011 22:27:22 +0200
+Message-ID: <20110824202721.GF45292@book.hvoigt.net>
+References: <680d2679c3275c01152500760311b5f96a93ea62.1314193375.git.brad.king@kitware.com> <20110824191438.GA45292@book.hvoigt.net> <7vty96obo9.fsf@alter.siamese.dyndns.org> <20110824194618.GD45292@book.hvoigt.net> <4E5558BB.4040307@kitware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 24 22:22:41 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Brad King <brad.king@kitware.com>
+X-From: git-owner@vger.kernel.org Wed Aug 24 22:27:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwJyC-0006XE-BE
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 22:22:40 +0200
+	id 1QwK2r-0000Qq-7z
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 22:27:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752630Ab1HXUWg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Aug 2011 16:22:36 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56908
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752622Ab1HXUWf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Aug 2011 16:22:35 -0400
-Received: (qmail 5996 invoked by uid 107); 24 Aug 2011 20:23:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 24 Aug 2011 16:23:17 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Aug 2011 16:22:33 -0400
+	id S1752697Ab1HXU1Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Aug 2011 16:27:25 -0400
+Received: from darksea.de ([83.133.111.250]:42672 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751826Ab1HXU1Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Aug 2011 16:27:24 -0400
+Received: (qmail 5474 invoked from network); 24 Aug 2011 22:27:22 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 24 Aug 2011 22:27:22 +0200
 Content-Disposition: inline
-In-Reply-To: <20110824202027.GA28900@sigill.intra.peff.net>
+In-Reply-To: <4E5558BB.4040307@kitware.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180036>
 
-On Wed, Aug 24, 2011 at 04:20:27PM -0400, Jeff King wrote:
+On Wed, Aug 24, 2011 at 04:02:03PM -0400, Brad King wrote:
+> On 8/24/2011 3:14 PM, Heiko Voigt wrote:
+> > thanks for finding this subtle bug!
+>
+> Thanks for looking at it!
+>
+> On 8/24/2011 3:46 PM, Heiko Voigt wrote:
+>> For the merge search we do not take the bases into
+>> account so the outcome will not change.
+>
+> The test case creates history like this:
+>
+> >     b---bc
+> >    / \ /
+> >   o   X
+> >    \ / \
+> >     c---cb
+>
+> where b, c, bc, and cb all reference different submodule commits.
+>
+> Isn't the merge search asked to search for a descendant of "b:sub" and "c:sub"
+> during the recursive part of the merge and then "bc:sub" and "cb:sub" during
+> the primary merge?  Might those results be different?
 
-> Certainly my only user has ever been "exec make test". But I wonder if
+The merge is quite simple. All it does is check whether both changes
+base->a or base->b point forward in the submodule. Then it checks
+whether a is contained in b or the other way around. This is the only
+case in which it will succeed automatically.
 
-Er, s/user/use.
+Supposing you merge bc into cb:
+If I understand the situation correctly, the above is done first with
+a := cb:sub, b := bc:sub, base := b:sub and then another time with
+base := c:sub.
 
-> somebody is crazy enough to auto-generate some content and commit it.
-> OTOH, shouldn't it then be their responsibility to make the commit?
-> I.e., I can see at least the potential for mucking with the index, but I
-> really don't see a reason for _leaving_ the index in a mucked state.
+For the suggestion part only bc and cb are taken into account. That is
+we search for the first commit in the submodule refs which contains both
+bc:sub and cb:sub.
 
-Having just read your followup patch, it looks sane. Exec commands are
-free to do whatever they like with the index as long as it is left in a
-clean state. That keeps the door open for semi-sane use cases, but will
-catch unintended index manipulation.
+>
+> As for the UI part, I think the user would be interested only in the search
+> results for the primary merge between HEAD and MERGE_HEAD.  Results from the
+> intermediate merges might not make sense.
 
--Peff
+As stated above since bc:sub and cb:sub will not change in between two
+searches the result for the suggestion will be the same. What I meant
+was that the same result would be output twice (or more).
+
+Cheers Heiko
