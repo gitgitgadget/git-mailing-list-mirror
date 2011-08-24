@@ -1,88 +1,172 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] get_indexed_object can return NULL if nothing is in that
- slot; check for it
-Date: Wed, 24 Aug 2011 14:10:11 -0700
-Message-ID: <7vpqjuo6rw.fsf@alter.siamese.dyndns.org>
-References: <20110824054717.GA16512@localhost>
- <7vmxeypudw.fsf@alter.siamese.dyndns.org> <20110824204021.GA28157@beast>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [WIP PATCH] revision-walking: allow iterating revisions multiple
+	times
+Date: Wed, 24 Aug 2011 23:14:31 +0200
+Message-ID: <20110824211431.GH45292@book.hvoigt.net>
+References: <1313791728-11328-1-git-send-email-iveqy@iveqy.com> <1313791728-11328-2-git-send-email-iveqy@iveqy.com> <7vwre9yodc.fsf@alter.siamese.dyndns.org> <7vippszj70.fsf@alter.siamese.dyndns.org> <7vmxf3xnsf.fsf@alter.siamese.dyndns.org> <20110822194728.GA11745@sandbox-rc> <7vd3fxulw8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Brian Harring <ferringb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 24 23:10:24 2011
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org,
+	jens.lehmann@web.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 24 23:14:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwKiN-0004o3-Ss
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 23:10:24 +0200
+	id 1QwKmU-0006px-LJ
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 23:14:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752818Ab1HXVKQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Aug 2011 17:10:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54965 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752116Ab1HXVKP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Aug 2011 17:10:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E48A94800;
-	Wed, 24 Aug 2011 17:10:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=k1jDjEuKmcXfRKWfC6i48v+EwMY=; b=Su3dTS
-	vD7LYQbmV7GXakT40NFKQe3o0TVDsEaLbjcppQPLSWCBC55MXqrdphJnCmoaV6wV
-	/3GkhqPDyVdi+zP6NJ3l1DfpKnMxVLocTazzEt/8pgvTwHW/V7E5cs6NAxoqJHUN
-	EMlFSlKpuet53NHMZrMzD6nC3PFhpnCLY2O5o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wDeihmwEGDwq99BlMeXCCZMdi0/8FljA
-	n1FKAAWkDGShoPBmQ1NXSXK48RksnKcmN7auEXgQmXmZ4miQxYXS4leQQ6+tcFHn
-	zFSzcTWtMqhTzygDHIFnDM8aAMb6EFPA9cogWcRSajv6gVRtBYmG8URpu9kpTj1u
-	gq49GeESUZA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D46D747FF;
-	Wed, 24 Aug 2011 17:10:13 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6694447FE; Wed, 24 Aug 2011
- 17:10:13 -0400 (EDT)
-In-Reply-To: <20110824204021.GA28157@beast> (Brian Harring's message of "Wed,
- 24 Aug 2011 13:40:21 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7549715C-CE95-11E0-8C73-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753282Ab1HXVOe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Aug 2011 17:14:34 -0400
+Received: from darksea.de ([83.133.111.250]:35988 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752042Ab1HXVOd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Aug 2011 17:14:33 -0400
+Received: (qmail 5595 invoked from network); 24 Aug 2011 23:14:31 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 24 Aug 2011 23:14:31 +0200
+Content-Disposition: inline
+In-Reply-To: <7vd3fxulw8.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180041>
 
-Brian Harring <ferringb@gmail.com> writes:
+---
+Hi,
 
-> On Wed, Aug 24, 2011 at 10:54:51AM -0700, Junio C Hamano wrote:
->> Thanks for a fix.
->> 
->> It is both interesting and disturbing to see that these small mistakes are
->> discovered a week after the topics hit 'master', even though it has been
->> cooking in 'next' for a week before that happened (in the case of this
->> topic, it also hit 'maint' yesterday).
->
-> I'll admit I'm slightly surprised it slipped past for initial 
-> development- that said, you have to explicitly trigger the race to 
-> trigger the segfault.  And that's not easy w/out building out a 
-> custom setup- even w/ that setup, you need to go digging in server 
-> logs to realize the previous serverside failure just converted to a 
-> segfault.  Clientside, it hung just the same.
->
-> Bit nonobvious.  Plus, shit happens. ;)
->
-> Either way, I was poking at the source trying to figure out how to get 
-> some unittests for an end to end testing of the http/smartserv; that 
-> said I was having a helluva time finding a way to do it without 
-> bundling a stub of a webserver.  Suggestions would be welcome on that 
-> one.
+On Mon, Aug 22, 2011 at 03:22:31PM -0700, Junio C Hamano wrote:
+> Heiko Voigt <hvoigt@hvoigt.net> writes:
+> 
+> > Junio since you are one person listed in the api docs could you maybe
+> > quickly explain to me what this flag is used for?
+> 
+> It is used in order to avoid walking the object we have walked already.
+> 
+> Which in turn means that once you walk chain of objects, unless you
+> remember the ones you walked and clear the marks after you are done, you
+> cannot walk the object chain for unrelated purposes.  See how functions
+> like get_merge_bases_many() walk portions of graph for their own purpose
+> and then avoid disrupting others by calling clear_commit_marks(). The use
+> of TMP_MARK (and its clearing after the function is done with the marked
+> objects) in remove_duplicate_parents() serve the same purpose.
 
-I probably should have made it clear that I was not complaining, and if it
-sounded as if I was complaining at _you_, my deepest apologies.
+What do you think about this approach ? Its not yet correctly collecting
+revisions for all situations but it fixes the demonstrated test failure.
 
-In any case, thanks, and congratulations for your first commit in git.git
-;-)
+ revision.c  |   24 ++++++++++++++++++++++++
+ revision.h  |    3 +++
+ submodule.c |    3 +++
+ 3 files changed, 30 insertions(+), 0 deletions(-)
+
+diff --git a/revision.c b/revision.c
+index c46cfaa..e374c4a 100644
+--- a/revision.c
++++ b/revision.c
+@@ -500,6 +500,8 @@ static int add_parents_to_list(struct rev_info *revs, struct commit *commit,
+ 				continue;
+ 			p->object.flags |= SEEN;
+ 			commit_list_insert_by_date_cached(p, list, cached_base, cache_ptr);
++			if (revs->fill_reset_list)
++				add_object_array(&p->object, NULL, &revs->walked);
+ 		}
+ 		return 0;
+ 	}
+@@ -527,6 +529,8 @@ static int add_parents_to_list(struct rev_info *revs, struct commit *commit,
+ 		if (!(p->object.flags & SEEN)) {
+ 			p->object.flags |= SEEN;
+ 			commit_list_insert_by_date_cached(p, list, cached_base, cache_ptr);
++			if (revs->fill_reset_list)
++				add_object_array(&p->object, NULL, &revs->walked);
+ 		}
+ 		if (revs->first_parent_only)
+ 			break;
+@@ -1950,6 +1954,23 @@ static void set_children(struct rev_info *revs)
+ 	}
+ }
+ 
++void reset_revision_walk(struct rev_info *revs)
++{
++	int nr = revs->walked.nr;
++	struct object_array_entry *e = revs->walked.objects;
++
++	/* reset the seen flags set by prepare_revision_walk */
++	while (--nr >= 0) {
++		struct object *o = e->item;
++		o->flags &= ~(ALL_REV_FLAGS);
++		e++;
++	}
++	free(revs->walked.objects);
++	revs->walked.nr = 0;
++	revs->walked.alloc = 0;
++	revs->walked.objects = NULL;
++}
++
+ int prepare_revision_walk(struct rev_info *revs)
+ {
+ 	int nr = revs->pending.nr;
+@@ -1964,6 +1985,9 @@ int prepare_revision_walk(struct rev_info *revs)
+ 		if (commit) {
+ 			if (!(commit->object.flags & SEEN)) {
+ 				commit->object.flags |= SEEN;
++				if (revs->fill_reset_list)
++					add_object_array(&commit->object, NULL,
++							 &revs->walked);
+ 				commit_list_insert_by_date(commit, &revs->commits);
+ 			}
+ 		}
+diff --git a/revision.h b/revision.h
+index 3d64ada..6a0fa99 100644
+--- a/revision.h
++++ b/revision.h
+@@ -28,6 +28,7 @@ struct rev_info {
+ 	/* Starting list */
+ 	struct commit_list *commits;
+ 	struct object_array pending;
++	struct object_array walked;
+ 
+ 	/* Parents of shown commits */
+ 	struct object_array boundary_commits;
+@@ -72,6 +73,7 @@ struct rev_info {
+ 			bisect:1,
+ 			ancestry_path:1,
+ 			first_parent_only:1;
++	unsigned int	fill_reset_list:1;
+ 
+ 	/* Diff flags */
+ 	unsigned int	diff:1,
+@@ -169,6 +171,7 @@ extern void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ct
+ 				 const char * const usagestr[]);
+ extern int handle_revision_arg(const char *arg, struct rev_info *revs,int flags,int cant_be_filename);
+ 
++extern void reset_revision_walk(struct rev_info *revs);
+ extern int prepare_revision_walk(struct rev_info *revs);
+ extern struct commit *get_revision(struct rev_info *revs);
+ extern char *get_revision_mark(const struct rev_info *revs, const struct commit *commit);
+diff --git a/submodule.c b/submodule.c
+index dc95498..410d8e4 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -441,6 +441,7 @@ static int inspect_superproject_commits(unsigned char new_sha1[20], const char *
+ 
+ 	strbuf_addf(&remotes_arg, "--remotes=%s", remotes_name);
+ 	init_revisions(&rev, NULL);
++	rev.fill_reset_list = 1;
+ 	sha1_copy = xstrdup(sha1_to_hex(new_sha1));
+ 	argv[1] = sha1_copy;
+ 	argv[3] = remotes_arg.buf;
+@@ -451,6 +452,8 @@ static int inspect_superproject_commits(unsigned char new_sha1[20], const char *
+ 	while ((commit = get_revision(&rev)) && do_continue)
+ 		do_continue = commit_need_pushing(commit, commit->parents, func, data);
+ 
++
++	reset_revision_walk(&rev);
+ 	free(sha1_copy);
+ 	strbuf_release(&remotes_arg);
+ 
+-- 
+1.7.6.553.g84dc
