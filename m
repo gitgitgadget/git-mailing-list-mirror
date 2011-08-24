@@ -1,305 +1,319 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git 1.7.6.1
-Date: Wed, 24 Aug 2011 16:51:23 -0700
-Message-ID: <7vpqjumkqs.fsf@alter.siamese.dyndns.org>
+Subject: A note from the maintainer
+Date: Wed, 24 Aug 2011 16:51:35 -0700
+Message-ID: <7vobzemkqg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
 To: git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Thu Aug 25 01:51:47 2011
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+X-From: git-owner@vger.kernel.org Thu Aug 25 01:51:48 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1QwNEY-0002LY-Tg
-	for glk-linux-kernel-3@lo.gmane.org; Thu, 25 Aug 2011 01:51:47 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1QwNEa-0002LY-4M
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 01:51:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752413Ab1HXXv3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 24 Aug 2011 19:51:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49549 "EHLO
+	id S1752517Ab1HXXvk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Aug 2011 19:51:40 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49661 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750803Ab1HXXv1 convert rfc822-to-8bit (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 24 Aug 2011 19:51:27 -0400
+	id S1752485Ab1HXXvi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Aug 2011 19:51:38 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 834F65FFC;
-	Wed, 24 Aug 2011 19:51:26 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 037084010;
+	Wed, 24 Aug 2011 19:51:38 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:cc:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=SkLv43MX2yjBbDZA76ZHRHYME
-	F8=; b=T1R2iTjGm7lusybwIcgBaWDjO7B0YXPUBlevAE9ghR6BgNBJOJoffAkxf
-	TLRS2CAMat7dzKT0mo46h136cUrQ5UHw/0IBHsRz2LlgHVrZ4AP5GC8bTPqEddWW
-	aFzy/QLIZXLKPGn1+xMqI3vzOLyzs9/sJT/h0qVzWxmE5lCCgs=
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=fwQzAPSTI9EmpVv9Y+dBcirjs
+	3s=; b=Dw3PGqwaYKkZxRM/zkFsEoOjh4+P3DpRZNBYwp0wK9/r3wk1MEYE4+UQz
+	OTFMWnRUOqJIwLKftoIxKBmSiniWf6d2X9vBdaWvsn7iCohaigX6DzvWGbq63C13
+	B+Tqa7AGKl5Mofj0peAJw1XXaymYUbKttABgtxbtkJeOKZl0Rs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:cc:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=mJHCW3dRpLB2Ls1yuRN
-	aiH6hHZGig62pcJ9sugl4X06h2SMmGLUGGdHWnadVfH3YmTr5vSW2gdKYF76pc16
-	+GK4CaXt84MiPJyCJ1Re8BPoNomH/4sUNJxwnte17yhuhomuZX81IIrfKgmT63x2
-	eDQQ9WhG/R37ZDP4wr4rnyqc=
+	:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=KgmgkFtWr0ZjiEG9Yoz
+	fnQwr1J6XCW5e+BklOwqbd3HerNmr/rojTOD4Swo910/wUftc2395I6YkOyaAqZZ
+	K7AUN9Jn4bF0pWJQ/wSh86g6eko8gT2V5GpUnqkDlqLtYq4HmSL4w/i8Bs02Ilp3
+	lSZ6rVbOnPzbLUIagObBbOq8=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 681865FFB;
-	Wed, 24 Aug 2011 19:51:26 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DE1A4400F;
+	Wed, 24 Aug 2011 19:51:37 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E8DB85FFA; Wed, 24 Aug 2011
- 19:51:24 -0400 (EDT)
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BCE97400C; Wed, 24 Aug 2011
+ 19:51:36 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: F9F8A3EE-CEAB-11E0-8620-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+X-Pobox-Relay-ID: 0103E4AA-CEAC-11E0-96A1-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180052>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180053>
 
-The latest maintenance release Git 1.7.6.1 is available at the
-usual places:
+Welcome to the Git development community.
 
-  http://www.kernel.org/pub/software/scm/git/
+This message is written by the maintainer and talks about how Git
+project is managed, and how you can work with it.
 
-  git-1.7.6.1.tar.{gz,bz2}			(source tarball)
-  git-htmldocs-1.7.6.1.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.7.6.1.tar.{gz,bz2}		(preformatted docs)
+* Mailing list and the community
 
-The RPM binary packages for a few architectures are found in:
+The development is primarily done on the Git mailing list. Help
+requests, feature proposals, bug reports and patches should be sent to
+the list address <git@vger.kernel.org>.  You don't have to be
+subscribed to send messages.  The convention on the list is to keep
+everybody involved on Cc:, so it is unnecessary to ask "Please Cc: me,
+I am not subscribed".
 
-  RPMS/$arch/git-*-1.7.6.1-1.fc13.$arch.rpm	(RPM)
+Before sending patches, please read Documentation/SubmittingPatches
+and Documentation/CodingGuidelines to familiarize yourself with the
+project convention.
 
+If you sent a patch and you did not hear any response from anybody for
+several days, it could be that your patch was totally uninteresting,
+but it also is possible that it was simply lost in the noise.  Please
+do not hesitate to send a reminder message in such a case.  Messages
+getting lost in the noise is a sign that people involved don't have
+enough mental/time bandwidth to process them right at the moment, and
+it often helps to wait until the list traffic becomes calmer before
+sending such a reminder.
 
-Git v1.7.6.1 Release Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
+The list archive is available at a few public sites as well:
 
-=46ixes since v1.7.6
-------------------
+        http://news.gmane.org/gmane.comp.version-control.git/
+        http://marc.theaimsgroup.com/?l=3Dgit
+        http://www.spinics.net/lists/git/
 
- * Various codepaths that invoked zlib deflate/inflate assumed that the=
-se
-   functions can compress or uncompress more than 4GB data in one call =
-on
-   platforms with 64-bit long, which has been corrected.
+and some people seem to prefer to read it over NNTP:
 
- * "git unexecutable" reported that "unexecutable" was not found, even
-   though the actual error was that "unexecutable" was found but did
-   not have a proper she-bang line to be executed.
+        nntp://news.gmane.org/gmane.comp.version-control.git
 
- * Error exits from $PAGER were silently ignored.
+When you point at a message in a mailing list archive, using
+gmane is often the easiest to follow by readers, like this:
 
- * "git checkout -b <branch>" was confused when attempting to create a
-   branch whose name ends with "-g" followed by hexadecimal digits,
-   and refused to work.
+        http://thread.gmane.org/gmane.comp.version-control.git/27/focus=
+=3D217
 
- * "git checkout -b <branch>" sometimes wrote a bogus reflog entry,
-   causing later "git checkout -" to fail.
+as it also allows people who subscribe to the mailing list as gmane
+newsgroup to "jump to" the article.
 
- * "git diff --cc" learned to correctly ignore binary files.
+Some members of the development community can sometimes also be found
+on the #git IRC channel on Freenode.  Its log is available at:
 
- * "git diff -c/--cc" mishandled a deletion that resolves a conflict, a=
-nd
-   looked in the working tree instead.
+        http://colabti.org/irclogger/irclogger_log/git
 
- * "git fast-export" forgot to quote pathnames with unsafe characters
-   in its output.
+* Reporting bugs
 
- * "git fetch" over smart-http transport used to abort when the
-   repository was updated between the initial connection and the
-   subsequent object transfer.
+When you think git does not behave as you expect, please do not stop yo=
+ur
+bug report with just "git does not work".  "I tried to do X but it did =
+not
+work" is not much better, neither is "I tried to do X and git did Y, wh=
+ich
+is broken".  It often is that what you expect is _not_ what other peopl=
+e
+expect, and chances are that what you expect is very different from wha=
+t
+people who have worked on git have expected (otherwise, the behavior
+would have been changed to match that expectation long time ago).
 
- * "git fetch" did not recurse into submodules in subdirectories.
+Please remember to always state
 
- * "git ls-tree" did not error out when asked to show a corrupt tree.
+ - what you wanted to do;
 
- * "git pull" without any argument left an extra whitespace after the
-   command name in its reflog.
+ - what you did (the version of git and the command sequence to reprodu=
+ce
+   the behavior);
 
- * "git push --quiet" was not really quiet.
+ - what you saw happen;
 
- * "git rebase -i -p" incorrectly dropped commits from side branches.
+ - what you expected to see; and
 
- * "git reset [<commit>] paths..." did not reset the index entry correc=
-tly
-   for unmerged paths.
+ - how the last two are different.
 
- * "git submodule add" did not allow a relative repository path when
-   the superproject did not have any default remote url.
+See http://www.chiark.greenend.org.uk/~sgtatham/bugs.html for further
+hints.
 
- * "git submodule foreach" failed to correctly give the standard input =
-to
-   the user-supplied command it invoked.
+* Repositories, branches and documentation.
 
- * submodules that the user has never showed interest in by running
-   "git submodule init" was incorrectly marked as interesting by "git
-   submodule sync".
+My public git.git repository is at:
 
- * "git submodule update --quiet" was not really quiet.
+        git://git.kernel.org/pub/scm/git/git.git/
 
-  * "git tag -l <glob>..." did not take multiple glob patterns from the
-   command line.
+Immediately after I publish to the primary repository at kernel.org, I
+also push into an alternate here:
 
-----------------------------------------------------------------
+        git://repo.or.cz/alt-git.git/
 
-Changes since v1.7.6 are as follows:
+Impatient people might have better luck with the latter one (there are =
+a
+few other mirrors I push into at sourceforge and github as well).
 
-Alex Neronskiy (2):
-      Fix documentation of fetch-pack that implies that the client can =
-disconnect after sending wants.
-      Document the underlying protocol used by shallow repositories and=
- --depth commands.
+Their gitweb interfaces are found at:
 
-Andrew Wong (1):
-      rebase -i -p: include non-first-parent commits in todo list
+        http://git.kernel.org/?p=3Dgit/git.git
+        http://repo.or.cz/w/alt-git.git
 
-Bert Wesarg (1):
-      Documentation: clearly specify what refs are honored by core.logA=
-llRefUpdates
+There are three branches in git.git repository that are not about the
+source tree of git: "html", "man", and "todo".
 
-Brandon Casey (2):
-      t/t7407: demonstrate that the command called by 'submodule foreac=
-h' loses stdin
-      git-submodule.sh: preserve stdin for the command spawned by forea=
-ch
+The "html" and "man" are auto-generated documentation from the tip of
+the "master" branch; the tip of "html" is extracted to be visible at
+kernel.org at:
 
-Brian Harring (1):
-      get_indexed_object can return NULL if nothing is in that slot; ch=
-eck for it
+        http://www.kernel.org/pub/software/scm/git/docs/
 
-Carlos Mart=C3=ADn Nieto (1):
-      Documentation: clarify the invalidated tree entry format
+The above URL is the top-level documentation page, and it has links to
+documentation of older releases.
 
-Clemens Buchacher (3):
-      error_routine: use parent's stderr if exec fails
-      propagate --quiet to send-pack/receive-pack
-      notice error exit from pager
+The "todo" branch was originally meant to contain a TODO list for me,
+but is mostly used to keep some helper scripts I use to maintain git.
+=46or example, the script to maintain the two documentation branches ar=
+e
+found there as dodoc.sh, which may be a good demonstration of how to
+use a post-update hook to automate a task after pushing into a
+repository.
 
-Dmitry Ivankov (1):
-      doc/fast-import: clarify notemodify command
+There are four branches in git.git repository that track the source tre=
+e
+of git: "master", "maint", "next", and "pu".
 
-Emilio G. Cota (2):
-      Documentation: ignore *.pdf files
-      Documentation/Makefile: add *.pdf to `clean' target
+The "master" branch is meant to contain what are very well tested and
+ready to be used in a production setting.  Every now and then, a "featu=
+re
+release" is cut from the tip of this branch and they typically are name=
+d
+with three dotted decimal digits.  The last such release was 1.7.6 done=
+ on
+June 26, 2011.  You can expect that the tip of the "master" branch is
+always more stable than any of the released versions.
 
-Erik Faye-Lund (1):
-      connect: correctly number ipv6 network adapter
-
-=46redrik Kuivinen (1):
-      Makefile: Track changes to LDFLAGS and relink when necessary
-
-Heiko Voigt (2):
-      add gitignore entry to description about how to write a builtin
-      add technical documentation about ref iteration
-
-Jack Nagel (1):
-      Documentation: minor grammatical fix in rev-list-options.txt
-
-Jakub Narebski (2):
-      gitweb: Serve text/* 'blob_plain' as text/plain with $prevent_xss
-      gitweb: Serve */*+xml 'blob_plain' as text/plain with $prevent_xs=
+Whenever a feature release is made, "maint" branch is forked off from
+"master" at that point.  Obvious, safe and urgent fixes after a feature
+release are applied to this branch and maintenance releases are cut fro=
+m
+it.  The maintenance releases are named with four dotted decimal, named
+after the feature release they are updates to; the last such release wa=
 s
+1.7.6.1.  New features never go to this branch.  This branch is also
+merged into "master" to propagate the fixes forward.
 
-Jeff King (10):
-      combine-diff: split header printing into its own function
-      combine-diff: calculate mode_differs earlier
-      combine-diff: handle binary files as binary
-      refactor get_textconv to not require diff_filespec
-      combine-diff: respect textconv attributes
-      tag: accept multiple patterns for --list
-      docs: document --textconv diff option
-      t7400: fix bogus test failure with symlinked trash
-      fast-export: quote paths in output
-      am: refresh the index at start and --resolved
+A new development does not usually happen on "master". When you send a
+series of patches, after review on the mailing list, a separate topic
+branch is forked from the tip of "master" and your patches are queued
+there, and kept out of "master" while people test it out.  The quality =
+of
+topic branches are judged primarily by the mailing list discussions.
 
-Jens Lehmann (7):
-      submodule add: test failure when url is not configured in superpr=
-oject
-      submodule add: allow relative repository path even when no url is=
- set
-      submodule add: clean up duplicated code
-      fetch: Also fetch submodules in subdirectories in on-demand mode
-      submodule add: always initialize .git/config entry
-      tests: print failed test numbers at the end of the test run
-      submodule: update and add must honor --quiet flag
+Topic branches that are in good shape are merged to the "next" branch. =
+In
+general, the "next" branch always contains the tip of "master".  It mig=
+ht
+not be quite rock-solid production ready, but is expected to work more =
+or
+less without major breakage. The "next" branch is where new and excitin=
+g
+things take place. A topic that is in "next" is expected to be polished=
+ to
+perfection before it is merged to "master" (that's why "master" can be
+expected to stay more stable than any released version).
 
-Johannes Schindelin (1):
-      get_pwd_cwd(): Do not trust st_dev/st_ino blindly
+The "pu" (proposed updates) branch bundles all the remaining topic
+branches. The topics on the branch are not complete, well tested, nor w=
+ell
+documented and need further work. When a topic that was in "pu" proves =
+to
+be in testable shape, it is merged to "next".
 
-Jon Seymour (2):
-      Add a test to check that git ls-tree sets non-zero exit code on e=
-rror.
-      Ensure git ls-tree exits with a non-zero exit code if read_tree_r=
-ecursive fails.
+You can run "git log --first-parent master..pu" to see what topics are
+currently in flight.  Sometimes, an idea that looked promising turns ou=
+t
+to be not so good and the topic can be dropped from "pu" in such a case=
+=2E
 
-Julian Phillips (1):
-      remote-curl: Add a format check to parsing of info/refs
+The two branches "master" and "maint" are never rewound, and "next"
+usually will not be either.  After a feature release is made from
+"master", however, "next" will be rebuilt from the tip of "master"
+using the topics that didn't make the cut in the feature release.
 
-Junio C Hamano (29):
-      diff-index --quiet: learn the "stop feeding the backend early" lo=
-gic
-      checkout -b <name>: correctly detect existing branch
-      sha1_file.c: "legacy" is really the current format
-      zlib wrapper: refactor error message formatter
-      zlib: wrap remaining calls to direct inflate/inflateEnd
-      zlib: wrap inflateInit2 used to accept only for gzip format
-      zlib: wrap deflate side of the API
-      zlib: wrap deflateBound() too
-      zlib: zlib can only process 4GB at a time
-      zlib: allow feeding more than 4GB in one go
-      t/gitweb-lib.sh: skip gitweb tests when perl dependencies are not=
- met
-      cygwin: trust executable bit by default
-      git-remote.txt: avoid sounding as if loose refs are the only ones=
- in the world
-      check-ref-format doc: de-emphasize the implementation detail of a=
- ref
-      git.txt: de-emphasize the implementation detail of a ref
-      glossary: update description of "tag"
-      glossary: update description of head and ref
-      glossary: clarify description of HEAD
-      submodule sync: do not auto-vivify uninteresting submodule
-      "branch -d" can remove more than one branches
-      test: skip clean-up when running under --immediate mode
-      checkout: do not write bogus reflog entry out
-      reset [<commit>] paths...: do not mishandle unmerged paths
-      diff -c/--cc: do not mistake "resolved as deletion" as "use worki=
-ng tree"
-      receive-pack: do not overstep command line argument array
-      helping smart-http/stateless-rpc fetch race
-      Prepare for 1.7.6.1
-      Update draft release notes for 1.7.6.1
-      Git 1.7.6.1
+Note that being in "next" is not a guarantee to appear in the next
+release, nor even in any future release.  There were cases that topics
+needed reverting a few commits in them before graduating to "master", o=
+r a
+topic that already was in "next" was reverted from "next" because fatal
+flaws were found in it after it was merged.
 
-Martin von Zweigbergk (2):
-      Documentation: use [verse] for SYNOPSIS sections
-      rebase: clarify "restore the original branch"
 
-Michael Haggerty (6):
-      git-svn: Demonstrate a bug with root commits in mergeinfo ranges
-      git-svn: Disambiguate rev-list arguments to improve error message
-      git-svn: Correctly handle root commits in mergeinfo ranges
-      gitattributes: Clarify discussion of attribute macros
-      gitattributes: Reword "attribute macro" to "macro attribute"
-      Do not use C++-style comments
+* Other people's trees, trusted lieutenants and credits.
 
-Michael Schubert (1):
-      help_unknown_cmd: do not propose an "unknown" cmd
+Documentation/SubmittingPatches outlines to whom your proposed changes
+should be sent.  As described in contrib/README, I would delegate fixes
+and enhancements in contrib/ area to the primary contributors of them.
 
-Michael Witten (1):
-      filter-branch: Export variable `workdir' for --commit-filter
+Although the following are included in git.git repository, they have th=
+eir
+own authoritative repository and maintainers:
 
-Namhyung Kim (1):
-      git-remote.txt: fix wrong remote refspec
+ - git-gui/ comes from git-gui project, maintained by Pat Thoyts:
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (3):
-      Break down no-lstat() condition checks in verify_uptodate()
-      checkout-index: remove obsolete comment
-      fetch-pack: check for valid commit from server
+        git://repo.or.cz/git-gui.git
 
-Ori Avtalion (1):
-      pull: remove extra space from reflog message
+ - gitk-git/ comes from Paul Mackerras's gitk project:
 
-Pavan Kumar Sunkara (1):
-      git-config: Remove extra whitespaces
+        git://git.kernel.org/pub/scm/gitk/gitk.git
 
-Peter Collingbourne (1):
-      Documentation: git-filter-branch honors replacement refs
+I would like to thank everybody who helped to raise git into the curren=
+t
+shape.  Especially I would like to thank the git list regulars whose he=
+lp
+I have relied on and expect to continue relying on heavily:
+
+ - Linus Torvalds, Shawn Pearce, Johannes Schindelin, Nicolas Pitre,
+   Ren=C3=A9 Scharfe, Jeff King, Jonathan Nieder, Johan Herland, Johann=
+es
+   Sixt, Sverre Rabbelier, Michael J Gruber, Nguy=E1=BB=85n Th=C3=A1i N=
+g=E1=BB=8Dc Duy,
+   =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason and Thomas Rast on general de=
+sign and
+   implementation issues and reviews on the mailing list.
+
+ - Shawn and Nicolas Pitre on pack issues.
+
+ - Martin Langhoff, Frank Lichtenheld and =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason on
+   cvsserver and cvsimport.
+
+ - Paul Mackerras on gitk.
+
+ - Eric Wong, David D. Kilzer and Sam Vilain on git-svn.
+
+ - Simon Hausmann and Pete Wyckoff on git-p4.
+
+ - Jakub Narebski, John Hawley, Petr Baudis, Luben Tuikov, Giuseppe Bil=
+otta on
+   gitweb.
+
+ - J. Bruce Fields, Jonathan Nieder, Michael J Gruber and Thomas Rast o=
+n
+   documentation (and countless others for proofreading and fixing).
+
+ - Alexandre Julliard on Emacs integration.
+
+ - David Aguilar and Charles Bailey for taking good care of git-mergeto=
+ol
+   (and Theodore Ts'o for creating it in the first place) and git-difft=
+ool.
+
+ - Johannes Schindelin, Johannes Sixt, Erik Faye-Lund and others for th=
+eir
+   effort to move things forward on the Windows front.
+
+ - People on non-Linux platforms for keeping their eyes on portability;
+   especially, Randal Schwartz, Theodore Ts'o, Jason Riedy, Thomas Glan=
+zmann,
+   Brandon Casey, Jeff King, Alex Riesen and countless others.
+
+* This document
+
+The latest copy of this document is found in git.git repository,
+on 'todo' branch, as MaintNotes.
