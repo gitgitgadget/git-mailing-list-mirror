@@ -1,85 +1,161 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] git-reset.txt: Be clearer about the symbolic ref nature of HEAD
-Date: Wed, 24 Aug 2011 11:56:26 +0200
-Message-ID: <f903e0bb1c14cb083c263deb165dc9495ab4c60e.1314179720.git.git@drmicha.warpmail.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 24 11:56:37 2011
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: What's cooking in git.git (Aug 2011, #03; Thu, 11)
+Date: Wed, 24 Aug 2011 12:14:55 +0200
+Message-ID: <4E54CF1F.7020608@kdbg.org>
+References: <7vr54rpogf.fsf@alter.siamese.dyndns.org> <4E4D7DD3.2000701@obry.net> <7vhb5e73hy.fsf@alter.siamese.dyndns.org> <4E502302.4000300@ramsay1.demon.co.uk> <7vaab0rodu.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>, pascal@obry.net,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 24 12:15:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwACJ-000872-PT
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 11:56:36 +0200
+	id 1QwAUD-0007Qi-Lx
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 12:15:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754194Ab1HXJ4b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Aug 2011 05:56:31 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:52321 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750855Ab1HXJ4a (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Aug 2011 05:56:30 -0400
-Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 9FE4120850
-	for <git@vger.kernel.org>; Wed, 24 Aug 2011 05:56:29 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute5.internal (MEProxy); Wed, 24 Aug 2011 05:56:29 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=from:to:subject:date:message-id; s=
-	smtpout; bh=Mzym7eEVxmhDcjjxceXv4QiKrfk=; b=C+eStXvJ9pxUfFSoW0QK
-	FVcRrkyPipOYnWmDQAvS5ya2eILn4aTtZqxs5D8qIxt1nNQiH11CjVV3AmCV/0l+
-	5XP4RoIUDTiHsgKe00wszp0qDUNPJ4eofrUIhaBYSD92wTBLj7kpgMXaQGaQ94pZ
-	SE5lrwzsrQ9KJwkBUHdQ8/g=
-X-Sasl-enc: iUOZbnkGrw28p8QQvS8JCAWzBpaHUFWs/wVrs/PUOOam 1314179789
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 2159C9E07C4;
-	Wed, 24 Aug 2011 05:56:29 -0400 (EDT)
-X-Mailer: git-send-email 1.7.6.845.gc3c05
+	id S1756566Ab1HXKPA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Aug 2011 06:15:00 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:27604 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751395Ab1HXKO5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Aug 2011 06:14:57 -0400
+Received: from [77.117.184.250] (77.117.184.250.wireless.dyn.drei.com [77.117.184.250])
+	by bsmtp.bon.at (Postfix) with ESMTP id E70A02C400E;
+	Wed, 24 Aug 2011 12:14:52 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.17) Gecko/20110414 Thunderbird/3.1.10
+In-Reply-To: <7vaab0rodu.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179993>
 
-"git reset" updates the ref which HEAD points to (or HEAD itself, if
-detached), due to being a symbolic ref (unless detached). Therefore,
-"updating/resetting HEAD" is a possible source of confusion especially when
-compared with "git checkout", and the change in
-d537c74 (git-reset.txt: make modes description more consistent, 2010-09-15)
-did not quite help.
+Am 23.08.2011 20:09, schrieb Junio C Hamano:
+> Ramsay Jones<ramsay@ramsay1.demon.co.uk>  writes:
+>
+>> Commit 704c335 (On Cygwin support both UNIX and DOS style path-names=
+,
+>> 05-08-2011) in pu needs an update to fix the commit message.
+>
+> Thanks for a reminder, Ramsay.
+>
+> Here is the exchange where fixing the commit log was mentioned.
+>
+>      From: Pascal Obry<pascal@obry.net>
+>      Subject: Re: [PATCH 2/2] On Cygwin support both UNIX and DOS sty=
+le path-names
+>      To: Ramsay Jones<ramsay@ramsay1.demon.co.uk>
+>      Cc: git@vger.kernel.org
+>      Date: Sat, 13 Aug 2011 19:34:37 +0200
+>      Message-ID:<4E46B5AD.5050806@obry.net>
+>
+>      Le 11/08/2011 22:35, Ramsay Jones a =C3=A9crit :
+>      >    ... could you please correct your commit message. Thanks!
+>
+>      Done, thanks for your review.
+>
+>> Also, I didn't see any response to Johannes Sixt's query concerning
+>> backslash in pathspec. (I personally don't want to go down that
+>> route, but ...)
+>
+> Here is what J6t said in the message:
+>
+>    From: Johannes Sixt<j6t@kdbg.org>
+>    Subject: Re: [PATCH 2/2] On Cygwin support both UNIX and DOS style=
+ path-names
+>    Date: Tue, 09 Aug 2011 21:47:15 +0200
+>    Message-ID:<4E418EC3.4070904@kdbg.org>
+>
+>    >  Do you also want to support this:
+>    >       $ git add src\file.c
+>    >  i.e., backslash in pathspec? Then you need more than this:
+>    >  >  +#define has_dos_drive_prefix(path) (isalpha(*(path))&&  (pa=
+th)[1] =3D=3D ':')
+>    >  >  +#define is_dir_sep(c) ((c) =3D=3D '/' || (c) =3D=3D '\\')
+>    >
+>    >  In particular, you have to enable backslash processing in
+>    >  setup.c:prefix_filename(), but then you lose the ability to esc=
+ape
+>    >  special characters with the backslash.
+>
+> When "git add src\file.c" is given from the command line, what does o=
+ur
+> main() see in argv[2]? Do cmd.exe and bash give us the same thing? Wh=
+at if
+> the command line is "git add 'src\*.c'"?
 
-Clean up after d537c74 (myself) and try to be even clearer about which
-ref is changed by "git reset". Avoid the term "symbolic ref", because who can
-tell *HEAD from HEAD from &HEAD?
+Our main() sees the string as given on the command line, i.e., with the=
+=20
+backslash.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- Documentation/git-reset.txt |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+> I vaguely recall that on Windows you only get a single parameter stri=
+ng
+> from the program loader, and arguments are split in the invoked proce=
+ss,
+> but that is so common that as far as our main() is concerned we can e=
+xpect
+> the example command line to give us argc=3D3 and argv=3D{ "git", "add=
+", "???",
+> NULL }. What I do not recall is if there is some other magic such as
+> expanding shell globs and swapping the direction of slashes in string=
+s
+> involved when this argument processing is done.
 
-diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-index b2832fc..96c964d 100644
---- a/Documentation/git-reset.txt
-+++ b/Documentation/git-reset.txt
-@@ -15,7 +15,7 @@ SYNOPSIS
- DESCRIPTION
- -----------
- In the first and second form, copy entries from <commit> to the index.
--In the third form, set the current branch head (HEAD) to <commit>, optionally
-+In the third form, set the current branch head (which HEAD points to) to <commit>, optionally
- modifying index and working tree to match.  The <commit> defaults to HEAD
- in all forms.
- 
-@@ -44,8 +44,9 @@ you can use it to selectively reset hunks. See the ``Interactive Mode''
- section of linkgit:git-add[1] to learn how to operate the `\--patch` mode.
- 
- 'git reset' [--<mode>] [<commit>]::
--	This form resets the current branch head to <commit> and
--	possibly updates the index (resetting it to the tree of <commit>) and
-+	This form resets the current branch head (which HEAD points to) to <commit>;
-+	if HEAD points to a commit (aka detached HEAD) then HEAD is reset to <commit>.
-+	This form also possibly updates the index (resetting it to the tree of <commit>) and
- 	the working tree depending on <mode>, which
- 	must be one of the following:
- +
--- 
-1.7.6.845.gc3c05
+There is a linker option whether shell globs should be expanded or not=20
+before they are passed to main(). If the option is enabled, the expansi=
+on=20
+is different from the way mandated by POSIX.
+
+There was a proposal recently (on the msysgit list?) that this option=20
+should be disabled, and any expansion of pathspec (globs) should be don=
+e=20
+entirely by git's own expansion rules, which includes automatic recursi=
+ve=20
+matching. As a result, git would behave differently on Windows and Unix=
+,=20
+but since it already does when the linker option is enabled, we argue t=
+hat=20
+git's rules are superior (and Windows's linker option is inferior), we=20
+better should go the proposed new route.
+
+> You probably _could_ do '\\' ->  '/' inside prefix_filename() and
+> get_pathspec(), but as J6t mentioned, we _do_ handle backslash as a
+> quoting character, and this is _not_ going to change.
+
+=2E.. not going to change on platforms where this already works. It doe=
+s not=20
+work on Windows.
+
+> So even if we were to go that route, the user would need to make git =
+see
+> "src\\file.c" or "src\\*.c" in order to make it turn into "src/file.c=
+" and
+> "src/*.c" pathspec. If it means that the user needs to type:
+>
+> 	$ git add src\\\\file.c
+>
+> I would have to say that it would be simpler for them to say
+>
+> 	$ git add src/file.c
+>
+> even on Cygwin. After all, isn't Cygwin for people who are forced to =
+be on
+> Windows and miss POSIXy environments?
+>
+> By the way, Johannes, how does Git for Windows handle pathspecs?
+
+On Windows, prefix_filename() and prefix_path() (the latter via=20
+normalize_path_copy()) transform any backslashes to forward-slashes.=20
+Therefore, if you have src\*.c on the command line, it is processed as=20
+src/*.c. That is, if \ was meant to escape the *, then this would not=20
+work. It does not help to duplicate backslashes, because all of them ar=
+e=20
+transformed to forward-slashes before git's glob expansion kicks in.
+
+-- Hannes
