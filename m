@@ -1,50 +1,68 @@
-From: Marat Radchenko <marat@slonopotamus.org>
-Subject: Re: [PATCH v2] xdiff/xprepare: improve O(n*m) performance in =?utf-8?b?eGRsX2NsZWFudXBfcmVjb3Jkcygp?=
-Date: Wed, 24 Aug 2011 06:32:53 +0000 (UTC)
-Message-ID: <loom.20110824T083156-530@post.gmane.org>
-References: <7vd3g5i7ci.fsf@alter.siamese.dyndns.org> <1313546037-4104-1-git-send-email-rctay89@gmail.com> <loom.20110824T082807-840@post.gmane.org>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: Looking for a way to turn off/modify ref disambiguation
+Date: Wed, 24 Aug 2011 08:54:12 +0200
+Message-ID: <20110824065412.GA10800@ecki>
+References: <CAPRoxBXjL3Y3KRd8R2guX9Ar374sw-pBhz1bCzNZxn1vC6XNPw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 24 08:35:12 2011
+Cc: git@vger.kernel.org
+To: "Nathan W. Panike" <nathan.panike@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 24 08:56:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qw73Q-0002D2-GG
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 08:35:12 +0200
+	id 1Qw7OA-0003PK-NB
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 08:56:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752693Ab1HXGfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Aug 2011 02:35:07 -0400
-Received: from lo.gmane.org ([80.91.229.12]:35467 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752296Ab1HXGfF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Aug 2011 02:35:05 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Qw73I-000288-EL
-	for git@vger.kernel.org; Wed, 24 Aug 2011 08:35:04 +0200
-Received: from 195.218.191.171 ([195.218.191.171])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 24 Aug 2011 08:35:04 +0200
-Received: from marat by 195.218.191.171 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 24 Aug 2011 08:35:04 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 195.218.191.171 (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30)
+	id S1752890Ab1HXG4e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Aug 2011 02:56:34 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:12787 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751411Ab1HXG4d (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Aug 2011 02:56:33 -0400
+Received: from localhost (p5B22C8F7.dip.t-dialin.net [91.34.200.247])
+	by bsmtp.bon.at (Postfix) with ESMTP id 3E1D4130082;
+	Wed, 24 Aug 2011 08:56:30 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <CAPRoxBXjL3Y3KRd8R2guX9Ar374sw-pBhz1bCzNZxn1vC6XNPw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179989>
 
-Marat Radchenko <marat <at> slonopotamus.org> writes:
-> So, will this be applied to git master? Very impressive speed improvement.
+Hi Nathan,
 
-Sorry, just discovered it is already in pu.
+On Tue, Aug 23, 2011 at 02:26:48PM -0500, Nathan W. Panike wrote:
+> 
+> Is there any way to change this behavior, e.g., so that rule 6 becomes
+> an error? Say, by setting a config option?
+
+I know you're trying to improve git. I do not want to discourage
+that. But with little UI annoyances like this, it's usually not
+worth it.  Git has countless magic tricks like this.  It's a bit
+like perl in that regard. Assuming that we agree on what we would
+like to get rid of (which is the hard part), it would still break
+backwards compatibility. Maintaining a switch, on the other hand,
+is overhead and in the end it would make git even more complicated,
+because now the behavior of core commands depends on user
+configuration.
+
+But once you accept the fact that this is what git is, you can
+tackle the problem in a different way:
+
+> A colleague at $dayjob recently caused corruption in our git
+> repository by accidentally running the command
+> 
+> git rebase origin stable
+
+Ok, mistakes happen. But that's exactly why you have git: To be
+able to deal with mistakes gracefully. So use git to review and
+test changes before they get declared as a stable release (stable
+enough to be used internally, at least). Then mistakes usually
+become a local problem and can be undone using the reflog.
+
+Clemens
