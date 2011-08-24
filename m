@@ -1,123 +1,78 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] submodule: Demonstrate known breakage during recursive
-	merge
-Date: Wed, 24 Aug 2011 21:14:38 +0200
-Message-ID: <20110824191438.GA45292@book.hvoigt.net>
-References: <680d2679c3275c01152500760311b5f96a93ea62.1314193375.git.brad.king@kitware.com>
+ merge
+Date: Wed, 24 Aug 2011 12:24:22 -0700
+Message-ID: <7vty96obo9.fsf@alter.siamese.dyndns.org>
+References: <680d2679c3275c01152500760311b5f96a93ea62.1314193375.git.brad.king@kitware.com> <20110824191438.GA45292@book.hvoigt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Brad King <brad.king@kitware.com>
-X-From: git-owner@vger.kernel.org Wed Aug 24 21:14:47 2011
+Cc: Brad King <brad.king@kitware.com>, git@vger.kernel.org
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Wed Aug 24 21:24:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwIuU-0005DS-MO
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 21:14:47 +0200
+	id 1QwJ48-0001rK-8r
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 21:24:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753809Ab1HXTOm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Aug 2011 15:14:42 -0400
-Received: from darksea.de ([83.133.111.250]:52840 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753796Ab1HXTOk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Aug 2011 15:14:40 -0400
-Received: (qmail 5286 invoked from network); 24 Aug 2011 21:14:38 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 24 Aug 2011 21:14:38 +0200
-Content-Disposition: inline
-In-Reply-To: <680d2679c3275c01152500760311b5f96a93ea62.1314193375.git.brad.king@kitware.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1751160Ab1HXTY0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Aug 2011 15:24:26 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49579 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750767Ab1HXTYZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Aug 2011 15:24:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E55454434;
+	Wed, 24 Aug 2011 15:24:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=f26ghLoh4RvxUaOC3N0OH3EtTGY=; b=nIgiQK
+	BJSf/wqOSk66PlaFLd3SO1Sez+5698F2ZEj+cawl1xvdL1SuCqaZ+5H11P0YIcUz
+	nrhyO75oX9ppHElwowuHYo0q2To2Eqtf/DQbWYoDayjMwoSh70JeEfHdanipHPwW
+	WXWk1/3Q9xQb06CEdFr3GfI8ZOKr1/66o6iS0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BkXXb3EXVBEIes76R9AylnGn93eGok5B
+	0xW9U0MlLi7Y4AcxEeTkZDoM+dk++19L03GVbJIwLkLlKPQx47/gM7SX5xRwh9sY
+	rOFfSAdW4XW+lei115OYU0vvyk9ouj/adSAt5sI6+65np1sE76n+9eQQoiMBD7Cl
+	JA1Vc2bN2tw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DCAC44433;
+	Wed, 24 Aug 2011 15:24:23 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7279E4432; Wed, 24 Aug 2011
+ 15:24:23 -0400 (EDT)
+In-Reply-To: <20110824191438.GA45292@book.hvoigt.net> (Heiko Voigt's message
+ of "Wed, 24 Aug 2011 21:14:38 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: AC6BC7F2-CE86-11E0-B056-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180028>
 
-Hi,
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
-thanks for finding this subtle bug!
+> ... Its a
+> little bit workaroundish so if anymore has an idea how to fix this in
+> nicer way, please tell me.
+>
+> [1]--8<----
+> From: Heiko Voigt <hvoigt@hvoigt.net>
+> Subject: [PATCH] protect submodule merge search against multiple calls for
+>  the same path
+>
+> When multiple merge-bases are found for two commits to be merged the
+> merge machinery will ask twice for a merge resolution. Currently its not
+> possible to use the revision-walking api for walking the same commits
+> multiple times.
 
-On Wed, Aug 24, 2011 at 09:59:50AM -0400, Brad King wrote:
-> Since commit 68d03e4a (Implement automatic fast-forward merge for
-> submodules, 2010-07-07) we try to suggest submodule commits that resolve
-> a conflict.  Consider a true recursive merge case
-> 
->     b---bc
->    / \ /
->   o   X
->    \ / \
->     c---cb
-
-And here is a patch[1] that you can apply on top of yours which should fix
-this. An extra pair of merge machinery knowing eyes appreciated. Its a
-little bit workaroundish so if anymore has an idea how to fix this in
-nicer way, please tell me.
-
-[1]--8<----
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [PATCH] protect submodule merge search against multiple calls for
- the same path
-
-When multiple merge-bases are found for two commits to be merged the
-merge machinery will ask twice for a merge resolution. Currently its not
-possible to use the revision-walking api for walking the same commits
-multiple times. Since the result will not change we can simply fail
-here if we are asked for a resolution of the same path again.
-
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
----
- submodule.c                |    9 +++++++++
- t/t7405-submodule-merge.sh |    2 +-
- 2 files changed, 10 insertions(+), 1 deletions(-)
-
-diff --git a/submodule.c b/submodule.c
-index 1ba9646..a4af08e 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -646,6 +646,7 @@ int merge_submodule(unsigned char result[20], const char *path,
- 		    const unsigned char base[20], const unsigned char a[20],
- 		    const unsigned char b[20])
- {
-+	static char last_path[PATH_MAX] = {'\0'};
- 	struct commit *commit_base, *commit_a, *commit_b;
- 	int parent_count;
- 	struct object_array merges;
-@@ -699,6 +700,13 @@ int merge_submodule(unsigned char result[20], const char *path,
- 	 * user needs to confirm the resolution.
- 	 */
- 
-+	/* in case of multiple merge-bases the merge algorithm will ask
-+	 * again for a resolution. We should not search twice for the
-+	 * same path.
-+	 */
-+	if (!strcmp(path, last_path))
-+		return 0;
-+
- 	/* find commit which merges them */
- 	parent_count = find_first_merges(&merges, path, commit_a, commit_b);
- 	switch (parent_count) {
-@@ -726,6 +734,7 @@ int merge_submodule(unsigned char result[20], const char *path,
- 			print_commit((struct commit *) merges.objects[i].item);
- 	}
- 
-+	memcpy(last_path, path, strlen(path) + 1);
- 	free(merges.objects);
- 	return 0;
- }
-diff --git a/t/t7405-submodule-merge.sh b/t/t7405-submodule-merge.sh
-index 8f6f2d6..603fb72 100755
---- a/t/t7405-submodule-merge.sh
-+++ b/t/t7405-submodule-merge.sh
-@@ -269,7 +269,7 @@ test_expect_success 'setup for recursive merge with submodule' '
- '
- 
- # merge should leave submodule unmerged in index
--test_expect_failure 'recursive merge with submodule' '
-+test_expect_success 'recursive merge with submodule' '
- 	(cd merge-recursive &&
- 	 test_must_fail git merge top-bc &&
- 	 echo "160000 $(git rev-parse top-cb:sub) 2	sub" > expect2 &&
--- 
-1.7.6.551.g4266ca
+I have been suspecting that most of this should be done in a separate
+helper program that is run via run_command() interface, without
+contaminating the object pool the main merge process has with data from
+the submodule object store to begin with (i.e. add_submodule_odb() and
+everything below should go). Wouldn't it be a lot cleaner solution?
