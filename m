@@ -1,68 +1,76 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: [PATCH 0/2] Add an update=none option for 'loose' submodules
-Date: Wed, 24 Aug 2011 22:38:16 +0200
-Message-ID: <20110824203816.GG45292@book.hvoigt.net>
-References: <cover.1312923673.git.hvoigt@hvoigt.net> <7v8vqzreeo.fsf@alter.siamese.dyndns.org> <20110811195955.GA21185@book.hvoigt.net> <7vy5yujtr2.fsf@alter.siamese.dyndns.org> <20110822200052.GC11745@sandbox-rc> <7v62lpuky8.fsf@alter.siamese.dyndns.org> <20110823194350.GA57187@book.hvoigt.net> <4E540B03.2030909@web.de>
+From: Brian Harring <ferringb@gmail.com>
+Subject: Re: [PATCH] get_indexed_object can return NULL if nothing is in that
+ slot; check for it
+Date: Wed, 24 Aug 2011 13:40:21 -0700
+Message-ID: <20110824204021.GA28157@beast>
+References: <20110824054717.GA16512@localhost>
+ <7vmxeypudw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed Aug 24 22:38:27 2011
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 24 22:40:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwKDT-0005v3-B7
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 22:38:27 +0200
+	id 1QwKFS-0006yR-Va
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 22:40:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752620Ab1HXUiW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Aug 2011 16:38:22 -0400
-Received: from darksea.de ([83.133.111.250]:54902 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751617Ab1HXUiV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Aug 2011 16:38:21 -0400
-Received: (qmail 5489 invoked from network); 24 Aug 2011 22:38:17 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 24 Aug 2011 22:38:17 +0200
+	id S1752855Ab1HXUk1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Aug 2011 16:40:27 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:51107 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752886Ab1HXUkZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Aug 2011 16:40:25 -0400
+Received: by ywf7 with SMTP id 7so1166235ywf.19
+        for <git@vger.kernel.org>; Wed, 24 Aug 2011 13:40:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=9HuBkKLu83FrPczygmBVzgNeC2pYINSrrQImYVWG/Lk=;
+        b=kg9tP5t6mY2nL9MyFT6KkNcV+JbMNWu+Kab7eLoR8HkLReStSGt7KhbIjAbeNrwqUj
+         mxIb4dcHojUW7qXKVOyWZnhQdH+9Wy6cR9SdQMoT1uwBwqaUJv0JBFqAAh4xyAJiH73j
+         zvasxkP5pPL8aQaOJrLk8e/UXrku8lOdupfDI=
+Received: by 10.236.177.66 with SMTP id c42mr12947559yhm.14.1314218425344;
+        Wed, 24 Aug 2011 13:40:25 -0700 (PDT)
+Received: from smtp.gmail.com (74-95-192-101-SFBA.hfc.comcastbusiness.net [74.95.192.101])
+        by mx.google.com with ESMTPS id s62sm415317yhn.75.2011.08.24.13.40.22
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 24 Aug 2011 13:40:24 -0700 (PDT)
+Received: by smtp.gmail.com (sSMTP sendmail emulation); Wed, 24 Aug 2011 13:40:21 -0700
 Content-Disposition: inline
-In-Reply-To: <4E540B03.2030909@web.de>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+In-Reply-To: <7vmxeypudw.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180038>
 
-On Tue, Aug 23, 2011 at 10:18:11PM +0200, Jens Lehmann wrote:
-> Am 23.08.2011 21:43, schrieb Heiko Voigt:
-> > Another change I am thinking of (which would definitely need an entry in
-> > the release notes) is to change submodule foreach to iterate over all
-> > gitmodule entries in the index/HEAD/worktree (not sure yet) instead of
-> > "just entries that are in .git/config".
+On Wed, Aug 24, 2011 at 10:54:51AM -0700, Junio C Hamano wrote:
+> Thanks for a fix.
 > 
-> When changing the default I think we'll surprise a lot of users (imagine
-> someone running a "git submodule foreach pwd" when some submodules aren't
-> populated). But adding an option to "git submodule foreach" (and maybe others)
-> to get the list of submodules from the index or HEAD might make sense (while
-> I'm not sure parsing the work tree does, as you'll basically have to pick up
-> any .git you find. AFAICS a submodule is defined either by an entry in the
-> .gitmodules file, in .git/config or through a gitlink entry in a commit or the
-> index. So maybe the third alternative to index and HEAD is to use those found
-> in .gitmodules?).
-> 
-> Could you describe a use case for that?
+> It is both interesting and disturbing to see that these small mistakes are
+> discovered a week after the topics hit 'master', even though it has been
+> cooking in 'next' for a week before that happened (in the case of this
+> topic, it also hit 'maint' yesterday).
 
-Yes, a repository using the submodule.$name.checkout=none config.
+I'll admit I'm slightly surprised it slipped past for initial 
+development- that said, you have to explicitly trigger the race to 
+trigger the segfault.  And that's not easy w/out building out a 
+custom setup- even w/ that setup, you need to go digging in server 
+logs to realize the previous serverside failure just converted to a 
+segfault.  Clientside, it hung just the same.
 
-Currently its hard to iterate over all submodules to set this config to
-'checkout' locally. You can not use submodule foreach for that since it
-will skip submodule directories that do not have .git in them.
+Bit nonobvious.  Plus, shit happens. ;)
 
-But you are right this should obviously be done using an option like
+Either way, I was poking at the source trying to figure out how to get 
+some unittests for an end to end testing of the http/smartserv; that 
+said I was having a helluva time finding a way to do it without 
+bundling a stub of a webserver.  Suggestions would be welcome on that 
+one.
 
-	git submodule foreach --head ...
-
-or similar.
-
-Cheers Heiko
+~brian
