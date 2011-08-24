@@ -1,97 +1,144 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: rebase -i: Should --continue auto-amend after failed exec?
-Date: Wed, 24 Aug 2011 15:36:52 +0200
-Message-ID: <vpqk4a3rkwb.fsf@bauges.imag.fr>
-References: <4E40511B.7090206@kdbg.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org List" <git@vger.kernel.org>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Wed Aug 24 15:37:04 2011
+From: Brad King <brad.king@kitware.com>
+Subject: [PATCH] submodule: Demonstrate known breakage during recursive merge
+Date: Wed, 24 Aug 2011 09:59:50 -0400
+Message-ID: <680d2679c3275c01152500760311b5f96a93ea62.1314193375.git.brad.king@kitware.com>
+Cc: Heiko Voigt <hvoigt@hvoigt.net>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Aug 24 16:05:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwDdf-0006Si-Vy
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 15:37:04 +0200
+	id 1QwE50-0005io-Lj
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 16:05:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751772Ab1HXNg7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Aug 2011 09:36:59 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:37484 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751087Ab1HXNg6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Aug 2011 09:36:58 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p7ODaZj9028445
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 24 Aug 2011 15:36:35 +0200
-Received: from bauges.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1QwDdU-0007NZ-Dh; Wed, 24 Aug 2011 15:36:52 +0200
-In-Reply-To: <4E40511B.7090206@kdbg.org> (Johannes Sixt's message of "Mon, 08
-	Aug 2011 23:11:55 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 24 Aug 2011 15:36:36 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p7ODaZj9028445
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1314797797.85667@AiiS2TNj6I4jDiSiVA2E5g
+	id S1751839Ab1HXOFO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Aug 2011 10:05:14 -0400
+Received: from 66-194-253-20.static.twtelecom.net ([66.194.253.20]:36911 "EHLO
+	public.kitware.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750767Ab1HXOFM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Aug 2011 10:05:12 -0400
+X-Greylist: delayed 320 seconds by postgrey-1.27 at vger.kernel.org; Wed, 24 Aug 2011 10:05:12 EDT
+Received: from vesper (vesper.kitwarein.com [192.168.1.207])
+	by public.kitware.com (Postfix) with ESMTP id F1E9935CBC;
+	Wed, 24 Aug 2011 09:59:50 -0400 (EDT)
+Received: by vesper (Postfix, from userid 1000)
+	id CFFF16098; Wed, 24 Aug 2011 09:59:50 -0400 (EDT)
+X-Mailer: git-send-email 1.7.4.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180002>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Since commit 68d03e4a (Implement automatic fast-forward merge for
+submodules, 2010-07-07) we try to suggest submodule commits that resolve
+a conflict.  Consider a true recursive merge case
 
-> If after a failed "exec" instruction there are staged changes, then currently rebase
-> --continue fails with:
->
-> .../git-rebase--interactive: line 774: .../.git/rebase-merge/author-script: No such file or directory
+    b---bc
+   / \ /
+  o   X
+   \ / \
+    c---cb
 
-That's obviously bad, there should at least be an accurate error
-message.
+in which the two heads themselves (bc,cb) had resolved a submodule
+conflict (i.e. reference different commits than their parents).  The
+submodule merge search runs during the temporary merge of the two merge
+bases (b,c) and prints out a suggestion that is not meaningful to the
+user.  Then during the main merge the submodule merge search runs again
+but dies with the message
 
-> But shouldn't this amend the HEAD commit? The documentation is not clear
-> (from git-rebase.txt):
->
->   The interactive rebase will stop when a command fails (i.e. exits with
->   non-0 status) to give you an opportunity to fix the problem. You can
->   continue with `git rebase --continue`.
->
-> This may be interpreted to work like "edit", and IMO would be a very useful
-> modus operandi.
+  fatal: --ancestry-path given but there are no bottom commits
 
-I'm not sure. What happens in "edit" is that when reaching the "edit"
-line, git-rebase--interactive.sh calls die_with_patch, which writes
-author information in .git/rebase-merge/author-script, which really
-means "I've stopped on this commit, this is the one that we should
-implicitely amend with --continue".
+while trying to enumerate candidates.  Demonstrate this known breakage
+with a new test in t7405-submodule-merge covering the case.
 
-The case of "exec" is a bit different: you don't stop "on a commit", but
-after doing something else. You can hardly guess whether the staged
-changes are meant to amend the existing commit, or to make a new one.
+Signed-off-by: Brad King <brad.king@kitware.com>
+---
+Hi folks,
 
-Actually, that could even be
+A co-worker encountered this problem last week in a real project.
+The merge dies and does not leave the submodule conflict in the index.
+We were able to work around it by moving the submodule out of the way
+and resolving the conflict by hand.  Then I ran the merge again to
+debug the problem and narrowed it down to this case.
 
-pick deadbeef Existing commit
-exec foo > bar.txt; git add bar.txt; git commit -m "added during rebase"
-exec false
-pick c00ffee Another commit
+BTW, if one adds the line
 
-then auto-amending may be really confusing: should it amend the HEAD
-commit that you've just created (this would really go against the logic
-of .git/rebase-merge/author-script) or the last picked commit (which you
-can't really do since it's not HEAD)?
+  rm -rf sub && mkdir sub &&
 
-I think it's best to abort, with an accurate error message pointing the
-user to both solutions (commit --amend && rebase --continue or commit &&
-rebase --continue). I'll try a patch.
+just above the line
 
+  test_must_fail git merge top-bc
+
+then the test passes because no submodule merge search runs.  Therefore
+this test can be switched to expect success when the problem is fixed.
+
+Brad
+
+ t/t7405-submodule-merge.sh |   51 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 51 insertions(+), 0 deletions(-)
+
+diff --git a/t/t7405-submodule-merge.sh b/t/t7405-submodule-merge.sh
+index a8fb30b..8f6f2d6 100755
+--- a/t/t7405-submodule-merge.sh
++++ b/t/t7405-submodule-merge.sh
+@@ -228,4 +228,55 @@ test_expect_success 'merging with a modify/modify conflict between merge bases'
+ 	git merge d
+ '
+ 
++# canonical criss-cross history in top and submodule
++test_expect_success 'setup for recursive merge with submodule' '
++	mkdir merge-recursive &&
++	(cd merge-recursive &&
++	 git init &&
++	 mkdir sub &&
++	 (cd sub &&
++	  git init &&
++	  test_commit a &&
++	  git checkout -b sub-b master &&
++	  test_commit b &&
++	  git checkout -b sub-c master &&
++	  test_commit c &&
++	  git checkout -b sub-bc sub-b &&
++	  git merge sub-c &&
++	  git checkout -b sub-cb sub-c &&
++	  git merge sub-b &&
++	  git checkout master) &&
++	 git add sub &&
++	 git commit -m a &&
++	 git checkout -b top-b master &&
++	 (cd sub && git checkout sub-b) &&
++	 git add sub &&
++	 git commit -m b &&
++	 git checkout -b top-c master &&
++	 (cd sub && git checkout sub-c) &&
++	 git add sub &&
++	 git commit -m c &&
++	 git checkout -b top-bc top-b &&
++	 git merge -s ours -n top-c &&
++	 (cd sub && git checkout sub-bc) &&
++	 git add sub &&
++	 git commit -m bc &&
++	 git checkout -b top-cb top-c &&
++	 git merge -s ours -n top-b &&
++	 (cd sub && git checkout sub-cb) &&
++	 git add sub &&
++	 git commit -m cb)
++'
++
++# merge should leave submodule unmerged in index
++test_expect_failure 'recursive merge with submodule' '
++	(cd merge-recursive &&
++	 test_must_fail git merge top-bc &&
++	 echo "160000 $(git rev-parse top-cb:sub) 2	sub" > expect2 &&
++	 echo "160000 $(git rev-parse top-bc:sub) 3	sub" > expect3 &&
++	 git ls-files -u > actual &&
++	 grep "$(cat expect2)" actual > /dev/null &&
++	 grep "$(cat expect3)" actual > /dev/null)
++'
++
+ test_done
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.7.4.4
