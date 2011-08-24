@@ -1,64 +1,73 @@
-From: Todd Rinaldo <toddr@cpanel.net>
-Subject: Re: git clean --exclude broken?
-Date: Wed, 24 Aug 2011 18:08:28 -0500
-Message-ID: <F6809F96-2D71-482C-934F-2CF4EA74FEA1@cpanel.net>
-References: <A04A4D84-16CC-438C-8828-0D11BE9DE2DA@cpanel.net> <7vliuio65w.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1244.3)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 25 01:08:35 2011
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Problem with S_IFGITLINK
+Date: Thu, 25 Aug 2011 06:15:20 +0700
+Message-ID: <CACsJy8Dgz92YqBnqjvMS9KqtNoNTyrP_0ZqEqTurGnVfTzriUQ@mail.gmail.com>
+References: <4E54F364.7000503@gmail.com> <4E550E03.3080104@drmicha.warpmail.net>
+ <4E551904.303@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: =?UTF-8?Q?Adam_K=C5=82obukowski?= <adamklobukowski@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 25 01:15:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwMYl-00053Z-Ay
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 01:08:35 +0200
+	id 1QwMfs-0007UD-EF
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 01:15:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751893Ab1HXXIa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Aug 2011 19:08:30 -0400
-Received: from mx1.cpanel.net ([208.74.121.68]:59667 "EHLO mx1.cpanel.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750751Ab1HXXI3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Aug 2011 19:08:29 -0400
-Received: from ng1.cptxoffice.net ([208.74.121.102] helo=[10.1.4.99])
-	by mx1.cpanel.net with esmtps (TLSv1:AES128-SHA:128)
-	(Exim 4.69)
-	(envelope-from <toddr@cpanel.net>)
-	id 1QwMYe-0007bA-FU; Wed, 24 Aug 2011 18:08:28 -0500
-In-Reply-To: <7vliuio65w.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1244.3)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - mx1.cpanel.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - cpanel.net
+	id S1752533Ab1HXXPw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Aug 2011 19:15:52 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:50601 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752112Ab1HXXPv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Aug 2011 19:15:51 -0400
+Received: by bke11 with SMTP id 11so1283115bke.19
+        for <git@vger.kernel.org>; Wed, 24 Aug 2011 16:15:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=VI+UnKEPEkEvFnm28Zef4hZHAzE54pjwJiM1T8GV/i0=;
+        b=OJ2gETmaGID19kUGaTHqnRbqXZSXJ9cwAc8p+OR51Ux1+d0qa3cC1YhuNtAEHW6mFn
+         ii8GcbAJZy7vOUeIgl9ZO3ns/OjKfI3VxTP3BnLsvzZJ68IG1hqCg+K0/zsp5J0KLyoj
+         k6U9mRi5a1JxBST6VtePv5oVdPJpTRWY1zmT8=
+Received: by 10.204.155.81 with SMTP id r17mr2508508bkw.19.1314227750118; Wed,
+ 24 Aug 2011 16:15:50 -0700 (PDT)
+Received: by 10.204.156.24 with HTTP; Wed, 24 Aug 2011 16:15:20 -0700 (PDT)
+In-Reply-To: <4E551904.303@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180050>
 
+2011/8/24 Adam K=C5=82obukowski <adamklobukowski@gmail.com>:
+> I may try to implement it, but I my knowledge of Git internals is equ=
+al to
+> zero. If someone can point me what has to be done - I'll be gratefull=
+=2E
 
-On Aug 24, 2011, at 4:23 PM, Junio C Hamano wrote:
+Git stores mode in the index (struct cache_entry#ce_mode, cache.h) and
+in tree objects (see tree-walk.c). Basically you define a new set of
+S_IS* and S_IF* macros and use them instead of standard ones.
+Translations from struct stat#st_mode will be needed, I think
+ce_mode_from_stat() does that job.
 
-> Todd Rinaldo <toddr@cpanel.net> writes:
-> 
->> I think I have found a new bug in 1.7.5:
-> 
-> My quick check indicates 1.7.3 behaves the same way, and 1.7.2.5 didn't
-> have --exclude option, so this does not seem to be anything particularly
-> new in the 1.7.5 release.
-No. I was just clarifying what my binary was for research purposes.
+So:
+ - read index and checkout: entry.c
+ - read and update index: read-cache.c
+ - read tree objects: tree-walk.c
+ - write tree objects: cache-tree.c
+ - anywhere that checks struct cache_entry#ce_mode needs to convert to
+use the new defines
 
-> 
->> # The problem (Why is foo/ removed?)
->> $>git clean -dXf --exclude=/foo
->> Removing bar/
->> Removing foo/
-> 
-> Why is this command line giving -X that tells us not to use the ignore
-> rules, and --exclude option at the same time?
-My more complicated use of the command wanted to use the .gitignore rules to cleanup ignored files with the exception of 1 directory. I believe -dxf --exclude is also broken in the same way.
+Another way, less changes, is redefine S_IS* and S_IF* and ignore
+system values. Then make wrapper for stat() and lstat(), convert
+system values to git values. You can put these wrappers in compat
+directory. See git-compat-util.h, mingw port for example already
+redefine these functions for Windows platform.
+--=20
+Duy
