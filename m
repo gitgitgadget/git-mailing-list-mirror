@@ -1,60 +1,97 @@
-From: =?UTF-8?B?QWRhbSBLxYJvYnVrb3dza2k=?= <adamklobukowski@gmail.com>
-Subject: Problem with S_IFGITLINK
-Date: Wed, 24 Aug 2011 14:49:40 +0200
-Message-ID: <4E54F364.7000503@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: rebase -i: Should --continue auto-amend after failed exec?
+Date: Wed, 24 Aug 2011 15:36:52 +0200
+Message-ID: <vpqk4a3rkwb.fsf@bauges.imag.fr>
+References: <4E40511B.7090206@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 24 14:49:50 2011
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org List" <git@vger.kernel.org>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Aug 24 15:37:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwCtw-0004xw-Ic
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 14:49:48 +0200
+	id 1QwDdf-0006Si-Vy
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 15:37:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752565Ab1HXMto (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Aug 2011 08:49:44 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:46176 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752028Ab1HXMtn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Aug 2011 08:49:43 -0400
-Received: by fxh19 with SMTP id 19so936520fxh.19
-        for <git@vger.kernel.org>; Wed, 24 Aug 2011 05:49:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=ISInw4f2Yw4Q7PvR0zZLngfY7oFlMJY/OQXTqd5uUjg=;
-        b=sptyPI6H4OoCAymS3RqFY0pT8V45cvg4ayRjPxbsim36g/DeKJ3WuYMZl7X00kV0dR
-         7i259ogaaZYDhjFzwkbvQzz1cC9XJB6zn7UGSsIm35vddDrpMzPqYInZJJNZuZJ6BUWz
-         GsxF8ylF7cPcE1MChjlDPntH9gzx0HBRbBUAQ=
-Received: by 10.223.9.154 with SMTP id l26mr4496993fal.36.1314190182167;
-        Wed, 24 Aug 2011 05:49:42 -0700 (PDT)
-Received: from [192.168.0.102] (89-72-179-1.dynamic.chello.pl [89.72.179.1])
-        by mx.google.com with ESMTPS id r12sm808580fam.38.2011.08.24.05.49.40
-        (version=SSLv3 cipher=OTHER);
-        Wed, 24 Aug 2011 05:49:41 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110617 Thunderbird/3.1.11
+	id S1751772Ab1HXNg7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Aug 2011 09:36:59 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:37484 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751087Ab1HXNg6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Aug 2011 09:36:58 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p7ODaZj9028445
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 24 Aug 2011 15:36:35 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1QwDdU-0007NZ-Dh; Wed, 24 Aug 2011 15:36:52 +0200
+In-Reply-To: <4E40511B.7090206@kdbg.org> (Johannes Sixt's message of "Mon, 08
+	Aug 2011 23:11:55 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 24 Aug 2011 15:36:36 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p7ODaZj9028445
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1314797797.85667@AiiS2TNj6I4jDiSiVA2E5g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/179999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180001>
 
-Hello
+Johannes Sixt <j6t@kdbg.org> writes:
 
-I'm trying to compile git on some very exotic u*ix flavor (FreeMiNT 
-anyone? :)) and I encountered problem with S_IFGITLINK.
+> If after a failed "exec" instruction there are staged changes, then currently rebase
+> --continue fails with:
+>
+> .../git-rebase--interactive: line 774: .../.git/rebase-merge/author-script: No such file or directory
 
-Unfortunately, on my system S_IFGITLINK = S_IFLNK, and it breaks build 
-in entry.c write_entry.
+That's obviously bad, there should at least be an accurate error
+message.
 
-Should I report a bug? (where?, I could not find any reference to 
-bugtracker on git pages)
+> But shouldn't this amend the HEAD commit? The documentation is not clear
+> (from git-rebase.txt):
+>
+>   The interactive rebase will stop when a command fails (i.e. exits with
+>   non-0 status) to give you an opportunity to fix the problem. You can
+>   continue with `git rebase --continue`.
+>
+> This may be interpreted to work like "edit", and IMO would be a very useful
+> modus operandi.
 
-Can I fix it somehow? Can I change value of S_IFGITLINK to something else?
+I'm not sure. What happens in "edit" is that when reaching the "edit"
+line, git-rebase--interactive.sh calls die_with_patch, which writes
+author information in .git/rebase-merge/author-script, which really
+means "I've stopped on this commit, this is the one that we should
+implicitely amend with --continue".
 
-AdamK
+The case of "exec" is a bit different: you don't stop "on a commit", but
+after doing something else. You can hardly guess whether the staged
+changes are meant to amend the existing commit, or to make a new one.
+
+Actually, that could even be
+
+pick deadbeef Existing commit
+exec foo > bar.txt; git add bar.txt; git commit -m "added during rebase"
+exec false
+pick c00ffee Another commit
+
+then auto-amending may be really confusing: should it amend the HEAD
+commit that you've just created (this would really go against the logic
+of .git/rebase-merge/author-script) or the last picked commit (which you
+can't really do since it's not HEAD)?
+
+I think it's best to abort, with an accurate error message pointing the
+user to both solutions (commit --amend && rebase --continue or commit &&
+rebase --continue). I'll try a patch.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
