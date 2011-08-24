@@ -1,131 +1,82 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Buggy handling of non-canonical ref names
-Date: Wed, 24 Aug 2011 17:49:04 +0200
-Message-ID: <4E551D70.9080509@alum.mit.edu>
+From: Michael Schubert <mschub@elegosoft.com>
+Subject: Re: [RFC] branch: list branches by single remote
+Date: Wed, 24 Aug 2011 18:02:52 +0200
+Message-ID: <4E5520AC.7050407@elegosoft.com>
+References: <4E383132.3040907@elegosoft.com> <20110804040646.GA5104@sigill.intra.peff.net> <4E4A729D.9030906@drmicha.warpmail.net> <20110816151448.GA5152@sigill.intra.peff.net> <4E551548.9090807@elegosoft.com> <4E551AD0.7050702@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Aug 24 17:49:15 2011
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Aug 24 18:03:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwFhZ-0005XE-RP
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 17:49:14 +0200
+	id 1QwFvE-0004bT-Dm
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Aug 2011 18:03:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752278Ab1HXPtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Aug 2011 11:49:09 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:47087 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751172Ab1HXPtH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Aug 2011 11:49:07 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p7OFn42j009538
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Wed, 24 Aug 2011 17:49:05 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.18) Gecko/20110617 Lightning/1.0b2 Thunderbird/3.1.11
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1751808Ab1HXQDQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Aug 2011 12:03:16 -0400
+Received: from mx0.elegosoft.com ([78.47.87.163]:54785 "EHLO mx0.elegosoft.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750972Ab1HXQDP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Aug 2011 12:03:15 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id 20F14DE87F;
+	Wed, 24 Aug 2011 18:03:14 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mx0.elegosoft.com
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id KSJPhneWXxCu; Wed, 24 Aug 2011 18:03:08 +0200 (CEST)
+Received: from [10.10.10.197] (i59F7870A.versanet.de [89.247.135.10])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id BD3D0DE87E;
+	Wed, 24 Aug 2011 18:03:08 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
+In-Reply-To: <4E551AD0.7050702@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180014>
 
-git has inconsistencies (I would say bugs) in how it handles reference
-names that are in non-canonical format (e.g., "/foo/bar", "foo///bar",
-etc).  Some commands work with reference names that are in non-canonical
-form, whereas others do not.  Sometimes the behavior depends on whether
-the reference is loose or packed.
+On 08/24/2011 05:37 PM, Michael J Gruber wrote:
+> Michael Schubert venit, vidit, dixit 24.08.2011 17:14:
+>> On 08/16/2011 05:14 PM, Jeff King wrote:
+>>> On Tue, Aug 16, 2011 at 03:37:33PM +0200, Michael J Gruber wrote:
+>>>
+>>>>> This isn't right. You are assuming that a remote called "foo" will have
+>>>>> all of its branches in refs/remotes/foo. That's true under the default
+>>>>> configuration, but technically speaking, the remote tracking branches of
+>>>>> "foo" are defined by the right-hand side of foo's fetch refspecs.
+>>>>
+>>>> You are 100% right here, but...
+>>>>
+>>>>> So I think you want something more like this:
+>>>>
+>>>> ...the op still might want to filter simply by the remote name.
+>>>
+>>> That is a perfectly reasonable approach. It just should be called
+>>> "--glob" or something, and not "remote".  git-tag allows patterns to an
+>>> explicit "tag -l", but "-l" is already taken for git-branch.
+>>
+>> As suggested, I've just called it "--glob" for now.
+> 
+> Well, again, what's the point in replicating
+> 
+> http://permalink.gmane.org/gmane.comp.version-control.git/172228
+> 
+> and how is it different?
 
-For example "git branch" and "git update-ref" seem to swallow them OK:
+While I just haven't seen this,
 
-    $ git update-ref /foo/bar HEAD
-    $ cat .git/foo/bar
-    ef6cf90ba11dd6205f8b974692d795ea0b1c0bdd
-    $ git branch /bar/baz
-    $ git for-each-ref | grep baz
-    ef6cf90ba11dd6205f8b974692d795ea0b1c0bdd commit refs/heads/bar/baz
+> As I've mentioned, I've been in the middle of polishing that up. You can
+> follow it if you like:
+> 
+> http://repo.or.cz/w/git/mjg.git/shortlog/refs/heads/branch-list-pattern
 
-But other commands do not:
+I thought I just send it out not knowing you're actually into resurrecting
+the "patterns-with-branches series".
 
-    $ git rev-parse /foo/bar --
-    /foo/bar
-    fatal: ambiguous argument '/foo/bar': unknown revision or path not
-in the working tree.
-    Use '--' to separate paths from revisions
-    $ git rev-parse foo///bar --
-    foo///bar
-    fatal: ambiguous argument 'foo///bar': unknown revision or path not
-in the working tree.
-    Use '--' to separate paths from revisions
-    $ git rev-parse foo/bar --
-    ef6cf90ba11dd6205f8b974692d795ea0b1c0bdd
-    --
-
-It seems like most of the canonicalization of reference names is via
-path canonicalization using the likes of git_snpath() and git_path(),
-with the exception of "git check-ref-format --print", which does the
-work using its own code.  But packed references are not transformed into
-paths, so they don't handle canonicalization at all.  For example, in
-the following case, there is a difference between how packed and
-unpacked references are handled:
-
-    $ git update-ref refs/heads/foo/bar HEAD
-    $ git update-ref -d refs/heads/foo///bar HEAD
-    [Reference was really deleted]
-    $ git update-ref refs/heads/foo/bar HEAD
-    $ git pack-refs --all
-    $ git update-ref -d refs/heads/foo///bar HEAD
-    error: unable to resolve reference refs/heads/foo///bar: No such
-file or directory
-    $ git for-each-ref | grep foo
-    ffae1b1dc75896bd89ff3cbe7037f40474e57e2a commit refs/heads/foo/bar
-    [Reference was not deleted]
-
-What is the policy about reference names and their canonicalization?  In
-what situations should one be able to use non-canonical refnames, and in
-what situations should it be forbidden?
-
-Given that refnames are closely associated with filesystem paths, it is
-important that every code path either canonicalize or reject
-non-canonical refnames (i.e., failure to do so could be a security
-problem).  In the absence of clear rules, it will be very difficult to
-ensure that this is being done consistently.
-
-I also noticed that check_ref_format() accepts ref names that start with
-a "/", but that the leading slash is *not* stripped off as part of the
-canonicalization:
-
-    $ git check-ref-format /foo/bar ; echo $?
-    0
-    $ git check-ref-format --print /foo/bar
-    /foo/bar
-
-However, creating a reference with such a name is equivalent to creating
-a reference without the leading slash:
-
-    $ git update-ref /foo/bar HEAD
-    $ cat .git/foo/bar
-    ef6cf90ba11dd6205f8b974692d795ea0b1c0bdd
-    $ git branch /bar/baz
-    $ git for-each-ref | grep baz
-    ef6cf90ba11dd6205f8b974692d795ea0b1c0bdd commit refs/heads/bar/baz
-
-Therefore, it seems to belong in the equivalence class of "foo/bar".
-
-The test suite for "git check-ref-format" says nothing about how leading
-slashes should be handled.
-
-Either leading slashes should not be allowed in ref names at all or they
-should be canonicalized away.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Thanks.
