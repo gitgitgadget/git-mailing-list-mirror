@@ -1,64 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] replace: List replacement along with the object
-Date: Thu, 25 Aug 2011 12:07:25 -0700
-Message-ID: <7v1uw9l382.fsf@alter.siamese.dyndns.org>
-References: <bae5a8f7d30417864d972390f9f6b4470cf4e5bf.1314283118.git.git@drmicha.warpmail.net>
+From: Boaz Harrosh <bharrosh@panasas.com>
+Subject: git diff annoyance / feature request
+Date: Thu, 25 Aug 2011 12:14:24 -0700
+Message-ID: <4E569F10.8060808@panasas.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Aug 25 21:07:41 2011
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 25 21:14:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwfHA-00061u-Ps
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 21:07:41 +0200
+	id 1QwfNv-000185-88
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 21:14:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755297Ab1HYTHd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Aug 2011 15:07:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57695 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755306Ab1HYTH3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Aug 2011 15:07:29 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1187B440F;
-	Thu, 25 Aug 2011 15:07:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uay/XyKZaIYLfX5g1gb7jXWPHyI=; b=EOsWGZ
-	XDCZaqXv29QkH98WbAY/tJehYzpbGOokHiF4nHWSamBBEo07Wf7BNIHa9h8Ciwn5
-	a4rMHd+XgfaHff1Agne2lPmk5N4XVyzvpBznrVjx/+3ty8/cYqvergxiCyzDOf1t
-	6LHzP9TTkpPK9KLZUAgh8f8KW+G4TBpjEsEHE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bq+Iy8BjrM7+AnCBwZYvP9buG/uBYmvl
-	yuTpQyyaW9lMqcr5fYaZVNeJQmU2uyVf0ly8DPqk695ltZjhB1JGqqrFxvM5B/P8
-	8xJCULot+iaSEWyYG8XgBp5WEacWfqSCcVpKOlfl8QEHDLUs5Oi1BE5g4XHUUfsF
-	7yajqFO7ZfE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 07D47440D;
-	Thu, 25 Aug 2011 15:07:28 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5B743440C; Thu, 25 Aug 2011
- 15:07:27 -0400 (EDT)
-In-Reply-To: <bae5a8f7d30417864d972390f9f6b4470cf4e5bf.1314283118.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Thu, 25 Aug 2011 16:39:44 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7931D670-CF4D-11E0-A72D-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755349Ab1HYTOe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Aug 2011 15:14:34 -0400
+Received: from natasha.panasas.com ([67.152.220.90]:44926 "EHLO
+	natasha.panasas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755294Ab1HYTOe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Aug 2011 15:14:34 -0400
+Received: from zenyatta.panasas.com (zenyatta.int.panasas.com [172.17.28.63])
+	by natasha.panasas.com (8.13.1/8.13.1) with ESMTP id p7PJEX3F026678
+	for <git@vger.kernel.org>; Thu, 25 Aug 2011 15:14:33 -0400
+Received: from [172.17.132.75] (172.17.132.75) by zenyatta.int.panasas.com
+ (172.17.28.63) with Microsoft SMTP Server (TLS) id 14.1.289.1; Thu, 25 Aug
+ 2011 15:14:27 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110707 Thunderbird/5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180103>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> The documentation could be misunderstood as if "git replace -l" lists
-> the replacements of the specified objects. Currently, it lists the
-> replaced objects.
+git diff has this very annoying miss-fixture where it will state
+as hunk header the closest label instead of the function name.
 
-Seeing that you had to change existing tests, I do not think this is an
-improvement. The existing scripts can read the list of objects and find
-replacement themselves (if they want to find that out, that is), no?
+So I get:
+@@ -675,9 +670,23 @@ try_again:
+ 	}
+ 
+ 	if (flag) {
+-		foo();
++		bazz();
+ 	}
+ 
+ 
+Instead of what I'd like:
+@@ -563,12 +563,7 @@ static int write_exec(struct page_collect *pcol)
+ 	}
+ 
+ 	if (flag) {
+-		foo();
++		bazz();
+ 	}
+ 
+
+I mean. The label "try_again" is not at all unique in my file. As a
+reader I would like to see where is that code going to. The function
+name is a unique file identifier that tells me exactly where the change
+is going. The label is not. (It's not freaking BASIC)
+
+I bet all this was just inherited from diff. Would it be accepted if
+I send a patch to fix it? What you guys think a goto label makes any
+sense at all?
+
+Thanks
+Boaz
