@@ -1,63 +1,57 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: [RFC] branch: list branches by single remote
-Date: Wed, 24 Aug 2011 23:31:57 -0300
-Message-ID: <CACnwZYd=pM+fRNy0pqv+jR9bb0AWC89nkgHq3m1nMw9cUfHOQw@mail.gmail.com>
-References: <4E383132.3040907@elegosoft.com>
-	<20110804040646.GA5104@sigill.intra.peff.net>
-	<4E4A729D.9030906@drmicha.warpmail.net>
-	<20110816151448.GA5152@sigill.intra.peff.net>
-	<4E551548.9090807@elegosoft.com>
-	<4E551AD0.7050702@drmicha.warpmail.net>
-	<7vei0apsj9.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH RFC] gitk: Allow commit editing
+Date: Wed, 24 Aug 2011 23:07:55 -0400
+Message-ID: <20110825030755.GA3465@sigill.intra.peff.net>
+References: <1313610971-1741-1-git-send-email-sojka@os.inf.tu-dresden.de>
+ <20110818223346.GA8481@sigill.intra.peff.net>
+ <87obzlwpx0.fsf@steelpick.2x.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Michael Schubert <mschub@elegosoft.com>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 25 04:32:04 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, paulus@samba.org
+To: Michal Sojka <sojka@os.inf.tu-dresden.de>
+X-From: git-owner@vger.kernel.org Thu Aug 25 05:08:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwPje-0004Eh-M2
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 04:32:03 +0200
+	id 1QwQIW-0006d0-2H
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 05:08:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753159Ab1HYCb6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Aug 2011 22:31:58 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:45170 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752935Ab1HYCb5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Aug 2011 22:31:57 -0400
-Received: by yxj19 with SMTP id 19so1363472yxj.19
-        for <git@vger.kernel.org>; Wed, 24 Aug 2011 19:31:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=3sv23AOUOsY88khiwp3EigtuvLUoIAk0JHFo0oH8gr8=;
-        b=PTujru4Q5kn4KF8Y6dTv9ofpywHYdwgvZelBZATerx/+F7WqzECJvfOA74GftBVRRj
-         PAcpVE2ftkHDq4OG3bXwWJ/z0/gIEeF15Hc1iebxNWqLT1JbkhAYoz0W6HZ8tuQQcKqI
-         dq9nNMKf2eHvMzG9ZCHEd/VC5qApbPhdFWGUU=
-Received: by 10.150.213.20 with SMTP id l20mr241577ybg.232.1314239517231; Wed,
- 24 Aug 2011 19:31:57 -0700 (PDT)
-Received: by 10.151.83.19 with HTTP; Wed, 24 Aug 2011 19:31:57 -0700 (PDT)
-In-Reply-To: <7vei0apsj9.fsf@alter.siamese.dyndns.org>
+	id S1751306Ab1HYDH6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Aug 2011 23:07:58 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:41784
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750827Ab1HYDH5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Aug 2011 23:07:57 -0400
+Received: (qmail 10510 invoked by uid 107); 25 Aug 2011 03:08:40 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 24 Aug 2011 23:08:40 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Aug 2011 23:07:55 -0400
+Content-Disposition: inline
+In-Reply-To: <87obzlwpx0.fsf@steelpick.2x.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180058>
 
-On Wed, Aug 24, 2011 at 3:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> [Footnote]
->
-> *1* It does not have to be a weekly _posting_ on the list but can be a
-> well-known Wiki page or even a bug tracker. Whatever medium is used for
-> this purpose, there _must_ be a built-in mechanism to expire entries away
-> that are inactive for more than some reasonable limit (say two to three
-> weeks).
+On Fri, Aug 19, 2011 at 02:23:39PM +0200, Michal Sojka wrote:
 
-Host the project on Google Code for bug tracking? Use rietveld for
-code reviews (ike codereview.chromium.org and codereview.appspot.com)?
+> > Invoking rebase behind the scenes makes me very nervous. In particular:
+> > 
+> >   1. There is nothing to indicate to the user that they are rewriting a
+> >      string of commits, which is going to wreak havoc if any of the
+> >      commits have been published elsewhere (either pushed somewhere, or
+> >      even present in another local branch). I.e., rebasing generally
+> >      needs to be a conscious decision of the user.
+> 
+> I added a warning if the edited commit is contained in a remote branch.
+> Would you consider this sufficient?
+
+It's likely problematic if the commit appears in the history of any
+other ref, unless they are also planning on rebasing that ref, too
+(which you can't really know, but it is probably better to warn).
+
+-Peff
