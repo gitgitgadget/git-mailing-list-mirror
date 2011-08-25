@@ -1,69 +1,109 @@
-From: Boaz Harrosh <bharrosh@panasas.com>
-Subject: [PATCH] .gitattributes: Enable cpp diff parsing for .[ch] files
-Date: Thu, 25 Aug 2011 15:37:03 -0700
-Message-ID: <4E56CE8F.8080501@panasas.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] attr: map builtin userdiff drivers to well-known
+ extensions
+Date: Thu, 25 Aug 2011 15:57:06 -0700
+Message-ID: <7v8vqhhzgd.fsf@alter.siamese.dyndns.org>
+References: <20110825200001.GA6165@sigill.intra.peff.net>
+ <20110825204047.GA9948@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: Linus Torvalds <torvalds@linux-foundation.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	linux-kernel <linux-kernel@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 26 00:38:06 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Boaz Harrosh <bharrosh@panasas.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 26 00:57:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwiYn-0002YE-3m
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 00:38:05 +0200
+	id 1QwirM-0001Ys-V8
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 00:57:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755723Ab1HYWht (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Aug 2011 18:37:49 -0400
-Received: from natasha.panasas.com ([67.152.220.90]:50255 "EHLO
-	natasha.panasas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755558Ab1HYWhs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Aug 2011 18:37:48 -0400
-Received: from zenyatta.panasas.com (zenyatta.int.panasas.com [172.17.28.63])
-	by natasha.panasas.com (8.13.1/8.13.1) with ESMTP id p7PMb9vT006398;
-	Thu, 25 Aug 2011 18:37:11 -0400
-Received: from [172.17.132.75] (172.17.132.75) by zenyatta.int.panasas.com
- (172.17.28.63) with Microsoft SMTP Server (TLS) id 14.1.289.1; Thu, 25 Aug
- 2011 18:37:05 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110707 Thunderbird/5.0
+	id S1752677Ab1HYW5L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Aug 2011 18:57:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56985 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752594Ab1HYW5J (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Aug 2011 18:57:09 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BFD5958F1;
+	Thu, 25 Aug 2011 18:57:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=e+5jPbKzeGCrvOp2/NHtT2n/ijE=; b=Iq7sl+
+	B/qgwmyL12RlTD5bLpqnvFHovJWUYFQoxu2Z2zgzS8+JpPmlDzNUP07IxBGbRx6N
+	Epxdoo9iWaiVAX0LLyYC56lxdQl/YMapzPQ5P3fQvEGC8JSuOLHVODX3i2O6QFjB
+	cM1ES7no5e+ErorcBsGH7BPn04lX68emjq3bY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fxI6D/Gm0+66PjXRUaQYFcNupQucUNbI
+	aCjMG3uZgvpoQCuhbnB3w2rd9rjt8Z2y/amNJAqaDx2vd+/IfYwLP8Hodv2VOT8/
+	XMOKt6uYynp/nrqgGaoUVapvlXGHTnPfvJxAItdlPE7OvjmVv0l4G2/zv3o4aC7w
+	GguV9agI+kE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B694558F0;
+	Thu, 25 Aug 2011 18:57:08 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3AD3058EF; Thu, 25 Aug 2011
+ 18:57:08 -0400 (EDT)
+In-Reply-To: <20110825204047.GA9948@sigill.intra.peff.net> (Jeff King's
+ message of "Thu, 25 Aug 2011 16:40:47 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: 8F3B2244-CF6D-11E0-8C57-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180134>
 
+Jeff King <peff@peff.net> writes:
 
-The Linux Kernel source tree is certainly a C language repository.
-As a maintainer and code reviewer I would like too, for example:
-See function names as hunk headers and not goto labels. And all
-the other goodies a language specific diff parser gives me.
+> If you have any matching attribute line in your own files, it should
+> override. So:
+>
+>   foo/* -diff
+>
+> will still mark foo/bar.c as binary, even with this change.
+>
+> Can anyone think of other possible side effects?
+>
+> Also, any other extensions that would go into such a list? I have no
+> idea what the common extension is for something like pascal or csharp.
 
-Add a .gitattributes file to the Linux tree to enable cpp parsing
-of the source files.
+As long as the builtin ones are the lowest priority fallback, we should be
+Ok.
 
-People are welcome to add other parsers for other type of files
-if needed. (Like Makefile or Kconfig ...)
+Do we say anywhere that "Ah, this has 'diff' attribute defined, so it must
+be text"? If so, we should fix _that_. In other words, having this one
+extra entry
 
-CC: Jeff King <peff@peff.net>
-CC: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Boaz Harrosh <bharrosh@panasas.com>
----
- .gitattributes |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
- create mode 100644 .gitattributes
+	"* diff=default"
 
-diff --git a/.gitattributes b/.gitattributes
-new file mode 100644
-index 0000000..6d2b620
---- /dev/null
-+++ b/.gitattributes
-@@ -0,0 +1,2 @@
-+*.h diff=cpp
-+*.c diff=cpp
--- 
-1.7.6
+in the builtin_attr[] array should be a no-op, I think.
+
+>
+>  attr.c |   12 ++++++++++++
+>  1 files changed, 12 insertions(+), 0 deletions(-)
+>
+> diff --git a/attr.c b/attr.c
+> index da29c8e..5118a14 100644
+> --- a/attr.c
+> +++ b/attr.c
+> @@ -294,6 +294,18 @@ static void free_attr_elem(struct attr_stack *e)
+>  
+>  static const char *builtin_attr[] = {
+>  	"[attr]binary -diff -text",
+> +	"*.html diff=html",
+> +	"*.java diff=java",
+> +	"*.perl diff=perl",
+> +	"*.pl diff=perl",
+> +	"*.php diff=php",
+> +	"*.py diff=python",
+> +	"*.rb diff=ruby",
+> +	"*.bib diff=bibtex",
+> +	"*.tex diff=tex",
+> +	"*.c diff=cpp",
+> +	"*.cc diff=cpp",
+> +	"*.cxx diff=cpp",
+>  	NULL,
+>  };
