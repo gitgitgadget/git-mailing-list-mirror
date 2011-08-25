@@ -1,110 +1,149 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFC] branch: list branches by single remote
-Date: Thu, 25 Aug 2011 10:29:20 +0200
-Message-ID: <4E5607E0.1050300@drmicha.warpmail.net>
-References: <4E383132.3040907@elegosoft.com> <20110804040646.GA5104@sigill.intra.peff.net> <4E4A729D.9030906@drmicha.warpmail.net> <20110816151448.GA5152@sigill.intra.peff.net> <4E551548.9090807@elegosoft.com> <4E551AD0.7050702@drmicha.warpmail.net> <7vei0apsj9.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Michael Schubert <mschub@elegosoft.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 25 10:29:37 2011
+Subject: [PATCH 0/5] RFC: patterns for branch list
+Date: Thu, 25 Aug 2011 10:30:16 +0200
+Message-ID: <cover.1314259226.git.git@drmicha.warpmail.net>
+References: <4E5607E0.1050300@drmicha.warpmail.net>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Michael Schubert <mschub@elegosoft.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 25 10:30:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwVJd-0007sU-7t
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 10:29:33 +0200
+	id 1QwVKb-0008OO-2r
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 10:30:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752549Ab1HYI30 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Aug 2011 04:29:26 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:49457 "EHLO
+	id S1752851Ab1HYIa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Aug 2011 04:30:28 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:44029 "EHLO
 	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752135Ab1HYI3Y (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Aug 2011 04:29:24 -0400
-Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 1964820B45;
-	Thu, 25 Aug 2011 04:29:23 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute5.internal (MEProxy); Thu, 25 Aug 2011 04:29:23 -0400
+	by vger.kernel.org with ESMTP id S1752146Ab1HYIaZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Aug 2011 04:30:25 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 1CF5C20BE2;
+	Thu, 25 Aug 2011 04:30:25 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Thu, 25 Aug 2011 04:30:25 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=uegzU+oqG7SyUKobUcLEaT
-	s0vO0=; b=afCRHF1LTIek+XvaOChvrpdYp8DU6Naa/vDaW6WB68tUtk3ZGpYrnT
-	/Sy04NcW7M3oNify7kv/L3hHpCENiWy4kUzTpsr4VXLXp4CEJjIIBZnMol/KSQhb
-	kt/Od79TWg0VpPRFmHFh4LrNwRaYJgWGqXRBCygVJCqxxKWhRBKH4=
-X-Sasl-enc: oeBHoedis/SgkthE7C1XDbGEct3WaQ+iEHeKY/k5u4Tm 1314260962
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 24417901F0E;
-	Thu, 25 Aug 2011 04:29:22 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
-In-Reply-To: <7vei0apsj9.fsf@alter.siamese.dyndns.org>
+	messagingengine.com; h=from:to:cc:subject:date:message-id
+	:in-reply-to:references; s=smtpout; bh=x2bcQIZZJKjRG7nMX0J/g9+Tg
+	Zg=; b=cpazNjITe24a2XjGWCTOa71Ts3IA6jt8C6VEMI2mjlV6oMAlkzYR1DiRy
+	EQS8bsQoFbGFr57ktPz6IB87URYg/hRHTKALYkHtgwotSFdodXh4JGcmyDC+i41J
+	W/Jm0VEve3Ixc8GXS6TvBnwmVgOAmpqDPcCVMUbAYs4WAINytE=
+X-Sasl-enc: bpctpRMkGB1/CRL/CiO3GoCLY0RRljdN5KsgoG9zWOlj 1314261024
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 8DC0A840175;
+	Thu, 25 Aug 2011 04:30:24 -0400 (EDT)
+X-Mailer: git-send-email 1.7.6.845.gc3c05
+In-Reply-To: <4E5607E0.1050300@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180068>
 
-Junio C Hamano venit, vidit, dixit 24.08.2011 20:34:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->>> As suggested, I've just called it "--glob" for now.
->>
->> Well, again, what's the point in replicating
->>
->> http://permalink.gmane.org/gmane.comp.version-control.git/172228
->>
->> and how is it different?
->> As I've mentioned, I've been in the middle of polishing that up.
-> 
-> It is not unusual for a similar itch to happen to different people
-> independently.
-> 
-> If this were something you reposted even a WIP re-polish within the past
-> two weeks, I would understand and even sympathise with your irritation,
-> but please don't expect everybody to dig back FOUR MONTHS worth of mail
-> backlog to find an topic that may or may not be abandoned by the original
-> author.  Perhaps we would need a weekly posting of topics people have
+This mini series is about introducing patterns to the list mode of
+'git branch' much like the pattern for 'git tag -l'. There are several
+related things which are to be considered for the ui design:
 
-Well, I've mentioned it earlier in this thread, though without a link.
-It's the time when several of us are off-line for a couple weeks. I've
-also mentioned it in the thread about filtering by remote.
+git log
+=======
 
-On a side note, the list here usually does require people to search
-back, and much longer than this, on frequently requested issues. But how
-does a newcomer discover "frequently"? Right, by searching back years,
-not months.
+For "log" and friends, "--glob" is a means to specify revision arguments by
+matching refs. Note that we have
 
-> posted, found to be not quite ready yet, and are still being polished and
-> not abandoned [*1*]?
-> 
-> Having said that, I still appreciate that you posted a link to the
-> previous topic:
-> 
->   http://thread.gmane.org/gmane.comp.version-control.git/172226
-> 
-> so that the discussions in this thread to scratch the same "itch" can
-> benefit from the points raised in the previous thread that need to be
-> considered.
-> 
-> The old thread talks about renaming existing options and transition plans
-> to make the "listing" mode of "branch" and "tag" more similar, which may
-> be a good plan in the longer term.
-> 
-> I however can see that teaching "--glob" to both "branch" and "tag" (in
-> other words, "tag -l" would become a synonym for "tag --glob") an equally
-> good longer term plan.
+--branches[=<pattern>] matching in refs/heads
+--tags[=<pattern>] matching in refs/tags
+--glob=<glob-pattern> matching in refs/
 
-I don't care about the names, but I'd hate to introduce more
-inconsistencies. The implementation is a non-brainer, it's really
-something only Apple could get a patent on. The other Michael and I came
-up with basically the same patch because it follows "automatically". But
-the ui is important.
+git tag
+=======
 
-So I'll take the opportunity and discuss this further in the cover
-letter for the upcoming series.
+For "tag", we have a pattern matching in refs/tags, but only in the list mode
+of "tag", which is invoked by "-l", or automatically when there are no
+arguments. There is no pattern related option, it's "always on" in list mode.
+I.e., in list mode it behaves much like
 
-Michael
+git log --no-walk --oneline --tags=
+
+with a different format string, and an optional argument stuck at the end of
+the line. (git for-each-ref is another related interface, but plumbing, so I'll
+skip it here.)
+
+git branch
+==========
+
+Analogous to "git tag", "branch" has several modes, one of which is list mode.
+It is currently activated (and possibly modified) by "-v" and "-vv", and when
+there are no arguments. So, at the least,
+
+git branch -v[v] <pattern>
+
+should match just like "git tag -l <pattern>" does. And that is what the first
+patch in my series does.
+
+Then we need an option to invoke list mode. The natural candidate "-l" is taken
+by the badly named reflog option, which is why I suggested "--list" and moving
+the reflog option to "-g" over time.
+
+I'm open to other suggestions as long as they keep and improve the consistency
+between "git tag" and "git branch". I never liked their different implicit
+modes/subcommands but have been around long enough to know that they are there
+to stay.
+
+"git tag" should probably learn the same long option and others. And why not
+verify tags given by a pattern?
+
+Both "tag" and "branch" could activate list mode automatically on an invalid
+tag name rather than dieing:
+
+git tag v1.7.6\*
+Warning: tag 'v1.7.6*' not found.
+v1.7.6
+v1.7.6-rc0
+v1.7.6-rc1
+v1.7.6-rc2
+v1.7.6-rc3
+v1.7.6.1
+
+On the other hand, one might think about implementing both list modes (tag and
+branch) using the revision machinery and custom format strings, or
+for-each-ref; rather than both differently as it is now.
+
+'-l' is the natural short option name for '--list'. This is taken for the
+rarely used or needed 'create reflog' option. I'd change the latter to
+'-g,--create-reflog' (cmp. log) and take '-l,--list' but know the reaction
+already.
+
+-v[v] sanity
+============
+
+'-v' and '-vv' both take considerable time (because they need to walk).
+It makes more sense to have '-v' display cheap output (upstream name)
+and '-vv' add expensive output (ahead/behind info). '-vvv' could add super
+expensive info (ahead/equivalent/behind a la cherry-mark).
+
+These are changes to current porcelain ui behaviour, so I deem this to be OK
+(too late for 1.7.7, of course). The option renaming needs a transition
+(not done in this series).
+
+Michael J Gruber (5):
+  branch: allow pattern arguments
+  branch: introduce --list argument
+  t6040; test branch -vv [independent, can go in as is testing current behaviour]
+  branch: restructure -v vs. -vv
+  branch: give patchsame count with -vvv
+
+ Documentation/git-branch.txt |   20 +++++++++---
+ builtin/branch.c             |   65 +++++++++++++++++++++++++----------------
+ remote.c                     |   12 ++++++--
+ remote.h                     |    2 +-
+ t/t3203-branch-output.sh     |   24 +++++++++++++++
+ t/t6040-tracking-info.sh     |   41 ++++++++++++++++++++++++--
+ wt-status.c                  |    2 +-
+ 7 files changed, 127 insertions(+), 39 deletions(-)
+
+-- 
+1.7.6.845.gc3c05
