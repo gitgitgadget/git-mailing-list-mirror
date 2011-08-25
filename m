@@ -1,90 +1,79 @@
-From: Marat Radchenko <marat@slonopotamus.org>
-Subject: One MMORPG git facts
-Date: Thu, 25 Aug 2011 06:53:57 +0000 (UTC)
-Message-ID: <loom.20110825T081519-218@post.gmane.org>
-References: <416D1A48-9916-4E44-A200-3A13C39C4D70@gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [GSoC update] Final report: Some observations
+Date: Thu, 25 Aug 2011 12:26:15 +0530
+Message-ID: <CALkWK0=HJJdy-ZHOLVLRm1AOLLbnXsOk=603_iCaGv4h6oLEmQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 25 08:54:18 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 25 08:56:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwTpS-0007Bq-C9
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 08:54:18 +0200
+	id 1QwTrl-00086J-JH
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 08:56:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753001Ab1HYGyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Aug 2011 02:54:13 -0400
-Received: from lo.gmane.org ([80.91.229.12]:54159 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752605Ab1HYGyM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Aug 2011 02:54:12 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1QwTpL-0007AB-9w
-	for git@vger.kernel.org; Thu, 25 Aug 2011 08:54:11 +0200
-Received: from gprs-client-83.149.9.196.misp.ru ([gprs-client-83.149.9.196.misp.ru])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 25 Aug 2011 08:54:11 +0200
-Received: from marat by gprs-client-83.149.9.196.misp.ru with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 25 Aug 2011 08:54:11 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 83.149.9.196 (Mozilla/5.0 (X11; U; Linux armv7l; ru-RU; rv:1.9.2.3pre) Gecko/20100723 Firefox/3.5 Maemo Browser 1.7.4.8 RX-51 N900)
+	id S1753126Ab1HYG4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Aug 2011 02:56:37 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:61162 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753059Ab1HYG4g (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Aug 2011 02:56:36 -0400
+Received: by wyg24 with SMTP id 24so1409909wyg.19
+        for <git@vger.kernel.org>; Wed, 24 Aug 2011 23:56:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=GUOs5D8a0B3clC+MzFYgDp7T1WF1icJcOsVTttdsSZY=;
+        b=BJxk2ifmWvBWCH5uJMdSVEzE5e1qsn7IDdtnK3wlHjfwMs9UoHDrxgGVjuxHROPTNY
+         pGwEmhBjlI/w1o9R96NRRscJUe9CgeT1bKbCBPmtHjAON7k1xEbdR6lJ1XafHQjjkqzj
+         3EMXZ/hkgtiRJZRr6YfOBmqXhIIDFnlR4ZJko=
+Received: by 10.216.18.130 with SMTP id l2mr255667wel.74.1314255395101; Wed,
+ 24 Aug 2011 23:56:35 -0700 (PDT)
+Received: by 10.216.28.205 with HTTP; Wed, 24 Aug 2011 23:56:15 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180061>
 
-Lawrence Brett <lcbrett <at> gmail.com> writes:
+Hi,
 
-> 
-> Hello,
-> 
-> I am very interested in using git for game development.  I will be working
-> with a lot of binaries (textures, 3d assets, etc.) in addition to source
-> files.  I'd like to be able to version these files, but I understand that
-> big binaries aren't git's forte.
+I've been involved with the Git community since January 2010.  Apart
+from tiny miscellaneous patches, I spent two summers as a GSoC student
+writing more chunky portions.  I'll write down some of my personal
+observations here; it's nothing new, but I hope the community can
+benefit from learning what a (relatively) new contributor observes.
+Classifying them as "positive" or "negative" attributes makes little
+sense in my opinion.
+1. I really like the Git and the community.  It's a great piece of
+software, and the community makes sure that it stays that way.  As a
+result, it arguably has a high entry barrier.
+2. It's an exponential climb for a contributor.  Looking back, I can
+find issues with the first few patches that I contributed, but reviews
+weren't as stringent.  It also has to do with the parts of Git I've
+tried to contribute to- I slowly went from writing tiny documentation
+patches to large features.
+3. Excellent timely reviews.  If there's one reason I stayed around
+despite all the difficulties, this has to be it.  I don't know any
+faster way to improve as a software engineer.
+4. Language is beautiful and entertaining! People make use of their
+language skills to write interesting reviews and commit messages, not
+choppy dry ones.
+5. High transparency.  It looks like almost everything is on-list.
+6. Largely impersonal.  Although there are exceptions, people
+generally don't talk about their personal lives; some people don't use
+their real names.
 
-Define "big".
+Personally, I feel a little guilty because I feel that I've gained
+more than I've given back.  I'll try to make up for this over the
+coming months and years.
 
-I have one MMORPG here under Git. 250k revisions, 500k files in working dir
-(7Gb), 200 commits daily, 250Gb Git repo, SVN upstream repo of ~1Tb.
+Thanks.
 
-Some facts:
-1. It is unusable on 32bit machine (here and there hits memory limit for a
-single process
-2. It is unusable on Windows (because there's no 64bit msysgit)
-3. git status is 3s with hot disk caches (7mins with cold)
-4. History traversal means really massive I/O.
-5. Current setup: 120Gb 10k rpm disk for everything but .git/objects/pack,
-separate 500Gb (will be upgraded to 1Tb soon) disk for packs
-6. git gc is PAIN. I do it on weekends because it takes more than a day to run.
-Also, limits for git pack-objects should be configured VERY carefully, it can
-either run out of ram or take weeks to run if configured improperly.
-7. With default gc settings, git wants to gc daily (but gc takes more than a
-day, so if you follow its desire, you're in gc loop). I set objects limit to a
-very high value and invoke gc manually.
-8. svn users cannot sensibly do status on whole working copy (more than 10 mins)
-9. svn users only update witha nightly script (40 mins)
-10. git commit is several seconds because it writes 70Mb commit file.
-11. It is a good idea to run git status often so that working copy info isn't
-evicted from OS disk caches (remember, 3s vs 7min)
-12. Cloning git repo is one more pain. 100mbps network here, so fetching 250Gb
-takes some time. But worse, if cloning via git:// protocol, after fetching git
-sits for several hours in "Resolving deltas" stage. So, for initial cloning
-rsync is used.
-13. Here and there i hit scalability issues in various git commands (which i
-report to maillist and most [well, all, except the one i reported this week] of
-which get fixed)
-
-Hope this helps to get the idea of how git behaves on a large scale. Overall,
-i'm happy with it and won't return to svn.
+-- Ram
