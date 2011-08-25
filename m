@@ -1,123 +1,110 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH] Do not allow refnames to start with a slash
-Date: Thu, 25 Aug 2011 10:08:15 +0200
-Message-ID: <1314259695-30801-1-git-send-email-mhagger@alum.mit.edu>
-References: <4E55FFAA.9030904@alum.mit.edu>
-Cc: Junio C Hamano <gitster@pobox.com>, cmn@elego.de,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 25 10:08:36 2011
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC] branch: list branches by single remote
+Date: Thu, 25 Aug 2011 10:29:20 +0200
+Message-ID: <4E5607E0.1050300@drmicha.warpmail.net>
+References: <4E383132.3040907@elegosoft.com> <20110804040646.GA5104@sigill.intra.peff.net> <4E4A729D.9030906@drmicha.warpmail.net> <20110816151448.GA5152@sigill.intra.peff.net> <4E551548.9090807@elegosoft.com> <4E551AD0.7050702@drmicha.warpmail.net> <7vei0apsj9.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Michael Schubert <mschub@elegosoft.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 25 10:29:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwUzL-000677-Ij
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 10:08:35 +0200
+	id 1QwVJd-0007sU-7t
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 10:29:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751922Ab1HYIIb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Aug 2011 04:08:31 -0400
-Received: from mail.berlin.jpk.com ([212.222.128.130]:53274 "EHLO
-	mail.berlin.jpk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751749Ab1HYII2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Aug 2011 04:08:28 -0400
-Received: from michael.berlin.jpk.com ([192.168.100.152])
-	by mail.berlin.jpk.com with esmtp (Exim 4.50)
-	id 1QwUvm-0001Sl-Pq; Thu, 25 Aug 2011 10:04:54 +0200
-X-Mailer: git-send-email 1.7.6.8.gd2879
-In-Reply-To: <4E55FFAA.9030904@alum.mit.edu>
+	id S1752549Ab1HYI30 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Aug 2011 04:29:26 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:49457 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752135Ab1HYI3Y (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Aug 2011 04:29:24 -0400
+Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 1964820B45;
+	Thu, 25 Aug 2011 04:29:23 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute5.internal (MEProxy); Thu, 25 Aug 2011 04:29:23 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=uegzU+oqG7SyUKobUcLEaT
+	s0vO0=; b=afCRHF1LTIek+XvaOChvrpdYp8DU6Naa/vDaW6WB68tUtk3ZGpYrnT
+	/Sy04NcW7M3oNify7kv/L3hHpCENiWy4kUzTpsr4VXLXp4CEJjIIBZnMol/KSQhb
+	kt/Od79TWg0VpPRFmHFh4LrNwRaYJgWGqXRBCygVJCqxxKWhRBKH4=
+X-Sasl-enc: oeBHoedis/SgkthE7C1XDbGEct3WaQ+iEHeKY/k5u4Tm 1314260962
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 24417901F0E;
+	Thu, 25 Aug 2011 04:29:22 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:6.0) Gecko/20110816 Thunderbird/6.0
+In-Reply-To: <7vei0apsj9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180067>
 
-Previously, refnames with leading slashes were handled inconsistently.
-So forbid them altogether.
+Junio C Hamano venit, vidit, dixit 24.08.2011 20:34:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>>> As suggested, I've just called it "--glob" for now.
+>>
+>> Well, again, what's the point in replicating
+>>
+>> http://permalink.gmane.org/gmane.comp.version-control.git/172228
+>>
+>> and how is it different?
+>> As I've mentioned, I've been in the middle of polishing that up.
+> 
+> It is not unusual for a similar itch to happen to different people
+> independently.
+> 
+> If this were something you reposted even a WIP re-polish within the past
+> two weeks, I would understand and even sympathise with your irritation,
+> but please don't expect everybody to dig back FOUR MONTHS worth of mail
+> backlog to find an topic that may or may not be abandoned by the original
+> author.  Perhaps we would need a weekly posting of topics people have
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
-This patch chooses the alternative of forbidding leading slashes,
-because I feel that it is the safer option.  It is like Carlos's patch
-but with documentation changes, test-suite additions, and an
-corresponding change to git.py.  If anybody knows of other
-implementations of the ref format checking code, please let me know.
+Well, I've mentioned it earlier in this thread, though without a link.
+It's the time when several of us are off-line for a couple weeks. I've
+also mentioned it in the thread about filtering by remote.
 
-This patch applies to either master or maint.  Since it restricts the
-DWIM behavior in some cases, master is probably the better choice.
+On a side note, the list here usually does require people to search
+back, and much longer than this, on frequently requested issues. But how
+does a newcomer discover "frequently"? Right, by searching back years,
+not months.
 
- Documentation/git-check-ref-format.txt |    7 ++++---
- git_remote_helpers/git/git.py          |    3 ++-
- refs.c                                 |    3 +++
- t/t1402-check-ref-format.sh            |    4 ++++
- 4 files changed, 13 insertions(+), 4 deletions(-)
+> posted, found to be not quite ready yet, and are still being polished and
+> not abandoned [*1*]?
+> 
+> Having said that, I still appreciate that you posted a link to the
+> previous topic:
+> 
+>   http://thread.gmane.org/gmane.comp.version-control.git/172226
+> 
+> so that the discussions in this thread to scratch the same "itch" can
+> benefit from the points raised in the previous thread that need to be
+> considered.
+> 
+> The old thread talks about renaming existing options and transition plans
+> to make the "listing" mode of "branch" and "tag" more similar, which may
+> be a good plan in the longer term.
+> 
+> I however can see that teaching "--glob" to both "branch" and "tag" (in
+> other words, "tag -l" would become a synonym for "tag --glob") an equally
+> good longer term plan.
 
-diff --git a/Documentation/git-check-ref-format.txt b/Documentation/git-check-ref-format.txt
-index c9fdf84..238b185 100644
---- a/Documentation/git-check-ref-format.txt
-+++ b/Documentation/git-check-ref-format.txt
-@@ -34,15 +34,16 @@ git imposes the following rules on how references are named:
-   category like `heads/`, `tags/` etc. but the actual names are not
-   restricted.
- 
--. They cannot have two consecutive dots `..` anywhere.
-+. They must not start or end with slash `/`.
-+
-+. They cannot have two consecutive dots `..` anywhere or end with a
-+  dot `.`.
- 
- . They cannot have ASCII control characters (i.e. bytes whose
-   values are lower than \040, or \177 `DEL`), space, tilde `~`,
-   caret `{caret}`, colon `:`, question-mark `?`, asterisk `*`,
-   or open bracket `[` anywhere.
- 
--. They cannot end with a slash `/` nor a dot `.`.
--
- . They cannot end with the sequence `.lock`.
- 
- . They cannot contain a sequence `@{`.
-diff --git a/git_remote_helpers/git/git.py b/git_remote_helpers/git/git.py
-index a383e6c..6df53aa 100644
---- a/git_remote_helpers/git/git.py
-+++ b/git_remote_helpers/git/git.py
-@@ -55,7 +55,8 @@ def valid_git_ref (ref_name):
-     # command.  The rules were derived from the git check-ref-format(1)
-     # manual page.  This code should be replaced by a call to
-     # check_ref_format() in the git library, when such is available.
--    if ref_name.endswith('/') or \
-+    if ref_name.startswith('/') or \
-+       ref_name.endswith('/') or \
-        ref_name.startswith('.') or \
-        ref_name.count('/.') or \
-        ref_name.count('..') or \
-diff --git a/refs.c b/refs.c
-index 6f313a9..84c5af3 100644
---- a/refs.c
-+++ b/refs.c
-@@ -880,6 +880,9 @@ int check_ref_format(const char *ref)
- 	const char *cp = ref;
- 
- 	level = 0;
-+	if (*cp == '/')
-+		/* no leading slashes */
-+		return CHECK_REF_FORMAT_ERROR;
- 	while (1) {
- 		while ((ch = *cp++) == '/')
- 			; /* tolerate duplicated slashes */
-diff --git a/t/t1402-check-ref-format.sh b/t/t1402-check-ref-format.sh
-index 1b0f82f..b05ca26 100755
---- a/t/t1402-check-ref-format.sh
-+++ b/t/t1402-check-ref-format.sh
-@@ -18,6 +18,10 @@ invalid_ref 'foo'
- valid_ref 'foo/bar/baz'
- valid_ref 'refs///heads/foo'
- invalid_ref 'heads/foo/'
-+invalid_ref '/foo'
-+invalid_ref 'foo/'
-+invalid_ref '/foo/bar'
-+invalid_ref 'foo/bar/'
- invalid_ref './foo'
- invalid_ref '.refs/foo'
- invalid_ref 'heads/foo..bar'
--- 
-1.7.6.8.gd2879
+I don't care about the names, but I'd hate to introduce more
+inconsistencies. The implementation is a non-brainer, it's really
+something only Apple could get a patent on. The other Michael and I came
+up with basically the same patch because it follows "automatically". But
+the ui is important.
+
+So I'll take the opportunity and discuss this further in the cover
+letter for the upcoming series.
+
+Michael
