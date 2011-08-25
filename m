@@ -1,79 +1,117 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [GSoC update] Final report: Some observations
-Date: Thu, 25 Aug 2011 12:26:15 +0530
-Message-ID: <CALkWK0=HJJdy-ZHOLVLRm1AOLLbnXsOk=603_iCaGv4h6oLEmQ@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] rebase -i: clean error message for --continue after failed exec
+Date: Thu, 25 Aug 2011 09:09:26 +0200
+Message-ID: <vpqzkiydl21.fsf@bauges.imag.fr>
+References: <vpqk4a3rkwb.fsf@bauges.imag.fr>
+	<1314194508-12067-1-git-send-email-Matthieu.Moy@imag.fr>
+	<7v62lmps6k.fsf@alter.siamese.dyndns.org>
+	<7vy5yiod1h.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 25 08:56:44 2011
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 25 09:09:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwTrl-00086J-JH
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 08:56:41 +0200
+	id 1QwU4N-0005Dl-Mi
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 09:09:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753126Ab1HYG4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Aug 2011 02:56:37 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:61162 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753059Ab1HYG4g (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Aug 2011 02:56:36 -0400
-Received: by wyg24 with SMTP id 24so1409909wyg.19
-        for <git@vger.kernel.org>; Wed, 24 Aug 2011 23:56:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        bh=GUOs5D8a0B3clC+MzFYgDp7T1WF1icJcOsVTttdsSZY=;
-        b=BJxk2ifmWvBWCH5uJMdSVEzE5e1qsn7IDdtnK3wlHjfwMs9UoHDrxgGVjuxHROPTNY
-         pGwEmhBjlI/w1o9R96NRRscJUe9CgeT1bKbCBPmtHjAON7k1xEbdR6lJ1XafHQjjkqzj
-         3EMXZ/hkgtiRJZRr6YfOBmqXhIIDFnlR4ZJko=
-Received: by 10.216.18.130 with SMTP id l2mr255667wel.74.1314255395101; Wed,
- 24 Aug 2011 23:56:35 -0700 (PDT)
-Received: by 10.216.28.205 with HTTP; Wed, 24 Aug 2011 23:56:15 -0700 (PDT)
+	id S1753220Ab1HYHJf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Aug 2011 03:09:35 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:41897 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753184Ab1HYHJc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Aug 2011 03:09:32 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p7P7963q016059
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 25 Aug 2011 09:09:06 +0200
+Received: from bauges.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1QwU46-0001is-Iz; Thu, 25 Aug 2011 09:09:26 +0200
+In-Reply-To: <7vy5yiod1h.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 24 Aug 2011 11:54:50 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 25 Aug 2011 09:09:06 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p7P7963q016059
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1314860946.51425@xgx5KU3dX+q6SgB/BmBqLg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180062>
 
-Hi,
+Junio C Hamano <gitster@pobox.com> writes:
 
-I've been involved with the Git community since January 2010.  Apart
-from tiny miscellaneous patches, I spent two summers as a GSoC student
-writing more chunky portions.  I'll write down some of my personal
-observations here; it's nothing new, but I hope the community can
-benefit from learning what a (relatively) new contributor observes.
-Classifying them as "positive" or "negative" attributes makes little
-sense in my opinion.
-1. I really like the Git and the community.  It's a great piece of
-software, and the community makes sure that it stays that way.  As a
-result, it arguably has a high entry barrier.
-2. It's an exponential climb for a contributor.  Looking back, I can
-find issues with the first few patches that I contributed, but reviews
-weren't as stringent.  It also has to do with the parts of Git I've
-tried to contribute to- I slowly went from writing tiny documentation
-patches to large features.
-3. Excellent timely reviews.  If there's one reason I stayed around
-despite all the difficulties, this has to be it.  I don't know any
-faster way to improve as a software engineer.
-4. Language is beautiful and entertaining! People make use of their
-language skills to write interesting reviews and commit messages, not
-choppy dry ones.
-5. High transparency.  It looks like almost everything is on-list.
-6. Largely impersonal.  Although there are exceptions, people
-generally don't talk about their personal lives; some people don't use
-their real names.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+>>
+>>> If after a failed "exec" instruction there are staged changes,...
+>>
+>> I have to wonder why whatever "exec" runs is mucking with the index in the
+>> first place. Shouldn't we forbid it?
+>
+> I suspect your patch amounts to the same thing of forbidding, but
+> detecting the lack of $author_script feels like it is covering up the
+> symptom and not directly going for the cause of the symptom.
+>
+> I wonder if doing something like this would be more direct approach to
+> achieve the same thing.
 
-Personally, I feel a little guilty because I feel that I've gained
-more than I've given back.  I'll try to make up for this over the
-coming months and years.
+Not the same thing, but both patches could go well together.
 
-Thanks.
+Mine covers
 
--- Ram
+  pick deadbeef
+  exec make test
+  # :-( make test failed, I'm going to fix it
+  hack hack hack
+  git add changes
+  # OK, seems fixed.
+  git rebase --continue
+  # --> rebase tells me I forgot to commit my fixup patch
+
+i.e. the user changed the index interactively, not within exec. Yours
+covers the case where the command itself changes the index.
+
+> +		# Run in subshell because require_clean_work_tree can die.
+> +		dirty=f
+> +		(require_clean_work_tree "rebase") || dirty=t
+
+This will display error messages like
+
+  Cannot rebase: You have unstaged changes
+
+and right after
+
+>  			warn "Execution failed: $rest"
+> +			test "$dirty" = f ||
+> +			warn "and made changes to the index and/or the working tree"
+
+which sounds redundant. This should probably be
+
+(require_clean_work_tree "rebase" 2>/dev/null) || dirty=t
+
+but looking more closely at the patch, you're not the one introducing
+this, it was already there since 92c62a3f.
+
+>  		fi
+> +
+>  		;;
+>  	*)
+
+I think this one can be removed, there's usually no blank line before ;;
+in the code.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
