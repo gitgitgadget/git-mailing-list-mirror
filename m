@@ -1,55 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (Aug 2011, #07; Wed, 24)
-Date: Wed, 24 Aug 2011 17:09:09 -0700
-Message-ID: <7vk4a2mjx6.fsf@alter.siamese.dyndns.org>
+From: "R" <testersamsung85@aol.com>
+Subject: Re: What's cooking in git.git (Aug 2011, #07; Wed, 24)
+Date: Thu, 25 Aug 2011 00:13:11 +0000
+Message-ID: <201108250013.p7P0DIn3032584@ims-d14.mx.aol.com>
+Reply-To: "R" <testersamsung85@aol.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 25 02:09:22 2011
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>, <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 25 02:13:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwNVY-0008GG-6X
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 02:09:20 +0200
+	id 1QwNZY-0001HT-5C
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 02:13:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752072Ab1HYAJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Aug 2011 20:09:14 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55845 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750915Ab1HYAJN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Aug 2011 20:09:13 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 747DF42D8;
-	Wed, 24 Aug 2011 20:09:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=n
-	igFpaeRPcmZOcZKi4eNDjJfLbM=; b=CNA40FfsqDpthVYTgR5bDqN4zcbwj/J3E
-	aE1kQX8I2tpkJY8lVdFxGr662hma4oFxUrSW8bF6TLt7mPvE6TB9UYJc0/+KhJno
-	vkUV+e44fZ4oITBkJLaDStqxFsm+Zd9kvEw4Tk89v1vYcg7NAuOJyO7Nkyw+0W/x
-	aiET3Z0QN0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=e4b
-	N4UCmR5zhp5tgSmwID0Kcu6phrplzZTPNsVdq2Jg3Wih9qcZaXawXr4yZ5Pe0fi5
-	ANCI1X1ZQO+ZL1OOKjTdOB43TXyXMydjpyi4INf7AWaAcHChs3wtF0sQC28ei5Ro
-	4B7IPXSZfEaDF2P3BQY+oGEQCne5U3GHcydqMehk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A76742D7;
-	Wed, 24 Aug 2011 20:09:12 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1D1C742D3; Wed, 24 Aug 2011
- 20:09:11 -0400 (EDT)
-X-master-at: b7fcd007153b5021ed70ddc0a224127f14601bbc
-X-next-at: aa5cf7ba43e1b74c3a0aae0ca2989879d9a46233
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 7574350E-CEAE-11E0-BF35-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751470Ab1HYANX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Aug 2011 20:13:23 -0400
+Received: from ims-d14.mx.aol.com ([205.188.249.151]:8267 "EHLO
+	ims-d14.mx.aol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751197Ab1HYANX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Aug 2011 20:13:23 -0400
+Received: from oms-mb03.r1000.mx.aol.com (oms-mb03.r1000.mx.aol.com [64.12.102.139])
+	by ims-d14.mx.aol.com (8.14.1/8.14.1) with ESMTP id p7P0DIn3032584;
+	Wed, 24 Aug 2011 20:13:18 -0400
+Received: from mtaout-ma05.r1000.mx.aol.com (mtaout-ma05.r1000.mx.aol.com [172.29.41.5])
+	by oms-mb03.r1000.mx.aol.com (AOL Outbound OMS Interface) with ESMTP id 4FDB81C000081;
+	Wed, 24 Aug 2011 20:13:18 -0400 (EDT)
+Received: from oz.com (vzw-outgoing.oz-service.com [63.236.37.73])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(No client certificate requested)
+	by mtaout-ma05.r1000.mx.aol.com (MUA/Third Party Client Interface) with ESMTPSA id 94CCEE0000A6;
+	Wed, 24 Aug 2011 20:13:17 -0400 (EDT)
+x-aol-global-disposition: S
+X-SPAM-FLAG: YES
+X-AOL-SCOLL-SCORE: 0:2:510408352:93952408  
+X-AOL-SCOLL-URL_COUNT: 0  
+X-AOL-REROUTE: YES 
+x-aol-sid: 3039ac1d29054e55939d0556
+X-AOL-IP: 63.236.37.73
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180055>
+
+Udhshdhhs
+
+Sent from my Verizon Wireless 4G LTE smartphone
+
+------Original Message------
+From: Junio C Hamano <gitster@pobox.com>
+To: <git@vger.kernel.org>
+Date: Wednesday, August 24, 2011 5:09:09 PM GMT-0700
+Subject: What's cooking in git.git (Aug 2011, #07; Wed, 24)
 
 Here are the topics that have been cooking.  Commits prefixed with '-' are
 only in 'pu' while commits prefixed with '+' are in 'next'.
