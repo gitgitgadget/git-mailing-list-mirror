@@ -1,117 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] allow multiple calls to submodule merge search for the
- same path
-Date: Thu, 25 Aug 2011 16:39:26 -0700
-Message-ID: <7vobzdgixd.fsf@alter.siamese.dyndns.org>
-References: <680d2679c3275c01152500760311b5f96a93ea62.1314193375.git.brad.king@kitware.com> <20110824191438.GA45292@book.hvoigt.net> <7vty96obo9.fsf@alter.siamese.dyndns.org> <20110824194618.GD45292@book.hvoigt.net> <7v39gqo2fn.fsf@alter.siamese.dyndns.org> <20110825211144.GA67523@book.hvoigt.net> <7vwre1gjq1.fsf@alter.siamese.dyndns.org> <7vsjopgjfs.fsf@alter.siamese.dyndns.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [RFC/PATCH] attr: map builtin userdiff drivers to well-known
+ extensions
+Date: Thu, 25 Aug 2011 19:44:25 -0400
+Message-ID: <4E56DE59.5050601@sunshineco.com>
+References: <20110825200001.GA6165@sigill.intra.peff.net> <20110825204047.GA9948@sigill.intra.peff.net> <CAPig+cQ33PESWC5fzN8enLFRwNPx8o+PgRUTeCva4dSJ_EdwOw@mail.gmail.com> <20110825210654.GA11077@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brad King <brad.king@kitware.com>, git@vger.kernel.org
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Fri Aug 26 01:39:37 2011
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Boaz Harrosh <bharrosh@panasas.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 26 01:45:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwjWK-0007aY-8V
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 01:39:36 +0200
+	id 1QwjbX-0000i8-Hj
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 01:44:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752318Ab1HYXj3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Aug 2011 19:39:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45489 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751120Ab1HYXj2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Aug 2011 19:39:28 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 30AC85DD8;
-	Thu, 25 Aug 2011 19:39:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8A7zRRKTS+kOGkkNWxoYOqzU4/A=; b=QnpI6U
-	1vxpBO+HjIa1xu/X388BTDesNfLVO2LZEatd6qX0C38TM0gg8S7x/NPwIvVEHCdj
-	usHgtdClVAz2y+rf+u5vT6BDcZRbuD1UaMjaUn+H1v5zzM/LICU73TA7q9xV483U
-	K5Ey0kBd327FAkHmrcJB/wx2qsbaNuIWCWHzE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kQNbnXpbd9uShT/KirPAmHF2l40/xW4b
-	rhgFnlRNczlHqGEFgTbMHRj1KZd+yki+UCFtIuvUDouju1YD6uf+htyJ4BKlfpMi
-	0H+kfrGqU3+27uVr2dBkEy3UDTMffl7kOdkIwoopHr1jSIM1qBbiKsP+1xox07wB
-	HNt0cF6CbcQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26DA15DD7;
-	Thu, 25 Aug 2011 19:39:28 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 84F3D5DD6; Thu, 25 Aug 2011
- 19:39:27 -0400 (EDT)
-In-Reply-To: <7vsjopgjfs.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 25 Aug 2011 16:28:23 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 78C62968-CF73-11E0-8331-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753949Ab1HYXoc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Aug 2011 19:44:32 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:52285 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753915Ab1HYXo2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Aug 2011 19:44:28 -0400
+Received: by qyk34 with SMTP id 34so1906067qyk.19
+        for <git@vger.kernel.org>; Thu, 25 Aug 2011 16:44:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=oSqc+MJ9PzUAMVsGZFcultKtKFMW+Ddk/BOQJx2nr7E=;
+        b=Dm+ospg6h+hS9LyiULPevN6yPLQI4cgQM/QcFou41wHWW9CaOwijDFQyISP5BNXJe0
+         tMTnT5/VQxBGbuUNzO8Z04aW4SHsS+AyHt7ayYrog3bDWcXM4JmUqBHr96yvWfKjcOKs
+         L1ftLUh1NEERAFJ0uxOWiHUiKfH6Bt3nsONVU=
+Received: by 10.229.247.15 with SMTP id ma15mr522553qcb.1.1314315868049;
+        Thu, 25 Aug 2011 16:44:28 -0700 (PDT)
+Received: from [192.168.1.3] (user-0c936tj.cable.mindspring.com [24.145.155.179])
+        by mx.google.com with ESMTPS id h16sm762204qct.44.2011.08.25.16.44.26
+        (version=SSLv3 cipher=OTHER);
+        Thu, 25 Aug 2011 16:44:27 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.18) Gecko/20110617 Thunderbird/3.1.11
+In-Reply-To: <20110825210654.GA11077@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180139>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Junio C Hamano <gitster@pobox.com> writes:
+On 08/25/2011 05:06 PM, Jeff King wrote:
+> On Thu, Aug 25, 2011 at 05:00:51PM -0400, Eric Sunshine wrote:
 >
->> Heiko Voigt <hvoigt@hvoigt.net> writes:
+>>> Also, any other extensions that would go into such a list? I have no
+>>> idea what the common extension is for something like pascal or csharp.
 >>
->>> diff --git a/t/t7405-submodule-merge.sh b/t/t7405-submodule-merge.sh
->>> index 8f6f2d6..603fb72 100755
->>> --- a/t/t7405-submodule-merge.sh
->>> +++ b/t/t7405-submodule-merge.sh
->>> @@ -269,7 +269,7 @@ test_expect_success 'setup for recursive merge with submodule' '
->>>  '
->>>  
->>>  # merge should leave submodule unmerged in index
->>> -test_expect_failure 'recursive merge with submodule' '
->>> +test_expect_success 'recursive merge with submodule' '
->>>  	(cd merge-recursive &&
->>>  	 test_must_fail git merge top-bc &&
->>>  	 echo "160000 $(git rev-parse top-cb:sub) 2	sub" > expect2 &&
+>> C# uses extension ".cs".
 >>
->> What is this patch based on?
+>> ".cpp" is common, in fact often required, by Windows compilers.
 >
-> Ah, nevermind. I figured it out. Thanks.
+> Thanks, added both to my list.
 
-Just FYI; squashed this on top to fix compilation breakage.
-Thanks.
+To clarify, I meant to say that for C++, .cpp is common/required on Windows.
 
- submodule.c |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+>> What about ".h" and ".hpp"?
+>
+> How well do our cpp patterns do with header files? I imagine they're
+> better than the default, but I don't think I've ever really tried
+> anything tricky.
 
-diff --git a/submodule.c b/submodule.c
-index 21a57d2..752cd8a 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -738,6 +738,7 @@ static int find_first_merges(struct object_array *result, const char *path,
- 	struct object_array merges;
- 	struct commit *commit;
- 	int contains_another;
-+	FILE *out;
- 
- 	char merged_revision[42];
- 	const char *rev_args[] = { "rev-list", "--merges", "--ancestry-path",
-@@ -762,14 +763,15 @@ static int find_first_merges(struct object_array *result, const char *path,
- 	if (start_command(&cp))
- 		die("Could not run 'git rev-list --merges --ancestry-path --all %s' "
- 				"command in submodule %s", merged_revision, path);
--	FILE *out = fdopen(cp.out, "r");
-+	out = fdopen(cp.out, "r");
- 	if (!out)
- 		die("Could not open pipe of rev-list command.");
- 
- 	/* save all revisions from the above list that contain b */
- 	while (strbuf_getline(&one_rev, out, '\n') != EOF) {
-+		struct object *o;
- 		commit = lookup_commit_reference_by_name(one_rev.buf);
--		struct object *o = &(commit->object);
-+		o = &(commit->object);
- 		if (in_merge_bases(b, &commit, 1))
- 			add_object_array(o, NULL, &merges);
- 	}
+I scanned through a number of revisions for one of my long-running C++ 
+projects comparing the diff of header files with and without "*.h 
+diff=cpp". In some header files in this project, the oft-used C++ 
+keywords public:, protected:, and private: appear at start-of-line. In 
+such cases, the default diff emits a less-than-useful hunk header:
+
+     @@ -19,8 +19,8 @@ public:
+
+whereas, "diff=cpp" emits:
+
+     @@ -19,8 +19,8 @@ class Foobar
+
+-- ES
