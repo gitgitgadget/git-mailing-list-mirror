@@ -1,69 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/10] color and pager improvements
-Date: Thu, 25 Aug 2011 16:25:12 -0400
-Message-ID: <20110825202512.GD6165@sigill.intra.peff.net>
-References: <20110818224644.GC8481@sigill.intra.peff.net>
- <4e4e03fb.6d8e455c.bm000@wupperonline.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git diff annoyance / feature request
+Date: Thu, 25 Aug 2011 13:27:43 -0700
+Message-ID: <7vippljkxs.fsf@alter.siamese.dyndns.org>
+References: <4E569F10.8060808@panasas.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Ingo =?utf-8?Q?Br=C3=BCckl?= <ib@wupperonline.de>
-X-From: git-owner@vger.kernel.org Thu Aug 25 22:25:22 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git discussion list <git@vger.kernel.org>
+To: Boaz Harrosh <bharrosh@panasas.com>
+X-From: git-owner@vger.kernel.org Thu Aug 25 22:27:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwgUL-0002X1-Hd
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 22:25:21 +0200
+	id 1QwgWj-0003kJ-7p
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 22:27:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753961Ab1HYUZP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Aug 2011 16:25:15 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:46761
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753928Ab1HYUZP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Aug 2011 16:25:15 -0400
-Received: (qmail 18632 invoked by uid 107); 25 Aug 2011 20:25:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 25 Aug 2011 16:25:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 25 Aug 2011 16:25:12 -0400
-Content-Disposition: inline
-In-Reply-To: <4e4e03fb.6d8e455c.bm000@wupperonline.de>
+	id S1754022Ab1HYU1r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Aug 2011 16:27:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57773 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753973Ab1HYU1q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Aug 2011 16:27:46 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A38442AB;
+	Thu, 25 Aug 2011 16:27:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pGCAQiZSDx9uYF89KxjdTIG/gaw=; b=FxUc8d
+	wHxXy/BZs0IKeTS05YrGr2r25afNjlXWWBdjMv81gQqykbgI9M9okNq6lUf9O66d
+	FivCxuFIHkxsfCpuUBVSGx14BUJXsCoRiEu1M1bbz6Y9tCrdfV0U1+z0rywt+cgv
+	R13FEp67jS9KQt68JfThMFFrBY1vP6O9ht2kQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pFTpqeJeMhyzKvLJ0IWLsclZPqP5mH34
+	0TU8VT1Dxz2fqYqgO14EaZRDteof2PoLnUsFr2yPvSfQNNAmB0IIs6loyZsnFgej
+	sUKClDPRzPhtQWOXaTXOS0g0r9F8nbdNJteZixP7nzTgZmQCH/16cYHcAez+lLul
+	jk6KHbtPHTE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 920A642AA;
+	Thu, 25 Aug 2011 16:27:45 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 133EF42A9; Thu, 25 Aug 2011
+ 16:27:44 -0400 (EDT)
+In-Reply-To: <4E569F10.8060808@panasas.com> (Boaz Harrosh's message of "Thu,
+ 25 Aug 2011 12:14:24 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: B0C515C4-CF58-11E0-B681-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180111>
 
-On Fri, Aug 19, 2011 at 08:34:13AM +0200, Ingo Br=C3=BCckl wrote:
+Boaz Harrosh <bharrosh@panasas.com> writes:
 
-> Jeff King wrote on Thu, 18 Aug 2011 15:46:44 -0700:
->=20
-> > On Fri, Aug 19, 2011 at 12:33:01AM +0200, Ingo Br=C3=BCckl wrote:
->=20
-> >> My goal was to be able to turn off paging for "stash list" only wh=
-ile all
-> >> other stash commands should continue paging.
->=20
-> > Ah, OK. I think the only other stash command that pages is "stash s=
-how",
-> > but I don't think it's unreasonable to want paging for that but not=
- for
-> > "list".
->=20
-> Maybe "stash list" simply should - like other commands - not paginate=
- by
-> default.
+> I mean. The label "try_again" is not at all unique in my file. As a
+> reader I would like to see where is that code going to. The function
+> name is a unique file identifier that tells me exactly where the change
+> is going. The label is not. (It's not freaking BASIC)
+>
+> I bet all this was just inherited from diff. Would it be accepted if
+> I send a patch to fix it? What you guys think a goto label makes any
+> sense at all?
 
-I have no real opinion on that. It only paginates as a side effect of
-calling log.
+The default tries to mimic what GNU used to do when we added the feature.
 
-I do think "git stash show" paginating by default is probably helpful,
-though.
+The diff.*.xfuncname configuration variable is there exactly for people
+like you to tweak what we use for hunk headers. Please experiment with it
+and if you come up with a better set of patterns, people may want to copy
+it and use it themselves. we may even consider updating the built-in
+default with your patterns, once they got adopted by wider audiences.
 
-The best way to get people's attention is probably to post a patch
-adding --no-pager to the git-log invocation of "git stash list". :)
-
--Peff
+Personally, I would have to say that the source wouldn't be using too many
+labels with the same name for this behaviour to be problematic, especially
+if it is not freaking BASIC ;-), so...
