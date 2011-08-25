@@ -1,68 +1,69 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: [RFC/PATCH] attr: map builtin userdiff drivers to well-known
- extensions
-Date: Thu, 25 Aug 2011 17:29:36 -0500
-Message-ID: <5qgbkjmEZ8jSRkpVNieElg1bcVbuEStD525CFu1hZPQ7F03R3EzjXwQdDKQBOnR1zWDiZBsGu53K20rbOGpYd6rmp2-e-ZI3Z42BKT01TVI@cipher.nrlssc.navy.mil>
-References: <20110825204047.GA9948@sigill.intra.peff.net>
+From: Boaz Harrosh <bharrosh@panasas.com>
+Subject: [PATCH] .gitattributes: Enable cpp diff parsing for .[ch] files
+Date: Thu, 25 Aug 2011 15:37:03 -0700
+Message-ID: <4E56CE8F.8080501@panasas.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Cc: Boaz Harrosh <bharrosh@panasas.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 26 00:29:57 2011
+To: Linus Torvalds <torvalds@linux-foundation.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	linux-kernel <linux-kernel@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 26 00:38:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwiQu-0007yA-JB
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 00:29:56 +0200
+	id 1QwiYn-0002YE-3m
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 00:38:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755688Ab1HYW3w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Aug 2011 18:29:52 -0400
-Received: from mail4.nrlssc.navy.mil ([128.160.11.9]:35591 "EHLO
-	mail3.nrlssc.navy.mil" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755583Ab1HYW3v (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Aug 2011 18:29:51 -0400
-Received: by mail3.nrlssc.navy.mil id p7PMTb5m032740; Thu, 25 Aug 2011 17:29:37 -0500
-In-Reply-To: <20110825204047.GA9948@sigill.intra.peff.net>
-X-OriginalArrivalTime: 25 Aug 2011 22:29:36.0572 (UTC) FILETIME=[787E0FC0:01CC6376]
-X-Virus-Scanned: clamav-milter 0.97.2 at mail4
-X-Virus-Status: Clean
+	id S1755723Ab1HYWht (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Aug 2011 18:37:49 -0400
+Received: from natasha.panasas.com ([67.152.220.90]:50255 "EHLO
+	natasha.panasas.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755558Ab1HYWhs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Aug 2011 18:37:48 -0400
+Received: from zenyatta.panasas.com (zenyatta.int.panasas.com [172.17.28.63])
+	by natasha.panasas.com (8.13.1/8.13.1) with ESMTP id p7PMb9vT006398;
+	Thu, 25 Aug 2011 18:37:11 -0400
+Received: from [172.17.132.75] (172.17.132.75) by zenyatta.int.panasas.com
+ (172.17.28.63) with Microsoft SMTP Server (TLS) id 14.1.289.1; Thu, 25 Aug
+ 2011 18:37:05 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:5.0) Gecko/20110707 Thunderbird/5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180133>
 
-On 08/25/2011 03:40 PM, Jeff King wrote:
-> We already provide sane hunk-header patterns for specific
-> languages. However, the user has to manually map common
-> extensions to use them. It's not that hard to do, but it's
-> an extra step that the user might not even know is an
-> option. Let's be nice and do it automatically.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> I tried to think of negative side effects.
 
-That's what I worried about when I last touched this code.  Now I'm
-thinking "what took us so long to do this!!??".
+The Linux Kernel source tree is certainly a C language repository.
+As a maintainer and code reviewer I would like too, for example:
+See function names as hunk headers and not goto labels. And all
+the other goodies a language specific diff parser gives me.
 
-> Also, any other extensions that would go into such a list?
+Add a .gitattributes file to the Linux tree to enable cpp parsing
+of the source files.
 
-*.bib diff=bibtex
-*.tex diff=tex
+People are welcome to add other parsers for other type of files
+if needed. (Like Makefile or Kconfig ...)
 
-*.[Ff] diff=fortran
-*.[Ff][0-9][0-9] diff=fortran
+CC: Jeff King <peff@peff.net>
+CC: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Boaz Harrosh <bharrosh@panasas.com>
+---
+ .gitattributes |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+ create mode 100644 .gitattributes
 
-GNU fortran currently recognizes .fXX where XX is 90, 95, 03 and 08
-and probably enables/disables features based on the respective standard.
-[0-9][0-9] would future proof against fortran f13 and f25 as long as
-there aren't other extensions that would conflict.
-
-Wikipedia says that .for is an extension for fortran, but I've never
-seen that in the wild.  Maybe it's a windows thing (3-char ext).
-
--Brandon
+diff --git a/.gitattributes b/.gitattributes
+new file mode 100644
+index 0000000..6d2b620
+--- /dev/null
++++ b/.gitattributes
+@@ -0,0 +1,2 @@
++*.h diff=cpp
++*.c diff=cpp
+-- 
+1.7.6
