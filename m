@@ -1,96 +1,115 @@
-From: Marat Radchenko <marat@slonopotamus.org>
-Subject: Re: One MMORPG git facts
-Date: Thu, 25 Aug 2011 20:02:01 +0400
-Message-ID: <1314288121.8665.2.camel@n900.home.ru>
-References: <416D1A48-9916-4E44-A200-3A13C39C4D70@gmail.com>
-	 <loom.20110825T081519-218@post.gmane.org>
-	  <4E560053.1080005@eaglescrag.net>
-Reply-To: Marat Radchenko <marat@slonopotamus.org>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: master-master server setup
+Date: Thu, 25 Aug 2011 21:36:18 +0530
+Message-ID: <CAMK1S_gKrOqY1xrsQi4hQLc85yAD0NW+wJxJ31HwRQMuY9A9sA@mail.gmail.com>
+References: <loom.20110824T191218-282@post.gmane.org>
+	<1314210406.14580.6.camel@drew-northup.unet.maine.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "J.H." <warthog9@eaglescrag.net>
-X-From: git-owner@vger.kernel.org Thu Aug 25 18:02:21 2011
+To: Drew Northup <drew.northup@maine.edu>,
+	Corey Mitchell <cmitchell@cctus.com>
+X-From: git-owner@vger.kernel.org Thu Aug 25 18:06:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwcNp-0001GI-HU
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 18:02:21 +0200
+	id 1QwcRj-0003S7-Tq
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 18:06:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752238Ab1HYQCQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Aug 2011 12:02:16 -0400
-Received: from static.231.38.47.78.clients.your-server.de ([78.47.38.231]:52370
-	"EHLO slonopotamus.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751875Ab1HYQCQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Aug 2011 12:02:16 -0400
-Received: from [83.149.8.5] (helo=[172.19.57.142])
-	by slonopotamus.org with esmtpsa (SSLv3:CAMELLIA256-SHA:256)
-	(Exim 4.76)
-	(envelope-from <marat@slonopotamus.org>)
-	id 1QwcJS-0007yr-Eh; Thu, 25 Aug 2011 19:57:54 +0400
-X-Mailer: Modest 3.90.7
-In-Reply-To: <4E560053.1080005@eaglescrag.net>
-Content-ID: <1314288120.8665.1.camel@n900.home.ru>
+	id S1752470Ab1HYQGT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Aug 2011 12:06:19 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:39111 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751918Ab1HYQGS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Aug 2011 12:06:18 -0400
+Received: by vws1 with SMTP id 1so2111757vws.19
+        for <git@vger.kernel.org>; Thu, 25 Aug 2011 09:06:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=/cOut/o9DvYgUpnxelX+g84nWji8CjHGdr/ISPwfToY=;
+        b=I9cL08pV1s25IHq1ia7053Ry7Tz2MzU3mjeFUBjLMIUBYhw9OGKIztVJUdmBNjymcc
+         cCs/wTYkwQ/of+ssErNZIga148jkAkksIx0gr+uUCfPfvtoJ82PypR7t11sskNKm9a+A
+         vf8ndzoNCUAEoec80eFafYP9zXGCzJ3odfn+o=
+Received: by 10.52.71.141 with SMTP id v13mr6809887vdu.338.1314288378042; Thu,
+ 25 Aug 2011 09:06:18 -0700 (PDT)
+Received: by 10.52.6.131 with HTTP; Thu, 25 Aug 2011 09:06:18 -0700 (PDT)
+In-Reply-To: <1314210406.14580.6.camel@drew-northup.unet.maine.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180086>
 
-On 08/25/2011 11:57:07 MSD, J.H. <warthog9@eaglescrag.net> wrote:
-> Given the differences, I'm morbidly curious, which actually ends up
-> being the more usable version control system of a project of this sca=
-le?
->=C2=A0  It sounds like (from what you've said) git is generally faster=
-,
-> assuming it can get enough resources (which can obviously be hard at =
-the
-> scales your talking).
+[Thanks Drew!]
 
-Hard to compare (especially because I don't have pure git environment b=
-ut git-svn clone). I have give you some=20
+Corey,
 
-=46irst, there are lots of non-geek people working on MMORPG (quest des=
-igners, modellers, text writers, map designers). Many of them find it h=
-ard to understand DVCS concepts and prefer living with linear history i=
-n a single branch (svn trunk). Their work is highly isolated from each =
-other (for ex, maps are split in "regions" and only one person is allow=
-ed to edit one region simultanuously, only one modeller works on a part=
-icular model, each quest has a person responsible for it) so they don't=
- hit conflicts as often as programmers do. And since svn up of whole tr=
-ee takes 40 mins, they don't update during work day but have nightly sc=
-ript for that so the only thing they regularly use is svn commit.
+On Wed, Aug 24, 2011 at 11:56 PM, Drew Northup <drew.northup@maine.edu>=
+ wrote:
+>
+> On Wed, 2011-08-24 at 17:14 +0000, Corey Mitchell wrote:
+>> Hello Git team,
+>>
+>> We have a distributed team (US and Japan). =C2=A0We are thinking abo=
+ut migrating from
+>> subversion to git because it better suits our distributed team. =C2=A0=
+Due to network
+>> latency, we want to setup 2 git servers hosting the same repository.=
+ =C2=A0We want
+>> developers to be able to download and publish branches to their loca=
+l server and
+>> then have those changes replicated to the other site. =C2=A0Is this =
+possible? =C2=A0Can
+>> someone please explain how this setup is done? =C2=A0If not, can som=
+eone please
+>> explain the closest alternative and how it is setup?
+>
+> Corey,
+> If you choose to use gitolite, then you can just use Sitaram's
+> instructions here:
+> http://sitaramc.github.com/gitolite/doc/mirroring.html
 
-Second, there's TortoiseSVN that allows easy (for non-geeks) GUI histor=
-y inspection.
+The code for all this is in the "mirroring-revamp" branch, by the way,
+although I hope to shortly bump it into pu (see below).
 
-Third, we have 200 commits per day (8 work hours), that's one commit ea=
-ch 2.4 mins (actually, much less during lunch and much more in the morn=
-ing caused by the fact that programmers are not allowed to commit after=
- 16:00), so you copy is outdated all the time. If upstream repo was git=
-, one would have to pull + push in those 2.4 mins, otherwise she would =
-hit non-ff push. This could be fixed by using separate repos, though th=
-at would complicate git setup even more.
+> If nothing else, you might find it inspirational.
 
-On the other hand, git is really great for programmers. Heck, svn still=
- doesn't have anything like "git log -u" (well, afaik, they finally add=
-ed it in 1.7)! Stash/bisect/local commits/history rewriting/cheap branc=
-hing(almost no branching happens in svn repo because that either involv=
-es either fetching of 7Gb or [if svn switch is used] 10-30mins [don't r=
-emember exactly] of massive I/O. [sorry for two-level nesting]) are ver=
-y handy on daily basis. Also, git allows easy sharing of experimental c=
-hanges between programmers without touching shared server. It also allo=
-ws atomic commits for the whole working copy (which is important when p=
-rogrammer changes server, client or data at the same time).
+Considering I spend more time on the docs than on the code, I sure
+hope it's at least that ;-)
 
-There are some decisions that were made and without which repo could be=
- smaller (for example, client/server binaries are commited daily so tha=
-t designers can use them on next day), however these decisions were mad=
-e long before i joined the project and are very likely to stay this way=
-=2E
+I'm currently at one of my $DAYJOB's other cities, setting up an
+11-way mirrored gitolite setup for some colleagues in a different
+business unit.  They have about 80 repos spread across 6 or 7 cities,
+which different repos being "mastered" at different cities.
 
-To sum this up: git is a wonderful (and very powerful) tool for program=
-mers but too complex for non-tech users.
+Some of them have 2 slaves, most have 1.  Of those that have 2 slaves,
+only one needs the push *immediately* reflected.  All of them have to
+send to a specific "backup" server sometime at night so that's like an
+extra slave, though developers are not expected to hit it so it
+doesn't need any authorisation information..
+
+Some have enough developers that for convenience reasons they would
+like to have the developer push to the (local) slave and have the
+slave internally redirect the push to the real master, without the
+developer having to know where the real master is and having to
+configure his push-remote correctly.  For developers who're working on
+multiple projects, with some of them mastered in one city and some in
+another, this is great.  (I must warn that this feature is only useful
+when all the servers trust each others authentication, because that
+gets done at the slave site where the user hit, and authorisation is
+done on the real master taking the push).
+
+Note that this does no do exactly what you said, but probably comes
+close enough in some sense.
+
+So anyway it's been fun.  We're halfway there, and no problems so far.
+ Once this is up and running for a few days I will merge it into pu.
+
+regards
+
+sitaram
