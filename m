@@ -1,65 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Re* git clean --exclude broken?
-Date: Thu, 25 Aug 2011 13:28:08 -0700
-Message-ID: <7vei09jkx3.fsf@alter.siamese.dyndns.org>
-References: <A04A4D84-16CC-438C-8828-0D11BE9DE2DA@cpanel.net>
- <7vliuio65w.fsf@alter.siamese.dyndns.org>
- <7vfwkqmfsh.fsf@alter.siamese.dyndns.org>
- <7vpqjtl4yi.fsf_-_@alter.siamese.dyndns.org> <4E5696AE.4010201@elegosoft.com>
+From: Jeff King <peff@peff.net>
+Subject: [RFC/PATCH] attr: map builtin userdiff drivers to well-known
+ extensions
+Date: Thu, 25 Aug 2011 16:40:47 -0400
+Message-ID: <20110825204047.GA9948@sigill.intra.peff.net>
+References: <20110825200001.GA6165@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Todd Rinaldo <toddr@cpanel.net>
-To: Michael Schubert <mschub@elegosoft.com>
-X-From: git-owner@vger.kernel.org Thu Aug 25 22:28:18 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Boaz Harrosh <bharrosh@panasas.com>
+X-From: git-owner@vger.kernel.org Thu Aug 25 22:40:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwgXA-0003zx-9s
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 22:28:16 +0200
+	id 1QwgjP-0002DD-VL
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 22:40:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754095Ab1HYU2M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Aug 2011 16:28:12 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57937 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754024Ab1HYU2L (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Aug 2011 16:28:11 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9994E42C4;
-	Thu, 25 Aug 2011 16:28:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XdnxPYs20yr2hHrPzDSDejia9gY=; b=Ee/olh
-	u81Zr3JQA4LM2R+zFyCpaRfqzTcx5XlUGbxz202KtE4Fmfm0HcsiY4NnQNUphxbT
-	StcBigcRG08xT3edpjS+iNbbXf8sWr3cYhyx4Zh0qGvCCF/MVxpW75XSnEbVcJiY
-	Bz6Yu102gx0BSoFzQIwMLxrlkiE9p1564hPuM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Yvxq1E8HhVLe1Hb8KYRPlJ6UzjIib/Bo
-	tNTdw2bwxW/DD3xxlWFnR/w2/Jh/ByNAITc2RqcFaUTx7loTxRd9JP7/BY8ot2I5
-	QKvO7w6syETHOTZFVRRAQoSKVCj4lww+QIQn4erFHYz7e4IlR946BtEgNw/o/tx1
-	89cuLo1iPG8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8FA8942C1;
-	Thu, 25 Aug 2011 16:28:10 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0F29A42C0; Thu, 25 Aug 2011
- 16:28:09 -0400 (EDT)
-In-Reply-To: <4E5696AE.4010201@elegosoft.com> (Michael Schubert's message of
- "Thu, 25 Aug 2011 20:38:38 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: BFA92CE2-CF58-11E0-B1B2-1DC62E706CDE-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754476Ab1HYUkv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Aug 2011 16:40:51 -0400
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:39913
+	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754333Ab1HYUku (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Aug 2011 16:40:50 -0400
+Received: (qmail 18852 invoked by uid 107); 25 Aug 2011 20:41:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 25 Aug 2011 16:41:33 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 25 Aug 2011 16:40:47 -0400
+Content-Disposition: inline
+In-Reply-To: <20110825200001.GA6165@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180113>
 
-Michael Schubert <mschub@elegosoft.com> writes:
+We already provide sane hunk-header patterns for specific
+languages. However, the user has to manually map common
+extensions to use them. It's not that hard to do, but it's
+an extra step that the user might not even know is an
+option. Let's be nice and do it automatically.
 
-> Nitpick: Shouldn't this be "In addition to what is found in .." or
-> "In addition to those found in .."?
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I tried to think of negative side effects.
 
-Thanks.
+The userdiff drivers we have are pretty conservative; they just specify
+hunk headers. So if you have a binary file named "foo.c", we still do
+the regular binary detection.
+
+If you have any matching attribute line in your own files, it should
+override. So:
+
+  foo/* -diff
+
+will still mark foo/bar.c as binary, even with this change.
+
+Can anyone think of other possible side effects?
+
+Also, any other extensions that would go into such a list? I have no
+idea what the common extension is for something like pascal or csharp.
+
+ attr.c |   12 ++++++++++++
+ 1 files changed, 12 insertions(+), 0 deletions(-)
+
+diff --git a/attr.c b/attr.c
+index da29c8e..5118a14 100644
+--- a/attr.c
++++ b/attr.c
+@@ -294,6 +294,18 @@ static void free_attr_elem(struct attr_stack *e)
+ 
+ static const char *builtin_attr[] = {
+ 	"[attr]binary -diff -text",
++	"*.html diff=html",
++	"*.java diff=java",
++	"*.perl diff=perl",
++	"*.pl diff=perl",
++	"*.php diff=php",
++	"*.py diff=python",
++	"*.rb diff=ruby",
++	"*.bib diff=bibtex",
++	"*.tex diff=tex",
++	"*.c diff=cpp",
++	"*.cc diff=cpp",
++	"*.cxx diff=cpp",
+ 	NULL,
+ };
+ 
+-- 
+1.7.6.10.g62f04
