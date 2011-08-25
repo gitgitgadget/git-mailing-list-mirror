@@ -1,7 +1,7 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH 4/5] branch: restructure -v vs. -vv
-Date: Thu, 25 Aug 2011 10:30:21 +0200
-Message-ID: <f471a616e4f08e729384138d8cb8afff4e9dbcbf.1314259226.git.git@drmicha.warpmail.net>
+Subject: [PATCH 2/5] branch: introduce --list argument
+Date: Thu, 25 Aug 2011 10:30:19 +0200
+Message-ID: <32d0954697da9ac96cc11af0d8cc1390d93fd037.1314259226.git.git@drmicha.warpmail.net>
 References: <4E5607E0.1050300@drmicha.warpmail.net>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Michael Schubert <mschub@elegosoft.com>
@@ -12,31 +12,31 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwVL2-0000B1-Dz
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 10:31:00 +0200
+	id 1QwVL2-0000B1-VQ
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 10:31:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752947Ab1HYIao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Aug 2011 04:30:44 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:56144 "EHLO
+	id S1752979Ab1HYIaq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Aug 2011 04:30:46 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:47723 "EHLO
 	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752886Ab1HYIaf (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Aug 2011 04:30:35 -0400
-Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 857E620C65;
-	Thu, 25 Aug 2011 04:30:34 -0400 (EDT)
+	by vger.kernel.org with ESMTP id S1752856Ab1HYIab (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Aug 2011 04:30:31 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id EBEA120C6A;
+	Thu, 25 Aug 2011 04:30:30 -0400 (EDT)
 Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute6.internal (MEProxy); Thu, 25 Aug 2011 04:30:34 -0400
+  by compute3.internal (MEProxy); Thu, 25 Aug 2011 04:30:30 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=from:to:cc:subject:date:message-id
-	:in-reply-to:references:in-reply-to:references; s=smtpout; bh=A2
-	ANjD2fhizZJJDYVUE3rxEbnL8=; b=mhQWqRICBjJGU8b7XHuxeEoV4cFLueO466
-	sDJlyp/ViT19YBT2mWefc/Ou2JAb05IMMZ9Fp+2lX/h/FnXAfQ4mRPijJ0wJnp6f
-	+F3gMmVuRdapmqDMGDyh9zhQjN9jxvNE0rqBw64i7Of994LdT68xBBp1cPHwit9r
-	fKwG8ax2Q=
-X-Sasl-enc: cTVgAQeWG/X7aKiyVjJUEC/RZa9zXx/btnRITsil26PI 1314261034
+	:in-reply-to:references:in-reply-to:references; s=smtpout; bh=V0
+	10vxcgHPGrCdwaeWUAHf0rH+0=; b=aAqJ52Vs/XCXyNUyCzeqPrG7bdde/nzpNp
+	vxcryo9PQPIEdLwN4qMPOpr05SBkynelWucdgoTdlQoxW+n9Xi8bjNum8kHtH9PV
+	j4CZJVcxgE3JmJ3s+vZ6dFxW8L7Oo1r73mjgTtzT/B6dOhOfCbIY2jbilq7ZXSw1
+	rW8oawiNs=
+X-Sasl-enc: +tHZSHVm+Dpe0ZgHjc3oxzHX/o8WfvV4n5zvBmaNmU+F 1314261030
 Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 067A3901ED5;
-	Thu, 25 Aug 2011 04:30:33 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 5D7B9901ED5;
+	Thu, 25 Aug 2011 04:30:30 -0400 (EDT)
 X-Mailer: git-send-email 1.7.6.845.gc3c05
 In-Reply-To: <4E5607E0.1050300@drmicha.warpmail.net>
 In-Reply-To: <cover.1314259226.git.git@drmicha.warpmail.net>
@@ -45,110 +45,122 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180073>
 
-ahead/behind info is expensive, upstream name info cheap. Therefore,
-make -v output the upstream branch name and -vv add the ahead/behind
-info.
+Currently, there is no way to invoke the list mode with a pattern
+because this is interpreted as branch creation.
+
+Introduce a --list argument which invokes the list mode.
 
 Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
- Documentation/git-branch.txt |    4 ++--
- builtin/branch.c             |   34 ++++++++++++++++------------------
- t/t6040-tracking-info.sh     |    8 ++++----
- 3 files changed, 22 insertions(+), 24 deletions(-)
+ Documentation/git-branch.txt |    9 +++++++--
+ builtin/branch.c             |   10 +++++++---
+ t/t3203-branch-output.sh     |   14 ++++++++++++++
+ 3 files changed, 28 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 789ff02..59d729a 100644
+index 2152d48..789ff02 100644
 --- a/Documentation/git-branch.txt
 +++ b/Documentation/git-branch.txt
-@@ -115,8 +115,8 @@ OPTIONS
+@@ -9,7 +9,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git branch' [--color[=<when>] | --no-color] [-r | -a]
+-	[-v [--abbrev=<length> | --no-abbrev]]
++	[--list] [-v [--abbrev=<length> | --no-abbrev]]
+ 	[(--merged | --no-merged | --contains) [<commit>]] [<pattern>]
+ 'git branch' [--set-upstream | --track | --no-track] [-l] [-f] <branchname> [<start-point>]
+ 'git branch' (-m | -M) [<oldbranch>] <newbranch>
+@@ -21,7 +21,7 @@ DESCRIPTION
+ With no arguments, existing branches are listed and the current branch will
+ be highlighted with an asterisk.  Option `-r` causes the remote-tracking
+ branches to be listed, and option `-a` shows both. This list mode is also
+-activated by the `-v` option (see below).
++activated by the `--list` and `-v` options (see below).
+ <pattern> restricts the output to matching branches, the pattern is a shell
+ wildcard (i.e., matched using fnmatch(3))
+ 
+@@ -108,11 +108,16 @@ OPTIONS
+ -a::
+ 	List both remote-tracking branches and local branches.
+ 
++--list::
++	Activate the list mode. `git branch <pattern>` would try to create a branch,
++	use `git branch --list <pattern>` to list matching branches.
++
  -v::
  --verbose::
  	Show sha1 and commit subject line for each head, along with
--	relationship to upstream branch (if any). If given twice, print
--	the name of the upstream branch, as well.
-+	the name of the upstream branch (if any). If given twice, print
-+	the relationship to the upstream branch (ahead/behind), as well.
- 	`--list` is implied by all verbosity options.
+ 	relationship to upstream branch (if any). If given twice, print
+ 	the name of the upstream branch, as well.
++	`--list` is implied by all verbosity options.
  
  --abbrev=<length>::
+ 	Alter the sha1's minimum display length in the output listing.
 diff --git a/builtin/branch.c b/builtin/branch.c
-index aed0aca..21ef5fc 100644
+index 6b40815..aed0aca 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -359,29 +359,27 @@ static int ref_cmp(const void *r1, const void *r2)
- }
+@@ -617,7 +617,7 @@ static int opt_parse_merge_filter(const struct option *opt, const char *arg, int
  
- static void fill_tracking_info(struct strbuf *stat, const char *branch_name,
--		int show_upstream_ref)
-+		int verbose)
+ int cmd_branch(int argc, const char **argv, const char *prefix)
  {
- 	int ours, theirs;
- 	struct branch *branch = branch_get(branch_name);
+-	int delete = 0, rename = 0, force_create = 0;
++	int delete = 0, rename = 0, force_create = 0, list = 0;
+ 	int verbose = 0, abbrev = DEFAULT_ABBREV, detached = 0;
+ 	int reflog = 0;
+ 	enum branch_track track;
+@@ -656,6 +656,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		OPT_BIT('D', NULL, &delete, "delete branch (even if not merged)", 2),
+ 		OPT_BIT('m', NULL, &rename, "move/rename a branch and its reflog", 1),
+ 		OPT_BIT('M', NULL, &rename, "move/rename a branch, even if target exists", 2),
++		OPT_BOOLEAN(0, "list", &list, "list branch names"),
+ 		OPT_BOOLEAN('l', NULL, &reflog, "create the branch's reflog"),
+ 		OPT__FORCE(&force_create, "force creation (when already exists)"),
+ 		{
+@@ -695,12 +696,15 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
  
--	if (!stat_tracking_info(branch, &ours, &theirs)) {
--		if (branch && branch->merge && branch->merge[0]->dst &&
--		    show_upstream_ref)
--			strbuf_addf(stat, "[%s] ",
--			    shorten_unambiguous_ref(branch->merge[0]->dst, 0));
-+	/* verbose >= 1 */
-+	if (!(branch && branch->merge && branch->merge[0]->dst))
- 		return;
--	}
--
- 	strbuf_addch(stat, '[');
--	if (show_upstream_ref)
--		strbuf_addf(stat, "%s: ",
--			shorten_unambiguous_ref(branch->merge[0]->dst, 0));
--	if (!ours)
--		strbuf_addf(stat, _("behind %d] "), theirs);
--	else if (!theirs)
--		strbuf_addf(stat, _("ahead %d] "), ours);
--	else
--		strbuf_addf(stat, _("ahead %d, behind %d] "), ours, theirs);
-+	strbuf_addstr(stat, shorten_unambiguous_ref(branch->merge[0]->dst, 0));
+ 	argc = parse_options(argc, argv, prefix, options, builtin_branch_usage,
+ 			     0);
+-	if (!!delete + !!rename + !!force_create > 1)
++	if (!!delete + !!rename + !!force_create + !!list > 1)
+ 		usage_with_options(builtin_branch_usage, options);
+ 
++	if (argc == 0 || (verbose && argc == 1))
++		list = 1;
 +
-+	if (verbose >= 2 && stat_tracking_info(branch, &ours, &theirs)) {
-+		strbuf_addstr(stat, ": ");
-+		if (!ours)
-+			strbuf_addf(stat, _("behind %d"), theirs);
-+		else if (!theirs)
-+			strbuf_addf(stat, _("ahead %d"), ours);
-+		else
-+			strbuf_addf(stat, _("ahead %d, behind %d"), ours, theirs);
-+	}
-+	strbuf_addstr(stat, "] ");
- }
+ 	if (delete)
+ 		return delete_branches(argc, argv, delete > 1, kinds);
+-	else if (argc == 0 || (verbose && argc == 1))
++	else if (list)
+ 		return print_ref_list(kinds, detached, verbose, abbrev, with_commit, argc ? argv[0] : NULL);
+ 	else if (rename && (argc == 1))
+ 		rename_branch(head, argv[0], rename > 1);
+diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+index 2df1d3d..f2b294b 100755
+--- a/t/t3203-branch-output.sh
++++ b/t/t3203-branch-output.sh
+@@ -32,6 +32,20 @@ test_expect_success 'git branch shows local branches' '
+ 	test_cmp expect actual
+ '
  
- static int matches_merge_filter(struct commit *commit)
-@@ -408,7 +406,7 @@ static void add_verbose_info(struct strbuf *out, struct ref_item *item,
- 	}
- 
- 	if (item->kind == REF_LOCAL_BRANCH)
--		fill_tracking_info(&stat, item->name, verbose > 1);
-+		fill_tracking_info(&stat, item->name, verbose);
- 
- 	strbuf_addf(out, " %s %s%s",
- 		find_unique_abbrev(item->commit->object.sha1, abbrev),
-diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
-index 19272bc..9539882 100755
---- a/t/t6040-tracking-info.sh
-+++ b/t/t6040-tracking-info.sh
-@@ -36,10 +36,10 @@ test_expect_success setup '
- 
- script='s/^..\(b.\)[	 0-9a-f]*\[\([^]]*\)\].*/\1 \2/p'
- cat >expect <<\EOF
--b1 ahead 1, behind 1
--b2 ahead 1, behind 1
--b3 behind 1
--b4 ahead 2
-+b1 origin/master
-+b2 origin/master
-+b3 origin/master
-+b4 origin/master
- EOF
- 
- test_expect_success 'branch -v' '
++test_expect_success 'git branch --list shows local branches' '
++	git branch --list >actual &&
++	test_cmp expect actual
++'
++
++cat >expect <<'EOF'
++  branch-one
++  branch-two
++EOF
++test_expect_success 'git branch --list pattern shows matching local branches' '
++	git branch --list branch* >actual &&
++	test_cmp expect actual
++'
++
+ cat >expect <<'EOF'
+   origin/HEAD -> origin/branch-one
+   origin/branch-one
 -- 
 1.7.6.845.gc3c05
