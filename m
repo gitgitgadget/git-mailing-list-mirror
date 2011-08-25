@@ -1,80 +1,116 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] log: Do not decorate replacements with --no-replace-objects
-Date: Thu, 25 Aug 2011 20:55:56 +0700
-Message-ID: <CACsJy8BOhU7-aTN2TPRRoQ=_mSfbOstXFRfpyoPmrr_Gbqg0pg@mail.gmail.com>
-References: <ad41e81daa6f9fc4654ae4c312f293202519a5d0.1314279822.git.git@drmicha.warpmail.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Aug 25 15:56:34 2011
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] replace: List replacement along with the object
+Date: Thu, 25 Aug 2011 16:39:44 +0200
+Message-ID: <bae5a8f7d30417864d972390f9f6b4470cf4e5bf.1314283118.git.git@drmicha.warpmail.net>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 25 16:39:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwaQ5-0005er-2K
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 15:56:33 +0200
+	id 1Qwb61-0003yH-A5
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Aug 2011 16:39:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750858Ab1HYN42 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Aug 2011 09:56:28 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:54037 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751243Ab1HYN41 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Aug 2011 09:56:27 -0400
-Received: by bke11 with SMTP id 11so1747683bke.19
-        for <git@vger.kernel.org>; Thu, 25 Aug 2011 06:56:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=P1EhwK5wUZJl7ahlPpptsnowxe1UlOqZQC0YliAkNx8=;
-        b=XsMzN1jihy9pHw5yHFf2NclwzR3YWRemPhS8PCjjFs+Qz7VM4n2FBy/6UFasF2t53K
-         72eKupcY2NmoN34XX8eV9tWng4etJF3AexxNB84SFi7qFDHbweIES3wW4ZC1xWP9fXfe
-         2QiYGtiQVPLYLkWGA64Jxq/KjVMEVt5Bd7hdQ=
-Received: by 10.204.132.23 with SMTP id z23mr3050754bks.383.1314280586102;
- Thu, 25 Aug 2011 06:56:26 -0700 (PDT)
-Received: by 10.204.156.24 with HTTP; Thu, 25 Aug 2011 06:55:56 -0700 (PDT)
-In-Reply-To: <ad41e81daa6f9fc4654ae4c312f293202519a5d0.1314279822.git.git@drmicha.warpmail.net>
+	id S1751566Ab1HYOjs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Aug 2011 10:39:48 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:58126 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751407Ab1HYOjr (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Aug 2011 10:39:47 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 1193C20B6B;
+	Thu, 25 Aug 2011 10:39:47 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute3.internal (MEProxy); Thu, 25 Aug 2011 10:39:47 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=from:to:cc:subject:date:message-id; s=
+	smtpout; bh=nWlQQIhrjP8Fc5rMkDySlnFzCc0=; b=lfV+Spyn4nY1e73CmHaA
+	D5ED+JGkkIovTmHTXOzTSF7dvb7oRrO/Pz2HD9muga0gQz88h/CMQtfkZNcR7HdF
+	5kjkoJtX2wWhiAkiaiD8lCR84OzPCnwDRH+UUl8BZiSlLDFkhMKA8eotfN84rbYX
+	FNL81brJSLv7W1JUCYVXNRs=
+X-Sasl-enc: 6ekqtm5g2c7zmYJOhw75yhes4Tb8JFx3YKH0iGji6iEg 1314283186
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 84EBD9E09E0;
+	Thu, 25 Aug 2011 10:39:46 -0400 (EDT)
+X-Mailer: git-send-email 1.7.6.845.gc3c05
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180080>
 
-2011/8/25 Michael J Gruber <git@drmicha.warpmail.net>:
-> Make it so that additionally the use of --no-replace-objects is
-> detected: I.e. replaced commits are only decorated as replaced when t=
-hey
-> are actually replaced.
+The documentation could be misunderstood as if "git replace -l" lists
+the replacements of the specified objects. Currently, it lists the
+replaced objects.
 
-Yeah.. I forgot about this.
+Change the output to the form "<object> <replacement>" so that there is
+an easy way to find the replacement, besides the more difficult to find
+git show-ref $(git replace -l).
 
-> @@ -95,7 +95,7 @@ static int add_ref_decoration(const char *refname, =
-const unsigned char *sha1, in
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct object *obj;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0enum decoration_type type =3D DECORATION_N=
-ONE;
->
-> - =C2=A0 =C2=A0 =C2=A0 if (!prefixcmp(refname, "refs/replace/")) {
-> + =C2=A0 =C2=A0 =C2=A0 if (read_replace_refs && !prefixcmp(refname, "=
-refs/replace/")) {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0unsigned char =
-original_sha1[20];
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (get_sha1_h=
-ex(refname + 13, original_sha1)) {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0warning("invalid replace ref %s", refname);
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+Noted in passing while testing decorations.
+---
+ Documentation/git-replace.txt |    2 +-
+ builtin/replace.c             |    2 +-
+ t/t6050-replace.sh            |    8 ++++----
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-You should put "if (!read_replace_refs) return 0;" inside "if
-(!prefixcmp..", otherwise it'll come to the ref decoration code below
-and my second paragraph in 5267d29's commit message will be reverted.
-
-I thought my patch was
- - simple
- - replace is rarely used
-therefore neglected the tests. Perhaps you can also add a few tests
-here. It's not that simple after all.
---=20
-Duy
+diff --git a/Documentation/git-replace.txt b/Documentation/git-replace.txt
+index 17df525..9bf3ff8 100644
+--- a/Documentation/git-replace.txt
++++ b/Documentation/git-replace.txt
+@@ -58,7 +58,7 @@ OPTIONS
+ 
+ -l <pattern>::
+ 	List replace refs for objects that match the given pattern (or
+-	all if no pattern is given).
++	all if no pattern is given) in the form "<object> <replacement>".
+ 	Typing "git replace" without arguments, also lists all replace
+ 	refs.
+ 
+diff --git a/builtin/replace.c b/builtin/replace.c
+index fe3a647..f8c5a9f 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -26,7 +26,7 @@ static int show_reference(const char *refname, const unsigned char *sha1,
+ 	const char *pattern = cb_data;
+ 
+ 	if (!fnmatch(pattern, refname, 0))
+-		printf("%s\n", refname);
++		printf("%s %s\n", refname, sha1_to_hex(sha1));
+ 
+ 	return 0;
+ }
+diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+index 5c87f28..665b308 100755
+--- a/t/t6050-replace.sh
++++ b/t/t6050-replace.sh
+@@ -119,10 +119,10 @@ test_expect_success 'repack, clone and fetch work' '
+ '
+ 
+ test_expect_success '"git replace" listing and deleting' '
+-     test "$HASH2" = "$(git replace -l)" &&
+-     test "$HASH2" = "$(git replace)" &&
++     test "$HASH2 $R" = "$(git replace -l)" &&
++     test "$HASH2 $R" = "$(git replace)" &&
+      aa=${HASH2%??????????????????????????????????????} &&
+-     test "$HASH2" = "$(git replace -l "$aa*")" &&
++     test "$HASH2 $R" = "$(git replace -l "$aa*")" &&
+      test_must_fail git replace -d $R &&
+      test_must_fail git replace -d &&
+      test_must_fail git replace -l -d $HASH2 &&
+@@ -137,7 +137,7 @@ test_expect_success '"git replace" replacing' '
+      test_must_fail git replace $HASH2 $R &&
+      git replace -f $HASH2 $R &&
+      test_must_fail git replace -f &&
+-     test "$HASH2" = "$(git replace)"
++     test "$HASH2 $R" = "$(git replace)"
+ '
+ 
+ # This creates a side branch where the bug in H2
+-- 
+1.7.6.845.gc3c05
