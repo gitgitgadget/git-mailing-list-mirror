@@ -1,84 +1,96 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv2] git-replace.txt: Clarify list mode
-Date: Fri, 26 Aug 2011 09:53:20 +0200
-Message-ID: <0a88518db0b0db8f1a4a4deeebd6dffc2d603e74.1314345131.git.git@drmicha.warpmail.net>
-References: <4E574D61.8050501@drmicha.warpmail.net>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 26 09:53:29 2011
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] replace: List replacement along with the object
+Date: Fri, 26 Aug 2011 10:13:10 +0200
+Message-ID: <CAP8UFD1Or8dPVBpAsOwge4o0Lpej2gTs7dQJM0eocbn7EiWVrQ@mail.gmail.com>
+References: <bae5a8f7d30417864d972390f9f6b4470cf4e5bf.1314283118.git.git@drmicha.warpmail.net>
+	<CAP8UFD2Cr4UQjWa=pRvcqgyX_Ed+qjts=TujWRdyk4dUZsd_7Q@mail.gmail.com>
+	<4E574D61.8050501@drmicha.warpmail.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Aug 26 10:13:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QwrEH-0001Uo-7Y
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 09:53:29 +0200
+	id 1QwrXb-0001n3-Iq
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 10:13:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752890Ab1HZHxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Aug 2011 03:53:23 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:44790 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752855Ab1HZHxX (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Aug 2011 03:53:23 -0400
-Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id B7E3720BCE;
-	Fri, 26 Aug 2011 03:53:22 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute6.internal (MEProxy); Fri, 26 Aug 2011 03:53:22 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=from:to:cc:subject:date:message-id
-	:in-reply-to:references; s=smtpout; bh=XfTNUC1an4TLXRUYesBPdJZF4
-	sM=; b=AaIuy3g1jGpTTTqOxHo5wcBAUyf3nCB5Jv1gGLP1g+bgqoaN2KSITCU1g
-	AYa2ZxTgl+nLJw2f/q4rTR3fEwKj/M194Bmgdlaau/MNt4o2lvqNpuiVvQ/cUn0v
-	duzTEoVmJo6b99Zoar4U1ykjyQA0xqzjXSBK1xpufNH1VDZSpA=
-X-Sasl-enc: kwi/97/S076IlEzFQkwEnael4z+QR9ErN2e3FS3x0Fed 1314345202
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 31A65A205E6;
-	Fri, 26 Aug 2011 03:53:22 -0400 (EDT)
-X-Mailer: git-send-email 1.7.6.845.gc3c05
+	id S1752763Ab1HZINN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Aug 2011 04:13:13 -0400
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:64795 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750704Ab1HZINK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Aug 2011 04:13:10 -0400
+Received: by vxi9 with SMTP id 9so2388016vxi.19
+        for <git@vger.kernel.org>; Fri, 26 Aug 2011 01:13:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=vmzotEaQCGzGq4lFph+D8SWx7Mmm7X6/dUvc5/gE+lk=;
+        b=jHc68zSv/DvbRKemnSDali/fWe5UeM2KqJkqToTOSQkAIykwz/MhAAZnepI5G7gZCk
+         HDheLy4ExGqw6lVMTYZTGOzuXp3pXa02ZgJ/yyQ9Q6qDsetoVtRKmYTQkCEEFuIrBfF9
+         ycffFHF49Ekvo7y4T3SnLzUwqTMLF2KbP4Zkg=
+Received: by 10.52.24.135 with SMTP id u7mr757163vdf.464.1314346390082; Fri,
+ 26 Aug 2011 01:13:10 -0700 (PDT)
+Received: by 10.52.188.201 with HTTP; Fri, 26 Aug 2011 01:13:10 -0700 (PDT)
 In-Reply-To: <4E574D61.8050501@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180156>
 
-Clarify that in list mode, "git replace" outputs the shortened ref
-names, not their values.
+On Fri, Aug 26, 2011 at 9:38 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Christian Couder venit, vidit, dixit 25.08.2011 18:29:
+>> On Thu, Aug 25, 2011 at 4:39 PM, Michael J Gruber
+>> <git@drmicha.warpmail.net> wrote:
+>>> The documentation could be misunderstood as if "git replace -l" lists
+>>> the replacements of the specified objects. Currently, it lists the
+>>> replaced objects.
+>>
+>> You could just change the documentation to make it more explicit.
+>
+> Well, sure. I just didn't find the current form that useful.
+>
+>>> Change the output to the form "<object> <replacement>" so that there is
+>>> an easy way to find the replacement, besides the more difficult to find
+>>> git show-ref $(git replace -l).
+>>
+>> I shamelessly copied the "-l <pattern>" feature and the documentation
+>> from "git tag". If you just change the output of "git replace -l" it
+>> will make the UI inconsistent between both commands.
+>
+> I don't think many people will expect consistency between branch and tag
+> on the one hand, and replace refs on the other hand. It requires the
+> knowledge that a replacement is basically a lightweight tag stored in a
+> different namespace in refs/, which I would actually consider an
+> implementation detail.
 
-Also, point to the difficult to find git show-ref $(git replace -l).
+It is an implementation detail, but anyway UI consistency is important
+and I would suggest the same behavior even if it was implemented in
+another way.
+By the way it would be nice to make "git remote" more similar to "git
+branch", "git tag" and "git replace" while you are at it.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- Documentation/git-replace.txt |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
+>> Maybe you could add a "-L <pattern>" feature to "git replace", "git
+>> tag" and "git branch" that would output "<ref name> <ref content>"?
+>
+> I'd use "-v" then if this is about consistency, because that *always*
+> means "verbose", and migrate the misnamed "git tag -v"...
 
-diff --git a/Documentation/git-replace.txt b/Documentation/git-replace.txt
-index 17df525..cd00837 100644
---- a/Documentation/git-replace.txt
-+++ b/Documentation/git-replace.txt
-@@ -61,6 +61,13 @@ OPTIONS
- 	all if no pattern is given).
- 	Typing "git replace" without arguments, also lists all replace
- 	refs.
-++
-+Note that this lists the names of the replace refs, not their values
-+(not their replacements). You can get the latter like this, e.g.:
-+
-+------------------------------------------------
-+$ git show-ref $(git replace -l)
-+------------------------------------------------
- 
- BUGS
- ----
-@@ -76,6 +83,7 @@ replaced by a commit).
- 
- SEE ALSO
- --------
-+linkgit:git-show-ref[1]
- linkgit:git-tag[1]
- linkgit:git-branch[1]
- linkgit:git[1]
--- 
-1.7.6.845.gc3c05
+Yeah, but "git branch -v" is decribed like this:
+
+    Show sha1 and commit subject line for each head, along with
+relationship to upstream branch (if any). If given twice, print the
+name of the upstream branch, as well.
+
+So if you implement it in "git replace" and "git tag", you should at
+least show the commit subject line too.
+
+Thanks,
+Christian.
