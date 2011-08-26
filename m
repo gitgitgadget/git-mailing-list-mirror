@@ -1,94 +1,66 @@
-From: Jeff King <peff@peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
 Subject: Re: [RFC/PATCH] attr: map builtin userdiff drivers to well-known
  extensions
-Date: Thu, 25 Aug 2011 22:59:13 -0400
-Message-ID: <20110826025913.GC17625@sigill.intra.peff.net>
-References: <20110825200001.GA6165@sigill.intra.peff.net>
- <20110825204047.GA9948@sigill.intra.peff.net>
- <7v8vqhhzgd.fsf@alter.siamese.dyndns.org>
+Date: Thu, 25 Aug 2011 23:58:50 -0400
+Message-ID: <4E5719FA.9060603@sunshineco.com>
+References: <20110825204047.GA9948@sigill.intra.peff.net> <5qgbkjmEZ8jSRkpVNieElg1bcVbuEStD525CFu1hZPQ7F03R3EzjXwQdDKQBOnR1zWDiZBsGu53K20rbOGpYd6rmp2-e-ZI3Z42BKT01TVI@cipher.nrlssc.navy.mil> <20110826024533.GB17625@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Boaz Harrosh <bharrosh@panasas.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 26 04:59:22 2011
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>,
+	Boaz Harrosh <bharrosh@panasas.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 26 05:58:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qwmdd-00021n-Cq
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 04:59:21 +0200
+	id 1QwnZK-0003JS-QI
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 05:58:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751789Ab1HZC7S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Aug 2011 22:59:18 -0400
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net ([99.108.226.0]:56171
-	"EHLO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751882Ab1HZC7R (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Aug 2011 22:59:17 -0400
-Received: (qmail 22588 invoked by uid 107); 26 Aug 2011 02:59:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 25 Aug 2011 22:59:59 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 25 Aug 2011 22:59:13 -0400
-Content-Disposition: inline
-In-Reply-To: <7v8vqhhzgd.fsf@alter.siamese.dyndns.org>
+	id S1752692Ab1HZD6y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Aug 2011 23:58:54 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:57730 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752059Ab1HZD6x (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Aug 2011 23:58:53 -0400
+Received: by qyk34 with SMTP id 34so1978079qyk.19
+        for <git@vger.kernel.org>; Thu, 25 Aug 2011 20:58:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=fuqU/m6QmZXs+yucCZpiskQyjsBn8NY2Z84ViBFaR1A=;
+        b=JqqL+gHt2JchgFeMg6PXI3PEKDDbC6wWj5FgIL4H9AB0IYHxnCGAOc5xrkl5pLmUoS
+         NEAuul5a52DkAsz2KbGxFPNRZ9sq1z/Mkk8B98FYWKURguNsqNn0B5C80FTNKVt/rz+1
+         unCb49fO42MuCeZoE2eT0J0rv1ws4td78L4o4=
+Received: by 10.229.46.142 with SMTP id j14mr752398qcf.263.1314331132709;
+        Thu, 25 Aug 2011 20:58:52 -0700 (PDT)
+Received: from [192.168.1.3] (user-0c936tj.cable.mindspring.com [24.145.155.179])
+        by mx.google.com with ESMTPS id f17sm1031658qct.18.2011.08.25.20.58.51
+        (version=SSLv3 cipher=OTHER);
+        Thu, 25 Aug 2011 20:58:51 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.18) Gecko/20110617 Thunderbird/3.1.11
+In-Reply-To: <20110826024533.GB17625@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180150>
 
-On Thu, Aug 25, 2011 at 03:57:06PM -0700, Junio C Hamano wrote:
+On 08/25/2011 10:45 PM, Jeff King wrote:
+> Should all of our matches be case-insensitive? That is, should we be
+> matching both .HTML and .html? Clearly lowercase is the One True Way,
+> but I don't know what kind of junk people with case-insensitive
+> filesystems have, or whether we should even worry about it.
 
-> > If you have any matching attribute line in your own files, it should
-> > override. So:
-> >
-> >   foo/* -diff
-> >
-> > will still mark foo/bar.c as binary, even with this change.
-> >
-> > Can anyone think of other possible side effects?
-> >
-> > Also, any other extensions that would go into such a list? I have no
-> > idea what the common extension is for something like pascal or csharp.
-> 
-> As long as the builtin ones are the lowest priority fallback, we should be
-> Ok.
-> 
-> Do we say anywhere that "Ah, this has 'diff' attribute defined, so it must
-> be text"? If so, we should fix _that_. In other words, having this one
-> extra entry
-> 
-> 	"* diff=default"
-> 
-> in the builtin_attr[] array should be a no-op, I think.
+In the Windows world, uppercase extensions are common. Also, one often 
+finds .htm on Windows rather than .html.
 
-No, certainly not since 122aa6f (diff: introduce diff.<driver>.binary,
-2008-10-05). That commit's message claims that we did before it, but
-looking at the patch, I am not so sure. But I'm not about to start
-testing a 3-year-old patch to see if it really was the source of the
-fix; the point is that it is correct now. :)
+Speaking of other platforms, on Mac OS X:
 
-I think it could be a problem in the future if the builtin userdiff
-drivers started growing more invasive options, like automatically
-claiming to be non-binary (i.e., setting diff.cpp.binary = false by
-default). In other words, I think we have two options:
+Objective-C is .m
+Objective-C++ is .mm (and long-deprecated .M is probably not relevant)
 
-  1. Builtin drivers like "cpp" can stay minimal, only setting funcname
-     and color-words headers that aren't going to produce terrible
-     results if we are wrong about detecting by extension.
-
-  2. We force the user to identify file types manually, so we can't be
-     wrong. The "cpp" diff driver means "you are a text C file", and if
-     a user mis-marks a binary file with that diff driver, they are the
-     one who is wrong.
-
-So if it's an either/or situation, we should decide not only that
-extension auto-detection is a good feature, but that it trumps adding
-more advanced features to the builtin drivers in the future.
-
-Or we could decide that the extensions really are good enough, and if
-you really do have binary files named "foo.c", it's your problem to
-override the defaults with "*.c -diff".
-
--Peff
+-- ES
