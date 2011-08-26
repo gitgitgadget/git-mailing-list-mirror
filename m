@@ -1,41 +1,41 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv2 2/5] git-tag: introduce long forms for the options
-Date: Fri, 26 Aug 2011 16:05:12 +0200
-Message-ID: <f02e446227a93fff37591f1a866566e6220ce283.1314367414.git.git@drmicha.warpmail.net>
+Subject: [PATCHv2 4/5] branch: introduce --list option
+Date: Fri, 26 Aug 2011 16:05:14 +0200
+Message-ID: <0785cac235c3b45537cf161c86dde8e798c4ff3e.1314367414.git.git@drmicha.warpmail.net>
 References: <20110825175301.GC519@sigill.intra.peff.net>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 26 16:05:41 2011
+X-From: git-owner@vger.kernel.org Fri Aug 26 16:05:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qwx2T-0007ZO-18
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 16:05:41 +0200
+	id 1Qwx2U-0007ZO-1E
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 16:05:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755158Ab1HZOFZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Aug 2011 10:05:25 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:32820 "EHLO
+	id S1755174Ab1HZOF3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Aug 2011 10:05:29 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:55709 "EHLO
 	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755132Ab1HZOFW (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Aug 2011 10:05:22 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id ECBCC20814;
-	Fri, 26 Aug 2011 10:05:21 -0400 (EDT)
+	by vger.kernel.org with ESMTP id S1755132Ab1HZOF0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Aug 2011 10:05:26 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 991BF20814;
+	Fri, 26 Aug 2011 10:05:25 -0400 (EDT)
 Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Fri, 26 Aug 2011 10:05:21 -0400
+  by compute3.internal (MEProxy); Fri, 26 Aug 2011 10:05:25 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=from:to:cc:subject:date:message-id
-	:in-reply-to:references:in-reply-to:references; s=smtpout; bh=wv
-	zuS5S3J7Kw5DzeQUXhAfqjsuw=; b=U3+0pU2LhZwj2OtJjIivuCy5T3DxxVqC1T
-	4Co4ypRh6G7ft02EqjdXLc1qkYknfnOm1ADCLlWbFC3hngg3N0vjbsIlQHbifO4W
-	6Vz6B5qUB86TuJza/myEbIYHOdLCOfDdRPu0a8C+EcjcaBt5gX6Q+40HMGlZYPlw
-	Zw1L1Ff/k=
-X-Sasl-enc: 2g1PrR0D3rLtaTbgRxX+zNbXnQ1X4HldQLx71+GN1paT 1314367521
+	:in-reply-to:references:in-reply-to:references; s=smtpout; bh=qp
+	HU1JIxY9zKJyWiUT1jWfXg0Js=; b=ZtOrshZZyjdvjMoSNepsms9utj9vcbn+ZO
+	vINrRhN0WNYaJmON9b8uF3TAljcPAJS+gea55rXQg0MCyt9BfKgS27egVeOX0z0a
+	xTL/O3AisrB53Q9Ecn1I+XbKJcIcDbAwZ9eS0IQrw9GN4lTnLnorxuFHQJo2XTej
+	3tn9u+Mxc=
+X-Sasl-enc: ovnOUa/wX5Ed7JqB+qyydCceINqZUcnDwZe4kXVicSJF 1314367525
 Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 631F59205E1;
-	Fri, 26 Aug 2011 10:05:21 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 1A8859205E4;
+	Fri, 26 Aug 2011 10:05:24 -0400 (EDT)
 X-Mailer: git-send-email 1.7.6.845.gc3c05
 In-Reply-To: <20110825175301.GC519@sigill.intra.peff.net>
 In-Reply-To: <cover.1314367414.git.git@drmicha.warpmail.net>
@@ -44,112 +44,127 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180168>
 
-Long forms are better to memoize, and more reliably uniform across
-commands.
-
-Design notes:
-
--u,--local-user is named following the analogous gnupg option.
-
--l,--list is not an argument taking option but a mode switch.
+Currently, there is no way to invoke the list mode explicitly.
+Introduce a --list option which invokes the list mode. This will be
+beneficial for invoking list mode with pattern matching, which otherwise
+would be interpreted as branch creation.
 
 Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
- Documentation/git-tag.txt |    8 ++++++++
- builtin/tag.c             |   16 ++++++++--------
- 2 files changed, 16 insertions(+), 8 deletions(-)
+ Documentation/git-branch.txt |    9 +++++++--
+ builtin/branch.c             |   12 +++++++++---
+ t/t3203-branch-output.sh     |   14 ++++++++++++++
+ 3 files changed, 30 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index fb1c0ac..c83cb13 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -43,12 +43,15 @@ GnuPG key for signing.
- OPTIONS
- -------
- -a::
-+--annotate::
- 	Make an unsigned, annotated tag object
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index 4c64ac9..ac278fb 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -9,7 +9,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git branch' [--color[=<when>] | --no-color] [-r | -a]
+-	[-v [--abbrev=<length> | --no-abbrev]]
++	[--list] [-v [--abbrev=<length> | --no-abbrev]]
+ 	[(--merged | --no-merged | --contains) [<commit>]]
+ 'git branch' [--set-upstream | --track | --no-track] [-l] [-f] <branchname> [<start-point>]
+ 'git branch' (-m | -M) [<oldbranch>] <newbranch>
+@@ -20,7 +20,8 @@ DESCRIPTION
  
- -s::
-+--sign::
- 	Make a GPG-signed tag, using the default e-mail address's key
+ With no arguments, existing branches are listed and the current branch will
+ be highlighted with an asterisk.  Option `-r` causes the remote-tracking
+-branches to be listed, and option `-a` shows both.
++branches to be listed, and option `-a` shows both. This list mode is also
++activated by the `--list` and `-v` options (see below).
  
- -u <key-id>::
-+--local-user=<key-id>::
- 	Make a GPG-signed tag, using the given key
+ With `--contains`, shows only the branches that contain the named commit
+ (in other words, the branches whose tip commits are descendants of the
+@@ -110,11 +111,15 @@ OPTIONS
+ --all::
+ 	List both remote-tracking branches and local branches.
  
- -f::
-@@ -56,9 +59,11 @@ OPTIONS
- 	Replace an existing tag with the given name (instead of failing)
- 
- -d::
-+--delete::
- 	Delete existing tags with the given names.
- 
++--list::
++	Activate the list mode.
++
  -v::
-+--verify::
- 	Verify the gpg signature of the given tag names.
+ --verbose::
+ 	Show sha1 and commit subject line for each head, along with
+ 	relationship to upstream branch (if any). If given twice, print
+ 	the name of the upstream branch, as well.
++	`--list` is implied by all verbosity options.
  
- -n<num>::
-@@ -69,6 +74,7 @@ OPTIONS
- 	If the tag is not annotated, the commit message is displayed instead.
+ --abbrev=<length>::
+ 	Alter the sha1's minimum display length in the output listing.
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 94e41ae..4a33b07 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -608,7 +608,7 @@ static int opt_parse_merge_filter(const struct option *opt, const char *arg, int
  
- -l <pattern>::
-+--list <pattern>::
- 	List tags with names that match the given pattern (or all if no
- 	pattern is given).  Running "git tag" without arguments also
- 	lists all tags. The pattern is a shell wildcard (i.e., matched
-@@ -79,6 +85,7 @@ OPTIONS
- 	Only list tags which contain the specified commit.
+ int cmd_branch(int argc, const char **argv, const char *prefix)
+ {
+-	int delete = 0, rename = 0, force_create = 0;
++	int delete = 0, rename = 0, force_create = 0, list = 0;
+ 	int verbose = 0, abbrev = -1, detached = 0;
+ 	int reflog = 0;
+ 	enum branch_track track;
+@@ -647,6 +647,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		OPT_BIT('D', NULL, &delete, "delete branch (even if not merged)", 2),
+ 		OPT_BIT('m', "move", &rename, "move/rename a branch and its reflog", 1),
+ 		OPT_BIT('M', NULL, &rename, "move/rename a branch, even if target exists", 2),
++		OPT_BOOLEAN(0, "list", &list, "list branch names"),
+ 		OPT_BOOLEAN('l', "create-reflog", &reflog, "create the branch's reflog"),
+ 		OPT__FORCE(&force_create, "force creation (when already exists)"),
+ 		{
+@@ -686,7 +687,12 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
  
- -m <msg>::
-+--message=<msg>::
- 	Use the given tag message (instead of prompting).
- 	If multiple `-m` options are given, their values are
- 	concatenated as separate paragraphs.
-@@ -86,6 +93,7 @@ OPTIONS
- 	is given.
+ 	argc = parse_options(argc, argv, prefix, options, builtin_branch_usage,
+ 			     0);
+-	if (!!delete + !!rename + !!force_create > 1)
++
++	if (!delete && !rename && !force_create &&
++	    (argc == 0 || (verbose && argc)))
++		list = 1;
++
++	if (!!delete + !!rename + !!force_create + !!list > 1)
+ 		usage_with_options(builtin_branch_usage, options);
  
- -F <file>::
-+--file=<file>::
- 	Take the tag message from the given file.  Use '-' to
- 	read the message from the standard input.
- 	Implies `-a` if none of `-a`, `-s`, or `-u <key-id>`
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 667515e..9d89616 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -429,21 +429,21 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	struct msg_arg msg = { 0, STRBUF_INIT };
- 	struct commit_list *with_commit = NULL;
- 	struct option options[] = {
--		OPT_BOOLEAN('l', NULL, &list, "list tag names"),
-+		OPT_BOOLEAN('l', "list", &list, "list tag names"),
- 		{ OPTION_INTEGER, 'n', NULL, &lines, "n",
- 				"print <n> lines of each tag message",
- 				PARSE_OPT_OPTARG, NULL, 1 },
--		OPT_BOOLEAN('d', NULL, &delete, "delete tags"),
--		OPT_BOOLEAN('v', NULL, &verify, "verify tags"),
-+		OPT_BOOLEAN('d', "delete", &delete, "delete tags"),
-+		OPT_BOOLEAN('v', "verify", &verify, "verify tags"),
+ 	if (abbrev == -1)
+@@ -694,7 +700,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
  
- 		OPT_GROUP("Tag creation options"),
--		OPT_BOOLEAN('a', NULL, &annotate,
-+		OPT_BOOLEAN('a', "annotate", &annotate,
- 					"annotated tag, needs a message"),
--		OPT_CALLBACK('m', NULL, &msg, "message",
-+		OPT_CALLBACK('m', "message", &msg, "message",
- 			     "tag message", parse_msg_arg),
--		OPT_FILENAME('F', NULL, &msgfile, "read message from file"),
--		OPT_BOOLEAN('s', NULL, &sign, "annotated and GPG-signed tag"),
--		OPT_STRING('u', NULL, &keyid, "key-id",
-+		OPT_FILENAME('F', "file", &msgfile, "read message from file"),
-+		OPT_BOOLEAN('s', "sign", &sign, "annotated and GPG-signed tag"),
-+		OPT_STRING('u', "local-user", &keyid, "key-id",
- 					"use another key to sign the tag"),
- 		OPT__FORCE(&force, "replace the tag if exists"),
+ 	if (delete)
+ 		return delete_branches(argc, argv, delete > 1, kinds);
+-	else if (argc == 0)
++	else if (list)
+ 		return print_ref_list(kinds, detached, verbose, abbrev, with_commit);
+ 	else if (rename && (argc == 1))
+ 		rename_branch(head, argv[0], rename > 1);
+diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+index 6b7c118..61e095c 100755
+--- a/t/t3203-branch-output.sh
++++ b/t/t3203-branch-output.sh
+@@ -32,6 +32,20 @@ test_expect_success 'git branch shows local branches' '
+ 	test_cmp expect actual
+ '
  
++test_expect_success 'git branch --list shows local branches' '
++	git branch --list >actual &&
++	test_cmp expect actual
++'
++
++cat >expect <<'EOF'
++  branch-one
++  branch-two
++EOF
++test_expect_success 'git branch --list pattern shows matching local branches' '
++	git branch --list branch* >actual &&
++	test_cmp expect actual
++'
++
+ cat >expect <<'EOF'
+   origin/HEAD -> origin/branch-one
+   origin/branch-one
 -- 
 1.7.6.845.gc3c05
