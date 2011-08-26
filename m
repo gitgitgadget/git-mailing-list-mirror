@@ -1,147 +1,127 @@
-From: Brad King <brad.king@kitware.com>
-Subject: [PATCH v2/RFC] submodule: Search for merges only at end of recursive merge
-Date: Fri, 26 Aug 2011 15:30:56 -0400
-Message-ID: <8e4e80f75d281c8bdd07b0a29eee9ad407661102.1314386859.git.brad.king@kitware.com>
-References: <7vr548c7un.fsf@alter.siamese.dyndns.org>
-Cc: gitster@pobox.com, Heiko Voigt <hvoigt@hvoigt.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 26 21:31:06 2011
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: highlight: strip non-printable characters via col(1)
+Date: Fri, 26 Aug 2011 21:54:13 +0200
+Message-ID: <201108262154.14493.jnareb@gmail.com>
+References: <1314053923-13122-1-git-send-email-cfuhrman@panix.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org, cwilson@cdwilson.us,
+	sylvain@abstraction.fr
+To: "Christopher M. Fuhrman" <cfuhrman@panix.com>
+X-From: git-owner@vger.kernel.org Fri Aug 26 21:54:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Qx27L-0007Zt-4V
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 21:31:03 +0200
+	id 1Qx2U7-0001j3-R9
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Aug 2011 21:54:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752288Ab1HZTa6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Aug 2011 15:30:58 -0400
-Received: from 66-194-253-20.static.twtelecom.net ([66.194.253.20]:47018 "EHLO
-	public.kitware.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751929Ab1HZTa5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Aug 2011 15:30:57 -0400
-Received: from vesper (vesper.kitwarein.com [192.168.1.207])
-	by public.kitware.com (Postfix) with ESMTP id 4EF0536B24;
-	Fri, 26 Aug 2011 15:30:56 -0400 (EDT)
-Received: by vesper (Postfix, from userid 1000)
-	id 491916098; Fri, 26 Aug 2011 15:30:56 -0400 (EDT)
-X-Mailer: git-send-email 1.7.4.4
-In-Reply-To: <7vr548c7un.fsf@alter.siamese.dyndns.org>
+	id S1753705Ab1HZTya (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Aug 2011 15:54:30 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:37771 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753313Ab1HZTya (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Aug 2011 15:54:30 -0400
+Received: by fxh19 with SMTP id 19so2819381fxh.19
+        for <git@vger.kernel.org>; Fri, 26 Aug 2011 12:54:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=m7evexFuD/fDsByMgrlEKbA4sJjTC6YsmhMw1TKIbKY=;
+        b=i3atRNfSQKnKg69SIH8gPSqfl7E9MVr81mJek2Jekknb/536u/u32pm3ey09mcThka
+         ZyTmpEkSqfHWCMAWZvOQJEAuYqWsoZsjrCR19w+HO0AgIpoXMnBmOoxtu5F5l5oK5JZ4
+         jCRBHIJ5G1SIZcc8AcUNZ6aBkZlyGZI6QjsM8=
+Received: by 10.223.11.6 with SMTP id r6mr2275200far.57.1314388468826;
+        Fri, 26 Aug 2011 12:54:28 -0700 (PDT)
+Received: from [192.168.1.13] (abwo191.neoplus.adsl.tpnet.pl [83.8.238.191])
+        by mx.google.com with ESMTPS id l22sm1587900fam.13.2011.08.26.12.54.20
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 26 Aug 2011 12:54:21 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1314053923-13122-1-git-send-email-cfuhrman@panix.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/180193>
 
-The submodule merge search is not useful during virtual merges because
-the results cannot be used automatically.  Furthermore any suggestions
-made by the search may apply to commits different than HEAD:sub and
-MERGE_HEAD:sub, thus confusing the user.  Skip searching for submodule
-merges during a virtual merge such as that between B and C while merging
-the heads of:
+On Tue, 23 Aug 2011, Christopher M. Fuhrman wrote:
 
-    B---BC
-   / \ /
-  A   X
-   \ / \
-    C---CB
+> The current code, as is, passes control characters, such as form-feed
+> (^L) to highlight which then passes it through to the browser.  This
+> will cause the browser to display one of the following warnings:
+> 
+> Safari v5.1 (6534.50) & Google Chrome v13.0.782.112:
+> 
+>   This page contains the following errors:
+> 
+>   error on line 657 at column 38: PCDATA invalid Char value 12
+>   Below is a rendering of the page up to the first error.
+> 
+> Mozilla Firefox 3.6.19 & Mozilla Firefox 5.0:
+> 
+>    XML Parsing Error: not well-formed
+>    Location:
+>    http://path/to/git/repo/blah/blah
+> 
+> Both errors were generated by gitweb.perl v1.7.3.4 w/ highlight 2.7
+> using arch/ia64/kernel/unwind.c from the Linux kernel.
+> 
+> Strip non-printable control-characters by piping the output produced
+> by git-cat-file(1) to col(1) as follows:
+> 
+>   git cat-file blob deadbeef314159 | col -bx | highlight <args>
+> 
+> Note usage of the '-x' option which tells col(1) to output multiple
+> spaces instead of tabs.
 
-Run the search only when the recursion level is zero (!o->call_depth).
-This fixes known breakage tested in t7405-submodule-merge.
+Why use external program (which ming be not installed, or might not
+strip control-characters), instead of making gitweb sanitize highlighter
+output itself.  Something like the patch below (which additionally
+shows where there are control characters):
 
-Signed-off-by: Brad King <brad.king@kitware.com>
----
-On 8/26/2011 3:04 PM, Junio C Hamano wrote:
-> This is a knee-jerk reaction without thinking things thoroughly through,
-> but wouldn't it make more sense to do this by conditionally calling
-> merge_submodule() when !o->call_depth, leaving the callee oblivious to
-> what is in the "merge_options" structure? That way, you do not have to
-> touch submodule.c at all, I would think.
-
-I originally considered that but I think merge_submodule is still useful
-during virtual merges in the fast forward case.  I haven't thought that
-through in detail though.
-
-> After all, merge_submodule() should be usable in a future merge strategy
-> that is different from recursive and has no notion of call_depth.
-
-That's a worthwhile goal.  Perhaps instead we should pass in a parameter
-to tell merge_submodule whether or not to do the search after the fast
-forward case fails.
-
-Brad
-
- merge-recursive.c          |    6 ++++--
- submodule.c                |    6 +++++-
- submodule.h                |    2 +-
- t/t7405-submodule-merge.sh |    2 +-
- 4 files changed, 11 insertions(+), 5 deletions(-)
-
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 0cc1e6f..390811e 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -830,8 +830,10 @@ static struct merge_file_info merge_file(struct merge_options *o,
- 			free(result_buf.ptr);
- 			result.clean = (merge_status == 0);
- 		} else if (S_ISGITLINK(a->mode)) {
--			result.clean = merge_submodule(result.sha, one->path, one->sha1,
--						       a->sha1, b->sha1);
-+			result.clean = merge_submodule(result.sha,
-+						       one->path, one->sha1,
-+						       a->sha1, b->sha1,
-+						       !o->call_depth);
- 		} else if (S_ISLNK(a->mode)) {
- 			hashcpy(result.sha, a->sha1);
+-- >8 --
+diff --git i/gitweb/gitweb.perl w/gitweb/gitweb.perl
+index 7cf12af..192db2c 100755
+--- i/gitweb/gitweb.perl
++++ w/gitweb/gitweb.perl
+@@ -1517,6 +1517,17 @@ sub esc_path {
+ 	return $str;
+ }
  
-diff --git a/submodule.c b/submodule.c
-index 1ba9646..bf4f693 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -644,7 +644,7 @@ static void print_commit(struct commit *commit)
- 
- int merge_submodule(unsigned char result[20], const char *path,
- 		    const unsigned char base[20], const unsigned char a[20],
--		    const unsigned char b[20])
-+		    const unsigned char b[20], int search)
- {
- 	struct commit *commit_base, *commit_a, *commit_b;
- 	int parent_count;
-@@ -699,6 +699,10 @@ int merge_submodule(unsigned char result[20], const char *path,
- 	 * user needs to confirm the resolution.
- 	 */
- 
-+	/* Skip the search if makes no sense to the calling context.  */
-+	if (!search)
-+		return 0;
++# Sanitize for use in XHTML + application/xml+xhtml
++sub sanitize {
++	my $str = shift;
 +
- 	/* find commit which merges them */
- 	parent_count = find_first_merges(&merges, path, commit_a, commit_b);
- 	switch (parent_count) {
-diff --git a/submodule.h b/submodule.h
-index 5350b0d..d4344c8 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -28,6 +28,6 @@ int fetch_populated_submodules(int num_options, const char **options,
- 			       int quiet);
- unsigned is_submodule_modified(const char *path, int ignore_untracked);
- int merge_submodule(unsigned char result[20], const char *path, const unsigned char base[20],
--		    const unsigned char a[20], const unsigned char b[20]);
-+		    const unsigned char a[20], const unsigned char b[20], int search);
- 
- #endif
-diff --git a/t/t7405-submodule-merge.sh b/t/t7405-submodule-merge.sh
-index 14da2e3..0d5b42a 100755
---- a/t/t7405-submodule-merge.sh
-+++ b/t/t7405-submodule-merge.sh
-@@ -269,7 +269,7 @@ test_expect_success 'setup for recursive merge with submodule' '
- '
- 
- # merge should leave submodule unmerged in index
--test_expect_failure 'recursive merge with submodule' '
-+test_expect_success 'recursive merge with submodule' '
- 	(cd merge-recursive &&
- 	 test_must_fail git merge top-bc &&
- 	 echo "160000 $(git rev-parse top-cb:sub) 2	sub" > expect2 &&
++	return undef unless defined $str;
++
++	$str = to_utf8($str);
++	$str =~ s|([[:cntrl:]])|quot_cec($1)|eg;
++	return $str;
++}
++
+ # Make control characters "printable", using character escape codes (CEC)
+ sub quot_cec {
+ 	my $cntrl = shift;
+@@ -6546,7 +6557,8 @@ sub git_blob {
+ 			$nr++;
+ 			$line = untabify($line);
+ 			printf qq!<div class="pre"><a id="l%i" href="%s#l%i" class="linenr">%4i</a> %s</div>\n!,
+-			       $nr, esc_attr(href(-replay => 1)), $nr, $nr, $syntax ? to_utf8($line) : esc_html($line, -nbsp=>1);
++			       $nr, esc_attr(href(-replay => 1)), $nr, $nr,
++			       $syntax ? sanitize($line) : esc_html($line, -nbsp=>1);
+ 		}
+ 	}
+ 	close $fd
+
+-- 8< --
+
 -- 
-1.7.4.4
+Jakub Narebski
+Poland
